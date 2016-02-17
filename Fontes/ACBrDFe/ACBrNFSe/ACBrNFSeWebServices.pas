@@ -785,6 +785,7 @@ var
 begin
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;', '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;', '', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(FPRetornoWS, '#9#9#9#9', '', [rfReplaceAll]); //proCONAM
   // Remover quebras de linha //
   FPRetornoWS := StringReplace(FPRetornoWS, #10, '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, #13, '', [rfReplaceAll]);
@@ -820,6 +821,7 @@ begin
   Result := StringReplace(Result, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
+  Result := StringReplace(Result, '<?xml version = "1.0" encoding = "utf-8"?>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
 end;
 
@@ -1146,13 +1148,17 @@ begin
                       '</' + FPrefixo4 + 'Rps>';
 
     // RPS versão 2.00
-    ve200: FvNotas := FvNotas +
+    ve200: case FProvedor of
+             proCONAM: FvNotas := FvNotas + RPS;
+           else
+             FvNotas := FvNotas +
                       '<' + FPrefixo4 + 'Rps>' +
                        '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
                          RetornarConteudoEntre(RPS,
                            '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
                          '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
                       '</' + FPrefixo4 + 'Rps>';
+           end;
 
     // RPS versão 1.10 - Infisc
     ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>'); 
@@ -1209,6 +1215,8 @@ begin
     RazaoSocial  := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
     Senha        := FPConfiguracoesNFSe.Geral.Emitente.WebSenha;
     FraseSecreta := FPConfiguracoesNFSe.Geral.Emitente.WebFraseSecr;
+    UserWeb      := FPConfiguracoesNFSe.Geral.UserWeb;
+    SenhaWeb     := FPConfiguracoesNFSe.Geral.SenhaWeb;
   end;
 end;
 
@@ -1316,6 +1324,15 @@ begin
       NumeroLote := TNFSeGerarLoteRps(Self).NumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
+
+      if FProvedor = proCONAM then
+      begin
+        AliquotaIss    := FNotasFiscais.Items[0].NFSe.Servico.Valores.Aliquota;
+        TipoTributacao := '4';
+        ValorIss       := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIss;
+        ValorIssRetido := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIssRetido;
+      end;
+
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
@@ -1434,6 +1451,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case Provedor of
+      proCONAM: TagGrupo := 'ws_nfe.PROCESSARPS';
       proInfisc: TagGrupo := 'envioLote';
       proISSDSF: TagGrupo := 'ReqEnvioLoteRPS';
       proEquiplano: TagGrupo := 'enviarLoteRpsEnvio';
@@ -1443,6 +1461,7 @@ begin
     end;
 
     case FProvedor of
+      proCONAM: TagElemento := 'Reg20';
       proInfisc,
       proSP: TagElemento := '';
     else
@@ -1467,6 +1486,8 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
+
+      proCONAM,
       proFISSLex,
       proSimplISS,
       proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
@@ -1517,6 +1538,15 @@ begin
 
       // Necessário para o provedor Governa
       ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+
+      if FProvedor = proCONAM then
+      begin
+        AliquotaIss    := FNotasFiscais.Items[0].NFSe.Servico.Valores.Aliquota;
+        TipoTributacao := '4';
+        ValorIss       := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIss;
+        ValorIssRetido := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIssRetido;
+      end;
+
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
@@ -2010,6 +2040,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
+      proCONAM: TagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
       proInfisc: TagGrupo := 'pedidoStatusLote';
       proEquiplano: TagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
       proSimplISS: TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
@@ -2752,6 +2783,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
+      proCONAM: TagGrupo := 'ws_nfe.CANCELANOTAELETRONICA';
       proEGoverneISS: TagGrupo := 'request';
       proEquiplano: TagGrupo := 'esCancelarNfseEnvio';
       proInfisc: TagGrupo := 'pedCancelaNFSe';
@@ -2772,14 +2804,16 @@ begin
     InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingCab);
 
     case FProvedor of
-      proEquiplano,
-      proPublica,
-      proISSCuritiba,
-      proSP: FURI:= '';
+      proCONAM: FURI := 'Sdt_cancelanfe';
 
       proDigifred: FURI := 'CANC' + TNFSeCancelarNfse(Self).FNumeroNFSe;
 
-      proSaatri: FURI := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+      proEquiplano,
+      proISSCuritiba,
+      proPublica,
+      proSP: FURI:= '';
+
+      proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
 
       proIssIntel,
       proISSNet: begin
@@ -2790,11 +2824,12 @@ begin
       proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                   IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
 
-      proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
+      proSaatri: FURI := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
 
-    else FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                FPConfiguracoesNFSe.Geral.Emitente.InscMun +
-                TNFSeCancelarNfse(Self).FNumeroNFSe;
+    else
+      FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                                   FPConfiguracoesNFSe.Geral.Emitente.InscMun +
+                                   TNFSeCancelarNfse(Self).FNumeroNFSe;
     end;
 
     case FProvedor of
@@ -2827,13 +2862,14 @@ begin
       proEGoverneISS,
       proISSDSF: begin
                    FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
-                   FTagF :=  '</' + FPrefixo3 + TagGrupo + '>';
+                   FTagF := '</' + FPrefixo3 + TagGrupo + '>';
                  end;
 
+      proCONAM,
       proInfisc,
       proSP: begin
                FTagI := '<' + FPrefixo3 + TagGrupo + '>';
-               FTagF :=  '</' + FPrefixo3 + TagGrupo + '>';
+               FTagF := '</' + FPrefixo3 + TagGrupo + '>';
              end;
 
       proISSCuritiba: begin
@@ -2939,6 +2975,9 @@ begin
       NumeroNFSe := TNFSeCancelarNfse(Self).NumeroNFSe;
       CodigoCanc := TNFSeCancelarNfse(Self).FCodigoCancelamento;
       MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
+
+      NumeroRPS  := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+      ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;
 
       // Necessário para o provedor ISSDSF
       Transacao  := FNotasFiscais.Transacao;
@@ -3415,7 +3454,8 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
-    if FConsSitLoteRPS.VersaoNFSe = ve100 then
+    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
+       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
     begin
       Result := FConsSitLoteRPS.Executar;
 
@@ -3544,7 +3584,7 @@ begin
       FConsNfseRps.FTipo      := TipoRPSToStr(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
 
       // Provedor Infisc não possui o método Consultar NFS-e por RPS
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc] then
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc, proCONAM] then
         Result := True
       else
         Result := FConsNfseRps.Executar;

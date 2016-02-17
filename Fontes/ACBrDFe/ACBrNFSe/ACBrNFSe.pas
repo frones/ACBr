@@ -433,6 +433,7 @@ begin
       if NotasFiscais.Items[i].Confirmada and Imprimir then
         NotasFiscais.Items[i].Imprimir;
     end;
+    SetStatus( stNFSeIdle );
   end;
 end;
 

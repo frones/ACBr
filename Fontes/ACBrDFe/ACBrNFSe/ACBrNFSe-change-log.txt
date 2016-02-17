@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2016
+[+] Incluido o provedor CONAM.
+    Por: Edson / Italo Jurisato Junior
+
 16/02/2016
 [+] Incluido o provedor SP (Cidade de São Paulo).
     Por: Italo Jurisato Junior

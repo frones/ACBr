@@ -110,7 +110,7 @@ type
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
-                loInfisc, loISSDSF, loGoverna, loSP);
+                loInfisc, loISSDSF, loGoverna, loSP, loCONAM);
 
   TnfseFrete = ( tfPrestador, tfTomador );
 
@@ -18164,6 +18164,7 @@ begin
     proInfisc:      Result := loInfisc;
     proIssDSF:      Result := loISSDSF;
     proSP:          Result := loSP;
+    proCONAM:       Result := loCONAM;
   else
     Result := loNone;
   end;

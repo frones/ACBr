@@ -116,6 +116,7 @@ type
     function LerXml_proEL: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proGoverna: Boolean;
+    function LerXml_proCONAM: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -207,6 +208,7 @@ begin
    proEL:         Result := LerXml_proEL;
    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
    proGoverna:    Result := LerXml_proGoverna;
+   proCONAM:      Result := LerXml_proCONAM;
  else
    Result := LerXml_ABRASF;
  end;
@@ -609,6 +611,42 @@ begin
         end;
         inc(i);
       end;
+    end;
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXml_proCONAM: boolean;
+var
+  sMotCod,sMotDes: string;
+  i: integer;
+begin
+  Result := False;
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if leitor.rExtrai(1, 'Sdt_processarpsout') <> '' then begin
+        FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Id');
+        if (FInfRec.FSucesso = 'Arquivo Aceito') then  begin
+            FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'Protocolo');
+            FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'Protocolo');
+            //FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dhRecbto')
+        end;
+        // if (FInfRec.FSucesso = '200') 200-Rejeitado
+        if leitor.rExtrai(2, 'Messages') <> '' then begin
+            i := 0;
+            while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do begin
+                sMotCod:=Leitor.rCampo(tcStr, 'Id');
+                sMotDes:=Leitor.rCampo(tcStr, 'Description');
+
+                InfRec.MsgRetorno.Add;
+                InfRec.MsgRetorno[i].FCodigo   := sMotCod;
+                InfRec.MsgRetorno[i].FMensagem := sMotDes;
+                Inc(i);
+            end;
+        end;
     end;
     Result := True;
   except

@@ -99,6 +99,15 @@ type
     FValorTotalServicos: Currency;
     FValorTotalDeducoes: Currency;
 
+    // Layout - CONAM
+    FUserWeb: String;
+    FSenhaWeb: String;
+    FTipoTributacao: String;
+    FValorNota: Currency;
+    FAliquotaISS: Currency;
+    FValorIss: Currency;
+    FValorIssRetido: Currency;
+
     // Layout - Equiplano
     FOptanteSimples: TnfseSimNao;
 
@@ -175,6 +184,15 @@ type
     property SeriePrestacao: String       read FSeriePrestacao     write FSeriePrestacao;
     property ValorTotalServicos: Currency read FValorTotalServicos write FValorTotalServicos;
     property ValorTotalDeducoes: Currency read FValorTotalDeducoes write FValorTotalDeducoes;
+
+    // Layout - CONAM
+    property UserWeb: String          read FUserWeb        write FUserWeb;
+    property SenhaWeb: String         read FSenhaWeb       write FSenhaWeb;
+    property TipoTributacao: String   read FTipoTributacao write FTipoTributacao;
+    property ValorNota: Currency      read FValorNota      write FValorNota;
+    property AliquotaIss: Currency    read FAliquotaIss    write FAliquotaIss;
+    property ValorIss: Currency       read FValorIss       write FValorIss;
+    property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;
 
     // Layout - Equiplano
     property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
@@ -324,9 +342,37 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   case Provedor of
-    proInfisc: begin
-                 Gerador.ArquivoFormatoXML := Notas;
-               end;
+    proCONAM: begin
+                Gerador.Opcoes.DecimalChar := ',';
+                Gerador.Prefixo := '';
+                Gerador.wGrupoNFSe('Sdt_processarpsin xmlns="NFe"');
+                Gerador.wGrupoNFSe('Login');
+                Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
+                Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
+                Gerador.wGrupoNFSe('/Login');
+                Gerador.wGrupoNFSe('SDTRPS');
+                Gerador.wCampoNFSe(tcStr, '', 'Ano', 01, 04, 1, FormatDateTime('yyyy', DataInicial), '');
+                Gerador.wCampoNFSe(tcStr, '', 'Mes', 01, 02, 1, FormatDateTime('mm', DataInicial), '');
+                Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJ', 11, 14, 1, CNPJ, '');
+                Gerador.wCampoNFSe(tcStr, '', 'DTIni', 01, 10, 1, FormatDateTime('dd/mm/yyyy', DataInicial), '');
+                Gerador.wCampoNFSe(tcStr, '', 'DTFin', 01, 10, 1, FormatDateTime('dd/mm/yyyy', DataFinal), '');
+                Gerador.wCampoNFSe(tcStr, '', 'TipoTrib', 11, 1, 1, TipoTributacao, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 01, 14, 1, FormatFloat('#,##0.00',AliquotaIss), '');
+                Gerador.wCampoNFSe(tcStr, '', 'Versao', 11, 10, 1, VersaoDados, '');
+                Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                             '<Reg20>' + Notas + '</Reg20>';
+                Gerador.wGrupoNFSe('Reg90');
+                Gerador.wCampoNFSe(tcInt, '', 'QtdRegNormal', 01, 2, 1, QtdeNotas, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorNFS', 01, 14, 1, ValorTotalServicos, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorISS', 01, 14, 1, ValorIss, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorDed', 01, 14, 1, ValorTotalDeducoes, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorIssRetTom', 01, 14, 1, ValorIssRetido, '');
+                Gerador.wCampoNFSe(tcInt, '', 'QtdReg30', 01, 03, 1, '0', '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorTributos', 01, 14, 1, '0,00', '');
+                Gerador.wGrupoNFSe('/Reg90');
+                Gerador.wGrupoNFSe('/SDTRPS');
+                Gerador.wGrupoNFSe('/Sdt_processarpsin');
+              end;
 
     proEquiplano: begin
                     Gerador.Prefixo := '';
@@ -368,6 +414,10 @@ begin
 
              Gerador.wGrupoNFSe('/LoteRps');
            end;
+
+    proInfisc: begin
+                 Gerador.ArquivoFormatoXML := Notas;
+               end;
 
     proISSDSF: begin
                  Gerador.Prefixo := '';
@@ -500,10 +550,15 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   case Provedor of
-    proInfisc: begin
+    proCONAM:  begin
                  Gerador.Prefixo := '';
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'cLote', 01, 15, 1, Protocolo, '');
+                 Gerador.wGrupoNFSe('Sdt_consultanotasprotocoloin xmlns="NFe"');
+                 Gerador.wGrupoNFSe('Protocolo>' + Protocolo + '</Protocolo');
+                 Gerador.wGrupoNFSe('Login');
+                 Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
+                 Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
+                 Gerador.wGrupoNFSe('/Login');
+                 Gerador.wGrupoNFSe('/Sdt_consultanotasprotocoloin');
                end;
 
     proEquiplano: begin
@@ -526,6 +581,12 @@ begin
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroProtocolo', 01, 50, 1, Protocolo, '');
            end;
+
+    proInfisc: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#1', 'cLote', 01, 15, 1, Protocolo, '');
+               end;
 
     proISSDSF: begin
                  // Não possui 
@@ -589,8 +650,15 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   case Provedor of
-    proInfisc: begin
-                 // Não Possui 
+    proCONAM:  begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Sdt_consultanotasprotocoloin xmlns="NFe"');
+                 Gerador.wGrupoNFSe('Protocolo>' + Protocolo + '</Protocolo');
+                 Gerador.wGrupoNFSe('Login');
+                 Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
+                 Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
+                 Gerador.wGrupoNFSe('/Login');
+                 Gerador.wGrupoNFSe('/Sdt_consultanotasprotocoloin');
                end;
 
     proEquiplano: begin
@@ -613,6 +681,10 @@ begin
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroProtocolo', 01, 50, 1, Protocolo, '');
            end;
+
+    proInfisc: begin
+                 // Não Possui
+               end;
 
     proISSDSF: begin
                  Gerador.Prefixo := '';
@@ -1007,10 +1079,23 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   case Provedor of
-    proInfisc: begin
+    proCONAM:  begin
                  Gerador.Prefixo := '';
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+                 Gerador.wGrupoNFSe('Sdt_cancelanfe xmlns="NFe"');
+                 Gerador.wGrupoNFSe('Login');
+                 Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
+                 Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
+                 Gerador.wGrupoNFSe('/Login');
+                 Gerador.wGrupoNFSe('Nota');
+                 Gerador.wGrupoNFSe('SerieNota>' + 'NFe' + '</SerieNota');
+                 Gerador.wGrupoNFSe('NumeroNota>' + NumeroNfse + '</NumeroNota');
+                 Gerador.wGrupoNFSe('SerieRPS>' + 'UNICA' + '</SerieRPS');
+                 Gerador.wGrupoNFSe('NumeroRps>' + NumeroRps + '</NumeroRps');
+                 Gerador.wGrupoNFSe('ValorNota>' + FormatFloat('#,##0.00',ValorNota) + '</ValorNota');
+                 Gerador.wGrupoNFSe('MotivoCancelamento>' + MotivoCanc + '</MotivoCancelamento');
+                 Gerador.wGrupoNFSe('PodeCancelarGuia>S</PodeCancelarGuia');
+                 Gerador.wGrupoNFSe('/Nota');
+                 Gerador.wGrupoNFSe('/Sdt_cancelanfe');
                end;
 
     proEquiplano: begin
@@ -1034,6 +1119,12 @@ begin
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroNfse', 01, 15, 1, NumeroNFSe, '');
            end;
+
+    proInfisc: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+               end;
 
     proISSDSF: begin
                  Gerador.Prefixo := '';

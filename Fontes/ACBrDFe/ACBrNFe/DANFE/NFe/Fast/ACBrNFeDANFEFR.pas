@@ -467,8 +467,10 @@ begin
 					ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
 				frxReport.Export(frxPDFExport);
-				frxPDFExport.ShowDialog := fsShowDialog;
+			end;
+			frxPDFExport.ShowDialog := fsShowDialog;
     end;		
+		end;
   end;
 end;
 

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/02/2016
+-- ACBrECFVirtualBuffer --
+[*] Modificada a rotina "TACBrECFVirtualBufferClass.AddBufferRelatorio", para
+    constar o valor de "CuponsCanceladosEmAberto" (se o mesmo não for vazio)
+
 Data: 08/02/2016
 -- ACBrDevice --
 [*] Adicionado controle de falhas em "EnviaStringSerial". Em algumas situações

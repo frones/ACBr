@@ -245,7 +245,6 @@ var
   XMLStr: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
-  CNPJEmitente, CNPJCertificado: String;
 begin
   TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.ValidarCNPJCertificado( NFe.Emit.CNPJCPF );
 

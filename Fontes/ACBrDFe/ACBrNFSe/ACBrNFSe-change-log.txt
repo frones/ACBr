@@ -49,6 +49,10 @@ Símbolo : Significado
 
 17/02/2016
 -- ACBrNFSeNotasFiscais --
+[*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)
+
+17/02/2016
+-- ACBrNFSeNotasFiscais --
 [-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
     é emitido para o CPF do responsável e não para o CNPJ da empresa.
     por: regys.silveria / Italo Jurisato Junior

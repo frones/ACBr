@@ -237,18 +237,8 @@ var
   XMLStr: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
-  CNPJEmitente, CNPJCertificado: String;
 begin
-  // Verificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
-  CNPJEmitente    := OnlyNumber(GNRE.c03_idContribuinteEmitente);
-  CNPJCertificado := OnlyNumber(TACBrGNRE(TGuias(Collection).ACBrGNRE).SSL.CertCNPJ);
-
-  // verificar somente os 8 primeiros digitos, para evitar problemas quando
-  // a filial estiver utilizando o certificado da matriz.
-  // verificar somente quando for CNPJ no certificado, a casos em que o certificado
-  // é emitido para o CPF do responsável, não validar neste caso.
-  if (Length(CNPJCertificado) = 14) and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
-    raise EACBrGNREException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+  TACBrGNRE(TGuias(Collection).ACBrGNRE).SSL.ValidarCNPJCertificado( GNRE.c03_idContribuinteEmitente );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;

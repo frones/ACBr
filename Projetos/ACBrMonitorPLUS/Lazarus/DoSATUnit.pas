@@ -377,14 +377,14 @@ begin
           Ide.assinaturaQRCODE := INIRec.ReadString(  'Identificacao','assinaturaQRCODE' ,Ide.assinaturaQRCODE );
           Ide.numeroCaixa := INIRec.ReadInteger( 'Identificacao','numeroCaixa' , Ide.numeroCaixa);
 
-          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF', Emit.CNPJ));
+          Emit.CNPJ              := INIRec.ReadString(  'Emitente','CNPJ'    ,INIRec.ReadString(  'Emitente','CNPJCPF', edtEmitCNPJ.Text ));
           Emit.xNome             := INIRec.ReadString(  'Emitente','Razao'   ,INIRec.ReadString(  'Emitente','xNome', Emit.xNome));
           Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant', Emit.xFant));
-          Emit.IE                := INIRec.ReadString(  'Emitente','IE', Emit.IE);
-          Emit.IM                := INIRec.ReadString(  'Emitente','IM', Emit.IM);
-          Emit.cRegTrib          := StrToRegTrib(ok, INIRec.ReadString(  'Emitente','cRegTrib',RegTribToStr(Emit.cRegTrib)));
-          Emit.cRegTribISSQN     := StrToRegTribISSQN(ok, INIRec.ReadString(  'Emitente','cRegTribISSQN', RegTribISSQNToStr(Emit.cRegTribISSQN)));
-          Emit.indRatISSQN       := StrToindRatISSQN(ok, INIRec.ReadString(  'Emitente','indRatISSQN', indRatISSQNToStr(Emit.indRatISSQN)));
+          Emit.IE                := INIRec.ReadString(  'Emitente','IE', edtEmitIE.Text);
+          Emit.IM                := INIRec.ReadString(  'Emitente','IM', edtEmitIM.Text);
+          Emit.cRegTrib          := StrToRegTrib(ok, IntToStr(INIRec.ReadInteger(  'Emitente','cRegTrib',cbxRegTributario.ItemIndex)));
+          Emit.cRegTribISSQN     := StrToRegTribISSQN(ok, IntToStr(INIRec.ReadInteger(  'Emitente','cRegTribISSQN', cbxRegTribISSQN.ItemIndex)));
+          Emit.indRatISSQN       := StrToindRatISSQN(ok, IntToStr(INIRec.ReadInteger(  'Emitente','indRatISSQN', cbxIndRatISSQN.ItemIndex)));
 
           Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr', Emit.EnderEmit.xLgr));
           Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro', Emit.EnderEmit.nro));

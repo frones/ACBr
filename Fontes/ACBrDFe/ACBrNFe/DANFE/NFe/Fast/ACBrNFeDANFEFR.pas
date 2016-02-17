@@ -85,10 +85,10 @@ type
     FFastFileInutilizacao: String;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
+		function GetPreparedReportInutilizacao: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
     function PrepareReportEvento: Boolean;
-    function PrepareReportInutilizacao: Boolean;
-    function GetPreparedReportInutilizacao: TfrxReport;
+    function PrepareReportInutilizacao: Boolean;    
     procedure setTributosPercentual(const Value: TpcnPercentualTributos);
     procedure setTributosPercentualPersonalizado(const Value: double);
   public
@@ -109,6 +109,7 @@ type
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport: TfrxReport read GetPreparedReport;
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
+		property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
     property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
@@ -442,28 +443,32 @@ var
 begin
   if PrepareReport(NFE) then
   begin
-    fsShowDialog := FdmDanfe.frxPDFExport.ShowDialog;
-    FdmDanfe.frxPDFExport.Author     := Sistema;
-    FdmDanfe.frxPDFExport.Creator    := Sistema;
-    FdmDanfe.frxPDFExport.Producer   := Sistema;
-    FdmDanfe.frxPDFExport.Title      := TITULO_PDF;
-    FdmDanfe.frxPDFExport.Subject    := TITULO_PDF;
-    FdmDanfe.frxPDFExport.Keywords   := TITULO_PDF;
-    FdmDanfe.frxPDFExport.ShowDialog := False;
+		with FdmDanfe do
+		begin
+			fsShowDialog := frxPDFExport.ShowDialog;
+			frxPDFExport.Author        := Sistema;
+			frxPDFExport.Creator       := Sistema;
+			frxPDFExport.Producer      := Sistema;
+			frxPDFExport.Title         := TITULO_PDF;
+			frxPDFExport.Subject       := TITULO_PDF;
+			frxPDFExport.Keywords      := TITULO_PDF;
+			frxPDFExport.ShowDialog    := False;
+			frxPDFExport.EmbeddedFonts := False;
+			frxPDFExport.Background    := False;
 
-    for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
-    begin
-      FdmDanfe.frxPDFExport.FileName :=
-        PathWithDelim(Self.PathPDF) +
-        StringReplace(UpperCase(FdmDanfe.NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) +
-        '-nfe.pdf';
+			for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
+			begin
+				frxPDFExport.FileName :=
+					PathWithDelim(Self.PathPDF) +
+					StringReplace(UpperCase(NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) +
+					'-nfe.pdf';
 
-      if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
-        ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));
+				if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+					ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
 
-      FdmDanfe.frxReport.Export(FdmDanfe.frxPDFExport);
-    end;
-		FdmDanfe.frxPDFExport.ShowDialog := fsShowDialog;
+				frxReport.Export(frxPDFExport);
+				frxPDFExport.ShowDialog := fsShowDialog;
+    end;		
   end;
 end;
 

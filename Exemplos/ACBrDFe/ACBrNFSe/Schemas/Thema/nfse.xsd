@@ -1,9 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
             targetNamespace="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" 
             xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd" 
-            xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
-            attributeFormDefault="unqualified"
+            xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" 
+            attributeFormDefault="unqualified" 
             elementFormDefault="qualified">
 <xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema20020212.xsd"/>
 
@@ -32,7 +32,7 @@
 	</xsd:simpleType>
 	<xsd:simpleType name="tsNaturezaOperacao">
 		<xsd:restriction base="xsd:byte">
-			<xsd:pattern value="50|51|52|57|58|59|60|61|62|63|64|67|68|69|70|78|79"/>
+			<xsd:pattern value="50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|78|79"/>
 		</xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="tsRegimeEspecialTributacao">
@@ -446,7 +446,6 @@
     <xsd:complexType name="tcPedidoCancelamento">
         <xsd:sequence>
             <xsd:element name="InfPedidoCancelamento" type="tcInfPedidoCancelamento" minOccurs="1" maxOccurs="1"/>
-            <xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="tcConfirmacaoCancelamento">
@@ -603,8 +602,8 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Prestador" type="tcIdentificacaoPrestador" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="NumeroNfse" type="tsNumeroNfse" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="PeriodoEmissao" minOccurs="1" maxOccurs="1">
+                <xsd:element name="NumeroNfse" type="tsNumeroNfse" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="PeriodoEmissao" minOccurs="0" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
                             <xsd:element name="DataInicial" type="xsd:date" minOccurs="1" maxOccurs="1"/>
@@ -655,6 +654,7 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="Pedido" type="tcPedidoCancelamento"/>
+				<xsd:element ref="dsig:Signature" minOccurs="0" maxOccurs="1"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>

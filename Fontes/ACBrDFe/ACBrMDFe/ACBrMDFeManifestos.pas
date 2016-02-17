@@ -225,8 +225,10 @@ begin
   CNPJCertificado := OnlyNumber(TACBrMDFe(TManifestos(Collection).ACBrMDFe).SSL.CertCNPJ);
 
   // verificar somente os 8 primeiros digitos, para evitar problemas quando
-  // a filial estiver utilizando o certificado da matriz
-  if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
+  // a filial estiver utilizando o certificado da matriz.
+  // verificar somente quando for CNPJ no certificado, a casos em que o certificado
+  // é emitido para o CPF do responsável, não validar neste caso.
+  if (Length(CNPJCertificado) = 14) and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
     raise EACBrMDFeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas

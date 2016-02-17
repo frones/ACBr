@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/02/2016
+-- ACBrMDFeManifestos --
+[-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
+    é emitido para o CPF do responsável e não para o CNPJ da empresa.
+    por: regys.silveria / Italo Jurisato Junior
+
+17/02/2016
 --ACBrMDFeDAMDFeRLEvento
 [*] Modificação para exibir ou não o preview também no imprimir evento
     Por: Juliomar Marchetti

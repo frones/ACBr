@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/02/2016
+-- ACBrNFSeNotasFiscais --
+[-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
+    é emitido para o CPF do responsável e não para o CNPJ da empresa.
+    por: regys.silveria / Italo Jurisato Junior
+
+17/02/2016
 [+] Incluido o provedor CONAM.
     Por: Edson / Italo Jurisato Junior
 

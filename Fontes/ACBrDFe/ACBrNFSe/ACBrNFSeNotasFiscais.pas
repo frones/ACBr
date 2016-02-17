@@ -230,11 +230,13 @@ begin
     CNPJEmitente    := OnlyNumber(NFSe.Prestador.CNPJ);
     CNPJCertificado := OnlyNumber(TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.CertCNPJ);
 
-    // Verificar somente os 8 primeiros digitos, para evitar problemas quando
-    // a filial estiver utilizando o certificado da matriz,
-    // Mas faz a verificação só se for ambiente de produção.
+    // verificar somente os 8 primeiros digitos, para evitar problemas quando
+    // a filial estiver utilizando o certificado da matriz.
+    // verificar somente quando for CNPJ no certificado, a casos em que o certificado
+    // é emitido para o CPF do responsável, não validar neste caso.
+    // Faz a verificação só se for ambiente de produção.
     if TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.WebServices.Ambiente = taProducao then
-      if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
+      if (Length(CNPJCertificado) = 14) and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
         raise EACBrNFSeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
   end;
 

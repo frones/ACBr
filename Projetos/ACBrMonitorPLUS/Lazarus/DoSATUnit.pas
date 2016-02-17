@@ -169,7 +169,12 @@ begin
     begin
       AjustaACBrSAT;
 
-      Resultado := ACBrSAT1.EnviarDadosVenda( ParamAsXML(Cmd.Params(0)) );
+      ArqCFe := ParamAsXML(Cmd.Params(0));
+      if ArqCFe = '' then
+        Resultado := ACBrSAT1.EnviarDadosVenda
+      else
+        Resultado := ACBrSAT1.EnviarDadosVenda( ArqCFe );
+
       Cmd.Resposta := RespostaEnviarDadosVenda( Resultado );
     end
 
@@ -255,6 +260,8 @@ function ParamAsXML(AParam: String): String;
 var
   SL : TStringList;
 begin
+  Result := Trim(AParam);
+
   if (pos(#10,AParam) = 0) and FileExists(AParam) then
   begin
     SL := TStringList.Create;
@@ -264,9 +271,7 @@ begin
     finally
       SL.Free;
     end;
-  end
-  else
-    Result := AParam;
+  end;
 end;
 
 procedure CarregarDadosCancelamento(aStr: String);

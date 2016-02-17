@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 17/02/2016
+-- pcteRetConsSitCTe --
+[-] A SEFAZ-MS esta retornando Status=129 como status de retorno da consulta
+    mas o status do CT-e consultado é 100, incluido a checagem do status = 129
+    por: Italo Jurisato Junior
+
+17/02/2016
 -- ACBrCTeConhecimentos --
 [-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
     é emitido para o CPF do responsável e não para o CNPJ da empresa.

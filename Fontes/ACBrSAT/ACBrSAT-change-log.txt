@@ -52,6 +52,8 @@ Data: 17/02/2016
 [+] Implementado o método "DescontoAcrescimoItemAnteriorVirtual" (Por: Amarildo)
 [-] Correção no método "VendeItemVirtual", para não considerar os descontos
     pois serão tratados em "DescontoAcrescimoItemAnteriorVirtual"  (por: DSA)
+[*] DescontoAcrescimoItemAnteriorVirtual, modificado para considerar o Acréscimo
+    em: "Det.Prod.vOutro"
 
 Data: 04/02/2016
 -- pcnCFeR --

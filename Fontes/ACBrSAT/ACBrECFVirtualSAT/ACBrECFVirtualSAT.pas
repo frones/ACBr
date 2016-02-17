@@ -395,18 +395,15 @@ end;
 
 procedure TACBrECFVirtualSATClass.DescontoAcrescimoItemAnteriorVirtual(
   ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
-var Det:TDetCollectionItem;
-    Acres:double;
+var
+  Det: TDetCollectionItem;
 begin
   with fsACBrSAT do
   begin
-    Det := CFe.det.Items[ itemCupom.Sequencia-1 ];
+    Det := CFe.det.Items[ CFe.Det.Count - 1 ];
+
     if ItemCupom.DescAcres > 0 then
-    begin
-      // Não há campo para Acréscimo... somando o Acréscimo no preço Unitário
-      Acres := RoundABNT(ItemCupom.DescAcres/ItemCupom.Qtd, ECF.DecimaisPreco);
-      Det.Prod.vUnCom := Det.Prod.vUnCom + Acres;
-    end
+      Det.Prod.vOutro := ItemCupom.DescAcres
     else
       Det.Prod.vDesc := -ItemCupom.DescAcres;
   end;
@@ -421,12 +418,12 @@ begin
 
     with CFe.Det.Items[NumItem-1] do
     begin
-      Prod.qCom := 0;    // marca item cancelado
+      Prod.qCom    := 0;    // marca item cancelado
       Prod.vUnCom  := 0;
-      Prod.vProd := 0;
-      Prod.vDesc := 0;
-      Prod.vOutro := 0;
-      Prod.vItem := 0;
+      Prod.vProd   := 0;
+      Prod.vDesc   := 0;
+      Prod.vOutro  := 0;
+      Prod.vItem   := 0;
       Prod.vUnCom  := 0;
     end;
   end;

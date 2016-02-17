@@ -48,6 +48,11 @@ Símbolo : Significado
 -- ACBrDFeCapicomDelphiSoap --
 [*] Ajuste para definir o TimeOut de DFeSSL para a Indy (por: DSA)
 
+-- ACBrDFeSSL --
+[+] Adicionado o método TDFeSSL.ValidarCNPJCertificado(CNPJDocumento: String);
+    Dispara exception se o "CNPJDocumento" não contiver a mesma raiz do CNPJ do
+    Certificado   (por: DSA)
+
 10/02/2015
 -- ACBrDFeWebService --
 [-] Ajuste no método TDFeWebService.SalvarEnvio, para que a gravação dos

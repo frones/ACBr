@@ -799,6 +799,9 @@ begin
     Result := SeparaDados(FPRetornoWS, 'ns:return');
 
   if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 'outputXML');
+
+  if Result = '' then
     Result := SeparaDados(FPRetornoWS, 's:Body');
 
   if Result = '' then
@@ -809,9 +812,6 @@ begin
 
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'soapenv:Body');
-
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'outputXML');
 
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then

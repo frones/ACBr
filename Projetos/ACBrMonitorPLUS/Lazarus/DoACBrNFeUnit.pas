@@ -419,13 +419,9 @@ begin
               ACBrNFe1.DANFE.ProtocoloNFe := Cmd.Params(1);
 
            if NaoEstaVazio(Cmd.Params(2)) then
-            begin
-              ACBrNFeDANFeRL1.MarcadAgua := Cmd.Params(2);
-            end
+              ACBrNFeDANFeRL1.MarcadAgua := Cmd.Params(2)
            else
-            begin
               ACBrNFeDANFeRL1.MarcadAgua := '';
-            end ;
 
            if NaoEstaVazio(Cmd.Params(3)) then
               ACBrNFe1.DANFE.ViaConsumidor := (Cmd.Params(3) = '1');

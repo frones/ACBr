@@ -423,6 +423,7 @@ begin
       Add('Mensagem0', ftString, 50);
       Add('Sistema', ftString, 50);
       Add('Usuario', ftString, 50);
+      Add('Site', ftString, 50);
       Add('NaturezaOperacao', ftString, 50);
       Add('RegimeEspecialTributacao', ftString, 50);
       Add('OptanteSimplesNacional', ftString, 10);
@@ -467,9 +468,9 @@ begin
     begin
       Clear;
       Add('DiscriminacaoServico', ftString, 80);
-      Add('Quantidade', ftFloat);
-      Add('ValorUnitario', ftCurrency);
-      Add('ValorTotal', ftCurrency);
+      Add('Quantidade', ftString, 10);
+      Add('ValorUnitario', ftString, 30);
+      Add('ValorTotal', ftString, 30);
       Add('Tributavel', ftString, 1);
     end;
     CreateDataSet;
@@ -624,6 +625,7 @@ begin
         Add('Mensagem0=Mensagem0');
         Add('Sistema=Sistema');
         Add('Usuario=Usuario');
+        Add('Site=Site');
         Add('IncentivadorCultural=IncentivadorCultural');
         Add('OptanteSimplesNacional=OptanteSimplesNacional');
         Add('RegimeEspecialTributacao=RegimeEspecialTributacao');
@@ -675,7 +677,7 @@ begin
     begin
       FieldByName('Id').AsString                := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
       FieldByName('Numero').AsString            := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero);
-      FieldByName('Competencia').AsString       := Competencia;
+      FieldByName('Competencia').AsString       := FormatDateTime('MM"/"yyyy', DataEmissao ) ;
       FieldByName('NFSeSubstituida').AsString   := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida);
       FieldByName('NumeroNFSe').AsString        := FormatarNumeroDocumentoFiscalNFSe(Numero);
       FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
@@ -698,12 +700,27 @@ begin
       begin
         Append;
         cdsItensServico.FieldByName('DiscriminacaoServico').AsString := Descricao;
-        cdsItensServico.FieldByName('Quantidade').AsFloat            := Quantidade;
-        cdsItensServico.FieldByName('ValorUnitario').AsFloat         := ValorUnitario;
-        cdsItensServico.FieldByName('ValorTotal').AsFloat            := ValorTotal;
+        cdsItensServico.FieldByName('Quantidade').AsString           := FloatToStr( Quantidade );
+        cdsItensServico.FieldByName('ValorUnitario').AsString        := FormatFloatBr( ValorUnitario, '###,###,##0.00');
+        cdsItensServico.FieldByName('ValorTotal').AsString           := FormatFloatBr( ValorTotal, '###,###,##0.00');
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
         Post;
       end;
+
+    if ANFSe.Servico.ItemServico.Count < 12 then
+      begin
+        for I := 1 to 12 - ANFSe.Servico.ItemServico.Count do
+          begin
+            Append;
+            cdsItensServico.FieldByName('DiscriminacaoServico').AsString := EmptyStr ;
+            cdsItensServico.FieldByName('Quantidade').AsString           := EmptyStr ;
+            cdsItensServico.FieldByName('ValorUnitario').AsString        := EmptyStr ;
+            cdsItensServico.FieldByName('ValorTotal').AsString           := EmptyStr ;
+            cdsItensServico.FieldByName('Tributavel').AsString           := EmptyStr ;
+            Post;
+          end;
+      end;
+
   end;
 end;
 
@@ -741,6 +758,7 @@ begin
 
     FieldByName('Sistema').AsString   := DANFSeClassOwner.Sistema;
     FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
+    FieldByName('Site').AsString   := DANFSeClassOwner.Site;
     FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');
 
     Post;

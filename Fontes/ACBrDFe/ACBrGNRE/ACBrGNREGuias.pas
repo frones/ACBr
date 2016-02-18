@@ -416,6 +416,7 @@ begin
     IdAnterior := GNRE.c42_identificadorGuia;
     FGNREW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FGNREW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
 //  FGNREW.Opcoes.GerarTXTSimultaneamente := False;

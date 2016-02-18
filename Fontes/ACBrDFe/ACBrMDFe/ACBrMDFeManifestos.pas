@@ -472,6 +472,7 @@ begin
     IdAnterior := MDFe.infMDFe.ID;
     FMDFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FMDFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FMDFeW.GerarXml;

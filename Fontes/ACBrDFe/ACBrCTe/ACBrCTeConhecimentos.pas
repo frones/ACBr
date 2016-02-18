@@ -501,8 +501,9 @@ begin
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     IdAnterior := CTe.infCTe.ID;
-    FCTeW.Gerador.Opcoes.FormatoAlerta   := Configuracoes.Geral.FormatoAlerta;
-    FCTeW.Gerador.Opcoes.RetirarAcentos  := Configuracoes.Geral.RetirarAcentos;
+    FCTeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
+    FCTeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FCTeW.GerarXml;

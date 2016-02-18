@@ -426,6 +426,7 @@ begin
 
     FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FNFSeW.GerarXml;

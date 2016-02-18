@@ -976,6 +976,9 @@ end;
 
 procedure TACBrNFSeDANFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 begin
+  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];
   frxReport.FindObject('Memo23').Visible := DANFSeClassOwner.ImprimeCanhoto;
   frxReport.FindObject('Memo75').Visible := DANFSeClassOwner.ImprimeCanhoto;
   frxReport.FindObject('Memo77').Visible := DANFSeClassOwner.ImprimeCanhoto;

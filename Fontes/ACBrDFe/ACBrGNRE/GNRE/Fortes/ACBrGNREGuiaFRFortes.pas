@@ -307,8 +307,7 @@ begin
       begin
         for i := 0 to TACBrGNRE(ACBrGNRE).GuiasRetorno.Count - 1 do
         begin
-          frACBrGNREFortes.GNRE := TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i]
-            .GNRE;
+          frACBrGNREFortes.GNRE := TACBrGNRE(ACBrGNRE).GuiasRetorno.Items[i].GNRE;
           frACBrGNREFortes.CarregaDados;
         end;
       end
@@ -450,8 +449,7 @@ begin
       FieldByName('MunicipioEmitente').AsString := MunicipioEmitente;
       FieldByName('UFEmitente').AsString := UFEmitente;
       FieldByName('CEPEmitente').AsString := CEPEmitente;
-      FieldByName('TelefoneEmitente').AsString := RemoverZeros
-        (TelefoneEmitente);
+      //FieldByName('TelefoneEmitente').AsString := RemoverZeros(TelefoneEmitente);
       FieldByName('TipoDocDestinatario').AsInteger := TipoDocDestinatario;
 
       case TipoDocDestinatario of

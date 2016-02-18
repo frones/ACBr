@@ -1065,6 +1065,9 @@ var
   Memo      : TfrxMemoView;
   Shape     : TfrxShapeView;
 begin
+  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];
   case TipoEvento of
     teCCe:
       begin

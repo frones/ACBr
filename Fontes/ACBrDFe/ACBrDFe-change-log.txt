@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2016
+-- ACBrDFeConfiguracoes --
+[+] Adicionado a propriedade: TimeZoneConf: TTimeZoneConf em TWebServicesConf,
+    para permitit configurar como o métoto pcnAuxiliar.GetUTC se comportará,
+    na detecção do TimeZone (leia mais em: PCNComum-change-log.txt)
+
 17/02/2016
 -- ACBrDFeCapicomDelphiSoap --
 [*] Ajuste para definir o TimeOut de DFeSSL para a Indy (por: DSA)

@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2016
+--  pcnCCeNFe, pcnEnvEventoNFe, pcnNFeW, pcnProcNFe --
+[*] Ajuste para usar nova versão de pcnAuxiliar.GetUTC         (por: DSA)
+
+-- ACBrNFE, ACBrNFeNotasFiscais --
+[*] Ajuste para propagar valores de ACBrNFE.Configuracoes.WebServices.TimeZoneConf
+    para pcnAuxiliar.TimeZoneConf      (por: DSA)
+
 17/02/2016
 -- ACBrNFeNotasFiscais --
 [*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)
@@ -56,6 +64,11 @@ Símbolo : Significado
     em contingência (por: theiller)
     http://www.projetoacbr.com.br/forum/topic/28027-nfe-contigencia-ba-svcrs-ajustes/
 
+-- ACBrNFeDANFeRL, ACBrNFeDANFeRLClass --
+[*] Ajuste para que o método "ImprimirDANFEPDF", possa receber o nome da Impressora.
+    Na tentativa de corrigir problemas de geração de PDF em Sistemas onde existem
+    impressoras de bobina instaladas.
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28020
 
 17/02/2016
 -- ACBrNFeNotasFiscais --
@@ -66,7 +79,7 @@ Símbolo : Significado
 13/02/2016
 -- ACBrNFeNotasFiscais --
 [-] Acerto para validar corretamente a regra 773 agora que foi introduzido o DIFAL
-    http://www.projetoacbr.com.br/forum/topic/28025-solicitação-de-alteração-no-acbrnfenotasfiscais-ref-ao-tratamento-da-regra-de-validação-773/#comment-184292
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28025
 
 10/02/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 

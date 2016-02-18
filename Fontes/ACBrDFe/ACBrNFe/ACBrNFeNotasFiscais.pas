@@ -1232,6 +1232,7 @@ begin
     IdAnterior := NFe.infNFe.ID;
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FNFeW.Opcoes.GerarTXTSimultaneamente := False;

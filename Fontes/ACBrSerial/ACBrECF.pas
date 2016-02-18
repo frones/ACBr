@@ -3306,7 +3306,8 @@ begin
 
   { Todos ECFs suportam no máximo 8 Linhas no Rodapé. Ajusta se necessário,
     para evitar erro na Impressão, no caso de mais linhas serem enviadas }
-  Observacao:= AjustaLinhas(Observacao, Colunas, 8);
+  if not (fsModelo in [ecfEscECF, ecfECFVirtual]) then
+     Observacao:= AjustaLinhas(Observacao, Colunas, 8);
 
   ComandoLOG := 'FechaCupom( '+Observacao+' )' ;
 

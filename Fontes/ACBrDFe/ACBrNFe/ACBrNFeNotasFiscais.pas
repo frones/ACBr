@@ -245,16 +245,8 @@ var
   XMLStr: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
-  CNPJEmitente, CNPJCertificado: String;
 begin
-  // VErificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
-  CNPJEmitente    := OnlyNumber(NFe.Emit.CNPJCPF);
-  CNPJCertificado := OnlyNumber(TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.CertCNPJ);
-
-  // verificar somente os 8 primeiros digitos, para evitar problemas quando
-  // a filial estiver utilizando o certificado da matriz
-  if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
-    raise EACBrNFeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+  TACBrNFe(TNotasFiscais(Collection).ACBrNFe).SSL.ValidarCNPJCertificado( NFe.Emit.CNPJCPF );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -855,8 +847,9 @@ begin
 
       GravaLog('Validar: 773-Op.Interna e UF diferente');
       if (nfe.Ide.idDest = doInterna) and
-         (NFe.Dest.EnderDest.UF <> NFe.Emit.EnderEmit.UF) then
-        AdicionaErro('773-Rejeição: Operação Interna e UF de destino difere da UF do emitente');
+         (NFe.Dest.EnderDest.UF <> NFe.Emit.EnderEmit.UF) and
+         (NFe.Ide.indPres <> pcPresencial) then
+        AdicionaErro('773-Rejeição: Operação Interna e UF de destino difere da UF do emitente - não presencial');
 
       GravaLog('Validar: 790-Op.Exterior e Destinatário ICMS');
       if (NFe.Ide.idDest = doExterior) and
@@ -1239,6 +1232,7 @@ begin
     IdAnterior := NFe.infNFe.ID;
     FNFeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FNFeW.Opcoes.GerarTXTSimultaneamente := False;

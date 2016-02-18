@@ -255,7 +255,6 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    Visible = False
   end
   object Label13: TLabel
     Left = 276
@@ -340,7 +339,6 @@ object framePacotes: TframePacotes
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    Visible = False
   end
   object Label19: TLabel
     Left = 276
@@ -1075,7 +1073,6 @@ object framePacotes: TframePacotes
     Font.Style = []
     ParentFont = False
     TabOrder = 35
-    Visible = False
     OnClick = VerificarCheckboxes
   end
   object ACBr_NFeDanfeRL_dpk: TCheckBox
@@ -1216,7 +1213,6 @@ object framePacotes: TframePacotes
     Font.Style = []
     ParentFont = False
     TabOrder = 42
-    Visible = False
     OnClick = VerificarCheckboxes
   end
   object ACBr_BlocoX_dpk: TCheckBox

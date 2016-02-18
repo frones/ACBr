@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - DANFe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="8">
+    <Files Count="10">
       <Item1>
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRL.pas"/>
         <UnitName Value="ACBrNFeDANFeRL"/>
@@ -54,6 +54,14 @@
         <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLSimplificado.pas"/>
         <UnitName Value="ACBrNFeDANFeRLSimplificado"/>
       </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRL.pas"/>
+        <UnitName Value="ACBrNFeDAInutRL"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRLRetrato.pas"/>
+        <UnitName Value="ACBrNFeDAInutRLRetrato"/>
+      </Item10>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

@@ -18,6 +18,7 @@ type
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
+    btnInutilizarImprimir: TButton;
     btnValidarRegrasNegocio: TButton;
     Button1: TButton;
     Button2: TButton;
@@ -204,6 +205,7 @@ type
     spPathSchemas: TSpeedButton;
     procedure ACBrNFe1TransmitError(const HttpError, InternalError: Integer;
       const URL, DataSent, SoapAction: String; var TryAgain: Boolean);
+    procedure btnInutilizarImprimirClick(Sender: TObject);
     procedure btnValidarRegrasNegocioClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -555,6 +557,29 @@ begin
              'InternalError: '+IntToStr(InternalError)  );
 
  TryAgain := False;
+end;
+
+procedure TForm1.btnInutilizarImprimirClick(Sender: TObject);
+begin
+ {OpenDialog1.Title := 'Selecione a NFE';
+ OpenDialog1.DefaultExt := '*.XML';
+ OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+ if OpenDialog1.Execute then
+ begin
+   ACBrNFe1.NotasFiscais.Clear;
+   ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+ end;}
+
+ OpenDialog1.Title := 'Selecione a Inutilização';
+ OpenDialog1.DefaultExt := '*.XML';
+ OpenDialog1.Filter := 'Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+ OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+ if OpenDialog1.Execute then
+ begin
+   ACBrNFe1.InutNFe.LerXML(OpenDialog1.FileName);
+   ACBrNFe1.ImprimirInutilizacao;
+ end;
 end;
 
 procedure TForm1.btnValidarRegrasNegocioClick(Sender: TObject);

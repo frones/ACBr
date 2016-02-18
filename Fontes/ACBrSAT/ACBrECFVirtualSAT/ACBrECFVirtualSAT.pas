@@ -111,6 +111,9 @@ type
     Procedure FechaCupomVirtual( Observacao : AnsiString = ''; IndiceBMP : Integer = 0) ; override ;
     procedure VerificaPodeCancelarCupom(NumCOOCancelar: Integer = 0); override;
     Procedure CancelaCupomVirtual ; override ;
+    Procedure DescontoAcrescimoItemAnteriorVirtual(
+      ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double) ; override ;
+
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
     procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; override;
@@ -350,15 +353,6 @@ begin
     Det.Prod.vUnCom   := ItemCupom.ValorUnit;
     Det.Prod.uCom     := ItemCupom.Unidade;
 
-    if ItemCupom.DescAcres > 0 then
-    begin
-      // Não há campo para Acréscimo... somando o Acréscimo no preço Unitário
-      Acres := RoundABNT(ItemCupom.DescAcres/ItemCupom.Qtd, ECF.DecimaisPreco);
-      Det.Prod.vUnCom := Det.Prod.vUnCom + Acres;
-    end
-    else
-      Det.Prod.vDesc := (ItemCupom.DescAcres * -1); 
-
     if ECF.Arredonda then
       Det.Prod.indRegra := irArredondamento
     else
@@ -399,6 +393,22 @@ begin
   end;
 end;
 
+procedure TACBrECFVirtualSATClass.DescontoAcrescimoItemAnteriorVirtual(
+  ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
+var
+  Det: TDetCollectionItem;
+begin
+  with fsACBrSAT do
+  begin
+    Det := CFe.det.Items[ CFe.Det.Count - 1 ];
+
+    if ItemCupom.DescAcres > 0 then
+      Det.Prod.vOutro := ItemCupom.DescAcres
+    else
+      Det.Prod.vDesc := -ItemCupom.DescAcres;
+  end;
+end;
+
 procedure TACBrECFVirtualSATClass.CancelaItemVendidoVirtual(NumItem: Integer);
 begin
   with fsACBrSAT do
@@ -408,12 +418,12 @@ begin
 
     with CFe.Det.Items[NumItem-1] do
     begin
-      Prod.qCom := 0;    // marca item cancelado
+      Prod.qCom    := 0;    // marca item cancelado
       Prod.vUnCom  := 0;
-      Prod.vProd := 0;
-      Prod.vDesc := 0;
-      Prod.vOutro := 0;
-      Prod.vItem := 0;
+      Prod.vProd   := 0;
+      Prod.vDesc   := 0;
+      Prod.vOutro  := 0;
+      Prod.vItem   := 0;
       Prod.vUnCom  := 0;
     end;
   end;

@@ -975,17 +975,17 @@ begin
                DFill( GT_FIN )                +
                DFill( VL_BRT )                +
                LFill( CstPisToStr(CST_PIS) )  +
-               VLFill( VL_BC_PIS, 0, 2 )      +
-               VDFill( ALIQ_PIS, 4)           +
-               VLFill( QUANT_BC_PIS, 3)       +
-               VDFill( ALIQ_PIS_QUANT, 4)     +
-               VLFill( VL_PIS, 0, 2 )         +
+              VLFill( VL_BC_PIS, 0, 2 )      +
+              VDFill( ALIQ_PIS, 4)           +
+              VLFill( QUANT_BC_PIS, 3)       +
+              VDFill( ALIQ_PIS_QUANT, 4)     +
+              VLFill( VL_PIS, 0, 2 )         +
                LFill( CstCofinsToStr(CST_COFINS) )         +
-               VLFill( VL_BC_COFINS,0,2 )     +
-               VDFill( ALIQ_COFINS, 4)        +
-               VLFill( QUANT_BC_COFINS, 3)    +
-               VDFill( ALIQ_COFINS_QUANT, 4)  +
-               VLFill( VL_COFINS,0,2 )        +
+              VLFill( VL_BC_COFINS,0,2 )     +
+              VDFill( ALIQ_COFINS, 4)        +
+              VLFill( QUANT_BC_COFINS, 3)    +
+              VDFill( ALIQ_COFINS_QUANT, 4)  +
+              VLFill( VL_COFINS,0,2 )        +
                LFill(COD_CTA) ) ;
         end;
 
@@ -1300,13 +1300,13 @@ begin
 
         Add( LFill('D601')          +
              LFill( COD_CLASS, 4 )  + //Verificar criação da tabela
-             LFill( VL_ITEM,0,2 )   +
-             LFill( VL_DESC,0,2 )   +
+            VLFill( VL_ITEM,0,2 )   +
+            VLFill( VL_DESC,0,2 )   +
              LFill( CstPisToStr(CST_PIS) )    +
-             LFill( VL_BC_PIS,0,2 ) +
-             DFill( ALIQ_PIS, 4 )  +
+            VLFill( VL_BC_PIS,0,2 ) +
+            VDFill( ALIQ_PIS, 4 )  +
              LFill( VL_PIS,0,2 )    +
-             LFill(COD_CTA) ) ;
+             LFill( COD_CTA ) ) ;
         //
         RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
       end;
@@ -1328,13 +1328,13 @@ begin
       begin
         Add( LFill('D605')             +
              LFill( COD_CLASS, 4 )        + //Verificar criação da tabela
-             LFill( VL_ITEM,0,2 )      +
-             LFill( VL_DESC,0,2 )      +
+            VLFill( VL_ITEM,0,2 )      +
+            VLFill( VL_DESC,0,2 )      +
              LFill( CstCofinsToStr(CST_COFINS) )    +
-             LFill( VL_BC_COFINS,0,2 ) +
-             DFill( ALIQ_COFINS, 4 )  +
-             LFill( VL_COFINS,0,2 )    +
-             LFill(COD_CTA) ) ;
+            VLFill( VL_BC_COFINS,0,2 ) +
+            VDFill( ALIQ_COFINS, 4 )  +
+            VLFill( VL_COFINS,0,2 )    +
+             LFill( COD_CTA ) ) ;
         //
         RegistroD990.QTD_LIN_D := RegistroD990.QTD_LIN_D + 1;
       end;

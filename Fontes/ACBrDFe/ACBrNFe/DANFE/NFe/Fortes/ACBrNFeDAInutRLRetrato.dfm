@@ -1,7 +1,7 @@
 inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
   Left = 375
   Top = 175
-  Caption = 'Inutiliza'#195#167#195#163'o - Retrato'
+  Caption = 'Inutilização - Retrato'
   ClientHeight = 485
   ClientWidth = 844
   Font.Height = -8
@@ -19,23 +19,19 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
       Left = 38
       Top = 38
       Width = 718
-      Height = 73
+      Height = 61
+      AutoSize = True
+      BandType = btTitle
+      Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False
-      object RLShape46: TRLDraw
-        Left = 0
-        Top = 0
-        Width = 741
-        Height = 67
-        Brush.Style = bsClear
-      end
       object rllLinha1: TRLLabel
-        Left = 211
+        Left = 205
         Top = 2
-        Width = 322
+        Width = 334
         Height = 19
         Alignment = taCenter
-        Caption = 'INUTILIZA'#195#8225#195#402'O DE NUMERA'#195#8225#195#402'O DA NF-E'
+        Caption = 'INUTILIZA'#199#195'O DE NUMERA'#199#195'O DA NF-E'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -53,8 +49,8 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Height = 15
         Alignment = taCenter
         Caption = 
-          'N'#195#163'o possui valor fiscal, simples representa'#195#167#195#163'o do fato indica' +
-          'do abaixo.'
+          'N'#227'o possui valor fiscal, simples representa'#231#227'o do fato indicado ' +
+          'abaixo.'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -85,9 +81,10 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     end
     object rlb_07_Rodape: TRLBand
       Left = 38
-      Top = 430
+      Top = 433
       Width = 718
       Height = 32
+      BandType = btFooter
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_07_RodapeBeforePrint
@@ -99,7 +96,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Brush.Style = bsClear
       end
       object rllblSistema: TRLLabel
-        Left = 448
+        Left = 424
         Top = 6
         Width = 291
         Height = 13
@@ -120,7 +117,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 6
         Width = 140
         Height = 12
-        Caption = 'DATA E HORA DA IMPRESS'#195#402'O: '
+        Caption = 'DATA E HORA DA IMPRESS'#195'O: '
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -133,19 +130,13 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
     end
     object rlb_03_Inutilizacao: TRLBand
       Left = 38
-      Top = 231
+      Top = 213
       Width = 718
-      Height = 154
+      Height = 220
+      Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False
       BeforePrint = RLb_03_InutilizacaoBeforePrint
-      object rlsQuadro01: TRLDraw
-        Left = 0
-        Top = 0
-        Width = 741
-        Height = 145
-        Brush.Style = bsClear
-      end
       object rlsLinhaV01: TRLDraw
         Left = 70
         Top = 48
@@ -172,7 +163,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 18
         Width = 27
         Height = 8
-        Caption = 'ORG'#195#402'O'
+        Caption = 'ORG'#195'O'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -231,11 +222,11 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object rllDescricao: TRLLabel
-        Left = 414
+        Left = 450
         Top = 83
-        Width = 54
+        Width = 53
         Height = 8
-        Caption = 'N'#194#176' PROTOCOLO'
+        Caption = 'N'#186' PROTOCOLO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -247,9 +238,9 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Transparent = False
       end
       object rllProtocolo: TRLLabel
-        Left = 414
+        Left = 450
         Top = 94
-        Width = 322
+        Width = 265
         Height = 16
         Alignment = taCenter
         AutoSize = False
@@ -274,7 +265,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 2
         Width = 181
         Height = 13
-        Caption = 'INUTILIZA'#195#8225#195#402'O DE NUMERA'#195#8225#195#402'O'
+        Caption = 'INUTILIZA'#199#195'O DE NUMERA'#199#195'O'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -328,7 +319,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 50
         Width = 21
         Height = 8
-        Caption = 'S'#195#8240'RIE'
+        Caption = 'S'#201'RIE'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -392,7 +383,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 50
         Width = 92
         Height = 8
-        Caption = 'N'#195#353'MERA'#195#8225#195#402'O INUTILIZADA'
+        Caption = 'N'#218'MERA'#199#195'O INUTILIZADA'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -426,7 +417,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Brush.Style = bsClear
       end
       object rlShape50: TRLDraw
-        Left = 410
+        Left = 446
         Top = 80
         Width = 1
         Height = 33
@@ -492,11 +483,12 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
         Transparent = False
       end
-      object rllJustificativa: TRLLabel
+      object rllJustificativa: TRLMemo
         Left = 4
-        Top = 126
-        Width = 77
-        Height = 15
+        Top = 127
+        Width = 699
+        Height = 87
+        AutoSize = False
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -507,41 +499,27 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
     end
-    object rlb_05_NaoUsado_Detalhe: TRLBand
-      Left = 38
-      Top = 400
-      Width = 718
-      Height = 15
-      Color = clWhite
-      ParentColor = False
-      BeforePrint = rlb_05_NaoUsado_DetalheBeforePrint
-    end
     object rlb_02_Emitente: TRLBand
       Left = 38
-      Top = 111
+      Top = 99
       Width = 718
-      Height = 120
+      Height = 114
+      AutoSize = True
+      Borders.Sides = sdAll
       Color = clWhite
       ParentColor = False
-      BeforePrint = rlb_02_EmitenteBeforePrint
-      object rlsQuadro02: TRLDraw
-        Left = 0
-        Top = 0
-        Width = 741
-        Height = 113
-        Brush.Style = bsClear
-      end
+      Visible = False
       object rlsLinhaH07: TRLDraw
-        Left = 1
+        Left = 0
         Top = 80
-        Width = 740
+        Width = 718
         Height = 1
         Brush.Style = bsClear
       end
       object rlsLinhaH06: TRLDraw
         Left = 1
         Top = 48
-        Width = 740
+        Width = 717
         Height = 1
         Brush.Style = bsClear
       end
@@ -574,7 +552,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object rllInscEstEmitente: TRLLabel
-        Left = 624
+        Left = 600
         Top = 94
         Width = 90
         Height = 14
@@ -602,7 +580,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object rllCNPJEmitente: TRLLabel
-        Left = 608
+        Left = 584
         Top = 30
         Width = 82
         Height = 14
@@ -616,7 +594,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object rllCEPEmitente: TRLLabel
-        Left = 669
+        Left = 645
         Top = 62
         Width = 64
         Height = 15
@@ -631,7 +609,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object rlLabel98: TRLLabel
-        Left = 669
+        Left = 645
         Top = 52
         Width = 15
         Height = 8
@@ -647,11 +625,11 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Transparent = False
       end
       object rlLabel93: TRLLabel
-        Left = 624
+        Left = 600
         Top = 84
         Width = 78
         Height = 8
-        Caption = 'INSCRI'#195#8225#195#402'O ESTADUAL'
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -663,7 +641,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Transparent = False
       end
       object rlLabel24: TRLLabel
-        Left = 608
+        Left = 584
         Top = 19
         Width = 19
         Height = 8
@@ -683,7 +661,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 84
         Width = 38
         Height = 8
-        Caption = 'MUNIC'#195#141'PIO'
+        Caption = 'MUNIC'#205#141'PIO'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -699,7 +677,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 52
         Width = 39
         Height = 8
-        Caption = 'ENDERE'#195#8225'O'
+        Caption = 'ENDERE'#199'O'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -715,7 +693,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Top = 19
         Width = 79
         Height = 8
-        Caption = 'NOME / RAZ'#195#402'O SOCIAL'
+        Caption = 'NOME / RAZ'#195'O SOCIAL'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -751,28 +729,28 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Brush.Style = bsClear
       end
       object RLShape53: TRLDraw
-        Left = 604
+        Left = 580
         Top = 16
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
       object RLShape82: TRLDraw
-        Left = 665
+        Left = 641
         Top = 48
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
       object RLShape99: TRLDraw
-        Left = 448
+        Left = 424
         Top = 48
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
       object RLLabel4: TRLLabel
-        Left = 452
+        Left = 428
         Top = 52
         Width = 29
         Height = 8
@@ -788,7 +766,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Transparent = False
       end
       object rllBairroEmitente: TRLLabel
-        Left = 452
+        Left = 428
         Top = 62
         Width = 85
         Height = 14
@@ -802,14 +780,14 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object RLShape108: TRLDraw
-        Left = 620
+        Left = 596
         Top = 80
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
       object RLLabel5: TRLLabel
-        Left = 452
+        Left = 428
         Top = 84
         Width = 40
         Height = 8
@@ -825,7 +803,7 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         Transparent = False
       end
       object rllFoneEmitente: TRLLabel
-        Left = 452
+        Left = 428
         Top = 94
         Width = 79
         Height = 14
@@ -839,29 +817,12 @@ inherited frmNFeDAInutRLRetrato: TfrmNFeDAInutRLRetrato
         ParentFont = False
       end
       object RLShape109: TRLDraw
-        Left = 448
+        Left = 424
         Top = 80
         Width = 1
         Height = 33
         Brush.Style = bsClear
       end
-    end
-    object rlb_04_NaoUsado: TRLBand
-      Left = 38
-      Top = 385
-      Width = 718
-      Height = 15
-      Color = clWhite
-      ParentColor = False
-    end
-    object rlb_06_NaoUsado_Summary: TRLBand
-      Left = 38
-      Top = 415
-      Width = 718
-      Height = 15
-      Color = clWhite
-      ParentColor = False
-      BeforePrint = rlb_06_NaoUsado_SummaryBeforePrint
     end
   end
 end

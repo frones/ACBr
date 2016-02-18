@@ -185,6 +185,7 @@ function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
 function ValidarRenavam( const Documento : String ) : String ;
 function ValidarEmail (const Documento : string ) : String;
+function ValidarCEP(const ACEP, AUF: String): String;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -248,6 +249,11 @@ end;
 function ValidarEmail (const Documento : string ) : String;
 begin
   Result := ValidarDocumento( docEmail, Documento );
+end;
+
+function ValidarCEP(const ACEP, AUF: String): String;
+begin
+  Result := ValidarDocumento( docCEP, ACEP, AUF);
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;

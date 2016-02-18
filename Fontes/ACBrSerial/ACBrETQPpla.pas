@@ -141,8 +141,8 @@ begin
   if (Fonte < 0) or (Fonte > 10) then
      Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 10 para Fonte'));
 
-  if (SubFonte < 0) or (SubFonte > 7) then
-     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 7 para SubFonte'));
+  if (SubFonte < 0) or (SubFonte > 999) then
+     Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 999 para SubFonte'));
 
 { Multiplicador Horizontal, Multiplicador Vertical:
  De 0 a 9 e de A até O representa as escalas de multiplicação (A=10, B=11,..., O=24)}

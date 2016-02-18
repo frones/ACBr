@@ -219,23 +219,18 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, CNPJEmitente, CNPJCertificado, InfElemento, NomeArq: String;
+  XMLStr, InfElemento, NomeArq: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
 begin
-  // Se o XML deve ser assinado então verifica se o XML tem o mesmo CNPJ do Certificado
+  // Verifica se foi informado o Numero de Série do Certificado.
   if ( TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.NumeroSerie <> '' ) then
   begin
-    CNPJEmitente    := OnlyNumber(NFSe.Prestador.CNPJ);
-    CNPJCertificado := OnlyNumber(TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.CertCNPJ);
-
-    // Verificar somente os 8 primeiros digitos, para evitar problemas quando
-    // a filial estiver utilizando o certificado da matriz,
-    // Mas faz a verificação só se for ambiente de produção.
+    // Verifica somente se for ambiente de produção.
+    // Tem provedor que devemos informar um CNPJ de emitente padrão para testes.
     if TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.WebServices.Ambiente = taProducao then
-      if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
-        raise EACBrNFSeException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+      TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.ValidarCNPJCertificado( NFSe.Prestador.CNPJ );
   end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
@@ -431,6 +426,7 @@ begin
 
     FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FNFSeW.GerarXml;
@@ -727,11 +723,16 @@ var
     Result := Pos('</NFS-e>', AXMLString);
     if Result = 0 then
     begin
-      TamTAG := 6;
-      Result := Pos('</Nfse>', AXMLString);
-      // provedor ISSDSF
+      TamTAG := 10;
+      Result := Pos('</CompNfse>', AXMLString);
       if Result = 0 then
-        Result := Pos('</Nota>', AXMLString);
+      begin
+        TamTAG := 6;
+        Result := Pos('</Nfse>', AXMLString);
+        // provedor ISSDSF
+        if Result = 0 then
+          Result := Pos('</Nota>', AXMLString);
+      end;
     end;
   end;
 

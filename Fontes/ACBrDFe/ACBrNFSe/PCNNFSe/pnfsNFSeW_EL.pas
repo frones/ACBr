@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_EL;
 
@@ -87,17 +87,6 @@ uses
 {==============================================================================}
 
 { TNFSeW_EL }
-
-constructor TNFSeW_EL.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-end;
-
-function TNFSeW_EL.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
 
 procedure TNFSeW_EL.GerarIdentificacaoRPS;
 begin
@@ -248,8 +237,7 @@ end;
 
 procedure TNFSeW_EL.GerarServicoValores;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_EL.GerarListaServicos;
@@ -297,14 +285,54 @@ end;
 
 procedure TNFSeW_EL.GerarConstrucaoCivil;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_EL.GerarCondicaoPagamento;
 begin
-  inherited;
+  // Não Definido
+end;
 
+procedure TNFSeW_EL.GerarXML_EL;
+var
+  LocPrest: String;
+begin
+  FIdentificador := 'Id';
+  Gerador.wCampoNFSe(tcStr, '#01', FIdentificador, 001, 015, 1, NFSe.InfID.ID, '');
+
+  LocPrest := '2';
+  if NFSe.NaturezaOperacao = no2 then
+    LocPrest := '1';
+
+  // Código para identificação do local de prestação do serviço 1-Fora do município 2-No município
+  Gerador.wCampoNFSe(tcStr   , '#02', 'LocalPrestacao', 001, 001, 1, LocPrest, '');
+  Gerador.wCampoNFSe(tcStr   , '#03', 'IssRetido'     , 001, 001, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
+  Gerador.wCampoNFSe(tcDatHor, '#04', 'DataEmissao'   , 019, 019, 1, NFSe.DataEmissao, DSC_DEMI);
+
+  GerarIdentificacaoRPS;
+
+  GerarPrestador;
+  GerarTomador;
+  GerarIntermediarioServico;
+  GerarListaServicos;
+  GerarValoresServico;
+  GerarRPSSubstituido;
+
+  Gerador.wCampoNFSe(tcStr, '#90', 'Observacao', 001, 255, 0, NFSe.OutrasInformacoes, '');
+  Gerador.wCampoNFSe(tcStr, '#91', 'Status'    , 001, 001, 1, StatusRPSToStr(NFSe.Status), '');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_EL.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+
+end;
+
+function TNFSeW_EL.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
 function TNFSeW_EL.GerarXml: Boolean;
@@ -355,35 +383,6 @@ begin
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
-end;
-
-procedure TNFSeW_EL.GerarXML_EL;
-var
-  LocPrest: String;
-begin
-  FIdentificador := 'Id';
-  Gerador.wCampoNFSe(tcStr, '#01', FIdentificador, 001, 015, 1, NFSe.InfID.ID, '');
-
-  LocPrest := '2';
-  if NFSe.NaturezaOperacao = no2 then
-    LocPrest := '1';
-
-  // Código para identificação do local de prestação do serviço 1-Fora do município 2-No município
-  Gerador.wCampoNFSe(tcStr   , '#02', 'LocalPrestacao', 001, 001, 1, LocPrest, '');
-  Gerador.wCampoNFSe(tcStr   , '#03', 'IssRetido'     , 001, 001, 1, SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido), '');
-  Gerador.wCampoNFSe(tcDatHor, '#04', 'DataEmissao'   , 019, 019, 1, NFSe.DataEmissao, DSC_DEMI);
-
-  GerarIdentificacaoRPS;
-
-  GerarPrestador;
-  GerarTomador;
-  GerarIntermediarioServico;
-  GerarListaServicos;
-  GerarValoresServico;
-  GerarRPSSubstituido;
-
-  Gerador.wCampoNFSe(tcStr, '#90', 'Observacao', 001, 255, 0, NFSe.OutrasInformacoes, '');
-  Gerador.wCampoNFSe(tcStr, '#91', 'Status'    , 001, 001, 1, StatusRPSToStr(NFSe.Status), '');
 end;
 
 end.

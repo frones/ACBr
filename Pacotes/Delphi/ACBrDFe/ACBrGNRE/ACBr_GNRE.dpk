@@ -81,7 +81,7 @@ requires
   ACBr_DFeComum;
 
 contains
-  ACBrGNRE in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE.pas',
+  ACBrGNRE2 in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNRE2.pas',
   ACBrGNREConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREConfiguracoes.pas',
   ACBrGNREGuias in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREGuias.pas',
   ACBrGNREReg in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREReg.pas',

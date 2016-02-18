@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_Equiplano;
 
@@ -88,17 +88,6 @@ uses
 
 { TNFSeW_Equiplano }
 
-constructor TNFSeW_Equiplano.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-end;
-
-function TNFSeW_Equiplano.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
-
 procedure TNFSeW_Equiplano.GerarIdentificacaoRPS;
 begin
   Gerador.wCampoNFSe(tcInt,   '', 'nrRps       ', 01, 15, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
@@ -111,14 +100,12 @@ end;
 
 procedure TNFSeW_Equiplano.GerarRPSSubstituido;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Equiplano.GerarPrestador;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Equiplano.GerarTomador;
@@ -157,14 +144,12 @@ end;
 
 procedure TNFSeW_Equiplano.GerarIntermediarioServico;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Equiplano.GerarServicoValores;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Equiplano.GerarListaServicos;
@@ -228,14 +213,36 @@ end;
 
 procedure TNFSeW_Equiplano.GerarConstrucaoCivil;
 begin
-  inherited;
-
+  // Não Definido
 end;
 
 procedure TNFSeW_Equiplano.GerarCondicaoPagamento;
 begin
-  inherited;
+  // Não Definido
+end;
 
+procedure TNFSeW_Equiplano.GerarXML_Equiplano;
+begin
+  Gerador.wGrupoNFSe('rps');
+
+  GerarIdentificacaoRPS;
+  GerarTomador;
+  GerarListaServicos;
+  GerarValoresServico;
+
+  Gerador.wGrupoNFSe('/rps');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_Equiplano.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+end;
+
+function TNFSeW_Equiplano.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
 function TNFSeW_Equiplano.GerarXml: Boolean;
@@ -280,18 +287,6 @@ begin
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
-end;
-
-procedure TNFSeW_Equiplano.GerarXML_Equiplano;
-begin
-  Gerador.wGrupoNFSe('rps');
-
-  GerarIdentificacaoRPS;
-  GerarTomador;
-  GerarListaServicos;
-  GerarValoresServico;
-
-  Gerador.wGrupoNFSe('/rps');
 end;
 
 end.

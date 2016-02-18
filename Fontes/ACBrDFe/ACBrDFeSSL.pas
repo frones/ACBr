@@ -164,6 +164,8 @@ type
     procedure DescarregarCertificado;
     function SelecionarCertificado: String;
 
+    procedure ValidarCNPJCertificado(CNPJDocumento: String);
+
     property CertificadoLido: Boolean read GetCertificadoLido;
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
@@ -199,7 +201,8 @@ type
 
 implementation
 
-uses strutils, ACBrDFeUtil, ACBrUtil, ACBrDFeException
+uses strutils,
+  ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrDFeException
   {$IFNDEF DFE_SEM_OPENSSL}
    ,ACBrDFeOpenSSL
   {$ENDIF}
@@ -338,6 +341,31 @@ begin
 
   if NaoEstaVazio(Result) then
     FSSLClass.CarregarCertificado;
+end;
+
+{ Verifica se o "CNPJDocumento", é da mesma raiz do CNPJ do Certificado }
+procedure TDFeSSL.ValidarCNPJCertificado(CNPJDocumento: String);
+var
+  ErroCNPJ, CNPJCertificado: String;
+begin
+  CNPJDocumento := OnlyNumber(CNPJDocumento);
+  if (CNPJDocumento = '') or              // Informou vazio
+     (Length(CNPJDocumento) <> 14) then   // Não é CNPJ
+    exit;
+
+  CNPJCertificado := OnlyNumber(CertCNPJ);  // Lendo CNPJ do Certificado...
+  if (CNPJCertificado = '') or              // Não foi capaz de ler CNPJ do Certificado (Senha, NumSerie, Path... há algo errado na configuração)
+     (Length(CNPJCertificado) <> 14) then   // Não é CNPJ (estranho.. pode ser um eCPF)
+    exit;
+
+  ErroCNPJ := ValidarCNPJ(CNPJDocumento);
+  if (ErroCNPJ <> '') then
+    raise EACBrDFeException.CreateDef('Erro CNPJ Documento: '+ErroCNPJ);
+
+  { Deve verificar somente os 8 primeiros digitos, para evitar problemas quando
+    a filial estiver utilizando o certificado da matriz }
+  if (Copy(CNPJDocumento, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
+    raise EACBrDFeException.Create('O CNPJ do Documento é diferente do CNPJ do Certificado Digital' );
 end;
 
 function TDFeSSL.GetCertDataVenc: TDateTime;

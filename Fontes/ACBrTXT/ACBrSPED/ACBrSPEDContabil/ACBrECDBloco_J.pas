@@ -40,6 +40,8 @@
 |*  - Modificações para o layout 2
 |* 04/03/2015: Flavio Rubens Massaro Jr.
 |* - Modificação para contemplar layout 3 referente ao ano calendario 2014
+|* 03/02/2016: Anderson Nunes Kovaski
+|* - Modificação para contemplar layout 4 referente ao ano calendario 2015
 *******************************************************************************}
 
 unit ACBrECDBloco_J;
@@ -144,13 +146,17 @@ type
     fNIVEL_AGL: String;      /// Nível do Código de aglutinação (mesmo conceito do plano de contas - Registro I050).
     fDESCR_COD_AGL: String;  /// Descrição do Código de aglutinação.
     fVL_CTA: Currency;           /// Valor total do Código de aglutinação na Demonstração do Resultado do Exercício no período informado.
-    fIND_VL: String;         /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
+    fIND_VL: String;             /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
+    fVL_CTA_ULT_DRE: Currency;   /// Valor inicial total constante na Demonstração do Resultado do Exercício do último período informado.
+    fIND_VL_ULT_DRE: String;     /// Indicador da situação do valor informado no campo anterior: D - Despesa ou valor que represente parcela redutora do lucro;R - Receita ou valor que represente incremento do lucro;P - Subtotal ou total positivo;N - Subtotal ou total negativo.
   public
     property COD_AGL: String read fCOD_AGL write fCOD_AGL;
     property NIVEL_AGL: String read fNIVEL_AGL write fNIVEL_AGL;
     property DESCR_COD_AGL: String read fDESCR_COD_AGL write fDESCR_COD_AGL;
     property VL_CTA: Currency read fVL_CTA write fVL_CTA;
     property IND_VL: String read fIND_VL write fIND_VL;
+    property VL_CTA_ULT_DRE: Currency read fVL_CTA_ULT_DRE write fVL_CTA_ULT_DRE;    
+    property IND_VL_ULT_DRE: String read fIND_VL_ULT_DRE write fIND_VL_ULT_DRE;
   end;
 
   /// Registro J150 - Lista

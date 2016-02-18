@@ -43,6 +43,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2016
+[+] Adicionada configuração para permitir configurar o TimeZone, para geração
+    dos XMLs: tzSistema (default), tzPCN, tzManual  (por: DSA)
+
+17/02/2016
+[*] Ajuste em "SAT.EnviarCFe", para permitir o envio do XML que esteja na memória
+    carregado com "SAT.CarregarDadosVenda"  (por: DSA)
+[-] Ajustes na leitura dos campos Emit.cRegTrib, Emit.cRegTribISSQN e
+    Emit.indRatISSQN (por: Anfm)
+
+12/02/2016
+[+] Adicionada configuração para permitir a criação de XMLs com acentos
+[-] Correção nas rotinas de geração de XML por INI, para usar "String"
+    (por: DSA)
+
+11/02/2016
+[*] Ajuste para que o método "SAT.EnviarCFe", não tente interpretar o XML
+    recebido (por: DSA)
+
 28/018/2016
 [*] Ajuste para que todos os Edits números da aba DFe/Impressão usem
     TSpinEdit ou TFloatSpinEdit  (por: DSA)

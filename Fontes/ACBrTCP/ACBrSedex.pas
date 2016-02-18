@@ -317,16 +317,16 @@ begin
       '&sDsSenha=' + fsDsSenha +
       '&sCepOrigem=' + OnlyNumber(fsCepOrigem) +
       '&sCepDestino=' + OnlyNumber(fsCepDestino) +
-      '&nVlPeso=' + FormatFloat('#,000', fnVlPeso) +
+      '&nVlPeso=' + FloatToString(fnVlPeso) +
       '&nCdFormato=' + TpFormato +
-      '&nVlComprimento=' + FormatFloat('#,000', fnVlComprimento) +
-      '&nVlAltura=' + FormatFloat('#,000', fnVlAltura) +
-      '&nVlLargura=' + FormatFloat('#,000', fnVlLargura) +
+      '&nVlComprimento=' + FloatToString(fnVlComprimento) +
+      '&nVlAltura=' + FloatToString(fnVlAltura) +
+      '&nVlLargura=' + FloatToString(fnVlLargura) +
       '&sCdMaoPropria=' + TpMaoPropria +
-      '&nVlValorDeclarado=' + FormatFloat('#0,00', fnVlValorDeclarado) +
+      '&nVlValorDeclarado=' + FloatToString(fnVlValorDeclarado) +
       '&sCdAvisoRecebimento=' + TpAvisoRecebimento +
       '&nCdServico=' + TpServico +
-      '&nVlDiametro=' + FormatFloat('#,000', fnVlDiametro) +
+      '&nVlDiametro=' + FloatToString(fnVlDiametro) +
       '&StrRetorno=xml');
   except
     on E: Exception do

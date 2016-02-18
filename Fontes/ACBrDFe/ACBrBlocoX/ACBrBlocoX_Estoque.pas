@@ -118,7 +118,7 @@ begin
 
   FXMLOriginal := ConverteXMLtoUTF8(FGerador.ArquivoFormatoXML);
   if Assinar then
-    FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'Estoque', '/Estoque');
+    FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'Estoque', 'Mensagem');
 end;
 
 procedure TACBrBlocoX_Estoque.SaveToFile(const AXmlFileName: string);

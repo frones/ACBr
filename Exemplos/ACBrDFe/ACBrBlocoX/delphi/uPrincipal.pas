@@ -116,6 +116,7 @@ begin
       begin
         ReducoesZ.DataReferencia   := DATE;
         ReducoesZ.CRZ              := 12;
+        ReducoesZ.COO              := 1000;
         ReducoesZ.CRO              := 12345679;
         ReducoesZ.VendaBrutaDiaria := 3456.78;
         ReducoesZ.GT               := 123456789.45;

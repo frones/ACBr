@@ -247,14 +247,18 @@ var
   PCertContext: Pointer;
 
   Ok: Boolean;
-  port, i, AccessType: integer;
-  ANone, AHost, APage, pProxy, Header: String;
+  i, AccessType: Integer;
+  ANone, AHost, AProt, APort, APath, pProxy, Header: String;
 begin
 
   if (FUseCertificate) then
     FUseSSL := True;
 
-  ParseURL(FUrl, ANone, ANone, ANone, AHost, ANone, APage, ANone);
+  AProt := '';
+  APort := '';
+  APath := '';
+
+  ParseURL(FUrl, AProt, ANone, ANone, AHost, APort, APath, ANone);
 
   if ((ShowCertStore) or ((FCertSerialNumber = '') and (FCertificate = nil))) then
   begin
@@ -314,10 +318,10 @@ begin
     //DEBUG
     //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Ajustando TimeOut: '+IntToStr(FTimeOut));
 
-    if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
-      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
-
     if not InternetSetOption(pSession, INTERNET_OPTION_CONNECT_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
+      raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Conexão');
+
+    if not InternetSetOption(pSession, INTERNET_OPTION_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
       raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Envio');
 
     if not InternetSetOption(pSession, INTERNET_OPTION_DATA_SEND_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
@@ -329,20 +333,23 @@ begin
     if not InternetSetOption(pSession, INTERNET_OPTION_DATA_RECEIVE_TIMEOUT, @FTimeOut, SizeOf(FTimeOut)) then
       raise EACBrHTTPReqResp.Create('Erro ao definir TimeOut de Recebimento');
 
-    if (FUseSSL) then
-      Port := INTERNET_DEFAULT_HTTPS_PORT
-    else
-      Port := INTERNET_DEFAULT_HTTP_PORT;
+    if APort = '' then
+    begin
+      if (FUseSSL) then
+        APort := IntToStr(INTERNET_DEFAULT_HTTPS_PORT)
+      else
+        APort := IntToStr(INTERNET_DEFAULT_HTTP_PORT);
+    end;
 
     //Debug, TimeOut Test
     //AHost := 'www.google.com';
     //port := 81;
 
     //DEBUG
-    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+IntToStr(port));
+    //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+APort);
 
-    pConnection := InternetConnect(pSession, PChar(AHost), Port,
-      PChar(FProxyUser), PChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, cardinal(Self));
+    pConnection := InternetConnect(pSession, PChar(AHost), StrToInt(APort),
+      PChar(FProxyUser), PChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, 0{cardinal(Self)});
     if not Assigned(pConnection) then
       raise EACBrHTTPReqResp.Create('Erro: Internet Connect or Host');
 
@@ -360,10 +367,10 @@ begin
         flags := INTERNET_SERVICE_HTTP;
 
       //DEBUG
-      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APage);
+      //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APath);
 
       pRequest := HttpOpenRequest(pConnection, PChar('POST'),
-        PChar(APage), nil, nil, nil, flags, 0);
+        PChar(APath), nil, nil, nil, flags, 0);
 
       if not Assigned(pRequest) then
         raise EACBrHTTPReqResp.Create('Erro: Open Request');
@@ -371,6 +378,10 @@ begin
       UpdateErrorCodes(pRequest);
 
       try
+        if ( (APort <> IntToStr(INTERNET_DEFAULT_HTTP_PORT)) and (UpperCase(AProt) = 'HTTP') ) or
+           ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UpperCase(AProt) = 'HTTPS') ) then
+          AHost := AHost +':'+ APort;
+
         Header := 'Host: ' + AHost + sLineBreak +
                   'Content-Type: ' + FMimeType + '; charset='+FCharsets + SLineBreak +
                   'Accept-Charset: ' + FCharsets + SLineBreak +
@@ -398,7 +409,7 @@ begin
           FData := UTF8Encode(FData);
 
         //DEBUG
-        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+APage);
+        //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Enviando Dados: '+APath);
         //WriteToTXT('c:\temp\httpreqresp.log', FData);
 
         Ok := False;

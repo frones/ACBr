@@ -167,7 +167,7 @@ type
 implementation
 
 uses
-  ACBrGNRE, ACBrUtil, pgnreConversao, synautil;
+  ACBrGNRE2, ACBrUtil, pgnreConversao, synautil;
 
 { Guia }
 
@@ -237,16 +237,8 @@ var
   XMLStr: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
-  CNPJEmitente, CNPJCertificado: String;
 begin
-  // Verificando se pode assinar esse XML (O XML tem o mesmo CNPJ do Certificado ??)
-  CNPJEmitente    := OnlyNumber(GNRE.c03_idContribuinteEmitente);
-  CNPJCertificado := OnlyNumber(TACBrGNRE(TGuias(Collection).ACBrGNRE).SSL.CertCNPJ);
-
-  // verificar somente os 8 primeiros digitos, para evitar problemas quando
-  // a filial estiver utilizando o certificado da matriz
-  if (CNPJCertificado <> '') and (Copy(CNPJEmitente, 1, 8) <> Copy(CNPJCertificado, 1, 8)) then
-    raise EACBrGNREException.Create('Erro ao Assinar. O XML informado possui CNPJ diferente do Certificado Digital' );
+  TACBrGNRE(TGuias(Collection).ACBrGNRE).SSL.ValidarCNPJCertificado( GNRE.c03_idContribuinteEmitente );
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;
@@ -424,6 +416,7 @@ begin
     IdAnterior := GNRE.c42_identificadorGuia;
     FGNREW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
     FGNREW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
 //  FGNREW.Opcoes.GerarTXTSimultaneamente := False;

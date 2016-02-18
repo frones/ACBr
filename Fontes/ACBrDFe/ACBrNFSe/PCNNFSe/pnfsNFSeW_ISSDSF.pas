@@ -54,19 +54,19 @@ type
     FTipoRecolhimento: String;
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ISSDSF;
 
@@ -92,17 +92,6 @@ uses
 {==============================================================================}
 
 { TNFSeW_ISSDSF }
-
-constructor TNFSeW_ISSDSF.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-end;
-
-function TNFSeW_ISSDSF.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
 
 procedure TNFSeW_ISSDSF.GerarIdentificacaoRPS;
 begin
@@ -177,8 +166,7 @@ end;
 
 procedure TNFSeW_ISSDSF.GerarServicoValores;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_ISSDSF.GerarListaServicos;
@@ -291,59 +279,12 @@ end;
 
 procedure TNFSeW_ISSDSF.GerarConstrucaoCivil;
 begin
-  inherited;
-
+  // Não definido
 end;
 
 procedure TNFSeW_ISSDSF.GerarCondicaoPagamento;
 begin
-  inherited;
-
-end;
-
-function TNFSeW_ISSDSF.GerarXml: Boolean;
-var
-  Gerar: Boolean;
-begin
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.Prefixo           := FPrefixo4;
-
-  FDefTipos := FServicoEnviar;
-
-  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
-    then FDefTipos := '/' + FDefTipos;
-
-  if Trim(FPrefixo4) <> ''
-    then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
-    else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
-
-  FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
-
-  GerarXML_ISSDSF;
-
-  if FOpcoes.GerarTagAssinatura <> taNunca then
-  begin
-    Gerar := true;
-    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
-      Gerar := ((NFSe.signature.DigestValue <> '') and
-                (NFSe.signature.SignatureValue <> '') and
-                (NFSe.signature.X509Certificate <> ''));
-    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-      Gerar := ((NFSe.signature.DigestValue = '') and
-                (NFSe.signature.SignatureValue = '') and
-                (NFSe.signature.X509Certificate = ''));
-    if Gerar then
-    begin
-      FNFSe.signature.URI := FNFSe.InfID.ID;
-      FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-      FNFSe.signature.GerarXMLNFSe;
-      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                   FNFSe.signature.Gerador.ArquivoFormatoXML;
-    end;
-  end;
-
-  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
-  Result := (Gerador.ListaDeAlertas.Count = 0);
+  // Não definido
 end;
 
 procedure TNFSeW_ISSDSF.GerarXML_ISSDSF;
@@ -417,6 +358,64 @@ begin
   GerarListaServicos;
 
   Gerador.wGrupoNFSe('/RPS');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_ISSDSF.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+
+end;
+
+function TNFSeW_ISSDSF.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
+end;
+
+function TNFSeW_ISSDSF.GerarXml: Boolean;
+var
+  Gerar: Boolean;
+begin
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.Prefixo           := FPrefixo4;
+
+  FDefTipos := FServicoEnviar;
+
+  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
+    then FDefTipos := '/' + FDefTipos;
+
+  if Trim(FPrefixo4) <> ''
+    then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
+    else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
+
+  FNFSe.InfID.ID := FNFSe.IdentificacaoRps.Numero;
+
+  GerarXML_ISSDSF;
+
+  if FOpcoes.GerarTagAssinatura <> taNunca then
+  begin
+    Gerar := true;
+    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
+      Gerar := ((NFSe.signature.DigestValue <> '') and
+                (NFSe.signature.SignatureValue <> '') and
+                (NFSe.signature.X509Certificate <> ''));
+    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
+      Gerar := ((NFSe.signature.DigestValue = '') and
+                (NFSe.signature.SignatureValue = '') and
+                (NFSe.signature.X509Certificate = ''));
+    if Gerar then
+    begin
+      FNFSe.signature.URI := FNFSe.InfID.ID;
+      FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+      FNFSe.signature.GerarXMLNFSe;
+      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                   FNFSe.signature.Gerador.ArquivoFormatoXML;
+    end;
+  end;
+
+  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

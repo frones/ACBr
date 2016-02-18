@@ -192,7 +192,7 @@ begin
     Itens     := StringReplace(Itens, ItensTemp, '',[]);
     ItensTemp := copy(Itens,Pos('<det nItem=',Itens),(Pos('</det>',Itens)+6)-Pos('<det nItem=',Itens));
 
-    Leitor.rExtrai(1, 'det nItem=' + Aspas + IntToStr(nItem) + Aspas, 'det');
+    Leitor.rExtrai(1, 'det nItem=' + Aspas + NumItem + Aspas, 'det');
     CFe.Det.Add;
     (*   *)CFe.Det[i].nItem := nItem;
     (*V01*)CFe.Det[i].infAdProd := Leitor.rCampo(tcStr, 'infAdProd');

@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils, types,
-  pcnConversao,
+  pcnConversao, pcnAuxiliar,
   ACBrDFeSSL;
 
 type
@@ -86,6 +86,7 @@ type
     FConfiguracoes: TConfiguracoes;
     FResourceName: String;
     FTimeOut: Integer;
+    FTimeZoneConf: TTimeZoneConf;
     FVisualizar: Boolean;
     FUF: String;
     FUFCodigo: integer;
@@ -149,6 +150,7 @@ type
     property Params: TStrings read FParams write SetParams;
     property TimeOut: Integer read FTimeOut write SetTimeOut default 5000;
     property QuebradeLinha: String read FQuebradeLinha write FQuebradeLinha;
+    property TimeZoneConf: TTimeZoneConf read FTimeZoneConf write FTimeZoneConf;
   end;
 
   { TGeralConf }
@@ -433,6 +435,7 @@ begin
 
   FConfiguracoes := AConfiguracoes;
   FParams := TStringList.Create;
+  FTimeZoneConf := TTimeZoneConf.Create;
 
   FUF := DFeUF[24];
   FUFCodigo := DFeUFCodigo[24];
@@ -456,6 +459,7 @@ end;
 destructor TWebServicesConf.Destroy;
 begin
   FParams.Free;
+  FTimeZoneConf.Free;
   inherited;
 end;
 

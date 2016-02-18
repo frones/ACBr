@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="892"/>
-        <CursorPos X="6" Y="900"/>
+        <TopLine Value="562"/>
+        <CursorPos X="34" Y="581"/>
         <UsageCount Value="226"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -1083,124 +1083,124 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
-        <Caret Line="483" Column="72" TopLine="422"/>
       </Position1>
       <Position2>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
-        <Caret Line="61" Column="23" TopLine="34"/>
+        <Caret Line="691" Column="46" TopLine="676"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
-        <Caret Line="105" Column="31" TopLine="79"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="755" Column="44" TopLine="744"/>
       </Position3>
       <Position4>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicomDelphiSoap.pas"/>
-        <Caret Line="114" Column="49" TopLine="99"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="754" Column="44" TopLine="743"/>
       </Position4>
       <Position5>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicomDelphiSoap.pas"/>
-        <Caret Line="96" Column="38" TopLine="88"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="755" Column="44" TopLine="744"/>
       </Position5>
       <Position6>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicomDelphiSoap.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="754" Column="44" TopLine="743"/>
       </Position6>
       <Position7>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
-        <Caret Line="143" Column="14" TopLine="122"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="749" Column="11" TopLine="744"/>
       </Position7>
       <Position8>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
       </Position8>
       <Position9>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas"/>
-        <Caret Line="691" Column="46" TopLine="676"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="87" Column="13" TopLine="69"/>
       </Position9>
       <Position10>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="755" Column="44" TopLine="744"/>
+        <Caret Line="88" Column="13" TopLine="70"/>
       </Position10>
       <Position11>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="754" Column="44" TopLine="743"/>
+        <Caret Line="527" Column="30" TopLine="522"/>
       </Position11>
       <Position12>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="755" Column="44" TopLine="744"/>
+        <Caret Line="526" Column="30" TopLine="521"/>
       </Position12>
       <Position13>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="754" Column="44" TopLine="743"/>
+        <Caret Line="527" Column="30" TopLine="522"/>
       </Position13>
       <Position14>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="749" Column="11" TopLine="744"/>
+        <Caret Line="526" Column="30" TopLine="521"/>
       </Position14>
       <Position15>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Caret Line="534" Column="29" TopLine="522"/>
       </Position15>
       <Position16>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="87" Column="13" TopLine="69"/>
+        <Caret Line="536" Column="13" TopLine="522"/>
       </Position16>
       <Position17>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="88" Column="13" TopLine="70"/>
+        <Caret Line="837" Column="33" TopLine="823"/>
       </Position17>
       <Position18>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="527" Column="30" TopLine="522"/>
+        <Caret Line="839" Column="5" TopLine="823"/>
       </Position18>
       <Position19>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="526" Column="30" TopLine="521"/>
       </Position19>
       <Position20>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="527" Column="30" TopLine="522"/>
+        <Caret Line="89" Column="17" TopLine="71"/>
       </Position20>
       <Position21>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="526" Column="30" TopLine="521"/>
+        <Caret Line="90" Column="17" TopLine="72"/>
       </Position21>
       <Position22>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="534" Column="29" TopLine="522"/>
+        <Caret Line="537" Column="17" TopLine="519"/>
       </Position22>
       <Position23>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="536" Column="13" TopLine="522"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="389" Column="22" TopLine="384"/>
       </Position23>
       <Position24>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="837" Column="33" TopLine="823"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="906" Column="63" TopLine="892"/>
       </Position24>
       <Position25>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="839" Column="5" TopLine="823"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="913" Column="63" TopLine="899"/>
       </Position25>
       <Position26>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="564" Column="3" TopLine="562"/>
       </Position26>
       <Position27>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="89" Column="17" TopLine="71"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="906" Column="3" TopLine="904"/>
       </Position27>
       <Position28>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="90" Column="17" TopLine="72"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="2984" TopLine="2982"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas"/>
-        <Caret Line="537" Column="17" TopLine="519"/>
+        <Filename Value="Unit1.pas"/>
+        <Caret Line="564" Column="3" TopLine="562"/>
       </Position29>
       <Position30>
         <Filename Value="Unit1.pas"/>
-        <Caret Line="389" Column="22" TopLine="384"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="3">
+    <BreakPoints Count="4">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -1222,6 +1222,13 @@
         <Source Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeWebServices.pas"/>
         <Line Value="1094"/>
       </Item3>
+      <Item4>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="Unit1.pas"/>
+        <Line Value="564"/>
+      </Item4>
     </BreakPoints>
     <Watches Count="2">
       <Item1>

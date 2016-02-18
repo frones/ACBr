@@ -76,8 +76,7 @@ type
 
 implementation
 
-uses ACBrGNRE2, ACBrGNREUtil, ACBrUtil, StrUtils, Dialogs,
-  ACBrGNREGuiasRetorno;
+uses ACBrGNRE2, ACBrUtil, StrUtils, Dialogs, ACBrGNREGuiasRetorno;
 
 constructor TACBrGNREGuiaFR.Create(AOwner: TComponent);
 begin

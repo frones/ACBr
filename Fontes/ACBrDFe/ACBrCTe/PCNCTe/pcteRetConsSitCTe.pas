@@ -156,7 +156,9 @@ begin
       (*ER07 *)FcUF      := leitor.rCampo(tcInt, 'cUF');
 
       // status 100 = Autorizado, 101 = Cancelado, 110 = Denegado, 301 = Denegado
-      if (FcStat in  [100, 101, 110]) or (FcStat = 301) then
+      // A SEFAZ-MS esta retornando Status=129 como status de retorno da consulta
+      // mas o status do CT-e consultado é 100
+      if (FcStat in  [100, 101, 110, 129]) or (FcStat = 301) then
       begin
         if (Leitor.rExtrai(1, 'protCTe') <> '') then
         begin

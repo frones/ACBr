@@ -72,6 +72,7 @@ package ACBr_GNREGuiaFR;
 requires
   rtl,
   designide,
+{$IFDEF VER140} fs6, frx6, frxe6, frxDB6, {$ENDIF} // D6	
 {$IFDEF VER150} fs7, frx7, frxe7, frxDB7, {$ENDIF} // D7
 {$IFDEF VER170} fs9, frx9, frxe9, frxDB9, {$ENDIF} // D2005
 {$IFDEF VER180}
@@ -93,8 +94,8 @@ requires
   ACBr_GNRE;
 
 contains
-  ACBrGNREGuiaFR in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFR.pas',
-  ACBrGNREGuiaFRDM in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFRDM.pas' {dmACBrGNREFR: TDataModule},
-  ACBrGNREGuiaFRReg in '..\..\..\Fontes\ACBrGNRE\ACBrGNREGuiaFRReg.pas';
+  ACBrGNREGuiaFR in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fast\ACBrGNREGuiaFR.pas',
+  ACBrGNREGuiaFRDM in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fast\ACBrGNREGuiaFRDM.pas' {dmACBrGNREFR: TDataModule},
+  ACBrGNREGuiaFRReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fast\ACBrGNREGuiaFRReg.pas';
 
 end.

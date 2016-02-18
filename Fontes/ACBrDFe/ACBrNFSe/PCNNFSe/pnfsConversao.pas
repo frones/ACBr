@@ -74,6 +74,7 @@ type
                                     retSociedadeProfissionais, retCooperativa,
                                     retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
                                     retLucroReal, retLucroPresumido, retSimplesNacional);
+
   TnfseSimNao = ( snSim, snNao );
   TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito, cpCartaoDebito);
   TnfseTipoRPS = ( trRPS, trNFConjugada, trCupom );
@@ -94,7 +95,7 @@ type
                     proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSeBrasil,
                     proTinus, proSJP, proCONAM, proEReceita, proGoverna,
-                    proNEAInformatica, proNotaInteligente);
+                    proNEAInformatica, proNotaInteligente, proSP);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -109,7 +110,15 @@ type
   TTipoDANFSE = ( tpPadrao, tpIssDSF, tpFiorilli );
 
   TLayOutXML = (loNone, loABRASFv1, loABRASFv2, loEGoverneISS, loEL, loEquiplano,
-                loInfisc, loISSDSF, loGoverna);
+                loInfisc, loISSDSF, loGoverna, loSP, loCONAM);
+
+  TnfseFrete = ( tfPrestador, tfTomador );
+
+  TnfseTTributacaoRPS = ( ttTribnoMun, ttTribforaMun,
+                          ttTribnoMunIsento, ttTribforaMunIsento,
+                          ttTribnoMunImune, ttTribforaMunImune,
+                          ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                          ttExpServicos);
 
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
@@ -194,6 +203,12 @@ function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 
 function RemoverNameSpace(const AXML: String): String;
 
+function TipoFreteToStr(const t: TnfseFrete): String;
+function StrToTipoFrete(out ok: boolean; const s: String): TnfseFrete;
+
+function TTributacaoRPSToStr(const t: TnfseTTributacaoRPS): String;
+function StrToTTributacaoRPS(out ok: boolean; const s: String): TnfseTTributacaoRPS;
+
 implementation
 
 uses
@@ -220,14 +235,14 @@ end;
 function StatusNFSeToStr(const t: TnfseStatusNFSe): String;
 begin
   result := EnumeradoToStr(t,
-                           ['1','2'],
+                           ['1', '2'],
                            [srNormal, srCancelado]);
 end;
 
 function StrToStatusNFSe(out ok: boolean; const s: String): TnfseStatusNFSe;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1','2'],
+                           ['1', '2'],
                            [snNormal, snCancelado]);
 end;
 
@@ -388,7 +403,7 @@ begin
          'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
          'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
-         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -399,7 +414,7 @@ begin
          proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
          proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
-         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -414,7 +429,7 @@ begin
          'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
          'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
-         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente'],
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -425,7 +440,7 @@ begin
          proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
          proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
-         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente]);
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18148,7 +18163,8 @@ begin
     proGoverna:     Result := loGoverna;
     proInfisc:      Result := loInfisc;
     proIssDSF:      Result := loISSDSF;
-
+    proSP:          Result := loSP;
+    proCONAM:       Result := loCONAM;
   else
     Result := loNone;
   end;
@@ -18184,6 +18200,42 @@ begin
   XML := StringReplace(XML, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll] );
 
   Result := XML;
+end;
+
+function TipoFreteToStr(const t: TnfseFrete): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['0', '1'],
+                           [tfPrestador, tfTomador]);
+end;
+
+function StrToTipoFrete(out ok: boolean; const s: String): TnfseFrete;
+begin
+  result := StrToEnumerado(ok, s,
+                          ['0', '1'],
+                          [tfPrestador, tfTomador]);
+end;
+
+function TTributacaoRPSToStr(const t: TnfseTTributacaoRPS): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
+                           [ttTribnoMun, ttTribforaMun,
+                            ttTribnoMunIsento, ttTribforaMunIsento,
+                            ttTribnoMunImune, ttTribforaMunImune,
+                            ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                            ttExpServicos]);
+end;
+
+function StrToTTributacaoRPS(out ok: boolean; const s: String): TnfseTTributacaoRPS;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['T', 'F', 'A', 'B', 'M', 'N', 'X', 'V', 'P'],
+                           [ttTribnoMun, ttTribforaMun,
+                            ttTribnoMunIsento, ttTribforaMunIsento,
+                            ttTribnoMunImune, ttTribforaMunImune,
+                            ttTribnoMunSuspensa, ttTribforaMunSuspensa,
+                            ttExpServicos]);
 end;
 
 end.

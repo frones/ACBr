@@ -1547,6 +1547,15 @@ object Form1: TForm1
             OnClick = btnValidarRegrasNegocioClick
             TabOrder = 25
           end
+          object btnInutilizarImprimir: TButton
+            Left = 375
+            Height = 25
+            Top = 6
+            Width = 177
+            Caption = 'Inutilizar Imprimir'
+            OnClick = btnInutilizarImprimirClick
+            TabOrder = 26
+          end
         end
         object tsNFCe: TTabSheet
           Caption = 'NFC-e'

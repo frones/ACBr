@@ -244,6 +244,7 @@ const
                                        'Normalmente os equipamentos Seriais utilizam: 7 ou 8' ;
   cACBrDeviceSetPortaException       = 'Não é possível mudar a Porta com o Dispositivo Ativo' ;
   cACBrDeviceEnviaStrThreadException = 'Erro gravando em: %s ' ;
+  cACBrDeviceEnviaStrFailCount       = 'Erro ao enviar dados para a porta: %s';
 
   { constantes para exibição na inicialização e no sobre do delphi a partir da versão 2009 }
   cACBrSobreDialogoTitulo = 'Projeto ACBr';

@@ -56,7 +56,6 @@ type
     rlsQuadro2: TRLDraw;
     rlsQuadro1: TRLDraw;
     rlsHorizontal1: TRLDraw;
-    rlLabel8: TRLLabel;
     rlLabel17: TRLLabel;
     rliLogo: TRLImage;
     rlmEmitente: TRLMemo;
@@ -167,13 +166,13 @@ type
     rlmCodDescarreg: TRLMemo;
     rlmNomeCarreg: TRLMemo;
     rlmNomeDescarreg: TRLMemo;
-    RLLabel6: TRLLabel;
     RLDraw1: TRLDraw;
     RLDraw2: TRLDraw;
     RLDraw3: TRLDraw;
     rllUFDescarrega: TRLLabel;
     RLLabel11: TRLLabel;
     RLSystemInfo1: TRLSystemInfo;
+    RLMemo1: TRLMemo;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -229,8 +228,8 @@ begin
     rlb_1_DadosManifesto.Height         := 200;
 
   {$IFNDEF BORLAND}
-  rlLabel8.Layout := tlCenter;
-  rlLabel8.Font.Size := 6;
+  RLMemo1.Layout := tlCenter;
+  RLMemo1.Font.Size := 6;
   {$ENDIF}
 
   if (FLogo <> '') then

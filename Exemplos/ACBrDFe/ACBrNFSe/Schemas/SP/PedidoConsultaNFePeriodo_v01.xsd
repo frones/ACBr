@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://www.prefeitura.sp.gov.br/nfe" 
+           xmlns:tipos="http://www.prefeitura.sp.gov.br/nfe/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://www.prefeitura.sp.gov.br/nfe/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="PedidoConsultaNFePeriodo">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para PEDIDO de consulta de NFS-e Emitidas ou Recebidas por período.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelos Prestadores/Tomadores de serviços consultarem NFS-e Emitidas ou Recebidas por eles.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do pedido.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o CPF/CNPJ do Remetente autorizado a transmitir a mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="CPFCNPJ" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Para consulta de NFS-e Recebidas Informe o CNPJ do Tomador.</xs:documentation>
+                  <xs:documentation>Para consulta de NFS-e Emitidas Informe o CNPJ do Prestador.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="Inscricao" type="tipos:tpInscricaoMunicipal" minOccurs ="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Para consulta de NFS-e Recebidas Informe a Inscrição Municipal do Tomador.</xs:documentation>
+                  <xs:documentation>Para consulta de NFS-e Emitidas Informe a Inscrição Municipal do Prestador. Neste caso o preenchimento deste campo se torna obrigatório.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="dtInicio" type="xs:date" minOccurs="1" maxOccurs ="1">
+                <xs:annotation>
+                  <xs:documentation>Informe a data de início do período a ser consultado (AAAA-MM-DD).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="dtFim" type="xs:date" minOccurs="1" maxOccurs ="1">
+                <xs:annotation>
+                  <xs:documentation>Informe a data final do período trasmitido (AAAA-MM-DD).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="NumeroPagina" type="tipos:tpNumero" minOccurs ="1" maxOccurs ="1" default="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o número da página que deseja consultar.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Informe a Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Assinatura digital do tomador das NFS-e.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

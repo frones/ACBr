@@ -47,6 +47,72 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2016
+-- ACBrNFSeNotasFiscais --
+[*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)
+
+17/02/2016
+-- ACBrNFSeNotasFiscais --
+[-] Acerto para validar corretamente a raiz do certificado quando é o certificado 
+    é emitido para o CPF do responsável e não para o CNPJ da empresa.
+    por: regys.silveria / Italo Jurisato Junior
+
+17/02/2016
+[+] Incluido o provedor CONAM.
+    Por: Edson / Italo Jurisato Junior
+
+16/02/2016
+[+] Incluido o provedor SP (Cidade de São Paulo).
+    Por: Italo Jurisato Junior
+
+12/02/2016
+[+] Incluido o grupo <transportadora> para o provedor Infisc.
+    Por: Italo Jurisato Junior
+-- pnfsNFSeG --
+[*] Alterações visando atender o provedor FISSLex.
+    Por: Italo Jurisato Junior
+-- pnfsLerListaNFSe --
+[*] Incluida a TAG de consulta a NFSe - provedor SimplISS.
+    Por: João Miler
+
+11/02/2016
+-- ACBrNFSeWebServices / pnfsConsSitLoteRpsResposta --
+[*] Ao consultar a situação do Lote caso seja retornado uma lista de erros
+    a propriedade FSituacao vai conter o valor "Erro", desta forma a lista
+    de erros podera ser visualizada.
+    Por: Italo Jurisato Junior
+
+10/02/2016
+-- ACBrNFSeWebServices --
+[*] Imposto condição quando se tratar de Envio Sincrono para 3 campos:
+    NumeroLote, dfRecebimento e Protocolo.
+    Por: Italo Jurisato Junior
+-- pnfsNFSeG --
+[*] Foi incluido o NameSpace na geração de alguns grupos visando a montagem
+    correta do envelope para o provedor SimplISS.
+    Por: Italo Jurisato Junior
+
+05/02/2016
+-- ACBrNFSe / ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
+[*] A propriedade de configuração ConfigAssinar.Gerar mudou para 
+    ConfigAssinar.RpsGerar caso seu valor for True o Rps a ser enviado pelo
+    Método Gerar será assinado, foi criado a propriedade de configuração:
+    ConfigAssinar.LoteGerar, o método Gerar do provedor BHISS é diferente
+    em vez de conter um RPS possui um LoteRps com 1 até 3 RPS e para esse
+    provedor tanto o RPS quanto o Lote devem ser assinados.
+[+] Foi incluido em DefinirDadosMsg de varias classes a checagem de qtde
+    de RPS / Notas carregadas no componente.
+    Por: Italo Jurisato Junior
+
+04/02/2016
+-- ACBrNFSeNotasFiscais --
+[*] Alterações visando a leitura completa do XML da NFS-e, não estava lendo o
+    grupo NfseCancelamento.
+    Por: Italo Jurisato Junior
+-- ACBrNFSe / ACBrNFSeConfiguracoes / ACBrNFSeWebServices --
+[*] Alterações visando a montagem correta dos xmlns com ou sem prefixos.
+    Por: Italo Jurisato Junior
+
 02/02/2016
 -- ACBrNFSeWebServices --
 [*] Remoção do Encoding na mensagem de resposta.

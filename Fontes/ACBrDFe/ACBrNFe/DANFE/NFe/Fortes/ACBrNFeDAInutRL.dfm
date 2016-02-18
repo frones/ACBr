@@ -11,6 +11,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = True
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object RLNFeInut: TRLReport

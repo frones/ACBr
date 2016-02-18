@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ABRASF_v2;
 
@@ -88,20 +88,8 @@ uses
 
 { TNFSeW_ABRASFv2 }
 
-constructor TNFSeW_ABRASFv2.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-end;
-
-function TNFSeW_ABRASFv2.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
-
 procedure TNFSeW_ABRASFv2.GerarIdentificacaoRPS;
 begin
-//  inherited;
   Gerador.wGrupoNFSe('IdentificacaoRps');
   Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 15, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
   Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, '');
@@ -111,7 +99,6 @@ end;
 
 procedure TNFSeW_ABRASFv2.GerarRPSSubstituido;
 begin
-//  inherited;
   if NFSe.RpsSubstituido.Numero <> '' then
   begin
     Gerador.wGrupoNFSe('RpsSubstituido');
@@ -242,7 +229,6 @@ end;
 
 procedure TNFSeW_ABRASFv2.GerarIntermediarioServico;
 begin
-//  inherited;
   if (NFSe.IntermediarioServico.RazaoSocial <> '') or
      (NFSe.IntermediarioServico.CpfCnpj <> '') then
   begin
@@ -289,7 +275,6 @@ end;
 
 procedure TNFSeW_ABRASFv2.GerarServicoValores;
 begin
-//  inherited;
   Gerador.wGrupoNFSe('Servico');
 
   if FProvedor in [proTecnos] then
@@ -537,7 +522,6 @@ end;
 
 procedure TNFSeW_ABRASFv2.GerarValoresServico;
 begin
-//  inherited;
   Gerador.wGrupoNFSe('ValoresServico');
   Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis        ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
   Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins     ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
@@ -552,7 +536,6 @@ end;
 
 procedure TNFSeW_ABRASFv2.GerarConstrucaoCivil;
 begin
-//  inherited;
   if (NFSe.ConstrucaoCivil.CodigoObra <> '') then
   begin
     Gerador.wGrupoNFSe('ConstrucaoCivil');
@@ -583,98 +566,6 @@ begin
     Gerador.wGrupoNFSe('/CondicaoPagamento');
   end;
 *)
-end;
-
-function TNFSeW_ABRASFv2.GerarXml: Boolean;
-var
-  Gerar: Boolean;
-begin
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.Prefixo           := FPrefixo4;
-
-  if (FProvedor in [pro4R, proActcon, proAgili, proCoplan, proDigifred, profintelISS,
-                    proFiorilli, proGoiania, proGovDigital, proISSDigital, proLink3,
-                    proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-                    proTecnos, proVirtual, proVitoria, proNFSEBrasil,
-                    proNEAInformatica, proNotaInteligente]) then
-    FDefTipos := FServicoEnviar;
-
-  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
-    then FDefTipos := '/' + FDefTipos;
-
-  if Trim(FPrefixo4) <> ''
-    then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
-    else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
-
-  if (FProvedor in [proISSDigital, proNotaInteligente]) and (NFSe.NumeroLote <> '')
-    then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
-
-  if (FProvedor in [proBetha, proNotaInteligente]) then
-    Gerador.wGrupo('Rps')
-  else
-    Gerador.wGrupo('Rps' + Atributo);
-
-  case FProvedor of
-    proDigifred,
-    proFiorilli,
-    proISSe,
-    proSisPMJP,
-    proPVH,
-    proNEAInformatica,
-    proMitra:     NFSe.InfID.ID := 'rps' +
-                                   OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
-                                   FNFSe.IdentificacaoRps.Serie;
-
-    proISSDigital: FNFSe.InfID.ID := 'rps' + ChaveAcesso(FNFSe.Prestador.cUF,
-                                                 FNFSe.DataEmissao,
-                                                 OnlyNumber(FNFSe.Prestador.Cnpj),
-                                                 0, // Serie
-                                                 StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)),
-                                                 StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)));
-
-    proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
-//                                 FormatDateTime('yyyy', FNFSe.DataEmissao) +
-                                 OnlyNumber(FNFSe.Prestador.Cnpj) +
-                                 IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
-
-    proGovDigital: FNFSe.InfID.ID := 'Rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
-
-    proNotaInteligente : FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero);
-
-    proVirtual: FNFSe.InfID.ID := '';
-
-  else
-    FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
-                      FNFSe.IdentificacaoRps.Serie;
-  end;
-
-  GerarXML_ABRASF_v2;
-
-  if FOpcoes.GerarTagAssinatura <> taNunca then
-  begin
-    Gerar := true;
-    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
-      Gerar := ((NFSe.signature.DigestValue <> '') and
-                (NFSe.signature.SignatureValue <> '') and
-                (NFSe.signature.X509Certificate <> ''));
-    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
-      Gerar := ((NFSe.signature.DigestValue = '') and
-                (NFSe.signature.SignatureValue = '') and
-                (NFSe.signature.X509Certificate = ''));
-    if Gerar then
-    begin
-      FNFSe.signature.URI := FNFSe.InfID.ID;
-      FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-      FNFSe.signature.GerarXMLNFSe;
-      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                   FNFSe.signature.Gerador.ArquivoFormatoXML;
-    end;
-  end;
-
-  Gerador.wGrupo('/Rps');
-
-  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
-  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
@@ -811,6 +702,110 @@ begin
 
   if FProvedor in [proTecnos] then
     Gerador.WGrupoNFSe('/tcDeclaracaoPrestacaoServico');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_ABRASFv2.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+end;
+
+function TNFSeW_ABRASFv2.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
+end;
+
+function TNFSeW_ABRASFv2.GerarXml: Boolean;
+var
+  Gerar: Boolean;
+begin
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.Prefixo           := FPrefixo4;
+
+  if (FProvedor in [pro4R, proActcon, proAgili, proCoplan, proDigifred, profintelISS,
+                    proFiorilli, proGoiania, proGovDigital, proISSDigital, proLink3,
+                    proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
+                    proTecnos, proVirtual, proVitoria, proNFSEBrasil,
+                    proNEAInformatica, proNotaInteligente]) then
+    FDefTipos := FServicoEnviar;
+
+  if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
+    then FDefTipos := '/' + FDefTipos;
+
+  if Trim(FPrefixo4) <> ''
+    then Atributo := ' xmlns:' + StringReplace(Prefixo4, ':', '', []) + '="' + FURL + FDefTipos + '"'
+    else Atributo := ' xmlns="' + FURL + FDefTipos + '"';
+
+  if (FProvedor in [proISSDigital, proNotaInteligente]) and (NFSe.NumeroLote <> '')
+    then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
+
+  if (FProvedor in [proBetha, proNotaInteligente]) then
+    Gerador.wGrupo('Rps')
+  else
+    Gerador.wGrupo('Rps' + Atributo);
+
+  case FProvedor of
+    proDigifred,
+    proFiorilli,
+    proISSe,
+    proSisPMJP,
+    proPVH,
+    proNEAInformatica,
+    proMitra:     NFSe.InfID.ID := 'rps' +
+                                   OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
+                                   FNFSe.IdentificacaoRps.Serie;
+
+    proISSDigital: FNFSe.InfID.ID := 'rps' + ChaveAcesso(FNFSe.Prestador.cUF,
+                                                 FNFSe.DataEmissao,
+                                                 OnlyNumber(FNFSe.Prestador.Cnpj),
+                                                 0, // Serie
+                                                 StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)),
+                                                 StrToInt(OnlyNumber(FNFSe.IdentificacaoRps.Numero)));
+
+    proTecnos: FNFSe.InfID.ID := '1' + //Fixo - Lote Sincrono
+//                                 FormatDateTime('yyyy', FNFSe.DataEmissao) +
+                                 OnlyNumber(FNFSe.Prestador.Cnpj) +
+                                 IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
+
+    proGovDigital: FNFSe.InfID.ID := 'Rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
+
+    proNotaInteligente : FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero);
+
+    proVirtual: FNFSe.InfID.ID := '';
+
+  else
+    FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
+                      FNFSe.IdentificacaoRps.Serie;
+  end;
+
+  GerarXML_ABRASF_v2;
+
+  if FOpcoes.GerarTagAssinatura <> taNunca then
+  begin
+    Gerar := true;
+    if FOpcoes.GerarTagAssinatura = taSomenteSeAssinada then
+      Gerar := ((NFSe.signature.DigestValue <> '') and
+                (NFSe.signature.SignatureValue <> '') and
+                (NFSe.signature.X509Certificate <> ''));
+    if FOpcoes.GerarTagAssinatura = taSomenteParaNaoAssinada then
+      Gerar := ((NFSe.signature.DigestValue = '') and
+                (NFSe.signature.SignatureValue = '') and
+                (NFSe.signature.X509Certificate = ''));
+    if Gerar then
+    begin
+      FNFSe.signature.URI := FNFSe.InfID.ID;
+      FNFSe.signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+      FNFSe.signature.GerarXMLNFSe;
+      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                   FNFSe.signature.Gerador.ArquivoFormatoXML;
+    end;
+  end;
+
+  Gerador.wGrupo('/Rps');
+
+  Gerador.gtAjustarRegistros(NFSe.InfID.ID);
+  Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 
 end.

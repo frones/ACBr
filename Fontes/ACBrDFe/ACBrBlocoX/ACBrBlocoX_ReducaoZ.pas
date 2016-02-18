@@ -67,11 +67,12 @@ type
 
   TACBrBlocoX_ReducaoZ = class(TACBrBlocoX_BaseFile)
   private
-    FDataReferencia: TDateTime;
     FVendaBrutaDiaria: Double;
     FCRO: Integer;
     FGT: Double;
     FCRZ: Integer;
+    FCOO: Integer;
+    FDataReferencia: TDateTime;
     FTotalizadoresParciais: TACBrBlocoX_Totalizadores;
   public
     constructor Create(AOwner: TComponent); override;
@@ -82,6 +83,7 @@ type
 
     property DataReferencia: TDateTime read FDataReferencia write FDataReferencia;
     property CRZ: Integer read FCRZ write FCRZ;
+    property COO: Integer read FCOO write FCOO;
     property CRO: Integer read FCRO write FCRO;
     property VendaBrutaDiaria: Double read FVendaBrutaDiaria write FVendaBrutaDiaria;
     property GT: Double read FGT write FGT;
@@ -160,6 +162,7 @@ begin
   FGerador.wGrupo('DadosReducaoZ');
   FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FormatDateBr(DataReferencia));
   FGerador.wCampo(tcStr, '', 'CRZ', 1, 6, 1, CRZ);
+  FGerador.wCampo(tcStr, '', 'COO', 1, 6, 1, COO);
   FGerador.wCampo(tcStr, '', 'CRO', 1, 9, 1, CRO);
   FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, FloatToIntStr(VendaBrutaDiaria, 2));
   FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, FloatToIntStr(GT, 2));
@@ -218,7 +221,7 @@ begin
 
   FXMLOriginal := ConverteXMLtoUTF8(FGerador.ArquivoFormatoXML);
   if Assinar then
-    FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'ReducaoZ', '/ReducaoZ');
+    FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'ReducaoZ', 'Mensagem');
 end;
 
 procedure TACBrBlocoX_ReducaoZ.SaveToFile(const AXmlFileName: string);

@@ -67,8 +67,10 @@ type
     RLNFeInut: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
     procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-
+    cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
+    procedure ConfigDataSet;
   protected
     FACBrNFe        : TACBrNFe;
     FNFe            : TNFe;
@@ -115,7 +117,11 @@ uses
   MaskUtils;
 
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 class procedure TfrmNFeDAInutRL.Imprimir(AACBrNFe: TACBrNFe;
                                          ALogo: String = '';
@@ -227,6 +233,80 @@ begin
      finally
         Free;
      end;
+end;
+
+procedure TfrmNFeDAInutRL.ConfigDataSet;
+begin
+ if not Assigned( cdsItens ) then
+ cdsItens:=  {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}  TBufDataset.create(nil) {$ENDIF};
+
+  if cdsItens.Active then
+ begin
+ {$IFDEF BORLAND}
+  if cdsItens is TClientDataSet then
+  TClientDataSet(cdsItens).EmptyDataSet;
+ {$ENDIF}
+  cdsItens.Active := False;
+ end;
+
+ {$IFDEF BORLAND}
+ if cdsItens is TClientDataSet then
+  begin
+  TClientDataSet(cdsItens).StoreDefs := False;
+  TClientDataSet(cdsItens).IndexDefs.Clear;
+  TClientDataSet(cdsItens).IndexFieldNames := '';
+  TClientDataSet(cdsItens).IndexName := '';
+  TClientDataSet(cdsItens).Aggregates.Clear;
+  TClientDataSet(cdsItens).AggFields.Clear;
+  end;
+ {$ELSE}
+ if cdsItens is TBufDataset then
+  begin
+  TBufDataset(cdsItens).IndexDefs.Clear;
+  TBufDataset(cdsItens).IndexFieldNames:='';
+  TBufDataset(cdsItens).IndexName:='';
+  end;
+ {$ENDIF}
+
+ with cdsItens do
+  if FieldCount = 0 then
+  begin
+    FieldDefs.Clear;
+    Fields.Clear;
+    FieldDefs.Add('CODIGO',ftString,60);
+   {$IFDEF BORLAND}
+    if cdsItens is TClientDataSet then
+    TClientDataSet(cdsItens).CreateDataSet;
+   {$ELSE}
+    if cdsItens is TBufDataset then
+    TBufDataset(cdsItens).CreateDataSet;
+   {$ENDIF}
+   end;
+
+ {$IFDEF BORLAND}
+  if cdsItens is TClientDataSet then
+  TClientDataSet(cdsItens).StoreDefs := False;
+ {$ENDIF}
+
+   if not cdsItens.Active then
+   cdsItens.Active := True;
+
+  {$IFDEF BORLAND}
+   if cdsItens is TClientDataSet then
+   if cdsItens.Active then
+   TClientDataSet(cdsItens).LogChanges := False;
+ {$ENDIF}
+
+ cdsItens.Insert;
+ cdsItens.FieldByName('CODIGO').AsString := '1';
+ cdsItens.Post;
+
+ DataSource1.dataset := cdsItens;
+
+end;
+procedure TfrmNFeDAInutRL.FormCreate(Sender: TObject);
+begin
+  ConfigDataSet;
 end;
 
 procedure TfrmNFeDAInutRL.FormDestroy(Sender: TObject);

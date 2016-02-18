@@ -52,19 +52,19 @@ type
   private
   protected
 
-    procedure GerarIdentificacaoRPS; override;
-    procedure GerarRPSSubstituido; override;
+    procedure GerarIdentificacaoRPS;
+    procedure GerarRPSSubstituido;
 
-    procedure GerarPrestador; override;
-    procedure GerarTomador; override;
-    procedure GerarIntermediarioServico; override;
+    procedure GerarPrestador;
+    procedure GerarTomador;
+    procedure GerarIntermediarioServico;
 
-    procedure GerarServicoValores; override;
-    procedure GerarListaServicos; override;
-    procedure GerarValoresServico; override;
+    procedure GerarServicoValores;
+    procedure GerarListaServicos;
+    procedure GerarValoresServico;
 
-    procedure GerarConstrucaoCivil; override;
-    procedure GerarCondicaoPagamento; override;
+    procedure GerarConstrucaoCivil;
+    procedure GerarCondicaoPagamento;
 
     procedure GerarXML_ABRASF_V1;
 
@@ -88,21 +88,8 @@ uses
 
 { TNFSeW_ABRASFv1 }
 
-constructor TNFSeW_ABRASFv1.Create(ANFSeW: TNFSeW);
-begin
-  inherited Create(ANFSeW);
-
-  //  FNFSe := AOwner;
-end;
-
-function TNFSeW_ABRASFv1.ObterNomeArquivo: String;
-begin
-  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
-end;
-
 procedure TNFSeW_ABRASFv1.GerarIdentificacaoRPS;
 begin
-//  inherited;
   Gerador.wGrupoNFSe('IdentificacaoRps');
   Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 15, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
   Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, '');
@@ -112,7 +99,6 @@ end;
 
 procedure TNFSeW_ABRASFv1.GerarRPSSubstituido;
 begin
-//  inherited;
   if NFSe.RpsSubstituido.Numero <> '' then
   begin
     Gerador.wGrupoNFSe('RpsSubstituido');
@@ -154,13 +140,7 @@ begin
      (NFSe.Tomador.Contato.Email <>'') then
   begin
     Gerador.wGrupoNFSe('Tomador');
-(*
-    if (VersaoNFSe = ve100) or
-       (FProvedor in [proNFSeBrasil, proEReceita]) then
-      Gerador.wGrupoNFSe('Tomador')
-    else
-      Gerador.wGrupoNFSe('TomadorServico');
-*)
+
     if (NFSe.Tomador.Endereco.UF <> 'EX') then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
@@ -221,30 +201,15 @@ begin
            end;
          end;
     end;
-(*
-    if (VersaoNFSe = ve100) or
-       (FProvedor in [proNFSeBrasil, proEReceita]) then
-      Gerador.wGrupoNFSe('/Tomador')
-    else
-      Gerador.wGrupoNFSe('/TomadorServico');
-*)
+
     Gerador.wGrupoNFSe('/Tomador');
   end
-  else begin
-         Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '');
-(*
-         // Gera a TAG vazia quando nenhum dado do tomador for informado.
-         if (VersaoNFSe = ve100) or (FProvedor in [proEReceita]) then
-           Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '')
-         else
-           Gerador.wCampoNFSe(tcStr, '#', 'TomadorServico', 0, 1, 1, '', '');
-*)
-  end;
+  else
+    Gerador.wCampoNFSe(tcStr, '#', 'Tomador', 0, 1, 1, '', '');
 end;
 
 procedure TNFSeW_ABRASFv1.GerarIntermediarioServico;
 begin
-//  inherited;
   if (NFSe.IntermediarioServico.RazaoSocial <> '') or
      (NFSe.IntermediarioServico.CpfCnpj <> '') then
   begin
@@ -267,7 +232,6 @@ procedure TNFSeW_ABRASFv1.GerarServicoValores;
 var
   i: Integer;
 begin
-//  inherited;
   Gerador.wGrupoNFSe('Servico');
   Gerador.wGrupoNFSe('Valores');
   Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
@@ -447,24 +411,11 @@ end;
 
 procedure TNFSeW_ABRASFv1.GerarValoresServico;
 begin
-//  inherited;
-(*
-  Gerador.wGrupoNFSe('ValoresServico');
-  Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis        ', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
-  Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins     ', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
-  Gerador.wCampoNFSe(tcDe2, '#17', 'ValorInss       ', 01, 15, 0, NFSe.Servico.Valores.ValorInss, '');
-  Gerador.wCampoNFSe(tcDe2, '#18', 'ValorIr         ', 01, 15, 0, NFSe.Servico.Valores.ValorIr, '');
-  Gerador.wCampoNFSe(tcDe2, '#19', 'ValorCsll       ', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-  Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss        ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
-  Gerador.wCampoNFSe(tcDe2, '#13', 'ValorLiquidoNfse', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-  Gerador.wCampoNFSe(tcDe2, '#13', 'ValorServicos   ', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-  Gerador.wGrupoNFSe('/ValoresServico');
-*)
+//  Não definido
 end;
 
 procedure TNFSeW_ABRASFv1.GerarConstrucaoCivil;
 begin
-//  inherited;
   if (NFSe.ConstrucaoCivil.CodigoObra <> '') then
   begin
     Gerador.wGrupoNFSe('ConstrucaoCivil');
@@ -493,6 +444,56 @@ begin
     end;
     Gerador.wGrupoNFSe('/CondicaoPagamento');
   end;
+end;
+
+procedure TNFSeW_ABRASFv1.GerarXML_ABRASF_V1;
+begin
+  if (FIdentificador = '') then
+    Gerador.wGrupoNFSe('InfRps')
+  else
+    Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+
+  GerarIdentificacaoRPS;
+
+  Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao     ', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+  Gerador.wCampoNFSe(tcStr,    '#5', 'NaturezaOperacao', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
+
+  if not (FProvedor in [proPublica, proDBSeller]) then
+  begin
+    if (NFSe.RegimeEspecialTributacao <> retNenhum) then
+      Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
+  end;
+
+  Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+  Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+  Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
+
+  if FProvedor in [proBetha, proFISSLex, proSimplISS] then
+    Gerador.wCampoNFSe(tcStr, '#11', 'OutrasInformacoes', 001, 255, 0, NFSe.OutrasInformacoes, '');
+
+  GerarRPSSubstituido;
+
+  GerarServicoValores;
+  GerarPrestador;
+  GerarTomador;
+  GerarIntermediarioServico;
+  GerarConstrucaoCivil;
+  if (FProvedor = proBetha) then
+    GerarCondicaoPagamento;
+
+  Gerador.wGrupoNFSe('/InfRps');
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TNFSeW_ABRASFv1.Create(ANFSeW: TNFSeW);
+begin
+  inherited Create(ANFSeW);
+end;
+
+function TNFSeW_ABRASFv1.ObterNomeArquivo: String;
+begin
+  Result := OnlyNumber(NFSe.infID.ID) + '.xml';
 end;
 
 function TNFSeW_ABRASFv1.GerarXml: Boolean;
@@ -558,44 +559,6 @@ begin
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);
-end;
-
-procedure TNFSeW_ABRASFv1.GerarXML_ABRASF_V1;
-begin
-  if (FIdentificador = '') then
-    Gerador.wGrupoNFSe('InfRps')
-  else
-    Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
-
-  GerarIdentificacaoRPS;
-
-  Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao     ', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
-  Gerador.wCampoNFSe(tcStr,    '#5', 'NaturezaOperacao', 01, 01, 1, NaturezaOperacaoToStr(NFSe.NaturezaOperacao), '');
-
-  if not (FProvedor in [proPublica, proDBSeller]) then
-  begin
-    if (NFSe.RegimeEspecialTributacao <> retNenhum) then
-      Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
-  end;
-
-  Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-  Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
-  Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
-
-  if FProvedor in [proBetha, proFISSLex, proSimplISS] then
-    Gerador.wCampoNFSe(tcStr, '#11', 'OutrasInformacoes', 001, 255, 0, NFSe.OutrasInformacoes, '');
-
-  GerarRPSSubstituido;
-
-  GerarServicoValores;
-  GerarPrestador;
-  GerarTomador;
-  GerarIntermediarioServico;
-  GerarConstrucaoCivil;
-  if (FProvedor = proBetha) then
-    GerarCondicaoPagamento;
-
-  Gerador.wGrupoNFSe('/InfRps');
 end;
 
 end.

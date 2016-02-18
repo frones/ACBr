@@ -245,6 +245,9 @@ begin
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
+          if trim(InfSit.FMsgRetorno[i].FCodigo) <> '' then
+            InfSit.FSituacao := 'Erro';
+
           inc(i);
         end;
       end;
@@ -257,6 +260,8 @@ begin
        InfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'faultcode');
        InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'faultstring');
        InfSit.FMsgRetorno[i].FCorrecao := '';
+
+       InfSit.FSituacao := 'Erro';
 
        inc(i);
      end;
@@ -330,6 +335,8 @@ begin
     InfSit.FSituacao   := Leitor.rCampo(tcStr, 'sit');
     if InfSit.FSituacao = '100' then
       InfSit.FSituacao := '4' // 4 = Processado com Sucesso
+    else if InfSit.FSituacao = '217' then // 217 = Fila para processamento
+      InfSit.FSituacao := '1' // 1 = Aguardando processamento
     else if InfSit.FSituacao = '200' then
     begin
       InfSit.FSituacao := '3'; // 3 = Processado com Erro

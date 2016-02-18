@@ -517,7 +517,7 @@ begin
 
   // Passo 1
   sdhEmi_HEX := AsciiToHex(DateTimeTodh(DataHoraEmissao) +
-    GetUTC{(CodigoParaUF(CUF), DataHoraEmissao)});
+    GetUTC(CodigoParaUF(CUF), DataHoraEmissao));
   sdigVal_HEX := AsciiToHex(DigestValue);
 
   if CUF = 41 then

@@ -70,19 +70,31 @@ type
 
   public
     class procedure Imprimir(AOwner: TComponent;
-		  AEventoMDFe: TInfEventoCollectionItem; ALogo: string = '';
-      ANumCopias: integer = 1; ASistema: string = '';
-      AUsuario: string = ''; AMostrarPreview: boolean = True;
-      AMargemSuperior: double = 0.7; AMargemInferior: double = 0.7;
-      AMargemEsquerda: double = 0.7; AMargemDireita: double = 0.7;
-      AImpressora: string = ''; AMDFe: TMDFe = nil);
+		  AEventoMDFe: TInfEventoCollectionItem;
+      ALogo: string = '';
+      ANumCopias: integer = 1;
+      ASistema: string = '';
+      AUsuario: string = '';
+      AMostrarPreview: boolean = True;
+      AMargemSuperior: double = 0.7;
+      AMargemInferior: double = 0.7;
+      AMargemEsquerda: double = 0.7;
+      AMargemDireita: double = 0.7;
+      AImpressora: string = '';
+      AMDFe: TMDFe = nil;
+      APrintDialog  : Boolean = True  );
 
     class procedure SavePDF(AOwner: TComponent;
-		  AEventoMDFe: TInfEventoCollectionItem; ALogo: string = '';
-      AFile: string = ''; ASistema: string = '';
-      AUsuario: string = ''; AMargemSuperior: double = 0.7;
-      AMargemInferior: double = 0.7; AMargemEsquerda: double = 0.7;
-      AMargemDireita: double = 0.7; AMDFe: TMDFe = nil);
+		  AEventoMDFe: TInfEventoCollectionItem;
+      ALogo: string = '';
+      AFile: string = '';
+      ASistema: string = '';
+      AUsuario: string = '';
+      AMargemSuperior: double = 0.7;
+      AMargemInferior: double = 0.7;
+      AMargemEsquerda: double = 0.7;
+      AMargemDireita: double = 0.7;
+      AMDFe: TMDFe = nil);
   end;
 
 implementation
@@ -108,10 +120,10 @@ class procedure TfrmMDFeDAEventorl.Imprimir(AOwner: TComponent;
   AMargemEsquerda: double = 0.7;
   AMargemDireita: double = 0.7;
   AImpressora: string = '';
-  AMDFe: TMDFe = nil);
+  AMDFe: TMDFe = nil;
+  APrintDialog  : Boolean = True  );
 begin
   with Create ( AOwner ) do
-  //with TfrmMDFeDAEventoRL do
     try
       FEventoMDFe := AEventoMDFe;
       FLogo := ALogo;
@@ -125,6 +137,7 @@ begin
       FMargemDireita := AMargemDireita;
       FImpressora := AImpressora;
 
+
       if AMDFe <> nil then
         FMDFe := AMDFe;
 
@@ -136,9 +149,11 @@ begin
       else
         RLPrinter.Copies := 1;
 
-      //if APreview = True then
-        //RLMDFe.PreviewModal
-      //else
+      RLMDFeEvento.PrintDialog := APrintDialog;
+
+      if AMostrarPreview then
+        RLMDFeEvento.PreviewModal
+      else
         RLMDFeEvento.Print;
     finally
       RLMDFeEvento.Free;

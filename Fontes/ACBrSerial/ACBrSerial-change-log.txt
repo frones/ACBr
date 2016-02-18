@@ -39,6 +39,34 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/02/2016
+-- ACBrECFVirtualBuffer --
+[*] Modificada a rotina "TACBrECFVirtualBufferClass.AddBufferRelatorio", para
+    constar o valor de "CuponsCanceladosEmAberto" (se o mesmo não for vazio)
+
+Data: 08/02/2016
+-- ACBrDevice --
+[*] Adicionado controle de falhas em "EnviaStringSerial". Em algumas situações
+    específicas, o Device para de receber dados, e isso ocasionava um Loop
+    infinito nesse método. (por: DSA)
+
+Data: 07/02/2016
+-- ACBrECFEscECF --
+[-] Método DadosUltimaReducaoZ, ajuste para correta leitura dos totalizadores
+    Não Tributados em Daruma FS800I. Esse modelo não retorna o valor da alíquota
+    para Totalizadores não tributados
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27897
+
+-- ACBrECF --
+[*] Método FechaCupom, ajuste para não limitar em 8 linhas de observação, quando
+    se tratar dos modelos ecfEscEcf ou ecfECFVirtual
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27926
+
+Data; 04/02/2016
+-- ACBrETQPpla --
+[*] Ajuste para permitir SubFontes até 999 em "ImprimirTexto"
+    http://www.projetoacbr.com.br/forum/topic/27887-subfonte-do-componente-acbretq/
+
 Data: 27/01/2015   (por: DSA)
 -- ACBrECF --
 [+] Adicionada a propriedade "TotalCancelamentosEmAberto: Double"

@@ -202,7 +202,7 @@ type
     property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
     property FonteTributos: String                   read FFonteTributos                  write FFonteTributos;
     property ChaveTributos: String                   read FChaveTributos                  write FChaveTributos;
-    property PosCanhoto: TPosRecibo                  read FPosCanhoto                     write FPosCanhoto; // default prCabecalho;
+    property PosCanhoto: TPosRecibo                  read FPosCanhoto                     write FPosCanhoto default prCabecalho;
     property ImprimeEmUmaLinha: Boolean              read FImprimeEmUmaLinha              write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean          read FImprimeDescAcrescItem          write FImprimeDescAcrescItem default True;
     property UsaCodigoEanImpressao: Boolean          read FUsaCodigoEanImpressao          write FUsaCodigoEanImpressao default False;

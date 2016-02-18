@@ -819,14 +819,14 @@ begin
 
   // Posiciona o canhoto do DANFE no cabeçalho ou rodapé
   case FPosCanhoto of
-    pcCabecalho:
+    prCabecalho:
       begin
         pnlCanhoto.Align := faLeftMost;
         pnlDivisao.Align := faLeftMost;
         pnlCanhoto.Left := 26;
         pnlDivisao.Left := pnlCanhoto.Left + pnlCanhoto.Width;
       end;
-    pcRodape:
+    prRodape:
       begin
         pnlCanhoto.Align := faRightMost;
         pnlDivisao.Align := faRightMost;
@@ -1761,8 +1761,8 @@ var iAumento: Integer;
 begin
   iAumento := pnlCanhoto.Width + pnlDivisao.Width;
   case FPosCanhoto of
-    pcCabecalho: rlbObsItem.Left := rlbObsItem.Left - iAumento;
-    pcRodape: rlbObsItem.Left := rlbObsItem.Left;
+    prCabecalho: rlbObsItem.Left := rlbObsItem.Left - iAumento;
+    prRodape: rlbObsItem.Left := rlbObsItem.Left;
   end;
 end;
 

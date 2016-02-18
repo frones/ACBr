@@ -3590,7 +3590,7 @@ begin
     ACBrCTe1.DACTe.PathPDF     := edtPathPDF.Text;
     ACBrCTe1.DACTe.MostrarStatus        := cbxMostraStatus.Checked;
     ACBrCTe1.DACTe.ExpandirLogoMarca    := cbxExpandirLogo.Checked;
-    ACBrCTe1.DACTe.PosCanhoto := TPosCanhoto(rgLocalCanhoto.ItemIndex);
+    ACBrCTe1.DACTe.PosCanhoto := TPosRecibo(rgLocalCanhoto.ItemIndex);
 
     ACBrMDFe1.DAMDFe.TipoDAMDFe  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
@@ -6992,7 +6992,7 @@ begin
     ACBrNFe1.DANFE.ExpandirLogoMarca := cbxExpandirLogo.Checked;
     ACBrNFe1.DANFE.TamanhoFonte_DemaisCampos := speFonteCampos.Value;
     ACBrNFe1.DANFE.TamanhoFonteEndereco:= speFonteEndereco.Value;
-    ACBrNFe1.DANFE.PosCanhoto := TPosCanhoto(rgLocalCanhoto.ItemIndex);
+    ACBrNFe1.DANFE.PosCanhoto := TPosRecibo(rgLocalCanhoto.ItemIndex);
 
     if ACBrNFe1.DANFE = ACBrNFeDANFeRL1 then
     begin

@@ -127,7 +127,7 @@ type
     property CTeCancelada: Boolean          read FCTeCancelada           write FCTeCancelada;
     property ExibirResumoCanhoto: Boolean   read FResumoCanhoto          write FResumoCanhoto;
     property EPECEnviado: Boolean           read FEPECEnviado            write FEPECEnviado;
-    property PosCanhoto: TPosRecibo         read FPosCanhoto             write FPosCanhoto;
+    property PosCanhoto: TPosRecibo         read FPosCanhoto             write FPosCanhoto default prCabecalho;
     property ImprimirDescPorc: Boolean      read FImprimirDescPorc       write FImprimirDescPorc;
   end;
 

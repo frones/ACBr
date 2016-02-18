@@ -875,14 +875,14 @@ begin
 
   // Posiciona o canhoto do DANFE no cabeçalho ou rodapé
   case FPosCanhoto of
-    pcCabecalho:
+    prCabecalho:
     begin
       rlbReciboHeader.BandType := btHeader;
       rlbDivisaoRecibo.BandType := btHeader;
       rlbReciboHeader.Top := 0;
       rlbDivisaoRecibo.Top := rlbReciboHeader.Top + rlbDivisaoRecibo.Height;
     end;
-    pcRodape:
+    prRodape:
     begin
       rlbReciboHeader.BandType := btFooter;
       rlbDivisaoRecibo.BandType := btFooter;
@@ -1737,7 +1737,7 @@ end;
 procedure TfrlDANFeRLRetrato.rlbDadosAdicionaisBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  if FPosCanhoto = pcCabecalho then
+  if FPosCanhoto = prCabecalho then
   begin
     rlbReciboHeader.Visible := False;
     rlbReciboHeader.Height := 66;

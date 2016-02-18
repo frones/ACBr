@@ -56,6 +56,26 @@ uses
 {$ENDIF}
   pcnConversao, synautil;
 
+type
+  TTimeZoneModoDeteccao = (tzSistema, tzPCN, tzManual);
+
+  { TTimeZoneConf }
+
+  TTimeZoneConf = class(TPersistent)
+  private
+    FModoDeteccao: TTimeZoneModoDeteccao;
+    FTimeZoneStr: String;
+    procedure SetModoDeteccao(AValue: TTimeZoneModoDeteccao);
+    procedure SetTimeZone(AValue: String);
+  public
+    constructor Create;
+    procedure Assign(AFrom: TTimeZoneConf);
+  published
+    property ModoDeteccao: TTimeZoneModoDeteccao read FModoDeteccao
+      write SetModoDeteccao default tzSistema;
+    property TimeZoneStr: String read FTimeZoneStr write SetTimeZone;
+  end;
+
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
@@ -91,14 +111,17 @@ function SubStrEmSubStr(const SubStr1: string; SubStr2: string): boolean;
 function xml4line(texto: AnsiString): AnsiString;
 function RetornarPosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 function DateTimeTodhUTC(DataHora: TDateTime; TZD: string): string;
-function GetUTC(UF: string; const dataHora: TDateTime): string; overload;
-function GetUTC: string; overload;
+function GetUTC(UF: string; const dataHora: TDateTime): string;
+function GetUTCSistema: String;
 function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
 function GetTerceiroDomingoDoMes(const ano, mes: Integer): TDateTime;
 function GetInicioDoHorarioDeVerao(const ano: Integer): TDateTime;
 function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
 function GetDataDoCarnaval(const ano: Integer): TDateTime;
 function GetDataDaPascoa(const ano: Integer): TDateTime;
+
+var
+  TimeZoneConf: TTimeZoneConf;
 
 implementation
 
@@ -729,13 +752,7 @@ begin
             TZD;
 end;
 
-function GetUTC: string; overload;
-begin
-  Result := TimeZone;
-  Insert(':', Result, 4);
-end;
-
-function GetUTC(UF: string; const dataHora: TDateTime): string; overload;
+function GetUTC(UF: string; const dataHora: TDateTime): string;
 const
   UTC5 = '.AC.';
   UTC4 = '.AM.RR.RO.MT.MS.';
@@ -743,29 +760,47 @@ const
 var
   HorarioDeVerao: Boolean;
 begin
-  if (UF = '90') or (UF = '91') or (UF = '') then
-     UF := 'DF';  
+  case TimeZoneConf.ModoDeteccao of
+    tzSistema:
+        Result := GetUTCSistema;
 
-  HorarioDeVerao := IsHorarioDeVerao(UF, dataHora);
+    tzPCN:
+      begin
+        if (UF = '90') or (UF = '91') or (UF = '') then
+           UF := 'DF';
 
-  if AnsiPos('.' + UF + '.', UTC4) > 0 then
-  begin
-    Result := '-04:00';
-    if HorarioDeVerao then
-      Result := '-03:00';
-  end
-  else
-  if AnsiPos('.' + UF + '.', UTC3) > 0 then
-  begin
-    Result := '-03:00';
-    if IsHorarioDeVerao(UF, dataHora) then
-      Result := '-02:00';
-  end
-  else
-  if AnsiPos('.' + UF + '.', UTC5) > 0 then
-  begin
-    Result := '-05:00';
+        HorarioDeVerao := IsHorarioDeVerao(UF, dataHora);
+        Result := '-03:00';  // TimeZone de Brasília
+
+        if AnsiPos('.' + UF + '.', UTC4) > 0 then
+        begin
+          Result := '-04:00';
+          if HorarioDeVerao then
+            Result := '-03:00';
+        end
+        else
+        if AnsiPos('.' + UF + '.', UTC3) > 0 then
+        begin
+          Result := '-03:00';
+          if HorarioDeVerao then
+            Result := '-02:00';
+        end
+        else
+        if AnsiPos('.' + UF + '.', UTC5) > 0 then
+        begin
+          Result := '-05:00';
+        end;
+      end;
+
+    tzManual:
+      Result := TimeZoneConf.TimeZoneStr;
   end;
+end;
+
+function GetUTCSistema: String;
+begin
+  Result := synautil.TimeZone;
+  Insert(':', Result, 4);
 end;
 
 function IsHorarioDeVerao(const UF: string; const dataHora: TDateTime): Boolean;
@@ -880,6 +915,74 @@ begin
    end;
   result :=  EncodeDate(ano, mes, dia);
 end;
+
+{ TTimeZoneConf }
+
+constructor TTimeZoneConf.Create;
+begin
+  inherited;
+
+  FTimeZoneStr := '';
+  FModoDeteccao := tzSistema;
+end;
+
+procedure TTimeZoneConf.Assign(AFrom: TTimeZoneConf);
+begin
+  FModoDeteccao := AFrom.ModoDeteccao;
+  FTimeZoneStr  := AFrom.TimeZoneStr;
+end;
+
+procedure TTimeZoneConf.SetTimeZone(AValue: String);
+var
+  Hora, Minuto: Integer;
+begin
+  if FTimeZoneStr = AValue then Exit;
+
+  if FModoDeteccao <> tzManual then
+  begin
+    FTimeZoneStr := '';
+    exit;
+  end;
+
+  if (Length(AValue) <> 6) then
+    raise Exception.Create('Tamanho de TimeZone deve ser 6. Ex: -03:00');
+
+  if not (AValue[1] in ['-','+']) then
+    raise Exception.Create('Primeiro caractere deve ser "+,-". Ex: -03:00');
+
+  if not (AValue[4] = ':') then
+    raise Exception.Create('Quarto caractere deve ser ":". Ex: -03:00');
+
+  Hora := StrToIntDef(copy(AValue,2,2), -99);
+  if ((Hora < -11) or (Hora > 14)) then
+    raise Exception.Create('Hora deve estar entre -11 a +14. Ex: -03:00');
+
+  Minuto := StrToIntDef(copy(AValue,5,2), -99);
+  if ((Minuto < 0) or (Minuto > 60)) then
+    raise Exception.Create('Minuto deve estar entre 0 a 59. Ex: -03:00');
+
+  FTimeZoneStr := AValue;
+end;
+
+procedure TTimeZoneConf.SetModoDeteccao(AValue: TTimeZoneModoDeteccao);
+begin
+  if FModoDeteccao = AValue then Exit;
+  FModoDeteccao := AValue;
+
+  if FModoDeteccao <> tzManual then
+    FTimeZoneStr := ''
+  else
+  begin
+    if FTimeZoneStr = '' then
+      FTimeZoneStr := GetUTCSistema;
+  end;
+end;
+
+initialization
+  TimeZoneConf := TTimeZoneConf.Create;
+
+finalization;
+  FreeAndNil( TimeZoneConf );
 
 end.
 

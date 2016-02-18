@@ -39,6 +39,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2016
+-- pcnAuxiliar --      (por: DSA)
+[+] Adicionado novo Tipo: TTimeZoneModoDeteccao = (tzSistema, tzPCN, tzManual);
+[+] Adicionada novca classe: "TTimeZoneConf" com as propriedades published:
+    ModoDeteccao: TTimeZoneModoDeteccao
+    TimeZoneStr: String
+[*] Removida a sobrecarga do método: "GetUTC"
+[+] Adicionado o método: "GetUTCSistema", que utiliza a rotina de synautil para
+    detectar o TimeZone do Sistema Operacional
+[+] Adicionada uma variável global "TimeZoneConf: TTimeZoneConf", para permitir
+    configurar a maneira que o método "GetUTC", irá se comportar de acordo com
+    as propriedades de TTimeZoneConf
+
 27/01/2016
 -- pcnLeitor --
 [*] Melhorado a detecção do tipo de caracter utilizado para determinar o inicio

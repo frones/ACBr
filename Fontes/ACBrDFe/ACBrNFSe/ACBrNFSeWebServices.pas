@@ -1465,7 +1465,7 @@ begin
     case FProvedor of
       proCONAM: TagElemento := 'Reg20';
       proInfisc,
-      proSP: TagElemento := '';
+      proSP: TagElemento := 'RPS';
     else
       TagElemento := 'LoteRps';
     end;
@@ -1491,8 +1491,7 @@ begin
 
       proCONAM,
       proFISSLex,
-      proSimplISS,
-      proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
+      proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';
     end;
@@ -1570,7 +1569,8 @@ begin
 
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.
-    FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
+    if FProvedor <> proSP then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,

@@ -182,15 +182,16 @@ type
     cbLogComp: TCheckBox;
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
-    cbRetirarAcentos: TCheckBox;
     cbMonitorarPasta: TCheckBox;
     cbPreview: TCheckBox;
+    cbRetirarAcentos: TCheckBox;
     cbRFDModelo: TComboBox;
     cbSenha: TCheckBox;
     cbTraduzirTags: TCheckBox;
     cbUF: TComboBox;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
+    cbValidarDigest: TCheckBox;
     cbVersaoWS: TComboBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxAjustarAut: TCheckBox;
@@ -205,6 +206,7 @@ type
     cbxCNAB: TComboBox;
     cbxEmissaoPathNFe: TCheckBox;
     cbxExibeResumo: TCheckBox;
+    cbxTimeZoneMode: TComboBox;
     cbxQuebrarLinhasDetalhesItens: TCheckBox;
     cbxExpandirLogo: TCheckBox;
     cbxFormatXML: TCheckBox;
@@ -250,6 +252,8 @@ type
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
     cbxExibirCampoFatura: TCheckBox;
+    edTimeZoneStr: TEdit;
+    edtTimeoutWebServices: TSpinEdit;
     fspeNFCeMargemDir: TFloatSpinEdit;
     fspeNFCeMargemEsq: TFloatSpinEdit;
     fspeNFCeMargemInf: TFloatSpinEdit;
@@ -258,6 +262,9 @@ type
     fspeMargemEsq: TFloatSpinEdit;
     fspeMargemInf: TFloatSpinEdit;
     fspeMargemSup: TFloatSpinEdit;
+    gbDFeConfDiversas: TGroupBox;
+    gbDFeTimeZone: TGroupBox;
+    Label187: TLabel;
     speAlturaCampos: TSpinEdit;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
@@ -272,7 +279,6 @@ type
     speLargCodProd: TSpinEdit;
     edtNumCopia: TSpinEdit;
     edtCNPJContador: TEdit;
-    edtTimeoutWebServices: TSpinEdit;
     gbxMargem1: TGroupBox;
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
@@ -293,7 +299,6 @@ type
     Label184: TLabel;
     Label185: TLabel;
     Label186: TLabel;
-    Label187: TLabel;
     Label188: TLabel;
     lblAlturaCampos: TLabel;
     lblFonteEndereco: TLabel;
@@ -324,7 +329,6 @@ type
     chECFSinalGavetaInvertido: TCheckBox;
     cbxExibirEAN: TCheckBox;
     cbUmaInstancia: TCheckBox;
-    cbValidarDigest: TCheckBox;
     cbHRI: TCheckBox;
     chkLerCedenteRetorno: TCheckBox;
     chLCBExcluirSufixo: TCheckBox;
@@ -1005,6 +1009,7 @@ type
     procedure cbxSATSepararPorCNPJChange(Sender: TObject);
     procedure cbxSATSepararPorMESChange(Sender: TObject);
     procedure cbxSepararPorCNPJChange(Sender: TObject);
+    procedure cbxTimeZoneModeChange(Sender: TObject);
     procedure cbxUTF8Change(Sender: TObject);
     procedure chbTagQrCodeChange(Sender: TObject);
     procedure chECFArredondaMFDClick(Sender: TObject);
@@ -1021,6 +1026,7 @@ type
     procedure edBALLogChange(Sender: TObject);
     procedure edEmailEnderecoExit(Sender: TObject);
     procedure edSATLogChange(Sender: TObject);
+    procedure edTimeZoneStrEditingDone(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);{%h-}
     procedure FormCreate(Sender: TObject);
     procedure ACBrECF1MsgAguarde(Mensagem: string);
@@ -1255,7 +1261,7 @@ var
 implementation
 
 uses IniFiles, TypInfo, LCLType, strutils,
-  UtilUnit,
+  UtilUnit, pcnAuxiliar,
   DoECFUnit, DoGAVUnit, DoCHQUnit, DoDISUnit, DoLCBUnit, DoACBrUnit, DoBALUnit,
   DoBoletoUnit, DoCEPUnit, DoIBGEUnit,
   {$IFDEF MSWINDOWS} sndkey32, {$ENDIF}
@@ -1285,6 +1291,7 @@ var
   ILayout: TACBrBolLayOut;
   iImpressoraESCPOS: TACBrPosPrinterModelo;
   iPagCodigoESCPOS: TACBrPosPaginaCodigo;
+  iTZMode: TTimeZoneModoDeteccao;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1416,6 +1423,10 @@ begin
   cbxImpressora.Items.Assign(Printer.Printers);
   cbxImpressoraNFCe.Items.Clear;
   cbxImpressoraNFCe.Items.Assign(Printer.Printers);
+
+  cbxTimeZoneMode.Items.Clear;
+  For iTZMode := Low(TTimeZoneModoDeteccao) to High(TTimeZoneModoDeteccao) do
+     cbxTimeZoneMode.Items.Add( GetEnumName(TypeInfo(TTimeZoneModoDeteccao), integer(iTZMode) ) ) ;
 
   {SAT}
   cbxModeloSAT.Items.Clear;
@@ -2645,6 +2656,17 @@ begin
   ACBrNFe1.Configuracoes.Arquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
 end;
 
+procedure TFrmACBrMonitor.cbxTimeZoneModeChange(Sender: TObject);
+begin
+  ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao :=
+    TTimeZoneModoDeteccao( cbxTimeZoneMode.ItemIndex );
+  edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
+  edTimeZoneStr.Enabled := (ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao = tzManual);
+
+  ACBrCTe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
+  ACBrMDFe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
+end;
+
 procedure TFrmACBrMonitor.cbxUTF8Change(Sender: TObject);
 begin
   ACBrSAT1.Config.EhUTF8 := cbxUTF8.Checked;
@@ -2780,6 +2802,15 @@ end;
 procedure TFrmACBrMonitor.edSATLogChange(Sender: TObject);
 begin
   ACBrSAT1.ArqLOG:= edSATLog.Text;
+end;
+
+procedure TFrmACBrMonitor.edTimeZoneStrEditingDone(Sender: TObject);
+begin
+  try
+    ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr := edTimeZoneStr.Caption;
+  finally
+    edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
+  end;
 end;
 
 {------------------------------------------------------------------------------}
@@ -3316,6 +3347,9 @@ begin
     cbValidarDigest.Checked := Ini.ReadBool('ACBrNFeMonitor', 'ValidarDigest', True);
     edtTimeoutWebServices.Value := Ini.ReadInteger('ACBrNFeMonitor', 'TimeoutWebService', 15);
 
+    cbxTimeZoneMode.ItemIndex := Ini.ReadInteger('WebService','TimeZoneMode',0);
+    edTimeZoneStr.Caption := Ini.ReadString('WebService','TimeZoneStr','');
+
     ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesNFe.Text;
     ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
     ACBrNFe1.Configuracoes.Geral.ValidarDigest := cbValidarDigest.Checked;
@@ -3342,16 +3376,26 @@ begin
     ACBrNFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
+    ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao := TTimeZoneModoDeteccao( cbxTimeZoneMode.ItemIndex );
+    try
+      ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr := edTimeZoneStr.Caption;
+    except
+      ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr := GetUTCSistema;
+    end;
+    edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
+    edTimeZoneStr.Enabled := (ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao = tzManual);
 
     ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
     ACBrCTe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrCTe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrCTe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
+    ACBrCTe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 
     ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
     ACBrMDFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrMDFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrMDFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
+    ACBrMDFe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 
     cbxAjustarAut.Checked := Ini.ReadBool('WebService', 'AjustarAut', False);
     edtAguardar.Text := Ini.ReadString('WebService', 'Aguardar', '0');
@@ -4255,6 +4299,8 @@ begin
     Ini.WriteString('WebService', 'Aguardar', edtAguardar.Text);
     Ini.WriteString('WebService', 'Tentativas', edtTentativas.Text);
     Ini.WriteString('WebService', 'Intervalo', edtIntervalo.Text);
+    Ini.WriteInteger('WebService','TimeZoneMode', cbxTimeZoneMode.ItemIndex);
+    Ini.WriteString('WebService','TimeZoneStr', edTimeZoneStr.Caption);
 
     Ini.WriteString('Proxy', 'Host', edtProxyHost.Text);
     Ini.WriteString('Proxy', 'Porta', edtProxyPorta.Text);

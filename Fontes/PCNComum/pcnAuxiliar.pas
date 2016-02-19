@@ -999,7 +999,7 @@ initialization
 
 finalization;
   if Assigned( TimeZoneConfInstance ) then
-    TimeZoneConf.Free;
+    TimeZoneConfInstance.Free;
 
 end.
 

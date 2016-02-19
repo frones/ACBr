@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/02/2016
+--ACBrECFEpson --
+[-] Ajuste para que o método "CarregaFormasPagamento" considere todas as FPGs
+    da memória
+    http://www.projetoacbr.com.br/forum/topic/28186-carregaformaspagamento-ecfepson/
+
 Data: 17/02/2016
 -- ACBrECFVirtualBuffer --
 [*] Modificada a rotina "TACBrECFVirtualBufferClass.AddBufferRelatorio", para

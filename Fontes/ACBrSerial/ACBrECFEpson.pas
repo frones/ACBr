@@ -2484,9 +2484,7 @@ begin
            on E : Exception do
            begin
               // 090C “Tipo de pagamento não definido”
-              if (pos('090C',E.Message) > 0) then
-                 Break
-              else
+              if pos('090C',E.Message) = 0 then
                  raise ;
            end ;
         end;

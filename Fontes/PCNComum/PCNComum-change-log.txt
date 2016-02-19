@@ -39,10 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/02/2016
+-- pcnAuxiliar --
+[*] Modificada a maneira de criação / acesso de "TimeZoneConf", para evitar
+    problemas em rotinas que criam o componente em RunTime  (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/28066-setando-fuso-horário-manualmente-no-xml/?do=findComment&comment=185564
+
 18/02/2016
 -- pcnAuxiliar --      (por: DSA)
 [+] Adicionado novo Tipo: TTimeZoneModoDeteccao = (tzSistema, tzPCN, tzManual);
-[+] Adicionada novca classe: "TTimeZoneConf" com as propriedades published:
+[+] Adicionada nova classe: "TTimeZoneConf" com as propriedades published:
     ModoDeteccao: TTimeZoneModoDeteccao
     TimeZoneStr: String
 [*] Removida a sobrecarga do método: "GetUTC"

@@ -120,8 +120,10 @@ function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
 function GetDataDoCarnaval(const ano: Integer): TDateTime;
 function GetDataDaPascoa(const ano: Integer): TDateTime;
 
+function TimeZoneConf: TTimeZoneConf;
+
 var
-  TimeZoneConf: TTimeZoneConf;
+  TimeZoneConfInstance: TTimeZoneConf;
 
 implementation
 
@@ -918,6 +920,14 @@ end;
 
 { TTimeZoneConf }
 
+function TimeZoneConf: TTimeZoneConf;
+begin
+  if not Assigned(TimeZoneConfInstance) then
+    TimeZoneConfInstance := TTimeZoneConf.Create;
+
+  Result := TimeZoneConfInstance;
+end;
+
 constructor TTimeZoneConf.Create;
 begin
   inherited;
@@ -938,10 +948,16 @@ var
 begin
   if FTimeZoneStr = AValue then Exit;
 
-  if FModoDeteccao <> tzManual then
+  if (FModoDeteccao <> tzManual) then
   begin
     FTimeZoneStr := '';
-    exit;
+    Exit;
+  end;
+
+  if (Trim(AValue) = '') then
+  begin
+    FTimeZoneStr := GetUTCSistema;
+    Exit;
   end;
 
   if (Length(AValue) <> 6) then
@@ -979,10 +995,11 @@ begin
 end;
 
 initialization
-  TimeZoneConf := TTimeZoneConf.Create;
+  TimeZoneConfInstance := nil;
 
 finalization;
-  FreeAndNil( TimeZoneConf );
+  if Assigned( TimeZoneConfInstance ) then
+    TimeZoneConf.Free;
 
 end.
 

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/02/16 ver. 0.0.179a
+-- ACBrBancoSantander --
+[*] Ajuste remessa CNAB240. (Juliana Tamizou)
+
 Data: 15/02/16 ver. 0.0.178a
 -- ACBrBancoHSBC --
 [-] Ajuste para montagem correta do código de barras para contas com primeiro digito

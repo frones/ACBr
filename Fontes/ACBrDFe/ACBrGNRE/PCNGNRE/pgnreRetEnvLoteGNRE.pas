@@ -100,21 +100,21 @@ begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
-    if Leitor.rExtrai(1, 'TRetLote_GNRE') <> '' then
+    if Leitor.rExtrai(1, 'ns1:TRetLote_GNRE') <> '' then
     begin
-      FAmbiente := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'Ambiente'));
-      if Leitor.rExtrai(2, 'situacaoRecepcao') <> '' then
+      FAmbiente := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:Ambiente'));
+      if Leitor.rExtrai(2, 'ns1:situacaoRecepcao') <> '' then
       begin
-        Fcodigo    := Leitor.rCampo(tcInt, 'codigo');
-        Fdescricao := Leitor.rCampo(tcStr, 'descricao');
+        Fcodigo    := Leitor.rCampo(tcInt, 'ns1:codigo');
+        Fdescricao := Leitor.rCampo(tcStr, 'ns1:descricao');
       end;
 
-      if Leitor.rExtrai(2, 'recibo') <> '' then
+      if Leitor.rExtrai(2, 'ns1:recibo') <> '' then
       begin
       //       Grupo recibo - Dados do Recibo do Lote (Só é gerado se o Lote for aceito)
-        Fnumero            := Leitor.rCampo(tcInt, 'numero');
-        FdataHoraRecibo    := Leitor.rCampo(tcDatHor, 'dataHoraRecibo');
-        FtempoEstimadoProc := Leitor.rCampo(tcInt, 'tempoEstimadoProc');
+        Fnumero            := Leitor.rCampo(tcInt, 'ns1:numero');
+        FdataHoraRecibo    := Leitor.rCampo(tcDatHor, 'ns1:dataHoraRecibo');
+        FtempoEstimadoProc := Leitor.rCampo(tcInt, 'ns1:tempoEstimadoProc');
       end;
 
       Result := True;

@@ -58,7 +58,7 @@ uses
   ACBrGNREGuias, ACBrGNREConfiguracoes;
 
 const
-  CURL_WSDL = 'http://www.gnre.pe.gov.br/gnreWS/services/';
+  CURL_WSDL = 'http://www.gnre.pe.gov.br/webservice/';
   INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
@@ -162,6 +162,7 @@ type
     procedure Clear; override;
 
     function Executar: Boolean; override;
+    function SalvarTXT(AResultado: String): Boolean;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
@@ -389,6 +390,8 @@ begin
     FPVersaoServico := TACBrGNRE(FPDFeOwner).LerVersaoDeParams(FPLayout);
 
   Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
+
+  //  Result := '<versaoDados>1.00</versaoDados>';
 end;
 
 procedure TGNREWebService.FinalizarServico;
@@ -461,7 +464,7 @@ end;
 
 procedure TGNRERecepcao.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'GnreLoteRecepcao';
+  FPServico := CURL_WSDL + 'GnreLoteRecepcao';
 
   FPSoapAction := FPServico;
 end;
@@ -579,7 +582,7 @@ begin
   FPArqEnv := 'ped-rec';
   FPArqResp := 'pro-rec';
 
-  FnumeroRecibo := '';
+//  FnumeroRecibo := '';
   Fcodigo := 0;
   Fresultado := '';
   Fdescricao := '';
@@ -635,7 +638,7 @@ end;
 
 procedure TGNRERetRecepcao.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'GnreResultadoLote';
+  FPServico := CURL_WSDL + 'GnreResultadoLote';
 
   FPSoapAction := FPServico;
 end;
@@ -832,56 +835,13 @@ begin
   end;
   *)
 
-(*
-function TWebServicesBase.Confirma(AResultado: String): Boolean;
-var SL, SLAux: TStringList;
-  i, GuiasOk: Integer;
-  Cabec, RepresentacaoNumerica, SituacaoGuia: String;
-begin
-  SL := TStringList.Create;
-  SLAux := TStringList.Create;
-  SL.Text := AResultado;
-  GuiasOk := 0;
-
-  try
-    Cabec := SL.Strings[0];
-    for i := 0 to SL.Count - 1 do
-    begin
-      if SameText(Copy(SL.Strings[i], 1, 1), '1') then
-      begin
-        SituacaoGuia := Trim(Copy(SL.Strings[i], 6, 1));
-        if SameText(SituacaoGuia, '0') then
-        begin
-          SLAux.Add(Cabec);
-          SLAux.Add(SL.Strings[i]);
-          Inc(GuiasOk);
-          RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
-
-          if FConfiguracoes.Geral.Salvar then
-            SLAux.SaveToFile(PathWithDelim(FConfiguracoes.Geral.PathSalvar)+RepresentacaoNumerica+'-gnre.txt');
-        end;
-      end;
-
-      SLAux.Clear;
-      SituacaoGuia := '';
-      RepresentacaoNumerica := '';
-    end;
-  finally
-    FreeAndNil(SL);
-    FreeAndNil(SLAux);
-    Result := GuiasOk > 0;
-  end;
-end;
-*)
-
-
-
   //Verificando se existe alguma guia confirmada
   for I := 0 to FGuias.Count - 1 do
   begin
     if FGuias.Items[I].Confirmada then
     begin
       Result := True;
+      Self.SalvarTXT(FGNRERetorno.resultado);
       break;
     end;
   end;
@@ -910,6 +870,47 @@ end;
 //    FProtocolo := AInfProt.Items[0].nProt;
 //    FcStat := AInfProt.Items[0].cStat;
 //  end;
+end;
+
+function TGNRERetRecepcao.SalvarTXT(AResultado: String): Boolean;
+var
+  SL, SLAux: TStringList;
+  i, GuiasOk: Integer;
+  Cabec, RepresentacaoNumerica, SituacaoGuia: String;
+begin
+  SL := TStringList.Create;
+  SLAux := TStringList.Create;
+  SL.Text := AResultado;
+  GuiasOk := 0;
+
+  try
+    Cabec := SL.Strings[0];
+    for i := 0 to SL.Count - 1 do
+    begin
+      if SameText(Copy(SL.Strings[i], 1, 1), '1') then
+      begin
+        SituacaoGuia := Trim(Copy(SL.Strings[i], 6, 1));
+        if SameText(SituacaoGuia, '0') then
+        begin
+          SLAux.Add(Cabec);
+          SLAux.Add(SL.Strings[i]);
+          Inc(GuiasOk);
+          RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
+
+          if FPConfiguracoesGNRE.Geral.Salvar then
+            SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathSalvar)+RepresentacaoNumerica+'-gnre.txt');
+        end;
+      end;
+
+      SLAux.Clear;
+      SituacaoGuia := '';
+      RepresentacaoNumerica := '';
+    end;
+  finally
+    FreeAndNil(SL);
+    FreeAndNil(SLAux);
+    Result := GuiasOk > 0;
+  end;
 end;
 
 { TGNRERecibo }
@@ -957,7 +958,7 @@ end;
 
 procedure TGNRERecibo.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'GnreResultadoLote';
+  FPServico := CURL_WSDL + 'GnreResultadoLote';
   FPSoapAction := FPServico;
 end;
 
@@ -1113,7 +1114,7 @@ end;
 
 procedure TGNREConsultaUF.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'GnreConfigUF';
+  FPServico := CURL_WSDL + 'GnreConfigUF';
   FPSoapAction := FPServico;
 end;
 

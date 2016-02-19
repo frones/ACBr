@@ -249,15 +249,15 @@ begin
 
   try
     Leitor.Grupo := Leitor.Arquivo;
-    if Leitor.rExtrai(1, 'TResultLote_GNRE') <> '' then
+    if Leitor.rExtrai(1, 'ns1:TResultLote_GNRE') <> '' then
     begin
-      FAmbiente   := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ambiente'));
-      Fresultado  := Leitor.rCampo(tcStr, 'resultado');
+      FAmbiente   := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:ambiente'));
+      Fresultado  := Leitor.rCampo(tcStr, 'ns1:resultado');
 
-      if Leitor.rExtrai(2, 'situacaoProcess') <> '' then
+      if Leitor.rExtrai(2, 'ns1:situacaoProcess') <> '' then
       begin
-        Fcodigo     := Leitor.rCampo(tcInt, 'codigo');
-        Fdescricao  := Leitor.rCampo(tcStr, 'descricao');
+        Fcodigo     := Leitor.rCampo(tcInt, 'ns1:codigo');
+        Fdescricao  := Leitor.rCampo(tcStr, 'ns1:descricao');
       end;
 
       if Fresultado <> '' then

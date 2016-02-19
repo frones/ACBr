@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/02/2016
+[*] Diversas correções realizadas por: Cesar Balbinott, Leandro Silva visando
+    fazer o componente funcionar de forma correta.
+    
+
 17/02/2016
 -- ACBrGNREGuias --
 [*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)

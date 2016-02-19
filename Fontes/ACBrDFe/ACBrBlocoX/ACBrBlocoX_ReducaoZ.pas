@@ -79,7 +79,7 @@ type
     destructor Destroy; override;
 
     procedure GerarXML(const Assinar: Boolean = True); override;
-    procedure SaveToFile(const AXmlFileName: string); override;
+    procedure SaveToFile(const AXmlFileName: string; const AAssinar: Boolean = True); override;
 
     property DataReferencia: TDateTime read FDataReferencia write FDataReferencia;
     property CRZ: Integer read FCRZ write FCRZ;
@@ -224,10 +224,14 @@ begin
     FXMLAssinado := TACBrBlocoX(FACBrBlocoX).SSL.Assinar(FXMLOriginal, 'ReducaoZ', 'Mensagem');
 end;
 
-procedure TACBrBlocoX_ReducaoZ.SaveToFile(const AXmlFileName: string);
+procedure TACBrBlocoX_ReducaoZ.SaveToFile(const AXmlFileName: string; const AAssinar: Boolean);
 begin
-  GerarXML;
-  WriteToTXT(AXmlFileName, FXMLAssinado, False, True)
+  GerarXML(AAssinar);
+
+  if FXMLAssinado <> '' then
+    WriteToTXT(AXmlFileName, FXMLAssinado, False, True)
+  else
+    WriteToTXT(AXmlFileName, FXMLOriginal, False, True);
 end;
 
 { TACBrBlocoX_Totalizador }

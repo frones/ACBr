@@ -113,8 +113,11 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
+    property XMLOriginal: String read FXMLOriginal;
+    property XMLAssinado: String read FXMLAssinado;
+
     procedure GerarXML(const Assinar: Boolean = True); virtual;
-    procedure SaveToFile(const AXmlFileName: String); virtual;
+    procedure SaveToFile(const AXmlFileName: String; const AAssinar: Boolean = True); virtual;
   end;
 
   function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
@@ -259,7 +262,7 @@ begin
   raise EACBrBlocoXException.Create('Método não implementado "GerarXML"');
 end;
 
-procedure TACBrBlocoX_BaseFile.SaveToFile(const AXmlFileName: String);
+procedure TACBrBlocoX_BaseFile.SaveToFile(const AXmlFileName: String; const AAssinar: Boolean);
 begin
   raise EACBrBlocoXException.Create('Método não implementado "SaveToFileName"');
 end;

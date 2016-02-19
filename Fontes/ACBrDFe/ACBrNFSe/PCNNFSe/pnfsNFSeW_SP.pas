@@ -70,6 +70,8 @@ type
 
     procedure GerarXML_SP;
 
+   function AsciiToByte(const ABinaryString: AnsiString): String;
+
   public
     constructor Create(ANFSeW: TNFSeW); override;
 
@@ -172,14 +174,15 @@ begin
     Gerador.wGrupoNFSe('CPFCNPJIntermediario');
     Gerador.wCampoCNPJCPF('', '', OnlyNumber(NFSe.IntermediarioServico.CpfCnpj));
     Gerador.wGrupoNFSe('/CPFCNPJIntermediario');
+
+    Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalIntermediario',  01, 08, 0, OnlyNumber(NFSe.IntermediarioServico.InscricaoMunicipal), '');
+
+    sISSRetidoInter := EnumeradoToStr( NFSe.IntermediarioServico.IssRetido,
+                                  ['false', 'true'], [stNormal, stRetencao]);
+
+    Gerador.wCampoNFSe(tcStr, '', 'ISSRetidoIntermediario',  01, 05, 0, sISSRetidoInter, '');
+    Gerador.wCampoNFSe(tcStr, '', 'EmailIntermediario', 01, 75, 0, NFSe.IntermediarioServico.EMail, '');
   end;
-  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalIntermediario',  01, 08, 0, OnlyNumber(NFSe.IntermediarioServico.InscricaoMunicipal), '');
-
-  sISSRetidoInter := EnumeradoToStr( NFSe.IntermediarioServico.IssRetido,
-                                ['false', 'true'], [stNormal, stRetencao]);
-
-  Gerador.wCampoNFSe(tcStr, '', 'ISSRetidoIntermediario',  01, 05, 0, sISSRetidoInter, '');
-  Gerador.wCampoNFSe(tcStr, '', 'EmailIntermediario', 01, 75, 0, NFSe.IntermediarioServico.EMail, '');
 end;
 
 procedure TNFSeW_SP.GerarListaServicos;
@@ -213,10 +216,20 @@ begin
   // Não definido
 end;
 
+function TNFSeW_SP.AsciiToByte(const ABinaryString: AnsiString): String;
+var
+  I, L: Integer;
+begin
+  Result := '' ;
+  L := Length(ABinaryString) ;
+  for I := 1 to L do
+    Result := Result + IntToStr(Ord(ABinaryString[I]));
+end;
+
 procedure TNFSeW_SP.GerarXML_SP;
 var
-  sAssinatura, sISSRetido, sIndTomador,
-  sIndIntermediario, sISSRetidoInter: String;
+  sAssinatura, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
+  sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter: String;
 begin
   Gerador.Prefixo := '';
 //  Gerador.wGrupoNFSe('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
@@ -230,24 +243,40 @@ begin
   sISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
                                 ['N', 'S'], [stNormal, stRetencao]);
 
-  if Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) = 11 then
+  // Tomador do Serviço
+  sCPFCNPJTomador := OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
+
+  if Length(sCPFCNPJTomador) = 11 then
     sIndTomador := '1'
   else
-    if Length(NFSe.Tomador.IdentificacaoTomador.CpfCnpj) = 14 then
+    if Length(sCPFCNPJTomador) = 14 then
       sIndTomador := '2'
     else
       sIndTomador := '3';
 
-  if Length(NFSe.IntermediarioServico.CpfCnpj) = 11 then
-    sIndIntermediario := '1'
+  if sIndTomador <> '3' then
+    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14)
   else
-    if Length(NFSe.IntermediarioServico.CpfCnpj) = 14 then
-      sIndIntermediario := '2'
+    sTomador := '';
+
+  // Prestador Intermediario
+  sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
+
+  if Length(sCPFCNPJInter) = 11 then
+    sIndInter := '1'
+  else
+    if Length(sCPFCNPJInter) = 14 then
+      sIndInter := '2'
     else
-      sIndIntermediario := '3';
+      sIndInter := '3';
 
   sISSRetidoInter := EnumeradoToStr( NFSe.IntermediarioServico.IssRetido,
                                 ['N', 'S'], [stNormal, stRetencao]);
+
+  if sIndInter <> '3' then
+    sInter := sIndInter + Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
+  else
+    sInter := '';
 
   sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 8) +
                  PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
@@ -259,14 +288,18 @@ begin
                  Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
                  Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
                  Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
-                 sIndTomador +
-                 Poem_Zeros(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14) +
-                 sIndIntermediario +
-                 Poem_Zeros(OnlyNumber(NFSe.IntermediarioServico.CpfCnpj), 14) +
-                 sISSRetidoInter;
+                 sTomador +
+                 sInter;
 
+  sAssinatura := AsciiToByte(sAssinatura);
   sAssinatura := AsciiToHex(SHA1(sAssinatura));
-  sAssinatura := LowerCase(sAssinatura);
+
+  //  sAssinatura := AsciiToHex(MD5(SHA1(sAssinatura)));
+//  sAssinatura := LowerCase(sAssinatura);
+
+//  sAssinatura := AsciiToHex(sAssinatura);
+//  sAssinatura := SHA1(sAssinatura);
+//  sAssinatura := LowerCase(sAssinatura);
 
   Gerador.wCampoNFSe(tcStr, '', 'Assinatura', 01, 2000, 1, sAssinatura, '');
 

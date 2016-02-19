@@ -46,15 +46,20 @@ type
   private
     FNumeroLote: String;
     FSituacao: String;
+    FSucesso: String;
     FMsgRetorno: TMsgRetornoSitCollection;
+    FInformacoesLote: TInformacoesLote;
 
     procedure SetMsgRetorno(Value: TMsgRetornoSitCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
+
     property NumeroLote: String                   read FNumeroLote write FNumeroLote;
     property Situacao: String                     read FSituacao   write FSituacao;
+    property Sucesso: String                      read FSucesso         write FSucesso;
     property MsgRetorno: TMsgRetornoSitCollection read FMsgRetorno write SetMsgRetorno;
+    property InformacoesLote: TInformacoesLote    read FInformacoesLote write FInformacoesLote;
   end;
 
  TMsgRetornoSitCollection = class(TCollection)
@@ -67,31 +72,22 @@ type
     property Items[Index: Integer]: TMsgRetornoSitCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoSitIdentificacaoRps = class(TPersistent)
-  private
-    FNumero: String;
-    FSerie: String;
-    FTipo: TnfseTipoRps;
-  published
-    property Numero: String     read FNumero write FNumero;
-    property Serie: String      read FSerie  write FSerie;
-    property Tipo: TnfseTipoRps read FTipo   write FTipo;
-  end;
-
  TMsgRetornoSitCollectionItem = class(TCollectionItem)
   private
-    FIdentificacaoRps: TMsgRetornoSitIdentificacaoRps;
     FCodigo: String;
     FMensagem: String;
     FCorrecao: String;
+    FIdentificacaoRps: TMsgRetornoIdentificacaoRps;
+    FChaveNFeRPS: TChaveNFeRPS;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property IdentificacaoRps: TMsgRetornoSitIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
+    property IdentificacaoRps: TMsgRetornoIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
+    property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
  TretSitLote = class(TPersistent)
@@ -104,12 +100,15 @@ type
     destructor Destroy; override;
 
     function LerXml: Boolean;
+
     function LerXml_ABRASF: Boolean;
-    function LerXml_proISSDSF: Boolean;
+
+    function LerXML_proEL: Boolean;
     function LerXML_proEquiplano: Boolean;
     function LerXML_proInfisc: Boolean;
-    function LerXML_proEL: Boolean;
+    function LerXml_proISSDSF: Boolean;
 	  function LerXml_proNFSeBrasil: Boolean;
+    function LerXml_proSP: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -124,12 +123,13 @@ implementation
 constructor TInfSit.Create;
 begin
   FMsgRetorno := TMsgRetornoSitCollection.Create(Self);
+  FInformacoesLote := TInformacoesLote.Create;
 end;
 
 destructor TInfSit.Destroy;
 begin
   FMsgRetorno.Free;
-
+  FInformacoesLote.Free;
   inherited;
 end;
 
@@ -167,13 +167,15 @@ end;
 
 constructor TMsgRetornoSitCollectionItem.Create;
 begin
-  FIdentificacaoRps       := TMsgRetornoSitIdentificacaoRps.Create;
-  FIdentificacaoRps.FTipo := trRPS;
+  FIdentificacaoRps := TMsgRetornoIdentificacaoRps.Create;
+  FIdentificacaoRps.Tipo := trRPS;
+  FChaveNFeRPS := TChaveNFeRPS.Create;
 end;
 
 destructor TMsgRetornoSitCollectionItem.Destroy;
 begin
   FIdentificacaoRps.Free;
+  FChaveNFeRPS.Free;
   inherited;
 end;
 
@@ -542,6 +544,93 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretSitLote.LerXml_proSP: Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'RetornoInformacoesLote') <> '' then
+    begin
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+        FInfSit.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
+        if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
+        begin
+          FInfSit.InformacoesLote.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfSit.InformacoesLote.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfSit.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CNPJ');
+          if FInfSit.InformacoesLote.CPFCNPJRemetente = '' then
+            FInfSit.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CPF');
+          FInfSit.InformacoesLote.DataEnvioLote := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
+          FInfSit.InformacoesLote.QtdNotasProcessadas := Leitor.rCampo(tcInt, 'QtdeNotasProcessadas');
+          FInfSit.InformacoesLote.TempoProcessamento := Leitor.rCampo(tcInt, 'TempoProcessamento');
+          FInfSit.InformacoesLote.ValorTotalServico := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
+        end;
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
+      begin
+        FInfSit.MsgRetorno.Add;
+        FInfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        FInfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+        FInfSit.FMsgRetorno[i].FCorrecao := '';
+
+        if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+        begin
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+        end;
+
+        if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+        begin
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+        end;
+
+        Inc(i);
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
+      begin
+        FInfSit.MsgRetorno.Add;
+        FInfSit.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        FInfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+        FInfSit.FMsgRetorno[i].FCorrecao := '';
+
+        if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+        begin
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+        end;
+
+        if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+        begin
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+          FInfSit.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+        end;
+
+        Inc(i);
+      end;
+
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
 end;
 
 end.

@@ -76,6 +76,57 @@ type
  TConfirmacaoCancelamento           = class;
  TSubstituicaoNfse                  = class;
 
+//******************************************************************************
+
+  TMsgRetornoIdentificacaoRps = class(TPersistent)
+  private
+    FNumero: String;
+    FSerie: String;
+    FTipo: TnfseTipoRps;
+  published
+    property Numero: String     read FNumero write FNumero;
+    property Serie: String      read FSerie  write FSerie;
+    property Tipo: TnfseTipoRps read FTipo   write FTipo;
+  end;
+
+  TInformacoesLote = class(TPersistent)
+  private
+    FNumeroLote: String;
+    FInscricaoPrestador: String;
+    FCPFCNPJRemetente: String;
+    FDataEnvioLote: TDateTime;
+    FQtdNotasProcessadas: Integer;
+    FTempoProcessamento: Integer;
+    FValorTotalServico: Currency;
+  public
+    property NumeroLote: String           read FNumeroLote          write FNumeroLote;
+    property InscricaoPrestador: String   read FInscricaoPrestador  write FInscricaoPrestador;
+    property CPFCNPJRemetente: String     read FCPFCNPJRemetente    write FCPFCNPJRemetente;
+    property DataEnvioLote: TDateTime     read FDataEnvioLote       write FDataEnvioLote;
+    property QtdNotasProcessadas: Integer read FQtdNotasProcessadas write FQtdNotasProcessadas;
+    property TempoProcessamento: Integer  read FTempoProcessamento  write FTempoProcessamento;
+    property ValorTotalServico: Currency  read FValorTotalServico   write FValorTotalServico;
+  end;
+
+  TChaveNFeRPS = class(TPersistent)
+  private
+    FInscricaoPrestador: String;
+    FNumero: String;
+    FCodigoVerificacao: String;
+    FNumeroRPS: String;
+    FSerieRPS: String;
+  public
+    property InscricaoPrestador: String read FInscricaoPrestador write FInscricaoPrestador;
+    // NFS-e
+    property Numero: String             read FNumero             write FNumero;
+    property CodigoVerificacao: String  read FCodigoVerificacao  write FCodigoVerificacao;
+    // RPS
+    property SerieRPS: String           read FSerieRPS           write FSerieRPS;
+    property NumeroRPS: String          read FNumeroRPS          write FNumeroRPS;
+  end;
+
+//******************************************************************************
+
  TInfID = class(TPersistent)
   private
     FID: string;

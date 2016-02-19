@@ -54,6 +54,7 @@ type
     FMsgCanc: String;
     FMsgRetorno: TMsgRetornoCancCollection;
     FNotasCanceladas: TNotasCanceladasCollection;
+    FInformacoesLote: TInformacoesLote;
 
     procedure SetMsgRetorno(Value: TMsgRetornoCancCollection);
     procedure SetNotasCanceladas(const Value: TNotasCanceladasCollection);
@@ -68,6 +69,7 @@ type
     property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno  write SetMsgRetorno;
 
     property NotasCanceladas: TNotasCanceladasCollection read FNotasCanceladas write SetNotasCanceladas;
+    property InformacoesLote: TInformacoesLote    read FInformacoesLote write FInformacoesLote;
   end;
 
  TMsgRetornoCancCollection = class(TCollection)
@@ -85,6 +87,8 @@ type
     FCodigo: String;
     FMensagem: String;
     FCorrecao: String;
+    FIdentificacaoRps: TMsgRetornoIdentificacaoRps;
+    FChaveNFeRPS: TChaveNFeRPS;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -92,6 +96,8 @@ type
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
+    property IdentificacaoRps: TMsgRetornoIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
+    property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
  TNotasCanceladasCollection = class(TCollection)
@@ -129,12 +135,15 @@ type
     destructor Destroy; override;
 
     function LerXml: Boolean;
+
     function LerXml_ABRASF: Boolean;
-    function LerXml_proISSDSF: Boolean;
+
     function LerXML_proEquiplano: Boolean;
-    function LerXml_proInfisc: Boolean;
     function LerXml_proEL: Boolean;
+    function LerXml_proInfisc: Boolean;
+    function LerXml_proISSDSF: Boolean;
     function LerXml_proNFSeBrasil: Boolean;
+    function LerXml_proSP: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -152,6 +161,7 @@ begin
   FPedido          := TPedidoCancelamento.Create;
   FMsgRetorno      := TMsgRetornoCancCollection.Create(Self);
   FNotasCanceladas := TNotasCanceladasCollection.Create(Self);
+  FInformacoesLote := TInformacoesLote.Create;
 end;
 
 destructor TInfCanc.Destroy;
@@ -159,6 +169,7 @@ begin
   FPedido.Free;
   FMsgRetorno.Free;
   FNotasCanceladas.Free;
+  FInformacoesLote.Free;
 
   inherited;
 end;
@@ -202,12 +213,15 @@ end;
 
 constructor TMsgRetornoCancCollectionItem.Create;
 begin
-
+  FIdentificacaoRps := TMsgRetornoIdentificacaoRps.Create;
+  FIdentificacaoRps.Tipo := trRPS;
+  FChaveNFeRPS := TChaveNFeRPS.Create;
 end;
 
 destructor TMsgRetornoCancCollectionItem.Destroy;
 begin
-
+  FIdentificacaoRps.Free;
+  FChaveNFeRPS.Free;
   inherited;
 end;
 
@@ -614,6 +628,93 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretCancNFSe.LerXml_proSP: Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+
+    if leitor.rExtrai(1, 'RetornoInformacoesLote') <> '' then
+    begin
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+        FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
+        if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
+        begin
+          FInfCanc.InformacoesLote.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfCanc.InformacoesLote.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfCanc.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CNPJ');
+          if FInfCanc.InformacoesLote.CPFCNPJRemetente = '' then
+            FInfCanc.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CPF');
+          FInfCanc.InformacoesLote.DataEnvioLote := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
+          FInfCanc.InformacoesLote.QtdNotasProcessadas := Leitor.rCampo(tcInt, 'QtdeNotasProcessadas');
+          FInfCanc.InformacoesLote.TempoProcessamento := Leitor.rCampo(tcInt, 'TempoProcessamento');
+          FInfCanc.InformacoesLote.ValorTotalServico := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
+        end;
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
+      begin
+        FInfCanc.MsgRetorno.Add;
+        FInfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        FInfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+        FInfCanc.FMsgRetorno[i].FCorrecao := '';
+
+        if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+        begin
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+        end;
+
+        if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+        begin
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+        end;
+
+        Inc(i);
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
+      begin
+        FInfCanc.MsgRetorno.Add;
+        FInfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        FInfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+        FInfCanc.FMsgRetorno[i].FCorrecao := '';
+
+        if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+        begin
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+        end;
+
+        if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+        begin
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+          FInfCanc.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+        end;
+
+        Inc(i);
+      end;
+
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
 end;
 
 end.

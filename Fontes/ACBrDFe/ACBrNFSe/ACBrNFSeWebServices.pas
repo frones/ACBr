@@ -802,6 +802,9 @@ begin
     Result := SeparaDados(FPRetornoWS, 'outputXML');
 
   if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 'RetornoXML');
+
+  if Result = '' then
     Result := SeparaDados(FPRetornoWS, 's:Body');
 
   if Result = '' then

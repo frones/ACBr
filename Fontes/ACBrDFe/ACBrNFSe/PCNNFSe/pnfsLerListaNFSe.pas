@@ -41,22 +41,28 @@ uses
 
 type
 
- TLerListaNFSeCollection = class;
- TLerListaNFSeCollectionItem = class;
- TMsgRetornoNFSeCollection = class;
- TMsgRetornoNFSeCollectionItem = class;
+  TLerListaNFSeCollection = class;
+  TLerListaNFSeCollectionItem = class;
+  TMsgRetornoNFSeCollection = class;
+  TMsgRetornoNFSeCollectionItem = class;
 
  TListaNFSe = class(TPersistent)
   private
     FCompNFSe: TLerListaNFSeCollection;
     FMsgRetorno: TMsgRetornoNFSeCollection;
+    FSucesso: String;
+    FChaveNFeRPS: TChaveNFeRPS;
+
     procedure SetCompNFSe(Value: TLerListaNFSeCollection);
     procedure SetMsgRetorno(Value: TMsgRetornoNFSeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
-    property CompNFSe: TLerListaNFSeCollection     read FCompNFSe   write SetCompNFSe;
-    property MsgRetorno: TMsgRetornoNFSeCollection read FMsgRetorno write SetMsgRetorno;
+
+    property CompNFSe: TLerListaNFSeCollection     read FCompNFSe        write SetCompNFSe;
+    property MsgRetorno: TMsgRetornoNFSeCollection read FMsgRetorno      write SetMsgRetorno;
+    property Sucesso: String                       read FSucesso         write FSucesso;
+    property ChaveNFeRPS: TChaveNFeRPS             read FChaveNFeRPS     write FChaveNFeRPS;
   end;
 
  TLerListaNFSeCollection = class(TCollection)
@@ -93,31 +99,22 @@ type
     property Items[Index: Integer]: TMsgRetornoNFSeCollectionItem read GetItem write SetItem; default;
   end;
 
- TMsgRetornoNFSeIdentificacaoRps = class(TPersistent)
-  private
-    FNumero: String;
-    FSerie: String;
-    FTipo: TNFSeTipoRps;
-  published
-    property Numero: String     read FNumero write FNumero;
-    property Serie: String      read FSerie  write FSerie;
-    property Tipo: TNFSeTipoRps read FTipo   write FTipo;
-  end;
-
  TMsgRetornoNFSeCollectionItem = class(TCollectionItem)
   private
-    FIdentificacaoRps: TMsgRetornoNFSeIdentificacaoRps;
     FCodigo: String;
     FMensagem: String;
     FCorrecao: String;
+    FIdentificacaoRps: TMsgRetornoIdentificacaoRps;
+    FChaveNFeRPS: TChaveNFeRPS;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property IdentificacaoRps: TMsgRetornoNFSeIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
     property Codigo: String   read FCodigo   write FCodigo;
     property Mensagem: String read FMensagem write FMensagem;
     property Correcao: String read FCorrecao write FCorrecao;
+    property IdentificacaoRps: TMsgRetornoIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
+    property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
  TRetornoNFSe = class(TPersistent)
@@ -149,12 +146,14 @@ constructor TListaNFSe.Create;
 begin
   FCompNfse   := TLerListaNFSeCollection.Create(Self);
   FMsgRetorno := TMsgRetornoNFSeCollection.Create(Self);
+  FChaveNFeRPS := TChaveNFeRPS.Create;
 end;
 
 destructor TListaNFSe.Destroy;
 begin
   FCompNfse.Free;
   FMsgRetorno.Free;
+  FChaveNFeRPS.Free;
 
   inherited;
 end;
@@ -241,13 +240,15 @@ end;
 
 constructor TMsgRetornoNFSeCollectionItem.Create;
 begin
-  FIdentificacaoRps       := TMsgRetornoNFSeIdentificacaoRps.Create;
-  FIdentificacaoRps.FTipo := trRPS;
+  FIdentificacaoRps := TMsgRetornoIdentificacaoRps.Create;
+  FIdentificacaoRps.Tipo := trRPS;
+  FChaveNFeRPS := TChaveNFeRPS.Create;
 end;
 
 destructor TMsgRetornoNFSeCollectionItem.Destroy;
 begin
   FIdentificacaoRps.Free;
+  FChaveNFeRPS.Free;
 
   inherited;
 end;
@@ -333,6 +334,9 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaNFSeRPS') <> '');
 
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoEnvioRPS') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -366,6 +370,7 @@ begin
             (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
+            (leitor.rExtrai(Nivel, 'NFe', '', i + 1) <> '') or                   // Provedor SP
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     //ConsultaLote
@@ -395,6 +400,12 @@ begin
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'ComplNfse');
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'RetornoConsultaRPS');
+              if NFSe.XML = '' then
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'NFe');
+              if NFSe.XML = '' then
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'Nfse');
+              if NFSe.XML = '' then
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'nfse');
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'ConsultaNFSe');
               if NFSe.XML = '' then
@@ -661,6 +672,89 @@ begin
       end;
     end;
 *)
+
+    if FProvedor = proSP then
+    begin
+      Result := False;
+
+      try
+        Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+        Leitor.Grupo   := Leitor.Arquivo;
+
+        ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
+        if (leitor.rExtrai(2, 'ChaveNFeRPS') <> '') then
+        begin
+          if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+          begin
+            ListaNFSe.FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+            ListaNFSe.FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+            ListaNFSe.FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+          end;
+
+          if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+          begin
+            ListaNFSe.FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+            ListaNFSe.FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+            ListaNFSe.FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+          end;
+        end;
+
+        i := 0;
+        while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
+        begin
+          ListaNFSe.FMsgRetorno.Add;
+          ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+          ListaNFSe.FMsgRetorno[i].FCorrecao := '';
+
+          if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+          begin
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+          end;
+
+          if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+          begin
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+          end;
+
+          Inc(i);
+        end;
+
+        i := 0;
+        while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
+        begin
+          ListaNFSe.MsgRetorno.Add;
+          ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+          ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+          ListaNFSe.FMsgRetorno[i].FCorrecao := '';
+
+          if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+          begin
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+          end;
+
+          if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+          begin
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+          end;
+
+          Inc(i);
+        end;
+
+        Result := True;
+      except
+        Result := False;
+      end;
+    end;
   except
     Result := False;
   end;

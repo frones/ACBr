@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 371
+  Left = 361
   Height = 452
-  Top = 104
+  Top = 216
   Width = 731
   Caption = 'TEFDDemo'
   ClientHeight = 452
@@ -9,7 +9,7 @@ object Form1: TForm1
   KeyPreview = True
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.6.0.4'
   object Panel3: TPanel
     Left = 0
     Height = 194
@@ -305,7 +305,7 @@ object Form1: TForm1
         Width = 308
         Align = alLeft
         Caption = 'ECF'
-        ClientHeight = 162
+        ClientHeight = 160
         ClientWidth = 304
         TabOrder = 0
         object Label2: TLabel
@@ -420,7 +420,7 @@ object Form1: TForm1
           Left = 186
           Height = 15
           Top = 1
-          Width = 92
+          Width = 90
           Caption = 'Indice "CARTAO"'
           ParentColor = False
         end
@@ -477,7 +477,7 @@ object Form1: TForm1
           Width = 413
           Align = alClient
           Caption = 'TEF'
-          ClientHeight = 160
+          ClientHeight = 158
           ClientWidth = 409
           TabOrder = 0
           object bInicializar: TButton
@@ -617,7 +617,7 @@ object Form1: TForm1
         Width = 292
         Align = alLeft
         Caption = 'ECF'
-        ClientHeight = 162
+        ClientHeight = 160
         ClientWidth = 288
         Enabled = False
         TabOrder = 0
@@ -750,7 +750,7 @@ object Form1: TForm1
         Width = 431
         Align = alClient
         Caption = 'TEF'
-        ClientHeight = 162
+        ClientHeight = 160
         ClientWidth = 427
         TabOrder = 1
         object bADM: TButton
@@ -898,7 +898,7 @@ object Form1: TForm1
           Top = 115
           Width = 185
           Caption = 'TEF Direção'
-          ClientHeight = 27
+          ClientHeight = 25
           ClientWidth = 181
           TabOrder = 14
           object ComboBox1: TComboBox
@@ -1185,7 +1185,6 @@ object Form1: TForm1
     MsgPausaRelatorio = 'Destaque a %dª via, <ENTER> proxima, %d seg.'
     MaxLinhasBuffer = 3
     PaginaDeCodigo = 28591
-    FormMsgColor = clHighlight
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
     MemoParams.Strings = (
       '[Cabecalho]'
@@ -1220,6 +1219,7 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
+    ConfigBarras.Margem = 0
     InfoRodapeCupom.Imposto.ModoCompacto = False
     left = 16
     top = 296

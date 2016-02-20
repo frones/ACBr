@@ -1,7 +1,7 @@
 object Form2: TForm2
-  Left = 470
+  Left = 200
   Height = 174
-  Top = 202
+  Top = 194
   Width = 318
   ActiveControl = cbxRede
   BorderIcons = [biSystemMenu]
@@ -10,12 +10,12 @@ object Form2: TForm2
   ClientHeight = 174
   ClientWidth = 318
   OnCreate = FormCreate
-  LCLVersion = '0.9.29'
+  LCLVersion = '1.6.0.4'
   object Label1: TLabel
     Left = 17
-    Height = 16
+    Height = 15
     Top = 15
-    Width = 28
+    Width = 27
     Caption = 'REDE'
     ParentColor = False
   end
@@ -34,9 +34,9 @@ object Form2: TForm2
   end
   object Label2: TLabel
     Left = 133
-    Height = 16
+    Height = 15
     Top = 15
-    Width = 24
+    Width = 23
     Caption = 'NSU'
     ParentColor = False
   end
@@ -49,9 +49,9 @@ object Form2: TForm2
   end
   object Label3: TLabel
     Left = 17
-    Height = 16
+    Height = 15
     Top = 72
-    Width = 82
+    Width = 80
     Caption = 'Data Transação'
     ParentColor = False
   end
@@ -78,9 +78,9 @@ object Form2: TForm2
   end
   object Label4: TLabel
     Left = 133
-    Height = 16
+    Height = 15
     Top = 72
-    Width = 27
+    Width = 26
     Caption = 'Hora'
     ParentColor = False
   end

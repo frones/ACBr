@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/02/2016
+--ACBrTEFDVeSPague--
+[-] Tratado pois estava fazendo requisição enviando o comando transacao_valor_ajuste com 1
+    ocorrendo o problema de sempre trazer o desconto de 1 real em qualquer transação
+		Por: Juliomar Marchetti
+
 Data: 17/02/2016
 -- ACBrTEFDClass --
 [+] Adicionadas as seguintes propriedades ao TACBrTEFDResp:

@@ -72,6 +72,8 @@ type
     destructor Destroy; override;
   end;
 
+  { TfrmACBrDANFCeFortesFrA4 }
+
   TfrmACBrDANFCeFortesFrA4 = class(TForm)
     rlReportA4: TRLReport;
     RLBand1: TRLBand;
@@ -163,6 +165,10 @@ type
     RLLabel51: TRLLabel;
     lCancelada: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLLabel14BeforePrint(Sender: TObject; var Text: string;
+      var PrintIt: Boolean);
+    procedure RLLabel15BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLLabel1BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
@@ -327,6 +333,18 @@ procedure TfrmACBrDANFCeFortesFrA4.lNomeFantasiaBeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.xFant;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel14BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
+end;
+
+procedure TfrmACBrDANFCeFortesFrA4.RLLabel15BeforePrint(Sender: TObject;
+  var Text: string; var PrintIt: Boolean);
+begin
+  PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.lSistemaBeforePrint(Sender: TObject;
@@ -507,12 +525,14 @@ procedure TfrmACBrDANFCeFortesFrA4.RLLabel18BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   Text := FormatFloat('R$ ,0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vDesc);
+  PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel19BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   Text := FormatFloat('R$ ,0.00##', self.FACBrNFeDANFCeFortesA4.FpNFe.Det[self.FNumItem].Prod.vOutro);
+  PrintIt := FACBrNFeDANFCeFortesA4.ImprimeDescAcrescItem;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel1BeforePrint(Sender: TObject;

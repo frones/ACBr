@@ -274,6 +274,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = []
         Layout = tlCenter
         ParentFont = False
+				BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
         Left = 552
@@ -288,6 +289,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = []
         Layout = tlCenter
         ParentFont = False
+				BeforePrint = RLLabel15BeforePrint
       end
     end
     object subItens: TRLSubDetail

@@ -32,22 +32,19 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="SynEdit"/>
       </Item1>
       <Item2>
-        <PackageName Value="PCN2"/>
+        <PackageName Value="ACBr_GNRE"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_GNRE"/>
+        <PackageName Value="ACBrComum"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBrComum"/>
-      </Item4>
-      <Item5>
         <PackageName Value="LCL"/>
-      </Item5>
+      </Item4>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -60,7 +57,6 @@
         <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ufrmStatus"/>
       </Unit1>
       <Unit2>
         <Filename Value="Frm_Demo_ACBrGNRE.pas"/>
@@ -68,7 +64,6 @@
         <ComponentName Value="frmDemo_ACBrGNRE"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_Demo_ACBrGNRE"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -93,7 +88,6 @@
     </Linking>
     <Other>
       <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>

@@ -12,7 +12,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.3'
+  LCLVersion = '1.6.0.4'
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -209,8 +209,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         end
         object TabSheet2: TTabSheet
           Caption = 'Geral'
-          ClientHeight = 0
-          ClientWidth = 0
+          ClientHeight = 333
+          ClientWidth = 269
           ImageIndex = 1
           object GroupBox3: TGroupBox
             Left = 0
@@ -252,9 +252,9 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
             end
             object ckSalvar: TCheckBox
               Left = 6
-              Height = 15
+              Height = 19
               Top = 10
-              Width = 209
+              Width = 196
               Caption = 'Salvar Arquivos de Envio e Resposta'
               Font.Color = clWindowText
               Font.Height = -11
@@ -266,8 +266,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         end
         object TabSheet3: TTabSheet
           Caption = 'WebService'
-          ClientHeight = 0
-          ClientWidth = 0
+          ClientHeight = 333
+          ClientWidth = 269
           ImageIndex = 2
           object GroupBox4: TGroupBox
             Left = 0
@@ -292,9 +292,9 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
             end
             object ckVisualizar: TCheckBox
               Left = 6
-              Height = 17
+              Height = 19
               Top = 104
-              Width = 153
+              Width = 119
               Caption = 'Visualizar Mensagem'
               Font.Color = clWindowText
               Font.Height = -11
@@ -446,8 +446,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         end
         object TabSheet4: TTabSheet
           Caption = 'Emitente'
-          ClientHeight = 0
-          ClientWidth = 0
+          ClientHeight = 333
+          ClientWidth = 269
           ImageIndex = 3
           object Label12: TLabel
             Left = 8
@@ -647,8 +647,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         end
         object TabSheet7: TTabSheet
           Caption = 'Email'
-          ClientHeight = 0
-          ClientWidth = 0
+          ClientHeight = 333
+          ClientWidth = 269
           ImageIndex = 4
           object GroupBox5: TGroupBox
             Left = 1
@@ -744,9 +744,9 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
             end
             object cbEmailSSL: TCheckBox
               Left = 8
-              Height = 17
+              Height = 19
               Top = 130
-              Width = 167
+              Width = 157
               Caption = 'SMTP exige conexão segura'
               TabOrder = 5
             end
@@ -1333,7 +1333,6 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
           )
           VisibleSpecialChars = [vscSpace, vscTabAtLast]
           ReadOnly = True
-          SelectedColor.FrameEdges = sfeAround
           SelectedColor.BackPriority = 50
           SelectedColor.ForePriority = 50
           SelectedColor.FramePriority = 50
@@ -1341,23 +1340,17 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
           SelectedColor.ItalicPriority = 50
           SelectedColor.UnderlinePriority = 50
           SelectedColor.StrikeOutPriority = 50
-          IncrementColor.FrameEdges = sfeAround
-          HighlightAllColor.FrameEdges = sfeAround
           BracketHighlightStyle = sbhsBoth
           BracketMatchColor.Background = clNone
           BracketMatchColor.Foreground = clNone
-          BracketMatchColor.FrameEdges = sfeAround
           BracketMatchColor.Style = [fsBold]
           FoldedCodeColor.Background = clNone
           FoldedCodeColor.Foreground = clGray
           FoldedCodeColor.FrameColor = clGray
-          FoldedCodeColor.FrameEdges = sfeAround
           MouseLinkColor.Background = clNone
           MouseLinkColor.Foreground = clBlue
-          MouseLinkColor.FrameEdges = sfeAround
           LineHighlightColor.Background = clNone
           LineHighlightColor.Foreground = clNone
-          LineHighlightColor.FrameEdges = sfeAround
           inline SynLeftGutterPartList1: TSynGutterPartList
             object SynGutterMarks1: TSynGutterMarks
               Width = 24
@@ -1368,7 +1361,6 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               MouseActions = <>
               MarkupInfo.Background = clBtnFace
               MarkupInfo.Foreground = clNone
-              MarkupInfo.FrameEdges = sfeAround
               DigitCount = 2
               ShowOnlyLineNumbersMultiplesOf = 1
               ZeroStart = False
@@ -1385,13 +1377,11 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               MouseActions = <>
               MarkupInfo.Background = clWhite
               MarkupInfo.Foreground = clGray
-              MarkupInfo.FrameEdges = sfeAround
             end
             object SynGutterCodeFolding1: TSynGutterCodeFolding
               MouseActions = <>
               MarkupInfo.Background = clNone
               MarkupInfo.Foreground = clGray
-              MarkupInfo.FrameEdges = sfeAround
               MouseActionsExpanded = <>
               MouseActionsCollapsed = <>
             end
@@ -1451,31 +1441,19 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     top = 224
   end
   object ACBrGNRE1: TACBrGNRE
-    Configuracoes.Geral.PathSalvar = 'C:\Program Files (x86)\Borland\Delphi7\Bin\'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
-    Configuracoes.WebServices.IntervaloTentativas = 0
-    Configuracoes.WebServices.AjustaAguardaConsultaRet = False
     OnStatusChange = ACBrGNRE1StatusChange
     OnGerarLog = ACBrGNRE1GerarLog
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
     left = 406
     top = 224
   end
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'Documento XML (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
-    ElementAttri.FrameEdges = sfeAround
-    AttributeAttri.FrameEdges = sfeAround
-    NamespaceAttributeAttri.FrameEdges = sfeAround
-    AttributeValueAttri.FrameEdges = sfeAround
-    NamespaceAttributeValueAttri.FrameEdges = sfeAround
-    TextAttri.FrameEdges = sfeAround
-    CDATAAttri.FrameEdges = sfeAround
-    EntityRefAttri.FrameEdges = sfeAround
-    ProcessingInstructionAttri.FrameEdges = sfeAround
-    CommentAttri.FrameEdges = sfeAround
-    DocTypeAttri.FrameEdges = sfeAround
-    SpaceAttri.FrameEdges = sfeAround
-    SymbolAttri.FrameEdges = sfeAround
     WantBracesParsed = False
     left = 512
     top = 224

@@ -75,6 +75,7 @@ Var wDescricao  : AnsiString ;
     Finalidade  : TACBrECFFinalizaArqMFD;
     TipoDoc     : TACBrECFTipoDocumento;
     TipoDocStr, FinalidadeStr: String;
+    FXMLOriginal : TStringList;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do
   begin
@@ -1050,7 +1051,40 @@ begin
           begin
               ArquivoMF_DLL(Cmd.Params(0) )                          { Path do Arquivo }
           end
-
+        else if Cmd.Metodo = 'assinarblocoxestoque' then
+          begin
+            if FileExists(Cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'Estoque', 'Mensagem');
+                FXMLOriginal.SaveToFile(Cmd.Params(0));
+                Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
+              finally
+                FXMLOriginal.Free;;
+              end;
+            end
+            else
+                Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(Cmd.Params(0), 'Estoque', 'Mensagem');
+          end
+        else if Cmd.Metodo = 'assinarblocoxreducaoz' then
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'Estoque', 'Mensagem');
+                FXMLOriginal.SaveToFile(Cmd.Params(0));
+                Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
+              finally
+                FXMLOriginal.Free;;
+              end;
+            end
+            else
+               Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(Cmd.Params(0), 'ReducaoZ', 'Mensagem');
+          end
         else if Cmd.Metodo = 'pafmf_arquivomfd' then
           begin
               ArquivoMFD_DLL(Cmd.Params(0) )                          { Path do Arquivo }

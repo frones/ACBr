@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2016
+[+] Adicionado a opção para assinar os arquivos do Bloco X do Paf-ECF!
+		por: Juliomar Marchetti
+		
 18/02/2016
 [+] Adicionada configuração para permitir configurar o TimeZone, para geração
     dos XMLs: tzSistema (default), tzPCN, tzManual  (por: DSA)

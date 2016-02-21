@@ -2,32 +2,32 @@
 { Projeto: ACBr Monitor                                                        }
 {  Executavel multiplataforma que faz usocdo conjunto de componentes ACBr para }
 { criar uma interface de comunicação com equipamentos de automacao comercial.  }
-
+{                                                                              }
 { Direitos Autorais Reservados (c) 2010 Daniel Simões de Almeida               }
-
+{                                                                              }
 { Colaboradores nesse arquivo:     2005 Fábio Rogério Baía                     }
-
+{                                                                              }
 {  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
-
+{                                                                              }
 {  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
 { sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
 { Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
 { qualquer versão mais nova.                                                   }
-
+{                                                                              }
 {  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
 { GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
 { QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
 { obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
-
+{                                                                              }
 {  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
 { programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
 { Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
 { copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
-
+{                                                                              }
 { Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
 {       Rua Coronel Aureliano de Camargo, 973 - Tatuí - SP - 18270-170         }
-
+{                                                                              }
 {******************************************************************************}
 
 {$mode objfpc}{$H+}
@@ -43,9 +43,9 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, SynHighlighterXML, SynMemo, PrintersDlgs,
-  pcnConversao, pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrMDFe,
+  Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
+  pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
+  ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass;
 
 const
@@ -63,6 +63,7 @@ type
   { TFrmACBrMonitor }
 
   TFrmACBrMonitor = class(TForm)
+    ACBrBlocoX1: TACBrBlocoX;
     ACBrBoleto1: TACBrBoleto;
     ACBrBoletoFCFortes1: TACBrBoletoFCFortes;
     ACBrCEP1: TACBrCEP;
@@ -3484,11 +3485,13 @@ begin
     ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumeroSerie.Text;
     ACBrCTe1.Configuracoes.Certificados.NumeroSerie := edtNumeroSerie.Text;
     ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := edtNumeroSerie.Text;
+    ACBrBlocoX1.Configuracoes.Certificados.NumeroSerie := edtNumeroSerie.Text;
 
     edtSenha.Text := LeINICrypt(INI, 'Certificado', 'Senha', _C);
     ACBrNFe1.Configuracoes.Certificados.Senha := edtSenha.Text;
     ACBrCTe1.Configuracoes.Certificados.Senha := edtSenha.Text;
     ACBrMDFe1.Configuracoes.Certificados.Senha := edtSenha.Text;
+    ACBrBlocoX1.Configuracoes.Certificados.Senha := edtSenha.Text;
 
     edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
     edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
@@ -3508,6 +3511,11 @@ begin
     ACBrMDFe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
     ACBrMDFe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
     ACBrMDFe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+
+    ACBrBlocoX1.Configuracoes.WebServices.ProxyHost := edtProxyHost.Text;
+    ACBrBlocoX1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
+    ACBrBlocoX1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
+    ACBrBlocoX1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
 
     rgTipoDanfe.ItemIndex := Ini.ReadInteger('Geral', 'DANFE', 0);
     edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');

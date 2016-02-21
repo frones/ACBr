@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 300
+  Left = 251
   Height = 689
-  Top = 177
+  Top = 139
   Width = 832
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.0.4'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 620
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsCertificadoDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 1
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -9387,7 +9387,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       ShortCut = 57379
                     end>
                   MouseActions = <>
+                  MouseTextActions = <>
                   MouseSelActions = <>
+                  VisibleSpecialChars = [vscSpace, vscTabAtLast]
                   SelectedColor.BackPriority = 50
                   SelectedColor.ForePriority = 50
                   SelectedColor.FramePriority = 50
@@ -11278,6 +11280,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -12523,5 +12526,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ACBrBoleto = ACBrBoleto1
     left = 784
     top = 544
+  end
+  object ACBrBlocoX1: TACBrBlocoX
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    left = 336
+    top = 520
   end
 end

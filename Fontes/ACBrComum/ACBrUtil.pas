@@ -451,7 +451,8 @@ end;
  -----------------------------------------------------------------------------}
 function RoundABNT(const AValue: Double; const Digits: SmallInt):Double;
 var
-   Pow, PowValue, RestPart, FracValue : Extended;
+   Pow, FracValue, PowValue : Extended;
+   RestPart: Double;
    IntCalc, FracCalc, LastNumber, IntValue : Int64;
 Begin
    Pow       := intpower(10, abs(Digits) );
@@ -459,9 +460,9 @@ Begin
    IntValue  := trunc(PowValue);
    FracValue := frac(PowValue);
 
-   PowValue := SimpleRoundTo( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
+   PowValue := FracValue * 10 * Pow ; 
    IntCalc  := trunc( PowValue );
-   FracCalc := trunc( frac( PowValue ) * 100);
+   FracCalc := TruncFix( frac( PowValue ) * 100 );
 
    if (FracCalc > 50) then
       Inc( IntCalc )
@@ -474,9 +475,10 @@ Begin
          Inc( IntCalc )
       else
        begin
-         RestPart := frac( PowValue * 10 ) ;
+         PowValue := PowValue * 10;
+         RestPart := PowValue - TruncFix(PowValue);
 
-         if RestPart > 0 then
+         if RestPart > 0.00001 then
             Inc( IntCalc );
        end ;
     end ;
@@ -1189,7 +1191,22 @@ begin
    Result := DefaultFormatSettings;
   {$ELSE}
    Result := TFormatSettings.Create('');
-  {$ENDIF}
+   Result.CurrencyString            := CurrencyString;
+   Result.CurrencyFormat            := CurrencyFormat;
+   Result.NegCurrFormat             := NegCurrFormat;
+   Result.ThousandSeparator         := ThousandSeparator;
+   Result.DecimalSeparator          := DecimalSeparator;
+   Result.CurrencyDecimals          := CurrencyDecimals;
+   Result.DateSeparator             := DateSeparator;
+   Result.ShortDateFormat           := ShortDateFormat;
+   Result.LongDateFormat            := LongDateFormat;
+   Result.TimeSeparator             := TimeSeparator;
+   Result.TimeAMString              := TimeAMString;
+   Result.TimePMString              := TimePMString;
+   Result.ShortTimeFormat           := ShortTimeFormat;
+   Result.LongTimeFormat            := LongTimeFormat;
+   Result.TwoDigitYearCenturyWindow := TwoDigitYearCenturyWindow;
+   Result.ListSeparator             := ListSeparator;  {$ENDIF}
 end;
 {$ENDIF}
 
@@ -2027,7 +2044,7 @@ function StringToBinaryString(const AString: AnsiString): AnsiString;
 var
    P, I : LongInt;
    Hex : String;
-   CharHex : AnsiChar;
+   CharHex : AnsiString;
 begin
   Result := AString ;
 
@@ -2040,11 +2057,16 @@ begin
      begin
        try
           CharHex := AnsiChr(StrToInt('$'+Hex));
+          {$IFNDEF COMPILER8_UP}
+          // Delphi 7 não conseguirá processar Strings com Nulos em "StringReplace"
+          if CharHex = #0 then
+            CharHex := '[#0]';
+          {$ENDIF}  
        except
           CharHex := ' ' ;
        end ;
 
-       Result := AnsiString( StringReplace(String(Result),'\x'+Hex,String(CharHex),[rfReplaceAll]) );
+       Result := AnsiString( StringReplace(String(Result), '\x'+Hex, String(CharHex),[rfReplaceAll]) );
        I := 1;
      end
      else
@@ -2052,6 +2074,10 @@ begin
 
      P := PosEx('\x', String(Result), P + I) ;
   end ;
+
+  {$IFNDEF COMPILER8_UP}
+  Result := AnsiString( StringReplace(String(Result), '[#0]', #0, [rfReplaceAll]) );
+  {$ENDIF}
 end ;
 
 {-----------------------------------------------------------------------------

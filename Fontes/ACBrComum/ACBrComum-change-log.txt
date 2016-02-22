@@ -38,6 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/02/2016
+-- ACBrUtil --
+[*] RoundABNT, aplicado workaround para funcionamento em D7
+    (problemas com função "frac")
+[*] CreateFormatSettings, modificado para considerar os valores atribuídos as
+    variáveis Globais de ACBrUtil ex: "ThousandSeparator" (Delphi XE)
+[*] StringToBinaryString, aplicado workaround para funcionamento em D7
+    (problemas com StringReplace contendo caracter Nulo (#0)
+
 Data: 10/12/2015
 -- ACBrUtil --     (por: DSA)
 [+] Adicionado os métodos:

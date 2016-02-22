@@ -122,8 +122,8 @@ procedure TNFSeW_SP.GerarValoresServico;
 var
   ISSRetido: String;
 begin
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorServicos', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'ValorDeducoes', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorServicos', 00, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorDeducoes', 00, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorPIS',    01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorCOFINS', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorINSS',   01, 15, 0, NFSe.Servico.Valores.ValorInss, '');

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 251
+  Left = 400
   Height = 689
-  Top = 139
+  Top = 92
   Width = 832
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.4.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -9387,9 +9387,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       ShortCut = 57379
                     end>
                   MouseActions = <>
-                  MouseTextActions = <>
                   MouseSelActions = <>
-                  VisibleSpecialChars = [vscSpace, vscTabAtLast]
                   SelectedColor.BackPriority = 50
                   SelectedColor.ForePriority = 50
                   SelectedColor.FramePriority = 50
@@ -11496,7 +11494,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 32
+    left = 40
     top = 576
   end
   object ImageList1: TImageList

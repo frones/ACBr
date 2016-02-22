@@ -488,6 +488,8 @@ begin
                 end;
 
     proSP: begin
+             Gerador.Opcoes.SuprimirDecimais := True;
+
              Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
              Gerador.wGrupoNFSe('CPFCNPJRemetente');
              Gerador.wCampoCNPJCPF('', '', Cnpj);
@@ -502,6 +504,8 @@ begin
              Gerador.wGrupoNFSe('/Cabecalho');
 
              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+
+             Gerador.Opcoes.SuprimirDecimais := False;
            end;
 
   else begin

@@ -330,6 +330,7 @@ function TNFSeW_SP.GerarXml: Boolean;
 var
   Gerar: Boolean;
 begin
+  Gerador.Opcoes.SuprimirDecimais := True;
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 
@@ -368,6 +369,8 @@ begin
   end;
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
+  Gerador.Opcoes.SuprimirDecimais := False;
+  
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;
 

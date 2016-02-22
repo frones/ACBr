@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2016
+-- pnfsNFSeW_SP / pnfsNFSeG --
+[*] Para o provedor SP ao gerar o XML será ativado a supressão de decimais.
+    Por: Italo Jurisato Junior
+
 19/02/2016
 [+] Inclusão das leituras dos retornos do Web Services do provedor SP.
     Por: Italo Jurisato Junior

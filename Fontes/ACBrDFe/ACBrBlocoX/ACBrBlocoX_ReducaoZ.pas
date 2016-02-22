@@ -38,7 +38,7 @@ uses
 type
   TACBrBlocoX_Totalizador = class(TCollectionItem)
   private
-    FIdentificao: String;
+    FIdentificacao: String;
     FValor: Double;
     FProdutos: TACBrBlocoX_Produtos;
     FServicos: TACBrBlocoX_Servicos;
@@ -46,7 +46,7 @@ type
     constructor Create(Collection: TCollection); override;
     destructor Destroy; override;
 
-    property Identificao: String read FIdentificao write FIdentificao;
+    property Identificacao: String read FIdentificacao write FIdentificacao;
     property Valor: Double read FValor write FValor;
     property Produtos: TACBrBlocoX_Produtos read FProdutos write FProdutos;
     property Servicos: TACBrBlocoX_Servicos read FServicos write FServicos;
@@ -174,7 +174,7 @@ begin
     for I := 0 to TotalizadoresParciais.Count - 1 do
     begin
       FGerador.wGrupo('TotalizadorParcial');
-      FGerador.wCampo(tcStr, '', 'Identificao', 0,  0, 1, TotalizadoresParciais[I].Identificao);
+      FGerador.wCampo(tcStr, '', 'Identificacao', 0,  0, 1, TotalizadoresParciais[I].Identificacao);
       FGerador.wCampo(tcStr, '', 'Valor',       1, 11, 1, FloatToIntStr(TotalizadoresParciais[I].Valor, 2));
 
       with TotalizadoresParciais[I] do
@@ -200,7 +200,7 @@ begin
           begin
             FGerador.wGrupo('Servico');
             FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Servicos[X].Descricao);
-            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Servicos[X].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Produtos[X].Codigo.Tipo) + '"');
+            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Servicos[X].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Servicos[X].Codigo.Tipo) + '"');
             FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, Servicos[X].Quantidade);
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Servicos[X].Unidade);
             FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FloatToIntStr(Servicos[X].ValorUnitario, 2));

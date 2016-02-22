@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2016
+-- ACBrBlocoX_ReducaoZ --
+[-] Acertos no nome da propriedade Identificacao e na geração de serviços.
+
 19/02/2016
 -- ACBrBlocoX --
 [+] Adicionado parametro no SaveToFile para assinar ou não o arquivo gerado.

@@ -499,8 +499,8 @@ begin
              Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
              Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
              Gerador.wCampoNFSe(tcInt, '#1', 'QtdRPS', 01, 14, 1, QtdeNotas, '');
-             Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalServicos', 00, 15, 1, ValorTotalServicos, '');
-             Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalDeducoes', 00, 15, 1, ValorTotalDeducoes, '');
+             Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalServicos', 1, 15, 1, ValorTotalServicos, '');
+             Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalDeducoes', 1, 15, 1, ValorTotalDeducoes, '');
              Gerador.wGrupoNFSe('/Cabecalho');
 
              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;

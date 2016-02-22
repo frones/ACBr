@@ -1,8 +1,6 @@
 unit ACBrUtilTest;
 
-{$IFDEF FPC}
-{$mode objfpc}{$H+}
-{$ENDIF}
+{$I ACBr.inc}
 
 interface
 
@@ -11,7 +9,7 @@ uses
   {$ifdef FPC}
   fpcunit, testutils, testregistry
   {$else}
-  TestFramework
+    TestFramework
   {$endif};
 
 type
@@ -51,8 +49,8 @@ type
 
   DecodeToStringTest = class(TTestCase)
   published
-    procedure TesteUTF8;
-    procedure TesteAnsi;
+    procedure DecodeToString_TesteUTF8;
+    procedure DecodeToString_TesteAnsi;
   end;
 
   { SepararDadosTest }
@@ -75,20 +73,12 @@ type
     procedure PipeDelimiter;
   end;
 
-  { ACBrStrTest }
-
-  ACBrStrTest = class(TTestCase)
-  published
-    procedure TesteUTF8;
-    procedure TesteAnsi;
-  end;
-
   { ACBrStrToAnsiTest }
 
   ACBrStrToAnsiTest = class(TTestCase)
   published
-    procedure TesteUTF8;
-    procedure TesteReverso;
+    procedure ACBrStrToAnsi_TesteUTF8;
+    procedure ACBrStrToAnsi_TesteReverso;
   end;
 
   { TruncFixTest }
@@ -112,6 +102,7 @@ type
     procedure ExpressaoCurrDuasCasasDecimais;
     procedure ExpressaoDblDuasCasasDecimais;
     procedure TestesEstouro;
+    procedure ValoresNegativos;
   end;
 
   { padRightTest }
@@ -297,6 +288,7 @@ type
   BinaryStringToStringTest = class(TTestCase)
   published
     procedure Simples;
+    procedure ComNulos;
     procedure Reverso;
   end;
 
@@ -305,8 +297,9 @@ type
   StringToBinaryStringTest = class(TTestCase)
   published
     procedure Simples;
-    procedure Reverso;
+    procedure ComNulos;
     procedure NaoHexa;
+    procedure Reverso;
   end;
 
   { IfEmptyThenTest }
@@ -1115,10 +1108,10 @@ end;
 
 procedure AscToStringTest.Normal;
 var
-  Resp: String;
+  Resp: AnsiString;
 begin
   Resp := AscToString('#13,#10,#255,#65,#150');
-  CheckTrue( (chr(13)+chr(10)+chr(255)+chr(65)+chr(150) = Resp) );
+  CheckEquals( #13+#10+#255+#65+#150, Resp );
 end;
 
 procedure AscToStringTest.ComLetras;
@@ -1126,7 +1119,7 @@ var
   Resp: String;
 begin
   Resp := AscToString('#13,A,#10,1,#255,B,#65,9,A,C,B,r,#150');
-  CheckTrue( (chr(13)+'A'+chr(10)+'1'+chr(255)+'BA'+'9ACBr'+chr(150) = Resp) );
+  CheckEquals( #13+'A'+#10+'1'+#255+'BA'+'9ACBr'+#150,  Resp );
 end;
 
 { StringToAscTest }
@@ -1134,8 +1127,10 @@ end;
 procedure StringToAscTest.Normal;
 var
   Resp: String;
+  AnsiStr: AnsiString;
 begin
-  Resp := StringToAsc(chr(13)+chr(10)+chr(255)+chr(65)+chr(150));
+  AnsiStr := #13+#10+#255+#65+#150;
+  Resp := StringToAsc(AnsiStr);
   CheckEquals('#13,#10,#255,#65,#150', Resp );
 end;
 
@@ -1690,6 +1685,11 @@ begin
   CheckEquals('\xml\xA\\A\ab', StringToBinaryString('\xml\xA\\\x41\ab'));
 end;
 
+procedure StringToBinaryStringTest.ComNulos;
+begin
+  CheckEquals(chr(0)+chr(13)+chr(10)+chr(0)+'ABC'+chr(0)+chr(13), StringToBinaryString('\x00\x0D\x0A\x00ABC\x00\x0D'));
+end;
+
 { BinaryStringToStringTest }
 
 procedure BinaryStringToStringTest.Simples;
@@ -1712,6 +1712,11 @@ begin
   end;
 
   CheckEquals(Resp, BinaryStringToString(AllChars) ) ;
+end;
+
+procedure BinaryStringToStringTest.ComNulos;
+begin
+  CheckEquals('\x00\x0D\x0A\x00ABC\x00\x0D', BinaryStringToString(chr(0)+chr(13)+chr(10)+chr(0)+'ABC'+chr(0)+chr(13)));
 end;
 
 { AsciiToHexTest }
@@ -1892,181 +1897,220 @@ end;
 { RoundABNTTest }
 
 procedure RoundABNTTest.AsIntegerImpar;
+var
+  AInt: Integer;
 begin
-  CheckEquals( 5, RoundABNT(5.1, 0));
-  CheckEquals( 5, RoundABNT(5.2, 0));
-  CheckEquals( 5, RoundABNT(5.3, 0));
-  CheckEquals( 5, RoundABNT(5.4, 0));
-  CheckEquals( 6, RoundABNT(5.5, 0));
-  CheckEquals( 6, RoundABNT(5.6, 0));
-  CheckEquals( 6, RoundABNT(5.7, 0));
-  CheckEquals( 6, RoundABNT(5.8, 0));
-  CheckEquals( 6, RoundABNT(5.9, 0));
+  AInt := 5;
+  CheckEquals( AInt, RoundABNT(5.1, 0));
+  CheckEquals( AInt, RoundABNT(5.2, 0));
+  CheckEquals( AInt, RoundABNT(5.3, 0));
+  CheckEquals( AInt, RoundABNT(5.4, 0));
+  AInt := 6;
+  CheckEquals( AInt, RoundABNT(5.5, 0));
+  CheckEquals( AInt, RoundABNT(5.6, 0));
+  CheckEquals( AInt, RoundABNT(5.7, 0));
+  CheckEquals( AInt, RoundABNT(5.8, 0));
+  CheckEquals( AInt, RoundABNT(5.9, 0));
 end;
 
 procedure RoundABNTTest.AsIntegerPar;
+var
+  AInt: Integer;
 begin
-  CheckEquals( 4, RoundABNT(4.1, 0));
-  CheckEquals( 4, RoundABNT(4.2, 0));
-  CheckEquals( 4, RoundABNT(4.3, 0));
-  CheckEquals( 4, RoundABNT(4.4, 0));
-  CheckEquals( 4, RoundABNT(4.5, 0));
-  CheckEquals( 5, RoundABNT(4.501, 0));
-  CheckEquals( 5, RoundABNT(4.6, 0));
-  CheckEquals( 5, RoundABNT(4.7, 0));
-  CheckEquals( 5, RoundABNT(4.8, 0));
-  CheckEquals( 5, RoundABNT(4.9, 0));
+  AInt := 4;
+  CheckEquals( AInt, RoundABNT(4.1, 0));
+  CheckEquals( AInt, RoundABNT(4.2, 0));
+  CheckEquals( AInt, RoundABNT(4.3, 0));
+  CheckEquals( AInt, RoundABNT(4.4, 0));
+  CheckEquals( AInt, RoundABNT(4.5, 0));
+  AInt := 5;
+  CheckEquals( AInt, RoundABNT(4.501, 0));
+  CheckEquals( AInt, RoundABNT(4.6, 0));
+  CheckEquals( AInt, RoundABNT(4.7, 0));
+  CheckEquals( AInt, RoundABNT(4.8, 0));
+  CheckEquals( AInt, RoundABNT(4.9, 0));
 end;
 
 procedure RoundABNTTest.TresParaDuasCasasDecimais;
+var
+  AVal: Double;
 begin
-  CheckEquals( 5.10, RoundABNT(5.101, 2));
-  CheckEquals( 5.10, RoundABNT(5.102, 2));
-  CheckEquals( 5.10, RoundABNT(5.103, 2));
-  CheckEquals( 5.10, RoundABNT(5.104, 2));
-  CheckEquals( 5.10, RoundABNT(5.105, 2));
-  CheckEquals( 5.11, RoundABNT(5.1050123, 2));
-  CheckEquals( 5.11, RoundABNT(5.106, 2));
-  CheckEquals( 5.11, RoundABNT(5.107, 2));
-  CheckEquals( 5.11, RoundABNT(5.108, 2));
-  CheckEquals( 5.11, RoundABNT(5.109, 2));
+  AVal := 4.86;
+  CheckEquals( AVal, RoundABNT(4.855, 2));
+  AVal := 4.56;
+  CheckEquals( AVal, RoundABNT(4.555, 2));
+  AVal := 5.10;
+  CheckEquals( AVal, RoundABNT(5.101, 2));
+  CheckEquals( AVal, RoundABNT(5.102, 2));
+  CheckEquals( AVal, RoundABNT(5.103, 2));
+  CheckEquals( AVal, RoundABNT(5.104, 2));
+  CheckEquals( AVal, RoundABNT(5.105, 2));
+  AVal := 5.11;
+  CheckEquals( AVal, RoundABNT(5.1050123, 2));
+  CheckEquals( AVal, RoundABNT(5.106, 2));
+  CheckEquals( AVal, RoundABNT(5.107, 2));
+  CheckEquals( AVal, RoundABNT(5.108, 2));
+  CheckEquals( AVal, RoundABNT(5.109, 2));
 end;
 
 procedure RoundABNTTest.QuatroParaDuasCasasDecimais;
+var
+  AVal: Double;
 begin
-  CheckEquals( 5.10, RoundABNT(5.1010, 2));
-  CheckEquals( 5.10, RoundABNT(5.1011, 2));
-  CheckEquals( 5.10, RoundABNT(5.1012, 2));
-  CheckEquals( 5.10, RoundABNT(5.1013, 2));
-  CheckEquals( 5.10, RoundABNT(5.1014, 2));
-  CheckEquals( 5.10, RoundABNT(5.1015, 2));
-  CheckEquals( 5.10, RoundABNT(5.1016, 2));
-  CheckEquals( 5.10, RoundABNT(5.1017, 2));
-  CheckEquals( 5.10, RoundABNT(5.1018, 2));
-  CheckEquals( 5.10, RoundABNT(5.1019, 2));
+  AVal := 5.10;
+  CheckEquals( AVal, RoundABNT(5.1010, 2));
+  CheckEquals( AVal, RoundABNT(5.1011, 2));
+  CheckEquals( AVal, RoundABNT(5.1012, 2));
+  CheckEquals( AVal, RoundABNT(5.1013, 2));
+  CheckEquals( AVal, RoundABNT(5.1014, 2));
+  CheckEquals( AVal, RoundABNT(5.1015, 2));
+  CheckEquals( AVal, RoundABNT(5.1016, 2));
+  CheckEquals( AVal, RoundABNT(5.1017, 2));
+  CheckEquals( AVal, RoundABNT(5.1018, 2));
+  CheckEquals( AVal, RoundABNT(5.1019, 2));
 
-  CheckEquals( 5.10, RoundABNT(5.1020, 2));
-  CheckEquals( 5.10, RoundABNT(5.1021, 2));
-  CheckEquals( 5.10, RoundABNT(5.1022, 2));
-  CheckEquals( 5.10, RoundABNT(5.1023, 2));
-  CheckEquals( 5.10, RoundABNT(5.1024, 2));
-  CheckEquals( 5.10, RoundABNT(5.1025, 2));
-  CheckEquals( 5.10, RoundABNT(5.1026, 2));
-  CheckEquals( 5.10, RoundABNT(5.1027, 2));
-  CheckEquals( 5.10, RoundABNT(5.1028, 2));
-  CheckEquals( 5.10, RoundABNT(5.1029, 2));
+  CheckEquals( AVal, RoundABNT(5.1020, 2));
+  CheckEquals( AVal, RoundABNT(5.1021, 2));
+  CheckEquals( AVal, RoundABNT(5.1022, 2));
+  CheckEquals( AVal, RoundABNT(5.1023, 2));
+  CheckEquals( AVal, RoundABNT(5.1024, 2));
+  CheckEquals( AVal, RoundABNT(5.1025, 2));
+  CheckEquals( AVal, RoundABNT(5.1026, 2));
+  CheckEquals( AVal, RoundABNT(5.1027, 2));
+  CheckEquals( AVal, RoundABNT(5.1028, 2));
+  CheckEquals( AVal, RoundABNT(5.1029, 2));
 
-  CheckEquals( 5.10, RoundABNT(5.1030, 2));
-  CheckEquals( 5.10, RoundABNT(5.1031, 2));
-  CheckEquals( 5.10, RoundABNT(5.1032, 2));
-  CheckEquals( 5.10, RoundABNT(5.1033, 2));
-  CheckEquals( 5.10, RoundABNT(5.1034, 2));
-  CheckEquals( 5.10, RoundABNT(5.1035, 2));
-  CheckEquals( 5.10, RoundABNT(5.1036, 2));
-  CheckEquals( 5.10, RoundABNT(5.1037, 2));
-  CheckEquals( 5.10, RoundABNT(5.1038, 2));
-  CheckEquals( 5.10, RoundABNT(5.1039, 2));
+  CheckEquals( AVal, RoundABNT(5.1030, 2));
+  CheckEquals( AVal, RoundABNT(5.1031, 2));
+  CheckEquals( AVal, RoundABNT(5.1032, 2));
+  CheckEquals( AVal, RoundABNT(5.1033, 2));
+  CheckEquals( AVal, RoundABNT(5.1034, 2));
+  CheckEquals( AVal, RoundABNT(5.1035, 2));
+  CheckEquals( AVal, RoundABNT(5.1036, 2));
+  CheckEquals( AVal, RoundABNT(5.1037, 2));
+  CheckEquals( AVal, RoundABNT(5.1038, 2));
+  CheckEquals( AVal, RoundABNT(5.1039, 2));
 
-  CheckEquals( 5.10, RoundABNT(5.1040, 2));
-  CheckEquals( 5.10, RoundABNT(5.1041, 2));
-  CheckEquals( 5.10, RoundABNT(5.1042, 2));
-  CheckEquals( 5.10, RoundABNT(5.1043, 2));
-  CheckEquals( 5.10, RoundABNT(5.1044, 2));
-  CheckEquals( 5.10, RoundABNT(5.1045, 2));
-  CheckEquals( 5.10, RoundABNT(5.1046, 2));
-  CheckEquals( 5.10, RoundABNT(5.1047, 2));
-  CheckEquals( 5.10, RoundABNT(5.1048, 2));
-  CheckEquals( 5.10, RoundABNT(5.1049, 2));
+  CheckEquals( AVal, RoundABNT(5.1040, 2));
+  CheckEquals( AVal, RoundABNT(5.1041, 2));
+  CheckEquals( AVal, RoundABNT(5.1042, 2));
+  CheckEquals( AVal, RoundABNT(5.1043, 2));
+  CheckEquals( AVal, RoundABNT(5.1044, 2));
+  CheckEquals( AVal, RoundABNT(5.1045, 2));
+  CheckEquals( AVal, RoundABNT(5.1046, 2));
+  CheckEquals( AVal, RoundABNT(5.1047, 2));
+  CheckEquals( AVal, RoundABNT(5.1048, 2));
+  CheckEquals( AVal, RoundABNT(5.1049, 2));
+  CheckEquals( AVal, RoundABNT(5.1050, 2));
 
-  CheckEquals( 5.10, RoundABNT(5.1050, 2));
-  CheckEquals( 5.11, RoundABNT(5.1051, 2));
-  CheckEquals( 5.11, RoundABNT(5.1052, 2));
-  CheckEquals( 5.11, RoundABNT(5.1053, 2));
-  CheckEquals( 5.11, RoundABNT(5.1054, 2));
-  CheckEquals( 5.11, RoundABNT(5.1055, 2));
-  CheckEquals( 5.11, RoundABNT(5.1056, 2));
-  CheckEquals( 5.11, RoundABNT(5.1057, 2));
-  CheckEquals( 5.11, RoundABNT(5.1058, 2));
-  CheckEquals( 5.11, RoundABNT(5.1059, 2));
+  AVal := 5.11;
+  CheckEquals( AVal, RoundABNT(5.1051, 2));
+  CheckEquals( AVal, RoundABNT(5.1052, 2));
+  CheckEquals( AVal, RoundABNT(5.1053, 2));
+  CheckEquals( AVal, RoundABNT(5.1054, 2));
+  CheckEquals( AVal, RoundABNT(5.1055, 2));
+  CheckEquals( AVal, RoundABNT(5.1056, 2));
+  CheckEquals( AVal, RoundABNT(5.1057, 2));
+  CheckEquals( AVal, RoundABNT(5.1058, 2));
+  CheckEquals( AVal, RoundABNT(5.1059, 2));
 
-  CheckEquals( 5.11, RoundABNT(5.1060, 2));
-  CheckEquals( 5.11, RoundABNT(5.1061, 2));
-  CheckEquals( 5.11, RoundABNT(5.1062, 2));
-  CheckEquals( 5.11, RoundABNT(5.1063, 2));
-  CheckEquals( 5.11, RoundABNT(5.1064, 2));
-  CheckEquals( 5.11, RoundABNT(5.1065, 2));
-  CheckEquals( 5.11, RoundABNT(5.1066, 2));
-  CheckEquals( 5.11, RoundABNT(5.1067, 2));
-  CheckEquals( 5.11, RoundABNT(5.1068, 2));
-  CheckEquals( 5.11, RoundABNT(5.1069, 2));
+  CheckEquals( AVal, RoundABNT(5.1060, 2));
+  CheckEquals( AVal, RoundABNT(5.1061, 2));
+  CheckEquals( AVal, RoundABNT(5.1062, 2));
+  CheckEquals( AVal, RoundABNT(5.1063, 2));
+  CheckEquals( AVal, RoundABNT(5.1064, 2));
+  CheckEquals( AVal, RoundABNT(5.1065, 2));
+  CheckEquals( AVal, RoundABNT(5.1066, 2));
+  CheckEquals( AVal, RoundABNT(5.1067, 2));
+  CheckEquals( AVal, RoundABNT(5.1068, 2));
+  CheckEquals( AVal, RoundABNT(5.1069, 2));
 
-  CheckEquals( 5.11, RoundABNT(5.1070, 2));
-  CheckEquals( 5.11, RoundABNT(5.1071, 2));
-  CheckEquals( 5.11, RoundABNT(5.1072, 2));
-  CheckEquals( 5.11, RoundABNT(5.1073, 2));
-  CheckEquals( 5.11, RoundABNT(5.1074, 2));
-  CheckEquals( 5.11, RoundABNT(5.1075, 2));
-  CheckEquals( 5.11, RoundABNT(5.1076, 2));
-  CheckEquals( 5.11, RoundABNT(5.1077, 2));
-  CheckEquals( 5.11, RoundABNT(5.1078, 2));
-  CheckEquals( 5.11, RoundABNT(5.1079, 2));
+  CheckEquals( AVal, RoundABNT(5.1070, 2));
+  CheckEquals( AVal, RoundABNT(5.1071, 2));
+  CheckEquals( AVal, RoundABNT(5.1072, 2));
+  CheckEquals( AVal, RoundABNT(5.1073, 2));
+  CheckEquals( AVal, RoundABNT(5.1074, 2));
+  CheckEquals( AVal, RoundABNT(5.1075, 2));
+  CheckEquals( AVal, RoundABNT(5.1076, 2));
+  CheckEquals( AVal, RoundABNT(5.1077, 2));
+  CheckEquals( AVal, RoundABNT(5.1078, 2));
+  CheckEquals( AVal, RoundABNT(5.1079, 2));
 
-  CheckEquals( 5.11, RoundABNT(5.1080, 2));
-  CheckEquals( 5.11, RoundABNT(5.1081, 2));
-  CheckEquals( 5.11, RoundABNT(5.1082, 2));
-  CheckEquals( 5.11, RoundABNT(5.1083, 2));
-  CheckEquals( 5.11, RoundABNT(5.1084, 2));
-  CheckEquals( 5.11, RoundABNT(5.1085, 2));
-  CheckEquals( 5.11, RoundABNT(5.1086, 2));
-  CheckEquals( 5.11, RoundABNT(5.1087, 2));
-  CheckEquals( 5.11, RoundABNT(5.1088, 2));
-  CheckEquals( 5.11, RoundABNT(5.1089, 2));
+  CheckEquals( AVal, RoundABNT(5.1080, 2));
+  CheckEquals( AVal, RoundABNT(5.1081, 2));
+  CheckEquals( AVal, RoundABNT(5.1082, 2));
+  CheckEquals( AVal, RoundABNT(5.1083, 2));
+  CheckEquals( AVal, RoundABNT(5.1084, 2));
+  CheckEquals( AVal, RoundABNT(5.1085, 2));
+  CheckEquals( AVal, RoundABNT(5.1086, 2));
+  CheckEquals( AVal, RoundABNT(5.1087, 2));
+  CheckEquals( AVal, RoundABNT(5.1088, 2));
+  CheckEquals( AVal, RoundABNT(5.1089, 2));
 
-  CheckEquals( 5.11, RoundABNT(5.1090, 2));
-  CheckEquals( 5.11, RoundABNT(5.1091, 2));
-  CheckEquals( 5.11, RoundABNT(5.1092, 2));
-  CheckEquals( 5.11, RoundABNT(5.1093, 2));
-  CheckEquals( 5.11, RoundABNT(5.1094, 2));
-  CheckEquals( 5.11, RoundABNT(5.1095, 2));
-  CheckEquals( 5.11, RoundABNT(5.1096, 2));
-  CheckEquals( 5.11, RoundABNT(5.1097, 2));
-  CheckEquals( 5.11, RoundABNT(5.1098, 2));
-  CheckEquals( 5.11, RoundABNT(5.1099, 2));
+  CheckEquals( AVal, RoundABNT(5.1090, 2));
+  CheckEquals( AVal, RoundABNT(5.1091, 2));
+  CheckEquals( AVal, RoundABNT(5.1092, 2));
+  CheckEquals( AVal, RoundABNT(5.1093, 2));
+  CheckEquals( AVal, RoundABNT(5.1094, 2));
+  CheckEquals( AVal, RoundABNT(5.1095, 2));
+  CheckEquals( AVal, RoundABNT(5.1096, 2));
+  CheckEquals( AVal, RoundABNT(5.1097, 2));
+  CheckEquals( AVal, RoundABNT(5.1098, 2));
+  CheckEquals( AVal, RoundABNT(5.1099, 2));
 end;
 
 procedure RoundABNTTest.ExpressaoCurrDuasCasasDecimais;
 var
-  currValorUnit, currQtde, currTotal: Currency;
+  currVal, currValorUnit, currQtde, currTotal: Currency;
 begin
   currValorUnit :=0.99;
   currQtde :=0.995;
   currTotal := currValorUnit * currQtde;
 
   // 0.99 x 0.995 = 0,98505, porÈm "currTotal" È um currency, que somente usa 4 casas decimais, portanto ser·: 0,9850
-  CheckEquals( 0.98, RoundABNT(currTotal, 2));
+  currVal := 0.98;
+  CheckEquals(currVal , RoundABNT(currTotal, 2), 0.00001);
   // RoundABNT tem um par‚metro do tipo "Double", portanto aqui todas as casas decimais ser„o utilizadas
-  CheckEquals( 0.99, RoundABNT(currValorUnit * currQtde, 2));
+  currVal := 0.99;
+  CheckEquals( currVal, RoundABNT(currValorUnit * currQtde, 2), 0.00001);
 end;
 
 procedure RoundABNTTest.ExpressaoDblDuasCasasDecimais;
 var
-  dblValorUnit, dblQtde, dblTotal: Double;
+  dblVal, dblValorUnit, dblQtde, dblTotal: Double;
 begin
   dblValorUnit :=0.99;
   dblQtde :=0.995;
   dblTotal := dblValorUnit * dblQtde;
-  CheckEquals( 0.98, RoundABNT(0.9849, 2));
-  CheckEquals( 0.98, RoundABNT(0.9850, 2));
-  CheckEquals( 0.99, RoundABNT(0.98505, 2));
-  CheckEquals( 0.99, RoundABNT(dblTotal, 2));
-  CheckEquals( 0.99, RoundABNT(dblValorUnit * dblQtde, 2));
+  dblVal := 0.98;
+  CheckEquals( dblVal, RoundABNT(0.9849, 2));
+  CheckEquals( dblVal, RoundABNT(0.9850, 2));
+  dblVal := 0.99;
+  CheckEquals( dblVal, RoundABNT(0.98505, 2));
+  CheckEquals( dblVal, RoundABNT(dblTotal, 2));
+  CheckEquals( dblVal, RoundABNT(dblValorUnit * dblQtde, 2));
 end;
 
 procedure RoundABNTTest.TestesEstouro;
+var
+  extVal: Extended;
 begin
-  CheckEquals( 12334234.46, RoundABNT(12334234.4567567567567567567,-2) );
-  CheckEquals( 12334234.4568, RoundABNT(12334234.4567567567567567567,-4) );
-  CheckEquals( 5233.456757, RoundABNT(5233.4567567567567567567,-6) );
+  extVal := 12334234.46;
+  CheckEquals( extVal, RoundABNT(12334234.4567567567567567567,-2), 0.00001 );
+  extVal := 12334234.4568;
+  CheckEquals( extVal, RoundABNT(12334234.4567567567567567567,-4), 0.00001 );
+  extVal := 5233.456757;
+  CheckEquals( extVal, RoundABNT(5233.4567567567567567567,-6), 0.00001 );
+end;
+
+procedure RoundABNTTest.ValoresNegativos;
+var
+  AVal: Double;
+begin
+  AVal := -2;
+  CheckEquals( AVal, RoundABNT(AVal, 0) );
+  CheckEquals( AVal, RoundABNT(AVal, -1) );
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
 end;
 
 { TruncFixTest }
@@ -2116,37 +2160,27 @@ end;
 
 { ACBrStrToAnsiTest }
 
-procedure ACBrStrToAnsiTest.TesteUTF8;
+procedure ACBrStrToAnsiTest.ACBrStrToAnsi_TesteUTF8;
 Var
   UTF8Str : AnsiString;
 begin
+  {$IFDEF UNICODE}
   UTF8Str := UTF8Encode('¡…Õ”⁄');  // Nota: essa Unit usa CP1252
+  {$ELSE}
+  UTF8Str := '¡…Õ”⁄'; 
+  {$ENDIF}
+
   CheckEquals( '¡…Õ”⁄', ACBrStrToAnsi(UTF8Str) );
 end;
 
-procedure ACBrStrToAnsiTest.TesteReverso;
+procedure ACBrStrToAnsiTest.ACBrStrToAnsi_TesteReverso;
 begin
   CheckEquals( '¡…Õ”⁄', ACBrStrToAnsi(ACBrStr('¡…Õ”⁄')) );
 end;
 
-{ ACBrStrTest }
-
-procedure ACBrStrTest.TesteUTF8;
-Var
-  UTF8Str : AnsiString;
-begin
-  UTF8Str := UTF8Encode('¡…Õ”⁄');  // Nota: essa Unit usa CP1252
-  CheckEquals( UTF8Str, ACBrStr('¡…Õ”⁄'));
-end;
-
-procedure ACBrStrTest.TesteAnsi;
-begin
-  CheckEquals( '¡…Õ”⁄', UTF8Decode(ACBrStr('¡…Õ”⁄')) );
-end;
-
 { DecodeToStringTest }
 
-procedure DecodeToStringTest.TesteUTF8;
+procedure DecodeToStringTest.DecodeToString_TesteUTF8;
 Var
   UTF8Str : AnsiString;
 begin
@@ -2154,7 +2188,7 @@ begin
   CheckEquals(ACBrStr('¡…Õ”⁄'), DecodeToString(UTF8Str, True));
 end;
 
-procedure DecodeToStringTest.TesteAnsi;
+procedure DecodeToStringTest.DecodeToString_TesteAnsi;
 Var
   AnsiStr : AnsiString;
 begin
@@ -2500,7 +2534,7 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDate(2015,01,02);
-  CheckEquals(ADateTime, StringToDateTimeDef('02/01/2015', Now));
+  CheckEquals(ADateTime, StringToDateTimeDef('02/01/2015', Now, 'd/m/yyyy'));
 end;
 
 procedure StringToDateTimeDefTest.Hora;
@@ -2508,7 +2542,7 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeTime(12,45,12,0);
-  CheckEquals(ADateTime, StringToDateTimeDef('12:45:12', Now));
+  CheckEquals(ADateTime, StringToDateTimeDef('12:45:12', Now, 'h:n:s'));
 end;
 
 procedure StringToDateTimeDefTest.DataEHora;
@@ -2516,7 +2550,7 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
-  CheckEquals(ADateTime, StringToDateTimeDef('14/01/2015 12:45:12', Now));
+  CheckEquals(ADateTime, StringToDateTimeDef('14/01/2015 12:45:12', Now, 'd/m/yyyy h:n:s'));
 end;
 
 procedure StringToDateTimeDefTest.ValorDefault;
@@ -2539,7 +2573,7 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDate(2015,02,03);
-  CheckEquals(ADateTime, StringToDateTime('03/02/2015'));
+  CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'd/m/yyyy'));
   CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd/mm/yyyy'));
   CheckEquals(ADateTime, StringToDateTime('03/02/2015', 'dd-mm-yyyy'));
 end;
@@ -2549,7 +2583,7 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDate(2015,02,28);
-  CheckEquals(ADateTime, StringToDateTime('28/02/15'));
+  CheckEquals(ADateTime, StringToDateTime('28/02/15', 'd/m/yyyy'));
   CheckEquals(ADateTime, StringToDateTime('28/02/15', 'dd/mm/yy'));
   CheckEquals(ADateTime, StringToDateTime('28/02/15', 'dd-mm-yy'));
 end;
@@ -2567,7 +2601,7 @@ var
   ADateTime: TDateTime;
 begin
   ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
-  CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12'));
+  CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12', 'd/m/yyyy h:n:s'));
 end;
 
 procedure StringToDateTimeTest.ComFormatSettingsDiferente;
@@ -2582,8 +2616,8 @@ begin
     TimeSeparator := ';';
 
     ADateTime := EncodeDateTime(2015,01,14,12,45,12,0);
-    CheckEquals(ADateTime, StringToDateTime('14-01-2015 12;45;12'));
-    CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12'));
+    CheckEquals(ADateTime, StringToDateTime('14-01-2015 12;45;12', 'd/m/yyyy h:n:s'));
+    CheckEquals(ADateTime, StringToDateTime('14/01/2015 12:45:12', 'd/m/yyyy h:n:s'));
   finally
     DateSeparator := OldDateSeprator;
     TimeSeparator := OldTimeSeparator;
@@ -2633,12 +2667,27 @@ end;
 
 procedure StringToFloatTest.ComVirgula;
 begin
-  CheckEquals(123.45, StringToFloat('123,45'));
+  CheckEquals(123.45, StringToFloat('123,45'), 1);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.1);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.01);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.001);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.0001);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.00001);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.000001);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.0000001);
+  CheckEquals(123.45, StringToFloat('123,45'), 0.0000000001);
 end;
 
 procedure StringToFloatTest.ComPonto;
 begin
-  CheckEquals(123.45, StringToFloat('123.45'));
+  CheckEquals(123.45, StringToFloat('123.45'), 1);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.1);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.01);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.001);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.0001);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.00001);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.000001);
+  CheckEquals(123.45, StringToFloat('123.45'), 0.000000001);
 end;
 
 procedure StringToFloatTest.ApenasInteiro;
@@ -3108,13 +3157,11 @@ begin
 end;
 
 initialization
-
   RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', DecodeToStringTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', SepararDadosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', QuebrarLinhaTest{$ifndef FPC}.Suite{$endif});
-  RegisterTest('ACBrComum.ACBrUtil', ACBrStrTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ACBrStrToAnsiTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TruncFixTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest{$ifndef FPC}.Suite{$endif});
@@ -3188,7 +3235,6 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', EAN13Test{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest{$ifndef FPC}.suite{$endif});
-
   //TODO: WriteToTXT, WriteLog,
 end.
 

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2016
+-- pcnGerador --
+[*] Adicionada um condição para não gerar valores decimais menores que 10 com 2 
+    digitos quando é habilitado a propriedade SuprimirDecimais.
+    Ex: valor 1.00 tem que gerar 1 e não 01 como estava ocorrendo.
+    Por DSA
+
 19/02/2016
 -- pcnAuxiliar --
 [*] Modificada a maneira de criação / acesso de "TimeZoneConf", para evitar

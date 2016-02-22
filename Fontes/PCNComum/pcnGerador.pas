@@ -908,9 +908,12 @@ begin
     tcDe2, tcDe3, tcDe4, tcDe6, tcDe10:
       begin
         // adicionar um para que o máximo e mínimo não considerem a virgula
-        TamMax := TamMax + 1;
-        TamMin := TamMin + 1;
-
+        if not FOpcoes.FSuprimirDecimais then
+        begin
+          TamMax := TamMax + 1;
+          TamMin := TamMin + 1;
+        end;
+        
         // Tipo numerico com decimais
         case Tipo of
           tcDe2 : NumeroDecimais :=  2;

@@ -1128,9 +1128,7 @@ begin
   (**)GerarDetImpostoPISST(i);
   (**)GerarDetImpostoCOFINS(i);
   (**)GerarDetImpostoCOFINSST(i);
-
-  if nfe.Det[i].Imposto.ICMSUFDest.pICMSInterPart > 0 then
-    (**)GerarDetImpostoICMSUFDest(i);
+  (**)GerarDetImpostoICMSUFDest(i);
 
   Gerador.wGrupo('/imposto');
 end;

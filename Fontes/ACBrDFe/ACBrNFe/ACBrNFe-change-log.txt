@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/02/2016
+-- pcnNFeW --
+[-] alteração para geração das tags do DIFAL mesmo com valor zerado, 
+    agora com a liminar do simples nacional não passa sem elas e não tem valor.
+
 18/02/2016
 --  pcnCCeNFe, pcnEnvEventoNFe, pcnNFeW, pcnProcNFe --
 [*] Ajuste para usar nova versão de pcnAuxiliar.GetUTC         (por: DSA)

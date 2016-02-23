@@ -1625,7 +1625,10 @@ procedure TfrlDANFeRLRetrato.ISSQN;
 begin
   with FNFe.Total.ISSQNtot do
   begin
-    rlbISSQN.Visible  := ( FNFe.Total.ISSQNtot.vISS > 0 ) and ( fMostraDadosISSQN = True );
+    rlbISSQN.Visible  := ( ( FNFe.Total.ISSQNtot.vServ > 0 ) or
+                           ( FNFe.Total.ISSQNtot.vBC   > 0 ) or
+                           ( FNFe.Total.ISSQNtot.vISS  > 0 ) )
+                       and ( fMostraDadosISSQN = True );
     if rlbISSQN.Visible then
     begin
       rllISSQNInscricao.Caption     := FNFe.Emit.IM;
@@ -2014,10 +2017,10 @@ begin
     RLLabelLIQ.Caption    := ACBrStr( 'VALOR LÍQUIDO' );
 
     // Define a Coluna dos label's
-	RLLabelNUmero.Left    := 264;
-	RLLabelValor.Left     := 439;
-	RLLabelDupl.Left      := 541;
-	RLLabelLIQ.Left       := 652;
+    RLLabelNUmero.Left    := 264;
+    RLLabelValor.Left     := 439;
+    RLLabelDupl.Left      := 541;
+    RLLabelLIQ.Left       := 652;
 
     if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
     begin

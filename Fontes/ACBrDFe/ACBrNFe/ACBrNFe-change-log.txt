@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+23/02/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[*] Ajuste na critica do mostrar Dados ISSQN. 
+    Por: Henrique Leonardo
+
+
 22/02/2016
 -- pcnNFeW --
 [-] alteração para geração das tags do DIFAL mesmo com valor zerado, 

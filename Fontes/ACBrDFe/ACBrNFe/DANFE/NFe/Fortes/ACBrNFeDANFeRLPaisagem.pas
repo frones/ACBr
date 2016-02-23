@@ -1583,7 +1583,11 @@ procedure TfrlDANFeRLPaisagem.ISSQN;
 begin
   with FNFe.Total.ISSQNtot do
   begin
-    rlbISSQN.Visible  := ( FNFe.Total.ISSQNtot.vISS > 0 ) and ( fMostraDadosISSQN = True );
+    rlbISSQN.Visible  := ( ( FNFe.Total.ISSQNtot.vServ > 0 ) or
+                           ( FNFe.Total.ISSQNtot.vBC   > 0 ) or
+                           ( FNFe.Total.ISSQNtot.vISS  > 0 ) )
+                       and ( fMostraDadosISSQN = True );
+
     if rlbISSQN.Visible then
     begin
       rllISSQNInscricao.Caption     := FNFe.Emit.IM;

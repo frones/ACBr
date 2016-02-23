@@ -238,15 +238,19 @@ begin
 end;
 
 function TArquivosConfMDFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+var
+  rPathDown: String;
 begin
+  rPathDown := '';
   if EstaVazio(FDownloadMDFe.PathDownload) then
      FDownloadMDFe.PathDownload := PathSalvar;
 
-  if FDownloadMDFe.SepararPorNome then
-     if NaoEstaVazio(xNome) then
-        FDownloadMDFe.PathDownload := PathWithDelim(FDownloadMDFe.PathDownload) + TiraAcentos(xNome);
+  if (FDownloadMDFe.SepararPorNome) and (NaoEstaVazio(xNome)) then
+     rPathDown := rPathDown + PathWithDelim(FDownloadMDFe.PathDownload) + TiraAcentos(xNome)
+  else
+     rPathDown := FDownloadMDFe.PathDownload;
 
-  Result := GetPath(FDownloadMDFe.PathDownload, 'Down', CNPJ, Data);
+  Result := GetPath(rPathDow, 'Down', CNPJ, Data);
 end;
 
 { TDownloadConfMDFe }

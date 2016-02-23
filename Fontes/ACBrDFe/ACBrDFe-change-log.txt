@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2016
+-- ACBrMDFeConfiguracoes
+-- ACBrCTeConfiguracoes
+-- ACBrNFeConfiguracoes
+[-] Correção da criação de pastas, separando os XMLs por nome, no método DistribuicaoDFe()
+    estava criando pasta dentro de pasta. (por Isaque Pinheiro)
+
 18/02/2016
 -- ACBrDFeConfiguracoes --
 [+] Adicionado a propriedade: TimeZoneConf: TTimeZoneConf em TWebServicesConf,

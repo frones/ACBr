@@ -1164,7 +1164,7 @@ begin
            end;
 
     // RPS versão 1.10 - Infisc
-    ve110 : FvNotas := FvNotas + RetornarConteudoEntre(RPS,'<' + FPrefixo4 + 'Rps>','</Rps>');
+    ve110 : FvNotas := FvNotas + RPS;
 
     // RPS versão 1.00
     else
@@ -1173,7 +1173,9 @@ begin
         proEL,
         proGoverna: FvNotas :=  FvNotas + RPS;
 
-        proSP: FvNotas :=  FvNotas + '<RPS xmlns=""' + RetornarConteudoEntre(RPS,'<RPS','</RPS>') + '</RPS>';
+        proSP: FvNotas :=  FvNotas + '<RPS xmlns=""' +
+                                      RetornarConteudoEntre(RPS, '<RPS', '</RPS>') +
+                                     '</RPS>';
 
         proIssDSF,
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);

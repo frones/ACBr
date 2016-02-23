@@ -416,7 +416,15 @@ begin
            end;
 
     proInfisc: begin
-                 Gerador.ArquivoFormatoXML := Notas;
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('envioLote versao="1.0"');
+                 Gerador.wCampoNFSe(tcStr, '', 'CNPJ'   , 01, 14, 1, Cnpj, '');
+//                 Gerador.wCampoNFSe(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');
+                 Gerador.wCampoNFSe(tcDatHor, '', 'dhTrans', 01, 19, 1, Now, '');
+
+                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+
+                 Gerador.wGrupoNFSe('/envioLote');
                end;
 
     proISSDSF: begin

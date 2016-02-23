@@ -630,12 +630,12 @@ end;
 procedure TNFSeW_Infisc.GerarXML_Infisc;
 begin
   Gerador.Prefixo := '';
-  if VersaoNFSe = ve100 then
-    Gerador.wGrupoNFSe('?xml version=''1.0'' encoding=''utf-8''?');
+//  if VersaoNFSe = ve100 then
+//    Gerador.wGrupoNFSe('?xml version=''1.0'' encoding=''utf-8''?');
 
-  Gerador.wGrupoNFSe('envioLote versao="1.0"');
-  Gerador.wCampoNFSe(tcStr, '', 'CNPJ'   , 01, 14, 1, NFSe.Prestador.Cnpj, '');
-  Gerador.wCampoNFSe(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');
+//  Gerador.wGrupoNFSe('envioLote versao="1.0"');
+//  Gerador.wCampoNFSe(tcStr, '', 'CNPJ'   , 01, 14, 1, NFSe.Prestador.Cnpj, '');
+//  Gerador.wCampoNFSe(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');
 
   Gerador.wGrupoNFSe('NFS-e');
 
@@ -674,7 +674,7 @@ begin
   Gerador.wGrupoNFSe('/infNFSe');
 
   Gerador.wGrupoNFSe('/NFS-e');
-  Gerador.wGrupoNFSe('/envioLote');
+//  Gerador.wGrupoNFSe('/envioLote');
 end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -695,7 +695,7 @@ var
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
-
+(*
   FDefTipos := FServicoEnviar;
 
   if VersaoNFSe = ve110 then
@@ -712,7 +712,7 @@ begin
 
     Gerador.wGrupo('Rps' + Atributo);
   end;
-
+*)
   FNFSe.InfID.ID := FNFSe.Numero;
 
   GerarXML_Infisc;
@@ -738,7 +738,7 @@ begin
     end;
   end;
 
-  Gerador.wGrupo('/Rps');
+//  Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);

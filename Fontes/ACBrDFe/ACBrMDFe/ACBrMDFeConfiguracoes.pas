@@ -250,7 +250,7 @@ begin
   else
      rPathDown := FDownloadMDFe.PathDownload;
 
-  Result := GetPath(rPathDow, 'Down', CNPJ, Data);
+  Result := GetPath(rPathDown, 'Down', CNPJ, Data);
 end;
 
 { TDownloadConfMDFe }

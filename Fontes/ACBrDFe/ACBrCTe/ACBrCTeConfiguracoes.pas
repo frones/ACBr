@@ -256,7 +256,7 @@ begin
      FDownloadCTe.PathDownload := PathSalvar;
 
   if (FDownloadCTe.SepararPorNome) and (NaoEstaVazio(xNome)) then
-     rPathDown := rPathDown + PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome);
+     rPathDown := rPathDown + PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome)
   else
      rPathDown := FDownloadCTe.PathDownload;
 

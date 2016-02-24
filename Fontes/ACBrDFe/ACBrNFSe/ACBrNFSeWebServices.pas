@@ -1469,7 +1469,7 @@ begin
 
     case FProvedor of
       proCONAM: TagElemento := 'Reg20';
-      proInfisc,
+      proInfisc: TagElemento := 'infNFSe';
       proSP: TagElemento := 'RPS';
     else
       TagElemento := 'LoteRps';

@@ -252,6 +252,12 @@ begin
       InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfRps';
     end;
 
+    case Configuracoes.Geral.Provedor of
+      proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
+    else
+      InfElemento := InfElemento;
+    end;
+
     if Assina then
       FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps', InfElemento)
     else

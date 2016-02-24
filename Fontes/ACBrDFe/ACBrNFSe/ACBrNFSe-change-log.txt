@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2016
+-- ACBrNFSeNotasFiscais / ACBrNFSeWebServices / pnfsNFSeW_EGoverneISS --
+[*] Alterações visando realizar a assinatura no RPS do provedor EGoverneISS.
+    Por: Italo Jurisato Junior
+
 22/02/2016
 -- pnfsNFSeW_SP / pnfsNFSeG --
 [*] Para o provedor SP ao gerar o XML será ativado a supressão de decimais.

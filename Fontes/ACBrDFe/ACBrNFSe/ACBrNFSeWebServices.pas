@@ -1129,12 +1129,24 @@ begin
                       '</' + Prefixo4 + 'Rps>';
 
     // RPS versão 1.00
-    else FvNotas := FvNotas +
+    else begin
+      case FProvedor of
+        proEgoverneISS: FvNotas := FvNotas +
+                         '<' + FPrefixo4 + 'Rps>' +
+                          '<' + FPrefixo4 + 'NotaFiscal' +
+                            RetornarConteudoEntre(RPS,
+                              '<' + FPrefixo4 + 'NotaFiscal', '</Signature>') +
+                            '</Signature>'+
+                         '</' + FPrefixo4 + 'Rps>';
+      else
+        FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
                      '<' + FPrefixo4 + 'InfRps' +
                        RetornarConteudoEntre(RPS,
                          '<' + FPrefixo4 + 'InfRps', '</Rps>') +
                     '</' + FPrefixo4 + 'Rps>';
+      end;
+    end;
   end;
 end;
 

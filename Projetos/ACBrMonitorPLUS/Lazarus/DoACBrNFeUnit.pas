@@ -3056,6 +3056,7 @@ begin
                INIRec.WriteString(  sSecao,'EAN'      ,Prod.cEAN);
                INIRec.WriteString(  sSecao,'Descricao',Prod.xProd);
                INIRec.WriteString(  sSecao,'NCM'      ,Prod.NCM);
+               INIRec.WriteString(  sSecao,'CEST'     ,Prod.CEST);
                INIRec.WriteString(  sSecao,'EXTIPI'   ,Prod.EXTIPI);
                INIRec.WriteString( sSecao,'CFOP'      ,Prod.CFOP);
                INIRec.WriteString( sSecao,'Unidade'   ,Prod.uCom);

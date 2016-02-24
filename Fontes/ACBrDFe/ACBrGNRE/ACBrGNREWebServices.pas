@@ -58,7 +58,6 @@ uses
   ACBrGNREGuias, ACBrGNREConfiguracoes;
 
 const
-  CURL_WSDL = 'http://www.gnre.pe.gov.br/webservice/';
   INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
@@ -80,7 +79,7 @@ type
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
     procedure FinalizarServico; override;
-
+    function GetUrlWsd: String;override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
@@ -385,20 +384,20 @@ end;
 function TGNREWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
-
   if EstaVazio(FPVersaoServico) then
     FPVersaoServico := TACBrGNRE(FPDFeOwner).LerVersaoDeParams(FPLayout);
-
   Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
-
-  //  Result := '<versaoDados>1.00</versaoDados>';
 end;
 
 procedure TGNREWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
-
   TACBrGNRE(FPDFeOwner).SetStatus(stGNREIdle);
+end;
+
+function TGNREWebService.GetUrlWsd: String;
+begin
+  Result := FPDFeOwner.GetNameSpaceURI+'/webservice/'
 end;
 
 { TGNRERecepcao }
@@ -464,7 +463,7 @@ end;
 
 procedure TGNRERecepcao.DefinirServicoEAction;
 begin
-  FPServico := CURL_WSDL + 'GnreLoteRecepcao';
+  FPServico := GetUrlWsd + 'GnreLoteRecepcao';
 
   FPSoapAction := FPServico;
 end;
@@ -638,7 +637,7 @@ end;
 
 procedure TGNRERetRecepcao.DefinirServicoEAction;
 begin
-  FPServico := CURL_WSDL + 'GnreResultadoLote';
+  FPServico := GetUrlWsd + 'GnreResultadoLote';
 
   FPSoapAction := FPServico;
 end;
@@ -958,7 +957,7 @@ end;
 
 procedure TGNRERecibo.DefinirServicoEAction;
 begin
-  FPServico := CURL_WSDL + 'GnreResultadoLote';
+  FPServico := GetUrlWsd + 'GnreResultadoLote';
   FPSoapAction := FPServico;
 end;
 
@@ -1114,7 +1113,7 @@ end;
 
 procedure TGNREConsultaUF.DefinirServicoEAction;
 begin
-  FPServico := CURL_WSDL + 'GnreConfigUF';
+  FPServico := GetUrlWsd + 'GnreConfigUF';
   FPSoapAction := FPServico;
 end;
 

@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2016
+[*] modificado o metodo GetUrlWsd para virtual e assim poder sobre-escrever ele
+   por: Juliomar Marchetti
+
 23/02/2016
 -- ACBrMDFeConfiguracoes
 -- ACBrCTeConfiguracoes

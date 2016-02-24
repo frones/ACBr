@@ -141,12 +141,14 @@ begin
 
   FGuias := TGuias.Create(Self, Guia);
   FWebServices := TWebServices.Create(Self);
+  FGuiasRetorno := TGuiasRetorno.Create(Self, GuiaRetorno);
 end;
 
 destructor TACBrGNRE.Destroy;
 begin
   FGuias.Free;
   FWebServices.Free;
+  FGuiasRetorno.Free;
 
   inherited;
 end;

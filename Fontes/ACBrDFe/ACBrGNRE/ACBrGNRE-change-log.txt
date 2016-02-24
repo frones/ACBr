@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2016
+[*] Novas implementações para resolver erros da geração do gnre
+		por : Juliomar Marchetti
+
 18/02/2016
 [*] Diversas correções realizadas por: Cesar Balbinott, Leandro Silva visando
     fazer o componente funcionar de forma correta.

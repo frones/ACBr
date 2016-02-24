@@ -90,7 +90,7 @@ type
     procedure SalvarResposta; virtual;
     procedure FinalizarServico; virtual;
 
-    function GetUrlWsd: String;
+    function GetUrlWsd: String; virtual;
 
     procedure AssinarXML(const AXML, docElement, infElement: String;
       MsgErro: String; SignatureNode: String = '';

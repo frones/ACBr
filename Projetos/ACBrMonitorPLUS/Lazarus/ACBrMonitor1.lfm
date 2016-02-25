@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 400
+  Left = 343
   Height = 689
-  Top = 92
+  Top = 161
   Width = 832
   Align = alClient
   Caption = 'ACBrMonitor'
@@ -3809,7 +3809,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             TabOrder = 1
           end
           object lAdSufixo: TLabel
-            Left = 142
+            Left = 144
             Height = 19
             Top = 73
             Width = 169
@@ -6491,9 +6491,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 311
             Top = 0
             Width = 620
-            ActivePage = tsCertificadoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 1
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -7585,113 +7585,37 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 281
                 Top = 0
                 Width = 612
-                ActivePage = tsImpCTe
+                ActivePage = TabSheet1
                 Align = alClient
-                TabIndex = 3
+                TabIndex = 2
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
                   ClientHeight = 251
-                  ClientWidth = 607
+                  ClientWidth = 604
                   object Label139: TLabel
-                    Left = 6
+                    Left = 2
                     Height = 17
-                    Top = 40
+                    Top = 46
                     Width = 112
                     Caption = 'Impressora Padrão'
                     ParentColor = False
                   end
                   object Label140: TLabel
-                    Left = 231
+                    Left = 227
                     Height = 17
-                    Top = 40
+                    Top = 46
                     Width = 75
                     Caption = 'Núm. Cópias'
                     ParentColor = False
                   end
-                  object Label141: TLabel
-                    AnchorSideLeft.Control = speLargCodProd
-                    AnchorSideRight.Control = speLargCodProd
-                    AnchorSideRight.Side = asrBottom
-                    Left = 6
-                    Height = 27
-                    Top = 154
-                    Width = 68
-                    Alignment = taCenter
-                    Anchors = [akTop, akLeft, akRight]
-                    AutoSize = False
-                    Caption = 'Largura Cód.Produto'
-                    Font.Height = -11
-                    ParentColor = False
-                    ParentFont = False
-                    WordWrap = True
-                  end
-                  object Label142: TLabel
-                    AnchorSideLeft.Control = speEspBorda
-                    AnchorSideRight.Control = speEspBorda
-                    AnchorSideRight.Side = asrBottom
-                    Left = 78
-                    Height = 27
-                    Top = 154
-                    Width = 68
-                    Alignment = taCenter
-                    Anchors = [akTop, akLeft, akRight]
-                    AutoSize = False
-                    Caption = 'Espessura Borda'
-                    Font.Height = -11
-                    ParentColor = False
-                    ParentFont = False
-                    WordWrap = True
-                  end
-                  object Label143: TLabel
-                    AnchorSideLeft.Control = speFonteRazao
-                    AnchorSideRight.Control = speFonteRazao
-                    AnchorSideRight.Side = asrBottom
-                    Left = 150
-                    Height = 27
-                    Top = 154
-                    Width = 68
-                    Alignment = taCenter
-                    Anchors = [akTop, akLeft, akRight]
-                    AutoSize = False
-                    Caption = 'Fonte Razão Social'
-                    Font.Height = -11
-                    ParentColor = False
-                    ParentFont = False
-                    WordWrap = True
-                  end
-                  object Label144: TLabel
-                    AnchorSideLeft.Control = speFonteCampos
-                    AnchorSideRight.Control = speFonteCampos
-                    AnchorSideRight.Side = asrBottom
-                    Left = 293
-                    Height = 27
-                    Top = 154
-                    Width = 68
-                    Alignment = taCenter
-                    Anchors = [akTop, akLeft, akRight]
-                    AutoSize = False
-                    Caption = 'Fonte Demais Campos'
-                    Font.Height = -11
-                    ParentColor = False
-                    ParentFont = False
-                    WordWrap = True
-                  end
-                  object Label145: TLabel
-                    Left = 168
-                    Height = 17
-                    Top = 208
-                    Width = 136
-                    Caption = 'Decimais Valor Unitário'
-                    ParentColor = False
-                  end
                   object rgTipoDanfe: TRadioGroup
-                    Left = 145
+                    Left = 141
                     Height = 44
                     Top = 0
                     Width = 160
                     AutoFill = True
-                    Caption = 'DANFe/DACTe/DAMDFe'
+                    Caption = 'NFe/CTe/MDFe'
                     ChildSizing.LeftRightSpacing = 6
                     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                     ChildSizing.EnlargeVertical = crsHomogenousChildResize
@@ -7710,39 +7634,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 1
                   end
                   object cbxImpressora: TComboBox
-                    Left = 6
+                    Left = 2
                     Height = 25
-                    Top = 56
+                    Top = 62
                     Width = 219
                     ItemHeight = 17
-                    TabOrder = 13
-                  end
-                  object cbxImpDescPorc: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 0
-                    Width = 231
-                    Caption = 'Imprimir Desconto em Porcentagem'
-                    OnChange = cbxImpDescPorcChange
                     TabOrder = 2
                   end
-                  object cbxMostrarPreview: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 17
-                    Width = 234
-                    Caption = 'Mostrar Preview antes da impressão'
-                    TabOrder = 3
-                  end
                   object gbxMargem: TGroupBox
-                    Left = 6
-                    Height = 72
-                    Top = 81
+                    Left = 2
+                    Height = 71
+                    Top = 94
                     Width = 299
-                    Caption = 'Margens'
-                    ClientHeight = 50
+                    Caption = 'Margens (NFe/CTe/MDFe)'
+                    ClientHeight = 49
                     ClientWidth = 295
-                    TabOrder = 15
+                    TabOrder = 4
                     object Label146: TLabel
                       Left = 6
                       Height = 17
@@ -7821,7 +7728,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     end
                   end
                   object rgModeloDanfe: TRadioGroup
-                    Left = 6
+                    Left = 2
                     Height = 44
                     Top = 0
                     Width = 134
@@ -7843,112 +7750,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     )
                     TabOrder = 0
                   end
-                  object cbxExibeResumo: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 34
-                    Width = 175
-                    Caption = 'Exibir Resumo no Canhoto'
-                    TabOrder = 4
-                  end
-                  object cbxImpValLiq: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 51
-                    Width = 222
-                    Caption = 'Imprimir Valor Líquido do Produto'
-                    TabOrder = 5
-                  end
-                  object cbxFormCont: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 68
-                    Width = 165
-                    Caption = 'Formulario Pré-Impresso'
-                    TabOrder = 6
-                  end
-                  object rgTipoFonte: TRadioGroup
-                    Left = 316
-                    Height = 44
-                    Top = 208
-                    Width = 285
-                    AutoFill = True
-                    Caption = 'Tipo de Fonte'
-                    ChildSizing.LeftRightSpacing = 6
-                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-                    ChildSizing.ShrinkHorizontal = crsScaleChilds
-                    ChildSizing.ShrinkVertical = crsScaleChilds
-                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                    ChildSizing.ControlsPerLine = 3
-                    ClientHeight = 22
-                    ClientWidth = 281
-                    Columns = 3
-                    ItemIndex = 0
-                    Items.Strings = (
-                      'Times'
-                      'Courier'
-                      'Arial'
-                    )
-                    TabOrder = 25
-                  end
-                  object cbxMostraStatus: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 102
-                    Width = 106
-                    Caption = 'Mostrar Status'
-                    TabOrder = 8
-                  end
-                  object cbxExpandirLogo: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 119
-                    Width = 109
-                    Caption = 'Expandir Logo '
-                    TabOrder = 10
-                  end
-                  object rgCasasDecimaisQtd: TRadioGroup
-                    Left = 6
-                    Height = 44
-                    Top = 208
-                    Width = 147
-                    AutoFill = True
-                    Caption = 'Decimais Quantidade'
-                    ChildSizing.LeftRightSpacing = 6
-                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
-                    ChildSizing.ShrinkHorizontal = crsScaleChilds
-                    ChildSizing.ShrinkVertical = crsScaleChilds
-                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                    ChildSizing.ControlsPerLine = 3
-                    ClientHeight = 22
-                    ClientWidth = 143
-                    Columns = 3
-                    ItemIndex = 0
-                    Items.Strings = (
-                      '2'
-                      '3'
-                      '4'
-                    )
-                    TabOrder = 23
-                  end
-                  object spedtDecimaisVUnit: TSpinEdit
-                    Left = 168
-                    Height = 25
-                    Top = 225
-                    Width = 121
-                    MaxValue = 10
-                    TabOrder = 24
-                  end
                   object rgLocalCanhoto: TRadioGroup
-                    Left = 439
-                    Height = 43
+                    Left = 2
+                    Height = 51
                     Hint = 'Funcionalidade disponível somente no Rave'
-                    Top = 167
-                    Width = 162
+                    Top = 174
+                    Width = 198
                     AutoFill = True
-                    Caption = 'Local Canhoto'
+                    Caption = 'Local Canhoto (NFe/CTe)'
                     ChildSizing.LeftRightSpacing = 6
                     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
                     ChildSizing.EnlargeVertical = crsHomogenousChildResize
@@ -7956,155 +7765,92 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     ChildSizing.ShrinkVertical = crsScaleChilds
                     ChildSizing.Layout = cclLeftToRightThenTopToBottom
                     ChildSizing.ControlsPerLine = 2
-                    ClientHeight = 21
-                    ClientWidth = 158
+                    ClientHeight = 29
+                    ClientWidth = 194
                     Columns = 2
                     ItemIndex = 0
                     Items.Strings = (
                       'Cabeçalho'
                       'Rodapé'
                     )
-                    TabOrder = 22
+                    TabOrder = 5
                   end
                   object cbxImprimirTributos: TCheckBox
-                    Left = 316
+                    Left = 365
                     Height = 21
-                    Top = 85
+                    Top = 230
                     Width = 236
                     Caption = 'Imprimir Valor dos Tributos por Item'
-                    TabOrder = 7
-                  end
-                  object cbxExibirEAN: TCheckBox
-                    Left = 456
-                    Height = 21
-                    Top = 119
-                    Width = 81
-                    Caption = 'Exibir EAN'
-                    TabOrder = 11
-                  end
-                  object cbxExibirCampoFatura: TCheckBox
-                    Left = 456
-                    Height = 21
-                    Top = 102
-                    Width = 138
-                    Caption = 'Exibir Campo Fatura'
-                    TabOrder = 9
+                    TabOrder = 8
+                    Visible = False
                   end
                   object edtNumCopia: TSpinEdit
-                    Left = 231
+                    Left = 227
                     Height = 25
-                    Top = 56
+                    Top = 62
                     Width = 74
                     MinValue = 1
-                    TabOrder = 14
+                    TabOrder = 3
                     Value = 1
                   end
-                  object cbxQuebrarLinhasDetalhesItens: TCheckBox
-                    Left = 316
-                    Height = 21
-                    Top = 136
-                    Width = 241
-                    Caption = 'Quebrar linhas em '#13#10'detalhe dos itens'
-                    TabOrder = 12
+                  object GroupBox10: TGroupBox
+                    Left = 308
+                    Height = 87
+                    Top = 0
+                    Width = 293
+                    Caption = 'NFe/CTe'
+                    ClientHeight = 65
+                    ClientWidth = 289
+                    TabOrder = 6
+                    object cbxImpDescPorc: TCheckBox
+                      Left = 8
+                      Height = 21
+                      Top = 0
+                      Width = 231
+                      Caption = 'Imprimir Desconto em Porcentagem'
+                      OnChange = cbxImpDescPorcChange
+                      TabOrder = 0
+                    end
                   end
-                  object lblAlturaCampos: TLabel
-                    AnchorSideLeft.Control = speAlturaCampos
-                    AnchorSideRight.Control = speAlturaCampos
-                    AnchorSideRight.Side = asrBottom
-                    Left = 364
-                    Height = 27
-                    Top = 154
-                    Width = 68
-                    Alignment = taCenter
-                    Anchors = [akTop, akLeft, akRight]
-                    AutoSize = False
-                    Caption = 'Altura Campos'
-                    Font.Height = -11
-                    ParentColor = False
-                    ParentFont = False
-                    WordWrap = True
-                  end
-                  object lblFonteEndereco: TLabel
-                    AnchorSideLeft.Control = speFonteEndereco
-                    AnchorSideRight.Control = speFonteEndereco
-                    AnchorSideRight.Side = asrBottom
-                    Left = 222
-                    Height = 27
-                    Top = 154
-                    Width = 68
-                    Alignment = taCenter
-                    Anchors = [akTop, akLeft, akRight]
-                    AutoSize = False
-                    Caption = 'Fonte Endereço'
-                    Font.Height = -11
-                    ParentColor = False
-                    ParentFont = False
-                    WordWrap = True
-                  end
-                  object speLargCodProd: TSpinEdit
-                    Left = 6
-                    Height = 25
-                    Top = 181
-                    Width = 68
-                    MaxValue = 60
-                    MinValue = 10
-                    TabOrder = 16
-                    Value = 40
-                  end
-                  object speEspBorda: TSpinEdit
-                    Left = 78
-                    Height = 25
-                    Top = 181
-                    Width = 68
-                    MaxValue = 10
-                    MinValue = 1
-                    TabOrder = 17
-                    Value = 1
-                  end
-                  object speFonteRazao: TSpinEdit
-                    Left = 150
-                    Height = 25
-                    Top = 181
-                    Width = 68
-                    MaxValue = 36
-                    MinValue = 6
-                    TabOrder = 18
-                    Value = 12
-                  end
-                  object speFonteEndereco: TSpinEdit
-                    Left = 222
-                    Height = 25
-                    Top = 181
-                    Width = 68
-                    MaxValue = 36
-                    MinValue = 4
-                    TabOrder = 19
-                    Value = 10
-                  end
-                  object speFonteCampos: TSpinEdit
-                    Left = 293
-                    Height = 25
-                    Top = 181
-                    Width = 68
-                    MaxValue = 36
-                    MinValue = 4
-                    TabOrder = 20
-                    Value = 10
-                  end
-                  object speAlturaCampos: TSpinEdit
-                    Left = 364
-                    Height = 25
-                    Top = 181
-                    Width = 68
-                    MinValue = 10
-                    TabOrder = 21
-                    Value = 30
+                  object GroupBox11: TGroupBox
+                    Left = 308
+                    Height = 99
+                    Top = 94
+                    Width = 293
+                    Caption = 'NFe/CTe/MDFe'
+                    ClientHeight = 77
+                    ClientWidth = 289
+                    TabOrder = 7
+                    object cbxMostrarPreview: TCheckBox
+                      Left = 8
+                      Height = 21
+                      Top = 0
+                      Width = 234
+                      Caption = 'Mostrar Preview antes da impressão'
+                      TabOrder = 0
+                    end
+                    object cbxMostraStatus: TCheckBox
+                      Left = 8
+                      Height = 21
+                      Top = 22
+                      Width = 106
+                      Caption = 'Mostrar Status'
+                      TabOrder = 1
+                    end
+                    object cbxExpandirLogo: TCheckBox
+                      Left = 8
+                      Height = 21
+                      Top = 44
+                      Width = 105
+                      Caption = 'Expandir Logo'
+                      TabOrder = 2
+                    end
                   end
                 end
                 object tsDadosEmpresa: TTabSheet
                   Caption = 'Dados Empresa'
                   ClientHeight = 251
-                  ClientWidth = 607
+                  ClientWidth = 604
                   ImageIndex = 1
                   object Label150: TLabel
                     Left = 6
@@ -8189,10 +7935,311 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     TabOrder = 3
                   end
                 end
+                object TabSheet1: TTabSheet
+                  Caption = 'NFe'
+                  ClientHeight = 251
+                  ClientWidth = 604
+                  object speProdutosPorPagina: TSpinEdit
+                    Left = 8
+                    Height = 25
+                    Top = 19
+                    Width = 95
+                    Alignment = taCenter
+                    Anchors = [akTop, akRight]
+                    MaxValue = 999
+                    TabOrder = 0
+                  end
+                  object Label189: TLabel
+                    Left = 8
+                    Height = 17
+                    Top = 0
+                    Width = 95
+                    Caption = 'No. Itens Página'
+                    ParentColor = False
+                  end
+                  object Label145: TLabel
+                    Left = 265
+                    Height = 17
+                    Top = 0
+                    Width = 96
+                    Caption = 'Decimais Vl.Unit.'
+                    ParentColor = False
+                  end
+                  object spedtDecimaisVUnit: TSpinEdit
+                    Left = 265
+                    Height = 25
+                    Top = 19
+                    Width = 96
+                    Alignment = taCenter
+                    MaxValue = 10
+                    TabOrder = 2
+                  end
+                  object rgCasasDecimaisQtd: TRadioGroup
+                    Left = 108
+                    Height = 44
+                    Top = 0
+                    Width = 154
+                    AutoFill = True
+                    Caption = 'Decimais Quantidade'
+                    ChildSizing.LeftRightSpacing = 6
+                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                    ChildSizing.ShrinkHorizontal = crsScaleChilds
+                    ChildSizing.ShrinkVertical = crsScaleChilds
+                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                    ChildSizing.ControlsPerLine = 3
+                    ClientHeight = 22
+                    ClientWidth = 150
+                    Columns = 3
+                    ItemIndex = 0
+                    Items.Strings = (
+                      '2'
+                      '3'
+                      '4'
+                    )
+                    TabOrder = 1
+                  end
+                  object rgTipoFonte: TRadioGroup
+                    Left = 10
+                    Height = 44
+                    Top = 50
+                    Width = 252
+                    AutoFill = True
+                    Caption = 'Tipo de Fonte'
+                    ChildSizing.LeftRightSpacing = 6
+                    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+                    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+                    ChildSizing.ShrinkHorizontal = crsScaleChilds
+                    ChildSizing.ShrinkVertical = crsScaleChilds
+                    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+                    ChildSizing.ControlsPerLine = 3
+                    ClientHeight = 22
+                    ClientWidth = 248
+                    Columns = 3
+                    ItemIndex = 0
+                    Items.Strings = (
+                      'Times'
+                      'Courier'
+                      'Arial'
+                    )
+                    TabOrder = 3
+                  end
+                  object lblAlturaCampos: TLabel
+                    AnchorSideLeft.Control = speAlturaCampos
+                    AnchorSideRight.Control = speAlturaCampos
+                    AnchorSideRight.Side = asrBottom
+                    Left = 293
+                    Height = 27
+                    Top = 100
+                    Width = 68
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Altura Campos'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object speAlturaCampos: TSpinEdit
+                    Left = 293
+                    Height = 25
+                    Top = 127
+                    Width = 68
+                    MinValue = 10
+                    TabOrder = 8
+                    Value = 30
+                  end
+                  object Label144: TLabel
+                    AnchorSideLeft.Control = speFonteCampos
+                    AnchorSideRight.Control = speFonteCampos
+                    AnchorSideRight.Side = asrBottom
+                    Left = 222
+                    Height = 27
+                    Top = 100
+                    Width = 68
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Fonte Demais Campos'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object speFonteCampos: TSpinEdit
+                    Left = 222
+                    Height = 25
+                    Top = 127
+                    Width = 68
+                    MaxValue = 36
+                    MinValue = 4
+                    TabOrder = 7
+                    Value = 10
+                  end
+                  object lblFonteEndereco: TLabel
+                    AnchorSideLeft.Control = speFonteEndereco
+                    AnchorSideRight.Control = speFonteEndereco
+                    AnchorSideRight.Side = asrBottom
+                    Left = 151
+                    Height = 27
+                    Top = 100
+                    Width = 68
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Fonte Endereço'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object speFonteEndereco: TSpinEdit
+                    Left = 151
+                    Height = 25
+                    Top = 127
+                    Width = 68
+                    MaxValue = 36
+                    MinValue = 4
+                    TabOrder = 6
+                    Value = 10
+                  end
+                  object Label143: TLabel
+                    AnchorSideLeft.Control = speFonteRazao
+                    AnchorSideRight.Control = speFonteRazao
+                    AnchorSideRight.Side = asrBottom
+                    Left = 79
+                    Height = 27
+                    Top = 100
+                    Width = 68
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Fonte Razão Social'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object speFonteRazao: TSpinEdit
+                    Left = 79
+                    Height = 25
+                    Top = 127
+                    Width = 68
+                    MaxValue = 36
+                    MinValue = 6
+                    TabOrder = 5
+                    Value = 12
+                  end
+                  object Label142: TLabel
+                    AnchorSideLeft.Control = speEspBorda
+                    AnchorSideRight.Control = speEspBorda
+                    AnchorSideRight.Side = asrBottom
+                    Left = 530
+                    Height = 27
+                    Top = 198
+                    Width = 68
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Espessura Borda'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    Visible = False
+                    WordWrap = True
+                  end
+                  object speEspBorda: TSpinEdit
+                    Left = 530
+                    Height = 25
+                    Top = 225
+                    Width = 68
+                    MaxValue = 10
+                    MinValue = 1
+                    TabOrder = 15
+                    Value = 1
+                    Visible = False
+                  end
+                  object Label141: TLabel
+                    AnchorSideLeft.Control = speLargCodProd
+                    AnchorSideRight.Control = speLargCodProd
+                    AnchorSideRight.Side = asrBottom
+                    Left = 8
+                    Height = 27
+                    Top = 100
+                    Width = 68
+                    Alignment = taCenter
+                    Anchors = [akTop, akLeft, akRight]
+                    AutoSize = False
+                    Caption = 'Largura Cód.Produto'
+                    Font.Height = -11
+                    ParentColor = False
+                    ParentFont = False
+                    WordWrap = True
+                  end
+                  object speLargCodProd: TSpinEdit
+                    Left = 8
+                    Height = 25
+                    Top = 127
+                    Width = 68
+                    MaxValue = 60
+                    MinValue = 10
+                    TabOrder = 4
+                    Value = 40
+                  end
+                  object cbxExibirEAN: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 158
+                    Width = 81
+                    Caption = 'Exibir EAN'
+                    TabOrder = 9
+                  end
+                  object cbxExibirCampoFatura: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 180
+                    Width = 138
+                    Caption = 'Exibir Campo Fatura'
+                    TabOrder = 10
+                  end
+                  object cbxQuebrarLinhasDetalhesItens: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 202
+                    Width = 241
+                    Caption = 'Quebrar linhas em '#13#10'detalhe dos itens'
+                    TabOrder = 11
+                  end
+                  object cbxFormCont: TCheckBox
+                    Left = 8
+                    Height = 21
+                    Top = 224
+                    Width = 165
+                    Caption = 'Formulario Pré-Impresso'
+                    TabOrder = 12
+                  end
+                  object cbxImpValLiq: TCheckBox
+                    Left = 262
+                    Height = 21
+                    Top = 180
+                    Width = 222
+                    Caption = 'Imprimir Valor Líquido do Produto'
+                    TabOrder = 14
+                  end
+                  object cbxExibeResumo: TCheckBox
+                    Left = 262
+                    Height = 21
+                    Top = 158
+                    Width = 175
+                    Caption = 'Exibir Resumo no Canhoto'
+                    TabOrder = 13
+                  end
+                end
                 object tsImpNFCe: TTabSheet
                   Caption = 'NFC-e'
                   ClientHeight = 251
-                  ClientWidth = 607
+                  ClientWidth = 604
                   ImageIndex = 2
                   object rgModeloDANFeNFCE: TRadioGroup
                     Left = 6

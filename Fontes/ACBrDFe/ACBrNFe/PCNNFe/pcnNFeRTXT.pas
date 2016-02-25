@@ -485,7 +485,7 @@ begin
     (*I04*)NFe.Det[i].Prod.xProd := LerCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM := LerCampo(tcStr, 'NCM');
 //           NFe.Det[i].Prod.NVE := LerCampo(tcStr, 'NVE');
-           NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
+//           NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
     (*I06*)NFe.Det[i].Prod.EXTIPI := LerCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := LerCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP := LerCampo(tcEsp, 'CFOP');
@@ -515,6 +515,11 @@ begin
     (*I05a*)NFe.Det[i].Prod.NVE[j].NVE := LerCampo(tcStr, 'NVE');
   end;
 
+	if ID = 'I05c' then
+  begin
+		i := NFe.Det.Count - 1;
+		(*I05c*)NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
+	end;
 
   if ID = 'I18' then (* Grupo da TAG <det><prod><DI> **************************)
   begin
@@ -946,9 +951,9 @@ begin
     (*W03*)NFe.Total.ICMSTot.vBC          := LerCampo(tcDe2, 'vBC');
     (*W04*)NFe.Total.ICMSTot.vICMS        := LerCampo(tcDe2, 'vICMS');
            NFe.Total.ICMSTot.vICMSDeson   := LerCampo(tcDe2, 'vICMSDeson');
-           NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
-           NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
-           NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
+           //NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
+           //NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
+           //NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
     (*W05*)NFe.Total.ICMSTot.vBCST        := LerCampo(tcDe2, 'vBCST');
     (*W06*)NFe.Total.ICMSTot.vST          := LerCampo(tcDe2, 'vST');
     (*W07*)NFe.Total.ICMSTot.vProd        := LerCampo(tcDe2, 'vProd');
@@ -963,7 +968,16 @@ begin
     (*W16*)NFe.Total.ICMSTot.vNF          := LerCampo(tcDe2, 'vNF');
     (*W16a*)NFe.Total.ICMSTot.vTotTrib    := LerCampo(tcDe2, 'vTotTrib');
   end;
+	
+	if ID = 'W04c' then	
+		(*W04c*)NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
 
+	if ID = 'W04e' then	
+		(*W04e*)NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
+
+	if ID = 'W04g' then	
+		(*W04g*)NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
+		
   if ID = 'W17' then (* Grupo da TAG <total><ISSQNtot> ************************)
   begin
     (*W18*)NFe.Total.ISSQNtot.vServ := LerCampo(tcDe2, 'vServ');

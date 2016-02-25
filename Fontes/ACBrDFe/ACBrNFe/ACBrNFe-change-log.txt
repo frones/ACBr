@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2016
+[*] Modificação para compatibilizar os campos igual aos manuais do sefaz
+		http://www.emissornfe.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
+		http://www.emissornfehom.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
+		por : Juliomar Marchetti
 
 23/02/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 

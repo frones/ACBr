@@ -207,12 +207,17 @@ type
     cbxCNAB: TComboBox;
     cbxEmissaoPathNFe: TCheckBox;
     cbxExibeResumo: TCheckBox;
-    cbxTimeZoneMode: TComboBox;
-    cbxQuebrarLinhasDetalhesItens: TCheckBox;
+    cbxExibirCampoFatura: TCheckBox;
+    cbxExibirEAN: TCheckBox;
     cbxExpandirLogo: TCheckBox;
-    cbxFormatXML: TCheckBox;
     cbxFormCont: TCheckBox;
     cbxImpDescPorc: TCheckBox;
+    cbxImpValLiq: TCheckBox;
+    cbxMostrarPreview: TCheckBox;
+    cbxMostraStatus: TCheckBox;
+    cbxQuebrarLinhasDetalhesItens: TCheckBox;
+    cbxTimeZoneMode: TComboBox;
+    cbxFormatXML: TCheckBox;
     cbxImpressora: TComboBox;
     cbxImpressoraNFCe: TComboBox;
     cbxImprimirDescAcresItemNFCe: TCheckBox;
@@ -220,12 +225,9 @@ type
     cbxImprimirItem1LinhaNFCe: TCheckBox;
     cbxImprimirItem1LinhaSAT: TCheckBox;
     cbxImprimirTributos: TCheckBox;
-    cbxImpValLiq: TCheckBox;
     cbxIndRatISSQN: TComboBox;
     cbxModelo: TComboBox;
     cbxModeloSAT: TComboBox;
-    cbxMostrarPreview: TCheckBox;
-    cbxMostraStatus: TCheckBox;
     cbxPagCodigo: TComboBox;
     cbxPastaMensal: TCheckBox;
     cbxPorta: TComboBox;
@@ -252,9 +254,27 @@ type
     chbTCPANSI: TCheckBox;
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
-    cbxExibirCampoFatura: TCheckBox;
     edTimeZoneStr: TEdit;
     edtTimeoutWebServices: TSpinEdit;
+    GroupBox10: TGroupBox;
+    GroupBox11: TGroupBox;
+    Label141: TLabel;
+    Label142: TLabel;
+    Label143: TLabel;
+    Label144: TLabel;
+    Label145: TLabel;
+    lblAlturaCampos: TLabel;
+    lblFonteEndereco: TLabel;
+    rgCasasDecimaisQtd: TRadioGroup;
+    rgTipoFonte: TRadioGroup;
+    speAlturaCampos: TSpinEdit;
+    spedtDecimaisVUnit: TSpinEdit;
+    speEspBorda: TSpinEdit;
+    speFonteCampos: TSpinEdit;
+    speFonteEndereco: TSpinEdit;
+    speFonteRazao: TSpinEdit;
+    speLargCodProd: TSpinEdit;
+    speProdutosPorPagina: TSpinEdit;
     fspeNFCeMargemDir: TFloatSpinEdit;
     fspeNFCeMargemEsq: TFloatSpinEdit;
     fspeNFCeMargemInf: TFloatSpinEdit;
@@ -266,18 +286,13 @@ type
     gbDFeConfDiversas: TGroupBox;
     gbDFeTimeZone: TGroupBox;
     Label187: TLabel;
-    speAlturaCampos: TSpinEdit;
+    Label189: TLabel;
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
     edtEmailAssuntoCTe: TEdit;
-    speEspBorda: TSpinEdit;
-    speFonteCampos: TSpinEdit;
-    speFonteEndereco: TSpinEdit;
-    speFonteRazao: TSpinEdit;
-    speLargCodProd: TSpinEdit;
     edtNumCopia: TSpinEdit;
     edtCNPJContador: TEdit;
     gbxMargem1: TGroupBox;
@@ -301,8 +316,6 @@ type
     Label185: TLabel;
     Label186: TLabel;
     Label188: TLabel;
-    lblAlturaCampos: TLabel;
-    lblFonteEndereco: TLabel;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     mmEmailMsgCTe: TMemo;
@@ -312,6 +325,7 @@ type
     sbArquivoWebServicesMDFe: TSpeedButton;
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
+    TabSheet1: TTabSheet;
     tsImpCTe: TTabSheet;
     tsTesteMDFe: TTabSheet;
     tsEmailMDFe: TTabSheet;
@@ -328,7 +342,6 @@ type
     chECFDescrGrande: TCheckBox;
     chECFIgnorarTagsFormatacao: TCheckBox;
     chECFSinalGavetaInvertido: TCheckBox;
-    cbxExibirEAN: TCheckBox;
     cbUmaInstancia: TCheckBox;
     cbHRI: TCheckBox;
     chkLerCedenteRetorno: TCheckBox;
@@ -566,11 +579,6 @@ type
     Label139: TLabel;
     Label14: TLabel;
     Label140: TLabel;
-    Label141: TLabel;
-    Label142: TLabel;
-    Label143: TLabel;
-    Label144: TLabel;
-    Label145: TLabel;
     Label146: TLabel;
     Label147: TLabel;
     Label148: TLabel;
@@ -780,14 +788,12 @@ type
     rbLCBTeclado: TRadioButton;
     rbTCP: TRadioButton;
     rbTXT: TRadioButton;
-    rgCasasDecimaisQtd: TRadioGroup;
     rgFormaEmissao: TRadioGroup;
     rgLocalCanhoto: TRadioGroup;
     rgModeloDanfe: TRadioGroup;
     rgModeloDANFeNFCE: TRadioGroup;
     rgModoImpressaoEvento: TRadioGroup;
     rgTipoDanfe: TRadioGroup;
-    rgTipoFonte: TRadioGroup;
     SbArqLog: TSpeedButton;
     SbArqLog2: TSpeedButton;
     sbBALSerial: TSpeedButton;
@@ -847,7 +853,6 @@ type
     shpLCB: TShape;
     shpTC: TShape;
     spBOLCopias: TSpinEdit;
-    spedtDecimaisVUnit: TSpinEdit;
     SpeedButton1: TSpeedButton;
     seFundoImp: TSpinEdit;
     seCodBarrasLargura: TSpinEdit;
@@ -3558,6 +3563,7 @@ begin
     rgTipoFonte.ItemIndex := Ini.ReadInteger('DANFE', 'Fonte', 0);
     rgLocalCanhoto.ItemIndex := Ini.ReadInteger('DANFE', 'LocalCanhoto', 0);
     cbxQuebrarLinhasDetalhesItens.Checked := ini.ReadBool('DANFE','QuebrarLinhasDetalheItens', False) ;
+    speProdutosPorPagina.Value := Ini.ReadInteger('DANFE', 'ProdutosPorPagina', 0);
 
     cbxImpDescPorcChange(nil);
 
@@ -4366,6 +4372,7 @@ begin
     Ini.WriteInteger('DANFE', 'Fonte', rgTipoFonte.ItemIndex);
     Ini.WriteInteger('DANFE', 'LocalCanhoto', rgLocalCanhoto.ItemIndex);
     ini.WriteBool('DANFE','QuebrarLinhasDetalheItens', cbxQuebrarLinhasDetalhesItens.Checked) ;
+    Ini.WriteInteger('DANFE', 'ProdutosPorPagina', speProdutosPorPagina.Value);
 
     Ini.WriteInteger('NFCe', 'Modelo', rgModeloDANFeNFCE.ItemIndex);
     Ini.WriteInteger('NFCe', 'ModoImpressaoEvento', rgModoImpressaoEvento.ItemIndex);
@@ -6985,7 +6992,7 @@ begin
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;
     ACBrNFe1.DANFE.ImprimirDescPorc := cbxImpDescPorc.Checked;
     ACBrNFe1.DANFE.NumCopias := edtNumCopia.Value;
-    ACBrNFe1.DANFE.ProdutosPorPagina := speLargCodProd.Value;
+    ACBrNFe1.DANFE.ProdutosPorPagina := speProdutosPorPagina.Value;
     ACBrNFe1.DANFE.MargemInferior := fspeMargemInf.Value;
     ACBrNFe1.DANFE.MargemSuperior := fspeMargemSup.Value;
     ACBrNFe1.DANFE.MargemDireita := fspeMargemDir.Value;

@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2016
+[+] Criado uma nova aba em DFe->Impressão de nome NFe, nela irá ter somente
+    configurações de NFe.
+[*] Removido várias opções de configurações da aba DFe-Impressao->Geral e 
+    realocada na nova aba DFe->Impressao->NFe.
+[+] Adicionado componente para definir a quantidade de itens por páginas 
+    coforme relato de erro no link :
+    http://www.projetoacbr.com.br/forum/topic/28308-propriedade-produtosporpagina-no-monitorplus/?do=findComment&comment=186590
+    (Isaque Pinheiro)   
+
 24/02/2016
 [+] NFe.LerNFe não contemplava ler o CEST do xml
     por: Juliomar Marchetti

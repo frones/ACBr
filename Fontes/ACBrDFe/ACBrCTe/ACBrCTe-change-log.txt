@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/02/2016
+-- ACBrCTeServicos --
+[*] Atualização das URLs de homologação da SEFAZ-MS.
+    por: Italo Jurisato Junior
+
 17/02/2016
 -- ACBrCTeConhecimentos --
 [*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)

@@ -108,7 +108,8 @@ type
                           ANumeroNFSe: String = '';
                           AMotivoCancelamento: String = ''): Boolean;
 
-    function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
+    function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String;
+                            AMotivoCancelamento: String = ''): Boolean;
 
     function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
 
@@ -514,11 +515,11 @@ begin
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
   Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
-            AMotivoCancelamento);
+                                    AMotivoCancelamento);
 end;
 
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,
-  ANumeroNFSe: String): Boolean;
+  ANumeroNFSe: String; AMotivoCancelamento: String): Boolean;
 begin
   if ACodigoCancelamento = '' then
     GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
@@ -531,7 +532,8 @@ begin
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
 
-  Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe);
+  Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe,
+                                      AMotivoCancelamento);
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;

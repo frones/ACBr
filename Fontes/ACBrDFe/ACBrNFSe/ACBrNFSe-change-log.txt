@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/02/2016
+-- ACBrNFSe / ACBrNFSeWebServices --
+[*] Incluido a propriedade AMotivoCancelamento no método SubstituirNFSe.
+    Por: Italo Jurisato Junior
 -- ACBrNFSeNotasFiscais / ACBrNFSeWebServices / pnfsNFSeW_EGoverneISS --
 [*] Alterações visando realizar a assinatura no RPS do provedor EGoverneISS.
     Por: Italo Jurisato Junior

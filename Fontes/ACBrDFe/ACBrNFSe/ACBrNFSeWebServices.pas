@@ -545,7 +545,8 @@ type
                          AMotivoCancelamento: String = ''): Boolean;
 
     function SubstituiNFSe(ACodigoCancelamento,
-                           ANumeroNFSe: String): Boolean;
+                           ANumeroNFSe: String;
+                           AMotivoCancelamento: String = ''): Boolean;
 
     property ACBrNFSe: TACBrDFe                            read FACBrNFSe        write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS               read FGerarLoteRPS    write FGerarLoteRPS;
@@ -2819,7 +2820,7 @@ begin
     if FNotasFiscais.Count > 0 then
     begin
       FNumeroNFSe         := FNotasFiscais.Items[0].NFSe.Numero;
-      FMotivoCancelamento := FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
+//      FMotivoCancelamento := FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
     end;
 
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoCancelar;
@@ -2952,7 +2953,7 @@ begin
             Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
             Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
             Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
-            Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, NFSe.MotivoCancelamento, '');
+            Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
             Gerador.wGrupoNFSe('/Nota');
           end;
         end;
@@ -2973,7 +2974,7 @@ begin
           with FNotasFiscais.Items[I] do
           begin
             Gerador.wCampoNFSe(tcStr, '', 'chvAcessoNFS-e', 1, 39, 1, NFSe.ChaveNFSe, '');
-            Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, NFSe.MotivoCancelamento, '');
+            Gerador.wCampoNFSe(tcStr, '', 'motivo', 1, 39, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
           end;
         end;
 
@@ -3225,7 +3226,7 @@ begin
             Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, FPConfiguracoesNFSe.Geral.Emitente.InscMun, '');
             Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 12, 1, OnlyNumber(NFSe.Numero), '');
             Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 255,  1, NFSe.CodigoVerificacao, '');
-            Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, NFSe.MotivoCancelamento, '');
+            Gerador.wCampoNFSe(tcStr, '', 'MotivoCancelamento', 01, 80, 1, TNFSeSubstituirNfse(Self).FMotivoCancelamento, '');
             Gerador.wGrupoNFSe('/Nota');
           end;
         end;
@@ -3621,7 +3622,8 @@ begin
   end;
 end;
 
-function TWebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
+function TWebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe: String;
+  AMotivoCancelamento: String): Boolean;
 begin
   Result := False;
 
@@ -3632,7 +3634,7 @@ begin
     FSubNfse.GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'))
   else begin
     FSubNfse.FNumeroRps         := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
-    FSubNfse.MotivoCancelamento := TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.MotivoCancelamento;
+    FSubNfse.MotivoCancelamento := AMotivoCancelamento;
 
     Result := FSubNfse.Executar;
 

@@ -57,8 +57,8 @@ uses
   pgnreRetConsResLoteGNRE, pgnreConsConfigUF, pgnreRetConsConfigUF,
   ACBrGNREGuias, ACBrGNREConfiguracoes;
 
-const
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
+//const
+//  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
 
@@ -79,7 +79,7 @@ type
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
     procedure FinalizarServico; override;
-    function GetUrlWsd: String;override;
+    function GetUrlWsd: String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
@@ -397,7 +397,7 @@ end;
 
 function TGNREWebService.GetUrlWsd: String;
 begin
-  Result := FPDFeOwner.GetNameSpaceURI+'/webservice/'
+  Result := FPDFeOwner.GetNameSpaceURI + '/webservice/';
 end;
 
 { TGNRERecepcao }

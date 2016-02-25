@@ -50,9 +50,9 @@ uses
   pmdfeDistDFeInt, pmdfeRetDistDFeInt,
   ACBrMDFeManifestos, ACBrMDFeConfiguracoes;
 
-const
-  CURL_WSDL = 'http://www.portalfiscal.inf.br/mdfe/wsdl/';
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
+//const
+//  CURL_WSDL = 'http://www.portalfiscal.inf.br/mdfe/wsdl/';
+//  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
 

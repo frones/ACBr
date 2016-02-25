@@ -52,9 +52,9 @@ uses
   pcteRetConsSitCTe, pcteRetEnvCTe, pcteDistDFeInt, pcteRetDistDFeInt,
   ACBrCteConhecimentos, ACBrCTeConfiguracoes;
 
-const
-  CURL_WSDL = 'http://www.portalfiscal.inf.br/cte/wsdl/';
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
+//const
+//  CURL_WSDL = 'http://www.portalfiscal.inf.br/cte/wsdl/';
+//  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
 

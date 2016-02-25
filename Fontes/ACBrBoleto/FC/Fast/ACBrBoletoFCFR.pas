@@ -1,13 +1,11 @@
 {******************************************************************************}
-{ Projeto: Componentes ACBr                                                 }
+{ Projeto: Componentes ACBr                                                    }
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2009 http://acbr.sf.net                     }
-
-
 {                                                                              }
-{ Colaboradores nesse arquivo:  Isaque Pinheiro                                               }
+{ Colaboradores nesse arquivo:  Isaque Pinheiro                                }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
@@ -137,6 +135,9 @@ begin
 end;
 procedure TdmACBrBoletoFCFR.DataModuleCreate(Sender: TObject);
 begin
+	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];	
    // Banco
    with cdsBanco do
    begin

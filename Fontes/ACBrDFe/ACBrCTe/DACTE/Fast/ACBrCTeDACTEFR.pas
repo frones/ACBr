@@ -311,6 +311,9 @@ end;
 procedure TACBrCTeDACTEFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
+	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];		
   frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin
@@ -1065,9 +1068,6 @@ var
   Memo      : TfrxMemoView;
   Shape     : TfrxShapeView;
 begin
-  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];
   case TipoEvento of
     teCCe:
       begin

@@ -1347,6 +1347,9 @@ begin
 
   FfrxReport := TfrxReport.Create( nil);
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
+  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];	
   with FfrxReport do
   begin
      EngineOptions.DoublePass := True;
@@ -1970,9 +1973,6 @@ var
   qrcode: String;
   CpTituloReport, CpLogomarca, CpQrCode, CpDescrProtocolo, CpTotTrib: TfrxComponent;
 begin
-  frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];
 
   qrCode := '';
   if Assigned(NFe) then

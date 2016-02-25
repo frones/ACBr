@@ -314,6 +314,9 @@ constructor TdmACBrGNREFR.Create(AOwner: TComponent);
 begin
   inherited;
   FGNREGuiaClassOwner := TACBrGNREGuiaClass(AOwner);
+	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];		
 end;
 
 end.

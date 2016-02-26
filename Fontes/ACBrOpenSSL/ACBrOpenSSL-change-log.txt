@@ -39,7 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 23/11/0105
+Data: 26/02/2016
+[+] Adicionado modo de saida: "outBinary" para ser usado em "InternalDigest" (por: DSA)
+
+Data: 23/11/2015
 [*] pequena otimização do método GerarXMLeECFc quando passar o parâmetro de arquivo, 
     estava sendo duplicado a montagem do arquivo nos dois métodos que fazem overload.
 

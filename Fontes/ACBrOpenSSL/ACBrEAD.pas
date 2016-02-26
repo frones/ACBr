@@ -74,7 +74,7 @@ const
 
 type
   TACBrEADDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1, dgstSHA256, dgstSHA512) ;
-  TACBrEADDgstOutput = (outHexa, outBase64) ;
+  TACBrEADDgstOutput = (outHexa, outBase64, outBinary) ;
 
   TACBrEADCalc = procedure(Arquivo: String) of object ;
   TACBrEADGetChave = procedure(var Chave: AnsiString) of object ;
@@ -821,7 +821,7 @@ begin
     dgstSHA1   : NameDgst := 'sha1';
     dgstSHA256 : NameDgst := 'sha256';
     dgstSHA512 : NameDgst := 'sha512';
- end ;
+  end ;
 
   if Assinar then
      LerChavePrivada;
@@ -854,17 +854,26 @@ begin
     else
        EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
 
-    if OutputType = outBase64 then
-    begin
-      SetString( ABinStr, md_value_bin, md_len);
-      Base64Str := EncodeBase64( ABinStr );
-      Result := Trim(Base64Str);
-    end
-    else
-    begin
-      BinToHex( md_value_bin, md_value_hex, md_len);
-      md_value_hex[2 * md_len] := #0;
-      Result := AnsiString(StrPas(md_value_hex));
+    case OutputType of
+      outBase64:
+        begin
+          SetString( ABinStr, md_value_bin, md_len);
+          Base64Str := EncodeBase64( ABinStr );
+          Result := Trim(Base64Str);
+        end;
+
+      outHexa:
+        begin
+          BinToHex( md_value_bin, md_value_hex, md_len);
+          md_value_hex[2 * md_len] := #0;
+          Result := AnsiString(StrPas(md_value_hex));
+        end;
+
+      outBinary:
+        begin
+          SetString( ABinStr, md_value_bin, md_len);
+          Result := ABinStr;
+        end;
     end;
   finally
     Freemem(Memory);

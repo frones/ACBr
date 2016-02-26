@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2016
+[*] Modificação para ler os campos novos do manual novo do TXT
+		por: Juliomar Marchetti
+		
 25/02/2016
 [*] Modificação para compatibilizar os campos igual aos manuais do sefaz
 		http://www.emissornfe.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf

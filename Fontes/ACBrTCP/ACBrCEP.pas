@@ -53,7 +53,7 @@ uses
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
                          wsBases4you, wsRNSolucoes, wsKingHost, wsByJG,
-                         wsCorreios, wsDevMedia, wsViaCep ) ;
+                         wsCorreios, wsDevMedia, wsViaCep, wsCorreiosSIGEP) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -293,6 +293,13 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end;
 
+  TACBrWSCorreiosSIGEP = class(TACBrCEPWSClass)
+  private
+    procedure ProcessaResposta;
+  public
+    constructor Create( AOwner : TACBrCEP ) ; override ;
+    Procedure BuscarPorCEP( ACEP : String ) ; override ;
+  end;
 
 
 implementation
@@ -386,6 +393,7 @@ begin
     wsCorreios         : fACBrCEPWS := TACBrWSCorreios.Create(Self);
     wsDevMedia         : fACBrCEPWS := TACBrWSDevMedia.Create(Self);
     wsViaCep           : fACBrCEPWS := TACBrWSViaCEP.Create(Self);
+    wsCorreiosSIGEP    : fACBrCEPWS := TACBrWSCorreiosSIGEP.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1410,6 +1418,105 @@ begin
           Municipio       := LerTagXML(Buffer, 'localidade');
           UF              := LerTagXML(Buffer, 'uf');
           IBGE_Municipio  := LerTagXML(Buffer, 'ibge');
+        end;
+      end;
+    end;
+  finally
+    SL1.Free;
+  end;
+
+  if Assigned(fOwner.OnBuscaEfetuada) then
+    fOwner.OnBuscaEfetuada(Self);
+end;
+
+
+
+{ TACBrWSCorreiosSIGEP }
+constructor TACBrWSCorreiosSIGEP.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+
+  fOwner.ParseText := False;
+  fpURL := 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
+end;
+
+procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(ACEP: String);
+var
+  Acao: TStringList;
+  Stream: TMemoryStream;
+begin
+  Acao   := TStringList.Create;
+  Stream := TMemoryStream.Create;
+  try
+    Acao.Text :=
+     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
+     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> '+
+     ' <soapenv:Header/>'+
+     ' <soapenv:Body>' +
+     ' <cli:consultaCEP>' +
+     ' <cep>' + ACEP + '</cep>' +
+     ' </cli:consultaCEP>' +
+     ' </soapenv:Body>' +
+     ' </soapenv:Envelope>';
+
+    try
+      Acao.SaveToStream(Stream);
+
+      fOwner.HTTPSend.Clear;
+      fOwner.HTTPSend.Document.LoadFromStream(Stream);
+      fOwner.HTTPPost(fpURL);
+
+      ProcessaResposta;
+    except
+      on E: Exception do
+      begin
+        if Pos('CEP NAO ENCONTRADO', E.Message) <> 0  then
+          exit
+        else
+          raise EACBrCEPException.Create(
+            'Ocorreu o seguinte erro ao consumir o WebService dos correios:' + sLineBreak +
+            '  - ' + E.Message
+          );
+      end;
+    end;
+  finally
+    Stream.Free;
+    Acao.Free;
+  end;
+end;
+
+procedure TACBrWSCorreiosSIGEP.ProcessaResposta;
+var
+  Buffer: string;
+  s: string;
+  i: Integer;
+  SL1: TStringList;
+begin
+  SL1 := TStringList.Create;
+
+  try
+    Buffer := fOwner.RespHTTP.Text;
+    Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
+
+    SL1.Text := Buffer;
+
+    for i := 0 to SL1.Count-1 do
+    begin
+      s := SL1.Strings[i];
+
+      if LerTagXML(s, 'cep') <> '' then
+      begin
+        with fOwner.Enderecos.New do
+        begin
+          CEP             := LerTagXML(Buffer, 'cep');
+          Tipo_Logradouro := '';
+          Logradouro      := LerTagXML(Buffer, 'end');
+          Complemento     := LerTagXML(Buffer, 'complemento');
+          Bairro          := LerTagXML(Buffer, 'bairro');
+          Municipio       := LerTagXML(Buffer, 'cidade');
+          UF              := LerTagXML(Buffer, 'uf');
+          IBGE_Municipio  := '';
         end;
       end;
     end;

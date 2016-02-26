@@ -507,7 +507,7 @@ begin
    (*128p*)NFe.Det[i].Prod.nFCI := LerCampo(tcStr, 'nFCI');
   end;
 
-  if ID = 'I05a' then
+  if ID = 'I05A' then
   begin
     i := NFe.Det.Count - 1;
     NFe.Det[i].Prod.NVE.Add;
@@ -515,7 +515,7 @@ begin
     (*I05a*)NFe.Det[i].Prod.NVE[j].NVE := LerCampo(tcStr, 'NVE');
   end;
 
-	if ID = 'I05c' then
+	if ID = 'I05C' then
   begin
 		i := NFe.Det.Count - 1;
 		(*I05c*)NFe.Det[i].Prod.CEST := LerCampo(tcStr, 'CEST');
@@ -969,13 +969,13 @@ begin
     (*W16a*)NFe.Total.ICMSTot.vTotTrib    := LerCampo(tcDe2, 'vTotTrib');
   end;
 	
-	if ID = 'W04c' then	
+	if ID = 'W04C' then	
 		(*W04c*)NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
 
-	if ID = 'W04e' then	
+	if ID = 'W04E' then	
 		(*W04e*)NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
 
-	if ID = 'W04g' then	
+	if ID = 'W04G' then	
 		(*W04g*)NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
 		
   if ID = 'W17' then (* Grupo da TAG <total><ISSQNtot> ************************)

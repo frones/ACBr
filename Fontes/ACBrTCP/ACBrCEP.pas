@@ -134,7 +134,7 @@ type
       property ChaveAcesso: String read fChaveAcesso write fChaveAcesso ;
       property Usuario: String read fUsuario write fUsuario ;
       property Senha: String read fSenha write fSenha ;
-      property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE; // Válido somente para wsCorreios
+      property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE; // Válido somente para wsCorreios e TACBrWSCorreiosSIGEP
 
       property OnBuscaEfetuada : TNotifyEvent read fOnBuscaEfetuada
          write fOnBuscaEfetuada ;
@@ -293,11 +293,15 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end;
 
+  { TACBrWSCorreiosSIGEP }
+
   TACBrWSCorreiosSIGEP = class(TACBrCEPWSClass)
   private
+    fACBrIBGE: TACBrIBGE;
     procedure ProcessaResposta;
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
+    destructor Destroy; override;
     Procedure BuscarPorCEP( ACEP : String ) ; override ;
   end;
 
@@ -390,7 +394,8 @@ begin
     wsRNSolucoes       : fACBrCEPWS := TACBrWSRNSolucoes.Create(Self);
     wsKingHost         : fACBrCEPWS := TACBrWSKingHost.Create(Self);
     wsByJG             : fACBrCEPWS := TACBrWSByJG.Create(Self);
-    wsCorreios         : fACBrCEPWS := TACBrWSCorreios.Create(Self);
+    //wsCorreios       : fACBrCEPWS := TACBrWSCorreios.Create(Self);      // WebService antigo do correios morreu :(
+    wsCorreios         : fACBrCEPWS := TACBrWSCorreiosSIGEP.Create(Self);
     wsDevMedia         : fACBrCEPWS := TACBrWSDevMedia.Create(Self);
     wsViaCep           : fACBrCEPWS := TACBrWSViaCEP.Create(Self);
     wsCorreiosSIGEP    : fACBrCEPWS := TACBrWSCorreiosSIGEP.Create(Self);
@@ -1435,9 +1440,16 @@ end;
 constructor TACBrWSCorreiosSIGEP.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
+  fACBrIBGE := TACBrIBGE.Create(nil);
 
   fOwner.ParseText := False;
   fpURL := 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
+end;
+
+destructor TACBrWSCorreiosSIGEP.Destroy;
+begin
+  fACBrIBGE.Free;
+  inherited Destroy;
 end;
 
 procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(ACEP: String);
@@ -1492,14 +1504,21 @@ var
   s: string;
   i: Integer;
   SL1: TStringList;
+  sMun: String;
 begin
   SL1 := TStringList.Create;
+
+  fACBrIBGE.ProxyHost := fOwner.ProxyHost;
+  fACBrIBGE.ProxyPort := fOwner.ProxyPort;
+  fACBrIBGE.ProxyPass := fOwner.ProxyPass;
+  fACBrIBGE.ProxyUser := fOwner.ProxyUser;
 
   try
     Buffer := fOwner.RespHTTP.Text;
     Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
 
     SL1.Text := Buffer;
+    sMun := '';
 
     for i := 0 to SL1.Count-1 do
     begin
@@ -1517,6 +1536,21 @@ begin
           Municipio       := LerTagXML(Buffer, 'cidade');
           UF              := LerTagXML(Buffer, 'uf');
           IBGE_Municipio  := '';
+
+          // Correios não retornam informação do IBGE, Fazendo busca do IBGE com ACBrIBGE //
+          if (Municipio <> '') and
+             (fOwner.PesquisarIBGE) then
+          begin
+            if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
+            begin
+              fACBrIBGE.BuscarPorNome( Municipio, UF, True, False ) ;
+              sMun := Municipio;
+            end ;
+
+            if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
+               IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
+          end ;
+
         end;
       end;
     end;

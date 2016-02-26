@@ -40,7 +40,9 @@ Símbolo : Significado
 26/02/2016
 --ACBrCEP--
 [+] Adição de outro webservice pra consulta por Cantu
-	  http://www.projetoacbr.com.br/forum/topic/28314-acbrcep-erro-404/
+    http://www.projetoacbr.com.br/forum/topic/28314-acbrcep-erro-404/
+[*] Ajuste em TACBrWSCorreiosSIGEP, para fazer a busca do Cod.IBGE
+[*] Modelo wsCorreios modificado para instanciar TACBrWSCorreiosSIGEP
 		
 16/12/2015
 -- ACBrMail --

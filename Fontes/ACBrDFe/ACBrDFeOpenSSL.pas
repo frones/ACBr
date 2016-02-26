@@ -43,7 +43,8 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL,
   HTTPSend, ssl_openssl,
-  libxmlsec, libxslt, libxml2;
+  libxmlsec, libxslt, libxml2,
+  {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF}  ;
 
 const
   cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& Id ID #IMPLIED>]>';
@@ -65,10 +66,11 @@ type
   { TDFeOpenSSL }
 
   TDFeOpenSSL = class(TDFeSSLClass)
-  private
-    FHTTP: THTTPSend;
+  private                     FHTTP: THTTPSend;
     FdsigCtx: xmlSecDSigCtxPtr;
     FCNPJ: String;
+    FRazaoSocial: String;
+    FKey: pEVP_PKEY;
     FNumSerie: String;
     FValidade: TDateTime;
     FSubjectName: String;
@@ -84,11 +86,13 @@ type
       SignatureNode, SelectionNamespaces: AnsiString): AnsiString;
     procedure CreateCtx;
     procedure DestroyCtx;
+    procedure DestroyKey;
   protected
 
     function GetCertDataVenc: TDateTime; override;
     function GetCertNumeroSerie: String; override;
     function GetCertSubjectName: String; override;
+    function GetCertRazaoSocial: String; override;
     function GetCertCNPJ: String; override;
     function GetHTTPResultCode: Integer; override;
     function GetInternalErrorCode: Integer; override;
@@ -108,6 +112,10 @@ type
       const infElement: String; SignatureNode: String = '';
       SelectionNamespaces: String = ''): Boolean; override;
 
+    function CalcHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Assinar: Boolean =  False): AnsiString; override;
+
     procedure CarregarCertificado; override;
     procedure DescarregarCertificado; override;
   end;
@@ -123,8 +131,7 @@ implementation
 uses Math, strutils, dateutils,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   pcnAuxiliar,
-  synautil, synacode,
-  {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
+  synautil, synacode;
 
 procedure InitXmlSec;
 begin
@@ -275,6 +282,7 @@ var
   schema: xmlSchemaPtr;
   valid_ctxt: xmlSchemaValidCtxtPtr;
   schemError: xmlErrorPtr;
+  AXml: AnsiString;
 begin
   InitXmlSec;
 
@@ -286,7 +294,8 @@ begin
   valid_ctxt := Nil;
 
   try
-    doc := xmlParseDoc(PAnsiChar(AnsiString(ConteudoXML)));
+    AXml := ACBrStrToUTF8(ConteudoXML);
+    doc := xmlParseDoc(PAnsiChar(AXml));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
       MsgErro := 'Erro: unable to parse';
@@ -375,13 +384,13 @@ begin
   SelName := AnsiString(SelectionNamespaces);
   VerificarValoresPadrao(SigNode, SelName);
 
-  DTD := StringReplace(cDTD, '&infElement&', infElement, []);
-  AXml := InserirDTD(ConteudoXML, DTD);
-
   Result := False;
-  X509Certificate := copy(AXml, pos('<X509Certificate>', AXml) + 17,
-                  pos('</X509Certificate>', AXml) -
-                  (pos('<X509Certificate>', AXml) + 17));
+  X509Certificate := copy(ConteudoXML, pos('<X509Certificate>', ConteudoXML) + 17,
+                  pos('</X509Certificate>', ConteudoXML) -
+                  (pos('<X509Certificate>', ConteudoXML) + 17));
+
+  DTD  := StringReplace(cDTD, '&infElement&', infElement, []);
+  AXml := ACBrStrToUTF8(InserirDTD(ConteudoXML, DTD));
 
   doc := nil;
   node := nil;
@@ -465,6 +474,65 @@ begin
 
     if (dsigCtx <> nil) then
       xmlSecDSigCtxDestroy(dsigCtx);
+  end;
+end;
+
+{ Método clonado de ACBrEAD }
+function TDFeOpenSSL.CalcHash(const AStream: TStream; const Digest: TSSLDgst;
+  const Assinar: Boolean): AnsiString;
+Var
+  md : PEVP_MD ;
+  md_len: cardinal;
+  md_ctx: EVP_MD_CTX;
+  md_value_bin : array [0..1023] of AnsiChar;
+  NameDgst : PAnsiChar;
+  ABinStr: AnsiString;
+  Memory: Pointer;
+  PosStream: Int64;
+  BytesRead: LongInt;
+begin
+  NameDgst := '';
+  case Digest of
+    dgstMD2    : NameDgst := 'md2';
+    dgstMD4    : NameDgst := 'md4';
+    dgstMD5    : NameDgst := 'md5';
+    dgstRMD160 : NameDgst := 'rmd160';
+    dgstSHA    : NameDgst := 'sha';
+    dgstSHA1   : NameDgst := 'sha1';
+    dgstSHA256 : NameDgst := 'sha256';
+    dgstSHA512 : NameDgst := 'sha512';
+  end ;
+
+  if Assinar and (FKey = Nil) then
+    CarregarCertificado;
+
+  PosStream := 0;
+  AStream.Position := 0;
+  GetMem(Memory, CBufferSize);
+  try
+    md_len := 0;
+    md := EVP_get_digestbyname( NameDgst );
+    EVP_DigestInit( @md_ctx, md );
+
+    while (PosStream < AStream.Size) do
+    begin
+       BytesRead := AStream.Read(Memory^, CBufferSize);
+       if BytesRead <= 0 then
+          Break;
+
+       EVP_DigestUpdate( @md_ctx, Memory, BytesRead ) ;
+       PosStream := PosStream + BytesRead;
+    end;
+
+    if Assinar then
+       EVP_SignFinal( @md_ctx, @md_value_bin, md_len, FKey)
+    else
+       EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
+
+    SetString( ABinStr, md_value_bin, md_len);
+    Result := ABinStr;
+  finally
+    Freemem(Memory);
   end;
 end;
 
@@ -570,6 +638,19 @@ begin
   end;
 end;
 
+procedure TDFeOpenSSL.DestroyKey;
+begin
+  if FKey <> Nil then
+  begin
+    {$IFDEF USE_libeay32}
+     EVP_PKEY_free(FKey);
+    {$ELSE}
+     EvpPkeyFree(FKey);
+    {$ENDIF}
+    FKey := nil;
+  end;
+end;
+
 procedure TDFeOpenSSL.CarregarCertificado;
 var
   LoadFromFile, LoadFromData: Boolean;
@@ -622,6 +703,7 @@ end;
 procedure TDFeOpenSSL.DescarregarCertificado;
 begin
   DestroyCtx;
+  DestroyKey;
   Clear;
   FpCertificadoLido := False;
 end;
@@ -658,22 +740,6 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
       Result := Copy(Result,2,Length(Result));
 
     Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
-  end;
-
-  function GetCNPJ( SubjectName: String ): String;
-  var
-    P: Integer;
-  begin
-    Result := '';
-    P := pos('CN=',SubjectName);
-    if P > 0 then
-    begin
-      P := PosEx(':', SubjectName, P);
-      if P > 0 then
-      begin
-        Result := OnlyNumber(copy(SubjectName, P+1, 14));
-      end;
-    end;
   end;
 
   function GetCNPJExt( cert: pX509): String;
@@ -729,11 +795,12 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
 
 var
   cert: pX509;
-  pkey: pEVP_PKEY;
   ca, p12: Pointer;
   b: PBIO;
 begin
   Result := False;
+  DestroyKey;
+
   {$IFDEF USE_libeay32}
    b := Bio_New(BIO_s_mem);
   {$ELSE}
@@ -752,19 +819,20 @@ begin
 
     try
       cert := nil;
-      pkey := nil;
-      ca := nil;
+      FKey := nil;
+      ca   := nil;
       try
         {$IFDEF USE_libeay32}
-        if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), pkey, cert, ca) > 0 then
+        if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), FKey, cert, ca) > 0 then
         {$ELSE}
-        if PKCS12parse(p12, FpDFeSSL.Senha, pkey, cert, ca) > 0 then
+        if PKCS12parse(p12, FpDFeSSL.Senha, FKey, cert, ca) > 0 then
         {$ENDIF}
         begin
           Result := True;
           FValidade := GetNotAfter( cert );
           FSubjectName := GetSubjectName( cert );
-          FCNPJ := GetCNPJ( FSubjectName );
+          FRazaoSocial := GetRazaoSocialFromSubjectName( FSubjectName );
+          FCNPJ := GetCNPJFromSubjectName( FSubjectName );
           if FCNPJ = '' then  // Não tem CNPJ no SubjectName, lendo das Extensões
             FCNPJ := GetCNPJExt( cert );
 
@@ -772,10 +840,8 @@ begin
         end;
       finally
         {$IFDEF USE_libeay32}
-         EVP_PKEY_free(pkey);
          X509_free(cert);
         {$ELSE}
-         EvpPkeyFree(pkey);
          X509free(cert);
         {$ENDIF}
       end;
@@ -851,6 +917,14 @@ begin
   Result := FSubjectName;
 end;
 
+function TDFeOpenSSL.GetCertRazaoSocial: String;
+begin
+  if EstaVazio(FRazaoSocial) then
+    CarregarCertificado;
+
+  Result := FRazaoSocial;
+end;
+
 function TDFeOpenSSL.GetCertCNPJ: String;
 begin
   if EstaVazio(FCNPJ) then
@@ -872,6 +946,7 @@ end;
 procedure TDFeOpenSSL.Clear;
 begin
   FCNPJ := '';
+  FRazaoSocial := '';
   FNumSerie := '';
   FValidade := 0;
   FSubjectName := '';

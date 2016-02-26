@@ -44,7 +44,34 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2016
+-- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
+[+] Adicionada a propriedade "CertRazaoSocial", para retornar a "Razão Social"
+    do Certificado
+[+] Adicionado o método "CalcHash", para permitir o calculo de Hashs nos
+    seguintes modos: dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1,
+    dgstSHA256, dgstSHA512. O resultado do Hash pode ser apresentado nos formatos:
+    outHexa, outBase64, outBinary.
+    - Também é possível "Assinar" o Hash gerado, com a chave RSA do Certificado
+      (assinatura digital)
+    CalcHash( const AStream : TStream; const Digest: TSSLDgst;
+              const ModoSaida: TSSLHashOutput = outHexa;
+              const Assinar: Boolean =  False): AnsiString;
+    - Há sobrecarga do método para permitir entrada de dados como:
+       BinaryString : AnsiString e AStringList : TStringList
+[+] Adicionado o método: CalcHashArquivo( const NomeArquivo : String; ...),
+    de forma analoga a "CalcHash"
+
+-- ACBrDFeCapicom --
+[-] Correção nos método "Assinar", "Validar" e "VerificarAssinatura", para
+    tratar corretamente XMLs em UTF8 com acentos.
+
+-- ACBrDFeOpenSSL --
+[-] Correção nos método "Validar" e "VerificarAssinatura", para
+    tratar corretamente XMLs em UTF8 com acentos.
+
 24/02/2016
+-- ACBrDFeWebService --
 [*] modificado o metodo GetUrlWsd para virtual e assim poder sobre-escrever ele
    por: Juliomar Marchetti
 

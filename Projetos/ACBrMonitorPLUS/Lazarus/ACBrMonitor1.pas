@@ -471,7 +471,6 @@ type
     edtSedexValorDeclarado: TEdit;
     edtSenha: TEdit;
     edtSiteEmpresa: TEdit;
-    edtSoftwareHouse: TEdit;
     edtSwHAssinatura: TEdit;
     edtSwHCNPJ: TEdit;
     edtTentativas: TEdit;
@@ -542,7 +541,6 @@ type
     Label119: TLabel;
     Label12: TLabel;
     Label120: TLabel;
-    Label121: TLabel;
     Label122: TLabel;
     Label123: TLabel;
     Label124: TLabel;
@@ -3526,7 +3524,6 @@ begin
     edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');
     rgModeloDanfe.ItemIndex := Ini.ReadInteger('DANFE', 'Modelo', 0);
     rgTamanhoPapelDacte.ItemIndex := Ini.ReadInteger('DACTE', 'TamanhoPapel', 0);
-//    edtSoftwareHouse.Text := Ini.ReadString('DANFE', 'SoftwareHouse', '');
     edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
     edtEmailEmpresa.Text := Ini.ReadString('DANFE', 'Email', '');
     edtFaxEmpresa.Text := Ini.ReadString('DANFE', 'Fax', '');
@@ -3589,7 +3586,7 @@ begin
 
     ACBrCTe1.DACTe.TipoDACTE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrCTe1.DACTe.Logo       := edtLogoMarca.Text;
-    ACBrCTe1.DACTe.Sistema := edSH_RazaoSocial.Text; //edtSoftwareHouse.Text;
+    ACBrCTe1.DACTe.Sistema := edSH_RazaoSocial.Text;
     ACBrCTe1.DACTe.Site    := edtSiteEmpresa.Text;
     ACBrCTe1.DACTe.Email   := edtEmailEmpresa.Text;
     ACBrCTe1.DACTe.Fax     := edtFaxEmpresa.Text;
@@ -3608,7 +3605,7 @@ begin
 
     ACBrMDFe1.DAMDFe.TipoDAMDFe  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
     ACBrMDFe1.DAMDFe.Logo       := edtLogoMarca.Text;
-    ACBrMDFe1.DAMDFe.Sistema := edSH_RazaoSocial.Text; //edtSoftwareHouse.Text;
+    ACBrMDFe1.DAMDFe.Sistema := edSH_RazaoSocial.Text;
     ACBrMDFe1.DAMDFe.Site    := edtSiteEmpresa.Text;
     ACBrMDFe1.DAMDFe.Email   := edtEmailEmpresa.Text;
     ACBrMDFe1.DAMDFe.Fax     := edtFaxEmpresa.Text;
@@ -4337,7 +4334,6 @@ begin
 
     Ini.WriteInteger('DANFE', 'Modelo', rgModeloDanfe.ItemIndex);
     Ini.WriteInteger('DACTE', 'TamanhoPapel', rgTamanhoPapelDacte.ItemIndex);
-//    Ini.WriteString('DANFE', 'SoftwareHouse', edtSoftwareHouse.Text);
     Ini.WriteString('DANFE', 'Site', edtSiteEmpresa.Text);
     Ini.WriteString('DANFE', 'Email', edtEmailEmpresa.Text);
     Ini.WriteString('DANFE', 'Fax', edtFaxEmpresa.Text);
@@ -6986,7 +6982,7 @@ begin
   begin
     ACBrNFe1.DANFE.TipoDANFE := StrToTpImp(OK, IntToStr(rgTipoDanfe.ItemIndex + 1));
     ACBrNFe1.DANFE.Logo := edtLogoMarca.Text;
-    ACBrNFe1.DANFE.Sistema := edSH_RazaoSocial.Text; //edtSoftwareHouse.Text;
+    ACBrNFe1.DANFE.Sistema := edSH_RazaoSocial.Text;
     ACBrNFe1.DANFE.Site := edtSiteEmpresa.Text;
     ACBrNFe1.DANFE.Email := edtEmailEmpresa.Text;
     ACBrNFe1.DANFE.Fax := edtFaxEmpresa.Text;

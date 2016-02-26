@@ -26,6 +26,8 @@ type
     Button4: TButton;
     Button5: TButton;
     cbTipoEmissao: TComboBox;
+    cbAssinar: TCheckBox;
+    Edit1: TEdit;
     Label39: TLabel;
     Label40: TLabel;
     Panel1: TPanel;
@@ -211,6 +213,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     procedure cbTipoEmissaoChange(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -402,6 +405,7 @@ begin
       with ACBrNFe1.Configuracoes.Geral do
        begin
          ExibirErroSchema      := cbxExibirErroSchema.Checked;
+         RetirarAcentos        := cbxRetirarAcentos.Checked;
          FormatoAlerta         := edtFormatoAlerta.Text;
          FormaEmissao          := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); 
          ModeloDF              := TpcnModeloDF(cbModeloDF.ItemIndex);
@@ -618,12 +622,21 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
-  ShowMessage( ACBrNFe1.SSL.CertSubjectName );
+  ShowMessage( ACBrNFe1.SSL.CertSubjectName + sLineBreak + sLineBreak +
+               'Razão Social: '+ACBrNFe1.SSL.CertRazaoSocial);
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
   ShowMessage( ACBrNFe1.SSL.CertCNPJ );
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var
+  Ahash: AnsiString;
+begin
+  Ahash := ACBrNFe1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
+  MemoResp.Lines.Add( Ahash );
 end;
 
 procedure TForm1.cbTipoEmissaoChange(Sender: TObject);

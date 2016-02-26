@@ -2459,15 +2459,27 @@ end;
 
 
 procedure TACBrECFEpson.CarregaFormasPagamento;
-Var A      : Integer;
-    FPagto : TACBrECFFormaPagamento ;
+Var 
+  A, I, J: Integer;
+  FPagto : TACBrECFFormaPagamento ;
 begin
   inherited CarregaFormasPagamento ;   { Cria fpFormasPagamentos }
 
   try
+     { Lê quantas Formas de Pagamento foram programadas }
+     try
+        EpsonComando.Comando := '0901' ;
+        EpsonComando.Extensao := '0000' ;
+        EnviaComando;
+        I := StrToIntDef(EpsonResposta.Params[0], 20);
+     except
+        I := 20;
+     end; 
+
      { Lê as Formas de Pagamento cadastradas na impressora }
      A := 1;
-     while (A <= 20) do
+     J := 1;
+     while (J <= I) do
      begin
         EpsonComando.Comando := '050D' ;
         EpsonComando.AddParamInteger( A ) ;
@@ -2480,6 +2492,7 @@ begin
            FPagto.PermiteVinculado := ( EpsonResposta.Params[1] = 'S' ) ;
 
            fpFormasPagamentos.Add( FPagto ) ;
+           Inc(J);
         except
            on E : Exception do
            begin

@@ -50,7 +50,6 @@ uses
 const
   cACBrSAT_Versao      = '0.2.0' ;
   cLIBSAT              = 'SAT.DLL';
-  CUTF8CodPage         = 65001;
   cversaoDadosEnt      = 0.06;
   CPREFIXO_ArqCFe = 'AD';
   CPREFIXO_ArqCFeCanc = 'ADC';

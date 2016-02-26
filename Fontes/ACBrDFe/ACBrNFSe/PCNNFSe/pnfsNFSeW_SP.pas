@@ -40,7 +40,7 @@ uses
 
 {$ENDIF}
   SysUtils, Classes, StrUtils,
-  synacode, ACBrConsts,
+  ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
   pnfsNFSe, pnfsConversao;
@@ -50,8 +50,6 @@ type
 
   TNFSeW_SP = class(TNFSeWClass)
   private
-    FSituacao: String;
-    FTipoRecolhimento: String;
   protected
 
     procedure GerarChaveRPS;
@@ -77,9 +75,6 @@ type
 
     function ObterNomeArquivo: String; override;
     function GerarXml: Boolean; override;
-
-    property Situacao: String         read FSituacao;
-    property TipoRecolhimento: String read FTipoRecolhimento;
   end;
 
 implementation
@@ -106,15 +101,17 @@ end;
 
 procedure TNFSeW_SP.GerarIdentificacaoRPS;
 var
- TipoRPS: String;
+ TipoRPS, Situacao: String;
 begin
   TipoRPS := EnumeradoToStr(NFSe.IdentificacaoRps.Tipo,
                            ['RPS','RPS-M','RPS-C'],
                            [trRPS, trNFConjugada, trCupom]);
 
+  Situacao := EnumeradoToStr(NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
+
   Gerador.wCampoNFSe(tcStr, '', 'TipoRPS'      , 1, 05, 1, TipoRPS, '');
   Gerador.wCampoNFSe(tcDat, '', 'DataEmissao'  , 1, 10, 1, NFse.DataEmissao, '');
-  Gerador.wCampoNFSe(tcStr, '', 'StatusRPS'    , 1, 01, 1, FSituacao, '');
+  Gerador.wCampoNFSe(tcStr, '', 'StatusRPS'    , 1, 01, 1, Situacao, '');
   Gerador.wCampoNFSe(tcStr, '', 'TributacaoRPS', 1, 01, 1, TTributacaoRPSToStr(NFSe.TipoTributacaoRPS), '');
 end;
 
@@ -227,81 +224,11 @@ begin
 end;
 
 procedure TNFSeW_SP.GerarXML_SP;
-var
-  sAssinatura, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
-  sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter: String;
 begin
   Gerador.Prefixo := '';
-//  Gerador.wGrupoNFSe('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
   Gerador.wGrupoNFSe('RPS');
 
-  FSituacao := EnumeradoToStr( NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
-
-  FTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                       ['A', 'R'], [stNormal, stRetencao]);
-
-  sISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                ['N', 'S'], [stNormal, stRetencao]);
-
-  // Tomador do Serviço
-  sCPFCNPJTomador := OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
-
-  if Length(sCPFCNPJTomador) = 11 then
-    sIndTomador := '1'
-  else
-    if Length(sCPFCNPJTomador) = 14 then
-      sIndTomador := '2'
-    else
-      sIndTomador := '3';
-
-  if sIndTomador <> '3' then
-    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14)
-  else
-    sTomador := '';
-
-  // Prestador Intermediario
-  sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
-
-  if Length(sCPFCNPJInter) = 11 then
-    sIndInter := '1'
-  else
-    if Length(sCPFCNPJInter) = 14 then
-      sIndInter := '2'
-    else
-      sIndInter := '3';
-
-  sISSRetidoInter := EnumeradoToStr( NFSe.IntermediarioServico.IssRetido,
-                                ['N', 'S'], [stNormal, stRetencao]);
-
-  if sIndInter <> '3' then
-    sInter := sIndInter + Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
-  else
-    sInter := '';
-
-  sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 8) +
-                 PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
-                 Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
-                 FormatDateTime('yyyymmdd',NFse.DataEmissao) +
-                 TTributacaoRPSToStr(NFSe.TipoTributacaoRPS) +
-                 Situacao +
-                 sISSRetido +
-                 Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
-                 Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
-                 Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
-                 sTomador +
-                 sInter;
-
-  sAssinatura := AsciiToByte(sAssinatura);
-  sAssinatura := AsciiToHex(SHA1(sAssinatura));
-
-  //  sAssinatura := AsciiToHex(MD5(SHA1(sAssinatura)));
-//  sAssinatura := LowerCase(sAssinatura);
-
-//  sAssinatura := AsciiToHex(sAssinatura);
-//  sAssinatura := SHA1(sAssinatura);
-//  sAssinatura := LowerCase(sAssinatura);
-
-  Gerador.wCampoNFSe(tcStr, '', 'Assinatura', 1, 2000, 1, sAssinatura, '');
+  Gerador.wCampoNFSe(tcStr, '', 'Assinatura', 1, 2000, 1, NFSe.Assinatura, '');
 
   GerarChaveRPS;
   GerarIdentificacaoRPS;

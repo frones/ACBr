@@ -681,6 +681,7 @@ type
     Femail: TemailCollection;
     FTipoRecolhimento: String;
     FTipoTributacaoRPS: TnfseTTributacaoRPS;
+    FAssinatura: String;
 
     procedure Setemail(const Value: TemailCollection);
 
@@ -739,12 +740,14 @@ type
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
 
-    //propriedade para provedor Governa
+    // propriedade para provedor Governa
     property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
     property email: TemailCollection read Femail write Setemail;
 
     property TipoTributacaoRPS: TnfseTTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
+    // Provedor SP
+    property Assinatura: String read FAssinatura write FAssinatura;
   end;
 
  TLoteRps = class(TPersistent)

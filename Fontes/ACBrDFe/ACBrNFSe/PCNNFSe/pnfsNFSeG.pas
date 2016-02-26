@@ -38,7 +38,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  synacode, pcnAuxiliar, pcnGerador, pcnConversao,
+  pcnAuxiliar, pcnGerador, pcnConversao,
   pnfsNFSe, pnfsConversao, ACBrUtil;
 
 type
@@ -114,6 +114,9 @@ type
     // Layout - Governa
     FChaveAcessoPrefeitura: String;
     FCodVerificacaoRPS: String;
+
+    // Layout - SP
+    FAssinaturaCan: String;
 
     FPossuiAlertas: Boolean;
 
@@ -200,6 +203,9 @@ type
     // Layout - Governa
     property ChaveAcessoPrefeitura: String read FChaveAcessoPrefeitura write FChaveAcessoPrefeitura;
     property CodVerificacaoRPS: String read FCodVerificacaoRPS write FCodVerificacaoRPS;
+
+    // Layout - SP
+    property AssinaturaCan: String read FAssinaturaCan write FAssinaturaCan;
 
     property PossuiAlertas: Boolean read FPossuiAlertas write FPossuiAlertas;
    end;
@@ -1091,8 +1097,6 @@ begin
 end;
 
 function TNFSeG.Gera_DadosMsgCancelarNFSe: String;
-var
-  sAssinatura: String;
 begin
   SetAtributos;
   Gerador.ArquivoFormatoXML := '';
@@ -1189,11 +1193,6 @@ begin
                    end;
 
     proSP: begin
-             sAssinatura := Poem_Zeros(IM, 8) + Poem_Zeros(NumeroNFSe, 12);
-
-             sAssinatura := AsciiToHex(SHA1(sAssinatura));
-             sAssinatura := LowerCase(sAssinatura);
-
              Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
              Gerador.wGrupoNFSe('CPFCNPJRemetente');
              Gerador.wCampoCNPJCPF('', '', Cnpj);
@@ -1208,7 +1207,7 @@ begin
 //             Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 8, 0, CodVerificacaoRPS, '');
              Gerador.wGrupoNFSe('/ChaveNFe');
 
-             Gerador.wCampoNFSe(tcStr, '', 'AssinaturaCancelamento', 01, 2000, 1, sAssinatura, '');
+             Gerador.wCampoNFSe(tcStr, '', 'AssinaturaCancelamento', 01, 2000, 1, AssinaturaCan, '');
 
              Gerador.wGrupoNFSe('/Detalhe');
            end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2016
+[*] Alterado a forma de calcular o Hash, usando agora uma nova rotina escrita
+    por DSA.
+    Por: Italo Jurisato Junior
+
 24/02/2016
 -- ACBrNFSe / ACBrNFSeWebServices --
 [*] Incluido a propriedade AMotivoCancelamento no método SubstituirNFSe.

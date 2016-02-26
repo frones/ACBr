@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils, pcnAuxiliar, pcnConversao,
-  ACBrDFe, ACBrDFeWebService,
+  ACBrDFe, ACBrDFeWebService, ACBrDFeSSL,
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes,
   pnfsNFSe, pnfsNFSeG, pnfsConversao, pnfsLerListaNFSe, pnfsEnvLoteRpsResposta,
   pnfsConsSitLoteRpsResposta, pnfsCancNFSeResposta, pnfsSubsNFSeResposta;
@@ -1031,7 +1031,6 @@ var
   EnviarLoteRps, xmlns, xPrefixo: String;
   i, j: Integer;
 begin
-
   if FPLayout = LayNFSeGerar then
   begin
     EnviarLoteRps := 'GerarNfseEnvio';
@@ -2799,7 +2798,7 @@ procedure TNFSeCancelarNfse.DefinirDadosMsg;
 var
   i: Integer;
   Gerador: TGerador;
-  TagGrupo, docElemento: String;
+  TagGrupo, docElemento, sAssinatura: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
@@ -2985,6 +2984,12 @@ begin
     end;
 
     InicializarGerarDadosMsg;
+
+    if FProvedor = proSP then
+    begin
+      sAssinatura := Poem_Zeros(GerarDadosMsg.IM, 8) + Poem_Zeros(TNFSeCancelarNfse(Self).NumeroNFSe, 12);
+      GerarDadosMsg.AssinaturaCan := FPDFeOwner.SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, False);
+    end;
 
     with GerarDadosMsg do
     begin

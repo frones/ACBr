@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, Forms, StrUtils,
-  ACBrNFSeConfiguracoes, ACBrDFeUtil,
+  ACBrNFSeConfiguracoes, ACBrDFeUtil, ACBrDFeSSL,
   pnfsNFSe, pnfsNFSeR, pnfsNFSeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
@@ -75,6 +75,8 @@ type
     function GetXMLAssinado: String;
     procedure SetXML(const Value: String);
     procedure SetXMLOriginal(const Value: String);
+
+    procedure AssinaturaAdicional;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -520,6 +522,69 @@ begin
     FXMLAssinado := '';
 end;
 
+procedure NotaFiscal.AssinaturaAdicional;
+var
+  sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador,
+  sTomador, sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
+begin
+  sSituacao := EnumeradoToStr(NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
+
+  sISSRetido := EnumeradoToStr(NFSe.Servico.Valores.IssRetido,
+                               ['N', 'S'], [stNormal, stRetencao]);
+
+  // Tomador do Serviço
+  sCPFCNPJTomador := OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
+
+  if Length(sCPFCNPJTomador) = 11 then
+    sIndTomador := '1'
+  else
+    if Length(sCPFCNPJTomador) = 14 then
+      sIndTomador := '2'
+    else
+      sIndTomador := '3';
+
+  if sIndTomador <> '3' then
+    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14)
+  else
+    sTomador := '';
+
+  // Prestador Intermediario
+  sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
+
+  if Length(sCPFCNPJInter) = 11 then
+    sIndInter := '1'
+  else
+    if Length(sCPFCNPJInter) = 14 then
+      sIndInter := '2'
+    else
+      sIndInter := '3';
+
+  sISSRetidoInter := EnumeradoToStr(NFSe.IntermediarioServico.IssRetido,
+                                    ['N', 'S'], [stNormal, stRetencao]);
+
+  if sIndInter <> '3' then
+    sInter := sIndInter + Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
+  else
+    sInter := '';
+
+  sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 8) +
+                 PadRight(NFSe.IdentificacaoRps.Serie, 5 , ' ') +
+                 Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
+                 FormatDateTime('yyyymmdd', NFse.DataEmissao) +
+                 TTributacaoRPSToStr(NFSe.TipoTributacaoRPS) +
+                 sSituacao +
+                 sISSRetido +
+                 Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
+                 Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
+                 Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
+                 sTomador +
+                 sInter;
+
+  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
+    NFSe.Assinatura := SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, False);
+//    NFSe.Assinatura := SSL.CalcHash(AsciiToHex(sAssinatura), dgstSHA1, outBase64, False);
+end;
+
 { TNotasFiscais }
 
 constructor TNotasFiscais.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -544,7 +609,11 @@ var
   i: integer;
 begin
   for i := 0 to Self.Count - 1 do
+  begin
+    if Self.FConfiguracoes.Geral.Provedor = proSP then
+      Self.Items[i].AssinaturaAdicional;
     Self.Items[i].Assinar(Assina);
+  end;
 end;
 
 function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;

@@ -94,6 +94,8 @@ procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
 function ACBrStr( AString : AnsiString ) : String ;
 function ACBrStrToAnsi( AString : String ) : AnsiString ;
 function ACBrStrToUTF8( AString : String ) : AnsiString;
+function ACBrUTF8ToAnsi( UTF8String : AnsiString ) : AnsiString;
+function ACBrAnsiToUTF8( AAnsiString : AnsiString ) : AnsiString;
 function AnsiChr( b: Byte) : AnsiChar;
 
 function TruncFix( X : Double ) : Integer ;
@@ -401,6 +403,41 @@ begin
    Result := AString;
   {$ENDIF}
 end;
+
+{-----------------------------------------------------------------------------
+  Converte uma String que está em UTF8 para ANSI, considerando as diferetes IDEs
+  suportadas pelo ACBr
+ -----------------------------------------------------------------------------}
+function ACBrUTF8ToAnsi( UTF8String : AnsiString ) : AnsiString;
+begin
+  Result := '';
+
+  {$IFNDEF FPC}
+   {$IFDEF UNICODE}
+    {$IFDEF DELPHI12_UP}  // delphi 2009 em diante
+      Result := UTF8ToString(UTF8String);
+    {$ELSE}
+      Result := UTF8Decode(UTF8String);
+    {$ENDIF}
+   {$ENDIF}
+  {$ENDIF}
+
+  if Result = '' then
+    Result := Utf8ToAnsi( UTF8String ) ;
+end;
+
+{-----------------------------------------------------------------------------
+  Converte uma String que está em ANSI para UTF8, considerando as diferetes IDEs
+  suportadas pelo ACBr
+ -----------------------------------------------------------------------------}
+function ACBrAnsiToUTF8(AAnsiString: AnsiString): AnsiString;
+begin
+  Result := ACBrStrToUTF8(AAnsiString);
+  {$IfDef FPC}
+   Result := AnsiToUtf8( Result ) ;
+  {$EndIf}
+end;
+
 {-----------------------------------------------------------------------------
  Faz o mesmo que o comando chr(), porém retorna um AnsiChar ao invés de Char
  Util quando for usada para compor valores em AnsiString,

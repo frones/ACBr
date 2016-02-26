@@ -38,6 +38,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/02/2016
+-- ACBrConsts --
+[+] Adicionadas constantes para manipulação de Encoding UTF8
+
+-- ACBrUtil --
+[+] function ACBrUTF8ToAnsi( UTF8String : AnsiString ) : AnsiString;
+    Converte uma String que está em UTF8 para ANSI, considerando as diferetes IDEs
+    suportadas pelo ACBr
+
+[+] function ACBrAnsiToUTF8( AAnsiString : AnsiString ) : AnsiString;
+    Converte uma String que está em ANSI para UTF8, considerando as diferetes IDEs
+    suportadas pelo ACBr
+
 Data: 22/02/2016
 -- ACBrUtil --
 [*] RoundABNT, aplicado workaround para funcionamento em D7

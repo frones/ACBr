@@ -102,6 +102,9 @@ const
   CTRL_Z = #26 ;
   CRLF = CR + LF ;
 
+  CUTF8CodPage = 65001;
+  CUTF8BOM = #239+#187+#191;
+
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
 
   cTagLigaExpandido    = '<e>';

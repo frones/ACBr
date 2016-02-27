@@ -190,10 +190,12 @@ begin
 
       with RLPDFFilter1.DocumentInfo do
       begin
-        Title := ACBrStr('DAMDFe EVENTO - MDFe nº ') + FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-        KeyWords := ACBrStr('Número:') + FormatFloat('000,000,000', FMDFe.Ide.nMDF) +
-          ACBrStr('; Data de emissão: ') + FormatDateTime('dd/mm/yyyy', FMDFe.Ide.dhEmi) +
-          '; CNPJ: ' + FMDFe.emit.CNPJ;
+        Title :=
+          ACBrStr(Format('DAMDFe EVENTO - MDFe %s',[AEventoMDFe.RetInfEvento.chMDFe]));
+        KeyWords :=
+          ACBrStr(Format('Número: %s; Data de emissão: %s; CNPJ: %s',
+            [FormatFloat('000,000,000', AEventoMDFe.RetInfEvento.nSeqEvento),FormatDateTime('dd/mm/yyyy', AEventoMDFe.RetInfEvento.dhRegEvento),
+              AEventoMDFe.InfEvento.CNPJ]));
       end;
 
       RLMDFeEvento.SaveToFile(AFile);
@@ -209,16 +211,4 @@ begin
 end;
 
 end.
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -524,8 +524,8 @@ end;
 
 procedure NotaFiscal.AssinaturaAdicional;
 var
-  sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador,
-  sTomador, sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
+  sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
+  sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
 begin
   sSituacao := EnumeradoToStr(NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
 
@@ -581,8 +581,7 @@ begin
                  sInter;
 
   with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
-    NFSe.Assinatura := SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, False);
-//    NFSe.Assinatura := SSL.CalcHash(AsciiToHex(sAssinatura), dgstSHA1, outBase64, False);
+    NFSe.Assinatura := SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
 end;
 
 { TNotasFiscais }

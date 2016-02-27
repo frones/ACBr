@@ -2817,10 +2817,7 @@ begin
     end;
 
     if FNotasFiscais.Count > 0 then
-    begin
       FNumeroNFSe         := FNotasFiscais.Items[0].NFSe.Numero;
-//      FMotivoCancelamento := FNotasFiscais.Items[0].NFSe.MotivoCancelamento;
-    end;
 
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoCancelar;
 
@@ -2988,7 +2985,7 @@ begin
     if FProvedor = proSP then
     begin
       sAssinatura := Poem_Zeros(GerarDadosMsg.IM, 8) + Poem_Zeros(TNFSeCancelarNfse(Self).NumeroNFSe, 12);
-      GerarDadosMsg.AssinaturaCan := FPDFeOwner.SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, False);
+      GerarDadosMsg.AssinaturaCan := FPDFeOwner.SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
     end;
 
     with GerarDadosMsg do

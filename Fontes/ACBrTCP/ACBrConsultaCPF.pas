@@ -222,9 +222,18 @@ begin
         FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');
         FDigitoVerificador := LerCampo(Resposta,'Digito Verificador:');
 
+        if Trim(FNome) = '' then
+        begin
+          Erro     := LerCampo(Resposta,'Data de nascimento informada');
+          if Trim(Erro) <> '' then
+            Erro := 'Erro de data';
+        end;
       finally
         Resposta.Free;
       end ;
+
+      if Trim(Erro) = 'Erro de data' then
+            raise EACBrConsultaCPFException.Create('Data de nascimento divergente da base da Receita Federal.');
 
       if Trim(FNome) = '' then
         raise EACBrConsultaCPFException.Create('Não foi possível obter os dados.');

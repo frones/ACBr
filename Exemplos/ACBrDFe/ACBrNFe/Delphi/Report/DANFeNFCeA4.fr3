@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <TfrxReport Version="5.3.14" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="40401.475989294" ReportOptions.Description.Text="" ReportOptions.LastChange="42307.6145179167" ScriptLanguage="PascalScript" ScriptText.Text="&#13;&#10;procedure Page1OnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  ReportTitle1.Visible := &#60;Parametros.&#34;Imagem&#34;&#62; = '';&#13;&#10;end;&#13;&#10;&#13;&#10;procedure ValorTributosOnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  ValorTributos.Visible := &#60;CalculoImposto.&#34;VTotTrib&#34;&#62; &#62; 0;&#13;&#10;end;&#13;&#10;&#13;&#10;begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
-    <item DataSetName="CalculoImposto"/>
-    <item DataSet="frxDadosProdutos" DataSetName="DadosProdutos"/>
-    <item DataSetName="Destinatario"/>
-    <item DataSetName="Duplicatas"/>
-    <item DataSetName="Emitente"/>
-    <item DataSetName="Eventos"/>
-    <item DataSetName="Fatura"/>
     <item DataSetName="Identificacao"/>
-    <item DataSetName="InformacoesAdicionais"/>
-    <item DataSetName="ISSQN"/>
-    <item DataSetName="LocalEntrega"/>
-    <item DataSetName="LocalRetirada"/>
-    <item DataSetName="Pagamento"/>
+    <item DataSetName="Emitente"/>
+		<item DataSetName="Destinatario"/>
+		<item DataSetName="DadosProdutos"/>
     <item DataSetName="Parametros"/>
+    <item DataSetName="Duplicatas"/>
+		<item DataSetName="CalculoImposto"/>
     <item DataSetName="Transportador"/>
     <item DataSetName="Veiculo"/>
     <item DataSetName="Volumes"/>
+    <item DataSetName="Eventos"/>
+    <item DataSetName="ISSQN"/>
+    <item DataSetName="Fatura"/>
+    <item DataSetName="LocalRetirada"/>
+    <item DataSetName="LocalEntrega"/>
+    <item DataSetName="InformacoesAdicionais"/>
+    <item DataSetName="Pagamento"/>
+		<item DataSetName="Inutilizacao"/>
   </Datasets>
   <Variables>
     <item Name=" User"/>

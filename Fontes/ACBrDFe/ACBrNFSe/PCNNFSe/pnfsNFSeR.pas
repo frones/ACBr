@@ -938,7 +938,16 @@ begin
       NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
       NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
       NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
-      NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
+
+      if FProvedor = ProTecnos then
+      begin
+        NFSe.Competencia            := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
+      end
+      else
+      begin
+        NFSe.Competencia            := Leitor.rCampo(tcStr, 'Competencia');
+      end;
+
       NFSe.OutrasInformacoes        := Leitor.rCampo(tcStr, 'OutrasInformacoes');
       NFSe.ValorCredito             := Leitor.rCampo(tcDe2, 'ValorCredito');
 
@@ -1361,7 +1370,15 @@ begin
     if NFSe.InfID.ID = '' then
       NFSe.InfID.ID := Leitor.rAtributo('id=');
 
-    NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
+    if FProvedor = ProTecnos then
+    begin
+      NFSe.Competencia            := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
+    end
+    else
+    begin
+      NFSe.Competencia            := Leitor.rCampo(tcStr, 'Competencia');
+    end;
+
     NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
     NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
     NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'));

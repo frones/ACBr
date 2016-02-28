@@ -188,6 +188,7 @@ function LayOutToServico(const t: TLayOutNFSe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutNFSe;
 
 function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
+function LayOutToStr(const t: TLayOutNFSe): String;
 
 function SchemaNFSeToStr(const t: TSchemaNFSe): String;
 function StrToSchemaNFSe(out ok: Boolean; const s: String): TSchemaNFSe;
@@ -18015,6 +18016,17 @@ begin
   else
     Result := schErro;
   end;
+end;
+
+function LayOutToStr(const t: TLayOutNFSe): String;
+begin
+  Result := EnumeradoToStr(t,
+    ['Enviar Lote', 'Consultar Lote', 'Consultar NFS-e por RPS',
+     'Consultar Situação do Lote', 'Consultar NFS-e', 'Cancelar NFS-e',
+     'Gerar', 'Enviar Lote - Síncrono', 'Substituir NFS-e'],
+    [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
+      LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
+      LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
 end;
 
 function SchemaNFSeToStr(const t: TSchemaNFSe): String;

@@ -986,7 +986,7 @@ begin
       begin
         FPMsg := FPMsg + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-        FaMsg := FaMsg + 'Método..... : Consultar' + LineBreak +
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo + LineBreak +
                          'Mensagem... : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak+
                          'Correção... : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Correcao + LineBreak+
@@ -996,13 +996,13 @@ begin
   end
   else begin
     if FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0 then
-      FaMsg := 'Método........ : Consultar' + LineBreak +
+      FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                'Situação...... : ' + FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Situacao + LineBreak +
                'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
                'Protocolo..... : ' + FProtocolo + LineBreak +
                'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak
     else
-      FaMsg := 'Método........ : Consultar' + LineBreak +
+      FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
                'Protocolo..... : ' + FProtocolo + LineBreak +
                'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
@@ -1652,7 +1652,7 @@ begin
       begin
         FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-        FaMsg := FaMsg + 'Método..... : Enviar Lote RPS' + LineBreak +
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
                          'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
                          'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
@@ -1665,7 +1665,7 @@ begin
         FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
         FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
       end;
-      FaMsg := 'Método........ : Enviar Lote RPS' + LineBreak +
+      FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
                'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
                'Protocolo..... : ' + FProtocolo + LineBreak +
@@ -2222,7 +2222,7 @@ begin
     begin
       FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-      FaMsg := FaMsg + 'Método..... : Consultar Situação do Lote de RPS' + LineBreak +
+      FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                        'Código Erro : ' + RetSitLote.infSit.MsgRetorno.Items[i].Codigo + LineBreak +
                        'Mensagem... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
                        'Correção... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Correcao + LineBreak+
@@ -2264,7 +2264,7 @@ begin
          end;
     end;
 
-    FaMsg := 'Método........ : Consultar Situação do Lote de RPS' + LineBreak +
+    FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
              'Numero do Lote : ' + RetSitLote.InfSit.NumeroLote + LineBreak +
              'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
   end;
@@ -3074,14 +3074,14 @@ begin
     begin
       FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-      FaMsg := FaMsg + 'Método..... : Cancelar NFS-e' + LineBreak +
+      FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                        'Código Erro : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Codigo + LineBreak +
                        'Mensagem... : ' + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak +
                        'Correção... : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Correcao + LineBreak +
                        'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
     end;
   end
-  else FaMsg := 'Método........ : Cancelar NFS-e' + LineBreak +
+  else FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
                 'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
                 'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
@@ -3305,7 +3305,7 @@ begin
       begin
         FPMsg := FPMsg + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-        FaMsg := FaMsg + 'Método..... : Substituir NFS-e' + LineBreak +
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + FNFSeRetorno.MsgRetorno.Items[i].Codigo + LineBreak +
                          'Mensagem... : ' + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + LineBreak +
                          'Correção... : ' + FNFSeRetorno.MsgRetorno.Items[i].Correcao + LineBreak +

@@ -3316,7 +3316,7 @@ end;
 
 function TAdministrarCSCNFCe.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'admCscNFCeResult');
+  FPRetWS := SeparaDados(FPRetornoWS, 'cscNFCeResult');
 
   FretAdmCSCNFCe.Leitor.Arquivo := FPRetWS;
   FretAdmCSCNFCe.LerXml;

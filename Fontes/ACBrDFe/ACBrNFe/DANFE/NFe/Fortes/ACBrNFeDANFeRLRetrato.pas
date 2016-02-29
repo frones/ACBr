@@ -577,6 +577,7 @@ type
     txtNCM: TRLDBMemo;
     txtCodigo: TRLDBText;
     RLLabel2: TRLLabel;
+    procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensAfterPrint(Sender: TObject);
@@ -649,6 +650,12 @@ begin
     RLPrinters.RLPrinter.Copies := FNumCopias
   else
     RLPrinters.RLPrinter.Copies := 1;
+end;
+
+procedure TfrlDANFeRLRetrato.rlbReciboHeaderBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt :=  RLNFe.PageNumber = 1;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteBeforePrint(Sender: TObject;

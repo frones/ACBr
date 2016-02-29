@@ -46,7 +46,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+29/02/2016
+--ACBrNFeDANFeRLRetrato
+[+] Modificado para imprimir o canhoto de recibo somente na primeira página indiferente do cabeçalho ou rodape
+		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
+		por : Juliomar Marchetti
+		
 26/02/2016
 [*] Modificação para ler os campos novos do manual novo do TXT
 		por: Juliomar Marchetti

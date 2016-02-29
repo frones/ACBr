@@ -6502,6 +6502,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Height = 57
       AutoSize = True
       BandType = btHeader
+      BeforePrint = rlbReciboHeaderBeforePrint
       object rliCanhoto: TRLDraw
         Left = 0
         Top = 0

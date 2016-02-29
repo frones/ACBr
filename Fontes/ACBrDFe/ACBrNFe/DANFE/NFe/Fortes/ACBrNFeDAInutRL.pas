@@ -175,7 +175,6 @@ begin
      finally
         RLNFeInut.Free;
         RLNFeInut := nil;
-        Printer.Free;
         Free;
      end;
 end;

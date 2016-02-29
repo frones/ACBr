@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <TfrxReport Tag="1" Version="4.12.2" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.AllowEdit="False" PreviewOptions.Buttons="3125" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="41606,3604004514" ReportOptions.Description.Text="" ReportOptions.LastChange="42002,608125" ScriptLanguage="PascalScript" ScriptText.Text="&#13;&#10;&#13;&#10;procedure Overlay1OnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  Overlay1.Visible := &#60;HOMOLOGACAO&#62;;&#13;&#10;  Overlay1.Height := ENGINE.PageHeight;                                                                                    &#13;&#10;end;&#13;&#10;        &#13;&#10;begin&#13;&#10;&#13;&#10;end." StoreInDFM="False" OnReportPrint="frxReportOnReportPrint" PropData="044C656674023003546F7002240844617461736574730101062D20446174615365743D22667278456D6974656E74652220446174615365744E616D653D22456D6974656E7465220001062B20446174615365743D226672784576656E746F732220446174615365744E616D653D224576656E746F73220001063120446174615365743D22667278506172616D6574726F732220446174615365744E616D653D22506172616D6574726F73220001062B20446174615365743D22667278546F6D61646F722220446174615365744E616D653D22546F6D61646F72220000095661726961626C65730100055374796C650100">
+  <Datasets>
+    <item DataSetName="Identificacao"/>
+    <item DataSetName="Emitente"/>
+    <item DataSetName="Destinatario"/>
+    <item DataSetName="DadosNotasFiscais"/>
+    <item DataSetName="Parametros"/>
+    <item DataSetName="Volumes"/>
+    <item DataSetName="InformacoesAdicionais"/>
+    <item DataSetName="Tomador"/>
+    <item DataSetName="Expedidor"/>
+    <item DataSetName="Recebedor"/>
+    <item DataSetName="Remetente"/>
+    <item DataSetName="CalculoImposto"/>
+    <item DataSetName="ComponentesPrestacao"/>
+    <item DataSetName="Seguro"/>
+    <item DataSetName="ModalRodoviario"/>
+    <item DataSetName="ModalAquaviario"/>
+    <item DataSetName="ModalAereo"/>
+    <item DataSetName="MultiModal"/>
+    <item DataSetName="Veiculos"/>
+    <item DataSetName="ValePedagio"/>
+    <item DataSetName="Motorista"/>
+    <item DataSetName="DocAnterior"/>
+    <item DataSetName="AnuladoComple"/>
+    <item DataSetName="Eventos"/>
+	</Datasets>
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
   <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
     <TfrxReportTitle Name="ReportTitle1" Height="49,13389" Left="0" Top="18,89765" Width="718,1107">

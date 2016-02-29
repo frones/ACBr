@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <TfrxReport Tag="1" Version="5.2.3" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42269,3941764931" ReportOptions.Description.Text="" ReportOptions.LastChange="42270,4921345602" ScriptLanguage="PascalScript" ScriptText.Text="var&#13;&#10;       NumImpressao: Integer;&#13;&#10;         &#13;&#10;procedure MasterData2OnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;    if Trim(&#60;Parametros.&#34;Imagem&#34;&#62;) &#60;&#62; '' then&#13;&#10;       imgLogomarca.Picture.LoadFromFile(&#60;Parametros.&#34;Imagem&#34;&#62;);  &#13;&#10;end;&#13;&#10;&#13;&#10;procedure MasterData2OnAfterPrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  Inc(NumImpressao);&#13;&#10;  if NumImpressao = 1 then&#13;&#10;  begin              &#13;&#10;    Engine.ShowBand(Child2);&#13;&#10;  end;     &#13;&#10;end;  &#13;&#10;    &#13;&#10;begin&#13;&#10;  NumImpressao := 0;  &#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
-    <item DataSetName="AnuladoComple"/>
-    <item DataSetName="ComponentesPrestacao"/>
-    <item DataSetName="DadosNotasFiscais"/>
-    <item DataSetName="Destinatario"/>
-    <item DataSetName="DocAnterior"/>
-    <item DataSetName="Emitente"/>
-    <item DataSetName="Eventos"/>
-    <item DataSetName="Expedidor"/>
     <item DataSetName="Identificacao"/>
-    <item DataSetName="InformacoesAdicionais"/>
-    <item DataSetName="LocalEntrega"/>
-    <item DataSetName="ModalAereo"/>
-    <item DataSetName="ModalRodoviario"/>
-    <item DataSetName="Motorista"/>
+    <item DataSetName="Emitente"/>
+    <item DataSetName="Destinatario"/>
+    <item DataSetName="DadosNotasFiscais"/>
     <item DataSetName="Parametros"/>
+    <item DataSetName="Volumes"/>
+    <item DataSetName="InformacoesAdicionais"/>
+    <item DataSetName="Tomador"/>
+    <item DataSetName="Expedidor"/>
     <item DataSetName="Recebedor"/>
     <item DataSetName="Remetente"/>
+    <item DataSetName="CalculoImposto"/>
+    <item DataSetName="ComponentesPrestacao"/>
     <item DataSetName="Seguro"/>
-    <item DataSetName="Tomador"/>
-    <item DataSetName="ValePedagio"/>
+    <item DataSetName="ModalRodoviario"/>
+    <item DataSetName="ModalAquaviario"/>
+    <item DataSetName="ModalAereo"/>
+    <item DataSetName="MultiModal"/>
     <item DataSetName="Veiculos"/>
-    <item DataSetName="Volumes"/>
-  </Datasets>
+    <item DataSetName="ValePedagio"/>
+    <item DataSetName="Motorista"/>
+    <item DataSetName="DocAnterior"/>
+    <item DataSetName="AnuladoComple"/>
+    <item DataSetName="Eventos"/>
+	</Datasets>
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
   <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="5" RightMargin="5" TopMargin="5" BottomMargin="5" ColumnWidth="0" ColumnPositions.Text="" PageCount="2" LargeDesignHeight="True" PrintOnPreviousPage="True" HGuides.Text="" VGuides.Text="">
     <TfrxMasterData Name="MasterData2" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="517,79561" Left="0" Top="18,89765" Width="755,906" OnAfterPrint="MasterData2OnAfterPrint" OnBeforePrint="MasterData2OnBeforePrint" ColumnWidth="0" ColumnGap="0" DataSetName="Identificacao" RowCount="0">

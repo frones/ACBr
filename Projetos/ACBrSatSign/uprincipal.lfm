@@ -502,6 +502,7 @@ object frmPrincipal: TfrmPrincipal
   object btnCriarAssinatura: TBitBtn
     Left = 693
     Height = 32
+    Hint = 'Criar assinatura'
     Top = 368
     Width = 179
     Caption = 'Criar assinatura'
@@ -582,12 +583,14 @@ object frmPrincipal: TfrmPrincipal
       0000000000000000000000000000000000000000000000000000
     }
     OnClick = btnCriarAssinaturaClick
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 4
   end
   object btnCopiar: TSpeedButton
     Left = 192
     Height = 32
-    Hint = 'Configurar aplicativo'
+    Hint = 'Copiar para a área de transferência'
     Top = 368
     Width = 32
     Glyph.Data = {

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/02/2016
+-- ACBrBoletoFR --
+[-] acerto na montagem do codigo do cedente para FastReport.
+    por: Carlos Nascimento
+
 23/10/2015
 -- ACBrBoletoFCFortes --
 [*] Ajuste para não exibir a janela de Progresso na geração de PDF se

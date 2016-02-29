@@ -67,17 +67,21 @@ type
     { Private declarations }
     fFastReportFile: String;
     FImpressora: String;
+    fIndice: Integer;
     function PrepareBoletos(const DmBoleto: TdmACBrBoletoFCFR): Boolean;
     function PrepareReport(const DmBoleto: TdmACBrBoletoFCFR): Boolean;
+    function GetACBrTitulo: TACBrTitulo;
   public
     { Public declarations }
     constructor Create(AOwner: TComponent); override;
 
     procedure Imprimir; override;
     function PreparedReport: TfrxReport;
+    property Titulo   : TACBrTitulo read GetACBrTitulo ;
   published
     property FastReportFile: String read FFastReportFile write FFastReportFile;
     property Impressora: String read FImpressora write FImpressora;
+
   end;
 
   { TdmACbrBoletoFCFR }
@@ -99,6 +103,7 @@ type
     procedure ImprimeLogoMarca(sCaminhoFoto, sfrxPicture: string);
   public
     { Public declarations }
+
   end;
 
 implementation
@@ -114,6 +119,12 @@ begin
   ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString +'\' +cdsBanco.FieldByName('Numero').AsString  + '.bmp','Logo_2');
   ImprimeLogoMarca(cdsBanco.FieldByName('DirLogo').AsString +'\' +cdsBanco.FieldByName('Numero').AsString  + '.bmp','Logo_3');
 end;
+
+function TACBrBoletoFCFR.GetACBrTitulo: TACBrTitulo;
+begin
+   Result := fACBrBoleto.ListadeBoletos[ fIndice ] ;
+end;
+
 
 procedure TdmACBrBoletoFCFR.ImprimeLogoMarca(sCaminhoFoto, sfrxPicture: string);
 var
@@ -237,6 +248,7 @@ begin
   fpAbout := 'ACBRBoletoFCFR ver: ' + CACBrBoletoFCFR_Versao;
   fFastReportFile := '' ;
   fImpressora := '';
+   fIndice   := 0 ;  
 end;
 
 function TACBrBoletoFCFR.PreparedReport: TfrxReport;
@@ -418,7 +430,7 @@ begin
       begin
          Append;
          FieldByName('Nome').AsString              := Cedente.Nome;
-         FieldByName('CodigoCedente').AsString     := Cedente.CodigoCedente;
+         FieldByName('CodigoCedente').AsString     := Banco.MontarCampoCodigoCedente(Titulo); //Cedente.CodigoCedente;
          FieldByName('CodigoTransmissao').AsString := Cedente.CodigoTransmissao;
          FieldByName('Agencia').AsString           := Cedente.Agencia;
          FieldByName('AgenciaDigito').AsString     := Cedente.AgenciaDigito;

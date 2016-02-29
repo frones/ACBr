@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/02/2016
+-- pcnNFeW --
+[-] Correção, estava gerando a TAG cRegTrib mesmo com o valor RTISSNenhum.
+    Por: Italo Jurisato Junior
 -- ACBrNFeWebServices --
 [-] Correção no nome da TAG de retorno do método de Administração de CSC da NFC-e.
     Por: Italo Jurisato Junior

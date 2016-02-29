@@ -1277,6 +1277,7 @@ begin
                end;
 
     proBHISS,
+    proThema,
     proWebISS: begin
                  Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
 

@@ -1,10 +1,12 @@
 unit uPrincipal;
 
 {$mode objfpc}{$H+}
+{$r BannerACBrSAC.rc}
 
 interface
 
 uses
+  Windows,
   Classes, SysUtils, strutils, IniFiles, FileUtil, Forms, Controls, Graphics,
   Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit, Menus, ACBrGIF, ACBrUtil,
   ACBrValidador, ACBrEnterTab, ACBrDFe, ACBrDFeSSL;
@@ -15,12 +17,12 @@ type
 
   TfrmPrincipal = class(TForm)
     ACBrEnterTab1: TACBrEnterTab;
+    ACBrGIF1: TACBrGIF;
     Bevel1: TBevel;
     Bevel2: TBevel;
     btnCopiar: TSpeedButton;
     btnCriarAssinatura: TBitBtn;
     edtCertificado: TEdit;
-    Image2: TImage;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -32,6 +34,7 @@ type
     rbtTipoCapicom: TRadioButton;
     rbtTipoOpenSSL: TRadioButton;
     btnBuscarCertificado: TSpeedButton;
+    procedure ACBrGIF1Click(Sender: TObject);
     procedure btnCopiarClick(Sender: TObject);
     procedure btnCriarAssinaturaClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -44,6 +47,7 @@ type
     procedure ConfigurarDFe;
     function GetPathConfig: String;
     procedure GravarConfiguracoes;
+    procedure CarregarGifBannerACBrSAC;
   public
 
   end;
@@ -60,6 +64,19 @@ const
 {$R *.lfm}
 
 { TfrmPrincipal }
+
+procedure TfrmPrincipal.CarregarGifBannerACBrSAC;
+var
+  S: TResourceStream;
+begin
+  S := TResourceStream.Create(HInstance, 'BANNER_ACBrSAC', RT_RCDATA);
+  try
+    ACBrGIF1.LoadFromStream(S);
+    ACBrGIF1.Active := True;
+  finally
+    S.Free;
+  end;
+end;
 
 function TfrmPrincipal.GetPathConfig: String;
 begin
@@ -110,6 +127,8 @@ end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
 begin
+  CarregarGifBannerACBrSAC;
+
   FACBrDFe := TACBrDFe.Create(Self);
 
   edtCertificado.Clear;
@@ -145,6 +164,11 @@ procedure TfrmPrincipal.btnCopiarClick(Sender: TObject);
 begin
   memCodigoVinculacao.CopyToClipboard;
   ShowMessage('Copiado para a área de transferência!');
+end;
+
+procedure TfrmPrincipal.ACBrGIF1Click(Sender: TObject);
+begin
+  OpenURL('http://www.projetoacbr.com.br/forum/SAC/cadastro/');
 end;
 
 procedure TfrmPrincipal.btnCriarAssinaturaClick(Sender: TObject);

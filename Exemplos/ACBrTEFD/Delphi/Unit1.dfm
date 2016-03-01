@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 354
   Top = 110
-  Width = 788
-  Height = 490
   Caption = 'TEFDDemo'
+  ClientHeight = 451
+  ClientWidth = 772
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,14 @@ object Form1: TForm1
   OnCreate = FormCreate
   DesignSize = (
     772
-    452)
+    451)
   PixelsPerInch = 96
   TextHeight = 13
   object Panel3: TPanel
     Left = 0
     Top = 208
     Width = 772
-    Height = 194
+    Height = 193
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 4
@@ -31,14 +31,14 @@ object Form1: TForm1
       Left = 597
       Top = 0
       Width = 5
-      Height = 194
+      Height = 193
       Align = alRight
     end
     object Panel4: TPanel
       Left = 602
       Top = 0
       Width = 170
-      Height = 194
+      Height = 193
       Align = alRight
       Constraints.MinWidth = 170
       TabOrder = 0
@@ -61,7 +61,7 @@ object Form1: TForm1
       end
       object Panel5: TPanel
         Left = 1
-        Top = 128
+        Top = 127
         Width = 168
         Height = 65
         Align = alBottom
@@ -264,7 +264,7 @@ object Form1: TForm1
         Left = 1
         Top = 14
         Width = 168
-        Height = 114
+        Height = 113
         Align = alClient
         ReadOnly = True
         TabOrder = 1
@@ -274,7 +274,7 @@ object Form1: TForm1
       Left = 0
       Top = 0
       Width = 597
-      Height = 194
+      Height = 193
       Align = alClient
       Lines.Strings = (
         'Memo1')
@@ -376,7 +376,6 @@ object Form1: TForm1
           Width = 161
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           TabOrder = 0
           OnChange = cbxModeloChange
           Items.Strings = (
@@ -387,7 +386,6 @@ object Form1: TForm1
           Top = 92
           Width = 131
           Height = 21
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 1
           Text = 'Procurar'
@@ -513,7 +511,6 @@ object Form1: TForm1
             Width = 133
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             TabOrder = 0
             OnChange = cbxGPChange
           end
@@ -824,7 +821,6 @@ object Form1: TForm1
           Width = 142
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
           TabOrder = 0
           OnChange = cbxGPChange
         end
@@ -876,7 +872,6 @@ object Form1: TForm1
             Top = 17
             Width = 166
             Height = 21
-            ItemHeight = 13
             TabOrder = 0
             Items.Strings = (
               'Nenhuma Transa'#195#167#195#163'o'
@@ -893,7 +888,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 429
+    Top = 428
     Width = 772
     Height = 23
     Panels = <
@@ -909,7 +904,7 @@ object Form1: TForm1
   end
   object Panel1: TPanel
     Left = 0
-    Top = 402
+    Top = 401
     Width = 772
     Height = 27
     Align = alBottom
@@ -1145,6 +1140,7 @@ object Form1: TForm1
     end
   end
   object ACBrECF1: TACBrECF
+    QuebraLinhaRodape = False
     Modelo = ecfDaruma
     Porta = 'COM1'
     ReTentar = False
@@ -1159,12 +1155,6 @@ object Form1: TForm1
     MsgPausaRelatorio = 'Destaque a %d'#194#170' via, <ENTER> proxima, %d seg.'
     MaxLinhasBuffer = 3
     PaginaDeCodigo = 28591
-    FormMsgFonte.Charset = DEFAULT_CHARSET
-    FormMsgFonte.Color = clWindowText
-    FormMsgFonte.Height = -11
-    FormMsgFonte.Name = 'Tahoma'
-    FormMsgFonte.Style = []
-    FormMsgColor = clHighlight
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel
     MemoParams.Strings = (
       '[Cabecalho]'
@@ -1208,8 +1198,10 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
-    Left = 16
-    Top = 296
+    ConfigBarras.Margem = 0
+    InfoRodapeCupom.Imposto.ModoCompacto = False
+    Left = 52
+    Top = 290
   end
   object ACBrTEFD1: TACBrTEFD
     Identificacao.NomeAplicacao = 'TEFDDemo'
@@ -1284,6 +1276,7 @@ object Form1: TForm1
     TEFFoxWin.ArqSTS = 'C:\FwTEF\rsp\intpos.sts'
     TEFFoxWin.ArqResp = 'C:\FwTEF\rsp\intpos.001'
     TEFFoxWin.GPExeName = 'C:\FwTEF\bin\FwTEF.exe'
+    TEFCliDTEF.ArqResp = ''
     TEFCliDTEF.OnExibeMenu = CliDTEFExibeMenu
     TEFCliDTEF.OnObtemInformacao = CliDTEFObtemInformacao
     TEFPetrocard.ArqTemp = 'C:\CardTech\req\intpos.tmp'
@@ -1304,6 +1297,11 @@ object Form1: TForm1
     TEFTicketCar.NumLoja = 0
     TEFTicketCar.NumCaixa = 0
     TEFTicketCar.AtualizaPrecos = False
+    TEFConvCard.ArqTemp = 'C:\ger_convenio\tx\crtsol.tmp'
+    TEFConvCard.ArqReq = 'C:\ger_convenio\tx\crtsol.001'
+    TEFConvCard.ArqSTS = 'C:\ger_convenio\rx\crtsol.ok'
+    TEFConvCard.ArqResp = 'C:\ger_convenio\rx\crtsol.001'
+    TEFConvCard.GPExeName = 'C:\ger_convcard\convcard.exe'
     OnAguardaResp = ACBrTEFD1AguardaResp
     OnExibeMsg = ACBrTEFD1ExibeMsg
     OnBloqueiaMouseTeclado = ACBrTEFD1BloqueiaMouseTeclado

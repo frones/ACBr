@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2016
+-- ACBrCTeServicos --
+[*] Atualização das URLs de produção da SEFAZ-MS.
+    por: Italo Jurisato Junior
+
 25/02/2016
 -- ACBrCTeServicos --
 [*] Atualização das URLs de homologação da SEFAZ-MS.

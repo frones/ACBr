@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/02/2016
+[-] Acerto para substituir as variáveis do email também no botão de teste de envio de NFe.
+
 25/02/2016
 [+] Criado uma nova aba em DFe->Impressão de nome NFe, nela irá ter somente
     configurações de NFe.

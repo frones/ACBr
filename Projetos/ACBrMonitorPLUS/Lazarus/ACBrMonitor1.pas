@@ -2199,6 +2199,8 @@ end;
 procedure TFrmACBrMonitor.btnEnviarEmailClick(Sender: TObject);
 var
   vPara: string;
+  sAssunto: String;
+  sMensagem: TStringList;
 begin
   LimparResp;
   OpenDialog1.Title := 'Selecione a NFE';
@@ -2217,13 +2219,22 @@ begin
       exit;
 
     try
-      ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(vPara, edtEmailAssuntoNFe.Text,
-        mmEmailMsgNFe.Lines
-        , True  // Enviar PDF junto
-        ,
-        nil    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
-        , nil);
-      // Lista de anexos - TStrings
+      sMensagem := TStringList.Create;
+      try
+        sAssunto       := SubstituirVariaveis(edtEmailAssuntoNFe.Text);
+        sMensagem.Text := SubstituirVariaveis(mmEmailMsgNFe.Text);
+
+        ACBrNFe1.NotasFiscais.Items[0].EnviarEmail(
+          vPara,
+          sAssunto,
+          sMensagem,
+          True,  // Enviar PDF junto
+          nil,    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
+          nil
+        );
+      finally
+        sMensagem.Free;
+      end;
     except
       on E: Exception do
       begin

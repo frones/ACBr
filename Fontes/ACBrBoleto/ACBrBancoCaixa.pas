@@ -340,7 +340,10 @@ var
 begin
    with ACBrTitulo do
    begin
-      ANossoNumero := FormataNossoNumero(ACBrTitulo);
+      if ( Trim(ACBrTitulo.NossoNumero) <> '' ) then
+        ANossoNumero := FormataNossoNumero(ACBrTitulo)
+      else
+        ANossoNumero := '';  
 
       {SEGMENTO P}
 
@@ -470,7 +473,7 @@ begin
                PadRight(ACBrBoleto.Cedente.AgenciaDigito, 1 , '0')            + //23 -Dígito verificador da agência
                PadRight(ACBrBoleto.Cedente.CodigoCedente, 6, '0')             + //24 a 29 - Código do Convênio no Banco (Codigo do cedente)
                PadRight('', 11, '0')                                          + //30 a 40 - Uso Exclusivo da CAIXA
-               '14'                                                       + //41 a 42 - Modalidade da Carteira
+               PadRight(Copy(ANossoNumero,1,2), 2, '0')                                                        + //41 a 42 - Modalidade da Carteira
                PadLeft(Copy(ANossoNumero,3,17), 15, '0')                     + //43 a 57 - Nosso número - identificação do título no banco
                '1'                                                        + //58 - Cobrança Simples
                '1'                                                        + //59 - Forma de cadastramento do título no banco: com cadastramento  1-cobrança Registrada
@@ -684,7 +687,7 @@ begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := Trim(copy(Linha,59,11));
+            SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,11);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 

@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/02/16 ver. 0.0.180a
+-- ACBrBancoCaixa --
+[*] Ajuste geração remessa CNAB240 (windsoft)
+[-] Correção leitura retorno CNAB240 (Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/26563-erro-na-leitura-do-retorno-da-caixa/
+
+-- ACBrBancoBradesco --
+[*] Ajuste remessa CNAB400. (jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/26199-indicador-para-d%C3%A9bito-autom%C3%A1tico-bradesco/
+
 Data: 19/02/16 ver. 0.0.179a
 -- ACBrBancoSantander --
 [*] Ajuste remessa CNAB240. (Juliana Tamizou)

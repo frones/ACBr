@@ -1889,7 +1889,7 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if FProvedor in [proBHISS, proWebISS] then
+  if FProvedor in [proBHISS, proWebISS, proThema] then
   begin
     if FNotasFiscais.Count > 3 then
       GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +

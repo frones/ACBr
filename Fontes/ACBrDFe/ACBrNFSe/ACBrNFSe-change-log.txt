@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2016
+[+] Incluido a propriedade Imprimir nos métodos Gerar e EnviarSincrono ao moldes
+    do Enviar.
+    Por padrão essa propriedade tem o valor True, isso faz com que as notas
+    confirmadas o seu respectivo DANFSE seja impresso automaticamente.
+    Por: Italo Jurisato Junior
+
 26/02/2016
 [*] Alterado a forma de calcular o Hash, usando agora uma nova rotina escrita
     por DSA.

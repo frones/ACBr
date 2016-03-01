@@ -92,7 +92,7 @@ type
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
-    function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
+    function Gerar(ARps: Integer; ALote: Integer = 1; Imprimir: Boolean = True): Boolean;
 
     function ConsultarSituacao(AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
@@ -441,11 +441,13 @@ end;
 function TACBrNFSe.EnviarSincrono(ALote: Integer;
   Imprimir: Boolean): Boolean;
 begin
-  Result := EnviarSincrono(IntToStr(ALote));
+  Result := EnviarSincrono(IntToStr(ALote), Imprimir);
 end;
 
 function TACBrNFSe.EnviarSincrono(ALote: String;
   Imprimir: Boolean): Boolean;
+var
+  i: Integer;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -457,9 +459,21 @@ begin
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
   Result := WebServices.EnviaSincrono(ALote);
+
+  if DANFSE <> nil then
+  begin
+    for i:= 0 to NotasFiscais.Count-1 do
+    begin
+      if NotasFiscais.Items[i].Confirmada and Imprimir then
+        NotasFiscais.Items[i].Imprimir;
+    end;
+    SetStatus( stNFSeIdle );
+  end;
 end;
 
-function TACBrNFSe.Gerar(ARps: Integer; ALote: Integer): Boolean;
+function TACBrNFSe.Gerar(ARps: Integer; ALote: Integer; Imprimir: Boolean): Boolean;
+var
+  i: Integer;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
@@ -479,6 +493,16 @@ begin
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RpsGerar);
 
   Result := WebServices.Gera(ARps, ALote);
+
+  if DANFSE <> nil then
+  begin
+    for i:= 0 to NotasFiscais.Count-1 do
+    begin
+      if NotasFiscais.Items[i].Confirmada and Imprimir then
+        NotasFiscais.Items[i].Imprimir;
+    end;
+    SetStatus( stNFSeIdle );
+  end;
 end;
 
 function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;

@@ -967,7 +967,7 @@ begin
     FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.dhRecebimento;
     if FDataRecebimento = 0 then
       FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.DataEmissao;
-    if (FProvedor = proInfisc) then
+    if FProvedor in [proInfisc, proGovDigital] then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else begin
@@ -1470,19 +1470,19 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case Provedor of
-      proCONAM: TagGrupo := 'ws_nfe.PROCESSARPS';
-      proInfisc: TagGrupo := 'envioLote';
-      proISSDSF: TagGrupo := 'ReqEnvioLoteRPS';
+      proCONAM:     TagGrupo := 'ws_nfe.PROCESSARPS';
+      proInfisc:    TagGrupo := 'envioLote';
+      proISSDSF:    TagGrupo := 'ReqEnvioLoteRPS';
       proEquiplano: TagGrupo := 'enviarLoteRpsEnvio';
-      proSP: TagGrupo := 'PedidoEnvioLoteRPS';
+      proSP:        TagGrupo := 'PedidoEnvioLoteRPS';
     else
       TagGrupo := 'EnviarLoteRpsEnvio';
     end;
 
     case FProvedor of
-      proCONAM: TagElemento := 'Reg20';
+      proCONAM:  TagElemento := 'Reg20';
       proInfisc: TagElemento := 'infNFSe';
-      proSP: TagElemento := 'RPS';
+      proSP:     TagElemento := 'RPS';
     else
       TagElemento := 'LoteRps';
     end;
@@ -1904,16 +1904,18 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proSimplISS: TagGrupo := 'GerarNovaNfseEnvio';
+      proSimplISS:    TagGrupo := 'GerarNovaNfseEnvio';
       proEGoverneISS: TagGrupo := 'request';
-      proSP: TagGrupo := 'PedidoEnvioRPS';
+      proSP:          TagGrupo := 'PedidoEnvioRPS';
+      proThema:       TagGrupo := 'EnviarLoteRpsEnvio';
     else
       TagGrupo := 'GerarNfseEnvio';
     end;
 
     case FProvedor of
+      proThema,
       proBHISS: TagElemento := 'LoteRps';
-      proSP: TagElemento := 'RPS';
+      proSP:    TagElemento := 'RPS';
     else
       TagElemento := 'Rps';
     end;
@@ -2063,11 +2065,11 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proCONAM: TagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
-      proInfisc: TagGrupo := 'pedidoStatusLote';
+      proCONAM:     TagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
+      proInfisc:    TagGrupo := 'pedidoStatusLote';
       proEquiplano: TagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
-      proSimplISS: TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
-      proSP: TagGrupo := 'PedidoInformacoesLote';
+      proSimplISS:  TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
+      proSP:        TagGrupo := 'PedidoInformacoesLote';
     else
       TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     end;
@@ -2322,8 +2324,8 @@ begin
   try
     case FProvedor of
       proEquiplano: TagGrupo := 'esConsultarLoteRpsEnvio';
-      proISSDSF: TagGrupo :='ReqConsultaLote';
-      proSP: TagGrupo := 'PedidoConsultaLote';
+      proISSDSF:    TagGrupo := 'ReqConsultaLote';
+      proSP:        TagGrupo := 'PedidoConsultaLote';
     else
       TagGrupo := 'ConsultarLoteRpsEnvio';
     end;
@@ -2461,9 +2463,9 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proISSDSF: TagGrupo := 'ReqConsultaNFSeRPS';
+      proISSDSF:    TagGrupo := 'ReqConsultaNFSeRPS';
       proEquiplano: TagGrupo := 'esConsultarNfsePorRpsEnvio';
-      proSP: TagGrupo := 'PedidoConsultaNFe';
+      proSP:        TagGrupo := 'PedidoConsultaNFe';
     else
       TagGrupo := 'ConsultarNfseRpsEnvio';
     end;
@@ -2654,11 +2656,11 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proDigifred: TagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
-      proInfisc: TagGrupo := 'pedidoLoteNFSe';
-      proISSDSF: TagGrupo := 'ReqConsultaNotas';
+      proDigifred:  TagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
+      proInfisc:    TagGrupo := 'pedidoLoteNFSe';
+      proISSDSF:    TagGrupo := 'ReqConsultaNotas';
       proSystemPro: TagGrupo := 'ConsultarNfseFaixaEnvio';
-      proSP: TagGrupo := 'PedidoConsultaNFe';
+      proSP:        TagGrupo := 'PedidoConsultaNFe';
     else
       TagGrupo := 'ConsultarNfseEnvio';
     end;
@@ -2806,12 +2808,12 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proCONAM: TagGrupo := 'ws_nfe.CANCELANOTAELETRONICA';
+      proCONAM:       TagGrupo := 'ws_nfe.CANCELANOTAELETRONICA';
       proEGoverneISS: TagGrupo := 'request';
-      proEquiplano: TagGrupo := 'esCancelarNfseEnvio';
-      proInfisc: TagGrupo := 'pedCancelaNFSe';
-      proISSDSF: TagGrupo := 'ReqCancelamentoNFSe';
-      proSP: TagGrupo := 'PedidoCancelamentoNFe';
+      proEquiplano:   TagGrupo := 'esCancelarNfseEnvio';
+      proInfisc:      TagGrupo := 'pedCancelaNFSe';
+      proISSDSF:      TagGrupo := 'ReqCancelamentoNFSe';
+      proSP:          TagGrupo := 'PedidoCancelamentoNFe';
     else
       TagGrupo :=  'CancelarNfseEnvio';
     end;

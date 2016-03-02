@@ -1235,7 +1235,7 @@ begin
 
          Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 01, 01, 1, CodigoCanc, '');
 
-         if (Provedor in [proPublica, proTecnos]) and (MotivoCanc <> '') then
+         if Provedor in [proTecnos] then
            Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
 
          Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +

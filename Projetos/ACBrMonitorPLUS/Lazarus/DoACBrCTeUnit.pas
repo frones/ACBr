@@ -1133,6 +1133,7 @@ var
   INIRec : TMemIniFile;
   SL     : TStringList;
   OK     : boolean;
+  fsICMSUFFim : TStrings;
 begin
  INIRec := TMemIniFile.create( 'cte.ini' );
  SL := TStringList.Create;
@@ -1552,6 +1553,7 @@ begin
           Imp.vTotTrib   := StringToFloatDef( INIRec.ReadString('Imp','vComp',INIRec.ReadString('ICMS','vComp','')) ,0);
           Imp.infAdFisco := INIRec.ReadString('Imp','infAdFisco',INIRec.ReadString('ICMS','infAdFisco',''));
 
+
           if INIRec.ReadString('ICMS00', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMS00.CST   := StrToCSTICMS(OK,INIRec.ReadString('ICMS00','CST','00'));
@@ -1614,6 +1616,24 @@ begin
             Imp.ICMS.ICMSSN.indSN := INIRec.ReadInteger('ICMSSN', 'indSN',1);
           end;
 
+          fsICMSUFFim := TStringList.Create;
+          try
+            INIRec.ReadSection('ICMSUFFim', fsICMSUFFim);
+            if fsICMSUFFim.Count > 0 then
+              if INIRec.ReadString('ICMSUFFim', 'CST','') <> '' then
+              begin
+                Imp.ICMSUFFim.vBCUFFim := INIRec.ReadFloat('ICMSUFFim', 'vBCUFFim', 0.00);
+                Imp.ICMSUFFim.pFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'pFCPUFFim', 0.00);
+                Imp.ICMSUFFim.pICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'pICMSUFFim', 0.00);
+                Imp.ICMSUFFim.pICMSInter := INIRec.ReadFloat('ICMSUFFim', 'pICMSInter', 0.00);
+                Imp.ICMSUFFim.pICMSInterPart := INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00);
+                Imp.ICMSUFFim.vFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'vFCPUFFim', 0.00);
+                Imp.ICMSUFFim.vICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFFim', 0.00);
+                Imp.ICMSUFFim.vICMSUFIni := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFIni', 0.00);
+              end;
+          finally
+            fsICMSUFFim.Free;
+          end;
         {$IFDEF PL_200}
           infCTeNorm.infCarga.vCarga   := StringToFloatDef( INIRec.ReadString('infCarga','vCarga','') ,0);
           infCTeNorm.infCarga.proPred  := INIRec.ReadString('infCarga','proPred','');
@@ -2592,6 +2612,15 @@ begin
           {indica se é simples}
           if (Imp.ICMS.ICMSSN.indSN = 1) and (Imp.ICMS.SituTrib = cstICMSSN) then
             INIRec.WriteInteger('ICMSSN', 'indSN', Imp.ICMS.ICMSSN.indSN);
+
+          INIRec.WriteFloat('ICMSUFFim', 'vBCUFFim', Imp.ICMSUFFim.vBCUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'pFCPUFFim', Imp.ICMSUFFim.pFCPUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'pICMSUFFim', Imp.ICMSUFFim.pICMSUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'pICMSInter', Imp.ICMSUFFim.pICMSInter);
+          INIRec.WriteFloat('ICMSUFFim', 'pICMSInterPart', Imp.ICMSUFFim.pICMSInterPart);
+          INIRec.WriteFloat('ICMSUFFim', 'vFCPUFFim', Imp.ICMSUFFim.vFCPUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'vICMSUFFim', Imp.ICMSUFFim.vICMSUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'vICMSUFIni', Imp.ICMSUFFim.vICMSUFIni);
 
         {$IFDEF PL_200}
           INIRec.WriteString('infCarga', 'vCarga', CurrToStr(infCTeNorm.infCarga.vCarga));

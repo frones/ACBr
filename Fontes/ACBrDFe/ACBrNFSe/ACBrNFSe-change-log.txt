@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2016
+[*] incluido a função StrToInt64Def para converter o numero do RPS de string para
+    Int64, pois pode ocorrer diferenças entre o RPS e a NFS-e.
+    Por exemplo:  000123 (RPS) e 123 (NFS-e).
+    Por: Italo Jurisato Junior
+
 01/03/2016
 [+] Incluido a propriedade Imprimir nos métodos Gerar e EnviarSincrono ao moldes
     do Enviar.

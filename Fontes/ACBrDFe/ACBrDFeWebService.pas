@@ -218,7 +218,7 @@ begin
   // Alguns provedores de NFS-e não possui um SoapAction para os seus serviços,
   // sendo assim é atribuido o caracter "*" no arquivo INI desses provedores.
   if SoapAction = '*' then
-    SoapAction := '';
+    FPSoapAction := '';
 end;
 
 procedure TDFeWebService.DefinirServicoEAction;

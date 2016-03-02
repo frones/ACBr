@@ -214,6 +214,11 @@ begin
 
   if SoapAction = '' then
     GerarException( ACBrStr('SoapAction não definido para: ') + ClassName);
+
+  // Alguns provedores de NFS-e não possui um SoapAction para os seus serviços,
+  // sendo assim é atribuido o caracter "*" no arquivo INI desses provedores.
+  if SoapAction = '*' then
+    SoapAction := '';
 end;
 
 procedure TDFeWebService.DefinirServicoEAction;

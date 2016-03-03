@@ -575,8 +575,8 @@ type
     rlbCancelada: TRLBand;
     RLLCancelada: TRLLabel;
     txtNCM: TRLDBMemo;
-    txtCodigo: TRLDBText;
     RLLabel2: TRLLabel;
+    txtCodigo: TRLDBMemo;
     procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);

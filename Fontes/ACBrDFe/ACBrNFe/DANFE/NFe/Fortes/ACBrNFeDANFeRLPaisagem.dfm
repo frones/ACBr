@@ -4,6 +4,9 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Caption = 'frlDANFeRLPaisagem'
   ClientHeight = 693
   ClientWidth = 1133
+  ExplicitTop = -64
+  ExplicitWidth = 1149
+  ExplicitHeight = 731
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
@@ -23,6 +26,10 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     PrintDialog = False
     Title = 'Danfe Paisagem'
     BeforePrint = RLNFeBeforePrint
+    ExplicitLeft = 0
+    ExplicitTop = 0
+    ExplicitWidth = 1123
+    ExplicitHeight = 794
     object rliMarcaDagua1: TRLImage
       Left = 352
       Top = 430
@@ -4069,22 +4076,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentColor = False
         Transparent = False
         AfterPrint = pnlDescricao1AfterPrint
-        object txtCodigo: TRLDBText
-          Left = 2
-          Top = 1
-          Width = 51
-          Height = 11
-          AutoSize = False
-          DataField = 'CODIGO'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          Text = ''
-          Transparent = False
-        end
         object LinhaProd2: TRLDraw
           Left = 54
           Top = 0
@@ -4147,6 +4138,21 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Angle = 90.000000000000000000
           DrawKind = dkLine
           HoldStyle = hsRelatively
+          Transparent = False
+        end
+        object txtCodigo: TRLDBMemo
+          Left = 2
+          Top = 1
+          Width = 51
+          Height = 11
+          AutoSize = False
+          DataField = 'CODIGO'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
           Transparent = False
         end
       end

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
+[*] Modificado para imprimir o codigo do produtos em varias linhas. 
+		http://www.projetoacbr.com.br/forum/topic/28420-campo-cprod-cortando-no-acbrnfedanferlfortes-report/#comment-187849
+		por : Henrique Leonardo
+
 29/02/2016
 -- pcnNFeW --
 [-] Correção, estava gerando a TAG cRegTrib mesmo com o valor RTISSNenhum.

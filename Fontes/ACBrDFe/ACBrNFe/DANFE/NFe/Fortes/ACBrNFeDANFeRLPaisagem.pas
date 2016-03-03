@@ -354,7 +354,6 @@ type
     rlsRectProdutos1: TRLDraw;
     RLDraw4: TRLDraw;
     pnlDescricao1: TRLPanel;
-    txtCodigo: TRLDBText;
     LinhaProd2: TRLDraw;
     LinhaProd1: TRLDraw;
     pnlCabecalho2: TRLPanel;
@@ -469,6 +468,7 @@ type
     rlbCancelada: TRLBand;
     RLLCancelada: TRLLabel;
     RLLabel6: TRLLabel;
+    txtCodigo: TRLDBMemo;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);

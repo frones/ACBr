@@ -4,10 +4,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 881
   ClientWidth = 916
+  ExplicitWidth = 932
+  ExplicitHeight = 919
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Left = 0
     Top = 8
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
@@ -20,6 +21,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     PrintDialog = False
     Title = 'Danfe Retrato'
     BeforePrint = RLNFeBeforePrint
+    ExplicitTop = 8
     object rliMarcaDagua1: TRLImage
       Left = 241
       Top = 670
@@ -6194,7 +6196,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Style = []
         ParentFont = False
       end
-      object txtCodigo: TRLDBText
+      object txtCodigo: TRLDBMemo
         Tag = 705
         Left = 2
         Top = 1
@@ -6209,7 +6211,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-        Text = ''
       end
     end
     object rlbISSQN: TRLBand

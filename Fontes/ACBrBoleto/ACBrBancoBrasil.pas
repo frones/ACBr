@@ -164,7 +164,7 @@ begin
       Result := 7
    else if ((wTamConvenio > 4) and (wTamConvenio < 6)) or
            ((wTamConvenio = 6) and ((wCarteira = '12') or (wCarteira = '15') or
-            (wCarteira = '17'))) then
+            (wCarteira = '17') or (wCarteira = '18'))) then
       Result := 5
    else if (wTamConvenio = 6) then
       Result := 11
@@ -689,20 +689,19 @@ begin
 
      {Pegando Código da Ocorrencia}
      case OcorrenciaOriginal.Tipo of
-       toRemessaBaixar                         : ATipoOcorrencia := '02'; {Pedido de Baixa}
-       toRemessaConcederAbatimento             : ATipoOcorrencia := '04'; {Concessão de Abatimento}
-       toRemessaCancelarAbatimento             : ATipoOcorrencia := '05'; {Cancelamento de Abatimento concedido}
-       toRemessaAlterarVencimento              : ATipoOcorrencia := '06'; {Alteração de vencimento}
-       toRemessaAlterarControleParticipante    : ATipoOcorrencia := '07'; {Alteração do número de controle do participante}
-       toRemessaAlterarNumeroControle          : ATipoOcorrencia := '08'; {Alteração de seu número}
-       toRemessaProtestar                      : ATipoOcorrencia := '09'; {Pedido de protesto}
-       toRemessaCancelarInstrucaoProtestoBaixa : ATipoOcorrencia := '10'; {Sustar protesto e baixar}
-       toRemessaCancelarInstrucaoProtesto      : ATipoOcorrencia := '10'; {Sustar protesto e manter na carteira}
-       toRemessaDispensarJuros                 : ATipoOcorrencia := '11'; {Instrução para dispensar juros}
-       toRemessaAlterarNomeEnderecoSacado      : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}
-       toRemessaOutrasOcorrencias              : ATipoOcorrencia := '31'; {Alteração de Outros Dados}
-       toRemessaCancelarDesconto               : ATipoOcorrencia := '32'; {Não conceder desconto}
-       toRemessaAlterarModalidade              : ATipoOcorrencia  := '40'; {Alterar modalidade (Vide Observações)}
+       toRemessaBaixar                     : ATipoOcorrencia := '02'; {Pedido de Baixa}
+       toRemessaConcederAbatimento         : ATipoOcorrencia := '04'; {Concessão de Abatimento}
+       toRemessaCancelarAbatimento         : ATipoOcorrencia := '05'; {Cancelamento de Abatimento concedido}
+       toRemessaAlterarVencimento          : ATipoOcorrencia := '06'; {Alteração de vencimento}
+       toRemessaAlterarControleParticipante: ATipoOcorrencia := '07'; {Alteração do número de controle do participante}
+       toRemessaAlterarNumeroControle      : ATipoOcorrencia := '08'; {Alteração de seu número}
+       toRemessaProtestar                  : ATipoOcorrencia := '09'; {Pedido de protesto}       
+       toRemessaCancelarInstrucaoProtesto  : ATipoOcorrencia := '10'; {Instrução para sustar protesto}
+       toRemessaDispensarJuros             : ATipoOcorrencia := '11'; {Instrução para dispensar juros}
+       toRemessaAlterarNomeEnderecoSacado  : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}       
+       toRemessaConcederDesconto           : ATipoOcorrencia := '31'; {Conceder desconto}
+       toRemessaCancelarDesconto           : ATipoOcorrencia := '32'; {Não conceder desconto}
+       toRemessaAlterarModalidade          : ATipoOcorrencia := '40'; {Alterar modalidade (Vide Observações)}
      else
        ATipoOcorrencia := '01'; {Remessa}
      end;

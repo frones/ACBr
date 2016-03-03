@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/02/16 ver. 0.0.181a
+-- ACBrBancoBrasil --
+[-] Ajuste tipo ocorrência remessa CNAB400.(Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/20022-altera%C3%A7%C3%B5es-na-unit-banco-do-brasil/
+
+[*] Ajuste formatação Nosso Numero covenio 6 posições. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28250-problema-nossonumero-banco-do-brasil-carteira-18-e-conv%C3%AAnio-de-6-d%C3%ADgitos/
+
+
+
 Data: 29/02/16 ver. 0.0.180a
 -- ACBrBancoCaixa --
 [*] Ajuste geração remessa CNAB240 (windsoft)

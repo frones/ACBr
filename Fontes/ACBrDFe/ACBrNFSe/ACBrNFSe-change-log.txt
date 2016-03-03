@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/03/2016
+-- ACBrNFSe / ACBrNFSeWebServices / pnfsNFSeG  --
+[*] Realizado uma alteração visando alterar o nome da TAG: recepcionarLoteRps para
+    recepcionarLoteRpsLimitado quando a quantidade de RPS for menor que 4.
+    Somente para o provedor Thema.
+    O método de envio alterado é Enviar.
+    Por: Italo Jurisato Junior
+
 02/03/2016
 [*] incluido a função StrToInt64Def para converter o numero do RPS de string para
     Int64, pois pode ocorrer diferenças entre o RPS e a NFS-e.

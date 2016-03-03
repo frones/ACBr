@@ -1277,7 +1277,6 @@ begin
                end;
 
     proBHISS,
-    proThema,
     proWebISS: begin
                  Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
 
@@ -1317,7 +1316,7 @@ begin
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
                   proBetim, proDBSeller, proEquiplano, proFIssLex, proGinfes,
                   proGovBR, proIssCuritiba, proIssIntel, proIssNet, proLexsom,
-                  proNatal, proTinus, proProdemge, proRJ, proSimplIss, 
+                  proNatal, proTinus, proProdemge, proRJ, proSimplIss, proThema,
                   proTiplan, proIssDSF, proInfisc, proAgili, proSpeedGov,
                   proPronim, proActcon, proSalvador, proNFSEBrasil] then
     Result := '';

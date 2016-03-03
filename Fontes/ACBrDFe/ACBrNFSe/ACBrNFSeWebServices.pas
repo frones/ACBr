@@ -1574,6 +1574,9 @@ begin
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
+  if (FProvedor = proThema) and (FNotasFiscais.Count < 4) then
+    FDadosEnvelope := StringReplace(FDadosEnvelope, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
     DefinirSignatureNode('');
@@ -1889,7 +1892,7 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if FProvedor in [proBHISS, proWebISS, proThema] then
+  if FProvedor in [proBHISS, proWebISS] then
   begin
     if FNotasFiscais.Count > 3 then
       GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +
@@ -1907,13 +1910,11 @@ begin
       proSimplISS:    TagGrupo := 'GerarNovaNfseEnvio';
       proEGoverneISS: TagGrupo := 'request';
       proSP:          TagGrupo := 'PedidoEnvioRPS';
-      proThema:       TagGrupo := 'EnviarLoteRpsEnvio';
     else
       TagGrupo := 'GerarNfseEnvio';
     end;
 
     case FProvedor of
-      proThema,
       proBHISS: TagElemento := 'LoteRps';
       proSP:    TagElemento := 'RPS';
     else

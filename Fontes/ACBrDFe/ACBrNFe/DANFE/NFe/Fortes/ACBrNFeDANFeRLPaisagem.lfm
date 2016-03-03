@@ -1,6 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 200
-  Top = 205
+  Left = 206
+  Top = 206
   Caption = 'frlDANFeRLPaisagem'
   inherited RLNFe: TRLReport
     Left = 0
@@ -4993,23 +4993,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         RealBounds.Height = 0
         Transparent = False
         AfterPrint = pnlDescricao1AfterPrint
-        object txtCodigo: TRLDBText
-          Left = 2
-          Height = 11
-          Top = 1
-          Width = 51
-          AutoSize = False
-          DataField = 'CODIGO'
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Arial'
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-          Transparent = False
-        end
         object LinhaProd2: TRLDraw
           Left = 54
           Height = 13
@@ -5083,6 +5066,24 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Angle = 90
           DrawKind = dkLine
           HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object txtCodigo: TRLDBMemo
+          Left = 2
+          Height = 11
+          Top = 1
+          Width = 51
+          AutoSize = False
+          Behavior = [beSiteExpander]
+          DataField = 'CODIGO'
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
           RealBounds.Width = 0

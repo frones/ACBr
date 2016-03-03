@@ -1,10 +1,10 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Left = 476
-  Top = 109
+  Top = 119
   Caption = 'frlDANFeRLRetrato'
   inherited RLNFe: TRLReport
     Left = 0
-    Top = 8
+    Top = 0
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -7401,7 +7401,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object txtCodigo: TRLDBText
+      object txtCodigo: TRLDBMemo
         Tag = 705
         Left = 2
         Height = 11

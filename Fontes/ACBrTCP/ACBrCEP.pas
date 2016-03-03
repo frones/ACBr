@@ -1415,14 +1415,14 @@ begin
       begin
         with fOwner.Enderecos.New do
         begin
-          CEP             := LerTagXML(Buffer, 'cep');
+          CEP             := LerTagXML(s, 'cep');
           Tipo_Logradouro := '';
-          Logradouro      := LerTagXML(Buffer, 'logradouro');
-          Complemento     := LerTagXML(Buffer, 'complemento');
-          Bairro          := LerTagXML(Buffer, 'bairro');
-          Municipio       := LerTagXML(Buffer, 'localidade');
-          UF              := LerTagXML(Buffer, 'uf');
-          IBGE_Municipio  := LerTagXML(Buffer, 'ibge');
+          Logradouro      := LerTagXML(s, 'logradouro');
+          Complemento     := LerTagXML(s, 'complemento');
+          Bairro          := LerTagXML(s, 'bairro');
+          Municipio       := LerTagXML(s, 'localidade');
+          UF              := LerTagXML(s, 'uf');
+          IBGE_Municipio  := LerTagXML(s, 'ibge');
         end;
       end;
     end;

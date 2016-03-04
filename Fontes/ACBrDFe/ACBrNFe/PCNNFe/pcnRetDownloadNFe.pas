@@ -189,7 +189,8 @@ function TRetDownloadNFe.LerXml: boolean;
 var
   ok: boolean;
   i: Integer;
-  StrAux, StrDecod, versao: String;
+  StrAux, versao: String;
+  StrDecod: AnsiString;
 
   function LerDataHora(ADataHora: String): TDateTime;
   begin

@@ -44,12 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-04/03/2016
+04/03/2016  (por: DSA)
 -- ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeWebService --
 [*] Ajustes para compilação após modificações em ACBrUtil
 [*] Modificações para compatibilização com FPC 3.0
 
-26/02/2016
+-- ACBrDFeWebService --
+[+] Adicionado o método protegido "AjustarOpcoes", para permitir que o XML
+    gerado pelo WebService, respeite RetirarAcentos e RetirarEspacos das Opções
+    do componente pai (TACBrDFe). Ex: AjustarOpcoes( InutNFe.Gerador.Opcoes );
+
+26/02/2016  (por: DSA)
 -- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
 [+] Adicionada a propriedade "CertRazaoSocial", para retornar a "Razão Social"
     do Certificado

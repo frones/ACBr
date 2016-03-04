@@ -44,7 +44,7 @@ uses Classes, SysUtils,
   {$IFNDEF NOGUI}
    {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
   {$ENDIF}
-  ACBrDFeConfiguracoes, ACBrDFe;
+  ACBrDFeConfiguracoes, ACBrDFe, pcnGerador;
 
 type
 
@@ -78,6 +78,7 @@ type
   protected
     procedure FazerLog(Msg: String; Exibir: Boolean = False); virtual;
     procedure GerarException(Msg: String; E: Exception = nil); virtual;
+    procedure AjustarOpcoes(AOpcoes: TGeradorOpcoes);
 
     procedure InicializarServico; virtual;
     procedure DefinirServicoEAction; virtual;
@@ -132,7 +133,8 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrDFeException, ACBrUtil, pcnGerador;
+  ACBrDFeUtil, ACBrDFeException, ACBrUtil,
+  pcnAuxiliar;
 
 { TDFeWebService }
 
@@ -443,6 +445,13 @@ end;
 procedure TDFeWebService.GerarException(Msg: String; E: Exception);
 begin
   FPDFeOwner.GerarException(Msg, E);
+end;
+
+procedure TDFeWebService.AjustarOpcoes(AOpcoes: TGeradorOpcoes);
+begin
+  AOpcoes.FormatoAlerta := FPDFeOwner.Configuracoes.Geral.FormatoAlerta;
+  AOpcoes.RetirarAcentos := FPDFeOwner.Configuracoes.Geral.RetirarAcentos;
+  pcnAuxiliar.TimeZoneConf.Assign( FPDFeOwner.Configuracoes.WebServices.TimeZoneConf );
 end;
 
 function TDFeWebService.GerarMsgErro(E: Exception): String;

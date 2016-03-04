@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2016  (por: DSA)
+-- ACBrNFeWebServices, pcnInutNFe --
+[-] Correção em "TNFeInutilizacao" e "TinutNFe", para permitir a geração de XMLs
+    com acentos
+[-] Modificado para que procedure TNFeInutilizacao.DefinirDadosMsg não modifique
+    o valor configurado em "Configuracoes.Geral.ModeloDF"
+
 03/03/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
 [*] Modificado para imprimir o codigo do produtos em varias linhas. 

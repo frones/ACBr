@@ -155,7 +155,9 @@ begin
   Gerador.wCampo(tcInt, 'DP13', 'nNFFin', 001, 009, 1, FnNFFin, DSC_NNFFIN);
   if FnNFIni > FnNFFin then
     Gerador.wAlerta('DP13', 'nNFFin', DSC_NNFFIN, ERR_MSG_FINAL_MENOR_INICIAL);
-  Gerador.wCampo(tcStr, 'CP14', 'xJust ', 015, 255, 1, FiltrarTextoXML(true, FxJust), DSC_XJUST);
+  Gerador.wCampo(tcStr, 'CP14', 'xJust ', 015, 255, 1,
+     FiltrarTextoXML( Gerador.Opcoes.RetirarEspacos, FxJust,
+                      Gerador.Opcoes.RetirarAcentos), DSC_XJUST);
   Gerador.wGrupo('/infInut');
   Gerador.wGrupo('/inutNFe');
 

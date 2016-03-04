@@ -2346,18 +2346,17 @@ begin
   OK := False;
   InutNFe := TinutNFe.Create;
   try
-    InutNFe.tpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
-    InutNFe.cUF := FPConfiguracoesNFe.WebServices.UFCodigo;
-    InutNFe.ano := FAno;
-    InutNFe.CNPJ := FCNPJ;
+    AjustarOpcoes( InutNFe.Gerador.Opcoes );
+
+    InutNFe.tpAmb  := FPConfiguracoesNFe.WebServices.Ambiente;
+    InutNFe.cUF    := FPConfiguracoesNFe.WebServices.UFCodigo;
+    InutNFe.ano    := FAno;
+    InutNFe.CNPJ   := FCNPJ;
     InutNFe.modelo := FModelo;
-    InutNFe.serie := FSerie;
+    InutNFe.serie  := FSerie;
     InutNFe.nNFIni := FNumeroInicial;
     InutNFe.nNFFin := FNumeroFinal;
-    InutNFe.xJust := FJustificativa;
-
-    FPConfiguracoesNFe.Geral.ModeloDF := StrToModeloDF(OK, IntToStr(InutNFe.modelo));
-
+    InutNFe.xJust  := FJustificativa;
     InutNFe.Versao := FPVersaoServico;
     InutNFe.GerarXML;
 

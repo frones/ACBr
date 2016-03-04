@@ -58,7 +58,7 @@ type
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     procedure WriteRegistro9001;
     procedure WriteRegistro9900;

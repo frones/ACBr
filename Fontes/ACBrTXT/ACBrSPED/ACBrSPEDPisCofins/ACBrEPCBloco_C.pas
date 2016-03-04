@@ -43,7 +43,7 @@ unit ACBrEPCBloco_C;
 interface
 
 uses
-  Contnrs, ACBrEPCBlocos;
+ Classes, Contnrs, ACBrEPCBlocos;
 
 type
   TRegistroC010List = class;

@@ -200,7 +200,7 @@ type
   public
     constructor Create(AOwner: TComponent); overload;
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroC001New: TRegistroC001;
     function RegistroC100New: TRegistroC100;

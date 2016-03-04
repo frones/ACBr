@@ -113,7 +113,7 @@ type
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroE001New: TRegistroE001;
     function RegistroE100New: TRegistroE100;

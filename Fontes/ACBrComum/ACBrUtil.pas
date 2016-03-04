@@ -40,9 +40,6 @@
  {$IFNDEF NOGUI}
   {$DEFINE USE_LCLIntf}
  {$ENDIF}
- {$IFNDEF MSWINDOWS}
-  {$DEFINE USE_LConvEncoding}
- {$ENDIF}
 {$ENDIF}
 
 unit ACBrUtil;
@@ -52,9 +49,7 @@ interface
 Uses SysUtils, Math, Classes, ACBrConsts, synautil
     {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
     {$IFDEF FPC}
-      ,dynlibs, zstream
-      {$IFNDEF NOGUI}, LazUTF8 {$ENDIF}
-      {$IFDEF USE_LConvEncoding} ,LConvEncoding {$ENDIF}
+      ,dynlibs, zstream, LazUTF8, LConvEncoding
       {$IFDEF USE_LCLIntf} ,LCLIntf {$ENDIF}
     {$ELSE}
       ,ACBrZLibExGZ
@@ -93,10 +88,25 @@ procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
 
 function ACBrStr( AString : AnsiString ) : String ;
 function ACBrStrToAnsi( AString : String ) : AnsiString ;
-function ACBrStrToUTF8( AString : String ) : AnsiString;
-function ACBrUTF8ToAnsi( UTF8String : AnsiString ) : AnsiString;
+
+function NativeStringToUTF8( AString : String ) : AnsiString;
+function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
+
+function NativeStringToAnsi( AString : String ) : AnsiString;
+function AnsiToNativeString( AAnsiString : AnsiString ) : String;
+
+function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
 function ACBrAnsiToUTF8( AAnsiString : AnsiString ) : AnsiString;
+
+{$IfDef FPC}
+function GetSysANSIencoding: String;
+{$EndIf}
+
 function AnsiChr( b: Byte) : AnsiChar;
+{$IfNDef HAS_CHARINSET}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
+{$EndIf}
 
 function TruncFix( X : Double ) : Integer ;
 function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
@@ -117,7 +127,6 @@ function LEStrToInt(ALEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
-
 
 function BinaryStringToString(const AString: AnsiString): AnsiString;
 function StringToBinaryString(const AString: AnsiString): AnsiString;
@@ -295,6 +304,10 @@ function UnZip(S: AnsiString): AnsiString; overload;
 
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
 
+{$IfDef FPC}
+var ACBrANSIEncoding: String;
+{$EndIf}
+
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
 var xOut32 : function (wAddr: word; bOut: byte): byte; stdcall;
@@ -333,47 +346,37 @@ end;
 
 {-----------------------------------------------------------------------------
   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
-  D5 a D2007, Porém D2009 e superiores usam Unicode, 
-   e Lazarus 0.9.27 e acima usam UTF8.
-  A função abaixo converte a "AString" de ANSI, para UNICODE ou UTF8, de acordo
-  com as diretivas do Compilador 
+  D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
+  usam UTF-8. A função abaixo converte a "AString" de ANSI CP1252, para UNICODE
+  ou UTF8, de acordo com as diretivas do Compilador
  -----------------------------------------------------------------------------}
 function ACBrStr( AString : AnsiString ) : String ;
 begin
 {$IFDEF UNICODE}
- {$IFDEF USE_LConvEncoding}
-   Result := CP1252ToUTF8( AString ) ;
- {$ELSE}
-   {$IFDEF FPC}
-     {$IFNDEF NOGUI}
-       Result := SysToUTF8( AString )
-     {$ELSE}
-       Result := AnsiToUtf8( AString ) ;
-     {$ENDIF}
-   {$ELSE}
+  {$IFDEF FPC}
+    Result := CP1252ToUTF8( AString ) ;
+  {$ELSE}
     Result := String(AString) ;
-   {$ENDIF}
- {$ENDIF}
+  {$ENDIF}
 {$ELSE}
   Result := AString
 {$ENDIF}
 end ;
 
 {-----------------------------------------------------------------------------
-  Converte a AString de UTF8 para ANSI nativo, apenas se o Compilador usar UNICODE
+   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
+  D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
+  usam UTF-8. A funçã abaixo, Converte a AString de UTF8 ou Unicode para a página
+  de código nativa do Sistema Operacional, (apenas se o Compilador usar UNICODE)
  -----------------------------------------------------------------------------}
 function ACBrStrToAnsi(AString: String): AnsiString;
 begin
 {$IFDEF UNICODE}
- {$IFDEF USE_LConvEncoding}
-   Result := UTF8ToCP1252( AString ) ;
- {$ELSE}
-   {$IFDEF FPC}
-    Result := Utf8ToAnsi( AString ) ;
-   {$ELSE}
+  {$IFDEF FPC}
+    Result := UTF8ToCP1252( AString ) ;
+  {$ELSE}
     Result := AnsiString( AString ) ;
-   {$ENDIF}
- {$ENDIF}
+  {$ENDIF}
 {$ELSE}
   Result := AString
 {$ENDIF}
@@ -383,47 +386,73 @@ end;
   Converte a AString nativa do Compilador, para UTF8, de acordo o suporte a
   UNICODE/UTF8 do Compilador
  -----------------------------------------------------------------------------}
-function ACBrStrToUTF8( AString : String ) : AnsiString;
+function NativeStringToUTF8( AString : String ) : AnsiString;
 {$IFNDEF FPC}
-{$IFDEF UNICODE}
-var
-  RBS: RawByteString;
-{$ENDIF}
+ {$IFDEF UNICODE}
+  var
+    RBS: RawByteString;
+ {$ENDIF}
 {$ENDIF}
 begin
-  {$IFNDEF FPC}
-   {$IFDEF UNICODE}
-    RBS := UTF8Encode(AString);
-    SetCodePage(RBS, 0, False);
-    Result := AnsiString(RBS);
-   {$ELSE}
-    Result := UTF8Encode(AString);
-   {$ENDIF}
+  {$IFDEF FPC}
+    Result := AString;  // FPC usa UTF8 de forma nativa
   {$ELSE}
-   Result := AString;
+    {$IFDEF UNICODE}
+      RBS := UTF8Encode(AString);
+      SetCodePage(RBS, 0, False);
+      Result := AnsiString(RBS);
+    {$ELSE}
+      Result := UTF8Encode(AString);
+    {$ENDIF}
   {$ENDIF}
+end;
+
+function UTF8ToNativeString(AUTF8String: AnsiString): String;
+begin
+  {$IfDef FPC}
+   Result := AUTF8String;  // FPC usa UTF8 de forma nativa
+  {$Else}
+   {$IfDef UNICODE}
+    {$IfDef DELPHI12_UP}  // delphi 2009 em diante
+     Result := UTF8ToString(AUTF8String);
+    {$Else}
+     Result := UTF8Decode(AUTF8String);
+    {$EndIf}
+   {$Else}
+    Result := Utf8ToAnsi(AUTF8String) ;
+   {$EndIf}
+  {$EndIf}
+end;
+
+function NativeStringToAnsi(AString: String): AnsiString;
+begin
+  {$IfDef FPC}
+    Result := ACBrUTF8ToAnsi(AString);
+  {$Else}
+    Result := AnsiString(AString);
+  {$EndIf}
+end;
+
+function AnsiToNativeString(AAnsiString: AnsiString): String;
+begin
+  {$IfDef FPC}
+    Result := ACBrAnsiToUTF8(AAnsiString);
+  {$Else}
+    Result := String(AAnsiString);
+  {$EndIf}
 end;
 
 {-----------------------------------------------------------------------------
   Converte uma String que está em UTF8 para ANSI, considerando as diferetes IDEs
   suportadas pelo ACBr
  -----------------------------------------------------------------------------}
-function ACBrUTF8ToAnsi( UTF8String : AnsiString ) : AnsiString;
+function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
 begin
-  Result := '';
-
-  {$IFNDEF FPC}
-   {$IFDEF UNICODE}
-    {$IFDEF DELPHI12_UP}  // delphi 2009 em diante
-      Result := UTF8ToString(UTF8String);
-    {$ELSE}
-      Result := UTF8Decode(UTF8String);
-    {$ENDIF}
-   {$ENDIF}
-  {$ENDIF}
-
-  if Result = '' then
-    Result := Utf8ToAnsi( UTF8String ) ;
+  {$IfNDef FPC}
+    Result := UTF8ToNativeString(AUTF8String);
+  {$Else}
+    Result := ConvertEncoding( AUTF8String, EncodingUTF8, ACBrANSIEncoding);
+  {$EndIf}
 end;
 
 {-----------------------------------------------------------------------------
@@ -432,11 +461,21 @@ end;
  -----------------------------------------------------------------------------}
 function ACBrAnsiToUTF8(AAnsiString: AnsiString): AnsiString;
 begin
-  Result := ACBrStrToUTF8(AAnsiString);
-  {$IfDef FPC}
-   Result := AnsiToUtf8( Result ) ;
+  {$IfNDef FPC}
+    Result := NativeStringToUTF8(AAnsiString);
+  {$Else}
+    Result := ConvertEncoding( AAnsiString, ACBrANSIEncoding, EncodingUTF8 );
   {$EndIf}
 end;
+
+{$IfDef FPC}
+function GetSysANSIencoding: String;
+begin
+  Result := {$IfDef NOGUI}GetConsoleTextEncoding{$Else}GetDefaultTextEncoding{$EndIf};
+  if Result = EncodingUTF8 then
+    Result := 'cp1252';  // Usando página de código ANSI padrão para o Brasil
+end;
+{$EndIf}
 
 {-----------------------------------------------------------------------------
  Faz o mesmo que o comando chr(), porém retorna um AnsiChar ao invés de Char
@@ -447,6 +486,18 @@ function AnsiChr(b: Byte): AnsiChar;
 begin
   Result := AnsiChar(chr(b));
 end;
+
+{$IfNDef HAS_CHARINSET}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+begin
+  Result := C in CharSet;
+end;
+
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean;
+begin
+  Result := (C < #$0100) and (AnsiChar(C) in CharSet);
+end;
+{$EndIf}
 
 {-----------------------------------------------------------------------------
  Corrige, bug da função Trunc.
@@ -1243,7 +1294,8 @@ begin
    Result.ShortTimeFormat           := ShortTimeFormat;
    Result.LongTimeFormat            := LongTimeFormat;
    Result.TwoDigitYearCenturyWindow := TwoDigitYearCenturyWindow;
-   Result.ListSeparator             := ListSeparator;  {$ENDIF}
+   Result.ListSeparator             := ListSeparator;
+  {$ENDIF}
 end;
 {$ENDIF}
 
@@ -1606,7 +1658,7 @@ end;
  ---------------------------------------------------------------------------- }
 function CharIsAlpha(const C: Char): Boolean;
 begin
-  Result := ( C in ['A'..'Z','a'..'z'] ) ;
+  Result := CharInSet( C, ['A'..'Z','a'..'z'] ) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1615,7 +1667,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function CharIsNum(const C: Char): Boolean;
 begin
-  Result := ( C in ['0'..'9'] ) ;
+  Result := CharInSet( C, ['0'..'9'] ) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1632,7 +1684,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function CharIsHexa(const C: Char): Boolean;
 begin
-  Result := ( C in ['0'..'9','A'..'F','a'..'f'] ) ;
+  Result := CharInSet( C, ['0'..'9','A'..'F','a'..'f'] ) ;
 end;
 
 {-----------------------------------------------------------------------------
@@ -1694,7 +1746,7 @@ begin
   LenValue := Length( AValue ) ;
   For I := 1 to LenValue do
   begin
-     if AValue[I] in SetOfChars then
+     if CharInSet( AValue[I], SetOfChars) then
         Result := Result + AValue[I];
   end;
 end;
@@ -1824,7 +1876,7 @@ begin
   For A := 1 to Length( AnsiStr ) do
   begin
      Letra := TiraAcento( AnsiStr[A] ) ;
-     if not (Letra in [#32..#126,#13,#10,#8]) then    {Letras / numeros / pontos / sinais}
+     if not CharInSet(Letra, [#32..#126,#13,#10,#8]) then    {Letras / numeros / pontos / sinais}
         Letra := ' ' ;
      Ret := Ret + Letra ;
   end ;
@@ -1946,11 +1998,11 @@ begin
 
        if Tamanho > PosFim then  // Ainda tem proxima linha ?
        begin
-          if (AnsiStr[PosFim+1] in [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
+          if CharInSet(AnsiStr[PosFim+1], [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
              Inc(PosFim)
           else
           begin
-            while (not (AnsiStr[PosFim] in [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
+            while (not CharInSet(AnsiStr[PosFim], [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
               Dec(PosFim) ;
           end;
        end;
@@ -1967,7 +2019,7 @@ begin
 
        // Pula CaracterQuebrar no Inicio da String
        if (PosIni <= Tamanho) then
-          while (AnsiStr[PosIni] in [CaracterQuebrar, LF]) and (PosIni <= Tamanho) do
+          while CharInSet(AnsiStr[PosIni], [CaracterQuebrar, LF]) and (PosIni <= Tamanho) do
              Inc(PosIni) ;
 
     until (PosIni > Tamanho);
@@ -2988,7 +3040,7 @@ begin
   Count := 0;
   for i := 1 to Length(str) do
   begin
-    if not (str[i] in InvalidChars) then
+    if not CharInSet(str[i], InvalidChars) then
     begin
       inc(Count);
       Result[Count] := str[i];
@@ -3048,7 +3100,7 @@ end;
 http://www.experts-exchange.com/Programming/Languages/Pascal/Delphi/Q_10147769.html
  ------------------------------------------------------------------------------}
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
-{$IFDEF USE_LConvEncoding}
+{$IfNDef MSWINDOWS}
  Var
    AnsiStr : AnsiString ;
    UTF8Str : String ;
@@ -3227,27 +3279,10 @@ end ;
 function DecodeToString(const ABinaryString: AnsiString; const StrIsUTF8: Boolean
   ): String;
 begin
-  Result := '';
-
-  {$IFDEF UNICODE}
-   if not StrIsUTF8 then
-     Result := ACBrStr( ABinaryString )
-   else
-     {$IFNDEF FPC}
-      {$IFDEF DELPHI12_UP}  // delphi 2009 em diante
-       Result := UTF8ToString(ABinaryString);
-      {$ELSE}
-       Result := UTF8Decode(ABinaryString);
-      {$ENDIF}
-     {$ENDIF} ;
-
-  {$ELSE}
-   if StrIsUTF8 then
-     Result := Utf8ToAnsi( ABinaryString ) ;
-  {$ENDIF}
-
-  if Result = '' then
-    Result := String(ABinaryString);
+  if StrIsUTF8 then
+    Result := UTF8ToNativeString(ABinaryString)
+  else
+    Result := AnsiToNativeString(ABinaryString);
 end;
 
 function SeparaDados(const AString: String; const Chave: String;
@@ -3415,7 +3450,7 @@ var
 begin
   if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
   begin
-    UTF8Str := ACBrStrToUTF8(AXML);
+    UTF8Str := NativeStringToUTF8(AXML);
     Result := '<?xml version="1.0" encoding="UTF-8"?>' + String(UTF8Str);
   end
   else
@@ -3524,13 +3559,17 @@ end;
 {$ENDIF}
 
 initialization
-{$IFDEF MSWINDOWS}
+{$IfDef MSWINDOWS}
   InpOutLoaded := False;
   BlockInputLoaded := False;
   xInp32 := Nil;
   xOut32 := Nil;
   xBlockInput := Nil;
-{$ENDIF}
+{$EndIf}
   Randomized := False ;
+{$IfDef FPC}
+ACBrANSIEncoding := GetSysANSIencoding;
+{$EndIf}
+
 end.
 

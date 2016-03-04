@@ -70,6 +70,20 @@
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}
   {$H+}
+
+  {$UnDef FPC3}
+  {$UnDef FPC2}
+  {$IFDEF VER2}
+   {$DEFINE FPC2}
+  {$EndIf}
+  {$IFDEF VER3}
+   {$DEFINE FPC3}
+  {$ENDIF}
+  {$IFDEF FPC3}
+   {$DEFINE HAS_CHARINSET}
+   {$UnDef FPC2}
+  {$ENDIF}
+
 {$ELSE}
   {$DEFINE BORLAND}
 {$ENDIF}
@@ -88,6 +102,9 @@
 //------------------------------------------------------------------------------
 {$I ACBr_jedi.inc}
 
+{$IFDEF DELPHI12_UP}
+  {$DEFINE HAS_CHARINSET}
+{$ENDIF}
 {$IFDEF DELPHI15_UP}
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/03/16 ver. 0.0.182a
+-- ACBrBancoItau --
+[-] Ajuste contador registros remessa CNAB240.(valramosr)
+http://www.projetoacbr.com.br/forum/topic/28290-problema-homoliga%C3%A7ao-remessa-ita%C3%BA/
+
+
 Data: 29/02/16 ver. 0.0.181a
 -- ACBrBancoBrasil --
 [-] Ajuste tipo ocorrência remessa CNAB400.(Jacinto Junior)

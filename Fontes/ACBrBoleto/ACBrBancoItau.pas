@@ -294,7 +294,7 @@ begin
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
                '3'                                                        + //8 - Tipo do registro: Registro detalhe
-               IntToStrZero(ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+ 1 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero(2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+ 1 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'P'                                                        + //14 - Código do segmento do registro detalhe
                ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + //16 a 17 - Código de movimento
@@ -363,7 +363,7 @@ begin
                IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
                '0001'                                                     + //Número do lote
                '3'                                                        + //Tipo do registro: Registro detalhe
-               IntToStrZero((ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 1 ,5) + //Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero((2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+1)+ 1 ,5) + //Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'Q'                                                        + //Código do segmento do registro detalhe
                ' '                                                        + //Uso exclusivo FEBRABAN/CNAB: Branco
                '01'                                                       + // 16 a 17

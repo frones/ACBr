@@ -294,7 +294,7 @@ begin
   valid_ctxt := Nil;
 
   try
-    AXml := ACBrStrToUTF8(ConteudoXML);
+    AXml := NativeStringToUTF8(ConteudoXML);
     doc := xmlParseDoc(PAnsiChar(AXml));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
@@ -390,7 +390,7 @@ begin
                   (pos('<X509Certificate>', ConteudoXML) + 17));
 
   DTD  := StringReplace(cDTD, '&infElement&', infElement, []);
-  AXml := ACBrStrToUTF8(InserirDTD(ConteudoXML, DTD));
+  AXml := NativeStringToUTF8(InserirDTD(ConteudoXML, DTD));
 
   doc := nil;
   node := nil;

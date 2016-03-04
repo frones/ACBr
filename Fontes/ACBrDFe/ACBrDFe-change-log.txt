@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2016
+-- ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeWebService --
+[*] Ajustes para compilação após modificações em ACBrUtil
+[*] Modificações para compatibilização com FPC 3.0
+
 26/02/2016
 -- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
 [+] Adicionada a propriedade "CertRazaoSocial", para retornar a "Razão Social"

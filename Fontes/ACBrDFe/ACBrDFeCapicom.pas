@@ -532,8 +532,12 @@ begin
   try
     CarregarCertificadoSeNecessario;
 
-    // IXMLDOMDocument3 não lê corretamente arquivo em UTF8 //
-    AXml   := ACBrUTF8ToAnsi(ConteudoXML);
+    // IXMLDOMDocument3 deve usar a String Nativa da IDE //
+    {$IfDef FPC2}
+     AXml := ACBrUTF8ToAnsi(ConteudoXML);
+    {$Else}
+     AXml := UTF8ToNativeString(ConteudoXML);
+    {$EndIf}
     XmlAss := '';
 
     // Usa valores default, se não foram informados //
@@ -584,7 +588,11 @@ begin
       //xmldoc.save('c:\temp\ass.xml');
 
       // Convertendo novamente para UTF8
-      XmlAss := ACBrAnsiToUTF8( xmldoc.xml );
+      {$IfDef FPC2}
+       XmlAss := ACBrAnsiToUTF8( xmldoc.xml );
+      {$Else}
+       XmlAss := NativeStringToUTF8( xmldoc.xml );
+      {$EndIf}
       XmlAss := AjustarXMLAssinado(XmlAss);
     finally
       dsigKey := nil;
@@ -650,7 +658,7 @@ var
   ParseError: IXMLDOMParseError;
   Schema: XMLSchemaCache;
   Inicializado: Boolean;
-  AXml: AnsiString;
+  AXml: String;
 begin
 
   Inicializado := (CoInitialize(nil) in [ S_OK, S_FALSE ]);
@@ -664,8 +672,12 @@ begin
       DOMDocument.resolveExternals := False;
       DOMDocument.validateOnParse := True;
 
-      // Carregando o AXml em XMLDOC, IXMLDOMDocument2 não lê corretamente arquivo em UTF8 //
-      AXml := ACBrStrToAnsi(ConteudoXML);
+      // Carregando ConteudoXML em XMLDOC. Nota: IXMLDOMDocument2 deve usar a String Nativa da IDE //
+      {$IfDef FPC2}
+       AXml := ACBrUTF8ToAnsi(ConteudoXML);
+      {$Else}
+       AXml := ConteudoXML;
+      {$EndIf}
       if (not DOMDocument.loadXML(AXml)) then
       begin
         ParseError := DOMDocument.parseError;
@@ -703,7 +715,7 @@ var
   xmldsig: IXMLDigitalSignature;
   pKeyInfo: IXMLDOMNode;
   pKey, pKeyOut: IXMLDSigKey;
-  AXml: AnsiString;
+  AXml: String;
 begin
   CarregarCertificadoSeNecessario;
 
@@ -717,8 +729,12 @@ begin
     xmldoc.validateOnParse := False;
     xmldoc.preserveWhiteSpace := True;
 
-    // Carregando o AXml em XMLDOC, IXMLDOMDocument2 não lê corretamente arquivo em UTF8 //
-    AXml := ACBrStrToAnsi(ConteudoXML);
+    // Carregando ConteudoXML em XMLDOC. Nota: IXMLDOMDocument2 deve usar a String Nativa da IDE //
+    {$IfDef FPC2}
+     AXml := ACBrUTF8ToAnsi(ConteudoXML);
+    {$Else}
+     AXml := ConteudoXML;
+    {$EndIf}
     if (not xmldoc.loadXML(AXml)) then
     begin
       MsgErro := 'Não foi possível carregar o arquivo.';

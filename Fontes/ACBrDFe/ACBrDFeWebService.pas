@@ -471,7 +471,7 @@ begin
     de "EnviarDados", após o tratamento de ParseText..
     Convertendo para UTF8 novamente, se no inicio do XML contiver tag de UTF8 }
   if XmlEhUTF8(FPRetornoWS) then
-    Result := ACBrStrToUTF8(FPRetornoWS)
+    Result := NativeStringToUTF8(FPRetornoWS)
   else
     Result := FPRetornoWS;
 end;
@@ -481,7 +481,7 @@ begin
   { FPRetornoWS e FPRetWS, foram convertidos de UTF8 para a String nativa da IDE
     Convertendo para UTF8 novamente, se no inicio do XML contiver tag de UTF8 }
   if XmlEhUTF8(FPRetWS) then
-    Result := ACBrStrToUTF8(FPRetWS)
+    Result := NativeStringToUTF8(FPRetWS)
   else
     Result := FPRetWS;
 end;

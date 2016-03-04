@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils,
   {$ifdef FPC}
-  fpcunit, testutils, testregistry
+  fpcunit, testutils, testregistry, LConvEncoding
   {$else}
     TestFramework
   {$endif};
@@ -103,6 +103,10 @@ type
     procedure ExpressaoDblDuasCasasDecimais;
     procedure TestesEstouro;
     procedure ValoresNegativos;
+    procedure DoctoABNTRegra2_1;
+    procedure DoctoABNTRegra2_2;
+    procedure DoctoABNTRegra2_3;
+    procedure DoctoABNTRegra2_4;
   end;
 
   { padRightTest }
@@ -2113,6 +2117,27 @@ begin
   CheckEquals( AVal, RoundABNT(AVal, -2) );
 end;
 
+procedure RoundABNTTest.DoctoABNTRegra2_1;
+begin
+  CheckEquals( 1.3, RoundABNT(1.3333, 1) );
+end;
+
+procedure RoundABNTTest.DoctoABNTRegra2_2;
+begin
+  CheckEquals( 1.7, RoundABNT(1.6666, 1) );
+  CheckEquals( 4.9, RoundABNT(4.8505, 1) );
+end;
+
+procedure RoundABNTTest.DoctoABNTRegra2_3;
+begin
+  CheckEquals( 4.6, RoundABNT(4.5500, 1) );
+end;
+
+procedure RoundABNTTest.DoctoABNTRegra2_4;
+begin
+  CheckEquals( 4.8, RoundABNT(4.8500, 1) );
+end;
+
 { TruncFixTest }
 
 procedure TruncFixTest.AsExpression;
@@ -2164,11 +2189,11 @@ procedure ACBrStrToAnsiTest.ACBrStrToAnsi_TesteUTF8;
 Var
   UTF8Str : AnsiString;
 begin
-  {$IFDEF UNICODE}
-  UTF8Str := UTF8Encode('аимсз');  // Nota: essa Unit usa CP1252
-  {$ELSE}
-  UTF8Str := 'аимсз'; 
-  {$ENDIF}
+  {$IfDef FPC}
+  UTF8Str := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
+  {$Else}
+  UTF8Str := UTF8Encode('аимсз');
+  {$EndIf}
 
   CheckEquals( 'аимсз', ACBrStrToAnsi(UTF8Str) );
 end;
@@ -2184,7 +2209,12 @@ procedure DecodeToStringTest.DecodeToString_TesteUTF8;
 Var
   UTF8Str : AnsiString;
 begin
-  UTF8Str := UTF8Encode('аимсз');  // Nota: essa Unit usa CP1252
+  {$IfDef FPC}
+  UTF8Str := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
+  {$Else}
+  UTF8Str := UTF8Encode('аимсз');
+  {$EndIf}
+
   CheckEquals(ACBrStr('аимсз'), DecodeToString(UTF8Str, True));
 end;
 

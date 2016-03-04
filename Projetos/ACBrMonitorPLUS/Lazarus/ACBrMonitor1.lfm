@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.0.4'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -1448,10 +1448,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 341
         Top = 18
         Width = 628
-        ActivePage = tsDFe
+        ActivePage = tsEmail
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 13
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -5793,17 +5793,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsEmail: TTabSheet
           Caption = 'E-mail'
           ClientHeight = 311
-          ClientWidth = 623
+          ClientWidth = 620
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 7
             Height = 326
             Top = 8
-            Width = 623
+            Width = 620
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
             ClientHeight = 304
-            ClientWidth = 619
+            ClientWidth = 616
             TabOrder = 0
             object Label33: TLabel
               Left = 19
@@ -5835,7 +5835,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 32
-              Width = 351
+              Width = 348
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -5884,7 +5884,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 89
-              Width = 240
+              Width = 237
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 3
             end
@@ -5969,7 +5969,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 10
               Top = 179
-              Width = 619
+              Width = 616
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
@@ -5977,7 +5977,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
-              Left = 499
+              Left = 496
               Height = 25
               Top = 88
               Width = 100
@@ -6099,13 +6099,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
-              Left = 499
+              Left = 496
               Height = 17
               Top = 70
               Width = 68
               Anchors = [akTop, akRight]
               Caption = 'Codificação'
               ParentColor = False
+            end
+            object cbEmailConfirmation: TCheckBox
+              Left = 19
+              Height = 21
+              Top = 200
+              Width = 148
+              Caption = 'Confirmação de Email'
+              TabOrder = 11
             end
           end
         end
@@ -11304,7 +11312,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

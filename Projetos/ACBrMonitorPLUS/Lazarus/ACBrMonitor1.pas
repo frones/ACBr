@@ -254,6 +254,7 @@ type
     chbTCPANSI: TCheckBox;
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
+    cbEmailConfirmation: TCheckBox;
     edTimeZoneStr: TEdit;
     edtTimeoutWebServices: TSpinEdit;
     GroupBox10: TGroupBox;
@@ -1775,6 +1776,7 @@ begin
     Port := Teste;
     SetSSL := cbEmailSsl.Checked;
     SetTLS := cbEmailTls.Checked;
+    ReadingConfirmation := cbEmailConfirmation.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
 
@@ -3335,6 +3337,7 @@ begin
     edEmailSenha.Text := LeINICrypt(Ini, 'EMAIL', 'Senha', _C);
     cbEmailSsl.Checked := Ini.ReadBool('EMAIL', 'ExigeSSL', False);
     cbEmailTls.Checked := Ini.ReadBool('EMAIL', 'ExigeTLS', False);
+    cbEmailConfirmation.Checked := Ini.ReadBool('EMAIL', 'Confirmacao', False);
     cbEmailCodificacao.Text := Ini.ReadString('EMAIL', 'Codificacao', '');
 
     {Parametro Sedex}
@@ -3937,6 +3940,7 @@ begin
     Password := edEmailSenha.Text;
     SetSSL := cbEmailSsl.Checked;
     SetTLS := cbEmailTls.Checked;
+    ReadingConfirmation := cbEmailConfirmation.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
   end;
@@ -4281,6 +4285,7 @@ begin
     Ini.WriteInteger('EMAIL', 'Porta', edEmailPorta.Value);
     Ini.WriteBool('EMAIL', 'ExigeSSL', cbEmailSsl.Checked);
     Ini.WriteBool('EMAIL', 'ExigeTLS', cbEmailTls.Checked);
+    Ini.WriteBool('EMAIL', 'Confirmacao',  cbEmailConfirmation.Checked);
     Ini.WriteString('EMAIL', 'Codificacao', cbEmailCodificacao.Text);
 
     { Parametros Sedex }

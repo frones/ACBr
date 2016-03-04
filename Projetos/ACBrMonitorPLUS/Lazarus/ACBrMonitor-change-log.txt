@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/03/2016
+[+] MAIL: Adicionada configuração para Confirmação de leitura de Email
+
 29/02/2016
 [-] Acerto para substituir as variáveis do email também no botão de teste de envio de NFe.
 

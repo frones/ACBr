@@ -75,6 +75,7 @@ type
     frxPercurso: TfrxDBDataset;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
+    procedure DataModuleCreate(Sender: TObject);
   private
     FDAMDFEClassOwner: TACBrMDFeDAMDFeClass;
     FMDFe            : TMDFe;
@@ -387,9 +388,13 @@ constructor TDMACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
 begin
   inherited;
   FDAMDFEClassOwner := TACBrMDFeDAMDFeClass(AOwner);
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.DataModuleCreate(Sender: TObject);
+begin
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];	
+    pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick,
+    pbNoClose, pbNoFullScreen, pbNoEmail ];
 end;
 
 procedure TDMACBrMDFeDAMDFEFR.frxReportGetValue(const VarName: string; var Value: Variant);

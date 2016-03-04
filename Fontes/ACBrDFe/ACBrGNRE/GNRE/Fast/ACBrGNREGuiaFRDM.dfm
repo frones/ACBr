@@ -1,8 +1,8 @@
 object dmACBrGNREFR: TdmACBrGNREFR
   OldCreateOrder = False
-  Left = 296
-  Height = 525
-  Width = 848
+  OnCreate = DataModuleCreate
+  Height = 260
+  Width = 689
   object frxPDFExport: TfrxPDFExport
     UseFileCache = True
     ShowProgress = True
@@ -22,6 +22,7 @@ object dmACBrGNREFR: TdmACBrGNREFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    CheckboxAsShape = False
     Left = 48
     Top = 92
   end

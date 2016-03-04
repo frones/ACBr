@@ -61,6 +61,7 @@ type
     frxBarCodeObject: TfrxBarCodeObject;
     frxReport: TfrxReport;
     constructor Create(AOwner: TComponent); override;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
     FGNREGuiaClassOwner: TACBrGNREGuiaClass;
@@ -314,9 +315,13 @@ constructor TdmACBrGNREFR.Create(AOwner: TComponent);
 begin
   inherited;
   FGNREGuiaClassOwner := TACBrGNREGuiaClass(AOwner);
+end;
+
+procedure TdmACBrGNREFR.DataModuleCreate(Sender: TObject);
+begin
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
     pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];		
+    pbNoClose, pbNoFullScreen, pbNoEmail ];
 end;
 
 end.

@@ -1,5 +1,6 @@
 object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Height = 382
   Width = 545
   object frxReport: TfrxReport
@@ -38,6 +39,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
+    CheckboxAsShape = False
     Left = 48
     Top = 92
   end

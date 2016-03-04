@@ -38,6 +38,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/03/2016
+-- ACBr.inc --
+[*] Adicionada verificação para saber se está usando FPC 3.0.0 ou superior
+[*] Adicionada verificação para saber se o compilador tem o método "CharInSet"
+
+-- ACBrUtil --
+[*] Lazarus, usando "LConvEncoding" por default
+[*] Método "ACBrStrToUTF8" renomeado para "NativeStringToUTF8"
+[+] Adicionado os métodos:
+    function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
+    function NativeStringToAnsi( AString : String ) : AnsiString;
+    function AnsiToNativeString( AAnsiString : AnsiString ) : String;
+[*] Simplificação dos métodos "ACBrStr" e "ACBrStrToAnsi", para Lazarus
+[+] Adicionado o método "CharInSet" se não estiver definido HAS_CHARINSET
+
+
 Data: 26/02/2016
 -- ACBrConsts --
 [+] Adicionadas constantes para manipulação de Encoding UTF8

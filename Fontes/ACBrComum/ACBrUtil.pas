@@ -617,8 +617,8 @@ begin
     exit ;
 
   Niveis := max( CountStr(VersionStr1, Delimiter), CountStr(VersionStr2, Delimiter) ) ;
-  P1I := 1; P1F := 0 ;
-  P2I := 1; P2F := 0 ;
+  P1I := 1;
+  P2I := 1;
 
   I := Niveis;
   while I >= 0 do
@@ -3031,8 +3031,6 @@ begin
 end;
 
 function TiraPontos(Str: string): string;
-const
-  InvalidChars : Set of Char = [ '/',',','-','.',')','(',' ' ];
 var
   i, Count: Integer;
 begin
@@ -3040,7 +3038,7 @@ begin
   Count := 0;
   for i := 1 to Length(str) do
   begin
-    if not CharInSet(str[i], InvalidChars) then
+    if not CharInSet(str[i], [ '/',',','-','.',')','(',' ' ]) then
     begin
       inc(Count);
       Result[Count] := str[i];
@@ -3293,7 +3291,6 @@ var
 begin
   UTexto := AnsiUpperCase(AString);
   UChave := AnsiUpperCase(Chave);
-  PosIni := 0;
   PosFim := 0;
 
   if MantemChave then
@@ -3395,6 +3392,7 @@ begin
     AStr := StringReplace(AStr, '>', '&gt;'  , [rfReplaceAll]);
     AStr := StringReplace(AStr, '"', '&quot;', [rfReplaceAll]);
     AStr := StringReplace(AStr, #39, '&#39;' , [rfReplaceAll]);
+    AStr := StringReplace(AStr, '''','&apos;', [rfReplaceAll]);
   end;
 
   Result := AStr;
@@ -3505,7 +3503,7 @@ begin
           {$ELSE}
           Inc(P);
           {$ENDIF}
-        until not ((P^ in [#1..' ']));
+        until not (CharInSet(P^, [#1..' ']));
       end;
     end;
   finally

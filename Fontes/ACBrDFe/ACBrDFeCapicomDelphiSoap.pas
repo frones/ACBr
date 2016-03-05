@@ -61,7 +61,7 @@ type
     procedure Executar(const ConteudoXML: String; Resp: TStream); override;
 
   public
-    constructor Create(ADFeSSL: TDFeSSL);
+    constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
   end;
 

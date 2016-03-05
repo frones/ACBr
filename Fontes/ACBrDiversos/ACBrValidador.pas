@@ -207,6 +207,7 @@ function FormatarDocumento( const TipoDocto : TACBrValTipoDocto;
   const Documento : String) : String ;
 
 function Modulo11(const Documento: string; const Peso: Integer = 2; const Base: Integer = 9): String;
+function MascaraIE(AValue : String; UF : String) : String;
 
 implementation
 uses
@@ -385,15 +386,11 @@ begin
  Result := Copy(S, 1, 3) + '-' + Copy(S, 4, 4);
 end;
 
-function FormatarIE(const AValue: String; UF: String): String;
-Var
-  Mascara : String ;
-  LenDoc : Integer;
-Begin
-  Result := AValue ;
-  if UpperCase( Trim(AValue) ) = 'ISENTO' then
-     exit ;
-
+function MascaraIE(AValue : String; UF : String) : String;
+var
+ LenDoc : Integer;
+ Mascara : String;
+begin
   UF      := UpperCase( UF ) ;
   LenDoc  := Length( AValue ) ;
   Mascara := StringOfChar('*', LenDoc) ;
@@ -426,6 +423,19 @@ Begin
   IF UF = 'SE' Then Mascara := '**.***.***-*';
   IF UF = 'TO' Then Mascara := IfThen((LenDoc=11),'**.**.******-*','**.***.***-*');
 
+  Result := Mascara;
+
+end;
+
+function FormatarIE(const AValue: String; UF: String): String;
+Var
+  Mascara : String ;
+Begin
+  Result := AValue ;
+  if UpperCase( Trim(AValue) ) = 'ISENTO' then
+     exit ;
+
+  Mascara := MascaraIE( AValue, UF);
   Result := FormatarMascaraNumerica( AValue, Mascara);
 end;
 
@@ -819,7 +829,7 @@ begin
     exit;
 
   // Não pode começar ou terminar com @ ou ponto
-  if (Documento[1] in ['@', '.']) or (Documento[Length(Documento)] in ['@', '.']) then
+  if CharInSet(Documento[1], ['@', '.']) or CharInSet(Documento[Length(Documento)], ['@', '.']) then
     exit;
 
   // O @ e o ponto não podem estar juntos

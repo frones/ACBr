@@ -963,7 +963,7 @@ begin
   if (Length(AValue) <> 6) then
     raise Exception.Create('Tamanho de TimeZone deve ser 6. Ex: -03:00');
 
-  if not (AValue[1] in ['-','+']) then
+  if not CharInSet(AValue[1], ['-','+']) then
     raise Exception.Create('Primeiro caractere deve ser "+,-". Ex: -03:00');
 
   if not (AValue[4] = ':') then

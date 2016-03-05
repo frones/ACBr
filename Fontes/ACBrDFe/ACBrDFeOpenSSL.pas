@@ -393,9 +393,7 @@ begin
   AXml := NativeStringToUTF8(InserirDTD(ConteudoXML, DTD));
 
   doc := nil;
-  node := nil;
   dsigCtx := nil;
-  mngr := nil;
 
   MS := TMemoryStream.Create;
   try

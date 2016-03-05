@@ -179,7 +179,7 @@ type
   public
     constructor Create ;          /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroC001New: TRegistroC001;
     function RegistroC010New: TRegistroC010;

@@ -1153,7 +1153,7 @@ begin
 
   S := GetValue(Linha,'PARITY') ;
   if S <> '' then
-    if S[1] in ['O','E','M','S','N'] then
+    if CharInSet(S[1], ['O','E','M','S','N']) then
       fsParity := S[1] ;
 
   Data := StrToIntDef(GetValue(Linha,'DATA'),Data) ;

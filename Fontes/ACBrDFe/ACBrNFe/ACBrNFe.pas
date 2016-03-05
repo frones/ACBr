@@ -127,7 +127,7 @@ type
 
     function Enviar(ALote: String; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
-    function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
+    function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
     function Consultar( AChave: String = ''): Boolean;
     function EnviarCartaCorrecao(idLote: integer): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
@@ -562,7 +562,7 @@ begin
   end;
 end;
 
-function TACBrNFe.Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
+function TACBrNFe.Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
 var
   i: integer;
 begin

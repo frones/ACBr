@@ -2119,23 +2119,23 @@ end;
 
 procedure RoundABNTTest.DoctoABNTRegra2_1;
 begin
-  CheckEquals( 1.3, RoundABNT(1.3333, 1) );
+  CheckEquals( 1.3, RoundABNT(1.3333, 1), 0.00001 );
 end;
 
 procedure RoundABNTTest.DoctoABNTRegra2_2;
 begin
-  CheckEquals( 1.7, RoundABNT(1.6666, 1) );
-  CheckEquals( 4.9, RoundABNT(4.8505, 1) );
+  CheckEquals( 1.7, RoundABNT(1.6666, 1), 0.00001 );
+  CheckEquals( 4.9, RoundABNT(4.8505, 1), 0.00001 );
 end;
 
 procedure RoundABNTTest.DoctoABNTRegra2_3;
 begin
-  CheckEquals( 4.6, RoundABNT(4.5500, 1) );
+  CheckEquals( 4.6, RoundABNT(4.5500, 1), 0.00001 );
 end;
 
 procedure RoundABNTTest.DoctoABNTRegra2_4;
 begin
-  CheckEquals( 4.8, RoundABNT(4.8500, 1) );
+  CheckEquals( 4.8, RoundABNT(4.8500, 1), 0.00001 );
 end;
 
 { TruncFixTest }
@@ -3187,6 +3187,7 @@ begin
 end;
 
 initialization
+  RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', DecodeToStringTest{$ifndef FPC}.Suite{$endif});

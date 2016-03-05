@@ -37,7 +37,7 @@ unit ACBrBancoItau;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Contnrs,
   ACBrBoleto;
 
 type

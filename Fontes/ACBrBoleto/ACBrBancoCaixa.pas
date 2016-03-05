@@ -40,7 +40,7 @@ unit ACBrBancoCaixa;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, SysUtils, Contnrs, ACBrBoleto;
 
 type
 

@@ -38,7 +38,7 @@ unit ACBrBancoSantander;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Contnrs,
   ACBrBoleto;
 
 type

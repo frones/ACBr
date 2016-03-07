@@ -247,7 +247,9 @@ begin
           InfSit.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
           InfSit.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
 
-          if trim(InfSit.FMsgRetorno[i].FCodigo) <> '' then
+          // Provedor Thema: E92 = Lote em Processamento
+          if (trim(InfSit.FMsgRetorno[i].FCodigo) <> '') and
+             (trim(InfSit.FMsgRetorno[i].FCodigo) <> 'E92') then
             InfSit.FSituacao := 'Erro';
 
           inc(i);

@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2016
+-- pnfsConsSitLoteRpsResposta  --
+[*] No Provedor Thema alem de retornar a situação do lote retorna também uma
+    mensagem, isso estava fazendo com que o componente interpretasse como um
+    erro e abortava o processo. Se o código da mensagem for E92 não será tratado
+    com um erro.
+    Por: Italo Jurisato Junior
+
 03/03/2016
 -- ACBrNFSe / ACBrNFSeWebServices / pnfsNFSeG  --
 [*] Realizado uma alteração visando alterar o nome da TAG: recepcionarLoteRps para

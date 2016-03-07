@@ -62,6 +62,9 @@ Símbolo : Significado
 
 -- ACBrNFSe --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings (por: DSA)
+
+-- ACBrNFSeNotasFiscais --
+
 	
 03/03/2016
 -- ACBrNFSe / ACBrNFSeWebServices / pnfsNFSeG  --

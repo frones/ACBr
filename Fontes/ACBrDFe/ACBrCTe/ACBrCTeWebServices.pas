@@ -696,7 +696,7 @@ begin
 
   CTeRetorno := TRetConsStatServ.Create;
   try
-    CTeRetorno.Leitor.Arquivo := FPRetWS;
+    CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     CTeRetorno.LerXml;
 
     Fversao := CTeRetorno.versao;
@@ -879,7 +879,7 @@ function TCTeRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoLoteResult');
 
-  FCTeRetorno.Leitor.Arquivo := FPRetWS;
+  FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FCTeRetorno.LerXml;
 
   Fversao := FCTeRetorno.versao;
@@ -1094,7 +1094,7 @@ function TCTeRetRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRetRecepcaoResult');
 
-  FCTeRetorno.Leitor.Arquivo := FPRetWS;
+  FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FCTeRetorno.LerXML;
 
   Fversao := FCTeRetorno.versao;
@@ -1386,7 +1386,7 @@ function TCTeRecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRetRecepcaoResult');
 
-  FCTeRetorno.Leitor.Arquivo := FPRetWS;
+  FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FCTeRetorno.LerXML;
 
   Fversao := FCTeRetorno.versao;
@@ -1569,7 +1569,7 @@ begin
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'cteConsultaCTResult');
 
-    CTeRetorno.Leitor.Arquivo := FPRetWS;
+    CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     CTeRetorno.LerXML;
 
     CTCancelado := False;
@@ -1822,10 +1822,6 @@ begin
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
                     FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
 
-//                  FPDFeOwner.Gravar(FCTeChave + NomeXML,
-//                                    XMLOriginal,
-//                                    PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(Data)));
-
                   // Salva o XML do CT-e assinado, protocolado e com os eventos
                   if FRetCTeDFe <> '' then
                     FPDFeOwner.Gravar(FCTeChave + '-CTeDFe.xml',
@@ -1991,7 +1987,7 @@ begin
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'cteInutilizacaoCTResult');
 
-    CTeRetorno.Leitor.Arquivo := FPRetWS;
+    CTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     CTeRetorno.LerXml;
 
     Fversao := CTeRetorno.versao;
@@ -2191,7 +2187,7 @@ function TCTeConsultaCadastro.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'consultaCadastro2Result');
 
-  FRetConsCad.Leitor.Arquivo := FPRetWS;
+  FRetConsCad.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsCad.LerXml;
 
   Fversao := FRetConsCad.versao;
@@ -2495,7 +2491,7 @@ begin
 
   FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoEventoResult');
 
-  EventoRetorno.Leitor.Arquivo := FPRetWS;
+  EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;
@@ -2551,9 +2547,6 @@ begin
                        '</retEventoCTe>' +
                       '</procEventoCTe>';
 
-            EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
-            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
-
             if FPConfiguracoesCTe.Arquivos.Salvar then
             begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoCTe.xml';
@@ -2562,6 +2555,10 @@ begin
               FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
               FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
             end;
+
+            Texto := ParseText(Texto);
+            EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
+            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 
             break;
           end;
@@ -2681,11 +2678,9 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
 
+  // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;
   FretDistDFeInt.LerXml;
-
-  FPMsg := FretDistDFeInt.xMotivo;
-  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin
@@ -2705,15 +2700,25 @@ begin
         *)
         schprocCTe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';
+
         schprocEventoCTe:
           NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
-            '-procEventoCTe.xml';
+                     '-procEventoCTe.xml';
       end;
 
       if (FPConfiguracoesCTe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
         FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
     end;
   end;
+
+  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
+    nativa e Decodificar caracteres HTML Entity }
+  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  FretDistDFeInt.LerXml;
+
+  FPMsg := FretDistDFeInt.xMotivo;
+  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
+
 end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;

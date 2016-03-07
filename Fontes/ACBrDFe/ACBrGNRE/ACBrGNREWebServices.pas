@@ -446,7 +446,7 @@ end;
 procedure TGNRERecepcao.DefinirDadosMsg;
 var
   i: Integer;
-  vGuias: WideString;
+  vGuias: String;
 begin
   vGuias := '';
   for i := 0 to FGuias.Count - 1 do
@@ -541,7 +541,7 @@ function TGNRERecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'processarResponse');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXml;
 
   Fcodigo            := FGNRERetorno.codigo;
@@ -734,7 +734,7 @@ function TGNRERetRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -1017,7 +1017,7 @@ function TGNRERecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -1145,7 +1145,7 @@ function TGNREConsultaUF.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
   FAmbiente                   := FGNRERetorno.Ambiente;

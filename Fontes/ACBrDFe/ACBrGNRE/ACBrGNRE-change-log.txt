@@ -48,6 +48,13 @@ Símbolo : Significado
 -- ACBrDFeCapicom, ACBrDFeCapicomDelphiSoap --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)
 
+-- ACBrGNREWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+[*] Remoção de Warnings   (por: DSA)
+
+-- ACBrGNREGuias --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
+
 24/02/2016
 [*] Novas implementações para resolver erros da geração do gnre
 		por : Juliomar Marchetti

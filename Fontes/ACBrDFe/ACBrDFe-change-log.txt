@@ -48,6 +48,22 @@ Símbolo : Significado
 -- ACBrDFeCapicom, ACBrDFeCapicomDelphiSoap --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)
 
+-- ACBrDFe --
+[*] Método "Gravar" modificado, inserido novo parâmetros "ConteudoEhUTF8"
+   function Gravar(NomeArquivo: String; ConteudoXML: String; aPath: String = '';
+      ConteudoEhUTF8: Boolean = True): Boolean;
+   - Se ConteudoEhUTF8 for True e ConteudoXML não contiver o cabeçalho de
+     Encoding em UTF8, ele será automaticamente adicionado.
+
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade Configuracoes.Geral.RetirarEspacos: Boolea, default True
+
+-- ACBrDFeWebService --
+[*] Método "EnviarDados", modificado para não converter a String recebida do
+    WebService. Ou seja, o conteudo das variáveis "RetornoWS" e "RetWS" sempre
+    permanecerá em UTF8 e sem decodificar os caracteres "HTML Entity"
+[*] Método "AjustarOpcoes" modificado para suportar "RetirarEspacos"
+
 04/03/2016  (por: DSA)
 -- ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeWebService --
 [*] Ajustes para compilação após modificações em ACBrUtil

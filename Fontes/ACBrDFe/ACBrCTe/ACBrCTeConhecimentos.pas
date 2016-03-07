@@ -501,8 +501,9 @@ begin
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     IdAnterior := CTe.infCTe.ID;
-    FCTeW.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
+    FCTeW.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FCTeW.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    FCTeW.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -755,8 +756,9 @@ begin
 
   l := Self.Count; // Indice do último conhecimento já existente
 
-  // Converte de UTF8 para a String nativa da IDE //
-  XMLStr := DecodeToString(XMLUTF8, True);
+  { Chamando ParseTXT, para converter de UTF8 para a String nativa e Decodificar
+    caracteres HTML Entity }
+  XMLStr := ParseText(XMLUTF8, True);
   LoadFromString(XMLStr, AGerarCTe);
 
   // Atribui Nome do arquivo a novos conhecimentos inseridos //

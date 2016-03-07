@@ -51,6 +51,15 @@ Símbolo : Significado
 -- ACBrNFe, ACBrNFeDANFeRL, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings  (por: DSA)
 
+-- ACBrNFeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    (por: DSA)
+
+-- ACBrNFeNotasFiscais --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML    (por: DSA)
+
 06/03/2016
 -- ACBrNFe --
 [*] Acrescentado os status de denegação ao veriricar se a nota foi confirmada.

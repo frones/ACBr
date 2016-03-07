@@ -51,11 +51,19 @@ Símbolo : Significado
 -- ACBrMDFe, pmdfeConversaoMDFe, pmdfeDistDFeInt, pmdfeEnvEventoMDFe --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)
 
+-- ACBrMDFeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    (por: DSA)
+
+-- ACBrMDFeManifestos --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML    (por: DSA)
+
 27/02/2016
 -- ACBrMDFeDAEventoRL
 [-] Correção para pegar informações do evento e não do mdf-e pois pode não estar 
-		carregado no componente
-		por : Juliomar Marchetti
+    carregado no componente (por : Juliomar Marchetti)
 		
 17/02/2016
 -- ACBrMDFeManifestos --

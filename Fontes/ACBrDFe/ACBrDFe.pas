@@ -88,7 +88,8 @@ type
     function GetNomeModeloDFe: String; virtual;
     function GetNameSpaceURI: String; virtual;
 
-    function Gravar(NomeArquivo: String; ConteudoXML: String; aPath: String = ''): Boolean;
+    function Gravar(NomeArquivo: String; ConteudoXML: String; aPath: String = '';
+      ConteudoEhUTF8: Boolean = True): Boolean;
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamNFe: TStream = nil; NomeArq: String = ''); virtual;
@@ -125,7 +126,8 @@ type
 implementation
 
 uses strutils,
-  ACBrDFeException, ACBrUtil ;
+  ACBrDFeException, ACBrUtil,
+  pcnGerador;
 
 { TACBrDFe }
 
@@ -203,8 +205,8 @@ begin
 end;
 
 
-function TACBrDFe.Gravar(NomeArquivo: String; ConteudoXML: String; aPath: String
-  ): Boolean;
+function TACBrDFe.Gravar(NomeArquivo: String; ConteudoXML: String;
+  aPath: String; ConteudoEhUTF8: Boolean): Boolean;
 var
   UTF8Str, SoNome, SoPath: String;
 begin
@@ -225,7 +227,10 @@ begin
     ConteudoXML := StringReplace(ConteudoXML, '<-><->', '', [rfReplaceAll]);
     { Sempre salva o Arquivo em UTF8, independente de qual seja a IDE...
       FPC já trabalha com UTF8 de forma nativa }
-    UTF8Str := ConverteXMLtoUTF8(ConteudoXML);
+    if ConteudoEhUTF8 and (not XmlEhUTF8(ConteudoXML)) then
+      UTF8Str := '<' + ENCODING_UTF8 + '>' + ConteudoXML
+    else
+      UTF8Str := ConverteXMLtoUTF8(ConteudoXML);
 
     if not DirectoryExists(SoPath) then
       ForceDirectories(SoPath);

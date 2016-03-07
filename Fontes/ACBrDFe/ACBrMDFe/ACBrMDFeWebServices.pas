@@ -624,7 +624,7 @@ begin
 
   MDFeRetorno := TRetConsStatServ.Create;
   try
-    MDFeRetorno.Leitor.Arquivo := FPRetWS;
+    MDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     MDFeRetorno.LerXml;
 
     Fversao := MDFeRetorno.versao;
@@ -800,7 +800,7 @@ function TMDFeRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoLoteResult');
 
-  FMDFeRetorno.Leitor.Arquivo := FPRetWS;
+  FMDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FMDFeRetorno.LerXml;
 
   Fversao := FMDFeRetorno.versao;
@@ -1008,7 +1008,7 @@ function TMDFeRetRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
 
-  FMDFeRetorno.Leitor.Arquivo := FPRetWS;
+  FMDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FMDFeRetorno.LerXML;
 
   Fversao := FMDFeRetorno.versao;
@@ -1279,7 +1279,7 @@ function TMDFeRecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRetRecepcaoResult');
 
-  FMDFeRetorno.Leitor.Arquivo := FPRetWS;
+  FMDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FMDFeRetorno.LerXML;
 
   Fversao := FMDFeRetorno.versao;
@@ -1450,7 +1450,7 @@ begin
   try
     FPRetWS := SeparaDados(FPRetornoWS, 'mdfeConsultaMDFResult');
 
-    MDFeRetorno.Leitor.Arquivo := FPRetWS;
+    MDFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     MDFeRetorno.LerXML;
 
     MDFCancelado := False;
@@ -1893,7 +1893,7 @@ begin
 
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeRecepcaoEventoResult');
 
-  EventoRetorno.Leitor.Arquivo := FPRetWS;
+  EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
 
   FcStat := EventoRetorno.cStat;
@@ -1948,10 +1948,6 @@ begin
                        '</retEventoMDFe>' +
                       '</procEventoMDFe>';
 
-            EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
-
-            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
-
             if FPConfiguracoesMDFe.Arquivos.Salvar then
             begin
               NomeArq := OnlyNumber(FEvento.Evento.Items[I].InfEvento.Id) + '-procEventoMDFe.xml';
@@ -1960,6 +1956,10 @@ begin
               FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
               FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
             end;
+
+            Texto := ParseText(Texto);
+            EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
+            FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 
             break;
           end;
@@ -2078,7 +2078,8 @@ begin
     ConsMDFeNaoEnc.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsMDFeNaoEnc.CNPJ  := FCNPJ; // TMDFeConsultaMDFeNaoEnc(Self).CNPJ;
 
-    ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesMDFe.Geral.RetirarAcentos;
+    AjustarOpcoes(ConsMDFeNaoEnc.Gerador.Opcoes);
+
     ConsMDFeNaoEnc.Versao := FPVersaoServico;
     ConsMDFeNaoEnc.GerarXML;
 
@@ -2098,7 +2099,7 @@ begin
   FRetConsMDFeNaoEnc.Free;
   FRetConsMDFeNaoEnc := TRetConsMDFeNaoEnc.Create;
 
-  FRetConsMDFeNaoEnc.Leitor.Arquivo := FPRetWS;
+  FRetConsMDFeNaoEnc.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsMDFeNaoEnc.LerXml;
 
   Fversao    := FRetConsMDFeNaoEnc.versao;
@@ -2205,11 +2206,9 @@ var
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'mdfeDistDFeInteresseResult');
 
+  // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;
   FretDistDFeInt.LerXml;
-
-  FPMsg := FretDistDFeInt.xMotivo;
-  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin
@@ -2229,15 +2228,24 @@ begin
         *)
         schprocMDFe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resMDFe.chMDFe + '-mdfe.xml';
+
         schprocEventoMDFe:
           NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
-            '-procEventoMDFe.xml';
+                     '-procEventoMDFe.xml';
       end;
 
       if (FPConfiguracoesMDFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
         FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
     end;
   end;
+
+  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
+    nativa e Decodificar caracteres HTML Entity }
+  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  FretDistDFeInt.LerXml;
+
+  FPMsg := FretDistDFeInt.xMotivo;
+  Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
 end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;

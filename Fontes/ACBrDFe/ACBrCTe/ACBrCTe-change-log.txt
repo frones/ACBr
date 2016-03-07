@@ -51,6 +51,15 @@ Símbolo : Significado
 -- ACBrCTe, pcteDistDFeInt, pcteInutCTe --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)
 
+-- ACBrCTeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    (por: DSA)
+
+-- ACBrCTeConhecimentos --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML    (por: DSA)
+
 01/03/2016
 -- ACBrCTeServicos --
 [*] Atualização das URLs de produção da SEFAZ-MS.

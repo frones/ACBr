@@ -656,6 +656,9 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
+// if AProvedor = proDBSeller then
+//   Result := '<ConsultarSituacaoLoteRpsEnvio>' + Result + '</ConsultarSituacaoLoteRpsEnvio>';
+
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
@@ -905,6 +908,9 @@ begin
   end;
 
   Result := Gerador.ArquivoFormatoXML;
+
+// if AProvedor = proDBSeller then
+//   Result := '<ConsultarNfseRpsEnvio>' + Result + '</ConsultarNfseRpsEnvio>';
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
@@ -1245,8 +1251,8 @@ begin
 
   Result := Gerador.ArquivoFormatoXML;
 
-  if Provedor = proDBSeller then
-    Result := '<CancelarNfse>' + Result + '</CancelarNfse>';
+//  if Provedor = proDBSeller then
+//    Result := '<CancelarNfse>' + Result + '</CancelarNfse>';
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 

@@ -652,7 +652,7 @@ begin
   else
     FPMimeType := 'text/xml';
 
-  FPDFeOwner.SSL.UseCertificate := FPConfiguracoesNFSe.Geral.ConfigGeral.UseSSL;
+  FPDFeOwner.SSL.UseCertificate := FPConfiguracoesNFSe.Geral.ConfigGeral.UseCertificado;
   FPDFeOwner.SSL.UseSSL := FPConfiguracoesNFSe.Geral.ConfigGeral.UseSSL;
 
   TACBrNFSe(FPDFeOwner).SetStatus(FPStatus);

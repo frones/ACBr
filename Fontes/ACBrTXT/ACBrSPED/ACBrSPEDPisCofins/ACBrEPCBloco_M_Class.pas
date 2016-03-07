@@ -865,7 +865,7 @@ begin
                LFill( DESCR_AJ )   +
                LFill( DT_REF ) ) ;
         end;
-
+        WriteRegistroM225( RegM210.RegistroM220.Items[intFor] );
         ///
         RegistroM990.QTD_LIN_M := RegistroM990.QTD_LIN_M + 1;
      end;

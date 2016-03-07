@@ -88,6 +88,8 @@ uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
           ,QDialogs
         {$ELSEIF DEFINED(FMX)}
           ,FMX.Dialogs, System.UITypes
+        {$ELSEIF DEFINED(DELPHICOMPILER16_UP)}
+          ,Vcl.Dialogs, System.UITypes
         {$ELSE}
           ,Dialogs
        {$IFEND}

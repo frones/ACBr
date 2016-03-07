@@ -52,6 +52,7 @@ Símbolo : Significado
     INI dos provedores foi incluido um campo com o mesmo nome cujo valo pode ser
     0 =  Não Usa Certificado ou 1 = Usa Certificado.
     Por: Italo Jurisato Junior
+	
 -- pnfsConsSitLoteRpsResposta  --
 [*] No Provedor Thema alem de retornar a situação do lote retorna também uma
     mensagem, isso estava fazendo com que o componente interpretasse como um
@@ -59,6 +60,9 @@ Símbolo : Significado
     com um erro.
     Por: Italo Jurisato Junior
 
+-- ACBrNFSe --
+[*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings (por: DSA)
+	
 03/03/2016
 -- ACBrNFSe / ACBrNFSeWebServices / pnfsNFSeG  --
 [*] Realizado uma alteração visando alterar o nome da TAG: recepcionarLoteRps para

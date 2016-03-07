@@ -445,7 +445,7 @@ begin
           Propriedade := '';
           SetLength(ByteArr, FpCertContext^.pCertInfo^.SerialNumber.cbData);
            Move(FpCertContext^.pCertInfo^.SerialNumber.pbData^,
-                Pointer(ByteArr)^,
+                ByteArr[0],
                 FpCertContext^.pCertInfo^.SerialNumber.cbData);
 
           For I := 0 to FpCertContext^.pCertInfo^.SerialNumber.cbData-1 do

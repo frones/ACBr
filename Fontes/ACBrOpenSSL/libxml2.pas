@@ -10,7 +10,7 @@ interface
 
 
 const
-{$IFDEF WIN32}
+{$IFDEF MSWINDOWS}
   LIBXML2_SO = 'libxml2.dll';
 {$ELSE}
   LIBXML2_SO = 'libxml2.so';
@@ -4415,7 +4415,7 @@ uses
 {$IFDEF FPC}
    DynLibs,
 {$ELSE}
-  {$IFDEF WIN32}
+  {$IFDEF MSWINDOWS}
     Windows,
   {$ENDIF}
 {$ENDIF}

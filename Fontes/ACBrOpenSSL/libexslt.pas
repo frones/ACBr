@@ -10,7 +10,7 @@ interface
 uses libxml2, libxslt;
 
 const
-{$IFDEF WIN32}
+{$IFDEF MSWINDOWS}
   LIBEXSLT_SO = 'libexslt.dll';
 {$ELSE}
   LIBEXSLT_SO = 'libexslt.so';
@@ -39,7 +39,7 @@ uses
 {$IFDEF FPC}
    DynLibs,
 {$ELSE}
-  {$IFDEF WIN32}
+  {$IFDEF MSWINDOWS}
     Windows,
   {$ENDIF}
 {$ENDIF}
@@ -110,4 +110,4 @@ initialization
     FreeLibrary(libHandle);
   end;
 
-end.
+end.

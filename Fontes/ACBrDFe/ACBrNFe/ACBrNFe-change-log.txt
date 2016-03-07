@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2016   
+-- ACBrNFe, ACBrNFeDANFeRL, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
+[*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings  (por: DSA)
+
 06/03/2016
 -- ACBrNFe --
 [*] Acrescentado os status de denegação ao veriricar se a nota foi confirmada.

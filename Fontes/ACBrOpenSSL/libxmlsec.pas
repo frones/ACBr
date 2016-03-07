@@ -10,7 +10,7 @@ interface
 uses libxml2, libxslt;
 
 const
-{$IFDEF WIN32}
+{$IFDEF MSWINDOWS}
   LIBXMLSEC_SO = 'libxmlsec.dll';
 {$ELSE}
   LIBXMLSEC_SO = 'libxmlsec.so';
@@ -1673,7 +1673,7 @@ uses
 {$IFDEF FPC}
    DynLibs,
 {$ELSE}
-  {$IFDEF WIN32}
+  {$IFDEF MSWINDOWS}
     Windows,
   {$ENDIF}
 {$ENDIF}

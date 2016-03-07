@@ -1437,8 +1437,7 @@ end;
 procedure TfrlDANFeRLRetrato.DadosAdicionais;
 var
   sInfCompl, sInfAdFisco, sInfContr, sObsFisco, sObsProcRef, sInfInteira,
-  sProtocolo, sSuframa: WideString;
-  sIndProc: String;
+  sProtocolo, sSuframa, sIndProc: String;
   i: integer;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
@@ -1555,7 +1554,7 @@ end;
 procedure TfrlDANFeRLRetrato.Observacoes;
 var
   i, iMaximoLinhas, iRestanteLinhas: integer;
-  sTexto: WideString;
+  sTexto: String;
 begin
   rlmDadosAdicionais.Lines.BeginUpdate;
   rlmDadosAdicionais.Lines.Clear;
@@ -1699,7 +1698,7 @@ end;
 procedure TfrlDANFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
 var
   h: integer;
-  str: WideString;
+  str: String;
 begin
   //// Alterna produtos com fundo colorido e fundo branco
   FundoItem.Color := fCorDestaqueProdutos;

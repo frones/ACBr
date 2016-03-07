@@ -1390,8 +1390,7 @@ end;
 
 procedure TfrlDANFeRLPaisagem.DadosAdicionais;
 var sInfCompl, sInfAdFisco, sInfContr, sObsFisco, sObsProcRef, sInfInteira,
-    sProtocolo, sSuframa : WideString;
-    sIndProc: String;
+    sProtocolo, sSuframa, sIndProc: String;
     i: Integer;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
@@ -1507,7 +1506,7 @@ end;
 
 procedure TfrlDANFeRLPaisagem.Observacoes;
 var i, iMaximoLinhas, iRestanteLinhas: Integer;
-sTexto: WideString;
+    sTexto: String;
 begin
   rlmDadosAdicionais.Lines.BeginUpdate;
   rlmDadosAdicionais.Lines.Clear;
@@ -1657,7 +1656,7 @@ end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensAfterPrint(Sender: TObject);
 var h: Integer;
-str: WideString;
+    str: String;
 begin
   q := q + 1;
   if FNFe.Det.Items[q - 1].infAdProd > '' then

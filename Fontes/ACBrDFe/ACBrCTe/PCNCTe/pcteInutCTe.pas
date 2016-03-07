@@ -54,8 +54,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, ACBrUtil,
-  pcteConversaoCTe;
+  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe,
+  ACBrUtil;
 
 
 type

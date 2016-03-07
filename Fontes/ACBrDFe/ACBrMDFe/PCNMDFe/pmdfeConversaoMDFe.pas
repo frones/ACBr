@@ -133,18 +133,18 @@ const
   DSC_TU          = 'Tonelada Útil';
 
 
-function StrToEnumerado(var ok: boolean; const s: string; const AString: array of string;
+function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
   array of string; const AEnumerados: array of variant): variant;
 
 function TpEmitenteToStr(const t: TTpEmitenteMDFe): String;
-function StrToTpEmitente(var ok: Boolean; const s: String): TTpEmitenteMDFe;
+function StrToTpEmitente(out ok: Boolean; const s: String): TTpEmitenteMDFe;
 
 function LayOutToSchema(const t: TLayOutMDFe): TSchemaMDFe;
 
 function ModalToStr(const t: TModalMDFe): String;
-function StrToModal(var ok: Boolean; const s: String): TModalMDFe;
+function StrToModal(out ok: Boolean; const s: String): TModalMDFe;
 
 function GetVersaoModalMDFe(AVersaoDF: TVersaoMDFe; AModal: TModalMDFe): string;
 
@@ -165,7 +165,7 @@ implementation
 uses
   pcnConversao, typinfo;
 
-function StrToEnumerado(var ok: boolean; const s: string; const AString:
+function StrToEnumerado(out ok: boolean; const s: string; const AString:
   array of string; const AEnumerados: array of variant): variant;
 var
   i: integer;
@@ -199,7 +199,7 @@ begin
                            [teTransportadora, teTranspCargaPropria]);
 end;
 
-function StrToTpEmitente(var ok: Boolean; const s: String): TTpEmitenteMDFe;
+function StrToTpEmitente(out ok: Boolean; const s: String): TTpEmitenteMDFe;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2'],
@@ -230,7 +230,7 @@ begin
                            [moRodoviario, moAereo, moAquaviario, moFerroviario]);
 end;
 
-function StrToModal(var ok: Boolean; const s: String): TModalMDFe;
+function StrToModal(out ok: Boolean; const s: String): TModalMDFe;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4'],

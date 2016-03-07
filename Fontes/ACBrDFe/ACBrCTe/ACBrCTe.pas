@@ -111,7 +111,7 @@ type
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean;  overload;
 
     function Consultar( AChave: String = ''): Boolean;
-    function Cancelamento(AJustificativa: WideString; ALote: Integer = 0): Boolean;
+    function Cancelamento(AJustificativa: String; ALote: Integer = 0): Boolean;
     function EnviarEvento(idLote: Integer): Boolean;
     function Inutilizar(ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
@@ -150,7 +150,11 @@ uses
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
- {$R ACBrCTeServicos.rc}
+ {$IFDEF CPU64}
+  {$R ACBrCTeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
+ {$ELSE}
+  {$R ACBrCTeServicos.rc}
+ {$ENDIF}
 {$ELSE}
  {$R ACBrCTeServicos.res}
 {$ENDIF}
@@ -242,7 +246,7 @@ begin
   Result := ACBRCTE_NAMESPACE;
 end;
 
-function TACBrCTe.cStatConfirmado(AValue: integer): Boolean;
+function TACBrCTe.cStatConfirmado(AValue: Integer): Boolean;
 begin
   case AValue of
     100, 150: Result := True;
@@ -251,7 +255,7 @@ begin
   end;
 end;
 
-function TACBrCTe.cStatProcessado(AValue: integer): Boolean;
+function TACBrCTe.cStatProcessado(AValue: Integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302: Result := True;
@@ -655,7 +659,7 @@ begin
   Result := True;
 end;
 
-function TACBrCTe.Cancelamento(AJustificativa: WideString; ALote: Integer): Boolean;
+function TACBrCTe.Cancelamento(AJustificativa: String; ALote: Integer): Boolean;
 var
   i: Integer;
 begin
@@ -765,7 +769,7 @@ begin
 end;
 
 function TACBrCTe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,
-  ANumInicial, ANumFinal: integer): Boolean;
+  ANumInicial, ANumFinal: Integer): Boolean;
 begin
   Result := True;
   WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, 57,

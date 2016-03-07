@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/03/2016   
+-- libexslt, libxml2, libxmlsec, libxslt --
+[*] Ajustes para compilação em 64 bits. (por: DSA)
+
 Data: 26/02/2016
 [+] Adicionado modo de saida: "outBinary" para ser usado em "InternalDigest" (por: DSA)
 

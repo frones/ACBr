@@ -358,7 +358,7 @@ begin
     Fields.Clear;
     FieldDefs.Add('CODIGO',ftString,60);
     FieldDefs.Add('EAN',ftString,14);
-    FieldDefs.Add('DESCRICAO',ftWideString,2000);
+    FieldDefs.Add('DESCRICAO',ftString,2000);
     FieldDefs.Add('NCM',ftString,8);
     FieldDefs.Add('CFOP',ftString,4);
     FieldDefs.Add('UNIDADE',ftString,6);

@@ -231,6 +231,8 @@ begin
 end;
 
 procedure TACBrHTTPReqResp.Execute(Resp: TStream);
+const
+  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 var
   aBuffer: array[0..4096] of AnsiChar;
   BytesRead: cardinal;
@@ -244,10 +246,9 @@ var
   Cert: ICertificate2;
   Cert2: ICertificate2;
   CertContext: ICertContext;
-  PCertContext: Pointer;
 
   Ok: Boolean;
-  i, AccessType: Integer;
+  i, AccessType, HCertContext: Integer;
   ANone, AHost, AProt, APort, APath, pProxy, Header: String;
 begin
 
@@ -308,7 +309,7 @@ begin
   //DEBUG
   //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
 
-  CertContext.Get_CertContext(integer(PCertContext));
+  CertContext.Get_CertContext(HCertContext);
   pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
 
   try
@@ -388,8 +389,8 @@ begin
                   'SOAPAction: "' + FSOAPAction + '"' +SLineBreak;
 
         if (FUseCertificate) then
-          if not InternetSetOption(pRequest, {$IFDEF FPC}INTERNET_OPTION_CLIENT_CERT_CONTEXT{$ELSE}84{$ENDIF},
-            PCertContext, SizeOf(CERT_CONTEXT)) then
+          if not InternetSetOption(pRequest, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
+            Pointer(HCertContext), SizeOf(CERT_CONTEXT)) then
             raise EACBrHTTPReqResp.Create('Erro: Problema ao inserir o certificado');
 
         if trim(FProxyUser) <> '' then
@@ -466,7 +467,7 @@ begin
     end;
   finally
     InternetCloseHandle(pSession);
-    CertContext.FreeContext(integer(PCertContext));
+    CertContext.FreeContext(HCertContext);
   end;
 end;
 

@@ -151,6 +151,9 @@ uses
    QGraphics
   {$ELSE}
    Graphics
+   {$IFDEF DELPHICOMPILER16_UP}
+    ,System.UITypes
+   {$ENDIF}
   {$ENDIF} ;
 
 type

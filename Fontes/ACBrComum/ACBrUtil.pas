@@ -283,7 +283,7 @@ Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True );
-procedure WriteLog( const ArqTXT, ABinaryString : AnsiString ;
+procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
 function TranslateUnprintable( const ABinaryString: AnsiString ): AnsiString;
 
@@ -2898,7 +2898,7 @@ begin
   end;
 end;
 
-procedure WriteLog(const ArqTXT, ABinaryString: AnsiString;
+procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
   const Traduz: Boolean);
 var
   Buf: AnsiString;
@@ -2947,7 +2947,7 @@ begin
         GS    : Ch := '[GS]' ;
         #32..#126 : Ch := ABinaryString[I] ;
      else ;
-       Ch := '['+IntToStr(ASC)+']'
+       Ch := '['+AnsiString(IntToStr(ASC))+']'
      end;
 
      Buf := Buf + Ch ;
@@ -3331,7 +3331,9 @@ end;
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web
-   Transforma caracteres HTML Entity em ASCII ou vice versa
+   Transforma caracteres HTML Entity em ASCII ou vice versa.
+   No caso de decodificação, também transforma o Encoding de UTF8 para a String
+   nativa da IDE
  ------------------------------------------------------------------------------}
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True ) : String;
@@ -3386,7 +3388,7 @@ begin
   end
   else
   begin
-    AStr := Texto;
+    AStr := string(Texto);
     AStr := StringReplace(AStr, '&', '&amp;' , [rfReplaceAll]);
     AStr := StringReplace(AStr, '<', '&lt;'  , [rfReplaceAll]);
     AStr := StringReplace(AStr, '>', '&gt;'  , [rfReplaceAll]);

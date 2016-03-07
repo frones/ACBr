@@ -2526,7 +2526,6 @@ end ;
 function TACBrECFSwedaSTX.GetDataMovimento: TDateTime;
 Var
   RetCmd : AnsiString ;
-  sData:String;
 begin
    RetCmd := Trim(RetornaInfoECF('A2'));
 

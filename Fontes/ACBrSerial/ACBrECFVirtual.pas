@@ -1667,13 +1667,13 @@ end;
 
 function TACBrECFVirtualClass.GetTotalPago: Double;
 begin
-  Result := RoundTo( fpCupom.TotalPago, -2);
+  Result := RoundTo( Double(fpCupom.TotalPago), -2);
   GravaLog('GetTotalPago: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetSubTotal: Double;
 begin
-  Result := RoundTo( fpCupom.SubTotal, -2) ;
+  Result := RoundTo( Double(fpCupom.SubTotal), -2) ;
   GravaLog('GetSubTotal: '+FloatToStr(Result));
 end;
 
@@ -1738,7 +1738,7 @@ procedure TACBrECFVirtualClass.VendeItem(Codigo, Descricao : String ;
   CodDepartamento : Integer) ;
 Var
   Aliq: TACBrECFAliquota;
-  Total, ValItemBruto: Double;
+  ValItemBruto: Double;
   ItemCupom: TACBrECFVirtualClassItemCupom;
 begin
   GravaLog( ComandoLOG );
@@ -2038,7 +2038,10 @@ begin
     { Se tiver Troco, remove de 01 - DINHEIRO (indice = 0) }
     Troco := 0 ;
     if fpCupom.TotalPago >= fpCupom.SubTotal then  { Tem TROCO ? }
-      Troco := RoundTo(fpCupom.TotalPago - fpCupom.SubTotal, -2) ;
+    begin
+      Troco := fpCupom.TotalPago - fpCupom.SubTotal;
+      Troco := RoundTo(Troco, -2) ;
+    end;
 
     if Troco > 0 then
     begin
@@ -3027,9 +3030,6 @@ end;
 
 function TACBrECFVirtualClass.AchaICMSAliquota(var AliquotaICMS: String):
    TACBrECFAliquota;
-Var
-  AliquotaStr : String ;
-  I: Integer;
 begin
   GravaLog( ComandoLOG );
 

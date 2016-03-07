@@ -67,7 +67,7 @@ TACBrECFNCRComando = class
     procedure SetComando(const Value: AnsiString);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Comando     : AnsiString  write SetComando  ;
     property TimeOut     : Integer     read fsTimeOut write fsTimeOut ;
@@ -96,7 +96,7 @@ TACBrECFNCRResposta = class
     procedure CarregaPosParam ;
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Resposta     : AnsiString    read fsResposta write SetResposta ;
     property Seq          : Byte          read fsSeq;

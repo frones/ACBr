@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/03/2016
+-- ACBrUtil --
+[-] RoundABNT: Correção para calculos com valores negativos  (por: DSA)
+
 Data: 04/03/2016
 -- ACBr.inc --
 [*] Adicionada verificação para saber se está usando FPC 3.0.0 ou superior

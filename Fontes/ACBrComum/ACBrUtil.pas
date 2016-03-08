@@ -109,7 +109,8 @@ function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
 {$EndIf}
 
 function TruncFix( X : Double ) : Integer ;
-function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
+function RoundABNT(const AValue: Double; const Digits: SmallInt;
+  const Delta: Double = 0.00001 ): Double;
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
@@ -537,41 +538,45 @@ end;
  http://www.sofazquemsabe.com/2011/01/como-fazer-arredondamento-da-numeracao.html
  http://partners.bematech.com.br/2011/12/edicao-98-entendendo-o-truncamento-e-arredondamento-no-ecf/
  -----------------------------------------------------------------------------}
-function RoundABNT(const AValue: Double; const Digits: SmallInt):Double;
+function RoundABNT(const AValue: Double; const Digits: SmallInt; const Delta: Double):Double;
 var
    Pow, FracValue, PowValue : Extended;
    RestPart: Double;
    IntCalc, FracCalc, LastNumber, IntValue : Int64;
+   Negativo: Boolean;
 Begin
+   Negativo  := (AValue < 0);
+
    Pow       := intpower(10, abs(Digits) );
-   PowValue  := AValue / 10 ;
+   PowValue  := abs(AValue) / 10 ;
    IntValue  := trunc(PowValue);
    FracValue := frac(PowValue);
 
-   PowValue := FracValue * 10 * Pow ; 
+   PowValue := SimpleRoundTo( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
    IntCalc  := trunc( PowValue );
-   FracCalc := TruncFix( frac( PowValue ) * 100 );
+   FracCalc := trunc( frac( PowValue ) * 100 );
 
    if (FracCalc > 50) then
-      Inc( IntCalc )
+     Inc( IntCalc )
 
    else if (FracCalc = 50) then
-    begin
-      LastNumber := round( frac( IntCalc / 10) * 10);
+   begin
+     LastNumber := round( frac( IntCalc / 10) * 10);
 
-      if odd(LastNumber) then
-         Inc( IntCalc )
-      else
-       begin
-         PowValue := PowValue * 10;
-         RestPart := PowValue - TruncFix(PowValue);
+     if odd(LastNumber) then
+       Inc( IntCalc )
+     else
+     begin
+       RestPart := frac( PowValue * 10 ) ;
 
-         if RestPart > 0.00001 then
-            Inc( IntCalc );
-       end ;
-    end ;
+       if RestPart > Delta then
+         Inc( IntCalc );
+     end ;
+   end ;
 
    Result := ((IntValue*10) + (IntCalc / Pow));
+   if Negativo then
+     Result := -Result;
 end;
 
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;

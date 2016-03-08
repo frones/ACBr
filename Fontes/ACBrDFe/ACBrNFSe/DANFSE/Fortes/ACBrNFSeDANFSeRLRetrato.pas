@@ -228,7 +228,11 @@ implementation
 uses
  StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrValidador;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 var
   FQuebradeLinha: String;

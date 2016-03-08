@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2016
+[*] modificação para usar o lfm no lazarus e evitar problemas com o delphi da danfse em fortes
+		por: Juliomar Marchetti
+
 07/03/2016
 [*] Incluido uma propriedade interna chamada UseCertificado, em todos os arquivos
     INI dos provedores foi incluido um campo com o mesmo nome cujo valo pode ser

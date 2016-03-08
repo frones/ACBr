@@ -47,6 +47,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2016   
+-- ACBrNFSe --
+[*] Ajustes para compilação em 64 bits
+    Por: DSA / Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    Por: DSA / Italo Jurisato Junior
+
+-- ACBrNFSeNotasFiscais --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML
+    Por: DSA / Italo Jurisato Junior
+
+08/03/2016
+-- ACBrDANFeRLRetrao
+[*] Ajuste para sair o canhoto somente na primeira folha
+		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
+		por: Juliomar Marchetti
+		
 08/03/2016
 [*] modificação para usar o lfm no lazarus e evitar problemas com o delphi da danfse em fortes
 		por: Juliomar Marchetti

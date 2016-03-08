@@ -1635,7 +1635,7 @@ begin
 
   FRetEnvLote := TRetEnvLote.Create;
   try
-    FRetEnvLote.Leitor.Arquivo := FPRetWS;
+    FRetEnvLote.Leitor.Arquivo := ParseText(FPRetWS);
     FRetEnvLote.Provedor := FProvedor;
     FRetEnvLote.LerXml;
 
@@ -2191,7 +2191,7 @@ begin
 
   FPRetWS := ExtrairRetorno;
 
-  FRetSitLote.Leitor.Arquivo := FPRetWS;
+  FRetSitLote.Leitor.Arquivo := ParseText(FPRetWS);
   FRetSitLote.Provedor       := FProvedor;
 
   RetSitLote.LerXml;
@@ -3059,7 +3059,7 @@ begin
     FRetCancNFSe.Free;
 
   FRetCancNFSe := TRetCancNfse.Create;
-  FRetCancNFSe.Leitor.Arquivo := FPRetWS;
+  FRetCancNFSe.Leitor.Arquivo := ParseText(FPRetWS);
   FRetCancNFSe.Provedor       := FProvedor;
   FRetCancNFSe.VersaoXML      := FVersaoXML;
 
@@ -3291,7 +3291,7 @@ begin
 
   FNFSeRetorno := TRetSubsNfse.Create;
   try
-    FNFSeRetorno.Leitor.Arquivo := FPRetWS;
+    FNFSeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     FNFSeRetorno.Provedor       := FProvedor;
 
     FNFSeRetorno.LerXml;

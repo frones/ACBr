@@ -762,8 +762,9 @@ begin
     MS.Free;
   end;
 
-  // Converte de UTF8 para a String nativa da IDE //
-  XMLStr := DecodeToString(XMLUTF8, True);
+  { Chamando ParseTXT, para converter de UTF8 para a String nativa e Decodificar
+    caracteres HTML Entity }
+  XMLStr := ParseText(XMLUTF8, True);
   LoadFromString(XMLStr, AGerarNFSe);
 
   for i := 0 to Self.Count - 1 do

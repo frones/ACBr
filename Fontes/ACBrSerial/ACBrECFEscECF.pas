@@ -2145,11 +2145,14 @@ begin
      if P = 0 then
         P := Colunas ;
 
-     Buffer := copy( Linha, 1, P)  ;
-     Espera := Trunc( CountStr( Buffer, LF ) / 4) ;
+     Buffer := copy( Linha, 1, P);
+     Espera := Trunc( CountStr( Buffer, LF ) / 4);
 
-     EscECFComando.CMD := 9                                ;
-     EscECFComando.TimeOut := Espera ;
+     if IsBematech and (RightStr(Buffer,1) = LF) then
+       Buffer := copy(Buffer, 1, Length(Buffer)-1);  // Remove último LF, isso causa erro na Bematech
+
+     EscECFComando.CMD := 9;
+     EscECFComando.TimeOut := Espera;
      EscECFComando.AddParamString(Buffer);
      EnviaComando;
 

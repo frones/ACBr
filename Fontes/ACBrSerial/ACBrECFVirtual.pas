@@ -1667,13 +1667,15 @@ end;
 
 function TACBrECFVirtualClass.GetTotalPago: Double;
 begin
-  Result := RoundTo( Double(fpCupom.TotalPago), -2);
+  Result := fpCupom.TotalPago;
+  Result := RoundTo( Result, -2);
   GravaLog('GetTotalPago: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetSubTotal: Double;
 begin
-  Result := RoundTo( Double(fpCupom.SubTotal), -2) ;
+  Result := fpCupom.SubTotal;
+  Result := RoundTo( Result, -2);
   GravaLog('GetSubTotal: '+FloatToStr(Result));
 end;
 

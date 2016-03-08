@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/03/2016
+-- ACBrECFVirtual --
+[-] Correção de Bug introduzido em 07/03/2016, após ajustes para compilação em
+    64 bits
+
 Data: 26/02/2016
 --ACBrECFEpson --
 [-] Ajuste para que o método "CarregaFormasPagamento" considere apenas o numero

@@ -115,23 +115,23 @@ begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
-
-    if Leitor.rExtrai(1, 'TConfigUf') <> '' then
+    //Faltou o namespace ns1
+    if Leitor.rExtrai(1, 'ns1:TConfigUf') <> '' then
     begin
-      (*1*)FAmbiente                    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ambiente'));
-      (*2*)FUf                          := Leitor.rCampo(tcStr, 'Uf');
-      (*4*)Fcodigo                      := Leitor.rCampo(tcInt, 'codigo');
-      (*5*)Fdescricao                   := Leitor.rCampo(tcStr, 'descricao');
-      (*6*)FexigeUfFavorecida           := SeparaDados(Leitor.Grupo, 'exigeUfFavorecida');
-      (*7*)FexigeReceita                := SeparaDados(Leitor.Grupo, 'exigeReceita');
-      (*43*)FexigeContribuinteEmitente  := SeparaDados(Leitor.Grupo, 'exigeContribuinteEmitente');
-      (*44*)FexigeDataVencimento        := SeparaDados(Leitor.Grupo, 'exigeDataVencimento');
-      (*45*)FexigeConvenio              := SeparaDados(Leitor.Grupo, 'exigeConvenio');
-      (*45*)FexigeDataPagamento         := SeparaDados(Leitor.Grupo, 'exigeDataPagamento');
+      (*1*)FAmbiente                    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:ambiente'));
+      (*2*)FUf                          := Leitor.rCampo(tcStr, 'ns1:Uf');
+      (*4*)Fcodigo                      := Leitor.rCampo(tcInt, 'ns1:codigo');
+      (*5*)Fdescricao                   := Leitor.rCampo(tcStr, 'ns1:descricao');
+      (*6*)FexigeUfFavorecida           := SeparaDados(Leitor.Grupo, 'ns1:exigeUfFavorecida');
+      (*7*)FexigeReceita                := SeparaDados(Leitor.Grupo, 'ns1:exigeReceita');
+      (*43*)FexigeContribuinteEmitente  := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteEmitente');
+      (*44*)FexigeDataVencimento        := SeparaDados(Leitor.Grupo, 'ns1:exigeDataVencimento');
+      (*45*)FexigeConvenio              := SeparaDados(Leitor.Grupo, 'ns1:exigeConvenio');
+      (*45*)FexigeDataPagamento         := SeparaDados(Leitor.Grupo, 'ns1:exigeDataPagamento');
 
       if SameText(FexigeReceita, 'S') then
       begin
-        if Leitor.rExtrai(2, 'receitas') <> '' then
+        if Leitor.rExtrai(2, 'ns1:receitas') <> '' then
         begin
           InfReceita.Leitor.Arquivo := Leitor.Grupo;
           InfReceita.LerXml;

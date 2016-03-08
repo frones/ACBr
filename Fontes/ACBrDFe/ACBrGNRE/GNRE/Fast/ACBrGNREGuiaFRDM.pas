@@ -209,7 +209,7 @@ procedure TdmACBrGNREFR.CarregaDados;
   begin
     if Str <> '' then
     begin
-      while Str[1] = '0' do
+      while (Str <> '') and (Str[1] = '0') do
         Str := Copy(Str, 2, Length(Str));
     end;
 
@@ -292,7 +292,12 @@ begin
       FieldByName('Convenio').AsString := Convenio;
       FieldByName('InfoComplementares').AsString := InfoComplementares;
       FieldByName('DataVencimento').AsDateTime := StrToDate(FormatarData(DataVencimento));
-      FieldByName('DataLimitePagamento').AsDateTime := StrToDate(FormatarData(DataLimitePagamento));
+
+      if DataLimitePagamento = '00000000' then
+        FieldByName('DataLimitePagamento').AsDateTime := FieldByName('DataVencimento').AsDateTime
+      else
+        FieldByName('DataLimitePagamento').AsDateTime := StrToDate(FormatarData(DataLimitePagamento));
+
       FieldByName('PeriodoReferencia').AsString := PeriodoReferencia;
       FieldByName('MesAnoReferencia').AsString := MesAnoReferencia;
       FieldByName('Parcela').AsString := IntToStr(Parcela);

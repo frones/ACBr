@@ -1072,14 +1072,12 @@ begin
 
   Fcodigo := 0;
   Fdescricao := '';
-  Freceita := 0;
   FexigeReceita := '';
   FexigeDataVencimento := '';
   FexigeDataPagamento := '';
   FexigeContribuinteEmitente := '';
   FexigeUfFavorecida := '';
   FexigeConvenio := '';
-  FUf := '';
 
   if Assigned(FPConfiguracoesGNRE) then
   begin
@@ -1127,7 +1125,7 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
-  FPLayout := LayGNRERetRecepcao;
+  FPLayout := LayGNREConsultaConfigUF;
 
   TACBrGNRE(FPDFeOwner).LerServicoDeParams(
     'GNRE',

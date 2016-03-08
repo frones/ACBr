@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2016
+[*] Correções do ACBrGNRE
+		http://www.projetoacbr.com.br/forum/topic/26605-acbrgnre-na-trunk2/?page=5
+
 07/03/2016   
 -- ACBrDFeCapicom, ACBrDFeCapicomDelphiSoap --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)

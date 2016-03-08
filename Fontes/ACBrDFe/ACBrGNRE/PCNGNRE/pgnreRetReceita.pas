@@ -206,24 +206,24 @@ begin
   Result := False;
   try
     i := 0;
-    if Leitor.rExtrai(1, 'receitas') <> '' then
+    if Leitor.rExtrai(1, 'ns1:receitas') <> '' then
     begin
-      while Leitor.rExtrai(2, 'receita', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'ns1:receita', '', i + 1) <> '' do
       begin
         FretReceita.Add;
-        FretReceita.Items[i].RetInfReceita.codigo                    := Leitor.rAtributo('codigo');
-        FretReceita.Items[i].RetInfReceita.descricao                 := Leitor.rAtributo('descricao');
-        if Pos('courier', Leitor.Grupo) > 0 then
-          FretReceita.Items[i].RetInfReceita.courier                   := Leitor.rAtributo('courier');
-        FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'exigeDetalhamentoReceita');
-        FretReceita.Items[i].RetInfReceita.exigeProduto                  := SeparaDados(Leitor.Grupo, 'exigeProduto');
-        FretReceita.Items[i].RetInfReceita.exigePeriodoReferencia        := SeparaDados(Leitor.Grupo, 'exigePeriodoReferencia');
-        FretReceita.Items[i].RetInfReceita.exigePeriodoApuracao          := SeparaDados(Leitor.Grupo, 'exigePeriodoApuracao');
-        FretReceita.Items[i].RetInfReceita.exigeParcela                  := SeparaDados(Leitor.Grupo, 'exigeParcela');
-        FretReceita.Items[i].RetInfReceita.valorExigido                  := SeparaDados(Leitor.Grupo, 'valorExigido');
-        FretReceita.Items[i].RetInfReceita.exigeDocumentoOrigem          := SeparaDados(Leitor.Grupo, 'exigeDocumentoOrigem');
-        FretReceita.Items[i].RetInfReceita.exigeContribuinteDestinatario := SeparaDados(Leitor.Grupo, 'exigeContribuinteDestinatario');
-        FretReceita.Items[i].RetInfReceita.exigeCamposAdicionais         := SeparaDados(Leitor.Grupo, 'exigeCamposAdicionais');
+        FretReceita.Items[i].RetInfReceita.codigo                    := Leitor.rAtributo('ns1:codigo');
+        FretReceita.Items[i].RetInfReceita.descricao                 := Leitor.rAtributo('ns1:descricao');
+        if Pos('ns1:courier', Leitor.Grupo) > 0 then
+          FretReceita.Items[i].RetInfReceita.courier                   := Leitor.rAtributo('ns1:courier');
+        FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeDetalhamentoReceita');
+        FretReceita.Items[i].RetInfReceita.exigeProduto                  := SeparaDados(Leitor.Grupo, 'ns1:exigeProduto');
+        FretReceita.Items[i].RetInfReceita.exigePeriodoReferencia        := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoReferencia');
+        FretReceita.Items[i].RetInfReceita.exigePeriodoApuracao          := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoApuracao');
+        FretReceita.Items[i].RetInfReceita.exigeParcela                  := SeparaDados(Leitor.Grupo, 'ns1:exigeParcela');
+        FretReceita.Items[i].RetInfReceita.valorExigido                  := SeparaDados(Leitor.Grupo, 'ns1:valorExigido');
+        FretReceita.Items[i].RetInfReceita.exigeDocumentoOrigem          := SeparaDados(Leitor.Grupo, 'ns1:exigeDocumentoOrigem');
+        FretReceita.Items[i].RetInfReceita.exigeContribuinteDestinatario := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteDestinatario');
+        FretReceita.Items[i].RetInfReceita.exigeCamposAdicionais         := SeparaDados(Leitor.Grupo, 'ns1:exigeCamposAdicionais');
 
 
         if Assigned(InfDetalhamentoReceita) then

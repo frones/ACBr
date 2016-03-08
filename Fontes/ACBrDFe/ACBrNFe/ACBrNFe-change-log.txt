@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2016
+-- ACBrDANFeRLRetrao
+[*] Ajuste para sair o canhoto somente na primeira folha
+		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
+		por: Juliomar Marchetti
+		
 07/03/2016   
 -- ACBrNFe, ACBrNFeDANFeRL, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings  (por: DSA)

@@ -2916,6 +2916,17 @@ begin
                             '</p1:' + TagGrupo + '>';
                  end;
 
+      proTecnos: begin
+                   FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>' +
+                             '<' + FPrefixo3 + 'Pedido>' +
+                              '<' + FPrefixo4 + 'InfPedidoCancelamento ' +
+                                    FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '" ' +
+                                    'xmlns="http://www.abrasf.org.br/nfse.xsd">';
+
+                   FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
+                            '</' + FPrefixo3 + TagGrupo + '>';
+                   end;
+
       proSimplISS: begin
                      FTagI := '<' + FPrefixo3 + TagGrupo + '>' +
                                '<' + FPrefixo3 + 'Pedido' + FNameSpaceDad + '>' +

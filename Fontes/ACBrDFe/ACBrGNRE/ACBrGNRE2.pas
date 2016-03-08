@@ -342,6 +342,8 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de GNRE transmitidas (máximo de 50 GNRE)' +
       ' excedido. Quantidade atual: ' + IntToStr(Guias.Count)));
 
+  Guias.GerarGNRE;
+
   Result := WebServices.Envia;
 
   if FGNREGuia <> nil then

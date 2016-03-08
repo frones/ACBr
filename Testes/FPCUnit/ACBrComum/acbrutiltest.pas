@@ -2105,6 +2105,8 @@ begin
   CheckEquals( extVal, RoundABNT(12334234.4567567567567567567,-4), 0.00001 );
   extVal := 5233.456757;
   CheckEquals( extVal, RoundABNT(5233.4567567567567567567,-6), 0.00001 );
+  extVal := 9999999999.46;
+  CheckEquals( extVal, RoundABNT(9999999999.4567567567567567567,-2), 0.00001 );
 end;
 
 procedure RoundABNTTest.ValoresNegativos;
@@ -2114,6 +2116,26 @@ begin
   AVal := -2;
   CheckEquals( AVal, RoundABNT(AVal, 0) );
   CheckEquals( AVal, RoundABNT(AVal, -1) );
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -0.94;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -0.95;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -0.96;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -0.97;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -0.98;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -0.99;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -1.94;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -1.95;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -1.96;
+  CheckEquals( AVal, RoundABNT(AVal, -2) );
+  AVal := -1.97;
   CheckEquals( AVal, RoundABNT(AVal, -2) );
 end;
 
@@ -2192,7 +2214,11 @@ begin
   {$IfDef FPC}
   UTF8Str := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
   {$Else}
-  UTF8Str := UTF8Encode('аимсз');
+   {$ifdef UNICODE}
+    UTF8Str := UTF8Encode('аимсз');
+   {$Else}
+    UTF8Str := 'аимсз';
+   {$endif}
   {$EndIf}
 
   CheckEquals( 'аимсз', ACBrStrToAnsi(UTF8Str) );

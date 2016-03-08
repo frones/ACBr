@@ -49,6 +49,7 @@ Símbolo : Significado
 [+] Adicionado novo parametro para definição se as abas dos pagecontrol deve
     ser mostradas ou ocultas, pois no novo menu tem todas as opções para chegar
     nas páginas.
+    por (Isaque Pinheiro)
 
 04/03/2016
 [+] MAIL: Adicionada configuração para Confirmação de leitura de Email

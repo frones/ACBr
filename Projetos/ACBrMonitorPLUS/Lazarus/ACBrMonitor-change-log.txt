@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2016
+[*] Modificação da tela principal, criado novo menu, buscando melhor visual
+    e melhor navegação nas páginas.
+[+] Adicionado novo parametro para definição se as abas dos pagecontrol deve
+    ser mostradas ou ocultas, pois no novo menu tem todas as opções para chegar
+    nas páginas.
+
 04/03/2016
 [+] MAIL: Adicionada configuração para Confirmação de leitura de Email
 

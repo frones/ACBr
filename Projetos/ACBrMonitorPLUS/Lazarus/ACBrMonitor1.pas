@@ -46,7 +46,7 @@ uses
   Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
   pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
   ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrBlocoX, ACBrMDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass;
+  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types;
 
 const
   {$I versao.txt}
@@ -59,6 +59,17 @@ const
   UTF8BOM : AnsiString = #$EF#$BB#$BF;
 
 type
+  TCores = class
+    class var
+    Buttons: TColor;
+    SubButtons: TColor;
+    ButtonSelected: TColor;
+    SubButtonSelected: TColor;
+    ButtonMouseEnter: TColor;
+    SubButtonMouseEnter: TColor;
+  public
+    class constructor Create;
+  end;
 
   { TFrmACBrMonitor }
 
@@ -103,6 +114,7 @@ type
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel3: TBevel;
+    bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
     bGAVAtivar: TBitBtn;
@@ -127,32 +139,82 @@ type
     btAtivarsat: TButton;
     bTCAtivar: TBitBtn;
     btConsultarStatusOPSAT: TButton;
+    btnBalanca: TPanel;
+    btnBoleto: TPanel;
+    btnBoletoCedente: TPanel;
+    btnBoletoCont: TPanel;
+    btnBoletoConta: TPanel;
+    btnBoletoEmail: TPanel;
+    btnBoletoLeiaute: TPanel;
+    btnBoletoRR: TPanel;
+    btnCadastro: TPanel;
+    btnCadastroCont: TPanel;
     btnCancNF: TButton;
     btnCancelarCTe: TButton;
     btnCancMDFe: TButton;
     btnConsultar: TButton;
     btnConsultarCTe: TButton;
     btnConsultarMDFe: TButton;
+    btnConsultas: TPanel;
+    btnDFe: TPanel;
+    btnDFeCertificados: TPanel;
+    btnDFeCont: TPanel;
+    btnDFeDir: TPanel;
+    btnDFeTeste: TPanel;
+    btnDFeEmail: TPanel;
+    btnDFeGeral: TPanel;
+    btnDFePrint: TPanel;
+    btnDFeWebServices: TPanel;
+    btnDisplay: TPanel;
+    btnECF: TPanel;
+    btnEmail: TPanel;
     btnEnviar: TButton;
     btnEnviarCTe: TButton;
     btnEnviarMDFe: TButton;
     btnEnviarEmail: TButton;
     btnEnviarEmailCTe: TButton;
     btnEnviarEmailMDFe: TButton;
+    btnEtiqueta: TPanel;
+    btnGaveta: TPanel;
+    btnImpCheque: TPanel;
     btnImprimir: TButton;
     btnImprimirCTe: TButton;
     btnImprimirMDFe: TButton;
     btnInutilizar: TButton;
     btnInutilizarCTe: TButton;
     btnInutilizarMDFe: TButton;
+    btnLeitorSerial: TPanel;
+    btnMonitor: TPanel;
+    btnNCM: TPanel;
+    btnPosPrinter: TPanel;
+    btnRFD: TPanel;
+    btnRFDCont: TPanel;
+    btnRFDFile: TPanel;
+    btnRFDGeral: TPanel;
+    btnSAT: TPanel;
+    btnSATCont: TPanel;
+    btnSATDados: TPanel;
+    btnSATEmitente: TPanel;
+    btnSATPrint: TPanel;
+    btnSATRede: TPanel;
+    btnSATSH: TPanel;
+    btnSedex: TPanel;
+    btnSH: TPanel;
     btnStatusServ: TButton;
     btnStatusServCTe: TButton;
     btnStatusServMDFe: TButton;
+    btnTC: TPanel;
+    btnUser: TPanel;
     btnValidarXML: TButton;
     btnValidarXMLCTe: TButton;
     btnValidarXMLMDFe: TButton;
     btSATAssocia: TButton;
     btSATConfigRede: TButton;
+    bvCadastro1: TBevel;
+    bvCadastro2: TBevel;
+    bvCadastro3: TBevel;
+    bvCadastro4: TBevel;
+    bvCadastro5: TBevel;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
     cbCEPWebService: TComboBox;
@@ -190,6 +252,7 @@ type
     cbSenha: TCheckBox;
     cbTraduzirTags: TCheckBox;
     cbUF: TComboBox;
+    cbAbas: TCheckBox;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbValidarDigest: TCheckBox;
@@ -255,10 +318,43 @@ type
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
     cbEmailConfirmation: TCheckBox;
+    deUSUDataCadastro: TDateEdit;
+    edtArquivoPFX: TEdit;
+    edtBOLEmailAssunto: TEdit;
+    edtBOLEmailMensagem: TMemo;
+    edtEmailAssuntoCTe: TEdit;
+    edtEmailAssuntoMDFe: TEdit;
+    edtEmailAssuntoNFe: TEdit;
     edTimeZoneStr: TEdit;
+    edtNumeroSerie: TEdit;
+    edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
+    Image2: TImage;
+    Label109: TLabel;
+    Label110: TLabel;
+    Label121: TLabel;
+    Label133: TLabel;
+    Label138: TLabel;
+    Label155: TLabel;
+    Label156: TLabel;
+    Label165: TLabel;
+    Label179: TLabel;
+    Label180: TLabel;
+    Label181: TLabel;
+    Label40: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    Label52: TLabel;
+    Label53: TLabel;
+    Label54: TLabel;
+    Label68: TLabel;
+    Label81: TLabel;
+    lblArquivoPFX: TLabel;
+    lblNumeroSerie: TLabel;
+    lblSenha: TLabel;
+    LCaption: TLabel;
     Label141: TLabel;
     Label142: TLabel;
     Label143: TLabel;
@@ -266,8 +362,21 @@ type
     Label145: TLabel;
     lblAlturaCampos: TLabel;
     lblFonteEndereco: TLabel;
+    meUSUHoraCadastro: TMaskEdit;
+    mmEmailMsgCTe: TMemo;
+    mmEmailMsgMDFe: TMemo;
+    mmEmailMsgNFe: TMemo;
+    PanelMenu: TPanel;
+    PanelScroll: TPanel;
+    PanelTitle: TPanel;
     rgCasasDecimaisQtd: TRadioGroup;
     rgTipoFonte: TRadioGroup;
+    sbArquivoCert: TSpeedButton;
+    sbNumeroSerieCert: TSpeedButton;
+    ScrollBox: TScrollBox;
+    seUSUCROCadastro: TSpinEdit;
+    seUSUGTCadastro: TFloatSpinEdit;
+    seUSUNumeroCadastro: TSpinEdit;
     speAlturaCampos: TSpinEdit;
     spedtDecimaisVUnit: TSpinEdit;
     speEspBorda: TSpinEdit;
@@ -291,35 +400,18 @@ type
     edtArquivoWebServicesMDFe: TEdit;
     edtArquivoWebServicesNFe: TEdit;
     edtArquivoWebServicesCTe: TEdit;
-    edtEmailAssuntoMDFe: TEdit;
-    edtEmailAssuntoNFe: TEdit;
-    edtEmailAssuntoCTe: TEdit;
     edtNumCopia: TSpinEdit;
     edtCNPJContador: TEdit;
     gbxMargem1: TGroupBox;
     GroupBox4: TGroupBox;
-    GroupBox5: TGroupBox;
-    GroupBox6: TGroupBox;
-    GroupBox9: TGroupBox;
-    Label133: TLabel;
-    Label138: TLabel;
-    Label155: TLabel;
-    Label156: TLabel;
     Label157: TLabel;
     Label159: TLabel;
-    Label163: TLabel;
-    Label165: TLabel;
-    Label180: TLabel;
-    Label181: TLabel;
     Label182: TLabel;
     Label183: TLabel;
     Label184: TLabel;
     Label185: TLabel;
     Label186: TLabel;
     Label188: TLabel;
-    mmEmailMsgMDFe: TMemo;
-    mmEmailMsgNFe: TMemo;
-    mmEmailMsgCTe: TMemo;
     pgEmailDFe: TPageControl;
     rgTamanhoPapelDacte: TRadioGroup;
     rgTipoAmb: TRadioGroup;
@@ -358,7 +450,6 @@ type
     deBolDirRetorno: TDirectoryEdit;
     deNcmSalvar: TDirectoryEdit;
     deRFDDataSwBasico: TDateEdit;
-    deUSUDataCadastro: TDateEdit;
     tsDiretoriosDFe: TTabSheet;
     edBALLog: TEdit;
     edCEPChaveBuscarCEP: TEdit;
@@ -396,7 +487,6 @@ type
     edRedeUsuario: TEdit;
     edSATLog: TEdit;
     edSATPathArqs: TEdit;
-    edtArquivoPFX: TEdit;
     edLogComp: TEdit;
     edtCodigoAtivacao: TEdit;
     edtCodUF: TEdit;
@@ -426,16 +516,12 @@ type
     edtBOLConta: TEdit;
     edtBOLDigitoAgencia: TEdit;
     edtBOLDigitoConta: TEdit;
-    edtBOLEmailAssunto: TEdit;
-    edtBOLEmailMensagem: TMemo;
     edtBOLLogradouro: TEdit;
     edtBOLNumero: TEdit;
     edtBOLRazaoSocial: TEdit;
-    edtBOLSH: TEdit;
     edtEmitCNPJ: TEdit;
     edtEmitIE: TEdit;
     edtEmitIM: TEdit;
-    edtNumeroSerie: TEdit;
     edTCArqPrecos: TEdit;
     edTCNaoEncontrado: TEdit;
     edtCodCliente: TEdit;
@@ -470,7 +556,6 @@ type
     edtSedexPeso: TEdit;
     edtSedexSenha: TEdit;
     edtSedexValorDeclarado: TEdit;
-    edtSenha: TEdit;
     edtSiteEmpresa: TEdit;
     edtSwHAssinatura: TEdit;
     edtSwHCNPJ: TEdit;
@@ -498,13 +583,10 @@ type
     gbTCP: TGroupBox;
     gbTXT: TGroupBox;
     gbWiFi: TGroupBox;
-    gbxCertificado: TGroupBox;
     gbxMargem: TGroupBox;
     gbxProxy: TGroupBox;
     gbxRetornoEnvio: TGroupBox;
     GroupBox1: TGroupBox;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
     gbxWSNFe: TGroupBox;
     gbConfiguracao: TGroupBox;
     gbCodBarras: TGroupBox;
@@ -514,7 +596,6 @@ type
     GroupBox7: TGroupBox;
     GroupBox8: TGroupBox;
     Image1: TImage;
-    Image2: TImage;
     ImageList1: TImageList;
     Impressao: TTabSheet;
     Label1: TLabel;
@@ -528,9 +609,7 @@ type
     Label106: TLabel;
     Label107: TLabel;
     Label108: TLabel;
-    Label109: TLabel;
     Label11: TLabel;
-    Label110: TLabel;
     Label111: TLabel;
     Label112: TLabel;
     Label113: TLabel;
@@ -607,7 +686,6 @@ type
     Label176: TLabel;
     Label177: TLabel;
     Label178: TLabel;
-    Label179: TLabel;
     Label18: TLabel;
     Label19: TLabel;
     Label2: TLabel;
@@ -633,7 +711,6 @@ type
     Label38: TLabel;
     Label39: TLabel;
     Label4: TLabel;
-    Label40: TLabel;
     Label41: TLabel;
     Label42: TLabel;
     Label43: TLabel;
@@ -644,11 +721,6 @@ type
     Label48: TLabel;
     Label49: TLabel;
     Label5: TLabel;
-    Label50: TLabel;
-    Label51: TLabel;
-    Label52: TLabel;
-    Label53: TLabel;
-    Label54: TLabel;
     Label55: TLabel;
     Label56: TLabel;
     Label57: TLabel;
@@ -663,7 +735,6 @@ type
     Label65: TLabel;
     Label66: TLabel;
     Label67: TLabel;
-    Label68: TLabel;
     Label69: TLabel;
     Label7: TLabel;
     Label70: TLabel;
@@ -678,7 +749,6 @@ type
     Label79: TLabel;
     Label8: TLabel;
     Label80: TLabel;
-    Label81: TLabel;
     Label82: TLabel;
     Label83: TLabel;
     Label84: TLabel;
@@ -715,9 +785,6 @@ type
     lblBOLNomeRazao: TLabel;
     lblBOLNumero: TLabel;
     lblBOLPessoa: TLabel;
-    lblNumeroSerie: TLabel;
-    lblArquivoPFX: TLabel;
-    lblSenha: TLabel;
     lCEPCEP: TLabel;
     lCEPChave: TLabel;
     lCEPProxyPorta: TLabel;
@@ -748,7 +815,6 @@ type
     lTimeOutTCP: TLabel;
     mCmd: TMemo;
     meRFDHoraSwBasico: TMaskEdit;
-    meUSUHoraCadastro: TMaskEdit;
     mResp: TMemo;
     mRFDINI: TMemo;
     mRSAKey: TMemo;
@@ -776,9 +842,7 @@ type
     pgTipoWebService: TPageControl;
     pRespostas: TPanel;
     PrintDialog1: TPrintDialog;
-    pTitulo: TPanel;
     pTopCmd: TPanel;
-    pTopo: TPanel;
     pTopRespostas: TPanel;
     rgRedeTipoInter: TRadioGroup;
     rgRedeTipoLan: TRadioGroup;
@@ -796,8 +860,6 @@ type
     SbArqLog: TSpeedButton;
     SbArqLog2: TSpeedButton;
     sbBALSerial: TSpeedButton;
-    sbNumeroSerieCert: TSpeedButton;
-    sbArquivoCert: TSpeedButton;
     sbBALLog: TSpeedButton;
     sbCHQBemafiINI: TSpeedButton;
     sbCHQSerial: TSpeedButton;
@@ -813,7 +875,6 @@ type
     sbPathPDF: TSpeedButton;
     sbPathSalvar: TSpeedButton;
     sbPosPrinterLog: TSpeedButton;
-    sbProcessando: TStatusBar;
     sbSerial: TSpeedButton;
     sbTCArqPrecosEdit: TSpeedButton;
     sbTCArqPrecosFind: TSpeedButton;
@@ -845,9 +906,6 @@ type
     seMargemTopo: TSpinEdit;
     seNumeroCaixa: TSpinEdit;
     sePagCod: TSpinEdit;
-    seUSUCROCadastro: TSpinEdit;
-    seUSUGTCadastro: TFloatSpinEdit;
-    seUSUNumeroCadastro: TSpinEdit;
     sfeVersaoEnt: TFloatSpinEdit;
     shpLCB: TShape;
     shpTC: TShape;
@@ -894,7 +952,6 @@ type
     tsTesteNFe: TTabSheet;
     tsWSNFCe: TTabSheet;
     tsWSNFe: TTabSheet;
-    tvMenu: TTreeView;
     TrayIcon1: TTrayIcon;
     bCancelar: TBitBtn;
     Timer1: TTimer;
@@ -962,26 +1019,66 @@ type
     procedure bSedexTestarClick(Sender: TObject);
     procedure btAtivarsatClick(Sender: TObject);
     procedure btConsultarStatusOPSATClick(Sender: TObject);
+    procedure btnBalancaClick(Sender: TObject);
+    procedure btnBoletoCedenteClick(Sender: TObject);
+    procedure btnBoletoClick(Sender: TObject);
+    procedure btnBoletoContaClick(Sender: TObject);
+    procedure btnBoletoEmailClick(Sender: TObject);
+    procedure btnBoletoLeiauteClick(Sender: TObject);
+    procedure btnBoletoRRClick(Sender: TObject);
+    procedure btnCadastroClick(Sender: TObject);
     procedure btnCancelarCTeClick(Sender: TObject);
     procedure btnCancMDFeClick(Sender: TObject);
     procedure btnCancNFClick(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnConsultarCTeClick(Sender: TObject);
     procedure btnConsultarMDFeClick(Sender: TObject);
+    procedure btnConsultasClick(Sender: TObject);
+    procedure btnDFeCertificadosClick(Sender: TObject);
+    procedure btnDFeClick(Sender: TObject);
+    procedure btnDFeDirClick(Sender: TObject);
+    procedure btnDFeEmailClick(Sender: TObject);
+    procedure btnDFeGeralClick(Sender: TObject);
+    procedure btnDFePrintClick(Sender: TObject);
+    procedure btnDFeTesteClick(Sender: TObject);
+    procedure btnDFeWebServicesClick(Sender: TObject);
+    procedure btnDisplayClick(Sender: TObject);
+    procedure btnECFClick(Sender: TObject);
+    procedure btnEmailClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnEnviarCTeClick(Sender: TObject);
     procedure btnEnviarEmailClick(Sender: TObject);
     procedure btnEnviarEmailCTeClick(Sender: TObject);
     procedure btnEnviarEmailMDFeClick(Sender: TObject);
     procedure btnEnviarMDFeClick(Sender: TObject);
+    procedure btnEtiquetaClick(Sender: TObject);
+    procedure btnGavetaClick(Sender: TObject);
+    procedure btnImpChequeClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btnImprimirCTeClick(Sender: TObject);
     procedure btnImprimirMDFeClick(Sender: TObject);
     procedure btnInutilizarClick(Sender: TObject);
     procedure btnInutilizarCTeClick(Sender: TObject);
+    procedure btnLeitorSerialClick(Sender: TObject);
+    procedure btnMonitorClick(Sender: TObject);
+    procedure btnNCMClick(Sender: TObject);
+    procedure btnPosPrinterClick(Sender: TObject);
+    procedure btnRFDClick(Sender: TObject);
+    procedure btnRFDFileClick(Sender: TObject);
+    procedure btnRFDGeralClick(Sender: TObject);
+    procedure btnSATClick(Sender: TObject);
+    procedure btnSATDadosClick(Sender: TObject);
+    procedure btnSATEmitenteClick(Sender: TObject);
+    procedure btnSATPrintClick(Sender: TObject);
+    procedure btnSATRedeClick(Sender: TObject);
+    procedure btnSATSHClick(Sender: TObject);
+    procedure btnSedexClick(Sender: TObject);
+    procedure btnSHClick(Sender: TObject);
     procedure btnStatusServClick(Sender: TObject);
     procedure btnStatusServCTeClick(Sender: TObject);
     procedure btnStatusServMDFeClick(Sender: TObject);
+    procedure btnTCClick(Sender: TObject);
+    procedure btnUserClick(Sender: TObject);
     procedure btnValidarXMLClick(Sender: TObject);
     procedure btnValidarXMLCTeClick(Sender: TObject);
     procedure btnValidarXMLMDFeClick(Sender: TObject);
@@ -1042,7 +1139,6 @@ type
     procedure bECFTestarClick(Sender: TObject);
     procedure bECFLeituraXClick(Sender: TObject);
     procedure bECFAtivarClick(Sender: TObject);
-    procedure Label133Click(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
@@ -1174,6 +1270,8 @@ type
     procedure cbETQModeloChange(Sender: TObject);
     procedure cbETQPortaChange(Sender: TObject);
     procedure bTCAtivarClick(Sender: TObject);
+    procedure tsTCContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure tsTCShow(Sender: TObject);
     procedure cbxTCModeloChange(Sender: TObject);
     procedure sbTCArqPrecosEditClick(Sender: TObject);
@@ -1184,6 +1282,8 @@ type
     procedure tvMenuEditing(Sender: TObject; Node: TTreeNode;
       var AllowEdit: boolean);
     procedure PathClick(Sender: TObject);
+    procedure ACT_ButtonMouseEnter(Sender: TObject);
+    procedure ACT_ButtonMouseLeave(Sender: TObject);
   private
     ACBrMonitorINI: string;
     Inicio, MonitorarPasta: boolean;
@@ -1200,13 +1300,13 @@ type
     fsCNPJSWOK: boolean;
     TipoCMD: string;
     pCanClose: boolean;
-
     fsSLPrecos: TStringList;
     fsDTPrecos: integer;
-
     fsTipo: integer;
-
     fsLinesLog: ansistring;
+    fsPosX: Integer;
+    fsPosY: Integer;
+    fsCaptura: Boolean;
 
     procedure DesInicializar;
     procedure Inicializar;
@@ -1227,11 +1327,13 @@ type
 
     procedure ACBrMailTesteMailProcess(const aStatus: TMailStatus);
 
-    procedure MudaPainel;
-    function AchaTipo(No: TTreeNode): integer;
-
     procedure LeDadosRedeSAT;
     procedure ConfiguraRedeSAT;
+
+    procedure SetColorButtons(Sender: TObject);
+    procedure SetColorSubButtons(Sender: TObject);
+    procedure SetPanel(Sender: TPanel);
+    procedure SetSize25(Sender: TObject);
   public
     Conexao: TTCPBlockSocket;
 
@@ -1278,6 +1380,19 @@ uses IniFiles, TypInfo, LCLType, strutils,
 
 {$R *.lfm}
 
+{ TCores }
+
+class constructor TCores.Create;
+begin
+  Buttons := clBtnFace;
+  ButtonSelected := $00CACA00;
+  ButtonMouseEnter := clGray;
+
+  SubButtons := $00FFFFB3;
+  SubButtonSelected := clWhite;
+  SubButtonMouseEnter := clGray;
+end;
+
 {-------------------------------- TFrmACBrMonitor -----------------------------}
 procedure TFrmACBrMonitor.FormCreate(Sender: TObject);
 var
@@ -1297,6 +1412,7 @@ var
   iImpressoraESCPOS: TACBrPosPrinterModelo;
   iPagCodigoESCPOS: TACBrPosPaginaCodigo;
   iTZMode: TTimeZoneModoDeteccao;
+  iFor: Integer;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1304,6 +1420,10 @@ begin
   {$IFDEF LINUX}
   FpUmask(0);
   {$ENDIF}
+
+  // Seta as definições iniciais para navegação
+  SetColorButtons(btnMonitor);
+  ScrollBox.VertScrollBar.Position:=0;
 
   mResp.Clear;
   mCmd.Clear;
@@ -1481,7 +1601,7 @@ begin
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 
-  Caption := 'ACBrMonitorPLUS ' + Versao + ' - ACBr: ' + ACBR_VERSAO;
+  Caption := ' ACBrMonitorPLUS ' + Versao + ' - ACBr: ' + ACBR_VERSAO + ' ';
 
   {$IFDEF LINUX}
   rbLCBTeclado.Caption := 'Dispositivo';
@@ -1531,7 +1651,6 @@ begin
   end
   else
     ACBrGIF1.Visible := False;
-
 
   pgConfig.ShowTabs := False;
   Timer1.Enabled := True;
@@ -1998,6 +2117,60 @@ begin
   LeDadosRedeSAT;
 end;
 
+procedure TFrmACBrMonitor.btnBalancaClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsBAL;
+end;
+
+procedure TFrmACBrMonitor.btnBoletoCedenteClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgBoleto.ActivePage := tsCedente;
+end;
+
+procedure TFrmACBrMonitor.btnBoletoClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  SetSize25(TPanel(Sender).Parent);
+  pgConfig.ActivePage := tsACBrBoleto;
+  // Ativa a 1a página do pegecontrol
+  btnBoletoCedenteClick(btnBoletoCedente);
+end;
+
+procedure TFrmACBrMonitor.btnBoletoContaClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgBoleto.ActivePage := tsContaBancaria;
+end;
+
+procedure TFrmACBrMonitor.btnBoletoEmailClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgBoleto.ActivePage := tsBoletoEmail;
+end;
+
+procedure TFrmACBrMonitor.btnBoletoLeiauteClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgBoleto.ActivePage := tsLayoutBoleto;
+end;
+
+procedure TFrmACBrMonitor.btnBoletoRRClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgBoleto.ActivePage := tsRemessaRetorno;
+end;
+
+procedure TFrmACBrMonitor.btnCadastroClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  SetSize25(TPanel(Sender).Parent);
+  pgConfig.ActivePage := tsCadastro;
+  // Ativa a 1a página do pegecontrol
+  btnUserClick(btnUser);
+end;
+
 procedure TFrmACBrMonitor.btnCancelarCTeClick(Sender: TObject);
 var
   idLote, vAux: string;
@@ -2152,6 +2325,81 @@ begin
     ACBrMDFe1.Consultar;
     ExibeResp(ACBrMDFe1.WebServices.Consulta.RetWS);
   end;
+end;
+
+procedure TFrmACBrMonitor.btnConsultasClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsConsultas;
+end;
+
+procedure TFrmACBrMonitor.btnDFeCertificadosClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsCertificadoDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFeClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  SetSize25(TPanel(Sender).Parent);
+  pgConfig.ActivePage := tsDFe;
+  // Ativa a 1a página do pegecontrol
+  btnDFeGeralClick(btnDFeGeral);
+end;
+
+procedure TFrmACBrMonitor.btnDFeDirClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsDiretoriosDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFeEmailClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsEmailDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFeGeralClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsConfiguracaoDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFePrintClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsImpressaoDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFeTesteClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsTestesDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDFeWebServicesClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDFe.ActivePage := tsWebServiceDFe;
+end;
+
+procedure TFrmACBrMonitor.btnDisplayClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsDIS;
+end;
+
+procedure TFrmACBrMonitor.btnECFClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsECF;
+end;
+
+procedure TFrmACBrMonitor.btnEmailClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsEmail;
 end;
 
 procedure TFrmACBrMonitor.btnEnviarClick(Sender: TObject);
@@ -2343,6 +2591,24 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.btnEtiquetaClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsETQ;
+end;
+
+procedure TFrmACBrMonitor.btnGavetaClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsGAV;
+end;
+
+procedure TFrmACBrMonitor.btnImpChequeClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsCHQ;
+end;
+
 procedure TFrmACBrMonitor.btnImprimirClick(Sender: TObject);
 begin
   LimparResp;
@@ -2454,6 +2720,102 @@ begin
   ExibeResp(ACBrCTe1.WebServices.Inutilizacao.RetWS);
 end;
 
+procedure TFrmACBrMonitor.btnLeitorSerialClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsLCB;
+end;
+
+procedure TFrmACBrMonitor.btnMonitorClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsMonitor;
+end;
+
+procedure TFrmACBrMonitor.btnNCMClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsNcm;
+end;
+
+procedure TFrmACBrMonitor.btnPosPrinterClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsEscPos;
+end;
+
+procedure TFrmACBrMonitor.btnRFDClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  SetSize25(TPanel(Sender).Parent);
+  pgConfig.ActivePage := tsRFD;
+  // Ativa a 1a página do pegecontrol
+  btnRFDGeralClick(btnRFDGeral);
+end;
+
+procedure TFrmACBrMonitor.btnRFDFileClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgConRFD.ActivePage := tsRFDINI;
+end;
+
+procedure TFrmACBrMonitor.btnRFDGeralClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgConRFD.ActivePage := tsRFDConfig;
+end;
+
+procedure TFrmACBrMonitor.btnSATClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  SetSize25(TPanel(Sender).Parent);
+  pgConfig.ActivePage := tsSat;
+  // Ativa a 1a página do pegecontrol
+  btnSATDadosClick(btnSATDados);
+end;
+
+procedure TFrmACBrMonitor.btnSATDadosClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgSAT.ActivePage := tsDadosSAT;
+end;
+
+procedure TFrmACBrMonitor.btnSATEmitenteClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgSAT.ActivePage := tsDadosEmit;
+end;
+
+procedure TFrmACBrMonitor.btnSATPrintClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgSAT.ActivePage := Impressao;
+end;
+
+procedure TFrmACBrMonitor.btnSATRedeClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgSAT.ActivePage := tsRede;
+end;
+
+procedure TFrmACBrMonitor.btnSATSHClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgSAT.ActivePage := tsDadosSwHouse;
+end;
+
+procedure TFrmACBrMonitor.btnSedexClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsSEDEX;
+end;
+
+procedure TFrmACBrMonitor.btnSHClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgCadastro.ActivePage := tsCadSwH;
+end;
+
 procedure TFrmACBrMonitor.btnStatusServClick(Sender: TObject);
 begin
   LimparResp;
@@ -2473,6 +2835,18 @@ begin
   LimparResp;
   ACBrMDFe1.WebServices.StatusServico.Executar;
   ExibeResp(ACBrMDFe1.WebServices.StatusServico.RetWS);
+end;
+
+procedure TFrmACBrMonitor.btnTCClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  pgConfig.ActivePage := tsTC;
+end;
+
+procedure TFrmACBrMonitor.btnUserClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgCadastro.ActivePage := tsCadUsuario;
 end;
 
 procedure TFrmACBrMonitor.btnValidarXMLClick(Sender: TObject);
@@ -2943,7 +3317,7 @@ begin
     TcpServer.Terminador := '#13,#10,#46,#13,#10';
     TcpServer.Ativo := rbTCP.Checked;
 
-    mResp.Lines.Add('ACBr Monitor Ver.' + Versao);
+    mResp.Lines.Add('ACBr MonitorPLUS Ver.' + Versao);
     mResp.Lines.Add('Aguardando comandos ACBr');
   except
     on E: Exception do
@@ -3167,6 +3541,7 @@ begin
     sedLogLinhas.Value := Ini.ReadInteger('ACBrMonitor', 'Linhas_Log', 0);
     cbComandos.Checked := Ini.ReadBool('ACBrMonitor', 'Comandos_Remotos', False);
     cbUmaInstancia.Checked := Ini.ReadBool('ACBrMonitor', 'Uma_Instancia', True);
+    cbAbas.Checked := Ini.ReadBool('ACBrMonitor', 'MostraAbas', False);
     cbMonitorarPasta.OnChange := Nil;
     cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
     cbMonitorarPasta.OnChange := @cbMonitorarPastaChange;
@@ -4048,6 +4423,13 @@ begin
   if cbxTCModelo.ItemIndex > 0 then
     bTCAtivar.Click;
 
+  // Mostrar Abas
+  pgConfig.ShowTabs:=cbAbas.Checked;
+  pgSwHouse.ShowTabs:=cbAbas.Checked;
+  pgConRFD.ShowTabs:=cbAbas.Checked;
+  pgBoleto.ShowTabs:=cbAbas.Checked;
+  pgDFe.ShowTabs:=cbAbas.Checked;
+  pgSAT.ShowTabs:=cbAbas.Checked;
 end;
 
 {------------------------------------------------------------------------------}
@@ -4140,7 +4522,7 @@ begin
 
   if pConfig.Visible and chRFD.Checked and (fsHashSenha < 1) then
   begin
-    pgConfig.ActivePageIndex := 0;
+    btnMonitorClick(btnMonitor); //    pgConfig.ActivePageIndex := 0;
     cbSenha.Checked := True;
     edSenha.SetFocus;
     raise Exception.Create('Para trabalhar com RFD é necessário definir uma Senha ' +
@@ -4151,7 +4533,7 @@ begin
   begin
     if not DirectoryExists(deNcmSalvar.Text) then
     begin
-      pgConfig.ActivePageIndex := 15;
+      btnNCMClick(btnNCM); //pgConfig.ActivePageIndex := 15;
       deNcmSalvar.SetFocus;
       raise Exception.Create('Diretorio para salvar arquivo de NCM nao encontrado.');
     end;
@@ -4193,6 +4575,7 @@ begin
     Ini.WriteInteger('ACBrMonitor', 'Linhas_Log', sedLogLinhas.Value);
     Ini.WriteBool('ACBrMonitor', 'Comandos_Remotos', cbComandos.Checked);
     Ini.WriteBool('ACBrMonitor', 'Uma_Instancia', cbUmaInstancia.Checked);
+    Ini.WriteBool('ACBrMonitor', 'MostraAbas', cbAbas.Checked);
 
     { Parametros do ECF }
     Ini.WriteInteger('ECF', 'Modelo', max(cbECFModelo.ItemIndex - 1, 0));
@@ -4573,8 +4956,8 @@ begin
       try
         Validar;    // Dispara Exception se Documento estiver errado
       except
-        pgConfig.ActivePage := tsACBrBoleto;
-        pgBoleto.ActivePage := tsCedente;
+        btnBoletoClick(btnBoleto);  //pgConfig.ActivePage := tsACBrBoleto;
+        btnBoletoCedenteClick(btnBoletoCedente); //pgBoleto.ActivePage := tsCedente;
         edtBOLCNPJ.SetFocus;
         raise;
       end;
@@ -4693,8 +5076,8 @@ begin
     begin
       if (Chave = '') and chRFD.Checked then
       begin
-        pgConfig.ActivePage := tsCadastro;
-        pgCadastro.ActivePage := tsCadSwH;
+        btnCadastroClick(btnCadastro); //pgConfig.ActivePage := tsCadastro;
+        btnSHClick(btnSH); // pgCadastro.ActivePage := tsCadSwH;
         pgSwHouse.ActivePage := tsCadSwChaveRSA;
 
         raise Exception.Create('Para trabalhar com RFD é necessário ' +
@@ -4713,9 +5096,8 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.EscondeConfig;
 begin
+  PanelScroll.Visible := False;
   pConfig.Visible := False;
-  tvMenu.Visible := False;
-
   bConfig.Caption := '&Configurar';
   bConfig.Glyph := nil;
   ImageList1.GetBitmap(11, bConfig.Glyph);
@@ -4747,17 +5129,14 @@ begin
     raise Exception.Create('Senha [' + Senha + '] inválida');
 
   fsCNPJSWOK := False;
+  PanelScroll.Visible := True;
   pConfig.Visible := True;
-  tvMenu.Visible := True;
-
   bConfig.Caption := '&Salvar';
   bConfig.Glyph := nil;
   ImageList1.GetBitmap(12, bConfig.Glyph);
   bCancelar.Visible := True;
   btMinimizar.Visible := False;
-  pgConfig.ActivePageIndex := 0;
-  tvMenu.Items.FindNodeWithText('Monitor').Selected := True;
-  MudaPainel;
+//  pgConfig.ActivePageIndex := 0;
   LimparResp;
 
   Application.ProcessMessages;
@@ -4816,7 +5195,7 @@ begin
 
     if Linha <> '' then
     begin
-      sbProcessando.Panels[1].Text := Linha;
+      StatusBar1.Panels[2].Text := Linha;
 
       try
         if pos('.', Linha) = 0 then              { Comandos do ACBrMonitor }
@@ -4875,7 +5254,7 @@ begin
           Resposta(Linha, 'ERRO: ' + E.Message);
       end;
 
-      sbProcessando.Panels[1].Text := '';
+      StatusBar1.Panels[2].Text := '';
     end;
 
     fsInicioLoteTXT := False;
@@ -5359,12 +5738,6 @@ begin
 
   AvaliaEstadoTsECF;
   AvaliaEstadoTsRFD;
-end;
-
-procedure TFrmACBrMonitor.Label133Click(Sender: TObject);
-begin
-  tvMenu.Items.FindNodeWithText('E-Mail').Selected := True;
-  MudaPainel;
 end;
 
 procedure TFrmACBrMonitor.meUSUHoraCadastroExit(Sender: TObject);
@@ -6569,83 +6942,6 @@ begin
 
 end;
 
-procedure TFrmACBrMonitor.MudaPainel;
-var
-  OldTipo: integer;
-  Titulo: string;
-begin
-  OldTipo := fsTipo;
-
-  if not Assigned(tvMenu.Selected) then
-    exit;
-
-  try
-    fsTipo := AchaTipo(tvMenu.Selected);
-    Titulo := tvMenu.Selected.GetParentNodeOfAbsoluteLevel(0).Text;
-
-    if (fsTipo = -1) and (tvMenu.Selected.Level > 0) then
-    begin
-      fsTipo := AchaTipo(tvMenu.Selected.GetParentNodeOfAbsoluteLevel(0));
-      Titulo := Titulo + ' - ' + tvMenu.Selected.Text;
-    end;
-  except
-    fsTipo := 0
-  end;
-
-  if OldTipo = fsTipo then
-    exit;
-
-  pgConfig.ActivePageIndex := fsTipo;
-  pTitulo.Caption := Titulo;
-end;
-
-function TFrmACBrMonitor.AchaTipo(No: TTreeNode): integer;
-begin
-  Result := -1;
-
-  if not Assigned(No) then
-    exit;
-
-  if No.Text = 'Monitor' then
-    Result := 0
-  else if No.Text = 'Cadastros' then
-    Result := 1
-  else if No.Text = 'ECF' then
-    Result := 2
-  else if No.Text = 'Impressão de Cheque' then
-    Result := 3
-  else if No.Text = 'Gaveta' then
-    Result := 4
-  else if No.Text = 'Display' then
-    Result := 5
-  else if No.Text = 'Leitor Serial' then
-    Result := 6
-  else if No.Text = 'RFD' then
-    Result := 7
-  else if No.Text = 'Balança' then
-    Result := 8
-  else if No.Text = 'Etiqueta' then
-    Result := 9
-  else if No.Text = 'Terminal de Consulta' then
-    Result := 10
-  else if No.Text = 'Boleto' then
-    Result := 11
-  else if No.Text = 'Consultas CEP/IBGE' then
-    Result := 12
-  else if No.Text = 'E-Mail' then
-    Result := 13
-  else if No.Text = 'Sedex' then
-    Result := 14
-  else if No.Text = 'NCM' then
-    Result := 15
-  else if No.Text = 'DFe' then
-    Result := 16
-  else if No.Text = 'SAT' then
-    Result := 17
-  else if No.Text = 'PosPrinter' then
-    Result := 18;
-end;
-
 procedure TFrmACBrMonitor.LeDadosRedeSAT;
 begin
   with ACBrSAT1.Rede do
@@ -6930,6 +7226,12 @@ begin
 
   mResp.Lines.Add('Servidor de Terminal de Consulta: ' + IfThen(
     TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO'));
+end;
+
+procedure TFrmACBrMonitor.tsTCContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+
 end;
 
 {------------------------------------------------------------------------------}
@@ -7268,16 +7570,13 @@ end;
 
 procedure TFrmACBrMonitor.tvMenuChange(Sender: TObject; Node: TTreeNode);
 begin
-  if not Visible then
-    exit;
 
-  MudaPainel;
 end;
 
 procedure TFrmACBrMonitor.tvMenuEditing(Sender: TObject; Node: TTreeNode;
   var AllowEdit: boolean);
 begin
-  AllowEdit := False;
+
 end;
 
 {----------------------------PosPrinter----------------------------------------}
@@ -7398,5 +7697,96 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.ACT_ButtonMouseEnter(Sender: TObject);
+begin
+  if (TPanel(Sender).Color = TCores.Buttons) or
+     (TPanel(Sender).Color = TCores.SubButtons) then
+  begin
+     TPanel(Sender).Color := clGray;
+  end;
+end;
+
+procedure TFrmACBrMonitor.ACT_ButtonMouseLeave(Sender: TObject);
+begin
+  if (TPanel(Sender).Color = TCores.ButtonMouseEnter) or
+     (TPanel(Sender).Color = TCores.SubButtonMouseEnter) then
+  begin
+    if TPanel(Sender).Tag = 0 then
+       TPanel(Sender).Color := TCores.Buttons
+    else
+       TPanel(Sender).Color := TCores.SubButtons;
+  end;
+end;
+
+procedure TFrmACBrMonitor.SetColorButtons(Sender: TObject);
+var
+  iFor: Integer;
+begin
+   for iFor := 0 to ScrollBox.ControlCount -1 do
+   begin
+     if TPanel(ScrollBox.Controls[iFor]).Tag = 0 then
+        TPanel(ScrollBox.Controls[iFor]).Color := TCores.Buttons
+     else
+     if TPanel(ScrollBox.Controls[iFor]).Tag = 1 then
+     begin
+        TPanel(ScrollBox.Controls[iFor]).Color := TCores.SubButtons;
+        TPanel(ScrollBox.Controls[iFor]).Height := 0;
+        TPanel(ScrollBox.Controls[iFor]).Font.Bold := False;
+     end
+     else
+     if TPanel(ScrollBox.Controls[iFor]).Tag = 9 then
+     begin
+       if ScrollBox.Controls[iFor] is TPanel then
+          SetPanel(TPanel(ScrollBox.Controls[iFor]));
+     end;
+   end;
+   TPanel(Sender).Color := TCores.ButtonSelected;
+end;
+
+procedure TFrmACBrMonitor.SetPanel(Sender: TPanel);
+var
+  iFor: Integer;
+begin
+  for iFor := 0 to Sender.ControlCount -1 do
+  begin
+    if Sender.Controls[iFor].Tag = 1 then
+    begin
+       Sender.Controls[iFor].Color := TCores.SubButtons;
+       Sender.Controls[iFor].Height := 0;
+       Sender.Controls[iFor].Font.Bold := False;
+    end
+    else
+    if Sender.Controls[iFor].Tag = 0 then
+       Sender.Controls[iFor].Color := TCores.Buttons;
+  end;
+end;
+
+procedure TFrmACBrMonitor.SetSize25(Sender: TObject);
+var
+  iFor: Integer;
+begin
+  for iFor := 0 to TPanel(Sender).ControlCount -1 do
+  begin
+    if TPanel(Sender).Controls[iFor].Tag = 1 then
+    begin
+       TPanel(Sender).Controls[iFor].Height := 25;
+    end;
+  end;
+end;
+
+procedure TFrmACBrMonitor.SetColorSubButtons(Sender: TObject);
+var
+  iFor: Integer;
+begin
+   for iFor := 0 to TPanel(Sender).Parent.ControlCount -1 do
+   begin
+     if TPanel(Sender).Parent.Controls[iFor].Tag = 1 then
+     begin
+        TPanel(Sender).Parent.Controls[iFor].Color := TCores.SubButtons;
+        TPanel(Sender).Parent.Controls[iFor].Font.Bold := False;
+     end;
+   end;
+   TPanel(Sender).Font.Bold := True;
+end;
 
 end.

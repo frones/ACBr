@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] correção do endereço sacador/avalista
+		http://www.projetoacbr.com.br/forum/topic/28421-melhoria-no-layout-de-boletos-fortesreport-endere%C3%A7o-sacadoravalista/
+		por: Juliomar Marchetti
+		
 29/02/2016
 -- ACBrBoletoFR --
 [-] acerto na montagem do codigo do cedente para FastReport.

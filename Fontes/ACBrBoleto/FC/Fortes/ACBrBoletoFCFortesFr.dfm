@@ -1448,9 +1448,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLLabel88: TRLLabel
-        Left = 65
-        Top = 288
+      object lblPagador2: TRLLabel
+        Left = 3
+        Top = 287
         Width = 46
         Height = 14
         Caption = 'Pagador:'
@@ -1461,13 +1461,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtNomeSacado2: TRLLabel
-        Left = 117
-        Top = 289
-        Width = 450
+      object txtNomePagador2: TRLLabel
+        Left = 53
+        Top = 287
+        Width = 514
         Height = 12
         AutoSize = False
-        Caption = 'Nome do Sacado'
+        Caption = 'Nome do Pagador'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1475,27 +1475,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtEnderecoSacado2: TRLLabel
-        Left = 117
-        Top = 303
-        Width = 450
+      object txtEndPagador2: TRLLabel
+        Left = 53
+        Top = 301
+        Width = 514
         Height = 12
         AutoSize = False
-        Caption = 'Rua / Numero / Complemento'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
-      object txtCidadeSacado2: TRLLabel
-        Left = 117
-        Top = 318
-        Width = 450
-        Height = 12
-        AutoSize = False
-        Caption = 'Cep / Bairro / Cidade / Estado'
+        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1516,9 +1502,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtCpfCnpjSacado2: TRLLabel
+      object txtCpfCnpjPagador2: TRLLabel
         Left = 574
-        Top = 300
+        Top = 299
         Width = 181
         Height = 14
         AutoSize = False
@@ -1601,12 +1587,12 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLLabel102: TRLLabel
-        Left = 4
-        Top = 329
-        Width = 88
+      object lblSacador2a: TRLLabel
+        Left = 3
+        Top = 316
+        Width = 47
         Height = 14
-        Caption = 'Sacador/Avalista:'
+        Caption = 'Sacador/'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1614,12 +1600,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtSacadorAvalista2: TRLLabel
-        Left = 108
+      object txtEndSacadorAval2: TRLLabel
+        Left = 53
         Top = 330
-        Width = 458
+        Width = 514
         Height = 14
         AutoSize = False
+        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1733,6 +1720,33 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 56
         Angle = 90.000000000000000000
         DrawKind = dkLine
+      end
+      object lblSacador2b: TRLLabel
+        Left = 3
+        Top = 330
+        Width = 45
+        Height = 14
+        Caption = 'Avalista:'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txtNomeSacadorAval2: TRLLabel
+        Left = 53
+        Top = 316
+        Width = 514
+        Height = 12
+        AutoSize = False
+        Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
     end
     object RLBand2: TRLBand
@@ -2478,10 +2492,10 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLLabel165: TRLLabel
-        Left = 65
+      object lblPagador3: TRLLabel
+        Left = 3
         Top = 293
-        Width = 46
+        Width = 43
         Height = 14
         Caption = 'Pagador'
         Font.Charset = DEFAULT_CHARSET
@@ -2491,13 +2505,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtNomeSacado3: TRLLabel
-        Left = 117
+      object txtNomePagador3: TRLLabel
+        Left = 53
         Top = 293
-        Width = 443
+        Width = 514
         Height = 14
         AutoSize = False
-        Caption = 'Nome do Sacado'
+        Caption = 'Nome do Pagador'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2518,7 +2532,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtCpfCnpjSacado3: TRLLabel
+      object txtCpfCnpjPagador3: TRLLabel
         Left = 573
         Top = 302
         Width = 187
@@ -2532,13 +2546,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtEnderecoSacado3: TRLLabel
-        Left = 117
-        Top = 306
-        Width = 443
+      object txtEndPagador3: TRLLabel
+        Left = 53
+        Top = 305
+        Width = 514
         Height = 14
         AutoSize = False
-        Caption = 'Rua / Numero / Complemento'
+        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2559,13 +2573,13 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtCidadeSacado3: TRLLabel
-        Left = 117
-        Top = 319
-        Width = 443
+      object txtNomeSacadorAval3: TRLLabel
+        Left = 53
+        Top = 318
+        Width = 514
         Height = 14
         AutoSize = False
-        Caption = 'Cep / Bairro / Cidade / Estado'
+        Caption = 'Nome do Sacador/Avalista - Cpf/Cnpj'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2599,19 +2613,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object RLLabel175: TRLLabel
-        Left = 4
-        Top = 330
-        Width = 88
-        Height = 14
-        Caption = 'Sacador/Avalista:'
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object txtReferencia3: TRLLabel
         Left = 638
         Top = 316
@@ -2631,6 +2632,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 350
         Width = 414
         Height = 58
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Behavior = [beSiteExpander]
         Caption = '00000000000000000000000000000000000000000000'
         CheckSumMethod = cmNone
@@ -2640,8 +2643,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         InvalidCode = icDrawAnyway
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         ParentFont = False
         Ratio = 3.000000000000000000
         RealBounds.UsedUnit = buMilimeters
@@ -2760,12 +2761,39 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
-      object txtSacadorAvalista3: TRLLabel
-        Left = 108
+      object txtEndSacadorAval3: TRLLabel
+        Left = 53
         Top = 330
-        Width = 424
+        Width = 514
         Height = 14
         AutoSize = False
+        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblSacador3a: TRLLabel
+        Left = 3
+        Top = 316
+        Width = 47
+        Height = 14
+        Caption = 'Sacador/'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lblSacador3b: TRLLabel
+        Left = 3
+        Top = 330
+        Width = 45
+        Height = 14
+        Caption = 'Avalista:'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2780,15 +2808,15 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
     Top = 109
     Width = 794
     Height = 1123
+    Margins.LeftMargin = 5.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 5.000000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 5.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 5.000000000000000000
-    Margins.BottomMargin = 0.000000000000000000
     PreviewOptions.ShowModal = True
     BeforePrint = BoletoCarneBeforePrint
     OnDataCount = BoletoCarneDataCount
@@ -3940,6 +3968,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 282
         Width = 465
         Height = 66
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         Caption = '23790-3571000000100120'
         CheckSumMethod = cmNone
@@ -3949,8 +3979,6 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         InvalidCode = icDrawAnyway
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         ParentFont = False
         Ratio = 3.000000000000000000
       end

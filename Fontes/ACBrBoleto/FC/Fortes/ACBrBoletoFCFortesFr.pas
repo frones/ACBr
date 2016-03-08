@@ -129,12 +129,12 @@ type
     RLDraw82: TRLDraw;
     RLDraw83: TRLDraw;
     RLDraw9: TRLDraw;
-    RLLabel102: TRLLabel;
+    lblSacador2a: TRLLabel;
     RLLabel11: TRLLabel;
     RLLabel123: TRLMemo;
     RLLabel161: TRLMemo;
     RLLabel80: TRLMemo;
-    txtSacadorAvalista3: TRLLabel;
+    txtEndSacadorAval3: TRLLabel;
     RLLabel14: TRLLabel;
     RLLabel145: TRLLabel;
     RLLabel146: TRLLabel;
@@ -155,13 +155,12 @@ type
     RLLabel162: TRLLabel;
     RLLabel163: TRLLabel;
     RLLabel164: TRLLabel;
-    RLLabel165: TRLLabel;
+    lblPagador3: TRLLabel;
     RLLabel166: TRLLabel;
     RLLabel167: TRLLabel;
     RLLabel168: TRLLabel;
     RLLabel169: TRLLabel;
     RLLabel171: TRLLabel;
-    RLLabel175: TRLLabel;
     RLLabel18: TRLLabel;
     RLLabel2: TRLLabel;
     RLLabel20: TRLLabel;
@@ -209,7 +208,7 @@ type
     RLLabel85: TRLLabel;
     RLLabel86: TRLLabel;
     RLLabel87: TRLLabel;
-    RLLabel88: TRLLabel;
+    lblPagador2: TRLLabel;
     RLLabel89: TRLLabel;
     RLLabel9: TRLLabel;
     RLLabel90: TRLLabel;
@@ -359,12 +358,11 @@ type
     txtDesconto2: TRLLabel;
     txtMoraMulta2: TRLLabel;
     txtValorCobrado2: TRLLabel;
-    txtNomeSacado2: TRLLabel;
-    txtEnderecoSacado2: TRLLabel;
-    txtCidadeSacado2: TRLLabel;
-    txtCpfCnpjSacado2: TRLLabel;
+    txtNomePagador2: TRLLabel;
+    txtEndPagador2: TRLLabel;
+    txtCpfCnpjPagador2: TRLLabel;
     txtCodigoBaixa2: TRLLabel;
-    txtSacadorAvalista2: TRLLabel;
+    txtEndSacadorAval2: TRLLabel;
     txtReferencia2: TRLLabel;
     txtEndCedente: TRLLabel;
     txtSwHouse: TRLAngleLabel;
@@ -391,13 +389,17 @@ type
     txtDesconto3: TRLLabel;
     txtMoraMulta3: TRLLabel;
     txtValorCobrado3: TRLLabel;
-    txtNomeSacado3: TRLLabel;
-    txtEnderecoSacado3: TRLLabel;
-    txtCidadeSacado3: TRLLabel;
-    txtCpfCnpjSacado3: TRLLabel;
+    txtNomePagador3: TRLLabel;
+    txtEndPagador3: TRLLabel;
+    txtNomeSacadorAval3: TRLLabel;
+    txtCpfCnpjPagador3: TRLLabel;
     txtCodigoBaixa3: TRLLabel;
     txtReferencia3: TRLLabel;
     imgCodigoBarra: TRLBarcode;
+    lblSacador2b: TRLLabel;
+    txtNomeSacadorAval2: TRLLabel;
+    lblSacador3a: TRLLabel;
+    lblSacador3b: TRLLabel;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -643,15 +645,31 @@ begin
       txtCarteira2.Caption            := Titulo.Carteira;
       txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
       txtValorDocumento2.Caption      := IfThen(Titulo.ValorDocumento > 0,FormatFloat('###,###,##0.00',Titulo.ValorDocumento));
-      txtNomeSacado2.Caption          := Titulo.Sacado.NomeSacado;
-      txtEnderecoSacado2.Caption      := Titulo.Sacado.Logradouro + ' '+
-                                         Titulo.Sacado.Numero + Titulo.Sacado.Complemento;
-      txtCidadeSacado2.Caption        := Titulo.Sacado.CEP + ' '+Titulo.Sacado.Bairro +
-                                         ' '+Titulo.Sacado.Cidade + ' '+Titulo.Sacado.UF;
-      txtCpfCnpjSacado2.Caption       := Titulo.Sacado.CNPJCPF;
+
+      with Titulo.Sacado do
+      begin
+        txtNomePagador2.Caption       := NomeSacado;
+        txtEndPagador2.Caption        := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+                                         Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+        txtCpfCnpjPagador2.Caption    := CNPJCPF;
+      end;
+
+      with Titulo.Sacado.SacadoAvalista do
+      begin
+        case Pessoa of
+           pFisica   : TipoDoc:= 'CPF: ';
+           pJuridica : TipoDoc:= 'CNPJ: ';
+        else
+           TipoDoc := 'DOC.: ';
+        end;
+
+        txtNomeSacadorAval2.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF;
+        txtEndSacadorAval2.Caption    := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+                                         Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+      end;
+
       txtInstrucoes2.Lines.Text       := MensagemPadrao.Text;
       txtOrientacoesBanco.Lines.Text  := Banco.OrientacoesBanco.Text;
-      txtSacadorAvalista2.Caption     := Titulo.Sacado.Avalista;
 
       rlBarraOrientbanco.Visible:= txtOrientacoesBanco.Lines.Count > 0;
 
@@ -692,12 +710,11 @@ begin
      txtCarteira3.Caption            := txtCarteira2.Caption;
      txtEspecieDoc3.Caption          := txtEspecieDoc2.Caption;
      txtValorDocumento3.Caption      := txtValorDocumento2.Caption;
-     txtNomeSacado3.Caption          := txtNomeSacado2.Caption;
-     txtEnderecoSacado3.Caption      := txtEnderecoSacado2.Caption;
-     txtCidadeSacado3.Caption        := txtCidadeSacado2.Caption;
-     txtCpfCnpjSacado3.Caption       := txtCpfCnpjSacado2.Caption;
-     txtSacadorAvalista3.Caption     := txtSacadorAvalista2.Caption;
-
+     txtNomePagador3.Caption         := txtNomePagador2.Caption;
+     txtEndPagador3.Caption          := txtEndPagador2.Caption;
+     txtCpfCnpjPagador3.Caption      := txtCpfCnpjPagador2.Caption;
+     txtNomeSacadorAval3.Caption     := txtNomeSacadorAval2.Caption;
+     txtEndSacadorAval3.Caption      := txtEndSacadorAval2.Caption;
      imgCodigoBarra.Caption          := CodBarras;
      txtLinhaDigitavel.Caption       := LinhaDigitavel;
      txtInstrucoes3.Lines.Text       := txtInstrucoes2.Lines.Text;

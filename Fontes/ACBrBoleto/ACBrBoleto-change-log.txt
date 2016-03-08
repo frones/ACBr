@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/03/16 ver. 0.0.183a
+-- ACBrBancoSicredi --
+[-] Ajuste remessa CNAB400. (RobertoSFilho)
+http://www.projetoacbr.com.br/forum/topic/28467-melhoria-remessa-400-sicredi-carn%C3%AA-e-parcelas/
+
+
 Data: 04/03/16 ver. 0.0.182a
 -- ACBrBancoItau --
 [-] Ajuste contador registros remessa CNAB240.(valramosr)

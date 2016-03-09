@@ -43,10 +43,10 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, SynHighlighterXML, SynMemo, PrintersDlgs, pcnConversao,
-  pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr,
-  ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrBlocoX, ACBrMDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types;
+  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs,
+  pcnConversao, pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
+  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrBlocoX,
+  ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types;
 
 const
   {$I versao.txt}
@@ -114,6 +114,11 @@ type
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel3: TBevel;
+    btnDownCont: TPanel;
+    btnPost: TBitBtn;
+    btnDown: TPanel;
+    btnDownConf: TPanel;
+    btnDownXml: TPanel;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -318,17 +323,22 @@ type
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
     cbEmailConfirmation: TCheckBox;
+    DBGrid3: TDBGrid;
     deUSUDataCadastro: TDateEdit;
     edtArquivoPFX: TEdit;
+    edtAutoExecute: TDBCheckBox;
+    edtAutoTimer: TDBEdit;
     edtBOLEmailAssunto: TEdit;
     edtBOLEmailMensagem: TMemo;
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
+    edtidDFeAutoInc: TDBEdit;
     edTimeZoneStr: TEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
+    edtultNSU: TDBEdit;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     Image2: TImage;
@@ -339,10 +349,14 @@ type
     Label138: TLabel;
     Label155: TLabel;
     Label156: TLabel;
+    Label163: TLabel;
     Label165: TLabel;
     Label179: TLabel;
     Label180: TLabel;
     Label181: TLabel;
+    Label194: TLabel;
+    Label196: TLabel;
+    Label197: TLabel;
     Label40: TLabel;
     Label50: TLabel;
     Label51: TLabel;
@@ -366,6 +380,10 @@ type
     mmEmailMsgCTe: TMemo;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
+    pgDownload: TNotebook;
+    pgDownConf: TPage;
+    pgDownXml: TPage;
+    PanelDownMenu: TPanel;
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
@@ -419,6 +437,7 @@ type
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
     TabSheet1: TTabSheet;
+    tsDownload: TTabSheet;
     tsImpCTe: TTabSheet;
     tsTesteMDFe: TTabSheet;
     tsEmailMDFe: TTabSheet;
@@ -1043,6 +1062,9 @@ type
     procedure btnDFeTesteClick(Sender: TObject);
     procedure btnDFeWebServicesClick(Sender: TObject);
     procedure btnDisplayClick(Sender: TObject);
+    procedure btnDownClick(Sender: TObject);
+    procedure btnDownConfClick(Sender: TObject);
+    procedure btnDownXmlClick(Sender: TObject);
     procedure btnECFClick(Sender: TObject);
     procedure btnEmailClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
@@ -2388,6 +2410,27 @@ procedure TFrmACBrMonitor.btnDisplayClick(Sender: TObject);
 begin
   SetColorButtons(Sender);
   pgConfig.ActivePage := tsDIS;
+end;
+
+procedure TFrmACBrMonitor.btnDownClick(Sender: TObject);
+begin
+  SetColorButtons(Sender);
+  SetSize25(TPanel(Sender).Parent);
+  pgConfig.ActivePage := tsDownload;
+  // Ativa a 1a página do pegecontrol
+  btnDownConfClick(btnDownConf);
+end;
+
+procedure TFrmACBrMonitor.btnDownConfClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDownload.PageIndex := 0; // pgDownConf
+end;
+
+procedure TFrmACBrMonitor.btnDownXmlClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgDownload.PageIndex := 1; // pgDownXml
 end;
 
 procedure TFrmACBrMonitor.btnECFClick(Sender: TObject);

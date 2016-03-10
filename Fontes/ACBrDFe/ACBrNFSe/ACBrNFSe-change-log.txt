@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2016
+-- ACBrNFSeNotasFiscais --
+[*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"
+
 10/03/2016   
 -- ACBrNFSeWebServices --
 [*] Ajustes no tratamento do Retorno o provedor DBSeller retorna no formato String

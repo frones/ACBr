@@ -725,9 +725,8 @@ begin
 
   l := Self.Count; // Indice do último manifesto já existente
 
-  { Chamando ParseTXT, para converter de UTF8 para a String nativa e Decodificar
-    caracteres HTML Entity }
-  XMLStr := ParseText(XMLUTF8, True);
+  // Converte de UTF8 para a String nativa da IDE //
+  XMLStr := DecodeToString(XMLUTF8, True);
   LoadFromString(XMLStr, AGerarMDFe);
 
   // Atribui Nome do arquivo a novos manifestos inseridos //

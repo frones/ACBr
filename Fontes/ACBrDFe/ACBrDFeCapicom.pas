@@ -472,7 +472,7 @@ begin
   if Assigned(FCertificado) then
     Result := FCertificado.ValidToDate
   else
-    Result := inherited;
+    Result := inherited GetCertDataVenc;
 end;
 
 function TDFeCapicom.GetCertNumeroSerie: String;
@@ -481,7 +481,7 @@ begin
   if Assigned(FCertificado) then
     Result := FCertificado.SerialNumber
   else
-    Result := inherited;
+    Result := inherited GetCertNumeroSerie;
 end;
 
 function TDFeCapicom.GetCertSubjectName: String;
@@ -490,7 +490,7 @@ begin
   if Assigned(FCertificado) then
     Result := FCertificado.SubjectName
   else
-    Result := inherited;
+    Result := inherited GetCertSubjectName;
 end;
 
 function TDFeCapicom.GetCertRazaoSocial: String;

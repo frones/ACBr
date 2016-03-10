@@ -1536,9 +1536,8 @@ begin
 
   l := Self.Count; // Indice da última nota já existente
 
-  { Chamando ParseTXT, para converter de UTF8 para a String nativa e Decodificar
-    caracteres HTML Entity }
-  XMLStr := ParseText(XMLUTF8, True);
+  // Converte de UTF8 para a String nativa da IDE //
+  XMLStr := DecodeToString(XMLUTF8, True);
   LoadFromString(XMLStr, AGerarNFe);
 
   // Atribui Nome do arquivo a novas notas inseridas //

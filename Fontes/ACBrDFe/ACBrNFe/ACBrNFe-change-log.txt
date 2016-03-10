@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2016
+-- ACBrNFeNotasFiscais --
+[*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"
+    http://www.projetoacbr.com.br/forum/topic/28603-unable-to-parse/
+
 08/03/2016
 -- ACBrDANFeRLRetrao
 [*] Ajuste para sair o canhoto somente na primeira folha

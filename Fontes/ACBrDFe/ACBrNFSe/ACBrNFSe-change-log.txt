@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/03/2016   
+-- ACBrNFSeWebServices --
+[*] Ajustes no tratamento do Retorno o provedor DBSeller retorna no formato String
+    e não no formato XML.
+    Por: Italo Jurisato Junior
+
 08/03/2016   
 -- ACBrNFSe --
 [*] Ajustes para compilação em 64 bits

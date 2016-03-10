@@ -817,6 +817,9 @@ begin
   if Result = '' then
     Result := SeparaDados(FPRetornoWS, 'soapenv:Body');
 
+  if Result = '' then
+    Result := SeparaDados(FPRetornoWS, 'SOAP-ENV:Body');
+
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if Result = '' then
     Result := FPRetornoWS;
@@ -827,6 +830,10 @@ begin
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version = "1.0" encoding = "utf-8"?>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
+
+  // Provedor DBSeller retorna a resposta convertida para String
+  // Aplicado a conversão de String para XML
+  Result := StringReplace(StringReplace(Result, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
@@ -2083,7 +2090,7 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd">';
-      proDBSeller,
+//      proDBSeller,
       proInfisc,
       proSimplISS,
       proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
@@ -2479,7 +2486,7 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd">';
-      proDBSeller,
+//      proDBSeller,
       proSimplISS,
       proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else

@@ -164,7 +164,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 46
         Width = 42
         Height = 10
-        Caption = 'Benefici'#225'rio'
+        Caption = 'Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -191,7 +191,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 46
         Width = 103
         Height = 10
-        Caption = 'Agencia / Codigo Benefici'#225'rio'
+        Caption = 'Agencia / Codigo Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -232,7 +232,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 100
         Width = 79
         Height = 10
-        Caption = 'N'#250'mero do Documento'
+        Caption = 'Número do Documento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -246,7 +246,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 145
         Height = 13
         AutoSize = False
-        Caption = 'N'#250'mero do Documento'
+        Caption = 'Número do Documento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -259,7 +259,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 100
         Width = 29
         Height = 10
-        Caption = 'Esp'#233'cie'
+        Caption = 'Espécie'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -273,7 +273,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 53
         Height = 13
         AutoSize = False
-        Caption = 'Esp'#233'cie'
+        Caption = 'Espécie'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -286,7 +286,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 73
         Width = 53
         Height = 10
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -301,7 +301,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 13
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -457,7 +457,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 143
         Width = 132
         Height = 11
-        Caption = 'com as caracterist'#237'cas acima'
+        Caption = 'com as características acima'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -588,7 +588,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 88
         Width = 64
         Height = 10
-        Caption = '[   ] N'#227'o procurado'
+        Caption = '[   ] Não procurado'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -614,7 +614,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 64
         Width = 90
         Height = 10
-        Caption = '[   ] N'#227'o existe n'#186'. indicado'
+        Caption = '[   ] Não existe n°. indicado'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -627,7 +627,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 88
         Width = 86
         Height = 10
-        Caption = '[   ] Endere'#231'o insuficiente'
+        Caption = '[   ] Endereço insuficiente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -915,7 +915,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 70
         Width = 44
         Height = 10
-        Caption = 'Benefici'#225'rio'
+        Caption = 'Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1229,9 +1229,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         Lines.Strings = (
           
-            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
-            'leto, contate o benefici'#225'rio)')
+            'Instruções (Todas as informações deste bloqueto são de exclusiva' +
+            ' responsabilidade do beneficiário. Qualquer dúvida sobre este bo' +
+            'leto, contate o beneficiário)')
         ParentFont = False
       end
       object txtInstrucoes2: TRLMemo
@@ -1288,7 +1288,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 69
         Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
+        Caption = 'Agência / Código Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1303,7 +1303,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Agência / Código Cedente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -1316,7 +1316,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 101
         Width = 53
         Height = 10
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1331,7 +1331,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 15
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -1481,7 +1481,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         Height = 12
         AutoSize = False
-        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
+        Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1521,7 +1521,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 318
         Width = 57
         Height = 10
-        Caption = 'C'#243'digo de Baixa'
+        Caption = 'Código de Baixa'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1555,9 +1555,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         Lines.Strings = (
-          'Recebimento atrav'#233's do cheque n'#250'mero'
+          'Recebimento através do cheque número'
           '                                           do banco.'
-          'Esta quita'#231#227'o s'#243' ter'#225' validade ap'#243's o '
+          'Esta quitação só terá validade após o '
           'pagamento do cheque pelo banco sacado.')
         ParentFont = False
       end
@@ -1566,7 +1566,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 346
         Width = 96
         Height = 10
-        Caption = 'Autentica'#231#227'o Mec'#226'nica'
+        Caption = 'Autenticação Mecânica'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -1606,7 +1606,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         Height = 14
         AutoSize = False
-        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
+        Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1987,7 +1987,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 85
         Width = 42
         Height = 10
-        Caption = 'Benefici'#225'rio'
+        Caption = 'Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2014,7 +2014,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 85
         Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
+        Caption = 'Agência / Código Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2029,7 +2029,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Ag'#234'ncia / C'#243'digo Cedente'
+        Caption = 'Agência / Código Cedente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -2070,7 +2070,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 117
         Width = 79
         Height = 10
-        Caption = 'N'#250'mero do Documento'
+        Caption = 'Número do Documento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2085,7 +2085,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 14
         Alignment = taCenter
         AutoSize = False
-        Caption = 'N'#250'mero do Documento'
+        Caption = 'Número do Documento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -2098,7 +2098,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 117
         Width = 47
         Height = 10
-        Caption = 'Esp'#233'cie Doc.'
+        Caption = 'Espécie Doc.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2113,7 +2113,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 13
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Esp'#233'cie Doc.'
+        Caption = 'Espécie Doc.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -2182,7 +2182,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 117
         Width = 53
         Height = 10
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2197,7 +2197,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 14
         Alignment = taRightJustify
         AutoSize = False
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -2267,7 +2267,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 142
         Width = 54
         Height = 10
-        Caption = 'Esp'#233'cie Moeda'
+        Caption = 'Espécie Moeda'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2282,7 +2282,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Height = 14
         Alignment = taCenter
         AutoSize = False
-        Caption = 'Esp'#233'cie'
+        Caption = 'Espécie'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -2385,9 +2385,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         Lines.Strings = (
           
-            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
-            'leto, contate o benefici'#225'rio)')
+            'Instruções (Todas as informações deste bloqueto são de exclusiva' +
+            ' responsabilidade do beneficiário. Qualquer dúvida sobre este bo' +
+            'leto, contate o beneficiário)')
         ParentFont = False
       end
       object txtInstrucoes3: TRLMemo
@@ -2552,7 +2552,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         Height = 14
         AutoSize = False
-        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
+        Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -2565,7 +2565,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 319
         Width = 57
         Height = 10
-        Caption = 'C'#243'digo de Baixa'
+        Caption = 'Código de Baixa'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2605,7 +2605,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 350
         Width = 131
         Height = 10
-        Caption = 'Autentica'#231#227'o - Ficha de Compensa'#231#227'o'
+        Caption = 'Autenticação - Ficha de Compensação'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2654,7 +2654,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 525
         Width = 76
         Height = 10
-        Caption = '( - ) Outras Dedu'#231#245'es'
+        Caption = '( - ) Outras Deduções'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -2767,7 +2767,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Width = 514
         Height = 14
         AutoSize = False
-        Caption = 'Logradouro / N'#250'mero / Comp. / Bairro / Cidade / Estado / Cep'
+        Caption = 'Logradouro / Número / Comp. / Bairro / Cidade / Estado / Cep'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -3001,7 +3001,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 71
         Width = 42
         Height = 10
-        Caption = 'Benefici'#225'rio'
+        Caption = 'Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3014,7 +3014,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 71
         Width = 91
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Beneficiario'
+        Caption = 'Agência / Código Beneficiario'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3040,7 +3040,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 96
         Width = 79
         Height = 10
-        Caption = 'N'#250'mero do Documento'
+        Caption = 'Número do Documento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3053,7 +3053,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 96
         Width = 47
         Height = 10
-        Caption = 'Esp'#233'cie Doc.'
+        Caption = 'Espécie Doc.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3092,7 +3092,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 96
         Width = 53
         Height = 10
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3131,7 +3131,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 121
         Width = 29
         Height = 10
-        Caption = 'Esp'#233'cie'
+        Caption = 'Espécie'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3206,9 +3206,9 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         Lines.Strings = (
           
-            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
-            'leto, contate o benefici'#225'rio)')
+            'Instruções (Todas as informações deste bloqueto são de exclusiva' +
+            ' responsabilidade do beneficiário. Qualquer dúvida sobre este bo' +
+            'leto, contate o beneficiário)')
         ParentFont = False
       end
       object RLLabel124: TRLLabel
@@ -3281,7 +3281,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 253
         Width = 57
         Height = 10
-        Caption = 'C'#243'digo de Baixa'
+        Caption = 'Código de Baixa'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3294,7 +3294,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 284
         Width = 80
         Height = 10
-        Caption = 'Autentica'#231#227'o Mec'#226'nica'
+        Caption = 'Autenticação Mecânica'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3375,7 +3375,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 310
         Width = 81
         Height = 10
-        Caption = 'Ficha de Compensa'#231#227'o'
+        Caption = 'Ficha de Compensação'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3422,7 +3422,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 71
         Width = 103
         Height = 10
-        Caption = 'Ag'#234'ncia / C'#243'digo Benefici'#225'rio'
+        Caption = 'Agência / Código Beneficiário'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3435,7 +3435,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 95
         Width = 29
         Height = 10
-        Caption = 'Esp'#233'cie'
+        Caption = 'Espécie'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -3550,7 +3550,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 229
         Width = 53
         Height = 10
-        Caption = 'Nosso N'#250'mero'
+        Caption = 'Nosso Número'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
@@ -4020,8 +4020,8 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Creator = 
-      'FortesReport (Open Source) v3.24(B14)  \251 Copyright '#169' 1999-200' +
-      '8 Fortes Inform'#225'tica'
+      'FortesReport (Open Source) v3.24(B14)  \251 Copyright 1999-200' +
+      '8 Fortes Informática'
     DisplayName = 'Filtro PDF'
     Left = 128
     Top = 8

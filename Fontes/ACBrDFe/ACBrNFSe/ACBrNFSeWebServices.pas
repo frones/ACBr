@@ -895,8 +895,8 @@ begin
       FNotasFiscais.Items[ii].NFSe.Protocolo     := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Protocolo;
     end;
 
-    // Retorno do ConsultarLoteRps
-    if FPLayout = LayNfseConsultaLote then
+    // Retorno do GerarNfse e ConsultarLoteRps
+    if FPLayout in [LayNFSeGerar, LayNfseConsultaLote] then
       FNotasFiscais.Items[ii].NFSe.Situacao := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Situacao;
 
     FNotasFiscais.Items[ii].NFSe.CodigoVerificacao := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.CodigoVerificacao;

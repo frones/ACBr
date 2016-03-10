@@ -784,6 +784,10 @@ function TNFSeWebService.ExtrairRetorno: String;
 var
   Encoding: String;
 begin
+  // Provedor DBSeller retorna a resposta em String
+  // Aplicado a conversão de String para XML
+  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;', '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;', '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '#9#9#9#9', '', [rfReplaceAll]); //proCONAM
@@ -830,10 +834,6 @@ begin
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version = "1.0" encoding = "utf-8"?>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
-
-  // Provedor DBSeller retorna a resposta convertida para String
-  // Aplicado a conversão de String para XML
-  Result := StringReplace(StringReplace(Result, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;
@@ -1642,7 +1642,7 @@ begin
 
   FRetEnvLote := TRetEnvLote.Create;
   try
-    FRetEnvLote.Leitor.Arquivo := ParseText(FPRetWS);
+    FRetEnvLote.Leitor.Arquivo := FPRetWS;
     FRetEnvLote.Provedor := FProvedor;
     FRetEnvLote.LerXml;
 
@@ -2198,7 +2198,7 @@ begin
 
   FPRetWS := ExtrairRetorno;
 
-  FRetSitLote.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetSitLote.Leitor.Arquivo := FPRetWS;
   FRetSitLote.Provedor       := FProvedor;
 
   RetSitLote.LerXml;
@@ -3076,7 +3076,7 @@ begin
     FRetCancNFSe.Free;
 
   FRetCancNFSe := TRetCancNfse.Create;
-  FRetCancNFSe.Leitor.Arquivo := ParseText(FPRetWS);
+  FRetCancNFSe.Leitor.Arquivo := FPRetWS;
   FRetCancNFSe.Provedor       := FProvedor;
   FRetCancNFSe.VersaoXML      := FVersaoXML;
 
@@ -3308,7 +3308,7 @@ begin
 
   FNFSeRetorno := TRetSubsNfse.Create;
   try
-    FNFSeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    FNFSeRetorno.Leitor.Arquivo := FPRetWS;
     FNFSeRetorno.Provedor       := FProvedor;
 
     FNFSeRetorno.LerXml;

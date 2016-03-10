@@ -10828,7 +10828,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Width = 196
         HorzScrollBar.Page = 1
         VertScrollBar.Page = 404
-        VertScrollBar.Position = 656
         Align = alLeft
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoSize = True

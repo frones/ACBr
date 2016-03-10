@@ -2164,19 +2164,19 @@ begin
   begin
     if (Imposto.vTotTrib <> 0)  and (ExibirTotalTributosItem) then
     begin
-      Result := ';';
+      Result := '';
       with Imposto do
       begin
-        Result := Result+#13+'Val Aprox Tributos: '+ FloatToStrF(Imposto.vTotTrib,ffCurrency,15,2);
+        Result := Result+'Val Aprox Tributos: '+ FloatToStrF(Imposto.vTotTrib,ffCurrency,15,2);
         if TributosPercentual = ptValorNF then
           Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0) +
                                 StringToFloatDef(FloatToStr(Prod.vFrete),0)  +
                                 StringToFloatDef(FloatToStr(Prod.vOutro),0)  +
                                 StringToFloatDef(FloatToStr(Prod.vSeg),0)    +
                                 StringToFloatDef(FloatToStr(IPI.vIPI), 0)    +
-                                StringToFloatDef(FloatToStr(ICMS.vICMSST), 0))),ffNumber,15,2)+'%)'+';'
+                                StringToFloatDef(FloatToStr(ICMS.vICMSST), 0))),ffNumber,15,2)+'%)'
         else
-          Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0))),ffNumber,15,2)+'%)'+';';
+          Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0))),ffNumber,15,2)+'%)';
       end;
     end;
   end;
@@ -2238,7 +2238,7 @@ begin
       for IndexCampo2 := 0 to Length(Campos2) - 1 do
         vTemp2.Add(Trim(Campos2[IndexCampo2]));
 
-      Result  := #13 + vTemp2.Text;
+      Result  := #13 + Trim(vTemp2.Text);
     end;
   finally
     vTemp2.free;

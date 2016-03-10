@@ -14,7 +14,6 @@
       <Title Value="Demo_ACBrCTe"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -33,7 +32,7 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="TurboPowerIPro"/>
       </Item1>
@@ -41,14 +40,11 @@
         <PackageName Value="ACBrComum"/>
       </Item2>
       <Item3>
-        <PackageName Value="PCN2"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_CTe"/>
-      </Item4>
-      <Item5>
         <PackageName Value="LCL"/>
-      </Item5>
+      </Item4>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
@@ -61,7 +57,6 @@
         <ComponentName Value="frmDemo_ACBrCTe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_Demo_ACBrCTe"/>
       </Unit1>
       <Unit2>
         <Filename Value="ufrmStatus.pas"/>
@@ -69,7 +64,6 @@
         <ComponentName Value="frmStatus"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ufrmStatus"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -97,11 +91,7 @@
       </Options>
     </Linking>
     <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
       <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-      <CompilerPath Value="$(CompPath)"/>
     </Other>
   </CompilerOptions>
   <Debugging>

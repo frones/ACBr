@@ -299,6 +299,9 @@ Var
   XmlAss, xmlHeaderAntes, xmlHeaderDepois: String;
   I: integer;
 begin
+  if not UseCertificate then
+    raise EACBrDFeException.Create('Impossível assinar. Componente configurado para não usar Certificado');
+
   // Nota: ConteudoXML, DEVE estar em UTF8 //
   // Lendo Header antes de assinar //
   xmlHeaderAntes := '';
@@ -354,6 +357,9 @@ function TDFeSSL.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
   SelectionNamespaces: String): Boolean;
 begin
+  if not UseCertificate then
+    raise EACBrDFeException.Create('Impossível assinar. Componente configurado para não usar Certificado');
+
   Result := FSSLClass.VerificarAssinatura(ConteudoXML, MsgErro,
                               infElement, SignatureNode, SelectionNamespaces);
 end;

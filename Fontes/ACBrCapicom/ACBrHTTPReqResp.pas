@@ -239,7 +239,7 @@ var
   pSession: HINTERNET;
   pConnection: HINTERNET;
   pRequest: HINTERNET;
-  flags: longword;
+  flags, flagsLen: longword;
 
   Store: IStore;
   Certs: ICertificates;
@@ -258,42 +258,48 @@ begin
   AProt := '';
   APort := '';
   APath := '';
+  HCertContext := 0;
 
   ParseURL(FUrl, AProt, ANone, ANone, AHost, APort, APath, ANone);
 
-  if ((ShowCertStore) or ((FCertSerialNumber = '') and (FCertificate = nil))) then
+  if (FUseCertificate) then
   begin
-    FCertSerialNumber := OpenCertStore;
-    if FCertSerialNumber <> '' then
-      FCertificate := nil;
-  end;
-
-  if FCertSerialNumber <> '' then
-  begin
-    Store := CoStore.Create;
-    Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
-
-    Certs := Store.Certificates as ICertificates2;
-
-    if Certs.Count > 0 then
+    if ((ShowCertStore) or ((FCertSerialNumber = '') and (FCertificate = nil))) then
     begin
-      for i := 1 to Certs.Count do
-      begin
-        Cert2 := IInterface(Certs.Item[i]) as ICertificate2;
-        if Cert2.SerialNumber = FCertSerialNumber then
-        begin
-          Cert := Cert2;
-          break;
-        end;
-      end;
-
-      CertContext := Cert as ICertContext;
+      FCertSerialNumber := OpenCertStore;
+      if FCertSerialNumber <> '' then
+        FCertificate := nil;
     end;
-  end
-  else
-  begin
-    CertContext := FCertificate as ICertContext;
+
+    if FCertSerialNumber <> '' then
+    begin
+      Store := CoStore.Create;
+      Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
+
+      Certs := Store.Certificates as ICertificates2;
+
+      if Certs.Count > 0 then
+      begin
+        for i := 1 to Certs.Count do
+        begin
+          Cert2 := IInterface(Certs.Item[i]) as ICertificate2;
+          if Cert2.SerialNumber = FCertSerialNumber then
+          begin
+            Cert := Cert2;
+            break;
+          end;
+        end;
+
+        CertContext := Cert as ICertContext;
+      end;
+    end
+    else
+    begin
+      CertContext := FCertificate as ICertContext;
+    end;
   end;
+
+  UseSSL := UseSSL or (APort = IntToStr(INTERNET_DEFAULT_HTTPS_PORT));
 
   if FProxyHost <> '' then
   begin
@@ -309,7 +315,9 @@ begin
   //DEBUG
   //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
 
-  CertContext.Get_CertContext(HCertContext);
+  if FUseCertificate then
+    CertContext.Get_CertContext(HCertContext);
+
   pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
 
   try
@@ -362,7 +370,7 @@ begin
 
         if (FUseCertificate) then
           flags := flags or (INTERNET_FLAG_IGNORE_CERT_CN_INVALID or
-            INTERNET_FLAG_IGNORE_CERT_DATE_INVALID);
+                             INTERNET_FLAG_IGNORE_CERT_DATE_INVALID);
       end
       else
         flags := INTERNET_SERVICE_HTTP;
@@ -385,13 +393,31 @@ begin
 
         Header := 'Host: ' + AHost + sLineBreak +
                   'Content-Type: ' + FMimeType + '; charset='+FCharsets + SLineBreak +
-                  'Accept-Charset: ' + FCharsets + SLineBreak +
-                  'SOAPAction: "' + FSOAPAction + '"' +SLineBreak;
+                  'Accept-Charset: ' + FCharsets + SLineBreak;
+
+        if FSOAPAction <> '' then
+          Header := Header +'SOAPAction: "' + FSOAPAction + '"' +SLineBreak;
 
         if (FUseCertificate) then
+        begin
           if not InternetSetOption(pRequest, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
             Pointer(HCertContext), SizeOf(CERT_CONTEXT)) then
-            raise EACBrHTTPReqResp.Create('Erro: Problema ao inserir o certificado');
+            raise EACBrHTTPReqResp.Create('Erro: Problema ao inserir o certificado')
+        end
+        else
+        begin
+          flags := 0;
+          flagsLen := SizeOf(flags);
+          if not InternetQueryOption(pRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
+            raise EACBrHTTPReqResp.Create('InternetQueryOption erro ao ler wininet flags.' + GetWininetError(GetLastError));
+
+          flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
+                            SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                            SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
+                            SECURITY_FLAG_IGNORE_REVOCATION;
+          if not InternetSetOption(pRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
+            raise EACBrHTTPReqResp.Create('InternetQueryOption erro ao ajustar INTERNET_OPTION_SECURITY_FLAGS' + GetWininetError(GetLastError));
+        end;
 
         if trim(FProxyUser) <> '' then
           if not InternetSetOption(pRequest, INTERNET_OPTION_PROXY_USERNAME,
@@ -467,7 +493,8 @@ begin
     end;
   finally
     InternetCloseHandle(pSession);
-    CertContext.FreeContext(HCertContext);
+    if (HCertContext <> 0) then
+      CertContext.FreeContext(HCertContext);
   end;
 end;
 
@@ -475,6 +502,7 @@ constructor TACBrHTTPReqResp.Create;
 begin
   FMimeType := 'application/soap+xml';
   FCharsets := 'utf-8';
+  FSOAPAction := '';
   FCertStoreName := 'My';
   FCertSerialNumber := '';
   FCertificate := nil;

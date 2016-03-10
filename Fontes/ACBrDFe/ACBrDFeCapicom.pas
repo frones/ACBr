@@ -311,7 +311,8 @@ var
 
 begin
   // Certificado já foi carregado ??
-  if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then
+  if (not FpDFeSSL.UseCertificate) or
+     ((FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie)) then
   begin
     FpCertificadoLido := True;
     exit;
@@ -468,25 +469,34 @@ end;
 function TDFeCapicom.GetCertDataVenc: TDateTime;
 begin
   CarregarCertificadoSeNecessario;
-  Result := FCertificado.ValidToDate;
+  if Assigned(FCertificado) then
+    Result := FCertificado.ValidToDate
+  else
+    Result := inherited;
 end;
 
 function TDFeCapicom.GetCertNumeroSerie: String;
 begin
   CarregarCertificadoSeNecessario;
-  Result := FCertificado.SerialNumber;
+  if Assigned(FCertificado) then
+    Result := FCertificado.SerialNumber
+  else
+    Result := inherited;
 end;
 
 function TDFeCapicom.GetCertSubjectName: String;
 begin
   CarregarCertificadoSeNecessario;
-  Result := FCertificado.SubjectName;
+  if Assigned(FCertificado) then
+    Result := FCertificado.SubjectName
+  else
+    Result := inherited;
 end;
 
 function TDFeCapicom.GetCertRazaoSocial: String;
 begin
   CarregarCertificadoSeNecessario;
-  if FRazaoSocial = '' then
+  if (FRazaoSocial = '') and Assigned(FCertificado) then
     FRazaoSocial := GetRazaoSocialFromSubjectName( FCertificado.SubjectName );
 
   Result := FRazaoSocial;
@@ -494,7 +504,7 @@ end;
 
 function TDFeCapicom.GetCertTipo: TSSLTipoCertificado;
 begin
-  if Self.Certificado.PrivateKey.IsHardwareDevice then
+  if Assigned(FCertificado) and FCertificado.PrivateKey.IsHardwareDevice then
     Result := tpcA3
   else
     Result := tpcA1;
@@ -717,8 +727,6 @@ var
   pKey, pKeyOut: IXMLDSigKey;
   AXml: String;
 begin
-  CarregarCertificadoSeNecessario;
-
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 
@@ -958,17 +966,13 @@ begin
 
   with FpDFeSSL do
   begin
-    if ProxyHost <> '' then
-    begin
-      FReqResp.ProxyHost := ProxyHost;
-      FReqResp.ProxyPort := ProxyPort;
-      FReqResp.ProxyUser := ProxyUser;
-      FReqResp.ProxyPass := ProxyPass;
-    end;
-
-    FReqResp.TimeOut := TimeOut;
+    FReqResp.ProxyHost := ProxyHost;
+    FReqResp.ProxyPort := ProxyPort;
+    FReqResp.ProxyUser := ProxyUser;
+    FReqResp.ProxyPass := ProxyPass;
+    FReqResp.TimeOut   := TimeOut;
     FReqResp.UseCertificate := UseCertificate;
-    FReqResp.UseSSL := UseSSL;
+    FReqResp.UseSSL         := UseSSL;
   end;
 
   FReqResp.SetCertificate(FCertificado);

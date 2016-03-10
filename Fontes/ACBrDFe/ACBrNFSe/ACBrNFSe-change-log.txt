@@ -95,7 +95,7 @@ Símbolo : Significado
 [*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings (por: DSA)
 
 -- ACBrNFSeNotasFiscais --
-
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
 	
 03/03/2016
 -- ACBrNFSe / ACBrNFSeWebServices / pnfsNFSeG  --

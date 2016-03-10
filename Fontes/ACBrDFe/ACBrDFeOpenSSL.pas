@@ -66,7 +66,8 @@ type
   { TDFeOpenSSL }
 
   TDFeOpenSSL = class(TDFeSSLClass)
-  private                     FHTTP: THTTPSend;
+  private
+    FHTTP: THTTPSend;
     FdsigCtx: xmlSecDSigCtxPtr;
     FCNPJ: String;
     FRazaoSocial: String;
@@ -248,7 +249,7 @@ begin
   RetornoWS := '';
 
   // Configurando o THTTPSend //
-  ConfiguraHTTP(URL, 'SOAPAction: "' + SoapAction + '"', MimeType);
+  ConfiguraHTTP(URL, SoapAction, MimeType);
 
   // Gravando no Buffer de Envio //
   WriteStrToStream(FHTTP.Document, AnsiString(ConteudoXML)) ;
@@ -405,13 +406,13 @@ begin
     mngr := xmlSecKeysMngrCreate();
     if (mngr = nil) then
     begin
-      MsgErro := cErrMngrCreate;
+      MsgErro := ACBrStr(cErrMngrCreate);
       exit;
     end;
 
     if xmlSecCryptoAppDefaultKeysMngrInit(mngr) < 0 then
     begin
-      MsgErro := cErrMngrInit;
+      MsgErro := ACBrStr(cErrMngrInit);
       exit;
     end;
 
@@ -420,14 +421,14 @@ begin
     if (xmlSecCryptoAppKeysMngrCertLoadMemory(mngr, MS.Memory, MS.Size,
       xmlSecKeyDataFormatCertDer, xmlSecKeyDataTypeTrusted) < 0) then
     begin
-      MsgErro := cErrCertLoad;
+      MsgErro := ACBrStr(cErrCertLoad);
       exit;
     end;
 
     doc := xmlParseDoc(PAnsiChar(AXml));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
-      MsgErro := cErrParseDoc;
+      MsgErro := ACBrStr(cErrParseDoc);
       exit;
     end;
 
@@ -435,14 +436,14 @@ begin
                xmlCharPtr(SigNode), xmlCharPtr(SelName) );
     if (node = nil) then
     begin
-      MsgErro := cErrFindSignNode;
+      MsgErro := ACBrStr(cErrFindSignNode);
       exit;
     end;
 
     dsigCtx := xmlSecDSigCtxCreate(mngr);
     if (dsigCtx = nil) then
     begin
-      MsgErro := cErrCtxCreate;
+      MsgErro := ACBrStr(cErrCtxCreate);
       exit;
     end;
 
@@ -451,14 +452,14 @@ begin
       xmlSecKeyDataFormatCertDer, nil, nil, nil);
     if (dsigCtx^.signKey = nil) then
     begin
-      MsgErro := cErrPubKeyLoad;
+      MsgErro := ACBrStr(cErrPubKeyLoad);
       exit;
     end;
 
     { Verify signature }
     if (xmlSecDSigCtxVerify(dsigCtx, node) < 0) then
     begin
-      MsgErro := cErrDSigVerify;
+      MsgErro := ACBrStr(cErrDSigVerify);
       exit;
     end;
 
@@ -638,7 +639,7 @@ end;
 
 procedure TDFeOpenSSL.DestroyKey;
 begin
-  if FKey <> Nil then
+  if (FKey <> Nil) then
   begin
     {$IFDEF USE_libeay32}
      EVP_PKEY_free(FKey);
@@ -656,43 +657,46 @@ var
 begin
   with FpDFeSSL do
   begin
-    // Verificando se possui parâmetros necessários //
-    if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
+    if UseCertificate then
     begin
-      if not EstaVazio(NumeroSerie) then
-        raise EACBrDFeException.Create(ClassName +
-          ' não suporta carga de Certificado pelo número de série.' +
-          sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"')
-      else
-        raise EACBrDFeException.Create('Certificado não informado.' +
-          sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"');
-    end;
-
-    LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
-    LoadFromData := (not EstaVazio(DadosPFX));
-
-    if not (LoadFromFile or LoadFromData) then
-      raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
-
-    if LoadFromFile then
-    begin
-      FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
-      try
-        DadosPFX := ReadStrFromStream(FS, FS.Size);
-      finally
-        FS.Free;
+      // Verificando se possui parâmetros necessários //
+      if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
+      begin
+        if not EstaVazio(NumeroSerie) then
+          raise EACBrDFeException.Create(ClassName +
+            ' não suporta carga de Certificado pelo número de série.' +
+            sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"')
+        else
+          raise EACBrDFeException.Create('Certificado não informado.' +
+            sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"');
       end;
+
+      LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
+      LoadFromData := (not EstaVazio(DadosPFX));
+
+      if not (LoadFromFile or LoadFromData) then
+        raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
+
+      if LoadFromFile then
+      begin
+        FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
+        try
+          DadosPFX := ReadStrFromStream(FS, FS.Size);
+        finally
+          FS.Free;
+        end;
+      end;
+
+      if EstaVazio(DadosPFX) then
+        raise EACBrDFeException.Create('Erro ao Carregar Certificado');
+
+      FHTTP.Sock.SSL.PFX := DadosPFX;
+      FHTTP.Sock.SSL.KeyPassword := Senha;
+
+      if not LerPFXInfo(DadosPFX) then
+        raise EACBrDFeException.Create('Erro ao ler informações do Certificado.'+sLineBreak+
+                                       'Provavelmente a senha está errada' );
     end;
-
-    if EstaVazio(DadosPFX) then
-      raise EACBrDFeException.Create('Erro ao Carregar Certificado');
-
-    FHTTP.Sock.SSL.PFX := DadosPFX;
-    FHTTP.Sock.SSL.KeyPassword := Senha;
-
-    if not LerPFXInfo(DadosPFX) then
-      raise EACBrDFeException.Create('Erro ao ler informações do Certificado.'+sLineBreak+
-                                     'Provavelmente a senha está errada' );
   end;
 
   FpCertificadoLido := True;
@@ -972,9 +976,11 @@ begin
   FHTTP.MimeType := MimeType + '; charset=utf-8';     // Todos DFes usam UTF8
 
   FHTTP.UserAgent := '';
-  FHTTP.Protocol := '1.1';
+  FHTTP.Protocol  := '1.1';
   FHTTP.AddPortNumberToHost := False;
-  FHTTP.Headers.Add(SoapAction);
+
+  if SoapAction <> '' then
+    FHTTP.Headers.Add('SOAPAction: "' + SoapAction + '"');
 end;
 
 function TDFeOpenSSL.InserirDTD(AXml: String; const DTD: String): String;

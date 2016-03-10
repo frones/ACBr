@@ -1445,7 +1445,6 @@ begin
 
   // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
-  ScrollBox.VertScrollBar.Position:=0;
 
   mResp.Clear;
   mCmd.Clear;

@@ -1114,6 +1114,12 @@ begin
   if (not OnlyException) or (MaxBandwidth > 0) then
      Result := Result + ' MAXBANDWIDTH='+IntToStr(MaxBandwidth) ;
      
+  if (not OnlyException) or (SendBytesCount > 0) then
+     Result := Result + ' SENDBYTESCOUNT='+IntToStr(SendBytesCount) ;
+
+  if (not OnlyException) or (SendBytesInterval > 0) then
+     Result := Result + ' SENDBYTESINTERVAL='+IntToStr(SendBytesInterval) ;
+
   Result := Trim(Result) ;
 end;
 
@@ -1179,6 +1185,12 @@ begin
 
   S := GetValue(Linha,'MAXBANDWIDTH') ;
   MaxBandwidth := StrToIntDef(S,MaxBandwidth) ;
+
+  S := GetValue(Linha,'SENDBYTESCOUNT') ;
+  SendBytesCount := StrToIntDef(S,SendBytesCount) ;
+
+  S := GetValue(Linha,'SENDBYTESINTERVAL') ;
+  SendBytesInterval := StrToIntDef(S,SendBytesInterval) ;
 end;
 
 

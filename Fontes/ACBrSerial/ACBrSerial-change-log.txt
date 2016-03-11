@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/03/2016
+-- ACBrDevice --
+[+] Adicionado os valores de SendBytesCount e SendBytesInterval em:
+	"DeviceToString" e "SetParamsString"   (por: DSA)
+	
 Data: 08/03/2016
 -- ACBrECFVirtual --
 [-] Correção de Bug introduzido em 07/03/2016, após ajustes para compilação em

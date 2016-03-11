@@ -60,6 +60,9 @@
 {.$DEFINE DFE_SEM_OPENSSL}
 {.$DEFINE DFE_SEM_CAPICOM}
 
+// Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL
+{.$DEFINE USE_DELAYED}
+
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}
@@ -101,6 +104,10 @@
 // da jedi, essa mudança permite uma evolução melhor do arquivo.
 //------------------------------------------------------------------------------
 {$I ACBr_jedi.inc}
+
+{$IFNDEF SUPPORTS_DELAYED_LOADING}
+ {$UNDEF USE_DELAYED}
+{$ENDIF}
 
 {$IFDEF DELPHI12_UP}
   {$DEFINE HAS_CHARINSET}

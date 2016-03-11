@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/03/2016
+-- ACBr.inc --
+[+] Adicionada a diretiva USE_DELAYED. Que deve ser ligada caso o programador
+    deseje utilizar a carga tardia de DLLs (OpenSSL e XMLSec)
+    A diretiva será desligada se a IDE não suportar carga tardia com "DELAYED"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28561
+
 Data: 08/03/2016
 -- ACBrUtil --
 [-] RoundABNT: Correção para calculos com valores negativos  (por: DSA)

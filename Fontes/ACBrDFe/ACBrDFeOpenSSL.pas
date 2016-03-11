@@ -137,6 +137,13 @@ uses Math, strutils, dateutils,
 procedure InitXmlSec;
 begin
   if XMLSecLoaded then exit;
+  
+  //--Inicializar funções das units do OpenSSL
+  libxml2.Init;
+  libxslt.Init;
+  libxmlsec.Init;
+  //libexslt.Init;
+  //--
 
   { Init libxml and libxslt libraries }
   xmlInitThreads();
@@ -178,6 +185,8 @@ end;
 
 procedure ShutDownXmlSec;
 begin
+  if not XMLSecLoaded then Exit;
+
   { Shutdown xmlsec-crypto library }
   xmlSecCryptoShutdown();
 
@@ -368,11 +377,11 @@ function TDFeOpenSSL.VerificarAssinatura(const ConteudoXML: String; out
   SelectionNamespaces: String): Boolean;
 var
   doc: xmlDocPtr;
-  node: xmlNodePtr;
+  node, NFeNode: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
   X509Certificate, DTD: String;
-  AXml, SigNode, SelName: AnsiString;
+  AXml, asSignatureNode, asSelectionNamespaces, asInfElement: AnsiString;
   MS: TMemoryStream;
 
 const
@@ -381,9 +390,10 @@ const
 begin
   InitXmlSec;
 
-  SigNode := AnsiString(SignatureNode);
-  SelName := AnsiString(SelectionNamespaces);
-  VerificarValoresPadrao(SigNode, SelName);
+  asSignatureNode       := AnsiString(SignatureNode);
+  asSelectionNamespaces := AnsiString(SelectionNamespaces);
+  asInfElement          := AnsiString(infElement);
+  VerificarValoresPadrao(asSignatureNode, asSelectionNamespaces);
 
   Result := False;
   X509Certificate := copy(ConteudoXML, pos('<X509Certificate>', ConteudoXML) + 17,
@@ -432,8 +442,26 @@ begin
       exit;
     end;
 
-    node := xmlSecFindChild(xmlDocGetRootElement(doc),
-               xmlCharPtr(SigNode), xmlCharPtr(SelName) );
+    NFeNode := xmlDocGetRootElement(doc);
+    while (NFeNode <> nil) and (NFeNode.name <> asInfElement) do
+      NFeNode := NFeNode.children;
+
+    if (NFeNode = nil) then
+    begin
+      MsgErro := ACBrStr(cErrFindSignNode);
+      exit;
+    end;
+
+    if NFeNode^.name = infElement then
+      NFeNode := NFeNode.parent;
+
+    if (NFeNode = nil) then
+    begin
+      MsgErro := ACBrStr(cErrFindRootNode);
+      exit;
+    end;
+
+    node := xmlSecFindChild(NFeNode, xmlCharPtr(asSignatureNode), xmlCharPtr(asSelectionNamespaces) );
     if (node = nil) then
     begin
       MsgErro := ACBrStr(cErrFindSignNode);
@@ -866,7 +894,7 @@ end;
 procedure TDFeOpenSSL.VerificarValoresPadrao(var SignatureNode: AnsiString;
   var SelectionNamespaces: AnsiString);
 var
-  DSigNs: String;
+  DSigNs: AnsiString;
 begin
   {
     Não está funcionando adequadamente, pois não estamos fazendo uso dos

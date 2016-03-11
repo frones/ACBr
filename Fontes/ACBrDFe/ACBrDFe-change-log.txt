@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2016
+-- ACBrDFeOpenSSL --
+[*] Modificada a rotina de inicialização de XMLSec, para suportar diretiva de
+    compilação "USE_DELAYED"
+[-] Corrigida falha na verificação de assinatura com notas Processadas "nfeProc"
+    (por: DSA)
+
 08/03/2016
 -- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrHTTPReqResp --
 [*] Ajustes para o correto funcionamento, quando a propriedade

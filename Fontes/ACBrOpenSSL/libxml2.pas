@@ -4543,8 +4543,15 @@ begin
     __xmlXPathNINF := PDouble(GetProcAddress(libHandle, 'xmlXPathNINF'));
     __xmlXPathPINF := PDouble(GetProcAddress(libHandle, 'xmlXPathPINF'));
 
-    FreeLibrary(libHandle);
+    //FreeLibrary(libHandle);
   end;
 end;
+
+initialization
+  libHandle := 0;
+
+finalization
+  if libHandle <> 0 then
+    FreeLibrary(libHandle);
 
 end.

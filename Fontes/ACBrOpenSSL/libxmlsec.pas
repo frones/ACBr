@@ -4925,8 +4925,16 @@ begin
     pxmlSecXkmsSoapFaultReasonUnsupportedVersion := xmlCharPtr(GetProcAddress(libHandle, 'xmlSecXkmsSoapFaultReasonUnsupportedVersion'));
     pxmlSecXkmsSoapSubcodeValueBadMessage := xmlCharPtr(GetProcAddress(libHandle, 'xmlSecXkmsSoapSubcodeValueBadMessage'));
     pxmlSecXkmsSoapSubcodeValueMessageNotSupported := xmlCharPtr(GetProcAddress(libHandle, 'xmlSecXkmsSoapSubcodeValueMessageNotSupported'));
-    FreeLibrary(libHandle);
+    
+    //FreeLibrary(libHandle);
   end;
 end;
+
+initialization
+  libHandle := 0;
+
+finalization
+  if libHandle <> 0 then 
+    FreeLibrary(libHandle);
 
 end.

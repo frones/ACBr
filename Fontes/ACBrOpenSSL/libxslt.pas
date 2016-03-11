@@ -1164,8 +1164,15 @@ begin
     pxsltLibxsltVersion := PInteger(GetProcAddress(libHandle, 'xsltLibxsltVersion'));
     __xsltMaxDepth := PInteger(GetProcAddress(libHandle, 'xsltMaxDepth'));
 
-    FreeLibrary(libHandle);
+    //FreeLibrary(libHandle);
   end;
 end;
+
+initialization
+  libHandle := 0;
+
+finalization
+  if libHandle <> 0 then
+    FreeLibrary(libHandle);
 
 end.

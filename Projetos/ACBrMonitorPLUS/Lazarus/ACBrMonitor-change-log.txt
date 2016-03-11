@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2016
+[-] Correção para a posição do canhoto nos danfe pois não assumia o valor passado
+    por Juliomar Marchetti
+		
 08/03/2016
 [*] Modificação da tela principal, criado novo menu, buscando melhor visual
     e melhor navegação nas páginas.

@@ -57,7 +57,6 @@ uses
 type
   TACBrCTeDACTeRL = class(TACBrCTeDACTeClass)
   private
-    FPosRecibo: TPosRecibo;
 		protected
      FPrintDialog: Boolean;
   public
@@ -68,7 +67,6 @@ type
     procedure ImprimirEVENTO(CTe: TCTe = nil); override;
     procedure ImprimirEVENTOPDF(CTe: TCTe = nil); override;
   published
-    property PosRecibo: TPosRecibo read FPosRecibo write FPosRecibo default prCabecalho;
     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
   end;
 
@@ -139,7 +137,7 @@ begin
         , MargemEsquerda
         , MargemDireita
         , Impressora
-        , PosRecibo
+        , PosCanhoto
         , CTeCancelada
         , EPECEnviado
 		    , PrintDialog);
@@ -165,7 +163,7 @@ begin
       , MargemEsquerda
       , MargemDireita
       , Impressora
-      , PosRecibo
+      , PosCanhoto
       , CTeCancelada
       , EPECEnviado
 	    , PrintDialog);
@@ -227,7 +225,7 @@ begin
         , MargemInferior
         , MargemEsquerda
         , MargemDireita
-        , PosRecibo
+        , PosCanhoto
         , CTeCancelada
         , EPECEnviado);
     end;
@@ -255,7 +253,7 @@ begin
       , MargemInferior
       , MargemEsquerda
       , MargemDireita
-      , PosRecibo
+      , PosCanhoto
       , CTeCancelada
       , EPECEnviado);
   end;

@@ -7769,13 +7769,6 @@ begin
      if TPanel(ScrollBox.Controls[iFor]).Tag = 0 then
         TPanel(ScrollBox.Controls[iFor]).Color := TCores.Buttons
      else
-     if TPanel(ScrollBox.Controls[iFor]).Tag = 1 then
-     begin
-        TPanel(ScrollBox.Controls[iFor]).Color := TCores.SubButtons;
-        TPanel(ScrollBox.Controls[iFor]).Height := 0;
-        TPanel(ScrollBox.Controls[iFor]).Font.Bold := False;
-     end
-     else
      if TPanel(ScrollBox.Controls[iFor]).Tag = 9 then
      begin
        if ScrollBox.Controls[iFor] is TPanel then

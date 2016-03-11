@@ -834,6 +834,8 @@ begin
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version = "1.0" encoding = "utf-8"?>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
+
+  Result := ParseText(Result);
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;

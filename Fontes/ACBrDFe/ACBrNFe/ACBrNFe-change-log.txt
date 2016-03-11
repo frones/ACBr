@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/03/2016
+-- pcnNFeW --
+[*] Corrigido a validação do campo nDI, pois este pode conter os numeros dos
+    documentos: DI, DSI, DIRE, ...
+    por: csoft / Italo Jurisato Junior
+
 10/03/2016
 -- ACBrNFeNotasFiscais --
 [*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"

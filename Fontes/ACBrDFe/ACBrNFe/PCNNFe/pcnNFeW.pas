@@ -810,9 +810,9 @@ begin
   for j := 0 to nfe.Det[i].Prod.DI.Count - 1 do
   begin
     Gerador.wGrupo('DI', 'I18');
-    Gerador.wCampo(tcStr, 'I19', 'nDI        ', 01, 12, 1, nfe.Det[i].Prod.DI[j].nDI, DSC_NDI);
+    Gerador.wCampo(tcStr, 'I19', 'nDI', 01, 12, 1, nfe.Det[i].Prod.DI[j].nDI, DSC_NDI);
 
-    if not ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
+    if not ValidaDIRE(nfe.Det[i].Prod.DI[j].nDI) and not ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
       Gerador.wAlerta('I19', 'nDI', DSC_NDI, ERR_MSG_INVALIDO);
 
     Gerador.wCampo(tcDat, 'I20', 'dDI        ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDI, DSC_DDi);

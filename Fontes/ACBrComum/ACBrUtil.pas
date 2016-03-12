@@ -66,7 +66,7 @@ Uses SysUtils, Math, Classes, ACBrConsts, synautil
 
 const
 {$IFDEF CPU64}
-  CINPOUTDLL = 'inpout64.dll';
+  CINPOUTDLL = 'inpoutx64.dll';
 {$ELSE}
   CINPOUTDLL = 'inpout32.dll';
 {$ENDIF}

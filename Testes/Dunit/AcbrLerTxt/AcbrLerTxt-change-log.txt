@@ -51,3 +51,6 @@ Data: 12/03/2016
 [+]     : Beta 1.0 - Implantanção no SVN
           Henrique Leonardo   
 
+[-]     : Remoção da Procedure ATribuirTexto 
+	  Por executar um Teste Vazio
+          Henrique leonardo

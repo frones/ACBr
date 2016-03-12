@@ -1,4 +1,4 @@
-program AcbrLerTxtSvn;
+program AcbrLerTxt;
 {
 
   Delphi DUnit Test Project

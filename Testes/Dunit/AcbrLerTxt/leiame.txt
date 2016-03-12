@@ -1,0 +1,40 @@
+Rio de janeiro, 12 de março de 2016.
+
+AcbRLERTXT
+-----------
+
+Teste unitário da Importação do arquivo de Texto de nfe.
+Versão beta 1.0 desenvolvida por Henrique Leonardo ( hleonardopa@yahoo.com.br ).
+Código doado ao Acbr.
+
+
+
+Dicas e truques :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

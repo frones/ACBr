@@ -54,3 +54,7 @@ Data: 12/03/2016
 [-]     : Remoção da Procedure ATribuirTexto 
 	  Por executar um Teste Vazio
           Henrique leonardo
+
+[*]     : Remoção de Initiaze de procedimentos
+	  Sem  função para o teste.
+          Henrique leonardo

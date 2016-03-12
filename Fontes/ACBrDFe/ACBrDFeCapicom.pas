@@ -43,7 +43,8 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL, ACBrHTTPReqResp,
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
-  JwaWindows, Windows, ActiveX, ComObj;
+  JwaWinCrypt,
+  Windows, ActiveX, ComObj;
 
 const
   DSIGNS = 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';

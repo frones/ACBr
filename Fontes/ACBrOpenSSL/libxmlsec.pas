@@ -15,7 +15,11 @@ procedure Init;
 
 const
 {$IFDEF MSWINDOWS}
-  LIBXMLSEC_SO = 'libxmlsec.dll';
+  {$IFDEF CPU64}
+    LIBXMLSEC_SO = 'libxmlsec1.dll';
+  {$ELSE}
+    LIBXMLSEC_SO = 'libxmlsec.dll';
+  {$ENDIF}
 {$ELSE}
   LIBXMLSEC_SO = 'libxmlsec.so';
 {$ENDIF}

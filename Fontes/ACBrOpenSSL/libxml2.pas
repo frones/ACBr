@@ -14,7 +14,11 @@ procedure Init;
 
 const
 {$IFDEF MSWINDOWS}
-  LIBXML2_SO = 'libxml2.dll';
+  {$IFDEF CPU64}
+    LIBXML2_SO = 'libxml2-2.dll';
+  {$ELSE}
+    LIBXML2_SO = 'libxml2.dll';
+  {$ENDIF}
 {$ELSE}
   LIBXML2_SO = 'libxml2.so';
 {$ENDIF}

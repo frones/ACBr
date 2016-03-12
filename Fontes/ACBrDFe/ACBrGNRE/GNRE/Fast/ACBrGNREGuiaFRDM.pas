@@ -325,8 +325,7 @@ end;
 procedure TdmACBrGNREFR.DataModuleCreate(Sender: TObject);
 begin
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick ];
 end;
 
 end.

@@ -312,8 +312,7 @@ procedure TACBrCTeDACTEFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];		
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick ];		
   frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin

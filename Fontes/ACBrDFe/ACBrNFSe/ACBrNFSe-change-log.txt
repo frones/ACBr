@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2016
+[*] Modificado para deixar alguns botões fora do preview em fast report
+		por: Juliomar Marchetti
+
 10/03/2016
 -- ACBrNFSeNotasFiscais --
 [*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"

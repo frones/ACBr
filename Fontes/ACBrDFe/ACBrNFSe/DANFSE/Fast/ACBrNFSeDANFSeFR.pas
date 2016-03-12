@@ -39,9 +39,7 @@ unit ACBrNFSeDANFSeFR;
 interface
 
 uses
-  SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, pcnauxiliar, frxClass,
-
-  // Antonio Gomes, 09/10/2015
+  SysUtils, Classes, Graphics, ACBrNFSeDANFSeClass, pnfsNFSe, pnfsConversao, pcnauxiliar, frxClass,  
   DB, DBClient, frxDBSet, frxExportPDF, frxBarcode, ACBrValidador;
 
 type
@@ -260,7 +258,7 @@ begin
     begin
       for I := 0 to TACBrNFSe(ACBrNFSe).NotasFiscais.Count - 1 do
       begin
-        // dmDanfse.NFSe := TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I].NFSe;
+        
         CarregaDados(TACBrNFSe(ACBrNFSe).NotasFiscais.Items[I].NFSe);
 
         if (I > 0) then
@@ -278,8 +276,7 @@ procedure TACBrNFSeDANFSeFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];
 	frxReport.EngineOptions.UseGlobalDataSetList := False; 
   with frxReport do
   begin

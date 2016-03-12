@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/03/2016
+[*] Modificado para deixar alguns botões fora do preview em fast report
+		por: Juliomar Marchetti
+
 11/03/2016
 -- pcnNFeW --
 [*] Corrigido a validação do campo nDI, pois este pode conter os numeros dos

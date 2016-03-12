@@ -1348,8 +1348,7 @@ begin
   FfrxReport := TfrxReport.Create( nil);
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
   FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];	
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];	
   with FfrxReport do
   begin
      EngineOptions.DoublePass := True;

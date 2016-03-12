@@ -393,8 +393,7 @@ end;
 procedure TDMACBrMDFeDAMDFEFR.DataModuleCreate(Sender: TObject);
 begin
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
-    pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick,
-    pbNoClose, pbNoFullScreen, pbNoEmail ];
+    pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick];
 end;
 
 procedure TDMACBrMDFeDAMDFEFR.frxReportGetValue(const VarName: string; var Value: Variant);

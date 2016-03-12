@@ -274,8 +274,8 @@ begin
     Result[0] := AString
   else
   begin
-    iDelLen := PCardinal(Cardinal(ADelimiter) - SizeOf(Cardinal))^;
-    iLen := PCardinal(Cardinal(AString) - SizeOf(Cardinal))^;
+    iDelLen := Length(ADelimiter);
+    iLen := Length(AString);
     Step := @Result[0];
     iLast := 0;
     iPos := 0;

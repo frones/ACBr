@@ -1986,8 +1986,8 @@ begin
    rpRemetente:      rllResponsavel.Caption := 'REMETENTE';
    rpExpedidor:      rllResponsavel.Caption := 'EXPEDIDOR';
    rpRecebedor:      rllResponsavel.Caption := 'RECEBEDOR';
-   rpDestinatario:   rllResponsavel.Caption := 'DESTINATÁRIO';
-   rpTomadorServico: rllResponsavel.Caption := 'TOMADOR DO SERVIÇO';
+   rpDestinatario:   rllResponsavel.Caption := ACBrStr('DESTINATÁRIO');
+   rpTomadorServico: rllResponsavel.Caption := ACBrStr('TOMADOR DO SERVIÇO');
   end;
   rllValorTotal.Caption := FormatFloatBr(msk13x2, FCTe.Rodo.valePed.vTValePed);
 {$ENDIF}
@@ -2010,9 +2010,10 @@ begin
   for i:= 0 to (FCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
    // TpcteTipoVeiculo = (tvTracao, tvReboque);
-   if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao
-    then rlmTipo.Lines.Add('Tração')
-    else rlmTipo.Lines.Add('Reboque');
+			if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao then 
+				rlmTipo.Lines.Add(ACBrStr('Tração'))
+			else 
+				rlmTipo.Lines.Add('Reboque');
    rlmPlaca.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].placa);
    rlmUF.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].UF);
    rlmRNTRC.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].Prop.RNTRC);
@@ -2033,7 +2034,7 @@ begin
   begin
     // TpcteTipoVeiculo = (tvTracao, tvReboque);
     if FCTe.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo.Lines.Add('Tração')
+      rlmTipo.Lines.Add(ACBrStr('Tração'))
     else
       rlmTipo.Lines.Add('Reboque');
     rlmPlaca.Lines.Add(FCTe.Rodo.veic.Items[i].placa);
@@ -2058,9 +2059,7 @@ begin
   end;
 
   for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
-  begin
     rllLacres.Caption := rllLacres.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
-  end;
 {$ENDIF}
 end;
 
@@ -2069,9 +2068,6 @@ var
   i: integer;
 begin
   inherited;
-
-  PrintIt := RLCTe.PageNumber = 1;
-
   rlmTipo2.Lines.Clear;
   rlmPlaca2.Lines.Clear;
   rlmUF2.Lines.Clear;
@@ -2089,9 +2085,10 @@ begin
   for i:= 0 to (FCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
    // TpcteTipoVeiculo = (tvTracao, tvReboque);
-   if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao
-    then rlmTipo2.Lines.Add('Tração')
-    else rlmTipo2.Lines.Add('Reboque');
+		if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao  then 
+			rlmTipo2.Lines.Add(ACBrStr('Tração'))
+    else 
+			rlmTipo2.Lines.Add('Reboque');
    rlmPlaca2.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].placa);
    rlmUF2.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].UF);
    rlmRNTRC2.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].Prop.RNTRC);
@@ -2119,7 +2116,7 @@ begin
   begin
     // TpcteTipoVeiculo = (tvTracao, tvReboque);
     if FCTe.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo2.Lines.Add('Tração')
+      rlmTipo2.Lines.Add(ACBrStr('Tração'))
     else
       rlmTipo2.Lines.Add('Reboque');
     rlmPlaca2.Lines.Add(FCTe.Rodo.veic.Items[i].placa);

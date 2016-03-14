@@ -101,10 +101,11 @@ type
     function GerarCabecalhoSoap: String; override;
     procedure InicializarDadosMsg(AIncluiEncodingCab: Boolean);
     procedure FinalizarServico; override;
+    function RemoverEncoding(AEncoding, AXML: String): String;
     function ExtrairRetorno: String;
     function ExtrairNotasRetorno: Boolean;
     function GerarRetornoNFSe(ARetNFSe: String): String;
-    procedure DefinirSignatureNode(TipoEnvio:String);
+    procedure DefinirSignatureNode(TipoEnvio: String);
     procedure GerarLoteRPScomAssinatura(RPS: String);
     procedure GerarLoteRPSsemAssinatura(RPS: String);
     procedure InicializarGerarDadosMsg;
@@ -780,13 +781,18 @@ begin
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
 end;
 
+function TNFSeWebService.RemoverEncoding(AEncoding, AXML: String): String;
+begin
+  Result := StringReplace(AXML, AEncoding, '', [rfReplaceAll])
+end;
+
 function TNFSeWebService.ExtrairRetorno: String;
 var
-  Encoding: String;
+  Encoding, AuxXML, XMLRet: String;
 begin
   // Provedor DBSeller retorna a resposta em String
   // Aplicado a conversão de String para XML
-  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+//  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
 
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;', '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;', '', [rfReplaceAll]);
@@ -798,44 +804,56 @@ begin
   Encoding := '<?xml version=' + '''' + '1.0' + '''' +
                    ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
 
-  Result := SeparaDados(FPRetornoWS, 'return');
+  AuxXML := ParseText(FPRetornoWS);
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'ns:return');
+  XMLRet := SeparaDados(AuxXML, 'return');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'outputXML');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'ns:return');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'RetornoXML');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'outputXML');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 's:Body');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'RetornoXML');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'soap:Body');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 's:Body');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'env:Body');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'soap:Body');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'soapenv:Body');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'env:Body');
 
-  if Result = '' then
-    Result := SeparaDados(FPRetornoWS, 'SOAP-ENV:Body');
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'soapenv:Body');
+
+  if XMLRet = '' then
+    XMLRet := SeparaDados(AuxXML, 'SOAP-ENV:Body');
 
   // Caso não consiga extrai o retorno, retornar a resposta completa.
-  if Result = '' then
-    Result := FPRetornoWS;
+  if XMLRet = '' then
+    XMLRet := AuxXML;
 
+  if Pos('?>', XMLRet) > 0 then
+  begin
+    XMLRet := RemoverEncoding('<' + XML_V01 + '>', XMLRet);
+    XMLRet := RemoverEncoding('<' + ENCODING_UTF8 + '>', XMLRet);
+    XMLRet := RemoverEncoding('<' + ENCODING_UTF8_STD + '>', XMLRet);
+    XMLRet := RemoverEncoding(Encoding, XMLRet);
+    XMLRet := RemoverEncoding('<?xml version = "1.0" encoding = "utf-8"?>', XMLRet);
+    XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', XMLRet);
+  end;
+  (*
   Result := StringReplace(Result, '<' + XML_V01 + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
   Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version = "1.0" encoding = "utf-8"?>', '', [rfReplaceAll]);
   Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
-
-  Result := ParseText(Result);
+  *)
+  Result := XMLRet;
 end;
 
 function TNFSeWebService.ExtrairNotasRetorno: Boolean;

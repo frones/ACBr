@@ -1153,7 +1153,6 @@ object frmPrincipal: TfrmPrincipal
         Width = 172
         Height = 21
         Style = csDropDownList
-        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1266,16 +1265,20 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
+        ExplicitWidth = 554
+        ExplicitHeight = 499
         DesignSize = (
           537
           499)
         inherited btnPacotesDesmarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
+          ExplicitTop = 465
         end
         inherited btnPacotesMarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
+          ExplicitTop = 465
         end
       end
     end
@@ -1645,7 +1648,6 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

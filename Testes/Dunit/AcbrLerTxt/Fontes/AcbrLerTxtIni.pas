@@ -11,6 +11,8 @@ Type
   TIniAcbrLerTxt = Class( Tobject )
   private
     FVersao       : Widestring;
+    FStrId        : Widestring;
+    fIntnNF       : Integer;
     FDecvUnTrib   : Integer;
     FDecqCom      : Integer;
     FDecvUnCom    : Integer;
@@ -20,6 +22,10 @@ Type
   Public
     [IniValue('CONFIGUR'      ,'Versao' ,'Beta 1.0')]
     Property Versao       : Widestring  read FVersao      write fVersao;
+    [IniValue('CONFIGUR'  ,'StrId'    ,'')]
+    Property StrId        : Widestring  read FStrId       write fStrId;
+    [IniValue('CONFIGUR'  ,'IntnNF'    ,'6')]
+    Property  IntnNF      : Integer     read fIntnNF      write fIntnNF;
     [IniValue('CONFIGUR'  ,'DecqCom'    ,'4')]
     Property DecqCom      : Integer     read FDecqCom     write FDecqCom;
     [IniValue('CONFIGUR'  ,'DecvUnCom'  ,'10')]
@@ -30,7 +36,6 @@ Type
     Property DecqTrib     : Integer     read FDecqTrib    write FDecqTrib;
     [IniValue('CONFIGUR'  ,'DecvUnTrib' ,'10')]
     Property DecvUnTrib   : Integer     read FDecvUnTrib  write FDecvUnTrib;
-
     procedure Save;
     procedure Load;
     constructor Create;

@@ -47,6 +47,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/03/2016
+-- AcbrLerTxtIni --
+[+]     : Novas Configurações em config.ini 
+            StrId        Define o Valor da TAg iD 
+            IntnNF       Define o numero de zeros a esquerda para Tag nNf
+            StrtpAmb     Define o tipo de ambiente para Tag tpAmb
+          
+          Henrique Leonardo   
+
+14/03/2016
+-- TestAcBrLerTxt --
+[+]     : Nova função MontaZeroEsquerda
+[+]     : Novas configurações para aceitar o config.ini
+            Henrique Leonardo   
+
+
 Data: 12/03/2016
 [+]     : Beta 1.0 - Implantanção no SVN
           Henrique Leonardo   

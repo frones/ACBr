@@ -50,6 +50,7 @@ type
     function RetornaConteudoPos( s  : String;iDD : Integer = 0  ) : String;
     Procedure Initialize( sMonta : STring );
     procedure Finalize;
+    procedure MontaZeroEsquerda(TAG, iZeros: Integer);
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -224,7 +225,7 @@ procedure TAcBrLerTxtTDD.LerTxt;
 begin
   with NFe do
   begin
-    CheckEquals(infNFe.ID,'');
+    CheckEquals(infNFe.ID,Config.Strid);
     CheckEquals(TpAmbToStr(procNFe.tpAmb),'1');
     CheckEquals(procNFe.verAplic,'');
     CheckEquals(procNFe.chNFe,'','procNFe.chNFe');
@@ -1711,7 +1712,7 @@ begin
   (*B05 *)Monta( IndpagToStr( NFe.ide.indPag ));
   (*B06 *)Monta( NFe.ide.modelo , tcInt );
   (*B07 *)Monta( NFe.ide.serie  , tcInt );
-  (*B08 *)Monta( NFe.ide.nNF    , tcInt );
+  (*B08 *)MontaZeroEsquerda( NFe.ide.nNF , Config.IntnNF );
   if nfe.infNFe.Versao > 2 then
   Begin
     (*B09 *)Monta( DateTimeTodh(nfe.ide.dEmi)    + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi));
@@ -2207,9 +2208,19 @@ begin
   Registro := Registro+LerCampo(Tipo, TAG)+'|';
 end;
 
+
+procedure TAcBrLerTxtTDD.MontaZeroEsquerda(TAG: Integer; iZeros: Integer);
+begin
+  if iZeros > 0 then
+    Registro := Registro+ Poem_Zeros( TAG, iZeros);
+
+  Registro := Registro+'|';
+end;
+
 procedure TAcBrLerTxtTDD.MontaDec(TAG: double; dDecimal: Integer);
 begin
-  Registro := Registro+ FloatToString( TAG, '.', FloatMask(dDecimal));
+  if dDecimal > 0 then
+    Registro := Registro+ FloatToString( TAG, '.', FloatMask(dDecimal));
   Registro := Registro+'|';
 end;
 

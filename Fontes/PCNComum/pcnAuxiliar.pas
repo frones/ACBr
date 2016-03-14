@@ -120,6 +120,9 @@ function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
 function GetDataDoCarnaval(const ano: Integer): TDateTime;
 function GetDataDaPascoa(const ano: Integer): TDateTime;
 
+function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
+function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
+
 function TimeZoneConf: TTimeZoneConf;
 
 var
@@ -919,6 +922,20 @@ begin
 end;
 
 { TTimeZoneConf }
+
+function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ValidarChave(AChaveNFe) then
+    Result := copy(AChaveNFE, 21, 2)
+  else
+    Result := '';
+end;
+
+function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
+begin
+  Result := StrToIntDef(Copy(AChaveNFE,1,2), 0);
+end;
 
 function TimeZoneConf: TTimeZoneConf;
 begin

@@ -65,8 +65,8 @@ type
     FPLayout: TLayOutMDFe;
     FPConfiguracoesMDFe: TConfiguracoesMDFe;
 
-    function ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
-    function ExtrairUFChaveAcesso(AChaveMDFe: String): Integer;
+    //function ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
+    //function ExtrairUFChaveAcesso(AChaveMDFe: String): Integer;
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -510,14 +510,14 @@ begin
   FPStatus := stMDFeIdle;
 end;
 
-function TMDFeWebService.ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
-begin
-  AChaveMDFe := OnlyNumber(AChaveMDFe);
-  if ValidarChave(AChaveMDFe) then
-    Result := copy(AChaveMDFe, 21, 2)
-  else
-    Result := '';
-end;
+//function TMDFeWebService.ExtrairModeloChaveAcesso(AChaveMDFe: String): String;
+//begin
+//  AChaveMDFe := OnlyNumber(AChaveMDFe);
+//  if ValidarChave(AChaveMDFe) then
+//    Result := copy(AChaveMDFe, 21, 2)
+//  else
+//    Result := '';
+//end;
 
 procedure TMDFeWebService.InicializarServico;
 begin
@@ -560,10 +560,10 @@ begin
   TACBrMDFe(FPDFeOwner).SetStatus(stMDFeIdle);
 end;
 
-function TMDFeWebService.ExtrairUFChaveAcesso(AChaveMDFe: String): Integer;
-begin
-  Result := StrToIntDef(Copy(AChaveMDFe, 1, 2), 0);
-end;
+//function TMDFeWebService.ExtrairUFChaveAcesso(AChaveMDFe: String): Integer;
+//begin
+//  Result := StrToIntDef(Copy(AChaveMDFe, 1, 2), 0);
+//end;
 
 { TMDFeStatusServico }
 

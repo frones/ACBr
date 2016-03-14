@@ -71,9 +71,6 @@ type
     FPLayout: TLayOutGNRE;
     FPConfiguracoesGNRE: TConfiguracoesGNRE;
 
-    //function ExtrairModeloChaveAcesso(AChaveGNRE: String): String;
-    //function ExtrairUFChaveAcesso(AChaveGNRE: String): Integer;
-
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -357,21 +354,6 @@ begin
   TACBrGNRE(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
-
-//function TGNREWebService.ExtrairModeloChaveAcesso(
-//  AChaveGNRE: String): String;
-//begin
-//  AChaveGNRE := OnlyNumber(AChaveGNRE);
-//  if ValidarChave(AChaveGNRE) then
-//    Result := copy(AChaveGNRE, 21, 2)
-//  else
-//    Result := '';
-//end;
-//
-//function TGNREWebService.ExtrairUFChaveAcesso(AChaveGNRE: String): Integer;
-//begin
-//  Result := StrToIntDef(Copy(AChaveGNRE, 1, 2), 0);
-//end;
 
 procedure TGNREWebService.InicializarServico;
 begin

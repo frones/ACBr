@@ -63,8 +63,6 @@ type
     FPConfiguracoesNFe: TConfiguracoesNFe;
 
     procedure ConfigurarSoapDEPC;
-    //function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
-    //function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
 
   protected
     procedure InicializarServico; override;
@@ -688,20 +686,6 @@ begin
     'xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/';
   FPBodyElement := 'sceDadosMsg';
 end;
-
-//function TNFeWebService.ExtrairModeloChaveAcesso(AChaveNFE: String): String;
-//begin
-//  AChaveNFE := OnlyNumber(AChaveNFE);
-//  if ValidarChave(AChaveNFe) then
-//    Result := copy(AChaveNFE, 21, 2)
-//  else
-//    Result := '';
-//end;
-//
-//function TNFeWebService.ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
-//begin
-//  Result := StrToIntDef(Copy(AChaveNFE,1,2), 0);
-//end;
 
 procedure TNFeWebService.InicializarServico;
 begin

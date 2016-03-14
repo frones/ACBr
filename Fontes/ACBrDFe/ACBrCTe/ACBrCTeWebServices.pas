@@ -67,8 +67,6 @@ type
     FPLayout: TLayOutCTe;
     FPConfiguracoesCTe: TConfiguracoesCTe;
 
-    //function ExtrairModeloChaveAcesso(AChaveCTE: String): String;
-    //function ExtrairUFChaveAcesso(AChaveCTE: String): Integer;
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
@@ -582,15 +580,6 @@ begin
   FPStatus := stCTeIdle;
 end;
 
-//function TCTeWebService.ExtrairModeloChaveAcesso(AChaveCTe: String): String;
-//begin
-//  AChaveCTe := OnlyNumber(AChaveCTe);
-//  if ValidarChave(AChaveCTe) then
-//    Result := copy(AChaveCTe, 21, 2)
-//  else
-//    Result := '';
-//end;
-
 procedure TCTeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
@@ -631,11 +620,6 @@ begin
 
   TACBrCTe(FPDFeOwner).SetStatus(stCTeIdle);
 end;
-
-//function TCTeWebService.ExtrairUFChaveAcesso(AChaveCTE: String): Integer;
-//begin
-//  Result := StrToIntDef(Copy(AChaveCTE, 1, 2), 0);
-//end;
 
 { TCTeStatusServico }
 

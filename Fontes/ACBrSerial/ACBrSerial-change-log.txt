@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/038/2016
+-- ACBrECFVirtual --
+[-] Correção de bug no calculo de Total por Aliquota, quando havia desconto/
+    acréscimo, na venda do Item    (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28573
+
 Data: 11/03/2016
 -- ACBrDevice --
 [+] Adicionado os valores de SendBytesCount e SendBytesInterval em:

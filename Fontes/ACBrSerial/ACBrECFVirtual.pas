@@ -1008,6 +1008,7 @@ procedure TACBrECFVirtualClassCupom.DescAresItem(NumItem: Integer; ADescAcres: D
   );
 var
   ItemCupom: TACBrECFVirtualClassItemCupom;
+  ALiq: TACBrECFVirtualClassAliquotaCupom;
 begin
   VerificaFaixaItem(NumItem);
 
@@ -1019,6 +1020,11 @@ begin
   ItemCupom.DescAcres := RoundABNT( ADescAcres, -2);
 
   fpSubTotal := fpSubTotal + ItemCupom.DescAcres;  // Atualiza SubTotal Cupom
+
+  // Atualiza totais das Aliquotas
+  ALiq := fpAliquotasCupom.Find(ItemCupom.AliqPos);
+  if Assigned(ALiq) then
+    ALiq.Total := ALiq.Total + ItemCupom.DescAcres;
 end;
 
 procedure TACBrECFVirtualClassCupom.CancelaItem(NumItem: Integer);

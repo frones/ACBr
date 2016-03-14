@@ -335,14 +335,14 @@ function TACBrGNRE.Enviar(Imprimir: Boolean): Boolean;
 var
   i: Integer;
 begin
+  Guias.GerarGNRE;
+  
   if Guias.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma GNRE adicionada ao Lote'));
 
   if Guias.Count > 50 then
     GerarException(ACBrStr('ERRO: Conjunto de GNRE transmitidas (máximo de 50 GNRE)' +
       ' excedido. Quantidade atual: ' + IntToStr(Guias.Count)));
-
-  Guias.GerarGNRE;
 
   Result := WebServices.Envia;
 

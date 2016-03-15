@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/03/2016
+[*] Diversas alterações visando o provedor Infisc.
+    por: Otimizy
+
 12/03/2016
 [*] Modificado para deixar alguns botões fora do preview em fast report
 		por: Juliomar Marchetti

@@ -967,6 +967,9 @@ begin
     end;
   end;
 
+  NFSe.Cancelada := snNao; {@/\@}
+  NFSe.Status := srNormal; {@/\@}
+
   case LayoutXML of
     loABRASFv1:    Result := LerNFSe_ABRASF_V1;
     loABRASFv2:    Result := LerNFSe_ABRASF_V2;
@@ -982,8 +985,10 @@ begin
 
   Leitor.Grupo := Leitor.Arquivo;
 
+{
   NFSe.Cancelada := snNao;
   NFSe.Status := srNormal;
+}
 
   if Leitor.rExtrai(1, 'NfseCancelamento') <> '' then
   begin
@@ -1792,6 +1797,10 @@ begin
 
       Nfse.DataEmissao := EncodeDateTime( ano, mes, dia, hora, minuto, 0, 0);
       NFSe.Status      := StrToEnumerado(ok, Leitor.rCampo(tcStr, 'anulada'), ['N','S'], [srNormal, srCancelado]);
+
+      NFSe.Cancelada   := StrToSimNaoInFisc(ok, Leitor.rCampo(tcStr, 'cancelada')); {Jozimar}
+      NFSe.MotivoCancelamento := Leitor.rCampo(tcStr, 'motCanc');                   {Jozimar}
+
       NFSe.InfID.ID    := SomenteNumeros(NFSe.CodigoVerificacao);
 
       NFSe.ChaveNFSe                   := Leitor.rCampo(tcStr, 'refNF');

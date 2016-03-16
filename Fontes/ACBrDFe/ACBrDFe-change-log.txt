@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2016
+-- ACBrDFeOpenSSL --
+[*] Método "VerificarAssinatura": Ajuste parta retorno de mensagem de erro,
+    quando a Assinatura do XML é inválida    (por: DSA)
+
+-- ACBrDFeWebService --
+[-] Método: "SalvarEnvio", correção para conversão de XML para UTF8, quando o
+    mesmo não foi previamente assinado     (por: DSA)
+
 11/03/2016
 -- ACBrDFeOpenSSL --
 [*] Modificada a rotina de inicialização de XMLSec, para suportar diretiva de

@@ -60,6 +60,7 @@ const
   cErrPubKeyLoad = 'Erro: Falha ao ler a Chave Publica do Certificado';
   cErrDSigSign = 'Erro: Falha ao assinar o Documento';
   cErrDSigVerify = 'Erro: Falha na verificação da Assinatura';
+  cErrDSigInvalid = 'Erro: Assinatura é inválida';
 
 
 type
@@ -492,6 +493,9 @@ begin
     end;
 
     Result := (dsigCtx.status = xmlSecDSigStatusSucceeded);
+    if not Result then
+      MsgErro := ACBrStr(cErrDSigInvalid);
+
   finally
     { cleanup }
     MS.Free;

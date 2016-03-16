@@ -345,7 +345,8 @@ end;
 
 procedure TDFeWebService.SalvarEnvio;
 var
-  Prefixo, ArqEnv, UTF8Str: String;
+  Prefixo, ArqEnv: String;
+  IsUTF8: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -358,18 +359,16 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
 
-    // Não deve tentar converter para UTF8, pois FPDadosMsg já está em UTF8
-    UTF8Str := FPDadosMsg;
-    FPDFeOwner.Gravar(ArqEnv, UTF8Str);
+    IsUTF8  := XmlEstaAssinado(FPDadosMsg);
+    FPDFeOwner.Gravar(ArqEnv, FPDadosMsg, '', IsUTF8);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
 
-    // Não deve tentar converter para UTF8, pois FPEnvelopeSoap já está em UTF8
-    UTF8Str := FPEnvelopeSoap;
-    FPDFeOwner.Gravar(ArqEnv, UTF8Str);
+    IsUTF8  := XmlEstaAssinado(FPEnvelopeSoap);
+    FPDFeOwner.Gravar(ArqEnv, FPEnvelopeSoap, '', IsUTF8);
   end;
 end;
 

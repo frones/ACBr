@@ -896,12 +896,10 @@ begin
   begin
 
     cdsParametros.FieldByName('LogoPrefExpandido').AsString := IfThen(ExpandirLogoMarca, '0', '1'); // Prefeitura
-
+    cdsParametros.FieldByName('Nome_Prefeitura').AsString := Prefeitura;
     if NaoEstaVazio(DANFSeClassOwner.Logo) then
     begin
-      cdsParametros.FieldByName('Nome_Prefeitura').AsString := Prefeitura;
       cdsParametros.FieldByName('imgPrefeitura').AsString   := Logo;
-
       vStream := TMemoryStream.Create;
       try
         if FileExists(Logo) then
@@ -976,7 +974,6 @@ end;
 
 procedure TACBrNFSeDANFSeFR.frxReportBeforePrint(Sender: TfrxReportComponent);
 begin
-  
   frxReport.FindObject('Memo23').Visible := DANFSeClassOwner.ImprimeCanhoto;
   frxReport.FindObject('Memo75').Visible := DANFSeClassOwner.ImprimeCanhoto;
   frxReport.FindObject('Memo77').Visible := DANFSeClassOwner.ImprimeCanhoto;

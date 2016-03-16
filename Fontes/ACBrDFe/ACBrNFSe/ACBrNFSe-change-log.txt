@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/03/2016
+ACBrNFSeDANFSeFR
+[*] Correção para sair o nome da prefeitura mesmo não tendo o logo
+		http://www.projetoacbr.com.br/forum/topic/28700-danfese-n%C3%A3o-sai-nome-da-prefeitura/
+		por : Juliomar Marchetti
+		
 15/03/2016
 [*] Diversas alterações visando o provedor Infisc.
     por: Otimizy

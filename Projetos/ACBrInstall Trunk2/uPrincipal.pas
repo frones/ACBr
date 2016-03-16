@@ -804,23 +804,27 @@ begin
   // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to oACBr.Count - 1 do
   begin
-    if      oACBr.Installations[iFor].VersionNumberStr = 'd3' then
-      edtDelphiVersion.Items.Add('Delphi 3')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd4' then
-      edtDelphiVersion.Items.Add('Delphi 4')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd5' then
-      edtDelphiVersion.Items.Add('Delphi 5')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd6' then
-      edtDelphiVersion.Items.Add('Delphi 6')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd7' then
-      edtDelphiVersion.Items.Add('Delphi 7')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd9' then
-      edtDelphiVersion.Items.Add('Delphi 2005')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd10' then
-      edtDelphiVersion.Items.Add('Delphi 2006')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd11' then
-      edtDelphiVersion.Items.Add('Delphi 2007')
-    else if oACBr.Installations[iFor].VersionNumberStr = 'd12' then
+    //if      oACBr.Installations[iFor].VersionNumberStr = 'd3' then
+    //  edtDelphiVersion.Items.Add('Delphi 3')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd4' then
+    //  edtDelphiVersion.Items.Add('Delphi 4')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd5' then
+    //  edtDelphiVersion.Items.Add('Delphi 5')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd6' then
+    //  edtDelphiVersion.Items.Add('Delphi 6')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd7' then
+    //  edtDelphiVersion.Items.Add('Delphi 7')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd9' then
+    //  edtDelphiVersion.Items.Add('Delphi 2005')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd10' then
+    //  edtDelphiVersion.Items.Add('Delphi 2006')
+    //else if oACBr.Installations[iFor].VersionNumberStr = 'd11' then
+    //  edtDelphiVersion.Items.Add('Delphi 2007')
+
+    // removidas as versões anteriores do Delphi porque agora o projeto não vai
+    // mais suportá-las, então não existe sentido em mantê-las na instalação.
+
+    if      oACBr.Installations[iFor].VersionNumberStr = 'd12' then
       edtDelphiVersion.Items.Add('Delphi 2009')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd14' then
       edtDelphiVersion.Items.Add('Delphi 2010')

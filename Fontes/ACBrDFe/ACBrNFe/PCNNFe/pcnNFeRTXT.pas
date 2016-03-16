@@ -157,22 +157,22 @@ begin
     case Tipo of
       tcStr     : result := ReverterFiltroTextoXML(ConteudoTag);
       tcDat     : begin
-                    if length(ConteudoTag)>0 then
+                    if length(Trim( ConteudoTag) )>0 then
                       result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
                     else
                       result:=0;
                     end;
       tcDatHor  : begin
-                      if length(ConteudoTag)>0 then
-                        result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
+                    if length(Trim( ConteudoTag) )>0 then
+                      result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
                         EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
-                      else
-                        result:=0;
+                    else
+                      result:=0;
                     end;
       tcHor     : begin
-                      if length(ConteudoTag)>0 then
+                    if length(Trim( ConteudoTag) )>0 then
                       result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
-                      else
+                    else
                       result:=0;
                     end;
       tcDe2,

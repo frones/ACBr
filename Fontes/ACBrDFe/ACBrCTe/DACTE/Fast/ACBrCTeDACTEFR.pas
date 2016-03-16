@@ -446,7 +446,7 @@ begin
     Add('Mensagem0', ftString, 60);
     Add('Versao', ftString, 5);
     Add('Imagem', ftString, 256);
-    Add('Sistema', ftString, 60);
+    Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
     Add('Fax', ftString, 60);
     Add('Site', ftString, 60);
@@ -2444,20 +2444,9 @@ begin
       end;
     end;
 
-    if Sistema <> '' then
-      FieldByName('Sistema').AsString := Sistema
-    else
-      FieldByName('Sistema').AsString := 'Projeto ACBr - http://acbr.sf.net';
-
-    if Usuario <> '' then
-      FieldByName('Usuario').AsString := ' - ' + Usuario
-    else
-      FieldByName('Usuario').AsString := '';
-
-    if Fax <> '' then
-      FieldByName('Fax').AsString := ' - FAX ' + Fax
-    else
-      FieldByName('Fax').AsString := '';
+    FieldByName('Sistema').AsString := Ifthen(Sistema <> '', Sistema, 'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString := Ifthen(Usuario <> '', ' - ' + Usuario,'');
+    FieldByName('Fax').AsString := Ifthen(Fax <> '',' - FAX ' + Fax,'');
 
     FieldByName('Site').AsString  := Site;
     FieldByName('Email').AsString := Email;

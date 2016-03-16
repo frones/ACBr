@@ -340,7 +340,7 @@ begin
     Clear;
     Add('Versao', ftString, 5);
     Add('Imagem', ftString, 256);
-    Add('Sistema', ftString, 60);
+    Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
 
     CreateDataSet;
@@ -349,18 +349,9 @@ begin
     FieldByName('Versao').AsString := '1.00';
 
     // Carregamento da imagem
-    if DAMDFEClassOwner.Logo <> '' then
-      FieldByName('Imagem').AsString := DAMDFEClassOwner.Logo;
-
-    if DAMDFEClassOwner.Sistema <> '' then
-      FieldByName('Sistema').AsString := DAMDFEClassOwner.Sistema
-    else
-      FieldByName('Sistema').AsString := 'Projeto ACBr - http://acbr.sf.net';
-
-    if DAMDFEClassOwner.Usuario <> '' then
-      FieldByName('Usuario').AsString := ' - ' + DAMDFEClassOwner.Usuario
-    else
-      FieldByName('Usuario').AsString := '';
+    FieldByName('Imagem').AsString := Ifthen(DAMDFEClassOwner.Logo <> '', DAMDFEClassOwner.Logo,'');
+    FieldByName('Sistema').AsString := Ifthen(DAMDFEClassOwner.Sistema <> '',DAMDFEClassOwner.Sistema,'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString := Ifthen(DAMDFEClassOwner.Usuario <> '',' - ' + DAMDFEClassOwner.Usuario,'');
     Post;
 
   end;

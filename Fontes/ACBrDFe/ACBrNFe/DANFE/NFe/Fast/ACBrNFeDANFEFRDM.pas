@@ -1556,7 +1556,7 @@ begin
         FieldDefs.Add('ResumoCanhoto', ftString, 200);
         FieldDefs.Add('Mensagem0', ftString, 60);
         FieldDefs.Add('Imagem', ftString, 256);
-        FieldDefs.Add('Sistema', ftString, 60);
+        FieldDefs.Add('Sistema', ftString, 150);
         FieldDefs.Add('Usuario', ftString, 60);
         FieldDefs.Add('Fax', ftString, 60);
         FieldDefs.Add('Site', ftString, 60);

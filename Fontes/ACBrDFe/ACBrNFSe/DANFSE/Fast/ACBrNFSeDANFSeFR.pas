@@ -421,7 +421,7 @@ begin
       Add('LogoPrefCarregado', ftBlob);
       Add('Nome_Prefeitura', ftString, 256);
       Add('Mensagem0', ftString, 50);
-      Add('Sistema', ftString, 50);
+      Add('Sistema', ftString, 150);
       Add('Usuario', ftString, 50);
       Add('Site', ftString, 50);
       Add('NaturezaOperacao', ftString, 50);
@@ -755,8 +755,8 @@ begin
 
     CarregaLogoPrefeitura;
     CarregaImagemPrestadora;
-
-    FieldByName('Sistema').AsString   := DANFSeClassOwner.Sistema;
+		
+    FieldByName('Sistema').AsString   := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
     FieldByName('Site').AsString   := DANFSeClassOwner.Site;
     FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');

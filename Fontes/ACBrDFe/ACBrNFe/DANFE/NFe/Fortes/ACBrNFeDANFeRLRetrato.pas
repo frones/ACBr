@@ -1241,7 +1241,7 @@ begin
     begin
       Result := XLgr +
                     IfThen(Nro = '0', '', ', ' + Nro) +
-                    IfThen(xCpl > '','', ' - ' + xCpl );
+                    IfThen(xCpl = '','', ' - ' + xCpl );
 
 
       Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
@@ -1262,7 +1262,7 @@ begin
     begin
       Result  := XLgr +
                     IfThen(Nro = '0', '', ', ' + Nro) +
-                    IfThen(xCpl > '','', ' - ' + xCpl );
+                    IfThen(xCpl = '','', ' - ' + xCpl );
 
       Result  := 'LOCAL DE RETIRADA: ' + Result  + ' - ' +
                     xBairro + ' - ' + xMun + '-' + UF +

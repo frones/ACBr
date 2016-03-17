@@ -432,6 +432,10 @@ begin
                         ifthen( (ACBrSATExtrato.CFe.ide.tpAmb = taHomologacao), rlbTeste.Height, 0 ) ;
 
   Result := max( 100, 50 + round(TotalPaginaPixel/MMAsPixels));
+  
+  // Limite do driver (Tamanho da página)
+  if (Result > 3276) then
+    Result := 3276;  
 end;
 
 procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);

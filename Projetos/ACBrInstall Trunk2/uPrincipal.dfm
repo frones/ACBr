@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1131,6 +1131,24 @@ object frmPrincipal: TfrmPrincipal
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
+      end
+      object Label22: TLabel
+        Left = 17
+        Top = 455
+        Width = 517
+        Height = 26
+        AutoSize = False
+        Caption = 
+          'NOTA: Seguindo o aviso feito no f'#243'rum sobre n'#227'o suportar vers'#245'es' +
+          ' n'#227'o UNICODE, vers'#245'es pr'#233' Delphi 2009 n'#227'o ser'#227'o mais suportadas,' +
+          ' portanto, n'#227'o s'#227'o listadas no combo de sele'#231#227'o de vers'#227'o.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        WordWrap = True
       end
       object edtDelphiVersion: TComboBox
         Left = 17

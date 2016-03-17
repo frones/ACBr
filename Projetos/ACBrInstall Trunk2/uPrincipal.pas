@@ -111,6 +111,7 @@ type
     btnWCInfo: TButton;
     ckbRemoverArquivosAntigos: TCheckBox;
     JvCreateProcess1: TJvCreateProcess;
+    Label22: TLabel;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -690,6 +691,9 @@ var
   sVersao: String;
   sTipo: String;
 begin
+  if Trim(edtDelphiVersion.Text) = '' then
+    raise Exception.Create('Escolha a versão do Delphi antes de continuar!');
+
   iVersion := edtDelphiVersion.ItemIndex;
   sVersao  := AnsiUpperCase(oACBr.Installations[iVersion].VersionNumberStr);
   sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
@@ -1424,7 +1428,18 @@ end;
 procedure TfrmPrincipal.wizPgConfiguracaoNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
-  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd3, d4, d5') > 0 then
+  if iVersion < 0 then
+  begin
+    Stop := True;
+    edtDelphiVersion.SetFocus;
+    Application.MessageBox(
+      'Para continuar escolha a versão do Delphi para a qual deseja instalar o ACBr.',
+      'Erro.',
+      MB_OK + MB_ICONERROR
+    );
+  end;
+
+  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd3, d4, d5, d6, d7, d9, d10, d11') > 0 then
   begin
     Stop := True;
     edtDelphiVersion.SetFocus;

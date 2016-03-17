@@ -808,27 +808,23 @@ begin
   // popular o combobox de versões do delphi instaladas na máquina
   for iFor := 0 to oACBr.Count - 1 do
   begin
-    //if      oACBr.Installations[iFor].VersionNumberStr = 'd3' then
-    //  edtDelphiVersion.Items.Add('Delphi 3')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd4' then
-    //  edtDelphiVersion.Items.Add('Delphi 4')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd5' then
-    //  edtDelphiVersion.Items.Add('Delphi 5')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd6' then
-    //  edtDelphiVersion.Items.Add('Delphi 6')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd7' then
-    //  edtDelphiVersion.Items.Add('Delphi 7')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd9' then
-    //  edtDelphiVersion.Items.Add('Delphi 2005')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd10' then
-    //  edtDelphiVersion.Items.Add('Delphi 2006')
-    //else if oACBr.Installations[iFor].VersionNumberStr = 'd11' then
-    //  edtDelphiVersion.Items.Add('Delphi 2007')
-
-    // removidas as versões anteriores do Delphi porque agora o projeto não vai
-    // mais suportá-las, então não existe sentido em mantê-las na instalação.
-
-    if      oACBr.Installations[iFor].VersionNumberStr = 'd12' then
+    if      oACBr.Installations[iFor].VersionNumberStr = 'd3' then
+      edtDelphiVersion.Items.Add('Delphi 3')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd4' then
+      edtDelphiVersion.Items.Add('Delphi 4')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd5' then
+      edtDelphiVersion.Items.Add('Delphi 5')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd6' then
+      edtDelphiVersion.Items.Add('Delphi 6')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd7' then
+      edtDelphiVersion.Items.Add('Delphi 7')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd9' then
+      edtDelphiVersion.Items.Add('Delphi 2005')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd10' then
+      edtDelphiVersion.Items.Add('Delphi 2006')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd11' then
+      edtDelphiVersion.Items.Add('Delphi 2007')
+    else if oACBr.Installations[iFor].VersionNumberStr = 'd12' then
       edtDelphiVersion.Items.Add('Delphi 2009')
     else if oACBr.Installations[iFor].VersionNumberStr = 'd14' then
       edtDelphiVersion.Items.Add('Delphi 2010')
@@ -1428,7 +1424,7 @@ end;
 procedure TfrmPrincipal.wizPgConfiguracaoNextButtonClick(Sender: TObject;
   var Stop: Boolean);
 begin
-  if iVersion < 0 then
+  if (iVersion < 0) or (Trim(edtDelphiVersion.Text) = EmptyStr) then
   begin
     Stop := True;
     edtDelphiVersion.SetFocus;
@@ -1439,7 +1435,7 @@ begin
     );
   end;
 
-  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd3, d4, d5, d6, d7, d9, d10, d11') > 0 then
+  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd3, d4, d5, d6') > 0 then
   begin
     Stop := True;
     edtDelphiVersion.SetFocus;
@@ -1449,6 +1445,16 @@ begin
       MB_OK + MB_ICONERROR
     );
   end;
+
+  if Pos(oACBr.Installations[iVersion].VersionNumberStr, 'd7, d9, d10, d11') > 0 then
+  begin
+    Application.MessageBox(
+      'Atenção: a partir de Agosto de 2016 o Projeto ACBr não suportará mais versões não Unicode do Delphi, atualize o quanto antes para versões mais recentes do Delphi.',
+      'Erro.',
+      MB_OK + MB_ICONWARNING
+    );
+  end;
+
 
   // verificar se foi informado o diretório
   if Trim(edtDirDestino.Text) = EmptyStr then

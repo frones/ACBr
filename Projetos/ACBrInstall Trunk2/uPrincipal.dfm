@@ -1141,7 +1141,7 @@ object frmPrincipal: TfrmPrincipal
         Caption = 
           'NOTA: Seguindo o aviso feito no f'#243'rum sobre n'#227'o suportar vers'#245'es' +
           ' n'#227'o UNICODE, vers'#245'es pr'#233' Delphi 2009 n'#227'o ser'#227'o mais suportadas,' +
-          ' portanto, n'#227'o s'#227'o listadas no combo de sele'#231#227'o de vers'#227'o.'
+          ' atualize sua vers'#227'o do Delphi se necess'#225'rio.'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clRed
         Font.Height = -11
@@ -1662,6 +1662,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
+        FrameIndex = 2
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

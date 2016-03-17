@@ -262,6 +262,9 @@ begin
   if Trim(fDirDestino) = '' then
     raise EACBrTabelasSpedxception.Create('Informe o diretótio onde o arquivo deve ser salvo');
 
+   if (not DirectoryExists(fDirDestino)) and (not ForceDirectories(fDirDestino)) then
+   raise EACBrTabelasSpedxception.CreateFmt(ACBrStr('Não foi possível criar a caminho de destino: %s'),[fDirDestino]);
+
   Dow := TACBrDownload.Create(nil);
   try
     Dow.Protocolo := protHTTP;

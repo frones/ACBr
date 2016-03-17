@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/03/2016
+--ACBrSpedTabelas
+[+] Adicionado recurso para criar o diretório de destino caso o definido não exista
+    link http://www.projetoacbr.com.br/forum/topic/28781-contribui%C3%A7%C3%A3o-para-unit-acbrspedtabelaspas/?do=findComment&comment=190279
+    (por: Isaque Pinheiro)
+
 27/02/2016
 --ACBrConsultaCPF
 [*] Ajuste para quando retornar o erro de data de nascimento errado mostrar o problema

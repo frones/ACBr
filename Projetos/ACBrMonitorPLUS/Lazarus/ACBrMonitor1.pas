@@ -1646,19 +1646,20 @@ begin
   chRFD.Font.Color := clRed;
 
   deBOLDirLogo.Text := ExtractFilePath(Application.ExeName) + 'Logos' + PathDelim;
-
-  pgBoleto.ActivePageIndex := 0;
   cbxBOLF_JChange(Self);
 
+  pgBoleto.ActivePageIndex := 0;
+  pgCadastro.ActivePageIndex := 0;
   pgConfig.ActivePageIndex := 0;
+  pgConRFD.ActivePageIndex := 0;
   pgDFe.ActivePageIndex := 0;
   pgImpressaoDFe.ActivePageIndex := 0;
   pgTestes.ActivePageIndex := 0;
   pgSAT.ActivePageIndex := 0;
   pgECFParams.ActivePageIndex := 0;
-  pgCadastro.ActivePageIndex := 0;
   pgSwHouse.ActivePageIndex := 0;
-  pgConRFD.ActivePageIndex := 0;
+  pgTipoWebService.ActivePageIndex := 0;
+  pgEmailDFe.ActivePageIndex := 0;
 
   Application.Title := Caption;
 

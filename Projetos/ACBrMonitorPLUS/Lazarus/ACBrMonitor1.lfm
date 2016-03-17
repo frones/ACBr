@@ -5427,10 +5427,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 319
             Top = 0
             Width = 592
-            ActivePage = tsEmailDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
             ShowTabs = False
-            TabIndex = 3
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -5915,21 +5915,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsWebServiceDFe: TTabSheet
               Caption = 'WebServices'
               ClientHeight = 311
-              ClientWidth = 582
+              ClientWidth = 584
               ImageIndex = 2
               object pgTipoWebService: TPageControl
                 Left = 0
-                Height = 267
+                Height = 311
                 Top = 0
-                Width = 582
-                ActivePage = tsWSNFCe
+                Width = 584
+                ActivePage = tsWSNFe
                 Align = alClient
-                TabIndex = 1
+                TabIndex = 0
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
-                  ClientHeight = 237
-                  ClientWidth = 574
+                  ClientHeight = 281
+                  ClientWidth = 576
                   object gbxWSNFe: TGroupBox
                     Left = 3
                     Height = 153
@@ -6266,8 +6266,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsWSNFCe: TTabSheet
                   Caption = 'NFC-e'
-                  ClientHeight = 237
-                  ClientWidth = 574
+                  ClientHeight = 281
+                  ClientWidth = 576
                   ImageIndex = 2
                   object Label131: TLabel
                     Left = 0
@@ -6515,21 +6515,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsImpressaoDFe: TTabSheet
               Caption = 'Impressão'
               ClientHeight = 311
-              ClientWidth = 582
+              ClientWidth = 584
               ImageIndex = 4
               object pgImpressaoDFe: TPageControl
                 Left = 0
-                Height = 267
+                Height = 311
                 Top = 0
-                Width = 582
-                ActivePage = TabSheet1
+                Width = 584
+                ActivePage = tsImpGeralDFe
                 Align = alClient
-                TabIndex = 2
+                TabIndex = 0
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
-                  ClientHeight = 251
-                  ClientWidth = 604
+                  ClientHeight = 281
+                  ClientWidth = 576
                   object Label139: TLabel
                     Left = 2
                     Height = 17
@@ -6874,8 +6874,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object TabSheet1: TTabSheet
                   Caption = 'NFe'
-                  ClientHeight = 237
-                  ClientWidth = 574
+                  ClientHeight = 281
+                  ClientWidth = 576
                   object speProdutosPorPagina: TSpinEdit
                     Left = 8
                     Height = 25
@@ -7388,7 +7388,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsDiretoriosDFe: TTabSheet
               Caption = 'Diretórios'
               ClientHeight = 311
-              ClientWidth = 582
+              ClientWidth = 584
               ImageIndex = 6
               object sbPathNFe: TSpeedButton
                 Left = 258
@@ -7661,20 +7661,20 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsTestesDFe: TTabSheet
               Caption = 'Teste'
               ClientHeight = 311
-              ClientWidth = 582
+              ClientWidth = 584
               ImageIndex = 5
               object Panel1: TPanel
                 Left = 0
-                Height = 267
+                Height = 311
                 Top = 0
                 Width = 177
                 Align = alLeft
-                ClientHeight = 267
+                ClientHeight = 311
                 ClientWidth = 177
                 TabOrder = 0
                 object pgTestes: TPageControl
                   Left = 1
-                  Height = 265
+                  Height = 309
                   Top = 1
                   Width = 175
                   ActivePage = tsTesteNFe
@@ -7683,7 +7683,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
-                    ClientHeight = 235
+                    ClientHeight = 279
                     ClientWidth = 167
                     object btnStatusServ: TButton
                       Left = 12
@@ -7907,18 +7907,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object Panel2: TPanel
                 Left = 177
-                Height = 267
+                Height = 311
                 Top = 0
-                Width = 405
+                Width = 407
                 Align = alClient
-                ClientHeight = 267
-                ClientWidth = 405
+                ClientHeight = 311
+                ClientWidth = 407
                 TabOrder = 1
                 object Panel3: TPanel
                   Left = 1
                   Height = 17
-                  Top = -13
-                  Width = 403
+                  Top = 31
+                  Width = 405
                   Align = alBottom
                   Alignment = taLeftJustify
                   Caption = 'Resposta WebService'
@@ -7933,8 +7933,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 1
                   Height = 262
-                  Top = 4
-                  Width = 403
+                  Top = 48
+                  Width = 405
                   Align = alBottom
                   Font.Height = -13
                   Font.Name = 'Courier New'
@@ -11922,6 +11922,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

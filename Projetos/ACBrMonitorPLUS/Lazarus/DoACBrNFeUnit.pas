@@ -3558,7 +3558,7 @@ begin
           INIRec.WriteString('procNFe','tpAmb',TpAmbToStr(procNFe.tpAmb)) ;
           INIRec.WriteString('procNFe','verAplic',procNFe.verAplic) ;
           INIRec.WriteString('procNFe','chNFe',procNFe.chNFe) ;
-          INIRec.WriteString('procNFe','dhRecbto'  ,DateToStr(procNFe.dhRecbto));
+		  INIRec.WriteString('procNFe','dhRecbto'  ,DateTimeToStr(procNFe.dhRecbto));
           INIRec.WriteString('procNFe','nProt',procNFe.nProt) ;
           INIRec.WriteString('procNFe','digVal',procNFe.digVal) ;
           INIRec.WriteString('procNFe','cStat',IntToStr(procNFe.cStat)) ;

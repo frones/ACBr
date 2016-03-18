@@ -38,6 +38,9 @@ unit ACBrAAC;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   ACBrBase, ACBrPAFClass, SysUtils, Classes;
 
 type

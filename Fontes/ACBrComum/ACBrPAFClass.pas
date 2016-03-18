@@ -73,10 +73,10 @@ type
   private
     procedure SetObject(Index: Integer; Item: TACBrAACECF);
     function GetObject(Index: Integer): TACBrAACECF;
-    procedure Insert(Index: Integer; Obj: TACBrAACECF);
   public
     function New: TACBrAACECF;
     function Add(Obj: TACBrAACECF): Integer;
+    procedure Insert(Index: Integer; Obj: TACBrAACECF);
     property Objects[Index: Integer]: TACBrAACECF read GetObject write SetObject; default;
   end;
 
@@ -297,11 +297,11 @@ type
   private
     procedure SetObject (Index: Integer; Item: TACBrECFDAV);
     function GetObject (Index: Integer): TACBrECFDAV;
-    procedure Insert (Index: Integer; Obj: TACBrECFDAV);
   public
     procedure Ordenar;
     function New: TACBrECFDAV;
     function Add (Obj: TACBrECFDAV): Integer;
+    procedure Insert (Index: Integer; Obj: TACBrECFDAV);
     function ValorTotalAcumulado: Double;  protected
     property Objects [Index: Integer]: TACBrECFDAV
       read GetObject write SetObject; default;

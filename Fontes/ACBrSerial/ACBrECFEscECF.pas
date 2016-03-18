@@ -1670,11 +1670,7 @@ procedure TACBrECFEscECF.SalvaRespostasMemoria(AtualizaVB : Boolean) ;
 Var
   ValVB : Double;
 begin
-  try
-     ValVB := RespostasComando.FieldByName('VendaBruta').AsFloat;
-  except
-     AtualizaVB := True;
-  end ;
+  AtualizaVB := AtualizaVB or (not Assigned(RespostasComando.FindFieldByName('VendaBruta')));
 
   if AtualizaVB then
   begin

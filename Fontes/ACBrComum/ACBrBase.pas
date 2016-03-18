@@ -173,11 +173,10 @@ de campos quando necessário}
     function GetItem(Index: Integer): TACBrInformacao;
     procedure SetItem(Index: Integer; const Value: TACBrInformacao);
     function GetFields(Index: String): TAcbrInformacao;
-  protected
-    function FindFieldByName(const AName: String): TACBrInformacao;
   public
     function Add: TACBrInformacao;
     function AddField(const AName: String; AValue: String): TACBrInformacao;
+    function FindFieldByName(const AName: String): TACBrInformacao;
     function FieldByName(const AName: String): TACBrInformacao;
 
     procedure SaveToFile( AFileName: String) ;

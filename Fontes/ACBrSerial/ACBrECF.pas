@@ -50,6 +50,9 @@ uses ACBrBase, ACBrDevice, ACBrECFClass, ACBrECFVirtual, ACBrPAFClass, ACBrRFD,
            ,FMX.Memo, System.UITypes
         {$ELSE}
            ,Controls, Forms, Dialogs, Graphics, StdCtrls
+           {$IFDEF DELPHIXE2_UP}
+            , System.UITypes
+           {$ENDIF}
         {$IFEND}
      {$ENDIF} ;
 {$IFDEF FRAMEWORK}

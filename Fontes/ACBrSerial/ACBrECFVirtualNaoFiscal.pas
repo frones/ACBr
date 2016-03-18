@@ -45,6 +45,9 @@ uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrConsts,
           ,FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
        {$ELSE}
           ,Controls, Forms, Dialogs
+          {$IFDEF DELPHIXE2_UP}
+           , System.UITypes
+          {$ENDIF}  
        {$IFEND}
      {$ENDIF} ;
 

@@ -1907,7 +1907,6 @@ function TACBrECFEscECF.GetEstado: TACBrECFEstado;
 Var
   FlagEst : Integer ;
 begin
-  Result := fpEstado;
   try
     if (not fpAtivo) then
       fpEstado := estNaoInicializada

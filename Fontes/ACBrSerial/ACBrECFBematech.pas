@@ -393,13 +393,12 @@ TACBrECFBematech = class( TACBrECFClass )
 
     function GetProp: AnsiString;
     function GetTotalizadoresParciais : String ;
-    procedure CRZToCOO(const ACRZIni, ACRZFim: Integer; var ACOOIni,
-      ACOOFim: Integer);
     procedure FinalidadeToTipoPrefixo( AFinalidade : TACBrECFFinalizaArqMFD;
        var Tipo: Integer; var Prefixo: AnsiString) ;
 
  protected
     property TotalizadoresParciais : String read GetTotalizadoresParciais ;
+    procedure CRZToCOO(const ACRZIni, ACRZFim: Integer; var ACOOIni, ACOOFim: Integer); //isso aqui ele diz que não está sendo utilizado.
 
     Function PreparaCmd( cmd : AnsiString ) : AnsiString ;
 

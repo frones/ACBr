@@ -97,7 +97,7 @@ TACBrECFEpsonComando = class
     procedure SetExtensao(const Value: AnsiString);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Comando      : AnsiString  write SetComando  ;
     property Extensao     : AnsiString  write SetExtensao ;
@@ -133,7 +133,7 @@ TACBrECFEpsonResposta = class
     procedure SetRespostaDLL(AValue : AnsiString) ;
  public
     constructor create( AOwner : TACBrECFEpson ) ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Resposta     : AnsiString  read fsResposta write SetResposta ;
     property Seq          : Byte        read fsSeq;

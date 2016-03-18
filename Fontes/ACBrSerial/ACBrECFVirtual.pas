@@ -1826,9 +1826,7 @@ begin
   if ItemCupom.DescAcres < 0 then
     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') já recebeu Desconto.')) ;
 
-  ValDescAcres  := 0 ;
-  PorcDescAcres := 0 ;
-  StrDescAcre   := IfThen(DescontoAcrescimo = 'D', 'DESCONTO', 'ACRESCIMO');
+  StrDescAcre := IfThen(DescontoAcrescimo = 'D', 'DESCONTO', 'ACRESCIMO');
 
   with ItemCupom do
   begin

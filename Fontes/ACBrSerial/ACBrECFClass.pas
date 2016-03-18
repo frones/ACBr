@@ -30,26 +30,15 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 21/08/2015: Macgayver Armini
-|*  - Adicionado canvas com suporte idêntico ao da VCL para o Firemonkey;
-|*  - Correção das teclas de interceptação para o Firemonkey;
-|*  - Adição de suporte a formulário de mensagem personalizado para o FireMonkey;
-|*  - Correção da chamada Application.MainForm do firemonkey;
-******************************************************************************}
+
 {$I ACBr.inc}
 
 Unit ACBrECFClass ;
 
 interface
-uses ACBrDevice,
-     SysUtils ,
-     Classes,
-     ACBrConsts,
-     ACBrBase,
-     Contnrs
+uses 
+     SysUtils, Classes, Contnrs,
+     ACBrDevice, ACBrConsts, ACBrBase
      {$IFNDEF NOGUI}
        {$IFDEF VisualCLX},
          {$IFDEF QT3CLX} QtLibrary, QtSignalHooks {$ELSE} Qt {$ENDIF},
@@ -60,6 +49,9 @@ uses ACBrDevice,
           , System.UITypes, System.Character, System.Types, FMX.Types, FMX.TextLayout, FMX.Objects, System.UIConsts
        {$ELSEIF DEFINED(VCL)}
           , Controls, Forms, Graphics, Dialogs, ExtCtrls
+          {$IFDEF DELPHIXE2_UP}
+           , System.UITypes
+          {$ENDIF}
        {$IFEND}
        {$IFDEF MSWINDOWS}
          , Windows, messages
@@ -109,11 +101,11 @@ type
     fsImprimir: Boolean;
     procedure SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
     function GetObject(Index: Integer): TACBRRodapeAbastecimento;
-    procedure Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
   public
      property Imprimir: Boolean read fsImprimir write fsImprimir;
     function New: TACBRRodapeAbastecimento;
     function Add(Obj: TACBRRodapeAbastecimento): Integer;
+    procedure Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
     property Objects[Index: Integer]: TACBRRodapeAbastecimento read GetObject write SetObject; default;
   end;
 

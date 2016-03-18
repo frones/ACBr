@@ -95,6 +95,9 @@ uses Classes, Contnrs, Math, SysUtils, IniFiles,
            ,FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes
         {$ELSE}
            ,Controls, Forms, Dialogs
+          {$IFDEF DELPHIXE2_UP}
+           , System.UITypes
+          {$ENDIF}  
         {$IFEND}
      {$ENDIF},
      ACBrECFClass, ACBrDevice, ACBrConsts;
@@ -1419,7 +1422,7 @@ begin
      fsItensCount := fsItensCupom.Count ;
 
      fsGrandeTotal := RoundTo( (Qtd * ValorUnitario) + fsGrandeTotal,-2) ;
-     fsVendaBruta  := fsGrandeTotal ;
+     fsVendaBruta  := RoundTo( (Qtd * ValorUnitario) + fsVendaBruta,-2) ;
      Aliq.TotalDia := RoundTo( Aliq.TotalDia + Total,-2) ; { Soma na aliquota }
      fsSubTotal    := RoundTo( SubTotal + Total,-2) ;      { Soma no Subtotal }
 
@@ -2534,7 +2537,7 @@ begin
      GravaBuffer ;
      try
         GravaArqINI ;
-        ImprimeBuffer
+        ImprimeBuffer;
      finally
         ZeraBuffer ;
      end ;

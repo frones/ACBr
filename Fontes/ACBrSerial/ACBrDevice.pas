@@ -496,7 +496,6 @@ begin
     LenTag1  := Length( Tag1 );
     ATag     := FTags.AcharTag( Tag1 ) ;
     Tag2     := '' ;
-    PosTag2  := 0 ;
 
     if ATag <> Nil then
     begin

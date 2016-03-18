@@ -51,7 +51,7 @@ TACBrECFFiscNETComando = class
     procedure SetNomeComando(const Value: String);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property NomeComando : String  write SetNomeComando ;
     property TimeOut     : Integer read fsTimeOut write fsTimeOut ;
@@ -76,7 +76,7 @@ TACBrECFFiscNETResposta = class
     procedure SetResposta(const Value: AnsiString);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Resposta   : AnsiString  read fsResposta write SetResposta ;
     property Cont       : Byte        read fsCont;
@@ -3032,7 +3032,6 @@ begin
       initotal := 155;
       For I := 0 to fpAliquotas.Count-1 do
       begin
-        J           := StrToIntDef( Trim(fpAliquotas[I].Indice), I );
         AliqZ       := TACBrECFAliquota.Create ;
         AliqZ.Assign( fpAliquotas[I] );
         total       := copy(RetCmd,initotal,14);

@@ -80,6 +80,9 @@ uses Classes,
           FMX.Controls, FMX.Dialogs, System.UITypes,
        {$ELSE}
           Controls, Dialogs,
+          {$IFDEF DELPHIXE2_UP}
+           , System.UITypes
+          {$ENDIF}  
        {$IFEND}
      {$ENDIF}
      ACBrECFClass, ACBrDevice;

@@ -156,6 +156,9 @@ uses Classes,
            FMX.Controls, FMX.Forms, FMX.Dialogs, System.UITypes,
         {$ELSE}
            Controls, Forms, Dialogs,
+          {$IFDEF DELPHIXE2_UP}
+           , System.UITypes
+          {$ENDIF}  
         {$IFEND}
      {$ENDIF}
      ACBrECFClass, ACBrDevice;

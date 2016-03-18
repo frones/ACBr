@@ -1292,17 +1292,12 @@ type
     procedure cbETQModeloChange(Sender: TObject);
     procedure cbETQPortaChange(Sender: TObject);
     procedure bTCAtivarClick(Sender: TObject);
-    procedure tsTCContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
     procedure tsTCShow(Sender: TObject);
     procedure cbxTCModeloChange(Sender: TObject);
     procedure sbTCArqPrecosEditClick(Sender: TObject);
     procedure sbTCArqPrecosFindClick(Sender: TObject);
     procedure TimerTCTimer(Sender: TObject);
     procedure sbCHQSerialClick(Sender: TObject);
-    procedure tvMenuChange(Sender: TObject; Node: TTreeNode);
-    procedure tvMenuEditing(Sender: TObject; Node: TTreeNode;
-      var AllowEdit: boolean);
     procedure PathClick(Sender: TObject);
     procedure ACT_ButtonMouseEnter(Sender: TObject);
     procedure ACT_ButtonMouseLeave(Sender: TObject);
@@ -7271,12 +7266,6 @@ begin
     TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO'));
 end;
 
-procedure TFrmACBrMonitor.tsTCContextPopup(Sender: TObject; MousePos: TPoint;
-  var Handled: Boolean);
-begin
-
-end;
-
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.sbTCArqPrecosEditClick(Sender: TObject);
 begin
@@ -7609,17 +7598,6 @@ begin
   finally
     FreeAndNil(frConfiguraSerial);
   end;
-
-end;
-
-procedure TFrmACBrMonitor.tvMenuChange(Sender: TObject; Node: TTreeNode);
-begin
-
-end;
-
-procedure TFrmACBrMonitor.tvMenuEditing(Sender: TObject; Node: TTreeNode;
-  var AllowEdit: boolean);
-begin
 
 end;
 

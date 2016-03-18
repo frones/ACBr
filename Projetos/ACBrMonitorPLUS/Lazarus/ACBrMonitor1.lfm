@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 395
+  Left = 396
   Height = 600
-  Top = 174
+  Top = 135
   Width = 800
   Align = alClient
   ClientHeight = 600
@@ -3429,7 +3429,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
           ClientHeight = 319
           ClientWidth = 590
           ImageIndex = 13
-          OnContextPopup = tsTCContextPopup
           OnShow = tsTCShow
           object sbTCArqPrecosEdit: TSpeedButton
             AnchorSideTop.Control = edTCArqPrecos

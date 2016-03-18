@@ -249,12 +249,11 @@ function TACBrSpedTabelas.Download(const aId, aVersao, aName: string): boolean;
 var
   Dow: TACBrDownload;
 begin
-  Result := False;
   if not fListou then
-    raise EACBrTabelasSpedxception.Create(ACBrStr('Falta listar as tabelas'));
+    raise EACBrTabelasSpedxception.Create('Falta listar as tabelas');
 
   if Trim(aId) = '' then
-    raise EACBrTabelasSpedxception.Create(ACBrStr('Informe o Id da tabela'));
+    raise EACBrTabelasSpedxception.Create('Informe o Id da tabela');
 
   if Trim(aVersao) = '' then
     raise EACBrTabelasSpedxception.Create(ACBrStr('Informe a versão da tabela'));

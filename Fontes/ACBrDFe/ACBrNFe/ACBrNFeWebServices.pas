@@ -2325,9 +2325,7 @@ end;
 procedure TNFeInutilizacao.DefinirDadosMsg;
 var
   InutNFe: TinutNFe;
-  OK: Boolean;
 begin
-  OK := False;
   InutNFe := TinutNFe.Create;
   try
     AjustarOpcoes( InutNFe.Gerador.Opcoes );

@@ -1142,7 +1142,6 @@ end;
 
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
 begin
-  Result := False;
   FNFeR.Leitor.Arquivo := AXML;
   FNFeR.LerXml;
 
@@ -1173,8 +1172,6 @@ end;
 
 function NotaFiscal.GravarStream(AStream: TStream): Boolean;
 begin
-  Result := False;
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
 
@@ -1524,8 +1521,6 @@ var
   i, l: integer;
   MS: TMemoryStream;
 begin
-  Result := False;
-
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(CaminhoArquivo);
@@ -1552,7 +1547,6 @@ function TNotasFiscais.LoadFromStream(AStream: TStringStream;
 var
   AXML: AnsiString;
 begin
-  Result := False;
   AStream.Position := 0;
   AXML := ReadStrFromStream(AStream, AStream.Size);
 

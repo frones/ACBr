@@ -158,9 +158,10 @@ begin
      fHTTPSend.ProxyUser := fProxy.ProxyUser;
      fHTTPSend.ProxyPass := fProxy.ProxyPass;
 
-     // ReplaceString foi chamado aqui porque no Delphi não reconhece barra "/"
+     // StringReplace() foi chamado aqui porque no Delphi não reconhece barra "/"
      // como o Lazarus que reconhece os dois.
-     fFilePart := ExtractFileName(ReplaceString(Path, '/', '\'));
+     fFilePart := ExtractFileName(StringReplace(Path, '/', '\', [rfReplaceAll]));
+
      if fFilePart = '' then
      begin
         fHTTPSend.Clear;

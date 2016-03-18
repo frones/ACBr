@@ -1273,9 +1273,10 @@ begin
         end;
       end;
     end;
-
-    FreeAndNil(FNFeRetorno);
   end;
+
+  if Assigned( FNFeRetorno ) then
+    FreeAndNil(FNFeRetorno);
 
   FNFeRetorno := TRetConsReciNFe.Create;
 end;

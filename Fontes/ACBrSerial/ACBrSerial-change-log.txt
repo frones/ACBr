@@ -39,7 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 14/038/2016
+Data: 17/03/2016
+-- ACBrECFDaruma, ACBrECFEscECF --
+[-] Método "ArquivoMFD_DLL", ECF FS800i, ajuste para funcionamento correto em
+    modo OnLine.     (por: Samuel Tonini)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28771
+
+Data: 14/03/2016
 -- ACBrECFVirtual --
 [-] Correção de bug no calculo de Total por Aliquota, quando havia desconto/
     acréscimo, na venda do Item    (por: DSA)

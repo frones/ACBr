@@ -5471,7 +5471,7 @@ procedure TACBrECFDaruma.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
 var
   Resp: Integer ;
   NomeArq, Relatorio, Tipo, Inicio, Fim, DirDest, PathDest: AnsiString ;
-  OldAtivo: Boolean ;
+  OldAtivo, OnLine: Boolean ;
 begin
   OldAtivo := Ativo;
   try
@@ -5505,8 +5505,9 @@ begin
     Ativo  := False;
     Inicio := IntToStrZero(ContInicial, 6);
     Fim    := IntToStrZero(ContFinal,   6);
+    OnLine := (OldAtivo) or ((TACBrECF(fpOwner).Modelo = ecfEscECF) and (TACBrECF(fpOwner).Ativo));
 
-    if OldAtivo then
+    if OnLine then
     begin
       Resp := xrGerarRelatorio_ECF_Daruma(Relatorio, Tipo, Inicio, Fim);
       if (Resp <> 1) then
@@ -5547,7 +5548,7 @@ procedure TACBrECFDaruma.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
 var
   Resp: Integer ;
   NomeArq, Relatorio, Tipo, DtInicial, DtFinal, DirDest, PathDest: AnsiString ;
-  OldAtivo: Boolean ;
+  OldAtivo, OnLine: Boolean ;
 begin
   OldAtivo := Ativo;
   try
@@ -5584,9 +5585,10 @@ begin
     Tipo      := 'DATAM';
     DtInicial := FormatDateTime('ddmmyyyy', DataInicial);
     DtFinal   := FormatDateTime('ddmmyyyy', DataFinal);
+    OnLine    := (OldAtivo) or ((TACBrECF(fpOwner).Modelo = ecfEscECF) and (TACBrECF(fpOwner).Ativo));
 
     // utilizar o modo on-line quando a impressora estiver ativa e o off-line quando não estiver
-    if OldAtivo then
+    if OnLine then
     begin
       Resp := xrGerarRelatorio_ECF_Daruma(Relatorio, Tipo, DtInicial, DtFinal);
       if (Resp <> 1) then

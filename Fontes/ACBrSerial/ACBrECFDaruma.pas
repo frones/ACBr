@@ -2929,7 +2929,7 @@ begin
 
   if not fpMFD then
   begin
-    if (AliquotaICMS[1] in ['F','I','N']) then
+    if CharInSet(AliquotaICMS[1] , ['F','I','N']) then
       AliquotaICMS := AliquotaICMS[1]+' ';
   end
   else
@@ -3505,7 +3505,7 @@ begin
   begin
     VerificarBmpTexto(IndiceBMP, Linha);
 
-    if not (fsTipoRel in ['G','V']) then   // Achando o Tipo de Relatorio //
+    if not CharInSet(fsTipoRel , ['G','V']) then   // Achando o Tipo de Relatorio //
     begin
       RetCmd := RetornaInfoECF('056') ;
 

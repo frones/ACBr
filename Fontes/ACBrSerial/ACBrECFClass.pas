@@ -1354,7 +1354,7 @@ end;
 
 procedure TACBrECFTotalizadorNaoTributado.SetTipo(const AValue: Char);
 begin
-  if not (AValue in ['T','S']) then
+  if not CharInSet(AValue , ['T','S']) then
     raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
 
   fsTipo := AValue;
@@ -1429,7 +1429,7 @@ begin
   if NewVar = ' ' then
      NewVar := 'T' ;
 
-  if not (NewVar in ['T','S']) then
+  if not CharInSet(NewVar , ['T','S']) then
      raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
 
   fsTipo := NewVar;
@@ -3685,7 +3685,7 @@ var
 begin
   GetAliquotas;
 
-  if not (Tipo in ['S','T']) then
+  if not CharInSet(Tipo , ['S','T']) then
      Tipo := ' ' ;
 
   Aliquota := SimpleRoundTo(Aliquota,-2) ;
@@ -3697,7 +3697,7 @@ begin
      begin
         ftAliq := SimpleRoundTo(Objects[A].Aliquota,-2) ;
         cTipo  := Objects[A].Tipo ;
-        if ( ftAliq = Aliquota) and (Tipo in [' ',cTipo]) then
+        if ( ftAliq = Aliquota) and CharInSet(Tipo , [' ',cTipo]) then
         begin
            result := Objects[A] ;
            Break ;

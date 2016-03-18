@@ -457,7 +457,7 @@ Procedure TACBrECFFiscNETComando.AddParamDateTime(ParamName : String;
 var
   Texto: string;
 begin
-  if Tipo in ['T','H'] then
+  if CharInSet( Tipo , ['T','H']) then
      Texto := FormatDateTime('hh:nn:ss',ADateTime)
   else
      Texto := FormatDateTime('dd/mm/yyyy',ADateTime) ;
@@ -1319,8 +1319,8 @@ begin
 
         ValAliq  := StringToFloat(
                          FiscNETResposta.Params.Values['PercentualAliquota'] );
-        if UpCase(
-            FiscNETResposta.Params.Values['AliquotaICMS'][1]) in ['F','N'] then
+        if CharInSet(UpCase(
+            FiscNETResposta.Params.Values['AliquotaICMS'][1]) , ['F','N']) then
            TipoAliq := 'S'
         else
            TipoAliq := 'T' ;
@@ -1366,7 +1366,7 @@ var
   Descr   : String ;
 begin
   Tipo := UpCase(Tipo) ;
-  if not (Tipo in ['T','S']) then
+  if not CharInSet(Tipo , ['T','S']) then
      Tipo := 'T' ;
 
   if Tipo = 'T' then
@@ -1440,8 +1440,8 @@ procedure TACBrECFFiscNET.CarregaFormasPagamento;
         FPagto.Indice :=
             FiscNETResposta.Params.Values['CodMeioPagamentoProgram'] ;
         FPagto.Descricao := FiscNETResposta.Params.Values['NomeMeioPagamento'] ;
-        FPagto.PermiteVinculado := ( UpCase(
-           FiscNETResposta.Params.Values['PermiteVinculado'][1]) in ['T','Y']) ;
+        FPagto.PermiteVinculado := CharInSet( UpCase(
+           FiscNETResposta.Params.Values['PermiteVinculado'][1]) , ['T','Y']) ;
 
         fpFormasPagamentos.Add( FPagto ) ;
      except
@@ -1630,7 +1630,7 @@ begin
      AddParamString('DescricaoNaoFiscal',Descricao) ;
      AddParamString('NomeNaoFiscal',Descricao) ;
      AddParamBool('TipoNaoFiscal',
-                  (not (UpCase(PadLeft(Tipo,1)[1]) in ['-','F','0'])) ) ;
+                  (not CharInSet(UpCase(PadLeft(Tipo,1)[1]) , ['-','F','0'])) ) ;
   end ;
   EnviaComando ;
 

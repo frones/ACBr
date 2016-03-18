@@ -940,7 +940,7 @@ procedure TACBrECFEpsonComando.AddParamDateTime(ADateTime : TDateTime ;
 var
   Texto : String ;
 begin
-  if Tipo in ['T','H'] then
+  if CharInSet(Tipo,['T','H']) then
      Texto := FormatDateTime('hhnnss',ADateTime)
   else
      Texto := FormatDateTime('ddmmyyyy',ADateTime) ;
@@ -1434,7 +1434,7 @@ begin
 
         { Segundo suporte da Epson, em alguns casos ECF não envia o ACK,
           enviando diretamente o STX (que é o inicio do Frame de Resposta) }
-        while not (chr(fsByteACK) in [STX,ACK]) do     { Se ACK = 6 Comando foi reconhecido }
+        while not CharInSet(chr(fsByteACK) , [STX,ACK]) do     { Se ACK = 6 Comando foi reconhecido }
         begin
            fsByteACK := 0 ;
            fpDevice.Serial.Purge ;                   { Limpa a Porta }
@@ -1466,7 +1466,7 @@ begin
                  raise EACBrECFSemResposta.create( ACBrStr(
                        'Impressora '+fpModeloStr+' não reconheceu o Comando'+
                        sLineBreak+' (NACK)') )
-              else if not (chr(fsByteACK) in [STX,ACK]) then
+              else if not CharInSet(chr(fsByteACK) , [STX,ACK]) then
                  raise EACBrECFSemResposta.create( ACBrStr(
                        'Erro. Resposta da Impressora '+fpModeloStr+' inválida'+
                        sLineBreak+' (ACK = '+IntToStr(fsByteACK)+')')) ;
@@ -2443,7 +2443,7 @@ begin
      AliquotaICMS := 'NS'
   else if copy(AliquotaICMS,1,2) = 'SI' then
      AliquotaICMS := 'IS'
-  else if (upcase(AliquotaICMS[1]) in ['T','S']) then
+  else if CharInSet(upcase(AliquotaICMS[1]) , ['T','S']) then
     AliquotaICMS := 'T'+AliquotaICMS[1]+copy(AliquotaICMS,2,2) ; {Indice}
 
   Result := inherited AchaICMSAliquota( AliquotaICMS );

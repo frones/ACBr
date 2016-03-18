@@ -2748,7 +2748,7 @@ begin
   if CasasDecimaisValor = 0 then
      CasasDecimaisValor := Self.DecimaisPreco;
 
-  if not (ArredondaTrunca in ['A','T']) then
+  if not CharInSet(ArredondaTrunca , ['A','T']) then
      ArredondaTrunca := IfThen(Self.Arredonda,'A','T')[1];
 
   try
@@ -2823,10 +2823,10 @@ begin
   if AliquotaICMS = '' then
      raise EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemAliqICMSException) );
 
-  if not (DescontoAcrescimo[1] in ['A','D']) then
+  if not CharInSet(DescontoAcrescimo[1] , ['A','D']) then
      raise EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemDescAcreException) );
 
-  if not (TipoDescontoAcrescimo[1] in ['%','$']) then
+  if not CharInSet(TipoDescontoAcrescimo[1] , ['%','$']) then
      raise  EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemTipoDescAcreException) );
 
   { Retorna em "AliquotaECF" (por referencia) a String de aliquota que deve
@@ -2998,10 +2998,10 @@ begin
   if ValorDescontoAcrescimo <= 0 then
      raise EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemValDescAcreException) );
 
-  if not (DescontoAcrescimo[1] in ['A','D']) then
+  if not CharInSet(DescontoAcrescimo[1] , ['A','D']) then
      raise  EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemDescAcreException) );
 
-  if not (TipoDescontoAcrescimo[1] in ['%','$']) then
+  if not CharInSet(TipoDescontoAcrescimo[1] , ['%','$']) then
      raise  EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemTipoDescAcreException) );
 
   fsECF.DescontoAcrescimoItemAnterior(ValorDescontoAcrescimo, DescontoAcrescimo,

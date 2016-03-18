@@ -859,7 +859,7 @@ var
 begin
   LenRet := Length( Retorno );
   Result := False;
-
+  Byte1  := #0;
   with fpECFEscECF do
   begin
     if LenRet > 0 then

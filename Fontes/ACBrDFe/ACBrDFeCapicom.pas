@@ -167,7 +167,7 @@ begin
   if (Certs2.Count > 0) then
   begin
     Cert := IInterface(Certs2.Item[1]) as ICertificate2;
-    FpDFeSSL.NumeroSerie := Cert.SerialNumber;
+    FpDFeSSL.NumeroSerie := String(Cert.SerialNumber);
     CarregarCertificado;
     Result := GetCertNumeroSerie;
   end
@@ -222,7 +222,7 @@ begin
     xmldoc.async := False;
     xmldoc.validateOnParse := False;
     xmldoc.preserveWhiteSpace := True;
-    xmldoc.loadXML(XML);
+    xmldoc.loadXML(WideString(XML));
     xmldoc.setProperty('SelectionNamespaces', DSIGNS);
 
     xmldsig := CoMXDigitalSignature50.Create;
@@ -334,7 +334,7 @@ begin
         for i := 1 to Certs.Count do
         begin
           Cert := IInterface(Certs.Item[i]) as ICertificate2;
-          if Cert.SerialNumber = FpDFeSSL.NumeroSerie then
+          if String(Cert.SerialNumber) = FpDFeSSL.NumeroSerie then
           begin
             FCertificado := Cert;
             Break;
@@ -353,7 +353,7 @@ begin
       if FStoreLocation = CAPICOM_LOCAL_MACHINE_STORE then
         KeyLocation := CAPICOM_LOCAL_MACHINE_KEY;
 
-      FCertificado.Load( FpDFeSSL.ArquivoPFX, FpDFeSSL.Senha,
+      FCertificado.Load( WideString(FpDFeSSL.ArquivoPFX), WideString(FpDFeSSL.Senha),
                          CAPICOM_KEY_STORAGE_DEFAULT, KeyLocation);
 
     end
@@ -377,7 +377,7 @@ begin
       raise EACBrDFeException.Create('Certificado Digital não encontrado!');
 
     // Salvando propriedades do Certificado //
-    FNumCertCarregado := FCertificado.SerialNumber;
+    FNumCertCarregado := String(FCertificado.SerialNumber);
 
     // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //
     FCertStoreMem := CoStore.Create;
@@ -391,7 +391,7 @@ begin
     for i := 1 to FCertificado.Extensions.Count do
     begin
       Extension := IInterface(FCertificado.Extensions.Item[i]) as IExtension;
-      Propriedades := Extension.EncodedData.Format(True);
+      Propriedades := String(Extension.EncodedData.Format(True));
 
       if (Pos('2.16.76.1.3.3', Propriedades) > 0) then
       begin
@@ -480,7 +480,7 @@ function TDFeCapicom.GetCertNumeroSerie: String;
 begin
   CarregarCertificadoSeNecessario;
   if Assigned(FCertificado) then
-    Result := FCertificado.SerialNumber
+    Result := String(FCertificado.SerialNumber)
   else
     Result := inherited GetCertNumeroSerie;
 end;
@@ -489,7 +489,7 @@ function TDFeCapicom.GetCertSubjectName: String;
 begin
   CarregarCertificadoSeNecessario;
   if Assigned(FCertificado) then
-    Result := FCertificado.SubjectName
+    Result := String(FCertificado.SubjectName)
   else
     Result := inherited GetCertSubjectName;
 end;
@@ -498,7 +498,7 @@ function TDFeCapicom.GetCertRazaoSocial: String;
 begin
   CarregarCertificadoSeNecessario;
   if (FRazaoSocial = '') and Assigned(FCertificado) then
-    FRazaoSocial := GetRazaoSocialFromSubjectName( FCertificado.SubjectName );
+    FRazaoSocial := GetRazaoSocialFromSubjectName( String(FCertificado.SubjectName) );
 
   Result := FRazaoSocial;
 end;
@@ -566,7 +566,7 @@ begin
       xmldoc.preserveWhiteSpace := True;
 
       // Carregando o AXml em XMLDOC
-      if (not xmldoc.loadXML( AXml )) then
+      if (not xmldoc.loadXML( WideString(AXml) )) then
         raise EACBrDFeException.Create('Não foi possível carregar XML'+sLineBreak+ AXml);
 
       xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
@@ -578,7 +578,7 @@ begin
       xmldsig := CoMXDigitalSignature50.Create;
 
       // Lendo elemento de Assinatura de XMLDOC //
-      xmldsig.signature := xmldoc.selectSingleNode( SignatureNode );
+      xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode) );
       if (xmldsig.signature = nil) then
         raise EACBrDFeException.Create('É preciso carregar o template antes de assinar.');
 
@@ -602,7 +602,7 @@ begin
       {$IfDef FPC2}
        XmlAss := ACBrAnsiToUTF8( xmldoc.xml );
       {$Else}
-       XmlAss := NativeStringToUTF8( xmldoc.xml );
+       XmlAss := NativeStringToUTF8( String(xmldoc.xml) );
       {$EndIf}
       XmlAss := AjustarXMLAssinado(XmlAss);
     finally
@@ -671,7 +671,7 @@ var
   Inicializado: Boolean;
   AXml: String;
 begin
-
+  Result := False;
   Inicializado := (CoInitialize(nil) in [ S_OK, S_FALSE ]);
   try
     CarregarCertificadoSeNecessario;
@@ -689,24 +689,24 @@ begin
       {$Else}
        AXml := ConteudoXML;
       {$EndIf}
-      if (not DOMDocument.loadXML(AXml)) then
+      if (not DOMDocument.loadXML(WideString(AXml))) then
       begin
         ParseError := DOMDocument.parseError;
         MsgErro := ACBrStr('Não foi possível carregar o arquivo.')+sLineBreak+
                    'Err: '+IntToStr(ParseError.errorCode) + ', ' +
                    'Lin: '+IntToStr(ParseError.line) + ', ' +
                    'Pos: '+IntToStr(ParseError.linepos) + ' - ' +
-                   ParseError.reason;
+                   String(ParseError.reason);
         exit;
       end;
 
-      Schema.add(FpDFeSSL.NameSpaceURI, ArqSchema);
+      Schema.add(WideString(FpDFeSSL.NameSpaceURI), ArqSchema);
 
       DOMDocument.schemas := Schema;
       ParseError := DOMDocument.validate;
 
       Result := (ParseError.errorCode = 0);
-      MsgErro := ParseError.reason;
+      MsgErro := String(ParseError.reason);
     finally
       ParseError := nil;
       DOMDocument := nil;
@@ -730,7 +730,7 @@ var
 begin
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
-
+  Result := False;
   xmldoc := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
   try
@@ -744,14 +744,14 @@ begin
     {$Else}
      AXml := ConteudoXML;
     {$EndIf}
-    if (not xmldoc.loadXML(AXml)) then
+    if (not xmldoc.loadXML(WideString(AXml))) then
     begin
       MsgErro := 'Não foi possível carregar o arquivo.';
       exit;
     end;
 
     xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
-    xmldsig.signature := xmldoc.selectSingleNode( SignatureNode );
+    xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode) );
     if (xmldsig.signature = nil) then
     begin
       MsgErro := 'Não foi possível carregar ou ler a assinatura ('+SignatureNode+')';

@@ -314,7 +314,6 @@ const
 begin
   if NomeSchema = '' then exit;
 
-  VersaoArq := 0;
   VersaoMaisProxima := 0;
   ArqSchema := '';
 

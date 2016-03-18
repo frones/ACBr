@@ -261,8 +261,8 @@ begin
   if Trim(fDirDestino) = '' then
     raise EACBrTabelasSpedxception.Create(ACBrStr('Informe o diretório onde o arquivo deve ser salvo'));
 
-   if (not DirectoryExists(fDirDestino)) and (not ForceDirectories(fDirDestino)) then
-   raise EACBrTabelasSpedxception.CreateFmt(ACBrStr('Não foi possível criar a pasta de destino: %s'),[fDirDestino]);
+  if (not DirectoryExists(fDirDestino)) and (not ForceDirectories(fDirDestino)) then
+    raise EACBrTabelasSpedxception.CreateFmt(ACBrStr('Não foi possível criar a pasta de destino: %s'),[fDirDestino]);
 
   Dow := TACBrDownload.Create(nil);
   try

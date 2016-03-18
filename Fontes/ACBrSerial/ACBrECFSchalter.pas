@@ -81,7 +81,7 @@ uses Classes,
        {$ELSE}
           Controls, Dialogs,
           {$IFDEF DELPHIXE2_UP}
-           , System.UITypes
+            System.UITypes,
           {$ENDIF}  
        {$IFEND}
      {$ENDIF}

@@ -157,7 +157,7 @@ uses Classes,
         {$ELSE}
            Controls, Forms, Dialogs,
           {$IFDEF DELPHIXE2_UP}
-           , System.UITypes
+           System.UITypes,
           {$ENDIF}  
         {$IFEND}
      {$ENDIF}

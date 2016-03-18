@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/03/2016
+-- ACBrSAT --
+[+] Adicionado o evento OnMensagemSEFAZ( ACod: Integer; AMensagem: String)
+    que será disparado, quando na resposta do SAT, houver alguma mensagem do
+    SEFAZ para o Contribuinte  (por: DSA)
+
 Data: 17/02/2016
 -- ACBrECFVirtualSAT --
 [+] Implementado o método "DescontoAcrescimoItemAnteriorVirtual" (Por: Amarildo)

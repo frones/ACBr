@@ -584,7 +584,6 @@ begin
   // Adding the Attachments //
   for i := 0 to Length(fAttachments) - 1 do
   begin
-    MimePartAttach := Nil;
 
     if (Trim(fAttachments[i].FileName) = '') then   // Using Stream
     begin

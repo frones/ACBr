@@ -438,6 +438,11 @@ begin
               FNFSe.OutrasInformacoes := NFSeLida.NFSe.OutrasInformacoes;
               FNFSe.ValorCredito      := NFSeLida.NFSe.ValorCredito;
 
+              FNFSe.ValoresNfse.BaseCalculo      := NFSeLida.NFSe.ValoresNfse.BaseCalculo;
+              FNFSe.ValoresNfse.Aliquota         := NFSeLida.NFSe.ValoresNfse.Aliquota;
+              FNFSe.ValoresNfse.ValorIss         := NFSeLida.NFSe.ValoresNfse.ValorIss;
+              FNFSe.ValoresNfse.ValorLiquidoNfse := NFSeLida.NFSe.ValoresNfse.ValorLiquidoNfse;
+
               FNFSe.IdentificacaoRps.Numero := NFSeLida.NFSe.IdentificacaoRps.Numero;
               FNFSe.IdentificacaoRps.Serie  := NFSeLida.NFSe.IdentificacaoRps.Serie;
               FNFSe.IdentificacaoRps.Tipo   := NFSeLida.NFSe.IdentificacaoRps.Tipo;

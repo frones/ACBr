@@ -46,7 +46,7 @@ Símbolo : Significado
 
 16/03/2016
 -- ACBrDFeOpenSSL --
-[*] Método "VerificarAssinatura": Ajuste parta retorno de mensagem de erro,
+[*] Método "VerificarAssinatura": Ajuste para retorno de mensagem de erro,
     quando a Assinatura do XML é inválida    (por: DSA)
 
 -- ACBrDFeWebService --

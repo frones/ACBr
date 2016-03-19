@@ -49,6 +49,7 @@ type
    TACBrSATEvento = procedure(var ARetorno: String) of object;
    TACBrSATEventoDados = procedure (ADados: String; var ARetorno: String) of object;
    TACBrSATMensagem = procedure ( ACod: Integer; AMensagem: String) of object;
+   TACBrSATCalcPathEvent = procedure (var APath: String; ACNPJ: String; AData: TDateTime) of object;
 
    { TACBrSAT }
 
@@ -85,6 +86,7 @@ type
      fsOnConsultarSAT: TACBrSATEvento;
      fsOnConsultarNumeroSessao: TACBrSATEventoDados;
      fsOnMensagemSEFAZ: TACBrSATMensagem;
+     fsOnCalcPath: TACBrSATCalcPathEvent;
 
      function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
@@ -221,6 +223,7 @@ type
         write fsOnConsultarNumeroSessao;
      property OnMensagemSEFAZ: TACBrSATMensagem read fsOnMensagemSEFAZ
         write fsOnMensagemSEFAZ;
+     property OnCalcPath: TACBrSATCalcPathEvent read fsOnCalcPath write fsOnCalcPath;
 
    end;
 

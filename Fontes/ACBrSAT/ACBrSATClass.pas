@@ -427,6 +427,12 @@ begin
       Dir := PathWithDelim(Dir) + AnoMes;
   end;
 
+  with TACBrSAT(fsOwner) do
+  begin
+    if Assigned( OnCalcPath ) then
+      OnCalcPath(Dir, CNPJ, Data);
+  end;
+
   Result := PathWithDelim(Dir);
 end;
 

@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/03/2016
+-- ACBrSAT --
+[+] Adicionado o evento:
+    OnCalcPath(var APath: String; ACNPJ: String; AData: TDateTime);
+    Que será disparado quando o componente computar o Path onde será gravado o
+    XML, permitindo a aplicação modificar o Path computado, atribuindo um novo
+    valor ao parâmetro "APath"               (Por: DSA e Amarildo)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28812
+
 Data: 17/03/2016
 -- ACBrSAT --
 [+] Adicionado o evento OnMensagemSEFAZ( ACod: Integer; AMensagem: String)

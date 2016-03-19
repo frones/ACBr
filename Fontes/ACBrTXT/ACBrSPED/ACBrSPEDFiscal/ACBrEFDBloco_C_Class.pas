@@ -964,9 +964,9 @@ end;
 procedure TBloco_C.WriteRegistroC100(RegC001: TRegistroC001) ;
 var
   intFor: integer;
-  strIND_FRT: AnsiString;
-  strIND_PGTO: AnsiString;
-  strCOD_SIT: AnsiString;
+  strIND_FRT: String;
+  strIND_PGTO: String;
+  strCOD_SIT: String;
   booNFCancelada: Boolean; /// Variavél p/ tratamento de NFs canceladas, denegadas ou inutilizada
   booAborta: Boolean;
 begin
@@ -1174,7 +1174,7 @@ end;
 procedure TBloco_C.WriteRegistroC105(RegC100: TRegistroC100);
 var
   intFor: integer;
-  strOPER: AnsiString;
+  strOPER: String;
 begin
   if Assigned( RegC100.RegistroC105 ) then
   begin
@@ -1232,7 +1232,7 @@ procedure TBloco_C.WriteRegistroC111(RegC110: TRegistroC110);
 var
   intFor: integer;
   intIND_PROC: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegC110.RegistroC111 ) then
   begin
@@ -1428,7 +1428,7 @@ end;
 procedure TBloco_C.WriteRegistroC120(RegC100: TRegistroC100);
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegC100.RegistroC120 ) then
   begin
@@ -1510,7 +1510,7 @@ end;
 procedure TBloco_C.WriteRegistroC140(RegC100: TRegistroC100);
 var
   intFor: integer;
-  strIND_TIT: AnsiString;
+  strIND_TIT: String;
 begin
   if Assigned( RegC100.RegistroC140 ) then
   begin
@@ -1635,10 +1635,10 @@ end;
 procedure TBloco_C.WriteRegistroC170(RegC100: TRegistroC100);
 var
   intFor: integer;
-  strIND_APUR : AnsiString;
+  strIND_APUR : String;
   intDecimaisPercent: integer;
   strMascaraParcent : string;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegC100.RegistroC170 ) then
   begin
@@ -2415,8 +2415,8 @@ end;
 procedure TBloco_C.WriteRegistroC460(RegC405: TRegistroC405);
 var
   intFor: integer;
-  strCOD_SIT: AnsiString;
-  strLinha: AnsiString;
+  strCOD_SIT: String;
+  strLinha: String;
 begin
   if Assigned( RegC405.RegistroC460 ) then
   begin
@@ -2471,7 +2471,7 @@ end;
 procedure TBloco_C.WriteRegistroC470(RegC460: TRegistroC460);
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegC460.RegistroC470 ) then
   begin
@@ -2593,8 +2593,8 @@ procedure TBloco_C.WriteRegistroC500(RegC001: TRegistroC001);
 var
   intFor: integer;
   intTP_LIGACAO: integer;
-  strCOD_SIT: AnsiString;
-  strCOD_GRUPO_TENSAO: AnsiString;
+  strCOD_SIT: String;
+  strCOD_GRUPO_TENSAO: String;
 begin
   if Assigned( RegC001.RegistroC500 ) then
   begin
@@ -2690,7 +2690,7 @@ end;
 procedure TBloco_C.WriteRegistroC510(RegC500:TRegistroC500);
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegC500.RegistroC510 ) then
   begin
@@ -3022,7 +3022,7 @@ end;
 procedure TBloco_C.WriteRegistroC800(RegC001: TRegistroC001);
 var
   intFor: integer;
-  strCOD_SIT: AnsiString;
+  strCOD_SIT: String;
   booNFCancelada: Boolean;
 begin
   if Assigned( RegC001.RegistroC800 ) then

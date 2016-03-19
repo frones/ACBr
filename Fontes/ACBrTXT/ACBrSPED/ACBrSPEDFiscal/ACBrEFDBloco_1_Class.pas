@@ -515,7 +515,7 @@ end;
 procedure TBloco_1.WriteRegistro1100(Reg1001: TRegistro1001) ;
 var
   intFor: integer;
-  strTP_CHC: AnsiString;
+  strTP_CHC: String;
 begin
   if Assigned( Reg1001.Registro1100 ) then
   begin
@@ -924,9 +924,9 @@ procedure TBloco_1.WriteRegistro1500(Reg1001: TRegistro1001) ;
 var
   intFor: integer;
   intTP_LIGACAO: integer;
-  strCOD_SIT: AnsiString;
-  strCOD_GRUPO_TENSAO: AnsiString;
-  strCOD_CONS: AnsiString;
+  strCOD_SIT: String;
+  strCOD_GRUPO_TENSAO: String;
+  strCOD_CONS: String;
 begin
   if Assigned( Reg1001.Registro1500 ) then
   begin
@@ -1079,7 +1079,7 @@ end;
 procedure TBloco_1.WriteRegistro1700(Reg1001: TRegistro1001) ;
 var
   intFor: integer;
-  strCOD_DISP: AnsiString;
+  strCOD_DISP: String;
 begin
   if Assigned( Reg1001.Registro1700 ) then
   begin

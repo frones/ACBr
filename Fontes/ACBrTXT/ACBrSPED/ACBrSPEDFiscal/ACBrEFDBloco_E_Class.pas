@@ -745,7 +745,7 @@ end;
 procedure TBloco_E.WriteRegistroE116(RegE110: TRegistroE110) ;
 var
   intFor: integer;
-  strIND_PROC: AnsiString;
+  strIND_PROC: String;
 begin
 
   if FBloco_0.Registro0000.COD_VER = vlVersao101 then
@@ -972,7 +972,7 @@ end;
 procedure TBloco_E.WriteRegistroE250(RegE210: TRegistroE210) ;
 var
   intFor: integer;
-  strIND_PROC: AnsiString;
+  strIND_PROC: String;
 begin
   if Assigned( RegE210.RegistroE250 ) then
   begin
@@ -1175,7 +1175,7 @@ end;
 procedure TBloco_E.WriteRegistroE316(RegE310: TRegistroE310);
 var
   intFor: integer;
-  strIND_PROC: AnsiString;
+  strIND_PROC: String;
 begin
   if Assigned( RegE310.RegistroE316 ) then
   begin
@@ -1239,7 +1239,7 @@ end;
 procedure TBloco_E.WriteRegistroE510(RegE500: TRegistroE500) ;
 var
   intFor: integer;
-  //strCST_IPI: AnsiString;
+  //strCST_IPI: String;
 begin
   if Assigned( RegE500.RegistroE510 ) then
   begin
@@ -1344,7 +1344,7 @@ begin
 end;
 
 procedure TBloco_E.WriteRegistroE990 ;
-  var strLinha: AnsiString;
+  var strLinha: String;
 begin
   if Assigned(RegistroE990) then
   begin

@@ -71,7 +71,7 @@ type
   TACBrSPEDFiscal = class(TComponent)
   private
     FACBrTXT: TACBrTXTClass;
-    FArquivo: ansistring;
+    FArquivo: String;
     FInicializado : boolean;
     FOnError: TErrorEvent;
 
@@ -85,11 +85,11 @@ type
     FDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
     FDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
 
-    FPath: ansistring;            /// Path do arquivo a ser gerado
-    FDelimitador: ansistring;     /// Caracter delimitador de campos
+    FPath: String;            /// Path do arquivo a ser gerado
+    FDelimitador: String;     /// Caracter delimitador de campos
     FTrimString: boolean;
     /// Retorna a string sem espaços em branco iniciais e finais
-    FCurMascara: ansistring;      /// Mascara para valores tipo currency
+    FCurMascara: String;      /// Mascara para valores tipo currency
 
     FBloco_0: TBloco_0;
     FBloco_1: TBloco_1;
@@ -101,28 +101,27 @@ type
     FBloco_H: TBloco_H;
     FBloco_K: TBloco_K;
 
-    function GetAbout: ansistring;
+    function GetAbout: String;
     function GetConteudo: TStringList;
-    function GetDelimitador: ansistring;
+    function GetDelimitador: String;
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
-    function GetCurMascara: ansistring;
+    function GetCurMascara: String;
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
     procedure InicializaBloco(Bloco: TACBrSPED);
-    procedure SetArquivo(const Value: ansistring);
-    procedure SetDelimitador(const Value: ansistring);
+    procedure SetArquivo(const Value: String);
+    procedure SetDelimitador(const Value: String);
     procedure SetLinhasBuffer(const Value: Integer);
-    procedure SetPath(const Value: ansistring);
+    procedure SetPath(const Value: String);
     procedure SetTrimString(const Value: boolean);
-    procedure SetCurMascara(const Value: ansistring);
+    procedure SetCurMascara(const Value: String);
     procedure SetDT_FIN(const Value: TDateTime);
     procedure SetDT_INI(const Value: TDateTime);
 
     function GetOnError: TErrorEvent; /// Método do evento OnError
     procedure SetOnError(const Value: TErrorEvent); /// Método SetError
 
-    procedure LimpaRegistros;
   protected
     /// BLOCO 0
     procedure WriteRegistro0000;
@@ -157,7 +156,7 @@ type
   public
     constructor Create(AOwner: TComponent); override; /// Create
     destructor Destroy; override; /// Destroy
-
+    procedure LimpaRegistros;
     procedure SaveFileTXT;
 
     procedure IniciaGeracao;
@@ -187,16 +186,16 @@ type
     property Bloco_H: TBloco_H read FBloco_H write FBloco_H;
     property Bloco_K: TBloco_K read FBloco_K write FBloco_K;
   published
-    property About: ansistring read GetAbout stored False;
-    property Path: ansistring read FPath write SetPath;
-    property Arquivo: ansistring read FArquivo write SetArquivo;
+    property About: String read GetAbout stored False;
+    property Path: String read FPath write SetPath;
+    property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
       default 1000 ;
 
     ///
-    property Delimitador: ansistring read GetDelimitador write SetDelimitador;
+    property Delimitador: String read GetDelimitador write SetDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
-    property CurMascara: ansistring read GetCurMascara write SetCurMascara;
+    property CurMascara: String read GetCurMascara write SetCurMascara;
 
     property OnError: TErrorEvent read GetOnError write SetOnError;
 
@@ -327,7 +326,7 @@ begin
   FBloco_9.LimpaRegistros;
 end;
 
-function TACBrSPEDFiscal.GetAbout: ansistring;
+function TACBrSPEDFiscal.GetAbout: String;
 begin
    Result := 'ACBrSpedFiscal Ver: ' + CACBrSpedFiscal_Versao;
 end;
@@ -337,7 +336,7 @@ begin
   Result := FACBrTXT.Conteudo;
 end;
 
-function TACBrSPEDFiscal.GetDelimitador: ansistring;
+function TACBrSPEDFiscal.GetDelimitador: String;
 begin
    Result := FDelimitador;
 end;
@@ -347,7 +346,7 @@ begin
    Result := FACBrTXT.LinhasBuffer ;
 end;
 
-procedure TACBrSPEDFiscal.SetDelimitador(const Value: ansistring);
+procedure TACBrSPEDFiscal.SetDelimitador(const Value: String);
 begin
   if Value = '' then
      raise EACBrSPEDFiscalException.Create('Campo não pode ser vazio!');
@@ -370,7 +369,7 @@ begin
    FACBrTXT.LinhasBuffer := Value ;
 end;
 
-procedure TACBrSPEDFiscal.SetPath(const Value: ansistring);
+procedure TACBrSPEDFiscal.SetPath(const Value: String);
 begin
   if Value = '' then
      raise EACBrSPEDFiscalException.Create('Campo não pode ser vazio!');
@@ -378,12 +377,12 @@ begin
   FPath := PathWithDelim( Value );
 end;
 
-function TACBrSPEDFiscal.GetCurMascara: ansistring;
+function TACBrSPEDFiscal.GetCurMascara: String;
 begin
   Result := FCurMascara;
 end;
 
-procedure TACBrSPEDFiscal.SetCurMascara(const Value: ansistring);
+procedure TACBrSPEDFiscal.SetCurMascara(const Value: String);
 begin
   if Value = '' then
      raise EACBrSPEDFiscalException.Create('Campo não pode ser vazio! Para deixar sem mascara digite #');
@@ -488,9 +487,9 @@ begin
   FInicializado := True ;
 end;
 
-procedure TACBrSPEDFiscal.SetArquivo(const Value: ansistring);
+procedure TACBrSPEDFiscal.SetArquivo(const Value: String);
 var
-  APath : AnsiString;
+  APath : String;
 begin
   if FArquivo = Value then
      exit;

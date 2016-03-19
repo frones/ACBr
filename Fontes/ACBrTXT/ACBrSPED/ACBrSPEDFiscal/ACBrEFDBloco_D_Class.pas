@@ -625,12 +625,12 @@ end;
 procedure TBloco_D.WriteRegistroD100(RegD001: TRegistroD001) ;
 var
   intFor: integer;
-  strIND_FRT: AnsiString;
-  strCOD_SIT: AnsiString;
+  strIND_FRT: String;
+  strCOD_SIT: String;
   booConsiderarComoValorNulo: Boolean;
   booConsiderarComoValorNuloParaInutilizado: Boolean;
   ChaveEletronicaCTe: string;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegD001.RegistroD100 ) then
   begin
@@ -767,7 +767,7 @@ end;
 procedure TBloco_D.WriteRegistroD110(RegD100: TRegistroD100) ;
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegD100.RegistroD110 ) then
   begin
@@ -839,7 +839,7 @@ end;
 procedure TBloco_D.WriteRegistroD130(RegD100: TRegistroD100) ;
 var
   intFor: integer;
-  strIND_FRT_RED: AnsiString;
+  strIND_FRT_RED: String;
 begin
   if Assigned( RegD100.RegistroD130 ) then
   begin
@@ -1431,7 +1431,7 @@ end;
 procedure TBloco_D.WriteRegistroD400(RegD001: TRegistroD001) ;
 var
   intFor: integer;
-  strCOD_SIT: AnsiString;
+  strCOD_SIT: String;
 begin
   if Assigned( RegD001.RegistroD400 ) then
   begin
@@ -1562,7 +1562,7 @@ procedure TBloco_D.WriteRegistroD500(RegD001: TRegistroD001) ;
 var
   intFor: integer;
   intTP_ASSINANTE: integer;
-  strCOD_SIT: AnsiString;
+  strCOD_SIT: String;
   booConsiderarComoValorNulo: Boolean;
 begin
   if Assigned( RegD001.RegistroD500 ) then
@@ -1638,7 +1638,7 @@ procedure TBloco_D.WriteRegistroD510(RegD500: TRegistroD500) ;
 var
   intFor: integer;
   intIND_REC: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( RegD500.RegistroD510 ) then
   begin

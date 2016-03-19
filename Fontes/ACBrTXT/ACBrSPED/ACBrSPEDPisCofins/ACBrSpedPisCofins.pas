@@ -62,7 +62,7 @@ type
   TACBrSPEDPisCofins = class(TComponent)
   private
     FACBrTXT: TACBrTXTClass;
-    FArquivo: ansistring;
+    FArquivo: String;
     FInicializado : boolean;
     FOnError: TErrorEvent;
 
@@ -71,11 +71,11 @@ type
     FDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
     FDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
 
-    FPath: ansistring;            /// Path do arquivo a ser gerado
-    FDelimitador: ansistring;     /// Caracter delimitador de campos
+    FPath: String;            /// Path do arquivo a ser gerado
+    FDelimitador: String;     /// Caracter delimitador de campos
     FTrimString: boolean;
     /// Retorna a string sem espaços em branco iniciais e finais
-    FCurMascara: ansistring;      /// Mascara para valores tipo currency
+    FCurMascara: String;      /// Mascara para valores tipo currency
 
     FBloco_0: TBloco_0;
     FBloco_1: TBloco_1;
@@ -88,21 +88,21 @@ type
     FBloco_M: TBloco_M;
     FBloco_P: TBloco_P;
 
-    function GetAbout: ansistring;
+    function GetAbout: String;
     function GetConteudo: TStringList;
-    function GetDelimitador: ansistring;
+    function GetDelimitador: String;
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
-    function GetCurMascara: ansistring;
+    function GetCurMascara: String;
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
     procedure InicializaBloco(Bloco: TACBrSPED);
-    procedure SetArquivo(const AValue: ansistring);
-    procedure SetDelimitador(const Value: ansistring);
+    procedure SetArquivo(const AValue: String);
+    procedure SetDelimitador(const Value: String);
     procedure SetLinhasBuffer(const AValue: Integer);
-    procedure SetPath(const AValue: ansistring);
+    procedure SetPath(const AValue: String);
     procedure SetTrimString(const Value: boolean);
-    procedure SetCurMascara(const Value: ansistring);
+    procedure SetCurMascara(const Value: String);
     procedure SetDT_FIN(const Value: TDateTime);
     procedure SetDT_INI(const Value: TDateTime);
 
@@ -181,16 +181,16 @@ type
     property Bloco_M: TBloco_M read FBloco_M write FBloco_M;
     property Bloco_P: TBloco_P read FBloco_P write FBloco_P;
   published
-    property About: ansistring read GetAbout stored False;
-    property Path: ansistring read FPath write SetPath;
-    property Arquivo: ansistring read FArquivo write SetArquivo;
+    property About: String read GetAbout stored False;
+    property Path: String read FPath write SetPath;
+    property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer
       default 1000 ;
 
     ///
-    property Delimitador: ansistring read GetDelimitador write SetDelimitador;
+    property Delimitador: String read GetDelimitador write SetDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
-    property CurMascara: ansistring read GetCurMascara write SetCurMascara;
+    property CurMascara: String read GetCurMascara write SetCurMascara;
 
     property OnError: TErrorEvent read GetOnError write SetOnError;
 
@@ -296,7 +296,7 @@ begin
   IniciaDados;
 end;
 
-function TACBrSPEDPisCofins.GetAbout: ansistring;
+function TACBrSPEDPisCofins.GetAbout: String;
 begin
    Result := 'ACBrSpedFiscal Ver: ' + CACBrSpedPisCofins_Versao;
 end;
@@ -306,7 +306,7 @@ begin
   Result := FACBrTXT.Conteudo;
 end;
 
-function TACBrSPEDPisCofins.GetDelimitador: ansistring;
+function TACBrSPEDPisCofins.GetDelimitador: String;
 begin
    Result := FDelimitador;
 end;
@@ -316,7 +316,7 @@ begin
    Result := FACBrTXT.LinhasBuffer ;
 end;
 
-procedure TACBrSPEDPisCofins.SetDelimitador(const Value: ansistring);
+procedure TACBrSPEDPisCofins.SetDelimitador(const Value: String);
 begin
   FDelimitador := Value;
 
@@ -337,17 +337,17 @@ begin
    FACBrTXT.LinhasBuffer := AValue ;
 end;
 
-procedure TACBrSPEDPisCofins.SetPath(const AValue: ansistring);
+procedure TACBrSPEDPisCofins.SetPath(const AValue: String);
 begin
   FPath := PathWithDelim( AValue );
 end;
 
-function TACBrSPEDPisCofins.GetCurMascara: ansistring;
+function TACBrSPEDPisCofins.GetCurMascara: String;
 begin
   Result := FCurMascara;
 end;
 
-procedure TACBrSPEDPisCofins.SetCurMascara(const Value: ansistring);
+procedure TACBrSPEDPisCofins.SetCurMascara(const Value: String);
 begin
   FCurMascara := Value;
 
@@ -467,9 +467,9 @@ begin
   FInicializado := True ;
 end;
 
-procedure TACBrSPEDPisCofins.SetArquivo(const AValue: ansistring);
+procedure TACBrSPEDPisCofins.SetArquivo(const AValue: String);
 var
-  APath : AnsiString;
+  APath : String;
 begin
   if FArquivo = AValue then
      exit;

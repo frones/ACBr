@@ -89,7 +89,7 @@ function funChecaPAISIBGE(const COD: String): Boolean;
 function funChecaMODNF(const COD: String): Boolean;
 function funChecaSITDOCTO(const COD: String): Boolean;
 function funStrZero(Zeros: String; Quant: Integer): String;
-function funChecaCOD_CONS(const COD_MOD, COD_CONS: AnsiString): Boolean;
+function funChecaCOD_CONS(const COD_MOD, COD_CONS: String): Boolean;
 
 function IfThen(AValue: Boolean; const ATrue: Char; AFalse: Char): Char; overload;
 function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency): Currency; overload;
@@ -103,42 +103,42 @@ begin
   Result := ACBrValidador.ValidarDocumento(docUF, UF) = '';
 end;
 
-function funChecaCOD_CONS(const COD_MOD, COD_CONS: AnsiString): Boolean;
+function funChecaCOD_CONS(const COD_MOD, COD_CONS: String): Boolean;
 const
-  ListaEnergia: array[0..7] of AnsiString = ('01',  // - Comercial
-                                             '02',  // - Consumo Próprio
-                                             '03',  // - Iluminação Pública
-                                             '04',  // - Industrial
-                                             '05',  // - Poder Público
-                                             '06',  // - Residencial
-                                             '07',  // - Rural
-                                             '08'); // - Serviço Público.
-  ListaAgua: array[0..25] of AnsiString = ('00',    // - 01 registro consolidando os documentos de consumo residencial até R$ 50,00
-                                           '01',    // - 01 registro consolidando os documentos de consumo residencial de R$ 50,01 a R$ 100,00
-                                           '02',    // - 01 registro consolidando os documentos de consumo residencial de R$ 100,01 a R$ 200,00
-                                           '03',    // - 01 registro consolidando os documentos de consumo residencial de R$ 200,01 a R$ 300,00
-                                           '04',    // - 01 registro consolidando os documentos de consumo residencial de R$ 300,01 a R$ 400,00
-                                           '05',    // - 01 registro consolidando os documentos de consumo residencial de R$ 400,01 a R$ 500,00
-                                           '06',    // - 01 registro consolidando os documentos de consumo residencial de R$ 500,01 a R$ 1000,00
-                                           '07',    // - 01 registro consolidando os documentos de consumo residencial acima de R$ 1.000,01
-                                           '20',    // - 01 registro consolidando os documentos de consumo comercial/industrial até R$ 50,00
-                                           '21',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 50,01 a R$ 100,00
-                                           '22',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 100,01 a R$ 200,00
-                                           '23',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 200,01 a R$ 300,00
-                                           '24',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 300,01 a R$ 400,00
-                                           '25',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 400,01 a R$ 500,00
-                                           '26',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 500,01 a R$ 1.000,00
-                                           '27',    // - 01 registro por documento fiscal de consumo comercial/industrial acima de R$ 1.000,01
-                                           '80',    // - 01 registro consolidando os documentos de consumo de órgão público
-                                           '90',    // - 01 registro consolidando os documentos de outros tipos de consumo até R$ 50,00
-                                           '91',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 50,01 a R$ 100,00
-                                           '92',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 100,01 a R$ 200,00
-                                           '93',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 200,01 a R$ 300,00
-                                           '94',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 300,01 a R$ 400,00
-                                           '95',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 400,01 a R$ 500,00
-                                           '96',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 500,01 a R$ 1.000,00
-                                           '97',    // - 01 registro consolidando os documentos de outros tipos de consumo acima de R$ 1.000,01
-                                           '99');   // - 01 registro por documento fiscal emitido
+  ListaEnergia: array[0..7] of String = ('01',  // - Comercial
+                                         '02',  // - Consumo Próprio
+                                         '03',  // - Iluminação Pública
+                                         '04',  // - Industrial
+                                         '05',  // - Poder Público
+                                         '06',  // - Residencial
+                                         '07',  // - Rural
+                                         '08'); // - Serviço Público.
+  ListaAgua: array[0..25] of String = ('00',    // - 01 registro consolidando os documentos de consumo residencial até R$ 50,00
+                                       '01',    // - 01 registro consolidando os documentos de consumo residencial de R$ 50,01 a R$ 100,00
+                                       '02',    // - 01 registro consolidando os documentos de consumo residencial de R$ 100,01 a R$ 200,00
+                                       '03',    // - 01 registro consolidando os documentos de consumo residencial de R$ 200,01 a R$ 300,00
+                                       '04',    // - 01 registro consolidando os documentos de consumo residencial de R$ 300,01 a R$ 400,00
+                                       '05',    // - 01 registro consolidando os documentos de consumo residencial de R$ 400,01 a R$ 500,00
+                                       '06',    // - 01 registro consolidando os documentos de consumo residencial de R$ 500,01 a R$ 1000,00
+                                       '07',    // - 01 registro consolidando os documentos de consumo residencial acima de R$ 1.000,01
+                                       '20',    // - 01 registro consolidando os documentos de consumo comercial/industrial até R$ 50,00
+                                       '21',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 50,01 a R$ 100,00
+                                       '22',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 100,01 a R$ 200,00
+                                       '23',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 200,01 a R$ 300,00
+                                       '24',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 300,01 a R$ 400,00
+                                       '25',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 400,01 a R$ 500,00
+                                       '26',    // - 01 registro consolidando os documentos de consumo comercial/industrial de R$ 500,01 a R$ 1.000,00
+                                       '27',    // - 01 registro por documento fiscal de consumo comercial/industrial acima de R$ 1.000,01
+                                       '80',    // - 01 registro consolidando os documentos de consumo de órgão público
+                                       '90',    // - 01 registro consolidando os documentos de outros tipos de consumo até R$ 50,00
+                                       '91',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 50,01 a R$ 100,00
+                                       '92',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 100,01 a R$ 200,00
+                                       '93',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 200,01 a R$ 300,00
+                                       '94',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 300,01 a R$ 400,00
+                                       '95',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 400,01 a R$ 500,00
+                                       '96',    // - 01 registro consolidando os documentos de outros tipos de consumo de R$ 500,01 a R$ 1.000,00
+                                       '97',    // - 01 registro consolidando os documentos de outros tipos de consumo acima de R$ 1.000,01
+                                       '99');   // - 01 registro por documento fiscal emitido
 begin
    Result := False;
    // Se o modelo for 06 (energia elétrica) ou 28 (gás canalizado), os valores válidos são [01, 02, 03, 04, 05, 06, 07, 08]

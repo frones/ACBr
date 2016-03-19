@@ -66,14 +66,14 @@ type
   TACBrSPEDContabil = class(TComponent)
   private
     FACBrTXT: TACBrTXTClass;
-    FArquivo: ansistring;
+    FArquivo: String;
     FInicializado : boolean;
     FOnError: TErrorEvent;
 
     FDT_INI: TDateTime;           /// Data inicial das informações contidas no arquivo
     FDT_FIN: TDateTime;           /// Data final das informações contidas no arquivo
 
-    FPath: AnsiString;            /// Path do arquivo a ser gerado
+    FPath: String;            /// Path do arquivo a ser gerado
     FDelimitador: String;     /// Caracter delimitador de campos
     FTrimString: boolean;         /// Retorna a string sem espaços em branco iniciais e finais
     FCurMascara: String;      /// Mascara para valores tipo currency
@@ -106,7 +106,7 @@ type
     procedure TotalizarTermos;
 
     procedure InicializaBloco(Bloco: TACBrSPED);
-    procedure SetArquivo(const Value: ansistring);
+    procedure SetArquivo(const Value: String);
     function GetConteudo: TStringList;
   protected
     /// BLOCO 0
@@ -174,13 +174,13 @@ type
     property Bloco_J: TBloco_J read FBloco_J write FBloco_J;
   published
     property About: String read GetAbout write SetAbout stored False ;
-    property Path: AnsiString read FPath write FPath;
+    property Path: String read FPath write FPath;
     ///
     property Delimitador: String read GetDelimitador write SetDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
     property CurMascara: String read GetCurMascara write SetCurMascara;
 
-    property Arquivo: ansistring read FArquivo write SetArquivo;
+    property Arquivo: String read FArquivo write SetArquivo;
 
     property OnError: TErrorEvent  read GetOnError write SetOnError;
 
@@ -1008,7 +1008,7 @@ begin
   Bloco_0.Gravado := true;
 end;
 
-procedure TACBrSPEDContabil.SetArquivo(const Value: ansistring);
+procedure TACBrSPEDContabil.SetArquivo(const Value: String);
 begin
   FArquivo := Value;
 end;

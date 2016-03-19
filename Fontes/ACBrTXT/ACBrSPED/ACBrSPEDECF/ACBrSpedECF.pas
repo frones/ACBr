@@ -69,15 +69,15 @@ type
   TACBrSPEDECF = class(TComponent)
   private
     FACBrTXT: TACBrTXTClass;
-    FArquivo: ansistring;
+    FArquivo: String;
     FInicializado : boolean;
     FOnError: TErrorEvent;
     FDT_INI: TDateTime;
     FDT_FIN: TDateTime;
-    FPath: ansistring;
-    FDelimitador: ansistring;
+    FPath: String;
+    FDelimitador: String;
     FTrimString: boolean;
-    FCurMascara: ansistring;
+    FCurMascara: String;
 
     FBloco_0: TBloco_0;
     FBloco_C: TBloco_C;
@@ -94,21 +94,21 @@ type
     FBloco_Y: TBloco_Y;
     FBloco_9: TBloco_9;
 
-    function GetAbout: ansistring;
+    function GetAbout: String;
     function GetConteudo: TStringList;
-    function GetDelimitador: ansistring;
+    function GetDelimitador: String;
     function GetLinhasBuffer: Integer;
     function GetTrimString: boolean;
-    function GetCurMascara: ansistring;
+    function GetCurMascara: String;
     function GetDT_FIN: TDateTime;
     function GetDT_INI: TDateTime;
     procedure InicializaBloco(Bloco: TACBrSPED);
-    procedure SetArquivo(const Value: ansistring);
-    procedure SetDelimitador(const Value: ansistring);
+    procedure SetArquivo(const Value: String);
+    procedure SetDelimitador(const Value: String);
     procedure SetLinhasBuffer(const Value: Integer);
-    procedure SetPath(const Value: ansistring);
+    procedure SetPath(const Value: String);
     procedure SetTrimString(const Value: boolean);
-    procedure SetCurMascara(const Value: ansistring);
+    procedure SetCurMascara(const Value: String);
     procedure SetDT_FIN(const Value: TDateTime);
     procedure SetDT_INI(const Value: TDateTime);
 
@@ -206,13 +206,13 @@ type
     property Bloco_9: TBloco_9 read FBloco_9 write FBloco_9;
 
   published
-    property About: ansistring read GetAbout stored False;
-    property Path: ansistring read FPath write SetPath;
-    property Arquivo: ansistring read FArquivo write SetArquivo;
+    property About: String read GetAbout stored False;
+    property Path: String read FPath write SetPath;
+    property Arquivo: String read FArquivo write SetArquivo;
     property LinhasBuffer : Integer read GetLinhasBuffer write SetLinhasBuffer default 1000 ;
-    property Delimitador: ansistring read GetDelimitador write SetDelimitador;
+    property Delimitador: String read GetDelimitador write SetDelimitador;
     property TrimString: boolean read GetTrimString write SetTrimString;
-    property CurMascara: ansistring read GetCurMascara write SetCurMascara;
+    property CurMascara: String read GetCurMascara write SetCurMascara;
 
     property OnError: TErrorEvent read GetOnError write SetOnError;
 
@@ -328,7 +328,7 @@ begin
   FBloco_9.LimpaRegistros;
 end;
 
-function TACBrSPEDECF.GetAbout: ansistring;
+function TACBrSPEDECF.GetAbout: String;
 begin
   Result := Format('ACBrSpedECF Ver: %s ', [CACBrSpedECF_Versao]);
 end;
@@ -338,7 +338,7 @@ begin
   Result := FACBrTXT.Conteudo;
 end;
 
-function TACBrSPEDECF.GetDelimitador: ansistring;
+function TACBrSPEDECF.GetDelimitador: String;
 begin
    Result := FDelimitador;
 end;
@@ -348,7 +348,7 @@ begin
    Result := FACBrTXT.LinhasBuffer ;
 end;
 
-procedure TACBrSPEDECF.SetDelimitador(const Value: ansistring);
+procedure TACBrSPEDECF.SetDelimitador(const Value: String);
 begin
   if Value = '' then
     raise Exception.Create('Campo não pode ser vazio!');
@@ -376,7 +376,7 @@ begin
    FACBrTXT.LinhasBuffer := Value ;
 end;
 
-procedure TACBrSPEDECF.SetPath(const Value: ansistring);
+procedure TACBrSPEDECF.SetPath(const Value: String);
 begin
   if Value = '' then
     raise Exception.Create('Campo não pode ser vazio!');
@@ -384,12 +384,12 @@ begin
   FPath := PathWithDelim( Value );
 end;
 
-function TACBrSPEDECF.GetCurMascara: ansistring;
+function TACBrSPEDECF.GetCurMascara: String;
 begin
   Result := FCurMascara;
 end;
 
-procedure TACBrSPEDECF.SetCurMascara(const Value: ansistring);
+procedure TACBrSPEDECF.SetCurMascara(const Value: String);
 begin
   if Value = '' then
     raise Exception.Create('Campo não pode ser vazio! Para deixar sem mascara digite #');
@@ -517,9 +517,9 @@ begin
   FInicializado := True ;
 end;
 
-procedure TACBrSPEDECF.SetArquivo(const Value: ansistring);
+procedure TACBrSPEDECF.SetArquivo(const Value: String);
 var
-  APath : AnsiString;
+  APath : String;
 begin
   if FArquivo = Value then
     Exit;

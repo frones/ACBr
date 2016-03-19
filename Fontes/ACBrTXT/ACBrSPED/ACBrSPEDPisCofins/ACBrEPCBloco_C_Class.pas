@@ -912,8 +912,8 @@ end;
 procedure TBloco_C.WriteRegistroC100(RegC010: TRegistroC010);
   var
     intFor         : integer;
-    strIND_EMIT    : AnsiString;
-    strIND_PGTO    : AnsiString;
+    strIND_EMIT    : String;
+    strIND_PGTO    : String;
     booNFCancelada : Boolean;
 begin
   if Assigned(RegC010.RegistroC100) then
@@ -1605,7 +1605,7 @@ end;
 procedure TBloco_C.WriteRegistroC396(RegC395: TRegistroC395);
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 
 begin
   if Assigned(RegC395.RegistroC396) then
@@ -2111,7 +2111,7 @@ end;
 procedure TBloco_C.WriteRegistroC501(RegC500: TRegistroC500);
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 
 begin
   if Assigned(RegC500.RegistroC501) then
@@ -2161,7 +2161,7 @@ end;
 procedure TBloco_C.WriteRegistroC505(RegC500: TRegistroC500);
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 begin
   if Assigned(RegC500.RegistroC505) then
   begin

@@ -278,10 +278,10 @@ end;
 procedure TBloco_A.WriteRegistroA100(RegA010: TRegistroA010) ;
   var
     intFor      : integer;
-    strIND_OPER : AnsiString;
-    strIND_EMIT : AnsiString;
-    strCOD_SIT  : AnsiString;
-    strIND_PGTO : AnsiString;
+    strIND_OPER : String;
+    strIND_EMIT : String;
+    strCOD_SIT  : String;
+    strIND_PGTO : String;
     booNFCancelada : Boolean;
 begin
   if Assigned(RegA010.RegistroA100) then
@@ -388,7 +388,7 @@ end;
 procedure TBloco_A.WriteRegistroA111(RegA100: TRegistroA100) ;
   var
     intFor      : integer;
-    strIND_PROC : AnsiString;
+    strIND_PROC : String;
 begin
   if Assigned(RegA100.RegistroA111) then
   begin
@@ -418,7 +418,7 @@ end;
 procedure TBloco_A.WriteRegistroA120(RegA100: TRegistroA100) ;
   var
     intFor          : integer;
-    strLOC_EXE_SERV : AnsiString;
+    strLOC_EXE_SERV : String;
 begin
   if Assigned(RegA100.RegistroA120) then
   begin
@@ -451,8 +451,8 @@ end;
 procedure TBloco_A.WriteRegistroA170(RegA100: TRegistroA100) ;
   var
     intFor           : integer;
-    strIND_ORIG_CRED : AnsiString;
-    strNAT_BC_CRED   : AnsiString;    
+    strIND_ORIG_CRED : String;
+    strNAT_BC_CRED   : String;    
 begin
   if Assigned(RegA100.RegistroA170) then
   begin

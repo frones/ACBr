@@ -514,8 +514,8 @@ end;
 procedure TBloco_M.WriteRegistroM100(RegM001: TRegistroM001) ;
   var
     intFor           : integer;
-    strIND_CRED_ORI  : AnsiString;
-    strIND_DESC_CRED : AnsiString;
+    strIND_CRED_ORI  : String;
+    strIND_DESC_CRED : String;
 begin
   if Assigned(RegM001.RegistroM100) then
   begin
@@ -565,7 +565,7 @@ end;
 procedure TBloco_M.WriteRegistroM105(RegM100: TRegistroM100) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 begin
   if Assigned(RegM100.RegistroM105) then
   begin
@@ -618,8 +618,8 @@ end;
 procedure TBloco_M.WriteRegistroM110(RegM100: TRegistroM100) ;
   var
     intFor    : integer;
-    strIND_AJ : AnsiString;
-    strCOD_AJ : AnsiString;    
+    strIND_AJ : String;
+    strCOD_AJ : String;    
 begin
   if Assigned(RegM100.RegistroM110) then
   begin
@@ -743,7 +743,7 @@ end;
 procedure TBloco_M.WriteRegistroM210(RegM200: TRegistroM200) ;
 var
     intFor      : integer;
-    strCOD_CONT : AnsiString;
+    strCOD_CONT : String;
 begin
   if Assigned(RegM200.RegistroM210) then
   begin
@@ -799,7 +799,7 @@ end;
 
 procedure TBloco_M.WriteRegistroM211(RegM210: TRegistroM210) ;
   var
-    strIND_TIP_COOP : AnsiString;
+    strIND_TIP_COOP : String;
 begin
   if Assigned(RegM210.RegistroM211) then
   begin
@@ -833,8 +833,8 @@ end;
 procedure TBloco_M.WriteRegistroM220(RegM210: TRegistroM210) ;
   var
     intFor : integer;
-    strIND_AJ : AnsiString;
-    strCOD_AJ : AnsiString;
+    strIND_AJ : String;
+    strCOD_AJ : String;
 begin
   if Assigned(RegM210.RegistroM220) then
   begin
@@ -931,8 +931,8 @@ end;
 procedure TBloco_M.WriteRegistroM300(RegM001: TRegistroM001) ;
   var
     intFor           : integer;
-    strNAT_CRED_DESC : AnsiString;
-    strCOD_CONT      : AnsiString;
+    strNAT_CRED_DESC : String;
+    strCOD_CONT      : String;
 begin
   if Assigned(RegM001.RegistroM300) then
   begin
@@ -1067,8 +1067,8 @@ end;
 procedure TBloco_M.WriteRegistroM500(RegM001: TRegistroM001) ;
   var
     intFor           : integer;
-    strIND_CRED_ORI  : AnsiString;
-    strIND_DESC_CRED : AnsiString;
+    strIND_CRED_ORI  : String;
+    strIND_DESC_CRED : String;
 begin
   if Assigned(RegM001.RegistroM500) then
   begin
@@ -1118,7 +1118,7 @@ end;
 procedure TBloco_M.WriteRegistroM505(RegM500: TRegistroM500) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 begin
   if Assigned(RegM500.RegistroM505) then
   begin
@@ -1171,8 +1171,8 @@ end;
 procedure TBloco_M.WriteRegistroM510(RegM500: TRegistroM500) ;
   var
     intFor    : integer;
-    strIND_AJ : AnsiString;
-    strCOD_AJ : AnsiString;    
+    strIND_AJ : String;
+    strCOD_AJ : String;    
 begin
   if Assigned(RegM500.RegistroM510) then
   begin
@@ -1296,7 +1296,7 @@ end;
 procedure TBloco_M.WriteRegistroM610(RegM600: TRegistroM600) ;
 var
   intFor      : integer;
-  strCOD_CONT : AnsiString;
+  strCOD_CONT : String;
 begin
   if Assigned(RegM600.RegistroM610) then
   begin
@@ -1352,7 +1352,7 @@ end;
 
 procedure TBloco_M.WriteRegistroM611(RegM610: TRegistroM610) ;
   var
-    strIND_TIP_COOP : AnsiString;
+    strIND_TIP_COOP : String;
 begin
   if Assigned(RegM610.RegistroM611) then
   begin
@@ -1386,8 +1386,8 @@ end;
 procedure TBloco_M.WriteRegistroM620(RegM610: TRegistroM610) ;
 var
   intFor    : integer;
-  strIND_AJ : AnsiString;
-  strCOD_AJ : AnsiString;
+  strIND_AJ : String;
+  strCOD_AJ : String;
 begin
   if Assigned(RegM610.RegistroM620) then
   begin
@@ -1486,8 +1486,8 @@ end;
 procedure TBloco_M.WriteRegistroM700(RegM001: TRegistroM001) ;
   var
     intFor           : integer;
-    strNAT_CRED_DESC : AnsiString;
-    strCOD_CONT      : AnsiString;
+    strNAT_CRED_DESC : String;
+    strCOD_CONT      : String;
 begin
   if Assigned(RegM001.RegistroM700) then
   begin

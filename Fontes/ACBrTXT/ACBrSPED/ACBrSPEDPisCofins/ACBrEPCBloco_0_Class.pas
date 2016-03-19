@@ -362,11 +362,11 @@ end;
 
 procedure TBloco_0.WriteRegistro0000;
 var
-strTIPO_ESCRIT: AnsiString;
-strIND_SIT_ESP: AnsiString;
-strIND_NAT_PJ: AnsiString;
-strIND_ATIV: AnsiString;
-strNUM_REC_ANTERIOR: AnsiString;
+strTIPO_ESCRIT: String;
+strIND_SIT_ESP: String;
+strIND_NAT_PJ: String;
+strIND_ATIV: String;
+strNUM_REC_ANTERIOR: String;
 begin
   if Assigned(Registro0000) then
   begin
@@ -748,7 +748,7 @@ end;
 procedure TBloco_0.WriteRegistro0200(Reg0140: TRegistro0140) ;
 var
   intFor: integer;
-  strTIPO_ITEM: AnsiString;
+  strTIPO_ITEM: String;
 begin
   if Assigned( Reg0140.Registro0200 ) then
   begin

@@ -421,7 +421,7 @@ begin
 end;
 
 procedure TBloco_0.WriteRegistro0990;
-var strLinha : AnsiString;
+var strLinha : String;
 begin
   if Assigned(FRegistro0990) then
   begin

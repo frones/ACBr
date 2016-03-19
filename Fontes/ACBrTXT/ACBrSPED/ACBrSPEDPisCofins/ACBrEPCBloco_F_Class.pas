@@ -481,9 +481,9 @@ end;
 procedure TBloco_F.WriteRegistroF100(RegF010: TRegistroF010) ;
   var
     intFor           : integer;
-    strIND_OPER      : AnsiString;
-    strIND_ORIG_CRED : AnsiString;
-    strNAT_BC_CRED   : AnsiString;
+    strIND_OPER      : String;
+    strIND_ORIG_CRED : String;
+    strNAT_BC_CRED   : String;
 begin
   if Assigned(RegF010.RegistroF100) then
   begin
@@ -559,7 +559,7 @@ end;
 procedure TBloco_F.WriteRegistroF111(RegF100: TRegistroF100) ;
   var
     intFor      : integer;
-    strIND_PROC : AnsiString;
+    strIND_PROC : String;
 begin
   if Assigned(RegF100.RegistroF111) then
   begin
@@ -589,7 +589,7 @@ end;
 procedure TBloco_F.WriteRegistroF120(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 begin
   if Assigned(RegF010.RegistroF120) then
   begin
@@ -651,7 +651,7 @@ end;
 procedure TBloco_F.WriteRegistroF129(RegF120: TRegistroF120) ;
   var
     intFor      : integer;
-    strIND_PROC : AnsiString;
+    strIND_PROC : String;
 begin
   if Assigned(RegF120.RegistroF129) then
   begin
@@ -681,7 +681,7 @@ end;
 procedure TBloco_F.WriteRegistroF130(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 begin
   if Assigned(RegF010.RegistroF130) then
   begin
@@ -746,7 +746,7 @@ end;
 procedure TBloco_F.WriteRegistroF139(RegF130: TRegistroF130) ;
   var
     intFor      : integer;
-    strIND_PROC : AnsiString;
+    strIND_PROC : String;
 begin
   if Assigned(RegF130.RegistroF139) then
   begin
@@ -776,7 +776,7 @@ end;
 procedure TBloco_F.WriteRegistroF150(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strNAT_BC_CRED : AnsiString;
+    strNAT_BC_CRED : String;
 begin
   if Assigned(RegF010.RegistroF150) then
   begin
@@ -832,7 +832,7 @@ end;
 procedure TBloco_F.WriteRegistroF200(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-//    strIND_OPER    : AnsiString;
+//    strIND_OPER    : String;
 begin
   if Assigned(RegF010.RegistroF200) then
   begin
@@ -946,7 +946,7 @@ end;
 procedure TBloco_F.WriteRegistroF211(RegF200: TRegistroF200) ;
   var
     intFor      : integer;
-    strIND_PROC : AnsiString;
+    strIND_PROC : String;
 begin
   if Assigned(RegF200.RegistroF211) then
   begin
@@ -1060,7 +1060,7 @@ end;
 procedure TBloco_F.WriteRegistroF600(RegF010: TRegistroF010) ;
   var
     intFor         : integer;
-    strIND_NAT_REC, strIND_NAT_RET : AnsiString;
+    strIND_NAT_REC, strIND_NAT_RET : String;
 begin
   if Assigned(RegF010.RegistroF600) then
   begin
@@ -1108,7 +1108,7 @@ end;
 procedure TBloco_F.WriteRegistroF700(RegF010: TRegistroF010) ;
   var
     intFor: integer;
-    strIND_ORI_DED, strIND_NAT_DED: AnsiString;
+    strIND_ORI_DED, strIND_NAT_DED: String;
 begin
   if Assigned(RegF010.RegistroF700) then
   begin
@@ -1151,7 +1151,7 @@ end;
 procedure TBloco_F.WriteRegistroF800(RegF010: TRegistroF010) ;
   var
     intFor      : integer;
-    strCOD_CRED : AnsiString;
+    strCOD_CRED : String;
 begin
   if Assigned(RegF010.RegistroF800) then
   begin
@@ -1361,7 +1361,7 @@ end;
 procedure TBloco_F.WriteRegistroF525(RegF010: TRegistroF010);
   var
     intFor : integer;
-    strIND_REC : AnsiString;
+    strIND_REC : String;
 begin
   //(*) Os registros referentes à escrituração do PIS/Pasep e da Cofins das pessoas jurídicas sujeitas ao regime de tributação
   //com  base  no  lucro  presumido,  aplicável  para  os  fatos  geradores  a  ocorrer  a  partir  de  01  de  janeiro  de  2012,  serão

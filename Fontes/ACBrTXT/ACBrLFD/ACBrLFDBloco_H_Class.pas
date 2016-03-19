@@ -98,7 +98,7 @@ type
 
 implementation
 
-uses ACBrLFDUtils, StrUtils;
+uses StrUtils;
 
 { TBloco_H }
 

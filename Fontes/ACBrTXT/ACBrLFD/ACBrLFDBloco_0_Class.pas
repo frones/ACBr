@@ -163,7 +163,8 @@ type
 
 implementation
 
-uses ACBrLFDUtils, StrUtils;
+uses StrUtils,
+     ACBrTXTUtils;
 
 { TBloco_0 }
 

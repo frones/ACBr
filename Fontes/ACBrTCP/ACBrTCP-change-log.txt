@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2016
+-- ACBrHTTPDownload --
+[+] Criada propriedade Publica para expor HTTPSend: THTTPSend   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/28813-erro-ao-fazer-download-em-alguns-servidores/
+
 17/03/2016
 --ACBrSpedTabelas
 [+] Adicionado recurso para criar o diretório de destino caso o definido não exista

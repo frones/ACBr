@@ -67,6 +67,8 @@ type
     destructor Destroy; override;
 
     procedure StartDownload; override;
+
+    property HTTPSend: THTTPSend read fHTTPSend;
   published
   end;
 

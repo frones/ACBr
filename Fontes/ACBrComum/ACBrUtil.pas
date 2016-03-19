@@ -298,7 +298,7 @@ function EAN13Valido( CodEAN13 : String ) : Boolean ;
 function EAN13_DV( CodEAN13 : String ) : String ;
 
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
-function MatchText(const AText: AnsiString; const AValues: array of AnsiString): Boolean;
+function MatchText(const AText: String; const AValues: array of String): Boolean;
 
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(S: AnsiString): AnsiString; overload;
@@ -3183,7 +3183,8 @@ function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word =
  end;
 {$ENDIF}
 
-function MatchText(const AText: AnsiString; const AValues: array of AnsiString): Boolean;
+function MatchText(const AText: String; const AValues: array of String
+  ): Boolean;
 var
   I: Integer;
 begin

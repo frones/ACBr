@@ -12,20 +12,28 @@ Type
   private
     FVersao       : Widestring;
     FStrId        : Widestring;
+    fStrtpAmb     : Widestring;
     fIntnNF       : Integer;
     FDecvUnTrib   : Integer;
     FDecqCom      : Integer;
     FDecvUnCom    : Integer;
     FDecvProd     : Integer;
     FDecqTrib     : Integer;
+    FDecvFrete    : Integer;
+    FDecvSeg      : Integer;
+    FDecvDesc     : Integer;
+    FDecvOutro    : Integer;
+
     FSettingsFile : String;
   Public
-    [IniValue('CONFIGUR'      ,'Versao' ,'Beta 1.0')]
+    [IniValue('CONFIGUR'      ,'Versao' ,'Beta 1.1')]
     Property Versao       : Widestring  read FVersao      write fVersao;
-    [IniValue('CONFIGUR'  ,'StrId'    ,'')]
+    [IniValue('CONFIGUR'  ,'StrId'      ,'')]
     Property StrId        : Widestring  read FStrId       write fStrId;
-    [IniValue('CONFIGUR'  ,'IntnNF'    ,'6')]
+    [IniValue('CONFIGUR'  ,'IntnNF'     ,'6')]
     Property  IntnNF      : Integer     read fIntnNF      write fIntnNF;
+    [IniValue('CONFIGUR'  ,'StrtpAmb'    ,'0')]
+    Property  StrtpAmb    : Widestring  read fStrtpAmb    write fStrtpAmb;
     [IniValue('CONFIGUR'  ,'DecqCom'    ,'4')]
     Property DecqCom      : Integer     read FDecqCom     write FDecqCom;
     [IniValue('CONFIGUR'  ,'DecvUnCom'  ,'10')]
@@ -36,6 +44,15 @@ Type
     Property DecqTrib     : Integer     read FDecqTrib    write FDecqTrib;
     [IniValue('CONFIGUR'  ,'DecvUnTrib' ,'10')]
     Property DecvUnTrib   : Integer     read FDecvUnTrib  write FDecvUnTrib;
+    [IniValue('CONFIGUR'  ,'DecvFrete'  ,'2')]
+    Property DecvFrete    : Integer     read FDecvFrete   write FDecvFrete;
+    [IniValue('CONFIGUR'  ,'DecvSeg'    ,'2')]
+    Property DecvSeg      : Integer     read FDecvSeg     write FDecvSeg;
+    [IniValue('CONFIGUR'  ,'DecvDesc'   ,'2')]
+    Property DecvDesc     : Integer     read FDecvDesc    write FDecvDesc;
+    [IniValue('CONFIGUR'  ,'DecvOutro'  ,'2')]
+    Property DecvOutro    : Integer     read FDecvOutro   write FDecvOutro;
+
     procedure Save;
     procedure Load;
     constructor Create;

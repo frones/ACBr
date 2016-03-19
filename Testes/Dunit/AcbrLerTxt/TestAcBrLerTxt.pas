@@ -45,12 +45,13 @@ type
     Function RetornaConteudo( s  : String;sBase : String = ''; iDD : Integer = 0  ) : String;
     procedure SetsComparar(const Value: String);
     function LerCampo(const Tipo: TpcnTipoCampo; TAG: variant): variant;
-    function iPosicao(s: String): Integer;
+    function iPosicao(s: String;iPosi : Integer = 0  ): Integer;
     function MontaISaber(sMonta: STring; pfiItem: Integer): Integer;
     function RetornaConteudoPos( s  : String;iDD : Integer = 0  ) : String;
     Procedure Initialize( sMonta : STring );
     procedure Finalize;
     procedure MontaZeroEsquerda(TAG, iZeros: Integer);
+    function MontaISaberString(sMonta: STring;iPosi : Integer ): Integer;
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -68,6 +69,7 @@ type
     procedure IdBA10;
     procedure IdBA13;
     procedure IdBA14;
+    procedure IdBA19;
     procedure IdBA20;
     procedure IdC;
     procedure IdC02;
@@ -89,6 +91,7 @@ type
     procedure IdGA03;
     procedure IdH;
     procedure IdI;
+    procedure IdI05a;
     procedure IdI05c;
     procedure IdI18;
     procedure IdI25;
@@ -116,7 +119,7 @@ type
     procedure IdN10A;
     procedure IdN10B;
     procedure IdN10C;
-    procedure N10d;
+    procedure IdN10d;
     procedure idN10E;
     procedure IdN10F;
     procedure IdN10G;
@@ -162,6 +165,7 @@ type
     procedure IdX18;
     procedure IdX26;
     procedure IdX33;
+    procedure IdYA;
     procedure IdY02;
     procedure IdY07;
     procedure IdZ;
@@ -226,7 +230,7 @@ begin
   with NFe do
   begin
     CheckEquals(infNFe.ID,Config.Strid);
-    CheckEquals(TpAmbToStr(procNFe.tpAmb),'1');
+    CheckEquals(TpAmbToStr(procNFe.tpAmb),Config.StrtpAmb,'procNFe.tpAmb');
     CheckEquals(procNFe.verAplic,'');
     CheckEquals(procNFe.chNFe,'','procNFe.chNFe');
     CheckEquals(DateTimeToStr(procNFe.dhRecbto),'30/12/1899','procNFe.dhRecbto ');
@@ -261,7 +265,7 @@ end;
 
 procedure TAcBrLerTxtTDD.IdC02A;
 begin
-  Initialize('C02A');
+  Initialize('C02a');
   (*C02A*)Monta(NFe.Emit.CNPJCPF );
   Finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
@@ -278,7 +282,7 @@ begin
   (*C10 *)Monta( NFe.Emit.EnderEmit.cMun  , tcInt );
   (*C11 *)Monta( NFe.Emit.enderEmit.xMun  );
   (*C12 *)Monta( NFe.Emit.enderEmit.UF    );
-  (*C13 *)Monta( Poem_Zeros( NFe.Emit.enderEmit.CEP ,8));
+  (*C13 *)MontaZeroEsquerda( NFe.Emit.enderEmit.CEP ,8);
   (*C14 *)Monta( NFe.Emit.enderEmit.cPais , tcInt );
   (*C15 *)Monta( NFe.Emit.enderEmit.xPais );
   (*C16 *)Monta( NFe.Emit.enderEmit.fone  );
@@ -337,7 +341,7 @@ end;
 
 procedure TAcBrLerTxtTDD.IdE03A ;
 begin
-  Initialize('E03A');
+  Initialize('E03a');
   (*E03*)Monta( NFe.Dest.idEstrangeiro );
   Finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
@@ -354,7 +358,7 @@ begin
   (*E10*)Monta( NFe.Dest.enderDest.cMun    , tcInt );
   (*E11*)Monta( NFe.Dest.enderDest.xMun    );
   (*E12*)Monta( NFe.Dest.enderDest.UF      );
-  (*E13*)Monta( Poem_Zeros( NFe.Dest.enderDest.CEP   , 8) );
+  (*E13*)MontaZeroEsquerda( NFe.Dest.enderDest.CEP , 8 );
   (*E14*)Monta( NFe.Dest.enderDest.cPais , tcInt );
   (*E15*)Monta( NFe.Dest.enderDest.xPais   );
   (*E16*)Monta( NFe.Dest.enderDest.fone    );
@@ -419,23 +423,6 @@ procedure TAcBrLerTxtTDD.IdG02A;
 begin
   Initialize('G02A');
   (*G02a*)Monta( NFe.Entrega.CNPJCPF   );
-  Finalize;
-  CheckEquals( Registro ,RetornaConteudo( sComparar));
-end;
-
-procedure TAcBrLerTxtTDD.IdGA02;
-begin
-  Initialize('GA02');
-  Monta( NFe.autXML.Add.CNPJCPF  );
-  Finalize;
-  CheckEquals( Registro ,RetornaConteudo( sComparar));
-end;
-
-
-procedure TAcBrLerTxtTDD.IdGA03;
-begin
-  Initialize('GA03');
-  Monta( NFe.autXML.Add.CNPJCPF  );
   Finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
 end;
@@ -769,7 +756,7 @@ begin
   for x := 0 to  NFe.Det.Count - 1 do
   begin
     IBase := MontaISaber('H', x );
-    Initialize('N07');
+    Initialize('N08');
     (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
     (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
     (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
@@ -845,7 +832,7 @@ begin
   for x := 0 to  NFe.Det.Count - 1 do
   begin
     IBase := MontaISaber('H', x );
-    Initialize('N10A');
+    Initialize('N10a');
     (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
     (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
     (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
@@ -873,7 +860,7 @@ begin
   for x := 0 to  NFe.Det.Count - 1 do
   begin
     IBase := MontaISaber('H', x );
-    Initialize('N10B');
+    Initialize('N10b');
     (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
     (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
     (*N26*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTRet     , tcDe2 );
@@ -892,7 +879,7 @@ begin
   for x := 0 to  NFe.Det.Count - 1 do
   begin
     IBase := MontaISaber('H', x );
-    Initialize('N10A');
+    Initialize('N10c');
     (*N11*)Monta(      OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
    (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
     (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
@@ -909,7 +896,7 @@ begin
   for x := 0 to  NFe.Det.Count - 1 do
   begin
     IBase := MontaISaber('H', x );
-    Initialize('N10E');
+    Initialize('N10e');
     (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
    (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
     (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
@@ -1014,7 +1001,7 @@ begin
   end;
 end;
 
-procedure TAcBrLerTxtTDD.N10d;
+procedure TAcBrLerTxtTDD.IdN10d;
 Var
   IBase , x : Integer;
 begin
@@ -1387,7 +1374,7 @@ begin
            Monta( NFe.Det[x].Imposto.ISSQN.cMun          );
            Monta( NFe.Det[x].Imposto.ISSQN.cPais         );
            Monta( NFe.Det[x].Imposto.ISSQN.nProcesso     );
-           Monta( NFe.Det[x].Imposto.ISSQN.indIncentivo  );
+           Monta( IndIncentivoToStr( NFe.Det[x].Imposto.ISSQN.indIncentivo ) );
     (*U07*)Monta( ISSQNcSitTribToStr( NFe.Det[x].Imposto.ISSQN.cSitTrib ));
     finalize;
     CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
@@ -1436,14 +1423,14 @@ end;
 
 procedure TAcBrLerTxtTDD.IdW04c;
 begin
-  Initialize('W04C');
+  Initialize('W04c');
   (*W04c*)Monta( NFe.Total.ICMSTot.vFCPUFDest   , tcDe2);
   finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
 end;
 procedure TAcBrLerTxtTDD.IdW04e;
 begin
-  Initialize('W04E');
+  Initialize('W04e');
   (*W04e*)Monta( NFe.Total.ICMSTot.vICMSUFDest  , tcDe2);
   finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
@@ -1451,7 +1438,7 @@ end;
 
 procedure TAcBrLerTxtTDD.IdW04g;
 begin
-  Initialize('W04G');
+  Initialize('W04g');
   (*W04g*)Monta( NFe.Total.ICMSTot.vICMSUFRemet , tcDe2);
   finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
@@ -1611,6 +1598,8 @@ begin
   end;
 end;
 
+
+
 procedure TAcBrLerTxtTDD.IdZ;
 begin
   Initialize('Z');
@@ -1638,11 +1627,17 @@ end;
 procedure TAcBrLerTxtTDD.IdZA;
 begin
   Initialize('ZA');
-  (*ZA02*)Monta( NFe.exporta.UFembarq      );
-  (*ZA03*)Monta( NFe.exporta.xLocEmbarq    );
-          Monta( NFe.exporta.UFSaidaPais   );
-          Monta( NFe.exporta.xLocExporta   );
-          Monta( NFe.exporta.xLocDespacho  );
+  if (nfe.infNFe.Versao < 3.10 ) then
+  begin
+    (*ZA02*)Monta( NFe.exporta.UFembarq      );
+    (*ZA03*)Monta( NFe.exporta.xLocEmbarq    );
+  end
+  else
+  begin
+    (*ZA02*)Monta( NFe.exporta.UFSaidaPais   );
+    (*ZA03*)Monta( NFe.exporta.xLocExporta   );
+    (*ZA04*)Monta( NFe.exporta.xLocDespacho  );
+  end;
   finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
 end;
@@ -1780,22 +1775,10 @@ begin
     (*I13*)Monta( NFe.Det[x].Prod.uTrib     );
     (*I14*)MontaDec( NFe.Det[x].Prod.qTrib  , config.DecqTrib);
    (*I14a*)MontaDec( NFe.Det[x].Prod.vUnTrib, Config.DecvUnTrib );
-               if NFe.Det[x].Prod.vFrete > 0 then
-    (*I15*)Monta( NFe.Det[x].Prod.vFrete  , tcDe2)
-           else
-           Monta( '' );
-               if NFe.Det[x].Prod.vSeg > 0 then
-    (*I16*)Monta( NFe.Det[x].Prod.vSeg      , tcDe2)
-           else
-           Monta( '' );
-               if NFe.Det[x].Prod.vDesc > 0 then
-    (*I17*)Monta( NFe.Det[x].Prod.vDesc   , tcDe2)
-           else
-           Monta( '' );
-                  if NFe.Det[x].Prod.vOutro > 0 then
-   (*I17a*)Monta( NFe.Det[x].Prod.vOutro , tcDe2)
-           else
-           Monta( '' );
+    (*I15*)MontaDec( NFe.Det[x].Prod.vFrete , Config.DecvFrete);
+    (*I16*)MontaDec( NFe.Det[x].Prod.vSeg   , Config.DecvSeg);
+    (*I17*)MontaDec( NFe.Det[x].Prod.vDesc  , Config.DecvDesc);
+   (*I17a*)MontaDec( NFe.Det[x].Prod.vOutro , Config.DecvOutro);
    (*I17b*)Monta( indTotToStr( NFe.Det[x].Prod.IndTot) );
    (*I28a*)Monta( NFe.Det[x].Prod.xPed     );
                if NFe.Det[x].Prod.nItemPed <> '0' then
@@ -1815,7 +1798,7 @@ begin
   for x := 0 to NFe.Det.Count - 1 do
   begin
     IBase := MontaISaber('H', x );
-    Initialize('I05C');
+    Initialize('I05c');
     (*I05c*)Monta( NFe.Det[x].Prod.CEST );
     finalize;
     CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
@@ -1823,98 +1806,12 @@ begin
 end;
 
 
-procedure TAcBrLerTxtTDD.IdBA02;
-Var
-  x     : Integer;
-begin
-  for x := 0 to NFe.ide.NFref.Count - 1 do
-  begin
-    Initialize('BA02');
-    (*B13*)Monta( NFe.ide.NFref[x].refNFe );
-    finalize;
-    CheckEquals( Registro ,RetornaConteudo( sComparar));
-  end;
-end;
-
-procedure TAcBrLerTxtTDD.IdBA03;
-Var
-  x     : Integer;
-begin
-  for x := 0 to NFe.ide.NFref.Count - 1 do
-  begin
-    Initialize('BA03');
-    (*B15*)Monta( NFe.ide.NFref[x].RefNF.cUF   , tcInt);
-    (*B16*)Monta( NFe.ide.NFref[x].RefNF.AAMM  );
-    (*B17*)Monta( NFe.ide.NFref[x].RefNF.CNPJ  );
-    (*B18*)Monta( NFe.ide.NFref[x].RefNF.Modelo, tcInt);
-    (*B19*)Monta( NFe.ide.NFref[x].RefNF.serie , tcInt);
-    (*B20*)Monta( NFe.ide.NFref[x].RefNF.nNF   , tcInt);
-    finalize;
-    CheckEquals( Registro ,RetornaConteudo( sComparar));
-  end;
-end;
 
 
-procedure TAcBrLerTxtTDD.IdBA10;
-Var
-  x     : Integer;
-begin
-  for x := 0 to NFe.ide.NFref.Count - 1 do
-  begin
-    Initialize('BA10');
-    (*B20b*)Monta( NFe.ide.NFref[x].refNFP.cUF   , tcInt);
-    (*B20c*)Monta( NFe.ide.NFref[x].refNFP.AAMM  );
-    (*B20f*)Monta( NFe.ide.NFref[x].refNFP.IE    );
-    (*B20f*)Monta( NFe.ide.NFref[x].refNFP.modelo);
-    (*B20g*)Monta( NFe.ide.NFref[x].refNFP.serie , tcInt);
-    (*B20h*)Monta( NFe.ide.NFref[x].refNFP.nNF   , tcInt);
-    if (NFe.infNFe.Versao >= 3.10) then
-      Monta( NFe.ide.NFref[x].refCTe);
-    finalize;
-    CheckEquals( Registro ,RetornaConteudo( sComparar));
-  end;
-end;
 
-procedure TAcBrLerTxtTDD.IdBA13;
-Var
-  x     : Integer;
-begin
-  for x := 0 to NFe.ide.NFref.Count - 1 do
-  begin
-    Initialize('BA13');
-    (*B20d*)Monta( NFe.ide.NFref[x].refNFP.CNPJCPF);
-    finalize;
-    CheckEquals( Registro ,RetornaConteudo( sComparar));
-  end;
-end;
 
-procedure TAcBrLerTxtTDD.IdBA14;
-Var
-  x     : Integer;
-begin
-  for x := 0 to NFe.ide.NFref.Count - 1 do
-  begin
-    Initialize('BA14');
-    (*B20d*)Monta( NFe.ide.NFref[x].refNFP.CNPJCPF);
-    finalize;
-    CheckEquals( Registro ,RetornaConteudo( sComparar));
-  end;
-end;
 
-procedure TAcBrLerTxtTDD.IdBA20;
-Var
-  x     : Integer;
-begin
-  for x := 0 to NFe.ide.NFref.Count - 1 do
-  begin
-    Initialize('BA20');
-    (*B20k*)Monta( ECFModRefToStr( NFe.ide.NFref[x].RefECF.modelo));
-    (*B20i*)Monta( NFe.ide.NFref[x].RefECF.nECF  );
-    (*B20m*)Monta( NFe.ide.NFref[x].RefECF.nCOO  );
-    finalize;
-    CheckEquals( Registro ,RetornaConteudo( sComparar));
-  end;
-end;
+
 
 procedure TAcBrLerTxtTDD.IdO08;
 Var
@@ -2158,14 +2055,22 @@ begin
   Result := iPosicao( sComparar );
 end;
 
-Function TAcBrLerTxtTDD.iPosicao( s : String ): Integer;
+
+Function TAcBrLerTxtTDD.MontaISaberString( sMonta : STring;iPosi : Integer ): Integer;
+begin
+  Monta(sMonta);
+  sComparar := Registro;
+  Result := iPosicao( sComparar , iPosi );
+end;
+
+Function TAcBrLerTxtTDD.iPosicao( s : String;iPosi : Integer = 0  ): Integer;
 Var
   iFor, j : Integer;
   AValues : String;
   sText   : String;
 begin
   Result := 0;
-  for iFor := 0 to FConteudoArquivo.count - 1 do
+  for iFor := iPosi to FConteudoArquivo.count - 1 do
   begin
     AValues := FConteudoArquivo[iFor];
     sText := '';
@@ -2219,7 +2124,7 @@ end;
 
 procedure TAcBrLerTxtTDD.MontaDec(TAG: double; dDecimal: Integer);
 begin
-  if dDecimal > 0 then
+  if dDecimal >= 0 then
     Registro := Registro+ FloatToString( TAG, '.', FloatMask(dDecimal));
   Registro := Registro+'|';
 end;
@@ -2234,6 +2139,267 @@ procedure TAcBrLerTxtTDD.Finalize;
 begin
   Registro := Registro+'|';
 end;
+
+procedure TAcBrLerTxtTDD.IdBA03;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA03', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA03');
+      (*B15*)Monta( NFe.ide.NFref[x].RefNF.cUF   , tcInt);
+      (*B16*)Monta( NFe.ide.NFref[x].RefNF.AAMM  );
+      (*B17*)Monta( NFe.ide.NFref[x].RefNF.CNPJ  );
+      (*B18*)MontaZeroEsquerda(NFe.ide.NFref[x].RefNF.Modelo, 2);
+      (*B19*)Monta( NFe.ide.NFref[x].RefNF.serie , tcInt);
+      (*B20*)Monta( NFe.ide.NFref[x].RefNF.nNF   , tcInt);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdBA02;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA02', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA02');
+      (*B13*)Monta( NFe.ide.NFref[x].refNFe );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdBA10;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA10', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA10');
+      (*B20b*)Monta( NFe.ide.NFref[x].refNFP.cUF   , tcInt);
+      (*B20c*)Monta( NFe.ide.NFref[x].refNFP.AAMM  );
+      (*B20f*)Monta( NFe.ide.NFref[x].refNFP.IE    );
+      (*B20f*)Monta( NFe.ide.NFref[x].refNFP.modelo);
+      (*B20g*)Monta( NFe.ide.NFref[x].refNFP.serie , tcInt);
+      (*B20h*)Monta( NFe.ide.NFref[x].refNFP.nNF   , tcInt);
+      if (NFe.infNFe.Versao >= 3.10) then
+        Monta( NFe.ide.NFref[x].refCTe);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdBA13;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA13', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA13');
+      (*B20d*)Monta( NFe.ide.NFref[x].refNFP.CNPJCPF);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+procedure TAcBrLerTxtTDD.IdBA14;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA14', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA14');
+      (*B20d*)Monta( NFe.ide.NFref[x].refNFP.CNPJCPF);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdBA19;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA19', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA19');
+      (*B20d*)Monta( NFe.ide.NFref[x].refCTe);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+procedure TAcBrLerTxtTDD.IdBA20;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.ide.NFref.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§BA20', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('BA20');
+      (*B20k*)Monta( ECFModRefToStr( NFe.ide.NFref[x].RefECF.modelo));
+      (*B20i*)Monta( NFe.ide.NFref[x].RefECF.nECF  );
+      (*B20m*)Monta( NFe.ide.NFref[x].RefECF.nCOO  );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdI05a;
+Var
+  IBase , x, fJ : Integer;
+  sRegistro : STring;
+begin
+  for x := 0 to NFe.Det.Count - 1 do
+  begin
+    IBase := -1;
+    for fJ := 0 to NFe.Det[x].Prod.NVE.Count - 1 do
+    begin
+     Inc( IBase );
+     Initialize('I05a');
+     (*I05c*)Monta( NFe.Det[x].Prod.NVE[fj].NVE );
+     finalize;
+     sRegistro := Registro;
+     IBase := MontaISaberString(sComparar, IBase );
+     CheckEquals( sRegistro ,RetornaConteudoPos( sRegistro,IBase));
+    end;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdGA02;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.autXML.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§GA02', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('GA02');
+      Monta( NFe.autXML[x].CNPJCPF  );
+      Finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdGA03;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to NFe.autXML.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§GA03', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('GA03');
+      Monta( NFe.autXML[x].CNPJCPF  );
+      Finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+    end
+    else
+    exit;
+  end;
+end;
+
+
+procedure TAcBrLerTxtTDD.IdYA;
+Var
+  IBase , x : Integer;
+begin
+  IBase := -1;
+  for x := 0 to  NFe.pag.Count - 1 do
+  begin
+    Inc( IBase );
+    IBase := MontaISaberString('§YA', IBase );
+    if ( IBase > 0 ) then
+    begin
+      Initialize('YA');
+      Monta( FormaPagamentoToStr( NFe.pag[x].tPag ));
+      Monta( NFe.pag[x].vPag  , tcDe2);
+      Monta( NFe.pag[x].CNPJ  , tcStr);
+      Monta( BandeiraCartaoToStr( NFe.pag[x].tBand ));
+      Monta( NFe.pag[x].cAut  , tcStr);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+      sComparar:= '';
+      Registro := '';
+
+    end
+    else
+    exit;
+  end;
+end;
+
 
 initialization
   // Register any test cases with the test runner

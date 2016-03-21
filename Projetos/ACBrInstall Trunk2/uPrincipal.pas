@@ -1576,7 +1576,7 @@ begin
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);
       if sDirPackage.Trim = '' then
-        raise Exception.Create('Não foi possível retornar o diretório do pacote!');
+        raise Exception.Create('Não foi possível retornar o diretório do pacote : ' + NomePacote);
 
       if IsDelphiPackage(NomePacote) then
       begin

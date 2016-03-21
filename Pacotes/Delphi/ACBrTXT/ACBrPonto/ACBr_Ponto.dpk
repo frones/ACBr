@@ -1,0 +1,44 @@
+package ACBr_Ponto;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DESCRIPTION 'ACBr - Ponto Eletrônico - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl,
+  ACBr_TXTComum;
+
+contains
+  ACBrPonto in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto.pas',
+  ACBrPonto_AFD in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFD.pas',
+  ACBrPonto_AFD_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFD_Class.pas',
+  ACBrPonto_AFDT in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFDT.pas',
+  ACBrPonto_AFDT_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFDT_Class.pas',
+  ACBrPonto_ACJEF in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_ACJEF.pas',
+  ACBrPonto_ACJEF_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_ACJEF_Class.pas';
+
+end.
+

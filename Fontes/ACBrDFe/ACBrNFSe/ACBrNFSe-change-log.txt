@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2016
+-- ACBrNFSeWebServices --
+[*] Correção para o provedor Infisc.
+    por: Italo Jurisato Junior
+		
 18/03/2016
 -- ACBrNFSeWebServices / pnfsLerListaNFSe --
 [*] Correção para o provedor Coplan.

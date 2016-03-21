@@ -1150,7 +1150,6 @@ begin
                                    '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                                '</Signature>'+
                               '</' + FPrefixo4 + 'Rps>';
-        *)
 
     // RPS versão 1.10
     ve110: FvNotas := FvNotas +
@@ -1159,6 +1158,7 @@ begin
                           '<' + FPrefixo4 + 'Rps', '</Signature>') +
                         '</Signature>'+
                       '</' + Prefixo4 + 'Rps>';
+        *)
 
     // RPS versão 1.00
     else begin
@@ -1207,9 +1207,6 @@ begin
                       '</' + FPrefixo4 + 'Rps>';
            end;
 
-    // RPS versão 1.10 - Infisc
-    ve110 : FvNotas := FvNotas + RPS;
-
     // RPS versão 1.00
     else
     begin
@@ -1220,6 +1217,11 @@ begin
         proSP: FvNotas :=  FvNotas + '<RPS xmlns=""' +
                                       RetornarConteudoEntre(RPS, '<RPS', '</RPS>') +
                                      '</RPS>';
+
+        proInfisc: FvNotas := FvNotas +
+                            '<NFS-e' +
+                              RetornarConteudoEntre(RPS, '<NFS-e', '</NFS-e>') +
+                            '</NFS-e>';
 
         proIssDSF,
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
@@ -3040,7 +3042,7 @@ begin
       case FProvedor of
         proISSNet: if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
                      CodMunicipio := 999;
-        proBetha: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+        proBetha: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio, 0);
       else
         CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
       end;

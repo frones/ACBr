@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 396
+  Left = 473
   Height = 600
-  Top = 135
+  Top = 196
   Width = 800
   Align = alClient
   ClientHeight = 600
@@ -8420,13 +8420,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsSat: TTabSheet
           Caption = 'SAT'
           ClientHeight = 319
-          ClientWidth = 590
+          ClientWidth = 592
           ImageIndex = 27
           object pgSAT: TPageControl
             Left = 0
             Height = 319
             Top = 0
-            Width = 590
+            Width = 592
             ActivePage = tsDadosSAT
             Align = alClient
             ShowTabs = False
@@ -8435,7 +8435,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsDadosSAT: TTabSheet
               Caption = 'Dados do SAT CFe'
               ClientHeight = 311
-              ClientWidth = 582
+              ClientWidth = 584
               object Label113: TLabel
                 Left = 16
                 Height = 17
@@ -8476,7 +8476,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 217
                 Height = 25
                 Top = 24
-                Width = 331
+                Width = 333
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 1
               end
@@ -8591,7 +8591,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 385
                 Height = 25
                 Top = 72
-                Width = 163
+                Width = 165
                 Anchors = [akTop, akLeft, akRight]
                 ItemHeight = 17
                 Style = csDropDownList
@@ -8635,12 +8635,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 385
                 Height = 25
                 Top = 123
-                Width = 137
+                Width = 139
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 10
               end
               object SbArqLog2: TSpeedButton
-                Left = 524
+                Left = 526
                 Height = 22
                 Top = 126
                 Width = 24
@@ -8734,7 +8734,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsDadosEmit: TTabSheet
               Caption = 'Dados Emitente'
               ClientHeight = 311
-              ClientWidth = 582
+              ClientWidth = 584
               object Label134: TLabel
                 Left = 12
                 Height = 17
@@ -10878,11 +10878,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnUser: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnCadastro
+            AnchorSideTop.Control = btnCadastro
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnCadastro
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 30
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Usuários  '
             Color = 16777139
@@ -10895,11 +10900,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnSH: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnCadastro
+            AnchorSideTop.Control = btnUser
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnCadastro
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 50
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Software House  '
             Color = 16777139
@@ -11013,11 +11023,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnRFDGeral: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnRFD
+            AnchorSideTop.Control = btnRFD
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnRFD
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 30
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Geral'
             Color = 16777139
@@ -11030,11 +11045,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnRFDFile: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnRFD
+            AnchorSideTop.Control = btnRFDGeral
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnRFD
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 50
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Arquivos'
             Color = 16777139
@@ -11118,11 +11138,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnBoletoCedente: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoleto
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 30
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Cedente'
             Color = 16777139
@@ -11135,11 +11160,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnBoletoConta: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoCedente
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 50
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Conta Bancária'
             Color = 16777139
@@ -11152,11 +11182,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnBoletoLeiaute: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoConta
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 70
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Leiaute'
             Color = 16777139
@@ -11169,11 +11204,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnBoletoRR: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoLeiaute
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 90
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Remessa e Retorno'
             Color = 16777139
@@ -11186,11 +11226,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnBoletoEmail: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoRR
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 110
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'E-Mail'
             Color = 16777139
@@ -11246,11 +11291,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFeGeral: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFe
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 30
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Geral'
             Color = 16777139
@@ -11263,11 +11313,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFeCertificados: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeGeral
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 50
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Certificados'
             Color = 16777139
@@ -11280,11 +11335,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFeWebServices: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeCertificados
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 70
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'WebServices'
             Color = 16777139
@@ -11297,11 +11357,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFeEmail: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeWebServices
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 90
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'E-Mail'
             Color = 16777139
@@ -11314,11 +11379,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFePrint: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeEmail
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 110
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Impressão'
             Color = 16777139
@@ -11331,11 +11401,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFeDir: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFePrint
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 130
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Diretórios'
             Color = 16777139
@@ -11348,11 +11423,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDFeTeste: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeDir
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 150
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Teste'
             Color = 16777139
@@ -11422,11 +11502,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           TabStop = True
           object btnSATDados: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSAT
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 30
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Dados do SAT CFe'
             Color = 16777139
@@ -11439,11 +11524,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnSATEmitente: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATDados
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 50
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Dados Emitente'
             Color = 16777139
@@ -11456,11 +11546,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnSATSH: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATEmitente
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 70
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Dados Software House'
             Color = 16777139
@@ -11473,11 +11568,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnSATRede: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATSH
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 90
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Rede'
             Color = 16777139
@@ -11490,11 +11590,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnSATPrint: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATRede
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 110
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Impressão'
             Color = 16777139
@@ -11567,11 +11672,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDownConf: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDown
+            AnchorSideTop.Control = btnDown
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDown
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 30
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'Configurações'
             Color = 16777139
@@ -11584,11 +11694,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
           object btnDownXml: TPanel
             Tag = 1
+            AnchorSideLeft.Control = btnDown
+            AnchorSideTop.Control = btnDownConf
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDown
+            AnchorSideRight.Side = asrBottom
             Left = 0
             Height = 20
             Top = 50
             Width = 179
-            Align = alTop
+            Anchors = [akTop, akLeft, akRight]
             BevelOuter = bvNone
             Caption = 'XML Baixados'
             Color = 16777139

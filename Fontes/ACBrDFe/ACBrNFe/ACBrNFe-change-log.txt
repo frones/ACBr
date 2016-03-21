@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2016
+-- ACBrDANFERL --
+[-] Acerto para ocupar todo o espaço quando não possui logomarca
+    por: regys.silveira
+
 17/03/2016
 -- ACBrNFeServicos --
 [+] Adicionado as URLs de Homologação/Produção da NFC-e de Pernambuco.

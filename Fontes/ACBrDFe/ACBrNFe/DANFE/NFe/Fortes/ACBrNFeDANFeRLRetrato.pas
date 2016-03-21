@@ -712,6 +712,12 @@ begin
          LogoStream.Free;
       end;
     end;
+  end
+  else
+  begin
+    // quando não possui logomarca usar todo o espaço
+    rlmEndereco.Left  := rlmEmitente.Left;
+    rlmEndereco.Width := rlmEmitente.Width;
   end;
 
   if (FMarcaDagua <> '') and FileExists(FMarcaDagua) then

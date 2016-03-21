@@ -38,8 +38,6 @@
 |*  - Criação e distribuição da Primeira Versao
 *******************************************************************************}
 
-{$I ACBr.inc}
-
 unit ACBrPonto_ACJEF_Class;
 
 interface

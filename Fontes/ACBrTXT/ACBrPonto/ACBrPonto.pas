@@ -46,10 +46,12 @@ interface
 
 uses
   SysUtils, Classes, DateUtils,
-{$IFDEF FPC}
-  LResources,
-{$ENDIF}
-{$IFDEF CLX} QForms, {$ELSE} Forms, {$ENDIF}
+  {$IFNDEF Framework}
+    {$IFDEF FPC}
+      LResources,
+    {$ENDIF}
+  {$ENDIF}
+  Forms,
   ACBrTXTClass, ACBrUtil,
   ACBrPonto_AFD, ACBrPonto_AFD_Class,
   ACBrPonto_AFDT, ACBrPonto_AFDT_Class,
@@ -127,7 +129,7 @@ Uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBr', [TACBrPonto]);
+  RegisterComponents('ACBrTXT', [TACBrPonto]);
 end;
 
 constructor TACBrPonto.Create(AOwner: TComponent);
@@ -451,10 +453,8 @@ begin
 end;
 
 {$IFDEF FPC}
-
 initialization
-
-{$I ACBrPonto.lrs}
+//   {$I ACBrPonto.lrs}
 {$ENDIF}
 
 end.

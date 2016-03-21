@@ -153,10 +153,11 @@ type
     procedure WriteRegistro9900;
     procedure WriteRegistro9990;
     procedure WriteRegistro9999;
+
+    procedure LimpaRegistros;
   public
     constructor Create(AOwner: TComponent); override; /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
     procedure SaveFileTXT;
 
     procedure IniciaGeracao;

@@ -469,10 +469,8 @@ begin
       FieldByName('NumDocOrigem').AsString := RemoverZeros(NumDocOrigem);
       FieldByName('Convenio').AsString := Convenio;
       FieldByName('InfoComplementares').AsString := InfoComplementares;
-      FieldByName('DataVencimento').AsDateTime := StrToDate
-        (FormatarData(DataVencimento));
-      FieldByName('DataLimitePagamento').AsDateTime := StrToDate
-        (FormatarData(DataLimitePagamento));
+      FieldByName('DataVencimento').AsDateTime := StrToDate(FormatarData(DataVencimento));
+      FieldByName('DataLimitePagamento').AsDateTime := StrToDateDef(FormatarData(DataLimitePagamento), FieldByName('DataVencimento').AsDateTime);
       FieldByName('PeriodoReferencia').AsString := PeriodoReferencia;
       FieldByName('MesAnoReferencia').AsString := MesAnoReferencia;
       FieldByName('Parcela').AsString := IntToStr(Parcela);

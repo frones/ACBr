@@ -1589,9 +1589,7 @@ begin
             MB_ICONERROR + MB_OK
           );
           Break;
-        end
-        else
-
+        end;
       end;
     end;
   end;

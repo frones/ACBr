@@ -511,7 +511,7 @@ TACBrECFBematech = class( TACBrECFClass )
       ModalidadeBCICMSST: Integer; PercentualMargemICMSST: Double;
       PercentualReducaoBCICMSST: Double; ValorReducaoBCICMSST: Double;
       AliquotaICMSST: Double; ValorICMSST: Double; ValorICMSDesonerado: Double;
-      MotivoDesoneracaoICMS: Integer); override;
+      MotivoDesoneracaoICMS: Integer; CEST: String); override;
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
@@ -1181,10 +1181,13 @@ begin
   result := '' ;
   if cmd = '' then exit ;
 
-  if fs25MFD then
-     cmd := FS + cmd
-  else
-     cmd := ESC + cmd ;   { Prefixo ESC }
+  if not CharInSet(cmd[1], [ESC, FS]) then
+  begin
+    if fs25MFD then
+       cmd := FS + cmd
+    else
+       cmd := ESC + cmd ;   { Prefixo ESC }
+  end;
 
   { Calculando a Soma dos caracteres ASC }
   iSoma := 0 ;
@@ -1863,9 +1866,10 @@ procedure TACBrECFBematech.VendeItemEx(Codigo, Descricao: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CEST: String);
 Var
   Comando : String;
+  NumItem: Integer;
 begin
   // TODO: Dúvidas:
   // InformacaoAdicional, o manual fala 500 e no comando suporta 80;
@@ -1927,6 +1931,13 @@ begin
 
   fsTotalPago := 0 ;
   fsTotalizadoresParciais := '' ;
+
+  CEST := OnlyNumber(CEST);
+  if CEST <> '' then
+  begin
+    NumItem := GetNumUltimoItem;
+    EnviaComando(ESC + #62+#95+#67 + IntToStrZero(NumItem, 3) + Poem_Zeros(CEST, 7));
+  end;
 end;
 
 procedure TACBrECFBematech.DescontoAcrescimoItemAnterior(

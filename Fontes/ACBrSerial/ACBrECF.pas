@@ -672,7 +672,8 @@ TACBrECF = class( TACBrComponent )
            AliquotaICMSST: Double = 0;            // ICMS ST:
            ValorICMSST: Double = 0;               // ICMS ST:
            ValorICMSDesonerado: Double = 0;
-           MotivoDesoneracaoICMS: Integer = 9);   // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           MotivoDesoneracaoICMS: Integer = 9;    // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           CEST: String = '');   // Código do CEST para esse produto (7 dígitos)
 
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
@@ -2732,7 +2733,7 @@ procedure TACBrECF.VendeItemEx(Codigo, Descricao: String; AliquotaICMS: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CEST: String);
 Var
   AliquotaECF : String ;
   Tratado     : Boolean;
@@ -2766,7 +2767,7 @@ begin
                       IndicadorIncentivoFiscalISS, CodigoIBGE,
                       ModalidadeBCICMSST, PercentualMargemICMSST, PercentualReducaoBCICMSST,
                       ValorReducaoBCICMSST, AliquotaICMSST, ValorICMSST,
-                      ValorICMSDesonerado, MotivoDesoneracaoICMS);
+                      ValorICMSDesonerado, MotivoDesoneracaoICMS, CEST);
   except
      if Assigned( FOnErrorVendeItem ) then
         FOnErrorVendeItem(Tratado);

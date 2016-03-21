@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/03/2016
+-- ACBRECF, ACBrECFClass, ACBrECFBematech --
+[*] Ajuste no método "VendeItemEx", para permitir informar o valor do campo
+    "CEST"  (por: DSA)
+
 Data: 17/03/2016
 -- ACBrECFDaruma, ACBrECFEscECF --
 [-] Método "ArquivoMFD_DLL", ECF FS800i, ajuste para funcionamento correto em

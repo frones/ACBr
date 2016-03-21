@@ -1154,7 +1154,8 @@ TACBrECFClass = class
            AliquotaICMSST: Double = 0;            // ICMS ST:
            ValorICMSST: Double = 0;               // ICMS ST:
            ValorICMSDesonerado: Double = 0;
-           MotivoDesoneracaoICMS: Integer = 9);   // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           MotivoDesoneracaoICMS: Integer = 9;    // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           CEST: String = '');   // Código do CEST para esse produto (7 dígitos)
            virtual;
 
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
@@ -3378,7 +3379,7 @@ procedure TACBrECFClass.VendeItemEx(Codigo, Descricao: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CEST: String);
 begin
   ErroAbstract('VendeItemEx');
 end;

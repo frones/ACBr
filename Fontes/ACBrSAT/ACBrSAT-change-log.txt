@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/03/2016
+-- ACBrSAT --
+[+] Adicionado propriedade CEST para ser gerado a partir de 01/01/2017, post
+    http://www.projetoacbr.com.br/forum/topic/28841-utilizar-cest/?do=findComment&comment=190836
+    (por Isaque Pinheiro)
+
 Data: 19/03/2016
 -- ACBrSAT --
 [+] Adicionado o evento:

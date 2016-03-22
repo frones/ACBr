@@ -140,8 +140,8 @@ begin
         else
            Aceite := atNao;
         DataProcessamento := Now;
-        NossoNumero       := edtNossoNro.Text;
         Carteira          := edtCarteira.Text;
+        NossoNumero       := edtNossoNro.Text;
         ValorDocumento    := StrToCurr(edtValorDoc.Text);
         Sacado.NomeSacado := edtNome.Text;
         Sacado.CNPJCPF    := OnlyNumber(edtCPFCNPJ.Text);

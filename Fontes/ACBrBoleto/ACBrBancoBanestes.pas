@@ -85,7 +85,7 @@ begin
    fpDigito := 3;
    fpNome:= 'Banestes';
    fpNumero := 021;
-   fpTamanhoMaximoNossoNum := 9;
+   fpTamanhoMaximoNossoNum := 8;
    fpTamanhoAgencia := 3;
    fpTamanhoConta   := 11;
    fpTamanhoCarteira:= 2;
@@ -100,11 +100,11 @@ var
 begin
   { Banestes não usa digitos verificadores para agência e conta }
   cLivreAsbace := copy(ACBrTitulo.NossoNumero,1,8)                       +
-                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 1, 11) +
+                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 1, 10) +
+                  ACBrTitulo.ACBrBoleto.Cedente.ContaDigito              + 
                   IfThen(ACBrtitulo.ACBrBoleto.Cedente.Modalidade = '',
                          '4', ACBrtitulo.ACBrBoleto.Cedente.Modalidade)  +
                   IntToStrZero(fpNumero,3);
-
   cIndice      := '21212121212121212121212';
   nResult      := 0;
   for nContAsbace := 23 downto 1 do
@@ -191,7 +191,6 @@ begin
     CodigoBarras := CodigoBarras + FatorVencimento;
     CodigoBarras := CodigoBarras + IntToStrZero(Round(ACBrTitulo.ValorDocumento*100),10);
     CodigoBarras := CodigoBarras + fASBACE;
-
     DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
   end;
 
@@ -222,7 +221,7 @@ begin
                'REMESSA'                                          + // Literal de Remessa
                '01'                                               + // Código do Tipo de Serviço
                PadRight('COBRANCA', 15 )                          +
-               PadLeft(OnlyNumber(Copy(Trim(Conta),1,11)), 11,'0')+ // Codigo da Empresa no Banco
+               PadLeft(OnlyNumber(Copy(Trim(Conta),1,10)+contadigito), 11,'0')+ // Codigo da Empresa no Banco
                space(9)                                           + // COMPLEMENTO DO REGISTRO
                PadRight(Nome, 30)                                 + // Nome da Empresa
                IntToStrzero(Numero,3)                             +
@@ -335,13 +334,12 @@ begin
       begin
         if Mensagem.Text<> ''then
           MensagemCedente:= Mensagem[0];
-
         wLinha := '1'                                                         +  // ID Registro
                   ATipoInscricao                                              +  // TIPO INSCRICAO EMPRESA(CNPJ, CPF);
                   PadRight(OnlyNumber(Cedente.CNPJCPF), 14, '0')              +
                   PadLeft(OnlyNumber(Copy(Trim(Cedente.Conta),1,11)), 11, '0')+ // Codigo da Empresa no Banco
                   Space(9)                                                    +
-                  PadLeft(SeuNumero, 10, '0') + Space(15)                     +  // identificacao da operacao na empresa
+                  PadLeft(SeuNumero,25)                                       +  // identificacao da operacao na empresa
                   PadRight(Copy(NossoNumero, 1, 8) +
                            DigitoNossoNumero, 10, '0')                        +
                   IfThen(PercentualMulta > 0, '1', '0')                       +  // Indica se exite Multa ou não

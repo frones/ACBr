@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/03/16 ver. 0.0.184a
+-- ACBrBancoBanestes --
+[-] Ajuste tamanho máximo nosso número para permitir a geração correta do campo
+    nosso número na remessa. (Juliana Tamizou)
+[-] Ajuste leitura nosso número do arquivo retorno para desconsiderar os DVs.
+    (Juliana Tamizou)
+
+-- ACBrBancoSantander --
+[-] Ajuste campo Aceite remessa CNAB240. (Rodrigo Guelf)
+http://www.projetoacbr.com.br/forum/topic/28656-corre%C3%A7%C3%A3o-do-unit-acbrbancosantanderpas/
+
+
 Data: 04/03/16 ver. 0.0.183a
 -- ACBrBancoSicredi --
 [-] Ajuste remessa CNAB400. (RobertoSFilho)

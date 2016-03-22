@@ -694,51 +694,50 @@ begin
 
       with ACBrBoleto do
       begin
-         wLinha:= '1'                                                     +  // ID Registro
-                  IfThen(Length(Cedente.CNPJCPF) > 12,'02','01')          +
-                  PadLeft(trim(OnlyNumber(Cedente.CNPJCPF)),14,'0')          +
-                  PadRight(trim(Cedente.CodigoTransmissao),20,'0')            +
-                  PadRight( SeuNumero ,25,' ')                                +
-                  PadLeft(RightStr(NossoNumero,7),7,'0') + DigitoNossoNumero +
+         wLinha:= '1'                                                         +  // 1- ID Registro
+                  IfThen(Length(Cedente.CNPJCPF) > 12,'02','01')              +  // 2 a 3
+                  PadLeft(trim(OnlyNumber(Cedente.CNPJCPF)),14,'0')           +  // 4 a 17
+                  PadRight(trim(Cedente.CodigoTransmissao),20,'0')            +  // 18 a 37
+                  PadRight( SeuNumero ,25,' ')                                +  // 38 a 62
+                  PadLeft(RightStr(NossoNumero,7),7,'0') + DigitoNossoNumero  +  // 63 a 70
                   IfThen(DataAbatimento < EncodeDate(2000,01,01),
                          '000000',
-                         FormatDateTime( 'ddmmyy', DataAbatimento))       +
-                  ' '+IfThen(PercentualMulta > 0,'4','0')                 +
-                  IntToStrZero( round( PercentualMulta * 100 ), 4)        +
-                  '00'+StringOfChar( '0', 13)+space(4)                    +
+                         FormatDateTime( 'ddmmyy', DataAbatimento))           +  // 71 a 76
+                  ' '+IfThen(PercentualMulta > 0,'4','0')                     +  // 77 a 78
+                  IntToStrZero( round( PercentualMulta * 100 ), 4)            +  // 79 a 82
+                  '00'+StringOfChar( '0', 13)+space(4)                        +  // 83 a 101
                   IfThen(DataMoraJuros < EncodeDate(2000,01,01),
                          '000000',
-                         FormatDateTime( 'ddmmyy', DataMoraJuros))        +
-                   IntToStr(aCarteira) + Ocorrencia                       +
-                  PadRight( NumeroDocumento,10,' ')                           +
-                  FormatDateTime( 'ddmmyy', Vencimento)                   +
-                  IntToStrZero( round( ValorDocumento * 100), 13)         +
-                  '033' + aAgencia                                        +
-                  PadRight(aEspecie,2) + 'N'                                  +
-                  FormatDateTime( 'ddmmyy', DataDocumento )               +
-                  PadRight(trim(Instrucao1),2,'0')                            +
-                  PadRight(trim(Instrucao2),2,'0')                            +
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)         +
+                         FormatDateTime( 'ddmmyy', DataMoraJuros))            +  // 102 a 107
+                   IntToStr(aCarteira) + Ocorrencia                           +  // 108 a 110
+                  PadRight( NumeroDocumento,10,' ')                           +  // 111 a 120
+                  FormatDateTime( 'ddmmyy', Vencimento)                       +  // 121 a 126
+                  IntToStrZero( round( ValorDocumento * 100), 13)             +  // 127 a 139
+                  '033' + aAgencia                                            +  // 140 a 147
+                  PadRight(aEspecie,2) + 'N'                                  +  // 148 a 150
+                  FormatDateTime( 'ddmmyy', DataDocumento )                   +  // 151 a 156
+                  PadRight(trim(Instrucao1),2,'0')                            +  // 157 a 158
+                  PadRight(trim(Instrucao2),2,'0')                            +  // 159 a 160
+                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)             +  // 161 a 173
                   IfThen(DataDesconto < EncodeDate(2000,01,01),
                          '000000',
-                         FormatDateTime( 'ddmmyy', DataDesconto))         +
-                  IntToStrZero( round( ValorDesconto * 100), 13)          +
-                  IntToStrZero( round( ValorIOF * 100 ), 13)              +
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13)       +
-                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')    +
-                  PadRight( Sacado.NomeSacado, 40, ' ')                       +
-                  PadRight( Sacado.Logradouro + ' '+ Sacado.Numero, 40, ' ')  +
-                  PadRight( Sacado.Bairro,12,' ')                             +
-                  PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +
-                  PadRight( Sacado.Cidade, 15, ' ') + Sacado.UF               +
-				  IfThen(ACBrBoleto.Cedente.TipoInscricao = pJuridica,
+                         FormatDateTime( 'ddmmyy', DataDesconto))             +  // 174 a 179
+                  IntToStrZero( round( ValorDesconto * 100), 13)              +  // 180 a 192
+                  IntToStrZero( round( ValorIOF * 100 ), 13)                  +  // 193 a 205
+                  IntToStrZero( round( ValorAbatimento * 100 ), 13)           +  // 206 a 218
+                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')     +  // 219 a 233
+                  PadRight( Sacado.NomeSacado, 40, ' ')                       +  // 234 a 273
+                  PadRight( Sacado.Logradouro + ' '+ Sacado.Numero, 40, ' ')  +  // 274 a 314
+                  PadRight( Sacado.Bairro,12,' ')                             +  // 315 a 326
+                  PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +  // 327 a 334
+                  PadRight( Sacado.Cidade, 15, ' ') + Sacado.UF               +  // 335 a 351
+		  IfThen(ACBrBoleto.Cedente.TipoInscricao = pJuridica,
                          Space(30),
-                         PadRight(Sacado.Avalista, 30, ' ' )
-                         )+ ' '+ 'I'                                       +
-                  Copy(Cedente.Conta,Length(Cedente.Conta),1)             +
-                  Cedente.ContaDigito + Space(6)                          +
-                  Protesto + ' '                                          +
-                  IntToStrZero( aRemessa.Count + 1, 6 );
+                         PadRight(Sacado.Avalista, 30, ' ' )) + ' I'          +  // 352 a 383
+                  Copy(Cedente.Conta,Length(Cedente.Conta),1)                 +  // 384 a 384
+                  Cedente.ContaDigito + Space(6)                              +  // 385 a 391
+                  Protesto + ' '                                              +  // 392 a 394
+                  IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
 
 
          wLinha:= UpperCase(wLinha);

@@ -86,8 +86,8 @@ function SeparaDados( const AString : String; const Chave : String; const Mantem
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
 
-function ACBrStr( AString : AnsiString ) : String ;
-function ACBrStrToAnsi( AString : String ) : AnsiString ;
+function ACBrStr( AString : String ) : String ;
+function ACBrStrToAnsi( AString : String ) : String ;
 
 function NativeStringToUTF8( AString : String ) : AnsiString;
 function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
@@ -142,9 +142,9 @@ function PadSpace(const AString : String; const nLen : Integer; Separador : Stri
    const Caracter : Char = ' ') : String ;
 
 function RemoveString(const sSubStr, sString: String): String;
-function RemoveStrings(const AText: String; StringsToRemove: array of AnsiString): AnsiString;
+function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
 function RemoverEspacosDuplos(const AString: String): String;
-function StripHTML(const AHTMLString : AnsiString) : AnsiString;
+function StripHTML(const AHTMLString : String) : String;
 procedure AcharProximaTag(const AString: AnsiString;
   const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
 procedure RemoveEmptyLines( AStringList: TStringList) ;
@@ -286,7 +286,7 @@ Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True );
 procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
-function TranslateUnprintable( const ABinaryString: AnsiString ): AnsiString;
+function TranslateUnprintable( const ABinaryString: AnsiString ): String;
 
 function TiraPontos(Str: string): string;
 function TBStrZero(const i: string; const Casas: byte): string;
@@ -351,7 +351,7 @@ end;
   usam UTF-8. A função abaixo converte a "AString" de ANSI CP1252, para UNICODE
   ou UTF8, de acordo com as diretivas do Compilador
  -----------------------------------------------------------------------------}
-function ACBrStr( AString : AnsiString ) : String ;
+function ACBrStr( AString : String ) : String ;
 begin
 {$IFDEF UNICODE}
   {$IFDEF FPC}
@@ -370,7 +370,7 @@ end ;
   usam UTF-8. A funçã abaixo, Converte a AString de UTF8 ou Unicode para a página
   de código nativa do Sistema Operacional, (apenas se o Compilador usar UNICODE)
  -----------------------------------------------------------------------------}
-function ACBrStrToAnsi(AString: String): AnsiString;
+function ACBrStrToAnsi(AString: String): String;
 begin
 {$IFDEF UNICODE}
   {$IFDEF FPC}
@@ -969,11 +969,11 @@ end;
    Remove todas ocorrencias do array <StringsToRemove> da String <AText>
    retornando a String alterada
  ---------------------------------------------------------------------------- }
-function RemoveStrings(const AText: String;
+function RemoveStrings(const AText: AnsiString;
   StringsToRemove: array of AnsiString): AnsiString;
 Var
   I, J : Integer ;
-  StrToFind : String ;
+  StrToFind : AnsiString ;
 begin
   Result := AText ;
   { Verificando parâmetros de Entrada }
@@ -1007,7 +1007,7 @@ end ;
 {-----------------------------------------------------------------------------
    Remove todas as TAGS de HTML de uma String, retornando a String alterada
  ---------------------------------------------------------------------------- }
-function StripHTML(const AHTMLString : AnsiString) : AnsiString;
+function StripHTML(const AHTMLString: String): String;
 var
   ATag: AnsiString;
   PosTag, LenTag: Integer;
@@ -2922,7 +2922,7 @@ begin
   end ;
 end;
 
-function TranslateUnprintable(const ABinaryString: AnsiString): AnsiString;
+function TranslateUnprintable(const ABinaryString: AnsiString): String;
 Var
   Buf, Ch : AnsiString ;
   I   : Integer ;

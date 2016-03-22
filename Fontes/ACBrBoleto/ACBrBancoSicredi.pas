@@ -1565,6 +1565,7 @@ begin
              PadLeft(OnlyNumber(Agencia), 5,'0')                              + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                         + // 023 a 023 - Dígito verificador da agência
              PadLeft(OnlyNumber(Conta), 12, '0')                              + // 024 a 035 - Número da conta corrente
+             ContaDigito	                                                  + // 036 a 036 - Digito da conta 
              Space(2)                                                         + // 037 a 037 - Dígito verificador da coop/ag/conta
              PadRight(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 20, '0')+ // 038 a 057 - Identificação do título no banco
              '1'                                                              + // 058 a 058 - Código da carteira

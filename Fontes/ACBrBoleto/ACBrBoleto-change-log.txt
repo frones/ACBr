@@ -47,7 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 04/03/16 ver. 0.0.184a
+Data: 22/03/16 ver. 0.0.185a
+-- ACBrBancoSicredi --
+[-] Ajuste remessa CNAB420. (josueprg)
+http://www.projetoacbr.com.br/forum/topic/28657-acbrbancosicredpas/
+
+
+Data: 21/03/16 ver. 0.0.184a
 -- ACBrBancoBanestes --
 [-] Ajuste tamanho máximo nosso número para permitir a geração correta do campo
     nosso número na remessa. (Juliana Tamizou)

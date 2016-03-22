@@ -240,7 +240,7 @@ function TACBrExtenso.ExtensoAux(Str3 : String) : String;
   digitos, (nao acressenta a moeda ou Titulo (Mil, Milhao, etc..))
   Str3 -> String com 3 casas com Valor a transformar em extenso }
 Var POS1, POS2, POS3 : Integer ;
-Var Resultado : AnsiString;
+Var Resultado : String;
 begin
 
   Resultado := '' ;

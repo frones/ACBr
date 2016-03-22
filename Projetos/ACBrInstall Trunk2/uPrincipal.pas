@@ -239,7 +239,7 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
             FindDirPackage(sDir + oDirList.Name, sPacote)
           else
           begin
-            if oDirList.Name = sPacote then
+            if UpperCase(oDirList.Name) = UpperCase(sPacote) then
               sDirPackage := IncludeTrailingPathDelimiter(sDir);
           end;
 

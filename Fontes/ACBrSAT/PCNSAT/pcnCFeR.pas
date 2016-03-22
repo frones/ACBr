@@ -203,6 +203,8 @@ begin
     (*I03*)CFe.Det[i].Prod.cEAN := Leitor.rCampo(tcStr, 'cEAN');
     (*I04*)CFe.Det[i].Prod.xProd := Leitor.rCampo(tcStr, 'xProd');
     (*I05*)CFe.Det[i].Prod.NCM := Leitor.rCampo(tcStr, 'NCM');
+    if CFe.ide.dEmi >= EncodeDate(2017,01,01) then
+      (*I05w*)CFe.Det[i].Prod.CEST := Leitor.rCampo(tcStr, 'CEST');
     (*I06*)CFe.Det[i].Prod.CFOP := Leitor.rCampo(tcEsp, 'CFOP');
     (*I07*)CFe.Det[i].Prod.uCom := Leitor.rCampo(tcStr, 'uCom');
     (*I08*)CFe.Det[i].Prod.qCom := Leitor.rCampo(tcDe4, 'qCom');

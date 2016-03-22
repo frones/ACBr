@@ -312,6 +312,7 @@ type
     FEhCombustivel: Boolean;
     FxProd: string;
     FNCM: string;
+    FCEST: string;
     FCFOP: string;
     FuCom: string;
     FqCom: currency;
@@ -334,6 +335,7 @@ type
     property cEAN: string read FcEAN write FcEAN;
     property xProd: string read FxProd write FxProd;
     property NCM: string read FNCM write FNCM;
+    property CEST: string read FCEST write FCEST;
     property CFOP: string read FCFOP write FCFOP;
     property uCom: string read FuCom write FuCom;
     property EhCombustivel: Boolean read FEhCombustivel write FEhCombustivel;
@@ -1084,6 +1086,7 @@ begin
   FcEAN     := '';
   FxProd    := '';
   FNCM      := '';
+  FCEST     := '';
   FCFOP     := '';
   FuCom     := '';
   FqCom     := 0;

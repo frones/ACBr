@@ -1935,7 +1935,7 @@ begin
         RetornaInfoECF( '8' ) ;
         FlagEst := StrToIntDef( EscECFResposta.Params[1], 0 );
 
-        if FlagEst = 2 then
+        if FlagEst = 2 then    //  2 - Redução Z Pendente
         begin
           fpEstado := estRequerZ;
 
@@ -1952,7 +1952,11 @@ begin
           RetornaInfoECF( '99|21' ) ;
           if (EscECFResposta.Params.Count > 11) and (EscECFResposta.Params[11] = 'S') then
             fpEstado := estRequerZ;
-        end;
+        end
+        { 0 - Não houve movimento, 1 - Com movimento aberto. Provavelmente
+          motivo do Bloqueio é Tampa Aberto ou Falta de Papel, e não falta da Z }
+        else if (fpEstado = estBloqueada) and (FlagEst in [0,1]) then
+          fpEstado := estLivre;
       end;
     end ;
   finally
@@ -2163,8 +2167,9 @@ end;
 procedure TACBrECFEscECF.AbreCupomVinculado(COO, CodFormaPagto,
    CodComprovanteNaoFiscal: String; Valor: Double);
 Var
-  Sequencia, NumPagtos, P : Integer ;
+  Sequencia, NumPagtos, P1, P2 : Integer ;
   APagto, CodPagto : String ;
+  ValorPagto: Double;
 
   procedure EnviaComandoCCD;
   begin
@@ -2191,12 +2196,24 @@ begin
     begin
       repeat
         APagto := RespostasComando.FieldByName('Pagto'+IntToStr(Sequencia)).AsString;
-        P := pos('|',APagto);
-        CodPagto := Copy(APagto,1,P-1);
-        if CodPagto = CodFormaPagto then
+        P1 := pos('|',APagto);
+        CodPagto := Copy(APagto,1,P1-1);
+
+        if (CodPagto = CodFormaPagto) then
         begin
-          APagto := '*'+APagto;  // sinaliza que já usou;
-          break;
+          ValorPagto := 0;
+          if Valor > 0 then
+          begin
+            P2 := PosEx('|', APagto, P1+1);
+            if P2 > P1 then
+              ValorPagto := StringToFloatDef(Copy(APagto,P1+1,P2-P1-1), 0);
+          end;
+
+          if (Valor = ValorPagto) then
+          begin
+            APagto := '*'+APagto;  // sinaliza que já usou;
+            break;
+          end;
         end ;
 
         Inc( Sequencia );
@@ -2210,7 +2227,7 @@ begin
   except
     On Exception do
     begin
-      // Woraround para Epson, que em algumas situações não reconhece o Nu. de Sequencia corretamente
+      // Woraround para Epson, que em algumas situações não reconhece o Num Sequencia corretamente
       if IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 11) then
       begin
         Dec(Sequencia);

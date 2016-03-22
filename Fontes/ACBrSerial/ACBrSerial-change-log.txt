@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/03/2016
+-- ACBrECFEscECF --
+[-] Método "GetEstado". Correção para detecção do Estado, quando o ECF possui
+    Bloqueio por hardware (tampa aberta ou sem papel)
+    http://www.projetoacbr.com.br/forum/topic/28830-bematech-mp-4200-th-fi-bloqueada/
+
 Data: 21/03/2016
 -- ACBRECF, ACBrECFClass, ACBrECFBematech --
 [*] Ajuste no método "VendeItemEx", para permitir informar o valor do campo

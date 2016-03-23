@@ -145,8 +145,8 @@ function RemoveString(const sSubStr, sString: String): String;
 function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
 function RemoverEspacosDuplos(const AString: String): String;
 function StripHTML(const AHTMLString : String) : String;
-procedure AcharProximaTag(const AString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+procedure AcharProximaTag(const AString: String;
+  const PosIni: Integer; var ATag: String; var PosTag: Integer);
 procedure RemoveEmptyLines( AStringList: TStringList) ;
 function RandomName(const LenName : Integer = 8) : String ;
 
@@ -176,7 +176,7 @@ function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True) : String;
 function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
 function PosLast(const SubStr, S: AnsiString): Integer;
-function CountStr(const AString, SubStr : AnsiString ) : Integer ;
+function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
 
@@ -237,21 +237,21 @@ function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
 function TiraAcentos( const AString : String ) : String ;
 function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
 
-function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
-   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
+function AjustaLinhas(const Texto: String; Colunas: Integer ;
+   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): String;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
 
-function TraduzComando( AString : String ) : AnsiString ;
-Function StringToAsc( AString : AnsiString ) : String ;
-Function AscToString( AString : String ) : AnsiString ;
+function TraduzComando( const AString : String ) : AnsiString ;
+Function StringToAsc( const AString : AnsiString ) : String ;
+Function AscToString( const AString : String ) : AnsiString ;
 
 function InPort(const PortAddr:word): byte;
 procedure OutPort(const PortAddr: word; const Databyte: byte); overload ;
 
 function StrCrypt(const AString, StrChave: AnsiString): AnsiString;
 function SomaAscII(const AString : AnsiString): Integer;
-function StringCrc16(AString : AnsiString ) : word;
+function StringCrc16(const AString : AnsiString ) : word;
 
 function ApplicationPath: String;
 Procedure FindFiles( const FileMask : String; AStringList : TStrings;
@@ -376,7 +376,7 @@ begin
   {$IFDEF FPC}
     Result := UTF8ToCP1252( AString ) ;
   {$ELSE}
-    Result := AnsiString( AString ) ;
+    Result := string(AnsiString( AString )) ;
   {$ENDIF}
 {$ELSE}
   Result := AString
@@ -450,7 +450,7 @@ end;
 function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
 begin
   {$IfNDef FPC}
-    Result := UTF8ToNativeString(AUTF8String);
+    Result := AnsiString( UTF8ToNativeString(AUTF8String));
   {$Else}
     Result := ConvertEncoding( AUTF8String, EncodingUTF8, ACBrANSIEncoding);
   {$EndIf}
@@ -463,7 +463,7 @@ end;
 function ACBrAnsiToUTF8(AAnsiString: AnsiString): AnsiString;
 begin
   {$IfNDef FPC}
-    Result := NativeStringToUTF8(AAnsiString);
+    Result := NativeStringToUTF8(String(AAnsiString));
   {$Else}
     Result := ConvertEncoding( AAnsiString, ACBrANSIEncoding, EncodingUTF8 );
   {$EndIf}
@@ -824,7 +824,7 @@ end;
 function HexToAscii(const HexStr : String) : AnsiString ;
 Var
   B   : Byte ;
-  Cmd : AnsiString ;
+  Cmd : String ;
   I, L: Integer ;
 begin
   Result := '' ;
@@ -912,46 +912,43 @@ end ;
  ---------------------------------------------------------------------------- }
 function PadSpace(const AString : String; const nLen : Integer;
    Separador : String; const Caracter : Char = ' ') : String ;
-var StuffStr : AnsiString ;
+var StuffStr : String ;
     nSep, nCharSep, nResto, nFeito, Ini : Integer ;
     D : Double ;
 begin
   Result := copy(AString,1,nLen) ;
   if Separador = String(Caracter) then  { Troca Separador, senao fica em loop infinito }
   begin
-     Result    := AnsiString(StringReplace( String(Result), Separador, #255,[rfReplaceAll]));
+     Result    := StringReplace( Result, Separador, #255,[rfReplaceAll]);
      Separador := #255 ;
   end ;
 
-  nSep   := CountStr( Result, AnsiString(Separador) ) ;
+  nSep := CountStr( Result, Separador ) ;
 
   if nSep < 1 then
   begin
-     Result := PadRight(Result, nLen, Caracter ) ;
+     Result := PadRight( Result, nLen, Caracter ) ;
      exit ;
   end ;
 
-  Result   := AnsiString( Trim( String( Result ) ) ) ;
+  Result   := Trim( Result ) ;
   D        := (nLen - (Length(Result)-nSep)) / nSep ;
   nCharSep := Trunc( D ) ;
   nResto   := nLen - ( (Length(Result)-nSep) + (nCharSep*nSep) ) ;
   nFeito   := nSep ;
-  StuffStr := StringOfChar( Caracter, nCharSep ) ;
+  StuffStr := String( StringOfChar( Caracter, nCharSep ) ) ;
 
-  Ini := Pos( Separador, String( Result ) ) ;
+  Ini := Pos( Separador, Result ) ;
   while Ini > 0 do
   begin
-    Result := AnsiString(
-      StuffString(
-        String(Result),
+    Result := StuffString( Result,
         Ini,
         length(Separador),
-        String(StuffStr) + ifthen(nFeito <= nResto, String(Caracter), '' )
-      )
-    );
+        StuffStr + ifthen(nFeito <= nResto, String(Caracter), '' )
+      );
 
     nFeito := nFeito - 1 ;
-    Ini    := Pos( String(Separador), String(Result) ) ;
+    Ini    := Pos( Separador, Result ) ;
   end ;
 end ;
 
@@ -1009,30 +1006,31 @@ end ;
  ---------------------------------------------------------------------------- }
 function StripHTML(const AHTMLString: String): String;
 var
-  ATag: AnsiString;
+  ATag, VHTMLString: String;
   PosTag, LenTag: Integer;
 begin
+  VHTMLString := AHTMLString;
   ATag   := '';
   PosTag := 0;
-  Result := AHTMLString;
 
-  AcharProximaTag( Result, 1, ATag, PosTag);
+  AcharProximaTag( VHTMLString, 1, ATag, PosTag);
   while ATag <> '' do
   begin
     LenTag := Length( ATag );
-    Delete(Result, PosTag, LenTag);
+    Delete(VHTMLString, PosTag, LenTag);
 
     ATag := '';
-    AcharProximaTag( Result, PosTag, ATag, PosTag );
+    AcharProximaTag( VHTMLString, PosTag, ATag, PosTag );
   end ;
+  Result := VHTMLString;
 end;
 
 {-----------------------------------------------------------------------------
    Localiza uma Tag dentro de uma String, iniciando a busca em PosIni.
    Se encontrar uma Tag, Retorna a mesma em ATag, e a posição inicial dela em PosTag
  ---------------------------------------------------------------------------- }
-procedure AcharProximaTag(const AString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+procedure AcharProximaTag(const AString: String;
+  const PosIni: Integer; var ATag: String; var PosTag: Integer);
 var
    PosTagAux, FimTag, LenTag : Integer ;
 begin
@@ -1111,7 +1109,7 @@ end ;
 {-----------------------------------------------------------------------------
   Retorna quantas ocorrencias de <SubStr> existem em <AString>
  ---------------------------------------------------------------------------- }
-function CountStr(const AString, SubStr : AnsiString ) : Integer ;
+function CountStr(const AString, SubStr : String ) : Integer ;
 Var ini : Integer ;
 begin
   result := 0 ;
@@ -1121,7 +1119,7 @@ begin
   while ini > 0 do
   begin
      Result := Result + 1 ;
-     ini    := PosEx( String(SubStr), String(AString), ini + 1 ) ;
+     ini    := PosEx( SubStr, AString, ini + 1 ) ;
   end ;
 end ;
 
@@ -1877,7 +1875,7 @@ Var A : Integer ;
 begin
   Result  := '' ;
   Ret     := '' ;
-  AnsiStr := ACBrStrToAnsi( AString );
+  AnsiStr := AnsiString( ACBrStrToAnsi( AString ));
   For A := 1 to Length( AnsiStr ) do
   begin
      Letra := TiraAcento( AnsiStr[A] ) ;
@@ -1886,7 +1884,7 @@ begin
      Ret := Ret + Letra ;
   end ;
 
-  Result := ACBrStr(Ret)
+  Result := ACBrStr(string(Ret))
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1922,43 +1920,44 @@ end ;
   Se <PadLinhas> for True, Todas as linhas terão o mesmo tamanho de Colunas
     com espaços a esquerda se necessário.
  ---------------------------------------------------------------------------- }
-function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
-   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
+function AjustaLinhas(const Texto: String; Colunas: Integer ;
+   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): String;
 Var
   Count,P,I : Integer ;
-  Linha, CurrLineBreak : AnsiString ;
+  Linha, CurrLineBreak, VTexto : String;
 begin
+  VTexto := Texto;
   { Trocando todos os #13+#10 por #10 }
   CurrLineBreak := sLineBreak ;
   if (CurrLineBreak <> #13+#10) then
-     Texto := AnsiString(StringReplace(String(Texto), #13+#10, #10, [rfReplaceAll])) ;
+     VTexto := StringReplace(VTexto, #13+#10, #10, [rfReplaceAll]) ;
 
   if (CurrLineBreak <> #10) then
-     Texto := AnsiString(StringReplace(String(Texto), String(CurrLineBreak), #10, [rfReplaceAll])) ;
+     VTexto := StringReplace(VTexto, CurrLineBreak, #10, [rfReplaceAll]) ;
 
   { Ajustando a largura das Linhas para o máximo permitido em  "Colunas"
     e limitando em "NumMaxLinhas" o total de Linhas}
   Count  := 0 ;
   Result := '' ;
   while ((Count < NumMaxLinhas) or (NumMaxLinhas = 0)) and
-        (Length(Texto) > 0) do
+        (Length(VTexto) > 0) do
   begin
-     P := pos(#10, String( Texto ) ) ;
+     P := pos(#10, VTexto ) ;
      if P > (Colunas + 1) then
         P := Colunas + 1 ;
 
      if P = 0 then
-        P := min( Length( Texto ), Colunas ) + 1 ;
+        P := min( Length( VTexto ), Colunas ) + 1 ;
 
      // somar 2 quando encontrar uma tag para não quebrar ela
-     if (Copy(Texto, P-1, 1) = '<') or (Copy(Texto, P-2, 2) = '</') then
+     if (Copy(VTexto, P-1, 1) = '<') or (Copy(VTexto, P-2, 2) = '</') then
         inc(P, 2);
 
      I := 0 ;
-     if copy(Texto,P,1) = #10 then   // Pula #10 ?
+     if copy(VTexto,P,1) = #10 then   // Pula #10 ?
         I := 1 ;
 
-     Linha := copy(Texto,1,P-1) ;    // Remove #10 (se hover)
+     Linha := copy(VTexto,1,P-1) ;    // Remove #10 (se hover)
 
      if PadLinhas then
         Result := Result + PadRight( Linha, Colunas) + #10
@@ -1966,7 +1965,7 @@ begin
         Result := Result + Linha + #10 ;
 
      Inc(Count) ;
-     Texto := copy(Texto, P+I, Length(Texto) ) ;
+     VTexto := copy(VTexto, P+I, Length(VTexto) ) ;
   end ;
 
   { Permitir impressão de uma linha em branco }
@@ -1983,7 +1982,7 @@ function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
 Var
   PosIni, PosFim, PosLF, Tamanho : Integer ;
-  AnsiStr, Resp: AnsiString;
+  AnsiStr, Resp: String;
 begin
   Resp := '';
   // Converte para Ansi, para não se perder com caracteres UTF8
@@ -2042,26 +2041,29 @@ end;
   Traduz Strings do Tipo '#13,v,#10', substituindo #nn por chr(nn). Ignora todo
    texto apos a String ' | '
  ---------------------------------------------------------------------------- }
-function TraduzComando(AString: String): AnsiString;
-Var A : Integer ;
+function TraduzComando(const AString: String): AnsiString;
+Var 
+  A : Integer ;
+  VString : String;
 begin
-  A := pos(' | ', String( AString ) ) ;
+  VString := AString;
+  A := pos(' | ', VString ) ;
   if A > 0 then
-     AString := copy(AString,1,A-1) ;   { removendo texto apos ' | ' }
+     VString := copy(VString,1,A-1) ;   { removendo texto apos ' | ' }
 
-  Result := AscToString( AString ) ;
+  Result := AscToString( VString ) ;
 end ;
 
 {-----------------------------------------------------------------------------
   Traduz Strings do Tipo chr(13)+chr(10) para uma representação que possa ser
    lida por AscToString Ex: '#13,#10'
  ---------------------------------------------------------------------------- }
-function StringToAsc(AString: AnsiString): String;
+function StringToAsc(const AString: AnsiString): String;
 Var A : Integer ;
 begin
   Result := '' ;
   For A := 1 to Length( AString ) do
-     Result := Result + AnsiString('#'+IntToStr( Ord( AString[A] ) )+',') ;
+     Result := Result + '#'+IntToStr( Ord( AString[A] ) )+',' ;
 
   Result := copy(Result,1, Length( Result )-1 ) ;
 end;
@@ -2071,23 +2073,24 @@ end;
   Usar , para separar um campo do outro... No exemplo acima o resultado seria
   chr(13)+'v'+chr(10) 
  ---------------------------------------------------------------------------- }
-function AscToString(AString: String): AnsiString;
+function AscToString(const AString: String): AnsiString;
 Var
   A : Integer ;
   Token : AnsiString ;
+  VString : string;
   C : Char ;
 begin
-  AString := AnsiString( Trim( String( AString ) ) );
+  VString := Trim( AString  );
   Result  := '' ;
   A       := 1  ;
   Token   := '' ;
 
-  while A <= length( AString ) + 1 do
+  while A <= length( VString ) + 1 do
   begin
-     if A > length( AString ) then
+     if A > length( VString ) then
         C := ','
      else
-        C := AString[A] ;
+        C := VString[A] ;
 
      if (C = ',') and (Length( Token ) >= 1) then
       begin
@@ -2101,7 +2104,7 @@ begin
         Token := '' ;
       end
      else
-        Token := Token + C ;
+        Token := Token + AnsiString(C) ;
 
      A := A + 1 ;
   end ;
@@ -2218,7 +2221,7 @@ end ;
 {-----------------------------------------------------------------------------
  Retorna valor de CRC16 de <AString>    http://www.ibrtses.com/delphi/dcrc.html
  -----------------------------------------------------------------------------}
-function StringCrc16(AString : AnsiString ):word;
+function StringCrc16(const AString : AnsiString ):word;
 
   procedure ByteCrc(data:byte;var crc:word);
    Var i : Byte;
@@ -2924,7 +2927,7 @@ end;
 
 function TranslateUnprintable(const ABinaryString: AnsiString): String;
 Var
-  Buf, Ch : AnsiString ;
+  Buf, Ch : String ;
   I   : Integer ;
   ASC : Byte ;
 begin
@@ -2952,7 +2955,7 @@ begin
         GS    : Ch := '[GS]' ;
         #32..#126 : Ch := ABinaryString[I] ;
      else ;
-       Ch := '['+AnsiString(IntToStr(ASC))+']'
+       Ch := '['+IntToStr(ASC)+']'
      end;
 
      Buf := Buf + Ch ;
@@ -3346,7 +3349,7 @@ function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
 var
   AStr: String;
 
-  function InternalStringReplace(const S, OldPatern: String; NewPattern: AnsiString ): String;
+  function InternalStringReplace(const S, OldPatern: String; NewPattern: String ): String;
   begin
     if pos(OldPatern, S) > 0 then
       Result := StringReplace(S, OldPatern, ACBrStr(NewPattern), [rfReplaceAll])

@@ -212,7 +212,7 @@ begin
       Msg := 'Componentes ACBr '+{$IFDEF FPC}'Lazarus/FPC'{$ELSE}'VCL'{$ENDIF}+#10+
              'Automação Comercial Brasil'+#10+#10+
              'http://acbr.sourceforge.net' ;
-      Msg := ACBrStr( AnsiString( Msg ) ) ;
+      Msg := ACBrStr( Msg ) ;
     {$ENDIF}
 
     {$IFDEF FMX}

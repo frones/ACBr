@@ -480,7 +480,8 @@ end;
 function TACBrTagProcessor.DecodificarTagsFormatacao(AString: AnsiString
   ): AnsiString;
 Var
-  Tag1, Tag2, Cmd : AnsiString ;
+  Tag1, Tag2: String;
+  Cmd : AnsiString ;
   PosTag1, LenTag1, PosTag2, FimTag : Integer ;
   ATag: TACBrTag;
 begin

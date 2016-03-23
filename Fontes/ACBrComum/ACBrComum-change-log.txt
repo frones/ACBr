@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/03/2016
+-- ACBrUtil --
+[*] Nova Revisão de métodos que usavam AnsiString, modificando-os quando possível,
+    para usar "String", a fim de diminuir o número de Warnings de compilação
+    (por: Waldir Paim e DSA)
+    http://www.projetoacbr.com.br/forum/topic/28345-remoção-de-hints-e-warning-do-acbr/?do=findComment&comment=191110
+
 Data: 22/03/2016
 -- ACBrUtil --
 [*] Revisão de métodos que usavam AnsiString, modificando-os quando possível,

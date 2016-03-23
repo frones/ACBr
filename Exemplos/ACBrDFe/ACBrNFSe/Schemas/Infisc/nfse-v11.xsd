@@ -1,0 +1,1457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:ds="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
+      elementFormDefault="qualified">
+      <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" 
+            schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
+
+      <!-- ***********************************************************  -->
+      <!-- ****     XML para Prefeitura de Caxias do Sul - RS    *****  -->
+      <!-- ****  NFS-e: Nota Fiscal de Serviços eletrônica       *****  -->
+      <!-- **** Data da Última Atualização: 2015-08-10  17:00    *****  -->
+      <!-- ***********************************************************  -->
+
+      <!-- Definicao de estruturas para chamadas dos serviços Web       -->
+
+      <!-- Definicao da estrutura de dados para Envio de Lote NFSe -->
+      <xs:element name="envioLote">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                  <xs:element name="CNPJ" type="TCnpj"/>
+                  <!-- Data e hora da transmissao do lote -->
+                  <xs:element name="dhTrans" type="TDataHora" />
+                  <!-- Notas fiscais de servico do lote -->
+                  <xs:element ref="NFS-e" minOccurs="1"  maxOccurs="999"/>
+                  <!-- Assinatura digital   -->
+                  <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para confirmacao de recebimento de Lote NFSe -->
+      <xs:element name="confirmaLote">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                  <xs:element name="CNPJ" type="TCnpj"/>
+                  <!-- Protocolo do Lote -->
+                  <xs:element name="cLote" type="TString15"/>
+                  <!-- Data e hora do recebimento do lote -->
+                  <xs:element name="dhRecbto" type="TDataHora" />
+                  <!-- Situacao do lote -->
+                  <xs:element name="sit" type="TSituacaoLote"/>
+                  <!-- Motivo -->
+                  <xs:element name="mot" type="TString100"/>
+                  <!-- Assinatura digital   -->
+                  <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para Pedido de Status de Lote NFSe -->
+      <xs:element name="pedidoStatusLote">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+            <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Número do lote   -->
+            <xs:element name="cLote" type="TString15" minOccurs="1"/>
+                  <!-- Assinatura digital   -->
+            <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao de estrutura de dados para confirmacao de recebimento de status do lote-->
+       <xs:element name="resultadoLote">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                  <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Número do lote   -->
+                  <xs:element name="cLote" type="TString15" minOccurs="1"/>
+                  <!-- Nota Fiscal eletronica   -->
+                  <xs:element ref="NFSe" minOccurs="1" maxOccurs="999"/>
+                  <!-- Assinatura digital   -->
+                  <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de situacao da NFSe -->
+         <xs:element name="NFSe">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Número do lote   -->
+                  <xs:element name="chvAcessoNFSe" type="TChaveAcesso" minOccurs="0" maxOccurs="1"/>
+                   <!-- Situacao do lote -->
+                  <xs:element name="sit" type="TSituacaoLote"/>
+                     <!-- Motivo -->
+                  <xs:element ref="motivos"/>
+              </xs:sequence>
+           </xs:complexType>
+         </xs:element>
+
+  <!-- Definicao da estrutura motivos-->
+         <xs:element name="motivos">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Motivo -->
+                  <xs:element name="mot" type="TString100" minOccurs="1" maxOccurs="999"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para Pedido de Cancelamento de Lote NFSe -->
+      <xs:element name="pedidoCancelamentoLote">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+            <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Número do lote   -->
+            <xs:element name="cLote" type="TString15" minOccurs="1"/>
+                  <!-- Assinatura digital   -->
+            <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+       <!-- Definicao da estrutura de dados para retorno de pedido de Cancelamento de Lote NFSe -->
+     <xs:element name="confirmaCancelamentoLote">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                  <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Número do lote   -->
+                  <xs:element name="cLote" type="TString15" minOccurs="1"/>
+                  <!-- Número do lote   -->
+                  <xs:element name="dhRecbto" type="TDataHora" minOccurs="1"/>
+                  <!-- Situacao -->
+                  <xs:element name="sit" type="TSituacaoLote"/>
+                  <!-- Motivo -->
+                  <xs:element name="mot" type="TString256" minOccurs="1" maxOccurs="1"/>
+                  <!-- Assinatura digital   -->
+            <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para Pedido de um Lote NFSe -->
+      <xs:element name="pedidoLoteNFSe">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+            <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                 <!-- Numero da nota inicial   -->
+            <xs:element name="notaInicial" type="TNF" minOccurs="0" maxOccurs="1"/>
+                 <!-- Numero da nota final   -->
+            <xs:element name="notaFinal" type="TNF" minOccurs="0" maxOccurs="1"/>
+                  <!-- Data de emissao inicial   -->
+            <xs:element name="emissaoInicial" type="TData" minOccurs="0" maxOccurs="1"/>
+                  <!-- Data de emissao final   -->
+            <xs:element name="emissaoFinal" type="TData" minOccurs="0" maxOccurs="1"/>
+                  <!-- Serie das notas   -->
+            <xs:element name="serieNotaFiscal" type="TSerie" minOccurs="0" maxOccurs="1"/>
+                  <!-- Assinatura digital   -->
+            <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+             </xs:sequence>
+             <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+       <!-- Definicao da estrutura de dados para Pedido de um Lote NFSe -->
+       <xs:element name="resPedidoLoteNFSe">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- CNPJ de um contribuinte -->
+              <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+              <!-- Numero da nota inicial   -->
+              <xs:element name="dhRecbto" type="TDataHora" minOccurs="1" maxOccurs="1"/>
+              <!-- Numero da nota inicial   -->
+              <xs:element ref="NFS-e" minOccurs="1"  maxOccurs="500"/>
+              <!-- Situacao -->
+              <xs:element name="sit" type="TSituacaoLote"/>
+            <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+             </xs:sequence>
+             <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+       </xs:element>
+
+      <!-- Definicao da estrutura de dados para Cancelamento de uma NFSe -->
+      <xs:element name="pedCancelaNFSe">
+         <xs:complexType>
+             <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+           <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Chave de acesso   -->
+           <xs:element name="chvAcessoNFS-e" type="TChaveAcesso" minOccurs="1"/>
+                  <!-- Motivo  -->
+           <xs:element name="motivo" type="TMotCanc" />
+                  <!-- Assinatura digital   -->
+           <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+             </xs:sequence>
+             <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+         </xs:complexType>
+      </xs:element>
+
+       <!-- Definicao da estrutura de dados para Cancelamento de uma NFSe -->
+       <xs:element name="resCancelaNFSe">
+         <xs:complexType>
+             <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                  <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Chave de acesso   -->
+                  <xs:element name="chvAcessoNFS-e" type="TChaveAcesso" minOccurs="1"/>
+                  <!-- Data Hora recebimento  -->
+                  <xs:element name="dhRecbto" type="TDataHora" />
+                  <!-- Numero Protocolo  -->
+                  <xs:element name="nProt" type="TString15" />
+                  <!-- Situacao  -->
+                  <xs:element name="sit" type="TSituacaoCancelamentoNota"/>
+                  <!-- Motivo  -->
+                  <xs:element name="mot" type="TString256" minOccurs="0"/>
+                  <!-- Assinatura digital   -->
+                  <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+             </xs:sequence>
+             <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+         </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para Pedido de uma NFSe -->
+      <xs:element name="pedidoNFSe">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+           <xs:element name="CNPJ" type="TCnpj" minOccurs="1"/>
+                  <!-- Chave de acesso   -->
+           <xs:element name="chvAcessoNFS-e" type="TChaveAcesso" minOccurs="1"/>
+                  <!-- Assinatura digital   -->
+           <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+        <!-- Definicao da estrutura de dados para Retorno a um Pedido de uma NFSe -->
+       <xs:element name="resPedidoNFSe">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- CNPJ de um contribuinte -->
+              <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+              <!-- Chave de acesso -->
+              <xs:element name="chvAcessoNFS-e" type="TChaveAcesso" minOccurs="1" maxOccurs="1"/>
+              <!-- Data e Hora recebimento   -->
+              <xs:element name="dhRecbto" type="TDataHora" minOccurs="1" maxOccurs="1"/>
+              <!-- Nota Fiscal   -->
+              <xs:element ref="NFS-e" minOccurs="0"  maxOccurs="1"/>
+              <!-- Situacao -->
+              <xs:element name="sit" type="TSituacaoNota" minOccurs="1" maxOccurs="1"/>
+               <!-- Motivo  -->
+              <xs:element name="mot" type="TString256" minOccurs="0"/>
+              <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+             </xs:sequence>
+             <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+       </xs:element>
+
+      <!-- Definicao da estrutura de dados para Consulta do Status de uma NFSe -->
+      <xs:element name="pedConsultaTrans">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+           <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+                  <!-- Chave de acesso   -->
+           <xs:element name="chvAcessoNFS-e" type="TChaveAcesso" minOccurs="1" maxOccurs="1"/>
+                  <!-- Assinatura digital   -->
+           <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+
+       <!-- Definicao da estrutura de dados para Retorno de Status de uma NFSe -->
+      <xs:element name="resConsultaTrans">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- CNPJ de um contribuinte -->
+              <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+              <!-- Chave de acesso   -->
+              <xs:element name="chvAcessoNFS-e" type="TChaveAcesso" minOccurs="1" maxOccurs="1"/>
+              <!-- Data e Hora recebimento   -->
+              <xs:element name="dhRecbto" type="TDataHora" minOccurs="1" maxOccurs="1"/>
+              <!-- Protocolo   -->
+              <xs:element name="nProt" type="TString15" minOccurs="1" maxOccurs="1"/>
+              <!-- Situacao da NFSe   -->
+              <xs:element name="sitNFS-e" type="TSituacaoNFSe" minOccurs="1" maxOccurs="1"/>
+              <!-- sit   -->
+              <xs:element name="sit" type="TSituacaoNota" minOccurs="1" maxOccurs="1"/>
+              <!-- Motivo   -->
+              <xs:element name="mot" type="TString256" minOccurs="0" maxOccurs="1"/>
+              <!-- Assinatura digital   -->
+              <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para Pedido da imagem PNG de uma NFSe -->
+      <xs:element name="pedidoNFSePNG">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                 <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+	   <!-- numero da nota inicial -->
+                 <xs:element name="notaInicial" type="TNF" minOccurs="0" maxOccurs="1"/>
+	   <!-- numero da nota final -->
+                 <xs:element name="notaFinal" type="TNF" minOccurs="0" maxOccurs="1"/>
+ 	  <!-- Data de emissão inicial -->
+ 	  <xs:element name="emissaoInicial" type="TData" minOccurs="0" maxOccurs="1"/>
+  	  <!-- Data de emissão final -->
+ 	  <xs:element name="emissaoFinal" type="TData" minOccurs="0" maxOccurs="1"/>
+ 	  <!-- Serie da nota fiscal -->
+ 	  <xs:element name="serieNotaFiscal" type="TSerie" minOccurs="0" maxOccurs="1"/>
+                  <!-- Assinatura digital   -->
+             <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+  <!-- Definicao da estrutura de dados para Resposta de um pedido de imagem de uma NFSe -->
+      <xs:element name="resPedidoLoteNFSePNG">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- CNPJ de um contribuinte -->
+              <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+              <!-- Data e Hora de emissao -->
+              <xs:element name="dhRecbto" type="TDataHora" minOccurs="1" maxOccurs="1"/>
+              <!-- Conteudo em formato Base64 -->
+              <xs:element name="NFS-ePNG" type="TStringBase64" minOccurs="0" maxOccurs="1"/>
+              <!-- Situacao -->
+              <xs:element name="sit" type="TSituacaoNota" minOccurs="1" maxOccurs="1"/>
+              <!-- Motivo -->
+              <xs:element name="mot" type="TString256" minOccurs="0" maxOccurs="1"/>
+              <!-- Assinatura digital   -->
+              <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+ <!-- Definicao da estrutura de dados para Pedido de PDF de uma NFSe -->
+      <xs:element name="pedidoNFSePDF">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ de um contribuinte -->
+                 <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+	   <!-- numero da nota inicial -->
+                 <xs:element name="notaInicial" type="TNF" minOccurs="0" maxOccurs="1"/>
+	   <!-- numero da nota final -->
+                 <xs:element name="notaFinal" type="TNF" minOccurs="0" maxOccurs="1"/>
+ 	  <!-- Data de emissão inicial -->
+ 	  <xs:element name="emissaoInicial" type="TData" minOccurs="0" maxOccurs="1"/>
+  	  <!-- Data de emissão final -->
+ 	  <xs:element name="emissaoFinal" type="TData" minOccurs="0" maxOccurs="1"/>
+ 	  <!-- Serie da nota fiscal -->
+ 	  <xs:element name="serieNotaFiscal" type="TSerie" minOccurs="0" maxOccurs="1"/>
+                  <!-- Assinatura digital   -->
+             <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+  <!-- Definicao da estrutura de dados para Resposta de um pedido de PDF de uma NFSe -->
+      <xs:element name="resPedidoLoteNFSePDF">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- CNPJ de um contribuinte -->
+              <xs:element name="CNPJ" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+              <!-- Data e Hora de emissao -->
+              <xs:element name="dhRecbto" type="TDataHora" minOccurs="1" maxOccurs="1"/>
+              <!-- Conteudo em formato Base64 -->
+              <xs:element name="NFS-ePDF" type="TStringBase64" minOccurs="0" maxOccurs="1"/>
+              <!-- Situacao -->
+              <xs:element name="sit" type="TSituacaoNota" minOccurs="1" maxOccurs="1"/>
+              <!-- Motivo -->
+              <xs:element name="mot" type="TString256" minOccurs="0" maxOccurs="1"/>
+              <!-- Assinatura digital   -->
+              <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+  <!-- Definicao da estrutura de dados para pedido de inutilizacao de numeracao de NFSe -->
+      <xs:element name="solicitacaoInutilizacao">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- Numero da Solicitacao -->
+              <xs:element name="numeroSolicitacao" type="TNum" minOccurs="1" maxOccurs="1"/>
+               <!-- CNPJ contribuinte -->
+              <xs:element name="cnpjContribuinte" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+              <!-- Data da solicitacao -->
+              <xs:element name="dataSolicitacao" type="TData" minOccurs="1" maxOccurs="1"/>
+               <!-- Hora da solicitacao -->
+              <xs:element name="horaSolicitacao" type="THora" minOccurs="1" maxOccurs="1"/>
+              <!-- Conteudo das inutilizacoes -->
+              <xs:element ref="numerosInutilizados" minOccurs="1" maxOccurs="1"/>  
+                   <!-- Assinatura digital   -->
+              <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+<!-- Definicao de estrutura para a numeracao e serie a serem inutilizadas -->
+      <xs:element name="numerosInutilizados">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Informacoes sobre uma nota com numeracao inutilizada -->
+                  <xs:element ref="inutilizar" minOccurs="1" maxOccurs="999"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+     <!-- Definicao de estrutura para a numeracao e serie a serem inutilizadas -->
+        <xs:element name="inutilizar">
+          <xs:complexType>
+              <xs:attribute name="numero" use="required" type="xs:string"/>
+              <xs:attribute name="serie" use="required" type="xs:string"/>
+          </xs:complexType>
+      </xs:element>
+
+
+<!-- Definicao da estrutura de dados para pedido de inutilizacao de numeracao de NFSe -->
+      <xs:element name="retornoSolicitacaoInutilizacao">
+          <xs:complexType>
+              <xs:sequence>
+              <!-- Numero da Solicitacao -->
+              <xs:element name="numeroSolicitacao" type="TNum" minOccurs="1" maxOccurs="1"/>
+               <!-- CNPJ contribuinte -->
+              <xs:element name="cnpjContribuinte" type="TCnpj" minOccurs="1" maxOccurs="1"/>
+              <!-- Data da solicitacao -->
+              <xs:element name="dataRetornoSolicitacao" type="TData" minOccurs="1" maxOccurs="1"/>
+              <!-- Hora da solicitacao -->
+              <xs:element name="horaRetornoSolicitacao" type="THora" minOccurs="1" maxOccurs="1"/>
+              <!-- Mensagem -->
+              <xs:element name="mensagem" type="TString256" minOccurs="1" maxOccurs="1"/>
+              <!-- Protocolos de retorno de inutilizacao -->
+              <xs:element ref="protocolosInutilizacao" minOccurs="0" maxOccurs="1"/>
+              <!-- Assinatura digital   -->
+              <xs:element ref="ds:Signature" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <xs:attribute name="versao" use="required" type="xs:string" fixed="1.0"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao de estrutura para o retorno de inutilizacao de numeracao -->
+      <xs:element name="protocolosInutilizacao">
+          <xs:complexType>
+              <xs:sequence>
+                <xs:element ref="inutilizado" minOccurs="0" maxOccurs="999" />
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+        <xs:element name="inutilizado">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string" >
+                 <xs:attribute name="numero" use="required" type="xs:string"/>
+                 <xs:attribute name="serie" use="required" type="xs:string"/>
+              </xs:extension>
+           </xs:simpleContent>
+         </xs:complexType>
+     </xs:element>
+
+
+
+      <!-- ***********************************************************  -->
+      <!-- Definicao de estruturas de dados compostas                   -->
+
+      <!-- Definicao da estrutura de dados para uma NFSe -->
+      <xs:element name="NFS-e">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Informacoes sobre uma nota -->
+            <xs:element ref="infNFSe" />
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para as informacoes de uma NFSe -->
+      <xs:element name="infNFSe">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Dados de identificação da NFSe -->
+                  <xs:element ref="Id"/>
+                  <!-- Dados do emitente da NFSe -->
+                  <xs:element ref="prest"/>
+                  <!-- Dados de tomador da NFSe -->
+                  <xs:element ref="TomS"/>
+                  <!-- Dados do local de entrega  -->
+                  <xs:element ref="dadosDaObra" minOccurs="0" maxOccurs="1" />  
+                  <!-- Dados da transportadora  -->
+                  <xs:element ref="transportadora" minOccurs="0" maxOccurs="1" />   
+                  <!-- Detalhes dos itens de servico da NFSe -->
+                  <xs:element ref="det" minOccurs="1"  maxOccurs="999"/>
+                  <!-- Dados de totalizacao da NFSe -->
+                  <xs:element ref="total"/>
+                  <!-- Dados de cobranca da NFSe -->
+                  <xs:element ref="faturas" minOccurs="0" maxOccurs="1"/>
+                  <!-- Local de tributacao a ser exibido na area de Informacoes Adicionais -->
+                  <xs:element name="infAdicLT" type="TCodMunIBGE" minOccurs="0"  maxOccurs="1" />
+                  <!-- Indica se deve ser exibido Exportacao de Servico na area de Informacoes Adicionais -->
+                  <xs:element name="infAdicES" type="TSimNao" minOccurs="0"  maxOccurs="1" />
+                  <!-- Informacoes adicionais de interesse do fisco -->
+                  <xs:element name="infAdic" type="TString256" minOccurs="0" maxOccurs="999"/>
+                  <!-- Exibir valor aproximado de tributos nas informações adicionais -->
+                  <xs:element name="infAdicAT" type="TCharInt" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+              <!-- Versão do formato XML da NFSe em está sendo submetido o arquivo XML de lote -->
+              <xs:attribute name="versao" use="required" type="xs:string"/>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para a identificacao de uma NFSe -->
+      <xs:element name="Id">
+         <xs:complexType>
+             <xs:sequence>
+                 <!-- Codigo numerico aleatorio para compor chave de acesso  -->
+                 <xs:element name="cNFS-e" type="TNumAleatorio"/>
+                 <!-- Modelo de uma NFSe -->
+                 <xs:element name="mod" type="TModelo"/>
+                 <!-- Serie da nota  -->
+                 <xs:element name="serie" type="TSerie"/>
+                 <!-- Numero da nota  -->
+                 <xs:element name="nNFS-e" type="TNF"/>
+                 <!-- Data de emissao -->
+                 <xs:element name="dEmi" type="TData"/>
+                 <!-- Hora de emissao -->
+                 <xs:element name="hEmi" type="THora" />
+                 <!-- Tipo de uma NFSe -->
+                 <xs:element name="tpNF" type="TNFSe" />
+                 <!-- Chave de acesso de uma NFSe -->
+                 <xs:element name="refNF" type="TChaveAcesso"/>
+                 <!-- Formato de impressao de uma NFSe: 1-Retrato, 2-Paisagem -->
+                 <xs:element name="tpImp" type="TImpressao" minOccurs="0"  maxOccurs="1"/>
+                 <!-- Formato de emissao de uma NFSe: N-Normal, C-Contigencia -->
+                 <xs:element name="tpEmis" type="TEmissao" />
+                 <!-- NFSe cancelada (S) ou não (N) -->
+                 <xs:element name="cancelada" type="TSimNao" minOccurs="0"  maxOccurs="1"/>
+                 <!-- Motivo do cancelamento  -->
+                 <xs:element name="motCanc" type="TMotCanc" minOccurs="0"  maxOccurs="999"/>
+                  <!-- Data do cancelamento -->
+                 <xs:element name="dataCanc" type="TData" minOccurs="0" maxOccurs="1"/>
+                 <!-- Numero da nota substitutiva da anulada/cancelada -->
+                 <xs:element name="notaSub" type="TNF" minOccurs="0"  maxOccurs="1"/>
+                  <!-- Incluir canhoto na imagem da nota: 0 nao incluir, 1 incluir no topo, 2 incluir no rodape -->
+                 <xs:element name="canhoto" type="TCharInt" minOccurs="0"  maxOccurs="1"/>
+                 <!-- Ambiente de emissao da NFSe: 1 producao ou 2 homologacao -->
+                 <xs:element name="ambienteEmi" type="TCharInt"/>
+                 <!-- Forma de emissao da NFSe: 1 via Portal, 2 via servicos Web, 3 via upload ou 4 via RPS -->
+                 <xs:element name="formaEmi" type="TCharInt"/>
+                 <!-- Nota de empreitada global: 1 caso seja ou 2 caso contrario -->
+                 <xs:element name="empreitadaGlobal" type="TCharInt"/>
+                 <!-- Codigo de validacao do RPS (USO INTERNO) -->
+                 <xs:element name="codRPS" type="TString15" minOccurs="0"  maxOccurs="1"/>
+                 <!-- Numero do RPS papel que originou a nota -->
+                 <xs:element name="rps" type="TNF"  minOccurs="0"  maxOccurs="1"/>
+                 <!-- Serie do RPS papel que originou a nota  -->
+                 <xs:element name="serierps" type="TSerie" minOccurs="0"  maxOccurs="1"/>
+                 <!-- Data de emissao do RPS papel que originou a nota  -->
+                 <xs:element name="dataEmissaoRpsPapel" type="TData" minOccurs="0"  maxOccurs="1"/>
+             </xs:sequence>
+         </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para o emitente de uma NFSe -->
+      <xs:element name="prest">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- CNPJ   -->
+                  <xs:element name="CNPJ" type="TCnpj"/>
+                  <!-- Nome ou razao social -->
+                  <xs:element name="xNome" type="TString150" />
+                  <!-- Nome fantasia -->
+                  <xs:element name="xFant" type="TString60" minOccurs="0" maxOccurs="1"/>
+                  <!-- Inscricao municipal  -->
+                  <xs:element name="IM" type="TString15"/>
+                  <!-- endereço de correio eletrônico do emitente  -->
+                  <xs:element name="xEmail" type="TString50" minOccurs="0" maxOccurs="1"/>
+                  <!-- URL do site do emitente  -->
+                  <xs:element name="xSite" type="TString50" minOccurs="0" maxOccurs="1"/>
+                  <!-- Endereco do emitente  -->
+                  <xs:element ref="end"/>
+                  <!-- Fone  -->
+                  <xs:element name="fone" type="TFone" minOccurs="0" maxOccurs="1"/>
+                  <!-- Fone alternativo -->
+                  <xs:element name="fone2" type="TFone" minOccurs="0" maxOccurs="1"/>
+                  <!-- Inscricao Estadual  -->
+                  <xs:element name="IE" type="TString15" minOccurs="0" maxOccurs="1"/> 
+                  <!-- Regime tributario  -->
+                  <xs:element name="regimeTrib" type="TCharInt"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element> 
+
+      <!-- Definicao da estrutura de dados para endereco de um emitente de uma NFSe -->
+      <xs:element name="end">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Logradouro  -->
+                  <xs:element name="xLgr" type="TString100"/>
+                  <!-- Numero  -->
+                  <xs:element name="nro" type="TString6"/>
+                  <!-- Complemento  -->
+                  <xs:element name="xCpl" type="TString100" minOccurs="0"  maxOccurs="1"/>
+                  <!-- Bairro  -->
+                  <xs:element name="xBairro" type="TString100"/>
+                  <!-- Codigo do municipio -->
+                  <xs:element name="cMun" type="TCodMunIBGE" />
+                  <!-- Nome do municipio -->
+                  <xs:element name="xMun" type="TString60"/>
+                  <!-- UF -->
+                  <xs:element name="UF" type="TString2"/>
+                  <!-- CEP  -->
+                  <xs:element name="CEP" type="TCep"/>
+                  <!-- Codigo do Pais   -->
+                  <xs:element name="cPais" type="TcPais" />
+                  <!-- Pais  -->
+                  <xs:element name="xPais" type="TString100" />
+              </xs:sequence>  
+          </xs:complexType>
+      </xs:element>   
+
+
+      <!-- Definicao da estrutura de dados para tomador de uma NFSe -->
+      <xs:element name="TomS">
+          <xs:complexType>
+              <xs:sequence>
+                  <xs:choice>
+                      <!-- CNPJ de um contribuinte -->
+                  <xs:element name="CNPJ" type="TCnpj"/>
+                      <!-- CPF de um contribuinte -->
+          <xs:element name="CPF" type="TCpf"/>
+            </xs:choice>
+                  <!-- Nome ou razao social -->
+                  <xs:element name="xNome" type="TString100" minOccurs="0" maxOccurs="1" />
+                  <!-- Endereco -->
+                  <xs:element ref="ender"/>
+                  <!-- Endereco de correio eletronico -->
+                  <xs:element name="xEmail" type="TString120"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Inscricao Estadual  -->
+                  <xs:element name="IE" type="TString15" minOccurs="0" maxOccurs="1"/>
+                  <!-- Inscricao municipal  -->
+                   <xs:element name="IM" type="TString15" minOccurs="0" maxOccurs="1" />
+                  <!-- Inscricao municipal eventual -->
+                  <xs:element name="IME" type="TString15" minOccurs="0"  maxOccurs="1"/>
+                  <!-- Fone  -->
+                  <xs:element name="fone" type="TFone" minOccurs="0" maxOccurs="1"/>
+                  <!-- Fone alternativo  -->
+                  <xs:element name="fone2" type="TFone" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para endereco de um tomador de uma NFSe -->
+      <xs:element name="ender">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Logradouro  -->
+                  <xs:element name="xLgr" type="TString100" minOccurs="0" maxOccurs="1"/>
+                  <!-- Numero  -->
+                  <xs:element name="nro" type="TString6"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Complemento  -->
+                  <xs:element name="xCpl" type="TString100" minOccurs="0" maxOccurs="1"/>
+                  <!-- Bairro  -->
+                  <xs:element name="xBairro" type="TString100" minOccurs="0" maxOccurs="1"/>
+                  <!-- Codigo do municipio   -->
+                  <xs:element name="cMun" type="TCodMunIBGE"/>
+                  <!-- Nome do municipio -->
+                  <xs:element name="xMun" type="TString60"/>
+                  <!-- UF -->
+                  <xs:element name="UF" type="TString2"/>
+                  <!-- CEP -->
+                  <xs:element name="CEP" type="TCep"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Codigo de pais  -->
+                  <xs:element name="cPais" type="TcPais"/>
+                  <!-- Pais  -->
+                  <xs:element name="xPais" type="TString100"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para endereco de dados da obra -->
+      <xs:element name="dadosDaObra">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Logradouro  -->
+                  <xs:element name="xLogObra" type="TString100"/>
+                  <!-- Complemento  -->
+                  <xs:element name="xComplObra" type="TString100" minOccurs="0" maxOccurs="1"/>
+                  <!-- Numero  -->
+                  <xs:element name="vNumeroObra" type="TString15" minOccurs="0" maxOccurs="1"/>
+                  <!-- Bairro  -->
+                  <xs:element name="xBairroObra" type="TString100" minOccurs="0" maxOccurs="1"/>
+                  <!-- CEP -->
+                  <xs:element name="xCepObra" type="TCep"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Codigo do municipio -->
+                  <xs:element name="cCidadeObra" type="TCodMunIBGE"/>
+                  <!-- Nome do municipio -->
+                  <xs:element name="xCidadeObra" type="TString60"/>
+                  <!-- UF -->
+                  <xs:element name="xUfObra" type="TString2" />
+                  <!-- Codigo do Pais  -->
+                  <xs:element name="cPaisObra" type="TcPais" />
+                  <!-- Nome do Pais  -->
+                  <xs:element name="xPaisObra" type="TString100" />
+                  <!-- Numero da ART em uma NFSe de construcao civil -->
+                  <xs:element name="numeroArt" type="TString12" minOccurs="0"  maxOccurs="1"/>
+                  <!-- Numero da matricula no CEI em uma NFSe de construcao civil -->
+                  <xs:element name="numeroCei" type="TString12" minOccurs="0"  maxOccurs="1"/>
+                  <!-- Numero do projeto em uma NFSe de construcao civil -->
+                  <xs:element name="numeroProj" type="TString15" minOccurs="0"  maxOccurs="1"/>
+                  <!-- Numero da matricula em uma NFSe de construcao civil -->
+                  <xs:element name="numeroMatri" type="TString15" minOccurs="0"  maxOccurs="1"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para transportadora -->
+      <xs:element name="transportadora">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Nome da transportadora  -->
+                  <xs:element name="xNomeTrans" type="TString100"/>
+                  <!-- CPF/CNPJ da transportadora  -->
+                  <xs:element name="xCpfCnpjTrans" type="TString15" minOccurs="0" maxOccurs="1"/>
+                  <!-- Inscricao Estadual da transportadora  -->
+                  <xs:element name="xInscEstTrans" type="TString15"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Placa do automovel da transportadora  -->
+                  <xs:element name="xPlacaTrans" type="TPlacaVeic" minOccurs="0" maxOccurs="1"/>
+                  <!-- Endereco da transportadora -->
+                  <xs:element name="xEndTrans" type="TString100"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Codigo do Municipio da transportadora -->
+                  <xs:element name="cMunTrans" type="TCodMunIBGE" minOccurs="0" maxOccurs="1"/>
+                  <!-- Nome do Municipio da transportadora -->
+                  <xs:element name="xMunTrans" type="TString60" minOccurs="0" maxOccurs="1"/>
+                  <!-- UF da transportadora  -->
+                  <xs:element name="xUfTrans" type="TString2"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Codigo do Pais da transportadora -->
+                  <xs:element name="cPaisTrans" type="TcPais" minOccurs="0" maxOccurs="1"/>
+                  <!-- Nome do Pais da transportadora -->
+                  <xs:element name="xPaisTrans" type="TString100" minOccurs="0" maxOccurs="1"/>
+                  <!-- Tipo do frete  -->
+                  <xs:element name="vTipoFreteTrans" type="TFrete" minOccurs="0" maxOccurs="1" />
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para detalhe do servico de uma NFSe -->
+      <xs:element name="det">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Ordem sequencial do item na nota  -->
+                  <xs:element name="nItem" type="TOrdemSeq"/>
+                  <xs:element ref="serv"/>
+                  <xs:element ref="ISSST" minOccurs="0" maxOccurs="1"/>   
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para detalhe de item de servico de uma NFSe -->
+      <xs:element name="serv">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Codigo municipal do servico  -->
+                  <xs:element name="cServ" type="TString60"/>
+                  <!-- Codigo do servico conforme Lei 116  -->
+                  <xs:element name="cLCServ" type="TLCServ"/>
+                  <!-- Descricao do serviço  -->
+                  <xs:element name="xServ" type="TString256"/>
+                  <!-- Local de tributação do servico -->
+                  <xs:element name="localTributacao" type="TCodMunIBGE"  minOccurs="0" maxOccurs="1"/>
+                  <!-- Local da verificação do resultado do servico  -->
+                  <xs:element name="localVerifResServ" type="TCharInt"/>
+                  <!-- Unidade do servico  -->
+                  <xs:element name="uTrib" type="TString2"/>
+                  <!-- Quantidade do servico -->
+                  <xs:element name="qTrib" type="TDec_1302"/>
+                  <!-- Valor unitario -->
+                  <xs:element name="vUnit" type="TDec_1304"/>
+                  <!-- Valor do servico -->
+                  <xs:element name="vServ" type="TDec_1302"/>
+                  <!-- Valor de desconto -->
+                  <xs:element name="vDesc" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo de ISSQN  -->
+                  <xs:element name="vBCISS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Aliquota do ISSQN -->
+                  <xs:element name="pISS" type="TDec_0302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor do ISSQN -->
+            <xs:element name="vISS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo de retencao de INSS  -->
+                  <xs:element name="vBCINSS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                   <!-- Percentual de retencao de INSS do item de servico  -->
+            <xs:element name="pRetINSS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor de retencao de INSS do item de servico  -->
+            <xs:element name="vRetINSS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor de redução da base de calculo  -->
+                  <xs:element name="vRed" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                   <!-- Valor da base de calculo da retencao de IR  -->
+                  <xs:element name="vBCRetIR" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Percentual  -->
+            <xs:element name="pRetIR" type="TDec_0302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor  -->
+            <xs:element name="vRetIR" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo de retencao de COFINS  -->
+                  <xs:element name="vBCCOFINS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Percentual  -->
+            <xs:element name="pRetCOFINS" type="TDec_0302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor  -->
+            <xs:element name="vRetCOFINS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo de retencao de CSLL  -->
+                  <xs:element name="vBCCSLL" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Percentual  -->
+            <xs:element name="pRetCSLL" type="TDec_0302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor  -->
+            <xs:element name="vRetCSLL" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo de retencao de PIS-PASEP  -->
+                  <xs:element name="vBCPISPASEP" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Percentual  -->
+            <xs:element name="pRetPISPASEP" type="TDec_0302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor  -->
+            <xs:element name="vRetPISPASEP" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+      <!-- Valor total Aproximado de tributos federais -->
+            <xs:element name="totalAproxTribServ" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para informações do ISS por substituicao tributaria em uma NFSe  -->
+      <xs:element name="ISSST">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Valor da reducao da base de calculo  -->
+            <xs:element name="vRedBCST" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo por substituicao tributaria -->
+            <xs:element name="vBCST" type="TDec_1302"/>
+                  <!-- Aliquota do ISSQN por substituicao tributaria -->
+            <xs:element name="pISSST" type="TDec_0302"/>
+                  <!-- Valor do ISSQN por substituicao tributaria -->
+            <xs:element name="vISSST" type="TDec_1302"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para totalizacoes em uma NFSe  -->
+      <xs:element name="total">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Valor total de servico  -->
+                  <xs:element name="vServ" type="TDec_1302" />
+                  <!-- Valor da reducao da base de calculo da construcao civil  -->
+                  <xs:element name="vRedBCCivil" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor total de desconto -->
+                  <xs:element name="vDesc"  type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor total da nota  -->
+                  <xs:element name="vtNF" type="TDec_1302" />
+                  <!-- Valor liquido total da nota -->
+                  <xs:element name="vtLiq" type="TDec_1302" />
+                  <!-- Valor total Aproximado de tributos federais -->
+                  <xs:element name="totalAproxTrib" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Totalizacoes das retencoes federais na nota -->
+                  <xs:element ref="Ret" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor liquido total das faturas -->
+                  <xs:element name="vtLiqFaturas" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Totalizacoes do ISS -->
+                  <xs:element ref="ISS"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+
+      <!-- Definicao da estrutura de dados para valores do ISSQN em uma NFSe  -->
+      <xs:element name="ISS">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Valor da base de calculo de ISSQN  -->
+                  <xs:element name="vBCISS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor do ISSQN  -->
+                  <xs:element name="vISS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da base de calculo de ISSQN por substituicao tributaria  -->
+                  <xs:element name="vBCSTISS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor do ISSQN por substituicao tributaria  -->
+                  <xs:element name="vSTISS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- Definicao da estrutura de dados para retencoes em uma NFSe  -->
+      <xs:element name="Ret">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Valor total da retencao de IR -->
+            <xs:element name="vRetIR" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor total da retencao de PIS-PASEP -->
+            <xs:element name="vRetPISPASEP" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor total da retencao de COFINS -->
+            <xs:element name="vRetCOFINS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor total da retencao de CSLL -->
+            <xs:element name="vRetCSLL" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor total da retencao de INSS  -->
+            <xs:element name="vRetINSS" type="TDec_1302" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para informacoes de faturas em uma NFSe  -->
+      <xs:element name="faturas">
+          <xs:complexType>
+              <xs:sequence>
+                  <xs:element ref="fat"  minOccurs="1" maxOccurs="999"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+      <!-- Definicao da estrutura de dados para informacoes sobre faturas em uma NFSe  -->
+      <xs:element name="fat">
+          <xs:complexType>
+              <xs:sequence>
+                  <!-- Ordenacao da fatura  -->
+                  <xs:element name="nItem" type="TOrdemSeq"/>
+                  <!-- Numero da fatura  -->
+                  <xs:element name="nFat" type="TNumFatura"/>
+                  <!-- Data de vencimento   -->
+                  <xs:element name="dVenc" type="TData" minOccurs="0" maxOccurs="1"/>
+                  <!-- Valor da fatura  -->
+                  <xs:element name="vFat" type="TDec_1302" />   
+                  <!-- Tipo vencimento fatura  -->
+                  <xs:element name="tipoVencFat" type="TCharInt" minOccurs="0" maxOccurs="1"/>
+                  <!-- Descrição tipo vencimento fatura  -->
+                  <xs:element name="descTipoVencFat" type="TString15" minOccurs="0" maxOccurs="1"/>
+              </xs:sequence>
+          </xs:complexType>
+      </xs:element>
+
+
+      <!-- *********************************************************** -->
+      <!-- Definicao dos tipos de dados básicos da NFSe                -->
+
+
+      <!-- Tipo para Codigo Postal  -->
+      <xs:simpleType name="TCep"> 
+  <xs:annotation>
+    <xs:documentation>Tipo para Codigo Postal</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+          <xs:pattern value="[0-9]{8}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para Caracter numerico  -->
+      <xs:simpleType name="TCharInt">
+  <xs:annotation>
+    <xs:documentation>Tipo para caracter numerico</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+          <xs:pattern value="[0-9]{1}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para chave de acesso de uma NFSe  -->
+      <xs:simpleType name="TChaveAcesso">
+  <xs:annotation>
+    <xs:documentation>Tipo para chave de acesso   </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:string">
+           <xs:maxLength value="39" />
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo Número do CNPJ  -->
+      <xs:simpleType name="TCnpj">
+  <xs:annotation>
+    <xs:documentation>Tipo Número do CNPJ</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[0-9]{14}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo Código do Município da tabela do IBGE   -->
+      <xs:simpleType name="TCodMunIBGE">
+  <xs:annotation>
+    <xs:documentation>Tipo Código do Município da tabela do IBGE</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[0-9]{7}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para codigo do pais -->
+      <xs:simpleType  name="TcPais">
+  <xs:annotation>
+    <xs:documentation>Tipo para Codigo do Pais</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[0-9]{1,5}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo Número do CPF  -->
+      <xs:simpleType name="TCpf">
+        <xs:annotation>
+    <xs:documentation>Tipo Número do CPF</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[0-9]{11}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+     <!-- Tipo data no formato AAAA-MM-DD  -->
+     <xs:simpleType name="TData">
+  <xs:annotation>
+    <xs:documentation> Tipo data AAAA-MM-DD</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:date">
+    <xs:pattern value="\d{4}-\d{2}-\d{2}"/>
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo data no formato AAAA-MM-DD HH:MM:SS -->
+     <xs:simpleType name="TDataHora">
+  <xs:annotation>
+    <xs:documentation> Tipo datetime AAAA-MM-DD HH:MM:SS</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:whiteSpace value="preserve"/>
+    <xs:pattern value="\d{4}-\d{2}-\d{2}(\s\d{2}:\d{2}:\d{2})?"/>
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais   -->
+     <xs:simpleType name="TDec_0302">
+  <xs:annotation>
+    <xs:documentation>Tipo Decimal com 5 dígitos, sendo 3 de corpo e 2 decimais</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+          <xs:minLength value="0"/>
+    <xs:whiteSpace value="preserve"/>
+      <xs:pattern value="|0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,2}(\.[0-9]{2})?"/>
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais   -->
+     <xs:simpleType name="TDec_1302">
+  <xs:annotation>
+    <xs:documentation>Tipo Decimal com 15 dígitos, sendo 13 de corpo e 2 decimais</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+          <xs:minLength value="0"/>
+    <xs:whiteSpace value="preserve"/>
+    <xs:pattern value="|0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2})?"/>
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo Decimal com 15 dígitos, 4 decimais   -->
+     <xs:simpleType name="TDec_1304">
+  <xs:annotation>
+    <xs:documentation>Valor com possível 4 casas decimais</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+          <xs:minLength value="0"/>
+    <xs:whiteSpace value="preserve"/>
+    <xs:pattern value="|0|0\.[0-9]{2,4}|[1-9]{1}[0-9]{0,12}(\.[0-9]{2,4})?"/>
+  </xs:restriction>
+     </xs:simpleType>
+
+      <!-- Tipo para forma de emissao de uma NFSe: N-Normal, C-Contigencia -->
+      <xs:simpleType name="TEmissao">
+  <xs:annotation>
+    <xs:documentation>Tipo para forma de emissao  </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[NC]{1}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para numero do telefone -->
+      <xs:simpleType name="TFone">
+  <xs:annotation>
+    <xs:documentation>Tipo para numero do telefone  </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="|[0-9]{10,15}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para frete de transportadora -->
+      <xs:simpleType name="TFrete">
+  <xs:annotation>
+    <xs:documentation>Tipo para frete de transportadora  </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+          <xs:pattern value="[0-9]{1}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo hora no formato HH:MM -->
+      <xs:simpleType name="THora">
+  <xs:annotation>
+    <xs:documentation> Tipo time HH:MM</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:whiteSpace value="preserve"/>
+    <xs:pattern value="\d{2}:\d{2}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para formato de impressao de uma NFSe: 1-Retrato, 2-Paisagem -->
+      <xs:simpleType name="TImpressao">
+  <xs:annotation>
+    <xs:documentation>Tipo para formato de impressao   </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:integer">
+        <!-- Em Caxias uma NFSe somente pode ser impressa no modo retrato  -->
+     <xs:minInclusive value="1"/>
+     <xs:maxInclusive value="1"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para Lei Complementar 116 -->
+      <xs:simpleType name="TLCServ">
+  <xs:annotation>
+    <xs:documentation>Tipo para Lei Complementar 116 </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="9999"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para modelo de uma NFSe -->
+      <xs:simpleType name="TModelo">
+  <xs:annotation>
+    <xs:documentation>Tipo para modelo de uma NFSe   </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:string">
+     <xs:minLength value="1"/>
+     <xs:maxLength value="2"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para motivo de cancelamento  -->
+      <xs:simpleType name="TMotCanc">
+  <xs:annotation>
+    <xs:documentation>Tipo para motivo de cancelamento</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+          <xs:pattern value="[0-9]{1}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo Número do Documento Fiscal  -->
+      <xs:simpleType name="TNF">
+  <xs:annotation>
+    <xs:documentation>Tipo Número do Documento Fiscal</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[0-9]{0,9}"/>
+  </xs:restriction>
+      </xs:simpleType>
+            
+  <!-- Tipo para numeros inteiros   -->
+  <xs:simpleType name="TNum">
+  <xs:annotation>
+    <xs:documentation>Tipo para numero inteiro</xs:documentation>
+    </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    </xs:restriction>
+  </xs:simpleType>
+
+
+      <!-- Tipo para uma NFSe -->
+      <xs:simpleType name="TNFSe">
+  <xs:annotation>
+    <xs:documentation>Tipo para uma NFSe   </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:integer">
+        <!-- Em Caxias uma NFSe somente pode ser de Saída  -->
+     <xs:minInclusive value="1"/>
+     <xs:maxInclusive value="1"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para numero aleatorio -->
+      <xs:simpleType name="TNumAleatorio">
+  <xs:annotation>
+    <xs:documentation>Tipo para numero aleatorio </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="999999999"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo Número de Fatura  -->
+      <xs:simpleType name="TNumFatura">
+  <xs:annotation>
+    <xs:documentation>Tipo Número de Fatura em NFS-e</xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:string">
+           <xs:maxLength value="15" />
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para ordem sequencial de itens -->
+      <xs:simpleType name="TOrdemSeq">
+  <xs:annotation>
+    <xs:documentation>Tipo para ordem sequencial de itens </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="999"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para placa de veiculo: String de tamanho maximo 7   -->
+      <xs:simpleType name="TPlacaVeic">
+  <xs:annotation>
+    <xs:documentation>Tipo String para placa de veiculo com tamanho maximo 7</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[a-zA-Z]{2,4}[0-9]{3,4}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para serie de notas: String para serie de nota   -->
+      <xs:simpleType name="TSerie">
+  <xs:annotation>
+    <xs:documentation>Tipo para serie de nota </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="3" />
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para Sim/Nao -->
+      <xs:simpleType name="TSimNao">
+  <xs:annotation>
+    <xs:documentation>Tipo para Sim/Nao  </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[SN]{1}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para situacao do cancelamento de uma NFSe -->
+      <xs:simpleType name="TSituacaoCancelamentoNota">
+  <xs:annotation>
+    <xs:documentation>Tipo para situacao de cancelamento de uma NFSe </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="999"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para situacao de um lote de NFSe -->
+      <xs:simpleType name="TSituacaoLote">
+  <xs:annotation>
+    <xs:documentation>Tipo para situacao de um lote de NFSe </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="999"/>
+        </xs:restriction>
+      </xs:simpleType>
+ 
+      <!-- Tipo para situacao de uma NFSe -->
+      <xs:simpleType name="TSituacaoNFSe">
+  <xs:annotation>
+    <xs:documentation>Tipo para situacao de uma NFSe </xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:token">
+    <xs:pattern value="[0-9]{1}"/>
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para situacao de uma nota dentro de um lote submetido -->
+      <xs:simpleType name="TSituacaoNota">
+  <xs:annotation>
+    <xs:documentation>Tipo para situacao de uma nota dentro de um lote submetido </xs:documentation>
+  </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+    <xs:maxInclusive value="999"/>
+        </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para string com tamanho maximo 2   -->
+      <xs:simpleType name="TString2">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 2</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="2" />
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para string com tamanho maximo 3   -->
+      <xs:simpleType name="TString3">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 3</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="3" />
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para string com tamanho maximo 5   -->
+      <xs:simpleType name="TString5">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 5</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="5" />
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para string com tamanho maximo 6   -->
+      <xs:simpleType name="TString6">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 6</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="6" />
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para string com tamanho maximo 12   -->
+      <xs:simpleType name="TString12">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 12</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="12" />
+  </xs:restriction>
+      </xs:simpleType>
+
+      <!-- Tipo para string com tamanho maximo 13   -->
+      <xs:simpleType name="TString13">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 13</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="13" />
+  </xs:restriction>
+      </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 15   -->
+     <xs:simpleType name="TString15">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 15</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="15" />
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 50   -->
+     <xs:simpleType name="TString50">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 50</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="50" />
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 60   -->
+     <xs:simpleType name="TString60">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 60</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="60" />
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 100   -->
+     <xs:simpleType name="TString100">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 100</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="100" />
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 120   -->
+     <xs:simpleType name="TString120">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 120</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="120" />
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 150   -->
+     <xs:simpleType name="TString150">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 150</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="150" />
+  </xs:restriction>
+     </xs:simpleType>
+
+     <!-- Tipo para string com tamanho maximo 256   -->
+     <xs:simpleType name="TString256">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho maximo 256</xs:documentation>
+  </xs:annotation>
+  <xs:restriction base="xs:string">
+    <xs:maxLength value="256" />
+  </xs:restriction>
+     </xs:simpleType>
+
+<!-- Tipo para string sem tamanho indefinido   -->
+  <xs:simpleType name="TString">
+  <xs:annotation>
+    <xs:documentation>Tipo para string de tamanho indefinido</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+
+<!-- Tipo para string com formato Base64   -->
+  <xs:simpleType name="TStringBase64">
+  <xs:annotation>
+    <xs:documentation>Tipo para string a ser usado com o formato Base64</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+  
+  
+
+</xs:schema>

@@ -634,6 +634,8 @@ type
     FNaturezaOperacao: TnfseNaturezaOperacao;
     FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao;
     FOptanteSimplesNacional: TnfseSimNao;
+    //Provedor Conam
+    FDataOptanteSimplesNacional: TDateTime;
     FIncentivadorCultural: TnfseSimNao;
     FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
@@ -698,6 +700,8 @@ type
     property NaturezaOperacao: TnfseNaturezaOperacao read FNaturezaOperacao write FNaturezaOperacao;
     property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao;
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;
+    //Provedor Conam
+    property DataOptanteSimplesNacional: TDateTime read FDataOptanteSimplesNacional write FDataOptanteSimplesNacional;
     property IncentivadorCultural: TnfseSimNao read FIncentivadorCultural write FIncentivadorCultural;
     property Producao: TnfseSimNao read FProducao write FProducao;
     property Status: TnfseStatusRps read FStatus write FStatus;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/03/2016
+-- pnfsNFSe / pnfsNFSeG / pnfsNFSeW_CONAM --
+[*] Correção para o provedor Conam.
+    por: André Medeiros
+		
 21/03/2016
 -- ACBrNFSeWebServices --
 [*] Correção para o provedor Infisc.

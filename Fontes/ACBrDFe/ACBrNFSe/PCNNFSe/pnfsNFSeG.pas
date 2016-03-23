@@ -356,27 +356,7 @@ begin
                 Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
                 Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
                 Gerador.wGrupoNFSe('/Login');
-                Gerador.wGrupoNFSe('SDTRPS');
-                Gerador.wCampoNFSe(tcStr, '', 'Ano', 01, 04, 1, FormatDateTime('yyyy', DataInicial), '');
-                Gerador.wCampoNFSe(tcStr, '', 'Mes', 01, 02, 1, FormatDateTime('mm', DataInicial), '');
-                Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJ', 11, 14, 1, CNPJ, '');
-                Gerador.wCampoNFSe(tcStr, '', 'DTIni', 01, 10, 1, FormatDateTime('dd/mm/yyyy', DataInicial), '');
-                Gerador.wCampoNFSe(tcStr, '', 'DTFin', 01, 10, 1, FormatDateTime('dd/mm/yyyy', DataFinal), '');
-                Gerador.wCampoNFSe(tcStr, '', 'TipoTrib', 11, 1, 1, TipoTributacao, '');
-                Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 01, 14, 1, FormatFloat('#,##0.00',AliquotaIss), '');
-                Gerador.wCampoNFSe(tcStr, '', 'Versao', 11, 10, 1, VersaoDados, '');
-                Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                             '<Reg20>' + Notas + '</Reg20>';
-                Gerador.wGrupoNFSe('Reg90');
-                Gerador.wCampoNFSe(tcInt, '', 'QtdRegNormal', 01, 2, 1, QtdeNotas, '');
-                Gerador.wCampoNFSe(tcDe2, '', 'ValorNFS', 01, 14, 1, ValorTotalServicos, '');
-                Gerador.wCampoNFSe(tcDe2, '', 'ValorISS', 01, 14, 1, ValorIss, '');
-                Gerador.wCampoNFSe(tcDe2, '', 'ValorDed', 01, 14, 1, ValorTotalDeducoes, '');
-                Gerador.wCampoNFSe(tcDe2, '', 'ValorIssRetTom', 01, 14, 1, ValorIssRetido, '');
-                Gerador.wCampoNFSe(tcInt, '', 'QtdReg30', 01, 03, 1, '0', '');
-                Gerador.wCampoNFSe(tcDe2, '', 'ValorTributos', 01, 14, 1, '0,00', '');
-                Gerador.wGrupoNFSe('/Reg90');
-                Gerador.wGrupoNFSe('/SDTRPS');
+                Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
                 Gerador.wGrupoNFSe('/Sdt_processarpsin');
               end;
 

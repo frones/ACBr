@@ -266,7 +266,7 @@ begin
               else
                 rllEmitEndereco.Caption := Emit.EnderEmit.xLgr + ', ' + Emit.EnderEmit.nro;
               rllEmitBairro.Caption := Emit.EnderEmit.xBairro;
-              rllEmitCEP.Caption := FormatarCEP(IntToStr(Emit.EnderEmit.CEP));
+              rllEmitCEP.Caption := FormatarCEP(Poem_Zeros(Emit.EnderEmit.CEP, 8));
               rllEmitCidade.Caption := Emit.EnderEmit.xMun;
               rllEmitFone.Caption := FormatarFone(Emit.EnderEmit.fone);
               rllEmitUF.Caption := Emit.EnderEmit.UF;
@@ -280,7 +280,7 @@ begin
               else
                 rllDestEndereco.Caption := Dest.EnderDest.xLgr + ', ' + Dest.EnderDest.nro;
               rllDestBairro.Caption := Dest.EnderDest.xBairro;
-              rllDestCEP.Caption := FormatarCEP(IntToStr(Dest.EnderDest.CEP));
+              rllDestCEP.Caption := FormatarCEP(Poem_Zeros(Dest.EnderDest.CEP, 8));
               rllDestCidade.Caption := Dest.EnderDest.xMun;
               rllDestFone.Caption := FormatarFone(Dest.EnderDest.fone);
               rllDestUF.Caption := Dest.EnderDest.UF;

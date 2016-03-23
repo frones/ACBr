@@ -476,7 +476,10 @@ begin
   if FxProvedor = 'ISSFortaleza' then
     FProvedor := StrToProvedor(Ok, 'GINFES')
   else
-    FProvedor := StrToProvedor(Ok, FxProvedor);
+    if FxProvedor = 'Infisc-v11' then
+      FProvedor := StrToProvedor(Ok, 'Infisc')
+    else
+      FProvedor := StrToProvedor(Ok, FxProvedor);
 
   FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome'     , '');
   FxUF        := FPIniParams.ReadString(CodIBGE, 'UF'       , '');

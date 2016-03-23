@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/03/2016
+-- ACBrNFSeConfiguracoes --
+[*] Alteração visando atender o provedor Infisc versão 1.1
+    por: Italo Jurisato Junior
 -- pnfsNFSe / pnfsNFSeG / pnfsNFSeW_CONAM --
 [*] Correção para o provedor Conam.
     por: André Medeiros

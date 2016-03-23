@@ -718,12 +718,20 @@ begin
 end;
 
 procedure TCFeW.GerarInfAdic;
+var
+  RetitarEspacos: Boolean;
 begin
   if (trim(CFe.InfAdic.infCpl) <> EmptyStr) or
     (CFe.InfAdic.obsFisco.Count > 0) then
   begin
     Gerador.wGrupo('infAdic', 'Z01');
-    Gerador.wCampo(tcStr, 'Z02', 'infCpl    ', 01, 5000, 0, CFe.InfAdic.infCpl, DSC_INFCPL);
+    RetitarEspacos := Gerador.Opcoes.RetirarEspacos;
+    try
+      Gerador.Opcoes.RetirarEspacos := False;   // Deve preservar espaços da Observação
+      Gerador.wCampo(tcStr, 'Z02', 'infCpl    ', 01, 5000, 0, CFe.InfAdic.infCpl, DSC_INFCPL);
+    finally
+      Gerador.Opcoes.RetirarEspacos := RetitarEspacos;
+    end;
     (**)GerarInfAdicObsFisco;
     Gerador.wGrupo('/infAdic');
   end;

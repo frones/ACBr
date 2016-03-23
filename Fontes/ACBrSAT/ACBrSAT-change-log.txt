@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/03/2016
+-- pcnCFeW --
+[-] Conteudo do campo "CFe.InfAdic.infCpl", tinha seu espaçamento interno
+    removido, devido a opção "Gerador.Opcoes.RetirarEspacos"   (por: DSA)
+
 Data: 22/03/2016
 -- ACBrSAT --
 [+] Adicionado propriedade CEST para ser gerado a partir de 01/01/2017, post

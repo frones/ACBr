@@ -143,9 +143,6 @@ uses
   {$R *.lfm}
 {$ENDIF}
 
-var
-  FProtocoloNFe : String;
-
 procedure TfrmNFeDAInutRLRetrato.RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
 begin
   inherited;

@@ -1327,6 +1327,7 @@ begin
       // Preenche os dados
       for i := 1 to FNFe.Transp.Vol.Count - 1 do
       begin
+        RLLabelModelo := nil;
         with FNFe.Transp.Vol[i] do
         begin
           // Cria os demais labels dinamicamente
@@ -1362,17 +1363,21 @@ begin
                       RLLabel.Caption  := FormatFloatBr(PesoB, '###,###,###,##0.000');
                   end;
             end;
-            RLLabel.Alignment  := RLLabelModelo.Alignment;
-            RLLabel.AutoSize   := RLLabelModelo.AutoSize;
-            RLLabel.Font       := RLLabelModelo.Font;
-            RLLabel.Name       := RLLabelModelo.Name + IntToStr(i);
-            RLLabel.Parent     := RLLabelModelo.Parent;
-            RLLabel.ParentFont := RLLabelModelo.ParentFont;
-            RLLabel.Tag        := RLLabelModelo.Tag;
-            RLLabel.Height     := RLLabelModelo.Height;
-            RLLabel.Width      := RLLabelModelo.Width;
-            RLLabel.Left       := RLLabelModelo.Left;
-            RLLabel.Top        := RLLabelModelo.Top + (i * (RLLabelModelo.Height)) ;//iAltLinha;
+
+            if Assigned(RLLabelModelo) then
+            begin
+              RLLabel.Alignment  := RLLabelModelo.Alignment;
+              RLLabel.AutoSize   := RLLabelModelo.AutoSize;
+              RLLabel.Font       := RLLabelModelo.Font;
+              RLLabel.Name       := RLLabelModelo.Name + IntToStr(i);
+              RLLabel.Parent     := RLLabelModelo.Parent;
+              RLLabel.ParentFont := RLLabelModelo.ParentFont;
+              RLLabel.Tag        := RLLabelModelo.Tag;
+              RLLabel.Height     := RLLabelModelo.Height;
+              RLLabel.Width      := RLLabelModelo.Width;
+              RLLabel.Left       := RLLabelModelo.Left;
+              RLLabel.Top        := RLLabelModelo.Top + (i * (RLLabelModelo.Height)) ;//iAltLinha;
+            end;
           end;
         end;
       end;

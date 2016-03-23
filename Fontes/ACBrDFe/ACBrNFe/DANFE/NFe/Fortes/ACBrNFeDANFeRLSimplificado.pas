@@ -231,7 +231,7 @@ end;
 procedure TfrlDANFeRLSimplificado.RLb04_DestinatarioBeforePrint(
   Sender: TObject; var PrintIt: boolean);
 var
- vTpEmissao: Integer;
+ vTpEmissao: TpcnTipoEmissao;
 begin
   inherited;
 
@@ -279,19 +279,15 @@ begin
      end;
    end;
 
-  if FNFe.Ide.tpEmis = teContingencia then
-      vTpEmissao:=2
-  else
-  if FNFe.Ide.tpEmis = teFSDA then
-      vTpEmissao:=5;
+  vTpEmissao := FNFe.Ide.tpEmis;
 
   case vTpEmissao of
-   2: begin
+   teContingencia : begin
        rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
        rllMsgTipoEmissao.Visible := True;
        rllMsgTipoEmissao.Enabled := True;
       end;
-   5: begin
+   teFSDA : begin
        rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
        rllMsgTipoEmissao.Visible := True;
        rllMsgTipoEmissao.Enabled := True;

@@ -42,8 +42,14 @@ Símbolo : Significado
 Data: 22/03/2016
 -- ACBrECFEscECF --
 [-] Método "GetEstado". Correção para detecção do Estado, quando o ECF possui
-    Bloqueio por hardware (tampa aberta ou sem papel)
-    http://www.projetoacbr.com.br/forum/topic/28830-bematech-mp-4200-th-fi-bloqueada/
+    Bloqueio por hardware (tampa aberta ou sem papel)     (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28830
+[-] Método: "AbreCupomVinculado". Correção para Epson TM800F, que não considera
+    as Formas de Pagamento que não permitem Vinculado, como sequencia de
+    pagamento    (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28839
+[+] Método "GetNumUltimoItem". Implementado leitura dos registradores do ECF,
+    para o Modelo Epson TM800F   (por: DSA)
 
 Data: 21/03/2016
 -- ACBRECF, ACBrECFClass, ACBrECFBematech --

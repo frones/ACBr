@@ -2167,35 +2167,20 @@ end;
 procedure TACBrECFEscECF.AbreCupomVinculado(COO, CodFormaPagto,
    CodComprovanteNaoFiscal: String; Valor: Double);
 Var
-  Sequencia, NumPagtos, P1, P2 : Integer ;
+  Sequencia, I, NumPagtos, P1, P2 : Integer ;
   APagto, CodPagto : String ;
   ValorPagto: Double;
-
-  procedure EnviaComandoCCD;
-  begin
-    with EscECFComando do
-    begin
-       CMD := 8;
-       AddParamInteger(Sequencia) ;
-       AddParamString(CodFormaPagto) ;
-       AddParamInteger(1) ;   // Qtd Parcelas ??
-       AddParamInteger(1) ;   // Num Parcela ??
-       AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
-       AddParamString(LeftStr(Consumidor.Nome,30)) ;
-       AddParamString(LeftStr(Consumidor.Endereco,79)) ;
-    end;
-    EnviaComando;
-  end;
-
+  FPG: TACBrECFFormaPagamento;
 begin
   // Achando a Sequencia do Pagamento de acordo com o Indice //
   Sequencia := 1;
+  I := 1;
   try
     NumPagtos := RespostasComando.FieldByName('NumPagtos').AsInteger;
     if NumPagtos > 1 then
     begin
       repeat
-        APagto := RespostasComando.FieldByName('Pagto'+IntToStr(Sequencia)).AsString;
+        APagto := RespostasComando.FieldByName('Pagto'+IntToStr(I)).AsString;
         P1 := pos('|',APagto);
         CodPagto := Copy(APagto,1,P1-1);
 
@@ -2216,30 +2201,42 @@ begin
           end;
         end ;
 
-        Inc( Sequencia );
-      until (Sequencia >= NumPagtos);
+        Inc( I );
+
+        if IsEpson then
+        begin
+          // Verificando se esse Pagamento permite Vinculado. Se não permitir, não considera como sequencia
+          if LeftStr(CodPagto,1) = '*' then
+            CodPagto := Copy(CodPagto, 2, Length(CodPagto));
+
+          FPG := AchaFPGIndice(CodPagto);
+          if Assigned(FPG) then
+            if FPG.PermiteVinculado then
+              Inc( Sequencia );
+        end
+        else
+          Inc( Sequencia );
+
+      until (I > NumPagtos);
     end ;
   except
   end ;
 
-  try
-    EnviaComandoCCD;
-  except
-    On Exception do
-    begin
-      // Woraround para Epson, que em algumas situações não reconhece o Num Sequencia corretamente
-      if IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 11) then
-      begin
-        Dec(Sequencia);
-        EnviaComandoCCD;
-      end
-      else
-        raise;
-    end;
+  with EscECFComando do
+  begin
+     CMD := 8;
+     AddParamInteger(Sequencia) ;
+     AddParamString(CodFormaPagto) ;
+     AddParamInteger(1) ;   // Qtd Parcelas ??
+     AddParamInteger(1) ;   // Num Parcela ??
+     AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
+     AddParamString(LeftStr(Consumidor.Nome,30)) ;
+     AddParamString(LeftStr(Consumidor.Endereco,79)) ;
   end;
+  EnviaComando;
 
   //RespostasComando.Clear;
-  RespostasComando.AddField( 'Pagto'+IntToStr(Sequencia), APagto );
+  RespostasComando.AddField( 'Pagto'+IntToStr(I), APagto );
   RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
   RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
@@ -3417,11 +3414,19 @@ end;
 
 function TACBrECFEscECF.GetNumUltimoItem: Integer;
 begin
-  try
-    Result := RespostasComando.FieldByName('NumUltItem').AsInteger;
-  except
-    Result := 0;
-  end ;
+  if IsEpson then
+  begin
+    RetornaInfoECF('99|03');
+    Result := StrToIntDef( EscECFResposta.Params[0], 0) ;
+  end
+  else
+  begin
+    try
+      Result := RespostasComando.FieldByName('NumUltItem').AsInteger;
+    except
+      Result := 0;
+    end ;
+  end;
 end;
 
 function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;

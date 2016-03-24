@@ -805,10 +805,33 @@ var
   iLinha : Integer;
   iIdxMotivo: Integer;
   procedure DoVerOcorrencia(AOcorrencia: string);
+  var
+    pMotivoRejeicao, CodMotivo, I: Integer;
   begin
     with Titulo.OcorrenciaOriginal do
     begin
-      if MatchText(AOcorrencia, ['02', '03', '06', '09', '11', '12', '13', '14'])  then
+      if MatchText(AOcorrencia, ['03', '26', '30'])  then
+      begin
+       pMotivoRejeicao:= 209;
+       for I:= 0 to 4 do
+       begin
+         CodMotivo:= StrToIntDef(copy(Linha,pMotivoRejeicao,2),0);
+         if CodMotivo > 0 then
+         begin
+           Titulo.MotivoRejeicaoComando.Add(copy(Linha, pMotivoRejeicao, 2));
+           Titulo.DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(
+                                                     Titulo.OcorrenciaOriginal.Tipo,CodMotivo));
+         end;
+         Inc(pMotivoRejeicao, 2);
+       end;
+       if AOcorrencia = '03' then
+         Tipo:= toRetornoRegistroRecusado
+       else if AOcorrencia = '26' then
+         Tipo := toRetornoInstrucaoRejeitada
+       else if AOcorrencia = '30' then
+         Tipo := toRetornoAlteracaoDadosRejeitados;
+      end
+      else if MatchText(AOcorrencia, ['02', '06', '09', '11', '12', '13', '14'])  then
       begin
         Tipo := CodOcorrenciaToTipo(StrToInt(AOcorrencia));
       end
@@ -830,21 +853,16 @@ var
           Tipo := toRetornoRetiradoDeCartorio
         else if AOcorrencia = '25' then
           Tipo := toRetornoBaixaPorProtesto
-        else if AOcorrencia = '26' then
-          Tipo := toRetornoInstrucaoRejeitada
         else if AOcorrencia = '27' then
           Tipo := toRetornoAlteracaoUsoCedente
         else if AOcorrencia = '28' then
           Tipo := toRetornoDebitoTarifas
         else if AOcorrencia = '29' then
           Tipo := toRetornoOcorrenciasDoSacado
-        else if AOcorrencia = '30' then
-          Tipo := toRetornoAlteracaoDadosRejeitados
       end;
     end;
   end;
 begin
-  // by Jéter Rabelo Ferreira - 06/2014
   iLinha := 0;
 
   // Verificar se o retorno é do banco selecionado
@@ -869,20 +887,18 @@ begin
         (rConta <> OnlyNumber(Cedente.Conta))) then
        raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-    Cedente.Nome := rCedente;
+    Cedente.Nome          := rCedente;
     Cedente.CodigoCedente := rCodigoCedente;
-    Cedente.CNPJCPF := rCnpjCpf;
-    Cedente.Agencia := rAgencia;
+    Cedente.CNPJCPF       := rCnpjCpf;
+    Cedente.Agencia       := rAgencia;
     Cedente.AgenciaDigito := rAgenciaDigito;
-    Cedente.Conta := rConta;
-    Cedente.ContaDigito := rContaDigito;
+    Cedente.Conta         := rConta;
+    Cedente.ContaDigito   := rContaDigito;
 
-    case StrToIntDef(copy(ARetorno[0], 17, 1), 0) of
-      1:
-        Cedente.TipoInscricao := pFisica;
-      else
-        Cedente.TipoInscricao := pJuridica;
-    end;
+    if StrToIntDef(copy(ARetorno[0], 17, 1), 0) = 1 then
+      Cedente.TipoInscricao := pFisica
+    else
+      Cedente.TipoInscricao := pJuridica;
 
     ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
   end;
@@ -906,35 +922,36 @@ begin
     begin
       if copy(Linha, 14, 1) = 'T' then
       begin
-        NossoNumero := Copy(Linha, 41, ACBrBanco.TamanhoMaximoNossoNum);
-        SeuNumero := Copy(Linha, 55, 15);
-        NumeroDocumento := Copy(Linha, 55, 15);
-        Carteira := Copy(Linha, 54, 1);
-        ValorDocumento := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+        NossoNumero          := Copy(Linha, 41, ACBrBanco.TamanhoMaximoNossoNum);
+        SeuNumero            := Copy(Linha, 55, 15);
+        NumeroDocumento      := Copy(Linha, 55, 15);
+        Carteira             := Copy(Linha, 54, 1);
+        ValorDocumento       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
         ValorDespesaCobranca := StrToFloatDef(copy(Linha, 194, 15), 0) / 100;
         // Sacado
         if Copy(Linha, 128, 1) = '1' then
           Sacado.Pessoa := pFisica
         else
           Sacado.Pessoa := pJuridica;
-        Sacado.CNPJCPF := Trim(Copy(Linha, 129, 15));
+        Sacado.CNPJCPF    := Trim(Copy(Linha, 129, 15));
         Sacado.NomeSacado := Trim(Copy(Linha, 144, 40));
+
+        // Algumas ocorrências estão diferentes do cnab400, farei uma separada aqui
+        DoVerOcorrencia(Copy(Linha, 16, 2));
       end
       else if copy(Linha, 14, 1) = 'U' then
       begin
-        // Algumas ocorrências estão diferentes do cnab400, farei uma separada aqui
-        DoVerOcorrencia(Copy(Linha, 16, 2));
-        ValorDocumento := max(ValorDocumento,StrToFloatDef(copy(Linha, 78, 15), 0) / 100);
-        ValorMoraJuros := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
-        ValorDesconto := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
-        ValorAbatimento := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
-        ValorIOF := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
-        ValorRecebido := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+        ValorDocumento      := max(ValorDocumento,StrToFloatDef(copy(Linha, 78, 15), 0) / 100);
+        ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
+        ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
+        ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
+        ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
+        ValorRecebido       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
         ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
         ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
-        DataOcorrencia := StringToDateTimeDef(Copy(Linha, 138, 2)+'/'+
-                                              Copy(Linha, 140, 2)+'/'+
-                                              Copy(Linha, 142,4),0, 'DD/MM/YYYY' );
+        DataOcorrencia      := StringToDateTimeDef(Copy(Linha, 138, 2)+'/'+
+                                                   Copy(Linha, 140, 2)+'/'+
+                                                   Copy(Linha, 142,4),0, 'DD/MM/YYYY' );
         DataCredito := StringToDateTimeDef(Copy(Linha, 146, 2)+'/'+
                                            Copy(Linha, 148, 2)+'/'+
                                            Copy(Linha, 150,4),0, 'DD/MM/YYYY' );

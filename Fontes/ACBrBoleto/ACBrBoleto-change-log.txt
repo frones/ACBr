@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/03/16 ver. 0.0.186a
+-- ACBrBancoSantander --
+[*] Inclusão de leitura dos motivos de rejeição no retorno do CNAB240. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28540-codigo-da-ocorrencia-no-retorno/
+
+-- ACBrBancoNordeste --
+[*]  Criado método MontarCampoCarteira para tratar a impressão deste campo no boleto(Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28855-homologa%C3%A7%C3%A3o-bnb/ 
+
 Data: 22/03/16 ver. 0.0.185a
 -- ACBrBancoSicredi --
 [-] Ajuste remessa CNAB420. (josueprg)

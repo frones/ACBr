@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/03/2016
+-- ACBrBoletoFCFortes ver. 0.0.29a  --
+[*] Ajuste para impressão do campo Carteira utilizar o novo método MontarCampoCarteira.
+    (Juliana Tamizou)
+
+
 12/03/2016
 [*] Modificado para deixar alguns botões fora do preview em fast report
 		por: Juliomar Marchetti

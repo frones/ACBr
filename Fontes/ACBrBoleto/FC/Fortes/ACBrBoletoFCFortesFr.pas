@@ -607,12 +607,13 @@ end;
 procedure TACBrBoletoFCFortesFr.RLBand1BeforePrint(Sender: TObject;
    var PrintIt: boolean);
 Var
-   NossoNum,CodCedente,TipoDoc : String;
+   NossoNum,CodCedente,TipoDoc, Carteira : String;
 begin
    with fBoletoFC.ACBrBoleto do
    begin
       NossoNum    := Banco.MontarCampoNossoNumero( Titulo );
       CodCedente  := Banco.MontarCampoCodigoCedente(titulo);
+      Carteira    := Banco.MontarCampoCarteira(Titulo);
 
       case Cedente.TipoInscricao of
          pFisica   : TipoDoc:= 'CPF: ';
@@ -642,7 +643,7 @@ begin
                                                 FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
       txtNossoNumero2.Caption         := NossoNum;
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
-      txtCarteira2.Caption            := Titulo.Carteira;
+      txtCarteira2.Caption            := Carteira;
       txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
       txtValorDocumento2.Caption      := IfThen(Titulo.ValorDocumento > 0,FormatFloat('###,###,##0.00',Titulo.ValorDocumento));
 
@@ -724,7 +725,7 @@ end;
 procedure TACBrBoletoFCFortesFr.RLBand3BeforePrint(Sender: TObject;
   var PrintIt: boolean);
 Var
-   NossoNum,LinhaDigitavel,CodBarras,CodCedente: String;
+   NossoNum,LinhaDigitavel,CodBarras,CodCedente, Carteira: String;
 begin
    with fBoletoFC.ACBrBoleto do
    begin
@@ -732,6 +733,7 @@ begin
       CodBarras      := Banco.MontarCodigoBarras( Titulo );
       LinhaDigitavel := Banco.MontarLinhaDigitavel( CodBarras, Titulo );
       CodCedente     := Banco.MontarCampoCodigoCedente(Titulo);
+      Carteira       := Banco.MontarCampoCarteira(Titulo);
 
       MensagemPadrao.Clear;
       MensagemPadrao.Text := Titulo.Mensagem.Text;
@@ -762,7 +764,7 @@ begin
       txtDataProces.Caption           := FormatDateTime('dd/mm/yyyy',Now);
 
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
-      txtCarteira.Caption             := Titulo.Carteira;
+      txtCarteira.Caption             := Carteira;
       txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
       txtParcela.Caption              := IntToStrZero(Titulo.Parcela,3)+' /';
       txtTotPar.Caption               := IntToStrZero(Titulo.TotalParcelas,3);

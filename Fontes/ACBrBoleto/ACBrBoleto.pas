@@ -528,6 +528,7 @@ type
     function MontarCampoNossoNumero(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarLinhaDigitavel(const CodigoBarras: String; ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; virtual;
+    function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String; virtual;
 
     procedure GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);  Virtual;
     function GerarRegistroHeader240(NumeroRemessa : Integer): String;    Virtual;
@@ -587,6 +588,7 @@ type
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer;
 
+    function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
@@ -1710,7 +1712,7 @@ begin
   Result := BancoClass.CodigosMoraAceitos;
 end;
 
-function TACBrBanco.GetCodigosGeracaoAceitos: String;
+function TACBrBanco.GetCodigosGeracaoAceitos: string;
 begin
   Result := BancoClass.CodigosGeracaoAceitos;
 end;
@@ -1814,6 +1816,11 @@ begin
   Result:= BancoClass.CalcularTamMaximoNossoNumero(Carteira,NossoNumero);
 end;
 
+function TACBrBanco.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
+begin
+  Result:= BancoClass.MontarCampoCarteira(ACBrTitulo);
+end;
+
 function TACBrBanco.MontarCampoNossoNumero ( const ACBrTitulo: TACBrTitulo
    ) : String;
 begin
@@ -1908,7 +1915,8 @@ begin
    Inherited Destroy;
 end;
 
-procedure TACBrBancoClass.GerarRegistroHeader400( NumeroRemessa: Integer; aRemessa: TStringList);
+procedure TACBrBancoClass.GerarRegistroHeader400(NumeroRemessa: Integer;
+  ARemessa: TStringList);
 begin
   { Método implementado apenas para evitar Warnings de compilação (poderia ser abstrato)
     Você de fazer "override" desse método em todas as classes filhas de TACBrBancoClass }
@@ -1934,6 +1942,12 @@ begin
   Result := '';
 end;
 
+function TACBrBancoClass.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo
+  ): String;
+begin
+  Result := ACBrTitulo.Carteira;
+end;
+
 
 function TACBrBancoClass.GerarRegistroTrailler240 ( ARemessa: TStringList
    ) : String;
@@ -1941,12 +1955,12 @@ begin
    Result:= '';
 end;
 
-Procedure TACBrBancoClass.LerRetorno400 ( ARetorno: TStringList );
+procedure TACBrBancoClass.LerRetorno400(ARetorno: TStringList);
 begin
    ErroAbstract('LerRetorno400');
 end;
 
-Procedure TACBrBancoClass.LerRetorno240 ( ARetorno: TStringList );
+procedure TACBrBancoClass.LerRetorno240(ARetorno: TStringList);
 begin
    ErroAbstract('LerRetorno240');
 end;
@@ -2017,7 +2031,8 @@ begin
                                          'Acesse nosso Forum em: http://acbr.sf.net/',[NomeProcedure,Nome])) ;
 end;
 
-function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDatetime) : String;
+function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDateTime
+  ): String;
 begin
    {** Padrão para vencimentos até 21/02/2025 **}
    //Result := IntToStrZero( Max(Trunc(DataVencimento - EncodeDate(1997,10,07)),0),4 );

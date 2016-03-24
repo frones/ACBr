@@ -56,6 +56,7 @@ type
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
+    function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String; override;
     procedure GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa: TStringList); override;
     procedure GerarRegistroTransacao400(ACBrTitulo : TACBrTitulo; aRemessa: TStringList); override;
     procedure GerarRegistroTrailler400(ARemessa:TStringList);  override;
@@ -138,6 +139,12 @@ begin
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
+function TACBrBancoNordeste.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo
+  ): String;
+begin
+  Result:= CarteiraToTipoOperacao(ACBrTitulo.Carteira);
+end;
+
 procedure TACBrBancoNordeste.GerarRegistroHeader400(NumeroRemessa : Integer; aRemessa:TStringList);
 var
   wLinha: String;
@@ -169,6 +176,7 @@ var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia :String;
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
   wLinha: String;
+  WCarteira: Char;
 begin
 
    with ACBrTitulo do
@@ -225,6 +233,23 @@ begin
          TipoSacado := '99';
       end;
 
+      if ACBrBoleto.Cedente.CaracTitulo = tcSimples then
+      begin
+        if ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite then
+          wCarteira:= '1'
+        else
+          wCarteira:= '4';
+      end
+      else if ACBrBoleto.Cedente.CaracTitulo = tcVinculada then
+      begin
+        if ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite then
+          wCarteira:= '2'
+        else
+          wCarteira:= '5';
+      end
+      else
+        WCarteira:= 'I';
+
       with ACBrBoleto do
       begin
          if Mensagem.Text<>'' then
@@ -244,7 +269,7 @@ begin
                   PadLeft( '0', 6, '0')                                      +  //Número do Contrato para cobrança caucionada/vinculada. Preencher com zeros para cobrança simples
                   IntToStrZero(round( ValorDesconto * 100), 13)           +
                   Space(8)                                                +  // Filler - Brancos
-                  Carteira                                                +  // Carteira a ser utilizada
+                  wCarteira                                               +  // Carteira a ser utilizada
                   Ocorrencia                                              +  // Ocorrência
                   PadRight( NumeroDocumento,  10)                             +
                   FormatDateTime( 'ddmmyy', Vencimento)                   +
@@ -284,7 +309,7 @@ begin
    ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
 end;
 
-Procedure TACBrBancoNordeste.LerRetorno400 ( ARetorno: TStringList );
+procedure TACBrBancoNordeste.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha, i: integer;
@@ -535,7 +560,8 @@ begin
 end;
 
 
-function TACBrBancoNordeste.COdMotivoRejeicaoToDescricao( const TipoOcorrencia:TACBrTipoOcorrencia ;CodMotivo: Integer) : String;
+function TACBrBancoNordeste.CodMotivoRejeicaoToDescricao(
+  const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
    case TipoOcorrencia of
       toRetornoRegistroConfirmado:

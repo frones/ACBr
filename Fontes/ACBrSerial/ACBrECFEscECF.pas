@@ -478,6 +478,7 @@ TACBrECFEscECF = class( TACBrECFClass )
 implementation
 Uses SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+    synautil,
     ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrConsts, ACBrUtil,
   ACBrECFDaruma;
 
@@ -552,7 +553,7 @@ begin
       ACmd := ACmd + StringToBinaryString( AnsiString(EscECFComando.Params[I]) ) + '|';
 
     aLineOut[0] := #0; // Zera Buffer de Saida
-    ACmd := StringReplace(ACmd, NUL, '[NULL]', [rfReplaceAll]);
+    ACmd := ReplaceString(ACmd, NUL, '[NULL]');
 
     GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
     Resp := xEPSON_Send_From_FileEX( ACmd, aLineOut ) ;
@@ -2567,11 +2568,11 @@ begin
     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
 
   // Carcateres de Controle, devem ser precedidos de ESC //
-  Result := StringReplace( Result, NUL, ESC+NUL, [rfReplaceAll]);
-  Result := StringReplace( Result, LF , ESC+LF , [rfReplaceAll]);
+  Result := ReplaceString( Result, NUL, ESC+NUL);
+  Result := ReplaceString( Result, LF , ESC+LF);
 
   if IsEpson then
-    Result := StringReplace( Result, CR , ESC+CR , [rfReplaceAll]);
+    Result := ReplaceString( Result, CR , ESC+CR);
 end ;
 
 procedure TACBrECFEscECF.AbreCupom ;

@@ -5110,8 +5110,7 @@ procedure TACBrECF.LinhaRelatorioGerencial(const Linha: AnsiString;
   const IndiceBMP: Integer);
 Var
   Texto, Buffer : AnsiString ;
-  Lin   : Integer ;
-  SL    : TStringList ;
+  Lin, Pos : Integer ;
 
   Procedure TentaImprimirLinhas( Texto: AnsiString; IndiceBMP: Integer )  ;
   var
@@ -5166,26 +5165,19 @@ begin
      Texto  := '' ;
      Buffer := DecodificarTagsFormatacao( Linha );
      Buffer := AjustaLinhas(Buffer, Colunas) ;
-     SL     := TStringList.Create ;
-     try
-        SL.Text := String(Buffer) ;
 
-        For Lin := 0 to SL.Count - 1 do
-        begin
-           Texto := Texto + AnsiString(SL[Lin]) + sLineBreak;
+     while Buffer <> '' do
+     begin
+       Pos := PosAt(#10, Buffer, MaxLinhasBuffer );
+       if Pos < 1 then
+         Pos := Length(Buffer);
 
-           if (Lin mod MaxLinhasBuffer) = 0 then
-           begin
-              TentaImprimirLinhas( Texto, IndiceBMP ) ;
-              Texto := '' ;
-           end ;
-        end ;
+       Texto := Copy(Buffer, 1, Pos);
+       if Length(Texto) > 0 then
+         TentaImprimirLinhas( Texto, IndiceBMP ) ;
 
-        if Texto <> '' then
-           TentaImprimirLinhas( Texto, IndiceBMP ) ;
-     finally
-        SL.Free ;
-     end ;
+       Buffer := Copy(Buffer, Pos+1, Length(Buffer) );
+     end;
    end ;
 
   {$IFNDEF NOGUI}

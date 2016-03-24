@@ -142,25 +142,21 @@ var
 begin
   inherited;
 
-  //rlb05a_Cab_Itens.Enabled := FImprimeItens;
-  //rlb05b_Desc_Itens.Enabled := FImprimeItens;
-  //rlb05c_Lin_Itens.Enabled := FImprimeItens;
-
   Itens;
   FTotalPages := 1;
 
   if ( FNFe.Det.Count > _NUM_ITEMS_PAGE1 ) then
-   begin
-      nRestItens := FNFe.Det.Count - _NUM_ITEMS_PAGE1;
-      if nRestItens <= _NUM_ITEMS_OTHERPAGES then
-         Inc( FTotalPages )
-      else
-      begin
-         Inc( FTotalPages, nRestItens div _NUM_ITEMS_OTHERPAGES );
-         if ( nRestItens mod _NUM_ITEMS_OTHERPAGES ) > 0 then
-            Inc( FTotalPages )
-      end;
-   end;
+  begin
+    nRestItens := FNFe.Det.Count - _NUM_ITEMS_PAGE1;
+    if nRestItens <= _NUM_ITEMS_OTHERPAGES then
+      Inc( FTotalPages )
+    else
+    begin
+      Inc( FTotalPages, nRestItens div _NUM_ITEMS_OTHERPAGES );
+      if ( nRestItens mod _NUM_ITEMS_OTHERPAGES ) > 0 then
+        Inc( FTotalPages )
+    end;
+  end;
 
   RLNFe.Title:='NF-e: ' + FormatFloat( '000,000,000', FNFe.Ide.nNF );
 
@@ -178,47 +174,45 @@ procedure TfrlDANFeRLSimplificado.RLb02_EmitenteBeforePrint(Sender: TObject;
 begin
   inherited;
 
-//  PrintBand := RLNFe.PageNumber = 1;
-
-  if FExpandirLogoMarca
-   then begin
+  if FExpandirLogoMarca then
+  begin
     rliLogo.top         := 13;
     rliLogo.Left        := 2;
     rliLogo.Height      := 108;
     rliLogo.Width       := 284;
     rliLogo.Stretch     := True;
     rlmEmitente.Enabled := False;
-   end;
+  end;
 
-  if (FLogo <> '') and FilesExists(FLogo)
-   then rliLogo.Picture.LoadFromFile(FLogo);
+  if (FLogo <> '') and FilesExists(FLogo) then
+    rliLogo.Picture.LoadFromFile(FLogo);
 
-  if not FExpandirLogoMarca
-   then begin
+  if not FExpandirLogoMarca then
+  begin
     rlmEmitente.Enabled := True;
     rlmEmitente.Lines.Clear;
     with FNFe.Emit do
-     begin
+    begin
       rlmEmitente.Lines.Add(TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant ));
       with EnderEmit do
-       begin
+      begin
         rlmEmitente.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro) +
                               IfThen(XCpl = '', '', ', ' + XCpl) +
                               IfThen(XBairro = '', '', ', ' + XBairro) +
                               ', ' + XMun + '/ ' + UF);
-       end;
+      end;
       rlmEmitente.Lines.Add('CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
                             ' IE: '+ IE);
-     end;
-   end;
+    end;
+  end;
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb03_DadosGeraisBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   // Contingencia ********************************************************
-  if FNFe.Ide.tpEmis in [teContingencia, teFSDA]
-   then rllTipoEmissao.Caption := 'CONTINGENCIA FS-DA';
+  if FNFe.Ide.tpEmis in [teContingencia, teFSDA] then
+    rllTipoEmissao.Caption := 'CONTINGENCIA FS-DA';
 
   rllEntradaSaida.Caption := tpNFToStr( FNFe.Ide.tpNF );
 
@@ -230,35 +224,33 @@ end;
 
 procedure TfrlDANFeRLSimplificado.RLb04_DestinatarioBeforePrint(
   Sender: TObject; var PrintIt: boolean);
-var
- vTpEmissao: TpcnTipoEmissao;
 begin
   inherited;
 
   rlmDestinatario.Lines.Clear;
   with FNFe.Dest do
-   begin
+  begin
     rlmDestinatario.Lines.Add(XNome);
     with EnderDest do
-     begin
+    begin
       rlmDestinatario.Lines.Add(XLgr + IfThen(Nro = '0', '', ', ' + Nro) +
                             IfThen(XCpl = '', '', ', ' + XCpl) +
                             IfThen(XBairro = '', '', ', ' + XBairro) +
                             ', ' + XMun + '/ ' + UF);
-     end;
+    end;
     rlmDestinatario.Lines.Add(ACBrStr('CPF/CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
                               ' IE: ' + IE));
-   end;
+  end;
 
   if FNFe.Ide.tpAmb = taHomologacao then
-   begin
+  begin
      rllMsgTipoEmissao.Caption := ACBrStr('HOMOLOGAÇÂO - SEM VALOR FISCAL');
      rllMsgTipoEmissao.Enabled := True;
      rllMsgTipoEmissao.Visible := True;
-   end;
+  end;
 
   if FNFe.procNFe.cStat > 0 then
-   begin
+  begin
      if ((FNFe.procNFe.cStat in [101, 151, 155]) or (FNFeCancelada)) then
      begin
        rllMsgTipoEmissao.Caption := 'NF-e CANCELADA';
@@ -277,20 +269,18 @@ begin
        rllMsgTipoEmissao.Visible := True;
        rllMsgTipoEmissao.Enabled := True;
      end;
-   end;
+  end;
 
-  vTpEmissao := FNFe.Ide.tpEmis;
-
-  case vTpEmissao of
-   teContingencia : begin
-       rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
-       rllMsgTipoEmissao.Visible := True;
-       rllMsgTipoEmissao.Enabled := True;
+  case FNFe.Ide.tpEmis of
+    teContingencia : begin
+        rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
+        rllMsgTipoEmissao.Visible := True;
+        rllMsgTipoEmissao.Enabled := True;
       end;
-   teFSDA : begin
-       rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
-       rllMsgTipoEmissao.Visible := True;
-       rllMsgTipoEmissao.Enabled := True;
+    teFSDA : begin
+        rllMsgTipoEmissao.Caption := ACBrStr('DANFE em Contingencia - impresso em decorrencia de problemas tecnicos');
+        rllMsgTipoEmissao.Visible := True;
+        rllMsgTipoEmissao.Enabled := True;
       end;
   end;
 
@@ -301,8 +291,6 @@ procedure TfrlDANFeRLSimplificado.RLb06a_TotaisBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   inherited;
-
-//  PrintBand := RLNFe.PageNumber = 1;
 
   rlmPagDesc.Lines.Clear;
   rlmPagValor.Lines.Clear;
@@ -320,7 +308,6 @@ var
  Perc: Double;
 begin
   inherited;
-//  PrintBand := RLNFe.PageNumber = 1;
 
   Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   rllTributos.Caption := ACBrStr('Valor aprox. dos tributos: ' +
@@ -333,8 +320,8 @@ procedure TfrlDANFeRLSimplificado.rlmProdutoDescricaoPrint(sender: TObject;
 begin
   inherited;
 
-  if cdsItens.FieldByName('INFADIPROD').AsString <> ''
-   then Value := Value + #13 + 'InfAd: ' + cdsItens.FieldByName('INFADIPROD').AsString;
+  if cdsItens.FieldByName('INFADIPROD').AsString <> '' then
+    Value := Value + #13 + 'InfAd: ' + cdsItens.FieldByName('INFADIPROD').AsString;
 end;
 
 procedure TfrlDANFeRLSimplificado.Itens;
@@ -400,24 +387,24 @@ begin
   rllChave.Caption := FormatarChaveAcesso(Copy(FNFe.InfNFe.Id, 4, 44));
 
   // Normal **************************************************************
-  if FNFe.Ide.tpEmis in [teNormal, teSCAN]
-   then begin
-    if FNFe.procNFe.cStat = 100
-     then rllDescricao.Caption := ACBrStr('Protocolo de Autorização');
+  if FNFe.Ide.tpEmis in [teNormal, teSCAN] then
+  begin
+    if FNFe.procNFe.cStat = 100 then
+      rllDescricao.Caption := ACBrStr('Protocolo de Autorização');
 
-    if FNFe.procNFe.cStat in [101, 151, 155]
-     then rllDescricao.Caption:= ACBrStr('Protocolo de Homologação de Cancelamento');
+    if FNFe.procNFe.cStat in [101, 151, 155] then
+      rllDescricao.Caption:= ACBrStr('Protocolo de Homologação de Cancelamento');
 
-    if FNFe.procNFe.cStat = 110
-     then rllDescricao.Caption:= ACBrStr('Protocolo de Denegação de Uso');
-   end;
+    if FNFe.procNFe.cStat = 110 then
+      rllDescricao.Caption:= ACBrStr('Protocolo de Denegação de Uso');
+  end;
 
-  if FProtocoloNFE <> ''
-   then rllProtocolo.Caption := FProtocoloNFE
-   else rllProtocolo.Caption := FNFe.procNFe.nProt + ' ' +
-                                IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
+  if FProtocoloNFE <> '' then
+    rllProtocolo.Caption := FProtocoloNFE
+  else
+    rllProtocolo.Caption := FNFe.procNFe.nProt + ' ' +
+                              IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
 
-  //FTotalPages := HrTotalPages;
 end;
 
 end.

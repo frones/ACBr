@@ -298,9 +298,7 @@ begin
 
       {Pegando campo Intruções}
       if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-          Protesto := '06' + IntToStrZero(DaysBetween(DataProtesto, Vencimento), 2)
-      else if Ocorrencia = '31' then
-         Protesto := '9999'
+          Protesto := 'P6' + IntToStrZero(DaysBetween(DataProtesto, Vencimento), 2)
       else
          Protesto := PadLeft(Trim(Instrucao1), 2, '0') + PadLeft(Trim(Instrucao2), 2, '0');
 
@@ -351,7 +349,7 @@ begin
                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')   +  // sacador avalista. não pode ser o proprio sacado
                   aCarteira                                                   +
                   Ocorrencia                                                  +
-                  PadLeft(SeuNumero, 10, '0')                                 +
+                  PadLeft(NumeroDocumento, 10, '0')                           +
                   FormatDateTime('ddmmyy', Vencimento)                        +
                   '000'                                                       +
                   IntToStrZero(Round(ValorDocumento * 100 ), 10)              +

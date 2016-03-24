@@ -56,6 +56,11 @@ http://www.projetoacbr.com.br/forum/topic/28540-codigo-da-ocorrencia-no-retorno/
 [*]  Criado método MontarCampoCarteira para tratar a impressão deste campo no boleto(Juliana Tamizou)
 http://www.projetoacbr.com.br/forum/topic/28855-homologa%C3%A7%C3%A3o-bnb/ 
 
+[-] Correção geração arquivo remessa CNAB400 quanto aos campos SeuNumero, NumeroDocumento e Instrucao.
+    Correção leituar arquivo retorno CNAB400 quanto ao campo NossoNumero. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28681-campos-do-arq-de-remessa-banestes-com-preenchimento-errado/
+
+
 Data: 22/03/16 ver. 0.0.185a
 -- ACBrBancoSicredi --
 [-] Ajuste remessa CNAB420. (josueprg)

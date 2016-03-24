@@ -42,6 +42,8 @@ type
 
  TLeitorOpcoes   = class;
 
+ { TNFSeR }
+
  TNFSeR = class(TPersistent)
   private
     FLeitor: TLeitor;
@@ -70,6 +72,7 @@ type
     function LerNFSe_Equiplano: Boolean;
     function LerNFSe_Infisc: Boolean;
     function LerNFSe_Governa: Boolean;
+    function LerNFSe_CONAM: Boolean;
 
     function LerRPS: Boolean;
     function LerNFSe: Boolean;
@@ -146,7 +149,8 @@ begin
   if (Pos('<Nfse', Leitor.Arquivo) > 0) or (Pos('<Notas>', Leitor.Arquivo) > 0) or
      (Pos('<Nota>', Leitor.Arquivo) > 0) or (Pos('<NFS-e>', Leitor.Arquivo) > 0) or
      (Pos('<nfse', Leitor.Arquivo) > 0) or (Pos('NumNot', Leitor.Arquivo) > 0) or
-     (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) then
+     (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) or (Pos('<Reg20Item>', Leitor.Arquivo) > 0) or
+     (Pos('<CompNfse', Leitor.Arquivo) > 0) then
     Result := LerNFSe
   else
     if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or
@@ -979,6 +983,7 @@ begin
     loGoverna:     Result := LerNFSe_Governa;
     loInfisc:      Result := LerNFSe_Infisc;
     loISSDSF:      Result := LerNFSe_ISSDSF;
+    loCONAM:       Result := LerNFSe_CONAM;
   else
     Result := False;
   end;
@@ -2282,6 +2287,55 @@ begin
   end;
 
   Result := True;
+end;
+
+function TNFSeR.LerNFSe_CONAM: Boolean;
+begin
+  NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
+
+  if (Leitor.rExtrai(1, 'Reg20Item') <> '') or (Leitor.rExtrai(1, 'CompNfse') <> '') then
+  begin
+    with NFSe do
+    begin
+      Numero := Leitor.rCampo(tcStr, 'NumNf');
+      IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
+      CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVernf');
+      PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocPre');
+      PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CpfCnpjPre');
+      PrestadorServico.IdentificacaoPrestador.InscricaoEstadual := Leitor.rCampo(tcStr, 'IEPr');
+      PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
+      PrestadorServico.Endereco.Endereco := Leitor.rCampo(tcStr, 'LogPre');
+      PrestadorServico.Endereco.Numero :=  Leitor.rCampo(tcStr, 'NumEndPre');
+      PrestadorServico.Endereco.Bairro := Leitor.rCampo(tcStr, 'BairroPre');
+      PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'ComplEndPre');
+      PrestadorServico.Endereco.xMunicipio := Leitor.rCampo(tcStr, 'MunPre');
+      PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'CepPre');
+      PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'SiglaUFPre');
+      Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'VlNFS');
+      ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'VlNFS');
+      Servico.Valores.ValorPis := Leitor.rCampo(tcDe2, 'VlrPIS');
+      Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'VlrCofins');
+      Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'VlrINSS');
+      Servico.Valores.ValorInss := Leitor.rCampo(tcDe2, 'VlrIR');
+      DataEmissao := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiNf'));
+      Nfse.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocTom');
+      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');
+      with  Nfse.Tomador.Endereco do
+      begin
+        Endereco := Leitor.rCampo(tcStr, 'DesEndTmd');
+        Bairro := Leitor.rCampo(tcStr, 'BairroTom');
+        xMunicipio := Leitor.rCampo(tcStr, 'MunTom');
+        UF := Leitor.rCampo(tcStr, 'SiglaUFTom');
+        CEP := Leitor.rCampo(tcStr, 'CepTom');
+      end;
+      Competencia := Leitor.rCampo(tcStr, 'DtEmiNf');
+      Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');
+      Servico.Discriminacao := Leitor.rCampo(tcStr, 'DiscrSrv');
+    end;
+  end;
+
+  Result := True;
+
 end;
 
 end.

@@ -2107,7 +2107,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
-      proCONAM:     TagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
+      proCONAM:     TagGrupo := 'ws_nfe.CONSULTAPROTOCOLO';
       proInfisc:    TagGrupo := 'pedidoStatusLote';
       proEquiplano: TagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
       proSimplISS:  TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
@@ -2218,10 +2218,11 @@ begin
   else
     cSituacao := '1'; // Lote Não Recebido
 
-  // Lote processado ?
+  // Lote processado ?    Situaçao 5 usado para sucesso no provedor CONAM
   if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') or
-     (FSituacao = 'Erro') then
+     (FSituacao = '5') or (FSituacao = 'Erro') then
     Result := TratarRespostaFinal;
+
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;
@@ -2366,6 +2367,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
+      proCONAM:     TagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
       proEquiplano: TagGrupo := 'esConsultarLoteRpsEnvio';
       proISSDSF:    TagGrupo := 'ReqConsultaLote';
       proSP:        TagGrupo := 'PedidoConsultaLote';
@@ -3673,7 +3675,7 @@ begin
       FConsNfseRps.FTipo      := TipoRPSToStr(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
 
       // Provedor Infisc não possui o método Consultar NFS-e por RPS
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc, proCONAM] then
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc] then
         Result := True
       else
         Result := FConsNfseRps.Executar;

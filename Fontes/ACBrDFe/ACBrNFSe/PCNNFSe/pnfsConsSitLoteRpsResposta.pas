@@ -90,6 +90,8 @@ type
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
   end;
 
+ { TretSitLote }
+
  TretSitLote = class(TPersistent)
   private
     FLeitor: TLeitor;
@@ -103,6 +105,7 @@ type
 
     function LerXml_ABRASF: Boolean;
 
+    function LerXml_proCONAM: Boolean;
     function LerXML_proEL: Boolean;
     function LerXML_proEquiplano: Boolean;
     function LerXML_proInfisc: Boolean;
@@ -199,6 +202,7 @@ begin
   Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
 
   case Provedor of
+    proCONAM:      Result := LerXml_proCONAM;
     proISSDSF:     Result := LerXml_proISSDSF;
     proEquiplano:  Result := LerXML_proEquiplano;
     proInfIsc:     Result := LerXml_proInfisc;
@@ -272,6 +276,47 @@ begin
   except
     Result := False;
   end;
+end;
+
+function TretSitLote.LerXml_proCONAM: Boolean;
+var
+  sMotCod,sMotDes: string;
+  i: integer;
+begin
+  Result := False;
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if (leitor.rExtrai(1, 'Sdt_consultaprotocoloout') <> '') or (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '') then begin
+      FInfSit.FSituacao:= Leitor.rCampo(tcStr, 'PrtXS'); {1 (Aguardando processamento)
+                                                            2 (Em Processamento)
+                                                            3 (Rejeitado)
+                                                            4 (Rejeitado Parcialmente)
+                                                            5 (Processado)}
+      FInfSit.FSucesso := Leitor.rCampo(tcStr, 'Id');
+
+      if (FInfSit.FSucesso = 'Arquivo Aceito') then  begin
+        FInfSit.FNumeroLote      := Leitor.rCampo(tcStr, 'Protocolo');
+      end;
+      if leitor.rExtrai(2, 'Messages') <> '' then begin
+          i := 0;
+          while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do begin
+              sMotCod:=Leitor.rCampo(tcStr, 'Id');
+              sMotDes:=Leitor.rCampo(tcStr, 'Description');
+
+              InfSit.MsgRetorno.Add;
+              InfSit.MsgRetorno[i].FCodigo   := sMotCod;
+              InfSit.MsgRetorno[i].FMensagem := sMotDes;
+              Inc(i);
+          end;
+        end;
+    end;
+
+    Result := True;
+  except
+    Result := False;
+  end;
+
 end;
 
 function TretSitLote.LerXml_proISSDSF: Boolean;

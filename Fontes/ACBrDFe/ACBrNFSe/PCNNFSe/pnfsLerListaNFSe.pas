@@ -337,6 +337,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RetornoEnvioRPS') <> '');
 
+    //Conam
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -371,11 +375,12 @@ begin
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'NFe', '', i + 1) <> '') or                   // Provedor SP
+            (leitor.rExtrai(Nivel, 'Reg20', '', i + 1) <> '') or                 // Provedor CONAM
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     //ConsultaLote
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or //ConsultaNFSePorRPS
-            ((Provedor in [proInfisc]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) do {@/\@}
+            ((Provedor in [proInfisc]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -413,6 +418,8 @@ begin
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'NotasConsultadas');
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'NFS-e');
+              if NFSe.XML = '' then
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'Reg20Item');  // Provedor Conam
 
               // Retorno do GerarNfse e EnviarLoteRpsSincrono
               FNFSe.NumeroLote    := NumeroLoteTemp;
@@ -763,6 +770,22 @@ begin
         Result := False;
       end;
     end;
+
+    if FProvedor = proCONAM then
+    begin
+      if leitor.rExtrai(2, 'Messages') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Id');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Description');
+          Inc(i);
+        end;
+      end;
+    end;
+
   except
     Result := False;
   end;

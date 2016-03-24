@@ -550,13 +550,13 @@ begin
   case Provedor of
     proCONAM:  begin
                  Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Sdt_consultanotasprotocoloin xmlns="NFe"');
+                 Gerador.wGrupoNFSe('Sdt_consultaprotocoloin xmlns="NFe"');
                  Gerador.wGrupoNFSe('Protocolo>' + Protocolo + '</Protocolo');
                  Gerador.wGrupoNFSe('Login');
                  Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
                  Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
                  Gerador.wGrupoNFSe('/Login');
-                 Gerador.wGrupoNFSe('/Sdt_consultanotasprotocoloin');
+                 Gerador.wGrupoNFSe('/Sdt_consultaprotocoloin');
                end;
 
     proEquiplano: begin
@@ -1087,17 +1087,18 @@ begin
   case Provedor of
     proCONAM:  begin
                  Gerador.Prefixo := '';
+                 Gerador.Opcoes.DecimalChar := '.';
                  Gerador.wGrupoNFSe('Sdt_cancelanfe xmlns="NFe"');
                  Gerador.wGrupoNFSe('Login');
                  Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
                  Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
                  Gerador.wGrupoNFSe('/Login');
                  Gerador.wGrupoNFSe('Nota');
-                 Gerador.wGrupoNFSe('SerieNota>' + 'NFe' + '</SerieNota');
+                 Gerador.wGrupoNFSe('SerieNota>' + 'NFE' + '</SerieNota');
                  Gerador.wGrupoNFSe('NumeroNota>' + NumeroNfse + '</NumeroNota');
                  Gerador.wGrupoNFSe('SerieRPS>' + 'UNICA' + '</SerieRPS');
                  Gerador.wGrupoNFSe('NumeroRps>' + NumeroRps + '</NumeroRps');
-                 Gerador.wGrupoNFSe('ValorNota>' + FormatFloat('#,##0.00',ValorNota) + '</ValorNota');
+                 Gerador.wGrupoNFSe('ValorNota>' + FloatToString(ValorNota) + '</ValorNota');
                  Gerador.wGrupoNFSe('MotivoCancelamento>' + MotivoCanc + '</MotivoCancelamento');
                  Gerador.wGrupoNFSe('PodeCancelarGuia>S</PodeCancelarGuia');
                  Gerador.wGrupoNFSe('/Nota');

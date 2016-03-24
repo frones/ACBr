@@ -701,9 +701,7 @@ begin
         if (FInfRec.FSucesso = 'Arquivo Aceito') then  begin
             FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'Protocolo');
             FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'Protocolo');
-            //FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dhRecbto')
         end;
-        // if (FInfRec.FSucesso = '200') 200-Rejeitado
         if leitor.rExtrai(2, 'Messages') <> '' then begin
             i := 0;
             while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do begin

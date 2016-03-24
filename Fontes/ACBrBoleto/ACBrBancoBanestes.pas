@@ -528,7 +528,7 @@ begin
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := Copy(Linha,63,10);
+         NossoNumero          := Copy(Linha,63,8);
          Carteira             := Copy(Linha,108,1);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
 

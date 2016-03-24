@@ -1359,10 +1359,16 @@ begin
 
     case FProvedor of
       proSimplISS: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
+      proTinus: FTagI := '<' + FPrefixo3 + 'Arg' + FNameSpaceDad + '>';
     else
       FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad + '>';
     end;
-    FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
+
+    case FProvedor of
+      proTinus: FTagF := '</' + FPrefixo3 + 'Arg>';
+    else
+      FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
+    end;
 
   	if FProvedor = proGoverna then
     begin
@@ -1509,6 +1515,7 @@ begin
       proISSDSF:    TagGrupo := 'ReqEnvioLoteRPS';
       proEquiplano: TagGrupo := 'enviarLoteRpsEnvio';
       proSP:        TagGrupo := 'PedidoEnvioLoteRPS';
+      proTinus:     TagGrupo := 'Arg';
     else
       TagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2105,6 +2112,7 @@ begin
       proEquiplano: TagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
       proSimplISS:  TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
       proSP:        TagGrupo := 'PedidoInformacoesLote';
+      proTinus:     TagGrupo := 'Arg';
     else
       TagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     end;
@@ -2361,6 +2369,7 @@ begin
       proEquiplano: TagGrupo := 'esConsultarLoteRpsEnvio';
       proISSDSF:    TagGrupo := 'ReqConsultaLote';
       proSP:        TagGrupo := 'PedidoConsultaLote';
+      proTinus:     TagGrupo := 'Arg';
     else
       TagGrupo := 'ConsultarLoteRpsEnvio';
     end;
@@ -2501,6 +2510,7 @@ begin
       proISSDSF:    TagGrupo := 'ReqConsultaNFSeRPS';
       proEquiplano: TagGrupo := 'esConsultarNfsePorRpsEnvio';
       proSP:        TagGrupo := 'PedidoConsultaNFe';
+      proTinus:     TagGrupo := 'Arg';
     else
       TagGrupo := 'ConsultarNfseRpsEnvio';
     end;
@@ -2849,6 +2859,7 @@ begin
       proInfisc:      TagGrupo := 'pedCancelaNFSe';
       proISSDSF:      TagGrupo := 'ReqCancelamentoNFSe';
       proSP:          TagGrupo := 'PedidoCancelamentoNFe';
+      proTinus:       TagGrupo := 'Arg';
     else
       TagGrupo :=  'CancelarNfseEnvio';
     end;

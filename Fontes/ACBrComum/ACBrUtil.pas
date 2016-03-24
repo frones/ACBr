@@ -2915,7 +2915,7 @@ begin
      exit ;
 
   if Traduz then
-     Buf := TranslateUnprintable(ABinaryString)
+     Buf := AnsiString( TranslateUnprintable(ABinaryString) )
   else
      Buf := ABinaryString;
 
@@ -2953,7 +2953,7 @@ begin
         ESC   : Ch := '[ESC]' ;
         FS    : Ch := '[FS]' ;
         GS    : Ch := '[GS]' ;
-        #32..#126 : Ch := ABinaryString[I] ;
+        #32..#126 : Ch := String(ABinaryString[I]) ;
      else ;
        Ch := '['+IntToStr(ASC)+']'
      end;

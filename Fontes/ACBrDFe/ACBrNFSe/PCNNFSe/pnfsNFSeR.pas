@@ -355,8 +355,8 @@ begin
       NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
     end; // fim Prestador
 
-    if (Leitor.rExtrai(3, 'Tomador') <> '') or
-       (Leitor.rExtrai(2, 'Tomador') <> '') then
+    if (Leitor.rExtrai(3, 'Tomador') <> '') or (Leitor.rExtrai(3, 'TomadorServico') <> '') or
+       (Leitor.rExtrai(2, 'Tomador') <> '') or (Leitor.rExtrai(2, 'TomadorServico') <> '') then
     begin
       NFSe.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazaoSocial');
 
@@ -1152,7 +1152,7 @@ begin
 
   end; // fim PrestadorServico
 
-  if Leitor.rExtrai(3, 'TomadorServico') <> '' then
+  if (Leitor.rExtrai(3, 'Tomador') <> '') or (Leitor.rExtrai(3, 'TomadorServico') <> '') then
   begin
     NFSe.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazaoSocial');
 

@@ -495,23 +495,63 @@ TACBrECFBematech = class( TACBrECFClass )
        Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
        Unidade : String = ''; TipoDescontoAcrescimo : String = '%';
        DescontoAcrescimo : String = 'D'; CodDepartamento: Integer = -1 ) ; override ;
-    procedure VendeItemEx(Codigo, Descricao: String; AliquotaICMS: String;
-      Qtd: Double; ValorUnitario: Double; ValorDescontoAcrescimo: Double;
-      Unidade: String; TipoDescontoAcrescimo: String;
-      DescontoAcrescimo: String; CodDepartamento: Integer; EAN13: String;
-      CasasDecimaisQtde: Integer; CasasDecimaisValor: Integer;
-      ArredondaTrunca: Char; NCM: String; CFOP: String;
-      InformacaoAdicional: String; TotalDosTributos: Double;
-      OrigemProduto: Integer; CST_ICMS: String;
-      ModalidadeBCICMS: Integer; PercentualReducaoBCICMS: Double;
-      CSOSN: String; ValorBaseCalculoSN: Double; ValorICMSRetidoSN: Double;
-      AliquotaCalculoCreditoSN: Double; ValorCreditoICMSSN: Double;
-      ItemListaServico: String; CodigoISS: String; NaturezaOperacaoISS: String;
-      IndicadorIncentivoFiscalISS: Integer; CodigoIBGE: String;
-      ModalidadeBCICMSST: Integer; PercentualMargemICMSST: Double;
-      PercentualReducaoBCICMSST: Double; ValorReducaoBCICMSST: Double;
-      AliquotaICMSST: Double; ValorICMSST: Double; ValorICMSDesonerado: Double;
-      MotivoDesoneracaoICMS: Integer; CEST: String); override;
+    procedure VendeItemEx( Codigo, Descricao : String; AliquotaICMS : String;
+           Qtd : Double ; ValorUnitario : Double; ValorDescontoAcrescimo : Double = 0;
+           Unidade : String = 'UN'; TipoDescontoAcrescimo : String = '%';
+           DescontoAcrescimo : String = 'D'; CodDepartamento: Integer = -1;
+           EAN13: String = '';              // Código Barras do Produto (GTIN-13)
+           CasasDecimaisQtde: Integer = 0;  // Se 0 assume o valor de DecimaisQtd
+           CasasDecimaisValor: Integer = 0; // Se 0 assume o valor de DecimaisPreco
+           ArredondaTrunca: Char = 'A';     // Se diferente de 'A' ou 'T' assume o valor de "Arredonda"
+           NCM: String = '';                // Código da Nomenclatura Comum do MERCOSUL
+           CFOP: String = '';               // Código Fiscal de Operações e Prestações
+           InformacaoAdicional: String = '';// Texto Livro, até 500 caracteres
+           TotalDosTributos: Double = 0;    // Valor da lei "De olho no Imposto)
+           OrigemProduto: Integer = 0;      // 0–Nacional; 1–Estrangeira Import.direta; 2–Estrangeira–Mercado interno
+
+           CST_ICMS: String = '';           // ICMS: Código de Situação Tributária
+           ModalidadeBCICMS: Integer = 0;   // ICMS: Modalidade Base de Calculo: 0 – Margem do valor agregado (%)
+                                            //                                   1 – Pauta (Valor)
+                                            //                                   2 – Preço tabelado máx. (Valor)
+                                            //                                   3 – Valor da operação
+           PercentualReducaoBCICMS: Double = 0; // ICMS:
+           CSOSN: String = '';                  // Simples Nacional: Código de Situação da Operação
+           ValorBaseCalculoSN: Double = 0;      // Simples Nacional: Base de Calculo
+           ValorICMSRetidoSN: Double = 0;       // Simples Nacional: Valor Retido para ICMS
+           AliquotaCalculoCreditoSN: Double = 0;// Simples Nacional:
+           ValorCreditoICMSSN: Double = 0;      // Simples Nacional:
+           ItemListaServico: String = '';   // Serviço apenas: código do serviço prestado: lista de serviços anexa à Lei Complementar nº 116,
+           CodigoISS: String = '';          // Serviço apenas: Código do Imposto Sobre Serviço
+           NaturezaOperacaoISS: String = '';// Serviço apenas: com os seguintes valores possíveis: '00' até '08',
+           IndicadorIncentivoFiscalISS: Integer = 1;  // Serviço apenas: para indicar se o estado é participante ou não da (Lei do Incentivo Fiscal – ISS), valores: 1 (participante) ou 2 (não participante)
+           CodigoIBGE: String = '';         // Serviço apenas: Código do município
+           ModalidadeBCICMSST: Integer = 0; // ICMS ST: Modalidade Base de Calculo, 0 – Preço tabelado ou máximo sugerido
+                                            //       Substituição Tributária        1 – Lista negativa (valor)
+                                            //                                      2 – Lista positiva (valor)
+                                            //                                      3 – Lista neutra (valor)
+                                            //                                      4 – Margem do valor agregado (%)
+                                            //                                      5 – Pauta (valor)
+           PercentualMargemICMSST: Double = 0;    // ICMS ST:
+           PercentualReducaoBCICMSST: Double = 0; // ICMS ST:
+           ValorReducaoBCICMSST: Double = 0;      // ICMS ST:
+           AliquotaICMSST: Double = 0;            // ICMS ST:
+           ValorICMSST: Double = 0;               // ICMS ST:
+           ValorICMSDesonerado: Double = 0;
+           MotivoDesoneracaoICMS: Integer = 9;    // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           CST_PIS: String = '';
+           BaseCalculoPIS: Double = 0;
+           AliquotaPIS: Double = 0;
+           ValorPIS: Double = 0;
+           QuantidadeVendidaPIS: Double = 0;
+           ValorAliquotaPIS: Double = 0;
+           CST_COFINS: String = '';
+           BaseCalculoCOFINS: Double = 0;
+           AliquotaCOFINS: Double = 0;
+           ValorCOFINS: Double = 0;
+           QuantidadeVendidaCOFINS: Double = 0;
+           ValorAliquotaCOFINS: Double = 0;
+           CEST: String = ''); override;
+
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
@@ -1866,7 +1906,11 @@ procedure TACBrECFBematech.VendeItemEx(Codigo, Descricao: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CEST: String);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CST_PIS: String;
+  BaseCalculoPIS: Double; AliquotaPIS: Double; ValorPIS: Double;
+  QuantidadeVendidaPIS: Double; ValorAliquotaPIS: Double; CST_COFINS: String;
+  BaseCalculoCOFINS: Double; AliquotaCOFINS: Double; ValorCOFINS: Double;
+  QuantidadeVendidaCOFINS: Double; ValorAliquotaCOFINS: Double; CEST: String);
 Var
   Comando : String;
   NumItem: Integer;
@@ -1913,18 +1957,18 @@ begin
              IntToStrZero( Round( AliquotaCalculoCreditoSN * 100), 4) +
              IntToStrZero( Round( ValorCreditoICMSSN * 100), 15) +
              IntToStrZero( Round( TotalDosTributos * 100), 8) +
-             '00'+                   // CST do PIS
-             '000000000000000'+      // Base de cálculo do PIS
-             '0000'+                 // Alíquota do PIS
-             '000000000000000'+      // Valor do PIS
-             '000000000000000'+      // Quantidade vendida com PIS
-             '000000000000000'+      // Valor da alíquota do PIS em reais
-             '00'+                   // CST COFINS
-             '000000000000000'+      // Base de cálculo do COFINS
-             '0000'+                 // Alíquota do COFINS
-             '000000000000000'+      // Valor do COFINS
-             '000000000000000'+      // Quantidade vendida com COFINS
-             '000000000000000' ;      // Valor da alíquota do COFINS em reais
+             PadRight(CST_PIS, 2) +
+             IntToStrZero( Round( BaseCalculoPIS * 100), 15) +
+             IntToStrZero( Round( AliquotaPIS * 100), 4) +
+             IntToStrZero( Round( ValorPIS * 100), 15) +
+             IntToStrZero( Round( QuantidadeVendidaPIS * 100), 15) +
+             IntToStrZero( Round( ValorAliquotaPIS * 100), 15) +
+             PadRight(CST_COFINS, 2) +
+             IntToStrZero( Round( BaseCalculoCOFINS * 100), 15) +
+             IntToStrZero( Round( AliquotaCOFINS * 100), 4) +
+             IntToStrZero( Round( ValorCOFINS * 100), 15) +
+             IntToStrZero( Round( QuantidadeVendidaCOFINS * 100), 15) +
+             IntToStrZero( Round( ValorAliquotaCOFINS * 100), 15);             
 
   BytesResp := 0 ;
   EnviaComando( #10 + Comando );

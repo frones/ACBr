@@ -39,6 +39,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/03/2016
+-- ACBrECF --
+[-] Método "LinhaRelatorioGerencial". Correção de Bug causado em 22/03/2016,
+    com remoção de Warning em ACBrUtil
+[*] Metodos GetDadosReducaoZ, GetDadosUltimaReducaoZ, MontaDadosReducaoZ
+    modificados para retornar "String" e não "AnsiString"
+
+-- ACBRECF, ACBrECFClass, ACBrECFBematech --
+[*] Ajuste no método "VendeItemEx", para permitir informar os seguintes
+    parâmetros: CST_PIS: String = ''; BaseCalculoPIS: Double = 0;
+    AliquotaPIS: Double = 0; ValorPIS: Double = 0; QuantidadeVendidaPIS: Double = 0;
+    ValorAliquotaPIS: Double = 0; CST_COFINS: String = ''; BaseCalculoCOFINS: Double = 0;
+    AliquotaCOFINS: Double = 0; ValorCOFINS: Double = 0; QuantidadeVendidaCOFINS: Double = 0;
+    ValorAliquotaCOFINS: Double = 0; CEST: String = ''
+    (por: DSA)
+
 Data: 22/03/2016
 -- ACBrECFEscECF --
 [-] Método "GetEstado". Correção para detecção do Estado, quando o ECF possui

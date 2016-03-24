@@ -76,6 +76,8 @@ type
     FEmissaoPathGNRE: boolean;
     FSalvarApenasGNREProcessadas: boolean;
     FPathGNRE: String;
+    FPathArqTXT:String;
+    FSalvarTXT:Boolean;
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeArquivosConfGNRE: TArquivosConfGNRE); overload;
@@ -87,6 +89,9 @@ type
     property SalvarApenasGNREProcessadas: boolean
       read FSalvarApenasGNREProcessadas write FSalvarApenasGNREProcessadas default False;
     property PathGNRE: String read FPathGNRE write FPathGNRE;
+    property PathArqTXT: String read FPathArqTXT  write FPathArqTXT ;
+    property SalvarTXT: Boolean read FSalvarTXT write FSalvarTXT default false;
+
   end;
 
   { TConfiguracoesGNRE }

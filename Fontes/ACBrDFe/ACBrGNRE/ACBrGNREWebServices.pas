@@ -878,8 +878,8 @@ begin
           Inc(GuiasOk);
           RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
 
-          if FPConfiguracoesGNRE.Geral.Salvar then
-            SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathSalvar)+RepresentacaoNumerica+'-gnre.txt');
+          if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
+            SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT)+RepresentacaoNumerica+'-gnre.txt');
         end;
       end;
 

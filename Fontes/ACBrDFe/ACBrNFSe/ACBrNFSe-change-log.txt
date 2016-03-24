@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/03/2016
+-- pnfsNFSeW_Infisc --
+[*] Alteração visando atender o provedor Infisc
+    por: BluData
 -- ACBrNFSeWebServices / pnfsConversao --
 [*] Alteração visando atender o provedor Tinus
     por: Davij Almeida / Italo Jurisato Junior

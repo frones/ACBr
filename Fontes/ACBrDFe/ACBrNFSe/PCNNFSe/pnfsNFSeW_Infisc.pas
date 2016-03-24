@@ -473,6 +473,7 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vOutro', 01, 15,  1, 0, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vtNF', 01, 15,  1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15,  1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
+
     Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTrib', 01, 15,  1, 0, '');
 
     // Total Retenção IRRF
@@ -522,7 +523,10 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vServ', 01, 15,  1, NFSe.Servico.Valores.ValorServicos, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vDesc', 01, 15,  1, NFSe.Servico.Valores.DescontoIncondicionado, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vtNF', 01, 15,  1,  NFSe.Servico.Valores.ValorServicos, ''); //Alterado por Moro em 27/02/2015
-    Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15,  1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
+    if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
+      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15,  1, NFSe.Servico.Valores.ValorLiquidoNfse, '')
+    else
+      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15,  1, NFSe.Servico.Valores.ValorServicos, '');
     Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTrib', 01, 15,  1, 0, '');
 
     // Total Retenção IRRF
@@ -559,7 +563,8 @@ begin
       Gerador.wGrupoNFSe('/Ret');
     end;
 
-    Gerador.wCampoNFSe(tcDe2, '', 'vtLiqFaturas', 01, 15,  1, NFSe.Servico.Valores.ValorLiquidoNfse, ''); // tem tag <vtLiqFaturas>
+    if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
+      Gerador.wCampoNFSe(tcDe2, '', 'vtLiqFaturas', 01, 15,  1, NFSe.Servico.Valores.ValorLiquidoNfse, ''); // tem tag <vtLiqFaturas>
 
     // Total Retenção ISSQN
     if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '1' then
@@ -613,17 +618,20 @@ begin
     //acrecentar se preciso
   end
   else begin
-    Gerador.wGrupoNFSe('faturas');
-      for i:=0 to NFSe.CondicaoPagamento.Parcelas.Count-1 do
-      begin
-        Gerador.wGrupoNFSe('fat');
-        Gerador.wCampoNFSe(tcStr, '', 'nItem', 01, 15,  1, IntToStr(i+1), '');
-        Gerador.wCampoNFSe(tcStr, '', 'nFat',  01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].Parcela, '');
-        Gerador.wCampoNFSe(tcDat, '', 'dVenc', 01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].DataVencimento, DSC_DEMI);
-        Gerador.wCampoNFSe(tcDe2, '', 'vFat',  01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].Valor, '');
-        Gerador.wGrupoNFSe('/fat');
-      end;
-    Gerador.wGrupoNFSe('/faturas');
+    if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
+    begin
+      Gerador.wGrupoNFSe('faturas');
+        for i:=0 to NFSe.CondicaoPagamento.Parcelas.Count-1 do
+        begin
+          Gerador.wGrupoNFSe('fat');
+          Gerador.wCampoNFSe(tcStr, '', 'nItem', 01, 15,  1, IntToStr(i+1), '');
+          Gerador.wCampoNFSe(tcStr, '', 'nFat',  01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].Parcela, '');
+          Gerador.wCampoNFSe(tcDat, '', 'dVenc', 01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].DataVencimento, DSC_DEMI);
+          Gerador.wCampoNFSe(tcDe2, '', 'vFat',  01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].Valor, '');
+          Gerador.wGrupoNFSe('/fat');
+        end;
+      Gerador.wGrupoNFSe('/faturas');
+    end;
   end;//fim do if versao
 end;
 

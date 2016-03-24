@@ -330,30 +330,8 @@ end;
 
 procedure TfrlDANFeRLSimplificado.rlmProdutoDescricaoPrint(sender: TObject;
   var Value: string);
-var
- intTamanhoDescricao,
- intTamanhoAdicional,
- intDivisaoDescricao,
- intDivisaoAdicional,
- intResto: Integer;
 begin
   inherited;
-
-  intTamanhoDescricao := Length(cdsItens.FieldByName( 'DESCRICAO' ).AsString);
-  intDivisaoAdicional := 0;
-  if Length(cdsItens.FieldByName( 'INFADIPROD' ).AsString)>0
-   then begin
-    intTamanhoAdicional := Length('InfAdic: '+cdsItens.FieldByName( 'INFADIPROD' ).AsString);
-    intDivisaoAdicional := intTamanhoAdicional DIV 35;
-    intResto := intTamanhoAdicional - (intTamanhoAdicional DIV 35)*35;
-    if intResto > 0
-     then intDivisaoAdicional := intDivisaoAdicional + 1;
-   end;
-
-  intDivisaoDescricao := intTamanhoDescricao DIV 35;
-  intResto := intTamanhoDescricao - (intTamanhoDescricao DIV 35)*35;
-  if intResto>0
-   then intDivisaoDescricao := intDivisaoDescricao + 1;
 
   if cdsItens.FieldByName('INFADIPROD').AsString <> ''
    then Value := Value + #13 + 'InfAd: ' + cdsItens.FieldByName('INFADIPROD').AsString;

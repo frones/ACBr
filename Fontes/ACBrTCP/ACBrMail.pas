@@ -493,6 +493,13 @@ var
   i, c: Integer;
   MultiPartParent, MimePartAttach : TMimePart;
   NeedMultiPartRelated, BodyHasImage: Boolean;
+
+  function InternalCharsetConversion(const Value: String; CharFrom: TMimeChar;
+    CharTo: TMimeChar): String;
+  begin
+   Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
+  end;
+
 begin
   if Assigned(OnBeforeMailProcess) then
     OnBeforeMailProcess( self );
@@ -503,10 +510,10 @@ begin
   if fDefaultCharsetCode <> fIDECharsetCode then
   begin
     if fBody.Count > 0 then
-      fBody.Text := CharsetConversion(fBody.Text, fIDECharsetCode, fDefaultCharsetCode);
+      fBody.Text := InternalCharsetConversion(fBody.Text, fIDECharsetCode, fDefaultCharsetCode);
 
     if fAltBody.Count > 0 then
-      fAltBody.Text := CharsetConversion(fAltBody.Text, fIDECharsetCode, fDefaultCharsetCode);
+      fAltBody.Text := InternalCharsetConversion(fAltBody.Text, fIDECharsetCode, fDefaultCharsetCode);
   end;
 
   // Configuring the Headers //
@@ -515,7 +522,7 @@ begin
   fMIMEMess.Header.CharsetCode := fDefaultCharsetCode;
 
   if fDefaultCharsetCode <> fIDECharsetCode then
-    fMIMEMess.Header.Subject := CharsetConversion(fSubject, fIDECharsetCode, fDefaultCharsetCode)
+    fMIMEMess.Header.Subject := InternalCharsetConversion(fSubject, fIDECharsetCode, fDefaultCharsetCode)
   else
     fMIMEMess.Header.Subject := fSubject;
 

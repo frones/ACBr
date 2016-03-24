@@ -673,6 +673,18 @@ TACBrECF = class( TACBrComponent )
            ValorICMSST: Double = 0;               // ICMS ST:
            ValorICMSDesonerado: Double = 0;
            MotivoDesoneracaoICMS: Integer = 9;    // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           CST_PIS: String = '';
+           BaseCalculoPIS: Double = 0;
+           AliquotaPIS: Double = 0;
+           ValorPIS: Double = 0;
+           QuantidadeVendidaPIS: Double = 0;
+           ValorAliquotaPIS: Double = 0;
+           CST_COFINS: String = '';
+           BaseCalculoCOFINS: Double = 0;
+           AliquotaCOFINS: Double = 0;
+           ValorCOFINS: Double = 0;
+           QuantidadeVendidaCOFINS: Double = 0;
+           ValorAliquotaCOFINS: Double = 0;
            CEST: String = '');   // Código do CEST para esse produto (7 dígitos)
 
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
@@ -2733,7 +2745,11 @@ procedure TACBrECF.VendeItemEx(Codigo, Descricao: String; AliquotaICMS: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CEST: String);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CST_PIS: String;
+  BaseCalculoPIS: Double; AliquotaPIS: Double; ValorPIS: Double;
+  QuantidadeVendidaPIS: Double; ValorAliquotaPIS: Double; CST_COFINS: String;
+  BaseCalculoCOFINS: Double; AliquotaCOFINS: Double; ValorCOFINS: Double;
+  QuantidadeVendidaCOFINS: Double; ValorAliquotaCOFINS: Double; CEST: String);
 Var
   AliquotaECF : String ;
   Tratado     : Boolean;
@@ -2767,7 +2783,12 @@ begin
                       IndicadorIncentivoFiscalISS, CodigoIBGE,
                       ModalidadeBCICMSST, PercentualMargemICMSST, PercentualReducaoBCICMSST,
                       ValorReducaoBCICMSST, AliquotaICMSST, ValorICMSST,
-                      ValorICMSDesonerado, MotivoDesoneracaoICMS, CEST);
+                      ValorICMSDesonerado, MotivoDesoneracaoICMS,
+                      CST_PIS, BaseCalculoPIS, AliquotaPIS, ValorPIS,
+                      QuantidadeVendidaPIS, ValorAliquotaPIS, CST_COFINS,
+                      BaseCalculoCOFINS, AliquotaCOFINS,
+                      ValorCOFINS, QuantidadeVendidaCOFINS, ValorAliquotaCOFINS,
+                      CEST);
   except
      if Assigned( FOnErrorVendeItem ) then
         FOnErrorVendeItem(Tratado);

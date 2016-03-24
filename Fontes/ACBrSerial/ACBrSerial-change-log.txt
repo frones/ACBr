@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 24/03/2016
+--ACBrBALMuller, ACBrBALRinnert, ACBrBALToledo2090
+[+] Adição de mais modelos de Balanças ao componente!
+		http://www.projetoacbr.com.br/forum/topic/28900-modelos-de-balan%C3%A7a-novos/
+		por : Juliomar Marchetti
+
+Data: 24/03/2016
 -- ACBrECF --
 [-] Método "LinhaRelatorioGerencial". Correção de Bug causado em 22/03/2016,
     com remoção de Warning em ACBrUtil

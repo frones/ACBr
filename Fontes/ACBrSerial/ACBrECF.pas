@@ -379,8 +379,8 @@ TACBrECF = class( TACBrComponent )
     function GetSubModeloECFClass: String ;
 
     function GetPAFClass: String;
-    function GetDadosReducaoZ: AnsiString;
-    function GetDadosUltimaReducaoZ: AnsiString;
+    function GetDadosReducaoZ: String;
+    function GetDadosUltimaReducaoZ: String;
     function GetDataMovimentoClass: TDateTime;
     function GetDataHoraUltimaReducaoZClass : TDateTime ;
     function GetGrandeTotalClass: Double;
@@ -483,8 +483,8 @@ TACBrECF = class( TACBrComponent )
     Property NumReducoesZRestantes: String read GetNumReducoesZRestantesClass;
 
     { Dados da Reducao Z - Registro 60M }
-    Property DadosReducaoZ : AnsiString  read GetDadosReducaoZ ;
-    Property DadosUltimaReducaoZ : AnsiString  read GetDadosUltimaReducaoZ ;
+    Property DadosReducaoZ : String  read GetDadosReducaoZ ;
+    Property DadosUltimaReducaoZ : String  read GetDadosUltimaReducaoZ ;
     Property DadosReducaoZClass: TACBrECFDadosRZ read GetDadosReducaoZClass;
 
     { Retorna String com todos os valores no formato: Campo = Valor (1 por linha)}
@@ -910,7 +910,7 @@ TACBrECF = class( TACBrComponent )
     function CodificarPaginaDeCodigoECF(ATexto: String): AnsiString;
     function DecodificarPaginaDeCodigoECF(ATexto: AnsiString): String;
 
-    function MontaDadosReducaoZ: AnsiString;
+    function MontaDadosReducaoZ: String;
 
     procedure DAV_Abrir(const AEmissao: TDateTime;
       const ADescrDocumento, ANumero, ASituacao, AVendedor, AObservacao,
@@ -2277,7 +2277,7 @@ begin
   Result := fsECF.Termica ;
 end;
 
-function TACBrECF.MontaDadosReducaoZ: AnsiString;
+function TACBrECF.MontaDadosReducaoZ: String;
 begin
   Result := fsECF.DadosReducaoZClass.MontaDadosReducaoZ;
 end;
@@ -2486,7 +2486,7 @@ begin
   Result := fsECF.NumUltItem ;
 end;
 
-function TACBrECF.GetDadosReducaoZ: AnsiString;
+function TACBrECF.GetDadosReducaoZ: String;
 begin
   if ComandoLOG = '' then
      ComandoLOG := 'DadosReducaoZ' ;
@@ -2500,7 +2500,7 @@ begin
    Result := fsECF.DadosReducaoZClass;
 end;
 
-function TACBrECF.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECF.GetDadosUltimaReducaoZ: String;
 begin
   if ComandoLOG = '' then
      ComandoLOG := 'DadosUltimaReducaoZ' ;
@@ -5147,11 +5147,11 @@ begin
      Buffer := AjustaLinhas(Buffer, Colunas) ;
      SL     := TStringList.Create ;
      try
-        SL.Text := Buffer ;
+        SL.Text := String(Buffer) ;
 
         For Lin := 0 to SL.Count - 1 do
         begin
-           Texto := Texto + SL[Lin] + sLineBreak;
+           Texto := Texto + AnsiString(SL[Lin]) + sLineBreak;
 
            if (Lin mod MaxLinhasBuffer) = 0 then
            begin

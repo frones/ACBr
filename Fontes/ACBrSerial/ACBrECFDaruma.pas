@@ -176,7 +176,7 @@ TACBrECFDaruma = class( TACBrECFClass )
     function GetNumCOOInicial: String; override ;
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     procedure SetDecimaisPreco(AValue: Integer); override;
     procedure SetDecimaisQtd(AValue: Integer); override;
@@ -4946,7 +4946,7 @@ begin
 end;
 
 
-function TACBrECFDaruma.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFDaruma.GetDadosUltimaReducaoZ: String;
 Var RetCmd, S, SS : AnsiString ;
     I :Integer;
     AliqZ : TACBrECFAliquota ;

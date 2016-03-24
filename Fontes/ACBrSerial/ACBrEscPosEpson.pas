@@ -157,7 +157,7 @@ begin
     Cmd128 := '{C';
 
     // Apenas números,
-    ACodigo := OnlyNumber(ACodigo);
+    ACodigo := AnsiString(OnlyNumber(String(ACodigo)));
 
     s := Length(ACodigo);
     if s mod 2 <> 0 then  // Tamanho deve ser Par
@@ -170,7 +170,7 @@ begin
     i := 1;
     while i < s do
     begin
-      Code128c := Code128c + chr(StrToInt(copy(ACodigo,i,2)));
+      Code128c := Code128c + AnsiChr(StrToInt(copy(String(ACodigo),i,2)));
       i := i + 2;
     end;
 
@@ -188,7 +188,7 @@ begin
 
   if CmdBarCode = 'I' then // Cod128
   begin
-    if LeftStr(ACodBar,1) <> '{' then
+    if Copy(String(ACodBar),1,1) <> '{' then
       ACodBar := Cmd128 + ACodBar;
   end;
 

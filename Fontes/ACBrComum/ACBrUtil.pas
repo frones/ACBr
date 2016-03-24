@@ -237,8 +237,8 @@ function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
 function TiraAcentos( const AString : String ) : String ;
 function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
 
-function AjustaLinhas(const Texto: String; Colunas: Integer ;
-   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): String;
+function AjustaLinhas(const Texto: AnsiString; Colunas: Integer ;
+   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
 
@@ -1920,13 +1920,13 @@ end ;
   Se <PadLinhas> for True, Todas as linhas terão o mesmo tamanho de Colunas
     com espaços a esquerda se necessário.
  ---------------------------------------------------------------------------- }
-function AjustaLinhas(const Texto: String; Colunas: Integer ;
-   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): String;
+function AjustaLinhas(const Texto: AnsiString; Colunas: Integer;
+  NumMaxLinhas: Integer; PadLinhas: Boolean): AnsiString;
 Var
   Count,P,I : Integer ;
   Linha, CurrLineBreak, VTexto : String;
 begin
-  VTexto := Texto;
+  VTexto := String(Texto);
   { Trocando todos os #13+#10 por #10 }
   CurrLineBreak := sLineBreak ;
   if (CurrLineBreak <> #13+#10) then
@@ -1960,9 +1960,9 @@ begin
      Linha := copy(VTexto,1,P-1) ;    // Remove #10 (se hover)
 
      if PadLinhas then
-        Result := Result + PadRight( Linha, Colunas) + #10
+        Result := Result + AnsiString(PadRight( Linha, Colunas)) + #10
      else
-        Result := Result + Linha + #10 ;
+        Result := Result + AnsiString(Linha) + #10 ;
 
      Inc(Count) ;
      VTexto := copy(VTexto, P+I, Length(VTexto) ) ;

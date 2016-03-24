@@ -468,7 +468,7 @@ TACBrECFBematech = class( TACBrECFClass )
     function GetNumCOOInicial: String; override ;
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     Function VerificaFimLeitura(var Retorno: AnsiString;
        var TempoLimite: TDateTime) : Boolean ; override ;
@@ -3103,7 +3103,7 @@ begin
      EnviaComando( #81 ) ;
 end;
 
-function TACBrECFBematech.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFBematech.GetDadosUltimaReducaoZ: String;
 Var
   RetCmd, S, SS : AnsiString ;
   I, P : Integer ;

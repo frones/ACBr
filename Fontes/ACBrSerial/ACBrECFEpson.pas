@@ -413,7 +413,7 @@ TACBrECFEpson = class( TACBrECFClass )
        BuscaExata : Boolean; IgnorarCase : Boolean = True  ):
        TACBrECFComprovanteNaoFiscal; override;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
@@ -3588,7 +3588,7 @@ begin
   end ;
 end ;
 
-function TACBrECFEpson.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFEpson.GetDadosUltimaReducaoZ: String;
 var
   Aliq, AliqZ : TACBrECFAliquota ;
   ECFCRZ, DtStr, HrStr : String ;

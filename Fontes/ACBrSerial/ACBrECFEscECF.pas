@@ -289,7 +289,7 @@ TACBrECFEscECF = class( TACBrECFClass )
 
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     function GetEstado: TACBrECFEstado; override ;
     function GetGavetaAberta: Boolean; override ;
@@ -3429,7 +3429,7 @@ begin
   end;
 end;
 
-function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;
+function TACBrECFEscECF.GetDadosUltimaReducaoZ : String ;
 var
   DataStr, ECFCRZ, Reg : String ;
   I, J, N : Integer;

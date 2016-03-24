@@ -499,7 +499,7 @@ TACBrECFDadosRZ = class
     procedure Clear;
     Procedure CalculaValoresVirtuais;
 
-    Function MontaDadosReducaoZ : AnsiString;
+    Function MontaDadosReducaoZ : String;
     procedure AdicionaAliquota( AliqZ: TACBrECFAliquota );
 
     property DataDaImpressora: TDateTime read fsDataDaImpressora write fsDataDaImpressora;
@@ -805,8 +805,8 @@ TACBrECFClass = class
     function GetNumCOOInicial: String; virtual ;
     function GetNumUltimoItem: Integer; virtual ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; Virtual ;
-    function GetDadosReducaoZ: AnsiString; Virtual ;
+    function GetDadosUltimaReducaoZ: String; Virtual ;
+    function GetDadosReducaoZ: String; Virtual ;
     Procedure InitDadosUltimaReducaoZ;
 
     function GetEstado: TACBrECFEstado; virtual ;
@@ -1014,8 +1014,8 @@ TACBrECFClass = class
     Property NumUltItem         : Integer    read GetNumUltimoItem ;
     Property TotalNaoFiscal     : Double     read GetTotalNaoFiscal ;
 
-    Property DadosReducaoZ : AnsiString  read GetDadosReducaoZ ;
-    Property DadosUltimaReducaoZ : AnsiString read GetDadosUltimaReducaoZ ;
+    Property DadosReducaoZ : String  read GetDadosReducaoZ ;
+    Property DadosUltimaReducaoZ : String read GetDadosUltimaReducaoZ ;
     Property DadosReducaoZClass: TACBrECFDadosRZ read fpDadosReducaoZClass;
 
     { Aliquotas de ICMS }
@@ -3119,13 +3119,13 @@ begin
   Result := ''
 end;
 
-function TACBrECFClass.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFClass.GetDadosUltimaReducaoZ: String;
 begin
   Result := '';
   ErroAbstract('DadosUltimaReducaoZ');
 end;
 
-function TACBrECFClass.GetDadosReducaoZ: AnsiString;
+function TACBrECFClass.GetDadosReducaoZ: String;
 Var
   I     : Integer ;
   AliqZ : TACBrECFAliquota ;
@@ -5119,7 +5119,7 @@ begin
   end;
 end;
 
-function TACBrECFDadosRZ.MontaDadosReducaoZ: AnsiString;
+function TACBrECFDadosRZ.MontaDadosReducaoZ: String;
 Var
   I: Integer ;
   S: String;

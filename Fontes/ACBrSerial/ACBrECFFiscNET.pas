@@ -231,7 +231,7 @@ TACBrECFFiscNET = class( TACBrECFClass )
     function GetNumCOOInicial: String; override ;
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;    
+    function GetDadosUltimaReducaoZ: String; override ;
 
     function GetPAF: String; override ;
 
@@ -2947,7 +2947,7 @@ begin
   inherited ArquivoMFD_DLL(NomeArquivo);
 end;
 
-function TACBrECFFiscNET.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFFiscNET.GetDadosUltimaReducaoZ: String;
 var
    RetCmd, S, SS , total : AnsiString ;
    I, J, ECFCRZ, ECFCRO,initotal : Integer;

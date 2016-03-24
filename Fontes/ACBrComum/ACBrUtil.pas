@@ -2154,16 +2154,11 @@ begin
      begin
        try
           CharHex := AnsiChr(StrToInt('$'+Hex));
-          {$IFNDEF COMPILER8_UP}
-          // Delphi 7 não conseguirá processar Strings com Nulos em "StringReplace"
-          if CharHex = #0 then
-            CharHex := '[#0]';
-          {$ENDIF}  
        except
           CharHex := ' ' ;
        end ;
 
-       Result := AnsiString( StringReplace(String(Result), '\x'+Hex, String(CharHex),[rfReplaceAll]) );
+       Result := ReplaceString(Result, '\x'+Hex, String(CharHex) );
        I := 1;
      end
      else
@@ -2171,10 +2166,6 @@ begin
 
      P := PosEx('\x', String(Result), P + I) ;
   end ;
-
-  {$IFNDEF COMPILER8_UP}
-  Result := AnsiString( StringReplace(String(Result), '[#0]', #0, [rfReplaceAll]) );
-  {$ENDIF}
 end ;
 
 {-----------------------------------------------------------------------------

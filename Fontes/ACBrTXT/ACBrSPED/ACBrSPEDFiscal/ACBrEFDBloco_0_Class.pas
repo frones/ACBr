@@ -391,7 +391,6 @@ end;
 procedure TBloco_0.WriteRegistro0000 ;
 var
   strIND_PERFIL: String;
-  strCOD_VER: String;
 begin
   if Assigned(Registro0000) then
   begin
@@ -403,8 +402,6 @@ begin
         pfPerfilC: strIND_PERFIL := 'C';
        end;
 
-       strCOD_VER := ACBrEFDBlocos.CodVerToStr(COD_VER);
-
        Check(funChecaCNPJ(CNPJ), '(0-0000) ENTIDADE: O CNPJ "%s" digitado é inválido!', [CNPJ]);
        Check(funChecaCPF(CPF), '(0-0000) ENTIDADE: O CPF "%s" digitado é inválido!', [CPF]);
        Check(funChecaUF(UF), '(0-0000) ENTIDADE: A UF "%s" digitada é inválido!', [UF]);
@@ -412,7 +409,7 @@ begin
        Check(funChecaMUN(COD_MUN), '(0-0000) ENTIDADE: O código do município "%s" digitado é inválido!', [IntToStr(COD_MUN)]);
        ///
        Add( LFill( '0000' ) +
-            LFill( strCOD_VER ) +
+            LFill( CodVerToStr(COD_VER) ) +
             LFill( Integer(COD_FIN), 1 ) +
             LFill( DT_INI ) +
             LFill( DT_FIN ) +

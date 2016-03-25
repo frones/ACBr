@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+24/03/2016
+[+]     : Novos procedimentos no teste : 
+	    ChecarItensLayoutVersao310 
+	    ChecarLayoutVersao310 
+
+          Henrique Leonardo   
+
+
 14/03/2016
 [+]     : versao Beta 1.1
            Melhorias internas          

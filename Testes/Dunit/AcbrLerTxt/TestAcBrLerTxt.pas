@@ -22,7 +22,7 @@ uses
   {$endif}
   AcbrLerTxtIni,
   pcnNFeRTXT,pcnConversaoNFe,pcnConversao,pcnNFe,pcnAuxiliar,ACBrValidador,
-  ACBrUtil;
+  ACBrUtil,pcnLayoutTXT;
 
 type
 
@@ -32,13 +32,13 @@ type
   strict private
 
   private
-    NFeRTXT         : TNFeRTXT;
-    ArqText         : TStringList;
-    FConteudoArquivo: TStringList;
-    FRegistro       : String;
-    fsComparar      : String;
-    FNFe            : TNFe;
-    FConfig         : TIniAcbrLerTxt;
+    NFeRTXT           : TNFeRTXT;
+    ArqText           : TStringList;
+    FConteudoArquivo  : TStringList;
+    FRegistro         : String;
+    fsComparar        : String;
+    FNFe              : TNFe;
+    FConfig           : TIniAcbrLerTxt;
     procedure LerArquivo;
     procedure Monta( TAG: variant; const Tipo: TpcnTipoCampo = tcStr );
     procedure MontaDec( TAG: double; dDecimal : Integer = 0 );
@@ -63,6 +63,8 @@ type
     property Config     : TIniAcbrLerTxt  Read FConfig    write FConfig;
     Procedure NomeDoArquivo;
     Procedure LerTxt;
+    procedure ChecarItensLayoutVersao310;
+    procedure ChecarLayoutVersao310;
     procedure IdB;
     procedure IdBA02;
     procedure IdBA03;
@@ -2135,6 +2137,8 @@ begin
   sComparar := Registro;
 end;
 
+
+
 procedure TAcBrLerTxtTDD.Finalize;
 begin
   Registro := Registro+'|';
@@ -2400,8 +2404,172 @@ begin
   end;
 end;
 
+procedure TAcBrLerTxtTDD.ChecarItensLayoutVersao310;
+Var
+  sTEmp: TStringList;
+  FLayoutArquivoTXT : TStringList;
+  I: Integer;
+begin
+  sTEmp := TStringList.create;
+  FLayoutArquivoTXT := TStringList.create;
+  try
+    sTEmp.Text  :=  CarregarLayoutTXT('3.10');
+    for I := 0 to sTEmp.Count - 1 do
+      if Trim( sTEmp[i] ) <> '' then
+        FLayoutArquivoTXT.Add(sTEmp[i]);
+
+    CheckEquals( FLayoutArquivoTXT.Count, 119 );
+  finally
+    sTEmp.Free;
+    FLayoutArquivoTXT.Free;
+  end;
+end;
+
+procedure TAcBrLerTxtTDD.ChecarLayoutVersao310;
+Var
+  sTEmp: TStringList;
+  FLayoutArquivoTXT : TStringList;
+  I: Integer;
+begin
+  sTEmp := TStringList.create;
+  FLayoutArquivoTXT := TStringList.create;
+  try
+    sTEmp.Text  :=  CarregarLayoutTXT('3.10');
+    for I := 0 to sTEmp.Count - 1 do
+      if Trim( sTEmp[i] ) <> '' then
+        FLayoutArquivoTXT.Add(sTEmp[i]);
+
+    CheckEquals( UpperCase('<B>       NOTA FISCAL|1'),FLayoutArquivoTXT[0]);
+    CheckEquals( UpperCase('<B01>     A|3.10|^id^'),FLayoutArquivoTXT[1]);
+    CheckEquals( UpperCase('<B01>     B|cUF¨|cNF¨|NatOp¨|indPag¨|mod¨|serie¨|nNF¨|dhEmi¨|dhSaiEnt¨|tpNF¨|idDest¨|cMunFG¨|tpImp¨|tpEmis¨|CDV¨|tpAmb¨|finNFe¨|indFinal¨|indPres¨|procEmi¨|verProc¨|dhCont¨|xJust¨'),FLayoutArquivoTXT[2]);
+    CheckEquals( UpperCase('<BA>   BA02|refNFe¨'),FLayoutArquivoTXT[3]);
+    CheckEquals( UpperCase('<BA03> BA03|cUF¨|AAMM¨|CNPJ¨|Mod¨|serie¨|nNF¨'),FLayoutArquivoTXT[4]);
+    CheckEquals( UpperCase('<BA10> BA10|cUF¨|AAMM¨|IE¨|Mod¨|serie¨|nNF¨'),FLayoutArquivoTXT[5]);
+    CheckEquals( UpperCase('<BA13> BA13|CNPJ¨'),FLayoutArquivoTXT[6]);
+    CheckEquals( UpperCase('<BA14> BA14|CPF¨'),FLayoutArquivoTXT[7]);
+    CheckEquals( UpperCase('<BA19> BA19|refCTe¨'),FLayoutArquivoTXT[8]);
+    CheckEquals( UpperCase('<BA20> BA20|mod¨|nECF¨|nCOO¨'),FLayoutArquivoTXT[9]);
+    CheckEquals( UpperCase('<C01>     C|XNome¨|XFant¨|IE¨|IEST¨|IM¨|CNAE¨|CRT¨'),FLayoutArquivoTXT[10]);
+    CheckEquals( UpperCase('<C01>   C02|CNPJ¨'),FLayoutArquivoTXT[11]);
+    CheckEquals( UpperCase('<C01>  C02a|CPF¨'),FLayoutArquivoTXT[12]);
+    CheckEquals( UpperCase('<C05>   C05|XLgr¨|Nro¨|xCpl¨|xBairro¨|CMun¨|XMun¨|UF¨|CEP¨|CPais¨|XPais¨|Fone¨'),FLayoutArquivoTXT[13]);
+    CheckEquals( UpperCase('<D01>     D|CNPJ¨|XOrgao¨|Matr¨|XAgente¨|Fone¨|UF¨|NDAR¨|DEmi¨|VDAR¨|RepEmi¨|DPag¨'),FLayoutArquivoTXT[14]);
+    CheckEquals( UpperCase('<E01>     E|XNome¨|indIEDest¨|IE¨|ISUF¨|IM¨|EMAIL¨'),FLayoutArquivoTXT[15]);
+    CheckEquals( UpperCase('<E01>   E02|CNPJ¨'),FLayoutArquivoTXT[16]);
+    CheckEquals( UpperCase('<E01>   E03|CPF¨'),FLayoutArquivoTXT[17]);
+    CheckEquals( UpperCase('<E01>  E03a|idEstrangeiro¨'),FLayoutArquivoTXT[18]);
+    CheckEquals( UpperCase('<E05>   E05|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨|CEP¨|CPais¨|XPais¨|Fone¨'),FLayoutArquivoTXT[19]);
+    CheckEquals( UpperCase('<F01>     F|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨'),FLayoutArquivoTXT[20]);
+    CheckEquals( UpperCase('<F01>   F02|CNPJ¨'),FLayoutArquivoTXT[21]);
+    CheckEquals( UpperCase('<F01>  F02a|CPF¨'),FLayoutArquivoTXT[22]);
+    CheckEquals( UpperCase('<G01>     G|XLgr¨|Nro¨|XCpl¨|XBairro¨|CMun¨|XMun¨|UF¨'),FLayoutArquivoTXT[23]);
+    CheckEquals( UpperCase('<G01>   G02|CNPJ¨'),FLayoutArquivoTXT[24]);
+    CheckEquals( UpperCase('<G01>  G02a|CPF¨'),FLayoutArquivoTXT[25]);
+    CheckEquals( UpperCase('<G01>  GA02|CNPJ¨'),FLayoutArquivoTXT[26]);
+    CheckEquals( UpperCase('<G01>  GA03|CPF¨'),FLayoutArquivoTXT[27]);
+    CheckEquals( UpperCase('<H01>     H|NItem¨|InfAdProd¨'),FLayoutArquivoTXT[28]);
+    CheckEquals( UpperCase('<I01>     I|CProd¨|CEAN¨|XProd¨|NCM¨|EXTIPI¨|CFOP¨|UCom¨|QCom¨|VUnCom¨|VProd¨|CEANTrib¨|UTrib¨|QTrib¨|VUnTrib¨|VFrete¨|VSeg¨|VDesc¨|VOutro¨|indTot¨|xPed¨|nItemPed¨|nFCI¨'),FLayoutArquivoTXT[29]);
+    CheckEquals( UpperCase('<I05A> I05a|NVE¨'),FLayoutArquivoTXT[30]);
+    CheckEquals( UpperCase('<I05c> I05c|CEST¨'),FLayoutArquivoTXT[31]);
+    CheckEquals( UpperCase('<I18>   I18|NDI¨|DDI¨|XLocDesemb¨|UFDesemb¨|DDesemb¨|tpViaTransp¨|vAFRMM¨|tpIntermedio¨|CNPJ¨|UFTerceiro¨|CExportador¨'),FLayoutArquivoTXT[32]);
+    CheckEquals( UpperCase('<I25>   I25|NAdicao¨|NSeqAdic¨|CFabricante¨|VDescDI¨|nDraw¨'),FLayoutArquivoTXT[33]);
+    CheckEquals( UpperCase('<I50>   I50|nDraw¨'),FLayoutArquivoTXT[34]);
+    CheckEquals( UpperCase('<I52>   I52|nRE¨|chNFe¨|qExport¨'),FLayoutArquivoTXT[35]);
+    CheckEquals( UpperCase('<J01>    JA|tpOp¨|chassi¨|cCor¨|xCor¨|pot¨|Cilin¨|pesoL¨|pesoB¨|NSerie¨|TpComb¨|NMotor¨|CMT¨|Dist¨|AnoMod¨|AnoFab¨|TpPint¨|TpVeic¨|EspVeic¨|VIN¨|CondVeic¨|CMod¨|cCorDENATRAN¨|lota¨|tpRest¨'),FLayoutArquivoTXT[36]);
+    CheckEquals( UpperCase('<K01>     K|NLote¨|QLote¨|DFab¨|DVal¨|VPMC¨'),FLayoutArquivoTXT[37]);
+    CheckEquals( UpperCase('<L01>     L|TpArma¨|NSerie¨|NCano¨|Descr¨'),FLayoutArquivoTXT[38]);
+    CheckEquals( UpperCase('<LA>     LA|CProdANP¨|PpMixGN¨|CODIF¨|QTemp¨|UFCons¨'),FLayoutArquivoTXT[39]);
+    CheckEquals( UpperCase('<LA07> LA07|QBCProd¨|VAliqProd¨|VCIDE¨'),FLayoutArquivoTXT[40]);
+    CheckEquals( UpperCase('<LB>     LB|nRECOPI¨'),FLayoutArquivoTXT[41]);
+    CheckEquals( UpperCase('<M01>     M|VTotTrib¨'),FLayoutArquivoTXT[42]);
+    CheckEquals( UpperCase('<N01>     N'),FLayoutArquivoTXT[43]); //ok
+    CheckEquals( UpperCase('<N02>   N02|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨'),FLayoutArquivoTXT[44]);
+    CheckEquals( UpperCase('<N03>   N03|Orig¨|CST¨|ModBC¨|VBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨'),FLayoutArquivoTXT[45]);
+    CheckEquals( UpperCase('<N04>   N04|Orig¨|CST¨|ModBC¨|PRedBC¨|VBC¨|PICMS¨|VICMS¨|VICMSDeson¨|MotDesICMS¨'),FLayoutArquivoTXT[46]);
+    CheckEquals( UpperCase('<N05>   N05|Orig¨|CST¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|VICMSDeson¨|MotDesICMS¨'),FLayoutArquivoTXT[47]);
+    CheckEquals( UpperCase('<N06>   N06|Orig¨|CST¨|vICMSDeson¨|MotDesICMS¨'),FLayoutArquivoTXT[48]);
+    CheckEquals( UpperCase('<N07>   N07|Orig¨|CST¨|ModBC¨|PRedBC¨|VBC¨|PICMS¨|VICMSOp¨|PDif¨|VICMSDif¨|VICMS¨'),FLayoutArquivoTXT[49]);
+    CheckEquals( UpperCase('<N08>   N08|Orig¨|CST¨|VBCSTRet¨|VICMSSTRet¨'),FLayoutArquivoTXT[50]);
+    CheckEquals( UpperCase('<N09>   N09|Orig¨|CST¨|ModBC¨|PRedBC¨|VBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|VICMSDeson¨|MotDesICMS¨'),FLayoutArquivoTXT[51]);
+    CheckEquals( UpperCase('<N10>   N10|Orig¨|CST¨|ModBC¨|VBC¨|PRedBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|VICMSDeson¨|MotDesICMS¨'),FLayoutArquivoTXT[52]);
+    CheckEquals( UpperCase('<N10a> N10a|Orig¨|CST¨|ModBC¨|VBC¨|PRedBC¨|PICMS¨|VICMS¨|ModBCST¨|PMVAST¨|PRedBCST¨|VBCST¨|PICMSST¨|VICMSST¨|pBCOp¨|UFST¨'),FLayoutArquivoTXT[53]);
+    CheckEquals( UpperCase('<N10b> N10b|Orig¨|CST¨|vBCSTRet¨|vICMSSTRet¨|vBCSTDest¨|vICMSSTDest¨'),FLayoutArquivoTXT[54]);
+    CheckEquals( UpperCase('<N10c> N10c|Orig¨|CSOSN¨|pCredSN¨|vCredICMSSN¨'),FLayoutArquivoTXT[55]);
+    CheckEquals( UpperCase('<N10d> N10d|Orig¨|CSOSN¨'),FLayoutArquivoTXT[56]);
+    CheckEquals( UpperCase('<N10e> N10e|Orig¨|CSOSN¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨|pCredSN¨|vCredICMSSN¨'),FLayoutArquivoTXT[57]);
+    CheckEquals( UpperCase('<N10f> N10f|Orig¨|CSOSN¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨'),FLayoutArquivoTXT[58]);
+    CheckEquals( UpperCase('<N10g> N10g|Orig¨|CSOSN¨|vBCSTRet¨|vICMSSTRet¨'),FLayoutArquivoTXT[59]);
+    CheckEquals( UpperCase('<N10h> N10h|Orig¨|CSOSN¨|modBC¨|vBC¨|pRedBC¨|pICMS¨|vICMS¨|modBCST¨|pMVAST¨|pRedBCST¨|vBCST¨|pICMSST¨|vICMSST¨|pCredSN¨|vCredICMSSN¨'),FLayoutArquivoTXT[60]);
+    CheckEquals( UpperCase('<NA>     NA|vBCUFDest¨|pFCPUFDest¨|pICMSUFDest¨|pICMSInter¨|pICMSInterPart¨|vFCPUFDest¨|vICMSUFDest¨|vICMSUFRemet¨'),FLayoutArquivoTXT[61]);
+    CheckEquals( UpperCase('<O01>     O|ClEnq¨|CNPJProd¨|CSelo¨|QSelo¨|CEnq¨'),FLayoutArquivoTXT[62]);
+    CheckEquals( UpperCase('<O07>   O07|CST¨|VIPI¨'),FLayoutArquivoTXT[63]);
+    CheckEquals( UpperCase('<O07>   O10|VBC¨|PIPI¨|VIPI¨'),FLayoutArquivoTXT[64]);
+    CheckEquals( UpperCase('<O07>   O11|QUnid¨|VUnid¨|VIPI¨'),FLayoutArquivoTXT[65]);
+    CheckEquals( UpperCase('<O08>   O08|CST¨'),FLayoutArquivoTXT[66]);
+    CheckEquals( UpperCase('<P01>     P|VBC¨|VDespAdu¨|VII¨|VIOF¨'),FLayoutArquivoTXT[67]);
+    CheckEquals( UpperCase('<Q01>     Q'),FLayoutArquivoTXT[68]); //ok
+    CheckEquals( UpperCase('<Q02>   Q02|CST¨|VBC¨|PPIS¨|VPIS¨'),FLayoutArquivoTXT[69]);
+    CheckEquals( UpperCase('<Q03>   Q03|CST¨|QBCProd¨|VAliqProd¨|VPIS¨'),FLayoutArquivoTXT[70]);
+    CheckEquals( UpperCase('<Q04>   Q04|CST¨'),FLayoutArquivoTXT[71]);
+    CheckEquals( UpperCase('<Q05>   Q05|CST¨|VPIS¨'),FLayoutArquivoTXT[72]);
+    CheckEquals( UpperCase('<Q05>   Q07|VBC¨|PPIS¨|VPIS¨'),FLayoutArquivoTXT[73]);
+    CheckEquals( UpperCase('<Q05>   Q10|QBCProd¨|VAliqProd¨'),FLayoutArquivoTXT[74]);
+    CheckEquals( UpperCase('<R01>     R|VPIS¨'),FLayoutArquivoTXT[75]);
+    CheckEquals( UpperCase('<R01>   R02|VBC¨|PPIS¨'),FLayoutArquivoTXT[76]);
+    CheckEquals( UpperCase('<R01>   R04|QBCProd¨|VAliqProd¨'),FLayoutArquivoTXT[77]);
+    CheckEquals( UpperCase('<S01>     S'),FLayoutArquivoTXT[78]); //ok
+    CheckEquals( UpperCase('<S02>   S02|CST¨|VBC¨|PCOFINS¨|VCOFINS¨'),FLayoutArquivoTXT[79]);
+    CheckEquals( UpperCase('<S03>   S03|CST¨|QBCProd¨|VAliqProd¨|VCOFINS¨'),FLayoutArquivoTXT[80]);
+    CheckEquals( UpperCase('<S04>   S04|CST¨'),FLayoutArquivoTXT[81]);
+    CheckEquals( UpperCase('<S05>   S05|CST¨|VCOFINS¨'),FLayoutArquivoTXT[82]);
+    CheckEquals( UpperCase('<S05>   S07|VBC¨|PCOFINS¨'),FLayoutArquivoTXT[83]);
+    CheckEquals( UpperCase('<S05>   S09|QBCProd¨|VAliqProd¨'),FLayoutArquivoTXT[84]);
+    CheckEquals( UpperCase('<T01>     T|VCOFINS¨'),FLayoutArquivoTXT[85]);
+    CheckEquals( UpperCase('<T01>   T02|VBC¨|PCOFINS¨'),FLayoutArquivoTXT[86]);
+    CheckEquals( UpperCase('<T01>   T04|QBCProd¨|VAliqProd¨'),FLayoutArquivoTXT[87]);
+    CheckEquals( UpperCase('<U01>     U|VBC¨|VAliq¨|VISSQN¨|CMunFG¨|CListServ¨|VDeducao¨|VOutro¨|VDescIncond¨|VDescCond¨|VISSRet¨|IndISS¨|CServico¨|CMun¨|CPais¨|NProcesso¨|IndIncentivo¨'),FLayoutArquivoTXT[88]); //ok
+    CheckEquals( UpperCase('<UA>     UA|PDevol¨|VIPIDevol¨'),FLayoutArquivoTXT[89]);
+    CheckEquals( UpperCase('<W01>     W'),FLayoutArquivoTXT[90]);
+    CheckEquals( UpperCase('<W02>   W02|vBC¨|vICMS¨|vICMSDeson¨|vBCST¨|vST¨|vProd¨|vFrete¨|vSeg¨|vDesc¨|vII¨|vIPI¨|vPIS¨|vCOFINS¨|vOutro¨|vNF¨|vTotTrib¨'),FLayoutArquivoTXT[91]);
+    CheckEquals( UpperCase('<W04c> W04c|vFCPUFDest¨'),FLayoutArquivoTXT[92]);
+    CheckEquals( UpperCase('<W04e> W04e|vICMSUFDest¨'),FLayoutArquivoTXT[93]);
+    CheckEquals( UpperCase('<W04g> W04g|vICMSUFRemet¨'),FLayoutArquivoTXT[94]);
+    CheckEquals( UpperCase('<W17>   W17|VServ¨|VBC¨|VISS¨|VPIS¨|VCOFINS¨|dCompet¨|vDeducao¨|vOutro¨|vDescIncond¨|vDescCond¨|vISSRet¨|cRegTrib¨'),FLayoutArquivoTXT[95]);
+    CheckEquals( UpperCase('<W23>   W23|VRetPIS¨|VRetCOFINS¨|VRetCSLL¨|VBCIRRF¨|VIRRF¨|VBCRetPrev¨|VRetPrev¨'),FLayoutArquivoTXT[96]);
+    CheckEquals( UpperCase('<X01>     X|ModFrete¨'),FLayoutArquivoTXT[97]);
+    CheckEquals( UpperCase('<X03>   X03|XNome¨|IE¨|XEnder¨|XMun¨|UF¨'),FLayoutArquivoTXT[98]);
+    CheckEquals( UpperCase('<X03>   X04|CNPJ¨'),FLayoutArquivoTXT[99]);
+    CheckEquals( UpperCase('<X03>   X05|CPF¨'),FLayoutArquivoTXT[100]);
+    CheckEquals( UpperCase('<X11>   X11|VServ¨|VBCRet¨|PICMSRet¨|VICMSRet¨|CFOP¨|CMunFG¨'),FLayoutArquivoTXT[101]);
+    CheckEquals( UpperCase('<X18>   X18|Placa¨|UF¨|RNTC¨'),FLayoutArquivoTXT[102]);
+    CheckEquals( UpperCase('<X22>   X22|Placa¨|UF¨|RNTC¨|Vagao¨|Balsa¨'),FLayoutArquivoTXT[103]);
+    CheckEquals( UpperCase('<X26>   X26|QVol¨|Esp¨|Marca¨|NVol¨|PesoL¨|PesoB¨'),FLayoutArquivoTXT[104]);
+    CheckEquals( UpperCase('<X26>   X33|NLacre¨'),FLayoutArquivoTXT[105]);
+    CheckEquals( UpperCase('<Y01>     Y'),FLayoutArquivoTXT[106]);
+    CheckEquals( UpperCase('<Y02>   Y02|NFat¨|VOrig¨|VDesc¨|VLiq¨'),FLayoutArquivoTXT[107]);
+    CheckEquals( UpperCase('<Y07>   Y07|NDup¨|DVenc¨|VDup¨'),FLayoutArquivoTXT[108]);
+    CheckEquals( UpperCase('<YA>     YA|TPag¨|VPag¨|CNPJ¨|TBand¨|CAut¨'),FLayoutArquivoTXT[109]);
+    CheckEquals( UpperCase('<Z01>     Z|InfAdFisco¨|InfCpl¨'),FLayoutArquivoTXT[110]);
+    CheckEquals( UpperCase('<Z04>   Z04|XCampo¨|XTexto¨'),FLayoutArquivoTXT[111]);
+    CheckEquals( UpperCase('<Z07>   Z07|XCampo¨|XTexto¨'),FLayoutArquivoTXT[112]);
+    CheckEquals( UpperCase('<Z10>   Z10|NProc¨|IndProc¨'),FLayoutArquivoTXT[113]);
+    CheckEquals( UpperCase('<ZA>     ZA|UFSaidaPais¨|XLocExporta¨|XLocDespacho¨'),FLayoutArquivoTXT[114]);
+    CheckEquals( UpperCase('<ZB>     ZB|XNEmp¨|XPed¨|XCont¨'),FLayoutArquivoTXT[115]);
+    CheckEquals( UpperCase('<ZC>     ZB|Safra¨|Ref¨|QTotMes¨|QTotAnt¨|QTotGer¨|VFor¨|VTotDed¨|VLiqFor¨'),FLayoutArquivoTXT[116]);
+    CheckEquals( UpperCase('<ZC04> ZC04|Dia¨|Qtde¨'),FLayoutArquivoTXT[117]);
+    CheckEquals( UpperCase('<ZC10> ZC10|XDed¨|VDed¨'),FLayoutArquivoTXT[118]);
+  finally
+    sTEmp.Free;
+    FLayoutArquivoTXT.Free;
+  end;
+end;
+
 
 initialization
   // Register any test cases with the test runner
   RegisterTest(TAcBrLerTxtTDD.Suite);
 end.
+
+
+
+

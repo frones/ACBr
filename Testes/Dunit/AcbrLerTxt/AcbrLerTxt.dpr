@@ -30,7 +30,8 @@ uses
   IniPersist in 'Fontes\IniPersist.pas',
   pcnConversaoNFe in '..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnConversaoNFe.pas',
   pcnConversao in '..\..\..\Fontes\PCNComum\pcnConversao.pas',
-  pcnNFeRTXT in '..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeRTXT.pas';
+  pcnNFeRTXT in '..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnNFeRTXT.pas',
+  pcnLayoutTXT in '..\..\..\Fontes\ACBrDFe\ACBrNFe\PCNNFe\pcnLayoutTXT.pas';
 
 {$R *.RES}
 begin

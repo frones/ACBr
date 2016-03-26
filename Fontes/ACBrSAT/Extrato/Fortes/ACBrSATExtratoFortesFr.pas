@@ -191,7 +191,9 @@ type
     rlbRodape: TRLBand;
     rlbTroco: TRLBand;
     RLDraw1: TRLDraw;
+    RLDraw10: TRLDraw;
     RLDraw11: TRLDraw;
+    RLDraw12: TRLDraw;
     RLDraw13: TRLDraw;
     RLDraw3: TRLDraw;
     rlbsCabecalho: TRLSubDetail;
@@ -898,6 +900,10 @@ begin
       if (Filtro = fiNenhum) and (PrinterName <> '') then
         RLPrinter.PrinterName := PrinterName;
 
+      //Para impressoras sem guilhotina não cortar no QrCorde
+      pEspacoFinal.Height := EspacoFinal;
+      pEspacoFinalCan.Height  := EspacoFinal;
+
       // Largura e Margens do Relatório //
       RLLayout.Width := LarguraBobina;
       RLLayout.Margins.LeftMargin   := Margens.Esquerda;
@@ -910,10 +916,6 @@ begin
       RLLayout.PageSetup.PaperSize   := fpCustom ;
       RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
       RLLayout.PageSetup.PaperHeight := CalcularTamanhoDaPagina( RLLayout );
-
-      //Para impressoras sem guilhotina não cortar no QrCorde
-      pEspacoFinal.Height := EspacoFinal;
-      pEspacoFinalCan.Height  := EspacoFinal;
 
       if Filtro = fiNenhum then
       begin

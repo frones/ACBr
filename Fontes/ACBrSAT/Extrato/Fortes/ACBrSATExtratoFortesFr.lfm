@@ -1,18 +1,18 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   Left = 400
-  Height = 778
+  Height = 741
   Top = 118
   Width = 738
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 778
+  ClientHeight = 741
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.4.4.0'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
-    Top = 2
+    Top = -496
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -35,7 +35,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 8
-      Height = 297
+      Height = 279
       Top = 668
       Width = 286
       AutoSize = True
@@ -193,14 +193,31 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object pEspacoFinal: TRLPanel
         Left = 0
-        Height = 32
+        Height = 14
         Top = 265
         Width = 286
         Align = faBottom
+        Color = clWhite
+        ParentColor = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Transparent = False
+        object RLDraw10: TRLDraw
+          Left = 0
+          Height = 1
+          Top = 13
+          Width = 286
+          Align = faBottom
+          Angle = 0
+          DrawKind = dkLine
+          Pen.Style = psDot
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
       end
     end
     object rlsbDetItem: TRLSubDetail
@@ -1444,9 +1461,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
   end
   object rlCancelamento: TRLReport
-    Left = 352
+    Left = 328
     Height = 1134
-    Top = 5
+    Top = -344
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -1801,6 +1818,20 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        object RLDraw12: TRLDraw
+          Left = 0
+          Height = 1
+          Top = 16
+          Width = 286
+          Align = faBottom
+          Angle = 0
+          DrawKind = dkLine
+          Pen.Style = psDot
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
       end
     end
     object rlbCabecalhoCan: TRLBand

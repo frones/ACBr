@@ -1,8 +1,8 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 406
-  Top = 118
+  Left = 389
+  Top = 117
   Width = 763
-  Height = 826
+  Height = 780
   Caption = 'ACBrSATExtratoFortes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,8 +16,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object rlVenda: TRLReport
-    Left = 8
-    Top = 2
+    Left = 16
+    Top = 0
     Width = 302
     Height = 1512
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
@@ -41,7 +41,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 668
       Width = 286
-      Height = 297
+      Height = 279
       AutoSize = True
       BandType = btSummary
       object RLDraw2: TRLDraw
@@ -157,8 +157,20 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 265
         Width = 286
-        Height = 32
+        Height = 14
         Align = faBottom
+        Color = clWhite
+        ParentColor = False
+        Transparent = False
+        object RLDraw10: TRLDraw
+          Left = 0
+          Top = 13
+          Width = 286
+          Height = 1
+          Align = faBottom
+          DrawKind = dkLine
+          Pen.Style = psDot
+        end
       end
     end
     object rlsbDetItem: TRLSubDetail
@@ -1071,8 +1083,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
   end
   object rlCancelamento: TRLReport
-    Left = 352
-    Top = 5
+    Left = 328
+    Top = 0
     Width = 302
     Height = 1134
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
@@ -1339,6 +1351,15 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Height = 17
         Align = faTop
+        object RLDraw12: TRLDraw
+          Left = 0
+          Top = 16
+          Width = 286
+          Height = 1
+          Align = faBottom
+          DrawKind = dkLine
+          Pen.Style = psDot
+        end
       end
     end
     object rlbCabecalhoCan: TRLBand

@@ -23,6 +23,10 @@ Type
     FDecvSeg      : Integer;
     FDecvDesc     : Integer;
     FDecvOutro    : Integer;
+    fIntcNF       : Integer;
+    fIntcDV       : Integer;
+    fIntCCEP      : Integer;
+    fIntECEP      : Integer;
 
     FSettingsFile : String;
   Public
@@ -30,28 +34,42 @@ Type
     Property Versao       : Widestring  read FVersao      write fVersao;
     [IniValue('CONFIGUR'  ,'StrId'      ,'')]
     Property StrId        : Widestring  read FStrId       write fStrId;
-    [IniValue('CONFIGUR'  ,'IntnNF'     ,'6')]
-    Property  IntnNF      : Integer     read fIntnNF      write fIntnNF;
     [IniValue('CONFIGUR'  ,'StrtpAmb'    ,'0')]
     Property  StrtpAmb    : Widestring  read fStrtpAmb    write fStrtpAmb;
-    [IniValue('CONFIGUR'  ,'DecqCom'    ,'4')]
+
+    [IniValue('CONFIGURiDB' ,'IntcNF' ,'8')]
+    Property IntcNF     : Integer     read fIntcNF   write fIntcNF;
+    [IniValue('CONFIGURiDB' ,'IntnNF' ,'6')]
+    Property  IntnNF      : Integer     read fIntnNF      write fIntnNF;
+    [IniValue('CONFIGURiDB' ,'IntcDV' ,'1')]
+    Property  IntcDV       : Integer    read fIntcDV      write fIntcDV;
+
+    [IniValue('CONFIGURidC' ,'IntCCEP' ,'8')]
+    Property  IntCCEP      : Integer    read fIntCCEP     write fIntCCEP;
+
+    [IniValue('CONFIGURIdE' ,'IntECEP' ,'8')]
+    Property  IntECEP      : Integer    read fIntECEP     write fIntECEP;
+
+    [IniValue(' '  ,'DecqCom'    ,'4')]
     Property DecqCom      : Integer     read FDecqCom     write FDecqCom;
-    [IniValue('CONFIGUR'  ,'DecvUnCom'  ,'10')]
+    [IniValue('CONFIGURIdI'  ,'DecvUnCom'  ,'10')]
     Property DecvUnCom    : Integer     read FDecvUnCom   write FDecvUnCom;
-    [IniValue('CONFIGUR'  ,'DecvProd'   ,'2')]
+    [IniValue('CONFIGURIdI'  ,'DecvProd'   ,'2')]
     Property DecvProd     : Integer     read FDecvProd    write FDecvProd;
-    [IniValue('CONFIGUR'  ,'DecqTrib'   ,'4')]
+    [IniValue('CONFIGURIdI'  ,'DecqTrib'   ,'4')]
     Property DecqTrib     : Integer     read FDecqTrib    write FDecqTrib;
-    [IniValue('CONFIGUR'  ,'DecvUnTrib' ,'10')]
+    [IniValue('CONFIGURIdI'  ,'DecvUnTrib' ,'10')]
     Property DecvUnTrib   : Integer     read FDecvUnTrib  write FDecvUnTrib;
-    [IniValue('CONFIGUR'  ,'DecvFrete'  ,'2')]
+    [IniValue('CONFIGURIdI'  ,'DecvFrete'  ,'2')]
     Property DecvFrete    : Integer     read FDecvFrete   write FDecvFrete;
-    [IniValue('CONFIGUR'  ,'DecvSeg'    ,'2')]
+    [IniValue('CONFIGURIdI'  ,'DecvSeg'    ,'2')]
     Property DecvSeg      : Integer     read FDecvSeg     write FDecvSeg;
-    [IniValue('CONFIGUR'  ,'DecvDesc'   ,'2')]
+    [IniValue('CONFIGURIdI'  ,'DecvDesc'   ,'2')]
     Property DecvDesc     : Integer     read FDecvDesc    write FDecvDesc;
-    [IniValue('CONFIGUR'  ,'DecvOutro'  ,'2')]
+    [IniValue('CONFIGURIdI'  ,'DecvOutro'  ,'2')]
     Property DecvOutro    : Integer     read FDecvOutro   write FDecvOutro;
+
+
 
     procedure Save;
     procedure Load;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2016
+[+]     : Novas configuraçoes no ini
+	  Melhorias em Varios procedimentos de Testes
+
+          Henrique Leonardo   
 
 24/03/2016
 [+]     : Novos procedimentos no teste : 

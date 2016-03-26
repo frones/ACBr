@@ -40,15 +40,23 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 26/03/2016
+-- ACBrECFVirtual --
+[-] Correções no método "CancelaCupom".
+    - Erro "List index () out of bounds", quando todos os Itens do Cupom já
+      estavam cancelados
+    - Rotina não considerava o fato do Item já estar cancelado, subtraindo o
+      mesmo novamente dos totalizadores    (por: DSA)
+
+--ACBrBALMuller, ACBrBALRinnert, ACBrBALToledo2090 --
 [-] Correção nas units novas das balanças
-		http://www.projetoacbr.com.br/forum/topic/28952-erro-ao-re-compilar-acbr-trunk2-acbr_serialdpk/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/28952-erro-ao-re-compilar-acbr-trunk2-acbr_serialdpk/
+    por : Juliomar Marchetti
 		
 Data: 24/03/2016
---ACBrBALMuller, ACBrBALRinnert, ACBrBALToledo2090
+--ACBrBALMuller, ACBrBALRinnert, ACBrBALToledo2090 --
 [+] Adição de mais modelos de Balanças ao componente!
-		http://www.projetoacbr.com.br/forum/topic/28900-modelos-de-balan%C3%A7a-novos/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/28900-modelos-de-balan%C3%A7a-novos/
+    por : Juliomar Marchetti
 
 Data: 24/03/2016
 -- ACBrECF --

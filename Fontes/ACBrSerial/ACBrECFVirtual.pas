@@ -1941,7 +1941,7 @@ procedure TACBrECFVirtualClass.SubtotalizaCupom(DescontoAcrescimo: Double;
        MensagemRodape : AnsiString );
 var
   ValorTotal: Double;
-  PosAliq, I: Integer;
+  PosAliqItem, I: Integer;
 begin
   GravaLog( ComandoLOG );
 
@@ -1981,10 +1981,10 @@ begin
         with fpCupom.Itens[I] do
         begin
           ValorTotal := TotalLiquido;
-          PosAliq    := AliqPos;
+          PosAliqItem:= AliqPos;
         end;
 
-        with fpAliquotas[ PosAliq ] do
+        with fpAliquotas[ PosAliqItem ] do
           Total := max(Total - ValorTotal, 0) ;
       end;
 
@@ -1995,10 +1995,10 @@ begin
         with fpCupom.Aliquotas[I] do
         begin
           ValorTotal := TotalLiquido;
-          PosAliq    := AliqPos;
+          PosAliqItem:= AliqPos;
         end;
 
-        with fpAliquotas[ PosAliq ] do
+        with fpAliquotas[ PosAliqItem ] do
           Total := max(Total + ValorTotal, 0) ;
       end;
     end;
@@ -2107,7 +2107,7 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaCupom(NumCOOCancelar: Integer);
 Var
-  I, PosAliq, OldCOO: Integer;
+  I, PosAliqItem, OldCOO: Integer;
   TotalAliq, SubTotalBruto: Double;
   PermiteCancelamento, CupomEstaAberto, AliquotasRemovidas: Boolean;
 begin
@@ -2172,11 +2172,11 @@ begin
       begin
         with fpCupom.Aliquotas[I] do
         begin
-          PosAliq   := AliqPos;
-          TotalAliq := Total;
+          PosAliqItem := AliqPos;
+          TotalAliq   := Total;
         end;
 
-        with fpAliquotas[ PosAliq ] do
+        with fpAliquotas[ PosAliqItem ] do
           Total := Max( RoundTo(Total - TotalAliq,-2), 0) ;
       end;
     end;
@@ -2186,17 +2186,22 @@ begin
     begin
       with fpCupom.Itens[I] do
       begin
-        if not AliquotasRemovidas then     // Já removeu Aliquotas no passo anterior ?
-          with fpAliquotas[ PosAliq ] do
-            Total := Max( RoundTo(Total - TotalLiquido,-2), 0) ;
-
-        if DescAcres < 0 then
+        if Qtd > 0 then // Verifica se Item já não foi cancelado
         begin
-          fpTotalDescontos := fpTotalDescontos + DescAcres;
-          SubTotalBruto    := SubTotalBruto    - DescAcres;
-        end
-        else
-          fpTotalAcrescimos := fpTotalAcrescimos - DescAcres;
+          if not AliquotasRemovidas then     // Já removeu Aliquotas no passo anterior ?
+          begin
+            with fpAliquotas[ AliqPos ] do
+              Total := Max( RoundTo(Total - TotalLiquido,-2), 0) ;
+          end;
+
+          if DescAcres < 0 then
+          begin
+            fpTotalDescontos := fpTotalDescontos + DescAcres;
+            SubTotalBruto    := SubTotalBruto    - DescAcres;
+          end
+          else
+            fpTotalAcrescimos := fpTotalAcrescimos - DescAcres;
+        end;
       end;
     end;
 

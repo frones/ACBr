@@ -60,7 +60,7 @@ type
 implementation
 Uses ACBrBAL,  
      {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-     SysUtils ;
+     SysUtils, ACBrConsts;
 
 { TACBrBALGertecSerial }
 
@@ -115,8 +115,8 @@ begin
         Resposta := copy(Resposta,1,Length(Resposta)-1) ;
 
      { Ajustando o separador de Decimal corretamente }
-     Resposta := StringReplace(Resposta,'.',FormatSettings.DecimalSeparator,[rfReplaceAll]) ;
-     Resposta := StringReplace(Resposta,',',FormatSettings.DecimalSeparator,[rfReplaceAll]) ;
+     Resposta := StringReplace(Resposta,'.',DecimalSeparator,[rfReplaceAll]) ;
+     Resposta := StringReplace(Resposta,',',DecimalSeparator,[rfReplaceAll]) ;
 
      try
        fpUltimoPesoLido := StrToFloat(Resposta)

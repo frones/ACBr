@@ -60,7 +60,7 @@ type
 implementation
 Uses ACBrBAL,  
      {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-     SysUtils ;
+     SysUtils, ACBrConsts, ACBrUtil ;
 
 { TACBrBALGertecSerial }
 
@@ -95,17 +95,8 @@ begin
 end;
 
 procedure TACBrBALMuller.LeSerial( MillisecTimeOut : Integer) ;
-function SoNumero(fField : String): String;
-var
-  I : Byte;
-begin
-   Result := '';
-   for I := 1 To Length(fField) do
-       if fField [I] In ['0'..'9'] Then
-            Result := Result + fField [I];
-end;
 Var
-  Resposta : WideString ;
+  Resposta : String ;
 begin
   fpUltimoPesoLido := 0 ;
   fpUltimaResposta := '' ;
@@ -124,10 +115,10 @@ begin
      if copy(Resposta,Length(Resposta),1) = ETX then
         Resposta := copy(Resposta,1,Length(Resposta)-1)
      else
-        Resposta := SoNumero(Resposta) ;
+        Resposta := OnlyNumber(Resposta) ;
      { Ajustando o separador de Decimal corretamente }
-     Resposta := StringReplace(Resposta,'.',FormatSettings.DecimalSeparator,[rfReplaceAll]) ;
-     Resposta := StringReplace(Resposta,',',FormatSettings.DecimalSeparator,[rfReplaceAll]) ;
+     Resposta := StringReplace(Resposta,'.',DecimalSeparator,[rfReplaceAll]) ;
+     Resposta := StringReplace(Resposta,',',DecimalSeparator,[rfReplaceAll]) ;
      try
        fpUltimoPesoLido := StrToFloat(Resposta)
      except

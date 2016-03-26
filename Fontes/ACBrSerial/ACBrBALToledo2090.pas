@@ -78,10 +78,8 @@ end;
 
 procedure TACBrBALToledo2090.LeSerial(MillisecTimeOut: Integer);
 Var
-  Resposta : AnsiString ;
+  Resposta : String ;
   Decimais : Integer ;
-  St2      : AnsiChar ;
-  PI,PF    : Integer ;
   Protocolo: String;
   lStrListDados : TStringList;
 begin

@@ -1,18 +1,18 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 621
-  Height = 741
-  Top = 65
+  Left = 400
+  Height = 778
+  Top = 118
   Width = 738
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 741
+  ClientHeight = 778
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.0.4'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
-    Top = -8
+    Top = 2
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -35,7 +35,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 8
-      Height = 265
+      Height = 297
       Top = 668
       Width = 286
       AutoSize = True
@@ -186,6 +186,17 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         CheckSumMethod = cmNone
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pEspacoFinal: TRLPanel
+        Left = 0
+        Height = 32
+        Top = 265
+        Width = 286
+        Align = faBottom
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -1435,7 +1446,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   object rlCancelamento: TRLReport
     Left = 352
     Height = 1134
-    Top = 0
+    Top = 5
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -1458,7 +1469,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbCanRodape: TRLBand
       Left = 8
-      Height = 523
+      Height = 540
       Top = 303
       Width = 286
       AutoSize = True
@@ -1775,6 +1786,17 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         CheckSumMethod = cmNone
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object pEspacoFinalCan: TRLPanel
+        Left = 0
+        Height = 17
+        Top = 523
+        Width = 286
+        Align = faTop
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0

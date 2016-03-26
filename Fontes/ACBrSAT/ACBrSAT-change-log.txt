@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/03/2016
+-- ACBrSATExtratoFortes, ACBrSATExtratoFortesFr --
+[*] Adicionada a propriedade "EspacoFinal: Integer", que permite forçar um
+    avanço de papel, para que o mesmo fique posicionado para o Corte, corretamente
+    http://www.projetoacbr.com.br/forum/topic/28953-acbrsatextratofortes-melhoria/
+
 Data: 23/03/2016
 -- pcnCFeW --
 [-] Conteudo do campo "CFe.InfAdic.infCpl", tinha seu espaçamento interno

@@ -57,12 +57,13 @@ const
 
 type
 
-  { TACBrSATExtratoFortes }
+  { TACBrSATExtratoFortesClass }
 
   TACBrSATExtratoFortesClass = class( TACBrSATExtratoClass )
   private
     fLarguraBobina: Integer;
     fMargens: TACBrSATExtratoMargem;
+    fEspacoFinal: integer;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -70,6 +71,7 @@ type
   published
     property LarguraBobina : Integer read fLarguraBobina  write fLarguraBobina default 302;
     property Margens       : TACBrSATExtratoMargem read fMargens write fMargens;
+    property EspacoFinal   : Integer read fEspacoFinal write fEspacoFinal default 0;
     property PrinterName;
   end ;
 
@@ -83,6 +85,7 @@ begin
 
   fMargens := TACBrSATExtratoMargem.create;
   fLarguraBobina := 302;
+  fEspacoFinal   := 0;
   fpAbout := 'ACBrSATExtratoFortes ver: ' + CACBrSATExtratoFortes_Versao  ;
 end;
 

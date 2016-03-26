@@ -164,6 +164,7 @@ type
     mLinhaItem: TRLMemo;
     pGap6: TRLPanel;
     pGap7: TRLPanel;
+    pEspacoFinalCan: TRLPanel;
     pNumSATCan: TRLPanel;
     pNumSATCancl: TRLPanel;
     rlbDadosCupomCancelado: TRLBand;
@@ -202,6 +203,7 @@ type
     RLPanel2: TRLPanel;
     RLPanel3: TRLPanel;
     RLPanel4: TRLPanel;
+    pEspacoFinal: TRLPanel;
     rlVenda: TRLReport;
     rlObsContrib: TRLBand;
     RLDraw2: TRLDraw;
@@ -908,6 +910,10 @@ begin
       RLLayout.PageSetup.PaperSize   := fpCustom ;
       RLLayout.PageSetup.PaperWidth  := Round(LarguraBobina/MMAsPixels) ;
       RLLayout.PageSetup.PaperHeight := CalcularTamanhoDaPagina( RLLayout );
+
+      //Para impressoras sem guilhotina não cortar no QrCorde
+      pEspacoFinal.Height := EspacoFinal;
+      pEspacoFinalCan.Height  := EspacoFinal;
 
       if Filtro = fiNenhum then
       begin

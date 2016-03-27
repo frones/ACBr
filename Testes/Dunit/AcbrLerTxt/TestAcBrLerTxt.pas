@@ -55,6 +55,7 @@ type
     procedure MontaHora(TAG: Variant);
     function MontaLista(s: String): TStringList;
     function ListaComparar(sLista, sListaCompara: String): Boolean;
+    procedure MontaDataHora(TAG: Variant; iCodigoParaUF: Integer);
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -833,35 +834,56 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x],'§N10a') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10a', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x],'§N10a') then
         begin
-          Initialize('N10a');
-          (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-          (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
-          (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
-          (*N14*)Monta( NFe.Det[x].Imposto.ICMS.pRedBC  , tcDe2 );
-          (*N16*)Monta( NFe.Det[x].Imposto.ICMS.pICMS   , tcDe2 );
-          (*N17*)Monta( NFe.Det[x].imposto.ICMS.vICMS   , tcDe2 );
-          (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
-          (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
-          (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
-          (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
-          (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
-          (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
-          (*N25*)Monta( NFe.Det[x].Imposto.ICMS.pBCOp   , tcDe2 );
-          (*N24*)Monta( NFe.Det[x].Imposto.ICMS.UFST    );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10a', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10a');
+            (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+            (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
+            (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
+            (*N14*)Monta( NFe.Det[x].Imposto.ICMS.pRedBC  , tcDe2 );
+            (*N16*)Monta( NFe.Det[x].Imposto.ICMS.pICMS   , tcDe2 );
+            (*N17*)Monta( NFe.Det[x].imposto.ICMS.vICMS   , tcDe2 );
+            (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
+            (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
+            (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
+            (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
+            (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
+            (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
+            (*N25*)Monta( NFe.Det[x].Imposto.ICMS.pBCOp   , tcDe2 );
+            (*N24*)Monta( NFe.Det[x].Imposto.ICMS.UFST    );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10a');
+      (*N11*)Monta( 0 );
+      (*N12*)Monta( 0 );
+      (*N13*)Monta( 0 );
+      (*N14*)Monta( 0 , tcDe2 );
+      (*N16*)Monta( 0 , tcDe2 );
+      (*N17*)Monta( 0 , tcDe2 );
+      (*N18*)Monta( 0 );
+      (*N19*)Monta( 0 , tcDe2 );
+      (*N20*)Monta( 0 , tcDe2 );
+      (*N21*)Monta( 0 , tcDe2 );
+      (*N22*)Monta( 0 , tcDe2 );
+      (*N23*)Monta( 0 , tcDe2 );
+      (*N25*)Monta( 0 , tcDe2 );
+      (*N24*)Monta( '');
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -877,27 +899,40 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x],'§N10b') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10b', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x],'§N10b') then
         begin
-          Initialize('N10b');
-          (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-          (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
-          (*N26*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTRet     , tcDe2 );
-          (*N27*)Monta( NFe.Det[x].Imposto.ICMS.vICMSSTRet   , tcDe2 );
-          (*N31*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTDest    , tcDe2 );
-                 Monta( NFe.Det[x].Imposto.ICMS.vICMSSTDest  , tcDe2 );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10b', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10b');
+            (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+            (*N12*)Monta( CSTICMSToStr( NFe.Det[x].Imposto.ICMS.CST   ));
+            (*N26*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTRet     , tcDe2 );
+            (*N27*)Monta( NFe.Det[x].Imposto.ICMS.vICMSSTRet   , tcDe2 );
+            (*N31*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTDest    , tcDe2 );
+                   Monta( NFe.Det[x].Imposto.ICMS.vICMSSTDest  , tcDe2 );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10b');
+      (*N11*)Monta( 0 );
+      (*N12*)Monta( 0 );
+      (*N26*)Monta( 0 , tcDe2 );
+      (*N27*)Monta( 0 , tcDe2 );
+      (*N31*)Monta( 0 , tcDe2 );
+             Monta( 0 , tcDe2 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -912,25 +947,36 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x],'§N10c') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10c', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x],'§N10c') then
         begin
-          Initialize('N10c');
-          (*N11*)Monta(      OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-         (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
-          (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
-          (*N30*)Monta( NFe.Det[x].Imposto.ICMS.vCredICMSSN  , tcDe2 );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10c', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10c');
+            (*N11*)Monta(      OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+           (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
+            (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
+            (*N30*)Monta( NFe.Det[x].Imposto.ICMS.vCredICMSSN  , tcDe2 );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10c');
+      (*N11*)Monta( 0 );
+     (*N12a*)Monta( 0 );
+      (*N29*)Monta( 0 , tcDe2 );
+      (*N30*)Monta( 0 , tcDe2 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -946,23 +992,32 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x],'§N10d') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10d', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x],'§N10d') then
         begin
-          Initialize('N10d');
-          (*N11 *)Monta(      OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-          (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10d', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10d');
+            (*N11 *)Monta(      OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+            (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10d');
+      (*N11*)Monta( 0 );
+     (*N12a*)Monta( 0 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -977,33 +1032,52 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x],'§N10e') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10e', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x],'§N10e') then
         begin
-          Initialize('N10e');
-          (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-         (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
-          (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
-          (*N14*)Monta( NFe.Det[x].Imposto.ICMS.pRedBC  , tcDe2 );
-          (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
-          (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
-          (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
-          (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
-          (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
-          (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
-          (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
-          (*N30*)Monta( NFe.Det[x].Imposto.ICMS.vCredICMSSN  , tcDe2 );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10e', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10e');
+            (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+           (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
+            (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
+            (*N14*)Monta( NFe.Det[x].Imposto.ICMS.pRedBC  , tcDe2 );
+            (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
+            (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
+            (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
+            (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
+            (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
+            (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
+            (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
+            (*N30*)Monta( NFe.Det[x].Imposto.ICMS.vCredICMSSN  , tcDe2 );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10e');
+      (*N11*)Monta( 0 );
+     (*N12a*)Monta( 0 );
+      (*N13*)Monta( 0 );
+      (*N14*)Monta( 0 , tcDe2 );
+      (*N18*)Monta( 0 );
+      (*N19*)Monta( 0 , tcDe2 );
+      (*N20*)Monta( 0 , tcDe2 );
+      (*N21*)Monta( 0 , tcDe2 );
+      (*N22*)Monta( 0 , tcDe2 );
+      (*N23*)Monta( 0 , tcDe2 );
+      (*N29*)Monta( 0 , tcDe2 );
+      (*N30*)Monta( 0 , tcDe2 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -1018,29 +1092,44 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x], '§N10f') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10f', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x], '§N10f') then
         begin
-          Initialize('N10f');
-          (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-         (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
-          (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
-          (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
-          (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
-          (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
-          (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
-          (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10f', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10f');
+            (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+           (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
+            (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
+            (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
+            (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
+            (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
+            (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
+            (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10f');
+      (*N11*)Monta( 0 );
+     (*N12a*)Monta( 0 );
+      (*N18*)Monta( 0);
+      (*N19*)Monta( 0 , tcDe2 );
+      (*N20*)Monta( 0 , tcDe2 );
+      (*N21*)Monta( 0 , tcDe2 );
+      (*N22*)Monta( 0 , tcDe2 );
+      (*N23*)Monta( 0 , tcDe2 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -1055,25 +1144,36 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x] ,  '§N10g') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10g', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x] ,  '§N10g') then
         begin
-          Initialize('N10g');
-          (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-         (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
-          (*N26*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTRet     , tcDe2 );
-          (*N27*)Monta( NFe.Det[x].Imposto.ICMS.vICMSSTRet   , tcDe2 );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10g', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10g');
+            (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+           (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
+            (*N26*)Monta( NFe.Det[x].Imposto.ICMS.vBCSTRet     , tcDe2 );
+            (*N27*)Monta( NFe.Det[x].Imposto.ICMS.vICMSSTRet   , tcDe2 );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10g');
+          (*N11*)Monta( 0 );
+         (*N12a*)Monta( 0 );
+          (*N26*)Monta( 0 , tcDe2 );
+          (*N27*)Monta( 0 , tcDe2 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -1088,36 +1188,58 @@ begin
   IBase := -1;
   fListaConteudo:= MontaLista( '§N10' );
   try
-  for x := 0 to  NFe.Det.Count - 1 do
+    if fListaConteudo.Count > 0 then
     begin
-      if ListaComparar( fListaConteudo[x] ,  '§N10h') then
+      for x := 0 to  NFe.Det.Count - 1 do
       begin
-        Inc( IBase );
-        IBase := MontaISaberString('§N10h', IBase );
-        if ( IBase > 0 ) then
+        if ListaComparar( fListaConteudo[x] ,  '§N10h') then
         begin
-          Initialize('N10h');
-          (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
-         (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
-          (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
-          (*N15*)Monta( NFe.Det[x].Imposto.ICMS.vBC     , tcDe2 );
-          (*N14*)Monta( NFe.Det[x].Imposto.ICMS.pRedBC  , tcDe2 );
-          (*N16*)Monta( NFe.Det[x].Imposto.ICMS.pICMS   , tcDe2 );
-          (*N17*)Monta( NFe.Det[x].imposto.ICMS.vICMS   , tcDe2 );
-          (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
-          (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
-          (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
-          (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
-          (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
-          (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
-          (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
-          (*N30*)Monta( NFe.Det[x].Imposto.ICMS.vCredICMSSN  , tcDe2 );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+          Inc( IBase );
+          IBase := MontaISaberString('§N10h', IBase );
+          if ( IBase > 0 ) then
+          begin
+            Initialize('N10h');
+            (*N11*)Monta(    OrigToStr( NFe.Det[x].Imposto.ICMS.orig  ));
+           (*N12a*)Monta( CSOSNIcmsToStr( NFe.Det[x].Imposto.ICMS.CSOSN ));
+            (*N13*)Monta(   modBCToStr( NFe.Det[x].Imposto.ICMS.modBC ));
+            (*N15*)Monta( NFe.Det[x].Imposto.ICMS.vBC     , tcDe2 );
+            (*N14*)Monta( NFe.Det[x].Imposto.ICMS.pRedBC  , tcDe2 );
+            (*N16*)Monta( NFe.Det[x].Imposto.ICMS.pICMS   , tcDe2 );
+            (*N17*)Monta( NFe.Det[x].imposto.ICMS.vICMS   , tcDe2 );
+            (*N18*)Monta( modBCSTToStr( NFe.Det[x].Imposto.ICMS.modBCST ));
+            (*N19*)Monta( NFe.Det[x].Imposto.ICMS.pMVAST  , tcDe2 );
+            (*N20*)Monta( NFe.Det[x].Imposto.ICMS.pRedBCST, tcDe2 );
+            (*N21*)Monta( NFe.Det[x].Imposto.ICMS.vBCST   , tcDe2 );
+            (*N22*)Monta( NFe.Det[x].Imposto.ICMS.pICMSST , tcDe2 );
+            (*N23*)Monta( NFe.Det[x].Imposto.ICMS.vICMSST , tcDe2 );
+            (*N29*)Monta( NFe.Det[x].Imposto.ICMS.pCredSN      , tcDe2 );
+            (*N30*)Monta( NFe.Det[x].Imposto.ICMS.vCredICMSSN  , tcDe2 );
+            finalize;
+            CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+          end;
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('N10h');
+      (*N11*)Monta( 0 );
+     (*N12a*)Monta( 0 );
+      (*N13*)Monta( 0 );;
+      (*N15*)Monta( 0 , tcDe2 );
+      (*N14*)Monta( 0 , tcDe2 );
+      (*N16*)Monta( 0 , tcDe2 );
+      (*N17*)Monta( 0 , tcDe2 );
+      (*N18*)Monta( 0 );
+      (*N19*)Monta( 0 , tcDe2 );
+      (*N20*)Monta( 0 , tcDe2 );
+      (*N21*)Monta( 0 , tcDe2 );
+      (*N22*)Monta( 0 , tcDe2 );
+      (*N23*)Monta( 0 , tcDe2 );
+      (*N29*)Monta( 0 , tcDe2 );
+      (*N30*)Monta( 0 , tcDe2 );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -1144,8 +1266,6 @@ begin
     CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
   end;
 end;
-
-
 
 procedure TAcBrLerTxtTDD.IdO;
 Var
@@ -1546,7 +1666,10 @@ begin
   (*W15*)Monta( NFe.Total.ICMSTot.vOutro     , tcDe2);
   (*W16*)Monta( NFe.Total.ICMSTot.vNF        , tcDe2);
   if NFe.Total.ICMSTot.vTotTrib > 0 then
-   (*W16a*)Monta( NFe.Total.ICMSTot.vTotTrib , tcDe2);
+   (*W16a*)Monta( NFe.Total.ICMSTot.vTotTrib , tcDe2)
+  else
+   (*W16a*)Monta( '');
+
   finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
 end;
@@ -1825,6 +1948,18 @@ begin
   end;
 end;
 
+
+
+
+Procedure TAcBrLerTxtTDD.MontaDataHora( TAG: Variant ; iCodigoParaUF : Integer );
+begin
+  if Tag <> StrToTime ('00:00:00' )  then
+    Registro := Registro+ DateTimeTodh( TAG ) + GetUTC(CodigoParaUF( iCodigoParaUF), TAG) ;
+
+  Registro := Registro+'|';
+end;
+
+
 procedure TAcBrLerTxtTDD.IdB;
 begin
   Initialize( 'B');
@@ -1837,8 +1972,8 @@ begin
   (*B08 *)MontaZeroEsquerda( NFe.ide.nNF , Config.IntnNF );
   if nfe.infNFe.Versao > 2 then
   Begin
-    (*B09 *)          Monta( DateTimeTodh(nfe.ide.dEmi)    + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dEmi));
-    (*B10 *)          Monta( DateTimeTodh(nfe.ide.dSaiEnt) + GetUTC(CodigoParaUF(nfe.ide.cUF), nfe.ide.dSaiEnt));
+    (*B09 *)  MontaDataHora( nfe.ide.dEmi, nfe.ide.cUF);
+    (*B10 *)  MontaDataHora( nfe.ide.dSaiEnt,nfe.ide.cUF);
   End
   else
   begin
@@ -1850,10 +1985,10 @@ begin
   if nfe.infNFe.Versao > 2 then
                       Monta( DestinoOperacaoToStr( NFe.ide.idDest )  );
   (*B12 *)            Monta( NFe.ide.cMunFG , tcInt      );
-  (*B21 *)            Monta( TpImpToStr( NFe.Ide.tpImp   ));
+  (*B21 *)            Monta(  TpImpToStr( NFe.Ide.tpImp   ));
   (*B22 *)            Monta( TpEmisToStr( NFe.Ide.tpEmis ));
   (*B23 *)MontaZeroEsquerda( NFe.Ide.cDV ,Config.IntcDV  );
-  (*B24 *)            Monta( TpAmbToStr( NFe.Ide.tpAmb  ));
+  (*B24 *)            Monta(  TpAmbToStr( NFe.Ide.tpAmb  ));
   (*B25 *)            Monta( FinNFeToStr( NFe.Ide.finNFe ));
   if nfe.infNFe.Versao > 2 then
   begin
@@ -1862,7 +1997,7 @@ begin
   end;
   (*B26 *)            Monta( procEmiToStr(NFe.Ide.procEmi));
   (*B27 *)            Monta( NFe.Ide.verProc  );
-  (*B28 *)        MontaHora( NFe.Ide.dhCont );
+  (*B28 *)MontaDataHora( NFe.Ide.dhCont, nfe.ide.cUF);
   (*B29*)             Monta( NFe.Ide.xJust);
   finalize;
   CheckEquals( Registro ,RetornaConteudo( sComparar));
@@ -1996,30 +2131,59 @@ end;
 
 procedure TAcBrLerTxtTDD.IdI25;
 Var
-  IBase , x, FJ,Fk : Integer;
+  IBase,FJ,Fk, x : Integer;
+  FListaConteudo : TStringList;
 begin
-  for x := 0 to NFe.Det.Count - 1 do
-  begin
-    IBase := MontaISaber('H', x );
-    for FJ := 0 to NFe.Det[x].Prod.DI.Count - 1 do
+  IBase := 0;
+  fListaConteudo:= MontaLista( '§I25' );
+  try
+    if fListaConteudo.Count > 0  then
     begin
-      Initialize('I25');
-      for fk := 0 to NFe.Det[x].Prod.DI[FJ].adi.Count - 1 do
+      for x := 0 to NFe.Det.Count - 1 do
       begin
-        (*I26*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].nAdicao     , tcInt);
-        (*I27*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].nSeqAdi     , tcInt);
-        (*I28*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].cFabricante );
-                   if NFe.Det[x].Prod.DI[fj].adi[fk].vDescDI > 0 then
-        (*I29*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].vDescDI     , tcDe2)
-                 else
-               Monta( '');
-               Monta( NFe.Det[x].Prod.DI[fj].adi[fk].nDraw       );
-        finalize;
-        CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        if ListaComparar( fListaConteudo[x] , '§I25') then
+        begin
+          IBase := MontaISaberString( '§I25' , IBase );
+          if ( IBase > 0 ) then
+          begin
+            for FJ := 0 to NFe.Det[x].Prod.DI.Count - 1 do
+            begin
+              for fk := 0 to NFe.Det[x].Prod.DI[FJ].adi.Count - 1 do
+              begin
+                Initialize('I25');
+                (*I26*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].nAdicao     , tcInt);
+                (*I27*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].nSeqAdi     , tcInt);
+                (*I28*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].cFabricante );
+                           if NFe.Det[x].Prod.DI[fj].adi[fk].vDescDI > 0 then
+                (*I29*)Monta( NFe.Det[x].Prod.DI[fj].adi[fk].vDescDI     , tcDe2)
+                         else
+                       Monta( '');
+                       Monta( NFe.Det[x].Prod.DI[fj].adi[fk].nDraw       );
+                finalize;
+                CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+                Inc( IBase );
+              end;
+            end;
+          end;
+        end;
       end;
     end;
+    if IBase = 0 then
+    begin
+      Initialize('I25');
+      (*I26*)Monta( 0, tcInt);
+      (*I27*)Monta( 0, tcInt);
+      (*I28*)Monta( '' );
+      (*I29*)Monta( 0, tcDe2);
+             Monta( '' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
+    end;
+  finally
+    fListaConteudo.Free;
   end;
 end;
+
 
 procedure TAcBrLerTxtTDD.IdLB;
 Var
@@ -2123,13 +2287,13 @@ begin
     case Tipo of
       tcStr     : result := ReverterFiltroTextoXML(ConteudoTag);
       tcDat     : result := FormatDateTime('yyyy-mm-dd', ConteudoTag );
-{      tcDatHor  : begin
+      tcDatHor  : begin
                     if length(ConteudoTag)>0 then
                       result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
                         EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
                     else
                       result:='0';
-                  end;}
+                  end;
       tcHor     : result := TimeToStr( ConteudoTag );
       tcDe2     : result := FloatToString( TAG, '.', FloatMask( 2));
       tcDe3     : result := FloatToString( TAG, '.', FloatMask( 3));
@@ -2251,6 +2415,43 @@ begin
   Registro := Registro+sFinalize;
 end;
 
+
+
+procedure TAcBrLerTxtTDD.IdBA02;
+Var
+  IBase, x : Integer;
+  FListaConteudo : TStringList;
+begin
+  IBase := -1;
+  fListaConteudo:= MontaLista( '§BA' );
+  try
+    for x := 0 to NFe.ide.NFref.Count - 1 do
+    begin
+      if ListaComparar( fListaConteudo[x] ,  '§BA02') then
+      begin
+        Inc( IBase );
+        IBase := MontaISaberString( '§BA02' , IBase );
+        if ( IBase > 0 ) then
+        begin
+          Initialize('BA02');
+          (*B13*)Monta( NFe.ide.NFref[x].refNFe );
+          finalize;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
+      end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('BA02');
+  (*B13*)Monta('' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
+    end;
+  finally
+    fListaConteudo.Free;
+  end;
+end;
+
 procedure TAcBrLerTxtTDD.IdBA03;
 Var
   IBase, x : Integer;
@@ -2275,47 +2476,27 @@ begin
           (*B19*)Monta( NFe.ide.NFref[x].RefNF.serie , tcInt);
           (*B20*)Monta( NFe.ide.NFref[x].RefNF.nNF   , tcInt);
           finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
     end;
-  finally
-    fListaConteudo.Free;
-  end;
-end;
-
-
-procedure TAcBrLerTxtTDD.IdBA02;
-Var
-  IBase, x : Integer;
-  FListaConteudo : TStringList;
-begin
-  IBase := -1;
-  fListaConteudo:= MontaLista( '§BA' );
-  try
-    for x := 0 to NFe.ide.NFref.Count - 1 do
+    if IBase = -1 then
     begin
-      if ListaComparar( fListaConteudo[x] ,  '§BA02') then
-      begin
-        Inc( IBase );
-        IBase := MontaISaberString( '§BA02' , IBase );
-        if ( IBase > 0 ) then
-        begin
-          Initialize('BA02');
-          (*B13*)Monta( NFe.ide.NFref[x].refNFe );
-          finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
-      end;
+      Initialize('BA03');
+      (*B15*)Monta( 0 , tcInt);
+      (*B16*)Monta( '' );
+      (*B17*)Monta( '' );
+      (*B18*)Monta( 0 , tcInt);
+      (*B19*)Monta( 0 , tcInt);
+      (*B20*)Monta( 0 , tcInt);
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
   end;
 end;
+
 
 procedure TAcBrLerTxtTDD.IdBA10;
 Var
@@ -2343,11 +2524,22 @@ begin
           if (NFe.infNFe.Versao >= 3.10) then
             Monta( NFe.ide.NFref[X].refCTe);
           finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-        else
-          exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('BA10');
+      (*B20b*)Monta( 0 , tcInt);
+      (*B20c*)Monta( ''  );
+      (*B20f*)Monta( ''  );
+      (*B20f*)Monta( ''  );
+      (*B20g*)Monta( 0 , tcInt);
+      (*B20h*)Monta( 0 , tcInt);
+              Monta( ''  );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2374,11 +2566,16 @@ begin
           Initialize('BA13');
           (*B20d*)Monta( NFe.ide.NFref[x].refNFP.CNPJCPF);
           finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('BA13');
+      (*B20d*)Monta( '' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2404,11 +2601,16 @@ begin
           Initialize('BA14');
           (*B20d*)Monta( NFe.ide.NFref[x].refNFP.CNPJCPF);
           finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('BA14');
+      (*B20d*)Monta( '');
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2435,11 +2637,16 @@ begin
           Initialize('BA19');
           (*B20d*)Monta( NFe.ide.NFref[x].refCTe);
           finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('BA19');
+      (*B20d*)Monta( '');
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2467,11 +2674,18 @@ begin
           (*B20i*)Monta( NFe.ide.NFref[x].RefECF.nECF  );
           (*B20m*)Monta( NFe.ide.NFref[x].RefECF.nCOO  );
           finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('BA20');
+      (*B20k*)Monta( 0  );
+      (*B20i*)Monta( '' );
+      (*B20m*)Monta( '' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2506,7 +2720,7 @@ Var
   FListaConteudo : TStringList;
 begin
   IBase := -1;
-  fListaConteudo:= MontaLista( '§GA' );
+  fListaConteudo:= MontaLista( '§GA0' );
   try
     for x := 0 to NFe.autXML.Count - 1 do
     begin
@@ -2519,11 +2733,16 @@ begin
           Initialize('GA02');
           Monta( NFe.autXML[x].CNPJCPF  );
           Finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('GA02');
+      Monta( '' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2536,7 +2755,7 @@ Var
   FListaConteudo : TStringList;
 begin
   IBase := -1;
-  fListaConteudo:= MontaLista( '§GA' );
+  fListaConteudo:= MontaLista( '§GA0' );
   try
     for x := 0 to NFe.autXML.Count - 1 do
     begin
@@ -2549,11 +2768,16 @@ begin
           Initialize('GA03');
           Monta( NFe.autXML[x].CNPJCPF  );
           Finalize;
-          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-        end
-      else
-        exit;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
       end;
+    end;
+    if IBase = -1 then
+    begin
+       Initialize('GA03');
+      Monta( '' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
     end;
   finally
     fListaConteudo.Free;
@@ -2581,7 +2805,6 @@ begin
       CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
       sComparar:= '';
       Registro := '';
-
     end
     else
     exit;

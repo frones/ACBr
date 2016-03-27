@@ -50,7 +50,7 @@ Type
     [IniValue('CONFIGURIdE' ,'IntECEP' ,'8')]
     Property  IntECEP      : Integer    read fIntECEP     write fIntECEP;
 
-    [IniValue(' '  ,'DecqCom'    ,'4')]
+    [IniValue('CONFIGURIdI'  ,'DecqCom'    ,'4')]
     Property DecqCom      : Integer     read FDecqCom     write FDecqCom;
     [IniValue('CONFIGURIdI'  ,'DecvUnCom'  ,'10')]
     Property DecvUnCom    : Integer     read FDecvUnCom   write FDecvUnCom;

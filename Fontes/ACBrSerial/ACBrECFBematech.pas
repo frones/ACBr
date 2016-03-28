@@ -1980,7 +1980,7 @@ begin
   if CEST <> '' then
   begin
     NumItem := GetNumUltimoItem;
-    EnviaComando(ESC + #62+#95+#67 + IntToStrZero(NumItem, 3) + Poem_Zeros(CEST, 7));
+    EnviaComando(#62+#95+#67 + IntToStrZero(NumItem, 3) + Poem_Zeros(CEST, 7));
   end;
 end;
 

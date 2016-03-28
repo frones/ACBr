@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2016
+-- ACBrValidador --
+[-] Método FormatarCEP. Corrigida formatação de CEPs com Zero a esquerda
+[+] Adicionada sobrecarga nos métodos FormatarCEP e ValidarCEP, para permitir
+    parâmetros como Integer      (por: DSA)
+
 31/01/2016
 -- ACBrValidador --
 [+] acrescentada validação de email

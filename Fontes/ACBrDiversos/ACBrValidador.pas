@@ -185,7 +185,8 @@ function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
 function ValidarRenavam( const Documento : String ) : String ;
 function ValidarEmail (const Documento : string ) : String;
-function ValidarCEP(const ACEP, AUF: String): String;
+function ValidarCEP(const ACEP, AUF: String): String; overload;
+function ValidarCEP(const ACEP: Integer; AUF: String): String; overload;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -195,7 +196,8 @@ function FormatarPlaca(const AValue: string): string;
 Function FormatarIE( const AValue: String; UF : String ) : String ;
 Function FormatarCheque( const AValue : String ) : String ;
 Function FormatarPIS( const AValue : String )    : String ;
-Function FormatarCEP( const AValue: String )     : String ;
+Function FormatarCEP( const AValue: String )     : String ; overload;
+Function FormatarCEP( const AValue: Integer )    : String ; overload;
 function FormatarSUFRAMA( const AValue: String ) : String ;
 
 Function FormatarMascaraNumerica(ANumValue, Mascara: String): String;
@@ -255,6 +257,11 @@ end;
 function ValidarCEP(const ACEP, AUF: String): String;
 begin
   Result := ValidarDocumento( docCEP, ACEP, AUF);
+end;
+
+function ValidarCEP(const ACEP: Integer; AUF: String): String;
+begin
+  ValidarCEP( FormatarCEP(ACEP), AUF );
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;
@@ -457,8 +464,13 @@ end;
 function FormatarCEP(const AValue: String): String;
 Var S : String ;
 begin
-  S := PadRight( OnlyNumber(AValue), 8, '0') ; { Prenche zeros a direita }
+  S := PadLeft( OnlyNumber(AValue), 8, '0') ; { Prenche zeros a esquerda }
   Result := copy(S,1,5) + '-' + copy(S,6,3) ;
+end;
+
+function FormatarCEP(const AValue: Integer): String;
+begin
+  Result := FormatarCEP(IntToStr(AValue));
 end;
 
 function FormatarSUFRAMA(const AValue: String): String;
@@ -851,7 +863,7 @@ end;
 Procedure TACBrValidador.ValidarCEP ;
 begin
   if fsAjustarTamanho then
-     fsDocto := PadRight( fsDocto, 8, '0') ;
+     fsDocto := PadLeft( Trim(fsDocto), 8, '0') ;
 
   if (Length( fsDocto ) <> 8) or ( not StrIsNumber( fsDocto ) ) then
   begin

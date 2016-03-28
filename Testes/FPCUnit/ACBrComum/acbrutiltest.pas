@@ -2093,6 +2093,10 @@ begin
   CheckEquals( dblVal, RoundABNT(0.98505, 2));
   CheckEquals( dblVal, RoundABNT(dblTotal, 2));
   CheckEquals( dblVal, RoundABNT(dblValorUnit * dblQtde, 2));
+  dblValorUnit := 0.69;
+  dblQtde := 28.50;
+  dblTotal := dblValorUnit * dblQtde;
+  CheckEquals( 19.66, RoundABNT(dblTotal, 2), 0.00001);
 end;
 
 procedure RoundABNTTest.TestesEstouro;

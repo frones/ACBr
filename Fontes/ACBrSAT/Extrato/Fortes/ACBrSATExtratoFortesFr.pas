@@ -497,7 +497,7 @@ begin
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
     if (Emit.EnderEmit.CEP <> 0) then
     begin
-      CEP := FormatarCEP( IntToStr(Emit.EnderEmit.CEP) );
+      CEP := FormatarCEP( Emit.EnderEmit.CEP );
       Endereco := Endereco + ' - '+CEP;
     end;
   end;

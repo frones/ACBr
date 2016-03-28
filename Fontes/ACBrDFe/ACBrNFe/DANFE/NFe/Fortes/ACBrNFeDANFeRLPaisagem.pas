@@ -1131,7 +1131,7 @@ begin
                 IfThen( xCpl > '' , Trim( XCpl ) , '') +
                 ' - ' + Trim( XBairro );
 
-      sTemp := sTemp + ' CEP:' + FormatarCEP(Poem_Zeros(CEP, 8)) + ' - ' + XMun + ' - ' + UF;
+      sTemp := sTemp + ' CEP:' + FormatarCEP(CEP) + ' - ' + XMun + ' - ' + UF;
       rlmEndereco.Lines.add(sTemp );
       sTemp := 'TEL: ' + FormatarFone(Fone) + IfThen( FFax <> ''  ,  ' - FAX: ' + FormatarFone(FFax),'' );
       rlmEndereco.Lines.add(sTemp );
@@ -1164,7 +1164,7 @@ begin
       rllDestBairro.Caption := XBairro;
       rllDestCidade.Caption := XMun;
       rllDestUF.Caption     := UF;
-      rllDestCEP.Caption    := FormatarCEP(Poem_Zeros(CEP, 8));
+      rllDestCEP.Caption    := FormatarCEP(CEP);
       rllDestFONE.Caption   := FormatarFone(Fone);
     end;
   end;

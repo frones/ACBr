@@ -45,6 +45,9 @@ unit ACBrTEFDTicketCar;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   Classes, SysUtils, ACBrTEFDClass
   {$IFNDEF NOGUI}
    {$IFDEF VisualCLX} ,QControls {$ELSE} ,Controls {$ENDIF}

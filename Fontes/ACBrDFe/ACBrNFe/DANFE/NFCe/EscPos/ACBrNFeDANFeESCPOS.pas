@@ -193,7 +193,7 @@ begin
     Trim(FpNFe.Emit.EnderEmit.xCpl) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xBairro) +  ' ' +
     Trim(FpNFe.Emit.EnderEmit.xMun) + '/' + Trim(FpNFe.Emit.EnderEmit.UF) + '  ' +
-    'Cep:' + FormatarCEP(IntToStr(FpNFe.Emit.EnderEmit.CEP)) + '  ' +
+    'Cep:' + FormatarCEP(FpNFe.Emit.EnderEmit.CEP) + '  ' +
     'Tel:' + FormatarFone(FpNFe.Emit.EnderEmit.fone)
     , FPosPrinter.ColunasFonteCondensada)
   );

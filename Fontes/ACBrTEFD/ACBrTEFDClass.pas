@@ -45,6 +45,9 @@ unit ACBrTEFDClass ;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   Classes, SysUtils, Contnrs, ACBrBase
   {$IFNDEF NOGUI}
     {$IFDEF VisualCLX}

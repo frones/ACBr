@@ -279,7 +279,7 @@ begin
           rlmDadosEmitente.Lines.Add(XCpl);
         if XBairro <> '' then
           rlmDadosEmitente.Lines.Add(XBairro);
-        rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(FormatFloat('00000000', CEP)) +
+        rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(CEP) +
           ' - ' + XMun + ' - ' + UF);
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));

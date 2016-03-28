@@ -522,7 +522,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := FormatarCEP(CEP);
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -608,7 +608,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := FormatarCEP(CEP);
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);

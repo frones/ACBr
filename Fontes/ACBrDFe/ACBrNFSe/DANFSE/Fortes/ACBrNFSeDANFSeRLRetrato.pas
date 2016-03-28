@@ -505,7 +505,7 @@ begin
                                                                   Trim( Numero )+' - '+
                                                                   Trim( Bairro )+
                                                                   ' - CEP: '+
-                                                                  FormatarCEP( Poem_Zeros( CEP, 8 ) ) ,
+                                                                  FormatarCEP( CEP ) ,
                                                                                                   Trim(FEndereco) ) ;
         rllPrestComplemento.Caption   := IfThen( Complemento <> '', Complemento , FComplemento);
         rllPrestMunicipio.Caption     := IfThen( xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , FMunicipio);
@@ -554,11 +554,11 @@ begin
           rllTomaEndereco.Caption :=  Trim(Endereco) + ', '  +
                                       Trim(Numero )  + ' - ' +
                                       Trim(Bairro )  + ' - CEP: ' +
-                                      FormatarCEP(Poem_Zeros(CEP, 8 ));
+                                      FormatarCEP(CEP);
         End
         Else
          rllTomaEndereco.Caption := Trim(FT_Endereco) + ' - CEP: ' +
-                                    FormatarCEP(Poem_Zeros(CEP, 8 ));
+                                    FormatarCEP(CEP);
 
         rllTomaComplemento.Caption := IfThen( Complemento <> '' , Complemento , FT_Complemento);
 

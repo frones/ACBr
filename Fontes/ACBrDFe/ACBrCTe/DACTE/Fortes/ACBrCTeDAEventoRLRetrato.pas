@@ -333,7 +333,7 @@ begin
     rllCNPJEmitente.Caption := FormatarCNPJouCPF(FCTe.emit.CNPJ);
     rllEnderecoEmitente.Caption := FCTe.emit.EnderEmit.xLgr + ', ' + FCTe.emit.EnderEmit.nro;
     rllBairroEmitente.Caption := FCTe.emit.EnderEmit.xBairro;
-    rllCEPEmitente.Caption := FormatarCEP(FormatFloat('00000000', FCTe.emit.EnderEmit.CEP));
+    rllCEPEmitente.Caption := FormatarCEP(FCTe.emit.EnderEmit.CEP);
     rllMunEmitente.Caption := FCTe.emit.EnderEmit.xMun + ' - ' + FCTe.emit.EnderEmit.UF;
     rllFoneEmitente.Caption := FormatarFone(FCTe.emit.enderEmit.fone);
     rllInscEstEmitente.Caption := FCTe.emit.IE;
@@ -359,7 +359,7 @@ begin
           rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
           rllBairroTomador.Caption := FCTe.Rem.EnderReme.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
+          rllCEPTomador.Caption := FormatarCEP(FCTe.Rem.EnderReme.CEP);
           rllMunTomador.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
           rllFoneTomador.Caption := FormatarFone(FCTe.Rem.fone);
           rllInscEstTomador.Caption := FCTe.Rem.IE;
@@ -370,7 +370,7 @@ begin
           rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
           rllBairroTomador.Caption := FCTe.Exped.EnderExped.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
+          rllCEPTomador.Caption := FormatarCEP(FCTe.Exped.EnderExped.CEP);
           rllMunTomador.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
           rllFoneTomador.Caption := FormatarFone(FCTe.Exped.fone);
           rllInscEstTomador.Caption := FCTe.Exped.IE;
@@ -381,7 +381,7 @@ begin
           rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
           rllBairroTomador.Caption := FCTe.Receb.EnderReceb.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
+          rllCEPTomador.Caption := FormatarCEP(FCTe.Receb.EnderReceb.CEP);
           rllMunTomador.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
           rllFoneTomador.Caption := FormatarFone(FCTe.Receb.fone);
           rllInscEstTomador.Caption := FCTe.Receb.IE;
@@ -392,7 +392,7 @@ begin
           rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
           rllEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
           rllBairroTomador.Caption := FCTe.Dest.EnderDest.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
+          rllCEPTomador.Caption := FormatarCEP(FCTe.Dest.EnderDest.CEP);
           rllMunTomador.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
           rllFoneTomador.Caption := FormatarFone(FCTe.Dest.fone);
           rllInscEstTomador.Caption := FCTe.Dest.IE;
@@ -405,7 +405,7 @@ begin
       rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
       rllEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
       rllBairroTomador.Caption := FCTe.Ide.Toma4.EnderToma.xBairro;
-      rllCEPTomador.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
+      rllCEPTomador.Caption := FormatarCEP(FCTe.Ide.Toma4.EnderToma.CEP);
       rllMunTomador.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
       rllFoneTomador.Caption := FormatarFone(FCTe.Ide.Toma4.fone);
       rllInscEstTomador.Caption := FCTe.Ide.Toma4.IE;

@@ -1023,7 +1023,6 @@ var
   end;
 
 begin
-   Result            := 0;
    ProximoComando    := 0;
    TipoCampo         := 0;
    TamanhoMinimo     := 0;

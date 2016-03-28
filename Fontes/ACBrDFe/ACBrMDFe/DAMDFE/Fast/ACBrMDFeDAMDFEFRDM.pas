@@ -677,7 +677,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := FormatarCEP(CEP);
         FieldByName('Fone').AsString    := FormatarFone(Fone);
         FieldByName('email').AsString   := email;
         FieldByName('site').AsString    := FDAMDFEClassOwner.Site;

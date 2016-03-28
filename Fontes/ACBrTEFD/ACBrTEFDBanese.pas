@@ -48,6 +48,9 @@ unit ACBrTEFDBanese;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   Classes, SysUtils, ACBrTEFDClass
   {$IFNDEF NOGUI}
    {$IFDEF VisualCLX}

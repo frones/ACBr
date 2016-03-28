@@ -60,6 +60,7 @@ type
     FdmGuia: TdmACBrGNREFR;
     FFastFile: String;
     FEspessuraBorda: Integer;
+    FShowDialog:boolean;
     function GetPreparedReport: TfrxReport;
     function PrepareReport(GNRE: TGNRERetorno = nil): Boolean;
    public
@@ -72,6 +73,7 @@ type
     property dmGuia: TdmACBrGNREFR read FdmGuia write FdmGuia;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport: TfrxReport read GetPreparedReport;
+    property ShowDialog: Boolean read FShowDialog write FShowDialog default true;
   end;
 
 implementation
@@ -112,7 +114,12 @@ begin
     if MostrarPreview then
       dmGuia.frxReport.ShowPreparedReport
     else
+    begin
+      dmguia.frxReport.PrintOptions.Printer    := Impressora;
+      dmGuia.frxReport.PrintOptions.Copies     := NumCopias;
+      dmguia.frxReport.PrintOptions.ShowDialog := ShowDialog;
       dmGuia.frxReport.Print;
+    end;
   end;
 end;
 

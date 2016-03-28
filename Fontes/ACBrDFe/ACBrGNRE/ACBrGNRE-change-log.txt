@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/03/2016
+--ACBrGNREGuiaFR
+[*] Adição do showdialog para exibição e número de cópias em fast report
+		http://www.projetoacbr.com.br/forum/topic/28940-corre%C3%A7%C3%B5es-na-impress%C3%A3o-da-gnre-fastreport/
+    por: Juliomar Marchetti
+
 24/03/2016
 -- ACBrGNREConfiguracoes-ACBrGNREWebServices
 [*] Melhoria proposta pra separar os txt gerado no gnre em pasta diferente do xml!

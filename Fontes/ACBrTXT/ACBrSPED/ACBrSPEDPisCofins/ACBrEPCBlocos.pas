@@ -1277,28 +1277,8 @@ function StrToIndTipCoop(const AValue: string): TACBrIndTipCoop;
 function StrToNatCredDesc(const AValue: string): TACBrNatCredDesc;
 function StrToIndCredOri(const AValue: string):TACBrIndCredOri;
 function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
-function StrToIndNatPJImporta(const AValue: string): TACBrIndNatPJ;
 
 implementation
-
-function StrToIndNatPJImporta(const AValue: string): TACBrIndNatPJ;
-begin
-  if AValue = '' then
-    Result := indNatPJNenhum
-  else if AValue = '00' then
-    Result := indNatPJSocEmpresariaGeral
-  else if AValue = '01' then
-    Result := indNatPJSocCooperativa
-  else if AValue = '02' then
-    Result := indNatPJEntExclusivaFolhaSal
-  else if AValue = '03' then
-    Result :=  indNatPJSocEmpresariaGeralSCP
-  else if AValue = '04' then
-    Result :=   indNatPJSocCooperativaSCP
-  else if AValue = '05' then
-    Result :=  indNatPJSocContaParticante;
-end;
-
 function StrToIndDescCred(const AValue: string):TACBrIndDescCred;
 begin
   Result := TACBrIndDescCred(StrToIntDef(AValue, 0));

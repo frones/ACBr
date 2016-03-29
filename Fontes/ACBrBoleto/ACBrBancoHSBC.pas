@@ -141,7 +141,7 @@ begin
    Result := '0';
 
    // numero base para o calculo do primeiro e segundo digitos
-   ANumeroDoc := PadLeft(rightStr(AnsiString(ACBrTitulo.NossoNumero),13),13,'0');
+   ANumeroDoc := PadLeft(RightStr(ACBrTitulo.NossoNumero,13),13,'0');
 
    // Calculo do primeiro digito
    ANumeroBase := ANumeroDoc;
@@ -1092,10 +1092,9 @@ var
   Titulo   : TACBrTitulo;
   Linha, rContrato, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta, rDigitoAgCta: String;
-  IdxMotivo, I, CodMotivo: Integer;
+  IdxMotivo : Integer;
   wSeuNumero: String;
 begin
-   ContLinha := 0;
 
    if (copy(ARetorno.Strings[0],1,3) <> '399') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1169,6 +1168,9 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1177,6 +1179,7 @@ begin
       if Copy(Linha,14,1)= 'T' then
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          {Segmento T}

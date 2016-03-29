@@ -437,7 +437,7 @@ begin
        tbBancoReemite    : ATipoBoleto := '4' + '1';
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
      end;
-
+     ACaracTitulo := ' ';
      case CaracTitulo of
        tcSimples     : ACaracTitulo  := '1';
        tcVinculada   : ACaracTitulo  := '2';
@@ -952,6 +952,8 @@ begin
    end;
 
    ACBrBanco.TamanhoMaximoNossoNum := 20;  
+   Linha := '';
+   Titulo := nil;
 
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
@@ -963,6 +965,7 @@ begin
       if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if copy(Linha, 14, 1) = 'T' then
@@ -1136,6 +1139,7 @@ end;
 function TACBrBancoBrasil.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
+ Result := toTipoOcorrenciaNenhum;
   case CodOcorrencia of
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoComandoRecusado;
@@ -1361,7 +1365,6 @@ var
   rConvenioCedente: String;
 begin
    fpTamanhoMaximoNossoNum := 11;
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
      raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1471,14 +1474,13 @@ end;
 procedure TACBrBancoBrasil.LerRetorno400Pos7(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
-  ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
+  ContLinha, CodOcorrencia, CodMotivo : Integer;
   rAgencia, rDigitoAgencia, rConta :String;
   rDigitoConta, rCodigoCedente     :String;
   Linha, rCedente                  :String;
   rConvenioCedente: String;
 begin
   fpTamanhoMaximoNossoNum := 20;
-  ContLinha := 0;
 
   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1548,7 +1550,7 @@ begin
 
       if(CodOcorrencia >= 2) and ((CodOcorrencia <= 10)) then
       begin
-        MotivoLinha:= 87;
+
         CodMotivo:= StrToIntDef(Copy(Linha,87,2),0);
         MotivoRejeicaoComando.Add(copy(Linha,87,2));
         DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));

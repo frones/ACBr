@@ -633,6 +633,8 @@ var
    ADataMulta, aEspecieDoc: String;
    TipoInscricaoAvalista: Char;
 begin
+   TipoInscricaoAvalista := ' ';
+
    with ACBrTitulo do
    begin
       ANossoNumero := FormataNossoNumero(ACBrTitulo)+CalcularDigitoVerificador(ACBrTitulo);
@@ -1136,7 +1138,6 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
 begin
-   ContLinha := 0;
 
    if (copy(ARetorno.Strings[0],143,1) <> '2') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1201,6 +1202,9 @@ begin
      ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1208,6 +1212,7 @@ begin
       if Copy(Linha,14,1)= 'T' then //segmento T - Só cria após passar pelo seguimento T depois U
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if Copy(Linha,14,1)= 'T' then //segmento T
@@ -1277,7 +1282,6 @@ var
   Linha, rCedente                  :String;
 begin
    fpTamanhoMaximoNossoNum := 20;
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +

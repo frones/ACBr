@@ -1049,6 +1049,8 @@ begin
    end;
 
 //   ACBrBanco.TamanhoMaximoNossoNum := 11;
+   Linha := '';
+   Titulo := nil;
 
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
@@ -1060,6 +1062,7 @@ begin
       if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if copy(Linha, 14, 1) = 'T' then

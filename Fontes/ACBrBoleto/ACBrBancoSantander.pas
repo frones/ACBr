@@ -224,12 +224,11 @@ end;
 function TACBrBancoSantander.GerarRegistroTransacao240(ACBrTitulo: TACBrTitulo): String;
 var
   ISequencia: Integer;
-  iCarteira: Integer;
   sCodMovimento, sAgencia, sCCorrente: String;
   sDigitoNossoNumero, sTipoCobranca, sTipoDocto, sTipoCarteira: String;
   sEspecie, sDataMoraJuros, sDataDesconto: String;
   STipoJuros, sTipoDesconto, sDiasProtesto, sDiasBaixaDevol: String;
-  sTipoInscricao, sEndereco, sMensagem: String;
+  sTipoInscricao, sEndereco : String;
   aTipoInscricao: Char;
   function MontarInstrucoes1: string;
   begin
@@ -311,6 +310,7 @@ var
   end;
 
 begin
+ aTipoInscricao := ' ';
 // by Jéter Rabelo Ferreira - 06/2014
   with ACBrTitulo do
   begin
@@ -329,8 +329,6 @@ begin
     else
        sCodMovimento := '01';                                          {Remessa}
     end;
-
-    iCarteira := StrToIntDef(ACBrTitulo.Carteira, 0 );
 
     sAgencia := PadLeft(OnlyNumber(ACBrTitulo.ACBrBoleto.Cedente.Agencia) +
                         ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,5,'0');
@@ -803,7 +801,7 @@ var
   Titulo: TACBrTitulo;
   Linha, rCodigoCedente, rCedente, rAgencia, rAgenciaDigito, rConta, rContaDigito, rCNPJCPF : String;
   iLinha : Integer;
-  iIdxMotivo: Integer;
+
   procedure DoVerOcorrencia(AOcorrencia: string);
   var
     pMotivoRejeicao, CodMotivo, I: Integer;
@@ -863,7 +861,6 @@ var
     end;
   end;
 begin
-  iLinha := 0;
 
   // Verificar se o retorno é do banco selecionado
   if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> Numero then
@@ -967,7 +964,6 @@ var
   Linha, rCedente, rAgencia, rConta, rDigitoConta, rCNPJCPF : String;
   wCodBanco: Integer;
 begin
-   ContLinha := 0;
    wCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
    if (wCodBanco <> Numero) and (wCodBanco <> 353) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +

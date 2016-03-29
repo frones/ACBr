@@ -400,12 +400,11 @@ var
   Titulo   : TACBrTitulo;
 
   Linha,rCedente: String ;
-  rCNPJCPF,rAgencia,rConta: String;
+  rCNPJCPF,rConta: String;
 
   CodOCorrencia: Integer;
   i, MotivoLinha : Integer;
 begin
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +

@@ -111,9 +111,6 @@ end;
 
 function TACBrBancoCecred.CalcularTamMaximoNossoNumero(
   const Carteira: String; NossoNumero : String = ''): Integer;
-var
-  wCarteira   : String;
-  wTamConvenio: Integer;
 begin
    Result := 17;
 
@@ -185,11 +182,8 @@ end;
 function TACBrBancoCecred.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
 var
   ANossoNumero: String;
-  wTamNossoNum: Integer;
 begin
    ANossoNumero := FormataNossoNumero(ACBrTitulo);
-   wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
-                                                OnlyNumber(ACBrTitulo.NossoNumero));
    Result:= ANossoNumero
 
 end;
@@ -651,6 +645,9 @@ begin
 
    ACBrBanco.TamanhoMaximoNossoNum := 20;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
      Linha := ARetorno[ContLinha];
@@ -661,6 +658,7 @@ begin
      if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
        Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+     if Assigned(Titulo) then
      with Titulo do
      begin
        if copy(Linha, 14, 1) = 'T' then
@@ -723,7 +721,6 @@ var
   Linha, rCedente                  :String;
 begin
    fpTamanhoMaximoNossoNum := 17;
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +

@@ -425,8 +425,7 @@ var
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, I, CodMotivo: Integer;
 begin
-   ContLinha := 0;
-
+ 
    if (copy(ARetorno.Strings[0],1,3) <> '756') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -492,6 +491,9 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -500,6 +502,7 @@ begin
       if Copy(Linha,14,1)= 'T' then
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          {Segmento T}
@@ -580,7 +583,6 @@ var
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF : String;
 begin
-   ContLinha := 0;
 
    if (copy(ARetorno.Strings[0],1,9) <> '02RETORNO') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -741,6 +743,7 @@ var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros
     wModalidade: String;
 begin
   NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
+  ATipoInscricaoAvalista := ' ';
   with ACBrTitulo do
     begin
       {SEGMENTO P}
@@ -928,11 +931,15 @@ begin
 
                if Mensagem.Count > 0 then
                begin
-                Result :=  Result + PadRight(Copy(Mensagem[0],1,40),40);    // 100-139 Menssagem livre
+                 Result :=  Result + PadRight(Copy(Mensagem[0],1,40),40);    // 100-139 Menssagem livre
 
-                if Mensagem.Count > 1 then
-                  Result := Result + PadRight(Copy(Mensagem[1],1,40),40);   // 140-179 Menssagem livre
-               end;
+                 if Mensagem.Count > 1 then
+                   Result := Result + PadRight(Copy(Mensagem[1],1,40),40)    // 140-179 Menssagem livre
+                 else
+                   Result := Result + Space(40);
+               end
+               else
+                 Result := Result + Space(80);
 
                Result := Result +
                space(20)                                                  + // 180-199 Uso da FEBRABAN "Brancos"

@@ -609,8 +609,7 @@ var
   MotivoLinha, I, CodMotivo: Integer;
   wSeuNumero: String;
 begin
-   ContLinha := 0;
-
+ 
    if (copy(ARetorno.Strings[0],1,3) <> '104') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -674,6 +673,9 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -682,6 +684,7 @@ begin
       if Copy(Linha,14,1)= 'T' then
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          {Segmento T}
@@ -1019,12 +1022,11 @@ end;
 procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
-  ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
+  ContLinha : Integer;
   rAgencia, rConta, Linha, rCedente :String;
 begin
    fpTamanhoMaximoNossoNum := 15;
-   ContLinha := 0;
-
+ 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));

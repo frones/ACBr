@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/03/16 ver: 0.0.188a
+-- ACBrBoleto* --
+[*] Remoção de Warnings e Hints. (Por Waldir Paim e DSA)
+    http://www.projetoacbr.com.br/forum/topic/28345-remoção-de-hints-e-warning-do-acbr/?do=findComment&comment=191681
+
 Data: 28/03/16 ver. 0.0.187a
 -- ACBrBancoBancoob --
 [*] Inclusão das mensagens do título na remessa CNAB240. (Juliana Tamizou)

@@ -68,7 +68,7 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:String): String; 
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:String): String; override;
   end;
 
 implementation
@@ -158,8 +158,6 @@ begin
 end;
 
 function TACBrBancoSicredi.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
-var
-  aNossoNumero: String;
 begin
   Result:= FormatDateTime('yy',ACBrTitulo.DataDocumento) + '/' +
            ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5) + '-' +
@@ -498,7 +496,6 @@ var
   CodMotivo_19,CodMotivo: String;
 begin
   fpTamanhoMaximoNossoNum := 20;
-  ContLinha := 0;
 
   if StrToIntDef(copy(ARetorno[0],77,3),-1) <> Numero then
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1164,9 +1161,8 @@ var
   Sequencia, wMes :Integer;
   NomeFixo, NomeArq: String;
   codMesSicredi : String;
-  Flag : Boolean;
 begin
-   Flag := True;
+
    with ACBrBanco.ACBrBoleto do
    begin
       if NomeArqRemessa <> '' then
@@ -1277,6 +1273,7 @@ end;
 function TACBrBancoSicredi.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
+  Result := toTipoOcorrenciaNenhum;
   case ACBrBanco.ACBrBoleto.LayoutRemessa of
     c240: begin
       case CodOcorrencia of
@@ -1636,7 +1633,6 @@ var Titulo: TACBrTitulo;
     rCedente, rCNPJCPF, rCodCedente, rAgencia, rDigitoAgencia: String;
     rConta, rDigitoConta: String;
 begin
-   ContLinha := 0;
 
    if (StrToIntDef(Copy(ARetorno[0], 1, 3), -1) <> Numero) then
      raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +

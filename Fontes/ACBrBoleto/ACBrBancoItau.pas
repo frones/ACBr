@@ -247,6 +247,7 @@ var
    ADataMoraJuros, ADataDesconto,ATipoAceite :String;
    ATipoInscricaoAvalista: Char;
 begin
+   ATipoInscricaoAvalista := ' ';
    with ACBrTitulo do
    begin
       {SEGMENTO P}
@@ -781,7 +782,6 @@ var
   ContLinha : Integer;
   idxMotivo: Integer;
 begin
-   ContLinha := 0;
 
    // informação do Header
    // Verifica se o arquivo pertence ao banco
@@ -827,6 +827,8 @@ begin
    end;
 
    ACBrBanco.TamanhoMaximoNossoNum := 8;
+   Linha := '';
+   Titulo := nil;
 
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
@@ -838,6 +840,7 @@ begin
       if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if copy(Linha, 14, 1) = 'T' then
@@ -897,7 +900,6 @@ var
   rCNPJCPF,rAgencia,rConta: String;
   Titulo: TACBrTitulo;
 begin
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +

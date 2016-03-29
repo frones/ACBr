@@ -63,7 +63,7 @@ type
     procedure LerRetorno240(ARetorno: TStringList); override;
 
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String; override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
@@ -792,7 +792,7 @@ end;
 procedure TACBrBanrisul.LerRetorno400(ARetorno: TStringList);
 var Titulo: TACBrTitulo;
     Linha: String;
-    CodOcorrencia, IdxMotivo, codMotivo,  ContLinha: Integer;
+    CodOcorrencia, IdxMotivo, ContLinha: Integer;
     rCedente,rConvenio: String;
     rAgencia,rAgenciaDigito: String;
     rConta,rContaDigito: String;
@@ -801,7 +801,7 @@ begin
       raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
                                      '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
-  ContLinha := 0;
+
   fpTamanhoMaximoNossoNum:=10;
 
   rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
@@ -810,7 +810,7 @@ begin
   rAgenciaDigito := ''; //Não possui essa info
   rConta         := Copy(ARetorno.Strings[0], 31, 9);
   rContaDigito   := ''; //Não possui essa info
-  codMotivo      := 0;
+
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 386, 9), 0);
   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
@@ -1054,6 +1054,7 @@ end;
 function TACBrBanrisul.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
+  Result := toTipoOcorrenciaNenhum;
   case ACBrBanco.ACBrBoleto.LayoutRemessa of
     {Nem estava sendo utilizada esta função anteriormente, estava implementada
     //function CodOcorrenciaToTipo(const CodOcorrencia: String): TACBrTipoOcorrencia; overload;}

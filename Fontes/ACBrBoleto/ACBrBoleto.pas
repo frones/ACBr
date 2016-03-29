@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.187a';
+  CACBrBoleto_Versao = '0.0.188a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -460,7 +460,9 @@ type
     toRetornoReembolsoTransferenciaDescontoVendor,
     toRetornoReembolsoDevolucaoDescontoVendor,
     toRetornoReembolsoNaoEfetuado,
-    toRetornoSustacaoEnvioCartorio
+    toRetornoSustacaoEnvioCartorio,
+
+    toTipoOcorrenciaNenhum
   );
 
   {TACBrOcorrencia}
@@ -520,7 +522,8 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; virtual;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; overload; virtual;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String; overload; virtual;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
 
@@ -2011,6 +2014,12 @@ function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
 begin
   Result := '';
 end ;
+
+function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
+const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String;
+begin
+  Result := '';
+end;
 
 function TACBrBancoClass.CodOcorrenciaToTipoRemessa(const CodOcorrencia : Integer
   ) : TACBrTipoOcorrencia ;

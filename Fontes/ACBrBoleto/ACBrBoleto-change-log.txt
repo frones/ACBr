@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/03/16 ver. 0.0.187a
+-- ACBrBancoBancoob --
+[*] Inclusão das mensagens do título na remessa CNAB240. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28917-outras-informa%C3%A7%C3%B5es-segmento-r-do-boleto-sicoob/
+
+-- ACBrBancoBanestes --
+[*] Ajuste campo NumeroDocumento para não completar com zeros na remessa CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28681-campos-do-arq-de-remessa-banestes-com-preenchimento-errado/
+
+
 Data: 24/03/16 ver. 0.0.186a
 -- ACBrBancoSantander --
 [*] Inclusão de leitura dos motivos de rejeição no retorno do CNAB240. (Juliana Tamizou)

@@ -535,15 +535,15 @@ begin
   DecodeDate(MDFe.ide.dhEmi, wAno, wMes, wDia);
 
   Result := not
-    ((Copy(MDFe.infMDFe.ID, 4, 2) <> IntToStrZero(MDFe.Ide.cUF, 2)) or
-    (Copy(MDFe.infMDFe.ID, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-    (Copy(MDFe.infMDFe.ID, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(MDFe.infMDFe.ID, 10, 14)<> PadLeft(OnlyNumber(MDFe.Emit.CNPJ), 14, '0')) or
-    (Copy(MDFe.infMDFe.ID, 24, 2) <> MDFe.Ide.modelo) or
-    (Copy(MDFe.infMDFe.ID, 26, 3) <> IntToStrZero(MDFe.Ide.serie, 3)) or
-    (Copy(MDFe.infMDFe.ID, 29, 9) <> IntToStrZero(MDFe.Ide.nMDF, 9)) or
-    (Copy(MDFe.infMDFe.ID, 38, 1) <> TpEmisToStr(MDFe.Ide.tpEmis)) or
-    (Copy(MDFe.infMDFe.ID, 39, 8) <> IntToStrZero(MDFe.Ide.cMDF, 8)));
+    ((Copy(MDFe.infMDFe.ID, 5, 2) <> IntToStrZero(MDFe.Ide.cUF, 2)) or
+    (Copy(MDFe.infMDFe.ID, 7, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
+    (Copy(MDFe.infMDFe.ID, 9, 2)  <> FormatFloat('00', wMes)) or
+    (Copy(MDFe.infMDFe.ID, 11, 14)<> PadLeft(OnlyNumber(MDFe.Emit.CNPJ), 14, '0')) or
+    (Copy(MDFe.infMDFe.ID, 25, 2) <> MDFe.Ide.modelo) or
+    (Copy(MDFe.infMDFe.ID, 27, 3) <> IntToStrZero(MDFe.Ide.serie, 3)) or
+    (Copy(MDFe.infMDFe.ID, 30, 9) <> IntToStrZero(MDFe.Ide.nMDF, 9)) or
+    (Copy(MDFe.infMDFe.ID, 39, 1) <> TpEmisToStr(MDFe.Ide.tpEmis)) or
+    (Copy(MDFe.infMDFe.ID, 40, 8) <> IntToStrZero(MDFe.Ide.cMDF, 8)));
 end;
 
 function Manifesto.GetConfirmado: Boolean;

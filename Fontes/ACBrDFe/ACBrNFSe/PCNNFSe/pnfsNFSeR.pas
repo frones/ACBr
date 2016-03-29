@@ -971,8 +971,8 @@ begin
     end;
   end;
 
-  NFSe.Cancelada := snNao; {@/\@}
-  NFSe.Status := srNormal; {@/\@}
+  NFSe.Cancelada := snNao;
+  NFSe.Status := srNormal;
 
   case LayoutXML of
     loABRASFv1:    Result := LerNFSe_ABRASF_V1;
@@ -990,19 +990,26 @@ begin
 
   Leitor.Grupo := Leitor.Arquivo;
 
-{
-  NFSe.Cancelada := snNao;
-  NFSe.Status := srNormal;
-}
-
   if Leitor.rExtrai(1, 'NfseCancelamento') <> '' then
   begin
     NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
     if NFSe.NfseCancelamento.DataHora = 0 then
       NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
     NFSe.NfseCancelamento.Pedido.CodigoCancelamento := Leitor.rCampo(tcStr, 'CodigoCancelamento');
-    NFSe.Cancelada := snSim;
-    NFSE.Status := srCancelado;
+
+    case FProvedor of
+     proBetha: begin
+                 if NFSe.NfseCancelamento.DataHora <> 0 then
+                 begin
+                   NFSe.Cancelada := snSim;
+                   NFSE.Status := srCancelado;
+                 end;
+               end;
+    else begin
+           NFSe.Cancelada := snSim;
+           NFSE.Status := srCancelado;
+         end;
+    end;
   end;
 
   if (Leitor.rExtrai(1, 'NfseSubstituicao') <> '') then

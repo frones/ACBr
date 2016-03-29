@@ -588,7 +588,7 @@ type
 //                      );
 
   ///Código da Situação Tributária referente ao ICMS.
-  TACBrCstIcms = (
+  TACBrCstIcms = ( sticmsNenhum,
                    sticmsTributadaIntegralmente                              , // '000' //	Tributada integralmente
                    sticmsTributadaComCobracaPorST                            , // '010' //	Tributada e com cobrança do ICMS por substituição tributária
                    sticmsComReducao                                          , // '020' //	Com redução de base de cálculo
@@ -807,7 +807,8 @@ type
                     stpiscofinsOperSemIncidenciaContribuicao,              //08 Operação sem Incidência da Contribuição
                     stpiscofinsOperComSuspensaoContribuicao,               //09 Operação com Suspensão da Contribuição
                     stpiscofinsOutrasOperacoesSaida,                       //49 Outras Operações de Saída
-                    stpiscofinsOutrasDespesas                              //99 Outras Operações
+                    stpiscofinsOutrasDespesas,                             //99 Outras Operações
+                    stpiscofinsNenhum
                   );
   TACBrSituacaoTribPISCOFINS = TACBrCstPisCofins;
 
@@ -1317,7 +1318,9 @@ begin
   else if AValue = '03' then
     Result := ncdAliqUnidProduto
   else if AValue = '04' then
-    Result := ncdPresAgroindustria;
+    Result := ncdPresAgroindustria
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
 end;
 
 function StrToIndTipCoop(const AValue: string): TACBrIndTipCoop;
@@ -1335,7 +1338,9 @@ begin
   else if AValue = '06' then
     Result := itcMedicos
   else if AValue = '99' then
-    Result := itcOutras;
+    Result := itcOutras
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,05,06 ou 99)',[AValue]));
 end;
 
 function StrToCodCont(const AValue: string): TACBrCodCont;
@@ -1367,7 +1372,9 @@ begin
   else if AValue = '72' then
     Result := ccApuradaSCPCumulativa
   else if AValue = '99' then
-    Result := ccPISPasepSalarios;
+    Result := ccPISPasepSalarios
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,31,32,51,52,53,54,70,71,72 ou 99)',[AValue]));
 end;
 
 
@@ -1384,7 +1391,9 @@ begin
   else if AValue = '05' then
     Result := codAjOutrasSituacaoes
   else if AValue = '06' then
-    Result := codAjEstorno;
+    Result := codAjEstorno
+   else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,05 e 06)',[AValue]));
 end;
 
 function StrToIndAJ(const AValue: string):TACBrIndAJ;
@@ -1448,7 +1457,9 @@ begin
   else if AValue = '308' then
     Result := ccREImportacao
   else if AValue = '399' then
-    Result := ccREOutros;
+    Result := ccREOutros
+   else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (101 a 109, 199, 201 a 208 e 299, 301 a 308 e 399)',[AValue]));
 end;
 
 function StrToIndNatDeducao(const AValue: string):TACBrIndNatDeducao;
@@ -1467,7 +1478,9 @@ begin
   else if AValue = '04' then
     Result := indSTNaoOCFatoGeradorPres
   else if AValue = '99' then
-    Result := indOutrasDeducoes;
+    Result := indOutrasDeducoes
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03 e 04)',[AValue]));
 end;
 
 function StrToIndNatRec(const AValue: string):TACBrIndNatRec;
@@ -1488,7 +1501,9 @@ begin
   else if AValue = '05' then
     Result := indRetFabricanteMaqVeiculos
   else if AValue = '99' then
-    Result := indOutrasRetencoes;
+    Result := indOutrasRetencoes
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,05 e 99)',[AValue]));
 end;
 
 function StrToInd_Rec(const AValue: string):TACBrInd_Rec;
@@ -1504,7 +1519,9 @@ begin
   else if AValue = '05' then
     Result :=   crItemVendido
   else if AValue = '99' then
-    Result :=   crOutros;
+    Result :=   crOutros
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,05 e 99)',[AValue]));
 end;
 
 function StrToIndTpOperacaoReceita(const AValue: string): TACBrIndTpOperacaoReceita;
@@ -1587,7 +1604,9 @@ begin
   if AValue = 'S' then
     Result := indCTASintetica
   else if AValue = 'A' then
-    Result := indCTAnalitica;
+    Result := indCTAnalitica
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (S e A)',[AValue]));
 end;
 
 function StrToNaturezaConta(const AValue: string): TACBrNaturezaConta;
@@ -1603,7 +1622,9 @@ begin
   else if (AValue = '05') then
     Result := ncgCompensacao
   else if (AValue = '09') then
-    Result := ncgOutras;
+    Result := ncgOutras
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,05 e 09)',[AValue]));
 end;
 
 function StrToIndMov(const AValue: string): TACBrIndMov;
@@ -1705,7 +1726,9 @@ begin
       Result := vlVersao200
    else
    if AValue = '003' then
-      Result := vlVersao201;
+      Result := vlVersao201
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (001,002 e 003)',[AValue]));
 end;
 
 function TipoEscritToStr(AValue: TACBrTipoEscrit): string;
@@ -1870,7 +1893,9 @@ begin
       Result := csfCancelado
    else
    if AValue = '99' then
-      Result := csfOutros;
+      Result := csfOutros
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (00,02 e 99)',[AValue]));
 end;
 
 function IndPgtoToStr(AValue: TACBrIndPgto): string;
@@ -2113,6 +2138,7 @@ function StrToCstPis(AValue: String): TACBrCstPis;
 var
    ifor: Integer;
 begin
+ Result := stpisNenhum;
    for ifor := 0 to High(CstPis) do
    begin
       if AValue = CstPis[ifor] then
@@ -2132,6 +2158,7 @@ function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
 var
    ifor: Integer;
 begin
+ Result := stpiscofinsNenhum;
    for ifor := 0 to High(CstPisCofins) do
    begin
       if AValue = CstPisCofins[ifor] then
@@ -2151,6 +2178,7 @@ function StrToCstCofins(AValue: String): TACBrCstCofins;
 var
 ifor: Integer;
 begin
+ Result := stcofinsNenhum;
    for ifor := 0 to High(CstCofins) do
    begin
       if AValue = CstCofins[ifor] then
@@ -2170,6 +2198,7 @@ function StrToCstIcms(AValue: String): TACBrCstIcms;
 var
 ifor: Integer;
 begin
+   Result := sticmsNenhum;
    for ifor := 0 to High(CstIcms) do
    begin
       if AValue = CstIcms[ifor] then
@@ -2189,6 +2218,7 @@ function StrToCstIpi(AValue: String): TACBrCstIpi;
 var
 ifor: Integer;
 begin
+ Result := stipiVazio;
    for ifor := 0 to High(CstIpi) do
    begin
       if AValue = CstIpi[ifor] then

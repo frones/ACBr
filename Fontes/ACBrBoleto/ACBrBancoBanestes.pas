@@ -349,7 +349,7 @@ begin
                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')   +  // sacador avalista. não pode ser o proprio sacado
                   aCarteira                                                   +
                   Ocorrencia                                                  +
-                  PadLeft(NumeroDocumento, 10, '0')                           +
+                  PadRight(NumeroDocumento, 10)                               +
                   FormatDateTime('ddmmyy', Vencimento)                        +
                   '000'                                                       +
                   IntToStrZero(Round(ValorDocumento * 100 ), 10)              +

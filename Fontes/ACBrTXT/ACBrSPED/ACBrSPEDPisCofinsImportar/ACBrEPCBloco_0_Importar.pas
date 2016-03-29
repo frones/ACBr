@@ -137,7 +137,7 @@ begin
     UF := Valor;
     COD_MUN := ValorI;
     SUFRAMA := Valor;
-    IND_NAT_PJ := StrToIndNatPJImporta(Valor);
+    IND_NAT_PJ := StrToIndNatPJ(Valor);
     IND_ATIV := StrToIndAtiv(Valor);
   end;
 end;

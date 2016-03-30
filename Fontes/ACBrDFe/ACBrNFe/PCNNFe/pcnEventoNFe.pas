@@ -203,7 +203,7 @@ type
 
   { TRetInfEvento }
 
-  TRetInfEvento = class // (TPersistent)
+  TRetInfEvento = class(TPersistent)
   private
     FId: String;
     FNomeArquivo: String;

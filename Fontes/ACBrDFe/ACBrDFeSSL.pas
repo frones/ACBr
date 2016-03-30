@@ -118,7 +118,7 @@ type
 
   { TDFeSSL }
 
-  TDFeSSL = class
+  TDFeSSL = class(TPersistent)
   private
     FArquivoPFX: String;
     FDadosPFX: AnsiString;
@@ -612,21 +612,27 @@ function TDFeSSLClass.Assinar(const ConteudoXML, docElement,
   infElement: String; SignatureNode: String; SelectionNamespaces: String;
   IdSignature: String): String;
 begin
+  {$IFDEF FPC}
   Result := '';
+  {$ENDIF}
   raise EACBrDFeException.Create(ClassName + '.Assinar, não implementado');
 end;
 
 function TDFeSSLClass.Enviar(const ConteudoXML: String; const URL: String;
   const SoapAction: String; const MimeType: String): String;
 begin
+  {$IFDEF FPC}
   Result := '';
+  {$ENDIF}
   raise EACBrDFeException.Create(ClassName + '.Enviar não implementado');
 end;
 
 function TDFeSSLClass.Validar(const ConteudoXML, ArqSchema: String;
   out MsgErro: String): Boolean;
 begin
+  {$IFDEF FPC}
   Result := False;
+  {$ENDIF}
   raise EACBrDFeException.Create('"Validar" não suportado em: ' + ClassName);
 end;
 
@@ -634,7 +640,9 @@ function TDFeSSLClass.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
   SelectionNamespaces: String): Boolean;
 begin
+  {$IFDEF FPC}
   Result := False;
+  {$ENDIF}
   raise EACBrDFeException.Create('"ValidarAssinatura" não suportado em: ' + ClassName);
 end;
 

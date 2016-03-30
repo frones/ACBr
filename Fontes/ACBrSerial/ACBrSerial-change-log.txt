@@ -41,7 +41,7 @@ Símbolo : Significado
 
 Data 30/03/2016
 -- ACBrECFVirtual, ACBrECFVirtualBuffer --
-[+] Adicionado suporte ao método "CancelaItemNaoFiscal" (por: DSA e Amarildo Lacarda)
+[+] Adicionado suporte ao método "CancelaItemNaoFiscal" (por: DSA e Amarildo Lacerda)
 [-] Correção de Bug no método "LerINI", que não considerava o Desconto/Acrescimo
     de SubTotal do cupom.
    http://www.projetoacbr.com.br/forum/topic/29019-sat-implementado-cancelaritemnaofiscal/

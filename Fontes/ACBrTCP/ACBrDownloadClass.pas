@@ -336,11 +336,13 @@ begin
             if (fResultCode = 200) or (fResultCode = 206) or (fResultCode = 226) then
             begin
               sFileName := Copy(fFilePart, 1, Length(fFilePart) -5);
-              if FileExists(sFileName) then
+              if FileExists(sFileName) and FilesExists(fFilePart) then
                 if not DeleteFile(sFileName) then
                   raise Exception.Create(Format('Não foi possível excluir o arquivo: %s', [sFileName]));
-              if not RenameFile(fFilePart, sFileName) then
-                raise Exception.Create(Format('Não foi possível renomear o arquivo: %s para %s', [fFilePart, sFileName]));
+
+              if FilesExists(fFilePart) then              
+                if not RenameFile(fFilePart, sFileName) then
+                  raise Exception.Create(Format('Não foi possível renomear o arquivo: %s para %s', [fFilePart, sFileName]));
             end;
          end
        end;

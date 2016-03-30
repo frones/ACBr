@@ -328,7 +328,7 @@ begin
 
   AStream.Position := 0 ;
   SetLength(S,AStream.Size);
-  AStream.ReadBuffer(pchar(S)^,AStream.Size);
+  AStream.ReadBuffer(PAnsiChar(S)^,AStream.Size);
 
   Cmd := Cmd + S ;
 

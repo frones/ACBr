@@ -40,6 +40,9 @@ unit ACBrDFeOpenSSL;
 interface
 
 uses
+  {$IFDEF DELPHI2009_UP}
+   AnsiStrings,
+  {$ENDIF}
   Classes, SysUtils,
   ACBrDFeSSL,
   HTTPSend, ssl_openssl,
@@ -750,7 +753,7 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
     notAfter: PASN1_TIME;
   begin
     notAfter := cert.cert_info^.validity^.notAfter;
-    Validade := StrPas( PAnsiChar(notAfter^.data) );
+    Validade := {$IFDEF DELPHI2009_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(notAfter^.data) );
     SetLength(Validade, notAfter^.length);
     Validade := OnlyNumber(Validade);
 
@@ -762,7 +765,7 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
 
   function GetSubjectName( cert: pX509 ): String;
   var
-    s: String;
+    s: AnsiString;
   begin
     setlength(s, 4096);
     {$IFDEF USE_libeay32}
@@ -822,7 +825,7 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
     {$ELSE}
      SN := X509GetSerialNumber(cert);
     {$ENDIF}
-    s := StrPas( PAnsiChar(SN^.data) );
+    s := {$IFDEF DELPHI2009_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(SN^.data) );
     SetLength(s,SN.length);
     Result := AsciiToHex(s);
   end;

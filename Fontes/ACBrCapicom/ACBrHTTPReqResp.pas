@@ -40,7 +40,12 @@ unit ACBrHTTPReqResp;
 interface
 
 uses
-  Windows, Classes, SysUtils, wininet, ACBrCAPICOM_TLB;
+  {$IFDEF DELPHI2009_UP}
+  AnsiStrings,
+  {$ENDIF}
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF} Classes, SysUtils, wininet, ACBrCAPICOM_TLB;
 
 type
 
@@ -205,7 +210,7 @@ begin
   if not HttpQueryInfo(ARequest, HTTP_QUERY_STATUS_CODE, @aBuffer, bufLen, dummy ) then
     FHTTPResultCode := 4
   else
-    FHTTPResultCode := StrToIntDef( StrPas(aBuffer), 0);
+    FHTTPResultCode := StrToIntDef( {$IFDEF DELPHI2009_UP}AnsiStrings.{$ENDIF}StrPas(aBuffer), 0);
 end;
 
 procedure TACBrHTTPReqResp.SetCertificate(pCertSerialNumber: String);

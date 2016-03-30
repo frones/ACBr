@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/03/2016
+-- ACBrBAL, ACBrBALSaturno --
+[+] Adicionado suporte a novo modelo "Saturno" (por: Wislei de Brito Fernandes)
+    http://www.projetoacbr.com.br/forum/topic/12619-componente-acbrba-balança-saturno/
+
 Data: 26/03/2016
 -- ACBrECFVirtual --
 [-] Correções no método "CancelaCupom".

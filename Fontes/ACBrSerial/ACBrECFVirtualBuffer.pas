@@ -120,6 +120,8 @@ TACBrECFVirtualBufferClass = class( TACBrECFVirtualClass )
     procedure AbreNaoFiscalVirtual(CPF_CNPJ: String; Nome: String; Endereco: String
       ); override;
     Procedure RegistraItemNaoFiscalVirtual( CNFCupom: TACBrECFVirtualClassCNFCupom ); override ;
+    Procedure CancelaItemNaoFiscalVirtual(NumItem: Integer); override;
+
     procedure AbreRelatorioGerencialVirtual(Indice: Integer); override;
     procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
       CodComprovanteNaoFiscal: String; SubtotalCupomAnterior, ValorFPG: Double ); override;
@@ -1027,6 +1029,15 @@ begin
   AddBufferLinhas( CNFCupom.Observacao );
   ImprimeBuffer ;
 end;
+
+procedure TACBrECFVirtualBufferClass.CancelaItemNaoFiscalVirtual(
+  NumItem: Integer);
+begin
+  ZeraBuffer;
+  fsBuffer.Add( 'CANCELADO ITEM: '+IntToStrZero( NumItem,3) ) ;
+  ImprimeBuffer;
+end;
+
 
 procedure TACBrECFVirtualBufferClass.AbreRelatorioGerencialVirtual(Indice: Integer);
 begin

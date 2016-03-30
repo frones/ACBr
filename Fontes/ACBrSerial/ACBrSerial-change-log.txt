@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 30/03/2016
+-- ACBrECFVirtual, ACBrECFVirtualBuffer --
+[+] Adicionado suporte ao método "CancelaItemNaoFiscal" (por: DSA e Amarildo Lacarda)
+[-] Correção de Bug no método "LerINI", que não considerava o Desconto/Acrescimo
+    de SubTotal do cupom.
+   http://www.projetoacbr.com.br/forum/topic/29019-sat-implementado-cancelaritemnaofiscal/
+
 Data: 29/03/2016
 -- ACBrBAL, ACBrBALSaturno --
 [+] Adicionado suporte a novo modelo "Saturno" (por: Wislei de Brito Fernandes)

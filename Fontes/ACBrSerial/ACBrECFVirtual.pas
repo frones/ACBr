@@ -230,6 +230,7 @@ TACBrECFVirtualClassCupom = class
 
     function RegistraCNF(AValor: Currency; AObservacao: String; APosCNF: Integer):
        TACBrECFVirtualClassCNFCupom;
+    procedure CancelaCNF(NumItem: Integer);
 
     procedure LoadFromINI( AIni: TCustomIniFile);
     procedure SaveToINI( AIni: TCustomIniFile);
@@ -400,6 +401,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     Procedure AbreNaoFiscalVirtual( CPF_CNPJ: String = ''; Nome: String = '';
        Endereco: String = '' ) ; virtual ;
     Procedure RegistraItemNaoFiscalVirtual( CNFCupom: TACBrECFVirtualClassCNFCupom ); virtual ;
+    Procedure CancelaItemNaoFiscalVirtual( NumItem : Integer ); virtual;
 
     Procedure EnviaConsumidorVirtual ; virtual;
 
@@ -506,6 +508,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
        Endereco: String = '' ) ; override ;
     Procedure RegistraItemNaoFiscal( CodCNF : String; Valor : Double;
        Obs : AnsiString = '') ; override ;
+    Procedure CancelaItemNaoFiscal(const AItem: Integer); override;
 
     Procedure MudaHorarioVerao  ; overload ; override ;
     Procedure MudaHorarioVerao( EHorarioVerao : Boolean ) ; overload ; override ;
@@ -1073,6 +1076,19 @@ begin
   end;
 end;
 
+procedure TACBrECFVirtualClassCupom.CancelaCNF(NumItem: Integer);
+var
+  ACNF: TACBrECFVirtualClassCNFCupom;
+begin
+  if (NumItem < 1) or (NumItem > fpCNFsCupom.Count) then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(NumItem,3)+') fora da Faixa.')) ;
+
+  ACNF := fpCNFsCupom[NumItem-1];
+
+  fpSubTotal := fpSubTotal - ACNF.fsValor;
+  ACNF.Valor := 0;
+end;
+
 procedure TACBrECFVirtualClassCupom.LoadFromINI(AIni: TCustomIniFile);
 var
   I: Integer;
@@ -1137,6 +1153,8 @@ begin
     AliqCupom.AsString := T;
     Inc( I );
   end ;
+
+  fpSubTotal := fpSubTotal + fpDescAcresSubtotal;
 end;
 
 procedure TACBrECFVirtualClassCupom.SaveToINI(AIni: TCustomIniFile);
@@ -2531,6 +2549,42 @@ end;
 
 procedure TACBrECFVirtualClass.RegistraItemNaoFiscalVirtual(
   CNFCupom: TACBrECFVirtualClassCNFCupom);
+begin
+  {}
+end;
+
+procedure TACBrECFVirtualClass.CancelaItemNaoFiscal(const AItem: Integer);
+var
+  ValorItem: Double;
+  PosCNFItem: Integer;
+begin
+  if (AItem < 1) or (AItem > fpCupom.CNF.Count) then
+    raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(AItem,3)+') fora da Faixa.')) ;
+
+  try
+    CancelaItemVendidoVirtual( AItem );
+
+    with fpCupom.CNF[AItem-1] do
+    begin
+      ValorItem  := Valor;
+      PosCNFItem := PosCNF;
+    end;
+
+    fpCupom.CancelaCNF( AItem );
+
+    with fpComprovantesNaoFiscais[PosCNFItem] do
+    begin
+      Total := RoundTo(Total - ValorItem, -2) ;
+    end;
+
+    GravaArqINI;
+  except
+    LeArqINI ;
+    raise;
+  end;
+end;
+
+procedure TACBrECFVirtualClass.CancelaItemNaoFiscalVirtual(NumItem: Integer);
 begin
   {}
 end;

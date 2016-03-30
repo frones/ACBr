@@ -69,7 +69,7 @@ type
     procedure SetTimeZone(AValue: String);
   public
     constructor Create;
-    procedure Assign(AFrom: TTimeZoneConf);
+    procedure Assign(Source: TPersistent); override;
   published
     property ModoDeteccao: TTimeZoneModoDeteccao read FModoDeteccao
       write SetModoDeteccao default tzSistema;
@@ -953,10 +953,13 @@ begin
   FModoDeteccao := tzSistema;
 end;
 
-procedure TTimeZoneConf.Assign(AFrom: TTimeZoneConf);
+procedure TTimeZoneConf.Assign(Source: TPersistent);
 begin
-  FModoDeteccao := AFrom.ModoDeteccao;
-  FTimeZoneStr  := AFrom.TimeZoneStr;
+ if Source is TTimeZoneConf then
+ begin
+   FModoDeteccao := TTimeZoneConf(Source).ModoDeteccao;
+   FTimeZoneStr  := TTimeZoneConf(Source).TimeZoneStr;
+ end;
 end;
 
 procedure TTimeZoneConf.SetTimeZone(AValue: String);

@@ -112,7 +112,7 @@ var
   ArquivoXML: TStringList;
 begin
   //NOTA: Carrega o arquivo xml na memória para posterior leitura de sua tag's
-  Result := False;
+
   ArquivoXML := TStringList.Create;
   try
     ArquivoXML.LoadFromFile(CaminhoArquivo);

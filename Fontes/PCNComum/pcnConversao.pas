@@ -914,10 +914,10 @@ end;
 
 function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
 begin
-  case T of
-    crtSimplesNacional: Result := RTSimplesNacional;
-    crtSimplesExcessoReceita, crtRegimeNormal: Result := RTRegimeNormal;
-  end;
+  if T = crtSimplesNacional then
+    Result := RTSimplesNacional
+  else
+    Result := RTRegimeNormal;
 end;
 
 // 117b - Indicador de soma no total da NFe **************************************

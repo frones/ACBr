@@ -63,7 +63,7 @@ type
     procedure SetVersaoDF(const Value: TpcnVersaoDF);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfNFe: TGeralConfNFe); overload;
+    procedure Assign(DeGeralConfNFe: TGeralConfNFe); reintroduce;
 
   published
     property ModeloDF: TpcnModeloDF read FModeloDF write SetModeloDF default moNFe;
@@ -104,7 +104,7 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
-    procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); overload;
+    procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); reintroduce;
 
     function GetPathInu(CNPJ: String = ''): String;
     function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
@@ -135,7 +135,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesNFe: TConfiguracoesNFe); overload;
+    procedure Assign(DeConfiguracoesNFe: TConfiguracoesNFe); reintroduce;
 
   published
     property Geral: TGeralConfNFe read GetGeral;

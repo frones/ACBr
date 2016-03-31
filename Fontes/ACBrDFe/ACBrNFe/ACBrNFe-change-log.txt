@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 23/03/2016
+-- DANFeRetrato.fr3, DANFeRetratoNovo.fr3 --
+[*] Correção para mostrar ISSQN, conforme post :
+      http://www.projetoacbr.com.br/forum/topic/28624-issqn-danfe-fastreport/#comment-191819
+      Por : Henrique Leonardo
+    
+
+
+23/03/2016
 -- ACBrNFeDANFeEventoRLRetrato
 [*] Correção para mostrar correto a informação do CEP no evento
 		http://www.projetoacbr.com.br/forum/topic/28876-erro-na-formata%C3%A7%C3%A3o-do-cep-danfe-evento-fortes/

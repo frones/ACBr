@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/03/2016
+-- ACBrBAL, ACBrBALAFTS --
+[+] Adicionado suporte a novo modelo "AFTS" (por: Paulo Henrique de Castro)
+    http://www.projetoacbr.com.br/forum/topic/29063-componente-acbrba-balan%C3%A7a-afts/
+
 Data 30/03/2016
 -- ACBrECFVirtual, ACBrECFVirtualBuffer --
 [+] Adicionado suporte ao método "CancelaItemNaoFiscal" (por: DSA e Amarildo Lacerda)

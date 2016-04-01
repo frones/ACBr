@@ -1324,6 +1324,7 @@ procedure TACBrTEFD.FinalizarCupom(DesbloquearMouseTecladoNoTermino: Boolean);
 Var
   I, J, Ordem : Integer;
   Est, EstNaoFiscal  : AnsiChar;
+  EhNaoFiscal: Boolean;
   ImpressaoOk : Boolean ;
   GrupoFPG    : TACBrTEFDArrayGrupoRespostasPendentes ;
 begin
@@ -1340,10 +1341,15 @@ begin
            try
               EstNaoFiscal := 'N';
               Est          := EstadoECF;
-              while Est <> 'L' do
+              EhNaoFiscal  := (Est = 'N');
+
+              while (Est <> 'L') do
               begin
+                 if Est = 'O' then
+                   raise EACBrTEFDECF.Create(CACBrTEFD_Erro_ECFEstado);
+
                  // É não fiscal ? Se SIM, vamos passar por todas as fases...
-                 if Est = 'N' then
+                 if EhNaoFiscal then
                  begin
                     case EstNaoFiscal of
                       'N' : EstNaoFiscal := 'V' ;
@@ -1453,7 +1459,8 @@ begin
            end;
 
         except
-           on EACBrTEFDECF do ImpressaoOk := False ;
+           on EACBrTEFDECF do
+              ImpressaoOk := False ;
            else
               raise ;
         end;

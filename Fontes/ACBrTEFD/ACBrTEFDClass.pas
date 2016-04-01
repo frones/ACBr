@@ -69,6 +69,7 @@ const
    CACBrTEFD_NumVias     = 2 ;
    CACBrTEFD_DestaqueVia = 'Destaque a %dª Via' ;
    CACBrTEFD_Erro_ECFNaoLivre = 'ECF não está LIVRE' ;
+   CACBrTEFD_Erro_ECFEstado = 'Erro ao obter Estado do ECF' ;
    CACBrTEFD_Erro_ECFNaoResponde = 'Erro na impressão.'+sLineBreak+
                                    'Deseja tentar novamente ?' ;
    CACBrTEFD_Erro_ECFNaoRespondeInfo = 'Impressora não responde.'+sLineBreak+

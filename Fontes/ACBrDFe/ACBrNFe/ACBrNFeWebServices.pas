@@ -336,6 +336,7 @@ type
     procedure SetJustificativa(AValue: String);
     function GerarPathPorCNPJ: String;
   protected
+    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
@@ -2304,11 +2305,40 @@ begin
   Result := FPConfiguracoesNFe.Arquivos.GetPathInu(CNPJ);
 end;
 
+procedure TNFeInutilizacao.DefinirURL;
+var
+  ok: Boolean;
+  VerServ: Double;
+  ModeloDFe: String;
+begin
+  FPVersaoServico := '';
+  FPURL  := '';
+
+  ModeloDFe := ModeloDFToPrefixo( StrToModeloDF(ok, IntToStr(FModelo) ));
+  if not ok then
+    raise EACBrNFeException.Create( 'Modelo Inválido: '+IntToStr(FModelo) );
+
+  VerServ := VersaoDFToDbl(FPConfiguracoesNFe.Geral.VersaoDF);
+
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(
+    ModeloDFe,
+    FPConfiguracoesNFe.WebServices.UF,
+    FPConfiguracoesNFe.WebServices.Ambiente,
+    LayOutToServico(FPLayout),
+    VerServ,
+    FPURL
+  );
+
+  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
+end;
+
 procedure TNFeInutilizacao.DefinirServicoEAction;
+var
+  ok: Boolean;
 begin
   // BA usa uma notação de Serviços diferente das demais UFs
   if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
-     (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+     (StrToModeloDF(ok, IntToStr(FModelo)) = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
   begin

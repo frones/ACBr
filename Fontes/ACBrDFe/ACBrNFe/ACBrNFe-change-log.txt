@@ -47,14 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2016
+-- ACBrNFeWebServices --
+[-] Correção no WebService "TNFeInutilizacao", que não considerava o Modelo
+    informado nos parâmetros, para a obtenção da URL    (por: DSA)
+
 23/03/2016
 -- DANFeRetrato.fr3, DANFeRetratoNovo.fr3 --
 [*] Correção para mostrar ISSQN, conforme post :
       http://www.projetoacbr.com.br/forum/topic/28624-issqn-danfe-fastreport/#comment-191819
       Por : Henrique Leonardo
     
-
-
 23/03/2016
 -- ACBrNFeDANFeEventoRLRetrato
 [*] Correção para mostrar correto a informação do CEP no evento

@@ -350,6 +350,21 @@ type
          read GetObject write SetObject; default;
      end;
 
+   TACBrTEFDRespNFCeSAT = class
+   private
+    FCodCredenciadora: String;
+    FAutorizacao: String;
+    FBandeira: String;
+    FCNPJCredenciadora: String;
+   public
+    procedure Clear;
+
+    property CodCredenciadora: String read FCodCredenciadora write FCodCredenciadora;
+    property CNPJCredenciadora: String read FCNPJCredenciadora write FCNPJCredenciadora;
+    property Bandeira: String read FBandeira write FBandeira;
+    property Autorizacao: String read FAutorizacao write FAutorizacao;
+   end;
+
 
    { TACBrTEFDResp }
 
@@ -432,6 +447,7 @@ type
      fpValorEntradaCDC:Double;
      fpDataEntradaCDC:TDateTime;
      fpTipoOperacao: TACBrTEFDRespTipoOperacao;
+     fpNFCeSAT: TACBrTEFDRespNFCeSAT;
 
      procedure SetCNFEnviado(const AValue : Boolean);
      procedure SetIndiceFPG_ECF(const AValue : String);
@@ -539,6 +555,8 @@ type
      property ValorEntradaCDC:Double read fpValorEntradaCDC;
      property DataEntradaCDC:TDateTime read fpDataEntradaCDC;
      property TipoOperacao: TACBrTEFDRespTipoOperacao read fpTipoOperacao;
+
+     property NFCeSAT: TACBrTEFDRespNFCeSAT read fpNFCeSAT;
    end;
 
    { TACBrTEFDRespTXT }
@@ -1155,6 +1173,8 @@ begin
   fpImagemComprovante1aVia := TStringList.Create;
   fpImagemComprovante2aVia := TStringList.Create;
 
+  fpNFCeSAT := TACBrTEFDRespNFCeSAT.Create;
+
   // Inicializa as variáveis internas //
   Clear ;
 end;
@@ -1166,6 +1186,8 @@ begin
 
   fpImagemComprovante1aVia.Free ;
   fpImagemComprovante2aVia.Free ;
+
+  fpNFCeSAT.Free;
 
   inherited ;
 end;
@@ -1264,6 +1286,8 @@ begin
 
    fpArqBackup := '' ;
    fpArqRespPendente := '' ;
+
+   fpNFCeSAT.Clear;
 end;
 
 procedure TACBrTEFDResp.LeArquivo(const NomeArquivo : String);
@@ -2919,6 +2943,16 @@ end;
 procedure TACBrTEFDRespostasPendentes.Insert(Index : Integer; Obj : TACBrTEFDResp);
 begin
   inherited Insert(Index, Obj);
+end;
+
+{ TACBrTEFDRespNFCeSAT }
+
+procedure TACBrTEFDRespNFCeSAT.Clear;
+begin
+  FCodCredenciadora  := '';
+  FAutorizacao       := '';
+  FBandeira          := '';
+  FCNPJCredenciadora := '';
 end;
 
 end.

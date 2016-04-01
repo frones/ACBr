@@ -425,6 +425,12 @@ begin
           end;
         end;
 
+       // dados de retorno da NFC-e/SAT
+       950: fpNFCeSAT.CNPJCredenciadora := Linha.Informacao.AsString;
+       951: fpNFCeSAT.Bandeira          := Linha.Informacao.AsString;
+       952: fpNFCeSAT.Autorizacao       := Linha.Informacao.AsString;
+       953: fpNFCeSAT.CodCredenciadora  := Linha.Informacao.AsString;
+
        4029 :
         begin
           fpDesconto   := Linha.Informacao.AsFloat;

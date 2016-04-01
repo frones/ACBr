@@ -109,13 +109,13 @@ begin
   end;
 
   Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN', 001, 10, 0, '', ''); //data de adesao ao simples nacional
-  Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 001, 6, 0, '' , '');
+  Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 001, 14, 1, FormatFloat('#,##0.00',NFSe.Servico.Valores.Aliquota), '');
 
   if FNFSe.OptanteSimplesNacional = snSim then
     begin
       Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 4 , '');
       Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN', 001, 10, 0, FormatDateTime('dd/mm/yyyy', NFSe.DataOptanteSimplesNacional) , ''); //data de adesao ao simples nacional
-      Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 001, 6, 0, FormatFloat('##0.00', NFSe.ValoresNfse.Aliquota) , '');
+      Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 001, 14, 1, FormatFloat('#,##0.00',NFSe.Servico.Valores.Aliquota), '');
     end;
 
   if FNFSe.RegimeEspecialTributacao = retMicroempresarioIndividual then
@@ -212,6 +212,10 @@ end;
 
 procedure TNFSeW_CONAM.GerarXML_CONAM;
 begin
+  Gerador.Opcoes.RetirarEspacos := False;
+  Gerador.Opcoes.DecimalChar := ',';
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.Prefixo           := FPrefixo4;
 
   Gerador.wGrupoNFSe('SDTRPS');
   GerarIdentificacaoRPS;

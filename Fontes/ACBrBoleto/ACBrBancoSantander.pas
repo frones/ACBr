@@ -856,11 +856,20 @@ var
         else if AOcorrencia = '28' then
           Tipo := toRetornoDebitoTarifas
         else if AOcorrencia = '29' then
-          Tipo := toRetornoOcorrenciasDoSacado
+          Tipo := toRetornoOcorrenciasDoSacado        
+        else if AOcorrencia = '32' then
+          Tipo := toRetornoIOFInvalido
+        else if AOcorrencia = '51' then
+          Tipo := toRetornoTituloDDAReconhecidoPagador
+        else if AOcorrencia = '52' then
+          Tipo := toRetornoTituloDDANaoReconhecidoPagador
+        else if AOcorrencia = '53' then
+          Tipo := toRetornoTituloDDARecusadoCIP;
       end;
     end;
   end;
 begin
+  iLinha := 0;
 
   // Verificar se o retorno é do banco selecionado
   if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> Numero then
@@ -963,7 +972,7 @@ var
   ContLinha, CodOcorrencia, CodMotivo : Integer;
   Linha, rCedente, rAgencia, rConta, rDigitoConta, rCNPJCPF : String;
   wCodBanco: Integer;
-begin
+begin   
    wCodBanco := StrToIntDef(copy(ARetorno.Strings[0],77,3),-1);
    if (wCodBanco <> Numero) and (wCodBanco <> 353) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1010,7 +1019,7 @@ begin
 
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
-
+   
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1116,6 +1125,8 @@ begin
     01: Result := '01-Título Não Existe';
     02: Result := '02-Entrada Tít.Confirmada';
     03: Result := '03-Entrada Tít.Rejeitada';
+    04: Result := '04-Transf. de Carteira/Entrada';
+    05: Result := '05-Transf. de Carteira/Baixa';
     06: Result := '06-Liquidação';
     07: Result := '07-Liquidação por Conta';
     08: Result := '08-Liquidação por Saldo';
@@ -1127,16 +1138,22 @@ begin
     14: Result := '14-Prorrogação de Vencimento';
     15: Result := '15-Confirmação de Protesto';
     16: Result := '16-Tít.Já Baixado/Liquidado';
-    17: Result := '17-Liquidado em Cartório';
+    17: Result := '17-Liq.após baixa/Liq.tít.não registrado';
+    19: Result := '19-Recebimento da Instrução Protesto';
+    20: Result := '20-Recebimento da Instrução Não Protestar';
     21: Result := '21-Tít. Enviado a Cartório';
-    22: Result := '22-Tít. Retirado de Cartório';
-    24: Result := '24-Custas de Cartório';
-    25: Result := '25-Protestar Título';
-    26: Result := '26-Sustar Protesto';
-    35: Result := '35-Título DDA Reconhecido Pelo Sacado';
-    36: Result := '36-Título DDA Não Reconhecido Pelo Sacado';
-    37: Result := '37-Título DDA Recusado Pela CIP';
-    38: Result := '38-Recebimento da Instrução Não Protestar';
+    23: Result := '23-Remessa a Cartório';
+    24: Result := '24-Tít. Retirado de Cartório';
+    25: Result := '25-Protestado e Baixado';
+    26: Result := '26-Instrução rejeitada';
+    27: Result := '27-Confirmação alt.de outros dados';
+    28: Result := '28-Débito de tarifas e custas';
+    29: Result := '29-Ocorrência do sacado';
+    30: Result := '30-Alteração de dados rejeitada';
+    32: Result := '32-Código IOF Inválido';
+    51: Result := '51-Título DDA Reconhecido Pelo Sacado';
+    52: Result := '52-Título DDA Não Reconhecido Pelo Sacado';
+    53: Result := '53-Título DDA Recusado Pela CIP';
   end;
 end;
 
@@ -1148,6 +1165,8 @@ begin
     01: Result := toRetornoTituloNaoExiste;
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoRegistroRecusado;
+    04: Result := toRetornoTransferenciaCarteiraEntrada;
+    05: Result := toRetornoTransferenciaCarteiraBaixa;
     06: Result := toRetornoLiquidado;
     07: Result := toRetornoLiquidadoPorConta;
     08: Result := toRetornoLiquidadoSaldoRestante;
@@ -1159,13 +1178,23 @@ begin
     14: Result := toRetornoVencimentoAlterado;
     15: Result := toRetornoProtestado;
     16: Result := toRetornoTituloJaBaixado;
-    17: Result := toRetornoLiquidadoEmCartorio;
+    17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
+    19: Result := toRetornoRecebimentoInstrucaoProtestar;
+    20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
     21: Result := toRetornoEncaminhadoACartorio;
-    22: Result := toRetornoRetiradoDeCartorio;
-    24: Result := toRetornoCustasCartorioDistribuidor;
-    25: Result := toRetornoRecebimentoInstrucaoProtestar;
-    26: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+    23: Result := toRetornoEntradaEmCartorio;
+    24: Result := toRetornoRetiradoDeCartorio;
+    25: Result := toRetornoBaixaPorProtesto;
+    26: Result := toRetornoInstrucaoRejeitada;
+    27: Result := toRetornoAlteracaoUsoCedente;
+    28: Result := toRetornoDebitoTarifas;
+    29: Result := toRetornoOcorrenciasDoSacado;
+    30: Result := toRetornoAlteracaoDadosRejeitados;
+    32: Result := toRetornoIOFInvalido;
     38: Result := toRetornoRecebimentoInstrucaoNaoProtestar;
+    51: Result := toRetornoTituloDDAReconhecidoPagador;
+    52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+    53: Result := toRetornoTituloDDARecusadoCIP;
   else
     Result := toRetornoOutrasOcorrencias;
   end;
@@ -1178,6 +1207,8 @@ begin
     toRetornoTituloNaoExiste                   : Result := '01';
     toRetornoRegistroConfirmado                : Result := '02';
     toRetornoRegistroRecusado                  : Result := '03';
+    toRetornoTransferenciaCarteiraEntrada      : Result := '04';
+    toRetornoTransferenciaCarteiraBaixa        : Result := '05';
     toRetornoLiquidado                         : Result := '06';
     toRetornoLiquidadoPorConta                 : Result := '07';
     toRetornoLiquidadoSaldoRestante            : Result := '08';
@@ -1189,13 +1220,21 @@ begin
     toRetornoVencimentoAlterado                : Result := '14';
     toRetornoProtestado                        : Result := '15';
     toRetornoTituloJaBaixado                   : Result := '16';
-    toRetornoLiquidadoEmCartorio               : Result := '17';
-    toRetornoEncaminhadoACartorio              : Result := '21';
-    toRetornoRetiradoDeCartorio                : Result := '22';
-    toRetornoCustasCartorioDistribuidor        : Result := '24';
-    toRetornoRecebimentoInstrucaoProtestar     : Result := '25';
-    toRetornoRecebimentoInstrucaoSustarProtesto: Result := '26';
-    toRetornoRecebimentoInstrucaoNaoProtestar  : Result := '38';
+    toRetornoLiquidadoAposBaixaOuNaoRegistro   : Result := '17';
+    toRetornoRecebimentoInstrucaoProtestar     : Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
+    toRetornoEntradaEmCartorio                 : Result := '23';
+    toRetornoRetiradoDeCartorio                : Result := '24';
+    toRetornoBaixaPorProtesto                  : Result := '25';
+    toRetornoInstrucaoRejeitada                : Result := '26';
+    toRetornoAlteracaoUsoCedente               : Result := '27';
+    toRetornoDebitoTarifas                     : Result := '28';
+    toRetornoOcorrenciasDoSacado               : Result := '29';
+    toRetornoAlteracaoDadosRejeitados          : Result := '30';
+    toRetornoIOFInvalido                       : Result := '32';
+    toRetornoTituloDDAReconhecidoPagador       : Result := '51';
+    toRetornoTituloDDANaoReconhecidoPagador    : Result := '52';
+    toRetornoTituloDDARecusadoCIP              : Result := '53';
   else
     Result := '02';
   end;

@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.188a';
+  CACBrBoleto_Versao = '0.0.189a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -461,7 +461,11 @@ type
     toRetornoReembolsoDevolucaoDescontoVendor,
     toRetornoReembolsoNaoEfetuado,
     toRetornoSustacaoEnvioCartorio,
-
+    toRetornoIOFInvalido,
+    toRetornoTituloDDAReconhecidoPagador,
+    toRetornoTituloDDANaoReconhecidoPagador,
+    toRetornoTituloDDARecusadoCIP,
+    toRetornoPagadorDDA,
     toTipoOcorrenciaNenhum
   );
 
@@ -1617,7 +1621,7 @@ begin
         if DataMoraJuros <> 0 then
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
-                         ' após '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
+                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
                                                                 IncDay(DataMoraJuros,1),DataMoraJuros))))
         else
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',

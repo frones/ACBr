@@ -337,7 +337,7 @@ begin
                   PadRight(OnlyNumber(Cedente.CNPJCPF), 14, '0')              +
                   PadLeft(OnlyNumber(Copy(Trim(Cedente.Conta),1,11)), 11, '0')+ // Codigo da Empresa no Banco
                   Space(9)                                                    +
-                  PadLeft(SeuNumero,25)                                       +  // identificacao da operacao na empresa
+                  PadRight(SeuNumero,25)                                       +  // identificacao da operacao na empresa
                   PadRight(Copy(NossoNumero, 1, 8) +
                            DigitoNossoNumero, 10, '0')                        +
                   IfThen(PercentualMulta > 0, '1', '0')                       +  // Indica se exite Multa ou não

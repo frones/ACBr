@@ -47,6 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/04/16 ver: 0.0.189a
+--ACBrBancoSantander--
+[*] Atualização códigos de ocorrência. (renan.saches)
+http://www.projetoacbr.com.br/forum/topic/28895-ocorr%C3%AAncia-de-retorno-acbrbancosantander/
+
+--ACBrBancoSafra --
+[-] Correção remessa CNAB400. (ubaltino)
+[-] Melhorias e reorganização do código. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28993-erro-arquivo-remessa-banco-safra/
+
+-- ACBrBoleto --
+[-] Correção da mensagem referente a multa impressa nos boletos. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/29072-dias-de-car%C3%AAncia/
+
+-- ACBrBancoBanestes --
+[-] Correção campo SeNumero remessa CNAB400( Juliana tamizou)
+http://www.projetoacbr.com.br/forum/topic/28681-campos-do-arq-de-remessa-banestes-com-preenchimento-errado/
+
 Data: 29/03/16 ver: 0.0.188a
 -- ACBrBoleto* --
 [*] Remoção de Warnings e Hints. (Por Waldir Paim e DSA)

@@ -526,7 +526,7 @@ begin
       fAlternaCoresProdutos := AAlternaCoresProdutos;
       fCorDestaqueProdutos := ACorDestaqueProdutos;
 
-      if FImpressora > '' then
+      if not EstaVazio(FImpressora) then
         RLPrinter.PrinterName := FImpressora;
 
       if FNumCopias > 0 then
@@ -536,6 +536,7 @@ begin
 
       vAuxDiferencaPDF := 0;
       RLNFe.ShowProgress := FMostrarStatus;
+      RLNFe.PrintDialog := not(FMostrarPreview) and (EstaVazio(FImpressora));
 
       if FMostrarPreview then
         RLNFe.PreviewModal

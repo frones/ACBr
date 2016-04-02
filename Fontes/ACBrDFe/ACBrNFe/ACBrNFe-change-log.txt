@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2016
+-- ACBrDANFCeFortesFr, ACBrDANFeRL --
+[-] Acerto para mostrar o dialogo de impressão corretamente quando não informar a impressora e não configurar para preview
+    por: regys.silveira
+
 31/03/2016
 -- ACBrNFeWebServices --
 [-] Correção no WebService "TNFeInutilizacao", que não considerava o Modelo

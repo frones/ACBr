@@ -1006,11 +1006,11 @@ begin
 
       RLPrinter.Copies := NumCopias ;
 
-      if ACBrNFeDANFCeFortes.Impressora <> '' then
-        RLPrinter.PrinterName := ACBrNFeDANFCeFortes.Impressora;
+      if not EstaVazio(FImpressora) then
+        RLPrinter.PrinterName := FImpressora;
 
-      RLLayout.PrintDialog := ACBrNFeDANFCeFortes.MostrarPreview;
-      RLLayout.ShowProgress:= ACBrNFeDANFCeFortes.MostrarStatus;
+      RLLayout.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
+      RLLayout.PrintDialog  := not(FMostrarPreview) and (EstaVazio(FImpressora));
 
       if Filtro = fiNenhum then
       begin

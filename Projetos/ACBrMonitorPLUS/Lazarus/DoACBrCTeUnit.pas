@@ -1620,7 +1620,7 @@ begin
           try
             INIRec.ReadSection('ICMSUFFim', fsICMSUFFim);
             if fsICMSUFFim.Count > 0 then
-              if INIRec.ReadString('ICMSUFFim', 'CST','') <> '' then
+              if INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00) > 0 then
               begin
                 Imp.ICMSUFFim.vBCUFFim := INIRec.ReadFloat('ICMSUFFim', 'vBCUFFim', 0.00);
                 Imp.ICMSUFFim.pFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'pFCPUFFim', 0.00);

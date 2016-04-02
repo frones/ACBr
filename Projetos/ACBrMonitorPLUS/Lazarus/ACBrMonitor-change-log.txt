@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/04/2016
+[-] Acerto na leitura dos dados de partilha, não estava informando porque procurava
+    a tag CST que não existe para partilha, troquei para o percentual de partilha
+    que é a mesma tag usada pelo gerador de XML para verificar se gera ou não.
+    por: regys.silveira
+
 11/03/2016
 [-] Correção para a posição do canhoto nos danfe pois não assumia o valor passado
     por Juliomar Marchetti

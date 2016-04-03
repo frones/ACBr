@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/04/2016
+[-] Acerto na leitura das tags:
+    Emit.cRegTrib, Emit.cRegTribISSQN, Emit.indRatISSQN
+    Quando não eram informadas não era lido corretamente das configurações
+    por: regys.silveira
+
 01/04/2016
 [-] Acerto na leitura dos dados de partilha, não estava informando porque procurava
     a tag CST que não existe para partilha, troquei para o percentual de partilha

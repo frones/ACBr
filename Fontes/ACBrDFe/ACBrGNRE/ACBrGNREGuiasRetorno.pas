@@ -87,7 +87,8 @@ type
     function Insert(Index: Integer): GuiaRetorno;
     property Items[Index: Integer]: GuiaRetorno read GetItem  write SetItem;
     function GetNamePath: string; override ;
-    function LoadFromFile(CaminhoArquivo: string): boolean;    
+    function LoadFromFile(CaminhoArquivo: String): boolean;
+    function LoadFromString(Arquivo: String): boolean;
     property ACBrGNRE : TComponent read FACBrGNRE ;
   end;
 
@@ -246,6 +247,91 @@ begin
     end;
     
     ArquivoRetorno.Free;
+  except
+    raise;
+    Result := False;
+  end;
+end;
+
+function TGuiasRetorno.LoadFromString(Arquivo: String): boolean;
+var 
+	GNRERetorno : TGNRERetorno;
+  i: Integer;
+	ArquivoRetorno : TStringList;
+begin
+  try
+    Result := True;
+		
+		ArquivoRetorno := TStringList.Create;
+		try
+			ArquivoRetorno.Text := arquivo;
+			
+			GNRERetorno := TACBrGNRE(ACBrGNRE).GuiasRetorno.Add.GNRE;
+			for i := 0 to ArquivoRetorno.Count - 1 do
+			begin
+				if SameText(Copy(ArquivoRetorno.Strings[i], 1, 1), '0') then
+				begin
+					GNRERetorno.InfoCabec.TipoIdentificadoSolicitante := StrToInt(Copy(ArquivoRetorno.Strings[i], 2, 1));
+					GNRERetorno.InfoCabec.IdentificadorSolicitante := Trim(Copy(ArquivoRetorno.Strings[i], 3, 14));
+					GNRERetorno.InfoCabec.NumeroProtocoloLote := Trim(Copy(ArquivoRetorno.Strings[i], 17, 10));
+					GNRERetorno.InfoCabec.Ambiente := StrToInt(Copy(ArquivoRetorno.Strings[i], 27, 1));
+				end;
+
+				if SameText(Copy(ArquivoRetorno.Strings[i], 1, 1), '1') then
+				begin
+					GNRERetorno.Identificador := StrToInt(Copy(ArquivoRetorno.Strings[i], 1, 1));
+					GNRERetorno.SequencialGuia := StrToInt(Copy(ArquivoRetorno.Strings[i], 2, 4));
+					GNRERetorno.SituacaoGuia := Trim(Copy(ArquivoRetorno.Strings[i], 6, 1));
+					GNRERetorno.UFFavorecida := Trim(Copy(ArquivoRetorno.Strings[i], 7, 2));
+					GNRERetorno.CodReceita := StrToInt(Copy(ArquivoRetorno.Strings[i], 9, 6));
+					GNRERetorno.TipoDocEmitente := StrToInt(Copy(ArquivoRetorno.Strings[i], 15, 1));
+
+					case GNRERetorno.TipoDocEmitente of
+						1: GNRERetorno.DocEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 21, 11));
+						2: GNRERetorno.DocEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 18, 14));
+						3: GNRERetorno.DocEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 16, 16));
+					end;
+
+					GNRERetorno.RazaoSocialEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 32, 60));
+					GNRERetorno.EnderecoEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 92, 60));
+					GNRERetorno.MunicipioEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 152, 50));
+					GNRERetorno.UFEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 202, 2));
+					GNRERetorno.CEPEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 204, 8));
+					GNRERetorno.TelefoneEmitente := Trim(Copy(ArquivoRetorno.Strings[i], 212, 11));
+					GNRERetorno.TipoDocDestinatario := StrToInt(Copy(ArquivoRetorno.Strings[i], 223, 1));
+
+					case GNRERetorno.TipoDocDestinatario of
+						1: GNRERetorno.DocDestinatario := Trim(Copy(ArquivoRetorno.Strings[i], 229, 11));
+						2: GNRERetorno.DocDestinatario := Trim(Copy(ArquivoRetorno.Strings[i], 226, 14));
+						3: GNRERetorno.DocDestinatario := Trim(Copy(ArquivoRetorno.Strings[i], 224, 16));
+					end;
+
+					GNRERetorno.MunicipioDestinatario := Trim(Copy(ArquivoRetorno.Strings[i], 240, 50));
+					GNRERetorno.Produto := Trim(Copy(ArquivoRetorno.Strings[i], 290, 255));
+					GNRERetorno.NumDocOrigem := Copy(ArquivoRetorno.Strings[i], 545, 18);
+					GNRERetorno.Convenio := Trim(Copy(ArquivoRetorno.Strings[i], 563, 30));
+					GNRERetorno.InfoComplementares := Trim(Copy(ArquivoRetorno.Strings[i], 593, 300));
+					GNRERetorno.DataVencimento := Trim(Copy(ArquivoRetorno.Strings[i], 893, 8));
+					GNRERetorno.DataLimitePagamento := Trim(Copy(ArquivoRetorno.Strings[i], 901, 8));
+					GNRERetorno.PeriodoReferencia := Trim(Copy(ArquivoRetorno.Strings[i], 909, 1));
+					GNRERetorno.MesAnoReferencia := Trim(Copy(ArquivoRetorno.Strings[i], 910, 6));
+					GNRERetorno.Parcela := StrToInt(Copy(ArquivoRetorno.Strings[i], 916, 3));
+					GNRERetorno.ValorPrincipal := StrToInt(Copy(ArquivoRetorno.Strings[i], 919, 15)) / 100;
+					GNRERetorno.AtualizacaoMonetaria := StrToInt(Copy(ArquivoRetorno.Strings[i], 934, 15)) / 100;
+					GNRERetorno.Juros := StrToInt(Copy(ArquivoRetorno.Strings[i], 949, 15)) / 100;
+					GNRERetorno.Multa := StrToInt(Copy(ArquivoRetorno.Strings[i], 964, 15)) / 100;
+					GNRERetorno.RepresentacaoNumerica := Copy(ArquivoRetorno.Strings[i], 979, 48);
+					GNRERetorno.CodigoBarras := Copy(ArquivoRetorno.Strings[i], 1027, 44);
+					GNRERetorno.QtdeVias := StrToInt(Copy(ArquivoRetorno.Strings[i], 1071, 1));
+					GNRERetorno.NumeroControle := Copy(ArquivoRetorno.Strings[i], 1072, 16);
+					GNRERetorno.IdentificadorGuia := Copy(ArquivoRetorno.Strings[i], 1088, 10);
+					GNRERetorno.GuiaGeradaContingencia := StrToInt(Copy(ArquivoRetorno.Strings[i], 1098, 1));
+					GNRERetorno.Reservado := Trim(Copy(ArquivoRetorno.Strings[i], 1099, 126));
+				end
+			end;
+		finally
+			ArquivoRetorno.free;
+		end;
   except
     raise;
     Result := False;

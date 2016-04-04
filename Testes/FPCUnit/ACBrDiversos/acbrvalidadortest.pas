@@ -188,14 +188,19 @@ type
   published
     procedure VerificarInvalidoSP;
     procedure VerificarValidoSP;
+    procedure VerificarValidoSemExtensaoSP;
     procedure FormatarInteger;
+    procedure FormatarIntegerSemExtensao;
     procedure VerificarIntegerValidoSP;
     procedure ComTraco;
     procedure ComTracoNoLugarErrado;
     procedure ComLetras;
     procedure FormatarVazio;
     procedure FormatarZerosAEsquerda;
-    procedure FormatarMenosDeOitoDigitos;
+    procedure FormatarMenosDeCincoDigitos;
+    procedure FormatarCincoDigitos;
+    procedure FormatarMenosDeOitoEMaisDeCincoDigitos;
+    procedure FormatarMaisDeOitoDigitos;
   end;
 
 implementation
@@ -212,12 +217,25 @@ begin
   CheckEquals('', ACBrValidador.ValidarCEP('02260001', 'SP'));
 end;
 
+procedure TTestCaseACBrValidadorCEP.VerificarValidoSemExtensaoSP;
+begin
+  CheckEquals('', ACBrValidador.ValidarCEP(18270, 'SP'));
+end;
+
 procedure TTestCaseACBrValidadorCEP.FormatarInteger;
 var
   ACep: Integer;
 begin
   ACep := 2260001;
   CheckEquals('02260-001', ACBrValidador.FormatarCEP(ACep));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarIntegerSemExtensao;
+var
+  ACep: Integer;
+begin
+  ACep := 2260;
+  CheckEquals('02260-000', ACBrValidador.FormatarCEP(ACep));
 end;
 
 procedure TTestCaseACBrValidadorCEP.VerificarIntegerValidoSP;
@@ -253,9 +271,24 @@ begin
   CheckEquals('02260-001', ACBrValidador.FormatarCEP('02260001'));
 end;
 
-procedure TTestCaseACBrValidadorCEP.FormatarMenosDeOitoDigitos;
+procedure TTestCaseACBrValidadorCEP.FormatarMenosDeCincoDigitos;
+begin
+  CheckEquals('02260-000', ACBrValidador.FormatarCEP('2260'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarCincoDigitos;
+begin
+  CheckEquals('18270-000', ACBrValidador.FormatarCEP('18270'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarMenosDeOitoEMaisDeCincoDigitos;
 begin
   CheckEquals('02260-001', ACBrValidador.FormatarCEP('2260001'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarMaisDeOitoDigitos;
+begin
+  CheckEquals('12345-678', ACBrValidador.FormatarCEP('123456789'));
 end;
 
 { TTestCaseACBrValidadorTelefone }

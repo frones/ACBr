@@ -462,9 +462,18 @@ begin
 end;
 
 function FormatarCEP(const AValue: String): String;
-Var S : String ;
+Var
+  S : String ;
 begin
-  S := PadLeft( OnlyNumber(AValue), 8, '0') ; { Prenche zeros a esquerda }
+  S := OnlyNumber(AValue);
+  if Length(S) < 5 then
+    S := PadLeft( S, 5, '0');    // "9876" -> "09876"
+
+  if Length(S) = 5 then
+    S := PadRight( S, 8, '0')    // "09876" -> "09876-000"; "18270" -> "18270-000"
+  else
+    S := PadLeft( S, 8, '0') ;    // "9876000" -> "09876-000"
+
   Result := copy(S,1,5) + '-' + copy(S,6,3) ;
 end;
 

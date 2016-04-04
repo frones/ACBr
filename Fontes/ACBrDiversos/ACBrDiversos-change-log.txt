@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2016
+-- ACBrValidador --
+[-] Método FormatarCEP. Ajuste para conseguir formatar CEPs com 5 dígitos,
+    acrescentando "000" a direita (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/29139-melhoria-no-m%C3%A9todo-formtarcep/
+
 28/03/2016
 -- ACBrValidador --
 [-] Método FormatarCEP. Corrigida formatação de CEPs com Zero a esquerda

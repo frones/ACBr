@@ -44,6 +44,11 @@ Data: 04/04/2016
 [-] Ajuste para que a Porta Serial seja desativa, mesmo quando houver erro no
     envio da Impressão, caso "ControlePorta = True".   (por: DSA)
 
+-- ACBrECFEscECF --
+[-] Método "GetEstado".Correção para detecção do estado de Pagamento. Em algumas
+    situações o estado simulado de Pagamento (após SubTotalização com Zero)
+    era incorretamente interpretado  (por: DSA)
+
 Data: 31/03/2016
 -- ACBrBAL, ACBrBALAFTS --
 [+] Adicionado suporte a novo modelo "AFTS" (por: Paulo Henrique de Castro)

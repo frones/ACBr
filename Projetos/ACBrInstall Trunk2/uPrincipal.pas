@@ -531,7 +531,7 @@ procedure TfrmPrincipal.DeixarSomenteLib;
     for i := Low(ListArquivos) to High(ListArquivos) do
     begin
       Arquivo := ExtractFileName(ListArquivos[i]);
-      CopyFile(PWideChar(ListArquivos[i]), PWideChar(IncludeTrailingPathDelimiter(sDirLibrary) + Arquivo), True);
+      CopyFile(PWideChar(ListArquivos[i]), PWideChar(IncludeTrailingPathDelimiter(sDirLibrary) + Arquivo), False);
     end;
   end;
 begin

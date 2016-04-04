@@ -1200,16 +1200,18 @@ begin
   if Assigned(FOnEnviarStringDevice) then
      FOnEnviarStringDevice(AString, Tratado);
 
-  if not Tratado then
-  begin
-    GravarLog('EnviarStringDevice( ' + AString + ')', True);
-    FDevice.EnviaString(AString);
-  end
-  else
-    GravarLog('OnEnviarStringDevice( ' + AString + ')', True);
-
-  if ControlePorta then
-    DesativarPorta;
+  try
+    if not Tratado then
+    begin
+      GravarLog('EnviarStringDevice( ' + AString + ')', True);
+      FDevice.EnviaString(AString);
+    end
+    else
+      GravarLog('OnEnviarStringDevice( ' + AString + ')', True);
+  finally
+    if ControlePorta then
+      DesativarPorta;
+  end;
 end;
 
 procedure TACBrPosPrinter.GravarLog(AString: AnsiString; Traduz: Boolean;

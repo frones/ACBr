@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/04/2016
+-- ACBrPosPrinter --
+[-] Ajuste para que a Porta Serial seja desativa, mesmo quando houver erro no
+    envio da Impressão, caso "ControlePorta = True".   (por: DSA)
+
 Data: 31/03/2016
 -- ACBrBAL, ACBrBALAFTS --
 [+] Adicionado suporte a novo modelo "AFTS" (por: Paulo Henrique de Castro)

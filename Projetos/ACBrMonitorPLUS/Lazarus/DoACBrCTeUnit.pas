@@ -1616,24 +1616,18 @@ begin
             Imp.ICMS.ICMSSN.indSN := INIRec.ReadInteger('ICMSSN', 'indSN',1);
           end;
 
-          fsICMSUFFim := TStringList.Create;
-          try
-            INIRec.ReadSection('ICMSUFFim', fsICMSUFFim);
-            if fsICMSUFFim.Count > 0 then
-              if INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00) > 0 then
-              begin
-                Imp.ICMSUFFim.vBCUFFim := INIRec.ReadFloat('ICMSUFFim', 'vBCUFFim', 0.00);
-                Imp.ICMSUFFim.pFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'pFCPUFFim', 0.00);
-                Imp.ICMSUFFim.pICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'pICMSUFFim', 0.00);
-                Imp.ICMSUFFim.pICMSInter := INIRec.ReadFloat('ICMSUFFim', 'pICMSInter', 0.00);
-                Imp.ICMSUFFim.pICMSInterPart := INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00);
-                Imp.ICMSUFFim.vFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'vFCPUFFim', 0.00);
-                Imp.ICMSUFFim.vICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFFim', 0.00);
-                Imp.ICMSUFFim.vICMSUFIni := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFIni', 0.00);
-              end;
-          finally
-            fsICMSUFFim.Free;
+          if INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00) > 0 then
+          begin
+            Imp.ICMSUFFim.vBCUFFim := INIRec.ReadFloat('ICMSUFFim', 'vBCUFFim', 0.00);
+            Imp.ICMSUFFim.pFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'pFCPUFFim', 0.00);
+            Imp.ICMSUFFim.pICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'pICMSUFFim', 0.00);
+            Imp.ICMSUFFim.pICMSInter := INIRec.ReadFloat('ICMSUFFim', 'pICMSInter', 0.00);
+            Imp.ICMSUFFim.pICMSInterPart := INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00);
+            Imp.ICMSUFFim.vFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'vFCPUFFim', 0.00);
+            Imp.ICMSUFFim.vICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFFim', 0.00);
+            Imp.ICMSUFFim.vICMSUFIni := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFIni', 0.00);
           end;
+
         {$IFDEF PL_200}
           infCTeNorm.infCarga.vCarga   := StringToFloatDef( INIRec.ReadString('infCarga','vCarga','') ,0);
           infCTeNorm.infCarga.proPred  := INIRec.ReadString('infCarga','proPred','');

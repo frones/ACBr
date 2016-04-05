@@ -580,7 +580,7 @@ begin
               IntToStrZero(0, 15)                                        + // 027 - 041 / Valor/Percentual a ser concedido
               Space(24)                                                  + // 042 – 065 / Reservado (uso Banco)
               '1'                                                        + // 066 - 066 / Código da multa
-              FormatDateTime('ddmmyyyy',DataMoraJuros)                   + // 067 - 074 / Data da multa
+              sDataMoraJuros                                             + // 067 - 074 / Data da multa
               IntToStrZero(round(ValorDocumento * PercentualMulta), 15)  + // 075 - 089 / Valor/Percentual a ser aplicado
               Space(10)                                                  + // 090 - 099 / Reservado (uso Banco)
               MontarInstrucoes1                                          + // 100 - 139 / Mensagem 3

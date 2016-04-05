@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/04/16 ver: 0.0.190a
+--ACBrBancoSantander--
+[-] Ajuste campo DataMoraJuros remessa CNAB240.(RobertoSFilho)
+http://www.projetoacbr.com.br/forum/topic/29127-ajuste-remessa-240-santander-data-da-multa-segmento-r/
+
+
 Data: 01/04/16 ver: 0.0.189a
 --ACBrBancoSantander--
 [*] Atualização códigos de ocorrência. (renan.saches)

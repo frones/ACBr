@@ -1173,9 +1173,10 @@ begin
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
-                     '<' + FPrefixo4 + 'InfRps' +
-                       RetornarConteudoEntre(RPS,
-                         '<' + FPrefixo4 + 'InfRps', '</Rps>') +
+                      '<' + FPrefixo4 + 'InfRps' +
+                        RetornarConteudoEntre(RPS,
+                          '<' + FPrefixo4 + 'InfRps', '</Signature>') +
+                        '</Signature>'+
                     '</' + FPrefixo4 + 'Rps>';
       end;
     end;
@@ -2004,16 +2005,11 @@ begin
   begin
     DefinirSignatureNode('');
 
-//    case FProvedor of
-//      proSP: AssinarXML(FPDadosMsg, FPrefixo3 + TagGrupo, '',
-//                             'Falha ao Assinar - Gerar NFS-e: ');
-//    else
-      FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
+    FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                               FPrefixo3 + TagGrupo,
                               FPrefixo3 + TagElemento,
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
-//    end;
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -3574,6 +3570,33 @@ begin
 
   if not (Result) then
     FEnviarSincrono.GerarException( FEnviarSincrono.Msg );
+
+  // Alguns provedores requerem que sejam feitas as consultas para obter o XML
+  // da NFS-e
+  FConsSitLoteRPS.FProtocolo  := FEnviarSincrono.Protocolo;
+  FConsSitLoteRPS.FNumeroLote := FEnviarSincrono.NumeroLote;
+
+  FConsLote.FProtocolo := FEnviarSincrono.Protocolo;
+
+  if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
+  begin
+    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
+       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
+    begin
+      Result := FConsSitLoteRPS.Executar;
+
+      if not (Result) then
+        FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+    end;
+
+    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proInfisc then
+      Result := True
+    else
+      Result := FConsLote.Executar;
+
+    if not (Result) then
+      FConsLote.GerarException( FConsLote.Msg );
+  end;
 end;
 
 function TWebServices.Gera(ARps: Integer; ALote: Integer): Boolean;

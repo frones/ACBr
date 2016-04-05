@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/04/2016
+-- ACBrNFSeWebServices --
+[*] Alterado a forma de compor a lista de RPS assinados para a montagem do lote.
+[+] Incluido as chamadas de Consulta para o EnvioSincrono.
+    por: Italo Jurisato Junior
+
 24/03/2016
 [*] Diversas correções e Implentações para o provedor Conam.
     por: André Medeiros

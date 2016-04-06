@@ -49,6 +49,7 @@ uses Classes,
 
 const
     cEscECFMaxBuffer = 512 ;
+    cEscECFMaxBufferBematech = 256 ;
     cNumFalhasMax = 5;
     cEsperaWAK = 50;
 
@@ -2105,11 +2106,16 @@ end;
 procedure TACBrECFEscECF.LinhaRelatorioGerencial(Linha: AnsiString;
    IndiceBMP: Integer);
 var
-  P, Espera: Integer;
+  P, Espera, LenMaxBuffer: Integer;
   Buffer   : AnsiString ;
   EhControle: Boolean;
 begin
   Linha := AjustaLinhas( Linha, Colunas, 0, False );  { Formata as Linhas de acordo com "Coluna" }
+
+  if IsBematech then
+    LenMaxBuffer := cEscECFMaxBufferBematech
+  else
+    LenMaxBuffer := cEscECFMaxBuffer;
 
   P := pos(LF, Linha);
   while P > 0 do
@@ -2136,17 +2142,14 @@ begin
   while Length( Linha ) > 0 do
   begin
      P := Length( Linha ) ;
-     if P > cEscECFMaxBuffer then    { Acha o fim de Linha mais próximo do limite máximo }
-        P := PosLast(LF, LeftStr(Linha,cEscECFMaxBuffer) ) ;
+     if P > LenMaxBuffer then    { Acha o fim de Linha mais próximo do limite máximo }
+        P := PosLast(LF, copy(Linha, 1 , LenMaxBuffer) ) ;
 
      if P = 0 then
-        P := Colunas ;
+        P := Trunc( LenMaxBuffer / Colunas ) * Colunas;
 
      Buffer := copy( Linha, 1, P);
      Espera := Trunc( CountStr( Buffer, LF ) / 4);
-
-     if IsBematech and (RightStr(Buffer,1) = LF) then
-       Buffer := copy(Buffer, 1, Length(Buffer)-1);  // Remove último LF, isso causa erro na Bematech
 
      EscECFComando.CMD := 9;
      EscECFComando.TimeOut := Espera;

@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/04/2016
+-- ACBrECFEscECF --
+[-] Método "LinhaRelatorioGerencial". Removido workaround aplicado para Bematech,
+    pois estava causando problemas de alinhamento na impressão dos relatórios.
+[*] Modificado tamanho máximo de Buffer de envio para Bematech, para 256 bytes
+    para evitar travamentos do ECF.   (por: DSA)
+
+-- ACBrECFClass --
+[-] Correção de Bug na exibição de mensagens de erros com acentos, do método
+    "FormMsgDoProcedure" (por: DSA)
+
 Data: 04/04/2016
 -- ACBrPosPrinter --
 [-] Ajuste para que a Porta Serial seja desativa, mesmo quando houver erro no

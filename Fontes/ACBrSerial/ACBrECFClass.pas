@@ -4607,7 +4607,7 @@ end;
         end ;
 
        if fsFormMsgException <> '' then
-          raise EACBrECFErro.Create( ACBrStr(fsFormMsgException) ) ;
+          raise EACBrECFErro.Create( fsFormMsgException ) ;
     finally
        {$IFDEF VisualCLX}
        Application.OnEvent := OldOnEvent;

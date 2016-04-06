@@ -5110,7 +5110,7 @@ procedure TACBrECF.LinhaRelatorioGerencial(const Linha: AnsiString;
   const IndiceBMP: Integer);
 Var
   Texto, Buffer : AnsiString ;
-  Lin, Pos : Integer ;
+  Pos : Integer ;
 
   Procedure TentaImprimirLinhas( Texto: AnsiString; IndiceBMP: Integer )  ;
   var

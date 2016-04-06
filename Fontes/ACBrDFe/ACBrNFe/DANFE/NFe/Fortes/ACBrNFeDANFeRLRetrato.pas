@@ -577,6 +577,8 @@ type
     txtNCM: TRLDBMemo;
     RLLabel2: TRLLabel;
     txtCodigo: TRLDBMemo;
+    procedure rlbDivisaoReciboBeforePrint(Sender: TObject; var PrintIt: Boolean
+      );
     procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -667,6 +669,12 @@ begin
 	rllRecebemosDe.Visible := RLNFe.PageNumber = 1;
 //	rllResumo.Visible := RLNFe.PageNumber = 1;
   rllSERIE0.Visible := RLNFe.PageNumber = 1;
+end;
+
+procedure TfrlDANFeRLRetrato.rlbDivisaoReciboBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  rliDivisao.Visible := RLNFe.PageNumber = 1 ;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbEmitenteBeforePrint(Sender: TObject;

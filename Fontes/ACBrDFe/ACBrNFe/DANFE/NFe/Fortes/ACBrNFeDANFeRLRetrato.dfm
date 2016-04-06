@@ -6631,6 +6631,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Width = 742
       Height = 16
       BandType = btHeader
+			BeforePrint = rlbDivisaoReciboBeforePrint
       object rliDivisao: TRLDraw
         Left = 0
         Top = 5

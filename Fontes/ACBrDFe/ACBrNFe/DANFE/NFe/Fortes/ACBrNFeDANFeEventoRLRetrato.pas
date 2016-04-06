@@ -296,13 +296,13 @@ begin
 
             // Prrenche os campos - "Condições de uso"
             rlmCondUso.Lines.Add(StringReplace(InfEvento.detEvento.xCondUso,
-                                  '; ', ';'#13#10, [rfReplaceAll, rfIgnoreCase]));
+                                  ';', #13#10, [rfReplaceAll, rfIgnoreCase]));
             rlmCondUso.Lines.Text := StringReplace(rlmCondUso.Lines.Text,
                                   ': I', ':'#13#10'I', [rfReplaceAll, rfIgnoreCase]);
 
             // Prrenche os campos - "Correção"
             rlmCorrecao.Lines.Add(StringReplace(InfEvento.detEvento.xCorrecao,
-                                  '; ', ';'#13#10, [rfReplaceAll, rfIgnoreCase]));
+                                  ';', #13#10, [rfReplaceAll, rfIgnoreCase]));
           end;
 
         teCancelamento:

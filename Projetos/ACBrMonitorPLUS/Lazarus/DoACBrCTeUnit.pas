@@ -34,7 +34,7 @@
 unit DoACBrCTeUnit;
 
 interface
-Uses Classes, SysUtils, CmdUnit;
+Uses Classes, SysUtils, CmdUnit, Dialogs;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
 procedure GerarIniCTe( AStr: WideString );
@@ -1616,16 +1616,16 @@ begin
             Imp.ICMS.ICMSSN.indSN := INIRec.ReadInteger('ICMSSN', 'indSN',1);
           end;
 
-          if INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00) > 0 then
+          if StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0) <> 0 then
           begin
-            Imp.ICMSUFFim.vBCUFFim := INIRec.ReadFloat('ICMSUFFim', 'vBCUFFim', 0.00);
-            Imp.ICMSUFFim.pFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'pFCPUFFim', 0.00);
-            Imp.ICMSUFFim.pICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'pICMSUFFim', 0.00);
-            Imp.ICMSUFFim.pICMSInter := INIRec.ReadFloat('ICMSUFFim', 'pICMSInter', 0.00);
-            Imp.ICMSUFFim.pICMSInterPart := INIRec.ReadFloat('ICMSUFFim', 'pICMSInterPart', 0.00);
-            Imp.ICMSUFFim.vFCPUFFim := INIRec.ReadFloat('ICMSUFFim', 'vFCPUFFim', 0.00);
-            Imp.ICMSUFFim.vICMSUFFim := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFFim', 0.00);
-            Imp.ICMSUFFim.vICMSUFIni := INIRec.ReadFloat('ICMSUFFim', 'vICMSUFIni', 0.00);
+            Imp.ICMSUFFim.vBCUFFim       := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vBCUFFim', ''), 0 );
+            Imp.ICMSUFFim.pFCPUFFim      := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pFCPUFFim', ''), 0 );
+            Imp.ICMSUFFim.pICMSUFFim     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSUFFim', ''), 0 );
+            Imp.ICMSUFFim.pICMSInter     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInter', ''), 0 );
+            Imp.ICMSUFFim.pICMSInterPart := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0 );
+            Imp.ICMSUFFim.vFCPUFFim      := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vFCPUFFim', ''), 0 );
+            Imp.ICMSUFFim.vICMSUFFim     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFFim', ''), 0 );
+            Imp.ICMSUFFim.vICMSUFIni     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFIni', ''), 0 );
           end;
 
         {$IFDEF PL_200}

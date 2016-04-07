@@ -817,6 +817,9 @@ var
     if VersaoNFSe < ve200 then
     begin
       Result := Pos('</Rps>', AXMLString);
+      // Provedor ISSDSF
+      if Result = 0 then
+        Result := Pos('</RPS>', AXMLString);
       // Provedor Governa
       if Result = 0 then
       begin

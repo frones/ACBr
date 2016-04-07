@@ -122,7 +122,7 @@ begin
         end
 
 
-    else if Cmd.Metodo = 'atualizasoftware' then
+    else if (Cmd.Metodo = 'atualizasoftware') or (Cmd.Metodo = 'atualizarsoftwaresat') then
       Cmd.Resposta := ACBrSAT1.AtualizarSoftwareSAT
 
     else if (Cmd.Metodo = 'comunicarcertificado') or

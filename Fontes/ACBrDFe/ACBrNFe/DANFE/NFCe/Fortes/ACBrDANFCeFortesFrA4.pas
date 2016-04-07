@@ -415,7 +415,8 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLBand10BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl) <> '';
+  PrintIt := StringReplace(Trim(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl), ';', #13, [rfReplaceAll] ) <> '';
+
 //  self.memDadosAdc.Lines.Clear;
 //  self.memDadosAdc.Lines.Add(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl);
 end;
@@ -586,9 +587,12 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel32BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  if self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb = taHomologacao then
-    Text := ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL')
-  else
+  if self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb = taHomologacao then Begin
+      if self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpEmis <> teNormal then
+        Text := ACBrStr('EMITIDA EM CONTINGÊNCIA - AMBIENTE DE HOMOLOGAÇÃO -  SEM VALOR FISCAL')
+    else
+       Text := ACBrStr('EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL')
+  End else
     begin
       if self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpEmis <> teNormal then
          Text := ACBrStr('EMITIDA EM CONTINGÊNCIA')
@@ -690,7 +694,7 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLMemo2BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl;
+  Text := StringReplace(self.FACBrNFeDANFCeFortesA4.FpNFe.InfAdic.infCpl, ';', #13, [rfReplaceAll] ) ;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLMemo3BeforePrint(Sender: TObject;

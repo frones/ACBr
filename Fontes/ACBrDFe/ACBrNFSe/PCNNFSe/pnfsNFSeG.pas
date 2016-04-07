@@ -856,7 +856,7 @@ begin
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);
 
          Gerador.Prefixo := Prefixo4;
-         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon]) then
+         if (VersaoNFSe <> ve100) or (Provedor in [proISSNet, proActcon, pro4R]) then
          begin
            Gerador.wGrupoNFSe('CpfCnpj');
            if Length(Cnpj) <= 11 then
@@ -1200,7 +1200,7 @@ begin
          Gerador.wGrupoNFSe('IdentificacaoNfse');
          Gerador.wCampoNFSe(tcStr, '#3', 'Numero', 01, 15, 1, NumeroNfse, '');
 
-         if (VersaoNFSe <> ve100) or (Provedor in [proActcon]) then
+         if (VersaoNFSe <> ve100) or (Provedor in [proActcon,pro4R]) then
          begin
            Gerador.wGrupoNFSe('CpfCnpj');
            if Length(Cnpj) <= 11 then

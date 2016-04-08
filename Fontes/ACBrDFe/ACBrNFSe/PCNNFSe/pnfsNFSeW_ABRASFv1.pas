@@ -141,7 +141,8 @@ begin
   begin
     Gerador.wGrupoNFSe('Tomador');
 
-    if (NFSe.Tomador.Endereco.UF <> 'EX') then
+    if (NFSe.Tomador.Endereco.UF <> 'EX') or
+       (FProvedor = proSimplISS) or (FProvedor = proISSNet) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
       Gerador.wGrupoNFSe('CpfCnpj');

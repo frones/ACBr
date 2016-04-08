@@ -372,7 +372,7 @@ begin
       Add('ItemListaServico', ftString, 6);
       Add('CodigoCnae', ftString, 15);
       Add('CodigoTributacaoMunicipio', ftString, 1);
-      Add('Discriminacao', ftString, 500);
+      Add('Discriminacao', ftString, 2000);
       Add('CodigoPais', ftString, 4);
       Add('NumeroProcesso', ftString, 10);
       Add('xItemListaServico', ftString, 300);

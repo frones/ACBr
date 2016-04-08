@@ -123,7 +123,7 @@ object frmPrincipal: TfrmPrincipal
     Configuracoes.WebServices.QuebradeLinha = '|'
     DANFE = ACBrNFeDANFEFR1
     Left = 213
-    Top = 219
+    Top = 214
   end
   object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
     ACBrNFe = ACBrNFe1
@@ -172,7 +172,7 @@ object frmPrincipal: TfrmPrincipal
     IncorporarBackgroundPdf = True
     IncorporarFontesPdf = True
     Left = 120
-    Top = 219
+    Top = 214
   end
   object OpenDialog1: TOpenDialog
     Filter = 'xml|*.xml'
@@ -197,7 +197,7 @@ object frmPrincipal: TfrmPrincipal
       'end.')
     OnReportPrint = 'frxReportOnReportPrint'
     Left = 299
-    Top = 230
+    Top = 214
     Datasets = <>
     Variables = <>
     Style = <>

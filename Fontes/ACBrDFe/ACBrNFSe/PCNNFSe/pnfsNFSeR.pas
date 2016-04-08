@@ -2298,15 +2298,19 @@ end;
 
 function TNFSeR.LerNFSe_CONAM: Boolean;
 begin
-  NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
+  NFSe.dhRecebimento := StrToDateTime(FormatDateTime('dd/mm/yyyy', now));
 
   if (Leitor.rExtrai(1, 'Reg20Item') <> '') or (Leitor.rExtrai(1, 'CompNfse') <> '') then
   begin
     with NFSe do
     begin
       Numero := Leitor.rCampo(tcStr, 'NumNf');
+      dhRecebimento := StrToDateTime(Leitor.rCampo(tcStr, 'DtHrGerNf'));
+      DataEmissao := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiNf'));
+      DataEmissaoRps := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiRps'));
       IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
       CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVernf');
+
       PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocPre');
       PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CpfCnpjPre');
       PrestadorServico.IdentificacaoPrestador.InscricaoEstadual := Leitor.rCampo(tcStr, 'IEPr');

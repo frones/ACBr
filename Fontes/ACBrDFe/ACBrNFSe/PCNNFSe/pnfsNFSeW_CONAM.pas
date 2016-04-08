@@ -2,28 +2,28 @@
 { Projeto: Componente ACBrNFSe                                                 }
 {  Biblioteca multiplataforma de componentes Delphi                            }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -73,7 +73,7 @@ uses
 {==============================================================================}
 { Essa unit tem por finalidade exclusiva de gerar o XML do RPS segundo o       }
 { layout do CONAM.                                                       }
-{ Sendo assim s√≥ ser√° criado uma nova unit para um novo layout.                }
+{ Sendo assim sÛ ser· criado uma nova unit para um novo layout.                }
 {==============================================================================}
 
 { TNFSeW_CONAM }
@@ -108,14 +108,14 @@ begin
     exiSuspensaProcessoAdministrativo : Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 3 , '');
   end;
 
-  Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN', 001, 10, 0, '', ''); //data de adesao ao simples nacional
-  Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 001, 14, 1, FormatFloat('#,##0.00',NFSe.Servico.Valores.Aliquota), '');
+  Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN', 01, 10, 0, '', ''); //data de adesao ao simples nacional
+  Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 01, 6, 0, '' , '');
 
   if FNFSe.OptanteSimplesNacional = snSim then
     begin
-      Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 4 , '');
-      Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN', 001, 10, 0, FormatDateTime('dd/mm/yyyy', NFSe.DataOptanteSimplesNacional) , ''); //data de adesao ao simples nacional
-      Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 001, 14, 1, FormatFloat('#,##0.00',NFSe.Servico.Valores.Aliquota), '');
+      Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 01, 1, 0, 4 , '');
+      Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN', 01, 10, 0, FormatDateTime('dd/mm/yyyy', NFSe.DataOptanteSimplesNacional) , ''); //data de adesao ao simples nacional
+      Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 01, 6, 0, FormatFloat('##0.00', NFSe.ValoresNfse.Aliquota) , '');
     end;
 
   if FNFSe.RegimeEspecialTributacao = retMicroempresarioIndividual then
@@ -126,6 +126,8 @@ begin
 end;
 
 procedure TNFSeW_CONAM.GerarListaServicos;
+var
+  i: Integer;
 begin
   Gerador.wGrupoNFSe('Reg20');
   Gerador.wGrupoNFSe('Reg20Item');
@@ -178,8 +180,10 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'SiglaUFLocpre',   01, 02,  1, NFSe.Tomador.Endereco.UF, '');
   Gerador.wCampoNFSe(tcStr, '', 'CepLocPre',       01, 08,  1, OnlyNumber(NFSe.Tomador.Endereco.CEP), '');
   Gerador.wCampoNFSe(tcStr, '', 'Email1', 01, 120,  1, NFSe.Tomador.Contato.Email, '');
-  Gerador.wCampoNFSe(tcStr, '', 'Email2', 01, 120,  1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'Email3', 01, 120,  1, '', '');
+
+  for i:= 0 to NFSe.email.Count - 1 do
+    Gerador.wCampoNFSe(tcStr, '', 'Email' + IntToStr(i+2), 01, 120,  1, NFSe.email.Items[i].emailCC, '');
+
   Gerador.wGrupoNFSe('/Reg20Item');
   Gerador.wGrupoNFSe('/Reg20');
 
@@ -212,11 +216,12 @@ end;
 
 procedure TNFSeW_CONAM.GerarXML_CONAM;
 begin
+(*
   Gerador.Opcoes.RetirarEspacos := False;
   Gerador.Opcoes.DecimalChar := ',';
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
-
+*)
   Gerador.wGrupoNFSe('SDTRPS');
   GerarIdentificacaoRPS;
   GerarListaServicos;

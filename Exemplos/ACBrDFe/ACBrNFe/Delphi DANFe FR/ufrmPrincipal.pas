@@ -40,15 +40,15 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,
-  dxGDIPlusClasses, ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,pcnConversao,
+  ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass,
+  Vcl.ComCtrls;
 
 type
   TfrmPrincipal = class(TForm)
     ACBrNFe1: TACBrNFe;
     ACBrNFeDANFEFR1: TACBrNFeDANFEFR;
     imgLogo: TImage;
-    lstbxFR3: TListBox;
     pnlbotoes: TPanel;
     btnImprimir: TButton;
     btncarregar: TButton;
@@ -57,12 +57,18 @@ type
     btncarregarinutilizacao: TButton;
     Image1: TImage;
     frxReport1: TfrxReport;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    lstbxFR3: TListBox;
+    TabSheet2: TTabSheet;
+    RbCanhoto: TRadioGroup;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
     procedure btncarregarinutilizacaoClick(Sender: TObject);
     procedure btnCarregarEventoClick(Sender: TObject);
   private
+    procedure Configuracao;
     { Private declarations }
   public
     { Public declarations }
@@ -85,6 +91,7 @@ end;
 
 procedure TfrmPrincipal.btnImprimirClick(Sender: TObject);
 begin
+  Configuracao;
   if lstbxFR3.ItemIndex = -1 then
     raise Exception.Create('Selecione um arquivo fr3 ');
 
@@ -138,6 +145,16 @@ begin
   for fsFiles in TDirectory.GetFiles('..\Delphi\Report\') do
     if Pos('.fr3', LowerCase(fsFiles)) > 0 then
       lstbxFR3.AddItem(fsFiles, nil);
+end;
+
+procedure TfrmPrincipal.Configuracao;
+begin
+  With ACBrNFeDANFEFR1 do
+  begin
+    PosCanhoto := TPosRecibo(RbCanhoto.ItemIndex);
+
+  end;
+
 end;
 
 end.

@@ -58,7 +58,7 @@ procedure DoACBrNFe(Cmd: TACBrCmd);
 var
   I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
-  Salva, OK, bImprimir, bMostrarPreview : Boolean;
+  Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
   SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
@@ -1060,6 +1060,7 @@ begin
                           cImpressora := Cmd.Params(2);
                           bMostrarPreview := (Cmd.Params(4) = '1');
                           nNumCopias := StrToIntDef(Cmd.Params(5), 0);
+                          bImprimirPDF := (Cmd.Params(6) = '1');
                          end
                         else
                          begin
@@ -1067,7 +1068,17 @@ begin
                           cImpressora := Cmd.Params(4);
                           bMostrarPreview := (Cmd.Params(5) = '1');
                           nNumCopias := StrToIntDef(Cmd.Params(6), 0);
+                          bImprimirPDF := (Cmd.Params(7) = '1');
                          end;
+
+                        if bImprimirPDF then
+                        begin
+                         ACBrNFe1.NotasFiscais.Items[i].ImprimirPDF;
+                         ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[i].NFe.infNFe.ID)+'-nfe.pdf';
+
+                         Cmd.Resposta := Cmd.Resposta+
+                           'PDF='+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
+                        end;
 
                         if nNumCopias > 0 then
                           ACBrNFe1.DANFE.NumCopias := nNumCopias;

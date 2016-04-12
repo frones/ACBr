@@ -48,10 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 01/04/16 ver: 0.0.190a
---ACBrBancoSantander--
-[-] Ajuste campo DataMoraJuros remessa CNAB240.(RobertoSFilho)
-http://www.projetoacbr.com.br/forum/topic/29127-ajuste-remessa-240-santander-data-da-multa-segmento-r/
+-- ACBrBancoSafra --
+[*] Correção geração arquivo remessa CNAB400 e montagem dos campos do boleto.(ubaltino)
+http://www.projetoacbr.com.br/forum/topic/28993-erro-arquivo-remessa-banco-safra/
 
+-- ACBrBancoCaixa --
+[-] Correção remessa CNAB240. (ubaltino)
+http://www.projetoacbr.com.br/forum/topic/29243-altera%C3%A7%C3%A3o-no-segmento-q-do-banco-caixa/#comment-193409
 
 Data: 01/04/16 ver: 0.0.189a
 --ACBrBancoSantander--

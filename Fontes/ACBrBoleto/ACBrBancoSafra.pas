@@ -301,11 +301,10 @@ procedure TACBrBancoSafra.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo;
 var
   wLinha, tipoInscricao, aAgencia, aConta: String;
   Ocorrencia, aEspecie, aAceite, aInstrucao2: String;
-  aTipoSacado, MensagemCedente: String;
+  aTipoSacado, MensagemCedente, sDataDesconto:String;
 begin
   with ACBrTitulo do
   begin
-
     if ACBrBoleto.Cedente.TipoInscricao = pFisica then
       tipoInscricao := '01'
     else
@@ -368,6 +367,11 @@ begin
     if Mensagem.Text <> '' then
       MensagemCedente := trim(Mensagem[0]);
 
+    if DataDesconto = 0 then
+      sDataDesconto := '000000'
+    else
+      sDataDesconto := FormatDateTime('ddmmyy', DataDesconto);
+
     wLinha := '1'                                                        + // Identificação do Registro de Transação
               tipoInscricao                                              + // Tipo de Inscrição da Empresa
               PadLeft(OnlyNumber(ACBrBoleto.Cedente.CNPJCPF), 14, '0')   + // Número da Inscrição da Empresa
@@ -393,7 +397,7 @@ begin
               PadLeft(trim(Instrucao1), 2, '0')                          + // Primeira Instrução de Cobrança
               aInstrucao2                                                + // Segunda Instrução de Cobrança
               IntToStrZero(round(ValorMoraJuros * 100), 13)              + // Juros de Mora Por Dia de Atraso
-              FormatDateTime('ddmmyy', DataDesconto)                     + // Data Limite para Desconto
+              sDataDesconto                                              + // Data Limite para Desconto
               IntToStrZero(round(ValorDesconto * 100), 13)               + // Valor Do Desconto Concedido
               IntToStrZero(round(ValorIOF * 100), 13)                    + // Valor De Iof Operações Deseguro
               IntToStrZero(round(ValorAbatimento * 100), 13)             + // Valor Do Abatimento Concedido Ou Cancelado / Multa

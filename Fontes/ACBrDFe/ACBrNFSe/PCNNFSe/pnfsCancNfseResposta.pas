@@ -723,28 +723,31 @@ end;
 
 function TretCancNFSe.LerXml_proCONAM: Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   Result := False;
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
-    if leitor.rExtrai(1, 'Sdt_retornocancelanfe') <> '' then begin
-        if leitor.rExtrai(2, 'Messages') <> '' then begin
-            i := 0;
-            while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do begin
-                FInfCanc.MsgRetorno.Add;
-                FInfCanc.MsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Id');
-                FInfCanc.MsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Description');
-                Inc(i);
-            end;
+    if leitor.rExtrai(1, 'Sdt_retornocancelanfe') <> '' then
+    begin
+      FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Retorno');
+      if leitor.rExtrai(2, 'Messages') <> '' then
+      begin
+        i := 0;
+        while Leitor.rExtrai(3, 'Message', '', i + 1) <> '' do
+        begin
+          FInfCanc.MsgRetorno.Add;
+          FInfCanc.MsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Id');
+          FInfCanc.MsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Description');
+          Inc(i);
         end;
+      end;
     end;
     Result := True;
   except
     Result := False;
   end;
-
 end;
 
 end.

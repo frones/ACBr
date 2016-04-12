@@ -1096,7 +1096,7 @@ begin
                  Gerador.wGrupoNFSe('Nota');
                  Gerador.wGrupoNFSe('SerieNota>' + 'NFE' + '</SerieNota');
                  Gerador.wGrupoNFSe('NumeroNota>' + NumeroNfse + '</NumeroNota');
-                 Gerador.wGrupoNFSe('SerieRPS>' + 'UNICA' + '</SerieRPS');
+                 Gerador.wGrupoNFSe('SerieRPS>' + SerieRps + '</SerieRPS');
                  Gerador.wGrupoNFSe('NumeroRps>' + NumeroRps + '</NumeroRps');
                  Gerador.wGrupoNFSe('ValorNota>' + FloatToString(ValorNota) + '</ValorNota');
                  Gerador.wGrupoNFSe('MotivoCancelamento>' + MotivoCanc + '</MotivoCancelamento');

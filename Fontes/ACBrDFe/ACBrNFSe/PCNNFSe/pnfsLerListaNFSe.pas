@@ -433,6 +433,7 @@ begin
               FNFSe.Numero            := NFSeLida.NFSe.Numero;
               FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;
               FNFSe.DataEmissao       := NFSeLida.NFSe.DataEmissao;
+              FNFSe.DataEmissaoRps    := NFSeLida.NFSe.DataEmissaoRps;
               FNFSe.dhRecebimento     := NFSeLida.NFSe.dhRecebimento;
 
               FNFSe.NaturezaOperacao         := NFSeLida.NFSe.NaturezaOperacao;

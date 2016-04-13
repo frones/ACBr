@@ -2120,7 +2120,6 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd">';
-//      proDBSeller,
       proInfisc,
       proSimplISS,
       proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
@@ -2520,7 +2519,6 @@ begin
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd">';
-//      proDBSeller,
       proSimplISS,
       proSP: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
@@ -2995,6 +2993,12 @@ begin
            FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
                     '</' + FPrefixo3 + TagGrupo + '>';
          end;
+    end;
+
+    if FProvedor in [proDBSeller] then
+    begin
+      FTagI := '<CancelarNfse>' + FTagI;
+      FTagF := FTagF + '</CancelarNfse>';
     end;
 
     if FProvedor in [proIssDSF] then

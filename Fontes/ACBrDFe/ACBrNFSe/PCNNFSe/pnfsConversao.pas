@@ -95,7 +95,7 @@ type
                     proEgoverneISS, proSisPMJP, proSystemPro, proInfisc, proSalvador,
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSeBrasil,
                     proTinus, proSJP, proCONAM, proEReceita, proGoverna,
-                    proNEAInformatica, proNotaInteligente, proSP);
+                    proNEAInformatica, proNotaInteligente, proSP, proPronimv2);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -413,7 +413,8 @@ begin
          'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
          'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
-         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP'],
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
+         'Pronimv2'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -424,7 +425,8 @@ begin
          proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
          proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
-         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP]);
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP,
+         proPronimv2]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -439,7 +441,8 @@ begin
          'Vitoria', 'Mitra', 'Tecnos', 'Pronim', 'Actcon', 'EL', 'EgoverneISS',
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
          'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
-         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP'],
+         'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
+         'Pronimv2'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -450,7 +453,8 @@ begin
          proTecnos, proPronim, proActcon, proEL, proEgoverneISS, proSisPMJP,
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
          proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
-         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP]);
+         proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP,
+         proPronimv2]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18175,9 +18179,9 @@ begin
 
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
-    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
-    proSaatri, proSisPMJP, proSystemPro, proTecnos, proVirtual,
-    proVitoria,
+    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata,
+    proPronimv2, proPVH, proSaatri, proSisPMJP, proSystemPro, proTecnos,
+    proVirtual, proVitoria,
     proNFSEBrasil: Result := loABRASFv2;
 
     proEgoverneISS: Result := loEGoverneISS;
@@ -18192,7 +18196,7 @@ begin
     Result := loNone;
   end;
 (*
-  TnfseProvedor = ( proProdam, proCONAM);
+  TnfseProvedor = ( proProdam);
 *)
 end;
 
@@ -18201,8 +18205,9 @@ begin
   case AProvedor of
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
-    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata, proPVH,
-    proSaatri, proSisPMJP, proSystemPro, proVirtual, proVitoria,
+    proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata,
+    proPronimv2, proPVH, proSaatri, proSisPMJP, proSystemPro, proVirtual,
+    proVitoria,
     proNFSEBrasil: Result := ve200;
 
     proTecnos: Result := ve201;

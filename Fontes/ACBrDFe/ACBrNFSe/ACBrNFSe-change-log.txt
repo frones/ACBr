@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2016
+[+] Implemento o provedor Pronim versao 2
+    por: Italo Jurisato Junior
+
 12/02/2016
 -- ACBrNFesConfiguracoes --
 [*] Removida a propriedde "UseSSL"

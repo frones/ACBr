@@ -759,8 +759,8 @@ begin
     FieldByName('Sistema').AsString   := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
     FieldByName('Site').AsString   := DANFSeClassOwner.Site;
-    FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');
-
+    //FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');
+    FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'NFSe CANCELADA', '');  // LUIZ
     Post;
   end;
 end;

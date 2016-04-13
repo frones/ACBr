@@ -2534,6 +2534,12 @@ begin
       FTagF := '';
     end;
 
+    if FProvedor in [proDBSeller] then
+    begin
+      FTagI := '<ConsultarNfsePorRps>' + FTagI;
+      FTagF := FTagF + '</ConsultarNfsePorRps>';
+    end;
+
     if FProvedor in [proIssDSF] then
     begin
       Gerador := TGerador.Create;

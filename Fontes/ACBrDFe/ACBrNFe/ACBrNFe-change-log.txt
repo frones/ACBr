@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2016
+-- ACBrNFeWebServices --
+[*] Método "TNFeWebService.Clear" modificado para inicializar:
+    SSL.UseCertificateHTTP := True  (por: DSA)
+
+-- ACBrNFeConfiguracoes --
+[*] Removida a propriedde "UseSSL"
+[*] Removida a propriedde "UseCertificate"
+[+] Adicionada a propriedade "UseCertificateHTTP" (por: DSA)
 
 08/04/2016
 -- DANFeRetratoNovo --

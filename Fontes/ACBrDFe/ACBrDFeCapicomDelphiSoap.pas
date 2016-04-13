@@ -95,19 +95,18 @@ var
   HCertContext: Integer;
   ContentHeader: String;
 begin
-  if (FpDFeSSL.UseCertificate) then
-  begin
-    CertContext := Certificado as ICertContext;
-    CertContext.Get_CertContext(HCertContext);
-  end;
-
   with FpDFeSSL do
   begin
-    if (UseCertificate) then
+    if (UseCertificateHTTP) then
+    begin
+      CertContext := Certificado as ICertContext;
+      CertContext.Get_CertContext(HCertContext);
+
       if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
         Pointer(HCertContext), SizeOf(CERT_CONTEXT)) then
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
                                        IntToStr(GetLastError));
+    end;
 
     if trim(ProxyUser) <> '' then
       if not InternetSetOption(Data, INTERNET_OPTION_PROXY_USERNAME,

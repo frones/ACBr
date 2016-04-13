@@ -675,6 +675,7 @@ begin
   inherited Clear;
 
   FPStatus := stIdle;
+  FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 procedure TNFeWebService.ConfigurarSoapDEPC;

@@ -312,8 +312,7 @@ var
 
 begin
   // Certificado já foi carregado ??
-  if (not FpDFeSSL.UseCertificate) or
-     ((FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie)) then
+  if ((FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie)) then
   begin
     FpCertificadoLido := True;
     exit;
@@ -963,20 +962,23 @@ end;
 
 procedure TDFeCapicom.ConfiguraReqResp(const URL, SoapAction: String);
 begin
-  CarregarCertificadoSeNecessario;
-
   with FpDFeSSL do
   begin
+    if UseCertificateHTTP then
+    begin
+      CarregarCertificadoSeNecessario;
+      FReqResp.SetCertificate(FCertificado);
+    end
+    else
+      FReqResp.SetCertificate(nil);
+
     FReqResp.ProxyHost := ProxyHost;
     FReqResp.ProxyPort := ProxyPort;
     FReqResp.ProxyUser := ProxyUser;
     FReqResp.ProxyPass := ProxyPass;
     FReqResp.TimeOut   := TimeOut;
-    FReqResp.UseCertificate := UseCertificate;
-    FReqResp.UseSSL         := UseSSL;
   end;
 
-  FReqResp.SetCertificate(FCertificado);
   FReqResp.Url := URL;
   FReqResp.SOAPAction := SoapAction;
   FReqResp.MimeType := FMimeType;

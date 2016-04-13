@@ -57,8 +57,7 @@ type
     ProLinkNFSe: String;
     HomLinkNFSe: String;
     DadosSenha: String;
-    UseCertificado:Boolean;
-    UseSSL: Boolean;
+    UseCertificateHTTP:Boolean;
  end;
 
  TConfigNameSpace = record
@@ -514,8 +513,7 @@ begin
   FConfigGeral.Identificador := trim(FPIniParams.ReadString('Geral', 'Identificador', ''));
   FConfigGeral.QuebradeLinha := trim(FPIniParams.ReadString('Geral', 'QuebradeLinha', ''));
 
-  FConfigGeral.UseCertificado := FPIniParams.ReadBool('Geral', 'UseCertificado', False);
-  FConfigGeral.UseSSL         := FPIniParams.ReadBool('Geral', 'UseSSL', False);
+  FConfigGeral.UseCertificateHTTP := FPIniParams.ReadBool('Geral', 'UseCertificado', False);
 
   FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);

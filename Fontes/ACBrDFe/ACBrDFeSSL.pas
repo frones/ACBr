@@ -133,8 +133,7 @@ type
     FSSLClass: TDFeSSLClass;
     FSSLLib: TSSLLib;
     FTimeOut: Integer;
-    FUseCertificate: Boolean;
-    FUseSSL: Boolean;
+    FUseCertificateHTTP: Boolean;
 
     function GetCertCNPJ: String;
     function GetCertDataVenc: TDateTime;
@@ -226,8 +225,7 @@ type
     property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
     property NameSpaceURI: String read FNameSpaceURI write FNameSpaceURI;
 
-    property UseCertificate: Boolean read FUseCertificate write FUseCertificate;
-    property UseSSL: Boolean read FUseSSL Write FUseSSL;
+    property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
   end;
 
 
@@ -272,8 +270,7 @@ begin
 
   // Para emissão de NFS-e essas propriedades podem ter valores diferentes dos
   // atribuidos abaixo, dependendo do provedor...
-  FUseCertificate := True;
-  FUseSSL := True;
+  FUseCertificateHTTP := True;
 
   if Assigned(FSSLClass) then
     FSSLClass.Free;
@@ -299,9 +296,6 @@ Var
   XmlAss, xmlHeaderAntes, xmlHeaderDepois: String;
   I: integer;
 begin
-  if not UseCertificate then
-    raise EACBrDFeException.Create('Impossível assinar. Componente configurado para não usar Certificado');
-
   // Nota: ConteudoXML, DEVE estar em UTF8 //
   // Lendo Header antes de assinar //
   xmlHeaderAntes := '';
@@ -357,9 +351,6 @@ function TDFeSSL.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
   SelectionNamespaces: String): Boolean;
 begin
-  if not UseCertificate then
-    raise EACBrDFeException.Create('Impossível assinar. Componente configurado para não usar Certificado');
-
   Result := FSSLClass.VerificarAssinatura(ConteudoXML, MsgErro,
                               infElement, SignatureNode, SelectionNamespaces);
 end;

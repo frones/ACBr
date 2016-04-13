@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2016
+-- ACBrNFesConfiguracoes --
+[*] Removida a propriedde "UseSSL"
+[*] Removida a propriedde "UseCertificado"
+[+] Adicionada a propriedade "UseCertificateHTTP", que usará a mesma chave
+    existente do arquivo .INI [Geral] 'UseCertificado'
+    (por: DSA)
+
 08/04/2016
 --ACBrNFSeDANFSeFR
 [*] Aumento do tamanho do campo descrição para 2000

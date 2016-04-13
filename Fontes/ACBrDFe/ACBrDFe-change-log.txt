@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/02/2016
+-- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeCapicomDelphiSoap --
+[*] Removida a propriedde "UseSSL"
+[*] Removida a propriedde "UseCertificate"
+[+] Adicionada a propriedade "UseCertificateHTTP", que permite informar se a
+    conexão HTTP precisa do Certificado A1 ou A3. Essa propriedade não irá
+    influenciar o método "Assinar", que SEMPRE exigirá o certificado. (por: DSA)
+
 16/03/2016
 -- ACBrDFeOpenSSL --
 [*] Método "VerificarAssinatura": Ajuste para retorno de mensagem de erro,

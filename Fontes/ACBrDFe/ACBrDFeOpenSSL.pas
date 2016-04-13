@@ -692,46 +692,43 @@ var
 begin
   with FpDFeSSL do
   begin
-    if UseCertificate then
+    // Verificando se possui parâmetros necessários //
+    if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
     begin
-      // Verificando se possui parâmetros necessários //
-      if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
-      begin
-        if not EstaVazio(NumeroSerie) then
-          raise EACBrDFeException.Create(ClassName +
-            ' não suporta carga de Certificado pelo número de série.' +
-            sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"')
-        else
-          raise EACBrDFeException.Create('Certificado não informado.' +
-            sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"');
-      end;
-
-      LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
-      LoadFromData := (not EstaVazio(DadosPFX));
-
-      if not (LoadFromFile or LoadFromData) then
-        raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
-
-      if LoadFromFile then
-      begin
-        FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
-        try
-          DadosPFX := ReadStrFromStream(FS, FS.Size);
-        finally
-          FS.Free;
-        end;
-      end;
-
-      if EstaVazio(DadosPFX) then
-        raise EACBrDFeException.Create('Erro ao Carregar Certificado');
-
-      FHTTP.Sock.SSL.PFX := DadosPFX;
-      FHTTP.Sock.SSL.KeyPassword := Senha;
-
-      if not LerPFXInfo(DadosPFX) then
-        raise EACBrDFeException.Create('Erro ao ler informações do Certificado.'+sLineBreak+
-                                       'Provavelmente a senha está errada' );
+      if not EstaVazio(NumeroSerie) then
+        raise EACBrDFeException.Create(ClassName +
+          ' não suporta carga de Certificado pelo número de série.' +
+          sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"')
+      else
+        raise EACBrDFeException.Create('Certificado não informado.' +
+          sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"');
     end;
+
+    LoadFromFile := (not EstaVazio(ArquivoPFX)) and FileExists(ArquivoPFX);
+    LoadFromData := (not EstaVazio(DadosPFX));
+
+    if not (LoadFromFile or LoadFromData) then
+      raise EACBrDFeException.Create('Arquivo: ' + ArquivoPFX + ' não encontrado, e DadosPFX não informado');
+
+    if LoadFromFile then
+    begin
+      FS := TFileStream.Create(ArquivoPFX, fmOpenRead or fmShareDenyNone);
+      try
+        DadosPFX := ReadStrFromStream(FS, FS.Size);
+      finally
+        FS.Free;
+      end;
+    end;
+
+    if EstaVazio(DadosPFX) then
+      raise EACBrDFeException.Create('Erro ao Carregar Certificado');
+
+    FHTTP.Sock.SSL.PFX := DadosPFX;
+    FHTTP.Sock.SSL.KeyPassword := Senha;
+
+    if not LerPFXInfo(DadosPFX) then
+      raise EACBrDFeException.Create('Erro ao ler informações do Certificado.'+sLineBreak+
+                                     'Provavelmente a senha está errada' );
   end;
 
   FpCertificadoLido := True;
@@ -996,8 +993,16 @@ procedure TDFeOpenSSL.ConfiguraHTTP(const URL, SoapAction: String;
 begin
   FHTTP.Clear;
 
-  if FHTTP.Sock.SSL.PFX = '' then
-    CarregarCertificado;
+  if not FpDFeSSL.UseCertificateHTTP then
+  begin
+    FHTTP.Sock.SSL.PFX := '';
+    FHTTP.Sock.SSL.KeyPassword := '';
+  end
+  else
+  begin
+    if (FHTTP.Sock.SSL.PFX = '') then
+      CarregarCertificado;
+  end;
 
   FHTTP.Timeout   := FpDFeSSL.TimeOut;
   FHTTP.ProxyHost := FpDFeSSL.ProxyHost;

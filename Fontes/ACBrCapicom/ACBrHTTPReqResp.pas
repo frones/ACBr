@@ -77,9 +77,7 @@ type
     FHTTPResultCode: Integer;
     FTimeOut: Integer;
     FUrl: String;
-    FUseCertificate: Boolean;
     FShowCertStore: Boolean;
-    FUseSSL: Boolean;
 
     function GetWinInetError(ErrorCode: cardinal): String;
     function OpenCertStore: String;
@@ -100,8 +98,6 @@ type
     property ProxyUser: String read FProxyUser write FProxyUser;
     property ProxyPass: String read FProxyPass write FProxyPass;
     property CertStoreName: String read FCertStoreName write FCertStoreName;
-    property UseCertificate: Boolean read FUseCertificate write FUseCertificate;
-    property UseSSL: Boolean read FUseSSL write FUseSSL;
     property ShowCertStore: Boolean read FShowCertStore write FShowCertStore;
     property EncodeDataToUTF8: Boolean read FEncodeDataToUTF8 write FEncodeDataToUTF8;
     property TimeOut: Integer read FTimeOut write FTimeOut;
@@ -172,30 +168,29 @@ end;
 function TACBrHTTPReqResp.OpenCertStore: String;
 var
   Store: IStore3;
-  Certs: ICertificates2;
-  Certs2: ICertificates2;
-  Cert: ICertificate2;
-  FNumeroSerie: WideString;
+  Certs, CertsSel: ICertificates2;
 begin
   Store := CoStore.Create;
   try
-    Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
+    Store.Open(CAPICOM_CURRENT_USER_STORE, WideString(FCertStoreName),
+               CAPICOM_STORE_OPEN_READ_ONLY);
 
     Certs := Store.Certificates as ICertificates2;
 
-    Certs2 := Certs.Select(ACBrStr('Certificado(s) Digital(is) disponível(is)'),
-      'Selecione o Certificado Digital para uso no aplicativo', False);
+    CertsSel := Certs.Select( WideString(ACBrStr('Certificados Digital disponível')),
+                              WideString('Selecione o Certificado Digital para uso no aplicativo'),
+                              False);
 
-    if not (Certs2.Count = 0) then
+    if not (CertsSel.Count = 0) then
     begin
-      Cert := IInterface(Certs2.Item[1]) as ICertificate2;
-      FNumeroSerie := Cert.SerialNumber;
+      FCertificate := IInterface(CertsSel.Item[1]) as ICertificate2;
+      FCertSerialNumber := String(FCertificate.SerialNumber);
     end;
   finally
     FreeAndNil(Store);
   end;
 
-  Result := FNumeroSerie;
+  Result := FCertSerialNumber;
 end;
 
 procedure TACBrHTTPReqResp.UpdateErrorCodes(ARequest: HINTERNET);
@@ -217,16 +212,22 @@ procedure TACBrHTTPReqResp.SetCertificate(pCertSerialNumber: String);
 begin
   if FCertSerialNumber = pCertSerialNumber then
     Exit;
+
   FCertSerialNumber := pCertSerialNumber;
-  FCertificate := nil;
+  FCertificate := nil;  // Força a busca do Certificado no próximo "Execute"
 end;
 
 procedure TACBrHTTPReqResp.SetCertificate(pCertificate: ICertificate2);
 begin
   if FCertificate = pCertificate then
     Exit;
+
   FCertificate := pCertificate;
-  FCertSerialNumber := '';
+
+  if Assigned(FCertificate) then
+    FCertSerialNumber := String(FCertificate.SerialNumber)
+  else
+    FCertSerialNumber := '';
 end;
 
 procedure TACBrHTTPReqResp.Execute(const DataMsg: String; Resp: TStream);
@@ -248,17 +249,13 @@ var
 
   Store: IStore;
   Certs: ICertificates;
-  Cert: ICertificate2;
   Cert2: ICertificate2;
   CertContext: ICertContext;
 
-  Ok: Boolean;
+  Ok, UseSSL, UseCertificate: Boolean;
   i, AccessType, HCertContext: Integer;
   ANone, AHost, AProt, APort, APath, pProxy, Header: String;
 begin
-
-  if (FUseCertificate) then
-    FUseSSL := True;
 
   AProt := '';
   APort := '';
@@ -267,44 +264,47 @@ begin
 
   ParseURL(FUrl, AProt, ANone, ANone, AHost, APort, APath, ANone);
 
-  if (FUseCertificate) then
+  UseSSL := (UpperCase(AProt) = 'HTTPS');
+
+  if UseSSL then
   begin
-    if ((ShowCertStore) or ((FCertSerialNumber = '') and (FCertificate = nil))) then
-    begin
-      FCertSerialNumber := OpenCertStore;
-      if FCertSerialNumber <> '' then
-        FCertificate := nil;
-    end;
+    // Ainda não tem Certificado, pode pedir para selecionar ?
+    if ((FCertSerialNumber = '') and ShowCertStore) then
+      OpenCertStore;
 
-    if FCertSerialNumber <> '' then
-    begin
-      Store := CoStore.Create;
-      Store.Open(CAPICOM_CURRENT_USER_STORE, FCertStoreName, CAPICOM_STORE_OPEN_READ_ONLY);
-
-      Certs := Store.Certificates as ICertificates2;
-
-      if Certs.Count > 0 then
-      begin
-        for i := 1 to Certs.Count do
-        begin
-          Cert2 := IInterface(Certs.Item[i]) as ICertificate2;
-          if Cert2.SerialNumber = FCertSerialNumber then
-          begin
-            Cert := Cert2;
-            break;
-          end;
-        end;
-
-        CertContext := Cert as ICertContext;
-      end;
-    end
+    if (FCertSerialNumber = '') then
+      FCertificate := nil
     else
     begin
-      CertContext := FCertificate as ICertContext;
-    end;
-  end;
+      // Procura pelo Certificado com o Numero de Série "CertSerialNumber"
+      if (FCertificate = nil) then
+      begin
+        Store := CoStore.Create;
+        try
+          Store.Open(CAPICOM_CURRENT_USER_STORE, WideString(FCertStoreName),
+                     CAPICOM_STORE_OPEN_READ_ONLY);
 
-  UseSSL := UseSSL or (APort = IntToStr(INTERNET_DEFAULT_HTTPS_PORT));
+          Certs := Store.Certificates as ICertificates2;
+
+          for i := 1 to Certs.Count do
+          begin
+            Cert2 := IInterface(Certs.Item[i]) as ICertificate2;
+            if String(Cert2.SerialNumber) = FCertSerialNumber then
+            begin
+              FCertificate := Cert2;
+              break;
+            end;
+          end;
+        finally
+          FreeAndNil(Store);
+        end;
+      end;
+    end;
+
+    UseCertificate := Assigned( FCertificate ) ;
+  end
+  else
+    UseCertificate := False;   // Uso de Certificado exige SSL
 
   if FProxyHost <> '' then
   begin
@@ -320,8 +320,11 @@ begin
   //DEBUG
   //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo sessão');
 
-  if FUseCertificate then
+  if UseCertificate then
+  begin
+    CertContext := FCertificate as ICertContext;
     CertContext.Get_CertContext(HCertContext);
+  end;
 
   pSession := InternetOpen(PChar('Borland SOAP 1.2'), AccessType, PChar(pProxy), nil, 0);
 
@@ -349,7 +352,7 @@ begin
 
     if APort = '' then
     begin
-      if (FUseSSL) then
+      if (UseSSL) then
         APort := IntToStr(INTERNET_DEFAULT_HTTPS_PORT)
       else
         APort := IntToStr(INTERNET_DEFAULT_HTTP_PORT);
@@ -363,17 +366,19 @@ begin
     //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Abrindo Conexão: '+AHost+':'+APort);
 
     pConnection := InternetConnect(pSession, PChar(AHost), StrToInt(APort),
-      PChar(FProxyUser), PChar(FProxyPass), INTERNET_SERVICE_HTTP, 0, 0{cardinal(Self)});
+                                   PChar(FProxyUser), PChar(FProxyPass),
+                                   INTERNET_SERVICE_HTTP,
+                                   0, 0{cardinal(Self)});
     if not Assigned(pConnection) then
       raise EACBrHTTPReqResp.Create('Erro: Internet Connect or Host');
 
     try
-      if (FUseSSL) then
+      if (UseSSL) then
       begin
         flags := INTERNET_FLAG_KEEP_CONNECTION or INTERNET_FLAG_NO_CACHE_WRITE;
         flags := flags or INTERNET_FLAG_SECURE;
 
-        if (FUseCertificate) then
+        if (UseCertificate) then
           flags := flags or (INTERNET_FLAG_IGNORE_CERT_CN_INVALID or
                              INTERNET_FLAG_IGNORE_CERT_DATE_INVALID);
       end
@@ -384,7 +389,7 @@ begin
       //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APath);
 
       pRequest := HttpOpenRequest(pConnection, PChar('POST'),
-        PChar(APath), nil, nil, nil, flags, 0);
+                                  PChar(APath), nil, nil, nil, flags, 0);
 
       if not Assigned(pRequest) then
         raise EACBrHTTPReqResp.Create('Erro: Open Request');
@@ -392,8 +397,8 @@ begin
       UpdateErrorCodes(pRequest);
 
       try
-        if ( (APort <> IntToStr(INTERNET_DEFAULT_HTTP_PORT)) and (UpperCase(AProt) = 'HTTP') ) or
-           ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UpperCase(AProt) = 'HTTPS') ) then
+        if ( (APort <> IntToStr(INTERNET_DEFAULT_HTTP_PORT)) and (not UseSSL) ) or
+           ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UseSSL) ) then
           AHost := AHost +':'+ APort;
 
         Header := 'Host: ' + AHost + sLineBreak +
@@ -403,10 +408,10 @@ begin
         if FSOAPAction <> '' then
           Header := Header +'SOAPAction: "' + FSOAPAction + '"' +SLineBreak;
 
-        if (FUseCertificate) then
+        if (UseCertificate) then
         begin
           if not InternetSetOption(pRequest, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-            Pointer(HCertContext), SizeOf(CERT_CONTEXT)) then
+                                   Pointer(HCertContext), SizeOf(CERT_CONTEXT)) then
             raise EACBrHTTPReqResp.Create('Erro: Problema ao inserir o certificado')
         end
         else
@@ -426,16 +431,15 @@ begin
 
         if trim(FProxyUser) <> '' then
           if not InternetSetOption(pRequest, INTERNET_OPTION_PROXY_USERNAME,
-            PChar(FProxyUser), Length(FProxyUser)) then
+                                   PChar(FProxyUser), Length(FProxyUser)) then
             raise EACBrHTTPReqResp.Create('Erro: Proxy User');
 
         if trim(FProxyPass) <> '' then
           if not InternetSetOption(pRequest, INTERNET_OPTION_PROXY_PASSWORD,
-            PChar(FProxyPass), Length(FProxyPass)) then
+                                   PChar(FProxyPass), Length(FProxyPass)) then
             raise EACBrHTTPReqResp.Create('Erro: Proxy Password');
 
-        HttpAddRequestHeaders(pRequest, PChar(Header), Length(Header),
-          HTTP_ADDREQ_FLAG_ADD);
+        HttpAddRequestHeaders(pRequest, PChar(Header), Length(Header), HTTP_ADDREQ_FLAG_ADD);
 
         if FEncodeDataToUTF8 then
           FData := UTF8Encode(FData);
@@ -498,6 +502,7 @@ begin
     end;
   finally
     InternetCloseHandle(pSession);
+
     if (HCertContext <> 0) then
       CertContext.FreeContext(HCertContext);
   end;
@@ -511,8 +516,6 @@ begin
   FCertStoreName := 'My';
   FCertSerialNumber := '';
   FCertificate := nil;
-  FUseCertificate := True;
-  FUseSSL := True;
   FShowCertStore := False;
   FHTTPResultCode := 0;
   FEncodeDataToUTF8 := False;

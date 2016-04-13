@@ -55,7 +55,7 @@ type
     procedure SetVersaoDF(const Value: TVersaoCTe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfCTe: TGeralConfCTe); overload;
+    procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
 
   published
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
@@ -87,7 +87,7 @@ type
     FDownloadCTe: TDownloadConfCTe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); overload;
+    procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
     destructor Destroy; override;
 
     function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
@@ -115,7 +115,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesCTe: TConfiguracoesCTe); overload;
+    procedure Assign(DeConfiguracoesCTe: TConfiguracoesCTe); reintroduce;
 
   published
     property Geral: TGeralConfCTe       read GetGeral;

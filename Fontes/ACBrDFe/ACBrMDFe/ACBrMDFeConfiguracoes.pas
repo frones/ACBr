@@ -54,7 +54,7 @@ type
     procedure SetVersaoDF(const Value: TVersaoMDFe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfMDFe: TGeralConfMDFe); overload;
+    procedure Assign(DeGeralConfMDFe: TGeralConfMDFe); reintroduce;
 
   published
     property VersaoDF: TVersaoMDFe read FVersaoDF write SetVersaoDF default ve100;
@@ -86,7 +86,7 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
-    procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); overload;
+    procedure Assign(DeArquivosConfMDFe: TArquivosConfMDFe); reintroduce;
 
     function GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
@@ -113,7 +113,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesMDFe: TConfiguracoesMDFe); overload;
+    procedure Assign(DeConfiguracoesMDFe: TConfiguracoesMDFe); reintroduce;
 
   published
     property Geral: TGeralConfMDFe read GetGeral;

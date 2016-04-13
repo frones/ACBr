@@ -506,6 +506,7 @@ begin
   inherited Clear;
 
   FPStatus := stMDFeIdle;
+  FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 procedure TMDFeWebService.InicializarServico;

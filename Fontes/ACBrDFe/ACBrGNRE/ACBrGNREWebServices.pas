@@ -337,6 +337,7 @@ begin
   inherited Clear;
 
   FPStatus := stGNREIdle;
+  FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 procedure TGNREWebService.DefinirURL;

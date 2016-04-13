@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2016
+-- ACBrMDFeWebServices --
+[*] Método "TMDFeWebService.Clear" modificado para inicializar:
+    SSL.UseCertificateHTTP := True  
+    por: DSA / Italo Jurisato Junior
+
 12/03/2016
 [*] Modificado para deixar alguns botões fora do preview em fast report
 		por: Juliomar Marchetti

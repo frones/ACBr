@@ -578,6 +578,7 @@ begin
   inherited Clear;
 
   FPStatus := stCTeIdle;
+  FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 procedure TCTeWebService.InicializarServico;

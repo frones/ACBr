@@ -252,7 +252,7 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
-    procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); overload;
+    procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); reintroduce;
     procedure SetConfigMunicipio;
 
     property ConfigGeral: TConfigGeral read FConfigGeral;
@@ -296,7 +296,7 @@ type
     FTabServicosExt: Boolean;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfNFSe: TArquivosConfNFSe); overload;
+    procedure Assign(DeArquivosConfNFSe: TArquivosConfNFSe); reintroduce;
 
     function GetPathGer(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathRPS(Data: TDateTime = 0; CNPJ: String = ''): String;
@@ -327,7 +327,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe); overload;
+    procedure Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe); reintroduce;
 
   published
     property Geral: TGeralConfNFSe read GetGeral;

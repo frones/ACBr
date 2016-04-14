@@ -14,6 +14,7 @@
       <Title Value="AcbrNcmDemo"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -57,16 +58,18 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit1"/>
       </Unit1>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+    </SearchPaths>
     <Parsing>
       <SyntaxOptions>
-        <SyntaxMode Value="delphi"/>
+        <SyntaxMode Value="Delphi"/>
       </SyntaxOptions>
     </Parsing>
     <Linking>
@@ -76,9 +79,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

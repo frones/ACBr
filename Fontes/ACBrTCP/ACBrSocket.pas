@@ -286,6 +286,7 @@ end;
 destructor TACBrTCPServerDaemon.Destroy;
 begin
   fsSock.Free ;
+  inherited Destroy;
 end;
 
 procedure TACBrTCPServerDaemon.Execute;

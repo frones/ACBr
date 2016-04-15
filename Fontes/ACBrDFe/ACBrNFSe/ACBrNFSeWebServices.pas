@@ -3060,7 +3060,7 @@ begin
       case FProvedor of
         proISSNet: if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
                      CodMunicipio := 999;
-        proBetha: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.Servico.CodigoMunicipio, 0);
+        proBetha: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
       else
         CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
       end;

@@ -113,7 +113,11 @@ begin
   begin
     P := pos('{',Result);
     if P > 0 then
+    begin
       Delete(Result,P,2);
+      //Alterando o caracter que contém o tamanho do código de barras
+      Result[P-1] := AnsiChr(Length(ACodigo));
+    end;
   end;
 end;
 

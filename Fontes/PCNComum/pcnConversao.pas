@@ -113,7 +113,8 @@ type
                   teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
                   teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
                   teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
-                  teRegistroPassagemNFe, teConfInternalizacao);
+                  teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
+                  teMDFeAutorizado);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -153,7 +154,7 @@ type
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
 const
-  TpcnTpEventoString : array[0..28] of String =('110110', '110111', '210200',
+  TpcnTpEventoString : array[0..30] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
                                                 '110112', '110113', '110114',
                                                 '110160', '310620', '510620',
@@ -162,7 +163,8 @@ const
                                                 '990900', '111500', '111501',
                                                 '111502', '111503', '411500',
                                                 '411501', '411502', '411503',
-                                                '610500', '990910');
+                                                '610500', '990910', '000000',
+                                                '610610');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -1010,7 +1012,8 @@ begin
               'VistoriaSuframa', 'PedProrrog1', 'PedProrrog2',
               'CanPedProrrog1', 'CanPedProrrog2', 'EventoFiscoPP1',
               'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2',
-              'RegPassagemNFe', 'ConfInternalizacao'],
+              'RegPassagemNFe', 'ConfInternalizacao', 'CTeAutorizado',
+              'MDFeAutorizado'],
              [teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1020,7 +1023,8 @@ begin
               teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
               teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
               teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
-              teRegistroPassagemNFe, teConfInternalizacao]);
+              teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
+              teMDFeAutorizado]);
 end;
 
 

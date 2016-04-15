@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/04/2016
+-- pcnEventoNFe --
+[*] Incluido o tipo de evento teMDFeAutorizado:
+    por: Italo Jurisato Junior
+
 13/04/2016
 -- ACBrNFeServicos --
 [+] Incluido as URLs: URL-QRCode e URL-ConsultaNFCe para a UF ES.

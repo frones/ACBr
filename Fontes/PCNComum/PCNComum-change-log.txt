@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/04/2016
+-- pcnConversao --
+[+] Incluido os tipos de eventos: teCTeAutorizado e teMDFeAutorizado.
+    por: Italo Jurisato Junior
+
 29/02/2016
 -- pcnConversao --
 [*] Pequena correção ortografica.

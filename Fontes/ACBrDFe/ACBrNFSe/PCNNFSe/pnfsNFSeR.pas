@@ -499,7 +499,11 @@ begin
   if (Leitor.rExtrai(2, 'InfDeclaracaoPrestacaoServico') <> '') or
      (Leitor.rExtrai(1, 'InfDeclaracaoPrestacaoServico') <> '') then
   begin
-    NFSe.Competencia              := Leitor.rCampo(tcStr, 'Competencia');
+    if FProvedor = ProTecnos then
+      NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0))
+    else
+      NFSe.Competencia := Leitor.rCampo(tcStr, 'Competencia');
+
     NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
     NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
     NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'));
@@ -944,16 +948,12 @@ begin
       NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
 
       if FProvedor = ProTecnos then
-      begin
-        NFSe.Competencia            := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
-      end
+        NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0))
       else
-      begin
-        NFSe.Competencia            := Leitor.rCampo(tcStr, 'Competencia');
-      end;
+        NFSe.Competencia := Leitor.rCampo(tcStr, 'Competencia');
 
-      NFSe.OutrasInformacoes        := Leitor.rCampo(tcStr, 'OutrasInformacoes');
-      NFSe.ValorCredito             := Leitor.rCampo(tcDe2, 'ValorCredito');
+      NFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'OutrasInformacoes');
+      NFSe.ValorCredito      := Leitor.rCampo(tcDe2, 'ValorCredito');
 
       if FProvedor = proVitoria then
         NFSe.IncentivadorCultural := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivoFiscal'))

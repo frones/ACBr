@@ -1031,6 +1031,19 @@ begin
 
            Gerador.Prefixo := Prefixo3;
            Gerador.wGrupoNFSe('/Tomador');
+         end
+         else begin
+           if Provedor = proTecnos then
+           begin
+             Gerador.Prefixo := Prefixo3;
+             Gerador.wGrupoNFSe('Tomador' + aNameSpace);
+             Gerador.Prefixo := Prefixo4;
+             Gerador.wGrupoNFSe('CpfCnpj');
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, '', '');
+             Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, '', '');
+             Gerador.Prefixo := Prefixo3;
+             Gerador.wGrupoNFSe('/Tomador');
+           end;
          end;
 
          if (NomeInter <> '') and (CNPJInter <> '') then
@@ -1057,6 +1070,20 @@ begin
 
            Gerador.Prefixo := Prefixo3;
            Gerador.wGrupoNFSe('/IntermediarioServico');
+         end
+         else begin
+           if Provedor = proTecnos then
+           begin
+             Gerador.Prefixo := Prefixo3;
+             Gerador.wGrupoNFSe('IntermediarioServico' + aNameSpace);
+             Gerador.Prefixo := Prefixo4;
+             Gerador.wCampoNFSe(tcStr, '#4', 'RazaoSocial', 01, 115, 1, '', '');
+             Gerador.wGrupoNFSe('CpfCnpj');
+             Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, '', '');
+             Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, '', '');
+             Gerador.Prefixo := Prefixo3;
+             Gerador.wGrupoNFSe('/IntermediarioServico');
+           end;
          end;
 
          if Provedor in [proFiorilli, profintelISS, proPVH, proSystemPro,

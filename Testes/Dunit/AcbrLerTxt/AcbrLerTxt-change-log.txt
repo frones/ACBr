@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+18/04/2016
+[+]     : Novo Teste YA40A
+[-]     : Ajuste no Teste YA
+[+]	  Melhorias em Varios procedimentos de Testes
+
+          Henrique Leonardo   
+
 26/03/2016
 [+]     : Novas configuraçoes no ini
 	  Melhorias em Varios procedimentos de Testes

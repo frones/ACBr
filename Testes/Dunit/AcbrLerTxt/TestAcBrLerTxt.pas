@@ -172,6 +172,7 @@ type
     procedure IdX26;
     procedure IdX33;
     procedure IdYA;
+    procedure IdYA04a;
     procedure IdY02;
     procedure IdY07;
     procedure IdZ;
@@ -2786,28 +2787,79 @@ end;
 
 procedure TAcBrLerTxtTDD.IdYA;
 Var
-  IBase , x : Integer;
+  IBase, x : Integer;
+  FListaConteudo : TStringList;
 begin
   IBase := -1;
-  for x := 0 to  NFe.pag.Count - 1 do
-  begin
-    Inc( IBase );
-    IBase := MontaISaberString('§YA', IBase );
-    if ( IBase > 0 ) then
+  fListaConteudo:= MontaLista( '§YA' );
+  try
+    for x := 0 to NFe.pag.Count - 1 do
+    begin
+      if ListaComparar( fListaConteudo[x] , '§YA') then
+      begin
+        Inc( IBase );
+        IBase := MontaISaberString( '§YA' , IBase );
+        if ( IBase >= 0 ) then
+        begin
+          Initialize('YA');
+          Monta( FormaPagamentoToStr( NFe.pag[x].tPag ));
+          Monta( NFe.pag[x].vPag  , tcDe2);
+          Monta( NFe.pag[x].CNPJ  , tcStr);
+          Monta( BandeiraCartaoToStr( NFe.pag[x].tBand ));
+          Monta( NFe.pag[x].cAut  , tcStr);
+          finalize;
+          CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
+      end;
+    end;
+    if IBase = -1 then
     begin
       Initialize('YA');
-      Monta( FormaPagamentoToStr( NFe.pag[x].tPag ));
-      Monta( NFe.pag[x].vPag  , tcDe2);
-      Monta( NFe.pag[x].CNPJ  , tcStr);
-      Monta( BandeiraCartaoToStr( NFe.pag[x].tBand ));
-      Monta( NFe.pag[x].cAut  , tcStr);
+      Monta( '');
+      Monta( '');
+      Monta( '');
+      Monta( '');
+      Monta( '');
       finalize;
-      CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
-      sComparar:= '';
-      Registro := '';
-    end
-    else
-    exit;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
+    end;
+  finally
+    fListaConteudo.Free;
+  end;
+end;
+
+procedure TAcBrLerTxtTDD.IdYA04a;
+Var
+  IBase, x : Integer;
+  FListaConteudo : TStringList;
+begin
+  IBase := -1;
+  fListaConteudo:= MontaLista( '§YA' );
+  try
+    for x := 0 to NFe.pag.Count - 1 do
+    begin
+      if ListaComparar( fListaConteudo[x] , '§YA') then
+      begin
+        Inc( IBase );
+        IBase := MontaISaberString( '§YA04a' , IBase );
+        if ( IBase >= 0 ) then
+        begin
+          Initialize('YA04a');
+          (*YA04a*)Monta( tpIntegraToStr( NFe.pag[x].tpIntegra));
+          finalize;
+         CheckEquals( Registro ,RetornaConteudoPos( sComparar,IBase));
+        end;
+      end;
+    end;
+    if IBase = -1 then
+    begin
+      Initialize('YA04a');
+  (*YA04a*)Monta('' );
+      finalize;
+      CheckEquals( Registro ,RetornaConteudo( sComparar));
+    end;
+  finally
+    fListaConteudo.Free;
   end;
 end;
 
@@ -2819,7 +2871,7 @@ begin
   try
     FLayoutArquivoTXT.Text := CarregarLayoutTXT('3.10');
 
-    CheckEquals( FLayoutArquivoTXT.Count, 119 );
+    CheckEquals( FLayoutArquivoTXT.Count, 120 );
   finally
     FLayoutArquivoTXT.Free;
   end;
@@ -2943,15 +2995,16 @@ begin
     CheckEquals( UpperCase('<Y02>   Y02|NFat¨|VOrig¨|VDesc¨|VLiq¨'),FLayoutArquivoTXT[107]);
     CheckEquals( UpperCase('<Y07>   Y07|NDup¨|DVenc¨|VDup¨'),FLayoutArquivoTXT[108]);
     CheckEquals( UpperCase('<YA>     YA|TPag¨|VPag¨|CNPJ¨|TBand¨|CAut¨'),FLayoutArquivoTXT[109]);
-    CheckEquals( UpperCase('<Z01>     Z|InfAdFisco¨|InfCpl¨'),FLayoutArquivoTXT[110]);
-    CheckEquals( UpperCase('<Z04>   Z04|XCampo¨|XTexto¨'),FLayoutArquivoTXT[111]);
-    CheckEquals( UpperCase('<Z07>   Z07|XCampo¨|XTexto¨'),FLayoutArquivoTXT[112]);
-    CheckEquals( UpperCase('<Z10>   Z10|NProc¨|IndProc¨'),FLayoutArquivoTXT[113]);
-    CheckEquals( UpperCase('<ZA>     ZA|UFSaidaPais¨|XLocExporta¨|XLocDespacho¨'),FLayoutArquivoTXT[114]);
-    CheckEquals( UpperCase('<ZB>     ZB|XNEmp¨|XPed¨|XCont¨'),FLayoutArquivoTXT[115]);
-    CheckEquals( UpperCase('<ZC>     ZB|Safra¨|Ref¨|QTotMes¨|QTotAnt¨|QTotGer¨|VFor¨|VTotDed¨|VLiqFor¨'),FLayoutArquivoTXT[116]);
-    CheckEquals( UpperCase('<ZC04> ZC04|Dia¨|Qtde¨'),FLayoutArquivoTXT[117]);
-    CheckEquals( UpperCase('<ZC10> ZC10|XDed¨|VDed¨'),FLayoutArquivoTXT[118]);
+    CheckEquals( UpperCase('<YA>  YA04a|tpIntegra¨'),FLayoutArquivoTXT[110]);
+    CheckEquals( UpperCase('<Z01>     Z|InfAdFisco¨|InfCpl¨'),FLayoutArquivoTXT[111]);
+    CheckEquals( UpperCase('<Z04>   Z04|XCampo¨|XTexto¨'),FLayoutArquivoTXT[112]);
+    CheckEquals( UpperCase('<Z07>   Z07|XCampo¨|XTexto¨'),FLayoutArquivoTXT[113]);
+    CheckEquals( UpperCase('<Z10>   Z10|NProc¨|IndProc¨'),FLayoutArquivoTXT[114]);
+    CheckEquals( UpperCase('<ZA>     ZA|UFSaidaPais¨|XLocExporta¨|XLocDespacho¨'),FLayoutArquivoTXT[115]);
+    CheckEquals( UpperCase('<ZB>     ZB|XNEmp¨|XPed¨|XCont¨'),FLayoutArquivoTXT[116]);
+    CheckEquals( UpperCase('<ZC>     ZB|Safra¨|Ref¨|QTotMes¨|QTotAnt¨|QTotGer¨|VFor¨|VTotDed¨|VLiqFor¨'),FLayoutArquivoTXT[117]);
+    CheckEquals( UpperCase('<ZC04> ZC04|Dia¨|Qtde¨'),FLayoutArquivoTXT[118]);
+    CheckEquals( UpperCase('<ZC10> ZC10|XDed¨|VDed¨'),FLayoutArquivoTXT[119]);
   finally
     FLayoutArquivoTXT.Free;
   end;

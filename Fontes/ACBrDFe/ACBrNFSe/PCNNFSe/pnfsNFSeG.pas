@@ -1040,6 +1040,7 @@ begin
              Gerador.Prefixo := Prefixo4;
              Gerador.wGrupoNFSe('CpfCnpj');
              Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, '', '');
+             Gerador.wGrupoNFSe('/CpfCnpj');
              Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, '', '');
              Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('/Tomador');
@@ -1080,6 +1081,7 @@ begin
              Gerador.wCampoNFSe(tcStr, '#4', 'RazaoSocial', 01, 115, 1, '', '');
              Gerador.wGrupoNFSe('CpfCnpj');
              Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, '', '');
+             Gerador.wGrupoNFSe('/CpfCnpj');
              Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, '', '');
              Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('/IntermediarioServico');

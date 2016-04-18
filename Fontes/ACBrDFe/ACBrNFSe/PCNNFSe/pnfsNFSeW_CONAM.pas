@@ -154,7 +154,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'DiscrSrv', 01, 4000, 1, StringReplace( NFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
   Gerador.wCampoNFSe(tcStr, '', 'VlNFS', 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorServicos), '');
   Gerador.wCampoNFSe(tcStr, '', 'VlDed', 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorDeducoes), '');
-  Gerador.wCampoNFSe(tcStr, '', 'DiscrDed', 01, 4000, 1,StringReplace( NFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
+  Gerador.wCampoNFSe(tcStr, '', 'DiscrDed', 01, 4000, 1,StringReplace( NFSe.Servico.Valores.JustificativaDeducao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), '');
   Gerador.wCampoNFSe(tcStr, '', 'VlBasCalc', 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.BaseCalculo), '');
   Gerador.wCampoNFSe(tcStr, '', 'AlqIss'      , 01, 05, 2, FormatFloat('############0.00', NFSe.Servico.Valores.Aliquota), '');
   Gerador.wCampoNFSe(tcStr, '', 'VlIss'       , 01, 16, 2, FormatFloat('############0.00', NFSe.Servico.Valores.ValorIss), '');

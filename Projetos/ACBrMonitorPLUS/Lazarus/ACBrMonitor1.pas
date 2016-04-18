@@ -233,6 +233,7 @@ type
     cbECFModelo: TComboBox;
     cbECFPorta: TComboBox;
     cbEmailCodificacao: TComboBox;
+    cbEmailThread: TCheckBox;
     cbEmailSsl: TCheckBox;
     cbEmailTls: TCheckBox;
     cbETQModelo: TComboBox;
@@ -1913,6 +1914,7 @@ begin
     SetSSL := cbEmailSsl.Checked;
     SetTLS := cbEmailTls.Checked;
     ReadingConfirmation := cbEmailConfirmation.Checked;
+    UseThread := cbEmailThread.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
 
@@ -3751,6 +3753,7 @@ begin
     cbEmailSsl.Checked := Ini.ReadBool('EMAIL', 'ExigeSSL', False);
     cbEmailTls.Checked := Ini.ReadBool('EMAIL', 'ExigeTLS', False);
     cbEmailConfirmation.Checked := Ini.ReadBool('EMAIL', 'Confirmacao', False);
+    cbEmailThread.Checked := Ini.ReadBool('EMAIL', 'SegundoPlano', False);
     cbEmailCodificacao.Text := Ini.ReadString('EMAIL', 'Codificacao', '');
 
     {Parametro Sedex}
@@ -4354,6 +4357,7 @@ begin
     SetSSL := cbEmailSsl.Checked;
     SetTLS := cbEmailTls.Checked;
     ReadingConfirmation := cbEmailConfirmation.Checked;
+    UseThread := cbEmailThread.Checked;
     DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
       cbEmailCodificacao.Text));
   end;
@@ -4707,6 +4711,7 @@ begin
     Ini.WriteBool('EMAIL', 'ExigeSSL', cbEmailSsl.Checked);
     Ini.WriteBool('EMAIL', 'ExigeTLS', cbEmailTls.Checked);
     Ini.WriteBool('EMAIL', 'Confirmacao',  cbEmailConfirmation.Checked);
+    Ini.WriteBool('EMAIL', 'SegundoPlano', cbEmailThread.Checked);
     Ini.WriteString('EMAIL', 'Codificacao', cbEmailCodificacao.Text);
 
     { Parametros Sedex }

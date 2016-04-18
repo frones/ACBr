@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/04/2016
+[+] Implementando opção para configuração de envio de email em Segundo Plano
+    (por: DSA)
+
 11/04/2016
 [+] Adição parametro para geração do PDF ao final CRIARENVIARNFE e EnviarLote!
 		http://www.projetoacbr.com.br/forum/topic/28860-sugest%C3%A3o-acbrplus-no-comando-criarenviarnfe/

@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 473
+  Left = 666
   Height = 600
-  Top = 196
+  Top = 135
   Width = 800
   Align = alClient
   ClientHeight = 600
@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.0.4'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -377,11 +377,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 327
         Top = 1
         Width = 600
-        ActivePage = tsMonitor
+        ActivePage = tsEmail
         Align = alClient
         Images = ImageList1
         ShowTabs = False
-        TabIndex = 0
+        TabIndex = 13
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4481,7 +4481,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsConsultas: TTabSheet
           Caption = 'Consultas'
           ClientHeight = 319
-          ClientWidth = 590
+          ClientWidth = 592
           ImageIndex = 17
           object gbCEP: TGroupBox
             Left = 267
@@ -4720,17 +4720,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsEmail: TTabSheet
           Caption = 'E-mail'
           ClientHeight = 319
-          ClientWidth = 590
+          ClientWidth = 592
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 0
             Height = 287
             Top = 4
-            Width = 590
+            Width = 592
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
             ClientHeight = 265
-            ClientWidth = 586
+            ClientWidth = 588
             TabOrder = 0
             object Label33: TLabel
               Left = 19
@@ -4762,7 +4762,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 32
-              Width = 318
+              Width = 320
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -4811,7 +4811,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 89
-              Width = 207
+              Width = 209
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 3
             end
@@ -4896,7 +4896,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 10
               Top = 179
-              Width = 586
+              Width = 588
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
@@ -4904,7 +4904,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
-              Left = 466
+              Left = 468
               Height = 25
               Top = 88
               Width = 100
@@ -5026,7 +5026,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
-              Left = 466
+              Left = 468
               Height = 17
               Top = 70
               Width = 68
@@ -5042,12 +5042,20 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Caption = 'Confirmação de Email'
               TabOrder = 11
             end
+            object cbEmailThread: TCheckBox
+              Left = 208
+              Height = 21
+              Top = 200
+              Width = 169
+              Caption = 'Enviar em segundo plano'
+              TabOrder = 12
+            end
           end
         end
         object tsSEDEX: TTabSheet
           Caption = 'Sedex'
           ClientHeight = 319
-          ClientWidth = 590
+          ClientWidth = 592
           ImageIndex = 24
           object Label42: TLabel
             Left = 15
@@ -5426,10 +5434,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 319
             Top = 0
             Width = 592
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
             ShowTabs = False
-            TabIndex = 0
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -5921,9 +5929,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Height = 311
                 Top = 0
                 Width = 584
-                ActivePage = tsWSNFe
+                ActivePage = tsWSNFCe
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 1
                 TabOrder = 0
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
@@ -8369,7 +8377,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       ShortCut = 57379
                     end>
                   MouseActions = <>
+                  MouseTextActions = <>
                   MouseSelActions = <>
+                  VisibleSpecialChars = [vscSpace, vscTabAtLast]
                   SelectedColor.BackPriority = 50
                   SelectedColor.ForePriority = 50
                   SelectedColor.FramePriority = 50

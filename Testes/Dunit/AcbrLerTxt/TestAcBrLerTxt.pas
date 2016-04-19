@@ -2618,7 +2618,6 @@ begin
   end;
 end;
 
-
 procedure TAcBrLerTxtTDD.IdBA19;
 Var
   IBase, x : Integer;

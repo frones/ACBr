@@ -374,9 +374,8 @@ procedure TACBrGNREGuiaFR_Fortes.CarregaDados;
 
   function RemoverZeros(Str: string): string;
   begin
-    if Trim(Str) <> '' then
-      while Str[1] = '0' do
-        Str := Copy(Str, 2, Length(Str));
+    while (Trim(Str) <> '') and (Str[1] = '0') do
+      Str := Copy(Str, 2, Length(Str));
 
     Result := Trim(Str);
   end;

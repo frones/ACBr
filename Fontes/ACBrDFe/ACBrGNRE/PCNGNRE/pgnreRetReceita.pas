@@ -211,8 +211,8 @@ begin
       while Leitor.rExtrai(2, 'ns1:receita', '', i + 1) <> '' do
       begin
         FretReceita.Add;
-        FretReceita.Items[i].RetInfReceita.codigo                    := Leitor.rAtributo('ns1:codigo');
-        FretReceita.Items[i].RetInfReceita.descricao                 := Leitor.rAtributo('ns1:descricao');
+        FretReceita.Items[i].RetInfReceita.codigo                    := Leitor.rAtributo('codigo');
+        FretReceita.Items[i].RetInfReceita.descricao                 := Leitor.rAtributo('descricao');
         if Pos('ns1:courier', Leitor.Grupo) > 0 then
           FretReceita.Items[i].RetInfReceita.courier                   := Leitor.rAtributo('ns1:courier');
         FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeDetalhamentoReceita');

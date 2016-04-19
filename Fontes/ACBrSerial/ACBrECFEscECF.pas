@@ -2110,7 +2110,7 @@ var
   Buffer   : AnsiString ;
   EhControle: Boolean;
 begin
-  Linha := AjustaLinhas( Linha, Colunas, 0, False );  { Formata as Linhas de acordo com "Coluna" }
+  Linha := AjustaLinhas( Linha, Colunas, 0, IsBematech );  { Formata as Linhas de acordo com "Coluna" }
 
   if IsBematech then
     LenMaxBuffer := cEscECFMaxBufferBematech

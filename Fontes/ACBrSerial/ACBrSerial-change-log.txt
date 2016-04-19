@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/04/2016
+-- ACBrECFEscECF --
+[-] Metodo LinhaRelatorioGerencial, aplicado workaround para bug em Bematech
+    na impressao de linhas do Gerencial  (por: DSA)
+	http://www.projetoacbr.com.br/forum/index.php?showtopic=29469
+	
 Data: 15/04/2016
 -- ACBrEscDiebold --
 [-] Correção na impressão de Code128 (por: Fabio Souza)

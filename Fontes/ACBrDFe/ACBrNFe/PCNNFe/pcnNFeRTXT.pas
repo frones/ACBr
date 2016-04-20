@@ -283,7 +283,7 @@ begin
   end;
 
   (* Grupo da TAG <ide><NFref><refNFe> ****************************************)
-  if (ID = 'B13') or (ID = 'BA') or (ID = 'BA02') then
+  if (ID = 'B13') {or (ID = 'BA')} or (ID = 'BA02') then
   begin
     NFe.Ide.NFref.Add;
     i := NFe.ide.NFref.Count - 1;
@@ -1095,7 +1095,7 @@ begin
     i := NFe.pag.Count - 1;
     NFe.pag[i].tPag :=  StrToFormaPagamento(ok, LerCampo(tcStr, 'tPag'));
     NFe.pag[i].vPag := LerCampo(tcDe2, 'vPag');
-//    NFe.pag[i].card := LerCampo(tcStr, 'card'); // é um grupo
+    NFe.pag[i].tpIntegra := StrTotpIntegra(ok, LerCampo(tcStr, 'card'));
     NFe.pag[i].CNPJ := LerCampo(tcStr, 'CNPJ');
     NFe.pag[i].tBand := StrToBandeiraCartao(ok, LerCampo(tcStr, 'tBand'));
     NFe.pag[i].cAut := LerCampo(tcStr, 'cAut');

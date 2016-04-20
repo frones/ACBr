@@ -51,7 +51,7 @@ Símbolo : Significado
 19/04/2016
 -- ACBrNFeDANFEFRDM --
 [*] Disponbilizando o uso da propriedade UsaCodigoEanImpressao
-     com a Inclusão função ManterCodigo.
+     com a Inclusão da função ManterCodigo.
   
     por: Henrique Leonardo
 

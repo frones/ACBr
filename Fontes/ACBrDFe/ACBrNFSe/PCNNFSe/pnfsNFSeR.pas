@@ -1100,6 +1100,23 @@ begin
 
 //    if NFSe.Servico.Valores.ValorIss = 0 then
 //      NFSe.Servico.Valores.ValorIss := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
+
+    // Provedor SimplISS permite varios itens servico
+    if FProvedor = proSimplISS then
+    begin
+      i := 1;
+      while (Leitor.rExtrai(4, 'ItensServico', 'ItensServico', i) <> '') do
+      begin
+        with NFSe.Servico.ItemServico.Add do
+        begin
+          Descricao := Leitor.rCampo(tcStr, 'Descricao');
+          Quantidade := Leitor.rCampo(tcInt, 'Quantidade');
+          ValorUnitario := Leitor.rCampo(tcDe2, 'ValorUnitario');
+        end;
+        inc(i);
+      end;
+    end;
+
   end; // fim serviço
 
   if Leitor.rExtrai(3, 'PrestadorServico') <> '' then

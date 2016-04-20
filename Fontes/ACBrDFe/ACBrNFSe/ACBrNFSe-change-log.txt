@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2016
+-- pnfsNFSeR --
+[*] Alteração visando a leitura correta da lista de itens de serviços do 
+    provedor SimplISS
+    por: Elisângela Borato / Italo Jurisato Junior
+
 13/04/2016
 [+] Implemento o provedor Pronim versao 2
     por: Italo Jurisato Junior

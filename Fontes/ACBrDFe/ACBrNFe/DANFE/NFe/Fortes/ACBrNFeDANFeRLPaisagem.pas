@@ -2032,6 +2032,8 @@ begin
   RlbDadoValorDesconto.caption  := '';
   RlbDadoValorLiquido.caption   := '';
 
+	RLBFaturaReal.Visible := fExibeCampoFatura;
+	
   if fExibeCampoFatura then
   begin
 

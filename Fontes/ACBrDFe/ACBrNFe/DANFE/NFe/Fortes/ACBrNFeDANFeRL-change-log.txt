@@ -47,7 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2016
+[*] aplicado para deixar visivel ou não o campo de fatura!
+		tanto retrato quanto paisagem!
+		por : Juliomar Marchetti
+		
 16/03/2016
---pcnNFeRTXT--
 [-] não saia o Complemento dos endereços de Retirada e Entrega em retrato e paisagem
 		por: Juliomar Marchetti

@@ -438,7 +438,7 @@ begin
         with FNFe.Det.Items[inItem] do
         begin
           FieldByName('ChaveNFe').AsString          := FNFe.infNFe.ID;
-          FieldByName('cProd').AsString             := Prod.cProd;
+          FieldByName('cProd').AsString             := FDANFEClassOwner.ManterCodigo( Prod.cEAN,Prod.cProd);
           FieldByName('cEAN').AsString              := Prod.cEAN;
           FieldByName('XProd').AsString             :=   StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
           FieldByName('VProd').AsString             :=     ManterVprod( Prod.VProd , Prod.vDesc );

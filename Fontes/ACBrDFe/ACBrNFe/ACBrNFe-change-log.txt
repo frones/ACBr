@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+19/04/2016
+-- ACBrNFeDANFEFRDM --
+[*] Disponbilizando o uso da propriedade UsaCodigoEanImpressao
+     com a Inclusão função ManterCodigo.
+  
+    por: Henrique Leonardo
+
+
 15/04/2016
 -- pcnEventoNFe --
 [*] Incluido o tipo de evento teMDFeAutorizado:

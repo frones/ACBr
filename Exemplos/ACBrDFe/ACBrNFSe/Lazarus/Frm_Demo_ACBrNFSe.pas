@@ -862,7 +862,7 @@ begin
  if OpenDialog1.Execute then
   begin
    ACBrNFSe1.NotasFiscais.Clear;
-   ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+   ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName, False);
    ACBrNFSe1.Configuracoes.Arquivos.NomeLongoNFSe := True;
    ACBrNFSe1.NotasFiscais.Imprimir;
    ACBrNFSe1.NotasFiscais.ImprimirPDF;

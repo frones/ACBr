@@ -297,6 +297,12 @@ begin
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
           end;
         end;
+        //Informação Adicional do produto
+        if infAdProd <> '' then
+        begin
+          LinhaCmd := StringReplace(infAdProd, ';', sLineBreak, [rfReplaceAll]);
+          FPosPrinter.Buffer.Add('<c>'+LinhaCmd);
+        end;
       end;
     end;
   end;

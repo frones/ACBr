@@ -42,13 +42,15 @@ uses
 
 procedure DoEmail(Cmd: TACBrCmd);
 procedure ConfigurarEmailNovo;
+procedure ConfigurarDadosEmail(aStr : String );
 procedure RecuperarDadosIniciais;
 function AdicionaDestino( Endereco, Nome, Tipo : String ) : String;
 function ValidarEmail(aEmail: String) : Boolean;
 
 implementation
 
-uses ACBrUtil, mimemess, RegExpr, synachar,
+uses ACBrUtil, mimemess, RegExpr, synachar, IniFiles, UtilUnit, DoACBrUnit,
+  ACBrMail, typinfo,
   {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
 var
@@ -82,11 +84,12 @@ begin
   begin
     if Cmd.Metodo = 'novo' then
      begin
-
        ConfigurarEmailNovo;
-
-       { Recupera dados iniciais }
-       RecuperarDadosIniciais;
+       if ( Cmd.Params(0) <> '' ) then { lê configurações do remetente via ini }
+         ConfigurarDadosEmail(Cmd.Params(0))
+       else
+         { Recupera dados iniciais }
+         RecuperarDadosIniciais;
 
        FlagEmailNovo := True;
 
@@ -226,13 +229,6 @@ procedure ConfigurarEmailNovo;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
   begin
-    if ( (Trim(From) = '') or not(ValidarEmail(From)) ) then
-       raise Exception.Create('E-mail do remetente não informado ou inválido!')
-    else if Trim(Host) = '' then
-       raise Exception.Create('Host SMTP não informado!')
-    else if (Trim(Port) = '') or (Port = '0') then
-       raise Exception.Create('Porta SMTP não informada ou inválida!');
-
     { Salva dados iniciais }
     EmailEndereco    := From;
     EmailNome        := FromName;
@@ -249,10 +245,60 @@ begin
   end;
 end;
 
+procedure ConfigurarDadosEmail(aStr: String);
+var
+  IniDados : TMemIniFile;
+  SL       : TStringList;
+  sCharset : String;
+begin
+  IniDados   := TMemIniFile.Create('');
+  SL         := TStringList.Create;
+
+  try
+    if (pos(#10,aStr) = 0) and FileExists(aStr) then
+      SL.LoadFromFile(aStr)
+    else
+      SL.Text := ConvertStrRecived(aStr);
+
+    IniDados.SetStrings(SL);
+
+    if IniDados.SectionExists('EMAIL') then
+    begin
+      with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
+      begin
+        From           := IniDados.ReadString('EMAIL', 'Endereco', EmailEndereco);
+        FromName       := IniDados.ReadString('EMAIL', 'NomeExibicao', EmailNome);
+        Host           := IniDados.ReadString('EMAIL', 'Email', EmailHost);
+        Username       := IniDados.ReadString('EMAIL', 'Usuario', EmailUsuario);
+        Password       := IniDados.ReadString('EMAIL', 'Senha', EmailSenha);
+        Port           := IniDados.ReadString('EMAIL', 'Porta', EmailPorta);
+        SetSSL         := IniDados.ReadBool(  'EMAIL', 'ExigeSSL', EmailSSL);
+        SetTLS         := IniDados.ReadBool(  'EMAIL', 'ExigeTLS', EmailTLS);
+        sCharset       := IniDados.ReadString('EMAIL', 'Codificacao', '');
+
+        if ( sCharset <> '' ) then
+           DefaultCharset := TMailCharset(GetEnumValue(TypeInfo(TMailCharset),
+             sCharset))
+
+      end;
+    end;
+  finally
+    SL.Free;
+    IniDados.Free;
+  end;
+end;
+
 procedure RecuperarDadosIniciais;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do
   begin
+    if ( (Trim(From) = '') or not(ValidarEmail(From)) ) then
+       raise Exception.Create('E-mail do remetente não informado ou inválido!')
+    else if Trim(Host) = '' then
+       raise Exception.Create('Host SMTP não informado!')
+    else if (Trim(Port) = '') or (Port = '0') then
+       raise Exception.Create('Porta SMTP não informada ou inválida!');
+
     From           := EmailEndereco;
     FromName       := EmailNome;
     Host           := EmailHost;

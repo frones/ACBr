@@ -2042,8 +2042,9 @@ begin
   RlbDadoValorDesconto.caption  := '';
   RlbDadoValorLiquido.caption   := '';
 
-  rlbFaturaReal.Visible         := fExibeCampoFatura;
 
+  // A propriedade ExibeCampoFatura só tem a função de controlar os dados de fatura.
+  //  Por padrão, a Banda Fatura, dever ser exibida sempre.
   if fExibeCampoFatura then
   begin
 

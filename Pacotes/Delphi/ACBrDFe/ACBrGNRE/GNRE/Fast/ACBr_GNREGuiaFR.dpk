@@ -91,6 +91,7 @@ requires
 {$IFDEF VER280} fs21, frx21, frxe21, frxDB21, dsnap, {$ENDIF} // XE7
 {$IFDEF VER290} fs22, frx22, frxe22, frxDB22, dsnap, {$ENDIF} // XE8
 {$IFDEF VER300} fs23, frx23, frxe23, frxDB23, dsnap, {$ENDIF} // XE9
+{$IFDEF VER310} fs24, frx24, frxe24, frxDB24, dsnap, {$ENDIF} // Berlin
   ACBr_GNRE;
 
 contains

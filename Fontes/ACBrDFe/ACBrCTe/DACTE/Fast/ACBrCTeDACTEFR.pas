@@ -369,6 +369,7 @@ begin
     Add('retira', ftString, 1);
     Add('xDetRetira', ftString, 160);
     Add('toma', ftString, 50);
+    Add('refCTE', ftString, 44);
     CreateDataSet;
   end;
 
@@ -1965,6 +1966,7 @@ begin
         tsSubcontratacao: FieldByName('tpServ').AsString := 'Subcontratação';
         tsRedespacho: FieldByName('tpServ').AsString     := 'Redespacho';
         tsIntermediario: FieldByName('tpServ').AsString  := 'Intermediário';
+        tsMultimodal: FieldByName('tpServ').AsString  := 'Vinc. Multimodal';
       end;
 
       FieldByName('cMunIni').AsString := IntToStr(cMunIni);
@@ -1990,6 +1992,7 @@ begin
       case Toma4.Toma of
         tmOutros: FieldByName('Toma').AsString := 'Outros';
       end;
+      FieldByName('refCTE').AsString := refCTe;
     end;
     Post;
   end;

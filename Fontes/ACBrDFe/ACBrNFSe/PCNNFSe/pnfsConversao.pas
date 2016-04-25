@@ -18135,6 +18135,9 @@ begin
     retCooperativa               : Result := '4 - Cooperativa';
     retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
     retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';
+    retLucroReal                 : Result := '7 - Lucro Real';
+    retLucroPresumido            : Result := '8 - Lucro Presumido';
+    retSimplesNacional           : Result := '9 - Simples Nacional';
   end;
 end;
 

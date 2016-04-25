@@ -962,6 +962,29 @@ begin
              Gerador.wGrupoNFSe('/Detalhe');
            end;
 
+    proTecnos: begin
+                 Gerador.Prefixo := Prefixo3;
+                 Gerador.wGrupoNFSe('Prestador' + aNameSpace);
+                 Gerador.Prefixo := Prefixo4;
+                 Gerador.wGrupoNFSe('CpfCnpj');
+                 if Length(Cnpj) <= 11 then
+                   Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
+                 else
+                   Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
+                 Gerador.wGrupoNFSe('/CpfCnpj');
+                 Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+                 Gerador.Prefixo := Prefixo3;
+                 Gerador.wGrupoNFSe('/Prestador');
+                 if NumeroNFSe <> '' then
+                 begin
+                   Gerador.wGrupoNFSe('Faixa');
+                   Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfseInicial', 01, 15, 1, NumeroNFSe, '');
+                   Gerador.wCampoNFSe(tcStr, '#6', 'NumeroNfseFinal', 01, 15, 1, NumeroNFSe, '');
+                   Gerador.wGrupoNFSe('/Faixa');
+                 end;
+                 Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 06, 1, Pagina, '');
+               end;
+
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);

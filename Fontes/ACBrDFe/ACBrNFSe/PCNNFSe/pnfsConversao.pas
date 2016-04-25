@@ -18229,6 +18229,7 @@ begin
   XML := StringReplace(XML, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/servico_enviar_lote_rps_resposta.xsd"', '', [rfReplaceAll] );
   XML := StringReplace(XML, ' xmlns="http://www.issnetonline.com.br/webserviceabrasf/vsd/tipos_complexos.xsd"', '', [rfReplaceAll] );
   XML := StringReplace(XML, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll] );
+  XML := StringReplace(XML, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll] );
 
   Result := XML;
 end;

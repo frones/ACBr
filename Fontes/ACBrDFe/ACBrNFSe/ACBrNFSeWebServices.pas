@@ -805,6 +805,9 @@ begin
 
   AuxXML := ParseText(FPRetornoWS);
 
+  if FPConfiguracoesNFSe.Geral.RetirarAcentos then
+    AuxXML := TiraAcentos(AuxXML);
+
   XMLRet := SeparaDados(AuxXML, 'return');
 
   if XMLRet = '' then

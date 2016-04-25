@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/04/2016
+-- ACBrNFSeWebServices --
+[*] Ao extrair o retono é checado se o valor da propriedade RetirarAcentos é True,
+    se sim os acentos são removidos do XML retornado do web service.
+    por: Italo Jurisato Junior
 -- ACBrNFSeWebServices / pnfsNFSeG --
 [*] Alteração visando o envio da solicitação de Consulta NFSe ao provedor Tecnos.
     por: Italo Jurisato Junior

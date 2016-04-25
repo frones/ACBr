@@ -1075,7 +1075,7 @@ begin
               FXMLOriginal := TStringList.Create;
               try
                 FXMLOriginal.LoadFromFile(Cmd.Params(0));
-                FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'Estoque', 'Mensagem');
+                FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'ReducaoZ', 'Mensagem');
                 FXMLOriginal.SaveToFile(Cmd.Params(0));
                 Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
               finally

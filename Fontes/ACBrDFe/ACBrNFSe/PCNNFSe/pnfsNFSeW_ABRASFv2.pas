@@ -607,10 +607,10 @@ begin
   if not (FProvedor in [proSystemPro]) then
   begin
     case FProvedor of
-      proAgili, proCoplan, proFiorilli, proISSe, proISSDigital, proProdata,
-      proPVH, proSaatri, proVitoria, proVirtual, proMitra,
-      proGovDigital, proSisPMJP, proActcon, proNEAInformatica, proNotaInteligente,
-      proEReceita: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+      proActcon, proAgili, proCoplan, proEReceita, proFiorilli, proGovDigital,
+      proISSDigital, proISSe, proMitra, proNEAInformatica, proNotaInteligente,
+      proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP, proVirtual,
+      proVitoria: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
     else
       Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);

@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 25/04/2016
+-- ACBrNFSeNotasFiscais --
+[*] Ao ler o XML da NFS-e não estava considerando o grupo NfseCancelamento.
+    por: Elisângela Borato / Italo Jurisato Junior
 -- ACBrNFSeWebServices --
 [*] Ao extrair o retono é checado se o valor da propriedade RetirarAcentos é True,
     se sim os acentos são removidos do XML retornado do web service.

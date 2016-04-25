@@ -811,6 +811,13 @@ var
     end;
   end;
 
+  //provedor SimplISS
+  function PosNFSeCancelamento: Integer;
+  begin
+    TamTAG := 18;
+    Result := Pos('</NfseCancelamento>', AXMLString);
+  end;
+
   function PosRPS: Integer;
   begin
     TamTAG := 5;
@@ -854,6 +861,15 @@ begin
     begin
       AXML := copy(AXMLString, 1, N + TamTAG);
       AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
+
+      //provedor SimplISS
+      N:= PosNFSeCancelamento;
+      if N > 0 then
+      begin
+        //copia tag NfseCancelamento
+        AXML:= AXML + copy(AXMLString, 1, N + TamTAG);
+        AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
+      end;
 
       with Self.Add do
       begin

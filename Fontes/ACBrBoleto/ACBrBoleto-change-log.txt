@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/04/16 ver: 0.0.191a
+-- ACBrBancoItau --
+[*] Ajuste retorno CNAB400 para ler corretamente os motivos de rejeição quando não houver. (Emerson Teixeira)
+http://www.projetoacbr.com.br/forum/topic/29364-altera%C3%A7%C3%A3o-na-leitura-da-motivo-da-rejei%C3%A7%C3%A3o-e-descri%C3%A7%C3%A3o-da-rejei%C3%A7%C3%A3o-do-arquivo-de-retorno-na-unit-acbrbancoitau/
+
+
 Data: 01/04/16 ver: 0.0.190a
 -- ACBrBancoSafra --
 [*] Correção geração arquivo remessa CNAB400 e montagem dos campos do boleto.(ubaltino)

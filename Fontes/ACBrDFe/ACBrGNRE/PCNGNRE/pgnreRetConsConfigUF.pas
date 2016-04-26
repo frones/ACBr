@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
 {  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
@@ -67,10 +67,6 @@ type
     Fdescricao: string;
     FexigeUfFavorecida: string;
     FexigeReceita: string;
-    FexigeContribuinteEmitente: string;
-    FexigeDataVencimento: string;
-    FexigeConvenio: string;
-    FexigeDataPagamento: string;
     FInfReceita: TRetReceita;
   public
     constructor Create;
@@ -84,10 +80,6 @@ type
     property descricao: string read Fdescricao write Fdescricao;
     property exigeUfFavorecida: string read FexigeUfFavorecida write FexigeUfFavorecida;
     property exigeReceita: string read FexigeReceita write FexigeReceita;
-    property exigeContribuinteEmitente: string read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
-    property exigeDataVencimento: string read FexigeDataVencimento write FexigeDataVencimento;
-    property exigeConvenio: string read FexigeConvenio write FexigeConvenio;
-    property exigeDataPagamento: string read FexigeDataPagamento write FexigeDataPagamento;
     property InfReceita: TRetReceita read FInfReceita write FInfReceita;
   end;
 
@@ -124,10 +116,6 @@ begin
       (*5*)Fdescricao                   := Leitor.rCampo(tcStr, 'ns1:descricao');
       (*6*)FexigeUfFavorecida           := SeparaDados(Leitor.Grupo, 'ns1:exigeUfFavorecida');
       (*7*)FexigeReceita                := SeparaDados(Leitor.Grupo, 'ns1:exigeReceita');
-      (*43*)FexigeContribuinteEmitente  := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteEmitente');
-      (*44*)FexigeDataVencimento        := SeparaDados(Leitor.Grupo, 'ns1:exigeDataVencimento');
-      (*45*)FexigeConvenio              := SeparaDados(Leitor.Grupo, 'ns1:exigeConvenio');
-      (*45*)FexigeDataPagamento         := SeparaDados(Leitor.Grupo, 'ns1:exigeDataPagamento');
 
       if SameText(FexigeReceita, 'S') then
       begin

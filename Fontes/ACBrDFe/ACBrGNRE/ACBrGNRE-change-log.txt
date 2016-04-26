@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/04/2016
+[*] Diversas alterações visando a correções de problemas de leitura de retornos.
+    por: Siagri Sistemas
+
 13/04/2016
 -- ACBrGNREWebServices --
 [*] Método "TGNREWebService.Clear" modificado para inicializar:

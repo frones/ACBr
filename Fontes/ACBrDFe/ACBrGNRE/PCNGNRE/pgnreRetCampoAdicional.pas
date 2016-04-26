@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
 {  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
@@ -154,17 +154,18 @@ begin
   Result := False;
   try
     i := 0;
-    if Leitor.rExtrai(1, 'camposAdicionais') <> '' then
+    if Leitor.rExtrai(1, 'ns1:camposAdicionais') <> '' then
     begin
-      while Leitor.rExtrai(2, 'campoAdicional', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'ns1:campoAdicional', '', i + 1) <> '' do
       begin
         retCampoAdicional.Add;
-        retCampoAdicional.Items[i].RetCampoAdicional.obrigatorio    := Leitor.rCampo(tcStr, 'obrigatorio');
-        retCampoAdicional.Items[i].RetCampoAdicional.codigo         := StrToInt(SeparaDados(Leitor.Grupo, 'codigo'));
-        retCampoAdicional.Items[i].RetCampoAdicional.tipo           := SeparaDados(Leitor.Grupo, 'tipo');
-        retCampoAdicional.Items[i].RetCampoAdicional.tamanho        := Leitor.rCampo(tcInt, 'tamanho');
-        retCampoAdicional.Items[i].RetCampoAdicional.casasDecimais  := Leitor.rCampo(tcInt, 'casasDecimais');
-        retCampoAdicional.Items[i].RetCampoAdicional.titulo         := Leitor.rCampo(tcStr, 'titulo');
+        retCampoAdicional.Items[i].RetCampoAdicional.obrigatorio    := Leitor.rCampo(tcStr, 'ns1:obrigatorio');
+        retCampoAdicional.Items[i].RetCampoAdicional.codigo         := StrToInt(SeparaDados(Leitor.Grupo, 'ns1:codigo'));
+        retCampoAdicional.Items[i].RetCampoAdicional.tipo           := SeparaDados(Leitor.Grupo, 'ns1:tipo');
+        retCampoAdicional.Items[i].RetCampoAdicional.tamanho        := Leitor.rCampo(tcInt, 'ns1:tamanho');
+        if Pos('ns1:casasDecimais', Leitor.Grupo) > 0 then
+          retCampoAdicional.Items[i].RetCampoAdicional.casasDecimais  := Leitor.rCampo(tcInt, 'ns1:casasDecimais');
+        retCampoAdicional.Items[i].RetCampoAdicional.titulo         := Leitor.rCampo(tcStr, 'ns1:titulo');
         inc(i);
       end;
 

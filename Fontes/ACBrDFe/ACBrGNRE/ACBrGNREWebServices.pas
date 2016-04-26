@@ -219,14 +219,9 @@ type
     Fdescricao: String;
     Freceita: Integer;
     FexigeReceita: String;
-    FexigeDataVencimento: String;
-    FexigeDataPagamento: String;
-    FexigeContribuinteEmitente: String;
     FexigeUfFavorecida: String;
-    FexigeConvenio: String;
     FUf: String;
     FAmbiente: TpcnTipoAmbiente;
-
     FGNRERetorno: TTConfigUf;
     FcUF: Integer;
 
@@ -249,11 +244,6 @@ type
     property receita: Integer read Freceita write Freceita;
     property exigeReceita: String read FexigeReceita write FexigeReceita;
     property exigeUfFavorecida: String read FexigeUfFavorecida write FexigeUfFavorecida;
-    property exigeContribuinteEmitente: String read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
-    property exigeDataVencimento: String read FexigeDataVencimento write FexigeDataVencimento;
-    property exigeConvenio: String read FexigeConvenio write FexigeConvenio;
-    property exigeDataPagamento: String read FexigeDataPagamento write FexigeDataPagamento;
-
     property GNRERetorno: TTConfigUf read FGNRERetorno write FGNRERetorno;
     property cUF: Integer read FcUF;
   end;
@@ -1052,15 +1042,10 @@ begin
   FPLayout := LayGNRERetRecepcao;
   FPArqEnv := 'ped-cfg';
   FPArqResp := 'cfg';
-
   Fcodigo := 0;
   Fdescricao := '';
   FexigeReceita := '';
-  FexigeDataVencimento := '';
-  FexigeDataPagamento := '';
-  FexigeContribuinteEmitente := '';
   FexigeUfFavorecida := '';
-  FexigeConvenio := '';
 
   if Assigned(FPConfiguracoesGNRE) then
   begin
@@ -1129,17 +1114,13 @@ begin
   FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
-  FAmbiente                   := FGNRERetorno.Ambiente;
-  Fcodigo                     := FGNRERetorno.codigo;
-  Fdescricao                  := UTF8Decode(FGNRERetorno.descricao);
-  FexigeReceita               := FGNRERetorno.exigeReceita;
-  FexigeDataVencimento        := FGNRERetorno.exigeDataVencimento;
-  FexigeDataPagamento         := FGNRERetorno.exigeDataPagamento;
-  FexigeContribuinteEmitente  := FGNRERetorno.exigeContribuinteEmitente;
-  FexigeUfFavorecida          := FGNRERetorno.exigeUfFavorecida;
-  FexigeConvenio              := FGNRERetorno.exigeConvenio;
-  FUf                         := FGNRERetorno.Uf;
-  FPMsg                       := UTF8Decode(FGNRERetorno.descricao);
+  FAmbiente          := FGNRERetorno.Ambiente;
+  Fcodigo            := FGNRERetorno.codigo;
+  Fdescricao         := UTF8Decode(FGNRERetorno.descricao);
+  FexigeReceita      := FGNRERetorno.exigeReceita;
+  FexigeUfFavorecida := FGNRERetorno.exigeUfFavorecida;
+  FUf                := FGNRERetorno.Uf;
+  FPMsg              := UTF8Decode(FGNRERetorno.descricao);
 
   Result := (FGNRERetorno.codigo = 450); // 450 = Consulta da configuração da UF realizada com sucesso.
 end;

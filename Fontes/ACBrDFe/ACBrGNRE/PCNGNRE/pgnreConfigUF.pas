@@ -97,6 +97,7 @@ type
     Fcodigo: Integer;
     Fdescricao: string;
     Fcourier: string;
+    FexigeContribuinteEmitente: string;
     FexigeDetalhamentoReceita: string;
     FexigeProduto: string;
     FexigePeriodoReferencia: string;
@@ -104,12 +105,16 @@ type
     FexigeParcela: string;
     FvalorExigido: string;
     FexigeDocumentoOrigem: string;
-    FexigeContribuinteDestinatario: string;    
+    FexigeContribuinteDestinatario: string;
+    FexigeDataVencimento: string;
+    FexigeDataPagamento: string;
+    FexigeConvenio: string; 
     FexigeCamposAdicionais: string;
   published
     property codigo: Integer read Fcodigo write Fcodigo;
     property descricao: string read Fdescricao write Fdescricao;
     property courier: string read Fcourier write Fcourier;
+    property exigeContribuinteEmitente: string read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
     property exigeDetalhamentoReceita: string read FexigeDetalhamentoReceita write FexigeDetalhamentoReceita;
     property exigeProduto: string read FexigeProduto write FexigeProduto;
     property exigePeriodoReferencia: string read FexigePeriodoReferencia write FexigePeriodoReferencia;
@@ -118,6 +123,9 @@ type
     property valorExigido: string read FvalorExigido write FvalorExigido;
     property exigeDocumentoOrigem: string read FexigeDocumentoOrigem write FexigeDocumentoOrigem;
     property exigeContribuinteDestinatario: string read FexigeContribuinteDestinatario write FexigeContribuinteDestinatario;
+    property exigeDataVencimento: string read FexigeDataVencimento write FexigeDataVencimento;
+    property exigeDataPagamento: string read FexigeDataPagamento write FexigeDataPagamento;    
+    property exigeConvenio: string read FexigeConvenio write FexigeConvenio;
     property exigeCamposAdicionais: string read FexigeCamposAdicionais write FexigeCamposAdicionais;
   end;
 

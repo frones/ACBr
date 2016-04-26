@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
 {  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
@@ -154,13 +154,13 @@ begin
   Result := False;
   try
     i := 0;
-    if Leitor.rExtrai(1, 'detalhamentosReceita') <> '' then
+    if Leitor.rExtrai(1, 'ns1:detalhamentosReceita') <> '' then
     begin
-      while Leitor.rExtrai(2, 'detalhamentoReceita', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'ns1:detalhamentoReceita', '', i + 1) <> '' do
       begin
         retDetalhamentoReceita.Add;
-        retDetalhamentoReceita.Items[i].RetDetalhamentoReceita.codigo    := Leitor.rCampo(tcInt, 'codigo');
-        retDetalhamentoReceita.Items[i].RetDetalhamentoReceita.descricao := Leitor.rCampo(tcStr, 'descricao');
+        retDetalhamentoReceita.Items[i].RetDetalhamentoReceita.codigo    := Leitor.rCampo(tcInt, 'ns1:codigo');
+        retDetalhamentoReceita.Items[i].RetDetalhamentoReceita.descricao := Leitor.rCampo(tcStr, 'ns1:descricao');
         inc(i);
       end;
 

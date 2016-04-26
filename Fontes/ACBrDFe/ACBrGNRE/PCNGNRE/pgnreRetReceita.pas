@@ -1,4 +1,4 @@
-{******************************************************************************}
+﻿{******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
 {  Biblioteca multiplataforma de componentes Delphi/Lazarus para emissão da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
@@ -211,10 +211,11 @@ begin
       while Leitor.rExtrai(2, 'ns1:receita', '', i + 1) <> '' do
       begin
         FretReceita.Add;
-        FretReceita.Items[i].RetInfReceita.codigo                    := Leitor.rAtributo('codigo');
-        FretReceita.Items[i].RetInfReceita.descricao                 := Leitor.rAtributo('descricao');
-        if Pos('ns1:courier', Leitor.Grupo) > 0 then
-          FretReceita.Items[i].RetInfReceita.courier                   := Leitor.rAtributo('ns1:courier');
+        FretReceita.Items[i].RetInfReceita.codigo                        := Leitor.rAtributo('codigo');
+        FretReceita.Items[i].RetInfReceita.descricao                     := Leitor.rAtributo('descricao');
+        if Pos('courier', Leitor.Grupo) > 0 then
+          FretReceita.Items[i].RetInfReceita.courier                     := Leitor.rAtributo('courier');
+        FretReceita.Items[i].RetInfReceita.exigeContribuinteEmitente     := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteEmitente');
         FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeDetalhamentoReceita');
         FretReceita.Items[i].RetInfReceita.exigeProduto                  := SeparaDados(Leitor.Grupo, 'ns1:exigeProduto');
         FretReceita.Items[i].RetInfReceita.exigePeriodoReferencia        := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoReferencia');
@@ -223,8 +224,10 @@ begin
         FretReceita.Items[i].RetInfReceita.valorExigido                  := SeparaDados(Leitor.Grupo, 'ns1:valorExigido');
         FretReceita.Items[i].RetInfReceita.exigeDocumentoOrigem          := SeparaDados(Leitor.Grupo, 'ns1:exigeDocumentoOrigem');
         FretReceita.Items[i].RetInfReceita.exigeContribuinteDestinatario := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteDestinatario');
+        FretReceita.Items[i].RetInfReceita.exigeDataVencimento           := SeparaDados(Leitor.Grupo, 'ns1:exigeDataVencimento');
+        FretReceita.Items[i].RetInfReceita.exigeDataPagamento            := SeparaDados(Leitor.Grupo, 'ns1:exigeDataPagamento');
+        FretReceita.Items[i].RetInfReceita.exigeConvenio                 := SeparaDados(Leitor.Grupo, 'ns1:exigeConvenio');
         FretReceita.Items[i].RetInfReceita.exigeCamposAdicionais         := SeparaDados(Leitor.Grupo, 'ns1:exigeCamposAdicionais');
-
 
         if Assigned(InfDetalhamentoReceita) then
           InfDetalhamentoReceita.Free;

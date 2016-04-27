@@ -75,7 +75,7 @@ type
     function rExtrai(const nivel: integer; const TagInicio: string; TagFim: string = ''; const item: integer = 1): AnsiString;
     function rCampo(const Tipo: TpcnTipoCampo; TAG: string; TAGparada: string = ''): variant;
     function rCampoCNPJCPF(TAGparada: string = ''): string;
-    function rAtributo(Atributo: string): variant;
+    function rAtributo(Atributo: string; Tag: String = ''): variant;
     function CarregarArquivo(const CaminhoArquivo: string): boolean; overload;
     function CarregarArquivo(const Stream: TStringStream): boolean; overload;
     function PosLast(const SubStr, S: AnsiString ): Integer;    
@@ -87,7 +87,7 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil;
+  ACBrConsts, ACBrUtil, StrUtils;
 
 { TLeitor }
 
@@ -269,12 +269,13 @@ begin
   end;
 end;
 
-function TLeitor.rAtributo(Atributo: string): variant;
+function TLeitor.rAtributo(Atributo: string; Tag: String): variant;
 var
   ConteudoTag ,
   Aspas       : String;
 
   inicio      ,
+  inicioTag   ,
   fim         ,
   iPos1       ,
   iPos2       : Integer;
@@ -282,7 +283,16 @@ var
 begin
   Result := '';
   Atributo := Trim(Atributo);
-  inicio   := pos(Atributo, FGrupo);
+  Tag := Trim(Tag);
+  inicioTag := pos(Tag, FGrupo);
+  inicio := pos(Atributo, FGrupo);
+
+  // se inicioTag > 0 significa que o parâmetro Tag foi informado.
+  // se inicioTag > inicio significa que o atributo encontrado não é da Tag informada
+  // logo devemos bustar a proxima ocorrecia a partir da posição da Tag.
+  if (inicioTag > 0) and (inicioTag > inicio)  then
+    inicio := PosEx(Atributo, FGrupo, inicioTag);
+
   if inicio > 0 then
   begin
     inicio := inicio + Length(Atributo);

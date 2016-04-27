@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/04/2016
+-- ACBrTEFDCliSitef --
+[-] Correção de A.V. quando tentava executar uma requisição, antes de Inicializar.
+    Agora um exception será disparado   (por: DSA)
+
 Data: 01/04/2016
 -- ACBrTEFD, ACBrTEFDClass --
 [*] Ajustes para melhor funcionamento de Fechamento Cupom Comprovante Não Fiscal,

@@ -950,6 +950,9 @@ Var
   ValorStr, DataStr, HoraStr : AnsiString;
   DataHora : TDateTime ;
 begin
+   if not Assigned(xIniciaFuncaoSiTefInterativo) then
+      raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFD_CliSiTef_NaoInicializado));
+
    if Documento = '' then
       Documento := DocumentoFiscal;
 

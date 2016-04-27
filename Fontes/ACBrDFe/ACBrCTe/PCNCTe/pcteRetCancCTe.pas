@@ -106,11 +106,11 @@ var
 begin
   Result := False;
   try
-    Fversao := Leitor.rAtributo('versao');
+    Fversao := Leitor.rAtributo('versao', 'retCancCTe');
 
     if Leitor.rExtrai(1, 'infCanc') <> '' then
     begin
-      (*CR04 *)FId       := Leitor.rAtributo('Id=');
+      (*CR04 *)FId       := Leitor.rAtributo('Id=', 'infCanc');
       (*CR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*CR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*CR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');

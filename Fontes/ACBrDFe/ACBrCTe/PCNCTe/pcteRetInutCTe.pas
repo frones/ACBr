@@ -119,13 +119,11 @@ begin
   Result := False;
   try
     if (leitor.rExtrai(1, 'inutCTe') <> '') then
-    begin
       FId := Leitor.rAtributo('Id=');
-    end;
 
     if (leitor.rExtrai(1, 'retInutCTe') <> '') or (leitor.rExtrai(1, 'infInut') <> '') then
     begin
-               Fversao   := Leitor.rAtributo('versao');
+               Fversao   := Leitor.rAtributo('versao', 'retInutCTe');
       (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*DR06 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*DR07 *)FcStat    := Leitor.rCampo(tcInt, 'cStat');

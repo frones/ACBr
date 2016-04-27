@@ -107,7 +107,7 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if leitor.rExtrai(1, 'retEnviMDFe') <> '' then
     begin
-      Fversao   := Leitor.rAtributo('versao');
+      Fversao   := Leitor.rAtributo('versao', 'retEnviMDFe');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FcUF      := Leitor.rCampo(tcInt, 'cUF');
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');

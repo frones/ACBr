@@ -110,7 +110,7 @@ begin
 
     if leitor.rExtrai(1, 'retConsStatServCte') <> '' then
     begin
-              Fversao    := Leitor.rAtributo('versao');
+              Fversao    := Leitor.rAtributo('versao', 'retConsStatServCte');
       (*FR03*)FtpAmb     := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*FR04*)FverAplic  := Leitor.rCampo(tcStr, 'verAplic');
       (*FR05*)FcStat     := Leitor.rCampo(tcInt, 'cStat');

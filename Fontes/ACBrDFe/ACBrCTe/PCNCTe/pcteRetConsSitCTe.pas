@@ -148,7 +148,7 @@ begin
   try
     if leitor.rExtrai(1, 'retConsSitCTe') <> '' then
     begin
-               Fversao   := Leitor.rAtributo('versao');
+               Fversao   := Leitor.rAtributo('versao', 'retConsSitCTe');
       (*ER03 *)FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
       (*ER04 *)FverAplic := leitor.rCampo(tcStr, 'verAplic');
       (*ER05 *)FcStat    := leitor.rCampo(tcInt, 'cStat');
@@ -168,7 +168,7 @@ begin
 
           if Leitor.rExtrai(2, 'infProt') <> '' then
           begin
-            protCTe.Id       := Leitor.rAtributo('Id=');
+            protCTe.Id       := Leitor.rAtributo('Id=', 'infProt');
             protCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
             protCTe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
             protCTe.chCTe    := Leitor.rCampo(tcStr, 'chCTe');
@@ -186,7 +186,7 @@ begin
       begin
         if Leitor.rExtrai(1, 'infCanc') <> '' then
         begin
-          retCancCTe.Id       := Leitor.rAtributo('Id=');
+          retCancCTe.Id       := Leitor.rAtributo('Id=', 'infCanc');
           retCancCTe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
           retCancCTe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
           retCancCTe.cStat    := Leitor.rCampo(tcInt, 'cStat');

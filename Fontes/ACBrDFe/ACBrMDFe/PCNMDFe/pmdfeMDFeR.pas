@@ -91,7 +91,7 @@ var
 begin
   Leitor.Grupo := Leitor.Arquivo;
 
-  MDFe.infMDFe.ID := Leitor.rAtributo('Id=');
+  MDFe.infMDFe.ID := Leitor.rAtributo('Id=', 'infMDFe');
 
   if OnlyNumber(MDFe.infMDFe.ID) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
@@ -746,7 +746,7 @@ begin
 
   Leitor.Grupo := Leitor.Arquivo;
 
-  MDFe.signature.URI             := Leitor.rAtributo('Reference URI=');
+  MDFe.signature.URI             := Leitor.rAtributo('URI=', 'Reference');
   MDFe.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
   MDFe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
   MDFe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');

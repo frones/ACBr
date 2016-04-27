@@ -149,7 +149,7 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if Leitor.rExtrai(1, 'retConsReciMDFe') <> '' then
     begin
-      Fversao   := Leitor.rAtributo('versao');
+      Fversao   := Leitor.rAtributo('versao', 'retConsReciMDFe');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       FnRec     := Leitor.rCampo(tcStr, 'nRec');

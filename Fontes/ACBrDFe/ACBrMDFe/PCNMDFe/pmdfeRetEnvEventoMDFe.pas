@@ -173,7 +173,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.Id         := Leitor.rAtributo('Id');
+         infEvento.Id         := Leitor.rAtributo('Id', 'infEvento');
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
@@ -184,7 +184,7 @@ begin
 
          if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
          begin
-           infEvento.VersaoEvento         := Leitor.rAtributo('versaoEvento');
+           infEvento.VersaoEvento         := Leitor.rAtributo('versaoEvento', 'detEvento');
            infEvento.detEvento.descEvento := Leitor.rCampo(tcStr, 'descEvento');
            infEvento.detEvento.nProt      := Leitor.rCampo(tcStr, 'nProt');
            infEvento.detEvento.dtEnc      := Leitor.rCampo(tcDat, 'dtEnc');
@@ -209,7 +209,7 @@ begin
 
          FretEvento.Items[i].FRetInfEvento.XML := Leitor.Grupo;
 
-         FretEvento.Items[i].FRetInfEvento.Id       := Leitor.rAtributo('Id');
+         FretEvento.Items[i].FRetInfEvento.Id       := Leitor.rAtributo('Id', 'infEvento');
          FretEvento.Items[i].FRetInfEvento.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          FretEvento.Items[i].FRetInfEvento.verAplic := Leitor.rCampo(tcStr, 'verAplic');
          FretEvento.Items[i].FRetInfEvento.cOrgao   := Leitor.rCampo(tcInt, 'cOrgao');

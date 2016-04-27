@@ -125,7 +125,7 @@ begin
   try
     if leitor.rExtrai(1, 'retConsMDFeNaoEnc') <> '' then
     begin
-      Fversao   := Leitor.rAtributo('versao');
+      Fversao   := Leitor.rAtributo('versao', 'retConsMDFeNaoEnc');
       FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := leitor.rCampo(tcStr, 'verAplic');
       FcStat    := leitor.rCampo(tcInt, 'cStat');

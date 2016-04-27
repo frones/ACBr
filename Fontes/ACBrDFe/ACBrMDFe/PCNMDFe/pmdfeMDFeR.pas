@@ -96,7 +96,7 @@ begin
   if OnlyNumber(MDFe.infMDFe.ID) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
-  MDFe.infMDFe.versao := StringToFloatDef(Leitor.rAtributo('versao='), -1);
+  MDFe.infMDFe.versao := StringToFloatDef(Leitor.rAtributo('versao=', 'infMDFe'), -1);
 
   if MDFe.infMDFe.versao = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');

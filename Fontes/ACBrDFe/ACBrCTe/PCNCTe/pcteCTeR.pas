@@ -127,7 +127,7 @@ begin
   if OnlyNumber(CTe.infCTe.Id) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
-  CTe.infCTe.versao := StringToFloatDef(Leitor.rAtributo('versao='), -1);
+  CTe.infCTe.versao := StringToFloatDef(Leitor.rAtributo('versao=', 'infCte'), -1);
   if CTe.infCTe.versao = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');
 

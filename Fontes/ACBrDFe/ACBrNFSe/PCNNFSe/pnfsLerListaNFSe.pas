@@ -329,6 +329,8 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'listaNfse') <> '');
     if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'ListaNfse') <> '');
+    if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'nfse') <> '');
 
     if not Nivel1 then

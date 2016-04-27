@@ -2852,6 +2852,9 @@ var
   Gerador: TGerador;
   TagGrupo, docElemento, sAssinatura: String;
 begin
+//  FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_CabecalhoStr;
+//  FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_DadosStr;
+
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 

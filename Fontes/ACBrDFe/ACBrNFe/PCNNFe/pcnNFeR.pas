@@ -126,7 +126,7 @@ begin
    else
     Aspas := '''';
 
-  NFe.infNFe.Id := Leitor.rAtributo('Id=');
+  NFe.infNFe.Id := Leitor.rAtributo('Id=', 'infNFe');
   if OnlyNumber(NFe.infNFe.Id) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 

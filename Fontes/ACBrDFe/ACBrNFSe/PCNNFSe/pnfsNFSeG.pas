@@ -1268,6 +1268,9 @@ begin
          if Provedor in [proTecnos] then
            Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
 
+         if (Provedor in [proPublica]) and (CodigoCanc = 'C999') then
+           Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
+
          Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
                                       '</' + Prefixo4 + 'InfPedidoCancelamento>';
        end;

@@ -847,13 +847,13 @@ begin
   VersaoNFSe := StrToVersaoNFSe(Ok, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConfigXML.VersaoXML);
 
   AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
-  AXMLString := RetirarPrefixos(AXMLString);
-(*
-  // Converte de UTF8 para a String nativa da IDE //
-  AXMLString := RetirarPrefixos(DecodeToString(AXMLString, True));
-*)
+
+  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proISSCuritiba then
+    AXMLString := RetirarPrefixos(AXMLString);
+
   Result := False;
   N := PosNFSe;
+
   if N > 0 then
   begin
     // Ler os XMLs das NFS-e

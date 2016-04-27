@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2016
+[*] Para o provedor IssCuritiba não deve ser executado a função RetirarPrefixo,
+    pois altera o nome de uma tag.
+    por: Rubens / Italo Jurisato Junior
+
 25/04/2016
 -- ACBrNFSeNotasFiscais --
 [*] Ao ler o XML da NFS-e não estava considerando o grupo NfseCancelamento.

@@ -281,7 +281,10 @@ begin
   Result := True;
 
   try
-    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+    if Provedor = proISSCuritiba then
+      Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
+    else
+      Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
     VersaodoXML    := VersaoXML(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 

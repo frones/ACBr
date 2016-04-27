@@ -199,7 +199,10 @@ end;
 
 function TretSitLote.LerXml: Boolean;
 begin
-  Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+  if Provedor = proISSCuritiba then
+    Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
+  else
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
 
   case Provedor of
     proCONAM:      Result := LerXml_proCONAM;

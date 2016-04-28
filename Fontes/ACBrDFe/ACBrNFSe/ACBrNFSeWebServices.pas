@@ -2910,14 +2910,12 @@ begin
 
     case FProvedor of
       proBetha: begin
-                  FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>' +
-                            '<Pedido>' +
-                             '<' + FPrefixo4 + 'InfPedidoCancelamento' +
+                  FTagI := '<Pedido>' +
+                            '<' + FPrefixo4 + 'InfPedidoCancelamento' +
                               ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+                                  FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
 
-                  FTagF :=  '</Pedido>' +
-                           '</' + FPrefixo3 + TagGrupo + '>';
+                  FTagF := '</Pedido>';
                 end;
 
       proEquiplano: begin
@@ -3095,7 +3093,7 @@ begin
     // O procedimento recebe como parametro o XML a ser assinado e retorna o
     // mesmo assinado da propriedade FPDadosMsg
     case FProvedor of
-      proBetha:  docElemento := 'Pedido></' + FPrefixo3 + TagGrupo;
+      proBetha:  docElemento := 'Pedido';
       proISSDSF,
       proEquiplano,
       proInfisc: docElemento := FPrefixo3 + TagGrupo;
@@ -3107,6 +3105,9 @@ begin
 
     AssinarXML(FPDadosMsg, docElemento, '', 'Falha ao Assinar - Cancelar NFS-e: ');
   end;
+
+  if (FProvedor = proBetha) and (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) then
+    FPDadosMsg := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>' + FPDadosMsg + '</' + FPrefixo3 + TagGrupo + '>';
 
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingDados then

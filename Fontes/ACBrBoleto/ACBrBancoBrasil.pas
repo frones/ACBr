@@ -246,7 +246,7 @@ function TACBrBancoBrasil.MontarCampoCodigoCedente (
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
              ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
-             IntToStrZero(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0),8)+'-'+
+             IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0)) +'-'+
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 

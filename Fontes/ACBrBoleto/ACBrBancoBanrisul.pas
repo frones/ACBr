@@ -650,12 +650,12 @@ begin
       raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
                                      '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
-  rCedente := trim(copy(ARetorno[0], 73, 30));
-  rConvenio      := Copy(ARetorno.Strings[1], 34, 13);
-  rAgencia       := Copy(ARetorno.Strings[1], 54,  5);
-  rAgenciaDigito := Copy(ARetorno.Strings[1], 59,  1);
-  rConta         := Copy(ARetorno.Strings[1], 60, 12);
-  rContaDigito   := Copy(ARetorno.Strings[1], 72,  1);
+  rCedente       := trim(copy(ARetorno[0], 73, 30));
+  rConvenio      := trim(Copy(ARetorno.Strings[1], 34, 13));
+  rAgencia       := trim(Copy(ARetorno.Strings[1], 54,  5));
+  rAgenciaDigito := trim(Copy(ARetorno.Strings[1], 59,  1));
+  rConta         := trim(Copy(ARetorno.Strings[1], 60, 12));
+  rContaDigito   := trim(Copy(ARetorno.Strings[1], 72,  1));
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 158, 6), 0);
 
@@ -806,9 +806,9 @@ begin
 
   rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
   rConvenio      := ''; //Não possui essa info
-  rAgencia       := Copy(ARetorno.Strings[0], 27, 4);
+  rAgencia       := trim(Copy(ARetorno.Strings[0], 27, 4));
   rAgenciaDigito := ''; //Não possui essa info
-  rConta         := Copy(ARetorno.Strings[0], 31, 9);
+  rConta         := trim(Copy(ARetorno.Strings[0], 31, 9));
   rContaDigito   := ''; //Não possui essa info
 
 

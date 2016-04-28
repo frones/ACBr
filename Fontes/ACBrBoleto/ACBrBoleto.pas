@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.191a';
+  CACBrBoleto_Versao = '0.0.192a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -1350,7 +1350,7 @@ begin
    fVersao               := '';
    fTipoImpressao        := tipNormal;
 
-   fCodigoMora    := '12';
+   fCodigoMora    := '';
    fCodigoGeracao := '2';
    fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
 end;

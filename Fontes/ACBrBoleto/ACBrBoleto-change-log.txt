@@ -47,6 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/04/16 ver: 0.0.192a
+-- ACBrBoleto --
+[*] Ajuste valor inicial da propriedade Titulo.CodigoMora para vazio de forma a evitar
+   problemas devido a valores incorretos. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/29000-alterado-o-fonte-como-us%C3%A1-lo/
+
+-- ACBrBancoBanrisul --
+[*] Ajuste leitura dados do cedente retorno CNAB240 e 400 removendo espaços vazios. (LeandroDoCouto)
+http://www.projetoacbr.com.br/forum/topic/29444-ler-retorno-do-banrisul/
+
+-- ACBrBancoBrasil --
+[*] Ajuste montagem código do cedente removendo os zeros a esquerda do número da conta. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/29279-d%C3%BAvida-formata%C3%A7%C3%A3o-da-ag%C3%AAnciac%C3%B3digo-cedente/
+
+-- ACBRBancoSicredi --
+[-] Ajuste remessa CNAB240 removendo espaço extra no registro P. (edu)
+http://www.projetoacbr.com.br/forum/topic/29554-ajuste-no-arquivo-de-remessa-cnab-240-do-sicredi/
+
 Data: 25/04/16 ver: 0.0.191a
 -- ACBrBancoItau --
 [*] Ajuste retorno CNAB400 para ler corretamente os motivos de rejeição quando não houver. (Emerson Teixeira)

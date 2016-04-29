@@ -366,9 +366,9 @@ begin
       begin
         Add(LFill('Y520') +
             LFill(TIP_EXT) +
-            LFill(PAIS) +
-            LFill(FORMA) +
-            LFill(NAT_OPER) +
+            LFill(PAIS,3) +
+            LFill(FORMA,1) +
+            LFill(NAT_OPER,5) +
             VLFill(VL_PERIODO, 19, 2));
       end;
 
@@ -409,7 +409,7 @@ begin
       begin
         Add(LFill('Y550') +
             LFill(CNPJ_EXP, 14) +
-            LFill(COD_NCM) +
+            LFill(COD_NCM,8) +
             VLFill(VL_VENDA, 19, 2));
       end;
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
@@ -429,8 +429,9 @@ begin
       begin
         Add(LFill('Y560') +
             LFill(CNPJ, 14) +
-            LFill(COD_NCM) +
-            VLFill(VL_COMPRA, 19, 2));
+            LFill(COD_NCM,8) +
+            VLFill(VL_COMPRA, 19, 2) +
+            VLFill(VL_EXP, 19, 2));
       end;
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
     end;

@@ -424,9 +424,33 @@ begin
 end;
 
 procedure TBloco_A.WriteRegistroA200(RegA020: TRegistroA020);
+var
+  intFor: Integer;
 begin
-
-end;
+  if Assigned(RegA020.RegistroA200) then
+  begin
+    for intFor := 0 to RegA020.RegistroA200.Count - 1 do
+      begin
+         with RegA020.RegistroA200.Items[intFor] do
+         begin
+            Add( LFill('A200') +
+                 LFill(Integer(NUM_ITEM),2) +
+                 LFill(COD_ITEM) +
+                 DFill(VL_UNIT,3)  +
+                 DFill(QTD,3) +
+                 LFill(UNID) +
+                 LFill(VL_ITEM,2) +
+                 LFill(VL_DESC_I,2) +
+                 LFill(CTISS) +
+                 LFill(VL_BC_ISS_I,2) +
+                 LFill(ALIQ_ISS,2) +
+                 LFill(VL_ISS_I,2) );
+         end;
+         RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
+      end;
+      FRegistroA200Count := FRegistroA200Count + RegA020.RegistroA200.Count;
+  end;
+End;
 
 procedure TBloco_A.WriteRegistroA300(RegA001: TRegistroA001);
 var

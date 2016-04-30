@@ -95,11 +95,9 @@ type
 
   TRegistroA020 = class
   private
-    FCOD_NAT: String;
     FIND_OPER: TACBrlTipoOperacao; /// Indicador do tipo de operação
     FIND_EMIT: TACBrlEmitente; /// Indicador do emitente do documento fiscal
     FCOD_PART: String; /// Código do participante (campo 02 do Registro 0150)
-    FCOD_MUN_SERV: Integer; /// Código do município onde o serviço foi prestado
     FCOD_MOD: String; /// Código do modelo do documento fiscal
     FCOD_SIT: TACBrlSituacaoDocto; /// Código da situação do documento fiscal
     FSER: String; /// Série do documento fiscal
@@ -107,16 +105,17 @@ type
     FNUM_DOC: Integer; /// Número do documento fiscal
     FDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; // Código da classe da prestação
-    FIND_PGTO: TACBrlTipoPagamento; /// Indicador do tipo de pagamento
+    FCOD_MUN_SERV: Integer; /// Código do município onde o serviço foi prestado
+    FCOD_NAT: String;
     FVL_DOC: Currency; /// Valor total do documento fiscal
+    FIND_PGTO: TACBrlTipoPagamento; /// Indicador do tipo de pagamento
+    FVL_SUB: Currency; /// Valor subcontratado
     FVL_DESC: Currency; /// Valor total do desconto
-    FVL_ACMO: Currency; /// Valor dos acréscimos
     FVL_SERV: Currency; /// Valor total dos serviços prestados
     FVL_MAT_PROP: Currency; /// Valor do material próprio utilizado na prestação do serviço
-    FVL_MAT_TERC: Currency; /// Valor do material de terceiros utilizado na prestação do serviço
-    FVL_SUB: Currency; /// Valor subcontratado
+    FVL_MAT_TERC: Currency; /// Valor do material de terceiros utilizado na prestação do serviço     
     FVL_DA: Currency; /// Valor de outras despesas acessórias
-    FVL_OP_ICMS: Currency; /// Valor das operações tributadas pelo ICMS
+//    FVL_OP_ICMS: Currency; /// Valor das operações tributadas pelo ICMS
     FVL_BC_ISS: Currency; /// Valor da base de cálculo do ISS
     FVL_ISS: Currency; /// Valor do ISS
     FVL_BC_RT_ISS: Currency; /// Valor da base de cálculo de retenção do ISS
@@ -136,25 +135,24 @@ type
     property IND_OPER: TACBrlTipoOperacao read FIND_OPER write FIND_OPER;
     property IND_EMIT: TACBrlEmitente read FIND_EMIT write FIND_EMIT;
     property COD_PART: String read FCOD_PART write FCOD_PART;
-    property COD_MUN_SERV: Integer read FCOD_MUN_SERV write FCOD_MUN_SERV;
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
-    property COD_NAT: String read FCOD_NAT write FCOD_NAT;
     property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
-    property IND_PGTO: TACBrlTipoPagamento read FIND_PGTO write FIND_PGTO;
+    property COD_MUN_SERV: Integer read FCOD_MUN_SERV write FCOD_MUN_SERV;
+    property COD_NAT: String read FCOD_NAT write FCOD_NAT;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;
+    property IND_PGTO: TACBrlTipoPagamento read FIND_PGTO write FIND_PGTO;
+    property VL_SUB: Currency read FVL_SUB write FVL_SUB;
     property VL_DESC: Currency read FVL_DESC write FVL_DESC;
-    property VL_ACMO: Currency read FVL_ACMO write FVL_ACMO;
     property VL_SERV: Currency read FVL_SERV write FVL_SERV;
     property VL_MAT_PROP: Currency read FVL_MAT_PROP write FVL_MAT_PROP;
     property VL_MAT_TERC: Currency read FVL_MAT_TERC write FVL_MAT_TERC;
-    property VL_SUB: Currency read FVL_SUB write FVL_SUB;
     property VL_DA: Currency read FVL_DA write FVL_DA;
-    property VL_OP_ICMS: Currency read FVL_OP_ICMS write FVL_OP_ICMS;
+//    property VL_OP_ICMS: Currency read FVL_OP_ICMS write FVL_OP_ICMS;
     property VL_BC_ISS: Currency read FVL_BC_ISS write FVL_BC_ISS;
     property VL_ISS: Currency read FVL_ISS write FVL_ISS;
     property VL_BC_RT_ISS: Currency read FVL_BC_RT_ISS write FVL_BC_RT_ISS;

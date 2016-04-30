@@ -36,6 +36,8 @@
 |*
 |* 26/01/2013: Nilson Sergio
 |*  - Criação e distribuição da Primeira Versao
+|* 21/11/2013: Wilson B. Junior
+|*  - Inclusa Função RegistroH020New
 *******************************************************************************}
 
 unit ACBrLFDBloco_H_Class;
@@ -77,6 +79,7 @@ type
     procedure LimpaRegistros;
 
     function RegistroH001New: TRegistroH001;
+    function RegistroH020New: TRegistroH020;
     function RegistroH030New: TRegistroH030;
     function RegistroH040New: TRegistroH040;
     function RegistroH050New: TRegistroH050;
@@ -148,6 +151,11 @@ end;
 function TBloco_H.RegistroH001New: TRegistroH001;
 begin
   Result := FRegistroH001;
+end;
+
+function TBloco_H.RegistroH020New: TRegistroH020;
+begin
+  Result := FRegistroH001.RegistroH020;
 end;
 
 function TBloco_H.RegistroH030New: TRegistroH030;

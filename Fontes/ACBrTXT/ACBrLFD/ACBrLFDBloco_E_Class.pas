@@ -36,6 +36,8 @@
 |*
 |* 26/01/2013: Nilson Sergio
 |*  - Criação e distribuição da Primeira Versao
+|* 21/11/2013: Wilson B. Junior
+|*  - Ajuste na função RegistroE310New
 *******************************************************************************}
 
 unit ACBrLFDBloco_E_Class;
@@ -430,12 +432,12 @@ end;
 
 function TBloco_E.RegistroE310New: TRegistroE310;
 begin
-
+  Result:= FRegistroE001.RegistroE300.RegistroE310.New(FRegistroE001.RegistroE300);
 end;
 
 function TBloco_E.RegistroE360New: TRegistroE360;
 begin
-
+  Result := FRegistroE001.RegistroE300.RegistroE360;
 end;
 
 function TBloco_E.RegistroE365New: TRegistroE365;

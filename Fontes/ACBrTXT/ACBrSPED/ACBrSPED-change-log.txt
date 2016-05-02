@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 02/05/2016
+-- ACBrSPEDPisCofins
+[-] Correção para os campos COD_CTA que estava preenchendo com zeros quando vazios
+		http://www.projetoacbr.com.br/forum/topic/29742-c%C3%B3digo-da-conta-cont%C3%A1bil-bloco-m115-cod_cta/
+		por : Juliomar Marchetti
+
 Data 05/02/2016
 -- ACBrSpedFiscal --
 [-] Correção de Memoryleak em "FChecksBloco_C"

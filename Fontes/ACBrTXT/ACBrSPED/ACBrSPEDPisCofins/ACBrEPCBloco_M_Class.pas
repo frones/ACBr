@@ -676,7 +676,7 @@ begin
                  LFill( DET_ALIQ, 8, 4)            +
                  LFill( DT_OPER_AJ)                +
                  LFill( DESC_AJ )                  +
-                 LFill( COD_CTA, 60 )              +
+                 LFill( COD_CTA )              +
                  LFill( INFO_COMPL)) ;
           end;
           ///
@@ -891,7 +891,7 @@ begin
                LFill( DET_ALIQ, 8, 4 )       +
                LFill( DT_OPER_AJ )           +
                LFill( DESC_AJ )              +
-               LFill( COD_CTA, 60)           +
+               LFill( COD_CTA)           +
                LFill( INFO_COMPL)) ;
         end;
         ///
@@ -1229,7 +1229,7 @@ begin
                LFill( DET_ALIQ, 8, 4 )                +
                LFill( DT_OPER_AJ )                    +
                LFill( DESC_AJ )                       +
-               LFill( COD_CTA, 60)                    +
+               LFill( COD_CTA)                    +
                LFill( INFO_COMPL)) ;
         end;
         ///
@@ -1444,7 +1444,7 @@ begin
                LFill( DET_ALIQ, 8, 4 )               +
                LFill( DT_OPER_AJ )                   +
                LFill( DESC_AJ )                      +
-               LFill( COD_CTA, 60)                   +
+               LFill( COD_CTA)                   +
                LFill( INFO_COMPL)) ;
         end;
         ///

@@ -94,6 +94,7 @@ type
     FInfAdic: TInfAdic;
     FSignature: TSignature;
     FXMLOriginal: AnsiString;
+    FAjustarTagNro:Boolean;
 
     function GetAsXMLString: AnsiString;
     procedure SetDet(Value: TDetCollection);
@@ -127,6 +128,7 @@ type
     property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
     property IdentarXML: boolean read FIdentarXML write FIdentarXML;
     property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
+    property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
   end;
 
   { TinfCFe }
@@ -1261,6 +1263,7 @@ begin
   FRetirarAcentos := True;
   FIdentarXML := False;
   FTamanhoIdentacao := 3;
+  FAjustarTagNro := True;
 
   Clear;
 end;
@@ -1354,9 +1357,10 @@ var
 begin
   LocCFeW := TCFeW.Create(Self);
   try
-    LocCFeW.Gerador.Opcoes.RetirarAcentos := FRetirarAcentos;
-    LocCFeW.Gerador.Opcoes.IdentarXML := FIdentarXML;
-    LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
+    LocCFeW.Gerador.Opcoes.RetirarAcentos   := FRetirarAcentos;
+    LocCFeW.Gerador.Opcoes.IdentarXML       := FIdentarXML;
+    LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;   
+    LocCFeW.Opcoes.AjustarTagNro            := FAjustarTagNro;   
 
     LocCFeW.GerarXml( ApenasTagsAplicacao );
     FXMLOriginal := LocCFeW.Gerador.ArquivoFormatoXML;

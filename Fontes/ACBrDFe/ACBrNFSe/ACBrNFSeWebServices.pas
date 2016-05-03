@@ -1125,23 +1125,24 @@ end;
 procedure TNFSeWebService.GerarLoteRPScomAssinatura(RPS: String);
 begin
   case FVersaoNFSe of
-    // RPS versão 2.01
-    ve201: FvNotas := FvNotas +
-                      '<' + FPrefixo4 + 'Rps>' +
-                       '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
-                         RetornarConteudoEntre(RPS,
-                           '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
-                         '</Signature>'+
-                      '</' + FPrefixo4 + 'Rps>';
-
     // RPS versão 2.00
-    ve200: FvNotas := FvNotas +
-                      '<' + FPrefixo4 + 'Rps>' +
-                       '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
-                         RetornarConteudoEntre(RPS,
-                           '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
-                         '</Signature>'+
-                      '</' + FPrefixo4 + 'Rps>';
+    ve200: case FProvedor of
+             proTecnos: FvNotas := FvNotas +
+                         '<' + FPrefixo4 + 'Rps>' +
+                          '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                            RetornarConteudoEntre(RPS,
+                              '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
+                            '</Signature>'+
+                         '</' + FPrefixo4 + 'Rps>';
+           else
+             FvNotas := FvNotas +
+                       '<' + FPrefixo4 + 'Rps>' +
+                        '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico' +
+                          RetornarConteudoEntre(RPS,
+                            '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                          '</Signature>'+
+                       '</' + FPrefixo4 + 'Rps>';
+           end;
 
         (*
         proSystemPro,
@@ -1188,17 +1189,16 @@ end;
 procedure TNFSeWebService.GerarLoteRPSsemAssinatura(RPS: String);
 begin
   case FVersaoNFSe of
-    // RPS versão 2.01
-    ve201: FvNotas := FvNotas +
-                      '<' + FPrefixo4 + 'Rps>' +
-                       '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
-                         RetornarConteudoEntre(RPS,
-                           '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>') +
-                         '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>'+
-                      '</' + FPrefixo4 + 'Rps>';
-
     // RPS versão 2.00
     ve200: case FProvedor of
+             proTecnos: FvNotas := FvNotas +
+                         '<' + FPrefixo4 + 'Rps>' +
+                          '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico' +
+                            RetornarConteudoEntre(RPS,
+                              '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>') +
+                            '</' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico>'+
+                         '</' + FPrefixo4 + 'Rps>';
+
              proCONAM: FvNotas := FvNotas + RPS;
            else
              FvNotas := FvNotas +
@@ -2886,6 +2886,7 @@ begin
 
       proEquiplano,
       proISSCuritiba,
+      proPronimv2,
       proPublica,
       proSP: FURI:= '';
 

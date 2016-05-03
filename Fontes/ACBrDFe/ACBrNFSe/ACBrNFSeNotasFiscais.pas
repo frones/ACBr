@@ -246,8 +246,7 @@ begin
   begin
     case StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML) of
       ve110,
-      ve200,
-      ve201: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
+      ve200: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
 
     // Os RPS versão 1.00 tem como InfElement = InfRps
     else

@@ -51,7 +51,7 @@ type
 
   TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe);
 
-  TVersaoNFSe = (ve100, ve110, ve200, ve201);
+  TVersaoNFSe = (ve100, ve110, ve200);
 
   TnfseTagAssinatura = (taSempre, taNunca, taSomenteSeAssinada,
                         taSomenteParaNaoAssinada);
@@ -18069,14 +18069,14 @@ end;
 
 function StrToVersaoNFSe(out ok: Boolean; const s: String): TVersaoNFSe;
 begin
-  Result := StrToEnumerado(ok, s, ['1.00', '1.10', '2.00', '2.01'],
-                                  [ve100, ve110, ve200, ve201]);
+  Result := StrToEnumerado(ok, s, ['1.00', '1.10', '2.00'],
+                                  [ve100, ve110, ve200]);
 end;
 
 function VersaoNFSeToStr(const t: TVersaoNFSe): String;
 begin
-  Result := EnumeradoToStr(t, ['1.00', '1.10', '2.00', '2.01'],
-                              [ve100, ve110, ve200, ve201]);
+  Result := EnumeradoToStr(t, ['1.00', '1.10', '2.00'],
+                              [ve100, ve110, ve200]);
 end;
 
 function DblToVersaoNFSe(out ok: Boolean; const d: Real): TVersaoNFSe;
@@ -18089,8 +18089,6 @@ begin
     Result := ve110
   else if (d = 2.0) then
     Result := ve200
-  else if (d = 2.01) then
-    Result := ve201
   else
   begin
     Result := ve100;
@@ -18104,7 +18102,6 @@ begin
     ve100: Result := 1.00;
     ve110: Result := 1.10;
     ve200: Result := 2.00;
-    ve201: Result := 2.01;
   else
     Result := 0;
   end;
@@ -18209,11 +18206,10 @@ begin
     proABRASFv2, pro4R, proActcon, proAgili, proCoplan, proDigifred, proEReceita,
     proFIntelISS, proFiorilli, proGoiania, proGovDigital, proISSDigital, proISSe,
     proLink3, proMitra, proNEAInformatica, proNotaInteligente, proProdata,
-    proPronimv2, proPVH, proSaatri, proSisPMJP, proSystemPro, proVirtual,
-    proVitoria,
+    proPronimv2, proPVH, proSaatri, proSisPMJP, proSystemPro, proTecnos,
+    proVirtual, proVitoria,
     proNFSEBrasil: Result := ve200;
 
-    proTecnos: Result := ve201;
     proInfisc: Result := ve110;
   else
     Result := ve100;

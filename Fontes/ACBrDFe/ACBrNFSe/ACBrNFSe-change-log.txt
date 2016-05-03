@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/05/2016
+[*] Removido os valores ve201 e ve202 e os provedores que utilizavam essas
+    versões (Tecnos e Pronimv2) passam a usar o valor ve200.
+    Uma vez que são pequenas variações no layout que não justifica criar 
+    versões para as variações.
+    por: Italo Jurisato Junior
+
 28/04/2016
 [*] Alterações para atender o provedor Betha - Cancelamento.
     por: Luiz / Italo Jurisato Junior

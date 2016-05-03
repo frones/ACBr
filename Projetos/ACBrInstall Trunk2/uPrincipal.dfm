@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = lbInfo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInicio
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1067,16 +1067,12 @@ object frmPrincipal: TfrmPrincipal
       Color = clWhite
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
-        Width = 79
+        Width = 84
         Height = 13
-        Caption = 'Vers'#227'o do delphi'
+        Caption = 'Vers'#245'es do delphi'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1124,8 +1120,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSelecDirInstallClick
       end
       object Label8: TLabel
-        Left = 34
-        Top = 125
+        Left = 211
+        Top = 129
         Width = 316
         Height = 13
         Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
@@ -1138,7 +1134,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label22: TLabel
         Left = 17
-        Top = 455
+        Top = 461
         Width = 517
         Height = 26
         AutoSize = False
@@ -1154,8 +1150,22 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         WordWrap = True
       end
+      object Label23: TLabel
+        Left = 373
+        Top = 68
+        Width = 93
+        Height = 13
+        Caption = 'ComboBox Invisivel'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
       object edtDelphiVersion: TComboBox
-        Left = 17
+        Left = 373
         Top = 84
         Width = 172
         Height = 21
@@ -1167,6 +1177,7 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        Visible = False
         OnChange = edtDelphiVersionChange
       end
       object edtPlatform: TComboBox
@@ -1203,8 +1214,8 @@ object frmPrincipal: TfrmPrincipal
         Text = 'C:\ACBr'
       end
       object rdgDLL: TRadioGroup
-        Left = 41
-        Top = 224
+        Left = 195
+        Top = 214
         Width = 350
         Height = 107
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1217,8 +1228,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
-        Left = 17
-        Top = 196
+        Left = 195
+        Top = 191
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
@@ -1226,30 +1237,38 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 5
       end
       object ckbBCB: TCheckBox
-        Left = 17
-        Top = 109
+        Left = 195
+        Top = 113
         Width = 278
         Height = 17
         Caption = 'Generate all C++Builder files (including package libs) '
         TabOrder = 3
       end
       object chkDeixarSomenteLIB: TCheckBox
-        Left = 17
-        Top = 150
+        Left = 195
+        Top = 145
         Width = 350
         Height = 17
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
         TabOrder = 4
       end
       object ckbRemoverArquivosAntigos: TCheckBox
-        Left = 17
-        Top = 173
+        Left = 195
+        Top = 168
         Width = 379
         Height = 17
-        Caption = 
-          'Remover arquivos antigos das unidades de disco (pode demorar bas' +
-          'tante)'
+        Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
         TabOrder = 7
+      end
+      object clbDelphiVersion: TCheckListBox
+        Left = 17
+        Top = 84
+        Width = 172
+        Height = 371
+        Color = clBtnFace
+        ItemHeight = 13
+        TabOrder = 8
+        OnClick = clbDelphiVersionClick
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1272,10 +1291,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inline frameDpk: TframePacotes
         Left = 0
         Top = 0
@@ -1333,10 +1348,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Reposit'#243'rio'
       OnEnterPage = wizPgObterFontesEnterPage
       OnNextButtonClick = wizPgObterFontesNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 77
         Top = 177
@@ -1422,10 +1433,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalarACBr: TSpeedButton
         Left = 430
         Top = 463
@@ -1485,10 +1492,6 @@ object frmPrincipal: TfrmPrincipal
           Font.Name = 'Courier New'
           Font.Style = []
           ItemHeight = 14
-          Items.Strings = (
-            'A'
-            'A'
-            'A')
           ParentColor = True
           ParentFont = False
           TabOrder = 0
@@ -1527,10 +1530,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = clWhite
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58

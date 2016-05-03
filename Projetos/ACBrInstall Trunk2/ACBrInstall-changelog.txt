@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/04/2016 
+[*] Adicionado recurso de selecionar quais versões do delphi, o ACBrInstall deve executar a 
+    instalação, podendo assim fazer instalação em várias versões sem ter que ficar voltando
+    e selecionando versão por versão.
+    por (Isaque Pinheiro)
+
 01/02/2016 
 [*] Retorno da opção do ACBrGNRE somente ele por enquanto as guias ainda não estão prontas
 

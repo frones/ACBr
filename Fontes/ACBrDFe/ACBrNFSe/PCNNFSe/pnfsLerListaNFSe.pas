@@ -671,28 +671,19 @@ begin
       inc(j);
     end;
 
-(*
-    if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
+    if FProvedor = proEGoverneISS then
     begin
-      if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
+      i := 0;
+      if (Leitor.rExtrai(1, 'EmitirResponse') <> '') then
       begin
-        with ListaNFSe.FCompNFSe.Add do
+        if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
         begin
-          FNFSe.Numero    := Leitor.rCampo(tcStr, 'b:Numero');
-          Protocolo       := Leitor.rCampo(tcStr, 'b:Autenticador');
-          FNFSe.Protocolo := Protocolo;
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FCodigo   := 'Erro';
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
         end;
       end;
     end;
-
-    if ListaNFSe.FMsgRetorno.Count = 0 then
-    begin
-      with ListaNFSe.FCompNFSe.Add do
-      begin
-        FNFSe.Numero := Leitor.rCampo(tcStr, 'NumNot');
-      end;
-    end;
-*)
 
     if FProvedor = proSP then
     begin

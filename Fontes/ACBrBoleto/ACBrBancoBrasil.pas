@@ -1380,7 +1380,7 @@ begin
    rConvenioCedente:= Copy(ARetorno[0],41,6);
 
 
-   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],41,6),0);
+   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],101,7),0);
 
    ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
                                                              Copy(ARetorno[0],97,2)+'/'+

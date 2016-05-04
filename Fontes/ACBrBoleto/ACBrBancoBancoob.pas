@@ -509,7 +509,7 @@ begin
          if Copy(Linha,14,1)= 'T' then
           begin
             SeuNumero                   := copy(Linha,40,7);
-            NumeroDocumento             := copy(Linha,59,7);
+            NumeroDocumento             := copy(Linha,59,15);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 
             //05 = Liquidação Sem Registro

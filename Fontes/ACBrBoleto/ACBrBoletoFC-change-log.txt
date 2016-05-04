@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/16
+-- ACBrBoletoFCFortes ver. 0.0.30a --
+[*] Ajuste para impressão do CNPJ do emitente no carnê. (OlavoJr)
+http://www.projetoacbr.com.br/forum/topic/29757-boleto-tipo-carne-sair-o-cnpj-do-benefici%C3%A1rio/
+
 
 24/03/2016
 -- ACBrBoletoFCFortes ver. 0.0.29a  --

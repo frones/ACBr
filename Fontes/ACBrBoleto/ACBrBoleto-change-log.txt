@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/05/16 ver: 0.0.193a
+-- ACBrBancoBancoob --
+[-] Correção leitura campo NumeroDocumento retorno CNAB240. (sandrojapa)
+http://www.projetoacbr.com.br/forum/topic/29689-retorno-sicoob-240-erro-numerodocumento/#comment-196361
+
+-- ACBrBancoBrasil --
+[-] Correção leitura campo NumeroArquivo retorno CNAB400. (Jardel Devogeski Silveira)
+http://www.projetoacbr.com.br/forum/topic/29461-corre%C3%A7%C3%A3o-ref-sequencial-de-retorno-cnab400-cbr643-6/
+
+
 Data: 25/04/16 ver: 0.0.192a
 -- ACBrBoleto --
 [*] Ajuste valor inicial da propriedade Titulo.CodigoMora para vazio de forma a evitar

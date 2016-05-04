@@ -52,7 +52,7 @@ uses
   ACBrBoleto ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.29a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.30a' ;
 
 type
 
@@ -725,7 +725,7 @@ end;
 procedure TACBrBoletoFCFortesFr.RLBand3BeforePrint(Sender: TObject;
   var PrintIt: boolean);
 Var
-   NossoNum,LinhaDigitavel,CodBarras,CodCedente, Carteira: String;
+   NossoNum,LinhaDigitavel,CodBarras,CodCedente, Carteira, TipoDoc: String;
 begin
    with fBoletoFC.ACBrBoleto do
    begin
@@ -738,6 +738,13 @@ begin
       MensagemPadrao.Clear;
       MensagemPadrao.Text := Titulo.Mensagem.Text;
       ACBrBoletoFC.ACBrBoleto.AdicionarMensagensPadroes(Titulo,MensagemPadrao);
+
+      case Cedente.TipoInscricao of
+         pFisica   : TipoDoc:= 'CPF: ';
+         pJuridica : TipoDoc:= 'CNPJ: ';
+      else
+         TipoDoc := 'DOC.: ';
+      end;
 
       fBoletoFC.CarregaLogo( ImgLoja.Picture, Banco.Numero );
       fBoletoFC.CarregaLogo( imgBancoCarne.Picture, Banco.Numero );
@@ -755,7 +762,7 @@ begin
       txtNomeSacadoCarne.Lines.Text   := txtNomeSacado.Caption;
 
       txtLocal.Lines.Text             := Titulo.LocalPagamento;
-      txtNomeCedente.Caption          := Cedente.Nome;
+      txtNomeCedente.Caption          := Cedente.Nome+ ' - '+TipoDoc + Cedente.CNPJCPF;
 
       txtDataDocto.Caption            := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
       txtNumeroDocto.Caption          := Titulo.NumeroDocumento;

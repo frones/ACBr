@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/05/2016
+-- ACBrSAT --
+[*] Ajustes na gravação do Log.     (por: DSA)
+    - Adicionada a Data.
+    - Correção para não gravar hora 2 vezes no Inicio do comando
+
 Data: 26/03/2016
 -- ACBrSATExtratoFortes, ACBrSATExtratoFortesFr --
 [*] Adicionada a propriedade "EspacoFinal: Integer", que permite forçar um

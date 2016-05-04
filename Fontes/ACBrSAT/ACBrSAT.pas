@@ -801,8 +801,7 @@ begin
   GerarnumeroSessao;
 
   fsRespostaComando := '';
-  AStr := '-- '+FormatDateTime('hh:nn:ss:zzz',now) +
-          ' - numeroSessao: '+IntToStr(numeroSessao) ;
+  AStr := 'NumeroSessao: '+IntToStr(numeroSessao) ;
   if fsComandoLog <> '' then
      AStr := AStr + ' - Comando: '+fsComandoLog;
 
@@ -864,7 +863,7 @@ begin
   if (ArqLOG = '') then
     exit;
 
-  WriteLog( ArqLOG, ' - '+FormatDateTime('hh:nn:ss:zzz',now) + ' - ' + AString );
+  WriteLog( ArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now) + ' - ' + AString );
 end ;
 
 function TACBrSAT.GerarnumeroSessao : Integer ;

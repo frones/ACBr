@@ -53,7 +53,7 @@ uses
     {$IFDEF VisualCLX}
        ,QForms, QDialogs, QControls
     {$ELSE}
-       ,Forms, Dialogs, Controls
+       {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Forms, Dialogs, Controls
     {$ENDIF}
   {$ENDIF} ;
 
@@ -770,7 +770,7 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer ): Str
 
 implementation
 
-Uses dateutils, StrUtils, Math, types,
+Uses dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
   ACBrConsts, ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil ;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;

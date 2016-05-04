@@ -60,7 +60,7 @@ uses
     {$IFDEF VisualCLX}
       ,QForms, QControls, Qt
     {$ELSE}
-      ,Forms, Controls
+       {$IFDEF FMX} ,System.UITypes, FMX.Platform.Win {$ENDIF} ,Forms, Controls
     {$ENDIF}
   {$ENDIF};
 
@@ -1908,7 +1908,12 @@ end;
    {$IFNDEF NOGUI}
    if not Tratado then
    begin
-      Application.BringToFront ;
+      {$IFNDEF FMX}
+        Application.BringToFront ;
+      {$ELSE}
+        if Application.MainForm <> nil then
+          Application.MainForm.BringToFront ;
+      {$ENDIF}
 
       {$IFDEF MSWINDOWS}
        if Assigned( Screen.ActiveForm ) then
@@ -1916,7 +1921,12 @@ end;
          {$IFDEF VisualCLX}
           QWidget_setActiveWindow( Screen.ActiveForm.Handle );
          {$ELSE}
-          SetForeGroundWindow( Screen.ActiveForm.Handle );
+          {$IFNDEF FMX}
+            SetForeGroundWindow( Screen.ActiveForm.Handle );
+          {$ELSE}
+            if Screen.ActiveForm <> nil then
+              SetForeGroundWindow( WindowHandleToPlatform(Screen.ActiveForm.Handle).Wnd );
+          {$ENDIF}
          {$ENDIF}
        end;
       {$ENDIF}

@@ -50,7 +50,7 @@ uses
   {$IFDEF VisualCLX}
      ,QControls, QForms, QDialogs
   {$ELSE}
-     ,Controls, Forms, Dialogs
+    {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Controls, Forms, Dialogs
   {$ENDIF}
   {$ENDIF}
   ,blcksock ;

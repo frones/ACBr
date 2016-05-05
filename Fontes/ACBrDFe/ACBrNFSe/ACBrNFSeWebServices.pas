@@ -1546,6 +1546,8 @@ begin
     end;
 
     case FProvedor of
+      proABase: FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
       proEquiplano: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                            'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
@@ -2364,6 +2366,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
+      proABase:     TagGrupo := 'ConsultaLoteRpsEnvio';
       proCONAM:     TagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
       proEquiplano: TagGrupo := 'esConsultarLoteRpsEnvio';
       proISSDSF:    TagGrupo := 'ReqConsultaLote';
@@ -2898,6 +2901,7 @@ begin
                    FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                  end;
 
+      proABase,
       proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                   IntToStrZero(StrToInt(TNFSeCancelarNfse(Self).FNumeroNFSe), 16);
 
@@ -3696,7 +3700,7 @@ begin
   if not (Result) then
     FCancNfse.GerarException( FCancNfse.Msg );
 
-  if not (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proISSNet, proEL]) then
+  if not (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proABase, proEL, proISSNet]) then
   begin
     if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSystemPro] then
     begin

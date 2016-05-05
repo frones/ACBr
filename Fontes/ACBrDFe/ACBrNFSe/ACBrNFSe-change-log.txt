@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2016
+[+] Implementação do Provedor ABase - Cidade: Santo Angelo/RS.
+    por: Alexandre Werner / Italo Jurisato Junior
+
 03/05/2016
 [*] Removido os valores ve201 e ve202 e os provedores que utilizavam essas
     versões (Tecnos e Pronimv2) passam a usar o valor ve200.

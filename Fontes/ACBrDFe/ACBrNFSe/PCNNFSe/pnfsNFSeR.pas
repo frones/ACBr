@@ -368,13 +368,13 @@ begin
       NFSe.Tomador.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
       NFSe.Tomador.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-      NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+      NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
       if NFSe.Tomador.Endereco.CodigoMunicipio = '' then
-        NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+        NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-      NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+      NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
       if NFSe.Tomador.Endereco.UF = '' then
-        NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+        NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
       NFSe.Tomador.Endereco.CEP := Leitor.rCampo(tcStr, 'Cep');
 
@@ -618,13 +618,13 @@ begin
      NFSe.Tomador.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
      NFSe.Tomador.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-     NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+     NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
      if NFSe.Tomador.Endereco.CodigoMunicipio = '' then
-       NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+       NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-     NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+     NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
      if NFSe.Tomador.Endereco.UF = '' then
-       NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+       NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
      NFSe.Tomador.Endereco.CEP := Leitor.rCampo(tcStr, 'Cep');
 
@@ -1136,13 +1136,13 @@ begin
     NFSe.PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
     NFSe.PrestadorServico.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-    NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+    NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
     if NFSe.PrestadorServico.Endereco.CodigoMunicipio = '' then
-      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
     if NFSe.PrestadorServico.Endereco.UF = '' then
-      NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+      NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
 //    NFSe.PrestadorServico.Endereco.CodigoPais := Leitor.rCampo(tcInt, 'CodigoPais');
     NFSe.PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'Cep');
@@ -1192,13 +1192,13 @@ begin
     NFSe.Tomador.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
     NFSe.Tomador.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-    NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+    NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
     if NFSe.Tomador.Endereco.CodigoMunicipio = '' then
-      NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+      NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-    NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+    NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
     if NFSe.Tomador.Endereco.UF = '' then
-      NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+      NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
     NFSe.Tomador.Endereco.CEP := Leitor.rCampo(tcStr, 'Cep');
 
@@ -1317,13 +1317,13 @@ begin
     NFSe.PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
     NFSe.PrestadorServico.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-    NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+    NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
     if NFSe.PrestadorServico.Endereco.CodigoMunicipio = '' then
-      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
     if NFSe.PrestadorServico.Endereco.UF = '' then
-      NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+      NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
     NFSe.PrestadorServico.Endereco.CodigoPais := Leitor.rCampo(tcInt, 'CodigoPais');
     NFSe.PrestadorServico.Endereco.CEP        := Leitor.rCampo(tcStr, 'Cep');
@@ -1372,13 +1372,13 @@ begin
     NFSe.PrestadorServico.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
     NFSe.PrestadorServico.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-    NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+    NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
     if NFSe.PrestadorServico.Endereco.CodigoMunicipio = '' then
-      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+      NFSe.PrestadorServico.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+    NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
     if NFSe.PrestadorServico.Endereco.UF = '' then
-      NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+      NFSe.PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
     NFSe.PrestadorServico.Endereco.CodigoPais := Leitor.rCampo(tcInt, 'CodigoPais');
     NFSe.PrestadorServico.Endereco.CEP        := Leitor.rCampo(tcStr, 'Cep');
@@ -1583,13 +1583,13 @@ begin
       NFSe.Tomador.Endereco.Complemento := Leitor.rCampo(tcStr, 'Complemento');
       NFSe.Tomador.Endereco.Bairro      := Leitor.rCampo(tcStr, 'Bairro');
 
-      NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
+      NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
       if NFSe.Tomador.Endereco.CodigoMunicipio = '' then
-        NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+        NFSe.Tomador.Endereco.CodigoMunicipio := Leitor.rCampo(tcStr, 'Cidade');
 
-      NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
+      NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
       if NFSe.Tomador.Endereco.UF = '' then
-        NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Uf');
+        NFSe.Tomador.Endereco.UF := Leitor.rCampo(tcStr, 'Estado');
 
       NFSe.Tomador.Endereco.CEP := Leitor.rCampo(tcStr, 'Cep');
 

@@ -289,6 +289,7 @@ begin
                    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss       ', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
                  end;
 
+   proABase,
    proActcon,
    proNEAInformatica,
    proPronimv2,
@@ -342,7 +343,7 @@ begin
   if FProvedor in [proActcon, proAgili, proTecnos] then
     Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, '');
 
-  if FProvedor in [proActcon, proPronimv2, proVirtual] then
+  if FProvedor in [proABase, proActcon, proPronimv2, proVirtual] then
     Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, '');
 
   case FProvedor of
@@ -379,6 +380,7 @@ begin
     Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 1, NFSe.Servico.Valores.BaseCalculo, '');
 
   case FProvedor of
+   proABase,
    proActcon,
    proPronimv2,
    proTecnos,
@@ -575,8 +577,8 @@ end;
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
 begin
   case FProvedor of
-   proDigifred, proEReceita, proFiorilli, proGovDigital, proISSDigital, proISSe,
-   proMitra, proNEAInformatica, proNotaInteligente, proPVH,
+   proABase, proDigifred, proEReceita, proFiorilli, proGovDigital, proISSDigital,
+   proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
    proSisPMJP: begin
                  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
                  Gerador.wGrupoNFSe('Rps');
@@ -616,9 +618,10 @@ begin
   if not (FProvedor in [proSystemPro]) then
   begin
     case FProvedor of
-      proActcon, proAgili, proCoplan, proEReceita, proFiorilli, proGovDigital,
-      proISSDigital, proISSe, proMitra, proNEAInformatica, proNotaInteligente,
-      proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP, proVirtual,
+      proABase, proActcon, proAgili, proCoplan, proEReceita, proFiorilli,
+      proGovDigital, proISSDigital, proISSe, proMitra, proNEAInformatica,
+      proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP,
+      proVirtual,
       proVitoria: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
     else
@@ -650,6 +653,7 @@ begin
         proSystemPro, proNEAInformatica,
         proEReceita: Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
+        proABase,
         proGovDigital,
         proNotaInteligente,
         proPronimv2 : Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
@@ -734,11 +738,11 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 
-  if (FProvedor in [pro4R, proActcon, proAgili, proCoplan, proDigifred, profintelISS,
-                    proFiorilli, proGoiania, proGovDigital, proISSDigital, proLink3,
-                    proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
-                    proTecnos, proVirtual, proVitoria, proNFSEBrasil,
-                    proNEAInformatica, proNotaInteligente]) then
+  if (FProvedor in [pro4R, proABase, proActcon, proAgili, proCoplan, proDigifred,
+                    profintelISS, proFiorilli, proGoiania, proGovDigital,
+                    proISSDigital, proLink3, proProdata, proPVH, proSaatri,
+                    proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
+                    proNFSEBrasil, proNEAInformatica, proNotaInteligente]) then
     FDefTipos := FServicoEnviar;
 
   if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')
@@ -779,6 +783,7 @@ begin
                                  OnlyNumber(FNFSe.Prestador.Cnpj) +
                                  IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
 
+    proABase,
     proGovDigital: FNFSe.InfID.ID := 'Rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
 
     proNotaInteligente : FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero);

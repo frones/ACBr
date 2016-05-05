@@ -1621,8 +1621,11 @@ begin
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
   if (FProvedor = proThema) and (FNotasFiscais.Count < 4) then
+  begin
     FDadosEnvelope := StringReplace(FDadosEnvelope, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
-
+    FPSoapAction := StringReplace(FPSoapAction, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+  end;
+  
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
     DefinirSignatureNode('');

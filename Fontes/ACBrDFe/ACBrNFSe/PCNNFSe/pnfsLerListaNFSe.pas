@@ -685,7 +685,7 @@ begin
         begin
           ListaNfse.FMsgRetorno.Add;
           ListaNfse.FMsgRetorno[i].FCodigo   := 'Erro';
-          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'a:MensagemErro');
         end;
       end;
     end;

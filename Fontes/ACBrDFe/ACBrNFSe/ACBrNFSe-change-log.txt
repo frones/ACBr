@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/05/2016
+[*] Alterações visando as novas opções de configuração contidas nos arquivos INI
+    do provedores para definir se a mensagem de cabeçalho e de dados serão
+    convertidas para string ou não em cada tipo de serviço.
+    por: Tailan / Italo Jurisato Junior
 [+] Implementação do Provedor ABase - Cidade: Santo Angelo/RS.
     por: Alexandre Werner / Italo Jurisato Junior
 

@@ -658,8 +658,8 @@ begin
 
   FConfigEnvelope.Recepcionar_IncluiEncodingCab := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingCab', False);
   FConfigEnvelope.Recepcionar_IncluiEncodingDados := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingDados', False);
-  FConfigEnvelope.Recepcionar_CabecalhoStr := FPIniParams.ReadBool('Recepcionar', 'CabecalhoStr', False);
-  FConfigEnvelope.Recepcionar_DadosStr := FPIniParams.ReadBool('Recepcionar', 'DadosStr', False);
+  FConfigEnvelope.Recepcionar_CabecalhoStr := FPIniParams.ReadBool('Recepcionar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Recepcionar_DadosStr := FPIniParams.ReadBool('Recepcionar', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -676,8 +676,8 @@ begin
 
   FConfigEnvelope.ConsSit_IncluiEncodingCab := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingCab', False);
   FConfigEnvelope.ConsSit_IncluiEncodingDados := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingDados', False);
-  FConfigEnvelope.ConsSit_CabecalhoStr := FPIniParams.ReadBool('ConsSit', 'CabecalhoStr', False);
-  FConfigEnvelope.ConsSit_DadosStr := FPIniParams.ReadBool('ConsSit', 'DadosStr', False);
+  FConfigEnvelope.ConsSit_CabecalhoStr := FPIniParams.ReadBool('ConsSit', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsSit_DadosStr := FPIniParams.ReadBool('ConsSit', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -694,8 +694,8 @@ begin
 
   FConfigEnvelope.ConsLote_IncluiEncodingCab := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingCab', False);
   FConfigEnvelope.ConsLote_IncluiEncodingDados := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingDados', False);
-  FConfigEnvelope.ConsLote_CabecalhoStr := FPIniParams.ReadBool('ConsLote', 'CabecalhoStr', False);
-  FConfigEnvelope.ConsLote_DadosStr := FPIniParams.ReadBool('ConsLote', 'DadosStr', False);
+  FConfigEnvelope.ConsLote_CabecalhoStr := FPIniParams.ReadBool('ConsLote', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsLote_DadosStr := FPIniParams.ReadBool('ConsLote', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -712,8 +712,8 @@ begin
 
   FConfigEnvelope.ConsNFSeRps_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingCab', False);
   FConfigEnvelope.ConsNFSeRps_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingDados', False);
-  FConfigEnvelope.ConsNFSeRps_CabecalhoStr := FPIniParams.ReadBool('ConsNFSeRps', 'CabecalhoStr', False);
-  FConfigEnvelope.ConsNFSeRps_DadosStr := FPIniParams.ReadBool('ConsNFSeRps', 'DadosStr', False);
+  FConfigEnvelope.ConsNFSeRps_CabecalhoStr := FPIniParams.ReadBool('ConsNFSeRps', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsNFSeRps_DadosStr := FPIniParams.ReadBool('ConsNFSeRps', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -730,8 +730,8 @@ begin
 
   FConfigEnvelope.ConsNFSe_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingCab', False);
   FConfigEnvelope.ConsNFSe_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingDados', False);
-  FConfigEnvelope.ConsNFSe_CabecalhoStr := FPIniParams.ReadBool('ConsNFSe', 'CabecalhoStr', False);
-  FConfigEnvelope.ConsNFSe_DadosStr := FPIniParams.ReadBool('ConsNFSe', 'DadosStr', False);
+  FConfigEnvelope.ConsNFSe_CabecalhoStr := FPIniParams.ReadBool('ConsNFSe', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsNFSe_DadosStr := FPIniParams.ReadBool('ConsNFSe', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -748,8 +748,8 @@ begin
 
   FConfigEnvelope.Cancelar_IncluiEncodingCab := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingCab', False);
   FConfigEnvelope.Cancelar_IncluiEncodingDados := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingDados', False);
-  FConfigEnvelope.Cancelar_CabecalhoStr := FPIniParams.ReadBool('Cancelar', 'CabecalhoStr', False);
-  FConfigEnvelope.Cancelar_DadosStr := FPIniParams.ReadBool('Cancelar', 'DadosStr', False);
+  FConfigEnvelope.Cancelar_CabecalhoStr := FPIniParams.ReadBool('Cancelar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Cancelar_DadosStr := FPIniParams.ReadBool('Cancelar', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -766,8 +766,8 @@ begin
 
   FConfigEnvelope.Gerar_IncluiEncodingCab := FPIniParams.ReadBool('Gerar', 'IncluiEncodingCab', False);
   FConfigEnvelope.Gerar_IncluiEncodingDados := FPIniParams.ReadBool('Gerar', 'IncluiEncodingDados', False);
-  FConfigEnvelope.Gerar_CabecalhoStr := FPIniParams.ReadBool('Gerar', 'CabecalhoStr', False);
-  FConfigEnvelope.Gerar_DadosStr := FPIniParams.ReadBool('Gerar', 'DadosStr', False);
+  FConfigEnvelope.Gerar_CabecalhoStr := FPIniParams.ReadBool('Gerar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Gerar_DadosStr := FPIniParams.ReadBool('Gerar', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -784,8 +784,8 @@ begin
 
   FConfigEnvelope.RecSincrono_IncluiEncodingCab := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingCab', False);
   FConfigEnvelope.RecSincrono_IncluiEncodingDados := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingDados', False);
-  FConfigEnvelope.RecSincrono_CabecalhoStr := FPIniParams.ReadBool('RecSincrono', 'CabecalhoStr', False);
-  FConfigEnvelope.RecSincrono_DadosStr := FPIniParams.ReadBool('RecSincrono', 'DadosStr', False);
+  FConfigEnvelope.RecSincrono_CabecalhoStr := FPIniParams.ReadBool('RecSincrono', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.RecSincrono_DadosStr := FPIniParams.ReadBool('RecSincrono', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -802,8 +802,8 @@ begin
 
   FConfigEnvelope.Substituir_IncluiEncodingCab := FPIniParams.ReadBool('Substituir', 'IncluiEncodingCab', False);
   FConfigEnvelope.Substituir_IncluiEncodingDados := FPIniParams.ReadBool('Substituir', 'IncluiEncodingDados', False);
-  FConfigEnvelope.Substituir_CabecalhoStr := FPIniParams.ReadBool('Substituir', 'CabecalhoStr', False);
-  FConfigEnvelope.Substituir_DadosStr := FPIniParams.ReadBool('Substituir', 'DadosStr', False);
+  FConfigEnvelope.Substituir_CabecalhoStr := FPIniParams.ReadBool('Substituir', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Substituir_DadosStr := FPIniParams.ReadBool('Substituir', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;

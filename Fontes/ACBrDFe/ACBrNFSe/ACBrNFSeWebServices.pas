@@ -85,6 +85,9 @@ type
     FxDSIGNSLote: String;
     FxIdSignature: String;
 
+    FCabecalhoStr: Boolean;
+    FDadosStr: Boolean;
+
     FvNotas: String;
     FXML_NFSe: String;
 
@@ -579,6 +582,8 @@ begin
   FPConfiguracoesNFSe := TConfiguracoesNFSe(FPConfiguracoes);
   FPLayout := LayNFSeRecepcaoLote;
   FPStatus := stNFSeIdle;
+  FCabecalhoStr:= False;
+  FDadosStr:= False;
 end;
 
 procedure TNFSeWebService.DefinirURL;
@@ -619,11 +624,11 @@ begin
     NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
 
   CabMsg := FPCabMsg;
-  if FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr then
+  if FCabecalhoStr then
     CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
   DadosMsg := FPDadosMsg;
-  if FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr then
+  if FDadosStr then
     DadosMsg := StringReplace(StringReplace(DadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
 
   // Alterações no conteudo de DadosMsg especificas para alguns provedores
@@ -1344,6 +1349,9 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
 
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_DadosStr;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
@@ -1509,6 +1517,9 @@ begin
   if FNotasFiscais.Count > 50 then
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_DadosStr;
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -1803,6 +1814,9 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
 
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_DadosStr;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono;
@@ -1952,6 +1966,9 @@ begin
       GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 1 RPS)' +
         ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
   end;
+
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_DadosStr;
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2107,6 +2124,9 @@ procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
 var
   TagGrupo: String;
 begin
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_DadosStr;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
@@ -2366,6 +2386,9 @@ procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
 var
   TagGrupo: String;
 begin
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_DadosStr;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
@@ -2508,6 +2531,9 @@ var
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
+
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_DadosStr;
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2708,6 +2734,9 @@ procedure TNFSeConsultarNfse.DefinirDadosMsg;
 var
   TagGrupo: String;
 begin
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_DadosStr;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
@@ -2858,11 +2887,11 @@ var
   Gerador: TGerador;
   TagGrupo, docElemento, sAssinatura: String;
 begin
-//  FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_CabecalhoStr;
-//  FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_DadosStr;
-
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
+
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_DadosStr;
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -3249,6 +3278,9 @@ var
   i: Integer;
   Gerador: TGerador;
 begin
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_DadosStr;
+
   GerarDadosMsg := TNFSeG.Create;
   try
     FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
@@ -3461,6 +3493,9 @@ procedure TNFSeEnvioWebService.DefinirDadosMsg;
 var
   LeitorXML: TLeitor;
 begin
+  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigXML.CabecalhoStr;
+  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigXML.DadosStr;
+
   LeitorXML := TLeitor.Create;
   try
     LeitorXML.Arquivo := FXMLEnvio;

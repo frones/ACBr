@@ -346,6 +346,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '');
 
+    //fiss-lex
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'WS_ConsultaNfsePorRps.ExecuteResponse') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -575,6 +579,7 @@ begin
     // =======================================================================
 
     if (leitor.rExtrai(1, 'ListaMensagemRetorno') <> '') or
+       (leitor.rExtrai(1, 'Listamensagemretorno') <> '') or
        (leitor.rExtrai(1, 'ListaMensagemRetornoLote') <> '') then
     begin
       i := 0;

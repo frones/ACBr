@@ -1399,6 +1399,7 @@ begin
   fsQuandoGravarArqINI := nil;
   fsQuandoCancelarCupom := nil;
   fpCupom := TACBrECFVirtualClassCupom.Create();
+  fpNumMaxLinhasRodape := 0;
 
   Zera ;
 end;

@@ -49,7 +49,6 @@ uses Classes,
 
 const
     cEscECFMaxBuffer = 512 ;
-    cEscECFMaxBufferBematech = 256 ;
     cNumFalhasMax = 5;
     cEsperaWAK = 50;
 
@@ -226,6 +225,8 @@ TACBrECFEscECF = class( TACBrECFClass )
 
     function CriarECFClassPorMarca : TACBrECFClass;
     procedure DestruirECFClass( AECFClass: TACBrECFClass );
+
+    procedure AjustaComandosControleImpressao(var Linha: AnsiString);
 
  protected
     procedure AtivarDevice;
@@ -1320,6 +1321,7 @@ begin
   fpMFD     := True ;
   fpTermica := True ;
   fpColunas := 48 ;
+  fpNumMaxLinhasRodape := 8;
 
   if fpDevice.IsDLLPort then
   begin
@@ -1331,7 +1333,7 @@ begin
   end
   else
   begin
-     if not (fsEscECFProtocolo is TACBrECFEscECFProtocolo) then
+     if (fsEscECFProtocolo is TACBrECFEscECFProtocoloEpsonDLL) then
      begin
        fsEscECFProtocolo.Free;
        fsEscECFProtocolo := TACBrECFEscECFProtocolo.Create(Self);
@@ -1366,6 +1368,12 @@ begin
      begin
        fpPaginaDeCodigo := 850;
        fpColunas := 57;
+     end;
+
+     if IsBematech and (CompareVersions(fsNumVersao, '01.00.02') >= 0) then
+     begin
+       // http://partners.bematech.com.br/bemacast/paginas/post.aspx?title=edicao-241---o-ecf-bematech-mp-4200-th-fi-ii&id=6220
+       fpNumMaxLinhasRodape := 20;
      end;
 
      LeRespostasMemoria;
@@ -1748,6 +1756,34 @@ begin
   Self.Ativar;
 end;
 
+procedure TACBrECFEscECF.AjustaComandosControleImpressao(var Linha: AnsiString);
+var
+  P: Integer;
+  EhControle: Boolean;
+begin
+  P := pos(LF, Linha);
+  while P > 0 do
+  begin
+    EhControle := Linha[max(P-1,1)] = ESC;
+
+    if not EhControle then
+    begin
+      Linha := StuffString(Linha, P, 0, CR );  // Adiciona CR antes de LF
+      Inc( P );
+    end
+    else
+    begin
+      if IsBematech then
+      begin
+        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
+        Dec( P );
+      end;
+    end;
+
+    P := PosEx( LF, Linha, P+1);
+  end;
+end;
+
 procedure TACBrECFEscECF.AtivarDevice;
 begin
   inherited Ativar;
@@ -2107,37 +2143,12 @@ procedure TACBrECFEscECF.LinhaRelatorioGerencial(Linha: AnsiString;
    IndiceBMP: Integer);
 var
   P, Espera, LenMaxBuffer: Integer;
-  Buffer   : AnsiString ;
-  EhControle: Boolean;
+  Buffer : AnsiString ;
 begin
   Linha := AjustaLinhas( Linha, Colunas, 0, IsBematech );  { Formata as Linhas de acordo com "Coluna" }
+  LenMaxBuffer := cEscECFMaxBuffer;
 
-  if IsBematech then
-    LenMaxBuffer := cEscECFMaxBufferBematech
-  else
-    LenMaxBuffer := cEscECFMaxBuffer;
-
-  P := pos(LF, Linha);
-  while P > 0 do
-  begin
-    EhControle := Linha[max(P-1,1)] = ESC;
-
-    if not EhControle then
-    begin
-      Linha := StuffString(Linha, P, 0, CR );  // Adiciona CR antes de LF
-      Inc( P );
-    end
-    else
-    begin
-      if IsBematech then
-      begin
-        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
-        Dec( P );
-      end;
-    end;
-
-    P := PosEx( LF, Linha, P+1);
-  end;
+  AjustaComandosControleImpressao(Linha);
 
   while Length( Linha ) > 0 do
   begin
@@ -2910,6 +2921,8 @@ procedure TACBrECFEscECF.FechaCupom(Observacao: AnsiString; IndiceBMP: Integer);
 begin
   if not Consumidor.Enviado then
      EnviaConsumidor;
+
+  AjustaComandosControleImpressao(Observacao);
 
   with EscECFComando do
   begin

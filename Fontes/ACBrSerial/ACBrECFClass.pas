@@ -654,6 +654,7 @@ TACBrECFClass = class
 
     procedure AtivarPorta;
     procedure DesativarPorta;
+    function GetNumMaxLinhasRodape: Integer;
     function GetPathDLL : string ;
     function GetTotalizadoresNaoTributados: TACBrECFTotalizadoresNaoTributados;
     procedure SetAtivo(const Value: Boolean);
@@ -703,6 +704,7 @@ TACBrECFClass = class
     fpOwner  : TComponent ;   { Componente ACBrECF }
     fpAtivo  : Boolean ;
     fpColunas: Integer;
+    fpNumMaxLinhasRodape: Integer;
     fpPaginaDeCodigo : Word ;
     fpRFDID  : String;
     fpModeloStr: String;
@@ -963,6 +965,8 @@ TACBrECFClass = class
     Property NumSerieMFD  : String read GetNumSerieMFD  ;
     Property NumVersao : String    read GetNumVersao ;
     Property NumReducoesZRestantes: String read GetNumReducoesZRestantes ;
+    Property NumMaxLinhasRodape: Integer read GetNumMaxLinhasRodape;
+
 
     { Dados da Reducao Z - Registro 60M }
     Property DataMovimento      : TDateTime  read GetDataMovimento ;
@@ -1881,6 +1885,7 @@ begin
   fpEstado                := estNaoInicializada ;
   fpPaginaDeCodigo        := 0 ;
   fpColunas               := 48 ;
+  fpNumMaxLinhasRodape    := 8 ;
   fpRFDID                 := '' ;
   fpModeloStr             := 'Não Definido' ;
   fpComandoEnviado        := '' ;
@@ -1995,6 +2000,11 @@ begin
 
   GravaLog('-- Desativando a porta: ' + fpDevice.Porta);
   fpDevice.Desativar;
+end;
+
+function TACBrECFClass.GetNumMaxLinhasRodape: Integer;
+begin
+  Result := fpNumMaxLinhasRodape;
 end;
 
 function TACBrECFClass.GetDataHoraUltimaReducaoZ : TDateTime ;

@@ -229,6 +229,7 @@ TACBrECF = class( TACBrComponent )
     function GetArredondaItemMFD : Boolean ;
     function GetIgnorarErroSemPapel : Boolean ;
     function GetIgnorarTagsFormatacao: Boolean;
+    function GetNumMaxLinhasRodapeClass: Integer;
     function GetOnGravarLog: TACBrGravarLog;
     function GetPaginaDeCodigoClass : Word ;
     function GetTipoUltimoDocumentoClass : TACBrECFTipoDocumento ;
@@ -481,6 +482,7 @@ TACBrECF = class( TACBrComponent )
     Property NumSerieMFD  : String read GetNumSerieMFDClass ;
     Property NumVersao : String    read GetNumVersaoClass;
     Property NumReducoesZRestantes: String read GetNumReducoesZRestantesClass;
+    Property NumMaxLinhasRodape: Integer read GetNumMaxLinhasRodapeClass;
 
     { Dados da Reducao Z - Registro 60M }
     Property DadosReducaoZ : String  read GetDadosReducaoZ ;
@@ -1809,6 +1811,11 @@ end;
 function TACBrECF.GetIgnorarTagsFormatacao: Boolean;
 begin
   Result := fsECF.IgnorarTagsFormatacao;
+end;
+
+function TACBrECF.GetNumMaxLinhasRodapeClass: Integer;
+begin
+  Result := fsECF.NumMaxLinhasRodape ;
 end;
 
 function TACBrECF.GetOnGravarLog: TACBrGravarLog;
@@ -3331,8 +3338,8 @@ begin
 
   { Todos ECFs suportam no máximo 8 Linhas no Rodapé. Ajusta se necessário,
     para evitar erro na Impressão, no caso de mais linhas serem enviadas }
-  if not (fsModelo in [ecfEscECF, ecfECFVirtual]) then
-     Observacao:= AjustaLinhas(Observacao, Colunas, 8);
+  if NumMaxLinhasRodape > 0 then
+    Observacao := AjustaLinhas(Observacao, Colunas, NumMaxLinhasRodape);
 
   ComandoLOG := 'FechaCupom( '+Observacao+' )' ;
 
@@ -3358,7 +3365,7 @@ begin
    begin
       fsMemoOperacao := 'fechacupom' ;
 
-      Observacao := AjustaLinhas( Observacao, fsMemoColunas, 8 ) ;
+      Observacao := AjustaLinhas( Observacao, fsMemoColunas, NumMaxLinhasRodape ) ;
       MemoAdicionaLinha( Observacao + sLineBreak + fsMemoRodape );
    end ;
   {$ENDIF}

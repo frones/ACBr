@@ -1533,13 +1533,14 @@ begin
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
-  LoadFromString(XMLStr, AGerarNFe);
+  Result := LoadFromString(XMLStr, AGerarNFe);
 
-  // Atribui Nome do arquivo a novas notas inseridas //
-  for i := l to Self.Count - 1 do
-    Self.Items[i].NomeArq := CaminhoArquivo;
-
-  Result := True;
+  if Result then
+  begin
+    // Atribui Nome do arquivo a novas notas inseridas //
+    for i := l to Self.Count - 1 do
+      Self.Items[i].NomeArq := CaminhoArquivo;
+  end;
 end;
 
 function TNotasFiscais.LoadFromStream(AStream: TStringStream;

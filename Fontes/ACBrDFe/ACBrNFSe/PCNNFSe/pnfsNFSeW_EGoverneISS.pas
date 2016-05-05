@@ -199,7 +199,7 @@ begin
    Gerador.Prefixo := 'rgm1:';
    Gerador.wCampoNFSe(tcDe4, '', 'Aliquota',                 1,   15, 1, NFSe.Servico.Valores.Aliquota, '');
    Gerador.wCampoNFSe(tcStr, '', 'Atividade',                1,   09, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
-   Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao',        1,   36, 1, NFSe.Prestador.Senha, '');
+   Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao',        1,   36, 1, NFSe.Prestador.ChaveAcesso, '');
    Gerador.wCampoNFSe(tcStr, '', 'Homologacao',              5,   05, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
    Gerador.wCampoNFSe(tcStr, '', 'NotificarTomadorPorEmail', 5,   05, 1, 'false', '');
    Gerador.wCampoNFSe(tcStr, '', 'SubstituicaoTributaria',   5,    5, 1, 'false', '');

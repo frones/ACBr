@@ -1088,8 +1088,8 @@ begin
         toRetornoInstrucaoRejeitada: //32
           case AnsiIndexStr(CodMotivo,
                             ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
-                             'B8', 'B9', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8', 'F9',
-                             'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8']) of
+                             'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8',
+                             'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';

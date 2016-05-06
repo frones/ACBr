@@ -508,7 +508,7 @@ begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := copy(Linha,40,7);
+            SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,15);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 
@@ -608,10 +608,10 @@ begin
       begin
         Cedente.Nome          := rCedente;
         Cedente.CNPJCPF       := rCNPJCPF;
-        Cedente.Agencia       := trim(copy(ARetorno[0], 18, 4));
-        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 22, 1));
-        Cedente.Conta         := trim(copy(ARetorno[0], 23, 8));
-        Cedente.ContaDigito   := trim(copy(ARetorno[0], 31, 1));
+        Cedente.Agencia       := trim(copy(ARetorno[1], 18, 4));
+        Cedente.AgenciaDigito := trim(copy(ARetorno[1], 22, 1));
+        Cedente.Conta         := trim(copy(ARetorno[1], 23, 8));
+        Cedente.ContaDigito   := trim(copy(ARetorno[1], 31, 1));
 
         case StrToIntDef(Copy(ARetorno[1],2,2),0) of
            11: Cedente.TipoInscricao:= pFisica;

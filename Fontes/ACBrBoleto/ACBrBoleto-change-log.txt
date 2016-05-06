@@ -47,8 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 04/05/16 ver: 0.0.193a
+Data: 04/05/16 ver: 0.0.194a
+
 -- ACBrBancoBancoob --
+[-] Correção leitura do campo SeuNumero retorno CNAB240. (volmir)
+http://www.projetoacbr.com.br/forum/topic/29808-retorno-cnab-240-bancoob/
+
+-- ACBrBancoBancoob --
+[*] Ajuste referente as intruções remessa CNAB2400. (denerbuzato)
+http://www.projetoacbr.com.br/forum/topic/29224-cobran%C3%A7a-hsbc-com-multa/
+[-] Correção leitura agencia/conta retorno CNAB400. (denerbuzato)
+http://www.projetoacbr.com.br/forum/topic/29834-corre%C3%A7%C3%A3o-lerretorno400-sicoob/
+
+-- ACBrBancoSicredi --
+[-] Ajuste leitura retorno CNAB400. (Alex Calado)
+http://www.projetoacbr.com.br/forum/topic/29802-retorno-sicredi-erro-c4-is-not-a-valid-integer-value/
+
+Data: 04/05/16 ver: 0.0.193a
+
 [-] Correção leitura campo NumeroDocumento retorno CNAB240. (sandrojapa)
 http://www.projetoacbr.com.br/forum/topic/29689-retorno-sicoob-240-erro-numerodocumento/#comment-196361
 

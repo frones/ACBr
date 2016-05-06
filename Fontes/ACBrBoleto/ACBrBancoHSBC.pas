@@ -288,6 +288,7 @@ var
   I :Integer;
   wAgencia: String;
   wConta: String;
+  AbatimentoMulta : String;
 begin
 
    with ACBrTitulo do
@@ -351,6 +352,20 @@ begin
          if length(MensagemCedente) > 60 then
             MensagemCedente:= copy(MensagemCedente,1,60);
 
+         //"Valor do Abatimento" - Valor do abatimento concedido somente quando o código de ocorrência for igual a “04” ou “05” / "Multa" - Quando utilizar as instruções 15,16,19,22,24,29,73 e 74.
+         if ((Ocorrencia  = '04') or (Ocorrencia  = '05')) and (ValorAbatimento > 0) then
+           AbatimentoMulta := IntToStrZero( round( ValorAbatimento * 100 ), 13)  // valor do abatimento
+         else if ((Trim(Instrucao1) = '15') or (Trim(Instrucao1) = '16')) and (PercentualMulta > 0) then
+           AbatimentoMulta := FormatDateTime( 'ddmmyy', DataMoraJuros) + IntToStrZero( round( PercentualMulta * 100 ), 4) + '   ' // Multa
+         else if (Trim(Instrucao1) = '22') and (PercentualMulta > 0) then
+           AbatimentoMulta := IntToStrZero( round( (ValorDocumento *(PercentualMulta/100)) * 100 ), 10) + IntToStrZero(DaysBetween(Vencimento, DataMoraJuros),3)  // Multa
+         else if (Trim(Instrucao1) = '24') and (PercentualMulta > 0) then
+           AbatimentoMulta := IntToStrZero( round( (ValorDocumento *(PercentualMulta/100)) * 100 ), 10) + '000'  // Multa
+         else if ((Trim(Instrucao1) = '73') or (Trim(Instrucao1) = '74')) and (PercentualMulta > 0) then
+           AbatimentoMulta := '      ' + IntToStrZero( round( PercentualMulta * 100 ), 4) + IntToStrZero(DaysBetween(Vencimento, DataMoraJuros),3)  // Multa
+         else
+           AbatimentoMulta := IntToStrZero(0,4);
+
          wAgencia := PadLeft(OnlyNumber(Cedente.Agencia), 4, '0');
          wConta   := PadLeft(OnlyNumber(Cedente.Conta) + Cedente.ContaDigito, 7, '0');
          wLinha:= '1'                                                             + // ID Registro
@@ -386,7 +401,7 @@ begin
                          FormatDateTime( 'ddmmyy', DataDesconto))                 + // data limite para desconto  //ADICIONEI ZERO ESTAVA E BRANCO ALFEU
                   IntToStrZero( round( ValorDesconto * 100), 13)                  + // valor do desconto
                   IntToStrZero( round( ValorIOF * 100 ), 13)                      + // Valor do  IOF
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13)               + // valor do abatimento
+                  AbatimentoMulta                                                 + // valor do abatimento / multa
                   TipoSacado                                                      + // codigo de inscrição do sacado
                   PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')                      + // numero de inscrição do sacado
                   PadRight(Sacado.NomeSacado, 40, ' ')                            + // nome sacado

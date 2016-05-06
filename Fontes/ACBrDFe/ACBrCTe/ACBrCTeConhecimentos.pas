@@ -758,13 +758,14 @@ begin
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
-  LoadFromString(XMLStr, AGerarCTe);
+  Result := LoadFromString(XMLStr, AGerarCTe);
 
-  // Atribui Nome do arquivo a novos conhecimentos inseridos //
-  for i := l to Self.Count - 1 do
-    Self.Items[i].NomeArq := CaminhoArquivo;
-
-  Result := True;
+  if Result then
+  begin
+    // Atribui Nome do arquivo a novos Conhecimentos inseridos //
+    for i := l to Self.Count - 1 do
+      Self.Items[i].NomeArq := CaminhoArquivo;
+  end;
 end;
 
 function TConhecimentos.LoadFromStream(AStream: TStringStream;

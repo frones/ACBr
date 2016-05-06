@@ -688,13 +688,14 @@ begin
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
-  LoadFromString(XMLStr, AGerarGNRE);
+  Result := LoadFromString(XMLStr, AGerarGNRE);
 
-  // Atribui Nome do arquivo a novas guias inseridas //
-  for i := l to Self.Count - 1 do
-    Self.Items[i].NomeArq := CaminhoArquivo;
-
-  Result := True;
+  if Result then
+  begin
+    // Atribui Nome do arquivo a novas guias inseridas //
+    for i := l to Self.Count - 1 do
+      Self.Items[i].NomeArq := CaminhoArquivo;
+  end;
 end;
 
 function TGuias.LoadFromStream(AStream: TStringStream;

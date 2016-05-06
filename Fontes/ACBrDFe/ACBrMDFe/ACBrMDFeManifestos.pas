@@ -727,13 +727,14 @@ begin
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
-  LoadFromString(XMLStr, AGerarMDFe);
+  Result := LoadFromString(XMLStr, AGerarMDFe);
 
-  // Atribui Nome do arquivo a novos manifestos inseridos //
-  for i := l to Self.Count - 1 do
-    Self.Items[i].NomeArq := CaminhoArquivo;
-
-  Result := True;
+  if Result then
+  begin
+    // Atribui Nome do arquivo a novos manifestos inseridos //
+    for i := l to Self.Count - 1 do
+      Self.Items[i].NomeArq := CaminhoArquivo;
+  end;
 end;
 
 function TManifestos.LoadFromStream(AStream: TStringStream;

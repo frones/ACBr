@@ -3143,7 +3143,7 @@ begin
     AssinarXML(FPDadosMsg, docElemento, '', 'Falha ao Assinar - Cancelar NFS-e: ');
   end;
 
-  if (FProvedor = proBetha) and (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) then
+  if (FProvedor = proBetha) {and (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar)} then
     FPDadosMsg := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>' + FPDadosMsg + '</' + FPrefixo3 + TagGrupo + '>';
 
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);

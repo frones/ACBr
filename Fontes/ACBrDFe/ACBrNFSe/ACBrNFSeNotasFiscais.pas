@@ -750,7 +750,7 @@ function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
-  i: integer;
+  i, l: integer;
   MS: TMemoryStream;
 begin
   MS := TMemoryStream.Create;
@@ -760,6 +760,8 @@ begin
   finally
     MS.Free;
   end;
+
+  l := Self.Count; // Indice da última nota já existente
 
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);

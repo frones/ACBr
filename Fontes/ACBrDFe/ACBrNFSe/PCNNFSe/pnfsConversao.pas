@@ -121,6 +121,8 @@ type
                           ttTribnoMunSuspensa, ttTribforaMunSuspensa,
                           ttExpServicos);
 
+  TnfseLogradouroLocalPrestacaoServico = (llpTomador, llpPrestador);
+
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
 function StrToStatusRPS(out ok: boolean; const s: String): TnfseStatusRPS;
@@ -143,7 +145,7 @@ function nfseRegimeEspecialTributacaoDescricao( const t: TnfseRegimeEspecialTrib
 function SimNaoToStr(const t: TnfseSimNao): String;
 function StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
 
-function StrToSimNaoInFisc(out ok: boolean; const s: String): TnfseSimNao;   {@/\@}
+function StrToSimNaoInFisc(out ok: boolean; const s: String): TnfseSimNao;
 
 function TipoRPSToStr(const t:TnfseTipoRPS): String;
 function StrToTipoRPS(out ok: boolean; const s: String): TnfseTipoRPS;

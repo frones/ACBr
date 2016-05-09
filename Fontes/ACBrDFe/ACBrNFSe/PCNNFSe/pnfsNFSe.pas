@@ -636,6 +636,7 @@ type
     FOptanteSimplesNacional: TnfseSimNao;
     //Provedor Conam
     FDataOptanteSimplesNacional: TDateTime;
+    FLogradouroLocalPrestacaoServico:TnfseLogradouroLocalPrestacaoServico;
     FIncentivadorCultural: TnfseSimNao;
     FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
@@ -702,6 +703,7 @@ type
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;
     //Provedor Conam
     property DataOptanteSimplesNacional: TDateTime read FDataOptanteSimplesNacional write FDataOptanteSimplesNacional;
+    property LogradouLocalPrestacaoServico:TnfseLogradouroLocalPrestacaoServico read FLogradouroLocalPrestacaoServico write FLogradouroLocalPrestacaoServico;
     property IncentivadorCultural: TnfseSimNao read FIncentivadorCultural write FIncentivadorCultural;
     property Producao: TnfseSimNao read FProducao write FProducao;
     property Status: TnfseStatusRps read FStatus write FStatus;
@@ -971,6 +973,8 @@ begin
  FModeloNFSe                   := '55';
  FCancelada                    := snNao;
  FTransportadora               := TDadosTransportadora.Create;
+
+ FLogradouroLocalPrestacaoServico := llpTomador;
 
  Femail                        := TemailCollection.Create(Self);
 end;

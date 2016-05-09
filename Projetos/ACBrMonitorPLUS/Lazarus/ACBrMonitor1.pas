@@ -5222,6 +5222,7 @@ begin
     if (UpperCase(Copy(Objeto, 1, 6)) = 'BOLETO') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'NFE')  or
        (UpperCase(Copy(Objeto, 1, 3)) = 'SAT') or
+       (UpperCase(Copy(Objeto, 1, 4)) = 'MDFE') or
        (UpperCase(Copy(Objeto, 1, 3)) = 'CTE')then
     begin
       Linha := Trim(fsProcessar.Text);

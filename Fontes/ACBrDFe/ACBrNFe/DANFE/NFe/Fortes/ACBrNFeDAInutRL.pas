@@ -218,15 +218,16 @@ begin
         FMostrarPreview := True;
         RLNFeInut.Prepare;
 
-        with RLPDFFilter1.DocumentInfo do
-        begin
-          Title := ACBrStr('Inutilização - Nota fiscal nº ' +
-                                      FormatFloat('000,000,000', FNFe.Ide.nNF));
-          KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
-                      '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi) +
-                      '; Destinatário: ' + FNFe.Dest.xNome +
-                      '; CNPJ: ' + FNFe.Dest.CNPJCPF );
-        end;
+        if FNFe <> nil then
+          with RLPDFFilter1.DocumentInfo do
+          begin
+            Title := ACBrStr('Inutilização - Nota fiscal nº ' +
+                                        FormatFloat('000,000,000', FNFe.Ide.nNF));
+            KeyWords := ACBrStr('Número:' + FormatFloat('000,000,000', FNFe.Ide.nNF) +
+                        '; Data de emissão: ' + FormatDateTime('dd/mm/yyyy', FNFe.Ide.dEmi) +
+                        '; Destinatário: ' + FNFe.Dest.xNome +
+                        '; CNPJ: ' + FNFe.Dest.CNPJCPF );
+          end;
 
         RLNFeInut.SaveToFile(AFile);
      finally

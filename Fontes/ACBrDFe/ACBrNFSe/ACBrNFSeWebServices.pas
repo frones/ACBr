@@ -1172,12 +1172,12 @@ begin
     else begin
       case FProvedor of
         proEgoverneISS: FvNotas := FvNotas +
-                         '<' + FPrefixo4 + 'Rps>' +
+//                         '<' + FPrefixo4 + 'Rps>' +
                           '<' + FPrefixo4 + 'NotaFiscal' +
                             RetornarConteudoEntre(RPS,
                               '<' + FPrefixo4 + 'NotaFiscal', '</Signature>') +
-                            '</Signature>'+
-                         '</' + FPrefixo4 + 'Rps>';
+                            '</Signature>' +
+                         '</' + FPrefixo4 + 'NotaFiscal>';
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
@@ -1974,15 +1974,16 @@ begin
   try
     case FProvedor of
       proSimplISS:    TagGrupo := 'GerarNovaNfseEnvio';
-      proEGoverneISS: TagGrupo := 'request';
+      proEGoverneISS: TagGrupo := 'EmissaoNotaFiscalRequest';
       proSP:          TagGrupo := 'PedidoEnvioRPS';
     else
       TagGrupo := 'GerarNfseEnvio';
     end;
 
     case FProvedor of
-      proBHISS: TagElemento := 'LoteRps';
-      proSP:    TagElemento := 'RPS';
+      proBHISS:       TagElemento := 'LoteRps';
+      proEGoverneISS: TagElemento := 'NotaFiscal';
+      proSP:          TagElemento := 'RPS';
     else
       TagElemento := 'Rps';
     end;
@@ -2002,6 +2003,8 @@ begin
     end;
 
     case FProvedor of
+      proEGoverneISS: FTagI := '<' + FPrefixo3 + TagGrupo + ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
+                                                            ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
       proSimplISS: FTagI := '<' + FPrefixo3 + TagGrupo + '>';
     else
       FTagI := '<' + FPrefixo3 + TagGrupo + FNameSpaceDad + '>';

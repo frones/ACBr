@@ -1050,7 +1050,10 @@ begin
     NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
     NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
     NFSe.Servico.Descricao                 := '';
-    NFSe.Servico.CodigoMunicipio           := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+    if FProvedor = proISSNet then
+      NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio')
+    else
+      NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
 //    NFSe.Servico.ResponsavelRetencao       := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
 //    NFSe.Servico.CodigoPais          := Leitor.rCampo(tcInt, 'CodigoPais');

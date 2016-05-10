@@ -59,7 +59,7 @@ type
 
 TACBrBALModelo = (balNenhum, balFilizola, balToledo, balToledo2090, balToledo2180, balUrano,
                   balLucasTec, balMagna, balDigitron, balMagellan, balUranoPOP, balLider, 
-                  balRinnert, balMuller, balSaturno, balAFTS ) ;
+                  balRinnert, balMuller, balSaturno, balAFTS, balGenerica ) ;
 TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
 { Componente ACBrBAL }
@@ -88,6 +88,10 @@ TACBrBAL = class( TACBrComponent )
     procedure SetModelo(const Value: TACBrBALModelo);
     procedure SetPorta(const Value: String);
     procedure SetAtivo(const Value: Boolean);
+    procedure SetPosIni(const Value: Integer);
+    procedure SetPosFim(const Value: Integer);
+    function GetPosIni: Integer;
+    function GetPosFim: Integer;
     procedure LeSerial(Sender: TObject); virtual ;
 
     function GetPorta: String;
@@ -121,6 +125,8 @@ TACBrBAL = class( TACBrComponent )
      property MonitorarBalanca : Boolean read fsMonitorarBalanca
         write SetMonitorarBalanca default False ;
      property ArqLOG : String      read GetArqLOG write SetArqLOG ;
+     property PosIni: Integer read GetPosini write SetPosIni default 0;
+     property PosFim: Integer read GetPosFim write SetPosFim default 0;
      { Instancia do Componente ACBrDevice, será passada para fsBAL.create }
      property Device : TACBrDevice read fsDevice ;
      property OnLePeso : TACBrBALLePeso read fsOnLePeso write fsOnLePeso;
@@ -129,7 +135,7 @@ TACBrBAL = class( TACBrComponent )
 implementation
 Uses ACBrUtil, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert, ACBrBALMuller,
      ACBrBALLucasTec,  ACBrBALToledo2180, ACBrBALMagna, ACBrBALDigitron,ACBrBALMagellan,
-     ACBrBALUranoPOP, ACBrBALLider, ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS,
+     ACBrBALUranoPOP, ACBrBALLider, ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS, ACBrBALGenerica,
      {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
      Math;
 
@@ -209,6 +215,7 @@ begin
      balMuller      : fsBAL := TACBrBALMuller.Create(Self);
      balSaturno     : fsBAL := TACBrBALSaturno.Create(Self);
      balAFTS        : fsBAL := TACBrBALAFTS.Create(Self);
+     balGenerica    : fsBAL := TACBrBALGenerica.Create(Self);
   else
      fsBAL := TACBrBALClass.create( Self ) ;
   end;
@@ -332,6 +339,26 @@ begin
   fsTimer.Interval := Value ;
   fsIntervalo      := fsTimer.Interval ;
   fsTimer.Enabled  := fsMonitorarBalanca and fsAtivo and (fsIntervalo > 0) ;
+end;
+
+procedure TACBrBAL.SetPosFim(const Value: Integer);
+begin
+   fsBAL.PosFim := Value;
+end;
+
+procedure TACBrBAL.SetPosIni(const Value: Integer);
+begin
+   fsBAL.PosIni := Value;
+end;
+
+function TACBrBAL.GetPosIni: Integer;
+begin
+   Result := fsBAL.PosIni;
+end;
+
+function TACBrBAL.GetPosFim: Integer;
+begin
+   Result := fsBAL.PosFim
 end;
 
 end.

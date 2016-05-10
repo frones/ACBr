@@ -66,6 +66,8 @@ TACBrBALClass = class
     fpUltimoPesoLido: Double;
     fpUltimaResposta: AnsiString;
     fpArqLOG: String;
+    fpPosIni: Integer;
+    fpPosFim: Integer;
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy  ; override ;
@@ -82,6 +84,8 @@ TACBrBALClass = class
     property UltimoPesoLido : Double read fpUltimoPesoLido ;
     property UltimaResposta : AnsiString read fpUltimaResposta ;
     property ArqLOG : String read fpArqLOG write fpArqLOG ;
+    property PosIni : Integer read fpPosIni write fpPosIni ;
+    property PosFim : Integer read fpPosFim write fpPosFim ;
 end;
 
 implementation

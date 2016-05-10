@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/05/16 ver: 0.0.195a
+
+-- ACBrBancoSicredi --
+[*] Adição do tratamento para motivos de rejeição no arquivo retorno, alterada função
+    CodMotivoRejeicaoToDescricao(). (sysbase)
+http://www.projetoacbr.com.br/forum/topic/29852-ajustes-unit-acbrbancosicredipas/
+
 Data: 04/05/16 ver: 0.0.194a
 
 -- ACBrBancoBancoob --

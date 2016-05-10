@@ -819,10 +819,11 @@ begin
 
         toRetornoRegistroRecusado: //03
           case AnsiIndexStr(CodMotivo,
-                           ['A1', 'A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C5', 'C6',
-                            'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7',
-                            'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9',
-                            'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 'L2', 'L3', 'L4']) of
+                           ['A1', 'A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C4', 'C7', 'C8', 
+                            'C9', 'C5', 'C6', 'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 
+                            'I5', 'I6', 'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 
+                            'J8', 'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 
+                            'L2', 'L3', 'L4']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2: Result:= 'A3-Agência depositária divergente: atualiza o cadastro de praças da agência cedente';
@@ -831,45 +832,48 @@ begin
             5: Result:= 'B6-Mensagem padrão não cadastrada';
             6: Result:= 'B7-Seu número inválido';
             7: Result:= 'B8-Percentual de multa inválido';
-            8: Result:= 'B9-Valor ou percentual de juros inválido';
-            9: Result:= 'C6-Título já liquidado';
-            10: Result:= 'D5-Quantidade inválida no pedido de bloquetos pré-impressos da cobrança sem registro';
-            11: Result:= 'D7-Cidade ou Estado do sacado não informado';
-            12: Result:= 'F6-Nosso número/Número da parcela fora de sequência - total de parcelas inválido';
-            13: Result:= 'H7-Espécie de documento necessita cedente ou avalista PJ';
-            14: Result:= 'H9-Dados do título não conferem com disquete';
-            15: Result:= 'I1-Sacado e sacador avalista são a mesma pessoa';
-            16: Result:= 'I2-Aguardar um dia útil após o vencimento para protestar';
-            17: Result:= 'I3-Data do vencimento rasurada';
-            18: Result:= 'I4-Vencimento - extenso não confere com número';
-            19: Result:= 'I5-Falta data de vencimento no título';
-            20: Result:= 'I6-DM/DMI sem comprovante autenticado ou declaração';
-            21: Result:= 'I7-Comprovante ilegível para conferência e microfilmagem';
-            22: Result:= 'I8-Nome solicitado não confere com emitente ou sacado';
-            23: Result:= 'I9-Confirmar se são 2 emitentes. Se sim, indicar os dados dos 2';
-            24: Result:= 'J1-Endereço do sacado igual ao do sacador ou do portador';
-            25: Result:= 'J2-Endereço do apresentante incompleto ou não informado';
-            26: Result:= 'J3-Rua/número inexistente no endereço';
-            27: Result:= 'J4-Falta endossodo favorecido para o apresentante';
-            28: Result:= 'J5-Data da emissão rasurada';
-            29: Result:= 'J6-Falta assinatura do sacador do título';
-            30: Result:= 'J7-Nome do apresentante não informado/incompleto/incorreto';
-            31: Result:= 'J8-Erro de preenchimento do título';
-            32: Result:= 'J9-Título com direito de regresso vencido';
-            33: Result:= 'K1-Título apresentado em duplicidade';
-            34: Result:= 'K2-Título ja protestado';
-            35: Result:= 'K3-Letra de cambio vencida - falta aceite do sacado';
-            36: Result:= 'K4-Falta declaração do saldo assinada no título';
-            37: Result:= 'K5-Contrato de cambio - Falta conta gráfica';
-            38: Result:= 'K6-Ausência do documento físico';
-            39: Result:= 'K7-Sacado falecido';
-            40: Result:= 'K8-Sacado apresentou quitação do título';
-            41: Result:= 'K9-Título de outra jurisdição territorial';
-            42: Result:= 'L1-Título com emissão anterior a concordata do sacado';
-            43: Result:= 'L2-Sacado consta na lista de falência';
-            44: Result:= 'L3-Apresentante não aceita publicação de edital';
-            45: Result:= 'L4-Dados do sacado em branco ou inválido';
-            46: Result:= 'C5-Título rejeitado pela centralizadora';
+            9: Result:= 'C5-Título rejeitado pela centralizadora';
+            10: Result:= 'C6-Título já liquidado';
+            11: Result:= 'D5-Quantidade inválida no pedido de bloquetos pré-impressos da cobrança sem registro';
+            12: Result:= 'D7-Cidade ou Estado do sacado não informado';
+            13: Result:= 'F6-Nosso número/Número da parcela fora de sequência - total de parcelas inválido';
+            14: Result:= 'H7-Espécie de documento necessita cedente ou avalista PJ';
+            15: Result:= 'H9-Dados do título não conferem com disquete';
+            16: Result:= 'I1-Sacado e sacador avalista são a mesma pessoa';
+            17: Result:= 'I2-Aguardar um dia útil após o vencimento para protestar';
+            18: Result:= 'I3-Data do vencimento rasurada';
+            19: Result:= 'I4-Vencimento - extenso não confere com número';
+            20: Result:= 'I5-Falta data de vencimento no título';
+            21: Result:= 'I6-DM/DMI sem comprovante autenticado ou declaração';
+            22: Result:= 'I7-Comprovante ilegível para conferência e microfilmagem';
+            23: Result:= 'I8-Nome solicitado não confere com emitente ou sacado';
+            24: Result:= 'I9-Confirmar se são 2 emitentes. Se sim, indicar os dados dos 2';
+            25: Result:= 'J1-Endereço do sacado igual ao do sacador ou do portador';
+            26: Result:= 'J2-Endereço do apresentante incompleto ou não informado';
+            27: Result:= 'J3-Rua/número inexistente no endereço';
+            28: Result:= 'J4-Falta endossodo favorecido para o apresentante';
+            29: Result:= 'J5-Data da emissão rasurada';
+            30: Result:= 'J6-Falta assinatura do sacador do título';
+            31: Result:= 'J7-Nome do apresentante não informado/incompleto/incorreto';
+            32: Result:= 'J8-Erro de preenchimento do título';
+            33: Result:= 'J9-Título com direito de regresso vencido';
+            34: Result:= 'K1-Título apresentado em duplicidade';
+            35: Result:= 'K2-Título ja protestado';
+            36: Result:= 'K3-Letra de cambio vencida - falta aceite do sacado';
+            37: Result:= 'K4-Falta declaração do saldo assinada no título';
+            38: Result:= 'K5-Contrato de cambio - Falta conta gráfica';
+            39: Result:= 'K6-Ausência do documento físico';
+            40: Result:= 'K7-Sacado falecido';
+            41: Result:= 'K8-Sacado apresentou quitação do título';
+            42: Result:= 'K9-Título de outra jurisdição territorial';
+            43: Result:= 'L1-Título com emissão anterior a concordata do sacado';
+            44: Result:= 'L2-Sacado consta na lista de falência';
+            45: Result:= 'L3-Apresentante não aceita publicação de edital';
+            46: Result:= 'L4-Dados do sacado em branco ou inválido';
+            47: Result:= 'C4-Título ainda não foi confirmado pela centralizadora';
+            48: Result:= 'C7-Título já baixado';
+            49: Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
+            50: Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
           else
             case StrToInt(CodMotivo) of
               02: Result:= '02-Código do registro detalhe inválido';
@@ -1020,10 +1024,10 @@ begin
           case AnsiIndexStr(CodMotivo,['A1', 'C6', 'C5', 'C7']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'C6-Título já liquidado';
-            2: Result:= 'C7-Título já baixado';
-            3: Result:= 'C5-Título rejeitado pela centralizadora';
+            2: Result:= 'C5-Título rejeitado pela centralizadora';
+            3: Result:= 'C7-Título já baixado';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,-1) of
               00: Result:= '00-Ocorrência aceita, baixa rejeitada';
               07: Result:= '07-Agência\Conta\dígito inválidos';
               08: Result:= '08-Nosso número inválido';
@@ -1087,9 +1091,10 @@ begin
 
         toRetornoInstrucaoRejeitada: //32
           case AnsiIndexStr(CodMotivo,
-                            ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
-                             'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8',
-                             'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8']) of
+                            ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 
+                             'B7', 'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9',
+                             'D1', 'D2', 'F7', 'F8', 'F9', 'G1', 'G5', 'G8', 'G9', 
+                             'H1', 'L3', 'L4', 'J8', 'I9', 'K9',  'J3']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';
@@ -1101,21 +1106,29 @@ begin
             8 : Result:= 'B7-Seu número inválido';
             9 : Result:= 'B8-Percentual de multa inválido';
             10 : Result:= 'B9-Valor ou percentual de juros inválido';
-            11 : Result:= 'C6-Título já liquidado';
-            12 : Result:= 'C7-Título já baixado';
-            13 : Result:= 'D2-Espécie de documento não permite protesto de título';
-            14 : Result:= 'F7-Falta de comprovante de prestação de serviço';
-            15 : Result:= 'F8-Nome do cedente incompleto/incorreto';
-            16 : Result:= 'F9-CNPJ/CPF incompatível com o nome do sacado/sacador avalista';
-            17 : Result:= 'G1-CNPJ/CPF do sacador incompatível com a espécie';
-            18 : Result:= 'G5-Praça de pagamento incompatível com o endereço';
-            19 : Result:= 'G8-Saldo maior que o valor do título';
-            20 : Result:= 'G9-Tipo de endosso inválido';
-            21 : Result:= 'H1-Nome do sacador incompleto/incorreto';
-            22 : Result:= 'L3-Apresentante não aceita publicação de edital';
-            23 : Result:= 'L4-Dados do sacado em branco ou inválido';
-            24 : Result:= 'J8-Erro de preenchimento do título';
-            25 : Result:= 'C5-Título rejeitado pela centralizadora';
+            11 : Result:= 'C4-Título ainda não foi confirmado pela centralizadora';
+            12 : Result:= 'C5-Título rejeitado pela centralizadora';
+            13 : Result:= 'C6-Título já liquidado';
+            14 : Result:= 'C7-Título já baixado';
+            15 : Result:= 'D2-Espécie de documento não permite protesto de título';
+            16 : Result:= 'F7-Falta de comprovante de prestação de serviço';
+            17 : Result:= 'F8-Nome do cedente incompleto/incorreto';
+            18 : Result:= 'F9-CNPJ/CPF incompatível com o nome do sacado/sacador avalista';
+            19 : Result:= 'G1-CNPJ/CPF do sacador incompatível com a espécie';
+            20 : Result:= 'G5-Praça de pagamento incompatível com o endereço';
+            21 : Result:= 'G8-Saldo maior que o valor do título';
+            22 : Result:= 'G9-Tipo de endosso inválido';
+            23 : Result:= 'H1-Nome do sacador incompleto/incorreto';
+            24 : Result:= 'L3-Apresentante não aceita publicação de edital';
+            25 : Result:= 'L4-Dados do sacado em branco ou inválido';
+            26 : Result:= 'J8-Erro de preenchimento do título';
+            27 : Result:= 'I9-Não previsto no manual';
+            28 : Result:= 'K9-Título de outra jurisdição territorial';
+            29 : Result:= 'A3-Cooperativa/agência depositária divergente: atualiza o cadastro de praças da Coop./agência beneficiária';
+            30 : Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
+            31 : Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
+            32 : Result:= 'J3-Rua/Número inexistente no endereço';
+            33 : Result:= 'D1-Título dentro do prazo de vencimento (em dia)';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';

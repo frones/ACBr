@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/05/2016
+-- pcnCFeR, pcnCFeW --
+[*] Ajuste para processar a taga "CEST", somente se a versão do XML for 0.08
+    http://www.projetoacbr.com.br/forum/topic/28841-utilizar-cest/
+    (por: DSA)
+
 Data: 04/05/2016
 -- ACBrSAT --
 [*] Ajustes na gravação do Log.     (por: DSA)

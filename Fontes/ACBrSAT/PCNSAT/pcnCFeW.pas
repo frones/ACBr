@@ -297,7 +297,7 @@ begin
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 08, 14, 0, CFe.Det[i].Prod.cEAN, DSC_CEAN);
   Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, CFe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08, 0, CFe.Det[i].Prod.NCM, DSC_NCM);
-  if CFe.ide.dEmi >= EncodeDate(2017,01,01) then
+  if CFe.infCFe.versaoDadosEnt >= 0.08 then
      Gerador.wCampo(tcStr, 'I05w ', 'CEST    ', 02, 07, 0, CFe.Det[i].Prod.CEST, DSC_CEST);
   Gerador.wCampo(tcEsp, 'I06 ', 'CFOP    ', 04, 04, 1, somenteNumeros(CFe.Det[i].Prod.CFOP), DSC_CFOP);
   Gerador.wCampo(tcStr, 'I07 ', 'uCom    ', 01, 06, 1, CFe.Det[i].Prod.uCom, DSC_UCOM);

@@ -957,7 +957,13 @@ var
   intFor: integer;
 begin
   if FInicializado then exit;
-  
+
+  if FDT_INI = 0 then
+     raise Exception.Create( ACBrStr('Informe a data inicial das informações contidas no arquivo!'));
+
+  if FDT_FIN = 0 then
+     raise Exception.Create( ACBrStr('Informe a data final das informações contidas no arquivo!'));
+
   if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
      raise Exception.Create( ACBrStr('Caminho ou nome do arquivo não informado!'));
 

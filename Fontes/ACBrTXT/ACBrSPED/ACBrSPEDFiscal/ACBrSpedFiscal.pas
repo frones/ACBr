@@ -438,6 +438,12 @@ procedure TACBrSPEDFiscal.IniciaGeracao;
 begin
   if FInicializado then exit ;
 
+  if FDT_INI = 0 then
+    raise EACBrSPEDFiscalException.Create(ACBrStr('Informe a data inicial das informações contidas no arquivo!'));
+
+  if FDT_FIN = 0 then
+    raise EACBrSPEDFiscalException.Create(ACBrStr('Informe a data final das informações contidas no arquivo!'));
+
   if (Trim(FArquivo) = '') or (Trim(FPath) = '') then
     raise EACBrSPEDFiscalException.Create(ACBrStr('Caminho ou nome do arquivo não informado!'));
 
@@ -455,10 +461,6 @@ begin
   InicializaBloco( Bloco_9 ) ;
 
   ///
-  FACBrTXT.Check(FDT_INI > 0, 'CHECAGEM INICIAL: Informe a data '
-    + 'inicial das informações contidas no arquivo!');
-  FACBrTXT.Check(FDT_FIN > 0, 'CHECAGEM INICIAL: Informe a data '
-    + 'final das informações contidas no arquivo!');
   FACBrTXT.Check(DayOf(FDT_INI) = 1, 'CHECAGEM INICIAL: A data inicial deve '
     + 'corresponder ao primeiro dia do mês informado!');
   FACBrTXT.Check(FDT_FIN >= FDT_INI, 'CHECAGEM INICIAL: A data final deve se '

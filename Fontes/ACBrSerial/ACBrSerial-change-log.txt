@@ -39,6 +39,47 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/05/2016
+-- ACBrECFVirtual --
+[+] Adicionado suporte aos registradores:
+    - NumCFC (Numero Total de Cupons Cancelados)
+    - NumGNFC (Número de Comprovantes não fiscais cancelados)
+    - TotalCancelamentosOPNF (Valor Total de Cancelamentos em Operações não fiscais)
+[+] Adicionada sobrecarga no método "FechaNaoFiscal", para permitir o fechamento
+    de Comprovantes não fiscais, que não exigam pagamento (Sangria, Suprimento)
+[+] Correção de Bug nos métodos "Sangria" e "Suprimento".
+    O valor da Sangria/Surpimento também era somado em uma Forma de Pagamento
+[*] Método: "CancelaCupom", modificado para realizar o corretamente o
+    cancelamento de Operações não fiscais
+    (por: DSA)
+
+-- ACBrECFVirtualBuffer --
+[*] Método: "AddBufferRelatorio", modificado para exibir:
+    - Número de Cancelamentos Não Fiscal
+    - Total Não Fiscal
+    - Total Não Fiscal Cancelado
+    (por: DSA)
+
+Data: 05/05/2016
+-- ACBrECF, ACBrECFClass --
+[+] Adicionada a propriedade "NumMaxLinhasRodape: Integer (readonly)", que
+    retornará o número máximo de Linhas suportado nas Observações do Rodapé,
+    para o Modelo de ECF (geralmente 8 linhas)
+[*] Método "FechaCupom", modificado para fazer uso de "NumMaxLinhasRodape"
+    (por: DSA)
+
+-- ACBrECFEscECF --
+[*] Método "FechaCupom" modificado, para efetuar tratamento dos caracteres de
+    controle de Impressão
+[-] Método "Ativar", correção na detectação da mudança de protocolo DLL/COM
+[*] Método "Ativar", detecção de "NumMaxLinhasRodape = 20" no caso de Bematech
+    01.00.02
+    (por: DSA)
+
+-- ACBrECFVirtual --
+[*] Modificado para que "NumMaxLinhasRodape := 0" (sem limites)
+    (por: DSA)
+
 Data: 19/04/2016
 -- ACBrECFEscECF --
 [-] Metodo LinhaRelatorioGerencial, aplicado workaround para bug em Bematech

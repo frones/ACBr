@@ -788,6 +788,19 @@ begin
       end;
     end;
 
+    if FProvedor = proSpeedGov then
+    begin
+      i := 0;
+      while Leitor.rExtrai(2, 'MensagemRetorno', '', i + 1) <> '' do
+      begin
+        ListaNFSe.FMsgRetorno.Add;
+        ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+        ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+        ListaNFSe.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+        inc(i);
+      end;
+    end;
+
   except
     Result := False;
   end;

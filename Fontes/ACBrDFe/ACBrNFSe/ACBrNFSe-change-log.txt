@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2016
+[*] Alterações visando atender os provedores da versão 2.00 da ABRASF e o 
+    provedor EGoverneISS.
+    por: Italo Jurisato Junior
+
 05/05/2016
 [*] Alterações visando as novas opções de configuração contidas nos arquivos INI
     do provedores para definir se a mensagem de cabeçalho e de dados serão

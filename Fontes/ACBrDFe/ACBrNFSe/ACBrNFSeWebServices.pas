@@ -3601,8 +3601,9 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
-    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
-       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
+//    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
+//       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
+    if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
       Result := FConsSitLoteRPS.Executar;
 
@@ -3643,8 +3644,9 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
-    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
-       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
+//    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
+//       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
+    if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
       Result := FConsSitLoteRPS.Executar;
 

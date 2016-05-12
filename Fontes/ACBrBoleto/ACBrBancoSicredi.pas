@@ -819,11 +819,11 @@ begin
 
         toRetornoRegistroRecusado: //03
           case AnsiIndexStr(CodMotivo,
-                           ['A1', 'A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C4', 'C7', 'C8', 
-                            'C9', 'C5', 'C6', 'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 
-                            'I5', 'I6', 'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 
-                            'J8', 'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 
-                            'L2', 'L3', 'L4']) of
+                           ['A1', 'A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C5', 'C6',
+                            'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6',
+                            'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8',
+                            'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1',
+                            'L2', 'L3', 'L4', 'C4', 'C7', 'C8', 'C9']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2: Result:= 'A3-Agência depositária divergente: atualiza o cadastro de praças da agência cedente';
@@ -832,6 +832,7 @@ begin
             5: Result:= 'B6-Mensagem padrão não cadastrada';
             6: Result:= 'B7-Seu número inválido';
             7: Result:= 'B8-Percentual de multa inválido';
+            8: Result:= 'B9-Valor ou percentual de juros inválido';
             9: Result:= 'C5-Título rejeitado pela centralizadora';
             10: Result:= 'C6-Título já liquidado';
             11: Result:= 'D5-Quantidade inválida no pedido de bloquetos pré-impressos da cobrança sem registro';
@@ -1091,10 +1092,10 @@ begin
 
         toRetornoInstrucaoRejeitada: //32
           case AnsiIndexStr(CodMotivo,
-                            ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 
-                             'B7', 'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9',
-                             'D1', 'D2', 'F7', 'F8', 'F9', 'G1', 'G5', 'G8', 'G9', 
-                             'H1', 'L3', 'L4', 'J8', 'I9', 'K9',  'J3']) of
+                            ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
+                             'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8',
+                             'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8',
+                             'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';

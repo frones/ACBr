@@ -100,8 +100,7 @@ var
 begin
   { Banestes não usa digitos verificadores para agência e conta }
   cLivreAsbace := copy(ACBrTitulo.NossoNumero,1,8)                       +
-                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 1, 10) +
-                  ACBrTitulo.ACBrBoleto.Cedente.ContaDigito              + 
+                  copy(trim(ACBrTitulo.ACBrBoleto.Cedente.Conta), 1, 11) +
                   IfThen(ACBrtitulo.ACBrBoleto.Cedente.Modalidade = '',
                          '4', ACBrtitulo.ACBrBoleto.Cedente.Modalidade)  +
                   IntToStrZero(fpNumero,3);
@@ -221,7 +220,7 @@ begin
                'REMESSA'                                          + // Literal de Remessa
                '01'                                               + // Código do Tipo de Serviço
                PadRight('COBRANCA', 15 )                          +
-               PadLeft(OnlyNumber(Copy(Trim(Conta),1,10)+contadigito), 11,'0')+ // Codigo da Empresa no Banco
+               PadLeft(OnlyNumber(Copy(Trim(Conta),1,11)), 11,'0')+ // Codigo da Empresa no Banco
                space(9)                                           + // COMPLEMENTO DO REGISTRO
                PadRight(Nome, 30)                                 + // Nome da Empresa
                IntToStrzero(Numero,3)                             +

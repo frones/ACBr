@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/05/16 ver: 0.0.196a
+
+-- ACBrBancoSicredi --
+[-] Ajuste no tratamento para motivos de rejeição no arquivo retorno, alterada função
+    CodMotivoRejeicaoToDescricao(). (sysbase)
+http://www.projetoacbr.com.br/forum/topic/29852-ajustes-unit-acbrbancosicredipas/
+
+-- ACBrBancoBanestes --
+[-] Ajuste informação dos dados da conta no arquivo remessa CNAB400. (denerbuzato)
+http://www.projetoacbr.com.br/forum/topic/29908-corre%C3%A7%C3%A3o-acbrbancobanestes-n%C3%A3o-usar-contadigito/
+
+
 Data: 09/05/16 ver: 0.0.195a
 
 -- ACBrBancoSicredi --

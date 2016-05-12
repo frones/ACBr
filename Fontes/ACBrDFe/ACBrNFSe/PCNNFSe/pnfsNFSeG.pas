@@ -281,8 +281,7 @@ begin
 
   // Valor do atributo Id ======================================================
   case Provedor of
-    proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) +
-                         Copy(Notas, Pos('<InfDeclaracaoPrestacaoServico Id="', Notas) + 40, 14) +
+    proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) + CNPJ +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
     proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
   else

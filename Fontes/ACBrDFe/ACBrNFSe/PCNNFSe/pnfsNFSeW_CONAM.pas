@@ -162,7 +162,7 @@ begin
 
   CpfCnpj := UpperCase(StringReplace(StringReplace(StringReplace(NFSe.Tomador.IdentificacaoTomador.CpfCnpj, '.', '', [rfReplaceAll]), '-', '', [rfReplaceAll]), '/', '', [rfReplaceAll]));
 
-  Gerador.wCampoNFSe(tcStr, '', 'CpfCnpTom'  , 01, 14, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+  Gerador.wCampoNFSe(tcStr, '', 'CpfCnpTom'  , 01, 14, 1, CpfCnpj, '');
   Gerador.wCampoNFSe(tcStr, '', 'RazSocTom'  , 01, 60, 1, NFSe.Tomador.RazaoSocial, '');
   Gerador.wCampoNFSe(tcStr, '', 'TipoLogtom' , 01, 10, 1, NFSe.Tomador.Endereco.TipoLogradouro, '');
   Gerador.wCampoNFSe(tcStr, '', 'LogTom'     , 01, 60, 1, NFSe.Tomador.Endereco.Endereco, '');

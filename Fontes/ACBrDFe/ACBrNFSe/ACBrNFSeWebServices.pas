@@ -2032,6 +2032,10 @@ begin
   begin
     DefinirSignatureNode('');
 
+    case FProvedor of
+      proPublica: TagGrupo := 'Rps></GerarNfseEnvio';
+    end;
+
     FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                               FPrefixo3 + TagGrupo,
                               FPrefixo3 + TagElemento,

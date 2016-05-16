@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/05/2016
+[*] Alterações visando simplificar o código e corrigir um erro no envio de
+    lote, provedor Betha.
+    por: Italo Jurisato Junior
+
 13/05/2016
 [*] Alterações visando realizar a assinatura do RPS no lugar correto.
     Método Gerar do provedor Publica.

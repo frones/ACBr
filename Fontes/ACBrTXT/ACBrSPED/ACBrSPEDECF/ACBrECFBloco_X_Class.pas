@@ -556,7 +556,7 @@ begin
       begin
         Add(LFill('X310')      +
             LFill(NOME)        +
-            LFill(PAIS)        +
+            LFill(PAIS,3)      +
             VLFill(VL_OPER,19) +
             LFill(COND_PES,2));
       end;
@@ -613,7 +613,7 @@ begin
       begin
         Add(LFill('X330')      +
             LFill(NOME)        +
-            LFill(PAIS)        +
+            LFill(PAIS,3)      +
             VLFill(VL_OPER,19) +
             LFill(COND_PES,2));
       end;
@@ -637,7 +637,7 @@ begin
            LFill(RAZ_SOCIAL)      +
            LFill(NIF)             +
            LFill(IND_CONTROLE, 1) +
-           LFill(PAIS)            +
+           LFill(PAIS,3)          +
            LFill(IND_ISEN_PETR)   +
            LFill(IND_CONSOL)      +
            LFill(MOT_NAO_CONSOL));
@@ -889,7 +889,7 @@ begin
       with FRegistroX001.RegistroX410.Items[intFor] do
       begin
         Add(LFill('X410')        +
-            LFill(PAIS)          +
+            LFill(PAIS,3)        +
             LFill(IND_HOME_DISP) +
             LFill(IND_SERV_DISP));
       end;
@@ -910,7 +910,7 @@ begin
       begin
         Add(LFill('X420')              +
             LFill(TIP_ROY)             +
-            LFill(PAIS)                +
+            LFill(PAIS,3)              +
             VLFill(VL_EXPL_DIR_SW,19)  +
             VLFill(VL_EXPL_DIR_AUT,19) +
             VLFill(VL_EXPL_MARCA,19)   +
@@ -935,7 +935,7 @@ begin
       with FRegistroX001.RegistroX430.Items[intFor] do
       begin
         Add(LFill('X430')                     +
-            LFill(PAIS)                       +
+            LFill(PAIS,3)                     +
             VLFill(VL_SERV_ASSIST,19)         +
             VLFill(VL_SERV_SEM_ASSIST,19)     +
             VLFill(VL_SERV_SEM_ASSIST_EXT,19) +
@@ -960,7 +960,7 @@ begin
       with FRegistroX001.RegistroX450.Items[intFor] do
       begin
         Add(LFill('X450')                     +
-            LFill(PAIS)                       +
+            LFill(PAIS,3)                     +
             VLFill(VL_SERV_ASSIST,19)         +
             VLFill(VL_SERV_SEM_ASSIST,19)     +
             VLFill(VL_SERV_SEM_ASSIST_EXT,19) +

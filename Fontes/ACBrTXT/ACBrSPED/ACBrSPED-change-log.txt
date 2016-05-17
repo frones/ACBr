@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 17/05/2016
+[-] Correções no ACBrSPEDECF bloco x e y
+		http://www.projetoacbr.com.br/forum/topic/30062-corre%C3%A7%C3%A3o-nos-blocos-x-e-y/
+		por : Juliomar Marchetti
+		
 Data 02/05/2016
 -- ACBrSPEDPisCofins
 [-] Correção para os campos COD_CTA que estava preenchendo com zeros quando vazios

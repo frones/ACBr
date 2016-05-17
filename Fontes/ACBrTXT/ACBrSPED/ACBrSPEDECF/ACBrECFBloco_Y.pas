@@ -348,6 +348,11 @@ type
     fPERC_CAP_VOT: variant;
     fQUALIF: string;
     fQUALIF_REP_LEG: integer;
+    fVL_IR_RET: variant;
+    fVL_JUR_CAP: variant;
+    fVL_REM_TRAB: variant;
+    fVL_LUC_DIV: variant;
+    fVL_DEM_REND: variant;
   public
     property DT_ALT_SOC: TDateTime read fDT_ALT_SOC write fDT_ALT_SOC;
     property DT_FIM_SOC: TDateTime read fDT_FIM_SOC write fDT_FIM_SOC;
@@ -360,6 +365,11 @@ type
     property PERC_CAP_VOT: variant read fPERC_CAP_VOT write fPERC_CAP_VOT;
     property CPF_REP_LEG: string read fCPF_REP_LEG write fCPF_REP_LEG;
     property QUALIF_REP_LEG: integer read fQUALIF_REP_LEG write fQUALIF_REP_LEG;
+    property VL_REM_TRAB: variant read fVL_REM_TRAB write fVL_REM_TRAB;
+    property VL_LUC_DIV: variant read fVL_LUC_DIV write fVL_LUC_DIV;
+    property VL_JUR_CAP: variant read fVL_JUR_CAP write fVL_JUR_CAP;
+    property VL_DEM_REND: variant read fVL_DEM_REND write fVL_DEM_REND;
+    property VL_IR_RET: variant read fVL_IR_RET write fVL_IR_RET;
   end;
 
   /// Registro Y600 - Lista

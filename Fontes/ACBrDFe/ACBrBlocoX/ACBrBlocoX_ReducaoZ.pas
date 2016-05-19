@@ -156,16 +156,16 @@ begin
     FGerador.wCampo(tcStr, '', 'Marca', 0, 0, 1, Marca);
     FGerador.wCampo(tcStr, '', 'Modelo', 0, 0, 1, Modelo);
     FGerador.wCampo(tcStr, '', 'Versao', 0, 0, 1, Versao);
+    FGerador.wCampo(tcStr, '', 'Caixa', 0, 0, 1, Caixa);
   end;
-  FGerador.wGrupo('/Ecf');
 
   FGerador.wGrupo('DadosReducaoZ');
-  FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FormatDateBr(DataReferencia));
+  FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferencia));
   FGerador.wCampo(tcStr, '', 'CRZ', 1, 6, 1, CRZ);
   FGerador.wCampo(tcStr, '', 'COO', 1, 6, 1, COO);
   FGerador.wCampo(tcStr, '', 'CRO', 1, 9, 1, CRO);
-  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, FloatToIntStr(VendaBrutaDiaria, 2));
-  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, FloatToIntStr(GT, 2));
+  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, FormatFloat('0.00',VendaBrutaDiaria));
+  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, FormatFloat('0.00',GT));
 
   if TotalizadoresParciais.Count > 0 then
   begin
@@ -174,8 +174,8 @@ begin
     for I := 0 to TotalizadoresParciais.Count - 1 do
     begin
       FGerador.wGrupo('TotalizadorParcial');
-      FGerador.wCampo(tcStr, '', 'Identificacao', 0,  0, 1, TotalizadoresParciais[I].Identificacao);
-      FGerador.wCampo(tcStr, '', 'Valor',       1, 11, 1, FloatToIntStr(TotalizadoresParciais[I].Valor, 2));
+      FGerador.wCampo(tcStr, '', 'Nome', 0,  0, 1, TotalizadoresParciais[I].Identificacao);
+      FGerador.wCampo(tcStr, '', 'Valor',       1, 11, 1, FormatFloat('0.00',TotalizadoresParciais[I].Valor));
 
       with TotalizadoresParciais[I] do
       begin
@@ -186,10 +186,11 @@ begin
           begin
             FGerador.wGrupo('Produto');
             FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Produtos[X].Descricao);
-            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Produtos[X].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Produtos[X].Codigo.Tipo) + '"');
-            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, Produtos[X].Quantidade);
+            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Produtos[X].Codigo.Numero);
+            FGerador.wCampo(tcStr, '', 'CodigoTipo',    0, 0, 1,   TipoCodigoToStr(Produtos[X].Codigo.Tipo));
+            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.00',Produtos[X].Quantidade));
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Produtos[X].Unidade);
-            FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FloatToIntStr(Produtos[X].ValorUnitario, 2));
+            FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorUnitario));
             FGerador.wGrupo('/Produto');
           end;
         end;
@@ -200,10 +201,11 @@ begin
           begin
             FGerador.wGrupo('Servico');
             FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Servicos[X].Descricao);
-            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Servicos[X].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Servicos[X].Codigo.Tipo) + '"');
-            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, Servicos[X].Quantidade);
+            FGerador.wCampo(tcStr, '', 'Codigo',        0, 0, 1, Servicos[X].Codigo.Numero);
+            FGerador.wCampo(tcStr, '', 'CodigoTipo',    0, 0, 1, TipoCodigoToStr(Servicos[X].Codigo.Tipo));
+            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.00',Servicos[X].Quantidade));
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Servicos[X].Unidade);
-            FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FloatToIntStr(Servicos[X].ValorUnitario, 2));
+            FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorUnitario));
             FGerador.wGrupo('/Servico');
           end;
         end;
@@ -216,6 +218,8 @@ begin
   end;
 
   FGerador.wGrupo('/DadosReducaoZ');
+  FGerador.wGrupo('/Ecf');
+
   FGerador.wGrupo('/Mensagem');
   FGerador.wGrupo('/ReducaoZ');
 

@@ -88,8 +88,8 @@ begin
   GerarDadosPafECF;
 
   FGerador.wGrupo('DadosEstoque');
-  FGerador.wCampo(tcStr, '', 'DataReferenciaInicial', 0, 0, 1, FormatDateBr(DataReferenciaInicial));
-  FGerador.wCampo(tcStr, '', 'DataReferenciaFinal', 0, 0, 1, FormatDateBr(DataReferenciaFinal));
+  FGerador.wCampo(tcStr, '', 'DataReferenciaInicial', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferenciaInicial));
+  FGerador.wCampo(tcStr, '', 'DataReferenciaFinal', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferenciaFinal));
 
   if Produtos.Count > 0 then
   begin
@@ -98,15 +98,16 @@ begin
     begin
       FGerador.wGrupo('Produto');
       FGerador.wCampo(tcStr, '', 'Descricao', 0, 0, 1, Produtos[I].Descricao);
-      FGerador.wCampo(tcStr, '', 'Codigo', 0, 0, 1, Produtos[I].Codigo.Numero, '', True, 'Tipo="' + TipoCodigoToStr(Produtos[I].Codigo.Tipo) + '"');
-      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, Produtos[I].Quantidade);
+      FGerador.wCampo(tcStr, '', 'Codigo', 0, 0, 1, Produtos[I].Codigo.Numero);
+      FGerador.wCampo(tcStr, '', 'CodigoTipo', 0, 0, 1,TipoCodigoToStr(Produtos[I].Codigo.Tipo));
+      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.00',Abs(Produtos[I].Quantidade)));
       FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Produtos[I].Unidade);
-      FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, FloatToIntStr(Produtos[I].ValorUnitario, 2));
+      FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, formatfloat('0.00',Produtos[I].ValorUnitario));
       FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));
-      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FloatToIntStr(Produtos[I].Aliquota, 2));
-      FGerador.wCampo(tcStr, '', 'IndicadorArredondamento', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, '1', '0'));
+      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FormatFloat('0.00',Produtos[I].Aliquota));
+      FGerador.wCampo(tcStr, '', 'IsArredondado', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, 'true', 'false'));
       FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Produtos[I].Ippt));
-      FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'P', 'N'));
+      FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'Positivo', 'Negativo'));
       FGerador.wGrupo('/Produto');
     end;
     FGerador.wGrupo('/Produtos');

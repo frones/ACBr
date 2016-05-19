@@ -81,6 +81,7 @@ const
     FNumeroFabricacao: String;
     FModelo: String;
     FMarca: String;
+    FCaixa: String;
     FTipo: String;
   published
     property NumeroFabricacao: String read FNumeroFabricacao write FNumeroFabricacao;
@@ -88,6 +89,7 @@ const
     property Marca: String read FMarca write FMarca;
     property Modelo: String read FModelo write FModelo;
     property Versao: String read FVersao write FVersao;
+    property Caixa: String read FCaixa write FCaixa;
   end;
 
 

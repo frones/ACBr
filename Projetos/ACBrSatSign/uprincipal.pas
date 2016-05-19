@@ -23,12 +23,14 @@ type
     btnCopiar: TSpeedButton;
     btnCriarAssinatura: TBitBtn;
     edtCertificado: TEdit;
+    edtSenhaCertificado: TEdit;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
     edtCNPJSoftwareHouse: TMaskEdit;
     edtCNPJCliente: TMaskEdit;
+    Label5: TLabel;
     memCodigoVinculacao: TMemo;
     OpenDialog1: TOpenDialog;
     rbtTipoCapicom: TRadioButton;
@@ -95,6 +97,7 @@ begin
     FACBrDFe.Configuracoes.Geral.SSLLib             := libOpenSSL;
     FACBrDFe.Configuracoes.Certificados.ArquivoPFX  := edtCertificado.Text;
   end;
+  ACBrBlocoX1.Configuracoes.Certificados.Senha := edtSenhaCertificado.Text;
 end;
 
 procedure TfrmPrincipal.GravarConfiguracoes;
@@ -105,7 +108,8 @@ begin
   try
     F.WriteString('CONFIG', 'Certificado', edtCertificado.Text);
     F.WriteString('CONFIG', 'CNPJ_SH',     edtCNPJSoftwareHouse.Text);
-    F.WriteString('CONFIG', 'Tipo',        IfThen(rbtTipoCapicom.Checked, TIPO_CAPICOM, TIPO_OPENSSL))
+    F.WriteString('CONFIG', 'Tipo',        IfThen(rbtTipoCapicom.Checked, TIPO_CAPICOM, TIPO_OPENSSL));
+    GravaINICrypt(F, 'Certificado', 'Senha', edtSenhaCertificado.Text, _C);
   finally
     F.Free;
   end;
@@ -120,6 +124,8 @@ begin
     edtCertificado.Text       := F.ReadString('CONFIG', 'Certificado', '');
     edtCNPJSoftwareHouse.Text := F.ReadString('CONFIG', 'CNPJ_SH', '');
     rbtTipoCapicom.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_CAPICOM;
+    rbtTipoOpenSSL.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_OPENSSL;
+    edtSenhaCertificado.Text := LeINICrypt(F, 'Certificado', 'Senha', _C);
   finally
     F.Free;
   end;

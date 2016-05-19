@@ -291,7 +291,6 @@ begin
 
    proABase,
    proActcon,
-   proNEAInformatica,
    proPronimv2,
    proVirtual: begin
                  Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes  ', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
@@ -307,8 +306,9 @@ begin
 
          case FProvedor of
            proISSe,
-           proSystemPro,
+           proNEAInformatica,
            proProdata,
+           proSystemPro,
            proVitoria,
            proTecnos: begin
                         Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis       ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, '');

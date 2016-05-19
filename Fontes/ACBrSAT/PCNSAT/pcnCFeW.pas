@@ -376,7 +376,7 @@ begin
   else
   begin
     case CFe.Det[i].Imposto.ICMS.CSOSN of
-       csosn102, csosn300, csosn500 :
+       csosn102, csosn300, csosn400, csosn500 :
           begin
             Gerador.wGrupo('ICMSSN102');
             Gerador.wCampo(tcStr, 'N06', 'Orig    ', 01, 01, 1, OrigTOStr(CFe.Det[i].Imposto.ICMS.orig), DSC_ORIG);

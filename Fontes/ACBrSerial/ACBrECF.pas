@@ -3456,7 +3456,10 @@ begin
         ' EI' + FormatFloat( '0000000.000', PostoCombustivel[I].EI ) +
         ' EF' + FormatFloat( '0000000.000', PostoCombustivel[I].EF ) +
         ' V' + FormatFloat( '0.000', PostoCombustivel[I].Volume ) +
-        ifthen( PostoCombustivel[I].Automatico, 'A', 'M' );
+        ifthen( PostoCombustivel[I].Automatico, 'A', '' );
+
+        if not PostoCombustivel[I].Automatico then
+          Rodape := Rodape + ifthen( PostoCombustivel[I].Manual, 'M', '' ) ;
       end;
     end;
   end;

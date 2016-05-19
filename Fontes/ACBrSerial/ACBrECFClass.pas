@@ -36,7 +36,7 @@
 Unit ACBrECFClass ;
 
 interface
-uses 
+uses
      SysUtils, Classes, Contnrs,
      ACBrDevice, ACBrConsts, ACBrBase
      {$IFNDEF NOGUI}
@@ -75,26 +75,23 @@ type
   { TACBRAbastecimento }
 
   TACBRRodapeAbastecimento = class( TPersistent )
-       private
-            FEI: Double;
-            FBico: Integer;
-            FVolume: Double;
-            FEF: Double;
+  private
+    FEI: Double;
+    FBico: Integer;
+    FVolume: Double;
+    FEF: Double;
     FAutomatico: Boolean;
-            procedure SetBico(const Value: Integer);
-            procedure SetEF(const Value: Double);
-            procedure SetEI(const Value: Double);
-            procedure SetVolume(const Value: Double);
-    procedure SetAutomatico(const Value: Boolean);
-       public
-           property Bico: Integer read FBico write SetBico;
-           property EI: Double read FEI write SetEI;
-           property EF: Double read FEF write SetEF;
-           property Volume: Double read FVolume write SetVolume;
-           property Automatico: Boolean read FAutomatico write SetAutomatico;
+    FManual: Boolean;
+  public
+    property Bico: Integer read FBico write FBico;
+    property EI: Double read FEI write FEI;
+    property EF: Double read FEF write FEF;
+    property Volume: Double read FVolume write FVolume;
+    property Automatico: Boolean read FAutomatico write FAutomatico;
+    property Manual: Boolean read FManual write FManual;
   end;
 
-   { TACBRAbastecimentos }
+  { TACBRAbastecimentos }
 
   TACBRRodapeAbastecimentos = class(TObjectList)
   private
@@ -174,7 +171,7 @@ TACBrECFRodape = class( TPersistent )
     fsNotaLegalDF: TACBrECFRodapeNotaLegalDF;
     fsParaibaLegal: Boolean;
     fsImposto: TACBrECFRodapeImposto;
-    fsPostoComustivel: TACBRRodapeAbastecimentos; 
+    fsPostoComustivel: TACBRRodapeAbastecimentos;
     procedure SetMD5(AValue : String) ;
   public
     constructor Create;
@@ -354,7 +351,7 @@ TACBrECFRelatorioGerencial = class
  public
     constructor create ;
     procedure Assign( ARelatorioGerencial : TACBrECFRelatorioGerencial ) ;
-    
+
     property Indice    : String read fsIndice    write fsIndice ;
     property Descricao : String read fsDescricao write fsDescricao ;
     property Contador : Integer read fsContador write fsContador;
@@ -391,7 +388,7 @@ TACBrECFComprovanteNaoFiscal = class
  public
     constructor create ;
     procedure Assign( AComprovanteNaoFiscal : TACBrECFComprovanteNaoFiscal ) ;
-    
+
     property Indice    : String read fsIndice    write fsIndice ;
     property Descricao : String read fsDescricao write fsDescricao ;
     property PermiteVinculado : Boolean read fsPermiteVinculado
@@ -889,7 +886,7 @@ TACBrECFClass = class
           property OnDrawFormMsg: TACBrECFMsgAguarde read fsOnDrawFormMsg write fsOnDrawFormMsg;
         {$ENDIF}
     {$ENDIF}
-    
+
     { Proriedades de uso interno, configurando o funcionamento da classe,
       atribuidas pelo Objeto TACBrECF dono dessa classe }
 //    property OnMsgErro : TACBrECFExibeErroEvent read  fpOnMsgErro
@@ -1180,7 +1177,7 @@ TACBrECFClass = class
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString = '' ) ;  virtual ;
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char) ;
-       Virtual ;{ A -> Acrescimo D -> Desconto } 
+       Virtual ;{ A -> Acrescimo D -> Desconto }
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; virtual ;
@@ -1194,8 +1191,8 @@ TACBrECFClass = class
     Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; virtual ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; virtual ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
-      Quantidade : Double) ; Virtual ; 
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; Virtual ; 
+      Quantidade : Double) ; Virtual ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; Virtual ;
     Property Subtotal  : Double read GetSubTotal ;
     Property TotalPago : Double read GetTotalPago ;
 
@@ -1237,7 +1234,7 @@ TACBrECFClass = class
        String; Valor : Double;  Relatorio : TStrings;
        Vias : Integer = 1) ;
     Procedure AbreCupomVinculado(COO, CodFormaPagto, CodComprovanteNaoFiscal :
-       String; Valor : Double) ; virtual ; 
+       String; Valor : Double) ; virtual ;
     Procedure LinhaCupomVinculado( Linha : AnsiString ) ; virtual ;
 
     Procedure SegundaViaVinculado; virtual;
@@ -1717,7 +1714,7 @@ procedure TACBrECFRelatoriosGerenciais.SetObject(Index: Integer;
 begin
   inherited SetItem (Index, Item) ;
 end;
-               
+
 
 { ---------------------- TACBrECFComprovantesNaoFiscais --------------------- }
 
@@ -1879,7 +1876,7 @@ begin
   {$IFNDEF NOGUI}
    fsUsandoBlockInput          := False ;
   {$ENDIF}
-  
+
   { Variaveis Protected fp___ acessiveis pelas Classes filhas }
   fpAtivo                 := false ;
   fpEstado                := estNaoInicializada ;
@@ -2168,7 +2165,7 @@ begin
         else
        {$ENDIF}
           FormMsgDoProcedure( DoLeResposta, 0 ) ;
-     end 
+     end
     else
   {$ENDIF}
      DoLeResposta ;
@@ -2195,7 +2192,7 @@ begin
      {$IFNDEF NOGUI}
        ProcessaFormMsg := (Assigned( fsFormMsg ) and fsFormMsgControla) ;
      {$ENDIF}
-     
+
      { Calcula Tempo Limite. Espera resposta até Tempo Limite. Se a resposta
        for Lida antes, já encerra. Se nao chegar até TempoLimite, gera erro.}
      TempoLimite := IncSecond( now, TimeOut) ;
@@ -2313,7 +2310,7 @@ begin
   except
      if not DoOnMsgRetentar(Format(cACBrECFCmdSemRespostaException, [ ModeloStr ]),
        'TransmitirComando') then
-       raise EACBrECFSemResposta.create(Format(ACBrStr(cACBrECFEnviaCmdSemRespostaException), [ ModeloStr ])) 
+       raise EACBrECFSemResposta.create(Format(ACBrStr(cACBrECFEnviaCmdSemRespostaException), [ ModeloStr ]))
      else
         Result := False ;
   end ;
@@ -2698,7 +2695,7 @@ begin
      try
         CancelaNaoFiscal ;
      except
-     end 
+     end
   else
      exit ;
 
@@ -4502,7 +4499,7 @@ end;
       LoadBlockInput;
       if not Assigned( xBlockInput ) then
          exit ;
-         
+
       if ClearTypeAhead then
       begin
         try
@@ -4739,7 +4736,7 @@ end;
                              QEventType_MouseButtonDblClick,
                              QEventType_DragMove,
                              QEventType_Leave, QEventType_Enter] then
-            {$ENDIF}                 
+            {$ENDIF}
             begin
                Handled := true ;
                fsFormMsg.SetFocus ;
@@ -4969,7 +4966,7 @@ begin
    fsTodasAliquotas          := TACBrECFAliquotas.Create;
    fsICMS                    := TACBrECFAliquotas.Create(False);
    fsISSQN                   := TACBrECFAliquotas.Create(False);
-   
+
    Clear ;
 end;
 
@@ -5351,7 +5348,7 @@ begin
 
   fsImposto := TACBrECFRodapeImposto.Create;
 
-  fsPostoComustivel := TACBRRodapeAbastecimentos.Create; 
+  fsPostoComustivel := TACBRRodapeAbastecimentos.Create;
   fsPostoComustivel.Imprimir := False;
 
   Self.Clear;
@@ -5389,33 +5386,6 @@ begin
   fsImposto.Fonte := '';
   fsImposto.Chave := '';
   fsImposto.ModoCompacto := False;
-end;
-
-{ TACBRRodapeAbastecimento }
-
-procedure TACBRRodapeAbastecimento.SetAutomatico(const Value: Boolean);
-begin
-  FAutomatico := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetBico(const Value: Integer);
-begin
-  FBico := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetEF(const Value: Double);
-begin
-  FEF := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetEI(const Value: Double);
-begin
-  FEI := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetVolume(const Value: Double);
-begin
-  FVolume := Value;
 end;
 
 { TACBRodapeRAbastecimentos }

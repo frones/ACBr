@@ -198,7 +198,7 @@ const
 implementation
 
 uses
-  ACBrBlocoX_Comum;
+  ACBrBlocoX_Comum, StrUtils;
 
 { TWebServices }
 
@@ -308,8 +308,8 @@ end;
 procedure TValidarBlocoX.DefinirDadosMsg;
 begin
   FPDadosMsg := '<pXml>'+ParseText(XML,False)+'</pXml>'+
-                '<pValidarPafEcf>'+BoolToStr(FValidarPafEcf,'true','false')+'</pValidarPafEcf>'+
-                '<pValidarEcf>'+BoolToStr(FValidarEcf,'true','false')+'</pValidarEcf>';
+                '<pValidarPafEcf>'+IfThen(FValidarPafEcf, 'true', 'false')+'</pValidarPafEcf>'+
+                '<pValidarEcf>'+IfThen(FValidarEcf, 'true', 'false')+'</pValidarEcf>';
 end;
 
 function TValidarBlocoX.TratarResposta: Boolean;

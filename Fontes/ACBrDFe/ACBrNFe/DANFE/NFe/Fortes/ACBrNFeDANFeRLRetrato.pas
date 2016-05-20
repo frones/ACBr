@@ -577,6 +577,26 @@ type
     txtNCM: TRLDBMemo;
     RLLabel2: TRLLabel;
     txtCodigo: TRLDBMemo;
+    rlbEntrega: TRLBand;
+    RLDraw25: TRLDraw;
+    RLLabel4: TRLLabel;
+    RLLabel9: TRLLabel;
+    rlbEntregaCnpjCpf: TRLLabel;
+    RLLabel10: TRLLabel;
+    RLDraw26: TRLDraw;
+    rlbEntregaEndereco: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLDraw27: TRLDraw;
+    rlbRetirada: TRLBand;
+    RLDraw13: TRLDraw;
+    RLLabel5: TRLLabel;
+    RLLabel3: TRLLabel;
+    rlbRetiradaCnpjCpf: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLDraw14: TRLDraw;
+    rlbRetiradaEndereco: TRLLabel;
+    RLLabel7: TRLLabel;
+    RLDraw28: TRLDraw;
     procedure rlbDivisaoReciboBeforePrint(Sender: TObject; var PrintIt: Boolean
       );
     procedure rlbReciboHeaderBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -613,6 +633,8 @@ type
     procedure AddFaturaReal;
     function ManterDuplicatas: Integer;
 	procedure AplicaParametros;
+    procedure BandEntrega;
+    procedure BandRetirada;
   public
 
   end;
@@ -658,7 +680,7 @@ procedure TfrlDANFeRLRetrato.rlbReciboHeaderBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
 //  PrintIt :=  RLNFe.PageNumber = 1;
- 	rliCanhoto.Visible := RLNFe.PageNumber = 1;
+ 	rliCanhoto.Visible  := RLNFe.PageNumber = 1;
 	rliCanhoto1.Visible := RLNFe.PageNumber = 1;
 	rliCanhoto2.Visible := RLNFe.PageNumber = 1;
 	rliCanhoto3.Visible := RLNFe.PageNumber = 1;
@@ -1053,6 +1075,8 @@ begin
   Itens;
   ISSQN;
   Transporte;
+  BandEntrega;
+  BandRetirada;
   AddFaturaReal;
   AddFatura;
   Observacoes;
@@ -1247,41 +1271,43 @@ end;
 Function  TfrlDANFeRLRetrato.EnderecoEntrega : String;
 begin
   Result := '';
-  if FNFe.Entrega.xLgr > '' then
-  begin
-    with FNFe.Entrega do
-    begin
-      Result := XLgr +
-                    IfThen(Nro = '0', '', ', ' + Nro) +
-                    IfThen(xCpl = '','', ' - ' + xCpl );
-
-
-      Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
-                    xBairro + ' - ' + xMun + '-' + UF +
-                    TrataDocumento(CNPJCPF);
-
-
-    end;
-  end;
+  // Descomentar para utilizar
+  //  if FNFe.Entrega.xLgr > '' then
+  //  begin
+  //    with FNFe.Entrega do
+  //    begin
+  //      Result := XLgr +
+  //                    IfThen(Nro = '0', '', ', ' + Nro) +
+  //                    IfThen(xCpl = '','', ' - ' + xCpl );
+  //
+  //
+  //      Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
+  //                    xBairro + ' - ' + xMun + '-' + UF +
+  //                    TrataDocumento(CNPJCPF);
+  //
+  //
+  //    end;
+  //  end;
 end;
 
 Function TfrlDANFeRLRetrato.EnderecoRetirada : String;
 begin
   Result := '';
-  if FNFe.Retirada.xLgr > '' then
-  begin
-    with FNFe.Retirada do
-    begin
-      Result  := XLgr +
-                    IfThen(Nro = '0', '', ', ' + Nro) +
-                    IfThen(xCpl = '','', ' - ' + xCpl );
-
-      Result  := 'LOCAL DE RETIRADA: ' + Result  + ' - ' +
-                    xBairro + ' - ' + xMun + '-' + UF +
-                    TrataDocumento(CNPJCPF);
-
-    end;
-  end;
+  // Descomentar para utilizar
+  //   if FNFe.Retirada.xLgr > '' then
+  //   begin
+  //     with FNFe.Retirada do
+  //     begin
+  //       Result  := XLgr +
+  //                     IfThen(Nro = '0', '', ', ' + Nro) +
+  //                     IfThen(xCpl = '','', ' - ' + xCpl );
+  //
+  //       Result  := 'LOCAL DE RETIRADA: ' + Result  + ' - ' +
+  //                     xBairro + ' - ' + xMun + '-' + UF +
+  //                     TrataDocumento(CNPJCPF);
+  //
+  //     end;
+  //   end;
 end;
 
 procedure TfrlDANFeRLRetrato.Imposto;
@@ -1850,16 +1876,12 @@ begin
     crtSimplesExcessoReceita :
       begin
         lblCST.Caption    := 'CST';
-        lblCST.Font.Size  := 5;
-        lblCST.Top        := 18;
         txtCST.DataField  := 'CST';
       end;
 
     crtSimplesNacional :
       begin
         lblCST.Caption    := 'CSOSN';
-        lblCST.Font.Size  := 4;
-        lblCST.Top        := 19;
         txtCST.DataField  := 'CSOSN';
       end;
   end;
@@ -2365,6 +2387,42 @@ begin
 
   // ******** Produtos ********
   rlbObsItem.Height      := 12 + fEspacoEntreProdutos; // Remove espaço entre produtos com EspacoEntreProdutos = 0
+end;
+
+procedure TfrlDANFeRLRetrato.BandEntrega;
+begin
+  with FNFe.Entrega do
+  begin
+    rlbEntrega.Visible := ( xLgr <> '' );
+    if rlbEntrega.Visible then
+    begin
+      rlbEntregaCnpjCpf.Caption   := FormatarCNPJouCPF(CNPJCPF);
+      rlbEntregaEndereco.Caption  := XLgr +
+                                        IfThen(Nro = '0', '', ', ' + Nro) +
+                                        IfThen(xCpl = '','', ' - ' + xCpl )+ ' - ' +
+                                        xBairro + ' - ' +
+                                        xMun + '-' +
+                                        UF;
+    end;
+  end;
+end;
+
+procedure TfrlDANFeRLRetrato.BandRetirada;
+begin
+  with FNFe.Retirada do
+  begin
+    rlbRetirada.Visible :=  ( xLgr <> '' );
+    if rlbRetirada.Visible  then
+    begin
+      rlbRetiradaCnpjCpf.Caption   := FormatarCNPJouCPF(CNPJCPF);
+      rlbRetiradaEndereco.Caption  := XLgr +
+                                        IfThen(Nro = '0', '', ', ' + Nro) +
+                                        IfThen(xCpl = '','', ' - ' + xCpl )+ ' - ' +
+                                        xBairro + ' - ' +
+                                        xMun + '-' +
+                                        UF;
+    end;
+  end;
 end;
 
 

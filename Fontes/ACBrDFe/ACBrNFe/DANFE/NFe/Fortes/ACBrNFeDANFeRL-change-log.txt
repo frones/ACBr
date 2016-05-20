@@ -47,6 +47,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2016
+[+] Implantação da Banda Local entrega na danfe Fortes Retrato
+      Caso exista a informações do Local de entrega
+       no Arquivo xml, será impressa.
+         Por : Henrique Leonardo   
+
+
+20/05/2016
+[+] Implantação da Banda Local retirada na danfe Fortes Retrato
+      Caso exista a informações do Local de retirada
+       no Arquivo xml, será impressa
+         Por : Henrique Leonardo   
+
+
+
+
 21/04/2016
 [*] Remoção do recurso de Habilitar ou não a Banda Fatura.( campo ).
       Por padrão, a Banda Fatura, dever ser exibida sempre.

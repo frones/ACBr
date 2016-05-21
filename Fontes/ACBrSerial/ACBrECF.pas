@@ -843,6 +843,9 @@ TACBrECF = class( TACBrComponent )
      //--- False se não coicidem
     function DecodificaTexto(Operacao: Char; Texto: String; var Resposta: String): Boolean;
 
+    function CalculaTotalItem(AValorUnitario: Double; AQtd: Double = 1;
+       ADecimais: Integer = 2; FlagAT: Char = ' '): Double;
+
     {$IFNDEF NOGUI}
      Procedure MemoLeParams ;
      Property MemoItens : Integer read fsMemoItens write fsMemoItens ;
@@ -6154,6 +6157,38 @@ function TACBrECF.DecodificaTexto(Operacao: Char; Texto: String;
 begin
    ComandoLOG := 'DecodificaTexto';
    Result := fsECF.DecodificaTexto(Operacao,Texto,Resposta) ;
+end;
+
+function TACBrECF.CalculaTotalItem(AValorUnitario: Double; AQtd: Double;
+  ADecimais: Integer; FlagAT: Char): Double;
+var
+  TotalItem, Pot: Double;
+  EhArredondamento: Boolean;
+begin
+  TotalItem := AValorUnitario * AQtd;
+
+  case upcase(FlagAT) of
+    'A': EhArredondamento := True;
+    'T': EhArredondamento := False;
+  else
+     EhArredondamento := Arredonda or ArredondaItemMFD;
+  end;
+
+  if EhArredondamento then
+  begin
+    Result := RoundABNT(TotalItem, ADecimais)
+  end
+  else
+  begin
+    if ArredondaPorQtd then
+    begin
+      ArredondarPorQtd(AQtd, AValorUnitario, -ADecimais ); // Modifica AQtd
+      TotalItem := AValorUnitario * AQtd;
+    end ;
+
+    Pot := Power(10, ADecimais) ;
+    Result := TruncFix(TotalItem * Pot) / Pot;
+  end;
 end;
 
 function TACBrECF.GetAbout: String;

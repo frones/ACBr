@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/05/2016
+-- ACBrECF --
+[+] Adicionado o método:
+    function CalculaTotalItem(AValorUnitario: Double; AQtd: Double = 1;
+       ADecimais: Integer = 2; FlagAT: Char = ' '): Double;
+    Que permite a aplicação, computar antecipadamente, o Total do Item, de
+    acordo com as regras do ECF, considerando os parâmetros de Arredondamento.
+    (por: DSA)
+
 Data: 11/05/2016
 -- ACBrECFVirtual --
 [+] Adicionado suporte aos registradores:

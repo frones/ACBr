@@ -481,6 +481,7 @@ begin
   with frxIdentificacao do
   begin
     UserName        := 'Identificacao';
+    Enabled         := False;
     CloseDataSource := False;
     OpenDataSource  := False;
     with FieldAliases do
@@ -504,6 +505,7 @@ begin
   with frxPrestador do
   begin
     UserName        := 'Prestador';
+    Enabled         := False;
     CloseDataSource := False;
     OpenDataSource  := False;
     with FieldAliases do
@@ -532,6 +534,7 @@ begin
     with frxTomador do
     begin
       UserName        := 'Tomador';
+      Enabled         := False;
       CloseDataSource := False;
       OpenDataSource  := False;
       with FieldAliases do
@@ -561,6 +564,7 @@ begin
     with frxServicos do
     begin
       UserName        := 'Servicos';
+      Enabled         := False;
       CloseDataSource := False;
       OpenDataSource  := False;
       with FieldAliases do
@@ -604,6 +608,7 @@ begin
     with frxParametros do
     begin
       UserName        := 'Parametros';
+      Enabled         := False;
       CloseDataSource := False;
       OpenDataSource  := False;
       with FieldAliases do
@@ -639,6 +644,7 @@ begin
     with frxItensServico do
     begin
       UserName        := 'ItensServico';
+      Enabled         := False;
       CloseDataSource := False;
       OpenDataSource  := False;
       with FieldAliases do

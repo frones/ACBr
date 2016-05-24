@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/05/16 ver: 0.0.197a
+
+-- ACBrBancoBrasil --
+[-] Correção leitura retorno CNAB240. (softcom.wendel)
+http://www.projetoacbr.com.br/forum/topic/29918-retorno-cnab-240-bb/
+
+
 Data: 09/05/16 ver: 0.0.196a
 
 -- ACBrBancoSicredi --

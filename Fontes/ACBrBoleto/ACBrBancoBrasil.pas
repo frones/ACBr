@@ -1004,21 +1004,21 @@ begin
             if Trim(NumeroDocumento) = '' then
               NumeroDocumento := NossoNumero;
           end
-         else // segmento U
+         else if copy(Linha, 14, 1) = 'U' then // segmento U
           begin
-            ValorIOF := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
-            ValorAbatimento := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
-            ValorDesconto := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
-            ValorMoraJuros := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
+            ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
+            ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
+            ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
+            ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
             ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
             ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
-            ValorRecebido := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+            ValorRecebido       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
             TempData := copy(Linha, 138, 2)+'/'+copy(Linha, 140, 2)+'/'+copy(Linha, 142, 4);
             if TempData<>'00/00/0000' then
-                DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+              DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
             TempData := copy(Linha, 146, 2)+'/'+copy(Linha, 148, 2)+'/'+copy(Linha, 150, 4);
             if TempData<>'00/00/0000' then
-                DataCredito := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+              DataCredito := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
           end;
       end;
    end;

@@ -46,9 +46,6 @@ uses
 
 type
   TDMACBrMDFeDAMDFEFR = class(TDataModule)
-    frxReport: TfrxReport;
-    frxPDFExport: TfrxPDFExport;
-    frxBarCodeObject: TfrxBarCodeObject;
     cdsIdentificacao: TClientDataSet;
     frxIdentificacao: TfrxDBDataset;
     cdsEmitente: TClientDataSet;
@@ -76,6 +73,7 @@ type
     constructor Create(AOwner: TComponent); override;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
     procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     FDAMDFEClassOwner: TACBrMDFeDAMDFeClass;
     FMDFe            : TMDFe;
@@ -89,9 +87,13 @@ type
     procedure CarregaModalAereo;
     procedure CarregaModalAquaviario;
     procedure CarregaModalFerroviario;
-    procedure CarregaMunCarrega; 
+    procedure CarregaMunCarrega;
     procedure CarregaPercurso;
   public
+    frxPDFExport: TfrxPDFExport;
+    frxReport: TfrxReport;
+    frxBarCodeObject: TfrxBarCodeObject;
+
     property MDFe            : TMDFe read FMDFe write FMDFe;
     property Evento          : TEventoMDFe read FEvento write FEvento;
     property DAMDFEClassOwner: TACBrMDFeDAMDFeClass read FDAMDFEClassOwner;
@@ -378,6 +380,47 @@ end;
 constructor TDMACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
 begin
   inherited;
+  frxReport:= TfrxReport.Create(Self);
+  with frxReport do
+  begin
+    //Version         := '5.4.3';
+    DotMatrixReport           := False;
+    IniFile                   := '\Software\Fast Reports';
+    PreviewOptions.AllowEdit  := False;
+    PreviewOptions.Buttons    := [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
+    PreviewOptions.Zoom       := 1;
+    PrintOptions.Printer      := 'Default';
+    PrintOptions.PrintOnSheet := 0;
+    StoreInDFM                := False;
+    OnGetValue                := frxReportGetValue;
+  end;
+
+  frxPDFExport:= TfrxPDFExport.Create(Self);
+  with frxPDFExport do
+  begin
+    UseFileCache    := True;
+    ShowProgress    := True;
+    OverwritePrompt := False;
+    DataOnly        := False;
+    PrintOptimized  := True;
+    Outline         := False;
+    Background      := True;
+    HTMLTags        := True;
+    Quality         := 95;
+    Transparency    := False;
+    Author          := 'FastReport';
+    Subject         := 'Exportando DANFE para PDF';
+    ProtectionFlags := [ePrint, eModify, eCopy, eAnnot];
+    HideToolbar     := False;
+    HideMenubar     := False;
+    HideWindowUI    := False;
+    FitWindow       := False;
+    CenterWindow    := False;
+    PrintScaling    := False;
+    PdfA            := False
+  end;
+  frxBarCodeObject:= TfrxBarCodeObject.Create(Self);
+
   FDAMDFEClassOwner := TACBrMDFeDAMDFeClass(AOwner);
 end;
 
@@ -385,6 +428,13 @@ procedure TDMACBrMDFeDAMDFEFR.DataModuleCreate(Sender: TObject);
 begin
 	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
     pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick];
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.DataModuleDestroy(Sender: TObject);
+begin
+  frxPDFExport.Free;
+  frxReport.Free;
+  frxBarCodeObject.Free;
 end;
 
 procedure TDMACBrMDFeDAMDFEFR.frxReportGetValue(const VarName: string; var Value: Variant);

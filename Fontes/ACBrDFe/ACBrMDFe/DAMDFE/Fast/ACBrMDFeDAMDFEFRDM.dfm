@@ -1,56 +1,15 @@
 object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 382
-  Width = 545
-  object frxReport: TfrxReport
-    Version = '4.15'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.AllowEdit = False
-    PreviewOptions.Buttons = [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = 'Default'
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 41606.360400451400000000
-    ReportOptions.LastChange = 41606.413323935190000000
-    ScriptLanguage = 'PascalScript'
-    StoreInDFM = False
-    OnGetValue = frxReportGetValue
-    Left = 48
-    Top = 36
-  end
-  object frxPDFExport: TfrxPDFExport
-    UseFileCache = True
-    ShowProgress = True
-    OverwritePrompt = False
-    DataOnly = False
-    PrintOptimized = True
-    Outline = False
-    Background = True
-    HTMLTags = True
-    Quality = 95
-    Author = 'FastReport'
-    Subject = 'Exportando DANFE para PDF'
-    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
-    HideToolbar = False
-    HideMenubar = False
-    HideWindowUI = False
-    FitWindow = False
-    CenterWindow = False
-    PrintScaling = False
-    CheckboxAsShape = False
-    Left = 48
-    Top = 92
-  end
-  object frxBarCodeObject: TfrxBarCodeObject
-    Left = 48
-    Top = 148
-  end
+  OnDestroy = DataModuleDestroy
+  Left = 165
+  Top = 204
+  Height = 442
+  Width = 437
   object cdsIdentificacao: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 135
+    Left = 39
     Top = 12
   end
   object frxIdentificacao: TfrxDBDataset
@@ -59,13 +18,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsIdentificacao
     BCDToCurrency = False
-    Left = 212
+    Left = 116
     Top = 12
   end
   object cdsEmitente: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 140
+    Left = 44
     Top = 71
   end
   object frxEmitente: TfrxDBDataset
@@ -74,13 +33,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsEmitente
     BCDToCurrency = False
-    Left = 212
+    Left = 116
     Top = 71
   end
   object cdsModalRodo: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 300
+    Left = 204
     Top = 11
   end
   object frxModalRodo: TfrxDBDataset
@@ -89,7 +48,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsModalRodo
     BCDToCurrency = False
-    Left = 377
+    Left = 281
     Top = 11
   end
   object frxModalAereo: TfrxDBDataset
@@ -98,19 +57,19 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSModalAereo
     BCDToCurrency = False
-    Left = 217
+    Left = 121
     Top = 181
   end
   object CDSModalAereo: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 140
+    Left = 44
     Top = 181
   end
   object CDSModalAqua: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 140
+    Left = 44
     Top = 236
   end
   object frxModalAqua: TfrxDBDataset
@@ -119,7 +78,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSModalAqua
     BCDToCurrency = False
-    Left = 222
+    Left = 126
     Top = 236
   end
   object frxModalFerrov: TfrxDBDataset
@@ -128,19 +87,19 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSModalFerrov
     BCDToCurrency = False
-    Left = 396
+    Left = 300
     Top = 182
   end
   object CDSModalFerrov: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 310
+    Left = 214
     Top = 178
   end
   object cdsParametros: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 297
+    Left = 201
     Top = 68
   end
   object frxParametros: TfrxDBDataset
@@ -149,13 +108,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsParametros
     BCDToCurrency = False
-    Left = 369
+    Left = 273
     Top = 68
   end
   object CDSModalFerrovVagoes: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 311
+    Left = 215
     Top = 234
   end
   object frxModalFerrovVagoes: TfrxDBDataset
@@ -164,13 +123,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSModalFerrovVagoes
     BCDToCurrency = False
-    Left = 405
+    Left = 309
     Top = 230
   end
   object CDSDocumentos: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 140
+    Left = 44
     Top = 291
   end
   object frxDocumentos: TfrxDBDataset
@@ -179,13 +138,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = CDSDocumentos
     BCDToCurrency = False
-    Left = 222
+    Left = 126
     Top = 291
   end
   object cdsEventos: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 316
+    Left = 220
     Top = 308
   end
   object frxEventos: TfrxDBDataset
@@ -194,13 +153,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsEventos
     BCDToCurrency = False
-    Left = 388
+    Left = 292
     Top = 304
   end
   object cdsMunCarrega: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 139
+    Left = 43
     Top = 128
   end
   object frxMunCarrega: TfrxDBDataset
@@ -209,13 +168,13 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsMunCarrega
     BCDToCurrency = False
-    Left = 216
+    Left = 120
     Top = 128
   end
   object cdsPercurso: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 299
+    Left = 203
     Top = 128
   end
   object frxPercurso: TfrxDBDataset
@@ -224,7 +183,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsPercurso
     BCDToCurrency = False
-    Left = 376
+    Left = 280
     Top = 128
   end
 end

@@ -573,11 +573,11 @@ begin
 
     PintarQRCode( qrcode, imgQRCode.Picture );
 
-    if Ide.tpEmis <> teOffLine then
-       lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
+    if not EstaVazio(Trim(procNFe.nProt)) then
+      lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
                               ' '+ifthen(procNFe.dhRecbto<>0,DateTimeToStr(procNFe.dhRecbto),''))
     else
-       lProtocolo.Caption := '';
+      lProtocolo.Caption := '';
 
   end;
 

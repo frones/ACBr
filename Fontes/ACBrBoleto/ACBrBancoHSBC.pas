@@ -51,7 +51,7 @@ type
   public
     Constructor create(AOwner: TACBrBanco);
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
 
     function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
@@ -95,7 +95,7 @@ begin
 end;
 
 function TACBrBancoHSBC.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''): Integer;
+  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 begin
    Result := fpTamanhoMaximoNossoNum;
 

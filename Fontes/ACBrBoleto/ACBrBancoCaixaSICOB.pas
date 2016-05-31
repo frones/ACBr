@@ -77,7 +77,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
    end;
 
 implementation
@@ -301,17 +301,21 @@ begin
 end;
 
 function TACBrCaixaEconomicaSICOB.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero: String): Integer;
+  const Carteira: String; NossoNumero: String; Convenio: String): Integer;
 var
-  wTamNossoNumero: Integer;
+  wTamNossoNumero, wOperacao: Integer;
 begin
    Result:= 15;
 
    wTamNossoNumero:= length(NossoNumero);
 
-   if ((wTamNossoNumero >= 8)  and (wTamNossoNumero <= 10)) or
-      ((wTamNossoNumero >= 14) and (wTamNossoNumero <= 15)) then
-      Result := wTamNossoNumero;
+   wOperacao := StrToIntDef(Copy(Convenio, 1, 3), 0);
+   if (wOperacao = 870) and (Carteira = 'SR') then
+     wTamNossoNumero:= 15
+   else if (Carteira = 'CR') then
+     wTamNossoNumero:= 10
+   else
+     Result := wTamNossoNumero;
 end;
 
 function TACBrCaixaEconomicaSICOB.CodOcorrenciaToTipo(
@@ -354,27 +358,23 @@ function TACBrCaixaEconomicaSICOB.FormataNossoNumero(const ACBrTitulo :TACBrTitu
 var
   ANossoNumero: String;
   wTamNossoNum: Integer;
+  wOperacao: Integer;
 begin
    with ACBrTitulo do
    begin
+     ANossoNumero := OnlyNumber(NossoNumero);
+     wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira, ANossoNumero, ACBrBoleto.Cedente.Convenio );
+     wOperacao    := StrToIntDef(Copy(ACBrBoleto.Cedente.Convenio, 1 , 3 ), 0);
 
-      ANossoNumero := OnlyNumber(NossoNumero);
-      wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira,ANossoNumero);
-
-      if (wTamNossoNum = 10) or (wTamNossoNum = 15) then
-         ANossoNumero:= ANossoNumero
-      else
-       begin
-         if Carteira = 'SR' then
-          begin
-            if wTamNossoNum = 14 then
-               ANossoNumero:= '8'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-13,14),14)
-            else
-              ANossoNumero:= '82'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);
-          end
-         else
-            ANossoNumero:= '9' + PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9,'0');
-       end;
+     if (Carteira = 'SR') then
+      begin
+       if (wOperacao =  870) then
+         ANossoNumero:= '8'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-13,14),14)
+       else
+         ANossoNumero:= '82'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);
+      end
+     else
+       ANossoNumero:= '9' + PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9,'0');
    end;
    Result := ANossoNumero;
 end;
@@ -1137,6 +1137,7 @@ var
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
+  wCarteira: String;
 begin
 
    if (copy(ARetorno.Strings[0],143,1) <> '2') then
@@ -1217,6 +1218,11 @@ begin
       begin
          if Copy(Linha,14,1)= 'T' then //segmento T
           begin
+            wCarteira := Copy(Linha, 58, 1);
+
+            ACBrBanco.TamanhoMaximoNossoNum :=
+             CalcularTamMaximoNossoNumero(Carteira, '', ACBrBanco.ACBrBoleto.Cedente.Convenio);
+
             SeuNumero        := copy(Linha,59,11);
             NumeroDocumento  := copy(Linha,106,25);
 
@@ -1281,8 +1287,6 @@ var
   rDigitoConta, rCodigoCedente     :String;
   Linha, rCedente                  :String;
 begin
-   fpTamanhoMaximoNossoNum := 20;
-
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -1319,8 +1323,6 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
-   ACBrBanco.TamanhoMaximoNossoNum := 20;
-
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1332,6 +1334,11 @@ begin
 
       with Titulo do
       begin
+         Carteira := Copy(Linha,107,2);
+
+         ACBrBanco.TamanhoMaximoNossoNum :=
+           CalcularTamMaximoNossoNumero(Carteira, '', ACBrBanco.ACBrBoleto.Cedente.Convenio);
+
          SeuNumero                   := copy(Linha,39,25);
          NumeroDocumento             := copy(Linha,117,10);
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(

@@ -99,7 +99,7 @@ type
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
    end;
 
 implementation
@@ -138,7 +138,7 @@ begin
 end;
 
 function TACBrBancoBrasil.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''): Integer;
+  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 var
   wCarteira   : String;
   wTamConvenio: Integer;

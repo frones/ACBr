@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 31/05/16 ver: 0.0.198a
+-- ACBrBancoCaixaSICOB --
+[*] Ajuste do método CalcularTamMaximoNossoNumero() para considerar também o convênio. (Juliana Tamizou)
+    http://www.projetoacbr.com.br/forum/topic/29977-nosso-n%C3%BAmero-carteira-r%C3%A1pida-cef/
+
+[*] Ajustados rotinas de leitura do arquivo retorno para considerar o tamanho calculado pela
+    função. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28730-pegando-nossonumero-errado-no-retorno-caixa-sicob/
+
 Data: 23/05/16 ver: 0.0.197a
 
 -- ACBrBancoBrasil --

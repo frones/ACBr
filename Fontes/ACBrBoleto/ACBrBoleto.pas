@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.197a';
+  CACBrBoleto_Versao = '0.0.198a';
 
   cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
   'Remessa Registrar',
@@ -521,7 +521,7 @@ type
     property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; virtual;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
@@ -593,7 +593,7 @@ type
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 
     function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
@@ -1230,7 +1230,8 @@ begin
    wNossoNumero:= OnlyNumber(AValue);
    with ACBrBoleto.Banco do
    begin
-      wTamNossoNumero:= CalcularTamMaximoNossoNumero(Carteira, wNossoNumero);
+      wTamNossoNumero:= CalcularTamMaximoNossoNumero(Carteira, wNossoNumero,
+                                                     ACBrBoleto.Cedente.Convenio);
 
       if Length(trim(wNossoNumero)) > wTamNossoNumero then
          raise Exception.Create( ACBrStr('Tamanho Máximo do Nosso Número é: '+ IntToStr(wTamNossoNumero) ));
@@ -1818,9 +1819,9 @@ begin
    Result:=  BancoClass.CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-function TACBrBanco.CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero : String = ''): Integer;
+function TACBrBanco.CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 begin
-  Result:= BancoClass.CalcularTamMaximoNossoNumero(Carteira,NossoNumero);
+  Result:= BancoClass.CalcularTamMaximoNossoNumero(Carteira, NossoNumero, Convenio);
 end;
 
 function TACBrBanco.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
@@ -1990,7 +1991,7 @@ begin
 end;
 
 function TACBrBancoClass.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''): Integer;
+  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 begin
   Result := ACBrBanco.TamanhoMaximoNossoNum;
 end;

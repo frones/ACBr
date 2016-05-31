@@ -52,7 +52,7 @@ type
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; override;
   public
     Constructor create(AOwner: TACBrBanco);
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
     function CalcularDigitoVerificador(const ACBrTitulo:TACBrTitulo): String; override;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
@@ -828,7 +828,7 @@ begin
 end;
 
 function TACBrBancoBradescoSICOOB.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero: String): Integer;
+  const Carteira: String; NossoNumero: String; Convenio: String = ''): Integer;
 begin
   Result := ACBrBanco.TamanhoMaximoNossoNum;
 end;

@@ -417,7 +417,6 @@ begin
     FitWindow       := False;
     CenterWindow    := False;
     PrintScaling    := False;
-    PdfA            := False
   end;
   frxBarCodeObject:= TfrxBarCodeObject.Create(Self);
 

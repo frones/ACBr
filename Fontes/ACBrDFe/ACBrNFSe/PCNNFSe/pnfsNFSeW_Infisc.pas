@@ -174,7 +174,6 @@ begin
         Gerador.wCampoNFSe(tcStr, '', 'xPais'  , 01, 100, 1, NFSe.PrestadorServico.Endereco.xPais, '');
         Gerador.wCampoNFSe(tcStr, '', 'fone'  , 01, 100, 1, NFSe.PrestadorServico.Contato.Telefone, '');
       Gerador.wGrupoNFSe('/end');
-      Gerador.wCampoNFSe(tcStr, '', 'xEmail', 01, 100, 1, NFSe.PrestadorServico.Contato.Email, '');
 
       case Nfse.RegimeEspecialTributacao of
         retNenhum,
@@ -665,7 +664,8 @@ begin
   GerarValoresServico;
   GerarCondicaoPagamento;
 
-  Gerador.wCampoNFSe(tcStr, '', 'infAdicLT', 01, 100,  1, NFSe.PrestadorServico.Endereco.CodigoMunicipio, '');
+  if VersaoNFSe = ve110 then
+    Gerador.wCampoNFSe(tcStr, '', 'infAdicLT', 01, 100,  1, NFSe.PrestadorServico.Endereco.CodigoMunicipio, '');
 
   if VersaoNFSe = ve100 then
   begin

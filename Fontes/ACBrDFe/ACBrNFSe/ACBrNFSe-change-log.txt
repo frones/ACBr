@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2016
+[*] Modificação visando gerar e validar o XML para o provedor Infisc em ambas versões.
+    por : Guilherme Lanius
+
 23/05/2016
 [*] Modificação proposta para deixar desabilitado os TfrxDBDataset igualmente é feito na NF-e
 		http://www.projetoacbr.com.br/forum/topic/30136-sugest%C3%A3o-de-modifica%C3%A7%C3%A3o-acbrnfsedanfsefr/

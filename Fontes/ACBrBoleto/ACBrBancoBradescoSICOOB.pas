@@ -828,7 +828,7 @@ begin
 end;
 
 function TACBrBancoBradescoSICOOB.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero: String; Convenio: String = ''): Integer;
+  const Carteira: String; NossoNumero: String; Convenio: String): Integer;
 begin
   Result := ACBrBanco.TamanhoMaximoNossoNum;
 end;

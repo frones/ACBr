@@ -2134,7 +2134,7 @@ begin
   if Estado <> estPagamento then
     raise EACBrECFERRO.create(ACBrStr('O Estado nao é "PAGAMENTO", não houve SubTotal')) ;
 
-  if  RoundABNT(TotalPago,2) < RoundABNT(SubTotal,2) then
+  if CompareValue(TotalPago, SubTotal, 0.001) < 0 then
     raise EACBrECFERRO.create(ACBrStr('Total Pago é inferior ao Total do Cupom')) ;
 
   Observacao := StringReplace( Observacao, #10, CRLF, [rfReplaceAll] ) ;

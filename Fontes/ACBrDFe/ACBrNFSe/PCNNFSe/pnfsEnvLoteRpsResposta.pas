@@ -695,7 +695,6 @@ var
   sMotCod,sMotDes: string;
   i: integer;
 begin
-  Result := False;
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;

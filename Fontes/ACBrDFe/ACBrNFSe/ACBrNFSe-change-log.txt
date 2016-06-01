@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2016
+[*] Inclusão do provedor VersaTecnologia.
+    por : acgubamg
+
 31/05/2016
 [*] Modificação visando gerar e validar o XML para o provedor Infisc em ambas versões.
     por : Guilherme Lanius

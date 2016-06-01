@@ -692,8 +692,6 @@ begin
 
     if FProvedor = proSP then
     begin
-      Result := False;
-
       try
         Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
         Leitor.Grupo   := Leitor.Arquivo;

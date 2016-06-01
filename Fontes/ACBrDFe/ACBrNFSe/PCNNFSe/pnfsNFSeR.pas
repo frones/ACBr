@@ -571,7 +571,7 @@ begin
         NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe3, 'DescontoIncondicionado');
         NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
 
-        if (FProvedor in [proISSe, proNEAInformatica]) then
+        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -934,6 +934,14 @@ begin
       NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
       NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
 
+      {Considerar a data de recebimento da NFS-e como dhrecebimento - para esse provedor nao tem a tag
+        Diferente do que foi colocado para outros provedores, de atribuir a data now, ficaria errado se
+        passase a transmissao de um dia para outro. E se for pensar como dhrecebimento pelo webservice e
+        não o recebimento no programa que usar esse componente
+      }
+      if FProvedor = proVersaTecnologia then
+        NFSe.dhRecebimento := Leitor.rCampo(tcDat, 'DataEmissao');
+
       if FProvedor in [proFreire, proSpeedGov, proVitoria, proDBSeller] then
         NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
       else
@@ -941,7 +949,7 @@ begin
 
       // Tratar erro de conversão de tipo no Provedor Ábaco
       if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
-	      NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
+        NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
 
       NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
       NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
@@ -1507,7 +1515,7 @@ begin
 //        NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
         NFSe.Servico.Valores.Aliquota        := Leitor.rCampo(tcDe3, 'Aliquota');
 
-        if (FProvedor in [proISSe, proNEAInformatica]) then
+        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')

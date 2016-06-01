@@ -62,7 +62,7 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
     property Pedido: TPedidocancelamento           read FPedido      write FPedido;
-    property DataHora: TDateTime                   read FDataHora    write FDataHora;
+    property DataHora: TDateTime                   read FDataHora    write FDataHora;  
     property Confirmacao: String                   read FConfirmacao write FConfirmacao;
     property Sucesso: String                       read FSucesso     write FSucesso;
     property MsgCanc: String                       read FMsgCanc     write FMsgCanc;
@@ -728,13 +728,13 @@ function TretCancNFSe.LerXml_proCONAM: Boolean;
 var
   i: Integer;
 begin
-  Result := False;
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
     if leitor.rExtrai(1, 'Sdt_retornocancelanfe') <> '' then
     begin
       FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Retorno');
+      FInfCanc.DataHora := Now;
       if leitor.rExtrai(2, 'Messages') <> '' then
       begin
         i := 0;

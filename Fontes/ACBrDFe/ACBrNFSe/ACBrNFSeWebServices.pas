@@ -1006,7 +1006,7 @@ begin
     FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.dhRecebimento;
     if FDataRecebimento = 0 then
       FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.DataEmissao;
-    if FProvedor in [proInfisc, proGovDigital] then
+    if FProvedor in [proInfisc, proGovDigital, proVersaTecnologia] then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else begin
@@ -3109,6 +3109,7 @@ begin
       MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
 
       NumeroRPS  := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+      SerieRps   := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
       ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;
 
       // Necessário para o provedor ISSDSF
@@ -3594,8 +3595,6 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
-//    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
-//       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
     if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
       Result := FConsSitLoteRPS.Executar;
@@ -3637,8 +3636,6 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
-//    if (FConsSitLoteRPS.VersaoNFSe = ve100) or
-//       (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proCONAM) then
     if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
       Result := FConsSitLoteRPS.Executar;
@@ -3736,7 +3733,7 @@ begin
   if not (Result) then
     FCancNfse.GerarException( FCancNfse.Msg );
 
-  if not (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proABase, proEL, proISSNet]) then
+  if not (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proABase, proCONAM, proEL, proISSNet]) then
   begin
     if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSystemPro] then
     begin

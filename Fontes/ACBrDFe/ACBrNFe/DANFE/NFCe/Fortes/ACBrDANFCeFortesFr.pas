@@ -628,6 +628,7 @@ procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
   LinhaTotal : string;
+  LinhaItem : String;
 begin
   PrintIt := not Resumido;
   if not PrintIt then exit;
@@ -635,9 +636,14 @@ begin
   mLinhaItem.Lines.Clear ;
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    mLinhaItem.Lines.Add(IntToStrZero(Prod.nItem,3) + ' ' +
+    LinhaItem := IntToStrZero(Prod.nItem,3) + ' ' +
                              ACBrNFeDANFCeFortes.ManterCodigo( Prod.cEAN , Prod.cProd ) + ' ' +
-                             Trim(Prod.xProd));
+                             Trim(Prod.xProd);
+
+    if Trim(infAdProd) <> '' then
+      LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';',#13,[rfReplaceAll]);
+
+    mLinhaItem.Lines.Add(LinhaItem);
 
     //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
     LinhaTotal  := PadLeft( ACBrNFeDANFCeFortes.FormatQuantidade(Prod.qCom), 12) +
@@ -648,6 +654,7 @@ begin
     mLinhaItem.Lines.Add(LinhaTotal);
   end;
 end;
+
 
 procedure TACBrNFeDANFCeFortesFr.rlbPagamentoBeforePrint(Sender: TObject;
   var PrintIt: boolean);

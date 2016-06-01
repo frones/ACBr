@@ -569,7 +569,10 @@ begin
 
   For A := 0 to fsCabecalho.Count - 1 do
   begin
-    Linha := PadCenter(fsCabecalho[A], Colunas) ;
+    if pos('<',fsCabecalho[A])>0 then
+       Linha:=fsCabecalho[A]
+       else
+      Linha := PadCenter(fsCabecalho[A], Colunas) ;
     if A = 0 then
       Linha := '</zera></ce></logo>'+ Linha ;
 

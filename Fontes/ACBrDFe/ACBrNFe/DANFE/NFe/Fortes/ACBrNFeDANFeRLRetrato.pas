@@ -767,7 +767,7 @@ begin
         '  -  ' + 'DEST. / REM.: ' +
         FNFe.Dest.xNome + '  -  ' + 'VALOR TOTAL: R$ ' +
         FormatFloatBr(FNFe.Total.ICMSTot.vNF,
-        '###,###,###,##0.00');
+        ',#0.00');
     end;
     rllResumo.Visible := True;
     iAlturaCanhoto := 25;
@@ -1316,24 +1316,24 @@ var
 begin
   with FNFe.Total.ICMSTot do
   begin
-    rllBaseICMS.Caption := FormatFloatBr(VBC, '###,###,###,##0.00');
-    rllValorICMS.Caption := FormatFloatBr(VICMS, '###,###,###,##0.00');
-    rllBaseICMSST.Caption := FormatFloatBr(VBCST, '###,###,###,##0.00');
-    rllValorICMSST.Caption := FormatFloatBr(VST, '###,###,###,##0.00');
-    rllTotalProdutos.Caption := FormatFloatBr(VProd, '###,###,###,##0.00');
-    rllValorFrete.Caption := FormatFloatBr(VFrete, '###,###,###,##0.00');
-    rllValorSeguro.Caption := FormatFloatBr(VSeg, '###,###,###,##0.00');
-    rllDescontos.Caption := FormatFloatBr(VDesc, '###,###,###,##0.00');
-    rllAcessorias.Caption := FormatFloatBr(VOutro, '###,###,###,##0.00');
-    rllValorIPI.Caption := FormatFloatBr(VIPI, '###,###,###,##0.00');
-    rllTotalNF.Caption := FormatFloatBr(VNF, '###,###,###,##0.00');
+    rllBaseICMS.Caption := FormatFloatBr(VBC, ',#0.00');
+    rllValorICMS.Caption := FormatFloatBr(VICMS, ',#0.00');
+    rllBaseICMSST.Caption := FormatFloatBr(VBCST, ',#0.00');
+    rllValorICMSST.Caption := FormatFloatBr(VST, ',#0.00');
+    rllTotalProdutos.Caption := FormatFloatBr(VProd, ',#0.00');
+    rllValorFrete.Caption := FormatFloatBr(VFrete, ',#0.00');
+    rllValorSeguro.Caption := FormatFloatBr(VSeg, ',#0.00');
+    rllDescontos.Caption := FormatFloatBr(VDesc, ',#0.00');
+    rllAcessorias.Caption := FormatFloatBr(VOutro, ',#0.00');
+    rllValorIPI.Caption := FormatFloatBr(VIPI, ',#0.00');
+    rllTotalNF.Caption := FormatFloatBr(VNF, ',#0.00');
 
     //115 460 143
     // Exibe o Valor total dos tributos se vTotTrib for informado
     // e ajusta a posição dos outros campos para "abrir espaço" para ele.
     if vTotTrib > 0 then
     begin
-      rllTotalTributos.Caption := FormatFloatBr(vTotTrib, '###,###,###,##0.00');
+      rllTotalTributos.Caption := FormatFloatBr(vTotTrib, ',#0.00');
       rliDivImposto4.Visible := True;
       rllTituloTotalTributos.Visible := True;
       rllTotalTributos.Visible := True;
@@ -1665,16 +1665,16 @@ begin
       cdsItens.FieldByName('UNIDADE').AsString      := Prod.UCom;
       cdsItens.FieldByName('QTDE').AsString         := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
       cdsItens.FieldByName('VALOR').AsString        := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
-      cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', Prod.vProd);
-      cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
-      cdsItens.FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),'###,###,##0.00');
-      cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);
-      cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', Imposto.ICMS.PICMS);
-      cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VICMS);
-      cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vBCST);
-      cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vICMSST);
-      cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.PIPI);
-      cdsItens.FieldByName('VALORIPI').AsString     := FormatFloat('##0.00', Imposto.IPI.VIPI);
+      cdsItens.FieldByName('TOTAL').AsString        := FormatFloatBr(Prod.vProd, ',#0.00');
+      cdsItens.FieldByName('VALORDESC').AsString    := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), ',#0.00');
+      cdsItens.FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),',#0.00');
+      cdsItens.FieldByName('BICMS').AsString        := FormatFloatBr(Imposto.ICMS.VBC, ',#0.00');
+      cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloatBr(Imposto.ICMS.PICMS, ',#0.00');
+      cdsItens.FieldByName('VALORICMS').AsString    := FormatFloatBr(Imposto.ICMS.VICMS, ',#0.00');
+      cdsItens.FieldByName('BICMSST').AsString      := FormatFloatBr(Imposto.ICMS.vBCST, ',#0.00');
+      cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloatBr(Imposto.ICMS.vICMSST, ',#0.00');
+      cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloatBr(Imposto.IPI.PIPI, ',#0.00');
+      cdsItens.FieldByName('VALORIPI').AsString     := FormatFloatBr(Imposto.IPI.VIPI, ',#0.00');
       cdsItens.Post;
     end;
   end;
@@ -2086,9 +2086,9 @@ begin
       with FNFe.Cobr.Fat do
       begin
         RlbDadoNumero.caption         := nFat;
-        RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig,'###,###,###,##0.00');
-        RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,'###,###,###,##0.00');
-        RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,'###,###,###,##0.00');
+        RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig,',#0.00');
+        RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,',#0.00');
+        RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,',#0.00');
       end;
     end
   end;
@@ -2111,7 +2111,7 @@ begin
       begin
         TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
         TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
-        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,'###,###,###,##0.00');
+        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,',#0.00');
       end;
     end;
   end;

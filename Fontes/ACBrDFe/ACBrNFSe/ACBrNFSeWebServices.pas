@@ -1349,15 +1349,14 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
 
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingCab);
-
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
@@ -1518,8 +1517,11 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
 
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -1546,10 +1548,6 @@ begin
 
     if Provedor <> proBetha then
       TagElemento := FPrefixo3 + TagElemento;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingCab);
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
@@ -1801,15 +1799,14 @@ begin
     GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
       ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
 
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviarSincrono;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_IncluiEncodingCab);
-
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
@@ -1954,8 +1951,11 @@ begin
         ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
   end;
 
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -1978,10 +1978,6 @@ begin
     end;
 
     TagElemento := FPrefixo3 + TagElemento;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Gerar_IncluiEncodingCab);
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS or FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar then
     begin
@@ -2121,8 +2117,11 @@ procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
 var
   TagGrupo: String;
 begin
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConSit;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2138,10 +2137,6 @@ begin
     end;
 
     TagGrupo := FPrefixo3 + TagGrupo;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConSit;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingCab);
 
     case FProvedor of
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
@@ -2385,8 +2380,11 @@ procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
 var
   TagGrupo: String;
 begin
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConLot;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2402,10 +2400,6 @@ begin
     end;
 
     TagGrupo := FPrefixo3 + TagGrupo;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConLot;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingCab);
 
     case FProvedor of
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
@@ -2533,8 +2527,11 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConRps;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2548,10 +2545,6 @@ begin
     end;
 
     TagGrupo := FPrefixo3 + TagGrupo;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConRps;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingCab);
 
     case FProvedor of
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
@@ -2737,8 +2730,11 @@ procedure TNFSeConsultarNfse.DefinirDadosMsg;
 var
   TagGrupo: String;
 begin
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConNfse;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2754,10 +2750,6 @@ begin
     end;
 
     TagGrupo := FPrefixo3 + TagGrupo;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoConNfse;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingCab);
 
     case FProvedor of
       proInfisc,
@@ -2894,8 +2886,11 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoCancelar;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
@@ -2915,10 +2910,6 @@ begin
 
     if FNotasFiscais.Count > 0 then
       FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;
-
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoCancelar;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Cancelar_IncluiEncodingCab);
 
     case FProvedor of
       proCONAM: FURI := 'Sdt_cancelanfe';
@@ -3284,15 +3275,14 @@ var
   i: Integer;
   Gerador: TGerador;
 begin
-  FCabecalhoStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_CabecalhoStr;
-  FDadosStr:= FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_DadosStr;
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingCab);
 
   GerarDadosMsg := TNFSeG.Create;
   try
-    FxsdServico := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir;
-
-    InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingCab);
-
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do

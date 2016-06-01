@@ -106,7 +106,7 @@ end;
 procedure TNFSeW_EGoverneISS.GerarTomador;
 begin
   Gerador.wGrupoNFSe('Tomador');
-//  Gerador.Prefixo := 'rgm2:';
+  Gerador.Prefixo := 'rgm2:';
 
   if Length(NFSE.Tomador.IdentificacaoTomador.CpfCnpj) > 11 then
   begin
@@ -147,7 +147,7 @@ begin
 *)
   Gerador.wCampoNFSe(tcStr, '', 'Telefone', 00, 08, 1, RightStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),8), '');
 
-//  Gerador.Prefixo := 'rgm1:';
+  Gerador.Prefixo := 'rgm1:';
   Gerador.wGrupoNFSe('/Tomador');
 
   if (Trim(NFSe.Tomador.Endereco.xPais) <> '') and (NFSe.Tomador.Endereco.xPais <> 'BRASIL') then
@@ -199,20 +199,22 @@ end;
 
 procedure TNFSeW_EGoverneISS.GerarXML_EGoverneISS;
 begin
-   Gerador.wGrupoNFSe('NotaFiscal');
-   Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao', 1, 36, 1, NFSe.Prestador.ChaveAcesso, '');
+  Gerador.Prefixo := 'rgm:';
+  Gerador.wGrupoNFSe('NotaFiscal');
+  Gerador.Prefixo := 'rgm1:';
+  Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao', 1, 36, 1, NFSe.Prestador.ChaveAcesso, '');
 
-   GerarTomador;
+  GerarTomador;
 
-   Gerador.wCampoNFSe(tcStr, '', 'InformacoesAdicionais', 0, 2300, 0, NFSe.OutrasInformacoes, '');
-   Gerador.wCampoNFSe(tcStr, '', 'Atividade',             1,   09, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
+  Gerador.wCampoNFSe(tcStr, '', 'InformacoesAdicionais', 0, 2300, 0, NFSe.OutrasInformacoes, '');
+  Gerador.wCampoNFSe(tcStr, '', 'Atividade',             1,   09, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
 
-   GerarValoresServico;
+  GerarValoresServico;
 
-   Gerador.wCampoNFSe(tcStr, '', 'Homologacao',              5, 5, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
-   Gerador.wCampoNFSe(tcStr, '', 'NotificarTomadorPorEmail', 5, 5, 1, 'false', '');
+  Gerador.wCampoNFSe(tcStr, '', 'Homologacao',              5, 5, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
+  Gerador.wCampoNFSe(tcStr, '', 'NotificarTomadorPorEmail', 5, 5, 1, 'false', '');
 
-
+  Gerador.Prefixo := 'rgm:';
   Gerador.wGrupoNFSe('/NotaFiscal');
 
 (*
@@ -254,13 +256,6 @@ var
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo := FPrefixo4;
-  (*
-  Atributo := ' xmlns:rgm="http://schemas.datacontract.org/2004/07/Rgm.Eissnfe.Negocio.WebServices.Mensagem"' +
-              ' xmlns:rgm1="http://schemas.datacontract.org/2004/07/Rgm.Eissnfe.Dominio.DataTransferObject.Prestador"' +
-              ' xmlns:rgm2="http://schemas.datacontract.org/2004/07/Rgm.Eissnfe.Dominio.DataTransferObject.Contribuinte"';
-
-  Gerador.wGrupo('Rps' + Atributo);
-  *)
   FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                       FNFSe.IdentificacaoRps.Serie;
 
@@ -286,8 +281,6 @@ begin
                                    FNFSe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-
-//  Gerador.wGrupo('/Rps');
 
   Gerador.gtAjustarRegistros(NFSe.InfID.ID);
   Result := (Gerador.ListaDeAlertas.Count = 0);

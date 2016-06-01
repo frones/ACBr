@@ -1172,12 +1172,11 @@ begin
     else begin
       case FProvedor of
         proEgoverneISS: FvNotas := FvNotas +
-//                         '<' + FPrefixo4 + 'Rps>' +
-                          '<' + FPrefixo4 + 'NotaFiscal' +
+                          '<' + FPrefixo3 + 'NotaFiscal' +
                             RetornarConteudoEntre(RPS,
-                              '<' + FPrefixo4 + 'NotaFiscal', '</Signature>') +
+                              '<' + FPrefixo3 + 'NotaFiscal', '</Signature>') +
                             '</Signature>' +
-                         '</' + FPrefixo4 + 'NotaFiscal>';
+                         '</' + FPrefixo3 + 'NotaFiscal>';
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
@@ -1235,10 +1234,10 @@ begin
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
 
         proEgoverneISS: FvNotas := FvNotas +
-                                   '<' + FPrefixo4 + 'NotaFiscal>' +
+                                   '<' + FPrefixo3 + 'NotaFiscal>' +
                                      RetornarConteudoEntre(RPS,
-                                     '<' + FPrefixo4 + 'NotaFiscal>', '</' + FPrefixo4 + 'NotaFiscal>') +
-                                   '</' + FPrefixo4 + 'NotaFiscal>';
+                                     '<' + FPrefixo3 + 'NotaFiscal>', '</' + FPrefixo3 + 'NotaFiscal>') +
+                                   '</' + FPrefixo3 + 'NotaFiscal>';
 
         proNFSeBrasil: begin
                          FvNotas := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]) + '</Rps>';
@@ -1990,8 +1989,9 @@ begin
     end;
 
     case FProvedor of
-      proEGoverneISS: FTagI := '<' + TagGrupo + ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
-                                                ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+//      proEGoverneISS: FTagI := '<' + TagGrupo + ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"' +
+//                                                ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+      proEGoverneISS,
       proSimplISS: FTagI := '<' + TagGrupo + '>';
     else
       FTagI := '<' + TagGrupo + FNameSpaceDad + '>';

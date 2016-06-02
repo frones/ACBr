@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/06/16 ver: 0.0.199a
+-- ACBrBancoCaixaSICOB --
+[*] Ajuste para informar corretamente as posições referentes a data da baixa na remessa
+CNAB240. (Fabiano Sehn)
+http://www.projetoacbr.com.br/forum/topic/30314-boletos-cef-sicoob/  
+
+
+[-] Correção refente aos campos de abatimento e multa na remessa CNAB400. (Valdemir Jacon Sanches)
+http://www.projetoacbr.com.br/forum/topic/30335-erro-remessa-hsbc-campo-abatimento-multa/
+
 
 Data: 31/05/16 ver: 0.0.198a
 -- ACBrBancoCaixaSICOB --

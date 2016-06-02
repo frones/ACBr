@@ -364,7 +364,7 @@ begin
          else if ((Trim(Instrucao1) = '73') or (Trim(Instrucao1) = '74')) and (PercentualMulta > 0) then
            AbatimentoMulta := '      ' + IntToStrZero( round( PercentualMulta * 100 ), 4) + IntToStrZero(DaysBetween(Vencimento, DataMoraJuros),3)  // Multa
          else
-           AbatimentoMulta := IntToStrZero(0,4);
+           AbatimentoMulta := IntToStrZero(0,13);
 
          wAgencia := PadLeft(OnlyNumber(Cedente.Agencia), 4, '0');
          wConta   := PadLeft(OnlyNumber(Cedente.Conta) + Cedente.ContaDigito, 7, '0');

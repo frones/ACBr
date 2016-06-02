@@ -801,8 +801,9 @@ begin
                IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                       PadLeft(IntToStr(DaysBetween(DataProtesto,
                        Vencimento)), 2, '0'), '00')                                     + // 222 a 223 - Prazo para protesto (em dias corridos)
-               '2'                                                                      + // 224 a 224 - Código para baixa/devolução: Não baixar/não devolver
-               PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 3, '0')         + // 225 a 227 - Prazo para baixa/devolução (em dias corridos)
+               IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2') + //224 - Código para baixa/devolução: Não baixar/não devolver
+               IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
+                      PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 3, '0'), '000') + //225 a 227 - Prazo para baixa/devolução (em dias corridos)
                '09'                                                                     + // 228 a 229 - Código da moeda: Real
                Space(10)                                                                + // 230 a 239 - Uso Exclusivo FEBRABAN/CNAB
                Space(1);                                                                  // 240 a 240 - Uso exclusivo FEBRABAN/CNAB

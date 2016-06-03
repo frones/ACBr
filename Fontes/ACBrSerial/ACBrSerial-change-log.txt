@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/06/2016
+-- ACBrECFEscECF --
+[-] Corrigido Bug em "Ativar", que em algumas situações não chamava "AtivarPorta"
+    caso "ControlePorta" estivesse ativo.  (por: DSA)
+
 Data: 21/05/2016
 -- ACBrECF --
 [+] Adicionado o método:

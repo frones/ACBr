@@ -1340,6 +1340,7 @@ begin
      end
   end;
 
+  fpAtivo := False;
   fsEscECFProtocolo.Ativar;
 
   try

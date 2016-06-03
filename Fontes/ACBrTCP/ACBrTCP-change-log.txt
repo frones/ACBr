@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/02/2016
+-- ACBrMTer --
+[+] Adicionado novo componente ACBrMTer, que atua como servidor de MicroTerminais
+    TCP/IP, suportando atualmente os protocolos: VT100, StxEtx, PMTG
+    (por: Elias César Vieira e DSA)
+
 14/04/2016
 -- ACBrSocket --
 [-] Método: "TACBrTCPServerDaemon.Destroy" não estava chamando "inherited Destroy"

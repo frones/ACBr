@@ -1,0 +1,648 @@
+object Form1: TForm1
+  Left = 448
+  Height = 389
+  Top = 177
+  Width = 766
+  Caption = 'Form1'
+  ClientHeight = 389
+  ClientWidth = 766
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.6.0.4'
+  object pnConectados: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = pnConfig
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = pnComandos
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 0
+    Height = 261
+    Top = 128
+    Width = 328
+    Align = alCustom
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 261
+    ClientWidth = 328
+    TabOrder = 0
+    object clbConectados: TCheckListBox
+      Left = 189
+      Height = 259
+      Top = 1
+      Width = 138
+      Align = alRight
+      ItemHeight = 0
+      TabOrder = 0
+    end
+    object mOutput: TMemo
+      Left = 1
+      Height = 259
+      Top = 1
+      Width = 183
+      Align = alClient
+      Lines.Strings = (
+        'Output:'
+        ''
+      )
+      ReadOnly = True
+      TabOrder = 1
+    end
+    object Splitter1: TSplitter
+      Left = 184
+      Height = 259
+      Top = 1
+      Width = 5
+      Align = alRight
+      ResizeAnchor = akRight
+    end
+  end
+  object pnComandos: TPanel
+    Left = 328
+    Height = 389
+    Top = 0
+    Width = 438
+    Align = alRight
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 389
+    ClientWidth = 438
+    TabOrder = 1
+    object PageControl2: TPageControl
+      Left = 1
+      Height = 387
+      Top = 1
+      Width = 436
+      ActivePage = tsFluxoVendas
+      Align = alClient
+      TabIndex = 1
+      TabOrder = 0
+      OnChange = PageControl2Change
+      object tsComandos: TTabSheet
+        Caption = 'Comandos'
+        ClientHeight = 359
+        ClientWidth = 428
+        object btBackSpace: TButton
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Side = asrCenter
+          Left = 166
+          Height = 25
+          Top = 16
+          Width = 80
+          Caption = 'BackSpace'
+          OnClick = btBackSpaceClick
+          TabOrder = 0
+        end
+        object btLimparDisplay: TButton
+          Left = 41
+          Height = 25
+          Top = 16
+          Width = 109
+          Caption = 'Limpa Display'
+          OnClick = btLimparDisplayClick
+          TabOrder = 1
+        end
+        object btBeep: TButton
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Side = asrCenter
+          Left = 264
+          Height = 25
+          Top = 16
+          Width = 80
+          Caption = 'Beep'
+          OnClick = btBeepClick
+          TabOrder = 2
+        end
+        object btEnviarTexto: TButton
+          AnchorSideTop.Side = asrBottom
+          Left = 41
+          Height = 25
+          Top = 59
+          Width = 109
+          Caption = 'Enviar Texto'
+          OnClick = btEnviarTextoClick
+          TabOrder = 3
+        end
+        object edEnviarTexto: TEdit
+          Left = 166
+          Height = 23
+          Top = 59
+          Width = 240
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 4
+          Text = 'Texto para Enviar'
+        end
+        object btPosicionarCursor: TButton
+          Left = 41
+          Height = 25
+          Top = 188
+          Width = 109
+          Caption = 'Posicionar Cursor'
+          OnClick = btPosicionarCursorClick
+          TabOrder = 5
+        end
+        object btDeslocarCursor: TButton
+          Left = 40
+          Height = 25
+          Top = 274
+          Width = 109
+          Caption = 'Deslocar Cursor'
+          OnClick = btDeslocarCursorClick
+          TabOrder = 6
+        end
+        object btDeslocarLinha: TButton
+          Left = 41
+          Height = 25
+          Top = 231
+          Width = 109
+          Caption = 'Deslocar Linha'
+          OnClick = btDeslocarLinhaClick
+          TabOrder = 7
+        end
+        object btLimparLinha: TButton
+          Left = 41
+          Height = 25
+          Top = 317
+          Width = 109
+          Caption = 'Limpar Linha'
+          OnClick = btLimparLinhaClick
+          TabOrder = 8
+        end
+        object edPosLinha: TSpinEdit
+          Left = 166
+          Height = 23
+          Top = 190
+          Width = 71
+          MaxValue = 2
+          TabOrder = 9
+          Value = 1
+        end
+        object edPosColuna: TSpinEdit
+          Left = 254
+          Height = 23
+          Top = 190
+          Width = 71
+          MaxValue = 40
+          TabOrder = 10
+          Value = 1
+        end
+        object lbPosLinha: TLabel
+          AnchorSideLeft.Control = edPosLinha
+          AnchorSideBottom.Control = edPosLinha
+          Left = 166
+          Height = 15
+          Top = 175
+          Width = 32
+          Anchors = [akLeft, akBottom]
+          Caption = 'Linha:'
+          ParentColor = False
+        end
+        object lbPosColuna: TLabel
+          AnchorSideLeft.Control = edPosColuna
+          AnchorSideBottom.Control = edPosColuna
+          Left = 254
+          Height = 15
+          Top = 175
+          Width = 41
+          Anchors = [akLeft, akBottom]
+          Caption = 'Coluna:'
+          ParentColor = False
+        end
+        object lbDesLinha: TLabel
+          AnchorSideLeft.Control = edDesLinha
+          AnchorSideBottom.Control = edDesLinha
+          Left = 166
+          Height = 15
+          Top = 218
+          Width = 32
+          Anchors = [akLeft, akBottom]
+          Caption = 'Linha:'
+          ParentColor = False
+        end
+        object edDesLinha: TSpinEdit
+          Left = 166
+          Height = 23
+          Top = 233
+          Width = 71
+          MaxValue = 2
+          MinValue = -1
+          TabOrder = 11
+          Value = 1
+        end
+        object edQtdPosicao: TSpinEdit
+          Left = 165
+          Height = 23
+          Top = 276
+          Width = 71
+          MinValue = -20
+          TabOrder = 12
+          Value = 1
+        end
+        object lbQtdPosicoes: TLabel
+          AnchorSideLeft.Control = edQtdPosicao
+          AnchorSideBottom.Control = edQtdPosicao
+          Left = 165
+          Height = 15
+          Top = 261
+          Width = 72
+          Anchors = [akLeft, akBottom]
+          Caption = 'Qtd. Posicões'
+          ParentColor = False
+        end
+        object lbLimparLinha: TLabel
+          AnchorSideLeft.Control = edLimparLinha
+          AnchorSideBottom.Control = edLimparLinha
+          Left = 166
+          Height = 15
+          Top = 304
+          Width = 32
+          Anchors = [akLeft, akBottom]
+          Caption = 'Linha:'
+          ParentColor = False
+        end
+        object edLimparLinha: TSpinEdit
+          Left = 166
+          Height = 23
+          Top = 319
+          Width = 71
+          MaxValue = 2
+          MinValue = 1
+          TabOrder = 13
+          Value = 1
+        end
+        object btEnviarSerial: TButton
+          AnchorSideTop.Side = asrBottom
+          Left = 41
+          Height = 25
+          Top = 145
+          Width = 109
+          Caption = 'Enviar p/ Serial'
+          OnClick = btEnviarSerialClick
+          TabOrder = 14
+        end
+        object edEnviarSerial: TEdit
+          Left = 166
+          Height = 23
+          Top = 145
+          Width = 182
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 15
+          Text = 'Texto para Serial'
+        end
+        object edSerial: TSpinEdit
+          Left = 359
+          Height = 23
+          Top = 145
+          Width = 47
+          Anchors = [akTop, akRight]
+          MaxValue = 4
+          TabOrder = 16
+        end
+        object lbSerial: TLabel
+          AnchorSideLeft.Control = edSerial
+          AnchorSideBottom.Control = edSerial
+          Left = 359
+          Height = 15
+          Top = 130
+          Width = 31
+          Anchors = [akLeft, akBottom]
+          Caption = 'Serial:'
+          ParentColor = False
+        end
+        object btEnviarParalela: TButton
+          AnchorSideTop.Side = asrBottom
+          Left = 41
+          Height = 25
+          Top = 102
+          Width = 109
+          Caption = 'Enviar p/ Paralela'
+          OnClick = btEnviarParalelaClick
+          TabOrder = 17
+        end
+        object edEnviarParalela: TEdit
+          Left = 166
+          Height = 23
+          Top = 102
+          Width = 240
+          Anchors = [akTop, akLeft, akRight]
+          TabOrder = 18
+          Text = 'Texto para Paralela'
+        end
+      end
+      object tsFluxoVendas: TTabSheet
+        Caption = 'Fluxo de Vendas'
+        ClientHeight = 359
+        ClientWidth = 428
+        object pnComandas: TPanel
+          Left = 220
+          Height = 359
+          Top = 0
+          Width = 208
+          Align = alClient
+          ClientHeight = 359
+          ClientWidth = 208
+          TabOrder = 0
+          object gbComandas: TGroupBox
+            Left = 1
+            Height = 357
+            Top = 1
+            Width = 206
+            Align = alClient
+            Caption = 'Comandas:'
+            ClientHeight = 337
+            ClientWidth = 202
+            TabOrder = 0
+            object dbgComandas: TDBGrid
+              Left = 0
+              Height = 337
+              Top = 0
+              Width = 202
+              Align = alClient
+              Color = clWindow
+              Columns = <              
+                item
+                  Title.Caption = 'Cod.'
+                  Width = 108
+                  FieldName = 'CODCOMANDA'
+                end              
+                item
+                  Alignment = taCenter
+                  Title.Alignment = taCenter
+                  Title.Caption = 'Itens'
+                  Width = 62
+                  FieldName = 'QTD_ITENS'
+                end>
+              DataSource = dsComandas
+              FixedCols = 0
+              Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+              Scrollbars = ssAutoVertical
+              TabOrder = 0
+            end
+          end
+        end
+        object pnTerminais: TPanel
+          Left = 0
+          Height = 359
+          Top = 0
+          Width = 220
+          Align = alLeft
+          ClientHeight = 359
+          ClientWidth = 220
+          TabOrder = 1
+          object pnLegenda: TPanel
+            Left = 1
+            Height = 50
+            Top = 308
+            Width = 218
+            Align = alBottom
+            TabOrder = 0
+          end
+          object dbgTerminais: TDBGrid
+            Left = 1
+            Height = 243
+            Top = 65
+            Width = 218
+            Align = alClient
+            BorderSpacing.Top = 1
+            Color = clWindow
+            Columns = <            
+              item
+                Title.Caption = 'IP Terminal'
+                Width = 134
+                FieldName = 'IP_TERMINAL'
+              end            
+              item
+                Alignment = taCenter
+                Title.Alignment = taCenter
+                Title.Caption = 'Status'
+                Width = 80
+                FieldName = 'STATUS'
+              end>
+            DataSource = dsTerminais
+            FixedCols = 0
+            Options = [dgTitles, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+            Scrollbars = ssAutoVertical
+            TabOrder = 1
+          end
+          object pnAtivarFluxo: TPanel
+            Left = 1
+            Height = 63
+            Top = 1
+            Width = 218
+            Align = alTop
+            BevelOuter = bvNone
+            ClientHeight = 63
+            ClientWidth = 218
+            TabOrder = 2
+            object btFluxoVendas: TButton
+              AnchorSideLeft.Control = pnAtivarFluxo
+              AnchorSideLeft.Side = asrCenter
+              AnchorSideTop.Control = pnAtivarFluxo
+              AnchorSideTop.Side = asrCenter
+              Left = 37
+              Height = 25
+              Top = 19
+              Width = 144
+              Caption = 'Iniciar Fluxo de Vendas'
+              OnClick = btFluxoVendasClick
+              TabOrder = 0
+            end
+          end
+        end
+      end
+    end
+  end
+  object pnConfig: TPanel
+    AnchorSideRight.Control = pnComandos
+    Left = 0
+    Height = 128
+    Top = 0
+    Width = 328
+    Align = alCustom
+    Anchors = [akTop, akLeft, akRight]
+    ClientHeight = 128
+    ClientWidth = 328
+    TabOrder = 2
+    object btAtivar: TButton
+      Left = 240
+      Height = 25
+      Top = 16
+      Width = 75
+      Caption = 'Ativar'
+      OnClick = btAtivarClick
+      TabOrder = 0
+    end
+    object btDesativar: TButton
+      Left = 240
+      Height = 25
+      Top = 48
+      Width = 75
+      Caption = 'Desativar'
+      OnClick = btDesativarClick
+      TabOrder = 1
+    end
+    object lbPorta: TLabel
+      AnchorSideLeft.Control = edPorta
+      AnchorSideBottom.Control = edPorta
+      Left = 136
+      Height = 15
+      Top = 11
+      Width = 31
+      Anchors = [akLeft, akBottom]
+      Caption = 'Porta:'
+      ParentColor = False
+    end
+    object edPorta: TEdit
+      Left = 136
+      Height = 23
+      Top = 26
+      Width = 88
+      TabOrder = 2
+      Text = '6550'
+    end
+    object cbModelo: TComboBox
+      Left = 16
+      Height = 23
+      Top = 26
+      Width = 104
+      ItemHeight = 15
+      ItemIndex = 1
+      Items.Strings = (
+        'mtrNenhum'
+        'mtrVT100'
+        'mtrSTX/ETX'
+        'mtrPMTG'
+      )
+      Style = csDropDownList
+      TabOrder = 3
+      Text = 'mtrVT100'
+    end
+    object lbModelo: TLabel
+      AnchorSideLeft.Control = cbModelo
+      AnchorSideBottom.Control = cbModelo
+      Left = 16
+      Height = 15
+      Top = 11
+      Width = 44
+      Anchors = [akLeft, akBottom]
+      Caption = 'Modelo:'
+      ParentColor = False
+    end
+    object edTerminador: TEdit
+      Left = 16
+      Height = 23
+      Top = 72
+      Width = 104
+      TabOrder = 4
+    end
+    object lbTerminador: TLabel
+      AnchorSideLeft.Control = edTerminador
+      AnchorSideBottom.Control = edTerminador
+      Left = 16
+      Height = 15
+      Top = 57
+      Width = 64
+      Anchors = [akLeft, akBottom]
+      Caption = 'Terminador:'
+      ParentColor = False
+    end
+    object edTimeout: TEdit
+      Left = 136
+      Height = 23
+      Top = 72
+      Width = 88
+      TabOrder = 5
+      Text = '5000'
+    end
+    object Label1: TLabel
+      AnchorSideLeft.Control = edTimeout
+      AnchorSideBottom.Control = edTimeout
+      Left = 136
+      Height = 15
+      Top = 57
+      Width = 48
+      Anchors = [akLeft, akBottom]
+      Caption = 'Timeout:'
+      ParentColor = False
+    end
+    object btAtualizar: TButton
+      Left = 240
+      Height = 25
+      Top = 80
+      Width = 75
+      Caption = 'Atualizar'
+      OnClick = btAtualizarClick
+      TabOrder = 6
+    end
+    object cbEcoAutomatico: TCheckBox
+      Left = 16
+      Height = 19
+      Top = 96
+      Width = 140
+      Caption = 'Enviar Eco Automatico'
+      Checked = True
+      State = cbChecked
+      TabOrder = 7
+    end
+  end
+  object ACBrMTer1: TACBrMTer
+    ArqLog = '_ACBrMTer.log'
+    EcoAuto = True
+    IP = '0.0.0.0'
+    Port = '6550'
+    TimeOut = 5000
+    OnConecta = ACBrMTer1Conecta
+    OnDesconecta = ACBrMTer1Desconecta
+    OnRecebeDados = ACBrMTer1RecebeDados
+    left = 24
+    top = 224
+  end
+  object memTerminais: TMemDataset
+    FieldDefs = <    
+      item
+        Name = 'IP_TERMINAL'
+        DataType = ftString
+        Size = 15
+      end    
+      item
+        Name = 'STATUS'
+        DataType = ftSmallint
+        Size = 1
+      end    
+      item
+        Name = 'RESPOSTA'
+        DataType = ftString
+        Size = 20
+      end    
+      item
+        Name = 'COMANDA'
+        DataType = ftString
+        Size = 20
+      end>
+    left = 104
+    top = 224
+  end
+  object dsTerminais: TDataSource
+    DataSet = memTerminais
+    left = 184
+    top = 224
+  end
+  object memComandas: TMemDataset
+    FieldDefs = <    
+      item
+        Name = 'CODCOMANDA'
+        DataType = ftString
+        Size = 20
+      end    
+      item
+        Name = 'QTD_ITENS'
+        DataType = ftInteger
+        Size = 2
+      end>
+    left = 104
+    top = 280
+  end
+  object dsComandas: TDataSource
+    DataSet = memComandas
+    left = 184
+    top = 280
+  end
+end

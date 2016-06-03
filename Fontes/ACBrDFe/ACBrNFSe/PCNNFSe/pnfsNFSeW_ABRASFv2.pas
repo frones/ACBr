@@ -752,7 +752,8 @@ begin
                     profintelISS, proFiorilli, proGoiania, proGovDigital,
                     proISSDigital, proLink3, proProdata, proPVH, proSaatri,
                     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
-                    proNFSEBrasil, proNEAInformatica, proNotaInteligente]) then
+                    proNFSEBrasil, proNEAInformatica, proNotaInteligente,
+                    proVersaTecnologia]) then
     FDefTipos := FServicoEnviar;
 
   if (RightStr(FURL, 1) <> '/') and (FDefTipos <> '')

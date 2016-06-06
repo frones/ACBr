@@ -252,7 +252,7 @@ begin
         with RegJ005.RegistroJ150.Items[intFor] do
         begin
            Check(((IND_VL = 'D') or (IND_VL = 'R') or (IND_VL = 'P') or (IND_VL = 'N')), '(J-J150) No Indicador da situação do valor, deve ser informado: D ou R ou P ou N!');
-           Check(((IND_VL_ULT_DRE = 'D') or (IND_VL_ULT_DRE = 'R') or (IND_VL_ULT_DRE = 'P') or (IND_VL_ULT_DRE = 'N')), '(J-J150) No Indicador da situação do saldo valor inicial, deve ser informado: D ou R ou P ou N!');
+           //Check(((IND_VL_ULT_DRE = 'D') or (IND_VL_ULT_DRE = 'R') or (IND_VL_ULT_DRE = 'P') or (IND_VL_ULT_DRE = 'N')), '(J-J150) No Indicador da situação do saldo valor inicial, deve ser informado: D ou R ou P ou N!');
            ///
            Add( LFill('J150') +
                 LFill(COD_AGL) +
@@ -261,7 +261,7 @@ begin
                 LFill(VL_CTA, 19, 2) +
                 LFill(IND_VL, 1) +
                 LFill(VL_CTA_ULT_DRE, 19, 2) +
-                LFill(IND_VL_ULT_DRE, 1)
+                LFill(IND_VL_ULT_DRE)
                 );
 
         end;

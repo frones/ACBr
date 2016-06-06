@@ -55,8 +55,8 @@ uses
   ACBrECFBloco_0_Class, ACBrECFBloco_C_Class, ACBrECFBloco_E_Class,
   ACBrECFBloco_J_Class, ACBrECFBloco_K_Class, ACBrECFBloco_L_Class,
   ACBrECFBloco_M_Class, ACBrECFBloco_N_Class, ACBrECFBloco_P_Class,
-  ACBrECFBloco_T_Class, ACBrECFBloco_U_Class, ACBrECFBloco_X_Class,
-  ACBrECFBloco_Y_Class, ACBrECFBloco_9_Class ;
+  ACBrECFBloco_Q_Class, ACBrECFBloco_T_Class, ACBrECFBloco_U_Class,
+  ACBrECFBloco_X_Class, ACBrECFBloco_Y_Class, ACBrECFBloco_9_Class ;
 
 const
   CACBrSpedECF_Versao = '0.01';
@@ -88,6 +88,7 @@ type
     FBloco_M: TBloco_M;
     FBloco_N: TBloco_N;
     FBloco_P: TBloco_P;
+    FBloco_Q: TBloco_Q;
     FBloco_T: TBloco_T;
     FBloco_U: TBloco_U;
     FBloco_X: TBloco_X;
@@ -145,6 +146,9 @@ type
 		/// BLOCO P
     procedure WriteRegistroP001;
     procedure WriteRegistroP990;
+		/// BLOCO Q
+    procedure WriteRegistroQ001;
+    procedure WriteRegistroQ990;
 		/// BLOCO T
     procedure WriteRegistroT001;
     procedure WriteRegistroT990;
@@ -179,6 +183,7 @@ type
     procedure WriteBloco_M;
     procedure WriteBloco_N;
     procedure WriteBloco_P;
+    procedure WriteBloco_Q;
     procedure WriteBloco_T;
     procedure WriteBloco_U;
     procedure WriteBloco_X;
@@ -199,6 +204,7 @@ type
     property Bloco_M: TBloco_M read FBloco_M write FBloco_M;
     property Bloco_N: TBloco_N read FBloco_N write FBloco_N;
     property Bloco_P: TBloco_P read FBloco_P write FBloco_P;
+    property Bloco_Q: TBloco_Q read FBloco_Q write FBloco_Q;
     property Bloco_T: TBloco_T read FBloco_T write FBloco_T;
     property Bloco_U: TBloco_U read FBloco_U write FBloco_U;
     property Bloco_X: TBloco_X read FBloco_X write FBloco_X;
@@ -258,6 +264,7 @@ begin
   FBloco_M := TBloco_M.Create;
   FBloco_N := TBloco_N.Create;
   FBloco_P := TBloco_P.Create;
+  FBloco_Q := TBloco_Q.Create;
   FBloco_T := TBloco_T.Create;
   FBloco_U := TBloco_U.Create;
   FBloco_X := TBloco_X.Create;
@@ -274,6 +281,7 @@ begin
   FBloco_M.Bloco_0 := FBloco_0;
   FBloco_N.Bloco_0 := FBloco_0;
   FBloco_P.Bloco_0 := FBloco_0;
+  FBloco_Q.Bloco_0 := FBloco_0;
   FBloco_T.Bloco_0 := FBloco_0;
   FBloco_U.Bloco_0 := FBloco_0;
   FBloco_X.Bloco_0 := FBloco_0;
@@ -302,6 +310,7 @@ begin
   FBloco_M.Free;
   FBloco_N.Free;
   FBloco_P.Free;
+  FBloco_Q.Free;
   FBloco_T.Free;
   FBloco_U.Free;
   FBloco_X.Free;
@@ -321,6 +330,7 @@ begin
   FBloco_M.LimpaRegistros;
   FBloco_N.LimpaRegistros;
   FBloco_P.LimpaRegistros;
+  FBloco_Q.LimpaRegistros;
   FBloco_T.LimpaRegistros;
   FBloco_U.LimpaRegistros;
   FBloco_X.LimpaRegistros;
@@ -364,6 +374,7 @@ begin
   FBloco_M.Delimitador := Value;
   FBloco_N.Delimitador := Value;
   FBloco_P.Delimitador := Value;
+  FBloco_Q.Delimitador := Value;
   FBloco_T.Delimitador := Value;
   FBloco_U.Delimitador := Value;
   FBloco_X.Delimitador := Value;
@@ -405,6 +416,7 @@ begin
   FBloco_M.CurMascara := Value;
   FBloco_N.CurMascara := Value;
   FBloco_P.CurMascara := Value;
+  FBloco_Q.CurMascara := Value;
   FBloco_T.CurMascara := Value;
   FBloco_U.CurMascara := Value;
   FBloco_X.CurMascara := Value;
@@ -430,6 +442,7 @@ begin
   FBloco_M.TrimString := Value;
   FBloco_N.TrimString := Value;
   FBloco_P.TrimString := Value;
+  FBloco_Q.TrimString := Value;
   FBloco_T.TrimString := Value;
   FBloco_U.TrimString := Value;
   FBloco_X.TrimString := Value;
@@ -480,6 +493,7 @@ begin
   InicializaBloco( Bloco_M );
   InicializaBloco( Bloco_N );
   InicializaBloco( Bloco_P );
+  InicializaBloco( Bloco_Q );
   InicializaBloco( Bloco_T );
   InicializaBloco( Bloco_U );
   InicializaBloco( Bloco_X );
@@ -512,6 +526,7 @@ begin
   Bloco_M.RegistroM990.QTD_LIN := 0;
   Bloco_N.RegistroN990.QTD_LIN := 0;
   Bloco_P.RegistroP990.QTD_LIN := 0;
+  Bloco_Q.RegistroQ990.QTD_LIN := 0;
   Bloco_T.RegistroT990.QTD_LIN := 0;
   Bloco_U.RegistroU990.QTD_LIN := 0;
   Bloco_X.RegistroX990.QTD_LIN := 0;
@@ -548,6 +563,7 @@ begin
   FBloco_M.DT_INI := Value;
   FBloco_N.DT_INI := Value;
   FBloco_P.DT_INI := Value;
+  FBloco_Q.DT_INI := Value;
   FBloco_T.DT_INI := Value;
   FBloco_U.DT_INI := Value;
   FBloco_X.DT_INI := Value;
@@ -576,6 +592,7 @@ begin
   FBloco_M.DT_FIN := Value;
   FBloco_N.DT_FIN := Value;
   FBloco_P.DT_FIN := Value;
+  FBloco_Q.DT_FIN := Value;
   FBloco_T.DT_FIN := Value;
   FBloco_U.DT_FIN := Value;
   FBloco_X.DT_FIN := Value;
@@ -603,6 +620,7 @@ begin
   FBloco_M.OnError := Value;
   FBloco_N.OnError := Value;
   FBloco_P.OnError := Value;
+  FBloco_Q.OnError := Value;
   FBloco_T.OnError := Value;
   FBloco_U.OnError := Value;
   FBloco_X.OnError := Value;
@@ -624,6 +642,7 @@ begin
     WriteBloco_M;
     WriteBloco_N;
     WriteBloco_P;
+    WriteBloco_Q;
     WriteBloco_T;
     WriteBloco_U;
     WriteBloco_X;
@@ -782,13 +801,29 @@ begin
   Bloco_P.Gravado := True;
 end;
 
+procedure TACBrSPEDECF.WriteBloco_Q;
+begin
+  if Bloco_Q.Gravado then
+    exit;
+
+  if not Bloco_P.Gravado then
+    WriteBloco_P;
+
+  WriteRegistroQ001;
+  WriteRegistroQ990;
+
+  Bloco_Q.WriteBuffer;
+  Bloco_Q.Conteudo.Clear;
+  Bloco_Q.Gravado := True;
+end;
+
 procedure TACBrSPEDECF.WriteBloco_T;
 begin
   if Bloco_T.Gravado then
     exit;
 
-  if not Bloco_P.Gravado then
-    WriteBloco_P;
+  if not Bloco_Q.Gravado then
+    WriteBloco_Q;
 
   WriteRegistroT001;
   WriteRegistroT990;
@@ -1657,6 +1692,40 @@ begin
     end;
   end;
   Bloco_P.WriteRegistroP990;
+end;
+
+procedure TACBrSPEDECF.WriteRegistroQ001;
+begin
+  Bloco_Q.WriteRegistroQ001;
+end;
+
+procedure TACBrSPEDECF.WriteRegistroQ990;
+begin
+  with Bloco_9.Registro9900 do
+  begin
+    with New do
+    begin
+      REG_BLC := 'Q001';
+      QTD_REG_BLC := 1;
+    end;
+    if (Bloco_Q.RegistroQ001.IND_DAD = idComDados) then
+    begin
+      if Bloco_Q.RegistroQ100.Count > 0 then
+      begin
+        with New do
+        begin
+          REG_BLC := 'Q100';
+          QTD_REG_BLC := Bloco_Q.RegistroQ100.Count;
+        end;
+      end;
+    end;
+    with New do
+    begin
+      REG_BLC := 'Q990';
+      QTD_REG_BLC := 1;
+    end;
+  end;
+  Bloco_Q.WriteRegistroQ990;
 end;
 
 procedure TACBrSPEDECF.WriteRegistroT001;

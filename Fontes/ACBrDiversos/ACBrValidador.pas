@@ -76,8 +76,9 @@ const
                 'RJ,RN,RS,RO,RR,SC,SP,SE,TO,EX,';
 
 type
-  TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
-                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, docEmail ) ;
+  TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS, 
+                        docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
+                        docEmail, docCNH ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -144,6 +145,7 @@ type
     procedure ValidarGTIN;
     procedure ValidarRenavam;
     Procedure ValidarEmail;
+    Procedure ValidarCNH ;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -187,6 +189,7 @@ function ValidarRenavam( const Documento : String ) : String ;
 function ValidarEmail (const Documento : string ) : String;
 function ValidarCEP(const ACEP, AUF: String): String; overload;
 function ValidarCEP(const ACEP: Integer; AUF: String): String; overload;
+function ValidarCNH(const Documento: String) : String ;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -262,6 +265,11 @@ end;
 function ValidarCEP(const ACEP: Integer; AUF: String): String;
 begin
   ValidarCEP( FormatarCEP(ACEP), AUF );
+end;
+
+function ValidarCNH(const Documento: String): String ;
+begin
+  Result := ValidarDocumento( docCNH, Documento );
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;
@@ -649,6 +657,7 @@ begin
           docGTIN          : NomeDocto := 'GTIN';
           docRenavam       : NomeDocto := 'Renavam';
           docEmail         : NomeDocto := 'E-Mail';
+          docCNH           : NomeDocto := 'Carteira Nacional de Habilitação' ;
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -669,6 +678,7 @@ begin
        docGTIN          : ValidarGTIN ;
        docRenavam       : ValidarRenavam;
        docEmail         : ValidarEmail;
+       docCNH           : ValidarCNH ;
      end;
 
   if fsMsgErro <> '' then
@@ -1645,6 +1655,65 @@ begin
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
+end;
+
+// Rotina para Validação da C.N.H. Modelo 11 digitos (nova CNH)
+procedure TACBrValidador.ValidarCNH ;
+var
+  I, vFator, vSoma, vResto, vBase: integer;
+  sResultado : string;
+begin
+  if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
+  begin
+     fsMsgErro := 'C.N.H. deve ter 11 dígitos. (Apenas números)' ;
+     exit
+  end ;
+
+  if pos(fsDocto,'11111111111.22222222222.33333333333.44444444444.55555555555.'+
+         '66666666666.77777777777.88888888888.99999999999.00000000000') > 0 then
+  begin
+     fsMsgErro := 'C.N.H. não deve conter números repetidos !' ;
+     exit ;
+  end ;
+
+  vBase := 0;
+
+  vSoma := 0;
+  vFator := 9;
+  for I := 1 to 9 do
+  begin
+    vSoma := vSoma + (StrToInt(fsDocto[I]) * vFator);
+    dec(vFator) ;
+  end;
+  vResto := vSoma Mod 11;
+  if vResto = 10 then
+    vBase := -2;
+
+  if vResto > 9 then
+    vResto := 0;
+  sResultado := IntToStr(vResto) ;
+
+  vSoma := 0;
+  vFator := 1;
+  for I := 1 to 9 do
+  begin
+    vSoma := vSoma + (StrToInt(fsDocto[I]) * vFator);
+    Inc(vFator) ;
+  end;
+
+  if (vSoma Mod 11) + vBase < 0 then
+    vResto := 11 + (vSoma Mod 11) + vBase;
+
+  if (vSoma Mod 11) + vBase >= 0 then
+    vResto := (vSoma Mod 11) + vBase;
+
+  if vResto > 9 then
+    vResto := 0;
+
+  sResultado := sResultado + IntToStr(vResto) ;
+
+  if Copy(fsDocto,10,2) <> sResultado then
+    fsMsgErro := 'C.N.H. Inválida !!' ;
 end;
 
 {------------------------------ TACBrCalcDigito ------------------------------}

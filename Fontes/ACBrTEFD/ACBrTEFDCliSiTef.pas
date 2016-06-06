@@ -202,6 +202,9 @@ type
         var Tipo: SmallInt): Integer;
         {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
 
+     xVerificaPresencaPinPad: function(): Integer
+     {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF};
+
      procedure AvaliaErro(Sts : Integer);
      function GetDataHoraFiscal: TDateTime;
      function GetDocumentoFiscal: AnsiString;
@@ -268,6 +271,7 @@ type
         DocumentoVinculado : AnsiString);
      function ValidaCampoCodigoEmBarras(Dados: AnsiString;
         var Tipo: SmallInt): Integer;
+     function VerificaPresencaPinPad: Boolean;
 
    published
      property EnderecoIP: AnsiString                    read fEnderecoIP           write fEnderecoIP;
@@ -527,6 +531,7 @@ begin
   xObtemQuantidadeTransacoesPendentes := nil;
   xValidaCampoCodigoEmBarras          := nil;
   xEnviaRecebeSiTefDireto             := nil;
+  xVerificaPresencaPinPad             := nil;
 
   fOnExibeMenu  := nil ;
   fOnObtemCampo := nil ;
@@ -586,6 +591,7 @@ begin
    CliSiTefFunctionDetect('ObtemQuantidadeTransacoesPendentes',@xObtemQuantidadeTransacoesPendentes);
    CliSiTefFunctionDetect('ValidaCampoCodigoEmBarras',@xValidaCampoCodigoEmBarras);
    CliSiTefFunctionDetect('EnviaRecebeSiTefDireto',@xEnviaRecebeSiTefDireto);
+   CliSiTefFunctionDetect('VerificaPresencaPinPad',@xVerificaPresencaPinPad);
 end ;
 
 procedure TACBrTEFDCliSiTef.UnLoadDLLFunctions;
@@ -606,6 +612,7 @@ begin
   xObtemQuantidadeTransacoesPendentes := Nil;
   xValidaCampoCodigoEmBarras          := Nil;
   xEnviaRecebeSiTefDireto             := Nil;
+  xVerificaPresencaPinPad             := Nil;
 end;
 
 procedure TACBrTEFDCliSiTef.SetParametrosAdicionais(const AValue : TStringList
@@ -1497,10 +1504,10 @@ begin
         -4 : Erro := 'Falta de memória para rodar a função' ;
         -5 : Erro := '' ; // 'Sem comunicação com o SiTef' ; // Comentado pois SiTEF já envia a msg de Erro
         -6 : Erro := 'Operação cancelada pelo usuário' ;
-		-40: Erro := 'Transação negada pelo SiTef';
-		-43: Erro := 'Falha no pinpad';
-		-50: Erro := 'Transação não segura';
-		-100: Erro := 'Erro interno do módulo';		
+        -40: Erro := 'Transação negada pelo SiTef';
+        -43: Erro := 'Falha no pinpad';
+        -50: Erro := 'Transação não segura';
+        -100: Erro := 'Erro interno do módulo';
    else
       if Sts < 0 then
          Erro := 'Erros detectados internamente pela rotina ('+IntToStr(Sts)+')'
@@ -1619,6 +1626,23 @@ function TACBrTEFDCliSiTef.HMS: String;
 begin
    Result := FormatDateTime('hhmmss',Now);
 end;
+
+function TACBrTEFDCliSiTef.VerificaPresencaPinPad: Boolean;
+begin
+  GravaLog('VerificaPresencaPinpad', True);
+
+  {
+   Retornos:
+      1: Existe um PinPad operacional conectado ao micro;
+      0: Nao Existe um PinPad conectado ao micro;
+     -1: Biblioteca de acesso ao PinPad não encontrada }
+
+  if Assigned(xVerificaPresencaPinPad) then
+    Result := ( xVerificaPresencaPinPad() = 1 )
+  else
+    raise EACBrTEFDErro.Create(ACBrStr(CACBrTEFD_CliSiTef_NaoInicializado));
+end;
+
 
 end.
 

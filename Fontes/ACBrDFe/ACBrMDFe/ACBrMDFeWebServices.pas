@@ -1703,7 +1703,8 @@ end;
 
 destructor TMDFeEnvEvento.Destroy;
 begin
-  FEventoRetorno.Free;
+  if Assigned(FEventoRetorno) then
+    FEventoRetorno.Free;
 
   inherited;
 end;
@@ -1941,11 +1942,12 @@ begin
               PathArq := PathWithDelim(GerarPathEvento(FEvento.Evento.Items[I].InfEvento.CNPJ));
 
               FPDFeOwner.Gravar(NomeArq, Texto, PathArq);
+              FEventoRetorno.retEvento.Items[J].RetInfEvento.NomeArquivo := PathArq + NomeArq;
               FEvento.Evento.Items[I].RetInfEvento.NomeArquivo := PathArq + NomeArq;
             end;
 
             Texto := ParseText(Texto);
-            EventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
+            FEventoRetorno.retEvento.Items[J].RetInfEvento.XML := Texto;
             FEvento.Evento.Items[I].RetInfEvento.XML := Texto;
 
             break;

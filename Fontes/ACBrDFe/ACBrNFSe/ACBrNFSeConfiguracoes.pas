@@ -570,6 +570,7 @@ begin
   FConfigSchemas.ServicoEnviarSincrono := FPIniParams.ReadString('Schemas', 'ServicoEnviarSincrono', '');
   FConfigSchemas.ServicoSubstituir := FPIniParams.ReadString('Schemas', 'ServicoSubstituir', '');
 
+(*
   FConfigSoapAction.Recepcionar := StringReplace(FPIniParams.ReadString('SoapAction', 'Recepcionar', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.ConsSit     := StringReplace(FPIniParams.ReadString('SoapAction', 'ConsSit'    , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.ConsLote    := StringReplace(FPIniParams.ReadString('SoapAction', 'ConsLote'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
@@ -579,6 +580,17 @@ begin
   FConfigSoapAction.Gerar       := StringReplace(FPIniParams.ReadString('SoapAction', 'Gerar'      , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.RecSincrono := StringReplace(FPIniParams.ReadString('SoapAction', 'RecSincrono', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.Substituir  := StringReplace(FPIniParams.ReadString('SoapAction', 'Substituir' , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+*)
+
+  FConfigSoapAction.Recepcionar := FPIniParams.ReadString('SoapAction', 'Recepcionar', '*');
+  FConfigSoapAction.ConsSit     := FPIniParams.ReadString('SoapAction', 'ConsSit'    , '*');
+  FConfigSoapAction.ConsLote    := FPIniParams.ReadString('SoapAction', 'ConsLote'   , '*');
+  FConfigSoapAction.ConsNFSeRps := FPIniParams.ReadString('SoapAction', 'ConsNFSeRps', '*');
+  FConfigSoapAction.ConsNFSe    := FPIniParams.ReadString('SoapAction', 'ConsNFSe'   , '*');
+  FConfigSoapAction.Cancelar    := FPIniParams.ReadString('SoapAction', 'Cancelar'   , '*');
+  FConfigSoapAction.Gerar       := FPIniParams.ReadString('SoapAction', 'Gerar'      , '*');
+  FConfigSoapAction.RecSincrono := FPIniParams.ReadString('SoapAction', 'RecSincrono', '*');
+  FConfigSoapAction.Substituir  := FPIniParams.ReadString('SoapAction', 'Substituir' , '*');
 
   if FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS', '') = '*******' then
   begin
@@ -818,8 +830,8 @@ begin
   end;
   FConfigGeral.RetornoNFSe := Texto;
 
-  FConfigGeral.ProLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Producao'   , '');
-  FConfigGeral.HomLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Homologacao', '');
+  FConfigGeral.ProLinkNFSe := StringReplace(FPIniParams.ReadString('LinkNFSe', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+  FConfigGeral.HomLinkNFSe := StringReplace(FPIniParams.ReadString('LinkNFSe', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
 
   Texto := '';
   I := 1;

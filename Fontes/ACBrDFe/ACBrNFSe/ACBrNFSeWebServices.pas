@@ -689,6 +689,20 @@ begin
   FURIRef := '';
 
   FNameSpace  := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
+
+  if Pos('%NomeURL_HP%', FNameSpace) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+    begin
+      FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll]);
+
+      if FProvedor = proActcon then
+        FNameSpace := StringReplace(FNameSpace, '/nfseserv/', '/homologacao/', [rfReplaceAll])
+    end
+    else
+      FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
+
   FVersaoXML  := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoXML;
   FVersaoNFSe := StrToVersaoNFSe(Ok, FVersaoXML);
   FDefTipos   := FPConfiguracoesNFSe.Geral.ConfigSchemas.DefTipos;
@@ -1500,6 +1514,14 @@ procedure TNFSeEnviarLoteRPS.DefinirServicoEAction;
 begin
   FPServico := 'EnviarLoteRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Recepcionar;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
@@ -1784,7 +1806,15 @@ end;
 procedure TNFSeEnviarSincrono.DefinirServicoEAction;
 begin
   FPServico :=  'NFSeEnviarSincrono';
-  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.RecSincrono; 
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.RecSincrono;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeEnviarSincrono.DefinirDadosMsg;
@@ -1928,6 +1958,14 @@ procedure TNFSeGerarNFSe.DefinirServicoEAction;
 begin
   FPServico :=  'NFSeGerarNFSe';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Gerar;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
@@ -2111,6 +2149,14 @@ procedure TNFSeConsultarSituacaoLoteRPS.DefinirServicoEAction;
 begin
   FPServico :=  'NFSeConsSitLoteRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsSit;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
@@ -2374,6 +2420,14 @@ procedure TNFSeConsultarLoteRPS.DefinirServicoEAction;
 begin
   FPServico := 'NFSeConsLote';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsLote;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
@@ -2516,6 +2570,14 @@ procedure TNFSeConsultarNfseRPS.DefinirServicoEAction;
 begin
   FPServico := 'NFSeConsNfseRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfseRps;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
@@ -2724,6 +2786,14 @@ procedure TNFSeConsultarNfse.DefinirServicoEAction;
 begin
   FPServico := 'NFSeConsNfse';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfse;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeConsultarNfse.DefinirDadosMsg;
@@ -2875,6 +2945,14 @@ procedure TNFSeCancelarNfse.DefinirServicoEAction;
 begin
   FPServico := 'NFSeCancNfse';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Cancelar;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeCancelarNfse.DefinirDadosMsg;
@@ -3269,6 +3347,14 @@ procedure TNFSeSubstituirNFSe.DefinirServicoEAction;
 begin
   FPServico := 'NFSeSubNfse';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Substituir;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
@@ -3484,6 +3570,14 @@ end;
 procedure TNFSeEnvioWebService.DefinirServicoEAction;
 begin
   FPServico := FPSoapAction;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 procedure TNFSeEnvioWebService.DefinirDadosMsg;

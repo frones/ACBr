@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/06/2016
+-- ACBrNFesConfiguracoes / ACBrNFSeWebServices --
+[*] Para atender alguns provedores cujo NameSpace e SoapAction são diferentes 
+    para cada cidade e para cada ambiente foi criado a variável %Nome_URL_HP%.
+    As units acimas foram alteradas visando detectar essa variável no arquivo
+    INI e fazer o devido tratamento.
+    por : Italo Jurisato Junior
+
 01/06/2016
 [*] Inclusão do provedor VersaTecnologia.
     por : acgubamg

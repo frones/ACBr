@@ -346,7 +346,7 @@ const
 
   cACBrDFeSSLEnviarException = 'Erro Interno: %d'+sLineBreak+'Erro HTTP: %d';
 
-  sDisplayFormat = '###,###,###,##0.%.*d';
+  sDisplayFormat = ',#0.%.*d';
 
 implementation
 

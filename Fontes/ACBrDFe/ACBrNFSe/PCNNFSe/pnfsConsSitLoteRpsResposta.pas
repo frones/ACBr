@@ -287,7 +287,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
     if (leitor.rExtrai(1, 'Sdt_consultaprotocoloout') <> '') or
        (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '') then
@@ -607,7 +606,6 @@ begin
   Result := False;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
     if leitor.rExtrai(1, 'RetornoInformacoesLote') <> '' then

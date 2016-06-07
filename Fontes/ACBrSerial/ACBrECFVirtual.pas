@@ -932,7 +932,7 @@ begin
 
   { Calculando o Rateio do Desconto ou Acrescimo, na base de calculo das aliquotas
     Exemplo: http://partners.bematech.com.br/bemacast/Paginas/post.aspx?idPost=5790 }
-  PercentualEfetivo := RoundABNT( fpDescAcresSubtotal / fpSubTotal * 100, -2) ;
+  PercentualEfetivo := TruncTo( fpDescAcresSubtotal / fpSubTotal * 100, 2) ;
   TotalDescAcresRateio := 0;
   fpSubTotal := fpSubTotal + fpDescAcresSubtotal;
 
@@ -940,7 +940,7 @@ begin
   begin
     with fpAliquotasCupom[I] do
     begin
-      Rateio := RoundABNT(Total * (PercentualEfetivo/100), -2) ;
+      Rateio := TruncTo(Total * (PercentualEfetivo/100), 2) ;
       TotalDescAcresRateio := TotalDescAcresRateio + Rateio;
     end;
   end;
@@ -971,7 +971,7 @@ begin
        end;
      end;
 
-     if P > 0 then  // Commo assim ? Não achou um campeão ? Então use o primeiro Totalizador
+     if P < 0 then  // Commo assim ? Não achou um campeão ? Então use o primeiro Totalizador
        P := 0;
 
      fpAliquotasCupom[P].Rateio := fpAliquotasCupom[P].Rateio + ValorResiduo;

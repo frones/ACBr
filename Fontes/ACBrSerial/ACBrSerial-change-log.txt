@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/06/2016
+-- ACBrECFVirtual --
+[-] Correção de Bug no calculo do Rateio do Desconto/Acredcimo no SubTotal
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30478
+
 Data: 03/06/2016
 -- ACBrECFEscECF --
 [-] Corrigido Bug em "Ativar", que em algumas situações não chamava "AtivarPorta"

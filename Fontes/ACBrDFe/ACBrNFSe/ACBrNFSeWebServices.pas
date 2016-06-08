@@ -1998,7 +1998,7 @@ begin
   try
     case FProvedor of
       proSimplISS:    TagGrupo := 'GerarNovaNfseEnvio';
-      proEGoverneISS: TagGrupo := 'EmissaoNotaFiscalRequest';
+      proEGoverneISS: TagGrupo := 'request';
       proSP:          TagGrupo := 'PedidoEnvioRPS';
     else
       TagGrupo := 'GerarNfseEnvio';

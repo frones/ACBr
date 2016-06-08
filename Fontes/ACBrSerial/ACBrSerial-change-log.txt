@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/06/2016
+-- ACBrECFDaruma -- por: regys.silveira
+[*] Acerto na leitura da data/hora da impressora para não depender de configurações
+    do sistema operacional.
+
 Data: 07/06/2016
 -- ACBrECFVirtual --
 [-] Correção de Bug no calculo do Rateio do Desconto/Acredcimo no SubTotal

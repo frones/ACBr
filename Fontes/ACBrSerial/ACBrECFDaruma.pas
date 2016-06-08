@@ -1494,45 +1494,44 @@ end;
 
 
 function TACBrECFDaruma.GetDataHora: TDateTime;
-Var RetCmd : AnsiString ;
-    OldShortDateFormat : String ;
+Var
+  RetCmd: AnsiString;
+  dia, mes, ano, hora, minuto, segundo: Word;
 begin
-  OldShortDateFormat := ShortDateFormat ;
-  try
-    if fpMFD then
-    begin
-      RetCmd  :=  RetornaInfoECF('66') ;
-      { Retorna a data/hora no formato: ddmmaaaahhnnss }
+  if fpMFD then
+  begin
+    RetCmd  :=  RetornaInfoECF('66');
+    { Retorna a data/hora no formato: ddmmaaaahhnnss }
 
-      ShortDateFormat := 'dd/mm/yyyy' ;
-      result := StrToDate(copy(RetCmd,1,2)+ DateSeparator +
-                          copy(RetCmd,3,2)+ DateSeparator +
-                          copy(RetCmd,5,4)) ;
+    dia     := StrToInt(copy(RetCmd, 1,2));
+    mes     := StrToInt(copy(RetCmd, 3,2));
+    ano     := StrToInt(copy(RetCmd, 5,4));
+    hora    := StrToInt(copy(RetCmd, 9,2));
+    minuto  := StrToInt(copy(RetCmd,11,2));
+    segundo := StrToInt(copy(RetCmd,13,2));
 
-      Result := RecodeHour(  Result,StrToInt(copy(RetCmd, 9,2))) ;
-      Result := RecodeMinute(Result,StrToInt(copy(RetCmd,11,2))) ;
-      Result := RecodeSecond(Result,StrToInt(copy(RetCmd,13,2))) ;
-    end
-    else
-    begin
-      RetCmd := EnviaComando( ESC + #230 ) ;
-      // MFD, 2000 -> :[230]EEWWddmmaahhMMss[CR]
-      // fs345     -> :TddmmaahhMMss[CR]
-      RetCmd := copy(RetCmd,Length(RetCmd)-12,12) ;  {Pega apenas a Data/Hora}
+    Result := EncodeDateTime(ano, mes, dia, hora, minuto, segundo, 0);
+  end
+  else
+  begin
+    RetCmd := EnviaComando( ESC + #230 ) ;
+    // MFD, 2000 -> :[230]EEWWddmmaahhMMss[CR]
+    // fs345     -> :TddmmaahhMMss[CR]
+    RetCmd := copy(RetCmd, Length(RetCmd)-12, 12) ;  {Pega apenas a Data/Hora}
 
-      ShortDateFormat := 'dd/mm/yy' ;
-      result := StrToDate(copy(RetCmd,1,2)+ DateSeparator +
-                          copy(RetCmd,3,2)+ DateSeparator +
-                          copy(RetCmd,5,2)) ;
+    // pega o inicio do ano atual para complementar o que vem da impressora
+    ano := FormatDateTime('yyyy', DATE);
+    ano := Copy(ano, 1, 2);
 
-      Result := RecodeHour(  Result,StrToInt(copy(RetCmd, 7,2))) ;
-      Result := RecodeMinute(Result,StrToInt(copy(RetCmd, 9,2))) ;
-      Result := RecodeSecond(Result,StrToInt(copy(RetCmd,11,2))) ;
-    end ;
-  finally
-     ShortDateFormat := OldShortDateFormat ;
-  end ;
+    dia     := StrToInt(copy(RetCmd, 1,2));
+    mes     := StrToInt(copy(RetCmd, 3,2));
+    ano     := StrToInt(ano + copy(RetCmd, 5,2));
+    hora    := StrToInt(copy(RetCmd, 7,2));
+    minuto  := StrToInt(copy(RetCmd, 9,2));
+    segundo := StrToInt(copy(RetCmd,11,2));
 
+    Result := EncodeDateTime(ano, mes, dia, hora, minuto, segundo, 0);
+  end;
 end;
 
 function TACBrECFDaruma.GetNumCupom: String;

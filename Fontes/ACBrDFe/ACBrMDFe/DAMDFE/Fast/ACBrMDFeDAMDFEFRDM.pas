@@ -407,7 +407,7 @@ begin
     Background      := True;
     HTMLTags        := True;
     Quality         := 95;
-    Transparency    := False;
+    //Transparency    := False;
     Author          := 'FastReport';
     Subject         := 'Exportando DANFE para PDF';
     ProtectionFlags := [ePrint, eModify, eCopy, eAnnot];

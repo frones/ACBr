@@ -316,46 +316,47 @@ begin
       ' após esta Emissão (') + FormatDateTime('dd/mm/yyyy hh:nn', Now) + ')';
   end;
 
-  rllModelo.Caption := FMDFe.Ide.modelo;
-  rllSerie.Caption := FormatFloat('000', FMDFe.Ide.serie);
-  rllNumMDFe.Caption := FormatFloat('000,000,000', FMDFe.Ide.nMDF);
-//  rllPageNumber.Caption := format('%2.2d', [RLMDFe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
-  rllEmissao.Caption := FormatDateTimeBr(FMDFe.Ide.dhEmi);
+  rllModelo.Caption       := FMDFe.Ide.modelo;
+  rllSerie.Caption        := Poem_Zeros(FMDFe.Ide.serie, 3);
+  rllNumMDFe.Caption      := FormatarNumeroDocumentoFiscal(IntToStr(FMDFe.Ide.nMDF));
+  rllEmissao.Caption      := FormatDateTimeBr(FMDFe.Ide.dhEmi);
   rllUFCarrega.Caption    := FMDFe.Ide.UFIni;
   rllUFDescarrega.Caption := FMDFe.Ide.UFFim;
 
   // TMDFeModal = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
   case FMDFe.Ide.modal of
     moRodoviario:
-    begin
-      rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
-      rlb_3_Aereo.Visible := false;
-      rlb_4_Aquav.Visible := false;
-      rlb_5_Ferrov.Visible := false;
-    end;
+      begin
+        rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
+        rlb_3_Aereo.Visible := false;
+        rlb_4_Aquav.Visible := false;
+        rlb_5_Ferrov.Visible := false;
+      end;
+
     moAereo:
-    begin
-      rllModal.Caption := ACBrStr('MODAL AÉREO DE CARGA');
-    end;
+      begin
+        rllModal.Caption := ACBrStr('MODAL AÉREO DE CARGA');
+      end;
+
     moAquaviario:
-    begin
-      rllModal.Caption := ACBrStr('MODAL AQUAVIÁRIO DE CARGA');
-    end;
+      begin
+        rllModal.Caption := ACBrStr('MODAL AQUAVIÁRIO DE CARGA');
+      end;
+
     moFerroviario:
-    begin
-      rllModal.Caption := ACBrStr('MODAL FERROVIÁRIO DE CARGA');
-    end;
+      begin
+        rllModal.Caption := ACBrStr('MODAL FERROVIÁRIO DE CARGA');
+      end;
   end;
 
-  rllqCTe.Caption := FormatFloat('##0', FMDFe.tot.qCTe);
-  rllqNFe.Caption := FormatFloat('##0', FMDFe.tot.qNFe);
-  rllqMDFe.Caption := FormatFloat('##0', FMDFe.tot.qMDFe);
+  rllqCTe.Caption  := FormatFloatBr(FMDFe.tot.qCTe,  '#0');
+  rllqNFe.Caption  := FormatFloatBr(FMDFe.tot.qNFe,  '#0');
+  rllqMDFe.Caption := FormatFloatBr(FMDFe.tot.qMDFe, '#0');
 
-  // UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
-  if FMDFe.tot.cUnid = uKG then
-    rllPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga)
+  if Frac(FMDFe.tot.qCarga) > 0 then
+    rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0.000')
   else
-    rllPesoTotal.Caption := FormatFloat('#,##0.###', FMDFe.tot.qCarga * 1000);
+    rllPesoTotal.Caption := FormatFloatBr(FMDFe.tot.qCarga, ',#0');
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);

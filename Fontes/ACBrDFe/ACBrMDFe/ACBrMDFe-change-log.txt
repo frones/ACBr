@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/06/2016
+-- ACBrMDFeDAMDFeRLRetrato --
+[-] Correção para formatar corretamente os valores, acerto para utilizar as 
+    funções que já são utilizadas em outros impressores como por exemplo a NFe
+    por: Regys.Silveira
+
 15/04/2016
 -- pmdfeEventoMDFe --
 [*] Incluido o tipo de evento teMDFeAutorizado:

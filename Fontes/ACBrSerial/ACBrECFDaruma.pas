@@ -1496,6 +1496,7 @@ end;
 function TACBrECFDaruma.GetDataHora: TDateTime;
 Var
   RetCmd: AnsiString;
+  PrefixAno: String;
   dia, mes, ano, hora, minuto, segundo: Word;
 begin
   if fpMFD then
@@ -1520,12 +1521,12 @@ begin
     RetCmd := copy(RetCmd, Length(RetCmd)-12, 12) ;  {Pega apenas a Data/Hora}
 
     // pega o inicio do ano atual para complementar o que vem da impressora
-    ano := FormatDateTime('yyyy', DATE);
-    ano := Copy(ano, 1, 2);
+    PrefixAno := FormatDateTime('yyyy', DATE);
+    PrefixAno := Copy(PrefixAno, 1, 2);
 
     dia     := StrToInt(copy(RetCmd, 1,2));
     mes     := StrToInt(copy(RetCmd, 3,2));
-    ano     := StrToInt(ano + copy(RetCmd, 5,2));
+    ano     := StrToInt(PrefixAno + copy(RetCmd, 5,2));
     hora    := StrToInt(copy(RetCmd, 7,2));
     minuto  := StrToInt(copy(RetCmd, 9,2));
     segundo := StrToInt(copy(RetCmd,11,2));

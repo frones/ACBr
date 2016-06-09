@@ -3210,7 +3210,7 @@ begin
       proISSDSF,
       proEquiplano,
       proInfisc: docElemento := TagGrupo;
-      proGinfes: docElemento := 'CancelarNfseEnvio';
+      proGinfes: docElemento := TagGrupo; // 'CancelarNfseEnvio';
       proISSNet: docElemento := FPrefixo3 + 'Pedido></p1:' + TagGrupo;
     else
       docElemento := FPrefixo3 + 'Pedido></' + TagGrupo;

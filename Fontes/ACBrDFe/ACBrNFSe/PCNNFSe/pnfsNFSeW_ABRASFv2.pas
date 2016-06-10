@@ -355,9 +355,10 @@ begin
     proNEAInformatica,
     proNotaInteligente,
     proPronimv2,
-    proSisPMJP: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+    proSisPMJP    : Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
 
     proTecnos,
+    proABase,
     proProdata: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
     pro4R,

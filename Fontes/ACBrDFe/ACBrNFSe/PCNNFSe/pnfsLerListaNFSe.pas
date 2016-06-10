@@ -474,6 +474,7 @@ begin
               FNFSe.Servico.CodigoTributacaoMunicipio := NFSeLida.NFSe.Servico.CodigoTributacaoMunicipio;
               FNFSe.Servico.Discriminacao             := NFSeLida.NFSe.Servico.Discriminacao;
               FNFSe.Servico.CodigoMunicipio           := NFSeLida.NFSe.Servico.CodigoMunicipio;
+              FNFSe.Servico.ExigibilidadeISS          := NFSeLida.NFSe.Servico.ExigibilidadeISS;
 
               FNFSe.Servico.Valores.ValorServicos          := NFSeLida.NFSe.Servico.Valores.ValorServicos;
               FNFSe.Servico.Valores.ValorDeducoes          := NFSeLida.NFSe.Servico.Valores.ValorDeducoes;

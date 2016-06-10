@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2016
+[*] Alterações para atender o provedor ABase.
+    por : Alexandre Werner
+
 08/06/2016
 [*] Alterações visando gerar o XML corretamente para o provedor EGoverneISS.
     por : Italo Jurisato Junior

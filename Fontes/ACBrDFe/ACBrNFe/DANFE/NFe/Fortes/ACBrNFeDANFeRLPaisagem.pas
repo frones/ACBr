@@ -578,14 +578,19 @@ begin
   if (FLogo <> '') then
   begin
     if FileExists (FLogo) then
-     rliLogo.Picture.LoadFromFile(FLogo)
+      rliLogo.Picture.LoadFromFile(FLogo)
     else
     begin
-      LogoStream := TStringStream.Create(FLogo);
       try
-         rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        LogoStream := TStringStream.Create(FLogo);
+        try
+           rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        except
+          { Para o caso do FLogo ser um arquivo não encontrado, ou um Stream Inválido }
+          rliLogo.Picture.Clear;
+        end;
       finally
-         LogoStream.Free;
+        LogoStream.Free;
       end;
     end;
   end;

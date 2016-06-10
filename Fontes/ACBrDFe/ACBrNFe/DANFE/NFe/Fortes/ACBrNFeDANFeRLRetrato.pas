@@ -668,7 +668,7 @@ begin
   ConfigureDataSource;
   InitDados;
 
-  RLNFe.Title       := Copy(FNFe.InfNFe.Id, 4, 44);
+  RLNFe.Title := Copy(FNFe.InfNFe.Id, 4, 44);
 
   if FNumCopias > 0 then
     RLPrinters.RLPrinter.Copies := FNumCopias
@@ -731,13 +731,18 @@ begin
   // Carrega logomarca
   if (FLogo <> '') then
   begin
-    if FileExists (FLogo) then
-     rliLogo.Picture.LoadFromFile(FLogo)
+    if FileExists(FLogo) then
+      rliLogo.Picture.LoadFromFile(FLogo)
     else
     begin
       LogoStream := TStringStream.Create(FLogo);
       try
-         rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        try
+          rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
+        except
+          { Para o caso do FLogo ser um arquivo não encontrado, ou um Stream Inválido }
+          rliLogo.Picture.Clear;
+        end;
       finally
          LogoStream.Free;
       end;
@@ -976,7 +981,7 @@ begin
   end;
 
   // Expande a logomarca
-  if FExpandirLogoMarca = True then
+  if FExpandirLogoMarca then
   begin
     rlmEmitente.Visible := False;
     rlmEndereco.Visible := False;

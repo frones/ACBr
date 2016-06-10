@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/06/2016
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[-] Ajuste para evitar erro na Impressão, caso o Logo informado seja
+    um arquivo não existente, ou um Stream Inválido  (por: DSA)
+
 20/05/2016
 [+] Implantação da Banda Local entrega na danfe Fortes Retrato
       Caso exista a informações do Local de entrega

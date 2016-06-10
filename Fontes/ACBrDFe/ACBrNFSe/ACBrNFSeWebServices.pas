@@ -1186,11 +1186,11 @@ begin
     else begin
       case FProvedor of
         proEgoverneISS: FvNotas := FvNotas +
-                          '<' + FPrefixo3 + 'NotaFiscal' +
+                          '<rgm:NotaFiscal' +
                             RetornarConteudoEntre(RPS,
-                              '<' + FPrefixo3 + 'NotaFiscal', '</Signature>') +
+                              '<rgm:NotaFiscal', '</Signature>') +
                             '</Signature>' +
-                         '</' + FPrefixo3 + 'NotaFiscal>';
+                         '</rgm:NotaFiscal>';
       else
         FvNotas := FvNotas +
                     '<' + FPrefixo4 + 'Rps>' +
@@ -1248,10 +1248,10 @@ begin
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
 
         proEgoverneISS: FvNotas := FvNotas +
-                                   '<' + FPrefixo3 + 'NotaFiscal>' +
+                                   '<rgm:NotaFiscal>' +
                                      RetornarConteudoEntre(RPS,
-                                     '<' + FPrefixo3 + 'NotaFiscal>', '</' + FPrefixo3 + 'NotaFiscal>') +
-                                   '</' + FPrefixo3 + 'NotaFiscal>';
+                                     '<rgm:NotaFiscal>', '</rgm:NotaFiscal>') +
+                                   '</rgm:NotaFiscal>';
 
         proNFSeBrasil: begin
                          FvNotas := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]) + '</Rps>';
@@ -2008,13 +2008,14 @@ begin
 
     case FProvedor of
       proBHISS:       TagElemento := 'LoteRps';
-      proEGoverneISS: TagElemento := 'NotaFiscal';
+      proEGoverneISS: TagElemento := 'rgm:NotaFiscal';
       proSP:          TagElemento := 'RPS';
     else
       TagElemento := 'Rps';
     end;
 
-    TagElemento := FPrefixo3 + TagElemento;
+    if FProvedor <> proEGoverneISS then
+      TagElemento := FPrefixo3 + TagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS or FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar then
     begin

@@ -40,6 +40,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 10/06/2016
+-- ACBrECF --
+[*] Métodos: "SubtotalizaCupom" e "EfetuaPagamento". Ajustes para evitar que
+    falhas na leitura das informações para exibição do MemoBobina, disparem
+    exception, invalidando o comando anterior, que foi executado com sucesso
+    (por: DSA e Elias)
+
+Ajustes para
 -- ACBrECFVirtual --
 [-] Correções no calculo dos Totalizadores em Cancelamento de Item Vendido com desconto
 [-] Correções no calculo dos Totalizadores de Aliquotas em Cancelamento do Cupom

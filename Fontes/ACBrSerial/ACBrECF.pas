@@ -124,6 +124,7 @@ TACBrECF = class( TACBrComponent )
     fsMensagemRodape : String ;
     fsRegistrouRFDCNF : Boolean ;
     fsSubTotalPagto :Double;
+    fsTotalPago: Double;
     fsIndiceGerencial : Integer ;
     {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
@@ -312,6 +313,8 @@ TACBrECF = class( TACBrComponent )
     procedure SetLinhasEntreCupons(const AValue: Integer);
     function GetMaxLinhasBuffer: Integer;
     procedure SetMaxLinhasBuffer(const AValue: Integer);
+
+    Function MemoAssigned: Boolean;
     {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
       procedure SetFormMsgFonte(const AValue: TFont);
@@ -320,7 +323,6 @@ TACBrECF = class( TACBrComponent )
       procedure SetMemoParams(const AValue: TStrings);
       procedure MemoAdicionaLinha( Linhas : String ) ;
 
-      Function MemoAssigned : Boolean ;
       procedure MemoAdicionaCabecalho ;
       Function MemoTraduzCode( Linha : String ) : String ;
       procedure MemoTitulo(ATitulo : String) ;
@@ -1225,6 +1227,7 @@ begin
   inherited create( AOwner );
 
   { Inicializando as Variaveis Internas }
+  fsTotalPago       := 0;
   fsSubTotalPagto   := 0;
   fsIndiceGerencial := 0;
   fsAtivo           := false ;
@@ -1566,6 +1569,7 @@ begin
      fsMemoItens     := NumUltItem;
      {$ENDIF}
      fsSubTotalPagto := Subtotal;
+     fsTotalPago     := TotalPago;
   end;
 
   {$IFNDEF NOGUI}
@@ -1760,6 +1764,15 @@ procedure TACBrECF.SetMaxLinhasBuffer(const AValue: Integer);
 begin
   fsECF.MaxLinhasBuffer := AValue ;
 end;
+
+ function TACBrECF.MemoAssigned: Boolean;
+ begin
+   {$IFDEF NOGUI}
+     Result := False;
+   {$ELSE}
+     Result := {$IFNDEF FRAMEWORK}Assigned( fsMemoBobina ) or {$ENDIF}Assigned( fsOnBobinaAdicionaLinhas ) ;
+   {$ENDIF}
+ end;
 
 function TACBrECF.GetMsgPausaRelatorio: String;
 begin
@@ -3121,6 +3134,7 @@ end;
 procedure TACBrECF.SubtotalizaCupom(DescontoAcrescimo: Double;
    MensagemRodape : AnsiString );
 var
+  wSubtotal: Double;
   Tratado : Boolean;
 begin
   { Ajustando valores acima de 2 Decimais }
@@ -3132,6 +3146,10 @@ begin
 
   ComandoLOG := 'SubtotalizaCupom( '+FloatToStr(DescontoAcrescimo)+' , '+
                     fsMensagemRodape+' )';
+
+  wSubtotal := 0;
+  if MemoAssigned then
+    wSubtotal := Subtotal + DescontoAcrescimo;  // Le Subtotal do ECF
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
@@ -3162,7 +3180,10 @@ begin
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
+   begin
+      fsSubTotalPagto := wSubtotal;
       MemoSubtotaliza(DescontoAcrescimo);
+   end;
   {$ENDIF}
 
   if RFDAtivo then
@@ -3211,6 +3232,7 @@ procedure TACBrECF.EfetuaPagamento(CodFormaPagto : String ; Valor : Double ;
 Var
   FPG     : TACBrECFFormaPagamento ;
   Tratado : Boolean;
+  wTotalPago: Double;
 begin
   CodFormaPagto := Trim(CodFormaPagto);
   Observacao    := TrimRight(Observacao) ;
@@ -3222,6 +3244,10 @@ begin
   ComandoLOG := 'EfetuaPagamento( '+CodFormaPagto+' , '+
                     FloatToStr(Valor)+' , '+Observacao+', '+
                     BoolToStr( ImprimeVinculado)+', '+IntToStr(CodMeioPagamento)+' )';
+
+  wTotalPago := 0;
+  if MemoAssigned then
+    wTotalPago := TotalPago + Valor;     // Lê TotalPago do ECF
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
@@ -3250,7 +3276,10 @@ begin
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
+   begin
+      fsTotalPago := wTotalPago;
       MemoEfetuaPagamento(FPG.Descricao, Valor, Observacao);
+   end;
   {$ENDIF}
 
   if RFDAtivo then
@@ -5572,6 +5601,7 @@ end;
    MemoAdicionaLinha( fsMemoCabecalho ) ;
    fsMemoItens     := 0 ;  { Zera contador de Itens }
    fsSubTotalPagto := 0;   {Zera o total pago verificador da bobina}
+   fsTotalPago     := 0;
  end;
 
  procedure TACBrECF.MemoTitulo(ATitulo: String) ;
@@ -5580,17 +5610,11 @@ end;
                       ATitulo+'</center></h'+IntToStr(fsMemoHTMLTitleSise)+'>' ) ;
  end;
 
- function TACBrECF.MemoAssigned: Boolean;
- begin
-   Result := {$IFNDEF FRAMEWORK}Assigned( fsMemoBobina ) or {$ENDIF}Assigned( fsOnBobinaAdicionaLinhas ) ;
- end;
-
  procedure TACBrECF.MemoSubtotaliza(DescontoAcrescimo: Double );
  Var
     S : String ;
  begin
    fsMemoOperacao  := 'subtotalizanaofiscal' ;
-   fsSubTotalPagto := Subtotal;
 
    {Para que na condição de pagamento, não precise ficar pegando toda hora}
    {o subtotal, evitando ficar mandando para a impressora }
@@ -5623,7 +5647,7 @@ end;
  procedure TACBrECF.MemoEfetuaPagamento(Descricao: String; Valor: Double;
     Observacao: String) ;
  Var
-    TotPago,  Troco : Double ;
+    Troco : Double ;
  begin
     fsMemoOperacao := 'efetuapagamento' ;
     Inc( fsMemoItens ) ;
@@ -5636,20 +5660,17 @@ end;
     Observacao := AjustaLinhas( Observacao, fsMemoColunas, 2 ) ;
     MemoAdicionaLinha( Observacao );
 
-    TotPago := TotalPago ;  { Le valores do ECF }
-//  fsTotalPago := fsTotalPago + Valor;
-
-    if TotPago >= fsSubTotalPagto then   { Ultrapassou o Valor do Cupom }
+    if fsTotalPago >= fsSubTotalPagto then   { Ultrapassou o Valor do Cupom }
     begin
        if fsMemoItens > 1 then
           MemoAdicionaLinha( '<table width=100%><tr>'+
                              '<td align=left><b>S O M A  R$</b></td>'+
-                             '<td align=right>'+FormatFloat('#,###,##0.00',TotPago)+'</td>'+
+                             '<td align=right>'+FormatFloat('#,###,##0.00',fsTotalPago)+'</td>'+
                              '</tr></table>' ) ;
 
-      if TotPago > fsSubTotalPagto then  { Tem TROCO ? }
+      if fsTotalPago > fsSubTotalPagto then  { Tem TROCO ? }
       begin
-         Troco  := RoundTo(TotPago - fsSubTotalPagto,-2) ;
+         Troco  := RoundTo(fsTotalPago - fsSubTotalPagto,-2) ;
          MemoTitulo( '<table width=100%><tr>'+
                      '<td align=left>TROCO  R$</td>'+
                      '<td align=right>'+FormatFloat('#,###,##0.00',Troco)+'</td>'+

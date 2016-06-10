@@ -1054,6 +1054,7 @@ begin
   begin
     TotalItem := TotalLiquido;
     Qtd := 0;
+    DescAcres := 0;
     fpSubTotal := fpSubTotal - TotalItem;
     SubtraiAliquota(AliqPos, TotalItem);
   end;
@@ -1941,7 +1942,7 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
 var 
-  ValorItem, DescAcresItem: Double;
+  ValorItem, DescAcresItem, TotBruto: Double;
   PosAliqItem: Integer;
 begin
   GravaLog( ComandoLOG );
@@ -1962,11 +1963,12 @@ begin
       ValorItem     := TotalLiquido;
       PosAliqItem   := AliqPos;
       DescAcresItem := DescAcres;
+      TotBruto      := TotalBruto;
     end;
 
     fpCupom.CancelaItem( NumItem );
 
-    fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + ValorItem;
+    fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + TotBruto;
 
     { Estornando do total de Acréscimos/Descontos. VendaBruta e GT nunca são estornadas }
     if DescAcresItem < 0 then
@@ -2227,7 +2229,7 @@ begin
         with fpCupom.Aliquotas[I] do
         begin
           PosAliqItem := AliqPos;
-          TotalAliq   := Total;
+          TotalAliq   := TotalLiquido;
         end;
 
         with fpAliquotas[ PosAliqItem ] do

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/06/2016
+-- ACBrECFVirtual --
+[-] Correções no calculo dos Totalizadores em Cancelamento de Item Vendido com desconto
+[-] Correções no calculo dos Totalizadores de Aliquotas em Cancelamento do Cupom
+    com Desconto no Subtotal
+    (por: douglas_k)  http://www.projetoacbr.com.br/forum/index.php?showtopic=30568
+
 Data: 08/06/2016
 -- ACBrECFDaruma -- por: regys.silveira
 [*] Acerto na leitura da data/hora da impressora para não depender de configurações
@@ -47,7 +54,7 @@ Data: 08/06/2016
 Data: 07/06/2016
 -- ACBrECFVirtual --
 [-] Correção de Bug no calculo do Rateio do Desconto/Acredcimo no SubTotal
-    http://www.projetoacbr.com.br/forum/index.php?showtopic=30478
+    (por: douglas_k) http://www.projetoacbr.com.br/forum/index.php?showtopic=30478
 
 Data: 03/06/2016
 -- ACBrECFEscECF --

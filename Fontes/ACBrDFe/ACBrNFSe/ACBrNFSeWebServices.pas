@@ -2984,7 +2984,8 @@ begin
       TagGrupo := 'CancelarNfseEnvio';
     end;
 
-    TagGrupo := FPrefixo3 + TagGrupo;
+    if FProvedor <> proGinfes then
+      TagGrupo := FPrefixo3 + TagGrupo;
 
     if FNotasFiscais.Count > 0 then
       FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;

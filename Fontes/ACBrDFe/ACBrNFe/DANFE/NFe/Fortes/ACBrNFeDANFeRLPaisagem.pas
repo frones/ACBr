@@ -587,7 +587,7 @@ begin
            rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
         except
           { Para o caso do FLogo ser um arquivo não encontrado, ou um Stream Inválido }
-          rliLogo.Picture.Clear;
+          rliLogo.Picture := Nil;
         end;
       finally
         LogoStream.Free;

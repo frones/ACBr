@@ -1911,24 +1911,24 @@ end;
       {$IFNDEF FMX}
         Application.BringToFront ;
       {$ELSE}
-        if Application.MainForm <> nil then
+        if Assigned(Application.MainForm) then
           Application.MainForm.BringToFront ;
       {$ENDIF}
 
       {$IFDEF MSWINDOWS}
-       if Assigned( Screen.ActiveForm ) then
-       begin
-         {$IFDEF VisualCLX}
-          QWidget_setActiveWindow( Screen.ActiveForm.Handle );
-         {$ELSE}
-          {$IFNDEF FMX}
-            SetForeGroundWindow( Screen.ActiveForm.Handle );
-          {$ELSE}
-            if Screen.ActiveForm <> nil then
-              SetForeGroundWindow( WindowHandleToPlatform(Screen.ActiveForm.Handle).Wnd );
-          {$ENDIF}
-         {$ENDIF}
-       end;
+        {$IFNDEF FMX}
+           if Assigned( Screen.ActiveForm ) then
+           begin
+             {$IFDEF VisualCLX}
+                QWidget_setActiveWindow( Screen.ActiveForm.Handle );
+             {$ELSE}
+                SetForeGroundWindow( Screen.ActiveForm.Handle );
+             {$ENDIF}
+           end;
+        {$ELSE}
+          if Assigned(Application.MainForm) then
+            SetForegroundWindow(FormToHWND(Application.MainForm));
+        {$ENDIF}
       {$ENDIF}
    end;
   {$ENDIF}

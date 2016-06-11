@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/06/2016
+-- ACBrTEFD --
+[*] Ajuste para restaurar foco na aplicação em FMX (por: Macgayver Armini)
+   http://www.projetoacbr.com.br/forum/topic/29783-altera%C3%A7%C3%B5es-para-firemonkey/
+
 Data: 26/04/2016
 -- ACBrTEFDCliSitef --
 [-] Correção de A.V. quando tentava executar uma requisição, antes de Inicializar.

@@ -3102,6 +3102,15 @@ begin
                      FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
                               '</' + TagGrupo + '>';
                    end;
+      proSpeedGov: begin
+                     FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
+                               '<Pedido>' +
+                                '<' + FPrefixo4 + 'InfPedidoCancelamento ' +
+                                      FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '">';
+
+                     FTagF :=  '</Pedido>' +
+                              '</' + TagGrupo + '>';
+                   end;
     else begin
            FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
                      '<' + FPrefixo3 + 'Pedido>' +

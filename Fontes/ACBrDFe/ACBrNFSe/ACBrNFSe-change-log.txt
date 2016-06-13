@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2016
+[*] Correção na definição das TAG Inicial e Final para a montagem do XML de 
+    cancelamento para o provedor SpeedGov.
+    por : Nilson Sérgio
+
 10/06/2016
 [*] Alterações para atender o provedor ABase.
     por : Alexandre Werner

@@ -77,9 +77,14 @@ type
 
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
+
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String;
 function XmlEhUTF8(const AXML: String): Boolean;
 function ConverteXMLtoUTF8(const AXML: String): String;
+function ConverteXMLtoNativeString(const AXML: String): String;
+function ObtemDeclaracaoXML(const AXML: String): String;
+function RemoverDeclaracaoXML(const AXML: String): String;
+
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 
@@ -3457,6 +3462,55 @@ begin
     Result := AXML;
 end;
 
+{------------------------------------------------------------------------------
+   Se XML contiver a TAG de encoding em UTF8, no seu início, remove a TAG
+   e converte o conteudo do mesmo para String Nativa da IDE (se necessário, dependendo da IDE)
+ ------------------------------------------------------------------------------}
+function ConverteXMLtoNativeString(const AXML: String): String;
+begin
+  if XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
+  begin
+    Result := UTF8ToNativeString(AnsiString(AXML));
+    {$IfNDef FPC}
+     Result := RemoverDeclaracaoXML(Result);
+    {$EndIf}
+  end
+  else
+    Result := AXML;
+end;
+
+{------------------------------------------------------------------------------
+   Retorna a Declaração do XML, Ex: <?xml version="1.0"?>
+   http://www.tizag.com/xmlTutorial/xmlprolog.php
+ ------------------------------------------------------------------------------}
+function ObtemDeclaracaoXML(const AXML: String): String;
+var
+  P1, P2: Integer;
+begin
+  Result := '';
+  P1 := pos('<?', AXML);
+  if P1 > 0 then
+  begin
+    P2 := PosEx('?>', AXML, P1+2);
+    if P2 > 0 then
+      Result := copy(AXML, P1, P2-P1+2);
+  end;
+end;
+
+{------------------------------------------------------------------------------
+   Retorna XML sem a Declaração, Ex: <?xml version="1.0"?>
+ ------------------------------------------------------------------------------}
+function RemoverDeclaracaoXML(const AXML: String): String;
+var
+  DeclaracaoXML: String;
+begin
+  DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+
+  if DeclaracaoXML <> '' then
+    Result := StringReplace(AXML, DeclaracaoXML, '', [])
+  else
+    Result := AXML;
+end;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char; Delimiter: char);

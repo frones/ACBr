@@ -38,6 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/06/2016
+-- ACBrUtil --
+[+] Adicionado os métodos  (por: DSA)
+    "ConverteXMLtoNativeString":  Se XML contiver a TAG de encoding em UTF8, no
+      seu início, remove a TAG e converte o conteudo do mesmo para String Nativa
+      da IDE
+    "ObtemDeclaracaoXML": Retorna a Declaração do XML, Ex: <?xml version="1.0"?>
+    "RemoverDeclaracaoXML": Retorna XML sem a Declaração.
+
 Data: 23/03/2016
 -- ACBrUtil --
 [*] Nova Revisão de métodos que usavam AnsiString, modificando-os quando possível,

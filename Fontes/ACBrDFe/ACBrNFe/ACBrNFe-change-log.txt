@@ -47,6 +47,51 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2016
+-- pcnNFeW --
+[*] Método: "GerarXml", modificado para somente gerar Declaração de UTF8 no XML
+    se estiver em FPC (que usa UTF8 de forma nativa)
+
+-- ACBrNFe --
+[+] Adicionado o método "CstatCancelada(AValue: integer): Boolean;" que retorna
+    True se "AValue" estiver entre os status de cancelamento
+
+-- ACBrNFeNotasFiscais --
+[*] Método: "CalcularNomeArquivoCompleto" movido para Public
+[*] Método: "LerXML" corrigido para usar "String" e não "AnsiString"
+[*] Propriedades "XMLOriginal" e "XMLAssinado", modificadas para presumir que o
+    o seu conteudo sempre estará em UTF8
+[+] Adicionada a propriedade: "NotaFiscal.Cancelada: Boolean"
+    (True quando CStat for cancelamento)
+[*] Método: "NotaFiscal.Validar", modificado para preservar a Declaração do XML
+[*] Método "NotaFiscal.LerXML", mnodificado para converter (se necessário) o
+    conteúdo do XML informado para a String Nativa da IDE, além de efetuar o
+    "parse" dos "HTML Entity"). Isso é necessário, para que as propriedades do
+    Objeto "NFe" fiquem com apresentação correta.
+[-] Método: "CalcularNomeArquivoCompleto", correção para evitar somar o Path no
+    Resultado final, quando o nome do arquivo já conter o mesmo.
+[+] Método: "SetXMLOriginal", modificado para verificar se o conteúdo do XML
+    informado está em UTF8, convertendo-o, se necessário.
+[*] Método: "TNotasFiscais.VerificarAssinatura", modificado para disparar Erro,
+    caso nenhuma nota esteja carregada.
+[*] Método: "TNotasFiscais.LoadFromFile" modificado para não Decodificar o XML
+    para a String nativa, pois isso agora é feito por "NotaFiscal.LerXML"
+[-] Método: "TNotasFiscais.LoadFromString", modificado para conseguir processar
+    XMLs com a Tag "procNFe", obtido pelo Portal do SEFAZ
+[*] Método: "TNotasFiscais.LoadFromString", modificado para converter o XML
+    informado, para a String Nativa (se necessário)
+
+-- ACBrNFeWebServices --
+[*] Método: "TNFeRecepcao.TratarResposta", "TNFeRetRecepcao.TratarRespostaFinal",
+    "TNFeConsulta.TratarResposta" modificados para não salvar 2x o XML.
+[*] Método: "TNFeConsulta.TratarResposta": refatorados para usar "CstatCancelada"
+    e "CstatProcessado";
+[-] "TNFeConsulta.TratarResposta": Corrigido Bug que apagava o conteúdo do XML,
+    caso ocorrese uma falha no Retorno do XML
+[-] "TNFeConsulta.TratarResposta": Corrigido Bug na Atualização do XML caso o
+    mesmo estivesse Cancelado e "AtualizarXMLCancelado = True"
+[*] "TNFeConsulta.TratarResposta": Remoção de bloco de código que estava comentado
+
 
 19/04/2016
 -- ACBrNFeDANFEFRDM --

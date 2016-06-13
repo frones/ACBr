@@ -1013,7 +1013,7 @@ end;
 function TNFeRecepcao.TratarResposta: Boolean;
 var
   I: integer;
-  chNFe, AXML: String;
+  chNFe, AXML, NomeXMLSalvo: String;
   AProcNFe: TProcNFe;
   SalvarXML: Boolean;
 begin
@@ -1096,9 +1096,8 @@ begin
 
             AProcNFe := TProcNFe.Create;
             try
-              AProcNFe.XML_NFe := StringReplace(XMLAssinado,
-                                         '<' + ENCODING_UTF8 + '>', '',
-                                         [rfReplaceAll]);
+              // Processando em UTF8, para poder gravar arquivo corretamente //
+              AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLAssinado);
               AProcNFe.XML_Prot := FNFeRetornoSincrono.XMLprotNFe;
               AProcNFe.Versao := FPVersaoServico;
               AProcNFe.GerarXML;
@@ -1113,10 +1112,15 @@ begin
                 // Salva o XML da NF-e assinado e protocolado
                 if SalvarXML then
                 begin
+                  NomeXMLSalvo := '';
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
                     FPDFeOwner.Gravar( NomeArq, XMLOriginal ); // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
 
-                  GravarXML; // Salva na pasta baseado nas configurações do PathNFe
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML; // Salva na pasta baseado nas configurações do PathNFe
                 end;
               end ;
             finally
@@ -1422,6 +1426,7 @@ var
   AProcNFe: TProcNFe;
   AInfProt: TProtNFeCollection;
   SalvarXML: Boolean;
+  NomeXMLSalvo: String;
 begin
   Result := False;
 
@@ -1467,9 +1472,7 @@ begin
         begin
           AProcNFe := TProcNFe.Create;
           try
-            AProcNFe.XML_NFe := StringReplace(FNotasFiscais.Items[J].XMLAssinado,
-                                       '<' + ENCODING_UTF8 + '>', '',
-                                       [rfReplaceAll]);
+            AProcNFe.XML_NFe := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
             AProcNFe.XML_Prot := AInfProt.Items[I].XMLprotNFe;
             AProcNFe.Versao := FPVersaoServico;
             AProcNFe.GerarXML;
@@ -1486,10 +1489,15 @@ begin
                 // Salva o XML da NF-e assinado e protocolado
                 if SalvarXML then
                 begin
+                  NomeXMLSalvo := '';
                   if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
                     FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
 
-                  GravarXML; // Salva na pasta baseado nas configurações do PathNFe
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML; // Salva na pasta baseado nas configurações do PathNFe
                 end;
               end;
             end;
@@ -1889,7 +1897,7 @@ function TNFeConsulta.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsSitNFe;
   SalvarXML, NFCancelada, Atualiza: Boolean;
-  aEventos, sPathNFe: String;
+  aEventos, sPathNFe, NomeXMLSalvo: String;
   AProcNFe: TProcNFe;
   I, J, Inicio, Fim: integer;
   dhEmissao: TDateTime;
@@ -2045,16 +2053,18 @@ begin
     end;
     {*)}
 
-    if not NFCancelada and (NaoEstaVazio(NFeRetorno.protNFe.nProt))  then
+    if (not NFCancelada) and (NaoEstaVazio(NFeRetorno.protNFe.nProt))  then
     begin
       FProtocolo := NFeRetorno.protNFe.nProt;
       FDhRecbto := NFeRetorno.protNFe.dhRecbto;
       FPMsg := NFeRetorno.protNFe.xMotivo;
     end;
 
-    Result := (NFeRetorno.CStat in [100, 101, 110, 150, 151, 155]) or
-              (NFeRetorno.CStat = 301) or (NFeRetorno.CStat = 302) or
-              (NFeRetorno.CStat = 303);
+    with TACBrNFe(FPDFeOwner) do
+    begin
+      Result := CstatProcessado(NFeRetorno.CStat) or
+                CstatCancelada(NFeRetorno.CStat);
+    end;
 
     for i := 0 to TACBrNFe(FPDFeOwner).NotasFiscais.Count - 1 do
     begin
@@ -2062,9 +2072,10 @@ begin
       begin
         if (OnlyNumber(FNFeChave) = NumID) then
         begin
-          Atualiza := NaoEstaVazio(NFeRetorno.XMLprotNFe);
-          if ((NFeRetorno.CStat in [101, 151, 155]) and
-            (not FPConfiguracoesNFe.Geral.AtualizarXMLCancelado)) then
+          Atualiza := (NaoEstaVazio(NFeRetorno.XMLprotNFe));
+          if Atualiza and
+             TACBrNFe(FPDFeOwner).CstatCancelada(NFeRetorno.CStat) and
+             (not FPConfiguracoesNFe.Geral.AtualizarXMLCancelado) then
             Atualiza := False;
 
           if (FPConfiguracoesNFe.Geral.ValidarDigest) and
@@ -2092,44 +2103,52 @@ begin
             GerarXML;
           end;
 
-          SalvarXML := FPConfiguracoesNFe.Arquivos.Salvar and
-                      ((not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
-                       Processada);
+          SalvarXML := Result and
+                       FPConfiguracoesNFe.Arquivos.Salvar and
+                       ((not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
+                         Processada);
 
           if SalvarXML then
           begin
+            {
+              O Bloco abaixo foi comentado por DSA, pois notei que causa Bug
+              quando "AtualizarXMLCancelado = True", não respeitando esse parâmetro
+              O ProcNFe já foi atualizado acima, no bloco "if Atualiza", portanto,
+              precisamos realmente do Bloco de código abaixo  ???
+              TODO: Discutir com a equipe e remover bloco e esta notação,
+                    se o mesmo não for necessário
+
             AProcNFe := TProcNFe.Create;
             try
-              AProcNFe.XML_NFe := StringReplace(XMLOriginal,
-                                         '<' + ENCODING_UTF8 + '>', '',
-                                         [rfReplaceAll]);
+              AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
               AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
               AProcNFe.Versao := FPVersaoServico;
               AProcNFe.GerarXML;
 
               XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
-
-              FRetNFeDFe := '';
-
-              if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
-              begin
-                Inicio := Pos('<procEventoNFe', FPRetWS);
-                Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
-
-                aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-                FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
-                              '<NFeDFe>' +
-                               '<procNFe versao="' + FVersao + '">' +
-                                 SeparaDados(XMLOriginal, 'nfeProc') +
-                               '</procNFe>' +
-                               '<procEventoNFe versao="' + FVersao + '">' +
-                                 aEventos +
-                               '</procEventoNFe>' +
-                              '</NFeDFe>';
-              end;
             finally
               AProcNFe.Free;
+            end;
+            }
+
+            FRetNFeDFe := '';
+
+            if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
+            begin
+              Inicio := Pos('<procEventoNFe', FPRetWS);
+              Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
+
+              aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+              FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
+                            '<NFeDFe>' +
+                             '<procNFe versao="' + FVersao + '">' +
+                               SeparaDados(XMLOriginal, 'nfeProc') +
+                             '</procNFe>' +
+                             '<procEventoNFe versao="' + FVersao + '">' +
+                               aEventos +
+                             '</procEventoNFe>' +
+                            '</NFeDFe>';
             end;
 
             // Salva o XML da NF-e assinado, protocolado e com os eventos
@@ -2143,85 +2162,26 @@ begin
             if (FRetNFeDFe <> '') and FPConfiguracoesNFe.Geral.Salvar then
               FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml', FRetNFeDFe, sPathNFe);
 
-            // Salva o XML da NF-e assinado e protocolado
-            if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-              FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+            if Atualiza then
+            begin
+              // Salva o XML da NF-e assinado e protocolado
+              NomeXMLSalvo := '';
+              if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+              begin
+                FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
+                NomeXMLSalvo := NomeArq;
+              end;
 
-            GravarXML; // Salva na pasta baseado nas configurações do PathNFe
+              // Salva na pasta baseado nas configurações do PathNFe
+              if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                GravarXML;
+            end;
           end;
 
           break;
         end;
       end;
     end;
-
-    {// Não há NFes carregadas na memória... Vamos tentar achar o arquivo na Pasta
-    if (TACBrNFe(FPDFeOwner).NotasFiscais.Count <= 0) then
-    begin
-      SalvarXML := FPConfiguracoesNFe.Arquivos.Salvar;
-      if SalvarXML then
-        SalvarXML := (not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
-                      TACBrNFe(FPDFeOwner).CstatProcessado( NFeRetorno.CStat );
-
-      if SalvarXML then
-      begin
-        NomeArquivo := PathWithDelim(FPConfiguracoesNFe.Arquivos.PathSalvar) + FNFeChave;
-        FRetNFeDFe := '';
-
-        if FileExists(NomeArquivo + '-nfe.xml') then
-        begin
-          AProcNFe := TProcNFe.Create;
-          try
-            AProcNFe.PathNFe := NomeArquivo + '-nfe.xml';
-            AProcNFe.PathRetConsSitNFe := NomeArquivo + '-sit.xml';
-
-            if FPConfiguracoesNFe.Geral.VersaoDF >= ve310 then
-              AProcNFe.Versao := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeAutorizacao)
-            else
-              AProcNFe.Versao := TACBrNFe(FPDFeOwner).LerVersaoDeParams(LayNfeRecepcao);
-
-            AProcNFe.GerarXML;
-
-            aNFe := AProcNFe.Gerador.ArquivoFormatoXML;
-
-            if NaoEstaVazio(AProcNFe.Gerador.ArquivoFormatoXML) then
-              AProcNFe.Gerador.SalvarArquivo(AProcNFe.PathNFe);
-
-            if (NaoEstaVazio(aNFe)) and (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
-            begin
-              Inicio := Pos('<procEventoNFe', FPRetWS);
-              Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
-
-              aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-              FRetNFeDFe := '<?xml version="1.0" encoding="UTF-8" ?>' +
-                         '<NFeDFe>' +
-                          '<procNFe versao="' + FVersao + '">' +
-                            SeparaDados(aNFe, 'nfeProc') +
-                          '</procNFe>' +
-                          '<procEventoNFe versao="' + FVersao + '">' +
-                            aEventos +
-                          '</procEventoNFe>' +
-                         '</NFeDFe>';
-            end;
-          finally
-            AProcNFe.Free;
-          end;
-        end;
-
-        if (FRetNFeDFe <> '') and FPConfiguracoesNFe.Geral.Salvar then
-        begin
-          if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
-            Data := TACBrNFe(FPDFeOwner).NotasFiscais.Items[i].NFe.Ide.dEmi
-          else
-            Data := Now;
-
-          FPDFeOwner.Gravar(FNFeChave + '-NFeDFe.xml',
-                                     aNFeDFe,
-                                     PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(Data)));
-        end;
-      end;
-    end;}//Com a estrutura atual de pastas, onde os arquivos da NFe são gravados apenas no PathNFe esse trecho não será útil(procura apenas no PathSalvar)
   finally
     NFeRetorno.Free;
   end;

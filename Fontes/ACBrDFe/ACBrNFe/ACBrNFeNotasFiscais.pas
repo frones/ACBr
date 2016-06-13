@@ -76,7 +76,7 @@ type
 
     function GetConfirmada: Boolean;
     function GetProcessada: Boolean;
-
+    function GetCancelada: Boolean;
 
     function GetMsg: String;
     function GetNumID: String;
@@ -86,8 +86,6 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
-    function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
-      PathArquivo: String = ''): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -99,7 +97,7 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: AnsiString): Boolean;
+    function LerXML(AXML: String): Boolean;
 
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
@@ -113,16 +111,19 @@ type
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
 
     property NomeArq: String read FNomeArq write FNomeArq;
+    function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
+      PathArquivo: String = ''): String;
 
     property NFe: TNFe read FNFe;
 
     // Atribuir a "XML", faz o componente transferir os dados lido para as propriedades internas e "XMLAssinado"
     property XML: String         read FXMLOriginal   write SetXML;
     // Atribuir a "XMLOriginal", reflete em XMLAssinado, se existir a tag de assinatura
-    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;
-    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;
+    property XMLOriginal: String read FXMLOriginal   write SetXMLOriginal;    // Sempre deve estar em UTF8
+    property XMLAssinado: String read GetXMLAssinado write FXMLAssinado;      // Sempre deve estar em UTF8
     property Confirmada: Boolean read GetConfirmada;
     property Processada: Boolean read GetProcessada;
+    property Cancelada: Boolean read GetCancelada;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
 
@@ -257,6 +258,7 @@ begin
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin
     FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'NFe', 'infNFe');
+    // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
@@ -301,7 +303,7 @@ end;
 
 procedure NotaFiscal.Validar;
 var
-  Erro, AXML: String;
+  Erro, AXML, DeclaracaoXML: String;
   NotaEhValida, ok: Boolean;
   ALayout: TLayOut;
   VerServ: Real;
@@ -322,7 +324,10 @@ begin
       ALayout := LayNfeRecepcao;
 
     // Extraindo apenas os dados da NFe (sem nfeProc)
-    AXML := '<NFe xmlns' + RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>') + '</NFe>';
+    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+    AXML := DeclaracaoXML + '<NFe xmlns' +
+            RetornarConteudoEntre(AXML, '<NFe xmlns', '</NFe>') +
+            '</NFe>';
 
     NotaEhValida := SSL.Validar(AXML, GerarNomeArqSchema(ALayout, VerServ), Erro);
 
@@ -1140,12 +1145,18 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
+function NotaFiscal.LerXML(AXML: String): Boolean;
+var
+  XMLStr: String;
 begin
-  FNFeR.Leitor.Arquivo := AXML;
-  FNFeR.LerXml;
+  XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
-  XMLOriginal := string(AXML);
+  { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
+    Isso é necessário, para que as propriedades fiquem com a acentuação correta }
+  XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
+
+  FNFeR.Leitor.Arquivo := XMLStr;
+  FNFeR.LerXml;
 
   Result := True;
 end;
@@ -1238,9 +1249,12 @@ begin
   FNFeW.GerarXml;
   //DEBUG
   //WriteToTXT('c:\temp\Notafiscal.xml', FNFeW.Gerador.ArquivoFormatoXML, False, False);
-  XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;
 
-  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+  XMLOriginal := FNFeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
+
+  { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
+    nome do arquivo, mantendo o PATH do arquivo carregado }
+  if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FNFe.infNFe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
   FAlertas := ACBrStr( FNFeW.Gerador.ListaDeAlertas.Text );
@@ -1306,14 +1320,22 @@ end;
 
 function NotaFiscal.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
+var
+  PathNoArquivo: String;
 begin
   if EstaVazio(NomeArquivo) then
     NomeArquivo := CalcularNomeArquivo;
 
-  if EstaVazio(PathArquivo) then
-    PathArquivo := CalcularPathArquivo
+  PathNoArquivo := ExtractFilePath(NomeArquivo);
+  if EstaVazio(PathNoArquivo) then
+  begin
+    if EstaVazio(PathArquivo) then
+      PathArquivo := CalcularPathArquivo
+    else
+      PathArquivo := PathWithDelim(PathArquivo);
+  end
   else
-    PathArquivo := PathWithDelim(PathArquivo);
+    PathArquivo := '';
 
   Result := PathArquivo + NomeArquivo;
 end;
@@ -1352,6 +1374,12 @@ begin
     FNFe.procNFe.cStat);
 end;
 
+function NotaFiscal.GetCancelada: Boolean;
+begin
+  Result := TACBrNFe(TNotasFiscais(Collection).ACBrNFe).CstatCancelada(
+    FNFe.procNFe.cStat);
+end;
+
 function NotaFiscal.GetMsg: String;
 begin
   Result := FNFe.procNFe.xMotivo;
@@ -1376,8 +1404,14 @@ begin
 end;
 
 procedure NotaFiscal.SetXMLOriginal(AValue: String);
+var
+  XMLUTF8: String;
 begin
-  FXMLOriginal := AValue;
+  { Garante que o XML informado está em UTF8, se ele realmente estiver, nada
+    será modificado por "ConverteXMLtoUTF8"  (mantendo-o "original") }
+  XMLUTF8 := ConverteXMLtoUTF8(AValue);
+
+  FXMLOriginal := XMLUTF8;
 
   if XmlEstaAssinado(FXMLOriginal) then
     FXMLAssinado := FXMLOriginal
@@ -1486,6 +1520,13 @@ begin
   Result := True;
   Erros := '';
 
+  if Self.Count < 1 then
+  begin
+    Erros := 'Nenhuma NFe carregada';
+    Result := False;
+    Exit;
+  end;
+
   for i := 0 to Self.Count - 1 do
   begin
     if not Self.Items[i].VerificarAssinatura then
@@ -1516,7 +1557,6 @@ end;
 function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
   AGerarNFe: Boolean = True): Boolean;
 var
-  XMLStr: String;
   XMLUTF8: AnsiString;
   i, l: integer;
   MS: TMemoryStream;
@@ -1530,10 +1570,7 @@ begin
   end;
 
   l := Self.Count; // Indice da última nota já existente
-
-  // Converte de UTF8 para a String nativa da IDE //
-  XMLStr := DecodeToString(XMLUTF8, True);
-  Result := LoadFromString(XMLStr, AGerarNFe);
+  Result := LoadFromString(String(XMLUTF8), AGerarNFe);
 
   if Result then
   begin
@@ -1557,33 +1594,40 @@ end;
 function TNotasFiscais.LoadFromString(AXMLString: String;
   AGerarNFe: Boolean = True): Boolean;
 var
-  AXML: AnsiString;
+  ANFeXML, XMLStr: AnsiString;
   P, N: integer;
 
   function PosNFe: integer;
   begin
-    Result := pos('</NFe>', AXMLString);
+    Result := pos('</NFe>', XMLStr);
   end;
 
 begin
+  // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
+  XMLStr := ConverteXMLtoNativeString(AXMLString);
+
   N := PosNFe;
   while N > 0 do
   begin
-    P := pos('</nfeProc>', AXMLString);
+    P := pos('</nfeProc>', XMLStr);
+
+    if P <= 0 then
+      P := pos('</procNFe>', XMLStr);  // NFe obtida pelo Portal da Receita
+
     if P > 0 then
     begin
-      AXML := copy(AXMLString, 1, P + 10);
-      AXMLString := Trim(copy(AXMLString, P + 10, length(AXMLString)));
+      ANFeXML := copy(XMLStr, 1, P + 10);
+      XMLStr := Trim(copy(XMLStr, P + 10, length(XMLStr)));
     end
     else
     begin
-      AXML := copy(AXMLString, 1, N + 6);
-      AXMLString := Trim(copy(AXMLString, N + 6, length(AXMLString)));
+      ANFeXML := copy(XMLStr, 1, N + 6);
+      XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
     end;
 
     with Self.Add do
     begin
-      LerXML(AXML);
+      LerXML(ANFeXML);
 
       if AGerarNFe then // Recalcula o XML
         GerarXML;

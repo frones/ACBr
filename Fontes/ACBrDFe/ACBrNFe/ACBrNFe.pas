@@ -124,6 +124,7 @@ type
 
     function CstatConfirmada(AValue: integer): Boolean;
     function CstatProcessado(AValue: integer): Boolean;
+    function CstatCancelada(AValue: integer): Boolean;
 
     function Enviar(ALote: String; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
@@ -308,6 +309,15 @@ function TACBrNFe.CstatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302, 303: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrNFe.CstatCancelada(AValue: integer): Boolean;
+begin
+  case AValue of
+    101, 151, 155: Result := True;
     else
       Result := False;
   end;

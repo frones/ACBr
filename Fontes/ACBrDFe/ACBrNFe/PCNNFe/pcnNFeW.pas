@@ -256,12 +256,14 @@ begin
 
   Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
-//  Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
+
+  {$IfDef FPC}
+   Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$EndIf}
+
   if nfe.procNFe.nProt <> '' then
-   begin
-      Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
-   end;
+    Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
+
   Gerador.wGrupo('NFe ' + NAME_SPACE);
   Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + nfe.infNFe.ID + '"');
   (**)GerarInfNFe;

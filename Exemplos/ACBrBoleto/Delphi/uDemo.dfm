@@ -13,6 +13,7 @@ object frmDemo: TfrmDemo
   OldCreateOrder = False
   Position = poDesktopCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -113,7 +114,7 @@ object frmDemo: TfrmDemo
       Width = 103
       Height = 21
       TabOrder = 5
-      Text = '00000000000'
+      Text = '1'
     end
   end
   object GroupBox2: TGroupBox
@@ -627,33 +628,5 @@ object frmDemo: TfrmDemo
       TabOrder = 6
       OnClick = Button7Click
     end
-  end
-  object ACBrBoleto1: TACBrBoleto
-    Banco.Numero = 341
-    Banco.TamanhoMaximoNossoNum = 8
-    Banco.TipoCobranca = cobItau
-    Cedente.Nome = 'TodaObra Materias p/ Construcao'
-    Cedente.CodigoCedente = '4266443'
-    Cedente.Agencia = '0284'
-    Cedente.AgenciaDigito = '5'
-    Cedente.Conta = '79489'
-    Cedente.ContaDigito = '9'
-    Cedente.CNPJCPF = '05.481.336/0001-37'
-    Cedente.TipoInscricao = pJuridica
-    DirArqRemessa = 'c:\temp'
-    NumeroArquivo = 0
-    ACBrBoletoFC = ACBrBoletoFCFortes1
-    Left = 64
-    Top = 231
-  end
-  object ACBrBoletoFCFortes1: TACBrBoletoFCFortes
-    ACBrBoleto = ACBrBoleto1
-    DirLogo = '..\..\..\Fontes\ACBrBoleto\Logos\Colorido'
-    MostrarPreview = False
-    MostrarSetup = False
-    NomeArquivo = 'boleto.pdf'
-    SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
-    Left = 160
-    Top = 231
   end
 end

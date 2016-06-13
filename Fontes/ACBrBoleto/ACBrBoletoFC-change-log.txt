@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2016
+-- ACBrBoletoFCFR
+[*] Melhoria para funcionamento em threads
+		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/#comment-201083
+		(Juliomar Marchetti)
+		
 04/05/16
 -- ACBrBoletoFCFortes ver. 0.0.30a --
 [*] Ajuste para impressão do CNPJ do emitente no carnê. (OlavoJr)

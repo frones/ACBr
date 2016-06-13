@@ -1,11 +1,11 @@
+{$I Report.inc}
 unit uDemo;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Mask, ACBrBase, ACBrBoleto, ACBrUtil,
-  ACBrBoletoFCFortesFr;
+  Dialogs, StdCtrls, ExtCtrls, Mask, {$IFDEF demo_forte} uDMForte, {$ELSE}uDMFast, {$ENDIF}ACBrBase, ACBrBoleto, ACBrUtil;
 
 type
   TfrmDemo = class(TForm)
@@ -84,8 +84,6 @@ type
     edtCEP: TEdit;
     Label30: TLabel;
     edtUF: TEdit;
-    ACBrBoleto1: TACBrBoleto;
-    ACBrBoletoFCFortes1: TACBrBoletoFCFortes;
     Label31: TLabel;
     cbxLayOut: TComboBox;
     procedure Button1Click(Sender: TObject);
@@ -97,7 +95,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure cbxLayOutChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+{$IFDEF demo_forte}
+    dm: TdmForte;
+{$ELSE}
+    dm: TdmFast;
+{$ENDIF}
     { Private declarations }
   public
     { Public declarations }
@@ -114,149 +118,158 @@ Uses TypInfo;
 
 procedure TfrmDemo.Button1Click(Sender: TObject);
 begin
-   ACBrBoleto1.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName)+'teste.html';
-   ACBrBoleto1.GerarHTML;
+  dm.ACBrBoleto.ACBrBoletoFC.NomeArquivo := ExtractFilePath(Application.ExeName) + 'teste.html';
+  dm.ACBrBoleto.GerarHTML;
 end;
 
 procedure TfrmDemo.Button2Click(Sender: TObject);
 begin
-   ACBrBoleto1.GerarPDF;
+  dm.ACBrBoleto.GerarPDF;
 end;
 
 procedure TfrmDemo.Button4Click(Sender: TObject);
 var
-  Titulo : TACBrTitulo;
+  Titulo: TACBrTitulo;
 begin
-     Titulo := ACBrBoleto1.CriarTituloNaLista;
+  Titulo := dm.ACBrBoleto.CriarTituloNaLista;
 
-     with Titulo do
-     begin
-        Vencimento        := StrToDate(edtVencimento.Text);
-        DataDocumento     := StrToDate(edtDataDoc.Text);
-        NumeroDocumento   := edtNumeroDoc.Text;
-        EspecieDoc        := edtEspecieDoc.Text;
-        if cbxAceite.ItemIndex = 0 then
-           Aceite := atSim
-        else
-           Aceite := atNao;
-        DataProcessamento := Now;
-        Carteira          := edtCarteira.Text;
-        NossoNumero       := edtNossoNro.Text;
-        ValorDocumento    := StrToCurr(edtValorDoc.Text);
-        Sacado.NomeSacado := edtNome.Text;
-        Sacado.CNPJCPF    := OnlyNumber(edtCPFCNPJ.Text);
-        Sacado.Logradouro := edtEndereco.Text;
-        Sacado.Numero     := edtNumero.Text;
-        Sacado.Bairro     := edtBairro.Text;
-        Sacado.Cidade     := edtCidade.Text;
-        Sacado.UF         := edtUF.Text;
-        Sacado.CEP        := OnlyNumber(edtCEP.Text);
-        ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
-        LocalPagamento    := edtLocalPag.Text;
-        ValorMoraJuros    := StrToCurrDef(edtMoraJuros.Text,0);
-        ValorDesconto     := StrToCurrDef(edtValorDesconto.Text,0);
-        ValorAbatimento   := StrToCurrDef(edtValorAbatimento.Text,0);
-        DataMoraJuros     := StrToDateDef(edtDataMora.Text, 0);
-        DataDesconto      := StrToDateDef(edtDataDesconto.Text, 0);
-        DataAbatimento    := StrToDateDef(edtDataAbatimento.Text, 0);
-        DataProtesto      := StrToDateDef(edtDataProtesto.Text, 0);
-        PercentualMulta   := StrToCurrDef(edtMulta.Text,0);
-        Mensagem.Text     := memMensagem.Text;
-        OcorrenciaOriginal.Tipo := toRemessaBaixar;
-        Instrucao1        := PadRight(trim(edtInstrucoes1.Text),2,'0');
-        Instrucao2        := PadRight(trim(edtInstrucoes2.Text),2,'0');
+  with Titulo do
+  begin
+    Vencimento := StrToDate(edtVencimento.Text);
+    DataDocumento := StrToDate(edtDataDoc.Text);
+    NumeroDocumento := edtNumeroDoc.Text;
+    EspecieDoc := edtEspecieDoc.Text;
+    if cbxAceite.ItemIndex = 0 then
+      Aceite := atSim
+    else
+      Aceite := atNao;
+    DataProcessamento := Now;
+    Carteira := edtCarteira.Text;
+    NossoNumero := edtNossoNro.Text;
+    ValorDocumento := StrToCurr(edtValorDoc.Text);
+    Sacado.NomeSacado := edtNome.Text;
+    Sacado.CNPJCPF := OnlyNumber(edtCPFCNPJ.Text);
+    Sacado.Logradouro := edtEndereco.Text;
+    Sacado.Numero := edtNumero.Text;
+    Sacado.Bairro := edtBairro.Text;
+    Sacado.Cidade := edtCidade.Text;
+    Sacado.UF := edtUF.Text;
+    Sacado.CEP := OnlyNumber(edtCEP.Text);
+    ValorAbatimento := StrToCurrDef(edtValorAbatimento.Text, 0);
+    LocalPagamento := edtLocalPag.Text;
+    ValorMoraJuros := StrToCurrDef(edtMoraJuros.Text, 0);
+    ValorDesconto := StrToCurrDef(edtValorDesconto.Text, 0);
+    ValorAbatimento := StrToCurrDef(edtValorAbatimento.Text, 0);
+    DataMoraJuros := StrToDateDef(edtDataMora.Text, 0);
+    DataDesconto := StrToDateDef(edtDataDesconto.Text, 0);
+    DataAbatimento := StrToDateDef(edtDataAbatimento.Text, 0);
+    DataProtesto := StrToDateDef(edtDataProtesto.Text, 0);
+    PercentualMulta := StrToCurrDef(edtMulta.Text, 0);
+    Mensagem.Text := memMensagem.Text;
+    OcorrenciaOriginal.Tipo := toRemessaBaixar;
+    Instrucao1 := PadRight(trim(edtInstrucoes1.Text), 2, '0');
+    Instrucao2 := PadRight(trim(edtInstrucoes2.Text), 2, '0');
 
-       // ACBrBoleto1.AdicionarMensagensPadroes(Titulo,Mensagem);
-     end;
-end;       
+    // dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo,Mensagem);
+  end;
+end;
 
 procedure TfrmDemo.Button5Click(Sender: TObject);
 var
-  Titulo    : TACBrTitulo;
-  I         : Integer;
-  NrTitulos : Integer;
-  NrTitulosStr :String;
+  Titulo: TACBrTitulo;
+  I: Integer;
+  NrTitulos: Integer;
+  NrTitulosStr: String;
   Convertido: Boolean;
 begin
-   NrTitulos    := 10;
-   NrTitulosStr := '10';
-   Convertido   := true;
+  NrTitulos := 10;
+  NrTitulosStr := '10';
+  Convertido := true;
 
-   repeat
-     InputQuery('ACBrBoleto','Número de Boletos a incluir',NrTitulosStr);
-     try
-       NrTitulos := StrToInt(NrTitulosStr);
-     except
-       Convertido:= false;
-     end;
-   until  Convertido;
+  repeat
+    InputQuery('ACBrBoleto', 'Número de Boletos a incluir', NrTitulosStr);
+    try
+      NrTitulos := StrToInt(NrTitulosStr);
+    except
+      Convertido := false;
+    end;
+  until Convertido;
 
-   for I := 1 to NrTitulos do
-   begin
-     Titulo:= ACBrBoleto1.CriarTituloNaLista;
+  for I := 1 to NrTitulos do
+  begin
+    Titulo := dm.ACBrBoleto.CriarTituloNaLista;
 
-     with Titulo do
-     begin
-        LocalPagamento    := 'Pagar preferêncialmente nas agências do Bradesco'; //MEnsagem exigida pelo bradesco
-        Vencimento        := IncMonth(EncodeDate(2010,05,10),I);
-        DataDocumento     := EncodeDate(2010,04,10);
-        NumeroDocumento   := PadRight(IntToStr(I),6,'0');
-        EspecieDoc        := 'DM';
-        Aceite            := atSim;
-        DataProcessamento := Now;
-        NossoNumero       := IntToStrZero(I,11);
-        Carteira          := '09';
-        ValorDocumento    := 100.35 * (I+0.5);
-        Sacado.NomeSacado := 'Jose Luiz Pedroso';
-        Sacado.CNPJCPF    := '12345678901';
-        Sacado.Logradouro := 'Rua da Consolacao';
-        Sacado.Numero     := '100';
-        Sacado.Bairro     := 'Vila Esperanca';
-        Sacado.Cidade     := 'Tatui';
-        Sacado.UF         := 'SP';
-        Sacado.CEP        := '18270000';
-        ValorAbatimento   := 10;
-        DataAbatimento    := Vencimento-5;
-        Instrucao1        := '00';
-        Instrucao2        := '00';
+    with Titulo do
+    begin
+      LocalPagamento := 'Pagar preferêncialmente nas agências do Bradesco'; // MEnsagem exigida pelo bradesco
+      Vencimento := IncMonth(EncodeDate(2010, 05, 10), I);
+      DataDocumento := EncodeDate(2010, 04, 10);
+      NumeroDocumento := PadRight(IntToStr(I), 6, '0');
+      EspecieDoc := 'DM';
+      Aceite := atSim;
+      DataProcessamento := Now;
+      NossoNumero := IntToStrZero(I, 8);
+      Carteira := '09';
+      ValorDocumento := 100.35 * (I + 0.5);
+      Sacado.NomeSacado := 'Jose Luiz Pedroso';
+      Sacado.CNPJCPF := '12345678901';
+      Sacado.Logradouro := 'Rua da Consolacao';
+      Sacado.Numero := '100';
+      Sacado.Bairro := 'Vila Esperanca';
+      Sacado.Cidade := 'Tatui';
+      Sacado.UF := 'SP';
+      Sacado.CEP := '18270000';
+      ValorAbatimento := 10;
+      DataAbatimento := Vencimento - 5;
+      Instrucao1 := '00';
+      Instrucao2 := '00';
 
-        ACBrBoleto1.AdicionarMensagensPadroes(Titulo,Mensagem);
-     end;
-   end;
-end;          
+      dm.ACBrBoleto.AdicionarMensagensPadroes(Titulo, Mensagem);
+    end;
+  end;
+end;
 
 procedure TfrmDemo.Button6Click(Sender: TObject);
 begin
-   ACBrBoleto1.GerarRemessa( 1 );   
+  dm.ACBrBoleto.GerarRemessa(1);
 end;
 
 procedure TfrmDemo.Button7Click(Sender: TObject);
 begin
-   ACBrBoleto1.Imprimir; 
+  dm.ACBrBoleto.Imprimir;
 end;
 
 procedure TfrmDemo.FormCreate(Sender: TObject);
 var
-  I : TACBrBolLayOut ;
+  I: TACBrBolLayOut;
 begin
-   edtDataDoc.Text    := DateToStr(Now);
-   edtVencimento.Text := DateToStr(IncMonth(StrToDate(edtDataDoc.Text),1));
-   edtDataMora.Text   := DateToStr(StrToDate(edtVencimento.Text)+1);
+  edtDataDoc.Text := DateToStr(Now);
+  edtVencimento.Text := DateToStr(IncMonth(StrToDate(edtDataDoc.Text), 1));
+  edtDataMora.Text := DateToStr(StrToDate(edtVencimento.Text) + 1);
 
-   cbxLayOut.Items.Clear ;
-   For I := Low(TACBrBolLayOut) to High(TACBrBolLayOut) do
-      cbxLayOut.Items.Add( GetEnumName(TypeInfo(TACBrBolLayOut), integer(I) ) ) ;
-   cbxLayOut.ItemIndex := 0 ;
+  cbxLayOut.Items.Clear;
+  For I := Low(TACBrBolLayOut) to High(TACBrBolLayOut) do
+    cbxLayOut.Items.Add(GetEnumName(TypeInfo(TACBrBolLayOut), Integer(I)));
+  cbxLayOut.ItemIndex := 0;
+end;
+
+procedure TfrmDemo.FormShow(Sender: TObject);
+begin
+{$IFDEF demo_forte}
+  dm := dmForte;
+{$ELSE}
+  dm := dmFast;
+{$ENDIF}
 end;
 
 procedure TfrmDemo.Button3Click(Sender: TObject);
 begin
-   ACBrBoleto1.ListadeBoletos.Clear;
+  dm.ACBrBoleto.ListadeBoletos.Clear;
 end;
 
 procedure TfrmDemo.cbxLayOutChange(Sender: TObject);
 begin
-  ACBrBoleto1.ACBrBoletoFC.LayOut := TACBrBolLayOut( cbxLayOut.ItemIndex );
+  dm.ACBrBoleto.ACBrBoletoFC.LayOut := TACBrBolLayOut(cbxLayOut.ItemIndex);
 end;
 
 end.

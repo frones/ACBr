@@ -44,6 +44,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2016
+-- ACBrDFeSSL --
+[*] Método: "Assinar", ajuste para usar Declaralção anterior do XML, apenas se
+    a mesma for compatível com UTF8
+[*] Método: "AjustarXMLAssinado", modificado para remover Espaços apenas do
+    Elemento de Assinatura, e não de todo final do XML, após a Tag de assinatura;
+    Modificado para permitir informar o Certificado DER_Base64 que constará na
+    Assinatura (usado por OpenSSL)
+[*] Métodos "Validar", "VerificarAssinatura", modificados para presumir que o
+    XML de entrada, sempre estará em UTF8
+
+-- ACBrDFeOpenSSL --
+[-] Correção para correta assinatura de XML com Certificados da "SOLUTI" (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30247
+[*] Método: "XmlSecSign", modificado para conseguir achar a assinatura em XMLs
+    com tag "nfeProc" como Raiz
+[*] Métodos "Validar", "VerificarAssinatura", modificados para presumir que o
+    XML de entrada, sempre estará em UTF8
+[*] Método: "LerPFXInfo", modificado para extrair o Certificado no formato
+    DER_Base64, (o mesmo será utilizado na Tag de Assinatura)
+
+-- ACBrDFeCapicom --
+[*] Métodos "Validar", "VerificarAssinatura", modificados para presumir que o
+    XML de entrada, sempre estará em UTF8
+
 12/02/2016
 -- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeCapicomDelphiSoap --
 [*] Removida a propriedde "UseSSL"
@@ -62,7 +87,7 @@ Símbolo : Significado
     mesmo não foi previamente assinado     (por: DSA)
 
 11/03/2016
--- ACBrDFeOpenSSL --
+*-- ACBrDFeOpenSSL --
 [*] Modificada a rotina de inicialização de XMLSec, para suportar diretiva de
     compilação "USE_DELAYED"
 [-] Corrigida falha na verificação de assinatura com notas Processadas "nfeProc"

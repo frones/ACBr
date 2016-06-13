@@ -596,13 +596,17 @@ begin
 
       //DEBUG
       //xmldoc.save('c:\temp\ass.xml');
+      XmlAss := AnsiString(xmldoc.xml);
 
       // Convertendo novamente para UTF8
       {$IfDef FPC2}
-       XmlAss := ACBrAnsiToUTF8( xmldoc.xml );
+       XmlAss := ACBrAnsiToUTF8( XmlAss );
       {$Else}
-       XmlAss := NativeStringToUTF8( String(xmldoc.xml) );
+       XmlAss := NativeStringToUTF8( String(XmlAss) );
       {$EndIf}
+
+      // Ajustando o XML... CAPICOM insere um cabeçalho inválido
+      XmlAss := StringReplace(XmlAss, '<?xml version="1.0"?>', '', []);
       XmlAss := AjustarXMLAssinado(XmlAss);
     finally
       dsigKey := nil;
@@ -686,8 +690,9 @@ begin
       {$IfDef FPC2}
        AXml := ACBrUTF8ToAnsi(ConteudoXML);
       {$Else}
-       AXml := ConteudoXML;
+       AXml := UTF8ToNativeString(ConteudoXML);
       {$EndIf}
+
       if (not DOMDocument.loadXML(WideString(AXml))) then
       begin
         ParseError := DOMDocument.parseError;
@@ -741,8 +746,9 @@ begin
     {$IfDef FPC2}
      AXml := ACBrUTF8ToAnsi(ConteudoXML);
     {$Else}
-     AXml := ConteudoXML;
+     AXml := UTF8ToNativeString(ConteudoXML);
     {$EndIf}
+
     if (not xmldoc.loadXML(WideString(AXml))) then
     begin
       MsgErro := 'Não foi possível carregar o arquivo.';

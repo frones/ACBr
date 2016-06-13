@@ -78,7 +78,7 @@ type
       virtual;
     function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
       docElement, IdSignature: String): String;
-    function AjustarXMLAssinado(const ConteudoXML: String): String;
+    function AjustarXMLAssinado(const ConteudoXML: String; X509DER: String = ''): String;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
 
@@ -162,13 +162,15 @@ type
     function Assinar(const ConteudoXML, docElement, infElement: String;
       SignatureNode: String = ''; SelectionNamespaces: String = '';
       IdSignature: String = ''): String;
-    // Envia por SoapAction o ConteudoXML para URL. Retorna a resposta do Servico //
+    // Envia por SoapAction o ConteudoXML (em UTF8) para URL. Retorna a resposta do Servico //
     function Enviar(var ConteudoXML: String; const URL: String;
       const SoapAction: String; const MimeType: String = ''): String;
     // Valida um Arquivo contra o seu Schema. Retorna True se OK, preenche MsgErro se False //
+    // ConteudoXML, DEVE estar em UTF8
     function Validar(const ConteudoXML: String; ArqSchema: String;
       out MsgErro: String): Boolean;
     // Verifica se assinatura de um XML é válida. Retorna True se OK, preenche MsgErro se False //
+    // ConteudoXML, DEVE estar em UTF8
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
       const infElement: String; SignatureNode: String = '';
       SelectionNamespaces: String = ''): Boolean;
@@ -293,35 +295,27 @@ function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String;
   SignatureNode: String; SelectionNamespaces: String; IdSignature: String
   ): String;
 Var
-  XmlAss, xmlHeaderAntes, xmlHeaderDepois: String;
+  XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois: String;
   I: integer;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
-  // Lendo Header antes de assinar //
-  xmlHeaderAntes := '';
-  I := pos('?>', ConteudoXML);
-  if I > 0 then
-    xmlHeaderAntes := copy(ConteudoXML, 1, I + 1);
+  // Lendo Header antes de assinar, Se Header não for UTF8 não usa... //
+  if XmlEhUTF8(ConteudoXML) then
+    DeclaracaoXMLAntes := ObtemDeclaracaoXML(ConteudoXML)
+  else
+    DeclaracaoXMLAntes := '';
 
   XmlAss := FSSLClass.Assinar( ConteudoXML, docElement, infElement,
                                SignatureNode, SelectionNamespaces, IdSignature);
 
   // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
-  if xmlHeaderAntes <> '' then
+  if DeclaracaoXMLAntes <> '' then
   begin
-    I := pos('?>', XmlAss);
-    if I > 0 then
-    begin
-      xmlHeaderDepois := copy(XmlAss, 1, I + 1);
-      if xmlHeaderAntes <> xmlHeaderDepois then
-        XmlAss := StuffString(XmlAss, 1, length(xmlHeaderDepois), xmlHeaderAntes);
-    end
-    else
-      XmlAss := xmlHeaderAntes + XmlAss;
-  end;
+    DeclaracaoXMLDepois := ObtemDeclaracaoXML(XmlAss);
 
-  //remover um cabeçalho vazio que estava ficando na inutilização
-  XmlAss := StringReplace(XmlAss, '<?xml version="1.0"?>', '', []);
+    if DeclaracaoXMLAntes <> DeclaracaoXMLDepois then
+      XmlAss := StringReplace(XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois, []);
+  end;
 
   Result := XmlAss;
 end;
@@ -782,10 +776,28 @@ begin
             SignatureElement(URI, AddX509Data, IdSignature) + TagEndDocElement;
 end;
 
-function TDFeSSLClass.AjustarXMLAssinado(const ConteudoXML: String): String;
+function TDFeSSLClass.AjustarXMLAssinado(const ConteudoXML: String;
+  X509DER: String): String;
 var
   XmlAss: String;
   PosIni, PosFim: Integer;
+
+  function RemoveEspacos( const AXML, TagIni, TagFim : String): String;
+  begin
+    Result := '';
+    PosIni := PosLast(TagIni, AXML);
+    if PosIni > 0 then
+    begin
+      PosFim := PosEx(TagFim, AXML, PosIni + 1);
+      if PosFim > 0 then
+        Result := copy(AXML, 1, PosIni - 1) +
+                  StringReplace(copy(AXML, PosIni, PosFim-PosIni), ' ', '', [rfReplaceAll])+
+                  copy(AXML, PosFim, Length(AXML));
+    end;
+
+    if Result = '' then
+      Result := AXML;
+  end;
 begin
   XmlAss := ConteudoXML;
 
@@ -793,15 +805,24 @@ begin
   XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
   XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
 
-  // Removendo espaços desnecessários, do Elemento da Assinatura //
-  PosIni := PosLast('<SignatureValue>', XmlAss) + length('<SignatureValue>');
-  XmlAss := copy(XmlAss, 1, PosIni - 1) + StringReplace(
-    copy(XmlAss, PosIni, length(XmlAss)), ' ', '', [rfReplaceAll]);
+  PosIni := PosLast('<SignatureValue>', XmlAss);
+  if X509DER = '' then
+  begin
+    // Considerando apenas o último Certificado X509, da assinatura //
+    PosIni := PosEx('<X509Certificate>', XmlAss, PosIni) - 1;
+    PosFim := PosLast('<X509Certificate>', XmlAss);
+    XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+  end
+  else
+  begin
+    // Remove todos Certificados adiconados, e Adiciona o X509DER informado //
+    PosIni := PosEx('<X509Certificate>', XmlAss, PosIni) + Length('<X509Certificate>') - 1;
+    PosFim := PosLast('</X509Certificate>', XmlAss);
+    XmlAss := copy(XmlAss, 1, PosIni) + X509DER + copy(XmlAss, PosFim, length(XmlAss));
+  end;
 
-  // Considerando apenas o último Certificado X509, da assinatura //
-  PosIni := PosEx('<X509Certificate>', XmlAss, PosIni) - 1;
-  PosFim := PosLast('<X509Certificate>', XmlAss);
-  XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+  // CAPICOM insere espaços em alguns Elementos da Assinatura //
+  XmlAss := RemoveEspacos(XmlAss, '<SignatureValue>', '</Signature>');
 
   Result := XmlAss;
 end;

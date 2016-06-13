@@ -75,8 +75,9 @@ type
     FdsigCtx: xmlSecDSigCtxPtr;
     FCNPJ: String;
     FRazaoSocial: String;
-    FKey: pEVP_PKEY;
+    FPrivKey: pEVP_PKEY;
     FNumSerie: String;
+    FCertAsDER: String;
     FValidade: TDateTime;
     FSubjectName: String;
 
@@ -88,7 +89,7 @@ type
     procedure VerificarValoresPadrao(var SignatureNode: AnsiString;
       var SelectionNamespaces: AnsiString);
     function XmlSecSign(const ConteudoXML: AnsiString;
-      SignatureNode, SelectionNamespaces: AnsiString): AnsiString;
+      SignatureNode, SelectionNamespaces, InfElement: AnsiString): AnsiString;
     procedure CreateCtx;
     procedure DestroyCtx;
     procedure DestroyKey;
@@ -246,8 +247,11 @@ begin
   //DEBUG
   //WriteToTXT('C:\TEMP\XmlToSign.xml', AXml, False, False);
 
-  XmlAss := XmlSecSign(AXml, AnsiString(SignatureNode), AnsiString(SelectionNamespaces));
-  XmlAss := AjustarXMLAssinado(XmlAss);
+  XmlAss := XmlSecSign(AXml, AnsiString(SignatureNode),
+                             AnsiString(SelectionNamespaces),
+                             AnsiString(infElement));
+
+  XmlAss := AjustarXMLAssinado(XmlAss, FCertAsDER);
 
   // Removendo DTD //
   Result := StringReplace(XmlAss, DTD, '', []);
@@ -308,7 +312,7 @@ begin
   valid_ctxt := Nil;
 
   try
-    AXml := NativeStringToUTF8(ConteudoXML);
+    AXml := AnsiString(ConteudoXML);
     doc := xmlParseDoc(PAnsiChar(AXml));
     if ((doc = nil) or (xmlDocGetRootElement(doc) = nil)) then
     begin
@@ -381,7 +385,7 @@ function TDFeOpenSSL.VerificarAssinatura(const ConteudoXML: String; out
   SelectionNamespaces: String): Boolean;
 var
   doc: xmlDocPtr;
-  node, NFeNode: xmlNodePtr;
+  node, infNode: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
   X509Certificate, DTD: String;
@@ -400,12 +404,10 @@ begin
   VerificarValoresPadrao(asSignatureNode, asSelectionNamespaces);
 
   Result := False;
-  X509Certificate := copy(ConteudoXML, pos('<X509Certificate>', ConteudoXML) + 17,
-                  pos('</X509Certificate>', ConteudoXML) -
-                  (pos('<X509Certificate>', ConteudoXML) + 17));
 
+  X509Certificate := LerTagXML(ConteudoXML, 'X509Certificate' );
   DTD  := StringReplace(cDTD, '&infElement&', infElement, []);
-  AXml := NativeStringToUTF8(InserirDTD(ConteudoXML, DTD));
+  AXml := AnsiString(InserirDTD(ConteudoXML, DTD));
 
   doc := nil;
   dsigCtx := nil;
@@ -446,26 +448,26 @@ begin
       exit;
     end;
 
-    NFeNode := xmlDocGetRootElement(doc);
-    while (NFeNode <> nil) and (NFeNode.name <> asInfElement) do
-      NFeNode := NFeNode.children;
+    infNode := xmlDocGetRootElement(doc);
+    while (infNode <> nil) and (infNode.name <> asInfElement) do
+      infNode := infNode.children;
 
-    if (NFeNode = nil) then
-    begin
-      MsgErro := ACBrStr(cErrFindSignNode);
-      exit;
-    end;
-
-    if NFeNode^.name = infElement then
-      NFeNode := NFeNode.parent;
-
-    if (NFeNode = nil) then
+    if (infNode = nil) then
     begin
       MsgErro := ACBrStr(cErrFindRootNode);
       exit;
     end;
 
-    node := xmlSecFindChild(NFeNode, xmlCharPtr(asSignatureNode), xmlCharPtr(asSelectionNamespaces) );
+    if infNode^.name = infElement then
+      infNode := infNode.parent;
+
+    if (infNode = nil) then
+    begin
+      MsgErro := ACBrStr(cErrFindRootNode);
+      exit;
+    end;
+
+    node := xmlSecFindChild(infNode, xmlCharPtr(asSignatureNode), xmlCharPtr(asSelectionNamespaces) );
     if (node = nil) then
     begin
       MsgErro := ACBrStr(cErrFindSignNode);
@@ -537,7 +539,7 @@ begin
     dgstSHA512 : NameDgst := 'sha512';
   end ;
 
-  if Assinar and (FKey = Nil) then
+  if Assinar and (FPrivKey = Nil) then
     CarregarCertificado;
 
   PosStream := 0;
@@ -559,7 +561,7 @@ begin
     end;
 
     if Assinar then
-       EVP_SignFinal( @md_ctx, @md_value_bin, md_len, FKey)
+       EVP_SignFinal( @md_ctx, @md_value_bin, md_len, FPrivKey)
     else
        EVP_DigestFinal( @md_ctx, @md_value_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
 
@@ -571,10 +573,10 @@ begin
 end;
 
 function TDFeOpenSSL.XmlSecSign(const ConteudoXML: AnsiString; SignatureNode,
-  SelectionNamespaces: AnsiString): AnsiString;
+  SelectionNamespaces, InfElement: AnsiString): AnsiString;
 var
   doc: xmlDocPtr;
-  node, RootElement: xmlNodePtr;
+  node, infNode: xmlNodePtr;
   buffer: PAnsiChar;
   bufSize: integer;
 begin
@@ -595,14 +597,22 @@ begin
     if (doc = nil) then
       raise EACBrDFeException.Create(cErrParseDoc);
 
-    { find start node }
-    RootElement := xmlDocGetRootElement(doc);
-    if (RootElement = nil) then
+    { find infElement node }
+    infNode := xmlDocGetRootElement(doc);
+    while (infNode <> nil) and (infNode.name <> InfElement) do
+      infNode := infNode.children;
+
+    if (infNode = nil) then
+      raise EACBrDFeException.Create(cErrFindRootNode);
+
+    if infNode^.name = InfElement then
+      infNode := infNode.parent;
+
+    if (infNode = nil) then
       raise EACBrDFeException.Create(cErrFindRootNode);
 
     { find Signature node }
-    node := xmlSecFindChild(RootElement,
-               xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
+    node := xmlSecFindChild(infNode, xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
     if (node = nil) then
       raise EACBrDFeException.Create(cErrFindSignNode);
 
@@ -674,14 +684,14 @@ end;
 
 procedure TDFeOpenSSL.DestroyKey;
 begin
-  if (FKey <> Nil) then
+  if (FPrivKey <> Nil) then
   begin
     {$IFDEF USE_libeay32}
-     EVP_PKEY_free(FKey);
+     EVP_PKEY_free(FPrivKey);
     {$ELSE}
-     EvpPkeyFree(FKey);
+     EvpPkeyFree(FPrivKey);
     {$ENDIF}
-    FKey := nil;
+    FPrivKey := nil;
   end;
 end;
 
@@ -827,6 +837,63 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
     Result := AsciiToHex(s);
   end;
 
+  { Método clonado de ACBrEAD }
+  function BioToStr(ABio : pBIO) : AnsiString ;
+  Var
+    {$IFDEF USE_libeay32}
+     Buf : array [0..1023] of AnsiChar;
+    {$ENDIF}
+    Ret : Integer ;
+    Lin : String ;
+  begin
+    Result := '';
+
+    {$IFDEF USE_libeay32}
+     while BIO_eof( ABio ) = 0 do
+     begin
+       Ret := BIO_gets( ABio, Buf, 1024 );
+       SetString( Lin, Buf, Ret);
+       Result := Result + Lin;
+     end ;
+    {$ELSE}
+     repeat
+        SetLength(Lin,1024);
+        Ret := BioRead( ABio, Lin, 1024);
+        if Ret > 0 then
+        begin
+           Lin := copy(Lin,1,Ret) ;
+           Result := Result + Lin;
+        end ;
+     until (Ret <= 0);
+    {$ENDIF}
+  end ;
+
+  function CertToDER( cert: pX509): String;
+  var
+    MemBio: PBIO;
+    Buff: AnsiString;
+  begin
+    {$IFDEF USE_libeay32}
+     MemBio := Bio_New(Bio_S_Mem());
+     try
+       i2d_X509_bio(MemBio, cert);
+       Buff := BioToStr( MemBio );
+     finally
+       BIO_free_all( MemBio );
+     end;
+    {$ELSE}
+     MemBio := BioNew(BioSMem());
+     try
+       i2dX509bio(MemBio, cert);
+       Buff := BioToStr( MemBio );
+     finally
+       BioFreeAll( MemBio );
+     end;
+    {$ENDIF}
+
+    Result := EncodeBase64(Buff);
+  end;
+
 var
   cert: pX509;
   ca, p12: Pointer;
@@ -853,13 +920,13 @@ begin
 
     try
       cert := nil;
-      FKey := nil;
-      ca   := nil;
+      FPrivKey := nil;
+      ca := nil;
       try
         {$IFDEF USE_libeay32}
-        if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), FKey, cert, ca) > 0 then
+        if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), FPrivKey, cert, ca) > 0 then
         {$ELSE}
-        if PKCS12parse(p12, FpDFeSSL.Senha, FKey, cert, ca) > 0 then
+        if PKCS12parse(p12, FpDFeSSL.Senha, FPrivKey, cert, ca) > 0 then
         {$ENDIF}
         begin
           Result := True;
@@ -871,6 +938,7 @@ begin
             FCNPJ := GetCNPJExt( cert );
 
           FNumSerie := GetSerialNumber( cert );
+          FCertAsDER := CertToDER( cert );
         end;
       finally
         {$IFDEF USE_libeay32}

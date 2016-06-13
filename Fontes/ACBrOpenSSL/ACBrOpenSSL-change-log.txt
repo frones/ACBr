@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2016
+-- OpenSSLExt --
+[+] Adicionado suporte ao método: X509GetPubkey  (por: DSA)
+
 11/03/2016
 -- libexslt, libxml2, libxmlsec, libxslt --
 [*] Ajustes para suportar a diretiva de compilação "USE_DELAYED"

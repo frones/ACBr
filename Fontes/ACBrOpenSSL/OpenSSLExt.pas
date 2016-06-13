@@ -776,6 +776,7 @@ var
   function X509Digest(data: PX509; _type: PEVP_MD; md: String; var len: cInt):cInt;
   function X509print(b: PBIO; a: PX509): cInt;
   function X509SetVersion(x: PX509; version: cInt): cInt;
+  function X509GetPubkey(x: PX509): PEVP_PKEY;
   function X509SetPubkey(x: PX509; pkey: PEVP_PKEY): cInt;
   function X509SetIssuerName(x: PX509; name: PX509_NAME): cInt;
   function X509NameAddEntryByTxt(name: PX509_NAME; field: string; _type: cInt;
@@ -1038,6 +1039,7 @@ type
   TX509Digest = function(data: PX509; _type: PEVP_MD; md: PChar; len: PcInt):cInt; cdecl;
   TX509print = function(b: PBIO; a: PX509): cInt; cdecl;
   TX509SetVersion = function(x: PX509; version: cInt): cInt; cdecl;
+  TX509GetPubkey = function(x: PX509): PEVP_PKEY; cdecl;
   TX509SetPubkey = function(x: PX509; pkey: PEVP_PKEY): cInt; cdecl;
   TX509SetIssuerName = function(x: PX509; name: PX509_NAME): cInt; cdecl;
   TX509NameAddEntryByTxt = function(name: PX509_NAME; field: PChar; _type: cInt;
@@ -1265,6 +1267,7 @@ var
   _X509Digest: TX509Digest = nil;
   _X509print: TX509print = nil;
   _X509SetVersion: TX509SetVersion = nil;
+  _X509GetPubkey: TX509GetPubkey = nil;
   _X509SetPubkey: TX509SetPubkey = nil;
   _X509SetIssuerName: TX509SetIssuerName = nil;
   _X509NameAddEntryByTxt: TX509NameAddEntryByTxt = nil;
@@ -2007,6 +2010,14 @@ begin
     Result := _X509SetVersion(x, version)
   else
     Result := 0;
+end;
+
+function X509GetPubkey(x: PX509): PEVP_PKEY;
+begin
+  if InitlibeaInterface and Assigned(_X509GetPubkey) then
+    Result := _X509GetPubkey(x)
+  else
+    Result := nil;
 end;
 
 function X509SetPubkey(x: PX509; pkey: PEVP_PKEY): cInt;
@@ -3075,6 +3086,7 @@ begin
         _X509Digest := GetProcAddr(SSLUtilHandle, 'X509_digest', AVerboseLoading);
         _X509print := GetProcAddr(SSLUtilHandle, 'X509_print', AVerboseLoading);
         _X509SetVersion := GetProcAddr(SSLUtilHandle, 'X509_set_version', AVerboseLoading);
+        _X509GetPubkey := GetProcAddr(SSLUtilHandle, 'X509_get_pubkey', AVerboseLoading);
         _X509SetPubkey := GetProcAddr(SSLUtilHandle, 'X509_set_pubkey', AVerboseLoading);
         _X509SetIssuerName := GetProcAddr(SSLUtilHandle, 'X509_set_issuer_name', AVerboseLoading);
         _X509NameAddEntryByTxt := GetProcAddr(SSLUtilHandle, 'X509_NAME_add_entry_by_txt', AVerboseLoading);
@@ -3359,6 +3371,7 @@ begin
     _X509Digest := nil;
     _X509print := nil;
     _X509SetVersion := nil;
+    _X509GetPubkey := nil;
     _X509SetPubkey := nil;
     _X509SetIssuerName := nil;
     _X509NameAddEntryByTxt := nil;

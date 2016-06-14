@@ -669,7 +669,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0

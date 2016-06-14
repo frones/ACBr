@@ -548,14 +548,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 218
         Top = 7
         Width = 44
-        Height = 11
+        Height = 12
         Alignment = taRightJustify
         Caption = '99.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
       end
       object lFonteTributos: TRLLabel

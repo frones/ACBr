@@ -10,7 +10,7 @@ object frmPrincipal: TfrmPrincipal
   OnClose = FormClose
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.0.4'
   object Bevel1: TBevel
     Left = 176
     Height = 408
@@ -33,10 +33,16 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 4
   end
   object btnBuscarCertificado: TSpeedButton
+    AnchorSideLeft.Control = edtCertificado
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = edtCertificado
+    AnchorSideBottom.Control = edtCertificado
+    AnchorSideBottom.Side = asrBottom
     Left = 560
-    Height = 25
+    Height = 23
     Top = 41
     Width = 31
+    Anchors = [akTop, akLeft, akBottom]
     Caption = '...'
     OnClick = btnBuscarCertificadoClick
   end
@@ -268,6 +274,7 @@ object frmPrincipal: TfrmPrincipal
     Caption = 'Capicom'
     Checked = True
     Font.Color = clMaroon
+    OnChange = rbtTipoCapicomChange
     ParentFont = False
     TabOrder = 7
     TabStop = True
@@ -279,6 +286,7 @@ object frmPrincipal: TfrmPrincipal
     Width = 67
     Caption = 'OpenSSL'
     Font.Color = clMaroon
+    OnChange = rbtTipoOpenSSLChange
     ParentFont = False
     TabOrder = 6
   end

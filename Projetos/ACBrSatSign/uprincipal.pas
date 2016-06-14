@@ -11,6 +11,9 @@ uses
   Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit, Menus, ACBrGIF, ACBrUtil,
   ACBrValidador, ACBrEnterTab, ACBrDFe, ACBrDFeSSL;
 
+const
+  _C = 'tYk*5W@';
+
 type
 
   { TfrmPrincipal }
@@ -44,6 +47,8 @@ type
     procedure Image2Click(Sender: TObject);
     procedure LerConfiguracoes;
     procedure btnBuscarCertificadoClick(Sender: TObject);
+    procedure rbtTipoCapicomChange(Sender: TObject);
+    procedure rbtTipoOpenSSLChange(Sender: TObject);
   private
     FACBrDFe: TACBrDFe;
     procedure ConfigurarDFe;
@@ -58,6 +63,9 @@ var
   frmPrincipal: TfrmPrincipal;
 
 implementation
+
+uses
+  UtilUnit;
 
 const
   TIPO_CAPICOM = 'CAPICOM';
@@ -96,8 +104,8 @@ begin
   begin
     FACBrDFe.Configuracoes.Geral.SSLLib             := libOpenSSL;
     FACBrDFe.Configuracoes.Certificados.ArquivoPFX  := edtCertificado.Text;
+    FACBrDFe.Configuracoes.Certificados.Senha       := edtSenhaCertificado.Text;
   end;
-  ACBrBlocoX1.Configuracoes.Certificados.Senha := edtSenhaCertificado.Text;
 end;
 
 procedure TfrmPrincipal.GravarConfiguracoes;
@@ -158,12 +166,26 @@ end;
 procedure TfrmPrincipal.btnBuscarCertificadoClick(Sender: TObject);
 begin
   if rbtTipoCapicom.Checked then
+  begin
+    FACBrDFe.Configuracoes.Geral.SSLLib := libCapicom;
     edtCertificado.Text := FACBrDFe.SSL.SelecionarCertificado
+  end
   else
   begin
+    FACBrDFe.Configuracoes.Geral.SSLLib := libOpenSSL;
     if OpenDialog1.Execute then
       edtCertificado.Text := OpenDialog1.FileName;
   end;
+end;
+
+procedure TfrmPrincipal.rbtTipoCapicomChange(Sender: TObject);
+begin
+  edtCertificado.ReadOnly := True;
+end;
+
+procedure TfrmPrincipal.rbtTipoOpenSSLChange(Sender: TObject);
+begin
+  edtCertificado.ReadOnly := False;
 end;
 
 procedure TfrmPrincipal.btnCopiarClick(Sender: TObject);

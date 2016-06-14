@@ -20,9 +20,9 @@
     <VersionInfo>
       <StringTable ProductVersion=""/>
     </VersionInfo>
-    <BuildModes Count="3">
-      <Item1 Name="Default" Default="True"/>
-      <Item2 Name="Debug">
+    <BuildModes Count="2">
+      <Item1 Name="Debug" Default="True"/>
+      <Item2 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
@@ -31,44 +31,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
-          </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <IncludeAssertionCode Value="True"/>
-            </SyntaxOptions>
-          </Parsing>
-          <CodeGeneration>
-            <Checks>
-              <IOChecks Value="True"/>
-              <RangeChecks Value="True"/>
-              <OverflowChecks Value="True"/>
-              <StackChecks Value="True"/>
-            </Checks>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
-              <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
-            </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
-          </Linking>
-        </CompilerOptions>
-      </Item2>
-      <Item3 Name="Release">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <PathDelim Value="\"/>
-          <Target>
-            <Filename Value="ACBrSatSign"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\ACBrMonitorPLUS\Lazarus"/>
             <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
           </SearchPaths>
           <CodeGeneration>
@@ -89,7 +52,7 @@
             </Options>
           </Linking>
         </CompilerOptions>
-      </Item3>
+      </Item2>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -110,7 +73,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="ACBrSatSign.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -123,6 +86,10 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="uPrincipal"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\ACBrMonitorPLUS\Lazarus\UtilUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -133,9 +100,28 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\ACBrMonitorPLUS\Lazarus"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <IncludeAssertionCode Value="True"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+    </CodeGeneration>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+        <UseHeaptrc Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

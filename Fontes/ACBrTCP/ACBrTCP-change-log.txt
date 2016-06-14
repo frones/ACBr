@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2016
+-- ACBrConsultaCPF --
+[-] Correção do endereço HTTP para HTTPS  (por: Alan Lucas)
+    http://www.projetoacbr.com.br/forum/topic/30634-consultacpf-corre%C3%A7%C3%A3o-de-endere%C3%A7o/
+
 03/02/2016
 -- ACBrMTer --
 [+] Adicionado novo componente ACBrMTer, que atua como servidor de MicroTerminais

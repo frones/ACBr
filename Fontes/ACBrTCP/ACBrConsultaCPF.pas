@@ -57,6 +57,7 @@ type
   TACBrConsultaCPF = class(TACBrHTTP)
   private
     FDataNascimento: String;
+    FDataInscricao: String;
     FNome: String;
     FSituacao: String;
     FCPF: String;
@@ -74,6 +75,7 @@ type
   published
     property CPF: String Read FCPF Write FCPF;
     property DataNascimento : String Read FDataNascimento write FDataNascimento;
+    property DataInscricao : String Read FDataInscricao write FDataInscricao;
     property Nome: String Read FNome;
     property Situacao: String Read FSituacao;
     property DigitoVerificador: String Read FDigitoVerificador;
@@ -218,6 +220,7 @@ begin
         FNome     := LerCampo(Resposta,'Nome da Pessoa Física:');
         FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
         FSituacao := LerCampo(Resposta,'Situação Cadastral:');
+        FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');
         FEmissao  := LerCampo(Resposta,'Comprovante emitido às:');
         FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');
         FDigitoVerificador := LerCampo(Resposta,'Digito Verificador:');

@@ -62,10 +62,10 @@ type
     FErroValidacaoCompleto: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
-    FXML: String;
 
     function GetConfirmado: Boolean;
     function GetProcessado: Boolean;
+    function GetCancelado: Boolean;
 
     function GetMsg: String;
     function GetNumID: String;
@@ -75,8 +75,6 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
-    function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
-      PathArquivo: String = ''): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -88,7 +86,7 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: AnsiString): Boolean;
+    function LerXML(AXML: String): Boolean;
 
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
@@ -97,6 +95,9 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
+
+    function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
+      PathArquivo: String = ''): String;
 
     property NomeArq: String read FNomeArq write FNomeArq;
 
@@ -110,6 +111,7 @@ type
 
     property Confirmado: Boolean read GetConfirmado;
     property Processado: Boolean read GetProcessado;
+    property Cancelado: Boolean  read GetCancelado;
     property Msg: String read GetMsg;
     property NumID: String read GetNumID;
 
@@ -230,6 +232,7 @@ begin
   with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
   begin
     FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'MDFe', 'infMDFe');
+    // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
@@ -255,7 +258,7 @@ end;
 
 procedure Manifesto.Validar;
 var
-  Erro, AXML, AXMLModal: String;
+  Erro, AXML, DeclaracaoXML, AXMLModal: String;
   MDFeEhValida, ModalEhValido: Boolean;
   ALayout: TLayOutMDFe;
 begin
@@ -292,7 +295,10 @@ begin
     ALayout := LayMDFeRecepcao;
 
     // Extraindo apenas os dados da MDFe (sem mdfeProc)
-    AXML := '<MDFe xmlns' + RetornarConteudoEntre(AXML, '<MDFe xmlns', '</MDFe>') + '</MDFe>';
+    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+    AXML := DeclaracaoXML + '<MDFe xmlns' +
+            RetornarConteudoEntre(AXML, '<MDFe xmlns', '</MDFe>') +
+            '</MDFe>';
 
     ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FMDFe.infMDFe.Versao), Erro);
 
@@ -345,7 +351,7 @@ end;
 
 function Manifesto.ValidarRegrasdeNegocios: Boolean;
 var
-  Erros, Log: String;
+  Erros{, Log}: String;
   Agora: TDateTime;
 
   procedure GravaLog(AString: String);
@@ -390,13 +396,18 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function Manifesto.LerXML(AXML: AnsiString): Boolean;
+function Manifesto.LerXML(AXML: String): Boolean;
+var
+  XMLStr: String;
 begin
-  Result := False;
-  FMDFeR.Leitor.Arquivo := AXML;
-  FMDFeR.LerXml;
+  XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
-  XMLOriginal := string(AXML);
+  { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
+    Isso é necessário, para que as propriedades fiquem com a acentuação correta }
+  XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
+
+  FMDFeR.Leitor.Arquivo := XMLStr;
+  FMDFeR.LerXml;
 
   Result := True;
 end;
@@ -413,8 +424,6 @@ end;
 
 function Manifesto.GravarStream(AStream: TStream): Boolean;
 begin
-  Result := False;
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
 
@@ -477,9 +486,11 @@ begin
   end;
 
   FMDFeW.GerarXml;
-  XMLOriginal := FMDFeW.Gerador.ArquivoFormatoXML;
 
-  // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+  XMLOriginal := FMDFeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
+
+  { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
+    nome do arquivo, mantendo o PATH do arquivo carregado }
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FMDFe.infMDFe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
@@ -516,14 +527,22 @@ end;
 
 function Manifesto.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
+var
+  PathNoArquivo: String;
 begin
   if EstaVazio(NomeArquivo) then
     NomeArquivo := CalcularNomeArquivo;
 
-  if EstaVazio(PathArquivo) then
-    PathArquivo := CalcularPathArquivo
+  PathNoArquivo := ExtractFilePath(NomeArquivo);
+  if EstaVazio(PathNoArquivo) then
+  begin
+    if EstaVazio(PathArquivo) then
+      PathArquivo := CalcularPathArquivo
+    else
+      PathArquivo := PathWithDelim(PathArquivo);
+  end
   else
-    PathArquivo := PathWithDelim(PathArquivo);
+    PathArquivo := '';
 
   Result := PathArquivo + NomeArquivo;
 end;
@@ -558,6 +577,12 @@ begin
     FMDFe.procMDFe.cStat);
 end;
 
+function Manifesto.GetCancelado: Boolean;
+begin
+  Result := TACBrMDFe(TManifestos(Collection).ACBrMDFe).cStatCancelado(
+    FMDFe.procMDFe.cStat);
+end;
+
 function Manifesto.GetMsg: String;
 begin
   Result := FMDFe.procMDFe.xMotivo;
@@ -582,8 +607,14 @@ begin
 end;
 
 procedure Manifesto.SetXMLOriginal(AValue: String);
+var
+  XMLUTF8: String;
 begin
-  FXMLOriginal := AValue;
+  { Garante que o XML informado está em UTF8, se ele realmente estiver, nada
+    será modificado por "ConverteXMLtoUTF8"  (mantendo-o "original") }
+  XMLUTF8 := ConverteXMLtoUTF8(AValue);
+
+  FXMLOriginal := XMLUTF8;
 
   if XmlEstaAssinado(FXMLOriginal) then
     FXMLAssinado := FXMLOriginal
@@ -678,6 +709,13 @@ begin
   Result := True;
   Erros := '';
 
+  if Self.Count < 1 then
+  begin
+    Erros := 'Nenhum MDFe carregado';
+    Result := False;
+    Exit;
+  end;
+
   for i := 0 to Self.Count - 1 do
   begin
     if not Self.Items[i].VerificarAssinatura then
@@ -708,13 +746,10 @@ end;
 function TManifestos.LoadFromFile(CaminhoArquivo: String;
   AGerarMDFe: Boolean = True): Boolean;
 var
-  XMLStr: String;
   XMLUTF8: AnsiString;
   i, l: integer;
   MS: TMemoryStream;
 begin
-  Result := False;
-
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(CaminhoArquivo);
@@ -724,10 +759,7 @@ begin
   end;
 
   l := Self.Count; // Indice do último manifesto já existente
-
-  // Converte de UTF8 para a String nativa da IDE //
-  XMLStr := DecodeToString(XMLUTF8, True);
-  Result := LoadFromString(XMLStr, AGerarMDFe);
+  Result := LoadFromString(String(XMLUTF8), AGerarMDFe);
 
   if Result then
   begin
@@ -742,7 +774,6 @@ function TManifestos.LoadFromStream(AStream: TStringStream;
 var
   AXML: AnsiString;
 begin
-  Result := False;
   AStream.Position := 0;
   AXML := ReadStrFromStream(AStream, AStream.Size);
 
@@ -752,33 +783,40 @@ end;
 function TManifestos.LoadFromString(AXMLString: String;
   AGerarMDFe: Boolean = True): Boolean;
 var
-  AXML: AnsiString;
+  AMDFeXML, XMLStr: AnsiString;
   P, N: integer;
 
   function PosMDFe: integer;
   begin
-    Result := pos('</MDFe>', AXMLString);
+    Result := pos('</MDFe>', XMLStr);
   end;
 
 begin
+  // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
+  XMLStr := ConverteXMLtoNativeString(AXMLString);
+
   N := PosMDFe;
   while N > 0 do
   begin
-    P := pos('</mdfeProc>', AXMLString);
+    P := pos('</mdfeProc>', XMLStr);
+
+    if P <= 0 then
+      P := pos('</procMDFe>', XMLStr);  // MDFe obtido pelo Portal da Receita
+
     if P > 0 then
     begin
-      AXML := copy(AXMLString, 1, P + 11);
-      AXMLString := Trim(copy(AXMLString, P + 11, length(AXMLString)));
+      AMDFeXML := copy(XMLStr, 1, P + 11);
+      XMLStr := Trim(copy(XMLStr, P + 11, length(XMLStr)));
     end
     else
     begin
-      AXML := copy(AXMLString, 1, N + 7);
-      AXMLString := Trim(copy(AXMLString, N + 7, length(AXMLString)));
+      AMDFeXML := copy(XMLStr, 1, N + 7);
+      XMLStr := Trim(copy(XMLStr, N + 7, length(XMLStr)));
     end;
 
     with Self.Add do
     begin
-      LerXML(AXML);
+      LerXML(AMDFeXML);
 
       if AGerarMDFe then // Recalcula o XML
         GerarXML;

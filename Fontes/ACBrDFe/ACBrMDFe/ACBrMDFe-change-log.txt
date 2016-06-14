@@ -47,6 +47,50 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2016
+-- pmdfeMDFeW --
+[*] Método: "GerarXml", modificado para somente gerar Declaração de UTF8 no XML
+    se estiver em FPC (que usa UTF8 de forma nativa)
+
+-- ACBrMDFe --
+[+] Adicionado o método "cStatCancelado(AValue: integer): Boolean;" que retorna
+    True se "AValue" estiver entre os status de cancelamento
+
+-- ACBrMDFeManifestos --
+[*] Método: "CalcularNomeArquivoCompleto" movido para Public
+[*] Método: "LerXML" corrigido para usar "String" e não "AnsiString"
+[*] Propriedades "XMLOriginal" e "XMLAssinado", modificadas para presumir que o
+    o seu conteudo sempre estará em UTF8
+[+] Adicionada a propriedade: "Manifesto.Cancelado: Boolean"
+    (True quando CStat for cancelamento)
+[*] Método: "Manifesto.Validar", modificado para preservar a Declaração do XML
+[*] Método "Manifesto.LerXML", mnodificado para converter (se necessário) o
+    conteúdo do XML informado para a String Nativa da IDE, além de efetuar o
+    "parse" dos "HTML Entity"). Isso é necessário, para que as propriedades do
+    Objeto "MDFe" fiquem com apresentação correta.
+[-] Método: "CalcularNomeArquivoCompleto", correção para evitar somar o Path no
+    Resultado final, quando o nome do arquivo já conter o mesmo.
+[+] Método: "SetXMLOriginal", modificado para verificar se o conteúdo do XML
+    informado está em UTF8, convertendo-o, se necessário.
+[*] Método: "TManifestos.VerificarAssinatura", modificado para disparar Erro,
+    caso nenhum manifesto esteja carregado.
+[*] Método: "TManifestos.LoadFromFile" modificado para não Decodificar o XML
+    para a String nativa, pois isso agora é feito por "Manifesto.LerXML"
+[-] Método: "TManifestos.LoadFromString", modificado para conseguir processar
+    XMLs com a Tag "procMDFe", obtido pelo Portal do SEFAZ
+[*] Método: "TManifestos.LoadFromString", modificado para converter o XML
+    informado, para a String Nativa (se necessário)
+
+-- ACBrMDFeWebServices --
+[*] Método: "TMDFeRecepcao.TratarResposta", "TMDFeRetRecepcao.TratarRespostaFinal",
+    "TMDFeConsulta.TratarResposta" modificados para não salvar 2x o XML.
+[*] Método: "TMDFeConsulta.TratarResposta": refatorados para usar "cStatCancelado"
+    e "CstatProcessado";
+[-] "TMDFeConsulta.TratarResposta": Corrigido Bug que apagava o conteúdo do XML,
+    caso ocorrese uma falha no Retorno do XML
+[-] "TMDFeConsulta.TratarResposta": Corrigido Bug na Atualização do XML caso o
+    mesmo estivesse Cancelado
+
 08/06/2016
 -- ACBrMDFeDAMDFeRLRetrato --
 [-] Correção para formatar corretamente os valores, acerto para utilizar as 

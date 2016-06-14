@@ -89,6 +89,7 @@ type
 
     function cStatConfirmado(AValue: Integer): Boolean;
     function cStatProcessado(AValue: Integer): Boolean;
+    function cStatCancelado(AValue: integer): Boolean;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOutCTe; var Versao: Double;
@@ -259,6 +260,15 @@ function TACBrCTe.cStatProcessado(AValue: Integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrCTe.cStatCancelado(AValue: integer): Boolean;
+begin
+  case AValue of
+    101, 151, 155: Result := True;
     else
       Result := False;
   end;

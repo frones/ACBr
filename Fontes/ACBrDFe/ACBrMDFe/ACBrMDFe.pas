@@ -91,6 +91,7 @@ type
 
     function cStatConfirmado(AValue: integer): Boolean;
     function cStatProcessado(AValue: integer): Boolean;
+    function cStatCancelado(AValue: integer): Boolean;
 
     function Consultar( AChave: String = ''): Boolean;
     function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
@@ -245,6 +246,15 @@ function TACBrMDFe.cStatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrMDFe.cStatCancelado(AValue: integer): Boolean;
+begin
+  case AValue of
+    101, 151, 155: Result := True;
     else
       Result := False;
   end;

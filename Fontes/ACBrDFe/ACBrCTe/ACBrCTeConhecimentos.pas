@@ -64,10 +64,10 @@ type
     FErroValidacaoCompleto: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
-    FXML: String;
 
     function GetConfirmado: Boolean;
     function GetProcessado: Boolean;
+    function GetCancelado: Boolean;
 
     function GetMsg: String;
     function GetNumID: String;
@@ -77,7 +77,6 @@ type
     function ValidarConcatChave: Boolean;
     function CalcularNomeArquivo: String;
     function CalcularPathArquivo: String;
-    function CalcularNomeArquivoCompleto(NomeArquivo: String = ''; PathArquivo: String = ''): String;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -89,7 +88,7 @@ type
     function VerificarAssinatura: Boolean;
     function ValidarRegrasdeNegocios: Boolean;
 
-    function LerXML(AXML: AnsiString): Boolean;
+    function LerXML(AXML: String): Boolean;
     function GerarXML: String;
     function GravarXML(NomeArquivo: String = ''; PathArquivo: String = ''): Boolean;
 
@@ -97,6 +96,9 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
+
+    function CalcularNomeArquivoCompleto(NomeArquivo: String = '';
+      PathArquivo: String = ''): String;
 
     property NomeArq: String read FNomeArq write FNomeArq;
 
@@ -110,6 +112,7 @@ type
 
     property Confirmado: Boolean read GetConfirmado;
     property Processado: Boolean read GetProcessado;
+    property Cancelado: Boolean  read GetCancelado;
     property Msg: String         read GetMsg;
     property NumID: String       read GetNumID;
 
@@ -150,7 +153,7 @@ type
     // para o componente, será gerado ou não novamente o XML do CTe.
     function LoadFromFile(CaminhoArquivo: String; AGerarCTe: Boolean = True): Boolean;
     function LoadFromStream(AStream: TStringStream; AGerarCTe: Boolean = True): Boolean;
-    function LoadFromString(AString: String; AGerarCTe: Boolean = True): Boolean;
+    function LoadFromString(AXMLString: String; AGerarCTe: Boolean = True): Boolean;
     function GravarXML(PathNomeArquivo: String = ''): Boolean;
 
     property ACBrCTe: TComponent read FACBrCTe;
@@ -234,6 +237,7 @@ begin
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
     FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTe', 'infCte');
+    // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
@@ -259,7 +263,7 @@ end;
 
 procedure Conhecimento.Validar;
 var
-  Erro, AXML, AXMLModal: String;
+  Erro, AXML, DeclaracaoXML, AXMLModal: String;
   CTeEhValido, ModalEhValido: Boolean;
   ALayout: TLayOutCTe;
 begin
@@ -306,7 +310,10 @@ begin
     ALayout := LayCTeRecepcao;
 
     // Extraindo apenas os dados do CTe (sem cteProc)
-    AXML := '<CTe xmlns' + RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') + '</CTe>';
+    DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+    AXML := DeclaracaoXML + '<CTe xmlns' +
+            RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
+            '</CTe>';
 
     if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
     begin
@@ -364,7 +371,7 @@ end;
 
 function Conhecimento.ValidarRegrasdeNegocios: Boolean;
 var
-  Erros, Log: String;
+  Erros{, Log}: String;
   Agora: TDateTime;
 
   procedure GravaLog(AString: String);
@@ -421,13 +428,18 @@ begin
   FErroRegrasdeNegocios := Erros;
 end;
 
-function Conhecimento.LerXML(AXML: AnsiString): Boolean;
+function Conhecimento.LerXML(AXML: String): Boolean;
+var
+  XMLStr: String;
 begin
-  Result := False;
-  FCTeR.Leitor.Arquivo := AXML;
-  FCTeR.LerXml;
+  XMLOriginal := AXML;  // SetXMLOriginal() irá verificar se AXML está em UTF8
 
-  XMLOriginal := string(AXML);
+  { Verifica se precisa converter "AXML" de UTF8 para a String nativa da IDE.
+    Isso é necessário, para que as propriedades fiquem com a acentuação correta }
+  XMLStr := ParseText(AXML, True, XmlEhUTF8(AXML));
+
+  FCTeR.Leitor.Arquivo := XMLStr;
+  FCTeR.LerXml;
 
   Result := True;
 end;
@@ -444,8 +456,6 @@ end;
 
 function Conhecimento.GravarStream(AStream: TStream): Boolean;
 begin
-  Result := False;
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
 
@@ -508,9 +518,11 @@ begin
   end;
 
   FCTeW.GerarXml;
-  XMLOriginal := FCTeW.Gerador.ArquivoFormatoXML;
 
-  // XML gerado pode ter nova Chave e ID, então devemos calcular novamente o nome do arquivo, mantendo o PATH do arquivo carregado
+  XMLOriginal := FCTeW.Gerador.ArquivoFormatoXML;  // SetXMLOriginal() irá converter para UTF8
+
+  { XML gerado pode ter nova Chave e ID, então devemos calcular novamente o
+    nome do arquivo, mantendo o PATH do arquivo carregado }
   if (NaoEstaVazio(FNomeArq) and (IdAnterior <> FCTe.infCTe.ID)) then
     FNomeArq := CalcularNomeArquivoCompleto('', ExtractFilePath(FNomeArq));
 
@@ -547,14 +559,22 @@ end;
 
 function Conhecimento.CalcularNomeArquivoCompleto(NomeArquivo: String;
   PathArquivo: String): String;
+var
+  PathNoArquivo: String;
 begin
   if EstaVazio(NomeArquivo) then
     NomeArquivo := CalcularNomeArquivo;
 
-  if EstaVazio(PathArquivo) then
-    PathArquivo := CalcularPathArquivo
+  PathNoArquivo := ExtractFilePath(NomeArquivo);
+  if EstaVazio(PathNoArquivo) then
+  begin
+    if EstaVazio(PathArquivo) then
+      PathArquivo := CalcularPathArquivo
+    else
+      PathArquivo := PathWithDelim(PathArquivo);
+  end
   else
-    PathArquivo := PathWithDelim(PathArquivo);
+    PathArquivo := '';
 
   Result := PathArquivo + NomeArquivo;
 end;
@@ -588,6 +608,12 @@ begin
     FCTe.procCTe.cStat);
 end;
 
+function Conhecimento.GetCancelado: Boolean;
+begin
+  Result := TACBrCTe(TConhecimentos(Collection).ACBrCTe).cStatCancelado(
+    FCTe.procCTe.cStat);
+end;
+
 function Conhecimento.GetMsg: String;
 begin
   Result := FCTe.procCTe.xMotivo;
@@ -612,8 +638,14 @@ begin
 end;
 
 procedure Conhecimento.SetXMLOriginal(AValue: String);
+var
+  XMLUTF8: String;
 begin
-  FXMLOriginal := AValue;
+  { Garante que o XML informado está em UTF8, se ele realmente estiver, nada
+    será modificado por "ConverteXMLtoUTF8"  (mantendo-o "original") }
+  XMLUTF8 := ConverteXMLtoUTF8(AValue);
+
+  FXMLOriginal := XMLUTF8;
 
   if XmlEstaAssinado(FXMLOriginal) then
     FXMLAssinado := FXMLOriginal
@@ -709,6 +741,13 @@ begin
   Result := True;
   Erros := '';
 
+  if Self.Count < 1 then
+  begin
+    Erros := 'Nenhum CTe carregado';
+    Result := False;
+    Exit;
+  end;
+
   for i := 0 to Self.Count - 1 do
   begin
     if not Self.Items[i].VerificarAssinatura then
@@ -739,13 +778,10 @@ end;
 function TConhecimentos.LoadFromFile(CaminhoArquivo: String;
   AGerarCTe: Boolean = True): Boolean;
 var
-  XMLStr: String;
   XMLUTF8: AnsiString;
   i, l: integer;
   MS: TMemoryStream;
 begin
-  Result := False;
-
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(CaminhoArquivo);
@@ -755,10 +791,7 @@ begin
   end;
 
   l := Self.Count; // Indice do último conhecimento já existente
-
-  // Converte de UTF8 para a String nativa da IDE //
-  XMLStr := DecodeToString(XMLUTF8, True);
-  Result := LoadFromString(XMLStr, AGerarCTe);
+  Result := LoadFromString(String(XMLUTF8), AGerarCTe);
 
   if Result then
   begin
@@ -773,43 +806,49 @@ function TConhecimentos.LoadFromStream(AStream: TStringStream;
 var
   AXML: AnsiString;
 begin
-  Result := False;
   AStream.Position := 0;
   AXML := ReadStrFromStream(AStream, AStream.Size);
 
   Result := Self.LoadFromString(String(AXML), AGerarCTe);
 end;
 
-function TConhecimentos.LoadFromString(AString: String;
+function TConhecimentos.LoadFromString(AXMLString: String;
   AGerarCTe: Boolean = True): Boolean;
 var
-  AXML: AnsiString;
+  ACTeXML, XMLStr: AnsiString;
   P, N: integer;
 
   function PosCTe: integer;
   begin
-    Result := pos('</CTe>', AString);
+    Result := pos('</CTe>', XMLStr);
   end;
 
 begin
+  // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
+  XMLStr := ConverteXMLtoNativeString(AXMLString);
+
   N := PosCTe;
   while N > 0 do
   begin
-    P := pos('</cteProc>', AString);
+    P := pos('</cteProc>', XMLStr);
+
+    if P <= 0 then
+      P := pos('</procCTe>', XMLStr);  // CTe obtido pelo Portal da Receita
+
     if P > 0 then
     begin
-      AXML := copy(AString, 1, P + 10);
-      AString := Trim(copy(AString, P + 10, length(AString)));
+      ACTeXML := copy(XMLStr, 1, P + 10);
+      XMLStr := Trim(copy(XMLStr, P + 10, length(XMLStr)));
     end
     else
     begin
-      AXML := copy(AString, 1, N + 6);
-      AString := Trim(copy(AString, N + 6, length(AString)));
+      ACTeXML := copy(XMLStr, 1, N + 6);
+      XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
     end;
 
     with Self.Add do
     begin
-      LerXML(AXML);
+      LerXML(ACTeXML);
 
       if AGerarCTe then // Recalcula o XML
         GerarXML;

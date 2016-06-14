@@ -258,10 +258,13 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
 
-  Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$IfDef FPC}
+   Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$EndIf}
 
-  if trim(CTe.procCTe.nProt) <> ''
-   then Gerador.wGrupo('cteProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '');
+  if CTe.procCTe.nProt <> '' then
+    Gerador.wGrupo('cteProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '');
+
   Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
   Gerador.wGrupo('infCte ' + CTe.infCTe.VersaoStr + ' Id="' + CTe.infCTe.ID + '"');
 

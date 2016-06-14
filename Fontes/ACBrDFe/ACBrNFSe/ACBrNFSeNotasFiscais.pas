@@ -221,7 +221,7 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, InfElemento, NomeArq: String;
+  XMLStr, InfElemento: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
@@ -274,10 +274,13 @@ begin
     finally
       Leitor.Free;
     end;
-
-    NomeArq := NFSe.IdentificacaoRps.Numero + NFSe.IdentificacaoRps.Serie + '-rps.xml';
     if Configuracoes.Arquivos.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+    begin
+      if NaoEstaVazio(NomeArq) then
+        Gravar(NomeArq, FXMLAssinado)
+      else
+        Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+    end;
   end;
 end;
 
@@ -903,6 +906,7 @@ begin
       N := PosRPS;
     end;
   end;
+  Result := Self.Count > 0;
 end;
 
 function TNotasFiscais.GravarXML(PathNomeArquivo: String): Boolean;

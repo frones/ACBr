@@ -54,7 +54,6 @@
         <ComponentName Value="frmPrincipal"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="uPrincipal"/>
       </Unit1>
     </Units>
   </ProjectOptions>
@@ -80,15 +79,9 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="4">
+    <Exceptions Count="5">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -101,6 +94,9 @@
       <Item4>
         <Name Value="EACBrConsultaCPFException"/>
       </Item4>
+      <Item5>
+        <Name Value="EReadError"/>
+      </Item5>
     </Exceptions>
   </Debugging>
 </CONFIG>

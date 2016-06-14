@@ -92,6 +92,19 @@ object frmPrincipal: TfrmPrincipal
       Font.Style = []
       ParentFont = False
     end
+    object Label4: TLabel
+      Left = 465
+      Top = 63
+      Width = 94
+      Height = 16
+      Caption = 'Data da Incri'#231#227'o'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = []
+      ParentFont = False
+    end
     object EditRazaoSocial: TEdit
       Left = 10
       Top = 33
@@ -159,7 +172,7 @@ object frmPrincipal: TfrmPrincipal
     object EdtEmissao: TEdit
       Left = 113
       Top = 85
-      Width = 512
+      Width = 346
       Height = 24
       TabStop = False
       Color = clInfoBk
@@ -171,6 +184,22 @@ object frmPrincipal: TfrmPrincipal
       ParentFont = False
       ReadOnly = True
       TabOrder = 4
+    end
+    object EdtIncricao: TEdit
+      Left = 465
+      Top = 85
+      Width = 160
+      Height = 24
+      TabStop = False
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 5
     end
   end
   object Panel1: TPanel

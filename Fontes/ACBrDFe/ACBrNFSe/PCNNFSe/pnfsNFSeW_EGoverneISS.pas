@@ -100,11 +100,11 @@ end;
 
 procedure TNFSeW_EGoverneISS.GerarPrestador;
 begin
-  Gerador.wCampoNFSe(tcStr, '', 'CEPPrestacaoServico',      1, 36, 1, '', '');
+  Gerador.wCampoNFSe(tcStr, '', 'CEPPrestacaoServico',      1, 36, 1, NFSe.PrestadorServico.Endereco.CEP, '');
   Gerador.wCampoNFSe(tcStr, '', 'ChaveAutenticacao',        1, 36, 1, NFSe.Prestador.ChaveAcesso, '');
-  Gerador.wCampoNFSe(tcStr, '', 'CidadePrestacaoServico',   1, 36, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'EnderecoPrestacaoServico', 1, 36, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'EstadoPrestacaoServico',   1, 36, 1, '', '');
+  Gerador.wCampoNFSe(tcStr, '', 'CidadePrestacaoServico',   1, 36, 1, NFSe.PrestadorServico.Endereco.xMunicipio, '');
+  Gerador.wCampoNFSe(tcStr, '', 'EnderecoPrestacaoServico', 1, 36, 1, NFSe.PrestadorServico.Endereco.Endereco, '');
+  Gerador.wCampoNFSe(tcStr, '', 'EstadoPrestacaoServico',   1, 36, 1, NFSe.PrestadorServico.Endereco.UF, '');
 end;
 
 procedure TNFSeW_EGoverneISS.GerarTomador;

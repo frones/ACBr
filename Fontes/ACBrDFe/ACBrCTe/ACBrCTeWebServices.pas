@@ -1813,7 +1813,7 @@ begin
 
                 sPathCTe := PathWithDelim(FPConfiguracoesCTe.Arquivos.GetPathCTe(dhEmissao, CTe.Emit.CNPJ));
 
-                if (FRetCTeDFe <> '') and FPConfiguracoesCTe.Geral.Salvar then
+                if (FRetCTeDFe <> '') {and FPConfiguracoesCTe.Geral.Salvar} then
                   FPDFeOwner.Gravar( FCTeChave + '-CTeDFe.xml', FRetCTeDFe, sPathCTe);
 
                 // Salva o XML do CT-e assinado e protocolado
@@ -2691,7 +2691,12 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
-  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
+//  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
+//  FretDistDFeInt.LerXml;
+
+  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
+    nativa e Decodificar caracteres HTML Entity }
+  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
@@ -2723,14 +2728,8 @@ begin
     end;
   end;
 
-  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
-    nativa e Decodificar caracteres HTML Entity }
-  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
-  FretDistDFeInt.LerXml;
-
   FPMsg := FretDistDFeInt.xMotivo;
   Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
-
 end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;

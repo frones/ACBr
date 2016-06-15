@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/06/2016
+-- ACBrNFeWebServices --
+[*] Ajustes para melhorar a performance ao acrescentar o protocolo de autorização
+    quando obtido através do método Consultar.
+    Por: Italo Jurisato e DSA
+
 13/06/2016
 -- pcnNFeW --
 [*] Método: "GerarXml", modificado para somente gerar Declaração de UTF8 no XML

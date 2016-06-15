@@ -2100,7 +2100,49 @@ begin
             NFe.procNFe.cStat := NFeRetorno.cStat;
             NFe.procNFe.xMotivo := NFeRetorno.xMotivo;
 
-            GerarXML;
+            if TACBrNFe(FPDFeOwner).CstatCancelada(NFeRetorno.CStat) and
+               FPConfiguracoesNFe.Geral.AtualizarXMLCancelado then
+              GerarXML
+            else
+            begin
+              // O código abaixo é bem mais rápido que "GerarXML" (acima)...
+              AProcNFe := TProcNFe.Create;
+              try
+                AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
+                AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
+                AProcNFe.Versao := FPVersaoServico;
+                AProcNFe.GerarXML;
+
+                XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
+              finally
+                AProcNFe.Free;
+              end;
+            end;
+          end;
+
+          { Se no retorno da consulta constar que a nota possui eventos vinculados
+           será disponibilizado na propriedade FRetNFeDFe, e conforme configurado
+           em "ConfiguracoesNFe.Arquivos.Salvar", também será gerado o arquivo:
+           <chave>-NFeDFe.xml}
+
+          FRetNFeDFe := '';
+
+          if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
+          begin
+            Inicio := Pos('<procEventoNFe', FPRetWS);
+            Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
+
+            aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
+
+            FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
+                          '<NFeDFe>' +
+                           '<procNFe versao="' + FVersao + '">' +
+                             SeparaDados(XMLOriginal, 'nfeProc') +
+                           '</procNFe>' +
+                           '<procEventoNFe versao="' + FVersao + '">' +
+                             aEventos +
+                           '</procEventoNFe>' +
+                          '</NFeDFe>';
           end;
 
           SalvarXML := Result and
@@ -2110,47 +2152,6 @@ begin
 
           if SalvarXML then
           begin
-            {
-              O Bloco abaixo foi comentado por DSA, pois notei que causa Bug
-              quando "AtualizarXMLCancelado = True", não respeitando esse parâmetro
-              O ProcNFe já foi atualizado acima, no bloco "if Atualiza", portanto,
-              precisamos realmente do Bloco de código abaixo  ???
-              TODO: Discutir com a equipe e remover bloco e esta notação,
-                    se o mesmo não for necessário
-
-            AProcNFe := TProcNFe.Create;
-            try
-              AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
-              AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
-              AProcNFe.Versao := FPVersaoServico;
-              AProcNFe.GerarXML;
-
-              XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
-            finally
-              AProcNFe.Free;
-            end;
-            }
-
-            FRetNFeDFe := '';
-
-            if (NaoEstaVazio(SeparaDados(FPRetWS, 'procEventoNFe'))) then
-            begin
-              Inicio := Pos('<procEventoNFe', FPRetWS);
-              Fim    := Pos('</retConsSitNFe', FPRetWS) -1;
-
-              aEventos := Copy(FPRetWS, Inicio, Fim - Inicio + 1);
-
-              FRetNFeDFe := '<' + ENCODING_UTF8 + '>' +
-                            '<NFeDFe>' +
-                             '<procNFe versao="' + FVersao + '">' +
-                               SeparaDados(XMLOriginal, 'nfeProc') +
-                             '</procNFe>' +
-                             '<procEventoNFe versao="' + FVersao + '">' +
-                               aEventos +
-                             '</procEventoNFe>' +
-                            '</NFeDFe>';
-            end;
-
             // Salva o XML da NF-e assinado, protocolado e com os eventos
             if FPConfiguracoesNFe.Arquivos.EmissaoPathNFe then
               dhEmissao := NFe.Ide.dEmi
@@ -2159,7 +2160,7 @@ begin
 
             sPathNFe := PathWithDelim(FPConfiguracoesNFe.Arquivos.GetPathNFe(dhEmissao, NFe.Emit.CNPJCPF, NFe.Ide.modelo));
 
-            if (FRetNFeDFe <> '') and FPConfiguracoesNFe.Geral.Salvar then
+            if (FRetNFeDFe <> '') then
               FPDFeOwner.Gravar( FNFeChave + '-NFeDFe.xml', FRetNFeDFe, sPathNFe);
 
             if Atualiza then

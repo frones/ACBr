@@ -124,14 +124,14 @@ begin
   end;
 
   if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 11 then
-    Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 0, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),3), '')
+    Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 0, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone), 3), '')
   else
     if Length(OnlyNumber(NFSe.Tomador.Contato.Telefone)) = 10 then
-      Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 1, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),2), '')
+      Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 1, LeftStr(OnlyNumber(NFSe.Tomador.Contato.Telefone), 2), '')
     else
       Gerador.wCampoNFSe(tcStr, '', 'DDD', 00, 03, 1, '', '');
 
-  Gerador.wCampoNFSe(tcStr, '', 'Telefone', 00, 08, 1, RightStr(OnlyNumber(NFSe.Tomador.Contato.Telefone),8), '');
+  Gerador.wCampoNFSe(tcStr, '', 'Email', 01, 120, 1, NFSe.Tomador.Contato.Email, '');
 
   Gerador.wGrupoNFSe('Endereco');
   Gerador.wCampoNFSe(tcStr, '', 'Bairro',         01, 50,  1, NFSe.Tomador.Endereco.Bairro, '');
@@ -147,7 +147,8 @@ begin
 
   Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipal', 01, 11,  0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
   Gerador.wCampoNFSe(tcStr, '', 'Nome',               01, 120, 1, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '', 'Email',              01, 120, 1, NFSe.Tomador.Contato.Email, '');
+
+  Gerador.wCampoNFSe(tcStr, '', 'Telefone', 00, 08, 1, RightStr(OnlyNumber(NFSe.Tomador.Contato.Telefone), 8), '');
 
   Gerador.Prefixo := 'rgm1:';
   Gerador.wGrupoNFSe('/Tomador');

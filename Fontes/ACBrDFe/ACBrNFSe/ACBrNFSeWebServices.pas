@@ -2810,6 +2810,7 @@ begin
   GerarDadosMsg := TNFSeG.Create;
   try
     case FProvedor of
+      proPronimv2,
       proDigifred:  TagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
       proInfisc:    TagGrupo := 'pedidoLoteNFSe';
       proISSDSF:    TagGrupo := 'ReqConsultaNotas';

@@ -892,6 +892,15 @@ begin
   FRetornoNFSe.PathIniCidades := FPConfiguracoesNFSe.Geral.PathIniCidades;
   FRetornoNFSe.LerXml;
 
+  if FProvedor = proEGoverneISS then
+  begin
+    FNotasFiscais.Items[0].NFSe.Autenticador := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Autenticador;
+    FNotasFiscais.Items[0].NFSe.Link         := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Link;
+    FNotasFiscais.Items[0].NFSe.Numero       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Numero;
+
+    exit;
+  end;
+
   ii := 0;
   for i := 0 to FRetornoNFSe.ListaNFSe.CompNFSe.Count -1 do
   begin

@@ -2691,12 +2691,7 @@ begin
   FPRetWS := SeparaDados(FPRetornoWS, 'cteDistDFeInteresseResult');
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
-//  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
-//  FretDistDFeInt.LerXml;
-
-  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
-    nativa e Decodificar caracteres HTML Entity }
-  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  FretDistDFeInt.Leitor.Arquivo := FPRetWS;
   FretDistDFeInt.LerXml;
 
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
@@ -2727,6 +2722,14 @@ begin
         FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
     end;
   end;
+
+  { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
+    nativa e Decodificar caracteres HTML Entity }
+  FretDistDFeInt.Free;   // Limpando a lista
+  FretDistDFeInt := TRetDistDFeInt.Create;
+
+  FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
+  FretDistDFeInt.LerXml;
 
   FPMsg := FretDistDFeInt.xMotivo;
   Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);

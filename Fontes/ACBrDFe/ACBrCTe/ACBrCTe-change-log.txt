@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2016
+-- ACBrCTeWebServices --
+[-] Ajuste para não duplicar a lista de items em TDistribuicaoDFe
+    (por: DSA / Italo Jurisato Junior)
+
 14/06/2016
 -- pcteCTeW --
 [*] Método: "GerarXml", modificado para somente gerar Declaração de UTF8 no XML

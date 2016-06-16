@@ -285,8 +285,9 @@ begin
       Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
     else
       Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
-    VersaodoXML    := VersaoXML(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
+
+    VersaodoXML  := VersaoXML(Leitor.Arquivo);
+    Leitor.Grupo := Leitor.Arquivo;
 
     Nivel1 := (leitor.rExtrai(1, 'GerarNfseResposta') <> '');
     if not Nivel1 then
@@ -686,7 +687,16 @@ begin
         begin
           ListaNfse.FMsgRetorno.Add;
           ListaNfse.FMsgRetorno[i].FCodigo   := 'Erro';
-          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'a:MensagemErro');
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
+        end
+        else
+        begin
+          with ListaNFSe.FCompNFSe.Add do
+          begin
+            FNFSe.Autenticador := Leitor.rCampo(tcStr, 'Autenticador');
+            FNFSe.Link := Leitor.rCampo(tcStr, 'Link');
+            FNFSe.Numero := Leitor.rCampo(tcStr, 'Numero');
+          end;
         end;
       end;
     end;

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/06/2016
+[*] Aplicado melhorias no retorno do método Gerar para o provedor EGoverneISS.
+    Incluido as propriedades: Autenticador e Link, juntamente com a propriedade
+    Numero que já existe, temos o retorno do envio da nota para Web Services do
+    provedor. 
+    por: Italo Jurisato Junior
+
 14/06/2016
 [*] Apliquei melhorias como retorno de função e nome de arquivo
 		http://www.projetoacbr.com.br/forum/topic/30607-nfse-result-loadfromstring/

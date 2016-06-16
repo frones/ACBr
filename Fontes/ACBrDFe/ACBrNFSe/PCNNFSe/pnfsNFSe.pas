@@ -659,6 +659,8 @@ type
     FPrestadorServico: TDadosPrestador;
     FOrgaoGerador: TIdentificacaoOrgaoGerador;
     FValoresNfse: TValoresNfse;
+    FAutenticador: String; // para provedor EGoverneISS
+    FLink: String; // para provedor EGoverneISS
     // RPS e NFSe
     FSignature: TSignature;
 
@@ -727,6 +729,9 @@ type
     property PrestadorServico: TDadosPrestador read FPrestadorServico write FPrestadorServico;
     property OrgaoGerador: TIdentificacaoOrgaoGerador read FOrgaoGerador write FOrgaoGerador;
     property ValoresNfse: TValoresNfse read FValoresNfse write FValoresNfse;
+    // propriedades para provedor EGoverneISS
+    property Autenticador: String read FAutenticador write FAutenticador;
+    property Link: String read FLink write FLink;
     // RPS e NFSe
     property signature: Tsignature read Fsignature write Fsignature;
 

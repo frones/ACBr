@@ -17966,6 +17966,8 @@ begin
  XML := StringReplace( XML, 'soap12:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'SOAP-ENV:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'tin:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'a:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'b:', '', [rfReplaceAll] );
 
  // Provedor Governa, os prefixos não tem ":"
  XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );

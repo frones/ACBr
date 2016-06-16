@@ -3196,6 +3196,9 @@ begin
 
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
+  FRetDownloadNFe.Free;    // Limpa a lista
+  FRetDownloadNFe := TRetDownloadNFe.Create;
+
   FRetDownloadNFe.Leitor.Arquivo := ParseText(FPRetWS);
   FRetDownloadNFe.LerXml;
 
@@ -3450,6 +3453,9 @@ begin
 
   { Processsa novamente, chamando ParseTXT, para converter de UTF8 para a String
     nativa e Decodificar caracteres HTML Entity }
+  FretDistDFeInt.Free;   // Limpando a lista
+  FretDistDFeInt := TRetDistDFeInt.Create;
+
   FretDistDFeInt.Leitor.Arquivo := ParseText(FPRetWS);
   FretDistDFeInt.LerXml;
 

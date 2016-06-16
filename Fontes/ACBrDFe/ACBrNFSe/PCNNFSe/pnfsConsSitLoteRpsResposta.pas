@@ -79,6 +79,8 @@ type
     FCorrecao: String;
     FIdentificacaoRps: TMsgRetornoIdentificacaoRps;
     FChaveNFeRPS: TChaveNFeRPS;
+    FchvAcessoNFSe: String;
+    Fsit: String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -88,6 +90,8 @@ type
     property Correcao: String read FCorrecao write FCorrecao;
     property IdentificacaoRps: TMsgRetornoIdentificacaoRps read FIdentificacaoRps write FIdentificacaoRps;
     property ChaveNFeRPS: TChaveNFeRPS read FChaveNFeRPS write FChaveNFeRPS;
+    property chvAcessoNFSe: String read FchvAcessoNFSe write FchvAcessoNFSe;
+    property sit: String           read Fsit           write Fsit;
   end;
 
  { TretSitLote }
@@ -380,39 +384,52 @@ end;
 
 function TretSitLote.LerXML_proInfisc: Boolean;
 var
-  i: Integer;
-  sMotCod, sMotDes: String;
+  i, j: Integer;
+  sMotCod, sMotDes, chave, situacao: String;
 begin
   try
     Leitor.Grupo := Leitor.Arquivo;
 
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'cLote');
-    InfSit.FSituacao   := Leitor.rCampo(tcStr, 'sit');
-    if InfSit.FSituacao = '100' then
-      InfSit.FSituacao := '4' // 4 = Processado com Sucesso
-    else if InfSit.FSituacao = '217' then // 217 = Fila para processamento
-      InfSit.FSituacao := '1' // 1 = Aguardando processamento
-    else if InfSit.FSituacao = '200' then
+
+    i := 0;
+    while Leitor.rExtrai(1, 'NFSe', '', i + 1) <> '' do
     begin
-      InfSit.FSituacao := '3'; // 3 = Processado com Erro
-      i := 0;
-      if (leitor.rExtrai(1, 'motivos') <> '') then
+      chave := Leitor.rCampo(tcStr, 'chvAcessoNFSe');
+      situacao := Leitor.rCampo(tcStr, 'sit');
+      InfSit.FSituacao   := situacao;
+
+      if InfSit.FSituacao = '100' then
+        InfSit.FSituacao := '4' // 4 = Processado com Sucesso
+      else if InfSit.FSituacao = '217' then // 217 = Fila para processamento
+        InfSit.FSituacao := '1' // 1 = Aguardando processamento
+      else if InfSit.FSituacao = '200' then
       begin
-        while Leitor.rExtrai(2, 'mot', '', i + 1) <> '' do
+        InfSit.FSituacao := '3'; // 3 = Processado com Erro
+        j := 0;
+        if (leitor.rExtrai(1, 'motivos') <> '') then
         begin
-          sMotDes := Leitor.rCampo(tcStr, 'mot');
-          if Pos('Error', sMotDes) > 0 then
-            sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))
-          else
-            sMotCod := '';
-          InfSit.FMsgRetorno.Add;
-          InfSit.FMsgRetorno[i].FCodigo   := sMotCod;
-          InfSit.FMsgRetorno[i].FMensagem := sMotDes;
-          InfSit.FMsgRetorno[i].FCorrecao := '';
-          inc(i);
+          while Leitor.rExtrai(2, 'mot', '', j + 1) <> '' do
+          begin
+            sMotDes := Leitor.rCampo(tcStr, 'mot');
+            if Pos('Error', sMotDes) > 0 then
+              sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))
+            else
+              sMotCod := '';
+            InfSit.FMsgRetorno.Add;
+            InfSit.FMsgRetorno[j].FCodigo   := sMotCod;
+            InfSit.FMsgRetorno[j].FMensagem := sMotDes;
+            InfSit.FMsgRetorno[j].FCorrecao := '';
+            InfSit.FMsgRetorno[j].FchvAcessoNFSe := chave;
+            InfSit.FMsgRetorno[j].Fsit := situacao;
+
+            inc(j);
+          end;
         end;
       end;
+      inc(i);
     end;
+
     Result := True;
   except
     Result := False;

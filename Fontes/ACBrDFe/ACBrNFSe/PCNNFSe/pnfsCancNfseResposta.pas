@@ -521,19 +521,14 @@ end;
 
 function TretCancNFSe.LerXml_proInfisc: Boolean;
 var
-  sMotCod, sMotDes, sCancelaAnula: String;
+  sMotCod, sMotDes: String;
 begin
   Result := False;
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     Leitor.Grupo   := Leitor.Arquivo;
 
-    if VersaoXML = '1.10' then
-      sCancelaAnula := 'resCancelaNFSe' // Caxias do Sul Versão XML 1.1
-    else
-      sCancelaAnula := 'resAnulaNFSe';  // Demais Cidades
-
-    if leitor.rExtrai(1, sCancelaAnula) <> '' then
+    if leitor.rExtrai(1, 'resCancelaNFSe') <> '' then
     begin
       InfCanc.FSucesso := Leitor.rCampo(tcStr, 'sit');
       if (InfCanc.FSucesso = '100') then // 100-Aceito

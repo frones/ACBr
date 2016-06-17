@@ -946,9 +946,21 @@ begin
     // Retorno do GerarNfse e EnviarLoteRpsSincrono
     if FPLayout in [LayNFSeGerar, LayNFSeRecepcaoLoteSincrono] then
     begin
-      FNotasFiscais.Items[ii].NFSe.NumeroLote    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote;
-      FNotasFiscais.Items[ii].NFSe.dhRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.dhRecebimento;
-      FNotasFiscais.Items[ii].NFSe.Protocolo     := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Protocolo;
+      if (Provedor = ProTecnos) then
+      begin
+        if (FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote <> '0') then
+        begin
+          FNotasFiscais.Items[ii].NFSe.NumeroLote    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote;
+          FNotasFiscais.Items[ii].NFSe.dhRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.dhRecebimento;
+          FNotasFiscais.Items[ii].NFSe.Protocolo     := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Protocolo;
+        end;
+      end
+      else
+      begin
+        FNotasFiscais.Items[ii].NFSe.NumeroLote    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote;
+        FNotasFiscais.Items[ii].NFSe.dhRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.dhRecebimento;
+        FNotasFiscais.Items[ii].NFSe.Protocolo     := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Protocolo;
+      end;
     end;
 
     // Retorno do GerarNfse e ConsultarLoteRps
@@ -1033,14 +1045,18 @@ begin
   if FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0 then
   begin
     FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.dhRecebimento;
+
     if FDataRecebimento = 0 then
       FDataRecebimento := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.DataEmissao;
+
+    if (FProvedor = ProTecnos) and (DateToStr(FDataRecebimento) = '01/01/0001') then
+      FDataRecebimento := 0;
+
     if FProvedor in [proInfisc, proGovDigital, proVersaTecnologia] then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
-  else begin
+  else
     FDataRecebimento := 0;
-  end;
 
   // Lista de Mensagem de Retorno
   FPMsg := '';

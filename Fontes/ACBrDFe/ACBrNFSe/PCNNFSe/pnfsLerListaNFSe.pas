@@ -259,6 +259,7 @@ constructor TRetornoNFSe.Create;
 begin
   FLeitor    := TLeitor.Create;
   FListaNfse := TListaNfse.Create;
+  FProtocolo := '';
 end;
 
 destructor TRetornoNFSe.Destroy;
@@ -368,6 +369,9 @@ begin
       ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
       if trim(ProtocoloTemp) = '' then
         ProtocoloTemp := '0';
+
+      if (Provedor in [ProTecnos]) and (ProtocoloTemp <> '') then
+        FProtocolo := ProtocoloTemp;
 
       SituacaoTemp:= Leitor.rCampo(tcStr, 'Situacao');
       if trim(SituacaoTemp) = '' then
@@ -574,6 +578,21 @@ begin
 
         inc(i); // Incrementa o contador de notas.
       end;
+
+      if (Provedor = ProTecnos) then
+      begin
+        NFSe := TNFSe.Create;
+        with ListaNFSe.FCompNFSe.Add do
+        begin
+          FNFSe.NumeroLote    := NumeroLoteTemp;
+          FNFSe.dhRecebimento := DataRecebimentoTemp;
+          FNFSe.Protocolo     := ProtocoloTemp;
+
+          if (NumeroLoteTemp = '0') or (ProtocoloTemp = '0') then
+            Result := False;
+        end;
+      end;
+
     end;
     
     // =======================================================================

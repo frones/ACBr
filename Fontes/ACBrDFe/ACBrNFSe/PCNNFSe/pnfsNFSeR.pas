@@ -1817,11 +1817,12 @@ end;
 function TNFSeR.LerNFSe_Infisc: Boolean;
 var
   ok: Boolean;
-  Item: Integer;
+  Item, lIndex: Integer;
   leitorAux: TLeitor;
   dEmi: String;
   hEmi: String;
   dia, mes, ano, hora, minuto: Word;
+  lTextoAposInfAdic: String;
 begin
   Result := False;
   Leitor.Grupo := Leitor.Arquivo;
@@ -1858,9 +1859,19 @@ begin
       NFSe.ChaveNFSe                   := Leitor.rCampo(tcStr, 'refNF');
       NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'cMun');
       NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
-      //NFSe.OutrasInformacoes           := Leitor.rCampo(tcStr, 'xInf');
+      NFSe.Servico.ItemListaServico    := Leitor.rCampo(tcStr, 'infAdicLT');
 
-      NFSe.Servico.ItemListaServico    := Leitor.rCampo(tcStr, 'infAdic');
+      {Adicionado desta forma pois o arquivo tem varias tag <infAdic>, na forma antiga era carregado apenas a primeira}
+      {NFSe.OutrasInformacoes           := Leitor.rCampo(tcStr, 'infAdic'); }
+
+      lIndex := Pos('<infAdic>', Leitor.Arquivo);
+      if (lIndex > 0) then
+      begin
+        lTextoAposInfAdic := Trim(Copy(Leitor.Arquivo, lIndex, Length(Leitor.Arquivo)));
+//        NFSe.OutrasInformacoes := Leitor.CarregarInformacoesAdicionais(lTextoAposInfAdic, 'infAdic');
+      end
+      else
+        NFSe.OutrasInformacoes := '';
 
       // prest
       leitorAux := TLeitor.Create;
@@ -1918,6 +1929,27 @@ begin
         leitorAux.Free;
       end;
 
+     {Transportadora - Implementado Jozimar @@}
+      leitorAux := TLeitor.Create;
+      try
+        leitorAux.Arquivo := Leitor.rExtrai(1, 'transportadora');
+        leitorAux.Grupo   := leitorAux.Arquivo;
+        if (leitorAux.Arquivo <> '') then begin
+          NFSe.Transportadora.xNomeTrans := leitorAux.rCampo(tcStr, 'xNomeTrans');
+          NFSe.Transportadora.xCpfCnpjTrans := leitorAux.rCampo(tcStr, 'xCpfCnpjTrans');
+          NFSe.Transportadora.xInscEstTrans := leitorAux.rCampo(tcStr, 'xInscEstTrans');
+          NFSe.Transportadora.xPlacaTrans := leitorAux.rCampo(tcStr, 'xPlacaTrans');
+          NFSe.Transportadora.xEndTrans := leitorAux.rCampo(tcStr, 'xEndTrans');
+          NFSe.Transportadora.cMunTrans := leitorAux.rCampo(tcStr, 'cMunTrans');
+          NFSe.Transportadora.xMunTrans := leitorAux.rCampo(tcStr, 'xMunTrans');
+          NFSe.Transportadora.xUFTrans := leitorAux.rCampo(tcStr, 'xUfTrans');
+          NFSe.Transportadora.cPaisTrans := leitorAux.rCampo(tcStr, 'cPaisTrans');
+          NFSe.Transportadora.vTipoFreteTrans := TnfseFrete(leitorAux.rCampo(tcStr, 'vTipoFreteTrans'));
+        end;
+      finally
+        leitorAux.Free;
+      end;
+
       // Detalhes dos serviços
       Item := 0 ;
       while (Leitor.rExtrai(1, 'det', '', Item + 1) <> '') do
@@ -1925,12 +1957,14 @@ begin
         if Leitor.rExtrai(1, 'serv', '', Item + 1) <> '' then
         begin
           Nfse.Servico.ItemServico.Add;
-          Nfse.Servico.ItemServico[Item].Codigo        := Leitor.rCampo(tcStr, 'cServ');
-          Nfse.Servico.ItemServico[Item].Descricao     := Leitor.rCampo(tcStr, 'xServ');
-          Nfse.Servico.ItemServico[Item].Discriminacao := FNfse.Servico.ItemServico[Item].Codigo + ' - ' + FNfse.Servico.ItemServico[Item].Descricao;
-          Nfse.Servico.ItemServico[Item].Quantidade    := Leitor.rCampo(tcDe4, 'qTrib');
-          Nfse.Servico.ItemServico[Item].ValorUnitario := Leitor.rCampo(tcDe3, 'vUnit');
-          Nfse.Servico.ItemServico[Item].ValorServicos := Leitor.rCampo(tcDe2, 'vServ');
+          Nfse.Servico.ItemServico[Item].Codigo                 := Leitor.rCampo(tcStr, 'cServ');
+          Nfse.Servico.ItemServico[Item].CodLCServ              := Leitor.rCampo(tcStr, 'cLCServ'); //Jozimar @@
+          Nfse.Servico.ItemServico[Item].Descricao              := Leitor.rCampo(tcStr, 'xServ');
+          Nfse.Servico.ItemServico[Item].Discriminacao          := FNfse.Servico.ItemServico[Item].Codigo + ' - ' + FNfse.Servico.ItemServico[Item].Descricao;
+          Nfse.Servico.ItemServico[Item].Quantidade             := Leitor.rCampo(tcDe4, 'qTrib');
+          Nfse.Servico.ItemServico[Item].ValorUnitario          := Leitor.rCampo(tcDe3, 'vUnit');
+          Nfse.Servico.ItemServico[Item].ValorTotal             := Leitor.rCampo(tcDe3, 'vServ'); //Jozimar @@
+          Nfse.Servico.ItemServico[Item].ValorServicos          := Leitor.rCampo(tcDe2, 'vServ');
           Nfse.Servico.ItemServico[Item].DescontoIncondicionado := Leitor.rCampo(tcDe2, 'vDesc');
           // ISSQN
           Nfse.Servico.ItemServico[Item].BaseCalculo := Leitor.rCampo(tcDe2, 'vBCISS');
@@ -1942,6 +1976,13 @@ begin
           NFSe.Servico.ItemServico.Items[Item].ValorCofins := Leitor.rCampo(tcDe2, 'vRetCOFINS');
           NFSe.Servico.ItemServico.Items[Item].ValorCsll   := Leitor.rCampo(tcDe2, 'vRetCSLL');
           NFSe.Servico.ItemServico.Items[Item].ValorInss   := Leitor.rCampo(tcDe2, 'vRetINSS');
+
+          if Leitor.rExtrai(1, 'ISSST', '', Item + 1) <> '' then begin
+            Nfse.Servico.ItemServico[Item].BaseCalculo := Leitor.rCampo(tcDe2, 'vBCST');  //Jozimar @@
+            Nfse.Servico.ItemServico[Item].Aliquota    := Leitor.rCampo(tcDe2, 'pISSST'); //Jozimar @@
+            Nfse.Servico.ItemServico[Item].ValorIss    := Leitor.rCampo(tcDe2, 'vISSST'); //Jozimar @@
+          end;
+
         end;
         inc(Item);
       end;

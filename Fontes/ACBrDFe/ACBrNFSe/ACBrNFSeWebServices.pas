@@ -892,18 +892,22 @@ begin
   FRetornoNFSe.PathIniCidades := FPConfiguracoesNFSe.Geral.PathIniCidades;
   FRetornoNFSe.LerXml;
 
-  if (FProvedor = proEGoverneISS) and (FRetornoNFSe.ListaNFSe.CompNFSe.Count > 0) then
-  begin
-    FNotasFiscais.Items[0].NFSe.Autenticador := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Autenticador;
-    FNotasFiscais.Items[0].NFSe.Link         := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Link;
-    FNotasFiscais.Items[0].NFSe.Numero       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Numero;
-
-    exit;
-  end;
-
   ii := 0;
   for i := 0 to FRetornoNFSe.ListaNFSe.CompNFSe.Count -1 do
   begin
+
+    // O provedor EGovverneISS não retorna o XML da NFS-e esse é obtido pelo
+    // Link retornado e atribuido a propriedade Link, bem como o numero da nota
+    // que é atribuido a propriedade Numero
+    if (FProvedor = proEGoverneISS) then
+    begin
+      FNotasFiscais.Items[0].NFSe.Autenticador := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Autenticador;
+      FNotasFiscais.Items[0].NFSe.Link         := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Link;
+      FNotasFiscais.Items[0].NFSe.Numero       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[0].NFSe.Numero;
+
+      break;
+    end;
+
     // Considerar o retorno sempre como novo, avaliar abaixo se o RPS está na lista
     NovoRetorno := True;
     for l := 0 to FNotasFiscais.Count -1 do
@@ -934,6 +938,8 @@ begin
     end;
 
     FNotasFiscais.Items[ii].Confirmada := True;
+
+    FNotasFiscais.Items[ii].NFSe.XML := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.XML;
 
     FNotasFiscais.Items[ii].NFSe.InfID.ID := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.InfID.ID;
 

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/06/2016
+[+] Implementação do provedor Giga para as cidades: Canelinha/SC e Fraiburgo/SC.
+    Por: Michel Ouriques.
+
 16/06/2016
 [*] Aplicado melhorias no retorno do método Gerar para o provedor EGoverneISS.
     Incluido as propriedades: Autenticador e Link, juntamente com a propriedade

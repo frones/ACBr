@@ -206,7 +206,7 @@ begin
 
   GerarPrestador;
 
-  Gerador.wCampoNFSe(tcStr, '', 'Homologacao', 5, 5, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
+  Gerador.wCampoNFSe(tcStr, '', 'Homologacao', 4, 5, 1, ifThen(SimNaoToStr(NFSe.Producao) = '1', 'false', 'true'), '');
   Gerador.wCampoNFSe(tcStr, '', 'InformacoesAdicionais', 0, 2300, 0, NFSe.OutrasInformacoes, '');
   Gerador.wCampoNFSe(tcStr, '', 'NotificarTomadorPorEmail', 5, 5, 1, 'false', '');
   Gerador.wCampoNFSe(tcStr, '', 'SubstituicaoTributaria', 5, 5, 1, 'false', '');

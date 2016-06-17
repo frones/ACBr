@@ -1150,6 +1150,12 @@ begin
                  Gerador.wGrupoNFSe('/Sdt_cancelanfe');
                end;
 
+    proEGoverneISS: begin
+                      Gerador.Prefixo := Prefixo3;
+                      Gerador.wCampoNFSe(tcStr, '#1', 'ChaveAutenticacao', 01, 36, 1, ChaveAcessoPrefeitura, '');
+                      Gerador.wCampoNFSe(tcStr, '#1', 'Homologacao', 04, 05, 1, LowerCase(booltostr(Transacao, True)), '');
+                      Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 15, 1, NumeroNFSe, '');
+                    end;
     proEquiplano: begin
                     Gerador.Prefixo := '';
                     Gerador.wGrupoNFSe('prestador');
@@ -1172,6 +1178,19 @@ begin
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroNfse', 01, 15, 1, NumeroNFSe, '');
            end;
 
+    proGinfes: begin
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('Prestador');
+
+                 Gerador.Prefixo := Prefixo4;
+                 Gerador.wCampoNFSe(tcStr, '#1', 'Cnpj', 14, 14, 1, Cnpj, '');
+                 Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+
+                 Gerador.Prefixo := '';
+                 Gerador.wGrupoNFSe('/Prestador');
+                 Gerador.wCampoNFSe(tcStr, '#3', 'NumeroNfse', 01, 15, 1, NumeroNfse, '');
+               end;
+
     proInfisc: begin
                  Gerador.Prefixo := '';
                  Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
@@ -1191,19 +1210,6 @@ begin
                                               '<Lote' + aIdentificador + '>' +
                                                 Notas +
                                               '</Lote>';
-               end;
-
-    proGinfes: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Prestador');
-
-                 Gerador.Prefixo := Prefixo4;
-                 Gerador.wCampoNFSe(tcStr, '#1', 'Cnpj', 14, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
-
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('/Prestador');
-                 Gerador.wCampoNFSe(tcStr, '#3', 'NumeroNfse', 01, 15, 1, NumeroNfse, '');
                end;
 
     proIssCuritiba: begin

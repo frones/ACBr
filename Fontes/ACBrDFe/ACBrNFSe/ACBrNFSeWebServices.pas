@@ -3237,6 +3237,12 @@ begin
       Transacao  := FNotasFiscais.Transacao;
       NumeroLote := FNotasFiscais.NumeroLote;
       Notas      := FvNotas;
+
+      if FProvedor = proEGoverneISS then
+      begin
+        ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+        Transacao := (SimNaoToStr(FNotasFiscais.Items[0].NFSe.Producao) = '2');
+      end;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;

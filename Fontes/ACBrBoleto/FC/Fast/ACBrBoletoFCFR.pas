@@ -35,6 +35,8 @@
 {******************************************************************************
 |* Historico
 |
+|* 0.0.15 - 16/06/2016: Paulo Monteiro
+|*  [*] Adicionado a propriedade IncorporarBackgroundPdf e IncorporarFontesPdf
 |* 0.0.14 - 19/04/2016: Paulo Monteiro
 |*  [*] Adicionado a propriedade modo thread para quem utiliza o recurso de geração
 |*      de boleto em aplicações multi thread datasnap, isapi, etc.
@@ -57,7 +59,7 @@ uses
   frxClass, frxDBSet, frxBarcode, frxExportHTML, frxExportPDF;
 
 const
-  CACBrBoletoFCFR_Versao = '0.0.14';
+  CACBrBoletoFCFR_Versao = '0.0.15';
 
 type
   EACBrBoletoFCFR = class(Exception);
@@ -73,6 +75,8 @@ type
     fIndice: Integer;
     FdmBoleto: TdmACBrBoletoFCFR;
     FModoThread: Boolean;
+    FIncorporarFontesPdf: Boolean;
+    FIncorporarBackgroundPdf: Boolean;
     function PrepareBoletos: Boolean;
     function PreparaRelatorio: Boolean;
     function GetACBrTitulo: TACBrTitulo;
@@ -89,6 +93,8 @@ type
     property Impressora: String read FImpressora write FImpressora;
     property ModoThread: Boolean read FModoThread write FModoThread;
     property dmBoleto: TdmACBrBoletoFCFR read FdmBoleto write FdmBoleto;
+    property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
+    property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
   end;
 
   { TdmACbrBoletoFCFR }
@@ -270,6 +276,8 @@ begin
   FImpressora := '';
   fIndice := 0;
   FModoThread := False;
+  FIncorporarBackgroundPdf := False;
+  FIncorporarFontesPdf := False;
   FdmBoleto := TdmACBrBoletoFCFR.Create(Self);
 end;
 
@@ -339,7 +347,8 @@ begin
               frxPDFExport.Title := 'Boleto';
               frxPDFExport.Subject := frxPDFExport.Title;
               frxPDFExport.Keywords := frxPDFExport.Title;
-              frxPDFExport.Background := False; // isso faz diminuir 70% do tamanho do pdf
+              frxPDFExport.Background := IncorporarBackgroundPdf;//False diminui 70% do tamanho do pdf
+              frxPDFExport.EmbeddedFonts := IncorporarFontesPdf;
               frxReport.Export(FdmBoleto.frxPDFExport);
               if frxPDFExport.FileName <> NomeArquivo then
                 NomeArquivo := frxPDFExport.FileName;

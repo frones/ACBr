@@ -523,7 +523,7 @@ begin
             LFill(TIP_EXP, 2)      +
             LFill(DESC_EXP)        +
             VLFill(TOT_OPER,19)    +
-            LFill(COD_NCM)         +
+            LFill(COD_NCM,8)       +
             VLFill(QTDE,19)        +
             LFill(UNI_MED,2)       +
             LFill(IND_OPER,1)      +
@@ -581,7 +581,7 @@ begin
             LFill(TIP_IMP,2)       +
             LFill(DESC_IMP)        +
             VLFill(TOT_OPER,19)    +
-            LFill(COD_NCM)         +
+            LFill(COD_NCM,8)       +
             VLFill(QTDE,19)        +
             LFill(UNI_MED,2)       +
             LFill(TIP_MET)         +

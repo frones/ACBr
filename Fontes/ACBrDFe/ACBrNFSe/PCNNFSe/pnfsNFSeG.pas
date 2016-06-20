@@ -1151,7 +1151,7 @@ begin
                end;
 
     proEGoverneISS: begin
-                      Gerador.Prefixo := Prefixo3;
+                      Gerador.Prefixo := 'rgm:';
                       Gerador.wCampoNFSe(tcStr, '#1', 'ChaveAutenticacao', 01, 36, 1, ChaveAcessoPrefeitura, '');
                       Gerador.wCampoNFSe(tcStr, '#1', 'Homologacao', 04, 05, 1, LowerCase(booltostr(Transacao, True)), '');
                       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 15, 1, NumeroNFSe, '');

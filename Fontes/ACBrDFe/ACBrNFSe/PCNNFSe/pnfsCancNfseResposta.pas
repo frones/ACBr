@@ -140,13 +140,14 @@ type
 
     function LerXml_ABRASF: Boolean;
 
-    function LerXML_proEquiplano: Boolean;
+    function LerXml_proCONAM: Boolean;
+    function LerXML_proEGoverneISS: Boolean;
     function LerXml_proEL: Boolean;
+    function LerXML_proEquiplano: Boolean;
     function LerXml_proInfisc: Boolean;
     function LerXml_proISSDSF: Boolean;
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
-    function LerXml_proCONAM: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -283,16 +284,25 @@ end;
 
 function TretCancNFSe.LerXml: Boolean;
 begin
- case Provedor of
-   proISSDSF:     Result := LerXml_proISSDSF;
-   proEquiplano:  Result := LerXML_proEquiplano;
-   proInfIsc:     Result := LerXml_proInfisc;
-   proEL:         Result := LerXml_proEL;
-   proNFSeBrasil: Result := LerXml_proNFSeBrasil;
-   proCONAM:      Result := LerXml_proCONAM;
- else
-   Result := LerXml_ABRASF;
- end;
+  if Provedor = proISSCuritiba then
+    Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
+  else
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+
+  Leitor.Grupo   := Leitor.Arquivo;
+
+  case Provedor of
+    proCONAM:       Result := LerXml_proCONAM;
+    proEGoverneISS: Result := LerXML_proEGoverneISS;
+    proEL:          Result := LerXml_proEL;
+    proEquiplano:   Result := LerXML_proEquiplano;
+    proInfIsc:      Result := LerXml_proInfisc;
+    proISSDSF:      Result := LerXml_proISSDSF;
+    proNFSeBrasil:  Result := LerXml_proNFSeBrasil;
+    proSP:          Result := LerXml_proSP;
+  else
+    Result := LerXml_ABRASF;
+  end;
 end;
 
 function TretCancNFSe.LerXml_ABRASF: Boolean;
@@ -302,12 +312,6 @@ begin
   Result := True;
 
   try
-    if Provedor = proISSCuritiba then
-      Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
-    else
-      Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if Provedor = proGinfes then
     begin
       if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
@@ -420,9 +424,6 @@ begin
   Result := False;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if leitor.rExtrai(1, 'RetornoCancelamentoNFSe') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
@@ -479,9 +480,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     InfCanc.FSucesso  := Leitor.rCampo(tcStr, 'Sucesso');
     InfCanc.FDataHora := Leitor.rCampo(tcDatHor, 'dtCancelamento');
 
@@ -525,9 +523,6 @@ var
 begin
   Result := False;
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if leitor.rExtrai(1, 'resCancelaNFSe') <> '' then
     begin
       InfCanc.FSucesso := Leitor.rCampo(tcStr, 'sit');
@@ -575,9 +570,7 @@ begin
   (*
    // Luiz Baião 2014.12.03 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
-    Leitor.Grupo   := Leitor.Arquivo;
 
     strAux := leitor.rExtrai_NFSEBrasil(1, 'RespostaLoteRps');
 
@@ -639,9 +632,6 @@ begin
   Result := False;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if leitor.rExtrai(1, 'RetornoInformacoesLote') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
@@ -724,8 +714,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
     if leitor.rExtrai(1, 'Sdt_retornocancelanfe') <> '' then
     begin
       FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Retorno');
@@ -745,6 +733,24 @@ begin
     Result := True;
   except
     Result := False;
+  end;
+end;
+
+function TretCancNFSe.LerXML_proEGoverneISS: Boolean;
+var
+  i: Integer;
+begin
+  i := 0;
+  if (Leitor.rExtrai(1, 'CancelarResponse') <> '') then
+  begin
+    if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
+    begin
+      FInfCanc.FMsgRetorno.Add;
+      FInfCanc.FMsgRetorno[i].FCodigo   := 'Erro';
+      FInfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'MensagemErro');
+    end
+    else
+      FInfCanc.FSucesso := 'true';
   end;
 end;
 

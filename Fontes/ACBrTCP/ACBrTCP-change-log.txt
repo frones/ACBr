@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2016
+-- ACBrSocket --
+[*] ACBrTCPServer, melhorias para suporte a aplicações Multi-thread
+[*] ACBrTCPServer, modificação para permitir ajuste das propriedades
+    "TimeOut" e "Terminador", mesmo com o Servidor Ativo  (por: DSA)
+
 14/06/2016
 -- ACBrConsultaCPF --
 [-] Correção do endereço HTTP para HTTPS

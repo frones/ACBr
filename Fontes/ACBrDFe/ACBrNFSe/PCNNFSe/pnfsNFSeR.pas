@@ -2390,6 +2390,7 @@ begin
       DataEmissao := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiNf'));
       DataEmissaoRps := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiRps'));
       IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
+      IdentificacaoRps.Serie:= Leitor.rCampo(tcStr, 'SerRps');
       CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVernf');
 
       PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocPre');

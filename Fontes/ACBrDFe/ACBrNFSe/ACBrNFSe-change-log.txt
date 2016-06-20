@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/06/2016
+[*] Correções visando a geração do XML bem como a sua leitura - provedor Conam.
+    Por: André Medeiros.
+
 17/06/2016
 [+] Implementação do provedor Giga para as cidades: Canelinha/SC e Fraiburgo/SC.
     Por: Michel Ouriques.

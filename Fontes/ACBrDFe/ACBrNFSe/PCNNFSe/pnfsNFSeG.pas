@@ -960,7 +960,7 @@ begin
              Gerador.wGrupoNFSe('/ChaveNFe');
              Gerador.wGrupoNFSe('/Detalhe');
            end;
-
+    (*
     proTecnos: begin
                  Gerador.Prefixo := Prefixo3;
                  Gerador.wGrupoNFSe('Prestador' + aNameSpace);
@@ -983,7 +983,7 @@ begin
                  end;
                  Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 06, 1, Pagina, '');
                end;
-
+      *)
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);
@@ -1156,6 +1156,7 @@ begin
                       Gerador.wCampoNFSe(tcStr, '#1', 'Homologacao', 04, 05, 1, LowerCase(booltostr(Transacao, True)), '');
                       Gerador.wCampoNFSe(tcStr, '#1', 'NumeroNota', 01, 15, 1, NumeroNFSe, '');
                     end;
+
     proEquiplano: begin
                     Gerador.Prefixo := '';
                     Gerador.wGrupoNFSe('prestador');
@@ -1251,7 +1252,7 @@ begin
          Gerador.wGrupoNFSe('IdentificacaoNfse');
          Gerador.wCampoNFSe(tcStr, '#3', 'Numero', 01, 15, 1, NumeroNfse, '');
 
-         if (VersaoNFSe <> ve100) or (Provedor in [proActcon,pro4R]) then
+         if (VersaoNFSe <> ve100) or (Provedor in [proActcon, pro4R]) then
          begin
            Gerador.wGrupoNFSe('CpfCnpj');
            if Length(Cnpj) <= 11 then

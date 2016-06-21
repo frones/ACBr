@@ -123,6 +123,8 @@ type
 
   TnfseLogradouroLocalPrestacaoServico = (llpTomador, llpPrestador);
 
+  TnfseCanhoto = ( tcNenhum, tcCabecalho, tcRodape );
+
 function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
 function StrToStatusRPS(out ok: boolean; const s: String): TnfseStatusRPS;
@@ -214,6 +216,9 @@ function StrToTipoFrete(out ok: boolean; const s: String): TnfseFrete;
 
 function TTributacaoRPSToStr(const t: TnfseTTributacaoRPS): String;
 function StrToTTributacaoRPS(out ok: boolean; const s: String): TnfseTTributacaoRPS;
+
+function TCanhotoToStr(const t: TnfseCanhoto): String;
+function StrToTCanhoto(out ok: boolean; const s: String): TnfseCanhoto;
 
 implementation
 
@@ -18270,6 +18275,20 @@ begin
                             ttTribnoMunImune, ttTribforaMunImune,
                             ttTribnoMunSuspensa, ttTribforaMunSuspensa,
                             ttExpServicos]);
+end;
+
+function TCanhotoToStr(const t: TnfseCanhoto): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['0', '1', '2'],
+                           [tcNenhum, tcCabecalho, tcRodape]);
+end;
+
+function StrToTCanhoto(out ok: boolean; const s: String): TnfseCanhoto;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['0', '1', '2'],
+                           [tcNenhum, tcCabecalho, tcRodape]);
 end;
 
 end.

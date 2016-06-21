@@ -682,6 +682,7 @@ type
     FModeloNFSe: String;
     FCancelada: TnfseSimNao;
     FTransportadora: TDadosTransportadora;
+    FCanhoto: TnfseCanhoto;
 
     Femail: TemailCollection;
     FTipoRecolhimento: String;
@@ -749,6 +750,7 @@ type
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
+    property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
 
     // propriedade para provedor Governa
@@ -977,6 +979,7 @@ begin
  FEmpreitadaGlobal             := EgOutros;
  FModeloNFSe                   := '55';
  FCancelada                    := snNao;
+ FCanhoto                      := tcNenhum;
  FTransportadora               := TDadosTransportadora.Create;
 
  FLogradouroLocalPrestacaoServico := llpTomador;

@@ -274,7 +274,7 @@ begin
     aVersao := '';
 
   // Atributo NameSapce ========================================================
-  if Provedor = proSimplISS then
+  if Provedor in [proEL, proSimplISS] then
     aNameSpace := ' ' + NameSpaceDad
   else
     aNameSpace := '';
@@ -388,7 +388,7 @@ begin
              Gerador.wCampoNFSe(tcInt, '#1', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ) <> 14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
 

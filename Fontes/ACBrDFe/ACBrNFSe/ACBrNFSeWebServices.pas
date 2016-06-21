@@ -1619,6 +1619,7 @@ begin
                                                'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
 
       proCONAM,
+      proEL,
       proFISSLex,
       proSimplISS: FTagI := '<' + TagGrupo + '>';
     else

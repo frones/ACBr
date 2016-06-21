@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/06/16 ver: 0.0.200a
+-- ACBrBancoBancoob --
+[-] Correção leitura do campo DataArquivo e DataLancamento retorno CNAB240. (leotelles)
+http://www.projetoacbr.com.br/forum/topic/24544-ler-retornocnab240-bancoob/
+
+
 Data: 02/06/16 ver: 0.0.199a
 -- ACBrBancoCaixaSICOB --
 [*] Ajuste para informar corretamente as posições referentes a data da baixa na remessa

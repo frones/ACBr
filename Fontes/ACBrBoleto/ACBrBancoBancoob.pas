@@ -436,14 +436,14 @@ begin
    rDigitoConta := Copy(ARetorno[0],71,1);
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 158, 6), 0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[1],144,2)+'/'+
-                                                             Copy(ARetorno[1],146,2)+'/'+
-                                                             Copy(ARetorno[1],148,4),0, 'DD/MM/YY' );
+   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],144,2)+'/'+
+                                                             Copy(ARetorno[0],146,2)+'/'+
+                                                             Copy(ARetorno[0],148,4),0, 'DD/MM/YY' );
 
    if StrToIntDef(Copy(ARetorno[1],200,6),0) <> 0 then
-      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[1],200,2)+'/'+
-                                                                  Copy(ARetorno[1],202,2)+'/'+
-                                                                  Copy(ARetorno[1],204,4),0, 'DD/MM/YY' );
+      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],200,2)+'/'+
+                                                                  Copy(ARetorno[0],202,2)+'/'+
+                                                                  Copy(ARetorno[0],204,4),0, 'DD/MM/YY' );
    rCNPJCPF := trim( Copy(ARetorno[0],19,14)) ;
 
    if ACBrBanco.ACBrBoleto.Cedente.TipoInscricao = pJuridica then

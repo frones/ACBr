@@ -17,7 +17,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.4.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -377,11 +377,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 327
         Top = 1
         Width = 600
-        ActivePage = tsEmail
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
         ShowTabs = False
-        TabIndex = 13
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -5434,10 +5434,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 319
             Top = 0
             Width = 592
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsTestesDFe
             Align = alClient
             ShowTabs = False
-            TabIndex = 4
+            TabIndex = 6
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -8377,9 +8377,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       ShortCut = 57379
                     end>
                   MouseActions = <>
-                  MouseTextActions = <>
                   MouseSelActions = <>
-                  VisibleSpecialChars = [vscSpace, vscTabAtLast]
                   SelectedColor.BackPriority = 50
                   SelectedColor.ForePriority = 50
                   SelectedColor.FramePriority = 50
@@ -12046,6 +12044,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -12261,8 +12260,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
     WantBracesParsed = False
-    left = 114
-    top = 556
+    left = 104
+    top = 554
   end
   object ImageList1: TImageList
     left = 206

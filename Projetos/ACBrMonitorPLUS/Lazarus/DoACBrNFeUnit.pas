@@ -479,7 +479,8 @@ begin
             end
            else
             begin
-              if NaoEstaVazio(Cmd.Params(1)) then
+              ACBrNFe1.NotasFiscais.LoadFromString(Cmd.Params(1));
+              if (ACBrNFe1.NotasFiscais.Count < 1) and NaoEstaVazio(Cmd.Params(1)) then
                  raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
             end;
 
@@ -1051,7 +1052,7 @@ begin
                                    'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].dhRecbto)+sLineBreak+
                                    'NProt='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].nProt+sLineBreak+
                                    'DigVal='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].digVal+sLineBreak+
-                                   'Arquivo='+PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrNFe1.NotasFiscais.Items[j].NFe.infNFe.ID)+'-nfe.xml'+sLineBreak;
+                                   'Arquivo='+ACBrNFe1.NotasFiscais.Items[j].NomeArq+sLineBreak;
 
                         //Impressão NFE enviada
                         if (cmd.Metodo = 'enviarlotenfe') then

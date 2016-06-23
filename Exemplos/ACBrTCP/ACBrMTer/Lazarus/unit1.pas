@@ -27,6 +27,7 @@ type
     btFluxoVendas: TButton;
     btLimparDisplay: TButton;
     btLimparLinha: TButton;
+    btLimparLinha1: TButton;
     btPosicionarCursor: TButton;
     cbEcoAutomatico: TCheckBox;
     cbModelo: TComboBox;
@@ -88,6 +89,7 @@ type
     procedure btEnviarSerialClick(Sender: TObject);
     procedure btEnviarTextoClick(Sender: TObject);
     procedure btLimparDisplayClick(Sender: TObject);
+    procedure btLimparLinha1Click(Sender: TObject);
     procedure btLimparLinhaClick(Sender: TObject);
     procedure btPosicionarCursorClick(Sender: TObject);
     procedure btFluxoVendasClick(Sender: TObject);
@@ -113,6 +115,9 @@ var
   Form1: TForm1;
 
 implementation
+
+uses
+  strutils;
 
 {$R *.lfm}
 
@@ -257,6 +262,21 @@ begin
   for I := 0 to clbConectados.Count - 1 do
     if clbConectados.Checked[I] then
       ACBrMTer1.LimparDisplay(clbConectados.Items[I]);
+end;
+
+procedure TForm1.btLimparLinha1Click(Sender: TObject);
+var
+  IsOnLine: Boolean;
+  I: Integer;
+begin
+  VerificaSelecionado;
+
+  for I := 0 to clbConectados.Count - 1 do
+    if clbConectados.Checked[I] then
+    begin
+      IsOnLine := ACBrMTer1.Online(clbConectados.Items[I]);
+      mOutput.Lines.Add('Terminal: '+clbConectados.Items[I]+' - '+IfThen(IsOnLine,'On Line','Off Line') );
+    end;
 end;
 
 procedure TForm1.btLimparLinhaClick(Sender: TObject);

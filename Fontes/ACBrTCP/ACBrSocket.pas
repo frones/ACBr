@@ -47,7 +47,7 @@ unit ACBrSocket;
 
 interface
 
-uses SysUtils, Classes, Types,
+uses SysUtils, Classes, Types, syncobjs,
      blcksock, synsock, httpsend, ssl_openssl,  {Units da Synapse}
      {$IFDEF MSWINDOWS} windows, wininet, {$ENDIF}  { Units para a auto-detecção de Proxy }
      ACBrBase ;
@@ -88,22 +88,31 @@ TACBrTCPServerDaemon = class(TThread)
     property ErroBind : Integer read fErroBind ;
   end;
 
+{ TACBrTCPServerThread }
+
 TACBrTCPServerThread = class(TThread)
   private
     fsACBrTCPServerDaemon : TACBrTCPServerDaemon ;
+    fsEnabled: Boolean;
+    fsEvent: TSimpleEvent;
     fsSock   : TTCPBlockSocket;
     fsStrRcv, fsStrToSend : AnsiString ;
     fsCSock  : TSocket;
     fsErro   : Integer ;
+
     function GetActive: Boolean;
+    procedure SetEnabled(AValue: Boolean);
   protected
     procedure CallOnRecebeDados ;
     procedure CallOnConecta ;
     procedure CallOnDesConecta ;
   public
     Constructor Create(ClientSocket: TSocket; ACBrTCPServerDaemon : TACBrTCPServerDaemon);
+    Destructor Destroy; override;
+
     procedure Execute; override;
 
+    property Enabled: Boolean read fsEnabled write SetEnabled;
     property Active : Boolean read GetActive ;
     property TCPBlockSocket : TTCPBlockSocket read fsSock ;
   end;
@@ -320,26 +329,52 @@ end;
 
 { TACBrTCPServerThread }
 
-Constructor TACBrTCPServerThread.Create(ClientSocket: TSocket;
-   ACBrTCPServerDaemon : TACBrTCPServerDaemon);
+constructor TACBrTCPServerThread.Create(ClientSocket: TSocket;
+  ACBrTCPServerDaemon: TACBrTCPServerDaemon);
 begin
-  inherited create(false);
-
+  fsEnabled := True;
+  fsEvent := TSimpleEvent.Create;
   fsACBrTCPServerDaemon := ACBrTCPServerDaemon ;
   fsCSock  := ClientSocket ;
   FreeOnTerminate := True ;
+
+  inherited create(false);
+end;
+
+destructor TACBrTCPServerThread.Destroy;
+begin
+  fsEnabled := False;
+  Terminate;
+  fsEvent.SetEvent;  // libera Event.WaitFor()
+
+  if not Terminated then
+    WaitFor;
+
+  fsEvent.Free;
+
+  inherited Destroy;
+end;
+
+procedure TACBrTCPServerThread.SetEnabled(AValue: Boolean);
+begin
+  if fsEnabled = AValue then Exit;
+
+  fsEnabled := AValue;
+  fsEvent.SetEvent;
 end;
 
 procedure TACBrTCPServerThread.Execute;
 begin
   fsStrToSend := '' ;
   fsErro      := 0 ;
-  fsSock      := TTCPBlockSocket.create;
+  fsSock      := TTCPBlockSocket.Create;
   try
      fsSock.Socket := fsCSock ;
      fsSock.GetSins;
      with fsSock do
      begin
+        fsSock.Owner := Self;
+
         {$IFNDEF NOGUI}
          Synchronize( CallOnConecta );
         {$ELSE}
@@ -354,6 +389,8 @@ begin
 
         while fsErro = 0 do
         begin
+          fsEvent.ResetEvent;
+
            if Terminated then
            begin
               fsErro := -1 ;
@@ -377,6 +414,12 @@ begin
               fsErro := -1 ;
               break ;
            end ;
+
+           if not fsEnabled then
+           begin
+             fsEvent.WaitFor( Cardinal(-1) );   // Espera infinita, até chamada de SetEvent();
+             Continue;
+           end;
 
            // Se não tem nada para ler, re-inicia o loop //
            if not fsSock.CanRead( 200 ) then

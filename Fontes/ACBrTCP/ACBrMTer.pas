@@ -100,7 +100,10 @@ type
     procedure DoRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
       const Recebido: AnsiString; var Enviar: AnsiString);
 
-    procedure EnviarComando(ASocket: TTCPBlockSocket; const ACmd: AnsiString);
+    procedure EnviarComando(ASocket: TTCPBlockSocket; const ACmd: AnsiString); overload;
+    function LerResposta(ASocket: TTCPBlockSocket; const aTimeOut: Integer;
+      NumBytes: Integer = 0; Terminador: AnsiString = ''): AnsiString; overload;
+
     function BuscarPorIP(aIP: String): TTCPBlockSocket;
     function EncontrarConexao(aIP: String = ''): TTCPBlockSocket;
   public
@@ -110,6 +113,10 @@ type
     procedure Ativar;
     procedure Desativar;
     procedure VerificarAtivo;
+
+    procedure EnviarComando(const aIP: String; const ACmd: AnsiString); overload;
+    function LerResposta(const aIP: String; const aTimeOut: Integer;
+      NumBytes: Integer = 0; Terminador: AnsiString = ''): AnsiString; overload;
 
     procedure GravaLog(aString: String; Traduz: Boolean = False);
 
@@ -123,6 +130,7 @@ type
     procedure LimparDisplay(aIP: String);
     procedure LimparLinha(aIP: String; aLinha: Integer);
     procedure PosicionarCursor(aIP: String; aLinha, aColuna: Integer);
+    function Online(aIP: String): Boolean;
 
     property Ativo     : Boolean        read GetAtivo write SetAtivo;
     property CmdEnviado: AnsiString     read fCmdEnviado;
@@ -212,19 +220,25 @@ procedure TACBrMTer.DoRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
 var
   wIP, wRecebido: String;
 begin
+  wIP := TCPBlockSocket.GetRemoteSinIP;
+
+  GravaLog('Terminal: ' + wIP + ' - RecebeDados: ' + Recebido);
+
   wRecebido := fMTer.InterpretarResposta(Recebido);
 
   if (wRecebido = '') then
     Exit;
-
-  wIP := TCPBlockSocket.GetRemoteSinIP;
-  GravaLog('Terminal: ' + wIP + ' - RecebeDados: ' + wRecebido);
 
   if Assigned(fOnRecebeDados) then
     OnRecebeDados(wIP, wRecebido);
 
   if (EcoAuto) then
     Enviar := fMTer.ComandoEco(wRecebido);
+end;
+
+procedure TACBrMTer.EnviarComando(const aIP: String; const ACmd: AnsiString);
+begin
+  EnviarComando(EncontrarConexao(aIP), ACmd);
 end;
 
 procedure TACBrMTer.EnviarComando(ASocket: TTCPBlockSocket;
@@ -239,6 +253,26 @@ begin
   fCmdEnviado := ACmd;
   GravaLog('Terminal: ' + ASocket.GetRemoteSinIP + ' - Comando enviado: ' + ACmd);
   ASocket.SendString(ACmd);
+end;
+
+function TACBrMTer.LerResposta(const aIP: String; const aTimeOut: Integer;
+  NumBytes: Integer; Terminador: AnsiString): AnsiString;
+var
+  aSocket: TTCPBlockSocket;
+begin
+  Result := LerResposta( EncontrarConexao(aIP), aTimeOut, NumBytes, Terminador );
+end;
+
+function TACBrMTer.LerResposta(ASocket: TTCPBlockSocket;
+  const aTimeOut: Integer; NumBytes: Integer; Terminador: AnsiString
+  ): AnsiString;
+begin
+  if NumBytes > 0 then
+     Result := ASocket.RecvBufferStr( NumBytes, aTimeOut)
+  else if Terminador <> '' then
+     Result := ASocket.RecvTerminated( aTimeOut, Terminador)
+  else
+     Result := ASocket.RecvPacket( aTimeOut );
 end;
 
 function TACBrMTer.BuscarPorIP(aIP: String): TTCPBlockSocket;
@@ -424,61 +458,89 @@ end;
 
 procedure TACBrMTer.BackSpace(aIP: String);
 begin
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoBackSpace);
+  EnviarComando(aIP, fMTer.ComandoBackSpace);
 end;
 
 procedure TACBrMTer.Beep(aIP: String);
 begin
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoBeep);
+  EnviarComando(aIP, fMTer.ComandoBeep);
 end;
 
 procedure TACBrMTer.DeslocarCursor(aIP: String; aValue: Integer);
 begin
   // Desloca Cursor a partir da posição atual (Permite valores negativos)
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoDeslocarCursor(aValue));
+  EnviarComando(aIP, fMTer.ComandoDeslocarCursor(aValue));
 end;
 
 procedure TACBrMTer.DeslocarLinha(aIP: String; aValue: Integer);
 begin
   // Desloca Linha a partir da posição atual(Valores: 1 ou -1)
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoDeslocarLinha(aValue));
+  EnviarComando(aIP, fMTer.ComandoDeslocarLinha(aValue));
 end;
 
 procedure TACBrMTer.EnviarParaParalela(aIp, aDados: String);
 begin
   // Envia String para Porta Paralela
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoEnviarParaParalela(aDados));
+  EnviarComando(aIP, fMTer.ComandoEnviarParaParalela(aDados));
 end;
 
 procedure TACBrMTer.EnviarParaSerial(aIP, aDados: String; aSerial: Integer);
 begin
   // Envia String para Porta Serial
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoEnviarParaSerial(aDados, aSerial));
+  EnviarComando(aIP, fMTer.ComandoEnviarParaSerial(aDados, aSerial));
 end;
 
 procedure TACBrMTer.EnviarTexto(aIP: String; aTexto: String);
 begin
   // Envia String para o Display
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoEnviarTexto(aTexto));
+  EnviarComando(aIP, fMTer.ComandoEnviarTexto(aTexto));
 end;
 
 procedure TACBrMTer.LimparDisplay(aIP: String);
 begin
   // Limpa Display e posiciona cursor em 0,0
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoLimparDisplay);
+  EnviarComando(aIP, fMTer.ComandoLimparDisplay);
 end;
 
 procedure TACBrMTer.LimparLinha(aIP: String; aLinha: Integer);
 begin
   // Apaga Linha, mantendo cursor na posição atual
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoLimparLinha(aLinha));
+  EnviarComando(aIP, fMTer.ComandoLimparLinha(aLinha));
 end;
 
 procedure TACBrMTer.PosicionarCursor(aIP: String; aLinha, aColuna: Integer);
 begin
   // Posiciona cursor na posição informada
-  EnviarComando(EncontrarConexao(aIP), fMTer.ComandoPosicionarCursor(aLinha, aColuna));
+  EnviarComando(aIP, fMTer.ComandoPosicionarCursor(aLinha, aColuna));
+end;
+
+function TACBrMTer.Online(aIP: String): Boolean;
+var
+  aSocket: TTCPBlockSocket;
+  CmdOnLine, Resp: AnsiString;
+begin
+  Result := True;
+  CmdOnLine := fMTer.ComandoOnline;
+
+  if CmdOnLine = '' then   // protocolo não suporta comando OnLine
+    Exit;
+
+  aSocket := BuscarPorIP(aIP);
+  // Desliga a Thread desta coenxão, para ler a resposta manualmente
+  if aSocket.Owner is TACBrTCPServerThread then
+    TACBrTCPServerThread(aSocket.Owner).Enabled := False;
+
+  try
+    EnviarComando(aSocket, CmdOnLine);
+    Resp := LerResposta(aSocket, TimeOut, 0, TCPServer.Terminador);
+  finally
+    if aSocket.Owner is TACBrTCPServerThread then
+      TACBrTCPServerThread(aSocket.Owner).Enabled := True;
+  end;
+
+  Result := (Resp <> '');
 end;
 
 end.
+
 

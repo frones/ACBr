@@ -37,6 +37,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2016
+-- ACBrSocket --
+[+] TACBrTCPServerThread, adicionada a propriedade "Enabled: Boolean", que
+    permite pausar a Thread.      (por: DSA)
+[*] TACBrTCPServerThread passa a ser o Dono do Socket. Isso permite manipular a
+    Thread, através do Socket. Ex:
+                  TACBrTCPServerThread(aSocket.Owner).Enabled := False;
+
+-- ACBrMTer --
+[+] Adicionado o método "OnLine(aIp:String): Boolean"
+[+] Adicionado os métodos Público:
+    procedure EnviarComando(const aIP: String; const ACmd: AnsiString);
+    function LerResposta(const aIP: String; const aTimeOut: Integer;
+      NumBytes: Integer = 0; Terminador: AnsiString = ''): AnsiString;
+[*] Refatoração e melhoria na montagem dos comandos dos protocolos existemtes
+    e na interpretação da resposta
+    (por: Elias e DSA)
+
 20/06/2016
 -- ACBrSocket --
 [*] ACBrTCPServer, melhorias para suporte a aplicações Multi-thread

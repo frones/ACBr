@@ -56,7 +56,7 @@ type
 
   TACBrMTerStxEtx = class(TACBrMTerClass)
   private
-    { Private declarations }
+    function PrepararCmd(aCmd: Char; aParams: AnsiString = ''): AnsiString;
   public
     constructor Create(aOwner: TComponent);
 
@@ -69,6 +69,7 @@ type
     function ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte = 0): AnsiString; override;
     function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; override;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
+    function ComandoOnline: AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
 
@@ -79,6 +80,11 @@ implementation
 
 { TACBrMTerStxEtx }
 
+function TACBrMTerStxEtx.PrepararCmd(aCmd: Char; aParams: AnsiString): AnsiString;
+begin
+  Result := STX + aCmd + aParams + ETX;
+end;
+
 constructor TACBrMTerStxEtx.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
@@ -88,7 +94,7 @@ end;
 
 function TACBrMTerStxEtx.ComandoBackSpace: AnsiString;
 begin
-  Result := STX + 'D' + BS + ETX;
+  Result := PrepararCmd('D', BS);
 end;
 
 function TACBrMTerStxEtx.ComandoBeep: AnsiString;
@@ -109,75 +115,77 @@ begin
 
   while (aValue > 0) do
   begin
-    Result := STX + 'O' + DC4 + ETX;
+    Result := Result + PrepararCmd('O', DC4);
     aValue := aValue - 1;
   end;
 end;
 
 function TACBrMTerStxEtx.ComandoDeslocarLinha(aValue: Integer): AnsiString;
 begin
-  case aValue of
-    -1, 1: Result := STX + 'C000' + ETX;
-     2:    Result := STX + 'C100' + ETX;
+  Result := PrepararCmd('C', '100');
   end;
-end;
 
-function TACBrMTerStxEtx.ComandoEnviarParaParalela(aDados: AnsiString
-  ): AnsiString;
+function TACBrMTerStxEtx.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
 var
   I: Integer;
 begin
+  Result := '';
   for I := 1 to Length(aDados) do
-    Result := Result + STX + 'P' + aDados[I] + ETX;
+    Result := Result + PrepararCmd('P', aDados[I]);
 end;
 
 function TACBrMTerStxEtx.ComandoEnviarParaSerial(aDados: AnsiString;
   aSerial: Byte): AnsiString;
 var
-  wPorta: String;
+  wPorta: Char;
   I: Integer;
 begin
+  Result := '';
+
   if (aSerial = 1) then
     wPorta := 'R'        // Seleciona porta serial 1
   else
     wPorta := 'S';       // Seleciona porta serial padrão(0)
 
   for I := 1 to Length(aDados) do
-    Result := Result + STX + wPorta + aDados[I] + ETX;
+    Result := Result + PrepararCmd(wPorta, aDados[I]);
 end;
 
 function TACBrMTerStxEtx.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
 begin
-  Result := STX + 'D' + aTexto + ETX;
+  Result := PrepararCmd('D', aTexto);
 end;
 
 function TACBrMTerStxEtx.ComandoLimparLinha(aLinha: Integer): AnsiString;
 begin
-  //Result := inherited ComandoLimparLinha(aLinha);
   Result := '';
 end;
 
-function TACBrMTerStxEtx.ComandoPosicionarCursor(aLinha, aColuna: Integer
-  ): AnsiString;
+function TACBrMTerStxEtx.ComandoOnline: AnsiString;
 begin
-  Result := STX + 'C' + IntToStr(aLinha-1) + IntToStrZero(aColuna-1, 2) + ETX;
+  Result := PrepararCmd('T');
+end;
+
+function TACBrMTerStxEtx.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
+var
+  wCol, wLinha: Integer;
+begin
+  wLinha := (aLinha - 1);
+  wCol   := (aColuna - 1);
+  Result := PrepararCmd('C', IntToStr(wLinha) + IntToStrZero(wCol, 2));
 end;
 
 function TACBrMTerStxEtx.ComandoLimparDisplay: AnsiString;
 begin
-  Result := STX + 'L' + ETX;
+  Result := PrepararCmd('L');
 end;
 
 function TACBrMTerStxEtx.InterpretarResposta(aRecebido: AnsiString): AnsiString;
 begin
-  { É Comando? Retorna vazio... }
   if (aRecebido[1] = STX) and (aRecebido[Length(aRecebido)] = ETX) then
-    Result := ''
-  { É espaço? Retorna espaço }
-  else if (Length(aRecebido) = 1) and (aRecebido[1] = #32) then
-    Result := aRecebido
-  else
-    Result := Trim(TiraAcentos(aRecebido));
+    Exit;
+
+  Result := inherited InterpretarResposta(aRecebido);
 end;
 
 end.

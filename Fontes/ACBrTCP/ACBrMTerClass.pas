@@ -77,9 +77,11 @@ type
     function ComandoEnviarParaParalela(aDados: AnsiString): AnsiString; virtual;
     function ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte = 0): AnsiString; virtual;
     function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; virtual;
+    function ComandoOnline: AnsiString; virtual;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; virtual;
     function ComandoLimparDisplay: AnsiString; virtual;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; virtual;
+
     function InterpretarResposta(aRecebido: AnsiString): AnsiString; virtual;
 
     property ModeloStr: String read fpModeloStr;
@@ -160,8 +162,12 @@ begin
   DisparaErroNaoImplementado('ComandoEnviarTexto');
 end;
 
-function TACBrMTerClass.ComandoPosicionarCursor(aLinha, aColuna: Integer
-  ): AnsiString;
+function TACBrMTerClass.ComandoOnline: AnsiString;
+begin
+  Result := '';
+end;
+
+function TACBrMTerClass.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoPosicionarCursor');
@@ -180,9 +186,23 @@ begin
 end;
 
 function TACBrMTerClass.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+var
+  AnsiStr: AnsiString;
+  aChar: AnsiChar;
+  I: Integer;
 begin
   Result := '';
-  DisparaErroNaoImplementado('InterpretarResposta');
+
+  for I := 0 to Length(aRecebido) do
+  begin
+    aChar := aRecebido[I];
+
+    {Mantém apenas Letras/Números/Pontos/Sinais}
+    if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
+      Continue;
+
+    Result := Result + aChar;
+  end;
 end;
 
 end.

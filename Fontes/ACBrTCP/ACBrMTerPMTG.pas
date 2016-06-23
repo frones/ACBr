@@ -56,7 +56,7 @@ type
 
   TACBrMTerPMTG = class(TACBrMTerClass)
   private
-    { Private declarations }
+    function PrepararCmd(aCmd: Integer; aParams: AnsiString = ''): AnsiString;
   public
     constructor Create(aOwner: TComponent);
 
@@ -71,6 +71,7 @@ type
     function ComandoEnviarTexto(aTexto: AnsiString): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
     function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
+    function ComandoOnline: AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
 
     function InterpretarResposta(aRecebido: AnsiString): AnsiString; override;
@@ -79,6 +80,14 @@ type
 implementation
 
 { TACBrMTerPMTG }
+
+function TACBrMTerPMTG.PrepararCmd(aCmd: Integer; aParams: AnsiString): AnsiString;
+var
+  wTamParams: Integer;
+begin
+  wTamParams := Length(aParams);
+  Result     := IntToLEStr(aCmd) + IntToLEStr(wTamParams) + aParams;
+end;
 
 constructor TACBrMTerPMTG.Create(aOwner: TComponent);
 begin
@@ -89,37 +98,31 @@ end;
 
 function TACBrMTerPMTG.ComandoBackSpace: AnsiString;
 begin
-  Result := HexToAscii('21') + NUL;
+  Result := PrepararCmd(33);
 end;
 
 function TACBrMTerPMTG.ComandoBoasVindas: AnsiString;
 begin
-  Result := ETX + NUL;
+  Result := PrepararCmd(3) + ComandoOnline;
 end;
 
 function TACBrMTerPMTG.ComandoBeep: AnsiString;
 begin
-  Result := HexToAscii('5D') + NUL + SOH;
+  // Liga Beep
+  Result := PrepararCmd(93, IntToLEStr(1, 4));
+
+  // Desliga Beep
+  Result := Result + ComandoOnline + PrepararCmd(93, IntToLEStr(0, 4));
 end;
 
 function TACBrMTerPMTG.ComandoDeslocarCursor(aValue: Integer): AnsiString;
-var
-  wColunaStr: String;
 begin
-  wColunaStr := HexToAscii(IntToStrZero(aValue, 2));
-
-  Result := HexToAscii('2B') + NUL + IntToLEStr(2) + NUL + wColunaStr;
+  Result := PrepararCmd(43, NUL + IntToLEStr(aValue));
 end;
 
 function TACBrMTerPMTG.ComandoDeslocarLinha(aValue: Integer): AnsiString;
 begin
-  Result := '';
-
-  while (aValue > 0) do
-  begin
-    Result := Result + HexToAscii('25') + NUL;
-    Dec(aValue, 1);
-  end;
+  Result := PrepararCmd(43, PadRight(IntToLEStr(aValue, 1), 3, NUL));
 end;
 
 function TACBrMTerPMTG.ComandoEco(aValue: AnsiString): AnsiString;
@@ -140,75 +143,71 @@ begin
   end;
 end;
 
-function TACBrMTerPMTG.ComandoEnviarParaParalela(aDados: AnsiString
-  ): AnsiString;
-var
-  wTam: Integer;
+function TACBrMTerPMTG.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
 begin
-  { MT740 não possui porta Paralela }
-  wTam   := Length(aDados);
-  Result := HexToAscii('49') + NUL + IntToLEStr(wTam, 2) + aDados;
+  { Apenas GE750 possui porta Paralela }
+  Result := PrepararCmd(73, aDados);
 end;
 
-function TACBrMTerPMTG.ComandoEnviarParaSerial(aDados: AnsiString; aSerial: Byte
-  ): AnsiString;
-var
-  wTam: Integer;
+function TACBrMTerPMTG.ComandoEnviarParaSerial(aDados: AnsiString;
+  aSerial: Byte): AnsiString;
 begin
   { Portas COM disponíveis:
     - GE750: 1 e 2;
     - GE760: 1;
     - MT740: 1, 2, 3 e 4;
     - MT720: 1, 2 e 3 }
-
-  wTam := Length(aDados) + 1;
-
-  Result := HexToAscii('3F') + NUL + IntToLEStr(wTam, 2)+ AnsiChr(aSerial-1) + aDados;
+  Result := PrepararCmd(63, AnsiChr(aSerial-1) + aDados);
 end;
 
 function TACBrMTerPMTG.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
-var
-  wTam: Integer;
 begin
-  wTam := Length(aTexto);
-
-  Result := HexToAscii('33') + NUL + IntToLEStr(wTam, 2) + aTexto;
+  Result := PrepararCmd(51, PadRight(aTexto, 29, NUL));
 end;
 
 function TACBrMTerPMTG.ComandoLimparDisplay: AnsiString;
 begin
-  Result := HexToAscii('27') + NUL;
+  Result := PrepararCmd(39);
 end;
 
 function TACBrMTerPMTG.ComandoLimparLinha(aLinha: Integer): AnsiString;
 begin
-  Result := '';
+  Result := PrepararCmd(55, IntToLEStr(aLinha));
 end;
 
-function TACBrMTerPMTG.ComandoPosicionarCursor(aLinha, aColuna: Integer
-  ): AnsiString;
+function TACBrMTerPMTG.ComandoOnline: AnsiString;
+begin
+  Result := PrepararCmd(1);
+end;
+
+function TACBrMTerPMTG.ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString;
 var
   wLinhaStr, wColunaStr: String;
 begin
-  wLinhaStr  := HexToAscii(IntToStrZero(aLinha, 2));
-  wColunaStr := HexToAscii(IntToStrZero(aColuna,2));
+  wLinhaStr  := IntToLEStr(aLinha, 1);
+  wColunaStr := IntToLEStr(aColuna);
 
-  Result := HexToAscii('29') + NUL + IntToLEStr(2) + wLinhaStr + wColunaStr;
+  Result := PrepararCmd(41, wLinhaStr + wColunaStr);
 end;
 
 function TACBrMTerPMTG.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+var
+  wCmd, wLenParams, wLen, wPosCmd: Integer;
 begin
-  if (Pos(GS, aRecebido) <= 0) then
-    Exit;
+  Result  := '';
+  wLen    := Length(aRecebido);
+  wPosCmd := 1;
 
-  if (Pos(#8, aRecebido) > 0) then        // É Backspace ?
-    Result := #8
-  else if (Pos(#13, aRecebido) > 0) then  // É Enter ?
-    Result := #13
-  else if (Pos(#32, aRecebido) > 0) then  // É Espaço ?
-    Result := #32
-  else
-    Result := Trim(TiraAcentos(aRecebido));
+  while (wPosCmd < wLen) do
+  begin
+    wCmd       := LEStrToInt(Copy(aRecebido, wPosCmd, 2));
+    wLenParams := LEStrToInt(Copy(aRecebido, wPosCmd + 2, 2));
+
+    if (wCmd = 29) then
+      Result := Result + Copy(aRecebido, wPosCmd + 4, wLenParams);
+
+    wPosCmd := wPosCmd + wLenParams + 4;
+  end;
 end;
 
 end.

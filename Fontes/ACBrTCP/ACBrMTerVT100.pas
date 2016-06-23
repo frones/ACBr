@@ -71,8 +71,6 @@ type
     function ComandoLimparLinha(aLinha: Integer): AnsiString; override;
     function ComandoPosicionarCursor(aLinha, aColuna: Integer): AnsiString; override;
     function ComandoLimparDisplay: AnsiString; override;
-
-    function InterpretarResposta(aRecebido: AnsiString): AnsiString; override;
   end;
 
 implementation
@@ -186,16 +184,6 @@ end;
 function TACBrMTerVT100.ComandoLimparDisplay: AnsiString;
 begin
   Result := ESC + '[H' + ESC + '[J';
-end;
-
-function TACBrMTerVT100.InterpretarResposta(aRecebido: AnsiString): AnsiString;
-begin
-  Result := aRecebido;
-
-  if (Length(Result) = 1) and (Result[1] = #32) then  // É espaço ? ...Sai
-    Exit;
-
-  Result := StringReplace(TiraAcentos(Result), #32, '', [rfReplaceAll]);
 end;
 
 end.

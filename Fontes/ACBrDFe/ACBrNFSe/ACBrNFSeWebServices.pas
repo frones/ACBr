@@ -1532,6 +1532,8 @@ begin
   FPArqEnv := 'env-lot';
   FPArqResp := 'rec';
 
+  FProtocolo := '';
+  
   FRetornoNFSe := nil;
 end;
 
@@ -1824,6 +1826,7 @@ begin
   FPArqEnv := 'env-lotS';
   FPArqResp := 'lista-nfse';
 
+  FProtocolo := '';
   FSituacao := '';
 
   FRetornoNFSe := nil;
@@ -1975,6 +1978,7 @@ begin
   FPArqEnv := 'ger-nfse';
   FPArqResp := 'lista-nfse';
 
+  FProtocolo := '';
   FSituacao := '';
 
   FRetornoNFSe := nil;

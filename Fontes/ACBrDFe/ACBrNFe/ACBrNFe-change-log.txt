@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/06/2016
+-- ACBrNFeServicos.ini
+[*] Ajuste no links de Goias para a QR-Code e ConsultaNFCe em produção e homologação
+		por: Juliomar Marchetti
+		
 16/06/2016
 -- ACBrNFeWebServices --
 [-] Ajuste para não duplicar a lista de items em  TNFeDownloadNFe e TDistribuicaoDFe

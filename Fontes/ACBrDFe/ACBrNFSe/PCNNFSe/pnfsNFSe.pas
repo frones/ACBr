@@ -1008,6 +1008,8 @@ begin
  FNfseCancelamento.Free;
  Femail.Free;
 
+ FTransportadora.Free;
+
  inherited Destroy;
 end;
 

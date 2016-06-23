@@ -71,6 +71,7 @@ type
 
   public
     constructor Create(ANFSeW: TNFSeW); virtual;
+    destructor  Destroy; Override;
 
     function ObterNomeArquivo: String; virtual;
     function GerarXml: Boolean; virtual;
@@ -232,6 +233,13 @@ function TNFSeWClass.ObterNomeArquivo: String;
 begin
   Result := '';
   raise EACBrDFeException.Create(ClassName + '.ObterNomeArquivo, não implementado');
+end;
+
+destructor TNFSeWClass.Destroy;
+begin
+  FOpcoes.Free;
+  FGerador.Free;
+  inherited Destroy;
 end;
 
 function TNFSeWClass.GerarXml: Boolean;

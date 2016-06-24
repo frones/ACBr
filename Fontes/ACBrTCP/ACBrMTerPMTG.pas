@@ -103,7 +103,7 @@ end;
 
 function TACBrMTerPMTG.ComandoBoasVindas: AnsiString;
 begin
-  Result := PrepararCmd(3) + ComandoOnline;
+  Result := PrepararCmd(3);
 end;
 
 function TACBrMTerPMTG.ComandoBeep: AnsiString;

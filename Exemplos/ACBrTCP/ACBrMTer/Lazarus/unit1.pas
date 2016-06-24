@@ -77,7 +77,7 @@ type
     procedure ACBrMTer1Desconecta(const IP: AnsiString; Erro: Integer;
       ErroDesc: AnsiString);
     procedure ACBrMTer1RecebeDados(const IP: AnsiString;
-      const Recebido: AnsiString);
+      var Recebido: AnsiString);
     procedure btAtivarClick(Sender: TObject);
     procedure btAtualizarClick(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
@@ -104,7 +104,7 @@ type
     procedure IniciarFluxoVendas;
     function AlterarEstadoTerminal(aIP: String; aEstado: Integer): Boolean;
 
-    procedure AvaliarRespostaTerminal(aIP, aString: String);
+    procedure AvaliarRespostaTerminal(aIP: String; var aString: String);
     procedure IncluirComanda(aComanda: String);
     procedure AdicionaItem(aComanda: String);
   public
@@ -157,7 +157,7 @@ begin
 end;
 
 procedure TForm1.ACBrMTer1RecebeDados(const IP: AnsiString;
-  const Recebido: AnsiString);
+  var Recebido: AnsiString);
 begin
   mOutput.Lines.Add('IP: ' + IP + ' - Recebido :' + Recebido);
 
@@ -437,7 +437,7 @@ begin
   end;
 end;
 
-procedure TForm1.AvaliarRespostaTerminal(aIP, aString: String);
+procedure TForm1.AvaliarRespostaTerminal(aIP: String; var aString: String);
 begin
   with memTerminais do
   begin
@@ -455,6 +455,7 @@ begin
           Exit;
         end;
 
+        aString := '';
         case FieldByName('STATUS').AsInteger of
           1:
           begin

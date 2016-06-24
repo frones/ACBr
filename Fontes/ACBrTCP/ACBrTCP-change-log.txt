@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2016
+-- ACBrMTer --
+[*] Assinatura do Evento "OnRecebeDados" modificada para possibilitar a 
+	alteração dos dados retornados ao Micro Terminal.
+-- ACBrMTerPMTG --
+[*] Correção do método "ComandoBoasVindas". (por: Elias)
+
 23/06/2016
 -- ACBrSocket --
 [+] TACBrTCPServerThread, adicionada a propriedade "Enabled: Boolean", que

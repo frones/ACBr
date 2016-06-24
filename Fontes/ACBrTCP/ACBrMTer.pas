@@ -63,7 +63,7 @@ type
     ErroDesc: AnsiString) of object;
 
   { Evento disparado quando Recebe Dados }
-  TACBrMTerRecebeDados = procedure(const IP: AnsiString; const
+  TACBrMTerRecebeDados = procedure(const IP: AnsiString; var
     Recebido: AnsiString) of object;
 
   { TACBrMTer }

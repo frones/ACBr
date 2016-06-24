@@ -1762,7 +1762,7 @@ var
   P: Integer;
   EhControle: Boolean;
 begin
-  if (not IsBematech) then
+  if (IsEpson and (not fpDevice.IsDLLPort)) then
     Exit;
 
   P := pos(LF, Linha);
@@ -1777,8 +1777,11 @@ begin
     end
     else
     begin
-      Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
-      Dec( P );
+      if IsBematech then
+      begin
+        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
+        Dec( P );
+      end;
     end;
 
     P := PosEx( LF, Linha, P+1);

@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2016
+[*] Objeto EMAIL, comandos TextoMensagem e Texto alternativo,
+    modificados para adicionar texto à mensagem ao invés de setar.
+    por: Celso Marigo Junior
+
 18/04/2016
 [+] Implementando opção para configuração de envio de email em Segundo Plano
     (por: DSA)

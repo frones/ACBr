@@ -49,6 +49,11 @@ Símbolo : Significado
 [*] Método "AjustarXMLAssinado" modificado para remover Declaração de XML sem
     UTF8  (por: DSA)
 
+-- ACBrDFeOpenSSL --
+[*] Ajuste para permitir a assintura sem informar o parâmetro "infElement".
+    Nesse caso, a assinatura será procurada no ultimo nó do Documento Raiz
+    (por: DSA)
+
 13/06/2016
 -- ACBrDFeSSL --
 [*] Método: "Assinar", ajuste para usar Declaralção anterior do XML, apenas se

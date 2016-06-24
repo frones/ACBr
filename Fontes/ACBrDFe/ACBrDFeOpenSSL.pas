@@ -61,7 +61,7 @@ const
   cErrCtxCreate = 'Erro: Falha ao criar Ctx "xmlSecDSigCtxCreate"';
   cErrPrivKeyLoad = 'Erro: Falha ao ler a Chave Privada de DadosPFX';
   cErrPubKeyLoad = 'Erro: Falha ao ler a Chave Publica do Certificado';
-  cErrDSigSign = 'Erro: Falha ao assinar o Documento';
+  cErrDSigSign = 'Erro %d: Falha ao assinar o Documento';
   cErrDSigVerify = 'Erro: Falha na verificação da Assinatura';
   cErrDSigInvalid = 'Erro: Assinatura é inválida';
 
@@ -236,8 +236,13 @@ var
 begin
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
   XmlAss := '';
-  DTD := StringReplace(cDTD, '&infElement&', infElement, []);
-  AXml := InserirDTD(ConteudoXML, DTD);
+  if infElement <> '' then
+  begin
+    DTD := StringReplace(cDTD, '&infElement&', infElement, []);
+    AXml := InserirDTD(ConteudoXML, DTD);
+  end
+  else
+    AXml := ConteudoXML;
 
   // Inserindo Template da Assinatura digital //
   if (not XmlEstaAssinado(AXml)) or (SignatureNode <> '') then
@@ -576,9 +581,9 @@ function TDFeOpenSSL.XmlSecSign(const ConteudoXML: AnsiString; SignatureNode,
   SelectionNamespaces, InfElement: AnsiString): AnsiString;
 var
   doc: xmlDocPtr;
-  node, infNode: xmlNodePtr;
+  SignNode, infNode: xmlNodePtr;
   buffer: PAnsiChar;
-  bufSize: integer;
+  bufSize, SignResult: integer;
 begin
   InitXmlSec;
 
@@ -599,26 +604,40 @@ begin
 
     { find infElement node }
     infNode := xmlDocGetRootElement(doc);
-    while (infNode <> nil) and (infNode.name <> InfElement) do
-      infNode := infNode.children;
+    if (InfElement <> '') then
+    begin
+      while (infNode <> nil) and (infNode.name <> InfElement) do
+        infNode := infNode.children;
 
-    if (infNode = nil) then
-      raise EACBrDFeException.Create(cErrFindRootNode);
+      if (infNode = nil) then
+        raise EACBrDFeException.Create(cErrFindRootNode);
 
-    if infNode^.name = InfElement then
-      infNode := infNode.parent;
+      if (infNode^.name = InfElement) and Assigned(infNode.parent) and (infNode.parent^.name <> '') then
+        infNode := infNode.parent;
+    end;
 
     if (infNode = nil) then
       raise EACBrDFeException.Create(cErrFindRootNode);
 
     { find Signature node }
-    node := xmlSecFindChild(infNode, xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
-    if (node = nil) then
+    SignNode := xmlSecFindChild(infNode, xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
+    if (SignNode = nil) then
+    begin
+      // Tentando achar pelo Ultimo nó a partir da Raiz
+      infNode := xmlDocGetRootElement(doc);
+      SignNode := infNode.last;
+      if (SignNode <> nil) then
+        if SignNode.name <> SignatureNode then
+          SignNode := nil;
+    end;
+
+    if (SignNode = nil) then
       raise EACBrDFeException.Create(cErrFindSignNode);
 
     { sign the template }
-    if (xmlSecDSigCtxSign(FdsigCtx, node) < 0) then
-      raise EACBrDFeException.Create(cErrDSigSign);
+    SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
+    if (SignResult < 0) then
+      raise EACBrDFeException.CreateFmt(cErrDSigSign, [SignResult]);
 
     { print signed document to stdout }
     // xmlDocDump(stdout, doc);

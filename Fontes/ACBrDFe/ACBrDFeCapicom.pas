@@ -606,7 +606,6 @@ begin
       {$EndIf}
 
       // Ajustando o XML... CAPICOM insere um cabeçalho inválido
-      XmlAss := StringReplace(XmlAss, '<?xml version="1.0"?>', '', []);
       XmlAss := AjustarXMLAssinado(XmlAss);
     finally
       dsigKey := nil;

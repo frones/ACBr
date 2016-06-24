@@ -801,6 +801,10 @@ var
 begin
   XmlAss := ConteudoXML;
 
+  // Removendo Declaração sem UTF8 Ex: <?xml version="1.0"?> //
+  if not XmlEhUTF8(ObtemDeclaracaoXML(XmlAss)) then
+    XmlAss := RemoverDeclaracaoXML(XmlAss);
+
   // Removendo quebras de linha //
   XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
   XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2016
+-- ACBrDFeSSL --
+[*] Método "AjustarXMLAssinado" modificado para remover Declaração de XML sem
+    UTF8  (por: DSA)
+
 13/06/2016
 -- ACBrDFeSSL --
 [*] Método: "Assinar", ajuste para usar Declaralção anterior do XML, apenas se

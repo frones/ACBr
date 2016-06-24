@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/06/2019
+-- ACBrECFEscECF --
+[-] Correção no método "FechaCupom", para ECFs Epson TM800F/900F.   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/30761-erro-fechacupom-ecf-epson-tm-t900f
+
 Data: 10/06/2016
 -- ACBrECF --
 [*] Métodos: "SubtotalizaCupom" e "EfetuaPagamento". Ajustes para evitar que

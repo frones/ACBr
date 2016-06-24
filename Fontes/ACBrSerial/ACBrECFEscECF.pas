@@ -1762,23 +1762,23 @@ var
   P: Integer;
   EhControle: Boolean;
 begin
+  if (not IsBematech) then
+    Exit;
+
   P := pos(LF, Linha);
   while P > 0 do
   begin
-    EhControle := Linha[max(P-1,1)] = ESC;
+    EhControle := (Linha[max(P-1,1)] = ESC);
 
-    if not EhControle then
+    if (not EhControle) then
     begin
       Linha := StuffString(Linha, P, 0, CR );  // Adiciona CR antes de LF
       Inc( P );
     end
     else
     begin
-      if IsBematech then
-      begin
-        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
-        Dec( P );
-      end;
+      Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
+      Dec( P );
     end;
 
     P := PosEx( LF, Linha, P+1);

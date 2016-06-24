@@ -255,6 +255,7 @@ begin
 
     case Configuracoes.Geral.Provedor of
       proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
+      pro4R: InfElemento := 'Rps';
     else
       InfElemento := InfElemento;
     end;

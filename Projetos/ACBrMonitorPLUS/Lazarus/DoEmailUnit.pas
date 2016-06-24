@@ -166,11 +166,11 @@ begin
        Cmd.Resposta := 'Codificação setada para ' + Cmd.Params(0);
      end
 
-    else if Cmd.Metodo = 'textomensagem' then {informa o texto do e-mail}
-       Body.Text := Cmd.Params(0)
+    else if Cmd.Metodo = 'textomensagem' then {adiciona o texto ao corpo do e-mail}
+       Body.Add( Cmd.Params(0) )
 
-    else if Cmd.Metodo = 'textoalternativo' then {informa o texto alternativo (texto puro) do e-mail}
-       AltBody.Text := Cmd.Params(0)
+    else if Cmd.Metodo = 'textoalternativo' then {adiciona o texto alternativo (texto puro) do e-mail}
+       AltBody.Add( Cmd.Params(0) )
 
     else if Cmd.Metodo = 'adicionaanexo' then {adiciona anexo}
      begin

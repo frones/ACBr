@@ -731,13 +731,14 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
         Left = 3
         Top = 279
         Width = 472
-        Height = 34
+        Height = 45
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         DataField = 'CodigoBarras'
         DataSource = dsGuia
+        Ratio = 3.000000000000000000
       end
       object RLLabel24: TRLLabel
         Left = 487
@@ -1668,13 +1669,14 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
         Left = 3
         Top = 609
         Width = 472
-        Height = 34
+        Height = 45
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         DataField = 'CodigoBarras'
         DataSource = dsGuia
+        Ratio = 3.000000000000000000
       end
       object RLLabel61: TRLLabel
         Left = 487
@@ -2606,13 +2608,14 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
       Left = 41
       Top = 977
       Width = 472
-      Height = 34
+      Height = 45
       Margins.LeftMargin = 1.000000000000000000
       Margins.RightMargin = 1.000000000000000000
       Alignment = taCenter
       AutoSize = False
       DataField = 'CodigoBarras'
       DataSource = dsGuia
+      Ratio = 3.000000000000000000
     end
     object RLLabel98: TRLLabel
       Left = 525

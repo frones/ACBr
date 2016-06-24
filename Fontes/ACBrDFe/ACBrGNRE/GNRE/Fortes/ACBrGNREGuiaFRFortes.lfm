@@ -920,7 +920,7 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
       end
       object RLDBBarcode1: TRLDBBarcode
         Left = 3
-        Height = 34
+        Height = 45
         Top = 279
         Width = 472
         Alignment = taCenter
@@ -929,6 +929,7 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
         DataSource = dsGuia
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
+				Ratio = 3
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -2093,7 +2094,7 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
       end
       object RLDBBarcode2: TRLDBBarcode
         Left = 3
-        Height = 34
+        Height = 45
         Top = 609
         Width = 472
         Alignment = taCenter
@@ -2102,6 +2103,7 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
         DataSource = dsGuia
         Margins.LeftMargin = 1
         Margins.RightMargin = 1
+				Ratio = 3
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -3267,7 +3269,7 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
     end
     object RLDBBarcode3: TRLDBBarcode
       Left = 41
-      Height = 34
+      Height = 45
       Top = 977
       Width = 472
       Alignment = taCenter
@@ -3276,6 +3278,7 @@ object ACBrGNREGuiaFR_Fortes: TACBrGNREGuiaFR_Fortes
       DataSource = dsGuia
       Margins.LeftMargin = 1
       Margins.RightMargin = 1
+			Ratio = 3
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0

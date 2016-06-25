@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/06/2016
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[*] Ajustes para Habilitar ou não a Banda Fatura, atraves da 
+    propriedade ExibirCampoFatura.
+[+] Ajuste para Habilitar ou não a Banda Fatura, no caso 
+    da forma de pagamento igual a OUTROS e existir
+    dados de fatura.
+         Por : Henrique Leonardo       
+
 10/06/2016
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [-] Ajuste para evitar erro na Impressão, caso o Logo informado seja

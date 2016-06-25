@@ -2053,26 +2053,18 @@ end;
 
 procedure TfrlDANFeRLRetrato.AddFaturaReal;
 begin
+  rlbFaturaReal.Visible := fExibeCampoFatura;
 
   case FNFe.Ide.indPag of
-    ipVista : RlbDadoPagamento.caption := ACBrStr('PAGAMENTO À VISTA');
-    ipPrazo : RlbDadoPagamento.caption := ACBrStr('PAGAMENTO À PRAZO');
-    ipOutras: RlbDadoPagamento.caption := 'OUTROS';
+    ipVista : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO À VISTA');
+    ipPrazo : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO À PRAZO');
+    ipOutras: begin
+                RlbDadoPagamento.caption  := 'OUTROS';
+                rlbFaturaReal.Visible     := NaoEstaVazio(FNFe.Cobr.Fat.nFat) and fExibeCampoFatura;
+              end;
   end;
 
-  RLLabelNUmero.Caption         := '';
-  RLLabelValor.Caption          := '';
-  RLLabelDupl.Caption           := '';
-  RLLabelLIQ.Caption            := '';
-  RlbDadoNumero.caption         := '';
-  RlbDadoValorOriginal.caption  := '';
-  RlbDadoValorDesconto.caption  := '';
-  RlbDadoValorLiquido.caption   := '';
-
-
-  // A propriedade ExibeCampoFatura só tem a função de controlar os dados de fatura.
-  //  Por padrão, a Banda Fatura, dever ser exibida sempre.
-  if fExibeCampoFatura then
+  if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
   begin
 
     RLLabelNUmero.Caption := ACBrStr( 'NÚMERO' );
@@ -2085,17 +2077,24 @@ begin
     RLLabelValor.Left     := 439;
     RLLabelDupl.Left      := 541;
     RLLabelLIQ.Left       := 652;
-
-    if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
+    with FNFe.Cobr.Fat do
     begin
-      with FNFe.Cobr.Fat do
-      begin
-        RlbDadoNumero.caption         := nFat;
-        RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig,',#0.00');
-        RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,',#0.00');
-        RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,',#0.00');
-      end;
-    end
+      RlbDadoNumero.caption         := nFat;
+      RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig,'###,###,###,##0.00');
+      RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,'###,###,###,##0.00');
+      RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,'###,###,###,##0.00');
+    end;
+  end
+  else
+  begin
+    RLLabelNUmero.Caption         := '';
+    RLLabelValor.Caption          := '';
+    RLLabelDupl.Caption           := '';
+    RLLabelLIQ.Caption            := '';
+    RlbDadoNumero.caption         := '';
+    RlbDadoValorOriginal.caption  := '';
+    RlbDadoValorDesconto.caption  := '';
+    RlbDadoValorLiquido.caption   := '';
   end;
 end;
 

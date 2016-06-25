@@ -22,7 +22,6 @@ object dmACBrGNREFR: TdmACBrGNREFR
     FitWindow = False
     CenterWindow = False
     PrintScaling = False
-    CheckboxAsShape = False
     Left = 48
     Top = 92
   end
@@ -46,7 +45,7 @@ object dmACBrGNREFR: TdmACBrGNREFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.13.1'
+    Version = '5.3.16'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False

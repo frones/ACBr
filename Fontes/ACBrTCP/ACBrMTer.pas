@@ -218,7 +218,7 @@ end;
 procedure TACBrMTer.DoRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
   const Recebido: AnsiString; var Enviar: AnsiString);
 var
-  wIP, wRecebido: String;
+  wIP, wRecebido: AnsiString;
 begin
   wIP := TCPBlockSocket.GetRemoteSinIP;
 

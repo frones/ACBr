@@ -1316,8 +1316,14 @@ begin
     VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
     // Dados do Emitente
     CNPJ         := FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+    if CNPJ = '' then
+      GerarException(ACBrStr('O CNPJ não informado em: Configuracoes.Geral.Emitente.CNPJ'));
     IM           := FPConfiguracoesNFSe.Geral.Emitente.InscMun;
+    if IM = '' then
+      GerarException(ACBrStr('A I.M. não informada em: Configuracoes.Geral.Emitente.InscMun'));
     RazaoSocial  := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
+    if RazaoSocial = '' then
+      GerarException(ACBrStr('A Razão Social não informada em: Configuracoes.Geral.Emitente.RazSocial'));
     Senha        := FPConfiguracoesNFSe.Geral.Emitente.WebSenha;
     FraseSecreta := FPConfiguracoesNFSe.Geral.Emitente.WebFraseSecr;
     UserWeb      := FPConfiguracoesNFSe.Geral.UserWeb;

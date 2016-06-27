@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/06/2016
+-- ACBrNFSeWebServices --
+[*] Acrescentado verificação se as configurações: Configuracoes.Geral.Emitente.CNPJ,
+    Configuracoes.Geral.Emitente.InscMun e Configuracoes.Geral.Emitente.RazSocial
+    foram setadas.
+    Por: Italo Jurisato Junior
+
 24/06/2016
 -- ACBrNFSeNotasFiscais --
 [*] Possível Correção de assinatura do provedor "pro4R" em OpenSSL (por: DSA)

@@ -2856,6 +2856,7 @@ begin
       proDigifred:  TagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
       proInfisc:    TagGrupo := 'pedidoLoteNFSe';
       proISSDSF:    TagGrupo := 'ReqConsultaNotas';
+      proPVH,
       proTecnos,
       proSystemPro: TagGrupo := 'ConsultarNfseFaixaEnvio';
       proSP:        TagGrupo := 'PedidoConsultaNFe';

@@ -1791,8 +1791,8 @@ procedure TNFSeEnviarLoteRPS.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeEnviarLoteRPS.GerarMsgLog: String;
@@ -1943,8 +1943,8 @@ procedure TNFSeEnviarSincrono.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeEnviarSincrono.GerarMsgLog: String;
@@ -2136,8 +2136,8 @@ procedure TNFSeGerarNFSe.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeGerarNFSe.GerarMsgLog: String;
@@ -3584,8 +3584,8 @@ procedure TNFSeSubstituirNFSe.FinalizarServico;
 begin
   inherited FinalizarServico;
 
-  if Assigned(FRetornoNFSe) then
-    FreeAndNil(FRetornoNFSe);
+//  if Assigned(FRetornoNFSe) then
+//    FreeAndNil(FRetornoNFSe);
 end;
 
 function TNFSeSubstituirNFSe.GerarMsgLog: String;

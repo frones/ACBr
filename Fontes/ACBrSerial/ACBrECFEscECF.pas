@@ -2149,7 +2149,15 @@ var
   P, Espera, LenMaxBuffer: Integer;
   Buffer : AnsiString ;
 begin
+  { Muda caracteres de controle com CR e LF, para evitar quebra de linhas em "AjustaLinhas" abaixo }
+  Linha := ReplaceString(Linha, ESC+CR, ESC+#213);
+  Linha := ReplaceString(Linha, ESC+LF, ESC+#210);
+
   Linha := AjustaLinhas( Linha, Colunas, 0, IsBematech );  { Formata as Linhas de acordo com "Coluna" }
+
+  Linha := ReplaceString(Linha, ESC+#213, ESC+CR);
+  Linha := ReplaceString(Linha, ESC+#210, ESC+LF);
+
   LenMaxBuffer := cEscECFMaxBuffer;
 
   AjustaComandosControleImpressao(Linha);

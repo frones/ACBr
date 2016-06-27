@@ -195,7 +195,10 @@ end;
 procedure TCFeCancW.GerarDest;
 begin
   Gerador.wGrupo('dest', 'E01');
-  Gerador.wCampoCNPJCPF('E02', 'E03', CFeCanc.Dest.CNPJCPF, False);
+
+  if (CFeCanc.infCFe.versao < 0.07) or (not FApenasTagsAplicacao) then
+    Gerador.wCampoCNPJCPF('E02', 'E03', CFeCanc.Dest.CNPJCPF, False);
+
   Gerador.wGrupo('/dest');
 end;
 

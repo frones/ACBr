@@ -1438,6 +1438,7 @@ end;
 procedure TACBrSAT.CFe2CFeCanc;
 begin
   CFeCanc.Clear;
+  CFeCanc.infCFe.versao   := CFe.infCFe.versao;
   CFeCanc.infCFe.chCanc   := fsPrefixoCFe + CFe.infCFe.ID;
   CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
   CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;

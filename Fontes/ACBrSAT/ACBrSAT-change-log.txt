@@ -52,6 +52,11 @@ Data: 27/06/2016
 [*] Adicionada a limeza do conteudo de "vTroco" em CFe.Clear
     http://www.projetoacbr.com.br/forum/index.php?showtopic=30868
 
+-- ACBrSAT, pcnCFeCancW --
+[-] Correção para não gerar CPF ou CNPJ se a versão do XML for superior a 0.06.
+    Versão do XML de Cancelamento será definida pela versão do XML da venda lido
+    (por: DSA)
+
 Data: 11/05/2016
 -- pcnCFeR, pcnCFeW --
 [*] Ajuste para processar a taga "CEST", somente se a versão do XML for 0.08

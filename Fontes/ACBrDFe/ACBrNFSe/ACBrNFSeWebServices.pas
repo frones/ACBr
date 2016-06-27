@@ -1595,7 +1595,7 @@ begin
     case FProvedor of
       proCONAM:  TagElemento := 'Reg20';
       proInfisc: TagElemento := 'infNFSe';
-      proSP:     TagElemento := 'RPS';
+      proSP:     TagElemento := '';
     else
       TagElemento := 'LoteRps';
     end;
@@ -2045,7 +2045,7 @@ begin
     case FProvedor of
       proBHISS:       TagElemento := 'LoteRps';
       proEGoverneISS: TagElemento := 'rgm:NotaFiscal';
-      proSP:          TagElemento := 'RPS';
+      proSP:          TagElemento := '';
     else
       TagElemento := 'Rps';
     end;

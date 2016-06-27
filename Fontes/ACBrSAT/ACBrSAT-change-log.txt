@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/06/2016
+-- pcnCFe --
+[*] Adicionada a limeza do conteudo de "vTroco" em CFe.Clear
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30868
+
 Data: 11/05/2016
 -- pcnCFeR, pcnCFeW --
 [*] Ajuste para processar a taga "CEST", somente se a versão do XML for 0.08

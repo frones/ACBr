@@ -621,7 +621,7 @@ type
   public
     constructor Create(AOwner: TCFe);
     destructor Destroy; override;
-
+    procedure Clear;
     function Add: TMPCollectionItem;
     property Items[Index: Integer]: TMPCollectionItem read GetItem write SetItem; default;
   published
@@ -1220,7 +1220,12 @@ end ;
 function TMPCollection.Add: TMPCollectionItem;
 begin
   Result := TMPCollectionItem(inherited Add);
-//  Result.Create;
+end;
+
+procedure TMPCollection.Clear;
+begin
+   inherited Clear;
+   FvTroco := 0;
 end;
 
 constructor TMPCollection.Create(AOwner: TCFe);

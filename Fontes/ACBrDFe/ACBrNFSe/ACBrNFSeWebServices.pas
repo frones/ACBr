@@ -1637,23 +1637,6 @@ begin
     FTagF := '</' + TagGrupo + '>';
 
     if FProvedor in [proInfisc, proGoverna] then
-    case FProvedor of
-      proABase: FTagI := '<' + TagGrupo + FNameSpaceDad + ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
-
-      proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
-                                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-                                               'xsi:schemaLocation="http://www.equiplano.com.br/enfs esRecepcionarLoteRpsEnvio_v01.xsd">';
-
-      proCONAM,
-      proEL,
-      proFISSLex,
-      proPronimV2,
-      proSimplISS: FTagI := '<' + TagGrupo + '>';
-    else
-      FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
-    end;
-    FTagF := '</' + TagGrupo + '>';
-
     begin
       FTagI := '';
       FTagF := '';

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/06/2016
+[+] Implementada leitura do grupo de exportação do item.
+	por: Celso Marigo Junior
+
 24/06/2016
 [*] Objeto EMAIL, comandos TextoMensagem e Texto alternativo,
     modificados para adicionar texto à mensagem ao invés de setar.

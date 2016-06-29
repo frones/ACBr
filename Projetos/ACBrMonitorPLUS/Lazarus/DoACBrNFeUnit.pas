@@ -3123,6 +3123,21 @@ begin
                     Break;
                 end;
 
+               for J:=0 to Prod.detExport.Count-1 do
+               begin
+                 if Prod.detExport.Items[j].nDraw <> '' then
+                 begin
+                   with Prod.detExport.Items[j] do
+                   begin
+                     sSecao := 'detExport'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3);
+                     INIRec.WriteString(sSecao, 'nDraw', nDraw);
+                     INIRec.WriteString(sSecao, 'nRe', nRE);
+                     INIRec.WriteString(sSecao, 'chNFe', chNFe);
+                     INIRec.WriteFloat(sSecao, 'qExport', qExport);
+                   end;
+                 end;
+               end;
+
               if Prod.veicProd.chassi <> '' then
                begin
                  sSecao := 'Veiculo'+IntToStrZero(I+1,3) ;

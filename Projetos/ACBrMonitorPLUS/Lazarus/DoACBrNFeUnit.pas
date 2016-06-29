@@ -3540,10 +3540,14 @@ begin
              end;
           end;
 
-         if (exporta.UFembarq <> '') then
+         if (exporta.UFembarq <> '') or (exporta.UFSaidaPais <> '') then
           begin
             INIRec.WriteString( 'Exporta','UFembarq'  ,exporta.UFembarq) ;
             INIRec.WriteString( 'Exporta','xLocEmbarq',exporta.xLocEmbarq);
+
+            INIRec.WriteString( 'Exporta','UFSaidaPais',exporta.UFSaidaPais) ;
+            INIRec.WriteString( 'Exporta','xLocExporta',exporta.xLocExporta);
+            INIRec.WriteString( 'Exporta','xLocDespacho',exporta.xLocDespacho);
           end;
 
          if (compra.xNEmp <> '') then

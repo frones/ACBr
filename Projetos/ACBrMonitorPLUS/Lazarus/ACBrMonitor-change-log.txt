@@ -44,6 +44,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/06/2016
+[+] Implementada leitura do grupo de EXPORTA da nota.
+	por: Celso Marigo Junior
+
+29/06/2016
 [+] Implementada leitura do grupo de exportação do item.
 	por: Celso Marigo Junior
 

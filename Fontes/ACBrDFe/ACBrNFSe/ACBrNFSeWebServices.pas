@@ -1526,6 +1526,9 @@ begin
   if Assigned(FRetornoNFSe) then
     FRetornoNFSe.Free;
 
+  if Assigned(FRetEnvLote) then
+    FRetEnvLote.Free;
+
   inherited Destroy;
 end;
 
@@ -1740,52 +1743,51 @@ var
 begin
   FPRetWS := ExtrairRetorno;
 
+  if Assigned(FRetEnvLote) then
+    FreeAndNil(FRetEnvLote);
   FRetEnvLote := TRetEnvLote.Create;
-  try
-    FRetEnvLote.Leitor.Arquivo := FPRetWS;
-    FRetEnvLote.Provedor := FProvedor;
-    FRetEnvLote.LerXml;
 
-    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar);
+  FRetEnvLote.Leitor.Arquivo := FPRetWS;
+  FRetEnvLote.Provedor := FProvedor;
+  FRetEnvLote.LerXml;
 
-    FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
-    FProtocolo       := RetEnvLote.InfRec.Protocolo;
-    if RetEnvLote.InfRec.NumeroLote <> '' then
-      FNumeroLote := RetEnvLote.InfRec.NumeroLote;
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar);
 
-    // Lista de Mensagem de Retorno
-    FPMsg := '';
-    FaMsg := '';
-    if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+  FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
+  FProtocolo       := RetEnvLote.InfRec.Protocolo;
+  if RetEnvLote.InfRec.NumeroLote <> '' then
+    FNumeroLote := RetEnvLote.InfRec.NumeroLote;
+
+  // Lista de Mensagem de Retorno
+  FPMsg := '';
+  FaMsg := '';
+  if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+  begin
+    for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
     begin
-      for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
-      begin
-        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
+      FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
-                         'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
-                         'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
-                         'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
-                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
-      end;
-    end
-    else begin
-      for i := 0 to FNotasFiscais.Count -1 do
-      begin
-        FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
-        FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
-      end;
-      FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
-               'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
-               'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
-               'Protocolo..... : ' + FProtocolo + LineBreak +
-               'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+      FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                       'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
+                       'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                       'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
+                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
     end;
-
-    Result := (RetEnvLote.InfRec.Protocolo <> '');
-  finally
-    RetEnvLote.Free;
+  end
+  else begin
+    for i := 0 to FNotasFiscais.Count -1 do
+    begin
+      FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
+      FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
+    end;
+    FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+             'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
+             'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
+             'Protocolo..... : ' + FProtocolo + LineBreak +
+             'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
+
+  Result := (RetEnvLote.InfRec.Protocolo <> '');
 end;
 
 procedure TNFSeEnviarLoteRPS.FinalizarServico;

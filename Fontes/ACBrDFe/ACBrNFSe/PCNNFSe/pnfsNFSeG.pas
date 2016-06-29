@@ -1028,7 +1028,7 @@ begin
              Gerador.wCampoNFSe(tcStr, '#5', 'NumeroNfse', 01, 15, 1, NumeroNFSe, '', True, aNameSpace);
          end;
 
-         if (DataInicial>0) and (DataFinal>0) then
+         if ((DataInicial>0) and (DataFinal>0)) and (provedor <> proPVH) then
          begin
            Gerador.wGrupoNFSe('PeriodoEmissao' + aNameSpace);
            Gerador.wCampoNFSe(tcDat, '#5', 'DataInicial', 10, 10, 1, DataInicial, '');

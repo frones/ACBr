@@ -227,15 +227,15 @@ begin
   if not FApenasTagsAplicacao then
   begin
     if CFeCanc.InfAdic.obsFisco.Count > 10 then
-      Gerador.wAlerta('Z03', 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
+      Gerador.wAlerta(IIf(CFeCanc.infCFe.versao >= 0.08,'ZA01','Z03'), 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
     for i := 0 to CFeCanc.InfAdic.obsFisco.Count - 1 do
     begin
-      Gerador.wGrupo('obsFisco xCampo="' + trim(CFeCanc.InfAdic.obsFisco[i].xCampo) + '"', 'Z04');
+      Gerador.wGrupo('obsFisco xCampo="' + trim(CFeCanc.InfAdic.obsFisco[i].xCampo) + '"', IIf(CFeCanc.infCFe.versao >= 0.08,'ZA02','Z04'));
       if length(trim(CFeCanc.InfAdic.obsFisco[i].xCampo)) > 20 then
-        Gerador.wAlerta('ZO4', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+        Gerador.wAlerta(IIf(CFeCanc.infCFe.versao >= 0.08,'ZA02','Z04'), 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
       if length(trim(CFeCanc.InfAdic.obsFisco[i].xCampo)) = 0 then
-        Gerador.wAlerta('ZO4', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
-      Gerador.wCampo(tcStr, 'Z05', 'xTexto', 01, 60, 1, CFeCanc.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
+        Gerador.wAlerta(IIf(CFeCanc.infCFe.versao >= 0.08,'ZA02','Z04'), 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+      Gerador.wCampo(tcStr, IIf(CFeCanc.infCFe.versao >= 0.08,'ZA03','Z05'), 'xTexto', 01, 60, 1, CFeCanc.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
       Gerador.wGrupo('/obsFisco');
     end;
   end;

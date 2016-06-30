@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/06/2016
+-- pcnCFeW, pcnCFeCancW --
+[*] Ajustes para correta nomenclatura dos Campos na versão 0.08 (por:TDP Sistemas)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30957
+
+
 Data: 27/06/2016
 -- pcnCFe --
 [*] Adicionada a limeza do conteudo de "vTroco" em CFe.Clear

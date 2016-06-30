@@ -189,7 +189,7 @@ function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
 function RetirarPrefixos(const AXML: String): String;
 function VersaoXML(AXML: String): String;
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
-                               ANumero: Integer; AModelo: Integer = 56): String;
+                               ANumero: Int64; AModelo: Integer = 56): String;
 
 function LayOutToServico(const t: TLayOutNFSe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutNFSe;
@@ -17992,7 +17992,7 @@ begin
 end;
 
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
-                       ANumero: Integer; AModelo: Integer): String;
+                       ANumero: Int64; AModelo: Integer): String;
 var
   vUF, vDataEmissao, vNumero, vModelo: String;
 begin

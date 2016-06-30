@@ -312,7 +312,7 @@ begin
     Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
                             ANFSe.DataEmissao,
                             OnlyNumber(xCNPJ),
-                            StrToIntDef(NumDoc, 0))
+                            StrToInt64Def(NumDoc, 0))
   else
     Result := NumDoc + ANFSe.IdentificacaoRps.Serie;
 end;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/06/2016
+-- ACBrNFSe / ACBrNFSeWebServices --
+[*] Alterado a montagem do nome da NFS-e, acrescentando a função para remover a 
+    formatação do CNPJ do emitente.
+    Por: Italo Jurisato Junior
+
 29/06/2016
 -- ACBrNFSeWebServices --
 [*] Alterado a montagem do nome da NFS-e, acrescentando a série.

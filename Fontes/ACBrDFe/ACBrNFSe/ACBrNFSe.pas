@@ -311,7 +311,7 @@ begin
   if Configuracoes.Arquivos.NomeLongoNFSe then
     Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
                             ANFSe.DataEmissao,
-                            xCNPJ,
+                            OnlyNumber(xCNPJ),
                             StrToIntDef(NumDoc, 0))
   else
     Result := NumDoc + ANFSe.IdentificacaoRps.Serie;

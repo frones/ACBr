@@ -268,6 +268,18 @@ type
     FUnidade: String;
     FAlicotaISSST: currency;
     FValorISSST: currency;
+    FpRetIR: currency;
+    FvBCCSLL: currency;
+    FpRetINSS: currency;
+    FvBCINSS: currency;
+    FvBCPISPASEP: currency;
+    FvBCCOFINS: currency;
+    FvBCRetIR: currency;
+    FpRetCSLL: currency;
+    FvDed: currency;
+    FpRetPISPASEP: currency;
+    FpRetCOFINS: currency;
+    FvRed: currency;
 
   public
     constructor Create; reintroduce;
@@ -300,6 +312,19 @@ type
     property Unidade     : String read FUnidade write FUnidade;
     property AlicotaISSST: currency read FAlicotaISSST write FAlicotaISSST;
     property ValorISSST  : currency read FValorISSST write FValorISSST;
+    property vDed: currency read FvDed write FvDed;
+    property vBCINSS: currency read FvBCINSS write FvBCINSS;
+    property pRetINSS: currency read FpRetINSS write FpRetINSS;
+    property vRed: currency read FvRed write FvRed;
+    property vBCRetIR: currency read FvBCRetIR write FvBCRetIR;
+    property pRetIR: currency read FpRetIR write FpRetIR;
+    property vBCCOFINS: currency read FvBCCOFINS write FvBCCOFINS;
+    property pRetCOFINS: currency read FpRetCOFINS write FpRetCOFINS;
+    property vBCCSLL: currency read FvBCCSLL write FvBCCSLL;
+    property pRetCSLL: currency read FpRetCSLL write FpRetCSLL;
+    property vBCPISPASEP: currency read FvBCPISPASEP write FvBCPISPASEP;
+    property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
+
   end;
 
  TDeducaoCollection = class(TCollection)

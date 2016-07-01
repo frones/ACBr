@@ -7374,12 +7374,12 @@ begin
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin
-      ACBrNFeDANFCeFortes1.ImprimirDescPorc := cbxImprimirDescAcresItemNFCe.Checked;
-      ACBrNFeDANFCeFortes1.ImprimirTotalLiquido := cbxImprimirDescAcresItemNFCe.Checked;
-      ACBrNFeDANFCeFortes1.MargemInferior  := fspeNFCeMargemInf.Value;
-      ACBrNFeDANFCeFortes1.MargemSuperior  := fspeNFCeMargemSup.Value;
-      ACBrNFeDANFCeFortes1.MargemDireita   := fspeNFCeMargemDir.Value;
-      ACBrNFeDANFCeFortes1.MargemEsquerda  := fspeNFCeMargemEsq.Value;
+      ACBrNFeDANFCeFortes1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortes1.ImprimirTotalLiquido  := cbxImprimirDescAcresItemNFCe.Checked;
+      ACBrNFeDANFCeFortes1.MargemInferior        := fspeNFCeMargemInf.Value;
+      ACBrNFeDANFCeFortes1.MargemSuperior        := fspeNFCeMargemSup.Value;
+      ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
+      ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     begin

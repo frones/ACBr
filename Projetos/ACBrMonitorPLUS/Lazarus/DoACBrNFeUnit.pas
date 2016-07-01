@@ -2166,9 +2166,9 @@ begin
                if (Length(INIRec.ReadString( sSecao,'EAN','')) > 0) or (Length(INIRec.ReadString( sSecao,'cEAN','')) > 0)  then
                   Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
                Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
-               Prod.NCM       := INIRec.ReadString( sSecao,'NCM'      ,'');
-               Prod.CEST       := INIRec.ReadString( sSecao,'CEST'      ,'');
-               Prod.EXTIPI       := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
+               Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
+               Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
+               Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
                Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
                Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
                Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0) ;

@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2016
+[*] Correção para parâmetro de impressão de desconto no item da NFCe.
+	por: Celso Marigo Junior
+
 29/06/2016
 [+] Implementada leitura do grupo de EXPORTA da nota.
 	por: Celso Marigo Junior

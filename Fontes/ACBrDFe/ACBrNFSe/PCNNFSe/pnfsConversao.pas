@@ -17999,7 +17999,7 @@ begin
   vUF          := Poem_Zeros(AUF, 2);
   vDataEmissao := FormatDateTime('YYMM', ADataEmissao);
   vModelo      := Poem_Zeros(AModelo, 2);
-  vNumero      := Poem_Zeros(ANumero, 9);
+  vNumero      := Poem_Zeros(ANumero, 15);
 
   Result := vUF + vDataEmissao + ACNPJ + vModelo + vNumero;
 end;

@@ -135,7 +135,7 @@ type
     function LerXml_proGoverna: Boolean;
     function LerXml_proInfisc: Boolean;
     function LerXml_proISSDSF: Boolean;
-	  function LerXml_proNFSeBrasil: Boolean;
+    function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
 
   published
@@ -738,9 +738,10 @@ begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
       begin
         FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
-
         if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
         begin
+          if FInfRec.FSucesso = 'true' then
+            FInfRec.Protocolo:=Leitor.rCampo(tcStr, 'NumeroLote');
           FInfRec.InformacoesLote.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
           FInfRec.InformacoesLote.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
           FInfRec.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CNPJ');

@@ -90,6 +90,15 @@ type
       var SelectionNamespaces: AnsiString);
     function XmlSecSign(const ConteudoXML: AnsiString;
       SignatureNode, SelectionNamespaces, InfElement: AnsiString): AnsiString;
+    function XmlSecNodeWasFound(ANode: xmlNodePtr; NodeName: AnsiString;
+      NameSpace: AnsiString): Boolean;
+    function XmlSecFindSignatureNode( ADoc: xmlDocPtr; SignatureNode,
+      SelectionNamespaces, InfElement: AnsiString): xmlNodePtr;
+    function XmlSecLookUpNode(ParentNode: xmlNodePtr; NodeName: AnsiString;
+      NameSpace: AnsiString = ''): xmlNodePtr;
+    function _XmlSecLookUpNode(ParentNode: xmlNodePtr; NodeName: AnsiString;
+      NameSpace: AnsiString = ''): xmlNodePtr;
+
     procedure CreateCtx;
     procedure DestroyCtx;
     procedure DestroyKey;
@@ -390,7 +399,7 @@ function TDFeOpenSSL.VerificarAssinatura(const ConteudoXML: String; out
   SelectionNamespaces: String): Boolean;
 var
   doc: xmlDocPtr;
-  node, infNode: xmlNodePtr;
+  SignNode: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
   X509Certificate, DTD: String;
@@ -453,30 +462,15 @@ begin
       exit;
     end;
 
-    infNode := xmlDocGetRootElement(doc);
-    while (infNode <> nil) and (infNode.name <> asInfElement) do
-      infNode := infNode.children;
-
-    if (infNode = nil) then
-    begin
-      MsgErro := ACBrStr(cErrFindRootNode);
-      exit;
-    end;
-
-    if infNode^.name = infElement then
-      infNode := infNode.parent;
-
-    if (infNode = nil) then
-    begin
-      MsgErro := ACBrStr(cErrFindRootNode);
-      exit;
-    end;
-
-    node := xmlSecFindChild(infNode, xmlCharPtr(asSignatureNode), xmlCharPtr(asSelectionNamespaces) );
-    if (node = nil) then
-    begin
-      MsgErro := ACBrStr(cErrFindSignNode);
-      exit;
+    { Achando o nó da Assinatura }
+    try
+      SignNode := XmlSecFindSignatureNode(doc, SignatureNode, SelectionNamespaces, infElement);
+    except
+      On E: Exception do
+      begin
+        MsgErro := E.Message;
+        exit;
+      end
     end;
 
     dsigCtx := xmlSecDSigCtxCreate(mngr);
@@ -496,7 +490,7 @@ begin
     end;
 
     { Verify signature }
-    if (xmlSecDSigCtxVerify(dsigCtx, node) < 0) then
+    if (xmlSecDSigCtxVerify(dsigCtx, SignNode) < 0) then
     begin
       MsgErro := ACBrStr(cErrDSigVerify);
       exit;
@@ -581,7 +575,7 @@ function TDFeOpenSSL.XmlSecSign(const ConteudoXML: AnsiString; SignatureNode,
   SelectionNamespaces, InfElement: AnsiString): AnsiString;
 var
   doc: xmlDocPtr;
-  SignNode, infNode: xmlNodePtr;
+  SignNode: xmlNodePtr;
   buffer: PAnsiChar;
   bufSize, SignResult: integer;
 begin
@@ -595,44 +589,13 @@ begin
 
   CreateCtx;
   try
-    VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
-
     { load template }
     doc := xmlParseDoc(PAnsiChar(ConteudoXML));
     if (doc = nil) then
       raise EACBrDFeException.Create(cErrParseDoc);
 
-    { find infElement node }
-    infNode := xmlDocGetRootElement(doc);
-    if (InfElement <> '') then
-    begin
-      while (infNode <> nil) and (infNode.name <> InfElement) do
-        infNode := infNode.children;
-
-      if (infNode = nil) then
-        raise EACBrDFeException.Create(cErrFindRootNode);
-
-      if (infNode^.name = InfElement) and Assigned(infNode.parent) and (infNode.parent^.name <> '') then
-        infNode := infNode.parent;
-    end;
-
-    if (infNode = nil) then
-      raise EACBrDFeException.Create(cErrFindRootNode);
-
-    { find Signature node }
-    SignNode := xmlSecFindChild(infNode, xmlCharPtr(SignatureNode), xmlCharPtr(SelectionNamespaces) );
-    if (SignNode = nil) then
-    begin
-      // Tentando achar pelo Ultimo nó a partir da Raiz
-      infNode := xmlDocGetRootElement(doc);
-      SignNode := infNode.last;
-      if (SignNode <> nil) then
-        if SignNode.name <> SignatureNode then
-          SignNode := nil;
-    end;
-
-    if (SignNode = nil) then
-      raise EACBrDFeException.Create(cErrFindSignNode);
+    { Dispara Exception se não encontrar o SignNode }
+    SignNode := XmlSecFindSignatureNode(doc, SignatureNode, SelectionNamespaces, InfElement);
 
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
@@ -654,6 +617,114 @@ begin
 
     DestroyCtx ;
   end;
+end;
+
+function TDFeOpenSSL.XmlSecFindSignatureNode(ADoc: xmlDocPtr; SignatureNode,
+  SelectionNamespaces, InfElement: AnsiString): xmlNodePtr;
+var
+  rootNode, infNode, SignNode: xmlNodePtr;
+begin
+  { Encontra o elemento Raiz }
+  rootNode := xmlDocGetRootElement(ADoc);
+  if (rootNode = nil) then
+    raise EACBrDFeException.Create(cErrFindRootNode);
+
+  VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
+
+  { Se tem InfElement, procura pelo mesmo. Isso permitirá acharmos o nó de
+    assinatura, relacionado a ele (mesmo pai) }
+  if (InfElement <> '') then
+  begin
+    { Procura InfElement em todos os nós, filhos de Raiz, usando XMLSec }
+    infNode := XmlSecLookUpNode(rootNode, InfElement );
+
+    { Não achei o InfElement em nenhum nó :( }
+    if (infNode = nil) then
+      raise EACBrDFeException.Create(cErrFindRootNode);
+
+    { Vamos agora, achar o pai desse Elemento, pois com ele encontraremos a assinatura }
+    if (infNode^.name = InfElement) and Assigned(infNode.parent) and (infNode.parent^.name <> '') then
+      infNode := infNode.parent;
+  end
+  else
+  begin
+    { InfElement não foi informado... vamos usar o nó raiz, para pesquisar pela assinatura }
+    infNode := rootNode;
+  end;
+
+  if (infNode = nil) then
+    raise EACBrDFeException.Create(cErrFindRootNode);
+
+  { Procurando pelo nó de assinatura...
+    Primeiro vamos verificar manualmente se é o último no do nosso infNode atual };
+  SignNode := infNode.last;
+  if not XmlSecNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
+  begin
+    { Não é o ultimo nó do infNode... então, vamos procurar por um Nó dentro de infNode }
+    SignNode := XmlSecLookUpNode(infNode, SignatureNode, SelectionNamespaces );
+
+    { Se ainda não achamos, vamos procurar novamente a partir do elemento Raiz  }
+    if (SignNode = nil) then
+    begin
+      SignNode := rootNode.last;
+      if not XmlSecNodeWasFound(SignNode, SignatureNode, SelectionNamespaces) then
+        SignNode := XmlSecLookUpNode(rootNode, SignatureNode, SelectionNamespaces );
+    end;
+  end;
+
+  if (SignNode = nil) then
+    raise EACBrDFeException.Create(cErrFindSignNode);
+
+  Result := SignNode;
+end;
+
+function TDFeOpenSSL.XmlSecNodeWasFound(ANode: xmlNodePtr;
+  NodeName: AnsiString; NameSpace: AnsiString): Boolean;
+begin
+  Result := (ANode <> nil) and
+            (ANode.name = NodeName) and
+            ( (NameSpace = '') or (ANode.ns.href = NameSpace) );
+end;
+
+function TDFeOpenSSL.XmlSecLookUpNode(ParentNode: xmlNodePtr;
+  NodeName: AnsiString; NameSpace: AnsiString): xmlNodePtr;
+begin
+  Result := ParentNode;
+  if (ParentNode = Nil) or (Trim(NodeName) = '') then
+    Exit;
+
+  { Primeiro vamos ver se o nó Raiz já não é o que precisamos }
+  if XmlSecNodeWasFound(ParentNode, NodeName, NameSpace) then
+    Exit;
+
+  { Chama função auxiliar, que usa busca recursiva em todos os nós filhos }
+  Result := _XmlSecLookUpNode(ParentNode.children, NodeName, NameSpace);
+end;
+
+function TDFeOpenSSL._XmlSecLookUpNode(ParentNode: xmlNodePtr;
+  NodeName: AnsiString; NameSpace: AnsiString): xmlNodePtr;
+var
+  NextNode, ChildNode, FoundNode: xmlNodePtr;
+begin
+  Result := ParentNode;
+  if (ParentNode = Nil) then
+    Exit;
+
+  FoundNode := ParentNode;
+
+  while (FoundNode <> Nil) and
+        (not XmlSecNodeWasFound(FoundNode, NodeName, NameSpace)) do
+  begin
+    ChildNode := FoundNode.children;
+    NextNode  := FoundNode.next;
+    { Faz Chamada recursiva para o novo Filho }
+    FoundNode := _XmlSecLookUpNode(ChildNode, NodeName, NameSpace);
+
+    if FoundNode = Nil then
+      FoundNode := NextNode;
+  end;
+
+  Result := FoundNode;
 end;
 
 procedure TDFeOpenSSL.CreateCtx;
@@ -987,30 +1058,22 @@ procedure TDFeOpenSSL.VerificarValoresPadrao(var SignatureNode: AnsiString;
 var
   DSigNs: AnsiString;
 begin
-  {
-    Não está funcionando adequadamente, pois não estamos fazendo uso dos
-    parâmetros enviados. Entretanto atualmente OpenSSL consegue assinar XMLs
-    com 2 assinaturas, mesmo sem essa informação, pois o comando
-    "xmlSecFindChild" consegue achar o NÓ de assinatura, imeditamente inferior
-    ao elemento raiz selecionado
-  }
-
-  //if SignatureNode = '' then
-    SignatureNode := xmlSecNodeSignature();
-  //else
-  //  SignatureNode := copy(SignatureNode, Pos(':',SignatureNode)+1, Length(SignatureNode));
+  if SignatureNode = '' then
+    SignatureNode := xmlSecNodeSignature()
+  else
+    SignatureNode := copy(SignatureNode, Pos(':',SignatureNode)+1, Length(SignatureNode));
 
   DSigNs := xmlSecDSigNs();
 
-  //if SelectionNamespaces = '' then
+  if SelectionNamespaces = '' then
     SelectionNamespaces := DSigNs
-  //else
-  //begin
-  //  SelectionNamespaces := RetornarConteudoEntre( SelectionNamespaces, '"', '"');
-  //
-  //  if LeftStr(SelectionNamespaces, Length(DSigNs)) <> DSigNs then
-  //    SelectionNamespaces := DSigNs + ' ' + SelectionNamespaces;
-  //end;
+  else
+  begin
+    SelectionNamespaces := RetornarConteudoEntre( SelectionNamespaces, '"', '"');
+
+    if strutils.LeftStr(SelectionNamespaces, Length(DSigNs)) <> DSigNs then
+      SelectionNamespaces := DSigNs + ' ' + SelectionNamespaces;
+  end;
 end;
 
 

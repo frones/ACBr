@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/07/2016
+-- ACBrDFeOpenSSL --
+[*] Adicionado métodos internos para busca de nós a fim de melhorar a detecção
+    do nó a ser assinado e o nó de assinatura, a fim de suportar os diversos 
+    tipos de XMLs da NFSe (por: DSA)
+
 24/06/2016
 -- ACBrDFeSSL --
 [*] Método "AjustarXMLAssinado" modificado para remover Declaração de XML sem

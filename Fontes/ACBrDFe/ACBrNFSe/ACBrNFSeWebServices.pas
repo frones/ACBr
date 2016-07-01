@@ -638,6 +638,9 @@ begin
   if FProvedor = proPronim then
     DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 
+  if FProvedor = proPronimV2 then
+    DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
+
   Texto := StringReplace(Texto, '%SenhaMsg%', FDadosSenha, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NameSpace%', NameSpace, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%CabMsg%', CabMsg, [rfReplaceAll]);
@@ -1634,7 +1637,6 @@ begin
       proCONAM,
       proEL,
       proFISSLex,
-      proPronimV2,
       proSimplISS: FTagI := '<' + TagGrupo + '>';
     else
       FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
@@ -1892,11 +1894,7 @@ begin
         GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
     end;
 
-    case FProvedor of
-      proPronimV2: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + '>';
-    else
-      FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
-    end;
+    FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio' + FNameSpaceDad + '>';
     FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsSincronoEnvio>';
 
     InicializarGerarDadosMsg;

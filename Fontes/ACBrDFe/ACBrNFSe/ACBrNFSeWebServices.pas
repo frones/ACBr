@@ -1445,7 +1445,7 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroLote := TNFSeGerarLoteRps(Self).NumeroLote;
+      NumeroLote := FNumeroLote; // TNFSeGerarLoteRps(Self).NumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
 
@@ -1668,7 +1668,7 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroLote := TNFSeEnviarLoteRps(Self).NumeroLote;
+      NumeroLote := FNumeroLote; // TNFSeEnviarLoteRps(Self).NumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
 
@@ -1901,7 +1901,7 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroLote := TNFSeEnviarSincrono(Self).NumeroLote;
+      NumeroLote := FNumeroLote; // TNFSeEnviarSincrono(Self).NumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
@@ -2090,8 +2090,8 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroRps  := TNFSeGerarNfse(Self).FNumeroRps;
-      NumeroLote := TNFSeGerarNfse(Self).NumeroLote;
+      NumeroRps  := FNumeroRps; // TNFSeGerarNfse(Self).FNumeroRps;
+      NumeroLote := FNumeroLote; // TNFSeGerarNfse(Self).NumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
@@ -2256,10 +2256,10 @@ begin
 
     with GerarDadosMsg do
     begin
-      Protocolo := TNFSeConsultarSituacaoLoteRPS(Self).Protocolo;
+      Protocolo := FProtocolo; // TNFSeConsultarSituacaoLoteRPS(Self).Protocolo;
 
       // Necessário para o provedor Equiplano - Infisc
-      NumeroLote := TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote;
+      NumeroLote := FNumeroLote; // TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsSitLote + FTagF;
@@ -2526,10 +2526,10 @@ begin
 
     with GerarDadosMsg do
     begin
-      Protocolo := TNFSeConsultarLoteRPS(Self).Protocolo;
+      Protocolo := FProtocolo; // TNFSeConsultarLoteRPS(Self).Protocolo;
 
       // Necessário para o provedor Equiplano - EL
-      NumeroLote := TNFSeConsultarLoteRPS(Self).NumeroLote;
+      NumeroLote := FNumeroLote; // TNFSeConsultarLoteRPS(Self).NumeroLote;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote + FTagF;
@@ -2734,9 +2734,9 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroRps := TNFSeConsultarNfseRPS(Self).NumeroRps;
-      SerieRps  := TNFSeConsultarNfseRPS(Self).Serie;
-      TipoRps   := TNFSeConsultarNfseRPS(Self).Tipo;
+      NumeroRps := FNumeroRPS; // TNFSeConsultarNfseRPS(Self).NumeroRps;
+      SerieRps  := FSerie;
+      TipoRps   := FTipo;
 
       // Necessário para o provedor ISSDSF
       Transacao := FNotasFiscais.Transacao;

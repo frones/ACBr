@@ -521,7 +521,7 @@ end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
 begin
-  if Self.NotasFiscais.Count <= 0 then
+  if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
   Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo);
@@ -539,7 +539,7 @@ end;
 function TACBrNFSe.CancelarNFSe(ACodigoCancelamento, ANumeroNFSe,
   AMotivoCancelamento: String): Boolean;
 begin
-  if Self.NotasFiscais.Count <= 0 then
+  if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
   Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
@@ -555,7 +555,7 @@ begin
   if ANumeroNFSe = '' then
     GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
 
-  if Self.NotasFiscais.Count <= 0 then
+  if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);

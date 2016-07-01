@@ -3106,6 +3106,23 @@ begin
                         INIRec.WriteString(sSecao,'DataDesembaraco',DateToStr(dDesemb));
                         INIRec.WriteString(sSecao,'CodigoExportador',cExportador);;
 
+                        if ( TipoViaTranspToStr(tpViaTransp) <> '' ) then
+                        begin
+                          INIRec.WriteString(sSecao,'tpViaTransp', TipoViaTranspToStr(tpViaTransp));
+                          if ( tpViaTransp = tvMaritima ) then
+                            INIRec.WriteFloat(sSecao, 'vAFRMM', vAFRMM);
+                        end;
+
+                        if ( TipoIntermedioToStr(tpIntermedio) <> '' ) then
+                        begin
+                          INIRec.WriteString(sSecao, 'tpIntermedio', TipoIntermedioToStr(tpIntermedio));
+                          if not ( tpIntermedio = tiContaPropria) then
+                          begin
+                            INIRec.WriteString(sSecao, 'CNPJ', CNPJ);
+                            INIRec.WriteString(sSecao, 'UFTerceiro', UFTerceiro);
+                          end;
+                        end;
+
                         for K:=0 to adi.Count-1 do
                          begin
                            with adi.Items[K] do

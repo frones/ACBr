@@ -537,7 +537,7 @@ begin
            NFe.Det[i].Prod.DI[j].tpViaTransp := StrToTipoViaTransp(ok, LerCampo(tcStr, 'tpViaTransp'));
            if (NFe.infNFe.Versao >= 3.10) then
            begin
-             NFe.Det[i].Prod.DI[j].vAFRMM := LerCampo(tcStr, 'vAFRMM');
+             NFe.Det[i].Prod.DI[j].vAFRMM := LerCampo(tcDe2, 'vAFRMM');
              NFe.Det[i].Prod.DI[j].tpIntermedio := StrToTipoIntermedio(ok, LerCampo(tcStr, 'tpIntermedio'));
              NFe.Det[i].Prod.DI[j].CNPJ := LerCampo(tcStr, 'CNPJ');
              NFe.Det[i].Prod.DI[j].UFTerceiro := LerCampo(tcStr, 'UFTerceiro');

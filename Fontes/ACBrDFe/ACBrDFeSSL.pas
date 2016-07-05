@@ -296,7 +296,6 @@ function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String;
   ): String;
 Var
   XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois: String;
-  I: integer;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
   // Lendo Header antes de assinar, Se Header não for UTF8 não usa... //

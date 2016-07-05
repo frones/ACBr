@@ -858,7 +858,6 @@ begin
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proISSCuritiba then
     AXMLString := RetirarPrefixos(AXMLString);
 
-  Result := False;
   N := PosNFSe;
 
   if N > 0 then
@@ -907,6 +906,7 @@ begin
       N := PosRPS;
     end;
   end;
+
   Result := Self.Count > 0;
 end;
 

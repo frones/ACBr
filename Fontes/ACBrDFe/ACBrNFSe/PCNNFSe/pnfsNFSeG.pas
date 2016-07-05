@@ -283,6 +283,9 @@ begin
   case Provedor of
     proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) + CNPJ +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
+
+    proSalvador: IdLote := 'Lote' + NumeroLote;
+
     proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
   else
     IdLote := NumeroLote;

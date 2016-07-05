@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2016
+-- ACBrNFSeNotasFiscais / pnfsLerListaNFSe / pnfsNFSeW_ABRASFv1 / pnfsNFSeG --
+[*] Alterações visando acrescentar o prefixo RPS no ID do RPS e Lote no ID do Lote
+    para o provedor Salvador
+[*] Remoção de código desnecessário.
+    Por: Italo Jurisato Junior
+
 30/06/2016
 -- ACBrNFSe / ACBrNFSeWebServices --
 [*] Alterado a montagem do nome da NFS-e, acrescentando a função para remover a 

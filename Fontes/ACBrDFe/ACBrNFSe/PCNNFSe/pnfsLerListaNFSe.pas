@@ -581,7 +581,7 @@ begin
 
       if (Provedor = ProTecnos) then
       begin
-        NFSe := TNFSe.Create;
+//        NFSe := TNFSe.Create;
         with ListaNFSe.FCompNFSe.Add do
         begin
           FNFSe.NumeroLote    := NumeroLoteTemp;

@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2016
+-- ACBrDFeSSL --
+[*] Remoção de uma variável definida e não utilizada.
+   por: Italo Jurisato Junior
+
 01/07/2016
 -- ACBrDFeOpenSSL --
 [*] Adicionado métodos internos para busca de nós a fim de melhorar a detecção

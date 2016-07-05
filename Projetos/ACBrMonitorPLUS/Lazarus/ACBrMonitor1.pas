@@ -220,6 +220,7 @@ type
     bvCadastro3: TBevel;
     bvCadastro4: TBevel;
     bvCadastro5: TBevel;
+    cbMostrarNaBarraDeTarefas: TCheckBox;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
     cbCEPWebService: TComboBox;
@@ -1798,8 +1799,11 @@ begin
   if WindowState <> wsMinimized then
     Application.Minimize;
 
-  Visible := False;
-  Application.ShowMainForm := False;
+  if not ( cbMostrarNaBarraDeTarefas.Checked ) then
+  begin
+    Visible := False;
+    Application.ShowMainForm := False;
+  end;
 end;
 
 procedure TFrmACBrMonitor.ApplicationProperties1Restore(Sender: TObject);
@@ -3582,6 +3586,7 @@ begin
     cbComandos.Checked := Ini.ReadBool('ACBrMonitor', 'Comandos_Remotos', False);
     cbUmaInstancia.Checked := Ini.ReadBool('ACBrMonitor', 'Uma_Instancia', True);
     cbAbas.Checked := Ini.ReadBool('ACBrMonitor', 'MostraAbas', False);
+    cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', False);
     cbMonitorarPasta.OnChange := Nil;
     cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
     cbMonitorarPasta.OnChange := @cbMonitorarPastaChange;
@@ -4618,6 +4623,7 @@ begin
     Ini.WriteBool('ACBrMonitor', 'Comandos_Remotos', cbComandos.Checked);
     Ini.WriteBool('ACBrMonitor', 'Uma_Instancia', cbUmaInstancia.Checked);
     Ini.WriteBool('ACBrMonitor', 'MostraAbas', cbAbas.Checked);
+    Ini.WriteBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', cbMostrarNaBarraDeTarefas.Checked);
 
     { Parametros do ECF }
     Ini.WriteInteger('ECF', 'Modelo', max(cbECFModelo.ItemIndex - 1, 0));

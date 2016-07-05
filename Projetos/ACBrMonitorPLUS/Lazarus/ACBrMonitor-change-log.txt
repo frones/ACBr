@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2016
+[+] Opção para mostrar botão do ACBrMonitorPLUS na barra de tarefas,
+	isso deve resolver o problema do ACBrMonitorPLUS sumir no Ubuntu
+	por: Celso Marigo Junior
+
 01/07/2016
 [*] Adicionados campos faltando no grupo importação na geração do ini da NFe.
 	por: Celso Marigo Junior

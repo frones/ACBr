@@ -147,6 +147,7 @@ function nfseRegimeEspecialTributacaoDescricao( const t: TnfseRegimeEspecialTrib
 function SimNaoToStr(const t: TnfseSimNao): String;
 function StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
 
+function SimNaoInFiscToStr(const t: TnfseSimNao): String;
 function StrToSimNaoInFisc(out ok: boolean; const s: String): TnfseSimNao;
 
 function TipoRPSToStr(const t:TnfseTipoRPS): String;
@@ -343,17 +344,24 @@ begin
                            [snSim, snNao]);
 end;
 
-function StrToSimNaoInFisc(out ok: boolean; const s: String): TnfseSimNao;  {@/\@}
-begin
-  Result := StrToEnumerado(ok, s,
-                           ['N','S'],
-                           [snNao, snSim]);
-end;
-
 function StrToSimNao(out ok: boolean; const s: String): TnfseSimNao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1','2'],
+                           [snSim, snNao]);
+end;
+
+function SimNaoInFiscToStr(const t: TnfseSimNao): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['S','N'],
+                           [snSim, snNao]);
+end;
+
+function StrToSimNaoInFisc(out ok: boolean; const s: String): TnfseSimNao;
+begin
+  Result := StrToEnumerado(ok, s,
+                           ['S','N'],
                            [snSim, snNao]);
 end;
 

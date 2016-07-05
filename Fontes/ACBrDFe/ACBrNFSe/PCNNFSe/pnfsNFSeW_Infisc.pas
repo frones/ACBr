@@ -128,12 +128,9 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'tpNF'  , 01, 01, 1, '1', '');     // 0- Entrada 1- Saída
     Gerador.wCampoNFSe(tcStr, '', 'refNF' , 01, 39, 1, sChave, ''); // chave de acesso 39 caracteres
     Gerador.wCampoNFSe(tcStr, '', 'tpEmis', 01, 01, 1, TipoEmissaoToStr(NFSe.TipoEmissao), ''); // N- Normal C- Contigencia
-    Gerador.wCampoNFSe(tcStr, '', 'canhoto', 01, 01, 1, TCanhotoToStr(NFSe.Canhoto), '');
 
-    if NFSe.Cancelada = snNao then
-      Gerador.wCampoNFSe(tcStr, '', 'cancelada', 01, 01, 1, 'N', '')    // N- Não
-    else
-      Gerador.wCampoNFSe(tcStr, '', 'cancelada', 01, 01, 1, 'S', '');   // S- Sim
+    Gerador.wCampoNFSe(tcStr, '', 'cancelada', 01, 01, 1, SimNaoInFiscToStr(NFSe.Cancelada), '');
+    Gerador.wCampoNFSe(tcStr, '', 'canhoto'  , 01, 01, 1, TCanhotoToStr(NFSe.Canhoto), '');
 
     // ambiente 1- producao 2- homologacao
     Gerador.wCampoNFSe(tcStr, '', 'ambienteEmi', 01, 01, 1, SimNaoToStr(NFSe.Producao), '');

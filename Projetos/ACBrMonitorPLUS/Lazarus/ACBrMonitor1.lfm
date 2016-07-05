@@ -12,6 +12,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   Constraints.MinWidth = 590
   Font.Height = -13
   KeyPreview = True
+  Menu = MainMenu1
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -24,7 +25,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 23
     Top = 577
-    Width = 1027
+    Width = 1022
     Panels = <    
       item
         Text = 'Monitor: Inativo'
@@ -41,10 +42,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 43
     Top = 534
-    Width = 1027
+    Width = 1022
     Align = alBottom
     ClientHeight = 43
-    ClientWidth = 1027
+    ClientWidth = 1022
     Color = clBtnFace
     Font.Height = -13
     Font.Style = [fsBold]
@@ -55,7 +56,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 41
       Top = 1
-      Width = 1025
+      Width = 1020
       Align = alClient
       Picture.Data = {
         1754506F727461626C654E6574776F726B477261706869632A02000089504E47
@@ -82,7 +83,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     end
     object bCancelar: TBitBtn
       AnchorSideTop.Side = asrCenter
-      Left = 790
+      Left = 785
       Height = 27
       Hint = 'Cancela as AlteraÃ§Ãµes efetuadas'
       Top = 8
@@ -127,7 +128,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Control = pBotoes
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = bConfig
-      Left = 790
+      Left = 785
       Height = 27
       Hint = 'Esconde o ACBrMonitor'
       Top = 8
@@ -173,7 +174,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = pBotoes
       AnchorSideRight.Side = asrBottom
-      Left = 908
+      Left = 903
       Height = 27
       Hint = 'Configura os equipamentos e '#13#10'MÃ©todo de Monitoramento'
       Top = 8
@@ -251,10 +252,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 196
     Height = 504
     Top = 30
-    Width = 831
+    Width = 826
     Align = alClient
     ClientHeight = 504
-    ClientWidth = 831
+    ClientWidth = 826
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
@@ -262,17 +263,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 173
       Top = 330
-      Width = 829
+      Width = 824
       Align = alClient
       ClientHeight = 173
-      ClientWidth = 829
+      ClientWidth = 824
       TabOrder = 0
       object Splitter1: TSplitter
         Cursor = crVSplit
         Left = 1
         Height = 5
         Top = 86
-        Width = 827
+        Width = 822
         Align = alTop
         Beveled = True
         ResizeAnchor = akTop
@@ -281,18 +282,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Left = 1
         Height = 85
         Top = 1
-        Width = 827
+        Width = 822
         Align = alTop
         Caption = 'pCmd'
         ClientHeight = 85
-        ClientWidth = 827
+        ClientWidth = 822
         Constraints.MinHeight = 70
         TabOrder = 0
         object mCmd: TMemo
           Left = 1
           Height = 66
           Top = 18
-          Width = 825
+          Width = 820
           Align = alClient
           BorderStyle = bsNone
           ReadOnly = True
@@ -306,7 +307,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 1
           Height = 17
           Top = 1
-          Width = 825
+          Width = 820
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Comandos a Processar'
@@ -323,18 +324,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Left = 1
         Height = 81
         Top = 91
-        Width = 827
+        Width = 822
         Align = alClient
         Caption = 'pRespostas'
         ClientHeight = 81
-        ClientWidth = 827
+        ClientWidth = 822
         Constraints.MinHeight = 70
         TabOrder = 2
         object mResp: TMemo
           Left = 1
           Height = 62
           Top = 18
-          Width = 825
+          Width = 820
           Align = alClient
           BorderStyle = bsNone
           ReadOnly = True
@@ -349,7 +350,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 1
           Height = 17
           Top = 1
-          Width = 825
+          Width = 820
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Respostas Enviadas'
@@ -367,17 +368,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 329
       Top = 1
-      Width = 829
+      Width = 824
       Align = alTop
       ClientHeight = 329
-      ClientWidth = 829
+      ClientWidth = 824
       TabOrder = 1
       Visible = False
       object pgConfig: TPageControl
         Left = 1
         Height = 327
         Top = 1
-        Width = 827
+        Width = 822
         ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
@@ -5427,13 +5428,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsDFe: TTabSheet
           Caption = 'DFe'
           ClientHeight = 297
-          ClientWidth = 819
+          ClientWidth = 814
           ImageIndex = 26
           object pgDFe: TPageControl
             Left = 0
             Height = 297
             Top = 0
-            Width = 819
+            Width = 814
             ActivePage = tsConfiguracaoDFe
             Align = alClient
             ShowTabs = False
@@ -5442,17 +5443,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
               ClientHeight = 289
-              ClientWidth = 811
+              ClientWidth = 806
               object gbLogComp: TGroupBox
                 AnchorSideRight.Control = rgVersaoSSL
                 Left = 8
                 Height = 116
                 Top = 8
-                Width = 546
+                Width = 541
                 Anchors = [akTop, akLeft, akRight]
                 BorderSpacing.Right = 5
                 ClientHeight = 94
-                ClientWidth = 542
+                ClientWidth = 537
                 Enabled = False
                 TabOrder = 1
                 object Label111: TLabel
@@ -5482,7 +5483,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object SpeedButton1: TSpeedButton
-                  Left = 516
+                  Left = 511
                   Height = 25
                   Top = 8
                   Width = 23
@@ -5508,7 +5509,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 88
                   Height = 25
                   Top = 8
-                  Width = 421
+                  Width = 416
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 0
                 end
@@ -5531,7 +5532,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 0
               end
               object rgVersaoSSL: TRadioGroup
-                Left = 559
+                Left = 554
                 Height = 57
                 Top = 8
                 Width = 236
@@ -5559,22 +5560,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 122
                 Top = 128
-                Width = 496
+                Width = 491
                 Anchors = [akTop, akLeft, akRight]
                 Caption = 'Arquivo com Endereços dos WebServices'
                 ClientHeight = 100
-                ClientWidth = 492
+                ClientWidth = 487
                 TabOrder = 3
                 object edtArquivoWebServicesNFe: TEdit
                   Left = 55
                   Height = 25
                   Top = 1
-                  Width = 401
+                  Width = 396
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 0
                 end
                 object sbArquivoWebServicesNFe: TSpeedButton
-                  Left = 466
+                  Left = 461
                   Height = 25
                   Top = 1
                   Width = 23
@@ -5608,7 +5609,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 32
-                  Width = 400
+                  Width = 395
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 1
                 end
@@ -5621,7 +5622,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object sbArquivoWebServicesCTe: TSpeedButton
-                  Left = 466
+                  Left = 461
                   Height = 25
                   Top = 32
                   Width = 23
@@ -5647,7 +5648,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 64
-                  Width = 400
+                  Width = 395
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 2
                 end
@@ -5660,7 +5661,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object sbArquivoWebServicesMDFe: TSpeedButton
-                  Left = 466
+                  Left = 461
                   Height = 25
                   Top = 64
                   Width = 23
@@ -5684,7 +5685,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
               end
               object gbDFeConfDiversas: TGroupBox
-                Left = 511
+                Left = 506
                 Height = 122
                 Top = 128
                 Width = 284
@@ -5746,7 +5747,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object gbDFeTimeZone: TGroupBox
                 AnchorSideRight.Control = rgVersaoSSL
                 AnchorSideRight.Side = asrBottom
-                Left = 559
+                Left = 554
                 Height = 54
                 Top = 70
                 Width = 236
@@ -10105,11 +10106,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 30
     Top = 0
-    Width = 1027
+    Width = 1022
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 30
-    ClientWidth = 1027
+    ClientWidth = 1022
     Color = 14671839
     ParentColor = False
     TabOrder = 3
@@ -12052,6 +12053,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -13306,5 +13308,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.WebServices.QuebradeLinha = '|'
     left = 336
     top = 520
+  end
+  object MainMenu1: TMainMenu
+    left = 743
+    top = 161
   end
 end

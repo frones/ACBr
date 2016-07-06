@@ -103,11 +103,15 @@ type
     FUserWeb: String;
     FSenhaWeb: String;
     FTipoTributacao: String;
+    FQtdTributos: Integer; //almp1
     FValorNota: Currency;
     FAliquotaISS: Currency;
     FValorIss: Currency;
     FValorIssRetido: Currency;
-
+    FValorTotalTributos: Currency; //almp1
+    FDataOptanteSimples: TDateTime; //almp1
+    FExigibilidadeISS: TnfseExigibilidadeISS; //almp1
+    FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao; //almp1
     // Layout - Equiplano
     FOptanteSimples: TnfseSimNao;
 
@@ -192,10 +196,15 @@ type
     property UserWeb: String          read FUserWeb        write FUserWeb;
     property SenhaWeb: String         read FSenhaWeb       write FSenhaWeb;
     property TipoTributacao: String   read FTipoTributacao write FTipoTributacao;
+    property QtdTributos: Integer     read FQtdTributos    write FQtdTributos;
     property ValorNota: Currency      read FValorNota      write FValorNota;
     property AliquotaIss: Currency    read FAliquotaIss    write FAliquotaIss;
     property ValorIss: Currency       read FValorIss       write FValorIss;
     property ValorIssRetido: Currency read FValorIssRetido write FValorIssRetido;
+    property ValorTotalTributos: Currency read FValorTotalTributos write FValorTotalTributos; //almp1
+    property DataOptanteSimples: TDateTime read FDataOptanteSimples write FDataOptanteSimples; //almp1
+    property ExigibilidadeISS: TnfseExigibilidadeISS read FExigibilidadeISS write FExigibilidadeISS; //almp1
+    property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao; //almp1
 
     // Layout - Equiplano
     property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
@@ -358,7 +367,59 @@ begin
                 Gerador.wGrupoNFSe('CodigoUsuario>' + UserWeb + '</CodigoUsuario');
                 Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
                 Gerador.wGrupoNFSe('/Login');
+
+                // Identificaçao do RPS
+                Gerador.wGrupoNFSe('SDTRPS');
+                Gerador.wCampoNFSe(tcStr, '', 'Ano'    , 01, 04, 0, FormatDateTime('yyyy', DataInicial) , '');
+                Gerador.wCampoNFSe(tcStr, '', 'Mes'    , 01, 02, 0, FormatDateTime('mm', DataInicial) , '');
+                Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJ', 01, 14, 0, CNPJ , '');
+                Gerador.wCampoNFSe(tcStr, '', 'DTIni'  , 01, 10, 0, FormatDateTime('dd/mm/yyyy', DataInicial) , '');
+                Gerador.wCampoNFSe(tcStr, '', 'DTFin'  , 01, 10, 0, FormatDateTime('dd/mm/yyyy', DataFinal) , '');
+
+                if OptanteSimples = snSim then
+                begin
+                  Gerador.wCampoNFSe(tcInt, '', 'TipoTrib'   , 01, 01, 0, 4 , '');
+                  // Data de adesao ao simples nacional
+                  Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN'    , 01, 10, 0, FormatDateTime('dd/mm/yyyy', DataOptanteSimples) , '');
+                  Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 01, 06, 0, FormatFloat('##0.00', AliquotaIss) , '');
+                end
+                else begin
+                  case ExigibilidadeISS of
+                    exiExigivel:                       Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 1 , '');
+                    exiNaoIncidencia,
+                    exiIsencao,
+                    exiImunidade:                      Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 2 , '');
+                    exiSuspensaDecisaoJudicial,
+                    exiSuspensaProcessoAdministrativo: Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 3 , '');
+                    exiExportacao:                     Gerador.wCampoNFSe(tcInt, '', 'TipoTrib', 001, 1, 0, 5 , '');
+                  end;
+                  // Data de adesao ao simples nacional
+                  Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN'    , 01, 10, 0, '', '');
+                  Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 01, 06, 0, '' , '');
+                end;
+
+                if RegimeEspecialTributacao = retMicroempresarioIndividual then
+                  Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 001, 6, 0, '' , '');
+
+                Gerador.wCampoNFSe(tcStr, '', 'Versao', 001, 4, 0, '2.00' , '');
+
+                Gerador.wGrupoNFSe('Reg20');
                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+                Gerador.wGrupoNFSe('/Reg20');
+
+                // Inicio do rodape registro 90
+                Gerador.wGrupoNFSe('Reg90');
+                Gerador.wCampoNFSe(tcStr, '', 'QtdRegNormal'  , 01, 05, 1, QtdeNotas, '');
+                Gerador.wCampoNFSe(tcStr, '', 'ValorNFS'      , 01, 16, 2, FormatFloat('############0.00', ValorTotalServicos), '');
+                Gerador.wCampoNFSe(tcStr, '', 'ValorISS'      , 01, 16, 2, FormatFloat('############0.00', ValorIss), '');
+                Gerador.wCampoNFSe(tcStr, '', 'ValorDed'      , 01, 16, 2, FormatFloat('############0.00', ValorTotalDeducoes), '');
+                Gerador.wCampoNFSe(tcStr, '', 'ValorIssRetTom', 01, 16, 2, FormatFloat('############0.00', ValorIssRetido), '');
+                Gerador.wCampoNFSe(tcStr, '', 'ValorTributos' , 01, 16, 2, FormatFloat('############0.00', ValorTotalTributos), '');
+                Gerador.wCampoNFSe(tcStr, '', 'QtdReg30'      , 01, 05, 1, QtdTributos, '');
+                Gerador.wGrupoNFSe('/Reg90');
+                // Fim do rodape registro 90
+
+                Gerador.wGrupoNFSe('/SDTRPS');
                 Gerador.wGrupoNFSe('/Sdt_processarpsin');
               end;
 

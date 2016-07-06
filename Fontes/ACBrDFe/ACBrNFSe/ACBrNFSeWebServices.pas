@@ -45,7 +45,7 @@ uses
   ACBrDFe, ACBrDFeWebService, ACBrDFeSSL,
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes,
   pnfsNFSe, pnfsNFSeG, pnfsConversao, pnfsLerListaNFSe, pnfsEnvLoteRpsResposta,
-  pnfsConsSitLoteRpsResposta, pnfsCancNFSeResposta, pnfsSubsNFSeResposta;
+  pnfsConsSitLoteRpsResposta, pnfsCancNfseResposta, pnfsSubsNfseResposta;
 
 type
 
@@ -1573,9 +1573,10 @@ end;
 
 procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
 var
-  I: Integer;
-  dDataInicial, dDataFinal : TDateTime;
-  TotalServicos, TotalDeducoes: Double;
+  I, iTributos: Integer;
+  dDataInicial, dDataFinal: TDateTime;
+  TotalServicos, TotalDeducoes, TotalISS,
+  TotalTributos, TotalISSRetido: Double;
   TagGrupo, TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
@@ -1649,10 +1650,14 @@ begin
       FTagF := '';
     end;
 
-    dDataInicial  := FNotasFiscais.Items[0].NFSe.DataEmissao;
-    dDataFinal    := dDataInicial;
-    TotalServicos := 0.0;
-    TotalDeducoes := 0.0;
+    dDataInicial   := FNotasFiscais.Items[0].NFSe.DataEmissao;
+    dDataFinal     := dDataInicial;
+    iTributos      := 0;
+    TotalServicos  := 0.0;
+    TotalDeducoes  := 0.0;
+    TotalISS       := 0.0;
+    TotalISSRetido := 0.0;
+    TotalTributos  := 0.0;
 
     for i := 0 to FNotasFiscais.Count-1 do
     begin
@@ -1660,8 +1665,27 @@ begin
         dDataInicial := FNotasFiscais.Items[i].NFSe.DataEmissao;
       if FNotasFiscais.Items[i].NFSe.DataEmissao > dDataFinal then
         dDataFinal := FNotasFiscais.Items[i].NFSe.DataEmissao;
-      TotalServicos := TotalServicos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
-      TotalDeducoes := TotalDeducoes + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaPis > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaCofins > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaCsll > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaInss > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaIr > 0 then
+        iTributos := iTributos + 1;
+
+      TotalServicos  := TotalServicos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
+      TotalDeducoes  := TotalDeducoes + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+      TotalISS       := TotalISS + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIss;
+      TotalISSRetido := TotalISSRetido + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIssRetido;
+      TotalTributos  := TotalTributos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIr
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorCofins
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorPis
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorInss
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorCsll;
     end;
 
     InicializarGerarDadosMsg;
@@ -1690,8 +1714,12 @@ begin
       begin
         AliquotaIss    := FNotasFiscais.Items[0].NFSe.Servico.Valores.Aliquota;
         TipoTributacao := '4';
+        QtdTributos    := iTributos;
+        ValorNota      := TotalServicos;
         ValorIss       := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIss;
         ValorIssRetido := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIssRetido;
+        ValorTotalDeducoes := TotalDeducoes;
+        ValorTotalTributos := TotalTributos;
       end;
 
     end;

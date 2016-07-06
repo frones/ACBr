@@ -132,7 +132,7 @@ var
   MunTomador: String;
   MunPrestador: String;
 begin
-  Gerador.wGrupoNFSe('Reg20');
+  //Gerador.wGrupoNFSe('Reg20');
   Gerador.wGrupoNFSe('Reg20Item');
   if FNFSe.IdentificacaoRps.Tipo = trRPS then
     Gerador.wCampoNFSe(tcStr, '', 'TipoNFS', 01, 3, 1, 'RPS' , '')
@@ -229,7 +229,7 @@ begin
      GeraTributos;
 
   Gerador.wGrupoNFSe('/Reg20Item');
-  Gerador.wGrupoNFSe('/Reg20');
+  //Gerador.wGrupoNFSe('/Reg20');
 end;
 
 procedure TNFSeW_CONAM.GeraTributos;
@@ -339,11 +339,11 @@ begin
 *)
   //Gerador.Opcoes.IdentarXML:=True;
 
-  Gerador.wGrupoNFSe('SDTRPS');
-  GerarIdentificacaoRPS;
+  //Gerador.wGrupoNFSe('SDTRPS');
+  //GerarIdentificacaoRPS;
   GerarListaServicos;
-  GerarValoresServico;
-  Gerador.wGrupoNFSe('/SDTRPS');
+  //GerarValoresServico;
+  //Gerador.wGrupoNFSe('/SDTRPS');
 end;
 
 end.

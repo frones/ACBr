@@ -2060,16 +2060,20 @@ begin
       PrestadorServico.Endereco.xMunicipio := Leitor.rCampo(tcStr, 'MunPre');
       PrestadorServico.Endereco.CEP := Leitor.rCampo(tcStr, 'CepPre');
       PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'SiglaUFPre');
-      Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'VlNFS');
+
       ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'VlNFS');
+
+      Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'VlNFS');
       Servico.Valores.ValorPis := Leitor.rCampo(tcDe2, 'VlrPIS');
       Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'VlrCofins');
       Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'VlrINSS');
       Servico.Valores.ValorInss := Leitor.rCampo(tcDe2, 'VlrIR');
+
       DataEmissao := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiNf'));
-      Nfse.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocTom');
-      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');
-      with  Nfse.Tomador.Endereco do
+
+      Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocTom');
+      Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');
+      with  Tomador.Endereco do
       begin
         Endereco := Leitor.rCampo(tcStr, 'DesEndTmd');
         Bairro := Leitor.rCampo(tcStr, 'BairroTom');
@@ -2077,9 +2081,13 @@ begin
         UF := Leitor.rCampo(tcStr, 'SiglaUFTom');
         CEP := Leitor.rCampo(tcStr, 'CepTom');
       end;
+
       Competencia := Leitor.rCampo(tcStr, 'DtEmiNf');
+
       Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');
       Servico.Discriminacao := Leitor.rCampo(tcStr, 'DiscrSrv');
+      
+      InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
     end;
   end;
 

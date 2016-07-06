@@ -389,11 +389,11 @@ begin
             (Leitor.rExtrai(Nivel, 'ComplNfse', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'RetornoConsultaRPS', '', i + 1) <> '') or
             (leitor.rExtrai(Nivel, 'NFe', '', i + 1) <> '') or                   // Provedor SP
-            (leitor.rExtrai(Nivel, 'Reg20', '', i + 1) <> '') or                 // Provedor CONAM
+            (leitor.rExtrai(Nivel, 'Reg20Item', '', i + 1) <> '') or             // Provedor CONAM
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
-            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     //ConsultaLote
-            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or //ConsultaNFSePorRPS
+            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote
+            ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS
             ((Provedor in [proInfisc]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;

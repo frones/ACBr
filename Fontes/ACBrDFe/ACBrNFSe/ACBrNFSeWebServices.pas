@@ -1611,11 +1611,12 @@ begin
       proCONAM:  TagElemento := 'Reg20';
       proInfisc: TagElemento := 'infNFSe';
       proSP:     TagElemento := '';
+      proIssDSF: TagElemento := 'Lote';
     else
       TagElemento := 'LoteRps';
     end;
 
-    if Provedor <> proBetha then
+    if (TagElemento <> '') and not (Provedor in [proBetha, proIssDSF]) then
       TagElemento := FPrefixo3 + TagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then

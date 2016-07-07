@@ -1,12 +1,14 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 607
-  Height = 930
-  Top = 13
+  Left = 481
+  Height = 873
+  Top = 119
+  Width = 925
   Caption = 'frlDANFeRLRetrato'
-  ClientHeight = 930
+  ClientHeight = 873
+  ClientWidth = 925
   inherited RLNFe: TRLReport
-    Left = -8
-    Top = 0
+    Left = 16
+    Top = -104
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -18,6 +20,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     PrintDialog = False
     Title = 'Danfe Retrato'
     BeforePrint = RLNFeBeforePrint
+    OnDataRecord = RLNFeDataRecord
     object rliMarcaDagua1: TRLImage[0]
       Left = 241
       Height = 234
@@ -34,7 +37,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     object rlbContinuacaoInformacoesComplementares: TRLBand[1]
       Left = 26
       Height = 41
-      Top = 1097
+      Top = 1115
       Width = 742
       AutoSize = True
       BandType = btSummary
@@ -158,7 +161,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLabel26: TRLLabel
         Left = 1
-        Height = 16
+        Height = 17
         Top = 13
         Width = 737
         AutoSize = False
@@ -203,7 +206,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object rlsDivProd1: TRLDraw
+      object rlsDivProd: TRLDraw
         Left = 54
         Height = 19
         Top = 12
@@ -374,7 +377,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object RLLabel82: TRLLabel
         Tag = 10
-        Left = 245
+        Left = 244
         Height = 7
         Top = 18
         Width = 38
@@ -716,9 +719,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rlmCodProd: TRLMemo
         Tag = 10
-        Left = 2
+        Left = 3
         Height = 14
-        Top = 14
+        Top = 16
         Width = 52
         Alignment = taCenter
         AutoSize = False
@@ -817,7 +820,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      AfterPrint = rlbEmitenteAfterPrint
       BeforePrint = rlbEmitenteBeforePrint
       object rliEmitente: TRLDraw
         Left = 0
@@ -1410,7 +1412,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        Transparent = False
       end
       object rllDadosVariaveis1c: TRLLabel
         Tag = 704
@@ -1489,7 +1490,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     object rlbDadosAdicionais: TRLBand[4]
       Left = 26
       Height = 169
-      Top = 1190
+      Top = 1208
       Width = 742
       AlignToBottom = True
       AutoExpand = False
@@ -6887,546 +6888,10 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlbItens: TRLBand[9]
-      Left = 26
-      Height = 12
-      Top = 1065
-      Width = 742
-      Background.Height = 487
-      Background.Width = 865
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
-      AfterPrint = rlbItensAfterPrint
-      BeforePrint = rlbItensBeforePrint
-      object FundoItem: TRLLabel
-        Left = 0
-        Height = 12
-        Top = 0
-        Width = 740
-        AutoSize = False
-        Caption = '  '
-        Color = 16316664
-        ParentColor = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
-        Visible = False
-      end
-      object txtCST: TRLDBText
-        Tag = 705
-        Left = 284
-        Height = 11
-        Top = 1
-        Width = 22
-        Alignment = taCenter
-        AutoSize = False
-        DataField = 'CST'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtCFOP: TRLDBText
-        Tag = 705
-        Left = 308
-        Height = 11
-        Top = 1
-        Width = 21
-        AutoSize = False
-        DataField = 'CFOP'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtUnidade: TRLDBText
-        Tag = 705
-        Left = 330
-        Height = 11
-        Top = 0
-        Width = 28
-        AutoSize = False
-        DataField = 'UNIDADE'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtQuantidade: TRLDBText
-        Tag = 705
-        Left = 359
-        Height = 11
-        Top = 1
-        Width = 45
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'QTDE'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtValorUnitario: TRLDBText
-        Tag = 705
-        Left = 404
-        Height = 11
-        Top = 1
-        Width = 50
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'VALOR'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtValorTotal: TRLDBText
-        Tag = 705
-        Left = 455
-        Height = 11
-        Top = 1
-        Width = 52
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'TOTAL'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtValorIPI: TRLDBText
-        Tag = 705
-        Left = 652
-        Height = 11
-        Top = 1
-        Width = 37
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'VALORIPI'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtAliqICMS: TRLDBText
-        Tag = 705
-        Left = 692
-        Height = 11
-        Top = 1
-        Width = 22
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'ALIQICMS'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtAliqIPI: TRLDBText
-        Tag = 705
-        Left = 716
-        Height = 11
-        Top = 1
-        Width = 22
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'ALIQIPI'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaCST: TRLDraw
-        Left = 282
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaCFOP: TRLDraw
-        Left = 307
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaUnidade: TRLDraw
-        Left = 330
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaQuantidade: TRLDraw
-        Left = 359
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaValorUnitario: TRLDraw
-        Left = 404
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaValorTotal: TRLDraw
-        Left = 455
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaBaseICMS: TRLDraw
-        Left = 554
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaValorICMS: TRLDraw
-        Left = 609
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaValorIPI: TRLDraw
-        Left = 650
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaAliqICMS: TRLDraw
-        Left = 690
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaAliqIPI: TRLDraw
-        Left = 714
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaFinal: TRLDraw
-        Left = 739
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaNCM: TRLDraw
-        Left = 243
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaDescricao: TRLDraw
-        Left = 54
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaCodigo: TRLDraw
-        Left = 0
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlmDescricao: TRLDBMemo
-        Tag = 705
-        Left = 54
-        Height = 10
-        Top = 1
-        Width = 185
-        Behavior = [beSiteExpander]
-        DataField = 'DESCRICAO'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaFimItens: TRLDraw
-        Left = 0
-        Height = 1
-        Top = 11
-        Width = 740
-        Align = faBottomOnly
-        Angle = 0
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtBaseICMS: TRLDBText
-        Tag = 705
-        Left = 556
-        Height = 11
-        Top = 1
-        Width = 52
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'BICMS'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtValorICMS: TRLDBText
-        Tag = 705
-        Left = 611
-        Height = 11
-        Top = 1
-        Width = 38
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'VALORICMS'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtValorDesconto: TRLDBText
-        Tag = 705
-        Left = 509
-        Height = 11
-        Top = 1
-        Width = 44
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'VALORDESC'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object RLDraw2: TRLDraw
-        Left = 508
-        Height = 12
-        Top = 0
-        Width = 1
-        Align = faHeight
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtNCM: TRLDBMemo
-        Tag = 705
-        Left = 245
-        Height = 11
-        Top = 1
-        Width = 38
-        Alignment = taCenter
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        DataField = 'NCM'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object txtCodigo: TRLDBMemo
-        Tag = 705
-        Left = 2
-        Height = 11
-        Top = 1
-        Width = 51
-        AutoSize = False
-        Behavior = [beSiteExpander]
-        DataField = 'CODIGO'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-    end
-    object rlbISSQN: TRLBand[10]
+    object rlbISSQN: TRLBand[9]
       Left = 26
       Height = 52
-      Top = 1138
+      Top = 1156
       Width = 742
       BandType = btFooter
       RealBounds.Left = 0
@@ -7643,7 +7108,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlbAvisoContingencia: TRLBand[11]
+    object rlbAvisoContingencia: TRLBand[10]
       Left = 26
       Height = 36
       Top = 998
@@ -7690,102 +7155,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Transparent = False
       end
     end
-    object rlbObsItem: TRLBand[12]
-      Left = 26
-      Height = 20
-      Top = 1077
-      Width = 742
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
-      object FundoObsItem: TRLLabel
-        Left = 0
-        Height = 12
-        Top = 0
-        Width = 740
-        AutoSize = False
-        Caption = '  '
-        Color = 16316664
-        ParentColor = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
-      end
-      object LinhaFimObsItem: TRLDraw
-        Left = 0
-        Height = 1
-        Top = 14
-        Width = 740
-        Angle = 0
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaInicioItem: TRLDraw
-        Left = 0
-        Height = 1
-        Top = 19
-        Width = 740
-        Align = faBottomOnly
-        Angle = 0
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object rlmObsItem: TRLMemo
-        Tag = 20
-        Left = 1
-        Height = 8
-        Top = 1
-        Width = 664
-        Behavior = [beSiteExpander]
-        Borders.Style = bsClear
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Courier New'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaObsItemEsquerda: TRLDraw
-        Left = 0
-        Height = 14
-        Top = 0
-        Width = 1
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object LinhaObsItemDireita: TRLDraw
-        Left = 739
-        Height = 14
-        Top = 0
-        Width = 1
-        Angle = 90
-        DrawKind = dkLine
-        HoldStyle = hsRelatively
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-    end
-    object rlbReciboHeader: TRLBand[13]
+    object rlbReciboHeader: TRLBand[11]
       Left = 26
       Height = 57
       Top = 26
@@ -7954,7 +7324,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlbDivisaoRecibo: TRLBand[14]
+    object rlbDivisaoRecibo: TRLBand[12]
       Left = 26
       Height = 16
       Top = 83
@@ -7980,7 +7350,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlmDadosAdicionaisAuxiliar: TRLMemo[15]
+    object rlmDadosAdicionaisAuxiliar: TRLMemo[13]
       Left = 136
       Height = 12
       Top = 64
@@ -7997,7 +7367,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Height = 0
       Visible = False
     end
-    object rlbFaturaReal: TRLBand[16]
+    object rlbFaturaReal: TRLBand[14]
       Left = 26
       Height = 46
       Top = 481
@@ -8248,7 +7618,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlbCancelada: TRLBand[17]
+    object rlbCancelada: TRLBand[15]
       Left = 26
       Height = 30
       Top = 968
@@ -8279,7 +7649,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Transparent = False
       end
     end
-    object rlbEntrega: TRLBand[18]
+    object rlbEntrega: TRLBand[16]
       Left = 26
       Height = 46
       Top = 389
@@ -8436,7 +7806,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
-    object rlbRetirada: TRLBand[19]
+    object rlbRetirada: TRLBand[17]
       Left = 26
       Height = 46
       Top = 435
@@ -8593,9 +7963,560 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
     end
+    object subItens: TRLSubDetail[18]
+      Left = 26
+      Height = 50
+      Top = 1065
+      Width = 742
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      OnDataRecord = subItensDataRecord
+      object rlbItens: TRLBand
+        Left = 0
+        Height = 13
+        Top = 0
+        Width = 742
+        Background.Height = 487
+        Background.Width = 865
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        AfterPrint = rlbItensAfterPrint
+        BeforePrint = rlbItensBeforePrint
+        object FundoItem: TRLLabel
+          Left = 0
+          Height = 13
+          Top = 0
+          Width = 742
+          Align = faClient
+          Alignment = taCenter
+          AutoSize = False
+          Caption = '  '
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+          Visible = False
+        end
+        object LinhaCST: TRLDraw
+          Left = 282
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaCFOP: TRLDraw
+          Left = 307
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaUnidade: TRLDraw
+          Left = 330
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaQuantidade: TRLDraw
+          Left = 359
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaValorUnitario: TRLDraw
+          Left = 404
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaValorTotal: TRLDraw
+          Left = 455
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaBaseICMS: TRLDraw
+          Left = 554
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaValorICMS: TRLDraw
+          Left = 609
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaValorIPI: TRLDraw
+          Left = 650
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaAliqICMS: TRLDraw
+          Left = 690
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaAliqIPI: TRLDraw
+          Left = 714
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaNCM: TRLDraw
+          Left = 243
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaDescricao: TRLDraw
+          Left = 54
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          SecondHolder = rlsDivProd
+        end
+        object LinhaFimItens: TRLDraw
+          Left = 0
+          Height = 1
+          Top = 12
+          Width = 740
+          Align = faBottomOnly
+          Angle = 0
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object rlmDescricao: TRLMemo
+          Tag = 705
+          Left = 55
+          Height = 10
+          Top = 1
+          Width = 185
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtCodigo: TRLMemo
+          Tag = 705
+          Left = 1
+          Height = 10
+          Top = 1
+          Width = 51
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtCFOP: TRLLabel
+          Tag = 705
+          Left = 308
+          Height = 11
+          Top = 1
+          Width = 21
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtUnidade: TRLLabel
+          Tag = 705
+          Left = 330
+          Height = 11
+          Top = 1
+          Width = 28
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtQuantidade: TRLLabel
+          Tag = 705
+          Left = 359
+          Height = 11
+          Top = 1
+          Width = 45
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtValorUnitario: TRLLabel
+          Tag = 705
+          Left = 404
+          Height = 11
+          Top = 1
+          Width = 50
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtValorTotal: TRLLabel
+          Tag = 705
+          Left = 455
+          Height = 11
+          Top = 1
+          Width = 52
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtValorDesconto: TRLLabel
+          Tag = 705
+          Left = 509
+          Height = 11
+          Top = 1
+          Width = 44
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtBaseICMS: TRLLabel
+          Tag = 705
+          Left = 556
+          Height = 11
+          Top = 1
+          Width = 52
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtValorICMS: TRLLabel
+          Tag = 705
+          Left = 611
+          Height = 11
+          Top = 1
+          Width = 38
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtValorIPI: TRLLabel
+          Tag = 705
+          Left = 652
+          Height = 11
+          Top = 1
+          Width = 37
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtAliqICMS: TRLLabel
+          Tag = 705
+          Left = 692
+          Height = 11
+          Top = 1
+          Width = 22
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtAliqIPI: TRLLabel
+          Tag = 705
+          Left = 716
+          Height = 11
+          Top = 1
+          Width = 22
+          Alignment = taRightJustify
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtCST: TRLLabel
+          Tag = 705
+          Left = 284
+          Height = 11
+          Top = 1
+          Width = 22
+          Alignment = taCenter
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object txtNCM: TRLLabel
+          Tag = 705
+          Left = 244
+          Height = 10
+          Top = 1
+          Width = 38
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaDesconto: TRLDraw
+          Left = 508
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaCodigo: TRLDraw
+          Left = 0
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Visible = False
+        end
+        object LinhaFinal: TRLDraw
+          Left = 739
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object LinhaItem: TRLDraw
+          Left = 0
+          Height = 13
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
+    end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    left = 704
+    left = 696
     top = 106
   end
   inherited DataSource1: TDataSource

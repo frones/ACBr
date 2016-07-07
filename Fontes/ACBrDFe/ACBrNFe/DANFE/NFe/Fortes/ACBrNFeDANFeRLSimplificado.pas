@@ -54,21 +54,10 @@ type
     RLb02_Emitente: TRLBand;
     RLb03_DadosGerais: TRLBand;
     RLb04_Destinatario: TRLBand;
-    RLb05a_Cab_Itens: TRLBand;
-    RLb05b_Desc_Itens: TRLBand;
     RLb05c_Lin_Itens: TRLBand;
-    RLb06a_Totais: TRLBand;
-    RLb06b_Tributos: TRLBand;
     RLiLogo: TRLImage;
     RLLabel1: TRLLabel;
-    RLLabel142: TRLLabel;
-    RLLabel143: TRLLabel;
-    RLLabel147: TRLLabel;
-    RLLabel148: TRLLabel;
-    RLLabel149: TRLLabel;
-    RLLabel150: TRLLabel;
     RLLabel27: TRLLabel;
-    RLLabel3: TRLLabel;
     RLLabel9: TRLLabel;
     RLlChave: TRLLabel;
     RLlDescricao: TRLLabel;
@@ -77,24 +66,36 @@ type
     RLlMsgTipoEmissao: TRLLabel;
     RLlProtocolo: TRLLabel;
     RLlTipoEmissao: TRLLabel;
-    RLlTributos: TRLLabel;
     RLmDestinatario: TRLMemo;
     RLmEmitente: TRLMemo;
-    RLmPagDesc: TRLMemo;
-    RLmPagValor: TRLMemo;
-    RLmProdutoCodigo: TRLDBText;
-    RLmProdutoDescricao: TRLDBText;
-    RLmProdutoItem: TRLDBText;
-    RLmProdutoQTDE: TRLDBText;
-    RLmProdutoTotal: TRLDBText;
-    RLmProdutoUnidade: TRLDBText;
-    RLmProdutoValor: TRLDBText;
     RLShape102: TRLDraw;
     RLShape68: TRLDraw;
     rlb01_Chave: TRLBand;
     RLBarcode1: TRLBarcode;
     RLLabel17: TRLLabel;
     lblNumero: TRLLabel;
+    subItens: TRLSubDetail;
+    rlb05a_Cab_Itens: TRLBand;
+    RLLabel2: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLLabel7: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLLabel3: TRLLabel;
+    rlb05b_Desc_Itens: TRLBand;
+    rlmProdutoCodigo: TRLLabel;
+    rlmProdutoDescricao: TRLLabel;
+    rlmProdutoUnidade: TRLLabel;
+    rlmProdutoQTDE: TRLLabel;
+    rlmProdutoValor: TRLLabel;
+    rlmProdutoTotal: TRLLabel;
+    rlmProdutoItem: TRLLabel;
+    rlb06a_Totais: TRLBand;
+    rlmPagDesc: TRLMemo;
+    rlmPagValor: TRLMemo;
+    rlb06b_Tributos: TRLBand;
+    rllTributos: TRLLabel;
     procedure RLb02_EmitenteBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLb03_DadosGeraisBeforePrint(Sender: TObject; var PrintIt: boolean
       );
@@ -104,15 +105,18 @@ type
     procedure RLb06b_TributosBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure RLNFeBeforePrint(Sender: TObject;
       var PrintReport: Boolean);
-    procedure rlmProdutoDescricaoPrint(sender: TObject; var Value: string);
-
     procedure rlb01_ChaveBeforePrint(Sender: TObject;
       var PrintBand: Boolean);
+    procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure rlb05b_Desc_ItensBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
   private
     { Private declarations }
-    FTotalPages: Integer;
-    TotalItens: Integer;
-    procedure Itens;
+    FNumItem    : Integer;
+    FTotalPages : Integer;
   public
     { Public declarations }
     procedure ProtocoloNFE( const sProtocolo : String );
@@ -142,8 +146,7 @@ var
 begin
   inherited;
 
-  Itens;
-  FTotalPages := 1;
+  FTotalPages   := 1;
 
   if ( FNFe.Det.Count > _NUM_ITEMS_PAGE1 ) then
   begin
@@ -287,6 +290,7 @@ begin
  rllMsgTipoEmissao.Repaint;
 end;
 
+
 procedure TfrlDANFeRLSimplificado.RLb06a_TotaisBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
@@ -294,12 +298,10 @@ begin
 
   rlmPagDesc.Lines.Clear;
   rlmPagValor.Lines.Clear;
-
   rlmPagDesc.Lines.Add('Qtde Total de Itens');
-  rlmPagValor.Lines.Add(IntToStr(TotalItens));
-
+  rlmPagValor.Lines.Add(IntToStr(FNFe.Det.Count));
   rlmPagDesc.Lines.Add('Valor Total');
-  rlmPagValor.Lines.Add(FormatFloatBr(FNFE.Total.ICMSTot.vNF));
+  rlmPagValor.Lines.Add( FormatFloat('###,###,###,##0.00', FNFE.Total.ICMSTot.vNF));
 end;
 
 procedure TfrlDANFeRLSimplificado.RLb06b_TributosBeforePrint(Sender: TObject;
@@ -313,61 +315,6 @@ begin
   rllTributos.Caption := ACBrStr('Valor aprox. dos tributos: ' +
                          FormatFloatBr(FNFE.Total.ICMSTot.vTotTrib) +
                          '(' + FormatFloatBr(Perc) + '%)(Fonte: IBPT)');
-end;
-
-procedure TfrlDANFeRLSimplificado.rlmProdutoDescricaoPrint(sender: TObject;
-  var Value: string);
-begin
-  inherited;
-
-  if cdsItens.FieldByName('INFADIPROD').AsString <> '' then
-    Value := Value + #13 + 'InfAd: ' + cdsItens.FieldByName('INFADIPROD').AsString;
-end;
-
-procedure TfrlDANFeRLSimplificado.Itens;
-var
-  nItem: Integer;
-begin
-  cdsItens.Close;
-  cdsItens.CreateDataSet;
-  cdsItens.Open;
-  TotalItens  := FNFe.Det.Count;
-  for nItem   := 0 to (FNFe.Det.Count - 1) do
-  begin
-    with FNFe.Det.Items[nItem] do
-    begin
-      with Prod do
-      begin
-        with Imposto.ICMS do
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('ITEM').AsString         := FormatFloat('000', nItem );
-          cdsItens.FieldByName('CODIGO').AsString       := TACBrNFeDANFeRL(Owner).ManterCodigo(cEAN, CProd);
-          cdsItens.FieldByName('DESCRICAO').AsString    := XProd;
-          cdsItens.FieldByName('INFADIPROD').AsString   := infAdProd;
-          cdsItens.FieldByName('NCM').AsString          := NCM;
-          cdsItens.FieldByName('CST').AsString          := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
-          cdsItens.FieldByName('CSOSN').AsString        := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
-          cdsItens.FieldByName('CFOP').AsString         := CFOP;
-          cdsItens.FieldByName('QTDE').AsString         := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
-          cdsItens.FieldByName('VALOR').AsString        := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
-          cdsItens.FieldByName('UNIDADE').AsString      := UCom;
-          cdsItens.FieldByName('TOTAL').AsString        := FormatFloat('###,###,###,##0.00', vProd);
-          cdsItens.FieldByName('VALORDESC').AsString    := FormatFloat('###,###,###,##0.00', ManterDesPro( Prod.vDesc ,Prod.vProd));
-          cdsItens.FieldByName('Valorliquido').AsString := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),'###,###,##0.00');
-          cdsItens.FieldByName('BICMS').AsString        := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VBC);
-          cdsItens.FieldByName('ALIQICMS').AsString     := FormatFloat('###,###,###,##0.00', Imposto.ICMS.PICMS);
-          cdsItens.FieldByName('VALORICMS').AsString    := FormatFloat('###,###,###,##0.00', Imposto.ICMS.VICMS);
-          cdsItens.FieldByName('BICMSST').AsString      := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vBCST);
-          cdsItens.FieldByName('VALORICMSST').AsString  := FormatFloat('###,###,###,##0.00', Imposto.ICMS.vICMSST);
-          cdsItens.FieldByName('ALIQIPI').AsString      := FormatFloat('##0.00', Imposto.IPI.PIPI);
-          cdsItens.FieldByName('VALORIPI').AsString     := FormatFloat('##0.00', Imposto.IPI.VIPI);
-          cdsItens.Post;
-        end;
-      end;
-    end;
-  end;
-  cdsItens.First;
 end;
 
 procedure TfrlDANFeRLSimplificado.ProtocoloNFE( const sProtocolo : String );
@@ -406,5 +353,48 @@ begin
                               IfThen(FNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FNFe.procNFe.dhRecbto), '');
 
 end;
+
+
+procedure TfrlDANFeRLSimplificado.rlb05b_Desc_ItensBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+  Function ManterinfAdProd(sXProd: String; sinfAdProd :String ) : String;
+  begin
+    Result := sXProd;
+    if sinfAdProd <> '' then
+      Result := Result + #13+#13 + 'InfAd: ' + sinfAdProd;
+  end;
+begin
+  inherited;
+  with FNFe.Det.Items[FNumItem] do
+  begin
+    rlmProdutoItem.caption      := FormatFloat('000', FNumItem+1 );
+    rlmProdutoCodigo.caption    := TACBrNFeDANFeRL(Owner).ManterCodigo(Prod.cEAN, Prod.CProd);
+    rlmProdutoDescricao.caption := ManterinfAdProd(Prod.XProd, infAdProd );
+    rlmProdutoQTDE.caption      := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
+    rlmProdutoValor.caption     := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
+    rlmProdutoUnidade.caption   := Prod.UCom;
+    rlmProdutoTotal.caption     := FormatFloat('###,###,###,##0.00', Prod.vProd);
+  end;
+end;
+
+procedure TfrlDANFeRLSimplificado.RLNFeDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+begin
+  inherited;
+  Eof := (RecNo > 1);
+  RecordAction := raUseIt;
+end;
+
+procedure TfrlDANFeRLSimplificado.subItensDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+begin
+  inherited;
+  FNumItem      := RecNo - 1 ;
+  Eof           := (RecNo > FNFe.Det.Count) ;
+  RecordAction  := raUseIt ;
+end;
+
+
+
 
 end.

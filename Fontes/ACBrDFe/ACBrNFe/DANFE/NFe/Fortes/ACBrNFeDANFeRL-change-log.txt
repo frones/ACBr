@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2016
+-- ACBrNFeDANFeRLSimplificado --
+[*] Remoção de controles Dataset/ Db. 
+[+] Refatoração para aceitar dados de classe Nfe.
+         Por : Henrique Leonardo   
+
 06/07/2016
 -- ACBrNFeDANFeRLRetrato --
 [*] Remoção de controles Dataset/ Db. 

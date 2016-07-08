@@ -263,7 +263,14 @@ begin
 end;
 
 procedure TNFSeG.SetAtributos;
+var
+ dhEnvio: String;
 begin
+  dhEnvio := DateToStr(Date) + '_' + TimeToStr(Time);
+
+  dhEnvio := StringReplace(dhEnvio, '/', '', [rfReplaceAll]);
+  dhEnvio := StringReplace(dhEnvio, ':', '', [rfReplaceAll]);
+
   // Atributo versao ===========================================================
   if VersaoDados <> '' then
   begin
@@ -294,6 +301,8 @@ begin
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
 
     proSalvador: IdLote := 'Lote' + NumeroLote;
+
+    proSiam: IdLote := 'Lote_' + NumeroLote + '_' + dhEnvio;
 
     proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
   else
@@ -701,7 +710,7 @@ begin
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
                   proCoplan, profintelISS, proFiorilli, proGoiania, proGovDigital,
                   proISSDigital, proISSe, proProdata, proVirtual, proSaatri,
-                  proFreire, proPVH, proVitoria, proTecnos, proSisPMJP,
+                  proFreire, proPVH, proVitoria, proTecnos, proSiam, proSisPMJP,
                   proSystemPro] then
     Result := '';
 end;
@@ -948,7 +957,7 @@ begin
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
-  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proSiam] then
     Result := '';
 end;
 
@@ -1184,7 +1193,7 @@ begin
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
-  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proSiam] then
     Result := '';
 end;
 
@@ -1350,7 +1359,7 @@ begin
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
-  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proSiam] then
     Result := '';
 end;
 
@@ -1413,12 +1422,13 @@ begin
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
-  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proBetha,
-                  proBetim, proDBSeller, proEquiplano, proFIssLex, proGinfes,
-                  proGovBR, proIssCuritiba, proIssIntel, proIssNet, proLexsom,
-                  proNatal, proTinus, proProdemge, proRJ, proSimplIss, proThema,
-                  proTiplan, proIssDSF, proInfisc, proAgili, proSpeedGov,
-                  proPronim, proActcon, proSalvador, proNFSEBrasil] then
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proActcon,
+                  proAgili, proBetha, proBetim, proDBSeller, proEquiplano,
+                  proFIssLex, proGinfes, proGovBR, proInfisc, proIssCuritiba,
+                  proIssDSF, proIssIntel, proIssNet, proLexsom, proNatal,
+                  proNFSEBrasil, proProdemge, proPronim, proRJ, proSalvador,
+                  proSiam, proSimplIss, proSpeedGov, proThema, proTinus,
+                  proTiplan] then
     Result := '';
 end;
 

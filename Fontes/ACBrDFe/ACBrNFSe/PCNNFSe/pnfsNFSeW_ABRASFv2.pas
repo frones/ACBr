@@ -599,6 +599,11 @@ begin
                   Gerador.wGrupoNFSe('Rps');
                 end;
 
+   proSiam: begin
+              Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="Declaracao_' + OnlyNumber(NFSe.Prestador.Cnpj) + '"');
+              Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+            end;
+
    proSystemPro: begin
                    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
                  end;
@@ -796,6 +801,7 @@ begin
                                  IntToStrZero(StrToIntDef(FNFSe.IdentificacaoRps.Numero, 1), 16);
 
     proABase,
+    proSiam,
     proGovDigital: FNFSe.InfID.ID := 'Rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
 
     proNotaInteligente : FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero);

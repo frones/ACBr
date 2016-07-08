@@ -931,8 +931,6 @@ begin
       FProvedor := FProvedorConf;
   end;
 
-
-
   VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
   LayoutXML := ProvedorToLayoutXML(FProvedor);
 
@@ -2075,20 +2073,45 @@ begin
 end;
 
 function TNFSeR.LerNFSe_CONAM: Boolean;
+var
+  i: Integer;
+  bNota: Boolean;
+  bRPS: Boolean;
 begin
   NFSe.dhRecebimento := StrToDateTime(FormatDateTime('dd/mm/yyyy', now));
 
-  if (Leitor.rExtrai(1, 'Reg20Item') <> '') or (Leitor.rExtrai(1, 'CompNfse') <> '') then
+  bRPS := False;
+  bNota := False;
+
+  if (Leitor.rExtrai(1, 'Reg20Item') <> '') then
+    bRPS := True;
+
+  if (Leitor.rExtrai(1, 'CompNfse') <> '') then
+    bNota := True;
+
+  if bNota or bRPS then
   begin
     with NFSe do
     begin
       Numero := Leitor.rCampo(tcStr, 'NumNf');
-      dhRecebimento := StrToDateTime(Leitor.rCampo(tcStr, 'DtHrGerNf'));
-      DataEmissao := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiNf'));
-      DataEmissaoRps := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiRps'));
+
+      if bRPS then
+        DataEmissao := Leitor.rCampo(tcDat, 'DtEmi')
+      else
+        DataEmissao := Leitor.rCampo(tcDat, 'DtEmiNf');
+
+      DataEmissaoRps := Leitor.rCampo(tcDat, 'DtEmiRps');
+
       IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
       IdentificacaoRps.Serie:= Leitor.rCampo(tcStr, 'SerRps');
       CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVernf');
+
+      if Leitor.rCampo(tcStr, 'TipoTribPre') = 'SN' then
+        OptanteSimplesNacional := snSim
+      else
+        OptanteSimplesNacional := snNao;
+
+      DataOptanteSimplesNacional := Leitor.rCampo(tcDat, 'DtAdeSN');
 
       PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocPre');
       PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CpfCnpjPre');
@@ -2103,14 +2126,18 @@ begin
       PrestadorServico.Endereco.UF := Leitor.rCampo(tcStr, 'SiglaUFPre');
 
       ValoresNfse.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'VlNFS');
+      ValoresNfse.Aliquota := Leitor.rCampo(tcDe2, 'AlqIss');
+      ValoresNfse.ValorIss := Leitor.rCampo(tcDe2, 'VlIss');
+      ValoresNfse.BaseCalculo := Leitor.rCampo(tcDe2, 'VlBasCalc');
 
+      Servico.Valores.BaseCalculo := Leitor.rCampo(tcDe2, 'VlBasCalc');
       Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'VlNFS');
-      Servico.Valores.ValorPis := Leitor.rCampo(tcDe2, 'VlrPIS');
-      Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'VlrCofins');
-      Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'VlrINSS');
-      Servico.Valores.ValorInss := Leitor.rCampo(tcDe2, 'VlrIR');
+      Servico.Valores.ValorIss := Leitor.rCampo(tcDe2, 'VlIss');
+      Servico.Valores.Aliquota := Leitor.rCampo(tcDe2, 'AlqIss');
+      Servico.Valores.IssRetido := Leitor.rCampo(tcDe2, 'VlIssRet');
+      Servico.Valores.ValorDeducoes := Leitor.rCampo(tcDe2, 'VlDed');
 
-      DataEmissao := StrToDateTime(Leitor.rCampo(tcStr, 'DtEmiNf'));
+      Servico.Valores.JustificativaDeducao := Leitor.rCampo(tcStr, 'DiscrDed');
 
       Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocTom');
       Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');
@@ -2121,13 +2148,55 @@ begin
         xMunicipio := Leitor.rCampo(tcStr, 'MunTom');
         UF := Leitor.rCampo(tcStr, 'SiglaUFTom');
         CEP := Leitor.rCampo(tcStr, 'CepTom');
+        Numero := Leitor.rCampo(tcStr, 'NumEndTom');;
       end;
 
-      Competencia := Leitor.rCampo(tcStr, 'DtEmiNf');
+      Competencia := FormatDateTime('mm/yyyy', Leitor.rCampo(tcDat, 'DtEmiNf'));
 
       Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');
+      {
+       todo: almp1
+       deveria substrituir "\\" por "nova linha"
+      }
       Servico.Discriminacao := Leitor.rCampo(tcStr, 'DiscrSrv');
-      
+      Situacao := Leitor.rCampo(tcStr, 'SitNf');
+      MotivoCancelamento := Leitor.rCampo(tcStr, 'MotivoCncNf');
+
+      //valores dos tributos
+      if (Leitor.rExtrai(1, 'Reg30') <> '') then
+      begin
+        i := 1;
+        while (Leitor.rExtrai(1, 'Reg30Item', '', i) <> '') do
+        begin
+          if Leitor.rCampo(tcStr, 'TributoSigla') = 'IR' then
+          begin
+            Servico.Valores.AliquotaIr := Leitor.rCampo(tcDe2, 'TributoAliquota');
+            Servico.Valores.ValorIr := Leitor.rCampo(tcDe2, 'TributoValor');
+          end;
+          if Leitor.rCampo(tcStr, 'TributoSigla') = 'PIS' then
+          begin
+            Servico.Valores.AliquotaPis := Leitor.rCampo(tcDe2, 'TributoAliquota');
+            Servico.Valores.ValorPis := Leitor.rCampo(tcDe2, 'TributoValor');
+          end;
+          if Leitor.rCampo(tcStr, 'TributoSigla') = 'COFINS' then
+          begin
+            Servico.Valores.AliquotaCofins := Leitor.rCampo(tcDe2, 'TributoAliquota');
+            Servico.Valores.ValorCofins := Leitor.rCampo(tcDe2, 'TributoValor');
+          end;
+          if Leitor.rCampo(tcStr, 'TributoSigla') = 'CSLL' then
+          begin
+            Servico.Valores.AliquotaCsll := Leitor.rCampo(tcDe2, 'TributoAliquota');
+            Servico.Valores.ValorCsll := Leitor.rCampo(tcDe2, 'TributoValor');
+          end;
+          if Leitor.rCampo(tcStr, 'TributoSigla') = 'INSS' then
+          begin
+            Servico.Valores.AliquotaInss := Leitor.rCampo(tcDe2, 'TributoAliquota');
+            Servico.Valores.ValorInss := Leitor.rCampo(tcDe2, 'TributoValor');
+          end;
+          Inc(i);
+        end;
+      end;
+
       InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
     end;
   end;

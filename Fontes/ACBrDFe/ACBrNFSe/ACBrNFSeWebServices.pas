@@ -1324,7 +1324,7 @@ begin
     if CNPJ = '' then
       GerarException(ACBrStr('O CNPJ não informado em: Configuracoes.Geral.Emitente.CNPJ'));
     IM           := FPConfiguracoesNFSe.Geral.Emitente.InscMun;
-    if IM = '' then
+    if (IM = '') and ((Provedor <> proBetha) or (FPConfiguracoes.WebServices.Ambiente = taProducao)) then
       GerarException(ACBrStr('A I.M. não informada em: Configuracoes.Geral.Emitente.InscMun'));
     RazaoSocial  := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
     if RazaoSocial = '' then

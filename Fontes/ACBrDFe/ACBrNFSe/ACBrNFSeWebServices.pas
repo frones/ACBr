@@ -2896,11 +2896,15 @@ begin
       proTecnos,
       proSystemPro: TagGrupo := 'ConsultarNfseFaixaEnvio';
       proSP:        TagGrupo := 'PedidoConsultaNFe';
+      proGoverna :  TagGrupo := 'ConsultaCancelamento';
     else
       TagGrupo := 'ConsultarNfseEnvio';
     end;
 
-    TagGrupo := FPrefixo3 + TagGrupo;
+    if FProvedor = proGoverna then
+      TagGrupo := FPrefixo4 + TagGrupo
+    else
+      TagGrupo := FPrefixo3 + TagGrupo;
 
     case FProvedor of
       proInfisc,

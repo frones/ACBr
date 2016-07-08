@@ -931,6 +931,8 @@ begin
       FProvedor := FProvedorConf;
   end;
 
+
+
   VersaoNFSe := ProvedorToVersaoNFSe(FProvedor);
   LayoutXML := ProvedorToLayoutXML(FProvedor);
 
@@ -988,6 +990,11 @@ begin
 
   NFSe.Cancelada := snNao;
   NFSe.Status := srNormal;
+
+  if FProvedor = proGoverna then
+  begin
+    Leitor.rExtrai(1,'RetornoConsultaRPS');
+  end;
 
   case LayoutXML of
     loABRASFv1:    Result := LerNFSe_ABRASF_V1;
@@ -1983,6 +1990,8 @@ begin
 end;
 
 function TNFSeR.LerNFSe_Governa: Boolean;
+var
+  i: integer;
 begin
   NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
   NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
@@ -2016,6 +2025,9 @@ begin
       DataEmissao := Leitor.rCampo(tcDat, 'DtemiNfse');
       Nfse.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'NomTmd');
       NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'NumDocTmd');
+      NFSe.TipoRecolhimento := Leitor.rCampo(tcStr, 'TipRec');
+      NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual := Leitor.rCampo(tcStr, 'InscricaoEstadual');
+      Nfse.OutrasInformacoes := Leitor.rCampo(tcStr, 'Obs');
       with  Nfse.Tomador.Endereco do
       begin
         Endereco := Leitor.rCampo(tcStr, 'DesEndTmd');
@@ -2024,9 +2036,38 @@ begin
         UF := Leitor.rCampo(tcStr, 'CodEstTmd');
         CEP := Leitor.rCampo(tcStr, 'CEPTmd');
       end;
+
       Competencia := Leitor.rCampo(tcStr, 'DtemiNfse');
-      Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodAti');
+      Servico.CodigoCnae := Leitor.rCampo(tcStr, 'CodAti');
       Servico.Discriminacao := Leitor.rCampo(tcStr, 'DesSvc');
+      Servico.Descricao := Leitor.rCampo(tcStr, 'DescricaoServ');
+
+//    Itens do serviço prestado
+      i := 0;
+      while i <> -1 do
+      begin
+        if (Leitor.rExtrai(1, 'ItemNfse','',i+1) <> '') then
+        begin
+          Nfse.Servico.ItemServico.Insert(i);
+          with NFSe.Servico.ItemServico.Items[i] do
+          begin
+            Descricao := Leitor.rCampo(tcStr, 'DesSvc');
+            Quantidade := StrToFloat(Leitor.rCampo(tcStr, 'QdeSvc'));
+            ValorUnitario := StrToFloat(Leitor.rCampo(tcStr, 'VlrUnt'));
+            ValorTotal := StrToFloat(Leitor.rCampo(tcStr, 'QdeSvc')) * StrToFloat(Leitor.rCampo(tcStr, 'VlrUnt'));
+          end;
+          inc(i);
+        end
+        else
+        begin
+          i := -1;
+        end;
+      end;
+
+      for i := 0 to Nfse.Servico.ItemServico.Count - 1 do
+      begin
+        Servico.Valores.ValorLiquidoNfse := Servico.Valores.ValorLiquidoNfse + NFse.Servico.ItemServico.Items[i].ValorTotal;
+      end;
     end;
   end;
 

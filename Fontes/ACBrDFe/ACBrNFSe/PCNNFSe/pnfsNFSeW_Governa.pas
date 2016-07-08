@@ -128,19 +128,25 @@ begin
 end;
 
 procedure TNFSeW_Governa.GerarListaServicos;
+var
+  i: integer;
 begin
   Gerador.Prefixo := Prefixo4;
   Gerador.wGrupoNFSe('ItensRps');
-  Gerador.wGrupoNFSe('ItemRps');
 
-  Gerador.Prefixo := Prefixo3;
-  Gerador.wCampoNFSe(tcInt, '', 'SeqItem', 01, 02, 1, 1, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'QdeSvc', 01, 09, 1, 1, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'VlrUnt', 01, 16, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
-  Gerador.wCampoNFSe(tcStr, '', 'DesSvc', 00, 100, 1, NFSe.Servico.Discriminacao, '');
+  for i := 0 to Nfse.Servico.ItemServico.Count -1 do
+  begin
+    Gerador.wGrupoNFSe('ItemRps');
+    Gerador.Prefixo := Prefixo3;
+    Gerador.wCampoNFSe(tcInt, '', 'SeqItem', 01, 02, 1, i+1, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'QdeSvc', 01, 09, 1, Nfse.Servico.ItemServico.Items[i].Quantidade, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'VlrUnt', 01, 16, 1, Nfse.Servico.ItemServico.Items[i].ValorUnitario, '');
+    Gerador.wCampoNFSe(tcStr, '', 'DesSvc', 00, 100, 1, Nfse.Servico.ItemServico.Items[i].Descricao, '');
+    Gerador.Prefixo := Prefixo4;
+    Gerador.wGrupoNFSe('/ItemRps');
+  end;
 
   Gerador.Prefixo := Prefixo4;
-  Gerador.wGrupoNFSe('/ItemRps');
   Gerador.wGrupoNFSe('/ItensRps');
 end;
 

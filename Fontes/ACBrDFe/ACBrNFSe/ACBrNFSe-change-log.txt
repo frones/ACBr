@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2016
+[*] Alterações visando o provedor Governa.
+    Por: Felippi
+
 06/07/2016
 [*] Alterações visando o envio em Lote de RPS para o provedor Conam.
     Por: André Medeiros

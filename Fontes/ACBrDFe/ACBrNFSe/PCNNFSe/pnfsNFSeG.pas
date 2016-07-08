@@ -1057,6 +1057,14 @@ begin
                  Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 06, 1, Pagina, '');
                end;
       *)
+    proGoverna :
+              begin
+               Gerador.Prefixo := Prefixo3;
+               Gerador.wCampoNFSe(tcStr, '#1', 'CodCadBic', 01, 15, 1, IMTomador, '');
+               Gerador.wCampoNFSe(tcStr, '#1', 'ChvAcs', 01, 15, 1, SerieNFSe, '');
+               Gerador.wCampoNFSe(tcStr, '#1', 'NumNot', 01, 15, 1, NumeroNFSe, '');
+               Gerador.wCampoNFSe(tcStr, '#1', 'CodVer', 01, 15, 1, NomeInter, '');
+              end     
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);

@@ -352,6 +352,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'WS_ConsultaNfsePorRps.ExecuteResponse') <> '');
 
+    //GOVERNA
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RecepcionarConsultaNotaCanceladaResult') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -383,6 +387,13 @@ begin
       else
         Nivel := 2;
 
+      // GOVERNA
+      if leitor.rExtrai(2,'RetornoConsultaCancelamento') <> '' then
+      begin
+        Nivel := 3;
+        DataRecebimentoTemp := Date;
+      end;
+
       i := 0;
       while (Leitor.rExtrai(Nivel, 'tcCompNfse', '', i + 1) <> '') or
             (Leitor.rExtrai(Nivel, 'CompNfse', '', i + 1) <> '') or
@@ -394,7 +405,8 @@ begin
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS
-            ((Provedor in [proInfisc]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) do
+            ((Provedor in [proInfisc]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) or
+            ((Provedor in [proGoverna]) and (Leitor.rExtrai(Nivel, 'InfRetConsultaNotCan', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -682,19 +694,50 @@ begin
       end;
     end;
 
-    j := 0;
-    MsgErro := 0;
-    while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
+    if FProvedor = proGoverna then
     begin
-      Msg  := Leitor.rCampo(tcStr, 'DesOco');
-      if (Pos('OK!', Msg) = 0) and (Pos('RPS já Importado', Msg) = 0) and
-         (Pos('Sucesso', Msg) = 0) then
+      j := 0;
+      MsgErro := 0;
+      while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
       begin
+        Msg  := Leitor.rCampo(tcStr, 'DesOco');
+        if (Pos('OK!', Msg) = 0) and (Pos('RPS já Importado', Msg) = 0) and
+           (Pos('Sucesso', Msg) = 0) then
+        begin
+          ListaNFSe.FMsgRetorno.Add;
+          ListaNFSe.FMsgRetorno[MsgErro].FMensagem := Msg;
+          inc(MsgErro);
+        end;
+        inc(j);
+      end;
+
+      MsgErro := 0;
+      j := 0;
+      while Leitor.rExtrai(1, 'InfRetConsultaNotCan', '', j+1) <> '' do
+      begin
+        Msg  := Leitor.rCampo(tcStr, 'SitCan');
+        if Msg = 'N' then
+          Msg := 'Nota não cancelada!'
+        else
+          Msg := 'Nota cancelada!';
+
         ListaNFSe.FMsgRetorno.Add;
         ListaNFSe.FMsgRetorno[MsgErro].FMensagem := Msg;
         inc(MsgErro);
+
+        Msg  := Leitor.rCampo(tcStr, 'DatCan');
+        if Msg <> '' then
+        begin
+          ListaNFSe.FMsgRetorno.Add;
+          ListaNFSe.FMsgRetorno[MsgErro].FMensagem := 'Data de Cancelamento: ' + Msg;
+        end;
+        inc(j);
       end;
-      inc(j);
+      Result := true;
+      With ListaNFSe.FCompNFSe.Add do
+      begin
+        FNFSe.dhRecebimento := Date;
+      end;
     end;
 
     if FProvedor = proEGoverneISS then

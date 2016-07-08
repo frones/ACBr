@@ -2919,11 +2919,14 @@ begin
          INIRec.WriteString( 'Identificacao','Saida'   ,DateToStr(Ide.dSaiEnt));
          INIRec.WriteString( 'Identificacao','hSaiEnt' ,TimeToStr(Ide.hSaiEnt));
          INIRec.WriteString( 'Identificacao','Tipo'    ,tpNFToStr(Ide.tpNF ));
+         INIRec.WriteString( 'Identificacao','idDest'  , DestinoOperacaoToStr(TpcnDestinoOperacao(Ide.idDest)));
          INIRec.WriteInteger('Identificacao','CidadeCod' ,Ide.cMunFG);
          INIRec.WriteString( 'Identificacao','tpAmb'   ,TpAmbToStr(Ide.tpAmb ));
          INIRec.WriteString( 'Identificacao','tpImp'   ,TpImpToStr(Ide.tpImp ));
          INIRec.WriteString( 'Identificacao','tpemis'  ,TpEmisToStr(Ide.tpemis ));
          INIRec.WriteString( 'Identificacao','Finalidade',FinNFeToStr(Ide.finNFe));
+         INIRec.WriteString( 'Identificacao','indFinal',ConsumidorFinalToStr(TpcnConsumidorFinal(Ide.indFinal)));
+         INIRec.WriteString( 'Identificacao','indPres', PresencaCompradorToStr(TpcnPresencaComprador(Ide.indPres)));
          INIRec.WriteString( 'Identificacao','procEmi' ,procEmiToStr(Ide.procEmi) );
          INIRec.WriteString( 'Identificacao','verProc' ,Ide.verProc );
          INIRec.WriteString( 'Identificacao','dhCont'  ,DateToStr(Ide.dhCont));
@@ -3018,6 +3021,7 @@ begin
          INIRec.WriteString(  'Destinatario','indIEDest'  ,indIEDestToStr(Dest.indIEDest));
          INIRec.WriteString(  'Destinatario','IE'         ,Dest.IE);
          INIRec.WriteString(  'Destinatario','ISUF'       ,Dest.ISUF);
+         INIRec.WriteString(  'Destinatario','IM'         ,Dest.IM);
          INIRec.WriteString(  'Destinatario','Email'      ,Dest.Email);
 
          INIRec.WriteString(  'Destinatario','Logradouro' ,Dest.EnderDest.xLgr);
@@ -3092,6 +3096,20 @@ begin
 
                INIRec.WriteFloat(sSecao,'vTotTrib',Imposto.vTotTrib) ;
 
+               for J:=0 to Prod.NVE.Count-1 do
+                begin
+                  if Prod.NVE.Items[J].NVE <> '' then
+                   begin
+                    with Prod.NVE.Items[J] do
+                       begin
+                         sSecao := 'NVE'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3);
+                         INIRec.WriteString(sSecao,'NVE',NVE);
+                       end;
+                   end
+                  else
+                    Break;
+                end;
+
                for J:=0 to Prod.DI.Count-1 do
                 begin
                   if Prod.DI.Items[j].nDi <> '' then
@@ -3132,6 +3150,8 @@ begin
                               INIRec.WriteInteger(sSecao,'nSeqAdi'     ,nSeqAdi) ;
                               INIRec.WriteString( sSecao,'CodigoFrabricante',cFabricante);
                               INIRec.WriteFloat(  sSecao,'DescontoADI' ,vDescDI);
+                              INIRec.WriteString( sSecao,'nDraw' , nDraw);
+
                             end;
                          end;
                       end;

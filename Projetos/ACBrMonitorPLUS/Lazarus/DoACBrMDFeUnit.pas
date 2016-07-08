@@ -1638,7 +1638,7 @@ end;
 
 function GerarMDFeIni( XML : WideString ) : WideString;
 var
-  I, j : Integer;
+  I, j, y : Integer;
   sSecao : String;
   INIRec : TMemIniFile;
   IniMDFe : TStringList;
@@ -1722,7 +1722,37 @@ begin
            moRodoviario:  begin
                             INIRec.WriteString('Rodo', 'RNTRC', Rodo.RNTRC);
                             INIRec.WriteString('Rodo', 'CIOT', Rodo.CIOT);
-                            // Implementar
+                            INIRec.WriteString('Rodo', 'tpRod', TpRodadoToStr(Rodo.veicTracao.tpRod));
+                            INIRec.WriteString('Rodo', 'tpCar', TpCarroceriaToStr(Rodo.veicTracao.tpCar));
+                            INIRec.WriteString('Rodo', 'UF', Rodo.veicTracao.UF);
+
+                            if (Rodo.veicTracao.placa <> '') then
+                                begin
+                                  INIRec.WriteString('veicTracao', 'clInt', Rodo.veicTracao.cInt);
+                                  INIRec.WriteString('veicTracao', 'placa', Rodo.veicTracao.placa);
+                                  INIRec.WriteString('veicTracao', 'RENAVAN', Rodo.veicTracao.RENAVAM);
+                                  INIRec.WriteInteger('veicTracao', 'tara', Rodo.veicTracao.tara);
+                                  INIRec.WriteInteger('veicTracao', 'capKG', Rodo.veicTracao.capKG);
+                                  INIRec.WriteInteger('veicTracao', 'clInt', Rodo.veicTracao.capM3);
+                                end;
+
+                              if ( Rodo.veicTracao.prop.CNPJCPF <> '') then
+                              begin
+                                INIRec.WriteString('prop','CPFCNPJ',Rodo.veicTracao.prop.CNPJCPF);
+                                INIRec.WriteString('prop','RNTRC',Rodo.veicTracao.prop.RNTRC);
+                                INIRec.WriteString('prop','xNome',Rodo.veicTracao.prop.xNome);
+                                INIRec.WriteString('prop','IE',Rodo.veicTracao.prop.IE);
+                                INIRec.WriteString('prop','UF',Rodo.veicTracao.prop.UF);
+                                INIRec.WriteString('prop','tpProp',TpPropToStr(Rodo.veicTracao.prop.tpProp));
+                                end;
+
+                              for y := 1 to Rodo.veicTracao.condutor.Count -1 do
+                                begin
+                                sSecao := 'condutor'+IntToStrZero(y+1,3);
+                                IniRec.WriteString(sSecao,'CPF',Rodo.veicTracao.condutor.Items[y].CPF);
+                                IniRec.WriteString(sSecao,'xNome',Rodo.veicTracao.condutor.Items[y].xNome);
+                                end;
+
                           end;
            moAereo:       begin
                             // Implementar

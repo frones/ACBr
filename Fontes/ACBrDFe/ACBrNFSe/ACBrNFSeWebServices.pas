@@ -1717,8 +1717,8 @@ begin
         TipoTributacao := '4';
         QtdTributos    := iTributos;
         ValorNota      := TotalServicos;
-        ValorIss       := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIss;
-        ValorIssRetido := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIssRetido;
+        ValorIss       := TotalIss;
+        ValorIssRetido := TotalIssRetido;
         ValorTotalDeducoes := TotalDeducoes;
         ValorTotalTributos := TotalTributos;
       end;

@@ -59,13 +59,16 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnRetInutNFe;
+  pcnConversao, pcnGerador, pcnRetInutNFe, pcnLeitor;
 
 type
+
+  { TinutNFe }
 
   TinutNFe = class(TPersistent)
   private
     FGerador: TGerador;
+    FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
     FcUF: Integer;
     Fano: Integer;
@@ -86,6 +89,7 @@ type
     function LerXMLFromString(const AXML: String): Boolean;
     function ObterNomeArquivo: String;
   published
+    property Leitor: TLeitor         read FLeitor   write FLeitor;
     property Gerador: TGerador       read FGerador    write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
     property cUF: Integer            read FcUF        write FcUF;
@@ -96,7 +100,7 @@ type
     property nNFIni: Integer         read FnNFIni     write FnNFIni;
     property nNFFin: Integer         read FnNFFin     write FnNFFin;
     property xJust: String           read FxJust      write FxJust;
-    property ID: String              read FIDInutilizacao;
+    property ID: String              read FIDInutilizacao write FIDInutilizacao;
     property Versao: String          read FVersao     write FVersao;
     property RetInutNFe: TRetInutNFe read FRetInutNFe write FRetInutNFe;
   end;
@@ -110,14 +114,16 @@ Uses pcnAuxiliar,
 
 constructor TinutNFe.Create;
 begin
-  FGerador := TGerador.Create;
+  FGerador    := TGerador.Create;
   FRetInutNFe := TRetInutNFe.Create;
+  FLeitor     := TLeitor.Create;
 end;
 
 destructor TinutNFe.Destroy;
 begin
   FGerador.Free;
   FRetInutNFe.Free;
+  FLeitor.Free;
   inherited;
 end;
 
@@ -181,11 +187,44 @@ end;
 function TinutNFe.LerXMLFromString(const AXML: String): Boolean;
 var
   RetornoInutNFe: TRetInutNFe;
+  Ok : Boolean;
 begin
-  RetornoInutNFe := TRetInutNFe.Create;
   try
+    // Lendo dados do pedido de inutilização, se houver...
+    Leitor.Arquivo := AXML;
+    try
+      if ( leitor.rExtrai(1, 'infInut') <> '') then
+      begin
+        FIDInutilizacao := Leitor.rAtributo('Id=');
+
+                 Fversao   := Leitor.rAtributo('versao');
+        (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+        (*DR09 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+        (*DR10 *)Fano      := Leitor.rCampo(tcInt, 'ano');
+        (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+        (*DR12 *)FModelo   := Leitor.rCampo(tcInt, 'mod');
+        (*DR13 *)FSerie    := Leitor.rCampo(tcInt, 'serie');
+        (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');
+        (*DR15 *)FnNFFin   := Leitor.rCampo(tcInt, 'nNFFin');
+                 FxJust    := Leitor.rCampo(tcStr, 'xJust');;
+
+                 Result := True;
+      end;
+    except
+      result := False;
+    end;
+
+    // Lendo dados do retorno, se houver
+    RetornoInutNFe := TRetInutNFe.Create;
     RetornoInutNFe.Leitor.Arquivo := AXML;
+
     Result := RetornoInutNFe.LerXml;
+
+    if ( FIDInutilizacao = '' ) then
+    begin
+      FIDInutilizacao := RetornoInutNFe.Id;
+      tpAmb           := RetornoInutNFe.tpAmb;
+    end;
 
     with FRetInutNFe do
      begin

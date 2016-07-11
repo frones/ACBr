@@ -680,12 +680,12 @@ begin
 	rliCanhoto1.Visible         := RLNFe.PageNumber = 1;
 	rliCanhoto2.Visible         := RLNFe.PageNumber = 1;
 	rliCanhoto3.Visible         := RLNFe.PageNumber = 1;
-  	rllDataRecebimento.Visible  := RLNFe.PageNumber = 1;
+  rllDataRecebimento.Visible  := RLNFe.PageNumber = 1;
 	rllIdentificacao.Visible    := RLNFe.PageNumber = 1;
 	rllNFe.Visible              := RLNFe.PageNumber = 1;
 	rllNumNF0.Visible           := RLNFe.PageNumber = 1;
 	rllRecebemosDe.Visible      := RLNFe.PageNumber = 1;
-  	rllSERIE0.Visible           := RLNFe.PageNumber = 1;
+  rllSERIE0.Visible           := RLNFe.PageNumber = 1;
 end;
 
 procedure TfrlDANFeRLRetrato.rlbDivisaoReciboBeforePrint(Sender: TObject;
@@ -2296,8 +2296,16 @@ begin
     txtUnidade.Caption         := Prod.UCom;
     txtQuantidade.Caption      := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
     txtValorUnitario.Caption   := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
-    txtValorTotal.Caption      := FormatFloatBr(Prod.vProd, ',#0.00');
-    txtValorDesconto.Caption   := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), ',#0.00');
+    if ( fImprimirTotalLiquido ) then
+    begin
+      txtValorTotal.Caption       := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), ',#0.00');
+      txtValorDesconto.Caption    := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd),',#0.00');
+    end
+    else
+    begin
+      txtValorTotal.Caption      := FormatFloatBr(Prod.vProd, ',#0.00');
+      txtValorDesconto.Caption   := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), ',#0.00');
+    end;
     txtBaseICMS.Caption        := FormatFloatBr(Imposto.ICMS.VBC, ',#0.00');
     txtValorICMS.Caption       := FormatFloatBr(Imposto.ICMS.VICMS, ',#0.00');
     txtValorIPI.Caption        := FormatFloatBr(Imposto.IPI.VIPI, ',#0.00');

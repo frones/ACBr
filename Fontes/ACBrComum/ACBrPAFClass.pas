@@ -252,6 +252,7 @@ type
   TACBrECFIdentificacaoPAF = class( TPersistent )
   private
     fsNumeroLaudo: String;
+    fsNumeroCredencimento : string;
     fsEmpresa: TACBrECFEmpresa;
     fsPaf: TACBrECFInfoPaf;
     fsOutrosArquivos: TACBrECFArquivos;
@@ -266,6 +267,7 @@ type
     property ArquivoListaAutenticados: TACBrECFArquivo read fsArquivoListaAutenticados write fsArquivoListaAutenticados;
   published
     property NumeroLaudo: String read fsNumeroLaudo write fsNumeroLaudo;
+    property NumeroCredencimento : string read fsNumeroCredencimento write fsNumeroCredencimento;
     property VersaoER: String read fsVersaoER write fsVersaoER;
     property Empresa: TACBrECFEmpresa read fsEmpresa write fsEmpresa;
     property Paf: TACBrECFInfoPaf read fsPaf write fsPaf;

@@ -1396,6 +1396,7 @@ end;
 procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
 var
   I: Integer;
+  TagGrupo, TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -1412,6 +1413,31 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
+    case Provedor of
+      proCONAM:     TagGrupo := 'ws_nfe.PROCESSARPS';
+      proInfisc:    TagGrupo := 'envioLote';
+      proISSDSF:    TagGrupo := 'ReqEnvioLoteRPS';
+      proEquiplano: TagGrupo := 'enviarLoteRpsEnvio';
+      proSP:        TagGrupo := 'PedidoEnvioLoteRPS';
+      proTinus:     TagGrupo := 'Arg';
+    else
+      TagGrupo := 'EnviarLoteRpsEnvio';
+    end;
+
+    TagGrupo := FPrefixo3 + TagGrupo;
+
+    case FProvedor of
+      proCONAM:  TagElemento := 'Reg20';
+      proInfisc: TagElemento := 'infNFSe';
+      proSP:     TagElemento := '';
+      proIssDSF: TagElemento := 'Lote';
+    else
+      TagElemento := 'LoteRps';
+    end;
+
+    if (TagElemento <> '') and not (Provedor in [proBetha, proIssDSF]) then
+      TagElemento := FPrefixo3 + TagElemento;
+
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
@@ -1423,17 +1449,12 @@ begin
     end;
 
     case FProvedor of
-      proSimplISS: FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
-      proTinus: FTagI := '<' + FPrefixo3 + 'Arg' + FNameSpaceDad + '>';
+      proSimplISS: FTagI := '<' + TagGrupo + '>';
     else
-      FTagI := '<' + FPrefixo3 + 'EnviarLoteRpsEnvio' + FNameSpaceDad + '>';
+      FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
     end;
 
-    case FProvedor of
-      proTinus: FTagF := '</' + FPrefixo3 + 'Arg>';
-    else
-      FTagF := '</' + FPrefixo3 + 'EnviarLoteRpsEnvio>';
-    end;
+    FTagF := '</' + TagGrupo + '>';
 
   	if FProvedor = proGoverna then
     begin
@@ -1470,9 +1491,7 @@ begin
   begin
     DefinirSignatureNode('');
 
-    FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg,
-                                  FPrefixo3 + 'EnviarLoteRpsEnvio',
-                                  FPrefixo3 + 'LoteRps',
+    FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, TagGrupo, TagElemento,
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
 
@@ -1643,6 +1662,7 @@ begin
     else
       FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
     end;
+    
     FTagF := '</' + TagGrupo + '>';
 
     if FProvedor in [proInfisc, proGoverna] then

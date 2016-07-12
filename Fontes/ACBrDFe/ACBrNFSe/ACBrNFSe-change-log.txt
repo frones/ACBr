@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/07/2016
+[*] Alteração para o provedor Tinus, não estava sendo informado o nome correto
+    da TAG para realizar a assinatura do Lote.
+    Por: Italo Jurisato Junior
+
 08/07/2016
 [*] Alterações visando o provedor Governa.
     Por: Felippi

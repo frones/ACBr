@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/07/2016
+-- ACBrCargaBal --
+[+]	Adição da integração URF32 balança Urano!
+		http://www.projetoacbr.com.br/forum/topic/31195-integra%C3%A7%C3%A3o-sistema-urf32-balan%C3%A7a-urano/
+		por : Juliomar Marchetti
+
 04/04/2016
 -- ACBrValidador --
 [-] Método FormatarCEP. Ajuste para conseguir formatar CEPs com 5 dígitos,

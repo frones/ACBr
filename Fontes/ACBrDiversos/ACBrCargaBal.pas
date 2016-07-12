@@ -51,8 +51,9 @@ uses
 type
   EACBrCargaBal = class(Exception);
   TACBrCargaBalTipoVenda = (tpvPeso, tpvUnidade, tpvEAN13);
-  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5);
+  TACBrCargaBalModelo = (modFilizola, modToledo, modUrano, modUranoS, modToledoMGV5, modUranoURF32);
   TACBrCargaBalProgresso = procedure(Mensagem: String; ProgressoAtual, ProgressoTotal: Integer) of object;
+  TACBrCargaBalTipoValidade = (tpvDias, tpvMeses);
 
   // nutricional
   TACBrCargaBalNutriUndPorcao = (tpGramas, tpMililitros, tpUnidades);
@@ -120,14 +121,20 @@ type
     FCodigo: Integer;
     FTipo: TACBrCargaBalTipoVenda;
     FValidade: Smallint;
+    FTipoValidade: TACBrCargaBalTipoValidade;
     FSetor: TACBrCargaBalSetor;
     FNutricional: TACBrCargaBalNutricional;
+    FCodigoTexto1: Integer;
+    FCodigoTexto2: Integer;
+    FCodigoTexto3: Integer;
+    FCodigoInfoNutr: Integer;
   Public
     constructor Create;
     destructor Destroy; override;
     property Setor: TACBrCargaBalSetor read FSetor write FSetor;
     property ModeloEtiqueta: Smallint read FModeloEtiqueta write FModeloEtiqueta;
     property Tipo: TACBrCargaBalTipoVenda read FTipo write FTipo;
+    property TipoValidade: TACBrCargaBalTipoValidade read FTipoValidade write FTipoValidade;
     property Codigo: Integer read FCodigo write FCodigo;
     property ValorVenda: Currency read FValorVenda write FValorVenda;
     property Validade: Smallint read FValidade write FValidade;
@@ -135,6 +142,11 @@ type
     property Receita: String read FReceita write FReceita;
     property Tecla: Integer read FTecla write FTecla;
     property Nutricional: TACBrCargaBalNutricional Read FNutricional Write FNutricional;
+    property CodigoTexto1: Integer read FCodigoTexto1 write FCodigoTexto1;
+    property CodigoTexto2: Integer read FCodigoTexto2 write FCodigoTexto2;
+    property CodigoTexto3: Integer read FCodigoTexto3 write FCodigoTexto3;
+    property CodigoInfoNutr: Integer read FCodigoInfoNutr write FCodigoInfoNutr;
+
   end;
 
   TACBrCargaBalItens = class(TObjectList)
@@ -166,17 +178,23 @@ type
     function GetNomeArquivoProduto: String;
     function GetNomeArquivoReceita: String;
     function GetNomeArquivoSetor: String;
+    function GetNomeArquivoRelacaoProdutoNutricional: String;
+    function GetNomeArquivoRelacaoProdutoReceita: String;
 
     function GetTipoProdutoFilizola(Tipo: TACBrCargaBalTipoVenda): String;
     function GetTipoProdutoToledo(Tipo: TACBrCargaBalTipoVenda): String;
     function GetTipoProdutoUrano(Tipo: TACBrCargaBalTipoVenda): string;
+    function GetTipoProdutoUranoURF32(Tipo: TACBrCargaBalTipoVenda): string;
     function CalcularSoma(const xStr: string): integer;
     function GetModeloStr: string;
+
+    function GetTipoValidadeProdutoUranoURF32(Tipo: TACBrCargaBalTipoValidade): string;
 
     procedure PreencherFilizola(Arquivo, Setor, Nutricional, Receita: TStringList);
     procedure PreencherToledo(Arquivo, Nutricional, Receita: TStringList; Versao: integer = 0);
     procedure PreencherUrano(Arquivo: TStringList);
     procedure PreencherUranoS(Arquivo: TStringList);
+    procedure PreencherUranoURF32(Arquivo, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList);
 
     function GetNutriUndPorcaoToledo(Tipo: TACBrCargaBalNutriUndPorcao): String;
     function GetNutriPartDecimalToledo(Tipo: TACBrCargaBalNutriPartdecimal): String;
@@ -244,6 +262,11 @@ begin
   FValidade        := 0;
 
   FNutricional := TACBrCargaBalNutricional.Create;
+
+  FCodigoTexto1    := 0;
+  FCodigoTexto2    := 0;
+  FCodigoTexto3    := 0;
+  FCodigoInfoNutr  := 0;
 end;
 
 destructor TACBrCargaBalItem.Destroy;
@@ -347,6 +370,7 @@ begin
     modUrano      : Result := 'PRODUTOS.TXT';
     modUranoS     : Result := 'PRODUTOS.TXT';
     modToledoMGV5 : Result := 'ITENSMGV.TXT';
+    modUranoURF32 : Result := 'PRODUTOS.TXT';
   end;
 end;
 
@@ -430,6 +454,14 @@ begin
   end;
 end;
 
+function TACBrCargaBal.GetTipoProdutoUranoURF32(Tipo: TACBrCargaBalTipoVenda): string;
+begin
+  case Tipo of
+    tpvPeso    : Result:='0';
+    tpvUnidade : Result:='6';
+  end;
+end;
+
 function TACBrCargaBal.GetNomeArquivoSetor: String;
 begin
   // Toledo e Urano nao possuem arquivo de setor a parte
@@ -440,10 +472,11 @@ end;
 
 function TACBrCargaBal.GetNomeArquivoReceita: String;
 begin
-  // Urano nao possue arquivo de Receita a parte
+  // Urano nao possue arquivo de Receita a parte. EXCETO URANO URF32
   case FModelo of
     modFilizola : Result := 'REC_ASS.TXT';
-    modToledoMGV5: Result := 'TXINFO.TXT'
+    modToledoMGV5: Result := 'TXINFO.TXT';
+    modUranoURF32: Result := 'RECEITAS.TXT';
   end;
 end;
 
@@ -454,6 +487,7 @@ begin
   case FModelo of
     modToledoMGV5 : Result := 'INFNUTRI.TXT';
     modFilizola : Result := 'NUTRI.TXT';
+    modUranoURF32: Result := 'INFORMACOESNUTRICIONAIS.TXT';
   end;
 end;
 
@@ -763,6 +797,86 @@ begin
   end;
 end;
 
+procedure TACBrCargaBal.PreencherUranoURF32(Arquivo, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList);
+var
+  i, iTotal: Integer;
+  sReceita:string;
+  function TrocaPontoPorVirgula(sString: String): String;
+  var
+    iPos :Integer;
+    sRetorno :String;
+  begin
+    sRetorno := '';
+    for iPos := 1 to Length(sString) do
+      begin
+        if sString[iPos] <> '.' then
+          sRetorno := sRetorno + sString[iPos]
+        else
+          sRetorno := sRetorno + ',';
+      end;
+     Result := sRetorno;
+  end;
+
+  function ValorComVirgula(nValor:Currency):string;
+  var
+    sTemp:string;
+  begin
+    sTemp := LFIll(FormatFloat('###,###,##0.00', nValor), 9, ' ');
+    Result := TrocaPontoPorVirgula(sTemp);
+  end;
+
+begin
+  iTotal := Produtos.Count;
+
+  for i := 0 to iTotal - 1 do
+    begin
+      Arquivo.Add(LFIll(Produtos[i].Codigo, 6, ' ') +          // Código
+                  '*' +                                        // Flag * para transmitir
+                  GetTipoProdutoUranoURF32(Produtos[i].Tipo) + // Tipo
+                  RFIll(Produtos[i].Descricao, 20, ' ') +      // Nome
+                  ValorComVirgula(Produtos[i].ValorVenda) +    // Preço
+                  LFIll(Produtos[i].Validade, 5, ' ') +        // Validade
+                  LFIll(GetTipoValidadeProdutoUranoURF32(Produtos[i].TipoValidade), 1)   // Validade 2 - Indica se é M=Meses ou D=Dias
+                  );
+
+      // Informações Nutricionais
+      Nutricional.Add(LFIll(Produtos[i].Codigo,5, ' ') +
+                      LFIll(Produtos[i].Nutricional.Qtd,6) +
+                      LFIll(Produtos[i].Nutricional.ValorEnergetico,5) +
+                      LFIll(Produtos[i].Nutricional.Carboidrato,6,1) +
+                      LFIll(Produtos[i].Nutricional.Proteina,6,1) +
+                      LFIll(Produtos[i].Nutricional.GorduraTotal,6,1) +
+                      LFIll(Produtos[i].Nutricional.GorduraSaturada,6,1)+
+                      LFIll(Produtos[i].Nutricional.GorduraTrans,6,1) +
+                      LFIll(Produtos[i].Nutricional.Fibra,6,1)+
+                      LFIll(Produtos[i].Nutricional.Sodio,5)
+                      );
+
+      if Produtos[i].Nutricional.Qtd > 0 then
+        begin
+          RelacaoProdutoNutricional.Add(LFIll(Produtos[i].Codigo,6, ' ') +
+                                        LFIll(Produtos[i].Codigo,5, ' ')
+                                        );
+        end;
+
+      // Receita
+      sReceita := LFIll(Produtos[i].Codigo,4) +
+                  ' ' + // Flag * para transmitir
+                  RFill(Produtos[i].Receita,254);
+
+      if (Length(Produtos[i].Receita) > 2) and (Receita.IndexOf(sReceita) < 0) then
+        begin
+          Receita.Add(sReceita);
+          RelacaoProdutoReceita.Add(LFIll(Produtos[i].Codigo,6, ' ') +
+                                    LFIll(Produtos[i].Codigo,5, ' ')
+                                        );
+
+        end;
+
+      Progresso(Format('Gerando produto %6.6d %s', [Produtos[i].Codigo, Produtos[i].Descricao]), i, iTotal);
+    end;
+end;
+
 procedure TACBrCargaBal.Progresso(const AMensagem: String; const AContAtual,
   AContTotal: Integer);
 begin
@@ -773,6 +887,7 @@ end;
 procedure TACBrCargaBal.GerarArquivos(const ADiretorio: String);
 var
   Produto, Setor, Receita, Nutricional: TStringList;
+  RelacaoProdutoNutricional, RelacaoProdutoReceita: TStringList;
   NomeArquivo: TFileName;
   Total: integer;
 begin
@@ -797,6 +912,12 @@ begin
   Nutricional := TStringList.Create;
   Nutricional.Clear;
 
+  RelacaoProdutoNutricional := TStringList.Create;
+  RelacaoProdutoNutricional.Clear;
+
+  RelacaoProdutoReceita := TStringList.Create;
+  RelacaoProdutoReceita.Clear;
+
   try
     Total := Self.Produtos.Count;
     Progresso(ACBrStr('Iniciando a geração dos arquivos'), 0, Total);
@@ -808,6 +929,7 @@ begin
       modUrano      : PreencherUrano(Produto);
       modUranoS     : PreencherUranoS(Produto);
       modToledoMGV5 : PreencherToledo(Produto, Nutricional, Receita ,1);
+      modUranoURF32 : PreencherUranoURF32(Produto, Nutricional, Receita, RelacaoProdutoNutricional, RelacaoProdutoReceita);
     end;
 
     // Monta o nome do arquivo de produtos seguindo o padrao da balanca
@@ -838,6 +960,20 @@ begin
       Nutricional.SaveToFile(NomeArquivo);
     end;
 
+    // Gerar arquivo de relação entre Produto e Nutricionais se houverem dados e o arquivo for separado
+    if RelacaoProdutoNutricional.Count > 0 then
+    begin
+      NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoRelacaoProdutoNutricional;
+      RelacaoProdutoNutricional.SaveToFile(NomeArquivo);
+    end;
+
+    // Gerar arquivo de relção entre Produto e Receita se houverem dados e o arquivo for separado
+    if RelacaoProdutoReceita.Count > 0 then
+    begin
+      NomeArquivo := IncludeTrailingPathDelimiter(ADiretorio) + GetNomeArquivoRelacaoProdutoReceita;
+      RelacaoProdutoReceita.SaveToFile(NomeArquivo);
+    end;
+
     Progresso('Terminado', Total, Total);
   finally
     FreeAndNil(Produto);
@@ -855,7 +991,31 @@ begin
    modUrano      : result := 'Urano';
    modUranoS     : result := 'Urano (S)';
    modToledoMGV5 : result := 'ToledoMGV5';
+   modUranoURF32 : result := 'Urano URF32';
  end;
+end;
+
+function TACBrCargaBal.GetTipoValidadeProdutoUranoURF32(
+  Tipo: TACBrCargaBalTipoValidade): string;
+begin
+  case Tipo of
+    tpvDias    : Result := 'D';
+    tpvMeses   : Result := 'M';
+  end;                         
+end;
+
+function TACBrCargaBal.GetNomeArquivoRelacaoProdutoNutricional: String;
+begin
+  case FModelo of
+    modUranoURF32: Result := 'PRODUTOSINFORMACOESNUTRICIONAIS.TXT';
+  end;
+end;
+
+function TACBrCargaBal.GetNomeArquivoRelacaoProdutoReceita: String;
+begin
+  case FModelo of
+    modUranoURF32: Result := 'PRODUTOSRECEITAS.TXT';
+  end;
 end;
 
 end.

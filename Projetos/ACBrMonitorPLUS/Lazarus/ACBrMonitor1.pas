@@ -325,6 +325,7 @@ type
     chbTagQrCode: TCheckBox;
     cbEscPosImprimirLogo: TCheckBox;
     cbEmailConfirmation: TCheckBox;
+    cbxAtualizarXMLCancelado: TCheckBox;
     DBGrid3: TDBGrid;
     deUSUDataCadastro: TDateEdit;
     edtArquivoPFX: TEdit;
@@ -3810,7 +3811,7 @@ begin
     edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',PathApplication + 'Logs');
     cbxImpressora.ItemIndex := cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
 
-    ACBrNFe1.Configuracoes.Geral.AtualizarXMLCancelado := True;
+    ACBrNFe1.Configuracoes.Geral.AtualizarXMLCancelado := Ini.ReadBool('Arquivos', 'AtualizarXMLCancelado', True);
     ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
     ACBrNFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
@@ -4072,6 +4073,7 @@ begin
     cbxSepararporModelo.Checked := Ini.ReadBool('Arquivos', 'SepararPorModelo', True);
     cbxSalvarNFesProcessadas.Checked :=
       Ini.ReadBool('Arquivos', 'SalvarApenasNFesAutorizadas', False);
+    cbxAtualizarXMLCancelado.Checked := Ini.ReadBool('Arquivos', 'AtualizarXMLCancelado', True);
 
     edtPathNFe.Text := Ini.ReadString('Arquivos', 'PathNFe', PathApplication+'Arqs');
     edtPathInu.Text := Ini.ReadString('Arquivos', 'PathInu', PathApplication+'Arqs');
@@ -4834,6 +4836,8 @@ begin
     Ini.WriteBool('Arquivos', 'SepararPorModelo', cbxSepararporModelo.Checked);
     Ini.WriteBool('Arquivos', 'SalvarApenasNFesAutorizadas',
       cbxSalvarNFesProcessadas.Checked);
+    Ini.WriteBool('Arquivos', 'AtualizarXMLCancelado',
+      cbxAtualizarXMLCancelado.Checked);
     Ini.WriteString('Arquivos', 'PathNFe', edtPathNFe.Text);
     Ini.WriteString('Arquivos', 'PathInu', edtPathInu.Text);
     Ini.WriteString('Arquivos', 'PathDPEC', edtPathDPEC.Text);

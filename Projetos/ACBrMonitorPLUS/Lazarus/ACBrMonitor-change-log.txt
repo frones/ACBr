@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/07/2016
+[+] Opção para o usuário selecionar se deseja alterar XML cancelado
+	por: Celso Marigo Junior
+
 08/07/2016
 [+] Adição da modalidade rodoviário completo do MDF-e
 		http://www.projetoacbr.com.br/forum/topic/31007-campos-para-mdfe-no-plus/?do=findComment&comment=205823

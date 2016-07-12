@@ -431,7 +431,7 @@ begin
       // (valor unitario * quantidade) - desconto
       Gerador.wCampoNFSe(tcDe2, '', 'vServ', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].ValorServicos, '');
       Gerador.wCampoNFSe(tcDe2, '', 'vDesc', 01, 15, 1, NFSe.Servico.ItemServico.Items[i].DescontoIncondicionado, '');
-      Gerador.wCampoNFSe(tcDe2, '', 'vDed' , 01, 15, 1, NFSe.Servico.ItemServico.Items[i].vDed, '');
+      Gerador.wCampoNFSe(tcDe2, '', 'vDed' , 01, 15, 0, NFSe.Servico.ItemServico.Items[i].vDed, '');
 
       if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '2' then
       begin  // 1 - stRetencao ; 2 - stNormal ; 3 - stSubstituicao

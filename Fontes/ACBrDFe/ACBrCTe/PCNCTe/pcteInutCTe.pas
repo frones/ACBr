@@ -54,15 +54,18 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe,
+  pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
   ACBrUtil;
 
 
 type
 
+  { TinutCTe }
+
   TinutCTe = class(TPersistent)
   private
     FGerador: TGerador;
+    FLeitor: TLeitor;
     FtpAmb: TpcnTipoAmbiente;
     FcUF: Integer;
     Fano: Integer;
@@ -83,6 +86,7 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo: String;
   published
+    property Leitor: TLeitor         read FLeitor     write FLeitor;
     property Gerador: TGerador       read FGerador    write FGerador;
     property tpAmb: TpcnTipoAmbiente read FtpAmb      write FtpAmb;
     property cUF: Integer            read FcUF        write FcUF;
@@ -93,7 +97,7 @@ type
     property nCTIni: Integer         read FnCTIni     write FnCTIni;
     property nCTFin: Integer         read FnCTFin     write FnCTFin;
     property xJust: String           read FxJust      write FxJust;
-    property ID: String              read FIDInutilizacao;
+    property ID: String              read FIDInutilizacao write FIDInutilizacao;
     property RetInutCTe: TRetInutCTe read FRetInutCTe write FRetInutCTe;
     property Versao: String          read FVersao     write FVersao; 
   end;
@@ -104,14 +108,16 @@ implementation
 
 constructor TinutCTe.Create;
 begin
-  FGerador := TGerador.Create;
+  FGerador    := TGerador.Create;
   FRetInutCTe := TRetInutCTe.Create;
+  FLeitor     := TLeitor.Create;
 end;
 
 destructor TinutCTe.Destroy;
 begin
   FGerador.Free;
   FRetInutCTe.Free;
+  FLeitor.Free;
   inherited;
 end;
 
@@ -172,11 +178,43 @@ end;
 function TinutCTe.LerXMLFromString(const AXML: String): boolean;
 var
   RetornoInutCTe: TRetInutCTe;
+  Ok : Boolean;
 begin
-  RetornoInutCTe := TRetInutCTe.Create;
   try
+    // Lendo dados do pedido de inutilização, se houver...
+    Leitor.Arquivo := AXML;
+    try
+      if ( leitor.rExtrai(1, 'infInut') <> '') then
+      begin
+        FIDInutilizacao := Leitor.rAtributo('Id=');
+
+        Fversao := Leitor.rAtributo('versao');
+        FtpAmb  := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+        FcUF    := Leitor.rCampo(tcInt, 'cUF');
+        Fano    := Leitor.rCampo(tcInt, 'ano');
+        FCNPJ   := Leitor.rCampo(tcStr, 'CNPJ');
+        FModelo := Leitor.rCampo(tcInt, 'mod');
+        FSerie  := Leitor.rCampo(tcInt, 'serie');
+        FnCTIni := Leitor.rCampo(tcInt, 'nCTIni');
+        FnCTFin := Leitor.rCampo(tcInt, 'nCTFin');
+        FxJust  := Leitor.rCampo(tcStr, 'xJust');;
+
+        Result := True;
+      end;
+    except
+      Result := False;
+    end;
+
+    // Lendo dados do retorno, se houver
+    RetornoInutCTe := TRetInutCTe.Create;
     RetornoInutCTe.Leitor.Arquivo := AXML;
     Result := RetornoInutCTe.LerXml;
+
+    if ( FIDInutilizacao = '' ) then
+    begin
+      FIDInutilizacao := RetornoInutCTe.Id;
+      tpAmb           := RetornoInutCTe.tpAmb;
+    end;
 
     with FRetInutCTe do
      begin

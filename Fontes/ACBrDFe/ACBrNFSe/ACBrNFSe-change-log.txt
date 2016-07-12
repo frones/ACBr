@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/07/2016
+[*] Acrescentado novas Naturezas de Operação, usadas pelo provedor Publica.
+    Por Vanderson
 [*] Alteração para o provedor Tinus, não estava sendo informado o nome correto
     da TAG para realizar a assinatura do Lote.
     Por: Italo Jurisato Junior

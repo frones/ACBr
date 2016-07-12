@@ -2077,6 +2077,7 @@ var
   i: Integer;
   bNota: Boolean;
   bRPS: Boolean;
+  sDataTemp: String;
 begin
   NFSe.dhRecebimento := StrToDateTime(FormatDateTime('dd/mm/yyyy', now));
 
@@ -2084,10 +2085,10 @@ begin
   bNota := False;
 
   if (Leitor.rExtrai(1, 'Reg20Item') <> '') then
-    bRPS := True;
-
-  if (Leitor.rExtrai(1, 'CompNfse') <> '') then
-    bNota := True;
+    bRPS := True
+  else
+    if (Leitor.rExtrai(1, 'CompNfse') <> '') then
+      bNota := True;
 
   if bNota or bRPS then
   begin
@@ -2095,12 +2096,16 @@ begin
     begin
       Numero := Leitor.rCampo(tcStr, 'NumNf');
 
-      if bRPS then
-        DataEmissao := Leitor.rCampo(tcDat, 'DtEmi')
-      else
-        DataEmissao := Leitor.rCampo(tcDat, 'DtEmiNf');
+      sDataTemp := Leitor.rCampo(tcStr, 'DtEmi');
 
-      DataEmissaoRps := Leitor.rCampo(tcDat, 'DtEmiRps');
+      if sDataTemp = EmptyStr then
+        sDataTemp := Leitor.rCampo(tcStr, 'DtEmiNf');
+
+      if sDataTemp <> EmptyStr then
+      begin
+        DataEmissao := StrToDate(sDataTemp);
+        Competencia := FormatDateTime('mm/yyyy', StrToDate(sDataTemp));
+      end;
 
       IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
       IdentificacaoRps.Serie:= Leitor.rCampo(tcStr, 'SerRps');
@@ -2111,7 +2116,9 @@ begin
       else
         OptanteSimplesNacional := snNao;
 
-      DataOptanteSimplesNacional := Leitor.rCampo(tcDat, 'DtAdeSN');
+      sDataTemp := Leitor.rCampo(tcStr, 'DtAdeSN');
+      if (sDataTemp <> EmptyStr) and (sDataTemp <> '/  /') then
+        DataOptanteSimplesNacional := StrToDate(sDataTemp);
 
       PrestadorServico.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocPre');
       PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'CpfCnpjPre');
@@ -2150,8 +2157,6 @@ begin
         CEP := Leitor.rCampo(tcStr, 'CepTom');
         Numero := Leitor.rCampo(tcStr, 'NumEndTom');;
       end;
-
-      Competencia := FormatDateTime('mm/yyyy', Leitor.rCampo(tcDat, 'DtEmiNf'));
 
       Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');
       {

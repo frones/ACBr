@@ -1122,14 +1122,21 @@ var
 begin
   if FPLayout = LayNFSeGerar then
   begin
-    EnviarLoteRps := 'GerarNfseEnvio';
+    case FProvedor of
+      proSimplISS:    EnviarLoteRps := 'GerarNovaNfseEnvio';
+      proEGoverneISS: EnviarLoteRps := 'request';
+      proSP:          EnviarLoteRps := 'PedidoEnvioRPS';
+    else
+      EnviarLoteRps := 'GerarNfseEnvio';
+    end;
   end
   else begin
     case FProvedor of
-      proActcon: EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
-      proIssDsf: EnviarLoteRps := 'ReqEnvioLoteRPS';
-      proInfisc: EnviarLoteRps := 'envioLote';
       proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
+      proInfisc:    EnviarLoteRps := 'envioLote';
+      proIssDsf:    EnviarLoteRps := 'ReqEnvioLoteRPS';
+      proSP:        EnviarLoteRps := 'PedidoEnvioLoteRPS';
+      proTinus:     EnviarLoteRps := 'Arg';
     else
       EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
     end;

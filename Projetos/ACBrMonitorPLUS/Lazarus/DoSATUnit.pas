@@ -343,19 +343,19 @@ var
   I, J   : Integer;
   sSecao, sFim, sCodPro : String;
 
-  function RegTribDescToStr(const AString: String): String;
+  function RegTribDescToStr(const AInteger: Integer): String;
   begin
-    Result := RegTribToStr(TpcnRegTrib(GetEnumValue(TypeInfo(TpcnRegTrib), AString)));
+    Result := RegTribToStr(TpcnRegTrib(AInteger));
   end;
 
-  function RegTribISSQNDescToStr(const AString: String): String;
+  function RegTribISSQNDescToStr(const AInteger: Integer): String;
   begin
-    Result := RegTribISSQNToStr(TpcnRegTribISSQN(GetEnumValue(TypeInfo(TpcnRegTribISSQN), AString)));
+    Result := RegTribISSQNToStr(TpcnRegTribISSQN(AInteger));
   end;
 
-  function indRatISSQNDescToStr(const AString: String): String;
+  function indRatISSQNDescToStr(const AInteger: Integer): String;
   begin
-    Result := indRatISSQNToStr(TpcnindRatISSQN(GetEnumValue(TypeInfo(TpcnindRatISSQN), AString)));
+    Result := indRatISSQNToStr(TpcnindRatISSQN(AInteger));
   end;
 
 begin
@@ -404,9 +404,9 @@ begin
           Emit.IE                := INIRec.ReadString(  'Emitente','IE', edtEmitIE.Text);
           Emit.IM                := INIRec.ReadString(  'Emitente','IM', edtEmitIM.Text);
 
-          Emit.cRegTrib          := StrToRegTrib(      ok, INIRec.ReadString( 'Emitente','cRegTrib',      RegTribDescToStr(cbxRegTributario.Text)));
-          Emit.cRegTribISSQN     := StrToRegTribISSQN( ok, INIRec.ReadString( 'Emitente','cRegTribISSQN', RegTribISSQNDescToStr(cbxRegTribISSQN.Text)));
-          Emit.indRatISSQN       := StrToindRatISSQN(  ok, INIRec.ReadString( 'Emitente','indRatISSQN',   indRatISSQNDescToStr(cbxIndRatISSQN.Text)));
+          Emit.cRegTrib          := StrToRegTrib(      ok, INIRec.ReadString( 'Emitente','cRegTrib',      RegTribDescToStr(cbxRegTributario.ItemIndex)));
+          Emit.cRegTribISSQN     := StrToRegTribISSQN( ok, INIRec.ReadString( 'Emitente','cRegTribISSQN', RegTribISSQNDescToStr(cbxRegTribISSQN.ItemIndex)));
+          Emit.indRatISSQN       := StrToindRatISSQN(  ok, INIRec.ReadString( 'Emitente','indRatISSQN',   indRatISSQNDescToStr(cbxIndRatISSQN.ItemIndex)));
 
           Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr', Emit.EnderEmit.xLgr));
           Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro', Emit.EnderEmit.nro));

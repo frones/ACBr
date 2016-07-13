@@ -44,6 +44,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 12/07/2016
+[*]	Ajustados os campos de RegTrib e demais que usavam combos para configuração dos
+	valores para utilizar o índice, facilitando a conversão.
+	por: Celso Marigo Junior/ DSA
+
+12/07/2016
 [+] Opção para o usuário selecionar se deseja alterar XML cancelado
 	por: Celso Marigo Junior
 

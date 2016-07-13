@@ -47,11 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/07/2016
+-- ACBrSAT --
+[*] Adicionada gravação de Log, no momento da gravação de Arquivos em disco
+    (por: DSA)
+
+-- pcnCFe, pcnCFeCanc --
+[*] Simplificação/Melhoria na rotina de gravação do XML  (por: DSA)
+
 Data: 30/06/2016
 -- pcnCFeW, pcnCFeCancW --
 [*] Ajustes para correta nomenclatura dos Campos na versão 0.08 (por:TDP Sistemas)
     http://www.projetoacbr.com.br/forum/index.php?showtopic=30957
-
 
 Data: 27/06/2016
 -- pcnCFe --

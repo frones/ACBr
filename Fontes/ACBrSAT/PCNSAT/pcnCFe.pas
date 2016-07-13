@@ -677,7 +677,9 @@ type
 
 implementation
 
-Uses dateutils, pcnCFeR, pcnCFeW ;
+Uses dateutils,
+  pcnCFeR, pcnCFeW,
+  ACBrUtil;
 
 { TDescAcrEntr }
 
@@ -1328,19 +1330,10 @@ begin
 end ;
 
 function TCFe.SaveToFile(AFileName: String): boolean;
-var
-  SL : TStringList;
 begin
-  Result := False;
-  SL := TStringList.Create;
-  try
-    SL.Text := AsXMLString;
-    SL.SaveToFile( AFileName );
-    FNomeArquivo := AFileName;
-    Result := True;
-  finally
-    SL.Free;
-  end;
+  WriteToTXT(AFileName, AsXMLString, False, False);
+  FNomeArquivo := AFileName;
+  Result := True;
 end ;
 
 procedure TCFe.SetDet(Value: TDetCollection);

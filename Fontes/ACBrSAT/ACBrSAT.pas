@@ -970,6 +970,7 @@ begin
   begin
     NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaEnvio, '', '-env');
     WriteToTXT(NomeCFe, dadosCancelamento, False, False);
+    DoLog('  Gravando XML Cancelamento enviado: '+NomeCFe);
   end;
 
   IniciaComando;
@@ -1149,6 +1150,7 @@ begin
                                IntToStrZero(numeroSessao, 6),
                                '-env');
     WriteToTXT(NomeCFe, dadosVenda, False, False);
+    DoLog('  Gravando XML Venda enviado: '+NomeCFe);
   end;
 
   Retorno := '';
@@ -1240,6 +1242,7 @@ begin
                                IntToStrZero(numeroSessao, 6),
                                '-teste-env');
     WriteToTXT(NomeCFe, dadosVenda, False, False);
+    DoLog('  Gravando XML TesteFimAFim enviado: '+NomeCFe);
   end;
 
   Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
@@ -1253,6 +1256,7 @@ begin
      begin
        NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda,'','-teste');
        CFe.SaveToFile(NomeCFe);
+       DoLog('  Gravando XML TesteFimAFim recebido: '+NomeCFe);
      end;
   end;
 end ;
@@ -1414,6 +1418,7 @@ begin
   begin
     NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda);
     CFe.SaveToFile(NomeCFe);
+    DoLog('  Gravando XML Venda recebido: '+NomeCFe);
   end;
 end;
 
@@ -1431,6 +1436,7 @@ begin
   begin
     NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaCFeCancelamento);
     CFeCanc.SaveToFile(NomeCFe);
+    DoLog('  Gravando XML Cancelamento recebido: '+NomeCFe);
   end;
 end;
 

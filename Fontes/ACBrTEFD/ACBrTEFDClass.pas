@@ -318,6 +318,58 @@ type
         const Sequencia : Integer; const Informacao : String ) ;
    end;
 
+   { Definindo novo tipo para armazenar Correspondente Bancário }
+   { TACBrTEFDRespCB }
+
+   TACBrTEFDRespCB = class
+   private
+     fsAcrescimo: Double;
+     fsDataPagamento: TDateTime;
+     fsDataVencimento: TDateTime;
+     fsDesconto: Double;
+     fsDocumento: String;
+     fsNSUCancelamento: String;
+     fsNSUTransacaoCB: String;
+     fsTipoDocumento: Integer;
+     fsValorOriginal: Double;
+     fsValorPago: Double;
+
+   public
+     constructor Create;
+
+     property Acrescimo      : Double    read fsAcrescimo       write fsAcrescimo;
+     property DataVencimento : TDateTime read fsDataVencimento  write fsDataVencimento;
+     property DataPagamento  : TDateTime read fsDataPagamento   write fsDataPagamento;
+     property Desconto       : Double    read fsDesconto        write fsDesconto;
+     property Documento      : String    read fsDocumento       write fsDocumento;
+     property NSUCancelamento: String    read fsNSUCancelamento write fsNSUCancelamento;
+     property NSUTransacaoCB : String    read fsNSUTransacaoCB  write fsNSUTransacaoCB;
+     property TipoDocumento  : Integer   read fsTipoDocumento   write fsTipoDocumento;
+     property ValorOriginal  : Double    read fsValorOriginal   write fsValorOriginal;
+     property ValorPago      : Double    read fsValorPago       write fsValorPago;
+   end;
+
+   { Lista para armazenar Objetos do tipo TACBrTEFDRespCB }
+   { TACBrTEFDRespListaCB }
+
+   TACBrTEFDRespListaCB = class(TObjectList)
+   protected
+     fsTotalTitulos: Double;
+     fsTotalTitulosNaoPago: Double;
+
+     procedure SetObject(Index: Integer; Item: TACBrTEFDRespCB);
+     function GetObject(Index: Integer): TACBrTEFDRespCB;
+   public
+     constructor Create(FreeObjects: boolean);
+
+     function Add(Obj: TACBrTEFDRespCB): Integer;
+     procedure Insert(Index: Integer; Obj: TACBrTEFDRespCB);
+     property Objects[Index: Integer]: TACBrTEFDRespCB
+       read GetObject write SetObject; default;
+
+     property TotalTitulos       : Double read fsTotalTitulos        write fsTotalTitulos;
+     property TotalTitulosNaoPago: Double read fsTotalTitulosNaoPago write fsTotalTitulosNaoPago;
+   end;
 
    { Definindo novo tipo para armazenar as Parcelas }
 
@@ -386,15 +438,14 @@ type
      fpConta : String;
      fpContaDC : String;
      fpConteudo : TACBrTEFDArquivo;
+     fpCorrespBancarios: TACBrTEFDRespListaCB;
      fpDataCheque : TDateTime;
      fpDataHoraTransacaoCancelada : TDateTime;
      fpDataHoraTransacaoComprovante : TDateTime;
      fpDataHoraTransacaoHost : TDateTime;
      fpDataHoraTransacaoLocal : TDateTime;
      fpDataPreDatado : TDateTime;
-     fpDataPagamentoCB: TDateTime;
      fpDocumentoPessoa : String;
-     fpDocumentoCB: String;
      fpFinalizacao : String;
      fpHeader : String;
      fpID : Integer;
@@ -403,7 +454,6 @@ type
      fpNomeAdministradora : String;
      fpNomeOperadoraCelular: String;
      fpNSU : String;
-     fpNSUTransacaoCB: String;
      fpNSUTransacaoCancelada : String;
      fpNumeroLoteTransacao : Integer;
      fpNumeroRecargaCelular: String;
@@ -420,17 +470,11 @@ type
      fpTrailer : String;
      fpValorTotal : Double;
      fpValorOriginal: Double;
-     fpValorAcrescimoCB: Double;
-     fpValorDescontoCB: Double;
-     fpValorPagoCB: Double;
      fpValorRecargaCelular: Double;
-     fpValorTotalTitulosCB: Double;
-     fpValorTotalNaoPagoCB: Double;
      fpSaque: Double;
      fpDesconto: Double;
      fpTaxaServico: Double;
      fpDocumentoVinculado : String;
-     fpTipoDocumentoCB: Integer;
      fpTipoParcelamento : Integer;
      fpParcelas : TACBrTEFDRespParcelas ;
      fpImagemComprovante1aVia : TStringList ;
@@ -515,15 +559,7 @@ type
      property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante ;
      property Trailer                     : String    read fpTrailer ;
 
-     property DataPagamentoCB        : TDateTime read fpDataPagamentoCB;
-     property DocumentoCB            : String    read fpDocumentoCB;
-     property NSUTransacaoCB         : String    read fpNSUTransacaoCB;
-     property TipoDocumentoCB        : Integer   read fpTipoDocumentoCB;
-     property ValorPagoCB            : Double    read fpValorPagoCB;
-     property ValorAcrescimoCB       : Double    read fpValorAcrescimoCB;
-     property ValorDescontoCB        : Double    read fpValorDescontoCB;
-     property ValorTotalTitulosCB    : Double    read fpValorTotalTitulosCB;
-     property ValorTotalNaoPagoCB    : Double    read fpValorTotalNaoPagoCB;
+     property CorrespBancarios: TACBrTEFDRespListaCB read fpCorrespBancarios;
 
      property CodigoOperadoraCelular : String    read fpCodigoOperadoraCelular;
      property NomeOperadoraCelular   : String    read fpNomeOperadoraCelular;
@@ -779,6 +815,51 @@ var
 begin
    Casas  := max(Length(IntToStr(Identificacao)),3) ;
    Result := IntToStrZero(Identificacao, Casas)+'-'+IntToStrZero(Sequencia, 3);
+end;
+
+{ TACBrTEFDRespListaCB }
+
+procedure TACBrTEFDRespListaCB.SetObject(Index: Integer; Item: TACBrTEFDRespCB);
+begin
+  inherited SetItem(Index, Item);
+end;
+
+function TACBrTEFDRespListaCB.GetObject(Index: Integer): TACBrTEFDRespCB;
+begin
+  Result := inherited GetItem(Index) as TACBrTEFDRespCB;
+end;
+
+constructor TACBrTEFDRespListaCB.Create(FreeObjects: boolean);
+begin
+  inherited Create(FreeObjects);
+
+  fsTotalTitulos        := 0;
+  fsTotalTitulosNaoPago := 0;
+end;
+
+function TACBrTEFDRespListaCB.Add(Obj: TACBrTEFDRespCB): Integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
+procedure TACBrTEFDRespListaCB.Insert(Index: Integer; Obj: TACBrTEFDRespCB);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+{ TACBrTEFDRespCB }
+
+constructor TACBrTEFDRespCB.Create;
+begin
+  fsAcrescimo      := 0;
+  fsDataPagamento  := 0;
+  fsDataVencimento := 0;
+  fsDesconto       := 0;
+  fsDocumento      := '';
+  fsNSUTransacaoCB := '';
+  fsTipoDocumento  := 0;
+  fsValorOriginal  := 0;
+  fsValorPago      := 0;
 end;
 
 
@@ -1164,12 +1245,13 @@ end;
 
 { TACBrTEFDResp }
 
-constructor TACBrTEFDResp.Create ;
+constructor TACBrTEFDResp.Create;
 begin
-  inherited Create ;
+  inherited Create;
 
   fpConteudo := TACBrTEFDArquivo.Create;
-  fpParcelas := TACBrTEFDRespParcelas.create(True) ;
+  fpParcelas := TACBrTEFDRespParcelas.create(True);
+  fpCorrespBancarios := TACBrTEFDRespListaCB.Create(True);
   
   fpImagemComprovante1aVia := TStringList.Create;
   fpImagemComprovante2aVia := TStringList.Create;
@@ -1177,13 +1259,14 @@ begin
   fpNFCeSAT := TACBrTEFDRespNFCeSAT.Create;
 
   // Inicializa as variáveis internas //
-  Clear ;
+  Clear;
 end;
 
 destructor TACBrTEFDResp.Destroy;
 begin
   fpConteudo.Free;
   fpParcelas.Free ;
+  fpCorrespBancarios.Free;
 
   fpImagemComprovante1aVia.Free ;
   fpImagemComprovante2aVia.Free ;
@@ -1212,6 +1295,7 @@ procedure TACBrTEFDResp.Clear;
 begin
    fpConteudo.Clear;
    fpParcelas.Clear;
+   fpCorrespBancarios.Clear;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
 
@@ -1258,16 +1342,6 @@ begin
    fpTipoParcelamento             := 0 ;
    fpValorEntradaCDC              := 0;
    fpDataEntradaCDC               := 0;
-
-   fpDataPagamentoCB        := 0;
-   fpDocumentoCB            := '';
-   fpNSUTransacaoCB         := '';
-   fpTipoDocumentoCB        := 0;
-   fpValorPagoCB            := 0;
-   fpValorAcrescimoCB       := 0;
-   fpValorDescontoCB        := 0;
-   fpValorTotalTitulosCB    := 0;
-   fpValorTotalNaoPagoCB    := 0;
 
    fpCodigoOperadoraCelular := '';
    fpNomeOperadoraCelular   := '';

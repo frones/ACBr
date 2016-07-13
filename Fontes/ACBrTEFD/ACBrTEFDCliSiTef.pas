@@ -309,12 +309,12 @@ end;
 
 procedure TACBrTEFDRespCliSiTef.ConteudoToProperty;
 var
-   Linha : TACBrTEFDLinha ;
-   I     : Integer;
+   I, wTipoOperacao, wNumCB: Integer;
+   Linha : TACBrTEFDLinha;
    Parc  : TACBrTEFDRespParcela;
-   LinStr: AnsiString ;
-   wTipoOperacao: Integer;
-   TemParcelas : Boolean ;
+   CB    : TACBrTEFDRespCB;
+   LinStr: AnsiString;
+   TemParcelas : Boolean;
 begin
    fpValorTotal  := 0;
    fpImagemComprovante1aVia.Clear;
@@ -323,6 +323,7 @@ begin
    fpCredito   := False;
    fpDigitado  := False;
    TemParcelas := False;
+   wNumCB      := 0;
 
    for I := 0 to Conteudo.Count - 1 do
    begin
@@ -393,23 +394,35 @@ begin
        590 : fpNomeOperadoraCelular        := LinStr;                     { Nome da Operadora de Celular }
        591 : fpValorRecargaCelular         := Linha.Informacao.AsFloat;   { Valor selecionado para a Recarga }
        592 : fpNumeroRecargaCelular        := LinStr;                     { Numero de Celular informado para Recarda }
-       600 : fpDataVencimento              := Linha.Informacao.AsDate;    { Data Vencimento do título - CB }
-       601 : fpValorPagoCB                 := Linha.Informacao.AsFloat;   { Valor Pago do título - CB }
-       602 : fpValorOriginal               := Linha.Informacao.AsFloat;   { Valor Original do título - CB }
-       603 : fpValorAcrescimoCB            := Linha.Informacao.AsFloat;   { Valor do Acréscimo - CB }
-       604 : fpValorDescontoCB             := Linha.Informacao.AsFloat;   { Valor do Desconto - CB }
-       605 : fpDataPagamentoCB             := Linha.Informacao.AsDate;    { Data contábil do Pagamento - CB }
-       609 : fpValorTotalTitulosCB         := Linha.Informacao.AsFloat;   { Valor total dos títulos efetivamente pagos no caso de pagamento em lote }
-       610 : fpValorTotalNaoPagoCB         := Linha.Informacao.AsFloat;   { Valor total dos títulos NÃO pagos no caso de pagamento em lote }
-       611 : fpNSUTransacaoCB              := LinStr;                     { NSU da Transação CB }
-       612 : fpTipoDocumentoCB             := Linha.Informacao.AsInteger; { Tipo Docto CB - 0:Arrecadação/ 1:Título/ 2:Tributo }
+
+       607 :  // Indice do Correspondente Bancário
+         begin
+           wNumCB := Linha.Informacao.AsInteger;
+
+           if (wNumCB = 1) then
+             fpCorrespBancarios.Clear;
+
+           CB := TACBrTEFDRespCB.Create;
+           CB.DataVencimento  := LeInformacao(600, wNumCB).AsDate;    { Data Vencimento do título - CB }
+           CB.ValorPago       := LeInformacao(601, wNumCB).AsFloat;   { Valor Pago do título - CB }
+           CB.ValorOriginal   := LeInformacao(602, wNumCB).AsFloat;   { Valor Original do título - CB }
+           CB.Acrescimo       := LeInformacao(603, wNumCB).AsFloat;   { Valor do Acréscimo - CB }
+           CB.Desconto        := LeInformacao(604, wNumCB).AsFloat;   { Valor do Desconto - CB }
+           CB.DataPagamento   := LeInformacao(605, wNumCB).AsDate;    { Data contábil do Pagamento - CB }
+           CB.NSUTransacaoCB  := LeInformacao(611, wNumCB).AsString;  { NSU da Transação CB }
+           CB.TipoDocumento   := LeInformacao(612, wNumCB).AsInteger; { Tipo Docto CB - 0:Arrecadação/ 1:Título/ 2:Tributo }
+           CB.NSUCancelamento := LeInformacao(623, wNumCB).AsString;  { NSU para cancelamento - CB }
+           CB.Documento       := LeInformacao(624, wNumCB).AsString;  { Linha Digitável/Código de Barras do documento pago}
+
+           fpCorrespBancarios.Add(CB);
+         end;
+       609 : fpCorrespBancarios.TotalTitulos        := Linha.Informacao.AsFloat;   { Valor total dos títulos efetivamente pagos no caso de pagamento em lote }
+       610 : fpCorrespBancarios.TotalTitulosNaoPago := Linha.Informacao.AsFloat;   { Valor total dos títulos NÃO pagos no caso de pagamento em lote }
        613 :
         begin
           fpCheque                         := copy(LinStr, 21, 6);
           fpCMC7                           := LinStr;
         end;
-       623 : fpNSU                         := LinStr;  { NSU para cancelamento - CB }
-       624 : fpDocumentoCB                 := LinStr;  { Linha Digitável ou Código de Barras do documento pago - CB }
        626 : fpBanco                       := LinStr;
        627 : fpAgencia                     := LinStr;
        628 : fpAgenciaDC                   := LinStr;
@@ -461,18 +474,22 @@ begin
    end;
 end;
 
-procedure TACBrTEFDRespCliSiTef.GravaInformacao(const Identificacao : Integer;
-   const Informacao : AnsiString);
-Var
-  Sequencia : Integer ;
+procedure TACBrTEFDRespCliSiTef.GravaInformacao(const Identificacao: Integer;
+  const Informacao: AnsiString);
+var
+  Sequencia: Integer;
 begin
-  Sequencia := 0 ;
+  Sequencia := 0;
 
-  if (Identificacao in [141,142]) then  // 141 - Data Parcela, 142 - Valor Parcela
-  begin
-    Sequencia := 1 ;
-    while LeInformacao(Identificacao, Sequencia).AsString <> '' do
-       Inc( Sequencia ) ;
+  case Identificacao of
+    141, 142,            // 141 - Data Parcela, 142 - Valor Parcela
+    600..607, 611..624:  // Dados do Corresp. Bancário
+    begin
+      Sequencia := 1;
+
+      while (Trim(LeInformacao(Identificacao, Sequencia).AsString) <> '') do
+        Inc(Sequencia);
+    end;
   end;
 
   fpConteudo.GravaInformacao( Identificacao, Sequencia,

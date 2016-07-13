@@ -47,6 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/07/2016
+-- ACBrTEFDClass --
+[+] Criada classe TACBrTEFDRespCB para armazenar informações de Correspondente Bancário;
+
+[*] Retiradas propriedades referentes ao CB de TACBrTEFDResp e incluída propriedade
+    CorrespBancarios do tipo TACBrTEFDRespListaCB;  (por: Elias)
+
+-- ACBrTEFDCliSiTef --
+[-] Correção em GravaInformacao() para armazenar dados de todos os Correspondentes
+    Bancários e não apenas do último;
+	
+[*]	Alteração de ConteudoToProperty para utilizar a nova propriedade CorrespBancarios
+    ao gravar os dados de CB.  (por: Elias)
+
 Data: 11/06/2016
 -- ACBrTEFD --
 [*] Ajuste para restaurar foco na aplicação em FMX (por: Macgayver Armini)

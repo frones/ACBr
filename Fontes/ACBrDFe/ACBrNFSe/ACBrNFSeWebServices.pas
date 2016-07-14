@@ -1261,6 +1261,12 @@ begin
                          '</' + FPrefixo4 + 'Rps>';
 
              proCONAM: FvNotas := FvNotas + RPS;
+
+             proAgili: FvNotas := FvNotas +
+                      '<' + FPrefixo4 + 'DeclaracaoPrestacaoServico' +
+                         RetornarConteudoEntre(RPS,
+                           '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                      '</' + FPrefixo4 + 'DeclaracaoPrestacaoServico>';
            else
              FvNotas := FvNotas +
                       '<' + FPrefixo4 + 'Rps>' +
@@ -1326,20 +1332,26 @@ begin
     CodMunicipio  := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
     Identificador := FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador;
     VersaoDados   := FPConfiguracoesNFSe.Geral.ConfigXML.VersaoDados;
+
+    UserWeb        := FPConfiguracoesNFSe.Geral.UserWeb;
+    SenhaWeb       := FPConfiguracoesNFSe.Geral.SenhaWeb;
+    CNPJPrefeitura := OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura);
+
     // Dados do Emitente
-    CNPJ         := FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+    CNPJ := FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
     if CNPJ = '' then
       GerarException(ACBrStr('O CNPJ não informado em: Configuracoes.Geral.Emitente.CNPJ'));
-    IM           := FPConfiguracoesNFSe.Geral.Emitente.InscMun;
+    IM := FPConfiguracoesNFSe.Geral.Emitente.InscMun;
     if (IM = '') and ((Provedor <> proBetha) or (FPConfiguracoes.WebServices.Ambiente = taProducao)) then
       GerarException(ACBrStr('A I.M. não informada em: Configuracoes.Geral.Emitente.InscMun'));
-    RazaoSocial  := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
+    RazaoSocial := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
     if RazaoSocial = '' then
       GerarException(ACBrStr('A Razão Social não informada em: Configuracoes.Geral.Emitente.RazSocial'));
+
     Senha        := FPConfiguracoesNFSe.Geral.Emitente.WebSenha;
     FraseSecreta := FPConfiguracoesNFSe.Geral.Emitente.WebFraseSecr;
-    UserWeb      := FPConfiguracoesNFSe.Geral.UserWeb;
-    SenhaWeb     := FPConfiguracoesNFSe.Geral.SenhaWeb;
+
+    ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso;
   end;
 end;
 
@@ -2562,6 +2574,11 @@ begin
     TagGrupo := FPrefixo3 + TagGrupo;
 
     case FProvedor of
+      proAgili: FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
+                          '<UnidadeGestora>' +
+                          OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
+                          '</UnidadeGestora>';
+
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarLoteRpsEnvio_v01.xsd">';
@@ -2919,9 +2936,12 @@ begin
       proDigifred:  TagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
       proInfisc:    TagGrupo := 'pedidoLoteNFSe';
       proISSDSF:    TagGrupo := 'ReqConsultaNotas';
+
+      proAgili,
       proPVH,
       proTecnos,
       proSystemPro: TagGrupo := 'ConsultarNfseFaixaEnvio';
+
       proSP:        TagGrupo := 'PedidoConsultaNFe';
       proGoverna :  TagGrupo := 'ConsultaCancelamento';
     else
@@ -3134,6 +3154,16 @@ begin
     end;
 
     case FProvedor of
+      proAgili: begin
+                  FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
+                            '<UnidadeGestora>' +
+                              OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
+                            '</UnidadeGestora>' +
+                           '<' + FPrefixo3 + 'PedidoCancelamento>';
+                  FTagF :=  '</' + FPrefixo3 + 'PedidoCancelamento>' +
+                           '</' + TagGrupo + '>';
+                end;
+
       proBetha: begin
                   FTagI := '<Pedido>' +
                             '<' + FPrefixo4 + 'InfPedidoCancelamento' +
@@ -3530,15 +3560,30 @@ begin
                       TNFSeSubstituirNfse(Self).FNumeroNFSe;
     end;
 
-    FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
-              '<' + FPrefixo3 + 'SubstituicaoNfse>' +
-               '<' + FPrefixo3 + 'Pedido>' +
-                '<' + FPrefixo4 + 'InfPedidoCancelamento' +
-                  ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
-                         FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+    case FProvedor of
+      proAgili: begin
+                  FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+                            '<UnidadeGestora>' +
+                             OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
+                            '</UnidadeGestora>' +
+                           '<' + FPrefixo4 + 'PedidoCancelamento' +
+                            ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
+                                   FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
 
-    FTagF :=  '</' + FPrefixo3 + 'SubstituicaoNfse>' +
-             '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
+                  FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
+                end;
+    else begin
+           FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+                     '<' + FPrefixo3 + 'SubstituicaoNfse>' +
+                      '<' + FPrefixo3 + 'Pedido>' +
+                       '<' + FPrefixo4 + 'InfPedidoCancelamento' +
+                         ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
+                                FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+
+           FTagF :=  '</' + FPrefixo3 + 'SubstituicaoNfse>' +
+                    '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
+         end;
+    end;
 
     if FProvedor in [proIssDSF] then
     begin

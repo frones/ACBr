@@ -222,6 +222,7 @@ type
     FWebUser: String;
     FWebSenha: String;
     FWebFraseSecr: String;
+    FWebChaveAcesso: String;
 
   public
     Constructor Create;
@@ -233,6 +234,7 @@ type
     property WebUser: String      read FWebUser      write FWebUser;
     property WebSenha: String     read FWebSenha     write FWebSenha;
     property WebFraseSecr: String read FWebFraseSecr write FWebFraseSecr;
+    property WebChaveAcesso: String read FWebChaveAcesso write FWebChaveAcesso;
   end;
 
   { TGeralConfNFSe }
@@ -260,6 +262,7 @@ type
     FxNomeURL_P: String;
     FSenhaWeb: String;
     FUserWeb: String;
+    FCNPJPrefeitura: String;
     FConsultaLoteAposEnvio: Boolean;
     FPathIniCidades: String;
     FPathIniProvedor: String;
@@ -293,6 +296,7 @@ type
     property xNomeURL_P: String read FxNomeURL_P;
     property SenhaWeb: String read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
+    property CNPJPrefeitura: String read FCNPJPrefeitura write FCNPJPrefeitura;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
     property PathIniCidades: String read FPathIniCidades write FPathIniCidades;
     property PathIniProvedor: String read FPathIniProvedor write FPathIniProvedor;
@@ -370,6 +374,7 @@ begin
   FWebUser := '';
   FWebSenha := '';
   FWebFraseSecr := '';
+  FWebChaveAcesso := '';
 end;
 
 procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
@@ -382,6 +387,7 @@ begin
     FWebUser := TEmitenteConfNFSe(Source).WebUser;
     FWebSenha := TEmitenteConfNFSe(Source).WebSenha;
     FWebFraseSecr := TEmitenteConfNFSe(Source).WebFraseSecr;
+    FWebChaveAcesso := TEmitenteConfNFSe(Source).WebChaveAcesso;
   end
   else
     inherited Assign(Source);

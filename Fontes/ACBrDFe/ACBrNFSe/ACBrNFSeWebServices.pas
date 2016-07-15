@@ -656,7 +656,9 @@ begin
 
   FProvedor := FPConfiguracoesNFSe.Geral.Provedor;
 
-  if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '1.2' then
+  if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '' then
+    FPMimeType := 'application/xml'
+  else if FPConfiguracoesNFSe.Geral.ConfigGeral.VersaoSoap = '1.2' then
     FPMimeType := 'application/soap+xml'
   else
     FPMimeType := 'text/xml';

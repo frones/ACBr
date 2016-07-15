@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2016
+[*] Como o provedor Agili não utiliza o MimeType text/xml e nem application/soap+xml,
+    se fez necessário no arquivo INI deixar o campo VersaoSoap em branco.
+    Na Unit ACBrNFSeWebServices é verificado o valor de VersaoSoap, caso seja vazio
+    o MimeType será application/xml
+    Por: BigWings
+
 14/07/2016
 [+] Incluido o provedor Agili.
     Por: BigWings / Italo Jurisato Junior

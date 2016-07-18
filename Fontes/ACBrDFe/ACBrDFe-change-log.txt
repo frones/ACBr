@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2016
+-- ACBrDFeOpenSSL --
+[*] Incluido o código 202 na checagem do ResultCode, uma vez que o provedor
+    retorna 202 em vez de 200 como resposta ao Envio.
+   por: BigWings
+
 05/07/2016
 -- ACBrDFeSSL --
 [*] Remoção de uma variável definida e não utilizada.

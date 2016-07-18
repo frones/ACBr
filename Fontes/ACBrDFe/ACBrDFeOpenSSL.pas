@@ -291,7 +291,9 @@ begin
 
   // Transmitindo //
   OK := FHTTP.HTTPMethod('POST', URL);
-  OK := OK and (FHTTP.ResultCode = 200);
+
+  // Provedor Agili (RESTFul) retorna 202 em vez de 200 //
+  OK := OK and (FHTTP.ResultCode in [200, 202]);
   if not OK then
     raise EACBrDFeException.CreateFmt( cACBrDFeSSLEnviarException,
                                        [InternalErrorCode, HTTPResultCode] );

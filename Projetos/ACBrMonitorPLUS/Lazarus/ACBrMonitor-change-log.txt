@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/07/2016
+[+] Habilitados campos: vFCPUFDest, vICMSUFDest, vICMSUFRemet na geração declaração
+	de NFe usando o INI no formato da SEFAZ
+	por: Celso Marigo Junior
+
 12/07/2016
 [*]	Ajustados os campos de RegTrib e demais que usavam combos para configuração dos
 	valores para utilizar o índice, facilitando a conversão.

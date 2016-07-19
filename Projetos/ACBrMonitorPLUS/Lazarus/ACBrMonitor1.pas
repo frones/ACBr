@@ -3548,7 +3548,11 @@ begin
   DISAtivado := ACBrDIS1.Ativo;
   BALAtivado := ACBrBAL1.Ativo;
   ETQAtivado := ACBrETQ1.Ativo;
-  ESCPOSAtivado := ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo;
+
+  if ( Assigned(ACBrNFeDANFeESCPOS1.PosPrinter) ) then
+     ESCPOSAtivado := ACBrNFeDANFeESCPOS1.PosPrinter.Device.Ativo
+  else
+     ESCPOSAtivado := False;
 
   Ini := TIniFile.Create(ACBrMonitorINI);
   try

@@ -954,9 +954,9 @@ begin
     (*W03*)NFe.Total.ICMSTot.vBC          := LerCampo(tcDe2, 'vBC');
     (*W04*)NFe.Total.ICMSTot.vICMS        := LerCampo(tcDe2, 'vICMS');
            NFe.Total.ICMSTot.vICMSDeson   := LerCampo(tcDe2, 'vICMSDeson');
-           //NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
-           //NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
-           //NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
+           NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
+           NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
+           NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
     (*W05*)NFe.Total.ICMSTot.vBCST        := LerCampo(tcDe2, 'vBCST');
     (*W06*)NFe.Total.ICMSTot.vST          := LerCampo(tcDe2, 'vST');
     (*W07*)NFe.Total.ICMSTot.vProd        := LerCampo(tcDe2, 'vProd');

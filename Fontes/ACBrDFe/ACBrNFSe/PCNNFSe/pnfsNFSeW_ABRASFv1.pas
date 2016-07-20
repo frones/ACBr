@@ -143,7 +143,8 @@ begin
 
     if (NFSe.Tomador.Endereco.UF <> 'EX') and {(FProvedor in [proSimplISS, proISSNet]) or}
        ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
-       (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '')) then
+        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
+        (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '')) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
       

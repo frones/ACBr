@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2016
+[*] Alterado as condições para gerar ou não o grupo de identificação do Tomador
+    de Serviço: ABRASF Versão 1.
+    Por: Italo Jurisato Junior
+
 15/07/2016
 [*] Como o provedor Agili não utiliza o MimeType text/xml e nem application/soap+xml,
     se fez necessário no arquivo INI deixar o campo VersaoSoap em branco.

@@ -141,17 +141,24 @@ begin
   begin
     Gerador.wGrupoNFSe('Tomador');
 
-    if (NFSe.Tomador.Endereco.UF <> 'EX') or (FProvedor in [proSimplISS, proISSNet]) then
+    if (NFSe.Tomador.Endereco.UF <> 'EX') and {(FProvedor in [proSimplISS, proISSNet]) or}
+       ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+       (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '')) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
-      Gerador.wGrupoNFSe('CpfCnpj');
+      
+      if NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '' then
+      begin
+        Gerador.wGrupoNFSe('CpfCnpj');
 
-      if Length(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
-        Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
-      else
-        Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+        if Length(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
+          Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
+        else
+          Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
 
-      Gerador.wGrupoNFSe('/CpfCnpj');
+        Gerador.wGrupoNFSe('/CpfCnpj');
+      end;
+
       Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
 
       if FProvedor in [proBetha, proSimplISS] then

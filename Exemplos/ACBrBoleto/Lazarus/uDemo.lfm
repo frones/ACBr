@@ -6,16 +6,17 @@ object frmDemo: TfrmDemo
   Caption = 'Demo ACBrBoleto'
   ClientHeight = 601
   ClientWidth = 811
+  Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.6.0.4'
   object GroupBox2: TGroupBox
     Left = 8
     Height = 72
     Top = 8
     Width = 794
     Caption = 'Informações Sobre a Cobrança'
-    ClientHeight = 54
+    ClientHeight = 52
     ClientWidth = 790
     TabOrder = 0
     object Label1: TLabel
@@ -127,7 +128,7 @@ object frmDemo: TfrmDemo
     Top = 215
     Width = 578
     Caption = 'Mensagens \ Instruções'
-    ClientHeight = 104
+    ClientHeight = 102
     ClientWidth = 574
     TabOrder = 3
     object memMensagem: TMemo
@@ -267,7 +268,7 @@ object frmDemo: TfrmDemo
     Top = 88
     Width = 208
     Caption = 'Informações Sobre a Duplicata '
-    ClientHeight = 231
+    ClientHeight = 229
     ClientWidth = 204
     TabOrder = 2
     object edtNumeroDoc: TEdit
@@ -312,7 +313,6 @@ object frmDemo: TfrmDemo
       CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
-      CharCase = ecNormal
       NumGlyphs = 1
       MaxLength = 0
       TabOrder = 3
@@ -327,7 +327,6 @@ object frmDemo: TfrmDemo
       CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
-      CharCase = ecNormal
       NumGlyphs = 1
       MaxLength = 0
       TabOrder = 2
@@ -355,7 +354,7 @@ object frmDemo: TfrmDemo
     Top = 344
     Width = 794
     Caption = 'Informações do Sacado'
-    ClientHeight = 142
+    ClientHeight = 140
     ClientWidth = 790
     TabOrder = 4
     object Label13: TLabel
@@ -544,7 +543,7 @@ object frmDemo: TfrmDemo
       Height = 25
       Top = 112
       Width = 75
-      Caption = 'Button3'
+      Caption = 'Ler Retorno'
       OnClick = Button3Click
       TabOrder = 11
     end
@@ -555,7 +554,7 @@ object frmDemo: TfrmDemo
     Top = 88
     Width = 578
     Caption = 'Acréscimos\Descontos'
-    ClientHeight = 100
+    ClientHeight = 98
     ClientWidth = 574
     TabOrder = 1
     object edtDataAbatimento: TDateEdit
@@ -568,7 +567,6 @@ object frmDemo: TfrmDemo
       CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
-      CharCase = ecNormal
       NumGlyphs = 1
       MaxLength = 0
       TabOrder = 6
@@ -583,7 +581,6 @@ object frmDemo: TfrmDemo
       CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
-      CharCase = ecNormal
       NumGlyphs = 1
       MaxLength = 0
       TabOrder = 5
@@ -614,7 +611,6 @@ object frmDemo: TfrmDemo
       CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
-      CharCase = ecNormal
       NumGlyphs = 1
       MaxLength = 0
       TabOrder = 7
@@ -645,7 +641,6 @@ object frmDemo: TfrmDemo
       CancelCaption = 'Cancel'
       DateOrder = doNone
       ButtonWidth = 23
-      CharCase = ecNormal
       NumGlyphs = 1
       MaxLength = 0
       TabOrder = 4
@@ -717,18 +712,15 @@ object frmDemo: TfrmDemo
   end
   object ACBrBoleto1: TACBrBoleto
     MAIL = ACBrMail1
-    Banco.Numero = 104
-    Banco.TamanhoMaximoNossoNum = 0
-    Banco.TipoCobranca = cobCaixaSicob
-    Banco.OrientacoesBanco.Strings = (
-      'SAC CAIXA: 0800 726 0101 (informações,reclamações e elogios) '#13#10'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 '#13#10'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'#13#10'     caixa.gov.br      '
-    )
+    Banco.Numero = 237
+    Banco.TamanhoMaximoNossoNum = 11
+    Banco.TipoCobranca = cobBradesco
     Cedente.Nome = 'teste cedente'
-    Cedente.CodigoCedente = '166087000000032'
-    Cedente.Agencia = '01073'
-    Cedente.AgenciaDigito = '2'
-    Cedente.Conta = '00000051'
-    Cedente.ContaDigito = '8'
+    Cedente.CodigoCedente = '4863177'
+    Cedente.Agencia = '2132'
+    Cedente.AgenciaDigito = '6'
+    Cedente.Conta = '0018600'
+    Cedente.ContaDigito = '7'
     Cedente.Modalidade = '019'
     Cedente.Convenio = '899283'
     Cedente.CNPJCPF = '82.961.095/0001-74'
@@ -781,5 +773,13 @@ object frmDemo: TfrmDemo
     IDECharset = UTF_8
     left = 235
     top = 265
+  end
+  object MainMenu1: TMainMenu
+    left = 217
+    top = 287
+  end
+  object MainMenu2: TMainMenu
+    left = 212
+    top = 277
   end
 end

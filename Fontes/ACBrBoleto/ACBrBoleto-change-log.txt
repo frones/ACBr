@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/07/2016 ver: 0.0.201a
+-- ACBrBancoBanestes --
+[-] Correção campo carteira e código Lançamento retorno CNAB400. (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/30044-altera%C3%A7%C3%B5es-acbrbancobanestes-lerretorno400/
+
 Data: 20/06/16 ver: 0.0.200a
 -- ACBrBancoBancoob --
 [-] Correção leitura do campo DataArquivo e DataLancamento retorno CNAB240. (leotelles)

@@ -417,10 +417,6 @@ begin
                                                              Copy(ARetorno[0],97,2)+'/'+
                                                              Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
 
-   ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],114,2)+'/'+
-                                                               Copy(ARetorno[0],116,2)+'/'+
-                                                               Copy(ARetorno[0],118,2),0, 'DD/MM/YY' );
-
    case StrToIntDef(Copy(ARetorno[1],2,2),0) of
       1 : rCNPJCPF:= Copy(ARetorno[1],07,11);
       2 : rCNPJCPF:= Copy(ARetorno[1],04,14);
@@ -463,7 +459,6 @@ begin
       begin
          SeuNumero                   := copy(Linha,38,25);
          NumeroDocumento             := copy(Linha,117,10);
-         Carteira                    := copy(Linha,83,3);
 
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
 
@@ -538,6 +533,7 @@ begin
                          Copy(Linha,113,2)+'/'+
                          Copy(Linha,115,2),0,'DD/MM/YY');
 
+         CodigoLiquidacao := Copy(Linha,83,2); //Código Lançamento (Aviso de Movimentação)
       end;
    end;
 end;

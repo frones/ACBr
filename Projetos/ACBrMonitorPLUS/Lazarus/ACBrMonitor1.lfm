@@ -6807,8 +6807,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsDadosEmpresa: TTabSheet
                   Caption = 'Dados Empresa'
-                  ClientHeight = 251
-                  ClientWidth = 604
+                  ClientHeight = 281
+                  ClientWidth = 576
                   ImageIndex = 1
                   object Label150: TLabel
                     Left = 6
@@ -7376,8 +7376,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsImpCTe: TTabSheet
                   Caption = 'CT-e'
-                  ClientHeight = 251
-                  ClientWidth = 604
+                  ClientHeight = 281
+                  ClientWidth = 576
                   object rgTamanhoPapelDacte: TRadioGroup
                     Left = 6
                     Height = 44

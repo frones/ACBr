@@ -578,21 +578,20 @@ begin
 end;
 
 function TretEnvLote.LerXml_proNFSeBrasil: Boolean;
-//var
-  //Item, posI, count: Integer;
-  //VersaoXML: String;
-  //strAux,strAux2, strItem: AnsiString;
-  //leitorAux, leitorItem:TLeitor;
+var
+  i, Item, posI, count: Integer;
+  VersaoXML: String;
+  strAux,strAux2, strItem: AnsiString;
+  leitorAux, leitorItem:TLeitor;
 begin
   result := False;
-   // Luiz Baião 2014.12.01
-  (*
+//    Luiz Baião 2014.12.01
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
     Leitor.Grupo   := Leitor.Arquivo;
 
-    strAux := leitor.rExtrai_NFSEBrasil(1, 'RespostaLoteRps');
+    strAux := leitor.rExtrai(1, 'RespostaLoteRps');
 
     if ( strAux <> emptystr) then  begin
            FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
@@ -604,7 +603,7 @@ begin
        infRec.FProtocolo := Leitor.rCampo(tcStr, 'Protocolo');
     end;
 
-    strAux := leitor.rExtrai_NFSEBrasil(1, 'erros');
+    strAux := leitor.rExtrai(1, 'erros');
     if ( strAux <> emptystr) then begin
 
         posI := 1;
@@ -615,7 +614,7 @@ begin
              LeitorAux := TLeitor.Create;
              leitorAux.Arquivo := copy(strAux, PosI, count);
              leitorAux.Grupo   := leitorAux.Arquivo;
-             strAux2 := leitorAux.rExtrai_NFSEBrasil(1,'erro');
+             strAux2 := leitorAux.rExtrai(1,'erro');
              strAux2 := Leitor.rCampo(tcStr, 'erro');
              FInfRec.FMsgRetorno.Add;
              FInfRec.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'erro')+#13;
@@ -626,7 +625,7 @@ begin
         end;
     end;
 
-    strAux := leitor.rExtrai_NFSEBrasil(1, 'confirmacoes');
+    strAux := leitor.rExtrai(1, 'confirmacoes');
     if ( strAux <> emptystr) then begin
 
         posI := 1;
@@ -637,7 +636,7 @@ begin
            LeitorAux := TLeitor.Create;
            leitorAux.Arquivo := copy(strAux, PosI, count);
            leitorAux.Grupo   := leitorAux.Arquivo;
-           strAux2 := leitorAux.rExtrai_NFSEBrasil(1,'confirmacao');
+           strAux2 := leitorAux.rExtrai(1,'confirmacao');
            strAux2 := Leitor.rCampo(tcStr, 'confirmacao');
            FInfRec.FMsgRetorno.Add;
            FInfRec.FMsgRetorno.Items[i].Mensagem := Leitor.rCampo(tcStr, 'confirmacao')+#13;
@@ -652,7 +651,6 @@ begin
   except
     result := False;
   end;
-  *)
 end;
 
 function TretEnvLote.LerXml_proGoverna: Boolean;

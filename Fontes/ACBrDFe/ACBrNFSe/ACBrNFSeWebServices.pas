@@ -768,6 +768,8 @@ begin
 //                                  ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
 //                                  ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 
+      proNFSeBrasil: FNameSpaceDad := ' xmlns:xs="http://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd"' +
+                                      ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
       else begin
         if (FSeparador = '') then
         begin
@@ -791,6 +793,7 @@ begin
   Texto := FPConfiguracoesNFSe.Geral.ConfigGeral.DadosSenha;
   // %Usuario% : Representa o nome do usuário ou CNPJ
   // %Senha%   : Representa a senha do usuário
+  Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Usuario%', FPConfiguracoesNFSe.Geral.UserWeb, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Senha%', FPConfiguracoesNFSe.Geral.SenhaWeb, [rfReplaceAll]);
 
@@ -1305,9 +1308,9 @@ begin
                                    '</rgm:NotaFiscal>';
 
         proNFSeBrasil: begin
-                         FvNotas := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]) + '</Rps>';
+                         FvNotas := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]);
                          FvNotas := StringReplace(FvNotas, '<Rps>', '', [rfReplaceAll]);
-                         FvNotas := '<Rps>' + StringReplace(FvNotas, '<InfRps>', '', [rfReplaceAll]);
+                         FvNotas := '<Rps>' + StringReplace(FvNotas, '<InfRps>', '', [rfReplaceAll]) + '</Rps>';
                        end;
       else
         FvNotas := FvNotas +

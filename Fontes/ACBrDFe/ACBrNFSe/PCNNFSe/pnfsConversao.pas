@@ -18193,14 +18193,14 @@ begin
     proGINFES, proGovBR, proISSCuritiba, proISSIntel, proISSNet, proLexsom,
     proNatal, proProdemge, proPronim, proPublica, proRecife, proRJ, proSalvador,
     proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan, proWebISS,
-    proCIGA: Result := loABRASFv1;
+    proCIGA, proNFSeBrasil: Result := loABRASFv1;
 
     proABRASFv2, pro4R, proABase, proActcon, proCoplan, proDigifred,
     proEReceita, proFIntelISS, proFiorilli, proGoiania, proGovDigital,
     proISSDigital, proISSe, proLink3, proMitra, proNEAInformatica,
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
-    proNFSEBrasil, proVersaTecnologia: Result := loABRASFv2;
+    proVersaTecnologia: Result := loABRASFv2;
 
     proAgili:       Result := loAgili;
     proEgoverneISS: Result := loEGoverneISS;

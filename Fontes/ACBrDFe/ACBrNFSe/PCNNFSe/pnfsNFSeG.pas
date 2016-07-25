@@ -552,8 +552,7 @@ begin
                end;
 
     proNFSEBrasil: begin
-                     Atributo_cMun := RetornarConteudoEntre(Notas, '<CodigoMunicipio>', '</CodigoMunicipio>');
-                     Atributo_cMun := ' codMunicipio="' + Atributo_cMun + '"';
+                     Atributo_cMun := ' codMunicipio="' + IntToStr(CodMunicipio) + '"';
 
                      Gerador.Prefixo := Prefixo3;
                      Gerador.wGrupoNFSe('LoteRps' + Atributo_cMun + aVersao + aIdentificador);
@@ -561,17 +560,17 @@ begin
                      Gerador.Prefixo := Prefixo4;
                      Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
 
-                     if VersaoNFSe = ve100 then
-                     begin
-                       Gerador.wGrupoNFSe('CpfCnpj');
-                       if Length(Cnpj) <= 11 then
-                         Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-                       else
-                         Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-                       Gerador.wGrupoNFSe('/CpfCnpj');
-                     end
-                     else
-                       Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
+//                     if VersaoNFSe = ve100 then
+//                     begin
+//                       Gerador.wGrupoNFSe('CpfCnpj');
+//                       if Length(Cnpj) <= 11 then
+//                         Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
+//                       else
+//                         Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
+//                       Gerador.wGrupoNFSe('/CpfCnpj');
+//                     end
+//                     else
+                     Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
                      Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
                      Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
@@ -870,6 +869,9 @@ begin
 
          if Provedor = proTecnos then
            Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 115, 1, RazaoSocial, '');
+
+         if Provedor = proNFSeBrasil then
+           Gerador.wCampoNFSe(tcStr, '#3', 'codMunicipio', 01, 07, 1, IntToStr(CodMunicipio), '');
 
          Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 

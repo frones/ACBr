@@ -461,7 +461,12 @@ begin
   if (FIdentificador = '') then
     Gerador.wGrupoNFSe('InfRps')
   else
-    Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+  begin
+    if FProvedor <>  proNFSeBrasil then
+      Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"')
+    else
+      Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.IdentificacaoRps.Numero + '"');
+  end;
 
   GerarIdentificacaoRPS;
 
@@ -474,8 +479,11 @@ begin
       Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
   end;
 
-  Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-  Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+  if FProvedor <>  proNFSeBrasil then
+  begin
+    Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+    Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+  end;
   Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
 
   if FProvedor in [proBetha, proFISSLex, proSimplISS] then
@@ -530,7 +538,7 @@ begin
   if (FProvedor = proISSDigital) and (NFSe.NumeroLote <> '')
     then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
-  if (FProvedor in [proBetha]) then
+  if (FProvedor in [proBetha, proNFSeBrasil]) then
     Gerador.wGrupo('Rps')
   else
     Gerador.wGrupo('Rps' + Atributo);

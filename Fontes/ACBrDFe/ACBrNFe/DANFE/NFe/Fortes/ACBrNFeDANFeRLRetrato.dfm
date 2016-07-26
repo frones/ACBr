@@ -5970,10 +5970,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rllAvisoContingencia: TRLLabel
-        Left = 273
-        Top = 3
-        Width = 164
+        Left = 0
+        Top = 0
+        Width = 742
         Height = 19
+        Align = faTop
         Alignment = taCenter
         Color = clGray
         Font.Charset = DEFAULT_CHARSET

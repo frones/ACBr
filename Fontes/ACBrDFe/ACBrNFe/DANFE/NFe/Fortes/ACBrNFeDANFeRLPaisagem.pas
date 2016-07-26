@@ -1080,8 +1080,9 @@ begin
       teDPEC          : begin
                           rllDadosVariaveis1a.Visible         := True;
                           rllDadosVariaveis1b.Visible         := True;
-
-                          if NaoEstaVazio(FNFe.procNFe.nProt) then // DPEC TRANSMITIDO
+                          rlbAvisoContingencia.Visible := not NaoEstaVazio(FNFe.procNFe.nProt);
+                          rllAvisoContingencia.Caption  := ACBrStr('DANFE impresso em contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
+                          if not rlbAvisoContingencia.Visible then // DPEC TRANSMITIDO
                             rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
                                                                   IfThen(FNFe.procNFe.dhRecbto <> 0,
                                                                   DateTimeToStr(FNFe.procNFe.dhRecbto), '')

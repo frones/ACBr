@@ -7136,10 +7136,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Height = 0
       end
       object rllAvisoContingencia: TRLLabel
-        Left = 273
+        Left = 0
         Height = 19
-        Top = 3
-        Width = 164
+        Top = 0
+        Width = 742
+				Align = faTop
         Alignment = taCenter
         Color = clGray
         Font.Color = clWhite

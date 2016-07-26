@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/07/2016
+-- ACBrNFeDANFeRLPaisagem.pas, ACBrNFeDANFeRLRetrato.pas 
+		Alterações para impressão quando no modo EPEC de emissão
+		http://www.projetoacbr.com.br/forum/topic/31395-altera%C3%A7%C3%B5es-no-danfe-para-epec/
+		por : Juliomar Marchetti
+		
 10/07/2016
 -- ACBrNFeDANFeRLRetrato --
 [-] Correção das colunas valor do desconto e valor liquido trocadas,

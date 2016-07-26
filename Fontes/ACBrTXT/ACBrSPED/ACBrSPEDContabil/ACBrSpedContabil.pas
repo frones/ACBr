@@ -628,6 +628,14 @@ begin
          QTD_REG_BLC := Bloco_I.RegistroI155Count;
       end;
    end;
+   if Bloco_I.RegistroI157Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'I157';
+         QTD_REG_BLC := Bloco_I.RegistroI157Count;
+      end;
+   end;
 end;
 
 procedure TACBrSPEDContabil.WriteRegistroI200;
@@ -957,13 +965,7 @@ var
   intFor: integer;
 begin
   if FInicializado then exit;
-
-  if FDT_INI = 0 then
-     raise Exception.Create( ACBrStr('Informe a data inicial das informações contidas no arquivo!'));
-
-  if FDT_FIN = 0 then
-     raise Exception.Create( ACBrStr('Informe a data final das informações contidas no arquivo!'));
-
+  
   if (Trim(Arquivo) = '') or (Trim(fPath) = '') then
      raise Exception.Create( ACBrStr('Caminho ou nome do arquivo não informado!'));
 

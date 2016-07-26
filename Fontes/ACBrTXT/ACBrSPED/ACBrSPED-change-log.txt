@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[+] Adição do registro I157 no Sped Contábil
+		http://www.projetoacbr.com.br/forum/topic/31468-registro-i157/
+		por : Juliomar Marchetti
+		
 Data 20/06/2016
 [-] Correção do Bloco X para o Sped ECF
     http://www.projetoacbr.com.br/forum/topic/30712-corre%C3%A7%C3%A3o-bloco-x/

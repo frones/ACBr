@@ -1158,7 +1158,7 @@ begin
         não o recebimento no programa que usar esse componente
       }
       if FProvedor = proVersaTecnologia then
-        NFSe.dhRecebimento := Leitor.rCampo(tcDat, 'DataEmissao');
+        NFSe.dhRecebimento := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
       if FProvedor in [proFreire, proSpeedGov, proVitoria, proDBSeller] then
         NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')

@@ -917,10 +917,10 @@ begin
                '0'                                                        + // 18  tipo de desconto 2
                PadLeft('0', 8, '0')                                       + // 19 - 26 Numero da linha a ser impressa
                PadLeft('0',15, '0')                                       + // 27 - 41 Valor/Percentual
-               '1'                                                        + // 42
+               '0'                                                        + // 42
                PadLeft('0', 8, '0')                                       + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                      + // 51-65 Valor ou percentual a ser concedido
-               '2'                                                        + // 66 Código da multa - 1) valor fixo e 2) valor percentual
+               IfThen((PercentualMulta > 0), '2', '0')                    + // 66 Código da multa - 1) valor fixo e 2) valor percentual
                IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
                        FormatDateTime('ddmmyyyy', DataMoraJuros),
                                       '00000000')                         + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar

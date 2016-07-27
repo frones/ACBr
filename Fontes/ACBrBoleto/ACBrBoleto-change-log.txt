@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/07/2016 ver: 0.0.202a
+-- ACBrBancoob --
+[-] Correção campo Código Desconto 3, Código Multa, layout retorno CNAB240. (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/31147-problemas-com-gera%C3%A7%C3%A3o-do-arquivo-de-cobran%C3%A7a-240-sicoob/
+
 Data: 21/07/2016 ver: 0.0.201a
 -- ACBrBancoBanestes --
 [-] Correção campo carteira e código Lançamento retorno CNAB400. (Graziele Rocha)

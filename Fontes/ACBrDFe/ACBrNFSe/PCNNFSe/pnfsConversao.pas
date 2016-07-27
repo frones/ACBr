@@ -17981,6 +17981,9 @@ begin
  XML := StringReplace( XML, 'tin:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'a:', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'b:', '', [rfReplaceAll] );
+ XML := StringReplace( XML, '<![CDATA[', '', [rfReplaceAll] );
+ XML := StringReplace( XML, ']]>', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'R$', '', [rfReplaceAll] );
 
  // Provedor Governa, os prefixos não tem ":"
  XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );

@@ -1153,6 +1153,7 @@ function TNFSeR.LerNFSe: Boolean;
 var
   ok: Boolean;
   CM: String;
+  DataHorBR: String;
 begin
   if FProvedor = proNenhum then
   begin
@@ -1206,12 +1207,26 @@ begin
 
       if FProvedor in [proFreire, proSpeedGov, proVitoria, proDBSeller] then
         NFSe.DataEmissao := Leitor.rCampo(tcDat, 'DataEmissao')
+      else if FProvedor in [proNFSeBrasil] then
+      begin
+        DataHorBR := Leitor.rCampo(tcStr, 'DataEmissao');
+
+        NFSe.DataEmissao := StringToDateTime(DataHorBr, 'DD/MM/YYYY hh:nn:ss');
+      end
       else
         NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
       // Tratar erro de conversão de tipo no Provedor Ábaco
       if Leitor.rCampo(tcStr, 'DataEmissaoRps') <> '0000-00-00' then
-        NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
+      begin
+        if FProvedor in [proNFSeBrasil] then
+        begin
+          DataHorBR := Leitor.rCampo(tcStr, 'DataEmissaoRps');
+          NFSe.DataEmissaoRps := StringToDateTime(DataHorBr, 'DD/MM/YYYY');
+        end
+        else
+          NFSe.DataEmissaoRps := Leitor.rCampo(tcDat, 'DataEmissaoRps');
+      end;
 
       NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
       NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
@@ -1297,11 +1312,19 @@ var
   item, I: Integer;
   ok: Boolean;
 begin
-  if (Leitor.rExtrai(3, 'IdentificacaoRps') <> '') then
+  if FProvedor <> proNFSeBrasil then
   begin
-    NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
-    NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
-    NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
+    if (Leitor.rExtrai(3, 'IdentificacaoRps') <> '') then
+    begin
+      NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
+      NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
+      NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
+      NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+    end;
+  end
+  else
+  begin
+    NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRps');
     NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
   end;
 

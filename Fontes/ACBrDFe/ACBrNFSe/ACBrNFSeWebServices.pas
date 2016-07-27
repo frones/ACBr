@@ -872,6 +872,7 @@ begin
     XMLRet := RemoverEncoding('<' + ENCODING_UTF8_STD + '>', XMLRet);
     XMLRet := RemoverEncoding(Encoding, XMLRet);
     XMLRet := RemoverEncoding('<?xml version = "1.0" encoding = "utf-8"?>', XMLRet);
+    XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1"?>', XMLRet);
     XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', XMLRet);
   end;
   (*
@@ -1062,7 +1063,7 @@ begin
     if (FProvedor = ProTecnos) and (DateToStr(FDataRecebimento) = '01/01/0001') then
       FDataRecebimento := 0;
 
-    if FProvedor in [proInfisc, proGovDigital, proVersaTecnologia] then
+    if FProvedor in [proInfisc, proGovDigital, proVersaTecnologia, proNFSeBrasil] then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else
@@ -1253,6 +1254,8 @@ begin
 end;
 
 procedure TNFSeWebService.GerarLoteRPSsemAssinatura(RPS: String);
+var
+  SRpsTmp: String;
 begin
   case FVersaoNFSe of
     // RPS versão 2.00
@@ -1309,9 +1312,9 @@ begin
                                    '</rgm:NotaFiscal>';
 
         proNFSeBrasil: begin
-                         FvNotas := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]);
-                         FvNotas := StringReplace(FvNotas, '<Rps>', '', [rfReplaceAll]);
-                         FvNotas := '<Rps>' + StringReplace(FvNotas, '<InfRps>', '', [rfReplaceAll]) + '</Rps>';
+                         SRpsTmp := StringReplace(RPS, '</Rps>', '', [rfReplaceAll]);
+                         SRpsTmp := StringReplace(SRpsTmp, '<Rps>', '', [rfReplaceAll]);
+                         FvNotas := FvNotas + '<Rps>' + StringReplace(SRpsTmp, '<InfRps>', '', [rfReplaceAll]) + '</Rps>';
                        end;
       else
         FvNotas := FvNotas +
@@ -2618,6 +2621,9 @@ begin
     GerarDadosMsg.Free;
   end;
 
+  if Provedor = proNFSeBrasil then
+    FPDadosMsg := FProtocolo;
+
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsLote) and (FPDadosMsg <> '') then
   begin
     // O procedimento recebe como parametro o XML a ser assinado e retorna o
@@ -2832,6 +2838,9 @@ begin
   finally
     GerarDadosMsg.Free;
   end;
+
+  if Provedor = proNFSeBrasil then
+    FPDadosMsg := NumeroRps;
 
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSeRps) and (FPDadosMsg <> '') then
   begin

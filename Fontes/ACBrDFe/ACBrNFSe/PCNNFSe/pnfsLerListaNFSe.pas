@@ -356,6 +356,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RecepcionarConsultaNotaCanceladaResult') <> '');
 
+    //NFSeBrasil
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RespostaLoteRps') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -384,6 +388,8 @@ begin
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then
         Nivel := 3
+      else if leitor.rExtrai(2, 'notas') <> '' then
+        Nivel := 3
       else
         Nivel := 2;
 
@@ -404,6 +410,7 @@ begin
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proAgili]) and (Leitor.rExtrai(Nivel, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
+            ((Provedor in [proNFSeBrasil]) and (Leitor.rExtrai(Nivel, 'nota', '', i + 1) <> '')) or
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS
             ((Provedor in [proInfisc]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) or
@@ -447,6 +454,8 @@ begin
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'NFS-e');
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'Reg20Item');  // Provedor Conam
+              if NFSe.XML = '' then
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'xml');  // Provedor NFSeBrasil
 
               // Retorno do GerarNfse e EnviarLoteRpsSincrono
               FNFSe.NumeroLote    := NumeroLoteTemp;

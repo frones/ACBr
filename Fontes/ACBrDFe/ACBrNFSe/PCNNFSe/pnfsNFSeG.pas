@@ -569,16 +569,6 @@ begin
                      Gerador.Prefixo := Prefixo4;
                      Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
 
-//                     if VersaoNFSe = ve100 then
-//                     begin
-//                       Gerador.wGrupoNFSe('CpfCnpj');
-//                       if Length(Cnpj) <= 11 then
-//                         Gerador.wCampoNFSe(tcStr, '#2', 'Cpf', 11, 11, 1, Cnpj, '')
-//                       else
-//                         Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-//                       Gerador.wGrupoNFSe('/CpfCnpj');
-//                     end
-//                     else
                      Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
                      Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
@@ -1017,6 +1007,10 @@ begin
                   Gerador.wGrupoNFSe('/ConsultaRps');
                 end;
 
+    proNFSEBrasil: begin
+                     // Nenhum valor
+                   end;
+                   
     proSP: begin
              Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
              Gerador.wGrupoNFSe('CPFCNPJRemetente');

@@ -39,7 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 27/06/2019
+Data: 27/07-2016
+-- ACBrECFNaoFiscal, ACBrECFVirtual, ACBrECFVirtualBuffer --
+[*] Ajustes para permitir calculos com Truncamento, quando:
+    ArredondaItemMFD := False                                   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/31494-truncar-valor-total-item-acbrecfnaofiscal/
+
+Data: 27/06/2016
 -- ACBrECFEscECF --
 [-] Correção em "LinhaRelatorioGerencial", na impressão de Cod.Barras ou
     caracteres de controle, que continham CR ou LF  (por: DSA)

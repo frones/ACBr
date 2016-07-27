@@ -905,7 +905,7 @@ begin
   else
     StrPreco := FormatFloat('####0.000', ItemCupom.ValorUnit ) ;
 
-  Total := RoundABNT( ItemCupom.Qtd * ItemCupom.ValorUnit, -2) ;
+  Total := ItemCupom.TotalBruto;
 
   with ItemCupom do
   begin
@@ -944,7 +944,7 @@ begin
   else
     StrDescAcre := 'DESCONTO';
 
-  TotalItem := RoundABNT(ItemCupom.Qtd * ItemCupom.ValorUnit, -2) + ItemCupom.DescAcres;
+  TotalItem := ItemCupom.TotalLiquido;
 
   fsBuffer.Add( PadSpace('|'+StrDescAcre+' ITEM: '+IntToStrZero(ItemCupom.Sequencia,3)+'|'+
                          ifthen(PorcDesc > 0, FormatFloat('#0.00', PorcDesc)+'%','')+'|'+

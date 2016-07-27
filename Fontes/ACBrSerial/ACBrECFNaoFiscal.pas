@@ -298,6 +298,8 @@ TACBrECFNaoFiscal = class( TACBrECFClass )
     function AchaCNFIndiceNaoFiscal( Indice: String) : Integer ;
     function GetNomeArqINI: String;
 
+    function CalcTotalItem( AQtd, APrecoUnit: Double): Double;
+
  protected
     function GetNumCupom: String; override ;
     function GetNumGNF: String; override ;
@@ -552,6 +554,8 @@ begin
   fswComprovantesNaoFiscais := TObjectList.Create( true );
   fswItensCupom             := TObjectList.Create( true );
   fswPagamentosCupom        := TObjectList.Create( true );
+
+  fpArredondaItemMFD := True;
 
   SalvaEstadoAtual ;
 end;
@@ -1072,7 +1076,7 @@ begin
   try
      with TACBrECFNaoFiscalItemCupom( fsItensCupom[NumItem-1] ) do
      begin
-        fsSubTotal := RoundTo(Subtotal - ( RoundABNT( Qtd * ValorUnit,-2) + Desconto ) ,-2);
+        fsSubTotal := RoundTo(Subtotal - ( CalcTotalItem(Qtd, ValorUnit) + Desconto ) ,-2);
         Qtd := 0;
 
         with TACBrECFNaoFiscalAliquota( fsAliquotas[PosAliq] ) do
@@ -1349,7 +1353,7 @@ begin
   else
      StrPreco := FormatFloat('####0.000',ValorUnitario ) ;
 
-  Total   := RoundABNT( Qtd * ValorUnitario, -2) ;
+  Total   := CalcTotalItem( Qtd * ValorUnitario, -2) ;
   ValDesc := 0 ;
   PorcDesc:= 0 ;
   if ValorDescontoAcrescimo > 0 then
@@ -2203,6 +2207,14 @@ begin
    end ;
 end;
 
+function TACBrECFNaoFiscal.CalcTotalItem(AQtd, APrecoUnit: Double): Double;
+begin
+  if fpArredondaItemMFD then
+    Result := RoundABNT( AQtd * APrecoUnit, -2)
+  else
+    Result := TruncTo( AQtd * APrecoUnit, -2);
+end;
+
 procedure TACBrECFNaoFiscal.AvisoLegal ;
 begin
   {$IFNDEF NOGUI}
@@ -2496,8 +2508,8 @@ begin
   fswNumGRG     := fsNumGRG ;
   fswNumCDC     := fsNumCDC ;
   fswNumCER     := fsNumCER ;
-  fswGrandeTotal  := fsGrandeTotal ;
-  fswVendaBruta   := fsVendaBruta ;
+  fswGrandeTotal:= fsGrandeTotal ;
+  fswVendaBruta := fsVendaBruta ;
   fswNumCCF     := fsNumCCF ;
   fswSubTotal   := fsSubTotal ;
   fswTotalPago  := fsTotalPago;
@@ -2571,7 +2583,7 @@ end ;
 
 function TACBrECFNaoFiscal.GetArredonda: Boolean;
 begin
-  Result := true  ;  { NaoFiscal sempre arredonda }
+  Result := fpArredondaItemMFD;
 end;
 
 function TACBrECFNaoFiscal.GetHorarioVerao: Boolean;

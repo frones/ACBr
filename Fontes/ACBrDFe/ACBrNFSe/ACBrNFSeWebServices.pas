@@ -1267,11 +1267,12 @@ begin
 
              proCONAM: FvNotas := FvNotas + RPS;
 
-             proAgili: FvNotas := FvNotas +
-                      '<' + FPrefixo4 + 'DeclaracaoPrestacaoServico' +
-                         RetornarConteudoEntre(RPS,
-                           '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
-                      '</' + FPrefixo4 + 'DeclaracaoPrestacaoServico>';
+             proAgili,
+             proAgiliv2: FvNotas := FvNotas +
+                          '<' + FPrefixo4 + 'DeclaracaoPrestacaoServico' +
+                            RetornarConteudoEntre(RPS,
+                            '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                          '</' + FPrefixo4 + 'DeclaracaoPrestacaoServico>';
            else
              FvNotas := FvNotas +
                       '<' + FPrefixo4 + 'Rps>' +
@@ -2584,6 +2585,8 @@ begin
                           OnlyNumber(FPConfiguracoesNFSe.Geral.CNPJPrefeitura) +
                           '</UnidadeGestora>';
 
+      proAgiliv2: FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
+
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarLoteRpsEnvio_v01.xsd">';
@@ -2943,6 +2946,7 @@ begin
       proISSDSF:    TagGrupo := 'ReqConsultaNotas';
 
       proAgili,
+      proAgiliv2,
       proPVH,
       proTecnos,
       proSystemPro: TagGrupo := 'ConsultarNfseFaixaEnvio';
@@ -3168,6 +3172,13 @@ begin
                   FTagF :=  '</' + FPrefixo3 + 'PedidoCancelamento>' +
                            '</' + TagGrupo + '>';
                 end;
+
+      proAgiliv2: begin
+                    FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
+                              '<' + FPrefixo3 + 'PedidoCancelamento>';
+                    FTagF :=  '</' + FPrefixo3 + 'PedidoCancelamento>' +
+                             '</' + TagGrupo + '>';
+                  end;
 
       proBetha: begin
                   FTagI := '<Pedido>' +
@@ -3577,6 +3588,15 @@ begin
 
                   FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
                 end;
+
+      proAgiliv2: begin
+                    FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+                             '<' + FPrefixo4 + 'PedidoCancelamento' +
+                              ifThen(FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador <> '', ' ' +
+                                     FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador + '="' + FURI + '"', '') + '>';
+
+                    FTagF := '</' + FPrefixo3 + 'SubstituirNfseEnvio>';
+                  end;
     else begin
            FTagI := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
                      '<' + FPrefixo3 + 'SubstituicaoNfse>' +

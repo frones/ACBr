@@ -321,6 +321,7 @@ begin
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
   FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
+  FdmDanfe.frxReport.PrintOptions.ShowDialog := ShowDialog;
 
   // preparar relatorio
   if Assigned(ACBrNFe) then

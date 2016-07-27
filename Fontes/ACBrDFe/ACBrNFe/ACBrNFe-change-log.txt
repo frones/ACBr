@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/07/2016
+-- ACBrNFeDANFEFR
+[*] Tratar para não exibir a caixa de seleção de impressora
+		http://www.projetoacbr.com.br/forum/topic/31487-impress%C3%A3o-de-eventofast-sempre-mostrando-a-sele%C3%A7%C3%A3o-de-impressoras/
+		por : Juliomar Marchetti
+		
 23/06/2016
 -- ACBrNFeServicos.ini
 [*] Ajuste no links de Goias para a QR-Code e ConsultaNFCe em produção e homologação

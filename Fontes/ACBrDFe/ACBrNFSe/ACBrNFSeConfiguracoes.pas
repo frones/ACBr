@@ -82,7 +82,7 @@ type
  end;
 
  TConfigXML = record
-    VersaoCabecalho: String;
+    Layout: String;
     VersaoDados: String;
     VersaoXML: String;
     NameSpace: String;
@@ -556,12 +556,20 @@ begin
   FConfigAssinar.RecSincrono := FPIniParams.ReadBool('Assinar', 'RecSincrono', False);
   FConfigAssinar.Substituir := FPIniParams.ReadBool('Assinar', 'Substituir', False);
 
-  FConfigXML.VersaoCabecalho := FPIniParams.ReadString('XML', 'VersaoCabecalho', '');
+  FConfigXML.Layout := FPIniParams.ReadString('XML', 'Layout', 'ABRASF');
   FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
   FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
   FConfigXML.CabecalhoStr := FPIniParams.ReadBool('XML', 'Cabecalho', False);
   FConfigXML.DadosStr := FPIniParams.ReadBool('XML', 'Dados', False);
+
+  if FConfigXML.Layout = 'ABRASF' then
+  begin
+    if FConfigXML.VersaoXML = '1.00' then
+      FConfigXML.Layout := 'ABRASFv1'
+    else
+      FConfigXML.Layout := 'ABRASFv2';
+  end;
 
   FConfigSchemas.Validar := FPIniParams.ReadBool('Schemas', 'Validar', True);
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');

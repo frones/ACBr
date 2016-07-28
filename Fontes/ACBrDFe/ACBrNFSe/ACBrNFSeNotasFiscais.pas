@@ -828,7 +828,7 @@ var
   function PosRPS: Integer;
   begin
     TamTAG := 5;
-    if VersaoNFSe < ve200 then
+    if (VersaoNFSe < ve200) and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proAgili) then
     begin
       Result := Pos('</Rps>', AXMLString);
       // Provedor ISSDSF

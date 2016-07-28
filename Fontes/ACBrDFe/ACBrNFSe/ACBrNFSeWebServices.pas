@@ -1274,7 +1274,6 @@ begin
 
              proCONAM: FvNotas := FvNotas + RPS;
 
-             proAgili,
              proAgiliv2: FvNotas := FvNotas +
                           '<' + FPrefixo4 + 'DeclaracaoPrestacaoServico' +
                             RetornarConteudoEntre(RPS,
@@ -1294,6 +1293,12 @@ begin
     else
     begin
       case FProvedor of
+        proAgili: FvNotas := FvNotas +
+                   '<' + FPrefixo4 + 'DeclaracaoPrestacaoServico' +
+                     RetornarConteudoEntre(RPS,
+                     '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+                   '</' + FPrefixo4 + 'DeclaracaoPrestacaoServico>';
+
         proEL,
         proGoverna: FvNotas :=  FvNotas + RPS;
 

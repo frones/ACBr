@@ -408,7 +408,7 @@ begin
             (leitor.rExtrai(Nivel, 'NFe', '', i + 1) <> '') or                   // Provedor SP
             (leitor.rExtrai(Nivel, 'Reg20Item', '', i + 1) <> '') or             // Provedor CONAM
             ((Provedor in [proActcon]) and (Leitor.rExtrai(Nivel + 1, 'Nfse', '', i + 1) <> '')) or
-            ((Provedor in [proAgili]) and (Leitor.rExtrai(Nivel, 'Nfse', '', i + 1) <> '')) or
+            ((Provedor in [proAgili, proAgiliv2]) and (Leitor.rExtrai(Nivel, 'Nfse', '', i + 1) <> '')) or
             ((Provedor in [proEquiplano]) and (Leitor.rExtrai(Nivel, 'nfse', '', i + 1) <> '')) or
             ((Provedor in [proNFSeBrasil]) and (Leitor.rExtrai(Nivel, 'nota', '', i + 1) <> '')) or
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote

@@ -97,9 +97,9 @@ begin
     Exit;
 
   if VersaoNFSe = ve100 then
-    Result := FormatMaskText('9999-999;0', Result)
+    Result := FormatMaskText('99.9.9-9.99;0', Result)
   else
-    Result := FormatMaskText('99.9.9-9.99;0', Result);
+    Result := FormatMaskText('9999-999;0', Result);
 end;
 
 function _RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): String;
@@ -336,7 +336,7 @@ begin
   for i := 0 to NFSe.Servico.ItemServico.Count - 1 do
   begin
 
-    codLCServ := IntToStr(StrToInt(OnlyNumber(NFSe.Servico.ItemServico[i].CodLCServ)));
+    codLCServ := IntToStr(StrToIntDef(OnlyNumber(NFSe.Servico.ItemServico[i].CodLCServ), 0));
     if Length(codLCServ) > 2 then
       Insert('.', codLCServ, Length(codLCServ) - 2 + 1);
 
@@ -460,17 +460,26 @@ begin
   Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
 
   if VersaoNFSe = ve100 then
+  begin
     Gerador.wCampoNFSe(tcStr, '', 'OptanteMEISimei', 01, 01, 1, SimNaoToStr(snNao), '');
 
-  if NFSe.Servico.Valores.IssRetido = stRetencao then
-    Gerador.wCampoNFSe(tcStr, '', 'ISSQNRetido', 01, 01, 1, SimNaoToStr(snSim), '')
+    if NFSe.Servico.Valores.IssRetido = stRetencao then
+      Gerador.wCampoNFSe(tcStr, '', 'ISSQNRetido', 01, 01, 1, SimNaoToStr(snSim), '')
+    else
+      Gerador.wCampoNFSe(tcStr, '', 'ISSQNRetido', 01, 01, 1, SimNaoToStr(snNao), '');
+  end
   else
-    Gerador.wCampoNFSe(tcStr, '', 'ISSQNRetido', 01, 01, 1, SimNaoToStr(snNao), '');
+  begin
+    if NFSe.Servico.Valores.IssRetido = stRetencao then
+      Gerador.wCampoNFSe(tcStr, '', 'IssRetido', 01, 01, 1, SimNaoToStr(snSim), '')
+    else
+      Gerador.wCampoNFSe(tcStr, '', 'IssRetido', 01, 01, 1, SimNaoToStr(snNao), '');
+  end;
 
   GerarResponsavelISSQN;
   Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, FormatarCnae(NFSe.Servico.CodigoCnae), '');
 
-  if VersaoNFSe = ve100 then
+  if VersaoNFSe = ve200 then
     Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 0007, 0, FormatarCnae(NFSe.Servico.CodigoCnae), '');
 
   GerarExigibilidadeISSQN;

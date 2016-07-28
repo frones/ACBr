@@ -1519,10 +1519,12 @@ begin
       NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
       if Leitor.rExtrai(5, 'CpfCnpj') <> '' then
       begin
-        if Leitor.rCampo(tcStr, 'Cpf')<>'' then
+        if Leitor.rCampo(tcStr, 'Cpf') <> '' then
           NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cpf')
+        else if Leitor.rCampo(tcStr, 'Cnpj') <> '' then
+          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cnpj')
         else
-          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'Cnpj');
+          NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpj');
       end;
     end;
 

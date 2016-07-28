@@ -1510,6 +1510,7 @@ begin
         ValorIssRetido := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIssRetido;
       end;
 
+      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso; //Governa
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
@@ -3217,6 +3218,11 @@ begin
                    FTagF := '</' + TagGrupo + '>';
                  end;
 
+      proGoverna: begin
+                    FTagI := '';
+                    FTagF := '';
+                  end;
+
       proEGoverneISS,
       proISSDSF: begin
                    FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
@@ -3272,6 +3278,7 @@ begin
                      FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
                               '</' + TagGrupo + '>';
                    end;
+
       proSpeedGov: begin
                      FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
                                '<Pedido>' +
@@ -3281,6 +3288,7 @@ begin
                      FTagF :=  '</Pedido>' +
                               '</' + TagGrupo + '>';
                    end;
+
     else begin
            FTagI := '<' + TagGrupo + FNameSpaceDad + '>' +
                      '<' + FPrefixo3 + 'Pedido>' +
@@ -3345,6 +3353,34 @@ begin
       end;
     end;
 
+    if FProvedor in [proGoverna] then
+    begin
+      Gerador := TGerador.Create;
+      try
+        Gerador.ArquivoFormatoXML := '';
+        Gerador.Prefixo := Prefixo4;
+        for i := 0 to FNotasFiscais.Count-1 do
+        begin
+          Gerador.wGrupoNFSe('NotCan');
+          with FNotasFiscais.Items[I] do
+          begin
+            Gerador.wGrupoNFSe('InfNotCan');
+            Gerador.Prefixo := Prefixo3;
+            Gerador.wCampoNFSe(tcStr, '', 'NumNot', 01, 10, 1, OnlyNumber(NFSe.Numero), '');
+            Gerador.wCampoNFSe(tcStr, '', 'CodVer', 01, 255,  1, NFSe.CodigoVerificacao, '');
+            Gerador.wCampoNFSe(tcStr, '', 'DesMotCan', 01, 80, 1, TNFSeCancelarNfse(Self).FMotivoCancelamento, '');
+            Gerador.Prefixo := Prefixo4;
+            Gerador.wGrupoNFSe('/InfNotCan');
+          end;
+          Gerador.wGrupoNFSe('/NotCan');
+        end;
+
+        FvNotas := Gerador.ArquivoFormatoXML;
+      finally
+        Gerador.Free;
+      end;
+    end;
+
     InicializarGerarDadosMsg;
 
     if FProvedor = proSP then
@@ -3377,10 +3413,9 @@ begin
       Notas      := FvNotas;
 
       if FProvedor = proEGoverneISS then
-      begin
-        ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
         Transacao := (SimNaoToStr(FNotasFiscais.Items[0].NFSe.Producao) = '2');
-      end;
+
+      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;

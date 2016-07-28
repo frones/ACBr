@@ -148,6 +148,7 @@ type
     function LerXml_proISSDSF: Boolean;
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
+    function LerXml_proGoverna: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -300,6 +301,7 @@ begin
     proISSDSF:      Result := LerXml_proISSDSF;
     proNFSeBrasil:  Result := LerXml_proNFSeBrasil;
     proSP:          Result := LerXml_proSP;
+    proGoverna:     Result := LerXml_proGoverna;
   else
     Result := LerXml_ABRASF;
   end;
@@ -751,6 +753,64 @@ begin
     end
     else
       FInfCanc.FSucesso := 'true';
+  end;
+end;
+
+function TretCancNFSe.LerXml_proGoverna: Boolean;
+var
+  i, j, MsgErro: Integer;
+  Msg: String;
+begin
+  try
+    if (Leitor.rExtrai(1, 'RetornoLoteCancelamento') <> '') then
+    begin
+      j := 0;
+      i := 0;
+      MsgErro := 0;
+      
+      while Leitor.rExtrai(1, 'InfRetNotCan', '', i + 1) <> '' do
+      begin
+        InfCanc.FSucesso := Leitor.rCampo(tcStr, 'FlgRet'); //Valida a estrutura: V = Verdadeiro, F = Falso // LEANDROLEDO
+        if (InfCanc.FSucesso = 'V') then
+          infCanc.DataHora := Now;
+
+        while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
+        begin
+          Msg  := Leitor.rCampo(tcStr, 'DesOco');
+          if (Pos('ja cancelada', Msg) > 0) then
+          begin
+            infCanc.DataHora := Now;
+            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno[MsgErro].FMensagem := Msg;
+            Inc(MsgErro);
+          end;
+          if (Pos('OK!', Msg) = 0) and (Pos('cancelada', Msg) = 0) then
+          begin
+            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno[MsgErro].FMensagem := Msg;
+            Inc(MsgErro);
+          end;
+          inc(j);
+        end;
+        inc(i);
+      end;
+    end;
+    {i := 0;
+    while Leitor.rExtrai(2, 'InfRetRps', '', i + 1) <> '' do
+    begin
+      if (Leitor.rCampo(tcStr,'FlgRet') = 'V') then //V = Verdadeiro | F = Falso
+      begin
+        InfCanc. FListaChaveNFeRPS.Add;
+        InfCanc.ListaChaveNFeRPS[i].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumNot');
+        InfCanc.ListaChaveNFeRPS[i].ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVer');
+        InfCanc.ListaChaveNFeRPS[i].ChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumRPS');
+      end;
+      Inc(i);
+    end;}
+    Result := True;
+
+  except
+    Result := False;
   end;
 end;
 

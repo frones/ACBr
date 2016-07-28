@@ -588,7 +588,13 @@ begin
                   Gerador.wGrupoNFSe('LoteRps');
                   Gerador.Prefixo := Prefixo3;
                   Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 15, 1, IM, '');
-                  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+
+
+                  if CodMunicipio = 3104007  then //Araxá
+                    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '4', '')
+                  else
+                    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+
                   Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 30, 30, 1, ChaveAcessoPrefeitura, '');
                   Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
                   Gerador.Prefixo := Prefixo4;
@@ -995,7 +1001,12 @@ begin
                   Gerador.wGrupoNFSe('ConsultaRps');
                   Gerador.Prefixo := Prefixo3;
                   Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 10, 1, IM, '');
-                  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 10, 1, '1', ''); //fixo 1
+
+                  if CodMunicipio = 3104007  then //Araxá
+                    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '4', '')
+                  else
+                    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 10, 1, '1', '');
+
                   Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 01, 30, 1, ChaveAcessoPrefeitura, '');
                   Gerador.Prefixo := Prefixo4;
                   Gerador.wGrupoNFSe('InfConsultaRPS');
@@ -1449,6 +1460,23 @@ begin
                  Gerador.wGrupoNFSe('/Prestador');
                  Gerador.wCampoNFSe(tcStr, '#3', 'NumeroNfse', 01, 15, 1, NumeroNfse, '');
                end;
+
+    proGoverna: begin
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('LoteCancelamento');
+                  Gerador.Prefixo := Prefixo3;
+                  Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 15, 1, IM, '');
+
+                  if CodMunicipio = 3104007  then //Araxá
+                    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '4', '')
+                  else
+                    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+                    
+                  Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 30, 30, 1, ChaveAcessoPrefeitura, '');
+                  Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+                  Gerador.Prefixo := Prefixo4;
+                  Gerador.wGrupoNFSe('/LoteCancelamento');
+                end;
 
     proInfisc: begin
                  Gerador.Prefixo := '';

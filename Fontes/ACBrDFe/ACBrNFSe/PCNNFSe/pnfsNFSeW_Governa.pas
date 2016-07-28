@@ -154,8 +154,19 @@ procedure TNFSeW_Governa.GerarValoresServico;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'CodAti', 4, 10, 1, NFSe.Servico.CodigoTributacaoMunicipio, '');
   Gerador.wCampoNFSe(tcDe2, '', 'PerAlq', 01, 15, 1, NFSe.Servico.Valores.Aliquota, '');
-  Gerador.wCampoNFSe(tcStr, '', 'FrmTrb', 01, 02, 1, '11', '');
-  Gerador.wCampoNFSe(tcStr, '', 'TipRec', 01, 01, 1, NFSe.TipoRecolhimento , '');
+
+  if TRegRecToStr(NFSe.RegRec) <> '' then
+  begin
+    Gerador.wCampoNFSe(tcStr, '', 'RegRec', 01, 01, 2, TRegRecToStr(NFSe.RegRec) , '');
+    Gerador.wCampoNFSe(tcStr, '', 'FrmRec', 01, 01, 1, TFrmRecToStr(NFSe.FrmRec) , '');
+    Gerador.wCampoNFSe(tcStr, '', 'AnoCpt', 01, 01, 1, FormatDateTime('YYYY', StrToDateTimeDef(NFSe.Competencia,NFSe.DataEmissao)) , '');
+    Gerador.wCampoNFSe(tcStr, '', 'MesCpt', 01, 01, 1, FormatDateTime('MM', StrToDateTimeDef(NFSe.Competencia,NFSe.DataEmissao)) , '');
+  end
+  else begin
+    Gerador.wCampoNFSe(tcStr, '', 'FrmTrb', 01, 02, 1, '11', '');
+    Gerador.wCampoNFSe(tcStr, '', 'TipRec', 01, 01, 1, NFSe.TipoRecolhimento , '');
+  end;
+
   Gerador.wCampoNFSe(tcStr, '', 'DatEmsRps', 08, 08, 1, StringReplace(FormatDateTime('yyyymmdd',NFSe.DataEmissao),'/', '',[rfReplaceAll]), '');
   Gerador.wCampoNFSe(tcStr, '', 'DatEmsNFSe', 08, 08, 1, '' , '');
   Gerador.wCampoNFSe(tcDe2, '', 'VlrDed', 01, 16, 1, NFSe.Servico.Valores.ValorDeducoes, '');
@@ -169,6 +180,14 @@ begin
   Gerador.wCampoNFSe(tcDe2, '', 'VlrCSLL', 01, 16, 1, NFSe.Servico.Valores.ValorCsll, '');
   Gerador.wCampoNFSe(tcDe2, '', 'VlrOtrRtn', 01, 16, 1, NFSe.Servico.Valores.valorOutrasRetencoes , '');
   Gerador.wCampoNFSe(tcStr, '', 'DesOtrRtn', 01, 16, 1, NFSe.Servico.Valores.DescricaoOutrasRetencoes, '');
+
+  if TRegRecToStr(NFSe.RegRec) <> '' then
+  begin
+    Gerador.wCampoNFSe(tcStr, '', 'EstServ', 01, 01, 2, iif(NFSe.Servico.UFPrestacao = '', NFSe.Tomador.Endereco.UF,NFSe.Servico.UFPrestacao) , '');
+    Gerador.wCampoNFSe(tcStr, '', 'MunSvc', 01, 01, 2, iif(NFSe.Servico.CodigoMunicipio = '', NFSe.Tomador.Endereco.CodigoMunicipio, NFSe.Servico.CodigoMunicipio), '');
+    Gerador.wCampoNFSe(tcDe2, '', 'VlrRep', 01, 16, 1, NFSe.Servico.Valores.ValorRepasse, '');
+  end;
+
   Gerador.wCampoNFSe(tcStr, '', 'Obs', 01, 16, 1, NFSe.OutrasInformacoes, '');
 end;
 
@@ -191,8 +210,11 @@ begin
   Gerador.Prefixo := Prefixo3;
   Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 10, 1, NFSe.IdentificacaoRps.Numero, '');
   Gerador.wCampoNFSe(tcStr, '', 'CodVer', 01, 10, 1, NFSe.CodigoVerificacao, '');
-  //** Versão fixo 3**
-  Gerador.wCampoNFSe(tcStr, '', 'VrsImp', 01, 01, 1, '3', '');
+
+  if NFSe.PrestadorServico.Endereco.CodigoMunicipio = '3104007' then //Araxá
+    Gerador.wCampoNFSe(tcStr, '', 'VrsImp', 01, 01, 1, '5', '')
+  else
+    Gerador.wCampoNFSe(tcStr, '', 'VrsImp', 01, 01, 1, '3', '');
 
   GerarTomador;
   GerarValoresServico;
@@ -222,7 +244,12 @@ begin
   Gerador.wGrupoNFSe('LoteRps');
 
   Gerador.wCampoNFSe(tcStr, '', 'CodCadBic', 01, 15, 1, NFSe.Prestador.InscricaoMunicipal, '');
-  Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+
+  if NFSe.PrestadorServico.Endereco.CodigoMunicipio = '3104007' then //Araxá
+    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '4', '')
+  else
+    Gerador.wCampoNFSe(tcStr, '', 'VrsArq', 01, 01, 1, '1', '');
+
   Gerador.wCampoNFSe(tcStr, '', 'ChvAcs', 30, 30, 1, NFSe.Prestador.ChaveAcesso, '');
 
   GerarXML_Governa;

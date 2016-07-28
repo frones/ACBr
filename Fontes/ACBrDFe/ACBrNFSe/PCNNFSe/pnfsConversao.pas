@@ -125,7 +125,14 @@ type
 
   TnfseCanhoto = ( tcNenhum, tcCabecalho, tcRodape );
 
-function SimNao( const t : Integer ): String;
+  TnfseRegRec = ( regNenhum, regMovimento, regCancelado, regIsento, regImune,
+                  regNaoIncidencia, regEstimativa, regSocLiberal,
+                  regSimplesNacional, regMEI);
+  TnfseFrmRec = ( frmNenhum, frmNormal, frmRetidoNaFonte, frmSimplesNacional,
+                  frmFixoAnual, frmSemRecolhimento, frmDevidoOutroMunicipio,
+                  frmFixoMensal);
+
+  function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
 function StrToStatusRPS(out ok: boolean; const s: String): TnfseStatusRPS;
 
@@ -220,6 +227,12 @@ function StrToTTributacaoRPS(out ok: boolean; const s: String): TnfseTTributacao
 
 function TCanhotoToStr(const t: TnfseCanhoto): String;
 function StrToTCanhoto(out ok: boolean; const s: String): TnfseCanhoto;
+
+function TRegRecToStr(const t: TNFSERegRec): String; //Governa
+function StrToTRegRec(out ok: boolean; const s: String): TNFSERegRec; //Governa
+
+function TFrmRecToStr(const t: TNFSEFrmRec): String; //Governa
+function StrToTFrmRec(out ok: boolean; const s: String): TNFSEFrmRec; //Governa
 
 implementation
 
@@ -18302,6 +18315,42 @@ begin
   result := StrToEnumerado(ok, s,
                            ['0', '1', '2'],
                            [tcNenhum, tcCabecalho, tcRodape]);
+end;
+
+function TRegRecToStr(const t: TNFSERegRec): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['', '00', '02', '03', '04', '07', '08', '09', '11', '12'],
+                           [regNenhum, regMovimento, regCancelado, regIsento,
+                            regImune, regNaoIncidencia, regEstimativa,
+                            regSocLiberal, regSimplesNacional, regMEI]);
+end;
+
+function StrToTRegRec(out ok: boolean; const s: String): TNFSERegRec;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['', '00', '02', '03', '04', '07', '08', '09', '11', '12'],
+                           [regNenhum, regMovimento, regCancelado, regIsento,
+                            regImune, regNaoIncidencia, regEstimativa,
+                            regSocLiberal, regSimplesNacional, regMEI]);
+end;
+
+function TFrmRecToStr(const t: TNFSEFrmRec): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['','00', '01', '03', '04', '05', '06', '07'],
+                           [frmNenhum, frmNormal, frmRetidoNaFonte,
+                            frmSimplesNacional, frmFixoAnual, frmSemRecolhimento,
+                            frmDevidoOutroMunicipio, frmFixoMensal]);
+end;
+
+function StrToTFrmRec(out ok: boolean; const s: String): TNFSEFrmRec;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['', '00', '01', '03', '04', '05', '06', '07'],
+                           [frmNenhum, frmNormal, frmRetidoNaFonte,
+                            frmSimplesNacional, frmFixoAnual, frmSemRecolhimento,
+                            frmDevidoOutroMunicipio, frmFixoMensal]);
 end;
 
 end.

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2016
+[*] Ajustes promovidos em vários fontes para o provedor Governa.
+    Por: Isledo
+
 25/07/2016
 [*] Ajustes promovidos em vários fontes para o provedor NFSeBrasil.
     Por: Jéter Rabelo Ferreira

@@ -1137,6 +1137,7 @@ end;
 
 function TNFSeR.LerRps_Governa: Boolean;
 begin
+  Leitor.rExtrai(1, 'LoteRps');
   NFSe.dhRecebimento                := StrToDateTime(formatdatetime ('dd/mm/yyyy',now));
   NFSe.Prestador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'CodCadBic');
   NFSe.Prestador.ChaveAcesso        := Leitor.rCampo(tcStr, 'ChvAcs');

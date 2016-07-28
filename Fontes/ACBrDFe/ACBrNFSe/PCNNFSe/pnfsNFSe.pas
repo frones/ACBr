@@ -197,6 +197,7 @@ type
     FJustificativaDeducao: String;
     FvalorOutrasRetencoes: Currency;
     FDescricaoOutrasRetencoes: String;
+    FvalorRepasse: Currency; //Governa
   published
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
@@ -226,6 +227,7 @@ type
     //propriedade do Provedor Governa
     property valorOutrasRetencoes: Currency read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
     property DescricaoOutrasRetencoes: String read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;
+    property ValorRepasse: Currency read FValorRepasse write FValorRepasse;
   end;
 
   TItemServicoCollection = class(TCollection)
@@ -377,6 +379,7 @@ type
     FResponsavelRetencao: TnfseResponsavelRetencao;
     FDescricao: String;
     FDeducao : TDeducaoCollection;
+    FUFPrestacao: String; //Governa
 
     procedure SetItemServico(Value: TItemServicoCollection);
   public
@@ -399,6 +402,7 @@ type
     property Descricao: String read FDescricao write FDescricao;
     // Deducao usada pelo Provedor IssDsf
     property Deducao : TDeducaoCollection read FDeducao write FDeducao;
+    property UFPrestacao: String read FUFPrestacao write FUFPrestacao; //Governa
   end;
 
  TIdentificacaoPrestador = class(TPersistent)
@@ -711,6 +715,8 @@ type
 
     Femail: TemailCollection;
     FTipoRecolhimento: String;
+    FRegRec: TnfseRegRec; //String;
+    FFrmRec: TnfseFrmRec; //String;
     FTipoTributacaoRPS: TnfseTTributacaoRPS;
     FAssinatura: String;
 
@@ -786,6 +792,8 @@ type
     property TipoTributacaoRPS: TnfseTTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
     // Provedor SP
     property Assinatura: String read FAssinatura write FAssinatura;
+    property RegRec: TnfseRegRec read FRegRec write FRegRec; //Governa
+    property FrmRec: TnfseFrmRec read FFrmRec write FFrmRec; //Governa
   end;
 
  TLoteRps = class(TPersistent)

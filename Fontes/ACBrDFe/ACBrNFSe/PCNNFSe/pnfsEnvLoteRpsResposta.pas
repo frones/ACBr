@@ -579,13 +579,11 @@ end;
 
 function TretEnvLote.LerXml_proNFSeBrasil: Boolean;
 var
-  i, Item, posI, count: Integer;
+  i, posI, count: Integer;
   VersaoXML: String;
-  strAux,strAux2, strItem: AnsiString;
-  leitorAux, leitorItem:TLeitor;
+  strAux, strAux2: AnsiString;
+  leitorAux: TLeitor;
 begin
-  result := False;
-//    Luiz Baião 2014.12.01
   try
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
     VersaoXML      := '1';
@@ -649,7 +647,7 @@ begin
 
     Result := True;
   except
-    result := False;
+    Result := False;
   end;
 end;
 
@@ -666,6 +664,7 @@ begin
       j := 0;
       i := 0;
       MsgErro := 0;
+
       while Leitor.rExtrai(1, 'RetornoLoteRps', '', i + 1) <> '' do
       begin
         while Leitor.rExtrai(2, 'DesOco', '', j + 1) <> '' do
@@ -679,6 +678,24 @@ begin
           end;
           inc(j);
         end;
+
+        j := 0;
+
+        while Leitor.rExtrai(2, 'InfRetRps', '', j + 1) <> '' do
+        begin
+          if (Leitor.rCampo(tcStr,'FlgRet') = 'V') then //V = Verdadeiro | F = Falso
+          begin
+            InfRec.DataRecebimento := Now;
+            InfRec.FProtocolo := '0';
+            InfRec.Sucesso := Leitor.rCampo(tcStr,'FlgRet');
+            InfRec.FListaChaveNFeRPS.Add;
+            InfRec.ListaChaveNFeRPS[j].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumNot');
+            InfRec.ListaChaveNFeRPS[j].ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVer');
+            InfRec.ListaChaveNFeRPS[j].ChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumRPS');
+          end;
+          Inc(j);
+        end;
+
         inc(i);
       end;
     end;

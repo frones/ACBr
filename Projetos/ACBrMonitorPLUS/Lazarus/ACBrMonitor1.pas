@@ -4169,7 +4169,7 @@ begin
     seMargemTopo.Value     := INI.ReadInteger('SATFortes','MargemTopo',ACBrSATExtratoFortes1.Margens.Topo);
     seMargemFundo.Value    := INI.ReadInteger('SATFortes','MargemFundo',ACBrSATExtratoFortes1.Margens.Fundo);
     seMargemEsquerda.Value := INI.ReadInteger('SATFortes','MargemEsquerda',ACBrSATExtratoFortes1.Margens.Esquerda);
-    seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
+	seMargemDireita.Value  := INI.ReadInteger('SATFortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
     cbPreview.Checked      := INI.ReadBool('SATFortes','Preview',True);
 
     lImpressora.Caption := INI.ReadString('SATPrinter','Name',Printer.PrinterName);

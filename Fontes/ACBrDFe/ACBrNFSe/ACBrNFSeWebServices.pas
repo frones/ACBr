@@ -959,6 +959,8 @@ begin
     // Retorno do GerarNfse e EnviarLoteRpsSincrono
     if FPLayout in [LayNFSeGerar, LayNFSeRecepcaoLoteSincrono] then
     begin
+      FProtocolo := FRetornoNFSe.Protocolo;
+
       if (Provedor = ProTecnos) then
       begin
         if (FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NumeroLote <> '0') then

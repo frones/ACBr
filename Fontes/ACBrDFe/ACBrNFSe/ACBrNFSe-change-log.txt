@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2016
+[*] Quando se utiliza os métodos Gerar e EnviarSincrono a propriedade Protocolo
+    fica vazia, pois esta a principio é alimentada através do retorno do método
+    Envio.
+    Foi feita uma alteração para contornar o problema.
+    Por: Italo Jurisato Junior
+
 28/07/2016
 [*] Ajustes promovidos em vários fontes para o provedor Governa.
     Por: Isledo

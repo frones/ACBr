@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/07/2016
+-- ACBrNFeServicos
+[*] Novas URLs do QR-Code para a UF de GO.
+    por: Italo Jurisato Junior
+		
 27/07/2016
 -- ACBrNFeDANFEFR
 [*] Tratar para não exibir a caixa de seleção de impressora

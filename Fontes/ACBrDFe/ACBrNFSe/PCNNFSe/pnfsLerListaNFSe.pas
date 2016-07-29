@@ -776,9 +776,6 @@ begin
     if FProvedor = proSP then
     begin
       try
-        Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-        Leitor.Grupo   := Leitor.Arquivo;
-
         ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
 
         if (leitor.rExtrai(2, 'ChaveNFeRPS') <> '') then

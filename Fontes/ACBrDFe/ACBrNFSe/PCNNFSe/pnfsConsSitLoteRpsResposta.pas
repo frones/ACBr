@@ -208,6 +208,8 @@ begin
   else
     Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
 
+  Leitor.Grupo := Leitor.Arquivo;
+
   case Provedor of
     proCONAM:      Result := LerXml_proCONAM;
     proISSDSF:     Result := LerXml_proISSDSF;
@@ -228,8 +230,6 @@ begin
   Result := True;
 
   try
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if (leitor.rExtrai(1, 'ConsultarSituacaoLoteRpsResposta') <> '') or
        (leitor.rExtrai(1, 'Consultarsituacaoloterpsresposta') <> '') or
        (leitor.rExtrai(1, 'ConsultarLoteRpsResposta') <> '') or
@@ -291,7 +291,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Grupo   := Leitor.Arquivo;
     if (leitor.rExtrai(1, 'Sdt_consultaprotocoloout') <> '') or
        (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '') then
     begin
@@ -339,8 +338,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Grupo   := Leitor.Arquivo;
-
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'nrLoteRps');
     InfSit.FSituacao   := Leitor.rCampo(tcStr, 'stLote');
 		//1 - Aguardando processamento
@@ -388,8 +385,6 @@ var
   sMotCod, sMotDes, chave, situacao: String;
 begin
   try
-    Leitor.Grupo := Leitor.Arquivo;
-
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'cLote');
 
     i := 0;
@@ -443,8 +438,6 @@ var
   strAux: AnsiString;
 begin
   try
-    Leitor.Grupo := Leitor.Arquivo;
-
     InfSit.FNumeroLote := Leitor.rCampo(tcStr, 'numeroLote');
     InfSit.FSituacao   := Leitor.rCampo(tcStr, 'situacaoLoteRps');
 
@@ -494,7 +487,6 @@ begin
    // Luiz Baião 2014.12.03
   try
     VersaoXML      := '1';
-    Leitor.Grupo   := Leitor.Arquivo;
 
     // <erros> .. </erros>
     strAux := leitor.rExtrai_NFSEBrasil(1, 'erros');
@@ -623,8 +615,6 @@ begin
   Result := False;
 
   try
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if leitor.rExtrai(1, 'RetornoInformacoesLote') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then

@@ -269,6 +269,13 @@ end;
 
 function TretEnvLote.LerXml: Boolean;
 begin
+  if Provedor = proISSCuritiba then
+    Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
+  else
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+
+  Leitor.Grupo := Leitor.Arquivo;
+
  case Provedor of
    proCONAM:      Result := LerXml_proCONAM;
    proEL:         Result := LerXml_proEL;
@@ -292,12 +299,6 @@ begin
   Result := True;
 
   try
-    if Provedor = proISSCuritiba then
-      Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
-    else
-      Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
-    Leitor.Grupo   := Leitor.Arquivo;
-
     infRec.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
     infRec.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
 
@@ -364,9 +365,6 @@ begin
   Result := False;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
@@ -454,9 +452,6 @@ var
   i: Integer;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'nrLote');
     infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dtRecebimento');
     infRec.FProtocolo       := Leitor.rCampo(tcStr, 'nrProtocolo');
@@ -503,8 +498,6 @@ var
 begin
   Result := False;
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
     if leitor.rExtrai(1, 'confirmaLote') <> '' then
     begin
       FInfRec.FSucesso := Leitor.rCampo(tcStr, 'sit');
@@ -543,9 +536,6 @@ var
   strAux: AnsiString;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numeroLote');
     infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dataRecebimento');
     infRec.FProtocolo       := Leitor.rCampo(tcStr, 'numeroProtocolo');
@@ -585,10 +575,7 @@ var
   leitorAux: TLeitor;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    VersaoXML      := '1';
-    Leitor.Grupo   := Leitor.Arquivo;
-
+    VersaoXML := '1';
     strAux := leitor.rExtrai(1, 'RespostaLoteRps');
 
     if ( strAux <> emptystr) then  begin
@@ -657,8 +644,6 @@ var
   Msg: String;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
     if (Leitor.rExtrai(1, 'RetornoLoteRps') <> '') then
     begin
       j := 0;
@@ -711,8 +696,6 @@ var
   i: integer;
 begin
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
     if leitor.rExtrai(1, 'Sdt_processarpsout') <> '' then begin
         FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Id');
         if (FInfRec.FSucesso = 'Arquivo Aceito') then  begin
@@ -745,9 +728,6 @@ begin
   Result := False;
 
   try
-    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo);
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then

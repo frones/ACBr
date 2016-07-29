@@ -226,6 +226,13 @@ end;
 
 function TretSubsNFSe.LerXml: Boolean;
 begin
+  if Provedor = proISSCuritiba then
+    Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
+  else
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+
+  Leitor.Grupo   := Leitor.Arquivo;
+
  case Provedor of
    proISSDSF:     Result := LerXml_proISSDSF;
    proEquiplano:  Result := LerXML_proEquiplano;
@@ -244,12 +251,6 @@ begin
   Result := True;
 
   try
-    if Provedor = proISSCuritiba then
-      Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
-    else
-      Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
-    Leitor.Grupo   := Leitor.Arquivo;
-
     if (leitor.rExtrai(1, 'SubstituirNfseResposta') <> '') then
     begin
       if (leitor.rExtrai(2, 'RetSubstituicao') <> '') then

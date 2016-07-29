@@ -301,6 +301,7 @@ begin
       toRemessaAlterarVencimento             : Ocorrencia:='06'; {Alteração de vencimento}
       toRemessaProtestar                     : Ocorrencia:='09'; {Pedido de protesto}
       toRemessaSustarProtesto                : Ocorrencia:='10'; {Sustação de protesto}
+      toRemessaAlterarNumeroDiasProtesto     : Ocorrencia:='16'; {Alteração do numero de dias para protesto}
       //toRemessaCancelarInstrucaoProtestoBaixa: Ocorrencia:='18'; {Sustar protesto e baixar} //---Estão erradas essas ocorrencias comentadas
       //toRemessaCancelarInstrucaoProtesto     : Ocorrencia:='19'; {Sustar protesto e manter na carteira}
       //toRemessaOutrasOcorrencias             : Ocorrencia:='31'; {Alteração de Outros Dados}

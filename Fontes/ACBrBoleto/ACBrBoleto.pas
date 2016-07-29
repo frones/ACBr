@@ -56,9 +56,9 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.202a';
+  CACBrBoleto_Versao = '0.0.203a';
 
-  cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
   'Remessa Registrar',
   'Remessa Baixar',
   'Remessa Debitar em Conta',
@@ -99,6 +99,7 @@ const
   'Remessa Cobrar Juros Mora',
   'Remessa Alterar Valor Titulo',
   'Remessa Excluir Sacador Avalista',
+  'Remessa Alterar Numero de Dias Para Protesto',
   'Retorno Confirmado',
   'Retorno Transferencia Carteira',
   'Retorno Transferencia Carteira Entrada',
@@ -318,6 +319,7 @@ type
     toRemessaCobrarJurosMora,
     toRemessaAlterarValorTitulo,
     toRemessaExcluirSacadorAvalista,
+    toRemessaAlterarNumeroDiasProtesto,
 
     {Ocorrências para arquivo retorno}
     toRetornoRegistroConfirmado,
@@ -2276,9 +2278,9 @@ end;
 function TACBrBoleto.GetOcorrenciasRemessa: TACBrOcorrenciasRemessa;
 var I: Integer;
 begin
-  SetLength(Result, 38);
+  SetLength(Result, 41);
 
-  for I:= 1 to 38 do
+  for I:= 1 to 41 do
   begin
     Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
     Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];

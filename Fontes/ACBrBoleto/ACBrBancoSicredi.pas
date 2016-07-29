@@ -676,7 +676,26 @@ begin
         toRetornoInstrucaoRejeitada,
         toRetornoAlteracaoDadosRejeitados:
         begin
-          case StrtoInt(CodMotivo) of
+          case StrtoIntDef(CodMotivo, -1) of
+            -1:
+            begin
+              if(CodMotivo = 'A1') Then
+                Result := 'A1 - Rejeição da alteração do número controle do participante'
+              else if(CodMotivo = 'A2') Then
+                Result := 'A2 - Rejeição da alteração dos dados do sacado'
+              else if(CodMotivo = 'A3') Then
+                Result := 'A3 - Rejeição da alteração dos dados do sacador/avalista'
+              else if(CodMotivo = 'A4') Then
+                Result := 'A4 - Sacado DDA'
+              else if(CodMotivo = 'A5') Then
+                Result := 'A5 - Registro Rejeitado – Título já Liquidado'
+              else if(CodMotivo = 'A6') Then
+                Result := 'A6 -  Código do Convenente Inválido ou Encerrado'
+              else if(CodMotivo = 'A7') Then
+                Result := 'A7 -  Título já se encontra na situação Pretendida'
+              else if(CodMotivo = 'A8') Then
+                Result := 'A8 -  Valor do Abatimento inválido para cancelamento';
+            end;
             01: Result := '01 - Código do banco inválido';
             02: Result := '02 - Código do registro detalhe inválido';
             03: Result := '03 - Código do segmento inválido';
@@ -746,6 +765,19 @@ begin
             84: Result := '84 - Número autorização inexistente';
             85: Result := '85 - Título com pagamento vinculado';
             86: Result := '86 - Seu Número inválido';
+            87: Result := '87 - e-mail/SMS enviado';
+            88: Result := '88 - e-mail Lido';
+            89: Result := '89 - e-mail/SMS devolvido - endereço de e-mail ou número do celular incorreto';
+            90: Result := '90 - e-mail devolvido - caixa postal cheia ';
+            91: Result := '91 - e-mail/número do celular do sacado não informado';
+            92: Result := '92 - Sacado optante por Bloqueto Eletrônico - e-mail não enviado';
+            93: Result := '93 - Código para emissão de bloqueto não permite envio de e-mail ';
+            94: Result := '94 - Código da Carteira inválido para envio e-mail';
+            95: Result := '95 - Contrato não permite o envio de e-mail';
+            96: Result := '96 - Número de contrato inválido';
+            97: Result := '97 - Rejeição da alteração do prazo limite de recebimento (a data deve ser informada no campo 28.3.p)';
+            98: Result := '98 - Rejeição de dispensa de prazo limite de recebimento';
+            99: Result := '99 - Rejeição da alteração do número do título dado pelo cedente';
           else
             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
           end;

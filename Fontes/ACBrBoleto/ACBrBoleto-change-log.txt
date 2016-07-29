@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/07/2016 ver: 0.0.203a
+-- ACBrBancoBanrisul --
+[-] Correção adicionado o envio da instrução 16 "Alteração do número de didas para protesto". (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/29941-banrisul-inclus%C3%A3o-da-instru%C3%A7%C3%A3o-16/
+
+-- ACBrBancoSicredi --
+[-] Correção dos motivos de rejeição CNAB240. (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/30232-retorno-sicredi-cnab240-adi%C3%A7%C3%A3o-de-motivos-de-rejei%C3%A7%C3%A3o/#comment-200090
+
+
 Data: 27/07/2016 ver: 0.0.202a
 -- ACBrBancoob --
 [-] Correção campo Código Desconto 3, Código Multa, layout retorno CNAB240. (Graziele Rocha)

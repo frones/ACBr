@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/07/2016
+[*] Correções na geração do XML para o provedor Agili.
+    Por: BigWings
 [*] Quando se utiliza os métodos Gerar e EnviarSincrono a propriedade Protocolo
     fica vazia, pois esta a principio é alimentada através do retorno do método
     Envio.

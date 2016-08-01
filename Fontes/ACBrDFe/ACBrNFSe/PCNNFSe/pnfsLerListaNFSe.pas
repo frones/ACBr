@@ -467,6 +467,7 @@ begin
 
               FNFSe.InfID.ID          := NFSeLida.NFSe.InfID.ID;
               FNFSe.Numero            := NFSeLida.NFSe.Numero;
+              FNFSe.SeriePrestacao    := NFSeLida.NFSe.SeriePrestacao;
               FNFSe.CodigoVerificacao := NFSeLida.NFSe.CodigoVerificacao;
               FNFSe.DataEmissao       := NFSeLida.NFSe.DataEmissao;
               FNFSe.DataEmissaoRps    := NFSeLida.NFSe.DataEmissaoRps;

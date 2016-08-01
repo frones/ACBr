@@ -1196,6 +1196,7 @@ begin
     if (Leitor.rExtrai(2, 'InfNfse') <> '') or (Leitor.rExtrai(1, 'InfNfse') <> '') then
     begin
       NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
+      NFSe.SeriePrestacao    := Leitor.rCampo(tcStr, 'Serie');
       NFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
 
       {Considerar a data de recebimento da NFS-e como dhrecebimento - para esse provedor nao tem a tag

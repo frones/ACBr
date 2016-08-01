@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2016
+-- ACBrNFeDANFeRLRetrato --
+[-] Correção do primeiro item  quando e solicitado a impressão do valor desconto
+	http://www.projetoacbr.com.br/forum/topic/31142-valor-liquido-e-descontos-no-danfe-retrato-fortes/#comment-208670
+         Por : Henrique Leonardo       
 
 26/07/2016
 -- ACBrNFeDANFeRLPaisagem.pas, ACBrNFeDANFeRLRetrato.pas 

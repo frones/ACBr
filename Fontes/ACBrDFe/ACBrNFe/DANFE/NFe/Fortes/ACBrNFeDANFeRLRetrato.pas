@@ -600,7 +600,6 @@ type
     procedure rlbItensAfterPrint(Sender: TObject);
     procedure rlbDadosAdicionaisBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-    procedure rlbCabecalhoItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
       var Eof: Boolean; var RecordAction: TRLRecordAction);
@@ -633,6 +632,7 @@ type
     procedure BandEntrega;
     procedure BandRetirada;
     function ManterinfAdProd(inItem: Integer): String;
+    procedure CabItens;
   public
 
   end;
@@ -1076,6 +1076,7 @@ begin
   BandRetirada;
   AddFaturaReal;
   AddFatura;
+  CabItens;
   Observacoes;
 
   // Verifica se será exibida a 'continuação das informações complementares'
@@ -1730,31 +1731,6 @@ begin
 end;
 
 
-procedure TfrlDANFeRLRetrato.rlbCabecalhoItensBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
-begin
-  case FNFe.Emit.CRT of
-    crtRegimeNormal,
-    crtSimplesExcessoReceita  : lblCST.Caption  := 'CST';
-    crtSimplesNacional        : lblCST.Caption  := 'CSOSN';
-  end;
-
-  if ( fImprimirDescPorc )  then
-  begin
-    lblPercValorDesc.Caption := 'PERC.(%)';
-    fImprimirTotalLiquido    := false;
-  end
-  else
-    lblPercValorDesc.Caption := 'VALOR';
-
-
-  if ( fImprimirTotalLiquido ) then
-  begin
-    lblValorTotal.Caption       := 'DESCONTO';
-    lblPercValorDesc1.Caption   := ACBrStr('LÍQUIDO');
-  end;
-end;
-
 procedure TfrlDANFeRLRetrato.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -2297,6 +2273,7 @@ begin
     txtUnidade.Caption         := Prod.UCom;
     txtQuantidade.Caption      := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
     txtValorUnitario.Caption   := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
+
     if ( fImprimirTotalLiquido ) then
     begin
       txtValorTotal.Caption       := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), ',#0.00');
@@ -2345,6 +2322,31 @@ begin
     Result := Result + ManterMedicamentos( inItem );
     Result := Result + ManterArma( inItem );
     Result := Result + ManterCombustivel( inItem );
+  end;
+end;
+
+procedure TfrlDANFeRLRetrato.CabItens;
+begin
+ //   Configura Cabecalho dos Itens
+  case FNFe.Emit.CRT of
+    crtRegimeNormal,
+    crtSimplesExcessoReceita  : lblCST.Caption  := 'CST';
+    crtSimplesNacional        : lblCST.Caption  := 'CSOSN';
+  end;
+
+  if ( fImprimirDescPorc )  then
+  begin
+    lblPercValorDesc.Caption := 'PERC.(%)';
+    fImprimirTotalLiquido    := false;
+  end
+  else
+    lblPercValorDesc.Caption := 'VALOR';
+
+
+  if ( fImprimirTotalLiquido ) then
+  begin
+    lblValorTotal.Caption       := 'DESCONTO';
+    lblPercValorDesc1.Caption   := ACBrStr('LÍQUIDO');
   end;
 end;
 

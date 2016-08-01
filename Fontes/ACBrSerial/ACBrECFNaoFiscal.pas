@@ -1353,7 +1353,7 @@ begin
   else
      StrPreco := FormatFloat('####0.000',ValorUnitario ) ;
 
-  Total   := CalcTotalItem( Qtd * ValorUnitario, -2) ;
+  Total   := CalcTotalItem( Qtd, ValorUnitario) ;
   ValDesc := 0 ;
   PorcDesc:= 0 ;
   if ValorDescontoAcrescimo > 0 then

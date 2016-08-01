@@ -378,8 +378,8 @@ begin
       if trim(ProtocoloTemp) = '' then
         ProtocoloTemp := '0';
 
-      if (Provedor in [ProTecnos]) and (ProtocoloTemp <> '') then
-        FProtocolo := ProtocoloTemp;
+//      if (Provedor in [ProTecnos]) and (ProtocoloTemp <> '') then
+      FProtocolo := ProtocoloTemp;
 
       SituacaoTemp:= Leitor.rCampo(tcStr, 'Situacao');
       if trim(SituacaoTemp) = '' then
@@ -601,9 +601,10 @@ begin
         inc(i); // Incrementa o contador de notas.
       end;
 
+      // Estava provocanto a inclusão de um outro elemento na lista.
+      (*
       if (Provedor = ProTecnos) then
       begin
-//        NFSe := TNFSe.Create;
         with ListaNFSe.FCompNFSe.Add do
         begin
           FNFSe.NumeroLote    := NumeroLoteTemp;
@@ -614,7 +615,7 @@ begin
             Result := False;
         end;
       end;
-
+      *)
     end;
     
     // =======================================================================
@@ -743,7 +744,10 @@ begin
         end;
         inc(j);
       end;
+
       Result := true;
+      
+      // Bloco abaixo verificar a real necessidade
       With ListaNFSe.FCompNFSe.Add do
       begin
         FNFSe.dhRecebimento := Date;

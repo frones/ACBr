@@ -905,7 +905,7 @@ begin
   for i := 0 to FRetornoNFSe.ListaNFSe.CompNFSe.Count -1 do
   begin
 
-    // O provedor EGovverneISS não retorna o XML da NFS-e esse é obtido pelo
+    // O provedor EGoverneISS não retorna o XML da NFS-e esse é obtido pelo
     // Link retornado e atribuido a propriedade Link, bem como o numero da nota
     // que é atribuido a propriedade Numero
     if (FProvedor = proEGoverneISS) then

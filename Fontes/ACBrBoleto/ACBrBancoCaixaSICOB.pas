@@ -373,6 +373,8 @@ begin
        else
          ANossoNumero:= '82'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);
       end
+     else if (Carteira = 'CS') then
+      ANossoNumero := PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-9,10),10,'0')
      else
        ANossoNumero:= '9' + PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9,'0');
    end;

@@ -1125,7 +1125,7 @@ begin
         toRetornoInstrucaoRejeitada: //32
           case AnsiIndexStr(CodMotivo,
                             ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
-                             'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8',
+                             'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F3', 'F7', 'F8',
                              'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8',
                              'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
@@ -1144,24 +1144,25 @@ begin
             13 : Result:= 'C6-Título já liquidado';
             14 : Result:= 'C7-Título já baixado';
             15 : Result:= 'D2-Espécie de documento não permite protesto de título';
-            16 : Result:= 'F7-Falta de comprovante de prestação de serviço';
-            17 : Result:= 'F8-Nome do cedente incompleto/incorreto';
-            18 : Result:= 'F9-CNPJ/CPF incompatível com o nome do sacado/sacador avalista';
-            19 : Result:= 'G1-CNPJ/CPF do sacador incompatível com a espécie';
-            20 : Result:= 'G5-Praça de pagamento incompatível com o endereço';
-            21 : Result:= 'G8-Saldo maior que o valor do título';
-            22 : Result:= 'G9-Tipo de endosso inválido';
-            23 : Result:= 'H1-Nome do sacador incompleto/incorreto';
-            24 : Result:= 'L3-Apresentante não aceita publicação de edital';
-            25 : Result:= 'L4-Dados do sacado em branco ou inválido';
-            26 : Result:= 'J8-Erro de preenchimento do título';
-            27 : Result:= 'I9-Não previsto no manual';
-            28 : Result:= 'K9-Título de outra jurisdição territorial';
-            29 : Result:= 'A3-Cooperativa/agência depositária divergente: atualiza o cadastro de praças da Coop./agência beneficiária';
-            30 : Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
-            31 : Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
-            32 : Result:= 'J3-Rua/Número inexistente no endereço';
-            33 : Result:= 'D1-Título dentro do prazo de vencimento (em dia)';
+            16 : Result:= 'F3-Instrução inválida, este título está caucionado/descontado';
+            17 : Result:= 'F7-Falta de comprovante de prestação de serviço';
+            18 : Result:= 'F8-Nome do cedente incompleto/incorreto';
+            19 : Result:= 'F9-CNPJ/CPF incompatível com o nome do sacado/sacador avalista';
+            20 : Result:= 'G1-CNPJ/CPF do sacador incompatível com a espécie';
+            21 : Result:= 'G5-Praça de pagamento incompatível com o endereço';
+            22 : Result:= 'G8-Saldo maior que o valor do título';
+            23 : Result:= 'G9-Tipo de endosso inválido';
+            24 : Result:= 'H1-Nome do sacador incompleto/incorreto';
+            25 : Result:= 'L3-Apresentante não aceita publicação de edital';
+            26 : Result:= 'L4-Dados do sacado em branco ou inválido';
+            27 : Result:= 'J8-Erro de preenchimento do título';
+            28 : Result:= 'I9-Não previsto no manual';
+            29 : Result:= 'K9-Título de outra jurisdição territorial';
+            30 : Result:= 'A3-Cooperativa/agência depositária divergente: atualiza o cadastro de praças da Coop./agência beneficiária';
+            31 : Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
+            32 : Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
+            33 : Result:= 'J3-Rua/Número inexistente no endereço';
+            34 : Result:= 'D1-Título dentro do prazo de vencimento (em dia)';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';

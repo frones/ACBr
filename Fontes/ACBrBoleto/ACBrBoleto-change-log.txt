@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/08/2016 ver: 0.0.204a
+-- ACBrBancoSicredi --
+[-] Correção instrução de rejeição: "F3 Instrução inválida, este título está caucionado/descontado" (Graziele Serafim)
+http://www.projetoacbr.com.br/forum/topic/31539-erro-ao-processar-retorno-sicredi-f3-is-not-a-valid-integer-value/
+
+-- ACBrCaixaEconomicaSICOB --
+[-] Correção função FormataNossoNumero carteira referente a carteira CS.(Graziele Serafim)
+http://www.projetoacbr.com.br/forum/topic/30680-impress%C3%A3o-segunda-via-boleto-caixa-sicob/
+
 Data: 28/07/2016 ver: 0.0.203a
 -- ACBrBancoBanrisul --
 [-] Correção adicionado o envio da instrução 16 "Alteração do número de didas para protesto". (Graziele Rocha)

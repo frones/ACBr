@@ -213,7 +213,7 @@ type
     // Entrada
     FNumeroLote: String;
     // Retorno
-    FSituacao: String;
+    FRetEnvLote: TRetEnvLote;
 
   protected
     procedure DefinirURL; override;
@@ -230,7 +230,8 @@ type
     procedure Clear; override;
 
     property NumeroLote: String read FNumeroLote;
-    property Situacao: String   read FSituacao;
+
+    property RetEnvLote: TRetEnvLote read FRetEnvLote write FRetEnvLote;
   end;
 
 { TNFSeGerarNFSe }
@@ -1854,20 +1855,9 @@ begin
   // Lista de Mensagem de Retorno
   FPMsg := '';
   FaMsg := '';
-  if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
-  begin
-    for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
-    begin
-      FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
 
-      FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
-                       'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
-                       'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
-                       'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
-                       'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
-    end;
-  end
-  else begin
+  if FProtocolo <> '' then
+  begin
     for i := 0 to FNotasFiscais.Count -1 do
     begin
       FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
@@ -1878,6 +1868,24 @@ begin
              'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
              'Protocolo..... : ' + FProtocolo + LineBreak +
              'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+  end;
+
+  if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+  begin
+    for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
+    begin
+      if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
+         (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
+      begin
+        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
+
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                         'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
+                         'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
+                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+      end;
+    end;
   end;
 
   Result := (RetEnvLote.InfRec.Protocolo <> '');
@@ -1903,8 +1911,7 @@ end;
 
 { TNFSeEnviarSincrono }
 
-constructor TNFSeEnviarSincrono.Create(AOwner: TACBrDFe;
-  ANotasFiscais: TNotasFiscais);
+constructor TNFSeEnviarSincrono.Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
 begin
   inherited Create(AOwner);
 
@@ -1916,6 +1923,9 @@ begin
   if Assigned(FRetornoNFSe) then
     FRetornoNFSe.Free;
 
+  if Assigned(FRetEnvLote) then
+    FRetEnvLote.Free;
+
   inherited Destroy;
 end;
 
@@ -1926,10 +1936,9 @@ begin
   FPStatus := stNFSeRecepcao;
   FPLayout := LayNFSeRecepcaoLoteSincrono;
   FPArqEnv := 'env-lotS';
-  FPArqResp := 'lista-nfse';
+  FPArqResp := 'recS';
 
   FProtocolo := '';
-  FSituacao := '';
 
   FRetornoNFSe := nil;
 end;
@@ -1937,6 +1946,7 @@ end;
 procedure TNFSeEnviarSincrono.DefinirURL;
 begin
   FPLayout := LayNFSeRecepcaoLoteSincrono;
+
   inherited DefinirURL;
 end;
 
@@ -2024,15 +2034,71 @@ begin
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if FPConfiguracoesNFSe.Geral.ConfigEnvelope.RecSincrono_IncluiEncodingDados then
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
+  // Lote tem mais de 500kb ? //
+  if Length(FPDadosMsg) > (500 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
+      IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
 end;
 
 function TNFSeEnviarSincrono.TratarResposta: Boolean;
+var
+  i: Integer;
 begin
+  FPRetWS := ExtrairRetorno;
+
+  if Assigned(FRetEnvLote) then
+    FreeAndNil(FRetEnvLote);
+  FRetEnvLote := TRetEnvLote.Create;
+
+  FRetEnvLote.Leitor.Arquivo := FPRetWS;
+  FRetEnvLote.Provedor := FProvedor;
+  FRetEnvLote.LerXml;
+
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
+
+  FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
+  FProtocolo       := RetEnvLote.InfRec.Protocolo;
+  if RetEnvLote.InfRec.NumeroLote <> '' then
+    FNumeroLote := RetEnvLote.InfRec.NumeroLote;
+
+  // Lista de Mensagem de Retorno
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno;
-  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
-  Result := ExtrairNotasRetorno;
+
+  if FProtocolo <> '' then
+  begin
+    for i := 0 to FNotasFiscais.Count -1 do
+    begin
+      FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
+      FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
+    end;
+    FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+             'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
+             'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
+             'Protocolo..... : ' + FProtocolo + LineBreak +
+             'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+  end;
+
+  if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+  begin
+    for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
+    begin
+      if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
+         (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
+      begin
+        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
+
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                         'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
+                         'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
+                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+      end;
+    end;
+  end;
+
+  Result := (RetEnvLote.InfRec.Protocolo <> '');
 end;
 
 procedure TNFSeEnviarSincrono.FinalizarServico;

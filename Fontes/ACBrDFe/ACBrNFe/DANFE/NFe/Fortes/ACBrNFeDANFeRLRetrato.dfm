@@ -113,7 +113,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       Background.Width = 175
       BandType = btColumnHeader
       PageBreaking = pbBeforePrint
-      BeforePrint = rlbCabecalhoItensBeforePrint
       object rlsRectProdutos: TRLDraw
         Left = 0
         Top = 12

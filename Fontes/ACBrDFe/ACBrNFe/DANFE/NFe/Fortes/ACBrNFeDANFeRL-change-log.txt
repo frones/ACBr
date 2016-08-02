@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+02/08/2016
+-- ACBrNFeDANFeRLRetrato --
+[-] Remocao do procedimento rlbCabecalhoItens.BeforePrint 
+    http://www.projetoacbr.com.br/forum/topic/31613-erro-no-fortes-depois-da-atualiza%C3%A7%C3%A3o/
+         Por : Henrique Leonardo       
+
+
 01/08/2016
 -- ACBrNFeDANFeRLRetrato --
 [-] Correção do primeiro item  quando e solicitado a impressão do valor desconto

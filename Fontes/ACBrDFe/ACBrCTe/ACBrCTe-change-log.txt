@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2016
+[*] Melhoria no posicionamento da razão social no dacte em retrato em fortes
+		http://www.projetoacbr.com.br/forum/topic/31363-layout-cte-dados-do-rlmdadosemitente-sobrep%C3%B5e-o-rlmemitente-quando-descri%C3%A7%C3%A3o-%C3%A9-muito-grande/
+		por Juliomar Marchetti
+		
 16/06/2016
 -- ACBrCTeWebServices --
 [-] Ajuste para não duplicar a lista de items em TDistribuicaoDFe

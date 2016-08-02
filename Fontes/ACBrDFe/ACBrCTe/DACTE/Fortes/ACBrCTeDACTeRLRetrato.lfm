@@ -886,7 +886,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rliLogo: TRLImage
         Left = 7
         Height = 62
-        Top = 26
+        Top = 34
         Width = 94
         Center = True
         RealBounds.Left = 0
@@ -932,13 +932,13 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rlmDadosEmitente: TRLMemo
         Left = 113
         Height = 71
-        Top = 22
+        Top = 36
         Width = 216
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
         Font.Color = clWindowText
-        Font.Height = -9
+        Font.Height = -8
         Font.Name = 'Times New Roman'
         Lines.Strings = (
           '1 Linha - LOGRADOURO - COMPLEMENTO - BAIRRO'

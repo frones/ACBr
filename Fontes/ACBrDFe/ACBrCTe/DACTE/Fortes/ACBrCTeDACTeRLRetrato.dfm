@@ -732,7 +732,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rliLogo: TRLImage
         Left = 7
-        Top = 26
+        Top = 34
         Width = 94
         Height = 62
         Center = True
@@ -766,7 +766,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmDadosEmitente: TRLMemo
         Left = 113
-        Top = 22
+        Top = 36
         Width = 216
         Height = 71
         AutoSize = False
@@ -774,7 +774,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -9
+        Font.Height = -8
         Font.Name = 'Times New Roman'
         Font.Style = []
         Lines.Strings = (

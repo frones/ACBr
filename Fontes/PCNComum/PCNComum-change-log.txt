@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2016
+-- pcnAuxiliar --
+[*] Incluido o caracter "." no final das constantes UFS e CODIGOS da function CodigoParaUF.
+    por: Italo Jurisato Junior
+
 15/04/2016
 -- pcnConversao --
 [+] Incluido os tipos de eventos: teCTeAutorizado e teMDFeAutorizado.

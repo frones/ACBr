@@ -147,7 +147,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      BeforePrint = rlbCabecalhoItensBeforePrint
       object rlsRectProdutos: TRLDraw
         Left = 0
         Height = 19
@@ -1085,6 +1084,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Transparent = False
       end
       object rllChaveAcesso: TRLLabel
         Tag = 10
@@ -1412,6 +1412,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Transparent = False
       end
       object rllDadosVariaveis1c: TRLLabel
         Tag = 704
@@ -7140,7 +7141,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 19
         Top = 0
         Width = 742
-				Align = faTop
+        Align = faTop
         Alignment = taCenter
         Color = clGray
         Font.Color = clWhite

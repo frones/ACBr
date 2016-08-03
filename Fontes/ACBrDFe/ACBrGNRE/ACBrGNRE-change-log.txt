@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/08/2016
+[*] Adição de suporte do fortes para as guias do gnre
+		http://www.projetoacbr.com.br/forum/topic/31424-modulo-gnre-para-o-monitor-plus/
+		por : Juliomar Marchetti
 24/06/2016
 [-] Melhoria para impressão do código barras em jato de tinta
 		http://www.projetoacbr.com.br/forum/topic/30853-c%C3%B3digo-de-barras-da-gnre-em-impressora-jato-de-tinta/

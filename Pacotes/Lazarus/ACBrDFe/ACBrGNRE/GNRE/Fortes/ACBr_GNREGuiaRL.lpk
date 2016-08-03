@@ -15,12 +15,24 @@
     </CompilerOptions>
     <Description Value="ACBrGNREGuiaRL - Impressão da Guia gerada pelo ACBrGNRE"/>
     <License Value="LGPL"/>
-    <Files Count="1">
+    <Files Count="4">
       <Item1>
-        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaFRFortes.pas"/>
-        <HasRegisterProc Value="True"/>
-        <UnitName Value="ACBrGNREGuiaFRFortes"/>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLClass.pas"/>
+        <UnitName Value="ACBrGNREGuiaRLClass"/>
       </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrGNREGuiaRLReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRL.pas"/>
+        <UnitName Value="ACBrGNReGuiaRL"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLRetrato.pas"/>
+        <UnitName Value="ACBrGNReGuiaRLRetrato"/>
+      </Item4>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

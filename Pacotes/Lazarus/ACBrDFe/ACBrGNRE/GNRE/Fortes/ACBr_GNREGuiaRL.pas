@@ -7,13 +7,14 @@ unit ACBr_GNREGuiaRL;
 interface
 
 uses
-  ACBrGNREGuiaFRFortes, LazarusPackageIntf;
+  ACBrGNReGuiaRLClass, ACBrGNReGuiaRLReg, ACBrGNReGuiaRL, 
+  ACBrGNReGuiaRLRetrato, LazarusPackageIntf;
 
 implementation
 
 procedure Register;
 begin
-  RegisterUnit('ACBrGNREGuiaFRFortes', @ACBrGNREGuiaFRFortes.Register);
+  RegisterUnit('ACBrGNReGuiaRLReg', @ACBrGNReGuiaRLReg.Register);
 end;
 
 initialization

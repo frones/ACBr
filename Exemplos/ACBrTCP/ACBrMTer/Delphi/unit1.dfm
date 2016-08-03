@@ -13,6 +13,7 @@ object Form1: TForm1
   OldCreateOrder = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnConectados: TPanel
@@ -591,13 +592,48 @@ object Form1: TForm1
   end
   object memComandas: TClientDataSet
     Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'CODCOMANDA'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'QTD_ITENS'
+        DataType = ftSmallint
+      end>
+    IndexDefs = <>
     Params = <>
+    StoreDefs = True
     Left = 116
     Top = 260
   end
   object memTerminais: TClientDataSet
     Aggregates = <>
+    FieldDefs = <
+      item
+        Name = 'IP_TERMINAL'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'COMANDA'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'RESPOSTA'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'STATUS'
+        DataType = ftString
+        Size = 20
+      end>
+    IndexDefs = <>
     Params = <>
+    StoreDefs = True
     Left = 108
     Top = 204
   end

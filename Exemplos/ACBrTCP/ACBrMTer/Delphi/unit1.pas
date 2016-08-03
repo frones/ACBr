@@ -1,4 +1,4 @@
-Ôªøunit Unit1;
+unit Unit1;
 
 interface
 
@@ -95,6 +95,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PageControl2Change(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     procedure AtualizarConexoes;
     procedure VerificaSelecionado;
@@ -393,7 +394,7 @@ procedure TForm1.IniciarFluxoVendas;
 begin
   if memTerminais.IsEmpty then
   begin
-    ShowMessage('Nenhum terminal dispon√≠vel');
+    ShowMessage('Nenhum terminal disponÌvel');
     Exit;
   end;
 
@@ -503,7 +504,7 @@ begin
       while (not EOF) do
       begin
         if (FieldByName('CODCOMANDA').AsString = aComanda) then
-          Exit;   // Comanda j√° existe? ...Sai
+          Exit;   // Comanda j· existe? ...Sai
 
         Next;
       end;
@@ -544,5 +545,12 @@ begin
   end;
 end;
 
-end.
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  memComandas.CreateDataSet;
+  memTerminais.CreateDataSet;
+  memTerminais.Open;
+  memComandas.Open;
+end;
 
+end.

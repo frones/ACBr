@@ -2009,10 +2009,10 @@ end;
 
 Function TfrlDANFeRLPaisagem.ManterXpod( sXProd : String;  inItem : Integer ) : String;
 begin
+  sQuebraLinha := QuebraLinha;
   Result := sXProd;
   if FImprimirDetalhamentoEspecifico = true then
   begin
-    sQuebraLinha := QuebraLinha;
     Result := Result + ManterVeiculos( inItem );
     Result := Result + ManterMedicamentos( inItem );
     Result := Result + ManterArma( inItem );

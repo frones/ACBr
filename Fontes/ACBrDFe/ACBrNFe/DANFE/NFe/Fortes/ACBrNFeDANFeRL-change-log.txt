@@ -47,7 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+03/08/2016
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[-] Correção para que os dados fiquem bem alinhados
+		http://www.projetoacbr.com.br/forum/topic/31630-acbrnfedanferlretrato/
+		por: Juliomar Marchetti
+		
 02/08/2016
 -- ACBrNFeDANFeRLRetrato --
 [-] Remocao do procedimento rlbCabecalhoItens.BeforePrint 

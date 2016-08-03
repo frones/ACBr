@@ -2313,11 +2313,11 @@ end;
 
 Function TfrlDANFeRLRetrato.ManterXpod( sXProd : String;  inItem : Integer ) : String;
 begin
+  sQuebraLinha := QuebraLinha;
   Result := sXProd;
   Result := Result + ManterinfAdProd(inItem ) ;
   if FImprimirDetalhamentoEspecifico = true then
   begin
-    sQuebraLinha := QuebraLinha;
     Result := Result + ManterVeiculos( inItem );
     Result := Result + ManterMedicamentos( inItem );
     Result := Result + ManterArma( inItem );

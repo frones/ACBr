@@ -3001,6 +3001,8 @@ var
 begin
  Result := True ;
 
+ if LibName = '' then Exit;
+
 {$IFDEF FPC}
  LibHandle := dynlibs.LoadLibrary( LibName ) ;
  if LibHandle <> 0 then

@@ -534,7 +534,7 @@ begin
     GetUTC(CodigoParaUF(CUF), DataHoraEmissao));
   sdigVal_HEX := AsciiToHex(DigestValue);
 
-  if (CUF in [35, 41, 50] then
+  if (CUF in [35, 41, 50]) then
   begin
     sdhEmi_HEX := LowerCase(sdhEmi_HEX);
     sdigVal_HEX := LowerCase(sdigVal_HEX);

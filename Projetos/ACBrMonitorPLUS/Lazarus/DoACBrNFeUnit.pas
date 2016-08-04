@@ -38,7 +38,6 @@ interface
 Uses Classes, TypInfo, SysUtils, CmdUnit,  StdCtrls;
 
 Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
-Function ConvertStrRecived( AStr: String ) : String ;
 function UFparaCodigo(const UF: string): integer;
 function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 procedure GerarIniNFe( AStr: String ) ;
@@ -1845,30 +1844,6 @@ begin
            SetCurrentDir(wDiretorioAtual);
      end ;
   end;
-end ;
-
-function ConvertStrRecived(AStr: String): String;
- Var P   : Integer ;
-     Hex : String ;
-     CharHex : Char ;
-begin
-  { Verificando por codigos em Hexa }
-  Result := AStr ;
-
-  P := pos('\x',Result) ;
-  while P > 0 do
-  begin
-     Hex := copy(Result,P+2,2) ;
-
-     try
-        CharHex := Chr(StrToInt('$'+Hex)) ;
-     except
-        CharHex := ' ' ;
-     end ;
-
-     Result := StringReplace(Result,'\x'+Hex,CharHex,[rfReplaceAll]) ;
-     P      := pos('\x',Result) ;
-  end ;
 end ;
 
 function UFparaCodigo(const UF: string): integer;

@@ -194,22 +194,25 @@ begin
             begin
               if FileExists(Cmd.Params(0)) then
                begin
-                 ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
-                 ACBrCTe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                 ACBrNFe1.Configuracoes.Certificados.ArquivoPFX   := Cmd.Params(0);
+                 ACBrCTe1.Configuracoes.Certificados.ArquivoPFX   := Cmd.Params(0);
                  ACBrMDFe1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
+                 ACBrGNRE1.Configuracoes.Certificados.ArquivoPFX  := Cmd.Params(0);
                  edtArquivoPFX.Text :=  ACBrNFe1.Configuracoes.Certificados.ArquivoPFX ;
                end
               else
                begin
                  ACBrNFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
                  ACBrCTe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
-                 ACBrMDFe1.Configuracoes.Certificados.NumeroSerie  := Cmd.Params(0);
+                 ACBrMDFe1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
+                 ACBrGNRE1.Configuracoes.Certificados.NumeroSerie := Cmd.Params(0);
                  edtNumeroSerie.Text :=  ACBrNFe1.Configuracoes.Certificados.NumeroSerie ;
                end;
 
-              ACBrNFe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
-              ACBrCTe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+              ACBrNFe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);
+              ACBrCTe1.Configuracoes.Certificados.Senha  := Cmd.Params(1);
               ACBrMDFe1.Configuracoes.Certificados.Senha := Cmd.Params(1);
+              ACBrGNRE1.Configuracoes.Certificados.Senha := Cmd.Params(1);
               edtSenha.Text := ACBrNFe1.Configuracoes.Certificados.Senha;
               SalvarIni;
             end

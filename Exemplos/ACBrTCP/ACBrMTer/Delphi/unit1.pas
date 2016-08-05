@@ -5,8 +5,8 @@ interface
 uses
   Classes, SysUtils, db, Forms, Controls, Graphics, Dialogs,
   StdCtrls, ExtCtrls, CheckLst, Spin, ComCtrls, DBGrids,
-  ACBrMTer, ACBrSocket, ACBrConsts, blcksock, Datasnap.DBClient, ACBrBase,
-  Vcl.Grids;
+  ACBrMTer, ACBrSocket, ACBrConsts, blcksock, DBClient, ACBrBase,
+  Grids;
 
 type
 
@@ -72,11 +72,11 @@ type
     tsFluxoVendas: TTabSheet;
     memComandas: TClientDataSet;
     memTerminais: TClientDataSet;
-    procedure ACBrMTer1Conecta(const IP: AnsiString);
-    procedure ACBrMTer1Desconecta(const IP: AnsiString; Erro: Integer;
-      ErroDesc: AnsiString);
-    procedure ACBrMTer1RecebeDados(const IP: AnsiString;
-      var Recebido: AnsiString);
+    procedure ACBrMTer1Conecta(const IP: String);
+    procedure ACBrMTer1Desconecta(const IP: String; Erro: Integer;
+      ErroDesc: String);
+    procedure ACBrMTer1RecebeDados(const IP: String;
+      var Recebido: String);
     procedure btAtivarClick(Sender: TObject);
     procedure btAtualizarClick(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
@@ -137,7 +137,7 @@ begin
   mOutput.Lines.Add('Escutando porta: ' + edPorta.Text);
 end;
 
-procedure TForm1.ACBrMTer1Conecta(const IP: AnsiString);
+procedure TForm1.ACBrMTer1Conecta(const IP: String);
 begin
   mOutput.Lines.Add('Conectou IP: ' + IP);
 
@@ -147,8 +147,8 @@ begin
   AtualizarConexoes;
 end;
 
-procedure TForm1.ACBrMTer1Desconecta(const IP: AnsiString; Erro: Integer;
-  ErroDesc: AnsiString);
+procedure TForm1.ACBrMTer1Desconecta(const IP: String; Erro: Integer;
+  ErroDesc: String);
 begin
   mOutput.Lines.Add('Desconectou IP: ' + IP);
   mOutput.Lines.Add('  - Erro: ' + IntToStr(Erro) + ' - ' + ErroDesc);
@@ -156,8 +156,8 @@ begin
   AtualizarConexoes;
 end;
 
-procedure TForm1.ACBrMTer1RecebeDados(const IP: AnsiString;
-  var Recebido: AnsiString);
+procedure TForm1.ACBrMTer1RecebeDados(const IP: String;
+  var Recebido: String);
 begin
   mOutput.Lines.Add('IP: ' + IP + ' - Recebido :' + Recebido);
 

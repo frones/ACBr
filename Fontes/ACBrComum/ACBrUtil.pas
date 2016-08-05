@@ -2527,8 +2527,14 @@ function PathWithDelim(const APath : String) : String ;
 begin
   Result := Trim(APath) ;
   if Result <> '' then
-     if RightStr(Result,1) <> PathDelim then   { Tem delimitador no final ? }
-        Result := Result + PathDelim ;
+  begin
+     {$IfDef FPC}
+      Result := IncludeTrailingPathDelimiter(Result);
+     {$Else}
+      if RightStr(Result,1) <> PathDelim then   { Tem delimitador no final ? }
+         Result := Result + PathDelim ;
+     {$EndIf}
+  end;
 end ;
 
 {-----------------------------------------------------------------------------

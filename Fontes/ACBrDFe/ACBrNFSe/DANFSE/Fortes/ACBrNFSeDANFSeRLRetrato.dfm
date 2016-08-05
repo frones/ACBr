@@ -2,13 +2,13 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
   Left = 349
   Top = 55
   Caption = 'frlDANFSeRLRetrato'
-  ClientHeight = 751
+  ClientHeight = 1045
   ClientWidth = 827
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
     Left = 32
-    Top = -160
+    Top = 0
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 8.000000000000000000
     Margins.RightMargin = 5.099999999999999000
@@ -568,8 +568,8 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         ParentFont = False
       end
       object RLDraw10: TRLDraw
-        Left = 350
-        Top = 138
+        Left = 224
+        Top = 139
         Width = 1
         Height = 35
         Angle = 90.000000000000000000
@@ -577,7 +577,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         DrawKind = dkLine
       end
       object RLLabel20: TRLLabel
-        Left = 362
+        Left = 445
         Top = 139
         Width = 162
         Height = 15
@@ -591,7 +591,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Transparent = False
       end
       object rllNumNFSeSubstituida: TRLLabel
-        Left = 362
+        Left = 445
         Top = 157
         Width = 135
         Height = 15
@@ -680,6 +680,41 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Caption = 'P'#225'gina'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw11: TRLDraw
+        Left = 436
+        Top = 139
+        Width = 1
+        Height = 35
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel64: TRLLabel
+        Left = 236
+        Top = 139
+        Width = 193
+        Height = 15
+        Caption = 'Munic'#237'pio de Presta'#231#227'o do Servi'#231'o:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Transparent = False
+      end
+      object rllMunicipioPrestacaoServico: TRLLabel
+        Left = 236
+        Top = 157
+        Width = 167
+        Height = 15
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
         Font.Style = [fsBold]

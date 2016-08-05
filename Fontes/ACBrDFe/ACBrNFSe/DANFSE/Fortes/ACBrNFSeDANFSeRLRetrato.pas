@@ -203,6 +203,9 @@ type
     RLSystemInfo2: TRLSystemInfo;
     RLLabel62: TRLLabel;
     RLLabel63: TRLLabel;
+    RLDraw11: TRLDraw;
+    RLLabel64: TRLLabel;
+    rllMunicipioPrestacaoServico: TRLLabel;
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -374,6 +377,7 @@ begin
 
     rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
+    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
   end;
 end;
 
@@ -446,6 +450,7 @@ begin
       rllAliquota.Caption             := ManterAliquota ( Aliquota );
       rllISSReter.Caption             := SituacaoTributariaDescricao( IssRetido );
       rllValorISS.Caption             := FormatFloat('#,##0.00',ValorIss);
+
 
     end;
   end;

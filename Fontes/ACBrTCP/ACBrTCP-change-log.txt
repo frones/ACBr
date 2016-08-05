@@ -37,6 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2016
+-- ACBrSocket --
+[-] Correção de Bug em TACBrTCPServer.Desativar, em Delphi, onde o erro
+    thread error the handle is invalid (6)" era disparado no caso de existir
+    conexões ativas (por:DSA)
+
+-- ACBrMTer* --
+[-] Correção de Enconding para ANSI. Remoção de variáveis não utilizadas
+
 24/06/2016
 -- ACBrMTer --
 [*] Assinatura do Evento "OnRecebeDados" modificada para possibilitar a 

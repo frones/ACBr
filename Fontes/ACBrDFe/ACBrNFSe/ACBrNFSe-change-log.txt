@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2016
+[*] Correções na leitura do XML da NFS-e - provedor Conam.
+    Por: Edson
+
 01/08/2016
 [*] Alteração na forma de tratar a resposta do EnvioSincrono.
     Por: Italo Jurisato Junior

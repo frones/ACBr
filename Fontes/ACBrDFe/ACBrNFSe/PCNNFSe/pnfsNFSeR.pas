@@ -2749,6 +2749,7 @@ var
   bNota: Boolean;
   bRPS: Boolean;
   sDataTemp: String;
+  ValorIssRet: Double;  //Edson
 begin
   NFSe.dhRecebimento := StrToDateTime(FormatDateTime('dd/mm/yyyy', now));
 
@@ -2782,6 +2783,8 @@ begin
       IdentificacaoRps.Serie:= Leitor.rCampo(tcStr, 'SerRps');
       CodigoVerificacao := Leitor.rCampo(tcStr, 'CodVernf');
 
+      ValorIssRet := Leitor.rCampo(tcDe2, 'VlIssRet');  //Edson
+
       if Leitor.rCampo(tcStr, 'TipoTribPre') = 'SN' then
         OptanteSimplesNacional := snSim
       else
@@ -2810,12 +2813,28 @@ begin
 
       Servico.Valores.BaseCalculo := Leitor.rCampo(tcDe2, 'VlBasCalc');
       Servico.Valores.ValorServicos := Leitor.rCampo(tcDe2, 'VlNFS');
-      Servico.Valores.ValorIss := Leitor.rCampo(tcDe2, 'VlIss');
       Servico.Valores.Aliquota := Leitor.rCampo(tcDe2, 'AlqIss');
-      Servico.Valores.IssRetido := Leitor.rCampo(tcDe2, 'VlIssRet');
+      Servico.Valores.IssRetido := Leitor.rCampo(tcDe2, 'VlIssRet'); // Isto nao está funcionando...
+              //O conteúdo de "Servico.Valores.IssRetido dever ser SIM ou NAO
+              //O conteúdo de "Sevrico.Valores.ValorIssRetido é o valor do ISS
       Servico.Valores.ValorDeducoes := Leitor.rCampo(tcDe2, 'VlDed');
-
       Servico.Valores.JustificativaDeducao := Leitor.rCampo(tcStr, 'DiscrDed');
+
+      if ValorIssRet>0 then
+      begin
+          Servico.Valores.IssRetido      := stRetencao;   //Edson
+          Servico.Valores.ValorIssRetido := ValorIssRet;  //Edson
+          Servico.Valores.ValorIss       := 0;            //Edson
+          Servico.Valores.ValorLiquidoNfse:= Servico.Valores.ValorServicos - ValorIssRet;   //Edson
+          ValoresNfse.ValorLiquidoNfse    := Servico.Valores.ValorServicos - ValorIssRet;   //Edson
+      end else
+      begin
+          Servico.Valores.IssRetido      := stNormal;    //Edson
+          Servico.Valores.ValorIssRetido := 0;           //Edson
+          Servico.Valores.ValorIss       := Leitor.rCampo(tcDe2, 'VlIss');    //Edson
+          Servico.Valores.ValorLiquidoNfse:= Leitor.rCampo(tcDe2, 'VlNFS');   //Edson
+          ValoresNfse.ValorLiquidoNfse    := Leitor.rCampo(tcDe2, 'VlNFS');   //Edson
+      end;
 
       Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazSocTom');
       Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');

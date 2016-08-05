@@ -2,8 +2,6 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Left = 165
-  Top = 204
   Height = 442
   Width = 437
   object cdsIdentificacao: TClientDataSet

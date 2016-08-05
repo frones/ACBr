@@ -99,6 +99,7 @@ type
     property DAMDFEClassOwner: TACBrMDFeDAMDFeClass read FDAMDFEClassOwner;
     procedure CarregaDados;
     procedure CarregaDadosEventos;
+    procedure SetDataSetsToFrxReport;
   end;
 
 function CollateBr(Str: string): string;
@@ -381,6 +382,7 @@ constructor TDMACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
 begin
   inherited;
   frxReport:= TfrxReport.Create(Self);
+  frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin
     //Version         := '5.4.3';
@@ -955,6 +957,36 @@ begin
     Result := Result + Resultado;
     i      := i + 1;
   end;
+end;
+procedure TDMACBrMDFeDAMDFEFR.SetDataSetsToFrxReport;
+begin
+  frxReport.DataSets.Clear;
+  frxReport.DataSets.Add(frxIdentificacao);
+  frxReport.DataSets.Add(frxEmitente);
+  frxReport.DataSets.Add(frxMunCarrega);
+  frxReport.DataSets.Add(frxModalRodo);
+  frxReport.DataSets.Add(frxModalAereo);
+  frxReport.DataSets.Add(frxModalAqua);
+  frxReport.DataSets.Add(frxModalFerrov);
+  frxReport.DataSets.Add(frxModalFerrovVagoes);
+  frxReport.DataSets.Add(frxDocumentos);
+  frxReport.DataSets.Add(frxParametros);
+  frxReport.DataSets.Add(frxPercurso);
+  frxReport.DataSets.Add(frxEventos);
+
+  frxReport.EnabledDataSets.Clear;
+  frxReport.EnabledDataSets.Add(frxIdentificacao);
+  frxReport.EnabledDataSets.Add(frxEmitente);
+  frxReport.EnabledDataSets.Add(frxMunCarrega);
+  frxReport.EnabledDataSets.Add(frxModalRodo);
+  frxReport.EnabledDataSets.Add(frxModalAereo);
+  frxReport.EnabledDataSets.Add(frxModalAqua);
+  frxReport.EnabledDataSets.Add(frxModalFerrov);
+  frxReport.EnabledDataSets.Add(frxModalFerrovVagoes);
+  frxReport.EnabledDataSets.Add(frxDocumentos);
+  frxReport.EnabledDataSets.Add(frxParametros);
+  frxReport.EnabledDataSets.Add(frxPercurso);
+  frxReport.EnabledDataSets.Add(frxEventos);
 end;
 
 end.

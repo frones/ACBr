@@ -29,9 +29,9 @@ type
     btLimparLinha: TButton;
     btLimparLinha1: TButton;
     btPosicionarCursor: TButton;
-    cbEcoAutomatico: TCheckBox;
     cbModelo: TComboBox;
     clbConectados: TCheckListBox;
+    cbEchoMode: TComboBox;
     dbgComandas: TDBGrid;
     dbgTerminais: TDBGrid;
     dsComandas: TDataSource;
@@ -50,6 +50,7 @@ type
     edTimeout: TEdit;
     gbComandas: TGroupBox;
     Label1: TLabel;
+    lbEchoMode: TLabel;
     lbDesLinha: TLabel;
     lbLimparLinha: TLabel;
     lbModelo: TLabel;
@@ -93,6 +94,7 @@ type
     procedure btLimparLinhaClick(Sender: TObject);
     procedure btPosicionarCursorClick(Sender: TObject);
     procedure btFluxoVendasClick(Sender: TObject);
+    procedure cbEchoModeChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure PageControl2Change(Sender: TObject);
@@ -129,9 +131,9 @@ begin
   begin
     Modelo     := TACBrMTerModelo(cbModelo.ItemIndex);
     Port       := edPorta.Text;
+    EchoMode   := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
     Terminador := edTerminador.Text;
     TimeOut    := StrToInt(edTimeout.Text);
-    EcoAuto    := cbEcoAutomatico.Checked;
     Ativar;
   end;
   mOutput.Lines.Add('Escutando porta: ' + edPorta.Text);
@@ -304,6 +306,11 @@ end;
 procedure TForm1.btFluxoVendasClick(Sender: TObject);
 begin
   IniciarFluxoVendas;
+end;
+
+procedure TForm1.cbEchoModeChange(Sender: TObject);
+begin
+  ACBrMTer1.EchoMode := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

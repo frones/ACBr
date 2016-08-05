@@ -28,7 +28,6 @@ type
     btLimparLinha: TButton;
     btLimparLinha1: TButton;
     btPosicionarCursor: TButton;
-    cbEcoAutomatico: TCheckBox;
     cbModelo: TComboBox;
     clbConectados: TCheckListBox;
     dbgComandas: TDBGrid;
@@ -72,6 +71,8 @@ type
     tsFluxoVendas: TTabSheet;
     memComandas: TClientDataSet;
     memTerminais: TClientDataSet;
+    cbEchoMode: TComboBox;
+    lbEchoMode: TLabel;
     procedure ACBrMTer1Conecta(const IP: String);
     procedure ACBrMTer1Desconecta(const IP: String; Erro: Integer;
       ErroDesc: String);
@@ -96,6 +97,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure PageControl2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure cbEchoModeChange(Sender: TObject);
   private
     procedure AtualizarConexoes;
     procedure VerificaSelecionado;
@@ -129,9 +131,9 @@ begin
   begin
     Modelo     := TACBrMTerModelo(cbModelo.ItemIndex);
     Port       := edPorta.Text;
+    EchoMode   := TACBrMterEchoMode(cbEchoMode.ItemIndex);
     Terminador := edTerminador.Text;
     TimeOut    := StrToInt(edTimeout.Text);
-    EcoAuto    := cbEcoAutomatico.Checked;
     Ativar;
   end;
   mOutput.Lines.Add('Escutando porta: ' + edPorta.Text);
@@ -551,6 +553,11 @@ begin
   memTerminais.CreateDataSet;
   memTerminais.Open;
   memComandas.Open;
+end;
+
+procedure TForm1.cbEchoModeChange(Sender: TObject);
+begin
+  ACBrMTer1.EchoMode := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
 end;
 
 end.

@@ -18,9 +18,9 @@ object Form1: TForm1
   TextHeight = 13
   object pnConectados: TPanel
     Left = 0
-    Top = 128
+    Top = 136
     Width = 328
-    Height = 261
+    Height = 253
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
@@ -28,14 +28,14 @@ object Form1: TForm1
       Left = 184
       Top = 1
       Width = 5
-      Height = 259
+      Height = 251
       Align = alRight
     end
     object clbConectados: TCheckListBox
       Left = 189
       Top = 1
       Width = 138
-      Height = 259
+      Height = 251
       Align = alRight
       ItemHeight = 13
       TabOrder = 0
@@ -44,7 +44,7 @@ object Form1: TForm1
       Left = 1
       Top = 1
       Width = 183
-      Height = 259
+      Height = 251
       Align = alClient
       Lines.Strings = (
         'Output:'
@@ -445,16 +445,16 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 328
-    Height = 128
+    Height = 137
     Align = alCustom
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 2
     DesignSize = (
       328
-      128)
+      137)
     object lbPorta: TLabel
       Left = 136
-      Top = 11
+      Top = 8
       Width = 30
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -464,7 +464,7 @@ object Form1: TForm1
     end
     object lbModelo: TLabel
       Left = 16
-      Top = 11
+      Top = 8
       Width = 38
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -474,7 +474,7 @@ object Form1: TForm1
     end
     object lbTerminador: TLabel
       Left = 16
-      Top = 57
+      Top = 94
       Width = 58
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -484,13 +484,20 @@ object Form1: TForm1
     end
     object Label1: TLabel
       Left = 136
-      Top = 57
+      Top = 50
       Width = 42
       Height = 13
       Anchors = [akLeft, akBottom]
       Caption = 'Timeout:'
       Color = clBtnFace
       ParentColor = False
+    end
+    object lbEchoMode: TLabel
+      Left = 16
+      Top = 50
+      Width = 53
+      Height = 13
+      Caption = 'EchoMode:'
     end
     object btAtivar: TButton
       Left = 240
@@ -512,7 +519,7 @@ object Form1: TForm1
     end
     object edPorta: TEdit
       Left = 136
-      Top = 26
+      Top = 22
       Width = 88
       Height = 21
       TabOrder = 2
@@ -520,7 +527,7 @@ object Form1: TForm1
     end
     object cbModelo: TComboBox
       Left = 16
-      Top = 26
+      Top = 22
       Width = 104
       Height = 21
       Style = csDropDownList
@@ -536,14 +543,14 @@ object Form1: TForm1
     end
     object edTerminador: TEdit
       Left = 16
-      Top = 72
+      Top = 108
       Width = 104
       Height = 21
       TabOrder = 4
     end
     object edTimeout: TEdit
       Left = 136
-      Top = 72
+      Top = 64
       Width = 88
       Height = 21
       TabOrder = 5
@@ -558,27 +565,34 @@ object Form1: TForm1
       TabOrder = 6
       OnClick = btAtualizarClick
     end
-    object cbEcoAutomatico: TCheckBox
+    object cbEchoMode: TComboBox
       Left = 16
-      Top = 96
-      Width = 140
-      Height = 19
-      Caption = 'Enviar Eco Automatico'
-      Checked = True
-      State = cbChecked
+      Top = 64
+      Width = 104
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      ItemIndex = 0
       TabOrder = 7
+      Text = 'mdeNormal'
+      OnChange = cbEchoModeChange
+      Items.Strings = (
+        'mdeNormal'
+        'mdeNone'
+        'mdePassword')
     end
   end
   object ACBrMTer1: TACBrMTer
     ArqLog = '_ACBrMTer.log'
-    EcoAuto = True
+    EchoMode = mdePassword
     IP = '0.0.0.0'
+    PasswordChar = '*'
     Port = '6550'
     TimeOut = 5000
     OnConecta = ACBrMTer1Conecta
     OnDesconecta = ACBrMTer1Desconecta
     OnRecebeDados = ACBrMTer1RecebeDados
-    Left = 24
+    Left = 40
     Top = 224
   end
   object dsTerminais: TDataSource

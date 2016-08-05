@@ -38,6 +38,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 05/08/2016
+-- ACBrMTer --
+[-] Exclusão da propriedade EcoAuto.
+[+] Inclusão das propriedades EchoMode e PasswordChar para possibilitar 
+	alteração no modo de exibição do texto no display de Micro Terminais. 
+	(por: Elias)
+
+05/08/2016
 -- ACBrSocket --
 [-] Correção de Bug em TACBrTCPServer.Desativar, em Delphi, onde o erro
     thread error the handle is invalid (6)" era disparado no caso de existir

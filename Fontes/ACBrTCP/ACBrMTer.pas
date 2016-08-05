@@ -54,6 +54,7 @@ uses
 type
 
   TACBrMTerModelo = (mtrNenhum, mtrVT100, mtrStxEtx, mtrPMTG);
+  TACBrMTerEchoMode = (mdeNormal, mdeNone, mdePassword);
 
   { Evento disparado quando Conecta }
   TACBrMTerConecta = procedure(const IP: AnsiString) of object;
@@ -72,14 +73,15 @@ type
   private
     fArqLog: String;
     fCmdEnviado: AnsiString;
+    fEchoMode: TACBrMTerEchoMode;
     fModeloStr: String;
     fMTer: TACBrMTerClass;
     fModelo: TACBrMTerModelo;
-    fEcoAuto: Boolean;
     fOnConecta: TACBrMTerConecta;
     fOnDesconecta: TACBrMTerDesconecta;
     fOnGravarLog: TACBrGravarLog;
     fOnRecebeDados: TACBrMTerRecebeDados;
+    fPassWordChar: Char;
     fTCPServer: TACBrTCPServer;
     function GetAtivo: Boolean;
     function GetIP: String;
@@ -87,8 +89,10 @@ type
     function GetTerminador: String;
     function GetTimeOut: Integer;
     procedure SetAtivo(AValue: Boolean);
+    procedure SetEchoMode(AValue: TACBrMTerEchoMode);
     procedure SetIP(AValue: String);
     procedure SetModelo(AValue: TACBrMTerModelo);
+    procedure SetPasswordChar(AValue: Char);
     procedure SetPort(AValue: String);
     procedure SetTerminador(AValue: String);
     procedure SetTimeOut(AValue: Integer);
@@ -139,13 +143,15 @@ type
     property TCPServer : TACBrTCPServer read fTCPServer;
 
   published
-    property ArqLog    : String          read fArqLog       write fArqLog;
-    property EcoAuto   : Boolean         read fEcoAuto      write fEcoAuto default False;
-    property IP        : String          read GetIP         write SetIP;
-    property Port      : String          read GetPort       write SetPort;
-    property Terminador: String          read GetTerminador write SetTerminador;
-    property TimeOut   : Integer         read GetTimeOut    write SetTimeOut;
-    property Modelo    : TACBrMTerModelo read fModelo       write SetModelo default mtrNenhum;
+    property ArqLog      : String            read fArqLog       write fArqLog;
+    property EchoMode    : TACBrMTerEchoMode read fEchoMode     write SetEchoMode;
+    property IP          : String            read GetIP         write SetIP;
+    property PasswordChar: Char              read fPasswordChar write SetPasswordChar;
+    property Port        : String            read GetPort       write SetPort;
+    property Terminador  : String            read GetTerminador write SetTerminador;
+    property TimeOut     : Integer           read GetTimeOut    write SetTimeOut;
+    property Modelo      : TACBrMTerModelo   read fModelo       write SetModelo default mtrNenhum;
+
 
     property OnConecta    : TACBrMTerConecta     read fOnConecta     write fOnConecta;
     property OnDesconecta : TACBrMTerDesconecta  read fOnDesconecta  write fOnDesconecta;
@@ -232,8 +238,10 @@ begin
   if Assigned(fOnRecebeDados) then
     OnRecebeDados(wIP, wRecebido);
 
-  if (EcoAuto) then
-    Enviar := fMTer.ComandoEco(wRecebido);
+  case EchoMode of
+    mdeNormal  : Enviar := fMTer.ComandoEco(wRecebido);
+    mdePassword: Enviar := fMTer.ComandoEco(PadCenter('', Length(wRecebido), PasswordChar));
+  end;
 end;
 
 procedure TACBrMTer.EnviarComando(const aIP: String; const ACmd: AnsiString);
@@ -324,6 +332,22 @@ begin
     Desativar;
 end;
 
+procedure TACBrMTer.SetEchoMode(AValue: TACBrMTerEchoMode);
+begin
+  if (fEchoMode = AValue) then
+    Exit;
+
+  fEchoMode := AValue;
+
+  case fEchoMode of
+    mdeNone  : PasswordChar := ' ';
+    mdeNormal: PasswordChar :=  #0;
+  else
+    if (PasswordChar = #0) or (PasswordChar = ' ') then
+      PasswordChar := '*';
+  end;
+end;
+
 procedure TACBrMTer.SetIP(AValue: String);
 begin
   if (fTCPServer.IP = AValue) then
@@ -350,6 +374,20 @@ begin
   end;
 
   fModelo := AValue;
+end;
+
+procedure TACBrMTer.SetPasswordChar(AValue: Char);
+begin
+  if (fPasswordChar = AValue) then
+    Exit;
+
+  fPasswordChar    := AValue;
+  case fPassWordChar of
+    #0 : EchoMode := mdeNormal;
+    ' ': EchoMode := mdeNone;
+  else
+    EchoMode := mdePassword;
+  end;
 end;
 
 function TACBrMTer.GetAtivo: Boolean;
@@ -382,7 +420,6 @@ begin
   inherited Create(AOwner);
 
   Modelo  := mtrNenhum;
-  EcoAuto := False;
 
   { Instanciando TACBrTCPServer }
   fTCPServer := TACBrTCPServer.Create(Self);

@@ -1,43 +1,43 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2016 Elias C√©sar Vieira                     }
+{ Direitos Autorais Reservados (c) 2016 Elias CÈsar Vieira                     }
 {                                                                              }
-{ Colaboradores nesse arquivo: Daniel Sim√µes de Almeida                        }
+{ Colaboradores nesse arquivo: Daniel Simıes de Almeida                        }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 { Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
 {  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
-|* 17/05/2016: Elias C√©sar Vieira
+|* 17/05/2016: Elias CÈsar Vieira
 |*  - Primeira Versao ACBrMTerVT100
 ******************************************************************************}
 
@@ -108,7 +108,7 @@ begin
   Result := '';
 
   if (aValue < 0) then
-    raise Exception.Create(ACBrStr('V√°lidos apenas n√∫meros positivos'));
+    raise Exception.Create(ACBrStr('V·lidos apenas n˙meros positivos'));
 
   for I := 1 to aValue do
     Result := Result + ESC + '[C';
@@ -137,9 +137,9 @@ function TACBrMTerVT100.ComandoEnviarParaParalela(aDados: AnsiString
 begin
   Result := ESC + '[?24l';  // Seleciona porta paralela
 
-  Result := Result + ESC + '[5i';  // Habilita servi√ßo de impress√£o
+  Result := Result + ESC + '[5i';  // Habilita serviÁo de impress„o
   Result := Result + aDados;       // Envia Dados
-  Result := Result + ESC + '[4i';  // Desabilita servi√ßo de impress√£o
+  Result := Result + ESC + '[4i';  // Desabilita serviÁo de impress„o
 end;
 
 function TACBrMTerVT100.ComandoEnviarParaSerial(aDados: AnsiString;
@@ -148,11 +148,11 @@ begin
   if (aSerial = 1) then
     Result := ESC + '[?24r'   // Seleciona porta serial 1
   else
-    Result := ESC + '[?24h';  // Seleciona porta serial padr√£o(0)
+    Result := ESC + '[?24h';  // Seleciona porta serial padr„o(0)
 
-  Result := Result + ESC + '[5i';  // Habilita servi√ßo de impress√£o
+  Result := Result + ESC + '[5i';  // Habilita serviÁo de impress„o
   Result := Result + aDados;       // Envia Dados
-  Result := Result + ESC + '[4i';  // Desabilita servi√ßo de impress√£o
+  Result := Result + ESC + '[4i';  // Desabilita serviÁo de impress„o
 end;
 
 function TACBrMTerVT100.ComandoEnviarTexto(aTexto: AnsiString): AnsiString;
@@ -171,9 +171,9 @@ var
   wL, wC: String;
 begin
   if (aLinha < 1) or (aLinha > 2) then
-    raise Exception.Create(ACBrStr('Valores v√°lidos para Linhas: 1 ou 2'));
+    raise Exception.Create(ACBrStr('Valores v·lidos para Linhas: 1 ou 2'));
   if (aColuna < 1) or (aColuna > 40) then
-    raise Exception.Create(ACBrStr('Valores v√°lidos para Colunas: 1 ao 40'));
+    raise Exception.Create(ACBrStr('Valores v·lidos para Colunas: 1 ao 40'));
 
   wL := IntToStrZero(aLinha, 2);
   wC := IntToStrZero(aColuna, 2);

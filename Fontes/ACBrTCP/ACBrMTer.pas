@@ -1,43 +1,43 @@
 {******************************************************************************}
 { Projeto: Componentes ACBr                                                    }
-{  Biblioteca multiplataforma de componentes Delphi para intera√ß√£o com equipa- }
-{ mentos de Automa√ß√£o Comercial utilizados no Brasil                           }
+{  Biblioteca multiplataforma de componentes Delphi para interaÁ„o com equipa- }
+{ mentos de AutomaÁ„o Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2016 Elias C√©sar Vieira                     }
+{ Direitos Autorais Reservados (c) 2016 Elias CÈsar Vieira                     }
 {                                                                              }
-{ Colaboradores nesse arquivo: Daniel Sim√µes de Almeida                        }
+{ Colaboradores nesse arquivo: Daniel Simıes de Almeida                        }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do  Projeto ACBr    }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do  Projeto ACBr    }
 { Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
 {                                                                              }
 { Esse arquivo usa a classe  SynaSer   Copyright (c)2001-2003, Lukas Gebauer   }
 {  Project : Ararat Synapse     (Found at URL: http://www.ararat.cz/synapse/)  }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
 {******************************************************************************
 |* Historico
 |*
-|* 11/05/2016: Elias C√©sar Vieira
+|* 11/05/2016: Elias CÈsar Vieira
 |*  - Primeira Versao ACBrMTer
 ******************************************************************************}
 
@@ -248,7 +248,7 @@ begin
     Exit;
 
   if (not Ativo) then
-    raise Exception.Create(ACBrStr('Componente ACBrMTer n√£o est√° ATIVO'));
+    raise Exception.Create(ACBrStr('Componente ACBrMTer n„o est· ATIVO'));
 
   fCmdEnviado := ACmd;
   GravaLog('Terminal: ' + ASocket.GetRemoteSinIP + ' - Comando enviado: ' + ACmd);
@@ -257,8 +257,6 @@ end;
 
 function TACBrMTer.LerResposta(const aIP: String; const aTimeOut: Integer;
   NumBytes: Integer; Terminador: AnsiString): AnsiString;
-var
-  aSocket: TTCPBlockSocket;
 begin
   Result := LerResposta( EncontrarConexao(aIP), aTimeOut, NumBytes, Terminador );
 end;
@@ -280,7 +278,7 @@ var
   wIP: String;
   I: Integer;
 begin
-  // Procura IP nas conex√µes ativas.
+  // Procura IP nas conexıes ativas.
   Result := Nil;
   wIP    :=  '';
 
@@ -315,7 +313,7 @@ begin
   Result := BuscarPorIP(aIP);
 
   if not Assigned(Result) then
-    raise Exception.Create(ACBrStr('Terminal '+ QuotedStr(aIP) +' n√£o encontrado'));
+    raise Exception.Create(ACBrStr('Terminal '+ QuotedStr(aIP) +' n„o encontrado'));
 end;
 
 procedure TACBrMTer.SetAtivo(AValue: Boolean);
@@ -392,7 +390,7 @@ begin
   fTCPServer.OnDesConecta  := DoDesconecta;
   fTCPServer.OnRecebeDados := DoRecebeDados;
 
-  { Instanciando fMTer com modelo gen√©rico }
+  { Instanciando fMTer com modelo genÈrico }
   fMTer := TACBrMTerClass.Create(Self);
 end;
 
@@ -435,7 +433,7 @@ end;
 procedure TACBrMTer.VerificarAtivo;
 begin
   if Ativo then
-    raise Exception.Create(ACBrStr('N√£o √© poss√≠vel modificar as propriedades ' +
+    raise Exception.Create(ACBrStr('N„o È possÌvel modificar as propriedades ' +
                                    'com ACBrMTer Ativo'));
 end;
 
@@ -468,13 +466,13 @@ end;
 
 procedure TACBrMTer.DeslocarCursor(aIP: String; aValue: Integer);
 begin
-  // Desloca Cursor a partir da posi√ß√£o atual (Permite valores negativos)
+  // Desloca Cursor a partir da posiÁ„o atual (Permite valores negativos)
   EnviarComando(aIP, fMTer.ComandoDeslocarCursor(aValue));
 end;
 
 procedure TACBrMTer.DeslocarLinha(aIP: String; aValue: Integer);
 begin
-  // Desloca Linha a partir da posi√ß√£o atual(Valores: 1 ou -1)
+  // Desloca Linha a partir da posiÁ„o atual(Valores: 1 ou -1)
   EnviarComando(aIP, fMTer.ComandoDeslocarLinha(aValue));
 end;
 
@@ -504,13 +502,13 @@ end;
 
 procedure TACBrMTer.LimparLinha(aIP: String; aLinha: Integer);
 begin
-  // Apaga Linha, mantendo cursor na posi√ß√£o atual
+  // Apaga Linha, mantendo cursor na posiÁ„o atual
   EnviarComando(aIP, fMTer.ComandoLimparLinha(aLinha));
 end;
 
 procedure TACBrMTer.PosicionarCursor(aIP: String; aLinha, aColuna: Integer);
 begin
-  // Posiciona cursor na posi√ß√£o informada
+  // Posiciona cursor na posiÁ„o informada
   EnviarComando(aIP, fMTer.ComandoPosicionarCursor(aLinha, aColuna));
 end;
 
@@ -522,11 +520,11 @@ begin
   Result := True;
   CmdOnLine := fMTer.ComandoOnline;
 
-  if CmdOnLine = '' then   // protocolo n√£o suporta comando OnLine
+  if CmdOnLine = '' then   // protocolo n„o suporta comando OnLine
     Exit;
 
   aSocket := BuscarPorIP(aIP);
-  // Desliga a Thread desta coenx√£o, para ler a resposta manualmente
+  // Desliga a Thread desta coenx„o, para ler a resposta manualmente
   if aSocket.Owner is TACBrTCPServerThread then
     TACBrTCPServerThread(aSocket.Owner).Enabled := False;
 

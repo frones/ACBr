@@ -590,23 +590,35 @@ end;
 procedure TACBrTCPServer.Desativar;
 var
   UmaConexao: TACBrTCPServerThread;
+  I: Integer;
 begin
   if Assigned( fsACBrTCPServerDaemon )then
-    fsACBrTCPServerDaemon.Terminate ;
+     fsACBrTCPServerDaemon.Terminate ;
 
   with fsThreadList.LockList do
   try
-     while Count > 0 do
+     for I := 0 to Count-1 do
      begin
-        UmaConexao := TACBrTCPServerThread(Items[0]);
-        Delete(0);
-
+        UmaConexao := TACBrTCPServerThread(Items[I]);
+        UmaConexao.FreeOnTerminate := False;
         UmaConexao.Terminate;
         UmaConexao.WaitFor;
      end;
   finally
      fsThreadList.UnlockList;
   end ;
+
+  with fsThreadList.LockList do
+  try
+     while Count > 0 do
+     begin
+        TACBrTCPServerThread(Items[0]).Free;
+        Delete(0);
+     end;
+  finally
+     fsThreadList.UnlockList;
+  end ;
+
   fsThreadList.Clear ;
 
   if Assigned( fsACBrTCPServerDaemon )then

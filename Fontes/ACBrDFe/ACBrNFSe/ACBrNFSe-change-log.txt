@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2016
+[+] Incluido os métodos: AbrirSessao e FecharSessao, esses métodos são executados
+    automaticamente somente para o provedor EL.
+    por: Italo Jurisato Junior
+
 05/08/2016
 [*] Adição da informação do município de prestação de serviços
 		http://www.projetoacbr.com.br/forum/topic/31646-danfese-fortes-report/

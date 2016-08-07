@@ -43,13 +43,16 @@ uses
 type
   TStatusACBrNFSe = (stNFSeIdle, stNFSeRecepcao, stNFSeConsulta, stNFSeConsultaSituacao,
                      stNFSeCancelamento, stNFSeEmail, stNFSeAguardaProcesso,
-                     stNFSeSubstituicao, stNFSeEnvioWebService);
+                     stNFSeSubstituicao, stNFSeAbrirSessao, stNFSeFecharSessao,
+                     stNFSeEnvioWebService);
 
   TLayOutNFSe = (LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
                  LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
-                 LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse);
+                 LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
+                 LayNfseAbrirSessao, LayNfseFecharSessao);
 
-  TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe);
+  TSchemaNFSe = (schErro, schNFSe, schConsNFSe, schCancNFSe, schSubNFSe,
+                 schAbrirSessao, schFecharSessao);
 
   TVersaoNFSe = (ve100, ve110, ve200);
 
@@ -18033,10 +18036,12 @@ begin
   Result := EnumeradoToStr(t,
     ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
      'NfseConsultaSitLoteRps', 'NfseConsultaNfse', 'NfseCancelaNfse',
-     'NfseGerar', 'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse'],
+     'NfseGerar', 'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse',
+     'NfseAbrirSessao', 'NfseFecharSessao'],
     [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
       LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
-      LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
+      LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
+      LayNfseAbrirSessao, LayNfseFecharSessao ] );
 end;
 
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutNFSe;
@@ -18044,10 +18049,12 @@ begin
   Result := StrToEnumerado(ok, s,
   ['NfseRecepcaoLote', 'NfseConsultaLote', 'NfseConsultaNfseRps',
    'NfseConsultaSitLoteRps', 'NfseConsultaNfse', 'NfseCancelaNfse',
-   'NfseGerar', 'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse'],
+   'NfseGerar', 'NfseRecepcaoLoteSincrono', 'NfseSubstituiNfse',
+   'NfseAbrirSessao', 'NfseFecharSessao'],
   [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
     LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
-    LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
+    LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
+    LayNfseAbrirSessao, LayNfseFecharSessao ] );
 end;
 
 function LayOutToSchema(const t: TLayOutNFSe): TSchemaNFSe;
@@ -18062,6 +18069,8 @@ begin
     LayNfseGerar:                Result := schNFSe;
     LayNfseRecepcaoLoteSincrono: Result := schNFSe;
     LayNfseSubstituiNfse:        Result := schSubNFSe;
+    LayNfseAbrirSessao:           Result := schAbrirSessao;
+    LayNfseFecharSessao:          Result := schFecharSessao;
   else
     Result := schErro;
   end;
@@ -18072,10 +18081,12 @@ begin
   Result := EnumeradoToStr(t,
     ['Enviar Lote', 'Consultar Lote', 'Consultar NFS-e por RPS',
      'Consultar Situação do Lote', 'Consultar NFS-e', 'Cancelar NFS-e',
-     'Gerar', 'Enviar Lote - Síncrono', 'Substituir NFS-e'],
+     'Gerar', 'Enviar Lote - Síncrono', 'Substituir NFS-e',
+     'Abrir Sessão', 'Fechar Sessão'],
     [ LayNfseRecepcaoLote, LayNfseConsultaLote, LayNfseConsultaNfseRps,
       LayNfseConsultaSitLoteRps, LayNfseConsultaNfse, LayNfseCancelaNfse,
-      LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse ] );
+      LayNfseGerar, LayNfseRecepcaoLoteSincrono, LayNfseSubstituiNfse,
+      LayNfseAbrirSessao, LayNfseFecharSessao ] );
 end;
 
 function SchemaNFSeToStr(const t: TSchemaNFSe): String;

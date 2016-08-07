@@ -365,6 +365,8 @@ begin
       LayNfseGerar:                URL := Configuracoes.Geral.ConfigURL.HomGerarNFSe;
       LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoSincrono;
       LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.HomSubstituiNFSe;
+      LayNfseAbrirSessao:          URL := Configuracoes.Geral.ConfigURL.HomAbrirSessao;
+      LayNfseFecharSessao:         URL := Configuracoes.Geral.ConfigURL.HomFecharSessao;
     end;
   end
   else begin
@@ -378,6 +380,8 @@ begin
       LayNfseGerar:                URL := Configuracoes.Geral.ConfigURL.ProGerarNFSe;
       LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoSincrono;
       LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
+      LayNfseAbrirSessao:          URL := Configuracoes.Geral.ConfigURL.ProAbrirSessao;
+      LayNfseFecharSessao:         URL := Configuracoes.Geral.ConfigURL.ProFecharSessao;
     end;
   end;
 end;

@@ -45,7 +45,8 @@ uses
   ACBrDFe, ACBrDFeWebService, ACBrDFeSSL,
   ACBrNFSeNotasFiscais, ACBrNFSeConfiguracoes,
   pnfsNFSe, pnfsNFSeG, pnfsConversao, pnfsLerListaNFSe, pnfsEnvLoteRpsResposta,
-  pnfsConsSitLoteRpsResposta, pnfsCancNfseResposta, pnfsSubsNfseResposta;
+  pnfsConsSitLoteRpsResposta, pnfsCancNfseResposta, pnfsSubsNfseResposta,
+  pnfsAbrirSessaoResposta;
 
 type
 
@@ -84,6 +85,7 @@ type
     FxSignatureNode: String;
     FxDSIGNSLote: String;
     FxIdSignature: String;
+    FHashIdent: String;
 
     FCabecalhoStr: Boolean;
     FDadosStr: Boolean;
@@ -142,6 +144,8 @@ type
     property xSignatureNode: String  read FxSignatureNode;
     property xDSIGNSLote: String     read FxDSIGNSLote;
     property xIdSignature: String    read FxIdSignature;
+    property HashIdent: String       read FHashIdent;
+
 
     property vNotas: String   read FvNotas;
     property XML_NFSe: String read FXML_NFSe;
@@ -436,6 +440,7 @@ type
     FCodigoCancelamento: String;
     FMotivoCancelamento: String;
     FNumeroRps: String;
+    
     // Retorno
     FDataHora: TDateTime;
     FSituacao: String;
@@ -467,7 +472,65 @@ type
     property NFSeRetorno: TretSubsNFSe read FNFSeRetorno write FNFSeRetorno;
   end;
 
-  { TNFSeEnvioWebService }
+ { TNFSeAbrirSessao }
+
+  TNFSeAbrirSessao = Class(TNFSeWebService)
+  private
+    // Entrada
+    FNumeroLote: String;
+
+    // Retorno
+    FRetAbrirSessao: TRetAbrirSessao;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+    procedure Clear; override;
+
+    property NumeroLote: String read FNumeroLote;
+
+    property RetAbrirSessao: TRetAbrirSessao read FRetAbrirSessao write FRetAbrirSessao;
+  end;
+
+ { TNFSeFecharSessao }
+
+  TNFSeFecharSessao = Class(TNFSeWebService)
+  private
+    // Entrada
+    FNumeroLote: String;
+
+    // Retorno
+//    FRetAbrirSessao: TRetAbrirSessao;
+
+  protected
+    procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
+    procedure FinalizarServico; override;
+    function GerarMsgLog: String; override;
+    function GerarPrefixoArquivo: String; override;
+  public
+    constructor Create(AOwner: TACBrDFe; ANotasFiscais: TNotasFiscais);
+      reintroduce; overload;
+    destructor Destroy; override;
+    procedure Clear; override;
+
+    property NumeroLote: String read FNumeroLote;
+
+//    property RetAbrirSessao: TRetAbrirSessao read FRetAbrirSessao write FRetAbrirSessao;
+  end;
+
+ { TNFSeEnvioWebService }
 
   TNFSeEnvioWebService = class(TNFSeWebService)
   private
@@ -500,6 +563,7 @@ type
   TWebServices = class
   private
     FACBrNFSe: TACBrDFe;
+    
     FGerarLoteRPS: TNFSeGerarLoteRPS;
     FEnviarLoteRPS: TNFSeEnviarLoteRPS;
     FEnviarSincrono: TNFSeEnviarSincrono;
@@ -510,6 +574,9 @@ type
     FConsNFSe: TNFSeConsultarNFSe;
     FCancNFSe: TNFSeCancelarNFSe;
     FSubNFSe: TNFSeSubstituirNFSe;
+    FAbrirSessao: TNFSeAbrirSessao;
+    FFecharSessao: TNFSeFecharSessao;
+
     FEnvioWebService: TNFSeEnvioWebService;
 
   public
@@ -564,6 +631,9 @@ type
     property ConsNFSe: TNFSeConsultarNFSe                  read FConsNFSe        write FConsNFSe;
     property CancNFSe: TNFSeCancelarNFSe                   read FCancNFSe        write FCancNFSe;
     property SubNFSe: TNFSeSubstituirNFSe                  read FSubNFSe         write FSubNFSe;
+    property AbrirSessao: TNFSeAbrirSessao                 read FAbrirSessao     write FAbrirSessao;
+    property FecharSessao: TNFSeFecharSessao               read FFecharSessao    write FFecharSessao;
+
     property EnvioWebService: TNFSeEnvioWebService         read FEnvioWebService write FEnvioWebService;
   end;
 
@@ -1825,6 +1895,13 @@ begin
   if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados then
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
 
+  if FProvedor = proEL then
+    FPDadosMsg := '<identificacaoPrestador>' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ + '</identificacaoPrestador>' +
+                  '<hashIdentificador>' + FHashIdent + '</hashIdentificador>' +
+                  '<arquivo>' +
+                    StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                  '</arquivo>';
+
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
     GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
@@ -2582,7 +2659,7 @@ begin
              'Situação...... : ' + FSituacao + '-' + xSituacao + LineBreak;
   end;
 
-  Result := (FPMsg ='');
+  Result := (FPMsg = '');
 end;
 
 { TNFSeConsultarLoteRPS }
@@ -3635,6 +3712,7 @@ end;
 procedure TNFSeSubstituirNFSe.DefinirURL;
 begin
   FPLayout := LayNfseSubstituiNfse;
+
   inherited DefinirURL;
 end;
 
@@ -3832,7 +3910,7 @@ begin
 //    else FaMsg := 'Numero da NFSe : ' + FNFSeRetorno.Pedido.IdentificacaoNfse.Numero + LineBreak +
 //                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
-    Result := (FPMsg <> '');
+    Result := (FPMsg = '');
   finally
     FNFSeRetorno.Free;
   end;
@@ -3854,6 +3932,316 @@ end;
 function TNFSeSubstituirNFSe.GerarPrefixoArquivo: String;
 begin
   Result := NumeroNFSe;
+end;
+
+{ TNFSeAbrirSessao }
+
+constructor TNFSeAbrirSessao.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeAbrirSessao.Destroy;
+begin
+  if Assigned(FRetornoNFSe) then
+    FRetornoNFSe.Free;
+
+  inherited Destroy;
+end;
+
+procedure TNFSeAbrirSessao.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeAbrirSessao;
+  FPLayout := LayNfseAbrirSessao;
+  FPArqEnv := 'abr-ses';
+  FPArqResp := 'sesA';
+
+  FHashIdent := '';
+
+  FRetornoNFSe := nil;
+end;
+
+procedure TNFSeAbrirSessao.DefinirURL;
+begin
+  FPLayout := LayNfseAbrirSessao;
+
+  inherited DefinirURL;
+end;
+
+procedure TNFSeAbrirSessao.DefinirServicoEAction;
+begin
+  FPServico := 'NFSeAbrirSessao';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.AbrirSessao;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
+end;
+
+procedure TNFSeAbrirSessao.DefinirDadosMsg;
+var
+  TagGrupo: String;
+begin
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoAbrirSessao;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_IncluiEncodingCab);
+
+  GerarDadosMsg := TNFSeG.Create;
+  try
+    TagGrupo := '';
+
+    TagGrupo := FPrefixo3 + TagGrupo;
+
+    FTagI := '';
+    FTagF := '';
+
+    InicializarGerarDadosMsg;
+
+    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgAbrirSessao + FTagF;
+  finally
+    GerarDadosMsg.Free;
+  end;
+
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.AbrirSessao) and (FPDadosMsg <> '') then
+  begin
+    // O procedimento recebe como parametro o XML a ser assinado e retorna o
+    // mesmo assinado da propriedade FPDadosMsg
+    AssinarXML(FPDadosMsg, TagGrupo, '',
+               'Falha ao Assinar - Abrir Sessão: ');
+  end;
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao;
+
+  if (FPDadosMsg = '') or (FDadosEnvelope = '') then
+    GerarException(ACBrStr('A funcionalidade [Abrir Sessão] não foi disponibilizada pelo provedor: ' +
+     FPConfiguracoesNFSe.Geral.xProvedor));
+end;
+
+function TNFSeAbrirSessao.TratarResposta: Boolean;
+var
+  i: Integer;
+begin
+  FPRetWS := ExtrairRetorno;
+
+  FRetAbrirSessao := TRetAbrirSessao.Create;
+  try
+    FRetAbrirSessao.Leitor.Arquivo := FPRetWS;
+    FRetAbrirSessao.Provedor       := FProvedor;
+
+    FRetAbrirSessao.LerXml;
+
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.AbrirSessao);
+
+    // Lista de Mensagem de Retorno
+    FPMsg := '';
+    FaMsg := '';
+    if FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Count > 0 then
+    begin
+      for i := 0 to FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Count - 1 do
+      begin
+        FPMsg := FPMsg + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak;
+
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                         'Código Erro : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Codigo + LineBreak +
+                         'Mensagem... : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         'Correção... : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Correcao + LineBreak +
+                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+      end;
+    end;
+//    else FaMsg := 'Numero da NFSe : ' + FNFSeRetorno.Pedido.IdentificacaoNfse.Numero + LineBreak +
+//                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
+
+    Result := (FPMsg = '');
+  finally
+    FRetAbrirSessao.Free;
+  end;
+end;
+
+procedure TNFSeAbrirSessao.FinalizarServico;
+begin
+  inherited FinalizarServico;
+end;
+
+function TNFSeAbrirSessao.GerarMsgLog: String;
+begin
+  Result := ACBrStr(FaMsg)
+end;
+
+function TNFSeAbrirSessao.GerarPrefixoArquivo: String;
+begin
+  Result := NumeroLote;
+end;
+
+{ TNFSeFecharSessao }
+
+constructor TNFSeFecharSessao.Create(AOwner: TACBrDFe;
+  ANotasFiscais: TNotasFiscais);
+begin
+  inherited Create(AOwner);
+
+  FNotasFiscais := ANotasFiscais;
+end;
+
+destructor TNFSeFecharSessao.Destroy;
+begin
+  if Assigned(FRetornoNFSe) then
+    FRetornoNFSe.Free;
+
+  inherited Destroy;
+end;
+
+procedure TNFSeFecharSessao.Clear;
+begin
+  inherited Clear;
+
+  FPStatus := stNFSeFecharSessao;
+  FPLayout := LayNfseFecharSessao;
+  FPArqEnv := 'fec-ses';
+  FPArqResp := 'sesF';
+
+  FRetornoNFSe := nil;
+end;
+
+procedure TNFSeFecharSessao.DefinirURL;
+begin
+  FPLayout := LayNfseFecharSessao;
+
+  inherited DefinirURL;
+end;
+
+procedure TNFSeFecharSessao.DefinirServicoEAction;
+begin
+  FPServico := 'NFSeFecharSessao';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.FecharSessao;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
+end;
+
+procedure TNFSeFecharSessao.DefinirDadosMsg;
+var
+  TagGrupo: String;
+begin
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_DadosStr;
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoFecharSessao;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_IncluiEncodingCab);
+
+  GerarDadosMsg := TNFSeG.Create;
+  try
+    TagGrupo := '';
+
+    TagGrupo := FPrefixo3 + TagGrupo;
+
+    FTagI := '';
+    FTagF := '';
+
+    InicializarGerarDadosMsg;
+
+    with GerarDadosMsg do
+    begin
+      HashIdent := TNFSeFecharSessao(Self).HashIdent;
+    end;
+
+    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgFecharSessao + FTagF;
+  finally
+    GerarDadosMsg.Free;
+  end;
+
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.FecharSessao) and (FPDadosMsg <> '') then
+  begin
+    // O procedimento recebe como parametro o XML a ser assinado e retorna o
+    // mesmo assinado da propriedade FPDadosMsg
+    AssinarXML(FPDadosMsg, TagGrupo, '',
+               'Falha ao Assinar - Fechar Sessão: ');
+  end;
+
+  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_IncluiEncodingDados then
+    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao;
+
+  if (FPDadosMsg = '') or (FDadosEnvelope = '') then
+    GerarException(ACBrStr('A funcionalidade [Fechar Sessão] não foi disponibilizada pelo provedor: ' +
+     FPConfiguracoesNFSe.Geral.xProvedor));
+end;
+
+function TNFSeFecharSessao.TratarResposta: Boolean;
+var
+  i: Integer;
+begin
+  FPRetWS := ExtrairRetorno;
+
+//  FRetAbrirSessao := TRetAbrirSessao.Create;
+  try
+//    FRetAbrirSessao.Leitor.Arquivo := FPRetWS;
+//    FRetAbrirSessao.Provedor       := FProvedor;
+
+//    FRetAbrirSessao.LerXml;
+
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.FecharSessao);
+
+    // Lista de Mensagem de Retorno
+    FPMsg := '';
+    FaMsg := '';
+    (*
+    if FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Count > 0 then
+    begin
+      for i := 0 to FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Count - 1 do
+      begin
+        FPMsg := FPMsg + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak;
+
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                         'Código Erro : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Codigo + LineBreak +
+                         'Mensagem... : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         'Correção... : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Correcao + LineBreak +
+                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+      end;
+    end;
+//    else FaMsg := 'Numero da NFSe : ' + FNFSeRetorno.Pedido.IdentificacaoNfse.Numero + LineBreak +
+//                  'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
+    *)
+    Result := (FPMsg = '');
+  finally
+//    FRetAbrirSessao.Free;
+  end;
+end;
+
+procedure TNFSeFecharSessao.FinalizarServico;
+begin
+  inherited FinalizarServico;
+end;
+
+function TNFSeFecharSessao.GerarMsgLog: String;
+begin
+  Result := ACBrStr(FaMsg)
+end;
+
+function TNFSeFecharSessao.GerarPrefixoArquivo: String;
+begin
+  Result := NumeroLote;
 end;
 
 { TNFSeEnvioWebService }
@@ -3951,6 +4339,8 @@ begin
   FConsNfse       := TNFSeConsultarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   FCancNfse       := TNFSeCancelarNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
   FSubNfse        := TNFSeSubstituirNfse.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FAbrirSessao    := TNFSeAbrirSessao.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
+  FFecharSessao   := TNFSeFecharSessao.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
 
   FEnvioWebService := TNFSeEnvioWebService.Create(FACBrNFSe);
 end;
@@ -3967,6 +4357,9 @@ begin
   FConsNfse.Free;
   FCancNfse.Free;
   FSubNfse.Free;
+  FAbrirSessao.Free;
+  FFecharSessao.Free;
+
   FEnvioWebService.Free;
 
   inherited Destroy;
@@ -3994,12 +4387,33 @@ end;
 
 function TWebServices.Envia(ALote: String): Boolean;
 begin
+  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
+  begin
+    FAbrirSessao.FNumeroLote := ALote;
+
+    Result := FAbrirSessao.Executar;
+
+    if not (Result) then
+      FAbrirSessao.GerarException( FAbrirSessao.Msg );
+  end;
+
   FEnviarLoteRPS.FNumeroLote := ALote;
 
   Result := FEnviarLoteRPS.Executar;
 
   if not (Result) then
     FEnviarLoteRPS.GerarException( FEnviarLoteRPS.Msg );
+
+  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proEL then
+  begin
+    FFecharSessao.FNumeroLote := ALote;
+    FFecharSessao.FHashIdent := FEnviarLoteRPS.HashIdent;
+
+    Result := FFecharSessao.Executar;
+
+    if not (Result) then
+      FFecharSessao.GerarException( FFecharSessao.Msg );
+  end;
 
   FConsSitLoteRPS.FProtocolo  := FEnviarLoteRPS.Protocolo;
   FConsSitLoteRPS.FNumeroLote := FEnviarLoteRPS.NumeroLote;

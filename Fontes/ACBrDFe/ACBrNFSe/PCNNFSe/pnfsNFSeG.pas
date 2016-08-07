@@ -127,6 +127,9 @@ type
     // Layout - Agili
     FCNPJPrefeitura: String;
 
+    // Layout - EL
+    FHashIdent: String;
+
     procedure SetAtributos;
     function GetIdEntidadeEquiplano(const IBGE: Integer): String;
     procedure SetCNPJ(const Value: String);
@@ -146,6 +149,9 @@ type
     function Gera_DadosMsgGerarNFSe: String;
     function Gera_DadosMsgEnviarSincrono: String;
     function Gera_DadosMsgSubstituirNFSe: String;
+
+    function Gera_DadosMsgAbrirSessao: String;
+    function Gera_DadosMsgFecharSessao: String;
   published
     property Gerador: TGerador read FGerador write FGerador;
 
@@ -224,6 +230,9 @@ type
     property AssinaturaCan: String read FAssinaturaCan write FAssinaturaCan;
 
     property PossuiAlertas: Boolean read FPossuiAlertas write FPossuiAlertas;
+
+    // Layout - EL
+    property HashIdent: String read FHashIdent write FHashIdent;
    end;
 
 implementation
@@ -517,7 +526,7 @@ begin
              Gerador.wCampoNFSe(tcInt, '#1', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ) <> 14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJ) <> 14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
 
@@ -697,7 +706,7 @@ begin
              Gerador.Prefixo := '';
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroProtocolo', 01, 50, 1, Protocolo, '');
@@ -818,7 +827,7 @@ begin
              Gerador.Prefixo := '';
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroProtocolo', 01, 50, 1, Protocolo, '');
@@ -971,7 +980,7 @@ begin
              Gerador.Prefixo := '';
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wGrupoNFSe('IdentificacaoRps');
@@ -1139,7 +1148,7 @@ begin
              Gerador.Prefixo := '';
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroNfse', 01, 15, 1, NumeroNFSe, '');
@@ -1147,13 +1156,13 @@ begin
              Gerador.wCampoNFSe(tcDat, '#1', 'dataFinal', 10, 10, 1, DataFinal, '');
              Gerador.wGrupoNFSe('IdentificacaoTomador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJTomador, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJTomador)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJTomador)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IMTomador, '');
              Gerador.wGrupoNFSe('/IdentificacaoTomador');
              Gerador.wGrupoNFSe('IdentificacaoIntermediario');
              Gerador.wCampoNFSe(tcStr, '#1', 'RazaoSocial', 01, 120, 1, NomeInter, '');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJInter, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJInter)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJInter)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IMInter, '');
              Gerador.wGrupoNFSe('/IdentificacaoIntermediario');
            end;
@@ -1442,7 +1451,7 @@ begin
              Gerador.Prefixo := '';
              Gerador.wGrupoNFSe('IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'CpfCnpj', 11, 14, 1, CNPJ, '');
-             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaocpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'IndicacaoCpfCnpj', 01, 01, 1, IfThen(Length(CNPJ)<>14, '1', '2'), '');
              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipal', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
              Gerador.wCampoNFSe(tcStr, '#1', 'numeroNfse', 01, 15, 1, NumeroNFSe, '');
@@ -1685,6 +1694,75 @@ begin
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
   if Provedor in [proNenhum] then
+    Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgAbrirSessao: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proEL: begin
+             Gerador.wGrupoNFSe('autenticarContribuinte');
+
+             Gerador.Prefixo := Prefixo4;
+             Gerador.wCampoNFSe(tcStr, '#1', 'IdentificacaoPrestador', 14, 14, 1, Cnpj, '');
+             Gerador.wCampoNFSe(tcStr, '#2', 'Senha', 01, 14, 1, SenhaWeb, '');
+
+             Gerador.Prefixo := Prefixo3;
+             Gerador.wGrupoNFSe('/autenticarContribuinte');
+           end;
+
+  else
+    Gerador.ArquivoFormatoXML := '';
+  end;
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proActcon,
+                  proBetha, proBetim, proDBSeller, proEquiplano,
+                  proFIssLex, proGinfes, proGovBR, proInfisc, proIssCuritiba,
+                  proIssDSF, proIssIntel, proIssNet, proLexsom, proNatal,
+                  proNFSEBrasil, proProdemge, proPronim, proRJ, proSalvador,
+                  proSiam, proSimplIss, proSpeedGov, proThema, proTinus,
+                  proTiplan] then
+    Result := '';
+end;
+
+function TNFSeG.Gera_DadosMsgFecharSessao: String;
+begin
+  SetAtributos;
+  Gerador.ArquivoFormatoXML := '';
+
+  case Provedor of
+    proEL: begin
+             Gerador.wGrupoNFSe('finalizarSessao');
+
+             Gerador.Prefixo := Prefixo4;
+             Gerador.wCampoNFSe(tcStr, '#1', 'hashIdentificador', 01, 40, 1, HashIdent, '');
+
+             Gerador.Prefixo := Prefixo3;
+             Gerador.wGrupoNFSe('/finalizarSessao');
+           end;
+
+  else
+    Gerador.ArquivoFormatoXML := '';
+  end;
+
+  Result := Gerador.ArquivoFormatoXML;
+
+  FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
+
+  if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proActcon,
+                  proBetha, proBetim, proDBSeller, proEquiplano,
+                  proFIssLex, proGinfes, proGovBR, proInfisc, proIssCuritiba,
+                  proIssDSF, proIssIntel, proIssNet, proLexsom, proNatal,
+                  proNFSEBrasil, proProdemge, proPronim, proRJ, proSalvador,
+                  proSiam, proSimplIss, proSpeedGov, proThema, proTinus,
+                  proTiplan] then
     Result := '';
 end;
 

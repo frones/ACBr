@@ -1114,7 +1114,7 @@ begin
            if INIRec.ReadString('veicTracao', 'CNPJCPF', '') <> '' then
            begin
              rodo.veicTracao.prop.CNPJCPF := INIRec.ReadString('veicTracao', 'CNPJCPF', '');
-             rodo.veicTracao.prop.RNTRC   := INIRec.ReadString('veicTracao', 'RNRTC', '');
+             rodo.veicTracao.prop.RNTRC   := INIRec.ReadString('veicTracao', 'RNTRC', '');
              rodo.veicTracao.prop.xNome   := INIRec.ReadString('veicTracao', 'xNome', '');
              rodo.veicTracao.prop.IE      := INIRec.ReadString('veicTracao', 'IE', '');
              rodo.veicTracao.prop.UF      := INIRec.ReadString('veicTracao', 'UFProp', '');
@@ -1161,7 +1161,7 @@ begin
                if INIRec.ReadString(sSecao, 'CNPJCPF', '') <> '' then
                begin
                  prop.CNPJCPF := INIRec.ReadString(sSecao, 'CNPJCPF', '');
-                 prop.RNTRC   := INIRec.ReadString(sSecao, 'RNRTC', '');
+                 prop.RNTRC   := INIRec.ReadString(sSecao, 'RNTRC', '');
                  prop.xNome   := INIRec.ReadString(sSecao, 'xNome', '');
                  prop.IE      := INIRec.ReadString(sSecao, 'IE', '');
                  prop.UF      := INIRec.ReadString(sSecao, 'UFProp', '');

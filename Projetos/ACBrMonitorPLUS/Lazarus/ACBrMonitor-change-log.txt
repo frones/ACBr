@@ -43,10 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2016
+[-] Correção do nome do campo de RNRTC para RNTRC
+                http://www.projetoacbr.com.br/forum/topic/31347-mdfe-informações-não-estão-indo-para-o-xml/
+		por: Italo Jurisato Junior
+		
 03/08/2016
 [+] Adição do suporte ao componente ACBrGNRE junto ao monitor
 		http://www.projetoacbr.com.br/forum/topic/31424-modulo-gnre-para-o-monitor-plus/
-		por: Juliiomar Marchetti
+		por: Juliomar Marchetti
 		
 19/07/2016
 [+] Habilitados campos: vFCPUFDest, vICMSUFDest, vICMSUFRemet na geração declaração

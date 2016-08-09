@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2016
+[+] adicionado os comandos para ECF.ValidarBlocoX(Arquivo), ECF.EnviarBlocoX(Arquivo), ECF.ConsultarBlocoX(recibo)
+		http://www.projetoacbr.com.br/forum/topic/31728-blocox-acbrmonitorplus/
+		por: Juliomar Marchetti
+		
 08/08/2016
 [-] Correção do nome do campo de RNRTC para RNTRC
                 http://www.projetoacbr.com.br/forum/topic/31347-mdfe-informações-não-estão-indo-para-o-xml/

@@ -185,9 +185,10 @@ end;
 procedure TNFSeW_SP.GerarListaServicos;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'Discriminacao', 1, 2000, 1, NFSe.Servico.Discriminacao, '');
-  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 1, NFSe.Servico.CodigoMunicipio, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'ValorCargaTributaria', 1, 15, 0, NFSe.Servico.ValorCargaTributaria, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'PercentualCargaTributaria', 1, 5, 0, NFSe.Servico.PercentualCargaTributaria, '');
+  Gerador.wCampoNFSe(tcStr, '', 'FonteCargaTributaria', 1, 10, 0, NFSe.Servico.FonteCargaTributaria, '');
 end;
-
 
 procedure TNFSeW_SP.GerarRPSSubstituido;
 begin
@@ -206,7 +207,9 @@ end;
 
 procedure TNFSeW_SP.GerarConstrucaoCivil;
 begin
-  // Não definido
+  Gerador.wCampoNFSe(tcStr, '', 'CodigoCEI', 1, 12, 0, NFSe.ConstrucaoCivil.nCei, '');
+  Gerador.wCampoNFSe(tcStr, '', 'MatriculaObra', 1, 12, 0, NFSe.ConstrucaoCivil.nMatri, '');
+  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.Servico.CodigoMunicipio, '');
 end;
 
 procedure TNFSeW_SP.GerarCondicaoPagamento;

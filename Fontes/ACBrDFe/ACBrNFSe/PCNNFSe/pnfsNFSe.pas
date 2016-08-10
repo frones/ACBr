@@ -326,7 +326,6 @@ type
     property pRetCSLL: currency read FpRetCSLL write FpRetCSLL;
     property vBCPISPASEP: currency read FvBCPISPASEP write FvBCPISPASEP;
     property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
-
   end;
 
  TDeducaoCollection = class(TCollection)
@@ -378,8 +377,14 @@ type
     FItemServico: TItemServicoCollection;
     FResponsavelRetencao: TnfseResponsavelRetencao;
     FDescricao: String;
-    FDeducao : TDeducaoCollection;
-    FUFPrestacao: String; //Governa
+    // Provedor IssDsf
+    FDeducao: TDeducaoCollection;
+    // Provedor Governa
+    FUFPrestacao: String;
+    // Provedor SP
+    FValorCargaTributaria: currency;
+    FPercentualCargaTributaria: currency;
+    FFonteCargaTributaria: String;
 
     procedure SetItemServico(Value: TItemServicoCollection);
   public
@@ -400,9 +405,14 @@ type
     property ItemServico: TItemServicoCollection read FItemServico write SetItemServico;
     property ResponsavelRetencao: TnfseResponsavelRetencao read FResponsavelRetencao write FResponsavelRetencao;
     property Descricao: String read FDescricao write FDescricao;
-    // Deducao usada pelo Provedor IssDsf
-    property Deducao : TDeducaoCollection read FDeducao write FDeducao;
-    property UFPrestacao: String read FUFPrestacao write FUFPrestacao; //Governa
+    // Provedor IssDsf
+    property Deducao: TDeducaoCollection read FDeducao write FDeducao;
+    // Provedor Governa
+    property UFPrestacao: String read FUFPrestacao write FUFPrestacao;
+    // Provedor SP
+    property ValorCargaTributaria: currency read FValorCargaTributaria write FValorCargaTributaria;
+    property PercentualCargaTributaria: currency read FPercentualCargaTributaria write FPercentualCargaTributaria;
+    property FonteCargaTributaria: String read FFonteCargaTributaria write FFonteCargaTributaria;
   end;
 
  TIdentificacaoPrestador = class(TPersistent)
@@ -665,7 +675,7 @@ type
     FOptanteSimplesNacional: TnfseSimNao;
     //Provedor Conam
     FDataOptanteSimplesNacional: TDateTime;
-    FLogradouroLocalPrestacaoServico:TnfseLogradouroLocalPrestacaoServico;
+    FLogradouroLocalPrestacaoServico: TnfseLogradouroLocalPrestacaoServico;
     FIncentivadorCultural: TnfseSimNao;
     FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
@@ -737,7 +747,7 @@ type
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;
     //Provedor Conam
     property DataOptanteSimplesNacional: TDateTime read FDataOptanteSimplesNacional write FDataOptanteSimplesNacional;
-    property LogradouLocalPrestacaoServico:TnfseLogradouroLocalPrestacaoServico read FLogradouroLocalPrestacaoServico write FLogradouroLocalPrestacaoServico;
+    property LogradouLocalPrestacaoServico: TnfseLogradouroLocalPrestacaoServico read FLogradouroLocalPrestacaoServico write FLogradouroLocalPrestacaoServico;
     property IncentivadorCultural: TnfseSimNao read FIncentivadorCultural write FIncentivadorCultural;
     property Producao: TnfseSimNao read FProducao write FProducao;
     property Status: TnfseStatusRps read FStatus write FStatus;

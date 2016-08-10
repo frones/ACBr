@@ -117,7 +117,8 @@ end;
 
 procedure TNFSeW_SP.GerarValoresServico;
 var
-  ISSRetido: String;
+  aliquota, ISSRetido: String;
+
 begin
   Gerador.wCampoNFSe(tcDe2, '', 'ValorServicos', 1, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorDeducoes', 1, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
@@ -126,9 +127,17 @@ begin
   Gerador.wCampoNFSe(tcDe2, '', 'ValorINSS'    , 1, 15, 0, NFSe.Servico.Valores.ValorInss, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorIR'      , 1, 15, 0, NFSe.Servico.Valores.ValorIr, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorCSLL'    , 1, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-
   Gerador.wCampoNFSe(tcStr, '', 'CodigoServico'   , 1, 05, 1, OnlyNumber(NFSe.Servico.ItemListaServico), '');
-  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaServicos', 1, 05, 0, NFSe.Servico.Valores.Aliquota, '');
+
+  if NFSe.Servico.Valores.Aliquota > 0 then
+    begin
+      aliquota := FormatFloat('0.00##', NFSe.Servico.Valores.Aliquota / 100);
+      aliquota := StringReplace(aliquota, ',', '.', [rfReplaceAll]);
+    end
+  else aliquota := '0';
+  Gerador.wCampoNFSe(tcStr, '', 'AliquotaServicos', 1, 6, 1, aliquota, '');
+
+//  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaServicos', 1, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), '');
 
   ISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
                                        ['false', 'true'], [stNormal, stRetencao]);
@@ -209,7 +218,7 @@ procedure TNFSeW_SP.GerarConstrucaoCivil;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'CodigoCEI', 1, 12, 0, NFSe.ConstrucaoCivil.nCei, '');
   Gerador.wCampoNFSe(tcStr, '', 'MatriculaObra', 1, 12, 0, NFSe.ConstrucaoCivil.nMatri, '');
-  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.Servico.CodigoMunicipio, '');
+  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
 end;
 
 procedure TNFSeW_SP.GerarCondicaoPagamento;

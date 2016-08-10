@@ -1060,9 +1060,9 @@ end;
 
 function TNFSeR.LerRPS_SP: Boolean;
 var
-  item: Integer;
+//  item: Integer;
   ok  : Boolean;
-  sOperacao, sTributacao: String;
+//  sOperacao, sTributacao: String;
 begin
   if (Leitor.rExtrai(1, 'RPS') <> '') then
     begin

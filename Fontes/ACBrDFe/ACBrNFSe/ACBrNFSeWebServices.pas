@@ -1965,7 +1965,10 @@ begin
     end;
   end;
 
-  Result := (RetEnvLote.InfRec.Protocolo <> '');
+  if FProvedor = proSP then
+    Result := UpperCase(RetEnvLote.infRec.Sucesso) = UpperCase('true')
+  else
+    Result := (RetEnvLote.InfRec.Protocolo <> '');
 end;
 
 procedure TNFSeEnviarLoteRPS.FinalizarServico;
@@ -4194,8 +4197,8 @@ begin
 end;
 
 function TNFSeFecharSessao.TratarResposta: Boolean;
-var
-  i: Integer;
+//var
+//  i: Integer;
 begin
   FPRetWS := ExtrairRetorno;
 

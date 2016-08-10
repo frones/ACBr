@@ -57,13 +57,13 @@ type
     procedure GerarValoresServico;
     procedure GerarTomador;
     procedure GerarIntermediarioServico;
+    procedure GerarConstrucaoCivil;
     procedure GerarListaServicos;
 
     procedure GerarRPSSubstituido;
     procedure GerarPrestador;
     procedure GerarServicoValores;
 
-    procedure GerarConstrucaoCivil;
     procedure GerarCondicaoPagamento;
 
     procedure GerarXML_SP;
@@ -185,6 +185,7 @@ end;
 procedure TNFSeW_SP.GerarListaServicos;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'Discriminacao', 1, 2000, 1, NFSe.Servico.Discriminacao, '');
+  Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 1, NFSe.Servico.CodigoMunicipio, '');
 end;
 
 
@@ -236,6 +237,7 @@ begin
   GerarTomador;
   GerarIntermediarioServico;
   GerarListaServicos;
+  GerarConstrucaoCivil;
 
   Gerador.wGrupoNFSe('/RPS');
 end;

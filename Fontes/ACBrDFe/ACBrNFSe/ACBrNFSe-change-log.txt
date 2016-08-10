@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/08/2016
+[*] Acrescentado a geração da TAG MunicipioPrestacao.
+    por: Rodrigo de Souza Moreira
+
 07/08/2016
 [+] Incluido os métodos: AbrirSessao e FecharSessao, esses métodos são executados
     automaticamente somente para o provedor EL.

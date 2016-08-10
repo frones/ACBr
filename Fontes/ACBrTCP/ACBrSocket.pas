@@ -399,19 +399,19 @@ begin
 
            if fsSock.Socket = INVALID_SOCKET then   // O Socket ainda é válido ?
            begin
-              fsErro := -1 ;
+              fsErro := -2 ;
               break;
            end ;
 
            if not Assigned( fsACBrTCPServerDaemon ) then  // O Daemon ainda existe ?
            begin
-              fsErro := -1 ;
+              fsErro := -3 ;
               break ;
            end ;
 
            if fsACBrTCPServerDaemon.Terminated then   // O Daemon está rodando ?
            begin
-              fsErro := -1 ;
+              fsErro := -4 ;
               break ;
            end ;
 
@@ -462,11 +462,17 @@ begin
      Terminate;
   finally
      // Chama o evento de Desconexão...
-     {$IFNDEF NOGUI}
-      Synchronize( CallOnDesConecta );
-     {$ELSE}
-      CallOnDesConecta ;
-     {$ENDIF}
+     if Assigned(fsACBrTCPServerDaemon) then
+     begin
+       if not fsACBrTCPServerDaemon.Terminated then
+       begin
+         {$IFNDEF NOGUI}
+          Synchronize( CallOnDesConecta );
+         {$ELSE}
+          CallOnDesConecta ;
+         {$ENDIF}
+       end;
+     end;
 
      fsSock.CloseSocket ;
      FreeAndNil(fsSock);
@@ -537,6 +543,7 @@ end;
 
 destructor TACBrTCPServer.Destroy;
 begin
+  fsOnDesConecta := Nil;
   Desativar;
   fsThreadList.Free ;
 
@@ -589,7 +596,6 @@ end;
 
 procedure TACBrTCPServer.Desativar;
 var
-  UmaConexao: TACBrTCPServerThread;
   I: Integer;
 begin
   if Assigned( fsACBrTCPServerDaemon )then
@@ -597,29 +603,21 @@ begin
 
   with fsThreadList.LockList do
   try
-     for I := 0 to Count-1 do
+     I := Count-1;
+     while I >= 0 do
      begin
-        UmaConexao := TACBrTCPServerThread(Items[I]);
-        UmaConexao.FreeOnTerminate := False;
-        UmaConexao.Terminate;
-        UmaConexao.WaitFor;
-     end;
-  finally
-     fsThreadList.UnlockList;
-  end ;
-
-  with fsThreadList.LockList do
-  try
-     while Count > 0 do
-     begin
-        TACBrTCPServerThread(Items[0]).Free;
-        Delete(0);
-     end;
+        TACBrTCPServerThread(Items[I]).Terminate;
+        Dec( I );
+     end
   finally
      fsThreadList.UnlockList;
   end ;
 
   fsThreadList.Clear ;
+
+  // Chama o Evento, se estiver atribuido
+  if  Assigned( fsOnDesConecta ) then
+     fsOnDesConecta( Nil, -5, 'TACBrTCPServer.Desativar' ) ;
 
   if Assigned( fsACBrTCPServerDaemon )then
   begin

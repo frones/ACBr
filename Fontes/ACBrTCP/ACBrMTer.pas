@@ -211,11 +211,20 @@ end;
 procedure TACBrMTer.DoDesconecta(const TCPBlockSocket: TTCPBlockSocket;
   Erro: Integer; ErroDesc: String);
 var
-  wIP: String;
+  wIP, ErroMsg: String;
 begin
-  wIP := TCPBlockSocket.GetRemoteSinIP;
+  ErroMsg := IntToStr(Erro)+'-'+ErroDesc;
 
-  GravaLog('Terminal: ' + wIP + ' Desconectou');
+  if Assigned(TCPBlockSocket) then
+  begin
+    wIP := TCPBlockSocket.GetRemoteSinIP;
+    GravaLog('Terminal: ' + wIP + ' Desconectou - '+ErroMsg);
+  end
+  else
+  begin
+    wIP := '';
+    GravaLog(ErroMsg);
+  end;
 
   if Assigned(fOnDesconecta) then
     OnDesconecta(wIP, Erro, ErroDesc);

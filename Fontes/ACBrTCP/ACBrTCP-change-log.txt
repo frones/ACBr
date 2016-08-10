@@ -37,6 +37,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2016
+-- ACBrSocket --
+[-] Correção em ACBrTCPServer.Desativar para que não ocorra Erros de Thread com
+    as conexões abertas   (por: DSA)
+
+-- ACBrMTer --
+[*] Ajustes após modificação no comportamente de ACBrTCPServer.Desativar
+
 05/08/2016
 -- ACBrMTer --
 [-] Exclusão da propriedade EcoAuto.

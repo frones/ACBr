@@ -217,6 +217,7 @@ begin
     proInfIsc:     Result := LerXml_proInfisc;
     proEL:         Result := LerXML_proEL;
     proNFSeBrasil: Result := LerXml_proNFSeBrasil;
+    proSP:         Result := LerXml_proSP;      
   else
     Result := LerXml_ABRASF;
   end;
@@ -619,19 +620,24 @@ begin
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
       begin
-        FInfSit.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+        FInfSit.FSucesso  := Leitor.rCampo(tcStr, 'Sucesso');
+
+        if (FInfSit.FSucesso = 'false') then
+          FInfSit.FSituacao := '2'
+        else
+          FInfSit.FSituacao := '4';
 
         if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
         begin
-          FInfSit.InformacoesLote.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
-          FInfSit.InformacoesLote.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-          FInfSit.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CNPJ');
+          FInfSit.InformacoesLote.NumeroLote          := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfSit.InformacoesLote.InscricaoPrestador  := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfSit.InformacoesLote.CPFCNPJRemetente    := Leitor.rCampo(tcStr, 'CNPJ');
           if FInfSit.InformacoesLote.CPFCNPJRemetente = '' then
-            FInfSit.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CPF');
-          FInfSit.InformacoesLote.DataEnvioLote := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
+            FInfSit.InformacoesLote.CPFCNPJRemetente  := Leitor.rCampo(tcStr, 'CPF');
+          FInfSit.InformacoesLote.DataEnvioLote       := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
           FInfSit.InformacoesLote.QtdNotasProcessadas := Leitor.rCampo(tcInt, 'QtdeNotasProcessadas');
-          FInfSit.InformacoesLote.TempoProcessamento := Leitor.rCampo(tcInt, 'TempoProcessamento');
-          FInfSit.InformacoesLote.ValorTotalServico := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
+          FInfSit.InformacoesLote.TempoProcessamento  := Leitor.rCampo(tcInt, 'TempoProcessamento');
+          FInfSit.InformacoesLote.ValorTotalServico   := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
         end;
       end;
 

@@ -731,7 +731,6 @@ begin
              Gerador.wGrupoNFSe('CPFCNPJRemetente');
              Gerador.wCampoCNPJCPF('', '', Cnpj);
              Gerador.wGrupoNFSe('/CPFCNPJRemetente');
-//             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
              Gerador.wCampoNFSe(tcStr, '#3', 'NumeroLote', 01, 14, 1, NumeroLote, '');
              Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoPrestador', 01, 15, 1, IM, '');
              Gerador.wGrupoNFSe('/Cabecalho');
@@ -1528,18 +1527,14 @@ begin
              Gerador.wGrupoNFSe('CPFCNPJRemetente');
              Gerador.wCampoCNPJCPF('', '', Cnpj);
              Gerador.wGrupoNFSe('/CPFCNPJRemetente');
-//             Gerador.wCampoNFSe(tcStr, '#2', 'CNPJRemetente', 14, 14, 1, Cnpj, '');
              Gerador.wCampoNFSe(tcStr, '#3', 'transacao', 01, 05, 0, LowerCase(BooltoStr(Transacao, True)), '');
              Gerador.wGrupoNFSe('/Cabecalho');
-             Gerador.wGrupoNFSe('Detalhe');
+             Gerador.wGrupoNFSe('Detalhe xmlns=""');
              Gerador.wGrupoNFSe('ChaveNFe');
              Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 01, 11, 1, IM, '');
-             Gerador.wCampoNFSe(tcStr, '', 'Numero', 01, 12, 1, NumeroNFSe, '');
-//             Gerador.wCampoNFSe(tcStr, '', 'CodigoVerificacao', 01, 8, 0, CodVerificacaoRPS, '');
+             Gerador.wCampoNFSe(tcStr, '', 'NumeroNFe', 01, 12, 1, NumeroNFSe, '');
              Gerador.wGrupoNFSe('/ChaveNFe');
-
              Gerador.wCampoNFSe(tcStr, '', 'AssinaturaCancelamento', 01, 2000, 1, AssinaturaCan, '');
-
              Gerador.wGrupoNFSe('/Detalhe');
            end;
   else begin

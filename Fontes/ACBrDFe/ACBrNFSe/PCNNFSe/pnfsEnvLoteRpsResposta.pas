@@ -735,17 +735,20 @@ begin
         FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
         if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
         begin
-          if FInfRec.FSucesso = 'true' then
-            FInfRec.Protocolo:=Leitor.rCampo(tcStr, 'NumeroLote');
-          FInfRec.InformacoesLote.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
-          FInfRec.InformacoesLote.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-          FInfRec.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CNPJ');
-          if FInfRec.InformacoesLote.CPFCNPJRemetente = '' then
-            FInfRec.InformacoesLote.CPFCNPJRemetente := Leitor.rCampo(tcStr, 'CPF');
-          FInfRec.InformacoesLote.DataEnvioLote := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
+          FInfRec.Protocolo                           := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfRec.NumeroLote                          := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfRec.DataRecebimento                     := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
+
+          FInfRec.InformacoesLote.NumeroLote          := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfRec.InformacoesLote.InscricaoPrestador  := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+          FInfRec.InformacoesLote.CPFCNPJRemetente    := Leitor.rCampo(tcStr, 'CNPJ');
+          if (FInfRec.InformacoesLote.CPFCNPJRemetente = '') then
+            FInfRec.InformacoesLote.CPFCNPJRemetente  := Leitor.rCampo(tcStr, 'CPF');
+
+          FInfRec.InformacoesLote.DataEnvioLote       := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
           FInfRec.InformacoesLote.QtdNotasProcessadas := Leitor.rCampo(tcInt, 'QtdeNotasProcessadas');
-          FInfRec.InformacoesLote.TempoProcessamento := Leitor.rCampo(tcInt, 'TempoProcessamento');
-          FInfRec.InformacoesLote.ValorTotalServico := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
+          FInfRec.InformacoesLote.TempoProcessamento  := Leitor.rCampo(tcInt, 'TempoProcessamento');
+          FInfRec.InformacoesLote.ValorTotalServico   := Leitor.rCampo(tcDe2, 'ValorTotalServicos');
         end;
       end;
 
@@ -757,7 +760,7 @@ begin
         if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
         begin
           FInfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-          FInfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+          FInfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumeroNFe');
           FInfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
         end;
 

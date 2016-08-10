@@ -634,12 +634,16 @@ begin
   Result := False;
 
   try
-    if leitor.rExtrai(1, 'RetornoInformacoesLote') <> '' then
+    if leitor.rExtrai(1, 'RetornoCancelamentoNFe') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
       begin
         FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
 
+        // Provedor não retorna nada mais do que o sucesso, quando cancela...¬¬
+        if (FInfCanc.FSucesso = 'true') then
+          FinfCanc.FDataHora := Now;
+          
         if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
         begin
           FInfCanc.InformacoesLote.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');

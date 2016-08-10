@@ -360,6 +360,10 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RespostaLoteRps') <> '');
 
+    //SP
+    if not Nivel1 then
+      Nivel1 := (Leitor.rExtrai(1, 'RetornoConsulta') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -398,6 +402,13 @@ begin
       begin
         Nivel := 3;
         DataRecebimentoTemp := Date;
+      end;
+
+      // SP
+      if (leitor.rExtrai(2, 'NFe') <> '') then
+      begin
+        Nivel := 2;
+        DataRecebimentoTemp := Leitor.rCampo(tcDatHor, 'DataEmissaoNFe');
       end;
 
       i := 0;
@@ -781,76 +792,62 @@ begin
     if FProvedor = proSP then
     begin
       try
-        ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
-
-        if (leitor.rExtrai(2, 'ChaveNFeRPS') <> '') then
+        if Leitor.rExtrai(1, 'RetornoConsulta') <> '' then
         begin
-          if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+          ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
+          i := 0;
+          while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
           begin
-            ListaNFSe.FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-            ListaNFSe.FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
-            ListaNFSe.FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+            ListaNFSe.FMsgRetorno.Add;
+            ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+            ListaNFSe.FMsgRetorno[i].FCorrecao := '';
+
+            if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+            begin
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+            end;
+
+            if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+            begin
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+            end;
+
+            Inc(i);
           end;
 
-          if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+          i := 0;
+          while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
           begin
-            ListaNFSe.FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-            ListaNFSe.FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
-            ListaNFSe.FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+            ListaNFSe.MsgRetorno.Add;
+            ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+            ListaNFSe.FMsgRetorno[i].FCorrecao := '';
+
+            if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
+            begin
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+            end;
+
+            if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
+            begin
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
+              ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+            end;
+
+            Inc(i);
           end;
+
+          Result := True;
         end;
-
-        i := 0;
-        while Leitor.rExtrai(2, 'Alerta', '', i + 1) <> '' do
-        begin
-          ListaNFSe.FMsgRetorno.Add;
-          ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-          ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
-          ListaNFSe.FMsgRetorno[i].FCorrecao := '';
-
-          if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
-          begin
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-          end;
-
-          if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
-          begin
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
-          end;
-
-          Inc(i);
-        end;
-
-        i := 0;
-        while Leitor.rExtrai(2, 'Erro', '', i + 1) <> '' do
-        begin
-          ListaNFSe.MsgRetorno.Add;
-          ListaNFSe.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
-          ListaNFSe.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
-          ListaNFSe.FMsgRetorno[i].FCorrecao := '';
-
-          if (leitor.rExtrai(3, 'ChaveNFe') <> '') then
-          begin
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'Numero');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
-          end;
-
-          if (leitor.rExtrai(3, 'ChaveRPS') <> '') then
-          begin
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.SerieRPS := Leitor.rCampo(tcStr, 'SerieRPS');
-            ListaNFSe.FMsgRetorno[i].FChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
-          end;
-
-          Inc(i);
-        end;
-
-        Result := True;
       except
         Result := False;
       end;

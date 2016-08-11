@@ -1,6 +1,6 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 187
-  Top = 84
+  Left = 350
+  Top = 87
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
@@ -420,6 +420,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
       object RLDraw32: TRLDraw
         Left = 1
@@ -7576,6 +7577,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
+      AfterPrint = rlb_11_ModRodLot104AfterPrint
       BeforePrint = rlb_11_ModRodLot104BeforePrint
       object RLDraw4: TRLDraw
         Left = 0

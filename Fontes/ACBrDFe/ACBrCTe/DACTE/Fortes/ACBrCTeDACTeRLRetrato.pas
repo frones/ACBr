@@ -604,7 +604,10 @@ type
     procedure rlb_18_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_06_ProdutosPerigososBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_07_HeaderItensAfterPrint(Sender: TObject);
+    procedure rlb_11_ModRodLot104AfterPrint(Sender: TObject);
   private
+    Linhas : Integer;
     procedure Itens;
   public
     procedure ProtocoloCTe(const sProtocolo: string);
@@ -1812,20 +1815,41 @@ begin
   PrintIt := RLCTe.PageNumber = 1;
 end;
 
+procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensAfterPrint(Sender: TObject);
+begin
+  inherited;
+
+  if (Linhas>70) and (not cdsDocumentos.eof) then
+  begin
+    Linhas := 0;
+    rlDocOrig_tpDoc1.Height := 50;
+    rlDocOrig_tpDoc2.Height := 50;
+    rld_07_headerItens.Height := 81;
+    RLCTe.newpage;
+  end;
+
+end;
+
 procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i : Integer;
 begin
   inherited;
-	PrintIt := RLCTe.PageNumber = 1; 
-	
+	//PrintIt := RLCTe.PageNumber = 1;
+
   rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);
 
   rlDocOrig_tpDoc1.Lines.Clear;
   rlDocOrig_tpDoc2.Lines.Clear;
 
-  cdsDocumentos.First;
+  //cdsDocumentos.First;
+
+  if (RLCTe.PageNumber<=1) then
+    cdsDocumentos.First
+  else
+    PrintIt := (not cdsDocumentos.eof);
+
   while not cdsDocumentos.Eof do
   begin
     if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
@@ -1841,6 +1865,12 @@ begin
       cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
     end;
     cdsDocumentos.Next;
+
+    if (RLCTe.PageNumber>1) then
+      inc(Linhas);
+    if ((cdsDocumentos.recno > 4) and (RLCTe.PageNumber=1) or (Linhas>70)) then
+      break;
+
   end;
 
   rlDocOrig_tpDoc1.Height := Round( rlDocOrig_tpDoc1.Lines.Count * 12);
@@ -2061,6 +2091,14 @@ begin
   for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
     rllLacres.Caption := rllLacres.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
 {$ENDIF}
+end;
+
+procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104AfterPrint(Sender: TObject);
+begin
+  inherited;
+
+  if ((cdsDocumentos.recNo>4) and (rlCte.PageNumber=1)) then
+    RLCte.newpage;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104BeforePrint(Sender: TObject; var PrintIt: Boolean);

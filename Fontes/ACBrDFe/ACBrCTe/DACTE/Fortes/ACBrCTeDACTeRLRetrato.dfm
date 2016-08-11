@@ -2,7 +2,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 187
   Top = 84
   Caption = 'DACTe - Retrato'
-  ClientHeight = 745
+  ClientHeight = 782
   ClientWidth = 965
   Font.Height = -8
   Font.Name = 'Arial'
@@ -353,6 +353,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
+      AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
       object RLDraw32: TRLDraw
         Left = 1
@@ -4411,7 +4412,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Style = []
         Info = itNow
         ParentFont = False
-        Text = ''
       end
     end
     object rlb_16_DadosExcEmitente: TRLBand
@@ -6332,6 +6332,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       BandType = btHeader
       Color = clWhite
       ParentColor = False
+      AfterPrint = rlb_11_ModRodLot104AfterPrint
       BeforePrint = rlb_11_ModRodLot104BeforePrint
       object RLDraw4: TRLDraw
         Left = 0

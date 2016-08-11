@@ -597,6 +597,7 @@ end;
 procedure TACBrTCPServer.Desativar;
 var
   I: Integer;
+  UmaConexao: TACBrTCPServerThread;
 begin
   if Assigned( fsACBrTCPServerDaemon )then
      fsACBrTCPServerDaemon.Terminate ;
@@ -606,7 +607,13 @@ begin
      I := Count-1;
      while I >= 0 do
      begin
-        TACBrTCPServerThread(Items[I]).Terminate;
+        UmaConexao := TACBrTCPServerThread(Items[I]);
+        
+        // Chama o Evento de Desconexão manualmente...
+        if  Assigned( fsOnDesConecta ) then
+          fsOnDesConecta( UmaConexao.TCPBlockSocket, -5, 'TACBrTCPServer.Desativar' ) ;
+
+        UmaConexao.Terminate;
         Dec( I );
      end
   finally
@@ -615,9 +622,9 @@ begin
 
   fsThreadList.Clear ;
 
-  // Chama o Evento, se estiver atribuido
+  // Chama o Evento mais uma vez, porém sem nenhuma conexão,
   if  Assigned( fsOnDesConecta ) then
-     fsOnDesConecta( Nil, -5, 'TACBrTCPServer.Desativar' ) ;
+    fsOnDesConecta( Nil, -6, 'TACBrTCPServer.Desativar' ) ;
 
   if Assigned( fsACBrTCPServerDaemon )then
   begin

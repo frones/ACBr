@@ -349,6 +349,7 @@ end;
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
 begin
   FNFSeR.Leitor.Arquivo := AXML;
+  FNFSeR.Provedor       := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
   FNFSeR.ProvedorConf   := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
   FNFSeR.PathIniCidades := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.PathIniCidades;
   FNFSeR.LerXml;

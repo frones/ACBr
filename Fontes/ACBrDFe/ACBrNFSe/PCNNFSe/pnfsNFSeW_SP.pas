@@ -118,7 +118,6 @@ end;
 procedure TNFSeW_SP.GerarValoresServico;
 var
   aliquota, ISSRetido: String;
-
 begin
   Gerador.wCampoNFSe(tcDe2, '', 'ValorServicos', 1, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorDeducoes', 1, 15, 1, NFSe.Servico.Valores.ValorDeducoes, '');
@@ -136,8 +135,6 @@ begin
     end
   else aliquota := '0';
   Gerador.wCampoNFSe(tcStr, '', 'AliquotaServicos', 1, 6, 1, aliquota, '');
-
-//  Gerador.wCampoNFSe(tcDe4, '', 'AliquotaServicos', 1, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), '');
 
   ISSRetido := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
                                        ['false', 'true'], [stNormal, stRetencao]);

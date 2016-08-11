@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/08/2016
+[*] Mais ajustes para o provedor SP.
+    por: Lutzem Massao Aihara e André Medeiros
+
 10/08/2016
 [*] Mais ajustes na geração do RPS para o provedor SP.
     por: Rodrigo de Souza Moreira

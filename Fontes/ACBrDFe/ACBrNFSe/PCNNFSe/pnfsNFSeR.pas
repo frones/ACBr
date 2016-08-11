@@ -2567,8 +2567,9 @@ var
 begin
   Result := False;
 
-  if (Leitor.rExtrai(1, 'NFe') <> '') then
+  if (Leitor.rExtrai(1, 'NFe') <> '') or (Leitor.rExtrai(1, 'CompNfse') <> '') then
   begin
+    NFSe.dhRecebimento  := Now;
     NFSe.Protocolo      := Leitor.rCampo(tcStr, 'NumeroLote');
     NFSe.NumeroLote     := Leitor.rCampo(tcStr, 'NumeroLote');
     NFSe.DataEmissao    := Leitor.rCampo(tcDatHor, 'DataEmissaoNFe');

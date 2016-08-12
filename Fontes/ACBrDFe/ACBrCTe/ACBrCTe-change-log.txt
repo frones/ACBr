@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2016
+--ACBrCTeDACTEFR
+[-] Melhoria para não ficar efetuando loop para verificar o CTe
+		http://www.projetoacbr.com.br/forum/topic/31807-envio-de-dacte-por-e-mail/
+		por : Juliomar Marchetti		
+
 11/08/2016
 [-] Correção para imprimir diversas chaves de nf-e no dacte em fortes
 		http://www.projetoacbr.com.br/forum/topic/25893-dacte-fortes-report-n%C3%A3o-imprimi-todas-as-chaves-das-nf-e/

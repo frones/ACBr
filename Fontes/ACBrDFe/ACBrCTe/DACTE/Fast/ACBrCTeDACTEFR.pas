@@ -1169,7 +1169,6 @@ procedure TACBrCTeDACTEFR.ImprimirDACTEPDF(ACTE: TCTe);
 const
   TITULO_PDF = 'Conhecimento de Transporte Eletrônico';
 var
-  i            : Integer;
   OldShowDialog: Boolean;
 begin
   if PrepareReport(ACTE) then
@@ -1180,18 +1179,16 @@ begin
     frxPDFExport.Title    := TITULO_PDF;
     frxPDFExport.Subject  := TITULO_PDF;
     frxPDFExport.Keywords := TITULO_PDF;
+
     OldShowDialog         := frxPDFExport.ShowDialog;
+
     try
       frxPDFExport.ShowDialog := False;
+      frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + OnlyNumber(CTE.infCTe.Id) + '-cte.pdf';
 
-      for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
-      begin
-        frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + OnlyNumber(CTE.infCTe.Id) + '-cte.pdf';
-
-        if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
-          ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
-        frxReport.Export(frxPDFExport);
-      end;
+      if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+      frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
     end;
@@ -2055,6 +2052,7 @@ begin
       try
         if Trim(wObs) <> '' then
         begin
+          Campos         := nil;
           Campos         := Split(';', wObs);
           for IndexCampo := 0 to Length(Campos) - 1 do
             vTemp.Add(Campos[IndexCampo]);
@@ -2084,6 +2082,7 @@ begin
       try
         if Trim(wObs) <> '' then
         begin
+          Campos         := nil;
           Campos         := Split(';', wObs);
           for IndexCampo := 0 to Length(Campos) - 1 do
             vTemp.Add(Campos[IndexCampo]);
@@ -2111,6 +2110,7 @@ begin
       try
         if Trim(wObs) <> '' then
         begin
+          Campos         := nil;
           Campos := Split(';', wObs);
           for IndexCampo := 0 to Length(Campos) - 1 do
             vTemp.Add(Campos[IndexCampo]);

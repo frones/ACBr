@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/2016
+[*] Ajustada versão do projeto para 0.3.08.1
+	Ajuste em chamadas a métodos do ACBrSocket, verifica se componente foi atribuido.
+	por: Celso Marigo Junior
+
 09/08/2016
 [+] adicionado os comandos para ECF.ValidarBlocoX(Arquivo), ECF.EnviarBlocoX(Arquivo), ECF.ConsultarBlocoX(recibo)
 		http://www.projetoacbr.com.br/forum/topic/31728-blocox-acbrmonitorplus/

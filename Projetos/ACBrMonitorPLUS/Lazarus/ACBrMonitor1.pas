@@ -6137,6 +6137,9 @@ procedure TFrmACBrMonitor.TcpServerDesConecta(const TCPBlockSocket: TTCPBlockSoc
 var
   Resp: string;
 begin
+  if not Assigned( TCPBlockSocket ) then
+    Exit;
+
   Conexao := TCPBlockSocket;
   Resp := 'ALERTA: Fim da Conexão com: ' + Conexao.GetRemoteSinIP +
     ' em: ' + FormatDateTime('dd/mm/yy hh:nn:ss', now);
@@ -6186,6 +6189,9 @@ var
   IP: string;
   Indice: integer;
 begin
+  if not Assigned( TCPBlockSocket ) then
+     Exit;
+
   IP := TCPBlockSocket.GetRemoteSinIP;
   fsLinesLog := 'T.C. Fim Conexão IP: [' + IP + '] em: ' +
     FormatDateTime('dd/mm/yy hh:nn:ss', now);

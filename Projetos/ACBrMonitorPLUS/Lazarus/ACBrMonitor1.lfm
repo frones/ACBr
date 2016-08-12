@@ -12000,7 +12000,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     OnDesConecta = TcpServerDesConecta
     OnRecebeDados = TcpServerRecebeDados
     left = 280
-    top = 554
+    top = 544
   end
   object OpenDialog1: TOpenDialog
     Filter = 'Arquivos ini|*.ini|Arquivos INI|*.INI'
@@ -12031,7 +12031,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     OnDesConecta = TCPServerTCDesConecta
     OnRecebeDados = TCPServerTCRecebeDados
     left = 244
-    top = 556
+    top = 544
   end
   object TimerTC: TTimer
     Enabled = False
@@ -12107,6 +12107,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

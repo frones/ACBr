@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/08/16
+ACBrValidador
+[*] Movido função interna RemoveZerosEsquerda() para a unit ACBrUtil do pacote ACBrComum.
+
 21/07/2016
 [-] Correção para validar IE no PE
     http://www.projetoacbr.com.br/forum/topic/31351-erro-de-valida%C3%A7%C3%A3o-de-ie-pe-acbrvalidador/

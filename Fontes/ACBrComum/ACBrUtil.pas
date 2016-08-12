@@ -184,6 +184,7 @@ function PosLast(const SubStr, S: AnsiString): Integer;
 function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
+function RemoveZerosEsquerda( ANumStr: String): String;
 
 {$IFDEF HAS_FORMATSETTINGS}
 Function CreateFormatSettings: TFormatSettings;
@@ -1279,6 +1280,14 @@ function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ;
 begin
   Result := IntToStrZero( NumInteiro, Tamanho) ;
 end ;
+
+function RemoveZerosEsquerda(ANumStr: String): String;
+begin
+  while LeftStr(ANumStr,1) = '0' do
+    ANumStr := Copy(ANumStr,2,Length(ANumStr));
+
+  Result := ANumStr;
+end;
 
 {$IFDEF HAS_FORMATSETTINGS}
 function CreateFormatSettings: TFormatSettings;

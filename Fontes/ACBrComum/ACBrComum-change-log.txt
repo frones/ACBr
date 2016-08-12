@@ -46,6 +46,10 @@ Data: 13/06/2016
       da IDE
     "ObtemDeclaracaoXML": Retorna a Declaração do XML, Ex: <?xml version="1.0"?>
     "RemoverDeclaracaoXML": Retorna XML sem a Declaração.
+	
+Data: 12/08/2016
+-- ACBrUtil --	
+[*] Adicionada função RemoveZerosEsquerda() movida da unit ACBrValidador no pacote ACBrDiversos.
 
 Data: 23/03/2016
 -- ACBrUtil --

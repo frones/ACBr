@@ -310,15 +310,6 @@ var
   FoneNum, Mascara : string;
   ComecaComZero: Boolean;
   LenFoneNum: Integer;
-
-  function RemoveZerosEsquerda( ANumStr: String): String;
-  begin
-    while LeftStr(ANumStr,1) = '0' do
-      ANumStr := Copy(ANumStr,2,Length(ANumStr));
-
-    Result := ANumStr;
-  end;
-
 begin
   Result := '';
   FoneNum := OnlyNumber(AValue);

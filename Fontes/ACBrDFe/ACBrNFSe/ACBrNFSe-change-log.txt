@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2016
+[*] Melhoria para poder informar na serie quando é única em Fast Report e adição de campo
+    http://www.projetoacbr.com.br/forum/topic/31793-corre%C3%A7%C3%A3o-e-inclus%C3%A3o-de-campos-na-impress%C3%A3o-do-danfse/
+		por : Juliomar Marchetti
+		
 11/08/2016
 [*] Mais ajustes para o provedor SP.
     por: Lutzem Massao Aihara e André Medeiros

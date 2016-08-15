@@ -1699,6 +1699,7 @@ begin
 
   case Provedor of
     proEL: begin
+             Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('autenticarContribuinte');
 
              Gerador.Prefixo := Prefixo4;
@@ -1734,6 +1735,7 @@ begin
 
   case Provedor of
     proEL: begin
+             Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('finalizarSessao');
 
              Gerador.Prefixo := Prefixo4;

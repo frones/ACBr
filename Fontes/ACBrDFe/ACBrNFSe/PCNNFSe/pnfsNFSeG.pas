@@ -1703,8 +1703,8 @@ begin
              Gerador.wGrupoNFSe('autenticarContribuinte');
 
              Gerador.Prefixo := Prefixo4;
-             Gerador.wCampoNFSe(tcStr, '#1', 'IdentificacaoPrestador', 14, 14, 1, Cnpj, '');
-             Gerador.wCampoNFSe(tcStr, '#2', 'Senha', 01, 14, 1, SenhaWeb, '');
+             Gerador.wCampoNFSe(tcStr, '#1', 'identificacaoPrestador', 14, 14, 1, Cnpj, '');
+             Gerador.wCampoNFSe(tcStr, '#2', 'senha', 01, 14, 1, SenhaWeb, '');
 
              Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('/autenticarContribuinte');

@@ -323,7 +323,6 @@ begin
    fpCredito   := False;
    fpDigitado  := False;
    TemParcelas := False;
-   wNumCB      := 0;
 
    for I := 0 to Conteudo.Count - 1 do
    begin

@@ -672,7 +672,11 @@ begin
         Parar := False;
         while not Parar do
         begin
-           if ItemSelecionado = 30 then Exit;
+           if ItemSelecionado = 30 then
+           begin
+             Result   := -1; //verificar isso aqui.
+             Exit;
+           end;
 
            Voltar := False;
            ItemSelecionado := -1;

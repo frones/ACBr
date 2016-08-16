@@ -500,8 +500,6 @@ type
      procedure SetOrdemPagamento(const AValue : Integer);
    protected
      function GetTransacaoAprovada : Boolean; virtual;
-   published
-
    public
      constructor Create ;
      destructor Destroy ; override;
@@ -1774,8 +1772,6 @@ end;
 
 function TACBrTEFDClass.ADM: Boolean;
 begin
-  Result := False ;
-
   IniciarRequisicao('ADM');
   AdicionarIdentificacao;
   FinalizarRequisicao;
@@ -1792,7 +1788,6 @@ end;
 function TACBrTEFDClass.CRT(Valor: Double; IndiceFPG_ECF: String;
   DocumentoVinculado: String; Moeda: Integer): Boolean;
 begin
-  Result := False ;
   VerificarTransacaoPagamento( Valor );
 
   IniciarRequisicao('CRT');
@@ -1813,7 +1808,6 @@ function TACBrTEFDClass.CHQ(Valor: Double; IndiceFPG_ECF: String;
 begin
   // Compensacao não é utilizado em TEF discado //
 
-  Result := False ;
   VerificarTransacaoPagamento( Valor );
 
   IniciarRequisicao('CHQ');
@@ -1849,7 +1843,6 @@ function TACBrTEFDClass.CNC: Boolean;
 Var
   OldResp : TACBrTEFDRespTXT ;
 begin
-  Result  := False ;
   OldResp := TACBrTEFDRespTXT.Create;
   try
      OldResp.Assign(Resp);      { Salvando dados da Resposta Atual }
@@ -1892,8 +1885,6 @@ end;
 function TACBrTEFDClass.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double): Boolean;
 begin
-  Result := False ;
-
   IniciarRequisicao('CNC');
   Req.ValorTotal                   := Valor;
   Req.Rede                         := Rede;
@@ -2697,8 +2688,6 @@ var
   UltimaTransacao, ImpressaoOk, TecladoEstavaLivre : Boolean;
   RespostaPendente : TACBrTEFDRespTXT;
 begin
-  Result := False ;
-
   LerRespostaRequisicao;
 
   GravaLog( Name +' ProcessarRespostaPagamento: '+Resp.Header+' - '+IntToStr(Resp.ID)+

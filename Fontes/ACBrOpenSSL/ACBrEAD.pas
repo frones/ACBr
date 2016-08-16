@@ -569,6 +569,7 @@ begin
     GerarXMLeECFc(NomeSwHouse),
     False
   );
+  Result := True;
 end;
 
 function TACBrEAD.GerarXMLeECFc(const NomeSwHouse: String): AnsiString;

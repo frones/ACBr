@@ -397,7 +397,7 @@ TACBrECFEscECF = class( TACBrECFClass )
        DescricaoCNF: String; DescricaoFPG: String; IndiceBMP: Integer ) ; override ;
 
     Function EstornaCCD( const Todos: Boolean = True) : Integer; overload; override;
-    Function EstornaCCD( NumCupomFiscal: Integer; ADiante: Boolean = True ) : Integer; overload;
+    Function EstornaCCD( NumCupomFiscal: Integer; ADiante: Boolean = True ) : Integer; reintroduce; overload;
 
     { Gaveta de dinheiro }
     Procedure AbreGaveta  ; override ;
@@ -1946,6 +1946,7 @@ begin
     if (not fpAtivo) then
     begin
       fpEstado := estNaoInicializada;
+      Result := fpEstado;
       Exit;
     end;
 
@@ -4022,7 +4023,6 @@ begin
   Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;
 
-end.
 
 { Observaçoes:
 
@@ -4034,5 +4034,8 @@ end.
 -- Total Cancelamentos OPNF
 -- Total Descontos OPNF
 }
+
+end.
+
 
 

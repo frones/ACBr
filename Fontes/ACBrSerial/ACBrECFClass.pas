@@ -2197,7 +2197,6 @@ begin
        for Lida antes, já encerra. Se nao chegar até TempoLimite, gera erro.}
      TempoLimite := IncSecond( now, TimeOut) ;
      TempoInicio := IncSecond( now, TempoInicioMsg) ;
-     Fim := True ;
      FimLeitura := False ;
 
      { - Le até atingir a condiçao descrita na funçao VerificaFimLeitura que
@@ -2321,7 +2320,9 @@ end;
 function TACBrECFClass.VerificaFimLeitura(var Retorno: AnsiString;
    var TempoLimite: TDateTime) : Boolean ;
 begin
+{$IFDEF FPC}
   Result := False;
+{$ENDIF}
   raise EACBrECFErro.Create( ACBrStr(Format(cACBrECFVerificaFimLeituraException, [ ModeloStr ]))) ;
 end;
 

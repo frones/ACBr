@@ -861,6 +861,13 @@ begin
     // Verifica se a Resposta está em ANSI //
     CT     := LowerCase( GetHeaderValue('Content-Type:') );
     IsUTF8 := (pos('utf-8', CT) > 0);
+
+    if not IsUTF8 then
+    begin
+      if (pos('xhtml+xml', CT) > 0) then
+        IsUTF8 := XmlEhUTF8(RespHTTP.Text);
+    end;
+
     if ParseText then
        RespHTTP.Text := ACBrUtil.ParseText( RespHTTP.Text, True, IsUTF8 )
     else
@@ -892,7 +899,7 @@ begin
      LinhaHeader := HTTPSend.Headers[I];
 
      if (pos(AValue, LinhaHeader) = 1) then
-        Result := copy(LinhaHeader, Length(AValue)+1, Length(LinhaHeader) ) ;
+        Result := Trim(copy(LinhaHeader, Length(AValue)+1, Length(LinhaHeader) )) ;
 
      Inc( I ) ;
   end ;

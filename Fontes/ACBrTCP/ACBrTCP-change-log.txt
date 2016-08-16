@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/08/2016
+-- ACBrSocket --
+[-] Correção em "TACBrHTTP.HTTPMethod", para detectar UTF8 quando Header.
+    Content-Type: = "xhtml+xml"   (por: DSA)
+
 10/08/2016
 -- ACBrSocket --
 [-] Correção em ACBrTCPServer.Desativar para que não ocorra Erros de Thread com

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/08/2016
+-- ACBrUtil --
+[+] Adicionado o método "RemoveZerosEsquerda"   (por: DSA)
+[-] Correção em "AjustaLinhas", para processar corretamente linhas vazias e
+    "PadLinhas = True"
+
 Data: 13/06/2016
 -- ACBrUtil --
 [+] Adicionado os métodos  (por: DSA)

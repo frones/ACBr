@@ -1282,11 +1282,15 @@ begin
 end ;
 
 function RemoveZerosEsquerda(ANumStr: String): String;
+var
+  I, L: Integer;
 begin
-  while LeftStr(ANumStr,1) = '0' do
-    ANumStr := Copy(ANumStr,2,Length(ANumStr));
+  L := Length(ANumStr);
+  I := 1;
+  while (I < L) and (ANumStr[I] = '0') do
+    Inc(I);
 
-  Result := ANumStr;
+  Result := Copy(ANumStr, I, L);
 end;
 
 {$IFDEF HAS_FORMATSETTINGS}
@@ -1984,7 +1988,12 @@ begin
 
   { Permitir impressão de uma linha em branco }
   if Result = '' then
-    Result := Result + #10;
+  begin
+    if PadLinhas then
+      Result := Space(Colunas) + #10
+    else
+      Result := #10;
+  end;
 end;
 
 {-----------------------------------------------------------------------------

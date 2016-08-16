@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/08/2016 ver: 0.0.205a
+-- ACBrBancoBrasil --
+[-] Correção para ler o convenio do cedente sem zeros a esquerda na função LerRetorno240" (Antonio Júnior)
+http://www.projetoacbr.com.br/forum/topic/30719-ler-retorno-240-banco-do-brasil/?_fromLogin=1
+
 Data: 01/08/2016 ver: 0.0.204a
 -- ACBrBancoSicredi --
 [-] Correção instrução de rejeição: "F3 Instrução inválida, este título está caucionado/descontado" (Graziele Serafim)

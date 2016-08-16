@@ -923,7 +923,7 @@ begin
 
    rCedente        := trim(copy(ARetorno[0], 73, 30));
    rCNPJCPF        := OnlyNumber( copy(ARetorno[0], 19, 14) );
-   rConvenioCedente:= Trim(Copy(ARetorno[0], 33, 9));
+   rConvenioCedente:= Trim(RemoveZerosEsquerda(Copy(ARetorno[0], 33, 9)));
 
    with ACBrBanco.ACBrBoleto do
    begin

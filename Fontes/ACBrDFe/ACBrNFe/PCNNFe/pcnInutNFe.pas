@@ -189,6 +189,7 @@ var
   RetornoInutNFe: TRetInutNFe;
   Ok : Boolean;
 begin
+  RetornoInutNFe := TRetInutNFe.Create;
   try
     // Lendo dados do pedido de inutilização, se houver...
     Leitor.Arquivo := AXML;
@@ -215,7 +216,6 @@ begin
     end;
 
     // Lendo dados do retorno, se houver
-    RetornoInutNFe := TRetInutNFe.Create;
     RetornoInutNFe.Leitor.Arquivo := AXML;
 
     Result := RetornoInutNFe.LerXml;

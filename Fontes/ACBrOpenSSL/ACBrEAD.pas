@@ -1075,7 +1075,6 @@ begin
   HexToBin( PAnsiChar(AnsiString(EAD)), EAD_crypt, md_len );
 
   LerChavePublica;
-  BytesToRead := 0;
   PosStream := 0;
   AStream.Position := 0;
   GetMem(Memory, BufferSize);

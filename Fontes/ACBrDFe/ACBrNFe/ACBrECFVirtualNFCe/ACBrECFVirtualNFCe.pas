@@ -97,8 +97,7 @@ type
       read GetQuandoFecharDocumento write SetQuandoFecharDocumento ;
     property QuandoCancelarDocumento : TACBrECFVirtualNFCeQuandoCancelarDocumento
       read GetQuandoCancelarDocumento write SetQuandoCancelarDocumento ;
-   //carlos
-    property Cabecalho ;
+
   end;
 
   { TACBrECFVirtualNFCeClass }

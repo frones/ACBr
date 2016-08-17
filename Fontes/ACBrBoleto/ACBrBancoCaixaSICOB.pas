@@ -303,19 +303,15 @@ end;
 function TACBrCaixaEconomicaSICOB.CalcularTamMaximoNossoNumero(
   const Carteira: String; NossoNumero: String; Convenio: String): Integer;
 var
-  wTamNossoNumero, wOperacao: Integer;
+  wOperacao: Integer;
 begin
-   Result:= 15;
-
-   wTamNossoNumero:= length(NossoNumero);
-
+   Result := length(NossoNumero);
    wOperacao := StrToIntDef(Copy(Convenio, 1, 3), 0);
+
    if (wOperacao = 870) and (Carteira = 'SR') then
-     wTamNossoNumero:= 15
+     Result := 15
    else if (Carteira = 'CR') then
-     wTamNossoNumero:= 10
-   else
-     Result := wTamNossoNumero;
+     Result := 10;
 end;
 
 function TACBrCaixaEconomicaSICOB.CodOcorrenciaToTipo(
@@ -357,13 +353,11 @@ end;
 function TACBrCaixaEconomicaSICOB.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
 var
   ANossoNumero: String;
-  wTamNossoNum: Integer;
   wOperacao: Integer;
 begin
    with ACBrTitulo do
    begin
      ANossoNumero := OnlyNumber(NossoNumero);
-     wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira, ANossoNumero, ACBrBoleto.Cedente.Convenio );
      wOperacao    := StrToIntDef(Copy(ACBrBoleto.Cedente.Convenio, 1 , 3 ), 0);
 
      if (Carteira = 'SR') then

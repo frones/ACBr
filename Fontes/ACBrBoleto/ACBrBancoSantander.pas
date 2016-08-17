@@ -869,7 +869,6 @@ var
     end;
   end;
 begin
-  iLinha := 0;
 
   // Verificar se o retorno é do banco selecionado
   if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> Numero then

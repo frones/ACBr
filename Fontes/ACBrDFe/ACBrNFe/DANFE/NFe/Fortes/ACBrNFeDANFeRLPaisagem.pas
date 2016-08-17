@@ -581,8 +581,8 @@ begin
       rliLogo.Picture.LoadFromFile(FLogo)
     else
     begin
+      LogoStream := TStringStream.Create(FLogo);
       try
-        LogoStream := TStringStream.Create(FLogo);
         try
            rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
         except

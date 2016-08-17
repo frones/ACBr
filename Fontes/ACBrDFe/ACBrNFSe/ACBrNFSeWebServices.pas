@@ -4053,6 +4053,8 @@ begin
 
     FRetAbrirSessao.LerXml;
 
+    FHashIdent := FRetAbrirSessao.InfAbrirSessao.HashIdent;
+
     FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.AbrirSessao);
 
     // Lista de Mensagem de Retorno

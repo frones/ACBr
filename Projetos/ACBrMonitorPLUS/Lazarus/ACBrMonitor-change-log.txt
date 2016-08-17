@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2016
+[*] Adição do método achar para ECF
+		por: Juliomar Marchetti
+		
 12/08/2016
 [*] Ajustada versão do projeto para 0.3.08.1
 	Ajuste em chamadas a métodos do ACBrSocket, verifica se componente foi atribuido.

@@ -80,6 +80,12 @@ begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do
   begin
      try
+        if Cmd.Metodo = 'achar' then
+        begin
+          Cmd.Resposta := BoolToStr(AcharECF(StrToBoolDef(Trim(Cmd.Params(0)),true),
+            StrToBoolDef(Trim(Cmd.Params(1)),true), StrToIntDef(Trim(Cmd.Params(1)), 3)), true);
+        end
+        else
         if Cmd.Metodo = 'ativar' then  { Ativa o ecf }
          begin
            Ativar ;

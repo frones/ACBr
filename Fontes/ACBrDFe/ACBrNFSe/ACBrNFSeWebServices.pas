@@ -4403,6 +4403,8 @@ begin
 
     Result := FAbrirSessao.Executar;
 
+    FEnviarLoteRPS.FHashIdent := FAbrirSessao.FHashIdent;
+
     if not (Result) then
       FAbrirSessao.GerarException( FAbrirSessao.Msg );
   end;

@@ -127,7 +127,7 @@ type
   TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
 
   { TACBrPosRazaoColunaFonte }
-
+  {$M+}
   TACBrPosRazaoColunaFonte = class
   private
     FCondensada: Double;
@@ -138,6 +138,7 @@ type
     property Condensada: Double read FCondensada write FCondensada;
     property Expandida: Double read FExpandida write FExpandida;
   end;
+  {$M-}
 
   TACBrPosPrinter = class;
 
@@ -263,7 +264,6 @@ type
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
     FArqLog: String;
 
-    FPosPrinterClass: TACBrPosPrinterClass;
     FBuffer: TStringList;
     FTipoAlinhamento: TACBrPosTipoAlinhamento;
     FFonteStatus: TACBrPosFonte;
@@ -288,6 +288,7 @@ type
     procedure SetModelo(AValue: TACBrPosPrinterModelo);
 
   protected
+    FPosPrinterClass: TACBrPosPrinterClass;
     procedure EnviarStringDevice(AString: AnsiString);
     procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
     procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;

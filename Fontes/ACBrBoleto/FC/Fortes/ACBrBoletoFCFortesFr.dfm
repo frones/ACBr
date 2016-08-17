@@ -4010,6 +4010,19 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         ParentFont = False
       end
+      object txtEndCedenteCarne: TRLLabel
+        Left = 202
+        Top = 71
+        Width = 364
+        Height = 12
+        Caption = 'Endereco Cedente'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+      end
     end
   end
   object RLHTMLFilter1: TRLHTMLFilter

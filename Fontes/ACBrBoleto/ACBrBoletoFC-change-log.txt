@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2016
+--ACBrBoletoFCFortesFr
+[-] Correção para o Layout em Fortes para Carne
+		http://www.projetoacbr.com.br/forum/topic/31813-corre%C3%A7%C3%A3o-layout-boleto-fortes-carn%C3%AA/
+		(Juliomar Marchetti)
+		
 13/06/2016
 -- ACBrBoletoFCFR
 [*] Melhoria para funcionamento em threads

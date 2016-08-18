@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/08/2016
+-- ACBrUtil --
+[-] Correção para o método "TruncTo", que poderia falhar em alguns casos.
+[+] Adicionado o método "SimpleTruncTo", para auxiliar "TruncTo"
+[+] Adicionado Teste Unitário para TruncTo em ACBrUtilTest
+    http://www.projetoacbr.com.br/forum/topic/31778-testecase/
+    (por: Waldir Paim)
+
 Data: 16/08/2016
 -- ACBrUtil --
 [+] Adicionado o método "RemoveZerosEsquerda"   (por: DSA)

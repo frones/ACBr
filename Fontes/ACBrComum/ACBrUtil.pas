@@ -114,9 +114,10 @@ function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
 {$EndIf}
 
 function TruncFix( X : Double ) : Integer ;
-function RoundABNT(const AValue: Double; const Digits: SmallInt;
+function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
   const Delta: Double = 0.00001 ): Double;
-function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
+function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
+function SimpleTruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
 function ComparaValor(const ValorUm, ValorDois : Double; const Tolerancia : Double = 0 ): Integer;
@@ -373,7 +374,7 @@ end ;
 {-----------------------------------------------------------------------------
    Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
   D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
-  usam UTF-8. A funçã abaixo, Converte a AString de UTF8 ou Unicode para a página
+  usam UTF-8. A função abaixo, Converte a AString de UTF8 ou Unicode para a página
   de código nativa do Sistema Operacional, (apenas se o Compilador usar UNICODE)
  -----------------------------------------------------------------------------}
 function ACBrStrToAnsi(AString: String): String;
@@ -544,7 +545,8 @@ end;
  http://www.sofazquemsabe.com/2011/01/como-fazer-arredondamento-da-numeracao.html
  http://partners.bematech.com.br/2011/12/edicao-98-entendendo-o-truncamento-e-arredondamento-no-ecf/
  -----------------------------------------------------------------------------}
-function RoundABNT(const AValue: Double; const Digits: SmallInt; const Delta: Double):Double;
+function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
+  const Delta: Double): Double;
 var
    Pow, FracValue, PowValue : Extended;
    RestPart: Double;
@@ -585,12 +587,30 @@ Begin
      Result := -Result;
 end;
 
-function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
+function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
 var
-   Pow : Extended;
+ VFrac : Double;
 begin
-   Pow      := intpower(10, abs(Digits) );
-   Result   := trunc(AValue*Pow)/Pow;
+  Result := AValue;
+  VFrac  := Frac(Result);
+
+  if VFrac <> 0 then
+  begin
+    VFrac  := SimpleTruncTo( VFrac, -Abs(Digits) );
+    Result := Int(Result) + VFrac  ;
+  end;
+end;
+
+function SimpleTruncTo(const AValue: Double; const Digits: TRoundToRange
+  ): Double;
+var
+  LFactor: Extended;
+begin
+  LFactor := IntPower(10.0, Digits);
+  if AValue < 0 then
+    Result := Int((AValue / LFactor) - 0.05) * LFactor
+  else
+    Result := Int((AValue / LFactor) + 0.05) * LFactor;
 end;
 
 {-----------------------------------------------------------------------------

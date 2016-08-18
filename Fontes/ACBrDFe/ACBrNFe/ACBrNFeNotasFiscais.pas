@@ -1025,8 +1025,8 @@ begin
           fsvOutro   := fsvOutro + Prod.vOutro;
           fsvServ   := fsvServ + Imposto.ISSQN.vBC; //VERIFICAR
 
-          // quando for serviço o produto não soma do total de produtos
-          if Prod.NCM <> '00' then
+          // quando for serviço o produto não soma do total de produtos, quando for nota de ajuste também irá somar
+					if (Prod.NCM <> '00') or ((Prod.NCM = '00') and (NFe.Ide.finNFe = fnAjuste)) then
             fsvProd := fsvProd + Prod.vProd;
         end;
 

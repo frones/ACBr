@@ -166,10 +166,10 @@ type
                              vlVersao103,  // Código 004 - Versão 103 Ato COTEPE 01/01/2011
                              vlVersao104,  // Código 005 - Versão 104 Ato COTEPE 01/07/2012
                              vlVersao105,  // Código 006 - Versão 105 Ato COTEPE 01/07/2012
-                             vlVersao106,  // Código 007
-                             vlVersao107,  // Código 008
-                             vlVersao108,  // Código 009
-                             vlVersao109   // Código 010
+                             vlVersao106,  // Código 007 - Versão 106 Ato COTEPE 01/07/2013
+                             vlVersao107,  // Código 008 - Versão 107 Ato COTEPE 01/07/2014
+                             vlVersao108,  // Código 009 - Versão 108 Ato COTEPE 01/07/2015
+                             vlVersao109   // Código 010 - Versão 109 Ato COTEPE 01/07/2016
                              );
   TACBrVersaoLeiaute = TACBrCodVer;
 

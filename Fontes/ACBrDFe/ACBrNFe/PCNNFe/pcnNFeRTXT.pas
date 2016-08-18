@@ -148,8 +148,11 @@ end;
 function TNFeRTXT.LerCampo(const Tipo: TpcnTipoCampo; TAG: String): variant;
 var
   ConteudoTag: String;
+  LenTag: Integer;
 begin
-  ConteudoTag := RetornarConteudoTag(TAG);
+  ConteudoTag := TrimLeft(RetornarConteudoTag(TAG));
+  LenTag := Length(Trim(ConteudoTag));
+
   if copy(ConteudoTag,1,1) = '§' then
     ConteudoTag := '';
 
@@ -157,22 +160,22 @@ begin
     case Tipo of
       tcStr     : result := ReverterFiltroTextoXML(ConteudoTag);
       tcDat     : begin
-                    if length(ConteudoTag)>0 then
-                      result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2)))
+                    if LenTag > 0 then
+                      result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)), StrToInt(copy(ConteudoTag, 6, 2)), StrToInt(copy(ConteudoTag, 9, 2)))
                     else
                       result:=0;
                     end;
       tcDatHor  : begin
-                      if length(ConteudoTag)>0 then
-                        result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 06, 2)), StrToInt(copy(ConteudoTag, 09, 2))) +
+                    if LenTag > 0 then
+                      result := EncodeDate(StrToInt(copy(ConteudoTag, 1, 4)), StrToInt(copy(ConteudoTag, 6, 2)), StrToInt(copy(ConteudoTag, 9, 2))) +
                         EncodeTime(StrToInt(copy(ConteudoTag, 12, 2)), StrToInt(copy(ConteudoTag, 15, 2)), StrToInt(copy(ConteudoTag, 18, 2)), 0)
-                      else
-                        result:=0;
+                    else
+                      result:=0;
                     end;
       tcHor     : begin
-                      if length(ConteudoTag)>0 then
+                    if LenTag > 0 then
                       result := EncodeTime(StrToInt(copy(ConteudoTag, 1, 2)), StrToInt(copy(ConteudoTag, 4, 2)), StrToInt(copy(ConteudoTag, 7, 2)), 0)
-                      else
+                    else
                       result:=0;
                     end;
       tcDe2,
@@ -501,7 +504,7 @@ begin
    (*I17a*)NFe.Det[i].Prod.vOutro := LerCampo(tcDe2, 'vOutro');
    (*I17b*)NFe.Det[i].Prod.IndTot := StrToIndTot(ok, LerCampo(tcStr, 'indTot'));
    (*I28a*)NFe.Det[i].Prod.xPed := LerCampo(tcStr, 'xPed');
-   (*I28b*)NFe.Det[i].Prod.nItemPed := LerCampo(tcInt, 'nItemPed');
+   (*I28b*)NFe.Det[i].Prod.nItemPed := LerCampo(tcStr, 'nItemPed');
    (*128p*)NFe.Det[i].Prod.nFCI := LerCampo(tcStr, 'nFCI');
   end;
 
@@ -966,7 +969,16 @@ begin
     (*W16*)NFe.Total.ICMSTot.vNF          := LerCampo(tcDe2, 'vNF');
     (*W16a*)NFe.Total.ICMSTot.vTotTrib    := LerCampo(tcDe2, 'vTotTrib');
   end;
+	
+	if ID = 'W04C' then	
+		(*W04c*)NFe.Total.ICMSTot.vFCPUFDest   := LerCampo(tcDe2, 'vFCPUFDest');
 
+	if ID = 'W04E' then	
+		(*W04e*)NFe.Total.ICMSTot.vICMSUFDest  := LerCampo(tcDe2, 'vICMSUFDest');
+
+	if ID = 'W04G' then	
+		(*W04g*)NFe.Total.ICMSTot.vICMSUFRemet := LerCampo(tcDe2, 'vICMSUFRemet');
+		
   if ID = 'W17' then (* Grupo da TAG <total><ISSQNtot> ************************)
   begin
     (*W18*)NFe.Total.ISSQNtot.vServ := LerCampo(tcDe2, 'vServ');
@@ -1081,7 +1093,7 @@ begin
     i := NFe.pag.Count - 1;
     NFe.pag[i].tPag :=  StrToFormaPagamento(ok, LerCampo(tcStr, 'tPag'));
     NFe.pag[i].vPag := LerCampo(tcDe2, 'vPag');
-//    NFe.pag[i].card := LerCampo(tcStr, 'card'); // é um grupo
+    NFe.pag[i].tpIntegra := StrTotpIntegra(ok, LerCampo(tcStr, 'card'));
     NFe.pag[i].CNPJ := LerCampo(tcStr, 'CNPJ');
     NFe.pag[i].tBand := StrToBandeiraCartao(ok, LerCampo(tcStr, 'tBand'));
     NFe.pag[i].cAut := LerCampo(tcStr, 'cAut');

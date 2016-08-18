@@ -1,8 +1,8 @@
 object dmACBrGNREFR: TdmACBrGNREFR
   OldCreateOrder = False
-  Left = 296
-  Height = 525
-  Width = 848
+  OnCreate = DataModuleCreate
+  Height = 260
+  Width = 689
   object frxPDFExport: TfrxPDFExport
     UseFileCache = True
     ShowProgress = True
@@ -45,7 +45,7 @@ object dmACBrGNREFR: TdmACBrGNREFR
     Top = 148
   end
   object frxReport: TfrxReport
-    Version = '4.13.1'
+    Version = '5.3.16'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.AllowEdit = False

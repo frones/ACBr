@@ -42,7 +42,7 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, Forms, StrUtils,
-  ACBrNFSeConfiguracoes, ACBrDFeUtil,
+  ACBrNFSeConfiguracoes, ACBrDFeUtil, ACBrDFeSSL,
   pnfsNFSe, pnfsNFSeR, pnfsNFSeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
@@ -75,6 +75,8 @@ type
     function GetXMLAssinado: String;
     procedure SetXML(const Value: String);
     procedure SetXMLOriginal(const Value: String);
+
+    procedure AssinaturaAdicional;
   public
     constructor Create(Collection2: TCollection); override;
     destructor Destroy; override;
@@ -219,7 +221,7 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, InfElemento, NomeArq: String;
+  XMLStr, InfElemento: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
@@ -244,12 +246,18 @@ begin
   begin
     case StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML) of
       ve110,
-      ve200,
-      ve201: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
+      ve200: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfDeclaracaoPrestacaoServico';
 
     // Os RPS versão 1.00 tem como InfElement = InfRps
     else
       InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'InfRps';
+    end;
+
+    case Configuracoes.Geral.Provedor of
+      proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
+      pro4R: InfElemento := 'Rps';
+    else
+      InfElemento := InfElemento;
     end;
 
     if Assina then
@@ -267,10 +275,13 @@ begin
     finally
       Leitor.Free;
     end;
-
-    NomeArq := NFSe.IdentificacaoRps.Numero + NFSe.IdentificacaoRps.Serie + '-rps.xml';
     if Configuracoes.Arquivos.Salvar then
-      Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+    begin
+      if NaoEstaVazio(NomeArq) then
+        Gravar(NomeArq, FXMLAssinado)
+      else
+        Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+    end;
   end;
 end;
 
@@ -338,6 +349,7 @@ end;
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
 begin
   FNFSeR.Leitor.Arquivo := AXML;
+  FNFSeR.Provedor       := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
   FNFSeR.ProvedorConf   := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
   FNFSeR.PathIniCidades := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.PathIniCidades;
   FNFSeR.LerXml;
@@ -424,8 +436,9 @@ begin
     FNFSeW.NFSeWClass.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
     FNFSeW.NFSeWClass.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;
 
-    FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta := Configuracoes.Geral.FormatoAlerta;
+    FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
+    FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
@@ -514,6 +527,68 @@ begin
     FXMLAssinado := '';
 end;
 
+procedure NotaFiscal.AssinaturaAdicional;
+var
+  sSituacao, sISSRetido, sCPFCNPJTomador, sIndTomador, sTomador,
+  sCPFCNPJInter, sIndInter, sISSRetidoInter, sInter, sAssinatura: String;
+begin
+  sSituacao := EnumeradoToStr(NFSe.Status, ['N', 'C'], [srNormal, srCancelado]);
+
+  sISSRetido := EnumeradoToStr(NFSe.Servico.Valores.IssRetido,
+                               ['N', 'S'], [stNormal, stRetencao]);
+
+  // Tomador do Serviço
+  sCPFCNPJTomador := OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj);
+
+  if Length(sCPFCNPJTomador) = 11 then
+    sIndTomador := '1'
+  else
+    if Length(sCPFCNPJTomador) = 14 then
+      sIndTomador := '2'
+    else
+      sIndTomador := '3';
+
+  if sIndTomador <> '3' then
+    sTomador := sIndTomador + Poem_Zeros(sCPFCNPJTomador, 14)
+  else
+    sTomador := '';
+
+  // Prestador Intermediario
+  sCPFCNPJInter := OnlyNumber(NFSe.IntermediarioServico.CpfCnpj);
+
+  if Length(sCPFCNPJInter) = 11 then
+    sIndInter := '1'
+  else
+    if Length(sCPFCNPJInter) = 14 then
+      sIndInter := '2'
+    else
+      sIndInter := '3';
+
+  sISSRetidoInter := EnumeradoToStr(NFSe.IntermediarioServico.IssRetido,
+                                    ['N', 'S'], [stNormal, stRetencao]);
+
+  if sIndInter <> '3' then
+    sInter := sIndInter + Poem_Zeros(sCPFCNPJInter, 14) + sISSRetidoInter
+  else
+    sInter := '';
+
+  sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 8) +
+                 PadRight(NFSe.IdentificacaoRps.Serie, 5 , ' ') +
+                 Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
+                 FormatDateTime('yyyymmdd', NFse.DataEmissao) +
+                 TTributacaoRPSToStr(NFSe.TipoTributacaoRPS) +
+                 sSituacao +
+                 sISSRetido +
+                 Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorServicos)), 15 ) +
+                 Poem_Zeros(OnlyNumber(FormatFloat('#0.00', NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
+                 Poem_Zeros(OnlyNumber(NFSe.Servico.ItemListaServico ), 5 ) +
+                 sTomador +
+                 sInter;
+
+  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
+    NFSe.Assinatura := SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
+end;
+
 { TNotasFiscais }
 
 constructor TNotasFiscais.Create(AOwner: TPersistent; ItemClass: TCollectionItemClass);
@@ -538,7 +613,11 @@ var
   i: integer;
 begin
   for i := 0 to Self.Count - 1 do
+  begin
+    if Self.FConfiguracoes.Geral.Provedor = proSP then
+      Self.Items[i].AssinaturaAdicional;
     Self.Items[i].Assinar(Assina);
+  end;
 end;
 
 function TNotasFiscais.AssinarLote(XMLLote, docElemento, infElemento: String;
@@ -676,7 +755,7 @@ function TNotasFiscais.LoadFromFile(CaminhoArquivo: String;
 var
   XMLStr: String;
   XMLUTF8: AnsiString;
-  i: integer;
+  i, l: integer;
   MS: TMemoryStream;
 begin
   MS := TMemoryStream.Create;
@@ -687,14 +766,18 @@ begin
     MS.Free;
   end;
 
+  l := Self.Count; // Indice da última nota já existente
+
   // Converte de UTF8 para a String nativa da IDE //
   XMLStr := DecodeToString(XMLUTF8, True);
-  LoadFromString(XMLStr, AGerarNFSe);
+  Result := LoadFromString(XMLStr, AGerarNFSe);
 
-  for i := 0 to Self.Count - 1 do
-    Self.Items[i].NomeArq := CaminhoArquivo;
-
-  Result := True;
+  if Result then
+  begin
+    // Atribui Nome do arquivo a novas notas inseridas //
+    for i := l to Self.Count - 1 do
+      Self.Items[i].NomeArq := CaminhoArquivo;
+  end;
 end;
 
 function TNotasFiscais.LoadFromStream(AStream: TStringStream;
@@ -736,12 +819,22 @@ var
     end;
   end;
 
+  //provedor SimplISS
+  function PosNFSeCancelamento: Integer;
+  begin
+    TamTAG := 18;
+    Result := Pos('</NfseCancelamento>', AXMLString);
+  end;
+
   function PosRPS: Integer;
   begin
     TamTAG := 5;
-    if VersaoNFSe < ve200 then
+    if (VersaoNFSe < ve200) and (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proAgili) then
     begin
       Result := Pos('</Rps>', AXMLString);
+      // Provedor ISSDSF
+      if Result = 0 then
+        Result := Pos('</RPS>', AXMLString);
       // Provedor Governa
       if Result = 0 then
       begin
@@ -762,13 +855,12 @@ begin
   VersaoNFSe := StrToVersaoNFSe(Ok, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConfigXML.VersaoXML);
 
   AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
-  AXMLString := RetirarPrefixos(AXMLString);
-(*
-  // Converte de UTF8 para a String nativa da IDE //
-  AXMLString := RetirarPrefixos(DecodeToString(AXMLString, True));
-*)
-  Result := False;
+
+  if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proISSCuritiba then
+    AXMLString := RetirarPrefixos(AXMLString);
+
   N := PosNFSe;
+
   if N > 0 then
   begin
     // Ler os XMLs das NFS-e
@@ -776,6 +868,15 @@ begin
     begin
       AXML := copy(AXMLString, 1, N + TamTAG);
       AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
+
+      //provedor SimplISS
+      N:= PosNFSeCancelamento;
+      if N > 0 then
+      begin
+        //copia tag NfseCancelamento
+        AXML:= AXML + copy(AXMLString, 1, N + TamTAG);
+        AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
+      end;
 
       with Self.Add do
       begin
@@ -806,6 +907,8 @@ begin
       N := PosRPS;
     end;
   end;
+
+  Result := Self.Count > 0;
 end;
 
 function TNotasFiscais.GravarXML(PathNomeArquivo: String): Boolean;

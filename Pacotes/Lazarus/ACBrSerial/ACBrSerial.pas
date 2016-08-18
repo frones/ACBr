@@ -8,22 +8,22 @@ interface
 
 uses
   ACBrSerialReg, ACBrDevice, ACBrBAL, ACBrBALClass, ACBrBALFilizola, 
-  ACBrBALToledo, ACBrBALUrano, ACBrCHQ, ACBrCHQBematech, ACBrCHQChronos, 
-  ACBrCHQClass, ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, ACBrCHQPerto, 
-  ACBrCHQSchalter, ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, ACBrDISClass, 
-  ACBrDISGertecSerial, ACBrDISGertecTeclado, ACBrDISKeytecTeclado, ACBrECF, 
-  ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, ACBrECFDataRegis, 
-  ACBrECFEpson, ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, ACBrECFNaoFiscal, 
-  ACBrECFNCR, ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, ACBrECFSwedaSTX, 
-  ACBrECFUrano, ACBrECFYanco, ACBrECFEscECF, ACBrETQ, ACBrETQClass, 
-  ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, ACBrGAVImpressoraComum, 
-  ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, ACBrGAVSerialMenno, ACBrLCB, 
-  ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, ACBrDISSmakTeclado, 
-  ACBrDISGertecTEC65lib, ACBrECFVirtual, ACBrECFVirtualBuffer, 
-  ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, ACBrPosPrinter, 
-  ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, ACBrEscDiebold, 
-  ACBrEscElgin, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, ACBrSMSZTE, 
-  LazarusPackageIntf;
+  ACBrBALToledo, ACBrBALUrano, ACBrBALSaturno, ACBrCHQ, ACBrCHQBematech, 
+  ACBrCHQChronos, ACBrCHQClass, ACBrCHQImpressoraComum, ACBrCHQImpressoraECF, 
+  ACBrCHQPerto, ACBrCHQSchalter, ACBrCHQSotomaq, ACBrCHQUrano, ACBrDIS, 
+  ACBrDISClass, ACBrDISGertecSerial, ACBrDISGertecTeclado, 
+  ACBrDISKeytecTeclado, ACBrECF, ACBrECFClass, ACBrECFBematech, ACBrECFDaruma, 
+  ACBrECFDataRegis, ACBrECFEpson, ACBrECFFiscNET, ACBrECFICash, ACBrECFMecaf, 
+  ACBrECFNaoFiscal, ACBrECFNCR, ACBrECFQuattro, ACBrECFSchalter, ACBrECFSweda, 
+  ACBrECFSwedaSTX, ACBrECFUrano, ACBrECFYanco, ACBrECFEscECF, ACBrETQ, 
+  ACBrETQClass, ACBrETQPpla, ACBrETQZplII, ACBrGAV, ACBrGAVClass, 
+  ACBrGAVImpressoraComum, ACBrGAVImpressoraECF, ACBrGAVSerialGerbo, 
+  ACBrGAVSerialMenno, ACBrLCB, ACBrRFD, ACBrTER, ACBrTERClass, ACBrTERWilbor, 
+  ACBrDISSmakTeclado, ACBrDISGertecTEC65lib, ACBrECFVirtual, 
+  ACBrECFVirtualBuffer, ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, 
+  ACBrPosPrinter, ACBrEscBematech, ACBrEscPosEpson, ACBrEscDaruma, 
+  ACBrEscDiebold, ACBrEscElgin, ACBrSMS, ACBrSMSClass, ACBrSMSDaruma, 
+  ACBrSMSZTE, LazarusPackageIntf;
 
 implementation
 

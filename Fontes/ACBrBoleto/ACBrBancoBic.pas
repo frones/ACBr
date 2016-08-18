@@ -177,7 +177,6 @@ var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia, aDiasProtesto :String;
   Protesto, TipoSacado, TipoSacador, TipoSacadorAvalista, MensagemCedente, aConta     :String;
   aCarteira, wLinha : String;
-  TipoBoleto :Char;
 begin
 
    with ACBrTitulo do
@@ -208,10 +207,8 @@ begin
       end;
 
       {Pegando Tipo de Boleto}
-      case ACBrBoleto.Cedente.ResponEmissao of
-         tbCliEmite : TipoBoleto := '2';
-      else
-         TipoBoleto := '1';
+      if (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite) then
+      begin
          if NossoNumero = EmptyStr then
            DigitoNossoNumero := '0';
       end;

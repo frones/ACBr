@@ -45,12 +45,15 @@ unit ACBrTEFDClass ;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   Classes, SysUtils, Contnrs, ACBrBase
   {$IFNDEF NOGUI}
     {$IFDEF VisualCLX}
        ,QForms, QDialogs, QControls
     {$ELSE}
-       ,Forms, Dialogs, Controls
+       {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Forms, Dialogs, Controls
     {$ENDIF}
   {$ENDIF} ;
 
@@ -66,6 +69,7 @@ const
    CACBrTEFD_NumVias     = 2 ;
    CACBrTEFD_DestaqueVia = 'Destaque a %dª Via' ;
    CACBrTEFD_Erro_ECFNaoLivre = 'ECF não está LIVRE' ;
+   CACBrTEFD_Erro_ECFEstado = 'Erro ao obter Estado do ECF' ;
    CACBrTEFD_Erro_ECFNaoResponde = 'Erro na impressão.'+sLineBreak+
                                    'Deseja tentar novamente ?' ;
    CACBrTEFD_Erro_ECFNaoRespondeInfo = 'Impressora não responde.'+sLineBreak+
@@ -314,6 +318,58 @@ type
         const Sequencia : Integer; const Informacao : String ) ;
    end;
 
+   { Definindo novo tipo para armazenar Correspondente Bancário }
+   { TACBrTEFDRespCB }
+
+   TACBrTEFDRespCB = class
+   private
+     fsAcrescimo: Double;
+     fsDataPagamento: TDateTime;
+     fsDataVencimento: TDateTime;
+     fsDesconto: Double;
+     fsDocumento: String;
+     fsNSUCancelamento: String;
+     fsNSUTransacaoCB: String;
+     fsTipoDocumento: Integer;
+     fsValorOriginal: Double;
+     fsValorPago: Double;
+
+   public
+     constructor Create;
+
+     property Acrescimo      : Double    read fsAcrescimo       write fsAcrescimo;
+     property DataVencimento : TDateTime read fsDataVencimento  write fsDataVencimento;
+     property DataPagamento  : TDateTime read fsDataPagamento   write fsDataPagamento;
+     property Desconto       : Double    read fsDesconto        write fsDesconto;
+     property Documento      : String    read fsDocumento       write fsDocumento;
+     property NSUCancelamento: String    read fsNSUCancelamento write fsNSUCancelamento;
+     property NSUTransacaoCB : String    read fsNSUTransacaoCB  write fsNSUTransacaoCB;
+     property TipoDocumento  : Integer   read fsTipoDocumento   write fsTipoDocumento;
+     property ValorOriginal  : Double    read fsValorOriginal   write fsValorOriginal;
+     property ValorPago      : Double    read fsValorPago       write fsValorPago;
+   end;
+
+   { Lista para armazenar Objetos do tipo TACBrTEFDRespCB }
+   { TACBrTEFDRespListaCB }
+
+   TACBrTEFDRespListaCB = class(TObjectList)
+   protected
+     fsTotalTitulos: Double;
+     fsTotalTitulosNaoPago: Double;
+
+     procedure SetObject(Index: Integer; Item: TACBrTEFDRespCB);
+     function GetObject(Index: Integer): TACBrTEFDRespCB;
+   public
+     constructor Create(FreeObjects: boolean);
+
+     function Add(Obj: TACBrTEFDRespCB): Integer;
+     procedure Insert(Index: Integer; Obj: TACBrTEFDRespCB);
+     property Objects[Index: Integer]: TACBrTEFDRespCB
+       read GetObject write SetObject; default;
+
+     property TotalTitulos       : Double read fsTotalTitulos        write fsTotalTitulos;
+     property TotalTitulosNaoPago: Double read fsTotalTitulosNaoPago write fsTotalTitulosNaoPago;
+   end;
 
    { Definindo novo tipo para armazenar as Parcelas }
 
@@ -347,6 +403,21 @@ type
          read GetObject write SetObject; default;
      end;
 
+   TACBrTEFDRespNFCeSAT = class
+   private
+    FCodCredenciadora: String;
+    FAutorizacao: String;
+    FBandeira: String;
+    FCNPJCredenciadora: String;
+   public
+    procedure Clear;
+
+    property CodCredenciadora: String read FCodCredenciadora write FCodCredenciadora;
+    property CNPJCredenciadora: String read FCNPJCredenciadora write FCNPJCredenciadora;
+    property Bandeira: String read FBandeira write FBandeira;
+    property Autorizacao: String read FAutorizacao write FAutorizacao;
+   end;
+
 
    { TACBrTEFDResp }
 
@@ -367,15 +438,14 @@ type
      fpConta : String;
      fpContaDC : String;
      fpConteudo : TACBrTEFDArquivo;
+     fpCorrespBancarios: TACBrTEFDRespListaCB;
      fpDataCheque : TDateTime;
      fpDataHoraTransacaoCancelada : TDateTime;
      fpDataHoraTransacaoComprovante : TDateTime;
      fpDataHoraTransacaoHost : TDateTime;
      fpDataHoraTransacaoLocal : TDateTime;
      fpDataPreDatado : TDateTime;
-     fpDataPagamentoCB: TDateTime;
      fpDocumentoPessoa : String;
-     fpDocumentoCB: String;
      fpFinalizacao : String;
      fpHeader : String;
      fpID : Integer;
@@ -384,7 +454,6 @@ type
      fpNomeAdministradora : String;
      fpNomeOperadoraCelular: String;
      fpNSU : String;
-     fpNSUTransacaoCB: String;
      fpNSUTransacaoCancelada : String;
      fpNumeroLoteTransacao : Integer;
      fpNumeroRecargaCelular: String;
@@ -401,17 +470,11 @@ type
      fpTrailer : String;
      fpValorTotal : Double;
      fpValorOriginal: Double;
-     fpValorAcrescimoCB: Double;
-     fpValorDescontoCB: Double;
-     fpValorPagoCB: Double;
      fpValorRecargaCelular: Double;
-     fpValorTotalTitulosCB: Double;
-     fpValorTotalNaoPagoCB: Double;
      fpSaque: Double;
      fpDesconto: Double;
      fpTaxaServico: Double;
      fpDocumentoVinculado : String;
-     fpTipoDocumentoCB: Integer;
      fpTipoParcelamento : Integer;
      fpParcelas : TACBrTEFDRespParcelas ;
      fpImagemComprovante1aVia : TStringList ;
@@ -429,6 +492,7 @@ type
      fpValorEntradaCDC:Double;
      fpDataEntradaCDC:TDateTime;
      fpTipoOperacao: TACBrTEFDRespTipoOperacao;
+     fpNFCeSAT: TACBrTEFDRespNFCeSAT;
 
      procedure SetCNFEnviado(const AValue : Boolean);
      procedure SetIndiceFPG_ECF(const AValue : String);
@@ -436,8 +500,6 @@ type
      procedure SetOrdemPagamento(const AValue : Integer);
    protected
      function GetTransacaoAprovada : Boolean; virtual;
-   published
-
    public
      constructor Create ;
      destructor Destroy ; override;
@@ -495,15 +557,7 @@ type
      property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante ;
      property Trailer                     : String    read fpTrailer ;
 
-     property DataPagamentoCB        : TDateTime read fpDataPagamentoCB;
-     property DocumentoCB            : String    read fpDocumentoCB;
-     property NSUTransacaoCB         : String    read fpNSUTransacaoCB;
-     property TipoDocumentoCB        : Integer   read fpTipoDocumentoCB;
-     property ValorPagoCB            : Double    read fpValorPagoCB;
-     property ValorAcrescimoCB       : Double    read fpValorAcrescimoCB;
-     property ValorDescontoCB        : Double    read fpValorDescontoCB;
-     property ValorTotalTitulosCB    : Double    read fpValorTotalTitulosCB;
-     property ValorTotalNaoPagoCB    : Double    read fpValorTotalNaoPagoCB;
+     property CorrespBancarios: TACBrTEFDRespListaCB read fpCorrespBancarios;
 
      property CodigoOperadoraCelular : String    read fpCodigoOperadoraCelular;
      property NomeOperadoraCelular   : String    read fpNomeOperadoraCelular;
@@ -536,6 +590,8 @@ type
      property ValorEntradaCDC:Double read fpValorEntradaCDC;
      property DataEntradaCDC:TDateTime read fpDataEntradaCDC;
      property TipoOperacao: TACBrTEFDRespTipoOperacao read fpTipoOperacao;
+
+     property NFCeSAT: TACBrTEFDRespNFCeSAT read fpNFCeSAT;
    end;
 
    { TACBrTEFDRespTXT }
@@ -748,7 +804,7 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer ): Str
 
 implementation
 
-Uses dateutils, StrUtils, Math, types,
+Uses dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
   ACBrConsts, ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil ;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;
@@ -757,6 +813,51 @@ var
 begin
    Casas  := max(Length(IntToStr(Identificacao)),3) ;
    Result := IntToStrZero(Identificacao, Casas)+'-'+IntToStrZero(Sequencia, 3);
+end;
+
+{ TACBrTEFDRespListaCB }
+
+procedure TACBrTEFDRespListaCB.SetObject(Index: Integer; Item: TACBrTEFDRespCB);
+begin
+  inherited SetItem(Index, Item);
+end;
+
+function TACBrTEFDRespListaCB.GetObject(Index: Integer): TACBrTEFDRespCB;
+begin
+  Result := inherited GetItem(Index) as TACBrTEFDRespCB;
+end;
+
+constructor TACBrTEFDRespListaCB.Create(FreeObjects: boolean);
+begin
+  inherited Create(FreeObjects);
+
+  fsTotalTitulos        := 0;
+  fsTotalTitulosNaoPago := 0;
+end;
+
+function TACBrTEFDRespListaCB.Add(Obj: TACBrTEFDRespCB): Integer;
+begin
+  Result := inherited Add(Obj);
+end;
+
+procedure TACBrTEFDRespListaCB.Insert(Index: Integer; Obj: TACBrTEFDRespCB);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+{ TACBrTEFDRespCB }
+
+constructor TACBrTEFDRespCB.Create;
+begin
+  fsAcrescimo      := 0;
+  fsDataPagamento  := 0;
+  fsDataVencimento := 0;
+  fsDesconto       := 0;
+  fsDocumento      := '';
+  fsNSUTransacaoCB := '';
+  fsTipoDocumento  := 0;
+  fsValorOriginal  := 0;
+  fsValorPago      := 0;
 end;
 
 
@@ -1142,27 +1243,33 @@ end;
 
 { TACBrTEFDResp }
 
-constructor TACBrTEFDResp.Create ;
+constructor TACBrTEFDResp.Create;
 begin
-  inherited Create ;
+  inherited Create;
 
   fpConteudo := TACBrTEFDArquivo.Create;
-  fpParcelas := TACBrTEFDRespParcelas.create(True) ;
+  fpParcelas := TACBrTEFDRespParcelas.create(True);
+  fpCorrespBancarios := TACBrTEFDRespListaCB.Create(True);
   
   fpImagemComprovante1aVia := TStringList.Create;
   fpImagemComprovante2aVia := TStringList.Create;
 
+  fpNFCeSAT := TACBrTEFDRespNFCeSAT.Create;
+
   // Inicializa as variáveis internas //
-  Clear ;
+  Clear;
 end;
 
 destructor TACBrTEFDResp.Destroy;
 begin
   fpConteudo.Free;
   fpParcelas.Free ;
+  fpCorrespBancarios.Free;
 
   fpImagemComprovante1aVia.Free ;
   fpImagemComprovante2aVia.Free ;
+
+  fpNFCeSAT.Free;
 
   inherited ;
 end;
@@ -1186,6 +1293,7 @@ procedure TACBrTEFDResp.Clear;
 begin
    fpConteudo.Clear;
    fpParcelas.Clear;
+   fpCorrespBancarios.Clear;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
 
@@ -1233,16 +1341,6 @@ begin
    fpValorEntradaCDC              := 0;
    fpDataEntradaCDC               := 0;
 
-   fpDataPagamentoCB        := 0;
-   fpDocumentoCB            := '';
-   fpNSUTransacaoCB         := '';
-   fpTipoDocumentoCB        := 0;
-   fpValorPagoCB            := 0;
-   fpValorAcrescimoCB       := 0;
-   fpValorDescontoCB        := 0;
-   fpValorTotalTitulosCB    := 0;
-   fpValorTotalNaoPagoCB    := 0;
-
    fpCodigoOperadoraCelular := '';
    fpNomeOperadoraCelular   := '';
    fpNumeroRecargaCelular   := '';
@@ -1261,6 +1359,8 @@ begin
 
    fpArqBackup := '' ;
    fpArqRespPendente := '' ;
+
+   fpNFCeSAT.Clear;
 end;
 
 procedure TACBrTEFDResp.LeArquivo(const NomeArquivo : String);
@@ -1672,8 +1772,6 @@ end;
 
 function TACBrTEFDClass.ADM: Boolean;
 begin
-  Result := False ;
-
   IniciarRequisicao('ADM');
   AdicionarIdentificacao;
   FinalizarRequisicao;
@@ -1690,7 +1788,6 @@ end;
 function TACBrTEFDClass.CRT(Valor: Double; IndiceFPG_ECF: String;
   DocumentoVinculado: String; Moeda: Integer): Boolean;
 begin
-  Result := False ;
   VerificarTransacaoPagamento( Valor );
 
   IniciarRequisicao('CRT');
@@ -1711,7 +1808,6 @@ function TACBrTEFDClass.CHQ(Valor: Double; IndiceFPG_ECF: String;
 begin
   // Compensacao não é utilizado em TEF discado //
 
-  Result := False ;
   VerificarTransacaoPagamento( Valor );
 
   IniciarRequisicao('CHQ');
@@ -1747,7 +1843,6 @@ function TACBrTEFDClass.CNC: Boolean;
 Var
   OldResp : TACBrTEFDRespTXT ;
 begin
-  Result  := False ;
   OldResp := TACBrTEFDRespTXT.Create;
   try
      OldResp.Assign(Resp);      { Salvando dados da Resposta Atual }
@@ -1790,8 +1885,6 @@ end;
 function TACBrTEFDClass.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
   Valor: Double): Boolean;
 begin
-  Result := False ;
-
   IniciarRequisicao('CNC');
   Req.ValorTotal                   := Valor;
   Req.Rede                         := Rede;
@@ -2595,8 +2688,6 @@ var
   UltimaTransacao, ImpressaoOk, TecladoEstavaLivre : Boolean;
   RespostaPendente : TACBrTEFDRespTXT;
 begin
-  Result := False ;
-
   LerRespostaRequisicao;
 
   GravaLog( Name +' ProcessarRespostaPagamento: '+Resp.Header+' - '+IntToStr(Resp.ID)+
@@ -2916,6 +3007,16 @@ end;
 procedure TACBrTEFDRespostasPendentes.Insert(Index : Integer; Obj : TACBrTEFDResp);
 begin
   inherited Insert(Index, Obj);
+end;
+
+{ TACBrTEFDRespNFCeSAT }
+
+procedure TACBrTEFDRespNFCeSAT.Clear;
+begin
+  FCodCredenciadora  := '';
+  FAutorizacao       := '';
+  FBandeira          := '';
+  FCNPJCredenciadora := '';
 end;
 
 end.

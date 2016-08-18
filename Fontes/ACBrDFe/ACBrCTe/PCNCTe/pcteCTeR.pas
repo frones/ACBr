@@ -122,12 +122,12 @@ begin
    else
     Aspas := '''';
 
-  CTe.infCTe.Id := Leitor.rAtributo('Id=');
+  CTe.infCTe.Id := Leitor.rAtributo('Id=', 'infCte');
 
   if OnlyNumber(CTe.infCTe.Id) = '' then
     raise Exception.Create('Não encontrei o atributo: Id');
 
-  CTe.infCTe.versao := StringToFloatDef(Leitor.rAtributo('versao='), -1);
+  CTe.infCTe.versao := StringToFloatDef(Leitor.rAtributo('versao=', 'infCte'), -1);
   if CTe.infCTe.versao = -1 then
     raise Exception.Create('Não encontrei o atributo: versao');
 
@@ -1324,7 +1324,7 @@ begin
   (* Grupo da TAG <signature> *************************************************)
   Leitor.Grupo := Leitor.Arquivo;
 
-  CTe.signature.URI             := Leitor.rAtributo('Reference URI=');
+  CTe.signature.URI             := Leitor.rAtributo('URI=', 'Reference');
   CTe.signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
   CTe.signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
   CTe.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');

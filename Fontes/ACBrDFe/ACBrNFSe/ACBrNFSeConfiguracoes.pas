@@ -57,7 +57,7 @@ type
     ProLinkNFSe: String;
     HomLinkNFSe: String;
     DadosSenha: String;
-    UseSSL: Boolean;
+    UseCertificateHTTP:Boolean;
  end;
 
  TConfigNameSpace = record
@@ -79,10 +79,12 @@ type
     LoteGerar: Boolean;
     RecSincrono: Boolean;
     Substituir: Boolean;
+    AbrirSessao: Boolean;
+    FecharSessao: Boolean;
  end;
 
  TConfigXML = record
-    VersaoCabecalho: String;
+    Layout: String;
     VersaoDados: String;
     VersaoXML: String;
     NameSpace: String;
@@ -104,6 +106,8 @@ type
     ServicoGerar: String;
     ServicoEnviarSincrono: String;
     ServicoSubstituir: String;
+    ServicoAbrirSessao: String;
+    ServicoFecharSessao: String;
   end;
 
  TConfigSoapAction = record
@@ -116,6 +120,8 @@ type
     Gerar: String;
     RecSincrono: String;
     Substituir: String;
+    AbrirSessao: String;
+    FecharSessao: String;
  end;
 
  TConfigURL = record
@@ -129,6 +135,8 @@ type
     HomGerarNFSe: String;
     HomRecepcaoSincrono: String;
     HomSubstituiNFSe: String;
+    HomAbrirSessao: String;
+    HomFecharSessao: String;
 
     ProRecepcaoLoteRPS: String;
     ProConsultaLoteRPS: String;
@@ -140,6 +148,8 @@ type
     ProGerarNFSe: String;
     ProRecepcaoSincrono: String;
     ProSubstituiNFSe: String;
+    ProAbrirSessao: String;
+    ProFecharSessao: String;
   end;
 
  TConfigEnvelope = record
@@ -148,38 +158,68 @@ type
     Recepcionar: String;
     Recepcionar_IncluiEncodingCab: Boolean;
     Recepcionar_IncluiEncodingDados: Boolean;
+    Recepcionar_CabecalhoStr: Boolean;
+    Recepcionar_DadosStr: Boolean;
 
     ConsSit: String;
     ConsSit_IncluiEncodingCab: Boolean;
     ConsSit_IncluiEncodingDados: Boolean;
+    ConsSit_CabecalhoStr: Boolean;
+    ConsSit_DadosStr: Boolean;
 
     ConsLote: String;
     ConsLote_IncluiEncodingCab: Boolean;
     ConsLote_IncluiEncodingDados: Boolean;
+    ConsLote_CabecalhoStr: Boolean;
+    ConsLote_DadosStr: Boolean;
 
     ConsNFSeRps: String;
     ConsNFSeRps_IncluiEncodingCab: Boolean;
     ConsNFSeRps_IncluiEncodingDados: Boolean;
+    ConsNFSeRps_CabecalhoStr: Boolean;
+    ConsNFSeRps_DadosStr: Boolean;
 
     ConsNFSe: String;
     ConsNFSe_IncluiEncodingCab: Boolean;
     ConsNFSe_IncluiEncodingDados: Boolean;
+    ConsNFSe_CabecalhoStr: Boolean;
+    ConsNFSe_DadosStr: Boolean;
 
     Cancelar: String;
     Cancelar_IncluiEncodingCab: Boolean;
     Cancelar_IncluiEncodingDados: Boolean;
+    Cancelar_CabecalhoStr: Boolean;
+    Cancelar_DadosStr: Boolean;
 
     Gerar: String;
     Gerar_IncluiEncodingCab: Boolean;
     Gerar_IncluiEncodingDados: Boolean;
+    Gerar_CabecalhoStr: Boolean;
+    Gerar_DadosStr: Boolean;
 
     RecSincrono: String;
     RecSincrono_IncluiEncodingCab: Boolean;
     RecSincrono_IncluiEncodingDados: Boolean;
+    RecSincrono_CabecalhoStr: Boolean;
+    RecSincrono_DadosStr: Boolean;
 
     Substituir: String;
     Substituir_IncluiEncodingCab: Boolean;
     Substituir_IncluiEncodingDados: Boolean;
+    Substituir_CabecalhoStr: Boolean;
+    Substituir_DadosStr: Boolean;
+
+    AbrirSessao: String;
+    AbrirSessao_IncluiEncodingCab: Boolean;
+    AbrirSessao_IncluiEncodingDados: Boolean;
+    AbrirSessao_CabecalhoStr: Boolean;
+    AbrirSessao_DadosStr: Boolean;
+
+    FecharSessao: String;
+    FecharSessao_IncluiEncodingCab: Boolean;
+    FecharSessao_IncluiEncodingDados: Boolean;
+    FecharSessao_CabecalhoStr: Boolean;
+    FecharSessao_DadosStr: Boolean;
  end;
 
  TConfigGrupoMsgRet = record
@@ -192,6 +232,8 @@ type
     Gerar: String;
     RecSincrono: String;
     Substituir: String;
+    AbrirSessao: String;
+    FecharSessao: String;
  end;
 
  { TEmitenteConfNFSe }
@@ -204,6 +246,7 @@ type
     FWebUser: String;
     FWebSenha: String;
     FWebFraseSecr: String;
+    FWebChaveAcesso: String;
 
   public
     Constructor Create;
@@ -215,6 +258,7 @@ type
     property WebUser: String      read FWebUser      write FWebUser;
     property WebSenha: String     read FWebSenha     write FWebSenha;
     property WebFraseSecr: String read FWebFraseSecr write FWebFraseSecr;
+    property WebChaveAcesso: String read FWebChaveAcesso write FWebChaveAcesso;
   end;
 
   { TGeralConfNFSe }
@@ -242,6 +286,7 @@ type
     FxNomeURL_P: String;
     FSenhaWeb: String;
     FUserWeb: String;
+    FCNPJPrefeitura: String;
     FConsultaLoteAposEnvio: Boolean;
     FPathIniCidades: String;
     FPathIniProvedor: String;
@@ -252,7 +297,7 @@ type
   public
     constructor Create(AOwner: TConfiguracoes); override;
     destructor Destroy; override;
-    procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); overload;
+    procedure Assign(DeGeralConfNFSe: TGeralConfNFSe); reintroduce;
     procedure SetConfigMunicipio;
 
     property ConfigGeral: TConfigGeral read FConfigGeral;
@@ -275,6 +320,7 @@ type
     property xNomeURL_P: String read FxNomeURL_P;
     property SenhaWeb: String read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
+    property CNPJPrefeitura: String read FCNPJPrefeitura write FCNPJPrefeitura;
     property ConsultaLoteAposEnvio: Boolean read FConsultaLoteAposEnvio write FConsultaLoteAposEnvio;
     property PathIniCidades: String read FPathIniCidades write FPathIniCidades;
     property PathIniProvedor: String read FPathIniProvedor write FPathIniProvedor;
@@ -296,7 +342,7 @@ type
     FTabServicosExt: Boolean;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfNFSe: TArquivosConfNFSe); overload;
+    procedure Assign(DeArquivosConfNFSe: TArquivosConfNFSe); reintroduce;
 
     function GetPathGer(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathRPS(Data: TDateTime = 0; CNPJ: String = ''): String;
@@ -327,7 +373,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe); overload;
+    procedure Assign(DeConfiguracoesNFSe: TConfiguracoesNFSe); reintroduce;
 
   published
     property Geral: TGeralConfNFSe read GetGeral;
@@ -352,6 +398,7 @@ begin
   FWebUser := '';
   FWebSenha := '';
   FWebFraseSecr := '';
+  FWebChaveAcesso := '';
 end;
 
 procedure TEmitenteConfNFSe.Assign(Source: TPersistent);
@@ -364,6 +411,7 @@ begin
     FWebUser := TEmitenteConfNFSe(Source).WebUser;
     FWebSenha := TEmitenteConfNFSe(Source).WebSenha;
     FWebFraseSecr := TEmitenteConfNFSe(Source).WebFraseSecr;
+    FWebChaveAcesso := TEmitenteConfNFSe(Source).WebChaveAcesso;
   end
   else
     inherited Assign(Source);
@@ -473,9 +521,12 @@ begin
   FxProvedor := FPIniParams.ReadString(CodIBGE, 'Provedor', '');
 
   if FxProvedor = 'ISSFortaleza' then
-    FProvedor := StrToProvedor(Ok, 'GINFES')
+    FProvedor := StrToProvedor(Ok, 'Ginfes')
   else
-    FProvedor := StrToProvedor(Ok, FxProvedor);
+    if FxProvedor = 'Infisc-v11' then
+      FProvedor := StrToProvedor(Ok, 'Infisc')
+    else
+      FProvedor := StrToProvedor(Ok, FxProvedor);
 
   FxMunicipio := FPIniParams.ReadString(CodIBGE, 'Nome'     , '');
   FxUF        := FPIniParams.ReadString(CodIBGE, 'UF'       , '');
@@ -509,7 +560,8 @@ begin
   FConfigGeral.Prefixo4      := trim(FPIniParams.ReadString('Geral', 'Prefixo4', ''));
   FConfigGeral.Identificador := trim(FPIniParams.ReadString('Geral', 'Identificador', ''));
   FConfigGeral.QuebradeLinha := trim(FPIniParams.ReadString('Geral', 'QuebradeLinha', ''));
-  FConfigGeral.UseSSL        := FPIniParams.ReadBool('Geral', 'UseSSL', False);
+
+  FConfigGeral.UseCertificateHTTP := FPIniParams.ReadBool('Geral', 'UseCertificado', False);
 
   FConfigNameSpace.Producao    := StringReplace(FPIniParams.ReadString('NameSpace', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigNameSpace.Homologacao := StringReplace(FPIniParams.ReadString('NameSpace', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
@@ -527,13 +579,23 @@ begin
   FConfigAssinar.LoteGerar := FPIniParams.ReadBool('Assinar', 'LoteGerar', False);
   FConfigAssinar.RecSincrono := FPIniParams.ReadBool('Assinar', 'RecSincrono', False);
   FConfigAssinar.Substituir := FPIniParams.ReadBool('Assinar', 'Substituir', False);
+  FConfigAssinar.AbrirSessao := FPIniParams.ReadBool('Assinar', 'AbrirSessao', False);
+  FConfigAssinar.FecharSessao := FPIniParams.ReadBool('Assinar', 'FecharSessao', False);
 
-  FConfigXML.VersaoCabecalho := FPIniParams.ReadString('XML', 'VersaoCabecalho', '');
+  FConfigXML.Layout := FPIniParams.ReadString('XML', 'Layout', 'ABRASF');
   FConfigXML.VersaoDados := FPIniParams.ReadString('XML', 'VersaoDados', '');
   FConfigXML.VersaoXML := FPIniParams.ReadString('XML', 'VersaoXML', '');
   FConfigXML.NameSpace := Trim(FPIniParams.ReadString('XML', 'NameSpace', ''));
   FConfigXML.CabecalhoStr := FPIniParams.ReadBool('XML', 'Cabecalho', False);
   FConfigXML.DadosStr := FPIniParams.ReadBool('XML', 'Dados', False);
+
+  if FConfigXML.Layout = 'ABRASF' then
+  begin
+    if FConfigXML.VersaoXML = '1.00' then
+      FConfigXML.Layout := 'ABRASFv1'
+    else
+      FConfigXML.Layout := 'ABRASFv2';
+  end;
 
   FConfigSchemas.Validar := FPIniParams.ReadBool('Schemas', 'Validar', True);
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');
@@ -547,7 +609,10 @@ begin
   FConfigSchemas.ServicoGerar := FPIniParams.ReadString('Schemas', 'ServicoGerar', '');
   FConfigSchemas.ServicoEnviarSincrono := FPIniParams.ReadString('Schemas', 'ServicoEnviarSincrono', '');
   FConfigSchemas.ServicoSubstituir := FPIniParams.ReadString('Schemas', 'ServicoSubstituir', '');
+  FConfigSchemas.ServicoAbrirSessao := FPIniParams.ReadString('Schemas', 'ServicoAbrirSessao', '');
+  FConfigSchemas.ServicoFecharSessao := FPIniParams.ReadString('Schemas', 'ServicoFecharSessao', '');
 
+(*
   FConfigSoapAction.Recepcionar := StringReplace(FPIniParams.ReadString('SoapAction', 'Recepcionar', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.ConsSit     := StringReplace(FPIniParams.ReadString('SoapAction', 'ConsSit'    , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.ConsLote    := StringReplace(FPIniParams.ReadString('SoapAction', 'ConsLote'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
@@ -557,6 +622,20 @@ begin
   FConfigSoapAction.Gerar       := StringReplace(FPIniParams.ReadString('SoapAction', 'Gerar'      , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.RecSincrono := StringReplace(FPIniParams.ReadString('SoapAction', 'RecSincrono', ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   FConfigSoapAction.Substituir  := StringReplace(FPIniParams.ReadString('SoapAction', 'Substituir' , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+*)
+
+  FConfigSoapAction.Recepcionar := FPIniParams.ReadString('SoapAction', 'Recepcionar', '*');
+  FConfigSoapAction.ConsSit     := FPIniParams.ReadString('SoapAction', 'ConsSit'    , '*');
+  FConfigSoapAction.ConsLote    := FPIniParams.ReadString('SoapAction', 'ConsLote'   , '*');
+  FConfigSoapAction.ConsNFSeRps := FPIniParams.ReadString('SoapAction', 'ConsNFSeRps', '*');
+  FConfigSoapAction.ConsNFSe    := FPIniParams.ReadString('SoapAction', 'ConsNFSe'   , '*');
+  FConfigSoapAction.Cancelar    := FPIniParams.ReadString('SoapAction', 'Cancelar'   , '*');
+  FConfigSoapAction.Gerar       := FPIniParams.ReadString('SoapAction', 'Gerar'      , '*');
+  FConfigSoapAction.RecSincrono := FPIniParams.ReadString('SoapAction', 'RecSincrono', '*');
+  FConfigSoapAction.Substituir  := FPIniParams.ReadString('SoapAction', 'Substituir' , '*');
+
+  FConfigSoapAction.AbrirSessao  := FPIniParams.ReadString('SoapAction', 'AbrirSessao' , '*');
+  FConfigSoapAction.FecharSessao := FPIniParams.ReadString('SoapAction', 'FecharSessao', '*');
 
   if FPIniParams.ReadString('URL_H', 'RecepcaoLoteRPS', '') = '*******' then
   begin
@@ -569,6 +648,8 @@ begin
     FConfigURL.HomGerarNFSe          := StringReplace(FPIniParams.ReadString('URL_H', 'GerarNFSe_' + CodIBGE         , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
     FConfigURL.HomRecepcaoSincrono   := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoSincrono_' + CodIBGE  , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
     FConfigURL.HomSubstituiNFSe      := StringReplace(FPIniParams.ReadString('URL_H', 'SubstituiNFSe_' + CodIBGE     , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomAbrirSessao        := StringReplace(FPIniParams.ReadString('URL_H', 'AbrirSessao_' + CodIBGE       , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomFecharSessao       := StringReplace(FPIniParams.ReadString('URL_H', 'FecharSessao_' + CodIBGE      , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   end
   else
   begin
@@ -581,6 +662,8 @@ begin
     FConfigURL.HomGerarNFSe          := StringReplace(FPIniParams.ReadString('URL_H', 'GerarNFSe'         , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
     FConfigURL.HomRecepcaoSincrono   := StringReplace(FPIniParams.ReadString('URL_H', 'RecepcaoSincrono'  , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
     FConfigURL.HomSubstituiNFSe      := StringReplace(FPIniParams.ReadString('URL_H', 'SubstituiNFSe'     , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomAbrirSessao        := StringReplace(FPIniParams.ReadString('URL_H', 'AbrirSessao'       , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
+    FConfigURL.HomFecharSessao       := StringReplace(FPIniParams.ReadString('URL_H', 'FecharSessao'      , FConfigURL.HomRecepcaoLoteRPS), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
   end;
 
   if FPIniParams.ReadString('URL_P', 'RecepcaoLoteRPS', '') = '*******' then
@@ -594,6 +677,8 @@ begin
     FConfigURL.ProGerarNFSe          := StringReplace(FPIniParams.ReadString('URL_P', 'GerarNFSe_' + CodIBGE         , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProRecepcaoSincrono   := StringReplace(FPIniParams.ReadString('URL_P', 'RecepcaoSincrono_' + CodIBGE  , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProSubstituiNFSe      := StringReplace(FPIniParams.ReadString('URL_P', 'SubstituiNFSe_' + CodIBGE     , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProAbrirSessao        := StringReplace(FPIniParams.ReadString('URL_P', 'AbrirSessao_' + CodIBGE       , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProFecharSessao       := StringReplace(FPIniParams.ReadString('URL_P', 'FecharSessao_' + CodIBGE      , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   end
   else
   begin
@@ -606,6 +691,8 @@ begin
     FConfigURL.ProGerarNFSe          := StringReplace(FPIniParams.ReadString('URL_P', 'GerarNFSe'         , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProRecepcaoSincrono   := StringReplace(FPIniParams.ReadString('URL_P', 'RecepcaoSincrono'  , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
     FConfigURL.ProSubstituiNFSe      := StringReplace(FPIniParams.ReadString('URL_P', 'SubstituiNFSe'     , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProAbrirSessao        := StringReplace(FPIniParams.ReadString('URL_P', 'AbrirSessao'       , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+    FConfigURL.ProFecharSessao       := StringReplace(FPIniParams.ReadString('URL_P', 'FecharSessao'      , FConfigURL.ProRecepcaoLoteRPS), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
   end;
 
   Texto := '';
@@ -634,8 +721,10 @@ begin
   end;
   FConfigEnvelope.Recepcionar := Texto;
 
-  FConfigEnvelope.Recepcionar_IncluiEncodingCab := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingCab', True);
-  FConfigEnvelope.Recepcionar_IncluiEncodingDados := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingDados', True);
+  FConfigEnvelope.Recepcionar_IncluiEncodingCab := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingCab', False);
+  FConfigEnvelope.Recepcionar_IncluiEncodingDados := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingDados', False);
+  FConfigEnvelope.Recepcionar_CabecalhoStr := FPIniParams.ReadBool('Recepcionar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Recepcionar_DadosStr := FPIniParams.ReadBool('Recepcionar', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -650,8 +739,10 @@ begin
   end;
   FConfigEnvelope.ConsSit := Texto;
 
-  FConfigEnvelope.ConsSit_IncluiEncodingCab := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingCab', True);
-  FConfigEnvelope.ConsSit_IncluiEncodingDados := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingDados', True);
+  FConfigEnvelope.ConsSit_IncluiEncodingCab := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingCab', False);
+  FConfigEnvelope.ConsSit_IncluiEncodingDados := FPIniParams.ReadBool('ConsSit', 'IncluiEncodingDados', False);
+  FConfigEnvelope.ConsSit_CabecalhoStr := FPIniParams.ReadBool('ConsSit', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsSit_DadosStr := FPIniParams.ReadBool('ConsSit', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -666,8 +757,10 @@ begin
   end;
   FConfigEnvelope.ConsLote := Texto;
 
-  FConfigEnvelope.ConsLote_IncluiEncodingCab := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingCab', True);
-  FConfigEnvelope.ConsLote_IncluiEncodingDados := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingDados', True);
+  FConfigEnvelope.ConsLote_IncluiEncodingCab := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingCab', False);
+  FConfigEnvelope.ConsLote_IncluiEncodingDados := FPIniParams.ReadBool('ConsLote', 'IncluiEncodingDados', False);
+  FConfigEnvelope.ConsLote_CabecalhoStr := FPIniParams.ReadBool('ConsLote', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsLote_DadosStr := FPIniParams.ReadBool('ConsLote', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -682,8 +775,10 @@ begin
   end;
   FConfigEnvelope.ConsNFSeRps := Texto;
 
-  FConfigEnvelope.ConsNFSeRps_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingCab', True);
-  FConfigEnvelope.ConsNFSeRps_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingDados', True);
+  FConfigEnvelope.ConsNFSeRps_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingCab', False);
+  FConfigEnvelope.ConsNFSeRps_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSeRps', 'IncluiEncodingDados', False);
+  FConfigEnvelope.ConsNFSeRps_CabecalhoStr := FPIniParams.ReadBool('ConsNFSeRps', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsNFSeRps_DadosStr := FPIniParams.ReadBool('ConsNFSeRps', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -698,8 +793,10 @@ begin
   end;
   FConfigEnvelope.ConsNFSe := Texto;
 
-  FConfigEnvelope.ConsNFSe_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingCab', True);
-  FConfigEnvelope.ConsNFSe_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingDados', True);
+  FConfigEnvelope.ConsNFSe_IncluiEncodingCab := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingCab', False);
+  FConfigEnvelope.ConsNFSe_IncluiEncodingDados := FPIniParams.ReadBool('ConsNFSe', 'IncluiEncodingDados', False);
+  FConfigEnvelope.ConsNFSe_CabecalhoStr := FPIniParams.ReadBool('ConsNFSe', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.ConsNFSe_DadosStr := FPIniParams.ReadBool('ConsNFSe', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -714,8 +811,10 @@ begin
   end;
   FConfigEnvelope.Cancelar := Texto;
 
-  FConfigEnvelope.Cancelar_IncluiEncodingCab := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingCab', True);
-  FConfigEnvelope.Cancelar_IncluiEncodingDados := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingDados', True);
+  FConfigEnvelope.Cancelar_IncluiEncodingCab := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingCab', False);
+  FConfigEnvelope.Cancelar_IncluiEncodingDados := FPIniParams.ReadBool('Cancelar', 'IncluiEncodingDados', False);
+  FConfigEnvelope.Cancelar_CabecalhoStr := FPIniParams.ReadBool('Cancelar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Cancelar_DadosStr := FPIniParams.ReadBool('Cancelar', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -730,8 +829,10 @@ begin
   end;
   FConfigEnvelope.Gerar := Texto;
 
-  FConfigEnvelope.Gerar_IncluiEncodingCab := FPIniParams.ReadBool('Gerar', 'IncluiEncodingCab', True);
-  FConfigEnvelope.Gerar_IncluiEncodingDados := FPIniParams.ReadBool('Gerar', 'IncluiEncodingDados', True);
+  FConfigEnvelope.Gerar_IncluiEncodingCab := FPIniParams.ReadBool('Gerar', 'IncluiEncodingCab', False);
+  FConfigEnvelope.Gerar_IncluiEncodingDados := FPIniParams.ReadBool('Gerar', 'IncluiEncodingDados', False);
+  FConfigEnvelope.Gerar_CabecalhoStr := FPIniParams.ReadBool('Gerar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Gerar_DadosStr := FPIniParams.ReadBool('Gerar', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -746,8 +847,10 @@ begin
   end;
   FConfigEnvelope.RecSincrono := Texto;
 
-  FConfigEnvelope.RecSincrono_IncluiEncodingCab := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingCab', True);
-  FConfigEnvelope.RecSincrono_IncluiEncodingDados := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingDados', True);
+  FConfigEnvelope.RecSincrono_IncluiEncodingCab := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingCab', False);
+  FConfigEnvelope.RecSincrono_IncluiEncodingDados := FPIniParams.ReadBool('RecSincrono', 'IncluiEncodingDados', False);
+  FConfigEnvelope.RecSincrono_CabecalhoStr := FPIniParams.ReadBool('RecSincrono', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.RecSincrono_DadosStr := FPIniParams.ReadBool('RecSincrono', 'DadosStr', FConfigXML.DadosStr);
 
   Texto := '';
   I := 1;
@@ -762,9 +865,47 @@ begin
   end;
   FConfigEnvelope.Substituir := Texto;
 
-  FConfigEnvelope.Substituir_IncluiEncodingCab := FPIniParams.ReadBool('Substituir', 'IncluiEncodingCab', True);
-  FConfigEnvelope.Substituir_IncluiEncodingDados := FPIniParams.ReadBool('Substituir', 'IncluiEncodingDados', True);
+  FConfigEnvelope.Substituir_IncluiEncodingCab := FPIniParams.ReadBool('Substituir', 'IncluiEncodingCab', False);
+  FConfigEnvelope.Substituir_IncluiEncodingDados := FPIniParams.ReadBool('Substituir', 'IncluiEncodingDados', False);
+  FConfigEnvelope.Substituir_CabecalhoStr := FPIniParams.ReadBool('Substituir', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.Substituir_DadosStr := FPIniParams.ReadBool('Substituir', 'DadosStr', FConfigXML.DadosStr);
 
+  Texto := '';
+  I := 1;
+  while true do
+  begin
+    sCampo := 'Texto' + IntToStr(I);
+    sFim   := FPIniParams.ReadString('AbrirSessao', sCampo, 'FIM');
+    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+      break;
+    Texto := Texto + sFim;
+    Inc(I);
+  end;
+  FConfigEnvelope.AbrirSessao := Texto;
+
+  FConfigEnvelope.AbrirSessao_IncluiEncodingCab := FPIniParams.ReadBool('AbrirSessao', 'IncluiEncodingCab', False);
+  FConfigEnvelope.AbrirSessao_IncluiEncodingDados := FPIniParams.ReadBool('AbrirSessao', 'IncluiEncodingDados', False);
+  FConfigEnvelope.AbrirSessao_CabecalhoStr := FPIniParams.ReadBool('AbrirSessao', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.AbrirSessao_DadosStr := FPIniParams.ReadBool('AbrirSessao', 'DadosStr', FConfigXML.DadosStr);
+
+
+  Texto := '';
+  I := 1;
+  while true do
+  begin
+    sCampo := 'Texto' + IntToStr(I);
+    sFim   := FPIniParams.ReadString('FecharSessao', sCampo, 'FIM');
+    if (sFim = 'FIM') or (Length(sFim) <= 0) then
+      break;
+    Texto := Texto + sFim;
+    Inc(I);
+  end;
+  FConfigEnvelope.FecharSessao := Texto;
+
+  FConfigEnvelope.FecharSessao_IncluiEncodingCab := FPIniParams.ReadBool('FecharSessao', 'IncluiEncodingCab', False);
+  FConfigEnvelope.FecharSessao_IncluiEncodingDados := FPIniParams.ReadBool('FecharSessao', 'IncluiEncodingDados', False);
+  FConfigEnvelope.FecharSessao_CabecalhoStr := FPIniParams.ReadBool('FecharSessao', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+  FConfigEnvelope.FecharSessao_DadosStr := FPIniParams.ReadBool('FecharSessao', 'DadosStr', FConfigXML.DadosStr);
   Texto := '';
   I := 1;
   while true do
@@ -778,8 +919,8 @@ begin
   end;
   FConfigGeral.RetornoNFSe := Texto;
 
-  FConfigGeral.ProLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Producao'   , '');
-  FConfigGeral.HomLinkNFSe := FPIniParams.ReadString('LinkNFSe', 'Homologacao', '');
+  FConfigGeral.ProLinkNFSe := StringReplace(FPIniParams.ReadString('LinkNFSe', 'Producao'   , ''), '%NomeURL_P%', FxNomeURL_P, [rfReplaceAll]);
+  FConfigGeral.HomLinkNFSe := StringReplace(FPIniParams.ReadString('LinkNFSe', 'Homologacao', ''), '%NomeURL_H%', FxNomeURL_H, [rfReplaceAll]);
 
   Texto := '';
   I := 1;
@@ -803,6 +944,9 @@ begin
   FConfigGrupoMsgRet.Gerar       := FPIniParams.ReadString('GrupoMsgRet', 'Gerar'      , '');
   FConfigGrupoMsgRet.RecSincrono := FPIniParams.ReadString('GrupoMsgRet', 'RecSincrono', '');
   FConfigGrupoMsgRet.Substituir  := FPIniParams.ReadString('GrupoMsgRet', 'Substituir' , '');
+
+  FConfigGrupoMsgRet.AbrirSessao  := FPIniParams.ReadString('GrupoMsgRet', 'AbrirSessao' , '');
+  FConfigGrupoMsgRet.FecharSessao := FPIniParams.ReadString('GrupoMsgRet', 'FecharSessao', '');
 
   FPIniParams.Free;
 end;

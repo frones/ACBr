@@ -85,7 +85,7 @@ begin
    fpDigito := 3;
    fpNome:= 'Banestes';
    fpNumero := 021;
-   fpTamanhoMaximoNossoNum := 9;
+   fpTamanhoMaximoNossoNum := 8;
    fpTamanhoAgencia := 3;
    fpTamanhoConta   := 11;
    fpTamanhoCarteira:= 2;
@@ -104,7 +104,6 @@ begin
                   IfThen(ACBrtitulo.ACBrBoleto.Cedente.Modalidade = '',
                          '4', ACBrtitulo.ACBrBoleto.Cedente.Modalidade)  +
                   IntToStrZero(fpNumero,3);
-
   cIndice      := '21212121212121212121212';
   nResult      := 0;
   for nContAsbace := 23 downto 1 do
@@ -191,7 +190,6 @@ begin
     CodigoBarras := CodigoBarras + FatorVencimento;
     CodigoBarras := CodigoBarras + IntToStrZero(Round(ACBrTitulo.ValorDocumento*100),10);
     CodigoBarras := CodigoBarras + fASBACE;
-
     DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
   end;
 
@@ -299,9 +297,7 @@ begin
 
       {Pegando campo Intruções}
       if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-          Protesto := '06' + IntToStrZero(DaysBetween(DataProtesto, Vencimento), 2)
-      else if Ocorrencia = '31' then
-         Protesto := '9999'
+          Protesto := 'P6' + IntToStrZero(DaysBetween(DataProtesto, Vencimento), 2)
       else
          Protesto := PadLeft(Trim(Instrucao1), 2, '0') + PadLeft(Trim(Instrucao2), 2, '0');
 
@@ -335,13 +331,12 @@ begin
       begin
         if Mensagem.Text<> ''then
           MensagemCedente:= Mensagem[0];
-
         wLinha := '1'                                                         +  // ID Registro
                   ATipoInscricao                                              +  // TIPO INSCRICAO EMPRESA(CNPJ, CPF);
                   PadRight(OnlyNumber(Cedente.CNPJCPF), 14, '0')              +
                   PadLeft(OnlyNumber(Copy(Trim(Cedente.Conta),1,11)), 11, '0')+ // Codigo da Empresa no Banco
                   Space(9)                                                    +
-                  PadLeft(SeuNumero, 10, '0') + Space(15)                     +  // identificacao da operacao na empresa
+                  PadRight(SeuNumero,25)                                       +  // identificacao da operacao na empresa
                   PadRight(Copy(NossoNumero, 1, 8) +
                            DigitoNossoNumero, 10, '0')                        +
                   IfThen(PercentualMulta > 0, '1', '0')                       +  // Indica se exite Multa ou não
@@ -353,7 +348,7 @@ begin
                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),14,'0')   +  // sacador avalista. não pode ser o proprio sacado
                   aCarteira                                                   +
                   Ocorrencia                                                  +
-                  PadLeft(SeuNumero, 10, '0')                                 +
+                  PadRight(NumeroDocumento, 10)                               +
                   FormatDateTime('ddmmyy', Vencimento)                        +
                   '000'                                                       +
                   IntToStrZero(Round(ValorDocumento * 100 ), 10)              +
@@ -404,12 +399,11 @@ var
   Titulo   : TACBrTitulo;
 
   Linha,rCedente: String ;
-  rCNPJCPF,rAgencia,rConta: String;
+  rCNPJCPF,rConta: String;
 
   CodOCorrencia: Integer;
   i, MotivoLinha : Integer;
 begin
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -422,10 +416,6 @@ begin
    ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
                                                              Copy(ARetorno[0],97,2)+'/'+
                                                              Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
-
-   ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],114,2)+'/'+
-                                                               Copy(ARetorno[0],116,2)+'/'+
-                                                               Copy(ARetorno[0],118,2),0, 'DD/MM/YY' );
 
    case StrToIntDef(Copy(ARetorno[1],2,2),0) of
       1 : rCNPJCPF:= Copy(ARetorno[1],07,11);
@@ -469,7 +459,6 @@ begin
       begin
          SeuNumero                   := copy(Linha,38,25);
          NumeroDocumento             := copy(Linha,117,10);
-         Carteira                    := copy(Linha,83,3);
 
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
 
@@ -530,7 +519,7 @@ begin
          ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
          ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
          ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := Copy(Linha,63,10);
+         NossoNumero          := Copy(Linha,63,8);
          Carteira             := Copy(Linha,108,1);
          ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
 
@@ -544,6 +533,7 @@ begin
                          Copy(Linha,113,2)+'/'+
                          Copy(Linha,115,2),0,'DD/MM/YY');
 
+         CodigoLiquidacao := Copy(Linha,83,2); //Código Lançamento (Aviso de Movimentação)
       end;
    end;
 end;

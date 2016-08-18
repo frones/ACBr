@@ -1,0 +1,137 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administradores:
+- Daniel Simões de Almeida
+- André Ferreira de Moraes
+
+* Desenvolvedores:
+- Wemerson P. Souto - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* ACBrNFeDANFeRL
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+03/08/2016
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[-] Correção para que os dados fiquem bem alinhados
+		http://www.projetoacbr.com.br/forum/topic/31630-acbrnfedanferlretrato/
+		por: Juliomar Marchetti
+		
+02/08/2016
+-- ACBrNFeDANFeRLRetrato --
+[-] Remocao do procedimento rlbCabecalhoItens.BeforePrint 
+    http://www.projetoacbr.com.br/forum/topic/31613-erro-no-fortes-depois-da-atualiza%C3%A7%C3%A3o/
+         Por : Henrique Leonardo       
+
+
+01/08/2016
+-- ACBrNFeDANFeRLRetrato --
+[-] Correção do primeiro item  quando e solicitado a impressão do valor desconto
+	http://www.projetoacbr.com.br/forum/topic/31142-valor-liquido-e-descontos-no-danfe-retrato-fortes/#comment-208670
+         Por : Henrique Leonardo       
+
+26/07/2016
+-- ACBrNFeDANFeRLPaisagem.pas, ACBrNFeDANFeRLRetrato.pas 
+		Alterações para impressão quando no modo EPEC de emissão
+		http://www.projetoacbr.com.br/forum/topic/31395-altera%C3%A7%C3%B5es-no-danfe-para-epec/
+		por : Juliomar Marchetti
+		
+10/07/2016
+-- ACBrNFeDANFeRLRetrato --
+[-] Correção das colunas valor do desconto e valor liquido trocadas,
+    quando e solicitado a impressão do valor liquido;
+         Por : Henrique Leonardo       
+
+07/07/2016
+-- ACBrNFeDANFeRLSimplificado --
+[*] Remoção de controles Dataset/ Db. 
+[+] Refatoração para aceitar dados de classe Nfe.
+         Por : Henrique Leonardo   
+
+06/07/2016
+-- ACBrNFeDANFeRLRetrato --
+[*] Remoção de controles Dataset/ Db. 
+[+] Refatoração para aceitar dados de classe Nfe.
+         Por : Henrique Leonardo       
+
+24/06/2016
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[*] Ajustes para Habilitar ou não a Banda Fatura, atraves da 
+    propriedade ExibirCampoFatura.
+[+] Ajuste para Habilitar ou não a Banda Fatura, no caso 
+    da forma de pagamento igual a OUTROS e existir
+    dados de fatura.
+         Por : Henrique Leonardo       
+
+10/06/2016
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[-] Ajuste para evitar erro na Impressão, caso o Logo informado seja
+    um arquivo não existente, ou um Stream Inválido  (por: DSA)
+
+20/05/2016
+[+] Implantação da Banda Local entrega na danfe Fortes Retrato
+      Caso exista a informações do Local de entrega
+       no Arquivo xml, será impressa.
+         Por : Henrique Leonardo   
+
+
+20/05/2016
+[+] Implantação da Banda Local retirada na danfe Fortes Retrato
+      Caso exista a informações do Local de retirada
+       no Arquivo xml, será impressa
+         Por : Henrique Leonardo   
+
+
+
+
+21/04/2016
+[*] Remoção do recurso de Habilitar ou não a Banda Fatura.( campo ).
+      Por padrão, a Banda Fatura, dever ser exibida sempre.
+         Por : Henrique Leonardo   
+
+
+
+20/04/2016
+[*] aplicado para deixar visivel ou não o campo de fatura!
+		tanto retrato quanto paisagem!
+		por : Juliomar Marchetti
+		
+16/03/2016
+[-] não saia o Complemento dos endereços de Retirada e Entrega em retrato e paisagem
+		por: Juliomar Marchetti

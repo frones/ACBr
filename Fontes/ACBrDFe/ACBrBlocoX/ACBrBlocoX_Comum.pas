@@ -58,7 +58,7 @@ type
     FIppt: TACBrBlocoX_Ippt;
     FAliquota: Double;
     FUnidade: String;
-    FQuantidade: Integer;
+    FQuantidade: double;
     FIndicadorArredondamento: Boolean;
     FSituacaoTributaria: TACBrBlocoX_SitTributaria;
   public
@@ -67,7 +67,7 @@ type
 
     property Codigo: TACBrBlocoX_Codigo read FCodigo write FCodigo;
     property Descricao: String read FDescricao write FDescricao;
-    property Quantidade: Integer read FQuantidade write FQuantidade;
+    property Quantidade: Double read FQuantidade write FQuantidade;
     property Unidade: String read FUnidade write FUnidade;
     property ValorUnitario: Double read FValorUnitario write FValorUnitario;
     property SituacaoTributaria: TACBrBlocoX_SitTributaria read FSituacaoTributaria write FSituacaoTributaria;
@@ -113,8 +113,11 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
+    property XMLOriginal: String read FXMLOriginal;
+    property XMLAssinado: String read FXMLAssinado;
+
     procedure GerarXML(const Assinar: Boolean = True); virtual;
-    procedure SaveToFile(const AXmlFileName: String); virtual;
+    procedure SaveToFile(const AXmlFileName: String; const AAssinar: Boolean = True); virtual;
   end;
 
   function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
@@ -141,7 +144,7 @@ end;
 function SituacaoTributariaToStr(const AValue: TACBrBlocoX_SitTributaria): String;
 begin
   Result := EnumeradoToStr(AValue,
-    ['I', 'N', 'F', 'T', 'S'],
+    ['Isento', 'Nao tributado', 'Substituicao tributaria', 'Tributado pelo ICMS', 'Tributado pelo ISSQN'],
     [stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN]
   );
 end;
@@ -149,7 +152,7 @@ end;
 function IpptToStr(const AValue: TACBrBlocoX_Ippt): String;
 begin
   Result := EnumeradoToStr(AValue,
-    ['P', 'T'],
+    ['Proprio', 'Terceiros'],
     [ipptProprio, ipptTerceiros]
   );
 end;
@@ -259,7 +262,7 @@ begin
   raise EACBrBlocoXException.Create('Método não implementado "GerarXML"');
 end;
 
-procedure TACBrBlocoX_BaseFile.SaveToFile(const AXmlFileName: String);
+procedure TACBrBlocoX_BaseFile.SaveToFile(const AXmlFileName: String; const AAssinar: Boolean);
 begin
   raise EACBrBlocoXException.Create('Método não implementado "SaveToFileName"');
 end;

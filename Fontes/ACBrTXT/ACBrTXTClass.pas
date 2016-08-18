@@ -50,7 +50,7 @@ uses
 type
   EACBrTXTClassErro            = class(Exception) ;
 
-  TErrorEvent = procedure(const MsnError: AnsiString) of object;
+  TErrorEvent = procedure(const MsnError: String) of object;
 
   { TACBrTXTClass }
 
@@ -76,7 +76,7 @@ type
     procedure SaveToFile ;
     procedure LoadFromFile ;
     procedure Reset ;
-    function Add( const AString : AnsiString; AddDelimiter : Boolean = True ) : Integer;
+    function Add( const AString : String; AddDelimiter : Boolean = True ) : Integer;
     function DFill(Value: Double;
                    Decimal: Integer = 2;
                    Nulo: Boolean = false): String;
@@ -191,10 +191,10 @@ begin
          DeleteFile( FNomeArquivo );
 end;
 
-function TACBrTXTClass.Add(const AString: AnsiString; AddDelimiter: Boolean
+function TACBrTXTClass.Add(const AString: String; AddDelimiter: Boolean
    ): Integer;
 Var
-  S : AnsiString ;
+  S : String ;
 begin
    if TrimString then
      S := Trim( AString )

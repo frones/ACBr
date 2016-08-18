@@ -180,7 +180,7 @@ begin
     Leitor.Grupo := Leitor.Arquivo;
     if Leitor.rExtrai(1, 'retConsReciCTe') <> '' then
     begin
-               Fversao   := Leitor.rAtributo('versao');
+               Fversao   := Leitor.rAtributo('versao', 'retConsReciCTe');
       (*BR03 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       (*BR04 *)FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       (*BR05 *)FnRec     := Leitor.rCampo(tcStr, 'nRec');
@@ -201,7 +201,7 @@ begin
 
         if Leitor.rExtrai(2, 'infProt') <> '' then
         begin
-          (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id=');
+          (*PR04*)ProtCTe[i].FId       := Leitor.rAtributo('Id=', 'infProt');
           (*PR05*)ProtCTe[i].FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
           (*PR06*)ProtCTe[i].FverAplic := Leitor.rCampo(tcStr, 'verAplic');
           (*PR07*)ProtCTe[i].FchCTe    := Leitor.rCampo(tcStr, 'chCTe');

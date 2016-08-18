@@ -40,7 +40,7 @@ unit ACBrBancoCaixa;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, SysUtils, Contnrs, ACBrBoleto;
 
 type
 
@@ -340,7 +340,10 @@ var
 begin
    with ACBrTitulo do
    begin
-      ANossoNumero := FormataNossoNumero(ACBrTitulo);
+      if ( Trim(ACBrTitulo.NossoNumero) <> '' ) then
+        ANossoNumero := FormataNossoNumero(ACBrTitulo)
+      else
+        ANossoNumero := '';  
 
       {SEGMENTO P}
 
@@ -470,7 +473,7 @@ begin
                PadRight(ACBrBoleto.Cedente.AgenciaDigito, 1 , '0')            + //23 -Dígito verificador da agência
                PadRight(ACBrBoleto.Cedente.CodigoCedente, 6, '0')             + //24 a 29 - Código do Convênio no Banco (Codigo do cedente)
                PadRight('', 11, '0')                                          + //30 a 40 - Uso Exclusivo da CAIXA
-               '14'                                                       + //41 a 42 - Modalidade da Carteira
+               PadRight(Copy(ANossoNumero,1,2), 2, '0')                                                        + //41 a 42 - Modalidade da Carteira
                PadLeft(Copy(ANossoNumero,3,17), 15, '0')                     + //43 a 57 - Nosso número - identificação do título no banco
                '1'                                                        + //58 - Cobrança Simples
                '1'                                                        + //59 - Forma de cadastramento do título no banco: com cadastramento  1-cobrança Registrada
@@ -534,7 +537,7 @@ begin
                )                                                                       + // 154 a 157 - Tipo de Inscrição
                PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')             + // 155 a 169 - Número de inscrição
                PadRight(Sacado.SacadoAvalista.NomeAValista, 40, ' ')                   + // 170 a 209 - Nome do sacador/avalista
-               PadRight('', 3, ' ')                                                    + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
+               PadRight('', 3, '0')                                                    + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
                PadRight('',20, ' ')                                                    + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
                PadRight('', 8, ' ');                                                     // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 
@@ -606,8 +609,7 @@ var
   MotivoLinha, I, CodMotivo: Integer;
   wSeuNumero: String;
 begin
-   ContLinha := 0;
-
+ 
    if (copy(ARetorno.Strings[0],1,3) <> '104') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -671,6 +673,9 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -679,12 +684,13 @@ begin
       if Copy(Linha,14,1)= 'T' then
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := Trim(copy(Linha,59,11));
+            SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,11);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 
@@ -1016,12 +1022,11 @@ end;
 procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
-  ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
+  ContLinha : Integer;
   rAgencia, rConta, Linha, rCedente :String;
 begin
    fpTamanhoMaximoNossoNum := 15;
-   ContLinha := 0;
-
+ 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));

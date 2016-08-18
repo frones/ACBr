@@ -45,11 +45,10 @@ uses SysUtils, Classes,
   {$ELSE}
   Forms, Dialogs,
   {$ENDIF}
-  Graphics, RLConsts, pcnNFe, pcnConversao, ACBrNFeDANFEClass;
+  Graphics, RLConsts, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);
-  TPosCanhoto = (pcCabecalho, pcRodape);
   TDetVeiculo = (dv_tpOp, dv_chassi, dv_cCor, dv_xCor, dv_pot, dv_cilin,
                  dv_pesoL, dv_pesoB, dv_nSerie, dv_tpComb, dv_nMotor, dv_CMT,
                  dv_dist, dv_anoMod, dv_anoFab, dv_tpPint, dv_tpVeic,
@@ -87,7 +86,7 @@ type
   private
     FMarcadagua: string;
     FLarguraCodProd: Integer;
-    FPosCanhoto: TPosCanhoto;
+    FPosCanhoto: TPosRecibo;
     fExibeCampoFatura: Boolean;
     FFonte: TFonte;
     FExibirEAN: Boolean;
@@ -115,8 +114,7 @@ type
   published
     property MarcadAgua : String read FMarcadagua write FMarcadagua ;
     property LarguraCodProd: Integer read FLarguraCodProd write FLarguraCodProd;
-    property PosCanhoto: TPosCanhoto read FPosCanhoto write FPosCanhoto
-                                                          default pcCabecalho;
+    property PosCanhoto: TPosRecibo read FPosCanhoto write FPosCanhoto default prCabecalho;
     property Fonte: TFonte read FFonte;
     property ExibirEAN: Boolean read FExibirEAN write SetExibirEAN;
     property DetVeiculos: TDetVeiculos read FDetVeiculos write FDetVeiculos default
@@ -178,7 +176,7 @@ begin
   FProdutosPorPagina := 0;
   FExibirEAN := False;
   FTipoDANFE := tiRetrato;
-  FPosCanhoto := pcCabecalho;
+  FPosCanhoto := prCabecalho;
   FDetVeiculos := [dv_chassi, dv_xCor, dv_nSerie, dv_tpComb, dv_nMotor, dv_anoMod, dv_anoFab];
   FDetMedicamentos := [dm_nLote, dm_qLote, dm_dFab, dm_dVal, dm_vPMC];
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];

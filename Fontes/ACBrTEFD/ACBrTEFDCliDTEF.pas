@@ -50,7 +50,7 @@ uses
   {$IFDEF VisualCLX}
      ,QForms, QControls
   {$ELSE}
-     ,Forms, Controls
+    {$IFDEF FMX} ,System.UITypes {$ENDIF}  ,Forms, Controls
   {$ENDIF}
   {$ENDIF};
 
@@ -672,7 +672,11 @@ begin
         Parar := False;
         while not Parar do
         begin
-           if ItemSelecionado = 30 then Exit;
+           if ItemSelecionado = 30 then
+           begin
+             Result   := -1; //verificar isso aqui.
+             Exit;
+           end;
 
            Voltar := False;
            ItemSelecionado := -1;

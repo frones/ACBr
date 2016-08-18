@@ -1,7 +1,7 @@
 object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   Left = 209
   Top = 130
-  Width = 870
+  Width = 876
   Height = 568
   Caption = 'Demo ACBrNFSe'
   Color = clBtnFace
@@ -93,7 +93,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Top = 15
         Width = 277
         Height = 368
-        ActivePage = TabSheet3
+        ActivePage = TabSheet4
         Align = alClient
         MultiLine = True
         TabOrder = 0
@@ -452,6 +452,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Sao Leopoldo/4318705/RS'
               'Sao Lourenco do Oeste/4216909/SC'
               'Sao Miguel do Oeste/4217204/SC'
+              'Sao Paulo/3550308/SP'
               'Saquarema/3305505/RJ'
               'Schroeder/4217402/SC'
               'Sinop/5107909/MT'
@@ -1107,14 +1108,14 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 557
+    Width = 563
     Height = 530
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 555
+      Width = 561
       Height = 208
       Align = alTop
       TabOrder = 0
@@ -1263,7 +1264,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object PageControl2: TPageControl
       Left = 1
       Top = 209
-      Width = 555
+      Width = 561
       Height = 320
       ActivePage = TabSheet5
       Align = alClient
@@ -1273,7 +1274,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 547
+          Width = 553
           Height = 292
           Align = alClient
           TabOrder = 0
@@ -1316,7 +1317,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         object trvwNFSe: TTreeView
           Left = 0
           Top = 0
-          Width = 547
+          Width = 553
           Height = 292
           Align = alClient
           Indent = 19
@@ -1366,7 +1367,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = True
     Configuracoes.WebServices.UF = 'SP'
-    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.AguardarConsultaRet = 2000
     Configuracoes.WebServices.Tentativas = 10
     Configuracoes.WebServices.IntervaloTentativas = 3000
     Configuracoes.WebServices.Salvar = True
@@ -1389,6 +1390,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     MargemDireita = 0.510000000000000000
     NFSeCancelada = False
     ImprimeCanhoto = True
+    Provedor = proNenhum
+    TamanhoFonte = 6
     Left = 392
     Top = 248
   end

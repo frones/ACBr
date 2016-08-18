@@ -40,9 +40,6 @@
  {$IFNDEF NOGUI}
   {$DEFINE USE_LCLIntf}
  {$ENDIF}
- {$IFNDEF MSWINDOWS}
-  {$DEFINE USE_LConvEncoding}
- {$ENDIF}
 {$ENDIF}
 
 unit ACBrUtil;
@@ -52,9 +49,7 @@ interface
 Uses SysUtils, Math, Classes, ACBrConsts, synautil
     {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
     {$IFDEF FPC}
-      ,dynlibs, zstream
-      {$IFNDEF NOGUI}, LazUTF8 {$ENDIF}
-      {$IFDEF USE_LConvEncoding} ,LConvEncoding {$ENDIF}
+      ,dynlibs, zstream, LazUTF8, LConvEncoding
       {$IFDEF USE_LCLIntf} ,LCLIntf {$ENDIF}
     {$ELSE}
       ,ACBrZLibExGZ
@@ -71,7 +66,7 @@ Uses SysUtils, Math, Classes, ACBrConsts, synautil
 
 const
 {$IFDEF CPU64}
-  CINPOUTDLL = 'inpout64.dll';
+  CINPOUTDLL = 'inpoutx64.dll';
 {$ELSE}
   CINPOUTDLL = 'inpout32.dll';
 {$ENDIF}
@@ -82,22 +77,45 @@ type
 
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
+
 function LerTagXML( const AXML, ATag: String; IgnoreCase: Boolean = True) : String;
 function XmlEhUTF8(const AXML: String): Boolean;
 function ConverteXMLtoUTF8(const AXML: String): String;
+function ConverteXMLtoNativeString(const AXML: String): String;
+function ObtemDeclaracaoXML(const AXML: String): String;
+function RemoverDeclaracaoXML(const AXML: String): String;
+
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
 
-function ACBrStr( AString : AnsiString ) : String ;
-function ACBrStrToAnsi( AString : String ) : AnsiString ;
-function ACBrStrToUTF8( AString : String ) : AnsiString;
+function ACBrStr( AString : String ) : String ;
+function ACBrStrToAnsi( AString : String ) : String ;
+
+function NativeStringToUTF8( AString : String ) : AnsiString;
+function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
+
+function NativeStringToAnsi( AString : String ) : AnsiString;
+function AnsiToNativeString( AAnsiString : AnsiString ) : String;
+
+function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
+function ACBrAnsiToUTF8( AAnsiString : AnsiString ) : AnsiString;
+
+{$IfDef FPC}
+function GetSysANSIencoding: String;
+{$EndIf}
+
 function AnsiChr( b: Byte) : AnsiChar;
+{$IfNDef HAS_CHARINSET}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
+{$EndIf}
 
 function TruncFix( X : Double ) : Integer ;
-function RoundABNT(const AValue: Double; const Digits: SmallInt): Double;
+function RoundABNT(const AValue: Double; const Digits: SmallInt;
+  const Delta: Double = 0.00001 ): Double;
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
@@ -116,7 +134,6 @@ function LEStrToInt(ALEStr: AnsiString): Integer;
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
 
-
 function BinaryStringToString(const AString: AnsiString): AnsiString;
 function StringToBinaryString(const AString: AnsiString): AnsiString;
 
@@ -130,11 +147,11 @@ function PadSpace(const AString : String; const nLen : Integer; Separador : Stri
    const Caracter : Char = ' ') : String ;
 
 function RemoveString(const sSubStr, sString: String): String;
-function RemoveStrings(const AText: String; StringsToRemove: array of AnsiString): AnsiString;
+function RemoveStrings(const AText: AnsiString; StringsToRemove: array of AnsiString): AnsiString;
 function RemoverEspacosDuplos(const AString: String): String;
-function StripHTML(const AHTMLString : AnsiString) : AnsiString;
-procedure AcharProximaTag(const AString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+function StripHTML(const AHTMLString : String) : String;
+procedure AcharProximaTag(const AString: String;
+  const PosIni: Integer; var ATag: String; var PosTag: Integer);
 procedure RemoveEmptyLines( AStringList: TStringList) ;
 function RandomName(const LenName : Integer = 8) : String ;
 
@@ -164,9 +181,10 @@ function PosEx(const SubStr, S: AnsiString; Offset: Cardinal = 1): Integer;
 function IfEmptyThen( const AValue, DefaultValue: String; DoTrim: Boolean = True) : String;
 function PosAt(const SubStr, S: AnsiString; Ocorrencia : Cardinal = 1): Integer;
 function PosLast(const SubStr, S: AnsiString): Integer;
-function CountStr(const AString, SubStr : AnsiString ) : Integer ;
+function CountStr(const AString, SubStr : String ) : Integer ;
 Function Poem_Zeros(const Texto : String; const Tamanho : Integer) : String; overload;
 function Poem_Zeros(const NumInteiro : Int64 ; Tamanho : Integer) : String ; overload;
+function RemoveZerosEsquerda( ANumStr: String): String;
 
 {$IFDEF HAS_FORMATSETTINGS}
 Function CreateFormatSettings: TFormatSettings;
@@ -225,21 +243,21 @@ function TamanhoMenor(const AValue: String; const ATamanho: Integer): Boolean;
 function TiraAcentos( const AString : String ) : String ;
 function TiraAcento( const AChar : AnsiChar ) : AnsiChar ;
 
-function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
+function AjustaLinhas(const Texto: AnsiString; Colunas: Integer ;
    NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
 function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
 
-function TraduzComando( AString : String ) : AnsiString ;
-Function StringToAsc( AString : AnsiString ) : String ;
-Function AscToString( AString : String ) : AnsiString ;
+function TraduzComando( const AString : String ) : AnsiString ;
+Function StringToAsc( const AString : AnsiString ) : String ;
+Function AscToString( const AString : String ) : AnsiString ;
 
 function InPort(const PortAddr:word): byte;
 procedure OutPort(const PortAddr: word; const Databyte: byte); overload ;
 
 function StrCrypt(const AString, StrChave: AnsiString): AnsiString;
 function SomaAscII(const AString : AnsiString): Integer;
-function StringCrc16(AString : AnsiString ) : word;
+function StringCrc16(const AString : AnsiString ) : word;
 
 function ApplicationPath: String;
 Procedure FindFiles( const FileMask : String; AStringList : TStrings;
@@ -272,9 +290,9 @@ Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True );
-procedure WriteLog( const ArqTXT, ABinaryString : AnsiString ;
+procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
    const Traduz : Boolean = False) ;
-function TranslateUnprintable( const ABinaryString: AnsiString ): AnsiString;
+function TranslateUnprintable( const ABinaryString: AnsiString ): String;
 
 function TiraPontos(Str: string): string;
 function TBStrZero(const i: string; const Casas: byte): string;
@@ -286,12 +304,16 @@ function EAN13Valido( CodEAN13 : String ) : Boolean ;
 function EAN13_DV( CodEAN13 : String ) : String ;
 
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
-function MatchText(const AText: AnsiString; const AValues: array of AnsiString): Boolean;
+function MatchText(const AText: String; const AValues: array of String): Boolean;
 
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(S: AnsiString): AnsiString; overload;
 
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
+
+{$IfDef FPC}
+var ACBrANSIEncoding: String;
+{$EndIf}
 
 {$IFDEF MSWINDOWS}
 var xInp32 : function (wAddr: word): byte; stdcall;
@@ -331,47 +353,37 @@ end;
 
 {-----------------------------------------------------------------------------
   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
-  D5 a D2007, Porém D2009 e superiores usam Unicode, 
-   e Lazarus 0.9.27 e acima usam UTF8.
-  A função abaixo converte a "AString" de ANSI, para UNICODE ou UTF8, de acordo
-  com as diretivas do Compilador 
+  D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
+  usam UTF-8. A função abaixo converte a "AString" de ANSI CP1252, para UNICODE
+  ou UTF8, de acordo com as diretivas do Compilador
  -----------------------------------------------------------------------------}
-function ACBrStr( AString : AnsiString ) : String ;
+function ACBrStr( AString : String ) : String ;
 begin
 {$IFDEF UNICODE}
- {$IFDEF USE_LConvEncoding}
-   Result := CP1252ToUTF8( AString ) ;
- {$ELSE}
-   {$IFDEF FPC}
-     {$IFNDEF NOGUI}
-       Result := SysToUTF8( AString )
-     {$ELSE}
-       Result := AnsiToUtf8( AString ) ;
-     {$ENDIF}
-   {$ELSE}
+  {$IFDEF FPC}
+    Result := CP1252ToUTF8( AString ) ;
+  {$ELSE}
     Result := String(AString) ;
-   {$ENDIF}
- {$ENDIF}
+  {$ENDIF}
 {$ELSE}
   Result := AString
 {$ENDIF}
 end ;
 
 {-----------------------------------------------------------------------------
-  Converte a AString de UTF8 para ANSI nativo, apenas se o Compilador usar UNICODE
+   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
+  D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
+  usam UTF-8. A funçã abaixo, Converte a AString de UTF8 ou Unicode para a página
+  de código nativa do Sistema Operacional, (apenas se o Compilador usar UNICODE)
  -----------------------------------------------------------------------------}
-function ACBrStrToAnsi(AString: String): AnsiString;
+function ACBrStrToAnsi(AString: String): String;
 begin
 {$IFDEF UNICODE}
- {$IFDEF USE_LConvEncoding}
-   Result := UTF8ToCP1252( AString ) ;
- {$ELSE}
-   {$IFDEF FPC}
-    Result := Utf8ToAnsi( AString ) ;
-   {$ELSE}
-    Result := AnsiString( AString ) ;
-   {$ENDIF}
- {$ENDIF}
+  {$IFDEF FPC}
+    Result := UTF8ToCP1252( AString ) ;
+  {$ELSE}
+    Result := string(AnsiString( AString )) ;
+  {$ENDIF}
 {$ELSE}
   Result := AString
 {$ENDIF}
@@ -381,26 +393,97 @@ end;
   Converte a AString nativa do Compilador, para UTF8, de acordo o suporte a
   UNICODE/UTF8 do Compilador
  -----------------------------------------------------------------------------}
-function ACBrStrToUTF8( AString : String ) : AnsiString;
+function NativeStringToUTF8( AString : String ) : AnsiString;
 {$IFNDEF FPC}
-{$IFDEF UNICODE}
-var
-  RBS: RawByteString;
-{$ENDIF}
+ {$IFDEF UNICODE}
+  var
+    RBS: RawByteString;
+ {$ENDIF}
 {$ENDIF}
 begin
-  {$IFNDEF FPC}
-   {$IFDEF UNICODE}
-    RBS := UTF8Encode(AString);
-    SetCodePage(RBS, 0, False);
-    Result := AnsiString(RBS);
-   {$ELSE}
-    Result := UTF8Encode(AString);
-   {$ENDIF}
+  {$IFDEF FPC}
+    Result := AString;  // FPC usa UTF8 de forma nativa
   {$ELSE}
-   Result := AString;
+    {$IFDEF UNICODE}
+      RBS := UTF8Encode(AString);
+      SetCodePage(RBS, 0, False);
+      Result := AnsiString(RBS);
+    {$ELSE}
+      Result := UTF8Encode(AString);
+    {$ENDIF}
   {$ENDIF}
 end;
+
+function UTF8ToNativeString(AUTF8String: AnsiString): String;
+begin
+  {$IfDef FPC}
+   Result := AUTF8String;  // FPC usa UTF8 de forma nativa
+  {$Else}
+   {$IfDef UNICODE}
+    {$IfDef DELPHI12_UP}  // delphi 2009 em diante
+     Result := UTF8ToString(AUTF8String);
+    {$Else}
+     Result := UTF8Decode(AUTF8String);
+    {$EndIf}
+   {$Else}
+    Result := Utf8ToAnsi(AUTF8String) ;
+   {$EndIf}
+  {$EndIf}
+end;
+
+function NativeStringToAnsi(AString: String): AnsiString;
+begin
+  {$IfDef FPC}
+    Result := ACBrUTF8ToAnsi(AString);
+  {$Else}
+    Result := AnsiString(AString);
+  {$EndIf}
+end;
+
+function AnsiToNativeString(AAnsiString: AnsiString): String;
+begin
+  {$IfDef FPC}
+    Result := ACBrAnsiToUTF8(AAnsiString);
+  {$Else}
+    Result := String(AAnsiString);
+  {$EndIf}
+end;
+
+{-----------------------------------------------------------------------------
+  Converte uma String que está em UTF8 para ANSI, considerando as diferetes IDEs
+  suportadas pelo ACBr
+ -----------------------------------------------------------------------------}
+function ACBrUTF8ToAnsi( AUTF8String : AnsiString ) : AnsiString;
+begin
+  {$IfNDef FPC}
+    Result := AnsiString( UTF8ToNativeString(AUTF8String));
+  {$Else}
+    Result := ConvertEncoding( AUTF8String, EncodingUTF8, ACBrANSIEncoding);
+  {$EndIf}
+end;
+
+{-----------------------------------------------------------------------------
+  Converte uma String que está em ANSI para UTF8, considerando as diferetes IDEs
+  suportadas pelo ACBr
+ -----------------------------------------------------------------------------}
+function ACBrAnsiToUTF8(AAnsiString: AnsiString): AnsiString;
+begin
+  {$IfNDef FPC}
+    Result := NativeStringToUTF8(String(AAnsiString));
+  {$Else}
+    Result := ConvertEncoding( AAnsiString, ACBrANSIEncoding, EncodingUTF8 );
+  {$EndIf}
+end;
+
+{$IfDef FPC}
+function GetSysANSIencoding: String;
+begin
+  Result := {$IfDef NOGUI}GetConsoleTextEncoding{$Else}GetDefaultTextEncoding{$EndIf};
+  if (Result = EncodingUTF8) or (Result = EncodingAnsi) then
+    Result := 'cp1252';  // Usando página de código ANSI padrão para o Brasil
+end;
+{$EndIf}
+
 {-----------------------------------------------------------------------------
  Faz o mesmo que o comando chr(), porém retorna um AnsiChar ao invés de Char
  Util quando for usada para compor valores em AnsiString,
@@ -410,6 +493,18 @@ function AnsiChr(b: Byte): AnsiChar;
 begin
   Result := AnsiChar(chr(b));
 end;
+
+{$IfNDef HAS_CHARINSET}
+function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean;
+begin
+  Result := C in CharSet;
+end;
+
+function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean;
+begin
+  Result := (C < #$0100) and (AnsiChar(C) in CharSet);
+end;
+{$EndIf}
 
 {-----------------------------------------------------------------------------
  Corrige, bug da função Trunc.
@@ -449,39 +544,45 @@ end;
  http://www.sofazquemsabe.com/2011/01/como-fazer-arredondamento-da-numeracao.html
  http://partners.bematech.com.br/2011/12/edicao-98-entendendo-o-truncamento-e-arredondamento-no-ecf/
  -----------------------------------------------------------------------------}
-function RoundABNT(const AValue: Double; const Digits: SmallInt):Double;
+function RoundABNT(const AValue: Double; const Digits: SmallInt; const Delta: Double):Double;
 var
-   Pow, PowValue, RestPart, FracValue : Extended;
+   Pow, FracValue, PowValue : Extended;
+   RestPart: Double;
    IntCalc, FracCalc, LastNumber, IntValue : Int64;
+   Negativo: Boolean;
 Begin
+   Negativo  := (AValue < 0);
+
    Pow       := intpower(10, abs(Digits) );
-   PowValue  := AValue / 10 ;
+   PowValue  := abs(AValue) / 10 ;
    IntValue  := trunc(PowValue);
    FracValue := frac(PowValue);
 
    PowValue := SimpleRoundTo( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
    IntCalc  := trunc( PowValue );
-   FracCalc := trunc( frac( PowValue ) * 100);
+   FracCalc := trunc( frac( PowValue ) * 100 );
 
    if (FracCalc > 50) then
-      Inc( IntCalc )
+     Inc( IntCalc )
 
    else if (FracCalc = 50) then
-    begin
-      LastNumber := round( frac( IntCalc / 10) * 10);
+   begin
+     LastNumber := round( frac( IntCalc / 10) * 10);
 
-      if odd(LastNumber) then
-         Inc( IntCalc )
-      else
-       begin
-         RestPart := frac( PowValue * 10 ) ;
+     if odd(LastNumber) then
+       Inc( IntCalc )
+     else
+     begin
+       RestPart := frac( PowValue * 10 ) ;
 
-         if RestPart > 0 then
-            Inc( IntCalc );
-       end ;
-    end ;
+       if RestPart > Delta then
+         Inc( IntCalc );
+     end ;
+   end ;
 
    Result := ((IntValue*10) + (IntCalc / Pow));
+   if Negativo then
+     Result := -Result;
 end;
 
 function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
@@ -527,8 +628,8 @@ begin
     exit ;
 
   Niveis := max( CountStr(VersionStr1, Delimiter), CountStr(VersionStr2, Delimiter) ) ;
-  P1I := 1; P1F := 0 ;
-  P2I := 1; P2F := 0 ;
+  P1I := 1;
+  P2I := 1;
 
   I := Niveis;
   while I >= 0 do
@@ -729,7 +830,7 @@ end;
 function HexToAscii(const HexStr : String) : AnsiString ;
 Var
   B   : Byte ;
-  Cmd : AnsiString ;
+  Cmd : String ;
   I, L: Integer ;
 begin
   Result := '' ;
@@ -817,46 +918,43 @@ end ;
  ---------------------------------------------------------------------------- }
 function PadSpace(const AString : String; const nLen : Integer;
    Separador : String; const Caracter : Char = ' ') : String ;
-var StuffStr : AnsiString ;
+var StuffStr : String ;
     nSep, nCharSep, nResto, nFeito, Ini : Integer ;
     D : Double ;
 begin
   Result := copy(AString,1,nLen) ;
   if Separador = String(Caracter) then  { Troca Separador, senao fica em loop infinito }
   begin
-     Result    := AnsiString(StringReplace( String(Result), Separador, #255,[rfReplaceAll]));
+     Result    := StringReplace( Result, Separador, #255,[rfReplaceAll]);
      Separador := #255 ;
   end ;
 
-  nSep   := CountStr( Result, AnsiString(Separador) ) ;
+  nSep := CountStr( Result, Separador ) ;
 
   if nSep < 1 then
   begin
-     Result := PadRight(Result, nLen, Caracter ) ;
+     Result := PadRight( Result, nLen, Caracter ) ;
      exit ;
   end ;
 
-  Result   := AnsiString( Trim( String( Result ) ) ) ;
+  Result   := Trim( Result ) ;
   D        := (nLen - (Length(Result)-nSep)) / nSep ;
   nCharSep := Trunc( D ) ;
   nResto   := nLen - ( (Length(Result)-nSep) + (nCharSep*nSep) ) ;
   nFeito   := nSep ;
-  StuffStr := StringOfChar( Caracter, nCharSep ) ;
+  StuffStr := String( StringOfChar( Caracter, nCharSep ) ) ;
 
-  Ini := Pos( Separador, String( Result ) ) ;
+  Ini := Pos( Separador, Result ) ;
   while Ini > 0 do
   begin
-    Result := AnsiString(
-      StuffString(
-        String(Result),
+    Result := StuffString( Result,
         Ini,
         length(Separador),
-        String(StuffStr) + ifthen(nFeito <= nResto, String(Caracter), '' )
-      )
-    );
+        StuffStr + ifthen(nFeito <= nResto, String(Caracter), '' )
+      );
 
     nFeito := nFeito - 1 ;
-    Ini    := Pos( String(Separador), String(Result) ) ;
+    Ini    := Pos( Separador, Result ) ;
   end ;
 end ;
 
@@ -874,11 +972,11 @@ end;
    Remove todas ocorrencias do array <StringsToRemove> da String <AText>
    retornando a String alterada
  ---------------------------------------------------------------------------- }
-function RemoveStrings(const AText: String;
+function RemoveStrings(const AText: AnsiString;
   StringsToRemove: array of AnsiString): AnsiString;
 Var
   I, J : Integer ;
-  StrToFind : String ;
+  StrToFind : AnsiString ;
 begin
   Result := AText ;
   { Verificando parâmetros de Entrada }
@@ -912,32 +1010,33 @@ end ;
 {-----------------------------------------------------------------------------
    Remove todas as TAGS de HTML de uma String, retornando a String alterada
  ---------------------------------------------------------------------------- }
-function StripHTML(const AHTMLString : AnsiString) : AnsiString;
+function StripHTML(const AHTMLString: String): String;
 var
-  ATag: AnsiString;
+  ATag, VHTMLString: String;
   PosTag, LenTag: Integer;
 begin
+  VHTMLString := AHTMLString;
   ATag   := '';
   PosTag := 0;
-  Result := AHTMLString;
 
-  AcharProximaTag( Result, 1, ATag, PosTag);
+  AcharProximaTag( VHTMLString, 1, ATag, PosTag);
   while ATag <> '' do
   begin
     LenTag := Length( ATag );
-    Delete(Result, PosTag, LenTag);
+    Delete(VHTMLString, PosTag, LenTag);
 
     ATag := '';
-    AcharProximaTag( Result, PosTag, ATag, PosTag );
+    AcharProximaTag( VHTMLString, PosTag, ATag, PosTag );
   end ;
+  Result := VHTMLString;
 end;
 
 {-----------------------------------------------------------------------------
    Localiza uma Tag dentro de uma String, iniciando a busca em PosIni.
    Se encontrar uma Tag, Retorna a mesma em ATag, e a posição inicial dela em PosTag
  ---------------------------------------------------------------------------- }
-procedure AcharProximaTag(const AString: AnsiString;
-  const PosIni: Integer; var ATag: AnsiString; var PosTag: Integer);
+procedure AcharProximaTag(const AString: String;
+  const PosIni: Integer; var ATag: String; var PosTag: Integer);
 var
    PosTagAux, FimTag, LenTag : Integer ;
 begin
@@ -1016,7 +1115,7 @@ end ;
 {-----------------------------------------------------------------------------
   Retorna quantas ocorrencias de <SubStr> existem em <AString>
  ---------------------------------------------------------------------------- }
-function CountStr(const AString, SubStr : AnsiString ) : Integer ;
+function CountStr(const AString, SubStr : String ) : Integer ;
 Var ini : Integer ;
 begin
   result := 0 ;
@@ -1026,7 +1125,7 @@ begin
   while ini > 0 do
   begin
      Result := Result + 1 ;
-     ini    := PosEx( String(SubStr), String(AString), ini + 1 ) ;
+     ini    := PosEx( SubStr, AString, ini + 1 ) ;
   end ;
 end ;
 
@@ -1182,6 +1281,18 @@ begin
   Result := IntToStrZero( NumInteiro, Tamanho) ;
 end ;
 
+function RemoveZerosEsquerda(ANumStr: String): String;
+var
+  I, L: Integer;
+begin
+  L := Length(ANumStr);
+  I := 1;
+  while (I < L) and (ANumStr[I] = '0') do
+    Inc(I);
+
+  Result := Copy(ANumStr, I, L);
+end;
+
 {$IFDEF HAS_FORMATSETTINGS}
 function CreateFormatSettings: TFormatSettings;
 begin
@@ -1189,6 +1300,22 @@ begin
    Result := DefaultFormatSettings;
   {$ELSE}
    Result := TFormatSettings.Create('');
+   Result.CurrencyString            := CurrencyString;
+   Result.CurrencyFormat            := CurrencyFormat;
+   Result.NegCurrFormat             := NegCurrFormat;
+   Result.ThousandSeparator         := ThousandSeparator;
+   Result.DecimalSeparator          := DecimalSeparator;
+   Result.CurrencyDecimals          := CurrencyDecimals;
+   Result.DateSeparator             := DateSeparator;
+   Result.ShortDateFormat           := ShortDateFormat;
+   Result.LongDateFormat            := LongDateFormat;
+   Result.TimeSeparator             := TimeSeparator;
+   Result.TimeAMString              := TimeAMString;
+   Result.TimePMString              := TimePMString;
+   Result.ShortTimeFormat           := ShortTimeFormat;
+   Result.LongTimeFormat            := LongTimeFormat;
+   Result.TwoDigitYearCenturyWindow := TwoDigitYearCenturyWindow;
+   Result.ListSeparator             := ListSeparator;
   {$ENDIF}
 end;
 {$ENDIF}
@@ -1552,7 +1679,7 @@ end;
  ---------------------------------------------------------------------------- }
 function CharIsAlpha(const C: Char): Boolean;
 begin
-  Result := ( C in ['A'..'Z','a'..'z'] ) ;
+  Result := CharInSet( C, ['A'..'Z','a'..'z'] ) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1561,7 +1688,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function CharIsNum(const C: Char): Boolean;
 begin
-  Result := ( C in ['0'..'9'] ) ;
+  Result := CharInSet( C, ['0'..'9'] ) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1578,7 +1705,7 @@ end ;
  ---------------------------------------------------------------------------- }
 function CharIsHexa(const C: Char): Boolean;
 begin
-  Result := ( C in ['0'..'9','A'..'F','a'..'f'] ) ;
+  Result := CharInSet( C, ['0'..'9','A'..'F','a'..'f'] ) ;
 end;
 
 {-----------------------------------------------------------------------------
@@ -1640,7 +1767,7 @@ begin
   LenValue := Length( AValue ) ;
   For I := 1 to LenValue do
   begin
-     if AValue[I] in SetOfChars then
+     if CharInSet( AValue[I], SetOfChars) then
         Result := Result + AValue[I];
   end;
 end;
@@ -1766,16 +1893,16 @@ Var A : Integer ;
 begin
   Result  := '' ;
   Ret     := '' ;
-  AnsiStr := ACBrStrToAnsi( AString );
+  AnsiStr := AnsiString( ACBrStrToAnsi( AString ));
   For A := 1 to Length( AnsiStr ) do
   begin
      Letra := TiraAcento( AnsiStr[A] ) ;
-     if not (Letra in [#32..#126,#13,#10,#8]) then    {Letras / numeros / pontos / sinais}
+     if not CharInSet(Letra, [#32..#126,#13,#10,#8]) then    {Letras / numeros / pontos / sinais}
         Letra := ' ' ;
      Ret := Ret + Letra ;
   end ;
 
-  Result := ACBrStr(Ret)
+  Result := ACBrStr(string(Ret))
 end ;
 
 {-----------------------------------------------------------------------------
@@ -1811,56 +1938,62 @@ end ;
   Se <PadLinhas> for True, Todas as linhas terão o mesmo tamanho de Colunas
     com espaços a esquerda se necessário.
  ---------------------------------------------------------------------------- }
-function AjustaLinhas(Texto: AnsiString; Colunas: Integer ;
-   NumMaxLinhas: Integer = 0; PadLinhas: Boolean = False): AnsiString;
+function AjustaLinhas(const Texto: AnsiString; Colunas: Integer;
+  NumMaxLinhas: Integer; PadLinhas: Boolean): AnsiString;
 Var
   Count,P,I : Integer ;
-  Linha, CurrLineBreak : AnsiString ;
+  Linha, CurrLineBreak, VTexto : String;
 begin
+  VTexto := String(Texto);
   { Trocando todos os #13+#10 por #10 }
   CurrLineBreak := sLineBreak ;
   if (CurrLineBreak <> #13+#10) then
-     Texto := AnsiString(StringReplace(String(Texto), #13+#10, #10, [rfReplaceAll])) ;
+     VTexto := StringReplace(VTexto, #13+#10, #10, [rfReplaceAll]) ;
 
   if (CurrLineBreak <> #10) then
-     Texto := AnsiString(StringReplace(String(Texto), String(CurrLineBreak), #10, [rfReplaceAll])) ;
+     VTexto := StringReplace(VTexto, CurrLineBreak, #10, [rfReplaceAll]) ;
 
   { Ajustando a largura das Linhas para o máximo permitido em  "Colunas"
     e limitando em "NumMaxLinhas" o total de Linhas}
   Count  := 0 ;
   Result := '' ;
   while ((Count < NumMaxLinhas) or (NumMaxLinhas = 0)) and
-        (Length(Texto) > 0) do
+        (Length(VTexto) > 0) do
   begin
-     P := pos(#10, String( Texto ) ) ;
+     P := pos(#10, VTexto ) ;
      if P > (Colunas + 1) then
         P := Colunas + 1 ;
 
      if P = 0 then
-        P := min( Length( Texto ), Colunas ) + 1 ;
+        P := min( Length( VTexto ), Colunas ) + 1 ;
 
      // somar 2 quando encontrar uma tag para não quebrar ela
-     if (Copy(Texto, P-1, 1) = '<') or (Copy(Texto, P-2, 2) = '</') then
+     if (Copy(VTexto, P-1, 1) = '<') or (Copy(VTexto, P-2, 2) = '</') then
         inc(P, 2);
 
      I := 0 ;
-     if copy(Texto,P,1) = #10 then   // Pula #10 ?
+     if copy(VTexto,P,1) = #10 then   // Pula #10 ?
         I := 1 ;
 
-     Linha := copy(Texto,1,P-1) ;    // Remove #10 (se hover)
+     Linha := copy(VTexto,1,P-1) ;    // Remove #10 (se hover)
 
      if PadLinhas then
-        Result := Result + PadRight( Linha, Colunas) + #10
+        Result := Result + AnsiString(PadRight( Linha, Colunas)) + #10
      else
-        Result := Result + Linha + #10 ;
+        Result := Result + AnsiString(Linha) + #10 ;
 
      Inc(Count) ;
-     Texto := copy(Texto, P+I, Length(Texto) ) ;
+     VTexto := copy(VTexto, P+I, Length(VTexto) ) ;
   end ;
 
   { Permitir impressão de uma linha em branco }
   if Result = '' then
-    Result := Result + #10;
+  begin
+    if PadLinhas then
+      Result := Space(Colunas) + #10
+    else
+      Result := #10;
+  end;
 end;
 
 {-----------------------------------------------------------------------------
@@ -1872,7 +2005,7 @@ function QuebraLinhas(const Texto: String; const Colunas: Integer;
    const CaracterQuebrar : AnsiChar = ' '): String;
 Var
   PosIni, PosFim, PosLF, Tamanho : Integer ;
-  AnsiStr, Resp: AnsiString;
+  AnsiStr, Resp: String;
 begin
   Resp := '';
   // Converte para Ansi, para não se perder com caracteres UTF8
@@ -1892,11 +2025,11 @@ begin
 
        if Tamanho > PosFim then  // Ainda tem proxima linha ?
        begin
-          if (AnsiStr[PosFim+1] in [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
+          if CharInSet(AnsiStr[PosFim+1], [CaracterQuebrar, LF]) then  // Proximo já é uma Quebra ?
              Inc(PosFim)
           else
           begin
-            while (not (AnsiStr[PosFim] in [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
+            while (not CharInSet(AnsiStr[PosFim], [CaracterQuebrar, LF])) and (PosFim > PosIni) do  // Ache uma Quebra
               Dec(PosFim) ;
           end;
        end;
@@ -1913,7 +2046,7 @@ begin
 
        // Pula CaracterQuebrar no Inicio da String
        if (PosIni <= Tamanho) then
-          while (AnsiStr[PosIni] in [CaracterQuebrar, LF]) and (PosIni <= Tamanho) do
+          while CharInSet(AnsiStr[PosIni], [CaracterQuebrar, LF]) and (PosIni <= Tamanho) do
              Inc(PosIni) ;
 
     until (PosIni > Tamanho);
@@ -1931,26 +2064,29 @@ end;
   Traduz Strings do Tipo '#13,v,#10', substituindo #nn por chr(nn). Ignora todo
    texto apos a String ' | '
  ---------------------------------------------------------------------------- }
-function TraduzComando(AString: String): AnsiString;
-Var A : Integer ;
+function TraduzComando(const AString: String): AnsiString;
+Var 
+  A : Integer ;
+  VString : String;
 begin
-  A := pos(' | ', String( AString ) ) ;
+  VString := AString;
+  A := pos(' | ', VString ) ;
   if A > 0 then
-     AString := copy(AString,1,A-1) ;   { removendo texto apos ' | ' }
+     VString := copy(VString,1,A-1) ;   { removendo texto apos ' | ' }
 
-  Result := AscToString( AString ) ;
+  Result := AscToString( VString ) ;
 end ;
 
 {-----------------------------------------------------------------------------
   Traduz Strings do Tipo chr(13)+chr(10) para uma representação que possa ser
    lida por AscToString Ex: '#13,#10'
  ---------------------------------------------------------------------------- }
-function StringToAsc(AString: AnsiString): String;
+function StringToAsc(const AString: AnsiString): String;
 Var A : Integer ;
 begin
   Result := '' ;
   For A := 1 to Length( AString ) do
-     Result := Result + AnsiString('#'+IntToStr( Ord( AString[A] ) )+',') ;
+     Result := Result + '#'+IntToStr( Ord( AString[A] ) )+',' ;
 
   Result := copy(Result,1, Length( Result )-1 ) ;
 end;
@@ -1960,23 +2096,24 @@ end;
   Usar , para separar um campo do outro... No exemplo acima o resultado seria
   chr(13)+'v'+chr(10) 
  ---------------------------------------------------------------------------- }
-function AscToString(AString: String): AnsiString;
+function AscToString(const AString: String): AnsiString;
 Var
   A : Integer ;
   Token : AnsiString ;
+  VString : string;
   C : Char ;
 begin
-  AString := AnsiString( Trim( String( AString ) ) );
+  VString := Trim( AString  );
   Result  := '' ;
   A       := 1  ;
   Token   := '' ;
 
-  while A <= length( AString ) + 1 do
+  while A <= length( VString ) + 1 do
   begin
-     if A > length( AString ) then
+     if A > length( VString ) then
         C := ','
      else
-        C := AString[A] ;
+        C := VString[A] ;
 
      if (C = ',') and (Length( Token ) >= 1) then
       begin
@@ -1990,7 +2127,7 @@ begin
         Token := '' ;
       end
      else
-        Token := Token + C ;
+        Token := Token + AnsiString(C) ;
 
      A := A + 1 ;
   end ;
@@ -2027,7 +2164,7 @@ function StringToBinaryString(const AString: AnsiString): AnsiString;
 var
    P, I : LongInt;
    Hex : String;
-   CharHex : AnsiChar;
+   CharHex : AnsiString;
 begin
   Result := AString ;
 
@@ -2044,7 +2181,7 @@ begin
           CharHex := ' ' ;
        end ;
 
-       Result := AnsiString( StringReplace(String(Result),'\x'+Hex,String(CharHex),[rfReplaceAll]) );
+       Result := ReplaceString(Result, '\x'+Hex, String(CharHex) );
        I := 1;
      end
      else
@@ -2098,7 +2235,7 @@ end ;
 {-----------------------------------------------------------------------------
  Retorna valor de CRC16 de <AString>    http://www.ibrtses.com/delphi/dcrc.html
  -----------------------------------------------------------------------------}
-function StringCrc16(AString : AnsiString ):word;
+function StringCrc16(const AString : AnsiString ):word;
 
   procedure ByteCrc(data:byte;var crc:word);
    Var i : Byte;
@@ -2408,8 +2545,14 @@ function PathWithDelim(const APath : String) : String ;
 begin
   Result := Trim(APath) ;
   if Result <> '' then
-     if RightStr(Result,1) <> PathDelim then   { Tem delimitador no final ? }
-        Result := Result + PathDelim ;
+  begin
+     {$IfDef FPC}
+      Result := IncludeTrailingPathDelimiter(Result);
+     {$Else}
+      if RightStr(Result,1) <> PathDelim then   { Tem delimitador no final ? }
+         Result := Result + PathDelim ;
+     {$EndIf}
+  end;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -2783,7 +2926,7 @@ begin
   end;
 end;
 
-procedure WriteLog(const ArqTXT, ABinaryString: AnsiString;
+procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
   const Traduz: Boolean);
 var
   Buf: AnsiString;
@@ -2792,7 +2935,7 @@ begin
      exit ;
 
   if Traduz then
-     Buf := TranslateUnprintable(ABinaryString)
+     Buf := AnsiString( TranslateUnprintable(ABinaryString) )
   else
      Buf := ABinaryString;
 
@@ -2802,9 +2945,9 @@ begin
   end ;
 end;
 
-function TranslateUnprintable(const ABinaryString: AnsiString): AnsiString;
+function TranslateUnprintable(const ABinaryString: AnsiString): String;
 Var
-  Buf, Ch : AnsiString ;
+  Buf, Ch : String ;
   I   : Integer ;
   ASC : Byte ;
 begin
@@ -2830,7 +2973,7 @@ begin
         ESC   : Ch := '[ESC]' ;
         FS    : Ch := '[FS]' ;
         GS    : Ch := '[GS]' ;
-        #32..#126 : Ch := ABinaryString[I] ;
+        #32..#126 : Ch := String(ABinaryString[I]) ;
      else ;
        Ch := '['+IntToStr(ASC)+']'
      end;
@@ -2882,6 +3025,8 @@ var
 begin
  Result := True ;
 
+ if LibName = '' then Exit;
+
 {$IFDEF FPC}
  LibHandle := dynlibs.LoadLibrary( LibName ) ;
  if LibHandle <> 0 then
@@ -2916,8 +3061,6 @@ begin
 end;
 
 function TiraPontos(Str: string): string;
-const
-  InvalidChars : Set of Char = [ '/',',','-','.',')','(',' ' ];
 var
   i, Count: Integer;
 begin
@@ -2925,7 +3068,7 @@ begin
   Count := 0;
   for i := 1 to Length(str) do
   begin
-    if not (str[i] in InvalidChars) then
+    if not CharInSet(str[i], [ '/',',','-','.',')','(',' ' ]) then
     begin
       inc(Count);
       Result[Count] := str[i];
@@ -2985,7 +3128,7 @@ end;
 http://www.experts-exchange.com/Programming/Languages/Pascal/Delphi/Q_10147769.html
  ------------------------------------------------------------------------------}
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
-{$IFDEF USE_LConvEncoding}
+{$IfNDef MSWINDOWS}
  Var
    AnsiStr : AnsiString ;
    UTF8Str : String ;
@@ -3065,7 +3208,8 @@ function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word =
  end;
 {$ENDIF}
 
-function MatchText(const AText: AnsiString; const AValues: array of AnsiString): Boolean;
+function MatchText(const AText: String; const AValues: array of String
+  ): Boolean;
 var
   I: Integer;
 begin
@@ -3164,27 +3308,10 @@ end ;
 function DecodeToString(const ABinaryString: AnsiString; const StrIsUTF8: Boolean
   ): String;
 begin
-  Result := '';
-
-  {$IFDEF UNICODE}
-   if not StrIsUTF8 then
-     Result := ACBrStr( ABinaryString )
-   else
-     {$IFNDEF FPC}
-      {$IFDEF DELPHI12_UP}  // delphi 2009 em diante
-       Result := UTF8ToString(ABinaryString);
-      {$ELSE}
-       Result := UTF8Decode(ABinaryString);
-      {$ENDIF}
-     {$ENDIF} ;
-
-  {$ELSE}
-   if StrIsUTF8 then
-     Result := Utf8ToAnsi( ABinaryString ) ;
-  {$ENDIF}
-
-  if Result = '' then
-    Result := String(ABinaryString);
+  if StrIsUTF8 then
+    Result := UTF8ToNativeString(ABinaryString)
+  else
+    Result := AnsiToNativeString(ABinaryString);
 end;
 
 function SeparaDados(const AString: String; const Chave: String;
@@ -3195,7 +3322,6 @@ var
 begin
   UTexto := AnsiUpperCase(AString);
   UChave := AnsiUpperCase(Chave);
-  PosIni := 0;
   PosFim := 0;
 
   if MantemChave then
@@ -3236,14 +3362,16 @@ end;
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web
-   Transforma caracteres HTML Entity em ASCII ou vice versa
+   Transforma caracteres HTML Entity em ASCII ou vice versa.
+   No caso de decodificação, também transforma o Encoding de UTF8 para a String
+   nativa da IDE
  ------------------------------------------------------------------------------}
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True ) : String;
 var
   AStr: String;
 
-  function InternalStringReplace(const S, OldPatern: String; NewPattern: AnsiString ): String;
+  function InternalStringReplace(const S, OldPatern: String; NewPattern: String ): String;
   begin
     if pos(OldPatern, S) > 0 then
       Result := StringReplace(S, OldPatern, ACBrStr(NewPattern), [rfReplaceAll])
@@ -3291,12 +3419,13 @@ begin
   end
   else
   begin
-    AStr := Texto;
+    AStr := string(Texto);
     AStr := StringReplace(AStr, '&', '&amp;' , [rfReplaceAll]);
     AStr := StringReplace(AStr, '<', '&lt;'  , [rfReplaceAll]);
     AStr := StringReplace(AStr, '>', '&gt;'  , [rfReplaceAll]);
     AStr := StringReplace(AStr, '"', '&quot;', [rfReplaceAll]);
     AStr := StringReplace(AStr, #39, '&#39;' , [rfReplaceAll]);
+    AStr := StringReplace(AStr, '''','&apos;', [rfReplaceAll]);
   end;
 
   Result := AStr;
@@ -3352,13 +3481,62 @@ var
 begin
   if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
   begin
-    UTF8Str := ACBrStrToUTF8(AXML);
+    UTF8Str := NativeStringToUTF8(AXML);
     Result := '<?xml version="1.0" encoding="UTF-8"?>' + String(UTF8Str);
   end
   else
     Result := AXML;
 end;
 
+{------------------------------------------------------------------------------
+   Se XML contiver a TAG de encoding em UTF8, no seu início, remove a TAG
+   e converte o conteudo do mesmo para String Nativa da IDE (se necessário, dependendo da IDE)
+ ------------------------------------------------------------------------------}
+function ConverteXMLtoNativeString(const AXML: String): String;
+begin
+  if XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
+  begin
+    Result := UTF8ToNativeString(AnsiString(AXML));
+    {$IfNDef FPC}
+     Result := RemoverDeclaracaoXML(Result);
+    {$EndIf}
+  end
+  else
+    Result := AXML;
+end;
+
+{------------------------------------------------------------------------------
+   Retorna a Declaração do XML, Ex: <?xml version="1.0"?>
+   http://www.tizag.com/xmlTutorial/xmlprolog.php
+ ------------------------------------------------------------------------------}
+function ObtemDeclaracaoXML(const AXML: String): String;
+var
+  P1, P2: Integer;
+begin
+  Result := '';
+  P1 := pos('<?', AXML);
+  if P1 > 0 then
+  begin
+    P2 := PosEx('?>', AXML, P1+2);
+    if P2 > 0 then
+      Result := copy(AXML, P1, P2-P1+2);
+  end;
+end;
+
+{------------------------------------------------------------------------------
+   Retorna XML sem a Declaração, Ex: <?xml version="1.0"?>
+ ------------------------------------------------------------------------------}
+function RemoverDeclaracaoXML(const AXML: String): String;
+var
+  DeclaracaoXML: String;
+begin
+  DeclaracaoXML := ObtemDeclaracaoXML(AXML);
+
+  if DeclaracaoXML <> '' then
+    Result := StringReplace(AXML, DeclaracaoXML, '', [])
+  else
+    Result := AXML;
+end;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char; Delimiter: char);
@@ -3407,7 +3585,7 @@ begin
           {$ELSE}
           Inc(P);
           {$ENDIF}
-        until not ((P^ in [#1..' ']));
+        until not (CharInSet(P^, [#1..' ']));
       end;
     end;
   finally
@@ -3461,13 +3639,17 @@ end;
 {$ENDIF}
 
 initialization
-{$IFDEF MSWINDOWS}
+{$IfDef MSWINDOWS}
   InpOutLoaded := False;
   BlockInputLoaded := False;
   xInp32 := Nil;
   xOut32 := Nil;
   xBlockInput := Nil;
-{$ENDIF}
+{$EndIf}
   Randomized := False ;
+{$IfDef FPC}
+ACBrANSIEncoding := GetSysANSIencoding;
+{$EndIf}
+
 end.
 

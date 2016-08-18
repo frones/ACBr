@@ -50,6 +50,9 @@ uses ACBrBase, ACBrDevice, ACBrECFClass, ACBrECFVirtual, ACBrPAFClass, ACBrRFD,
            ,FMX.Memo, System.UITypes
         {$ELSE}
            ,Controls, Forms, Dialogs, Graphics, StdCtrls
+           {$IFDEF DELPHIXE2_UP}
+            , System.UITypes
+           {$ENDIF}
         {$IFEND}
      {$ENDIF} ;
 {$IFDEF FRAMEWORK}
@@ -121,6 +124,7 @@ TACBrECF = class( TACBrComponent )
     fsMensagemRodape : String ;
     fsRegistrouRFDCNF : Boolean ;
     fsSubTotalPagto :Double;
+    fsTotalPago: Double;
     fsIndiceGerencial : Integer ;
     {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
@@ -226,6 +230,7 @@ TACBrECF = class( TACBrComponent )
     function GetArredondaItemMFD : Boolean ;
     function GetIgnorarErroSemPapel : Boolean ;
     function GetIgnorarTagsFormatacao: Boolean;
+    function GetNumMaxLinhasRodapeClass: Integer;
     function GetOnGravarLog: TACBrGravarLog;
     function GetPaginaDeCodigoClass : Word ;
     function GetTipoUltimoDocumentoClass : TACBrECFTipoDocumento ;
@@ -308,6 +313,8 @@ TACBrECF = class( TACBrComponent )
     procedure SetLinhasEntreCupons(const AValue: Integer);
     function GetMaxLinhasBuffer: Integer;
     procedure SetMaxLinhasBuffer(const AValue: Integer);
+
+    Function MemoAssigned: Boolean;
     {$IFNDEF NOGUI}
       {$IFNDEF FRAMEWORK}
       procedure SetFormMsgFonte(const AValue: TFont);
@@ -316,7 +323,6 @@ TACBrECF = class( TACBrComponent )
       procedure SetMemoParams(const AValue: TStrings);
       procedure MemoAdicionaLinha( Linhas : String ) ;
 
-      Function MemoAssigned : Boolean ;
       procedure MemoAdicionaCabecalho ;
       Function MemoTraduzCode( Linha : String ) : String ;
       procedure MemoTitulo(ATitulo : String) ;
@@ -376,8 +382,8 @@ TACBrECF = class( TACBrComponent )
     function GetSubModeloECFClass: String ;
 
     function GetPAFClass: String;
-    function GetDadosReducaoZ: AnsiString;
-    function GetDadosUltimaReducaoZ: AnsiString;
+    function GetDadosReducaoZ: String;
+    function GetDadosUltimaReducaoZ: String;
     function GetDataMovimentoClass: TDateTime;
     function GetDataHoraUltimaReducaoZClass : TDateTime ;
     function GetGrandeTotalClass: Double;
@@ -478,10 +484,11 @@ TACBrECF = class( TACBrComponent )
     Property NumSerieMFD  : String read GetNumSerieMFDClass ;
     Property NumVersao : String    read GetNumVersaoClass;
     Property NumReducoesZRestantes: String read GetNumReducoesZRestantesClass;
+    Property NumMaxLinhasRodape: Integer read GetNumMaxLinhasRodapeClass;
 
     { Dados da Reducao Z - Registro 60M }
-    Property DadosReducaoZ : AnsiString  read GetDadosReducaoZ ;
-    Property DadosUltimaReducaoZ : AnsiString  read GetDadosUltimaReducaoZ ;
+    Property DadosReducaoZ : String  read GetDadosReducaoZ ;
+    Property DadosUltimaReducaoZ : String  read GetDadosUltimaReducaoZ ;
     Property DadosReducaoZClass: TACBrECFDadosRZ read GetDadosReducaoZClass;
 
     { Retorna String com todos os valores no formato: Campo = Valor (1 por linha)}
@@ -669,7 +676,20 @@ TACBrECF = class( TACBrComponent )
            AliquotaICMSST: Double = 0;            // ICMS ST:
            ValorICMSST: Double = 0;               // ICMS ST:
            ValorICMSDesonerado: Double = 0;
-           MotivoDesoneracaoICMS: Integer = 9);   // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           MotivoDesoneracaoICMS: Integer = 9;    // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           CST_PIS: String = '';
+           BaseCalculoPIS: Double = 0;
+           AliquotaPIS: Double = 0;
+           ValorPIS: Double = 0;
+           QuantidadeVendidaPIS: Double = 0;
+           ValorAliquotaPIS: Double = 0;
+           CST_COFINS: String = '';
+           BaseCalculoCOFINS: Double = 0;
+           AliquotaCOFINS: Double = 0;
+           ValorCOFINS: Double = 0;
+           QuantidadeVendidaCOFINS: Double = 0;
+           ValorAliquotaCOFINS: Double = 0;
+           CEST: String = '');   // Código do CEST para esse produto (7 dígitos)
 
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
@@ -825,6 +845,9 @@ TACBrECF = class( TACBrComponent )
      //--- False se não coicidem
     function DecodificaTexto(Operacao: Char; Texto: String; var Resposta: String): Boolean;
 
+    function CalculaTotalItem(AValorUnitario: Double; AQtd: Double = 1;
+       ADecimais: Integer = 2; FlagAT: Char = ' '): Double;
+
     {$IFNDEF NOGUI}
      Procedure MemoLeParams ;
      Property MemoItens : Integer read fsMemoItens write fsMemoItens ;
@@ -906,7 +929,7 @@ TACBrECF = class( TACBrComponent )
     function CodificarPaginaDeCodigoECF(ATexto: String): AnsiString;
     function DecodificarPaginaDeCodigoECF(ATexto: AnsiString): String;
 
-    function MontaDadosReducaoZ: AnsiString;
+    function MontaDadosReducaoZ: String;
 
     procedure DAV_Abrir(const AEmissao: TDateTime;
       const ADescrDocumento, ANumero, ASituacao, AVendedor, AObservacao,
@@ -1204,6 +1227,7 @@ begin
   inherited create( AOwner );
 
   { Inicializando as Variaveis Internas }
+  fsTotalPago       := 0;
   fsSubTotalPagto   := 0;
   fsIndiceGerencial := 0;
   fsAtivo           := false ;
@@ -1545,6 +1569,7 @@ begin
      fsMemoItens     := NumUltItem;
      {$ENDIF}
      fsSubTotalPagto := Subtotal;
+     fsTotalPago     := TotalPago;
   end;
 
   {$IFNDEF NOGUI}
@@ -1740,6 +1765,15 @@ begin
   fsECF.MaxLinhasBuffer := AValue ;
 end;
 
+ function TACBrECF.MemoAssigned: Boolean;
+ begin
+   {$IFDEF NOGUI}
+     Result := False;
+   {$ELSE}
+     Result := {$IFNDEF FRAMEWORK}Assigned( fsMemoBobina ) or {$ENDIF}Assigned( fsOnBobinaAdicionaLinhas ) ;
+   {$ENDIF}
+ end;
+
 function TACBrECF.GetMsgPausaRelatorio: String;
 begin
   result := fsECF.MsgPausaRelatorio ;
@@ -1793,6 +1827,11 @@ end;
 function TACBrECF.GetIgnorarTagsFormatacao: Boolean;
 begin
   Result := fsECF.IgnorarTagsFormatacao;
+end;
+
+function TACBrECF.GetNumMaxLinhasRodapeClass: Integer;
+begin
+  Result := fsECF.NumMaxLinhasRodape ;
 end;
 
 function TACBrECF.GetOnGravarLog: TACBrGravarLog;
@@ -2273,7 +2312,7 @@ begin
   Result := fsECF.Termica ;
 end;
 
-function TACBrECF.MontaDadosReducaoZ: AnsiString;
+function TACBrECF.MontaDadosReducaoZ: String;
 begin
   Result := fsECF.DadosReducaoZClass.MontaDadosReducaoZ;
 end;
@@ -2482,7 +2521,7 @@ begin
   Result := fsECF.NumUltItem ;
 end;
 
-function TACBrECF.GetDadosReducaoZ: AnsiString;
+function TACBrECF.GetDadosReducaoZ: String;
 begin
   if ComandoLOG = '' then
      ComandoLOG := 'DadosReducaoZ' ;
@@ -2496,7 +2535,7 @@ begin
    Result := fsECF.DadosReducaoZClass;
 end;
 
-function TACBrECF.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECF.GetDadosUltimaReducaoZ: String;
 begin
   if ComandoLOG = '' then
      ComandoLOG := 'DadosUltimaReducaoZ' ;
@@ -2729,7 +2768,11 @@ procedure TACBrECF.VendeItemEx(Codigo, Descricao: String; AliquotaICMS: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CST_PIS: String;
+  BaseCalculoPIS: Double; AliquotaPIS: Double; ValorPIS: Double;
+  QuantidadeVendidaPIS: Double; ValorAliquotaPIS: Double; CST_COFINS: String;
+  BaseCalculoCOFINS: Double; AliquotaCOFINS: Double; ValorCOFINS: Double;
+  QuantidadeVendidaCOFINS: Double; ValorAliquotaCOFINS: Double; CEST: String);
 Var
   AliquotaECF : String ;
   Tratado     : Boolean;
@@ -2745,7 +2788,7 @@ begin
   if CasasDecimaisValor = 0 then
      CasasDecimaisValor := Self.DecimaisPreco;
 
-  if not (ArredondaTrunca in ['A','T']) then
+  if not CharInSet(ArredondaTrunca , ['A','T']) then
      ArredondaTrunca := IfThen(Self.Arredonda,'A','T')[1];
 
   try
@@ -2763,7 +2806,12 @@ begin
                       IndicadorIncentivoFiscalISS, CodigoIBGE,
                       ModalidadeBCICMSST, PercentualMargemICMSST, PercentualReducaoBCICMSST,
                       ValorReducaoBCICMSST, AliquotaICMSST, ValorICMSST,
-                      ValorICMSDesonerado, MotivoDesoneracaoICMS);
+                      ValorICMSDesonerado, MotivoDesoneracaoICMS,
+                      CST_PIS, BaseCalculoPIS, AliquotaPIS, ValorPIS,
+                      QuantidadeVendidaPIS, ValorAliquotaPIS, CST_COFINS,
+                      BaseCalculoCOFINS, AliquotaCOFINS,
+                      ValorCOFINS, QuantidadeVendidaCOFINS, ValorAliquotaCOFINS,
+                      CEST);
   except
      if Assigned( FOnErrorVendeItem ) then
         FOnErrorVendeItem(Tratado);
@@ -2820,10 +2868,10 @@ begin
   if AliquotaICMS = '' then
      raise EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemAliqICMSException) );
 
-  if not (DescontoAcrescimo[1] in ['A','D']) then
+  if not CharInSet(DescontoAcrescimo[1] , ['A','D']) then
      raise EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemDescAcreException) );
 
-  if not (TipoDescontoAcrescimo[1] in ['%','$']) then
+  if not CharInSet(TipoDescontoAcrescimo[1] , ['%','$']) then
      raise  EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemTipoDescAcreException) );
 
   { Retorna em "AliquotaECF" (por referencia) a String de aliquota que deve
@@ -2995,10 +3043,10 @@ begin
   if ValorDescontoAcrescimo <= 0 then
      raise EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemValDescAcreException) );
 
-  if not (DescontoAcrescimo[1] in ['A','D']) then
+  if not CharInSet(DescontoAcrescimo[1] , ['A','D']) then
      raise  EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemDescAcreException) );
 
-  if not (TipoDescontoAcrescimo[1] in ['%','$']) then
+  if not CharInSet(TipoDescontoAcrescimo[1] , ['%','$']) then
      raise  EACBrECFCMDInvalido.Create( ACBrStr(cACBrECFVendeItemTipoDescAcreException) );
 
   fsECF.DescontoAcrescimoItemAnterior(ValorDescontoAcrescimo, DescontoAcrescimo,
@@ -3086,6 +3134,7 @@ end;
 procedure TACBrECF.SubtotalizaCupom(DescontoAcrescimo: Double;
    MensagemRodape : AnsiString );
 var
+  wSubtotal: Double;
   Tratado : Boolean;
 begin
   { Ajustando valores acima de 2 Decimais }
@@ -3097,6 +3146,10 @@ begin
 
   ComandoLOG := 'SubtotalizaCupom( '+FloatToStr(DescontoAcrescimo)+' , '+
                     fsMensagemRodape+' )';
+
+  wSubtotal := 0;
+  if MemoAssigned then
+    wSubtotal := Subtotal + DescontoAcrescimo;  // Le Subtotal do ECF
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
@@ -3127,7 +3180,10 @@ begin
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
+   begin
+      fsSubTotalPagto := wSubtotal;
       MemoSubtotaliza(DescontoAcrescimo);
+   end;
   {$ENDIF}
 
   if RFDAtivo then
@@ -3176,6 +3232,7 @@ procedure TACBrECF.EfetuaPagamento(CodFormaPagto : String ; Valor : Double ;
 Var
   FPG     : TACBrECFFormaPagamento ;
   Tratado : Boolean;
+  wTotalPago: Double;
 begin
   CodFormaPagto := Trim(CodFormaPagto);
   Observacao    := TrimRight(Observacao) ;
@@ -3187,6 +3244,10 @@ begin
   ComandoLOG := 'EfetuaPagamento( '+CodFormaPagto+' , '+
                     FloatToStr(Valor)+' , '+Observacao+', '+
                     BoolToStr( ImprimeVinculado)+', '+IntToStr(CodMeioPagamento)+' )';
+
+  wTotalPago := 0;
+  if MemoAssigned then
+    wTotalPago := TotalPago + Valor;     // Lê TotalPago do ECF
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
@@ -3215,7 +3276,10 @@ begin
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
+   begin
+      fsTotalPago := wTotalPago;
       MemoEfetuaPagamento(FPG.Descricao, Valor, Observacao);
+   end;
   {$ENDIF}
 
   if RFDAtivo then
@@ -3306,8 +3370,8 @@ begin
 
   { Todos ECFs suportam no máximo 8 Linhas no Rodapé. Ajusta se necessário,
     para evitar erro na Impressão, no caso de mais linhas serem enviadas }
-  if not (fsModelo in [ecfEscECF, ecfECFVirtual]) then
-     Observacao:= AjustaLinhas(Observacao, Colunas, 8);
+  if NumMaxLinhasRodape > 0 then
+    Observacao := AjustaLinhas(Observacao, Colunas, NumMaxLinhasRodape);
 
   ComandoLOG := 'FechaCupom( '+Observacao+' )' ;
 
@@ -3333,7 +3397,7 @@ begin
    begin
       fsMemoOperacao := 'fechacupom' ;
 
-      Observacao := AjustaLinhas( Observacao, fsMemoColunas, 8 ) ;
+      Observacao := AjustaLinhas( Observacao, fsMemoColunas, NumMaxLinhasRodape ) ;
       MemoAdicionaLinha( Observacao + sLineBreak + fsMemoRodape );
    end ;
   {$ENDIF}
@@ -3425,6 +3489,9 @@ begin
         ' EF' + FormatFloat( '0000000.000', PostoCombustivel[I].EF ) +
         ' V' + FormatFloat( '0.000', PostoCombustivel[I].Volume ) +
         ifthen( PostoCombustivel[I].Automatico, 'A', '' );
+
+        if not PostoCombustivel[I].Automatico then
+          Rodape := Rodape + ifthen( PostoCombustivel[I].Manual, 'M', '' ) ;
       end;
     end;
   end;
@@ -5085,8 +5152,7 @@ procedure TACBrECF.LinhaRelatorioGerencial(const Linha: AnsiString;
   const IndiceBMP: Integer);
 Var
   Texto, Buffer : AnsiString ;
-  Lin   : Integer ;
-  SL    : TStringList ;
+  Pos : Integer ;
 
   Procedure TentaImprimirLinhas( Texto: AnsiString; IndiceBMP: Integer )  ;
   var
@@ -5141,26 +5207,19 @@ begin
      Texto  := '' ;
      Buffer := DecodificarTagsFormatacao( Linha );
      Buffer := AjustaLinhas(Buffer, Colunas) ;
-     SL     := TStringList.Create ;
-     try
-        SL.Text := Buffer ;
 
-        For Lin := 0 to SL.Count - 1 do
-        begin
-           Texto := Texto + SL[Lin] + sLineBreak;
+     while Buffer <> '' do
+     begin
+       Pos := PosAt(#10, Buffer, MaxLinhasBuffer );
+       if Pos < 1 then
+         Pos := Length(Buffer);
 
-           if (Lin mod MaxLinhasBuffer) = 0 then
-           begin
-              TentaImprimirLinhas( Texto, IndiceBMP ) ;
-              Texto := '' ;
-           end ;
-        end ;
+       Texto := Copy(Buffer, 1, Pos);
+       if Length(Texto) > 0 then
+         TentaImprimirLinhas( Texto, IndiceBMP ) ;
 
-        if Texto <> '' then
-           TentaImprimirLinhas( Texto, IndiceBMP ) ;
-     finally
-        SL.Free ;
-     end ;
+       Buffer := Copy(Buffer, Pos+1, Length(Buffer) );
+     end;
    end ;
 
   {$IFNDEF NOGUI}
@@ -5542,6 +5601,7 @@ end;
    MemoAdicionaLinha( fsMemoCabecalho ) ;
    fsMemoItens     := 0 ;  { Zera contador de Itens }
    fsSubTotalPagto := 0;   {Zera o total pago verificador da bobina}
+   fsTotalPago     := 0;
  end;
 
  procedure TACBrECF.MemoTitulo(ATitulo: String) ;
@@ -5550,17 +5610,11 @@ end;
                       ATitulo+'</center></h'+IntToStr(fsMemoHTMLTitleSise)+'>' ) ;
  end;
 
- function TACBrECF.MemoAssigned: Boolean;
- begin
-   Result := {$IFNDEF FRAMEWORK}Assigned( fsMemoBobina ) or {$ENDIF}Assigned( fsOnBobinaAdicionaLinhas ) ;
- end;
-
  procedure TACBrECF.MemoSubtotaliza(DescontoAcrescimo: Double );
  Var
     S : String ;
  begin
    fsMemoOperacao  := 'subtotalizanaofiscal' ;
-   fsSubTotalPagto := Subtotal;
 
    {Para que na condição de pagamento, não precise ficar pegando toda hora}
    {o subtotal, evitando ficar mandando para a impressora }
@@ -5593,7 +5647,7 @@ end;
  procedure TACBrECF.MemoEfetuaPagamento(Descricao: String; Valor: Double;
     Observacao: String) ;
  Var
-    TotPago,  Troco : Double ;
+    Troco : Double ;
  begin
     fsMemoOperacao := 'efetuapagamento' ;
     Inc( fsMemoItens ) ;
@@ -5606,20 +5660,17 @@ end;
     Observacao := AjustaLinhas( Observacao, fsMemoColunas, 2 ) ;
     MemoAdicionaLinha( Observacao );
 
-    TotPago := TotalPago ;  { Le valores do ECF }
-//  fsTotalPago := fsTotalPago + Valor;
-
-    if TotPago >= fsSubTotalPagto then   { Ultrapassou o Valor do Cupom }
+    if fsTotalPago >= fsSubTotalPagto then   { Ultrapassou o Valor do Cupom }
     begin
        if fsMemoItens > 1 then
           MemoAdicionaLinha( '<table width=100%><tr>'+
                              '<td align=left><b>S O M A  R$</b></td>'+
-                             '<td align=right>'+FormatFloat('#,###,##0.00',TotPago)+'</td>'+
+                             '<td align=right>'+FormatFloat('#,###,##0.00',fsTotalPago)+'</td>'+
                              '</tr></table>' ) ;
 
-      if TotPago > fsSubTotalPagto then  { Tem TROCO ? }
+      if fsTotalPago > fsSubTotalPagto then  { Tem TROCO ? }
       begin
-         Troco  := RoundTo(TotPago - fsSubTotalPagto,-2) ;
+         Troco  := RoundTo(fsTotalPago - fsSubTotalPagto,-2) ;
          MemoTitulo( '<table width=100%><tr>'+
                      '<td align=left>TROCO  R$</td>'+
                      '<td align=right>'+FormatFloat('#,###,##0.00',Troco)+'</td>'+
@@ -6127,6 +6178,38 @@ function TACBrECF.DecodificaTexto(Operacao: Char; Texto: String;
 begin
    ComandoLOG := 'DecodificaTexto';
    Result := fsECF.DecodificaTexto(Operacao,Texto,Resposta) ;
+end;
+
+function TACBrECF.CalculaTotalItem(AValorUnitario: Double; AQtd: Double;
+  ADecimais: Integer; FlagAT: Char): Double;
+var
+  TotalItem, Pot: Double;
+  EhArredondamento: Boolean;
+begin
+  TotalItem := AValorUnitario * AQtd;
+
+  case upcase(FlagAT) of
+    'A': EhArredondamento := True;
+    'T': EhArredondamento := False;
+  else
+     EhArredondamento := Arredonda or ArredondaItemMFD;
+  end;
+
+  if EhArredondamento then
+  begin
+    Result := RoundABNT(TotalItem, ADecimais)
+  end
+  else
+  begin
+    if ArredondaPorQtd then
+    begin
+      ArredondarPorQtd(AQtd, AValorUnitario, -ADecimais ); // Modifica AQtd
+      TotalItem := AValorUnitario * AQtd;
+    end ;
+
+    Pot := Power(10, ADecimais) ;
+    Result := TruncFix(TotalItem * Pot) / Pot;
+  end;
 end;
 
 function TACBrECF.GetAbout: String;

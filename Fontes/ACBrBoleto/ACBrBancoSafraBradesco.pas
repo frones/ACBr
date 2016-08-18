@@ -59,7 +59,7 @@ type
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
-    function TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
+    function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
   end;
 
@@ -296,7 +296,7 @@ end;
 procedure TACBrBancoSafraBradesco.LerRetorno400(ARetorno: TStringList);
 var
   Titulo: TACBrTitulo;
-  ContLinha, CodOcorrencia: Integer;
+  ContLinha: Integer;
   CodMotivo: Integer;
   rAgencia: String;
   rConta, rDigitoConta: String;
@@ -380,8 +380,7 @@ begin
       SeuNumero               := Copy(Linha, 38, 25);
       NumeroDocumento         := Copy(Linha, 117, 10);
       OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(Copy(Linha, 109, 2), 0));
-      CodOcorrencia           := StrToInt(IfThen(Copy(Linha, 109, 2) = '00', '00', Copy(Linha, 109, 2)));
-
+  
       CodMotivo := StrToIntDef(Copy(Linha, 105, 3), 0);
 
       if CodMotivo > 0 then

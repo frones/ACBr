@@ -44,24 +44,24 @@ begin
   ACBrNcms1.ListarNcms();
 
   try
-    ClientDataSet1.CreateDataSet;
+    BufDataset1.CreateDataSet;
   except
   end;
 
 
   for I := 0 to ACBrNcms1.Ncms.Count - 1 do
   begin
-    ClientDataSet1.Append;
+    BufDataset1.Append;
 
-    ClientDataSet1CODNCM.Value := ACBrNcms1.Ncms[i].CodigoNcm;
-    ClientDataSet1DESCRICAO.Value := ACBrNcms1.Ncms[i].DescricaoNcm;
+    BufDataset1CODNCM1.Value := ACBrNcms1.Ncms[i].CodigoNcm;
+    BufDataset1DESCRICAO1.Value := ACBrNcms1.Ncms[i].DescricaoNcm;
 
-    ClientDataSet1.Post;
+    BufDataset1.Post;
 
     Application.ProcessMessages;
   end;
 
-  Label1.Caption := 'Numero de Registros: ' + IntToStr(ClientDataSet1.RecordCount);
+  Label1.Caption := 'Numero de Registros: ' + IntToStr(BufDataset1.RecordCount);
   MessageDlg('Fim do Processo!', mtInformation, [mbOK], 0);
 end;
 

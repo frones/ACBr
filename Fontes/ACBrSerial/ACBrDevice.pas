@@ -480,7 +480,8 @@ end;
 function TACBrTagProcessor.DecodificarTagsFormatacao(AString: AnsiString
   ): AnsiString;
 Var
-  Tag1, Tag2, Cmd : AnsiString ;
+  Tag1, Tag2: String;
+  Cmd : AnsiString ;
   PosTag1, LenTag1, PosTag2, FimTag : Integer ;
   ATag: TACBrTag;
 begin
@@ -496,7 +497,6 @@ begin
     LenTag1  := Length( Tag1 );
     ATag     := FTags.AcharTag( Tag1 ) ;
     Tag2     := '' ;
-    PosTag2  := 0 ;
 
     if ATag <> Nil then
     begin
@@ -1114,6 +1114,12 @@ begin
   if (not OnlyException) or (MaxBandwidth > 0) then
      Result := Result + ' MAXBANDWIDTH='+IntToStr(MaxBandwidth) ;
      
+  if (not OnlyException) or (SendBytesCount > 0) then
+     Result := Result + ' SENDBYTESCOUNT='+IntToStr(SendBytesCount) ;
+
+  if (not OnlyException) or (SendBytesInterval > 0) then
+     Result := Result + ' SENDBYTESINTERVAL='+IntToStr(SendBytesInterval) ;
+
   Result := Trim(Result) ;
 end;
 
@@ -1153,7 +1159,7 @@ begin
 
   S := GetValue(Linha,'PARITY') ;
   if S <> '' then
-    if S[1] in ['O','E','M','S','N'] then
+    if CharInSet(S[1], ['O','E','M','S','N']) then
       fsParity := S[1] ;
 
   Data := StrToIntDef(GetValue(Linha,'DATA'),Data) ;
@@ -1179,6 +1185,12 @@ begin
 
   S := GetValue(Linha,'MAXBANDWIDTH') ;
   MaxBandwidth := StrToIntDef(S,MaxBandwidth) ;
+
+  S := GetValue(Linha,'SENDBYTESCOUNT') ;
+  SendBytesCount := StrToIntDef(S,SendBytesCount) ;
+
+  S := GetValue(Linha,'SENDBYTESINTERVAL') ;
+  SendBytesInterval := StrToIntDef(S,SendBytesInterval) ;
 end;
 
 

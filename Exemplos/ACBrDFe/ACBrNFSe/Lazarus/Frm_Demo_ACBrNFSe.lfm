@@ -1,8 +1,9 @@
 object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
-  Left = 218
+  Left = 834
   Height = 568
-  Top = 119
+  Top = 224
   Width = 870
+  ActiveControl = PageControl1
   Caption = 'Demo ACBrNFSe'
   ClientHeight = 568
   ClientWidth = 870
@@ -12,7 +13,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.0.4'
+  Visible = False
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -25,9 +27,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblColaborador: TLabel
       Cursor = crHandPoint
       Left = 18
-      Height = 14
+      Height = 13
       Top = 446
-      Width = 284
+      Width = 261
       Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
       Font.Color = clNavy
       Font.Height = -11
@@ -40,9 +42,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblPatrocinador: TLabel
       Cursor = crHandPoint
       Left = 16
-      Height = 14
+      Height = 13
       Top = 470
-      Width = 288
+      Width = 265
       Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
       Font.Color = clGreen
       Font.Height = -11
@@ -55,9 +57,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblDoar1: TLabel
       Cursor = crHandPoint
       Left = 21
-      Height = 14
+      Height = 13
       Top = 494
-      Width = 276
+      Width = 255
       Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
       Font.Color = clRed
       Font.Height = -11
@@ -70,9 +72,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     object lblDoar2: TLabel
       Cursor = crHandPoint
       Left = 117
-      Height = 14
+      Height = 13
       Top = 510
-      Width = 69
+      Width = 63
       Caption = 'clique aqui'
       Font.Color = clRed
       Font.Height = -11
@@ -87,100 +89,100 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       Top = 8
       Width = 281
       Caption = 'Configurações'
-      ClientHeight = 369
+      ClientHeight = 367
       ClientWidth = 277
       TabOrder = 0
       object PageControl1: TPageControl
         Left = 0
-        Height = 369
+        Height = 367
         Top = 0
         Width = 277
-        ActivePage = TabSheet4
+        ActivePage = TabSheet1
         Align = alClient
         MultiLine = True
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 0
         Options = [nboMultiLine]
         object TabSheet4: TTabSheet
           Caption = 'Emitente'
-          ClientHeight = 337
-          ClientWidth = 271
+          ClientHeight = 341
+          ClientWidth = 269
           ImageIndex = 3
           object Label12: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 8
-            Width = 26
+            Width = 27
             Caption = 'CNPJ'
             ParentColor = False
           end
           object Label13: TLabel
             Left = 136
-            Height = 14
+            Height = 13
             Top = 8
-            Width = 82
+            Width = 71
             Caption = 'Insc. Municipal'
             ParentColor = False
           end
           object Label14: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 48
-            Width = 72
+            Width = 63
             Caption = 'Razão Social'
             ParentColor = False
           end
           object Label15: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 88
-            Width = 46
+            Width = 40
             Caption = 'Fantasia'
             ParentColor = False
           end
           object Label16: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 168
-            Width = 65
+            Width = 54
             Caption = 'Logradouro'
             ParentColor = False
           end
           object Label17: TLabel
             Left = 208
-            Height = 14
+            Height = 13
             Top = 168
-            Width = 45
+            Width = 37
             Caption = 'Número'
             ParentColor = False
           end
           object Label18: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 208
-            Width = 79
+            Width = 64
             Caption = 'Complemento'
             ParentColor = False
           end
           object Label19: TLabel
             Left = 136
-            Height = 14
+            Height = 13
             Top = 208
-            Width = 35
+            Width = 27
             Caption = 'Bairro'
             ParentColor = False
           end
           object Label21: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 248
-            Width = 39
+            Width = 33
             Caption = 'Cidade'
             ParentColor = False
           end
           object Label22: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 288
             Width = 14
             Caption = 'UF'
@@ -188,101 +190,101 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object Label23: TLabel
             Left = 136
-            Height = 14
+            Height = 13
             Top = 128
-            Width = 22
+            Width = 21
             Caption = 'CEP'
             ParentColor = False
           end
           object Label24: TLabel
             Left = 8
-            Height = 14
+            Height = 13
             Top = 128
-            Width = 27
+            Width = 24
             Caption = 'Fone'
             ParentColor = False
           end
           object Label29: TLabel
             Left = 128
-            Height = 14
+            Height = 13
             Top = 288
-            Width = 69
+            Width = 58
             Caption = 'Cód. Cidade'
             ParentColor = False
           end
           object edtEmitCNPJ: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 24
             Width = 123
             TabOrder = 0
           end
           object edtEmitIM: TEdit
             Left = 136
-            Height = 24
+            Height = 21
             Top = 24
             Width = 123
             TabOrder = 1
           end
           object edtEmitRazao: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 64
             Width = 252
             TabOrder = 2
           end
           object edtEmitFantasia: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 104
             Width = 252
             TabOrder = 3
           end
           object edtEmitFone: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 144
             Width = 125
             TabOrder = 4
           end
           object edtEmitCEP: TEdit
             Left = 136
-            Height = 24
+            Height = 21
             Top = 144
             Width = 123
             TabOrder = 5
           end
           object edtEmitLogradouro: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 184
             Width = 196
             TabOrder = 6
           end
           object edtEmitNumero: TEdit
             Left = 208
-            Height = 24
+            Height = 21
             Top = 184
             Width = 50
             TabOrder = 7
           end
           object edtEmitComp: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 224
             Width = 123
             TabOrder = 8
           end
           object edtEmitBairro: TEdit
             Left = 136
-            Height = 24
+            Height = 21
             Top = 224
             Width = 123
             TabOrder = 9
           end
           object edtEmitCidade: TEdit
             Left = 72
-            Height = 24
+            Height = 21
             Top = 264
             Width = 142
             ReadOnly = True
@@ -292,7 +294,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object edtEmitUF: TEdit
             Left = 8
-            Height = 24
+            Height = 21
             Top = 304
             Width = 35
             Font.Color = clWindowText
@@ -306,10 +308,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object cbCidades: TComboBox
             Left = 8
-            Height = 27
+            Height = 21
             Top = 264
             Width = 257
-            ItemHeight = 0
+            ItemHeight = 13
             Items.Strings = (
               'Alfenas/3101607/MG'
               'Americana/3501608/SP'
@@ -405,6 +407,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Lages/4209300/SC'
               'Lagoa Santa/3137601/MG'
               'Lavras/3138203/MG'
+              'Limeira/3526902/SP'
               'Maceio/2704302/AL'
               'Manaus/1302603/AM'
               'Marechal Deodoro/3704708/AL'
@@ -471,6 +474,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Schroeder/4217402/SC'
               'Sinop/5107909/MT'
               'Soledade/4320800/RS'
+              'Sorocaba/3552205/SP'
               'Tangara da Serra/5107958/MT'
               'Tatui/3554003/SP'
               'Telemaco Borba/4127106/PR'
@@ -493,7 +497,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           end
           object edtCodCidade: TEdit
             Left = 128
-            Height = 24
+            Height = 21
             Top = 304
             Width = 89
             Font.Color = clWindowText
@@ -508,21 +512,21 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet1: TTabSheet
           Caption = 'Certificado'
-          ClientHeight = 337
-          ClientWidth = 271
+          ClientHeight = 341
+          ClientWidth = 269
           object gbCertificado: TGroupBox
             Left = 0
-            Height = 144
+            Height = 260
             Top = 4
             Width = 265
             Caption = 'Certificado'
-            ClientHeight = 128
+            ClientHeight = 242
             ClientWidth = 261
             TabOrder = 0
             object Label1: TLabel
               Left = 8
               Height = 13
-              Top = 0
+              Top = 48
               Width = 41
               Caption = 'Caminho'
               ParentColor = False
@@ -530,7 +534,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object Label2: TLabel
               Left = 8
               Height = 13
-              Top = 40
+              Top = 88
               Width = 31
               Caption = 'Senha'
               ParentColor = False
@@ -538,7 +542,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object sbtnCaminhoCert: TSpeedButton
               Left = 235
               Height = 24
-              Top = 16
+              Top = 64
               Width = 23
               Glyph.Data = {
                 76010000424D7601000000000000760000002800000020000000100000000100
@@ -560,7 +564,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object Label25: TLabel
               Left = 8
               Height = 13
-              Top = 80
+              Top = 128
               Width = 79
               Caption = 'Número de Série'
               ParentColor = False
@@ -568,7 +572,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object sbtnGetCert: TSpeedButton
               Left = 235
               Height = 24
-              Top = 94
+              Top = 142
               Width = 23
               Glyph.Data = {
                 76010000424D7601000000000000760000002800000020000000100000000100
@@ -590,32 +594,56 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             object edtCaminho: TEdit
               Left = 8
               Height = 21
-              Top = 16
+              Top = 64
               Width = 225
-              TabOrder = 0
+              TabOrder = 1
             end
             object edtSenha: TEdit
               Left = 8
               Height = 21
-              Top = 56
+              Top = 104
               Width = 249
               EchoMode = emPassword
               PasswordChar = '*'
-              TabOrder = 1
+              TabOrder = 2
             end
             object edtNumSerie: TEdit
               Left = 8
               Height = 21
-              Top = 96
+              Top = 144
               Width = 225
-              TabOrder = 2
+              TabOrder = 3
+            end
+            object rbgTipoCertificado: TRadioGroup
+              Left = 8
+              Height = 41
+              Top = 0
+              Width = 248
+              AutoFill = True
+              Caption = 'Tipo de Certificado'
+              ChildSizing.LeftRightSpacing = 6
+              ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+              ChildSizing.EnlargeVertical = crsHomogenousChildResize
+              ChildSizing.ShrinkHorizontal = crsScaleChilds
+              ChildSizing.ShrinkVertical = crsScaleChilds
+              ChildSizing.Layout = cclLeftToRightThenTopToBottom
+              ChildSizing.ControlsPerLine = 2
+              ClientHeight = 23
+              ClientWidth = 244
+              Columns = 2
+              ItemIndex = 0
+              Items.Strings = (
+                'OpenSSL'
+                'CAPICOM'
+              )
+              TabOrder = 0
             end
           end
         end
         object TabSheet2: TTabSheet
           Caption = 'Geral'
-          ClientHeight = 337
-          ClientWidth = 271
+          ClientHeight = 341
+          ClientWidth = 269
           ImageIndex = 1
           object gbGeral: TGroupBox
             Left = 0
@@ -623,7 +651,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 4
             Width = 265
             Caption = 'Geral'
-            ClientHeight = 276
+            ClientHeight = 274
             ClientWidth = 261
             TabOrder = 0
             object Label7: TLabel
@@ -847,8 +875,8 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         end
         object TabSheet3: TTabSheet
           Caption = 'WebService'
-          ClientHeight = 337
-          ClientWidth = 271
+          ClientHeight = 341
+          ClientWidth = 269
           ImageIndex = 2
           object Label6: TLabel
             Left = 8
@@ -872,7 +900,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 4
             Width = 265
             Caption = 'WebService'
-            ClientHeight = 93
+            ClientHeight = 91
             ClientWidth = 261
             TabOrder = 0
             object ckVisualizar: TCheckBox
@@ -901,7 +929,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               ChildSizing.ShrinkVertical = crsScaleChilds
               ChildSizing.Layout = cclLeftToRightThenTopToBottom
               ChildSizing.ControlsPerLine = 2
-              ClientHeight = 28
+              ClientHeight = 26
               ClientWidth = 245
               Columns = 2
               ItemIndex = 0
@@ -930,7 +958,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 128
             Width = 265
             Caption = 'Proxy'
-            ClientHeight = 89
+            ClientHeight = 87
             ClientWidth = 261
             TabOrder = 1
             object Label8: TLabel
@@ -1024,7 +1052,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
             Top = 4
             Width = 264
             Caption = 'Email'
-            ClientHeight = 308
+            ClientHeight = 306
             ClientWidth = 260
             TabOrder = 0
             object Label3: TLabel
@@ -1347,13 +1375,13 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
       TabOrder = 1
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ClientHeight = 326
-        ClientWidth = 565
+        ClientHeight = 332
+        ClientWidth = 563
         object MemoResp: TMemo
           Left = 0
-          Height = 326
+          Height = 332
           Top = 0
-          Width = 565
+          Width = 563
           Align = alClient
           TabOrder = 0
         end
@@ -1381,7 +1409,9 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
           Gutter.MouseActions = <>
           Keystrokes = <>
           MouseActions = <>
+          MouseTextActions = <>
           MouseSelActions = <>
+          VisibleSpecialChars = [vscSpace, vscTabAtLast]
           SelectedColor.BackPriority = 50
           SelectedColor.ForePriority = 50
           SelectedColor.FramePriority = 50
@@ -1491,13 +1521,13 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Title = 'Selecione a NFe'
     DefaultExt = '.*-nfe.XML'
     Filter = 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*'
-    left = 320
-    top = 248
+    left = 344
+    top = 264
   end
   object ACBrNFSe1: TACBrNFSe
     MAIL = ACBrMail1
     OnStatusChange = ACBrNFSe1StatusChange
-    Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
     Configuracoes.Geral.ConsultaLoteAposEnvio = True
@@ -1507,10 +1537,10 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.WebServices.IntervaloTentativas = 3000
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.Certificados.ArquivoPFX = 'C:\Erp\Certificados\ErloPneus - Ibate - Fiorilli\erlopneus.pfx'
     Configuracoes.Certificados.Senha = 'italo'
-    left = 360
-    top = 248
+    DANFSE = ACBrNFSeDANFSeRL1
+    left = 384
+    top = 320
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -1520,7 +1550,23 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    left = 430
-    top = 249
+    left = 448
+    top = 264
+  end
+  object ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL
+    ACBrNFSe = ACBrNFSe1
+    MostrarPreview = True
+    MostrarStatus = True
+    NumCopias = 1
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    NFSeCancelada = False
+    Provedor = proNenhum
+    TamanhoFonte = 6
+    PrintDialog = True
+    left = 480
+    top = 320
   end
 end

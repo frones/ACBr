@@ -801,7 +801,7 @@
 				<xsd:element name="Protocolo" type="tsNumeroProtocolo"
 					minOccurs="0" maxOccurs="1" />
 				<xsd:choice>
-					<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
+					<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="unbounded">
 						<xsd:complexType>
 							<xsd:sequence>
 								<xsd:element ref="CompNfse" 
@@ -834,8 +834,8 @@
 					<xsd:element name="ListaNfse" minOccurs="1" maxOccurs="1">
 						<xsd:complexType>
 							<xsd:sequence>
-								<xsd:element ref="CompNfse" 
-									minOccurs="1" />
+								<xsd:element ref="CompNfse"
+									minOccurs="1" maxOccurs="1"/>
 								<xsd:element ref="ListaMensagemAlertaRetorno" minOccurs="0" maxOccurs="1" />
 							</xsd:sequence>						
 						</xsd:complexType>

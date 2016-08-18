@@ -43,7 +43,8 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL, ACBrHTTPReqResp,
   ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
-  JwaWindows, Windows, ActiveX, ComObj;
+  JwaWinCrypt,
+  Windows, ActiveX, ComObj;
 
 const
   DSIGNS = 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';
@@ -57,9 +58,13 @@ type
   private
     FStoreLocation: CAPICOM_STORE_LOCATION;
     FNumCertCarregado: String;
+    FRazaoSocial: String;
     FCNPJ: String;
     FCertificado: ICertificate2;
     FCertStoreMem: IStore3;
+
+    FpStore: HCERTSTORE;
+    FpCertContext: PCCERT_CONTEXT;
 
     FReqResp: TACBrHTTPReqResp;
 
@@ -78,6 +83,7 @@ type
     function GetCertDataVenc: TDateTime; override;
     function GetCertNumeroSerie: String; override;
     function GetCertSubjectName: String; override;
+    function GetCertRazaoSocial: String; override;
     function GetCertCNPJ: String; override;
     function GetHTTPResultCode: Integer; override;
     function GetInternalErrorCode: Integer; override;
@@ -98,6 +104,10 @@ type
       const infElement: String; SignatureNode: String = '';
       SelectionNamespaces: String = ''): Boolean; override;
 
+    function CalcHash( const AStream : TStream;
+       const Digest: TSSLDgst;
+       const Assinar: Boolean =  False): AnsiString; override;
+
     procedure CarregarCertificado; override;
     function SelecionarCertificado: String; override;
     procedure DescarregarCertificado; override;
@@ -111,7 +121,7 @@ Var CertificadosA3ComPin: String;
 implementation
 
 uses
-  strutils,
+  strutils, typinfo,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   synautil;
 
@@ -121,9 +131,12 @@ constructor TDFeCapicom.Create(ADFeSSL: TDFeSSL);
 begin
   inherited Create(ADFeSSL);
   FNumCertCarregado := '';
+  FRazaoSocial := '';
   FCNPJ := '';
   FCertificado := nil;
   FCertStoreMem := nil;
+  FpCertContext := nil;
+  FpStore := nil;
   FStoreLocation := CAPICOM_CURRENT_USER_STORE;
   FReqResp := TACBrHTTPReqResp.Create;
   FMimeType := '';
@@ -154,7 +167,7 @@ begin
   if (Certs2.Count > 0) then
   begin
     Cert := IInterface(Certs2.Item[1]) as ICertificate2;
-    FpDFeSSL.NumeroSerie := Cert.SerialNumber;
+    FpDFeSSL.NumeroSerie := String(Cert.SerialNumber);
     CarregarCertificado;
     Result := GetCertNumeroSerie;
   end
@@ -209,7 +222,7 @@ begin
     xmldoc.async := False;
     xmldoc.validateOnParse := False;
     xmldoc.preserveWhiteSpace := True;
-    xmldoc.loadXML(XML);
+    xmldoc.loadXML(WideString(XML));
     xmldoc.setProperty('SelectionNamespaces', DSIGNS);
 
     xmldsig := CoMXDigitalSignature50.Create;
@@ -253,9 +266,20 @@ begin
   if Assigned(FCertStoreMem) then
     FCertStoreMem.Close;
 
-  FCertStoreMem := nil;
+  FCertStoreMem := Nil;
   FNumCertCarregado := '';
   FCNPJ := '';
+  FRazaoSocial := '';
+
+  // Limpando objetos da MS CryptoAPI //
+  if Assigned(FpCertContext) then
+    CertFreeCertificateContext(FpCertContext);
+
+  if Assigned(FpStore) then
+    CertCloseStore(FpStore, CERT_CLOSE_STORE_CHECK_FLAG);
+
+  FpCertContext := Nil;
+  FpStore := Nil;
 end;
 
 procedure TDFeCapicom.VerificarValoresPadrao(var SignatureNode: String;
@@ -284,10 +308,11 @@ var
   Lista: TStringList;
   KeyLocation: Integer;
   Inicializado: Boolean;
+  ByteArr: array of byte;
 
 begin
   // Certificado já foi carregado ??
-  if (FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie) then
+  if ((FCertificado <> nil) and (FNumCertCarregado = FpDFeSSL.NumeroSerie)) then
   begin
     FpCertificadoLido := True;
     exit;
@@ -308,7 +333,7 @@ begin
         for i := 1 to Certs.Count do
         begin
           Cert := IInterface(Certs.Item[i]) as ICertificate2;
-          if Cert.SerialNumber = FpDFeSSL.NumeroSerie then
+          if String(Cert.SerialNumber) = FpDFeSSL.NumeroSerie then
           begin
             FCertificado := Cert;
             Break;
@@ -327,8 +352,9 @@ begin
       if FStoreLocation = CAPICOM_LOCAL_MACHINE_STORE then
         KeyLocation := CAPICOM_LOCAL_MACHINE_KEY;
 
-      FCertificado.Load( FpDFeSSL.ArquivoPFX, FpDFeSSL.Senha,
+      FCertificado.Load( WideString(FpDFeSSL.ArquivoPFX), WideString(FpDFeSSL.Senha),
                          CAPICOM_KEY_STORAGE_DEFAULT, KeyLocation);
+
     end
 
     else if not EstaVazio(FpDFeSSL.DadosPFX) then
@@ -350,7 +376,7 @@ begin
       raise EACBrDFeException.Create('Certificado Digital não encontrado!');
 
     // Salvando propriedades do Certificado //
-    FNumCertCarregado := FCertificado.SerialNumber;
+    FNumCertCarregado := String(FCertificado.SerialNumber);
 
     // Criando memória de Store de Certificados para o ACBr, e adicionado certificado lido nela //
     FCertStoreMem := CoStore.Create;
@@ -364,7 +390,7 @@ begin
     for i := 1 to FCertificado.Extensions.Count do
     begin
       Extension := IInterface(FCertificado.Extensions.Item[i]) as IExtension;
-      Propriedades := Extension.EncodedData.Format(True);
+      Propriedades := String(Extension.EncodedData.Format(True));
 
       if (Pos('2.16.76.1.3.3', Propriedades) > 0) then
       begin
@@ -389,6 +415,49 @@ begin
       end;
       Extension := nil;
     end;
+
+    // Abrindo o Certificado, com MS CriptoAPI //
+
+    { TODO: verificar porque  "CertOpenStore" não funciona...
+            Preferir  usar "CertOpenStore" ao invez de "CertOpenSystemStore",
+            pois permite definir o Local do Store }
+
+    //FpStore := CertOpenStore(
+    //     LPCSTR(sz_CERT_STORE_PROV_MEMORY),
+    //     0,
+    //     0,
+    //     CERT_SYSTEM_STORE_CURRENT_USER,
+    //     PAnsiChar(StoreName) );
+
+    // Abrindo o Store do sistema //
+    FpStore := CertOpenSystemStore( 0, LPCTSTR(CAPICOM_STORE_NAME) );
+
+    if Assigned(FpStore) then
+    begin
+      { Abrindo Contexto do Certificado, para uso com MS CryptoAPI
+        Vamos ler todos os Certificados e comparar o Num.Série. Esse modo funciona
+        melhor que CertFindCertificateInStore();}
+      repeat
+        FpCertContext := CertEnumCertificatesInStore(FpStore, FpCertContext);
+
+        if FpCertContext <> Nil then
+        begin
+          // Montando o número de série, em Hexa, para comparação
+          Propriedade := '';
+          SetLength(ByteArr, FpCertContext^.pCertInfo^.SerialNumber.cbData);
+           Move(FpCertContext^.pCertInfo^.SerialNumber.pbData^,
+                ByteArr[0],
+                FpCertContext^.pCertInfo^.SerialNumber.cbData);
+
+          For I := 0 to FpCertContext^.pCertInfo^.SerialNumber.cbData-1 do
+            Propriedade := IntToHex(ByteArr[I], 2) + Propriedade;
+
+          if Propriedade = FNumCertCarregado then
+            break;
+        end;
+      until (FpCertContext = nil);  // não achou mais nenhum certificado
+    end;
+
   finally
     if Inicializado then
       CoUninitialize;
@@ -400,24 +469,42 @@ end;
 function TDFeCapicom.GetCertDataVenc: TDateTime;
 begin
   CarregarCertificadoSeNecessario;
-  Result := FCertificado.ValidToDate;
+  if Assigned(FCertificado) then
+    Result := FCertificado.ValidToDate
+  else
+    Result := inherited GetCertDataVenc;
 end;
 
 function TDFeCapicom.GetCertNumeroSerie: String;
 begin
   CarregarCertificadoSeNecessario;
-  Result := FCertificado.SerialNumber;
+  if Assigned(FCertificado) then
+    Result := String(FCertificado.SerialNumber)
+  else
+    Result := inherited GetCertNumeroSerie;
 end;
 
 function TDFeCapicom.GetCertSubjectName: String;
 begin
   CarregarCertificadoSeNecessario;
-  Result := FCertificado.SubjectName;
+  if Assigned(FCertificado) then
+    Result := String(FCertificado.SubjectName)
+  else
+    Result := inherited GetCertSubjectName;
+end;
+
+function TDFeCapicom.GetCertRazaoSocial: String;
+begin
+  CarregarCertificadoSeNecessario;
+  if (FRazaoSocial = '') and Assigned(FCertificado) then
+    FRazaoSocial := GetRazaoSocialFromSubjectName( String(FCertificado.SubjectName) );
+
+  Result := FRazaoSocial;
 end;
 
 function TDFeCapicom.GetCertTipo: TSSLTipoCertificado;
 begin
-  if Self.Certificado.PrivateKey.IsHardwareDevice then
+  if Assigned(FCertificado) and FCertificado.PrivateKey.IsHardwareDevice then
     Result := tpcA3
   else
     Result := tpcA1;
@@ -443,7 +530,7 @@ function TDFeCapicom.Assinar(const ConteudoXML, docElement, infElement: String;
   SignatureNode: String; SelectionNamespaces: String; IdSignature: String
   ): String;
 var
-  AXml, XmlAss: String;
+  AXml, XmlAss: AnsiString;
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignature;
   dsigKey: IXMLDSigKey;
@@ -455,7 +542,12 @@ begin
   try
     CarregarCertificadoSeNecessario;
 
-    AXml := ConteudoXML;
+    // IXMLDOMDocument3 deve usar a String Nativa da IDE //
+    {$IfDef FPC2}
+     AXml := ACBrUTF8ToAnsi(ConteudoXML);
+    {$Else}
+     AXml := UTF8ToNativeString(ConteudoXML);
+    {$EndIf}
     XmlAss := '';
 
     // Usa valores default, se não foram informados //
@@ -472,17 +564,20 @@ begin
       xmldoc.validateOnParse := False;
       xmldoc.preserveWhiteSpace := True;
 
-      // Carregando o AXml em XMLDOC //
-      if (not xmldoc.loadXML(AXml)) then
-        raise EACBrDFeException.Create('Não foi possível carregar o arquivo: ' + AXml);
+      // Carregando o AXml em XMLDOC
+      if (not xmldoc.loadXML( WideString(AXml) )) then
+        raise EACBrDFeException.Create('Não foi possível carregar XML'+sLineBreak+ AXml);
 
       xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
+
+      //DEBUG
+      //xmldoc.save('c:\temp\xmldoc.xml');
 
       // Criando Elemento de assinatura //
       xmldsig := CoMXDigitalSignature50.Create;
 
       // Lendo elemento de Assinatura de XMLDOC //
-      xmldsig.signature := xmldoc.selectSingleNode( SignatureNode );
+      xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode) );
       if (xmldsig.signature = nil) then
         raise EACBrDFeException.Create('É preciso carregar o template antes de assinar.');
 
@@ -499,7 +594,18 @@ begin
       if (signedKey = nil) then
         raise EACBrDFeException.Create('Assinatura Falhou.');
 
-      XmlAss := xmldoc.xml;
+      //DEBUG
+      //xmldoc.save('c:\temp\ass.xml');
+      XmlAss := AnsiString(xmldoc.xml);
+
+      // Convertendo novamente para UTF8
+      {$IfDef FPC2}
+       XmlAss := ACBrAnsiToUTF8( XmlAss );
+      {$Else}
+       XmlAss := NativeStringToUTF8( String(XmlAss) );
+      {$EndIf}
+
+      // Ajustando o XML... CAPICOM insere um cabeçalho inválido
       XmlAss := AjustarXMLAssinado(XmlAss);
     finally
       dsigKey := nil;
@@ -565,8 +671,9 @@ var
   ParseError: IXMLDOMParseError;
   Schema: XMLSchemaCache;
   Inicializado: Boolean;
+  AXml: String;
 begin
-
+  Result := False;
   Inicializado := (CoInitialize(nil) in [ S_OK, S_FALSE ]);
   try
     CarregarCertificadoSeNecessario;
@@ -577,24 +684,32 @@ begin
       DOMDocument.async := False;
       DOMDocument.resolveExternals := False;
       DOMDocument.validateOnParse := True;
-      if (not DOMDocument.loadXML(ConteudoXML)) then
+
+      // Carregando ConteudoXML em XMLDOC. Nota: IXMLDOMDocument2 deve usar a String Nativa da IDE //
+      {$IfDef FPC2}
+       AXml := ACBrUTF8ToAnsi(ConteudoXML);
+      {$Else}
+       AXml := UTF8ToNativeString(ConteudoXML);
+      {$EndIf}
+
+      if (not DOMDocument.loadXML(WideString(AXml))) then
       begin
         ParseError := DOMDocument.parseError;
         MsgErro := ACBrStr('Não foi possível carregar o arquivo.')+sLineBreak+
                    'Err: '+IntToStr(ParseError.errorCode) + ', ' +
                    'Lin: '+IntToStr(ParseError.line) + ', ' +
                    'Pos: '+IntToStr(ParseError.linepos) + ' - ' +
-                   ParseError.reason;
+                   String(ParseError.reason);
         exit;
       end;
 
-      Schema.add(FpDFeSSL.NameSpaceURI, ArqSchema);
+      Schema.add(WideString(FpDFeSSL.NameSpaceURI), ArqSchema);
 
       DOMDocument.schemas := Schema;
       ParseError := DOMDocument.validate;
 
       Result := (ParseError.errorCode = 0);
-      MsgErro := ParseError.reason;
+      MsgErro := String(ParseError.reason);
     finally
       ParseError := nil;
       DOMDocument := nil;
@@ -614,12 +729,11 @@ var
   xmldsig: IXMLDigitalSignature;
   pKeyInfo: IXMLDOMNode;
   pKey, pKeyOut: IXMLDSigKey;
+  AXml: String;
 begin
-  CarregarCertificadoSeNecessario;
-
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
-
+  Result := False;
   xmldoc := CoDOMDocument50.Create;
   xmldsig := CoMXDigitalSignature50.Create;
   try
@@ -627,14 +741,21 @@ begin
     xmldoc.validateOnParse := False;
     xmldoc.preserveWhiteSpace := True;
 
-    if (not xmldoc.loadXML(ConteudoXML)) then
+    // Carregando ConteudoXML em XMLDOC. Nota: IXMLDOMDocument2 deve usar a String Nativa da IDE //
+    {$IfDef FPC2}
+     AXml := ACBrUTF8ToAnsi(ConteudoXML);
+    {$Else}
+     AXml := UTF8ToNativeString(ConteudoXML);
+    {$EndIf}
+
+    if (not xmldoc.loadXML(WideString(AXml))) then
     begin
       MsgErro := 'Não foi possível carregar o arquivo.';
       exit;
     end;
 
     xmldoc.setProperty('SelectionNamespaces', SelectionNamespaces);
-    xmldsig.signature := xmldoc.selectSingleNode( SignatureNode );
+    xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode) );
     if (xmldsig.signature = nil) then
     begin
       MsgErro := 'Não foi possível carregar ou ler a assinatura ('+SignatureNode+')';
@@ -673,26 +794,196 @@ begin
   end;
 end;
 
+function TDFeCapicom.CalcHash(const AStream: TStream; const Digest: TSSLDgst;
+  const Assinar: Boolean): AnsiString;
+const
+  CALG_SHA_256 = $0000800c;
+  CALG_SHA_512 = $0000800e;
+  PROV_RSA_AES = 24;
+  //MS_ENH_RSA_AES_PROV = 'Microsoft Enhanced RSA and AES Cryptographic Provider';
+
+var
+  mCryptProvider, mCryptProviderCert: HCRYPTPROV;
+  mHash, aHashType: HCRYPTHASH;
+  hRSAKey, hSessKey, hExpKey: HCRYPTKEY;
+  I: Integer;
+  mTotal: LargeInt;
+  mBytesLen, mRead, dwKeySpec: DWORD;
+  Memory: Pointer;
+  mHashBuffer: array [0..1023] of AnsiChar;  // 1024 - Tamanho máximo do maior Hash atual
+  pfCallerFreeProv: Boolean;
+begin
+  Result := '';
+
+  case Digest of
+    dgstMD2    : aHashType := CALG_MD2;
+    dgstMD4    : aHashType := CALG_MD4;
+    dgstMD5    : aHashType := CALG_MD5;
+    dgstSHA    : aHashType := CALG_SHA;
+    dgstSHA1   : aHashType := CALG_SHA1;
+    dgstSHA256 : aHashType := CALG_SHA_256;
+    dgstSHA512 : aHashType := CALG_SHA_512;
+  else
+    raise EACBrDFeException.Create( 'Digest '+GetEnumName(TypeInfo(TSSLDgst),Integer(Digest))+
+                                    ' não suportado em '+ClassName);
+  end ;
+
+  mCryptProvider := 0;
+  mCryptProviderCert := 0;
+  mHash := 0;
+  hRSAKey := 0;
+  hExpKey := 0;
+  hSessKey := 0;
+  pfCallerFreeProv := False;
+  dwKeySpec := AT_KEYEXCHANGE;
+
+  try
+    try
+      // Obtendo Contexto de Provedor de Criptografia, com suporte a SHA256 //
+      if not CryptAcquireContext( mCryptProvider, Nil, Nil, //PAnsiChar(MS_ENH_RSA_AES_PROV),
+                                 PROV_RSA_AES, CRYPT_VERIFYCONTEXT) then
+        raise EACBrDFeException.Create('CryptAcquireContext');
+
+
+      if Assinar then
+      begin
+        CarregarCertificadoSeNecessario;
+
+        if not Assigned(FpCertContext) then
+          raise EACBrDFeException.Create('Certificado não pode ser carregado po MS CryptoAPI');
+
+        // Obtendo o Contexto do Provedor de Criptografia do Certificado //
+        if CryptAcquireCertificatePrivateKey( FpCertContext, 0, Nil, mCryptProviderCert, @dwKeySpec, @pfCallerFreeProv) then
+        begin
+          // Obtendo as chaves do Certificado //
+          if CryptGetUserKey(mCryptProviderCert, dwKeySpec, hRSAKey) then
+          begin
+            // Tentando copiar a chave do Certificado para o nosso Provedor de Criptografia //
+            try
+              mBytesLen := 0;
+              if CryptExportKey( hRSAKey, hSessKey, PRIVATEKEYBLOB, 0, Nil, mBytesLen ) then  // Calcula mBytesLen
+              begin
+                Memory := AllocMem(mBytesLen);  // Aloca a memória para receber o Blob
+                try
+                  if CryptExportKey( hRSAKey, hSessKey, PRIVATEKEYBLOB, 0, Memory, mBytesLen ) then
+                  begin
+                    if not CryptImportKey(mCryptProvider, Memory, mBytesLen, hSessKey, 0, hExpKey ) then
+                      raise EACBrDFeException.Create('CryptImportKey');
+                  end
+                  else
+                    raise EACBrDFeException.Create('CryptExportKey');
+                finally
+                  Freemem(Memory);
+                end;
+              end
+              else
+                raise EACBrDFeException.Create('CryptExportKey - len');
+            except
+              { Não foi capaz de Exportar/Copiar a Chave para o nosso Provedor
+                de Criptografia, então vamos usar o Provedor de Criptografia do
+                Certificado }
+
+              CryptReleaseContext(mCryptProvider, 0);
+              mCryptProvider := mCryptProviderCert;
+              pfCallerFreeProv := False;
+            end;
+          end
+          else
+            raise EACBrDFeException.Create('CryptGetUserKey');
+        end
+        else
+          raise EACBrDFeException.Create('CryptAcquireCertificatePrivateKey');
+      end;
+
+      if CryptCreateHash(mCryptProvider, aHashType, 0, 0, mHash) then
+      begin
+        Memory := Allocmem(CBufferSize);
+        try
+          mTotal := AStream.Size;
+          AStream.Position := 0;
+          repeat
+            mRead := AStream.Read(Memory^, CBufferSize);
+            if mRead > 0 then
+            begin
+              if not CryptHashData(mHash, Memory, mRead, 0) then
+                raise EACBrDFeException.Create('CryptHashData');
+            end;
+
+            mTotal := mTotal - mRead;
+          until mTotal < 1;
+        finally
+          FreeMem(Memory);
+        end;
+
+        mBytesLen := Length(mHashBuffer);
+
+        if Assinar then
+        begin
+          if CryptSignHash(mHash, dwKeySpec, Nil, 0, @mHashBuffer, mBytesLen ) then
+          begin
+            // MS CryptoAPI retorna assinatura em "Little Endian bit string", invertendo...
+            Result := '';
+            for I := mBytesLen downto 1 do
+              Result := Result + mHashBuffer[I-1];
+          end
+          else
+            raise EACBrDFeException.Create('CryptSignHash');
+        end
+        else
+        begin
+          // Obtendo o Hash //
+          if CryptGetHashParam(mHash, HP_HASHVAL, @mHashBuffer, mBytesLen, 0) then
+            SetString( Result, mHashBuffer, mBytesLen)
+          else
+            raise EACBrDFeException.Create('CryptGetHashParam');
+        end;
+      end
+      else
+        raise EACBrDFeException.Create('CryptCreateHash');
+
+    except
+      On E: Exception do
+      begin
+        raise EACBrDFeException.Create(E.Message+' , erro: $'+IntToHex(GetLastError, 8) );
+      end;
+    end;
+  finally
+    if mHash <> 0 then
+      CryptDestroyHash(mHash);
+
+    if pfCallerFreeProv then
+      CryptReleaseContext(mCryptProviderCert, 0);
+
+    if mCryptProvider <> 0 then
+      CryptReleaseContext(mCryptProvider, 0);
+
+    if hRSAKey <> 0 then
+      CryptDestroyKey( hRSAKey );
+
+    if hExpKey <> 0 then
+      CryptDestroyKey( hExpKey );
+  end;
+end;
+
 procedure TDFeCapicom.ConfiguraReqResp(const URL, SoapAction: String);
 begin
-  CarregarCertificadoSeNecessario;
-
   with FpDFeSSL do
   begin
-    if ProxyHost <> '' then
+    if UseCertificateHTTP then
     begin
-      FReqResp.ProxyHost := ProxyHost;
-      FReqResp.ProxyPort := ProxyPort;
-      FReqResp.ProxyUser := ProxyUser;
-      FReqResp.ProxyPass := ProxyPass;
-    end;
+      CarregarCertificadoSeNecessario;
+      FReqResp.SetCertificate(FCertificado);
+    end
+    else
+      FReqResp.SetCertificate(nil);
 
-    FReqResp.TimeOut := TimeOut;
-    FReqResp.UseCertificate := UseCertificate;
-    FReqResp.UseSSL := UseSSL;
+    FReqResp.ProxyHost := ProxyHost;
+    FReqResp.ProxyPort := ProxyPort;
+    FReqResp.ProxyUser := ProxyUser;
+    FReqResp.ProxyPass := ProxyPass;
+    FReqResp.TimeOut   := TimeOut;
   end;
 
-  FReqResp.SetCertificate(FCertificado);
   FReqResp.Url := URL;
   FReqResp.SOAPAction := SoapAction;
   FReqResp.MimeType := FMimeType;

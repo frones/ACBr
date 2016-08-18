@@ -76,8 +76,9 @@ const
                 'RJ,RN,RS,RO,RR,SC,SP,SE,TO,EX,';
 
 type
-  TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque,
-                       docPIS, docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, docEmail ) ;
+  TACBrValTipoDocto = ( docCPF, docCNPJ, docUF, docInscEst, docNumCheque, docPIS, 
+                        docCEP, docCartaoCredito, docSuframa, docGTIN, docRenavam, 
+                        docEmail, docCNH ) ;
 
 type
   TACBrCalcDigFormula = (frModulo11, frModulo10PIS, frModulo10) ;
@@ -144,6 +145,7 @@ type
     procedure ValidarGTIN;
     procedure ValidarRenavam;
     Procedure ValidarEmail;
+    Procedure ValidarCNH ;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -185,7 +187,9 @@ function ValidarSuframa( const Documento : String ) : String ;
 function ValidarGTIN( const Documento : String ) : String ;
 function ValidarRenavam( const Documento : String ) : String ;
 function ValidarEmail (const Documento : string ) : String;
-function ValidarCEP(const ACEP, AUF: String): String;
+function ValidarCEP(const ACEP, AUF: String): String; overload;
+function ValidarCEP(const ACEP: Integer; AUF: String): String; overload;
+function ValidarCNH(const Documento: String) : String ;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -195,7 +199,8 @@ function FormatarPlaca(const AValue: string): string;
 Function FormatarIE( const AValue: String; UF : String ) : String ;
 Function FormatarCheque( const AValue : String ) : String ;
 Function FormatarPIS( const AValue : String )    : String ;
-Function FormatarCEP( const AValue: String )     : String ;
+Function FormatarCEP( const AValue: String )     : String ; overload;
+Function FormatarCEP( const AValue: Integer )    : String ; overload;
 function FormatarSUFRAMA( const AValue: String ) : String ;
 
 Function FormatarMascaraNumerica(ANumValue, Mascara: String): String;
@@ -207,6 +212,7 @@ function FormatarDocumento( const TipoDocto : TACBrValTipoDocto;
   const Documento : String) : String ;
 
 function Modulo11(const Documento: string; const Peso: Integer = 2; const Base: Integer = 9): String;
+function MascaraIE(AValue : String; UF : String) : String;
 
 implementation
 uses
@@ -256,6 +262,16 @@ begin
   Result := ValidarDocumento( docCEP, ACEP, AUF);
 end;
 
+function ValidarCEP(const ACEP: Integer; AUF: String): String;
+begin
+  ValidarCEP( FormatarCEP(ACEP), AUF );
+end;
+
+function ValidarCNH(const Documento: String): String ;
+begin
+  Result := ValidarDocumento( docCNH, Documento );
+end;
+
 function ValidarCNPJouCPF(const Documento : String) : String ;
 Var
   NumDocto : String ;
@@ -294,15 +310,6 @@ var
   FoneNum, Mascara : string;
   ComecaComZero: Boolean;
   LenFoneNum: Integer;
-
-  function RemoveZerosEsquerda( ANumStr: String): String;
-  begin
-    while LeftStr(ANumStr,1) = '0' do
-      ANumStr := Copy(ANumStr,2,Length(ANumStr));
-
-    Result := ANumStr;
-  end;
-
 begin
   Result := '';
   FoneNum := OnlyNumber(AValue);
@@ -385,15 +392,11 @@ begin
  Result := Copy(S, 1, 3) + '-' + Copy(S, 4, 4);
 end;
 
-function FormatarIE(const AValue: String; UF: String): String;
-Var
-  Mascara : String ;
-  LenDoc : Integer;
-Begin
-  Result := AValue ;
-  if UpperCase( Trim(AValue) ) = 'ISENTO' then
-     exit ;
-
+function MascaraIE(AValue : String; UF : String) : String;
+var
+ LenDoc : Integer;
+ Mascara : String;
+begin
   UF      := UpperCase( UF ) ;
   LenDoc  := Length( AValue ) ;
   Mascara := StringOfChar('*', LenDoc) ;
@@ -426,6 +429,19 @@ Begin
   IF UF = 'SE' Then Mascara := '**.***.***-*';
   IF UF = 'TO' Then Mascara := IfThen((LenDoc=11),'**.**.******-*','**.***.***-*');
 
+  Result := Mascara;
+
+end;
+
+function FormatarIE(const AValue: String; UF: String): String;
+Var
+  Mascara : String ;
+Begin
+  Result := AValue ;
+  if UpperCase( Trim(AValue) ) = 'ISENTO' then
+     exit ;
+
+  Mascara := MascaraIE( AValue, UF);
   Result := FormatarMascaraNumerica( AValue, Mascara);
 end;
 
@@ -445,10 +461,24 @@ begin
 end;
 
 function FormatarCEP(const AValue: String): String;
-Var S : String ;
+Var
+  S : String ;
 begin
-  S := PadRight( OnlyNumber(AValue), 8, '0') ; { Prenche zeros a direita }
+  S := OnlyNumber(AValue);
+  if Length(S) < 5 then
+    S := PadLeft( S, 5, '0');    // "9876" -> "09876"
+
+  if Length(S) = 5 then
+    S := PadRight( S, 8, '0')    // "09876" -> "09876-000"; "18270" -> "18270-000"
+  else
+    S := PadLeft( S, 8, '0') ;    // "9876000" -> "09876-000"
+
   Result := copy(S,1,5) + '-' + copy(S,6,3) ;
+end;
+
+function FormatarCEP(const AValue: Integer): String;
+begin
+  Result := FormatarCEP(IntToStr(AValue));
 end;
 
 function FormatarSUFRAMA(const AValue: String): String;
@@ -618,6 +648,7 @@ begin
           docGTIN          : NomeDocto := 'GTIN';
           docRenavam       : NomeDocto := 'Renavam';
           docEmail         : NomeDocto := 'E-Mail';
+          docCNH           : NomeDocto := 'Carteira Nacional de Habilitação' ;
         end;
 
         fsMsgErro := NomeDocto + ' não pode ser vazio.' ;
@@ -638,6 +669,7 @@ begin
        docGTIN          : ValidarGTIN ;
        docRenavam       : ValidarRenavam;
        docEmail         : ValidarEmail;
+       docCNH           : ValidarCNH ;
      end;
 
   if fsMsgErro <> '' then
@@ -819,7 +851,7 @@ begin
     exit;
 
   // Não pode começar ou terminar com @ ou ponto
-  if (Documento[1] in ['@', '.']) or (Documento[Length(Documento)] in ['@', '.']) then
+  if CharInSet(Documento[1], ['@', '.']) or CharInSet(Documento[Length(Documento)], ['@', '.']) then
     exit;
 
   // O @ e o ponto não podem estar juntos
@@ -841,7 +873,7 @@ end;
 Procedure TACBrValidador.ValidarCEP ;
 begin
   if fsAjustarTamanho then
-     fsDocto := PadRight( fsDocto, 8, '0') ;
+     fsDocto := PadLeft( Trim(fsDocto), 8, '0') ;
 
   if (Length( fsDocto ) <> 8) or ( not StrIsNumber( fsDocto ) ) then
   begin
@@ -960,20 +992,22 @@ end;
 Procedure TACBrValidador.ValidarIE ;
 Const
    c0_9 : String = '0-9' ;
-   cPesos : array[1..13] of array[1..14] of Integer =
-      ((0 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,2 ,3 ,4 ,5 ,6 ),
-       (0 ,0 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,2 ,3 ,4 ,5 ),
-       (2 ,0 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,2 ,3 ,4 ,5 ,6 ),
-       (0 ,2 ,3 ,4 ,5 ,6 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ),
-       (0 ,8 ,7 ,6 ,5 ,4 ,3 ,2 ,1 ,0 ,0 ,0 ,0 ,0 ),
-       (0 ,2 ,3 ,4 ,5 ,6 ,7 ,0 ,0 ,8 ,9 ,0 ,0 ,0 ),
-       (0 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,1 ,2 ,3 ,4 ,5 ),
-       (0 ,2 ,3 ,4 ,5 ,6 ,7 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ),
-       (0 ,0 ,2 ,3 ,4 ,5 ,6 ,7 ,2 ,3 ,4 ,5 ,6 ,7 ),
-       (0 ,0 ,2 ,1 ,2 ,1 ,2 ,1 ,2 ,1 ,1 ,2 ,1 ,0 ),
-       (0 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,11,2 ,3 ,0 ),
-       (0 ,0 ,0 ,0 ,10,8 ,7 ,6 ,5 ,4 ,3 ,1 ,0 ,0 ),
-       (0 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10,2 ,3 ,0, 0 ) ) ;
+   cPesos : array[1..14] of array[1..14] of Integer =
+          {1} {2} {3} {4} {5} {6} {7} {8} {9} {10} {11} {12} {13} {14}
+  {1}    ((0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,2   ,3   ,4   ,5   ,6 ),
+  {2}     (0  ,0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9   ,2   ,3   ,4   ,5 ),
+  {3}     (2  ,0  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,2   ,3   ,4   ,5   ,6 ),
+  {4}     (0  ,2  ,3  ,4  ,5  ,6  ,0  ,0  ,0  ,0   ,0   ,0   ,0   ,0 ),
+  {5}     (0  ,8  ,7  ,6  ,5  ,4  ,3  ,2  ,1  ,0   ,0   ,0   ,0   ,0 ),
+  {6}     (0  ,2  ,3  ,4  ,5  ,6  ,7  ,0  ,0  ,8   ,9   ,0   ,0   ,0 ),
+  {7}     (0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,1   ,2   ,3   ,4   ,5 ),
+  {8}     (0  ,2  ,3  ,4  ,5  ,6  ,7  ,2  ,3  ,4   ,5   ,6   ,7   ,8 ),
+  {9}     (0  ,0  ,2  ,3  ,4  ,5  ,6  ,7  ,2  ,3   ,4   ,5   ,6   ,7 ),
+  {10}    (0  ,0  ,2  ,1  ,2  ,1  ,2  ,1  ,2  ,1   ,1   ,2   ,1   ,0 ),
+  {11}    (0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,10  ,11  ,2   ,3   ,0 ),
+  {12}    (0  ,0  ,0  ,0  ,10 ,8  ,7  ,6  ,5  ,4   ,3   ,1   ,0   ,0 ),
+  {13}    (0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,10  ,2   ,3   ,0   ,0 ),
+  {14}    (0  ,0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,3   ,4   ,5   ,6   ,7 ));
 
 Var
    vDigitos : array of {$IFDEF FPC}Variant{$ELSE} String{$ENDIF} ;
@@ -1191,7 +1225,7 @@ begin
       if Length(fsDocto) = 9 then
       begin
         Tamanho := 9;
-        xTP  :=  9   ;  xMD := 11;
+        xTP  :=  14   ;  xMD := 11;
         yROT := 'E'  ;  yMD := 11  ;   yTP := 7;
         vDigitos := VarArrayOf(
         [ 'DVY','DVX',c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,c0_9,'','','','',''] );
@@ -1614,6 +1648,65 @@ begin
      if fsExibeDigitoCorreto then
         fsMsgErro := fsMsgErro + '.. Dígito calculado: '+fsDigitoCalculado ;
   end ;
+end;
+
+// Rotina para Validação da C.N.H. Modelo 11 digitos (nova CNH)
+procedure TACBrValidador.ValidarCNH ;
+var
+  I, vFator, vSoma, vResto, vBase: integer;
+  sResultado : string;
+begin
+  if (Length( fsDocto ) <> 11) or ( not StrIsNumber( fsDocto ) ) then
+  begin
+     fsMsgErro := 'C.N.H. deve ter 11 dígitos. (Apenas números)' ;
+     exit
+  end ;
+
+  if pos(fsDocto,'11111111111.22222222222.33333333333.44444444444.55555555555.'+
+         '66666666666.77777777777.88888888888.99999999999.00000000000') > 0 then
+  begin
+     fsMsgErro := 'C.N.H. não deve conter números repetidos !' ;
+     exit ;
+  end ;
+
+  vBase := 0;
+
+  vSoma := 0;
+  vFator := 9;
+  for I := 1 to 9 do
+  begin
+    vSoma := vSoma + (StrToInt(fsDocto[I]) * vFator);
+    dec(vFator) ;
+  end;
+  vResto := vSoma Mod 11;
+  if vResto = 10 then
+    vBase := -2;
+
+  if vResto > 9 then
+    vResto := 0;
+  sResultado := IntToStr(vResto) ;
+
+  vSoma := 0;
+  vFator := 1;
+  for I := 1 to 9 do
+  begin
+    vSoma := vSoma + (StrToInt(fsDocto[I]) * vFator);
+    Inc(vFator) ;
+  end;
+
+  if (vSoma Mod 11) + vBase < 0 then
+    vResto := 11 + (vSoma Mod 11) + vBase;
+
+  if (vSoma Mod 11) + vBase >= 0 then
+    vResto := (vSoma Mod 11) + vBase;
+
+  if vResto > 9 then
+    vResto := 0;
+
+  sResultado := sResultado + IntToStr(vResto) ;
+
+  if Copy(fsDocto,10,2) <> sResultado then
+    fsMsgErro := 'C.N.H. Inválida !!' ;
 end;
 
 {------------------------------ TACBrCalcDigito ------------------------------}

@@ -1,38 +1,38 @@
 {******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emiss√£o da    }
+{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emiss„o da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
 {  http://www.gnre.pe.gov.br/                                                  }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
 {                                       Daniel Simoes de Almeida               }
-{                                       Andr√© Ferreira de Moraes               }
+{                                       AndrÈ Ferreira de Moraes               }
 {                                       Juliomar Marchetti                     }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -40,7 +40,7 @@
 |* Historico
 |*
 |* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doa√ß√£o do componente para o Projeto ACBr
+|*  - DoaÁ„o do componente para o Projeto ACBr
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -154,17 +154,18 @@ begin
   Result := False;
   try
     i := 0;
-    if Leitor.rExtrai(1, 'camposAdicionais') <> '' then
+    if Leitor.rExtrai(1, 'ns1:camposAdicionais') <> '' then
     begin
-      while Leitor.rExtrai(2, 'campoAdicional', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'ns1:campoAdicional', '', i + 1) <> '' do
       begin
         retCampoAdicional.Add;
-        retCampoAdicional.Items[i].RetCampoAdicional.obrigatorio    := Leitor.rCampo(tcStr, 'obrigatorio');
-        retCampoAdicional.Items[i].RetCampoAdicional.codigo         := StrToInt(SeparaDados(Leitor.Grupo, 'codigo'));
-        retCampoAdicional.Items[i].RetCampoAdicional.tipo           := SeparaDados(Leitor.Grupo, 'tipo');
-        retCampoAdicional.Items[i].RetCampoAdicional.tamanho        := Leitor.rCampo(tcInt, 'tamanho');
-        retCampoAdicional.Items[i].RetCampoAdicional.casasDecimais  := Leitor.rCampo(tcInt, 'casasDecimais');
-        retCampoAdicional.Items[i].RetCampoAdicional.titulo         := Leitor.rCampo(tcStr, 'titulo');
+        retCampoAdicional.Items[i].RetCampoAdicional.obrigatorio    := Leitor.rCampo(tcStr, 'ns1:obrigatorio');
+        retCampoAdicional.Items[i].RetCampoAdicional.codigo         := StrToInt(SeparaDados(Leitor.Grupo, 'ns1:codigo'));
+        retCampoAdicional.Items[i].RetCampoAdicional.tipo           := SeparaDados(Leitor.Grupo, 'ns1:tipo');
+        retCampoAdicional.Items[i].RetCampoAdicional.tamanho        := Leitor.rCampo(tcInt, 'ns1:tamanho');
+        if Pos('ns1:casasDecimais', Leitor.Grupo) > 0 then
+          retCampoAdicional.Items[i].RetCampoAdicional.casasDecimais  := Leitor.rCampo(tcInt, 'ns1:casasDecimais');
+        retCampoAdicional.Items[i].RetCampoAdicional.titulo         := Leitor.rCampo(tcStr, 'ns1:titulo');
         inc(i);
       end;
 

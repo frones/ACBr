@@ -40,17 +40,22 @@
 {                                                                              }
 {******************************************************************************}
 
-// $Id: JwaWinBase.pas,v 1.14 2005/09/06 16:36:50 marquardt Exp $
-
-{$IFNDEF JWA_INCLUDEMODE}
-
+// $Id: JwaWinBase.pas,v 1.17 2007/09/14 06:48:47 marquardt Exp $
+{$IFNDEF JWA_OMIT_SECTIONS}
 unit JwaWinBase;
+{$ENDIF JWA_OMIT_SECTIONS}
 
 {$WEAKPACKAGEUNIT}
 
-{$I jediapilib.inc}
+{$HPPEMIT ''}
+{$HPPEMIT '#include "WinBase.h"'}
+{$HPPEMIT ''}
 
-{$STACKFRAMES ON}
+{$IFNDEF JWA_OMIT_SECTIONS}
+
+{$I JediAPILib.inc}
+
+{$STACKFRAMES ON} // must be after include. FPC's $MODE command resets this
 
 interface
 
@@ -59,14 +64,9 @@ uses
   Windows,
   {$ENDIF USE_DELPHI_TYPES}
   JwaNtStatus, JwaWinNT, JwaWinType;
+{$ENDIF JWA_OMIT_SECTIONS}
 
-{$ENDIF !JWA_INCLUDEMODE}
-
-{$IFDEF JWA_INTERFACESECTION}
-
-{$HPPEMIT ''}
-{$HPPEMIT '#include "WinBase.h"'}
-{$HPPEMIT ''}
+{$IFNDEF JWA_IMPLEMENTATIONSECTION}
 
 const
   INVALID_HANDLE_VALUE     = HANDLE(-1);
@@ -159,7 +159,10 @@ procedure FillMemory(Destination: PVOID; Length: SIZE_T; Fill: BYTE);
 {$EXTERNALSYM FillMemory}
 procedure ZeroMemory(Destination: PVOID; Length: SIZE_T);
 {$EXTERNALSYM ZeroMemory}
-//#define SecureZeroMemory RtlSecureZeroMemory TODO
+
+
+function SecureZeroMemory({__in}ptr : PVOID;{__in}cnt : SIZE_T) : Pointer;{$IFDEF DELPHI2005_UP}inline;{$ENDIF}
+{$EXTERNALSYM ZeroMemory}
 
 //
 // File creation flags must start at the high end since they
@@ -353,10 +356,10 @@ type
   {$EXTERNALSYM _SECURITY_ATTRIBUTES}
   SECURITY_ATTRIBUTES = _SECURITY_ATTRIBUTES;
   {$EXTERNALSYM SECURITY_ATTRIBUTES}
-  LPSECURITY_ATTRIBUTES = ^SECURITY_ATTRIBUTES;
+  LPSECURITY_ATTRIBUTES = PSECURITY_ATTRIBUTES;
   {$EXTERNALSYM LPSECURITY_ATTRIBUTES}
   TSecurityAttributes = SECURITY_ATTRIBUTES;
-  PSecurityAttributes = PSECURITY_ATTRIBUTES;
+  PSecurityAttributes = LPSECURITY_ATTRIBUTES;
 
   PPROCESS_INFORMATION = ^PROCESS_INFORMATION;
   {$EXTERNALSYM PPROCESS_INFORMATION}
@@ -369,15 +372,14 @@ type
   {$EXTERNALSYM _PROCESS_INFORMATION}
   PROCESS_INFORMATION = _PROCESS_INFORMATION;
   {$EXTERNALSYM PROCESS_INFORMATION}
-  LPPROCESS_INFORMATION = ^PROCESS_INFORMATION;
+  LPPROCESS_INFORMATION = PPROCESS_INFORMATION;
   {$EXTERNALSYM LPPROCESS_INFORMATION}
   TProcessInformation = PROCESS_INFORMATION;
-  PProcessInformation = PPROCESS_INFORMATION;
+  PProcessInformation = LPPROCESS_INFORMATION;
 
 //
 //  File System time stamps are represented with the following structure:
 //
-
   {$IFNDEF JWA_INCLUDEMODE}
   LPFILETIME = ^FILETIME;
   {$EXTERNALSYM LPFILETIME}
@@ -390,7 +392,7 @@ type
   {$EXTERNALSYM FILETIME}
   TFileTime = FILETIME;
   PFileTime = LPFILETIME;
-  {$ENDIF !JWA_INCLUDEMODE}
+  {$ENDIF JWA_INCLUDEMODE}
 
 //
 // System time is represented with the following structure:
@@ -449,13 +451,86 @@ type
   LPCRITICAL_SECTION_DEBUG = PRTL_CRITICAL_SECTION_DEBUG;
   {$EXTERNALSYM LPCRITICAL_SECTION_DEBUG}
   TCriticalSectionDebug = CRITICAL_SECTION_DEBUG;
-  PCriticalSectionDebug = PCRITICAL_SECTION_DEBUG;  
+  PCriticalSectionDebug = PCRITICAL_SECTION_DEBUG;
 
+{$IFDEF WINVISTA_UP}
+
+//
+// Define the slim r/w lock
+//
+
+  SRWLOCK = RTL_SRWLOCK;
+  {$EXTERNALSYM SRWLOCK}
+  PSRWLOCK = PRTL_SRWLOCK;
+  {$EXTERNALSYM PSRWLOCK}
+  TSrwLock = SRWLOCK;
+  //const SRWLOCK_INIT = RTL_SRWLOCK_INIT; //doesnt work
+
+  procedure InitializeSRWLock(var SRWLock : SRWLOCK); stdcall;
+  {$EXTERNALSYM InitializeSRWLock}
+
+  procedure ReleaseSRWLockExclusive(var SRWLock : SRWLOCK); stdcall;
+  {$EXTERNALSYM ReleaseSRWLockExclusive}
+
+  procedure ReleaseSRWLockShared(var SRWLock : SRWLOCK); stdcall;
+  {$EXTERNALSYM ReleaseSRWLockShared}
+
+  procedure AcquireSRWLockExclusive(var SRWLock : SRWLOCK); stdcall;
+  {$EXTERNALSYM AcquireSRWLockExclusive}
+
+  procedure AcquireSRWLockShared(var SRWLock : SRWLOCK); stdcall;
+  {$EXTERNALSYM AcquireSRWLockShared}
+
+  function TryAcquireSRWLockExclusive(var SRWLock : SRWLOCK) : BOOL; stdcall;
+  {$EXTERNALSYM TryAcquireSRWLockExclusive}
+
+  function TryAcquireSRWLockShared(var SRWLock : SRWLOCK) : BOOL; stdcall;
+  {$EXTERNALSYM TryAcquireSRWLockShared}
+
+//
+// Define condition variable
+//
+
+type
+  CONDITION_VARIABLE = RTL_CONDITION_VARIABLE;
+  {$EXTERNALSYM CONDITION_VARIABLE}
+  PCONDITION_VARIABLE = ^CONDITION_VARIABLE;
+  {$EXTERNALSYM PCONDITION_VARIABLE}
+  TConditionVariable = CONDITION_VARIABLE;
+  PConditionVariable = PCONDITION_VARIABLE;
+
+  procedure InitializeConditionVariable(out ConditionVariable : CONDITION_VARIABLE); stdcall;
+  {$EXTERNALSYM InitializeConditionVariable}
+
+  procedure WakeConditionVariable(var ConditionVariable : CONDITION_VARIABLE); stdcall;
+  {$EXTERNALSYM WakeConditionVariable}
+
+  procedure WakeAllConditionVariable(var ConditionVariable : CONDITION_VARIABLE); stdcall;
+  {$EXTERNALSYM WakeAllConditionVariable}
+
+  function SleepConditionVariableCS(var ConditionVariable : CONDITION_VARIABLE;
+                                    var CriticalSection : CRITICAL_SECTION;
+                                    dwMilliseconds : DWORD) : BOOL; stdcall;
+  {$EXTERNALSYM SleepConditionVariableCS}
+
+  function SleepConditionVariableSRW(var ConditionVariable : CONDITION_VARIABLE;
+                                     var SRWLock : SRWLOCK;
+                                     dwMilliseconds : DWORD;
+                                     Flags : ULONG) : BOOL; stdcall;
+  {$EXTERNALSYM SleepConditionVariableSRW}
+
+const
+  CONDITION_VARIABLE_LOCKMODE_SHARED = RTL_CONDITION_VARIABLE_LOCKMODE_SHARED;
+  
+{$ENDIF WINVISTA_UP}
+
+type
   LPLDT_ENTRY = PLDT_ENTRY;
   {$EXTERNALSYM LPLDT_ENTRY}
+
   {$IFNDEF JWA_INCLUDEMODE}
   PLdtEntry = LPLDT_ENTRY;
-  {$ENDIF !JWA_INCLUDEMODE}
+  {$ENDIF JWA_INCLUDEMODE}
 
 const
   MUTEX_MODIFY_STATE = MUTANT_QUERY_STATE;
@@ -745,11 +820,11 @@ type
     ByteSize: BYTE;        // Number of bits/byte, 4-8
     Parity: BYTE;          // 0-4=None,Odd,Even,Mark,Space
     StopBits: BYTE;        // 0,1,2 = 1, 1.5, 2
-    XonChar: Char;         // Tx and Rx X-ON character
-    XoffChar: Char;        // Tx and Rx X-OFF character
-    ErrorChar: Char;       // Error replacement char
-    EofChar: Char;         // End of Input character
-    EvtChar: Char;         // Received Event character
+    XonChar: AnsiChar;         // Tx and Rx X-ON character
+    XoffChar: AnsiChar;        // Tx and Rx X-OFF character
+    ErrorChar: AnsiChar;       // Error replacement AnsiChar
+    EofChar: AnsiChar;         // End of Input character
+    EvtChar: AnsiChar;         // Received Event character
     wReserved1: WORD;      // Fill for now.
   end;
   {$EXTERNALSYM _DCB}
@@ -980,6 +1055,12 @@ const
   {$EXTERNALSYM CREATE_SHARED_WOW_VDM}
   CREATE_FORCEDOS         = $00002000;
   {$EXTERNALSYM CREATE_FORCEDOS}
+
+  CREATE_PROTECTED_PROCESS  = $00040000;
+  {$EXTERNALSYM CREATE_PROTECTED_PROCESS}
+
+  EXTENDED_STARTUPINFO_PRESENT = $00080000;
+  {$EXTERNALSYM EXTENDED_STARTUPINFO_PRESENT}
 
   BELOW_NORMAL_PRIORITY_CLASS = $00004000;
   {$EXTERNALSYM BELOW_NORMAL_PRIORITY_CLASS}
@@ -1574,7 +1655,7 @@ type
     nErrCode: Word;
     Reserved1: Word;
     Reserved2: Word;
-    szPathName: array [0..OFS_MAXPATHNAME - 1] of CHAR;
+    szPathName: array [0..OFS_MAXPATHNAME - 1] of AnsiChar;
   end;
   {$EXTERNALSYM _OFSTRUCT}
   OFSTRUCT = _OFSTRUCT;
@@ -1699,10 +1780,8 @@ procedure FreeLibraryAndExitThread(hLibModule: HMODULE; dwExitCode: DWORD); stdc
 function DisableThreadLibraryCalls(hLibModule: HMODULE): BOOL; stdcall;
 {$EXTERNALSYM DisableThreadLibraryCalls}
 
-{$IFNDEF JWA_INCLUDEMODE}
 function GetProcAddress(hModule: HMODULE; lpProcName: LPCSTR): FARPROC; stdcall;
 {$EXTERNALSYM GetProcAddress}
-{$ENDIF !JWA_INCLUDEMODE}
 
 function GetVersion: DWORD; stdcall;
 {$EXTERNALSYM GetVersion)}
@@ -2042,14 +2121,17 @@ procedure FatalExit(ExitCode: Integer); stdcall;
 function GetEnvironmentStringsW: LPWSTR; stdcall;
 {$EXTERNALSYM GetEnvironmentStringsW}
 
-function GetEnvironmentStrings: LPSTR; stdcall;
+function GetEnvironmentStrings: LPTSTR; stdcall;
 {$EXTERNALSYM GetEnvironmentStrings}
 
-{$IFNDEF UNICODE}
 function GetEnvironmentStringsA: LPSTR; stdcall;
 {$EXTERNALSYM GetEnvironmentStringsA}
-{$ENDIF !UNICODE}
 
+
+
+{$IFDEF WIN2003_UP}
+//This function is only available in Windows 2003, Vista and 2008
+//http://sourceforge.net/support/tracker.php?aid=1846987
 function SetEnvironmentStringsA(NewEnvironment: LPSTR): BOOL; stdcall;
 {$EXTERNALSYM SetEnvironmentStringsA}
 
@@ -2057,6 +2139,7 @@ function SetEnvironmentStringsW(NewEnvironment: LPWSTR): BOOL; stdcall;
 {$EXTERNALSYM SetEnvironmentStringsW}
 function SetEnvironmentStrings(NewEnvironment: LPTSTR): BOOL; stdcall;
 {$EXTERNALSYM SetEnvironmentStrings}
+{$ENDIF WIN2003_UP}
 
 function FreeEnvironmentStringsA(pstr: LPSTR): BOOL; stdcall;
 {$EXTERNALSYM FreeEnvironmentStringsA}
@@ -2593,7 +2676,7 @@ function SetCommState(hFile: HANDLE; const lpDCB: DCB): BOOL; stdcall;
 function SetCommTimeouts(hFile: HANDLE; const lpCommTimeouts: COMMTIMEOUTS): BOOL; stdcall;
 {$EXTERNALSYM SetCommTimeouts}
 
-function TransmitCommChar(hFile: HANDLE; cChar: Char): BOOL; stdcall;
+function TransmitCommChar(hFile: HANDLE; cChar: AnsiChar): BOOL; stdcall;
 {$EXTERNALSYM TransmitCommChar}
 
 function WaitCommEvent(hFile: HANDLE; var lpEvtMask: DWORD;
@@ -2701,7 +2784,7 @@ type
   PTimeZoneInformation = PTIME_ZONE_INFORMATION;
 
 function SystemTimeToTzSpecificLocalTime(lpTimeZoneInformation: LPTIME_ZONE_INFORMATION;
-  var lpUniversalTime, lpLocalTime: SYSTEMTIME): BOOL; stdcall;
+  lpUniversalTime: SYSTEMTIME; var lpLocalTime: SYSTEMTIME): BOOL; stdcall;
 {$EXTERNALSYM SystemTimeToTzSpecificLocalTime}
 
 function TzSpecificLocalTimeToSystemTime(const lpTimeZoneInformation: TIME_ZONE_INFORMATION;
@@ -2787,7 +2870,7 @@ function ConnectNamedPipe(hNamedPipe: HANDLE; lpOverlapped: LPOVERLAPPED): BOOL;
 function DisconnectNamedPipe(hNamedPipe: HANDLE): BOOL; stdcall;
 {$EXTERNALSYM DisconnectNamedPipe}
 
-function SetNamedPipeHandleState(hNamedPipe: HANDLE; var lpMode: DWORD;
+function SetNamedPipeHandleState(hNamedPipe: HANDLE; lpMode: LPDWORD;
   lpMaxCollectionCount: LPDWORD; lpCollectDataTimeout: LPDWORD): BOOL; stdcall;
 {$EXTERNALSYM SetNamedPipeHandleState}
 
@@ -3158,6 +3241,91 @@ function WriteFileGather(hFile: HANDLE; aSegmentArray: PFILE_SEGMENT_ELEMENT;
   nNumberOfBytesToWrite: DWORD; lpReserved: LPDWORD; lpOverlapped: LPOVERLAPPED): BOOL; stdcall;
 {$EXTERNALSYM WriteFileGather}
 
+
+
+//
+// Extended process and thread attribute support
+//
+const
+  {$EXTERNALSYM SHUTDOWN_NORETRY}
+  PROC_THREAD_ATTRIBUTE_NUMBER    = $0000FFFF;
+  {$EXTERNALSYM SHUTDOWN_NORETRY}
+  PROC_THREAD_ATTRIBUTE_THREAD    = $00010000;  // Attribute may be used with thread creation
+  {$EXTERNALSYM SHUTDOWN_NORETRY}
+  PROC_THREAD_ATTRIBUTE_INPUT     = $00020000;  // Attribute is input only
+  {$EXTERNALSYM SHUTDOWN_NORETRY}
+  PROC_THREAD_ATTRIBUTE_ADDITIVE  = $00040000;  // Attribute may be "accumulated," e.g. bitmasks, counters, etc.
+
+type
+  {$EXTERNALSYM _PROC_THREAD_ATTRIBUTE_NUM}
+  _PROC_THREAD_ATTRIBUTE_NUM = (
+    {$EXTERNALSYM ProcThreadAttributeParentProcess}
+    ProcThreadAttributeParentProcess{ = 0},
+    {$EXTERNALSYM ProcThreadAttributeExtendedFlags}
+    ProcThreadAttributeExtendedFlags,
+    {$EXTERNALSYM ProcThreadAttributeHandleList}
+    ProcThreadAttributeHandleList,
+    {$EXTERNALSYM ProcThreadAttributeMax}
+    ProcThreadAttributeMax);
+
+  {$EXTERNALSYM PROC_THREAD_ATTRIBUTE_NUM}
+  PROC_THREAD_ATTRIBUTE_NUM = ^_PROC_THREAD_ATTRIBUTE_NUM;
+  TProcThreadAttributeNum = _PROC_THREAD_ATTRIBUTE_NUM;
+  PProcThreadAttributeNum = ^TProcThreadAttributeNum;
+
+  {Macro function}
+  function ProcThreadAttributeValue(const Number : DWORD;
+     Thread, Input, Additive : Boolean) : DWORD;
+  {Macro function}
+  function PROC_THREAD_ATTRIBUTE_PARENT_PROCESS : DWORD;
+  {Macro function}
+  function PROC_THREAD_ATTRIBUTE_EXTENDED_FLAGS : DWORD;
+  {Macro function}
+  function PROC_THREAD_ATTRIBUTE_HANDLE_LIST : DWORD;
+
+type
+  {$EXTERNALSYM _PROC_THREAD_ATTRIBUTE_LIST}
+  _PROC_THREAD_ATTRIBUTE_LIST = record
+  end;
+  {$EXTERNALSYM PPROC_THREAD_ATTRIBUTE_LIST}
+  PPROC_THREAD_ATTRIBUTE_LIST = ^_PROC_THREAD_ATTRIBUTE_LIST;
+  {$EXTERNALSYM LPPROC_THREAD_ATTRIBUTE_LIST}
+  LPPROC_THREAD_ATTRIBUTE_LIST = PPROC_THREAD_ATTRIBUTE_LIST;
+
+  TProcThreadAttributeList = _PROC_THREAD_ATTRIBUTE_LIST;
+  PProcThreadAttributeList = PPROC_THREAD_ATTRIBUTE_LIST;
+
+  {$EXTERNALSYM InitializeProcThreadAttributeList}
+  function InitializeProcThreadAttributeList(
+    {__out_xcount_opt(*lpSize)} lpAttributeList : LPPROC_THREAD_ATTRIBUTE_LIST;
+    {__in} dwAttributeCount : DWORD;
+    {__in __reserved} dwFlags : DWORD;
+    {__inout} var lpSize : SIZE_T
+    ) : BOOL; stdcall;
+
+  {$EXTERNALSYM DeleteProcThreadAttributeList}
+  procedure DeleteProcThreadAttributeList(
+    {__inout} lpAttributeList : LPPROC_THREAD_ATTRIBUTE_LIST
+    ); stdcall;
+
+const
+  {$EXTERNALSYM PROC_THREAD_ATTRIBUTE_REPLACE_VALUE}
+  PROC_THREAD_ATTRIBUTE_REPLACE_VALUE     = $00000001;
+
+  {$EXTERNALSYM UpdateProcThreadAttribute}
+  function UpdateProcThreadAttribute(
+    {__inout} lpAttributeList : LPPROC_THREAD_ATTRIBUTE_LIST;
+    {__in} dwFlags : DWORD;
+    {__in} Attribute : DWORD_PTR;
+    {__in_bcount_opt(cbSize)} lpValue : PVOID;
+    {__in} cbSize : SIZE_T;
+    {__out_bcount_opt(cbSize)} lpPreviousValue : PVOID;
+    {__in_opt} lpReturnSize : PSIZE_T
+    ) : BOOL; stdcall;
+
+
+
+
 //
 // Dual Mode API below this line. Dual Mode Structures also included.
 //
@@ -3242,21 +3410,64 @@ type
   TStartupInfoW = STARTUPINFOW;
   PStartupInfoW = LPSTARTUPINFOW;
 
-  {$IFDEF UNICODE}
+  {$EXTERNALSYM _STARTUPINFOEXA}
+  _STARTUPINFOEXA = record
+    StartupInfo : STARTUPINFOA;
+    lpAttributeList : PPROC_THREAD_ATTRIBUTE_LIST;
+  end;
+  {$EXTERNALSYM STARTUPINFOEXA}
+  STARTUPINFOEXA = _STARTUPINFOEXA;
+  {$EXTERNALSYM LPSTARTUPINFOEXA}
+  LPSTARTUPINFOEXA = ^STARTUPINFOEXA;
+
+  TStartupInfoExA = _STARTUPINFOEXA;
+  PStartupInfoExA = LPSTARTUPINFOEXA;
+
+  {$EXTERNALSYM _STARTUPINFOEXW}
+  _STARTUPINFOEXW = record
+    StartupInfo : STARTUPINFOW;
+    lpAttributeList : PPROC_THREAD_ATTRIBUTE_LIST;
+  end;
+  {$EXTERNALSYM STARTUPINFOEXW}
+  STARTUPINFOEXW = _STARTUPINFOEXW;
+  {$EXTERNALSYM LPSTARTUPINFOEXW}
+  LPSTARTUPINFOEXW = ^STARTUPINFOEXW;
+
+  TStartupInfoExW = _STARTUPINFOEXW;
+  PStartupInfoExW = LPSTARTUPINFOEXW;
+
+{$IFDEF UNICODE}
   STARTUPINFO = STARTUPINFOW;
   {$EXTERNALSYM STARTUPINFO}
   LPSTARTUPINFO = LPSTARTUPINFOW;
   {$EXTERNALSYM LPSTARTUPINFO}
   TStartupInfo = TStartupInfoW;
   PStartupInfo = PStartupInfoW;
-  {$ELSE}
+
+  {$EXTERNALSYM STARTUPINFOEX}
+  STARTUPINFOEX = _STARTUPINFOEXW;
+  {$EXTERNALSYM LPSTARTUPINFOEX}
+  LPSTARTUPINFOEX = PStartupInfoExW;
+
+  TStartupInfoEx = TStartupInfoExW;
+  PStartupInfoEx = PStartupInfoExW;
+{$ELSE}
   STARTUPINFO = STARTUPINFOA;
   {$EXTERNALSYM STARTUPINFO}
   LPSTARTUPINFO = LPSTARTUPINFOA;
   {$EXTERNALSYM LPSTARTUPINFO}
   TStartupInfo = TStartupInfoA;
   PStartupInfo = PStartupInfoA;
-  {$ENDIF UNICODE}
+
+  {$EXTERNALSYM STARTUPINFOEX}
+  STARTUPINFOEX = _STARTUPINFOEXA;
+  {$EXTERNALSYM LPSTARTUPINFOEX}
+  LPSTARTUPINFOEX = PStartupInfoExA;
+
+  TStartupInfoEx = TStartupInfoExA;
+  PStartupInfoEx = PStartupInfoExA;
+{$ENDIF UNICODE}
+
 
 const
   SHUTDOWN_NORETRY = $00000001;
@@ -3274,8 +3485,8 @@ type
     nFileSizeLow: DWORD;
     dwReserved0: DWORD;
     dwReserved1: DWORD;
-    cFileName: array [0..MAX_PATH - 1] of CHAR;
-    cAlternateFileName: array [0..13] of CHAR;
+    cFileName: array [0..MAX_PATH - 1] of AnsiChar;
+    cAlternateFileName: array [0..13] of AnsiChar;
   end;
   {$EXTERNALSYM _WIN32_FIND_DATAA}
   WIN32_FIND_DATAA = _WIN32_FIND_DATAA;
@@ -3476,10 +3687,8 @@ function LoadLibraryA(lpLibFileName: LPCSTR): HMODULE; stdcall;
 {$EXTERNALSYM LoadLibraryA}
 function LoadLibraryW(lpLibFileName: LPCWSTR): HMODULE; stdcall;
 {$EXTERNALSYM LoadLibraryW}
-{$IFNDEF JWA_INCLUDEMODE}
 function LoadLibrary(lpLibFileName: LPCTSTR): HMODULE; stdcall;
 {$EXTERNALSYM LoadLibrary}
-{$ENDIF !JWA_INCLUDEMODE}
 
 function LoadLibraryExA(lpLibFileName: LPCSTR; hFile: HANDLE; dwFlags: DWORD): HMODULE; stdcall;
 {$EXTERNALSYM LoadLibraryExA}
@@ -3509,10 +3718,8 @@ function GetModuleHandleA(lpModuleName: LPCSTR): HMODULE; stdcall;
 {$EXTERNALSYM GetModuleHandleA}
 function GetModuleHandleW(lpModuleName: LPCWSTR): HMODULE; stdcall;
 {$EXTERNALSYM GetModuleHandleW}
-{$IFNDEF JWA_INCLUDEMODE}
 function GetModuleHandle(lpModuleName: LPCTSTR): HMODULE; stdcall;
 {$EXTERNALSYM GetModuleHandle}
-{$ENDIF !JWA_INCLUDEMODE}
 
 const
   GET_MODULE_HANDLE_EX_FLAG_PIN                = $00000001;
@@ -3549,6 +3756,8 @@ function NeedCurrentDirectoryForExePathW(ExeName: LPCWSTR): BOOL; stdcall;
 {$EXTERNALSYM NeedCurrentDirectoryForExePathW}
 function NeedCurrentDirectoryForExePath(ExeName: LPCTSTR): BOOL; stdcall;
 {$EXTERNALSYM NeedCurrentDirectoryForExePath}
+
+
 
 function CreateProcessA(lpApplicationName: LPCSTR; lpCommandLine: LPSTR;
   lpProcessAttributes, lpThreadAttributes: LPSECURITY_ATTRIBUTES;
@@ -3966,6 +4175,11 @@ function GetSystemWow64Directory(lpBuffer: LPTSTR; uSize: UINT): UINT; stdcall;
 
 function Wow64EnableWow64FsRedirection(Wow64FsEnableRedirection: BOOL): BOOL; stdcall;
 {$EXTERNALSYM Wow64EnableWow64FsRedirection}
+function Wow64DisableWow64FsRedirection(out OldValue: PVOID): BOOL; stdcall;
+{$EXTERNALSYM Wow64DisableWow64FsRedirection}
+function Wow64RevertWow64FsRedirection(const OldValue: PVOID): BOOL; stdcall;
+{$EXTERNALSYM Wow64RevertWow64FsRedirection}
+
 
 //
 // for GetProcAddress
@@ -5512,8 +5726,8 @@ type
   {$EXTERNALSYM LPHW_PROFILE_INFOA}
   tagHW_PROFILE_INFOA = record
     dwDockInfo: DWORD;
-    szHwProfileGuid: array [0..HW_PROFILE_GUIDLEN - 1] of CHAR;
-    szHwProfileName: array [0..MAX_PROFILE_LEN - 1] of CHAR;
+    szHwProfileGuid: array [0..HW_PROFILE_GUIDLEN - 1] of AnsiChar;
+    szHwProfileName: array [0..MAX_PROFILE_LEN - 1] of AnsiChar;
   end;
   {$EXTERNALSYM tagHW_PROFILE_INFOA}
   HW_PROFILE_INFOA = tagHW_PROFILE_INFOA;
@@ -5947,7 +6161,7 @@ type
   {$EXTERNALSYM PCACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA}
   TActCtxSectionKeyedDataAssemblyMetadata = ACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA;
   PActCtxSectionKeyedDataAssemblyMetadata = PACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA;
-  
+
   tagACTCTX_SECTION_KEYED_DATA = record
     cbSize: ULONG;
     ulDataFormatVersion: ULONG;
@@ -6048,7 +6262,7 @@ const
 //
 // String are placed after the structs.
 //
-  
+
 function QueryActCtxW(dwFlags: DWORD; hActCtx: HANDLE; pvSubInstance: PVOID;
   ulInfoClass: ULONG; pvBuffer: PVOID; cbBuffer: SIZE_T;
   pcbWrittenOrRequired: PSIZE_T): BOOL; stdcall;
@@ -6088,18 +6302,72 @@ function GetNumaNodeProcessorMask(Node: UCHAR; ProcessorMask: ULONGLONG): BOOL; 
 function GetNumaAvailableMemoryNode(Node: UCHAR; var AvailableBytes: ULONGLONG): BOOL; stdcall;
 {$EXTERNALSYM GetNumaAvailableMemoryNode}
 
-{$ENDIF JWA_INTERFACESECTION}
 
-{$IFNDEF JWA_INCLUDEMODE}
+const
+  PROCESS_DEP_ENABLE = 1;
+  {$EXTERNALSYM PROCESS_DEP_ENABLE}
+  PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION = 2;
+  {$EXTERNALSYM PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION}
 
+{$IFDEF WINVISTA_UP}
+  {http://msdn2.microsoft.com/en-us/library/bb736299(VS.85).aspx}
+  function SetProcessDEPPolicy({__in}dwFlags : DWORD) : Boolean; stdcall;
+  {$EXTERNALSYM SetProcessDEPPolicy}
+
+  function GetNamedPipeServerSessionId(Pipe : HANDLE; out ServerSessionID : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeServerSessionId}
+  function GetNamedPipeServerProcessId(Pipe : HANDLE; out ServerProcessId : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeServerProcessId}
+
+  function GetNamedPipeClientProcessId(Pipe : HANDLE; out ClientProcessId : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeClientProcessId}
+  function GetNamedPipeClientSessionId(Pipe : HANDLE; out ClientSessionId : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeClientSessionId}
+
+  function GetNamedPipeClientComputerName(Pipe : HANDLE; {out} ClientComputerName : LPTSTR; ClientComputerNameLength : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeClientComputerName}
+  function GetNamedPipeClientComputerNameA(Pipe : HANDLE; {out} ClientComputerName : LPSTR; ClientComputerNameLength : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeClientComputerNameA}
+  function GetNamedPipeClientComputerNameW(Pipe : HANDLE; {out} ClientComputerName : LPWSTR; ClientComputerNameLength : ULONG) : Boolean; stdcall;
+  {$EXTERNALSYM GetNamedPipeClientComputerNameA}
+{$ENDIF WINVISTA_UP}
+
+
+{$IF defined(WIN7_UP) or
+     (defined(WINXP)   and defined(SERVICEPACK_2)) or
+     (defined(WIN2003) and defined(SERVICEPACK_1))}
+  {$DEFINE JWENABLE_SETSEARCHPATHMODE}
+{$IFEND}
+
+{$IFDEF JWENABLE_SETSEARCHPATHMODE}
+const
+  BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE     = $00000001;
+  BASE_SEARCH_PATH_DISABLE_SAFE_SEARCHMODE    = $00010000;
+  BASE_SEARCH_PATH_PERMANENT                  = $00008000;
+
+  function SetSearchPathMode({__in} Flags : DWORD) : BOOL; stdcall;
+{$ENDIF}
+
+
+
+{$ENDIF JWA_IMPLEMENTATIONSECTION}
+
+{$IFNDEF JWA_OMIT_SECTIONS}
 implementation
+{$ENDIF JWA_OMIT_SECTIONS}
 
-uses
-  JwaWinDLLNames;
+{$IFNDEF JWA_OMIT_SECTIONS}
+const
+  kernel32 = 'kernel32.dll';
+  advapi32 = 'advapi32.dll';
+  {$IFDEF UNICODE}
+  AWSuffix = 'W';
+  {$ELSE}
+  AWSuffix = 'A';
+  {$ENDIF UNICODE}
+{$ENDIF JWA_OMIT_SECTIONS}
 
-{$ENDIF !JWA_INCLUDEMODE}
-
-{$IFDEF JWA_IMPLEMENTATIONSECTION}
+{$IFNDEF JWA_INTERFACESECTION}
 
 procedure MoveMemory(Destination, Source: PVOID; Length: SIZE_T);
 begin
@@ -6119,6 +6387,12 @@ end;
 procedure ZeroMemory(Destination: PVOID; Length: SIZE_T);
 begin
   FillChar(Destination^, Length, 0);
+end;
+
+function SecureZeroMemory({__in}ptr : PVOID;{__in}cnt : SIZE_T) : Pointer;
+begin
+  FillChar(ptr^, cnt, 0);
+  result := ptr;
 end;
 
 function FreeModule(hLibModule: HMODULE): BOOL;
@@ -6161,14 +6435,33 @@ begin
   Result := $100000;
 end;
 
+{added tweak from
+http://sourceforge.net/tracker/index.php?func=detail&aid=1662760&group_id=121894&atid=694029
+by
+Marco
+}
 function InterlockedExchangePointer(var Target: PVOID; Value: PVOID): PVOID;
 begin
+{$ifdef WIN64}
+  Result := PVOID(InterlockedExchange64(LONGLONG(Target), LONGLONG(Value)));
+{$else}
   Result := PVOID(InterlockedExchange(LONG(Target), LONG(Value)));
+{$endif WIN64}
 end;
 
+{added tweak from
+http://sourceforge.net/tracker/index.php?func=detail&aid=1662760&group_id=121894&atid=694029
+by Marco
+}
 function InterlockedCompareExchangePointer(var Destination: PVOID; Exchange, Comperand: PVOID): PVOID;
 begin
-  Result := PVOID(InterlockedCompareExchange(LONG(Destination), LONG(Exchange), LONG(Comperand)));
+{$ifdef WIN64}
+  Result := PVOID(InterlockedCompareExchange64(LONGLONG(Destination),
+              LONGLONG(Exchange), LONGLONG(Comperand)));
+{$else}
+  Result := PVOID(InterlockedCompareExchange(LONG(Destination),
+    LONG(Exchange), LONG(Comperand)));
+{$endif WIN64}
 end;
 
 function UnlockResource(hResData: HANDLE): BOOL;
@@ -6241,11 +6534,17 @@ end;
   False. Changing the bInitalOwner parameter type to Boolean fixes the problem
   (Boolean(True) = 1) but that would be implementation specific and might break
   in the future, though unlikely. Hence the CreateMutex function here which
-  explicitly passes LongBool(1) instead of LongBool(True). }
+  explicitly passes LongBool(1) instead of LongBool(True).
+
+
+  CW@2009:
+    bInitialOwner as LongBool doesn't help at all. So I set it to DWORD to have the
+    same size (4). Today, LongBool is the same as BOOL.
+}
 
 type
-  TCreateMutexA = function(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: LongBool; lpName: LPCSTR): HANDLE; stdcall;
-  TCreateMutexW = function(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: LongBool; lpName: LPCWSTR): HANDLE; stdcall;
+  TCreateMutexA = function(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: DWORD; lpName: LPCSTR): HANDLE; stdcall;
+  TCreateMutexW = function(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: DWORD; lpName: LPCWSTR): HANDLE; stdcall;
 
 var
   _CreateMutexA: Pointer;
@@ -6254,40 +6553,23 @@ var
 function CreateMutexA(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: BOOL; lpName: LPCSTR): HANDLE;
 begin
   GetProcedureAddress(_CreateMutexA, kernel32, 'CreateMutexA');
-  if bInitialOwner then
-    Result := TCreateMutexA(_CreateMutexA)(lpMutexAttributes, LongBool(1), lpName)
-  else
-    Result := TCreateMutexA(_CreateMutexA)(lpMutexAttributes, LongBool(0), lpName)
+  Result := TCreateMutexA(_CreateMutexA)(lpMutexAttributes, DWORD(Boolean(bInitialOwner)), lpName)
 end;
 
 function CreateMutexW(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: BOOL; lpName: LPCWSTR): HANDLE;
 begin
   GetProcedureAddress(_CreateMutexW, kernel32, 'CreateMutexW');
-  if bInitialOwner then
-    Result := TCreateMutexW(_CreateMutexW)(lpMutexAttributes, LongBool(1), lpName)
-  else
-    Result := TCreateMutexW(_CreateMutexW)(lpMutexAttributes, LongBool(0), lpName)
+  Result := TCreateMutexW(_CreateMutexW)(lpMutexAttributes, DWORD(Boolean(bInitialOwner)), lpName)
 end;
 
+function CreateMutex(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: BOOL; lpName: LPCTSTR): HANDLE;
+begin
 {$IFDEF UNICODE}
-function CreateMutex(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: BOOL; lpName: LPCWSTR): HANDLE;
-begin
-  GetProcedureAddress(_CreateMutexW, kernel32, 'CreateMutexW');
-  if bInitialOwner then
-    Result := TCreateMutexW(_CreateMutexW)(lpMutexAttributes, LongBool(1), lpName)
-  else
-    Result := TCreateMutexW(_CreateMutexW)(lpMutexAttributes, LongBool(0), lpName)
-end;
+  result := CreateMutexW(lpMutexAttributes, bInitialOwner, lpName);
 {$ELSE}
-function CreateMutex(lpMutexAttributes: LPSECURITY_ATTRIBUTES; bInitialOwner: BOOL; lpName: LPCSTR): HANDLE;
-begin
-  GetProcedureAddress(_CreateMutexA, kernel32, 'CreateMutexA');
-  if bInitialOwner then
-    Result := TCreateMutexA(_CreateMutexA)(lpMutexAttributes, LongBool(1), lpName)
-  else
-    Result := TCreateMutexA(_CreateMutexA)(lpMutexAttributes, LongBool(0), lpName)
-end;
+  result := CreateMutexA(lpMutexAttributes, bInitialOwner, lpName);
 {$ENDIF UNICODE}
+end;
 
 {$IFDEF DYNAMIC_LINK}
 
@@ -6499,7 +6781,6 @@ begin
   end;
 end;
 
-{$IFNDEF JWA_INCLUDEMODE}
 // MVB TODO Dynamic linking for GetProcAddress doesn't make much sense, does it? Same for LoadLibrary.
 
 var
@@ -6514,8 +6795,6 @@ begin
         JMP     [_GetProcAddress]
   end;
 end;
-
-{$ENDIF !JWA_INCLUDEMODE}
 
 var
   _GetVersion: Pointer;
@@ -7557,8 +7836,6 @@ begin
   end;
 end;
 
-{$IFNDEF UNICODE}
-
 var
   _GetEnvironmentStringsA: Pointer;
 
@@ -7572,8 +7849,8 @@ begin
   end;
 end;
 
-{$ENDIF !UNICODE}
 
+{$IFDEF WIN2003_UP}
 var
   _SetEnvironmentStringsA: Pointer;
 
@@ -7612,6 +7889,8 @@ begin
         JMP     [_SetEnvironmentStrings]
   end;
 end;
+
+{$ENDIF WIN2003_UP}
 
 var
   _FreeEnvironmentStringsA: Pointer;
@@ -11500,6 +11779,49 @@ begin
   end;
 end;
 
+
+var
+  _InitializePTAttrList: Pointer;
+
+function InitializeProcThreadAttributeList;
+begin
+  GetProcedureAddress(_InitializePTAttrList, kernel32, 'InitializeProcThreadAttributeList');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_InitializePTAttrList]
+  end;
+end;
+
+var
+  _DeleteProcTAttrList: Pointer;
+
+procedure DeleteProcThreadAttributeList;
+begin
+  GetProcedureAddress(_DeleteProcTAttrList, kernel32, 'DeleteProcThreadAttributeList');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_DeleteProcTAttrList]
+  end;
+end;
+
+var
+  _UpdateProcTAttr: Pointer;
+
+function UpdateProcThreadAttribute;
+begin
+  GetProcedureAddress(_UpdateProcTAttr, kernel32, 'UpdateProcThreadAttribute');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_UpdateProcTAttr]
+  end;
+end;
+
+////////////
+
+
 var
   _CreateProcessA: Pointer;
 
@@ -13343,6 +13665,32 @@ begin
         MOV     ESP, EBP
         POP     EBP
         JMP     [_Wow64EnableWow64FsRedirection]
+  end;
+end;
+
+var
+  _Wow64DisableWow64FsRedirection: Pointer;
+
+function Wow64DisableWow64FsRedirection;
+begin
+  GetProcedureAddress(_Wow64DisableWow64FsRedirection, kernel32, 'Wow64DisableWow64FsRedirection');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_Wow64DisableWow64FsRedirection]
+  end;
+end;
+
+var
+  _Wow64RevertWow64FsRedirection: Pointer;
+
+function Wow64RevertWow64FsRedirection;
+begin
+  GetProcedureAddress(_Wow64RevertWow64FsRedirection, kernel32, 'Wow64RevertWow64FsRedirection');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_Wow64RevertWow64FsRedirection]
   end;
 end;
 
@@ -18962,995 +19310,1358 @@ begin
   end;
 end;
 
+{$IFDEF WINVISTA_UP}
+
+var
+  _InitializeConditionVariable: Pointer;
+
+procedure InitializeConditionVariable;
+begin
+  GetProcedureAddress(_InitializeConditionVariable, kernel32, 'InitializeConditionVariable');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_InitializeConditionVariable]
+  end;
+end;
+
+var
+  _SleepConditionVariableCS: Pointer;
+
+function SleepConditionVariableCS;
+begin
+  GetProcedureAddress(_SleepConditionVariableCS, kernel32, 'SleepConditionVariableCS');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_SleepConditionVariableCS]
+  end;
+end;
+
+var
+  _SleepConditionVariableSRW: Pointer;
+
+function SleepConditionVariableSRW;
+begin
+  GetProcedureAddress(_SleepConditionVariableSRW, kernel32, 'SleepConditionVariableSRW');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_SleepConditionVariableSRW]
+  end;
+end;
+
+var
+  _WakeAllConditionVariable: Pointer;
+
+procedure WakeAllConditionVariable;
+begin
+  GetProcedureAddress(_WakeAllConditionVariable, kernel32, 'WakeAllConditionVariable');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_WakeAllConditionVariable]
+  end;
+end;
+
+var
+  _WakeConditionVariable: Pointer;
+
+procedure WakeConditionVariable;
+begin
+  GetProcedureAddress(_WakeConditionVariable, kernel32, 'WakeConditionVariable');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_WakeConditionVariable]
+  end;
+end;
+
+var
+  _InitializeSRWLock: Pointer;
+
+procedure InitializeSRWLock;
+begin
+  GetProcedureAddress(_InitializeSRWLock, kernel32, 'InitializeSRWLock');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_InitializeSRWLock]
+  end;
+end;
+
+var
+  _ReleaseSRWLockExclusive: Pointer;
+
+procedure ReleaseSRWLockExclusive;
+begin
+  GetProcedureAddress(_ReleaseSRWLockExclusive, kernel32, 'ReleaseSRWLockExclusive');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_ReleaseSRWLockExclusive]
+  end;
+end;
+
+var
+  _ReleaseSRWLockShared: Pointer;
+
+procedure ReleaseSRWLockShared;
+begin
+  GetProcedureAddress(_ReleaseSRWLockShared, kernel32, 'ReleaseSRWLockShared');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_ReleaseSRWLockShared]
+  end;
+end;
+
+var
+  _AcquireSRWLockExclusive: Pointer;
+
+procedure AcquireSRWLockExclusive;
+begin
+  GetProcedureAddress(_AcquireSRWLockExclusive, kernel32, 'AcquireSRWLockExclusive');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_AcquireSRWLockExclusive]
+  end;
+end;
+
+var
+  _AcquireSRWLockShared: Pointer;
+
+procedure AcquireSRWLockShared;
+begin
+  GetProcedureAddress(_AcquireSRWLockShared, kernel32, 'AcquireSRWLockShared');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_AcquireSRWLockShared]
+  end;
+end;
+
+var
+  _TryAcquireSRWLockExclusive: Pointer;
+
+function TryAcquireSRWLockExclusive;
+begin
+  GetProcedureAddress(_TryAcquireSRWLockExclusive, kernel32, 'TryAcquireSRWLockExclusive');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_TryAcquireSRWLockExclusive]
+  end;
+end;
+
+var
+  _TryAcquireSRWLockShared: Pointer;
+
+function TryAcquireSRWLockShared;
+begin
+  GetProcedureAddress(_TryAcquireSRWLockShared, kernel32, 'TryAcquireSRWLockShared');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_TryAcquireSRWLockShared]
+  end;
+end;
+
+
+var
+  _SetProcessDEPPolicy: Pointer;
+
+function SetProcessDEPPolicy({__in}dwFlags : DWORD) : Boolean;
+begin
+  GetProcedureAddress(_SetProcessDEPPolicy, kernel32, 'SetProcessDEPPolicy');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_SetProcessDEPPolicy]
+  end;
+end;
+
+
+var
+  _GetNamedPipeSrvSId: Pointer;
+
+function GetNamedPipeServerSessionId;
+begin
+  GetProcedureAddress(_GetNamedPipeSrvSId, kernel32, 'GetNamedPipeServerSessionId');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeSrvSId]
+  end;
+end;
+
+
+var
+  _GetNamedPipeSrvProcId: Pointer;
+
+function GetNamedPipeServerProcessId;
+begin
+  GetProcedureAddress(_GetNamedPipeSrvProcId, kernel32, 'GetNamedPipeServerProcessId');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeSrvProcId]
+  end;
+end;
+
+
+var
+  _GetNamedPipeClProcId: Pointer;
+
+function GetNamedPipeClientProcessId;
+begin
+  GetProcedureAddress(_GetNamedPipeClProcId, kernel32, 'GetNamedPipeClientProcessId');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeClProcId]
+  end;
+end;
+
+var
+  _GetNamedPipeClSId: Pointer;
+
+function GetNamedPipeClientSessionId;
+begin
+  GetProcedureAddress(_GetNamedPipeClSId, kernel32, 'GetNamedPipeClientSessionId');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeClSId]
+  end;
+end;
+
+
+var
+  _GetNamedPipeClCompName: Pointer;
+
+function GetNamedPipeClientComputerName;
+begin
+  GetProcedureAddress(_GetNamedPipeClCompName, kernel32, 'GetNamedPipeClientComputerName'+AWSuffix);
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeClCompName]
+  end;
+end;
+
+var
+  _GetNamedPipeClCompNameA: Pointer;
+
+function GetNamedPipeClientComputerNameA;
+begin
+  GetProcedureAddress(_GetNamedPipeClCompNameA, kernel32, 'GetNamedPipeClientComputerNameA');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeClCompNameA]
+  end;
+end;
+
+var
+  _GetNamedPipeClCompNameW: Pointer;
+
+function GetNamedPipeClientComputerNameW;
+begin
+  GetProcedureAddress(_GetNamedPipeClCompNameW, kernel32, 'GetNamedPipeClientComputerNameW');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_GetNamedPipeClCompNameW]
+  end;
+end;
+
+{$ENDIF WINVISTA_UP}
+
+{$IFDEF JWENABLE_SETSEARCHPATHMODE}
+var
+  _SetSearchPathMode: Pointer;
+
+function SetSearchPathMode;
+begin
+  GetProcedureAddress(_SetSearchPathMode, kernel32, 'SetSearchPathMode');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_SetSearchPathMode]
+  end;
+end;
+{$ENDIF}
+
 {$ELSE}
 
-function InterlockedCompareExchange64; external kernel32 name 'InterlockedCompareExchange64';
-function InterlockedIncrement; external kernel32 name 'InterlockedIncrement';
-function InterlockedDecrement; external kernel32 name 'InterlockedDecrement';
-function InterlockedExchange; external kernel32 name 'InterlockedExchange';
-function InterlockedExchangeAdd; external kernel32 name 'InterlockedExchangeAdd';
-function InterlockedCompareExchange; external kernel32 name 'InterlockedCompareExchange';
-procedure InitializeSListHead; external kernel32 name 'InitializeSListHead';
-function InterlockedPopEntrySList; external kernel32 name 'InterlockedPopEntrySList';
-function InterlockedPushEntrySList; external kernel32 name 'InterlockedPushEntrySList';
-function InterlockedFlushSList; external kernel32 name 'InterlockedFlushSList';
-function QueryDepthSList; external kernel32 name 'QueryDepthSList';
-function FreeResource; external kernel32 name 'FreeResource';
-function LockResource; external kernel32 name 'LockResource';
-function FreeLibrary; external kernel32 name 'FreeLibrary';
-procedure FreeLibraryAndExitThread; external kernel32 name 'FreeLibraryAndExitThread';
-function DisableThreadLibraryCalls; external kernel32 name 'DisableThreadLibraryCalls';
-{$IFNDEF JWA_INCLUDEMODE}
-function GetProcAddress; external kernel32 name 'GetProcAddress';
-{$ENDIF !JWA_INCLUDEMODE}
-function GetVersion; external kernel32 name 'GetVersion';
-function GlobalAlloc; external kernel32 name 'GlobalAlloc';
-function GlobalReAlloc; external kernel32 name 'GlobalReAlloc';
-function GlobalSize; external kernel32 name 'GlobalSize';
-function GlobalFlags; external kernel32 name 'GlobalFlags';
-function GlobalLock; external kernel32 name 'GlobalLock';
-function GlobalHandle; external kernel32 name 'GlobalHandle';
-function GlobalUnlock; external kernel32 name 'GlobalUnlock';
-function GlobalFree; external kernel32 name 'GlobalFree';
-function GlobalCompact; external kernel32 name 'GlobalCompact';
-procedure GlobalFix; external kernel32 name 'GlobalFix';
-procedure GlobalUnfix; external kernel32 name 'GlobalUnfix';
-function GlobalWire; external kernel32 name 'GlobalWire';
-function GlobalUnWire; external kernel32 name 'GlobalUnWire';
-procedure GlobalMemoryStatus; external kernel32 name 'GlobalMemoryStatus';
-function GlobalMemoryStatusEx; external kernel32 name 'GlobalMemoryStatusEx';
-function LocalAlloc; external kernel32 name 'LocalAlloc';
-function LocalReAlloc; external kernel32 name 'LocalReAlloc';
-function LocalLock; external kernel32 name 'LocalLock';
-function LocalHandle; external kernel32 name 'LocalHandle';
-function LocalUnlock; external kernel32 name 'LocalUnlock';
-function LocalSize; external kernel32 name 'LocalSize';
-function LocalFlags; external kernel32 name 'LocalFlags';
-function LocalFree; external kernel32 name 'LocalFree';
-function LocalShrink; external kernel32 name 'LocalShrink';
-function LocalCompact; external kernel32 name 'LocalCompact';
-function FlushInstructionCache; external kernel32 name 'FlushInstructionCache';
-function VirtualAlloc; external kernel32 name 'VirtualAlloc';
-function VirtualFree; external kernel32 name 'VirtualFree';
-function VirtualProtect; external kernel32 name 'VirtualProtect';
-function VirtualQuery; external kernel32 name 'VirtualQuery';
-function VirtualAllocEx; external kernel32 name 'VirtualAllocEx';
-function GetWriteWatch; external kernel32 name 'GetWriteWatch';
-function ResetWriteWatch; external kernel32 name 'ResetWriteWatch';
-function GetLargePageMinimum; external kernel32 name 'GetLargePageMinimum';
-function VirtualFreeEx; external kernel32 name 'VirtualFreeEx';
-function VirtualProtectEx; external kernel32 name 'VirtualProtectEx';
-function VirtualQueryEx; external kernel32 name 'VirtualQueryEx';
-function HeapCreate; external kernel32 name 'HeapCreate';
-function HeapDestroy; external kernel32 name 'HeapDestroy';
-function HeapAlloc; external kernel32 name 'HeapAlloc';
-function HeapReAlloc; external kernel32 name 'HeapReAlloc';
-function HeapFree; external kernel32 name 'HeapFree';
-function HeapSize; external kernel32 name 'HeapSize';
-function HeapValidate; external kernel32 name 'HeapValidate';
-function HeapCompact; external kernel32 name 'HeapCompact';
-function GetProcessHeap; external kernel32 name 'GetProcessHeap';
-function GetProcessHeaps; external kernel32 name 'GetProcessHeaps';
-function HeapLock; external kernel32 name 'HeapLock';
-function HeapUnlock; external kernel32 name 'HeapUnlock';
-function HeapWalk; external kernel32 name 'HeapWalk';
-function HeapSetInformation; external kernel32 name 'HeapSetInformation';
-function HeapQueryInformation; external kernel32 name 'HeapQueryInformation';
-function GetBinaryTypeA; external kernel32 name 'GetBinaryTypeA';
-function GetBinaryTypeW; external kernel32 name 'GetBinaryTypeW';
-function GetBinaryType; external kernel32 name 'GetBinaryType' + AWSuffix;
-function GetShortPathNameA; external kernel32 name 'GetShortPathNameA';
-function GetShortPathNameW; external kernel32 name 'GetShortPathNameW';
-function GetShortPathName; external kernel32 name 'GetShortPathName' + AWSuffix;
-function GetLongPathNameA; external kernel32 name 'GetLongPathNameA';
-function GetLongPathNameW; external kernel32 name 'GetLongPathNameW';
-function GetLongPathName; external kernel32 name 'GetLongPathName' + AWSuffix;
-function GetProcessAffinityMask; external kernel32 name 'GetProcessAffinityMask';
-function SetProcessAffinityMask; external kernel32 name 'SetProcessAffinityMask';
-function GetProcessHandleCount; external kernel32 name 'GetProcessHandleCount';
-function GetProcessTimes; external kernel32 name 'GetProcessTimes';
-function GetProcessIoCounters; external kernel32 name 'GetProcessIoCounters';
-function GetProcessWorkingSetSize; external kernel32 name 'GetProcessWorkingSetSize';
-function GetProcessWorkingSetSizeEx; external kernel32 name 'GetProcessWorkingSetSizeEx';
-function SetProcessWorkingSetSize; external kernel32 name 'SetProcessWorkingSetSize';
-function SetProcessWorkingSetSizeEx; external kernel32 name 'SetProcessWorkingSetSizeEx';
-function OpenProcess; external kernel32 name 'OpenProcess';
-function GetCurrentProcess; external kernel32 name 'GetCurrentProcess';
-function GetCurrentProcessId; external kernel32 name 'GetCurrentProcessId';
-procedure ExitProcess; external kernel32 name 'ExitProcess';
-function TerminateProcess; external kernel32 name 'TerminateProcess';
-function GetExitCodeProcess; external kernel32 name 'GetExitCodeProcess';
-procedure FatalExit; external kernel32 name 'FatalExit';
-function GetEnvironmentStringsW; external kernel32 name 'GetEnvironmentStringsW';
-function GetEnvironmentStrings; external kernel32 name 'GetEnvironmentStrings' + AWSuffix;
-{$IFNDEF UNICODE}
-function GetEnvironmentStringsA; external kernel32 name 'GetEnvironmentStringsA';
-{$ENDIF !UNICODE}
-function SetEnvironmentStringsA; external kernel32 name 'SetEnvironmentStringsA';
-function SetEnvironmentStringsW; external kernel32 name 'SetEnvironmentStringsW';
-function SetEnvironmentStrings; external kernel32 name 'SetEnvironmentStrings' + AWSuffix;
-function FreeEnvironmentStringsA; external kernel32 name 'FreeEnvironmentStringsA';
-function FreeEnvironmentStringsW; external kernel32 name 'FreeEnvironmentStringsW';
-function FreeEnvironmentStrings; external kernel32 name 'FreeEnvironmentStrings' + AWSuffix;
-procedure RaiseException; external kernel32 name 'RaiseException';
-function UnhandledExceptionFilter; external kernel32 name 'UnhandledExceptionFilter';
-function SetUnhandledExceptionFilter; external kernel32 name 'SetUnhandledExceptionFilter';
-function CreateFiber; external kernel32 name 'CreateFiber';
-function CreateFiberEx; external kernel32 name 'CreateFiberEx';
-procedure DeleteFiber; external kernel32 name 'DeleteFiber';
-function ConvertThreadToFiber; external kernel32 name 'ConvertThreadToFiber';
-function ConvertThreadToFiberEx; external kernel32 name 'ConvertThreadToFiberEx';
-function ConvertFiberToThread; external kernel32 name 'ConvertFiberToThread';
-procedure SwitchToFiber; external kernel32 name 'SwitchToFiber';
-function SwitchToThread; external kernel32 name 'SwitchToThread';
-function CreateThread; external kernel32 name 'CreateThread';
-function CreateRemoteThread; external kernel32 name 'CreateRemoteThread';
-function GetCurrentThread; external kernel32 name 'GetCurrentThread';
-function GetCurrentThreadId; external kernel32 name 'GetCurrentThreadId';
-function GetProcessIdOfThread; external kernel32 name 'GetProcessIdOfThread';
-function GetThreadId; external kernel32 name 'GetThreadId';
-function GetProcessId; external kernel32 name 'GetProcessId';
-function GetCurrentProcessorNumber; external kernel32 name 'GetCurrentProcessorNumber';
-function SetThreadAffinityMask; external kernel32 name 'SetThreadAffinityMask';
-function SetThreadIdealProcessor; external kernel32 name 'SetThreadIdealProcessor';
-function SetProcessPriorityBoost; external kernel32 name 'SetProcessPriorityBoost';
-function GetProcessPriorityBoost; external kernel32 name 'GetProcessPriorityBoost';
-function RequestWakeupLatency; external kernel32 name 'RequestWakeupLatency';
-function IsSystemResumeAutomatic; external kernel32 name 'IsSystemResumeAutomatic';
-function OpenThread; external kernel32 name 'OpenThread';
-function SetThreadPriority; external kernel32 name 'SetThreadPriority';
-function SetThreadPriorityBoost; external kernel32 name 'SetThreadPriorityBoost';
-function GetThreadPriorityBoost; external kernel32 name 'GetThreadPriorityBoost';
-function GetThreadPriority; external kernel32 name 'GetThreadPriority';
-function GetThreadTimes; external kernel32 name 'GetThreadTimes';
-function GetThreadIOPendingFlag; external kernel32 name 'GetThreadIOPendingFlag';
-procedure ExitThread; external kernel32 name 'ExitThread';
-function TerminateThread; external kernel32 name 'TerminateThread';
-function GetExitCodeThread; external kernel32 name 'GetExitCodeThread';
-function GetThreadSelectorEntry; external kernel32 name 'GetThreadSelectorEntry';
-function SetThreadExecutionState; external kernel32 name 'SetThreadExecutionState';
-function GetLastError; external kernel32 name 'GetLastError';
-procedure SetLastError; external kernel32 name 'SetLastError';
-procedure RestoreLastError; external kernel32 name 'RestoreLastError';
-function GetOverlappedResult; external kernel32 name 'GetOverlappedResult';
-function CreateIoCompletionPort; external kernel32 name 'CreateIoCompletionPort';
-function GetQueuedCompletionStatus; external kernel32 name 'GetQueuedCompletionStatus';
-function PostQueuedCompletionStatus; external kernel32 name 'PostQueuedCompletionStatus';
-function SetErrorMode; external kernel32 name 'SetErrorMode';
-function ReadProcessMemory; external kernel32 name 'ReadProcessMemory';
-function WriteProcessMemory; external kernel32 name 'WriteProcessMemory';
-function GetThreadContext; external kernel32 name 'GetThreadContext';
-function SetThreadContext; external kernel32 name 'SetThreadContext';
-function SuspendThread; external kernel32 name 'SuspendThread';
-function ResumeThread; external kernel32 name 'ResumeThread';
-function QueueUserAPC; external kernel32 name 'QueueUserAPC';
-function IsDebuggerPresent; external kernel32 name 'IsDebuggerPresent';
-function CheckRemoteDebuggerPresent; external kernel32 name 'CheckRemoteDebuggerPresent';
-procedure DebugBreak; external kernel32 name 'DebugBreak';
-function WaitForDebugEvent; external kernel32 name 'WaitForDebugEvent';
-function ContinueDebugEvent; external kernel32 name 'ContinueDebugEvent';
-function DebugActiveProcess; external kernel32 name 'DebugActiveProcess';
-function DebugActiveProcessStop; external kernel32 name 'DebugActiveProcessStop';
-function DebugSetProcessKillOnExit; external kernel32 name 'DebugSetProcessKillOnExit';
-function DebugBreakProcess; external kernel32 name 'DebugBreakProcess';
-procedure InitializeCriticalSection; external kernel32 name 'InitializeCriticalSection';
-procedure EnterCriticalSection; external kernel32 name 'EnterCriticalSection';
-procedure LeaveCriticalSection; external kernel32 name 'LeaveCriticalSection';
-function InitializeCriticalSectionAndSpinCount; external kernel32 name 'InitializeCriticalSectionAndSpinCount';
-function SetCriticalSectionSpinCount; external kernel32 name 'SetCriticalSectionSpinCount';
-function TryEnterCriticalSection; external kernel32 name 'TryEnterCriticalSection';
-procedure DeleteCriticalSection; external kernel32 name 'DeleteCriticalSection';
-function SetEvent; external kernel32 name 'SetEvent';
-function ResetEvent; external kernel32 name 'ResetEvent';
-function PulseEvent; external kernel32 name 'PulseEvent';
-function ReleaseSemaphore; external kernel32 name 'ReleaseSemaphore';
-function ReleaseMutex; external kernel32 name 'ReleaseMutex';
-function WaitForSingleObject; external kernel32 name 'WaitForSingleObject';
-function WaitForMultipleObjects; external kernel32 name 'WaitForMultipleObjects';
-procedure Sleep; external kernel32 name 'Sleep';
-function LoadResource; external kernel32 name 'LoadResource';
-function SizeofResource; external kernel32 name 'SizeofResource';
-function GlobalDeleteAtom; external kernel32 name 'GlobalDeleteAtom';
-function InitAtomTable; external kernel32 name 'InitAtomTable';
-function DeleteAtom; external kernel32 name 'DeleteAtom';
-function SetHandleCount; external kernel32 name 'SetHandleCount';
-function GetLogicalDrives; external kernel32 name 'GetLogicalDrives';
-function LockFile; external kernel32 name 'LockFile';
-function UnlockFile; external kernel32 name 'UnlockFile';
-function LockFileEx; external kernel32 name 'LockFileEx';
-function UnlockFileEx; external kernel32 name 'UnlockFileEx';
-function GetFileInformationByHandle; external kernel32 name 'GetFileInformationByHandle';
-function GetFileType; external kernel32 name 'GetFileType';
-function GetFileSize; external kernel32 name 'GetFileSize';
-function GetFileSizeEx; external kernel32 name 'GetFileSizeEx';
-function GetStdHandle; external kernel32 name 'GetStdHandle';
-function SetStdHandle; external kernel32 name 'SetStdHandle';
-function WriteFile; external kernel32 name 'WriteFile';
-function ReadFile; external kernel32 name 'ReadFile';
-function FlushFileBuffers; external kernel32 name 'FlushFileBuffers';
-function DeviceIoControl; external kernel32 name 'DeviceIoControl';
-function RequestDeviceWakeup; external kernel32 name 'RequestDeviceWakeup';
-function CancelDeviceWakeupRequest; external kernel32 name 'CancelDeviceWakeupRequest';
-function GetDevicePowerState; external kernel32 name 'GetDevicePowerState';
-function SetMessageWaitingIndicator; external kernel32 name 'SetMessageWaitingIndicator';
-function SetEndOfFile; external kernel32 name 'SetEndOfFile';
-function SetFilePointer; external kernel32 name 'SetFilePointer';
-function SetFilePointerEx; external kernel32 name 'SetFilePointerEx';
-function FindClose; external kernel32 name 'FindClose';
-function GetFileTime; external kernel32 name 'GetFileTime';
-function SetFileTime; external kernel32 name 'SetFileTime';
-function SetFileValidData; external kernel32 name 'SetFileValidData';
-function SetFileShortNameA; external kernel32 name 'SetFileShortNameA';
-function SetFileShortNameW; external kernel32 name 'SetFileShortNameW';
-function SetFileShortName; external kernel32 name 'SetFileShortName' + AWSuffix;
-function CloseHandle; external kernel32 name 'CloseHandle';
-function DuplicateHandle; external kernel32 name 'DuplicateHandle';
-function GetHandleInformation; external kernel32 name 'GetHandleInformation';
-function SetHandleInformation; external kernel32 name 'SetHandleInformation';
-function LoadModule; external kernel32 name 'LoadModule';
-function WinExec; external kernel32 name 'WinExec';
-function ClearCommBreak; external kernel32 name 'ClearCommBreak';
-function ClearCommError; external kernel32 name 'ClearCommError';
-function SetupComm; external kernel32 name 'SetupComm';
-function EscapeCommFunction; external kernel32 name 'EscapeCommFunction';
-function GetCommConfig; external kernel32 name 'GetCommConfig';
-function GetCommMask; external kernel32 name 'GetCommMask';
-function GetCommProperties; external kernel32 name 'GetCommProperties';
-function GetCommModemStatus; external kernel32 name 'GetCommModemStatus';
-function GetCommState; external kernel32 name 'GetCommState';
-function GetCommTimeouts; external kernel32 name 'GetCommTimeouts';
-function PurgeComm; external kernel32 name 'PurgeComm';
-function SetCommBreak; external kernel32 name 'SetCommBreak';
-function SetCommConfig; external kernel32 name 'SetCommConfig';
-function SetCommMask; external kernel32 name 'SetCommMask';
-function SetCommState; external kernel32 name 'SetCommState';
-function SetCommTimeouts; external kernel32 name 'SetCommTimeouts';
-function TransmitCommChar; external kernel32 name 'TransmitCommChar';
-function WaitCommEvent; external kernel32 name 'WaitCommEvent';
-function SetTapePosition; external kernel32 name 'SetTapePosition';
-function GetTapePosition; external kernel32 name 'GetTapePosition';
-function PrepareTape; external kernel32 name 'PrepareTape';
-function EraseTape; external kernel32 name 'EraseTape';
-function CreateTapePartition; external kernel32 name 'CreateTapePartition';
-function WriteTapemark; external kernel32 name 'WriteTapemark';
-function GetTapeStatus; external kernel32 name 'GetTapeStatus';
-function GetTapeParameters; external kernel32 name 'GetTapeParameters';
-function SetTapeParameters; external kernel32 name 'SetTapeParameters';
-function Beep; external kernel32 name 'Beep';
-function MulDiv; external kernel32 name 'MulDiv';
-procedure GetSystemTime; external kernel32 name 'GetSystemTime';
-procedure GetSystemTimeAsFileTime; external kernel32 name 'GetSystemTimeAsFileTime';
-function SetSystemTime; external kernel32 name 'SetSystemTime';
-procedure GetLocalTime; external kernel32 name 'GetLocalTime';
-function SetLocalTime; external kernel32 name 'SetLocalTime';
-procedure GetSystemInfo; external kernel32 name 'GetSystemInfo';
-function GetSystemRegistryQuota; external kernel32 name 'GetSystemRegistryQuota';
-function GetSystemTimes; external kernel32 name 'GetSystemTimes';
-procedure GetNativeSystemInfo; external kernel32 name 'GetNativeSystemInfo';
-function IsProcessorFeaturePresent; external kernel32 name 'IsProcessorFeaturePresent';
-function SystemTimeToTzSpecificLocalTime; external kernel32 name 'SystemTimeToTzSpecificLocalTime';
-function TzSpecificLocalTimeToSystemTime; external kernel32 name 'TzSpecificLocalTimeToSystemTime';
-function GetTimeZoneInformation; external kernel32 name 'GetTimeZoneInformation';
-function SetTimeZoneInformation; external kernel32 name 'SetTimeZoneInformation';
-function SystemTimeToFileTime; external kernel32 name 'SystemTimeToFileTime';
-function FileTimeToLocalFileTime; external kernel32 name 'FileTimeToLocalFileTime';
-function LocalFileTimeToFileTime; external kernel32 name 'LocalFileTimeToFileTime';
-function FileTimeToSystemTime; external kernel32 name 'FileTimeToSystemTime';
-function CompareFileTime; external kernel32 name 'CompareFileTime';
-function FileTimeToDosDateTime; external kernel32 name 'FileTimeToDosDateTime';
-function DosDateTimeToFileTime; external kernel32 name 'DosDateTimeToFileTime';
-function GetTickCount; external kernel32 name 'GetTickCount';
-function SetSystemTimeAdjustment; external kernel32 name 'SetSystemTimeAdjustment';
-function GetSystemTimeAdjustment; external kernel32 name 'GetSystemTimeAdjustment';
-function FormatMessageA; external kernel32 name 'FormatMessageA';
-function FormatMessageW; external kernel32 name 'FormatMessageW';
-function FormatMessage; external kernel32 name 'FormatMessage' + AWSuffix;
-function CreatePipe; external kernel32 name 'CreatePipe';
-function ConnectNamedPipe; external kernel32 name 'ConnectNamedPipe';
-function DisconnectNamedPipe; external kernel32 name 'DisconnectNamedPipe';
-function SetNamedPipeHandleState; external kernel32 name 'SetNamedPipeHandleState';
-function GetNamedPipeInfo; external kernel32 name 'GetNamedPipeInfo';
-function PeekNamedPipe; external kernel32 name 'PeekNamedPipe';
-function TransactNamedPipe; external kernel32 name 'TransactNamedPipe';
-function CreateMailslotA; external kernel32 name 'CreateMailslotA';
-function CreateMailslotW; external kernel32 name 'CreateMailslotW';
-function CreateMailslot; external kernel32 name 'CreateMailslot' + AWSuffix;
-function GetMailslotInfo; external kernel32 name 'GetMailslotInfo';
-function SetMailslotInfo; external kernel32 name 'SetMailslotInfo';
-function MapViewOfFile; external kernel32 name 'MapViewOfFile';
-function FlushViewOfFile; external kernel32 name 'FlushViewOfFile';
-function UnmapViewOfFile; external kernel32 name 'UnmapViewOfFile';
-function EncryptFileA; external advapi32 name 'EncryptFileA';
-function EncryptFileW; external advapi32 name 'EncryptFileW';
-function EncryptFile; external advapi32 name 'EncryptFile' + AWSuffix;
-function DecryptFileA; external advapi32 name 'DecryptFileA';
-function DecryptFileW; external advapi32 name 'DecryptFileW';
-function DecryptFile; external advapi32 name 'DecryptFile' + AWSuffix;
-function FileEncryptionStatusA; external advapi32 name 'FileEncryptionStatusA';
-function FileEncryptionStatusW; external advapi32 name 'FileEncryptionStatusW';
-function FileEncryptionStatus; external advapi32 name 'FileEncryptionStatus' + AWSuffix;
-function OpenEncryptedFileRawA; external advapi32 name 'OpenEncryptedFileRawA';
-function OpenEncryptedFileRawW; external advapi32 name 'OpenEncryptedFileRawW';
-function OpenEncryptedFileRaw; external advapi32 name 'OpenEncryptedFileRaw' + AWSuffix;
-function ReadEncryptedFileRaw; external advapi32 name 'ReadEncryptedFileRaw';
-function WriteEncryptedFileRaw; external advapi32 name 'WriteEncryptedFileRaw';
-procedure CloseEncryptedFileRaw; external advapi32 name 'CloseEncryptedFileRaw';
-function lstrcmpA; external kernel32 name 'lstrcmpA';
-function lstrcmpW; external kernel32 name 'lstrcmpW';
-function lstrcmp; external kernel32 name 'lstrcmp' + AWSuffix;
-function lstrcmpiA; external kernel32 name 'lstrcmpiA';
-function lstrcmpiW; external kernel32 name 'lstrcmpiW';
-function lstrcmpi; external kernel32 name 'lstrcmpi' + AWSuffix;
-function lstrcpynA; external kernel32 name 'lstrcpynA';
-function lstrcpynW; external kernel32 name 'lstrcpynW';
-function lstrcpyn; external kernel32 name 'lstrcpyn' + AWSuffix;
-function lstrcpyA; external kernel32 name 'lstrcpyA';
-function lstrcpyW; external kernel32 name 'lstrcpyW';
-function lstrcpy; external kernel32 name 'lstrcpy' + AWSuffix;
-function lstrcatA; external kernel32 name 'lstrcatA';
-function lstrcatW; external kernel32 name 'lstrcatW';
-function lstrcat; external kernel32 name 'lstrcat' + AWSuffix;
-function lstrlenA; external kernel32 name 'lstrlenA';
-function lstrlenW; external kernel32 name 'lstrlenW';
-function lstrlen; external kernel32 name 'lstrlen' + AWSuffix;
-function OpenFile; external kernel32 name 'OpenFile';
-function _lopen; external kernel32 name '_lopen';
-function _lcreat; external kernel32 name '_lcreat';
-function _lread; external kernel32 name '_lread';
-function _lwrite; external kernel32 name '_lwrite';
-function _hread; external kernel32 name '_hread';
-function _hwrite; external kernel32 name '_hwrite';
-function _lclose; external kernel32 name '_lclose';
-function _llseek; external kernel32 name '_llseek';
-function IsTextUnicode; external advapi32 name 'IsTextUnicode';
-function FlsAlloc; external kernel32 name 'FlsAlloc';
-function FlsGetValue; external kernel32 name 'FlsGetValue';
-function FlsSetValue; external kernel32 name 'FlsSetValue';
-function FlsFree; external kernel32 name 'FlsFree';
-function TlsAlloc; external kernel32 name 'TlsAlloc';
-function TlsGetValue; external kernel32 name 'TlsGetValue';
-function TlsSetValue; external kernel32 name 'TlsSetValue';
-function TlsFree; external kernel32 name 'TlsFree';
-function SleepEx; external kernel32 name 'SleepEx';
-function WaitForSingleObjectEx; external kernel32 name 'WaitForSingleObjectEx';
-function WaitForMultipleObjectsEx; external kernel32 name 'WaitForMultipleObjectsEx';
-function SignalObjectAndWait; external kernel32 name 'SignalObjectAndWait';
-function ReadFileEx; external kernel32 name 'ReadFileEx';
-function WriteFileEx; external kernel32 name 'WriteFileEx';
-function BackupRead; external kernel32 name 'BackupRead';
-function BackupSeek; external kernel32 name 'BackupSeek';
-function BackupWrite; external kernel32 name 'BackupWrite';
-function ReadFileScatter; external kernel32 name 'ReadFileScatter';
-function WriteFileGather; external kernel32 name 'WriteFileGather';
-function OpenMutexA; external kernel32 name 'OpenMutexA';
-function OpenMutexW; external kernel32 name 'OpenMutexW';
-function OpenMutex; external kernel32 name 'OpenMutex' + AWSuffix;
-function CreateEventA; external kernel32 name 'CreateEventA';
-function CreateEventW; external kernel32 name 'CreateEventW';
-function CreateEvent; external kernel32 name 'CreateEvent' + AWSuffix;
-function OpenEventA; external kernel32 name 'OpenEventA';
-function OpenEventW; external kernel32 name 'OpenEventW';
-function OpenEvent; external kernel32 name 'OpenEvent' + AWSuffix;
-function CreateSemaphoreA; external kernel32 name 'CreateSemaphoreA';
-function CreateSemaphoreW; external kernel32 name 'CreateSemaphoreW';
-function CreateSemaphore; external kernel32 name 'CreateSemaphore' + AWSuffix;
-function OpenSemaphoreA; external kernel32 name 'OpenSemaphoreA';
-function OpenSemaphoreW; external kernel32 name 'OpenSemaphoreW';
-function OpenSemaphore; external kernel32 name 'OpenSemaphore' + AWSuffix;
-function CreateWaitableTimerA; external kernel32 name 'CreateWaitableTimerA';
-function CreateWaitableTimerW; external kernel32 name 'CreateWaitableTimerW';
-function CreateWaitableTimer; external kernel32 name 'CreateWaitableTimer' + AWSuffix;
-function OpenWaitableTimerA; external kernel32 name 'OpenWaitableTimerA';
-function OpenWaitableTimerW; external kernel32 name 'OpenWaitableTimerW';
-function OpenWaitableTimer; external kernel32 name 'OpenWaitableTimer' + AWSuffix;
-function SetWaitableTimer; external kernel32 name 'SetWaitableTimer';
-function CancelWaitableTimer; external kernel32 name 'CancelWaitableTimer';
-function CreateFileMappingA; external kernel32 name 'CreateFileMappingA';
-function CreateFileMappingW; external kernel32 name 'CreateFileMappingW';
-function CreateFileMapping; external kernel32 name 'CreateFileMapping' + AWSuffix;
-function OpenFileMappingA; external kernel32 name 'OpenFileMappingA';
-function OpenFileMappingW; external kernel32 name 'OpenFileMappingW';
-function OpenFileMapping; external kernel32 name 'OpenFileMapping' + AWSuffix;
-function GetLogicalDriveStringsA; external kernel32 name 'GetLogicalDriveStringsA';
-function GetLogicalDriveStringsW; external kernel32 name 'GetLogicalDriveStringsW';
-function GetLogicalDriveStrings; external kernel32 name 'GetLogicalDriveStrings' + AWSuffix;
-function CreateMemoryResourceNotification; external kernel32 name 'CreateMemoryResourceNotification';
-function QueryMemoryResourceNotification; external kernel32 name 'QueryMemoryResourceNotification';
-function LoadLibraryA; external kernel32 name 'LoadLibraryA';
-function LoadLibraryW; external kernel32 name 'LoadLibraryW';
-{$IFNDEF JWA_INCLUDEMODE}
-function LoadLibrary; external kernel32 name 'LoadLibrary' + AWSuffix;
-{$ENDIF !JWA_INCLUDEMODE}
-function LoadLibraryExA; external kernel32 name 'LoadLibraryExA';
-function LoadLibraryExW; external kernel32 name 'LoadLibraryExW';
-function LoadLibraryEx; external kernel32 name 'LoadLibraryEx' + AWSuffix;
-function GetModuleFileNameA; external kernel32 name 'GetModuleFileNameA';
-function GetModuleFileNameW; external kernel32 name 'GetModuleFileNameW';
-function GetModuleFileName; external kernel32 name 'GetModuleFileName' + AWSuffix;
-function GetModuleHandleA; external kernel32 name 'GetModuleHandleA';
-function GetModuleHandleW; external kernel32 name 'GetModuleHandleW';
-{$IFNDEF JWA_INCLUDEMODE}
-function GetModuleHandle; external kernel32 name 'GetModuleHandle' + AWSuffix;
-{$ENDIF !JWA_INCLUDEMODE}
-function CreateProcessA; external kernel32 name 'CreateProcessA';
-function CreateProcessW; external kernel32 name 'CreateProcessW';
-function CreateProcess; external kernel32 name 'CreateProcess' + AWSuffix;
-function GetModuleHandleExA; external kernel32 name 'GetModuleHandleExA';
-function GetModuleHandleExW; external kernel32 name 'GetModuleHandleExW';
-function GetModuleHandleEx; external kernel32 name 'GetModuleHandleEx' + AWSuffix;
-function NeedCurrentDirectoryForExePathA; external kernel32 name 'NeedCurrentDirectoryForExePathA';
-function NeedCurrentDirectoryForExePathW; external kernel32 name 'NeedCurrentDirectoryForExePathW';
-function NeedCurrentDirectoryForExePath; external kernel32 name 'NeedCurrentDirectoryForExePath' + AWSuffix;
-function SetProcessShutdownParameters; external kernel32 name 'SetProcessShutdownParameters';
-function GetProcessShutdownParameters; external kernel32 name 'GetProcessShutdownParameters';
-function GetProcessVersion; external kernel32 name 'GetProcessVersion';
-procedure FatalAppExitA; external kernel32 name 'FatalAppExitA';
-procedure FatalAppExitW; external kernel32 name 'FatalAppExitW';
-procedure FatalAppExit; external kernel32 name 'FatalAppExit' + AWSuffix;
-procedure GetStartupInfoA; external kernel32 name 'GetStartupInfoA';
-procedure GetStartupInfoW; external kernel32 name 'GetStartupInfoW';
-procedure GetStartupInfo; external kernel32 name 'GetStartupInfo' + AWSuffix;
-function GetCommandLineA; external kernel32 name 'GetCommandLineA';
-function GetCommandLineW; external kernel32 name 'GetCommandLineW';
-function GetCommandLine; external kernel32 name 'GetCommandLine' + AWSuffix;
-function GetEnvironmentVariableA; external kernel32 name 'GetEnvironmentVariableA';
-function GetEnvironmentVariableW; external kernel32 name 'GetEnvironmentVariableW';
-function GetEnvironmentVariable; external kernel32 name 'GetEnvironmentVariable' + AWSuffix;
-function SetEnvironmentVariableA; external kernel32 name 'SetEnvironmentVariableA';
-function SetEnvironmentVariableW; external kernel32 name 'SetEnvironmentVariableW';
-function SetEnvironmentVariable; external kernel32 name 'SetEnvironmentVariable' + AWSuffix;
-function ExpandEnvironmentStringsA; external kernel32 name 'ExpandEnvironmentStringsA';
-function ExpandEnvironmentStringsW; external kernel32 name 'ExpandEnvironmentStringsW';
-function ExpandEnvironmentStrings; external kernel32 name 'ExpandEnvironmentStrings' + AWSuffix;
-function GetFirmwareEnvironmentVariableA; external kernel32 name 'GetFirmwareEnvironmentVariableA';
-function GetFirmwareEnvironmentVariableW; external kernel32 name 'GetFirmwareEnvironmentVariableW';
-function GetFirmwareEnvironmentVariable; external kernel32 name 'GetFirmwareEnvironmentVariable' + AWSuffix;
-function SetFirmwareEnvironmentVariableA; external kernel32 name 'SetFirmwareEnvironmentVariableA';
-function SetFirmwareEnvironmentVariableW; external kernel32 name 'SetFirmwareEnvironmentVariableW';
-function SetFirmwareEnvironmentVariable; external kernel32 name 'SetFirmwareEnvironmentVariable' + AWSuffix;
-procedure OutputDebugStringA; external kernel32 name 'OutputDebugStringA';
-procedure OutputDebugStringW; external kernel32 name 'OutputDebugStringW';
-procedure OutputDebugString; external kernel32 name 'OutputDebugString' + AWSuffix;
-function FindResourceA; external kernel32 name 'FindResourceA';
-function FindResourceW; external kernel32 name 'FindResourceW';
-function FindResource; external kernel32 name 'FindResource' + AWSuffix;
-function FindResourceExA; external kernel32 name 'FindResourceExA';
-function FindResourceExW; external kernel32 name 'FindResourceExW';
-function FindResourceEx; external kernel32 name 'FindResourceEx' + AWSuffix;
-function EnumResourceTypesA; external kernel32 name 'EnumResourceTypesA';
-function EnumResourceTypesW; external kernel32 name 'EnumResourceTypesW';
-function EnumResourceTypes; external kernel32 name 'EnumResourceTypes' + AWSuffix;
-function EnumResourceNamesA; external kernel32 name 'EnumResourceNamesA';
-function EnumResourceNamesW; external kernel32 name 'EnumResourceNamesW';
-function EnumResourceNames; external kernel32 name 'EnumResourceNames' + AWSuffix;
-function EnumResourceLanguagesA; external kernel32 name 'EnumResourceLanguagesA';
-function EnumResourceLanguagesW; external kernel32 name 'EnumResourceLanguagesW';
-function EnumResourceLanguages; external kernel32 name 'EnumResourceLanguages' + AWSuffix;
-function BeginUpdateResourceA; external kernel32 name 'BeginUpdateResourceA';
-function BeginUpdateResourceW; external kernel32 name 'BeginUpdateResourceW';
-function BeginUpdateResource; external kernel32 name 'BeginUpdateResource' + AWSuffix;
-function UpdateResourceA; external kernel32 name 'UpdateResourceA';
-function UpdateResourceW; external kernel32 name 'UpdateResourceW';
-function UpdateResource; external kernel32 name 'UpdateResource' + AWSuffix;
-function EndUpdateResourceA; external kernel32 name 'EndUpdateResourceA';
-function EndUpdateResourceW; external kernel32 name 'EndUpdateResourceW';
-function EndUpdateResource; external kernel32 name 'EndUpdateResource' + AWSuffix;
-function GlobalAddAtomA; external kernel32 name 'GlobalAddAtomA';
-function GlobalAddAtomW; external kernel32 name 'GlobalAddAtomW';
-function GlobalAddAtom; external kernel32 name 'GlobalAddAtom' + AWSuffix;
-function GlobalFindAtomA; external kernel32 name 'GlobalFindAtomA';
-function GlobalFindAtomW; external kernel32 name 'GlobalFindAtomW';
-function GlobalFindAtom; external kernel32 name 'GlobalFindAtom' + AWSuffix;
-function GlobalGetAtomNameA; external kernel32 name 'GlobalGetAtomNameA';
-function GlobalGetAtomNameW; external kernel32 name 'GlobalGetAtomNameW';
-function GlobalGetAtomName; external kernel32 name 'GlobalGetAtomName' + AWSuffix;
-function AddAtomA; external kernel32 name 'AddAtomA';
-function AddAtomW; external kernel32 name 'AddAtomW';
-function AddAtom; external kernel32 name 'AddAtom' + AWSuffix;
-function FindAtomA; external kernel32 name 'FindAtomA';
-function FindAtomW; external kernel32 name 'FindAtomW';
-function FindAtom; external kernel32 name 'FindAtom' + AWSuffix;
-function GetAtomNameA; external kernel32 name 'GetAtomNameA';
-function GetAtomNameW; external kernel32 name 'GetAtomNameW';
-function GetAtomName; external kernel32 name 'GetAtomName' + AWSuffix;
-function GetProfileIntA; external kernel32 name 'GetProfileIntA';
-function GetProfileIntW; external kernel32 name 'GetProfileIntW';
-function GetProfileInt; external kernel32 name 'GetProfileInt' + AWSuffix;
-function GetProfileStringA; external kernel32 name 'GetProfileStringA';
-function GetProfileStringW; external kernel32 name 'GetProfileStringW';
-function GetProfileString; external kernel32 name 'GetProfileString' + AWSuffix;
-function WriteProfileStringA; external kernel32 name 'WriteProfileStringA';
-function WriteProfileStringW; external kernel32 name 'WriteProfileStringW';
-function WriteProfileString; external kernel32 name 'WriteProfileString' + AWSuffix;
-function GetProfileSectionA; external kernel32 name 'GetProfileSectionA';
-function GetProfileSectionW; external kernel32 name 'GetProfileSectionW';
-function GetProfileSection; external kernel32 name 'GetProfileSection' + AWSuffix;
-function WriteProfileSectionA; external kernel32 name 'WriteProfileSectionA';
-function WriteProfileSectionW; external kernel32 name 'WriteProfileSectionW';
-function WriteProfileSection; external kernel32 name 'WriteProfileSection' + AWSuffix;
-function GetPrivateProfileIntA; external kernel32 name 'GetPrivateProfileIntA';
-function GetPrivateProfileIntW; external kernel32 name 'GetPrivateProfileIntW';
-function GetPrivateProfileInt; external kernel32 name 'GetPrivateProfileInt' + AWSuffix;
-function GetPrivateProfileStringA; external kernel32 name 'GetPrivateProfileStringA';
-function GetPrivateProfileStringW; external kernel32 name 'GetPrivateProfileStringW';
-function GetPrivateProfileString; external kernel32 name 'GetPrivateProfileString' + AWSuffix;
-function WritePrivateProfileStringA; external kernel32 name 'WritePrivateProfileStringA';
-function WritePrivateProfileStringW; external kernel32 name 'WritePrivateProfileStringW';
-function WritePrivateProfileString; external kernel32 name 'WritePrivateProfileString' + AWSuffix;
-function GetPrivateProfileSectionA; external kernel32 name 'GetPrivateProfileSectionA';
-function GetPrivateProfileSectionW; external kernel32 name 'GetPrivateProfileSectionW';
-function GetPrivateProfileSection; external kernel32 name 'GetPrivateProfileSection' + AWSuffix;
-function WritePrivateProfileSectionA; external kernel32 name 'WritePrivateProfileSectionA';
-function WritePrivateProfileSectionW; external kernel32 name 'WritePrivateProfileSectionW';
-function WritePrivateProfileSection; external kernel32 name 'WritePrivateProfileSection' + AWSuffix;
-function GetPrivateProfileSectionNamesA; external kernel32 name 'GetPrivateProfileSectionNamesA';
-function GetPrivateProfileSectionNamesW; external kernel32 name 'GetPrivateProfileSectionNamesW';
-function GetPrivateProfileSectionNames; external kernel32 name 'GetPrivateProfileSectionNames' + AWSuffix;
-function GetPrivateProfileStructA; external kernel32 name 'GetPrivateProfileStructA';
-function GetPrivateProfileStructW; external kernel32 name 'GetPrivateProfileStructW';
-function GetPrivateProfileStruct; external kernel32 name 'GetPrivateProfileStruct' + AWSuffix;
-function WritePrivateProfileStructA; external kernel32 name 'WritePrivateProfileStructA';
-function WritePrivateProfileStructW; external kernel32 name 'WritePrivateProfileStructW';
-function WritePrivateProfileStruct; external kernel32 name 'WritePrivateProfileStruct' + AWSuffix;
-function GetDriveTypeA; external kernel32 name 'GetDriveTypeA';
-function GetDriveTypeW; external kernel32 name 'GetDriveTypeW';
-function GetDriveType; external kernel32 name 'GetDriveType' + AWSuffix;
-function GetSystemDirectoryA; external kernel32 name 'GetSystemDirectoryA';
-function GetSystemDirectoryW; external kernel32 name 'GetSystemDirectoryW';
-function GetSystemDirectory; external kernel32 name 'GetSystemDirectory' + AWSuffix;
-function GetTempPathA; external kernel32 name 'GetTempPathA';
-function GetTempPathW; external kernel32 name 'GetTempPathW';
-function GetTempPath; external kernel32 name 'GetTempPath' + AWSuffix;
-function GetTempFileNameA; external kernel32 name 'GetTempFileNameA';
-function GetTempFileNameW; external kernel32 name 'GetTempFileNameW';
-function GetTempFileName; external kernel32 name 'GetTempFileName' + AWSuffix;
-function GetWindowsDirectoryA; external kernel32 name 'GetWindowsDirectoryA';
-function GetWindowsDirectoryW; external kernel32 name 'GetWindowsDirectoryW';
-function GetWindowsDirectory; external kernel32 name 'GetWindowsDirectory' + AWSuffix;
-function GetSystemWindowsDirectoryA; external kernel32 name 'GetSystemWindowsDirectoryA';
-function GetSystemWindowsDirectoryW; external kernel32 name 'GetSystemWindowsDirectoryW';
-function GetSystemWindowsDirectory; external kernel32 name 'GetSystemWindowsDirectory' + AWSuffix;
-function GetSystemWow64DirectoryA; external kernel32 name 'GetSystemWow64DirectoryA';
-function GetSystemWow64DirectoryW; external kernel32 name 'GetSystemWow64DirectoryW';
-function GetSystemWow64Directory; external kernel32 name 'GetSystemWow64Directory' + AWSuffix;
-function Wow64EnableWow64FsRedirection; external kernel32 name 'Wow64EnableWow64FsRedirection';
-function SetCurrentDirectoryA; external kernel32 name 'SetCurrentDirectoryA';
-function SetCurrentDirectoryW; external kernel32 name 'SetCurrentDirectoryW';
-function SetCurrentDirectory; external kernel32 name 'SetCurrentDirectory' + AWSuffix;
-function GetCurrentDirectoryA; external kernel32 name 'GetCurrentDirectoryA';
-function GetCurrentDirectoryW; external kernel32 name 'GetCurrentDirectoryW';
-function GetCurrentDirectory; external kernel32 name 'GetCurrentDirectory' + AWSuffix;
-function SetDllDirectoryA; external kernel32 name 'SetDllDirectoryA';
-function SetDllDirectoryW; external kernel32 name 'SetDllDirectoryW';
-function SetDllDirectory; external kernel32 name 'SetDllDirectory' + AWSuffix;
-function GetDllDirectoryA; external kernel32 name 'GetDllDirectoryA';
-function GetDllDirectoryW; external kernel32 name 'GetDllDirectoryW';
-function GetDllDirectory; external kernel32 name 'GetDllDirectory' + AWSuffix;
-function GetDiskFreeSpaceA; external kernel32 name 'GetDiskFreeSpaceA';
-function GetDiskFreeSpaceW; external kernel32 name 'GetDiskFreeSpaceW';
-function GetDiskFreeSpace; external kernel32 name 'GetDiskFreeSpace' + AWSuffix;
-function GetDiskFreeSpaceExA; external kernel32 name 'GetDiskFreeSpaceExA';
-function GetDiskFreeSpaceExW; external kernel32 name 'GetDiskFreeSpaceExW';
-function GetDiskFreeSpaceEx; external kernel32 name 'GetDiskFreeSpaceEx' + AWSuffix;
-function CreateDirectoryA; external kernel32 name 'CreateDirectoryA';
-function CreateDirectoryW; external kernel32 name 'CreateDirectoryW';
-function CreateDirectory; external kernel32 name 'CreateDirectory' + AWSuffix;
-function CreateDirectoryExA; external kernel32 name 'CreateDirectoryExA';
-function CreateDirectoryExW; external kernel32 name 'CreateDirectoryExW';
-function CreateDirectoryEx; external kernel32 name 'CreateDirectoryEx' + AWSuffix;
-function RemoveDirectoryA; external kernel32 name 'RemoveDirectoryA';
-function RemoveDirectoryW; external kernel32 name 'RemoveDirectoryW';
-function RemoveDirectory; external kernel32 name 'RemoveDirectory' + AWSuffix;
-function GetFullPathNameA; external kernel32 name 'GetFullPathNameA';
-function GetFullPathNameW; external kernel32 name 'GetFullPathNameW';
-function GetFullPathName; external kernel32 name 'GetFullPathName' + AWSuffix;
-function DefineDosDeviceA; external kernel32 name 'DefineDosDeviceA';
-function DefineDosDeviceW; external kernel32 name 'DefineDosDeviceW';
-function DefineDosDevice; external kernel32 name 'DefineDosDevice' + AWSuffix;
-function QueryDosDeviceA; external kernel32 name 'QueryDosDeviceA';
-function QueryDosDeviceW; external kernel32 name 'QueryDosDeviceW';
-function QueryDosDevice; external kernel32 name 'QueryDosDevice' + AWSuffix;
-function CreateFileA; external kernel32 name 'CreateFileA';
-function CreateFileW; external kernel32 name 'CreateFileW';
-function CreateFile; external kernel32 name 'CreateFile' + AWSuffix;
-function ReOpenFile; external kernel32 name 'ReOpenFile';
-function SetFileAttributesA; external kernel32 name 'SetFileAttributesA';
-function SetFileAttributesW; external kernel32 name 'SetFileAttributesW';
-function SetFileAttributes; external kernel32 name 'SetFileAttributes' + AWSuffix;
-function GetFileAttributesA; external kernel32 name 'GetFileAttributesA';
-function GetFileAttributesW; external kernel32 name 'GetFileAttributesW';
-function GetFileAttributes; external kernel32 name 'GetFileAttributes' + AWSuffix;
-function GetFileAttributesExA; external kernel32 name 'GetFileAttributesExA';
-function GetFileAttributesExW; external kernel32 name 'GetFileAttributesExW';
-function GetFileAttributesEx; external kernel32 name 'GetFileAttributesEx' + AWSuffix;
-function GetCompressedFileSizeA; external kernel32 name 'GetCompressedFileSizeA';
-function GetCompressedFileSizeW; external kernel32 name 'GetCompressedFileSizeW';
-function GetCompressedFileSize; external kernel32 name 'GetCompressedFileSize' + AWSuffix;
-function DeleteFileA; external kernel32 name 'DeleteFileA';
-function DeleteFileW; external kernel32 name 'DeleteFileW';
-function DeleteFile; external kernel32 name 'DeleteFile' + AWSuffix;
-function FindFirstFileExA; external kernel32 name 'FindFirstFileExA';
-function FindFirstFileExW; external kernel32 name 'FindFirstFileExW';
-function FindFirstFileEx; external kernel32 name 'FindFirstFileEx' + AWSuffix;
-function FindFirstFileA; external kernel32 name 'FindFirstFileA';
-function FindFirstFileW; external kernel32 name 'FindFirstFileW';
-function FindFirstFile; external kernel32 name 'FindFirstFile' + AWSuffix;
-function FindNextFileA; external kernel32 name 'FindNextFileA';
-function FindNextFileW; external kernel32 name 'FindNextFileW';
-function FindNextFile; external kernel32 name 'FindNextFile' + AWSuffix;
-function SearchPathA; external kernel32 name 'SearchPathA';
-function SearchPathW; external kernel32 name 'SearchPathW';
-function SearchPath; external kernel32 name 'SearchPath' + AWSuffix;
-function CopyFileA; external kernel32 name 'CopyFileA';
-function CopyFileW; external kernel32 name 'CopyFileW';
-function CopyFile; external kernel32 name 'CopyFile' + AWSuffix;
-function CopyFileExA; external kernel32 name 'CopyFileExA';
-function CopyFileExW; external kernel32 name 'CopyFileExW';
-function CopyFileEx; external kernel32 name 'CopyFileEx' + AWSuffix;
-function MoveFileA; external kernel32 name 'MoveFileA';
-function MoveFileW; external kernel32 name 'MoveFileW';
-function MoveFile; external kernel32 name 'MoveFile' + AWSuffix;
-function MoveFileExA; external kernel32 name 'MoveFileExA';
-function MoveFileExW; external kernel32 name 'MoveFileExW';
-function MoveFileEx; external kernel32 name 'MoveFileEx' + AWSuffix;
-function MoveFileWithProgressA; external kernel32 name 'MoveFileWithProgressA';
-function MoveFileWithProgressW; external kernel32 name 'MoveFileWithProgressW';
-function MoveFileWithProgress; external kernel32 name 'MoveFileWithProgress' + AWSuffix;
-function ReplaceFileA; external kernel32 name 'ReplaceFileA';
-function ReplaceFileW; external kernel32 name 'ReplaceFileW';
-function ReplaceFile; external kernel32 name 'ReplaceFile' + AWSuffix;
-function CreateHardLinkA; external kernel32 name 'CreateHardLinkA';
-function CreateHardLinkW; external kernel32 name 'CreateHardLinkW';
-function CreateHardLink; external kernel32 name 'CreateHardLink' + AWSuffix;
-function FindFirstStreamW; external kernel32 name 'FindFirstStreamW';
-function FindNextStreamW; external kernel32 name 'FindNextStreamW';
-function CreateNamedPipeA; external kernel32 name 'CreateNamedPipeA';
-function CreateNamedPipeW; external kernel32 name 'CreateNamedPipeW';
-function CreateNamedPipe; external kernel32 name 'CreateNamedPipe' + AWSuffix;
-function GetNamedPipeHandleStateA; external kernel32 name 'GetNamedPipeHandleStateA';
-function GetNamedPipeHandleStateW; external kernel32 name 'GetNamedPipeHandleStateW';
-function GetNamedPipeHandleState; external kernel32 name 'GetNamedPipeHandleState' + AWSuffix;
-function CallNamedPipeA; external kernel32 name 'CallNamedPipeA';
-function CallNamedPipeW; external kernel32 name 'CallNamedPipeW';
-function CallNamedPipe; external kernel32 name 'CallNamedPipe' + AWSuffix;
-function WaitNamedPipeA; external kernel32 name 'WaitNamedPipeA';
-function WaitNamedPipeW; external kernel32 name 'WaitNamedPipeW';
-function WaitNamedPipe; external kernel32 name 'WaitNamedPipe' + AWSuffix;
-function SetVolumeLabelA; external kernel32 name 'SetVolumeLabelA';
-function SetVolumeLabelW; external kernel32 name 'SetVolumeLabelW';
-function SetVolumeLabel; external kernel32 name 'SetVolumeLabel' + AWSuffix;
-procedure SetFileApisToOEM; external kernel32 name 'SetFileApisToOEM';
-procedure SetFileApisToANSI; external kernel32 name 'SetFileApisToANSI';
-function AreFileApisANSI; external kernel32 name 'AreFileApisANSI';
-function GetVolumeInformationA; external kernel32 name 'GetVolumeInformationA';
-function GetVolumeInformationW; external kernel32 name 'GetVolumeInformationW';
-function GetVolumeInformation; external kernel32 name 'GetVolumeInformation' + AWSuffix;
-function CancelIo; external kernel32 name 'CancelIo';
-function ClearEventLogA; external advapi32 name 'ClearEventLogA';
-function ClearEventLogW; external advapi32 name 'ClearEventLogW';
-function ClearEventLog; external advapi32 name 'ClearEventLog' + AWSuffix;
-function BackupEventLogA; external advapi32 name 'BackupEventLogA';
-function BackupEventLogW; external advapi32 name 'BackupEventLogW';
-function BackupEventLog; external advapi32 name 'BackupEventLog' + AWSuffix;
-function CloseEventLog; external advapi32 name 'CloseEventLog';
-function DeregisterEventSource; external advapi32 name 'DeregisterEventSource';
-function NotifyChangeEventLog; external advapi32 name 'NotifyChangeEventLog';
-function GetNumberOfEventLogRecords; external advapi32 name 'GetNumberOfEventLogRecords';
-function GetOldestEventLogRecord; external advapi32 name 'GetOldestEventLogRecord';
-function OpenEventLogA; external advapi32 name 'OpenEventLogA';
-function OpenEventLogW; external advapi32 name 'OpenEventLogW';
-function OpenEventLog; external advapi32 name 'OpenEventLog' + AWSuffix;
-function RegisterEventSourceA; external advapi32 name 'RegisterEventSourceA';
-function RegisterEventSourceW; external advapi32 name 'RegisterEventSourceW';
-function RegisterEventSource; external advapi32 name 'RegisterEventSource' + AWSuffix;
-function OpenBackupEventLogA; external advapi32 name 'OpenBackupEventLogA';
-function OpenBackupEventLogW; external advapi32 name 'OpenBackupEventLogW';
-function OpenBackupEventLog; external advapi32 name 'OpenBackupEventLog' + AWSuffix;
-function ReadEventLogA; external advapi32 name 'ReadEventLogA';
-function ReadEventLogW; external advapi32 name 'ReadEventLogW';
-function ReadEventLog; external advapi32 name 'ReadEventLog' + AWSuffix;
-function ReportEventA; external advapi32 name 'ReportEventA';
-function ReportEventW; external advapi32 name 'ReportEventW';
-function ReportEvent; external advapi32 name 'ReportEvent' + AWSuffix;
-function GetEventLogInformation; external advapi32 name 'GetEventLogInformation';
-function DuplicateToken; external advapi32 name 'DuplicateToken';
-function GetKernelObjectSecurity; external advapi32 name 'GetKernelObjectSecurity';
-function ImpersonateNamedPipeClient; external advapi32 name 'ImpersonateNamedPipeClient';
-function ImpersonateSelf; external advapi32 name 'ImpersonateSelf';
-function RevertToSelf; external advapi32 name 'RevertToSelf';
-function SetThreadToken; external advapi32 name 'SetThreadToken';
-function AccessCheck; external advapi32 name 'AccessCheck';
-function AccessCheckByType; external advapi32 name 'AccessCheckByType';
-function AccessCheckByTypeResultList; external advapi32 name 'AccessCheckByTypeResultList';
-function OpenProcessToken; external advapi32 name 'OpenProcessToken';
-function OpenThreadToken; external advapi32 name 'OpenThreadToken';
-function GetTokenInformation; external advapi32 name 'GetTokenInformation';
-function SetTokenInformation; external advapi32 name 'SetTokenInformation';
-function AdjustTokenPrivileges; external advapi32 name 'AdjustTokenPrivileges';
-function AdjustTokenGroups; external advapi32 name 'AdjustTokenGroups';
-function PrivilegeCheck; external advapi32 name 'PrivilegeCheck';
-function AccessCheckAndAuditAlarmA; external advapi32 name 'AccessCheckAndAuditAlarmA';
-function AccessCheckAndAuditAlarmW; external advapi32 name 'AccessCheckAndAuditAlarmW';
-function AccessCheckAndAuditAlarm; external advapi32 name 'AccessCheckAndAuditAlarm' + AWSuffix;
-function AccessCheckByTypeAndAuditAlarmA; external advapi32 name 'AccessCheckByTypeAndAuditAlarmA';
-function AccessCheckByTypeAndAuditAlarmW; external advapi32 name 'AccessCheckByTypeAndAuditAlarmW';
-function AccessCheckByTypeAndAuditAlarm; external advapi32 name 'AccessCheckByTypeAndAuditAlarm' + AWSuffix;
-function AccessCheckByTypeResultListAndAuditAlarmA; external advapi32 name 'AccessCheckByTypeResultListAndAuditAlarmA';
-function AccessCheckByTypeResultListAndAuditAlarmW; external advapi32 name 'AccessCheckByTypeResultListAndAuditAlarmW';
-function AccessCheckByTypeResultListAndAuditAlarm; external advapi32 name 'AccessCheckByTypeResultListAndAuditAlarm' + AWSuffix;
-function AccessCheckByTypeResultListAndAuditAlarmByHandleA; external advapi32 name 'AccessCheckByTypeResultListAndAuditAlarmByHandleA';
-function AccessCheckByTypeResultListAndAuditAlarmByHandleW; external advapi32 name 'AccessCheckByTypeResultListAndAuditAlarmByHandleW';
-function AccessCheckByTypeResultListAndAuditAlarmByHandle; external advapi32 name 'AccessCheckByTypeResultListAndAuditAlarmByHandle' + AWSuffix;
-function ObjectOpenAuditAlarmA; external advapi32 name 'ObjectOpenAuditAlarmA';
-function ObjectOpenAuditAlarmW; external advapi32 name 'ObjectOpenAuditAlarmW';
-function ObjectOpenAuditAlarm; external advapi32 name 'ObjectOpenAuditAlarm' + AWSuffix;
-function ObjectPrivilegeAuditAlarmA; external advapi32 name 'ObjectPrivilegeAuditAlarmA';
-function ObjectPrivilegeAuditAlarmW; external advapi32 name 'ObjectPrivilegeAuditAlarmW';
-function ObjectPrivilegeAuditAlarm; external advapi32 name 'ObjectPrivilegeAuditAlarm' + AWSuffix;
-function ObjectCloseAuditAlarmA; external advapi32 name 'ObjectCloseAuditAlarmA';
-function ObjectCloseAuditAlarmW; external advapi32 name 'ObjectCloseAuditAlarmW';
-function ObjectCloseAuditAlarm; external advapi32 name 'ObjectCloseAuditAlarm' + AWSuffix;
-function ObjectDeleteAuditAlarmA; external advapi32 name 'ObjectDeleteAuditAlarmA';
-function ObjectDeleteAuditAlarmW; external advapi32 name 'ObjectDeleteAuditAlarmW';
-function ObjectDeleteAuditAlarm; external advapi32 name 'ObjectDeleteAuditAlarm' + AWSuffix;
-function PrivilegedServiceAuditAlarmA; external advapi32 name 'PrivilegedServiceAuditAlarmA';
-function PrivilegedServiceAuditAlarmW; external advapi32 name 'PrivilegedServiceAuditAlarmW';
-function PrivilegedServiceAuditAlarm; external advapi32 name 'PrivilegedServiceAuditAlarm' + AWSuffix;
-function IsWellKnownSid; external advapi32 name 'IsWellKnownSid';
-function CreateWellKnownSid; external advapi32 name 'CreateWellKnownSid';
-function EqualDomainSid; external advapi32 name 'EqualDomainSid';
-function GetWindowsAccountDomainSid; external advapi32 name 'GetWindowsAccountDomainSid';
-function IsValidSid; external advapi32 name 'IsValidSid';
-function EqualSid; external advapi32 name 'EqualSid';
-function EqualPrefixSid; external advapi32 name 'EqualPrefixSid';
-function GetSidLengthRequired; external advapi32 name 'GetSidLengthRequired';
-function AllocateAndInitializeSid; external advapi32 name 'AllocateAndInitializeSid';
-function FreeSid; external advapi32 name 'FreeSid';
-function InitializeSid; external advapi32 name 'InitializeSid';
-function GetSidIdentifierAuthority; external advapi32 name 'GetSidIdentifierAuthority';
-function GetSidSubAuthority; external advapi32 name 'GetSidSubAuthority';
-function GetSidSubAuthorityCount; external advapi32 name 'GetSidSubAuthorityCount';
-function GetLengthSid; external advapi32 name 'GetLengthSid';
-function CopySid; external advapi32 name 'CopySid';
-function AreAllAccessesGranted; external advapi32 name 'AreAllAccessesGranted';
-function AreAnyAccessesGranted; external advapi32 name 'AreAnyAccessesGranted';
-procedure MapGenericMask; external advapi32 name 'MapGenericMask';
-function IsValidAcl; external advapi32 name 'IsValidAcl';
-function InitializeAcl; external advapi32 name 'InitializeAcl';
-function GetAclInformation; external advapi32 name 'GetAclInformation';
-function SetAclInformation; external advapi32 name 'SetAclInformation';
-function AddAce; external advapi32 name 'AddAce';
-function DeleteAce; external advapi32 name 'DeleteAce';
-function GetAce; external advapi32 name 'GetAce';
-function AddAccessAllowedAce; external advapi32 name 'AddAccessAllowedAce';
-function AddAccessAllowedAceEx; external advapi32 name 'AddAccessAllowedAceEx';
-function AddAccessDeniedAce; external advapi32 name 'AddAccessDeniedAce';
-function AddAccessDeniedAceEx; external advapi32 name 'AddAccessDeniedAceEx';
-function AddAuditAccessAce; external advapi32 name 'AddAuditAccessAce';
-function AddAuditAccessAceEx; external advapi32 name 'AddAuditAccessAceEx';
-function AddAccessAllowedObjectAce; external advapi32 name 'AddAccessAllowedObjectAce';
-function AddAccessDeniedObjectAce; external advapi32 name 'AddAccessDeniedObjectAce';
-function AddAuditAccessObjectAce; external advapi32 name 'AddAuditAccessObjectAce';
-function FindFirstFreeAce; external advapi32 name 'FindFirstFreeAce';
-function InitializeSecurityDescriptor; external advapi32 name 'InitializeSecurityDescriptor';
-function IsValidSecurityDescriptor; external advapi32 name 'IsValidSecurityDescriptor';
-function GetSecurityDescriptorLength; external advapi32 name 'GetSecurityDescriptorLength';
-function GetSecurityDescriptorControl; external advapi32 name 'GetSecurityDescriptorControl';
-function SetSecurityDescriptorControl; external advapi32 name 'SetSecurityDescriptorControl';
-function SetSecurityDescriptorDacl; external advapi32 name 'SetSecurityDescriptorDacl';
-function GetSecurityDescriptorDacl; external advapi32 name 'GetSecurityDescriptorDacl';
-function SetSecurityDescriptorSacl; external advapi32 name 'SetSecurityDescriptorSacl';
-function GetSecurityDescriptorSacl; external advapi32 name 'GetSecurityDescriptorSacl';
-function SetSecurityDescriptorOwner; external advapi32 name 'SetSecurityDescriptorOwner';
-function GetSecurityDescriptorOwner; external advapi32 name 'GetSecurityDescriptorOwner';
-function SetSecurityDescriptorGroup; external advapi32 name 'SetSecurityDescriptorGroup';
-function GetSecurityDescriptorGroup; external advapi32 name 'GetSecurityDescriptorGroup';
-function SetSecurityDescriptorRMControl; external advapi32 name 'SetSecurityDescriptorRMControl';
-function GetSecurityDescriptorRMControl; external advapi32 name 'GetSecurityDescriptorRMControl';
-function CreatePrivateObjectSecurity; external advapi32 name 'CreatePrivateObjectSecurity';
-function ConvertToAutoInheritPrivateObjectSecurity; external advapi32 name 'ConvertToAutoInheritPrivateObjectSecurity';
-function CreatePrivateObjectSecurityEx; external advapi32 name 'CreatePrivateObjectSecurityEx';
-function SetPrivateObjectSecurity; external advapi32 name 'SetPrivateObjectSecurity';
-function SetPrivateObjectSecurityEx; external advapi32 name 'SetPrivateObjectSecurityEx';
-function GetPrivateObjectSecurity; external advapi32 name 'GetPrivateObjectSecurity';
-function DestroyPrivateObjectSecurity; external advapi32 name 'DestroyPrivateObjectSecurity';
-function MakeSelfRelativeSD; external advapi32 name 'MakeSelfRelativeSD';
-function MakeAbsoluteSD; external advapi32 name 'MakeAbsoluteSD';
-function MakeAbsoluteSD2; external advapi32 name 'MakeAbsoluteSD2';
-function SetFileSecurityA; external advapi32 name 'SetFileSecurityA';
-function SetFileSecurityW; external advapi32 name 'SetFileSecurityW';
-function SetFileSecurity; external advapi32 name 'SetFileSecurity' + AWSuffix;
-function GetFileSecurityA; external advapi32 name 'GetFileSecurityA';
-function GetFileSecurityW; external advapi32 name 'GetFileSecurityW';
-function GetFileSecurity; external advapi32 name 'GetFileSecurity' + AWSuffix;
-function SetKernelObjectSecurity; external advapi32 name 'SetKernelObjectSecurity';
-function FindFirstChangeNotificationA; external kernel32 name 'FindFirstChangeNotificationA';
-function FindFirstChangeNotificationW; external kernel32 name 'FindFirstChangeNotificationW';
-function FindFirstChangeNotification; external kernel32 name 'FindFirstChangeNotification' + AWSuffix;
-function FindNextChangeNotification; external kernel32 name 'FindNextChangeNotification';
-function FindCloseChangeNotification; external kernel32 name 'FindCloseChangeNotification';
-function ReadDirectoryChangesW; external kernel32 name 'ReadDirectoryChangesW';
-function VirtualLock; external kernel32 name 'VirtualLock';
-function VirtualUnlock; external kernel32 name 'VirtualUnlock';
-function MapViewOfFileEx; external kernel32 name 'MapViewOfFileEx';
-function SetPriorityClass; external kernel32 name 'SetPriorityClass';
-function GetPriorityClass; external kernel32 name 'GetPriorityClass';
-function IsBadReadPtr; external kernel32 name 'IsBadReadPtr';
-function IsBadWritePtr; external kernel32 name 'IsBadWritePtr';
-function IsBadHugeReadPtr; external kernel32 name 'IsBadHugeReadPtr';
-function IsBadHugeWritePtr; external kernel32 name 'IsBadHugeWritePtr';
-function IsBadCodePtr; external kernel32 name 'IsBadCodePtr';
-function IsBadStringPtrA; external kernel32 name 'IsBadStringPtrA';
-function IsBadStringPtrW; external kernel32 name 'IsBadStringPtrW';
-function IsBadStringPtr; external kernel32 name 'IsBadStringPtr' + AWSuffix;
-function LookupAccountSidA; external advapi32 name 'LookupAccountSidA';
-function LookupAccountSidW; external advapi32 name 'LookupAccountSidW';
-function LookupAccountSid; external advapi32 name 'LookupAccountSid' + AWSuffix;
-function LookupAccountNameA; external advapi32 name 'LookupAccountNameA';
-function LookupAccountNameW; external advapi32 name 'LookupAccountNameW';
-function LookupAccountName; external advapi32 name 'LookupAccountName' + AWSuffix;
-function LookupPrivilegeValueA; external advapi32 name 'LookupPrivilegeValueA';
-function LookupPrivilegeValueW; external advapi32 name 'LookupPrivilegeValueW';
-function LookupPrivilegeValue; external advapi32 name 'LookupPrivilegeValue' + AWSuffix;
-function LookupPrivilegeNameA; external advapi32 name 'LookupPrivilegeNameA';
-function LookupPrivilegeNameW; external advapi32 name 'LookupPrivilegeNameW';
-function LookupPrivilegeName; external advapi32 name 'LookupPrivilegeName' + AWSuffix;
-function LookupPrivilegeDisplayNameA; external advapi32 name 'LookupPrivilegeDisplayNameA';
-function LookupPrivilegeDisplayNameW; external advapi32 name 'LookupPrivilegeDisplayNameW';
-function LookupPrivilegeDisplayName; external advapi32 name 'LookupPrivilegeDisplayName' + AWSuffix;
-function AllocateLocallyUniqueId; external advapi32 name 'AllocateLocallyUniqueId';
-function BuildCommDCBA; external kernel32 name 'BuildCommDCBA';
-function BuildCommDCBW; external kernel32 name 'BuildCommDCBW';
-function BuildCommDCB; external kernel32 name 'BuildCommDCB' + AWSuffix;
-function BuildCommDCBAndTimeoutsA; external kernel32 name 'BuildCommDCBAndTimeoutsA';
-function BuildCommDCBAndTimeoutsW; external kernel32 name 'BuildCommDCBAndTimeoutsW';
-function BuildCommDCBAndTimeouts; external kernel32 name 'BuildCommDCBAndTimeouts' + AWSuffix;
-function CommConfigDialogA; external kernel32 name 'CommConfigDialogA';
-function CommConfigDialogW; external kernel32 name 'CommConfigDialogW';
-function CommConfigDialog; external kernel32 name 'CommConfigDialog' + AWSuffix;
-function GetDefaultCommConfigA; external kernel32 name 'GetDefaultCommConfigA';
-function GetDefaultCommConfigW; external kernel32 name 'GetDefaultCommConfigW';
-function GetDefaultCommConfig; external kernel32 name 'GetDefaultCommConfig' + AWSuffix;
-function SetDefaultCommConfigA; external kernel32 name 'SetDefaultCommConfigA';
-function SetDefaultCommConfigW; external kernel32 name 'SetDefaultCommConfigW';
-function SetDefaultCommConfig; external kernel32 name 'SetDefaultCommConfig' + AWSuffix;
-function GetComputerNameA; external kernel32 name 'GetComputerNameA';
-function GetComputerNameW; external kernel32 name 'GetComputerNameW';
-function GetComputerName; external kernel32 name 'GetComputerName' + AWSuffix;
-function SetComputerNameA; external kernel32 name 'SetComputerNameA';
-function SetComputerNameW; external kernel32 name 'SetComputerNameW';
-function SetComputerName; external kernel32 name 'SetComputerName' + AWSuffix;
-function GetComputerNameExA; external kernel32 name 'GetComputerNameExA';
-function GetComputerNameExW; external kernel32 name 'GetComputerNameExW';
-function GetComputerNameEx; external kernel32 name 'GetComputerNameEx' + AWSuffix;
-function SetComputerNameExA; external kernel32 name 'SetComputerNameExA';
-function SetComputerNameExW; external kernel32 name 'SetComputerNameExW';
-function SetComputerNameEx; external kernel32 name 'SetComputerNameEx' + AWSuffix;
-function DnsHostnameToComputerNameA; external kernel32 name 'DnsHostnameToComputerNameA';
-function DnsHostnameToComputerNameW; external kernel32 name 'DnsHostnameToComputerNameW';
-function DnsHostnameToComputerName; external kernel32 name 'DnsHostnameToComputerName' + AWSuffix;
-function GetUserNameA; external advapi32 name 'GetUserNameA';
-function GetUserNameW; external advapi32 name 'GetUserNameW';
-function GetUserName; external advapi32 name 'GetUserName' + AWSuffix;
-function LogonUserA; external advapi32 name 'LogonUserA';
-function LogonUserW; external advapi32 name 'LogonUserW';
-function LogonUser; external advapi32 name 'LogonUser' + AWSuffix;
-function LogonUserExA; external advapi32 name 'LogonUserExA';
-function LogonUserExW; external advapi32 name 'LogonUserExW';
-function LogonUserEx; external advapi32 name 'LogonUserEx' + AWSuffix;
-function ImpersonateLoggedOnUser; external advapi32 name 'ImpersonateLoggedOnUser';
-function CreateProcessAsUserA; external advapi32 name 'CreateProcessAsUserA';
-function CreateProcessAsUserW; external advapi32 name 'CreateProcessAsUserW';
-function CreateProcessAsUser; external advapi32 name 'CreateProcessAsUser' + AWSuffix;
-function CreateProcessWithLogonW; external advapi32 name 'CreateProcessWithLogonW';
-function CreateProcessWithTokenW; external advapi32 name 'CreateProcessWithTokenW';
-function ImpersonateAnonymousToken; external advapi32 name 'ImpersonateAnonymousToken';
-function DuplicateTokenEx; external advapi32 name 'DuplicateTokenEx';
-function CreateRestrictedToken; external advapi32 name 'CreateRestrictedToken';
-function IsTokenRestricted; external advapi32 name 'IsTokenRestricted';
-function CheckTokenMembership; external advapi32 name 'CheckTokenMembership';
-function IsTokenUntrusted; external advapi32 name 'IsTokenUntrusted';
-function RegisterWaitForSingleObject; external kernel32 name 'RegisterWaitForSingleObject';
-function RegisterWaitForSingleObjectEx; external kernel32 name 'RegisterWaitForSingleObjectEx';
-function UnregisterWait; external kernel32 name 'UnregisterWait';
-function UnregisterWaitEx; external kernel32 name 'UnregisterWaitEx';
-function QueueUserWorkItem; external kernel32 name 'QueueUserWorkItem';
-function BindIoCompletionCallback; external kernel32 name 'BindIoCompletionCallback';
-function CreateTimerQueue; external kernel32 name 'CreateTimerQueue';
-function CreateTimerQueueTimer; external kernel32 name 'CreateTimerQueueTimer';
-function ChangeTimerQueueTimer; external kernel32 name 'ChangeTimerQueueTimer';
-function DeleteTimerQueueTimer; external kernel32 name 'DeleteTimerQueueTimer';
-function DeleteTimerQueueEx; external kernel32 name 'DeleteTimerQueueEx';
-function SetTimerQueueTimer; external kernel32 name 'SetTimerQueueTimer';
-function CancelTimerQueueTimer; external kernel32 name 'CancelTimerQueueTimer';
-function DeleteTimerQueue; external kernel32 name 'DeleteTimerQueue';
-function GetCurrentHwProfileA; external advapi32 name 'GetCurrentHwProfileA';
-function GetCurrentHwProfileW; external advapi32 name 'GetCurrentHwProfileW';
-function GetCurrentHwProfile; external advapi32 name 'GetCurrentHwProfile' + AWSuffix;
-function QueryPerformanceCounter; external kernel32 name 'QueryPerformanceCounter';
-function QueryPerformanceFrequency; external kernel32 name 'QueryPerformanceFrequency';
-function GetVersionExA; external kernel32 name 'GetVersionExA';
-function GetVersionExW; external kernel32 name 'GetVersionExW';
-function GetVersionEx; external kernel32 name 'GetVersionEx' + AWSuffix;
-function VerifyVersionInfoA; external kernel32 name 'VerifyVersionInfoA';
-function VerifyVersionInfoW; external kernel32 name 'VerifyVersionInfoW';
-function VerifyVersionInfo; external kernel32 name 'VerifyVersionInfo' + AWSuffix;
-function GetSystemPowerStatus; external kernel32 name 'GetSystemPowerStatus';
-function SetSystemPowerState; external kernel32 name 'SetSystemPowerState';
-function AllocateUserPhysicalPages; external kernel32 name 'AllocateUserPhysicalPages';
-function FreeUserPhysicalPages; external kernel32 name 'FreeUserPhysicalPages';
-function MapUserPhysicalPages; external kernel32 name 'MapUserPhysicalPages';
-function MapUserPhysicalPagesScatter; external kernel32 name 'MapUserPhysicalPagesScatter';
-function CreateJobObjectA; external kernel32 name 'CreateJobObjectA';
-function CreateJobObjectW; external kernel32 name 'CreateJobObjectW';
-function CreateJobObject; external kernel32 name 'CreateJobObject' + AWSuffix;
-function OpenJobObjectA; external kernel32 name 'OpenJobObjectA';
-function OpenJobObjectW; external kernel32 name 'OpenJobObjectW';
-function OpenJobObject; external kernel32 name 'OpenJobObject' + AWSuffix;
-function AssignProcessToJobObject; external kernel32 name 'AssignProcessToJobObject';
-function TerminateJobObject; external kernel32 name 'TerminateJobObject';
-function QueryInformationJobObject; external kernel32 name 'QueryInformationJobObject';
-function SetInformationJobObject; external kernel32 name 'SetInformationJobObject';
-function IsProcessInJob; external kernel32 name 'IsProcessInJob';
-function CreateJobSet; external kernel32 name 'CreateJobSet';
-function AddVectoredExceptionHandler; external kernel32 name 'AddVectoredExceptionHandler';
-function RemoveVectoredExceptionHandler; external kernel32 name 'RemoveVectoredExceptionHandler';
-function FindFirstVolumeA; external kernel32 name 'FindFirstVolumeA';
-function FindFirstVolumeW; external kernel32 name 'FindFirstVolumeW';
-function FindFirstVolume; external kernel32 name 'FindFirstVolume' + AWSuffix;
-function FindNextVolumeA; external kernel32 name 'FindNextVolumeA';
-function FindNextVolumeW; external kernel32 name 'FindNextVolumeW';
-function FindNextVolume; external kernel32 name 'FindNextVolume' + AWSuffix;
-function FindVolumeClose; external kernel32 name 'FindVolumeClose';
-function FindFirstVolumeMountPointA; external kernel32 name 'FindFirstVolumeMountPointA';
-function FindFirstVolumeMountPointW; external kernel32 name 'FindFirstVolumeMountPointW';
-function FindFirstVolumeMountPoint; external kernel32 name 'FindFirstVolumeMountPoint' + AWSuffix;
-function FindNextVolumeMountPointA; external kernel32 name 'FindNextVolumeMountPointA';
-function FindNextVolumeMountPointW; external kernel32 name 'FindNextVolumeMountPointW';
-function FindNextVolumeMountPoint; external kernel32 name 'FindNextVolumeMountPoint' + AWSuffix;
-function FindVolumeMountPointClose; external kernel32 name 'FindVolumeMountPointClose';
-function SetVolumeMountPointA; external kernel32 name 'SetVolumeMountPointA';
-function SetVolumeMountPointW; external kernel32 name 'SetVolumeMountPointW';
-function SetVolumeMountPoint; external kernel32 name 'SetVolumeMountPoint' + AWSuffix;
-function DeleteVolumeMountPointA; external kernel32 name 'DeleteVolumeMountPointA';
-function DeleteVolumeMountPointW; external kernel32 name 'DeleteVolumeMountPointW';
-function DeleteVolumeMountPoint; external kernel32 name 'DeleteVolumeMountPoint' + AWSuffix;
-function GetVolumeNameForVolumeMountPointA; external kernel32 name 'GetVolumeNameForVolumeMountPointA';
-function GetVolumeNameForVolumeMountPointW; external kernel32 name 'GetVolumeNameForVolumeMountPointW';
-function GetVolumeNameForVolumeMountPoint; external kernel32 name 'GetVolumeNameForVolumeMountPoint' + AWSuffix;
-function GetVolumePathNameA; external kernel32 name 'GetVolumePathNameA';
-function GetVolumePathNameW; external kernel32 name 'GetVolumePathNameW';
-function GetVolumePathName; external kernel32 name 'GetVolumePathName' + AWSuffix;
-function GetVolumePathNamesForVolumeNameA; external kernel32 name 'GetVolumePathNamesForVolumeNameA';
-function GetVolumePathNamesForVolumeNameW; external kernel32 name 'GetVolumePathNamesForVolumeNameW';
-function GetVolumePathNamesForVolumeName; external kernel32 name 'GetVolumePathNamesForVolumeName' + AWSuffix;
-function CreateActCtxA; external kernel32 name 'CreateActCtxA';
-function CreateActCtxW; external kernel32 name 'CreateActCtxW';
-function CreateActCtx; external kernel32 name 'CreateActCtx' + AWSuffix;
-procedure AddRefActCtx; external kernel32 name 'AddRefActCtx';
-procedure ReleaseActCtx; external kernel32 name 'ReleaseActCtx';
-function ZombifyActCtx; external kernel32 name 'ZombifyActCtx';
-function ActivateActCtx; external kernel32 name 'ActivateActCtx';
-function DeactivateActCtx; external kernel32 name 'DeactivateActCtx';
-function GetCurrentActCtx; external kernel32 name 'GetCurrentActCtx';
-function FindActCtxSectionStringA; external kernel32 name 'FindActCtxSectionStringA';
-function FindActCtxSectionStringW; external kernel32 name 'FindActCtxSectionStringW';
-function FindActCtxSectionString; external kernel32 name 'FindActCtxSectionString' + AWSuffix;
-function FindActCtxSectionGuid; external kernel32 name 'FindActCtxSectionGuid';
-function QueryActCtxW; external kernel32 name 'QueryActCtxW';
-function ProcessIdToSessionId; external kernel32 name 'ProcessIdToSessionId';
-function WTSGetActiveConsoleSessionId; external kernel32 name 'WTSGetActiveConsoleSessionId';
-function IsWow64Process; external kernel32 name 'IsWow64Process';
-function GetLogicalProcessorInformation; external kernel32 name 'GetLogicalProcessorInformation';
-function GetNumaHighestNodeNumber; external kernel32 name 'GetNumaHighestNodeNumber';
-function GetNumaProcessorNode; external kernel32 name 'GetNumaProcessorNode';
-function GetNumaNodeProcessorMask; external kernel32 name 'GetNumaNodeProcessorMask';
-function GetNumaAvailableMemoryNode; external kernel32 name 'GetNumaAvailableMemoryNode';
+
+function InterlockedCompareExchange64; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedCompareExchange64';
+function InterlockedIncrement; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedIncrement';
+function InterlockedDecrement; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedDecrement';
+function InterlockedExchange; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedExchange';
+function InterlockedExchangeAdd; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedExchangeAdd';
+function InterlockedCompareExchange; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedCompareExchange';
+procedure InitializeSListHead; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeSListHead';
+function InterlockedPopEntrySList; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedPopEntrySList';
+function InterlockedPushEntrySList; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedPushEntrySList';
+function InterlockedFlushSList; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InterlockedFlushSList';
+function QueryDepthSList; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryDepthSList';
+function FreeResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeResource';
+function LockResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LockResource';
+function FreeLibrary; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeLibrary';
+procedure FreeLibraryAndExitThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeLibraryAndExitThread';
+function DisableThreadLibraryCalls; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DisableThreadLibraryCalls';
+function GetProcAddress; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcAddress';
+function GetVersion; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVersion';
+function GlobalAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalAlloc';
+function GlobalReAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalReAlloc';
+function GlobalSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalSize';
+function GlobalFlags; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalFlags';
+function GlobalLock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalLock';
+function GlobalHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalHandle';
+function GlobalUnlock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalUnlock';
+function GlobalFree; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalFree';
+function GlobalCompact; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalCompact';
+procedure GlobalFix; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalFix';
+procedure GlobalUnfix; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalUnfix';
+function GlobalWire; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalWire';
+function GlobalUnWire; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalUnWire';
+procedure GlobalMemoryStatus; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalMemoryStatus';
+function GlobalMemoryStatusEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalMemoryStatusEx';
+function LocalAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalAlloc';
+function LocalReAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalReAlloc';
+function LocalLock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalLock';
+function LocalHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalHandle';
+function LocalUnlock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalUnlock';
+function LocalSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalSize';
+function LocalFlags; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalFlags';
+function LocalFree; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalFree';
+function LocalShrink; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalShrink';
+function LocalCompact; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalCompact';
+function FlushInstructionCache; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlushInstructionCache';
+function VirtualAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualAlloc';
+function VirtualFree; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualFree';
+function VirtualProtect; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualProtect';
+function VirtualQuery; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualQuery';
+function VirtualAllocEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualAllocEx';
+function GetWriteWatch; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetWriteWatch';
+function ResetWriteWatch; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ResetWriteWatch';
+function GetLargePageMinimum; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLargePageMinimum';
+function VirtualFreeEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualFreeEx';
+function VirtualProtectEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualProtectEx';
+function VirtualQueryEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualQueryEx';
+function HeapCreate; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapCreate';
+function HeapDestroy; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapDestroy';
+function HeapAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapAlloc';
+function HeapReAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapReAlloc';
+function HeapFree; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapFree';
+function HeapSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapSize';
+function HeapValidate; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapValidate';
+function HeapCompact; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapCompact';
+function GetProcessHeap; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessHeap';
+function GetProcessHeaps; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessHeaps';
+function HeapLock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapLock';
+function HeapUnlock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapUnlock';
+function HeapWalk; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapWalk';
+function HeapSetInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapSetInformation';
+function HeapQueryInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'HeapQueryInformation';
+function GetBinaryTypeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetBinaryTypeA';
+function GetBinaryTypeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetBinaryTypeW';
+function GetBinaryType; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetBinaryType' + AWSuffix;
+function GetShortPathNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetShortPathNameA';
+function GetShortPathNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetShortPathNameW';
+function GetShortPathName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetShortPathName' + AWSuffix;
+function GetLongPathNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLongPathNameA';
+function GetLongPathNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLongPathNameW';
+function GetLongPathName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLongPathName' + AWSuffix;
+function GetProcessAffinityMask; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessAffinityMask';
+function SetProcessAffinityMask; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetProcessAffinityMask';
+function GetProcessHandleCount; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessHandleCount';
+function GetProcessTimes; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessTimes';
+function GetProcessIoCounters; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessIoCounters';
+function GetProcessWorkingSetSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessWorkingSetSize';
+function GetProcessWorkingSetSizeEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessWorkingSetSizeEx';
+function SetProcessWorkingSetSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetProcessWorkingSetSize';
+function SetProcessWorkingSetSizeEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetProcessWorkingSetSizeEx';
+function OpenProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenProcess';
+function GetCurrentProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentProcess';
+function GetCurrentProcessId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentProcessId';
+procedure ExitProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ExitProcess';
+function TerminateProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TerminateProcess';
+function GetExitCodeProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetExitCodeProcess';
+procedure FatalExit; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FatalExit';
+function GetEnvironmentStringsW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEnvironmentStringsW';
+function GetEnvironmentStrings; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEnvironmentStrings' + AWSuffix;
+function GetEnvironmentStringsA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEnvironmentStringsA';
+
+{$IFDEF WIN2003_UP}
+function SetEnvironmentStringsA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEnvironmentStringsA';
+function SetEnvironmentStringsW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEnvironmentStringsW';
+function SetEnvironmentStrings; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEnvironmentStrings' + AWSuffix;
+{$ENDIF WIN2003_UP}
+
+function FreeEnvironmentStringsA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeEnvironmentStringsA';
+function FreeEnvironmentStringsW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeEnvironmentStringsW';
+function FreeEnvironmentStrings; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeEnvironmentStrings' + AWSuffix;
+procedure RaiseException; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RaiseException';
+function UnhandledExceptionFilter; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UnhandledExceptionFilter';
+function SetUnhandledExceptionFilter; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetUnhandledExceptionFilter';
+function CreateFiber; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFiber';
+function CreateFiberEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFiberEx';
+procedure DeleteFiber; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteFiber';
+function ConvertThreadToFiber; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ConvertThreadToFiber';
+function ConvertThreadToFiberEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ConvertThreadToFiberEx';
+function ConvertFiberToThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ConvertFiberToThread';
+procedure SwitchToFiber; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SwitchToFiber';
+function SwitchToThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SwitchToThread';
+function CreateThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateThread';
+function CreateRemoteThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateRemoteThread';
+function GetCurrentThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentThread';
+function GetCurrentThreadId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentThreadId';
+function GetProcessIdOfThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessIdOfThread';
+function GetThreadId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadId';
+function GetProcessId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessId';
+function GetCurrentProcessorNumber; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentProcessorNumber';
+function SetThreadAffinityMask; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadAffinityMask';
+function SetThreadIdealProcessor; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadIdealProcessor';
+function SetProcessPriorityBoost; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetProcessPriorityBoost';
+function GetProcessPriorityBoost; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessPriorityBoost';
+function RequestWakeupLatency; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RequestWakeupLatency';
+function IsSystemResumeAutomatic; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsSystemResumeAutomatic';
+function OpenThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenThread';
+function SetThreadPriority; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadPriority';
+function SetThreadPriorityBoost; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadPriorityBoost';
+function GetThreadPriorityBoost; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadPriorityBoost';
+function GetThreadPriority; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadPriority';
+function GetThreadTimes; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadTimes';
+function GetThreadIOPendingFlag; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadIOPendingFlag';
+procedure ExitThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ExitThread';
+function TerminateThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TerminateThread';
+function GetExitCodeThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetExitCodeThread';
+function GetThreadSelectorEntry; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadSelectorEntry';
+function SetThreadExecutionState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadExecutionState';
+function GetLastError; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLastError';
+procedure SetLastError; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetLastError';
+procedure RestoreLastError; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RestoreLastError';
+function GetOverlappedResult; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetOverlappedResult';
+function CreateIoCompletionPort; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateIoCompletionPort';
+function GetQueuedCompletionStatus; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetQueuedCompletionStatus';
+function PostQueuedCompletionStatus; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PostQueuedCompletionStatus';
+function SetErrorMode; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetErrorMode';
+function ReadProcessMemory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadProcessMemory';
+function WriteProcessMemory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProcessMemory';
+function GetThreadContext; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetThreadContext';
+function SetThreadContext; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadContext';
+function SuspendThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SuspendThread';
+function ResumeThread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ResumeThread';
+function QueueUserAPC; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueueUserAPC';
+function IsDebuggerPresent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsDebuggerPresent';
+function CheckRemoteDebuggerPresent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CheckRemoteDebuggerPresent';
+procedure DebugBreak; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DebugBreak';
+function WaitForDebugEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitForDebugEvent';
+function ContinueDebugEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ContinueDebugEvent';
+function DebugActiveProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DebugActiveProcess';
+function DebugActiveProcessStop; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DebugActiveProcessStop';
+function DebugSetProcessKillOnExit; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DebugSetProcessKillOnExit';
+function DebugBreakProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DebugBreakProcess';
+procedure InitializeCriticalSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeCriticalSection';
+procedure EnterCriticalSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnterCriticalSection';
+procedure LeaveCriticalSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LeaveCriticalSection';
+function InitializeCriticalSectionAndSpinCount; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeCriticalSectionAndSpinCount';
+function SetCriticalSectionSpinCount; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCriticalSectionSpinCount';
+function TryEnterCriticalSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TryEnterCriticalSection';
+procedure DeleteCriticalSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteCriticalSection';
+function SetEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEvent';
+function ResetEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ResetEvent';
+function PulseEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PulseEvent';
+function ReleaseSemaphore; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReleaseSemaphore';
+function ReleaseMutex; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReleaseMutex';
+function WaitForSingleObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitForSingleObject';
+function WaitForMultipleObjects; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitForMultipleObjects';
+procedure Sleep; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'Sleep';
+function LoadResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadResource';
+function SizeofResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SizeofResource';
+function GlobalDeleteAtom; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalDeleteAtom';
+function InitAtomTable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitAtomTable';
+function DeleteAtom; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteAtom';
+function SetHandleCount; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetHandleCount';
+function GetLogicalDrives; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLogicalDrives';
+function LockFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LockFile';
+function UnlockFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UnlockFile';
+function LockFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LockFileEx';
+function UnlockFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UnlockFileEx';
+function GetFileInformationByHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileInformationByHandle';
+function GetFileType; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileType';
+function GetFileSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileSize';
+function GetFileSizeEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileSizeEx';
+function GetStdHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetStdHandle';
+function SetStdHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetStdHandle';
+function WriteFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteFile';
+function ReadFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadFile';
+function FlushFileBuffers; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlushFileBuffers';
+function DeviceIoControl; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeviceIoControl';
+function RequestDeviceWakeup; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RequestDeviceWakeup';
+function CancelDeviceWakeupRequest; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CancelDeviceWakeupRequest';
+function GetDevicePowerState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDevicePowerState';
+function SetMessageWaitingIndicator; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetMessageWaitingIndicator';
+function SetEndOfFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEndOfFile';
+function SetFilePointer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFilePointer';
+function SetFilePointerEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFilePointerEx';
+function FindClose; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindClose';
+function GetFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileTime';
+function SetFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileTime';
+function SetFileValidData; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileValidData';
+function SetFileShortNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileShortNameA';
+function SetFileShortNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileShortNameW';
+function SetFileShortName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileShortName' + AWSuffix;
+function CloseHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CloseHandle';
+function DuplicateHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DuplicateHandle';
+function GetHandleInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetHandleInformation';
+function SetHandleInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetHandleInformation';
+function LoadModule; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadModule';
+function WinExec; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WinExec';
+function ClearCommBreak; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ClearCommBreak';
+function ClearCommError; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ClearCommError';
+function SetupComm; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetupComm';
+function EscapeCommFunction; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EscapeCommFunction';
+function GetCommConfig; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommConfig';
+function GetCommMask; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommMask';
+function GetCommProperties; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommProperties';
+function GetCommModemStatus; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommModemStatus';
+function GetCommState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommState';
+function GetCommTimeouts; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommTimeouts';
+function PurgeComm; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PurgeComm';
+function SetCommBreak; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCommBreak';
+function SetCommConfig; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCommConfig';
+function SetCommMask; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCommMask';
+function SetCommState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCommState';
+function SetCommTimeouts; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCommTimeouts';
+function TransmitCommChar; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TransmitCommChar';
+function WaitCommEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitCommEvent';
+function SetTapePosition; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetTapePosition';
+function GetTapePosition; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTapePosition';
+function PrepareTape; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PrepareTape';
+function EraseTape; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EraseTape';
+function CreateTapePartition; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateTapePartition';
+function WriteTapemark; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteTapemark';
+function GetTapeStatus; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTapeStatus';
+function GetTapeParameters; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTapeParameters';
+function SetTapeParameters; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetTapeParameters';
+function Beep; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'Beep';
+function MulDiv; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MulDiv';
+procedure GetSystemTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemTime';
+procedure GetSystemTimeAsFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemTimeAsFileTime';
+function SetSystemTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSystemTime';
+procedure GetLocalTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLocalTime';
+function SetLocalTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetLocalTime';
+procedure GetSystemInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemInfo';
+function GetSystemRegistryQuota; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemRegistryQuota';
+function GetSystemTimes; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemTimes';
+procedure GetNativeSystemInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNativeSystemInfo';
+function IsProcessorFeaturePresent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsProcessorFeaturePresent';
+function SystemTimeToTzSpecificLocalTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SystemTimeToTzSpecificLocalTime';
+function TzSpecificLocalTimeToSystemTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TzSpecificLocalTimeToSystemTime';
+function GetTimeZoneInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTimeZoneInformation';
+function SetTimeZoneInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetTimeZoneInformation';
+function SystemTimeToFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SystemTimeToFileTime';
+function FileTimeToLocalFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FileTimeToLocalFileTime';
+function LocalFileTimeToFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LocalFileTimeToFileTime';
+function FileTimeToSystemTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FileTimeToSystemTime';
+function CompareFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CompareFileTime';
+function FileTimeToDosDateTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FileTimeToDosDateTime';
+function DosDateTimeToFileTime; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DosDateTimeToFileTime';
+function GetTickCount; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTickCount';
+function SetSystemTimeAdjustment; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSystemTimeAdjustment';
+function GetSystemTimeAdjustment; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemTimeAdjustment';
+function FormatMessageA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FormatMessageA';
+function FormatMessageW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FormatMessageW';
+function FormatMessage; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FormatMessage' + AWSuffix;
+function CreatePipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreatePipe';
+function ConnectNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ConnectNamedPipe';
+function DisconnectNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DisconnectNamedPipe';
+function SetNamedPipeHandleState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetNamedPipeHandleState';
+function GetNamedPipeInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeInfo';
+function PeekNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PeekNamedPipe';
+function TransactNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TransactNamedPipe';
+function CreateMailslotA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateMailslotA';
+function CreateMailslotW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateMailslotW';
+function CreateMailslot; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateMailslot' + AWSuffix;
+function GetMailslotInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetMailslotInfo';
+function SetMailslotInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetMailslotInfo';
+function MapViewOfFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MapViewOfFile';
+function FlushViewOfFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlushViewOfFile';
+function UnmapViewOfFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UnmapViewOfFile';
+function EncryptFileA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EncryptFileA';
+function EncryptFileW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EncryptFileW';
+function EncryptFile; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EncryptFile' + AWSuffix;
+function DecryptFileA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DecryptFileA';
+function DecryptFileW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DecryptFileW';
+function DecryptFile; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DecryptFile' + AWSuffix;
+function FileEncryptionStatusA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FileEncryptionStatusA';
+function FileEncryptionStatusW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FileEncryptionStatusW';
+function FileEncryptionStatus; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FileEncryptionStatus' + AWSuffix;
+function OpenEncryptedFileRawA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEncryptedFileRawA';
+function OpenEncryptedFileRawW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEncryptedFileRawW';
+function OpenEncryptedFileRaw; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEncryptedFileRaw' + AWSuffix;
+function ReadEncryptedFileRaw; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadEncryptedFileRaw';
+function WriteEncryptedFileRaw; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteEncryptedFileRaw';
+procedure CloseEncryptedFileRaw; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CloseEncryptedFileRaw';
+function lstrcmpA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcmpA';
+function lstrcmpW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcmpW';
+function lstrcmp; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcmp' + AWSuffix;
+function lstrcmpiA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcmpiA';
+function lstrcmpiW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcmpiW';
+function lstrcmpi; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcmpi' + AWSuffix;
+function lstrcpynA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcpynA';
+function lstrcpynW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcpynW';
+function lstrcpyn; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcpyn' + AWSuffix;
+function lstrcpyA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcpyA';
+function lstrcpyW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcpyW';
+function lstrcpy; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcpy' + AWSuffix;
+function lstrcatA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcatA';
+function lstrcatW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcatW';
+function lstrcat; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrcat' + AWSuffix;
+function lstrlenA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrlenA';
+function lstrlenW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrlenW';
+function lstrlen; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'lstrlen' + AWSuffix;
+function OpenFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenFile';
+function _lopen; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_lopen';
+function _lcreat; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_lcreat';
+function _lread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_lread';
+function _lwrite; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_lwrite';
+function _hread; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_hread';
+function _hwrite; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_hwrite';
+function _lclose; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_lclose';
+function _llseek; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name '_llseek';
+function IsTextUnicode; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsTextUnicode';
+function FlsAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlsAlloc';
+function FlsGetValue; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlsGetValue';
+function FlsSetValue; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlsSetValue';
+function FlsFree; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FlsFree';
+function TlsAlloc; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TlsAlloc';
+function TlsGetValue; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TlsGetValue';
+function TlsSetValue; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TlsSetValue';
+function TlsFree; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TlsFree';
+function SleepEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SleepEx';
+function WaitForSingleObjectEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitForSingleObjectEx';
+function WaitForMultipleObjectsEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitForMultipleObjectsEx';
+function SignalObjectAndWait; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SignalObjectAndWait';
+function ReadFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadFileEx';
+function WriteFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteFileEx';
+function BackupRead; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BackupRead';
+function BackupSeek; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BackupSeek';
+function BackupWrite; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BackupWrite';
+function ReadFileScatter; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadFileScatter';
+function WriteFileGather; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteFileGather';
+function OpenMutexA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenMutexA';
+function OpenMutexW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenMutexW';
+function OpenMutex; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenMutex' + AWSuffix;
+function CreateEventA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateEventA';
+function CreateEventW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateEventW';
+function CreateEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateEvent' + AWSuffix;
+function OpenEventA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEventA';
+function OpenEventW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEventW';
+function OpenEvent; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEvent' + AWSuffix;
+function CreateSemaphoreA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateSemaphoreA';
+function CreateSemaphoreW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateSemaphoreW';
+function CreateSemaphore; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateSemaphore' + AWSuffix;
+function OpenSemaphoreA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenSemaphoreA';
+function OpenSemaphoreW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenSemaphoreW';
+function OpenSemaphore; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenSemaphore' + AWSuffix;
+function CreateWaitableTimerA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateWaitableTimerA';
+function CreateWaitableTimerW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateWaitableTimerW';
+function CreateWaitableTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateWaitableTimer' + AWSuffix;
+function OpenWaitableTimerA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenWaitableTimerA';
+function OpenWaitableTimerW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenWaitableTimerW';
+function OpenWaitableTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenWaitableTimer' + AWSuffix;
+function SetWaitableTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetWaitableTimer';
+function CancelWaitableTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CancelWaitableTimer';
+function CreateFileMappingA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFileMappingA';
+function CreateFileMappingW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFileMappingW';
+function CreateFileMapping; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFileMapping' + AWSuffix;
+function OpenFileMappingA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenFileMappingA';
+function OpenFileMappingW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenFileMappingW';
+function OpenFileMapping; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenFileMapping' + AWSuffix;
+function GetLogicalDriveStringsA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLogicalDriveStringsA';
+function GetLogicalDriveStringsW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLogicalDriveStringsW';
+function GetLogicalDriveStrings; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLogicalDriveStrings' + AWSuffix;
+function CreateMemoryResourceNotification; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateMemoryResourceNotification';
+function QueryMemoryResourceNotification; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryMemoryResourceNotification';
+function LoadLibraryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadLibraryA';
+function LoadLibraryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadLibraryW';
+function LoadLibrary; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadLibrary' + AWSuffix;
+function LoadLibraryExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadLibraryExA';
+function LoadLibraryExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadLibraryExW';
+function LoadLibraryEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LoadLibraryEx' + AWSuffix;
+function GetModuleFileNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleFileNameA';
+function GetModuleFileNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleFileNameW';
+function GetModuleFileName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleFileName' + AWSuffix;
+function GetModuleHandleA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleHandleA';
+function GetModuleHandleW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleHandleW';
+function GetModuleHandle; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleHandle' + AWSuffix;
+function InitializeProcThreadAttributeList; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeProcThreadAttributeList';
+procedure DeleteProcThreadAttributeList; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteProcThreadAttributeList';
+function UpdateProcThreadAttribute; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UpdateProcThreadAttribute';
+function CreateProcessA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessA';
+function CreateProcessW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessW';
+function CreateProcess; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcess' + AWSuffix;
+function GetModuleHandleExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleHandleExA';
+function GetModuleHandleExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleHandleExW';
+function GetModuleHandleEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetModuleHandleEx' + AWSuffix;
+function NeedCurrentDirectoryForExePathA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'NeedCurrentDirectoryForExePathA';
+function NeedCurrentDirectoryForExePathW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'NeedCurrentDirectoryForExePathW';
+function NeedCurrentDirectoryForExePath; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'NeedCurrentDirectoryForExePath' + AWSuffix;
+function SetProcessShutdownParameters; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetProcessShutdownParameters';
+function GetProcessShutdownParameters; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessShutdownParameters';
+function GetProcessVersion; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProcessVersion';
+procedure FatalAppExitA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FatalAppExitA';
+procedure FatalAppExitW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FatalAppExitW';
+procedure FatalAppExit; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FatalAppExit' + AWSuffix;
+procedure GetStartupInfoA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetStartupInfoA';
+procedure GetStartupInfoW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetStartupInfoW';
+procedure GetStartupInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetStartupInfo' + AWSuffix;
+function GetCommandLineA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommandLineA';
+function GetCommandLineW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommandLineW';
+function GetCommandLine; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCommandLine' + AWSuffix;
+function GetEnvironmentVariableA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEnvironmentVariableA';
+function GetEnvironmentVariableW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEnvironmentVariableW';
+function GetEnvironmentVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEnvironmentVariable' + AWSuffix;
+function SetEnvironmentVariableA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEnvironmentVariableA';
+function SetEnvironmentVariableW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEnvironmentVariableW';
+function SetEnvironmentVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetEnvironmentVariable' + AWSuffix;
+function ExpandEnvironmentStringsA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ExpandEnvironmentStringsA';
+function ExpandEnvironmentStringsW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ExpandEnvironmentStringsW';
+function ExpandEnvironmentStrings; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ExpandEnvironmentStrings' + AWSuffix;
+function GetFirmwareEnvironmentVariableA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFirmwareEnvironmentVariableA';
+function GetFirmwareEnvironmentVariableW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFirmwareEnvironmentVariableW';
+function GetFirmwareEnvironmentVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFirmwareEnvironmentVariable' + AWSuffix;
+function SetFirmwareEnvironmentVariableA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFirmwareEnvironmentVariableA';
+function SetFirmwareEnvironmentVariableW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFirmwareEnvironmentVariableW';
+function SetFirmwareEnvironmentVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFirmwareEnvironmentVariable' + AWSuffix;
+procedure OutputDebugStringA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OutputDebugStringA';
+procedure OutputDebugStringW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OutputDebugStringW';
+procedure OutputDebugString; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OutputDebugString' + AWSuffix;
+function FindResourceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindResourceA';
+function FindResourceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindResourceW';
+function FindResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindResource' + AWSuffix;
+function FindResourceExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindResourceExA';
+function FindResourceExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindResourceExW';
+function FindResourceEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindResourceEx' + AWSuffix;
+function EnumResourceTypesA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceTypesA';
+function EnumResourceTypesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceTypesW';
+function EnumResourceTypes; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceTypes' + AWSuffix;
+function EnumResourceNamesA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceNamesA';
+function EnumResourceNamesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceNamesW';
+function EnumResourceNames; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceNames' + AWSuffix;
+function EnumResourceLanguagesA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceLanguagesA';
+function EnumResourceLanguagesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceLanguagesW';
+function EnumResourceLanguages; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EnumResourceLanguages' + AWSuffix;
+function BeginUpdateResourceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BeginUpdateResourceA';
+function BeginUpdateResourceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BeginUpdateResourceW';
+function BeginUpdateResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BeginUpdateResource' + AWSuffix;
+function UpdateResourceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UpdateResourceA';
+function UpdateResourceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UpdateResourceW';
+function UpdateResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UpdateResource' + AWSuffix;
+function EndUpdateResourceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EndUpdateResourceA';
+function EndUpdateResourceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EndUpdateResourceW';
+function EndUpdateResource; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EndUpdateResource' + AWSuffix;
+function GlobalAddAtomA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalAddAtomA';
+function GlobalAddAtomW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalAddAtomW';
+function GlobalAddAtom; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalAddAtom' + AWSuffix;
+function GlobalFindAtomA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalFindAtomA';
+function GlobalFindAtomW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalFindAtomW';
+function GlobalFindAtom; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalFindAtom' + AWSuffix;
+function GlobalGetAtomNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalGetAtomNameA';
+function GlobalGetAtomNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalGetAtomNameW';
+function GlobalGetAtomName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GlobalGetAtomName' + AWSuffix;
+function AddAtomA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAtomA';
+function AddAtomW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAtomW';
+function AddAtom; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAtom' + AWSuffix;
+function FindAtomA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindAtomA';
+function FindAtomW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindAtomW';
+function FindAtom; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindAtom' + AWSuffix;
+function GetAtomNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetAtomNameA';
+function GetAtomNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetAtomNameW';
+function GetAtomName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetAtomName' + AWSuffix;
+function GetProfileIntA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileIntA';
+function GetProfileIntW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileIntW';
+function GetProfileInt; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileInt' + AWSuffix;
+function GetProfileStringA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileStringA';
+function GetProfileStringW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileStringW';
+function GetProfileString; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileString' + AWSuffix;
+function WriteProfileStringA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProfileStringA';
+function WriteProfileStringW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProfileStringW';
+function WriteProfileString; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProfileString' + AWSuffix;
+function GetProfileSectionA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileSectionA';
+function GetProfileSectionW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileSectionW';
+function GetProfileSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetProfileSection' + AWSuffix;
+function WriteProfileSectionA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProfileSectionA';
+function WriteProfileSectionW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProfileSectionW';
+function WriteProfileSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WriteProfileSection' + AWSuffix;
+function GetPrivateProfileIntA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileIntA';
+function GetPrivateProfileIntW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileIntW';
+function GetPrivateProfileInt; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileInt' + AWSuffix;
+function GetPrivateProfileStringA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileStringA';
+function GetPrivateProfileStringW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileStringW';
+function GetPrivateProfileString; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileString' + AWSuffix;
+function WritePrivateProfileStringA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileStringA';
+function WritePrivateProfileStringW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileStringW';
+function WritePrivateProfileString; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileString' + AWSuffix;
+function GetPrivateProfileSectionA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileSectionA';
+function GetPrivateProfileSectionW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileSectionW';
+function GetPrivateProfileSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileSection' + AWSuffix;
+function WritePrivateProfileSectionA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileSectionA';
+function WritePrivateProfileSectionW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileSectionW';
+function WritePrivateProfileSection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileSection' + AWSuffix;
+function GetPrivateProfileSectionNamesA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileSectionNamesA';
+function GetPrivateProfileSectionNamesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileSectionNamesW';
+function GetPrivateProfileSectionNames; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileSectionNames' + AWSuffix;
+function GetPrivateProfileStructA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileStructA';
+function GetPrivateProfileStructW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileStructW';
+function GetPrivateProfileStruct; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateProfileStruct' + AWSuffix;
+function WritePrivateProfileStructA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileStructA';
+function WritePrivateProfileStructW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileStructW';
+function WritePrivateProfileStruct; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WritePrivateProfileStruct' + AWSuffix;
+function GetDriveTypeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDriveTypeA';
+function GetDriveTypeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDriveTypeW';
+function GetDriveType; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDriveType' + AWSuffix;
+function GetSystemDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemDirectoryA';
+function GetSystemDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemDirectoryW';
+function GetSystemDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemDirectory' + AWSuffix;
+function GetTempPathA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTempPathA';
+function GetTempPathW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTempPathW';
+function GetTempPath; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTempPath' + AWSuffix;
+function GetTempFileNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTempFileNameA';
+function GetTempFileNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTempFileNameW';
+function GetTempFileName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTempFileName' + AWSuffix;
+function GetWindowsDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetWindowsDirectoryA';
+function GetWindowsDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetWindowsDirectoryW';
+function GetWindowsDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetWindowsDirectory' + AWSuffix;
+function GetSystemWindowsDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemWindowsDirectoryA';
+function GetSystemWindowsDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemWindowsDirectoryW';
+function GetSystemWindowsDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemWindowsDirectory' + AWSuffix;
+function GetSystemWow64DirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemWow64DirectoryA';
+function GetSystemWow64DirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemWow64DirectoryW';
+function GetSystemWow64Directory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemWow64Directory' + AWSuffix;
+function Wow64EnableWow64FsRedirection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'Wow64EnableWow64FsRedirection';
+function Wow64DisableWow64FsRedirection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'Wow64DisableWow64FsRedirection';
+function Wow64RevertWow64FsRedirection; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'Wow64RevertWow64FsRedirection';
+function SetCurrentDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCurrentDirectoryA';
+function SetCurrentDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCurrentDirectoryW';
+function SetCurrentDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetCurrentDirectory' + AWSuffix;
+function GetCurrentDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentDirectoryA';
+function GetCurrentDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentDirectoryW';
+function GetCurrentDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentDirectory' + AWSuffix;
+function SetDllDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetDllDirectoryA';
+function SetDllDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetDllDirectoryW';
+function SetDllDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetDllDirectory' + AWSuffix;
+function GetDllDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDllDirectoryA';
+function GetDllDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDllDirectoryW';
+function GetDllDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDllDirectory' + AWSuffix;
+function GetDiskFreeSpaceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDiskFreeSpaceA';
+function GetDiskFreeSpaceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDiskFreeSpaceW';
+function GetDiskFreeSpace; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDiskFreeSpace' + AWSuffix;
+function GetDiskFreeSpaceExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDiskFreeSpaceExA';
+function GetDiskFreeSpaceExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDiskFreeSpaceExW';
+function GetDiskFreeSpaceEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDiskFreeSpaceEx' + AWSuffix;
+function CreateDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateDirectoryA';
+function CreateDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateDirectoryW';
+function CreateDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateDirectory' + AWSuffix;
+function CreateDirectoryExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateDirectoryExA';
+function CreateDirectoryExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateDirectoryExW';
+function CreateDirectoryEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateDirectoryEx' + AWSuffix;
+function RemoveDirectoryA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RemoveDirectoryA';
+function RemoveDirectoryW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RemoveDirectoryW';
+function RemoveDirectory; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RemoveDirectory' + AWSuffix;
+function GetFullPathNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFullPathNameA';
+function GetFullPathNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFullPathNameW';
+function GetFullPathName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFullPathName' + AWSuffix;
+function DefineDosDeviceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DefineDosDeviceA';
+function DefineDosDeviceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DefineDosDeviceW';
+function DefineDosDevice; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DefineDosDevice' + AWSuffix;
+function QueryDosDeviceA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryDosDeviceA';
+function QueryDosDeviceW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryDosDeviceW';
+function QueryDosDevice; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryDosDevice' + AWSuffix;
+function CreateFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFileA';
+function CreateFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFileW';
+function CreateFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateFile' + AWSuffix;
+function ReOpenFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReOpenFile';
+function SetFileAttributesA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileAttributesA';
+function SetFileAttributesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileAttributesW';
+function SetFileAttributes; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileAttributes' + AWSuffix;
+function GetFileAttributesA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileAttributesA';
+function GetFileAttributesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileAttributesW';
+function GetFileAttributes; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileAttributes' + AWSuffix;
+function GetFileAttributesExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileAttributesExA';
+function GetFileAttributesExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileAttributesExW';
+function GetFileAttributesEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileAttributesEx' + AWSuffix;
+function GetCompressedFileSizeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCompressedFileSizeA';
+function GetCompressedFileSizeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCompressedFileSizeW';
+function GetCompressedFileSize; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCompressedFileSize' + AWSuffix;
+function DeleteFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteFileA';
+function DeleteFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteFileW';
+function DeleteFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteFile' + AWSuffix;
+function FindFirstFileExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFileExA';
+function FindFirstFileExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFileExW';
+function FindFirstFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFileEx' + AWSuffix;
+function FindFirstFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFileA';
+function FindFirstFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFileW';
+function FindFirstFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFile' + AWSuffix;
+function FindNextFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextFileA';
+function FindNextFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextFileW';
+function FindNextFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextFile' + AWSuffix;
+function SearchPathA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SearchPathA';
+function SearchPathW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SearchPathW';
+function SearchPath; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SearchPath' + AWSuffix;
+function CopyFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopyFileA';
+function CopyFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopyFileW';
+function CopyFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopyFile' + AWSuffix;
+function CopyFileExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopyFileExA';
+function CopyFileExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopyFileExW';
+function CopyFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopyFileEx' + AWSuffix;
+function MoveFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileA';
+function MoveFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileW';
+function MoveFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFile' + AWSuffix;
+function MoveFileExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileExA';
+function MoveFileExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileExW';
+function MoveFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileEx' + AWSuffix;
+function MoveFileWithProgressA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileWithProgressA';
+function MoveFileWithProgressW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileWithProgressW';
+function MoveFileWithProgress; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MoveFileWithProgress' + AWSuffix;
+function ReplaceFileA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReplaceFileA';
+function ReplaceFileW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReplaceFileW';
+function ReplaceFile; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReplaceFile' + AWSuffix;
+function CreateHardLinkA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateHardLinkA';
+function CreateHardLinkW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateHardLinkW';
+function CreateHardLink; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateHardLink' + AWSuffix;
+function FindFirstStreamW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstStreamW';
+function FindNextStreamW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextStreamW';
+function CreateNamedPipeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateNamedPipeA';
+function CreateNamedPipeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateNamedPipeW';
+function CreateNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateNamedPipe' + AWSuffix;
+function GetNamedPipeHandleStateA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeHandleStateA';
+function GetNamedPipeHandleStateW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeHandleStateW';
+function GetNamedPipeHandleState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeHandleState' + AWSuffix;
+function CallNamedPipeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CallNamedPipeA';
+function CallNamedPipeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CallNamedPipeW';
+function CallNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CallNamedPipe' + AWSuffix;
+function WaitNamedPipeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitNamedPipeA';
+function WaitNamedPipeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitNamedPipeW';
+function WaitNamedPipe; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WaitNamedPipe' + AWSuffix;
+function SetVolumeLabelA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetVolumeLabelA';
+function SetVolumeLabelW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetVolumeLabelW';
+function SetVolumeLabel; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetVolumeLabel' + AWSuffix;
+procedure SetFileApisToOEM; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileApisToOEM';
+procedure SetFileApisToANSI; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileApisToANSI';
+function AreFileApisANSI; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AreFileApisANSI';
+function GetVolumeInformationA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumeInformationA';
+function GetVolumeInformationW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumeInformationW';
+function GetVolumeInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumeInformation' + AWSuffix;
+function CancelIo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CancelIo';
+function ClearEventLogA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ClearEventLogA';
+function ClearEventLogW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ClearEventLogW';
+function ClearEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ClearEventLog' + AWSuffix;
+function BackupEventLogA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BackupEventLogA';
+function BackupEventLogW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BackupEventLogW';
+function BackupEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BackupEventLog' + AWSuffix;
+function CloseEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CloseEventLog';
+function DeregisterEventSource; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeregisterEventSource';
+function NotifyChangeEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'NotifyChangeEventLog';
+function GetNumberOfEventLogRecords; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNumberOfEventLogRecords';
+function GetOldestEventLogRecord; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetOldestEventLogRecord';
+function OpenEventLogA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEventLogA';
+function OpenEventLogW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEventLogW';
+function OpenEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenEventLog' + AWSuffix;
+function RegisterEventSourceA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RegisterEventSourceA';
+function RegisterEventSourceW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RegisterEventSourceW';
+function RegisterEventSource; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RegisterEventSource' + AWSuffix;
+function OpenBackupEventLogA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenBackupEventLogA';
+function OpenBackupEventLogW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenBackupEventLogW';
+function OpenBackupEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenBackupEventLog' + AWSuffix;
+function ReadEventLogA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadEventLogA';
+function ReadEventLogW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadEventLogW';
+function ReadEventLog; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadEventLog' + AWSuffix;
+function ReportEventA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReportEventA';
+function ReportEventW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReportEventW';
+function ReportEvent; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReportEvent' + AWSuffix;
+function GetEventLogInformation; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetEventLogInformation';
+function DuplicateToken; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DuplicateToken';
+function GetKernelObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetKernelObjectSecurity';
+function ImpersonateNamedPipeClient; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ImpersonateNamedPipeClient';
+function ImpersonateSelf; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ImpersonateSelf';
+function RevertToSelf; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RevertToSelf';
+function SetThreadToken; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetThreadToken';
+function AccessCheck; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheck';
+function AccessCheckByType; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByType';
+function AccessCheckByTypeResultList; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultList';
+function OpenProcessToken; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenProcessToken';
+function OpenThreadToken; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenThreadToken';
+function GetTokenInformation; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetTokenInformation';
+function SetTokenInformation; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetTokenInformation';
+function AdjustTokenPrivileges; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AdjustTokenPrivileges';
+function AdjustTokenGroups; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AdjustTokenGroups';
+function PrivilegeCheck; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PrivilegeCheck';
+function AccessCheckAndAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckAndAuditAlarmA';
+function AccessCheckAndAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckAndAuditAlarmW';
+function AccessCheckAndAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckAndAuditAlarm' + AWSuffix;
+function AccessCheckByTypeAndAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeAndAuditAlarmA';
+function AccessCheckByTypeAndAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeAndAuditAlarmW';
+function AccessCheckByTypeAndAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeAndAuditAlarm' + AWSuffix;
+function AccessCheckByTypeResultListAndAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultListAndAuditAlarmA';
+function AccessCheckByTypeResultListAndAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultListAndAuditAlarmW';
+function AccessCheckByTypeResultListAndAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultListAndAuditAlarm' + AWSuffix;
+function AccessCheckByTypeResultListAndAuditAlarmByHandleA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultListAndAuditAlarmByHandleA';
+function AccessCheckByTypeResultListAndAuditAlarmByHandleW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultListAndAuditAlarmByHandleW';
+function AccessCheckByTypeResultListAndAuditAlarmByHandle; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AccessCheckByTypeResultListAndAuditAlarmByHandle' + AWSuffix;
+function ObjectOpenAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectOpenAuditAlarmA';
+function ObjectOpenAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectOpenAuditAlarmW';
+function ObjectOpenAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectOpenAuditAlarm' + AWSuffix;
+function ObjectPrivilegeAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectPrivilegeAuditAlarmA';
+function ObjectPrivilegeAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectPrivilegeAuditAlarmW';
+function ObjectPrivilegeAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectPrivilegeAuditAlarm' + AWSuffix;
+function ObjectCloseAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectCloseAuditAlarmA';
+function ObjectCloseAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectCloseAuditAlarmW';
+function ObjectCloseAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectCloseAuditAlarm' + AWSuffix;
+function ObjectDeleteAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectDeleteAuditAlarmA';
+function ObjectDeleteAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectDeleteAuditAlarmW';
+function ObjectDeleteAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ObjectDeleteAuditAlarm' + AWSuffix;
+function PrivilegedServiceAuditAlarmA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PrivilegedServiceAuditAlarmA';
+function PrivilegedServiceAuditAlarmW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PrivilegedServiceAuditAlarmW';
+function PrivilegedServiceAuditAlarm; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'PrivilegedServiceAuditAlarm' + AWSuffix;
+function IsWellKnownSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsWellKnownSid';
+function CreateWellKnownSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateWellKnownSid';
+function EqualDomainSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EqualDomainSid';
+function GetWindowsAccountDomainSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetWindowsAccountDomainSid';
+function IsValidSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsValidSid';
+function EqualSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EqualSid';
+function EqualPrefixSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'EqualPrefixSid';
+function GetSidLengthRequired; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSidLengthRequired';
+function AllocateAndInitializeSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AllocateAndInitializeSid';
+function FreeSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeSid';
+function InitializeSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeSid';
+function GetSidIdentifierAuthority; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSidIdentifierAuthority';
+function GetSidSubAuthority; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSidSubAuthority';
+function GetSidSubAuthorityCount; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSidSubAuthorityCount';
+function GetLengthSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLengthSid';
+function CopySid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CopySid';
+function AreAllAccessesGranted; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AreAllAccessesGranted';
+function AreAnyAccessesGranted; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AreAnyAccessesGranted';
+procedure MapGenericMask; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MapGenericMask';
+function IsValidAcl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsValidAcl';
+function InitializeAcl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeAcl';
+function GetAclInformation; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetAclInformation';
+function SetAclInformation; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetAclInformation';
+function AddAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAce';
+function DeleteAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteAce';
+function GetAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetAce';
+function AddAccessAllowedAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAccessAllowedAce';
+function AddAccessAllowedAceEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAccessAllowedAceEx';
+function AddAccessDeniedAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAccessDeniedAce';
+function AddAccessDeniedAceEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAccessDeniedAceEx';
+function AddAuditAccessAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAuditAccessAce';
+function AddAuditAccessAceEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAuditAccessAceEx';
+function AddAccessAllowedObjectAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAccessAllowedObjectAce';
+function AddAccessDeniedObjectAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAccessDeniedObjectAce';
+function AddAuditAccessObjectAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddAuditAccessObjectAce';
+function FindFirstFreeAce; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstFreeAce';
+function InitializeSecurityDescriptor; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeSecurityDescriptor';
+function IsValidSecurityDescriptor; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsValidSecurityDescriptor';
+function GetSecurityDescriptorLength; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorLength';
+function GetSecurityDescriptorControl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorControl';
+function SetSecurityDescriptorControl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSecurityDescriptorControl';
+function SetSecurityDescriptorDacl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSecurityDescriptorDacl';
+function GetSecurityDescriptorDacl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorDacl';
+function SetSecurityDescriptorSacl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSecurityDescriptorSacl';
+function GetSecurityDescriptorSacl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorSacl';
+function SetSecurityDescriptorOwner; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSecurityDescriptorOwner';
+function GetSecurityDescriptorOwner; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorOwner';
+function SetSecurityDescriptorGroup; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSecurityDescriptorGroup';
+function GetSecurityDescriptorGroup; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorGroup';
+function SetSecurityDescriptorRMControl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSecurityDescriptorRMControl';
+function GetSecurityDescriptorRMControl; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSecurityDescriptorRMControl';
+function CreatePrivateObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreatePrivateObjectSecurity';
+function ConvertToAutoInheritPrivateObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ConvertToAutoInheritPrivateObjectSecurity';
+function CreatePrivateObjectSecurityEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreatePrivateObjectSecurityEx';
+function SetPrivateObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetPrivateObjectSecurity';
+function SetPrivateObjectSecurityEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetPrivateObjectSecurityEx';
+function GetPrivateObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPrivateObjectSecurity';
+function DestroyPrivateObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DestroyPrivateObjectSecurity';
+function MakeSelfRelativeSD; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MakeSelfRelativeSD';
+function MakeAbsoluteSD; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MakeAbsoluteSD';
+function MakeAbsoluteSD2; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MakeAbsoluteSD2';
+function SetFileSecurityA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileSecurityA';
+function SetFileSecurityW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileSecurityW';
+function SetFileSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetFileSecurity' + AWSuffix;
+function GetFileSecurityA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileSecurityA';
+function GetFileSecurityW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileSecurityW';
+function GetFileSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetFileSecurity' + AWSuffix;
+function SetKernelObjectSecurity; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetKernelObjectSecurity';
+function FindFirstChangeNotificationA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstChangeNotificationA';
+function FindFirstChangeNotificationW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstChangeNotificationW';
+function FindFirstChangeNotification; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstChangeNotification' + AWSuffix;
+function FindNextChangeNotification; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextChangeNotification';
+function FindCloseChangeNotification; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindCloseChangeNotification';
+function ReadDirectoryChangesW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReadDirectoryChangesW';
+function VirtualLock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualLock';
+function VirtualUnlock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VirtualUnlock';
+function MapViewOfFileEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MapViewOfFileEx';
+function SetPriorityClass; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetPriorityClass';
+function GetPriorityClass; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetPriorityClass';
+function IsBadReadPtr; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadReadPtr';
+function IsBadWritePtr; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadWritePtr';
+function IsBadHugeReadPtr; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadHugeReadPtr';
+function IsBadHugeWritePtr; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadHugeWritePtr';
+function IsBadCodePtr; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadCodePtr';
+function IsBadStringPtrA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadStringPtrA';
+function IsBadStringPtrW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadStringPtrW';
+function IsBadStringPtr; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsBadStringPtr' + AWSuffix;
+function LookupAccountSidA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupAccountSidA';
+function LookupAccountSidW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupAccountSidW';
+function LookupAccountSid; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupAccountSid' + AWSuffix;
+function LookupAccountNameA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupAccountNameA';
+function LookupAccountNameW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupAccountNameW';
+function LookupAccountName; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupAccountName' + AWSuffix;
+function LookupPrivilegeValueA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeValueA';
+function LookupPrivilegeValueW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeValueW';
+function LookupPrivilegeValue; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeValue' + AWSuffix;
+function LookupPrivilegeNameA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeNameA';
+function LookupPrivilegeNameW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeNameW';
+function LookupPrivilegeName; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeName' + AWSuffix;
+function LookupPrivilegeDisplayNameA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeDisplayNameA';
+function LookupPrivilegeDisplayNameW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeDisplayNameW';
+function LookupPrivilegeDisplayName; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LookupPrivilegeDisplayName' + AWSuffix;
+function AllocateLocallyUniqueId; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AllocateLocallyUniqueId';
+function BuildCommDCBA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BuildCommDCBA';
+function BuildCommDCBW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BuildCommDCBW';
+function BuildCommDCB; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BuildCommDCB' + AWSuffix;
+function BuildCommDCBAndTimeoutsA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BuildCommDCBAndTimeoutsA';
+function BuildCommDCBAndTimeoutsW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BuildCommDCBAndTimeoutsW';
+function BuildCommDCBAndTimeouts; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BuildCommDCBAndTimeouts' + AWSuffix;
+function CommConfigDialogA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CommConfigDialogA';
+function CommConfigDialogW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CommConfigDialogW';
+function CommConfigDialog; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CommConfigDialog' + AWSuffix;
+function GetDefaultCommConfigA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDefaultCommConfigA';
+function GetDefaultCommConfigW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDefaultCommConfigW';
+function GetDefaultCommConfig; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetDefaultCommConfig' + AWSuffix;
+function SetDefaultCommConfigA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetDefaultCommConfigA';
+function SetDefaultCommConfigW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetDefaultCommConfigW';
+function SetDefaultCommConfig; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetDefaultCommConfig' + AWSuffix;
+function GetComputerNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetComputerNameA';
+function GetComputerNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetComputerNameW';
+function GetComputerName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetComputerName' + AWSuffix;
+function SetComputerNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetComputerNameA';
+function SetComputerNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetComputerNameW';
+function SetComputerName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetComputerName' + AWSuffix;
+function GetComputerNameExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetComputerNameExA';
+function GetComputerNameExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetComputerNameExW';
+function GetComputerNameEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetComputerNameEx' + AWSuffix;
+function SetComputerNameExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetComputerNameExA';
+function SetComputerNameExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetComputerNameExW';
+function SetComputerNameEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetComputerNameEx' + AWSuffix;
+function DnsHostnameToComputerNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DnsHostnameToComputerNameA';
+function DnsHostnameToComputerNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DnsHostnameToComputerNameW';
+function DnsHostnameToComputerName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DnsHostnameToComputerName' + AWSuffix;
+function GetUserNameA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetUserNameA';
+function GetUserNameW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetUserNameW';
+function GetUserName; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetUserName' + AWSuffix;
+function LogonUserA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LogonUserA';
+function LogonUserW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LogonUserW';
+function LogonUser; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LogonUser' + AWSuffix;
+function LogonUserExA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LogonUserExA';
+function LogonUserExW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LogonUserExW';
+function LogonUserEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'LogonUserEx' + AWSuffix;
+function ImpersonateLoggedOnUser; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ImpersonateLoggedOnUser';
+function CreateProcessAsUserA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessAsUserA';
+function CreateProcessAsUserW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessAsUserW';
+function CreateProcessAsUser; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessAsUser' + AWSuffix;
+function CreateProcessWithLogonW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessWithLogonW';
+function CreateProcessWithTokenW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateProcessWithTokenW';
+function ImpersonateAnonymousToken; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ImpersonateAnonymousToken';
+function DuplicateTokenEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DuplicateTokenEx';
+function CreateRestrictedToken; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateRestrictedToken';
+function IsTokenRestricted; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsTokenRestricted';
+function CheckTokenMembership; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CheckTokenMembership';
+function IsTokenUntrusted; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsTokenUntrusted';
+function RegisterWaitForSingleObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RegisterWaitForSingleObject';
+function RegisterWaitForSingleObjectEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RegisterWaitForSingleObjectEx';
+function UnregisterWait; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UnregisterWait';
+function UnregisterWaitEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'UnregisterWaitEx';
+function QueueUserWorkItem; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueueUserWorkItem';
+function BindIoCompletionCallback; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'BindIoCompletionCallback';
+function CreateTimerQueue; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateTimerQueue';
+function CreateTimerQueueTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateTimerQueueTimer';
+function ChangeTimerQueueTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ChangeTimerQueueTimer';
+function DeleteTimerQueueTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteTimerQueueTimer';
+function DeleteTimerQueueEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteTimerQueueEx';
+function SetTimerQueueTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetTimerQueueTimer';
+function CancelTimerQueueTimer; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CancelTimerQueueTimer';
+function DeleteTimerQueue; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteTimerQueue';
+function GetCurrentHwProfileA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentHwProfileA';
+function GetCurrentHwProfileW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentHwProfileW';
+function GetCurrentHwProfile; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentHwProfile' + AWSuffix;
+function QueryPerformanceCounter; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryPerformanceCounter';
+function QueryPerformanceFrequency; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryPerformanceFrequency';
+function GetVersionExA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVersionExA';
+function GetVersionExW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVersionExW';
+function GetVersionEx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVersionEx' + AWSuffix;
+function VerifyVersionInfoA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VerifyVersionInfoA';
+function VerifyVersionInfoW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VerifyVersionInfoW';
+function VerifyVersionInfo; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'VerifyVersionInfo' + AWSuffix;
+function GetSystemPowerStatus; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetSystemPowerStatus';
+function SetSystemPowerState; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSystemPowerState';
+function AllocateUserPhysicalPages; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AllocateUserPhysicalPages';
+function FreeUserPhysicalPages; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FreeUserPhysicalPages';
+function MapUserPhysicalPages; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MapUserPhysicalPages';
+function MapUserPhysicalPagesScatter; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'MapUserPhysicalPagesScatter';
+function CreateJobObjectA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateJobObjectA';
+function CreateJobObjectW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateJobObjectW';
+function CreateJobObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateJobObject' + AWSuffix;
+function OpenJobObjectA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenJobObjectA';
+function OpenJobObjectW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenJobObjectW';
+function OpenJobObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'OpenJobObject' + AWSuffix;
+function AssignProcessToJobObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AssignProcessToJobObject';
+function TerminateJobObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TerminateJobObject';
+function QueryInformationJobObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryInformationJobObject';
+function SetInformationJobObject; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetInformationJobObject';
+function IsProcessInJob; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsProcessInJob';
+function CreateJobSet; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateJobSet';
+function AddVectoredExceptionHandler; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddVectoredExceptionHandler';
+function RemoveVectoredExceptionHandler; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'RemoveVectoredExceptionHandler';
+function FindFirstVolumeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstVolumeA';
+function FindFirstVolumeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstVolumeW';
+function FindFirstVolume; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstVolume' + AWSuffix;
+function FindNextVolumeA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextVolumeA';
+function FindNextVolumeW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextVolumeW';
+function FindNextVolume; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextVolume' + AWSuffix;
+function FindVolumeClose; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindVolumeClose';
+function FindFirstVolumeMountPointA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstVolumeMountPointA';
+function FindFirstVolumeMountPointW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstVolumeMountPointW';
+function FindFirstVolumeMountPoint; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindFirstVolumeMountPoint' + AWSuffix;
+function FindNextVolumeMountPointA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextVolumeMountPointA';
+function FindNextVolumeMountPointW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextVolumeMountPointW';
+function FindNextVolumeMountPoint; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindNextVolumeMountPoint' + AWSuffix;
+function FindVolumeMountPointClose; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindVolumeMountPointClose';
+function SetVolumeMountPointA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetVolumeMountPointA';
+function SetVolumeMountPointW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetVolumeMountPointW';
+function SetVolumeMountPoint; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetVolumeMountPoint' + AWSuffix;
+function DeleteVolumeMountPointA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteVolumeMountPointA';
+function DeleteVolumeMountPointW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteVolumeMountPointW';
+function DeleteVolumeMountPoint; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeleteVolumeMountPoint' + AWSuffix;
+function GetVolumeNameForVolumeMountPointA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumeNameForVolumeMountPointA';
+function GetVolumeNameForVolumeMountPointW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumeNameForVolumeMountPointW';
+function GetVolumeNameForVolumeMountPoint; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumeNameForVolumeMountPoint' + AWSuffix;
+function GetVolumePathNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumePathNameA';
+function GetVolumePathNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumePathNameW';
+function GetVolumePathName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumePathName' + AWSuffix;
+function GetVolumePathNamesForVolumeNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumePathNamesForVolumeNameA';
+function GetVolumePathNamesForVolumeNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumePathNamesForVolumeNameW';
+function GetVolumePathNamesForVolumeName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetVolumePathNamesForVolumeName' + AWSuffix;
+function CreateActCtxA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateActCtxA';
+function CreateActCtxW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateActCtxW';
+function CreateActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CreateActCtx' + AWSuffix;
+procedure AddRefActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AddRefActCtx';
+procedure ReleaseActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReleaseActCtx';
+function ZombifyActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ZombifyActCtx';
+function ActivateActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ActivateActCtx';
+function DeactivateActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'DeactivateActCtx';
+function GetCurrentActCtx; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetCurrentActCtx';
+function FindActCtxSectionStringA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindActCtxSectionStringA';
+function FindActCtxSectionStringW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindActCtxSectionStringW';
+function FindActCtxSectionString; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindActCtxSectionString' + AWSuffix;
+function FindActCtxSectionGuid; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindActCtxSectionGuid';
+function QueryActCtxW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'QueryActCtxW';
+function ProcessIdToSessionId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ProcessIdToSessionId';
+function WTSGetActiveConsoleSessionId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WTSGetActiveConsoleSessionId';
+function IsWow64Process; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'IsWow64Process';
+function GetLogicalProcessorInformation; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetLogicalProcessorInformation';
+function GetNumaHighestNodeNumber; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNumaHighestNodeNumber';
+function GetNumaProcessorNode; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNumaProcessorNode';
+function GetNumaNodeProcessorMask; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNumaNodeProcessorMask';
+function GetNumaAvailableMemoryNode; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNumaAvailableMemoryNode';
+
+{$IFDEF WINVISTA_UP}
+procedure InitializeConditionVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeConditionVariable';
+function SleepConditionVariableCS; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SleepConditionVariableCS';
+function SleepConditionVariableSRW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SleepConditionVariableSRW';
+procedure WakeAllConditionVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WakeAllConditionVariable';
+procedure WakeConditionVariable; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'WakeConditionVariable';
+
+procedure InitializeSRWLock; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'InitializeSRWLock';
+procedure ReleaseSRWLockExclusive; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReleaseSRWLockExclusive';
+procedure ReleaseSRWLockShared; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'ReleaseSRWLockShared';
+procedure AcquireSRWLockExclusive; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AcquireSRWLockExclusive';
+procedure AcquireSRWLockShared; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'AcquireSRWLockShared';
+function TryAcquireSRWLockExclusive; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TryAcquireSRWLockExclusive';
+function TryAcquireSRWLockShared; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'TryAcquireSRWLockShared';
+
+function SetProcessDEPPolicy; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetProcessDEPPolicy';
+function GetNamedPipeServerSessionId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeServerSessionId';
+function GetNamedPipeServerProcessId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeServerProcessId';
+
+function GetNamedPipeClientProcessId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeClientProcessId';
+function GetNamedPipeClientSessionId; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeClientSessionId';
+
+function GetNamedPipeClientComputerName; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeClientComputerName'+AWSuffix;
+function GetNamedPipeClientComputerNameA; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeClientComputerNameA';
+function GetNamedPipeClientComputerNameW; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'GetNamedPipeClientComputerNameW';
+{$ENDIF WINVISTA_UP}
+
+{$IFDEF JWENABLE_SETSEARCHPATHMODE}
+function SetSearchPathMode; external kernel32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'SetSearchPathMode';
+{$ENDIF}
+
 
 {$ENDIF DYNAMIC_LINK}
 
-{$ENDIF JWA_IMPLEMENTATIONSECTION}
+function ProcThreadAttributeValue(const Number : DWORD;
+     Thread, Input, Additive : Boolean) : DWORD;
+begin
+{
+#define ProcThreadAttributeValue(Number, Thread, Input, Additive) \
+    (((Number) & PROC_THREAD_ATTRIBUTE_NUMBER) | \
+     ((Thread != FALSE) ? PROC_THREAD_ATTRIBUTE_THREAD : 0) | \
+     ((Input != FALSE) ? PROC_THREAD_ATTRIBUTE_INPUT : 0) | \
+     ((Additive != FALSE) ? PROC_THREAD_ATTRIBUTE_ADDITIVE : 0))
+}
+  result := Number and PROC_THREAD_ATTRIBUTE_NUMBER;
+  if Thread then
+    result := result or PROC_THREAD_ATTRIBUTE_THREAD;
+  if Input then
+    result := result or PROC_THREAD_ATTRIBUTE_INPUT;
+  if Additive then
+    result := result or PROC_THREAD_ATTRIBUTE_ADDITIVE;
+end;
 
-{$IFNDEF JWA_INCLUDEMODE}
+function PROC_THREAD_ATTRIBUTE_PARENT_PROCESS : DWORD;
+begin
+{
+#define PROC_THREAD_ATTRIBUTE_PARENT_PROCESS \
+    ProcThreadAttributeValue (ProcThreadAttributeParentProcess, FALSE, TRUE, FALSE)
+}
+  result := ProcThreadAttributeValue(DWORD(ProcThreadAttributeParentProcess), false, true, false);
+end;
+
+function PROC_THREAD_ATTRIBUTE_EXTENDED_FLAGS : DWORD;
+begin
+{
+#define PROC_THREAD_ATTRIBUTE_EXTENDED_FLAGS \
+    ProcThreadAttributeValue (ProcThreadAttributeExtendedFlags, FALSE, TRUE, TRUE)
+}
+  result := ProcThreadAttributeValue(DWORD(ProcThreadAttributeExtendedFlags), false, true, true);
+end;
+
+function PROC_THREAD_ATTRIBUTE_HANDLE_LIST : DWORD;
+begin
+{
+#define PROC_THREAD_ATTRIBUTE_HANDLE_LIST \
+    ProcThreadAttributeValue (ProcThreadAttributeHandleList, FALSE, TRUE, FALSE)
+}
+  result := ProcThreadAttributeValue(DWORD(ProcThreadAttributeHandleList), false, true, false);
+end;
+{$ENDIF JWA_INTERFACESECTION}
+
+{$IFNDEF JWA_OMIT_SECTIONS}
 end.
-{$ENDIF !JWA_INCLUDEMODE}
+{$ENDIF JWA_OMIT_SECTIONS}

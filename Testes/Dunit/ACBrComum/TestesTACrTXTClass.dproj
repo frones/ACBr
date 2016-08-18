@@ -24,6 +24,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UsePackage>vcl;CodeSiteExpressVcl;rtl;vclx;vclimg;dbrtl;adortl;vcldb;vclactnband;vcldbx;bdertl;dbexpress;DataSnapIndy10ServerTransport;DataSnapClient;xmlrtl;DbxClientDriver;DbxCommonDriver;dbxcds;vclie;inet;IndyProtocols;inetdbbde;inetdbxpress;DataSnapProviderClient;inetdb;dsnap;IndySystem;IndyCore;DataSnapServer;dsnapcon;DBXInterBaseDriver;DBXMySQLDriver;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;vclib;ibxpress;webdsnap;vclribbon;soaprtl;VclSmp;vcltouch;websnap;AzureCloud;JclDeveloperTools;Jcl;JclContainers;JclVcl;JvCore;JvSystem;JvStdCtrls;JvAppFrm;JvDB;JvDlgs;JvBDE;JvControls;JvBands;JvCustom;JvDocking;JvDotNetCtrls;JvCrypt;JvGlobus;JvHMI;JvPascalInterpreter;JvJans;JvManagedThreads;JvMM;JvNet;JvCmp;JvPageComps;JvPluginSystem;JvPrintPreview;JvRuntimeDesign;JvTimeFramework;JvWizards;JvXPCtrls;Rave90VCL;TeeUI;Tee;TeeDB;intrawebdb_110_150;Intraweb_110_150;frce;ACBr_Comum;ACBr_synapse;ACBr_OpenSSL;ACBr_Diversos;ACBr_Serial;ACBr_Convenio115;ACBr_LFD;ACBr_TXTComum;ACBr_PAF;ACBr_SEF2;ACBr_PCNComum;ACBr_Sintegra;ACBr_SPED;ACBr_SPEDImportar;ACBR_DeSTDA;ACBr_TCP;ACBr_Boleto;ACBr_NFe;ACBr_DFeComum;ACBr_NFCeECFVirtual;ACBr_NFeDanfeESCPOS;ACBr_CTe;ACBr_NFSe;ACBr_MDFe;ACBr_SAT;ACBr_SATECFVirtual;ACBr_SATExtratoESCPOS;ACBr_TEFD;ACBr_NFeDanfeRL;ACBr_CTeDacteRL;ACBr_NFSeDanfseRL;ACBr_BoletoRL;ACBr_MDFeDamdfeRL;ACBr_SATExtratoRL;ACBr_BlocoX</DCC_UsePackage>
 			<DCC_Define>_CONSOLE_TESTRUNNER;$(DCC_Define)</DCC_Define>
 			<DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<DCC_DcuOutput>.</DCC_DcuOutput>
@@ -47,8 +48,8 @@
 			<DelphiCompile Include="TestesTACrTXTClass.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\..\FPCUnit\ACBrComum\acbrtxtclasstest.pas"/>
-			<DCCReference Include="..\..\FPCUnit\ACBrComum\acbrtxtclasstest2.pas"/>
+			<DCCReference Include="..\..\FPCUnit\ACBrTXTComum\acbrtxtclasstest.pas"/>
+			<DCCReference Include="..\..\FPCUnit\ACBrTXTComum\acbrtxtclasstest2.pas"/>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>

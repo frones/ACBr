@@ -38,6 +38,9 @@ unit ACBrAAC;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   ACBrBase, ACBrPAFClass, SysUtils, Classes;
 
 type
@@ -259,7 +262,7 @@ begin
     MS.LoadFromFile( fsNomeCompleto );
     MS.Position := 0;
     SetLength(S, MS.Size);
-    MS.ReadBuffer(PChar(S)^, MS.Size);
+    MS.ReadBuffer(PAnsiChar(S)^, MS.Size);
   finally
     MS.Free;
   end;

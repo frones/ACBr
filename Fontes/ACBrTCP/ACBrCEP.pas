@@ -53,7 +53,7 @@ uses
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
                          wsBases4you, wsRNSolucoes, wsKingHost, wsByJG,
-                         wsCorreios, wsDevMedia, wsViaCep ) ;
+                         wsCorreios, wsDevMedia, wsViaCep, wsCorreiosSIGEP) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -134,7 +134,7 @@ type
       property ChaveAcesso: String read fChaveAcesso write fChaveAcesso ;
       property Usuario: String read fUsuario write fUsuario ;
       property Senha: String read fSenha write fSenha ;
-      property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE; // Válido somente para wsCorreios
+      property PesquisarIBGE: Boolean read FPesquisarIBGE write FPesquisarIBGE; // Válido somente para wsCorreios e TACBrWSCorreiosSIGEP
 
       property OnBuscaEfetuada : TNotifyEvent read fOnBuscaEfetuada
          write fOnBuscaEfetuada ;
@@ -293,6 +293,17 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end;
 
+  { TACBrWSCorreiosSIGEP }
+
+  TACBrWSCorreiosSIGEP = class(TACBrCEPWSClass)
+  private
+    fACBrIBGE: TACBrIBGE;
+    procedure ProcessaResposta;
+  public
+    constructor Create( AOwner : TACBrCEP ) ; override ;
+    destructor Destroy; override;
+    Procedure BuscarPorCEP( ACEP : String ) ; override ;
+  end;
 
 
 implementation
@@ -383,9 +394,11 @@ begin
     wsRNSolucoes       : fACBrCEPWS := TACBrWSRNSolucoes.Create(Self);
     wsKingHost         : fACBrCEPWS := TACBrWSKingHost.Create(Self);
     wsByJG             : fACBrCEPWS := TACBrWSByJG.Create(Self);
-    wsCorreios         : fACBrCEPWS := TACBrWSCorreios.Create(Self);
+    //wsCorreios       : fACBrCEPWS := TACBrWSCorreios.Create(Self);      // WebService antigo do correios morreu :(
+    wsCorreios         : fACBrCEPWS := TACBrWSCorreiosSIGEP.Create(Self);
     wsDevMedia         : fACBrCEPWS := TACBrWSDevMedia.Create(Self);
     wsViaCep           : fACBrCEPWS := TACBrWSViaCEP.Create(Self);
+    wsCorreiosSIGEP    : fACBrCEPWS := TACBrWSCorreiosSIGEP.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -1402,14 +1415,142 @@ begin
       begin
         with fOwner.Enderecos.New do
         begin
+          CEP             := LerTagXML(s, 'cep');
+          Tipo_Logradouro := '';
+          Logradouro      := LerTagXML(s, 'logradouro');
+          Complemento     := LerTagXML(s, 'complemento');
+          Bairro          := LerTagXML(s, 'bairro');
+          Municipio       := LerTagXML(s, 'localidade');
+          UF              := LerTagXML(s, 'uf');
+          IBGE_Municipio  := LerTagXML(s, 'ibge');
+        end;
+      end;
+    end;
+  finally
+    SL1.Free;
+  end;
+
+  if Assigned(fOwner.OnBuscaEfetuada) then
+    fOwner.OnBuscaEfetuada(Self);
+end;
+
+
+
+{ TACBrWSCorreiosSIGEP }
+constructor TACBrWSCorreiosSIGEP.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fACBrIBGE := TACBrIBGE.Create(nil);
+
+  fOwner.ParseText := False;
+  fpURL := 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
+end;
+
+destructor TACBrWSCorreiosSIGEP.Destroy;
+begin
+  fACBrIBGE.Free;
+  inherited Destroy;
+end;
+
+procedure TACBrWSCorreiosSIGEP.BuscarPorCEP(ACEP: String);
+var
+  Acao: TStringList;
+  Stream: TMemoryStream;
+begin
+  Acao   := TStringList.Create;
+  Stream := TMemoryStream.Create;
+  try
+    Acao.Text :=
+     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
+     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> '+
+     ' <soapenv:Header/>'+
+     ' <soapenv:Body>' +
+     ' <cli:consultaCEP>' +
+     ' <cep>' + ACEP + '</cep>' +
+     ' </cli:consultaCEP>' +
+     ' </soapenv:Body>' +
+     ' </soapenv:Envelope>';
+
+    try
+      Acao.SaveToStream(Stream);
+
+      fOwner.HTTPSend.Clear;
+      fOwner.HTTPSend.Document.LoadFromStream(Stream);
+      fOwner.HTTPPost(fpURL);
+
+      ProcessaResposta;
+    except
+      on E: Exception do
+      begin
+        if Pos('CEP NAO ENCONTRADO', E.Message) <> 0  then
+          exit
+        else
+          raise EACBrCEPException.Create(
+            'Ocorreu o seguinte erro ao consumir o WebService dos correios:' + sLineBreak +
+            '  - ' + E.Message
+          );
+      end;
+    end;
+  finally
+    Stream.Free;
+    Acao.Free;
+  end;
+end;
+
+procedure TACBrWSCorreiosSIGEP.ProcessaResposta;
+var
+  Buffer: string;
+  s: string;
+  i: Integer;
+  SL1: TStringList;
+  sMun: String;
+begin
+  SL1 := TStringList.Create;
+
+  fACBrIBGE.ProxyHost := fOwner.ProxyHost;
+  fACBrIBGE.ProxyPort := fOwner.ProxyPort;
+  fACBrIBGE.ProxyPass := fOwner.ProxyPass;
+  fACBrIBGE.ProxyUser := fOwner.ProxyUser;
+
+  try
+    Buffer := fOwner.RespHTTP.Text;
+    Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
+
+    SL1.Text := Buffer;
+    sMun := '';
+
+    for i := 0 to SL1.Count-1 do
+    begin
+      s := SL1.Strings[i];
+
+      if LerTagXML(s, 'cep') <> '' then
+      begin
+        with fOwner.Enderecos.New do
+        begin
           CEP             := LerTagXML(Buffer, 'cep');
           Tipo_Logradouro := '';
-          Logradouro      := LerTagXML(Buffer, 'logradouro');
+          Logradouro      := LerTagXML(Buffer, 'end');
           Complemento     := LerTagXML(Buffer, 'complemento');
           Bairro          := LerTagXML(Buffer, 'bairro');
-          Municipio       := LerTagXML(Buffer, 'localidade');
+          Municipio       := LerTagXML(Buffer, 'cidade');
           UF              := LerTagXML(Buffer, 'uf');
-          IBGE_Municipio  := LerTagXML(Buffer, 'ibge');
+          IBGE_Municipio  := '';
+
+          // Correios não retornam informação do IBGE, Fazendo busca do IBGE com ACBrIBGE //
+          if (Municipio <> '') and
+             (fOwner.PesquisarIBGE) then
+          begin
+            if (sMun <> Municipio) then  // Evita buscar municipio já encontrado
+            begin
+              fACBrIBGE.BuscarPorNome( Municipio, UF, True, False ) ;
+              sMun := Municipio;
+            end ;
+
+            if fACBrIBGE.Cidades.Count > 0 then  // Achou ?
+               IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
+          end ;
+
         end;
       end;
     end;

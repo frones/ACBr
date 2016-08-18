@@ -132,7 +132,7 @@ type
     property OnWriteRegistroC111: TWriteRegistroEvent read GetOnWriteRegistroC111 write SetOnWriteRegistroC111;
     property OnWriteRegistroC120: TWriteRegistroEvent read GetOnWriteRegistroC120 write SetOnWriteRegistroC120;
     property OnWriteRegistroC170: TWriteRegistroEvent read GetOnWriteRegistroC170 write SetOnWriteRegistroC170;
-    property OnWriteRegistroC460: TWriteRegistroEvent read FOnWriteRegistroC460 write SetOnWriteRegistroC460;
+    property OnWriteRegistroC460: TWriteRegistroEvent read GetOnWriteRegistroC460 write SetOnWriteRegistroC460;
     property OnWriteRegistroC470: TWriteRegistroEvent read GetOnWriteRegistroC470 write SetOnWriteRegistroC470;
     property OnWriteRegistroC510: TWriteRegistroEvent read GetOnWriteRegistroC510 write SetOnWriteRegistroC510;
 

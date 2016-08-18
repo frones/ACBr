@@ -397,6 +397,7 @@ begin
  ACBrNFSe1.Configuracoes.Arquivos.PathGer          := edtPathLogs.Text;
 // ACBrNFSe1.Configuracoes.Arquivos.PathNFSe         := edtPathLogs.Text;
  ACBrNFSe1.Configuracoes.Arquivos.PathSchemas      := edtSchemas.Text;
+ ACBrNFSe1.Configuracoes.Arquivos.NomeLongoNFSe    := True;
 
  PathMensal := ACBrNFSe1.Configuracoes.Arquivos.GetPathGer(0);
 
@@ -426,6 +427,7 @@ begin
  ACBrNFSe1.Configuracoes.WebServices.ProxyPort  := edtProxyPorta.Text;
  ACBrNFSe1.Configuracoes.WebServices.ProxyUser  := edtProxyUser.Text;
  ACBrNFSe1.Configuracoes.WebServices.ProxyPass  := edtProxySenha.Text;
+ ACBrNFSe1.Configuracoes.WebServices.UF         := edtEmitUF.Text;
 
  ACBrNFSe1.Configuracoes.Geral.SetConfigMunicipio;
 
@@ -615,7 +617,7 @@ begin
      PrestadorServico.RazaoSocial := edtEmitRazao.Text;
 
      Tomador.IdentificacaoTomador.CpfCnpj            := '99999999000191';
-     Tomador.IdentificacaoTomador.InscricaoMunicipal := '1733160024';
+     Tomador.IdentificacaoTomador.InscricaoMunicipal := '17331600';
 
      Tomador.RazaoSocial := 'INSCRICAO DE TESTE';
 
@@ -878,7 +880,6 @@ begin
   begin
    ACBrNFSe1.NotasFiscais.Clear;
    ACBrNFSe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
-   ACBrNFSe1.Configuracoes.Arquivos.NomeLongoNFSe := True;
    ACBrNFSe1.NotasFiscais.Imprimir;
    ACBrNFSe1.NotasFiscais.ImprimirPDF;
 
@@ -905,6 +906,13 @@ begin
                    frmStatus.Show;
                    frmStatus.BringToFront;
                   end;
+  stNFSeConsultaSituacao : begin
+                             if ( frmStatus = nil ) then
+                               frmStatus := TfrmStatus.Create(Application);
+                             frmStatus.lblStatus.Caption := 'Consultando a Situação...';
+                             frmStatus.Show;
+                             frmStatus.BringToFront;
+                           end;
   stNFSeConsulta : begin
                    if ( frmStatus = nil )
                     then frmStatus := TfrmStatus.Create(Application);
@@ -1090,7 +1098,7 @@ begin
    ACBrNFSe1.NotasFiscais.Items[0].EnviarEmail(vAux
                                                , edtEmailAssunto.Text
                                                , mmEmailMsg.Lines
-                                               , False //Enviar PDF junto
+                                               , True //Enviar PDF junto
                                                , nil //Lista com emails que serão enviado cópias - TStrings
                                                , nil // Lista de anexos - TStrings
                                                 );

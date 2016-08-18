@@ -1,8 +1,8 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 636
-  Top = 83
+  Left = 389
+  Top = 117
   Width = 763
-  Height = 789
+  Height = 780
   Caption = 'ACBrSATExtratoFortes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,8 +16,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object rlVenda: TRLReport
-    Left = 8
-    Top = -8
+    Left = 16
+    Top = 0
     Width = 302
     Height = 1512
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
@@ -41,7 +41,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 668
       Width = 286
-      Height = 265
+      Height = 279
       AutoSize = True
       BandType = btSummary
       object RLDraw2: TRLDraw
@@ -152,6 +152,25 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         CheckSumMethod = cmNone
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+      end
+      object pEspacoFinal: TRLPanel
+        Left = 0
+        Top = 265
+        Width = 286
+        Height = 14
+        Align = faBottom
+        Color = clWhite
+        ParentColor = False
+        Transparent = False
+        object RLDraw10: TRLDraw
+          Left = 0
+          Top = 13
+          Width = 286
+          Height = 1
+          Align = faBottom
+          DrawKind = dkLine
+          Pen.Style = psDot
+        end
       end
     end
     object rlsbDetItem: TRLSubDetail
@@ -999,6 +1018,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Height = 14
           Align = faTop
           Alignment = taCenter
+          Behavior = [beSiteExpander]
           Caption = 'CPF/CNPJ Consumidor: <CPF_CNPJ>'
           Layout = tlBottom
           BeforePrint = lCPF_CNPJBeforePrint
@@ -1063,7 +1083,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
   end
   object rlCancelamento: TRLReport
-    Left = 352
+    Left = 328
     Top = 0
     Width = 302
     Height = 1134
@@ -1088,7 +1108,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 303
       Width = 286
-      Height = 523
+      Height = 540
       AutoSize = True
       BandType = btSummary
       object RLDraw8: TRLDraw
@@ -1324,6 +1344,22 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         CheckSumMethod = cmNone
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+      end
+      object pEspacoFinalCan: TRLPanel
+        Left = 0
+        Top = 523
+        Width = 286
+        Height = 17
+        Align = faTop
+        object RLDraw12: TRLDraw
+          Left = 0
+          Top = 16
+          Width = 286
+          Height = 1
+          Align = faBottom
+          DrawKind = dkLine
+          Pen.Style = psDot
+        end
       end
     end
     object rlbCabecalhoCan: TRLBand

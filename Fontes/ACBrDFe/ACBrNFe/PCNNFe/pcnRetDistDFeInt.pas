@@ -154,7 +154,7 @@ type
     FIE: String;
     FdhEmi: TDateTime;
     FtpNF: TpcnTipoNFe;
-    FvNF: Double;
+    FvNF: Currency;
     FdigVal: String;
     FdhRecbto: TDateTime;
     FnProt: String;
@@ -166,7 +166,7 @@ type
     property IE: String               read FIE       write FIE;
     property dhEmi: TDateTime         read FdhEmi    write FdhEmi;
     property tpNF: TpcnTipoNFe        read FtpNF     write FtpNF;
-    property vNF: Double              read FvNF      write FvNF;
+    property vNF: Currency            read FvNF      write FvNF;
     property digVal: String           read FdigVal   write FdigVal;
     property dhRecbto: TDateTime      read FdhRecbto write FdhRecbto;
     property nProt: String            read FnProt    write FnProt;

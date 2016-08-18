@@ -1,38 +1,38 @@
 {******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emiss√£o da    }
+{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emiss„o da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
 {  http://www.gnre.pe.gov.br/                                                  }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
 {                                       Daniel Simoes de Almeida               }
-{                                       Andr√© Ferreira de Moraes               }
+{                                       AndrÈ Ferreira de Moraes               }
 {                                       Juliomar Marchetti                     }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -40,7 +40,7 @@
 |* Historico
 |*
 |* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doa√ß√£o do componente para o Projeto ACBr
+|*  - DoaÁ„o do componente para o Projeto ACBr
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -206,25 +206,28 @@ begin
   Result := False;
   try
     i := 0;
-    if Leitor.rExtrai(1, 'receitas') <> '' then
+    if Leitor.rExtrai(1, 'ns1:receitas') <> '' then
     begin
-      while Leitor.rExtrai(2, 'receita', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'ns1:receita', '', i + 1) <> '' do
       begin
         FretReceita.Add;
-        FretReceita.Items[i].RetInfReceita.codigo                    := Leitor.rAtributo('codigo');
-        FretReceita.Items[i].RetInfReceita.descricao                 := Leitor.rAtributo('descricao');
+        FretReceita.Items[i].RetInfReceita.codigo                        := Leitor.rAtributo('codigo');
+        FretReceita.Items[i].RetInfReceita.descricao                     := Leitor.rAtributo('descricao');
         if Pos('courier', Leitor.Grupo) > 0 then
-          FretReceita.Items[i].RetInfReceita.courier                   := Leitor.rAtributo('courier');
-        FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'exigeDetalhamentoReceita');
-        FretReceita.Items[i].RetInfReceita.exigeProduto                  := SeparaDados(Leitor.Grupo, 'exigeProduto');
-        FretReceita.Items[i].RetInfReceita.exigePeriodoReferencia        := SeparaDados(Leitor.Grupo, 'exigePeriodoReferencia');
-        FretReceita.Items[i].RetInfReceita.exigePeriodoApuracao          := SeparaDados(Leitor.Grupo, 'exigePeriodoApuracao');
-        FretReceita.Items[i].RetInfReceita.exigeParcela                  := SeparaDados(Leitor.Grupo, 'exigeParcela');
-        FretReceita.Items[i].RetInfReceita.valorExigido                  := SeparaDados(Leitor.Grupo, 'valorExigido');
-        FretReceita.Items[i].RetInfReceita.exigeDocumentoOrigem          := SeparaDados(Leitor.Grupo, 'exigeDocumentoOrigem');
-        FretReceita.Items[i].RetInfReceita.exigeContribuinteDestinatario := SeparaDados(Leitor.Grupo, 'exigeContribuinteDestinatario');
-        FretReceita.Items[i].RetInfReceita.exigeCamposAdicionais         := SeparaDados(Leitor.Grupo, 'exigeCamposAdicionais');
-
+          FretReceita.Items[i].RetInfReceita.courier                     := Leitor.rAtributo('courier');
+        FretReceita.Items[i].RetInfReceita.exigeContribuinteEmitente     := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteEmitente');
+        FretReceita.Items[i].RetInfReceita.exigeDetalhamentoReceita      := SeparaDados(Leitor.Grupo, 'ns1:exigeDetalhamentoReceita');
+        FretReceita.Items[i].RetInfReceita.exigeProduto                  := SeparaDados(Leitor.Grupo, 'ns1:exigeProduto');
+        FretReceita.Items[i].RetInfReceita.exigePeriodoReferencia        := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoReferencia');
+        FretReceita.Items[i].RetInfReceita.exigePeriodoApuracao          := SeparaDados(Leitor.Grupo, 'ns1:exigePeriodoApuracao');
+        FretReceita.Items[i].RetInfReceita.exigeParcela                  := SeparaDados(Leitor.Grupo, 'ns1:exigeParcela');
+        FretReceita.Items[i].RetInfReceita.valorExigido                  := SeparaDados(Leitor.Grupo, 'ns1:valorExigido');
+        FretReceita.Items[i].RetInfReceita.exigeDocumentoOrigem          := SeparaDados(Leitor.Grupo, 'ns1:exigeDocumentoOrigem');
+        FretReceita.Items[i].RetInfReceita.exigeContribuinteDestinatario := SeparaDados(Leitor.Grupo, 'ns1:exigeContribuinteDestinatario');
+        FretReceita.Items[i].RetInfReceita.exigeDataVencimento           := SeparaDados(Leitor.Grupo, 'ns1:exigeDataVencimento');
+        FretReceita.Items[i].RetInfReceita.exigeDataPagamento            := SeparaDados(Leitor.Grupo, 'ns1:exigeDataPagamento');
+        FretReceita.Items[i].RetInfReceita.exigeConvenio                 := SeparaDados(Leitor.Grupo, 'ns1:exigeConvenio');
+        FretReceita.Items[i].RetInfReceita.exigeCamposAdicionais         := SeparaDados(Leitor.Grupo, 'ns1:exigeCamposAdicionais');
 
         if Assigned(InfDetalhamentoReceita) then
           InfDetalhamentoReceita.Free;

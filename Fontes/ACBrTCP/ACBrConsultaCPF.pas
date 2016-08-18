@@ -57,6 +57,7 @@ type
   TACBrConsultaCPF = class(TACBrHTTP)
   private
     FDataNascimento: String;
+    FDataInscricao: String;
     FNome: String;
     FSituacao: String;
     FCPF: String;
@@ -74,6 +75,7 @@ type
   published
     property CPF: String Read FCPF Write FCPF;
     property DataNascimento : String Read FDataNascimento write FDataNascimento;
+    property DataInscricao : String Read FDataInscricao write FDataInscricao;
     property Nome: String Read FNome;
     property Situacao: String Read FSituacao;
     property DigitoVerificador: String Read FDigitoVerificador;
@@ -106,7 +108,7 @@ end;
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet('http://www.receita.fazenda.gov.br/Aplicacoes/ATCTA/CPF/captcha/gerarCaptcha.asp');
+    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/captcha/gerarCaptcha.asp');
     if HTTPSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;
@@ -199,7 +201,7 @@ begin
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('http://www.receita.fazenda.gov.br/aplicacoes/atcta/cpf/ConsultaPublicaExibir.asp');
+    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaPublicaExibir.asp');
 
     Erro := VerificarErros(RespHTTP.Text);
 
@@ -218,13 +220,23 @@ begin
         FNome     := LerCampo(Resposta,'Nome da Pessoa Física:');
         FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
         FSituacao := LerCampo(Resposta,'Situação Cadastral:');
+        FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');
         FEmissao  := LerCampo(Resposta,'Comprovante emitido às:');
         FCodCtrlControle   := LerCampo(Resposta,'Código de controle do comprovante:');
         FDigitoVerificador := LerCampo(Resposta,'Digito Verificador:');
 
+        if Trim(FNome) = '' then
+        begin
+          Erro     := LerCampo(Resposta,'Data de nascimento informada');
+          if Trim(Erro) <> '' then
+            Erro := 'Erro de data';
+        end;
       finally
         Resposta.Free;
       end ;
+
+      if Trim(Erro) = 'Erro de data' then
+            raise EACBrConsultaCPFException.Create('Data de nascimento divergente da base da Receita Federal.');
 
       if Trim(FNome) = '' then
         raise EACBrConsultaCPFException.Create('Não foi possível obter os dados.');

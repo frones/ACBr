@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_Ponto"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Isaque Pinheiro"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrPonto\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - Ponto Eletrônico TXT - (http://www.projetoacbr.com.br/)
+Gera arquivo TXT para ponto eletrônico na &quot;Portaria Nº 1.510, de 21 de Agosto de 2009&quot;"/>
+    <License Value="LGPL"/>
+    <Version Major="1"/>
+    <Files Count="7">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto.pas"/>
+        <HasRegisterProc Value="True"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_ACJEF.pas"/>
+        <UnitName Value="ACBrPonto_ACJEF"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_ACJEF_Class.pas"/>
+        <UnitName Value="ACBrPonto_ACJEF_Class"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFD.pas"/>
+        <UnitName Value="ACBrPonto_AFD"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFD_Class.pas"/>
+        <UnitName Value="ACBrPonto_AFD_Class"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFDT.pas"/>
+        <UnitName Value="ACBrPonto_AFDT"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrPonto\ACBrPonto_AFDT_Class.pas"/>
+        <UnitName Value="ACBrPonto_AFDT_Class"/>
+      </Item7>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrTXTComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

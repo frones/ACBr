@@ -1,0 +1,104 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{ Biblioteca multi plataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+Agradecimentos:
+
+* Administrador:
+- Daniel Simões de Almeida
+
+
+* Desenvolvedor:
+- Henrique - Doação do componente ao projeto ACBr
+
+{******************************************************************************
+|* AcbrLerTxt
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+
+18/04/2016
+[+]     : Novo Teste YA40A
+[-]     : Ajuste no Teste YA
+[+]	  Melhorias em Varios procedimentos de Testes
+
+          Henrique Leonardo   
+
+26/03/2016
+[+]     : Novas configuraçoes no ini
+	  Melhorias em Varios procedimentos de Testes
+
+          Henrique Leonardo   
+
+24/03/2016
+[+]     : Novos procedimentos no teste : 
+	    ChecarItensLayoutVersao310 
+	    ChecarLayoutVersao310 
+
+          Henrique Leonardo   
+
+
+14/03/2016
+[+]     : versao Beta 1.1
+           Melhorias internas          
+          Henrique Leonardo   
+
+
+14/03/2016
+-- AcbrLerTxtIni --
+[+]     : Novas Configurações em config.ini 
+            StrId        Define o Valor da TAg iD 
+            IntnNF       Define o numero de zeros a esquerda para Tag nNf
+            StrtpAmb     Define o tipo de ambiente para Tag tpAmb
+          
+          Henrique Leonardo   
+
+14/03/2016
+-- TestAcBrLerTxt --
+[+]     : Nova função MontaZeroEsquerda
+[+]     : Novas configurações para aceitar o config.ini
+            Henrique Leonardo   
+
+
+Data: 12/03/2016
+[+]     : Beta 1.0 - Implantanção no SVN
+          Henrique Leonardo   
+
+[-]     : Remoção da Procedure ATribuirTexto 
+	  Por executar um Teste Vazio
+          Henrique leonardo
+
+[*]     : Remoção de Initiaze de procedimentos
+	  Sem  função para o teste.
+          Henrique leonardo

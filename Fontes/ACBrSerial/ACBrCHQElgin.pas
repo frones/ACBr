@@ -127,8 +127,6 @@ begin
 end;
 
 procedure TACBrCHQElgin.ImprimirVerso(AStringList : TStrings);
-var
-  A : integer;
 begin
 (* NÃO IMPLEMENTADO
   FImprimeVerso := True;

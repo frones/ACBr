@@ -45,7 +45,7 @@ interface
 uses SysUtils, Classes, DateUtils, ACBrTXTClass;
 
 type
-  TWriteRegistroEvent = procedure(var ALinha: AnsiString) of object;
+  TWriteRegistroEvent = procedure(var ALinha: String) of object;
   TCheckRegistroEvent = procedure(ARegistro: TObject; var AAbortar: Boolean) of object;
 
   EACBrSPEDException = class(Exception);

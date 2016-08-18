@@ -97,7 +97,7 @@ TACBrECFEpsonComando = class
     procedure SetExtensao(const Value: AnsiString);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Comando      : AnsiString  write SetComando  ;
     property Extensao     : AnsiString  write SetExtensao ;
@@ -133,7 +133,7 @@ TACBrECFEpsonResposta = class
     procedure SetRespostaDLL(AValue : AnsiString) ;
  public
     constructor create( AOwner : TACBrECFEpson ) ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Resposta     : AnsiString  read fsResposta write SetResposta ;
     property Seq          : Byte        read fsSeq;
@@ -413,7 +413,7 @@ TACBrECFEpson = class( TACBrECFClass )
        BuscaExata : Boolean; IgnorarCase : Boolean = True  ):
        TACBrECFComprovanteNaoFiscal; override;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
@@ -940,7 +940,7 @@ procedure TACBrECFEpsonComando.AddParamDateTime(ADateTime : TDateTime ;
 var
   Texto : String ;
 begin
-  if Tipo in ['T','H'] then
+  if CharInSet(Tipo,['T','H']) then
      Texto := FormatDateTime('hhnnss',ADateTime)
   else
      Texto := FormatDateTime('ddmmyyyy',ADateTime) ;
@@ -1434,7 +1434,7 @@ begin
 
         { Segundo suporte da Epson, em alguns casos ECF não envia o ACK,
           enviando diretamente o STX (que é o inicio do Frame de Resposta) }
-        while not (chr(fsByteACK) in [STX,ACK]) do     { Se ACK = 6 Comando foi reconhecido }
+        while not CharInSet(chr(fsByteACK) , [STX,ACK]) do     { Se ACK = 6 Comando foi reconhecido }
         begin
            fsByteACK := 0 ;
            fpDevice.Serial.Purge ;                   { Limpa a Porta }
@@ -1466,7 +1466,7 @@ begin
                  raise EACBrECFSemResposta.create( ACBrStr(
                        'Impressora '+fpModeloStr+' não reconheceu o Comando'+
                        sLineBreak+' (NACK)') )
-              else if not (chr(fsByteACK) in [STX,ACK]) then
+              else if not CharInSet(chr(fsByteACK) , [STX,ACK]) then
                  raise EACBrECFSemResposta.create( ACBrStr(
                        'Erro. Resposta da Impressora '+fpModeloStr+' inválida'+
                        sLineBreak+' (ACK = '+IntToStr(fsByteACK)+')')) ;
@@ -2443,7 +2443,7 @@ begin
      AliquotaICMS := 'NS'
   else if copy(AliquotaICMS,1,2) = 'SI' then
      AliquotaICMS := 'IS'
-  else if (upcase(AliquotaICMS[1]) in ['T','S']) then
+  else if CharInSet(upcase(AliquotaICMS[1]) , ['T','S']) then
     AliquotaICMS := 'T'+AliquotaICMS[1]+copy(AliquotaICMS,2,2) ; {Indice}
 
   Result := inherited AchaICMSAliquota( AliquotaICMS );
@@ -2459,15 +2459,27 @@ end;
 
 
 procedure TACBrECFEpson.CarregaFormasPagamento;
-Var A      : Integer;
-    FPagto : TACBrECFFormaPagamento ;
+Var 
+  A, I, J: Integer;
+  FPagto : TACBrECFFormaPagamento ;
 begin
   inherited CarregaFormasPagamento ;   { Cria fpFormasPagamentos }
 
   try
+     { Lê quantas Formas de Pagamento foram programadas }
+     try
+        EpsonComando.Comando := '0901' ;
+        EpsonComando.Extensao := '0000' ;
+        EnviaComando;
+        I := StrToIntDef(EpsonResposta.Params[0], 20);
+     except
+        I := 20;
+     end; 
+
      { Lê as Formas de Pagamento cadastradas na impressora }
      A := 1;
-     while (A <= 20) do
+     J := 1;
+     while (J <= I) do
      begin
         EpsonComando.Comando := '050D' ;
         EpsonComando.AddParamInteger( A ) ;
@@ -2480,13 +2492,12 @@ begin
            FPagto.PermiteVinculado := ( EpsonResposta.Params[1] = 'S' ) ;
 
            fpFormasPagamentos.Add( FPagto ) ;
+           Inc(J);
         except
            on E : Exception do
            begin
               // 090C “Tipo de pagamento não definido”
-              if (pos('090C',E.Message) > 0) then
-                 Break
-              else
+              if pos('090C',E.Message) = 0 then
                  raise ;
            end ;
         end;
@@ -3577,7 +3588,7 @@ begin
   end ;
 end ;
 
-function TACBrECFEpson.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFEpson.GetDadosUltimaReducaoZ: String;
 var
   Aliq, AliqZ : TACBrECFAliquota ;
   ECFCRZ, DtStr, HrStr : String ;

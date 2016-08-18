@@ -63,7 +63,7 @@ type
     procedure SetVersaoDF(const Value: TVersaoGNRE);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfGNRE: TGeralConfGNRE); overload;
+    procedure Assign(DeGeralConfGNRE: TGeralConfGNRE); reintroduce;
 
   published
     property VersaoDF: TVersaoGNRE read FVersaoDF write SetVersaoDF default ve100;
@@ -76,9 +76,11 @@ type
     FEmissaoPathGNRE: boolean;
     FSalvarApenasGNREProcessadas: boolean;
     FPathGNRE: String;
+    FPathArqTXT:String;
+    FSalvarTXT:Boolean;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfGNRE: TArquivosConfGNRE); overload;
+    procedure Assign(DeArquivosConfGNRE: TArquivosConfGNRE); reintroduce;
 
     function GetPathGNRE(Data: TDateTime = 0; CNPJ: String = ''): String;
   published
@@ -87,6 +89,9 @@ type
     property SalvarApenasGNREProcessadas: boolean
       read FSalvarApenasGNREProcessadas write FSalvarApenasGNREProcessadas default False;
     property PathGNRE: String read FPathGNRE write FPathGNRE;
+    property PathArqTXT: String read FPathArqTXT  write FPathArqTXT ;
+    property SalvarTXT: Boolean read FSalvarTXT write FSalvarTXT default false;
+
   end;
 
   { TConfiguracoesGNRE }
@@ -101,7 +106,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesGNRE: TConfiguracoesGNRE); overload;
+    procedure Assign(DeConfiguracoesGNRE: TConfiguracoesGNRE); reintroduce;
 
   published
     property Geral: TGeralConfGNRE read GetGeral;

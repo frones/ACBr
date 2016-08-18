@@ -205,6 +205,7 @@ begin
     begin
       case COD_VER of
         ECFVersao100: strCOD_VER := '0001';
+        ECFVersao200: strCOD_VER := '0002';
       end;
       Add( LFill('0000') +
            LFill('LECF') +

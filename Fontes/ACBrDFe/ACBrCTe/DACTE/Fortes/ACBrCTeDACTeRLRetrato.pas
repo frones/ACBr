@@ -604,7 +604,10 @@ type
     procedure rlb_18_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_06_ProdutosPerigososBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlb_07_HeaderItensAfterPrint(Sender: TObject);
+    procedure rlb_11_ModRodLot104AfterPrint(Sender: TObject);
   private
+    Linhas : Integer;
     procedure Itens;
   public
     procedure ProtocoloCTe(const sProtocolo: string);
@@ -1124,7 +1127,7 @@ begin
           rlmDadosEmitente.Lines.Add(XCpl);
         if XBairro <> '' then
           rlmDadosEmitente.Lines.Add(XBairro);
-        rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(FormatFloat('00000000', CEP)) +
+        rlmDadosEmitente.Lines.Add('CEP: ' + FormatarCEP(CEP) +
           ' - ' + XMun + ' - ' + UF);
       end;
       rlmDadosEmitente.Lines.Add('CNPJ: ' + FormatarCNPJ(CNPJ));
@@ -1240,7 +1243,7 @@ begin
   rllRazaoRemet.Caption := FCTe.Rem.xNome;
   rllEnderecoRemet1.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
   rllEnderecoRemet2.Caption := FCTe.Rem.EnderReme.xCpl + ' - ' + FCTe.Rem.EnderReme.xBairro;
-  rllCEPRemet.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
+  rllCEPRemet.Caption := FormatarCEP(FCTe.Rem.EnderReme.CEP);
   rllMunRemet.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
   rllCnpjRemet.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
   rllPaisRemet.Caption := FCTe.Rem.EnderReme.xPais;
@@ -1251,7 +1254,7 @@ begin
   rllRazaoDest.Caption := FCTe.Dest.xNome;
   rllEnderecoDest1.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
   rllEnderecoDest2.Caption := FCTe.Dest.EnderDest.xCpl + ' - ' + FCTe.Dest.EnderDest.xBairro;
-  rllCEPDest.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
+  rllCEPDest.Caption := FormatarCEP(FCTe.Dest.EnderDest.CEP);
   rllMunDest.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
   rllCnpjDest.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
   rllPaisDest.Caption := FCTe.Dest.EnderDest.xPais;
@@ -1264,7 +1267,7 @@ begin
     rllRazaoExped.Caption := FCTe.Exped.xNome;
     rllEnderecoExped1.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
     rllEnderecoExped2.Caption := FCTe.Exped.EnderExped.xCpl + ' - ' + FCTe.Exped.EnderExped.xBairro;
-    rllCEPExped.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
+    rllCEPExped.Caption := FormatarCEP(FCTe.Exped.EnderExped.CEP);
     rllMunExped.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
     rllCnpjExped.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
     rllPaisExped.Caption := FCTe.Exped.EnderExped.xPais;
@@ -1278,7 +1281,7 @@ begin
     rllRazaoReceb.Caption := FCTe.Receb.xNome;
     rllEnderecoReceb1.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
     rllEnderecoReceb2.Caption := FCTe.Receb.EnderReceb.xCpl + ' - ' + FCTe.Receb.EnderReceb.xBairro;
-    rllCEPReceb.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
+    rllCEPReceb.Caption := FormatarCEP(FCTe.Receb.EnderReceb.CEP);
     rllMunReceb.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
     rllCnpjReceb.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
     rllPaisReceb.Caption := FCTe.Receb.EnderReceb.xPais;
@@ -1294,7 +1297,7 @@ begin
         rllRazaoToma.Caption := FCTe.Rem.xNome;
         rllEnderecoToma.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro +
           ' - ' + FCTe.Rem.EnderReme.xCpl + ' - ' + FCTe.Rem.EnderReme.xBairro;
-        rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Rem.EnderReme.CEP));
+        rllCEPToma.Caption := FormatarCEP(FCTe.Rem.EnderReme.CEP);
         rllMunToma.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
         rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
         rllPaisToma.Caption := FCTe.Rem.EnderReme.xPais;
@@ -1306,7 +1309,7 @@ begin
         rllRazaoToma.Caption := FCTe.Exped.xNome;
         rllEnderecoToma.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro +
           ' - ' + FCTe.Exped.EnderExped.xCpl + ' - ' + FCTe.Exped.EnderExped.xBairro;
-        rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Exped.EnderExped.CEP));
+        rllCEPToma.Caption := FormatarCEP(FCTe.Exped.EnderExped.CEP);
         rllMunToma.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
         rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
         rllPaisToma.Caption := FCTe.Exped.EnderExped.xPais;
@@ -1318,7 +1321,7 @@ begin
         rllRazaoToma.Caption := FCTe.Receb.xNome;
         rllEnderecoToma.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro +
           ' - ' + FCTe.Receb.EnderReceb.xCpl + ' - ' + FCTe.Receb.EnderReceb.xBairro;
-        rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Receb.EnderReceb.CEP));
+        rllCEPToma.Caption := FormatarCEP(FCTe.Receb.EnderReceb.CEP);
         rllMunToma.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
         rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
         rllPaisToma.Caption := FCTe.Receb.EnderReceb.xPais;
@@ -1330,7 +1333,7 @@ begin
         rllRazaoToma.Caption := FCTe.Dest.xNome;
         rllEnderecoToma.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro +
           ' - ' + FCTe.Dest.EnderDest.xCpl + ' - ' + FCTe.Dest.EnderDest.xBairro;
-        rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Dest.EnderDest.CEP));
+        rllCEPToma.Caption := FormatarCEP(FCTe.Dest.EnderDest.CEP);
         rllMunToma.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
         rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
         rllPaisToma.Caption := FCTe.Dest.EnderDest.xPais;
@@ -1346,7 +1349,7 @@ begin
       rllRazaoToma.Caption := FCTe.Ide.Toma4.xNome;
       rllEnderecoToma.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro +
         ' - ' + FCTe.Ide.Toma4.EnderToma.xCpl + ' - ' + FCTe.Ide.Toma4.EnderToma.xBairro;
-      rllCEPToma.Caption := FormatarCEP(FormatFloat('00000000', FCTe.Ide.Toma4.EnderToma.CEP));
+      rllCEPToma.Caption := FormatarCEP(FCTe.Ide.Toma4.EnderToma.CEP);
       rllMunToma.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
       rllCnpjToma.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
       rllPaisToma.Caption := FCTe.Ide.Toma4.EnderToma.xPais;
@@ -1812,20 +1815,41 @@ begin
   PrintIt := RLCTe.PageNumber = 1;
 end;
 
+procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensAfterPrint(Sender: TObject);
+begin
+  inherited;
+
+  if (Linhas>70) and (not cdsDocumentos.eof) then
+  begin
+    Linhas := 0;
+    rlDocOrig_tpDoc1.Height := 50;
+    rlDocOrig_tpDoc2.Height := 50;
+    rld_07_headerItens.Height := 81;
+    RLCTe.newpage;
+  end;
+
+end;
+
 procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i : Integer;
 begin
   inherited;
-	PrintIt := RLCTe.PageNumber = 1; 
-	
+	//PrintIt := RLCTe.PageNumber = 1;
+
   rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
     (FCTe.Ide.tpCTe = tcSubstituto);
 
   rlDocOrig_tpDoc1.Lines.Clear;
   rlDocOrig_tpDoc2.Lines.Clear;
 
-  cdsDocumentos.First;
+  //cdsDocumentos.First;
+
+  if (RLCTe.PageNumber<=1) then
+    cdsDocumentos.First
+  else
+    PrintIt := (not cdsDocumentos.eof);
+
   while not cdsDocumentos.Eof do
   begin
     if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
@@ -1841,6 +1865,12 @@ begin
       cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
     end;
     cdsDocumentos.Next;
+
+    if (RLCTe.PageNumber>1) then
+      inc(Linhas);
+    if ((cdsDocumentos.recno > 4) and (RLCTe.PageNumber=1) or (Linhas>70)) then
+      break;
+
   end;
 
   rlDocOrig_tpDoc1.Height := Round( rlDocOrig_tpDoc1.Lines.Count * 12);
@@ -1986,8 +2016,8 @@ begin
    rpRemetente:      rllResponsavel.Caption := 'REMETENTE';
    rpExpedidor:      rllResponsavel.Caption := 'EXPEDIDOR';
    rpRecebedor:      rllResponsavel.Caption := 'RECEBEDOR';
-   rpDestinatario:   rllResponsavel.Caption := 'DESTINATÁRIO';
-   rpTomadorServico: rllResponsavel.Caption := 'TOMADOR DO SERVIÇO';
+   rpDestinatario:   rllResponsavel.Caption := ACBrStr('DESTINATÁRIO');
+   rpTomadorServico: rllResponsavel.Caption := ACBrStr('TOMADOR DO SERVIÇO');
   end;
   rllValorTotal.Caption := FormatFloatBr(msk13x2, FCTe.Rodo.valePed.vTValePed);
 {$ENDIF}
@@ -2010,9 +2040,10 @@ begin
   for i:= 0 to (FCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
    // TpcteTipoVeiculo = (tvTracao, tvReboque);
-   if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao
-    then rlmTipo.Lines.Add('Tração')
-    else rlmTipo.Lines.Add('Reboque');
+			if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao then 
+				rlmTipo.Lines.Add(ACBrStr('Tração'))
+			else 
+				rlmTipo.Lines.Add('Reboque');
    rlmPlaca.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].placa);
    rlmUF.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].UF);
    rlmRNTRC.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].Prop.RNTRC);
@@ -2033,7 +2064,7 @@ begin
   begin
     // TpcteTipoVeiculo = (tvTracao, tvReboque);
     if FCTe.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo.Lines.Add('Tração')
+      rlmTipo.Lines.Add(ACBrStr('Tração'))
     else
       rlmTipo.Lines.Add('Reboque');
     rlmPlaca.Lines.Add(FCTe.Rodo.veic.Items[i].placa);
@@ -2058,10 +2089,16 @@ begin
   end;
 
   for i := 0 to (FCTe.Rodo.Lacres.Count - 1) do
-  begin
     rllLacres.Caption := rllLacres.Caption + FCTe.Rodo.Lacres.Items[i].nLacre + '/';
-  end;
 {$ENDIF}
+end;
+
+procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104AfterPrint(Sender: TObject);
+begin
+  inherited;
+
+  if ((cdsDocumentos.recNo>4) and (rlCte.PageNumber=1)) then
+    RLCte.newpage;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104BeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -2069,9 +2106,6 @@ var
   i: integer;
 begin
   inherited;
-
-  PrintIt := RLCTe.PageNumber = 1;
-
   rlmTipo2.Lines.Clear;
   rlmPlaca2.Lines.Clear;
   rlmUF2.Lines.Clear;
@@ -2089,9 +2123,10 @@ begin
   for i:= 0 to (FCTe.infCTeNorm.Rodo.veic.Count - 1) do
   begin
    // TpcteTipoVeiculo = (tvTracao, tvReboque);
-   if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao
-    then rlmTipo2.Lines.Add('Tração')
-    else rlmTipo2.Lines.Add('Reboque');
+		if FCTe.infCTeNorm.Rodo.veic.Items[i].tpVeic = tvTracao  then 
+			rlmTipo2.Lines.Add(ACBrStr('Tração'))
+    else 
+			rlmTipo2.Lines.Add('Reboque');
    rlmPlaca2.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].placa);
    rlmUF2.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].UF);
    rlmRNTRC2.Lines.Add(FCTe.infCTeNorm.Rodo.veic.Items[i].Prop.RNTRC);
@@ -2119,7 +2154,7 @@ begin
   begin
     // TpcteTipoVeiculo = (tvTracao, tvReboque);
     if FCTe.Rodo.veic.Items[i].tpVeic = tvTracao then
-      rlmTipo2.Lines.Add('Tração')
+      rlmTipo2.Lines.Add(ACBrStr('Tração'))
     else
       rlmTipo2.Lines.Add('Reboque');
     rlmPlaca2.Lines.Add(FCTe.Rodo.veic.Items[i].placa);

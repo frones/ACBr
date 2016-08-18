@@ -56,9 +56,9 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.178a';
+  CACBrBoleto_Versao = '0.0.205a';
 
-  cACBrTipoOcorrenciaDecricao: array[0..180] of String = (
+  cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
   'Remessa Registrar',
   'Remessa Baixar',
   'Remessa Debitar em Conta',
@@ -99,6 +99,7 @@ const
   'Remessa Cobrar Juros Mora',
   'Remessa Alterar Valor Titulo',
   'Remessa Excluir Sacador Avalista',
+  'Remessa Alterar Numero de Dias Para Protesto',
   'Retorno Confirmado',
   'Retorno Transferencia Carteira',
   'Retorno Transferencia Carteira Entrada',
@@ -318,6 +319,7 @@ type
     toRemessaCobrarJurosMora,
     toRemessaAlterarValorTitulo,
     toRemessaExcluirSacadorAvalista,
+    toRemessaAlterarNumeroDiasProtesto,
 
     {Ocorrências para arquivo retorno}
     toRetornoRegistroConfirmado,
@@ -460,7 +462,13 @@ type
     toRetornoReembolsoTransferenciaDescontoVendor,
     toRetornoReembolsoDevolucaoDescontoVendor,
     toRetornoReembolsoNaoEfetuado,
-    toRetornoSustacaoEnvioCartorio
+    toRetornoSustacaoEnvioCartorio,
+    toRetornoIOFInvalido,
+    toRetornoTituloDDAReconhecidoPagador,
+    toRetornoTituloDDANaoReconhecidoPagador,
+    toRetornoTituloDDARecusadoCIP,
+    toRetornoPagadorDDA,
+    toTipoOcorrenciaNenhum
   );
 
   {TACBrOcorrencia}
@@ -515,12 +523,13 @@ type
     property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; virtual;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; virtual;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String; overload; virtual;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String; overload; virtual;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
 
@@ -528,6 +537,7 @@ type
     function MontarCampoNossoNumero(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarLinhaDigitavel(const CodigoBarras: String; ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; virtual;
+    function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String; virtual;
 
     procedure GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);  Virtual;
     function GerarRegistroHeader240(NumeroRemessa : Integer): String;    Virtual;
@@ -585,8 +595,9 @@ type
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 
+    function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String;
@@ -1221,7 +1232,8 @@ begin
    wNossoNumero:= OnlyNumber(AValue);
    with ACBrBoleto.Banco do
    begin
-      wTamNossoNumero:= CalcularTamMaximoNossoNumero(Carteira, wNossoNumero);
+      wTamNossoNumero:= CalcularTamMaximoNossoNumero(Carteira, wNossoNumero,
+                                                     ACBrBoleto.Cedente.Convenio);
 
       if Length(trim(wNossoNumero)) > wTamNossoNumero then
          raise Exception.Create( ACBrStr('Tamanho Máximo do Nosso Número é: '+ IntToStr(wTamNossoNumero) ));
@@ -1339,8 +1351,9 @@ begin
    fMultaValorFixo       := false;
    fReferencia           := '';
    fVersao               := '';
+   fTipoImpressao        := tipNormal;
 
-   fCodigoMora    := '12';
+   fCodigoMora    := '';
    fCodigoGeracao := '2';
    fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
 end;
@@ -1611,7 +1624,7 @@ begin
         if DataMoraJuros <> 0 then
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
-                         ' após '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
+                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
                                                                 IncDay(DataMoraJuros,1),DataMoraJuros))))
         else
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
@@ -1709,7 +1722,7 @@ begin
   Result := BancoClass.CodigosMoraAceitos;
 end;
 
-function TACBrBanco.GetCodigosGeracaoAceitos: String;
+function TACBrBanco.GetCodigosGeracaoAceitos: string;
 begin
   Result := BancoClass.CodigosGeracaoAceitos;
 end;
@@ -1808,9 +1821,14 @@ begin
    Result:=  BancoClass.CalcularDigitoVerificador(ACBrTitulo);
 end;
 
-function TACBrBanco.CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero : String = ''): Integer;
+function TACBrBanco.CalcularTamMaximoNossoNumero(const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 begin
-  Result:= BancoClass.CalcularTamMaximoNossoNumero(Carteira,NossoNumero);
+  Result:= BancoClass.CalcularTamMaximoNossoNumero(Carteira, NossoNumero, Convenio);
+end;
+
+function TACBrBanco.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String;
+begin
+  Result:= BancoClass.MontarCampoCarteira(ACBrTitulo);
 end;
 
 function TACBrBanco.MontarCampoNossoNumero ( const ACBrTitulo: TACBrTitulo
@@ -1907,7 +1925,8 @@ begin
    Inherited Destroy;
 end;
 
-procedure TACBrBancoClass.GerarRegistroHeader400( NumeroRemessa: Integer; aRemessa: TStringList);
+procedure TACBrBancoClass.GerarRegistroHeader400(NumeroRemessa: Integer;
+  ARemessa: TStringList);
 begin
   { Método implementado apenas para evitar Warnings de compilação (poderia ser abstrato)
     Você de fazer "override" desse método em todas as classes filhas de TACBrBancoClass }
@@ -1933,6 +1952,12 @@ begin
   Result := '';
 end;
 
+function TACBrBancoClass.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo
+  ): String;
+begin
+  Result := ACBrTitulo.Carteira;
+end;
+
 
 function TACBrBancoClass.GerarRegistroTrailler240 ( ARemessa: TStringList
    ) : String;
@@ -1940,12 +1965,12 @@ begin
    Result:= '';
 end;
 
-Procedure TACBrBancoClass.LerRetorno400 ( ARetorno: TStringList );
+procedure TACBrBancoClass.LerRetorno400(ARetorno: TStringList);
 begin
    ErroAbstract('LerRetorno400');
 end;
 
-Procedure TACBrBancoClass.LerRetorno240 ( ARetorno: TStringList );
+procedure TACBrBancoClass.LerRetorno240(ARetorno: TStringList);
 begin
    ErroAbstract('LerRetorno240');
 end;
@@ -1968,7 +1993,7 @@ begin
 end;
 
 function TACBrBancoClass.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''): Integer;
+  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 begin
   Result := ACBrBanco.TamanhoMaximoNossoNum;
 end;
@@ -1997,6 +2022,12 @@ begin
   Result := '';
 end ;
 
+function TACBrBancoClass.CodMotivoRejeicaoToDescricao(
+const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String;
+begin
+  Result := '';
+end;
+
 function TACBrBancoClass.CodOcorrenciaToTipoRemessa(const CodOcorrencia : Integer
   ) : TACBrTipoOcorrencia ;
 begin
@@ -2016,7 +2047,8 @@ begin
                                          'Acesse nosso Forum em: http://acbr.sf.net/',[NomeProcedure,Nome])) ;
 end;
 
-function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDatetime) : String;
+function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDateTime
+  ): String;
 begin
    {** Padrão para vencimentos até 21/02/2025 **}
    //Result := IntToStrZero( Max(Trunc(DataVencimento - EncodeDate(1997,10,07)),0),4 );
@@ -2246,9 +2278,9 @@ end;
 function TACBrBoleto.GetOcorrenciasRemessa: TACBrOcorrenciasRemessa;
 var I: Integer;
 begin
-  SetLength(Result, 38);
+  SetLength(Result, 41);
 
-  for I:= 1 to 38 do
+  for I:= 1 to 41 do
   begin
     Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
     Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];

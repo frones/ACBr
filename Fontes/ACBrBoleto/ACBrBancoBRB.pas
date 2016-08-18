@@ -51,7 +51,7 @@ type
     function MontarChaveASBACE(const ACBrTitulo: TACBrTitulo): string;
     function CalculaDigitosChaveASBACE(ChaveASBACESemDigito: string): string;
     procedure LerRetorno400(ARetorno: TStringList); override;
-    function CodOcorrenciaToTipo(const CodOcorrencia: string): TACBrTipoOcorrencia; overload;
+    function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; overload; override;
   end;
 
 implementation
@@ -406,9 +406,9 @@ begin
 end;
 
 function TACBrBancoBRB.CodOcorrenciaToTipo(
-  const CodOcorrencia: string): TACBrTipoOcorrencia;
+  const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
-  case StrToIntDef(CodOcorrencia, 0) of
+  case CodOcorrencia of
     00: Result := toRetornoBaixadoPorDevolucao;
     02: Result := toRetornoRegistroConfirmado;
     05: Result := toRetornoLiquidadoSemRegistro;

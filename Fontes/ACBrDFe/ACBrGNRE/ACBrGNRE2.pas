@@ -128,7 +128,11 @@ uses
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
- {$R ACBrGNREServicos.rc}
+ {$IFDEF CPU64}
+  {$R ACBrGNREServicos.res}  // Dificuldades de compilar Recurso em 64 bits
+ {$ELSE}
+  {$R ACBrGNREServicos.rc}
+ {$ENDIF}
 {$ELSE}
  {$R ACBrGNREServicos.res}
 {$ENDIF}
@@ -141,12 +145,14 @@ begin
 
   FGuias := TGuias.Create(Self, Guia);
   FWebServices := TWebServices.Create(Self);
+  FGuiasRetorno := TGuiasRetorno.Create(Self, GuiaRetorno);
 end;
 
 destructor TACBrGNRE.Destroy;
 begin
   FGuias.Free;
   FWebServices.Free;
+  FGuiasRetorno.Free;
 
   inherited;
 end;
@@ -329,6 +335,8 @@ function TACBrGNRE.Enviar(Imprimir: Boolean): Boolean;
 var
   i: Integer;
 begin
+  Guias.GerarGNRE;
+  
   if Guias.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma GNRE adicionada ao Lote'));
 

@@ -3732,6 +3732,10 @@ procedure TForm1.btnMenuFiscalConfigPAFECFClick(Sender: TObject);
 var
   Parametros: TACBrECFInfoPaf;
 begin
+  // para ERs mais novas usar, onde 'X' é o perfil de requisitos aplicado
+  ACBrECF1.PafMF_RelParametrosConfiguracao('X');
+
+  {
   if Assigned(ACBrECF1.AAC) then
     ACBrECF1.PafMF_RelParametrosConfiguracao(ACBrECF1.AAC.IdentPAF.Paf)
   else
@@ -3778,6 +3782,7 @@ begin
       Parametros.Free;
     end;
   end;
+  }
 end;
 
 procedure TForm1.btnMenuFiscalLMFCClick(Sender: TObject);

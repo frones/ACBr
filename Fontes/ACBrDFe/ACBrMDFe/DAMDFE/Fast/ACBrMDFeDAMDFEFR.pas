@@ -217,7 +217,7 @@ var
   i: Integer;
 begin
   Result := False;
-
+  dmDAMDFe.SetDataSetsToFrxReport; 
   if Trim(FastFile) <> '' then
   begin
     if FileExists(FastFile) then
@@ -232,7 +232,7 @@ begin
   begin
     dmDAMDFe.MDFe := MDFe;
     dmDAMDFe.CarregaDados;
-
+    dmDAMDFe.SetDataSetsToFrxReport; 
     Result := dmDAMDFe.frxReport.PrepareReport;
   end
   else
@@ -243,7 +243,6 @@ begin
       begin
         dmDAMDFe.MDFe := TACBrMDFe(ACBrMDFe).Manifestos.Items[i].MDFe;
         dmDAMDFe.CarregaDados;
-
         if (i > 0) then
           Result := dmDAMDFe.frxReport.PrepareReport(False)
         else

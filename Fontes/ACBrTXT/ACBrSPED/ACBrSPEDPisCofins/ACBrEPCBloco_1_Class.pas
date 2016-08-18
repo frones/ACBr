@@ -101,7 +101,7 @@ type
   public
     constructor Create ;          /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function Registro1001New: TRegistro1001;
     function Registro1010New: TRegistro1010;
@@ -887,7 +887,7 @@ end;
 procedure TBloco_1.WriteRegistro1809(Reg1800: TRegistro1800) ;
 var
 intFor: integer;
-strIND_PROC : AnsiString;
+strIND_PROC : String;
 begin
   if Assigned(Reg1800.Registro1809) then
   begin

@@ -57,9 +57,8 @@ uses
   pgnreRetConsResLoteGNRE, pgnreConsConfigUF, pgnreRetConsConfigUF,
   ACBrGNREGuias, ACBrGNREConfiguracoes;
 
-const
-  CURL_WSDL = 'http://www.gnre.pe.gov.br/gnreWS/services/';
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
+//const
+//  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
 
 type
 
@@ -72,15 +71,12 @@ type
     FPLayout: TLayOutGNRE;
     FPConfiguracoesGNRE: TConfiguracoesGNRE;
 
-    function ExtrairModeloChaveAcesso(AChaveGNRE: String): String;
-    function ExtrairUFChaveAcesso(AChaveGNRE: String): Integer;
-
   protected
     procedure InicializarServico; override;
     procedure DefinirURL; override;
     function GerarVersaoDadosSoap: String; override;
     procedure FinalizarServico; override;
-
+    function GetUrlWsd: String; override;
   public
     constructor Create(AOwner: TACBrDFe); override;
     procedure Clear; override;
@@ -162,6 +158,7 @@ type
     procedure Clear; override;
 
     function Executar: Boolean; override;
+    function SalvarTXT(AResultado: String): Boolean;
 
     property Ambiente: TpcnTipoAmbiente read FAmbiente write FAmbiente;
     property numeroRecibo: String read FnumeroRecibo write FnumeroRecibo;
@@ -222,14 +219,9 @@ type
     Fdescricao: String;
     Freceita: Integer;
     FexigeReceita: String;
-    FexigeDataVencimento: String;
-    FexigeDataPagamento: String;
-    FexigeContribuinteEmitente: String;
     FexigeUfFavorecida: String;
-    FexigeConvenio: String;
     FUf: String;
     FAmbiente: TpcnTipoAmbiente;
-
     FGNRERetorno: TTConfigUf;
     FcUF: Integer;
 
@@ -252,11 +244,6 @@ type
     property receita: Integer read Freceita write Freceita;
     property exigeReceita: String read FexigeReceita write FexigeReceita;
     property exigeUfFavorecida: String read FexigeUfFavorecida write FexigeUfFavorecida;
-    property exigeContribuinteEmitente: String read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
-    property exigeDataVencimento: String read FexigeDataVencimento write FexigeDataVencimento;
-    property exigeConvenio: String read FexigeConvenio write FexigeConvenio;
-    property exigeDataPagamento: String read FexigeDataPagamento write FexigeDataPagamento;
-
     property GNRERetorno: TTConfigUf read FGNRERetorno write FGNRERetorno;
     property cUF: Integer read FcUF;
   end;
@@ -340,6 +327,7 @@ begin
   inherited Clear;
 
   FPStatus := stGNREIdle;
+  FPDFeOwner.SSL.UseCertificateHTTP := True;
 end;
 
 procedure TGNREWebService.DefinirURL;
@@ -358,21 +346,6 @@ begin
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
-function TGNREWebService.ExtrairModeloChaveAcesso(
-  AChaveGNRE: String): String;
-begin
-  AChaveGNRE := OnlyNumber(AChaveGNRE);
-  if ValidarChave(AChaveGNRE) then
-    Result := copy(AChaveGNRE, 21, 2)
-  else
-    Result := '';
-end;
-
-function TGNREWebService.ExtrairUFChaveAcesso(AChaveGNRE: String): Integer;
-begin
-  Result := StrToIntDef(Copy(AChaveGNRE, 1, 2), 0);
-end;
-
 procedure TGNREWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
@@ -384,18 +357,20 @@ end;
 function TGNREWebService.GerarVersaoDadosSoap: String;
 begin
   { Sobrescrever apenas se necessário }
-
   if EstaVazio(FPVersaoServico) then
     FPVersaoServico := TACBrGNRE(FPDFeOwner).LerVersaoDeParams(FPLayout);
-
   Result := '<versaoDados>' + FPVersaoServico + '</versaoDados>';
 end;
 
 procedure TGNREWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
-
   TACBrGNRE(FPDFeOwner).SetStatus(stGNREIdle);
+end;
+
+function TGNREWebService.GetUrlWsd: String;
+begin
+  Result := FPDFeOwner.GetNameSpaceURI + '/webservice/';
 end;
 
 { TGNRERecepcao }
@@ -444,7 +419,7 @@ end;
 procedure TGNRERecepcao.DefinirDadosMsg;
 var
   i: Integer;
-  vGuias: WideString;
+  vGuias: String;
 begin
   vGuias := '';
   for i := 0 to FGuias.Count - 1 do
@@ -539,7 +514,7 @@ function TGNRERecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'processarResponse');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXml;
 
   Fcodigo            := FGNRERetorno.codigo;
@@ -579,7 +554,7 @@ begin
   FPArqEnv := 'ped-rec';
   FPArqResp := 'pro-rec';
 
-  FnumeroRecibo := '';
+//  FnumeroRecibo := '';
   Fcodigo := 0;
   Fresultado := '';
   Fdescricao := '';
@@ -732,7 +707,7 @@ function TGNRERetRecepcao.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -832,56 +807,13 @@ begin
   end;
   *)
 
-(*
-function TWebServicesBase.Confirma(AResultado: String): Boolean;
-var SL, SLAux: TStringList;
-  i, GuiasOk: Integer;
-  Cabec, RepresentacaoNumerica, SituacaoGuia: String;
-begin
-  SL := TStringList.Create;
-  SLAux := TStringList.Create;
-  SL.Text := AResultado;
-  GuiasOk := 0;
-
-  try
-    Cabec := SL.Strings[0];
-    for i := 0 to SL.Count - 1 do
-    begin
-      if SameText(Copy(SL.Strings[i], 1, 1), '1') then
-      begin
-        SituacaoGuia := Trim(Copy(SL.Strings[i], 6, 1));
-        if SameText(SituacaoGuia, '0') then
-        begin
-          SLAux.Add(Cabec);
-          SLAux.Add(SL.Strings[i]);
-          Inc(GuiasOk);
-          RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
-
-          if FConfiguracoes.Geral.Salvar then
-            SLAux.SaveToFile(PathWithDelim(FConfiguracoes.Geral.PathSalvar)+RepresentacaoNumerica+'-gnre.txt');
-        end;
-      end;
-
-      SLAux.Clear;
-      SituacaoGuia := '';
-      RepresentacaoNumerica := '';
-    end;
-  finally
-    FreeAndNil(SL);
-    FreeAndNil(SLAux);
-    Result := GuiasOk > 0;
-  end;
-end;
-*)
-
-
-
   //Verificando se existe alguma guia confirmada
   for I := 0 to FGuias.Count - 1 do
   begin
     if FGuias.Items[I].Confirmada then
     begin
       Result := True;
+      Self.SalvarTXT(FGNRERetorno.resultado);
       break;
     end;
   end;
@@ -910,6 +842,47 @@ end;
 //    FProtocolo := AInfProt.Items[0].nProt;
 //    FcStat := AInfProt.Items[0].cStat;
 //  end;
+end;
+
+function TGNRERetRecepcao.SalvarTXT(AResultado: String): Boolean;
+var
+  SL, SLAux: TStringList;
+  i, GuiasOk: Integer;
+  Cabec, RepresentacaoNumerica, SituacaoGuia: String;
+begin
+  SL := TStringList.Create;
+  SLAux := TStringList.Create;
+  SL.Text := AResultado;
+  GuiasOk := 0;
+
+  try
+    Cabec := SL.Strings[0];
+    for i := 0 to SL.Count - 1 do
+    begin
+      if SameText(Copy(SL.Strings[i], 1, 1), '1') then
+      begin
+        SituacaoGuia := Trim(Copy(SL.Strings[i], 6, 1));
+        if SameText(SituacaoGuia, '0') then
+        begin
+          SLAux.Add(Cabec);
+          SLAux.Add(SL.Strings[i]);
+          Inc(GuiasOk);
+          RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
+
+          if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
+            SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT)+RepresentacaoNumerica+'-gnre.txt');
+        end;
+      end;
+
+      SLAux.Clear;
+      SituacaoGuia := '';
+      RepresentacaoNumerica := '';
+    end;
+  finally
+    FreeAndNil(SL);
+    FreeAndNil(SLAux);
+    Result := GuiasOk > 0;
+  end;
 end;
 
 { TGNRERecibo }
@@ -1017,7 +990,7 @@ function TGNRERecibo.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
   FAmbiente  := FGNRERetorno.Ambiente;
@@ -1069,17 +1042,10 @@ begin
   FPLayout := LayGNRERetRecepcao;
   FPArqEnv := 'ped-cfg';
   FPArqResp := 'cfg';
-
   Fcodigo := 0;
   Fdescricao := '';
-  Freceita := 0;
   FexigeReceita := '';
-  FexigeDataVencimento := '';
-  FexigeDataPagamento := '';
-  FexigeContribuinteEmitente := '';
   FexigeUfFavorecida := '';
-  FexigeConvenio := '';
-  FUf := '';
 
   if Assigned(FPConfiguracoesGNRE) then
   begin
@@ -1127,7 +1093,7 @@ begin
   FPVersaoServico := '';
   FPURL := '';
 
-  FPLayout := LayGNRERetRecepcao;
+  FPLayout := LayGNREConsultaConfigUF;
 
   TACBrGNRE(FPDFeOwner).LerServicoDeParams(
     'GNRE',
@@ -1145,20 +1111,16 @@ function TGNREConsultaUF.TratarResposta: Boolean;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
-  FGNRERetorno.Leitor.Arquivo := FPRetWS;
+  FGNRERetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FGNRERetorno.LerXML;
 
-  FAmbiente                   := FGNRERetorno.Ambiente;
-  Fcodigo                     := FGNRERetorno.codigo;
-  Fdescricao                  := UTF8Decode(FGNRERetorno.descricao);
-  FexigeReceita               := FGNRERetorno.exigeReceita;
-  FexigeDataVencimento        := FGNRERetorno.exigeDataVencimento;
-  FexigeDataPagamento         := FGNRERetorno.exigeDataPagamento;
-  FexigeContribuinteEmitente  := FGNRERetorno.exigeContribuinteEmitente;
-  FexigeUfFavorecida          := FGNRERetorno.exigeUfFavorecida;
-  FexigeConvenio              := FGNRERetorno.exigeConvenio;
-  FUf                         := FGNRERetorno.Uf;
-  FPMsg                       := UTF8Decode(FGNRERetorno.descricao);
+  FAmbiente          := FGNRERetorno.Ambiente;
+  Fcodigo            := FGNRERetorno.codigo;
+  Fdescricao         := UTF8Decode(FGNRERetorno.descricao);
+  FexigeReceita      := FGNRERetorno.exigeReceita;
+  FexigeUfFavorecida := FGNRERetorno.exigeUfFavorecida;
+  FUf                := FGNRERetorno.Uf;
+  FPMsg              := UTF8Decode(FGNRERetorno.descricao);
 
   Result := (FGNRERetorno.codigo = 450); // 450 = Consulta da configuração da UF realizada com sucesso.
 end;

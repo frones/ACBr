@@ -1228,10 +1228,10 @@ begin
      QTD_REG_BLC:= 1;
   end;
 
-  if Bloco_A.RegistroA001.IND_MOV = imlComDados then
+  if Bloco_B.RegistroB001.IND_MOV = imlComDados then
     with Bloco_9.Registro9900 do
     begin
-       if Bloco_A.RegistroA020Count > 0 then
+       if Bloco_B.RegistroB020Count > 0 then
        begin
           with New do
           begin

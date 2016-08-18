@@ -321,6 +321,7 @@ begin
     raise EACBrNFeDANFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
   FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
+  FdmDanfe.frxReport.PrintOptions.ShowDialog := ShowDialog;
 
   // preparar relatorio
   if Assigned(ACBrNFe) then
@@ -456,18 +457,12 @@ begin
 			frxPDFExport.EmbeddedFonts := False;
 			frxPDFExport.Background    := False;
 
-			for I := 0 to TACBrNFe(ACBrNFe).NotasFiscais.Count - 1 do
-			begin
-				frxPDFExport.FileName :=
-					PathWithDelim(Self.PathPDF) +
-					StringReplace(UpperCase(NFe.infNFe.ID),'NFE','', [rfReplaceAll, rfIgnoreCase]) +
-					'-nfe.pdf';
-
-				if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
-					ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
-
-				frxReport.Export(frxPDFExport);
-			end;
+			frxPDFExport.FileName := PathWithDelim(Self.PathPDF) +	OnlyNumber(NFe.infNFe.ID) + '-nfe.pdf';
+	
+			if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+				ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+	
+			frxReport.Export(frxPDFExport);
 			frxPDFExport.ShowDialog := fsShowDialog;
     end;		
   end;

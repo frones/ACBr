@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 234
-  Top = 111
+  Left = 235
+  Top = 113
+  Width = 892
+  Height = 630
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
-  ClientHeight = 545
-  ClientWidth = 884
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 297
-    Height = 545
+    Height = 599
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -96,6 +96,8 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -110,8 +112,6 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 8
@@ -127,7 +127,7 @@ object Form1: TForm1
           Top = 0
           Width = 275
           Height = 437
-          ActivePage = TabSheet4
+          ActivePage = TabSheet3
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -142,7 +142,7 @@ object Form1: TForm1
             end
             object Label44: TLabel
               Left = 9
-              Top = 59
+              Top = 51
               Width = 216
               Height = 65
               Caption = 
@@ -153,7 +153,7 @@ object Form1: TForm1
             end
             object gbCertificado: TGroupBox
               Left = 2
-              Top = 130
+              Top = 122
               Width = 265
               Height = 144
               Caption = 'Certificado'
@@ -250,8 +250,72 @@ object Form1: TForm1
               Width = 238
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               TabOrder = 1
               OnChange = cbTipoEmissaoChange
+            end
+            object Button1: TButton
+              Left = 16
+              Top = 272
+              Width = 99
+              Height = 25
+              Caption = 'Data de Validade'
+              TabOrder = 2
+              OnClick = Button1Click
+            end
+            object Button2: TButton
+              Left = 144
+              Top = 272
+              Width = 99
+              Height = 25
+              Caption = 'Num.S'#233'rie'
+              TabOrder = 3
+              OnClick = Button2Click
+            end
+            object Button3: TButton
+              Left = 16
+              Top = 304
+              Width = 99
+              Height = 25
+              Caption = 'Subject Name'
+              TabOrder = 4
+              OnClick = Button3Click
+            end
+            object Button4: TButton
+              Left = 144
+              Top = 304
+              Width = 99
+              Height = 25
+              Caption = 'CNPJ'
+              TabOrder = 5
+              OnClick = Button4Click
+            end
+            object Edit1: TEdit
+              Left = 9
+              Top = 344
+              Width = 249
+              Height = 21
+              TabOrder = 6
+              Text = '0548133600013704583493000190'
+            end
+            object Button5: TButton
+              Left = 64
+              Top = 366
+              Width = 99
+              Height = 25
+              Caption = 'SHA256+RSA'
+              TabOrder = 7
+              OnClick = Button5Click
+            end
+            object cbAssinar: TCheckBox
+              Left = 176
+              Top = 372
+              Width = 54
+              Height = 19
+              Caption = 'Assinar'
+              Checked = True
+              State = cbChecked
+              TabOrder = 8
             end
           end
           object TabSheet4: TTabSheet
@@ -381,6 +445,7 @@ object Form1: TForm1
                 Top = 104
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -411,6 +476,7 @@ object Form1: TForm1
                 Top = 142
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -426,6 +492,7 @@ object Form1: TForm1
                 Top = 181
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -499,6 +566,7 @@ object Form1: TForm1
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
+                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -1296,7 +1364,7 @@ object Form1: TForm1
     Left = 297
     Top = 0
     Width = 587
-    Height = 545
+    Height = 599
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -1570,7 +1638,7 @@ object Form1: TForm1
       Left = 1
       Top = 301
       Width = 585
-      Height = 243
+      Height = 297
       ActivePage = TabSheet10
       Align = alClient
       TabOrder = 1
@@ -1624,7 +1692,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 577
-          Height = 215
+          Height = 269
           Align = alClient
           Indent = 19
           TabOrder = 0
@@ -1637,7 +1705,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 577
-          Height = 215
+          Height = 269
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1663,7 +1731,7 @@ object Form1: TForm1
           Left = 0
           Top = 0
           Width = 577
-          Height = 215
+          Height = 269
           Align = alClient
           Indent = 19
           TabOrder = 0

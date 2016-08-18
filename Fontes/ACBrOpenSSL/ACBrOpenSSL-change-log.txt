@@ -39,7 +39,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 23/11/0105
+13/06/2016
+-- OpenSSLExt --
+[+] Adicionado suporte ao método: X509GetPubkey  (por: DSA)
+
+11/03/2016
+-- libexslt, libxml2, libxmlsec, libxslt --
+[*] Ajustes para suportar a diretiva de compilação "USE_DELAYED"
+    Criado método "Init" nas Units, em substituição de Initialization
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28561
+
+07/03/2016   
+-- libexslt, libxml2, libxmlsec, libxslt --
+[*] Ajustes para compilação em 64 bits. (por: DSA)
+
+Data: 26/02/2016
+[+] Adicionado modo de saida: "outBinary" para ser usado em "InternalDigest" (por: DSA)
+
+Data: 23/11/2015
 [*] pequena otimização do método GerarXMLeECFc quando passar o parâmetro de arquivo, 
     estava sendo duplicado a montagem do arquivo nos dois métodos que fazem overload.
 

@@ -399,7 +399,7 @@ end;
 
 procedure TACBrRFDItemCupom.SetCancelado(const AValue: Char);
 begin
-  if not (UpCase(AValue) in ['S','N']) then
+  if not CharInSet(UpCase(AValue) , ['S','N']) then
      raise Exception.Create(ACBrStr('Valores válidos para TACBrRFDItemCupom.Cancelado, "S" ou "N"')) ;
 
   fsCancelado := UpCase( AValue );
@@ -840,7 +840,7 @@ end;
 
 procedure TACBrRFDCupom.SetOrdemDA(const AValue: Char);
 begin
-  if not (UpCase(AValue) in ['D','A']) then
+  if not CharInSet(UpCase(AValue) , ['D','A']) then
      raise Exception.Create(ACBrStr('Valores válidos para TACBrRFDE14.OrdemDA, "D" ou "A"')) ;
 
   fsOrdemDA := UpCase( AValue );
@@ -848,7 +848,7 @@ end;
 
 procedure TACBrRFDCupom.SetTipoAcrescimo(const AValue: Char);
 begin
-  if not (UpCase(AValue) in ['V','P']) then
+  if not CharInSet(UpCase(AValue) , ['V','P']) then
      raise Exception.Create(ACBrStr('Valores válidos para TACBrRFDE14.TipoAcrescimo, "V" ou "P"')) ;
 
   fsTipoAcrescimo := UpCase( AValue );
@@ -856,7 +856,7 @@ end;
 
 procedure TACBrRFDCupom.SetTipoDesconto(const AValue: Char);
 begin
-  if not (UpCase(AValue) in ['V','P']) then
+  if not CharInSet(UpCase(AValue) , ['V','P']) then
      raise Exception.Create(ACBrStr('Valores válidos para TACBrRFDE14.TipoDesconto, "V" ou "P"')) ;
 
   fsTipoDesconto := UpCase( AValue );
@@ -864,7 +864,7 @@ end;
 
 procedure TACBrRFDCupom.SetCancelado(const AValue: Char);
 begin
-  if not (UpCase(AValue) in ['S','N']) then
+  if not CharInSet(UpCase(AValue) , ['S','N']) then
      raise Exception.Create(ACBrStr('Valores válidos para TACBrRFDE14.Cancelado, "S" ou "N"')) ;
 
   fsCancelado := UpCase( AValue );

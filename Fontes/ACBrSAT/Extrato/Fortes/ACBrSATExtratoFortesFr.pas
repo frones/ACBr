@@ -164,6 +164,7 @@ type
     mLinhaItem: TRLMemo;
     pGap6: TRLPanel;
     pGap7: TRLPanel;
+    pEspacoFinalCan: TRLPanel;
     pNumSATCan: TRLPanel;
     pNumSATCancl: TRLPanel;
     rlbDadosCupomCancelado: TRLBand;
@@ -190,7 +191,9 @@ type
     rlbRodape: TRLBand;
     rlbTroco: TRLBand;
     RLDraw1: TRLDraw;
+    RLDraw10: TRLDraw;
     RLDraw11: TRLDraw;
+    RLDraw12: TRLDraw;
     RLDraw13: TRLDraw;
     RLDraw3: TRLDraw;
     rlbsCabecalho: TRLSubDetail;
@@ -202,6 +205,7 @@ type
     RLPanel2: TRLPanel;
     RLPanel3: TRLPanel;
     RLPanel4: TRLPanel;
+    pEspacoFinal: TRLPanel;
     rlVenda: TRLReport;
     rlObsContrib: TRLBand;
     RLDraw2: TRLDraw;
@@ -432,6 +436,10 @@ begin
                         ifthen( (ACBrSATExtrato.CFe.ide.tpAmb = taHomologacao), rlbTeste.Height, 0 ) ;
 
   Result := max( 100, 50 + round(TotalPaginaPixel/MMAsPixels));
+  
+  // Limite do driver (Tamanho da página)
+  if (Result > 3276) then
+    Result := 3276;  
 end;
 
 procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);
@@ -489,7 +497,7 @@ begin
       Endereco := Endereco + ' - '+Emit.EnderEmit.xMun;
     if (Emit.EnderEmit.CEP <> 0) then
     begin
-      CEP := FormatarCEP( IntToStr(Emit.EnderEmit.CEP) );
+      CEP := FormatarCEP( Emit.EnderEmit.CEP );
       Endereco := Endereco + ' - '+CEP;
     end;
   end;
@@ -891,6 +899,10 @@ begin
 
       if (Filtro = fiNenhum) and (PrinterName <> '') then
         RLPrinter.PrinterName := PrinterName;
+
+      //Para impressoras sem guilhotina não cortar no QrCorde
+      pEspacoFinal.Height := EspacoFinal;
+      pEspacoFinalCan.Height  := EspacoFinal;
 
       // Largura e Margens do Relatório //
       RLLayout.Width := LarguraBobina;

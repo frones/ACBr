@@ -91,10 +91,11 @@ type
 
     function cStatConfirmado(AValue: integer): Boolean;
     function cStatProcessado(AValue: integer): Boolean;
+    function cStatCancelado(AValue: integer): Boolean;
 
     function Consultar( AChave: String = ''): Boolean;
     function ConsultarMDFeNaoEnc(ACNPJ: String): Boolean;
-    function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
+    function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
@@ -136,7 +137,11 @@ uses
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
- {$R ACBrMDFeServicos.rc}
+ {$IFDEF CPU64}
+  {$R ACBrMDFeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
+ {$ELSE}
+  {$R ACBrMDFeServicos.rc}
+ {$ENDIF}
 {$ELSE}
  {$R ACBrMDFeServicos.res}
 {$ENDIF}
@@ -241,6 +246,15 @@ function TACBrMDFe.cStatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrMDFe.cStatCancelado(AValue: integer): Boolean;
+begin
+  case AValue of
+    101, 151, 155: Result := True;
     else
       Result := False;
   end;
@@ -435,7 +449,7 @@ begin
   end;
 end;
 
-function TACBrMDFe.Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
+function TACBrMDFe.Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
 var
   i: integer;
 begin

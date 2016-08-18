@@ -3,6 +3,7 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBrOpenSSL"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simoes de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
@@ -16,12 +17,6 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
-      <Other>
-        <CompilerMessages>
-          <UseMsgFile Value="True"/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - OpenSSL e LibXMLSec - EAD - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL
@@ -29,36 +24,35 @@
     <Version Minor="1"/>
     <Files Count="7">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxml2.pas"/>
-        <UnitName Value="libxml2"/>
-      </Item1>
-      <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxmlsec.pas"/>
-        <UnitName Value="libxmlsec"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxslt.pas"/>
-        <UnitName Value="libxslt"/>
-      </Item3>
-      <Item4>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\ACBrEAD.pas"/>
         <UnitName Value="ACBrEAD"/>
-      </Item4>
-      <Item5>
+      </Item1>
+      <Item2>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\OpenSSLExt.pas"/>
         <UnitName Value="OpenSSLExt"/>
-      </Item5>
-      <Item6>
+      </Item2>
+      <Item3>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\ACBrOpenSSLReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrOpenSSLReg"/>
-      </Item6>
-      <Item7>
+      </Item3>
+      <Item4>
         <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libexslt.pas"/>
         <UnitName Value="libexslt"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxslt.pas"/>
+        <UnitName Value="libxslt"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxml2.pas"/>
+        <UnitName Value="libxml2"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrOpenSSL\libxmlsec.pas"/>
+        <UnitName Value="libxmlsec"/>
       </Item7>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrComum"/>

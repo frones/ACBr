@@ -137,7 +137,9 @@ end;
 procedure TNFSeW_ISSDSF.GerarTomador;
 begin
   //TO DO - formatar segundo padrao da cidade
-  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalTomador',  01, 011, 1, '', '');
+  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalTomador',  01, 011, 1, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');  // CORRETO
+  //  LINHA COMENTADA - ESTÁ ABAIXO QUE FOI SUBSTITUIDA PELA LINHA ACIMA.
+  //  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalTomador',  01, 011, 1, '', '');
   Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJTomador',             01, 014, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
   Gerador.wCampoNFSe(tcStr, '', 'RazaoSocialTomador',         01, 120, 1, NFSe.Tomador.RazaoSocial, '');
   Gerador.wCampoNFSe(tcStr, '', 'DocTomadorEstrangeiro',      00, 020, 1, NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, '');

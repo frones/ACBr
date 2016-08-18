@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<TfrxReport Version="5.5" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42529,5984837384" ReportOptions.Description.Text="" ReportOptions.LastChange="42558,3657350347" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
+  <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
+  <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
+    <TfrxDetailData Name="DetailData1" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="1078" Left="0" Top="18,89765" Width="718,1107" ColumnWidth="0" ColumnGap="0" RowCount="0">
+      <TfrxPictureView Name="Picture1" Left="14" Top="860" Width="391" Height="53" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+      <TfrxMemoView Name="Memo1" Left="25" Top="385" Width="0" Height="62" Font.Charset="0" Font.Color="-16777208" Font.Height="-11" Font.Name="Courier New" Font.Style="0" ParentFont="False" Text="txtReferencia2S"/>
+      <TfrxShapeView Name="Shape1" Left="22" Top="464" Width="711" Height="6"/>
+      <TfrxShapeView Name="Shape2" Left="20" Top="541" Width="712" Height="4"/>
+      <TfrxShapeView Name="Shape3" Left="22" Top="39" Width="711" Height="6"/>
+      <TfrxShapeView Name="Shape4" Left="20" Top="119" Width="510" Height="69"/>
+      <TfrxShapeView Name="Shape5" Left="20" Top="186" Width="510" Height="5"/>
+      <TfrxShapeView Name="Shape6" Left="531" Top="188" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape7" Left="531" Top="218" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape8" Left="19" Top="278" Width="712" Height="13"/>
+      <TfrxShapeView Name="Shape9" Left="528" Top="41" Width="6" Height="241"/>
+      <TfrxMemoView Name="Memo2" Left="25" Top="190" Width="405" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Instruções ao Caixa (Todas as informações deste bloqueto são de exclusiva responsabilidade do Beneficiário)"/>
+      <TfrxMemoView Name="Memo3" Left="25" Top="289" Width="47" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Informações"/>
+      <TfrxShapeView Name="Shape10" Left="20" Top="371" Width="711" Height="6"/>
+      <TfrxMemoView Name="Memo4" Left="534" Top="44" Width="40" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Vencimento"/>
+      <TfrxMemoView Name="Memo5" Left="534" Top="73" Width="98" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Agência/Código Beneficiário"/>
+      <TfrxMemoView Name="Memo6" Left="534" Top="103" Width="52" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nosso Número"/>
+      <TfrxMemoView Name="Memo7" Left="534" Top="133" Width="86" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( = ) Valor do Documento"/>
+      <TfrxMemoView Name="Memo8" Left="534" Top="163" Width="91" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( - ) Desconto / Abatimento"/>
+      <TfrxMemoView Name="Memo9" Left="534" Top="223" Width="57" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( + ) Mora/Multa"/>
+      <TfrxMemoView Name="Memo10" Left="534" Top="253" Width="67" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( = ) Valor Cobrado"/>
+      <TfrxMemoView Name="Memo11" Left="479" Top="545" Width="229" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Autenticação Mecânica - Ficha de Compensação"/>
+      <TfrxMemoView Name="Memo12" Left="25" Top="375" Width="50" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Referência(s)"/>
+      <TfrxMemoView Name="Memo13" Left="25" Top="299" Width="0" Height="62" Font.Charset="0" Font.Color="-16777208" Font.Height="-11" Font.Name="Courier New" Font.Style="0" ParentFont="False" Text="txtInformacoes2S"/>
+      <TfrxShapeView Name="Shape11" Left="17" Top="43" Width="6" Height="502"/>
+      <TfrxShapeView Name="Shape12" Left="20" Top="67" Width="510" Height="6"/>
+      <TfrxShapeView Name="Shape13" Left="531" Top="68" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape14" Left="531" Top="98" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape15" Left="531" Top="128" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape16" Left="531" Top="158" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape18" Left="19" Top="116" Width="510" Height="3"/>
+      <TfrxShapeView Name="Shape19" Left="19" Top="562" Width="750" Height="8"/>
+      <TfrxMemoView Name="Memo14" Left="22" Top="559" Width="15" Height="15" Font.Charset="2" Font.Color="0" Font.Height="-12" Font.Name="Wingdings" Font.Style="0" ParentFont="False" Text="&#34;"/>
+      <TfrxPictureView Name="Picture2" Left="20" Top="1" Width="149" Height="38" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+      <TfrxMemoView Name="Memo15" Left="25" Top="200" Width="501" Height="79" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Courier New" Font.Style="0" ParentFont="False" Text="txtInstrucoes2S"/>
+      <TfrxShapeView Name="Shape20" Left="191" Top="1" Width="99" Height="38"/>
+      <TfrxMemoView Name="Memo16" Left="207" Top="6" Width="67" Height="30" Font.Charset="1" Font.Color="0" Font.Height="-24" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="000-0"/>
+      <TfrxMemoView Name="Memo17" Left="532" Top="14" Width="195" Height="19" Font.Charset="1" Font.Color="0" Font.Height="-16" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Recibo do Sacado"/>
+      <TfrxMemoView Name="Memo18" Left="534" Top="54" Width="193" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Vencimento"/>
+      <TfrxMemoView Name="Memo19" Left="534" Top="83" Width="191" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Agência / Código Cedente"/>
+      <TfrxMemoView Name="Memo20" Left="534" Top="113" Width="191" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nosso Número"/>
+      <TfrxMemoView Name="Memo21" Left="534" Top="143" Width="193" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Valor do Documento"/>
+      <TfrxShapeView Name="Shape22" Left="20" Top="631" Width="711" Height="6"/>
+      <TfrxPictureView Name="Picture3" Left="20" Top="594" Width="149" Height="38" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+      <TfrxShapeView Name="Shape24" Left="191" Top="594" Width="99" Height="38"/>
+      <TfrxMemoView Name="Memo24" Left="207" Top="598" Width="67" Height="30" Font.Charset="1" Font.Color="0" Font.Height="-24" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="000-0"/>
+      <TfrxPictureView Name="Picture4" Left="25" Top="960" Width="427" Height="49" HightQuality="False" Transparent="False" TransparentColor="16777215"/>
+      <TfrxMemoView Name="Memo25" Left="308" Top="609" Width="424" Height="19" Font.Charset="1" Font.Color="0" Font.Height="-15" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="00000.00000 00000.000000 00000.000000 0 00000000000000"/>
+      <TfrxMemoView Name="Memo26" Left="535" Top="508" Width="182" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Código de Baixa"/>
+      <TfrxMemoView Name="Memo27" Left="24" Top="469" Width="44" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Pagador:"/>
+      <TfrxMemoView Name="Memo28" Left="71" Top="469" Width="413" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nome do Sacado"/>
+      <TfrxMemoView Name="Memo29" Left="71" Top="486" Width="413" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Rua / Numero / Complemento"/>
+      <TfrxMemoView Name="Memo30" Left="70" Top="504" Width="413" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Cep / Bairro / Cidade / Estado"/>
+      <TfrxMemoView Name="Memo31" Left="536" Top="486" Width="181" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-12" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CPF / CNPJ"/>
+      <TfrxMemoView Name="Memo32" Left="536" Top="469" Width="44" Height="14" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CPF / CNPJ"/>
+      <TfrxMemoView Name="Memo33" Left="25" Top="81" Width="503" Height="16" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nome do Cedente"/>
+      <TfrxMemoView Name="Memo34" Left="25" Top="72" Width="41" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Beneficiário"/>
+      <TfrxMemoView Name="Memo35" Left="25" Top="42" Width="69" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Local de Pagamento"/>
+      <TfrxShapeView Name="Shape25" Left="139" Top="118" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape26" Left="274" Top="118" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape27" Left="341" Top="118" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape28" Left="408" Top="118" Width="6" Height="32"/>
+      <TfrxMemoView Name="Memo36" Left="416" Top="123" Width="81" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Processamento"/>
+      <TfrxMemoView Name="Memo37" Left="416" Top="133" Width="109" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Processamento"/>
+      <TfrxMemoView Name="Memo38" Left="349" Top="123" Width="22" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Aceite"/>
+      <TfrxMemoView Name="Memo39" Left="349" Top="133" Width="52" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Aceite"/>
+      <TfrxMemoView Name="Memo40" Left="280" Top="122" Width="46" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie Doc."/>
+      <TfrxMemoView Name="Memo41" Left="280" Top="133" Width="46" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie Doc."/>
+      <TfrxMemoView Name="Memo42" Left="146" Top="123" Width="78" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Número do Documento"/>
+      <TfrxMemoView Name="Memo43" Left="146" Top="133" Width="114" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Número do Documento"/>
+      <TfrxMemoView Name="Memo44" Left="25" Top="120" Width="67" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Documento"/>
+      <TfrxMemoView Name="Memo45" Left="24" Top="133" Width="109" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Documento"/>
+      <TfrxShapeView Name="Shape29" Left="139" Top="155" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape30" Left="212" Top="154" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape31" Left="274" Top="155" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape32" Left="408" Top="155" Width="6" Height="32"/>
+      <TfrxMemoView Name="Memo46" Left="416" Top="154" Width="19" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Valor"/>
+      <TfrxMemoView Name="Memo47" Left="280" Top="154" Width="39" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Quantidade"/>
+      <TfrxMemoView Name="Memo48" Left="219" Top="154" Width="28" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie"/>
+      <TfrxMemoView Name="Memo49" Left="219" Top="164" Width="51" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie"/>
+      <TfrxMemoView Name="Memo50" Left="149" Top="165" Width="57" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Carteira"/>
+      <TfrxMemoView Name="Memo51" Left="146" Top="154" Width="29" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Carteira"/>
+      <TfrxMemoView Name="Memo52" Left="25" Top="154" Width="48" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Uso do Banco"/>
+      <TfrxMemoView Name="Memo53" Left="24" Top="165" Width="109" Height="15" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Uso do Banco"/>
+      <TfrxMemoView Name="Memo54" Left="26" Top="53" Width="291" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Pagar preferencialmente nas agências bancárias e lotéricas"/>
+      <TfrxMemoView Name="Memo55" Left="24" Top="520" Width="86" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Pagador/Avalista:"/>
+      <TfrxMemoView Name="Memo56" Left="118" Top="520" Width="10" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text=" "/>
+      <TfrxMemoView Name="Memo57" Left="534" Top="193" Width="75" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( - ) Outras Deduções"/>
+      <TfrxShapeView Name="Shape33" Left="531" Top="248" Width="200" Height="6"/>
+      <TfrxMemoView Name="Memo58" Left="25" Top="98" Width="235" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Endereço do Cedente"/>
+      <TfrxMemoView Name="Memo59" Left="293" Top="100" Width="235" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CNPJ do Cedente"/>
+      <TfrxShapeView Name="Shape34" Left="20" Top="709" Width="510" Height="71"/>
+      <TfrxShapeView Name="Shape35" Left="20" Top="776" Width="510" Height="6"/>
+      <TfrxShapeView Name="Shape36" Left="531" Top="781" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape37" Left="531" Top="811" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape38" Left="528" Top="633" Width="6" Height="241"/>
+      <TfrxMemoView Name="Memo60" Left="25" Top="780" Width="405" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Instruções ao Caixa (Todas as informações deste bloqueto são de exclusiva responsabilidade do Beneficiário)"/>
+      <TfrxMemoView Name="Memo61" Left="534" Top="637" Width="40" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Vencimento"/>
+      <TfrxMemoView Name="Memo62" Left="534" Top="666" Width="98" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Agência/Código Beneficiário"/>
+      <TfrxMemoView Name="Memo63" Left="534" Top="696" Width="52" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nosso Número"/>
+      <TfrxMemoView Name="Memo64" Left="534" Top="726" Width="86" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( = ) Valor do Documento"/>
+      <TfrxMemoView Name="Memo65" Left="534" Top="756" Width="91" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( - ) Desconto / Abatimento"/>
+      <TfrxMemoView Name="Memo66" Left="534" Top="816" Width="57" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( + ) Mora/Multa"/>
+      <TfrxMemoView Name="Memo67" Left="534" Top="846" Width="67" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( = ) Valor Cobrado"/>
+      <TfrxShapeView Name="Shape39" Left="17" Top="634" Width="6" Height="317"/>
+      <TfrxShapeView Name="Shape40" Left="20" Top="660" Width="510" Height="6"/>
+      <TfrxShapeView Name="Shape41" Left="531" Top="661" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape42" Left="531" Top="691" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape43" Left="531" Top="721" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape44" Left="531" Top="751" Width="200" Height="6"/>
+      <TfrxShapeView Name="Shape46" Left="19" Top="710" Width="510" Height="3"/>
+      <TfrxMemoView Name="Memo68" Left="24" Top="790" Width="501" Height="79" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Courier New" Font.Style="0" ParentFont="False" Text="Linha 1&#13;&#10;Linha 2&#13;&#10;Linha 3&#13;&#10;Linha 4&#13;&#10;Linha 5&#13;&#10;Linha 6"/>
+      <TfrxMemoView Name="Memo69" Left="534" Top="647" Width="193" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Vencimento"/>
+      <TfrxMemoView Name="Memo70" Left="534" Top="676" Width="191" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Agência / Código Cedente"/>
+      <TfrxMemoView Name="Memo71" Left="535" Top="706" Width="191" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nosso Número"/>
+      <TfrxMemoView Name="Memo72" Left="534" Top="736" Width="193" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="1" ParentFont="False" Text="Valor do Documento"/>
+      <TfrxMemoView Name="Memo73" Left="25" Top="675" Width="503" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nome do Cedente"/>
+      <TfrxMemoView Name="Memo74" Left="25" Top="665" Width="41" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Beneficiário"/>
+      <TfrxMemoView Name="Memo75" Left="25" Top="635" Width="69" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Local de Pagamento"/>
+      <TfrxShapeView Name="Shape47" Left="139" Top="710" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape48" Left="274" Top="710" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape49" Left="341" Top="710" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape50" Left="408" Top="710" Width="6" Height="32"/>
+      <TfrxMemoView Name="Memo76" Left="416" Top="714" Width="81" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Processamento"/>
+      <TfrxMemoView Name="Memo77" Left="416" Top="724" Width="109" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Processamento"/>
+      <TfrxMemoView Name="Memo78" Left="349" Top="714" Width="22" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Aceite"/>
+      <TfrxMemoView Name="Memo79" Left="349" Top="724" Width="52" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Aceite"/>
+      <TfrxMemoView Name="Memo80" Left="280" Top="714" Width="46" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie Doc."/>
+      <TfrxMemoView Name="Memo81" Left="280" Top="724" Width="46" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie Doc."/>
+      <TfrxMemoView Name="Memo82" Left="146" Top="714" Width="78" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Número do Documento"/>
+      <TfrxMemoView Name="Memo83" Left="146" Top="724" Width="114" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Número do Documento"/>
+      <TfrxMemoView Name="Memo84" Left="25" Top="714" Width="67" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Documento"/>
+      <TfrxMemoView Name="Memo85" Left="24" Top="724" Width="109" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Data do Documento"/>
+      <TfrxShapeView Name="Shape51" Left="139" Top="745" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape52" Left="212" Top="745" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape53" Left="274" Top="745" Width="6" Height="32"/>
+      <TfrxShapeView Name="Shape54" Left="408" Top="745" Width="6" Height="32"/>
+      <TfrxMemoView Name="Memo86" Left="416" Top="746" Width="19" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Valor"/>
+      <TfrxMemoView Name="Memo87" Left="280" Top="746" Width="39" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Quantidade"/>
+      <TfrxMemoView Name="Memo88" Left="219" Top="746" Width="28" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie"/>
+      <TfrxMemoView Name="Memo89" Left="219" Top="756" Width="51" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Espécie"/>
+      <TfrxMemoView Name="Memo90" Left="146" Top="756" Width="57" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Carteira"/>
+      <TfrxMemoView Name="Memo91" Left="146" Top="746" Width="29" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Carteira"/>
+      <TfrxMemoView Name="Memo92" Left="25" Top="746" Width="48" Height="11" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Uso do Banco"/>
+      <TfrxMemoView Name="Memo93" Left="24" Top="756" Width="109" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Uso do Banco"/>
+      <TfrxMemoView Name="Memo94" Left="26" Top="646" Width="291" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Pagar preferencialmente nas agências bancárias e lotéricas"/>
+      <TfrxMemoView Name="Memo95" Left="534" Top="786" Width="75" Height="13" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="( - ) Outras Deduções"/>
+      <TfrxShapeView Name="Shape55" Left="531" Top="841" Width="200" Height="6"/>
+      <TfrxMemoView Name="Memo96" Left="25" Top="693" Width="235" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Endereço do Cedente"/>
+      <TfrxMemoView Name="Memo97" Left="293" Top="693" Width="235" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CNPJ do Cedente"/>
+      <TfrxShapeView Name="Shape56" Left="22" Top="948" Width="711" Height="4"/>
+      <TfrxShapeView Name="Shape57" Left="22" Top="871" Width="711" Height="6"/>
+      <TfrxMemoView Name="Memo98" Left="24" Top="876" Width="44" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Pagador:"/>
+      <TfrxMemoView Name="Memo99" Left="24" Top="927" Width="86" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Pagador/Avalista:"/>
+      <TfrxMemoView Name="Memo100" Left="118" Top="927" Width="10" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text=" "/>
+      <TfrxMemoView Name="Memo101" Left="70" Top="911" Width="413" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Cep / Bairro / Cidade / Estado"/>
+      <TfrxMemoView Name="Memo102" Left="70" Top="892" Width="413" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Rua / Numero / Complemento"/>
+      <TfrxMemoView Name="Memo103" Left="71" Top="876" Width="413" Height="15" Font.Charset="0" Font.Color="0" Font.Height="-11" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Nome do Sacado"/>
+      <TfrxMemoView Name="Memo104" Left="536" Top="876" Width="44" Height="14" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CPF / CNPJ"/>
+      <TfrxMemoView Name="Memo105" Left="536" Top="893" Width="181" Height="16" Font.Charset="1" Font.Color="0" Font.Height="-12" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="CPF / CNPJ"/>
+      <TfrxMemoView Name="Memo106" Left="535" Top="915" Width="182" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Código de Baixa"/>
+      <TfrxMemoView Name="Memo107" Left="479" Top="952" Width="229" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Autenticação Mecânica - Ficha de Compensação"/>
+    </TfrxDetailData>
+    <TfrxShapeView Name="Shape17" Left="731" Top="59,89765" Width="6" Height="503"/>
+    <TfrxShapeView Name="Shape21" Left="4" Top="1123,89765" Width="711" Height="4"/>
+    <TfrxMemoView Name="Memo22" Left="463" Top="1130,89765" Width="229" Height="11" Font.Charset="1" Font.Color="-16777208" Font.Height="-8" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="Autenticação Mecânica"/>
+    <TfrxMemoView Name="Memo23" Left="4" Top="1127,89765" Width="260" Height="48" Font.Charset="1" Font.Color="0" Font.Height="-9" Font.Name="Arial" Font.Style="0" ParentFont="False" Text="QRMemo8"/>
+    <TfrxShapeView Name="Shape23" Left="8" Top="1183,89765" Width="755" Height="8"/>
+    <TfrxShapeView Name="Shape45" Left="731" Top="651,89765" Width="6" Height="319"/>
+  </TfrxReportPage>
+</TfrxReport>

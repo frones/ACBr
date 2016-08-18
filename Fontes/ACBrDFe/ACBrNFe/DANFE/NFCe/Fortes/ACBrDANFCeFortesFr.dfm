@@ -1,9 +1,9 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 461
   Top = 84
-  Width = 788
-  Height = 780
   Caption = 'ACBrNFeDANFCeFortesFr'
+  ClientHeight = 741
+  ClientWidth = 772
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,16 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     Top = 4
     Width = 280
     Height = 1512
+    Margins.LeftMargin = 0.610000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 0.610000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -9
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 0.610000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 0.610000000000000000
-    Margins.BottomMargin = 0.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 74.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000
@@ -548,14 +548,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 218
         Top = 7
         Width = 44
-        Height = 11
+        Height = 12
         Alignment = taRightJustify
         Caption = '99.999,99'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
       end
       object lFonteTributos: TRLLabel
@@ -1038,16 +1038,16 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     Top = 4
     Width = 280
     Height = 1512
+    Margins.LeftMargin = 0.610000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 0.610000000000000000
+    Margins.BottomMargin = 0.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -9
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 0.610000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 0.610000000000000000
-    Margins.BottomMargin = 0.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 74.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000

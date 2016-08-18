@@ -446,11 +446,14 @@ object Form2: TForm2
     IdentPAF.Paf.TotalizaValoresLista = False
     IdentPAF.Paf.TransfPreVenda = False
     IdentPAF.Paf.TransfDAV = False
-    IdentPAF.Paf.NaoCoincGT = False
     IdentPAF.Paf.RecompoeGT = False
+    IdentPAF.Paf.RecompoeNumSerie = False
     IdentPAF.Paf.EmitePED = False
     IdentPAF.Paf.CupomMania = False
     IdentPAF.Paf.MinasLegal = False
+    IdentPAF.Paf.NotaLegalDF = False
+    IdentPAF.Paf.ParaibaLegal = False
+    IdentPAF.Paf.TrocoEmCartao = False
     OnGetChave = ACBrAAC1GetChave
     Left = 420
     Top = 398

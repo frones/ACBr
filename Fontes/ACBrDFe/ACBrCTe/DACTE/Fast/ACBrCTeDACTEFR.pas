@@ -311,6 +311,8 @@ end;
 procedure TACBrCTeDACTEFR.CriarDataSetsFrx;
 begin
   frxReport := TfrxReport.Create(nil);
+	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick ];		
   frxReport.EngineOptions.UseGlobalDataSetList := False;
   with frxReport do
   begin
@@ -367,6 +369,7 @@ begin
     Add('retira', ftString, 1);
     Add('xDetRetira', ftString, 160);
     Add('toma', ftString, 50);
+    Add('refCTE', ftString, 44);
     CreateDataSet;
   end;
 
@@ -444,7 +447,7 @@ begin
     Add('Mensagem0', ftString, 60);
     Add('Versao', ftString, 5);
     Add('Imagem', ftString, 256);
-    Add('Sistema', ftString, 60);
+    Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
     Add('Fax', ftString, 60);
     Add('Site', ftString, 60);
@@ -1166,7 +1169,6 @@ procedure TACBrCTeDACTEFR.ImprimirDACTEPDF(ACTE: TCTe);
 const
   TITULO_PDF = 'Conhecimento de Transporte Eletrônico';
 var
-  i            : Integer;
   OldShowDialog: Boolean;
 begin
   if PrepareReport(ACTE) then
@@ -1177,18 +1179,16 @@ begin
     frxPDFExport.Title    := TITULO_PDF;
     frxPDFExport.Subject  := TITULO_PDF;
     frxPDFExport.Keywords := TITULO_PDF;
+
     OldShowDialog         := frxPDFExport.ShowDialog;
+
     try
       frxPDFExport.ShowDialog := False;
+      frxPDFExport.FileName   := IncludeTrailingPathDelimiter(PathPDF) + OnlyNumber(CTE.infCTe.Id) + '-cte.pdf';
 
-      for i := 0 to TACBrCTe(ACBrCTe).Conhecimentos.Count - 1 do
-      begin
-        frxPDFExport.FileName := IncludeTrailingPathDelimiter(PathPDF) + OnlyNumber(CTE.infCTe.Id) + '-cte.pdf';
-
-        if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
-          ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
-        frxReport.Export(frxPDFExport);
-      end;
+      if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+         ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+      frxReport.Export(frxPDFExport);
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
     end;
@@ -1963,6 +1963,7 @@ begin
         tsSubcontratacao: FieldByName('tpServ').AsString := 'Subcontratação';
         tsRedespacho: FieldByName('tpServ').AsString     := 'Redespacho';
         tsIntermediario: FieldByName('tpServ').AsString  := 'Intermediário';
+        tsMultimodal: FieldByName('tpServ').AsString  := 'Vinc. Multimodal';
       end;
 
       FieldByName('cMunIni').AsString := IntToStr(cMunIni);
@@ -1988,6 +1989,7 @@ begin
       case Toma4.Toma of
         tmOutros: FieldByName('Toma').AsString := 'Outros';
       end;
+      FieldByName('refCTE').AsString := refCTe;
     end;
     Post;
   end;
@@ -2050,6 +2052,7 @@ begin
       try
         if Trim(wObs) <> '' then
         begin
+          Campos         := nil;
           Campos         := Split(';', wObs);
           for IndexCampo := 0 to Length(Campos) - 1 do
             vTemp.Add(Campos[IndexCampo]);
@@ -2079,6 +2082,7 @@ begin
       try
         if Trim(wObs) <> '' then
         begin
+          Campos         := nil;
           Campos         := Split(';', wObs);
           for IndexCampo := 0 to Length(Campos) - 1 do
             vTemp.Add(Campos[IndexCampo]);
@@ -2106,6 +2110,7 @@ begin
       try
         if Trim(wObs) <> '' then
         begin
+          Campos         := nil;
           Campos := Split(';', wObs);
           for IndexCampo := 0 to Length(Campos) - 1 do
             vTemp.Add(Campos[IndexCampo]);
@@ -2442,20 +2447,9 @@ begin
       end;
     end;
 
-    if Sistema <> '' then
-      FieldByName('Sistema').AsString := Sistema
-    else
-      FieldByName('Sistema').AsString := 'Projeto ACBr - http://acbr.sf.net';
-
-    if Usuario <> '' then
-      FieldByName('Usuario').AsString := ' - ' + Usuario
-    else
-      FieldByName('Usuario').AsString := '';
-
-    if Fax <> '' then
-      FieldByName('Fax').AsString := ' - FAX ' + Fax
-    else
-      FieldByName('Fax').AsString := '';
+    FieldByName('Sistema').AsString := Ifthen(Sistema <> '', Sistema, 'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString := Ifthen(Usuario <> '', ' - ' + Usuario,'');
+    FieldByName('Fax').AsString := Ifthen(Fax <> '',' - FAX ' + Fax,'');
 
     FieldByName('Site').AsString  := Site;
     FieldByName('Email').AsString := Email;

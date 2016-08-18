@@ -48,12 +48,15 @@ unit ACBrTEFDBanese;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   Classes, SysUtils, ACBrTEFDClass
   {$IFNDEF NOGUI}
    {$IFDEF VisualCLX}
       ,QForms, QControls
    {$ELSE}
-      ,Forms, Controls
+     {$IFDEF FMX} ,System.UITypes {$ENDIF} ,Forms, Controls
    {$ENDIF}
   {$ENDIF};
 

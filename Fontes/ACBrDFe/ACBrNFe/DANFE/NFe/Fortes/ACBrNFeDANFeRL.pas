@@ -141,7 +141,7 @@ type
     FSsitema: String;
     FSite: String;
     FUsuario: String;
-    FPosCanhoto: TPosCanhoto;
+    FPosCanhoto: TPosRecibo;
     FFormularioContinuo: Boolean;
     FExpandirLogoMarca: Boolean;
     FMostrarPreview: Boolean;
@@ -209,7 +209,7 @@ type
                     AFax: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; ASite: String = '';
                     AUsuario: String = '';
-                    APosCanhoto: TPosCanhoto = pcCabecalho;
+                    APosCanhoto: TPosRecibo = prCabecalho;
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
                     AMostrarPreview: Boolean = True;
@@ -261,7 +261,7 @@ type
                     AFax: String = ''; ANumCopias: Integer = 1;
                     ASistema: String = ''; ASite: String = '';
                     AUsuario: String = ''; AFile: String = '';
-                    APosCanhoto: TPosCanhoto = pcCabecalho;
+                    APosCanhoto: TPosRecibo = prCabecalho;
                     AFormularioContinuo: Boolean = False;
                     AExpandirLogoMarca: Boolean = False;
                     AMostrarStatus: Boolean = False;
@@ -358,7 +358,7 @@ begin
     Fields.Clear;
     FieldDefs.Add('CODIGO',ftString,60);
     FieldDefs.Add('EAN',ftString,14);
-    FieldDefs.Add('DESCRICAO',ftWideString,2000);
+    FieldDefs.Add('DESCRICAO',ftString,2000);
     FieldDefs.Add('NCM',ftString,8);
     FieldDefs.Add('CFOP',ftString,4);
     FieldDefs.Add('UNIDADE',ftString,6);
@@ -408,29 +408,62 @@ begin
 
 end;
 
-class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent; ANFe: TNFe;
-  ALogo: String; AMarcaDagua: String; ALarguraCodProd: Integer; AEmail: String;
-  AResumoCanhoto: Boolean; AFax: String; ANumCopias: Integer; ASistema: String;
-  ASite: String; AUsuario: String; APosCanhoto: TPosCanhoto;
-  AFormularioContinuo: Boolean; AExpandirLogoMarca: Boolean;
-  AMostrarPreview: Boolean; AMostrarStatus: Boolean; ANomeFonte: TNomeFonte;
-  ANegrito: Boolean; AMargemSuperior: Double; AMargemInferior: Double;
-  AMargemEsquerda: Double; AMargemDireita: Double; ACasasDecimaisqCom: Integer;
-  ACasasDecimaisvUncCom: Integer; AProdutosPorPagina: Integer;
-  AImpressora: String; ATamanhoFonte_RazaoSocial: Integer; AExibirEAN: Boolean;
-  AProtocoloNFe: String; AResumoCanhoto_Texto: String; ANFECancelada: Boolean;
-  AImprimirDetalhamentoEspecifico: Boolean; AImprimirDescPorc: Boolean;
-  AImprimeNomeFantasia: Boolean; AImprimirTotalLiquido: Boolean;
-  ADetVeiculos: TDetVeiculos; ADetMedicamentos: TDetMedicamentos;
-  ADetArmamentos: TDetArmamentos; ADetCombustiveis: TDetCombustiveis;
-  AdQuebraLinhaEmDetalhamentoEspecifico: Boolean;
-  AdCasasDecimaisFormato: Integer; AdCasasDecimais_Mask_qCom: String;
-  AdCasasDecimais_Mask_vUnCom: String; AdExibeCampoFatura: Boolean;
-  AMostraDadosISSQN: Boolean; AAltLinhaComun: Integer;
-  AEspacoEntreProdutos: Integer; AAlternaCoresProdutos: Boolean;
-  ACorDestaqueProdutos: TColor; ATamanhoLogoHeight: Integer;
-  ATamanhoLogoWidth: Integer; ARecuoEndereco: Integer; ARecuoEmpresa: Integer;
-  ALogoemCima: Boolean; ATamanhoFonteEndereco: Integer; ARecuoLogo: Integer);
+class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent;
+                ANFe: TNFe;
+                ALogo: String;
+                AMarcaDagua: String;
+                ALarguraCodProd: Integer;
+                AEmail: String;
+                AResumoCanhoto: Boolean;
+                AFax: String;
+                ANumCopias: Integer; ASistema: String;
+                ASite: String;
+                AUsuario: String;
+                APosCanhoto: TPosRecibo;
+                AFormularioContinuo: Boolean;
+                AExpandirLogoMarca: Boolean;
+                AMostrarPreview: Boolean;
+                AMostrarStatus: Boolean;
+                ANomeFonte: TNomeFonte;
+                ANegrito: Boolean;
+                AMargemSuperior: Double;
+                AMargemInferior: Double;
+                AMargemEsquerda: Double;
+                AMargemDireita: Double;
+                ACasasDecimaisqCom: Integer;
+                ACasasDecimaisvUncCom: Integer;
+                AProdutosPorPagina: Integer;
+                AImpressora: String;
+                ATamanhoFonte_RazaoSocial: Integer;
+                AExibirEAN: Boolean;
+                AProtocoloNFe: String;
+                AResumoCanhoto_Texto: String;
+                ANFECancelada: Boolean;
+                AImprimirDetalhamentoEspecifico: Boolean;
+                AImprimirDescPorc: Boolean;
+                AImprimeNomeFantasia: Boolean;
+                AImprimirTotalLiquido: Boolean;
+                ADetVeiculos: TDetVeiculos;
+                ADetMedicamentos: TDetMedicamentos;
+                ADetArmamentos: TDetArmamentos;
+                ADetCombustiveis: TDetCombustiveis;
+                AdQuebraLinhaEmDetalhamentoEspecifico: Boolean;
+                AdCasasDecimaisFormato: Integer;
+                AdCasasDecimais_Mask_qCom: String;
+                AdCasasDecimais_Mask_vUnCom: String;
+                AdExibeCampoFatura: Boolean;
+                AMostraDadosISSQN: Boolean;
+                AAltLinhaComun: Integer;
+                AEspacoEntreProdutos: Integer;
+                AAlternaCoresProdutos: Boolean;
+                ACorDestaqueProdutos: TColor;
+                ATamanhoLogoHeight: Integer;
+                ATamanhoLogoWidth: Integer;
+                ARecuoEndereco: Integer;
+                ARecuoEmpresa: Integer;
+                ALogoemCima: Boolean;
+                ATamanhoFonteEndereco: Integer;
+                ARecuoLogo: Integer);
 
 
 begin
@@ -493,7 +526,7 @@ begin
       fAlternaCoresProdutos := AAlternaCoresProdutos;
       fCorDestaqueProdutos := ACorDestaqueProdutos;
 
-      if FImpressora > '' then
+      if not EstaVazio(FImpressora) then
         RLPrinter.PrinterName := FImpressora;
 
       if FNumCopias > 0 then
@@ -503,6 +536,7 @@ begin
 
       vAuxDiferencaPDF := 0;
       RLNFe.ShowProgress := FMostrarStatus;
+      RLNFe.PrintDialog := not(FMostrarPreview) and (EstaVazio(FImpressora));
 
       if FMostrarPreview then
         RLNFe.PreviewModal
@@ -513,29 +547,63 @@ begin
     end ;
 end;
 
-class procedure TfrlDANFeRL.SavePDF(AOwner: TComponent; ANFe: TNFe;
-  ALogo: String; AMarcaDagua: String; ALarguraCodProd: Integer; AEmail: String;
-  AResumoCanhoto: Boolean; AFax: String; ANumCopias: Integer; ASistema: String;
-  ASite: String; AUsuario: String; AFile: String; APosCanhoto: TPosCanhoto;
-  AFormularioContinuo: Boolean; AExpandirLogoMarca: Boolean;
-  AMostrarStatus: Boolean; ANomeFonte: TNomeFonte; ANegrito: Boolean;
-  AMargemSuperior: Double; AMargemInferior: Double; AMargemEsquerda: Double;
-  AMargemDireita: Double; ACasasDecimaisqCom: Integer;
-  ACasasDecimaisvUncCom: Integer; AProdutosPorPagina: Integer;
-  AImpressora: String; ATamanhoFonte_RazaoSocial: Integer; AExibirEAN: Boolean;
-  AProtocoloNFe: String; AResumoCanhoto_Texto: String; ANFECancelada: Boolean;
-  AImprimirDetalhamentoEspecifico: Boolean; AImprimirDescPorc: Boolean;
-  AImprimeNomeFantasia: Boolean; AImprimirTotalLiquido: Boolean;
-  ADetVeiculos: TDetVeiculos; ADetMedicamentos: TDetMedicamentos;
-  ADetArmamentos: TDetArmamentos; ADetCombustiveis: TDetCombustiveis;
-  ADQuebraLinhaEmDetalhamentoEspecifico: Boolean;
-  AdCasasDecimaisFormato: Integer; AdCasasDecimais_Mask_qCom: String;
-  AdCasasDecimais_Mask_vUnCom: String; AdExibeCampoFatura: Boolean;
-  AMostraDadosISSQN: Boolean; AAltLinhaComun: Integer;
-  AEspacoEntreProdutos: Integer; AAlternaCoresProdutos: Boolean;
-  ACorDestaqueProdutos: TColor; ATamanhoLogoHeight: Integer;
-  ATamanhoLogoWidth: Integer; ARecuoEndereco: Integer; ARecuoEmpresa: Integer;
-  ALogoemCima: Boolean; ATamanhoFonteEndereco: Integer; ARecuoLogo: Integer);
+class procedure TfrlDANFeRL.SavePDF(AOwner: TComponent;
+                ANFe: TNFe;
+                ALogo: String;
+                AMarcaDagua: String;
+                ALarguraCodProd: Integer;
+                AEmail: String;
+                AResumoCanhoto: Boolean;
+                AFax: String;
+                ANumCopias: Integer;
+                ASistema: String;
+                ASite: String;
+                AUsuario: String;
+                AFile: String;
+                APosCanhoto: TPosRecibo;
+                AFormularioContinuo: Boolean;
+                AExpandirLogoMarca: Boolean;
+                AMostrarStatus: Boolean;
+                ANomeFonte: TNomeFonte;
+                ANegrito: Boolean;
+                AMargemSuperior: Double;
+                AMargemInferior: Double;
+                AMargemEsquerda: Double;
+                AMargemDireita: Double;
+                ACasasDecimaisqCom: Integer;
+                ACasasDecimaisvUncCom: Integer;
+                AProdutosPorPagina: Integer;
+                AImpressora: String;
+                ATamanhoFonte_RazaoSocial: Integer;
+                AExibirEAN: Boolean;
+                AProtocoloNFe: String;
+                AResumoCanhoto_Texto: String;
+                ANFECancelada: Boolean;
+                AImprimirDetalhamentoEspecifico: Boolean;
+                AImprimirDescPorc: Boolean;
+                AImprimeNomeFantasia: Boolean;
+                AImprimirTotalLiquido: Boolean;
+                ADetVeiculos: TDetVeiculos;
+                ADetMedicamentos: TDetMedicamentos;
+                ADetArmamentos: TDetArmamentos;
+                ADetCombustiveis: TDetCombustiveis;
+                ADQuebraLinhaEmDetalhamentoEspecifico: Boolean;
+                AdCasasDecimaisFormato: Integer;
+                AdCasasDecimais_Mask_qCom: String;
+                AdCasasDecimais_Mask_vUnCom: String;
+                AdExibeCampoFatura: Boolean;
+                AMostraDadosISSQN: Boolean;
+                AAltLinhaComun: Integer;
+                AEspacoEntreProdutos: Integer;
+                AAlternaCoresProdutos: Boolean;
+                ACorDestaqueProdutos: TColor;
+                ATamanhoLogoHeight: Integer;
+                ATamanhoLogoWidth: Integer;
+                ARecuoEndereco: Integer;
+                ARecuoEmpresa: Integer;
+                ALogoemCima: Boolean;
+                ATamanhoFonteEndereco: Integer;
+                ARecuoLogo: Integer);
 
 var
   ADir: String;

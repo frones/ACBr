@@ -47,6 +47,248 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2016
+-- ACBrNFeDANFEFR
+[*] Melhoria para não precisar fazer a interação!
+		http://www.projetoacbr.com.br/forum/topic/31710-acbrnfe-imprimirpdf-exportando-p%C3%A1ginas-sem-necessidade/
+		por: Juliomar Marchetti
+		
+29/07/2016
+-- ACBrNFeServicos
+[*] Novas URLs do QR-Code para a UF de GO.
+    por: Italo Jurisato Junior
+		
+27/07/2016
+-- ACBrNFeDANFEFR
+[*] Tratar para não exibir a caixa de seleção de impressora
+		http://www.projetoacbr.com.br/forum/topic/31487-impress%C3%A3o-de-eventofast-sempre-mostrando-a-sele%C3%A7%C3%A3o-de-impressoras/
+		por : Juliomar Marchetti
+		
+23/06/2016
+-- ACBrNFeServicos.ini
+[*] Ajuste no links de Goias para a QR-Code e ConsultaNFCe em produção e homologação
+		por: Juliomar Marchetti
+		
+16/06/2016
+-- ACBrNFeWebServices --
+[-] Ajuste para não duplicar a lista de items em  TNFeDownloadNFe e TDistribuicaoDFe
+    (por: DSA)
+
+15/06/2016
+-- ACBrNFeWebServices --
+[*] Ajustes para melhorar a performance ao acrescentar o protocolo de autorização
+    quando obtido através do método Consultar.
+    Por: Italo Jurisato e DSA
+
+13/06/2016
+-- pcnNFeW --
+[*] Método: "GerarXml", modificado para somente gerar Declaração de UTF8 no XML
+    se estiver em FPC (que usa UTF8 de forma nativa)
+
+-- ACBrNFe --
+[+] Adicionado o método "CstatCancelada(AValue: integer): Boolean;" que retorna
+    True se "AValue" estiver entre os status de cancelamento
+
+-- ACBrNFeNotasFiscais --
+[*] Método: "CalcularNomeArquivoCompleto" movido para Public
+[*] Método: "LerXML" corrigido para usar "String" e não "AnsiString"
+[*] Propriedades "XMLOriginal" e "XMLAssinado", modificadas para presumir que o
+    o seu conteudo sempre estará em UTF8
+[+] Adicionada a propriedade: "NotaFiscal.Cancelada: Boolean"
+    (True quando CStat for cancelamento)
+[*] Método: "NotaFiscal.Validar", modificado para preservar a Declaração do XML
+[*] Método "NotaFiscal.LerXML", mnodificado para converter (se necessário) o
+    conteúdo do XML informado para a String Nativa da IDE, além de efetuar o
+    "parse" dos "HTML Entity"). Isso é necessário, para que as propriedades do
+    Objeto "NFe" fiquem com apresentação correta.
+[-] Método: "CalcularNomeArquivoCompleto", correção para evitar somar o Path no
+    Resultado final, quando o nome do arquivo já conter o mesmo.
+[+] Método: "SetXMLOriginal", modificado para verificar se o conteúdo do XML
+    informado está em UTF8, convertendo-o, se necessário.
+[*] Método: "TNotasFiscais.VerificarAssinatura", modificado para disparar Erro,
+    caso nenhuma nota esteja carregada.
+[*] Método: "TNotasFiscais.LoadFromFile" modificado para não Decodificar o XML
+    para a String nativa, pois isso agora é feito por "NotaFiscal.LerXML"
+[-] Método: "TNotasFiscais.LoadFromString", modificado para conseguir processar
+    XMLs com a Tag "procNFe", obtido pelo Portal do SEFAZ
+[*] Método: "TNotasFiscais.LoadFromString", modificado para converter o XML
+    informado, para a String Nativa (se necessário)
+
+-- ACBrNFeWebServices --
+[*] Método: "TNFeRecepcao.TratarResposta", "TNFeRetRecepcao.TratarRespostaFinal",
+    "TNFeConsulta.TratarResposta" modificados para não salvar 2x o XML.
+[*] Método: "TNFeConsulta.TratarResposta": refatorados para usar "CstatCancelada"
+    e "CstatProcessado";
+[-] "TNFeConsulta.TratarResposta": Corrigido Bug que apagava o conteúdo do XML,
+    caso ocorrese uma falha no Retorno do XML
+[-] "TNFeConsulta.TratarResposta": Corrigido Bug na Atualização do XML caso o
+    mesmo estivesse Cancelado e "AtualizarXMLCancelado = True"
+[*] "TNFeConsulta.TratarResposta": Remoção de bloco de código que estava comentado
+
+
+19/04/2016
+-- ACBrNFeDANFEFRDM --
+[*] Disponbilizando o uso da propriedade UsaCodigoEanImpressao
+     com a Inclusão da função ManterCodigo.
+  
+    por: Henrique Leonardo
+
+
+15/04/2016
+-- pcnEventoNFe --
+[*] Incluido o tipo de evento teMDFeAutorizado:
+    por: Italo Jurisato Junior
+
+13/04/2016
+-- ACBrNFeServicos --
+[+] Incluido as URLs: URL-QRCode e URL-ConsultaNFCe para a UF ES.
+    por: Italo Jurisato Junior
+
+12/02/2016
+-- ACBrNFeWebServices --
+[*] Método "TNFeWebService.Clear" modificado para inicializar:
+    SSL.UseCertificateHTTP := True  (por: DSA)
+
+-- ACBrNFeConfiguracoes --
+[*] Removida a propriedde "UseSSL"
+[*] Removida a propriedde "UseCertificate"
+[+] Adicionada a propriedade "UseCertificateHTTP" (por: DSA)
+
+08/04/2016
+-- DANFeRetratoNovo --
+[+] Canhoto no Rodapé da primeira pagina
+    Por : Henrique Leonardo
+
+07/04/2016
+-- DANFeRetrato, DANFeRetratoNovo --
+[-] Acerto para mostrar duplicatas na grid
+    http://www.projetoacbr.com.br/forum/topic/29235-erro-danferetratofr3/#comment-193405
+
+
+01/04/2016
+-- ACBrDANFCeFortesFr, ACBrDANFeRL --
+[-] Acerto para mostrar o dialogo de impressão corretamente quando não informar a impressora e não configurar para preview
+    por: regys.silveira
+
+31/03/2016
+-- ACBrNFeWebServices --
+[-] Correção no WebService "TNFeInutilizacao", que não considerava o Modelo
+    informado nos parâmetros, para a obtenção da URL    (por: DSA)
+
+23/03/2016
+-- DANFeRetrato.fr3, DANFeRetratoNovo.fr3 --
+[*] Correção para mostrar ISSQN, conforme post :
+      http://www.projetoacbr.com.br/forum/topic/28624-issqn-danfe-fastreport/#comment-191819
+      Por : Henrique Leonardo
+    
+23/03/2016
+-- ACBrNFeDANFeEventoRLRetrato
+[*] Correção para mostrar correto a informação do CEP no evento
+		http://www.projetoacbr.com.br/forum/topic/28876-erro-na-formata%C3%A7%C3%A3o-do-cep-danfe-evento-fortes/
+		por : Juliomar Marchetti
+		
+21/03/2016
+-- ACBrDANFERL --
+[-] Acerto para ocupar todo o espaço quando não possui logomarca
+    por: regys.silveira
+
+17/03/2016
+-- ACBrNFeServicos --
+[+] Adicionado as URLs de Homologação/Produção da NFC-e de Pernambuco.
+    por: aemak / Italo Jurisato Junior
+
+16/03/2016
+--pcnNFeRTXT--
+[-] Melhoria da validação ao ler uma data ou hora vazia. 
+		por: Henrique Leonardo
+
+12/03/2016
+[*] Modificado para deixar alguns botões fora do preview em fast report
+		por: Juliomar Marchetti
+
+11/03/2016
+-- pcnNFeW --
+[*] Corrigido a validação do campo nDI, pois este pode conter os numeros dos
+    documentos: DI, DSI, DIRE, ...
+    por: csoft / Italo Jurisato Junior
+
+10/03/2016
+-- ACBrNFeNotasFiscais --
+[*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"
+    http://www.projetoacbr.com.br/forum/topic/28603-unable-to-parse/
+
+08/03/2016
+-- ACBrDANFeRLRetrao
+[*] Ajuste para sair o canhoto somente na primeira folha
+		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
+		por: Juliomar Marchetti
+		
+07/03/2016   
+-- ACBrNFe, ACBrNFeDANFeRL, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
+[*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings  (por: DSA)
+
+-- ACBrNFeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    (por: DSA)
+
+-- ACBrNFeNotasFiscais --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML    (por: DSA)
+
+06/03/2016
+-- ACBrNFe --
+[*] Acrescentado os status de denegação ao veriricar se a nota foi confirmada.
+    Por: Italo Jurisato Junior
+
+04/03/2016  (por: DSA)
+-- ACBrNFeWebServices, pcnInutNFe --
+[-] Correção em "TNFeInutilizacao" e "TinutNFe", para permitir a geração de XMLs
+    com acentos
+[-] Modificado para que procedure TNFeInutilizacao.DefinirDadosMsg não modifique
+    o valor configurado em "Configuracoes.Geral.ModeloDF"
+
+03/03/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
+[*] Modificado para imprimir o codigo do produtos em varias linhas. 
+		http://www.projetoacbr.com.br/forum/topic/28420-campo-cprod-cortando-no-acbrnfedanferlfortes-report/#comment-187849
+		por : Henrique Leonardo
+
+29/02/2016
+-- pcnNFeW --
+[-] Correção, estava gerando a TAG cRegTrib mesmo com o valor RTISSNenhum.
+    Por: Italo Jurisato Junior
+-- ACBrNFeWebServices --
+[-] Correção no nome da TAG de retorno do método de Administração de CSC da NFC-e.
+    Por: Italo Jurisato Junior
+
+29/02/2016
+--ACBrNFeDANFeRLRetrato
+[+] Modificado para imprimir o canhoto de recibo somente na primeira página indiferente do cabeçalho ou rodape
+		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
+		por : Juliomar Marchetti
+		
+26/02/2016
+[*] Modificação para ler os campos novos do manual novo do TXT
+		por: Juliomar Marchetti
+		
+25/02/2016
+[*] Modificação para compatibilizar os campos igual aos manuais do sefaz
+		http://www.emissornfe.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
+		http://www.emissornfehom.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
+		por : Juliomar Marchetti
+
+23/02/2016
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
+[*] Ajuste na critica do mostrar Dados ISSQN. 
+    Por: Henrique Leonardo
+
+
+22/02/2016
+-- pcnNFeW --
+[-] alteração para geração das tags do DIFAL mesmo com valor zerado, 
+    agora com a liminar do simples nacional não passa sem elas e não tem valor.
+
 18/02/2016
 --  pcnCCeNFe, pcnEnvEventoNFe, pcnNFeW, pcnProcNFe --
 [*] Ajuste para usar nova versão de pcnAuxiliar.GetUTC         (por: DSA)

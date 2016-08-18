@@ -107,6 +107,7 @@ function FormataCMC7(const ACMC7: String): String;
 function CalculaC1(Chave: String): Integer;
 function CalculaC2(Chave: String): Integer;
 function CalculaC3(Chave: String): Integer;
+function CalcDigitoCMC7(Documento : String; Inicial, Final : integer) : String;
 
 implementation
 
@@ -196,7 +197,7 @@ begin
     else
        vPeso := Final;
 
-    if Documento[I] in ['0'..'9'] then
+    if CharInSet(Documento[I], ['0'..'9']) then
     begin
        vVal1 := StrToFloat(Documento[I])*vPeso;
        if (vVal1 > 9) then

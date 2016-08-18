@@ -42,7 +42,7 @@ unit ACBrLFDBloco_C_Class;
 
 interface
 
-uses SysUtils, Classes, DateUtils, ACBrLFD3505, ACBrLFDUtils, ACBrLFDBlocos, ACBrLFDBloco_C,
+uses SysUtils, Classes, DateUtils, ACBrLFD3505, ACBrLFDBlocos, ACBrLFDBloco_C,
      ACBrTXTClass;
 
 
@@ -219,6 +219,9 @@ type
   end;
 
 implementation
+
+uses
+  ACBrTXTUtils;
 
 { TBloco_C }
 

@@ -47,6 +47,103 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2016
+[*] melhorias no damdfe em fast report
+		http://www.projetoacbr.com.br/forum/topic/31558-erro-ao-imprimir-mdf-e/
+		por : Juliomar Marchetti
+		
+16/06/2016
+-- ACBrMDFeWebServices --
+[-] Ajuste para não duplicar a lista de items em TDistribuicaoDFe
+    (por: DSA / Italo Jurisato Junior)
+
+14/06/2016
+-- pmdfeMDFeW --
+[*] Método: "GerarXml", modificado para somente gerar Declaração de UTF8 no XML
+    se estiver em FPC (que usa UTF8 de forma nativa)
+
+-- ACBrMDFe --
+[+] Adicionado o método "cStatCancelado(AValue: integer): Boolean;" que retorna
+    True se "AValue" estiver entre os status de cancelamento
+
+-- ACBrMDFeManifestos --
+[*] Método: "CalcularNomeArquivoCompleto" movido para Public
+[*] Método: "LerXML" corrigido para usar "String" e não "AnsiString"
+[*] Propriedades "XMLOriginal" e "XMLAssinado", modificadas para presumir que o
+    o seu conteudo sempre estará em UTF8
+[+] Adicionada a propriedade: "Manifesto.Cancelado: Boolean"
+    (True quando CStat for cancelamento)
+[*] Método: "Manifesto.Validar", modificado para preservar a Declaração do XML
+[*] Método "Manifesto.LerXML", mnodificado para converter (se necessário) o
+    conteúdo do XML informado para a String Nativa da IDE, além de efetuar o
+    "parse" dos "HTML Entity"). Isso é necessário, para que as propriedades do
+    Objeto "MDFe" fiquem com apresentação correta.
+[-] Método: "CalcularNomeArquivoCompleto", correção para evitar somar o Path no
+    Resultado final, quando o nome do arquivo já conter o mesmo.
+[+] Método: "SetXMLOriginal", modificado para verificar se o conteúdo do XML
+    informado está em UTF8, convertendo-o, se necessário.
+[*] Método: "TManifestos.VerificarAssinatura", modificado para disparar Erro,
+    caso nenhum manifesto esteja carregado.
+[*] Método: "TManifestos.LoadFromFile" modificado para não Decodificar o XML
+    para a String nativa, pois isso agora é feito por "Manifesto.LerXML"
+[-] Método: "TManifestos.LoadFromString", modificado para conseguir processar
+    XMLs com a Tag "procMDFe", obtido pelo Portal do SEFAZ
+[*] Método: "TManifestos.LoadFromString", modificado para converter o XML
+    informado, para a String Nativa (se necessário)
+
+-- ACBrMDFeWebServices --
+[*] Método: "TMDFeRecepcao.TratarResposta", "TMDFeRetRecepcao.TratarRespostaFinal",
+    "TMDFeConsulta.TratarResposta" modificados para não salvar 2x o XML.
+[*] Método: "TMDFeConsulta.TratarResposta": refatorados para usar "cStatCancelado"
+    e "CstatProcessado";
+[-] "TMDFeConsulta.TratarResposta": Corrigido Bug que apagava o conteúdo do XML,
+    caso ocorrese uma falha no Retorno do XML
+[-] "TMDFeConsulta.TratarResposta": Corrigido Bug na Atualização do XML caso o
+    mesmo estivesse Cancelado
+
+08/06/2016
+-- ACBrMDFeDAMDFeRLRetrato --
+[-] Correção para formatar corretamente os valores, acerto para utilizar as 
+    funções que já são utilizadas em outros impressores como por exemplo a NFe
+    por: Regys.Silveira
+
+15/04/2016
+-- pmdfeEventoMDFe --
+[*] Incluido o tipo de evento teMDFeAutorizado:
+    por: Italo Jurisato Junior
+
+13/04/2016
+-- ACBrMDFeWebServices --
+[*] Método "TMDFeWebService.Clear" modificado para inicializar:
+    SSL.UseCertificateHTTP := True  
+    por: DSA / Italo Jurisato Junior
+
+12/03/2016
+[*] Modificado para deixar alguns botões fora do preview em fast report
+		por: Juliomar Marchetti
+
+10/03/2016
+-- ACBrMDFeManifestos --
+[*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"
+
+07/03/2016   
+-- ACBrMDFe, pmdfeConversaoMDFe, pmdfeDistDFeInt, pmdfeEnvEventoMDFe --
+[*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)
+
+-- ACBrMDFeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    (por: DSA)
+
+-- ACBrMDFeManifestos --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML    (por: DSA)
+
+27/02/2016
+-- ACBrMDFeDAEventoRL
+[-] Correção para pegar informações do evento e não do mdf-e pois pode não estar 
+    carregado no componente (por : Juliomar Marchetti)
+		
 17/02/2016
 -- ACBrMDFeManifestos --
 [*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)

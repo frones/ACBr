@@ -76,7 +76,7 @@ type
     Constructor Create;
     Destructor Destroy; override;
 
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function RegistroP001New            : TRegistroP001;
     function RegistroP010New            : TRegistroP010;

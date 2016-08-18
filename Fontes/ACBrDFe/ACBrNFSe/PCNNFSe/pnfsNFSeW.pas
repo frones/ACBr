@@ -71,6 +71,7 @@ type
 
   public
     constructor Create(ANFSeW: TNFSeW); virtual;
+    destructor  Destroy; Override;
 
     function ObterNomeArquivo: String; virtual;
     function GerarXml: Boolean; virtual;
@@ -137,7 +138,7 @@ uses
   ACBrDFeException,
   pnfsNFSeW_ABRASFv1, pnfsNFSeW_ABRASFv2, pnfsNFSeW_EGoverneISS, pnfsNFSeW_EL,
   pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsNFSeW_Governa,
-  pnfsNFSeW_SP, pnfsNFSeW_CONAM;
+  pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili;
 
 { TNFSeW }
 
@@ -192,6 +193,7 @@ begin
     loISSDSF:      FNFSeWClass := TNFSeW_ISSDSF.Create(Self);
     loSP:          FNFSeWClass := TNFSeW_SP.Create(Self);
     loCONAM:       FNFSeWClass := TNFSeW_CONAM.Create(Self);
+    loAgili:       FNFSeWClass := TNFSeW_Agili.Create(Self); 
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;
@@ -232,6 +234,13 @@ function TNFSeWClass.ObterNomeArquivo: String;
 begin
   Result := '';
   raise EACBrDFeException.Create(ClassName + '.ObterNomeArquivo, não implementado');
+end;
+
+destructor TNFSeWClass.Destroy;
+begin
+  FOpcoes.Free;
+  FGerador.Free;
+  inherited Destroy;
 end;
 
 function TNFSeWClass.GerarXml: Boolean;

@@ -69,7 +69,7 @@ type
     procedure SetTimeZone(AValue: String);
   public
     constructor Create;
-    procedure Assign(AFrom: TTimeZoneConf);
+    procedure Assign(Source: TPersistent); override;
   published
     property ModoDeteccao: TTimeZoneModoDeteccao read FModoDeteccao
       write SetModoDeteccao default tzSistema;
@@ -120,8 +120,13 @@ function GetFimDoHorarioDeVerao(const ano: Integer): TDateTime;
 function GetDataDoCarnaval(const ano: Integer): TDateTime;
 function GetDataDaPascoa(const ano: Integer): TDateTime;
 
+function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
+function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
+
+function TimeZoneConf: TTimeZoneConf;
+
 var
-  TimeZoneConf: TTimeZoneConf;
+  TimeZoneConfInstance: TTimeZoneConf;
 
 implementation
 
@@ -130,8 +135,8 @@ uses
 
 function CodigoParaUF(const codigo: integer): string;
 const
-  (**)UFS = '.AC.AL.AP.AM.BA.CE.DF.ES.GO.MA.MT.MS.MG.PA.PB.PR.PE.PI.RJ.RN.RS.RO.RR.SC.SP.SE.TO.DF.DF';
-  CODIGOS = '.12.27.16.13.29.23.53.32.52.21.51.50.31.15.25.41.26.22.33.24.43.11.14.42.35.28.17.90.91';
+  (**)UFS = '.AC.AL.AP.AM.BA.CE.DF.ES.GO.MA.MT.MS.MG.PA.PB.PR.PE.PI.RJ.RN.RS.RO.RR.SC.SP.SE.TO.DF.DF.';
+  CODIGOS = '.12.27.16.13.29.23.53.32.52.21.51.50.31.15.25.41.26.22.33.24.43.11.14.42.35.28.17.90.91.';
 begin
   try
     result := copy(UFS, pos('.' + IntToStr(Codigo) + '.', CODIGOS) + 1, 2);
@@ -918,6 +923,28 @@ end;
 
 { TTimeZoneConf }
 
+function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ValidarChave(AChaveNFe) then
+    Result := copy(AChaveNFE, 21, 2)
+  else
+    Result := '';
+end;
+
+function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
+begin
+  Result := StrToIntDef(Copy(AChaveNFE,1,2), 0);
+end;
+
+function TimeZoneConf: TTimeZoneConf;
+begin
+  if not Assigned(TimeZoneConfInstance) then
+    TimeZoneConfInstance := TTimeZoneConf.Create;
+
+  Result := TimeZoneConfInstance;
+end;
+
 constructor TTimeZoneConf.Create;
 begin
   inherited;
@@ -926,10 +953,13 @@ begin
   FModoDeteccao := tzSistema;
 end;
 
-procedure TTimeZoneConf.Assign(AFrom: TTimeZoneConf);
+procedure TTimeZoneConf.Assign(Source: TPersistent);
 begin
-  FModoDeteccao := AFrom.ModoDeteccao;
-  FTimeZoneStr  := AFrom.TimeZoneStr;
+ if Source is TTimeZoneConf then
+ begin
+   FModoDeteccao := TTimeZoneConf(Source).ModoDeteccao;
+   FTimeZoneStr  := TTimeZoneConf(Source).TimeZoneStr;
+ end;
 end;
 
 procedure TTimeZoneConf.SetTimeZone(AValue: String);
@@ -938,16 +968,22 @@ var
 begin
   if FTimeZoneStr = AValue then Exit;
 
-  if FModoDeteccao <> tzManual then
+  if (FModoDeteccao <> tzManual) then
   begin
     FTimeZoneStr := '';
-    exit;
+    Exit;
+  end;
+
+  if (Trim(AValue) = '') then
+  begin
+    FTimeZoneStr := GetUTCSistema;
+    Exit;
   end;
 
   if (Length(AValue) <> 6) then
     raise Exception.Create('Tamanho de TimeZone deve ser 6. Ex: -03:00');
 
-  if not (AValue[1] in ['-','+']) then
+  if not CharInSet(AValue[1], ['-','+']) then
     raise Exception.Create('Primeiro caractere deve ser "+,-". Ex: -03:00');
 
   if not (AValue[4] = ':') then
@@ -979,10 +1015,11 @@ begin
 end;
 
 initialization
-  TimeZoneConf := TTimeZoneConf.Create;
+  TimeZoneConfInstance := nil;
 
 finalization;
-  FreeAndNil( TimeZoneConf );
+  if Assigned( TimeZoneConfInstance ) then
+    TimeZoneConfInstance.Free;
 
 end.
 

@@ -35,39 +35,101 @@
 { For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html }
 {                                                                              }
 {******************************************************************************}
-{$A+,Z4}
+{$A+} {record alignment on 4 byte boundaries}
+{$Z4} {enum size is 4 bytes}
 
 // This file is intended for C header conversions.
 // It defines several mutually exclusive IFDEFs which determine
 // the Windows version the API conversion is usable with.
 
+
+//contains the JEDI inclusion that is shared amongst all JEDI projects
+//it is an external svn repo
 {$I ACBr_jedi.inc}
+
 
 {$IFNDEF JEDI_INC}
 ALERT_jedi_inc_incompatible
 // secure against old versions of jedi.inc.
 {$ENDIF !JEDI_INC}
 
-// activate standalone feature for files
-{$IFNDEF JWA_INCLUDEMODE}
-{$DEFINE JWA_INTERFACESECTION}
-{$DEFINE JWA_IMPLEMENTATIONSECTION}
-{$ENDIF !JWA_INCLUDEMODE}
+{******* WARNINGS OFF *********
+Currently the generated warnings from Delphi make no sense.
+So we turn them off.}
+{$WARNINGS OFF}
+
+{WARNING:
+Do not change state of
+JWA_INCLUDEMODE
+JWA_INTERFACESECTION
+JWA_IMPLEMENTATIONSECTION
+Its only set in JwaWindows.pas.
+Standalone compiling would be useless!
+}
 
 // Global switch to enable dynamic linking of some APIs
 {.DEFINE DYNAMIC_LINK}
 {$IFDEF DYNAMIC_LINK}
   {$STACKFRAMES ON}
-  {$WARNINGS OFF}
 {$ENDIF DYNAMIC_LINK}
 
+{.$DEFINE ANSICODE}
+
 // Global switch to make UNICODE versions of API functions default
-{.DEFINE UNICODE}
+{.$DEFINE UNICODE}
+
+{$IFDEF ANSICODE}
+  {$IFDEF UNICODE}
+    //Ansicode must be stronger, since Delphi 2009
+    //sets UNICODE by default. However we unset it here
+    //if the user defined ansicode
+    {$UNDEF UNICODE}
+  {$ENDIF UNICODE}
+{$ENDIF ANSICODE}
 
 // Global switch to activate the use of the original basic types of
 // Delphi Windows.pas. Either indirectly in JwaWinType.pas or
 // directly through the use of Windows.pas instead of JwaWinType.pas.
 {$DEFINE USE_DELPHI_TYPES}
+
+
+// This global switch activates the using of long function variables
+// for dynamic linking
+// in old Delphi versions long var names are shorten and no more recognized.
+{$UNDEF SUPPORT_LONG_VARNAMES}
+{$IFDEF DELPHI6_UP}
+  {$DEFINE SUPPORT_LONG_VARNAMES}
+{$ENDIF DELPHI6_UP}
+
+{$IFDEF FPC}
+  {$DEFINE SUPPORT_LONG_VARNAMES}
+{$ENDIF FPC}
+
+//activate 64bit tweaks for some functions
+//jwaWinBase::InterlockedCompareExchangePointer
+//jwaWinBase::InterlockedExchangePointer
+{$DEFINE CPU64BIT}
+
+{$IFDEF DEBUG}
+  {.$WARNINGS OFF}
+{$IFDEF DELPHI7_UP}
+  {$WARN GARBAGE OFF} //removes warning about code behind end.
+{$ENDIF DELPHI7_UP}
+{$ENDIF DEBUG}
+
+//remove defs
+{$UNDEF WIN95}
+{$UNDEF WIN98}
+{$UNDEF WIN98SE}
+{$UNDEF WIN98ME}
+{$UNDEF WINNT4}
+{$UNDEF WIN2000}
+{$UNDEF WINXP}
+{$UNDEF WIN2003}
+{$UNDEF WINVISTA}
+{$UNDEF WIN2008}
+{$UNDEF WIN2008R2}
+{$UNDEF WIN7}
 
 // Global switch for the Windows version the files are compatible with
 // ONLY A SINGLE ONE IS ALLOWED TO BE ACTIVATED BY CHANGING THE DOT TO A DOLLAR SIGN!
@@ -78,8 +140,18 @@ ALERT_jedi_inc_incompatible
 {.DEFINE WIN98ME}
 {.DEFINE WINNT4}
 {.DEFINE WIN2000}
-{$DEFINE WINXP}
+{.$DEFINE WINXP}
 {.DEFINE WIN2003}
+{.$DEFINE WINVISTA}
+{.$DEFINE WIN2008}
+{.$DEFINE WIN2008R2}
+{$DEFINE WIN7}
+
+
+{.DEFINE SERVICEPACK_1}
+{.DEFINE SERVICEPACK_2}
+{.DEFINE SERVICEPACK_3}
+{.DEFINE SERVICEPACK_4}
 
 // Global switch for the Windows Internet Explorer versions
 // ONLY A SINGLE ONE IS ALLOWED TO BE ACTIVATED BY CHANGING THE DOT TO A DOLLAR SIGN!
@@ -106,6 +178,60 @@ ALERT_jedi_inc_incompatible
 {$DEFINE HTMLHELP12}
 
 // secondary IFDEFs for "_UP" which means also any later OS version
+{$IFDEF WIN2008R2}
+ {$DEFINE WIN95_UP}
+ {$DEFINE WIN98_UP}
+ {$DEFINE WIN98SE_UP}
+ {$DEFINE WIN98ME_UP}
+ {$DEFINE WINNT4_UP}
+ {$DEFINE WIN2000_UP}
+ {$DEFINE WINXP_UP}
+ {$DEFINE WIN2003_UP}
+ {$DEFINE WINVISTA_UP}
+ {$DEFINE WIN2008_UP}
+ {$DEFINE WIN2008R2_UP}
+ {$DEFINE WIN7_UP}
+{$ENDIF WIN2008}
+
+
+{$IFDEF WIN2008}
+ {$DEFINE WIN95_UP}
+ {$DEFINE WIN98_UP}
+ {$DEFINE WIN98SE_UP}
+ {$DEFINE WIN98ME_UP}
+ {$DEFINE WINNT4_UP}
+ {$DEFINE WIN2000_UP}
+ {$DEFINE WINXP_UP}
+ {$DEFINE WIN2003_UP}
+ {$DEFINE WINVISTA_UP}
+ {$DEFINE WIN2008_UP}
+{$ENDIF WIN2008}
+
+{$IFDEF WIN7}
+ {$DEFINE WIN95_UP}
+ {$DEFINE WIN98_UP}
+ {$DEFINE WIN98SE_UP}
+ {$DEFINE WIN98ME_UP}
+ {$DEFINE WINNT4_UP}
+ {$DEFINE WIN2000_UP}
+ {$DEFINE WINXP_UP}
+ {$DEFINE WIN2003_UP}
+ {$DEFINE WINVISTA_UP}
+ {$DEFINE WIN7_UP}
+{$ENDIF WIN7}
+
+{$IFDEF WINVISTA}
+ {$DEFINE WIN95_UP}
+ {$DEFINE WIN98_UP}
+ {$DEFINE WIN98SE_UP}
+ {$DEFINE WIN98ME_UP}
+ {$DEFINE WINNT4_UP}
+ {$DEFINE WIN2000_UP}
+ {$DEFINE WINXP_UP}
+ {$DEFINE WIN2003_UP}
+ {$DEFINE WINVISTA_UP}
+{$ENDIF WINVISTA}
+
 {$IFDEF WIN2003}
  {$DEFINE WIN95_UP}
  {$DEFINE WIN98_UP}
@@ -165,6 +291,21 @@ ALERT_jedi_inc_incompatible
 {$IFDEF WIN95}
  {$DEFINE WIN95_UP}
 {$ENDIF WIN95}
+
+{$IFDEF SERVICEPACK_2}
+ {$DEFINE SERVICEPACK_1_UP}
+{$ENDIF SERVICEPACK_2}
+
+{$IFDEF SERVICEPACK_3}
+ {$DEFINE SERVICEPACK_1_UP}
+ {$DEFINE SERVICEPACK_2_UP}
+{$ENDIF SERVICEPACK_3}
+
+{$IFDEF SERVICEPACK_4}
+ {$DEFINE SERVICEPACK_1_UP}
+ {$DEFINE SERVICEPACK_2_UP}
+ {$DEFINE SERVICEPACK_3_UP}
+{$ENDIF SERVICEPACK_4}
 
 
 // secondary IFDEFs for "_UP" which means also any later IE version
@@ -260,4 +401,28 @@ ALERT_jedi_inc_incompatible
  {$DEFINE HTMLHELP11_UP}
 {$ENDIF HTMLHELP11}
 
+{$IFDEF SUPPORTS_DELAYED_LOADING}         //if delayed linking is supported ...
+ {$IFDEF DYNAMIC_LINK}                    //... and dynamic linking is supposed ...
+  {$IFDEF DELPHI16_UP and Defined(WIN64)} //... and Delphi >= XE2 and target = Win64, then ... 
+    {$DEFINE DELAYED_LOADING}             //... switch to delayed loading
+    {$UNDEF DYNAMIC_LINK}
+  {$ENDIF DELPHI16_UP}  
+ {$ENDIF DYNAMIC_LINK}
+{$ELSE}                           //if delayed loading is not supported ...
+ {$IFDEF DELAYED_LOADING}         //... but someone wants it ...
+  {$UNDEF DELAYED_LOADING}        //... then switch back to dynamic linking
+  {$DEFINE DYNAMIC_LINK}
+ {$ENDIF DELAYED_LOADING}
+{$ENDIF}
+
+
 {$ENDIF ~JEDIAPILIB_INC}
+
+// Define JWA_USE_INCORRECT_IDENTIFIERS to activate types, constants and so on
+// which don't exist in original headers. They may have been written incorrectly
+// and are now corrected but remain for backwards compatibility.
+{.$DEFINE JWA_USE_INCORRECT_IDENTIFIERS}
+
+//This include must be at the end of include definitions
+//If this does not work, you forgot to add JWA source folder to your LIBRARY path.
+{$INCLUDE jwaAdditionals.inc}

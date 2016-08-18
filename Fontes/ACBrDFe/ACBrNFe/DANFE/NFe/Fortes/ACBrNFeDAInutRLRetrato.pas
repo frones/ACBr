@@ -143,13 +143,10 @@ uses
   {$R *.lfm}
 {$ENDIF}
 
-var
-  FProtocoloNFe : String;
-
 procedure TfrmNFeDAInutRLRetrato.RLInutBeforePrint(Sender: TObject; var PrintReport: Boolean);
 begin
   inherited;
-  RLNFeInut.Title := 'Inutilização';
+  RLNFeInut.Title := ACBrStr('Inutilização');
 end;
 
 procedure TfrmNFeDAInutRLRetrato.rlb_03_InutilizacaoBeforePrint(Sender: TObject; var PrintBand: Boolean);
@@ -161,8 +158,8 @@ begin
       rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
 
       case tpAmb of
-       taProducao:    rllTipoAmbiente.Caption := 'PRODUÇÃO';
-       taHomologacao: rllTipoAmbiente.Caption := 'HOMOLOGAÇÃO - SEM VALOR FISCAL';
+       taProducao:    rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
+       taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
       end;
 
       rllAno.Caption       := IntToStr(RetInutNFe.ano);

@@ -126,7 +126,7 @@ begin
         begin
           with TotalizadoresParciais.Add do
           begin
-            Identificao := '00T1234';
+            Identificacao := '00T1234';
             Valor       := 1234.56;
 
             for X := 1 to 2 do

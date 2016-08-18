@@ -118,7 +118,7 @@ type
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     function Registro0000New: TRegistro0000;
     function Registro0001New: TRegistro0001;
@@ -390,8 +390,7 @@ end;
 
 procedure TBloco_0.WriteRegistro0000 ;
 var
-  strIND_PERFIL: AnsiString;
-  strCOD_VER: AnsiString;
+  strIND_PERFIL: String;
 begin
   if Assigned(Registro0000) then
   begin
@@ -403,8 +402,6 @@ begin
         pfPerfilC: strIND_PERFIL := 'C';
        end;
 
-       strCOD_VER := ACBrEFDBlocos.CodVerToStr(COD_VER);
-
        Check(funChecaCNPJ(CNPJ), '(0-0000) ENTIDADE: O CNPJ "%s" digitado é inválido!', [CNPJ]);
        Check(funChecaCPF(CPF), '(0-0000) ENTIDADE: O CPF "%s" digitado é inválido!', [CPF]);
        Check(funChecaUF(UF), '(0-0000) ENTIDADE: A UF "%s" digitada é inválido!', [UF]);
@@ -412,7 +409,7 @@ begin
        Check(funChecaMUN(COD_MUN), '(0-0000) ENTIDADE: O código do município "%s" digitado é inválido!', [IntToStr(COD_MUN)]);
        ///
        Add( LFill( '0000' ) +
-            LFill( strCOD_VER ) +
+            LFill( CodVerToStr(COD_VER) ) +
             LFill( Integer(COD_FIN), 1 ) +
             LFill( DT_INI ) +
             LFill( DT_FIN ) +
@@ -641,8 +638,8 @@ end;
 procedure TBloco_0.WriteRegistro0200(Reg0001: TRegistro0001) ;
 var
   intFor: integer;
-  strTIPO_ITEM: AnsiString;
-  strLinha: AnsiString;
+  strTIPO_ITEM: String;
+  strLinha: String;
 begin
   if Assigned( Reg0001.Registro0200 ) then
   begin
@@ -746,7 +743,7 @@ end;
 procedure TBloco_0.WriteRegistro0206(Reg0200: TRegistro0200) ;
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( Reg0200.Registro0206 ) then
   begin
@@ -790,7 +787,7 @@ end;
 procedure TBloco_0.WriteRegistro0210(Reg0200: TRegistro0200);
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( Reg0200.Registro0210 ) then
   begin
@@ -959,7 +956,7 @@ end;
 procedure TBloco_0.WriteRegistro0500(Reg0001: TRegistro0001) ;
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   /// Exigência do Art. 3º do AC 09/08
   if DT_INI >= EncodeDate(2010,07,01) then
@@ -1016,7 +1013,7 @@ end;
 procedure TBloco_0.WriteRegistro0600(Reg0001: TRegistro0001) ;
 var
   intFor: integer;
-  strLinha: AnsiString;
+  strLinha: String;
 begin
   if Assigned( Reg0001.Registro0600 ) then
   begin
@@ -1061,7 +1058,7 @@ begin
 end;
 
 procedure TBloco_0.WriteRegistro0990 ;
-  var strLinha : AnsiString;
+  var strLinha : String;
 begin
   //--Before
   strLinha := '';

@@ -94,6 +94,7 @@ type
     FInfAdic: TInfAdic;
     FSignature: TSignature;
     FXMLOriginal: AnsiString;
+    FAjustarTagNro:Boolean;
 
     function GetAsXMLString: AnsiString;
     procedure SetDet(Value: TDetCollection);
@@ -127,6 +128,7 @@ type
     property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos;
     property IdentarXML: boolean read FIdentarXML write FIdentarXML;
     property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao;
+    property AjustarTagNro: boolean read FAjustarTagNro write FAjustarTagNro;
   end;
 
   { TinfCFe }
@@ -312,6 +314,7 @@ type
     FEhCombustivel: Boolean;
     FxProd: string;
     FNCM: string;
+    FCEST: string;
     FCFOP: string;
     FuCom: string;
     FqCom: currency;
@@ -334,6 +337,7 @@ type
     property cEAN: string read FcEAN write FcEAN;
     property xProd: string read FxProd write FxProd;
     property NCM: string read FNCM write FNCM;
+    property CEST: string read FCEST write FCEST;
     property CFOP: string read FCFOP write FCFOP;
     property uCom: string read FuCom write FuCom;
     property EhCombustivel: Boolean read FEhCombustivel write FEhCombustivel;
@@ -617,7 +621,7 @@ type
   public
     constructor Create(AOwner: TCFe);
     destructor Destroy; override;
-
+    procedure Clear;
     function Add: TMPCollectionItem;
     property Items[Index: Integer]: TMPCollectionItem read GetItem write SetItem; default;
   published
@@ -673,7 +677,9 @@ type
 
 implementation
 
-Uses dateutils, pcnCFeR, pcnCFeW ;
+Uses dateutils,
+  pcnCFeR, pcnCFeW,
+  ACBrUtil;
 
 { TDescAcrEntr }
 
@@ -1084,6 +1090,7 @@ begin
   FcEAN     := '';
   FxProd    := '';
   FNCM      := '';
+  FCEST     := '';
   FCFOP     := '';
   FuCom     := '';
   FqCom     := 0;
@@ -1215,7 +1222,12 @@ end ;
 function TMPCollection.Add: TMPCollectionItem;
 begin
   Result := TMPCollectionItem(inherited Add);
-//  Result.Create;
+end;
+
+procedure TMPCollection.Clear;
+begin
+   inherited Clear;
+   FvTroco := 0;
 end;
 
 constructor TMPCollection.Create(AOwner: TCFe);
@@ -1258,6 +1270,7 @@ begin
   FRetirarAcentos := True;
   FIdentarXML := False;
   FTamanhoIdentacao := 3;
+  FAjustarTagNro := True;
 
   Clear;
 end;
@@ -1317,19 +1330,10 @@ begin
 end ;
 
 function TCFe.SaveToFile(AFileName: String): boolean;
-var
-  SL : TStringList;
 begin
-  Result := False;
-  SL := TStringList.Create;
-  try
-    SL.Text := AsXMLString;
-    SL.SaveToFile( AFileName );
-    FNomeArquivo := AFileName;
-    Result := True;
-  finally
-    SL.Free;
-  end;
+  WriteToTXT(AFileName, AsXMLString, False, False);
+  FNomeArquivo := AFileName;
+  Result := True;
 end ;
 
 procedure TCFe.SetDet(Value: TDetCollection);
@@ -1351,9 +1355,10 @@ var
 begin
   LocCFeW := TCFeW.Create(Self);
   try
-    LocCFeW.Gerador.Opcoes.RetirarAcentos := FRetirarAcentos;
-    LocCFeW.Gerador.Opcoes.IdentarXML := FIdentarXML;
-    LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;
+    LocCFeW.Gerador.Opcoes.RetirarAcentos   := FRetirarAcentos;
+    LocCFeW.Gerador.Opcoes.IdentarXML       := FIdentarXML;
+    LocCFeW.Gerador.Opcoes.TamanhoIdentacao := FTamanhoIdentacao;   
+    LocCFeW.Opcoes.AjustarTagNro            := FAjustarTagNro;   
 
     LocCFeW.GerarXml( ApenasTagsAplicacao );
     FXMLOriginal := LocCFeW.Gerador.ArquivoFormatoXML;

@@ -151,7 +151,7 @@ begin
               Trim(CFe.Emit.EnderEmit.xCpl)+' '+
               Trim(CFe.Emit.EnderEmit.xBairro)+'-'+
               Trim(CFe.Emit.EnderEmit.xMun)+'-'+
-              FormatarCEP(IntToStr(CFe.Emit.EnderEmit.CEP)));
+              FormatarCEP(CFe.Emit.EnderEmit.CEP));
 
   FBuffer.Add( '</ae><c>'+
                'CNPJ:'+FormatarCNPJ(CFe.Emit.CNPJ)+

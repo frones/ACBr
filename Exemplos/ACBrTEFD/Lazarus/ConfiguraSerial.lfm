@@ -1,7 +1,7 @@
 object frConfiguraSerial: TfrConfiguraSerial
-  Left = 340
+  Left = 2194
   Height = 297
-  Top = 158
+  Top = 224
   Width = 268
   ActiveControl = cmbPortaSerial
   BorderIcons = [biSystemMenu]
@@ -14,15 +14,15 @@ object frConfiguraSerial: TfrConfiguraSerial
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poOwnerFormCenter
-  LCLVersion = '0.9.29'
+  LCLVersion = '1.6.0.4'
   object lBaud: TLabel
     AnchorSideLeft.Control = lPortaSerial
     AnchorSideTop.Control = cmbPortaSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
-    Height = 16
-    Top = 47
-    Width = 152
+    Height = 15
+    Top = 46
+    Width = 151
     BorderSpacing.Top = 2
     Caption = '&Baud rate (Bits por Segundo)'
     FocusControl = cmbBaudRate
@@ -33,9 +33,9 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Control = cmbBaudRate
     AnchorSideTop.Side = asrBottom
     Left = 8
-    Height = 16
-    Top = 89
-    Width = 129
+    Height = 15
+    Top = 87
+    Width = 128
     BorderSpacing.Top = 2
     Caption = '&Data Bits (Bits de Dados)'
     FocusControl = cmbDataBits
@@ -46,9 +46,9 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Control = cmbDataBits
     AnchorSideTop.Side = asrBottom
     Left = 8
-    Height = 16
-    Top = 131
-    Width = 88
+    Height = 15
+    Top = 128
+    Width = 87
     BorderSpacing.Top = 2
     Caption = '&Parity (Paridade)'
     FocusControl = cmbParity
@@ -59,9 +59,9 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Control = cmbParity
     AnchorSideTop.Side = asrBottom
     Left = 8
-    Height = 16
-    Top = 173
-    Width = 132
+    Height = 15
+    Top = 169
+    Width = 131
     BorderSpacing.Top = 2
     Caption = '&Stop Bits (Bits de Parada)'
     FocusControl = cmbStopBits
@@ -72,9 +72,9 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Control = cmbStopBits
     AnchorSideTop.Side = asrBottom
     Left = 8
-    Height = 16
-    Top = 215
-    Width = 175
+    Height = 15
+    Top = 210
+    Width = 174
     BorderSpacing.Top = 2
     Caption = '&Handshaking (Controle de Fluxo)'
     FocusControl = cmbHandShaking
@@ -84,9 +84,9 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
     Left = 8
-    Height = 16
+    Height = 15
     Top = 5
-    Width = 60
+    Width = 59
     BorderSpacing.Left = 8
     BorderSpacing.Top = 5
     Caption = '&Porta Serial'
@@ -99,7 +99,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 23
-    Top = 64
+    Top = 62
     Width = 161
     BorderSpacing.Top = 1
     ItemHeight = 15
@@ -129,7 +129,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 23
-    Top = 106
+    Top = 103
     Width = 161
     BorderSpacing.Top = 1
     ItemHeight = 15
@@ -151,7 +151,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 23
-    Top = 148
+    Top = 144
     Width = 161
     BorderSpacing.Top = 1
     ItemHeight = 15
@@ -174,7 +174,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 23
-    Top = 190
+    Top = 185
     Width = 161
     BorderSpacing.Top = 1
     ItemHeight = 15
@@ -196,7 +196,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 23
-    Top = 232
+    Top = 226
     Width = 161
     BorderSpacing.Top = 1
     ItemHeight = 15
@@ -218,7 +218,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 23
-    Top = 22
+    Top = 21
     Width = 161
     BorderSpacing.Top = 1
     ItemHeight = 15
@@ -334,7 +334,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideTop.Side = asrBottom
     Left = 8
     Height = 19
-    Top = 260
+    Top = 254
     Width = 71
     BorderSpacing.Top = 5
     Caption = 'HardFlow'
@@ -348,7 +348,7 @@ object frConfiguraSerial: TfrConfiguraSerial
     AnchorSideRight.Side = asrBottom
     Left = 103
     Height = 19
-    Top = 260
+    Top = 254
     Width = 66
     Anchors = [akTop, akRight]
     BorderSpacing.Left = 10

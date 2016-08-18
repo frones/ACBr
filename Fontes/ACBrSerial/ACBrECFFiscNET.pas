@@ -51,7 +51,7 @@ TACBrECFFiscNETComando = class
     procedure SetNomeComando(const Value: String);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property NomeComando : String  write SetNomeComando ;
     property TimeOut     : Integer read fsTimeOut write fsTimeOut ;
@@ -76,7 +76,7 @@ TACBrECFFiscNETResposta = class
     procedure SetResposta(const Value: AnsiString);
  public
     constructor create ;
-    destructor destroy ; override ;
+    destructor Destroy ; override ;
 
     property Resposta   : AnsiString  read fsResposta write SetResposta ;
     property Cont       : Byte        read fsCont;
@@ -231,7 +231,7 @@ TACBrECFFiscNET = class( TACBrECFClass )
     function GetNumCOOInicial: String; override ;
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;    
+    function GetDadosUltimaReducaoZ: String; override ;
 
     function GetPAF: String; override ;
 
@@ -457,7 +457,7 @@ Procedure TACBrECFFiscNETComando.AddParamDateTime(ParamName : String;
 var
   Texto: string;
 begin
-  if Tipo in ['T','H'] then
+  if CharInSet( Tipo , ['T','H']) then
      Texto := FormatDateTime('hh:nn:ss',ADateTime)
   else
      Texto := FormatDateTime('dd/mm/yyyy',ADateTime) ;
@@ -1319,8 +1319,8 @@ begin
 
         ValAliq  := StringToFloat(
                          FiscNETResposta.Params.Values['PercentualAliquota'] );
-        if UpCase(
-            FiscNETResposta.Params.Values['AliquotaICMS'][1]) in ['F','N'] then
+        if CharInSet(UpCase(
+            FiscNETResposta.Params.Values['AliquotaICMS'][1]) , ['F','N']) then
            TipoAliq := 'S'
         else
            TipoAliq := 'T' ;
@@ -1366,7 +1366,7 @@ var
   Descr   : String ;
 begin
   Tipo := UpCase(Tipo) ;
-  if not (Tipo in ['T','S']) then
+  if not CharInSet(Tipo , ['T','S']) then
      Tipo := 'T' ;
 
   if Tipo = 'T' then
@@ -1440,8 +1440,8 @@ procedure TACBrECFFiscNET.CarregaFormasPagamento;
         FPagto.Indice :=
             FiscNETResposta.Params.Values['CodMeioPagamentoProgram'] ;
         FPagto.Descricao := FiscNETResposta.Params.Values['NomeMeioPagamento'] ;
-        FPagto.PermiteVinculado := ( UpCase(
-           FiscNETResposta.Params.Values['PermiteVinculado'][1]) in ['T','Y']) ;
+        FPagto.PermiteVinculado := CharInSet( UpCase(
+           FiscNETResposta.Params.Values['PermiteVinculado'][1]) , ['T','Y']) ;
 
         fpFormasPagamentos.Add( FPagto ) ;
      except
@@ -1630,7 +1630,7 @@ begin
      AddParamString('DescricaoNaoFiscal',Descricao) ;
      AddParamString('NomeNaoFiscal',Descricao) ;
      AddParamBool('TipoNaoFiscal',
-                  (not (UpCase(PadLeft(Tipo,1)[1]) in ['-','F','0'])) ) ;
+                  (not CharInSet(UpCase(PadLeft(Tipo,1)[1]) , ['-','F','0'])) ) ;
   end ;
   EnviaComando ;
 
@@ -2947,7 +2947,7 @@ begin
   inherited ArquivoMFD_DLL(NomeArquivo);
 end;
 
-function TACBrECFFiscNET.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFFiscNET.GetDadosUltimaReducaoZ: String;
 var
    RetCmd, S, SS , total : AnsiString ;
    I, J, ECFCRZ, ECFCRO,initotal : Integer;
@@ -3032,7 +3032,6 @@ begin
       initotal := 155;
       For I := 0 to fpAliquotas.Count-1 do
       begin
-        J           := StrToIntDef( Trim(fpAliquotas[I].Indice), I );
         AliqZ       := TACBrECFAliquota.Create ;
         AliqZ.Assign( fpAliquotas[I] );
         total       := copy(RetCmd,initotal,14);

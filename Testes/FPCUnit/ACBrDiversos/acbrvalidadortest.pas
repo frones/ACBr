@@ -1,4 +1,4 @@
-Ôªøunit ACBrValidadorTest;
+unit ACBrValidadorTest;
 
 {$IFDEF FPC}
 {$mode objfpc}{$H+}
@@ -166,10 +166,6 @@ type
   {TTestCaseACBrValidadorTelefone}
 
   TTestCaseACBrValidadorTelefone = class(TTestCase)
-  private
-    fACBrValidador : TACBrValidador;
-  protected
-    procedure TearDown; override;
   published
     procedure FormatarVazio;
     procedure FormatarZeros;
@@ -186,14 +182,116 @@ type
     procedure Formatar55ComDDD9Dig;
   end;
 
+  { TTestCaseACBrValidadorCEP }
+
+  TTestCaseACBrValidadorCEP = class(TTestCase)
+  published
+    procedure VerificarInvalidoSP;
+    procedure VerificarValidoSP;
+    procedure VerificarValidoSemExtensaoSP;
+    procedure FormatarInteger;
+    procedure FormatarIntegerSemExtensao;
+    procedure VerificarIntegerValidoSP;
+    procedure ComTraco;
+    procedure ComTracoNoLugarErrado;
+    procedure ComLetras;
+    procedure FormatarVazio;
+    procedure FormatarZerosAEsquerda;
+    procedure FormatarMenosDeCincoDigitos;
+    procedure FormatarCincoDigitos;
+    procedure FormatarMenosDeOitoEMaisDeCincoDigitos;
+    procedure FormatarMaisDeOitoDigitos;
+  end;
+
 implementation
 
-{ TTestCaseACBrValidadorTelefone }
+{ TTestCaseACBrValidadorCEP }
 
-procedure TTestCaseACBrValidadorTelefone.TearDown;
+procedure TTestCaseACBrValidadorCEP.VerificarInvalidoSP;
 begin
-  FreeAndNil(fACBrValidador);
+  CheckNotEquals('', ACBrValidador.ValidarCEP('92260001', 'SP'));
 end;
+
+procedure TTestCaseACBrValidadorCEP.VerificarValidoSP;
+begin
+  CheckEquals('', ACBrValidador.ValidarCEP('02260001', 'SP'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.VerificarValidoSemExtensaoSP;
+begin
+  CheckEquals('', ACBrValidador.ValidarCEP(18270, 'SP'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarInteger;
+var
+  ACep: Integer;
+begin
+  ACep := 2260001;
+  CheckEquals('02260-001', ACBrValidador.FormatarCEP(ACep));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarIntegerSemExtensao;
+var
+  ACep: Integer;
+begin
+  ACep := 2260;
+  CheckEquals('02260-000', ACBrValidador.FormatarCEP(ACep));
+end;
+
+procedure TTestCaseACBrValidadorCEP.VerificarIntegerValidoSP;
+var
+  ACep: Integer;
+begin
+  ACep := 2260001;
+  CheckEquals('', ACBrValidador.ValidarCEP(ACep, 'SP'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.ComTraco;
+begin
+  CheckEquals('', ACBrValidador.ValidarCEP('02260-001', 'SP'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.ComTracoNoLugarErrado;
+begin
+  CheckEquals('', ACBrValidador.ValidarCEP('0226-0001', 'SP'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.ComLetras;
+begin
+  CheckNotEquals('', ACBrValidador.ValidarCEP('ABCDEFGHIJ', 'SP'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarVazio;
+begin
+  CheckEquals('00000-000', ACBrValidador.FormatarCEP(''));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarZerosAEsquerda;
+begin
+  CheckEquals('02260-001', ACBrValidador.FormatarCEP('02260001'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarMenosDeCincoDigitos;
+begin
+  CheckEquals('02260-000', ACBrValidador.FormatarCEP('2260'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarCincoDigitos;
+begin
+  CheckEquals('18270-000', ACBrValidador.FormatarCEP('18270'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarMenosDeOitoEMaisDeCincoDigitos;
+begin
+  CheckEquals('02260-001', ACBrValidador.FormatarCEP('2260001'));
+end;
+
+procedure TTestCaseACBrValidadorCEP.FormatarMaisDeOitoDigitos;
+begin
+  CheckEquals('12345-678', ACBrValidador.FormatarCEP('123456789'));
+end;
+
+{ TTestCaseACBrValidadorTelefone }
 
 procedure TTestCaseACBrValidadorTelefone.FormatarVazio;
 begin
@@ -294,9 +392,9 @@ end;
 procedure TTestCaseACBrValidadorIE.ValidoAC;
 begin
   fACBrValidador.Complemento := 'AC';
-  fACBrValidador.Documento := '01.004.823/001-12';  // 13 d√≠gitos
+  fACBrValidador.Documento := '01.004.823/001-12';  // 13 dÌgitos
   CheckTrue(fACBrValidador.Validar, MsgErroIE);
-  fACBrValidador.Documento := '013456784';          // 9 d√≠gitos
+  fACBrValidador.Documento := '013456784';          // 9 dÌgitos
   CheckTrue(fACBrValidador.Validar, MsgErroIE);
 end;
 
@@ -305,7 +403,7 @@ begin
   fACBrValidador.Complemento := 'AC';
   fACBrValidador.Documento := '';             // Testando Vazio apenas 1 vez
   CheckFalse(fACBrValidador.Validar, MsgErroIE);
-  fACBrValidador.Documento := '99999';        // Testando menos d√≠gitos apenas 1 vez
+  fACBrValidador.Documento := '99999';        // Testando menos dÌgitos apenas 1 vez
   fACBrValidador.AjustarTamanho := True;
   CheckFalse(fACBrValidador.Validar, MsgErroIE);
   fACBrValidador.Documento := '01.004.823/001-99';
@@ -444,7 +542,7 @@ procedure TTestCaseACBrValidadorIE.InvalidoDF;
 begin
   fACBrValidador.Complemento := 'DF';
   fACBrValidador.Documento := '12345678901';
-  CheckFalse(fACBrValidador.Validar, MsgErroIE);  // Tamanho inv√°lido
+  CheckFalse(fACBrValidador.Validar, MsgErroIE);  // Tamanho inv·lido
   fACBrValidador.Documento := '1234567890123';
   CheckFalse(fACBrValidador.Validar, MsgErroIE);
 end;
@@ -1119,5 +1217,6 @@ initialization
   RegisterTest(TTestCaseACBrValidadorUF{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
+  RegisterTest(TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
 end.
 

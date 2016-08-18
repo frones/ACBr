@@ -1,31 +1,31 @@
-{ ****************************************************************************** }
-{ Projeto: Componente ACBrMDFe }
-{ Biblioteca multiplataforma de componentes Delphi }
-{ }
-{ Você pode obter a última versão desse arquivo na pagina do Projeto ACBr }
-{ Componentes localizado em http://www.sourceforge.net/projects/acbr }
-{ }
-{ }
-{ Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
-{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela }
-{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
-{ qualquer versão posterior. }
-{ }
-{ Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM }
-{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU }
+{ ******************************************************************************}
+{ Projeto: Componente ACBrMDFe                                                  }
+{ Biblioteca multiplataforma de componentes Delphi                              }
+{                                                                               }
+{ Você pode obter a última versão desse arquivo na pagina do Projeto ACBr       }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr            }
+{                                                                               }
+{                                                                               }
+{ Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la   }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela   }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério)  }
+{ qualquer versão posterior.                                                    }
+{                                                                               }
+{ Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM     }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU       }
 { ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor }
-{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT) }
-{ }
-{ Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto }
-{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc., }
-{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA. }
-{ Você também pode obter uma copia da licença em: }
-{ http://www.opensource.org/licenses/lgpl-license.php }
-{ }
-{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br }
-{ Praça Anita Costa, 34 - Tatuí - SP - 18270-410 }
-{ }
-{ ****************************************************************************** }
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)               }
+{                                                                               }
+{ Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto  }
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,   }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.           }
+{ Você também pode obter uma copia da licença em:                               }
+{ http://www.opensource.org/licenses/lgpl-license.php                           }
+{                                                                               }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br   }
+{ Praça Anita Costa, 34 - Tatuí - SP - 18270-410                                }
+{                                                                               }
+{ ******************************************************************************}
 { ******************************************************************************
   |* Historico
   |*
@@ -46,9 +46,6 @@ uses
 
 type
   TDMACBrMDFeDAMDFEFR = class(TDataModule)
-    frxReport: TfrxReport;
-    frxPDFExport: TfrxPDFExport;
-    frxBarCodeObject: TfrxBarCodeObject;
     cdsIdentificacao: TClientDataSet;
     frxIdentificacao: TfrxDBDataset;
     cdsEmitente: TClientDataSet;
@@ -75,6 +72,8 @@ type
     frxPercurso: TfrxDBDataset;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     FDAMDFEClassOwner: TACBrMDFeDAMDFeClass;
     FMDFe            : TMDFe;
@@ -88,14 +87,19 @@ type
     procedure CarregaModalAereo;
     procedure CarregaModalAquaviario;
     procedure CarregaModalFerroviario;
-    procedure CarregaMunCarrega; 
+    procedure CarregaMunCarrega;
     procedure CarregaPercurso;
   public
+    frxPDFExport: TfrxPDFExport;
+    frxReport: TfrxReport;
+    frxBarCodeObject: TfrxBarCodeObject;
+
     property MDFe            : TMDFe read FMDFe write FMDFe;
     property Evento          : TEventoMDFe read FEvento write FEvento;
     property DAMDFEClassOwner: TACBrMDFeDAMDFeClass read FDAMDFEClassOwner;
     procedure CarregaDados;
     procedure CarregaDadosEventos;
+    procedure SetDataSetsToFrxReport;
   end;
 
 function CollateBr(Str: string): string;
@@ -339,7 +343,7 @@ begin
     Clear;
     Add('Versao', ftString, 5);
     Add('Imagem', ftString, 256);
-    Add('Sistema', ftString, 60);
+    Add('Sistema', ftString, 150);
     Add('Usuario', ftString, 60);
 
     CreateDataSet;
@@ -348,18 +352,9 @@ begin
     FieldByName('Versao').AsString := '1.00';
 
     // Carregamento da imagem
-    if DAMDFEClassOwner.Logo <> '' then
-      FieldByName('Imagem').AsString := DAMDFEClassOwner.Logo;
-
-    if DAMDFEClassOwner.Sistema <> '' then
-      FieldByName('Sistema').AsString := DAMDFEClassOwner.Sistema
-    else
-      FieldByName('Sistema').AsString := 'Projeto ACBr - http://acbr.sf.net';
-
-    if DAMDFEClassOwner.Usuario <> '' then
-      FieldByName('Usuario').AsString := ' - ' + DAMDFEClassOwner.Usuario
-    else
-      FieldByName('Usuario').AsString := '';
+    FieldByName('Imagem').AsString := Ifthen(DAMDFEClassOwner.Logo <> '', DAMDFEClassOwner.Logo,'');
+    FieldByName('Sistema').AsString := Ifthen(DAMDFEClassOwner.Sistema <> '',DAMDFEClassOwner.Sistema,'Projeto ACBr - http://acbr.sf.net');
+    FieldByName('Usuario').AsString := Ifthen(DAMDFEClassOwner.Usuario <> '',' - ' + DAMDFEClassOwner.Usuario,'');
     Post;
 
   end;
@@ -386,8 +381,61 @@ end;
 constructor TDMACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
 begin
   inherited;
-  FDAMDFEClassOwner := TACBrMDFeDAMDFeClass(AOwner);
+  frxReport:= TfrxReport.Create(Self);
+  frxReport.EngineOptions.UseGlobalDataSetList := False;
+  with frxReport do
+  begin
+    //Version         := '5.4.3';
+    DotMatrixReport           := False;
+    IniFile                   := '\Software\Fast Reports';
+    PreviewOptions.AllowEdit  := False;
+    PreviewOptions.Buttons    := [pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
+    PreviewOptions.Zoom       := 1;
+    PrintOptions.Printer      := 'Default';
+    PrintOptions.PrintOnSheet := 0;
+    StoreInDFM                := False;
+    OnGetValue                := frxReportGetValue;
+  end;
 
+  frxPDFExport:= TfrxPDFExport.Create(Self);
+  with frxPDFExport do
+  begin
+    UseFileCache    := True;
+    ShowProgress    := True;
+    OverwritePrompt := False;
+    DataOnly        := False;
+    PrintOptimized  := True;
+    Outline         := False;
+    Background      := True;
+    HTMLTags        := True;
+    Quality         := 95;
+    //Transparency    := False;
+    Author          := 'FastReport';
+    Subject         := 'Exportando DANFE para PDF';
+    ProtectionFlags := [ePrint, eModify, eCopy, eAnnot];
+    HideToolbar     := False;
+    HideMenubar     := False;
+    HideWindowUI    := False;
+    FitWindow       := False;
+    CenterWindow    := False;
+    PrintScaling    := False;
+  end;
+  frxBarCodeObject:= TfrxBarCodeObject.Create(Self);
+
+  FDAMDFEClassOwner := TACBrMDFeDAMDFeClass(AOwner);
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.DataModuleCreate(Sender: TObject);
+begin
+	frxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick];
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.DataModuleDestroy(Sender: TObject);
+begin
+  frxPDFExport.Free;
+  frxReport.Free;
+  frxBarCodeObject.Free;
 end;
 
 procedure TDMACBrMDFeDAMDFEFR.frxReportGetValue(const VarName: string; var Value: Variant);
@@ -680,7 +728,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := FormatarCEP(CEP);
         FieldByName('Fone').AsString    := FormatarFone(Fone);
         FieldByName('email').AsString   := email;
         FieldByName('site').AsString    := FDAMDFEClassOwner.Site;
@@ -909,6 +957,36 @@ begin
     Result := Result + Resultado;
     i      := i + 1;
   end;
+end;
+procedure TDMACBrMDFeDAMDFEFR.SetDataSetsToFrxReport;
+begin
+  frxReport.DataSets.Clear;
+  frxReport.DataSets.Add(frxIdentificacao);
+  frxReport.DataSets.Add(frxEmitente);
+  frxReport.DataSets.Add(frxMunCarrega);
+  frxReport.DataSets.Add(frxModalRodo);
+  frxReport.DataSets.Add(frxModalAereo);
+  frxReport.DataSets.Add(frxModalAqua);
+  frxReport.DataSets.Add(frxModalFerrov);
+  frxReport.DataSets.Add(frxModalFerrovVagoes);
+  frxReport.DataSets.Add(frxDocumentos);
+  frxReport.DataSets.Add(frxParametros);
+  frxReport.DataSets.Add(frxPercurso);
+  frxReport.DataSets.Add(frxEventos);
+
+  frxReport.EnabledDataSets.Clear;
+  frxReport.EnabledDataSets.Add(frxIdentificacao);
+  frxReport.EnabledDataSets.Add(frxEmitente);
+  frxReport.EnabledDataSets.Add(frxMunCarrega);
+  frxReport.EnabledDataSets.Add(frxModalRodo);
+  frxReport.EnabledDataSets.Add(frxModalAereo);
+  frxReport.EnabledDataSets.Add(frxModalAqua);
+  frxReport.EnabledDataSets.Add(frxModalFerrov);
+  frxReport.EnabledDataSets.Add(frxModalFerrovVagoes);
+  frxReport.EnabledDataSets.Add(frxDocumentos);
+  frxReport.EnabledDataSets.Add(frxParametros);
+  frxReport.EnabledDataSets.Add(frxPercurso);
+  frxReport.EnabledDataSets.Add(frxEventos);
 end;
 
 end.

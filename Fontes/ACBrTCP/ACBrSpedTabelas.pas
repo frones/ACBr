@@ -249,7 +249,6 @@ function TACBrSpedTabelas.Download(const aId, aVersao, aName: string): boolean;
 var
   Dow: TACBrDownload;
 begin
-  Result := False;
   if not fListou then
     raise EACBrTabelasSpedxception.Create('Falta listar as tabelas');
 
@@ -257,10 +256,13 @@ begin
     raise EACBrTabelasSpedxception.Create('Informe o Id da tabela');
 
   if Trim(aVersao) = '' then
-    raise EACBrTabelasSpedxception.Create('Informe a versão da tabela');
+    raise EACBrTabelasSpedxception.Create(ACBrStr('Informe a versão da tabela'));
 
   if Trim(fDirDestino) = '' then
-    raise EACBrTabelasSpedxception.Create('Informe o diretótio onde o arquivo deve ser salvo');
+    raise EACBrTabelasSpedxception.Create(ACBrStr('Informe o diretório onde o arquivo deve ser salvo'));
+
+  if (not DirectoryExists(fDirDestino)) and (not ForceDirectories(fDirDestino)) then
+    raise EACBrTabelasSpedxception.CreateFmt(ACBrStr('Não foi possível criar a pasta de destino: %s'),[fDirDestino]);
 
   Dow := TACBrDownload.Create(nil);
   try

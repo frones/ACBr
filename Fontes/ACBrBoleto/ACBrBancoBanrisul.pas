@@ -63,7 +63,7 @@ type
     procedure LerRetorno240(ARetorno: TStringList); override;
 
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String;
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: String): String; override;
 
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
@@ -301,6 +301,7 @@ begin
       toRemessaAlterarVencimento             : Ocorrencia:='06'; {Alteração de vencimento}
       toRemessaProtestar                     : Ocorrencia:='09'; {Pedido de protesto}
       toRemessaSustarProtesto                : Ocorrencia:='10'; {Sustação de protesto}
+      toRemessaAlterarNumeroDiasProtesto     : Ocorrencia:='16'; {Alteração do numero de dias para protesto}
       //toRemessaCancelarInstrucaoProtestoBaixa: Ocorrencia:='18'; {Sustar protesto e baixar} //---Estão erradas essas ocorrencias comentadas
       //toRemessaCancelarInstrucaoProtesto     : Ocorrencia:='19'; {Sustar protesto e manter na carteira}
       //toRemessaOutrasOcorrencias             : Ocorrencia:='31'; {Alteração de Outros Dados}
@@ -650,12 +651,12 @@ begin
       raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
                                      '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
-  rCedente := trim(copy(ARetorno[0], 73, 30));
-  rConvenio      := Copy(ARetorno.Strings[1], 34, 13);
-  rAgencia       := Copy(ARetorno.Strings[1], 54,  5);
-  rAgenciaDigito := Copy(ARetorno.Strings[1], 59,  1);
-  rConta         := Copy(ARetorno.Strings[1], 60, 12);
-  rContaDigito   := Copy(ARetorno.Strings[1], 72,  1);
+  rCedente       := trim(copy(ARetorno[0], 73, 30));
+  rConvenio      := trim(Copy(ARetorno.Strings[1], 34, 13));
+  rAgencia       := trim(Copy(ARetorno.Strings[1], 54,  5));
+  rAgenciaDigito := trim(Copy(ARetorno.Strings[1], 59,  1));
+  rConta         := trim(Copy(ARetorno.Strings[1], 60, 12));
+  rContaDigito   := trim(Copy(ARetorno.Strings[1], 72,  1));
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 158, 6), 0);
 
@@ -792,7 +793,7 @@ end;
 procedure TACBrBanrisul.LerRetorno400(ARetorno: TStringList);
 var Titulo: TACBrTitulo;
     Linha: String;
-    CodOcorrencia, IdxMotivo, codMotivo,  ContLinha: Integer;
+    CodOcorrencia, IdxMotivo, ContLinha: Integer;
     rCedente,rConvenio: String;
     rAgencia,rAgenciaDigito: String;
     rConta,rContaDigito: String;
@@ -801,16 +802,16 @@ begin
       raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
                                      '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
-  ContLinha := 0;
+
   fpTamanhoMaximoNossoNum:=10;
 
   rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
   rConvenio      := ''; //Não possui essa info
-  rAgencia       := Copy(ARetorno.Strings[0], 27, 4);
+  rAgencia       := trim(Copy(ARetorno.Strings[0], 27, 4));
   rAgenciaDigito := ''; //Não possui essa info
-  rConta         := Copy(ARetorno.Strings[0], 31, 9);
+  rConta         := trim(Copy(ARetorno.Strings[0], 31, 9));
   rContaDigito   := ''; //Não possui essa info
-  codMotivo      := 0;
+
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno.Strings[0], 386, 9), 0);
   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno.Strings[0], 95, 2) +'/'+
@@ -1054,6 +1055,7 @@ end;
 function TACBrBanrisul.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
+  Result := toTipoOcorrenciaNenhum;
   case ACBrBanco.ACBrBoleto.LayoutRemessa of
     {Nem estava sendo utilizada esta função anteriormente, estava implementada
     //function CodOcorrenciaToTipo(const CodOcorrencia: String): TACBrTipoOcorrencia; overload;}

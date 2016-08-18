@@ -39,6 +39,240 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/07-2016
+-- ACBrECFNaoFiscal, ACBrECFVirtual, ACBrECFVirtualBuffer --
+[*] Ajustes para permitir calculos com Truncamento, quando:
+    ArredondaItemMFD := False                                   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/31494-truncar-valor-total-item-acbrecfnaofiscal/
+
+Data: 27/06/2016
+-- ACBrECFEscECF --
+[-] Correção em "LinhaRelatorioGerencial", na impressão de Cod.Barras ou
+    caracteres de controle, que continham CR ou LF  (por: DSA)
+
+Data: 24/06/2019
+-- ACBrECFEscECF --
+[-] Correção no método "FechaCupom", para ECFs Epson TM800F/900F.   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/30761-erro-fechacupom-ecf-epson-tm-t900f
+
+Data: 10/06/2016
+-- ACBrECF --
+[*] Métodos: "SubtotalizaCupom" e "EfetuaPagamento". Ajustes para evitar que
+    falhas na leitura das informações para exibição do MemoBobina, disparem
+    exception, invalidando o comando anterior, que foi executado com sucesso
+    (por: DSA e Elias)
+
+Ajustes para
+-- ACBrECFVirtual --
+[-] Correções no calculo dos Totalizadores em Cancelamento de Item Vendido com desconto
+[-] Correções no calculo dos Totalizadores de Aliquotas em Cancelamento do Cupom
+    com Desconto no Subtotal
+    (por: douglas_k)  http://www.projetoacbr.com.br/forum/index.php?showtopic=30568
+
+Data: 08/06/2016
+-- ACBrECFDaruma -- por: regys.silveira
+[*] Acerto na leitura da data/hora da impressora para não depender de configurações
+    do sistema operacional.
+
+Data: 07/06/2016
+-- ACBrECFVirtual --
+[-] Correção de Bug no calculo do Rateio do Desconto/Acredcimo no SubTotal
+    (por: douglas_k) http://www.projetoacbr.com.br/forum/index.php?showtopic=30478
+
+Data: 03/06/2016
+-- ACBrECFEscECF --
+[-] Corrigido Bug em "Ativar", que em algumas situações não chamava "AtivarPorta"
+    caso "ControlePorta" estivesse ativo.  (por: DSA)
+
+Data: 21/05/2016
+-- ACBrECF --
+[+] Adicionado o método:
+    function CalculaTotalItem(AValorUnitario: Double; AQtd: Double = 1;
+       ADecimais: Integer = 2; FlagAT: Char = ' '): Double;
+    Que permite a aplicação, computar antecipadamente, o Total do Item, de
+    acordo com as regras do ECF, considerando os parâmetros de Arredondamento.
+    (por: DSA)
+
+Data: 11/05/2016
+-- ACBrECFVirtual --
+[+] Adicionado suporte aos registradores:
+    - NumCFC (Numero Total de Cupons Cancelados)
+    - NumGNFC (Número de Comprovantes não fiscais cancelados)
+    - TotalCancelamentosOPNF (Valor Total de Cancelamentos em Operações não fiscais)
+[+] Adicionada sobrecarga no método "FechaNaoFiscal", para permitir o fechamento
+    de Comprovantes não fiscais, que não exigam pagamento (Sangria, Suprimento)
+[+] Correção de Bug nos métodos "Sangria" e "Suprimento".
+    O valor da Sangria/Surpimento também era somado em uma Forma de Pagamento
+[*] Método: "CancelaCupom", modificado para realizar o corretamente o
+    cancelamento de Operações não fiscais
+    (por: DSA)
+
+-- ACBrECFVirtualBuffer --
+[*] Método: "AddBufferRelatorio", modificado para exibir:
+    - Número de Cancelamentos Não Fiscal
+    - Total Não Fiscal
+    - Total Não Fiscal Cancelado
+    (por: DSA)
+
+Data: 05/05/2016
+-- ACBrECF, ACBrECFClass --
+[+] Adicionada a propriedade "NumMaxLinhasRodape: Integer (readonly)", que
+    retornará o número máximo de Linhas suportado nas Observações do Rodapé,
+    para o Modelo de ECF (geralmente 8 linhas)
+[*] Método "FechaCupom", modificado para fazer uso de "NumMaxLinhasRodape"
+    (por: DSA)
+
+-- ACBrECFEscECF --
+[*] Método "FechaCupom" modificado, para efetuar tratamento dos caracteres de
+    controle de Impressão
+[-] Método "Ativar", correção na detectação da mudança de protocolo DLL/COM
+[*] Método "Ativar", detecção de "NumMaxLinhasRodape = 20" no caso de Bematech
+    01.00.02
+    (por: DSA)
+
+-- ACBrECFVirtual --
+[*] Modificado para que "NumMaxLinhasRodape := 0" (sem limites)
+    (por: DSA)
+
+Data: 19/04/2016
+-- ACBrECFEscECF --
+[-] Metodo LinhaRelatorioGerencial, aplicado workaround para bug em Bematech
+    na impressao de linhas do Gerencial  (por: DSA)
+	http://www.projetoacbr.com.br/forum/index.php?showtopic=29469
+	
+Data: 15/04/2016
+-- ACBrEscDiebold --
+[-] Correção na impressão de Code128 (por: Fabio Souza)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=23975
+
+Data: 06/04/2016
+-- ACBrECFEscECF --
+[-] Método "LinhaRelatorioGerencial". Removido workaround aplicado para Bematech,
+    pois estava causando problemas de alinhamento na impressão dos relatórios.
+[*] Modificado tamanho máximo de Buffer de envio para Bematech, para 256 bytes
+    para evitar travamentos do ECF.   (por: DSA)
+
+-- ACBrECFClass --
+[-] Correção de Bug na exibição de mensagens de erros com acentos, do método
+    "FormMsgDoProcedure" (por: DSA)
+
+Data: 04/04/2016
+-- ACBrPosPrinter --
+[-] Ajuste para que a Porta Serial seja desativa, mesmo quando houver erro no
+    envio da Impressão, caso "ControlePorta = True".   (por: DSA)
+
+-- ACBrECFEscECF --
+[-] Método "GetEstado".Correção para detecção do estado de Pagamento. Em algumas
+    situações o estado simulado de Pagamento (após SubTotalização com Zero)
+    era incorretamente interpretado  (por: DSA)
+
+Data: 31/03/2016
+-- ACBrBAL, ACBrBALAFTS --
+[+] Adicionado suporte a novo modelo "AFTS" (por: Paulo Henrique de Castro)
+    http://www.projetoacbr.com.br/forum/topic/29063-componente-acbrba-balan%C3%A7a-afts/
+
+Data 30/03/2016
+-- ACBrECFVirtual, ACBrECFVirtualBuffer --
+[+] Adicionado suporte ao método "CancelaItemNaoFiscal" (por: DSA e Amarildo Lacerda)
+[-] Correção de Bug no método "LerINI", que não considerava o Desconto/Acrescimo
+    de SubTotal do cupom.
+   http://www.projetoacbr.com.br/forum/topic/29019-sat-implementado-cancelaritemnaofiscal/
+
+Data: 29/03/2016
+-- ACBrBAL, ACBrBALSaturno --
+[+] Adicionado suporte a novo modelo "Saturno" (por: Wislei de Brito Fernandes)
+    http://www.projetoacbr.com.br/forum/topic/12619-componente-acbrba-balança-saturno/
+
+Data: 26/03/2016
+-- ACBrECFVirtual --
+[-] Correções no método "CancelaCupom".
+    - Erro "List index () out of bounds", quando todos os Itens do Cupom já
+      estavam cancelados
+    - Rotina não considerava o fato do Item já estar cancelado, subtraindo o
+      mesmo novamente dos totalizadores    (por: DSA)
+
+--ACBrBALMuller, ACBrBALRinnert, ACBrBALToledo2090 --
+[-] Correção nas units novas das balanças
+    http://www.projetoacbr.com.br/forum/topic/28952-erro-ao-re-compilar-acbr-trunk2-acbr_serialdpk/
+    por : Juliomar Marchetti
+		
+Data: 24/03/2016
+--ACBrBALMuller, ACBrBALRinnert, ACBrBALToledo2090 --
+[+] Adição de mais modelos de Balanças ao componente!
+    http://www.projetoacbr.com.br/forum/topic/28900-modelos-de-balan%C3%A7a-novos/
+    por : Juliomar Marchetti
+
+Data: 24/03/2016
+-- ACBrECF --
+[-] Método "LinhaRelatorioGerencial". Correção de Bug causado em 22/03/2016,
+    com remoção de Warning em ACBrUtil
+[*] Metodos GetDadosReducaoZ, GetDadosUltimaReducaoZ, MontaDadosReducaoZ
+    modificados para retornar "String" e não "AnsiString"
+
+-- ACBRECF, ACBrECFClass, ACBrECFBematech --
+[*] Ajuste no método "VendeItemEx", para permitir informar os seguintes
+    parâmetros: CST_PIS: String = ''; BaseCalculoPIS: Double = 0;
+    AliquotaPIS: Double = 0; ValorPIS: Double = 0; QuantidadeVendidaPIS: Double = 0;
+    ValorAliquotaPIS: Double = 0; CST_COFINS: String = ''; BaseCalculoCOFINS: Double = 0;
+    AliquotaCOFINS: Double = 0; ValorCOFINS: Double = 0; QuantidadeVendidaCOFINS: Double = 0;
+    ValorAliquotaCOFINS: Double = 0; CEST: String = ''
+    (por: DSA)
+
+Data: 22/03/2016
+-- ACBrECFEscECF --
+[-] Método "GetEstado". Correção para detecção do Estado, quando o ECF possui
+    Bloqueio por hardware (tampa aberta ou sem papel)     (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28830
+[-] Método: "AbreCupomVinculado". Correção para Epson TM800F, que não considera
+    as Formas de Pagamento que não permitem Vinculado, como sequencia de
+    pagamento    (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28839
+[+] Método "GetNumUltimoItem". Implementado leitura dos registradores do ECF,
+    para o Modelo Epson TM800F   (por: DSA)
+
+Data: 21/03/2016
+-- ACBRECF, ACBrECFClass, ACBrECFBematech --
+[*] Ajuste no método "VendeItemEx", para permitir informar o valor do campo
+    "CEST"  (por: DSA)
+
+Data: 17/03/2016
+-- ACBrECFDaruma, ACBrECFEscECF --
+[-] Método "ArquivoMFD_DLL", ECF FS800i, ajuste para funcionamento correto em
+    modo OnLine.     (por: Samuel Tonini)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28771
+
+Data: 14/03/2016
+-- ACBrECFVirtual --
+[-] Correção de bug no calculo de Total por Aliquota, quando havia desconto/
+    acréscimo, na venda do Item    (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28573
+
+Data: 11/03/2016
+-- ACBrDevice --
+[+] Adicionado os valores de SendBytesCount e SendBytesInterval em:
+	"DeviceToString" e "SetParamsString"   (por: DSA)
+	
+Data: 08/03/2016
+-- ACBrECFVirtual --
+[-] Correção de Bug introduzido em 07/03/2016, após ajustes para compilação em
+    64 bits
+
+-- ACBrECFEscECF --
+[*] Método "LinhaRelatorioGerencial", aplicado workaround para característica
+    da Bematech (por: DSA)
+
+Data: 26/02/2016
+--ACBrECFEpson --
+[-] Ajuste para que o método "CarregaFormasPagamento" considere apenas o numero
+    da Formas de pagamento cadastradas
+    http://www.projetoacbr.com.br/forum/topic/28186-carregaformaspagamento-ecfepson/
+
+Data: 19/02/2016
+--ACBrECFEpson --
+[-] Ajuste para que o método "CarregaFormasPagamento" considere todas as FPGs
+    da memória
+    http://www.projetoacbr.com.br/forum/topic/28186-carregaformaspagamento-ecfepson/
+
 Data: 17/02/2016
 -- ACBrECFVirtualBuffer --
 [*] Modificada a rotina "TACBrECFVirtualBufferClass.AddBufferRelatorio", para

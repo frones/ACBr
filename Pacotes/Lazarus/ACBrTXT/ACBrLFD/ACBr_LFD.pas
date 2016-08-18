@@ -7,15 +7,14 @@ unit ACBr_LFD;
 interface
 
 uses
-  ACBrLFD3505, ACBrLFDUtils, ACBrLFD, ACBrLFDBlocos, ACBrLFDBloco_0, 
-  ACBrLFDBloco_0_Class, ACBrLFDBloco_8, ACBrLFDBloco_8_Class, ACBrLFDBloco_9, 
-  ACBrLFDBloco_9_Class, ACBrLFDBloco_A, ACBrLFDBloco_A_Class, ACBrLFDBloco_B, 
-  ACBrLFDBloco_B_Class, ACBrLFDBloco_C, ACBrLFDBloco_C_Class, ACBrLFDBloco_D, 
-  ACBrLFDBloco_D_Class, ACBrLFDBloco_E, ACBrLFDBloco_E_Class, ACBrLFDBloco_H, 
-  ACBrLFDBloco_H_Class, ACBrLFDBloco_I, ACBrLFDBloco_I_Class, ACBrLFDBloco_J, 
-  ACBrLFDBloco_J_Class, ACBrLFDBloco_K, ACBrLFDBloco_K_Class, ACBrLFDBloco_L, 
-  ACBrLFDBloco_L_Class, ACBrLFDBloco_Z, ACBrLFDBloco_Z_Class, 
-  LazarusPackageIntf;
+  ACBrLFD3505, ACBrLFD, ACBrLFDBlocos, ACBrLFDBloco_0, ACBrLFDBloco_0_Class, 
+  ACBrLFDBloco_8, ACBrLFDBloco_8_Class, ACBrLFDBloco_9, ACBrLFDBloco_9_Class, 
+  ACBrLFDBloco_A, ACBrLFDBloco_A_Class, ACBrLFDBloco_B, ACBrLFDBloco_B_Class, 
+  ACBrLFDBloco_C, ACBrLFDBloco_C_Class, ACBrLFDBloco_D, ACBrLFDBloco_D_Class, 
+  ACBrLFDBloco_E, ACBrLFDBloco_E_Class, ACBrLFDBloco_H, ACBrLFDBloco_H_Class, 
+  ACBrLFDBloco_I, ACBrLFDBloco_I_Class, ACBrLFDBloco_J, ACBrLFDBloco_J_Class, 
+  ACBrLFDBloco_K, ACBrLFDBloco_K_Class, ACBrLFDBloco_L, ACBrLFDBloco_L_Class, 
+  ACBrLFDBloco_Z, ACBrLFDBloco_Z_Class, LazarusPackageIntf;
 
 implementation
 

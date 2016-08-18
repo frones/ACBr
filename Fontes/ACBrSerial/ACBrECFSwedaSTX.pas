@@ -175,7 +175,7 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     function GetNumCOOInicial: String; override ;
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     Function VerificaFimLeitura(var Retorno: AnsiString;
        var TempoLimite: TDateTime) : Boolean ; override ;
@@ -1823,7 +1823,7 @@ begin
      fpArredondaItemMFD := False;
 
  {Vai vir o indice, tem que transformar em aliquota no formato Tipo + Aliquota}
-  if not (AliquotaECF[1] in ['I','F','N']) then
+  if not CharInSet(AliquotaECF[1] , ['I','F','N']) then
   begin
      {Formato tem que ser T18,00% por exemplo}
      Aliquota := AchaICMSIndice(AliquotaECF);
@@ -1932,7 +1932,7 @@ function TACBrECFSwedaSTX.AchaICMSAliquota(var AliquotaICMS: String
 begin
   { Sweda usa a letra T/S no Indice, e ACBrECFClass.AchaICMSAliquota(), que é
    chamada logo abaixo, irá remove-lo, portanto vamos adicionar um T/S extra }
-  if (upcase(AliquotaICMS[1]) in ['T','S']) then
+  if CharInSet(upcase(AliquotaICMS[1]) , ['T','S']) then
     AliquotaICMS := AliquotaICMS[1]+AliquotaICMS[1]+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice T01, T1, T02}
 
   Result := inherited AchaICMSAliquota(AliquotaICMS);
@@ -2526,7 +2526,6 @@ end ;
 function TACBrECFSwedaSTX.GetDataMovimento: TDateTime;
 Var
   RetCmd : AnsiString ;
-  sData:String;
 begin
    RetCmd := Trim(RetornaInfoECF('A2'));
 
@@ -2844,7 +2843,7 @@ begin
    CancelaCupom;
 end;
 
-function TACBrECFSwedaSTX.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFSwedaSTX.GetDadosUltimaReducaoZ: String;
 var
   RetCMD :String;
   I : Integer;

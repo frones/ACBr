@@ -69,7 +69,7 @@ type
   public
     constructor Create;           /// Create
     destructor Destroy; override; /// Destroy
-    procedure LimpaRegistros;
+    procedure LimpaRegistros; override;
 
     procedure WriteRegistro0000;
     procedure WriteRegistro0001;
@@ -421,7 +421,7 @@ begin
 end;
 
 procedure TBloco_0.WriteRegistro0990;
-var strLinha : AnsiString;
+var strLinha : String;
 begin
   if Assigned(FRegistro0990) then
   begin

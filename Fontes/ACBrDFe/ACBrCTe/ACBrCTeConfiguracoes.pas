@@ -55,7 +55,7 @@ type
     procedure SetVersaoDF(const Value: TVersaoCTe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeGeralConfCTe: TGeralConfCTe); overload;
+    procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
 
   published
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
@@ -87,7 +87,7 @@ type
     FDownloadCTe: TDownloadConfCTe;
   public
     constructor Create(AOwner: TConfiguracoes); override;
-    procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); overload;
+    procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
     destructor Destroy; override;
 
     function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
@@ -115,7 +115,7 @@ type
 
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Assign(DeConfiguracoesCTe: TConfiguracoesCTe); overload;
+    procedure Assign(DeConfiguracoesCTe: TConfiguracoesCTe); reintroduce;
 
   published
     property Geral: TGeralConfCTe       read GetGeral;
@@ -248,15 +248,19 @@ begin
 end;
 
 function TArquivosConfCTe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
+var
+  rPathDown: String;
 begin
+  rPathDown := '';
   if EstaVazio(FDownloadCTe.PathDownload) then
      FDownloadCTe.PathDownload := PathSalvar;
 
-  if FDownloadCTe.SepararPorNome then
-     if NaoEstaVazio(xNome) then
-        FDownloadCTe.PathDownload := PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome);
+  if (FDownloadCTe.SepararPorNome) and (NaoEstaVazio(xNome)) then
+     rPathDown := rPathDown + PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome)
+  else
+     rPathDown := FDownloadCTe.PathDownload;
 
-  Result := GetPath(FDownloadCTe.PathDownload, 'Down', CNPJ, Data);
+  Result := GetPath(rPathDown, 'Down', CNPJ, Data);
 end;
 
 { TDownloadConfCTe }

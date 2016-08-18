@@ -38,7 +38,7 @@ unit ACBrBancoSicredi;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Contnrs,
   ACBrBoleto;
 
 type
@@ -68,7 +68,7 @@ type
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
-    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:String): String; 
+    function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:String): String; override;
   end;
 
 implementation
@@ -118,7 +118,8 @@ begin
    with ACBrTitulo.ACBrBoleto do
    begin
       FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
-      Modalidade := IfThen(Cedente.Modalidade='','1',Copy(trim(Cedente.Modalidade),1,1));
+
+	    Modalidade := IfThen(Trim(Cedente.Modalidade) = '', '1', Copy(Trim(Cedente.Modalidade),1,1));
 
       { Monta o campo livre }
       CampoLivre :=   Modalidade                                      + { 1-Com registro ou 3-Sem registro. Por enquanto vou deixar 1 mais tenho que tratar menhor essa informação }
@@ -157,8 +158,6 @@ begin
 end;
 
 function TACBrBancoSicredi.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;
-var
-  aNossoNumero: String;
 begin
   Result:= FormatDateTime('yy',ACBrTitulo.DataDocumento) + '/' +
            ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5) + '-' +
@@ -249,7 +248,6 @@ begin
       else
          TipoSacado:= '1';
 
-
       { Pegando o tipo de EspecieDoc }
       if EspecieDoc = 'DMI' then
          EspecieDoc   := 'A'
@@ -311,8 +309,9 @@ begin
                      IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(1)                                                           +  // 073 a 073 - Filler Brancos
                      TipoBoleto                                                         +  // 074 a 074 - Emissão do bloqueto = "A" Impressão pelo SICREDI "B" Impressão pelo Cedente
-                     IfThen(Parcela > 0, PadLeft(IntToStr(Parcela),2,'0'), '  ')        +  // 075 a 076 - Número da parcela do carnê --Anderson
-                     IfThen(TotalParcelas > 0,
+                     IfThen((TipoImpressao = tipCarne) and (Parcela > 0), 
+                            PadLeft(IntToStr(Parcela),2,'0'), '  ')                     +  // 075 a 076 - Número da parcela do carnê --Anderson
+                     IfThen((TipoImpressao = tipCarne) and (TotalParcelas > 0),
                             PadLeft(IntToStr(TotalParcelas),2,'0'), '  ')                  // 077 a 078 - Número total de parcelas do carnê -- Anderson
          else
             wLinha:= wLinha +
@@ -321,11 +320,10 @@ begin
                      Space(13)                                                          +  // 059 a 071 - Filler - Brancos
                      IfThen(TipoBoleto = 'A', 'S', 'N')                                 +  // 072 a 072 - Postagem do título = "S" Para postar o título "N" Não postar e remeter para o cedente
                      Space(2)                                                           +  // 073 a 074 - Filler Brancos
-                     IfThen((TipoBoleto = 'B') and (Parcela > 0),
+                     IfThen((TipoImpressao = tipCarne) and (Parcela > 0),
                              PadLeft(IntToStr(Parcela),2,'0'), '  ')                    +  // 075 a 076 - Número da parcela do carnê --Anderson
-                     IfThen((TipoBoleto = 'B') and (TotalParcelas > 0),
+                     IfThen((TipoImpressao = tipCarne) and (TotalParcelas > 0),
                             PadLeft(IntToStr(TotalParcelas),2,'0'), '  ');                 // 077 a 078 - Número total de parcelas do carnê -- Anderson
-
 
          wLinha:= wLinha +
                   Space(4)                                                              +  // 079 a 082 - Filler - Brancos
@@ -498,7 +496,6 @@ var
   CodMotivo_19,CodMotivo: String;
 begin
   fpTamanhoMaximoNossoNum := 20;
-  ContLinha := 0;
 
   if StrToIntDef(copy(ARetorno[0],77,3),-1) <> Numero then
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -679,7 +676,26 @@ begin
         toRetornoInstrucaoRejeitada,
         toRetornoAlteracaoDadosRejeitados:
         begin
-          case StrtoInt(CodMotivo) of
+          case StrtoIntDef(CodMotivo, -1) of
+            -1:
+            begin
+              if(CodMotivo = 'A1') Then
+                Result := 'A1 - Rejeição da alteração do número controle do participante'
+              else if(CodMotivo = 'A2') Then
+                Result := 'A2 - Rejeição da alteração dos dados do sacado'
+              else if(CodMotivo = 'A3') Then
+                Result := 'A3 - Rejeição da alteração dos dados do sacador/avalista'
+              else if(CodMotivo = 'A4') Then
+                Result := 'A4 - Sacado DDA'
+              else if(CodMotivo = 'A5') Then
+                Result := 'A5 - Registro Rejeitado – Título já Liquidado'
+              else if(CodMotivo = 'A6') Then
+                Result := 'A6 -  Código do Convenente Inválido ou Encerrado'
+              else if(CodMotivo = 'A7') Then
+                Result := 'A7 -  Título já se encontra na situação Pretendida'
+              else if(CodMotivo = 'A8') Then
+                Result := 'A8 -  Valor do Abatimento inválido para cancelamento';
+            end;
             01: Result := '01 - Código do banco inválido';
             02: Result := '02 - Código do registro detalhe inválido';
             03: Result := '03 - Código do segmento inválido';
@@ -749,6 +765,19 @@ begin
             84: Result := '84 - Número autorização inexistente';
             85: Result := '85 - Título com pagamento vinculado';
             86: Result := '86 - Seu Número inválido';
+            87: Result := '87 - e-mail/SMS enviado';
+            88: Result := '88 - e-mail Lido';
+            89: Result := '89 - e-mail/SMS devolvido - endereço de e-mail ou número do celular incorreto';
+            90: Result := '90 - e-mail devolvido - caixa postal cheia ';
+            91: Result := '91 - e-mail/número do celular do sacado não informado';
+            92: Result := '92 - Sacado optante por Bloqueto Eletrônico - e-mail não enviado';
+            93: Result := '93 - Código para emissão de bloqueto não permite envio de e-mail ';
+            94: Result := '94 - Código da Carteira inválido para envio e-mail';
+            95: Result := '95 - Contrato não permite o envio de e-mail';
+            96: Result := '96 - Número de contrato inválido';
+            97: Result := '97 - Rejeição da alteração do prazo limite de recebimento (a data deve ser informada no campo 28.3.p)';
+            98: Result := '98 - Rejeição de dispensa de prazo limite de recebimento';
+            99: Result := '99 - Rejeição da alteração do número do título dado pelo cedente';
           else
             Result := PadLeft(CodMotivo,2,'0') + ' - Outros motivos';
           end;
@@ -823,9 +852,10 @@ begin
         toRetornoRegistroRecusado: //03
           case AnsiIndexStr(CodMotivo,
                            ['A1', 'A2', 'A3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'C5', 'C6',
-                            'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7',
-                            'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9',
-                            'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1', 'L2', 'L3', 'L4']) of
+                            'D5', 'D7', 'F6', 'H7', 'H9', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6',
+                            'I7', 'I8', 'I9', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8',
+                            'J9', 'K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'L1',
+                            'L2', 'L3', 'L4', 'C4', 'C7', 'C8', 'C9']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2: Result:= 'A3-Agência depositária divergente: atualiza o cadastro de praças da agência cedente';
@@ -835,44 +865,48 @@ begin
             6: Result:= 'B7-Seu número inválido';
             7: Result:= 'B8-Percentual de multa inválido';
             8: Result:= 'B9-Valor ou percentual de juros inválido';
-            9: Result:= 'C6-Título já liquidado';
-            10: Result:= 'D5-Quantidade inválida no pedido de bloquetos pré-impressos da cobrança sem registro';
-            11: Result:= 'D7-Cidade ou Estado do sacado não informado';
-            12: Result:= 'F6-Nosso número/Número da parcela fora de sequência - total de parcelas inválido';
-            13: Result:= 'H7-Espécie de documento necessita cedente ou avalista PJ';
-            14: Result:= 'H9-Dados do título não conferem com disquete';
-            15: Result:= 'I1-Sacado e sacador avalista são a mesma pessoa';
-            16: Result:= 'I2-Aguardar um dia útil após o vencimento para protestar';
-            17: Result:= 'I3-Data do vencimento rasurada';
-            18: Result:= 'I4-Vencimento - extenso não confere com número';
-            19: Result:= 'I5-Falta data de vencimento no título';
-            20: Result:= 'I6-DM/DMI sem comprovante autenticado ou declaração';
-            21: Result:= 'I7-Comprovante ilegível para conferência e microfilmagem';
-            22: Result:= 'I8-Nome solicitado não confere com emitente ou sacado';
-            23: Result:= 'I9-Confirmar se são 2 emitentes. Se sim, indicar os dados dos 2';
-            24: Result:= 'J1-Endereço do sacado igual ao do sacador ou do portador';
-            25: Result:= 'J2-Endereço do apresentante incompleto ou não informado';
-            26: Result:= 'J3-Rua/número inexistente no endereço';
-            27: Result:= 'J4-Falta endossodo favorecido para o apresentante';
-            28: Result:= 'J5-Data da emissão rasurada';
-            29: Result:= 'J6-Falta assinatura do sacador do título';
-            30: Result:= 'J7-Nome do apresentante não informado/incompleto/incorreto';
-            31: Result:= 'J8-Erro de preenchimento do título';
-            32: Result:= 'J9-Título com direito de regresso vencido';
-            33: Result:= 'K1-Título apresentado em duplicidade';
-            34: Result:= 'K2-Título ja protestado';
-            35: Result:= 'K3-Letra de cambio vencida - falta aceite do sacado';
-            36: Result:= 'K4-Falta declaração do saldo assinada no título';
-            37: Result:= 'K5-Contrato de cambio - Falta conta gráfica';
-            38: Result:= 'K6-Ausência do documento físico';
-            39: Result:= 'K7-Sacado falecido';
-            40: Result:= 'K8-Sacado apresentou quitação do título';
-            41: Result:= 'K9-Título de outra jurisdição territorial';
-            42: Result:= 'L1-Título com emissão anterior a concordata do sacado';
-            43: Result:= 'L2-Sacado consta na lista de falência';
-            44: Result:= 'L3-Apresentante não aceita publicação de edital';
-            45: Result:= 'L4-Dados do sacado em branco ou inválido';
-            46: Result:= 'C5-Título rejeitado pela centralizadora';
+            9: Result:= 'C5-Título rejeitado pela centralizadora';
+            10: Result:= 'C6-Título já liquidado';
+            11: Result:= 'D5-Quantidade inválida no pedido de bloquetos pré-impressos da cobrança sem registro';
+            12: Result:= 'D7-Cidade ou Estado do sacado não informado';
+            13: Result:= 'F6-Nosso número/Número da parcela fora de sequência - total de parcelas inválido';
+            14: Result:= 'H7-Espécie de documento necessita cedente ou avalista PJ';
+            15: Result:= 'H9-Dados do título não conferem com disquete';
+            16: Result:= 'I1-Sacado e sacador avalista são a mesma pessoa';
+            17: Result:= 'I2-Aguardar um dia útil após o vencimento para protestar';
+            18: Result:= 'I3-Data do vencimento rasurada';
+            19: Result:= 'I4-Vencimento - extenso não confere com número';
+            20: Result:= 'I5-Falta data de vencimento no título';
+            21: Result:= 'I6-DM/DMI sem comprovante autenticado ou declaração';
+            22: Result:= 'I7-Comprovante ilegível para conferência e microfilmagem';
+            23: Result:= 'I8-Nome solicitado não confere com emitente ou sacado';
+            24: Result:= 'I9-Confirmar se são 2 emitentes. Se sim, indicar os dados dos 2';
+            25: Result:= 'J1-Endereço do sacado igual ao do sacador ou do portador';
+            26: Result:= 'J2-Endereço do apresentante incompleto ou não informado';
+            27: Result:= 'J3-Rua/número inexistente no endereço';
+            28: Result:= 'J4-Falta endossodo favorecido para o apresentante';
+            29: Result:= 'J5-Data da emissão rasurada';
+            30: Result:= 'J6-Falta assinatura do sacador do título';
+            31: Result:= 'J7-Nome do apresentante não informado/incompleto/incorreto';
+            32: Result:= 'J8-Erro de preenchimento do título';
+            33: Result:= 'J9-Título com direito de regresso vencido';
+            34: Result:= 'K1-Título apresentado em duplicidade';
+            35: Result:= 'K2-Título ja protestado';
+            36: Result:= 'K3-Letra de cambio vencida - falta aceite do sacado';
+            37: Result:= 'K4-Falta declaração do saldo assinada no título';
+            38: Result:= 'K5-Contrato de cambio - Falta conta gráfica';
+            39: Result:= 'K6-Ausência do documento físico';
+            40: Result:= 'K7-Sacado falecido';
+            41: Result:= 'K8-Sacado apresentou quitação do título';
+            42: Result:= 'K9-Título de outra jurisdição territorial';
+            43: Result:= 'L1-Título com emissão anterior a concordata do sacado';
+            44: Result:= 'L2-Sacado consta na lista de falência';
+            45: Result:= 'L3-Apresentante não aceita publicação de edital';
+            46: Result:= 'L4-Dados do sacado em branco ou inválido';
+            47: Result:= 'C4-Título ainda não foi confirmado pela centralizadora';
+            48: Result:= 'C7-Título já baixado';
+            49: Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
+            50: Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
           else
             case StrToInt(CodMotivo) of
               02: Result:= '02-Código do registro detalhe inválido';
@@ -1023,10 +1057,10 @@ begin
           case AnsiIndexStr(CodMotivo,['A1', 'C6', 'C5', 'C7']) of
             0: Result:= 'A1-Praça do sacado não cadastrada';
             1: Result:= 'C6-Título já liquidado';
-            2: Result:= 'C7-Título já baixado';
-            3: Result:= 'C5-Título rejeitado pela centralizadora';
+            2: Result:= 'C5-Título rejeitado pela centralizadora';
+            3: Result:= 'C7-Título já baixado';
           else
-            case StrToInt(CodMotivo) of
+            case StrToIntDef(CodMotivo,-1) of
               00: Result:= '00-Ocorrência aceita, baixa rejeitada';
               07: Result:= '07-Agência\Conta\dígito inválidos';
               08: Result:= '08-Nosso número inválido';
@@ -1091,8 +1125,9 @@ begin
         toRetornoInstrucaoRejeitada: //32
           case AnsiIndexStr(CodMotivo,
                             ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
-                             'B8', 'B9', 'C5', 'C6', 'C7', 'D2', 'F7', 'F8', 'F9',
-                             'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8']) of
+                             'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F3', 'F7', 'F8',
+                             'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8',
+                             'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';
@@ -1104,21 +1139,30 @@ begin
             8 : Result:= 'B7-Seu número inválido';
             9 : Result:= 'B8-Percentual de multa inválido';
             10 : Result:= 'B9-Valor ou percentual de juros inválido';
-            11 : Result:= 'C6-Título já liquidado';
-            12 : Result:= 'C7-Título já baixado';
-            13 : Result:= 'D2-Espécie de documento não permite protesto de título';
-            14 : Result:= 'F7-Falta de comprovante de prestação de serviço';
-            15 : Result:= 'F8-Nome do cedente incompleto/incorreto';
-            16 : Result:= 'F9-CNPJ/CPF incompatível com o nome do sacado/sacador avalista';
-            17 : Result:= 'G1-CNPJ/CPF do sacador incompatível com a espécie';
-            18 : Result:= 'G5-Praça de pagamento incompatível com o endereço';
-            19 : Result:= 'G8-Saldo maior que o valor do título';
-            20 : Result:= 'G9-Tipo de endosso inválido';
-            21 : Result:= 'H1-Nome do sacador incompleto/incorreto';
-            22 : Result:= 'L3-Apresentante não aceita publicação de edital';
-            23 : Result:= 'L4-Dados do sacado em branco ou inválido';
-            24 : Result:= 'J8-Erro de preenchimento do título';
-            25 : Result:= 'C5-Título rejeitado pela centralizadora';
+            11 : Result:= 'C4-Título ainda não foi confirmado pela centralizadora';
+            12 : Result:= 'C5-Título rejeitado pela centralizadora';
+            13 : Result:= 'C6-Título já liquidado';
+            14 : Result:= 'C7-Título já baixado';
+            15 : Result:= 'D2-Espécie de documento não permite protesto de título';
+            16 : Result:= 'F3-Instrução inválida, este título está caucionado/descontado';
+            17 : Result:= 'F7-Falta de comprovante de prestação de serviço';
+            18 : Result:= 'F8-Nome do cedente incompleto/incorreto';
+            19 : Result:= 'F9-CNPJ/CPF incompatível com o nome do sacado/sacador avalista';
+            20 : Result:= 'G1-CNPJ/CPF do sacador incompatível com a espécie';
+            21 : Result:= 'G5-Praça de pagamento incompatível com o endereço';
+            22 : Result:= 'G8-Saldo maior que o valor do título';
+            23 : Result:= 'G9-Tipo de endosso inválido';
+            24 : Result:= 'H1-Nome do sacador incompleto/incorreto';
+            25 : Result:= 'L3-Apresentante não aceita publicação de edital';
+            26 : Result:= 'L4-Dados do sacado em branco ou inválido';
+            27 : Result:= 'J8-Erro de preenchimento do título';
+            28 : Result:= 'I9-Não previsto no manual';
+            29 : Result:= 'K9-Título de outra jurisdição territorial';
+            30 : Result:= 'A3-Cooperativa/agência depositária divergente: atualiza o cadastro de praças da Coop./agência beneficiária';
+            31 : Result:= 'C8-Existe mesma instrução pendente de confirmação para este título';
+            32 : Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
+            33 : Result:= 'J3-Rua/Número inexistente no endereço';
+            34 : Result:= 'D1-Título dentro do prazo de vencimento (em dia)';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';
@@ -1164,9 +1208,8 @@ var
   Sequencia, wMes :Integer;
   NomeFixo, NomeArq: String;
   codMesSicredi : String;
-  Flag : Boolean;
 begin
-   Flag := True;
+
    with ACBrBanco.ACBrBoleto do
    begin
       if NomeArqRemessa <> '' then
@@ -1277,6 +1320,7 @@ end;
 function TACBrBancoSicredi.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
+  Result := toTipoOcorrenciaNenhum;
   case ACBrBanco.ACBrBoleto.LayoutRemessa of
     c240: begin
       case CodOcorrencia of
@@ -1565,7 +1609,8 @@ begin
              PadLeft(OnlyNumber(Agencia), 5,'0')                              + // 018 a 022 - Agência mantenedora da conta
              Space(1)                                                         + // 023 a 023 - Dígito verificador da agência
              PadLeft(OnlyNumber(Conta), 12, '0')                              + // 024 a 035 - Número da conta corrente
-             Space(2)                                                         + // 037 a 037 - Dígito verificador da coop/ag/conta
+             ContaDigito	                                                  + // 036 a 036 - Digito da conta 
+             Space(1)                                                         + // 037 a 037 - Dígito verificador da coop/ag/conta
              PadRight(OnlyNumber(MontarCampoNossoNumero(ACBrTitulo)), 20, '0')+ // 038 a 057 - Identificação do título no banco
              '1'                                                              + // 058 a 058 - Código da carteira
              '1'                                                              + // 059 a 059 - Forma de cadastro do título no banco
@@ -1635,7 +1680,6 @@ var Titulo: TACBrTitulo;
     rCedente, rCNPJCPF, rCodCedente, rAgencia, rDigitoAgencia: String;
     rConta, rDigitoConta: String;
 begin
-   ContLinha := 0;
 
    if (StrToIntDef(Copy(ARetorno[0], 1, 3), -1) <> Numero) then
      raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +

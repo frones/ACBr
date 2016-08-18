@@ -127,7 +127,7 @@ type
   TACBrPosPrinterStatus = set of TACBrPosTipoStatus;
 
   { TACBrPosRazaoColunaFonte }
-
+  {$M+}
   TACBrPosRazaoColunaFonte = class
   private
     FCondensada: Double;
@@ -138,6 +138,7 @@ type
     property Condensada: Double read FCondensada write FCondensada;
     property Expandida: Double read FExpandida write FExpandida;
   end;
+  {$M-}
 
   TACBrPosPrinter = class;
 
@@ -263,7 +264,6 @@ type
     FPaginaDeCodigo: TACBrPosPaginaCodigo;
     FArqLog: String;
 
-    FPosPrinterClass: TACBrPosPrinterClass;
     FBuffer: TStringList;
     FTipoAlinhamento: TACBrPosTipoAlinhamento;
     FFonteStatus: TACBrPosFonte;
@@ -288,6 +288,7 @@ type
     procedure SetModelo(AValue: TACBrPosPrinterModelo);
 
   protected
+    FPosPrinterClass: TACBrPosPrinterClass;
     procedure EnviarStringDevice(AString: AnsiString);
     procedure TraduzirTag(const ATag: AnsiString; var TagTraduzida: AnsiString);
     procedure TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
@@ -503,7 +504,7 @@ end;
 
 function TACBrPosPrinterClass.ComandoPuloLinhas(NLinhas: Integer): AnsiString;
 begin
-  Result := DupeString(' '+LF,NLinhas);
+  Result := AnsiString( DupeString(' '+LF,NLinhas) );
 end;
 
 function TACBrPosPrinterClass.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
@@ -512,13 +513,47 @@ begin
   Result := '';
 
   case TipoFonte of
-    ftExpandido: Result := IfThen(Ligar, Cmd.LigaExpandido, Cmd.DesligaExpandido);
-    ftCondensado: Result := IfThen(Ligar, Cmd.LigaCondensado, Cmd.DesligaCondensado);
-    ftNegrito: Result := IfThen(Ligar, Cmd.LigaNegrito, Cmd.DesligaNegrito);
-    ftItalico: Result := IfThen(Ligar, Cmd.LigaItalico, Cmd.DesligaItalico);
-    ftInvertido: Result := IfThen(Ligar, Cmd.LigaInvertido, Cmd.DesligaInvertido);
-    ftSublinhado: Result := IfThen(Ligar, Cmd.LigaSublinhado, Cmd.DesligaSublinhado);
-    ftFonteB: Result := IfThen(Ligar, Cmd.FonteB, Cmd.FonteA);
+    ftExpandido:
+      if Ligar then
+        Result := Cmd.LigaExpandido
+      else
+        Result := Cmd.DesligaExpandido;
+
+    ftCondensado:
+      if Ligar then
+        Result := Cmd.LigaCondensado
+      else
+        Result :=  Cmd.DesligaCondensado;
+
+    ftNegrito:
+      if Ligar then
+        Result := Cmd.LigaNegrito
+      else
+        Result := Cmd.DesligaNegrito;
+
+    ftItalico:
+      if Ligar then
+        Result := Cmd.LigaItalico
+      else
+         Result := Cmd.DesligaItalico;
+
+    ftInvertido:
+       if Ligar then
+         Result := Cmd.LigaInvertido
+       else
+         Result := Cmd.DesligaInvertido;
+
+    ftSublinhado:
+       if Ligar then
+         Result := Cmd.LigaSublinhado
+       else
+         Result := Cmd.DesligaSublinhado;
+
+    ftFonteB:
+      if Ligar then
+        Result := Cmd.FonteB
+      else
+        Result := Cmd.FonteA;
   end;
 end;
 
@@ -716,12 +751,12 @@ begin
   else
     DadosDevice := '  - Porta..: '+FDevice.Porta;
 
-  GravarLog(sLineBreak + StringOfChar('-', 80) + sLineBreak +
+  GravarLog(AnsiString(sLineBreak + StringOfChar('-', 80) + sLineBreak +
             'ATIVAR - ' + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) + sLineBreak +
             '  - Modelo.: ' + FPosPrinterClass.ModeloStr + sLineBreak +
             '  - TimeOut: ' + IntToStr(FDevice.TimeOut) + sLineBreak +
             DadosDevice + sLineBreak +
-            StringOfChar('-', 80) + sLineBreak,
+            StringOfChar('-', 80) + sLineBreak),
             False, False);
   {*)}
 
@@ -731,9 +766,9 @@ end;
 
 procedure TACBrPosPrinter.Desativar;
 begin
-  GravarLog(sLineBreak + StringOfChar('-', 80) + sLineBreak +
+  GravarLog(AnsiString(sLineBreak + StringOfChar('-', 80) + sLineBreak +
     'DESATIVAR - ' + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', now) +
-    sLineBreak + StringOfChar('-', 80) + sLineBreak,
+    sLineBreak + StringOfChar('-', 80) + sLineBreak),
     False, False);
 
   FDevice.Desativar;
@@ -748,8 +783,8 @@ begin
   if Ativo then
     Desativar;
 
-  GravarLog('SetModelo(' + GetEnumName(TypeInfo(TACBrPosPrinterModelo),
-    integer(AValue)) + ')');
+  GravarLog('SetModelo(' + AnsiString(GetEnumName(TypeInfo(TACBrPosPrinterModelo),
+    integer(AValue))) + ')');
 
   FPosPrinterClass.Free;
 
@@ -770,7 +805,7 @@ procedure TACBrPosPrinter.DoLinesChange(Sender: TObject);
 begin
   if (FLinhasBuffer > 0) and (FBuffer.Count > FLinhasBuffer) then
   begin
-    GravarLog('Esvaziando Buffer: ' + IntToStr(FBuffer.Count) + ' linhas');
+    GravarLog(AnsiString('Esvaziando Buffer: ' + IntToStr(FBuffer.Count) + ' linhas'));
     Imprimir;
   end;
 end;
@@ -902,10 +937,10 @@ begin
   end
 
   else if ATag = cTagLinhaSimples then
-    TagTraduzida := StringOfChar('-', Colunas)
+    TagTraduzida := AnsiString(StringOfChar('-', Colunas))
 
   else if ATag = cTagLinhaDupla then
-    TagTraduzida := StringOfChar('=', Colunas)
+    TagTraduzida := AnsiString(StringOfChar('=', Colunas))
 
   else if ATag = cTagPuloDeLinhas then
     TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
@@ -952,8 +987,7 @@ begin
     FTipoAlinhamento := alCentro;
   end;
 
-
-  GravarLog('TraduzirTag(' + ATag + ') -> ' + TagTraduzida, True);
+  GravarLog(AnsiString('TraduzirTag(' + ATag + ') -> ') + TagTraduzida, True);
 end;
 
 procedure TACBrPosPrinter.TraduzirTagBloco(const ATag, ConteudoBloco: AnsiString;
@@ -1167,16 +1201,18 @@ begin
   if Assigned(FOnEnviarStringDevice) then
      FOnEnviarStringDevice(AString, Tratado);
 
-  if not Tratado then
-  begin
-    GravarLog('EnviarStringDevice( ' + AString + ')', True);
-    FDevice.EnviaString(AString);
-  end
-  else
-    GravarLog('OnEnviarStringDevice( ' + AString + ')', True);
-
-  if ControlePorta then
-    DesativarPorta;
+  try
+    if not Tratado then
+    begin
+      GravarLog('EnviarStringDevice( ' + AString + ')', True);
+      FDevice.EnviaString(AString);
+    end
+    else
+      GravarLog('OnEnviarStringDevice( ' + AString + ')', True);
+  finally
+    if ControlePorta then
+      DesativarPorta;
+  end;
 end;
 
 procedure TACBrPosPrinter.GravarLog(AString: AnsiString; Traduz: Boolean;

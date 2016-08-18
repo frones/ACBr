@@ -60,6 +60,12 @@
 {.$DEFINE DFE_SEM_OPENSSL}
 {.$DEFINE DFE_SEM_CAPICOM}
 
+// Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
+{.$DEFINE USE_DELAYED}
+
+// Para Remover Warnings de CAST causados por WideString/String/AnsiString, descomente a linha abaixo. (Apenas Delphi)
+{.$DEFINE REMOVE_CAST_WARN}
+
 // Ajusta FreePascal para o modo Delphi
 //------------------------------------------------------------------------------
 {$IFDEF FPC}
@@ -70,9 +76,29 @@
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}
   {$H+}
+
+  {$UnDef FPC3}
+  {$UnDef FPC2}
+  {$IFDEF VER2}
+   {$DEFINE FPC2}
+  {$EndIf}
+  {$IFDEF VER3}
+   {$DEFINE FPC3}
+  {$ENDIF}
+  {$IFDEF FPC3}
+   {$DEFINE HAS_CHARINSET}
+   {$UnDef FPC2}
+  {$ENDIF}
 {$ELSE}
   {$DEFINE BORLAND}
 {$ENDIF}
+
+{$IFDEF REMOVE_CAST_WARN}
+  {$WARN IMPLICIT_STRING_CAST OFF}
+  {$WARN IMPLICIT_STRING_CAST_LOSS OFF}
+  {$WARN SYMBOL_DEPRECATED OFF}
+{$ENDIF}
+
 
 {$IFNDEF MSWINDOWS}   // Linux, apenas OpenSSL, sem Capicom
   {$DEFINE DFE_SEM_CAPICOM}
@@ -88,6 +114,13 @@
 //------------------------------------------------------------------------------
 {$I ACBr_jedi.inc}
 
+{$IFNDEF SUPPORTS_DELAYED_LOADING}
+ {$UNDEF USE_DELAYED}
+{$ENDIF}
+
+{$IFDEF DELPHI12_UP}
+  {$DEFINE HAS_CHARINSET}
+{$ENDIF}
 {$IFDEF DELPHI15_UP}
   {$DEFINE HAS_FORMATSETTINGS}
   {$DEFINE HAS_REGEXPR}

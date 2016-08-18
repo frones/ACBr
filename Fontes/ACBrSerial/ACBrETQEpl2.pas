@@ -335,7 +335,7 @@ begin
   AStream.Position := 0 ;
   Size := AStream.Size;
   SetLength(Data,Size);
-  AStream.ReadBuffer(pchar(Data)^,Size);
+  AStream.ReadBuffer(PAnsiChar(Data)^,Size);
 
   Cmd := 'GK' + NomeImagem                  + LF +  // deletes graphic "NomeImagem" - Required
          'GK' + NomeImagem                  + LF +  // second delete graphic - Required

@@ -507,6 +507,7 @@ type
     procedure SetItem(Index: Integer; const Value: TRegistro0400);
   public
     function New(AOwner: TRegistro0140): TRegistro0400;
+    function LocalizaRegistro(pCOD_NAT: String): boolean;
     property Items[Index: Integer]: TRegistro0400 read GetItem write SetItem;
   end;
 
@@ -907,6 +908,21 @@ end;
 function TRegistro0400List.GetItem(Index: Integer): TRegistro0400;
 begin
   Result := TRegistro0400(Inherited Items[Index]);
+end;
+
+function TRegistro0400List.LocalizaRegistro(pCOD_NAT: String): boolean;
+var
+intFor: integer;
+begin
+   Result := false;
+   for intFor := 0 to Self.Count - 1 do
+   begin
+      if Self.Items[intFor].COD_NAT = pCOD_NAT then
+      begin
+         Result := true;
+         Break;
+      end;
+   end;
 end;
 
 function TRegistro0400List.New(AOwner: TRegistro0140): TRegistro0400;

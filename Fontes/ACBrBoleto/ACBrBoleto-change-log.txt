@@ -47,6 +47,252 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/08/2016 ver: 0.0.205a
+-- ACBrBancoBrasil --
+[-] Correção para ler o convenio do cedente sem zeros a esquerda na função LerRetorno240" (Antonio Júnior)
+http://www.projetoacbr.com.br/forum/topic/30719-ler-retorno-240-banco-do-brasil/?_fromLogin=1
+
+Data: 01/08/2016 ver: 0.0.204a
+-- ACBrBancoSicredi --
+[-] Correção instrução de rejeição: "F3 Instrução inválida, este título está caucionado/descontado" (Graziele Serafim)
+http://www.projetoacbr.com.br/forum/topic/31539-erro-ao-processar-retorno-sicredi-f3-is-not-a-valid-integer-value/
+
+-- ACBrCaixaEconomicaSICOB --
+[-] Correção função FormataNossoNumero carteira referente a carteira CS.(Graziele Serafim)
+http://www.projetoacbr.com.br/forum/topic/30680-impress%C3%A3o-segunda-via-boleto-caixa-sicob/
+
+Data: 28/07/2016 ver: 0.0.203a
+-- ACBrBancoBanrisul --
+[-] Correção adicionado o envio da instrução 16 "Alteração do número de didas para protesto". (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/29941-banrisul-inclus%C3%A3o-da-instru%C3%A7%C3%A3o-16/
+
+-- ACBrBancoSicredi --
+[-] Correção dos motivos de rejeição CNAB240. (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/30232-retorno-sicredi-cnab240-adi%C3%A7%C3%A3o-de-motivos-de-rejei%C3%A7%C3%A3o/#comment-200090
+
+
+Data: 27/07/2016 ver: 0.0.202a
+-- ACBrBancoob --
+[-] Correção campo Código Desconto 3, Código Multa, layout retorno CNAB240. (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/31147-problemas-com-gera%C3%A7%C3%A3o-do-arquivo-de-cobran%C3%A7a-240-sicoob/
+
+Data: 21/07/2016 ver: 0.0.201a
+-- ACBrBancoBanestes --
+[-] Correção campo carteira e código Lançamento retorno CNAB400. (Graziele Rocha)
+http://www.projetoacbr.com.br/forum/topic/30044-altera%C3%A7%C3%B5es-acbrbancobanestes-lerretorno400/
+
+Data: 20/06/16 ver: 0.0.200a
+-- ACBrBancoBancoob --
+[-] Correção leitura do campo DataArquivo e DataLancamento retorno CNAB240. (leotelles)
+http://www.projetoacbr.com.br/forum/topic/24544-ler-retornocnab240-bancoob/
+
+
+Data: 02/06/16 ver: 0.0.199a
+-- ACBrBancoCaixaSICOB --
+[*] Ajuste para informar corretamente as posições referentes a data da baixa na remessa
+CNAB240. (Fabiano Sehn)
+http://www.projetoacbr.com.br/forum/topic/30314-boletos-cef-sicoob/  
+
+
+[-] Correção refente aos campos de abatimento e multa na remessa CNAB400. (Valdemir Jacon Sanches)
+http://www.projetoacbr.com.br/forum/topic/30335-erro-remessa-hsbc-campo-abatimento-multa/
+
+
+Data: 31/05/16 ver: 0.0.198a
+-- ACBrBancoCaixaSICOB --
+[*] Ajuste do método CalcularTamMaximoNossoNumero() para considerar também o convênio. (Juliana Tamizou)
+    http://www.projetoacbr.com.br/forum/topic/29977-nosso-n%C3%BAmero-carteira-r%C3%A1pida-cef/
+
+[*] Ajustados rotinas de leitura do arquivo retorno para considerar o tamanho calculado pela
+    função. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28730-pegando-nossonumero-errado-no-retorno-caixa-sicob/
+
+Data: 23/05/16 ver: 0.0.197a
+
+-- ACBrBancoBrasil --
+[-] Correção leitura retorno CNAB240. (softcom.wendel)
+http://www.projetoacbr.com.br/forum/topic/29918-retorno-cnab-240-bb/
+
+
+Data: 09/05/16 ver: 0.0.196a
+
+-- ACBrBancoSicredi --
+[-] Ajuste no tratamento para motivos de rejeição no arquivo retorno, alterada função
+    CodMotivoRejeicaoToDescricao(). (sysbase)
+http://www.projetoacbr.com.br/forum/topic/29852-ajustes-unit-acbrbancosicredipas/
+
+-- ACBrBancoBanestes --
+[-] Ajuste informação dos dados da conta no arquivo remessa CNAB400. (denerbuzato)
+http://www.projetoacbr.com.br/forum/topic/29908-corre%C3%A7%C3%A3o-acbrbancobanestes-n%C3%A3o-usar-contadigito/
+
+
+Data: 09/05/16 ver: 0.0.195a
+
+-- ACBrBancoSicredi --
+[*] Adição do tratamento para motivos de rejeição no arquivo retorno, alterada função
+    CodMotivoRejeicaoToDescricao(). (sysbase)
+http://www.projetoacbr.com.br/forum/topic/29852-ajustes-unit-acbrbancosicredipas/
+
+Data: 04/05/16 ver: 0.0.194a
+
+-- ACBrBancoBancoob --
+[-] Correção leitura do campo SeuNumero retorno CNAB240. (volmir)
+http://www.projetoacbr.com.br/forum/topic/29808-retorno-cnab-240-bancoob/
+
+-- ACBrBancoBancoob --
+[*] Ajuste referente as intruções remessa CNAB2400. (denerbuzato)
+http://www.projetoacbr.com.br/forum/topic/29224-cobran%C3%A7a-hsbc-com-multa/
+[-] Correção leitura agencia/conta retorno CNAB400. (denerbuzato)
+http://www.projetoacbr.com.br/forum/topic/29834-corre%C3%A7%C3%A3o-lerretorno400-sicoob/
+
+-- ACBrBancoSicredi --
+[-] Ajuste leitura retorno CNAB400. (Alex Calado)
+http://www.projetoacbr.com.br/forum/topic/29802-retorno-sicredi-erro-c4-is-not-a-valid-integer-value/
+
+Data: 04/05/16 ver: 0.0.193a
+
+[-] Correção leitura campo NumeroDocumento retorno CNAB240. (sandrojapa)
+http://www.projetoacbr.com.br/forum/topic/29689-retorno-sicoob-240-erro-numerodocumento/#comment-196361
+
+-- ACBrBancoBrasil --
+[-] Correção leitura campo NumeroArquivo retorno CNAB400. (Jardel Devogeski Silveira)
+http://www.projetoacbr.com.br/forum/topic/29461-corre%C3%A7%C3%A3o-ref-sequencial-de-retorno-cnab400-cbr643-6/
+
+
+Data: 25/04/16 ver: 0.0.192a
+-- ACBrBoleto --
+[*] Ajuste valor inicial da propriedade Titulo.CodigoMora para vazio de forma a evitar
+   problemas devido a valores incorretos. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/29000-alterado-o-fonte-como-us%C3%A1-lo/
+
+-- ACBrBancoBanrisul --
+[*] Ajuste leitura dados do cedente retorno CNAB240 e 400 removendo espaços vazios. (LeandroDoCouto)
+http://www.projetoacbr.com.br/forum/topic/29444-ler-retorno-do-banrisul/
+
+-- ACBrBancoBrasil --
+[*] Ajuste montagem código do cedente removendo os zeros a esquerda do número da conta. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/29279-d%C3%BAvida-formata%C3%A7%C3%A3o-da-ag%C3%AAnciac%C3%B3digo-cedente/
+
+-- ACBRBancoSicredi --
+[-] Ajuste remessa CNAB240 removendo espaço extra no registro P. (edu)
+http://www.projetoacbr.com.br/forum/topic/29554-ajuste-no-arquivo-de-remessa-cnab-240-do-sicredi/
+
+Data: 25/04/16 ver: 0.0.191a
+-- ACBrBancoItau --
+[*] Ajuste retorno CNAB400 para ler corretamente os motivos de rejeição quando não houver. (Emerson Teixeira)
+http://www.projetoacbr.com.br/forum/topic/29364-altera%C3%A7%C3%A3o-na-leitura-da-motivo-da-rejei%C3%A7%C3%A3o-e-descri%C3%A7%C3%A3o-da-rejei%C3%A7%C3%A3o-do-arquivo-de-retorno-na-unit-acbrbancoitau/
+
+
+Data: 01/04/16 ver: 0.0.190a
+-- ACBrBancoSafra --
+[*] Correção geração arquivo remessa CNAB400 e montagem dos campos do boleto.(ubaltino)
+http://www.projetoacbr.com.br/forum/topic/28993-erro-arquivo-remessa-banco-safra/
+
+-- ACBrBancoCaixa --
+[-] Correção remessa CNAB240. (ubaltino)
+http://www.projetoacbr.com.br/forum/topic/29243-altera%C3%A7%C3%A3o-no-segmento-q-do-banco-caixa/#comment-193409
+
+Data: 01/04/16 ver: 0.0.189a
+--ACBrBancoSantander--
+[*] Atualização códigos de ocorrência. (renan.saches)
+http://www.projetoacbr.com.br/forum/topic/28895-ocorr%C3%AAncia-de-retorno-acbrbancosantander/
+
+--ACBrBancoSafra --
+[-] Correção remessa CNAB400. (ubaltino)
+[-] Melhorias e reorganização do código. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28993-erro-arquivo-remessa-banco-safra/
+
+-- ACBrBoleto --
+[-] Correção da mensagem referente a multa impressa nos boletos. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/29072-dias-de-car%C3%AAncia/
+
+-- ACBrBancoBanestes --
+[-] Correção campo SeNumero remessa CNAB400( Juliana tamizou)
+http://www.projetoacbr.com.br/forum/topic/28681-campos-do-arq-de-remessa-banestes-com-preenchimento-errado/
+
+Data: 29/03/16 ver: 0.0.188a
+-- ACBrBoleto* --
+[*] Remoção de Warnings e Hints. (Por Waldir Paim e DSA)
+    http://www.projetoacbr.com.br/forum/topic/28345-remoção-de-hints-e-warning-do-acbr/?do=findComment&comment=191681
+
+Data: 28/03/16 ver. 0.0.187a
+-- ACBrBancoBancoob --
+[*] Inclusão das mensagens do título na remessa CNAB240. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28917-outras-informa%C3%A7%C3%B5es-segmento-r-do-boleto-sicoob/
+
+-- ACBrBancoBanestes --
+[*] Ajuste campo NumeroDocumento para não completar com zeros na remessa CNAB400. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28681-campos-do-arq-de-remessa-banestes-com-preenchimento-errado/
+
+
+Data: 24/03/16 ver. 0.0.186a
+-- ACBrBancoSantander --
+[*] Inclusão de leitura dos motivos de rejeição no retorno do CNAB240. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28540-codigo-da-ocorrencia-no-retorno/
+
+-- ACBrBancoNordeste --
+[*]  Criado método MontarCampoCarteira para tratar a impressão deste campo no boleto(Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28855-homologa%C3%A7%C3%A3o-bnb/ 
+
+[-] Correção geração arquivo remessa CNAB400 quanto aos campos SeuNumero, NumeroDocumento e Instrucao.
+    Correção leituar arquivo retorno CNAB400 quanto ao campo NossoNumero. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28681-campos-do-arq-de-remessa-banestes-com-preenchimento-errado/
+
+
+Data: 22/03/16 ver. 0.0.185a
+-- ACBrBancoSicredi --
+[-] Ajuste remessa CNAB420. (josueprg)
+http://www.projetoacbr.com.br/forum/topic/28657-acbrbancosicredpas/
+
+
+Data: 21/03/16 ver. 0.0.184a
+-- ACBrBancoBanestes --
+[-] Ajuste tamanho máximo nosso número para permitir a geração correta do campo
+    nosso número na remessa. (Juliana Tamizou)
+[-] Ajuste leitura nosso número do arquivo retorno para desconsiderar os DVs.
+    (Juliana Tamizou)
+
+-- ACBrBancoSantander --
+[-] Ajuste campo Aceite remessa CNAB240. (Rodrigo Guelf)
+http://www.projetoacbr.com.br/forum/topic/28656-corre%C3%A7%C3%A3o-do-unit-acbrbancosantanderpas/
+
+
+Data: 04/03/16 ver. 0.0.183a
+-- ACBrBancoSicredi --
+[-] Ajuste remessa CNAB400. (RobertoSFilho)
+http://www.projetoacbr.com.br/forum/topic/28467-melhoria-remessa-400-sicredi-carn%C3%AA-e-parcelas/
+
+
+Data: 04/03/16 ver. 0.0.182a
+-- ACBrBancoItau --
+[-] Ajuste contador registros remessa CNAB240.(valramosr)
+http://www.projetoacbr.com.br/forum/topic/28290-problema-homoliga%C3%A7ao-remessa-ita%C3%BA/
+
+
+Data: 29/02/16 ver. 0.0.181a
+-- ACBrBancoBrasil --
+[-] Ajuste tipo ocorrência remessa CNAB400.(Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/20022-altera%C3%A7%C3%B5es-na-unit-banco-do-brasil/
+
+[*] Ajuste formatação Nosso Numero covenio 6 posições. (Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/28250-problema-nossonumero-banco-do-brasil-carteira-18-e-conv%C3%AAnio-de-6-d%C3%ADgitos/
+
+
+
+Data: 29/02/16 ver. 0.0.180a
+-- ACBrBancoCaixa --
+[*] Ajuste geração remessa CNAB240 (windsoft)
+[-] Correção leitura retorno CNAB240 (Jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/26563-erro-na-leitura-do-retorno-da-caixa/
+
+-- ACBrBancoBradesco --
+[*] Ajuste remessa CNAB400. (jacinto Junior)
+http://www.projetoacbr.com.br/forum/topic/26199-indicador-para-d%C3%A9bito-autom%C3%A1tico-bradesco/
+
+Data: 19/02/16 ver. 0.0.179a
+-- ACBrBancoSantander --
+[*] Ajuste remessa CNAB240. (Juliana Tamizou)
+
 Data: 15/02/16 ver. 0.0.178a
 -- ACBrBancoHSBC --
 [-] Ajuste para montagem correta do código de barras para contas com primeiro digito

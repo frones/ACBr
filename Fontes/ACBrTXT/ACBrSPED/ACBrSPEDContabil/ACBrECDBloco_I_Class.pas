@@ -76,6 +76,7 @@ type
     FRegistroI053Count: Integer;
     FRegistroI151Count: Integer;
     FRegistroI155Count: Integer;
+    FRegistroI157Count: Integer;
     FRegistroI250Count: Integer;
     FRegistroI310Count: Integer;
     FRegistroI355Count: Integer;
@@ -88,6 +89,7 @@ type
     procedure WriteRegistroI053(RegI050: TRegistroI050);
     procedure WriteRegistroI151(RegI150: TRegistroI150);
     procedure WriteRegistroI155(RegI150: TRegistroI150);
+    procedure WriteRegistroI157(RegI155: TRegistroI155);
     procedure WriteRegistroI250(RegI200: TRegistroI200);
     procedure WriteRegistroI310(RegI300: TRegistroI300);
     procedure WriteRegistroI355(RegI350: TRegistroI350);
@@ -140,6 +142,7 @@ type
     property RegistroI053Count: Integer read FRegistroI053Count write FRegistroI053Count;    
     property RegistroI151Count: Integer read FRegistroI151Count write FRegistroI151Count;
     property RegistroI155Count: Integer read FRegistroI155Count write FRegistroI155Count;
+    property RegistroI157Count: Integer read FRegistroI157Count write FRegistroI157Count;
     property RegistroI250Count: Integer read FRegistroI250Count write FRegistroI250Count;
     property RegistroI310Count: Integer read FRegistroI310Count write FRegistroI310Count;
     property RegistroI355Count: Integer read FRegistroI355Count write FRegistroI355Count;
@@ -177,6 +180,7 @@ begin
   FRegistroI053Count := 0;
   FRegistroI151Count := 0;
   FRegistroI155Count := 0;
+  FRegistroI157Count := 0;
   FRegistroI250Count := 0;
   FRegistroI310Count := 0;
   FRegistroI355Count := 0;
@@ -227,6 +231,7 @@ begin
   FRegistroI053Count := 0;  
   FRegistroI151Count := 0;
   FRegistroI155Count := 0;
+  FRegistroI157Count := 0;
   FRegistroI250Count := 0;
   FRegistroI310Count := 0;
   FRegistroI355Count := 0;
@@ -571,7 +576,7 @@ begin
            ///
            Add( LFill('I150') +
                 LFill(DT_INI) +
-                LFill(DT_FIN) 
+                LFill(DT_FIN)
                 );
         end;
         // Registro Filho
@@ -625,12 +630,41 @@ begin
                 LFill(VL_DEB, 19, 2) +
                 LFill(VL_CRED, 19, 2) +
                 LFill(VL_SLD_FIN, 19, 2) +
-                LFill(IND_DC_FIN, 0) 
+                LFill(IND_DC_FIN, 0)
                 );
         end;
-       FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
+        // Registro Filho
+        WriteRegistroI157(RegI150.RegistroI155.Items[intFor]);
+
+        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
      end;
      FRegistroI155Count := FRegistroI155Count + RegI150.RegistroI155.Count;
+  end;
+end;
+
+procedure TBloco_I.WriteRegistroI157(RegI155: TRegistroI155);
+var
+intFor: integer;
+begin
+  if Assigned(RegI155.RegistroI157) then
+  begin
+     for intFor := 0 to RegI155.RegistroI157.Count - 1 do
+     begin
+        with RegI155.RegistroI157.Items[intFor] do
+        begin
+           Check(((IND_DC_INI = 'D') or (IND_DC_INI = 'C') or (IND_DC_INI = '')), '(I-I157) No Indicador da situação do saldo inicial, deve ser informado: D ou C ou nulo!');
+           ///
+           Add( LFill('I157') +
+                LFill(COD_CTA) +
+                LFill(COD_CCUS) +
+                LFill(VL_SLD_INI, 19, 2) +
+                LFill(IND_DC_INI, 0)
+                );
+        end;
+
+        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;
+     end;
+     FRegistroI157Count := FRegistroI157Count + RegI155.RegistroI157.Count;
   end;
 end;
 
@@ -729,7 +763,7 @@ begin
                 LFill(COD_CTA) +
                 LFill(COD_CCUS) +
                 LFill(VAL_DEBD, 19, 2) +
-                LFill(VAL_CRED, 19, 2) 
+                LFill(VAL_CRED, 19, 2)
                 );
         end;
        FRegistroI990.QTD_LIN_I := FRegistroI990.QTD_LIN_I + 1;

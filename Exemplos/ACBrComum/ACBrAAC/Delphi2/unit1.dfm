@@ -1213,6 +1213,7 @@ object Form1: TForm1
     end
   end
   object ACBrECF: TACBrECF
+    QuebraLinhaRodape = False
     Porta = 'procurar'
     ReTentar = False
     DescricaoGrande = True
@@ -1222,13 +1223,6 @@ object Form1: TForm1
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
-    FormMsgFonte.Charset = DEFAULT_CHARSET
-    FormMsgFonte.Color = clWhite
-    FormMsgFonte.Height = 11
-    FormMsgFonte.Name = 'MS Sans Serif'
-    FormMsgFonte.Pitch = fpVariable
-    FormMsgFonte.Style = []
-    FormMsgColor = clBlack
     DecimaisPreco = 2
     MemoParams.Strings = (
       '[Cabecalho]'
@@ -1269,6 +1263,8 @@ object Form1: TForm1
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
+    ConfigBarras.Margem = 0
+    InfoRodapeCupom.Imposto.ModoCompacto = False
     Left = 530
     Top = 3
   end
@@ -1309,6 +1305,6 @@ object Form1: TForm1
     IdentPAF.Paf.TrocoEmCartao = False
     OnGetChave = ACBrAAC1GetChave
     Left = 474
-    Top = 3
+    Top = 12
   end
 end

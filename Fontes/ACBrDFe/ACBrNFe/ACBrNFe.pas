@@ -124,10 +124,11 @@ type
 
     function CstatConfirmada(AValue: integer): Boolean;
     function CstatProcessado(AValue: integer): Boolean;
+    function CstatCancelada(AValue: integer): Boolean;
 
     function Enviar(ALote: String; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
-    function Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
+    function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
     function Consultar( AChave: String = ''): Boolean;
     function EnviarCartaCorrecao(idLote: integer): Boolean;
     function EnviarEvento(idLote: integer): Boolean;
@@ -191,7 +192,11 @@ uses
   pcnAuxiliar, synacode;
 
 {$IFDEF FPC}
- {$R ACBrNFeServicos.rc}
+ {$IFDEF CPU64}
+  {$R ACBrNFeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
+ {$ELSE}
+  {$R ACBrNFeServicos.rc}
+ {$ENDIF}
 {$ELSE}
  {$R ACBrNFeServicos.res}
 {$ENDIF}
@@ -294,7 +299,7 @@ end;
 function TACBrNFe.CstatConfirmada(AValue: integer): Boolean;
 begin
   case AValue of
-    100, 150: Result := True;
+    100, 110, 150, 301, 302, 303: Result := True;
     else
       Result := False;
   end;
@@ -304,6 +309,15 @@ function TACBrNFe.CstatProcessado(AValue: integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302, 303: Result := True;
+    else
+      Result := False;
+  end;
+end;
+
+function TACBrNFe.CstatCancelada(AValue: integer): Boolean;
+begin
+  case AValue of
+    101, 151, 155: Result := True;
     else
       Result := False;
   end;
@@ -520,7 +534,7 @@ begin
     GetUTC(CodigoParaUF(CUF), DataHoraEmissao));
   sdigVal_HEX := AsciiToHex(DigestValue);
 
-  if CUF = 41 then
+  if (CUF in [35, 41, 50]) then
   begin
     sdhEmi_HEX := LowerCase(sdhEmi_HEX);
     sdigVal_HEX := LowerCase(sdigVal_HEX);
@@ -562,7 +576,7 @@ begin
   end;
 end;
 
-function TACBrNFe.Cancelamento(AJustificativa: WideString; ALote: integer = 0): Boolean;
+function TACBrNFe.Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
 var
   i: integer;
 begin

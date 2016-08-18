@@ -141,17 +141,25 @@ begin
   begin
     Gerador.wGrupoNFSe('Tomador');
 
-    if (NFSe.Tomador.Endereco.UF <> 'EX') then
+    if (NFSe.Tomador.Endereco.UF <> 'EX') and {(FProvedor in [proSimplISS, proISSNet]) or}
+       ((NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
+        (NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal <> '') or
+        (NFSe.Tomador.IdentificacaoTomador.InscricaoEstadual <> '')) then
     begin
       Gerador.wGrupoNFSe('IdentificacaoTomador');
-      Gerador.wGrupoNFSe('CpfCnpj');
+      
+      if NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '' then
+      begin
+        Gerador.wGrupoNFSe('CpfCnpj');
 
-      if Length(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
-        Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
-      else
-        Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+        if Length(OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
+          Gerador.wCampoNFSe(tcStr, '#36', 'Cpf ', 11, 11, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '')
+        else
+          Gerador.wCampoNFSe(tcStr, '#36', 'Cnpj', 14, 14, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
 
-      Gerador.wGrupoNFSe('/CpfCnpj');
+        Gerador.wGrupoNFSe('/CpfCnpj');
+      end;
+
       Gerador.wCampoNFSe(tcStr, '#37', 'InscricaoMunicipal', 01, 15, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
 
       if FProvedor in [proBetha, proSimplISS] then
@@ -277,18 +285,21 @@ begin
   case FProvedor of
     proSimplISS: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
 
-    proGINFES:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), '');
+    proGINFES,
+    proRJ,
+    proPublica:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, (NFSe.Servico.Valores.Aliquota / 100), '');
 
     proGovBR,
     proPronim,
-    proISSNet:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
+    proISSNet,
+    proWebISS:   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
     proNFSEBrasil: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, (NFSe.Servico.Valores.Aliquota * 100), '');
 
     proRecife:   if NFSe.OptanteSimplesNacional = snSim then
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
+                   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '')
                  else
-                   Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
+                   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, '');
 
   else
     Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, '');
@@ -438,7 +449,7 @@ begin
     begin
       Gerador.wGrupoNFSe('Parcelas');
       Gerador.wCampoNFSe(tcInt, '#55', 'Parcela', 01, 03, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, '');
-      Gerador.wCampoNFSe(tcDatVcto, '#55', 'DataVencimento', 19, 19, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, DSC_DVENC);
+      Gerador.wCampoNFSe(tcDatVcto, '#55', 'DataVencimento', 10, 10, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, DSC_DVENC);
       Gerador.wCampoNFSe(tcDe2, '#55', 'Valor', 01, 18, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, '');
       Gerador.wGrupoNFSe('/Parcelas');
     end;
@@ -451,7 +462,12 @@ begin
   if (FIdentificador = '') then
     Gerador.wGrupoNFSe('InfRps')
   else
-    Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+  begin
+    if FProvedor <>  proNFSeBrasil then
+      Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.InfID.ID + '"')
+    else
+      Gerador.wGrupoNFSe('InfRps ' + FIdentificador + '="' + NFSe.IdentificacaoRps.Numero + '"');
+  end;
 
   GerarIdentificacaoRPS;
 
@@ -464,8 +480,11 @@ begin
       Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), '');
   end;
 
-  Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
-  Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+  if FProvedor <>  proNFSeBrasil then
+  begin
+    Gerador.wCampoNFSe(tcStr, '#7', 'OptanteSimplesNacional', 01, 01, 1, SimNaoToStr(NFSe.OptanteSimplesNacional), '');
+    Gerador.wCampoNFSe(tcStr, '#8', 'IncentivadorCultural  ', 01, 01, 1, SimNaoToStr(NFSe.IncentivadorCultural), '');
+  end;
   Gerador.wCampoNFSe(tcStr, '#9', 'Status                ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
 
   if FProvedor in [proBetha, proFISSLex, proSimplISS] then
@@ -520,13 +539,14 @@ begin
   if (FProvedor = proISSDigital) and (NFSe.NumeroLote <> '')
     then Atributo := ' Id="' +  (NFSe.IdentificacaoRps.Numero) + '"';
 
-  if (FProvedor in [proBetha]) then
+  if (FProvedor in [proBetha, proNFSeBrasil]) then
     Gerador.wGrupo('Rps')
   else
     Gerador.wGrupo('Rps' + Atributo);
 
   case FProvedor of
-    proRecife: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
+    proRecife,
+    proSalvador: FNFSe.InfID.ID := 'RPS' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
   else
     FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                       FNFSe.IdentificacaoRps.Serie;

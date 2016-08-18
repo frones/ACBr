@@ -44,6 +44,161 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/07/2016
+-- ACBrDFeOpenSSL --
+[*] Incluido o código 202 na checagem do ResultCode, uma vez que o provedor
+    retorna 202 em vez de 200 como resposta ao Envio.
+   por: BigWings
+
+05/07/2016
+-- ACBrDFeSSL --
+[*] Remoção de uma variável definida e não utilizada.
+   por: Italo Jurisato Junior
+
+01/07/2016
+-- ACBrDFeOpenSSL --
+[*] Adicionado métodos internos para busca de nós a fim de melhorar a detecção
+    do nó a ser assinado e o nó de assinatura, a fim de suportar os diversos 
+    tipos de XMLs da NFSe (por: DSA)
+
+24/06/2016
+-- ACBrDFeSSL --
+[*] Método "AjustarXMLAssinado" modificado para remover Declaração de XML sem
+    UTF8  (por: DSA)
+
+-- ACBrDFeOpenSSL --
+[*] Ajuste para permitir a assintura sem informar o parâmetro "infElement".
+    Nesse caso, a assinatura será procurada no ultimo nó do Documento Raiz
+    (por: DSA)
+
+13/06/2016
+-- ACBrDFeSSL --
+[*] Método: "Assinar", ajuste para usar Declaralção anterior do XML, apenas se
+    a mesma for compatível com UTF8
+[*] Método: "AjustarXMLAssinado", modificado para remover Espaços apenas do
+    Elemento de Assinatura, e não de todo final do XML, após a Tag de assinatura;
+    Modificado para permitir informar o Certificado DER_Base64 que constará na
+    Assinatura (usado por OpenSSL)
+[*] Métodos "Validar", "VerificarAssinatura", modificados para presumir que o
+    XML de entrada, sempre estará em UTF8
+
+-- ACBrDFeOpenSSL --
+[-] Correção para correta assinatura de XML com Certificados da "SOLUTI" (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30247
+[*] Método: "XmlSecSign", modificado para conseguir achar a assinatura em XMLs
+    com tag "nfeProc" como Raiz
+[*] Métodos "Validar", "VerificarAssinatura", modificados para presumir que o
+    XML de entrada, sempre estará em UTF8
+[*] Método: "LerPFXInfo", modificado para extrair o Certificado no formato
+    DER_Base64, (o mesmo será utilizado na Tag de Assinatura)
+
+-- ACBrDFeCapicom --
+[*] Métodos "Validar", "VerificarAssinatura", modificados para presumir que o
+    XML de entrada, sempre estará em UTF8
+
+12/02/2016
+-- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeCapicomDelphiSoap --
+[*] Removida a propriedde "UseSSL"
+[*] Removida a propriedde "UseCertificate"
+[+] Adicionada a propriedade "UseCertificateHTTP", que permite informar se a
+    conexão HTTP precisa do Certificado A1 ou A3. Essa propriedade não irá
+    influenciar o método "Assinar", que SEMPRE exigirá o certificado. (por: DSA)
+
+16/03/2016
+-- ACBrDFeOpenSSL --
+[*] Método "VerificarAssinatura": Ajuste para retorno de mensagem de erro,
+    quando a Assinatura do XML é inválida    (por: DSA)
+
+-- ACBrDFeWebService --
+[-] Método: "SalvarEnvio", correção para conversão de XML para UTF8, quando o
+    mesmo não foi previamente assinado     (por: DSA)
+
+11/03/2016
+*-- ACBrDFeOpenSSL --
+[*] Modificada a rotina de inicialização de XMLSec, para suportar diretiva de
+    compilação "USE_DELAYED"
+[-] Corrigida falha na verificação de assinatura com notas Processadas "nfeProc"
+    (por: DSA)
+
+08/03/2016
+-- ACBrDFeSSL, ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrHTTPReqResp --
+[*] Ajustes para o correto funcionamento, quando a propriedade
+    DFeSSL.UseCertificate = False          (por: DSA)
+
+-- ACBrDFeCapicom --
+[-] Correção no ajuste do Proxy, quando informando valores vazios   (por: DSA)
+
+-- ACBrDFeOpenSSL --
+[-] Correção de encoding nas mensagens de Erro de "VerificarAssinatura"  (por: DSA)
+
+07/03/2016   
+-- ACBrDFeCapicom, ACBrDFeCapicomDelphiSoap --
+[*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings   (por: DSA)
+
+-- ACBrDFe --
+[*] Método "Gravar" modificado, inserido novo parâmetros "ConteudoEhUTF8"
+   function Gravar(NomeArquivo: String; ConteudoXML: String; aPath: String = '';
+      ConteudoEhUTF8: Boolean = True): Boolean;
+   - Se ConteudoEhUTF8 for True e ConteudoXML não contiver o cabeçalho de
+     Encoding em UTF8, ele será automaticamente adicionado.
+
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade Configuracoes.Geral.RetirarEspacos: Boolea, default True
+
+-- ACBrDFeWebService --
+[*] Método "EnviarDados", modificado para não converter a String recebida do
+    WebService. Ou seja, o conteudo das variáveis "RetornoWS" e "RetWS" sempre
+    permanecerá em UTF8 e sem decodificar os caracteres "HTML Entity"
+[*] Método "AjustarOpcoes" modificado para suportar "RetirarEspacos"
+
+04/03/2016  (por: DSA)
+-- ACBrDFeCapicom, ACBrDFeOpenSSL, ACBrDFeWebService --
+[*] Ajustes para compilação após modificações em ACBrUtil
+[*] Modificações para compatibilização com FPC 3.0
+
+-- ACBrDFeWebService --
+[+] Adicionado o método protegido "AjustarOpcoes", para permitir que o XML
+    gerado pelo WebService, respeite RetirarAcentos e RetirarEspacos das Opções
+    do componente pai (TACBrDFe). Ex: AjustarOpcoes( InutNFe.Gerador.Opcoes );
+
+26/02/2016  (por: DSA)
+-- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
+[+] Adicionada a propriedade "CertRazaoSocial", para retornar a "Razão Social"
+    do Certificado
+[+] Adicionado o método "CalcHash", para permitir o calculo de Hashs nos
+    seguintes modos: dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1,
+    dgstSHA256, dgstSHA512. O resultado do Hash pode ser apresentado nos formatos:
+    outHexa, outBase64, outBinary.
+    - Também é possível "Assinar" o Hash gerado, com a chave RSA do Certificado
+      (assinatura digital)
+    CalcHash( const AStream : TStream; const Digest: TSSLDgst;
+              const ModoSaida: TSSLHashOutput = outHexa;
+              const Assinar: Boolean =  False): AnsiString;
+    - Há sobrecarga do método para permitir entrada de dados como:
+       BinaryString : AnsiString e AStringList : TStringList
+[+] Adicionado o método: CalcHashArquivo( const NomeArquivo : String; ...),
+    de forma analoga a "CalcHash"
+
+-- ACBrDFeCapicom --
+[-] Correção nos método "Assinar", "Validar" e "VerificarAssinatura", para
+    tratar corretamente XMLs em UTF8 com acentos.
+
+-- ACBrDFeOpenSSL --
+[-] Correção nos método "Validar" e "VerificarAssinatura", para
+    tratar corretamente XMLs em UTF8 com acentos.
+
+24/02/2016
+-- ACBrDFeWebService --
+[*] modificado o metodo GetUrlWsd para virtual e assim poder sobre-escrever ele
+   por: Juliomar Marchetti
+
+23/02/2016
+-- ACBrMDFeConfiguracoes
+-- ACBrCTeConfiguracoes
+-- ACBrNFeConfiguracoes
+[-] Correção da criação de pastas, separando os XMLs por nome, no método DistribuicaoDFe()
+    estava criando pasta dentro de pasta. (por Isaque Pinheiro)
+
 18/02/2016
 -- ACBrDFeConfiguracoes --
 [+] Adicionado a propriedade: TimeZoneConf: TTimeZoneConf em TWebServicesConf,

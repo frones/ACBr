@@ -297,6 +297,8 @@ begin
   Gerador.wCampo(tcStr, 'I03 ', 'cEAN    ', 08, 14, 0, CFe.Det[i].Prod.cEAN, DSC_CEAN);
   Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, CFe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08, 0, CFe.Det[i].Prod.NCM, DSC_NCM);
+  if CFe.infCFe.versaoDadosEnt >= 0.08 then
+     Gerador.wCampo(tcStr, 'I05w ', 'CEST    ', 02, 07, 0, CFe.Det[i].Prod.CEST, DSC_CEST);
   Gerador.wCampo(tcEsp, 'I06 ', 'CFOP    ', 04, 04, 1, somenteNumeros(CFe.Det[i].Prod.CFOP), DSC_CFOP);
   Gerador.wCampo(tcStr, 'I07 ', 'uCom    ', 01, 06, 1, CFe.Det[i].Prod.uCom, DSC_UCOM);
   Gerador.wCampo(tcDe4, 'I08 ', 'qCom    ', 05, 15, 1, CFe.Det[i].Prod.qCom, DSC_QCOM);
@@ -374,7 +376,7 @@ begin
   else
   begin
     case CFe.Det[i].Imposto.ICMS.CSOSN of
-       csosn102, csosn300, csosn500 :
+       csosn102, csosn300, csosn400, csosn500 :
           begin
             Gerador.wGrupo('ICMSSN102');
             Gerador.wCampo(tcStr, 'N06', 'Orig    ', 01, 01, 1, OrigTOStr(CFe.Det[i].Imposto.ICMS.orig), DSC_ORIG);
@@ -716,12 +718,20 @@ begin
 end;
 
 procedure TCFeW.GerarInfAdic;
+var
+  RetitarEspacos: Boolean;
 begin
   if (trim(CFe.InfAdic.infCpl) <> EmptyStr) or
     (CFe.InfAdic.obsFisco.Count > 0) then
   begin
     Gerador.wGrupo('infAdic', 'Z01');
-    Gerador.wCampo(tcStr, 'Z02', 'infCpl    ', 01, 5000, 0, CFe.InfAdic.infCpl, DSC_INFCPL);
+    RetitarEspacos := Gerador.Opcoes.RetirarEspacos;
+    try
+      Gerador.Opcoes.RetirarEspacos := False;   // Deve preservar espaços da Observação
+      Gerador.wCampo(tcStr, 'Z02', 'infCpl    ', 01, 5000, 0, CFe.InfAdic.infCpl, DSC_INFCPL);
+    finally
+      Gerador.Opcoes.RetirarEspacos := RetitarEspacos;
+    end;
     (**)GerarInfAdicObsFisco;
     Gerador.wGrupo('/infAdic');
   end;
@@ -734,15 +744,15 @@ begin
   if not FApenasTagsAplicacao then
   begin
     if CFe.InfAdic.obsFisco.Count > 10 then
-      Gerador.wAlerta('Z03', 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
+      Gerador.wAlerta(IIF(CFe.infCFe.versaoDadosEnt >= 0.08,'ZA01','Z03'), 'obsFisco', DSC_OBSFISCO, ERR_MSG_MAIOR_MAXIMO + '10');
     for i := 0 to CFe.InfAdic.obsFisco.Count - 1 do
     begin
-      Gerador.wGrupo('obsFisco xCampo="' + trim(CFe.InfAdic.obsFisco[i].xCampo) + '"', 'Z04');
+      Gerador.wGrupo('obsFisco xCampo="' + trim(CFe.InfAdic.obsFisco[i].xCampo) + '"', IIF(CFe.infCFe.versaoDadosEnt >= 0.08,'ZA02','Z04'));
       if length(trim(CFe.InfAdic.obsFisco[i].xCampo)) > 20 then
-        Gerador.wAlerta('ZO4', 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
+        Gerador.wAlerta(IIF(CFe.infCFe.versaoDadosEnt >= 0.08,'ZA02','Z04'), 'xCampo', DSC_XCAMPO, ERR_MSG_MAIOR);
       if length(trim(CFe.InfAdic.obsFisco[i].xCampo)) = 0 then
-        Gerador.wAlerta('ZO4', 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
-      Gerador.wCampo(tcStr, 'Z05', 'xTexto', 01, 60, 1, CFe.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
+        Gerador.wAlerta(IIF(CFe.infCFe.versaoDadosEnt >= 0.08,'ZA02','Z04'), 'xCampo', DSC_XCAMPO, ERR_MSG_VAZIO);
+      Gerador.wCampo(tcStr, IIF(CFe.infCFe.versaoDadosEnt >= 0.08,'ZA03','Z05'), 'xTexto', 01, 60, 1, CFe.InfAdic.obsFisco[i].xTexto, DSC_XTEXTO);
       Gerador.wGrupo('/obsFisco');
     end;
   end;

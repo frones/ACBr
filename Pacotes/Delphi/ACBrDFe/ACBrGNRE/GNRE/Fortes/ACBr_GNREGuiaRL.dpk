@@ -37,6 +37,6 @@ requires
   dsnap;
 
 contains
-  ACBrGNREGuiaFRFortes in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaFRFortes.pas' {ACBrGNREGuiaFR_Fortes};
+  ACBrGNREGuiaRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaRLReg.pas';
 
 end.

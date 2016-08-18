@@ -165,6 +165,7 @@ type
     FExibirErroSchema: Boolean;
     FFormatoAlerta: String;
     FRetirarAcentos: Boolean;
+    FRetirarEspacos: Boolean;
     FValidarDigest: Boolean;
 
     procedure SetSSLLib(AValue: TSSLLib);
@@ -187,6 +188,8 @@ type
     property FormatoAlerta: String read GetFormatoAlerta write FFormatoAlerta;
     property RetirarAcentos: Boolean read FRetirarAcentos
       write FRetirarAcentos default True;
+    property RetirarEspacos: Boolean read FRetirarEspacos
+      write FRetirarEspacos default True;
     property ValidarDigest: Boolean
       read FValidarDigest write FValidarDigest default True;
   end;
@@ -381,6 +384,7 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
   FRetirarAcentos := True;
+  FRetirarEspacos := True;
   FValidarDigest := True;
 end;
 
@@ -392,6 +396,7 @@ begin
   ExibirErroSchema := DeGeralConf.ExibirErroSchema;
   FormatoAlerta    := DeGeralConf.FormatoAlerta;
   RetirarAcentos   := DeGeralConf.RetirarAcentos;
+  RetirarEspacos   := DeGeralConf.RetirarEspacos;
   ValidarDigest    := DeGeralConf.ValidarDigest;
 end;
 

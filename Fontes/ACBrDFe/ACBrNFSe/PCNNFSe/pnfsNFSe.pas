@@ -76,6 +76,57 @@ type
  TConfirmacaoCancelamento           = class;
  TSubstituicaoNfse                  = class;
 
+//******************************************************************************
+
+  TMsgRetornoIdentificacaoRps = class(TPersistent)
+  private
+    FNumero: String;
+    FSerie: String;
+    FTipo: TnfseTipoRps;
+  published
+    property Numero: String     read FNumero write FNumero;
+    property Serie: String      read FSerie  write FSerie;
+    property Tipo: TnfseTipoRps read FTipo   write FTipo;
+  end;
+
+  TInformacoesLote = class(TPersistent)
+  private
+    FNumeroLote: String;
+    FInscricaoPrestador: String;
+    FCPFCNPJRemetente: String;
+    FDataEnvioLote: TDateTime;
+    FQtdNotasProcessadas: Integer;
+    FTempoProcessamento: Integer;
+    FValorTotalServico: Currency;
+  public
+    property NumeroLote: String           read FNumeroLote          write FNumeroLote;
+    property InscricaoPrestador: String   read FInscricaoPrestador  write FInscricaoPrestador;
+    property CPFCNPJRemetente: String     read FCPFCNPJRemetente    write FCPFCNPJRemetente;
+    property DataEnvioLote: TDateTime     read FDataEnvioLote       write FDataEnvioLote;
+    property QtdNotasProcessadas: Integer read FQtdNotasProcessadas write FQtdNotasProcessadas;
+    property TempoProcessamento: Integer  read FTempoProcessamento  write FTempoProcessamento;
+    property ValorTotalServico: Currency  read FValorTotalServico   write FValorTotalServico;
+  end;
+
+  TChaveNFeRPS = class(TPersistent)
+  private
+    FInscricaoPrestador: String;
+    FNumero: String;
+    FCodigoVerificacao: String;
+    FNumeroRPS: String;
+    FSerieRPS: String;
+  public
+    property InscricaoPrestador: String read FInscricaoPrestador write FInscricaoPrestador;
+    // NFS-e
+    property Numero: String             read FNumero             write FNumero;
+    property CodigoVerificacao: String  read FCodigoVerificacao  write FCodigoVerificacao;
+    // RPS
+    property SerieRPS: String           read FSerieRPS           write FSerieRPS;
+    property NumeroRPS: String          read FNumeroRPS          write FNumeroRPS;
+  end;
+
+//******************************************************************************
+
  TInfID = class(TPersistent)
   private
     FID: string;
@@ -146,6 +197,7 @@ type
     FJustificativaDeducao: String;
     FvalorOutrasRetencoes: Currency;
     FDescricaoOutrasRetencoes: String;
+    FvalorRepasse: Currency; //Governa
   published
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
@@ -175,6 +227,7 @@ type
     //propriedade do Provedor Governa
     property valorOutrasRetencoes: Currency read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
     property DescricaoOutrasRetencoes: String read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;
+    property ValorRepasse: Currency read FValorRepasse write FValorRepasse;
   end;
 
   TItemServicoCollection = class(TCollection)
@@ -217,6 +270,18 @@ type
     FUnidade: String;
     FAlicotaISSST: currency;
     FValorISSST: currency;
+    FpRetIR: currency;
+    FvBCCSLL: currency;
+    FpRetINSS: currency;
+    FvBCINSS: currency;
+    FvBCPISPASEP: currency;
+    FvBCCOFINS: currency;
+    FvBCRetIR: currency;
+    FpRetCSLL: currency;
+    FvDed: currency;
+    FpRetPISPASEP: currency;
+    FpRetCOFINS: currency;
+    FvRed: currency;
 
   public
     constructor Create; reintroduce;
@@ -249,6 +314,18 @@ type
     property Unidade     : String read FUnidade write FUnidade;
     property AlicotaISSST: currency read FAlicotaISSST write FAlicotaISSST;
     property ValorISSST  : currency read FValorISSST write FValorISSST;
+    property vDed: currency read FvDed write FvDed;
+    property vBCINSS: currency read FvBCINSS write FvBCINSS;
+    property pRetINSS: currency read FpRetINSS write FpRetINSS;
+    property vRed: currency read FvRed write FvRed;
+    property vBCRetIR: currency read FvBCRetIR write FvBCRetIR;
+    property pRetIR: currency read FpRetIR write FpRetIR;
+    property vBCCOFINS: currency read FvBCCOFINS write FvBCCOFINS;
+    property pRetCOFINS: currency read FpRetCOFINS write FpRetCOFINS;
+    property vBCCSLL: currency read FvBCCSLL write FvBCCSLL;
+    property pRetCSLL: currency read FpRetCSLL write FpRetCSLL;
+    property vBCPISPASEP: currency read FvBCPISPASEP write FvBCPISPASEP;
+    property pRetPISPASEP: currency read FpRetPISPASEP write FpRetPISPASEP;
   end;
 
  TDeducaoCollection = class(TCollection)
@@ -300,7 +377,14 @@ type
     FItemServico: TItemServicoCollection;
     FResponsavelRetencao: TnfseResponsavelRetencao;
     FDescricao: String;
-    FDeducao : TDeducaoCollection;
+    // Provedor IssDsf
+    FDeducao: TDeducaoCollection;
+    // Provedor Governa
+    FUFPrestacao: String;
+    // Provedor SP
+    FValorCargaTributaria: currency;
+    FPercentualCargaTributaria: currency;
+    FFonteCargaTributaria: String;
 
     procedure SetItemServico(Value: TItemServicoCollection);
   public
@@ -321,8 +405,14 @@ type
     property ItemServico: TItemServicoCollection read FItemServico write SetItemServico;
     property ResponsavelRetencao: TnfseResponsavelRetencao read FResponsavelRetencao write FResponsavelRetencao;
     property Descricao: String read FDescricao write FDescricao;
-    // Deducao usada pelo Provedor IssDsf
-    property Deducao : TDeducaoCollection read FDeducao write FDeducao;
+    // Provedor IssDsf
+    property Deducao: TDeducaoCollection read FDeducao write FDeducao;
+    // Provedor Governa
+    property UFPrestacao: String read FUFPrestacao write FUFPrestacao;
+    // Provedor SP
+    property ValorCargaTributaria: currency read FValorCargaTributaria write FValorCargaTributaria;
+    property PercentualCargaTributaria: currency read FPercentualCargaTributaria write FPercentualCargaTributaria;
+    property FonteCargaTributaria: String read FFonteCargaTributaria write FFonteCargaTributaria;
   end;
 
  TIdentificacaoPrestador = class(TPersistent)
@@ -583,6 +673,9 @@ type
     FNaturezaOperacao: TnfseNaturezaOperacao;
     FRegimeEspecialTributacao: TnfseRegimeEspecialTributacao;
     FOptanteSimplesNacional: TnfseSimNao;
+    //Provedor Conam
+    FDataOptanteSimplesNacional: TDateTime;
+    FLogradouroLocalPrestacaoServico: TnfseLogradouroLocalPrestacaoServico;
     FIncentivadorCultural: TnfseSimNao;
     FProducao: TnfseSimNao;
     FStatus: TnfseStatusRps;
@@ -605,6 +698,8 @@ type
     FPrestadorServico: TDadosPrestador;
     FOrgaoGerador: TIdentificacaoOrgaoGerador;
     FValoresNfse: TValoresNfse;
+    FAutenticador: String; // para provedor EGoverneISS
+    FLink: String; // para provedor EGoverneISS
     // RPS e NFSe
     FSignature: TSignature;
 
@@ -626,10 +721,14 @@ type
     FModeloNFSe: String;
     FCancelada: TnfseSimNao;
     FTransportadora: TDadosTransportadora;
+    FCanhoto: TnfseCanhoto;
 
     Femail: TemailCollection;
     FTipoRecolhimento: String;
+    FRegRec: TnfseRegRec; //String;
+    FFrmRec: TnfseFrmRec; //String;
     FTipoTributacaoRPS: TnfseTTributacaoRPS;
+    FAssinatura: String;
 
     procedure Setemail(const Value: TemailCollection);
 
@@ -646,6 +745,9 @@ type
     property NaturezaOperacao: TnfseNaturezaOperacao read FNaturezaOperacao write FNaturezaOperacao;
     property RegimeEspecialTributacao: TnfseRegimeEspecialTributacao read FRegimeEspecialTributacao write FRegimeEspecialTributacao;
     property OptanteSimplesNacional: TnfseSimNao read FOptanteSimplesNacional write FOptanteSimplesNacional;
+    //Provedor Conam
+    property DataOptanteSimplesNacional: TDateTime read FDataOptanteSimplesNacional write FDataOptanteSimplesNacional;
+    property LogradouLocalPrestacaoServico: TnfseLogradouroLocalPrestacaoServico read FLogradouroLocalPrestacaoServico write FLogradouroLocalPrestacaoServico;
     property IncentivadorCultural: TnfseSimNao read FIncentivadorCultural write FIncentivadorCultural;
     property Producao: TnfseSimNao read FProducao write FProducao;
     property Status: TnfseStatusRps read FStatus write FStatus;
@@ -669,6 +771,9 @@ type
     property PrestadorServico: TDadosPrestador read FPrestadorServico write FPrestadorServico;
     property OrgaoGerador: TIdentificacaoOrgaoGerador read FOrgaoGerador write FOrgaoGerador;
     property ValoresNfse: TValoresNfse read FValoresNfse write FValoresNfse;
+    // propriedades para provedor EGoverneISS
+    property Autenticador: String read FAutenticador write FAutenticador;
+    property Link: String read FLink write FLink;
     // RPS e NFSe
     property signature: Tsignature read Fsignature write Fsignature;
 
@@ -686,14 +791,19 @@ type
     property EmpreitadaGlobal: TnfseTEmpreitadaGlobal read FEmpreitadaGlobal write FEmpreitadaGlobal;
     property ModeloNFSe: String read FModeloNFSe write FModeloNFSe;
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
+    property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
 
-    //propriedade para provedor Governa
+    // propriedade para provedor Governa
     property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
 
     property email: TemailCollection read Femail write Setemail;
 
     property TipoTributacaoRPS: TnfseTTributacaoRPS read FTipoTributacaoRPS write FTipoTributacaoRPS;
+    // Provedor SP
+    property Assinatura: String read FAssinatura write FAssinatura;
+    property RegRec: TnfseRegRec read FRegRec write FRegRec; //Governa
+    property FrmRec: TnfseFrmRec read FFrmRec write FFrmRec; //Governa
   end;
 
  TLoteRps = class(TPersistent)
@@ -912,7 +1022,10 @@ begin
  FEmpreitadaGlobal             := EgOutros;
  FModeloNFSe                   := '55';
  FCancelada                    := snNao;
+ FCanhoto                      := tcNenhum;
  FTransportadora               := TDadosTransportadora.Create;
+
+ FLogradouroLocalPrestacaoServico := llpTomador;
 
  Femail                        := TemailCollection.Create(Self);
 end;
@@ -937,6 +1050,8 @@ begin
  Fsignature.Free;
  FNfseCancelamento.Free;
  Femail.Free;
+
+ FTransportadora.Free;
 
  inherited Destroy;
 end;

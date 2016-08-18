@@ -47,6 +47,413 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/08/2016
+[*] Melhoria para poder informar na serie quando é única em Fast Report e adição de campo
+    http://www.projetoacbr.com.br/forum/topic/31793-corre%C3%A7%C3%A3o-e-inclus%C3%A3o-de-campos-na-impress%C3%A3o-do-danfse/
+		por : Juliomar Marchetti
+		
+11/08/2016
+[*] Mais ajustes para o provedor SP.
+    por: Lutzem Massao Aihara e André Medeiros
+
+10/08/2016
+[*] Mais ajustes na geração do RPS para o provedor SP.
+    por: Rodrigo de Souza Moreira
+[*] Acrescentado a Leitura do XML de RPS para o provedor SP.
+    por: Rodrigo de Souza Moreira
+[*] Alterações diversas para o provedor SP.
+    por: Lutzem Massao Aihara
+[*] Acrescentado os campos que faltavam para completar a estrutura do RPS do provedor SP.
+    por: Italo Jurisato Junior
+
+09/08/2016
+[*] Acrescentado a geração da TAG MunicipioPrestacao.
+    por: Rodrigo de Souza Moreira
+
+07/08/2016
+[+] Incluido os métodos: AbrirSessao e FecharSessao, esses métodos são executados
+    automaticamente somente para o provedor EL.
+    por: Italo Jurisato Junior
+
+05/08/2016
+[*] Adição da informação do município de prestação de serviços
+		http://www.projetoacbr.com.br/forum/topic/31646-danfese-fortes-report/
+		por : Juliomar Marchetti
+		
+04/08/2016
+[*] Correções na leitura do XML da NFS-e - provedor Conam.
+    Por: Edson
+
+01/08/2016
+[*] Alteração na forma de tratar a resposta do EnvioSincrono.
+    Por: Italo Jurisato Junior
+[*] Correções para o provedor Publica (leitura da série da NFS-e).
+    Por: Michel Ouriques
+
+29/07/2016
+[*] Correções na geração do XML para o provedor Agili.
+    Por: BigWings
+[*] Quando se utiliza os métodos Gerar e EnviarSincrono a propriedade Protocolo
+    fica vazia, pois esta a principio é alimentada através do retorno do método
+    Envio.
+    Foi feita uma alteração para contornar o problema.
+    Por: Italo Jurisato Junior
+
+28/07/2016
+[*] Ajustes promovidos em vários fontes para o provedor Governa.
+    Por: Isledo
+
+25/07/2016
+[*] Ajustes promovidos em vários fontes para o provedor NFSeBrasil.
+    Por: Jéter Rabelo Ferreira
+
+20/07/2016
+[*] Alterado as condições para gerar ou não o grupo de identificação do Tomador
+    de Serviço: ABRASF Versão 1.
+    Por: Italo Jurisato Junior
+
+15/07/2016
+[*] Como o provedor Agili não utiliza o MimeType text/xml e nem application/soap+xml,
+    se fez necessário no arquivo INI deixar o campo VersaoSoap em branco.
+    Na Unit ACBrNFSeWebServices é verificado o valor de VersaoSoap, caso seja vazio
+    o MimeType será application/xml
+    Por: BigWings
+
+14/07/2016
+[+] Incluido o provedor Agili.
+    Por: BigWings / Italo Jurisato Junior
+
+13/07/2016
+[*] Alteração na procedure DefinirSignatureNode, visando atender os provedores
+    cujo o nome da Tag (grupo) principal é diferente do padrão.
+    Por: Italo Jurisato Junior
+
+12/07/2016
+[*] Acrescentado novas Naturezas de Operação, usadas pelo provedor Publica.
+    Por Vanderson
+[*] Alteração para o provedor Tinus, não estava sendo informado o nome correto
+    da TAG para realizar a assinatura do Lote.
+    Por: Italo Jurisato Junior
+
+08/07/2016
+[*] Alterações visando o provedor Governa.
+    Por: Felippi
+
+06/07/2016
+[*] Alterações visando o envio em Lote de RPS para o provedor Conam.
+    Por: André Medeiros
+
+05/07/2016
+-- ACBrNFSeNotasFiscais / pnfsLerListaNFSe / pnfsNFSeW_ABRASFv1 / pnfsNFSeG --
+[*] Alterações visando acrescentar o prefixo RPS no ID do RPS e Lote no ID do Lote
+    para o provedor Salvador
+[*] Remoção de código desnecessário.
+    Por: Italo Jurisato Junior
+
+30/06/2016
+-- ACBrNFSe / ACBrNFSeWebServices --
+[*] Alterado a montagem do nome da NFS-e, acrescentando a função para remover a 
+    formatação do CNPJ do emitente.
+    Por: Italo Jurisato Junior
+
+29/06/2016
+-- ACBrNFSeWebServices --
+[*] Alterado a montagem do nome da NFS-e, acrescentando a série.
+    Isso foi feito para compatibilizar com a rotina de envio de e-mail.
+    Por: Italo Jurisato Junior
+
+27/06/2016
+-- ACBrNFSeWebServices --
+[*] Acrescentado verificação se as configurações: Configuracoes.Geral.Emitente.CNPJ,
+    Configuracoes.Geral.Emitente.InscMun e Configuracoes.Geral.Emitente.RazSocial
+    foram setadas.
+    Por: Italo Jurisato Junior
+
+24/06/2016
+-- ACBrNFSeNotasFiscais --
+[*] Possível Correção de assinatura do provedor "pro4R" em OpenSSL (por: DSA)
+
+23/06/2016
+[-] Prevensão de memory leaks
+		http://www.projetoacbr.com.br/forum/topic/30838-corre%C3%A7%C3%A3o-limpeza-de-mem%C3%B3ria/
+		Por : Juliomar Marchetti
+		
+20/06/2016
+[*] Correções visando a geração do XML bem como a sua leitura - provedor Conam.
+    Por: André Medeiros.
+
+17/06/2016
+[+] Implementação do provedor Giga para as cidades: Canelinha/SC e Fraiburgo/SC.
+    Por: Michel Ouriques.
+
+16/06/2016
+[*] Aplicado melhorias no retorno do método Gerar para o provedor EGoverneISS.
+    Incluido as propriedades: Autenticador e Link, juntamente com a propriedade
+    Numero que já existe, temos o retorno do envio da nota para Web Services do
+    provedor. 
+    por: Italo Jurisato Junior
+
+14/06/2016
+[*] Apliquei melhorias como retorno de função e nome de arquivo
+		http://www.projetoacbr.com.br/forum/topic/30607-nfse-result-loadfromstring/
+		(Juliomar Marchetti)
+
+13/06/2016
+[*] Correção na definição das TAG Inicial e Final para a montagem do XML de 
+    cancelamento para o provedor SpeedGov.
+    por : Nilson Sérgio
+
+10/06/2016
+[*] Alterações para atender o provedor ABase.
+    por : Alexandre Werner
+
+08/06/2016
+[*] Alterações visando gerar o XML corretamente para o provedor EGoverneISS.
+    por : Italo Jurisato Junior
+
+07/06/2016
+-- ACBrNFesConfiguracoes / ACBrNFSeWebServices --
+[*] Para atender alguns provedores cujo NameSpace e SoapAction são diferentes 
+    para cada cidade e para cada ambiente foi criado a variável %Nome_URL_HP%.
+    As units acimas foram alteradas visando detectar essa variável no arquivo
+    INI e fazer o devido tratamento.
+    por : Italo Jurisato Junior
+
+01/06/2016
+[*] Inclusão do provedor VersaTecnologia.
+    por : acgubamg
+
+31/05/2016
+[*] Modificação visando gerar e validar o XML para o provedor Infisc em ambas versões.
+    por : Guilherme Lanius
+
+23/05/2016
+[*] Modificação proposta para deixar desabilitado os TfrxDBDataset igualmente é feito na NF-e
+		http://www.projetoacbr.com.br/forum/topic/30136-sugest%C3%A3o-de-modifica%C3%A7%C3%A3o-acbrnfsedanfsefr/
+		por : Juliomar Marchetti
+		
+16/05/2016
+[*] Alterações visando simplificar o código e corrigir um erro no envio de
+    lote, provedor Betha.
+    por: Italo Jurisato Junior
+
+13/05/2016
+[*] Alterações visando realizar a assinatura do RPS no lugar correto.
+    Método Gerar do provedor Publica.
+    por: Augusto Fontana
+
+12/05/2016
+[*] Alterações visando atender os provedores da versão 2.00 da ABRASF e o 
+    provedor EGoverneISS.
+    por: Italo Jurisato Junior
+
+05/05/2016
+[*] Alterações visando as novas opções de configuração contidas nos arquivos INI
+    do provedores para definir se a mensagem de cabeçalho e de dados serão
+    convertidas para string ou não em cada tipo de serviço.
+    por: Tailan / Italo Jurisato Junior
+[+] Implementação do Provedor ABase - Cidade: Santo Angelo/RS.
+    por: Alexandre Werner / Italo Jurisato Junior
+
+03/05/2016
+[*] Removido os valores ve201 e ve202 e os provedores que utilizavam essas
+    versões (Tecnos e Pronimv2) passam a usar o valor ve200.
+    Uma vez que são pequenas variações no layout que não justifica criar 
+    versões para as variações.
+    por: Italo Jurisato Junior
+
+28/04/2016
+[*] Alterações para atender o provedor Betha - Cancelamento.
+    por: Luiz / Italo Jurisato Junior
+
+27/04/2016
+[*] Alterações para atender o provedor Publica.
+    por: vand3rson
+[*] Para o provedor IssCuritiba não deve ser executado a função RetirarPrefixo,
+    pois altera o nome de uma tag.
+    por: Rubens / Italo Jurisato Junior
+
+25/04/2016
+-- ACBrNFSeNotasFiscais --
+[*] Ao ler o XML da NFS-e não estava considerando o grupo NfseCancelamento.
+    por: Elisângela Borato / Italo Jurisato Junior
+-- ACBrNFSeWebServices --
+[*] Ao extrair o retono é checado se o valor da propriedade RetirarAcentos é True,
+    se sim os acentos são removidos do XML retornado do web service.
+    por: Italo Jurisato Junior
+-- ACBrNFSeWebServices / pnfsNFSeG --
+[*] Alteração visando o envio da solicitação de Consulta NFSe ao provedor Tecnos.
+    por: Italo Jurisato Junior
+
+20/04/2016
+-- pnfsNFSeR --
+[*] Alteração visando a leitura correta da lista de itens de serviços do 
+    provedor SimplISS
+    por: Elisângela Borato / Italo Jurisato Junior
+
+13/04/2016
+[+] Implemento o provedor Pronim versao 2
+    por: Italo Jurisato Junior
+
+12/02/2016
+-- ACBrNFesConfiguracoes --
+[*] Removida a propriedde "UseSSL"
+[*] Removida a propriedde "UseCertificado"
+[+] Adicionada a propriedade "UseCertificateHTTP", que usará a mesma chave
+    existente do arquivo .INI [Geral] 'UseCertificado'
+    (por: DSA)
+
+08/04/2016
+--ACBrNFSeDANFSeFR
+[*] Aumento do tamanho do campo descrição para 2000
+		http://www.projetoacbr.com.br/forum/topic/29277-erro-tamanho-da-discrimina%C3%A7%C3%A3o-fast-report/
+		por: Juliomar Marchetti
+
+05/04/2016
+-- ACBrNFSeWebServices --
+[*] Alterado a forma de compor a lista de RPS assinados para a montagem do lote.
+[+] Incluido as chamadas de Consulta para o EnvioSincrono.
+    por: Italo Jurisato Junior
+
+24/03/2016
+[*] Diversas correções e Implentações para o provedor Conam.
+    por: André Medeiros
+-- pnfsNFSeW_Infisc --
+[*] Alteração visando atender o provedor Infisc
+    por: BluData
+-- ACBrNFSeWebServices / pnfsConversao --
+[*] Alteração visando atender o provedor Tinus
+    por: Davij Almeida / Italo Jurisato Junior
+
+23/03/2016
+-- ACBrNFSeConfiguracoes --
+[*] Alteração visando atender o provedor Infisc versão 1.1
+    por: Italo Jurisato Junior
+-- pnfsNFSe / pnfsNFSeG / pnfsNFSeW_CONAM --
+[*] Correção para o provedor Conam.
+    por: André Medeiros
+
+21/03/2016
+-- ACBrNFSeWebServices --
+[*] Correção para o provedor Infisc.
+    por: Italo Jurisato Junior
+		
+18/03/2016
+-- ACBrNFSeWebServices / pnfsLerListaNFSe --
+[*] Correção para o provedor Coplan.
+    por: Paulo Henrique
+		
+16/03/2016
+ACBrNFSeDANFSeFR
+[*] Correção para sair o nome da prefeitura mesmo não tendo o logo
+		http://www.projetoacbr.com.br/forum/topic/28700-danfese-n%C3%A3o-sai-nome-da-prefeitura/
+		por : Juliomar Marchetti
+		
+15/03/2016
+[*] Diversas alterações visando o provedor Infisc.
+    por: Otimizy
+
+12/03/2016
+[*] Modificado para deixar alguns botões fora do preview em fast report
+		por: Juliomar Marchetti
+
+10/03/2016
+-- ACBrNFSeNotasFiscais --
+[*] Corrigido bug introduzido em 08/03, no método "LoadFromFile"
+
+10/03/2016   
+-- ACBrNFSeWebServices --
+[*] Ajustes no tratamento do Retorno o provedor DBSeller retorna no formato String
+    e não no formato XML.
+    Por: Italo Jurisato Junior
+
+08/03/2016   
+-- ACBrNFSe --
+[*] Ajustes para compilação em 64 bits
+    Por: DSA / Italo Jurisato Junior
+
+-- ACBrNFSeWebServices --
+[*] Ajustes para novo tratamento de "RetornoWS" sem tratamento de conversão
+    Por: DSA / Italo Jurisato Junior
+
+-- ACBrNFSeNotasFiscais --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos
+[*] Método "LoadFromFile" modificado para usar "ParseText", para decodificar
+    caracteres "HTML Entity" no XML
+    Por: DSA / Italo Jurisato Junior
+
+08/03/2016
+-- ACBrDANFeRLRetrao
+[*] Ajuste para sair o canhoto somente na primeira folha
+		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
+		por: Juliomar Marchetti
+		
+08/03/2016
+[*] modificação para usar o lfm no lazarus e evitar problemas com o delphi da danfse em fortes
+		por: Juliomar Marchetti
+
+07/03/2016
+[*] Incluido uma propriedade interna chamada UseCertificado, em todos os arquivos
+    INI dos provedores foi incluido um campo com o mesmo nome cujo valo pode ser
+    0 =  Não Usa Certificado ou 1 = Usa Certificado.
+    Por: Italo Jurisato Junior
+	
+-- pnfsConsSitLoteRpsResposta  --
+[*] No Provedor Thema alem de retornar a situação do lote retorna também uma
+    mensagem, isso estava fazendo com que o componente interpretasse como um
+    erro e abortava o processo. Se o código da mensagem for E92 não será tratado
+    com um erro.
+    Por: Italo Jurisato Junior
+
+-- ACBrNFSe --
+[*] Ajustes para compilação em 64 bits. Remoção de Hints e Warnings (por: DSA)
+
+-- ACBrNFSeNotasFiscais --
+[+] Adicionada suporte a Configuracoes.Geral.RetirarEspacos   (por: DSA)
+	
+03/03/2016
+-- ACBrNFSe / ACBrNFSeWebServices / pnfsNFSeG  --
+[*] Realizado uma alteração visando alterar o nome da TAG: recepcionarLoteRps para
+    recepcionarLoteRpsLimitado quando a quantidade de RPS for menor que 4.
+    Somente para o provedor Thema.
+    O método de envio alterado é Enviar.
+    Por: Italo Jurisato Junior
+
+02/03/2016
+[*] incluido a função StrToInt64Def para converter o numero do RPS de string para
+    Int64, pois pode ocorrer diferenças entre o RPS e a NFS-e.
+    Por exemplo:  000123 (RPS) e 123 (NFS-e).
+    Por: Italo Jurisato Junior
+
+01/03/2016
+[+] Incluido a propriedade Imprimir nos métodos Gerar e EnviarSincrono ao moldes
+    do Enviar.
+    Por padrão essa propriedade tem o valor True, isso faz com que as notas
+    confirmadas o seu respectivo DANFSE seja impresso automaticamente.
+    Por: Italo Jurisato Junior
+
+26/02/2016
+[*] Alterado a forma de calcular o Hash, usando agora uma nova rotina escrita
+    por DSA.
+    Por: Italo Jurisato Junior
+
+24/02/2016
+-- ACBrNFSe / ACBrNFSeWebServices --
+[*] Incluido a propriedade AMotivoCancelamento no método SubstituirNFSe.
+    Por: Italo Jurisato Junior
+-- ACBrNFSeNotasFiscais / ACBrNFSeWebServices / pnfsNFSeW_EGoverneISS --
+[*] Alterações visando realizar a assinatura no RPS do provedor EGoverneISS.
+    Por: Italo Jurisato Junior
+
+22/02/2016
+-- pnfsNFSeW_SP / pnfsNFSeG --
+[*] Para o provedor SP ao gerar o XML será ativado a supressão de decimais.
+    Por: Italo Jurisato Junior
+
+19/02/2016
+[+] Inclusão das leituras dos retornos do Web Services do provedor SP.
+    Por: Italo Jurisato Junior
+
 17/02/2016
 -- ACBrNFSeNotasFiscais --
 [*] Refactoring para usar a nova rotina de validação de CNPJ, do DFeSSL (por: DSA)

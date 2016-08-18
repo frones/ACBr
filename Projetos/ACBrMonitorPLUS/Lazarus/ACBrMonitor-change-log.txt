@@ -43,6 +43,132 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/08/2016
+[*] Adição do método achar para ECF
+		por: Juliomar Marchetti
+		
+12/08/2016
+[*] Ajustada versão do projeto para 0.3.08.1
+	Ajuste em chamadas a métodos do ACBrSocket, verifica se componente foi atribuido.
+	por: Celso Marigo Junior
+
+09/08/2016
+[+] adicionado os comandos para ECF.ValidarBlocoX(Arquivo), ECF.EnviarBlocoX(Arquivo), ECF.ConsultarBlocoX(recibo)
+		http://www.projetoacbr.com.br/forum/topic/31728-blocox-acbrmonitorplus/
+		por: Juliomar Marchetti
+		
+08/08/2016
+[-] Correção do nome do campo de RNRTC para RNTRC
+                http://www.projetoacbr.com.br/forum/topic/31347-mdfe-informações-não-estão-indo-para-o-xml/
+		por: Italo Jurisato Junior
+		
+03/08/2016
+[+] Adição do suporte ao componente ACBrGNRE junto ao monitor
+		http://www.projetoacbr.com.br/forum/topic/31424-modulo-gnre-para-o-monitor-plus/
+		por: Juliomar Marchetti
+		
+19/07/2016
+[+] Habilitados campos: vFCPUFDest, vICMSUFDest, vICMSUFRemet na geração declaração
+	de NFe usando o INI no formato da SEFAZ
+	por: Celso Marigo Junior
+
+12/07/2016
+[*]	Ajustados os campos de RegTrib e demais que usavam combos para configuração dos
+	valores para utilizar o índice, facilitando a conversão.
+	por: Celso Marigo Junior/ DSA
+
+12/07/2016
+[+] Opção para o usuário selecionar se deseja alterar XML cancelado
+	por: Celso Marigo Junior
+
+08/07/2016
+[+] Adição da modalidade rodoviário completo do MDF-e
+		http://www.projetoacbr.com.br/forum/topic/31007-campos-para-mdfe-no-plus/?do=findComment&comment=205823
+		por : Juliomar Marchetti
+		
+05/07/2016
+[+] Opção para mostrar botão do ACBrMonitorPLUS na barra de tarefas,
+	isso deve resolver o problema do ACBrMonitorPLUS sumir no Ubuntu
+	por: Celso Marigo Junior
+
+01/07/2016
+[*] Adicionados campos faltando no grupo importação na geração do ini da NFe.
+	por: Celso Marigo Junior
+
+01/07/2016
+[*] Correção para parâmetro de impressão de desconto no item da NFCe.
+	por: Celso Marigo Junior
+
+29/06/2016
+[+] Implementada leitura do grupo de EXPORTA da nota.
+	por: Celso Marigo Junior
+
+29/06/2016
+[+] Implementada leitura do grupo de exportação do item.
+	por: Celso Marigo Junior
+
+24/06/2016
+[*] Objeto EMAIL, comandos TextoMensagem e Texto alternativo,
+    modificados para adicionar texto à mensagem ao invés de setar.
+    por: Celso Marigo Junior
+
+18/04/2016
+[+] Implementando opção para configuração de envio de email em Segundo Plano
+    (por: DSA)
+
+11/04/2016
+[+] Adição parametro para geração do PDF ao final CRIARENVIARNFE e EnviarLote!
+		http://www.projetoacbr.com.br/forum/topic/28860-sugest%C3%A3o-acbrplus-no-comando-criarenviarnfe/
+		por : Juliomar Marchetti
+		
+02/04/2016
+[-] Acerto na leitura das tags:
+    Emit.cRegTrib, Emit.cRegTribISSQN, Emit.indRatISSQN
+    Quando não eram informadas não era lido corretamente das configurações
+    por: regys.silveira
+
+01/04/2016
+[-] Acerto na leitura dos dados de partilha, não estava informando porque procurava
+    a tag CST que não existe para partilha, troquei para o percentual de partilha
+    que é a mesma tag usada pelo gerador de XML para verificar se gera ou não.
+    por: regys.silveira
+
+11/03/2016
+[-] Correção para a posição do canhoto nos danfe pois não assumia o valor passado
+    por Juliomar Marchetti
+		
+08/03/2016
+[*] Modificação da tela principal, criado novo menu, buscando melhor visual
+    e melhor navegação nas páginas.
+[+] Adicionado novo parametro para definição se as abas dos pagecontrol deve
+    ser mostradas ou ocultas, pois no novo menu tem todas as opções para chegar
+    nas páginas.
+    por (Isaque Pinheiro)
+
+04/03/2016
+[+] MAIL: Adicionada configuração para Confirmação de leitura de Email
+
+29/02/2016
+[-] Acerto para substituir as variáveis do email também no botão de teste de envio de NFe.
+
+25/02/2016
+[+] Criado uma nova aba em DFe->Impressão de nome NFe, nela irá ter somente
+    configurações de NFe.
+[*] Removido várias opções de configurações da aba DFe-Impressao->Geral e 
+    realocada na nova aba DFe->Impressao->NFe.
+[+] Adicionado componente para definir a quantidade de itens por páginas 
+    coforme relato de erro no link :
+    http://www.projetoacbr.com.br/forum/topic/28308-propriedade-produtosporpagina-no-monitorplus/?do=findComment&comment=186590
+    (Isaque Pinheiro)   
+
+24/02/2016
+[+] NFe.LerNFe não contemplava ler o CEST do xml
+    por: Juliomar Marchetti
+		
+21/02/2016
+[+] Adicionado a opção para assinar os arquivos do Bloco X do Paf-ECF!
+		por: Juliomar Marchetti
+		
 18/02/2016
 [+] Adicionada configuração para permitir configurar o TimeZone, para geração
     dos XMLs: tzSistema (default), tzPCN, tzManual  (por: DSA)

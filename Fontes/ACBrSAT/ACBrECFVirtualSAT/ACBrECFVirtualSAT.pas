@@ -338,7 +338,6 @@ procedure TACBrECFVirtualSATClass.VendeItemVirtual(
   ItemCupom: TACBrECFVirtualClassItemCupom);
 var
   Det: TDetCollectionItem;
-  Acres: Double;
   AliqECF: TACBrECFAliquota;
 begin
 

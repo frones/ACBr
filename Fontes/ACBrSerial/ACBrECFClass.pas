@@ -30,26 +30,15 @@
 {              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
-{******************************************************************************
-|* Historico
-|*
-|* 21/08/2015: Macgayver Armini
-|*  - Adicionado canvas com suporte idêntico ao da VCL para o Firemonkey;
-|*  - Correção das teclas de interceptação para o Firemonkey;
-|*  - Adição de suporte a formulário de mensagem personalizado para o FireMonkey;
-|*  - Correção da chamada Application.MainForm do firemonkey;
-******************************************************************************}
+
 {$I ACBr.inc}
 
 Unit ACBrECFClass ;
 
 interface
-uses ACBrDevice,
-     SysUtils ,
-     Classes,
-     ACBrConsts,
-     ACBrBase,
-     Contnrs
+uses
+     SysUtils, Classes, Contnrs,
+     ACBrDevice, ACBrConsts, ACBrBase
      {$IFNDEF NOGUI}
        {$IFDEF VisualCLX},
          {$IFDEF QT3CLX} QtLibrary, QtSignalHooks {$ELSE} Qt {$ENDIF},
@@ -60,6 +49,9 @@ uses ACBrDevice,
           , System.UITypes, System.Character, System.Types, FMX.Types, FMX.TextLayout, FMX.Objects, System.UIConsts
        {$ELSEIF DEFINED(VCL)}
           , Controls, Forms, Graphics, Dialogs, ExtCtrls
+          {$IFDEF DELPHIXE2_UP}
+           , System.UITypes
+          {$ENDIF}
        {$IFEND}
        {$IFDEF MSWINDOWS}
          , Windows, messages
@@ -83,37 +75,34 @@ type
   { TACBRAbastecimento }
 
   TACBRRodapeAbastecimento = class( TPersistent )
-       private
-            FEI: Double;
-            FBico: Integer;
-            FVolume: Double;
-            FEF: Double;
+  private
+    FEI: Double;
+    FBico: Integer;
+    FVolume: Double;
+    FEF: Double;
     FAutomatico: Boolean;
-            procedure SetBico(const Value: Integer);
-            procedure SetEF(const Value: Double);
-            procedure SetEI(const Value: Double);
-            procedure SetVolume(const Value: Double);
-    procedure SetAutomatico(const Value: Boolean);
-       public
-           property Bico: Integer read FBico write SetBico;
-           property EI: Double read FEI write SetEI;
-           property EF: Double read FEF write SetEF;
-           property Volume: Double read FVolume write SetVolume;
-           property Automatico: Boolean read FAutomatico write SetAutomatico;
+    FManual: Boolean;
+  public
+    property Bico: Integer read FBico write FBico;
+    property EI: Double read FEI write FEI;
+    property EF: Double read FEF write FEF;
+    property Volume: Double read FVolume write FVolume;
+    property Automatico: Boolean read FAutomatico write FAutomatico;
+    property Manual: Boolean read FManual write FManual;
   end;
 
-   { TACBRAbastecimentos }
+  { TACBRAbastecimentos }
 
   TACBRRodapeAbastecimentos = class(TObjectList)
   private
     fsImprimir: Boolean;
     procedure SetObject(Index: Integer; Item: TACBRRodapeAbastecimento);
     function GetObject(Index: Integer): TACBRRodapeAbastecimento;
-    procedure Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
   public
      property Imprimir: Boolean read fsImprimir write fsImprimir;
     function New: TACBRRodapeAbastecimento;
     function Add(Obj: TACBRRodapeAbastecimento): Integer;
+    procedure Insert(Index: Integer; Obj: TACBRRodapeAbastecimento);
     property Objects[Index: Integer]: TACBRRodapeAbastecimento read GetObject write SetObject; default;
   end;
 
@@ -182,7 +171,7 @@ TACBrECFRodape = class( TPersistent )
     fsNotaLegalDF: TACBrECFRodapeNotaLegalDF;
     fsParaibaLegal: Boolean;
     fsImposto: TACBrECFRodapeImposto;
-    fsPostoComustivel: TACBRRodapeAbastecimentos; 
+    fsPostoComustivel: TACBRRodapeAbastecimentos;
     procedure SetMD5(AValue : String) ;
   public
     constructor Create;
@@ -362,7 +351,7 @@ TACBrECFRelatorioGerencial = class
  public
     constructor create ;
     procedure Assign( ARelatorioGerencial : TACBrECFRelatorioGerencial ) ;
-    
+
     property Indice    : String read fsIndice    write fsIndice ;
     property Descricao : String read fsDescricao write fsDescricao ;
     property Contador : Integer read fsContador write fsContador;
@@ -399,7 +388,7 @@ TACBrECFComprovanteNaoFiscal = class
  public
     constructor create ;
     procedure Assign( AComprovanteNaoFiscal : TACBrECFComprovanteNaoFiscal ) ;
-    
+
     property Indice    : String read fsIndice    write fsIndice ;
     property Descricao : String read fsDescricao write fsDescricao ;
     property PermiteVinculado : Boolean read fsPermiteVinculado
@@ -507,7 +496,7 @@ TACBrECFDadosRZ = class
     procedure Clear;
     Procedure CalculaValoresVirtuais;
 
-    Function MontaDadosReducaoZ : AnsiString;
+    Function MontaDadosReducaoZ : String;
     procedure AdicionaAliquota( AliqZ: TACBrECFAliquota );
 
     property DataDaImpressora: TDateTime read fsDataDaImpressora write fsDataDaImpressora;
@@ -662,6 +651,7 @@ TACBrECFClass = class
 
     procedure AtivarPorta;
     procedure DesativarPorta;
+    function GetNumMaxLinhasRodape: Integer;
     function GetPathDLL : string ;
     function GetTotalizadoresNaoTributados: TACBrECFTotalizadoresNaoTributados;
     procedure SetAtivo(const Value: Boolean);
@@ -711,6 +701,7 @@ TACBrECFClass = class
     fpOwner  : TComponent ;   { Componente ACBrECF }
     fpAtivo  : Boolean ;
     fpColunas: Integer;
+    fpNumMaxLinhasRodape: Integer;
     fpPaginaDeCodigo : Word ;
     fpRFDID  : String;
     fpModeloStr: String;
@@ -813,8 +804,8 @@ TACBrECFClass = class
     function GetNumCOOInicial: String; virtual ;
     function GetNumUltimoItem: Integer; virtual ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; Virtual ;
-    function GetDadosReducaoZ: AnsiString; Virtual ;
+    function GetDadosUltimaReducaoZ: String; Virtual ;
+    function GetDadosReducaoZ: String; Virtual ;
     Procedure InitDadosUltimaReducaoZ;
 
     function GetEstado: TACBrECFEstado; virtual ;
@@ -895,7 +886,7 @@ TACBrECFClass = class
           property OnDrawFormMsg: TACBrECFMsgAguarde read fsOnDrawFormMsg write fsOnDrawFormMsg;
         {$ENDIF}
     {$ENDIF}
-    
+
     { Proriedades de uso interno, configurando o funcionamento da classe,
       atribuidas pelo Objeto TACBrECF dono dessa classe }
 //    property OnMsgErro : TACBrECFExibeErroEvent read  fpOnMsgErro
@@ -971,6 +962,8 @@ TACBrECFClass = class
     Property NumSerieMFD  : String read GetNumSerieMFD  ;
     Property NumVersao : String    read GetNumVersao ;
     Property NumReducoesZRestantes: String read GetNumReducoesZRestantes ;
+    Property NumMaxLinhasRodape: Integer read GetNumMaxLinhasRodape;
+
 
     { Dados da Reducao Z - Registro 60M }
     Property DataMovimento      : TDateTime  read GetDataMovimento ;
@@ -1022,8 +1015,8 @@ TACBrECFClass = class
     Property NumUltItem         : Integer    read GetNumUltimoItem ;
     Property TotalNaoFiscal     : Double     read GetTotalNaoFiscal ;
 
-    Property DadosReducaoZ : AnsiString  read GetDadosReducaoZ ;
-    Property DadosUltimaReducaoZ : AnsiString read GetDadosUltimaReducaoZ ;
+    Property DadosReducaoZ : String  read GetDadosReducaoZ ;
+    Property DadosUltimaReducaoZ : String read GetDadosUltimaReducaoZ ;
     Property DadosReducaoZClass: TACBrECFDadosRZ read fpDadosReducaoZClass;
 
     { Aliquotas de ICMS }
@@ -1162,7 +1155,20 @@ TACBrECFClass = class
            AliquotaICMSST: Double = 0;            // ICMS ST:
            ValorICMSST: Double = 0;               // ICMS ST:
            ValorICMSDesonerado: Double = 0;
-           MotivoDesoneracaoICMS: Integer = 9);   // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           MotivoDesoneracaoICMS: Integer = 9;    // 3 – Uso na agropecuária; 9 – Outros; 12 – Órgão de fomento e desenvolvimento agropecuário
+           CST_PIS: String = '';
+           BaseCalculoPIS: Double = 0;
+           AliquotaPIS: Double = 0;
+           ValorPIS: Double = 0;
+           QuantidadeVendidaPIS: Double = 0;
+           ValorAliquotaPIS: Double = 0;
+           CST_COFINS: String = '';
+           BaseCalculoCOFINS: Double = 0;
+           AliquotaCOFINS: Double = 0;
+           ValorCOFINS: Double = 0;
+           QuantidadeVendidaCOFINS: Double = 0;
+           ValorAliquotaCOFINS: Double = 0;
+           CEST: String = '');   // Código do CEST para esse produto (7 dígitos)
            virtual;
 
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
@@ -1171,7 +1177,7 @@ TACBrECFClass = class
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString = '' ) ;  virtual ;
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char) ;
-       Virtual ;{ A -> Acrescimo D -> Desconto } 
+       Virtual ;{ A -> Acrescimo D -> Desconto }
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
        Observacao : AnsiString = ''; ImprimeVinculado : Boolean = false;
        CodMeioPagamento: Integer = 0) ; virtual ;
@@ -1185,8 +1191,8 @@ TACBrECFClass = class
     Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; virtual ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; virtual ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
-      Quantidade : Double) ; Virtual ; 
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; Virtual ; 
+      Quantidade : Double) ; Virtual ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; Virtual ;
     Property Subtotal  : Double read GetSubTotal ;
     Property TotalPago : Double read GetTotalPago ;
 
@@ -1228,7 +1234,7 @@ TACBrECFClass = class
        String; Valor : Double;  Relatorio : TStrings;
        Vias : Integer = 1) ;
     Procedure AbreCupomVinculado(COO, CodFormaPagto, CodComprovanteNaoFiscal :
-       String; Valor : Double) ; virtual ; 
+       String; Valor : Double) ; virtual ;
     Procedure LinhaCupomVinculado( Linha : AnsiString ) ; virtual ;
 
     Procedure SegundaViaVinculado; virtual;
@@ -1362,7 +1368,7 @@ end;
 
 procedure TACBrECFTotalizadorNaoTributado.SetTipo(const AValue: Char);
 begin
-  if not (AValue in ['T','S']) then
+  if not CharInSet(AValue , ['T','S']) then
     raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
 
   fsTipo := AValue;
@@ -1437,7 +1443,7 @@ begin
   if NewVar = ' ' then
      NewVar := 'T' ;
 
-  if not (NewVar in ['T','S']) then
+  if not CharInSet(NewVar , ['T','S']) then
      raise EACBrECFErro.create( ACBrStr(cACBrECFAliquotaSetTipoException));
 
   fsTipo := NewVar;
@@ -1708,7 +1714,7 @@ procedure TACBrECFRelatoriosGerenciais.SetObject(Index: Integer;
 begin
   inherited SetItem (Index, Item) ;
 end;
-               
+
 
 { ---------------------- TACBrECFComprovantesNaoFiscais --------------------- }
 
@@ -1870,12 +1876,13 @@ begin
   {$IFNDEF NOGUI}
    fsUsandoBlockInput          := False ;
   {$ENDIF}
-  
+
   { Variaveis Protected fp___ acessiveis pelas Classes filhas }
   fpAtivo                 := false ;
   fpEstado                := estNaoInicializada ;
   fpPaginaDeCodigo        := 0 ;
   fpColunas               := 48 ;
+  fpNumMaxLinhasRodape    := 8 ;
   fpRFDID                 := '' ;
   fpModeloStr             := 'Não Definido' ;
   fpComandoEnviado        := '' ;
@@ -1990,6 +1997,11 @@ begin
 
   GravaLog('-- Desativando a porta: ' + fpDevice.Porta);
   fpDevice.Desativar;
+end;
+
+function TACBrECFClass.GetNumMaxLinhasRodape: Integer;
+begin
+  Result := fpNumMaxLinhasRodape;
 end;
 
 function TACBrECFClass.GetDataHoraUltimaReducaoZ : TDateTime ;
@@ -2153,7 +2165,7 @@ begin
         else
        {$ENDIF}
           FormMsgDoProcedure( DoLeResposta, 0 ) ;
-     end 
+     end
     else
   {$ENDIF}
      DoLeResposta ;
@@ -2180,12 +2192,11 @@ begin
      {$IFNDEF NOGUI}
        ProcessaFormMsg := (Assigned( fsFormMsg ) and fsFormMsgControla) ;
      {$ENDIF}
-     
+
      { Calcula Tempo Limite. Espera resposta até Tempo Limite. Se a resposta
        for Lida antes, já encerra. Se nao chegar até TempoLimite, gera erro.}
      TempoLimite := IncSecond( now, TimeOut) ;
      TempoInicio := IncSecond( now, TempoInicioMsg) ;
-     Fim := True ;
      FimLeitura := False ;
 
      { - Le até atingir a condiçao descrita na funçao VerificaFimLeitura que
@@ -2298,7 +2309,7 @@ begin
   except
      if not DoOnMsgRetentar(Format(cACBrECFCmdSemRespostaException, [ ModeloStr ]),
        'TransmitirComando') then
-       raise EACBrECFSemResposta.create(Format(ACBrStr(cACBrECFEnviaCmdSemRespostaException), [ ModeloStr ])) 
+       raise EACBrECFSemResposta.create(Format(ACBrStr(cACBrECFEnviaCmdSemRespostaException), [ ModeloStr ]))
      else
         Result := False ;
   end ;
@@ -2309,7 +2320,9 @@ end;
 function TACBrECFClass.VerificaFimLeitura(var Retorno: AnsiString;
    var TempoLimite: TDateTime) : Boolean ;
 begin
+{$IFDEF FPC}
   Result := False;
+{$ENDIF}
   raise EACBrECFErro.Create( ACBrStr(Format(cACBrECFVerificaFimLeituraException, [ ModeloStr ]))) ;
 end;
 
@@ -2683,7 +2696,7 @@ begin
      try
         CancelaNaoFiscal ;
      except
-     end 
+     end
   else
      exit ;
 
@@ -3126,13 +3139,13 @@ begin
   Result := ''
 end;
 
-function TACBrECFClass.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFClass.GetDadosUltimaReducaoZ: String;
 begin
   Result := '';
   ErroAbstract('DadosUltimaReducaoZ');
 end;
 
-function TACBrECFClass.GetDadosReducaoZ: AnsiString;
+function TACBrECFClass.GetDadosReducaoZ: String;
 Var
   I     : Integer ;
   AliqZ : TACBrECFAliquota ;
@@ -3386,7 +3399,11 @@ procedure TACBrECFClass.VendeItemEx(Codigo, Descricao: String;
   CodigoIBGE: String; ModalidadeBCICMSST: Integer;
   PercentualMargemICMSST: Double; PercentualReducaoBCICMSST: Double;
   ValorReducaoBCICMSST: Double; AliquotaICMSST: Double; ValorICMSST: Double;
-  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer);
+  ValorICMSDesonerado: Double; MotivoDesoneracaoICMS: Integer; CST_PIS: String;
+  BaseCalculoPIS: Double; AliquotaPIS: Double; ValorPIS: Double;
+  QuantidadeVendidaPIS: Double; ValorAliquotaPIS: Double; CST_COFINS: String;
+  BaseCalculoCOFINS: Double; AliquotaCOFINS: Double; ValorCOFINS: Double;
+  QuantidadeVendidaCOFINS: Double; ValorAliquotaCOFINS: Double; CEST: String);
 begin
   ErroAbstract('VendeItemEx');
 end;
@@ -3693,7 +3710,7 @@ var
 begin
   GetAliquotas;
 
-  if not (Tipo in ['S','T']) then
+  if not CharInSet(Tipo , ['S','T']) then
      Tipo := ' ' ;
 
   Aliquota := SimpleRoundTo(Aliquota,-2) ;
@@ -3705,7 +3722,7 @@ begin
      begin
         ftAliq := SimpleRoundTo(Objects[A].Aliquota,-2) ;
         cTipo  := Objects[A].Tipo ;
-        if ( ftAliq = Aliquota) and (Tipo in [' ',cTipo]) then
+        if ( ftAliq = Aliquota) and CharInSet(Tipo , [' ',cTipo]) then
         begin
            result := Objects[A] ;
            Break ;
@@ -4483,7 +4500,7 @@ end;
       LoadBlockInput;
       if not Assigned( xBlockInput ) then
          exit ;
-         
+
       if ClearTypeAhead then
       begin
         try
@@ -4598,7 +4615,7 @@ end;
         end ;
 
        if fsFormMsgException <> '' then
-          raise EACBrECFErro.Create( ACBrStr(fsFormMsgException) ) ;
+          raise EACBrECFErro.Create( fsFormMsgException ) ;
     finally
        {$IFDEF VisualCLX}
        Application.OnEvent := OldOnEvent;
@@ -4720,7 +4737,7 @@ end;
                              QEventType_MouseButtonDblClick,
                              QEventType_DragMove,
                              QEventType_Leave, QEventType_Enter] then
-            {$ENDIF}                 
+            {$ENDIF}
             begin
                Handled := true ;
                fsFormMsg.SetFocus ;
@@ -4950,7 +4967,7 @@ begin
    fsTodasAliquotas          := TACBrECFAliquotas.Create;
    fsICMS                    := TACBrECFAliquotas.Create(False);
    fsISSQN                   := TACBrECFAliquotas.Create(False);
-   
+
    Clear ;
 end;
 
@@ -5126,7 +5143,7 @@ begin
   end;
 end;
 
-function TACBrECFDadosRZ.MontaDadosReducaoZ: AnsiString;
+function TACBrECFDadosRZ.MontaDadosReducaoZ: String;
 Var
   I: Integer ;
   S: String;
@@ -5332,7 +5349,7 @@ begin
 
   fsImposto := TACBrECFRodapeImposto.Create;
 
-  fsPostoComustivel := TACBRRodapeAbastecimentos.Create; 
+  fsPostoComustivel := TACBRRodapeAbastecimentos.Create;
   fsPostoComustivel.Imprimir := False;
 
   Self.Clear;
@@ -5370,33 +5387,6 @@ begin
   fsImposto.Fonte := '';
   fsImposto.Chave := '';
   fsImposto.ModoCompacto := False;
-end;
-
-{ TACBRRodapeAbastecimento }
-
-procedure TACBRRodapeAbastecimento.SetAutomatico(const Value: Boolean);
-begin
-  FAutomatico := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetBico(const Value: Integer);
-begin
-  FBico := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetEF(const Value: Double);
-begin
-  FEF := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetEI(const Value: Double);
-begin
-  FEI := Value;
-end;
-
-procedure TACBRRodapeAbastecimento.SetVolume(const Value: Double);
-begin
-  FVolume := Value;
 end;
 
 { TACBRodapeRAbastecimentos }

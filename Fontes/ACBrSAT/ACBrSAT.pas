@@ -48,6 +48,8 @@ type
 
    TACBrSATEvento = procedure(var ARetorno: String) of object;
    TACBrSATEventoDados = procedure (ADados: String; var ARetorno: String) of object;
+   TACBrSATMensagem = procedure ( ACod: Integer; AMensagem: String) of object;
+   TACBrSATCalcPathEvent = procedure (var APath: String; ACNPJ: String; AData: TDateTime) of object;
 
    { TACBrSAT }
 
@@ -76,12 +78,15 @@ type
      fsConfigArquivos : TACBrSATConfigArquivos ;
      fsRede   : TRede ;
      fsStatus : TACBrSATStatus;
-     FOnEnviarDadosVenda: TACBrSATEventoDados;
-     FOnCancelarUltimaVenda: TACBrSATEventoDados;
-     FOnConsultaStatusOperacional: TACBrSATEvento;
-     FOnExtrairLogs: TACBrSATEvento;
-     FOnConsultarSAT: TACBrSATEvento;
-     FOnConsultarNumeroSessao: TACBrSATEventoDados;
+
+     fsOnEnviarDadosVenda: TACBrSATEventoDados;
+     fsOnCancelarUltimaVenda: TACBrSATEventoDados;
+     fsOnConsultaStatusOperacional: TACBrSATEvento;
+     fsOnExtrairLogs: TACBrSATEvento;
+     fsOnConsultarSAT: TACBrSATEvento;
+     fsOnConsultarNumeroSessao: TACBrSATEventoDados;
+     fsOnMensagemSEFAZ: TACBrSATMensagem;
+     fsOnCalcPath: TACBrSATCalcPathEvent;
 
      function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
@@ -206,16 +211,19 @@ type
      property OnGetNumeroSessao : TACBrSATGetNumeroSessao read fsOnGetNumeroSessao
         write fsOnGetNumeroSessao;
 
-     property OnEnviarDadosVenda: TACBrSATEventoDados read FOnEnviarDadosVenda
-        write FOnEnviarDadosVenda;
-     property OnCancelarUltimaVenda :TACBrSATEventoDados read FOnCancelarUltimaVenda
-        write FOnCancelarUltimaVenda;
+     property OnEnviarDadosVenda: TACBrSATEventoDados read fsOnEnviarDadosVenda
+        write fsOnEnviarDadosVenda;
+     property OnCancelarUltimaVenda :TACBrSATEventoDados read fsOnCancelarUltimaVenda
+        write fsOnCancelarUltimaVenda;
      property OnConsultaStatusOperacional: TACBrSATEvento
-        read FOnConsultaStatusOperacional write FOnConsultaStatusOperacional;
-     property OnExtrairLogs: TACBrSATEvento read FOnExtrairLogs write FonExtrairLogs;
-     property OnConsultarSAT: TACBrSATEvento read FOnConsultarSAT write FOnConsultarSAT;
-     property OnConsultarNumeroSessao:TACBrSATEventoDados read FOnConsultarNumeroSessao
-        write FOnConsultarNumeroSessao;
+        read fsOnConsultaStatusOperacional write fsOnConsultaStatusOperacional;
+     property OnExtrairLogs: TACBrSATEvento read fsOnExtrairLogs write fsOnExtrairLogs;
+     property OnConsultarSAT: TACBrSATEvento read fsOnConsultarSAT write fsOnConsultarSAT;
+     property OnConsultarNumeroSessao:TACBrSATEventoDados read fsOnConsultarNumeroSessao
+        write fsOnConsultarNumeroSessao;
+     property OnMensagemSEFAZ: TACBrSATMensagem read fsOnMensagemSEFAZ
+        write fsOnMensagemSEFAZ;
+     property OnCalcPath: TACBrSATCalcPathEvent read fsOnCalcPath write fsOnCalcPath;
 
    end;
 
@@ -703,10 +711,18 @@ begin
   fsComandoLog      := '';
   fsRespostaComando := '';
 
-  fsOnGetcodigoDeAtivacao := nil;
-  fsOnGetsignAC           := nil;
-  fsOnGravarLog           := nil;
-  fsOnGetNumeroSessao     := nil;
+  fsOnGetcodigoDeAtivacao := Nil;
+  fsOnGetsignAC           := Nil;
+  fsOnGravarLog           := Nil;
+  fsOnGetNumeroSessao     := Nil;
+
+  fsOnCancelarUltimaVenda       := Nil;
+  fsOnConsultarNumeroSessao     := Nil;
+  fsOnConsultarSAT              := Nil;
+  fsOnConsultaStatusOperacional := Nil;
+  fsOnEnviarDadosVenda          := Nil;
+  fsOnExtrairLogs               := Nil;
+  fsOnMensagemSEFAZ             := Nil;
 
   fsConfig := TACBrSATConfig.Create(Self);
   fsConfig.Name := 'ACBrSATConfig' ;
@@ -785,8 +801,7 @@ begin
   GerarnumeroSessao;
 
   fsRespostaComando := '';
-  AStr := '-- '+FormatDateTime('hh:nn:ss:zzz',now) +
-          ' - numeroSessao: '+IntToStr(numeroSessao) ;
+  AStr := 'NumeroSessao: '+IntToStr(numeroSessao) ;
   if fsComandoLog <> '' then
      AStr := AStr + ' - Comando: '+fsComandoLog;
 
@@ -806,6 +821,10 @@ begin
      AStr := AStr + ' - Resposta:'+fsRespostaComando;
 
   Resposta.RetornoStr := fsRespostaComando;
+
+  if Assigned(fsOnMensagemSEFAZ) then
+    if (Resposta.codigoSEFAZ > 0) or (Resposta.mensagemSEFAZ <> '') then
+      fsOnMensagemSEFAZ( Resposta.codigoSEFAZ, Resposta.mensagemSEFAZ );
 
   DoLog( AStr );
 end ;
@@ -844,7 +863,7 @@ begin
   if (ArqLOG = '') then
     exit;
 
-  WriteLog( ArqLOG, ' - '+FormatDateTime('hh:nn:ss:zzz',now) + ' - ' + AString );
+  WriteLog( ArqLOG, FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now) + ' - ' + AString );
 end ;
 
 function TACBrSAT.GerarnumeroSessao : Integer ;
@@ -951,13 +970,14 @@ begin
   begin
     NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaEnvio, '', '-env');
     WriteToTXT(NomeCFe, dadosCancelamento, False, False);
+    DoLog('  Gravando XML Cancelamento enviado: '+NomeCFe);
   end;
 
   IniciaComando;
 
   Retorno := '';
-  if Assigned(FOnCancelarUltimaVenda) then
-    FOnCancelarUltimaVenda(dadosCancelamento, Retorno);
+  if Assigned(fsOnCancelarUltimaVenda) then
+    fsOnCancelarUltimaVenda(dadosCancelamento, Retorno);
 
   if EstaVazio(Retorno) then
     Retorno := fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento);
@@ -994,8 +1014,8 @@ begin
   IniciaComando;
 
   Retorno := '';
-  if Assigned(FOnConsultarNumeroSessao) then
-    FOnConsultarNumeroSessao(IntToStr(cNumeroDeSessao), Retorno);
+  if Assigned(fsOnConsultarNumeroSessao) then
+    fsOnConsultarNumeroSessao(IntToStr(cNumeroDeSessao), Retorno);
 
   if EstaVazio(Retorno) then
     Retorno := fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao );
@@ -1014,8 +1034,8 @@ begin
   IniciaComando;
 
   Retorno := '';
-  if Assigned(FOnConsultarSAT) then
-    FOnConsultarSAT(Retorno);
+  if Assigned(fsOnConsultarSAT) then
+    fsOnConsultarSAT(Retorno);
 
   if EstaVazio(Retorno) then
     Retorno := fsSATClass.ConsultarSAT;
@@ -1033,8 +1053,8 @@ begin
   IniciaComando;
 
   Retorno := '';
-  if Assigned(FOnConsultaStatusOperacional) then
-    FOnConsultaStatusOperacional(Retorno);
+  if Assigned(fsOnConsultaStatusOperacional) then
+    fsOnConsultaStatusOperacional(Retorno);
 
   if EstaVazio(Retorno) then
     Retorno := fsSATClass.ConsultarStatusOperacional;
@@ -1130,11 +1150,12 @@ begin
                                IntToStrZero(numeroSessao, 6),
                                '-env');
     WriteToTXT(NomeCFe, dadosVenda, False, False);
+    DoLog('  Gravando XML Venda enviado: '+NomeCFe);
   end;
 
   Retorno := '';
-  if assigned(FOnEnviarDadosVenda) then
-    FOnEnviarDadosVenda(dadosVenda, Retorno);
+  if assigned(fsOnEnviarDadosVenda) then
+    fsOnEnviarDadosVenda(dadosVenda, Retorno);
 
   if EstaVazio(Retorno) then
     Retorno := fsSATClass.EnviarDadosVenda( dadosVenda );
@@ -1185,8 +1206,8 @@ begin
   IniciaComando;
 
   Retorno := '';
-  if Assigned(FOnExtrairLogs) then
-    FOnExtrairLogs(Retorno);
+  if Assigned(fsOnExtrairLogs) then
+    fsOnExtrairLogs(Retorno);
 
   if EstaVazio(Retorno) then
     Retorno := fsSATClass.ExtrairLogs;
@@ -1221,6 +1242,7 @@ begin
                                IntToStrZero(numeroSessao, 6),
                                '-teste-env');
     WriteToTXT(NomeCFe, dadosVenda, False, False);
+    DoLog('  Gravando XML TesteFimAFim enviado: '+NomeCFe);
   end;
 
   Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
@@ -1234,6 +1256,7 @@ begin
      begin
        NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda,'','-teste');
        CFe.SaveToFile(NomeCFe);
+       DoLog('  Gravando XML TesteFimAFim recebido: '+NomeCFe);
      end;
   end;
 end ;
@@ -1395,6 +1418,7 @@ begin
   begin
     NomeCFe := CalcCFeNomeArq(fsConfigArquivos.PastaCFeVenda);
     CFe.SaveToFile(NomeCFe);
+    DoLog('  Gravando XML Venda recebido: '+NomeCFe);
   end;
 end;
 
@@ -1412,6 +1436,7 @@ begin
   begin
     NomeCFe := CalcCFeCancNomeArq(fsConfigArquivos.PastaCFeCancelamento);
     CFeCanc.SaveToFile(NomeCFe);
+    DoLog('  Gravando XML Cancelamento recebido: '+NomeCFe);
   end;
 end;
 
@@ -1419,6 +1444,7 @@ end;
 procedure TACBrSAT.CFe2CFeCanc;
 begin
   CFeCanc.Clear;
+  CFeCanc.infCFe.versao   := CFe.infCFe.versao;
   CFeCanc.infCFe.chCanc   := fsPrefixoCFe + CFe.infCFe.ID;
   CFeCanc.infCFe.dEmi     := CFe.ide.dEmi;
   CFeCanc.infCFe.hEmi     := CFe.ide.hEmi;
@@ -1513,8 +1539,8 @@ begin
   Result := True;
 end;
 
-procedure TACBrSAT.EnviarEmail(sPara, sAssunto, NomeArq: String; sMensagem, sCC,
-  Anexos: TStrings; StreamCFe: TStream);
+procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String; NomeArq: String;
+  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings; StreamCFe: TStream);
 var
   i : Integer;
   EMails : TStringList;

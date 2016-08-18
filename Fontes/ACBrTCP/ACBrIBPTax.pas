@@ -134,6 +134,7 @@ type
     procedure ExportarXML(const AArquivo: String);
     procedure ExportarTXT(const AArquivo: String);
     function PopularItens: Integer;
+    function TraduzStrToAnsi(AValue : String) : string;
     procedure EventoErroImportacao(const Alinha, AErro: String);
   public
     destructor Destroy; override;
@@ -210,7 +211,7 @@ begin
   Result := TStringList.Create;
 
   Texto := AJSONString;
-  Texto := RemoveStrings(Texto, ['{', '}']);
+  Texto := String( RemoveStrings(AnsiString(Texto), ['{', '}']));
   Texto := StringReplace(Texto, ',"', sLineBreak + '"', [rfReplaceAll]);
   Texto := StringReplace(Texto, '"', '', [rfReplaceAll]);
   Texto := StringReplace(Texto, ':', '=', [rfReplaceAll]);
@@ -377,6 +378,11 @@ begin
 
 end;
 
+function TACBrIBPTax.TraduzStrToAnsi(AValue: String): string;
+begin
+ Result := string( ACBrStrToAnsi( AValue ) );
+end;
+
 function TACBrIBPTax.DownloadTabela: Boolean;
 begin
 
@@ -489,10 +495,10 @@ begin
     UrlConsulta := UrlConsulta + '&gtin=' + Self.AjustaParam(AGtin);
 
   // enviar consulta
-  Self.HTTPGet(ACBrStrToAnsi(UrlConsulta));
+  Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));
 
   // retorno em JSON
-  Result.JSON := ACBrStrToAnsi(Self.RespHTTP.Text);
+  Result.JSON := TraduzStrToAnsi(Self.RespHTTP.Text);
   json := SimpleJSONToList(Result.JSON);
   try
     Result.Codigo    := json.Values['Codigo'];
@@ -546,10 +552,10 @@ begin
     UrlConsulta := UrlConsulta + '&valor=' + Self.AjustaParam(FormatFloatBr(AValorUnitario));
 
   // enviar consulta
-  Self.HTTPGet(ACBrStrToAnsi(UrlConsulta));
+  Self.HTTPGet(TraduzStrToAnsi(UrlConsulta));
 
   // retorno em JSON
-  Result.JSON := ACBrStrToAnsi(Self.RespHTTP.Text);
+  Result.JSON := TraduzStrToAnsi(Self.RespHTTP.Text);
   json := SimpleJSONToList(Result.JSON);
   try
     Result.Codigo    := json.Values['Codigo'];
@@ -652,7 +658,7 @@ begin
   end;
 
   if Trim(Texto) <> '' then
-    WriteToTXT(AnsiString(AArquivo), AnsiString(Texto), False, False);
+    WriteToTXT(AArquivo, AnsiString(Texto), False, False);
 end;
 
 procedure TACBrIBPTax.ExportarTXT(const AArquivo: String);
@@ -679,7 +685,7 @@ begin
   end;
 
   if Trim(Texto) <> '' then
-    WriteToTXT(AnsiString(AArquivo), AnsiString(Texto), False, False);
+    WriteToTXT(AArquivo, AnsiString(Texto), False, False);
 end;
 
 procedure TACBrIBPTax.ExportarCSV(const AArquivo: String);
@@ -717,7 +723,7 @@ begin
   end;
 
   if Trim(Texto) <> '' then
-    WriteToTXT(AnsiString(AArquivo), AnsiString(Texto), False, False);
+    WriteToTXT(AArquivo, AnsiString(Texto), False, False);
 end;
 
 procedure TACBrIBPTax.ExportarXML(const AArquivo: String);
@@ -740,13 +746,13 @@ begin
         '<aliqFedImp>' + FloatToString(Itens[I].FederalImportado) + '</aliqFedImp>' +
         '<aliqEst>' + FloatToString(Itens[I].Estadual) + '</aliqEst>' +
         '<aliqMun>' + FloatToString(Itens[I].Municipal) + '</aliqMun>' +
-        '<descricao>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</descricao>' +
+        '<descricao>' + ACBrUtil.ParseText( AnsiString( Itens[I].Descricao ), False, False) + '</descricao>' +
       '</imposto>';
   end;
   Texto := Texto + '</IBPTax>';
 
   if Trim(Texto) <> '' then
-    WriteToTXT(AnsiString(AArquivo), AnsiString(Texto), False, True);
+    WriteToTXT(AArquivo, AnsiString(Texto), False, True);
 end;
 
 procedure TACBrIBPTax.ExportarHTML(const AArquivo: String);
@@ -792,7 +798,7 @@ begin
         '<td>' + FloatToStr(Itens[I].FederalImportado) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].Estadual) + '</td>' + slineBreak +
         '<td>' + FloatToStr(Itens[I].Municipal) + '</td>' + slineBreak +
-        '<td>' + ACBrUtil.ParseText(Itens[I].Descricao, False, False) + '</td>' + slineBreak +
+        '<td>' + ACBrUtil.ParseText( AnsiString( Itens[I].Descricao ), False, False) + '</td>' + slineBreak +
       '</tr>' + slineBreak;
   end;
 
@@ -802,7 +808,7 @@ begin
     '</html>' + slineBreak;
 
   if Trim(Texto) <> '' then
-    WriteToTXT(AnsiString(AArquivo), AnsiString(Texto), False, True);
+    WriteToTXT(AArquivo, AnsiString(Texto), False, True);
 end;
 
 end.

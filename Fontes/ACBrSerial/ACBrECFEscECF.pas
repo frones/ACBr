@@ -226,6 +226,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     function CriarECFClassPorMarca : TACBrECFClass;
     procedure DestruirECFClass( AECFClass: TACBrECFClass );
 
+    procedure AjustaComandosControleImpressao(var Linha: AnsiString);
+
  protected
     procedure AtivarDevice;
     Function TraduzErroMsg(EscECFResposta: TACBrECFEscECFResposta) : String;
@@ -289,7 +291,7 @@ TACBrECFEscECF = class( TACBrECFClass )
 
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     function GetEstado: TACBrECFEstado; override ;
     function GetGavetaAberta: Boolean; override ;
@@ -395,7 +397,7 @@ TACBrECFEscECF = class( TACBrECFClass )
        DescricaoCNF: String; DescricaoFPG: String; IndiceBMP: Integer ) ; override ;
 
     Function EstornaCCD( const Todos: Boolean = True) : Integer; overload; override;
-    Function EstornaCCD( NumCupomFiscal: Integer; ADiante: Boolean = True ) : Integer; overload;
+    Function EstornaCCD( NumCupomFiscal: Integer; ADiante: Boolean = True ) : Integer; reintroduce; overload;
 
     { Gaveta de dinheiro }
     Procedure AbreGaveta  ; override ;
@@ -478,6 +480,7 @@ TACBrECFEscECF = class( TACBrECFClass )
 implementation
 Uses SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+    synautil,
     ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrConsts, ACBrUtil,
   ACBrECFDaruma;
 
@@ -552,7 +555,7 @@ begin
       ACmd := ACmd + StringToBinaryString( AnsiString(EscECFComando.Params[I]) ) + '|';
 
     aLineOut[0] := #0; // Zera Buffer de Saida
-    ACmd := StringReplace(ACmd, NUL, '[NULL]', [rfReplaceAll]);
+    ACmd := ReplaceString(ACmd, NUL, '[NULL]');
 
     GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
     Resp := xEPSON_Send_From_FileEX( ACmd, aLineOut ) ;
@@ -859,7 +862,7 @@ var
 begin
   LenRet := Length( Retorno );
   Result := False;
-
+  Byte1  := #0;
   with fpECFEscECF do
   begin
     if LenRet > 0 then
@@ -1318,6 +1321,7 @@ begin
   fpMFD     := True ;
   fpTermica := True ;
   fpColunas := 48 ;
+  fpNumMaxLinhasRodape := 8;
 
   if fpDevice.IsDLLPort then
   begin
@@ -1329,13 +1333,14 @@ begin
   end
   else
   begin
-     if not (fsEscECFProtocolo is TACBrECFEscECFProtocolo) then
+     if (fsEscECFProtocolo is TACBrECFEscECFProtocoloEpsonDLL) then
      begin
        fsEscECFProtocolo.Free;
        fsEscECFProtocolo := TACBrECFEscECFProtocolo.Create(Self);
      end
   end;
 
+  fpAtivo := False;
   fsEscECFProtocolo.Ativar;
 
   try
@@ -1364,6 +1369,12 @@ begin
      begin
        fpPaginaDeCodigo := 850;
        fpColunas := 57;
+     end;
+
+     if IsBematech and (CompareVersions(fsNumVersao, '01.00.02') >= 0) then
+     begin
+       // http://partners.bematech.com.br/bemacast/paginas/post.aspx?title=edicao-241---o-ecf-bematech-mp-4200-th-fi-ii&id=6220
+       fpNumMaxLinhasRodape := 20;
      end;
 
      LeRespostasMemoria;
@@ -1670,11 +1681,7 @@ procedure TACBrECFEscECF.SalvaRespostasMemoria(AtualizaVB : Boolean) ;
 Var
   ValVB : Double;
 begin
-  try
-     ValVB := RespostasComando.FieldByName('VendaBruta').AsFloat;
-  except
-     AtualizaVB := True;
-  end ;
+  AtualizaVB := AtualizaVB or (not Assigned(RespostasComando.FindFieldByName('VendaBruta')));
 
   if AtualizaVB then
   begin
@@ -1683,7 +1690,6 @@ begin
       RespostasComando.AddField( 'VendaBruta', FloatToIntStr(ValVB) );
     except
     end;
-    RespostasComando.AddField( 'EmPagamento', ifthen( fsEmPagamento,'1','0') );
   end ;
 
   RespostasComando.SaveToFile( fsArqMemoria );
@@ -1702,8 +1708,6 @@ begin
      ValVB := RespostasComando.FieldByName('VendaBruta').AsFloat;
      if ValVB <> GetVendaBruta then
         RespostasComando.Clear;    // Arquivo invalido
-
-     fsEmPagamento := (RespostasComando.FieldByName( 'EmPagamento' ).AsInteger = 1);
   except
      RespostasComando.Clear;       // Arquivo invalido
   end;
@@ -1751,6 +1755,37 @@ begin
   end;
 
   Self.Ativar;
+end;
+
+procedure TACBrECFEscECF.AjustaComandosControleImpressao(var Linha: AnsiString);
+var
+  P: Integer;
+  EhControle: Boolean;
+begin
+  if (IsEpson and (not fpDevice.IsDLLPort)) then
+    Exit;
+
+  P := pos(LF, Linha);
+  while P > 0 do
+  begin
+    EhControle := (Linha[max(P-1,1)] = ESC);
+
+    if (not EhControle) then
+    begin
+      Linha := StuffString(Linha, P, 0, CR );  // Adiciona CR antes de LF
+      Inc( P );
+    end
+    else
+    begin
+      if IsBematech then
+      begin
+        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
+        Dec( P );
+      end;
+    end;
+
+    P := PosEx( LF, Linha, P+1);
+  end;
 end;
 
 procedure TACBrECFEscECF.AtivarDevice;
@@ -1907,59 +1942,63 @@ function TACBrECFEscECF.GetEstado: TACBrECFEstado;
 Var
   FlagEst : Integer ;
 begin
-  Result := fpEstado;
   try
     if (not fpAtivo) then
-      fpEstado := estNaoInicializada
-
-    else if fsEmPagamento then
-      fpEstado := estPagamento
-
-    else
     begin
-      fpEstado := estDesconhecido ;
+      fpEstado := estNaoInicializada;
+      Result := fpEstado;
+      Exit;
+    end;
 
-      FlagEst := StrToIntDef( RetornaInfoECF( '16|5' ), -1 );
-      Case FlagEst of
-        0  :             fpEstado := estLivre;
-        10 :             fpEstado := estVenda;
-        11..13, 21..23 : fpEstado := estPagamento;
-        20 :             fpEstado := estNaoFiscal;
-        30..32 :         fpEstado := estRelatorio;
-      end;
+    fpEstado := estDesconhecido ;
 
-      if (fpEstado in [estLivre,estDesconhecido]) then
+    FlagEst := StrToIntDef( RetornaInfoECF( '16|5' ), -1 );
+    Case FlagEst of
+      0  :             fpEstado := estLivre;
+      10 :             fpEstado := estVenda;
+      11..13, 21..23 : fpEstado := estPagamento;
+      20 :             fpEstado := estNaoFiscal;
+      30..32 :         fpEstado := estRelatorio;
+    end;
+
+    if (fpEstado = estVenda) and fsEmPagamento then   // Já Subtotalizou ?
+      fpEstado := estPagamento;
+
+    if (fpEstado in [estLivre,estDesconhecido]) then
+    begin
+      FlagEst := StrToIntDef( RetornaInfoECF( '16|4' ), 0 );
+      if FlagEst = 3 then
+        fpEstado := estBloqueada ;
+    end;
+
+    if fpEstado in [estLivre, estBloqueada] then
+    begin
+      RetornaInfoECF( '8' ) ;
+      FlagEst := StrToIntDef( EscECFResposta.Params[1], 0 );
+
+      if FlagEst = 2 then    //  2 - Redução Z Pendente
       begin
-        FlagEst := StrToIntDef( RetornaInfoECF( '16|4' ), 0 );
-        if FlagEst = 3 then
-          fpEstado := estBloqueada ;
-      end;
+        fpEstado := estRequerZ;
 
-      if fpEstado in [estLivre, estBloqueada] then
-      begin
-        RetornaInfoECF( '8' ) ;
-        FlagEst := StrToIntDef( EscECFResposta.Params[1], 0 );
-
-        if FlagEst = 2 then
+        if IsBematech then  // Workaround para Bematech, que não responde corretamente após Z emitida
         begin
-          fpEstado := estRequerZ;
-
-          if IsBematech then  // Workaround para Bematech, que não responde corretamente após Z emitida
-          begin
-            RetornaInfoECF( '99|10' ) ;
-            if TestBit(StrToIntDef(EscECFResposta.Params[0], 0),3) then
-              fpEstado := estBloqueada;
-          end;
-        end
-        // Workaround para Epson que não responde Flag de Status de Movimento corretamente
-        else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
-        begin
-          RetornaInfoECF( '99|21' ) ;
-          if (EscECFResposta.Params.Count > 11) and (EscECFResposta.Params[11] = 'S') then
-            fpEstado := estRequerZ;
+          RetornaInfoECF( '99|10' ) ;
+          if TestBit(StrToIntDef(EscECFResposta.Params[0], 0),3) then
+            fpEstado := estBloqueada;
         end;
-      end;
-    end ;
+      end
+      // Workaround para Epson que não responde Flag de Status de Movimento corretamente
+      else if (fpEstado = estBloqueada) and (FlagEst = 0) and IsEpson then
+      begin
+        RetornaInfoECF( '99|21' ) ;
+        if (EscECFResposta.Params.Count > 11) and (EscECFResposta.Params[11] = 'S') then
+          fpEstado := estRequerZ;
+      end
+      { 0 - Não houve movimento, 1 - Com movimento aberto. Provavelmente
+        motivo do Bloqueio é Tampa Aberto ou Falta de Papel, e não falta da Z }
+      else if (fpEstado = estBloqueada) and (FlagEst in [0,1]) then
+        fpEstado := estLivre;
+    end;
   finally
     Result := fpEstado ;
   end;
@@ -2108,48 +2147,36 @@ end;
 procedure TACBrECFEscECF.LinhaRelatorioGerencial(Linha: AnsiString;
    IndiceBMP: Integer);
 var
-  P, Espera: Integer;
-  Buffer   : AnsiString ;
-  EhControle: Boolean;
+  P, Espera, LenMaxBuffer: Integer;
+  Buffer : AnsiString ;
 begin
-  Linha := AjustaLinhas( Linha, Colunas, 0, False );  { Formata as Linhas de acordo com "Coluna" }
+  { Muda caracteres de controle com CR e LF, para evitar quebra de linhas em "AjustaLinhas" abaixo }
+  Linha := ReplaceString(Linha, ESC+CR, ESC+#213);
+  Linha := ReplaceString(Linha, ESC+LF, ESC+#210);
 
-  P := pos(LF, Linha);
-  while P > 0 do
-  begin
-    EhControle := Linha[max(P-1,1)] = ESC;
+  Linha := AjustaLinhas( Linha, Colunas, 0, IsBematech );  { Formata as Linhas de acordo com "Coluna" }
 
-    if not EhControle then
-    begin
-      Linha := StuffString(Linha, P, 0, CR );  // Adiciona CR antes de LF
-      Inc( P );
-    end
-    else
-    begin
-      if IsBematech then
-      begin
-        Delete(Linha, P-1, 1);  // Remove "ESC" (carcater de controle)
-        Dec( P );
-      end;
-    end;
+  Linha := ReplaceString(Linha, ESC+#213, ESC+CR);
+  Linha := ReplaceString(Linha, ESC+#210, ESC+LF);
 
-    P := PosEx( LF, Linha, P+1);
-  end;
+  LenMaxBuffer := cEscECFMaxBuffer;
+
+  AjustaComandosControleImpressao(Linha);
 
   while Length( Linha ) > 0 do
   begin
      P := Length( Linha ) ;
-     if P > cEscECFMaxBuffer then    { Acha o fim de Linha mais próximo do limite máximo }
-        P := PosLast(LF, LeftStr(Linha,cEscECFMaxBuffer) ) ;
+     if P > LenMaxBuffer then    { Acha o fim de Linha mais próximo do limite máximo }
+        P := PosLast(LF, copy(Linha, 1 , LenMaxBuffer) ) ;
 
      if P = 0 then
-        P := Colunas ;
+        P := Trunc( LenMaxBuffer / Colunas ) * Colunas;
 
-     Buffer := copy( Linha, 1, P)  ;
-     Espera := Trunc( CountStr( Buffer, LF ) / 4) ;
+     Buffer := copy( Linha, 1, P);
+     Espera := Trunc( CountStr( Buffer, LF ) / 4);
 
-     EscECFComando.CMD := 9                                ;
-     EscECFComando.TimeOut := Espera ;
+     EscECFComando.CMD := 9;
+     EscECFComando.TimeOut := Espera;
      EscECFComando.AddParamString(Buffer);
      EnviaComando;
 
@@ -2165,66 +2192,76 @@ end;
 procedure TACBrECFEscECF.AbreCupomVinculado(COO, CodFormaPagto,
    CodComprovanteNaoFiscal: String; Valor: Double);
 Var
-  Sequencia, NumPagtos, P : Integer ;
+  Sequencia, I, NumPagtos, P1, P2 : Integer ;
   APagto, CodPagto : String ;
-
-  procedure EnviaComandoCCD;
-  begin
-    with EscECFComando do
-    begin
-       CMD := 8;
-       AddParamInteger(Sequencia) ;
-       AddParamString(CodFormaPagto) ;
-       AddParamInteger(1) ;   // Qtd Parcelas ??
-       AddParamInteger(1) ;   // Num Parcela ??
-       AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
-       AddParamString(LeftStr(Consumidor.Nome,30)) ;
-       AddParamString(LeftStr(Consumidor.Endereco,79)) ;
-    end;
-    EnviaComando;
-  end;
-
+  ValorPagto: Double;
+  FPG: TACBrECFFormaPagamento;
 begin
   // Achando a Sequencia do Pagamento de acordo com o Indice //
   Sequencia := 1;
+  I := 1;
   try
     NumPagtos := RespostasComando.FieldByName('NumPagtos').AsInteger;
     if NumPagtos > 1 then
     begin
       repeat
-        APagto := RespostasComando.FieldByName('Pagto'+IntToStr(Sequencia)).AsString;
-        P := pos('|',APagto);
-        CodPagto := Copy(APagto,1,P-1);
-        if CodPagto = CodFormaPagto then
+        APagto := RespostasComando.FieldByName('Pagto'+IntToStr(I)).AsString;
+        P1 := pos('|',APagto);
+        CodPagto := Copy(APagto,1,P1-1);
+
+        if (CodPagto = CodFormaPagto) then
         begin
-          APagto := '*'+APagto;  // sinaliza que já usou;
-          break;
+          ValorPagto := 0;
+          if Valor > 0 then
+          begin
+            P2 := PosEx('|', APagto, P1+1);
+            if P2 > P1 then
+              ValorPagto := StringToFloatDef(Copy(APagto,P1+1,P2-P1-1), 0);
+          end;
+
+          if (Valor = ValorPagto) then
+          begin
+            APagto := '*'+APagto;  // sinaliza que já usou;
+            break;
+          end;
         end ;
 
-        Inc( Sequencia );
-      until (Sequencia >= NumPagtos);
+        Inc( I );
+
+        if IsEpson then
+        begin
+          // Verificando se esse Pagamento permite Vinculado. Se não permitir, não considera como sequencia
+          if LeftStr(CodPagto,1) = '*' then
+            CodPagto := Copy(CodPagto, 2, Length(CodPagto));
+
+          FPG := AchaFPGIndice(CodPagto);
+          if Assigned(FPG) then
+            if FPG.PermiteVinculado then
+              Inc( Sequencia );
+        end
+        else
+          Inc( Sequencia );
+
+      until (I > NumPagtos);
     end ;
   except
   end ;
 
-  try
-    EnviaComandoCCD;
-  except
-    On Exception do
-    begin
-      // Woraround para Epson, que em algumas situações não reconhece o Nu. de Sequencia corretamente
-      if IsEpson and (EscECFResposta.CAT = 16) and (EscECFResposta.RET.ECF = 11) then
-      begin
-        Dec(Sequencia);
-        EnviaComandoCCD;
-      end
-      else
-        raise;
-    end;
+  with EscECFComando do
+  begin
+     CMD := 8;
+     AddParamInteger(Sequencia) ;
+     AddParamString(CodFormaPagto) ;
+     AddParamInteger(1) ;   // Qtd Parcelas ??
+     AddParamInteger(1) ;   // Num Parcela ??
+     AddParamString(LeftStr(OnlyNumber(Consumidor.Documento),14)) ;
+     AddParamString(LeftStr(Consumidor.Nome,30)) ;
+     AddParamString(LeftStr(Consumidor.Endereco,79)) ;
   end;
+  EnviaComando;
 
   //RespostasComando.Clear;
-  RespostasComando.AddField( 'Pagto'+IntToStr(Sequencia), APagto );
+  RespostasComando.AddField( 'Pagto'+IntToStr(I), APagto );
   RespostasComando.AddField( 'COO',            EscECFResposta.Params[0] );
   RespostasComando.AddField( 'DataHora',       EscECFResposta.Params[1] );
   RespostasComando.AddField( 'VendaBruta',     EscECFResposta.Params[2] );
@@ -2555,11 +2592,11 @@ begin
     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
 
   // Carcateres de Controle, devem ser precedidos de ESC //
-  Result := StringReplace( Result, NUL, ESC+NUL, [rfReplaceAll]);
-  Result := StringReplace( Result, LF , ESC+LF , [rfReplaceAll]);
+  Result := ReplaceString( Result, NUL, ESC+NUL);
+  Result := ReplaceString( Result, LF , ESC+LF);
 
   if IsEpson then
-    Result := StringReplace( Result, CR , ESC+CR , [rfReplaceAll]);
+    Result := ReplaceString( Result, CR , ESC+CR);
 end ;
 
 procedure TACBrECFEscECF.AbreCupom ;
@@ -2654,7 +2691,8 @@ begin
   Est := TACBrECF( fpOwner ).Estado;
 
   case Est of
-    estRelatorio : FechaRelatorio ;
+    estRelatorio :
+      FechaRelatorio ;
 
     estVenda, estPagamento, estNaoFiscal :
       begin
@@ -2896,6 +2934,8 @@ procedure TACBrECFEscECF.FechaCupom(Observacao: AnsiString; IndiceBMP: Integer);
 begin
   if not Consumidor.Enviado then
      EnviaConsumidor;
+
+  AjustaComandosControleImpressao(Observacao);
 
   with EscECFComando do
   begin
@@ -3402,14 +3442,22 @@ end;
 
 function TACBrECFEscECF.GetNumUltimoItem: Integer;
 begin
-  try
-    Result := RespostasComando.FieldByName('NumUltItem').AsInteger;
-  except
-    Result := 0;
-  end ;
+  if IsEpson then
+  begin
+    RetornaInfoECF('99|03');
+    Result := StrToIntDef( EscECFResposta.Params[0], 0) ;
+  end
+  else
+  begin
+    try
+      Result := RespostasComando.FieldByName('NumUltItem').AsInteger;
+    except
+      Result := 0;
+    end ;
+  end;
 end;
 
-function TACBrECFEscECF.GetDadosUltimaReducaoZ : AnsiString ;
+function TACBrECFEscECF.GetDadosUltimaReducaoZ : String ;
 var
   DataStr, ECFCRZ, Reg : String ;
   I, J, N : Integer;
@@ -3975,7 +4023,6 @@ begin
   Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;
 
-end.
 
 { Observaçoes:
 
@@ -3987,5 +4034,8 @@ end.
 -- Total Cancelamentos OPNF
 -- Total Descontos OPNF
 }
+
+end.
+
 
 

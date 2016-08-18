@@ -14,7 +14,9 @@ type
   { TfrmPrincipal }
 
   TfrmPrincipal = class(TForm)
+    EdtIncricao: TEdit;
     Label15: TLabel;
+    Label4: TLabel;
     MaskNascimento: TMaskEdit;
     Panel2: TPanel;
     Label3: TLabel;
@@ -65,6 +67,7 @@ begin
       EdtEmissao.Text           := ACBrConsultaCPF1.Emissao;
       EdtCodCtrlControle.Text   := ACBrConsultaCPF1.CodCtrlControle;
       EdtDigitoVerificador.Text := ACBrConsultaCPF1.DigitoVerificador;
+      EdtIncricao.Text          := ACBrConsultaCPF1.DataInscricao;
     end;
   end
   else

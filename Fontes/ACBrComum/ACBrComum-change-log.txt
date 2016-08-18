@@ -38,6 +38,87 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/08/2016
+-- ACBrUtil --
+[+] Adicionado o método "RemoveZerosEsquerda"   (por: DSA)
+[-] Correção em "AjustaLinhas", para processar corretamente linhas vazias e
+    "PadLinhas = True"
+
+Data: 13/06/2016
+-- ACBrUtil --
+[+] Adicionado os métodos  (por: DSA)
+    "ConverteXMLtoNativeString":  Se XML contiver a TAG de encoding em UTF8, no
+      seu início, remove a TAG e converte o conteudo do mesmo para String Nativa
+      da IDE
+    "ObtemDeclaracaoXML": Retorna a Declaração do XML, Ex: <?xml version="1.0"?>
+    "RemoverDeclaracaoXML": Retorna XML sem a Declaração.
+	
+Data: 12/08/2016
+-- ACBrUtil --	
+[*] Adicionada função RemoveZerosEsquerda() movida da unit ACBrValidador no pacote ACBrDiversos.
+
+Data: 23/03/2016
+-- ACBrUtil --
+[*] Nova Revisão de métodos que usavam AnsiString, modificando-os quando possível,
+    para usar "String", a fim de diminuir o número de Warnings de compilação
+    (por: Waldir Paim e DSA)
+    http://www.projetoacbr.com.br/forum/topic/28345-remoção-de-hints-e-warning-do-acbr/?do=findComment&comment=191110
+
+Data: 22/03/2016
+-- ACBrUtil --
+[*] Revisão de métodos que usavam AnsiString, modificando-os quando possível,
+    para usar "String", a fim de diminuir o número de Warnings de compilação
+    (por:DSA)
+
+Data: 11/03/2016
+-- ACBr.inc --
+[+] Adicionada a diretiva USE_DELAYED. Que deve ser ligada caso o programador
+    deseje utilizar a carga tardia de DLLs (OpenSSL e XMLSec)
+    A diretiva será desligada se a IDE não suportar carga tardia com "DELAYED"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28561
+
+Data: 08/03/2016
+-- ACBrUtil --
+[-] RoundABNT: Correção para calculos com valores negativos  (por: DSA)
+
+Data: 04/03/2016
+-- ACBr.inc --
+[*] Adicionada verificação para saber se está usando FPC 3.0.0 ou superior
+[*] Adicionada verificação para saber se o compilador tem o método "CharInSet"
+
+-- ACBrUtil --
+[*] Lazarus, usando "LConvEncoding" por default
+[*] Método "ACBrStrToUTF8" renomeado para "NativeStringToUTF8"
+[+] Adicionado os métodos:
+    function UTF8ToNativeString( AUTF8String : AnsiString ) : String;
+    function NativeStringToAnsi( AString : String ) : AnsiString;
+    function AnsiToNativeString( AAnsiString : AnsiString ) : String;
+[*] Simplificação dos métodos "ACBrStr" e "ACBrStrToAnsi", para Lazarus
+[+] Adicionado o método "CharInSet" se não estiver definido HAS_CHARINSET
+
+
+Data: 26/02/2016
+-- ACBrConsts --
+[+] Adicionadas constantes para manipulação de Encoding UTF8
+
+-- ACBrUtil --
+[+] function ACBrUTF8ToAnsi( UTF8String : AnsiString ) : AnsiString;
+    Converte uma String que está em UTF8 para ANSI, considerando as diferetes IDEs
+    suportadas pelo ACBr
+
+[+] function ACBrAnsiToUTF8( AAnsiString : AnsiString ) : AnsiString;
+    Converte uma String que está em ANSI para UTF8, considerando as diferetes IDEs
+    suportadas pelo ACBr
+
+Data: 22/02/2016
+-- ACBrUtil --
+[*] RoundABNT, aplicado workaround para funcionamento em D7
+    (problemas com função "frac")
+[*] CreateFormatSettings, modificado para considerar os valores atribuídos as
+    variáveis Globais de ACBrUtil ex: "ThousandSeparator" (Delphi XE)
+[*] StringToBinaryString, aplicado workaround para funcionamento em D7
+    (problemas com StringReplace contendo caracter Nulo (#0)
+
 Data: 10/12/2015
 -- ACBrUtil --     (por: DSA)
 [+] Adicionado os métodos:

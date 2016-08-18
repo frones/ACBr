@@ -256,12 +256,14 @@ begin
 
   Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
-//  Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
+
+  {$IfDef FPC}
+   Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$EndIf}
+
   if nfe.procNFe.nProt <> '' then
-   begin
-      Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
-   end;
+    Gerador.wGrupo('nfeProc ' + NFe.infNFe.VersaoStr + ' ' + NAME_SPACE, '');
+
   Gerador.wGrupo('NFe ' + NAME_SPACE);
   Gerador.wGrupo('infNFe ' + NFe.infNFe.VersaoStr + ' Id="' + nfe.infNFe.ID + '"');
   (**)GerarInfNFe;
@@ -810,9 +812,9 @@ begin
   for j := 0 to nfe.Det[i].Prod.DI.Count - 1 do
   begin
     Gerador.wGrupo('DI', 'I18');
-    Gerador.wCampo(tcStr, 'I19', 'nDI        ', 01, 12, 1, nfe.Det[i].Prod.DI[j].nDI, DSC_NDI);
+    Gerador.wCampo(tcStr, 'I19', 'nDI', 01, 12, 1, nfe.Det[i].Prod.DI[j].nDI, DSC_NDI);
 
-    if not ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
+    if not ValidaDIRE(nfe.Det[i].Prod.DI[j].nDI) and not ValidaDIDSI(nfe.Det[i].Prod.DI[j].nDI) then
       Gerador.wAlerta('I19', 'nDI', DSC_NDI, ERR_MSG_INVALIDO);
 
     Gerador.wCampo(tcDat, 'I20', 'dDI        ', 10, 10, 1, nfe.Det[i].Prod.DI[j].dDI, DSC_DDi);
@@ -1882,7 +1884,8 @@ begin
 //      Gerador.wCampo(tcStr, 'W22n', 'nProcesso   ', 01, 30, 0, nfe.Total.ISSQNtot.nProcesso , DSC_NPROCESSO);
 
       Gerador.wCampo(tcDe2, 'W22f', 'vISSRet     ', 01, 15, 0, nfe.Total.ISSQNtot.vISSRet, DSC_VISSRET);
-      Gerador.wCampo(tcStr, 'W22g', 'cRegTrib    ', 01, 01, 0, RegTribISSQNToStr( nfe.Total.ISSQNtot.cRegTrib ) , DSC_CREGTRIB);
+      if nfe.Total.ISSQNtot.cRegTrib <> RTISSNenhum then
+        Gerador.wCampo(tcStr, 'W22g', 'cRegTrib    ', 01, 01, 0, RegTribISSQNToStr( nfe.Total.ISSQNtot.cRegTrib ) , DSC_CREGTRIB);
 //      Gerador.wCampo(tcStr, 'W22p', 'indIncentivo', 01, 01, 1, indIncentivoToStr( nfe.Total.ISSQNtot.indIncentivo ) , DSC_INDINCENTIVO);
     end;
 

@@ -163,10 +163,12 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
 
-  Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$IfDef FPC}
+   Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$EndIf}
 
-  if MDFe.procMDFe.nProt <> ''
-   then Gerador.wGrupo('mdfeProc ' + MDFe.infMDFe.VersaoStr + ' ' + NAME_SPACE_MDFe, '');
+  if MDFe.procMDFe.nProt <> '' then
+    Gerador.wGrupo('mdfeProc ' + MDFe.infMDFe.VersaoStr + ' ' + NAME_SPACE_MDFe, '');
 
   Gerador.wGrupo('MDFe ' + NAME_SPACE_MDFe);
   Gerador.wGrupo('infMDFe ' + MDFe.infMDFe.VersaoStr + ' Id="' + MDFe.infMDFe.ID + '"');

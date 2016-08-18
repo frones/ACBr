@@ -203,6 +203,9 @@ type
     RLSystemInfo2: TRLSystemInfo;
     RLLabel62: TRLLabel;
     RLLabel63: TRLLabel;
+    RLDraw11: TRLDraw;
+    RLLabel64: TRLLabel;
+    rllMunicipioPrestacaoServico: TRLLabel;
     procedure rlbCabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbPrestadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbTomadorBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -228,7 +231,11 @@ implementation
 uses
  StrUtils, DateUtils, ACBrUtil, pnfsNFSe, ACBrValidador;
 
-{$R *.dfm}
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 
 var
   FQuebradeLinha: String;
@@ -370,6 +377,7 @@ begin
 
     rllNumeroRPS.Caption          := IdentificacaoRps.Numero;
     rllNumNFSeSubstituida.Caption := NfseSubstituida;
+    rllMunicipioPrestacaoServico.Caption := CodCidadeToCidade(StrToIntDef(Servico.CodigoMunicipio, 0));
   end;
 end;
 
@@ -443,6 +451,7 @@ begin
       rllISSReter.Caption             := SituacaoTributariaDescricao( IssRetido );
       rllValorISS.Caption             := FormatFloat('#,##0.00',ValorIss);
 
+
     end;
   end;
 
@@ -501,7 +510,7 @@ begin
                                                                   Trim( Numero )+' - '+
                                                                   Trim( Bairro )+
                                                                   ' - CEP: '+
-                                                                  FormatarCEP( Poem_Zeros( CEP, 8 ) ) ,
+                                                                  FormatarCEP( CEP ) ,
                                                                                                   Trim(FEndereco) ) ;
         rllPrestComplemento.Caption   := IfThen( Complemento <> '', Complemento , FComplemento);
         rllPrestMunicipio.Caption     := IfThen( xMunicipio <> '' , CodigoMunicipio + ' - ' + xMunicipio , FMunicipio);
@@ -550,11 +559,11 @@ begin
           rllTomaEndereco.Caption :=  Trim(Endereco) + ', '  +
                                       Trim(Numero )  + ' - ' +
                                       Trim(Bairro )  + ' - CEP: ' +
-                                      FormatarCEP(Poem_Zeros(CEP, 8 ));
+                                      FormatarCEP(CEP);
         End
         Else
          rllTomaEndereco.Caption := Trim(FT_Endereco) + ' - CEP: ' +
-                                    FormatarCEP(Poem_Zeros(CEP, 8 ));
+                                    FormatarCEP(CEP);
 
         rllTomaComplemento.Caption := IfThen( Complemento <> '' , Complemento , FT_Complemento);
 

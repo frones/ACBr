@@ -37,7 +37,7 @@ unit ACBrBancoItau;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Contnrs,
   ACBrBoleto;
 
 type
@@ -247,6 +247,7 @@ var
    ADataMoraJuros, ADataDesconto,ATipoAceite :String;
    ATipoInscricaoAvalista: Char;
 begin
+   ATipoInscricaoAvalista := ' ';
    with ACBrTitulo do
    begin
       {SEGMENTO P}
@@ -294,7 +295,7 @@ begin
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
                '3'                                                        + //8 - Tipo do registro: Registro detalhe
-               IntToStrZero(ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+ 1 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero(2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+ 1 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'P'                                                        + //14 - Código do segmento do registro detalhe
                ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + //16 a 17 - Código de movimento
@@ -363,7 +364,7 @@ begin
                IntToStrZero(ACBrBanco.Numero, 3)                          + //Código do banco
                '0001'                                                     + //Número do lote
                '3'                                                        + //Tipo do registro: Registro detalhe
-               IntToStrZero((ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 1 ,5) + //Número seqüencial do registro no lote - Cada registro possui dois segmentos
+               IntToStrZero((2*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo)+1)+ 1 ,5) + //Número seqüencial do registro no lote - Cada registro possui dois segmentos
                'Q'                                                        + //Código do segmento do registro detalhe
                ' '                                                        + //Uso exclusivo FEBRABAN/CNAB: Branco
                '01'                                                       + // 16 a 17
@@ -781,7 +782,6 @@ var
   ContLinha : Integer;
   idxMotivo: Integer;
 begin
-   ContLinha := 0;
 
    // informação do Header
    // Verifica se o arquivo pertence ao banco
@@ -827,6 +827,8 @@ begin
    end;
 
    ACBrBanco.TamanhoMaximoNossoNum := 8;
+   Linha := '';
+   Titulo := nil;
 
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
@@ -838,6 +840,7 @@ begin
       if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if copy(Linha, 14, 1) = 'T' then
@@ -892,166 +895,166 @@ end;
 
 procedure TACBrBancoItau.LerRetorno400(ARetorno: TStringList);
 var
-  ContLinha, CodOCorrencia, I, MotivoLinha: Integer;
-  Linha, rCedente, rDigitoConta: String ;
-  rCNPJCPF,rAgencia,rConta: String;
+  ContLinha, CodOCorrencia, I    : Integer;
+  MotivoLinha, wMotivoRejeicaoCMD: Integer;
+  Linha, rCedente, rDigitoConta  : String ;
+  rCNPJCPF,rAgencia,rConta       : String;
   Titulo: TACBrTitulo;
 begin
-   ContLinha := 0;
 
-   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
-      raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
-                             'não é um arquivo de retorno do '+ Nome));
+  if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
+    raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
+                                   'não é um arquivo de retorno do '+ Nome));
 
-   rCedente := trim(Copy(ARetorno[0],47,30));
-   rAgencia := trim(Copy(ARetorno[0],27,4));
-   rConta   := trim(Copy(ARetorno[0],33,5));
-   rDigitoConta := Copy(ARetorno[0],38,1);
+  rCedente     := trim(Copy(ARetorno[0],47,30));
+  rAgencia     := trim(Copy(ARetorno[0],27,4));
+  rConta       := trim(Copy(ARetorno[0],33,5));
+  rDigitoConta := Copy(ARetorno[0],38,1);
 
-   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],109,5),0);
+  ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],109,5),0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+            //|
-                                                             Copy(ARetorno[0],97,2)+'/'+            //|Implementado por Carlos Fitl - 27/12/2010
-                                                             Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );//|
+  ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
+                                                            Copy(ARetorno[0],97,2)+'/'+
+                                                            Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
 
-   ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],114,2)+'/'+            //|
-                                                               Copy(ARetorno[0],116,2)+'/'+            //|Implementado por Carlos Fitl - 27/12/2010
-                                                               Copy(ARetorno[0],118,2),0, 'DD/MM/YY' );//|
+  ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],114,2)+'/'+
+                                                              Copy(ARetorno[0],116,2)+'/'+
+                                                              Copy(ARetorno[0],118,2),0, 'DD/MM/YY' );
 
-   case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-      1 : rCNPJCPF:= Copy(ARetorno[1],07,11);
-      2 : rCNPJCPF:= Copy(ARetorno[1],04,14);
-   else
-      rCNPJCPF:= Copy(ARetorno[1],4,14);
-   end;
+  case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+    1 : rCNPJCPF:= Copy(ARetorno[1],07,11);
+    2 : rCNPJCPF:= Copy(ARetorno[1],04,14);
+  else
+    rCNPJCPF:= Copy(ARetorno[1],4,14);
+  end;
 
-   with ACBrBanco.ACBrBoleto do
-   begin
-      if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
-         raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
+  with ACBrBanco.ACBrBoleto do
+  begin
+    if (not LeCedenteRetorno) and (rCNPJCPF <> OnlyNumber(Cedente.CNPJCPF)) then
+      raise Exception.Create(ACBrStr('CNPJ\CPF do arquivo inválido'));
 
-      if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
-          (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta)))) then
-         raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
+    if (not LeCedenteRetorno) and ((rAgencia <> OnlyNumber(Cedente.Agencia)) or
+       (rConta <> RightStr(OnlyNumber(Cedente.Conta), Length(rConta)))) then
+      raise Exception.Create(ACBrStr('Agencia\Conta do arquivo inválido'));
 
-      case StrToIntDef(Copy(ARetorno[1],2,2),0) of
-         01: Cedente.TipoInscricao:= pFisica;
-         else
-            Cedente.TipoInscricao:= pJuridica;
-      end;
+    case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+      01: Cedente.TipoInscricao:= pFisica;
+    else
+      Cedente.TipoInscricao:= pJuridica;
+    end;
 	  
-	  Cedente.Nome    := rCedente;
-      Cedente.CNPJCPF := rCNPJCPF;
-      Cedente.Agencia := rAgencia;
-      Cedente.AgenciaDigito:= '0';
-      Cedente.Conta   := rConta;
-      Cedente.ContaDigito:= rDigitoConta;
+    Cedente.Nome         := rCedente;
+    Cedente.CNPJCPF      := rCNPJCPF;
+    Cedente.Agencia      := rAgencia;
+    Cedente.AgenciaDigito:= '0';
+    Cedente.Conta        := rConta;
+    Cedente.ContaDigito  := rDigitoConta;
       
-      ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
-   end;
+    ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
+  end;
 
-   for ContLinha := 1 to ARetorno.Count - 2 do
-   begin
-      Linha := ARetorno[ContLinha] ;
+  for ContLinha := 1 to ARetorno.Count - 2 do
+  begin
+    Linha := ARetorno[ContLinha] ;
 
-      if Copy(Linha,1,1)<> '1' then
-         Continue;
+    if Copy(Linha,1,1)<> '1' then
+      Continue;
 
-      Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
+    Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
-      with Titulo do
+    with Titulo do
+    begin
+      SeuNumero                   := copy(Linha,38,25);
+      NumeroDocumento             := copy(Linha,117,10);
+      Carteira                    := copy(Linha,83,3);
+
+      OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
+
+      if OcorrenciaOriginal.Tipo in [toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
+                                     toRetornoAlegacaoDoSacado, toRetornoInstrucaoCancelada] then
       begin
-         SeuNumero                   := copy(Linha,38,25);
-         NumeroDocumento             := copy(Linha,117,10);
-         Carteira                    := copy(Linha,83,3);
+        MotivoLinha := 302;
+        wMotivoRejeicaoCMD:= StrToIntDef(Copy(Linha, MotivoLinha, 4), 0);
 
-         OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,109,2),0));
+        if wMotivoRejeicaoCMD <> 0 then
+        begin
+          MotivoRejeicaoComando.Add(Copy(Linha, MotivoLinha, 4));
+          CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[0], 0);
+          DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
+        end;
+      end
+     else
+      begin
+       MotivoLinha := 378;
+       for I := 0 to 3 do
+       begin
+         wMotivoRejeicaoCMD:= StrToIntDef(Copy(Linha, MotivoLinha, 2),0);
 
-         if OcorrenciaOriginal.Tipo in [toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
-           toRetornoAlegacaoDoSacado, toRetornoInstrucaoCancelada] then
+         if wMotivoRejeicaoCMD <> 0 then
          begin
-           MotivoLinha := 302;
-
-           MotivoRejeicaoComando.Add(IfThen(Copy(Linha, MotivoLinha, 4) = '    ', '0000', Copy(Linha, MotivoLinha, 4)));
-
-           if MotivoRejeicaoComando[0] <> '0000' then
-           begin
-             CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[0], 0);
-             DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
-           end;
-         end
-         else
-         begin
-           MotivoLinha := 378;
-
-           for I := 0 to 3 do
-           begin
-             MotivoRejeicaoComando.Add(IfThen(Copy(Linha, MotivoLinha, 2) = '  ', '00', Copy(Linha, MotivoLinha, 2)));
-
-             if MotivoRejeicaoComando[I] <> '00' then
-             begin
-               CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[I], 0) ;
-               DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
-             end;
-
-             MotivoLinha := MotivoLinha + 2;
-           end;
+           MotivoRejeicaoComando.Add(Copy(Linha, MotivoLinha, 2));
+           CodOcorrencia := StrToIntDef(MotivoRejeicaoComando[I], 0) ;
+           DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodOcorrencia));
          end;
+                         
+         MotivoLinha := MotivoLinha + 2;
+       end;
+     end;
 
-         DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                                Copy(Linha,113,2)+'/'+
-                                                Copy(Linha,115,2),0, 'DD/MM/YY' );
+     DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
+                                            Copy(Linha,113,2)+'/'+
+                                            Copy(Linha,115,2),0, 'DD/MM/YY' );
 
-         {Espécie do documento}
-         if Trim(Copy(Linha,174,2)) = '' then
-            EspecieDoc := '99'
-         else
-            case StrToIntDef(Copy(Linha,174,2),0) of
-               01 : EspecieDoc := 'DM';
-               02 : EspecieDoc := 'NP';
-               03 : EspecieDoc := 'NS';
-               04 : EspecieDoc := 'ME';
-               05 : EspecieDoc := 'RC';
-               06 : EspecieDoc := 'CT';
-               07 : EspecieDoc := 'CS';
-               08 : EspecieDoc := 'DS';
-               09 : EspecieDoc := 'LC';
-               13 : EspecieDoc := 'ND';
-               15 : EspecieDoc := 'DD';
-               16 : EspecieDoc := 'EC';
-               17 : EspecieDoc := 'PS';
-               99 : EspecieDoc := 'DV';
-            else
-               EspecieDoc := 'DV';
-            end;
+     {Espécie do documento}
+     if Trim(Copy(Linha,174,2)) = '' then
+       EspecieDoc := '99'
+     else
+       case StrToIntDef(Copy(Linha,174,2),0) of
+         01 : EspecieDoc := 'DM';
+         02 : EspecieDoc := 'NP';
+         03 : EspecieDoc := 'NS';
+         04 : EspecieDoc := 'ME';
+         05 : EspecieDoc := 'RC';
+         06 : EspecieDoc := 'CT';
+         07 : EspecieDoc := 'CS';
+         08 : EspecieDoc := 'DS';
+         09 : EspecieDoc := 'LC';
+         13 : EspecieDoc := 'ND';
+         15 : EspecieDoc := 'DD';
+         16 : EspecieDoc := 'EC';
+         17 : EspecieDoc := 'PS';
+         99 : EspecieDoc := 'DV';
+       else
+         EspecieDoc := 'DV';
+       end;
 
-         Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
-                                            Copy(Linha,149,2)+'/'+
-                                            Copy(Linha,151,2),0, 'DD/MM/YY' );
+       Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
+                                          Copy(Linha,149,2)+'/'+
+                                          Copy(Linha,151,2),0, 'DD/MM/YY' );
 
-         ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
-         ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
-         ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
-         ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
-         ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
-         ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
-         ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
-         NossoNumero          := Copy(Linha,63,8);
-         Carteira             := Copy(Linha,83,3);
-         ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
-         CodigoLiquidacao     := Copy(Linha,393,2);
+       ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
+       ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
+       ValorAbatimento      := StrToFloatDef(Copy(Linha,228,13),0)/100;
+       ValorDesconto        := StrToFloatDef(Copy(Linha,241,13),0)/100;
+       ValorMoraJuros       := StrToFloatDef(Copy(Linha,267,13),0)/100;
+       ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
+       ValorRecebido        := StrToFloatDef(Copy(Linha,254,13),0)/100;
+       NossoNumero          := Copy(Linha,63,8);
+       Carteira             := Copy(Linha,83,3);
+       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
+       CodigoLiquidacao     := Copy(Linha,393,2);
 
-         if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
-            DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
-                                               Copy(Linha,298,2)+'/'+
-                                               Copy(Linha,300,2),0, 'DD/MM/YY' );
+       if StrToIntDef(Copy(Linha,296,6),0) <> 0 then
+         DataCredito:= StringToDateTimeDef( Copy(Linha,296,2)+'/'+
+                                            Copy(Linha,298,2)+'/'+
+                                            Copy(Linha,300,2),0, 'DD/MM/YY' );
 
-         if StrToIntDef(Copy(Linha,111,6),0) <> 0 then
-            DataBaixa := StringToDateTimeDef(Copy(Linha,111,2)+'/'+
-                         Copy(Linha,113,2)+'/'+
-                         Copy(Linha,115,2),0,'DD/MM/YY');
+       if StrToIntDef(Copy(Linha,111,6),0) <> 0 then
+         DataBaixa := StringToDateTimeDef(Copy(Linha,111,2)+'/'+
+                                          Copy(Linha,113,2)+'/'+
+                                          Copy(Linha,115,2),0,'DD/MM/YY');
 
-      end;
+     end;
    end;
 end;
 

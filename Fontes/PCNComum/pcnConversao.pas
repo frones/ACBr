@@ -113,7 +113,8 @@ type
                   teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
                   teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
                   teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
-                  teRegistroPassagemNFe, teConfInternalizacao);
+                  teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
+                  teMDFeAutorizado);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -153,7 +154,7 @@ type
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
 const
-  TpcnTpEventoString : array[0..28] of String =('110110', '110111', '210200',
+  TpcnTpEventoString : array[0..30] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
                                                 '110112', '110113', '110114',
                                                 '110160', '310620', '510620',
@@ -162,7 +163,8 @@ const
                                                 '990900', '111500', '111501',
                                                 '111502', '111503', '411500',
                                                 '411501', '411502', '411503',
-                                                '610500', '990910');
+                                                '610500', '990910', '000000',
+                                                '610610');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -727,9 +729,9 @@ begin
     '60 - ICMS COBRADO ANTERIORMENTE POR SUBSTITUIÇÃO TRIBUTÁRIA',
     '70 - TRIBUTAÇÃO COM REDUÇÃO DE BC E COBRANÇA DO ICMS POR SUBST. TRIBUTÁRIA',
     '80 - RESPONSABILIDADE DO RECOLHIMENTO DO ICMS ATRIBUÍDO AO TOMADOR OU 3° POR ST',
-    '81 - ICMS DEVICO À OUTRA UF',
+    '81 - ICMS DEVIDO À OUTRA UF',
     '90 - ICMS OUTROS',
-    'ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
+    '90 - ICMS DEVIDO A UF DE ORIGEM DA PRESTACAO, QUANDO DIFERENTE DA UF DO EMITENTE',
     'SN - SIMPLES NACIONAL'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst45, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
 end;
@@ -914,10 +916,10 @@ end;
 
 function CRTTocRegTrib(const t: TpcnCRT): TpcnRegTrib;
 begin
-  case T of
-    crtSimplesNacional: Result := RTSimplesNacional;
-    crtSimplesExcessoReceita, crtRegimeNormal: Result := RTRegimeNormal;
-  end;
+  if T = crtSimplesNacional then
+    Result := RTSimplesNacional
+  else
+    Result := RTRegimeNormal;
 end;
 
 // 117b - Indicador de soma no total da NFe **************************************
@@ -1010,7 +1012,8 @@ begin
               'VistoriaSuframa', 'PedProrrog1', 'PedProrrog2',
               'CanPedProrrog1', 'CanPedProrrog2', 'EventoFiscoPP1',
               'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2',
-              'RegPassagemNFe', 'ConfInternalizacao'],
+              'RegPassagemNFe', 'ConfInternalizacao', 'CTeAutorizado',
+              'MDFeAutorizado'],
              [teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1020,7 +1023,8 @@ begin
               teVistoriaSuframa, tePedProrrog1, tePedProrrog2,
               teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
               teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
-              teRegistroPassagemNFe, teConfInternalizacao]);
+              teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
+              teMDFeAutorizado]);
 end;
 
 

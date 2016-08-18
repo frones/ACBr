@@ -92,7 +92,7 @@ type
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
-    function Gerar(ARps: Integer; ALote: Integer = 1): Boolean;
+    function Gerar(ARps: Integer; ALote: Integer = 1; Imprimir: Boolean = True): Boolean;
 
     function ConsultarSituacao(AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
@@ -108,7 +108,8 @@ type
                           ANumeroNFSe: String = '';
                           AMotivoCancelamento: String = ''): Boolean;
 
-    function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String): Boolean;
+    function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String;
+                            AMotivoCancelamento: String = ''): Boolean;
 
     function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
 
@@ -146,7 +147,11 @@ uses
   strutils, dateutils;
 
 {$IFDEF FPC}
- {$R ACBrNFSeServicos.rc}
+ {$IFDEF CPU64}
+  {$R ACBrNFSeServicos.res}  // Dificuldades de compilar Recurso em 64 bits
+ {$ELSE}
+  {$R ACBrNFSeServicos.rc}
+ {$ENDIF}
 {$ELSE}
  {$R ACBrNFSeServicos.res}
 {$ENDIF}
@@ -306,8 +311,8 @@ begin
   if Configuracoes.Arquivos.NomeLongoNFSe then
     Result := GerarNomeNFSe(Configuracoes.WebServices.UFCodigo,
                             ANFSe.DataEmissao,
-                            xCNPJ,
-                            StrToIntDef(NumDoc, 0))
+                            OnlyNumber(xCNPJ),
+                            StrToInt64Def(NumDoc, 0))
   else
     Result := NumDoc + ANFSe.IdentificacaoRps.Serie;
 end;
@@ -360,6 +365,8 @@ begin
       LayNfseGerar:                URL := Configuracoes.Geral.ConfigURL.HomGerarNFSe;
       LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.HomRecepcaoSincrono;
       LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.HomSubstituiNFSe;
+      LayNfseAbrirSessao:          URL := Configuracoes.Geral.ConfigURL.HomAbrirSessao;
+      LayNfseFecharSessao:         URL := Configuracoes.Geral.ConfigURL.HomFecharSessao;
     end;
   end
   else begin
@@ -373,6 +380,8 @@ begin
       LayNfseGerar:                URL := Configuracoes.Geral.ConfigURL.ProGerarNFSe;
       LayNfseRecepcaoLoteSincrono: URL := Configuracoes.Geral.ConfigURL.ProRecepcaoSincrono;
       LayNfseSubstituiNfse:        URL := Configuracoes.Geral.ConfigURL.ProSubstituiNFSe;
+      LayNfseAbrirSessao:          URL := Configuracoes.Geral.ConfigURL.ProAbrirSessao;
+      LayNfseFecharSessao:         URL := Configuracoes.Geral.ConfigURL.ProFecharSessao;
     end;
   end;
 end;
@@ -440,11 +449,13 @@ end;
 function TACBrNFSe.EnviarSincrono(ALote: Integer;
   Imprimir: Boolean): Boolean;
 begin
-  Result := EnviarSincrono(IntToStr(ALote));
+  Result := EnviarSincrono(IntToStr(ALote), Imprimir);
 end;
 
 function TACBrNFSe.EnviarSincrono(ALote: String;
   Imprimir: Boolean): Boolean;
+var
+  i: Integer;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -456,9 +467,21 @@ begin
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
   Result := WebServices.EnviaSincrono(ALote);
+
+  if DANFSE <> nil then
+  begin
+    for i:= 0 to NotasFiscais.Count-1 do
+    begin
+      if NotasFiscais.Items[i].Confirmada and Imprimir then
+        NotasFiscais.Items[i].Imprimir;
+    end;
+    SetStatus( stNFSeIdle );
+  end;
 end;
 
-function TACBrNFSe.Gerar(ARps: Integer; ALote: Integer): Boolean;
+function TACBrNFSe.Gerar(ARps: Integer; ALote: Integer; Imprimir: Boolean): Boolean;
+var
+  i: Integer;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
@@ -478,6 +501,16 @@ begin
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RpsGerar);
 
   Result := WebServices.Gera(ARps, ALote);
+
+  if DANFSE <> nil then
+  begin
+    for i:= 0 to NotasFiscais.Count-1 do
+    begin
+      if NotasFiscais.Items[i].Confirmada and Imprimir then
+        NotasFiscais.Items[i].Imprimir;
+    end;
+    SetStatus( stNFSeIdle );
+  end;
 end;
 
 function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;
@@ -492,7 +525,7 @@ end;
 
 function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
 begin
-  if Self.NotasFiscais.Count <= 0 then
+  if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
   Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo);
@@ -510,15 +543,15 @@ end;
 function TACBrNFSe.CancelarNFSe(ACodigoCancelamento, ANumeroNFSe,
   AMotivoCancelamento: String): Boolean;
 begin
-  if Self.NotasFiscais.Count <= 0 then
+  if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
   Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
-            AMotivoCancelamento);
+                                    AMotivoCancelamento);
 end;
 
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,
-  ANumeroNFSe: String): Boolean;
+  ANumeroNFSe: String; AMotivoCancelamento: String): Boolean;
 begin
   if ACodigoCancelamento = '' then
     GerarException(ACBrStr('ERRO: Código de Cancelamento não informado'));
@@ -526,12 +559,13 @@ begin
   if ANumeroNFSe = '' then
     GerarException(ACBrStr('ERRO: Numero da NFS-e não informada'));
 
-  if Self.NotasFiscais.Count <= 0 then
+  if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
 
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.Substituir);
 
-  Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe);
+  Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe,
+                                      AMotivoCancelamento);
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;

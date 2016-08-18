@@ -33,6 +33,8 @@ type
     btnConsultar: TButton;
     Label2: TLabel;
     EditDtNasc: TEdit;
+    EdtIncricao: TEdit;
+    Label4: TLabel;
     procedure LabAtualizarCaptchaClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -60,6 +62,7 @@ begin
       EdtEmissao.Text           := ACBrConsultaCPF1.Emissao;
       EdtCodCtrlControle.Text   := ACBrConsultaCPF1.CodCtrlControle;
       EdtDigitoVerificador.Text := ACBrConsultaCPF1.DigitoVerificador;
+      EdtIncricao.Text          := ACBrConsultaCPF1.DataInscricao;
     end;
   end
   else

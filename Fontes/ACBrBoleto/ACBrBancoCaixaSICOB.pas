@@ -43,7 +43,7 @@ unit ACBrBancoCaixaSICOB;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto;
+  Classes, SysUtils, Contnrs, ACBrBoleto;
 
 type
 
@@ -77,7 +77,7 @@ type
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia:TACBrTipoOcorrencia; CodMotivo:Integer): String; override;
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
    end;
 
 implementation
@@ -301,17 +301,17 @@ begin
 end;
 
 function TACBrCaixaEconomicaSICOB.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero: String): Integer;
+  const Carteira: String; NossoNumero: String; Convenio: String): Integer;
 var
-  wTamNossoNumero: Integer;
+  wOperacao: Integer;
 begin
-   Result:= 15;
+   Result := length(NossoNumero);
+   wOperacao := StrToIntDef(Copy(Convenio, 1, 3), 0);
 
-   wTamNossoNumero:= length(NossoNumero);
-
-   if ((wTamNossoNumero >= 8)  and (wTamNossoNumero <= 10)) or
-      ((wTamNossoNumero >= 14) and (wTamNossoNumero <= 15)) then
-      Result := wTamNossoNumero;
+   if (wOperacao = 870) and (Carteira = 'SR') then
+     Result := 15
+   else if (Carteira = 'CR') then
+     Result := 10;
 end;
 
 function TACBrCaixaEconomicaSICOB.CodOcorrenciaToTipo(
@@ -353,28 +353,24 @@ end;
 function TACBrCaixaEconomicaSICOB.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
 var
   ANossoNumero: String;
-  wTamNossoNum: Integer;
+  wOperacao: Integer;
 begin
    with ACBrTitulo do
    begin
+     ANossoNumero := OnlyNumber(NossoNumero);
+     wOperacao    := StrToIntDef(Copy(ACBrBoleto.Cedente.Convenio, 1 , 3 ), 0);
 
-      ANossoNumero := OnlyNumber(NossoNumero);
-      wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira,ANossoNumero);
-
-      if (wTamNossoNum = 10) or (wTamNossoNum = 15) then
-         ANossoNumero:= ANossoNumero
-      else
-       begin
-         if Carteira = 'SR' then
-          begin
-            if wTamNossoNum = 14 then
-               ANossoNumero:= '8'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-13,14),14)
-            else
-              ANossoNumero:= '82'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);
-          end
-         else
-            ANossoNumero:= '9' + PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9,'0');
-       end;
+     if (Carteira = 'SR') then
+      begin
+       if (wOperacao =  870) then
+         ANossoNumero:= '8'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-13,14),14)
+       else
+         ANossoNumero:= '82'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);
+      end
+     else if (Carteira = 'CS') then
+      ANossoNumero := PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-9,10),10,'0')
+     else
+       ANossoNumero:= '9' + PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-8,9),9,'0');
    end;
    Result := ANossoNumero;
 end;
@@ -633,6 +629,8 @@ var
    ADataMulta, aEspecieDoc: String;
    TipoInscricaoAvalista: Char;
 begin
+   TipoInscricaoAvalista := ' ';
+
    with ACBrTitulo do
    begin
       ANossoNumero := FormataNossoNumero(ACBrTitulo)+CalcularDigitoVerificador(ACBrTitulo);
@@ -799,8 +797,9 @@ begin
                IfThen((DataProtesto > 0) and (DataProtesto > Vencimento),
                       PadLeft(IntToStr(DaysBetween(DataProtesto,
                        Vencimento)), 2, '0'), '00')                                     + // 222 a 223 - Prazo para protesto (em dias corridos)
-               '2'                                                                      + // 224 a 224 - Código para baixa/devolução: Não baixar/não devolver
-               PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 3, '0')         + // 225 a 227 - Prazo para baixa/devolução (em dias corridos)
+               IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2') + //224 - Código para baixa/devolução: Não baixar/não devolver
+               IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
+                      PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 3, '0'), '000') + //225 a 227 - Prazo para baixa/devolução (em dias corridos)
                '09'                                                                     + // 228 a 229 - Código da moeda: Real
                Space(10)                                                                + // 230 a 239 - Uso Exclusivo FEBRABAN/CNAB
                Space(1);                                                                  // 240 a 240 - Uso exclusivo FEBRABAN/CNAB
@@ -1135,8 +1134,8 @@ var
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
+  wCarteira: String;
 begin
-   ContLinha := 0;
 
    if (copy(ARetorno.Strings[0],143,1) <> '2') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1201,6 +1200,9 @@ begin
      ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1208,10 +1210,16 @@ begin
       if Copy(Linha,14,1)= 'T' then //segmento T - Só cria após passar pelo seguimento T depois U
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if Copy(Linha,14,1)= 'T' then //segmento T
           begin
+            wCarteira := Copy(Linha, 58, 1);
+
+            ACBrBanco.TamanhoMaximoNossoNum :=
+             CalcularTamMaximoNossoNumero(Carteira, '', ACBrBanco.ACBrBoleto.Cedente.Convenio);
+
             SeuNumero        := copy(Linha,59,11);
             NumeroDocumento  := copy(Linha,106,25);
 
@@ -1276,9 +1284,6 @@ var
   rDigitoConta, rCodigoCedente     :String;
   Linha, rCedente                  :String;
 begin
-   fpTamanhoMaximoNossoNum := 20;
-   ContLinha := 0;
-
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -1315,8 +1320,6 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
-   ACBrBanco.TamanhoMaximoNossoNum := 20;
-
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -1328,6 +1331,11 @@ begin
 
       with Titulo do
       begin
+         Carteira := Copy(Linha,107,2);
+
+         ACBrBanco.TamanhoMaximoNossoNum :=
+           CalcularTamMaximoNossoNumero(Carteira, '', ACBrBanco.ACBrBoleto.Cedente.Convenio);
+
          SeuNumero                   := copy(Linha,39,25);
          NumeroDocumento             := copy(Linha,117,10);
          OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(

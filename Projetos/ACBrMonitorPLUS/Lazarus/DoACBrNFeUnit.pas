@@ -38,7 +38,6 @@ interface
 Uses Classes, TypInfo, SysUtils, CmdUnit,  StdCtrls;
 
 Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
-Function ConvertStrRecived( AStr: String ) : String ;
 function UFparaCodigo(const UF: string): integer;
 function ObterCodigoMunicipio(const xMun, xUF: string): integer;
 procedure GerarIniNFe( AStr: String ) ;
@@ -58,7 +57,7 @@ procedure DoACBrNFe(Cmd: TACBrCmd);
 var
   I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
-  Salva, OK, bImprimir, bMostrarPreview : Boolean;
+  Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
   SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
@@ -479,7 +478,8 @@ begin
             end
            else
             begin
-              if NaoEstaVazio(Cmd.Params(1)) then
+              ACBrNFe1.NotasFiscais.LoadFromString(Cmd.Params(1));
+              if (ACBrNFe1.NotasFiscais.Count < 1) and NaoEstaVazio(Cmd.Params(1)) then
                  raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
             end;
 
@@ -1051,7 +1051,7 @@ begin
                                    'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].dhRecbto)+sLineBreak+
                                    'NProt='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].nProt+sLineBreak+
                                    'DigVal='+ACBrNFe1.WebServices.Retorno.NFeRetorno.ProtNFe.Items[i].digVal+sLineBreak+
-                                   'Arquivo='+PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrNFe1.NotasFiscais.Items[j].NFe.infNFe.ID)+'-nfe.xml'+sLineBreak;
+                                   'Arquivo='+ACBrNFe1.NotasFiscais.Items[j].NomeArq+sLineBreak;
 
                         //Impressão NFE enviada
                         if (cmd.Metodo = 'enviarlotenfe') then
@@ -1060,6 +1060,7 @@ begin
                           cImpressora := Cmd.Params(2);
                           bMostrarPreview := (Cmd.Params(4) = '1');
                           nNumCopias := StrToIntDef(Cmd.Params(5), 0);
+                          bImprimirPDF := (Cmd.Params(6) = '1');
                          end
                         else
                          begin
@@ -1067,7 +1068,17 @@ begin
                           cImpressora := Cmd.Params(4);
                           bMostrarPreview := (Cmd.Params(5) = '1');
                           nNumCopias := StrToIntDef(Cmd.Params(6), 0);
+                          bImprimirPDF := (Cmd.Params(7) = '1');
                          end;
+
+                        if bImprimirPDF then
+                        begin
+                         ACBrNFe1.NotasFiscais.Items[i].ImprimirPDF;
+                         ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[i].NFe.infNFe.ID)+'-nfe.pdf';
+
+                         Cmd.Resposta := Cmd.Resposta+
+                           'PDF='+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
+                        end;
 
                         if nNumCopias > 0 then
                           ACBrNFe1.DANFE.NumCopias := nNumCopias;
@@ -1835,30 +1846,6 @@ begin
   end;
 end ;
 
-function ConvertStrRecived(AStr: String): String;
- Var P   : Integer ;
-     Hex : String ;
-     CharHex : Char ;
-begin
-  { Verificando por codigos em Hexa }
-  Result := AStr ;
-
-  P := pos('\x',Result) ;
-  while P > 0 do
-  begin
-     Hex := copy(Result,P+2,2) ;
-
-     try
-        CharHex := Chr(StrToInt('$'+Hex)) ;
-     except
-        CharHex := ' ' ;
-     end ;
-
-     Result := StringReplace(Result,'\x'+Hex,CharHex,[rfReplaceAll]) ;
-     P      := pos('\x',Result) ;
-  end ;
-end ;
-
 function UFparaCodigo(const UF: string): integer;
 const
   (**)UFS = '.AC.AL.AP.AM.BA.CE.DF.ES.GO.MA.MT.MS.MG.PA.PB.PR.PE.PI.RJ.RN.RS.RO.RR.SC.SP.SE.TO.';
@@ -2154,9 +2141,9 @@ begin
                if (Length(INIRec.ReadString( sSecao,'EAN','')) > 0) or (Length(INIRec.ReadString( sSecao,'cEAN','')) > 0)  then
                   Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
                Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
-               Prod.NCM       := INIRec.ReadString( sSecao,'NCM'      ,'');
-               Prod.CEST       := INIRec.ReadString( sSecao,'CEST'      ,'');
-               Prod.EXTIPI       := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
+               Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
+               Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
+               Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
                Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
                Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
                Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0) ;
@@ -2907,11 +2894,14 @@ begin
          INIRec.WriteString( 'Identificacao','Saida'   ,DateToStr(Ide.dSaiEnt));
          INIRec.WriteString( 'Identificacao','hSaiEnt' ,TimeToStr(Ide.hSaiEnt));
          INIRec.WriteString( 'Identificacao','Tipo'    ,tpNFToStr(Ide.tpNF ));
+         INIRec.WriteString( 'Identificacao','idDest'  , DestinoOperacaoToStr(TpcnDestinoOperacao(Ide.idDest)));
          INIRec.WriteInteger('Identificacao','CidadeCod' ,Ide.cMunFG);
          INIRec.WriteString( 'Identificacao','tpAmb'   ,TpAmbToStr(Ide.tpAmb ));
          INIRec.WriteString( 'Identificacao','tpImp'   ,TpImpToStr(Ide.tpImp ));
          INIRec.WriteString( 'Identificacao','tpemis'  ,TpEmisToStr(Ide.tpemis ));
          INIRec.WriteString( 'Identificacao','Finalidade',FinNFeToStr(Ide.finNFe));
+         INIRec.WriteString( 'Identificacao','indFinal',ConsumidorFinalToStr(TpcnConsumidorFinal(Ide.indFinal)));
+         INIRec.WriteString( 'Identificacao','indPres', PresencaCompradorToStr(TpcnPresencaComprador(Ide.indPres)));
          INIRec.WriteString( 'Identificacao','procEmi' ,procEmiToStr(Ide.procEmi) );
          INIRec.WriteString( 'Identificacao','verProc' ,Ide.verProc );
          INIRec.WriteString( 'Identificacao','dhCont'  ,DateToStr(Ide.dhCont));
@@ -3006,6 +2996,7 @@ begin
          INIRec.WriteString(  'Destinatario','indIEDest'  ,indIEDestToStr(Dest.indIEDest));
          INIRec.WriteString(  'Destinatario','IE'         ,Dest.IE);
          INIRec.WriteString(  'Destinatario','ISUF'       ,Dest.ISUF);
+         INIRec.WriteString(  'Destinatario','IM'         ,Dest.IM);
          INIRec.WriteString(  'Destinatario','Email'      ,Dest.Email);
 
          INIRec.WriteString(  'Destinatario','Logradouro' ,Dest.EnderDest.xLgr);
@@ -3056,6 +3047,7 @@ begin
                INIRec.WriteString(  sSecao,'EAN'      ,Prod.cEAN);
                INIRec.WriteString(  sSecao,'Descricao',Prod.xProd);
                INIRec.WriteString(  sSecao,'NCM'      ,Prod.NCM);
+               INIRec.WriteString(  sSecao,'CEST'     ,Prod.CEST);
                INIRec.WriteString(  sSecao,'EXTIPI'   ,Prod.EXTIPI);
                INIRec.WriteString( sSecao,'CFOP'      ,Prod.CFOP);
                INIRec.WriteString( sSecao,'Unidade'   ,Prod.uCom);
@@ -3079,6 +3071,20 @@ begin
 
                INIRec.WriteFloat(sSecao,'vTotTrib',Imposto.vTotTrib) ;
 
+               for J:=0 to Prod.NVE.Count-1 do
+                begin
+                  if Prod.NVE.Items[J].NVE <> '' then
+                   begin
+                    with Prod.NVE.Items[J] do
+                       begin
+                         sSecao := 'NVE'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3);
+                         INIRec.WriteString(sSecao,'NVE',NVE);
+                       end;
+                   end
+                  else
+                    Break;
+                end;
+
                for J:=0 to Prod.DI.Count-1 do
                 begin
                   if Prod.DI.Items[j].nDi <> '' then
@@ -3093,6 +3099,23 @@ begin
                         INIRec.WriteString(sSecao,'DataDesembaraco',DateToStr(dDesemb));
                         INIRec.WriteString(sSecao,'CodigoExportador',cExportador);;
 
+                        if ( TipoViaTranspToStr(tpViaTransp) <> '' ) then
+                        begin
+                          INIRec.WriteString(sSecao,'tpViaTransp', TipoViaTranspToStr(tpViaTransp));
+                          if ( tpViaTransp = tvMaritima ) then
+                            INIRec.WriteFloat(sSecao, 'vAFRMM', vAFRMM);
+                        end;
+
+                        if ( TipoIntermedioToStr(tpIntermedio) <> '' ) then
+                        begin
+                          INIRec.WriteString(sSecao, 'tpIntermedio', TipoIntermedioToStr(tpIntermedio));
+                          if not ( tpIntermedio = tiContaPropria) then
+                          begin
+                            INIRec.WriteString(sSecao, 'CNPJ', CNPJ);
+                            INIRec.WriteString(sSecao, 'UFTerceiro', UFTerceiro);
+                          end;
+                        end;
+
                         for K:=0 to adi.Count-1 do
                          begin
                            with adi.Items[K] do
@@ -3102,6 +3125,8 @@ begin
                               INIRec.WriteInteger(sSecao,'nSeqAdi'     ,nSeqAdi) ;
                               INIRec.WriteString( sSecao,'CodigoFrabricante',cFabricante);
                               INIRec.WriteFloat(  sSecao,'DescontoADI' ,vDescDI);
+                              INIRec.WriteString( sSecao,'nDraw' , nDraw);
+
                             end;
                          end;
                       end;
@@ -3109,6 +3134,21 @@ begin
                   else
                     Break;
                 end;
+
+               for J:=0 to Prod.detExport.Count-1 do
+               begin
+                 if Prod.detExport.Items[j].nDraw <> '' then
+                 begin
+                   with Prod.detExport.Items[j] do
+                   begin
+                     sSecao := 'detExport'+IntToStrZero(I+1,3)+IntToStrZero(J+1,3);
+                     INIRec.WriteString(sSecao, 'nDraw', nDraw);
+                     INIRec.WriteString(sSecao, 'nRe', nRE);
+                     INIRec.WriteString(sSecao, 'chNFe', chNFe);
+                     INIRec.WriteFloat(sSecao, 'qExport', qExport);
+                   end;
+                 end;
+               end;
 
               if Prod.veicProd.chassi <> '' then
                begin
@@ -3512,10 +3552,14 @@ begin
              end;
           end;
 
-         if (exporta.UFembarq <> '') then
+         if (exporta.UFembarq <> '') or (exporta.UFSaidaPais <> '') then
           begin
             INIRec.WriteString( 'Exporta','UFembarq'  ,exporta.UFembarq) ;
             INIRec.WriteString( 'Exporta','xLocEmbarq',exporta.xLocEmbarq);
+
+            INIRec.WriteString( 'Exporta','UFSaidaPais',exporta.UFSaidaPais) ;
+            INIRec.WriteString( 'Exporta','xLocExporta',exporta.xLocExporta);
+            INIRec.WriteString( 'Exporta','xLocDespacho',exporta.xLocDespacho);
           end;
 
          if (compra.xNEmp <> '') then
@@ -3557,7 +3601,7 @@ begin
           INIRec.WriteString('procNFe','tpAmb',TpAmbToStr(procNFe.tpAmb)) ;
           INIRec.WriteString('procNFe','verAplic',procNFe.verAplic) ;
           INIRec.WriteString('procNFe','chNFe',procNFe.chNFe) ;
-          INIRec.WriteString('procNFe','dhRecbto'  ,DateToStr(procNFe.dhRecbto));
+	      INIRec.WriteString('procNFe','dhRecbto',DateTimeToStr(procNFe.dhRecbto));
           INIRec.WriteString('procNFe','nProt',procNFe.nProt) ;
           INIRec.WriteString('procNFe','digVal',procNFe.digVal) ;
           INIRec.WriteString('procNFe','cStat',IntToStr(procNFe.cStat)) ;

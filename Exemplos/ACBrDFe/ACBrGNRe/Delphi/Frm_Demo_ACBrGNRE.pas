@@ -7,7 +7,7 @@ interface
 uses IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  pcnConversao, pgnreConversao, ACBrGNRE, ACBrGNREGuiaClass,
+  pcnConversao, pgnreConversao, ACBrGNRE2, ACBrGNREGuiaClass,
   ACBrDFeUtil, ACBrBase, ACBrDFe;
 
 type
@@ -435,8 +435,21 @@ begin
 end;
 
 procedure TfrmDemo_ACBrGNRE.btnConsultaConfigUFClick(Sender: TObject);
+var
+  aux : String;
 begin
+  aux := '';
+  if not(InputQuery('Consulta Configuração UF', 'Uf', aux))
+   then exit;
+  ACBrGNRE1.WebServices.ConsultaUF.Uf := aux;
+
+  aux := '';
+  if not(InputQuery('Consulta Configuração UF', 'Receita', aux))
+   then exit;
+  ACBrGNRE1.WebServices.ConsultaUF.receita := StrToIntDef(aux, 0);
+
   ACBrGNRE1.WebServices.ConsultaUF.Executar;
+
   MemoResp.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsultaUF.RetWS);
   memoRespWS.Lines.Text := UTF8Encode(ACBrGNRE1.WebServices.ConsultaUF.RetWS);
   LoadXML(MemoResp, WBResposta);

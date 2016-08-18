@@ -176,7 +176,7 @@ TACBrECFDaruma = class( TACBrECFClass )
     function GetNumCOOInicial: String; override ;
     function GetNumUltimoItem: Integer; override ;
 
-    function GetDadosUltimaReducaoZ: AnsiString; override ;
+    function GetDadosUltimaReducaoZ: String; override ;
 
     procedure SetDecimaisPreco(AValue: Integer); override;
     procedure SetDecimaisQtd(AValue: Integer); override;
@@ -1494,45 +1494,45 @@ end;
 
 
 function TACBrECFDaruma.GetDataHora: TDateTime;
-Var RetCmd : AnsiString ;
-    OldShortDateFormat : String ;
+Var
+  RetCmd: AnsiString;
+  PrefixAno: String;
+  dia, mes, ano, hora, minuto, segundo: Word;
 begin
-  OldShortDateFormat := ShortDateFormat ;
-  try
-    if fpMFD then
-    begin
-      RetCmd  :=  RetornaInfoECF('66') ;
-      { Retorna a data/hora no formato: ddmmaaaahhnnss }
+  if fpMFD then
+  begin
+    RetCmd  :=  RetornaInfoECF('66');
+    { Retorna a data/hora no formato: ddmmaaaahhnnss }
 
-      ShortDateFormat := 'dd/mm/yyyy' ;
-      result := StrToDate(copy(RetCmd,1,2)+ DateSeparator +
-                          copy(RetCmd,3,2)+ DateSeparator +
-                          copy(RetCmd,5,4)) ;
+    dia     := StrToInt(copy(RetCmd, 1,2));
+    mes     := StrToInt(copy(RetCmd, 3,2));
+    ano     := StrToInt(copy(RetCmd, 5,4));
+    hora    := StrToInt(copy(RetCmd, 9,2));
+    minuto  := StrToInt(copy(RetCmd,11,2));
+    segundo := StrToInt(copy(RetCmd,13,2));
 
-      Result := RecodeHour(  Result,StrToInt(copy(RetCmd, 9,2))) ;
-      Result := RecodeMinute(Result,StrToInt(copy(RetCmd,11,2))) ;
-      Result := RecodeSecond(Result,StrToInt(copy(RetCmd,13,2))) ;
-    end
-    else
-    begin
-      RetCmd := EnviaComando( ESC + #230 ) ;
-      // MFD, 2000 -> :[230]EEWWddmmaahhMMss[CR]
-      // fs345     -> :TddmmaahhMMss[CR]
-      RetCmd := copy(RetCmd,Length(RetCmd)-12,12) ;  {Pega apenas a Data/Hora}
+    Result := EncodeDateTime(ano, mes, dia, hora, minuto, segundo, 0);
+  end
+  else
+  begin
+    RetCmd := EnviaComando( ESC + #230 ) ;
+    // MFD, 2000 -> :[230]EEWWddmmaahhMMss[CR]
+    // fs345     -> :TddmmaahhMMss[CR]
+    RetCmd := copy(RetCmd, Length(RetCmd)-12, 12) ;  {Pega apenas a Data/Hora}
 
-      ShortDateFormat := 'dd/mm/yy' ;
-      result := StrToDate(copy(RetCmd,1,2)+ DateSeparator +
-                          copy(RetCmd,3,2)+ DateSeparator +
-                          copy(RetCmd,5,2)) ;
+    // pega o inicio do ano atual para complementar o que vem da impressora
+    PrefixAno := FormatDateTime('yyyy', DATE);
+    PrefixAno := Copy(PrefixAno, 1, 2);
 
-      Result := RecodeHour(  Result,StrToInt(copy(RetCmd, 7,2))) ;
-      Result := RecodeMinute(Result,StrToInt(copy(RetCmd, 9,2))) ;
-      Result := RecodeSecond(Result,StrToInt(copy(RetCmd,11,2))) ;
-    end ;
-  finally
-     ShortDateFormat := OldShortDateFormat ;
-  end ;
+    dia     := StrToInt(copy(RetCmd, 1,2));
+    mes     := StrToInt(copy(RetCmd, 3,2));
+    ano     := StrToInt(PrefixAno + copy(RetCmd, 5,2));
+    hora    := StrToInt(copy(RetCmd, 7,2));
+    minuto  := StrToInt(copy(RetCmd, 9,2));
+    segundo := StrToInt(copy(RetCmd,11,2));
 
+    Result := EncodeDateTime(ano, mes, dia, hora, minuto, segundo, 0);
+  end;
 end;
 
 function TACBrECFDaruma.GetNumCupom: String;
@@ -2929,7 +2929,7 @@ begin
 
   if not fpMFD then
   begin
-    if (AliquotaICMS[1] in ['F','I','N']) then
+    if CharInSet(AliquotaICMS[1] , ['F','I','N']) then
       AliquotaICMS := AliquotaICMS[1]+' ';
   end
   else
@@ -3505,7 +3505,7 @@ begin
   begin
     VerificarBmpTexto(IndiceBMP, Linha);
 
-    if not (fsTipoRel in ['G','V']) then   // Achando o Tipo de Relatorio //
+    if not CharInSet(fsTipoRel , ['G','V']) then   // Achando o Tipo de Relatorio //
     begin
       RetCmd := RetornaInfoECF('056') ;
 
@@ -4946,7 +4946,7 @@ begin
 end;
 
 
-function TACBrECFDaruma.GetDadosUltimaReducaoZ: AnsiString;
+function TACBrECFDaruma.GetDadosUltimaReducaoZ: String;
 Var RetCmd, S, SS : AnsiString ;
     I :Integer;
     AliqZ : TACBrECFAliquota ;
@@ -5471,7 +5471,7 @@ procedure TACBrECFDaruma.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
 var
   Resp: Integer ;
   NomeArq, Relatorio, Tipo, Inicio, Fim, DirDest, PathDest: AnsiString ;
-  OldAtivo: Boolean ;
+  OldAtivo, OnLine: Boolean ;
 begin
   OldAtivo := Ativo;
   try
@@ -5505,8 +5505,9 @@ begin
     Ativo  := False;
     Inicio := IntToStrZero(ContInicial, 6);
     Fim    := IntToStrZero(ContFinal,   6);
+    OnLine := (OldAtivo) or ((TACBrECF(fpOwner).Modelo = ecfEscECF) and (TACBrECF(fpOwner).Ativo));
 
-    if OldAtivo then
+    if OnLine then
     begin
       Resp := xrGerarRelatorio_ECF_Daruma(Relatorio, Tipo, Inicio, Fim);
       if (Resp <> 1) then
@@ -5547,7 +5548,7 @@ procedure TACBrECFDaruma.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
 var
   Resp: Integer ;
   NomeArq, Relatorio, Tipo, DtInicial, DtFinal, DirDest, PathDest: AnsiString ;
-  OldAtivo: Boolean ;
+  OldAtivo, OnLine: Boolean ;
 begin
   OldAtivo := Ativo;
   try
@@ -5584,9 +5585,10 @@ begin
     Tipo      := 'DATAM';
     DtInicial := FormatDateTime('ddmmyyyy', DataInicial);
     DtFinal   := FormatDateTime('ddmmyyyy', DataFinal);
+    OnLine    := (OldAtivo) or ((TACBrECF(fpOwner).Modelo = ecfEscECF) and (TACBrECF(fpOwner).Ativo));
 
     // utilizar o modo on-line quando a impressora estiver ativa e o off-line quando não estiver
-    if OldAtivo then
+    if OnLine then
     begin
       Resp := xrGerarRelatorio_ECF_Daruma(Relatorio, Tipo, DtInicial, DtFinal);
       if (Resp <> 1) then

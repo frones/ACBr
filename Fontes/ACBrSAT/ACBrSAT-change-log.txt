@@ -47,6 +47,73 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/07/2016
+-- ACBrSAT --
+[*] Adicionada gravação de Log, no momento da gravação de Arquivos em disco
+    (por: DSA)
+
+-- pcnCFe, pcnCFeCanc --
+[*] Simplificação/Melhoria na rotina de gravação do XML  (por: DSA)
+
+Data: 30/06/2016
+-- pcnCFeW, pcnCFeCancW --
+[*] Ajustes para correta nomenclatura dos Campos na versão 0.08 (por:TDP Sistemas)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30957
+
+Data: 27/06/2016
+-- pcnCFe --
+[*] Adicionada a limeza do conteudo de "vTroco" em CFe.Clear
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=30868
+
+-- ACBrSAT, pcnCFeCancW --
+[-] Correção para não gerar CPF ou CNPJ se a versão do XML for superior a 0.06.
+    Versão do XML de Cancelamento será definida pela versão do XML da venda lido
+    (por: DSA)
+
+Data: 11/05/2016
+-- pcnCFeR, pcnCFeW --
+[*] Ajuste para processar a taga "CEST", somente se a versão do XML for 0.08
+    http://www.projetoacbr.com.br/forum/topic/28841-utilizar-cest/
+    (por: DSA)
+
+Data: 04/05/2016
+-- ACBrSAT --
+[*] Ajustes na gravação do Log.     (por: DSA)
+    - Adicionada a Data.
+    - Correção para não gravar hora 2 vezes no Inicio do comando
+
+Data: 26/03/2016
+-- ACBrSATExtratoFortes, ACBrSATExtratoFortesFr --
+[*] Adicionada a propriedade "EspacoFinal: Integer", que permite forçar um
+    avanço de papel, para que o mesmo fique posicionado para o Corte, corretamente
+    http://www.projetoacbr.com.br/forum/topic/28953-acbrsatextratofortes-melhoria/
+
+Data: 23/03/2016
+-- pcnCFeW --
+[-] Conteudo do campo "CFe.InfAdic.infCpl", tinha seu espaçamento interno
+    removido, devido a opção "Gerador.Opcoes.RetirarEspacos"   (por: DSA)
+
+Data: 22/03/2016
+-- ACBrSAT --
+[+] Adicionado propriedade CEST para ser gerado a partir de 01/01/2017, post
+    http://www.projetoacbr.com.br/forum/topic/28841-utilizar-cest/?do=findComment&comment=190836
+    (por Isaque Pinheiro)
+
+Data: 19/03/2016
+-- ACBrSAT --
+[+] Adicionado o evento:
+    OnCalcPath(var APath: String; ACNPJ: String; AData: TDateTime);
+    Que será disparado quando o componente computar o Path onde será gravado o
+    XML, permitindo a aplicação modificar o Path computado, atribuindo um novo
+    valor ao parâmetro "APath"               (Por: DSA e Amarildo)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28812
+
+Data: 17/03/2016
+-- ACBrSAT --
+[+] Adicionado o evento OnMensagemSEFAZ( ACod: Integer; AMensagem: String)
+    que será disparado, quando na resposta do SAT, houver alguma mensagem do
+    SEFAZ para o Contribuinte  (por: DSA)
+
 Data: 17/02/2016
 -- ACBrECFVirtualSAT --
 [+] Implementado o método "DescontoAcrescimoItemAnteriorVirtual" (Por: Amarildo)

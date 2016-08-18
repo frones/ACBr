@@ -40,24 +40,24 @@
 {                                                                              }
 {******************************************************************************}
 
-// $Id: JwaWinCrypt.pas,v 1.13 2005/09/06 16:36:50 marquardt Exp $
+// $Id: JwaWinCrypt.pas,v 1.17 2007/09/05 11:58:53 dezipaitor Exp $
 
-{$IFNDEF JWA_INCLUDEMODE}
-
+{$IFNDEF JWA_OMIT_SECTIONS}
 unit JwaWinCrypt;
 
-{$I jediapilib.inc}
+{$I JediAPILib.inc}
 
 {$WEAKPACKAGEUNIT}
+{$ENDIF JWA_OMIT_SECTIONS}
 
+{$IFNDEF JWA_OMIT_SECTIONS}
 interface
 
 uses
-  JwaWindows;
+  JwaWinBase, JwaWinType;
+{$ENDIF JWA_OMIT_SECTIONS}
 
-{$ENDIF !JWA_INCLUDEMODE}
-
-{$IFDEF JWA_INTERFACESECTION}
+{$IFNDEF JWA_IMPLEMENTATIONSECTION}
 
 {$HPPEMIT ''}
 {$HPPEMIT '#include <WinCrypt.h>'}
@@ -160,6 +160,10 @@ const
   {$EXTERNALSYM ALG_SID_DSS_PKCS}
   ALG_SID_DSS_DMS  = 2;
   {$EXTERNALSYM ALG_SID_DSS_DMS}
+{$IFDEF WINVISTA_UP}
+  ALG_SID_ECDSA    = 3;
+  {$EXTERNALSYM ALG_SID_ECDSA}
+{$ENDIF}
 
 // Block cipher sub ids
 // DES sub_ids
@@ -184,6 +188,19 @@ const
   {$EXTERNALSYM ALG_SID_CYLINK_MEK}
   ALG_SID_RC5        = 13;
   {$EXTERNALSYM ALG_SID_RC5}
+
+{$IFDEF WINXP_UP}
+  ALG_SID_AES_128    = 14;
+  {$EXTERNALSYM ALG_SID_AES_128}
+  ALG_SID_AES_192    = 15;
+  {$EXTERNALSYM ALG_SID_AES_192}
+  ALG_SID_AES_256    = 16;
+  {$EXTERNALSYM ALG_SID_AES_256}
+  ALG_SID_AES        = 17;
+  {$EXTERNALSYM ALG_SID_AES}
+{$ENDIF}
+
+
 
 // Fortezza sub-ids
 
@@ -227,6 +244,10 @@ const
   {$EXTERNALSYM ALG_SID_AGREED_KEY_ANY}
   ALG_SID_KEA            = 4;
   {$EXTERNALSYM ALG_SID_KEA}
+{$IFDEF WINVISTA_UP}
+  ALG_SID_ECDH           = 5;
+  {$EXTERNALSYM ALG_SID_ECDH}
+{$ENDIF}
 
 // Hash sub ids
 
@@ -253,6 +274,20 @@ const
   ALG_SID_TLS1PRF    = 10;
   {$EXTERNALSYM ALG_SID_TLS1PRF}
 
+{$IFDEF WINXP_UP}
+  ALG_SID_HASH_REPLACE_OWF = 11;
+  {$EXTERNALSYM ALG_SID_HASH_REPLACE_OWF}
+{$ENDIF}
+
+{$IFDEF WIN2003_UP}
+  ALG_SID_SHA_256          = 12;
+  {$EXTERNALSYM ALG_SID_SHA_256}
+  ALG_SID_SHA_384          = 13;
+  {$EXTERNALSYM ALG_SID_SHA_384}
+  ALG_SID_SHA_512          = 14;
+  {$EXTERNALSYM ALG_SID_SHA_512}
+{$ENDIF}
+
 // secure channel sub ids
 
   ALG_SID_SSL3_MASTER          = 1;
@@ -269,6 +304,11 @@ const
   {$EXTERNALSYM ALG_SID_TLS1_MASTER}
   ALG_SID_SCHANNEL_ENC_KEY     = 7;
   {$EXTERNALSYM ALG_SID_SCHANNEL_ENC_KEY}
+{$IFDEF WINVISTA_UP}
+  // misc ECC sub ids
+  ALG_SID_ECMQV                 = 1;
+  {$EXTERNALSYM ALG_SID_ECMQV}
+{$ENDIF}
 
 // Our silly example sub-id
 
@@ -352,6 +392,37 @@ const
   {$EXTERNALSYM CALG_HMAC}
   CALG_TLS1PRF              = ALG_CLASS_HASH or ALG_TYPE_ANY or ALG_SID_TLS1PRF;
   {$EXTERNALSYM CALG_TLS1PRF}
+
+{$IFDEF WINXP_UP}
+  CALG_HASH_REPLACE_OWF     = ALG_CLASS_HASH or ALG_TYPE_ANY or ALG_SID_HASH_REPLACE_OWF;
+  {$EXTERNALSYM CALG_HASH_REPLACE_OWF}
+  CALG_AES_128              = ALG_CLASS_DATA_ENCRYPT or ALG_TYPE_BLOCK or ALG_SID_AES_128;
+  {$EXTERNALSYM CALG_AES_128}
+  CALG_AES_192              = ALG_CLASS_DATA_ENCRYPT or ALG_TYPE_BLOCK or ALG_SID_AES_192;
+  {$EXTERNALSYM CALG_AES_192}
+  CALG_AES_256              = ALG_CLASS_DATA_ENCRYPT or ALG_TYPE_BLOCK or ALG_SID_AES_256;
+  {$EXTERNALSYM CALG_AES_256}
+  CALG_AES                  = ALG_CLASS_DATA_ENCRYPT or ALG_TYPE_BLOCK or ALG_SID_AES;
+  {$EXTERNALSYM CALG_AES}
+{$ENDIF}
+
+{$IFDEF WIN2003_UP}
+  CALG_SHA_256              = ALG_CLASS_HASH or ALG_TYPE_ANY or ALG_SID_SHA_256;
+  {$EXTERNALSYM CALG_SHA_256}
+  CALG_SHA_384              = ALG_CLASS_HASH or ALG_TYPE_ANY or ALG_SID_SHA_384;
+  {$EXTERNALSYM CALG_SHA_384}
+  CALG_SHA_512              = ALG_CLASS_HASH or ALG_TYPE_ANY or ALG_SID_SHA_512;
+  {$EXTERNALSYM CALG_SHA_512}
+{$ENDIF}
+
+{$IFDEF WINVISTA_UP}
+  CALG_ECDH                = ALG_CLASS_KEY_EXCHANGE or ALG_TYPE_DH or ALG_SID_ECDH;
+  {$EXTERNALSYM CALG_ECDH}
+  CALG_ECMQV               = ALG_CLASS_KEY_EXCHANGE or ALG_TYPE_ANY or ALG_SID_ECMQV;
+  {$EXTERNALSYM CALG_ECMQV}
+  CALG_ECDSA               = ALG_CLASS_SIGNATURE or ALG_TYPE_DSS or ALG_SID_ECDSA;
+  {$EXTERNALSYM CALG_ECDSA}
+{$ENDIF}
 
 // resource number for signatures in the CSP
 
@@ -831,10 +902,18 @@ const
   PROV_INTEL_SEC     = 22;
   {$EXTERNALSYM PROV_INTEL_SEC}
 
+{$IFDEF WINXP_UP}
+  PROV_REPLACE_OWF   = 23;
+  {$EXTERNALSYM PROV_REPLACE_OWF}
+  PROV_RSA_AES       = 24;
+  {$EXTERNALSYM PROV_RSA_AES}
+{$ENDIF}
+
 //
 // STT defined Providers
 //
 
+{$IFNDEF WIN2003_UP}
   PROV_STT_MER  = 7;
   {$EXTERNALSYM PROV_STT_MER}
   PROV_STT_ACQ  = 8;
@@ -845,6 +924,7 @@ const
   {$EXTERNALSYM PROV_STT_ROOT}
   PROV_STT_ISS  = 11;
   {$EXTERNALSYM PROV_STT_ISS}
+{$ENDIF}
 
 //
 // Provider friendly names
@@ -971,6 +1051,30 @@ const
   {$EXTERNALSYM MS_SCARD_PROV}
   {$ENDIF UNICODE}
 
+  {$IFDEF WIN2003_UP}
+  MS_ENH_RSA_AES_PROV_A = 'Microsoft Enhanced RSA and AES Cryptographic Provider';
+  {$EXTERNALSYM MS_ENH_RSA_AES_PROV_A}
+  MS_ENH_RSA_AES_PROV_W = 'Microsoft Enhanced RSA and AES Cryptographic Provider';
+  {$EXTERNALSYM MS_ENH_RSA_AES_PROV_W}
+  {$ELSE}
+     {$IFDEF WINXP}
+        MS_ENH_RSA_AES_PROV_A = 'Microsoft Enhanced RSA and AES Cryptographic Provider (Prototype)';
+        {$EXTERNALSYM MS_ENH_RSA_AES_PROV_A}
+        MS_ENH_RSA_AES_PROV_W = 'Microsoft Enhanced RSA and AES Cryptographic Provider (Prototype)';
+        {$EXTERNALSYM MS_ENH_RSA_AES_PROV_W}
+     {$ENDIF}
+  {$ENDIF}
+
+  {$IFDEF WINXP_UP}
+    {$IFDEF UNICODE}
+      MS_ENH_RSA_AES_PROV = MS_ENH_RSA_AES_PROV_W;
+      {$EXTERNALSYM MS_ENH_RSA_AES_PROV}
+    {$ELSE}
+      MS_ENH_RSA_AES_PROV = MS_ENH_RSA_AES_PROV_A;
+      {$EXTERNALSYM MS_ENH_RSA_AES_PROV}
+    {$ENDIF}
+  {$ENDIF}
+
   MAXUIDLEN = 64;
   {$EXTERNALSYM MAXUIDLEN}
 
@@ -1056,7 +1160,7 @@ type
     aiAlgid: ALG_ID;
     dwBitLen: DWORD;
     dwNameLen: DWORD;
-    szName: array [0..19] of CHAR;
+    szName: array [0..19] of AnsiChar;
   end;
   {$EXTERNALSYM _PROV_ENUMALGS}
   PROV_ENUMALGS = _PROV_ENUMALGS;
@@ -1073,9 +1177,9 @@ type
     dwMaxLen: DWORD;
     dwProtocols: DWORD;
     dwNameLen: DWORD;
-    szName: array [0..19] of CHAR;
+    szName: array [0..19] of AnsiChar;
     dwLongNameLen: DWORD;
-    szLongName: array [0..39] of CHAR;
+    szLongName: array [0..39] of AnsiChar;
   end;
   {$EXTERNALSYM _PROV_ENUMALGS_EX}
   PROV_ENUMALGS_EX = _PROV_ENUMALGS_EX;
@@ -1282,7 +1386,7 @@ type
   TCryptAttrBlob = CRYPT_ATTR_BLOB;
   PCRYPT_ATTR_BLOB = ^_CRYPTOAPI_BLOB;
   {$EXTERNALSYM PCRYPT_ATTR_BLOB}
-  PCryptAttrBlob = PCRYPT_ATTR_BLOB;  
+  PCryptAttrBlob = PCRYPT_ATTR_BLOB;
 
 // structure for use with CryptSetKeyParam for CMS keys
 
@@ -1311,7 +1415,7 @@ function CryptAcquireContext(var phProv: HCRYPTPROV; pszContainer: LPCTSTR;
   pszProvider: LPCTSTR; dwProvType: DWORD; dwFlags: DWORD): BOOL; stdcall;
 {$EXTERNALSYM CryptAcquireContext}
 
-function CryptReleaseContext(hProv: HCRYPTPROV; dwFlags: ULONG_PTR): BOOL; stdcall;
+function CryptReleaseContext(hProv: HCRYPTPROV; dwFlags: DWORD): BOOL; stdcall;
 {$EXTERNALSYM CryptReleaseContext}
 
 function CryptGenKey(hProv: HCRYPTPROV; Algid: ALG_ID; dwFlags: DWORD;
@@ -2061,7 +2165,7 @@ const
 //  These UNICODE characters are encoded as UTF8 8 bit characters.
 //
 //  For CertDecodeName, two 0 bytes are always appended to the end of the
-//  string (ensures a CHAR or WCHAR string is null terminated).
+//  string (ensures a AnsiChar or WCHAR string is null terminated).
 //  These added 0 bytes are't included in the BLOB.cbData.
 //--------------------------------------------------------------------------
 
@@ -5871,7 +5975,7 @@ type
 //  private key is used. The hCryptProv and dwKeySpec specify the private key.
 //  The pSenderId identifies the certificate containing the sender's public key.
 //
-//  Currently, pvKeyEncryptionAuxInfo isn't used and must be set to NULL. 
+//  Currently, pvKeyEncryptionAuxInfo isn't used and must be set to NULL.
 //
 //  If KeyEncryptionAlgorithm.Parameters.cbData == 0, then, its Parameters
 //  are updated with the encoded KeyWrapAlgorithm.
@@ -8109,7 +8213,7 @@ type
   {$EXTERNALSYM PCCTL_CONTEXT}
   PPCCTL_CONTEXT = ^PCCTL_CONTEXT;
   {$EXTERNALSYM PPCCTL_CONTEXT}
-  
+
 //+-------------------------------------------------------------------------
 //  Certificate, CRL and CTL property IDs
 //
@@ -10293,7 +10397,7 @@ const
 //+-------------------------------------------------------------------------
 //  CRL_FIND_ISSUED_BY
 //
-//  Find CRL matching the specified issuer. 
+//  Find CRL matching the specified issuer.
 //
 //  pvFindPara is the PCCERT_CONTEXT of the CRL issuer.
 //
@@ -12813,15 +12917,15 @@ function CryptHashPublicKeyInfo(hCryptProv: HCRYPTPROV; Algid: ALG_ID;
 {$EXTERNALSYM CryptHashPublicKeyInfo}
 
 //+-------------------------------------------------------------------------
-//  Convert a Name Value to a null terminated char string
+//  Convert a Name Value to a null terminated AnsiChar string
 //
 //  Returns the number of characters converted including the terminating null
 //  character. If psz is NULL or csz is 0, returns the required size of the
-//  destination string (including the terminating null char).
+//  destination string (including the terminating null AnsiChar).
 //
 //  If psz != NULL && csz != 0, returned psz is always NULL terminated.
 //
-//  Note: csz includes the NULL char.
+//  Note: csz includes the NULL AnsiChar.
 //--------------------------------------------------------------------------
 
 function CertRDNValueToStrA(dwValueType: DWORD; pValue: PCERT_RDN_VALUE_BLOB;
@@ -12829,15 +12933,15 @@ function CertRDNValueToStrA(dwValueType: DWORD; pValue: PCERT_RDN_VALUE_BLOB;
 {$EXTERNALSYM CertRDNValueToStrA}
 
 //+-------------------------------------------------------------------------
-//  Convert a Name Value to a null terminated char string
+//  Convert a Name Value to a null terminated AnsiChar string
 //
 //  Returns the number of characters converted including the terminating null
 //  character. If psz is NULL or csz is 0, returns the required size of the
-//  destination string (including the terminating null char).
+//  destination string (including the terminating null AnsiChar).
 //
 //  If psz != NULL && csz != 0, returned psz is always NULL terminated.
 //
-//  Note: csz includes the NULL char.
+//  Note: csz includes the NULL AnsiChar.
 //--------------------------------------------------------------------------
 
 function CertRDNValueToStrW(dwValueType: DWORD; pValue: PCERT_RDN_VALUE_BLOB;
@@ -12848,7 +12952,7 @@ function CertRDNValueToStr(dwValueType: DWORD; pValue: PCERT_RDN_VALUE_BLOB;
 {$EXTERNALSYM CertRDNValueToStr}
 
 //+-------------------------------------------------------------------------
-//  Convert the certificate name blob to a null terminated char string.
+//  Convert the certificate name blob to a null terminated AnsiChar string.
 //
 //  Follows the string representation of distinguished names specified in
 //  RFC 1779. (Note, added double quoting "" for embedded quotes, quote
@@ -12902,11 +13006,11 @@ function CertRDNValueToStr(dwValueType: DWORD; pValue: PCERT_RDN_VALUE_BLOB;
 //
 //  Returns the number of characters converted including the terminating null
 //  character. If psz is NULL or csz is 0, returns the required size of the
-//  destination string (including the terminating null char).
+//  destination string (including the terminating null AnsiChar).
 //
 //  If psz != NULL && csz != 0, returned psz is always NULL terminated.
 //
-//  Note: csz includes the NULL char.
+//  Note: csz includes the NULL AnsiChar.
 //--------------------------------------------------------------------------
 
 //+-------------------------------------------------------------------------
@@ -13091,6 +13195,25 @@ function CertStrToName(dwCertEncodingType: DWORD; pszX500: LPCTSTR;
 //      Subject Name field for the Email OID, "1.2.840.113549.1.9.1".
 //      If the rfc822Name or Email OID is found, returns the string. Otherwise,
 //      returns an empty string (returned character count is 1).
+//    CERT_NAME_DNS_TYPE
+//      If the certificate has a Subject Alternative Name extension (for
+//      issuer, Issuer Alternative Name), searches for first DNSName choice.
+//      If the DNSName choice isn't found in the extension, searches the
+//      Subject Name field for the CN OID, "2.5.4.3".
+//      If the DNSName or CN OID is found, returns the string. Otherwise,
+//      returns an empty string.
+//    CERT_NAME_URL_TYPE
+//      If the certificate has a Subject Alternative Name extension (for
+//      issuer, Issuer Alternative Name), searches for first URL choice.
+//      If the URL choice is found, returns the string. Otherwise,
+//      returns an empty string.
+//    CERT_NAME_UPN_TYPE
+//      If the certificate has a Subject Alternative Name extension,
+//      searches the OtherName choices looking for a
+//      pszObjId == szOID_NT_PRINCIPAL_NAME, "1.3.6.1.4.1.311.20.2.3".
+//      If the UPN OID is found, the blob is decoded as a
+//      X509_UNICODE_ANY_STRING and the decoded string is returned.
+//      Otherwise, returns an empty string.
 //    CERT_NAME_RDN_TYPE
 //      Converts the Subject Name blob by calling CertNameToStr. pvTypePara
 //      points to a DWORD containing the dwStrType passed to CertNameToStr.
@@ -13132,13 +13255,13 @@ function CertStrToName(dwCertEncodingType: DWORD; pszX500: LPCTSTR;
 //  Returns the number of characters converted including the terminating null
 //  character. If pwszNameString is NULL or cchNameString is 0, returns the
 //  required size of the destination string (including the terminating null
-//  char). If the specified name type isn't found. returns an empty string
+//  AnsiChar). If the specified name type isn't found. returns an empty string
 //  with a returned character count of 1.
 //
 //  If pwszNameString != NULL && cwszNameString != 0, returned pwszNameString
 //  is always NULL terminated.
 //
-//  Note: cchNameString includes the NULL char.
+//  Note: cchNameString includes the NULL AnsiChar.
 //--------------------------------------------------------------------------
 
 //+-------------------------------------------------------------------------
@@ -13169,6 +13292,12 @@ const
   {$EXTERNALSYM CERT_NAME_SIMPLE_DISPLAY_TYPE}
   CERT_NAME_FRIENDLY_DISPLAY_TYPE = 5;
   {$EXTERNALSYM CERT_NAME_FRIENDLY_DISPLAY_TYPE}
+  CERT_NAME_DNS_TYPE              = 6;
+  {$EXTERNALSYM CERT_NAME_DNS_TYPE}
+  CERT_NAME_URL_TYPE              = 7;
+  {$EXTERNALSYM CERT_NAME_URL_TYPE}
+  CERT_NAME_UPN_TYPE              = 8;
+  {$EXTERNALSYM CERT_NAME_UPN_TYPE}
 
 //+-------------------------------------------------------------------------
 //  Certificate name flags
@@ -14285,7 +14414,7 @@ type
   CRYPT_BLOB_ARRAY = _CRYPT_BLOB_ARRAY;
   {$EXTERNALSYM CRYPT_BLOB_ARRAY}
   TCryptBlobArray = CRYPT_BLOB_ARRAY;
-  PCryptBlobArray = PCRYPT_BLOB_ARRAY;  
+  PCryptBlobArray = PCRYPT_BLOB_ARRAY;
 
   PCRYPT_CREDENTIALS = ^CRYPT_CREDENTIALS;
   {$EXTERNALSYM PCRYPT_CREDENTIALS}
@@ -14484,11 +14613,11 @@ function CryptRetrieveObjectByUrl(pszUrl: LPCTSTR; pszObjectOid: LPCSTR;
 //
 // Call back function to cancel object retrieval
 //
-// The function can be installed on a per thread basis.  
+// The function can be installed on a per thread basis.
 // If CryptInstallCancelRetrieval is called for multiple times, only the most recent
 // installation will be kept.
 //
-// This is only effective for http, https, gopher, and ftp protocol.  
+// This is only effective for http, https, gopher, and ftp protocol.
 // It is ignored by the rest of the protocols.
 
 type
@@ -15312,7 +15441,7 @@ type
     cbSize: DWORD;
     TrustStatus: CERT_TRUST_STATUS;
     cElement: DWORD;
-    rgpElement: PCERT_CHAIN_ELEMENT;
+    rgpElement: ^PCERT_CHAIN_ELEMENT;
     pTrustListInfo: PCERT_TRUST_LIST_INFO;
   end;
   {$EXTERNALSYM _CERT_SIMPLE_CHAIN}
@@ -15333,11 +15462,19 @@ type
 
   PCERT_CHAIN_CONTEXT = ^CERT_CHAIN_CONTEXT;
   {$EXTERNALSYM PCERT_CHAIN_CONTEXT}
+  PCCERT_CHAIN_CONTEXT = ^CERT_CHAIN_CONTEXT;
+  {$EXTERNALSYM PCCERT_CHAIN_CONTEXT}
+
   _CERT_CHAIN_CONTEXT = record
     cbSize: DWORD;
     TrustStatus: CERT_TRUST_STATUS;
     cChain: DWORD;
-    rgpChain: PCERT_SIMPLE_CHAIN;
+    rgpChain: ^PCERT_SIMPLE_CHAIN;
+
+    cLowerQualityChainContext : DWORD;
+    rgpLowerQualityChainContext : ^PCCERT_CHAIN_CONTEXT;
+    fHasRevocationFreshnessTime : BOOL;
+    dwRevocationFreshnessTime : DWORD;
   end;
   {$EXTERNALSYM _CERT_CHAIN_CONTEXT}
   CERT_CHAIN_CONTEXT = _CERT_CHAIN_CONTEXT;
@@ -15345,8 +15482,6 @@ type
   TCertChainContext = CERT_CHAIN_CONTEXT;
   PCertChainContext = PCERT_CHAIN_CONTEXT;
 
-  PCCERT_CHAIN_CONTEXT = ^CERT_CHAIN_CONTEXT;
-  {$EXTERNALSYM PCCERT_CHAIN_CONTEXT}
   PPCCERT_CHAIN_CONTEXT = ^PCERT_CHAIN_CONTEXT;
   {$NODEFINE PPCCERT_CHAIN_CONTEXT}
 
@@ -15955,18 +16090,153 @@ const
 //          dwError is set to CERT_E_UNTRUSTEDCA.
 //--------------------------------------------------------------------------
 
-{$ENDIF JWA_INTERFACESECTION}
+//+-------------------------------------------------------------------------
+//  CERT_CHAIN_POLICY_MICROSOFT_ROOT
+//
+//  Checks if the last element of the first simple chain contains a
+//  Microsoft root public key. If it doesn't contain a Microsoft root
+//  public key, dwError is set to CERT_E_UNTRUSTEDROOT.
+//
+//  pPolicyPara is optional. However,
+//  MICROSOFT_ROOT_CERT_CHAIN_POLICY_ENABLE_TEST_ROOT_FLAG can be set in
+//  the dwFlags in pPolicyPara to also check for the Microsoft Test Roots.
+//
+//  pvExtraPolicyPara and pvExtraPolicyStatus aren't used and must be set
+//  to NULL.
+//--------------------------------------------------------------------------
+const
+  MICROSOFT_ROOT_CERT_CHAIN_POLICY_ENABLE_TEST_ROOT_FLAG = $00010000;
+  {$EXTERNALSYM MICROSOFT_ROOT_CERT_CHAIN_POLICY_ENABLE_TEST_ROOT_FLAG}
+
+//+-------------------------------------------------------------------------
+// convert formatted string to binary
+// If cchString is 0, then pszString is NULL terminated and
+// cchString is obtained via strlen() + 1.
+// dwFlags defines string format
+// if pbBinary is NULL, *pcbBinary returns the size of required memory
+// *pdwSkip returns the character count of skipped strings, optional
+// *pdwFlags returns the actual format used in the conversion, optional
+//--------------------------------------------------------------------------
+function CryptStringToBinaryA(pszString: LPCSTR; cchString: DWORD;
+  dwFlags: DWORD; ppBinary: PBYTE; var ppcbBinary: DWORD;
+  ppdwSkip: PDWORD): BOOL; stdcall;
+{$EXTERNALSYM CryptStringToBinaryA}
+
+//+-------------------------------------------------------------------------
+// convert formatted string to binary
+// If cchString is 0, then pszString is NULL terminated and
+// cchString is obtained via strlen() + 1.
+// dwFlags defines string format
+// if pbBinary is NULL, *pcbBinary returns the size of required memory
+// *pdwSkip returns the character count of skipped strings, optional
+// *pdwFlags returns the actual format used in the conversion, optional
+//--------------------------------------------------------------------------
+
+function CryptStringToBinaryW(pszString: LPCWSTR; cchString: DWORD;
+  dwFlags: DWORD; ppBinary: BYTE; var ppcbBinary: DWORD;
+  ppdwSkip: DWORD): BOOL; stdcall;
+{$EXTERNALSYM CryptStringToBinaryW}
+
+function CryptStringToBinary(pszString: LPCSTR; cchString: DWORD;
+  dwFlags: DWORD; ppBinary: BYTE; var ppcbBinary: DWORD;
+  ppdwSkip: DWORD): BOOL; stdcall;
+{$EXTERNALSYM CryptStringToBinary}
+
+
+//+-------------------------------------------------------------------------
+// convert binary to formatted string
+// dwFlags defines string format
+// if pszString is NULL, *pcchString returns size in characters
+// including null-terminator
+//--------------------------------------------------------------------------
+function CryptBinaryToStringA(const pBinary: PBYTE; cbBinary: DWORD;
+  dwFlags: DWORD; pszString: LPSTR; var pchString: DWORD): BOOL; stdcall;
+{$EXTERNALSYM CryptBinaryToStringA}
+
+//+-------------------------------------------------------------------------
+// convert binary to formatted string
+// dwFlags defines string format
+// if pszString is NULL, *pcchString returns size in characters
+// including null-terminator
+//--------------------------------------------------------------------------
+function CryptBinaryToStringW(const pBinary: PBYTE; cbBinary: DWORD;
+  dwFlags: DWORD; pszString: LPWSTR; var pchString: DWORD): BOOL; stdcall;
+{$EXTERNALSYM CryptBinaryToStringW}
+
+function CryptBinaryToString(const pBinary: PBYTE; cbBinary: DWORD;
+  dwFlags: DWORD; pszString: LPSTR; var pchString: DWORD): BOOL; stdcall;
+{$EXTERNALSYM CryptBinaryToString}
+
+// dwFlags has the following defines
+const
+  CRYPT_STRING_BASE64HEADER                 = $00000000;
+  CRYPT_STRING_BASE64                       = $00000001;
+  CRYPT_STRING_BINARY                       = $00000002;
+  CRYPT_STRING_BASE64REQUESTHEADER          = $00000003;
+  CRYPT_STRING_HEX                          = $00000004;
+  CRYPT_STRING_HEXASCII                     = $00000005;
+  CRYPT_STRING_BASE64_ANY                   = $00000006;
+  CRYPT_STRING_ANY                          = $00000007;
+  CRYPT_STRING_HEX_ANY                      = $00000008;
+  CRYPT_STRING_BASE64X509CRLHEADER          = $00000009;
+  CRYPT_STRING_HEXADDR                      = $0000000a;
+  CRYPT_STRING_HEXASCIIADDR                 = $0000000b;
+
+  CRYPT_STRING_NOCR                         = DWORD($80000000);
+
+// CryptBinaryToString uses the following flags
+// CRYPT_STRING_BASE64HEADER - base64 format with certificate begin
+//                             and end headers
+// CRYPT_STRING_BASE64 - only base64 without headers
+// CRYPT_STRING_BINARY - pure binary copy
+// CRYPT_STRING_BASE64REQUESTHEADER - base64 format with request begin
+//                                    and end headers
+// CRYPT_STRING_BASE64X509CRLHEADER - base64 format with x509 crl begin
+//                                    and end headers
+// CRYPT_STRING_HEX - only hex format
+// CRYPT_STRING_HEXASCII - hex format with ascii AnsiChar display
+// CRYPT_STRING_HEXADDR - hex format with address display
+// CRYPT_STRING_HEXASCIIADDR - hex format with ascii AnsiChar and address display
+//
+// CryptBinaryToString accepts CRYPT_STRING_NOCR or'd into one of the above.
+// When set, line breaks contain only LF, instead of CR-LF pairs.
+
+// CryptStringToBinary uses the following flags
+// CRYPT_STRING_BASE64_ANY tries the following, in order:
+//    CRYPT_STRING_BASE64HEADER
+//    CRYPT_STRING_BASE64
+// CRYPT_STRING_ANY tries the following, in order:
+//    CRYPT_STRING_BASE64_ANY
+//    CRYPT_STRING_BINARY -- should always succeed
+// CRYPT_STRING_HEX_ANY tries the following, in order:
+//    CRYPT_STRING_HEXADDR
+//    CRYPT_STRING_HEXASCIIADDR
+//    CRYPT_STRING_HEXASCII
+//    CRYPT_STRING_HEX
+{$ENDIF JWA_IMPLEMENTATIONSECTION}
+
+
+{$IFNDEF JWA_OMIT_SECTIONS}
+implementation
+//uses ...
+{$ENDIF JWA_OMIT_SECTIONS}
+
+
+
+{$IFNDEF JWA_INTERFACESECTION}
 
 {$IFNDEF JWA_INCLUDEMODE}
-
-implementation
-
-uses
-  JwaWinDLLNames;
-
-{$ENDIF !JWA_INCLUDEMODE}
-
-{$IFDEF JWA_IMPLEMENTATIONSECTION}
+const
+  crypt32 = 'crypt32.dll';
+  cryptnet = 'cryptnet.dll';
+  advapi32 = 'advapi32.dll';
+  softpub = 'softpub.dll';
+  {$IFDEF UNICODE}
+  AWSuffix = 'W';
+  {$ELSE}
+  AWSuffix = 'A';
+  {$ENDIF UNICODE}
+{$ENDIF JWA_INCLUDEMODE}
 
 function GET_ALG_CLASS(x: DWORD): DWORD;
 begin
@@ -16147,7 +16417,7 @@ var
 
 function CryptSetKeyParam;
 begin
-  GetProcedureAddress(_CryptSetKeyParam, crypt32, 'CryptSetKeyParam');
+  GetProcedureAddress(_CryptSetKeyParam, advapi32, 'CryptSetKeyParam');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19085,7 +19355,7 @@ var
 
 function CryptRetrieveObjectByUrlA;
 begin
-  GetProcedureAddress(_CryptRetrieveObjectByUrlA, crypt32, 'CryptRetrieveObjectByUrlA');
+  GetProcedureAddress(_CryptRetrieveObjectByUrlA, cryptnet, 'CryptRetrieveObjectByUrlA');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19098,7 +19368,7 @@ var
 
 function CryptRetrieveObjectByUrlW;
 begin
-  GetProcedureAddress(_CryptRetrieveObjectByUrlW, crypt32, 'CryptRetrieveObjectByUrlW');
+  GetProcedureAddress(_CryptRetrieveObjectByUrlW, cryptnet, 'CryptRetrieveObjectByUrlW');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19111,7 +19381,7 @@ var
 
 function CryptRetrieveObjectByUrl;
 begin
-  GetProcedureAddress(_CryptRetrieveObjectByUrl, crypt32, 'CryptRetrieveObjectByUrl' + AWSuffix);
+  GetProcedureAddress(_CryptRetrieveObjectByUrl, cryptnet, 'CryptRetrieveObjectByUrl' + AWSuffix);
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19124,7 +19394,7 @@ var
 
 function CryptInstallCancelRetrieval;
 begin
-  GetProcedureAddress(_CryptInstallCancelRetrieval, crypt32, 'CryptInstallCancelRetrieval');
+  GetProcedureAddress(_CryptInstallCancelRetrieval, cryptnet, 'CryptInstallCancelRetrieval');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19137,7 +19407,7 @@ var
 
 function CryptUninstallCancelRetrieval;
 begin
-  GetProcedureAddress(_CryptUninstallCancelRetrieval, crypt32, 'CryptUninstallCancelRetrieval');
+  GetProcedureAddress(_CryptUninstallCancelRetrieval, cryptnet, 'CryptUninstallCancelRetrieval');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19150,7 +19420,7 @@ var
 
 function CryptCancelAsyncRetrieval;
 begin
-  GetProcedureAddress(_CryptCancelAsyncRetrieval, crypt32, 'CryptCancelAsyncRetrieval');
+  GetProcedureAddress(_CryptCancelAsyncRetrieval, cryptnet, 'CryptCancelAsyncRetrieval');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19163,7 +19433,7 @@ var
 
 function CryptGetObjectUrl;
 begin
-  GetProcedureAddress(_CryptGetObjectUrl, crypt32, 'CryptGetObjectUrl');
+  GetProcedureAddress(_CryptGetObjectUrl, cryptnet, 'CryptGetObjectUrl');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19176,7 +19446,7 @@ var
 
 function CryptGetTimeValidObject;
 begin
-  GetProcedureAddress(_CryptGetTimeValidObject, crypt32, 'CryptGetTimeValidObject');
+  GetProcedureAddress(_CryptGetTimeValidObject, cryptnet, 'CryptGetTimeValidObject');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19189,7 +19459,7 @@ var
 
 function CryptFlushTimeValidObject;
 begin
-  GetProcedureAddress(_CryptFlushTimeValidObject, crypt32, 'CryptFlushTimeValidObject');
+  GetProcedureAddress(_CryptFlushTimeValidObject, cryptnet, 'CryptFlushTimeValidObject');
   asm
         MOV     ESP, EBP
         POP     EBP
@@ -19392,270 +19662,349 @@ begin
   end;
 end;
 
+var
+  _CryptBinaryToStringA: Pointer;
+
+function CryptBinaryToStringA;
+begin
+  GetProcedureAddress(_CryptBinaryToStringA, crypt32, 'CryptBinaryToStringA');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_CryptBinaryToStringA]
+  end;
+end;
+
+var
+  _CryptBinaryToStringW: Pointer;
+
+function CryptBinaryToStringW;
+begin
+  GetProcedureAddress(_CryptBinaryToStringW, crypt32, 'CryptBinaryToStringW');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_CryptBinaryToStringW]
+  end;
+end;
+
+
+var
+  _CryptStringToBinaryA: Pointer;
+
+function CryptStringToBinaryA;
+begin
+  GetProcedureAddress(_CryptStringToBinaryA, crypt32, 'CryptStringToBinaryA');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_CryptStringToBinaryA]
+  end;
+end;
+
+var _CryptStringToBinaryW : Pointer;
+function CryptStringToBinaryW;
+begin
+  GetProcedureAddress(_CryptStringToBinaryW, crypt32, 'CryptStringToBinaryW');
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_CryptStringToBinaryW]
+  end;
+end;
+
+var _CryptStringToBinary : Pointer;
+function CryptStringToBinary;
+begin
+  GetProcedureAddress(_CryptStringToBinary, advapi32, 'CryptStringToBinary' + AWSuffix);
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_CryptStringToBinary]
+  end;
+end;
+
+var _CryptBinaryToString : Pointer;
+function CryptBinaryToString;
+begin
+  GetProcedureAddress(_CryptBinaryToString, advapi32, 'CryptBinaryToString' + AWSuffix);
+  asm
+        MOV     ESP, EBP
+        POP     EBP
+        JMP     [_CryptBinaryToString]
+  end;
+end;
+
+
 {$ELSE}
 
-function CryptAcquireContextA; external advapi32 name 'CryptAcquireContextA';
-function CryptAcquireContextW; external advapi32 name 'CryptAcquireContextW';
-function CryptAcquireContext; external advapi32 name 'CryptAcquireContext' + AWSuffix;
-function CryptReleaseContext; external advapi32 name 'CryptReleaseContext';
-function CryptGenKey; external advapi32 name 'CryptGenKey';
-function CryptDeriveKey; external advapi32 name 'CryptDeriveKey';
-function CryptDestroyKey; external advapi32 name 'CryptDestroyKey';
-function CryptSetKeyParam; external crypt32 name 'CryptSetKeyParam';
-function CryptGetKeyParam; external advapi32 name 'CryptGetKeyParam';
-function CryptSetHashParam; external advapi32 name 'CryptSetHashParam';
-function CryptGetHashParam; external advapi32 name 'CryptGetHashParam';
-function CryptSetProvParam; external advapi32 name 'CryptSetProvParam';
-function CryptGetProvParam; external advapi32 name 'CryptGetProvParam';
-function CryptGenRandom; external advapi32 name 'CryptGenRandom';
-function CryptGetUserKey; external advapi32 name 'CryptGetUserKey';
-function CryptExportKey; external advapi32 name 'CryptExportKey';
-function CryptImportKey; external advapi32 name 'CryptImportKey';
-function CryptEncrypt; external advapi32 name 'CryptEncrypt';
-function CryptDecrypt; external advapi32 name 'CryptDecrypt';
-function CryptCreateHash; external advapi32 name 'CryptCreateHash';
-function CryptHashData; external advapi32 name 'CryptHashData';
-function CryptHashSessionKey; external advapi32 name 'CryptHashSessionKey';
-function CryptDestroyHash; external advapi32 name 'CryptDestroyHash';
-function CryptSignHashA; external advapi32 name 'CryptSignHashA';
-function CryptSignHashW; external advapi32 name 'CryptSignHashW';
-function CryptSignHash; external advapi32 name 'CryptSignHash' + AWSuffix;
-function CryptVerifySignatureA; external advapi32 name 'CryptVerifySignatureA';
-function CryptVerifySignatureW; external advapi32 name 'CryptVerifySignatureW';
-function CryptVerifySignature; external advapi32 name 'CryptVerifySignature' + AWSuffix;
-function CryptSetProviderA; external advapi32 name 'CryptSetProviderA';
-function CryptSetProviderW; external advapi32 name 'CryptSetProviderW';
-function CryptSetProvider; external advapi32 name 'CryptSetProvider' + AWSuffix;
-function CryptSetProviderExA; external advapi32 name 'CryptSetProviderExA';
-function CryptSetProviderExW; external advapi32 name 'CryptSetProviderExW';
-function CryptSetProviderEx; external advapi32 name 'CryptSetProviderEx' + AWSuffix;
-function CryptGetDefaultProviderA; external advapi32 name 'CryptGetDefaultProviderA';
-function CryptGetDefaultProviderW; external advapi32 name 'CryptGetDefaultProviderW';
-function CryptGetDefaultProvider; external advapi32 name 'CryptGetDefaultProvider' + AWSuffix;
-function CryptEnumProviderTypesA; external advapi32 name 'CryptEnumProviderTypesA';
-function CryptEnumProviderTypesW; external advapi32 name 'CryptEnumProviderTypesW';
-function CryptEnumProviderTypes; external advapi32 name 'CryptEnumProviderTypes' + AWSuffix;
-function CryptEnumProvidersA; external advapi32 name 'CryptEnumProvidersA';
-function CryptEnumProvidersW; external advapi32 name 'CryptEnumProvidersW';
-function CryptEnumProviders; external advapi32 name 'CryptEnumProviders' + AWSuffix;
-function CryptContextAddRef; external advapi32 name 'CryptContextAddRef';
-function CryptDuplicateKey; external advapi32 name 'CryptDuplicateKey';
-function CryptDuplicateHash; external advapi32 name 'CryptDuplicateHash';
-function CryptFormatObject; external crypt32 name 'CryptFormatObject';
-function CryptEncodeObjectEx; external crypt32 name 'CryptEncodeObjectEx';
-function CryptEncodeObject; external crypt32 name 'CryptEncodeObject';
-function CryptDecodeObjectEx; external crypt32 name 'CryptDecodeObjectEx';
-function CryptDecodeObject; external crypt32 name 'CryptDecodeObject';
-function CryptInstallOIDFunctionAddress; external crypt32 name 'CryptInstallOIDFunctionAddress';
-function CryptInitOIDFunctionSet; external crypt32 name 'CryptInitOIDFunctionSet';
-function CryptGetOIDFunctionAddress; external crypt32 name 'CryptGetOIDFunctionAddress';
-function CryptGetDefaultOIDDllList; external crypt32 name 'CryptGetDefaultOIDDllList';
-function CryptGetDefaultOIDFunctionAddress; external crypt32 name 'CryptGetDefaultOIDFunctionAddress';
-function CryptFreeOIDFunctionAddress; external crypt32 name 'CryptFreeOIDFunctionAddress';
-function CryptRegisterOIDFunction; external crypt32 name 'CryptRegisterOIDFunction';
-function CryptUnregisterOIDFunction; external crypt32 name 'CryptUnregisterOIDFunction';
-function CryptRegisterDefaultOIDFunction; external crypt32 name 'CryptRegisterDefaultOIDFunction';
-function CryptUnregisterDefaultOIDFunction; external crypt32 name 'CryptUnregisterDefaultOIDFunction';
-function CryptSetOIDFunctionValue; external crypt32 name 'CryptSetOIDFunctionValue';
-function CryptGetOIDFunctionValue; external crypt32 name 'CryptGetOIDFunctionValue';
-function CryptEnumOIDFunction; external crypt32 name 'CryptEnumOIDFunction';
-function CryptFindOIDInfo; external crypt32 name 'CryptFindOIDInfo';
-function CryptRegisterOIDInfo; external crypt32 name 'CryptRegisterOIDInfo';
-function CryptUnregisterOIDInfo; external crypt32 name 'CryptUnregisterOIDInfo';
-function CryptEnumOIDInfo; external crypt32 name 'CryptEnumOIDInfo';
-function CryptFindLocalizedName; external crypt32 name 'CryptFindLocalizedName';
-function CryptMsgOpenToEncode; external crypt32 name 'CryptMsgOpenToEncode';
-function CryptMsgCalculateEncodedLength; external crypt32 name 'CryptMsgCalculateEncodedLength';
-function CryptMsgOpenToDecode; external crypt32 name 'CryptMsgOpenToDecode';
-function CryptMsgDuplicate; external crypt32 name 'CryptMsgDuplicate';
-function CryptMsgClose; external crypt32 name 'CryptMsgClose';
-function CryptMsgUpdate; external crypt32 name 'CryptMsgUpdate';
-function CryptMsgGetParam; external crypt32 name 'CryptMsgGetParam';
-function CryptMsgControl; external crypt32 name 'CryptMsgControl';
-function CryptMsgVerifyCountersignatureEncoded; external crypt32 name 'CryptMsgVerifyCountersignatureEncoded';
-function CryptMsgVerifyCountersignatureEncodedEx; external crypt32 name 'CryptMsgVerifyCountersignatureEncodedEx';
-function CryptMsgCountersign; external crypt32 name 'CryptMsgCountersign';
-function CryptMsgCountersignEncoded; external crypt32 name 'CryptMsgCountersignEncoded';
-function CertOpenStore; external crypt32 name 'CertOpenStore';
-function CertDuplicateStore; external crypt32 name 'CertDuplicateStore';
-function CertSaveStore; external crypt32 name 'CertSaveStore';
-function CertCloseStore; external crypt32 name 'CertCloseStore';
-function CertGetSubjectCertificateFromStore; external crypt32 name 'CertGetSubjectCertificateFromStore';
-function CertEnumCertificatesInStore; external crypt32 name 'CertEnumCertificatesInStore';
-function CertFindCertificateInStore; external crypt32 name 'CertFindCertificateInStore';
-function CertGetIssuerCertificateFromStore; external crypt32 name 'CertGetIssuerCertificateFromStore';
-function CertVerifySubjectCertificateContext; external crypt32 name 'CertVerifySubjectCertificateContext';
-function CertDuplicateCertificateContext; external crypt32 name 'CertDuplicateCertificateContext';
-function CertCreateCertificateContext; external crypt32 name 'CertCreateCertificateContext';
-function CertFreeCertificateContext; external crypt32 name 'CertFreeCertificateContext';
-function CertSetCertificateContextProperty; external crypt32 name 'CertSetCertificateContextProperty';
-function CertGetCertificateContextProperty; external crypt32 name 'CertGetCertificateContextProperty';
-function CertEnumCertificateContextProperties; external crypt32 name 'CertEnumCertificateContextProperties';
-function CertGetCRLFromStore; external crypt32 name 'CertGetCRLFromStore';
-function CertEnumCRLsInStore; external crypt32 name 'CertEnumCRLsInStore';
-function CertFindCRLInStore; external crypt32 name 'CertFindCRLInStore';
-function CertDuplicateCRLContext; external crypt32 name 'CertDuplicateCRLContext';
-function CertCreateCRLContext; external crypt32 name 'CertCreateCRLContext';
-function CertFreeCRLContext; external crypt32 name 'CertFreeCRLContext';
-function CertSetCRLContextProperty; external crypt32 name 'CertSetCRLContextProperty';
-function CertGetCRLContextProperty; external crypt32 name 'CertGetCRLContextProperty';
-function CertEnumCRLContextProperties; external crypt32 name 'CertEnumCRLContextProperties';
-function CertFindCertificateInCRL; external crypt32 name 'CertFindCertificateInCRL';
-function CertAddEncodedCertificateToStore; external crypt32 name 'CertAddEncodedCertificateToStore';
-function CertAddCertificateContextToStore; external crypt32 name 'CertAddCertificateContextToStore';
-function CertAddSerializedElementToStore; external crypt32 name 'CertAddSerializedElementToStore';
-function CertDeleteCertificateFromStore; external crypt32 name 'CertDeleteCertificateFromStore';
-function CertAddEncodedCRLToStore; external crypt32 name 'CertAddEncodedCRLToStore';
-function CertAddCRLContextToStore; external crypt32 name 'CertAddCRLContextToStore';
-function CertDeleteCRLFromStore; external crypt32 name 'CertDeleteCRLFromStore';
-function CertSerializeCertificateStoreElement; external crypt32 name 'CertSerializeCertificateStoreElement';
-function CertSerializeCRLStoreElement; external crypt32 name 'CertSerializeCRLStoreElement';
-function CertDuplicateCTLContext; external crypt32 name 'CertDuplicateCTLContext';
-function CertCreateCTLContext; external crypt32 name 'CertCreateCTLContext';
-function CertFreeCTLContext; external crypt32 name 'CertFreeCTLContext';
-function CertSetCTLContextProperty; external crypt32 name 'CertSetCTLContextProperty';
-function CertGetCTLContextProperty; external crypt32 name 'CertGetCTLContextProperty';
-function CertEnumCTLContextProperties; external crypt32 name 'CertEnumCTLContextProperties';
-function CertEnumCTLsInStore; external crypt32 name 'CertEnumCTLsInStore';
-function CertFindSubjectInCTL; external crypt32 name 'CertFindSubjectInCTL';
-function CertFindCTLInStore; external crypt32 name 'CertFindCTLInStore';
-function CertAddEncodedCTLToStore; external crypt32 name 'CertAddEncodedCTLToStore';
-function CertAddCTLContextToStore; external crypt32 name 'CertAddCTLContextToStore';
-function CertSerializeCTLStoreElement; external crypt32 name 'CertSerializeCTLStoreElement';
-function CertDeleteCTLFromStore; external crypt32 name 'CertDeleteCTLFromStore';
-function CertAddCertificateLinkToStore; external crypt32 name 'CertAddCertificateLinkToStore';
-function CertAddCRLLinkToStore; external crypt32 name 'CertAddCRLLinkToStore';
-function CertAddCTLLinkToStore; external crypt32 name 'CertAddCTLLinkToStore';
-function CertAddStoreToCollection; external crypt32 name 'CertAddStoreToCollection';
-procedure CertRemoveStoreFromCollection; external crypt32 name 'CertRemoveStoreFromCollection';
-function CertControlStore; external crypt32 name 'CertControlStore';
-function CertSetStoreProperty; external crypt32 name 'CertSetStoreProperty';
-function CertGetStoreProperty; external crypt32 name 'CertGetStoreProperty';
-function CertCreateContext; external crypt32 name 'CertCreateContext';
-function CertRegisterSystemStore; external crypt32 name 'CertRegisterSystemStore';
-function CertRegisterPhysicalStore; external crypt32 name 'CertRegisterPhysicalStore';
-function CertUnregisterSystemStore; external crypt32 name 'CertUnregisterSystemStore';
-function CertUnregisterPhysicalStore; external crypt32 name 'CertUnregisterPhysicalStore';
-function CertEnumSystemStoreLocation; external crypt32 name 'CertEnumSystemStoreLocation';
-function CertEnumSystemStore; external crypt32 name 'CertEnumSystemStore';
-function CertEnumPhysicalStore; external crypt32 name 'CertEnumPhysicalStore';
-function CertGetEnhancedKeyUsage; external crypt32 name 'CertGetEnhancedKeyUsage';
-function CertSetEnhancedKeyUsage; external crypt32 name 'CertSetEnhancedKeyUsage';
-function CertAddEnhancedKeyUsageIdentifier; external crypt32 name 'CertAddEnhancedKeyUsageIdentifier';
-function CertRemoveEnhancedKeyUsageIdentifier; external crypt32 name 'CertRemoveEnhancedKeyUsageIdentifier';
-function CertGetValidUsages; external crypt32 name 'CertGetValidUsages';
-function CryptMsgGetAndVerifySigner; external crypt32 name 'CryptMsgGetAndVerifySigner';
-function CryptMsgSignCTL; external crypt32 name 'CryptMsgSignCTL';
-function CryptMsgEncodeAndSignCTL; external crypt32 name 'CryptMsgEncodeAndSignCTL';
-function CertFindSubjectInSortedCTL; external crypt32 name 'CertFindSubjectInSortedCTL';
-function CertEnumSubjectInSortedCTL; external crypt32 name 'CertEnumSubjectInSortedCTL';
-function CertVerifyCTLUsage; external crypt32 name 'CertVerifyCTLUsage';
-function CertVerifyRevocation; external crypt32 name 'CertVerifyRevocation';
-function CertCompareIntegerBlob; external crypt32 name 'CertCompareIntegerBlob';
-function CertCompareCertificate; external crypt32 name 'CertCompareCertificate';
-function CertCompareCertificateName; external crypt32 name 'CertCompareCertificateName';
-function CertIsRDNAttrsInCertificateName; external crypt32 name 'CertIsRDNAttrsInCertificateName';
-function CertComparePublicKeyInfo; external crypt32 name 'CertComparePublicKeyInfo';
-function CertGetPublicKeyLength; external crypt32 name 'CertGetPublicKeyLength';
-function CryptVerifyCertificateSignature; external crypt32 name 'CryptVerifyCertificateSignature';
-function CryptVerifyCertificateSignatureEx; external crypt32 name 'CryptVerifyCertificateSignatureEx';
-function CryptHashToBeSigned; external crypt32 name 'CryptHashToBeSigned';
-function CryptHashCertificate; external crypt32 name 'CryptHashCertificate';
-function CryptSignCertificate; external crypt32 name 'CryptSignCertificate';
-function CryptSignAndEncodeCertificate; external crypt32 name 'CryptSignAndEncodeCertificate';
-function CertVerifyTimeValidity; external crypt32 name 'CertVerifyTimeValidity';
-function CertVerifyCRLTimeValidity; external crypt32 name 'CertVerifyCRLTimeValidity';
-function CertVerifyValidityNesting; external crypt32 name 'CertVerifyValidityNesting';
-function CertVerifyCRLRevocation; external crypt32 name 'CertVerifyCRLRevocation';
-function CertAlgIdToOID; external crypt32 name 'CertAlgIdToOID';
-function CertOIDToAlgId; external crypt32 name 'CertOIDToAlgId';
-function CertFindExtension; external crypt32 name 'CertFindExtension';
-function CertFindAttribute; external crypt32 name 'CertFindAttribute';
-function CertFindRDNAttr; external crypt32 name 'CertFindRDNAttr';
-function CertGetIntendedKeyUsage; external crypt32 name 'CertGetIntendedKeyUsage';
-function CryptInstallDefaultContext; external crypt32 name 'CryptInstallDefaultContext';
-function CryptUninstallDefaultContext; external crypt32 name 'CryptUninstallDefaultContext';
-function CryptExportPublicKeyInfo; external crypt32 name 'CryptExportPublicKeyInfo';
-function CryptExportPublicKeyInfoEx; external crypt32 name 'CryptExportPublicKeyInfoEx';
-function CryptImportPublicKeyInfo; external crypt32 name 'CryptImportPublicKeyInfo';
-function CryptImportPublicKeyInfoEx; external crypt32 name 'CryptImportPublicKeyInfoEx';
-function CryptAcquireCertificatePrivateKey; external crypt32 name 'CryptAcquireCertificatePrivateKey';
-function CryptFindCertificateKeyProvInfo; external crypt32 name 'CryptFindCertificateKeyProvInfo';
-function CryptImportPKCS8; external crypt32 name 'CryptImportPKCS8';
-function CryptExportPKCS8; external crypt32 name 'CryptExportPKCS8';
-function CryptExportPKCS8Ex; external crypt32 name 'CryptExportPKCS8Ex';
-function CryptHashPublicKeyInfo; external crypt32 name 'CryptHashPublicKeyInfo';
-function CertRDNValueToStrA; external crypt32 name 'CertRDNValueToStrA';
-function CertRDNValueToStrW; external crypt32 name 'CertRDNValueToStrW';
-function CertRDNValueToStr; external crypt32 name 'CertRDNValueToStr' + AWSuffix;
-function CertNameToStrA; external crypt32 name 'CertNameToStrA';
-function CertNameToStrW; external crypt32 name 'CertNameToStrW';
-function CertNameToStr; external crypt32 name 'CertNameToStr' + AWSuffix;
-function CertStrToNameA; external crypt32 name 'CertStrToNameA';
-function CertStrToNameW; external crypt32 name 'CertStrToNameW';
-function CertStrToName; external crypt32 name 'CertStrToName' + AWSuffix;
-function CertGetNameStringA; external crypt32 name 'CertGetNameStringA';
-function CertGetNameStringW; external crypt32 name 'CertGetNameStringW';
-function CertGetNameString; external crypt32 name 'CertGetNameString' + AWSuffix;
-function CryptSignMessage; external crypt32 name 'CryptSignMessage';
-function CryptVerifyMessageSignature; external crypt32 name 'CryptVerifyMessageSignature';
-function CryptGetMessageSignerCount; external crypt32 name 'CryptGetMessageSignerCount';
-function CryptGetMessageCertificates; external crypt32 name 'CryptGetMessageCertificates';
-function CryptVerifyDetachedMessageSignature; external crypt32 name 'CryptVerifyDetachedMessageSignature';
-function CryptEncryptMessage; external crypt32 name 'CryptEncryptMessage';
-function CryptDecryptMessage; external crypt32 name 'CryptDecryptMessage';
-function CryptSignAndEncryptMessage; external crypt32 name 'CryptSignAndEncryptMessage';
-function CryptDecryptAndVerifyMessageSignature; external crypt32 name 'CryptDecryptAndVerifyMessageSignature';
-function CryptDecodeMessage; external crypt32 name 'CryptDecodeMessage';
-function CryptHashMessage; external crypt32 name 'CryptHashMessage';
-function CryptVerifyMessageHash; external crypt32 name 'CryptVerifyMessageHash';
-function CryptVerifyDetachedMessageHash; external crypt32 name 'CryptVerifyDetachedMessageHash';
-function CryptSignMessageWithKey; external crypt32 name 'CryptSignMessageWithKey';
-function CryptVerifyMessageSignatureWithKey; external crypt32 name 'CryptVerifyMessageSignatureWithKey';
-function CertOpenSystemStoreA; external crypt32 name 'CertOpenSystemStoreA';
-function CertOpenSystemStoreW; external crypt32 name 'CertOpenSystemStoreW';
-function CertOpenSystemStore; external crypt32 name 'CertOpenSystemStore' + AWSuffix;
-function CertAddEncodedCertificateToSystemStoreA; external crypt32 name 'CertAddEncodedCertificateToSystemStoreA';
-function CertAddEncodedCertificateToSystemStoreW; external crypt32 name 'CertAddEncodedCertificateToSystemStoreW';
-function CertAddEncodedCertificateToSystemStore; external crypt32 name 'CertAddEncodedCertificateToSystemStore' + AWSuffix;
-function FindCertsByIssuer; external softpub name 'FindCertsByIssuer';
-function CryptQueryObject; external crypt32 name 'CryptQueryObject';
-function CryptMemAlloc; external crypt32 name 'CryptMemAlloc';
-function CryptMemRealloc; external crypt32 name 'CryptMemRealloc';
-procedure CryptMemFree; external crypt32 name 'CryptMemFree';
-function CryptCreateAsyncHandle; external crypt32 name 'CryptCreateAsyncHandle';
-function CryptSetAsyncParam; external crypt32 name 'CryptSetAsyncParam';
-function CryptGetAsyncParam; external crypt32 name 'CryptGetAsyncParam';
-function CryptCloseAsyncHandle; external crypt32 name 'CryptCloseAsyncHandle';
-function CryptRetrieveObjectByUrlA; external crypt32 name 'CryptRetrieveObjectByUrlA';
-function CryptRetrieveObjectByUrlW; external crypt32 name 'CryptRetrieveObjectByUrlW';
-function CryptRetrieveObjectByUrl; external crypt32 name 'CryptRetrieveObjectByUrl' + AWSuffix;
-function CryptInstallCancelRetrieval; external crypt32 name 'CryptInstallCancelRetrieval';
-function CryptUninstallCancelRetrieval; external crypt32 name 'CryptUninstallCancelRetrieval';
-function CryptCancelAsyncRetrieval; external crypt32 name 'CryptCancelAsyncRetrieval';
-function CryptGetObjectUrl; external crypt32 name 'CryptGetObjectUrl';
-function CryptGetTimeValidObject; external crypt32 name 'CryptGetTimeValidObject';
-function CryptFlushTimeValidObject; external crypt32 name 'CryptFlushTimeValidObject';
-function CryptProtectData; external crypt32 name 'CryptProtectData';
-function CryptUnprotectData; external crypt32 name 'CryptUnprotectData';
-function CertCreateSelfSignCertificate; external crypt32 name 'CertCreateSelfSignCertificate';
-function CryptGetKeyIdentifierProperty; external crypt32 name 'CryptGetKeyIdentifierProperty';
-function CryptSetKeyIdentifierProperty; external crypt32 name 'CryptSetKeyIdentifierProperty';
-function CryptEnumKeyIdentifierProperties; external crypt32 name 'CryptEnumKeyIdentifierProperties';
-function CryptCreateKeyIdentifierFromCSP; external crypt32 name 'CryptCreateKeyIdentifierFromCSP';
-function CertCreateCertificateChainEngine; external crypt32 name 'CertCreateCertificateChainEngine';
-procedure CertFreeCertificateChainEngine; external crypt32 name 'CertFreeCertificateChainEngine';
-function CertResyncCertificateChainEngine; external crypt32 name 'CertResyncCertificateChainEngine';
-function CertGetCertificateChain; external crypt32 name 'CertGetCertificateChain';
-procedure CertFreeCertificateChain; external crypt32 name 'CertFreeCertificateChain';
-function CertDuplicateCertificateChain; external crypt32 name 'CertDuplicateCertificateChain';
-function CertFindChainInStore; external crypt32 name 'CertFindChainInStore';
-function CertVerifyCertificateChainPolicy; external crypt32 name 'CertVerifyCertificateChainPolicy';
+function CryptAcquireContextA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptAcquireContextA';
+function CryptAcquireContextW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptAcquireContextW';
+function CryptAcquireContext; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptAcquireContext' + AWSuffix;
+function CryptReleaseContext; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptReleaseContext';
+function CryptGenKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGenKey';
+function CryptDeriveKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDeriveKey';
+function CryptDestroyKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDestroyKey';
+function CryptSetKeyParam; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetKeyParam';
+function CryptGetKeyParam; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetKeyParam';
+function CryptSetHashParam; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetHashParam';
+function CryptGetHashParam; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetHashParam';
+function CryptSetProvParam; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProvParam';
+function CryptGetProvParam; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetProvParam';
+function CryptGenRandom; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGenRandom';
+function CryptGetUserKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetUserKey';
+function CryptExportKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptExportKey';
+function CryptImportKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptImportKey';
+function CryptEncrypt; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEncrypt';
+function CryptDecrypt; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDecrypt';
+function CryptCreateHash; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptCreateHash';
+function CryptHashData; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptHashData';
+function CryptHashSessionKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptHashSessionKey';
+function CryptDestroyHash; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDestroyHash';
+function CryptSignHashA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignHashA';
+function CryptSignHashW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignHashW';
+function CryptSignHash; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignHash' + AWSuffix;
+function CryptVerifySignatureA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifySignatureA';
+function CryptVerifySignatureW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifySignatureW';
+function CryptVerifySignature; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifySignature' + AWSuffix;
+function CryptSetProviderA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProviderA';
+function CryptSetProviderW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProviderW';
+function CryptSetProvider; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProvider' + AWSuffix;
+function CryptSetProviderExA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProviderExA';
+function CryptSetProviderExW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProviderExW';
+function CryptSetProviderEx; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetProviderEx' + AWSuffix;
+function CryptGetDefaultProviderA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetDefaultProviderA';
+function CryptGetDefaultProviderW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetDefaultProviderW';
+function CryptGetDefaultProvider; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetDefaultProvider' + AWSuffix;
+function CryptEnumProviderTypesA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumProviderTypesA';
+function CryptEnumProviderTypesW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumProviderTypesW';
+function CryptEnumProviderTypes; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumProviderTypes' + AWSuffix;
+function CryptEnumProvidersA; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumProvidersA';
+function CryptEnumProvidersW; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumProvidersW';
+function CryptEnumProviders; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumProviders' + AWSuffix;
+function CryptContextAddRef; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptContextAddRef';
+function CryptDuplicateKey; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDuplicateKey';
+function CryptDuplicateHash; external advapi32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDuplicateHash';
+function CryptFormatObject; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptFormatObject';
+function CryptEncodeObjectEx; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEncodeObjectEx';
+function CryptEncodeObject; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEncodeObject';
+function CryptDecodeObjectEx; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDecodeObjectEx';
+function CryptDecodeObject; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDecodeObject';
+function CryptInstallOIDFunctionAddress; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptInstallOIDFunctionAddress';
+function CryptInitOIDFunctionSet; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptInitOIDFunctionSet';
+function CryptGetOIDFunctionAddress; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetOIDFunctionAddress';
+function CryptGetDefaultOIDDllList; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetDefaultOIDDllList';
+function CryptGetDefaultOIDFunctionAddress; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetDefaultOIDFunctionAddress';
+function CryptFreeOIDFunctionAddress; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptFreeOIDFunctionAddress';
+function CryptRegisterOIDFunction; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptRegisterOIDFunction';
+function CryptUnregisterOIDFunction; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptUnregisterOIDFunction';
+function CryptRegisterDefaultOIDFunction; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptRegisterDefaultOIDFunction';
+function CryptUnregisterDefaultOIDFunction; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptUnregisterDefaultOIDFunction';
+function CryptSetOIDFunctionValue; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetOIDFunctionValue';
+function CryptGetOIDFunctionValue; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetOIDFunctionValue';
+function CryptEnumOIDFunction; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumOIDFunction';
+function CryptFindOIDInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptFindOIDInfo';
+function CryptRegisterOIDInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptRegisterOIDInfo';
+function CryptUnregisterOIDInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptUnregisterOIDInfo';
+function CryptEnumOIDInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumOIDInfo';
+function CryptFindLocalizedName; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptFindLocalizedName';
+function CryptMsgOpenToEncode; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgOpenToEncode';
+function CryptMsgCalculateEncodedLength; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgCalculateEncodedLength';
+function CryptMsgOpenToDecode; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgOpenToDecode';
+function CryptMsgDuplicate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgDuplicate';
+function CryptMsgClose; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgClose';
+function CryptMsgUpdate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgUpdate';
+function CryptMsgGetParam; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgGetParam';
+function CryptMsgControl; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgControl';
+function CryptMsgVerifyCountersignatureEncoded; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgVerifyCountersignatureEncoded';
+function CryptMsgVerifyCountersignatureEncodedEx; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgVerifyCountersignatureEncodedEx';
+function CryptMsgCountersign; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgCountersign';
+function CryptMsgCountersignEncoded; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgCountersignEncoded';
+function CertOpenStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertOpenStore';
+function CertDuplicateStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDuplicateStore';
+function CertSaveStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSaveStore';
+function CertCloseStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCloseStore';
+function CertGetSubjectCertificateFromStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetSubjectCertificateFromStore';
+function CertEnumCertificatesInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumCertificatesInStore';
+function CertFindCertificateInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindCertificateInStore';
+function CertGetIssuerCertificateFromStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetIssuerCertificateFromStore';
+function CertVerifySubjectCertificateContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifySubjectCertificateContext';
+function CertDuplicateCertificateContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDuplicateCertificateContext';
+function CertCreateCertificateContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCreateCertificateContext';
+function CertFreeCertificateContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFreeCertificateContext';
+function CertSetCertificateContextProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSetCertificateContextProperty';
+function CertGetCertificateContextProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetCertificateContextProperty';
+function CertEnumCertificateContextProperties; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumCertificateContextProperties';
+function CertGetCRLFromStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetCRLFromStore';
+function CertEnumCRLsInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumCRLsInStore';
+function CertFindCRLInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindCRLInStore';
+function CertDuplicateCRLContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDuplicateCRLContext';
+function CertCreateCRLContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCreateCRLContext';
+function CertFreeCRLContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFreeCRLContext';
+function CertSetCRLContextProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSetCRLContextProperty';
+function CertGetCRLContextProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetCRLContextProperty';
+function CertEnumCRLContextProperties; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumCRLContextProperties';
+function CertFindCertificateInCRL; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindCertificateInCRL';
+function CertAddEncodedCertificateToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEncodedCertificateToStore';
+function CertAddCertificateContextToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddCertificateContextToStore';
+function CertAddSerializedElementToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddSerializedElementToStore';
+function CertDeleteCertificateFromStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDeleteCertificateFromStore';
+function CertAddEncodedCRLToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEncodedCRLToStore';
+function CertAddCRLContextToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddCRLContextToStore';
+function CertDeleteCRLFromStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDeleteCRLFromStore';
+function CertSerializeCertificateStoreElement; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSerializeCertificateStoreElement';
+function CertSerializeCRLStoreElement; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSerializeCRLStoreElement';
+function CertDuplicateCTLContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDuplicateCTLContext';
+function CertCreateCTLContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCreateCTLContext';
+function CertFreeCTLContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFreeCTLContext';
+function CertSetCTLContextProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSetCTLContextProperty';
+function CertGetCTLContextProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetCTLContextProperty';
+function CertEnumCTLContextProperties; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumCTLContextProperties';
+function CertEnumCTLsInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumCTLsInStore';
+function CertFindSubjectInCTL; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindSubjectInCTL';
+function CertFindCTLInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindCTLInStore';
+function CertAddEncodedCTLToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEncodedCTLToStore';
+function CertAddCTLContextToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddCTLContextToStore';
+function CertSerializeCTLStoreElement; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSerializeCTLStoreElement';
+function CertDeleteCTLFromStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDeleteCTLFromStore';
+function CertAddCertificateLinkToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddCertificateLinkToStore';
+function CertAddCRLLinkToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddCRLLinkToStore';
+function CertAddCTLLinkToStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddCTLLinkToStore';
+function CertAddStoreToCollection; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddStoreToCollection';
+procedure CertRemoveStoreFromCollection; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRemoveStoreFromCollection';
+function CertControlStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertControlStore';
+function CertSetStoreProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSetStoreProperty';
+function CertGetStoreProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetStoreProperty';
+function CertCreateContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCreateContext';
+function CertRegisterSystemStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRegisterSystemStore';
+function CertRegisterPhysicalStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRegisterPhysicalStore';
+function CertUnregisterSystemStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertUnregisterSystemStore';
+function CertUnregisterPhysicalStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertUnregisterPhysicalStore';
+function CertEnumSystemStoreLocation; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumSystemStoreLocation';
+function CertEnumSystemStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumSystemStore';
+function CertEnumPhysicalStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumPhysicalStore';
+function CertGetEnhancedKeyUsage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetEnhancedKeyUsage';
+function CertSetEnhancedKeyUsage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertSetEnhancedKeyUsage';
+function CertAddEnhancedKeyUsageIdentifier; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEnhancedKeyUsageIdentifier';
+function CertRemoveEnhancedKeyUsageIdentifier; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRemoveEnhancedKeyUsageIdentifier';
+function CertGetValidUsages; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetValidUsages';
+function CryptMsgGetAndVerifySigner; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgGetAndVerifySigner';
+function CryptMsgSignCTL; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgSignCTL';
+function CryptMsgEncodeAndSignCTL; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMsgEncodeAndSignCTL';
+function CertFindSubjectInSortedCTL; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindSubjectInSortedCTL';
+function CertEnumSubjectInSortedCTL; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertEnumSubjectInSortedCTL';
+function CertVerifyCTLUsage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyCTLUsage';
+function CertVerifyRevocation; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyRevocation';
+function CertCompareIntegerBlob; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCompareIntegerBlob';
+function CertCompareCertificate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCompareCertificate';
+function CertCompareCertificateName; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCompareCertificateName';
+function CertIsRDNAttrsInCertificateName; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertIsRDNAttrsInCertificateName';
+function CertComparePublicKeyInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertComparePublicKeyInfo';
+function CertGetPublicKeyLength; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetPublicKeyLength';
+function CryptVerifyCertificateSignature; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyCertificateSignature';
+function CryptVerifyCertificateSignatureEx; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyCertificateSignatureEx';
+function CryptHashToBeSigned; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptHashToBeSigned';
+function CryptHashCertificate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptHashCertificate';
+function CryptSignCertificate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignCertificate';
+function CryptSignAndEncodeCertificate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignAndEncodeCertificate';
+function CertVerifyTimeValidity; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyTimeValidity';
+function CertVerifyCRLTimeValidity; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyCRLTimeValidity';
+function CertVerifyValidityNesting; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyValidityNesting';
+function CertVerifyCRLRevocation; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyCRLRevocation';
+function CertAlgIdToOID; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAlgIdToOID';
+function CertOIDToAlgId; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertOIDToAlgId';
+function CertFindExtension; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindExtension';
+function CertFindAttribute; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindAttribute';
+function CertFindRDNAttr; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindRDNAttr';
+function CertGetIntendedKeyUsage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetIntendedKeyUsage';
+function CryptInstallDefaultContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptInstallDefaultContext';
+function CryptUninstallDefaultContext; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptUninstallDefaultContext';
+function CryptExportPublicKeyInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptExportPublicKeyInfo';
+function CryptExportPublicKeyInfoEx; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptExportPublicKeyInfoEx';
+function CryptImportPublicKeyInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptImportPublicKeyInfo';
+function CryptImportPublicKeyInfoEx; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptImportPublicKeyInfoEx';
+function CryptAcquireCertificatePrivateKey; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptAcquireCertificatePrivateKey';
+function CryptFindCertificateKeyProvInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptFindCertificateKeyProvInfo';
+function CryptImportPKCS8; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptImportPKCS8';
+function CryptExportPKCS8; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptExportPKCS8';
+function CryptExportPKCS8Ex; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptExportPKCS8Ex';
+function CryptHashPublicKeyInfo; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptHashPublicKeyInfo';
+function CertRDNValueToStrA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRDNValueToStrA';
+function CertRDNValueToStrW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRDNValueToStrW';
+function CertRDNValueToStr; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertRDNValueToStr' + AWSuffix;
+function CertNameToStrA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertNameToStrA';
+function CertNameToStrW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertNameToStrW';
+function CertNameToStr; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertNameToStr' + AWSuffix;
+function CertStrToNameA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertStrToNameA';
+function CertStrToNameW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertStrToNameW';
+function CertStrToName; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertStrToName' + AWSuffix;
+function CertGetNameStringA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetNameStringA';
+function CertGetNameStringW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetNameStringW';
+function CertGetNameString; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetNameString' + AWSuffix;
+function CryptSignMessage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignMessage';
+function CryptVerifyMessageSignature; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyMessageSignature';
+function CryptGetMessageSignerCount; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetMessageSignerCount';
+function CryptGetMessageCertificates; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetMessageCertificates';
+function CryptVerifyDetachedMessageSignature; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyDetachedMessageSignature';
+function CryptEncryptMessage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEncryptMessage';
+function CryptDecryptMessage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDecryptMessage';
+function CryptSignAndEncryptMessage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignAndEncryptMessage';
+function CryptDecryptAndVerifyMessageSignature; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDecryptAndVerifyMessageSignature';
+function CryptDecodeMessage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptDecodeMessage';
+function CryptHashMessage; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptHashMessage';
+function CryptVerifyMessageHash; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyMessageHash';
+function CryptVerifyDetachedMessageHash; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyDetachedMessageHash';
+function CryptSignMessageWithKey; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSignMessageWithKey';
+function CryptVerifyMessageSignatureWithKey; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptVerifyMessageSignatureWithKey';
+function CertOpenSystemStoreA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertOpenSystemStoreA';
+function CertOpenSystemStoreW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertOpenSystemStoreW';
+function CertOpenSystemStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertOpenSystemStore' + AWSuffix;
+function CertAddEncodedCertificateToSystemStoreA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEncodedCertificateToSystemStoreA';
+function CertAddEncodedCertificateToSystemStoreW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEncodedCertificateToSystemStoreW';
+function CertAddEncodedCertificateToSystemStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertAddEncodedCertificateToSystemStore' + AWSuffix;
+function FindCertsByIssuer; external softpub {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'FindCertsByIssuer';
+function CryptQueryObject; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptQueryObject';
+function CryptMemAlloc; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMemAlloc';
+function CryptMemRealloc; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMemRealloc';
+procedure CryptMemFree; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptMemFree';
+function CryptCreateAsyncHandle; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptCreateAsyncHandle';
+function CryptSetAsyncParam; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetAsyncParam';
+function CryptGetAsyncParam; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetAsyncParam';
+function CryptCloseAsyncHandle; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptCloseAsyncHandle';
+function CryptRetrieveObjectByUrlA; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptRetrieveObjectByUrlA';
+function CryptRetrieveObjectByUrlW; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptRetrieveObjectByUrlW';
+function CryptRetrieveObjectByUrl; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptRetrieveObjectByUrl' + AWSuffix;
+function CryptInstallCancelRetrieval; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptInstallCancelRetrieval';
+function CryptUninstallCancelRetrieval; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptUninstallCancelRetrieval';
+function CryptCancelAsyncRetrieval; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptCancelAsyncRetrieval';
+function CryptGetObjectUrl; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetObjectUrl';
+function CryptGetTimeValidObject; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetTimeValidObject';
+function CryptFlushTimeValidObject; external cryptnet {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptFlushTimeValidObject';
+function CryptProtectData; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptProtectData';
+function CryptUnprotectData; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptUnprotectData';
+function CertCreateSelfSignCertificate; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCreateSelfSignCertificate';
+function CryptGetKeyIdentifierProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptGetKeyIdentifierProperty';
+function CryptSetKeyIdentifierProperty; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptSetKeyIdentifierProperty';
+function CryptEnumKeyIdentifierProperties; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptEnumKeyIdentifierProperties';
+function CryptCreateKeyIdentifierFromCSP; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptCreateKeyIdentifierFromCSP';
+function CertCreateCertificateChainEngine; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertCreateCertificateChainEngine';
+procedure CertFreeCertificateChainEngine; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFreeCertificateChainEngine';
+function CertResyncCertificateChainEngine; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertResyncCertificateChainEngine';
+function CertGetCertificateChain; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertGetCertificateChain';
+procedure CertFreeCertificateChain; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFreeCertificateChain';
+function CertDuplicateCertificateChain; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertDuplicateCertificateChain';
+function CertFindChainInStore; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertFindChainInStore';
+function CertVerifyCertificateChainPolicy; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CertVerifyCertificateChainPolicy';
+function CryptBinaryToStringA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptBinaryToStringA';
+function CryptBinaryToStringW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptBinaryToStringW';
+function CryptBinaryToString; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptBinaryToString' + AWSuffix;
+function CryptStringToBinaryA; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptToStringBinaryA';
+function CryptStringToBinaryW; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptToStringBinaryW';
+function CryptStringToBinary; external crypt32 {$IFDEF DELAYED_LOADING}delayed{$ENDIF} name 'CryptToStringBinary' + AWSuffix;
 
 {$ENDIF DYNAMIC_LINK}
+{$ENDIF JWA_INTERFACESECTION}
 
-{$ENDIF JWA_IMPLEMENTATIONSECTION}
-
-{$IFNDEF JWA_INCLUDEMODE}
+{$IFNDEF JWA_OMIT_SECTIONS}
 end.
-{$ENDIF !JWA_INCLUDEMODE}
+{$ENDIF JWA_OMIT_SECTIONS}

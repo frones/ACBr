@@ -75,10 +75,17 @@ Var wDescricao  : AnsiString ;
     Finalidade  : TACBrECFFinalizaArqMFD;
     TipoDoc     : TACBrECFTipoDocumento;
     TipoDocStr, FinalidadeStr: String;
+    FXMLOriginal : TStringList;
 begin
   with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrECF1 {$ELSE}dm.ACBrECF1 {$ENDIF} do
   begin
      try
+        if Cmd.Metodo = 'achar' then
+        begin
+          Cmd.Resposta := BoolToStr(AcharECF(StrToBoolDef(Trim(Cmd.Params(0)),true),
+            StrToBoolDef(Trim(Cmd.Params(1)),true), StrToIntDef(Trim(Cmd.Params(1)), 3)), true);
+        end
+        else
         if Cmd.Metodo = 'ativar' then  { Ativa o ecf }
          begin
            Ativar ;
@@ -1050,7 +1057,83 @@ begin
           begin
               ArquivoMF_DLL(Cmd.Params(0) )                          { Path do Arquivo }
           end
+        else if Cmd.Metodo = 'assinarblocoxestoque' then
+          begin
+            if FileExists(Cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'Estoque', 'Mensagem');
+                FXMLOriginal.SaveToFile(Cmd.Params(0));
+                Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
+              finally
+                FXMLOriginal.Free;;
+              end;
+            end
+            else
+                Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(Cmd.Params(0), 'Estoque', 'Mensagem');
+          end
+        else if Cmd.Metodo = 'assinarblocoxreducaoz' then
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FXMLOriginal.Text := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(FXMLOriginal.Text, 'ReducaoZ', 'Mensagem');
+                FXMLOriginal.SaveToFile(Cmd.Params(0));
+                Cmd.Resposta:= 'OK: '+ Cmd.Params(0);
+              finally
+                FXMLOriginal.Free;;
+              end;
+            end
+            else
+               Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.SSL.Assinar(Cmd.Params(0), 'ReducaoZ', 'Mensagem');
+          end
 
+        else if Cmd.Metodo = 'validarblocox' then
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := FXMLOriginal.Text;
+              finally
+                FXMLOriginal.Free;;
+              end;
+            end
+            else
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.XML := Cmd.Params(0);
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarEcf := False;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.ValidarPafEcf := False;
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ValidarBlocoX.RetWS;
+          end
+	      else if Cmd.Metodo = 'enviarblocox' then 
+          begin
+            if FileExists(cmd.Params(0)) then
+            begin
+              FXMLOriginal := TStringList.Create;
+              try
+                FXMLOriginal.LoadFromFile(Cmd.Params(0));
+                FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := FXMLOriginal.Text;
+              finally
+                FXMLOriginal.Free;
+              end;
+            end
+            else
+               FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.XML := Cmd.Params(0);
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.EnviarBlocoX.RetWS;
+          end
+        else if Cmd.Metodo = 'consultarblocox' then 
+          begin
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ConsultarBlocoX.Recibo:= Cmd.Params(0);
+            FrmACBrMonitor.ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
+            Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
+          end
         else if Cmd.Metodo = 'pafmf_arquivomfd' then
           begin
               ArquivoMFD_DLL(Cmd.Params(0) )                          { Path do Arquivo }

@@ -44,7 +44,7 @@ uses Classes, SysUtils,
   {$IFNDEF NOGUI}
    {$IFDEF CLX} QDialogs,{$ELSE} Dialogs,{$ENDIF}
   {$ENDIF}
-  ACBrDFeConfiguracoes, ACBrDFe;
+  ACBrDFeConfiguracoes, ACBrDFe, pcnGerador;
 
 type
 
@@ -52,8 +52,6 @@ type
 
   TDFeWebService = class
   private
-    function GetRetornoWS: String;
-    function GetRetWS: String;
   protected
     FPSoapVersion: String;
     FPSoapEnvelopeAtributtes: String;
@@ -78,6 +76,7 @@ type
   protected
     procedure FazerLog(Msg: String; Exibir: Boolean = False); virtual;
     procedure GerarException(Msg: String; E: Exception = nil); virtual;
+    procedure AjustarOpcoes(AOpcoes: TGeradorOpcoes);
 
     procedure InicializarServico; virtual;
     procedure DefinirServicoEAction; virtual;
@@ -90,7 +89,7 @@ type
     procedure SalvarResposta; virtual;
     procedure FinalizarServico; virtual;
 
-    function GetUrlWsd: String;
+    function GetUrlWsd: String; virtual;
 
     procedure AssinarXML(const AXML, docElement, infElement: String;
       MsgErro: String; SignatureNode: String = '';
@@ -122,8 +121,8 @@ type
     property CabMsg: String read FPCabMsg;
     property DadosMsg: String read FPDadosMsg;
     property EnvelopeSoap: String read FPEnvelopeSoap;
-    property RetornoWS: String read GetRetornoWS;
-    property RetWS: String read GetRetWS;
+    property RetornoWS: String read FPRetornoWS;
+    property RetWS: String read FPRetWS;
     property Msg: String read FPMsg;
     property ArqEnv: String read FPArqEnv;
     property ArqResp: String read FPArqResp;
@@ -132,7 +131,8 @@ type
 implementation
 
 uses
-  ACBrDFeUtil, ACBrDFeException, ACBrUtil, pcnGerador;
+  ACBrDFeUtil, ACBrDFeException, ACBrUtil,
+  pcnAuxiliar;
 
 { TDFeWebService }
 
@@ -214,6 +214,11 @@ begin
 
   if SoapAction = '' then
     GerarException( ACBrStr('SoapAction não definido para: ') + ClassName);
+
+  // Alguns provedores de NFS-e não possui um SoapAction para os seus serviços,
+  // sendo assim é atribuido o caracter "*" no arquivo INI desses provedores.
+  if SoapAction = '*' then
+    FPSoapAction := '';
 end;
 
 procedure TDFeWebService.DefinirServicoEAction;
@@ -331,10 +336,6 @@ begin
         raise;
     end;
   end;
-
-  { Resposta sempre é UTF8, ParseTXT chamará DecodetoString, que converterá
-    de UTF8 para o formato nativo de  String usada pela IDE }
-  FPRetornoWS := ParseText(FPRetornoWS, True, True);
 end;
 
 function TDFeWebService.GerarPrefixoArquivo: String;
@@ -344,7 +345,8 @@ end;
 
 procedure TDFeWebService.SalvarEnvio;
 var
-  Prefixo, ArqEnv, UTF8Str: String;
+  Prefixo, ArqEnv: String;
+  IsUTF8: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -357,24 +359,16 @@ begin
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
 
-    // Não deve tentar converter para UTF8, pois FPDadosMsg já está em UTF8
-    UTF8Str := FPDadosMsg;
-    if not XmlEhUTF8( UTF8Str ) then
-      UTF8Str := '<?xml version="1.0" encoding="UTF-8"?>' + UTF8Str;
-
-    FPDFeOwner.Gravar(ArqEnv, UTF8Str);
+    IsUTF8  := XmlEstaAssinado(FPDadosMsg);
+    FPDFeOwner.Gravar(ArqEnv, FPDadosMsg, '', IsUTF8);
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
 
-    // Não deve tentar converter para UTF8, pois FPEnvelopeSoap já está em UTF8
-    UTF8Str := FPEnvelopeSoap;
-    if not XmlEhUTF8( UTF8Str ) then
-      UTF8Str := '<?xml version="1.0" encoding="UTF-8"?>' + UTF8Str;
-
-    FPDFeOwner.Gravar(ArqEnv, UTF8Str);
+    IsUTF8  := XmlEstaAssinado(FPEnvelopeSoap);
+    FPDFeOwner.Gravar(ArqEnv, FPEnvelopeSoap, '', IsUTF8);
   end;
 end;
 
@@ -392,13 +386,13 @@ begin
   if FPConfiguracoes.Geral.Salvar then
   begin
     ArqResp := Prefixo + '-' + FPArqResp + '.xml';
-    FPDFeOwner.Gravar(ArqResp, RetWS);  // Converte para UTF8 se necessasário
+    FPDFeOwner.Gravar(ArqResp, FPRetWS);  // FPRetWS já está em UTF8
   end;
 
   if FPConfiguracoes.WebServices.Salvar then
   begin
     ArqResp := Prefixo + '-' + FPArqResp + '-soap.xml';
-    FPDFeOwner.Gravar(ArqResp, RetornoWS );    // Converte para UTF8 se necessasário
+    FPDFeOwner.Gravar(ArqResp, FPRetornoWS );   // FPRetornoWS já está em UTF8
   end;
 end;
 
@@ -440,6 +434,14 @@ begin
   FPDFeOwner.GerarException(Msg, E);
 end;
 
+procedure TDFeWebService.AjustarOpcoes(AOpcoes: TGeradorOpcoes);
+begin
+  AOpcoes.FormatoAlerta := FPDFeOwner.Configuracoes.Geral.FormatoAlerta;
+  AOpcoes.RetirarAcentos := FPDFeOwner.Configuracoes.Geral.RetirarAcentos;
+  AOpcoes.RetirarEspacos := FPDFeOwner.Configuracoes.Geral.RetirarEspacos;
+  pcnAuxiliar.TimeZoneConf.Assign( FPDFeOwner.Configuracoes.WebServices.TimeZoneConf );
+end;
+
 function TDFeWebService.GerarMsgErro(E: Exception): String;
 begin
   { Sobrescrever com mensagem adicional, se desejar }
@@ -458,27 +460,6 @@ procedure TDFeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
 
-end;
-
-function TDFeWebService.GetRetornoWS: String;
-begin
-  { FPRetornoWS, foi convertido de UTF8 para a String nativa da IDE no final
-    de "EnviarDados", após o tratamento de ParseText..
-    Convertendo para UTF8 novamente, se no inicio do XML contiver tag de UTF8 }
-  if XmlEhUTF8(FPRetornoWS) then
-    Result := ACBrStrToUTF8(FPRetornoWS)
-  else
-    Result := FPRetornoWS;
-end;
-
-function TDFeWebService.GetRetWS: String;
-begin
-  { FPRetornoWS e FPRetWS, foram convertidos de UTF8 para a String nativa da IDE
-    Convertendo para UTF8 novamente, se no inicio do XML contiver tag de UTF8 }
-  if XmlEhUTF8(FPRetWS) then
-    Result := ACBrStrToUTF8(FPRetWS)
-  else
-    Result := FPRetWS;
 end;
 
 function TDFeWebService.GetUrlWsd: String;

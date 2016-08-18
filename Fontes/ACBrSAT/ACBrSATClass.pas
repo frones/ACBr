@@ -50,7 +50,6 @@ uses
 const
   cACBrSAT_Versao      = '0.2.0' ;
   cLIBSAT              = 'SAT.DLL';
-  CUTF8CodPage         = 65001;
   cversaoDadosEnt      = 0.06;
   CPREFIXO_ArqCFe = 'AD';
   CPREFIXO_ArqCFeCanc = 'ADC';
@@ -426,6 +425,12 @@ begin
 
     if Pos(AnoMes, Dir) <= 0 then
       Dir := PathWithDelim(Dir) + AnoMes;
+  end;
+
+  with TACBrSAT(fsOwner) do
+  begin
+    if Assigned( OnCalcPath ) then
+      OnCalcPath(Dir, CNPJ, Data);
   end;
 
   Result := PathWithDelim(Dir);

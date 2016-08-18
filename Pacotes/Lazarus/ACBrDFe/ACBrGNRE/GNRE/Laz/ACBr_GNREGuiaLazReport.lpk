@@ -22,16 +22,13 @@ Impressão da Guia gerada pelo ACBrGNRE"/>
         <UnitName Value="ACBrGNREGuiaLazReportDm"/>
       </Item1>
     </Files>
-    <RequiredPkgs Count="3">
+    <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="lazreportpdfexport"/>
       </Item1>
       <Item2>
         <PackageName Value="ACBr_GNRE"/>
       </Item2>
-      <Item3>
-        <PackageName Value="lazreport"/>
-      </Item3>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

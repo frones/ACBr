@@ -80,7 +80,6 @@ contains
   ACBrLFDBloco_Z in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z.pas',
   ACBrLFDBloco_Z_Class in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z_Class.pas',
   ACBrLFDBloco_Z_Events in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBloco_Z_Events.pas',
-  ACBrLFDBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBlocos.pas',
-  ACBrLFDUtils in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDUtils.pas';
+  ACBrLFDBlocos in '..\..\..\..\Fontes\ACBrTXT\ACBrLFD\ACBrLFDBlocos.pas';
 
 end.

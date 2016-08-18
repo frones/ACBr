@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = edtDirDestino
+  ActiveControl = lbInfo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgConfiguracao
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1070,9 +1070,9 @@ object frmPrincipal: TfrmPrincipal
       object Label4: TLabel
         Left = 17
         Top = 68
-        Width = 79
+        Width = 84
         Height = 13
-        Caption = 'Vers'#227'o do delphi'
+        Caption = 'Vers'#245'es do delphi'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1120,8 +1120,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSelecDirInstallClick
       end
       object Label8: TLabel
-        Left = 34
-        Top = 125
+        Left = 211
+        Top = 129
         Width = 316
         Height = 13
         Caption = 'Nota : A suite ACBr n'#227'o est'#225' 100% compativel com o C++ Builder'
@@ -1132,8 +1132,40 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ParentFont = False
       end
-      object edtDelphiVersion: TComboBox
+      object Label22: TLabel
         Left = 17
+        Top = 461
+        Width = 517
+        Height = 26
+        AutoSize = False
+        Caption = 
+          'NOTA: Seguindo o aviso feito no f'#243'rum sobre n'#227'o suportar vers'#245'es' +
+          ' n'#227'o UNICODE, vers'#245'es pr'#233' Delphi 2009 n'#227'o ser'#227'o mais suportadas,' +
+          ' atualize sua vers'#227'o do Delphi se necess'#225'rio.'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        WordWrap = True
+      end
+      object Label23: TLabel
+        Left = 373
+        Top = 68
+        Width = 93
+        Height = 13
+        Caption = 'ComboBox Invisivel'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object edtDelphiVersion: TComboBox
+        Left = 373
         Top = 84
         Width = 172
         Height = 21
@@ -1145,6 +1177,7 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        Visible = False
         OnChange = edtDelphiVersionChange
       end
       object edtPlatform: TComboBox
@@ -1153,7 +1186,6 @@ object frmPrincipal: TfrmPrincipal
         Width = 172
         Height = 21
         Style = csDropDownList
-        Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1182,8 +1214,8 @@ object frmPrincipal: TfrmPrincipal
         Text = 'C:\ACBr'
       end
       object rdgDLL: TRadioGroup
-        Left = 41
-        Top = 224
+        Left = 195
+        Top = 214
         Width = 350
         Height = 107
         Caption = 'Local para onde ser'#227'o copiadas as DLL'#39's'
@@ -1196,8 +1228,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = rdgDLLClick
       end
       object ckbCopiarTodasDll: TCheckBox
-        Left = 17
-        Top = 196
+        Left = 195
+        Top = 191
         Width = 305
         Height = 17
         Hint = 'Copia todas as DLL'#180's "Extras" para o destino selecionado'
@@ -1205,30 +1237,38 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 5
       end
       object ckbBCB: TCheckBox
-        Left = 17
-        Top = 109
+        Left = 195
+        Top = 113
         Width = 278
         Height = 17
         Caption = 'Generate all C++Builder files (including package libs) '
         TabOrder = 3
       end
       object chkDeixarSomenteLIB: TCheckBox
-        Left = 17
-        Top = 150
+        Left = 195
+        Top = 145
         Width = 350
         Height = 17
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
         TabOrder = 4
       end
       object ckbRemoverArquivosAntigos: TCheckBox
-        Left = 17
-        Top = 173
+        Left = 195
+        Top = 168
         Width = 379
         Height = 17
-        Caption = 
-          'Remover arquivos antigos das unidades de disco (pode demorar bas' +
-          'tante)'
+        Caption = 'Remover arquivos antigos do disco (pode demorar bastante)'
         TabOrder = 7
+      end
+      object clbDelphiVersion: TCheckListBox
+        Left = 17
+        Top = 84
+        Width = 172
+        Height = 371
+        Color = clBtnFace
+        ItemHeight = 13
+        TabOrder = 8
+        OnClick = clbDelphiVersionClick
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1266,16 +1306,20 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
+        ExplicitWidth = 554
+        ExplicitHeight = 499
         DesignSize = (
           537
           499)
         inherited btnPacotesDesmarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
+          ExplicitTop = 465
         end
         inherited btnPacotesMarcarTodos: TSpeedButton
           Top = 465
           Anchors = [akLeft, akBottom]
+          ExplicitTop = 465
         end
       end
     end
@@ -1448,10 +1492,6 @@ object frmPrincipal: TfrmPrincipal
           Font.Name = 'Courier New'
           Font.Style = []
           ItemHeight = 14
-          Items.Strings = (
-            'A'
-            'A'
-            'A')
           ParentColor = True
           ParentFont = False
           TabOrder = 0
@@ -1645,7 +1685,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Animate = True
         Center = True
-        FrameIndex = 2
+        FrameIndex = 5
         Image.Data = {
           688B00004749463839613F012800F70000FFFFFFFFFFE5FFFFCCF7FAFDFFFF99
           FFF7B9FFF9A9FFFA84EAFA9EFFF573FFF74AFFFF00FFF268F2F478FFF456E9F5

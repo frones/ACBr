@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <TfrxReport Tag="1" Version="5.2.3" DotMatrixReport="False" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="4095" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" PrintOptions.PrintOnSheet="0" ReportOptions.CreateDate="42269,3941764931" ReportOptions.Description.Text="" ReportOptions.LastChange="42270,4921345602" ScriptLanguage="PascalScript" ScriptText.Text="var&#13;&#10;       NumImpressao: Integer;&#13;&#10;         &#13;&#10;procedure MasterData2OnBeforePrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;    if Trim(&#60;Parametros.&#34;Imagem&#34;&#62;) &#60;&#62; '' then&#13;&#10;       imgLogomarca.Picture.LoadFromFile(&#60;Parametros.&#34;Imagem&#34;&#62;);  &#13;&#10;end;&#13;&#10;&#13;&#10;procedure MasterData2OnAfterPrint(Sender: TfrxComponent);&#13;&#10;begin&#13;&#10;  Inc(NumImpressao);&#13;&#10;  if NumImpressao = 1 then&#13;&#10;  begin              &#13;&#10;    Engine.ShowBand(Child2);&#13;&#10;  end;     &#13;&#10;end;  &#13;&#10;    &#13;&#10;begin&#13;&#10;  NumImpressao := 0;  &#13;&#10;end." OnReportPrint="frxReportOnReportPrint">
   <Datasets>
-    <item DataSetName="AnuladoComple"/>
-    <item DataSetName="ComponentesPrestacao"/>
-    <item DataSetName="DadosNotasFiscais"/>
-    <item DataSetName="Destinatario"/>
-    <item DataSetName="DocAnterior"/>
-    <item DataSetName="Emitente"/>
-    <item DataSetName="Eventos"/>
-    <item DataSetName="Expedidor"/>
     <item DataSetName="Identificacao"/>
-    <item DataSetName="InformacoesAdicionais"/>
-    <item DataSetName="LocalEntrega"/>
-    <item DataSetName="ModalAereo"/>
-    <item DataSetName="ModalRodoviario"/>
-    <item DataSetName="Motorista"/>
+    <item DataSetName="Emitente"/>
+    <item DataSetName="Destinatario"/>
+    <item DataSetName="DadosNotasFiscais"/>
     <item DataSetName="Parametros"/>
+    <item DataSetName="Volumes"/>
+    <item DataSetName="InformacoesAdicionais"/>
+    <item DataSetName="Tomador"/>
+    <item DataSetName="Expedidor"/>
     <item DataSetName="Recebedor"/>
     <item DataSetName="Remetente"/>
+    <item DataSetName="CalculoImposto"/>
+    <item DataSetName="ComponentesPrestacao"/>
     <item DataSetName="Seguro"/>
-    <item DataSetName="Tomador"/>
-    <item DataSetName="ValePedagio"/>
+    <item DataSetName="ModalRodoviario"/>
+    <item DataSetName="ModalAquaviario"/>
+    <item DataSetName="ModalAereo"/>
+    <item DataSetName="MultiModal"/>
     <item DataSetName="Veiculos"/>
-    <item DataSetName="Volumes"/>
-  </Datasets>
+    <item DataSetName="ValePedagio"/>
+    <item DataSetName="Motorista"/>
+    <item DataSetName="DocAnterior"/>
+    <item DataSetName="AnuladoComple"/>
+    <item DataSetName="Eventos"/>
+	</Datasets>
   <TfrxDataPage Name="Data" Height="1000" Left="0" Top="0" Width="1000"/>
   <TfrxReportPage Name="Page1" PaperWidth="210" PaperHeight="297" PaperSize="9" LeftMargin="5" RightMargin="5" TopMargin="5" BottomMargin="5" ColumnWidth="0" ColumnPositions.Text="" PageCount="2" LargeDesignHeight="True" PrintOnPreviousPage="True" HGuides.Text="" VGuides.Text="">
     <TfrxMasterData Name="MasterData2" FillType="ftBrush" FillGap.Top="0" FillGap.Left="0" FillGap.Bottom="0" FillGap.Right="0" Height="517,79561" Left="0" Top="18,89765" Width="755,906" OnAfterPrint="MasterData2OnAfterPrint" OnBeforePrint="MasterData2OnBeforePrint" ColumnWidth="0" ColumnGap="0" DataSetName="Identificacao" RowCount="0">
@@ -105,18 +107,18 @@
       <TfrxLineView Name="Line27" Left="551,8113922" Top="226,7718" Width="204,09462" Height="0" Color="0" Frame.Typ="4"/>
       <TfrxLineView Name="Line28" Left="551,8113922" Top="236,33086" Width="204,09462" Height="0" Color="0" Frame.Typ="4"/>
       <TfrxMemoView Name="Memo156" Left="551,8113922" Top="225,7718" Width="204,09462" Height="11,33859" Font.Charset="0" Font.Color="0" Font.Height="-8" Font.Name="Calibri" Font.Style="0" Frame.Width="0,5" HAlign="haCenter" ParentFont="False" Text="IMPOSTOS"/>
-      <TfrxMemoView Name="Memo157" Left="641,51974606" Top="238,11039" Width="113,38582677" Height="11,33858268" DataField="TXTSITTRIB" DataSetName="LocalEntrega" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[LocalEntrega.&#34;TXTSITTRIB&#34;]"/>
-      <TfrxMemoView Name="Memo159" Left="641,51974606" Top="249,44898" Width="113,38582677" Height="11,33858268" DataField="VBC" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[LocalEntrega.&#34;VBC&#34;]"/>
-      <TfrxMemoView Name="Memo160" Left="641,51974606" Top="260,78757" Width="113,38582677" Height="11,33858268" DataField="PICMS" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[LocalEntrega.&#34;PICMS&#34;]"/>
-      <TfrxMemoView Name="Memo161" Left="641,51974606" Top="272,12616" Width="113,38582677" Height="11,33858268" DataField="VICMS" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[LocalEntrega.&#34;VICMS&#34;]"/>
-      <TfrxMemoView Name="Memo162" Left="641,51974606" Top="294,80334" Width="113,38582677" Height="11,33858268" DataField="pRedBC" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[LocalEntrega.&#34;pRedBC&#34;]"/>
-      <TfrxMemoView Name="Memo163" Left="641,51974606" Top="283,46475" Width="113,38582677" Height="11,33858268" DataField="VICMSST" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[LocalEntrega.&#34;VICMSST&#34;]"/>
-      <TfrxMemoView Name="Memo166" Left="553,8113922" Top="238,11039" Width="86,92911677" Height="11,33858268" DataSetName="LocalEntrega" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="SITUAÇÃO TRIBUTÁRIA:"/>
-      <TfrxMemoView Name="Memo167" Left="553,8113922" Top="249,44898" Width="86,92911677" Height="11,33858268" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="BASE DE CÁLCULO:"/>
-      <TfrxMemoView Name="Memo170" Left="553,8113922" Top="260,78757" Width="86,92911677" Height="11,33858268" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="ALÍQUOTA ICMS(%):"/>
-      <TfrxMemoView Name="Memo171" Left="553,8113922" Top="272,12616" Width="86,92911677" Height="11,33858268" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="VALOR ICMS:"/>
-      <TfrxMemoView Name="Memo172" Left="553,8113922" Top="294,80334" Width="86,92911677" Height="11,33858268" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="% RED. BC. CALC.:"/>
-      <TfrxMemoView Name="Memo173" Left="553,8113922" Top="283,46475" Width="86,92911677" Height="11,33858268" DataSetName="LocalEntrega" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="ICMS ST:"/>
+      <TfrxMemoView Name="Memo157" Left="641,51974606" Top="238,11039" Width="113,38582677" Height="11,33858268" DataField="TXTSITTRIB" DataSetName="CalculoImposto" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;TXTSITTRIB&#34;]"/>
+      <TfrxMemoView Name="Memo159" Left="641,51974606" Top="249,44898" Width="113,38582677" Height="11,33858268" DataField="VBC" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;VBC&#34;]"/>
+      <TfrxMemoView Name="Memo160" Left="641,51974606" Top="260,78757" Width="113,38582677" Height="11,33858268" DataField="PICMS" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;PICMS&#34;]"/>
+      <TfrxMemoView Name="Memo161" Left="641,51974606" Top="272,12616" Width="113,38582677" Height="11,33858268" DataField="VICMS" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;VICMS&#34;]"/>
+      <TfrxMemoView Name="Memo162" Left="641,51974606" Top="294,80334" Width="113,38582677" Height="11,33858268" DataField="pRedBC" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;pRedBC&#34;]"/>
+      <TfrxMemoView Name="Memo163" Left="641,51974606" Top="283,46475" Width="113,38582677" Height="11,33858268" DataField="VICMSST" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[CalculoImposto.&#34;VICMSST&#34;]"/>
+      <TfrxMemoView Name="Memo166" Left="553,8113922" Top="238,11039" Width="86,92911677" Height="11,33858268" DataSetName="CalculoImposto" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="SITUAÇÃO TRIBUTÁRIA:"/>
+      <TfrxMemoView Name="Memo167" Left="553,8113922" Top="249,44898" Width="86,92911677" Height="11,33858268" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="BASE DE CÁLCULO:"/>
+      <TfrxMemoView Name="Memo170" Left="553,8113922" Top="260,78757" Width="86,92911677" Height="11,33858268" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2f" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="ALÍQUOTA ICMS(%):"/>
+      <TfrxMemoView Name="Memo171" Left="553,8113922" Top="272,12616" Width="86,92911677" Height="11,33858268" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="VALOR ICMS:"/>
+      <TfrxMemoView Name="Memo172" Left="553,8113922" Top="294,80334" Width="86,92911677" Height="11,33858268" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="% RED. BC. CALC.:"/>
+      <TfrxMemoView Name="Memo173" Left="553,8113922" Top="283,46475" Width="86,92911677" Height="11,33858268" DataSetName="CalculoImposto" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="1" Font.Color="0" Font.Height="-8" Font.Name="CALIBRI" Font.Style="0" Frame.Width="0,5" HAlign="haRight" ParentFont="False" WordWrap="False" Text="ICMS ST:"/>
       <TfrxMemoView Name="Memo174" Left="457,3231422" Top="311,7007874" Width="90,70872" Height="15,11811024" DataField="TotalServico" DataSetName="ComponentesPrestacao" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="0" Font.Color="-16777208" Font.Height="-11" Font.Name="Calibri" Font.Style="1" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[ComponentesPrestacao.&#34;TotalServico&#34;]"/>
       <TfrxMemoView Name="Memo175" Left="650,0791722" Top="311,7007874" Width="102,04731" Height="15,11812" DataField="TotalReceber" DataSetName="ComponentesPrestacao" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="0" Font.Color="-16777208" Font.Height="-11" Font.Name="Calibri" Font.Style="1" HAlign="haRight" ParentFont="False" WordWrap="False" Text="[ComponentesPrestacao.&#34;TotalReceber&#34;]"/>
       <TfrxMemoView Name="Memo176" Left="385,5120722" Top="311,7007874" Width="71,81107" Height="15,11811024" DataSetName="ComponentesPrestacao" DisplayFormat.FormatStr="%2.2n" DisplayFormat.Kind="fkNumeric" Font.Charset="0" Font.Color="-16777208" Font.Height="-11" Font.Name="Calibri" Font.Style="1" HAlign="haRight" ParentFont="False" WordWrap="False" Text="FRETE (R$):"/>

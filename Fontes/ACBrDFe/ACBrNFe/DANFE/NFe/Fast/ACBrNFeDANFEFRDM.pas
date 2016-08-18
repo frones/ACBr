@@ -274,8 +274,8 @@ begin
     Result[0] := AString
   else
   begin
-    iDelLen := PCardinal(Cardinal(ADelimiter) - SizeOf(Cardinal))^;
-    iLen := PCardinal(Cardinal(AString) - SizeOf(Cardinal))^;
+    iDelLen := Length(ADelimiter);
+    iLen := Length(AString);
     Step := @Result[0];
     iLast := 0;
     iPos := 0;
@@ -438,7 +438,7 @@ begin
         with FNFe.Det.Items[inItem] do
         begin
           FieldByName('ChaveNFe').AsString          := FNFe.infNFe.ID;
-          FieldByName('cProd').AsString             := Prod.cProd;
+          FieldByName('cProd').AsString             := FDANFEClassOwner.ManterCodigo( Prod.cEAN,Prod.cProd);
           FieldByName('cEAN').AsString              := Prod.cEAN;
           FieldByName('XProd').AsString             :=   StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
           FieldByName('VProd').AsString             :=     ManterVprod( Prod.VProd , Prod.vDesc );
@@ -522,7 +522,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := FormatarCEP(CEP);
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -608,7 +608,7 @@ begin
         FieldByName('CMun').AsString    := IntToStr(CMun);
         FieldByName('XMun').AsString    := CollateBr(XMun);
         FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := FormatarCEP(Poem_Zeros(CEP, 8));
+        FieldByName('CEP').AsString     := FormatarCEP(CEP);
         FieldByName('CPais').AsString   := IntToStr(CPais);
         FieldByName('XPais').AsString   := XPais;
         FieldByName('Fone').AsString    := FormatarFone(Fone);
@@ -1347,6 +1347,8 @@ begin
 
   FfrxReport := TfrxReport.Create( nil);
   FfrxReport.EngineOptions.UseGlobalDataSetList := False;
+  FfrxReport.PreviewOptions.Buttons := [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind,
+    pbOutline, pbPageSetup, pbTools, pbNavigator, pbExportQuick];	
   with FfrxReport do
   begin
      EngineOptions.DoublePass := True;
@@ -1554,7 +1556,7 @@ begin
         FieldDefs.Add('ResumoCanhoto', ftString, 200);
         FieldDefs.Add('Mensagem0', ftString, 60);
         FieldDefs.Add('Imagem', ftString, 256);
-        FieldDefs.Add('Sistema', ftString, 60);
+        FieldDefs.Add('Sistema', ftString, 150);
         FieldDefs.Add('Usuario', ftString, 60);
         FieldDefs.Add('Fax', ftString, 60);
         FieldDefs.Add('Site', ftString, 60);
@@ -1970,6 +1972,7 @@ var
   qrcode: String;
   CpTituloReport, CpLogomarca, CpQrCode, CpDescrProtocolo, CpTotTrib: TfrxComponent;
 begin
+
   qrCode := '';
   if Assigned(NFe) then
   begin
@@ -2160,19 +2163,19 @@ begin
   begin
     if (Imposto.vTotTrib <> 0)  and (ExibirTotalTributosItem) then
     begin
-      Result := ';';
+      Result := '';
       with Imposto do
       begin
-        Result := Result+#13+'Val Aprox Tributos: '+ FloatToStrF(Imposto.vTotTrib,ffCurrency,15,2);
+        Result := Result+'Val Aprox Tributos: '+ FloatToStrF(Imposto.vTotTrib,ffCurrency,15,2);
         if TributosPercentual = ptValorNF then
           Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0) +
                                 StringToFloatDef(FloatToStr(Prod.vFrete),0)  +
                                 StringToFloatDef(FloatToStr(Prod.vOutro),0)  +
                                 StringToFloatDef(FloatToStr(Prod.vSeg),0)    +
                                 StringToFloatDef(FloatToStr(IPI.vIPI), 0)    +
-                                StringToFloatDef(FloatToStr(ICMS.vICMSST), 0))),ffNumber,15,2)+'%)'+';'
+                                StringToFloatDef(FloatToStr(ICMS.vICMSST), 0))),ffNumber,15,2)+'%)'
         else
-          Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0))),ffNumber,15,2)+'%)'+';';
+          Result := Result+' ('+FloatToStrF(((StringToFloatDef(FloatToStr(Imposto.vTotTrib),0)*100)/(StringToFloatDef(FloatToStr(Prod.VProd),0))),ffNumber,15,2)+'%)';
       end;
     end;
   end;
@@ -2234,7 +2237,7 @@ begin
       for IndexCampo2 := 0 to Length(Campos2) - 1 do
         vTemp2.Add(Trim(Campos2[IndexCampo2]));
 
-      Result  := #13 + vTemp2.Text;
+      Result  := #13 + Trim(vTemp2.Text);
     end;
   finally
     vTemp2.free;

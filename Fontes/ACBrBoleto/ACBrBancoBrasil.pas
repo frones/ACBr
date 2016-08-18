@@ -64,7 +64,7 @@ unit ACBrBancoBrasil;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, Contnrs,
   ACBrBoleto;
 
 const
@@ -99,7 +99,7 @@ type
     function CodMotivoRejeicaoToDescricao(
       const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String; override;
 
-    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''): Integer; override;
+    function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; override;
    end;
 
 implementation
@@ -138,7 +138,7 @@ begin
 end;
 
 function TACBrBancoBrasil.CalcularTamMaximoNossoNumero(
-  const Carteira: String; NossoNumero : String = ''): Integer;
+  const Carteira: String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 var
   wCarteira   : String;
   wTamConvenio: Integer;
@@ -164,7 +164,7 @@ begin
       Result := 7
    else if ((wTamConvenio > 4) and (wTamConvenio < 6)) or
            ((wTamConvenio = 6) and ((wCarteira = '12') or (wCarteira = '15') or
-            (wCarteira = '17'))) then
+            (wCarteira = '17') or (wCarteira = '18'))) then
       Result := 5
    else if (wTamConvenio = 6) then
       Result := 11
@@ -246,7 +246,7 @@ function TACBrBancoBrasil.MontarCampoCodigoCedente (
 begin
    Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia+'-'+
              ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
-             IntToStrZero(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0),8)+'-'+
+             IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0)) +'-'+
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
@@ -437,7 +437,7 @@ begin
        tbBancoReemite    : ATipoBoleto := '4' + '1';
        tbBancoNaoReemite : ATipoBoleto := '5' + '2';
      end;
-
+     ACaracTitulo := ' ';
      case CaracTitulo of
        tcSimples     : ACaracTitulo  := '1';
        tcVinculada   : ACaracTitulo  := '2';
@@ -702,7 +702,7 @@ begin
        toRemessaAlterarNomeEnderecoSacado      : ATipoOcorrencia := '12'; {Alteração de nome e endereço do Sacado}
        toRemessaOutrasOcorrencias              : ATipoOcorrencia := '31'; {Alteração de Outros Dados}
        toRemessaCancelarDesconto               : ATipoOcorrencia := '32'; {Não conceder desconto}
-       toRemessaAlterarModalidade              : ATipoOcorrencia  := '40'; {Alterar modalidade (Vide Observações)}
+       toRemessaAlterarModalidade              : ATipoOcorrencia := '40'; {Alterar modalidade (Vide Observações)}
      else
        ATipoOcorrencia := '01'; {Remessa}
      end;
@@ -923,7 +923,7 @@ begin
 
    rCedente        := trim(copy(ARetorno[0], 73, 30));
    rCNPJCPF        := OnlyNumber( copy(ARetorno[0], 19, 14) );
-   rConvenioCedente:= Trim(Copy(ARetorno[0], 33, 9));
+   rConvenioCedente:= Trim(RemoveZerosEsquerda(Copy(ARetorno[0], 33, 9)));
 
    with ACBrBanco.ACBrBoleto do
    begin
@@ -952,6 +952,8 @@ begin
    end;
 
    ACBrBanco.TamanhoMaximoNossoNum := 20;  
+   Linha := '';
+   Titulo := nil;
 
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
@@ -963,6 +965,7 @@ begin
       if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if copy(Linha, 14, 1) = 'T' then
@@ -1001,21 +1004,21 @@ begin
             if Trim(NumeroDocumento) = '' then
               NumeroDocumento := NossoNumero;
           end
-         else // segmento U
+         else if copy(Linha, 14, 1) = 'U' then // segmento U
           begin
-            ValorIOF := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
-            ValorAbatimento := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
-            ValorDesconto := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
-            ValorMoraJuros := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
+            ValorIOF            := StrToFloatDef(copy(Linha, 63, 15), 0) / 100;
+            ValorAbatimento     := StrToFloatDef(copy(Linha, 48, 15), 0) / 100;
+            ValorDesconto       := StrToFloatDef(copy(Linha, 33, 15), 0) / 100;
+            ValorMoraJuros      := StrToFloatDef(copy(Linha, 18, 15), 0) / 100;
             ValorOutrosCreditos := StrToFloatDef(copy(Linha, 123, 15), 0) / 100;
             ValorOutrasDespesas := StrToFloatDef(copy(Linha, 108, 15), 0) / 100;
-            ValorRecebido := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
+            ValorRecebido       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
             TempData := copy(Linha, 138, 2)+'/'+copy(Linha, 140, 2)+'/'+copy(Linha, 142, 4);
             if TempData<>'00/00/0000' then
-                DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
+              DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DDMMYY');
             TempData := copy(Linha, 146, 2)+'/'+copy(Linha, 148, 2)+'/'+copy(Linha, 150, 4);
             if TempData<>'00/00/0000' then
-                DataCredito := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
+              DataCredito := StringToDateTimeDef(TempData, 0, 'DDMMYYYY');
           end;
       end;
    end;
@@ -1136,6 +1139,7 @@ end;
 function TACBrBancoBrasil.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
+ Result := toTipoOcorrenciaNenhum;
   case CodOcorrencia of
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoComandoRecusado;
@@ -1361,7 +1365,6 @@ var
   rConvenioCedente: String;
 begin
    fpTamanhoMaximoNossoNum := 11;
-   ContLinha := 0;
 
    if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
      raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1377,7 +1380,7 @@ begin
    rConvenioCedente:= Copy(ARetorno[0],41,6);
 
 
-   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],41,6),0);
+   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],101,7),0);
 
    ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
                                                              Copy(ARetorno[0],97,2)+'/'+
@@ -1471,14 +1474,13 @@ end;
 procedure TACBrBancoBrasil.LerRetorno400Pos7(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
-  ContLinha, CodOcorrencia, CodMotivo, MotivoLinha : Integer;
+  ContLinha, CodOcorrencia, CodMotivo : Integer;
   rAgencia, rDigitoAgencia, rConta :String;
   rDigitoConta, rCodigoCedente     :String;
   Linha, rCedente                  :String;
   rConvenioCedente: String;
 begin
   fpTamanhoMaximoNossoNum := 20;
-  ContLinha := 0;
 
   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> Numero then
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -1548,7 +1550,7 @@ begin
 
       if(CodOcorrencia >= 2) and ((CodOcorrencia <= 10)) then
       begin
-        MotivoLinha:= 87;
+
         CodMotivo:= StrToIntDef(Copy(Linha,87,2),0);
         MotivoRejeicaoComando.Add(copy(Linha,87,2));
         DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo,CodMotivo));

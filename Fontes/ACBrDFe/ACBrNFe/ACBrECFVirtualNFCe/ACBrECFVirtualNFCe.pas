@@ -46,6 +46,7 @@ const
   ACBrECFVirtualNFCe_VERSAO = '0.1.0a';
   estCupomAberto = [estVenda, estPagamento];
 
+
 type
 
   TACBrECFVirtualNFCeQuandoAbrirDocumento = procedure(NFe: TNFe) of object;
@@ -96,6 +97,7 @@ type
       read GetQuandoFecharDocumento write SetQuandoFecharDocumento ;
     property QuandoCancelarDocumento : TACBrECFVirtualNFCeQuandoCancelarDocumento
       read GetQuandoCancelarDocumento write SetQuandoCancelarDocumento ;
+
   end;
 
   { TACBrECFVirtualNFCeClass }
@@ -139,7 +141,7 @@ type
     Procedure CancelaCupomVirtual ; override ;
 
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; override;
-    procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; override;
+    procedure GravaArqINIVirtual( ConteudoINI: TStrings) ; override;
 
     property ECF: TACBrECF read GetACBrECF;
 
@@ -564,6 +566,9 @@ var
   ItDescAcre: Array of Extended;
   Total, VlDescAcres, TotDescAcre, VlItMaior: Extended;
 begin
+   if fsEhVenda then
+      begin
+
   with fsACBrNFCe do
   begin
     if fpCupom.DescAcresSubtotal > 0 then
@@ -613,6 +618,11 @@ begin
 
     NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
   end;
+
+
+  end
+   else
+     inherited;
 end;
 
 procedure TACBrECFVirtualNFCeClass.EfetuaPagamentoVirtual(
@@ -620,15 +630,26 @@ procedure TACBrECFVirtualNFCeClass.EfetuaPagamentoVirtual(
 var
   NFCePagto: TpagCollectionItem;
 begin
+if fsEhVenda then
+  begin
   with fsACBrNFCe do
   begin
+
     NFCePagto := NotasFiscais.Items[0].NFe.pag.Add;
 
     NFCePagto.vPag := Pagto.ValorPago;
     NFCePagto.tPag := AdivinharFormaPagamento( fpFormasPagamentos[ Pagto.PosFPG ].Descricao );
 
+    if (NFCePagto.tPag in [fpCartaoCredito, fpCartaoDebito]) then
+       begin
+        NFCePagto.tpIntegra := tiPagNaoIntegrado;
+//        NFCePagto.tBand:= bc
+       end;
+
     if Assigned( fsQuandoEfetuarPagamento ) then
       fsQuandoEfetuarPagamento( NFCePagto );
+  end;
+
   end;
 end;
 
@@ -680,6 +701,7 @@ begin
       begin
         Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
 
+
         if WebServices.Enviar.cStat <> 100 then
         begin
           cStat   := IntToStr(WebServices.Enviar.cStat);
@@ -713,6 +735,9 @@ procedure TACBrECFVirtualNFCeClass.CancelaCupomVirtual;
 var
   NomeNFCe, cStat, xMotivo: String;
 begin
+  if Estado=estNaoFiscal then
+     exit;
+
   with fsACBrNFCe do
   begin
     if (Estado in estCupomAberto) then    // Não precisa cancelar se ainda não enviou...d
@@ -765,11 +790,13 @@ end;
 procedure TACBrECFVirtualNFCeClass.LeArqINIVirtual(ConteudoINI: TStrings);
 begin
   // Se o cupom está aberto, deve ler conteudo temporário do XML
+
   if (fpEstado in estCupomAberto) then
     if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then
     begin
       fsACBrNFCe.NotasFiscais.Clear;
       fsACBrNFCe.NotasFiscais.LoadFromFile( fsNomeArqTempXML );
+      fsEhVenda := True;
     end;  
 
   inherited LeArqINIVirtual(ConteudoINI);
@@ -778,8 +805,11 @@ end;
 procedure TACBrECFVirtualNFCeClass.GravaArqINIVirtual(ConteudoINI: TStrings);
 begin
   // Se cupom está aberto, deve persistir o CFe //
-  if (fpEstado in estCupomAberto) then
-    fsACBrNFCe.NotasFiscais.Items[0].GravarTXT( fsNomeArqTempXML )
+  if (fpEstado in estCupomAberto) and (fsEhVenda) then
+     begin
+//     fsACBrNFCe.NotasFiscais.Items[0].GravarTXT( fsNomeArqTempXML );
+//     fsACBrNFCe.NotasFiscais.Items[0].GravarXML( fsNomeArqTempXML );
+     end
   else
   begin
     if (fsNomeArqTempXML <> '') and FileExists( fsNomeArqTempXML ) then

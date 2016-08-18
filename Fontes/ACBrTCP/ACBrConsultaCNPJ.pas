@@ -278,7 +278,7 @@ begin
         FCNPJ         := LerCampo(Resposta,'NÚMERO DE INSCRIÇÃO');
         if FCNPJ <> '' then
           FEmpresaTipo  := LerCampo(Resposta,FCNPJ);
-        FAbertura     := StrToDateDef(LerCampo(Resposta,'DATA DE ABERTURA'),0);
+        FAbertura     := StringToDateTimeDef(LerCampo(Resposta,'DATA DE ABERTURA'),0);
         FRazaoSocial  := LerCampo(Resposta,'NOME EMPRESARIAL');
         FFantasia     := LerCampo(Resposta,'TÍTULO DO ESTABELECIMENTO (NOME DE FANTASIA)');
         FCNAE1        := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA ATIVIDADE ECONÔMICA PRINCIPAL');
@@ -292,7 +292,7 @@ begin
         FCidade       := LerCampo(Resposta,'MUNICÍPIO');
         FUF           := LerCampo(Resposta,'UF');
         FSituacao     := LerCampo(Resposta,'SITUAÇÃO CADASTRAL');
-        FDataSituacao := StrToDateDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
+        FDataSituacao := StringToDateTimeDef(LerCampo(Resposta,'DATA DA SITUAÇÃO CADASTRAL'),0);
         FNaturezaJuridica := LerCampo(Resposta,'CÓDIGO E DESCRIÇÃO DA NATUREZA JURÍDICA');
         FEndEletronico:= LerCampo(Resposta, 'ENDEREÇO ELETRÔNICO');
         if Trim(FEndEletronico) = 'TELEFONE' then

@@ -411,7 +411,7 @@ begin
 
     if (Leitor.rExtrai(1, 'retDistDFeInt') <> '') then
     begin
-      Fversao   := Leitor.rAtributo('versao');
+      Fversao   := Leitor.rAtributo('versao', 'retDistDFeInt');
       FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
       FverAplic := Leitor.rCampo(tcStr, 'verAplic');
       FcStat    := Leitor.rCampo(tcInt, 'cStat');
@@ -424,8 +424,8 @@ begin
       while Leitor.rExtrai(2, 'docZip', '', i + 1) <> '' do
       begin
         FdocZip.Add;
-        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU');
-        FdocZip.Items[i].schema := StrToSchemaCTe(ok, Leitor.rAtributo('schema'));
+        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'docZip');
+        FdocZip.Items[i].schema := StrToSchemaCTe(ok, Leitor.rAtributo('schema', 'docZip'));
 
         StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
         StrDecod := DecodeBase64(StrAux);
@@ -514,7 +514,7 @@ begin
           begin
             FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
-            FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id');
+            FdocZip.Items[i].FprocEvento.FId         := oLeitorInfZip.rAtributo('Id', 'procEventoCTe');
             FdocZip.Items[i].FprocEvento.FcOrgao     := oLeitorInfZip.rCampo(tcInt, 'cOrgao');
             FdocZip.Items[i].FprocEvento.FtpAmb      := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
             FdocZip.Items[i].FprocEvento.FCNPJ       := oLeitorInfZip.rCampo(tcStr, 'CNPJ');
@@ -526,7 +526,7 @@ begin
 
             if (oLeitorInfZip.rExtrai(2, 'detEvento') <> '') then
             begin
-              FdocZip.Items[i].FprocEvento.detEvento.FVersao     := oLeitorInfZip.rAtributo('versao');
+              FdocZip.Items[i].FprocEvento.detEvento.FVersao     := oLeitorInfZip.rAtributo('versao', 'detEvento');
               FdocZip.Items[i].FprocEvento.detEvento.FnProt      := oLeitorInfZip.rCampo(tcStr, 'nProt');
               FdocZip.Items[i].FprocEvento.detEvento.FxJust      := oLeitorInfZip.rCampo(tcStr, 'xJust');
               FdocZip.Items[i].FprocEvento.detEvento.FDescEvento := oLeitorInfZip.rCampo(tcStr, 'descEvento');
@@ -550,7 +550,7 @@ begin
 
             if (oLeitorInfZip.rExtrai(2, 'retEvento') <> '') then
             begin
-              FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id');
+              FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id', 'retEvento');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpAmb       := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));
               FdocZip.Items[i].FprocEvento.RetinfEvento.FverAplic    := oLeitorInfZip.rCampo(tcStr, 'verAplic');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FcOrgao      := oLeitorInfZip.rCampo(tcInt, 'cOrgao');

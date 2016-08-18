@@ -1,5 +1,7 @@
 {This file generated automatically from libexslt-api.xml}
 {For libexslt version: 0.8.13}
+{$I ACBr.inc}
+
 Unit libexslt;
 
 interface
@@ -9,8 +11,10 @@ interface
 
 uses libxml2, libxslt;
 
+procedure Init;
+
 const
-{$IFDEF WIN32}
+{$IFDEF MSWINDOWS}
   LIBEXSLT_SO = 'libexslt.dll';
 {$ELSE}
   LIBEXSLT_SO = 'libexslt.so';
@@ -39,7 +43,7 @@ uses
 {$IFDEF FPC}
    DynLibs,
 {$ELSE}
-  {$IFDEF WIN32}
+  {$IFDEF MSWINDOWS}
     Windows,
   {$ENDIF}
 {$ENDIF}
@@ -94,7 +98,8 @@ end;
 
 
 
-initialization
+procedure Init;
+begin
   // The Delphi 'external' directive can be used for functions and procedures,
   // but here we need to obtain the addresses of POINTERS to functions. We can
   // get to these addresses (and also those of other data values exported from
@@ -109,5 +114,6 @@ initialization
 
     FreeLibrary(libHandle);
   end;
+end;
 
-end.
+end.

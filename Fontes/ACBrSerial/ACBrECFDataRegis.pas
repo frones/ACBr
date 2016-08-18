@@ -1315,7 +1315,7 @@ begin
                 'I' : fsIndII := Aliquota.Indice ;
              end ;
 
-             if (wTipo in ['I','F','N']) then
+             if CharInSet(wTipo , ['I','F','N']) then
                 wTipo := 'T' ;
              Aliquota.Tipo := wTipo ;
 
@@ -1346,7 +1346,7 @@ begin
                'I' : fsIndII := Aliquota.Indice ;
             end ;
 
-            if (wTipo in ['I','F','N']) then
+            if CharInSet(wTipo , ['I','F','N']) then
                wTipo := 'T' ;
             Aliquota.Tipo := wTipo ;
 

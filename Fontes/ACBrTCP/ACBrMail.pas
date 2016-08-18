@@ -109,6 +109,7 @@ type
   private
     fSMTP                : TSMTPSend;
     fMIMEMess            : TMimeMess;
+    fArqMIMe             : TMemoryStream;
 
     fReadingConfirmation : boolean;
     fOnMailProcess       : TACBrOnMailProcess;
@@ -167,6 +168,7 @@ type
     procedure Send; overload;
     procedure Clear;
     procedure SaveToFile(const AFileName: String);
+    function SaveToStream(AStream: TStream): Boolean;
 
     procedure AddAttachment(aFileName: string; aNameRef: string); overload;
     procedure AddAttachment(aFileName: string); overload;
@@ -357,10 +359,7 @@ end;
 procedure TACBrMail.SaveToFile(const AFileName: String);
 begin
   if AFileName <> '' then
-  begin
-    MIMEMess.EncodeMessage;
-    MIMEMess.Lines.SaveToFile(AFileName);
-  end;
+    fArqMIMe.SaveToFile(AFileName);
 end;
 
 procedure TACBrMail.MailProcess(const aStatus: TMailStatus);
@@ -377,6 +376,7 @@ begin
   fMIMEMess := TMimeMess.Create;
   fAltBody := TStringList.Create;
   fBody := TStringList.Create;
+  fArqMIMe := TMemoryStream.Create;
 
   fOnBeforeMailProcess := nil;
   fOnAfterMailProcess := nil;
@@ -418,7 +418,8 @@ begin
   fReplyTo.Free;
   fMIMEMess.Free;
   fSMTP.Free;
-
+  fArqMIMe.Free;
+  
   inherited Destroy;
 end;
 
@@ -493,6 +494,13 @@ var
   i, c: Integer;
   MultiPartParent, MimePartAttach : TMimePart;
   NeedMultiPartRelated, BodyHasImage: Boolean;
+
+  function InternalCharsetConversion(const Value: String; CharFrom: TMimeChar;
+    CharTo: TMimeChar): String;
+  begin
+   Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
+  end;
+
 begin
   if Assigned(OnBeforeMailProcess) then
     OnBeforeMailProcess( self );
@@ -503,10 +511,10 @@ begin
   if fDefaultCharsetCode <> fIDECharsetCode then
   begin
     if fBody.Count > 0 then
-      fBody.Text := CharsetConversion(fBody.Text, fIDECharsetCode, fDefaultCharsetCode);
+      fBody.Text := InternalCharsetConversion(fBody.Text, fIDECharsetCode, fDefaultCharsetCode);
 
     if fAltBody.Count > 0 then
-      fAltBody.Text := CharsetConversion(fAltBody.Text, fIDECharsetCode, fDefaultCharsetCode);
+      fAltBody.Text := InternalCharsetConversion(fAltBody.Text, fIDECharsetCode, fDefaultCharsetCode);
   end;
 
   // Configuring the Headers //
@@ -515,12 +523,12 @@ begin
   fMIMEMess.Header.CharsetCode := fDefaultCharsetCode;
 
   if fDefaultCharsetCode <> fIDECharsetCode then
-    fMIMEMess.Header.Subject := CharsetConversion(fSubject, fIDECharsetCode, fDefaultCharsetCode)
+    fMIMEMess.Header.Subject := InternalCharsetConversion(fSubject, fIDECharsetCode, fDefaultCharsetCode)
   else
     fMIMEMess.Header.Subject := fSubject;
 
   if Trim(fFromName) <> '' then
-    fMIMEMess.Header.From := '"' + fFromName + ' <' + From + '>"'
+    fMIMEMess.Header.From := '"' + fFromName + '" <' + From + '>'
   else
     fMIMEMess.Header.From := fFrom;
 
@@ -584,14 +592,16 @@ begin
   // Adding the Attachments //
   for i := 0 to Length(fAttachments) - 1 do
   begin
-    MimePartAttach := Nil;
 
     if (Trim(fAttachments[i].FileName) = '') then   // Using Stream
     begin
       if (Trim(fAttachments[i].NameRef) = '') then
         fAttachments[i].NameRef := 'file_' + FormatDateTime('hhnnsszzz',Now);
 
-      if fIsHTML then
+      BodyHasImage := pos(':'+LowerCase(fAttachments[i].NameRef),
+                          LowerCase(fBody.Text)) > 0;
+
+      if fIsHTML and BodyHasImage then
         MimePartAttach := fMIMEMess.AddPartHTMLBinary(
                                       fAttachments[i].Stream,
                                       fAttachments[i].NameRef,
@@ -632,6 +642,9 @@ begin
   end;
 
   fMIMEMess.EncodeMessage;
+
+  fArqMIMe.Clear;
+  fMIMEMess.Lines.SaveToStream(fArqMIMe);
 
   // DEBUG //
   //SaveToFile('.\Mail.eml');
@@ -831,7 +844,7 @@ end;
 procedure TACBrMail.AddAddress(aEmail: string; aName: string);
 begin
   if Trim(aName) <> '' then
-    fMIMEMess.Header.ToList.Add('"' + aName + ' <' + aEmail + '>"')
+    fMIMEMess.Header.ToList.Add('"' + aName + '" <' + aEmail + '>')
   else
     fMIMEMess.Header.ToList.Add(aEmail);
 end;
@@ -839,7 +852,7 @@ end;
 procedure TACBrMail.AddReplyTo(aEmail: string; aName: string);
 begin
   if Trim(aName) <> '' then
-    fReplyTo.Add('"' + aName + ' <' + aEmail + '>"')
+    fReplyTo.Add('"' + aName + '" <' + aEmail + '>')
   else
     fReplyTo.Add(aEmail);
 end;
@@ -847,7 +860,7 @@ end;
 procedure TACBrMail.AddCC(aEmail: string; aName: string);
 begin
   if Trim(aName) <> '' then
-    fMIMEMess.Header.CCList.Add('"' + aName + ' <' + aEmail + '>"')
+    fMIMEMess.Header.CCList.Add('"' + aName + '" <' + aEmail + '>')
   else
     fMIMEMess.Header.CCList.Add(aEmail);
 end;
@@ -855,6 +868,16 @@ end;
 procedure TACBrMail.AddBCC(aEmail: string);
 begin
   fBCC.Add(aEmail);
+end;
+
+function TACBrMail.SaveToStream(AStream: TStream): Boolean;
+begin
+  Result := True;
+  try
+    fArqMIMe.SaveToStream(AStream);
+  except
+    Result := False;
+  end;
 end;
 
 { TACBrMailThread }

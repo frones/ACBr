@@ -1,38 +1,38 @@
 {******************************************************************************}
 { Projeto: Componente ACBrGNRE                                                 }
-{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emiss√£o da    }
+{  Biblioteca multiplataforma de componentes Delphi/Lazarus para emiss„o da    }
 {  Guia Nacional de Recolhimento de Tributos Estaduais                         }
 {  http://www.gnre.pe.gov.br/                                                  }
 {                                                                              }
 { Direitos Autorais Reservados (c) 2013 Claudemir Vitor Pereira                }
 {                                       Daniel Simoes de Almeida               }
-{                                       Andr√© Ferreira de Moraes               }
+{                                       AndrÈ Ferreira de Moraes               }
 {                                       Juliomar Marchetti                     }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
-{  Voc√™ pode obter a √∫ltima vers√£o desse arquivo na pagina do Projeto ACBr     }
+{  VocÍ pode obter a ˙ltima vers„o desse arquivo na pagina do Projeto ACBr     }
 { Componentes localizado em http://www.sourceforge.net/projects/acbr           }
 {                                                                              }
 {                                                                              }
-{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
-{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
-{ qualquer vers√£o posterior.                                                   }
+{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
+{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
+{ qualquer vers„o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
-{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
+{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
-{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
+{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
+{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {                                                                              }
-{ Daniel Sim√µes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
-{              Pra√ßa Anita Costa, 34 - Tatu√≠ - SP - 18270-410                  }
+{ Daniel Simıes de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              PraÁa Anita Costa, 34 - TatuÌ - SP - 18270-410                  }
 {                                                                              }
 {******************************************************************************}
 
@@ -40,7 +40,7 @@
 |* Historico
 |*
 |* 09/12/2013 - Claudemir Vitor Pereira
-|*  - Doa√ß√£o do componente para o Projeto ACBr
+|*  - DoaÁ„o do componente para o Projeto ACBr
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -67,10 +67,6 @@ type
     Fdescricao: string;
     FexigeUfFavorecida: string;
     FexigeReceita: string;
-    FexigeContribuinteEmitente: string;
-    FexigeDataVencimento: string;
-    FexigeConvenio: string;
-    FexigeDataPagamento: string;
     FInfReceita: TRetReceita;
   public
     constructor Create;
@@ -84,10 +80,6 @@ type
     property descricao: string read Fdescricao write Fdescricao;
     property exigeUfFavorecida: string read FexigeUfFavorecida write FexigeUfFavorecida;
     property exigeReceita: string read FexigeReceita write FexigeReceita;
-    property exigeContribuinteEmitente: string read FexigeContribuinteEmitente write FexigeContribuinteEmitente;
-    property exigeDataVencimento: string read FexigeDataVencimento write FexigeDataVencimento;
-    property exigeConvenio: string read FexigeConvenio write FexigeConvenio;
-    property exigeDataPagamento: string read FexigeDataPagamento write FexigeDataPagamento;
     property InfReceita: TRetReceita read FInfReceita write FInfReceita;
   end;
 
@@ -115,23 +107,19 @@ begin
   Result := False;
   try
     Leitor.Grupo := Leitor.Arquivo;
-
-    if Leitor.rExtrai(1, 'TConfigUf') <> '' then
+    //Faltou o namespace ns1
+    if Leitor.rExtrai(1, 'ns1:TConfigUf') <> '' then
     begin
-      (*1*)FAmbiente                    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ambiente'));
-      (*2*)FUf                          := Leitor.rCampo(tcStr, 'Uf');
-      (*4*)Fcodigo                      := Leitor.rCampo(tcInt, 'codigo');
-      (*5*)Fdescricao                   := Leitor.rCampo(tcStr, 'descricao');
-      (*6*)FexigeUfFavorecida           := SeparaDados(Leitor.Grupo, 'exigeUfFavorecida');
-      (*7*)FexigeReceita                := SeparaDados(Leitor.Grupo, 'exigeReceita');
-      (*43*)FexigeContribuinteEmitente  := SeparaDados(Leitor.Grupo, 'exigeContribuinteEmitente');
-      (*44*)FexigeDataVencimento        := SeparaDados(Leitor.Grupo, 'exigeDataVencimento');
-      (*45*)FexigeConvenio              := SeparaDados(Leitor.Grupo, 'exigeConvenio');
-      (*45*)FexigeDataPagamento         := SeparaDados(Leitor.Grupo, 'exigeDataPagamento');
+      (*1*)FAmbiente                    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'ns1:ambiente'));
+      (*2*)FUf                          := Leitor.rCampo(tcStr, 'ns1:Uf');
+      (*4*)Fcodigo                      := Leitor.rCampo(tcInt, 'ns1:codigo');
+      (*5*)Fdescricao                   := Leitor.rCampo(tcStr, 'ns1:descricao');
+      (*6*)FexigeUfFavorecida           := SeparaDados(Leitor.Grupo, 'ns1:exigeUfFavorecida');
+      (*7*)FexigeReceita                := SeparaDados(Leitor.Grupo, 'ns1:exigeReceita');
 
       if SameText(FexigeReceita, 'S') then
       begin
-        if Leitor.rExtrai(2, 'receitas') <> '' then
+        if Leitor.rExtrai(2, 'ns1:receitas') <> '' then
         begin
           InfReceita.Leitor.Arquivo := Leitor.Grupo;
           InfReceita.LerXml;

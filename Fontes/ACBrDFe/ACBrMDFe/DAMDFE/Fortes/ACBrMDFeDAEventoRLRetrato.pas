@@ -339,7 +339,7 @@ begin
     rllCNPJEmitente.Caption := FormatarCNPJouCPF(FMDFe.emit.CNPJ);
     rllEnderecoEmitente.Caption := FMDFe.emit.EnderEmit.xLgr + ', ' + FMDFe.emit.EnderEmit.nro;
     rllBairroEmitente.Caption := FMDFe.emit.EnderEmit.xBairro;
-    rllCEPEmitente.Caption := FormatarCEP(FormatFloat('00000000', FMDFe.emit.EnderEmit.CEP));
+    rllCEPEmitente.Caption := FormatarCEP(FMDFe.emit.EnderEmit.CEP);
     rllMunEmitente.Caption := FMDFe.emit.EnderEmit.xMun + ' - ' + FMDFe.emit.EnderEmit.UF;
     rllFoneEmitente.Caption := FormatarFone(FMDFe.emit.enderEmit.fone);
     rllInscEstEmitente.Caption := FMDFe.emit.IE;
@@ -365,7 +365,7 @@ begin
           rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Rem.CNPJCPF);
           rllEnderecoTomador.Caption := FMDFe.Rem.EnderReme.xLgr + ', ' + FMDFe.Rem.EnderReme.nro;
           rllBairroTomador.Caption   := FMDFe.Rem.EnderReme.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FormatFloat( '00000000', FMDFe.Rem.EnderReme.CEP));
+          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Rem.EnderReme.CEP);
           rllMunTomador.Caption      := FMDFe.Rem.EnderReme.xMun+' - '+FMDFe.Rem.EnderReme.UF;
           rllFoneTomador.Caption     := FormatarFone(FMDFe.Rem.fone);
           rllInscEstTomador.Caption  := FMDFe.Rem.IE;
@@ -376,7 +376,7 @@ begin
           rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Exped.CNPJCPF);
           rllEnderecoTomador.Caption := FMDFe.Exped.EnderExped.xLgr + ', ' + FMDFe.Exped.EnderExped.nro;
           rllBairroTomador.Caption   := FMDFe.Exped.EnderExped.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FormatFloat( '00000000', FMDFe.Exped.EnderExped.CEP));
+          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Exped.EnderExped.CEP);
           rllMunTomador.Caption      := FMDFe.Exped.EnderExped.xMun+' - '+FMDFe.Exped.EnderExped.UF;
           rllFoneTomador.Caption     := FormatarFone(FMDFe.Exped.fone);
           rllInscEstTomador.Caption  := FMDFe.Exped.IE;
@@ -387,7 +387,7 @@ begin
           rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Receb.CNPJCPF);
           rllEnderecoTomador.Caption := FMDFe.Receb.EnderReceb.xLgr + ', ' + FMDFe.Receb.EnderReceb.nro;
           rllBairroTomador.Caption   := FMDFe.Receb.EnderReceb.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FormatFloat( '00000000', FMDFe.Receb.EnderReceb.CEP));
+          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Receb.EnderReceb.CEP);
           rllMunTomador.Caption      := FMDFe.Receb.EnderReceb.xMun+' - '+FMDFe.Receb.EnderReceb.UF;
           rllFoneTomador.Caption     := FormatarFone(FMDFe.Receb.fone);
           rllInscEstTomador.Caption  := FMDFe.Receb.IE;
@@ -398,7 +398,7 @@ begin
           rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Dest.CNPJCPF);
           rllEnderecoTomador.Caption := FMDFe.Dest.EnderDest.xLgr + ', ' + FMDFe.Dest.EnderDest.nro;
           rllBairroTomador.Caption   := FMDFe.Dest.EnderDest.xBairro;
-          rllCEPTomador.Caption      := FormatarCEP(FormatFloat( '00000000', FMDFe.Dest.EnderDest.CEP));
+          rllCEPTomador.Caption      := FormatarCEP(FMDFe.Dest.EnderDest.CEP);
           rllMunTomador.Caption      := FMDFe.Dest.EnderDest.xMun+' - '+FMDFe.Dest.EnderDest.UF;
           rllFoneTomador.Caption     := FormatarFone(FMDFe.Dest.fone);
           rllInscEstTomador.Caption  := FMDFe.Dest.IE;
@@ -410,7 +410,7 @@ begin
       rllCNPJTomador.Caption     := FormatarCNPJCPF(FMDFe.Ide.Toma4.CNPJCPF);
       rllEnderecoTomador.Caption := FMDFe.Ide.Toma4.EnderToma.xLgr + ', ' + FMDFe.Ide.Toma4.EnderToma.nro;
       rllBairroTomador.Caption   := FMDFe.Ide.Toma4.EnderToma.xBairro;
-      rllCEPTomador.Caption      := FormatarCEP(FormatFloat( '00000000', FMDFe.Ide.Toma4.EnderToma.CEP));
+      rllCEPTomador.Caption      := FormatarCEP(FMDFe.Ide.Toma4.EnderToma.CEP);
       rllMunTomador.Caption      := FMDFe.Ide.Toma4.EnderToma.xMun+' - '+FMDFe.Ide.Toma4.EnderToma.UF;
       rllFoneTomador.Caption     := FormatarFone(FMDFe.Ide.Toma4.fone);
       rllInscEstTomador.Caption  := FMDFe.Ide.Toma4.IE;

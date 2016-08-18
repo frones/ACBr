@@ -272,7 +272,9 @@ type
 
 implementation
 
-Uses dateutils, pcnCFeCancR, pcnCFeCancW ;
+Uses dateutils,
+  pcnCFeCancR, pcnCFeCancW,
+  ACBrUtil;
 
 { TDest }
 
@@ -590,19 +592,10 @@ begin
 end ;
 
 function TCFeCanc.SaveToFile(AFileName : String) : boolean ;
-var
-  SL : TStringList;
 begin
-  Result := False;
-  SL := TStringList.Create;
-  try
-    SL.Text := AsXMLString;
-    SL.SaveToFile( AFileName );
-    FNomeArquivo := AFileName;
-    Result := True;
-  finally
-    SL.Free;
-  end;
+  WriteToTXT(AFileName, AsXMLString, False, False);
+  FNomeArquivo := AFileName;
+  Result := True;
 end ;
 
 end.

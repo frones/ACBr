@@ -63,6 +63,7 @@ type
   TRegistroI053List = class;
   TRegistroI151List = class;
   TRegistroI155List = class;
+  TRegistroI157List = class;
   TRegistroI250List = class;
   TRegistroI310List = class;
   TRegistroI355List = class;
@@ -417,7 +418,10 @@ type
     fVL_CRED: Currency;       /// Valor total dos créditos no período.
     fVL_SLD_FIN: Currency;    /// Valor do saldo final do período.
     fIND_DC_FIN: String;  /// Indicador da situação do saldo final: D - Devedor; C - Credor.
+    FRegistroI157: TRegistroI157List;  /// BLOCO I - Lista de RegistroI157 (FILHO)
   public
+    constructor Create; virtual; /// Create
+
     property COD_CTA: String read fCOD_CTA write fCOD_CTA;
     property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
     property VL_SLD_INI: Currency read fVL_SLD_INI write fVL_SLD_INI;
@@ -426,6 +430,8 @@ type
     property VL_CRED: Currency read fVL_CRED write fVL_CRED;
     property VL_SLD_FIN: Currency read fVL_SLD_FIN write fVL_SLD_FIN;
     property IND_DC_FIN: String read fIND_DC_FIN write fIND_DC_FIN;
+
+    property RegistroI157: TRegistroI157List read FRegistroI157 write FRegistroI157;
   end;
 
   /// Registro I155 - Lista
@@ -437,6 +443,32 @@ type
   public
     function New: TRegistroI155;
     property Items[Index: Integer]: TRegistroI155 read GetItem write SetItem;
+  end;
+
+  /// Registro I157 - TRANSFERÊNCIA DE SALDOS DE PLANO DE CONTAS ANTERIOR
+
+  TRegistroI157 = class
+  private
+    fCOD_CTA: String;     /// Código da conta analítica do plano de contas anterior.
+    fCOD_CCUS: String;    /// Código do centro de custos.
+    fVL_SLD_INI: Currency;    /// Valor do saldo inicial do período.
+    fIND_DC_INI: String;  /// Indicador da situação do saldo inicial:D - Devedor;C - Credor.
+  public
+    property COD_CTA: String read fCOD_CTA write fCOD_CTA;
+    property COD_CCUS: String read fCOD_CCUS write fCOD_CCUS;
+    property VL_SLD_INI: Currency read fVL_SLD_INI write fVL_SLD_INI;
+    property IND_DC_INI: String read fIND_DC_INI write fIND_DC_INI;
+  end;
+
+  /// Registro I157 - Lista
+
+  TRegistroI157List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroI157;
+    procedure SetItem(Index: Integer; const Value: TRegistroI157);
+  public
+    function New: TRegistroI157;
+    property Items[Index: Integer]: TRegistroI157 read GetItem write SetItem;
   end;
 
   // Registro I200 - Lançamentos Contábeis
@@ -882,10 +914,16 @@ begin
    FRegistroI155 := TRegistroI155List.Create;
 end;
 
+constructor TRegistroI155.Create;
+begin
+   FRegistroI157 := TRegistroI157List.Create;
+end;
+
 destructor TRegistroI150.Destroy;
 begin
   FRegistroI151.Free;
   FRegistroI155.Free;
+//  FRegistroI157.Free;
   inherited;
 end;
 
@@ -939,6 +977,24 @@ begin
 end;
 
 procedure TRegistroI155List.SetItem(Index: Integer; const Value: TRegistroI155);
+begin
+  Put(Index, Value);
+end;
+
+{ TRegistroI157List }
+
+function TRegistroI157List.GetItem(Index: Integer): TRegistroI157;
+begin
+  Result := TRegistroI157(Inherited Items[Index]);
+end;
+
+function TRegistroI157List.New: TRegistroI157;
+begin
+  Result := TRegistroI157.Create;
+  Add(Result);
+end;
+
+procedure TRegistroI157List.SetItem(Index: Integer; const Value: TRegistroI157);
 begin
   Put(Index, Value);
 end;

@@ -37,6 +37,122 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/08/2016
+-- ACBrSocket --
+[-] Correção em "TACBrHTTP.HTTPMethod", para detectar UTF8 quando Header.
+    Content-Type: = "xhtml+xml"   (por: DSA)
+
+10/08/2016
+-- ACBrSocket --
+[-] Correção em ACBrTCPServer.Desativar para que não ocorra Erros de Thread com
+    as conexões abertas   (por: DSA)
+
+-- ACBrMTer --
+[*] Ajustes após modificação no comportamente de ACBrTCPServer.Desativar
+
+05/08/2016
+-- ACBrMTer --
+[-] Exclusão da propriedade EcoAuto.
+[+] Inclusão das propriedades EchoMode e PasswordChar para possibilitar 
+	alteração no modo de exibição do texto no display de Micro Terminais. 
+	(por: Elias)
+
+05/08/2016
+-- ACBrSocket --
+[-] Correção de Bug em TACBrTCPServer.Desativar, em Delphi, onde o erro
+    thread error the handle is invalid (6)" era disparado no caso de existir
+    conexões ativas (por:DSA)
+
+-- ACBrMTer* --
+[-] Correção de Enconding para ANSI. Remoção de variáveis não utilizadas
+
+24/06/2016
+-- ACBrMTer --
+[*] Assinatura do Evento "OnRecebeDados" modificada para possibilitar a 
+	alteração dos dados retornados ao Micro Terminal.
+-- ACBrMTerPMTG --
+[*] Correção do método "ComandoBoasVindas". (por: Elias)
+
+23/06/2016
+-- ACBrSocket --
+[+] TACBrTCPServerThread, adicionada a propriedade "Enabled: Boolean", que
+    permite pausar a Thread.      (por: DSA)
+[*] TACBrTCPServerThread passa a ser o Dono do Socket. Isso permite manipular a
+    Thread, através do Socket. Ex:
+                  TACBrTCPServerThread(aSocket.Owner).Enabled := False;
+
+-- ACBrMTer --
+[+] Adicionado o método "OnLine(aIp:String): Boolean"
+[+] Adicionado os métodos Público:
+    procedure EnviarComando(const aIP: String; const ACmd: AnsiString);
+    function LerResposta(const aIP: String; const aTimeOut: Integer;
+      NumBytes: Integer = 0; Terminador: AnsiString = ''): AnsiString;
+[*] Refatoração e melhoria na montagem dos comandos dos protocolos existemtes
+    e na interpretação da resposta
+    (por: Elias e DSA)
+
+20/06/2016
+-- ACBrSocket --
+[*] ACBrTCPServer, melhorias para suporte a aplicações Multi-thread
+[*] ACBrTCPServer, modificação para permitir ajuste das propriedades
+    "TimeOut" e "Terminador", mesmo com o Servidor Ativo  (por: DSA)
+
+14/06/2016
+-- ACBrConsultaCPF --
+[-] Correção do endereço HTTP para HTTPS
+[+] Adicionado suporte ao campo "Data da Inscrição"
+    http://www.projetoacbr.com.br/forum/topic/30634-consultacpf-corre%C3%A7%C3%A3o-de-endere%C3%A7o/
+    (por: Alan Lucas)
+
+03/02/2016
+-- ACBrMTer --
+[+] Adicionado novo componente ACBrMTer, que atua como servidor de MicroTerminais
+    TCP/IP, suportando atualmente os protocolos: VT100, StxEtx, PMTG
+    (por: Elias César Vieira e DSA)
+
+14/04/2016
+-- ACBrSocket --
+[-] Método: "TACBrTCPServerDaemon.Destroy" não estava chamando "inherited Destroy"
+    (por: DSA)
+
+12/04/2016
+-- ACBrConsultaCNPJ --
+[*] Ajuste para interpretar datas, em S.O. que não utilizam a barra (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/28667-ajuste-no-acbrconsultacnpj/
+
+30/03/2016
+-- ACBrMail --
+[+] Adicionado o método: function SaveToStream(AStream: TStream): Boolean;
+[-] Correção na montagem do cabeçalho de: "From, To, ReplyTo, CC", para que
+    apareça apenas o nome informado (informando "Nome" <email@provedor.com>)
+[-] Correção de Bug para permitir salvar corretamente o Email com anexos em
+    Arquivo.      (por: Renato Pavan)
+    http://www.projetoacbr.com.br/forum/topic/23435-acbrmail-colocando-clips/?do=findComment&comment=191979
+
+19/03/2016
+-- ACBrHTTPDownload --
+[+] Criada propriedade Publica para expor HTTPSend: THTTPSend   (por: DSA)
+    http://www.projetoacbr.com.br/forum/topic/28813-erro-ao-fazer-download-em-alguns-servidores/
+
+17/03/2016
+--ACBrSpedTabelas
+[+] Adicionado recurso para criar o diretório de destino caso o definido não exista
+    link http://www.projetoacbr.com.br/forum/topic/28781-contribui%C3%A7%C3%A3o-para-unit-acbrspedtabelaspas/?do=findComment&comment=190279
+    (por: Isaque Pinheiro)
+
+27/02/2016
+--ACBrConsultaCPF
+[*] Ajuste para quando retornar o erro de data de nascimento errado mostrar o problema
+		http://www.projetoacbr.com.br/forum/topic/18665-consulta-cpf/?do=findComment&comment=187068
+		por : Juliomar Marchetti
+		
+26/02/2016
+--ACBrCEP--
+[+] Adição de outro webservice pra consulta por Cantu
+    http://www.projetoacbr.com.br/forum/topic/28314-acbrcep-erro-404/
+[*] Ajuste em TACBrWSCorreiosSIGEP, para fazer a busca do Cod.IBGE
+[*] Modelo wsCorreios modificado para instanciar TACBrWSCorreiosSIGEP
+		
 16/12/2015
 -- ACBrMail --
 [-] Correção para Destruição de TACBrMail, não chamar "SMTP.Reset"

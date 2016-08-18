@@ -425,8 +425,7 @@ var
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, I, CodMotivo: Integer;
 begin
-   ContLinha := 0;
-
+ 
    if (copy(ARetorno.Strings[0],1,3) <> '756') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -437,14 +436,14 @@ begin
    rDigitoConta := Copy(ARetorno[0],71,1);
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 158, 6), 0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[1],144,2)+'/'+
-                                                             Copy(ARetorno[1],146,2)+'/'+
-                                                             Copy(ARetorno[1],148,4),0, 'DD/MM/YY' );
+   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],144,2)+'/'+
+                                                             Copy(ARetorno[0],146,2)+'/'+
+                                                             Copy(ARetorno[0],148,4),0, 'DD/MM/YY' );
 
    if StrToIntDef(Copy(ARetorno[1],200,6),0) <> 0 then
-      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[1],200,2)+'/'+
-                                                                  Copy(ARetorno[1],202,2)+'/'+
-                                                                  Copy(ARetorno[1],204,4),0, 'DD/MM/YY' );
+      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[0],200,2)+'/'+
+                                                                  Copy(ARetorno[0],202,2)+'/'+
+                                                                  Copy(ARetorno[0],204,4),0, 'DD/MM/YY' );
    rCNPJCPF := trim( Copy(ARetorno[0],19,14)) ;
 
    if ACBrBanco.ACBrBoleto.Cedente.TipoInscricao = pJuridica then
@@ -492,6 +491,9 @@ begin
       ACBrBanco.ACBrBoleto.ListadeBoletos.Clear;
    end;
 
+   Linha := '';
+   Titulo := nil;
+
    for ContLinha := 1 to ARetorno.Count - 2 do
    begin
       Linha := ARetorno[ContLinha] ;
@@ -500,13 +502,14 @@ begin
       if Copy(Linha,14,1)= 'T' then
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          {Segmento T}
          if Copy(Linha,14,1)= 'T' then
           begin
-            SeuNumero                   := copy(Linha,40,7);
-            NumeroDocumento             := copy(Linha,59,7);
+            SeuNumero                   := Trim(copy(Linha,106,25));
+            NumeroDocumento             := copy(Linha,59,15);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 
             //05 = Liquidação Sem Registro
@@ -580,7 +583,6 @@ var
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF : String;
 begin
-   ContLinha := 0;
 
    if (copy(ARetorno.Strings[0],1,9) <> '02RETORNO') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
@@ -606,10 +608,10 @@ begin
       begin
         Cedente.Nome          := rCedente;
         Cedente.CNPJCPF       := rCNPJCPF;
-        Cedente.Agencia       := trim(copy(ARetorno[0], 18, 4));
-        Cedente.AgenciaDigito := trim(copy(ARetorno[0], 22, 1));
-        Cedente.Conta         := trim(copy(ARetorno[0], 23, 8));
-        Cedente.ContaDigito   := trim(copy(ARetorno[0], 31, 1));
+        Cedente.Agencia       := trim(copy(ARetorno[1], 18, 4));
+        Cedente.AgenciaDigito := trim(copy(ARetorno[1], 22, 1));
+        Cedente.Conta         := trim(copy(ARetorno[1], 23, 8));
+        Cedente.ContaDigito   := trim(copy(ARetorno[1], 31, 1));
 
         case StrToIntDef(Copy(ARetorno[1],2,2),0) of
            11: Cedente.TipoInscricao:= pFisica;
@@ -741,6 +743,7 @@ var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros
     wModalidade: String;
 begin
   NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
+  ATipoInscricaoAvalista := ' ';
   with ACBrTitulo do
     begin
       {SEGMENTO P}
@@ -914,19 +917,31 @@ begin
                '0'                                                        + // 18  tipo de desconto 2
                PadLeft('0', 8, '0')                                       + // 19 - 26 Numero da linha a ser impressa
                PadLeft('0',15, '0')                                       + // 27 - 41 Valor/Percentual
-               '1'                                                        + // 42
+               '0'                                                        + // 42
                PadLeft('0', 8, '0')                                       + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                      + // 51-65 Valor ou percentual a ser concedido
-               '2'                                                        + // 66 Código da multa - 1) valor fixo e 2) valor percentual
+               IfThen((PercentualMulta > 0), '2', '0')                    + // 66 Código da multa - 1) valor fixo e 2) valor percentual
                IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
                        FormatDateTime('ddmmyyyy', DataMoraJuros),
                                       '00000000')                         + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
                IfThen(PercentualMulta > 0,
                       IntToStrZero(round(PercentualMulta * 100), 15),
                       PadLeft('', 15, '0'))                               + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
-               space(10)                                                  + // 90-99 Informações do sacado
-               space(40)                                                  + // 100-139 Menssagem livre
-               space(40)                                                  + // 140-179 Menssagem livre
+               space(10);                                                   // 90-99 Informações do sacado
+
+               if Mensagem.Count > 0 then
+               begin
+                 Result :=  Result + PadRight(Copy(Mensagem[0],1,40),40);    // 100-139 Menssagem livre
+
+                 if Mensagem.Count > 1 then
+                   Result := Result + PadRight(Copy(Mensagem[1],1,40),40)    // 140-179 Menssagem livre
+                 else
+                   Result := Result + Space(40);
+               end
+               else
+                 Result := Result + Space(80);
+
+               Result := Result +
                space(20)                                                  + // 180-199 Uso da FEBRABAN "Brancos"
                PadLeft('0', 08, '0')                                      + // 200-207 Código oco. sacado "0000000"
                PadLeft('0', 3, '0')                                       + // 208-210 Código do banco na conta de débito "000"

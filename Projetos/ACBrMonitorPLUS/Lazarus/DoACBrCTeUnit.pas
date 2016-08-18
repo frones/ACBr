@@ -34,7 +34,7 @@
 unit DoACBrCTeUnit;
 
 interface
-Uses Classes, SysUtils, CmdUnit;
+Uses Classes, SysUtils, CmdUnit, Dialogs;
 
 Procedure DoACBrCTe( Cmd : TACBrCmd );
 procedure GerarIniCTe( AStr: WideString );
@@ -1128,11 +1128,12 @@ end;
 
 procedure GerarIniCTe( AStr: WideString );
 var
-  I, J : Integer;
+  I, J, K, L : Integer;
   sSecao, sFim, sCampoAdic : String;
   INIRec : TMemIniFile;
   SL     : TStringList;
   OK     : boolean;
+  fsICMSUFFim : TStrings;
 begin
  INIRec := TMemIniFile.create( 'cte.ini' );
  SL := TStringList.Create;
@@ -1399,6 +1400,7 @@ begin
                 nCFOP   := INIRec.ReadInteger(sSecao,'nCFOP',0);
                 nPeso   := StringToFloatDef( INIRec.ReadString(sSecao,'nPeso','') ,0);
                 PIN     := INIRec.ReadString(sSecao,'PIN','');
+                dPrev   := StringToDateTime(INIRec.ReadString( sSecao,'dPrev','0'));
 
               {$IFNDEF PL_200}
                 locRet.CNPJCPF  := INIRec.ReadString(sSecao,'CNPJCPF','');
@@ -1413,6 +1415,115 @@ begin
                 if locRet.cMun <= 0 then
                   locRet.cMun := ObterCodigoMunicipio(locRet.xMun,locRet.UF);
               {$ENDIF}
+
+              {$IFDEF PL_200}
+                J := 1;
+                while true do
+                begin
+                  sSecao := 'infUnidTransp'+IntToStrZero(I,3)+IntToStrZero(J,3);
+                  sFim   := INIRec.ReadString(sSecao,'idUnidTransp','FIM');
+
+                  if sFim = 'FIM' then
+                    break;
+
+                  with infUnidTransp.Add do
+                  begin
+                    tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
+                    idUnidTransp := INIRec.ReadString(sSecao,'idUnidTransp','');
+                    qtdRat       := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+
+                    K := 1;
+                    while true do
+                    begin
+                      sSecao := 'lacUnidTransp'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                      sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+
+                      if sFim = 'FIM' then
+                        break;
+
+                      with lacUnidTransp.Add do
+                      begin
+                        nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                      end;
+
+                      inc(K);
+                    end;
+
+                    K := 1;
+                    while true do
+                    begin
+                      sSecao := 'infUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                      sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
+
+                      if sFim = 'FIM' then
+                        break;
+
+                      with infUnidCarga.Add do
+                      begin
+                        tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
+                        idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
+                        qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+
+                        L := 1;
+                        while true do
+                        begin
+                          sSecao := 'lacUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3)+IntToStrZero(L,3);
+                          sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+
+                          if sFim = 'FIM' then
+                            break;
+
+                          with lacUnidCarga.Add do
+                          begin
+                            nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                          end;
+
+                          inc(L);
+                        end;
+
+                      end;
+                      inc(K);
+                    end;
+                    inc(J);
+                  end;
+                end;
+
+                J := 1;
+                while true do
+                begin
+                  sSecao := 'infUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3);
+                  sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
+
+                  if sFim = 'FIM' then
+                    break;
+
+                  with infUnidCarga.Add do
+                  begin
+                    tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
+                    idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
+                    qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+
+                    K := 1;
+                    while true do
+                    begin
+                      sSecao := 'lacUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                      sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+
+                      if sFim = 'FIM' then
+                        break;
+
+                      with lacUnidCarga.Add do
+                      begin
+                        nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                      end;
+
+                      inc(K);
+                    end;
+                  end;
+                  inc(J);
+                end;
+              {$ENDIF}
+
               end;
              inc(I);
            end;
@@ -1433,6 +1544,98 @@ begin
               begin
                 chave := INIRec.ReadString(sSecao,'chave','');
                 PIN   := INIRec.ReadString(sSecao,'PIN','');
+                dPrev := StringToDateTime(INIRec.ReadString( sSecao,'dPrev','0'));
+
+              {$IFDEF PL_200}
+                J := 1;
+                while true do
+                 begin
+                   sSecao := 'infUnidTransp'+IntToStrZero(I,3)+IntToStrZero(J,3);
+                   sFim   := INIRec.ReadString(sSecao,'idUnidTransp','FIM');
+                   if sFim = 'FIM' then
+                      break;
+                   with infUnidTransp.Add do
+                    begin
+                      tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
+                      idUnidTransp := INIRec.ReadString(sSecao,'idUnidTransp','');
+                      qtdRat       := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+                      K := 1;
+                      while true do
+                       begin
+                         sSecao := 'lacUnidTransp'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                         sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+                         if sFim = 'FIM' then
+                            break;
+                         with lacUnidTransp.Add do
+                          begin
+                            nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                          end;
+                         inc(K);
+                       end;
+
+                      K := 1;
+                      while true do
+                       begin
+                         sSecao := 'infUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                         sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
+                         if sFim = 'FIM' then
+                            break;
+                         with infUnidCarga.Add do
+                          begin
+                            tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
+                            idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
+                            qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+                            L := 1;
+                            while true do
+                             begin
+                               sSecao := 'lacUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3)+IntToStrZero(L,3);
+                               sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+                               if sFim = 'FIM' then
+                                  break;
+                               with lacUnidCarga.Add do
+                                begin
+                                  nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                                end;
+                               inc(L);
+                             end;
+
+                            inc(K);
+                          end;
+                       end;
+                    end;
+                   inc(J);
+                 end;
+
+                J := 1;
+                while true do
+                 begin
+                   sSecao := 'infUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3);
+                   sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
+                   if sFim = 'FIM' then
+                      break;
+                   with infUnidCarga.Add do
+                    begin
+                      tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
+                      idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
+                      qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+                      K := 1;
+                      while true do
+                       begin
+                         sSecao := 'lacUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                         sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+                         if sFim = 'FIM' then
+                            break;
+                         with lacUnidCarga.Add do
+                          begin
+                            nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                          end;
+                         inc(K);
+                       end;
+                    end;
+                   inc(J);
+                 end;
+              {$ENDIF}
+
               end;
              Inc(I);
            end;
@@ -1456,6 +1659,97 @@ begin
                 nDoc       := INIRec.ReadString(sSecao,'nDoc','');
                 dEmi       := StringToDateTime(INIRec.ReadString( sSecao,'dEmi','0'));
                 vDocFisc   := StringToFloatDef( INIRec.ReadString(sSecao,'vDocFisc','') ,0);
+                dPrev      := StringToDateTime(INIRec.ReadString( sSecao,'dPrev','0'));
+
+              {$IFDEF PL_200}
+                J := 1;
+                while true do
+                 begin
+                   sSecao := 'infUnidTransp'+IntToStrZero(I,3)+IntToStrZero(J,3);
+                   sFim   := INIRec.ReadString(sSecao,'idUnidTransp','FIM');
+                   if sFim = 'FIM' then
+                      break;
+                   with infUnidTransp.Add do
+                    begin
+                      tpUnidTransp := StrToUnidTransp(OK,INIRec.ReadString(sSecao,'tpUnidTransp','1'));
+                      idUnidTransp := INIRec.ReadString(sSecao,'idUnidTransp','');
+                      qtdRat       := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+                      K := 1;
+                      while true do
+                       begin
+                         sSecao := 'lacUnidTransp'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                         sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+                         if sFim = 'FIM' then
+                            break;
+                         with lacUnidTransp.Add do
+                          begin
+                            nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                          end;
+                         inc(K);
+                       end;
+                      K := 1;
+                      while true do
+                       begin
+                         sSecao := 'infUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                         sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
+                         if sFim = 'FIM' then
+                            break;
+                         with infUnidCarga.Add do
+                          begin
+                            tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
+                            idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
+                            qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+                            L := 1;
+                            while true do
+                             begin
+                               sSecao := 'lacUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3)+IntToStrZero(L,3);
+                               sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+                               if sFim = 'FIM' then
+                                  break;
+                               with lacUnidCarga.Add do
+                                begin
+                                  nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                                end;
+                               inc(L);
+
+                             end;
+                           end;
+                         inc(K);
+                       end;
+                    end;
+                   inc(J);
+                 end;
+
+                J := 1;
+                while true do
+                 begin
+                   sSecao := 'infUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3);
+                   sFim   := INIRec.ReadString(sSecao,'idUnidCarga','FIM');
+                   if sFim = 'FIM' then
+                      break;
+                   with infUnidCarga.Add do
+                    begin
+                      tpUnidCarga := StrToUnidCarga(OK,INIRec.ReadString(sSecao,'tpUnidCarga','1'));
+                      idUnidCarga := INIRec.ReadString(sSecao,'idUnidCarga','');
+                      qtdRat      := StringToFloatDef( INIRec.ReadString(sSecao,'qtdRat',''),0);
+                      K := 1;
+                      while true do
+                       begin
+                         sSecao := 'lacUnidCarga'+IntToStrZero(I,3)+IntToStrZero(J,3)+IntToStrZero(K,3);
+                         sFim   := INIRec.ReadString(sSecao,'nLacre','FIM');
+                         if sFim = 'FIM' then
+                            break;
+                         with lacUnidCarga.Add do
+                          begin
+                            nLacre := INIRec.ReadString(sSecao,'nLacre','');
+                          end;
+                         inc(K);
+                       end;
+                    end;
+                   inc(J);
+                 end;
+              {$ENDIF}
+
               end;
              Inc(I);
            end;
@@ -1552,6 +1846,7 @@ begin
           Imp.vTotTrib   := StringToFloatDef( INIRec.ReadString('Imp','vComp',INIRec.ReadString('ICMS','vComp','')) ,0);
           Imp.infAdFisco := INIRec.ReadString('Imp','infAdFisco',INIRec.ReadString('ICMS','infAdFisco',''));
 
+
           if INIRec.ReadString('ICMS00', 'CST','') <> '' then
           begin
             Imp.ICMS.ICMS00.CST   := StrToCSTICMS(OK,INIRec.ReadString('ICMS00','CST','00'));
@@ -1612,6 +1907,18 @@ begin
           begin
             imp.ICMS.SituTrib := cstICMSSN;
             Imp.ICMS.ICMSSN.indSN := INIRec.ReadInteger('ICMSSN', 'indSN',1);
+          end;
+
+          if StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0) <> 0 then
+          begin
+            Imp.ICMSUFFim.vBCUFFim       := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vBCUFFim', ''), 0 );
+            Imp.ICMSUFFim.pFCPUFFim      := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pFCPUFFim', ''), 0 );
+            Imp.ICMSUFFim.pICMSUFFim     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSUFFim', ''), 0 );
+            Imp.ICMSUFFim.pICMSInter     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInter', ''), 0 );
+            Imp.ICMSUFFim.pICMSInterPart := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'pICMSInterPart', ''), 0 );
+            Imp.ICMSUFFim.vFCPUFFim      := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vFCPUFFim', ''), 0 );
+            Imp.ICMSUFFim.vICMSUFFim     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFFim', ''), 0 );
+            Imp.ICMSUFFim.vICMSUFIni     := StringToFloatDef( INIRec.ReadString('ICMSUFFim', 'vICMSUFIni', ''), 0 );
           end;
 
         {$IFDEF PL_200}
@@ -2592,6 +2899,15 @@ begin
           {indica se é simples}
           if (Imp.ICMS.ICMSSN.indSN = 1) and (Imp.ICMS.SituTrib = cstICMSSN) then
             INIRec.WriteInteger('ICMSSN', 'indSN', Imp.ICMS.ICMSSN.indSN);
+
+          INIRec.WriteFloat('ICMSUFFim', 'vBCUFFim', Imp.ICMSUFFim.vBCUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'pFCPUFFim', Imp.ICMSUFFim.pFCPUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'pICMSUFFim', Imp.ICMSUFFim.pICMSUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'pICMSInter', Imp.ICMSUFFim.pICMSInter);
+          INIRec.WriteFloat('ICMSUFFim', 'pICMSInterPart', Imp.ICMSUFFim.pICMSInterPart);
+          INIRec.WriteFloat('ICMSUFFim', 'vFCPUFFim', Imp.ICMSUFFim.vFCPUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'vICMSUFFim', Imp.ICMSUFFim.vICMSUFFim);
+          INIRec.WriteFloat('ICMSUFFim', 'vICMSUFIni', Imp.ICMSUFFim.vICMSUFIni);
 
         {$IFDEF PL_200}
           INIRec.WriteString('infCarga', 'vCarga', CurrToStr(infCTeNorm.infCarga.vCarga));

@@ -210,6 +210,13 @@ type
     Label44: TLabel;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     btnInutilizarImprimir: TButton;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Edit1: TEdit;
+    Button5: TButton;
+    cbAssinar: TCheckBox;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -259,6 +266,11 @@ type
     procedure spPathSchemasClick(Sender: TObject);
     procedure cbTipoEmissaoChange(Sender: TObject);
     procedure btnInutilizarImprimirClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     
   private
     { Private declarations }
@@ -3298,6 +3310,35 @@ end;
 procedure TForm1.spPathSchemasClick(Sender: TObject);
 begin
  PathClick(edtPathSchemas);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  ShowMessage( FormatDateBr(ACBrNFe1.SSL.CertDataVenc) );
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  ShowMessage( ACBrNFe1.SSL.CertNumeroSerie );
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  ShowMessage( ACBrNFe1.SSL.CertSubjectName + sLineBreak + sLineBreak +
+               'Razão Social: '+ACBrNFe1.SSL.CertRazaoSocial);   
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  ShowMessage( ACBrNFe1.SSL.CertCNPJ );
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var
+  Ahash: AnsiString;
+begin
+  Ahash := ACBrNFe1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
+  MemoResp.Lines.Add( Ahash );
 end;
 
 end.

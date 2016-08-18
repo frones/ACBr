@@ -335,10 +335,12 @@ begin
 
     if fTipoArquivo = aSEF then
     begin
-      WriteBloco_E;
-      if Bloco_H.RegistroH020Count > 0 then
-        WriteBloco_H;
+      if Bloco_E.RegistroE001.IND_MOV = icContConteudo
+      then WriteBloco_E;
+      if Bloco_H.RegistroH001.IND_DAD = icContConteudo
+      then WriteBloco_H;
     end;
+
     WriteBloco_9;
   finally
     LimpaRegistros;
@@ -466,8 +468,6 @@ begin
   if Bloco_9.Gravado then
     exit;
 
-  if (not Bloco_E.Gravado) and (TipoArquivo = aSef) then
-    WriteBloco_E;
 
   /// BLOCO 9
   WriteRegistro9001;
@@ -1090,4 +1090,4 @@ initialization
 	{$i ACBrSEF2.lrs}
 {$ENDIF}
 
-end.
+end.

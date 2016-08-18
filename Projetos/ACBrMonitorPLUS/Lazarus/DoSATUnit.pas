@@ -18,7 +18,7 @@ procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True) ;
 implementation
 
 uses
-  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar;
+  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo;
 
 procedure DoSAT(Cmd: TACBrCmd);
 var
@@ -122,7 +122,7 @@ begin
         end
 
 
-    else if Cmd.Metodo = 'atualizasoftware' then
+    else if (Cmd.Metodo = 'atualizasoftware') or (Cmd.Metodo = 'atualizarsoftwaresat') then
       Cmd.Resposta := ACBrSAT1.AtualizarSoftwareSAT
 
     else if (Cmd.Metodo = 'comunicarcertificado') or
@@ -342,6 +342,22 @@ var
   OK     : Boolean;
   I, J   : Integer;
   sSecao, sFim, sCodPro : String;
+
+  function RegTribDescToStr(const AInteger: Integer): String;
+  begin
+    Result := RegTribToStr(TpcnRegTrib(AInteger));
+  end;
+
+  function RegTribISSQNDescToStr(const AInteger: Integer): String;
+  begin
+    Result := RegTribISSQNToStr(TpcnRegTribISSQN(AInteger));
+  end;
+
+  function indRatISSQNDescToStr(const AInteger: Integer): String;
+  begin
+    Result := indRatISSQNToStr(TpcnindRatISSQN(AInteger));
+  end;
+
 begin
   INIRec := TMemIniFile.create( 'nfe.ini' ) ;
   try
@@ -387,9 +403,10 @@ begin
           Emit.xFant             := INIRec.ReadString(  'Emitente','Fantasia',INIRec.ReadString(  'Emitente','xFant', Emit.xFant));
           Emit.IE                := INIRec.ReadString(  'Emitente','IE', edtEmitIE.Text);
           Emit.IM                := INIRec.ReadString(  'Emitente','IM', edtEmitIM.Text);
-          Emit.cRegTrib          := StrToRegTrib(ok, IntToStr(INIRec.ReadInteger(  'Emitente','cRegTrib',cbxRegTributario.ItemIndex)));
-          Emit.cRegTribISSQN     := StrToRegTribISSQN(ok, IntToStr(INIRec.ReadInteger(  'Emitente','cRegTribISSQN', cbxRegTribISSQN.ItemIndex)));
-          Emit.indRatISSQN       := StrToindRatISSQN(ok, IntToStr(INIRec.ReadInteger(  'Emitente','indRatISSQN', cbxIndRatISSQN.ItemIndex)));
+
+          Emit.cRegTrib          := StrToRegTrib(      ok, INIRec.ReadString( 'Emitente','cRegTrib',      RegTribDescToStr(cbxRegTributario.ItemIndex)));
+          Emit.cRegTribISSQN     := StrToRegTribISSQN( ok, INIRec.ReadString( 'Emitente','cRegTribISSQN', RegTribISSQNDescToStr(cbxRegTribISSQN.ItemIndex)));
+          Emit.indRatISSQN       := StrToindRatISSQN(  ok, INIRec.ReadString( 'Emitente','indRatISSQN',   indRatISSQNDescToStr(cbxIndRatISSQN.ItemIndex)));
 
           Emit.EnderEmit.xLgr    := INIRec.ReadString(  'Emitente','Logradouro' ,INIRec.ReadString(  'Emitente','xLgr', Emit.EnderEmit.xLgr));
           Emit.EnderEmit.nro     := INIRec.ReadString(  'Emitente','Numero'     ,INIRec.ReadString(  'Emitente','nro', Emit.EnderEmit.nro));

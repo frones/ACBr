@@ -32,17 +32,18 @@
 { For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html }
 {                                                                              }
 {******************************************************************************}
-
-// $Id: JwaWinDLLNames.pas,v 1.1 2005/09/06 16:02:48 marquardt Exp $
-
+{$IFNDEF JWA_OMIT_SECTIONS}
+// $Id: JwaWinDLLNames.pas,v 1.2 2007/09/05 11:58:53 dezipaitor Exp $
 unit JwaWinDLLNames;
 
 {$WEAKPACKAGEUNIT}
 
-{$I jediapilib.inc}
+{$I JediAPILib.inc}
 
 interface
+{$ENDIF JWA_OMIT_SECTIONS}
 
+{$IFNDEF JWA_IMPLEMENTATIONSECTION}
 const
   {$IFDEF UNICODE}
   AWSuffix = 'W';
@@ -50,16 +51,20 @@ const
   AWSuffix = 'A';
   {$ENDIF UNICODE}
 
+  {The list is sorted alphabetically!}
   aclapilib = 'advapi32.dll';
   acluilib = 'aclui.dll';
   advapi32 = 'advapi32.dll';
   authzlib = 'authz.dll';
   adslib = 'activeds.dll';
+  bcryptdll = 'bcrypt.dll';
   btapi = 'irprops.cpl';
+  cfgmgrdllname = 'cfgmgr32.dll';
   comctl32 = 'comctl32.dll';
   credapi = 'advapi32.dll';
   credui = 'credui.dll';
   crypt32 = 'crypt32.dll';
+  cryptnet = 'cryptnet.dll';
   cryptuiapi = 'cryptui.dll';
   dhcpapi = 'dhcpcsvc.dll';
   dhcplib = 'dhcpsapi.dll';
@@ -67,55 +72,74 @@ const
   dsprop = 'dsprop.dll';
   dssec = 'dssec.dll';
   dsuiext = 'dsuiext.dll';
+  dwmlib = 'dwmapi.dll';
   faultreplib = 'faultrep.dll';
   gdi32 = 'gdi32.dll';
   gpeditlib = 'gpedit.dll';
   hhctrl = 'hhctrl.ocx';
   icmplib = 'icmp.dll';
-  ImageHlpLib = 'imagehlp.dll';
+  imagehlplib = 'imagehlp.dll';
   imelib = 'user32.dll';
   iphlpapilib = 'iphlpapi.dll';
   kernel32 = 'kernel32.dll';
-  LDAPLib = 'wldap32.dll';
+  kernel32dll = kernel32;
+  KtmW32Lib = 'ktmw32.dll';
+  ktmw32 = 'ktmw32.dll';
+  ldaplib = 'wldap32.dll';
   loadperflib = 'loadperf.dll';
   lpmlib = 'msidlpm.dll';
+  mapi32 = 'mapi32.dll';
   mprlib = 'mpr.dll';
   msgina = 'msgina.dll';
   msilib = 'msi.dll';
   msimg32 = 'msimg32.dll';
   mswsocklib = 'mswsock.dll';
+  mydocs = 'mydocs.dll';
+  ncryptdll = 'ncrypt.dll';
   netapi32 = 'netapi32.dll';
   netsh = 'netsh.exe';
   nsplib = 'wsock32.dll';
   ntdll = 'ntdll.dll';
   ntdsapilib = 'ntdsapi.dll';
   ntdsbclilib = 'ntdsbclilib.dll';
+  ole32 = 'Ole32.dll';
   opengl32 = 'opengl32.dll';
   patchapi = 'mspatcha.dll';
-  patchwiz = 'patchwiz.dll'; // mvb Installed in Samples\SysMgmt\Msi\Patching
-  PdhLib = 'pdh.dll';
+  patchwiz = 'patchwiz.dll';
+  pdhLib = 'pdh.dll';
   powrproflib = 'powrprof.dll';
-  PsapiLib = 'psapi.dll';
+  psapiLib = 'psapi.dll';
   querylib = 'query.dll';
   qosname = 'qosname.dll';
-  rpclib = 'rpcrt4.dll'; // 19/07/2005 fixed typo reported by primoz
+  rpclib = 'rpcrt4.dll';
   rpcns4 = 'rpcns4.dll';
   secur32 = 'secur32.dll';
   sensapilib = 'sensapi.dll';
-  Sfclib = 'sfc.dll';
+  setupapimodulename = 'SetupApi.dll';
+  sfclib = 'sfc.dll';
   sisbkuplib = 'sisbkup.dll';
+  shdocvwDll = 'shdocvw.dll';
+  shell32 = 'shell32.dll';
+  shfolderdll = 'shfolder.dll';
+  shlwapidll  = 'shlwapi.dll';
   snmpapilib = 'snmpapi.dll';
   softpub = 'softpub.dll';
   sporderlib = 'sporder.dll';
   srclient = 'srclient.dll';
   themelib = 'uxtheme.dll';
   trafficlib = 'traffic.dll';
+  urlmondll = 'urlmon.dll';
   user32 = 'user32.dll';
   userenvlib = 'userenv.dll';
+  utildll = 'utildll.dll';
   versionlib = 'version.dll';
+  VirtDisklib = 'VirtDisk.dll';
   winberapi = 'wldap32.dll';
   winfax = 'winfax.dll';
+  wimgapi = 'wimgapi.dll';
+  winetdll = 'wininet.dll';
   winspool32 = 'winspool32.drv';
+  winstadll = 'winsta.dll';
   winternl_lib = 'ntdll.dll';
   wow16lib = 'kernel32.dll';
   wow32lib = 'wow32.dll';
@@ -123,7 +147,30 @@ const
   ws2_32 = 'ws2_32.dll';
   wsock32 = 'wsock32.dll';
   wtsapi = 'wtsapi32.dll';
+  {The list is sorted alphabetically!}
 
+
+
+
+
+
+{$ENDIF JWA_IMPLEMENTATIONSECTION}
+
+
+
+{$IFNDEF JWA_OMIT_SECTIONS}
 implementation
+//uses ...
+{$ENDIF JWA_OMIT_SECTIONS}
 
+
+
+{$IFNDEF JWA_INTERFACESECTION}
+//your implementation here
+{$ENDIF JWA_INTERFACESECTION}
+
+
+
+{$IFNDEF JWA_OMIT_SECTIONS}
 end.
+{$ENDIF JWA_OMIT_SECTIONS}

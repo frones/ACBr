@@ -4011,17 +4011,17 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         ParentFont = False
       end
       object txtEndCedenteCarne: TRLLabel
-        Left = 232
-        Height = 14
-        Top = 42
-        Width = 335
+        Left = 202
+        Top = 71
+        Width = 364
+        Height = 12
+        AutoSize = False
         Caption = 'Endereco Cedente'
-        Font.CharSet = ANSI_CHARSET
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -11
+        Font.Height = -9
         Font.Name = 'Arial'
-        Font.Pitch = fpVariable
-        Font.Quality = fqDraft
+        Font.Style = []
         ParentFont = False
       end
     end

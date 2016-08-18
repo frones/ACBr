@@ -91,6 +91,33 @@ type
     procedure AsCurrency;
   end;
 
+  { TruncToTest }
+
+  TruncToTest = class(TTestCase)
+  private
+  published
+    procedure As199Currency;
+    procedure As4386Currency;
+    procedure As1526Currency;
+    procedure As113Currency;
+    procedure As199Extended;
+    procedure As4386Extended;
+    procedure As1526Extended;
+    procedure As113Extended;
+    procedure As199Double;
+    procedure As4386Double;
+    procedure As1526Double;
+    procedure As113Double;
+    procedure As199Single;
+    procedure As4386Single;
+    procedure As1526Single;
+    procedure As113Single;
+    procedure As11133Single;
+    procedure As11133Double;
+    procedure As11133Extended;
+    procedure As11133Currency;
+  end;
+
   { RoundABNTTest }
 
   RoundABNTTest = class(TTestCase)
@@ -403,6 +430,11 @@ type
    procedure ComDecimaisZerados;
    procedure ComFormatacao;
    procedure ComSerparadorDeMilhar;
+   procedure ComMascaraDisplayFormat027x2;
+   procedure ComMascaraDisplayFormat026x2;
+   procedure ComMascaraDisplayFormat02666x3;
+   procedure ComMascaraDisplayFormat026660x4;
+   procedure ComMascaraDisplayFormat026601x5;
   end;
 
   { FloatMaskTest }
@@ -1518,6 +1550,36 @@ begin
   CheckEquals('123.456,789', FormatFloatBr(123456.789, '###,000.000'));
 end;
 
+function Mascara(ADec : Integer) : string;
+begin
+  result :=  format(sDisplayFormat,[ADec,0]);
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat026601x5;
+begin
+  CheckEquals('0,26601', FormatFloatBr(0.26601, Mascara(5)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat026660x4;
+begin
+  CheckEquals('0,2660', FormatFloatBr(0.266, Mascara(4)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat02666x3;
+begin
+  CheckEquals('0,266', FormatFloatBr(0.266, Mascara(3)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat026x2;
+begin
+  CheckNotEquals('0,26', FormatFloatBr(0.266, Mascara(2)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat027x2;
+begin
+  CheckEquals('0,27', FormatFloatBr(0.266, Mascara(2)));
+end;
+
 { CountStrTest }
 
 procedure CountStrTest.SetUp;
@@ -2097,6 +2159,10 @@ begin
   dblQtde := 28.50;
   dblTotal := dblValorUnit * dblQtde;
   CheckEquals( 19.66, RoundABNT(dblTotal, 2), 0.00001);
+  dblValorUnit := 4.885;
+  dblQtde := 1;
+  dblTotal := dblValorUnit * dblQtde;
+  CheckEquals( 4.88, RoundABNT(dblTotal, 2), 0.00001);
 end;
 
 procedure RoundABNTTest.TestesEstouro;
@@ -3216,6 +3282,162 @@ begin
               + '&Eacute;&Ecirc;&Otilde;&apos;', True, False));
 end;
 
+{ TruncToTest }
+
+procedure TruncToTest.As11133Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 11.1335;
+  CheckEquals(11.1335, TruncTo( VValor, 4 ), 0.0001);
+end;
+
+procedure TruncToTest.As11133Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 11.133;
+  CheckEquals(11.133, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As11133Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 1189.13390;
+  CheckEquals(1189.1339, TruncTo( VValor, 4 ), 0.0001);
+end;
+
+procedure TruncToTest.As11133Single;
+begin
+  CheckEquals(11.133, TruncTo( 11.133, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 1.139;
+  ChecknotEquals(1.13, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 1.135;
+  CheckEquals(1.13, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 1.1373;
+  CheckEquals(1.137, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Single;
+begin
+  CheckEquals(1.13, TruncTo( 1.13, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 15.26001;
+  CheckEquals(15.26, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 15.2623;
+  CheckEquals(15.262, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 155.2611;
+  CheckEquals(155.261, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Single;
+var
+  VValor: Single;
+begin
+  VValor := 1 * 155.2611;
+  CheckEquals(155.261, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 1.997;
+  CheckEquals(1.997, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 1.9985;
+  CheckEquals(1.998, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 1.999;
+  CheckEquals(1.99, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Single;
+var
+  VValor: Single;
+begin
+  VValor := 1 * 1.99;
+  CheckEquals(1.9, TruncTo( VValor, 1 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 43.86;
+  CheckEquals(43.86, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 43.86;
+  CheckEquals(43.86, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 43.86;
+  CheckEquals(43.86, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Single;
+//var
+//  VValor: Single;
+begin
+ // VValor := -430000.80016;
+  CheckEquals(-430000.8001, TruncTo(-430000.80016 , 4 ), 0.0001);
+end;
+
 initialization
   RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
@@ -3225,6 +3447,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', QuebrarLinhaTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ACBrStrToAnsiTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TruncFixTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TruncToTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TestBitTest{$ifndef FPC}.Suite{$endif});

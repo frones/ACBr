@@ -1850,13 +1850,16 @@ begin
     end;
 
   if FProvedor = proEL then
+  begin
+    FPDadosMsg := GerarDadosMsg.Gera_DadosMsgEnviarLote;
     FPDadosMsg := FTagI +
                   '<identificacaoPrestador>' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ + '</identificacaoPrestador>' +
                   '<hashIdentificador>' + FHashIdent + '</hashIdentificador>' +
                   '<arquivo>' +
                     StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
                   '</arquivo>' +
-                  FTagF
+                  FTagF;
+  end
   else
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
 

@@ -1,9 +1,9 @@
 object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
   Left = 171
   Top = 52
-  Width = 1578
-  Height = 818
   Caption = 'ACBRBoletoFCFortesFr'
+  ClientHeight = 782
+  ClientWidth = 1562
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -4015,6 +4015,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Top = 71
         Width = 364
         Height = 12
+        AutoSize = False
         Caption = 'Endereco Cedente'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

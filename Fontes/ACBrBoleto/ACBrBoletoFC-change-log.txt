@@ -46,7 +46,12 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-
+18/08/2016
+--acbrboletofcfortesfr
+[-] Correção no dfm para desabilitar o autosize
+		http://www.projetoacbr.com.br/forum/topic/31917-boleto-carn%C3%AA-campo-cedente-endere%C3%A7o-sobrepondo-informa%C3%A7%C3%A3o/
+		(Juliomar Marcheti)
+		
 17/08/2016
 --ACBrBoletoFCFortesFr
 [-] Correção para o Layout em Fortes para Carne

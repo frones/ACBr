@@ -39,7 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 27/07-2016
+Data: 18/08/2016
+-- ACBrECFVirtual --
+[-] Correção nos retornos de GetTotalNaoTributado e GetTotalIsencao (estavam
+    invertidos)  (por: Amarildo Lacerda)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31929
+
+Data: 27/07/2016
 -- ACBrECFNaoFiscal, ACBrECFVirtual, ACBrECFVirtualBuffer --
 [*] Ajustes para permitir calculos com Truncamento, quando:
     ArredondaItemMFD := False                                   (por: DSA)

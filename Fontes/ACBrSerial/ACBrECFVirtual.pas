@@ -430,8 +430,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetGrandeTotal: Double; override ;
     function GetVendaBruta: Double; override ;
     function GetTotalSubstituicaoTributaria: Double; override ;
-    function GetTotalNaoTributado: Double; override ;
     function GetTotalIsencao: Double; override ;
+    function GetTotalNaoTributado: Double; override ;
     function GetNumReducoesZRestantes: String; override ;
     function GetTotalCancelamentosEmAberto: Double; override;
     function GetTotalCancelamentos: Double; override ;
@@ -1619,13 +1619,19 @@ end;
 
 function TACBrECFVirtualClass.GetTotalSubstituicaoTributaria: Double;
 begin
-  Result := RoundTo( fpAliquotas[0].Total, -2 ) ;
+  Result := RoundTo( fpAliquotas[0].Total, -2 ) ;   // FF
   GravaLog('GetTotalSubstituicaoTributaria: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalIsencao: Double;
+begin
+  Result := RoundTo( fpAliquotas[1].Total, -2 ) ;   // II
+  GravaLog('GetTotalIsencao: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalNaoTributado: Double;
 begin
-  Result := RoundTo( fpAliquotas[1].Total,-2 ) ;
+  Result := RoundTo( fpAliquotas[2].Total,-2 ) ;    // NN
   GravaLog('GetTotalNaoTributado: '+FloatToStr(Result));
 end;
 
@@ -1657,12 +1663,6 @@ function TACBrECFVirtualClass.GetTotalDescontos: Double;
 begin
    Result := RoundTo(fpTotalDescontos,-2);
    GravaLog('GetTotalDescontos: '+FloatToStr(Result));
-end;
-
-function TACBrECFVirtualClass.GetTotalIsencao: Double;
-begin
-  Result := RoundTo( fpAliquotas[2].Total, -2 ) ;
-  GravaLog('GetTotalIsencao: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetNumReducoesZRestantes: String;

@@ -946,14 +946,7 @@ begin
     XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1"?>', XMLRet);
     XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', XMLRet);
   end;
-  (*
-  Result := StringReplace(Result, '<' + XML_V01 + '>', '', [rfReplaceAll]);
-  Result := StringReplace(Result, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
-  Result := StringReplace(Result, '<' + ENCODING_UTF8_STD + '>', '', [rfReplaceAll]);
-  Result := StringReplace(Result, Encoding, '', [rfReplaceAll]);
-  Result := StringReplace(Result, '<?xml version = "1.0" encoding = "utf-8"?>', '', [rfReplaceAll]);
-  Result := StringReplace(Result, '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', '', [rfReplaceAll]);
-  *)
+
   Result := XMLRet;
 end;
 
@@ -1856,7 +1849,17 @@ begin
 
     end;
 
+  if FProvedor = proEL then
+    FPDadosMsg := FTagI +
+                  '<identificacaoPrestador>' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ + '</identificacaoPrestador>' +
+                  '<hashIdentificador>' + FHashIdent + '</hashIdentificador>' +
+                  '<arquivo>' +
+                    StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                  '</arquivo>' +
+                  FTagF
+  else
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
+
   finally
     GerarDadosMsg.Free;
   end;
@@ -1868,7 +1871,7 @@ begin
     FDadosEnvelope := StringReplace(FDadosEnvelope, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
     FPSoapAction := StringReplace(FPSoapAction, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
   end;
-  
+
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
     DefinirSignatureNode('');
@@ -1894,13 +1897,6 @@ begin
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados then
     FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
-
-  if FProvedor = proEL then
-    FPDadosMsg := '<identificacaoPrestador>' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ + '</identificacaoPrestador>' +
-                  '<hashIdentificador>' + FHashIdent + '</hashIdentificador>' +
-                  '<arquivo>' +
-                    StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
-                  '</arquivo>';
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then

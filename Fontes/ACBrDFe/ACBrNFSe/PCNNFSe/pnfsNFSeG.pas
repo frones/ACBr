@@ -520,7 +520,7 @@ begin
 
     proEL: begin
              Gerador.Prefixo := '';
-             Gerador.wGrupoNFSe('LoteRps' + aNameSpace);
+             Gerador.wGrupoNFSe('LoteRps' {+ aNameSpace});
              Gerador.wCampoNFSe(tcStr, '#1', 'Id', 13, 32, 1, IdLote, ''); // ?? Código Verificação
              Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
              Gerador.wCampoNFSe(tcInt, '#1', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');

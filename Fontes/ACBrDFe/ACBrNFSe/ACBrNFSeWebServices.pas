@@ -898,8 +898,8 @@ begin
   FPRetornoWS := StringReplace(FPRetornoWS, #10, '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, #13, '', [rfReplaceAll]);
 
-  Encoding := '<?xml version=' + '''' + '1.0' + '''' +
-                   ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
+  if Pos('?>', FPRetornoWS) > 0 then
+    FPRetornoWS := RemoverEncoding('<' + XML_V01 + '>', FPRetornoWS);
 
   AuxXML := ParseText(FPRetornoWS);
 
@@ -938,6 +938,9 @@ begin
 
   if Pos('?>', XMLRet) > 0 then
   begin
+    Encoding := '<?xml version=' + '''' + '1.0' + '''' +
+                   ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
+
     XMLRet := RemoverEncoding('<' + XML_V01 + '>', XMLRet);
     XMLRet := RemoverEncoding('<' + ENCODING_UTF8 + '>', XMLRet);
     XMLRet := RemoverEncoding('<' + ENCODING_UTF8_STD + '>', XMLRet);
@@ -1852,6 +1855,7 @@ begin
   if FProvedor = proEL then
   begin
     FPDadosMsg := GerarDadosMsg.Gera_DadosMsgEnviarLote;
+    FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
     FPDadosMsg := FTagI +
                   '<identificacaoPrestador>' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ + '</identificacaoPrestador>' +
                   '<hashIdentificador>' + FHashIdent + '</hashIdentificador>' +

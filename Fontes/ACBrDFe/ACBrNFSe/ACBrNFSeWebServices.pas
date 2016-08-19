@@ -1953,6 +1953,8 @@ begin
     begin
       FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
       FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
+      if FProvedor = proGoverna then
+        FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
     end;
     FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
              'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
@@ -4451,13 +4453,16 @@ begin
   begin
     if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
-      Result := FConsSitLoteRPS.Executar;
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proGoverna then
+        Result := True
+      else
+        Result := FConsSitLoteRPS.Executar;
 
       if not (Result) then
         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
     end;
 
-    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proInfisc then
+    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna, proInfisc] then
       Result := True
     else
       Result := FConsLote.Executar;

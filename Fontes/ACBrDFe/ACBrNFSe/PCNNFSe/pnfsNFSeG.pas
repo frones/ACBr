@@ -670,7 +670,7 @@ begin
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
-  if Provedor in [proNenhum, proABRASFv1, proABRASFv2] then
+  if Provedor in [proNenhum] then
     Result := '';
 end;
 

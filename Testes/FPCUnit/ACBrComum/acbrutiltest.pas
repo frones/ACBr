@@ -150,6 +150,8 @@ type
   padLeftTest = class(TTestCase)
   published
    procedure CompletarString;
+   procedure CompletarStringAcentosAnsi;
+   procedure CompletarStringAcentosUTF8;
    procedure ManterString;
    procedure TruncarString;
   end;
@@ -3107,6 +3109,28 @@ procedure padLeftTest.CompletarString;
 begin
   CheckEquals('ZZZACBrCompletaString', PadLeft('ACBrCompletaString', 21, 'Z'));
   CheckEquals('   ACBrCompletaString', PadLeft('ACBrCompletaString', 21));
+end;
+
+procedure padLeftTest.CompletarStringAcentosAnsi;
+var
+  AcentosStr: String;
+begin
+  AcentosStr := ACBrStr('аимсз');
+
+  CheckEquals('     '+AcentosStr, PadLeft(AcentosStr, 10));
+end;
+
+procedure padLeftTest.CompletarStringAcentosUTF8;
+Var
+  UTF8Str : AnsiString;
+begin
+  {$IfDef FPC}
+  UTF8Str := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
+  {$Else}
+  UTF8Str := UTF8Encode('аимсз');
+  {$EndIf}
+
+  CheckEquals('     '+UTF8Str, PadLeft(UTF8Str, 10));
 end;
 
 procedure padLeftTest.ManterString;

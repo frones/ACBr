@@ -223,6 +223,7 @@ type
  end;
 
  TConfigGrupoMsgRet = record
+    GrupoMsg: String;
     Recepcionar: String;
     ConsSit: String;
     ConsLote: String;
@@ -935,6 +936,7 @@ begin
   end;
   FConfigGeral.DadosSenha := Texto;
 
+  FConfigGrupoMsgRet.GrupoMsg    := FPIniParams.ReadString('GrupoMsgRet', 'GrupoMsg'   , '');
   FConfigGrupoMsgRet.Recepcionar := FPIniParams.ReadString('GrupoMsgRet', 'Recepcionar', '');
   FConfigGrupoMsgRet.ConsSit     := FPIniParams.ReadString('GrupoMsgRet', 'ConsSit'    , '');
   FConfigGrupoMsgRet.ConsLote    := FPIniParams.ReadString('GrupoMsgRet', 'ConsLote'   , '');

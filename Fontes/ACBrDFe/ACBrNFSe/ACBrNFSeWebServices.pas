@@ -906,31 +906,36 @@ begin
   if FPConfiguracoesNFSe.Geral.RetirarAcentos then
     AuxXML := TiraAcentos(AuxXML);
 
-  XMLRet := SeparaDados(AuxXML, 'return');
+  if FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar <> '' then
+    XMLRet := SeparaDados(AuxXML, FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar)
+  else
+  begin
+    XMLRet := SeparaDados(AuxXML, 'return');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'ns:return');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'ns:return');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'outputXML');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'outputXML');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'RetornoXML');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'RetornoXML');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 's:Body');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 's:Body');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'soap:Body');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'soap:Body');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'env:Body');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'env:Body');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'soapenv:Body');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'soapenv:Body');
 
-  if XMLRet = '' then
-    XMLRet := SeparaDados(AuxXML, 'SOAP-ENV:Body');
+    if XMLRet = '' then
+      XMLRet := SeparaDados(AuxXML, 'SOAP-ENV:Body');
+  end;
 
   // Caso não consiga extrai o retorno, retornar a resposta completa.
   if XMLRet = '' then

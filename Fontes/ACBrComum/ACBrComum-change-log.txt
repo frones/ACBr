@@ -38,6 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/08/2016
+-- ACBrUtil --
+[-] Correção em PadLeft, PadRight, PadCenter, PadSpace, para considerar o tamanho
+    correto da String, com caracteres acentuados (UTF8) em FPC
+[+] Adicionado o método
+    function LenghtNativeString(const AString: String): Integer;
+[-] Correção no método "FindSubDirectories", para correto funcionamento em Linux
+    (por: DSA)
+
 Data: 18/08/2016
 -- ACBrUtil --
 [-] Correção para o método "TruncTo", que poderia falhar em alguns casos.

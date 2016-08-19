@@ -71,6 +71,13 @@ const
   CINPOUTDLL = 'inpout32.dll';
 {$ENDIF}
 
+{$IfDef MSWINDOWS}
+  AllFilesMask = '*.*';
+{$Else}
+  AllFilesMask = '*';
+{$EndIf}
+
+
 type
   TSetOfChars = set of AnsiChar;
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
@@ -882,6 +889,19 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
+  Retorna o numero de caracteres dentro de uma String, semelhante a Length()
+  Porém Lenght() não funciona corretamente em FPC com UTF8 e acentos
+ ---------------------------------------------------------------------------- }
+function LenghtNativeString(const AString: String): Integer;
+begin
+  {$IfDef FPC}
+   Result := UTF8Length(AString);
+  {$Else}
+   Result := Length(AString);
+  {$EndIf}
+end;
+
+{-----------------------------------------------------------------------------
   Completa <AString> com <Caracter> a direita, até o tamanho <nLen>, Alinhando
   a <AString> a Esquerda. Se <AString> for maior que <nLen>, ela será truncada
  ---------------------------------------------------------------------------- }
@@ -890,7 +910,7 @@ function PadRight(const AString : String; const nLen : Integer;
 var
   Tam: Integer;
 begin
-  Tam := Length(AString);
+  Tam := LenghtNativeString( AString );
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
@@ -906,7 +926,7 @@ function PadLeft(const AString : String; const nLen : Integer;
 var
   Tam: Integer;
 begin
-  Tam := Length(AString);
+  Tam := LenghtNativeString( AString );
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
@@ -922,7 +942,7 @@ var
   nCharLeft: Integer;
   Tam: integer;
 begin
-  Tam := Length( AString );
+  Tam := LenghtNativeString( AString );
   if Tam < nLen then
   begin
     nCharLeft := Trunc( (nLen - Tam) / 2 ) ;
@@ -958,9 +978,9 @@ begin
   end ;
 
   Result   := Trim( Result ) ;
-  D        := (nLen - (Length(Result)-nSep)) / nSep ;
+  D        := (nLen - (LenghtNativeString(Result)-nSep)) / nSep ;
   nCharSep := Trunc( D ) ;
-  nResto   := nLen - ( (Length(Result)-nSep) + (nCharSep*nSep) ) ;
+  nResto   := nLen - ( (LenghtNativeString(Result)-nSep) + (nCharSep*nSep) ) ;
   nFeito   := nSep ;
   StuffStr := String( StringOfChar( Caracter, nCharSep ) ) ;
 
@@ -2422,7 +2442,7 @@ var
 begin
   LastFile := '' ;
   Path     := PathWithDelim(APath);
-  RetFind  := SysUtils.FindFirst(Path + '*.*', faDirectory, SearchRec);
+  RetFind  := SysUtils.FindFirst(Path + AllFilesMask, faDirectory, SearchRec);
   AStringList.Clear;
 
   try

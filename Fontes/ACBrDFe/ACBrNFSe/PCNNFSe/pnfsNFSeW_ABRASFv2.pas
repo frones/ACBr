@@ -637,10 +637,10 @@ begin
       proGovDigital, proISSDigital, proISSe, proMitra, proNEAInformatica,
       proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP,
       proVirtual, proVersaTecnologia,
-      proVitoria: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
+      proVitoria: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, 'DSC_DEMI');
 
     else
-      Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+      Gerador.wCampoNFSe(tcDatHor, '#4', 'DataEmissao', 19, 19, 1, NFSe.DataEmissao, 'DSC_DEMI');
     end;
 
     Gerador.wCampoNFSe(tcStr,    '#9', 'Status     ', 01, 01, 1, StatusRPSToStr(NFSe.Status), '');
@@ -656,9 +656,9 @@ begin
     GerarListaServicos;
 
     if NFSe.Competencia <> '' then
-      Gerador.wCampoNFSe(tcStr,    '#4', 'Competencia', 10, 19, 1, NFSe.Competencia, DSC_DEMI)
+      Gerador.wCampoNFSe(tcStr,    '#4', 'Competencia', 10, 19, 1, NFSe.Competencia, 'DSC_DEMI')
     else
-      Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, DSC_DEMI);
+      Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 1, NFSe.DataEmissao, 'DSC_DEMI');
   end
   else begin
     if NFSe.Competencia <> '' then
@@ -666,18 +666,18 @@ begin
       case FProvedor of
         proActcon, proISSDigital, proMitra, proPVH, proSisPMJP, proVirtual,
         proSystemPro, proNEAInformatica,
-        proEReceita: Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+        proEReceita: Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, 'DSC_DEMI');
 
         proABase,
         proGovDigital,
         proNotaInteligente,
         proPronimv2,
-        proVersaTecnologia : Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
+        proVersaTecnologia : Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, 'DSC_DEMI');
 
-        proTecnos:  Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
+        proTecnos:  Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, 'DSC_DEMI');
 
       else
-        Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, DSC_DEMI);
+        Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 19, 19, 1, NFSe.Competencia, 'DSC_DEMI');
       end;
     end
     else begin
@@ -686,10 +686,10 @@ begin
                        proNEAInformatica, proNotaInteligente, proPronimv2,
                        proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
                        proVirtual, proVitoria, proVersaTecnologia] then
-        Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI)
+        Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.DataEmissao, 'DSC_DEMI')
       else begin
         if not (FProvedor in [proGoiania]) then
-          Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, DSC_DEMI);
+          Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.DataEmissao, 'DSC_DEMI');
       end;
     end;
 

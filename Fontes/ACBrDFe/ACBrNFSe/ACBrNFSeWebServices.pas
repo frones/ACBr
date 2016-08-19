@@ -178,6 +178,7 @@ type
       reintroduce; overload;
     destructor Destroy; override;
     procedure Clear; override;
+    function Executar: Boolean; override;
 
     property NumeroLote: String read FNumeroLote;
   end;
@@ -1646,6 +1647,11 @@ end;
 function TNFSeGerarLoteRPS.GerarPrefixoArquivo: String;
 begin
   Result := NumeroLote;
+end;
+
+function TNFSeGerarLoteRPS.Executar: Boolean;
+begin
+  SalvarEnvio;
 end;
 
 { TNFSeEnviarLoteRPS }

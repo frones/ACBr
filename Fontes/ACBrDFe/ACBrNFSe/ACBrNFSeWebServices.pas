@@ -1859,6 +1859,9 @@ begin
         ValorIssRetido := TotalIssRetido;
         ValorTotalDeducoes := TotalDeducoes;
         ValorTotalTributos := TotalTributos;
+        {Todo:// Acrescentados estas duas linhas abaixo por masl}
+        ExigibilidadeISS:=FNotasFiscais.Items[0].NFSe.Servico.ExigibilidadeISS;
+        DataOptanteSimples:=FNotasFiscais.Items[0].NFSe.DataOptanteSimplesNacional;
       end;
 
     end;

@@ -41,7 +41,7 @@ unit pmdfeCabecalho;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBDFeConsts;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrDFeConsts;
 
 type
   TCabecalho = class(TPersistent)

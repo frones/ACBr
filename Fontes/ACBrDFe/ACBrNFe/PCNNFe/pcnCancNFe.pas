@@ -58,7 +58,7 @@ unit pcnCancNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, ACBrDFeConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador, ACBrDFeConsts, ACBrNFeConsts;
 
 type
 

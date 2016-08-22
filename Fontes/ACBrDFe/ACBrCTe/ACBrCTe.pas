@@ -239,7 +239,7 @@ end;
 
 function TACBrCTe.GetNomeModeloDFe: String;
 begin
-  Result := ModeloCTeToPrefixo( Configuracoes.Geral.ModeloDF );
+  Result := 'CTe';
 end;
 
 function TACBrCTe.GetNameSpaceURI: String;

@@ -58,7 +58,7 @@ unit pcnConsSitNFe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, ACBrDFeConsts, ACBrNFeConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador;
 
 type
 

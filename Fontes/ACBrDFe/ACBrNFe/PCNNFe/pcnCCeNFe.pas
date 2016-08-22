@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, ACBrDFeConsts, ACBrNFeConsts;
+  pcnConversao, pcnGerador;
 
 type
   TDetEvento               = class;

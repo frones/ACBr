@@ -47,14 +47,6 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-17/08/2016
--- diversos --
-[+] Criada a unit ACBrMDFeConsts que contem as constantes de mensagens usadas na
-    geração dos XML e que são apresentadas quando ocorre erro na validação.
-[*] Alteração em diversas units em virtude das novas units e para antender a nova
-    versão 3.00 do MDF-e.
-    por: Italo Jurisato Junior
-
 05/08/2016
 [*] melhorias no damdfe em fast report
 		http://www.projetoacbr.com.br/forum/topic/31558-erro-ao-imprimir-mdf-e/

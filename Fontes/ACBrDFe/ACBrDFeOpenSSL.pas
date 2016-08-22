@@ -758,6 +758,7 @@ begin
 
       if (FdsigCtx^.signKey = nil) then
         raise EACBrDFeException.Create(cErrPrivKeyLoad);
+
     finally
       MS.Free;
     end;

@@ -45,10 +45,8 @@ uses
 
 type
   TTpEmitenteMDFe = (teTransportadora, teTranspCargaPropria);
-
   TModalMDFe      = (moRodoviario, moAereo, moAquaviario, moFerroviario);
-
-  TVersaoMDFe     = (ve100, ve300);
+  TVersaoMDFe     = (ve100, ve100a);
 
   TLayOutMDFe     = (LayMDFeRecepcao, LayMDFeRetRecepcao, LayMDFeConsulta,
                      LayMDFeStatusServico, LayMDFeEvento, LayMDFeConsNaoEnc,
@@ -66,7 +64,74 @@ type
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
                      stMDFeDistDFeInt, stMDFeEnvioWebService);
 
-  TTransportadorMDFe = (ttETC, ttTAC, ttCTC);
+const
+
+  MDFeModalRodo    = '1.00';
+  MDFeModalAereo   = '1.00';
+  MDFeModalAqua    = '1.00';
+  MDFeModalFerro   = '1.00';
+  MDFeModalDuto    = '1.00';
+
+  DSC_NMDF        = 'Número do Manifesto';
+  DSC_CMDF        = 'Código numérico que compõe a Chave de Acesso';
+  DSC_TPEMIT      = 'Tipo do Emitente';
+  DSC_CMUNCARREGA = 'Código do Município de Carregamento';
+  DSC_XMUNCARREGA = 'Nome do Município de Carregamento';
+  DSC_UFPER       = 'Sigla da UF do percurso do veículo';
+  DSC_SEGCODBARRA = 'Segundo código de barras';
+  DSC_NCT         = 'Número do CT';
+  DSC_SUBSERIE    = 'Subsérie do CT';
+  DSC_PIN         = 'PIN SUFRAMA';
+  DSC_QCTE        = 'Quantidade total de CTe relacionados no Manifesto';
+  DSC_QCT         = 'Quantidade total de CT relacionados no Manifesto';
+  DSC_QNFE        = 'Quantidade total de NFe relacionados no Manifesto';
+  DSC_QNF         = 'Quantidade total de NF relacionados no Manifesto';
+  DSC_QCARGA      = 'Peso Bruto Total da Carga / Mercadoria Transportada';
+  DSC_DHINIVIAGEM = 'Data e Hora previstas de Inicio da Viagem';
+
+  // Rodoviário
+  DSC_CIOT        = 'Código Identificador da Operação de Transporte';
+  DSC_CINTV       = 'Código interno do veículo';
+  DSC_TARA        = 'Tara em KG';
+  DSC_CAPKG       = 'Capacidade em KG';
+  DSC_CAPM3       = 'Capacidade em m3';
+  DSC_CNPJFORN    = 'CNPJ da empresa fornecedora do Vale-Pedágio';
+  DSC_CNPJPG      = 'CNPJ do responsável pelo pagamento do Vale-Pedágio';
+  DSC_NCOMPRA     = 'Número do comprovante de compra';
+  DSC_CODAGPORTO  = 'Código de Agendamento no Porto';
+
+  // Aéreo
+  DSC_NAC         = 'Marca da Nacionalidade da Aeronave';
+  DSC_MATR        = 'Marca da Matricula da Aeronave';
+  DSC_NVOO        = 'Número do Vôo';
+  DSC_CAEREMB     = 'Aeródromo de Embarque';
+  DSC_CAERDES     = 'Aeródromo de Destino';
+  DSC_DVOO        = 'Data do Vôo';
+
+  // Aquaviário
+  DSC_CNPJAGENAV  = 'CNPJ da Agência de Navegação';
+  DSC_TPEMB       = 'Tipo de Embarcação';
+  DSC_CEMBAR      = 'Código da Embarcação';
+  DSC_XEMBAR      = 'Nome da Embarcação';
+  DSC_NVIAG       = 'Número da Viagem';
+  DSC_CPRTEMB     = 'Código do Porto de Embarque';
+  DSC_CPRTDEST    = 'Código do Porto de Destino';
+  DSC_CTERMCARREG = 'Código do Terminal de Carregamento';
+  DSC_XTERMCARREG = 'Nome do Terminal de Carregamento';
+  DSC_CTERMDESCAR = 'Código do Terminal de Descarregamento';
+  DSC_XTERMDESCAR = 'Nome do Terminal de Descarregamento';
+  DSC_CEMBCOMB    = 'Código da Embarcação do comboio';
+  
+  // Ferroviário
+  DSC_XPREF       = 'Prefixo do Trem';
+  DSC_DHTREM      = 'Data e Hora de liberação do Trem na origem';
+  DSC_XORI        = 'Origem do Trem';
+  DSC_XDEST       = 'Destino do Trem';
+  DSC_QVAG        = 'Quantidade de vagões carregados';
+  DSC_NVAG        = 'Número de Identificação do vagão';
+  DSC_NSEQ        = 'Sequência do vagão na composição';
+  DSC_TU          = 'Tonelada Útil';
+
 
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
@@ -94,9 +159,6 @@ function VersaoMDFeToStr(const t: TVersaoMDFe): String;
 
 function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
 function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;
-
-function TTransportadorToStr(const t: TTransportadorMDFe): String;
-function StrToTTransportador(out ok: Boolean; const s: String): TTransportadorMDFe;
 
 implementation
 
@@ -180,22 +242,15 @@ begin
   result := '';
 
   case AVersaoDF of
-    ve100: begin
-             case AModal of
-               moRodoviario:  result := '1.00';
-               moAereo:       result := '1.00';
-               moAquaviario:  result := '1.00';
-               moFerroviario: result := '1.00';
-             end;
-           end;
-    ve300: begin
-             case AModal of
-               moRodoviario:  result := '3.00';
-               moAereo:       result := '3.00';
-               moAquaviario:  result := '3.00';
-               moFerroviario: result := '3.00';
-             end;
-           end;
+    ve100,
+    ve100a: begin
+              case AModal of
+                moRodoviario:  result := '1.00';
+                moAereo:       result := '1.00';
+                moAquaviario:  result := '1.00';
+                moFerroviario: result := '1.00';
+              end;
+            end;
   end;
 end;
 
@@ -246,12 +301,12 @@ end;
 
 function StrToVersaoMDFe(out ok: Boolean; const s: String): TVersaoMDFe;
 begin
-  Result := StrToEnumerado(ok, s, ['1.00', '3.00'], [ve100, ve300]);
+  Result := StrToEnumerado(ok, s, ['1.00', '1.00'], [ve100, ve100a]);
 end;
 
 function VersaoMDFeToStr(const t: TVersaoMDFe): String;
 begin
-  Result := EnumeradoToStr(t, ['1.00', '3.00'], [ve100, ve300]);
+  Result := EnumeradoToStr(t, ['1.00', '1.00'], [ve100, ve100a]);
 end;
 
 function DblToVersaoMDFe(out ok: Boolean; const d: Double): TVersaoMDFe;
@@ -260,9 +315,6 @@ begin
 
   if d = 1.0 then
     Result := ve100
-  else
-  if d = 3.0 then
-    Result := ve300
   else
   begin
     Result := ve100;
@@ -274,20 +326,10 @@ function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;
 begin
   case t of
     ve100: Result := 1.0;
-    ve300: Result := 3.0;
+    ve100a: Result := 1.0;
   else
     Result := 0;
   end;
-end;
-
-function TTransportadorToStr(const t: TTransportadorMDFe): String;
-begin
-  Result := EnumeradoToStr(t, ['1', '2', '3'], [ttETC, ttTAC, ttCTC]);
-end;
-
-function StrToTTransportador(out ok: Boolean; const s: String): TTransportadorMDFe;
-begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3'], [ttETC, ttTAC, ttCTC]);
 end;
 
 end.

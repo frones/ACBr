@@ -93,11 +93,6 @@ type
   TinfMunDescargaCollection     = class;
   TinfMunDescargaCollectionItem = class;
 
-  TPeriCTeCollection            = class;
-  TPeriNFeCollection            = class;
-  TPeriMDFeCollection           = class;
-  TPeriCollectionItem           = class;
-
   TinfCTeCollection           = class;
   TinfCTeCollectionItem       = class;
   TinfUnidTranspCTeCollection = class;
@@ -125,9 +120,6 @@ type
   TinfMDFeTranspCollection     = class;
   TinfMDFeTranspCollectionItem = class;
   TinfUnidTranspMDFeCollection = class;
-
-  TSegCollection     = class;
-  TSegCollectionItem = class;
 
   Ttot                  = class;
   TlacresCollection     = class;
@@ -196,7 +188,6 @@ type
     FcUF: Integer;
     FtpAmb: TpcnTipoAmbiente;
     FtpEmit: TTpEmitenteMDFe;
-    FtpTransp: TTransportadorMDFe;
     Fmod: String;
     Fserie: Integer;
     FnMDF: Integer;
@@ -222,7 +213,6 @@ type
     property cUF: Integer                            read FcUF           write FcUF;
     property tpAmb: TpcnTipoAmbiente                 read FtpAmb         write FtpAmb;
     property tpEmit: TTpEmitenteMDFe                 read FtpEmit        write FtpEmit;
-    property tpTransp: TTransportadorMDFe            read FtpTransp      write FtpTransp;
     property modelo: String                          read Fmod           write Fmod;
     property serie: Integer                          read Fserie         write Fserie;
     property nMDF: Integer                           read FnMDF          write FnMDF;
@@ -634,56 +624,6 @@ type
     property TU: Double    read FTU    write FTU;
   end;
 
-  TPeriCTeCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TPeriCollectionItem;
-    procedure SetItem(Index: Integer; Value: TPeriCollectionItem);
-  public
-    constructor Create(AOwner:TinfCTeCollectionItem);
-    function Add: TPeriCollectionItem;
-    property Items[Index: Integer]: TPeriCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TPeriNFeCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TPeriCollectionItem;
-    procedure SetItem(Index: Integer; Value: TPeriCollectionItem);
-  public
-    constructor Create(AOwner: TinfNFeCollectionItem);
-    function Add: TPeriCollectionItem;
-    property Items[Index: Integer]: TPeriCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TPeriMDFeCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TPeriCollectionItem;
-    procedure SetItem(Index: Integer; Value: TPeriCollectionItem);
-  public
-    constructor Create(AOwner: TinfMDFeTranspCollectionItem);
-    function Add: TPeriCollectionItem;
-    property Items[Index: Integer]: TPeriCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TPeriCollectionItem = class(TCollectionItem)
-  private
-    FnONU        : String;
-    FxNomeAE     : String;
-    FxClaRisco   : String;
-    FgrEmb       : String;
-    FqTotProd    : String;
-    FqVolTipo    : String;
-  public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
-    property nONU: String        read FnONU        write FnONU;
-    property xNomeAE: String     read FxNomeAE     write FxNomeAE;
-    property xClaRisco: String   read FxClaRisco   write FxClaRisco;
-    property grEmb: String       read FgrEmb       write FgrEmb;
-    property qTotProd: String    read FqTotProd    write FqTotProd;
-    property qVolTipo: String    read FqVolTipo    write FqVolTipo;
-  end;
-
   TinfDoc = class(TPersistent)
   private
     FinfMunDescarga: TinfMunDescargaCollection;
@@ -748,21 +688,16 @@ type
   private
     FchCTe: String;
     FSegCodBarra: String;
-    FindReentrega: String;
     FinfUnidTransp: TinfUnidTranspCTeCollection;
-    Fperi: TPeriCTeCollection;
 
     procedure SetinfUnidTransp(const Value: TinfUnidTranspCTeCollection);
-    procedure SetPeri(const Value: TPeriCTeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property chCTe: String                              read FchCTe         write FchCTe;
     property SegCodBarra: String                        read FSegCodBarra   write FSegCodBarra;
-    property indReentrega: String                       read FindReentrega  write FindReentrega;
     property infUnidTransp: TinfUnidTranspCTeCollection read FinfUnidTransp write SetinfUnidTransp;
-    property peri: TPeriCTeCollection                   read Fperi          write SetPeri;
   end;
 
   TinfUnidTranspCTeCollection = class(TCollection)
@@ -920,21 +855,16 @@ type
   private
     FchNFe: String;
     FSegCodBarra: String;
-    FindReentrega: String;
     FinfUnidTransp: TinfUnidTranspNFeCollection;
-    Fperi: TPeriNFeCollection;
 
     procedure SetinfUnidTransp(const Value: TinfUnidTranspNFeCollection);
-    procedure SetPeri(const Value: TPeriNFeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property chNFe: String                              read FchNFe         write FchNFe;
     property SegCodBarra: String                        read FSegCodBarra   write FSegCodBarra;
-    property indReentrega: String                       read FindReentrega  write FindReentrega;
     property infUnidTransp: TinfUnidTranspNFeCollection read FinfUnidTransp write SetinfUnidTransp;
-    property peri: TPeriNFeCollection                   read Fperi          write SetPeri;
   end;
 
   TinfUnidTranspNFeCollection = class(TCollection)
@@ -1006,20 +936,15 @@ type
   TinfMDFeTranspCollectionItem = class(TCollectionItem)
   private
     FchMDFe: String;
-    FindReentrega: String;
     FinfUnidTransp: TinfUnidTranspMDFeCollection;
-    Fperi: TPeriMDFeCollection;
 
     procedure SetinfUnidTransp(const Value: TinfUnidTranspMDFeCollection);
-    procedure SetPeri(const Value: TPeriMDFeCollection);
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property chMDFe: String                              read FchMDFe        write FchMDFe;
-    property indReentrega: String                        read FindReentrega  write FindReentrega;
     property infUnidTransp: TinfUnidTranspMDFeCollection read FinfUnidTransp write SetinfUnidTransp;
-    property peri: TPeriMDFeCollection                   read Fperi          write SetPeri;
   end;
 
   TinfUnidTranspMDFeCollection = class(TCollection)
@@ -1030,36 +955,6 @@ type
     constructor Create(AOwner: TinfMDFeTranspCollectionItem);
     function Add: TinfUnidTranspCollectionItem;
     property Items[Index: Integer]: TinfUnidTranspCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TSegCollection = class(TCollection)
-  private
-    function GetItem(Index: Integer): TSegCollectionItem;
-    procedure SetItem(Index: Integer; Value: TSegCollectionItem);
-  public
-    constructor Create(AOwner: TMDFe);
-    function Add: TSegCollectionItem;
-    property Items[Index: Integer]: TSegCollectionItem read GetItem write SetItem; default;
-  end;
-
-  TSegCollectionItem = class(TCollectionItem)
-  private
-    FrespSeg: TpcteRspSeg;
-    FCNPJCPF: String;
-    FxSeg: String;
-    FCNPJ: String;
-    FnApol: String;
-    FnAver: String;
-  public
-    constructor Create; reintroduce;
-    destructor Destroy; override;
-  published
-    property respSeg: TpcteRspSeg read FrespSeg write FrespSeg;
-    property CNPJCPF: String      read FCNPJCPF write FCNPJCPF;
-    property xSeg: String         read FxSeg    write FxSeg;
-    property CNPJ: String         read FCNPJ    write FCNPJ;
-    property nApol: String        read FnApol   write FnApol;
-    property nAver: String        read FnAver   write FnAver;
   end;
 
   Ttot = class(TPersistent)
@@ -1144,7 +1039,6 @@ type
     Fferrov: Tferrov;
 
     FinfDoc: TinfDoc;
-    Fseg: TSegCollection;
     Ftot: Ttot;
     Flacres: TlacresCollection;
     FautXML: TautXMLCollection;
@@ -1155,7 +1049,6 @@ type
 
     procedure Setlacres(const Value: TlacresCollection);
     procedure SetautXML(const Value: TautXMLCollection);
-    procedure SetSeg(const Value: TSegCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -1170,7 +1063,6 @@ type
     property ferrov: Tferrov read Fferrov write Fferrov;
 
     property infDoc: TinfDoc           read FinfDoc  write FinfDoc;
-    property seg: TSegCollection       read Fseg     write SetSeg;
     property tot: Ttot                 read Ftot     write Ftot;
     property lacres: TlacresCollection read Flacres  write Setlacres;
     property autXML: TautXMLCollection read FautXML  write SetautXML;
@@ -1204,7 +1096,6 @@ begin
   Fferrov := Tferrov.Create(Self);
 
   FinfDoc  := TinfDoc.Create(Self);
-  Fseg     := TSegCollection.Create(Self);
   Ftot     := Ttot.Create;
   Flacres  := TlacresCollection.Create(Self);
   FautXML  := TautXMLCollection.Create(Self);
@@ -1226,7 +1117,6 @@ begin
   Fferrov.Free;
 
   FinfDoc.Free;
-  Fseg.Free;
   Ftot.Free;
   Flacres.Free;
   FautXML.Free;
@@ -1245,11 +1135,6 @@ end;
 procedure TMDFe.SetautXML(const Value: TautXMLCollection);
 begin
   FautXML := Value;
-end;
-
-procedure TMDFe.SetSeg(const Value: TSegCollection);
-begin
-  Fseg := Value;
 end;
 
 { TinfMunCarregaCollection }
@@ -1724,13 +1609,11 @@ end;
 constructor TinfCTeCollectionItem.Create;
 begin
   FinfUnidTransp := TInfUnidTranspCTeCollection.Create(Self);
-  FPeri := TPeriCTeCollection.Create(Self);
 end;
 
 destructor TinfCTeCollectionItem.Destroy;
 begin
   FinfUnidTransp.Free;
-  FPeri.Free;
   inherited;
 end;
 
@@ -1738,11 +1621,6 @@ procedure TinfCTeCollectionItem.SetinfUnidTransp(
   const Value: TinfUnidTranspCTeCollection);
 begin
   FinfUnidTransp := Value;
-end;
-
-procedure TinfCTeCollectionItem.SetPeri(const Value: TPeriCTeCollection);
-begin
-  Fperi := Value;
 end;
 
 { TinfCTCollection }
@@ -1818,13 +1696,11 @@ end;
 constructor TinfNFeCollectionItem.Create;
 begin
   FinfUnidTransp := TInfUnidTranspNFeCollection.Create(Self);
-  FPeri := TPeriNFeCollection.Create(Self);
 end;
 
 destructor TinfNFeCollectionItem.Destroy;
 begin
   FinfUnidTransp.Free;
-  FPeri.Free;
   inherited;
 end;
 
@@ -1832,11 +1708,6 @@ procedure TinfNFeCollectionItem.SetinfUnidTransp(
   const Value: TinfUnidTranspNFeCollection);
 begin
   FinfUnidTransp := Value;
-end;
-
-procedure TinfNFeCollectionItem.SetPeri(const Value: TPeriNFeCollection);
-begin
-  Fperi := Value;
 end;
 
 { TinfNFCollection }
@@ -2397,13 +2268,11 @@ end;
 constructor TinfMDFeTranspCollectionItem.Create;
 begin
   FinfUnidTransp := TInfUnidTranspMDFeCollection.Create(Self);
-  FPeri := TPeriMDFeCollection.Create(Self);
 end;
 
 destructor TinfMDFeTranspCollectionItem.Destroy;
 begin
   FinfUnidTransp.Free;
-  FPeri.Free;
   inherited;
 end;
 
@@ -2411,12 +2280,6 @@ procedure TinfMDFeTranspCollectionItem.SetinfUnidTransp(
   const Value: TinfUnidTranspMDFeCollection);
 begin
   FinfUnidTransp := Value;
-end;
-
-procedure TinfMDFeTranspCollectionItem.SetPeri(
-  const Value: TPeriMDFeCollection);
-begin
-  Fperi := Value;
 end;
 
 { TinfUnidTranspMDFeCollection }
@@ -2490,128 +2353,6 @@ begin
      Result := V1_00
   else
      Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
-end;
-
-{ TPeriCollectionItem }
-
-constructor TPeriCollectionItem.Create;
-begin
-
-end;
-
-destructor TPeriCollectionItem.Destroy;
-begin
-
-  inherited;
-end;
-
-{ TPeriCTeCollection }
-
-function TPeriCTeCollection.Add: TPeriCollectionItem;
-begin
-  Result := TPeriCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TPeriCTeCollection.Create(AOwner: TinfCTeCollectionItem);
-begin
-  inherited Create(TPeriCollectionItem);
-end;
-
-function TPeriCTeCollection.GetItem(Index: Integer): TPeriCollectionItem;
-begin
-  Result := TPeriCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TPeriCTeCollection.SetItem(Index: Integer;
-  Value: TPeriCollectionItem);
-begin
-  inherited Create(TPeriCollectionItem);
-end;
-
-{ TPeriNFeCollection }
-
-function TPeriNFeCollection.Add: TPeriCollectionItem;
-begin
-  Result := TPeriCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TPeriNFeCollection.Create(AOwner: TinfNFeCollectionItem);
-begin
-  inherited Create(TPeriCollectionItem);
-end;
-
-function TPeriNFeCollection.GetItem(Index: Integer): TPeriCollectionItem;
-begin
-  Result := TPeriCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TPeriNFeCollection.SetItem(Index: Integer;
-  Value: TPeriCollectionItem);
-begin
-  inherited Create(TPeriCollectionItem);
-end;
-
-{ TPeriMDFeCollection }
-
-function TPeriMDFeCollection.Add: TPeriCollectionItem;
-begin
-  Result := TPeriCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TPeriMDFeCollection.Create(AOwner: TinfMDFeTranspCollectionItem);
-begin
-  inherited Create(TPeriCollectionItem);
-end;
-
-function TPeriMDFeCollection.GetItem(Index: Integer): TPeriCollectionItem;
-begin
-  Result := TPeriCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TPeriMDFeCollection.SetItem(Index: Integer;
-  Value: TPeriCollectionItem);
-begin
-  inherited Create(TPeriCollectionItem);
-end;
-
-{ TSegCollectionItem }
-
-constructor TSegCollectionItem.Create;
-begin
-
-end;
-
-destructor TSegCollectionItem.Destroy;
-begin
-
-  inherited;
-end;
-
-{ TSegCollection }
-
-function TSegCollection.Add: TSegCollectionItem;
-begin
-  Result := TSegCollectionItem(inherited Add);
-  Result.create;
-end;
-
-constructor TSegCollection.Create(AOwner: TMDFe);
-begin
-  inherited Create(TSegCollectionItem);
-end;
-
-function TSegCollection.GetItem(Index: Integer): TSegCollectionItem;
-begin
-  Result := TSegCollectionItem(inherited GetItem(Index));
-end;
-
-procedure TSegCollection.SetItem(Index: Integer;
-  Value: TSegCollectionItem);
-begin
-  inherited SetItem(Index, Value);
 end;
 
 end.

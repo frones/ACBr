@@ -50,7 +50,7 @@ unit pcteCabecalho;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, ACBrDFeConsts;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
 
 type
   TCabecalho = class(TPersistent)

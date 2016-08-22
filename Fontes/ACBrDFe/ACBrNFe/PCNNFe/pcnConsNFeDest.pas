@@ -50,8 +50,7 @@ unit pcnConsNFeDest;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnConversaoNFe, pcnGerador, ACBrDFeConsts,
-  ACBrNFeConsts;
+  SysUtils, Classes, pcnConversao, pcnConversaoNFe, pcnGerador ;
 
 type
 

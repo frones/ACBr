@@ -39,12 +39,6 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-17/08/2016
--- pcnGerador / pcnSignature / pcnConversao --
-[*] Remoção das constantes referente a mensagens pois as mesmas agora estão em 
-    units apropriadas.
-    por: Italo Jurisato Junior
-
 03/08/2016
 -- pcnAuxiliar --
 [*] Incluido o caracter "." no final das constantes UFS e CODIGOS da function CodigoParaUF.

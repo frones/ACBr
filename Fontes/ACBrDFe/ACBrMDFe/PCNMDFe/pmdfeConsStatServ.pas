@@ -41,7 +41,7 @@ unit pmdfeConsStatServ;
 interface
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador, pmdfeConversaoMDFe, ACBrDFeConsts;
+  pcnAuxiliar, pcnConversao, pcnGerador, pmdfeConversaoMDFe;
 
 type
 

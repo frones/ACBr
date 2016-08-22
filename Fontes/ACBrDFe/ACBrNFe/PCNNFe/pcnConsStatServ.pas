@@ -58,7 +58,7 @@ unit pcnConsStatServ;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, ACBrDFeConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador;
 
 type
 

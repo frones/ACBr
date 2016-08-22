@@ -176,10 +176,10 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    FCTe.Ide.modelo := StrToInt(ModeloCTeToStr(Configuracoes.Geral.ModeloDF));
     FCTe.infCTe.Versao := VersaoCTeToDbl(Configuracoes.Geral.VersaoDF);
 
     FCTe.Ide.tpCTe := tcNormal;
+    FCTe.Ide.modelo := '57';
     FCTe.Ide.verProc := 'ACBrCTe';
     FCTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FCTe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
@@ -589,7 +589,7 @@ begin
      (Copy(CTe.infCTe.ID,  6,  2) <> Copy(FormatFloat('0000', wAno), 3, 2)) or
      (Copy(CTe.infCTe.ID,  8,  2) <> FormatFloat('00', wMes)) or
      (Copy(CTe.infCTe.ID, 10, 14) <> copy(OnlyNumber(CTe.Emit.CNPJ) + '00000000000000', 1, 14)) or
-     (Copy(CTe.infCTe.ID, 24,  2) <> IntToStr(CTe.ide.modelo)) or
+     (Copy(CTe.infCTe.ID, 24,  2) <> CTe.ide.modelo) or
      (Copy(CTe.infCTe.ID, 26,  3) <> IntToStrZero(CTe.ide.serie, 3)) or
      (Copy(CTe.infCTe.ID, 29,  9) <> IntToStrZero(CTe.ide.nCT, 9)) or
      (Copy(CTe.infCTe.ID, 38,  1) <> TpEmisToStr(CTe.ide.tpEmis)) or

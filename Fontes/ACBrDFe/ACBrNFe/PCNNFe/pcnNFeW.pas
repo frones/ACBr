@@ -60,7 +60,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnGerador, pcnNFe, pcnConversao, ACBrNFeConsts;
+  pcnGerador, pcnNFe, pcnConversao;
 
 type
 
@@ -182,9 +182,8 @@ type
 
 implementation
 
-Uses
-  pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
-  ACBrDFeUtil, ACBrDFeConsts, ACBrUtil;
+Uses pcnConversaoNFe, pcnAuxiliar, pcnLayoutTXT,
+  ACBrDFeUtil, ACBrUtil;
 
 { TNFeW }
 
@@ -734,7 +733,7 @@ begin
     Gerador.wGrupo('/autXML');
   end;
   if NFe.autXML.Count > 10 then
-    Gerador.wAlerta('G50', 'autXML', '', ERR_MSG_MAIOR_MAXIMO + '10');
+    Gerador.wAlerta('G50', 'autXML', DSC_LACR, ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 procedure TNFeW.GerarDet;

@@ -336,7 +336,6 @@ type
     procedure SetJustificativa(AValue: String);
     function GerarPathPorCNPJ: String;
   protected
-    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     procedure SalvarEnvio; override;
@@ -467,7 +466,6 @@ type
 
     function GerarPathDistribuicao(AItem: TdocZipCollectionItem): String;
   protected
-    procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
@@ -791,16 +789,13 @@ end;
 
 procedure TCTeRecepcao.DefinirURL;
 var
-  xUF: String;
+  Modelo, xUF: String;
   VerServ: Double;
-  Modelo: TModeloCTe;
-  Ok: Boolean;
 begin
   FPLayout := LayCTeRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
     FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
     VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
 
@@ -809,11 +804,11 @@ begin
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
-    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
+  Modelo := 'CTe';
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
   FPVersaoServico := '';
   FPURL := '';
@@ -826,7 +821,7 @@ begin
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    ModeloCTeToPrefixo(Modelo),
+    Modelo,
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1014,16 +1009,13 @@ end;
 
 procedure TCTeRetRecepcao.DefinirURL;
 var
-  xUF: String;
+  Modelo, xUF: String;
   VerServ: Double;
-  Modelo: TModeloCTe;
-  Ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
     FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
     VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
 
@@ -1032,12 +1024,12 @@ begin
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
-    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+  Modelo := 'CTe';
   FPVersaoServico := '';
   FPURL := '';
 
@@ -1049,7 +1041,7 @@ begin
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    ModeloCTeToPrefixo(Modelo),
+    Modelo,
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1315,16 +1307,13 @@ end;
 
 procedure TCTeRecibo.DefinirURL;
 var
-  xUF: String;
+  Modelo, xUF: String;
   VerServ: Double;
-  Modelo: TModeloCTe;
-  Ok: Boolean;
 begin
   FPLayout := LayCTeRetRecepcao;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
-    Modelo  := StrToModeloCTe(ok, IntToStr(FConhecimentos.Items[0].CTe.Ide.modelo));
     FcUF    := FConhecimentos.Items[0].CTe.Ide.cUF;
     VerServ := FConhecimentos.Items[0].CTe.infCTe.Versao;
 
@@ -1333,12 +1322,12 @@ begin
   end
   else
   begin                              // Se não tem CTe, use as configurações do componente
-    Modelo  := FPConfiguracoesCTe.Geral.ModeloDF;
     FcUF    := FPConfiguracoesCTe.WebServices.UFCodigo;
     VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   end;
 
   FTpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
+  Modelo := 'CTe';
   FPVersaoServico := '';
   FPURL := '';
 
@@ -1350,7 +1339,7 @@ begin
   end;
 
   TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    ModeloCTeToPrefixo(Modelo),
+    Modelo,
     xUF,
     FTpAmb,
     LayOutToServico(FPLayout),
@@ -1487,11 +1476,10 @@ procedure TCTeConsulta.DefinirURL;
 var
   VerServ: Double;
   Modelo, xUF: String;
-  Ok: Boolean;
 begin
   FPVersaoServico := '';
   FPURL  := '';
-  Modelo := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FCTeChave) ));
+  Modelo := 'CTe';
   FcUF   := ExtrairUFChaveAcesso(FCTeChave);
 
   if FConhecimentos.Count > 0 then
@@ -1942,33 +1930,6 @@ begin
   Result := FPConfiguracoesCTe.Arquivos.GetPathInu(Now, CNPJ);
 end;
 
-procedure TCTeInutilizacao.DefinirURL;
-var
-  ok: Boolean;
-  VerServ: Double;
-  Modelo: String;
-begin
-  FPVersaoServico := '';
-  FPURL  := '';
-
-  Modelo := ModeloCTeToPrefixo( StrToModeloCTe(ok, IntToStr(FModelo) ));
-  if not ok then
-    raise EACBrCTeException.Create( 'Modelo Inválido: '+IntToStr(FModelo) );
-
-  VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
-
-  TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    Modelo,
-    FPConfiguracoesCTe.WebServices.UF,
-    FPConfiguracoesCTe.WebServices.Ambiente,
-    LayOutToServico(FPLayout),
-    VerServ,
-    FPURL
-  );
-
-  FPVersaoServico := FloatToString(VerServ, '.', '0.00');
-end;
-
 procedure TCTeInutilizacao.DefinirServicoEAction;
 begin
   FPServico    := GetUrlWsd + 'CteInutilizacao';
@@ -2320,7 +2281,6 @@ procedure TCTeEnvEvento.DefinirURL;
 var
   UF, Modelo: String;
   VerServ: Double;
-  Ok: Boolean;
 begin
   { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
     os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
@@ -2328,7 +2288,7 @@ begin
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
-  Modelo   := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe) ));
+  Modelo  := 'CTe';
 
   case FPConfiguracoesCTe.Geral.FormaEmissao of
     teSVCRS: UF := 'SVC-RS';
@@ -2695,31 +2655,6 @@ begin
     FretDistDFeInt.Free;
 
   FretDistDFeInt := TRetDistDFeInt.Create;
-end;
-
-procedure TDistribuicaoDFe.DefinirURL;
-var
-  UF : String;
-  Versao: Double;
-begin
-  { Esse método é tratado diretamente pela RFB }
-
-  UF := 'AN';
-
-  Versao := 0;
-  FPVersaoServico := '';
-  FPURL := '';
-  Versao := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
-
-  TACBrCTe(FPDFeOwner).LerServicoDeParams(
-    TACBrCTe(FPDFeOwner).GetNomeModeloDFe,
-    UF ,
-    FPConfiguracoesCTe.WebServices.Ambiente,
-    LayOutToServico(FPLayout),
-    Versao,
-    FPURL);
-
-  FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
 procedure TDistribuicaoDFe.DefinirServicoEAction;

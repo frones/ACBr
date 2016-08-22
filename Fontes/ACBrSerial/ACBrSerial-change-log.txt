@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/08/2018
+-- ACBrECFEscECF --
+[-] Aplicado Workaround para problema de Leitura de Dados da Ultima Redução Z
+    em Bematech MP4200-TH FI II, versões até 01.00.02 e inferiores.
+    Caso o CRZ seja maior que 256, o ECF devolve informações da Redução Z errada.
+    (por: DSA)
+
 Data: 18/08/2016
 -- ACBrECFVirtual --
 [-] Correção nos retornos de GetTotalNaoTributado e GetTotalIsencao (estavam

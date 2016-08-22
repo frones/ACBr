@@ -292,6 +292,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     function GetNumUltimoItem: Integer; override ;
 
     function GetDadosUltimaReducaoZ: String; override ;
+    procedure BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal(ANumCRZ: Integer);
 
     function GetEstado: TACBrECFEstado; override ;
     function GetGavetaAberta: Boolean; override ;
@@ -3459,8 +3460,8 @@ end;
 
 function TACBrECFEscECF.GetDadosUltimaReducaoZ : String ;
 var
-  DataStr, ECFCRZ, Reg : String ;
-  I, J, N : Integer;
+  DataStr, Reg : String ;
+  I, J, N, ECFCRZ, RZCRZ : Integer;
   AliqZ : TACBrECFAliquota ;
   ValReg: Double;
 
@@ -3513,211 +3514,564 @@ begin
 
   with TACBrECF(fpOwner) do
   begin
-    ECFCRZ := Trim(NumCRZ);
+    ECFCRZ := StrToIntDef(Trim(NumCRZ), -1);
+    if ECFCRZ < 0 then
+      raise EACBrECFERRO.Create('Erro ao obter CRZ atual') ;
   end;
 
-  RetornaInfoECF( '17|'+ECFCRZ ) ;
-
+  RetornaInfoECF( '17|'+IntToStr(ECFCRZ) ) ;
   // DEBUG
   //WriteToTXT('C:\TEMP\REDZ.TXT', EscECFResposta.Params.Text, False, False);
   if (UpperCase(copy(EscECFResposta.Params.Text, 0, 5)) = 'ERRO:')  then
-  begin
     raise EACBrECFERRO.Create(ACBrStr(EscECFResposta.Params.Text)) ;
+
+  RZCRZ := StrToIntDef( EscECFResposta.Params[0], 0) ;
+
+  if IsBematech and (ECFCRZ <> RZCRZ) then
+  begin
+    { Bematech MP4200 TH-FI II, versões até 01.00.02 e inferiores, tem problemas
+      para ler dados da Ultima Redução Z, se o CRZ for maior que 256.
+      Se o CRZ lido for difernte do solicitado, é porque o problema ocorreu...
+      Nesse caso, vamos capturar as informações de uma LeituraMemoriaFiscalSerial }
+    BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal( ECFCRZ )
+  end
+  else
+  begin
+    { Alimenta a class com os dados atuais do ECF }
+    with fpDadosReducaoZClass do
+    begin
+      CRZ              := RZCRZ;
+      DataStr          := EscECFResposta.Params[1];
+      DataDoMovimento  := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
+                                      StrToInt(copy(DataStr,3,2)),   // Mes
+                                      StrToInt(copy(DataStr,1,2)) ); // Dia
+
+      DataStr := EscECFResposta.Params[2];
+      DataHoraEmissao := EncodeDateTime(StrToInt(copy(DataStr, 5,4)),   // Ano
+                                        StrToInt(copy(DataStr, 3,2)),   // Mes
+                                        StrToInt(copy(DataStr, 1,2)),   // Dia
+                                        StrToInt(copy(DataStr, 9,2)),   // Hora
+                                        StrToInt(copy(DataStr, 11,2)),   // Min
+                                        StrToInt(copy(DataStr, 13,2)),   // Seg
+                                        0 );
+
+      CRO              := StrToIntDef( EscECFResposta.Params[3], 0) ;
+      NumeroCOOInicial := EscECFResposta.Params[4];
+      COO              := StrToIntDef( EscECFResposta.Params[5], 0) ;
+      ValorVendaBruta  := RoundTo( StrToFloatDef(EscECFResposta.Params[07],0)/100, -2);
+      DescontoICMS     := RoundTo( StrToFloatDef(EscECFResposta.Params[08],0)/100, -2);
+      AcrescimoICMS    := RoundTo( StrToFloatDef(EscECFResposta.Params[09],0)/100, -2);
+      CancelamentoICMS := RoundTo( StrToFloatDef(EscECFResposta.Params[10],0)/100, -2);
+      DescontoISSQN    := RoundTo( StrToFloatDef(EscECFResposta.Params[11],0)/100, -2);
+      AcrescimoISSQN   := RoundTo( StrToFloatDef(EscECFResposta.Params[12],0)/100, -2);
+      CancelamentoISSQN:= RoundTo( StrToFloatDef(EscECFResposta.Params[13],0)/100, -2);
+
+      {Aliquotas}
+      {Percorrendo as aliquotas cadastradas no ECF para procurar por todas}
+      for I := 0 to Aliquotas.Count - 1 do
+      begin
+        AliqZ := TACBrECFAliquota.Create ;
+        AliqZ.Assign( fpAliquotas[I] );
+        {Procura pela aliquota no formato T/Snnnn na string}
+        ValReg := AchaValorRegistrador( AliqZ.Tipo, AliqZ.Aliquota ) ;
+        if ValReg >= 0 then
+          AliqZ.Total := ValReg;
+
+        AdicionaAliquota( AliqZ );
+      end ;
+
+      ValReg := AchaValorRegistrador('F1');
+      if ValReg >= 0 then
+        SubstituicaoTributariaICMS := ValReg;
+
+      ValReg := AchaValorRegistrador('F2');
+      if ValReg >= 0 then
+        SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
+
+      ValReg := AchaValorRegistrador('F3');
+      if ValReg >= 0 then
+        SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
+
+
+      ValReg := AchaValorRegistrador('N1');
+      if ValReg >= 0 then
+        NaoTributadoICMS := ValReg;
+
+      ValReg := AchaValorRegistrador('N2');
+      if ValReg >= 0 then
+        NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
+
+      ValReg := AchaValorRegistrador('N3');
+      if ValReg >= 0 then
+        NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
+
+
+      ValReg := AchaValorRegistrador('I1');
+      if ValReg >= 0 then
+        IsentoICMS := ValReg;
+
+      ValReg := AchaValorRegistrador('I2');
+      if ValReg >= 0 then
+        IsentoICMS := max(IsentoICMS,0) + ValReg;
+
+      ValReg := AchaValorRegistrador('I3');
+      if ValReg >= 0 then
+        IsentoICMS := max(IsentoICMS,0) + ValReg;
+
+
+      ValReg := AchaValorRegistrador('FS1');
+      if ValReg >= 0 then
+        SubstituicaoTributariaISSQN := ValReg;
+
+      ValReg := AchaValorRegistrador('FS2');
+      if ValReg >= 0 then
+        SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
+
+      ValReg := AchaValorRegistrador('FS3');
+      if ValReg >= 0 then
+        SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
+
+
+      ValReg := AchaValorRegistrador('NS1');
+      if ValReg >= 0 then
+        NaoTributadoISSQN := ValReg;
+
+      ValReg := AchaValorRegistrador('NS2');
+      if ValReg >= 0 then
+        NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
+
+      ValReg := AchaValorRegistrador('NS3');
+      if ValReg >= 0 then
+        NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
+
+
+      ValReg := AchaValorRegistrador('IS1');
+      if ValReg >= 0 then
+        IsentoISSQN := ValReg;
+
+      ValReg := AchaValorRegistrador('IS2');
+      if ValReg >= 0 then
+        IsentoISSQN := max(IsentoISSQN,0) + ValReg;
+
+      ValReg := AchaValorRegistrador('IS3');
+      if ValReg >= 0 then
+        IsentoISSQN := max(IsentoISSQN,0) + ValReg;
+
+      { Epson não retorna Totalizadores não tributados no comando padrão, usando
+        comando específico do Fabricante }
+      if IsEpson then
+      begin
+        RetornaInfoECF('99|30&'+IntToStr(ECFCRZ));
+
+        // Calculando a posição do "Total de alíquotas não tributadas"
+        I := 4 + (StrToIntDef( EscECFResposta.Params[4], 0) * 3) + 1;
+        I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
+        I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
+        I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 2) + 2;
+
+        GNF := StrToIntDef( EscECFResposta.Params[I], 0) ;
+        I := I + 3;
+        CCF := StrToIntDef( EscECFResposta.Params[I], 0) ;
+        I := I + 1;
+        CFD := StrToIntDef( EscECFResposta.Params[I], 0) ;
+        I := I + 1;
+        CCDC := StrToIntDef( EscECFResposta.Params[I], 0) ;
+        I := I + 1;
+        GRG := StrToIntDef( EscECFResposta.Params[I], 0) ;
+        I := I + 2;
+        CFC := StrToIntDef( EscECFResposta.Params[I], 0) ;
+        I := I + 3;
+        ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[I],0)/100, -2);
+        I := I + 14;
+        I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
+        I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 3;
+
+        N := StrToIntDef( EscECFResposta.Params[I], 0);
+        for J := 1 to N do
+        begin
+          Reg    := Copy( EscECFResposta.Params[I+J], 1, 1);
+          ValReg := RoundTo( StrToFloatDef(EscECFResposta.Params[I+J+N],0)/100, -2);
+
+          if (Reg = 'F') then
+            SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg
+          else if (Reg = 'N') then
+            NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg
+          else if (Reg = 'I') then
+            IsentoICMS := max(IsentoICMS,0) + ValReg
+        end ;
+
+        I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 2) + 1;
+
+        N := StrToIntDef( EscECFResposta.Params[I], 0);
+        for J := 1 to N do
+        begin
+          Reg    := Copy( EscECFResposta.Params[I+J], 1, 2);
+          ValReg := RoundTo( StrToFloatDef(EscECFResposta.Params[I+J+N],0)/100, -2);
+
+          if (Reg = 'FS') then
+            SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg
+          else if (Reg = 'NS') then
+            NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg
+          else if (Reg = 'IS') then
+            IsentoISSQN := max(IsentoISSQN,0) + ValReg
+        end ;
+      end
+      else
+      begin
+        { EscESC não retorna o GT em leitura de Dados da Ultima Reducao Z,
+          Usando o GTInicial deste movimento }
+
+        RetornaInfoECF( '8' ) ;
+        ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[3],0)/100, -2);
+      end;
+    end;
   end;
 
-  { Alimenta a class com os dados atuais do ECF }
   with fpDadosReducaoZClass do
   begin
-    CRZ              := StrToIntDef( EscECFResposta.Params[0], 0) ;
-    DataStr          := EscECFResposta.Params[1];
-    DataDoMovimento  := EncodeDate( StrToInt(copy(DataStr,5,4)),   // Ano
-                                    StrToInt(copy(DataStr,3,2)),   // Mes
-                                    StrToInt(copy(DataStr,1,2)) ); // Dia
-
-    DataStr := EscECFResposta.Params[2];
-    DataHoraEmissao := EncodeDateTime(StrToInt(copy(DataStr, 5,4)),   // Ano
-                                      StrToInt(copy(DataStr, 3,2)),   // Mes
-                                      StrToInt(copy(DataStr, 1,2)),   // Dia
-                                      StrToInt(copy(DataStr, 9,2)),   // Hora
-                                      StrToInt(copy(DataStr, 11,2)),   // Min
-                                      StrToInt(copy(DataStr, 13,2)),   // Seg
-                                      0 );
-
-    CRO              := StrToIntDef( EscECFResposta.Params[3], 0) ;
-    NumeroCOOInicial := EscECFResposta.Params[4];
-    COO              := StrToIntDef( EscECFResposta.Params[5], 0) ;
-    ValorVendaBruta  := RoundTo( StrToFloatDef(EscECFResposta.Params[07],0)/100, -2);
-    DescontoICMS     := RoundTo( StrToFloatDef(EscECFResposta.Params[08],0)/100, -2);
-    AcrescimoICMS    := RoundTo( StrToFloatDef(EscECFResposta.Params[09],0)/100, -2);
-    CancelamentoICMS := RoundTo( StrToFloatDef(EscECFResposta.Params[10],0)/100, -2);
-    DescontoISSQN    := RoundTo( StrToFloatDef(EscECFResposta.Params[11],0)/100, -2);
-    AcrescimoISSQN   := RoundTo( StrToFloatDef(EscECFResposta.Params[12],0)/100, -2);
-    CancelamentoISSQN:= RoundTo( StrToFloatDef(EscECFResposta.Params[13],0)/100, -2);
-
-    {Aliquotas}
-    {Percorrendo as aliquotas cadastradas no ECF para procurar por todas}
-    for I := 0 to Aliquotas.Count - 1 do
-    begin
-      AliqZ := TACBrECFAliquota.Create ;
-      AliqZ.Assign( fpAliquotas[I] );
-      {Procura pela aliquota no formato T/Snnnn na string}
-      ValReg := AchaValorRegistrador( AliqZ.Tipo, AliqZ.Aliquota ) ;
-      if ValReg >= 0 then
-        AliqZ.Total := ValReg;
-
-      AdicionaAliquota( AliqZ );
-    end ;
-
-    ValReg := AchaValorRegistrador('F1');
-    if ValReg >= 0 then
-      SubstituicaoTributariaICMS := ValReg;
-
-    ValReg := AchaValorRegistrador('F2');
-    if ValReg >= 0 then
-      SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
-
-    ValReg := AchaValorRegistrador('F3');
-    if ValReg >= 0 then
-      SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
-
-
-    ValReg := AchaValorRegistrador('N1');
-    if ValReg >= 0 then
-      NaoTributadoICMS := ValReg;
-
-    ValReg := AchaValorRegistrador('N2');
-    if ValReg >= 0 then
-      NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
-
-    ValReg := AchaValorRegistrador('N3');
-    if ValReg >= 0 then
-      NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
-
-
-    ValReg := AchaValorRegistrador('I1');
-    if ValReg >= 0 then
-      IsentoICMS := ValReg;
-
-    ValReg := AchaValorRegistrador('I2');
-    if ValReg >= 0 then
-      IsentoICMS := max(IsentoICMS,0) + ValReg;
-
-    ValReg := AchaValorRegistrador('I3');
-    if ValReg >= 0 then
-      IsentoICMS := max(IsentoICMS,0) + ValReg;
-
-
-    ValReg := AchaValorRegistrador('FS1');
-    if ValReg >= 0 then
-      SubstituicaoTributariaISSQN := ValReg;
-
-    ValReg := AchaValorRegistrador('FS2');
-    if ValReg >= 0 then
-      SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
-
-    ValReg := AchaValorRegistrador('FS3');
-    if ValReg >= 0 then
-      SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
-
-
-    ValReg := AchaValorRegistrador('NS1');
-    if ValReg >= 0 then
-      NaoTributadoISSQN := ValReg;
-
-    ValReg := AchaValorRegistrador('NS2');
-    if ValReg >= 0 then
-      NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
-
-    ValReg := AchaValorRegistrador('NS3');
-    if ValReg >= 0 then
-      NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
-
-
-    ValReg := AchaValorRegistrador('IS1');
-    if ValReg >= 0 then
-      IsentoISSQN := ValReg;
-
-    ValReg := AchaValorRegistrador('IS2');
-    if ValReg >= 0 then
-      IsentoISSQN := max(IsentoISSQN,0) + ValReg;
-
-    ValReg := AchaValorRegistrador('IS3');
-    if ValReg >= 0 then
-      IsentoISSQN := max(IsentoISSQN,0) + ValReg;
-
-
-    { Epson não retorna Totalizadores não tributados no comando padrão, usando
-      comando específico do Fabricante }
-    if IsEpson then
-    begin
-      RetornaInfoECF('99|30&'+ECFCRZ);
-
-      // Calculando a posição do "Total de alíquotas não tributadas"
-      I := 4 + (StrToIntDef( EscECFResposta.Params[4], 0) * 3) + 1;
-      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
-      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
-      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 2) + 2;
-
-      GNF := StrToIntDef( EscECFResposta.Params[I], 0) ;
-      I := I + 3;
-      CCF := StrToIntDef( EscECFResposta.Params[I], 0) ;
-      I := I + 1;
-      CFD := StrToIntDef( EscECFResposta.Params[I], 0) ;
-      I := I + 1;
-      CCDC := StrToIntDef( EscECFResposta.Params[I], 0) ;
-      I := I + 1;
-      GRG := StrToIntDef( EscECFResposta.Params[I], 0) ;
-      I := I + 2;
-      CFC := StrToIntDef( EscECFResposta.Params[I], 0) ;
-      I := I + 3;
-      ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[I],0)/100, -2);
-      I := I + 14;
-      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 2;
-      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 3) + 3;
-
-      N := StrToIntDef( EscECFResposta.Params[I], 0);
-      for J := 1 to N do
-      begin
-        Reg    := Copy( EscECFResposta.Params[I+J], 1, 1);
-        ValReg := RoundTo( StrToFloatDef(EscECFResposta.Params[I+J+N],0)/100, -2);
-
-        if (Reg = 'F') then
-          SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg
-        else if (Reg = 'N') then
-          NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg
-        else if (Reg = 'I') then
-          IsentoICMS := max(IsentoICMS,0) + ValReg
-      end ;
-
-      I := I + (StrToIntDef( EscECFResposta.Params[I], 0) * 2) + 1;
-
-      N := StrToIntDef( EscECFResposta.Params[I], 0);
-      for J := 1 to N do
-      begin
-        Reg    := Copy( EscECFResposta.Params[I+J], 1, 2);
-        ValReg := RoundTo( StrToFloatDef(EscECFResposta.Params[I+J+N],0)/100, -2);
-
-        if (Reg = 'FS') then
-          SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg
-        else if (Reg = 'NS') then
-          NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg
-        else if (Reg = 'IS') then
-          IsentoISSQN := max(IsentoISSQN,0) + ValReg
-      end ;
-    end
-    else
-    begin
-      { EscESC não retorna o GT em leitura de Dados da Ultima Reducao Z,
-        Usando o GTInicial deste movimento }
-
-      RetornaInfoECF( '8' ) ;
-      ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[3],0)/100, -2);
-    end;
-
     CalculaValoresVirtuais;
     Result := MontaDadosReducaoZ;
   end;
 end ;
+
+{ Bematech MP4200 TH-FI II, versões até 01.00.02 e inferiores, tem problemas
+  para ler dados da Ultima Redução Z, se o CRZ for maior que 256.
+  Nesse caso, vamos capturar as informações de uma LeituraMemoriaFiscalSerial }
+procedure TACBrECFEscECF.BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal(
+  ANumCRZ: Integer);
+var
+  SL, Totalizadores: TStringList;
+  I, J: Integer;
+  AStr, LinhaTracejada, NomeTotalizador, Lin: String;
+  AliqZ: TACBrECFAliquota;
+  ValReg: Double;
+
+  function EncontrarLinha(LinhaEncontrar: String): Boolean;
+  var
+    Linha: String;
+  begin
+    Result := False;
+    while (I < SL.Count) do
+    begin
+      Linha := SL[I];
+      Result := (pos(LinhaEncontrar, Linha ) > 0);
+      if Result then
+        Break;
+
+      Inc(I);
+    end;
+  end;
+
+  function ValorStrToFloat(AString: String): Double;
+  begin
+    AString := StringReplace(Trim(AString), '.', '', [rfReplaceAll]);  // Remove pontos
+    Result  := StringToFloatDef(AString, -1 ) ;
+  end;
+
+  procedure AdicionarTotalizador(Linha: String);
+  var
+    P: Integer;
+    NomeTot: String;
+    ValorTot: Double;
+  begin
+    P := pos('=', Linha);
+    if P = 0  then
+      exit;
+
+    NomeTot  := Trim(copy(Linha, 1, P-1));
+    ValorTot := ValorStrToFloat(copy(Linha, P+1, Length(Linha)));
+
+    Totalizadores.Values[NomeTot] := FloatToStr(ValorTot);
+  end;
+
+  procedure ExtrairTotalizadores;
+  begin
+    Totalizadores.Clear;
+    while (I < SL.Count) do
+    begin
+      if (pos(LinhaTracejada , SL[I] ) > 0) then
+        Break;
+
+      AdicionarTotalizador( copy( SL[I], 1, 24) );
+      AdicionarTotalizador( copy( SL[I],25, 24) );
+
+      Inc(I);
+    end;
+  end;
+
+  function AcharValorTotalizador(NomeTot: String): Double;
+  var
+    P: Integer;
+  begin
+    Result := -1;
+    P := Totalizadores.IndexOfName(NomeTot);
+    if P >= 0 then
+    begin
+      Result := StrToFloatDef(Totalizadores.ValueFromIndex[P], -1);
+      Totalizadores.Delete(P);  // Remove para não achar novamente
+    end;
+  end;
+
+begin
+{
+19/08/2016 19:03:07V               COO:000005080
+
+             LEITURA MEMÓRIA FISCAL
+              REDUÇÃO: 0192 a 0192
+
+Geral de Operação Não-Fiscal:          000001884
+Contador de Reduções Z:                     0194
+Contador de Reinício de Operação:            001
+Contador de Fita-Detalhe:                 000000
+Contador Geral de CF Cancelado              0558
+Tentativas Mal Suced. de Sub. SB            0000
+------------------INTERVENÇÕES------------------
+CRO  TIPO  DATA       HORA       CRZ   COO
+001  L     10/07/2013 11:34:57   0000  000000003
+-----------IMPRESSÃO DE FITA DETALHE------------
+CFD      DATA       HORA        COOi     COOf
+---------------REDUÇÕES Z DIÁRIAS---------------
+CRZ    TR   CRO   COO      DATA       HORA
+CFC                       VENDA BRUTA DIÁRIA(R$)
+DT = desconto ICMS      DS = desconto ISSQN
+AT = acréscimo ICMS     AS = acréscimo ISSQN
+CT = canc. ICMS         CS = canc. ISSQN
+ONE = Operação não-fiscal de entrada
+ONS = Operação não-fiscal de saída
+------------------------------------------------
+CRZ    TR   CRO   COO      DATA       HORA
+0192   0   001  000005067  04/07/2016 08:32:35V
+CFC                       VENDA BRUTA DIÁRIA(R$)
+000005                                     51,66
+DT = 0,00               DS = 0,00
+AT = 0,00               AS = 0,00
+CT = 49,66              CS = 0,00
+T18,00% = 2,00          T18,00% = 0,00
+T07,00% = 0,00          T12,00% = 0,00
+T25,00% = 0,00          T17,00% = 0,00
+T03,20% = 0,00          T05,20% = 0,00
+T12,00% = 0,00          T07,00% = 0,00
+T25,00% = 0,00          T04,00% = 0,00
+F1 = 0,00               I1 = 0,00
+N1 = 0,00               S05,00% = 0,00
+S12,00% = 0,00          S08,00% = 0,00
+FS1 = 0,00              IS1 = 0,00
+NS1 = 0,00
+ONE = 0,00              ONS = 0,00
+------------------------------------------------
+-----------TOTAL DO MES JULHO DE 2016-----------
+Venda Bruta(R$)                            51,66
+DT = 0,00               DS = 0,00
+AT = 0,00               AS = 0,00
+CT = 49,66              CS = 0,00
+T03,20% = 0,00          T04,00% = 0,00
+T05,20% = 0,00          T07,00% = 0,00
+T12,00% = 0,00          T17,00% = 0,00
+T18,00% = 2,00          T25,00% = 0,00
+F1 = 0,00               I1 = 0,00
+N1 = 0,00               S05,00% = 0,00
+S08,00% = 0,00          S12,00% = 0,00
+FS1 = 0,00              IS1 = 0,00
+NS1 = 0,00
+ONE = 0,00              ONS = 0,00
+-----------TOTAL DO PERÍODO DA LEITURA----------
+Venda Bruta(R$)                            51,66
+DT = 0,00               DS = 0,00
+AT = 0,00               AS = 0,00
+CT = 49,66              CS = 0,00
+T03,20% = 0,00          T04,00% = 0,00
+T05,20% = 0,00          T07,00% = 0,00
+T12,00% = 0,00          T17,00% = 0,00
+T18,00% = 2,00          T25,00% = 0,00
+F1 = 0,00               I1 = 0,00
+N1 = 0,00               S05,00% = 0,00
+S08,00% = 0,00          S12,00% = 0,00
+FS1 = 0,00              IS1 = 0,00
+NS1 = 0,00
+ONE = 0,00              ONS = 0,00
+------------------DADOS GERAIS------------------
+Quantidade de Reduções Restantes            3456
+MOEDA: R$                   19/06/2013 14:00:06
+-----------------SOFTWARE BÁSICO----------------
+01.00.00                    19/06/2013 14:00:02
+--------TENTATIVAS DE SUBSTITUIÇÃO DO SB--------
+----------------CODIFICAÇÃO DO GT---------------
+        a partir de: 19/06/2013 14:00:06
+0=Q, 1=W, 2=E, 3=R, 4=T, 5=Y, 6=U, 7=I, 8=O, 9=P
+------------------------------------------------
+MD-5:5AA6AEFF751859376631060EF2A86125
+DJPDV 1.4.3e
+------------------------------------------------
+  DUn6OqqRcrrxj5+x67ool9l4quiUhb6x3vWwwdOLXCU=
+MARCA: BEMATECH MOD: MP-4200 TH FI ECF-IF  VERSÃO
+: 01.00.00
+ECF: 001 LJ:      OPR: SUPER USUÃRIO (ALTE
+QQQQQQQQQWWQWERYYP          19/08/2016 19:03:08V
+FAB: BE101310100700000348                    BR
+---------------------------------
+  }
+
+  LinhaTracejada := StringOfChar('-',40);
+
+  Totalizadores := TStringList.Create;
+  SL := TStringList.Create;
+  try
+    LeituraMemoriaFiscalSerial(ANumCRZ, ANumCRZ, SL);
+
+    //DEBUG
+    //SL.SaveToFile('C:\TEMP\LeituraMemoriaFiscal'+IntToStrZero(ANumCRZ,4)+'.txt');
+
+    with fpDadosReducaoZClass do
+    begin
+      I := 0;
+      // Achando a linha de inicio //
+      if not EncontrarLinha(LinhaTracejada) then
+        Exit;
+
+      if not EncontrarLinha('CRZ') then
+        Exit;
+
+      Inc(I);
+      CRZ              := StrToIntDef( copy(SL[I],1 ,4), -1 ) ;
+      CRO              := StrToIntDef( copy(SL[I],12,3), -1 ) ;
+      COO              := StrToIntDef( copy(SL[I],17,9), -1 ) ;
+      AStr             := copy(SL[I],28,19);
+      try
+        DataDoMovimento := EncodeDate(StrToInt(copy(AStr, 7,4)),   // Ano
+                                      StrToInt(copy(AStr, 4,2)),   // Mes
+                                      StrToInt(copy(AStr, 1,2)));  // Dia
+      except
+        DataDoMovimento := 0;
+      end;
+
+      Inc(I, 2);
+      CFC              := StrToIntDef( copy(SL[I],1, 6), -1 ) ;
+      ValorVendaBruta  := ValorStrToFloat( copy(SL[I],8,Length(SL[I])) ) ;
+
+      Inc(I);
+      ExtrairTotalizadores;
+
+      ValReg := AcharValorTotalizador( 'DT' );
+      if ValReg >= 0 then
+        DescontoICMS := ValReg;
+
+      ValReg := AcharValorTotalizador( 'DS' );
+      if ValReg >= 0 then
+        DescontoISSQN := ValReg;
+
+      ValReg := AcharValorTotalizador( 'AT' );
+      if ValReg >= 0 then
+        AcrescimoICMS := ValReg;
+
+      ValReg := AcharValorTotalizador( 'AS' );
+      if ValReg >= 0 then
+        AcrescimoISSQN := ValReg;
+
+      ValReg := AcharValorTotalizador( 'CT' );
+      if ValReg >= 0 then
+        CancelamentoICMS := ValReg;
+
+      ValReg := AcharValorTotalizador( 'CS' );
+      if ValReg >= 0 then
+        CancelamentoISSQN := ValReg;
+
+      {Aliquotas}
+      {Percorrendo as aliquotas cadastradas no ECF para procurar por todas}
+      for J := 0 to fpAliquotas.Count - 1 do
+      begin
+        AliqZ := TACBrECFAliquota.Create ;
+        AliqZ.Assign( fpAliquotas[J] );
+
+        NomeTotalizador := fpAliquotas[J].Tipo+FormatFloat('00.00',fpAliquotas[J].Aliquota)+'%';
+        ValReg := AcharValorTotalizador( NomeTotalizador ) ;
+        if ValReg >= 0 then
+          AliqZ.Total := ValReg;
+
+        AdicionaAliquota( AliqZ );
+      end ;
+
+      ValReg := AcharValorTotalizador('F1');
+      if ValReg >= 0 then
+        SubstituicaoTributariaICMS := ValReg;
+
+      ValReg := AcharValorTotalizador('F2');
+      if ValReg >= 0 then
+        SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
+
+      ValReg := AcharValorTotalizador('F3');
+      if ValReg >= 0 then
+        SubstituicaoTributariaICMS := max(SubstituicaoTributariaICMS,0) + ValReg;
+
+
+      ValReg := AcharValorTotalizador('N1');
+      if ValReg >= 0 then
+        NaoTributadoICMS := ValReg;
+
+      ValReg := AcharValorTotalizador('N2');
+      if ValReg >= 0 then
+        NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
+
+      ValReg := AcharValorTotalizador('N3');
+      if ValReg >= 0 then
+        NaoTributadoICMS := max(NaoTributadoICMS,0) + ValReg;
+
+
+      ValReg := AcharValorTotalizador('I1');
+      if ValReg >= 0 then
+        IsentoICMS := ValReg;
+
+      ValReg := AcharValorTotalizador('I2');
+      if ValReg >= 0 then
+        IsentoICMS := max(IsentoICMS,0) + ValReg;
+
+      ValReg := AcharValorTotalizador('I3');
+      if ValReg >= 0 then
+        IsentoICMS := max(IsentoICMS,0) + ValReg;
+
+
+      ValReg := AcharValorTotalizador('FS1');
+      if ValReg >= 0 then
+        SubstituicaoTributariaISSQN := ValReg;
+
+      ValReg := AcharValorTotalizador('FS2');
+      if ValReg >= 0 then
+        SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
+
+      ValReg := AcharValorTotalizador('FS3');
+      if ValReg >= 0 then
+        SubstituicaoTributariaISSQN := max(SubstituicaoTributariaISSQN,0) + ValReg;
+
+
+      ValReg := AcharValorTotalizador('NS1');
+      if ValReg >= 0 then
+        NaoTributadoISSQN := ValReg;
+
+      ValReg := AcharValorTotalizador('NS2');
+      if ValReg >= 0 then
+        NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
+
+      ValReg := AcharValorTotalizador('NS3');
+      if ValReg >= 0 then
+        NaoTributadoISSQN := max(NaoTributadoISSQN,0) + ValReg;
+
+
+      ValReg := AcharValorTotalizador('IS1');
+      if ValReg >= 0 then
+        IsentoISSQN := ValReg;
+
+      ValReg := AcharValorTotalizador('IS2');
+      if ValReg >= 0 then
+        IsentoISSQN := max(IsentoISSQN,0) + ValReg;
+
+      ValReg := AcharValorTotalizador('IS3');
+      if ValReg >= 0 then
+        IsentoISSQN := max(IsentoISSQN,0) + ValReg;
+    end;
+  finally
+    SL.Free;
+    Totalizadores.Free;
+  end
+end;
 
 function TACBrECFEscECF.GetVendaBruta: Double;
 var

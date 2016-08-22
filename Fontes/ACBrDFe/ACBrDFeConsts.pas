@@ -127,6 +127,7 @@ const
   DSC_NREC = 'Numero do recibo';
   DSC_NSERIE = 'Número de série';
   DSC_INFCPL = 'Informações complementares de interesse do contribuinte';
+  DSC_NPROT = 'Numero do protocolo';
 
   DSC_MODAL  = 'Tipo de Modal';
   DSC_RNTRC  = 'Registro Nacional de Transportadores Rodoviários de Carga';

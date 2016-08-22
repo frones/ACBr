@@ -196,7 +196,6 @@ const
   DSC_XTEXTO = 'Conteúdo do Campo';
   DSC_XORGAO = 'Orgão emitente';
   DSC_CHNFE = 'Chave da NFe';
-  DSC_NPROT = 'Numero do protocolo';
   DSC_IDLOTE = 'Numero do Lote';
   DSC_VERAPLIC = 'Versão do aplicativo';
   DSC_NREGDPEC = 'Número de registro do DPEC';

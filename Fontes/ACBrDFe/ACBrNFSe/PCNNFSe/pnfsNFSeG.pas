@@ -395,7 +395,8 @@ begin
                     Gerador.wCampoNFSe(tcStr, '#1', 'UnidadeGestora', 14, 14, 1, CNPJPrefeitura, '');
 
                   Gerador.Prefixo := Prefixo3;
-                  Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao + aNameSpace);
+                  //Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao + aNameSpace);
+                  Gerador.wGrupoNFSe('LoteRps');
 
                   Gerador.Prefixo := Prefixo4;
                   Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');

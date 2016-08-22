@@ -50,7 +50,8 @@ unit pcteConsStatServ;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcteConversaoCTe,
+  ACBrDFeConsts;
 
 type
 

@@ -50,14 +50,19 @@ type
 
   TGeralConfCTe = class(TGeralConf)
   private
+    FModeloDF: TModeloCTe;
+    FModeloDFCodigo: integer;
     FVersaoDF: TVersaoCTe;
 
     procedure SetVersaoDF(const Value: TVersaoCTe);
+    procedure SetModeloDF(const Value: TModeloCTe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
 
   published
+    property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
+    property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
   end;
 
@@ -172,6 +177,7 @@ procedure TGeralConfCTe.Assign(DeGeralConfCTe: TGeralConfCTe);
 begin
   inherited Assign(DeGeralConfCTe);
 
+  ModeloDF := DeGeralConfCTe.ModeloDF;
   FVersaoDF := DeGeralConfCTe.VersaoDF;
 end;
 
@@ -179,7 +185,15 @@ constructor TGeralConfCTe.Create(AOwner: TConfiguracoes);
 begin
   Inherited Create(AOwner);
 
+  FModeloDF := moCTe;
+  FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
   FVersaoDF := ve200;
+end;
+
+procedure TGeralConfCTe.SetModeloDF(const Value: TModeloCTe);
+begin
+  FModeloDF := Value;
+  FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
 end;
 
 procedure TGeralConfCTe.SetVersaoDF(const Value: TVersaoCTe);

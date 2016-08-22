@@ -50,7 +50,7 @@ unit pcteSignature;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnConversao, pcnGerador, ACBrDFeConsts;
 
 type
 

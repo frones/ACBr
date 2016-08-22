@@ -50,6 +50,12 @@ Símbolo : Significado
     retorna 202 em vez de 200 como resposta ao Envio.
    por: BigWings
 
+17/08/2016
+-- diversos --
+[+] Criada a unit ACBrDFeConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+    por: Italo Jurisato Junior
+
 05/07/2016
 -- ACBrDFeSSL --
 [*] Remoção de uma variável definida e não utilizada.

@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnEventoNFe;
+  pcnConversao, pcnGerador, pcnEventoNFe, ACBrDFeConsts, ACBrNFeConsts;
 
 type
   TInfEventoCollection     = class;

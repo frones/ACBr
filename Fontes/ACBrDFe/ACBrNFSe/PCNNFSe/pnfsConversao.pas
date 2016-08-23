@@ -99,7 +99,8 @@ type
                     proDBSeller, proLexsom, proABRASFv1, proABRASFv2, proNFSeBrasil,
                     proTinus, proSJP, proCONAM, proEReceita, proGoverna,
                     proNEAInformatica, proNotaInteligente, proSP, proPronimv2,
-                    proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2);
+                    proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
+                    proBethav2);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -446,7 +447,8 @@ begin
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
          'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
-         'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2'],
+         'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
+         'Bethav2'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -458,7 +460,8 @@ begin
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
          proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
          proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP,
-         proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2]);
+         proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
+         proBethav2]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -474,7 +477,8 @@ begin
          'SisPMJP', 'SystemPro', 'Infisc', 'Salvador', 'DBSeller', 'Lexsom',
          'ABRASFv1', 'ABRASFv2', 'NFSeBrasil', 'Tinus', 'SJP', 'CONAM',
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
-         'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2'],
+         'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
+         'Bethav2'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -486,7 +490,8 @@ begin
          proSystemPro, proInfisc, proSalvador, proDBSeller, proLexsom,
          proABRASFv1, proABRASFv2,proNFSeBrasil, proTinus, proSJP, proCONAM,
          proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP,
-         proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2]);
+         proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
+         proBethav2]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18222,7 +18227,7 @@ begin
     proSimplISS, proSJP, proSpeedGov, proThema, proTinus, proTiplan, proWebISS,
     proCIGA, proNFSeBrasil: Result := loABRASFv1;
 
-    proABRASFv2, pro4R, proABase, proActcon, proCoplan, proDigifred,
+    proABRASFv2, pro4R, proABase, proActcon, proBethav2, proCoplan, proDigifred,
     proEReceita, proFIntelISS, proFiorilli, proGoiania, proGovDigital,
     proISSDigital, proISSe, proLink3, proMitra, proNEAInformatica,
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
@@ -18250,8 +18255,8 @@ end;
 function ProvedorToVersaoNFSe(const AProvedor: TnfseProvedor): TVersaoNFSe;
 begin
   case AProvedor of
-    proABRASFv2, pro4R, proABase, proActcon, proAgiliv2, proCoplan, proDigifred,
-    proEReceita, proFIntelISS, proFiorilli, proGoiania, proGovDigital,
+    proABRASFv2, pro4R, proABase, proActcon, proAgiliv2, proBethav2, proCoplan,
+    proDigifred, proEReceita, proFIntelISS, proFiorilli, proGoiania, proGovDigital,
     proISSDigital, proISSe, proLink3, proMitra, proNEAInformatica,
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,

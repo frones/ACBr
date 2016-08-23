@@ -1236,8 +1236,8 @@ begin
   begin
     if (URI <> '') then
     begin
-      if not (FProvedor in [proRecife, proRJ, proAbaco, proIssCuritiba,
-                            proFISSLex, proBetha, proPublica]) then
+      if not (FProvedor in [proAbaco, proBetha, proFISSLex, proIssCuritiba,
+                            proPublica, proRecife, proRJ]) then
       begin
         FxSignatureNode := './/ds:Signature[@' +
                    FPConfiguracoesNFSe.Geral.ConfigGeral.Identificador +

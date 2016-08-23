@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2016
+[+] Incluido o provedor Bethav2.
+    por: Italo Jurisato Junior
+
 15/08/2016
 [*] Melhoria para poder informar na serie quando é única em Fast Report e adição de campo
     http://www.projetoacbr.com.br/forum/topic/31793-corre%C3%A7%C3%A3o-e-inclus%C3%A3o-de-campos-na-impress%C3%A3o-do-danfse/

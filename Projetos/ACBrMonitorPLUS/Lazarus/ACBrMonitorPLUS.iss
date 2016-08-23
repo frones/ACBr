@@ -28,6 +28,7 @@ OutputBaseFilename={#MyAppVerName}-Windows-Instalador
 Compression=lzma
 SolidCompression=yes
 AppMuTex=ACBrMonitor
+DisableDirPage=no
 
 [Types]
 Name: full; Description: Instalação Completa;

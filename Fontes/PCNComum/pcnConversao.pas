@@ -150,6 +150,7 @@ type
   TpcteModal = (mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal);
   TpcteProp = (tpTACAgregado, tpTACIndependente, tpOutros);
   TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
+  TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
 
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
 
@@ -331,9 +332,14 @@ function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
 function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
 function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 
+function TpRspSeguroToStr(const t: TpcteRspSeg): String;
+function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
+function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
+
 implementation
 
-uses typinfo;
+uses
+  typinfo;
 
 function StrToHex(S: String): String;
 var I: Integer;
@@ -1431,6 +1437,28 @@ function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
                                   [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
+end;
+
+function TpRspSeguroToStr(const t: TpcteRspSeg): String;
+begin
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
+end;
+
+function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
+begin
+  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR',
+                               'DESTINATARIO', 'EMITENTE', 'TOMADOR SERVICO'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
+end;
+
+function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
 end;
 
 end.

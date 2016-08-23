@@ -59,7 +59,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnRetInutNFe, pcnLeitor;
+  pcnConversao, pcnGerador, pcnRetInutNFe, pcnLeitor, pcnConsts;
 
 type
 
@@ -134,7 +134,6 @@ end;
 
 function TinutNFe.GerarXML: Boolean;
 begin
-  // Alterado por Italo em 17/12/2014
   FIDInutilizacao := 'ID' + IntToStrZero(FcUF, 2) +  Copy(IntToStrZero(Fano, 4), 3, 2) +
                      OnlyNumber(FCNPJ) + IntToStrZero(Fmodelo, 2) + IntToStrZero(Fserie, 3) +
                      IntToStrZero(FnNFIni, 9) + IntToStrZero(FnNFFin, 9);

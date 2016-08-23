@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2016
+-- diversos --
+[+] Criada a unit pcnConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+    por: Italo Jurisato Junior
+
 03/08/2016
 -- pcnAuxiliar --
 [*] Incluido o caracter "." no final das constantes UFS e CODIGOS da function CodigoParaUF.

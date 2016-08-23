@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnAuxiliar, pcnConversao, pcnGerador,
+  pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts,
   pgnreGNRE, pgnreConversao;
 
 type

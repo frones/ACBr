@@ -55,7 +55,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcteRetInutCTe, pcnLeitor,
-  ACBrUtil;
+  ACBrUtil, pcnConsts;
 
 
 type
@@ -180,6 +180,7 @@ var
   RetornoInutCTe: TRetInutCTe;
   Ok : Boolean;
 begin
+  RetornoInutCTe := TRetInutCTe.Create;
   try
     // Lendo dados do pedido de inutilização, se houver...
     Leitor.Arquivo := AXML;
@@ -206,7 +207,6 @@ begin
     end;
 
     // Lendo dados do retorno, se houver
-    RetornoInutCTe := TRetInutCTe.Create;
     RetornoInutCTe.Leitor.Arquivo := AXML;
     Result := RetornoInutCTe.LerXml;
 
@@ -217,7 +217,7 @@ begin
     end;
 
     with FRetInutCTe do
-     begin
+    begin
       ID       := RetornoInutCTe.Id;
       tpAmb    := RetornoInutCTe.tpAmb;
       verAplic := RetornoInutCTe.verAplic;
@@ -234,11 +234,10 @@ begin
       nCTFin   := RetornoInutCTe.nCTFin;
       dhRecbto := RetornoInutCTe.dhRecbto;
       nProt    := RetornoInutCTe.nProt;
-     end;
+    end;
   finally
-     RetornoInutCTe.Free;
+    RetornoInutCTe.Free;
   end;
 end;
 
 end.
-

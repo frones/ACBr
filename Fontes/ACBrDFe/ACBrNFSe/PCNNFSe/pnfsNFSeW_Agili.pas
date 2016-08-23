@@ -168,7 +168,7 @@ begin
     Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="rps' + NFSe.InfID.ID + '"');
 
   GerarIdentificacaoRPS;
-  Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, 'DSC_DEMI');
+  Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
   Gerador.wGrupoNFSe('/Rps');
 end;

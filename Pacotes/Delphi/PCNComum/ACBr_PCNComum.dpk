@@ -32,10 +32,10 @@ requires
 
 contains
   pcnAuxiliar in '..\..\..\Fontes\PCNComum\pcnAuxiliar.pas',
-  pcnCabecalho in '..\..\..\Fontes\PCNComum\pcnCabecalho.pas',
   pcnConversao in '..\..\..\Fontes\PCNComum\pcnConversao.pas',
+  pcnConsts in '..\..\..\Fontes\PCNComum\pcnConsts.pas',
+  pcnSignature in '..\..\..\Fontes\PCNComum\pcnSignature.pas',
   pcnGerador in '..\..\..\Fontes\PCNComum\pcnGerador.pas',
-  pcnLeitor in '..\..\..\Fontes\PCNComum\pcnLeitor.pas',
-  pcnSignature in '..\..\..\Fontes\PCNComum\pcnSignature.pas';
+  pcnLeitor in '..\..\..\Fontes\PCNComum\pcnLeitor.pas';
 
 end.

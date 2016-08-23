@@ -138,7 +138,10 @@ begin
     (*B03*)CTe.Ide.cCT      := Leitor.rCampo(tcStr, 'cCT');
     (*B04*)CTe.Ide.CFOP     := Leitor.rCampo(tcStr, 'CFOP');
     (*B05*)CTe.Ide.natOp    := Leitor.rCampo(tcStr, 'natOp');
-    (*B06*)CTe.Ide.forPag   := StrTotpforPag(ok, Leitor.rCampo(tcStr, 'forPag'));
+
+    if CTe.infCTe.versao < 3 then
+      (*B06*)CTe.Ide.forPag   := StrTotpforPag(ok, Leitor.rCampo(tcStr, 'forPag'));
+
     (*B07*)CTe.Ide.modelo   := Leitor.rCampo(tcStr, 'mod');
     (*B08*)CTe.Ide.serie    := Leitor.rCampo(tcInt, 'serie');
     (*B09*)CTe.Ide.nCT      := Leitor.rCampo(tcInt, 'nCT');
@@ -150,6 +153,15 @@ begin
     (*B15*)CTe.Ide.tpCTe    := StrTotpCTe(ok, Leitor.rCampo(tcStr, 'tpCTe'));
     (*B15a*)CTe.Ide.procEmi := StrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
     (*B15b*)CTe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
+
+    if CTe.infCTe.versao = 3 then
+    begin
+      if Leitor.rCampo(tcStr, 'indGlobalizado') = '1' then
+        CTe.ide.indGlobalizado := tiSim
+      else
+        CTe.ide.indGlobalizado := tiNao;
+    end;
+
     (*B15c*)CTe.Ide.refCTE  := Leitor.rCampo(tcStr, 'refCTE');
     (*B16*)CTe.Ide.cMunEnv  := Leitor.rCampo(tcInt, 'cMunEnv');
     (*B17*)CTe.Ide.xMunEnv  := Leitor.rCampo(tcStr, 'xMunEnv');
@@ -164,6 +176,10 @@ begin
     (*B26*)CTe.Ide.UFFim    := Leitor.rCampo(tcStr, 'UFFim');
     (*B27*)CTe.Ide.retira   := StrToTpRetira(ok, Leitor.rCampo(tcStr, 'retira'));
     (*B27a*)CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
+
+    if CTe.infCTe.versao = 3 then
+      CTe.ide.indIEToma := StrToindIEDest(Ok, Leitor.rCampo(tcStr, 'indIEToma'));
+
     (*#57*)CTe.Ide.dhCont := Leitor.rCampo(tcDatHor, 'dhCont');
     (*#58*)CTe.Ide.xJust  := Leitor.rCampo(tcStr, 'xJust');
   end;
@@ -323,6 +339,33 @@ begin
       CTe.emit.enderemit.CEP     := Leitor.rCampo(tcInt, 'CEP');
       CTe.emit.enderemit.UF      := Leitor.rCampo(tcStr, 'UF');
       CTe.emit.enderemit.fone    := Leitor.rCampo(tcStr, 'fone');
+    end;
+  end;
+
+  if CTe.infCTe.versao = 3 then
+  begin
+    if Leitor.rExtrai(1, 'toma') <> '' then
+    begin
+      CTe.toma.CNPJCPF := Leitor.rCampoCNPJCPF;
+      CTe.toma.IE      := Leitor.rCampo(tcStr, 'IE');
+      CTe.toma.xNome   := Leitor.rCampo(tcStr, 'xNome');
+      CTe.toma.xFant   := Leitor.rCampo(tcStr, 'xFant');
+      CTe.toma.fone    := Leitor.rCampo(tcStr, 'fone');
+      CTe.toma.email   := Leitor.rCampo(tcStr, 'email');
+
+      if Leitor.rExtrai(2, 'enderToma') <> '' then
+      begin
+        CTe.toma.EnderToma.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
+        CTe.toma.EnderToma.nro     := Leitor.rCampo(tcStr, 'nro');
+        CTe.toma.EnderToma.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
+        CTe.toma.EnderToma.xBairro := Leitor.rCampo(tcStr, 'xBairro');
+        CTe.toma.EnderToma.cMun    := Leitor.rCampo(tcInt, 'cMun');
+        CTe.toma.EnderToma.xMun    := Leitor.rCampo(tcStr, 'xMun');
+        CTe.toma.EnderToma.CEP     := Leitor.rCampo(tcInt, 'CEP');
+        CTe.toma.EnderToma.UF      := Leitor.rCampo(tcStr, 'UF');
+        CTe.toma.EnderToma.cPais   := Leitor.rCampo(tcInt, 'cPais');
+        CTe.toma.EnderToma.xPais   := Leitor.rCampo(tcStr, 'xPais');
+      end;
     end;
   end;
 
@@ -616,11 +659,39 @@ begin
       CTe.Imp.ICMSUFFim.vICMSUFFim     := Leitor.rCampo(tcDe2,'vICMSUFFim');
       CTe.Imp.ICMSUFFim.vICMSUFIni     := Leitor.rCampo(tcDe2,'vICMSUFIni');
     end;
+
+    if Leitor.rExtrai(2, 'infTribFed') <> '' then
+    begin
+      CTe.Imp.infTribFed.vPIS    := Leitor.rCampo(tcDe2,'vPIS');
+      CTe.Imp.infTribFed.vCOFINS := Leitor.rCampo(tcDe2,'vCOFINS');
+      CTe.Imp.infTribFed.vIR     := Leitor.rCampo(tcDe2,'vIR');
+      CTe.Imp.infTribFed.vINSS   := Leitor.rCampo(tcDe2,'vINSS');
+      CTe.Imp.infTribFed.vCSLL   := Leitor.rCampo(tcDe2,'vCSLL');
+    end;
   end;
 
   (* Grupo da TAG <infCTeNorm> ************************************************)
   if Leitor.rExtrai(1, 'infCTeNorm') <> '' then
   begin
+
+    if Leitor.rExtrai(2, 'infServico') <> '' then
+    begin
+      CTe.infCTeNorm.infServico.xDescServ := Leitor.rCampo(tcStr,'xDescServ');
+      CTe.infCTeNorm.infServico.qCarga    := Leitor.rCampo(tcDe4,'qCarga');
+    end;
+
+    i01 := 0;
+    while Leitor.rExtrai(2, 'infDocRef', '', i01 + 1) <> '' do
+    begin
+      CTe.infCTeNorm.infDocRef.Add;
+      CTe.infCTeNorm.infDocRef[i01].nDoc     := Leitor.rCampo(tcEsp, 'nDoc');
+      CTe.infCTeNorm.infDocRef[i01].serie    := Leitor.rCampo(tcStr, 'serie');
+      CTe.infCTeNorm.infDocRef[i01].subserie := Leitor.rCampo(tcStr, 'subserie');
+      CTe.infCTeNorm.infDocRef[i01].dEmi     := Leitor.rCampo(tcDat, 'dEmi');
+      CTe.infCTeNorm.infDocRef[i01].vDoc     := Leitor.rCampo(tcDe2, 'vDoc');
+      inc(i01);
+    end;
+
     if Leitor.rExtrai(2, 'infCarga') <> ''
     then begin
       CTe.infCTeNorm.infCarga.vCarga  := Leitor.rCampo(tcDe2,'vCarga');
@@ -1083,6 +1154,30 @@ begin
 
     end; // fim das informações do modal Rodoviário
 
+    if Leitor.rExtrai(2, 'rodoOS') <> '' then
+    begin
+      CTe.infCTeNorm.rodoOS.TAF            := Leitor.rCampo(tcStr, 'TAF');
+      CTe.infCTeNorm.rodoOS.NroRegEstadual := Leitor.rCampo(tcStr, 'NroRegEstadual');
+
+      if Leitor.rExtrai(3, 'veic') <> '' then
+      begin
+        CTe.infCTeNorm.rodoOS.veic.placa   := Leitor.rCampo(tcStr, 'placa');
+        CTe.infCTeNorm.rodoOS.veic.RENAVAM := Leitor.rCampo(tcStr, 'RENAVAM');
+        CTe.infCTeNorm.rodoOS.veic.UF      := Leitor.rCampo(tcStr, 'UF');
+
+        if Leitor.rExtrai(4, 'prop') <> '' then
+        begin
+          CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF        := Leitor.rCampoCNPJCPF;
+          CTe.infCTeNorm.rodoOS.veic.prop.TAF            := Leitor.rCampo(tcStr, 'TAF');
+          CTe.infCTeNorm.rodoOS.veic.prop.NroRegEstadual := Leitor.rCampo(tcStr, 'NroRegEstadual');
+          CTe.infCTeNorm.rodoOS.veic.prop.xNome          := Leitor.rCampo(tcStr, 'xNome');
+          CTe.infCTeNorm.rodoOS.veic.prop.IE             := Leitor.rCampo(tcStr, 'IE');
+          CTe.infCTeNorm.rodoOS.veic.prop.UF             := Leitor.rCampo(tcStr, 'UF');
+          CTe.infCTeNorm.rodoOS.veic.prop.tpProp         := StrToTpProp(ok, Leitor.rCampo(tcStr, 'tpProp'));
+        end;
+      end;
+    end;
+
     if Leitor.rExtrai(2, 'aereo') <> '' then
     begin
       CTe.infCTeNorm.aereo.nMinu      := Leitor.rCampo(tcInt,'nMinu');
@@ -1276,25 +1371,44 @@ begin
 
     if Leitor.rExtrai(2, 'infCteSub') <> '' then
     begin
-     CTe.infCTeNorm.infCTeSub.chCte := Leitor.rCampo(tcStr, 'chCte');
-     if Leitor.rExtrai(3, 'tomaICMS') <> '' then
+      CTe.infCTeNorm.infCTeSub.chCte := Leitor.rCampo(tcStr, 'chCte');
+
+      if CTe.infCTe.versao = 3 then
+        CTe.infCTeNorm.infCTeSub.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
+
+      if Leitor.rExtrai(3, 'tomaICMS') <> '' then
       begin
-       CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe := Leitor.rCampo(tcStr, 'refNFe');
-       CTe.infCTeNorm.infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
-       if Leitor.rExtrai(4, 'refNF') <> '' then
+        CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe := Leitor.rCampo(tcStr, 'refNFe');
+        CTe.infCTeNorm.infCTeSub.tomaICMS.refCte := Leitor.rCampo(tcStr, 'refCte');
+        if Leitor.rExtrai(4, 'refNF') <> '' then
         begin
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF  := Leitor.rCampoCNPJCPF;
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo   := Leitor.rCampo(tcStr, 'mod');
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie    := Leitor.rCampo(tcInt, 'serie');
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie := Leitor.rCampo(tcInt, 'subserie');
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.nro      := Leitor.rCampo(tcInt, 'nro');
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.valor    := Leitor.rCampo(tcDe2, 'valor');
-         CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.dEmi     := Leitor.rCampo(tcDat, 'dEmi');
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.CNPJCPF  := Leitor.rCampoCNPJCPF;
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.modelo   := Leitor.rCampo(tcStr, 'mod');
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.serie    := Leitor.rCampo(tcInt, 'serie');
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.subserie := Leitor.rCampo(tcInt, 'subserie');
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.nro      := Leitor.rCampo(tcInt, 'nro');
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.valor    := Leitor.rCampo(tcDe2, 'valor');
+          CTe.infCTeNorm.infCTeSub.tomaICMS.refNF.dEmi     := Leitor.rCampo(tcDat, 'dEmi');
         end;
       end;
-     if Leitor.rExtrai(3, 'tomaNaoICMS') <> '' then
+      if Leitor.rExtrai(3, 'tomaNaoICMS') <> '' then
+        CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
+
+      if Leitor.rCampo(tcStr, 'indAlteraToma') <> '' then
+        CTe.infCTeNorm.infCTeSub.indAlteraToma := StrToTIndicador(Ok, Leitor.rCampo(tcStr, 'indAlteraToma'));
+    end;
+
+    if Leitor.rExtrai(2, 'infGlobalizado') <> '' then
+      CTe.infCTeNorm.infGlobalizado.xObs := Leitor.rCampo(tcStr, 'xObs');
+
+    if Leitor.rExtrai(2, 'infServVinc') <> '' then
+    begin
+      i01 := 0;
+      while Leitor.rExtrai(3, 'infCTeMultimodal', '', i01 + 1) <> '' do
       begin
-       CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
+        CTe.infCTeNorm.infServVinc.infCTeMultimodal.Add;
+        CTe.infCTeNorm.infServVinc.infCTeMultimodal[i01].chCTeMultimodal := Leitor.rCampo(tcStr, 'chCTeMultimodal');
+        inc(i01);
       end;
     end;
   end; // fim do infCTeNorm

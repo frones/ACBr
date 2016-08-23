@@ -55,7 +55,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteEventoCTe,
-  ACBrUtil, pcteConversaoCTe;
+  ACBrUtil, pcnConsts, pcteConsts, pcteConversaoCTe;
 
 type
   TInfEventoCollection     = class;

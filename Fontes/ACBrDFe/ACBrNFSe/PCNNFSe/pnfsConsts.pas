@@ -1,5 +1,5 @@
 {******************************************************************************}
-{ Projeto: Componente ACBrMDFe                                                 }
+{ Projeto: Componente ACBrNFSe                                                 }
 {  Biblioteca multiplataforma de componentes Delphi                            }
 {                                                                              }
 {  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
@@ -30,60 +30,26 @@
 {*******************************************************************************
 |* Historico
 |*
-|* 01/08/2012: Italo Jurisato Junior
-|*  - Doação do componente para o Projeto ACBr
+|* 23/08/2016: Italo Jurisato Junior
+|*  - Criado uma Unit especifica para as constantes usadas pelo componente
+|*    ACBrNFSe
 *******************************************************************************}
 
 {$I ACBr.inc}
 
-unit pmdfeCabecalho;
+unit pnfsConsts;
 
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts;
+  SysUtils;
 
-type
-  TCabecalho = class(TPersistent)
-  private
-    FGerador: TGerador;
-    FVersao: String;
-    FVersaoDados: String;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function GerarXML: Boolean;
-  published
-    property Gerador: TGerador   read FGerador     write FGerador;
-    property Versao: String      read FVersao      write FVersao;
-    property VersaoDados: String read FVersaoDados write FVersaoDados;
-  end;
+const
+  DSC_NUMRPS = 'Numero do RPS';
+  DSC_SERIERPS = 'Serie do RPS';
+  DSC_TIPORPS = 'Tipo do RPS';
 
 implementation
-
-{ TCabecalho }
-
-constructor TCabecalho.Create;
-begin
-  FGerador := TGerador.Create;
-end;
-
-destructor TCabecalho.Destroy;
-begin
-  FGerador.Free;
-  inherited;
-end;
-
-function TCabecalho.GerarXML: Boolean;
-begin
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.wGrupo(ENCODING_UTF8_STD, '', False);
-  Gerador.wGrupo('cabecMsg ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
-  Gerador.wCampo(tcStr, 'FP03', 'versaoDados', 001, 001, 1, VersaoDados, DSC_VERPROC);
-  Gerador.wGrupo('/cabecMsg');
-  
-  Result := (Gerador.ListaDeAlertas.Count = 0);
-end;
 
 end.
 

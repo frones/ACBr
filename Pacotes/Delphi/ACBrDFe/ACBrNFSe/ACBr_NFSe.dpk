@@ -41,6 +41,7 @@ contains
   ACBrNFSeNotasFiscais in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeNotasFiscais.pas',
   ACBrNFSeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeReg.pas',
   ACBrNFSeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSeWebServices.pas',
+  pnfsConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsts.pas',
   pnfsCancNfseResposta in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsCancNfseResposta.pas',
   pnfsConsSitLoteRpsResposta in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsSitLoteRpsResposta.pas',
   pnfsConversao in '..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConversao.pas',

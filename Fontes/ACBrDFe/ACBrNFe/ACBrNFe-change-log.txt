@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2016
+-- diversos --
+[+] Criada a unit pcnNFeConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+    por: Italo Jurisato Junior
+
 18/08/2016
 -- ACBRNFeNotasFiscais
 [-] Melhoria para corrigir erro de validação de nota de ajuste

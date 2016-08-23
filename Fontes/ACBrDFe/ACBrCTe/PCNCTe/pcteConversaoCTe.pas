@@ -72,14 +72,14 @@ type
                     stCTeRecibo, stCTeCadastro, stCTeEmail, stCTeCCe,
                     stCTeEvento, stCTeDistDFeInt, stCTeEnvioWebService);
 
-  TVersaoCTe = (ve200);
+  TModeloCTe = (moCTe, moCTeOS);
+  TVersaoCTe = (ve200, ve300);
 
   TpcteFormaPagamento = (fpPago, fpAPagar, fpOutros);
   TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   TpcteTipoServico = (tsNormal, tsSubcontratacao, tsRedespacho, tsIntermediario, tsMultimodal);
   TpcteRetira = (rtSim, rtNao);
   TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
-  TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
   TpcteLotacao = (ltNao, ltSim);
   TpcteDirecao = (drNorte, drLeste, drSul, drOeste);
   TpcteTipoNavegacao = (tnInterior, tnCabotagem);
@@ -94,15 +94,7 @@ type
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
   TpcteTipoVeiculo = (tvTracao, tvReboque);
-
-const
-
-  CTeModalRodo    = '2.00';
-  CTeModalAereo   = '2.00';
-  CTeModalAqua    = '2.00';
-  CTeModalFerro   = '2.00';
-  CTeModalDuto    = '2.00';
-  CTeMultiModal   = '2.00';
+  TIndicador = (tiSim, tiNao);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -138,10 +130,6 @@ function TpTomadorPagToStr(const t: TpcteTomador): string;
 function TpTomadorToStr(const t: TpcteTomador): String;
 function TpTomadorToStrText(const t: TpcteTomador): String;
 function StrToTpTomador(out ok: boolean; const s: String ): TpcteTomador;
-
-function TpRspSeguroToStr(const t: TpcteRspSeg): String;
-function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
-function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 
 function TpLotacaoToStr(const t: TpcteLotacao): string;
 function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
@@ -184,6 +172,15 @@ function StrToindNegociavel(out ok: boolean; const s: string): TpcnindNegociavel
 
 function TpVeiculoToStr(const t: TpcteTipoVeiculo): string;
 function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
+
+function GetVersaoModalCTe(AVersaoDF: TVersaoCTe; AModal: TpcteModal): string;
+
+function ModeloCTeToStr(const t: TModeloCTe): String;
+function StrToModeloCTe(out ok: Boolean; const s: String): TModeloCTe;
+function ModeloCTeToPrefixo(const t: TModeloCTe): String;
+
+function TIndicadorToStr(const t: TIndicador): string;
+function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 
 implementation
 
@@ -259,12 +256,12 @@ end;
 
 function StrToVersaoCTe(out ok: Boolean; const s: String): TVersaoCTe;
 begin
-  Result := StrToEnumerado(ok, s, ['2.00'], [ve200]);
+  Result := StrToEnumerado(ok, s, ['2.00', '3.00'], [ve200, ve300]);
 end;
 
 function VersaoCTeToStr(const t: TVersaoCTe): String;
 begin
-  Result := EnumeradoToStr(t, ['2.00'], [ve200]);
+  Result := EnumeradoToStr(t, ['2.00', '3.00'], [ve200, ve300]);
 end;
 
 function DblToVersaoCTe(out ok: Boolean; const d: Double): TVersaoCTe;
@@ -273,6 +270,9 @@ begin
 
   if d = 2.0 then
     Result := ve200
+  else
+  if d = 3.0 then
+    Result := ve300
   else
   begin
     Result := ve200;
@@ -284,6 +284,7 @@ function VersaoCTeToDbl(const t: TVersaoCTe): Double;
 begin
   case t of
     ve200: Result := 2.0;
+    ve300: Result := 3.0;
   else
     Result := 0;
   end;
@@ -382,21 +383,6 @@ begin
              [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
 end;
 
-function TpRspSeguroToStr(const t: TpcteRspSeg): String;
-begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
-                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
-                          rsEmitenteCTe, rsTomadorServico]);
-end;
-
-function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
-begin
-  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR',
-                               'DESTINATARIO', 'EMITENTE', 'TOMADOR SERVICO'],
-                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
-                          rsEmitenteCTe, rsTomadorServico]);
-end;
-
 function TpLotacaoToStr(const t: TpcteLotacao): string;
 begin
   result := EnumeradoToStr(t, ['0','1'], [ltNao, ltSim]);
@@ -406,13 +392,6 @@ function StrToTpTomador(out ok: boolean; const s: String ): TpcteTomador;
 begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4'],
              [tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros]);
-end;
-
-function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
-begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
-                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
-                          rsEmitenteCTe, rsTomadorServico]);
 end;
 
 function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
@@ -574,6 +553,63 @@ end;
 function StrToTpVeiculo(out ok: boolean; const s: string): TpcteTipoVeiculo;
 begin
   result := StrToEnumerado(ok, s, ['0','1'], [tvTracao, tvReboque]);
+end;
+
+function GetVersaoModalCTe(AVersaoDF: TVersaoCTe; AModal: TpcteModal): string;
+begin
+  result := '';
+
+  case AVersaoDF of
+    ve200: begin
+             case AModal of
+               mdRodoviario:  result := '2.00';
+               mdAereo:       result := '2.00';
+               mdAquaviario:  result := '2.00';
+               mdFerroviario: result := '2.00';
+               mdDutoviario:  result := '2.00';
+               mdMultimodal:  result := '2.00';
+             end;
+           end;
+    ve300: begin
+             case AModal of
+               mdRodoviario:  result := '3.00';
+               mdAereo:       result := '3.00';
+               mdAquaviario:  result := '3.00';
+               mdFerroviario: result := '3.00';
+               mdDutoviario:  result := '3.00';
+               mdMultimodal:  result := '3.00';
+             end;
+           end;
+  end;
+end;
+
+function ModeloCTeToStr(const t: TModeloCTe): String;
+begin
+  Result := EnumeradoToStr(t, ['57', '67'], [moCTe, moCTeOS]);
+end;
+
+function StrToModeloCTe(out ok: Boolean; const s: String): TModeloCTe;
+begin
+  Result := StrToEnumerado(ok, s, ['57', '67'], [moCTe, moCTeOS]);
+end;
+
+function ModeloCTeToPrefixo(const t: TModeloCTe): String;
+begin
+  Case t of
+    moCTeOS: Result := 'CTeOS';
+  else
+    Result := 'CTe';
+  end;
+end;
+
+function TIndicadorToStr(const t: TIndicador): string;
+begin
+  Result := EnumeradoToStr(t, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
 end;
 
 end.

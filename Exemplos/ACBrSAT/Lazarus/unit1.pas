@@ -108,6 +108,8 @@ type
     mCancelamentoEnviar: TSynMemo;
     MenuItem14: TMenuItem;
     MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    MenuItem17: TMenuItem;
     mRede: TSynMemo;
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
@@ -205,9 +207,12 @@ type
     tsRecebido : TTabSheet ;
     tsLog : TTabSheet ;
     tsGerado : TTabSheet ;
+    procedure ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
+      AData: TDateTime);
     procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
     procedure ACBrSAT1GetsignAC(var Chave : AnsiString) ;
     procedure ACBrSAT1GravarLog(const ALogLine: String; var Tratado: Boolean);
+    procedure ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
@@ -228,6 +233,7 @@ type
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem13Click(Sender: TObject);
     procedure MenuItem15Click(Sender: TObject);
+    procedure MenuItem17Click(Sender: TObject);
     procedure miGerarXMLCancelamentoClick(Sender: TObject);
     procedure miEnviarCancelamentoClick(Sender: TObject);
     procedure miImprimirExtratoCancelamentoClick(Sender: TObject);
@@ -273,7 +279,7 @@ var
 implementation
 
 Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers;
+  RLPrinters, Printers, ACBrSATExtratoClass;
 
 {$R *.lfm}
 
@@ -398,9 +404,20 @@ begin
   Tratado := False;
 end;
 
+procedure TForm1.ACBrSAT1MensagemSEFAZ(ACod: Integer; AMensagem: String);
+begin
+  MessageDlg('Mensagem do SEFAZ', IntToStr(ACod)+'-'+AMensagem, mtWarning, [mbOK], 0);
+end;
+
 procedure TForm1.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
 begin
   Chave := AnsiString( edtCodigoAtivacao.Text );
+end;
+
+procedure TForm1.ACBrSAT1CalcPath(var APath: String; ACNPJ: String;
+  AData: TDateTime);
+begin
+  mLog.Lines.Add('O Path para o CNPJ: '+ACNPJ+' Data: '+DateToStr(AData)+' é: '+APath);
 end;
 
 procedure TForm1.bImpressoraClick(Sender: TObject);
@@ -698,11 +715,29 @@ begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-    ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
-
-    mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
-    PageControl1.ActivePage := tsRecebido;
+     //ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+     //mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
+     //PageControl1.ActivePage := tsRecebido;
+     mVendaEnviar.Lines.LoadFromFile(OpenDialog1.FileName);
+     PageControl1.ActivePage := tsGerado;
   end ;
+end;
+
+procedure TForm1.MenuItem17Click(Sender: TObject);
+begin
+  ACBrSAT1.CFe.Clear;
+  ACBrSAT1.CFeCanc.Clear;
+
+  ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := rSim;
+
+  mVendaEnviar.Lines.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Vendas\11111111111111\201509\AD35150911111111111111591234567890001757849146.xml');
+  ACBrSAT1.CFe.AsXMLString := mVendaEnviar.Lines.Text;
+
+  mVendaEnviar.Lines.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Cancelamentos\11111111111111\201509\ADC35150911111111111111591234567890001768086718.xml');
+  ACBrSAT1.CFeCanc.AsXMLString := mVendaEnviar.Lines.Text;
+
+  PrepararImpressao;
+  ACBrSAT1.ImprimirExtratoCancelamento;
 end;
 
 procedure TForm1.miGerarXMLCancelamentoClick(Sender: TObject);
@@ -747,8 +782,8 @@ end;
 
 procedure TForm1.miImprimirExtratoCancelamentoClick(Sender: TObject);
 begin
-  //ACBrSAT1.CFeCanc.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesCancelados\CFe35150511111111111111591234567890000607158269-can.xml');
-  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000607158269.xml');
+  //ACBrSAT1.CFeCanc.LoadFromFile('C:\temp\ADC35160666591991000132590000371860052583129800.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\temp\AD35160666591991000132590000371860052570122411.xml');
   PrepararImpressao;
   ACBrSAT1.ImprimirExtratoCancelamento;
 end;
@@ -981,9 +1016,10 @@ begin
   with ACBrSAT1.CFe do
   begin
     ide.numeroCaixa := 1;
+    ide.cNF := Random(999999);
 
-    Dest.CNPJCPF := '05481336000137';
-    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç';
+    Dest.CNPJCPF := '5481336000137';
+    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo muito LONGO';
 
     Entrega.xLgr := 'logradouro';
     Entrega.nro := '112233';
@@ -1156,8 +1192,12 @@ end;
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
 begin
   PrepararImpressao;
-  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000757243865.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\temp\CFe.xml');
+  //ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
+  //ACBrSATExtratoFortes1.Filtro := fiPDF;
+  //ACBrSATExtratoFortes1.NomeArquivo := 'c:\temp\meucfe.pdf';
   ACBrSAT1.ImprimirExtrato;
+  //ACBrSAT1.CFe.SaveToFile(ACBrSAT1.CalcCFeNomeArq(''));
 end;
 
 procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;

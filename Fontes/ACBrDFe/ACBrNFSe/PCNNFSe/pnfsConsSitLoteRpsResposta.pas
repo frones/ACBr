@@ -264,6 +264,9 @@ begin
              (trim(InfSit.FMsgRetorno[i].FCodigo) <> 'E92') then
             InfSit.FSituacao := 'Erro';
 
+          if trim(InfSit.FMsgRetorno[i].FCodigo) = 'E92' then
+            InfSit.FSituacao := '2';
+
           inc(i);
         end;
       end;

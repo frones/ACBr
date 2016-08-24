@@ -1934,7 +1934,7 @@ begin
         fpOutros: FieldByName('forPag').AsString  := 'Outros';
       end;
 
-      FieldByName('Mod_').AsString    := modelo;
+      FieldByName('Mod_').AsString    := IntToStr(modelo);
       FieldByName('Serie').AsString   := IntToStr(serie);
       FieldByName('NCT').AsString     := FormatarNumeroDocumentoFiscal(IntToStr(nCT));
       FieldByName('dhEmi').AsDateTime := dhEmi;

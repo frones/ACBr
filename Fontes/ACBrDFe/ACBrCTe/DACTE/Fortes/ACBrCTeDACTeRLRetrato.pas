@@ -1101,7 +1101,7 @@ begin
   end;
 
   rllModal.Caption   := ACBrStr( TpModalToStrText(FCTe.Ide.modal) );
-  rllModelo.Caption  := FCTe.Ide.modelo;
+  rllModelo.Caption  := IntToStr(FCTe.Ide.modelo);
   rllSerie.Caption   := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
   rllNumCte.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);

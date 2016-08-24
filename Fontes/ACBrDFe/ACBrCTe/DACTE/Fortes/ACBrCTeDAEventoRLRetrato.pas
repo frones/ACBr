@@ -282,7 +282,7 @@ begin
   begin
     PrintIt := True;
 
-    rllModelo.Caption := FCTe.ide.modelo;
+    rllModelo.Caption := IntToStr(FCTe.ide.modelo);
     rllSerie.Caption := IntToStr(FCTe.ide.serie);
     rllNumCTe.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
     rllEmissao.Caption := FormatDateTimeBr(FCTe.Ide.dhEmi);

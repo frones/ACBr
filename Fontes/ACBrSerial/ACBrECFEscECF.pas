@@ -3742,7 +3742,7 @@ procedure TACBrECFEscECF.BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal(
 var
   SL, Totalizadores: TStringList;
   I, J: Integer;
-  AStr, LinhaTracejada, NomeTotalizador, Lin: String;
+  AStr, LinhaTracejada, NomeTotalizador: String;
   AliqZ: TACBrECFAliquota;
   ValReg: Double;
 
@@ -3781,7 +3781,7 @@ var
     NomeTot  := Trim(copy(Linha, 1, P-1));
     ValorTot := ValorStrToFloat(copy(Linha, P+1, Length(Linha)));
 
-    Totalizadores.Values[NomeTot] := FloatToStr(ValorTot);
+    Totalizadores.Add(NomeTot + '=' + FloatToStr(ValorTot));
   end;
 
   procedure ExtrairTotalizadores;

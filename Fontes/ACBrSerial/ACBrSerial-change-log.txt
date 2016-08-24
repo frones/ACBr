@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/08/2016
+-- ACBrECFEscECF --
+[-] Alteração para que os valores dos totalizadores não sejam sobrepostos caso 
+	existam alíquotas duplicadas no ECF.
+    (por: Elias César)
+
 Data: 23/08/2016
 -- ACBrECFClass --
 [-] Correção na função GetDadosReducaoZ para que não sejam criadas alíquotas zeradas

@@ -8,11 +8,11 @@ interface
 
 uses
   ACBrCTeConhecimentos, ACBrCTe, pcteConversaoCTe, ACBrCTeConfiguracoes, 
-  ACBrCTeReg, ACBrCTeWebServices, pcteCabecalho, pcteCancCTe, pcteConsCad, 
-  pcteConsReciCTe, pcteConsSitCTe, pcteConsStatServ, pcteCTe, pcteCTeR, 
-  pcteCTeW, pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, pcteLayoutTXT, 
-  pcteModeloCTe, pcteProcCTe, pcteRetCancCTe, pcteRetConsCad, 
-  ACBrCTeDACTEClass, LazarusPackageIntf;
+  ACBrCTeReg, ACBrCTeWebServices, pcteConsCad, pcteConsReciCTe, 
+  pcteConsSitCTe, pcteConsStatServ, pcteCTe, pcteCTeR, pcteCTeW, 
+  pcteEnvEventoCTe, pcteEventoCTe, pcteInutCTe, pcteLayoutTXT, pcteModeloCTe, 
+  pcteProcCTe, pcteRetCancCTe, pcteRetConsCad, ACBrCTeDACTEClass, pcteConsts, 
+  LazarusPackageIntf;
 
 implementation
 

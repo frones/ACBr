@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/08/2016
+-- ACBrNFSeConfiguracoes --
+[*] Alterado a forma de ler o SoapAction, agora podem ter um SoapAction para
+    cada cidade do mesmo provedor.
+    Por: Rick
+
 23/08/2016
 -- diversos --
 [+] Criada a unit pnfsConsts que contem as constantes de mensagens usadas na

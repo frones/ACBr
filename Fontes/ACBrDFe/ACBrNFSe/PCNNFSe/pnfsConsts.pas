@@ -48,6 +48,28 @@ const
   DSC_NUMRPS = 'Numero do RPS';
   DSC_SERIERPS = 'Serie do RPS';
   DSC_TIPORPS = 'Tipo do RPS';
+  DSC_NUMRPSSUB = 'Numero do RPS Substituido';
+  DSC_SERIERPSSUB = 'Serie do RPS Substituido';
+  DSC_TIPORPSSUB = 'Tipo do RPS Substituido';
+  DSC_VSERVICO = 'Valor do Serviço';
+  DSC_OUTRASRETENCOES = 'Valor de Outras Retenções';
+  DSC_VNFSE = 'Valor Liquido da NFS-e';
+  DSC_DISCR = 'Discriminação do Serviço';
+  DSC_VUNIT = 'Valor Unitário';
+  DSC_MUNINCI = 'Municipio de Incidencia';
+  DSC_INDRESPRET = 'Indicador de Responsável pela Retenção';
+  DSC_COBRA = 'Código da Obra';
+  DSC_ART = 'Arte';
+  DSC_QPARC = 'Quantidade de Parcelas';
+  DSC_NPARC = 'Numero da Parcela';
+  DSC_VPARC = 'Valor da Parcela';
+  DSC_INDNATOP = 'Indicador de Natureza de Operação';
+  DSC_INDOPSN = 'Indicador do Optante pelo Simples Nacional';
+  DSC_INDINCCULT = 'Indicador de Incentivador Cultural';
+  DSC_INDSTATUS = 'Indicador de Status';
+  DSC_OUTRASINF = 'Outras Informações';
+  DSC_SENHA = 'Senha';
+  DSC_FRASESECRETA = 'Frase Secreta';
 
 implementation
 

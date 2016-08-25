@@ -43,7 +43,7 @@ uses
   synacode, ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_Governa }
@@ -208,7 +208,7 @@ begin
   Gerador.wGrupoNFSe('InfRps');
 
   Gerador.Prefixo := Prefixo3;
-  Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 10, 1, NFSe.IdentificacaoRps.Numero, '');
+  Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 10, 1, NFSe.IdentificacaoRps.Numero, DSC_NUMRPS);
   Gerador.wCampoNFSe(tcStr, '', 'CodVer', 01, 10, 1, NFSe.CodigoVerificacao, '');
 
   if NFSe.PrestadorServico.Endereco.CodigoMunicipio = '3104007' then //Araxá

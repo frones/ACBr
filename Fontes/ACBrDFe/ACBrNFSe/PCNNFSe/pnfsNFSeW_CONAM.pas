@@ -43,7 +43,7 @@ uses
   synacode, ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_CONAM }
@@ -139,12 +139,12 @@ begin
   else
     Gerador.wCampoNFSe(tcStr, '', 'TipoNFS', 01, 3, 1, 'RPC' , '');
 
-  Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 9, 1, FNFSe.IdentificacaoRps.Numero , '');
+  Gerador.wCampoNFSe(tcStr, '', 'NumRps', 01, 9, 1, FNFSe.IdentificacaoRps.Numero , DSC_NUMRPS);
 
   if NFSe.IdentificacaoRps.Serie = '' then
-    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, '001', '')
+    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, '001', DSC_SERIERPS)
   else
-    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, NFSe.IdentificacaoRps.Serie, '');
+    Gerador.wCampoNFSe(tcStr, '', 'SerRps', 01, 03, 1, NFSe.IdentificacaoRps.Serie, DSC_SERIERPS);
 
   Gerador.wCampoNFSe(tcStr, '', 'DtEmi', 01, 10, 1, FormatDateTime('dd/mm/yyyy',NFse.DataEmissaoRps), '');
 

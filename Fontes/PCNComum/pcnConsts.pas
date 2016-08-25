@@ -101,6 +101,17 @@ const
   DSC_NREC = 'Numero do recibo';
   DSC_NSERIE = 'Número de série';
   DSC_NPROT = 'Numero do protocolo';
+  DSC_CNAE = 'Classificação Nacional de Atividades Econômicas';
+  DSC_QTDE = 'Quantidade';
+  DSC_QTDEITENS = 'Quantidade de Itens na lista';
+  DSC_INDISS = 'Indicador da Exigibilidade do ISS';
+  DSC_VDESCINCOND = 'Valor Desconto Incondicionado';
+  DSC_VDESCCOND = 'Valor Desconto Condicionado';
+  DSC_INDISSRET = 'Indicador de ISS Retido';
+  DSC_VISSRET = 'Valor Retenção ISS';
+  DSC_NPROCESSO = 'Número do Processo';
+  DSC_TPAG = 'Forma de Pagamento';
+  DSC_INDINCENTIVO = 'Indicador de Incentivo Fiscal';
 
   DSC_MODAL  = 'Tipo de Modal';
   DSC_RNTRC  = 'Registro Nacional de Transportadores Rodoviários de Carga';

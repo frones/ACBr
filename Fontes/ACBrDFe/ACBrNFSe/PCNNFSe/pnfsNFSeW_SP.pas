@@ -43,7 +43,7 @@ uses
   ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_SP }
@@ -95,7 +95,7 @@ begin
   Gerador.wGrupoNFSe('ChaveRPS');
   Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 1, 11, 1, NFSe.Prestador.InscricaoMunicipal, '');
   Gerador.wCampoNFSe(tcStr, '', 'SerieRPS'          , 1, 02, 1, NFSe.IdentificacaoRps.Serie, '');
-  Gerador.wCampoNFSe(tcStr, '', 'NumeroRPS'         , 1, 12, 1, NFSe.IdentificacaoRps.Numero, '');
+  Gerador.wCampoNFSe(tcStr, '', 'NumeroRPS'         , 1, 12, 1, NFSe.IdentificacaoRps.Numero, DSC_NUMRPS);
   Gerador.wGrupoNFSe('/ChaveRPS');
 end;
 

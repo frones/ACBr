@@ -58,7 +58,6 @@ const
   DSC_CMT = 'Capacidade Máxima de Tração';
   DSC_CCORDEN = 'Código da Cor DENATRAN';
   DSC_TPREST = 'Restrição';
-  DSC_CNAE = 'Classificação Nacional de Atividades Econômicas';
   DSC_CRT = 'Código de Regime Tributário';
   DSC_CODIF = 'Código de autorização / registro do CODIF';
   DSC_CONDVEIC = 'Condições do Veículo';
@@ -177,7 +176,6 @@ const
   DSC_REF = 'Mês e ano de referência';
   DSC_FORDIA = 'Grupo de Fornecimento diário de cana';
   DSC_DIA = 'Dia';
-  DSC_QTDE = 'Quantidade';
   DSC_QTOTMES = 'Quantidade Total do Mês';
   DSC_QTOTANT = 'Quantidade Total Anterior';
   DSC_TOTGER = 'Quantidade Total Geral';
@@ -211,17 +209,9 @@ const
   DSC_DCOMPET = 'Data da Prestação do Serviço';
   DSC_VDEDUCAO = 'Valor da Dedução';
   DSC_VOUTRODED = 'Valor Outras Deduções';
-  DSC_VDESCINCOND = 'Valor Desconto Incondicionado';
-  DSC_VDESCCOND = 'Valor Desconto Condicionado';
-  DSC_INDISSRET = 'Indicador de ISS Retido';
-  DSC_VISSRET = 'Valor Retenção ISS';
-  DSC_INDISS = 'Indicador da Exigibilidade do ISS';
   DSC_CSERVICO = 'Código do Serviço';
-  DSC_NPROCESSO = 'Número do Processo';
   DSC_CREGTRIB = 'Código do Regime Especial de Tributação';
-  DSC_INDINCENTIVO = 'Indicador de Incentivo Fiscal';
   DSC_XLOCDESP = 'Local de Despacho';
-  DSC_TPAG = 'Forma de Pagamento';
   DSC_VPAG = 'Valor do Pagamento';
   DSC_TBAND = 'Bandeira da Operadora de Cartão';
   DSC_CAUT = 'Número da Autorização';

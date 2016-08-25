@@ -43,7 +43,7 @@ uses
   synacode, ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_Agili }
@@ -137,13 +137,13 @@ end;
 procedure TNFSeW_Agili.GerarIdentificacaoRPS;
 begin
   Gerador.wGrupoNFSe('IdentificacaoRps');
-  Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 15, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
-  Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, '');
+  Gerador.wCampoNFSe(tcStr, '#1', 'Numero', 01, 15, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), DSC_NUMRPS);
+  Gerador.wCampoNFSe(tcStr, '#2', 'Serie ', 01, 05, 1, NFSe.IdentificacaoRps.Serie, DSC_SERIERPS);
 
   if VersaoNFSe = ve100 then
-    Gerador.wCampoNFSe(tcStr, '#3', 'Tipo', 01, 01, 1, _TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), '')
+    Gerador.wCampoNFSe(tcStr, '#3', 'Tipo', 01, 01, 1, _TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS)
   else
-    Gerador.wCampoNFSe(tcStr, '#3', 'Tipo', 01, 01, 1, TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), '');
+    Gerador.wCampoNFSe(tcStr, '#3', 'Tipo', 01, 01, 1, TipoRPSToStr(NFSe.IdentificacaoRps.Tipo), DSC_TIPORPS);
 
   Gerador.wGrupoNFSe('/IdentificacaoRps');
 end;
@@ -153,9 +153,9 @@ begin
   if NFSe.RpsSubstituido.Numero <> '' then
   begin
     Gerador.wGrupoNFSe('RpsSubstituido');
-    Gerador.wCampoNFSe(tcStr, '#10', 'Numero', 01, 15, 1, OnlyNumber(NFSe.RpsSubstituido.Numero), '');
-    Gerador.wCampoNFSe(tcStr, '#11', 'Serie ', 01, 05, 1, NFSe.RpsSubstituido.Serie, '');
-    Gerador.wCampoNFSe(tcStr, '#12', 'Tipo  ', 01, 01, 1, _TipoRPSToStr(NFSe.RpsSubstituido.Tipo), '');
+    Gerador.wCampoNFSe(tcStr, '#10', 'Numero', 01, 15, 1, OnlyNumber(NFSe.RpsSubstituido.Numero), DSC_NUMRPSSUB);
+    Gerador.wCampoNFSe(tcStr, '#11', 'Serie ', 01, 05, 1, NFSe.RpsSubstituido.Serie, DSC_SERIERPSSUB);
+    Gerador.wCampoNFSe(tcStr, '#12', 'Tipo  ', 01, 01, 1, _TipoRPSToStr(NFSe.RpsSubstituido.Tipo), DSC_TIPORPSSUB);
     Gerador.wGrupoNFSe('/RpsSubstituido');
   end;
 end;

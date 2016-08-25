@@ -1,0 +1,7 @@
+Se você for enviar para o ambiente de homologação,
+deve-se utilizar o schema Hom_nfse_v201 renomeado para nfse_v201.
+
+por outro lado
+
+Se você for enviar para o ambiente de produção,
+deve-se utilizar o schema prod_nfse_v201 renomeado para nfse_v201.

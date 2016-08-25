@@ -546,7 +546,9 @@ begin
     lRazaoSocial.Lines.Text := Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
+    {$IFNDEF NOGUI}
     imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
+    {$ENDIF}
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then
@@ -803,7 +805,9 @@ begin
     lRazaoSocialCan.Lines.Text := Emit.xNome ;
     lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;
+    {$IFNDEF NOGUI}
     imgLogoCan.Picture.Assign( ACBrSATExtrato.PictureLogo );
+    {$ENDIF}
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then

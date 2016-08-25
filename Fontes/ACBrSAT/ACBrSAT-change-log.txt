@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/08/2016
+--ACBrSATExtratoFortesFr
+[-] Correção para quando é usado a diretiva NOGUI e o componente de imagem não é instanciado
+		http://www.projetoacbr.com.br/forum/topic/10030-grande-commit-mudando-console-para-nogui/?do=findComment&comment=211528
+		por : Juliomar Marchetti
+		
 Data: 13/07/2016
 -- ACBrSAT --
 [*] Adicionada gravação de Log, no momento da gravação de Arquivos em disco

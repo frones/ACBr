@@ -82,6 +82,10 @@ type
   TSetOfChars = set of AnsiChar;
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
 
+  {$IFNDEF FPC}
+   TLibHandle = THandle;
+  {$ENDIF}
+   
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
 
@@ -288,7 +292,7 @@ procedure OpenURL( const URL : String ) ;
 function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer)
  : boolean; overload ;
 function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer;
-   var LibHandle: THandle ): boolean; overload ;
+   var LibHandle: TLibHandle ): boolean; overload ;
 function UnLoadLibrary(LibName: String ): Boolean ;
 
 function FlushToDisk( sFile: string): boolean;
@@ -3032,13 +3036,13 @@ end;
  -----------------------------------------------------------------------------}
 function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer): boolean;
 Var
-  LibHandle: tHandle;
+  LibHandle: TLibHandle;
 begin
  Result := FunctionDetect(LibName, FuncName, LibPointer, LibHandle);
 end;
 
-function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer;
-   var LibHandle: THandle ): boolean;
+function FunctionDetect(LibName, FuncName: String; var LibPointer: Pointer;
+  var LibHandle: TLibHandle): boolean;
 begin
  Result := false;
  LibPointer := NIL;
@@ -3061,7 +3065,7 @@ end;
 
 function UnLoadLibrary(LibName: String ): Boolean ;
 var
-  LibHandle: THandle ;
+  LibHandle: TLibHandle ;
 begin
  Result := True ;
 

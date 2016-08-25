@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/08/2016
+-- ACBrUtil --
+[*] Ajuste para os métodos "FunctionDetect" e "UnLoadLibrary" funcionarem
+    adequadamente em FPC 64 bits   (por: DSA)
+
 Data: 19/08/2016
 -- ACBrUtil --
 [-] Correção em PadLeft, PadRight, PadCenter, PadSpace, para considerar o tamanho

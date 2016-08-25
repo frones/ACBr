@@ -2492,8 +2492,11 @@ begin
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarSituacaoLoteRpsEnvio_v01.xsd">';
+
+      proEL,
       proInfisc,
       proSimplISS: FTagI := '<' + TagGrupo + '>';
+      
       proSP: FTagI := '<' + TagGrupo + ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
     else
       FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
@@ -2770,7 +2773,10 @@ begin
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarLoteRpsEnvio_v01.xsd">';
+
+      proEL,
       proSimplISS: FTagI := '<' + TagGrupo + '>';
+
       proSP: FTagI := '<' + TagGrupo + ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
     else
       FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
@@ -2926,7 +2932,10 @@ begin
       proEquiplano: FTagI := '<' + TagGrupo + ' xmlns:es="http://www.equiplano.com.br/esnfs" ' +
                                                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                                                'xsi:schemaLocation="http://www.equiplano.com.br/enfs esConsultarNfsePorRpsEnvio_v01.xsd">';
+
+      proEL,
       proSimplISS: FTagI := '<' + TagGrupo + '>';
+
       proSP: FTagI := '<' + TagGrupo + ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
     else
       FTagI := '<' + TagGrupo + FNameSpaceDad + '>';
@@ -3149,6 +3158,7 @@ begin
       TagGrupo := FPrefixo3 + TagGrupo;
 
     case FProvedor of
+      proEL,
       proInfisc,
       proSimplISS,
       proSP: FTagI := '<' + TagGrupo + '>';
@@ -3402,6 +3412,7 @@ begin
                  end;
 
       proCONAM,
+      proEL,
       proInfisc: begin
                    FTagI := '<' + TagGrupo + '>';
                    FTagF := '</' + TagGrupo + '>';

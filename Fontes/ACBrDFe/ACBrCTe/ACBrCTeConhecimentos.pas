@@ -251,7 +251,8 @@ begin
       Leitor.Free;
     end;
 
-    if Configuracoes.Arquivos.Salvar then
+    if Configuracoes.Arquivos.Salvar and
+      (not Configuracoes.Arquivos.SalvarApenasCTeProcessados) then
     begin
       if NaoEstaVazio(NomeArq) then
         Gravar(NomeArq, FXMLAssinado)

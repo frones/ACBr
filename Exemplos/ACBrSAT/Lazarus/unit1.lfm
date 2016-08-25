@@ -18,15 +18,15 @@ object Form1: TForm1
     Cursor = crVSplit
     Left = 0
     Height = 6
-    Top = 202
+    Top = 226
     Width = 850
     Align = alTop
     ResizeAnchor = akTop
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 189
-    Top = 208
+    Height = 148
+    Top = 232
     Width = 850
     ActivePage = tsRecebido
     Align = alClient
@@ -34,8 +34,8 @@ object Form1: TForm1
     TabOrder = 1
     object tsLog: TTabSheet
       Caption = 'Log de Comandos'
-      ClientHeight = 161
-      ClientWidth = 842
+      ClientHeight = 116
+      ClientWidth = 846
       object mLog: TMemo
         Left = 0
         Height = 161
@@ -52,8 +52,8 @@ object Form1: TForm1
     end
     object tsGerado: TTabSheet
       Caption = 'XML Gerado'
-      ClientHeight = 181
-      ClientWidth = 842
+      ClientHeight = 116
+      ClientWidth = 846
       inline mVendaEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
@@ -542,14 +542,14 @@ object Form1: TForm1
     end
     object tsRecebido: TTabSheet
       Caption = 'XML Recebido'
-      ClientHeight = 161
-      ClientWidth = 842
+      ClientHeight = 116
+      ClientWidth = 846
       inline mRecebido: TSynMemo
         Cursor = crIBeam
         Left = 0
-        Height = 161
+        Height = 116
         Top = 0
-        Width = 842
+        Width = 846
         Align = alClient
         Font.Height = -13
         Font.Name = 'Courier New'
@@ -1032,8 +1032,8 @@ object Form1: TForm1
     end
     object tsCancelamento: TTabSheet
       Caption = 'XML Cancelamento'
-      ClientHeight = 181
-      ClientWidth = 842
+      ClientHeight = 116
+      ClientWidth = 846
       inline mCancelamentoEnviar: TSynMemo
         Cursor = crIBeam
         Left = 0
@@ -1552,8 +1552,8 @@ object Form1: TForm1
     end
     object tsRedeXML: TTabSheet
       Caption = 'XML Rede'
-      ClientHeight = 222
-      ClientWidth = 785
+      ClientHeight = 116
+      ClientWidth = 846
       inline mRede: TSynMemo
         Cursor = crIBeam
         Left = 0
@@ -2043,21 +2043,21 @@ object Form1: TForm1
   end
   object Panel1: TPanel
     Left = 0
-    Height = 202
+    Height = 226
     Top = 0
     Width = 850
     Align = alTop
-    ClientHeight = 202
+    ClientHeight = 226
     ClientWidth = 850
     TabOrder = 2
     object gpOperacao: TGroupBox
       Left = 1
-      Height = 200
+      Height = 224
       Top = 1
       Width = 169
       Align = alLeft
       Caption = 'Inicialização'
-      ClientHeight = 180
+      ClientHeight = 204
       ClientWidth = 165
       TabOrder = 0
       object bInicializar: TButton
@@ -2075,10 +2075,10 @@ object Form1: TForm1
         AnchorSideLeft.Control = gpOperacao
         AnchorSideLeft.Side = asrCenter
         Left = 16
-        Height = 23
+        Height = 26
         Top = 8
         Width = 133
-        ItemHeight = 15
+        ItemHeight = 0
         Items.Strings = (
           ''
         )
@@ -2089,7 +2089,7 @@ object Form1: TForm1
       object GroupBox2: TGroupBox
         Left = 5
         Height = 89
-        Top = 86
+        Top = 110
         Width = 155
         Align = alBottom
         BorderSpacing.Around = 5
@@ -2123,27 +2123,27 @@ object Form1: TForm1
     end
     object GroupBox1: TGroupBox
       Left = 170
-      Height = 200
+      Height = 224
       Top = 1
       Width = 679
       Align = alClient
       Caption = 'Configuração'
-      ClientHeight = 180
+      ClientHeight = 204
       ClientWidth = 675
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 0
-        Height = 180
+        Height = 204
         Top = 0
         Width = 675
-        ActivePage = tsRede
+        ActivePage = Impressao
         Align = alClient
-        TabIndex = 3
+        TabIndex = 4
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
-          ClientHeight = 152
-          ClientWidth = 667
+          ClientHeight = 172
+          ClientWidth = 671
           object Label9: TLabel
             Left = 16
             Height = 15
@@ -2272,7 +2272,7 @@ object Form1: TForm1
             Top = 23
             Width = 152
             Anchors = [akTop, akRight]
-            ItemHeight = 15
+            ItemHeight = 0
             Style = csDropDownList
             TabOrder = 2
           end
@@ -2401,8 +2401,8 @@ object Form1: TForm1
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
-          ClientHeight = 152
-          ClientWidth = 610
+          ClientHeight = 172
+          ClientWidth = 671
           object Label11: TLabel
             Left = 12
             Height = 15
@@ -2456,7 +2456,7 @@ object Form1: TForm1
             Height = 23
             Top = 87
             Width = 130
-            ItemHeight = 15
+            ItemHeight = 0
             Style = csDropDownList
             TabOrder = 4
           end
@@ -2473,7 +2473,7 @@ object Form1: TForm1
             Height = 23
             Top = 87
             Width = 134
-            ItemHeight = 15
+            ItemHeight = 0
             Style = csDropDownList
             TabOrder = 5
           end
@@ -2498,15 +2498,15 @@ object Form1: TForm1
             Height = 23
             Top = 87
             Width = 166
-            ItemHeight = 15
+            ItemHeight = 0
             Style = csDropDownList
             TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
-          ClientHeight = 154
-          ClientWidth = 610
+          ClientHeight = 172
+          ClientWidth = 671
           object Label2: TLabel
             Left = 10
             Height = 15
@@ -2542,8 +2542,8 @@ object Form1: TForm1
         end
         object tsRede: TTabSheet
           Caption = 'Rede'
-          ClientHeight = 152
-          ClientWidth = 667
+          ClientHeight = 172
+          ClientWidth = 671
           object gbPPPoE: TGroupBox
             Left = 160
             Height = 105
@@ -2556,30 +2556,30 @@ object Form1: TForm1
             Visible = False
             object lSSID7: TLabel
               Left = 17
-              Height = 15
+              Height = 18
               Top = 4
-              Width = 40
+              Width = 47
               Caption = 'Usuario'
               ParentColor = False
             end
             object edRedeUsuario: TEdit
               Left = 64
-              Height = 23
+              Height = 26
               Top = -4
               Width = 88
               TabOrder = 0
             end
             object lSSID8: TLabel
               Left = 17
-              Height = 15
+              Height = 18
               Top = 34
-              Width = 32
+              Width = 39
               Caption = 'Senha'
               ParentColor = False
             end
             object edRedeSenha: TEdit
               Left = 64
-              Height = 23
+              Height = 26
               Top = 26
               Width = 88
               TabOrder = 1
@@ -2587,85 +2587,85 @@ object Form1: TForm1
           end
           object gbIPFix: TGroupBox
             Left = 160
-            Height = 105
+            Height = 109
             Top = 48
             Width = 289
             Caption = 'IPFIX'
-            ClientHeight = 85
+            ClientHeight = 89
             ClientWidth = 285
             TabOrder = 3
             Visible = False
             object lSSID2: TLabel
               Left = 32
-              Height = 15
+              Height = 18
               Top = 4
-              Width = 10
+              Width = 13
               Caption = 'IP'
               ParentColor = False
             end
             object edRedeIP: TEdit
               Left = 56
-              Height = 23
+              Height = 26
               Top = -4
               Width = 88
               TabOrder = 0
             end
             object lSSID3: TLabel
               Left = 17
-              Height = 15
+              Height = 18
               Top = 34
-              Width = 28
+              Width = 32
               Caption = 'Mask'
               ParentColor = False
             end
             object edRedeMask: TEdit
               Left = 56
-              Height = 23
+              Height = 26
               Top = 26
               Width = 88
               TabOrder = 1
             end
             object lSSID4: TLabel
               Left = 0
-              Height = 15
+              Height = 18
               Top = 64
-              Width = 45
+              Width = 53
               Caption = 'Gateway'
               ParentColor = False
             end
             object edRedeGW: TEdit
               Left = 56
-              Height = 23
+              Height = 26
               Top = 56
               Width = 88
               TabOrder = 2
             end
             object lSSID5: TLabel
               Left = 152
-              Height = 15
+              Height = 18
               Top = 4
-              Width = 29
+              Width = 33
               Caption = 'DNS1'
               ParentColor = False
             end
             object lSSID6: TLabel
               Left = 152
-              Height = 15
+              Height = 18
               Top = 34
-              Width = 29
+              Width = 33
               Caption = 'DNS2'
               ParentColor = False
             end
             object edRedeDNS1: TEdit
               Left = 192
-              Height = 23
+              Height = 26
               Top = -4
               Width = 87
               TabOrder = 3
             end
             object edRedeDNS2: TEdit
               Left = 192
-              Height = 23
+              Height = 26
               Top = 26
               Width = 87
               TabOrder = 4
@@ -2698,43 +2698,43 @@ object Form1: TForm1
           end
           object gbWiFi: TGroupBox
             Left = 8
-            Height = 105
+            Height = 109
             Top = 48
             Width = 144
             Caption = 'WiFi'
-            ClientHeight = 85
+            ClientHeight = 89
             ClientWidth = 140
             TabOrder = 1
             Visible = False
             object lSSID: TLabel
               Left = 8
-              Height = 15
+              Height = 18
               Top = 4
-              Width = 26
+              Width = 33
               Caption = 'SSID:'
               ParentColor = False
             end
             object edRedeSSID: TEdit
               Left = 47
-              Height = 23
+              Height = 26
               Top = -4
               Width = 82
               TabOrder = 0
             end
             object Label24: TLabel
               Left = 8
-              Height = 15
+              Height = 18
               Top = 34
-              Width = 22
+              Width = 27
               Caption = 'Seg:'
               ParentColor = False
             end
             object cbxRedeSeg: TComboBox
               Left = 47
-              Height = 23
+              Height = 26
               Top = 26
               Width = 82
-              ItemHeight = 15
+              ItemHeight = 0
               ItemIndex = 1
               Items.Strings = (
                 'NONE'
@@ -2748,15 +2748,15 @@ object Form1: TForm1
             end
             object lSSID1: TLabel
               Left = 8
-              Height = 15
+              Height = 18
               Top = 64
-              Width = 32
+              Width = 39
               Caption = 'Senha'
               ParentColor = False
             end
             object edRedeCodigo: TEdit
               Left = 47
-              Height = 23
+              Height = 26
               Top = 56
               Width = 82
               TabOrder = 2
@@ -2790,19 +2790,19 @@ object Form1: TForm1
           end
           object gbProxy: TGroupBox
             Left = 455
-            Height = 153
+            Height = 157
             Top = 0
             Width = 150
             Caption = 'Proxy'
-            ClientHeight = 133
+            ClientHeight = 137
             ClientWidth = 146
             TabOrder = 5
             object cbxRedeProxy: TComboBox
               Left = 8
-              Height = 23
+              Height = 26
               Top = 0
               Width = 129
-              ItemHeight = 15
+              ItemHeight = 0
               ItemIndex = 0
               Items.Strings = (
                 '0= Não usa proxy'
@@ -2816,15 +2816,15 @@ object Form1: TForm1
             end
             object lSSID9: TLabel
               Left = 24
-              Height = 15
+              Height = 18
               Top = 32
-              Width = 10
+              Width = 13
               Caption = 'IP'
               ParentColor = False
             end
             object edRedeProxyIP: TEdit
               Left = 49
-              Height = 23
+              Height = 26
               Top = 28
               Width = 88
               Enabled = False
@@ -2832,23 +2832,23 @@ object Form1: TForm1
             end
             object lSSID10: TLabel
               Left = 11
-              Height = 15
+              Height = 18
               Top = 62
-              Width = 28
+              Width = 32
               Caption = 'Porta'
               ParentColor = False
             end
             object lSSID11: TLabel
               Left = 3
-              Height = 15
+              Height = 18
               Top = 88
-              Width = 40
+              Width = 47
               Caption = 'Usuario'
               ParentColor = False
             end
             object edRedeProxyUser: TEdit
               Left = 49
-              Height = 23
+              Height = 26
               Top = 80
               Width = 88
               Enabled = False
@@ -2856,15 +2856,15 @@ object Form1: TForm1
             end
             object lSSID12: TLabel
               Left = 8
-              Height = 15
+              Height = 18
               Top = 114
-              Width = 32
+              Width = 39
               Caption = 'Senha'
               ParentColor = False
             end
             object edRedeProxySenha: TEdit
               Left = 49
-              Height = 23
+              Height = 26
               Top = 106
               Width = 88
               Enabled = False
@@ -2872,7 +2872,7 @@ object Form1: TForm1
             end
             object edRedeProxyPorta: TSpinEdit
               Left = 49
-              Height = 23
+              Height = 26
               Top = 54
               Width = 88
               Enabled = False
@@ -2883,103 +2883,101 @@ object Form1: TForm1
         end
         object Impressao: TTabSheet
           Caption = 'Impressao'
-          ClientHeight = 152
-          ClientWidth = 667
+          ClientHeight = 172
+          ClientWidth = 671
           object GroupBox3: TGroupBox
-            Left = 0
-            Height = 152
-            Top = 0
+            Left = -2
+            Height = 148
+            Top = 22
             Width = 345
-            Align = alClient
-            Caption = 'Fortes'
-            ClientHeight = 132
+            ClientHeight = 144
             ClientWidth = 341
             TabOrder = 2
             object seLargura: TSpinEdit
               Left = 8
-              Height = 23
-              Top = 14
+              Height = 26
+              Top = 16
               Width = 64
               MaxValue = 9999
               TabOrder = 0
             end
             object Label19: TLabel
               Left = 8
-              Height = 15
+              Height = 18
               Top = 0
-              Width = 40
+              Width = 46
               Caption = 'Largura'
               ParentColor = False
             end
             object Label20: TLabel
               Left = 96
-              Height = 15
+              Height = 18
               Top = 0
-              Width = 27
+              Width = 33
               Caption = 'Topo'
               ParentColor = False
             end
             object seMargemTopo: TSpinEdit
               Left = 96
-              Height = 23
-              Top = 14
+              Height = 26
+              Top = 16
               Width = 64
               MaxValue = 9999
               TabOrder = 1
             end
             object Label21: TLabel
               Left = 8
-              Height = 15
+              Height = 18
               Top = 48
-              Width = 34
+              Width = 38
               Caption = 'Fundo'
               ParentColor = False
             end
             object seMargemFundo: TSpinEdit
               Left = 8
-              Height = 23
-              Top = 62
+              Height = 26
+              Top = 66
               Width = 64
               MaxValue = 9999
               TabOrder = 2
             end
             object Label22: TLabel
               Left = 96
-              Height = 15
+              Height = 18
               Top = 48
-              Width = 48
+              Width = 58
               Caption = 'Esquerda'
               ParentColor = False
             end
             object seMargemEsquerda: TSpinEdit
               Left = 96
-              Height = 23
-              Top = 62
+              Height = 26
+              Top = 66
               Width = 64
               MaxValue = 9999
               TabOrder = 3
             end
             object Label23: TLabel
               Left = 184
-              Height = 15
+              Height = 18
               Top = 48
-              Width = 34
+              Width = 39
               Caption = 'Direita'
               ParentColor = False
             end
             object seMargemDireita: TSpinEdit
               Left = 184
-              Height = 23
-              Top = 62
+              Height = 26
+              Top = 66
               Width = 64
               MaxValue = 9999
               TabOrder = 4
             end
             object bImpressora: TButton
               Left = 8
-              Height = 25
-              Top = 96
-              Width = 122
+              Height = 28
+              Top = 102
+              Width = 125
               AutoSize = True
               Caption = 'Definir Impressora'
               OnClick = bImpressoraClick
@@ -2987,74 +2985,73 @@ object Form1: TForm1
             end
             object lImpressora: TLabel
               Left = 136
-              Height = 15
-              Top = 104
-              Width = 104
+              Height = 18
+              Top = 110
+              Width = 125
               Caption = 'Impresssora Default'
               ParentColor = False
             end
             object cbPreview: TCheckBox
               Left = 192
-              Height = 19
-              Top = 24
-              Width = 61
+              Height = 22
+              Top = 26
+              Width = 72
               Caption = 'Preview'
               TabOrder = 6
             end
           end
           object GroupBox4: TGroupBox
             Left = 345
-            Height = 152
-            Top = 0
+            Height = 148
+            Top = 22
             Width = 322
-            Align = alRight
-            ClientHeight = 132
+            ClientHeight = 144
             ClientWidth = 318
             TabOrder = 3
             object Label25: TLabel
-              Left = 153
-              Height = 30
-              Top = 73
-              Width = 34
+              Left = 155
+              Height = 36
+              Top = 58
+              Width = 39
               Caption = 'Linhas'#13#10'Pular'
               ParentColor = False
             end
             object seLinhasPular: TSpinEdit
-              Left = 153
-              Height = 23
-              Top = 104
+              Left = 155
+              Height = 26
+              Top = 94
               Width = 41
               MaxValue = 255
               TabOrder = 0
             end
             object Label26: TLabel
-              Left = 80
-              Height = 30
-              Top = 73
-              Width = 42
+              Left = 82
+              Height = 36
+              Top = 58
+              Width = 50
               Caption = 'Espaços'#13#10'Linhas'
               ParentColor = False
             end
             object seEspLinhas: TSpinEdit
-              Left = 81
-              Height = 23
-              Top = 104
+              Left = 82
+              Height = 26
+              Top = 94
               Width = 41
               MaxValue = 255
               TabOrder = 1
             end
             object Label27: TLabel
-              Left = 8
-              Height = 15
-              Top = 88
-              Width = 43
+              Left = 10
+              Height = 18
+              Top = 73
+              Width = 49
               Caption = 'Colunas'
               ParentColor = False
             end
             object seColunas: TSpinEdit
-              Left = 8
-              Height = 23
-              Top = 104
+              Left = 10
+              Height = 26
+              Top = 94
               Width = 41
               MaxValue = 999
               MinValue = 1
@@ -3062,62 +3059,66 @@ object Form1: TForm1
               Value = 48
             end
             object Label28: TLabel
-              Left = 10
-              Height = 15
-              Top = 22
-              Width = 41
+              Left = 8
+              Height = 18
+              Top = 4
+              Width = 46
               Caption = 'Modelo'
               ParentColor = False
             end
             object cbxModeloPosPrinter: TComboBox
-              Left = 8
-              Height = 23
-              Top = 40
+              Left = 6
+              Height = 30
+              Top = 24
               Width = 145
-              ItemHeight = 15
+              ItemHeight = 0
               OnChange = cbxModeloChange
               Style = csDropDownList
               TabOrder = 3
             end
             object Label7: TLabel
-              Left = 160
-              Height = 15
-              Top = 16
-              Width = 28
+              Left = 158
+              Height = 18
+              Top = 4
+              Width = 32
               Caption = 'Porta'
               ParentColor = False
             end
             object cbxPorta: TComboBox
-              Left = 160
-              Height = 23
-              Top = 40
+              Left = 158
+              Height = 28
+              Top = 24
               Width = 128
-              ItemHeight = 15
+              ItemHeight = 0
               TabOrder = 4
             end
             object Label29: TLabel
-              Left = 216
-              Height = 15
-              Top = 88
-              Width = 60
+              Left = 218
+              Height = 18
+              Top = 73
+              Width = 67
               Caption = 'Pag.codigo'
               ParentColor = False
             end
             object cbxPagCodigo: TComboBox
-              Left = 216
-              Height = 23
+              Left = 218
+              Height = 30
               Hint = 'Pagina de código usada pela Impressora POS'
-              Top = 104
+              Top = 94
               Width = 93
-              ItemHeight = 15
+              ItemHeight = 0
               Style = csDropDownList
               TabOrder = 5
             end
             object btSerial: TSpeedButton
-              Left = 288
-              Height = 22
-              Top = 41
-              Width = 23
+              AnchorSideTop.Control = cbxPorta
+              AnchorSideBottom.Control = cbxPorta
+              AnchorSideBottom.Side = asrBottom
+              Left = 286
+              Height = 28
+              Top = 24
+              Width = 25
+              Anchors = [akTop, akLeft, akBottom]
               Glyph.Data = {
                 36030000424D3603000000000000360000002800000010000000100000000100
                 1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -3149,33 +3150,43 @@ object Form1: TForm1
               OnClick = btSerialClick
             end
             object cbImprimir1Linha: TCheckBox
-              Left = 160
-              Height = 19
-              Top = -4
-              Width = 148
+              Left = 8
+              Height = 22
+              Top = 122
+              Width = 166
               Caption = 'Imprmir Item em 1 linha'
               TabOrder = 6
             end
           end
           object cbUsarFortes: TRadioButton
-            Left = 248
-            Height = 19
-            Top = 0
-            Width = 78
+            AnchorSideLeft.Control = GroupBox3
+            AnchorSideLeft.Side = asrCenter
+            Left = 113
+            Height = 26
+            Top = -2
+            Width = 115
             Caption = 'Usar Fortes'
-            Checked = True
+            Font.Height = -16
+            Font.Style = [fsBold]
             OnClick = cbUsarFortesClick
+            ParentFont = False
             TabOrder = 0
-            TabStop = True
           end
           object cbUsarEscPos: TRadioButton
-            Left = 352
-            Height = 19
-            Top = 0
-            Width = 85
+            AnchorSideLeft.Control = GroupBox4
+            AnchorSideLeft.Side = asrCenter
+            Left = 446
+            Height = 26
+            Top = -2
+            Width = 120
             Caption = 'Usar EscPOS'
+            Checked = True
+            Font.Height = -16
+            Font.Style = [fsBold]
             OnClick = cbUsarEscPosClick
+            ParentFont = False
             TabOrder = 1
+            TabStop = True
           end
         end
       end
@@ -3183,8 +3194,8 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 23
-    Top = 397
+    Height = 22
+    Top = 380
     Width = 850
     Panels = <    
       item

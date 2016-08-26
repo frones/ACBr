@@ -82,7 +82,7 @@ type
     procedure GerarPagamentos(Resumido: Boolean = False);
     procedure GerarAreaMensagemFiscal;
     procedure GerarInformacoesConsumidor;
-    procedure GerarInformacoesQRCode;
+    procedure GerarInformacoesQRCode(Cancelamento: Boolean = False);
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
 
@@ -424,11 +424,17 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarInformacoesQRCode;
+procedure TACBrNFeDANFeESCPOS.GerarInformacoesQRCode(Cancelamento: Boolean = False);
 var
   qrcode: AnsiString;
   ConfigQRCodeErrorLevel: Integer;
 begin
+  if Cancelamento then
+  begin
+    FPosPrinter.Buffer.Add('</fn></linha_simples>');
+    FPosPrinter.Buffer.Add('</ce>Consulta via leitor de QR Code');
+  end;
+
   if EstaVazio(Trim(FpNFe.infNFeSupl.qrCode)) then
     qrcode := TACBrNFe(ACBrNFe).GetURLQRCode(
       FpNFe.ide.cUF,
@@ -448,6 +454,7 @@ begin
   FPosPrinter.Buffer.Add( '<qrcode_error>0</qrcode_error>'+
                           '<qrcode>'+qrcode+'</qrcode>'+
                           '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
+
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarRodape;
@@ -600,6 +607,7 @@ begin
   GerarDadosEvento;
   GerarInformacoesConsumidor;
   GerarObservacoesEvento;
+  GerarInformacoesQRCode;
   GerarRodape;
 
   FPosPrinter.Imprimir;

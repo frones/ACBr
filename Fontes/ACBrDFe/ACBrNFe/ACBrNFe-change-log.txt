@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/08/2016
+-- UrlQrCode - ACBrNFe --
+[-] Remoção do OnlyNumber ao assinalar o valor para cDest na geração da URL QrCode
+    alguns documentos de estrangeiros possuem letras.
+
 23/08/2016
 -- diversos --
 [+] Criada a unit pcnNFeConsts que contem as constantes de mensagens usadas na

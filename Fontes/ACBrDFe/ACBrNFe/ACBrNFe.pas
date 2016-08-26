@@ -527,7 +527,7 @@ var
 begin
   urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
   idNFe := OnlyNumber(AChaveNFe);
-  cDest := OnlyNumber(Destinatario);
+  cDest := Trim(Destinatario);
 
   // Passo 1
   sdhEmi_HEX := AsciiToHex(DateTimeTodh(DataHoraEmissao) +

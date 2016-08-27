@@ -234,7 +234,7 @@ begin
       begin
         Gerador.wCampoNFSe(tcStr, '', 'TipoLogradouro', 001, 120, 1, NFSe.Tomador.Endereco.TipoLogradouro, '');
         Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro ', 001, 120, 1, NFSe.Tomador.Endereco.Endereco, '');
-        Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 1, NFSe.Tomador.Endereco.Numero, '');
+        Gerador.wCampoNFSe(tcStr, '#40', 'Numero     ', 001, 010, 0, NFSe.Tomador.Endereco.Numero, '');
         Gerador.wCampoNFSe(tcStr, '#41', 'Complemento', 001, 300, 0, NFSe.Tomador.Endereco.Complemento, '');
         Gerador.wCampoNFSe(tcStr, '#42', 'Bairro     ', 001, 120, 0, NFSe.Tomador.Endereco.Bairro, '')
       end

@@ -2156,6 +2156,13 @@ begin
           FormatFloat('00000', StrToIntDef(Copy(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 3, 5), 0));
 
     NFSe.PrestadorServico.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0));
+
+    if Leitor.rExtrai(2, 'Contato') <> '' then
+    begin
+      NFSe.PrestadorServico.Contato.Telefone := Leitor.rCampo(tcStr, 'Telefone');
+      NFSe.PrestadorServico.Contato.Email    := Leitor.rCampo(tcStr, 'Email');
+    end;
+
   end;
 
   if (Leitor.rExtrai(1, 'IdentificacaoPrestador') <> '') then
@@ -2173,12 +2180,6 @@ begin
         NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := Leitor.rCampo(tcStr, 'Cnpj');
     end;
 
-    if Leitor.rExtrai(2, 'Contato') <> '' then
-    begin
-      NFSe.PrestadorServico.Contato.Telefone := Leitor.rCampo(tcStr, 'Telefone');
-      NFSe.PrestadorServico.Contato.Email    := Leitor.rCampo(tcStr, 'Email');
-    end;
-    
   end;
 
   NFSe.Prestador.Cnpj := NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj;

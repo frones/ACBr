@@ -1753,7 +1753,7 @@ begin
       TagElemento := 'LoteRps';
     end;
 
-    if (TagElemento <> '') and not (Provedor in [proBetha, proIssDSF]) then
+    if (TagElemento <> '') and not (Provedor in [proBetha, proBethav2, proIssDSF]) then
       TagElemento := FPrefixo3 + TagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
@@ -2307,7 +2307,7 @@ begin
       TagGrupo := 'GerarNfseEnvio';
     end;
 
-    TagGrupo := FPrefixo3 + TagGrupo;
+      TagGrupo := FPrefixo3 + TagGrupo;
 
     case FProvedor of
       proBHISS:       TagElemento := 'LoteRps';
@@ -2317,7 +2317,7 @@ begin
       TagElemento := 'Rps';
     end;
 
-    if FProvedor <> proEGoverneISS then
+    if not (FProvedor in [proEGoverneISS]) then
       TagElemento := FPrefixo3 + TagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS or FPConfiguracoesNFSe.Geral.ConfigAssinar.RpsGerar then

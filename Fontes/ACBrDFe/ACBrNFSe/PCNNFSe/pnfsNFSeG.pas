@@ -337,7 +337,7 @@ begin
     aIdentificador := '';
 
   // Redefine o Profixo 3 ======================================================
-  if Provedor = proBetha then
+  if Provedor in [proBetha, proBethav2] then
     Prefixo3 := '';
 end;
 

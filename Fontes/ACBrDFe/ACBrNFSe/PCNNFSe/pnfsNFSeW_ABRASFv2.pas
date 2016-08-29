@@ -621,7 +621,7 @@ begin
   if not (FProvedor in [proSystemPro]) then
   begin
     case FProvedor of
-      proABase, proActcon, proAgili, proCoplan, proEReceita, proFiorilli,
+      proABase, proActcon, proAgili, proBethav2, proCoplan, proEReceita, proFiorilli,
       proGovDigital, proISSDigital, proISSe, proMitra, proNEAInformatica,
       proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP,
       proVirtual, proVersaTecnologia,
@@ -656,10 +656,7 @@ begin
         proSystemPro, proNEAInformatica,
         proEReceita: Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
-        proABase,
-        proGovDigital,
-        proNotaInteligente,
-        proPronimv2,
+        proABase, proBethav2, proGovDigital, proNotaInteligente, proPronimv2,
         proVersaTecnologia : Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos:  Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
@@ -669,7 +666,7 @@ begin
       end;
     end
     else begin
-      if FProvedor in [proActcon, proCoplan, proEReceita, proFiorilli,
+      if FProvedor in [proActcon, proBethav2, proCoplan, proEReceita, proFiorilli,
                        proGovDigital, proISSDigital, proISSe, proMitra,
                        proNEAInformatica, proNotaInteligente, proPronimv2,
                        proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,

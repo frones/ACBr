@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2016
+-- ACBrNFeConfiguracoes --
+[*] Alterado o valor padrão da propriedade: IncluirQRCodeXMLNFCe para True, pois
+    ao gerar a NFC-e deve-se gerar a TAG qrCode no XML.
+    por: Italo Jurisato Junior
+
 26/08/2016
 -- UrlQrCode - ACBrNFe --
 [-] Remoção do OnlyNumber ao assinalar o valor para cDest na geração da URL QrCode

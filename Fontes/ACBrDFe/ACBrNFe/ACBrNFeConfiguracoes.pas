@@ -73,7 +73,7 @@ type
       read FAtualizarXMLCancelado write FAtualizarXMLCancelado default False;
     property IdCSC: String read FIdCSC write SetIdCSC;
     property CSC: String read FCSC write SetCSC;
-    property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe;
+    property IncluirQRCodeXMLNFCe: Boolean read FIncluirQRCodeXMLNFCe write FIncluirQRCodeXMLNFCe default True;
   end;
 
   { TDownloadConfNFe }
@@ -218,7 +218,7 @@ begin
   FAtualizarXMLCancelado := False;
   FIdCSC := '';
   FCSC := '';
-  FIncluirQRCodeXMLNFCe := False;
+  FIncluirQRCodeXMLNFCe := True;
 end;
 
 procedure TGeralConfNFe.Assign(DeGeralConfNFe: TGeralConfNFe);

@@ -175,9 +175,10 @@ begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
   FPosPrinter.Buffer.Add(Cmd + '</ce><c><n>' + FpNFe.Emit.xNome + ' ' + FormatarCNPJ(FpNFe.Emit.CNPJCPF) + '</n>');
+  if (Trim(FpNFe.Emit.xFant) <> '') then
+     FPosPrinter.Buffer.Add(Cmd + '</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
 
-  FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(IIf((Trim(FpNFe.Emit.xFant) <> ''),'</ce><c><n>' + FpNFe.Emit.xFant + ' </n> - ','') +
-    Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
+  FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xCpl) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xBairro) +  ' ' +
@@ -455,6 +456,15 @@ begin
                           '<qrcode>'+qrcode+'</qrcode>'+
                           '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
 
+
+  if Cancelamento then
+  begin
+    FPosPrinter.Buffer.Add(ACBrStr('<c>Protocolo de Autorização'));
+    FPosPrinter.Buffer.Add('<c>'+Trim(FpNFe.procNFe.nProt) + ' ' +
+       IfThen(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto),
+              '') + '</fn>');
+    FPosPrinter.Buffer.Add('</linha_simples>');
+  end;
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarRodape;
@@ -607,7 +617,7 @@ begin
   GerarDadosEvento;
   GerarInformacoesConsumidor;
   GerarObservacoesEvento;
-  GerarInformacoesQRCode;
+  GerarInformacoesQRCode(True);
   GerarRodape;
 
   FPosPrinter.Imprimir;

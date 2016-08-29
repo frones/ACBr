@@ -347,6 +347,11 @@ begin
       lTitLei12741.Caption := lTitLei12741.Caption +' '+ FormatFloatBr(Total.ICMSTot.vTotTrib, '#,###,##0.00')
     else
       lTitLei12741.Visible := False;
+
+    if InfAdic.infCpl <> '' then
+      lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) )
+    else
+      lObservacoes.Visible := False;
   end;
 end;
 

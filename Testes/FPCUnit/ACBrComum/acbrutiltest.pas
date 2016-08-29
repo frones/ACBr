@@ -105,6 +105,7 @@ type
     procedure As1526Extended;
     procedure As113Extended;
     procedure As199Double;
+    procedure As9999899Double;
     procedure As4386Double;
     procedure As1526Double;
     procedure As113Double;
@@ -3127,7 +3128,11 @@ begin
   {$IfDef FPC}
   UTF8Str := CP1252ToUTF8('аимсз');  // Nota: essa Unit usa CP1252
   {$Else}
-  UTF8Str := UTF8Encode('аимсз');
+   {$IFDEF UNICODE}
+    UTF8Str := 'аимсз';
+   {$ELSE}
+    UTF8Str := UTF8Encode('аимсз');
+   {$ENDIF}
   {$EndIf}
 
   CheckEquals('     '+UTF8Str, PadLeft(UTF8Str, 10));
@@ -3412,6 +3417,14 @@ var
 begin
   VValor := 1 * 1.9985;
   CheckEquals(1.998, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As9999899Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 99998.999658800007;
+  CheckEquals(99998.99, TruncTo( VValor, 2 ), 0.0001);
 end;
 
 procedure TruncToTest.As199Extended;

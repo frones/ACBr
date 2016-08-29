@@ -515,6 +515,7 @@ begin
   GerarAreaMensagemFiscal;
   GerarInformacoesConsumidor;
   GerarInformacoesQRCode;
+  GerarMensagemInteresseContribuinte;
   GerarTotalTributos;
   GerarRodape;
 

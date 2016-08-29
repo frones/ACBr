@@ -47,7 +47,7 @@ const
 
 type
 
-  TACBrECFVirtualSATQuandoAbrirDocumento = procedure(CFe: TCFe) of object;
+  TACBrECFVirtualSATQuandoAbrirFecharDocumento = procedure(CFe: TCFe) of object;
 
   TACBrECFVirtualSATQuandoVenderItem = procedure(Det: TDetCollectionItem) of object;
 
@@ -58,15 +58,18 @@ type
   TACBrECFVirtualSAT = class(TACBrECFVirtualPrinter)
   private
     function GetACBrSAT: TACBrSAT;
-    function GetQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirDocumento;
 
-      function GetQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
-    function GetQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
+    function GetQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
     procedure SetQuandoAbrirDocumento(
-      AValue: TACBrECFVirtualSATQuandoAbrirDocumento);
+      AValue: TACBrECFVirtualSATQuandoAbrirFecharDocumento);
+    function GetQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
+    procedure SetQuandoVenderItem(AValue: TACBrECFVirtualSATQuandoVenderItem);
+    function GetQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
+    procedure SetQuandoFecharDocumento(
+      AValue: TACBrECFVirtualSATQuandoAbrirFecharDocumento);
+    function GetQuandoFecharDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
     procedure SetQuandoEfetuarPagamento(
       AValue: TACBrECFVirtualSATQuandoEfetuarPagamento);
-    procedure SetQuandoVenderItem(AValue: TACBrECFVirtualSATQuandoVenderItem);
     procedure SetSAT(AValue: TACBrSAT);
   protected
     procedure CreateVirtualClass; override;
@@ -74,12 +77,14 @@ type
   published
     property ACBrSAT: TACBrSAT read GetACBrSAT write SetSAT;
 
-    property QuandoAbrirDocumento : TACBrECFVirtualSATQuandoAbrirDocumento
+    property QuandoAbrirDocumento : TACBrECFVirtualSATQuandoAbrirFecharDocumento
       read GetQuandoAbrirDocumento write SetQuandoAbrirDocumento ;
     property QuandoVenderItem : TACBrECFVirtualSATQuandoVenderItem
       read GetQuandoVenderItem write SetQuandoVenderItem ;
     property QuandoEfetuarPagamento : TACBrECFVirtualSATQuandoEfetuarPagamento
       read GetQuandoEfetuarPagamento write SetQuandoEfetuarPagamento ;
+    property QuandoFecharDocumento : TACBrECFVirtualSATQuandoAbrirFecharDocumento
+      read GetQuandoFecharDocumento write SetQuandoFecharDocumento ;
   end;
 
   { TACBrECFVirtualSATClass }
@@ -88,12 +93,13 @@ type
   private
     fsACBrSAT: TACBrSAT;
     fsEhVenda: Boolean;
-
-    fsQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirDocumento;
-    fsQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
-    fsQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
     fsNomeArqTempXML: String;
     fsECF: TACBrECF;
+
+    fsQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
+    fsQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
+    fsQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
+    fsQuandoFecharDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
 
     function AdivinharCodigoMP( const DescricaoPagto: String ): TpcnCodigoMP;
     function GetACBrECF: TACBrECF;
@@ -124,12 +130,14 @@ type
     Constructor Create( AECFVirtualPrinter : TACBrECFVirtualPrinter ); override;
     property ACBrSAT: TACBrSAT read fsACBrSAT write fsACBrSAT;
 
-    property QuandoAbrirDocumento : TACBrECFVirtualSATQuandoAbrirDocumento
+    property QuandoAbrirDocumento : TACBrECFVirtualSATQuandoAbrirFecharDocumento
       read fsQuandoAbrirDocumento write fsQuandoAbrirDocumento ;
     property QuandoVenderItem : TACBrECFVirtualSATQuandoVenderItem
       read fsQuandoVenderItem write fsQuandoVenderItem ;
     property QuandoEfetuarPagamento : TACBrECFVirtualSATQuandoEfetuarPagamento
       read fsQuandoEfetuarPagamento write fsQuandoEfetuarPagamento ;
+    property QuandoFecharDocumento:TACBrECFVirtualSATQuandoAbrirFecharDocumento
+      read fsQuandoFecharDocumento write fsQuandoFecharDocumento;
   end;
 
 
@@ -186,15 +194,26 @@ begin
   end;
 end;
 
-function TACBrECFVirtualSAT.GetQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirDocumento;
+function TACBrECFVirtualSAT.GetQuandoAbrirDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
 begin
   Result := TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoAbrirDocumento ;
 end;
 
 procedure TACBrECFVirtualSAT.SetQuandoAbrirDocumento(
-  AValue: TACBrECFVirtualSATQuandoAbrirDocumento);
+  AValue: TACBrECFVirtualSATQuandoAbrirFecharDocumento);
 begin
   TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoAbrirDocumento := AValue ;
+end;
+
+function TACBrECFVirtualSAT.GetQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
+begin
+  Result := TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoVenderItem ;
+end;
+
+procedure TACBrECFVirtualSAT.SetQuandoVenderItem(
+  AValue: TACBrECFVirtualSATQuandoVenderItem);
+begin
+  TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoVenderItem := AValue ;
 end;
 
 function TACBrECFVirtualSAT.GetQuandoEfetuarPagamento: TACBrECFVirtualSATQuandoEfetuarPagamento;
@@ -208,16 +227,17 @@ begin
   TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoEfetuarPagamento := AValue ;
 end;
 
-function TACBrECFVirtualSAT.GetQuandoVenderItem: TACBrECFVirtualSATQuandoVenderItem;
+function TACBrECFVirtualSAT.GetQuandoFecharDocumento: TACBrECFVirtualSATQuandoAbrirFecharDocumento;
 begin
-  Result := TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoVenderItem ;
+  Result := TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoFecharDocumento ;
 end;
 
-procedure TACBrECFVirtualSAT.SetQuandoVenderItem(
-  AValue: TACBrECFVirtualSATQuandoVenderItem);
+procedure TACBrECFVirtualSAT.SetQuandoFecharDocumento(
+  AValue: TACBrECFVirtualSATQuandoAbrirFecharDocumento);
 begin
-  TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoVenderItem := AValue ;
+  TACBrECFVirtualSATClass( fpECFVirtualClass ).QuandoFecharDocumento := AValue ;
 end;
+
 
 { TACBrECFVirtualSATClass }
 
@@ -472,12 +492,15 @@ begin
 
       // apaga os itens cancelados
       for I := CFe.Det.Count-1 downto 0 do
-       if CFe.Det.Items[i].Prod.qCom=0 then
+        if CFe.Det.Items[i].Prod.qCom=0 then
           CFe.Det.Delete(I);
 
       // refaz a sequencia
       for I := 0 to CFe.Det.Count -1 do
-          CFe.Det.Items[i].nItem := I+1;
+        CFe.Det.Items[i].nItem := I+1;
+
+      if Assigned(fsQuandoFecharDocumento) then
+        fsQuandoFecharDocumento(CFe);
 
       EnviarDadosVenda;
 

@@ -47,11 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/08/2016
+-- ACBrECFVirtualSAT --
+[+] Adicionado o evento "QuandoFecharDocumento",
+[*] Modificado o tipo de evento: "TACBrECFVirtualSATQuandoAbrirDocumento" para
+    "TACBrECFVirtualSATQuandoAbrirFecharDocumento"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32025
+    (por: DSA e Amarildo)
+
 Data: 25/08/2016
 --ACBrSATExtratoFortesFr
-[-] Correção para quando é usado a diretiva NOGUI e o componente de imagem não é instanciado
-		http://www.projetoacbr.com.br/forum/topic/10030-grande-commit-mudando-console-para-nogui/?do=findComment&comment=211528
-		por : Juliomar Marchetti
+[-] Correção para quando é usado a diretiva NOGUI e o componente de imagem não é
+    instanciado
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=10030
+    (por : Juliomar Marchetti)
 		
 Data: 13/07/2016
 -- ACBrSAT --

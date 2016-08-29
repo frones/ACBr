@@ -128,7 +128,6 @@ function TruncFix( X : Double ) : Integer ;
 function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
   const Delta: Double = 0.00001 ): Double;
 function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
-function SimpleTruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
 function ComparaValor(const ValorUm, ValorDois : Double; const Tolerancia : Double = 0 ): Integer;
@@ -601,27 +600,18 @@ end;
 function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
 var
  VFrac : Double;
+ Pow: Extended;
 begin
   Result := AValue;
   VFrac  := Frac(Result);
 
   if VFrac <> 0 then
   begin
-    VFrac  := SimpleTruncTo( VFrac, -Abs(Digits) );
+    Pow    := intpower(10, abs(Digits) );
+    VFrac  := TruncFix(VFrac * Pow);
+    VFrac  := VFrac / Pow;
     Result := Int(Result) + VFrac  ;
   end;
-end;
-
-function SimpleTruncTo(const AValue: Double; const Digits: TRoundToRange
-  ): Double;
-var
-  LFactor: Extended;
-begin
-  LFactor := IntPower(10.0, Digits);
-  if AValue < 0 then
-    Result := Int((AValue / LFactor) - 0.05) * LFactor
-  else
-    Result := Int((AValue / LFactor) + 0.05) * LFactor;
 end;
 
 {-----------------------------------------------------------------------------

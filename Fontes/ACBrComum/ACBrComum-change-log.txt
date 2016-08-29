@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 29/08/2016
+-- ACBrUtil --
+[-] Correção no método "TruncTo", onde poderia ocorrer falha em valores
+    específicos... Nova Implementação, baseada em "TruncFix".
+    Novo teste adicionado em "ACBrComumTestCases"  (por: DSA)
+
 Data: 25/08/2016
 -- ACBrUtil --
 [*] Ajuste para os métodos "FunctionDetect" e "UnLoadLibrary" funcionarem

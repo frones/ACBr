@@ -83,19 +83,19 @@ type
   { TACBrNFeDANFCeFortesFr }
 
   TACBrNFeDANFCeFortesFr = class(TForm)
-    lFonteTributos: TRLLabel;
+    lConsumidor: TRLMemo;
     lNomeFantasia: TRLMemo;
     lNomeFantasiaCanc: TRLMemo;
+    lProtocolo: TRLLabel;
     lRazaoSocial: TRLMemo;
     lRazaoSocialCanc: TRLMemo;
+    lTitLei12741: TRLLabel;
+    lMensagemFiscal: TRLMemo;
     rlVenda: TRLReport;
     rlbRodape: TRLBand;
-    RLDraw2: TRLDraw;
-    lConsultaQRCode: TRLLabel;
     imgQRCode: TRLImage;
     pGap05: TRLPanel;
     lSistema: TRLLabel;
-    lProtocolo: TRLLabel;
     pGap8: TRLPanel;
     rlsbDetItem: TRLSubDetail;
     rlbDetItem: TRLBand;
@@ -125,47 +125,26 @@ type
     lQtdTotalItensVal: TRLLabel;
     lTitFormaPagto: TRLLabel;
     lTitValorPago: TRLLabel;
-    RLDraw7: TRLDraw;
-    rlbLei12741: TRLBand;
-    RLDraw6: TRLDraw;
-    lTitLei12741: TRLLabel;
-    lTitLei12742: TRLLabel;
-    lValLei12741: TRLLabel;
     rlbsCabecalho: TRLSubDetail;
     rlbMsgDANFe: TRLBand;
     lMsgDANFCe: TRLLabel;
-    lMsgDANFCe1: TRLLabel;
     lMsgDANFCe2: TRLLabel;
     rlbDadosCliche: TRLBand;
     pLogoeCliche: TRLPanel;
-    lEmitCNPJ_IE_IM: TRLLabel;
     lEndereco: TRLMemo;
-    RLDraw1: TRLDraw;
     imgLogo: TRLImage;
     rlbLegenda: TRLBand;
-    RLDraw4: TRLDraw;
     lCPF_CNPJ1: TRLLabel;
-    RLDraw5: TRLDraw;
     rlbConsumidor: TRLBand;
-    RLDraw10: TRLDraw;
-    lTitConsumidor: TRLLabel;
     lEnderecoConsumidor: TRLMemo;
-    lCPF_CNPJ_ID: TRLMemo;
     rlbMensagemFiscal: TRLBand;
-    RLDraw12: TRLDraw;
-    lMensagemFiscal: TRLLabel;
     lChaveDeAcesso: TRLLabel;
-    lTitChaveAcesso: TRLLabel;
     lNumeroSerie: TRLLabel;
     lTitConsulteChave: TRLMemo;
-    rlbMensagemContribuinte: TRLBand;
-    lMensagemContribuinte: TRLLabel;
-    RLDraw3: TRLDraw;
     lObservacoes: TRLMemo;
     RLHTMLFilter1: TRLHTMLFilter;
     RLPDFFilter1: TRLPDFFilter;
     lEmissaoVia: TRLLabel;
-    RLDraw8: TRLDraw;
     lCancelada: TRLLabel;
     rlCancelamento: TRLReport;
     rlbRodapeCanc: TRLBand;
@@ -213,6 +192,7 @@ type
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbConsumidorBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlbMensagemFiscalBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure rlbRodapeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlbLegendaBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -224,13 +204,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure rlVendaDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
-    procedure rlbLei12741BeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlsbDetItemDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlsbPagamentosDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
-    procedure rlbMensagemContribuinteBeforePrint(Sender: TObject;
-      var PrintIt: Boolean);
     procedure lSistemaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure rlbDetItemBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -316,21 +293,24 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     PrintIt := True ;
+    lMensagemFiscal.Lines.Clear;
 
     if Ide.tpAmb = taHomologacao then
     begin
       if Ide.tpEmis <> teNormal then
-        lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA - AMB. HOMOLOG. SEM VALOR FISCAL')
+        lMensagemFiscal.Lines.Text := ACBrStr('EMITIDA EM CONTINGÊNCIA - AMB. HOMOLOG. SEM VALOR FISCAL')
       else
-        lMensagemFiscal.Caption := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
+        lMensagemFiscal.Lines.Text := ACBrStr( 'EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL');
     end
     else
     begin
       if Ide.tpEmis <> teNormal then
-        lMensagemFiscal.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
+        lMensagemFiscal.Lines.Text := ACBrStr('EMITIDA EM CONTINGÊNCIA')
       else
-        lMensagemFiscal.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+        lMensagemFiscal.Lines.Clear;
     end;
+
+    lMensagemFiscal.Visible := (lMensagemFiscal.Lines.Text <> '');
 
     lNumeroSerie.Caption := ACBrStr(
       'Número ' + IntToStrZero(Ide.nNF, 9) + ' - ' +
@@ -358,6 +338,18 @@ begin
   end;
 end;
 
+procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  with ACBrNFeDANFCeFortes.FpNFe do
+  begin
+    if (Total.ICMSTot.vTotTrib > 0) then
+      lTitLei12741.Caption := lTitLei12741.Caption +' '+ FormatFloatBr(Total.ICMSTot.vTotTrib, '#,###,##0.00')
+    else
+      lTitLei12741.Visible := False;
+  end;
+end;
+
 procedure TACBrNFeDANFCeFortesFr.rlbMensagemFiscalCancBeforePrint(
   Sender: TObject; var PrintIt: Boolean);
 begin
@@ -374,7 +366,7 @@ begin
       if Ide.tpEmis <> teNormal then
         lMensagemFiscalCanc.Caption := ACBrStr('EMITIDA EM CONTINGÊNCIA')
       else
-        lMensagemFiscalCanc.Caption := ACBrStr('ÁREA DE MENSAGEM FISCAL');
+        lMensagemFiscalCanc.Caption := ACBrStr('');
     end;
 
     lNumeroSerieCanc.Caption := ACBrStr(
@@ -537,8 +529,7 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     lNomeFantasia.Lines.Text:= Emit.xFant ;
-    lRazaoSocial.Lines.Text := Emit.xNome ;
-    lEmitCNPJ_IE_IM.Caption := CompoemCliche;
+    lRazaoSocial.Lines.Text := Emit.xNome+' '+FormatarCNPJ(Emit.CNPJCPF) ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
     if ACBrNFeDANFCeFortes.Logo <> '' then
@@ -587,8 +578,6 @@ begin
                       rlbRodape.Height +
                       rlbLegenda.Height +
                       rlbPagamento.Height +
-                      rlbLei12741.Height +
-                      rlbMensagemContribuinte.Height +
                       rlbMensagemFiscal.Height +
                       rlbConsumidor.Height +
                       rlsbDetItem.Height +
@@ -706,20 +695,20 @@ begin
     if (Dest.idEstrangeiro = '') and
        (Dest.CNPJCPF = '') then
      begin
-        lCPF_CNPJ_ID.Lines.Text := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
+        lConsumidor.Lines.Text := ACBrStr('CONSUMIDOR NÃO IDENTIFICADO');
      end
     else if Dest.idEstrangeiro <> '' then
      begin
-       lCPF_CNPJ_ID.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+Dest.idEstrangeiro+' '+Dest.xNome;
+       lConsumidor.Lines.Text  := 'CONSUMIDOR Id. Estrangeiro: '+Dest.idEstrangeiro+' '+Dest.xNome;
      end
     else
      begin
        if Length(trim(Dest.CNPJCPF)) > 11 then
-          lCPF_CNPJ_ID.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCNPJ(Dest.CNPJCPF)
+          lConsumidor.Lines.Text  := 'CONSUMIDOR CNPJ: '+FormatarCNPJ(Dest.CNPJCPF)
        else
-          lCPF_CNPJ_ID.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCPF(Dest.CNPJCPF);
+          lConsumidor.Lines.Text  := 'CONSUMIDOR CPF: '+FormatarCPF(Dest.CNPJCPF);
 
-       lCPF_CNPJ_ID.Lines.Text  := lCPF_CNPJ_ID.Caption+' '+Dest.xNome;
+       lConsumidor.Lines.Text  := lConsumidor.Caption+' '+Dest.xNome;
      end;
      lEnderecoConsumidor.Lines.Text := Trim(Dest.EnderDest.xLgr)+' '+
                                        Trim(Dest.EnderDest.nro)+' '+
@@ -741,14 +730,14 @@ begin
      end
     else if Dest.idEstrangeiro <> '' then
      begin
-       lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+Dest.idEstrangeiro+' '+Dest.xNome;
+       lCPF_CNPJ_ID_Canc.Lines.Text  := 'CONSUMIDOR ID Estrangeiro: '+Dest.idEstrangeiro+' '+Dest.xNome;
      end
     else
      begin
        if Length(trim(Dest.CNPJCPF)) > 11 then
-          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCNPJ(Dest.CNPJCPF)
+          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CONSUMIDOR CNPJ: '+FormatarCNPJ(Dest.CNPJCPF)
        else
-          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CNPJ/CPF/ID Estrangeiro -'+FormatarCPF(Dest.CNPJCPF);
+          lCPF_CNPJ_ID_Canc.Lines.Text  := 'CONSUMIDOR CPF: '+FormatarCPF(Dest.CNPJCPF);
 
        lCPF_CNPJ_ID_Canc.Lines.Text  := lCPF_CNPJ_ID_Canc.Caption+' '+Dest.xNome;
      end;
@@ -757,38 +746,6 @@ begin
                                            Trim(Dest.EnderDest.xCpl)+' '+
                                            Trim(Dest.EnderDest.xBairro)+' '+
                                            Trim(Dest.EnderDest.xMun);
-  end;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbLei12741BeforePrint(Sender: TObject;
-  var PrintIt: boolean);
-begin
-  with ACBrNFeDANFCeFortes.FpNFe do
-  begin
-    PrintIt := (Total.ICMSTot.vTotTrib > 0);
-
-    if PrintIt then
-      lValLei12741.Caption := FormatFloatBr(Total.ICMSTot.vTotTrib, '#,###,##0.00');
-  end;
-
-  if PrintIt then
-    lFonteTributos.Caption := ACBrNFeDANFCeFortes.FonteTributos;
-end;
-
-procedure TACBrNFeDANFCeFortesFr.rlbMensagemContribuinteBeforePrint(
-  Sender: TObject; var PrintIt: Boolean);
-begin
-
-  Printit := False;
-
-  with ACBrNFeDANFCeFortes.FpNFe.InfAdic do
-  begin
-    if infCpl <> '' then
-    begin
-      PrintIt := True ;
-
-      lObservacoes.Lines.Add( StringReplace( infCpl, ';', #13, [rfReplaceAll] ) );
-    end;
   end;
 end;
 
@@ -896,8 +853,6 @@ begin
                       rlbRodape.Height +
                       rlbLegenda.Height +
                       rlbPagamento.Height +
-                      rlbLei12741.Height +
-                      rlbMensagemContribuinte.Height +
                       rlbMensagemFiscal.Height +
                       rlbConsumidor.Height +
                       rlsbDetItem.Height +

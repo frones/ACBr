@@ -12,7 +12,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.4.2.0'
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
@@ -39,8 +39,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 2
-      Height = 222
-      Top = 518
+      Height = 209
+      Top = 377
       Width = 276
       AutoSize = True
       BandType = btSummary
@@ -52,42 +52,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
-      object RLDraw2: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 0
-        Width = 276
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lConsultaQRCode: TRLLabel
-        Left = 0
-        Height = 12
-        Top = 8
-        Width = 276
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'Consulta via leitor de QR Code'
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Layout = tlBottom
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
+      BeforePrint = rlbRodapeBeforePrint
       object imgQRCode: TRLImage
         Left = 0
         Height = 137
-        Top = 20
+        Top = 0
         Width = 276
         Align = faTop
         Center = True
@@ -99,10 +68,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object pGap05: TRLPanel
         Left = 0
-        Height = 17
-        Top = 167
+        Height = 34
+        Top = 137
         Width = 276
         Align = faTop
+        AutoSize = True
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -111,12 +81,45 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        object lSistema: TRLLabel
+        object lObservacoes: TRLMemo
           Left = 0
-          Height = 10
+          Height = 12
           Top = 0
           Width = 276
           Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lTitLei12741: TRLLabel
+          Left = 0
+          Height = 12
+          Top = 12
+          Width = 276
+          Align = faTop
+          Caption = '   Tributos Incidentes Lei Federal 12.741/12 - Total R$'
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lSistema: TRLLabel
+          Left = 0
+          Height = 10
+          Top = 24
+          Width = 276
+          Align = faBottom
           Alignment = taRightJustify
           Caption = 'Projeto ACBr'
           Font.Color = clBlack
@@ -132,29 +135,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           BeforePrint = lSistemaBeforePrint
         end
       end
-      object lProtocolo: TRLLabel
-        Left = 0
-        Height = 10
-        Top = 157
-        Width = 276
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'Protocolo de Autorização: 999999999999999 DD/MM/AAAA HH:MM:SS'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlBottom
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object pGap8: TRLPanel
         Left = 0
         Height = 38
-        Top = 184
+        Top = 171
         Width = 276
         Align = faTop
         Font.Color = clBlack
@@ -170,7 +154,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlsbDetItem: TRLSubDetail
       Left = 2
       Height = 80
-      Top = 162
+      Top = 114
       Width = 276
       AllowedBands = [btDetail, btSummary]
       Font.Color = clBlack
@@ -256,7 +240,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lDesconto: TRLLabel
-          Left = 227
+          Left = 226
           Height = 10
           Top = 1
           Width = 34
@@ -272,7 +256,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lDescValLiq: TRLLabel
-          Left = 227
+          Left = 226
           Height = 10
           Top = 13
           Width = 34
@@ -329,7 +313,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lOutro: TRLLabel
-          Left = 227
+          Left = 226
           Height = 10
           Top = 1
           Width = 34
@@ -345,7 +329,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lOutroValLiq: TRLLabel
-          Left = 227
+          Left = 226
           Height = 10
           Top = 13
           Width = 34
@@ -377,7 +361,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     object rlsbPagamentos: TRLSubDetail
       Left = 2
       Height = 65
-      Top = 242
+      Top = 194
       Width = 276
       RealBounds.Left = 0
       RealBounds.Top = 0
@@ -396,7 +380,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
         BeforePrint = rlbPagamentoBeforePrint
         object lPagamento: TRLLabel
-          Left = 218
+          Left = 217
           Height = 12
           Top = 0
           Width = 44
@@ -412,7 +396,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lMeioPagamento: TRLLabel
-          Left = 0
+          Left = 8
           Height = 12
           Top = 0
           Width = 77
@@ -444,7 +428,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
         BeforePrint = rlbTrocoBeforePrint
         object lTitTroco: TRLLabel
-          Left = -2
+          Left = 8
           Height = 12
           Top = 0
           Width = 41
@@ -459,7 +443,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lTroco: TRLLabel
-          Left = 218
+          Left = 217
           Height = 12
           Top = 0
           Width = 44
@@ -493,7 +477,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
         BeforePrint = rlbTotalBeforePrint
         object lTitTotal: TRLLabel
-          Left = -2
+          Left = 8
           Height = 11
           Top = 18
           Width = 80
@@ -509,7 +493,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lTotal: TRLLabel
-          Left = 217
+          Left = 216
           Height = 11
           Top = 18
           Width = 44
@@ -526,7 +510,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lQtdItens: TRLLabel
-          Left = 0
+          Left = 8
           Height = 12
           Top = 6
           Width = 102
@@ -541,7 +525,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lQtdTotalItensVal: TRLLabel
-          Left = 230
+          Left = 229
           Height = 12
           Top = 6
           Width = 31
@@ -557,7 +541,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lTitFormaPagto: TRLLabel
-          Left = 0
+          Left = 8
           Height = 12
           Top = 30
           Width = 112
@@ -572,7 +556,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lTitValorPago: TRLLabel
-          Left = 213
+          Left = 212
           Height = 12
           Top = 30
           Width = 48
@@ -587,115 +571,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object RLDraw7: TRLDraw
-          Left = 0
-          Height = 8
-          Top = 0
-          Width = 276
-          Align = faTop
-          Angle = 0
-          DrawKind = dkLine
-          Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-      end
-    end
-    object rlbLei12741: TRLBand
-      Left = 2
-      Height = 28
-      Top = 307
-      Width = 276
-      AutoSize = True
-      BandType = btSummary
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
-      BeforePrint = rlbLei12741BeforePrint
-      object RLDraw6: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 0
-        Width = 276
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lTitLei12741: TRLLabel
-        Left = 0
-        Height = 12
-        Top = 6
-        Width = 182
-        Caption = 'Informação dos Tributos Totais Incidentes '
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lTitLei12742: TRLLabel
-        Left = 1
-        Height = 12
-        Top = 16
-        Width = 112
-        Caption = '(Lei Federal 12.741 /2012)'
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lValLei12741: TRLLabel
-        Left = 218
-        Height = 11
-        Top = 7
-        Width = 44
-        Alignment = taRightJustify
-        Caption = '99.999,99'
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lFonteTributos: TRLLabel
-        Left = 136
-        Height = 12
-        Top = 16
-        Width = 126
-        Alignment = taRightJustify
-        Caption = 'Fonte IBPT'
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
       end
     end
     object rlbsCabecalho: TRLSubDetail
       Left = 2
-      Height = 154
+      Height = 106
       Top = 8
       Width = 276
       RealBounds.Left = 0
@@ -705,8 +585,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       OnDataRecord = rlbsCabecalhoDataRecord
       object rlbMsgDANFe: TRLBand
         Left = 0
-        Height = 42
-        Top = 81
+        Height = 28
+        Top = 62
         Width = 276
         AutoSize = True
         RealBounds.Left = 0
@@ -720,26 +600,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Width = 276
           Align = faTop
           Alignment = taCenter
-          Caption = 'DANFE NFC-e - Documento Auxiliar'
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Arial'
-          Font.Style = [fsBold]
-          Layout = tlCenter
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object lMsgDANFCe1: TRLLabel
-          Left = 0
-          Height = 14
-          Top = 28
-          Width = 276
-          Align = faTop
-          Alignment = taCenter
-          Caption = 'Não permite aproveitamento de crédito de ICMS'
+          Caption = 'DOCUMENTO AUXILIAR DA NOTA FISCAL '
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
@@ -758,7 +619,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Width = 276
           Align = faTop
           Alignment = taCenter
-          Caption = 'da Nota Fiscal Eletrônica para Consumidor Final'
+          Caption = 'DE CONSUMIDOR ELETRÔNICA'
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
@@ -773,7 +634,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbDadosCliche: TRLBand
         Left = 0
-        Height = 81
+        Height = 62
         Top = 0
         Width = 276
         AutoSize = True
@@ -783,7 +644,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
         object pLogoeCliche: TRLPanel
           Left = 0
-          Height = 81
+          Height = 62
           Top = 0
           Width = 276
           Align = faTop
@@ -793,28 +654,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Top = 0
           RealBounds.Width = 0
           RealBounds.Height = 0
-          object lEmitCNPJ_IE_IM: TRLLabel
-            Left = 0
-            Height = 12
-            Top = 31
-            Width = 276
-            Align = faTop
-            Alignment = taCenter
-            Caption = 'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.233'
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Arial'
-            Layout = tlBottom
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
           object lEndereco: TRLMemo
             Left = 0
             Height = 30
-            Top = 43
+            Top = 32
             Width = 276
             Align = faTop
             Alignment = taCenter
@@ -826,20 +669,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
               'Endereço'
             )
             ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-          end
-          object RLDraw1: TRLDraw
-            Left = 0
-            Height = 8
-            Top = 73
-            Width = 276
-            Align = faTop
-            Angle = 0
-            DrawKind = dkLine
-            Pen.Width = 2
             RealBounds.Left = 0
             RealBounds.Top = 0
             RealBounds.Width = 0
@@ -884,7 +713,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           end
           object lRazaoSocial: TRLMemo
             Left = 0
-            Height = 12
+            Height = 13
             Top = 19
             Width = 276
             Align = faTop
@@ -906,8 +735,8 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Height = 28
-        Top = 123
+        Height = 12
+        Top = 90
         Width = 276
         AutoSize = True
         RealBounds.Left = 0
@@ -915,27 +744,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
         BeforePrint = rlbLegendaBeforePrint
-        object RLDraw4: TRLDraw
-          Left = 0
-          Height = 8
-          Top = 0
-          Width = 276
-          Align = faTop
-          Angle = 0
-          DrawKind = dkLine
-          Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
         object lCPF_CNPJ1: TRLLabel
           Left = 0
           Height = 12
-          Top = 8
+          Top = 0
           Width = 276
           Align = faTop
-          Caption = '#|COD|DESC|QTD|UN| VL UN R$|(VLTR R$)*| VL ITEM R$'
+          Caption = '    #|COD|DESC|QTD|UN| VL UN R$|(VLTR R$)*| VL ITEM R$'
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
@@ -946,70 +761,23 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object RLDraw5: TRLDraw
-          Left = 0
-          Height = 8
-          Top = 20
-          Width = 276
-          Align = faTop
-          Angle = 0
-          DrawKind = dkLine
-          Pen.Width = 2
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
       end
     end
     object rlbConsumidor: TRLBand
       Left = 2
-      Height = 55
-      Top = 365
+      Height = 36
+      Top = 341
       Width = 276
-      AutoSize = True
       BandType = btSummary
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlbConsumidorBeforePrint
-      object RLDraw10: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 0
-        Width = 276
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lTitConsumidor: TRLLabel
-        Left = 0
-        Height = 11
-        Top = 8
-        Width = 276
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'CONSUMIDOR'
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object lEnderecoConsumidor: TRLMemo
         Left = 0
         Height = 12
-        Top = 43
+        Top = 24
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1026,10 +794,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object lCPF_CNPJ_ID: TRLMemo
+      object lConsumidor: TRLMemo
         Left = 0
         Height = 24
-        Top = 19
+        Top = 0
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1045,12 +813,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Transparent = False
       end
     end
     object rlbMensagemFiscal: TRLBand
       Left = 2
-      Height = 98
-      Top = 420
+      Height = 82
+      Top = 259
       Width = 276
       AutoSize = True
       BandType = btSummary
@@ -1059,42 +828,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlbMensagemFiscalBeforePrint
-      object RLDraw12: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 0
-        Width = 276
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lMensagemFiscal: TRLLabel
-        Left = 0
-        Height = 10
-        Top = 8
-        Width = 276
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'ÃREA DE MENSAGEM FISCAL'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object lChaveDeAcesso: TRLLabel
         Left = 0
         Height = 12
-        Top = 74
+        Top = 48
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1108,17 +845,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object lTitChaveAcesso: TRLLabel
+      object lProtocolo: TRLLabel
         Left = 0
-        Height = 12
-        Top = 62
+        Height = 10
+        Top = 60
         Width = 276
         Align = faTop
         Alignment = taCenter
-        Caption = 'CHAVE DE ACESSO'
+        Caption = 'Protocolo de Autorização: 999999999999999 DD/MM/AAAA HH:MM:SS'
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -8
         Font.Name = 'Arial'
+        Layout = tlBottom
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -1128,7 +866,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object lNumeroSerie: TRLLabel
         Left = 0
         Height = 12
-        Top = 18
+        Top = 12
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1145,7 +883,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object lTitConsulteChave: TRLMemo
         Left = 0
         Height = 12
-        Top = 50
+        Top = 36
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1165,7 +903,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object lEmissaoVia: TRLLabel
         Left = 0
         Height = 12
-        Top = 30
+        Top = 24
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1179,24 +917,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object RLDraw8: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 42
-        Width = 276
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object lCancelada: TRLLabel
         Left = 0
         Height = 12
-        Top = 86
+        Top = 70
         Width = 276
         Align = faTop
         Alignment = taCenter
@@ -1209,63 +933,14 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-    end
-    object rlbMensagemContribuinte: TRLBand
-      Left = 2
-      Height = 30
-      Top = 335
-      Width = 276
-      AutoSize = True
-      BandType = btSummary
-      RealBounds.Left = 0
-      RealBounds.Top = 0
-      RealBounds.Width = 0
-      RealBounds.Height = 0
-      BeforePrint = rlbMensagemContribuinteBeforePrint
-      object lMensagemContribuinte: TRLLabel
-        Left = 0
-        Height = 10
-        Top = 8
-        Width = 276
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'AREA DE MENSAGEM DE INTERESSE DO CONTRIBUINTE'
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object RLDraw3: TRLDraw
-        Left = 0
-        Height = 8
-        Top = 0
-        Width = 276
-        Align = faTop
-        Angle = 0
-        DrawKind = dkLine
-        Pen.Width = 2
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
-      object lObservacoes: TRLMemo
+      object lMensagemFiscal: TRLMemo
         Left = 0
         Height = 12
-        Top = 18
+        Top = 0
         Width = 276
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0

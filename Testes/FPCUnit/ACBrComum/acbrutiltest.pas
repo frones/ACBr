@@ -106,6 +106,7 @@ type
     procedure As113Extended;
     procedure As199Double;
     procedure As9999899Double;
+    procedure As9999899DoubleTruncToZero;
     procedure As4386Double;
     procedure As1526Double;
     procedure As113Double;
@@ -3425,6 +3426,14 @@ var
 begin
   VValor := 1 * 99998.999658800007;
   CheckEquals(99998.99, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As9999899DoubleTruncToZero;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 99998.999658800007;
+  CheckEquals(99998, TruncTo( VValor, 0 ), 0.0001);
 end;
 
 procedure TruncToTest.As199Extended;

@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/08/2016
+--ACBrAAC
+[+] Adição do número do credenciamento ao arquivo para gerar o bloco X
+		por : Juliomar Marchetti
 
 Data: 29/08/2016
 -- ACBrUtil --

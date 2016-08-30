@@ -129,12 +129,14 @@ function TACBrMTerPMTG.ComandoEco(aValue: AnsiString): AnsiString;
 var
   I: Integer;
   C: AnsiChar;
+  S: AnsiString;
 begin
   Result := '';
+  S := LimparConteudo(aValue);
 
-  for I := 1 to Length(aValue) do
+  for I := 1 to Length(S) do
   begin
-    C := aValue[I];
+    C := S[I];
     case C of
       BS: Result := Result + ComandoBackSpace; // É backspace ?
     else

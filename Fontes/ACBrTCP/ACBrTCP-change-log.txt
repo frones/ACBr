@@ -37,6 +37,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2016
+-- ACBrMTerClass --
+[-] Alteração para retirar os caracteres de controle dos dados recebidos 
+	pelo Micro Terminal apenas no momento de enviar o eco. Dessa maneira não
+	são perdidos dados como DEL, ESC, etc.
+	(por: Elias César)
+	
+-- ACBrMTerPMTG --
+[-] Alteração para limpar conteúdo dos dados antes de enviar o "ComandoEco".
+	
+-- ACBrMTerStxEtx --
+[-] Compatibilização com alterações anteriores.	
+
 16/08/2016
 -- ACBrSocket --
 [-] Correção em "TACBrHTTP.HTTPMethod", para detectar UTF8 quando Header.

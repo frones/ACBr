@@ -64,6 +64,7 @@ type
 
   protected
     fpModeloStr: String;
+    function LimparConteudo(aString: AnsiString): AnsiString;
 
   public
     constructor Create(aOwner: TComponent);
@@ -97,6 +98,27 @@ uses ACBrMTer, ACBrUtil;
 procedure TACBrMTerClass.DisparaErroNaoImplementado(NomeMetodo: String);
 begin
   raise Exception.Create(ACBrStr('Metodo: '+NomeMetodo+', não implementada em: '+ModeloStr));
+end;
+
+function TACBrMTerClass.LimparConteudo(aString: AnsiString): AnsiString;
+var
+  aChar: AnsiChar;
+  I: Integer;
+begin
+  // Função retira os caracteres estranhos da String,
+  // Usada para enviar o eco ao Micro Terminal.
+  Result := '';
+
+  for I := 0 to Length(aString) do
+  begin
+    aChar := aString[I];
+
+    { Mantem apenas Letras/Numeros/Pontos/Sinais }
+    if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
+      Continue;
+
+    Result := Result + aChar;
+  end;
 end;
 
 constructor TACBrMTerClass.Create(aOwner: TComponent);
@@ -139,11 +161,10 @@ end;
 
 function TACBrMTerClass.ComandoEco(aValue: AnsiString): AnsiString;
 begin
-  Result := ComandoEnviarTexto(aValue);
+  Result := ComandoEnviarTexto(LimparConteudo(aValue));
 end;
 
-function TACBrMTerClass.ComandoEnviarParaParalela(aDados: AnsiString
-  ): AnsiString;
+function TACBrMTerClass.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoEnviarParaParalela');
@@ -190,18 +211,7 @@ var
   aChar: AnsiChar;
   I: Integer;
 begin
-  Result := '';
-
-  for I := 0 to Length(aRecebido) do
-  begin
-    aChar := aRecebido[I];
-
-    {Mantem apenas Letras/Numeros/Pontos/Sinais}
-    if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
-      Continue;
-
-    Result := Result + aChar;
-  end;
+  Result := aRecebido;
 end;
 
 end.

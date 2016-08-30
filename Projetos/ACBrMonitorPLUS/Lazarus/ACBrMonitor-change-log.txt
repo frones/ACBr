@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2016
+[*] Ajuste na leitura do campo modelo da CTe, do ini, que foi modificado para Inteiro ao inves de String
+[*] Ajuste na impressão de NFe e NFCe, no numero de vias, priorizar valor do comando.
+		por: Celso Marigo Junior
+
 17/08/2016
 [*] Adição do método achar para ECF
 		por: Juliomar Marchetti

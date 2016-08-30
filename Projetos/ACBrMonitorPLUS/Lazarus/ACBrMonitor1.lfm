@@ -1,11 +1,11 @@
 object FrmACBrMonitor: TFrmACBrMonitor
   Left = 297
-  Height = 600
+  Height = 713
   Top = 113
   Width = 1022
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 600
+  ClientHeight = 713
   ClientWidth = 1022
   Color = clBlack
   Constraints.MinHeight = 480
@@ -23,7 +23,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 577
+    Top = 690
     Width = 1022
     Panels = <    
       item
@@ -40,7 +40,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object pBotoes: TPanel
     Left = 0
     Height = 43
-    Top = 534
+    Top = 647
     Width = 1022
     Align = alBottom
     ClientHeight = 43
@@ -249,22 +249,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object pCentral: TPanel
     Left = 196
-    Height = 504
+    Height = 617
     Top = 30
     Width = 826
     Align = alClient
-    ClientHeight = 504
+    ClientHeight = 617
     ClientWidth = 826
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
     object pComandos: TPanel
       Left = 1
-      Height = 173
+      Height = 286
       Top = 330
       Width = 824
       Align = alClient
-      ClientHeight = 173
+      ClientHeight = 286
       ClientWidth = 824
       TabOrder = 0
       object Splitter1: TSplitter
@@ -321,18 +321,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
       end
       object pRespostas: TPanel
         Left = 1
-        Height = 81
+        Height = 194
         Top = 91
         Width = 822
         Align = alClient
         Caption = 'pRespostas'
-        ClientHeight = 81
+        ClientHeight = 194
         ClientWidth = 822
         Constraints.MinHeight = 70
         TabOrder = 2
         object mResp: TMemo
           Left = 1
-          Height = 62
+          Height = 175
           Top = 18
           Width = 820
           Align = alClient
@@ -5442,10 +5442,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 297
             Top = 0
             Width = 814
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsDiretoriosDFe
             Align = alClient
             ShowTabs = False
-            TabIndex = 0
+            TabIndex = 5
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6037,7 +6037,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 216
                       Height = 17
                       Top = 40
-                      Width = 40
+                      Width = 41
                       Caption = 'Versão'
                       ParentColor = False
                     end
@@ -6262,7 +6262,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                       Left = 100
                       Height = 17
                       Top = 24
-                      Width = 57
+                      Width = 58
                       Caption = 'Tentativas'
                       ParentColor = False
                     end
@@ -6332,7 +6332,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 0
                     Height = 17
                     Top = 0
-                    Width = 62
+                    Width = 63
                     Caption = 'CSC/Token'
                     ParentColor = False
                   end
@@ -6340,7 +6340,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Left = 0
                     Height = 17
                     Top = 40
-                    Width = 84
+                    Width = 85
                     Caption = 'IdCSC/IdToken'
                     ParentColor = False
                   end
@@ -10190,12 +10190,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object PanelMenu: TPanel
     Left = 0
-    Height = 504
+    Height = 617
     Top = 30
     Width = 196
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 504
+    ClientHeight = 617
     ClientWidth = 196
     Color = clBtnFace
     ParentColor = False
@@ -10883,26 +10883,26 @@ object FrmACBrMonitor: TFrmACBrMonitor
     end
     object PanelScroll: TPanel
       Left = 0
-      Height = 404
+      Height = 517
       Top = 100
       Width = 196
       Align = alClient
       BevelOuter = bvNone
-      ClientHeight = 404
+      ClientHeight = 517
       ClientWidth = 196
       TabOrder = 0
       object ScrollBox: TScrollBox
         Left = 0
-        Height = 404
+        Height = 517
         Top = 0
         Width = 196
         HorzScrollBar.Page = 1
-        VertScrollBar.Page = 404
+        VertScrollBar.Page = 517
         Align = alLeft
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoSize = True
         BorderStyle = bsNone
-        ClientHeight = 404
+        ClientHeight = 517
         ClientWidth = 179
         TabOrder = 0
         object btnECF: TPanel
@@ -12107,7 +12107,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

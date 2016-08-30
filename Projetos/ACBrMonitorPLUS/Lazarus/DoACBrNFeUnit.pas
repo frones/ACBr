@@ -1080,15 +1080,16 @@ begin
                            'PDF='+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
                         end;
 
-                        if nNumCopias > 0 then
-                          ACBrNFe1.DANFE.NumCopias := nNumCopias;
-
-                        if NaoEstaVazio(cImpressora) then
-                           ACBrNFe1.DANFE.Impressora := cImpressora;
-
                         if ACBrNFe1.NotasFiscais.Items[i].Confirmada and bImprimir then
                          begin
                            ConfiguraDANFe(False, bMostrarPreview);
+
+                           if nNumCopias > 0 then
+                             ACBrNFe1.DANFE.NumCopias := nNumCopias;
+
+                           if NaoEstaVazio(cImpressora) then
+                             ACBrNFe1.DANFE.Impressora := cImpressora;
+
                            ACBrNFe1.NotasFiscais.Items[i].Imprimir;
                          end;
 

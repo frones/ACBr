@@ -51,7 +51,7 @@ uses Classes, SysUtils,
      ACBrNFeDANFEClass, ACBrUtil,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
-     RLFilters, RLPrinters, Controls;
+     RLFilters, RLPrinters, RLTypes, Controls;
 
 const
   CACBrNFeDANFCeFortes_Versao = '0.1.0' ;
@@ -543,6 +543,9 @@ begin
       imgLogo.Width := ACBrNFeDANFCeFortes.TamanhoLogoWidth ;
       imgLogo.AutoSize := ACBrNFeDANFCeFortes.ExpandirLogoMarca ;
 
+      if (imgLogo.Width <= 0) or (imgLogo.Height <= 0) then
+        imgLogo.AutoSize := True;
+
       if FileExists (ACBrNFeDANFCeFortes.Logo) then
         imgLogo.Picture.LoadFromFile(ACBrNFeDANFCeFortes.Logo)
       else
@@ -586,9 +589,9 @@ begin
                       rlbMensagemFiscal.Height +
                       rlbConsumidor.Height +
                       rlsbDetItem.Height +
-                      Trunc(rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
+                      Trunc((rlbDetItem.Height+5.4) * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
   // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max( 100, 10+Trunc( TotalPaginaPixel / 3.75 ));
+  rlVenda.PageSetup.PaperHeight := max(300, 20+Trunc( TotalPaginaPixel / 3.75 ));
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
@@ -978,6 +981,7 @@ begin
 
       RLLayout.ShowProgress := ACBrNFeDANFCeFortes.MostrarStatus;
       RLLayout.PrintDialog  := not(FMostrarPreview) and (EstaVazio(FImpressora));
+      RLLayout.PageSetup.PaperSize:= fpCustom;
 
       if Filtro = fiNenhum then
       begin

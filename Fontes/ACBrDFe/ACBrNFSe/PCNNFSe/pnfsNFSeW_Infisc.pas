@@ -570,10 +570,10 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vDesc', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vtNF' , 01, 15, 1,  NFSe.Servico.Valores.ValorServicos, '');
 
-    if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
-      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '')
-    else
-      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
+//    if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
+      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
+//    else
+//      Gerador.wCampoNFSe(tcDe2, '', 'vtLiq', 01, 15, 1, NFSe.Servico.Valores.ValorServicos, '');
 
     Gerador.wCampoNFSe(tcDe2, '', 'totalAproxTrib', 01, 15, 1, 0, '');
 

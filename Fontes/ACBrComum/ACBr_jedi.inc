@@ -158,6 +158,8 @@
   DELPHIXE8           Alias for DELPHI22
   DELPHI23            Defined when compiling with Delphi 10 for Win32 (Codename AITANA)
   DELPHIX_SEATTLE     Alias for DELPHI23
+  DELPHI24            Defined when compiling with Delphi 10.1 for Win32 (Codename BIGBEN)
+  DELPHIX_BERLIN      Alias for DELPHI24
   DELPHI1_UP          Defined when compiling with Delphi 1 or higher
   DELPHI2_UP          Defined when compiling with Delphi 2 or higher
   DELPHI3_UP          Defined when compiling with Delphi 3 or higher

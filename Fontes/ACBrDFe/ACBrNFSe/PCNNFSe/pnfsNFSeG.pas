@@ -316,6 +316,7 @@ begin
     proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) + CNPJ +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
 
+    proBethav2: IdLote := 'lote' + NumeroLote;
     proSalvador: IdLote := 'Lote' + NumeroLote;
 
     proSiam: IdLote := 'Lote_' + NumeroLote + '_' + dhEnvio;

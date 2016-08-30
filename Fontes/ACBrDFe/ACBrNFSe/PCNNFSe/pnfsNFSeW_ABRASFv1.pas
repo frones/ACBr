@@ -440,9 +440,10 @@ procedure TNFSeW_ABRASFv1.GerarCondicaoPagamento;
 var
   i: Integer;
 begin
+  Gerador.wGrupoNFSe('CondicaoPagamento');
+
   if (NFSe.CondicaoPagamento.QtdParcela > 0) then
   begin
-    Gerador.wGrupoNFSe('CondicaoPagamento');
     Gerador.wCampoNFSe(tcStr, '#53', 'Condicao  ', 01, 15, 1, CondicaoToStr(NFSe.CondicaoPagamento.Condicao), DSC_TPAG);
     Gerador.wCampoNFSe(tcInt, '#54', 'QtdParcela', 01, 3, 1, NFSe.CondicaoPagamento.QtdParcela, DSC_QPARC);
     for i := 0 to NFSe.CondicaoPagamento.Parcelas.Count - 1 do
@@ -453,8 +454,11 @@ begin
       Gerador.wCampoNFSe(tcDe2, '#55', 'Valor', 01, 18, 1, NFSe.CondicaoPagamento.Parcelas.Items[i].Valor, DSC_VPARC);
       Gerador.wGrupoNFSe('/Parcelas');
     end;
-    Gerador.wGrupoNFSe('/CondicaoPagamento');
-  end;
+  end
+  else
+    Gerador.wCampoNFSe(tcStr, '#53', 'Condicao', 01, 15, 1, 'A_VISTA', DSC_TPAG);
+
+  Gerador.wGrupoNFSe('/CondicaoPagamento');
 end;
 
 procedure TNFSeW_ABRASFv1.GerarXML_ABRASF_V1;

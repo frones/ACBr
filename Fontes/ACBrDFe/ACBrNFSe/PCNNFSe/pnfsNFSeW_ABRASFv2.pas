@@ -575,8 +575,8 @@ end;
 procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
 begin
   case FProvedor of
-   proABase, proDigifred, proEReceita, proFiorilli, proGovDigital, proISSDigital,
-   proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
+   proABase, proBethav2, proDigifred, proEReceita, proFiorilli, proGovDigital,
+   proISSDigital, proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
    proSisPMJP: begin
                  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
                  Gerador.wGrupoNFSe('Rps');

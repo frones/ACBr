@@ -637,8 +637,6 @@
 		</xsd:sequence>
 	</xsd:complexType>
 
-
-
 	<xsd:complexType name="tcInfSubstituicaoNfse">
 		<xsd:sequence>
 			<xsd:element name="NfseSubstituidora" type="tsNumeroNfse"
@@ -714,7 +712,7 @@
 		<xsd:attribute name="versao" type="tsVersao" use="required" />
 	</xsd:complexType>
 	
-		<xsd:element name="ListaMensagemRetornoLote">
+	<xsd:element name="ListaMensagemRetornoLote">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="MensagemRetorno" type="tcMensagemRetornoLote"
@@ -753,7 +751,7 @@
 
 	<xsd:element name="CompNfse" type="tcCompNfse" />
 	
-		<xsd:element name="EnviarLoteRpsEnvio">
+	<xsd:element name="EnviarLoteRpsEnvio">
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element name="LoteRps" type="tcLoteRps" />
@@ -788,7 +786,6 @@
 					maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
-
 	</xsd:element>
 
 	<xsd:element name="EnviarLoteRpsSincronoResposta">

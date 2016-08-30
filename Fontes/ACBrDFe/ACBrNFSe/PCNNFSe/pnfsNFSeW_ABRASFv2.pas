@@ -789,6 +789,8 @@ begin
     proSiam,
     proGovDigital: FNFSe.InfID.ID := 'Rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
 
+    proBethav2: FNFSe.InfID.ID := 'rps' + OnlyNumber(FNFSe.IdentificacaoRps.Numero);
+
     proNotaInteligente : FNFSe.InfID.ID := OnlyNumber(FNFSe.IdentificacaoRps.Numero);
 
     proPronimv2,

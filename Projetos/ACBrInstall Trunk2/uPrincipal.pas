@@ -982,7 +982,7 @@ begin
     ConteudoArquivo := '@echo off' + sLineBreak;
     for I := 0 to DriverList.Count -1 do
     begin
-      ConteudoArquivo := ConteudoArquivo + DriverList[I].Replace('\', '') + sLineBreak;
+      ConteudoArquivo := ConteudoArquivo + StringReplace(DriverList[I], '\', '', []) + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + 'cd\' + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + 'del ACBr*.bpl ACBr*.dcp ACBr*.dcu PCN*.bpl PCN*.dcp PCN*.dcu SYNA*.bpl SYNA*.dcp SYNA*.dcu pnfs*.dcu pcte*.bpl pcte*.dcp pcte*.dcu pmdfe*.bpl pmdfe*.dcp pmdfe*.dcu /s' + sLineBreak;
       ConteudoArquivo := ConteudoArquivo + sLineBreak;

@@ -1154,7 +1154,7 @@ begin
           Ide.CFOP        := INIRec.ReadInteger('ide','CFOP',0);
           Ide.natOp       := INIRec.ReadString('ide','natOp',EmptyStr);
           Ide.forPag      := StrTotpforPag(OK,INIRec.ReadString('ide','forPag','0'));
-          Ide.modelo      := INIRec.ReadString( 'ide','mod' ,'55');
+          Ide.modelo      := INIRec.ReadInteger( 'ide','mod' ,55);
           Ide.serie       := INIRec.ReadInteger( 'ide','serie'  ,1);
           Ide.nCT         := INIRec.ReadInteger( 'ide','nCT' ,0);
           Ide.dhEmi       := StringToDateTime(INIRec.ReadString( 'ide','dhEmi','0'));
@@ -2679,7 +2679,7 @@ begin
           INIRec.WriteInteger('ide', 'CFOP', Ide.CFOP);
           INIRec.WriteString('ide', 'natOp', Ide.natOp);
           INIRec.WriteString('ide', 'forPag', tpforPagToStr(Ide.forPag));
-          INIRec.WriteString('ide', 'mod', Ide.modelo);
+          INIRec.WriteInteger('ide', 'mod', Ide.modelo);
           INIRec.WriteInteger('ide', 'serie', Ide.serie);
           INIRec.WriteInteger('ide', 'nCT', Ide.nCT);
           INIRec.WriteString('ide', 'dhEmi', DateToStr(Ide.dhEmi));

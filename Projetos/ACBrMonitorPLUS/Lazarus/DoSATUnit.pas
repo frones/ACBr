@@ -443,9 +443,10 @@ begin
                 infAdProd      := INIRec.ReadString(sSecao,'infAdProd','');
 
                 Prod.cProd    := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
-                Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
+                Prod.cEAN     := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
                 Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
-                Prod.NCM       := INIRec.ReadString( sSecao,'NCM'      ,'');
+                Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
+                Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
                 Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
                 Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
                 Prod.EhCombustivel := (INIRec.ReadInteger( sSecao,'Combustivel',0)=1);

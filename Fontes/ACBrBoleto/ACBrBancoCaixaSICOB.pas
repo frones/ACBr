@@ -89,17 +89,18 @@ uses StrUtils, Variants, math,
 constructor TACBrCaixaEconomicaSICOB.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 0;
-   fpNome   := 'Caixa Economica Federal';
-   fpNumero:= 104;
+   fpDigito                := 0;
+   fpNome                  := 'Caixa Economica Federal';
+   fpNumero                := 104;
    fpTamanhoMaximoNossoNum := 0;
-   fpTamanhoAgencia := 5;
-   fpTamanhoConta   := 8;
+   fpTamanhoAgencia        := 5;
+   fpTamanhoConta          := 8;
+   fpLocalpagamento        := 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
    fpOrientacoesBanco.Clear;
    fpOrientacoesBanco.Add(ACBrStr('SAC CAIXA: 0800 726 0101 (informações,reclamações e elogios) ' + sLineBreak+
                           'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 ' + sLineBreak +
-                          'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)') + sLineBreak+
+                          'Ouvidoria: 0800 725 7474') + sLineBreak+
                           '     caixa.gov.br      ');
 end;
 

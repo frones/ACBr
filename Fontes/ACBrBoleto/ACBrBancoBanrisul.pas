@@ -84,16 +84,16 @@ var
 constructor TACBrBanrisul.create(AOwner: TACBrBanco);
 begin
   inherited create(AOwner);
-  fpDigito:=8;
-  fpNome:='Banrisul';
-  fpNumero:= 041;
-  fpTamanhoMaximoNossoNum:=8;
+  fpDigito                := 8;
+  fpNome                  := 'Banrisul';
+  fpNumero                := 041;
+  fpTamanhoMaximoNossoNum := 8;
+  fpTamanhoAgencia        := 4;
+  fpTamanhoConta          := 7;
+  fpTamanhoCarteira       := 1;
+  fpLocalpagamento        := fpLocalpagamento + fpNome;
 
-  fpTamanhoAgencia:= 4;
-  fpTamanhoConta  := 7;
-  fpTamanhoCarteira:= 1;
-
-  fpCodigosMoraAceitos:='01';
+  fpCodigosMoraAceitos    :='01';
   fpOrientacoesBanco.Clear;
   fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
                                  'OUVIDORIA BANRISUL - 0800 644 2200'));

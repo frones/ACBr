@@ -47,6 +47,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/08/2016 ver: 0.0.206a
+
+-- ACBrBoleto --
+[+] Adicionado uma nova propriedade Banco.LocalPagamento onde será possível informar uma mensagem diferente da padrão 
+    caso o Banco solicitar, essa propriedade será terá a mensagem padrão 'Pagar preferencialmente nas agencias do '.
+   (Antonio Júnior) 
+http://www.projetoacbr.com.br/forum/topic/31649-cobran%C3%A7a-caixa-sicob/
+
+[*] Ajustado as classe banco para utilizar a nova propriedade LocalPagamento onde por padrão está recebendo a mensagem
+    padrão 'Pagar preferencialmente nas agencias do ' + Nome do Banco. (Antonio Júnior)
+http://www.projetoacbr.com.br/forum/topic/31649-cobran%C3%A7a-caixa-sicob/
+
+-- ACBrBancoCaixaSICOB --
+[*] Alterada a função TACBrCaixaEconomicaSICOB.create para preencher o local de pagamento do título e alterado 
+    fpOrientacoesBanco para receber a mensagem conforme o layout da Caixa Econômica Federal. (Antonio Júnior)
+http://www.projetoacbr.com.br/forum/topic/31649-cobran%C3%A7a-caixa-sicob/
+
+-- ACBrBancoCaixa --
+[*] Alterada a função TACBrCaixaEconomica.create para preencher o local de pagamento do título e alterado 
+    fpOrientacoesBanco para receber a mensagem conforme o layout da Caixa Econômica Federal. (Antonio Júnior)
+http://www.projetoacbr.com.br/forum/topic/31649-cobran%C3%A7a-caixa-sicob/ 
+
 Data: 16/08/2016 ver: 0.0.205a
 -- ACBrBancoBrasil --
 [-] Correção para ler o convenio do cedente sem zeros a esquerda na função LerRetorno240" (Antonio Júnior)

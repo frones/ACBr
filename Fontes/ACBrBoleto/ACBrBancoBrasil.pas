@@ -111,13 +111,14 @@ uses {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF},
 constructor TACBrBancoBrasil.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 9;
-   fpNome   := 'Banco do Brasil';
-   fpNumero := 001;
+   fpDigito                := 9;
+   fpNome                  := 'Banco do Brasil';
+   fpNumero                := 001;
    fpTamanhoMaximoNossoNum := 0;
-   fpTamanhoConta   := 12;
-   fpTamanhoAgencia := 4;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoConta          := 12;
+   fpTamanhoAgencia        := 4;
+   fpTamanhoCarteira       := 2;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 
 end;
 

@@ -82,12 +82,13 @@ uses
 constructor TACBrBancoSantander.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 7;
-   fpNome   := 'Santander';
-   fpNumero:= 033;
-   fpTamanhoMaximoNossoNum := 12;
-   fpTamanhoCarteira:= 3;
-   fpTamanhoConta := 11;
+   fpDigito                 := 7;
+   fpNome                   := 'Santander';
+   fpNumero                 := 033;
+   fpTamanhoMaximoNossoNum  := 12;
+   fpTamanhoCarteira        := 3;
+   fpTamanhoConta           := 11;
+   fpLocalpagamento         := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoSantander.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

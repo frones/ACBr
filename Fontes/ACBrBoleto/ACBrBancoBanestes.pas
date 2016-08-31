@@ -82,13 +82,14 @@ uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
 constructor TACBrBancoBanestes.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 3;
-   fpNome:= 'Banestes';
-   fpNumero := 021;
+   fpDigito                := 3;
+   fpNome                  := 'Banestes';
+   fpNumero                := 021;
    fpTamanhoMaximoNossoNum := 8;
-   fpTamanhoAgencia := 3;
-   fpTamanhoConta   := 11;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoAgencia        := 3;
+   fpTamanhoConta          := 11;
+   fpTamanhoCarteira       := 2;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoBanestes.CalcularCampoASBACE(

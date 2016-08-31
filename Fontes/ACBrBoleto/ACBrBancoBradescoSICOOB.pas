@@ -82,13 +82,14 @@ uses
 constructor TACBrBancoBradescoSICOOB.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 2;
-   fpNome:= 'Bradesco';
-   fpNumero := 237;
+   fpDigito                := 2;
+   fpNome                  := 'Bradesco';
+   fpNumero                := 237;
    fpTamanhoMaximoNossoNum := 6;
-   fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 7;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoAgencia        := 4;
+   fpTamanhoConta          := 7;
+   fpTamanhoCarteira       := 2;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoBradescoSICOOB.CalcularFatorVencimento(

@@ -82,14 +82,15 @@ uses
 constructor TACBrBancoNordeste.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 3;
-   fpNome:= 'Banco do Nordeste';
-   fpNumero := 4;
+   fpDigito                := 3;
+   fpNome                  := 'Banco do Nordeste';
+   fpNumero                := 4;
    fpTamanhoMaximoNossoNum := 7;
-   fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 7;
-   fpTamanhoCarteira:= 1;
-   fSequencia := 1;
+   fpTamanhoAgencia        := 4;
+   fpTamanhoConta          := 7;
+   fpTamanhoCarteira       := 1;
+   fSequencia              := 1;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoNordeste.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

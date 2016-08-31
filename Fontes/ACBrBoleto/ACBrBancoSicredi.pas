@@ -83,15 +83,16 @@ uses
 constructor TACBrBancoSicredi.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 10;
-   fpNome   := 'Sicredi';
-   fpNumero := 748;
+   fpDigito                := 10;
+   fpNome                  := 'Sicredi';
+   fpNumero                := 748;
    fpTamanhoMaximoNossoNum := 8;
-   fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 5;
-   fpTamanhoCarteira:= 1;
-   fpCodigosMoraAceitos:= 'AB';
+   fpTamanhoAgencia        := 4;
+   fpTamanhoConta          := 5;
+   fpTamanhoCarteira       := 1;
+   fpCodigosMoraAceitos    := 'AB';
    fpCodigosGeracaoAceitos := '23456789';
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

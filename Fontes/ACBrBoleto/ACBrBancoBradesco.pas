@@ -78,15 +78,14 @@ uses {$IFDEF COMPILER6_UP} dateutils {$ELSE} ACBrD5 {$ENDIF},
 constructor TACBrBancoBradesco.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 2;
-   fpNome:= 'Bradesco';
-   fpNumero := 237;
-   fpTamanhoMaximoNossoNum := 11;
-   // DONE -oJacinto Junior: Ajustar o tamanho da agência para 4 (quatro) algarismos conforme padrão do Bacen.
-//   fpTamanhoAgencia := 5;
-   fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 7;
-   fpTamanhoCarteira:= 2;
+   fpDigito                 := 2;
+   fpNome                   := 'Bradesco';
+   fpNumero                 := 237;
+   fpTamanhoMaximoNossoNum  := 11;   
+   fpTamanhoAgencia         := 4;
+   fpTamanhoConta           := 7;
+   fpTamanhoCarteira        := 2;
+   fpLocalpagamento         := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoBradesco.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

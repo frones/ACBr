@@ -72,11 +72,12 @@ uses
 constructor TACBrBancoMercantil.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 1;
-   fpNome   := 'Banco Mercantil';
-   fpNumero:= 389;
+   fpDigito                := 1;
+   fpNome                  := 'Banco Mercantil';
+   fpNumero                := 389;
    fpTamanhoMaximoNossoNum := 6;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoCarteira       := 2;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoMercantil.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;

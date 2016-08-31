@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.205a';
+  CACBrBoleto_Versao = '0.0.206a';
 
   cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
   'Remessa Registrar',
@@ -503,6 +503,8 @@ type
     fpOrientacoesBanco: TStringList;
     fpCodigosMoraAceitos: String;
     fpCodigosGeracaoAceitos: String;
+    fpLocalPagamento: String;
+
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
   public
@@ -521,6 +523,7 @@ type
     property OrientacoesBanco: TStringList read fpOrientacoesBanco;
     property CodigosMoraAceitos: String read fpCodigosMoraAceitos;
     property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
+    property LocalPagamento  : String read fpLocalPagamento;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
@@ -570,12 +573,15 @@ type
     function GetTamanhoMaximoNossoNum : Integer;
     function GetCodigosMoraAceitos: String;
     function GetCodigosGeracaoAceitos: string;
+    function GetLocalPagamento: String;
+
     procedure SetDigito(const AValue: Integer);
     procedure SetNome(const AValue: String);
     procedure SetTipoCobranca(const AValue: TACBrTipoCobranca);
     procedure SetNumero(const AValue: Integer);
     procedure SetTamMaximoNossoNumero(Const Avalue:Integer);
     procedure SetOrientacoesBanco(Const Avalue: TStringList);
+    procedure SetLocalPagamento(const AValue: String);
   public
     constructor Create( AOwner : TComponent); override;
     destructor Destroy ; override ;
@@ -621,6 +627,7 @@ type
     property TamanhoMaximoNossoNum :Integer read GetTamanhoMaximoNossoNum  write SetTamMaximoNossoNumero;
     property TipoCobranca : TACBrTipoCobranca read fTipoCobranca   write SetTipoCobranca;
     property OrientacoesBanco : TStringList read GetOrientacoesBanco write SetOrientacoesBanco;
+    property LocalPagamento : String    read GetLocalPagamento    write SetLocalPagamento   stored false;
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite);
@@ -1309,7 +1316,7 @@ begin
    inherited Create;
 
    fACBrBoleto        := ACBrBoleto;
-   fLocalPagamento    := 'Pagar preferencialmente nas agencias do '+ ACBrBoleto.Banco.Nome;
+   fLocalPagamento    := ACBrBoleto.Banco.LocalPagamento;
    fVencimento        := 0;
    fDataDocumento     := 0;
    fNumeroDocumento   := '';
@@ -1727,6 +1734,11 @@ begin
   Result := BancoClass.CodigosGeracaoAceitos;
 end;
 
+function TACBrBanco.GetLocalPagamento: String;
+begin
+   Result:= ACBrStr(fBancoClass.LocalPagamento);
+end;
+
 procedure TACBrBanco.SetDigito(const AValue: Integer);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
@@ -1738,6 +1750,11 @@ begin
 end;
 
 procedure TACBrBanco.SetNumero(const AValue: Integer);
+begin
+  {Apenas para aparecer no ObjectInspector do D7}
+end;
+
+procedure TACBrBanco.SetLocalPagamento(const AValue: String);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
 end;
@@ -1905,17 +1922,18 @@ constructor TACBrBancoClass.create(AOwner: TACBrBanco);
 begin
    inherited create;
 
-   fpAOwner := AOwner;
-   fpDigito := 0;
-   fpNome   := 'Não definido';
-   fpNumero := 0;
+   fpAOwner                := AOwner;
+   fpDigito                := 0;
+   fpNome                  := 'Não definido';
+   fpNumero                := 0;
    fpTamanhoMaximoNossoNum := 10;
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 10;
    fpCodigosMoraAceitos    := '12';
    fpCodigosGeracaoAceitos := '0123456789';
-   fpModulo := TACBrCalcDigito.Create;
-   fpOrientacoesBanco := TStringList.Create;
+   fpLocalPagamento        := 'Pagar preferencialmente nas agencias do ';
+   fpModulo                := TACBrCalcDigito.Create;
+   fpOrientacoesBanco      := TStringList.Create;
 end;
 
 destructor TACBrBancoClass.Destroy;

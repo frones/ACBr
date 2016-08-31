@@ -85,13 +85,14 @@ uses ACBrUtil;
 constructor TACBrBancoSafra.Create(AOwner: TACBrBanco);
 begin
   inherited Create(AOwner);
-  fpDigito          := 7;
-  fpNome            := 'Banco Safra';
-  fpNumero          := 422;
-  fpTamanhoAgencia  := 4;
-  fpTamanhoConta    := 8;
-  fpTamanhoCarteira := 1;
+  fpDigito                := 7;
+  fpNome                  := 'Banco Safra';
+  fpNumero                := 422;
+  fpTamanhoAgencia        := 4;
+  fpTamanhoConta          := 8;
+  fpTamanhoCarteira       := 1;
   fpTamanhoMaximoNossoNum := 9;
+  fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoSafra.CalcularDigitoVerificador(

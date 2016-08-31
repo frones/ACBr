@@ -66,13 +66,14 @@ uses
 constructor TACBrBancoBRB.create(AOwner: TACBrBanco);
 begin
   inherited create(AOwner);
-  fpDigito := 1;
-  fpNome := 'BRB';
-  fpNumero := 070;
+  fpDigito                := 1;
+  fpNome                  := 'BRB';
+  fpNumero                := 070;
   fpTamanhoMaximoNossoNum := 12;
-  fpTamanhoAgencia := 3;
-  fpTamanhoConta := 6;
-  fpTamanhoCarteira := 3;
+  fpTamanhoAgencia        := 3;
+  fpTamanhoConta          := 6;
+  fpTamanhoCarteira       := 3;
+  fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function Modulo11(Valor: string; Base: Integer = 9; Resto: boolean = false): string;

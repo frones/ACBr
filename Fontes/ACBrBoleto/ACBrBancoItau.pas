@@ -79,13 +79,14 @@ uses
 constructor TACBrBancoItau.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 7;
-   fpNome   := 'Banco Itau';
-   fpNumero:= 341;
+   fpDigito                := 7;
+   fpNome                  := 'Banco Itau';
+   fpNumero                := 341;
    fpTamanhoMaximoNossoNum := 8;
-   fpTamanhoAgencia := 4;
-   fpTamanhoConta   := 5;
-   fpTamanhoCarteira:= 3;
+   fpTamanhoAgencia        := 4;
+   fpTamanhoConta          := 5;
+   fpTamanhoCarteira       := 3;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoItau.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

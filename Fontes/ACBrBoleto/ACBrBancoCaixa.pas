@@ -79,21 +79,21 @@ uses StrUtils, Variants,
 constructor TACBrCaixaEconomica.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 0;
-   fpNome   := 'Caixa Economica Federal';
-   fpNumero:= 104;
-   fpTamanhoAgencia :=  5;
+   fpDigito                := 0;
+   fpNome                  := 'Caixa Economica Federal';
+   fpNumero                := 104;
+   fpTamanhoAgencia        := 5;
    fpTamanhoMaximoNossoNum := 15;
-   fpTamanhoCarteira := 2;
-
-   fValorTotalDocs:= 0;
+   fpTamanhoCarteira       := 2;
+   fpLocalpagamento        := 'Preferencialmente nas Casas Lotéricas até o valor limite';
+   fValorTotalDocs         := 0;
 
    fpOrientacoesBanco.Clear;
    fpOrientacoesBanco.Add(ACBrStr(
                           'SAC CAIXA: 0800 726 0101 (informações, reclamações, sugestões e elogios) ' + sLineBreak +
                           'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 ' + sLineBreak +
-                          'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias) ') + sLineBreak +
-                          'caixa.gov.br ');
+                          'Ouvidoria: 0800 725 7474') + sLineBreak +
+                          '     caixa.gov.br      ');
 end;
 
 function TACBrCaixaEconomica.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

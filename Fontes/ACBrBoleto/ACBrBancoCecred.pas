@@ -84,13 +84,14 @@ uses
 constructor TACBrBancoCecred.create(AOwner: TACBrBanco);
 begin
    inherited create(AOwner);
-   fpDigito := 1;
-   fpNome   := 'Banco Cecred';
-   fpNumero := 085;
+   fpDigito                := 1;
+   fpNome                  := 'Banco Cecred';
+   fpNumero                := 085;
    fpTamanhoMaximoNossoNum := 17;
-   fpTamanhoConta   := 8;
-   fpTamanhoAgencia := 4;
-   fpTamanhoCarteira:= 2;
+   fpTamanhoConta          := 8;
+   fpTamanhoAgencia        := 4;
+   fpTamanhoCarteira       := 2;
+   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoCecred.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

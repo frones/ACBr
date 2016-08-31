@@ -1354,7 +1354,7 @@ begin
            end;
          end;
 
-         if Provedor in [proFiorilli, profintelISS, proPVH, proSystemPro,
+         if Provedor in [proFiorilli, profintelISS, proPronimv2, proPVH, proSystemPro,
                          proSisPMJP, proDigifred] then
            Gerador.wCampoNFSe(tcInt, '#4', 'Pagina', 01, 06, 1, Pagina, '');
        end;

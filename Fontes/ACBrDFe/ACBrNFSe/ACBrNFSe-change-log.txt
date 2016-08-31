@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2016
+-- ACBrNFSeWebServices / pnfsNFSeG --
+[*] Incluido o provedor na lista de provedores que não possuem a consulta a situação
+    do lote.
+    Por: Italo Jurisato Junior
+
 25/08/2016
 -- Diversos --
 [*] Incluido na geração do XML as constantes que contem as mensagens que são

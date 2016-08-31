@@ -769,10 +769,10 @@ begin
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, pro4R, proAgili,
-                  proCoplan, profintelISS, proFiorilli, proGoiania, proGovDigital,
-                  proISSDigital, proISSe, proProdata, proVirtual, proSaatri,
-                  proFreire, proPVH, proVitoria, proTecnos, proSiam, proSisPMJP,
-                  proSystemPro] then
+                  proCoplan, proEL, profintelISS, proFiorilli, proGoiania,
+                  proGovDigital, proISSDigital, proISSe, proProdata, proVirtual,
+                  proSaatri, proFreire, proPVH, proVitoria, proTecnos, proSiam,
+                  proSisPMJP, proSystemPro] then
     Result := '';
 end;
 

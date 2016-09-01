@@ -90,7 +90,6 @@ begin
    fpTamanhoConta          := 7;
    fpTamanhoCarteira       := 1;
    fSequencia              := 1;
-   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoNordeste.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

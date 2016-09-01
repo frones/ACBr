@@ -48,6 +48,7 @@ type
 
   TACBrCaixaEconomica = class(TACBrBancoClass)
    protected
+    function GetLocalPagamento: String; override;
    private
     fValorTotalDocs:Double;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
@@ -85,7 +86,6 @@ begin
    fpTamanhoAgencia        := 5;
    fpTamanhoMaximoNossoNum := 15;
    fpTamanhoCarteira       := 2;
-   fpLocalpagamento        := 'Preferencialmente nas Casas Lotéricas até o valor limite';
    fValorTotalDocs         := 0;
 
    fpOrientacoesBanco.Clear;
@@ -146,6 +146,11 @@ begin
        Result := '0'
     else
        Result := Res[1];
+end;
+
+function TACBrCaixaEconomica.GetLocalPagamento: String;
+begin
+  Result := 'Preferencialmente nas Casas Lotéricas até o valor limite';
 end;
 
 function TACBrCaixaEconomica.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;

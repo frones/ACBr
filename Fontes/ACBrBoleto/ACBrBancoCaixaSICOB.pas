@@ -51,6 +51,7 @@ type
 
   TACBrCaixaEconomicaSICOB = class(TACBrBancoClass)
    protected
+    function GetLocalPagamento: String; override;
    private
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function CalcularDVAgCD(Header: Boolean = False): string;
@@ -95,7 +96,6 @@ begin
    fpTamanhoMaximoNossoNum := 0;
    fpTamanhoAgencia        := 5;
    fpTamanhoConta          := 8;
-   fpLocalpagamento        := 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
    fpOrientacoesBanco.Clear;
    fpOrientacoesBanco.Add(ACBrStr('SAC CAIXA: 0800 726 0101 (informações,reclamações e elogios) ' + sLineBreak+
@@ -349,6 +349,11 @@ begin
   else
     Result := toRetornoOutrasOcorrencias;
   end;
+end;
+
+function TACBrCaixaEconomicaSICOB.GetLocalPagamento: String;
+begin
+  Result := 'Preferencialmente nas Casas Lotéricas até o valor limite';
 end;
 
 function TACBrCaixaEconomicaSICOB.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;

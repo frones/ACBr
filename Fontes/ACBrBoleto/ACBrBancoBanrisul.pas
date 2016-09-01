@@ -91,13 +91,10 @@ begin
   fpTamanhoAgencia        := 4;
   fpTamanhoConta          := 7;
   fpTamanhoCarteira       := 1;
-  fpLocalpagamento        := fpLocalpagamento + fpNome;
-
   fpCodigosMoraAceitos    :='01';
   fpOrientacoesBanco.Clear;
   fpOrientacoesBanco.Add(ACBrStr('SAC       BANRISUL - 0800 646 1515'+sLineBreak+
                                  'OUVIDORIA BANRISUL - 0800 644 2200'));
-
 end;
 
 function Modulo11(Valor: string; Base: Integer=9; Resto: boolean=false): string;

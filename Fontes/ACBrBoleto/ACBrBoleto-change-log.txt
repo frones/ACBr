@@ -47,8 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 30/08/2016 ver: 0.0.206a
+Data: 01/09/2016
+-- ACBrBoleto --
+[*] Simplificação da maneira de trabalho da propriedade "LocalPagamento" (por: DSA)
 
+Data: 30/08/2016 ver: 0.0.206a
 -- ACBrBoleto --
 [+] Adicionado uma nova propriedade Banco.LocalPagamento onde será possível informar uma mensagem diferente da padrão 
     caso o Banco solicitar, essa propriedade será terá a mensagem padrão 'Pagar preferencialmente nas agencias do '.

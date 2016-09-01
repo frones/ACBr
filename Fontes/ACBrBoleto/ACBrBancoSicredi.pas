@@ -92,7 +92,6 @@ begin
    fpTamanhoCarteira       := 1;
    fpCodigosMoraAceitos    := 'AB';
    fpCodigosGeracaoAceitos := '23456789';
-   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoSicredi.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

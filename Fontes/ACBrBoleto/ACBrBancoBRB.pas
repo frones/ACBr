@@ -73,7 +73,6 @@ begin
   fpTamanhoAgencia        := 3;
   fpTamanhoConta          := 6;
   fpTamanhoCarteira       := 3;
-  fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function Modulo11(Valor: string; Base: Integer = 9; Resto: boolean = false): string;

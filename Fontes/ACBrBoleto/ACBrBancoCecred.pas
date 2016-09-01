@@ -91,7 +91,6 @@ begin
    fpTamanhoConta          := 8;
    fpTamanhoAgencia        := 4;
    fpTamanhoCarteira       := 2;
-   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoCecred.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

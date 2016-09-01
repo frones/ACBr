@@ -118,8 +118,6 @@ begin
    fpTamanhoConta          := 12;
    fpTamanhoAgencia        := 4;
    fpTamanhoCarteira       := 2;
-   fpLocalpagamento        := fpLocalpagamento + fpNome;
-
 end;
 
 function TACBrBancoBrasil.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

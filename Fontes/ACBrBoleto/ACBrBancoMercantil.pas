@@ -77,7 +77,6 @@ begin
    fpNumero                := 389;
    fpTamanhoMaximoNossoNum := 6;
    fpTamanhoCarteira       := 2;
-   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoMercantil.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;

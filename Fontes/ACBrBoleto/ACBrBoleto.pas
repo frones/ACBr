@@ -57,6 +57,7 @@ uses Classes, Graphics, Contnrs,
 
 const
   CACBrBoleto_Versao = '0.0.206a';
+  CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
 
   cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
   'Remessa Registrar',
@@ -503,8 +504,8 @@ type
     fpOrientacoesBanco: TStringList;
     fpCodigosMoraAceitos: String;
     fpCodigosGeracaoAceitos: String;
-    fpLocalPagamento: String;
 
+    function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
   public
@@ -523,7 +524,7 @@ type
     property OrientacoesBanco: TStringList read fpOrientacoesBanco;
     property CodigosMoraAceitos: String read fpCodigosMoraAceitos;
     property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
-    property LocalPagamento  : String read fpLocalPagamento;
+    property LocalPagamento  : String read GetLocalPagamento;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
@@ -1931,7 +1932,6 @@ begin
    fpTamanhoConta          := 10;
    fpCodigosMoraAceitos    := '12';
    fpCodigosGeracaoAceitos := '0123456789';
-   fpLocalPagamento        := 'Pagar preferencialmente nas agencias do ';
    fpModulo                := TACBrCalcDigito.Create;
    fpOrientacoesBanco      := TStringList.Create;
 end;
@@ -2063,6 +2063,11 @@ begin
                                          ' para o banco %s') + sLineBreak +
                                          'Ajude no desenvolvimento do ACBrECF. '+ sLineBreak+
                                          'Acesse nosso Forum em: http://acbr.sf.net/',[NomeProcedure,Nome])) ;
+end;
+
+function TACBrBancoClass.GetLocalPagamento: String;
+begin
+  Result := Format(CInstrucaoPagamento, [fpNome] );
 end;
 
 function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDateTime

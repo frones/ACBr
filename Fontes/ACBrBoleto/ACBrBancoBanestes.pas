@@ -89,7 +89,6 @@ begin
    fpTamanhoAgencia        := 3;
    fpTamanhoConta          := 11;
    fpTamanhoCarteira       := 2;
-   fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoBanestes.CalcularCampoASBACE(

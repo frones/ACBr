@@ -92,7 +92,6 @@ begin
   fpTamanhoConta          := 8;
   fpTamanhoCarteira       := 1;
   fpTamanhoMaximoNossoNum := 9;
-  fpLocalpagamento        := fpLocalpagamento + fpNome;
 end;
 
 function TACBrBancoSafra.CalcularDigitoVerificador(

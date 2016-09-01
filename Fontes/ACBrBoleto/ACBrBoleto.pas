@@ -56,7 +56,8 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.206a';
+  CACBrBoleto_Versao = '0.0.207a';
+  CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
 
   cACBrTipoOcorrenciaDecricao: array[0..181] of String = (

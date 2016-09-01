@@ -47,7 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 01/09/2016
+Data: 01/09/2016 ver: 0.0.207a
+-- ACBrBancoBancoob --
+[*] Ajustado a função MontarCodigoBarras para receber as carteiras permitidas no manual, feito alguns ajustes para pontuais
+nas funções GerarRegistroHeader240 e GerarRegistroTransacao240 para passar no validador já que estava dando erro referente a versão
+do layout isso porque a versão disponibilizada do layout do próprio banco não é a mesma do validador do próprio banco. (Antonio Júnior)
+http://www.projetoacbr.com.br/forum/topic/31147-problemas-com-gera%C3%A7%C3%A3o-do-arquivo-de-cobran%C3%A7a-240-sicoob/
+
 -- ACBrBoleto --
 [*] Simplificação da maneira de trabalho da propriedade "LocalPagamento" (por: DSA)
 

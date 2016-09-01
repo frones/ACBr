@@ -166,20 +166,18 @@ var
 begin
 
     FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
-
     ANossoNumero := ACBrTitulo.NossoNumero+CalcularDigitoVerificador(ACBrTitulo);
 
-    if (Length(ACBrTitulo.Carteira) > 0 )then
-       ACarteira := '1'
+    if (ACBrTitulo.Carteira = '1') or (ACBrTitulo.Carteira = '3')then
+       ACarteira := ACBrTitulo.Carteira
     else
-       raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak) ) ;
+       raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "1" ou "3".') );
 
     {Montando Campo Livre}
     CampoLivre    := PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.Modalidade), 2, '0') +
                      PadLeft(trim(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente), 7, '0') +
                      PadLeft(Copy(ANossoNumero,1,8), 8, '0') +  //7 Sequenciais + 1 do digito
                      IntToStrZero(Max(1,ACBrTitulo.Parcela),3);
-
 
     {Codigo de Barras}
     with ACBrTitulo.ACBrBoleto do
@@ -686,8 +684,8 @@ begin
                '0'                                      + //8 - Tipo de registro - Registro header de arquivo
                space(9)                                 + //9 a 17 Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                           + //18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 14, '0')       + //19 a 32 -Número de inscrição do cedente
-               space(20)                                + // 33 a 52 - Brancos
+               PadLeft(OnlyNumber(CNPJCPF), 14, '0')    + //19 a 32 -Número de inscrição do cedente
+               StringOfChar('0', 20)                    + // 33 a 52 - Brancos - Alteração para passar no validador
                '0'                                      + // 53 - Zeros
                PadLeft(OnlyNumber(Agencia), 4, '0')        + //54 a 57 - Código da agência do cedente
                PadRight(AgenciaDigito, 1, '0')              + //58 - Digito agência do cedente
@@ -701,7 +699,7 @@ begin
                FormatDateTime('ddmmyyyy', Now)          + // 144 a 151 - Data do de geração do arquivo
                FormatDateTime('hhmmss', Now)            + // 152 a 157 - Hora de geração do arquivo
                '000001'                                 + // 158 a 163 - Número sequencial do arquivo retorno
-               '081'                                    + // 164 a 166 - Número da versão do layout do arquivo
+               '087'                                    + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
                '00000'                                  + // 167 a 171 - Zeros
                space(54)                                + // 172 a 225 - 54 Brancos
                space(3)                                 + // 226 a 228 - zeros
@@ -714,7 +712,7 @@ begin
                'R'                                     + //9 - Tipo de operação: R (Remessa) ou T (Retorno)
                '01'                                    + //10 a 11 - Tipo de serviço: 01 (Cobrança)
                '  '                                    + //12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
-               '040'                                   + //14 a 16 - Número da versão do layout do lote
+               '045'                                   + //14 a 16 - Número da versão do layout do lote
                ' '                                     + //17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                          + //18 - Tipo de inscrição do cedente
                PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente
@@ -899,7 +897,7 @@ begin
                PadRight(Sacado.UF, 2, ' ')                                + // 152 a 153
                         {Dados do sacador/avalista}
                ATipoInscricaoAvalista                                     + // Tipo de inscrição: Não informado
-               PadRight(Sacado.SacadoAvalista.CNPJCPF,15, ' ' )           + // Número de inscrição
+               PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF),15, '0') + // Número de inscrição
                PadRight(Sacado.SacadoAvalista.NomeAvalista, 30, ' ')      + // Nome do sacador/avalista
                space(10)                                                  + // Uso exclusivo FEBRABAN/CNAB
                PadRight('0',3, '0')                                       + // Uso exclusivo FEBRABAN/CNAB

@@ -155,10 +155,10 @@ function ValidaDIRE(AValue: String): Boolean;
 var
   ano: integer;
 begin
-  // AValue = AANNNNNNNNNN
+  // AValue = AA/NNNNNNN-D
   // Onde: AA Ano corrente da geração do documento
-  //       NNNNNNNNNN Número sequencial dentro do Ano ( 10 dígitos )
-  AValue := OnlyNumber(AValue);
+  //       NNNNNNN Número sequencial dentro do Ano ( 7 dígitos )
+//  AValue := OnlyNumber(AValue);
   ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
 
   if length(AValue) <> 12 then

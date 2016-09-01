@@ -205,7 +205,8 @@ end;
 function TACBrNFeDANFEFR.PrepareReport(NFE: TNFe): Boolean;
 var
   I: Integer;
- wProjectStream: TStringStream;
+  wProjectStream: TStringStream;
+  Page: TfrxReportPage;
 begin
   Result := False;
 
@@ -289,6 +290,20 @@ begin
     end
     else
       raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
+  end;
+
+  for i := 0 to FdmDanfe.frxReport.PreviewPages.Count - 1 do
+  begin
+    Page := FdmDanfe.frxReport.PreviewPages.Page[i];
+    if MargemSuperior > 0 then
+      Page.TopMargin    := MargemSuperior * 10;
+    if MargemInferior > 0 then
+      Page.BottomMargin := MargemInferior * 10;
+    if MargemEsquerda > 0 then
+      Page.LeftMargin   := MargemEsquerda * 10;
+    if MargemDireita > 0 then
+      Page.RightMargin  := MargemDireita * 10;
+    FdmDanfe.frxReport.PreviewPages.ModifyPage(i, Page);
   end;
 end;
 

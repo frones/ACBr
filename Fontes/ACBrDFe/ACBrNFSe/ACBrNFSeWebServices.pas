@@ -2973,10 +2973,10 @@ begin
               with FNotasFiscais.Items[I] do
                 if NFSe.IdentificacaoRps.Numero <> '' then
                 begin
-                  Gerador.wGrupoNFSe('RPS Id="rps:' + NFSe.Numero + '"');
+                  Gerador.wGrupoNFSe('RPS Id="rps:' + NFSe.IdentificacaoRps.Numero + '"');
                   Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalPrestador', 01, 11,  1, NFSe.Prestador.InscricaoMunicipal, '');
                   Gerador.wCampoNFSe(tcStr, '#1', 'NumeroRPS', 01, 12, 1, OnlyNumber(NFSe.IdentificacaoRps.Numero), '');
-                  Gerador.wCampoNFSe(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.IdentificacaoRps.Serie, '');
+                  Gerador.wCampoNFSe(tcStr, '', 'SeriePrestacao', 01, 2,  1, NFSe.SeriePrestacao, '');
                   Gerador.wGrupoNFSe('/RPS');
                 end;
             end;

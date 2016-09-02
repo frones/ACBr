@@ -511,7 +511,7 @@ type
     FvAliq: currency;
     FvISSQN: currency;
     FcMunFG: integer;
-    FcListServ: integer;
+    FcListServ: String;
     FcServTribMun: string;
     FcNatOp: integer;
     FindIncFisc: TpcnindIncentivo;
@@ -524,7 +524,7 @@ type
     property vAliq: currency read FvAliq write FvAliq;
     property vISSQN: currency read FvISSQN write FvISSQN;
     property cMunFG: integer read FcMunFG write FcMunFG;
-    property cListServ: integer read FcListServ write FcListServ;
+    property cListServ: String read FcListServ write FcListServ;
     property cServTribMun: string read FcServTribMun write FcServTribMun;
     property cNatOp: integer read FcNatOp write FcNatOp;
     property indIncFisc: TpcnindIncentivo read FindIncFisc write FindIncFisc;
@@ -815,7 +815,7 @@ begin
   FvAliq       := 0;
   FvISSQN      := 0;
   FcMunFG      := 0;
-  FcListServ   := 0;
+  FcListServ   := '';
   FcServTribMun:= '';
   FcNatOp      := 0;
   FindIncFisc  := iiNao;

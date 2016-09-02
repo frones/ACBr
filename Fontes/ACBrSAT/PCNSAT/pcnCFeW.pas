@@ -612,9 +612,9 @@ begin
     Gerador.wCampo(tcInt, 'U06', 'cMunFG     ', 07, 07, 0, CFe.Det[i].Imposto.ISSQN.cMunFG, DSC_CMUNFG);
     if not ValidarMunicipio(CFe.Det[i].Imposto.ISSQN.cMunFG) then
        Gerador.wAlerta('U06', 'cMunFG', DSC_CMUNFG, ERR_MSG_INVALIDO);
-    Gerador.wCampo(tcInt, 'U07', 'cListServ  ', 05, 05, 0, CFe.Det[i].Imposto.ISSQN.cListServ, DSC_CLISTSERV);
-    if (FOpcoes.ValidarListaServicos) and (CFe.Det[i].Imposto.ISSQN.cListServ <> 0) then
-      if not ValidarCListServ(CFe.Det[i].Imposto.ISSQN.cListServ) then
+    Gerador.wCampo(tcStr, 'U07', 'cListServ  ', 05, 05, 0, CFe.Det[i].Imposto.ISSQN.cListServ, DSC_CLISTSERV);
+    if (FOpcoes.ValidarListaServicos) and (CFe.Det[i].Imposto.ISSQN.cListServ <> '') then
+      if not ValidarCListServ(StrToIntDef(CFe.Det[i].Imposto.ISSQN.cListServ, 0)) then
          Gerador.wAlerta('U07', 'cListServ', DSC_CLISTSERV, ERR_MSG_INVALIDO);
     Gerador.wCampo(tcStr, 'U08', 'cServTribMun', 20, 20, 0, CFe.Det[i].Imposto.ISSQN.cServTribMun, DSC_CSERVTRIBMUN);
     Gerador.wCampo(tcInt, 'U09', 'cNatOp      ', 02, 02, 1, CFe.Det[i].Imposto.ISSQN.cNatOp, DSC_CNATOP);

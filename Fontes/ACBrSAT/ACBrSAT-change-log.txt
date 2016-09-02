@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/09/2016
+-- pcnCFe, pcnCFeW, pcnCFeR --
+[-] Tag "cListServ" modificada para String, de acordo com a Especificação Técnica
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31810
+
 Data: 29/08/2016
 -- ACBrECFVirtualSAT --
 [+] Adicionado o evento "QuandoFecharDocumento",

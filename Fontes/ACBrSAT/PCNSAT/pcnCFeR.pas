@@ -284,7 +284,7 @@ begin
       (*U04*)CFe.Det[i].Imposto.ISSQN.vAliq     := Leitor.rCampo(tcDe2, 'vAliq');
       (*U05*)CFe.Det[i].Imposto.ISSQN.vISSQN    := Leitor.rCampo(tcDe2, 'vISSQN');
       (*U06*)CFe.Det[i].Imposto.ISSQN.cMunFG    := Leitor.rCampo(tcInt, 'cMunFG');
-      (*U07*)CFe.Det[i].Imposto.ISSQN.cListServ := Leitor.rCampo(tcInt, 'cListServ');
+      (*U07*)CFe.Det[i].Imposto.ISSQN.cListServ := Leitor.rCampo(tcStr, 'cListServ');
       (*U08*)CFe.Det[i].Imposto.ISSQN.cServTribMun := Leitor.rCampo(tcStr, 'cServTribMun') ;
       (*U09*)CFe.Det[i].Imposto.ISSQN.cNatOp    := Leitor.rCampo(tcInt, 'cNatOp');
       (*U10*)CFe.Det[i].Imposto.ISSQN.indIncFisc    := StrToindIncentivo(ok, Leitor.rCampo(tcInt, 'indIncFisc'));

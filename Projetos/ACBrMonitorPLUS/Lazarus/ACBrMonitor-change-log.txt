@@ -44,6 +44,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/09/2016
+[*] Corrigida propriedade cListServ para String;
+[*] Compilada versão assinada para o SAC. Versão modificada para 0.3.08.2.
+		por: Celso Marigo Junior
+
+02/09/2016
 [+] Adição da funcionalidade ao imprimir extrato sat setar a impressora, mas somente em fortes
 		por: Juliomar Marchetti
 		

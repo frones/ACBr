@@ -41,7 +41,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.IOUtils,pcnConversao,
-  ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass,
+  ACBrNFeDANFEFRDM, ACBrNFeDANFEClass, ACBrNFeDANFEFR, ACBrBase, ACBrDFe, ACBrNFe, frxClass,AcbrUtil,
   Vcl.ComCtrls;
 
 type
@@ -62,6 +62,15 @@ type
     lstbxFR3: TListBox;
     TabSheet2: TTabSheet;
     RbCanhoto: TRadioGroup;
+    GroupBox1: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    EditMargemEsquerda: TEdit;
+    EditMargemSuperior: TEdit;
+    EditMargemDireita: TEdit;
+    EditMargemInferior: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -69,6 +78,7 @@ type
     procedure btnCarregarEventoClick(Sender: TObject);
   private
     procedure Configuracao;
+    procedure Initializao;
     { Private declarations }
   public
     { Public declarations }
@@ -145,16 +155,33 @@ begin
   for fsFiles in TDirectory.GetFiles('..\Delphi\Report\') do
     if Pos('.fr3', LowerCase(fsFiles)) > 0 then
       lstbxFR3.AddItem(fsFiles, nil);
+
+  Initializao;
 end;
 
 procedure TfrmPrincipal.Configuracao;
 begin
   With ACBrNFeDANFEFR1 do
   begin
-    PosCanhoto := TPosRecibo(RbCanhoto.ItemIndex);
+    PosCanhoto      := TPosRecibo( RbCanhoto.ItemIndex );
 
+    // Margens
+    MargemEsquerda  := StringToFloat( EditMargemEsquerda.Text );
+    MargemSuperior  := StringToFloat( EditMargemSuperior.Text );
+    MargemDireita   := StringToFloat( EditMargemDireita.Text );
+    MargemInferior  := StringToFloat( EditMargemInferior.Text );
   end;
+end;
 
+procedure TfrmPrincipal.Initializao;
+begin
+  With ACBrNFeDANFEFR1 do
+  begin
+    EditMargemEsquerda.Text := FloatToString( MargemEsquerda);
+    EditMargemSuperior.Text := FloatToString( MargemSuperior);
+    EditMargemDireita.Text  := FloatToString( MargemDireita);
+    EditMargemInferior.Text := FloatToString( MargemInferior);
+  end;
 end;
 
 end.

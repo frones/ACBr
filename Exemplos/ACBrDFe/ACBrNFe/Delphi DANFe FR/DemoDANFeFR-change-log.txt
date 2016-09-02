@@ -53,6 +53,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2016
+-- DemoDANFeFR --- 
+[+] Grupo Margem na Aba Configuração
+      Por : Henrique Leonardo
+
 08/04/2016
 -- DemoDANFeFR --- 
 [+] Adicionado Arquivo de Log ao projeto : DemoDANFeFR-change-log.Txt

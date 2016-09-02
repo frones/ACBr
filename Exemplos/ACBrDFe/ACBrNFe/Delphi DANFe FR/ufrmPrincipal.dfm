@@ -112,6 +112,71 @@ object frmPrincipal: TfrmPrincipal
           'Rodap'#233)
         TabOrder = 0
       end
+      object GroupBox1: TGroupBox
+        Left = 0
+        Top = 46
+        Width = 350
+        Height = 59
+        Align = alTop
+        Caption = 'Margem'
+        TabOrder = 1
+        object Label1: TLabel
+          Left = 15
+          Top = 13
+          Width = 40
+          Height = 13
+          Caption = 'Superior'
+        end
+        object Label2: TLabel
+          Left = 75
+          Top = 13
+          Width = 36
+          Height = 13
+          Caption = 'Inferior'
+        end
+        object Label3: TLabel
+          Left = 254
+          Top = 13
+          Width = 31
+          Height = 13
+          Caption = 'Direita'
+        end
+        object Label4: TLabel
+          Left = 194
+          Top = 13
+          Width = 45
+          Height = 13
+          Caption = 'Esquerda'
+        end
+        object EditMargemEsquerda: TEdit
+          Left = 194
+          Top = 31
+          Width = 33
+          Height = 21
+          TabOrder = 0
+        end
+        object EditMargemSuperior: TEdit
+          Left = 15
+          Top = 31
+          Width = 30
+          Height = 21
+          TabOrder = 1
+        end
+        object EditMargemDireita: TEdit
+          Left = 254
+          Top = 31
+          Width = 33
+          Height = 21
+          TabOrder = 2
+        end
+        object EditMargemInferior: TEdit
+          Left = 75
+          Top = 31
+          Width = 33
+          Height = 21
+          TabOrder = 3
+        end
+      end
     end
   end
   object ACBrNFe1: TACBrNFe
@@ -180,7 +245,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 214
   end
   object frxReport1: TfrxReport
-    Version = '5.2.3'
+    Version = '5.5'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]

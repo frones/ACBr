@@ -1384,7 +1384,7 @@ type
 
     procedure AjustaACBrSAT ;
     procedure TrataErrosSAT(Sender : TObject ; E : Exception) ;
-    procedure PrepararImpressaoSAT;
+    procedure PrepararImpressaoSAT(NomeImpressora : string = '');
 
     procedure ConfiguraPosPrinter;
   end;
@@ -7181,7 +7181,7 @@ begin
    ACBrSAT1.DoLog( E.ClassName+' - '+Erro);
 end ;
 
-procedure TFrmACBrMonitor.PrepararImpressaoSAT;
+procedure TFrmACBrMonitor.PrepararImpressaoSAT(NomeImpressora : string);
 begin
   if cbUsarFortes.Checked then
   begin
@@ -7195,6 +7195,9 @@ begin
     ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
 
     try
+      if NomeImpressora <> '' then
+         ACBrSATExtratoFortes1.PrinterName := NomeImpressora
+      else
       if lImpressora.Caption <> '' then
         ACBrSATExtratoFortes1.PrinterName := lImpressora.Caption;
     except

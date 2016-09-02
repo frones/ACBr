@@ -200,21 +200,21 @@ begin
 
     else if Cmd.Metodo = 'imprimirextratovenda' then
     begin
-      PrepararImpressaoSAT;
+      PrepararImpressaoSAT(cmd.Params(1));
       CarregarDadosVenda(cmd.Params(0));
       ACBrSAT1.ImprimirExtrato;
     end
 
     else if Cmd.Metodo = 'imprimirextratoresumido' then
     begin
-      PrepararImpressaoSAT;
+      PrepararImpressaoSAT(cmd.Params(1));
       CarregarDadosVenda(cmd.Params(0));
       ACBrSAT1.ImprimirExtratoResumido;
     end
 
     else if Cmd.Metodo = 'imprimirextratocancelamento' then
     begin
-      PrepararImpressaoSAT;
+      PrepararImpressaoSAT(cmd.Params(2));
       CarregarDadosVenda(cmd.Params(0));
       CarregarDadosCancelamento(cmd.Params(1));
       ACBrSAT1.ImprimirExtratoCancelamento;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 02/09/2016 ver: 0.0.208a
+-- ACBrBancoBrasil --
+[*] Adicionado 3 aos códigos de mora válidos para o Banco do Brasil. (leotelles)
+http://www.projetoacbr.com.br/forum/topic/32180-c%C3%B3digo-morajuros-n%C3%A3o-permitido-para-bb/
+
 Data: 01/09/2016 ver: 0.0.207a
 -- ACBrBancoBancoob --
 [*] Ajustado a função MontarCodigoBarras para receber as carteiras permitidas no manual, feito alguns ajustes para pontuais

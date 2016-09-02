@@ -118,6 +118,7 @@ begin
    fpTamanhoConta          := 12;
    fpTamanhoAgencia        := 4;
    fpTamanhoCarteira       := 2;
+   fpCodigosMoraAceitos    := '123';
 end;
 
 function TACBrBancoBrasil.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

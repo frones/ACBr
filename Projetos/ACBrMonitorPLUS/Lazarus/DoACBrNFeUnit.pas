@@ -1877,7 +1877,7 @@ begin
       i := 0;
       while (i < list.count) and (result = 0) do
       begin
-        UpMunList := UpperCase(TiraAcentos(UTF8Encode(List[i])));
+        UpMunList := UpperCase(TiraAcentos(List[i]));
         if pos(UpMun, UpMunList ) = 9 then
           result := StrToInt(Trim(copy(list[i],1,7)));
 

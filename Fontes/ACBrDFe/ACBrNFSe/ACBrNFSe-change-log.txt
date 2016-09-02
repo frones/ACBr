@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/09/2016
+-- ACBrNFSeWebServices --
+[*] Alterado o tratamento do retorno referente ao Envio do Lote, provedor DBSeller
+    retorna o numero do protocolo mesmo o lote contendo erros.
+    Por: Italo Jurisato Junior
+
 31/08/2016
 -- ACBrNFSeWebServices / pnfsNFSeG --
 [*] Incluido o provedor na lista de provedores que não possuem a consulta a situação

@@ -1966,6 +1966,11 @@ begin
              'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
 
+  if FProvedor = proSP then
+    Result := UpperCase(RetEnvLote.infRec.Sucesso) = UpperCase('true')
+  else
+    Result := (RetEnvLote.InfRec.Protocolo <> '');
+
   if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
   begin
     for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
@@ -1980,14 +1985,12 @@ begin
                          'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
                          'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
                          'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+
+        if FProvedor = proDBSeller then
+          Result := False;
       end;
     end;
   end;
-
-  if FProvedor = proSP then
-    Result := UpperCase(RetEnvLote.infRec.Sucesso) = UpperCase('true')
-  else
-    Result := (RetEnvLote.InfRec.Protocolo <> '');
 end;
 
 procedure TNFSeEnviarLoteRPS.FinalizarServico;

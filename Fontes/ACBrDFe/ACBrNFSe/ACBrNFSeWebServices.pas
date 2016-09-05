@@ -4470,7 +4470,7 @@ begin
   begin
     if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proEL, proGoverna] then
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna] then
         Result := True
       else
         Result := FConsSitLoteRPS.Executar;

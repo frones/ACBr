@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2016
+-- ACBrNFSeWebServices / pnfsAbrirSessaoResposta --
+[*] Melhoria no tratamento do Retorno dos Web Services.
+    Por: Italo Jurisato Junior
+
 02/09/2016
 -- ACBrNFSeWebServices --
 [*] Alterado o tratamento do retorno referente ao Envio do Lote, provedor DBSeller

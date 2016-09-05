@@ -107,7 +107,7 @@ type
     procedure InicializarDadosMsg(AIncluiEncodingCab: Boolean);
     procedure FinalizarServico; override;
     function RemoverEncoding(AEncoding, AXML: String): String;
-    function ExtrairRetorno: String;
+    function ExtrairRetorno(GrupoMsgRet: String): String;
     function ExtrairNotasRetorno: Boolean;
     function GerarRetornoNFSe(ARetNFSe: String): String;
     procedure DefinirSignatureNode(TipoEnvio: String);
@@ -884,7 +884,7 @@ begin
   Result := StringReplace(AXML, AEncoding, '', [rfReplaceAll])
 end;
 
-function TNFSeWebService.ExtrairRetorno: String;
+function TNFSeWebService.ExtrairRetorno(GrupoMsgRet: String): String;
 var
   Encoding, AuxXML, XMLRet: String;
 begin
@@ -907,8 +907,8 @@ begin
   if FPConfiguracoesNFSe.Geral.RetirarAcentos then
     AuxXML := TiraAcentos(AuxXML);
 
-  if FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar <> '' then
-    XMLRet := SeparaDados(AuxXML, FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar)
+  if GrupoMsgRet <> '' then
+    XMLRet := SeparaDados(AuxXML, GrupoMsgRet)
   else
   begin
     XMLRet := SeparaDados(AuxXML, 'return');
@@ -1929,7 +1929,7 @@ function TNFSeEnviarLoteRPS.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar);
 
   if Assigned(FRetEnvLote) then
     FreeAndNil(FRetEnvLote);
@@ -2147,7 +2147,7 @@ function TNFSeEnviarSincrono.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
 
   if Assigned(FRetEnvLote) then
     FreeAndNil(FRetEnvLote);
@@ -2391,7 +2391,7 @@ function TNFSeGerarNFSe.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Gerar);
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Gerar);
   Result := ExtrairNotasRetorno;
 end;
@@ -2604,7 +2604,7 @@ begin
   FRetSitLote.Free;
   FRetSitLote := TretSitLote.Create;
 
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsSit);
 
   FRetSitLote.Leitor.Arquivo := FPRetWS;
   FRetSitLote.Provedor       := FProvedor;
@@ -2832,7 +2832,7 @@ function TNFSeConsultarLoteRPS.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsLote);
   Result := ExtrairNotasRetorno;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsLote);
@@ -3054,7 +3054,7 @@ function TNFSeConsultarNfseRPS.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSeRPS);
   Result := ExtrairNotasRetorno;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSeRPS);
@@ -3221,7 +3221,7 @@ function TNFSeConsultarNfse.TratarResposta: Boolean;
 begin
   FPMsg := '';
   FaMsg := '';
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSe);
   Result := ExtrairNotasRetorno;
 
   FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.ConsNFSe);
@@ -3650,7 +3650,7 @@ function TNFSeCancelarNfse.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Cancelar);
 
   if Assigned(FRetCancNFSe) then
     FRetCancNFSe.Free;
@@ -3919,7 +3919,7 @@ function TNFSeSubstituirNFSe.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Substituir);
 
   FNFSeRetorno := TRetSubsNfse.Create;
   try
@@ -4077,7 +4077,7 @@ function TNFSeAbrirSessao.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.AbrirSessao);
 
   FRetAbrirSessao := TRetAbrirSessao.Create;
   try
@@ -4235,7 +4235,7 @@ function TNFSeFecharSessao.TratarResposta: Boolean;
 //var
 //  i: Integer;
 begin
-  FPRetWS := ExtrairRetorno;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.FecharSessao);
 
 //  FRetAbrirSessao := TRetAbrirSessao.Create;
   try

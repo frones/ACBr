@@ -5913,7 +5913,7 @@ end;
 
 procedure TACBrECF.DoVerificaValorGT ;
 var
-   ValorGT_AAC, ValorGT_ECF : Double ;
+   ValorGT_ECF : Double ;
    Erro : Integer ;
 begin
   if not Assigned( fsAAC ) then
@@ -5923,8 +5923,7 @@ begin
      fsNumSerieCache := NumSerie;
 
   ValorGT_ECF := GrandeTotal ;
-  ValorGT_AAC := ValorGT_ECF;
-  Erro := fsAAC.VerificarGTECF( fsNumSerieCache, ValorGT_AAC );
+  Erro := fsAAC.VerificarGTECF( fsNumSerieCache, ValorGT_ECF );
 
   if Erro = -1 then
      raise EACBrAAC_NumSerieNaoEncontrado.Create( ACBrStr( Format(

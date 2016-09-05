@@ -3593,6 +3593,7 @@ begin
       CodigoCanc := TNFSeCancelarNfse(Self).FCodigoCancelamento;
       MotivoCanc := TNFSeCancelarNfse(Self).FMotivoCancelamento;
 
+      SerieNFSe  := FNotasFiscais.Items[0].NFSe.SeriePrestacao;
       NumeroRPS  := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
       SerieRps   := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
       ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;

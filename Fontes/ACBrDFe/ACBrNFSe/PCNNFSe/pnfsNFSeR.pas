@@ -2945,7 +2945,7 @@ begin
     with NFSe do
     begin
       Numero := Leitor.rCampo(tcStr, 'NumNf');
-
+      SeriePrestacao := Leitor.rCampo(tcStr, 'SerNf');
       sDataTemp := Leitor.rCampo(tcStr, 'DtEmi');
 
       if sDataTemp = EmptyStr then

@@ -1435,7 +1435,7 @@ begin
                 Gerador.wGrupoNFSe('CodigoContribuinte>' + SenhaWeb + '</CodigoContribuinte');
                 Gerador.wGrupoNFSe('/Login');
                 Gerador.wGrupoNFSe('Nota');
-                Gerador.wGrupoNFSe('SerieNota>' + 'NFSE' + '</SerieNota');
+                Gerador.wGrupoNFSe('SerieNota>' + SerieNFSe + '</SerieNota');
                 Gerador.wGrupoNFSe('NumeroNota>' + NumeroNfse + '</NumeroNota');
                 Gerador.wGrupoNFSe('SerieRPS>' + SerieRps + '</SerieRPS');
                 Gerador.wGrupoNFSe('NumeroRps>' + NumeroRps + '</NumeroRps');

@@ -109,6 +109,9 @@ begin
   // Usada para enviar o eco ao Micro Terminal.
   Result := '';
 
+  if (aString = EmptyStr) then
+    Exit;
+
   for I := 0 to Length(aString) do
   begin
     aChar := aString[I];

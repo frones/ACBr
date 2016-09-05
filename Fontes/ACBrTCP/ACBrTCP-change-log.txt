@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2016
+-- ACBrMTerClass --
+[-] Correção de erro ao ser chamada função ComandoEco com String vazia.
+	(por: Elias César)
+
 30/08/2016
 -- ACBrMTerClass --
 [-] Alteração para retirar os caracteres de controle dos dados recebidos 

@@ -254,7 +254,11 @@ begin
                  '"'+NomeArquivoAux+'"'+sLineBreak+
                  'não encontrado') );
 
+  {$IFDEF DELPHI2007_UP}
+  FileAge( fsNomeCompleto, fsDtHrArquivo );
+  {$ELSE}
   fsDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) );
+  {$ENDIF}
 
   // Lê arquivo de modo binário e transfere para a AnsiString = S //
   MS := TMemoryStream.Create;
@@ -592,7 +596,11 @@ begin
      if fsEfetuarFlush then
         FlushFileToDisk( fsNomeCompleto );
 
+     {$IFDEF DELPHI2007_UP}
+     FileAge( fsNomeCompleto, fsDtHrArquivo );
+     {$ELSE}
      fsDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) );
+     {$ENDIF}
 
      if Assigned( fsOnDepoisGravarArquivo ) then
         fsOnDepoisGravarArquivo( Self );
@@ -613,7 +621,11 @@ begin
   begin
      // Data/Hora do arquivo é diferente ?
      try
-       NewDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) ) ;
+       {$IFDEF DELPHI2007_UP}
+       FileAge( fsNomeCompleto, NewDtHrArquivo );
+       {$ELSE}
+       NewDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) );
+       {$ENDIF}
        Recarregar := (fsDtHrArquivo <> NewDtHrArquivo)
      except
        Recarregar := true;

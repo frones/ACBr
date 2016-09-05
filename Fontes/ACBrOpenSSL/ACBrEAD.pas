@@ -1089,10 +1089,11 @@ begin
     begin
        BytesToEnd := (StreamSize - PosStream);
 
+       if BytesToEnd <= 0 then
+          Break;
+
        if BytesToEnd > BufferSize then
           BytesToRead := BufferSize
-       else if BytesToEnd <= 0 then
-          Break
        else
           BytesToRead := BytesToEnd;
 

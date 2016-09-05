@@ -429,7 +429,7 @@ end ;
 
 function TACBrPAF.SaveToFile_TITP(Arquivo: String): Boolean;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
   SysUtils.DeleteFile(Arquivo);
@@ -471,7 +471,7 @@ end;
 
 function TACBrPAF.SaveToFile_Z(Arquivo: String): Boolean;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
   SysUtils.DeleteFile(Arquivo);
@@ -500,7 +500,7 @@ var
   PAF_MD5 : String ;
   iFor: Integer;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
   if Assigned( fsAAC ) then
@@ -630,7 +630,7 @@ end;
 
 function TACBrPAF.SaveToFile_RegistrosPAF(Arquivo: String): Boolean;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
   SysUtils.DeleteFile(Arquivo);

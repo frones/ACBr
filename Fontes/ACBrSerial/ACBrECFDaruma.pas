@@ -351,8 +351,10 @@ function DarumaTraduzirTagBloco(const ATag, Conteudo: AnsiString;
 
 
 implementation
-Uses SysUtils, Math,
-    {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+Uses
+    {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+    SysUtils, Math,
+    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
     ACBrUtil, ACBrECF, ACBrConsts;
 
 { ----------------------------- TACBrECFDaruma ------------------------------ }
@@ -5359,7 +5361,7 @@ begin
     Ativo := OldAtivo;
 
     if AnsiUpperCase(PathDest) <> AnsiUpperCase(NomeArquivo) then
-      DeleteFile(PathDest);
+      SysUtils.DeleteFile(PathDest);
   end;
 end;
 
@@ -5400,7 +5402,7 @@ begin
     Ativo := OldAtivo;
 
     if AnsiUpperCase(PathDest) <> AnsiUpperCase(NomeArquivo) then
-      DeleteFile(PathDest);
+      SysUtils.DeleteFile(PathDest);
   end;
 end;
 
@@ -5420,7 +5422,7 @@ begin
 
   Ativo := False;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
 
      GravaLog( '   xrEfetuarDownloadMFD_ECF_Daruma' );
      Resp := xrEfetuarDownloadMFD_ECF_Daruma( 'COO', '000001', '999999', ArqDest ) ;
@@ -5450,7 +5452,7 @@ begin
 
   Ativo := False;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
 
      GravaLog( '   xrEfetuarDownloadMF_ECF_Daruma' );
      Resp := xrEfetuarDownloadMF_ECF_Daruma( ArqDest ) ;
@@ -5538,7 +5540,7 @@ begin
     Ativo := OldAtivo;
 
     if AnsiUpperCase(PathDest) <> AnsiUpperCase(NomeArquivo) then
-      DeleteFile(PathDest);
+      SysUtils.DeleteFile(PathDest);
   end;
 end;
 
@@ -5623,7 +5625,7 @@ begin
     Ativo := OldAtivo;
 
     if AnsiUpperCase(PathDest) <> AnsiUpperCase(NomeArquivo) then
-      DeleteFile(PathDest);
+      SysUtils.DeleteFile(PathDest);
   end;
 end;
 

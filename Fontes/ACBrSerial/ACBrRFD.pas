@@ -57,7 +57,7 @@ uses ACBrBase, ACBrConsts,
          ,BaseUnix
        {$endif}
      {$ENDIF}
-     {$IFNDEF COMPILER6_UP} ,ACBrD5, Windows {$ENDIF};
+     {$IFNDEF COMPILER6_UP} ,ACBrD5 {$ENDIF};
 
 const
    cRFDAtoCotepe  = 'PC5207 01.00.00' ;
@@ -374,6 +374,7 @@ end;
 
 implementation
 Uses ACBrECF,
+    {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
     {$IFNDEF COMPILER6_UP}
       FileCtrl,
     {$ELSE}
@@ -1128,7 +1129,7 @@ begin
        { Criando BAT para chamar o "openssl.exe" com redirecionador ">" }
        WriteToTXT(ArqB,'openssl version > ' + ArqV, False) ;
        RunCommand(ArqB,'' ,True,0);
-       DeleteFile(ArqB) ;
+       SysUtils.DeleteFile(ArqB) ;
      {$ELSE}
        RunCommand('openssl' ,'version > '+ArqV , True);
      {$ENDIF}
@@ -1138,7 +1139,7 @@ begin
          raise Exception.Create(ACBrStr('Não existe método para calculo do registro EAD'+sLineBreak+
                                '(Instale o programa "openssl", disponível em:'+sLineBreak+
                                ' http://www.openssl.org/related/binaries.html )')) ;
-      DeleteFile( ArqV ) ;
+      SysUtils.DeleteFile( ArqV ) ;
   end ;
 *)
 

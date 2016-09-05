@@ -396,8 +396,10 @@ TACBrECFSweda = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, Math,
-    {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows {$ENDIF},
+Uses
+   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+   SysUtils, Math,
+    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
      ACBrECF, ACBrConsts, ACBrUtil ;
 
 { ----------------------------- TACBrECFSweda ------------------------------ }
@@ -3430,7 +3432,7 @@ begin
     if not FileExists( ExtractFilePath( sLibName ) + 'Swmfd.dll') then
        raise EACBrECFERRO.Create( ACBrStr( 'Não foi encontrada a dll auxiliar Swmfd.dll.' ) ) ;
    {$ENDIF}
-   DeleteFile( ExtractFilePath( sLibName ) + 'SWC.INI');
+   SysUtils.DeleteFile( ExtractFilePath( sLibName ) + 'SWC.INI');
 
    SwedaFunctionDetect('ECF_AbrePortaSerial', @xECF_AbrePortaSerial);
    SwedaFunctionDetect('ECF_DownloadMFD', @xECF_DownloadMFD);
@@ -3556,7 +3558,7 @@ begin
 
     PathBin := ExtractFilePath(NomeArquivo);
     PathBin:= PathBin + 'MF.BIN';
-    DeleteFile( PathBin );
+    SysUtils.DeleteFile( PathBin );
 
     Resp := xECF_DownloadMF( pathBin );
     if Resp <> 1 then
@@ -3618,7 +3620,7 @@ begin
 
     PathBin := ExtractFilePath(NomeArquivo);
     PathBin:= PathBin + 'MF.BIN';
-    DeleteFile( PathBin );
+    SysUtils.DeleteFile( PathBin );
 
     Resp := xECF_DownloadMF( pathBin );
     if Resp <> 1 then

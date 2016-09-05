@@ -246,7 +246,9 @@ type
 
 implementation
 
-Uses dateutils, Math, strutils,
+Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+  DateUtils, Math, StrUtils,
   ACBrTEFD, ACBrUtil;
 
 { TACBrTEFDRespCliDTEF }
@@ -544,7 +546,7 @@ begin
            if Resp.NSU <> '' then
               NSUs := NSUs + sLineBreak + 'NSU: '+Resp.NSU ;
 
-           DeleteFile( ArquivosVerficar[ 0 ] );
+           SysUtils.DeleteFile( ArquivosVerficar[ 0 ] );
            ArquivosVerficar.Delete( 0 );
         except
         end;
@@ -792,7 +794,7 @@ begin
            if ((Funcao = 7) or (Funcao = 9)) then
             begin
               ArquivoResposta.LoadFromFile(ArqResp + 'ULTIMO.PRN');
-              DeleteFile(ArqResp + 'ULTIMO.PRN');
+              SysUtils.DeleteFile(ArqResp + 'ULTIMO.PRN');
               ImprimirComprovantes(ArquivoResposta);
               ApagaEVerifica( ArqBackup );
             end

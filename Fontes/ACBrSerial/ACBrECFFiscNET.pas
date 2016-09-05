@@ -360,7 +360,8 @@ TACBrECFFiscNET = class( TACBrECFClass )
 
 implementation
 Uses ACBrECF, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils{$ELSE} ACBrD5, Windows{$ENDIF},
+     {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+     {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
      SysUtils, Math, IniFiles ;
 
 { -------------------------  TACBrECFFiscNETComando -------------------------- }
@@ -2653,7 +2654,7 @@ begin
      AbrePortaSerialDLL( PortaSerial, ExtractFilePath( NomeArquivo ) ) ;
 
      ArqTmp := ExtractFilePath( NomeArquivo ) ;
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
 
      iRet := xElgin_DownloadMFD(ArqTmp + '.mfd', '1', DiaIni, DiaFim, '');
      if (iRet <> 1) then
@@ -2671,7 +2672,7 @@ begin
         raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Elgin_FormatoDadosMFD.'+sLineBreak+
                                          'Arquivo: "' + NomeArquivo + '" não gerado' )) ;
      xElgin_FechaPortaSerial();
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
   finally
     Ativo := OldAtivo ;
   end;
@@ -2706,7 +2707,7 @@ begin
      AbrePortaSerialDLL( PortaSerial, ExtractFilePath( NomeArquivo ) ) ;
 
      ArqTmp := ExtractFilePath( NomeArquivo ) ;
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
 
      iRet := xElgin_DownloadMFD(ArqTmp + '.mfd', '2', CooIni, CooFim, Prop);
      if (iRet <> 1) then
@@ -2724,7 +2725,7 @@ begin
         raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Elgin_FormatoDadosMFD.'+sLineBreak+
                                          'Arquivo: "' + NomeArquivo + '" não gerado' )) ;
      xElgin_FechaPortaSerial();
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
   finally
     Ativo := OldAtivo ;
   end;
@@ -2816,7 +2817,7 @@ begin
       begin
         ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.TDM' ;
         if FileExists( NomeArquivo ) then
-           DeleteFile( NomeArquivo ) ;
+           SysUtils.DeleteFile( NomeArquivo ) ;
 
         DiaIni := FormatDateTime('yyyymmdd', DataInicial);
         DiaFim := FormatDateTime('yyyymmdd', DataFinal);
@@ -2913,7 +2914,7 @@ begin
       begin
         ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.TDM' ;
         if FileExists( NomeArquivo ) then
-           DeleteFile( NomeArquivo ) ;
+           SysUtils.DeleteFile( NomeArquivo ) ;
 
         iRet := xDLLReadLeMemorias( PortaSerial, ArqTmp, NumFab, '1');
 

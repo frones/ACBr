@@ -297,7 +297,9 @@ type
 
 implementation
 
-Uses dateutils, Math, StrUtils,
+Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+  dateutils, Math, StrUtils,
   ACBrTEFD, ACBrConsts, ACBrUtil ;
 
 { TACBrTEFDRespCliSiTef }

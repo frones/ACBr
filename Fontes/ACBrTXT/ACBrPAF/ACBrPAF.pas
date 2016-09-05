@@ -193,6 +193,7 @@ type
 implementation
 
 Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF} ;
 
 {$IFNDEF FPC}
@@ -431,7 +432,7 @@ begin
   Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   with FPAF_TITP do
   begin
@@ -473,7 +474,7 @@ begin
   Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   with PAF_Z do
   begin
@@ -537,7 +538,7 @@ begin
     end;
   end ;
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   with FPAF_N do
   begin
@@ -632,7 +633,7 @@ begin
   Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   FPAF_U.Conteudo.Clear;
   FPAF_A.Conteudo.Clear;

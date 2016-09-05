@@ -119,7 +119,9 @@ type
 
 implementation
 
-Uses ACBrUtil ;
+Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+  ACBrUtil ;
 
 (* TACBrTXTClass *)
 
@@ -188,7 +190,7 @@ begin
 
    if FNomeArquivo <> '' then
       if FileExists( FNomeArquivo ) then
-         DeleteFile( FNomeArquivo );
+         SysUtils.DeleteFile( FNomeArquivo );
 end;
 
 function TACBrTXTClass.Add(const AString: String; AddDelimiter: Boolean

@@ -671,6 +671,7 @@ function BematechTraduzirTagBloco(const ATag, Conteudo: AnsiString;
 
 implementation
 Uses
+   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
    SysUtils, IniFiles, math,
    {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5,{$ENDIF}
    ACBrConsts, ACBrECF, ACBrECFEscECF, ACBrUtil;
@@ -3775,7 +3776,7 @@ var
 begin
  //{$IFNDEF MSWINDOWS}
  // ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // DiaIni   := FormatDateTime('ddmmyy',DataInicial) ;
  // DiaFim   := FormatDateTime('ddmmyy',DataFinal) ;
@@ -3799,7 +3800,7 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
@@ -3807,7 +3808,7 @@ begin
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
   try
-     DeleteFile(NomeArquivo);
+     SysUtils.DeleteFile(NomeArquivo);
      AbrePortaSerialDLL( ExtractFilePath( NomeArquivo ) ) ;
 
      Resp := xBematech_FI_EspelhoMFD( NomeArquivo, DiaIni, DiaFim, 'D',
@@ -3839,7 +3840,7 @@ begin
 
  //{$IFNDEF MSWINDOWS}
  // ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.mfd' ;
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // OldAtivo := Ativo ;
  // try
@@ -3860,13 +3861,13 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
   OldAtivo := Ativo ;
   try
-     DeleteFile(NomeArquivo);
+     SysUtils.DeleteFile(NomeArquivo);
      AbrePortaSerialDLL( ExtractFilePath( NomeArquivo ) ) ;
 
      Resp := xBematech_FI_EspelhoMFD( NomeArquivo, CooIni, CooFim, 'C',
@@ -3953,7 +3954,7 @@ begin
   FilePath := ExtractFilePath( NomeArquivo );
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
      AbrePortaSerialDLL( FilePath ) ;
 
      GravaLog( '   xBematech_FI_DownloadMFD' );
@@ -3977,7 +3978,7 @@ begin
   FilePath := ExtractFilePath( NomeArquivo );
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
      AbrePortaSerialDLL( FilePath ) ;
 
      GravaLog( '   xBematech_FI_DownloadMF' );
@@ -4009,7 +4010,7 @@ begin
 
  //{$IFNDEF MSWINDOWS}
  // ArqTmp := FilePath +'ACBr.mfd';
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // DiaIni := FormatDateTime('ddmmyy',DataInicial) ;
  // DiaFim := FormatDateTime('ddmmyy',DataFinal) ;
@@ -4033,7 +4034,7 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
@@ -4041,7 +4042,7 @@ begin
   DiaFim   := FormatDateTime('dd"/"mm"/"yyyy', DataFinal) ;
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
 
      AbrePortaSerialDLL( FilePath ) ;
 
@@ -4133,7 +4134,7 @@ begin
  // DadoFinal   := IntToStrZero( ContFinal, 6 ) ;
  //
  // ArqTmp := FilePath + 'ACBr.mfd';
- // DeleteFile( ArqTmp ) ;
+ // SysUtils.DeleteFile( ArqTmp ) ;
  //
  // OldAtivo := Ativo ;
  // try
@@ -4154,7 +4155,7 @@ begin
  //       raise EACBrECFErro.Create( ACBrStr( 'Erro na execução do utilitário "bemamfd2".'+sLineBreak+
  //                               'Arquivo: "'+NomeArquivo + '" não gerado' )) ;
  // finally
- //    DeleteFile( ArqTmp ) ;
+ //    SysUtils.DeleteFile( ArqTmp ) ;
  //    Ativo := OldAtivo ;
  // end;
  //{$ELSE}
@@ -4173,7 +4174,7 @@ begin
 
   OldAtivo := Ativo ;
   try
-     DeleteFile( NomeArquivo );
+     SysUtils.DeleteFile( NomeArquivo );
 
      AbrePortaSerialDLL( FilePath ) ;
 

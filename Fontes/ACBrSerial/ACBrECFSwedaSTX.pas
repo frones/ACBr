@@ -307,8 +307,10 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, IniFiles, Math,
-   {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+Uses
+   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+   SysUtils, IniFiles, Math,
+   {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
    ACBrECF, ACBrConsts, ACBrUtil;
 
 { --------------------------- TACBrECFSwedaCache ---------------------------- }
@@ -1154,7 +1156,7 @@ begin
      begin
        PathBin := ExtractFilePath(NomeArquivo);   // na expecificacao de requisito 2.01 pede para gerar e assinar o "Arquivo Binario" da MF também
        PathBin := PathBin + 'MF.BIN';
-       DeleteFile( PathBin );
+       SysUtils.DeleteFile( PathBin );
 
        Resp := xECF_DownloadMF( pathBin );
        if Resp <> 1 then
@@ -1350,7 +1352,7 @@ begin
           //na expecificacao de requisito 2.01 pede para gerar e assinar o "Arquivo Binario" da MF também
           PathBin := ExtractFilePath(NomeArquivo);
           PathBin:= PathBin + 'MF.BIN';
-          DeleteFile( PathBin );
+          SysUtils.DeleteFile( PathBin );
 
           Resp := xECF_DownloadMF( pathBin );
           if Resp <> 1 then

@@ -2187,6 +2187,11 @@ Var Fim : Boolean ;
 begin
   if not Assigned(fpDevice) then exit ;
 
+  {$IFNDEF FPC}
+  // A linha abaixo remove Warning do Delphi (W1036 Variable 'Fim' might not have been initialized)
+  // Isso é um bug do compilador Win32 presente pelo menos da versão Delphi 6 até a XE7 (http://stackoverflow.com/a/25905266/460775)
+  Fim := True;
+  {$ENDIF}
   try
      fpRespostaComando := '' ;
      {$IFNDEF NOGUI}

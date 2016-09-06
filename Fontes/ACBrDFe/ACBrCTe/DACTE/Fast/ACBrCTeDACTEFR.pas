@@ -2097,7 +2097,7 @@ begin
         vTemp.Free;
       end;
     end;
-    FieldByName('ObsCont').AsString := BufferObs;
+    FieldByName('infAdFisco').AsString := BufferObs;
 
     BufferObs := '';
     if FCTe.compl.ObsCont.Count > 0 then
@@ -2126,7 +2126,7 @@ begin
       end;
 
     end;
-    FieldByName('infAdFisco').AsString := BufferObs;
+    FieldByName('ObsCont').AsString := BufferObs;
     Post;
   end;
 

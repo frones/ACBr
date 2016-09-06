@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2016
+-- ACBrCTeDACTEFR --
+[*] Estava invertido os campos do DataSet em relação ao conteudo atribuido.
+    Por: NCC
+
 17/08/2016
 -- diversos --
 [+] Criada a unit pcteConsts que contem as constantes de mensagens usadas na

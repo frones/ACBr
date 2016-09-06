@@ -1449,7 +1449,7 @@ begin
 end;
 
 function TNFSeWebService.ExtrairGrupoMsgRet(AGrupo: String): String;
-Var
+var
   aMsgRet: String;
 begin
   Result := FPRetWS;
@@ -1652,6 +1652,7 @@ end;
 function TNFSeGerarLoteRPS.Executar: Boolean;
 begin
   SalvarEnvio;
+  Result := True;
 end;
 
 { TNFSeEnviarLoteRPS }
@@ -2594,7 +2595,6 @@ begin
   if (FSituacao = cSituacao) or (FSituacao = '3') or (FSituacao = '4') or
      (FSituacao = '5') or (FSituacao = 'Erro') then
     Result := TratarRespostaFinal;
-
 end;
 
 function TNFSeConsultarSituacaoLoteRPS.TratarResposta: Boolean;

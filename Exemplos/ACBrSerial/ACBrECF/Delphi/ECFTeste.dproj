@@ -68,13 +68,11 @@
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
-        <Icon_MainIcon>ECFTeste_Icon.ico</Icon_MainIcon>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
-        <Icon_MainIcon>ECFTeste_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>

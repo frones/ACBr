@@ -616,6 +616,7 @@ var
    Recarregar : Boolean ;
 begin
   Recarregar := ArquivoInvalido;
+  //GravaLog( 'VerificaReCarregarArquivo_Inicio(Recarregar = '+ BoolToStr(Recarregar, True ) + ' )' );
 
   if not Recarregar then
   begin
@@ -631,6 +632,8 @@ begin
        Recarregar := true;
      end;
   end ;
+
+//  GravaLog( 'VerificaReCarregarArquivo_FIM(Recarregar = '+ BoolToStr(Recarregar, True) + ' )' );
 
   if Recarregar then
      AbrirArquivo ;
@@ -668,7 +671,7 @@ begin
   GravaLog( 'VerificarGTECF( '+ NumeroSerie+ ', '+FloatToStr(ValorGT) +' )' );
 
   Result := 0;
-  VerificaReCarregarArquivo;
+//  VerificaReCarregarArquivo; // Não necessário. Já é chamado dentro de AchaECF
 
   AECF := AchaECF( NumeroSerie );
   if not Assigned( AECF ) then

@@ -2666,7 +2666,7 @@ begin
                  '1' : xSituacao := 'Aguardando processamento';
                  '2' : xSituacao := 'Não Processado, lote com erro';
                  '3' : xSituacao := 'Lote Processado com avisos';
-                 '4' : xSituacao := 'LOte Processado com sucesso';
+                 '4' : xSituacao := 'Lote Processado com sucesso';
                end;
              end;
 

@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/09/2016
+[+] Adição do registro J1, J2 e dos registro V
+		por : Juliomar Marchetti
+		
 02/12/2015
 -- ACBrPAF_Z_Class --
 [-] acertos na geração do arquivo Z do Paf-ECF

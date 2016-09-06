@@ -14,7 +14,8 @@ uses
   ACBrPAF_F, ACBrPAF_F_Class, ACBrPAF_G, ACBrPAF_G_Class, ACBrPAF_H, 
   ACBrPAF_H_Class, ACBrPAF_L, ACBrPAF_L_Class, ACBrPAF_M, ACBrPAF_M_Class, 
   ACBrPAF_S, ACBrPAF_S_Class, ACBrPAF_TITP, ACBrPAF_TITP_Class, ACBrPAF_U, 
-  ACBrPAF_U_Class, ACBrPAF_Z, ACBrPAF_Z_Class, LazarusPackageIntf;
+  ACBrPAF_U_Class, ACBrPAF_Z, ACBrPAF_Z_Class, ACBrPAF_V, ACBrPAF_V_Class, 
+  ACBrPAF_J, ACBrPAF_J_Class, LazarusPackageIntf;
 
 implementation
 

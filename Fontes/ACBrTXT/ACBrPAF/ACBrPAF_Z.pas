@@ -54,16 +54,7 @@ type
   TRegistroZ2 = Class(TRegistroX1);
 
   // REGISTRO TIPO Z3 - IDENTIFICAÇÃO DO PAF-ECF
-  TRegistroZ3 = Class
-  private
-    fLAUDO:  string;         /// Número do Laudo de Análise Funcional
-    fNOME:   string;         /// Nome do aplicativo indicado no Laudo de Análise Técnica
-    fVERSAO: string;         /// Versão atual do aplicativo indicado no Laudo de Análise Técnica
-  public
-    property LAUDO: string read fLAUDO write fLAUDO;
-    property NOME: string read fNOME write fNOME;
-    property VERSAO: string read fVERSAO write fVERSAO;
-  end;
+  TRegistroZ3 = Class(TRegistroX3);
 
   // REGISTRO TIPO Z4 – Totalização de vendas a CPF/CNPJ:
   TRegistroZ4 = Class

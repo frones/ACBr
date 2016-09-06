@@ -48,7 +48,7 @@ interface
 
 uses
   LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_Z,
+  Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_Z, ACBrPAF_V,
   ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPAFRegistros, Math, ACBrEAD, ExtCtrls,
   ComCtrls, FileUtil;
 
@@ -59,6 +59,7 @@ type
   TForm6 = class(TForm)
     ACBrPAF: TACBrPAF;
     btnZ: TButton;
+    btnV: TButton;
     cbEAD: TCheckBox;
     GroupBox1: TGroupBox;
     Label1: TLabel;
@@ -81,6 +82,7 @@ type
     logErros: TMemo;
     ts2: TTabSheet;
     mmArquivoGerado: TMemo;
+    procedure btnVClick(Sender: TObject);
     procedure btnZClick(Sender: TObject);
     procedure cbEADChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -194,6 +196,38 @@ begin
     end;
   end;
   ACBrPAF.SaveToFile_Z('PAF_Z.TXT');
+end;
+
+procedure TForm6.btnVClick(Sender: TObject);
+var
+  V4: TRegistroV4;
+  i: integer;
+begin
+  // registro V1
+  PreencherHeader(ACBrPAF.PAF_V.RegistroV1); // preencher header do arquivo
+  PreencherHeader(ACBrPAF.PAF_V.RegistroV2); // preencher header do arquivo
+  with ACBrPAF.PAF_V do
+  begin
+    with RegistroV3 do
+      begin
+        LAUDO  := '11111';
+        NOME   := 'NOME';
+        VERSAO := '1.00';
+      end;
+    // registro Z4
+    RegistroV4.Clear;
+    for I := 1 to 5 do
+    begin
+      with RegistroV4.New do
+        begin
+          NUMUMEROFABRICACAO := '99.999.999/9999-1'+ IntToStr(I);
+          MARCAECF := 'MARCA'+IntToStr(I);
+          MFADICIONAL := 'B';
+          MODELOECF := 'MODELO'+IntToStr(I);
+        end;
+    end;
+  end;
+  ACBrPAF.SaveToFile_V('PAF_V.TXT');
 end;
 
 procedure TForm6.cbEADChange(Sender: TObject);
@@ -479,6 +513,57 @@ begin
         COD_TSER  := '0' + IntToStr(i + 1);
         QTDE_TOTAL:= 3 + i;
 
+        RegistroValido:= True;
+      end;
+    end;
+  //J1 J2
+  ACBrPAF.PAF_J.RegistroJ1.Clear;
+  for I := 0 to 2 do
+    begin
+      with ACBrPAF.PAF_J.RegistroJ1.New do
+      begin
+        CNPJ:= '12345678901234';
+        DATA_EMISSAO:= now;
+        SUBTOTAL:= 1;
+        DESC_SUBTOTAL:= 0;
+        INDICADOR_DESC:= 'D';
+        ACRES_SUBTOTAL:= 0;
+        INDICADOR_ACRES:= '';
+        VALOR_LIQUIDO:= 1;
+        INDICADOR_CANC:= 'N';
+        VAL_CANC_ACRES:= 0;
+        ORDEM_APLIC_DES_ACRES:= 'A';
+        NOME_CLIENTE:= 'consumidor';
+        CPFCNPJ_CLIENTE:= '13245678912';
+        NUMERO_NOTA:= '1231';
+        SERIE_NOTA:= '21';
+        CHAVE_NF:= '12345678901234567890123456789012345678901234';
+        TIPO_DOC:= '55';
+
+        for j := 1 to 2 do
+        begin
+          with RegistroJ2.New do
+            begin
+              CNPJ:= '12345678901234';
+              DATA_EMISSAO:= now;
+              NUMERO_ITEM:= inttostr(j);
+              CODIGO_PRODUTO:= '1';
+              DESCRICAO:= 'produto';
+              QUANTIDADE:= 1;
+              UNIDADE:= 'UN';
+              VALOR_UNITARIO:= 1;
+              DESCONTO_ITEM:= 0;
+              ACRESCIMO_ITEM:= 0;
+              VALOR_LIQUIDO:= 1;
+              TOTALIZADOR_PARCIAL:= 'T01';
+              CASAS_DECIMAIS_QTDE:= '2';
+              CASAS_DECIMAIS_VAL_UNIT:= '2';
+              NUMERO_NOTA:= '1231';
+              SERIE_NOTA:= '21';
+              CHAVE_NF:= '12345678901234567890123456789012345678901234';
+              TIPO_DOC:= '55';
+            end;
+        end;
         RegistroValido:= True;
       end;
     end;

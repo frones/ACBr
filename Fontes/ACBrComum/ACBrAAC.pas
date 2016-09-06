@@ -762,6 +762,8 @@ var
 begin
   LogTXT := 'AtualizarGTECF - NumSerie: '+NumeroSerie ;
 
+//  GravaLog( LogTXT +' Entrada'); //Debug
+
   AECF := AchaECF( NumeroSerie );    // AchaECF chama VerificaReCarregarArquivo;
   if not Assigned( AECF ) then
   begin
@@ -772,11 +774,11 @@ begin
         ' ECF: '+NumeroSerie+' não encontrado') );
   end ;
 
+  if RoundTo( ValorGT, -2) = RoundTo( AECF.ValorGT, -2) then Exit ;
+
   LogTXT := LogTXT + ' - De:' +FormatFloat('###,###,##0.00',AECF.ValorGT)+
                      ' Para:'+FormatFloat('###,###,##0.00',ValorGT) ;
   GravaLog( LogTXT );
-
-  if RoundTo( ValorGT, -2) = RoundTo( AECF.ValorGT, -2) then exit ;
 
   AECF.ValorGT        := ValorGT ;
   AECF.DtHrAtualizado := Now;

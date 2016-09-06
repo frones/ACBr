@@ -226,6 +226,7 @@ TACBrECF = class( TACBrComponent )
     FDAVItemCount: Integer;
     FDAVTotal: Double;
     FQuebraLinhaRodape : Boolean;
+    FVerificarApenasNumeroSerieNoAAC: Boolean;
 
     function GetArredondaItemMFD : Boolean ;
     function GetIgnorarErroSemPapel : Boolean ;
@@ -1177,6 +1178,7 @@ TACBrECF = class( TACBrComponent )
      property ConfigBarras: TACBrECFConfigBarras read fsConfigBarras write fsConfigBarras;
 
      property InfoRodapeCupom: TACBrECFRodape read GetInfoRodapeCupom write SetInfoRodapeCupom;
+     property VerificarApenasNumeroSerieNoAAC: Boolean read FVerificarApenasNumeroSerieNoAAC write FVerificarApenasNumeroSerieNoAAC default False;
 end ;
 
 Function NomeArqCAT52( CAT52ID, NumSerie: String; DtMov : TDatetime ) : String ;
@@ -1331,6 +1333,8 @@ begin
   fsConfigBarras.LarguraLinha := 0;
   fsConfigBarras.Altura := 0;
   fsConfigBarras.MostrarCodigo := True;
+
+  FVerificarApenasNumeroSerieNoAAC := False;
 
 end;
 
@@ -5917,13 +5921,20 @@ var
    Erro : Integer ;
 begin
   if not Assigned( fsAAC ) then
-     exit ;
+     Exit ;
 
   if fsNumSerieCache = '' then
      fsNumSerieCache := NumSerie;
 
-  ValorGT_ECF := GrandeTotal ;
-  Erro := fsAAC.VerificarGTECF( fsNumSerieCache, ValorGT_ECF );
+  if VerificarApenasNumeroSerieNoAAC then
+  begin
+    Erro := fsAAC.AchaIndiceECF(fsNumSerieCache);
+  end
+  else
+  begin
+    ValorGT_ECF := GrandeTotal ;
+    Erro := fsAAC.VerificarGTECF( fsNumSerieCache, ValorGT_ECF );
+  end;
 
   if Erro = -1 then
      raise EACBrAAC_NumSerieNaoEncontrado.Create( ACBrStr( Format(
@@ -5938,7 +5949,13 @@ Var
   ValorGT  : Double ;
 begin
   if not Assigned( fsAAC ) then
-     exit ;
+     Exit ;
+
+  if VerificarApenasNumeroSerieNoAAC then
+  begin
+    //Não é necessário atualizar GT se está verificando apenas o número de série;
+    Exit;
+  end;
 
   if fsNumSerieCache = '' then
      fsNumSerieCache := NumSerie;
@@ -5949,7 +5966,7 @@ begin
   except
      On E: EACBrECFSemPapel do
      begin
-        exit;
+        Exit;
      end
      else
         raise;

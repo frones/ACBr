@@ -1352,6 +1352,13 @@ end;
 
 { TACBrWSViaCEP }
 
+constructor TACBrWSViaCEP.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+  fOwner.ParseText := True;
+  fpURL := 'http://viacep.com.br/ws/';
+end;
+
 procedure TACBrWSViaCEP.BuscarPorCEP(ACEP: String);
 begin
   FCepBusca := ACep;
@@ -1383,12 +1390,6 @@ begin
   ProcessaResposta();
 end;
 
-constructor TACBrWSViaCEP.Create(AOwner: TACBrCEP);
-begin
-  inherited Create(AOwner);
-  fpURL := 'http://viacep.com.br/ws/';
-end;
-
 procedure TACBrWSViaCEP.ProcessaResposta;
 var
   Buffer: string;
@@ -1399,7 +1400,7 @@ begin
   SL1 := TStringList.Create;
 
   try
-    Buffer := ParseText(fOwner.RespHTTP.Text);
+    Buffer := fOwner.RespHTTP.Text;
     Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
     Buffer := StringReplace(Buffer, '<enderecos>', '', [rfReplaceAll]);
     Buffer := StringReplace(Buffer, '</enderecos>', '', [rfReplaceAll]);

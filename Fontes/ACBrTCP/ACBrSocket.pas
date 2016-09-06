@@ -738,6 +738,7 @@ begin
   fRespHTTP   := TStringList.Create;
   fOnAntesAbrirHTTP := nil ;
   fURL := '';
+  FParseText := False;
 end ;
 
 destructor TACBrHTTP.Destroy ;

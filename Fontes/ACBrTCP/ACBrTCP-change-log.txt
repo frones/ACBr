@@ -37,6 +37,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/08/2016
+-- ACBrCEP --
+[-] Correção em TACBrWSViaCEP para correto tratamento de UTF8 (por: DSA)
+
 05/09/2016
 -- ACBrMTerClass --
 [-] Correção de erro ao ser chamada função ComandoEco com String vazia.

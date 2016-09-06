@@ -2679,9 +2679,9 @@ begin
   if (Pos('<NFS-e>', Leitor.Arquivo) > 0) then
   begin
     if VersaoNFSe = ve110 then
-      Result := LerNFSe_Infisc_V10
+      Result := LerNFSe_Infisc_V11
     else
-      Result := LerNFSe_Infisc_V11;
+      Result := LerNFSe_Infisc_V10;
   end;
 end;
 

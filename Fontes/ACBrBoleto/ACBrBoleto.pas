@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.208a';
+  CACBrBoleto_Versao = '0.0.209a';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
 
   cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
@@ -648,7 +648,7 @@ type
   TACBrTipoDocumento = (Tradicional=1, Escritural=2);
 
   {Define se a carteira é Cobrança Simples / Registrada}
-  TACBrTipoCarteira = (tctSimples, tctRegistrada);
+  TACBrTipoCarteira = (tctSimples, tctRegistrada, tctEletronica);
 
   {Definir como o boleto vai ser gerado/enviado pelo Cedente ou pelo Banco }
   TACBrCarteiraEnvio = (tceCedente, tceBanco);

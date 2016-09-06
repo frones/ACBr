@@ -368,7 +368,7 @@ begin
 
      if (Carteira = 'SR') then
       begin
-       if (wOperacao =  870) then
+       if (wOperacao =  870) and (ACBrBoleto.Cedente.TipoCarteira = tctEletronica) then
          ANossoNumero:= '8'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-13,14),14)
        else
          ANossoNumero:= '82'+ PadLeft(Copy(ANossoNumero,Length(ANossoNumero)-7,8),8);

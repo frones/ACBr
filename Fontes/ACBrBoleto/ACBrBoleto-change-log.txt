@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/09/2016 ver: 0.0.209a
+-- ACBrBoleto --
+[*] Adicionado item tctEletronica no tipo enumerado TACBrTipoCarteira (por: Juliana Tamizou)
+
+-- ACBrBancoCaixaSICOB --
+[*] Ajustado função FormatarNossoNumero() para considerar o TipoCarteira. (por: Juliana Tamizou)
+http://www.projetoacbr.com.br/forum/topic/32228-duvida-boleto-caixa-sicob/
+
 Data: 02/09/2016 ver: 0.0.208a
 -- ACBrBancoBrasil --
 [*] Adicionado 3 aos códigos de mora válidos para o Banco do Brasil. (leotelles)

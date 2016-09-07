@@ -313,13 +313,19 @@ begin
 
   // Valor do atributo Id ======================================================
   case Provedor of
-    proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) + CNPJ +
-                         IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
-
     proBethav2: IdLote := 'lote' + NumeroLote;
+
+    proEL: begin
+             IdLote := StringOfChar('0', 15) + OnlyNumber(NumeroRps) + SerieRps;
+             IdLote := copy(IdLote, length(IdLote) - 15 + 1, 15);
+           end;
+
     proSalvador: IdLote := 'Lote' + NumeroLote;
 
     proSiam: IdLote := 'Lote_' + NumeroLote + '_' + dhEnvio;
+
+    proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) + CNPJ +
+                         IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
 
     proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
   else
@@ -523,7 +529,7 @@ begin
     proEL: begin
              Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('LoteRps' + aNameSpace);
-//             Gerador.Prefixo := '';
+             Gerador.Prefixo := '';
 
              Gerador.wCampoNFSe(tcStr, '#1', 'Id', 13, 32, 1, IdLote, ''); // ?? Código Verificação
              Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
@@ -539,7 +545,7 @@ begin
                                             Notas +
                                           '</listaRps>';
 
-//             Gerador.Prefixo := Prefixo3;
+             Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('/LoteRps');
            end;
 

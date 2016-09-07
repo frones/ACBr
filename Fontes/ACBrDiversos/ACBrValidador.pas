@@ -190,6 +190,7 @@ function ValidarEmail (const Documento : string ) : String;
 function ValidarCEP(const ACEP, AUF: String): String; overload;
 function ValidarCEP(const ACEP: Integer; AUF: String): String; overload;
 function ValidarCNH(const Documento: String) : String ;
+function ValidarUF(const AUF: String): String;
 
 Function FormatarFone( const AValue : String; DDDPadrao: String = '' ): String;
 Function FormatarCPF( const AValue : String )    : String ;
@@ -270,6 +271,11 @@ end;
 function ValidarCNH(const Documento: String): String ;
 begin
   Result := ValidarDocumento( docCNH, Documento );
+end;
+
+function ValidarUF(const AUF: String): String;
+begin
+Result := ValidarDocumento( docUF, AUF );
 end;
 
 function ValidarCNPJouCPF(const Documento : String) : String ;

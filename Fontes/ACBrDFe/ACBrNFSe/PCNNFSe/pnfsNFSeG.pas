@@ -521,8 +521,10 @@ begin
                   end;
 
     proEL: begin
-             Gerador.Prefixo := '';
+             Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('LoteRps' + aNameSpace);
+             Gerador.Prefixo := '';
+
              Gerador.wCampoNFSe(tcStr, '#1', 'Id', 13, 32, 1, IdLote, ''); // ?? Código Verificação
              Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
              Gerador.wCampoNFSe(tcInt, '#1', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
@@ -537,6 +539,7 @@ begin
                                             Notas +
                                           '</listaRps>';
 
+             Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('/LoteRps');
            end;
 

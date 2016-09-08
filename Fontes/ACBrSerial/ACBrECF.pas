@@ -2255,20 +2255,27 @@ begin
 end;
 
 function TACBrECF.GetEstadoClass: TACBrECFEstado;
+var
+  wIgnorarErroSemPapel : Boolean;
 begin
-  ComandoLOG := 'Estado' ;
-  IgnorarErroSemPapel := True;
-  Result := fsECF.Estado ;
+  wIgnorarErroSemPapel := IgnorarErroSemPapel;
+  try
+    ComandoLOG := 'Estado' ;
+    IgnorarErroSemPapel := True;
+    Result := fsECF.Estado ;
 
-  if Result <> fpUltimoEstadoObtido then
-  begin
-     try
-        if Assigned( FOnChangeEstado ) then
-           FOnChangeEstado( fpUltimoEstadoObtido, Result);
-     finally
-        fpUltimoEstadoObtido := Result;
-     end;
-  end ;
+    if Result <> fpUltimoEstadoObtido then
+    begin
+       try
+          if Assigned( FOnChangeEstado ) then
+             FOnChangeEstado( fpUltimoEstadoObtido, Result);
+       finally
+          fpUltimoEstadoObtido := Result;
+       end;
+    end ;
+  finally
+     IgnorarErroSemPapel := wIgnorarErroSemPapel;
+  end;
 end;
 
 function TACBrECF.GetPoucoPapelClass: Boolean;
@@ -2386,11 +2393,18 @@ begin
 end;
 
 function TACBrECF.GetGrandeTotalClass: Double;
+var
+  wIgnorarErroSemPapel : Boolean;
 begin
-  IgnorarErroSemPapel := True;
-  if ComandoLOG = '' then
-     ComandoLOG := 'GrandeTotal' ;
-  Result := RoundTo( fsECF.GrandeTotal, -2) ;
+  wIgnorarErroSemPapel := IgnorarErroSemPapel;
+  try
+    IgnorarErroSemPapel := True;
+    if ComandoLOG = '' then
+       ComandoLOG := 'GrandeTotal' ;
+    Result := RoundTo( fsECF.GrandeTotal, -2) ;
+  finally
+    IgnorarErroSemPapel := wIgnorarErroSemPapel;
+  end;
 end;
 
 function TACBrECF.GetNumCOOInicialClass: String;

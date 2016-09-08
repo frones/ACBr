@@ -1851,6 +1851,8 @@ begin
       ValorTotalDeducoes := TotalDeducoes;
 
       // Necessário para o provedor Equiplano - EL
+      NumeroRps      := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+      SerieRps       := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
       OptanteSimples := FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
 
       // Necessário para o provedor Governa

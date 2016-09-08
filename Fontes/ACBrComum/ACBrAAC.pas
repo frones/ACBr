@@ -325,6 +325,7 @@ begin
         else
         begin
            fsIdentPAF.NumeroLaudo             := Ini.ReadString('PAF','NumeroLaudo','');        // Número do Laudo
+           fsIdentPAF.DataLaudo               := Ini.ReadDate('PAF','EmissaoLaudo',0);          // Emissão do Laudo
            fsIdentPAF.NumeroCredencimento     := Ini.ReadString('PAF','NumeroCredencimento','');        // Número do Laudo
            fsIdentPAF.VersaoER                := Ini.ReadString('PAF','VersaoER','');           // Versão do Roteiro Executado na Homologação
            fsIdentPAF.Paf.Nome                := Ini.ReadString('PAF','Nome','');               // Nome do Sistema PAF
@@ -498,6 +499,7 @@ begin
         Ini.WriteString('PAF','SistemaOperacional',fsIdentPAF.Paf.SistemaOperacional); // Sistema operacional no qual roda o aplicativo
 
         Ini.WriteString('PAF','NumeroLaudo',fsIdentPAF.NumeroLaudo);       // Número do Laudo
+        Ini.WriteDate('PAF','EmissaoLaudo',fsIdentPAF.DataLaudo);       // Emissão do Laudo
         Ini.WriteString('PAF','NumeroCredencimento',fsIdentPAF.NumeroCredencimento);       // Número do Laudo
         Ini.WriteString('PAF','VersaoER',fsIdentPAF.VersaoER);             // Versão do Roteiro Executado na Homologação
         Ini.WriteString('PAF','NomeExe',fsIdentPAF.Paf.PrincipalExe.Nome); // Nome do Principal EXE do PAF

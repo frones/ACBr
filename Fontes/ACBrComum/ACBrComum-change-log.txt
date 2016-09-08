@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/09/2016
+--ACBrAAC, ACBrPAFClass
+[+] Adição do campo data para guardar no arquivo criptografado e imprimir na ecf do paf-ecf 02.04
+		http://www.projetoacbr.com.br/forum/topic/32295-modifica%C3%A7%C3%A3o-do-componente-acbraacacbrpafclassacbrecf-para-atender-requisito-xxxiii-er-0204/
+		por: Juliomar Marchetti
+		
 Data: 29/08/2016
 --ACBrAAC
 [+] Adição do número do credenciamento ao arquivo para gerar o bloco X

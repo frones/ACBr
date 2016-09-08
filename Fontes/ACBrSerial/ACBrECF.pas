@@ -6659,6 +6659,7 @@ begin
 
     Relatorio.Add('</linha_dupla>');
     Relatorio.Add('LAUDO NUMERO: <n>' + IdentificacaoPaf.NumeroLaudo + '</n>');
+    Relatorio.Add('EMISSÃO DO LAUDO: <n>' + FormatDateTime('dd/MM/yyyy', IdentificacaoPaf.DataLaudo) + '</n>');
     Relatorio.Add('</linha_dupla>');
 
     Relatorio.Add('');

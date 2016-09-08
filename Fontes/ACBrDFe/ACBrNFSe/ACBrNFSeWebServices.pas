@@ -843,9 +843,9 @@ begin
       proNFSeBrasil: FNameSpaceDad := ' xmlns:xs="http://www.nfsebrasil.net.br/nfse/rps/xsd/rps.xsd"' +
                                       ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
-//      proEL: FNameSpaceDad := 'xmlns=' + FNameSpace + FSeparador + FxsdServico + '" ' +
+      proEL: FNameSpaceDad := 'xmlns=' + FNameSpace + FSeparador + FxsdServico + '" ' +
+                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 //                              'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-//                              'xmlns:xsd="http://www.w3.org/2001/XMLSchema" '+
 //                              'xsi:schemaLocation="' + FNameSpace + FSeparador + FxsdServico + ' ' + FxsdServico + ' "';
 
       else begin

@@ -527,6 +527,7 @@ begin
                   end;
 
     proEL: begin
+             Prefixo3 := 'xsd:';
              Gerador.Prefixo := Prefixo3;
              Gerador.wGrupoNFSe('LoteRps' + aNameSpace);
              Gerador.Prefixo := '';

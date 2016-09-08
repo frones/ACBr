@@ -270,7 +270,6 @@
       <Unit27>
         <Filename Value="DoACBrGNReUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DoACBRGNReUnit"/>
       </Unit27>
     </Units>
   </ProjectOptions>
@@ -293,10 +292,16 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="1" IgnoreAll="True">
+    <Exceptions Count="3" IgnoreAll="True">
       <Item1>
         <Name Value="Exception"/>
       </Item1>
+      <Item2>
+        <Name Value="RunError(5)"/>
+      </Item2>
+      <Item3>
+        <Name Value="RunError(103)"/>
+      </Item3>
     </Exceptions>
   </Debugging>
 </CONFIG>

@@ -31,7 +31,7 @@
 {******************************************************************************}
 {$I ACBr.inc}
 
-unit DoACBRGNReUnit;
+unit DoACBrGNReUnit;
 
 interface
 

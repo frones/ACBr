@@ -1403,7 +1403,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
   DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrMDFeUnit, DoACBrCTeUnit,
-  DoSATUnit, DoPosPrinterUnit, DoACBRGNReUnit;
+  DoSATUnit, DoPosPrinterUnit, DoACBrGNReUnit;
 
 {$R *.lfm}
 
@@ -5611,7 +5611,9 @@ begin
   if Inicio then
   begin
     Inicializar;
-    Application.Minimize;
+    if FileExists(ACBrMonitorINI) then
+       Application.Minimize;
+
     exit;
   end;
 

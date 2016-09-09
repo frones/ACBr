@@ -357,7 +357,10 @@ var
  I: Integer;
  Ok: Boolean;
 begin
-  Result := schCTe;
+  if Configuracoes.Geral.ModeloDF = moCTe then
+    Result := schCTe
+  else
+    Result := schCTeOS;
 
   I := pos('<infCte', AXML);
   if I = 0  then
@@ -397,27 +400,32 @@ begin
   I := pos( '<rodo>', XML);
   if I = 0 then
   begin
-    I := pos( '<aereo>', XML);
-    if I> 0 then
-      Result := schcteModalAereo
+    I := pos( '<rodoOS>', XML);
+    if I > 0 then
+      Result := schcteModalRodoviarioOS
     else begin
-      I := pos( '<aquav>', XML);
-      if I> 0 then
-        Result := schcteModalAquaviario
+      I := pos( '<aereo>', XML);
+      if I > 0 then
+        Result := schcteModalAereo
       else begin
-        I := pos( '<duto>', XML);
-        if I> 0 then
-          Result := schcteModalDutoviario
+        I := pos( '<aquav>', XML);
+        if I > 0 then
+          Result := schcteModalAquaviario
         else begin
-          I := pos( '<ferrov>', XML);
-          if I> 0 then
-            Result := schcteModalFerroviario
+          I := pos( '<duto>', XML);
+          if I > 0 then
+            Result := schcteModalDutoviario
           else begin
-            I := pos( '<multimodal>', XML);
-            if I> 0 then
-              Result := schcteMultiModal
-            else
-              Result := schErro;
+            I := pos( '<ferrov>', XML);
+            if I > 0 then
+              Result := schcteModalFerroviario
+            else begin
+              I := pos( '<multimodal>', XML);
+              if I > 0 then
+                Result := schcteMultiModal
+              else
+                Result := schErro;
+            end;
           end;
         end;
       end;

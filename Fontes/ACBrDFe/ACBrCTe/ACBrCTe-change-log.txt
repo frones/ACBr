@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/09/2016
+-- diversos --
+[*] Correções para poder gerar, assinar e validar corretamente os modelos:
+    CTe e CTeOS versão 3.00
+    Por: Italo Jurisato Junior
+
 06/09/2016
 -- ACBrCTeDACTEFR --
 [*] Estava invertido os campos do DataSet em relação ao conteudo atribuido.

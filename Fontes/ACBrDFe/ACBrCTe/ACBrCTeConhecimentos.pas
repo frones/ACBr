@@ -236,7 +236,11 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTe', 'infCte');
+    if Configuracoes.Geral.ModeloDF = moCTe then
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTe', 'infCte')
+    else
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'CTeOS', 'infCte');
+      
     // SSL.Assinar() sempre responde em UTF8...
     FXMLOriginal := FXMLAssinado;
 
@@ -265,8 +269,9 @@ end;
 procedure Conhecimento.Validar;
 var
   Erro, AXML, DeclaracaoXML, AXMLModal: String;
-  CTeEhValido, ModalEhValido: Boolean;
+  CTeEhValido, ModalEhValido, ok: Boolean;
   ALayout: TLayOutCTe;
+  Modelo: TModeloCTe;
 begin
   AXML := XMLAssinado;
 
@@ -297,6 +302,11 @@ begin
                                            Trim(RetornarConteudoEntre(AXML, '<rodo>', '</rodo>')) +
                                          '</rodo>';
                           end;
+   schcteModalRodoviarioOS: begin
+                              AXMLModal := '<rodoOS xmlns="' + ACBRCTE_NAMESPACE + '">' +
+                                             Trim(RetornarConteudoEntre(AXML, '<rodoOS>', '</rodoOS>')) +
+                                           '</rodoOS>';
+                            end;
    schcteMultiModal: begin
                        AXMLModal := '<multimodal xmlns="' + ACBRCTE_NAMESPACE + '">' +
                                       Trim(RetornarConteudoEntre(AXML, '<multimodal>', '</multimodal>')) +
@@ -308,13 +318,24 @@ begin
 
   with TACBrCTe(TConhecimentos(Collection).ACBrCTe) do
   begin
-    ALayout := LayCTeRecepcao;
+    Modelo  := StrToModeloCTe(ok, IntToStr(FCTe.Ide.modelo));
 
     // Extraindo apenas os dados do CTe (sem cteProc)
     DeclaracaoXML := ObtemDeclaracaoXML(AXML);
-    AXML := DeclaracaoXML + '<CTe xmlns' +
-            RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
-            '</CTe>';
+
+    if Modelo = moCTe then
+    begin
+      ALayout := LayCTeRecepcao;
+      AXML := DeclaracaoXML + '<CTe xmlns' +
+              RetornarConteudoEntre(AXML, '<CTe xmlns', '</CTe>') +
+              '</CTe>';
+    end
+    else begin
+      ALayout := LayCTeRecepcaoOS;
+      AXML := DeclaracaoXML + '<CTeOS xmlns' +
+              RetornarConteudoEntre(AXML, '<CTeOS xmlns', '</CTeOS>') +
+              '</CTeOS>';
+    end;
 
     if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
     begin

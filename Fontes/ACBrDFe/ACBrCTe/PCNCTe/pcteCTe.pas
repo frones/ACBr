@@ -3119,6 +3119,7 @@ begin
   FinfGlobalizado := TinfGlobalizado.Create;
   FinfServVinc := TinfServVinc.Create(Self);
   FinfDocRef := TinfDocRefCollection.Create(Self);
+  FinfServico := TinfServico.Create;
 end;
 
 destructor TInfCTeNorm.Destroy;
@@ -3143,6 +3144,7 @@ begin
   FinfGlobalizado.Free;
   FinfServVinc.Free;
   FinfDocRef.Free;
+  FinfServico.Free;
 
   inherited;
 end;

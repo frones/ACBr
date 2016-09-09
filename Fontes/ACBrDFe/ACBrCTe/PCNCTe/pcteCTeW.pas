@@ -278,7 +278,11 @@ begin
   if CTe.procCTe.nProt <> '' then
     Gerador.wGrupo('cteProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '');
 
-  Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
+  if CTe.ide.modelo = 67 then
+    Gerador.wGrupo('CTeOS ' + NAME_SPACE_CTE + ' ' + CTe.infCTe.VersaoStr)
+  else
+    Gerador.wGrupo('CTe ' + NAME_SPACE_CTE);
+
   Gerador.wGrupo('infCte ' + CTe.infCTe.VersaoStr + ' Id="' + CTe.infCTe.ID + '"');
 
   GerarInfCTe;
@@ -303,7 +307,11 @@ begin
       Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + FCTe.signature.Gerador.ArquivoFormatoXML;
     end;
   end;
-  Gerador.wGrupo('/CTe');
+
+  if CTe.ide.modelo = 67 then
+    Gerador.wGrupo('/CTeOS')
+  else
+    Gerador.wGrupo('/CTe');
 
   if trim(CTe.procCTe.nProt) <> '' then
    begin
@@ -335,13 +343,15 @@ begin
   GerarCompl;
   GerarEmit;
 
-  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 67) then
-    GerarTomador;
-    
-  GerarRem;
-  GerarExped;
-  GerarReceb;
-  GerarDest;
+  if (CTe.ide.modelo = 67) then
+    GerarTomador
+  else begin
+    GerarRem;
+    GerarExped;
+    GerarReceb;
+    GerarDest;
+  end;
+
   GerarvPrest;
   GerarImp;
 
@@ -369,7 +379,12 @@ begin
   Gerador.wCampo(tcInt, '#010', 'mod     ', 02, 02, 1, CTe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, '#011', 'serie   ', 01, 03, 1, CTe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, '#012', 'nCT     ', 01, 09, 1, CTe.ide.nCT, DSC_NNF);
-  Gerador.wCampo(tcDatHor, '#013', 'dhEmi', 19, 19, 1, CTe.ide.dhEmi, DSC_DEMI);
+
+  if CTe.infCTe.versao = 3 then
+    Gerador.wCampo(tcStr, '#013', 'dhEmi', 25, 25, 1, DateTimeTodh(CTe.ide.dhEmi) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhEmi), DSC_DEMI)
+  else
+    Gerador.wCampo(tcDatHor, '#013', 'dhEmi', 19, 19, 1, CTe.ide.dhEmi, DSC_DEMI);
+
   Gerador.wCampo(tcStr, '#014', 'tpImp   ', 01, 01, 1, tpImpToStr(CTe.Ide.tpImp), DSC_TPIMP);
   Gerador.wCampo(tcStr, '#015', 'tpEmis  ', 01, 01, 1, tpEmisToStr(CTe.Ide.tpEmis), DSC_TPEMIS);
   Gerador.wCampo(tcInt, '#016', 'cDV     ', 01, 01, 1, CTe.Ide.cDV, DSC_CDV);
@@ -378,7 +393,7 @@ begin
   Gerador.wCampo(tcStr, '#019', 'procEmi', 01, 01, 1, procEmiToStr(CTe.Ide.procEmi), DSC_PROCEMI);
   Gerador.wCampo(tcStr, '#020', 'verProc', 01, 20, 1, CTe.Ide.verProc, DSC_VERPROC);
 
-  if (CTe.infCTe.versao = 3) and (CTe.ide.indGlobalizado = tiSim) then
+  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 57) and (CTe.ide.indGlobalizado = tiSim) then
     Gerador.wCampo(tcStr, '#020', 'indGlobalizado', 01, 01, 0, TindicadorToStr(CTe.ide.indGlobalizado), DSC_INDGLOBALIZADO);
 
   Gerador.wCampo(tcStr, '#021', 'refCTE ', 44, 44, 0, OnlyNumber(CTe.Ide.refCTE), DSC_REFCTE);
@@ -394,6 +409,10 @@ begin
     Gerador.wAlerta('#024', 'UFEnv', DSC_UF, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcStr, '#025', 'modal   ', 02, 02, 1, TpModalToStr(CTe.Ide.modal), DSC_MODAL);
   Gerador.wCampo(tcStr, '#026', 'tpServ  ', 01, 01, 1, TpServPagToStr(CTe.Ide.tpServ), DSC_TPSERV);
+
+  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 67) then
+    Gerador.wCampo(tcStr, '#035', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.ide.indIEToma), DSC_INDIETOMA);
+
   Gerador.wCampo(tcInt, '#027', 'cMunIni ', 07, 07, 1, CTe.ide.cMunIni, DSC_CMUNEMI);
   if not ValidarMunicipio(CTe.ide.cMunIni) then
     Gerador.wAlerta('#027', 'cMunIni', DSC_CMUNEMI, ERR_MSG_INVALIDO);
@@ -408,18 +427,30 @@ begin
   Gerador.wCampo(tcStr, '#032', 'UFFim      ', 02, 02, 1, CTe.ide.UFFim, DSC_UF);
   if not ValidarUF(CTe.ide.UFFim) then
     Gerador.wAlerta('#032', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#033', 'retira     ', 01, 01, 1, TpRetiraPagToStr(CTe.Ide.retira), DSC_RETIRA);
-  Gerador.wCampo(tcStr, '#034', 'xDetRetira ', 01, 160, 0, CTe.Ide.xdetretira, DSC_DRET);
 
-  if CTe.infCTe.versao = 3 then
+  if (CTe.ide.modelo = 57) then
+  begin
+    Gerador.wCampo(tcStr, '#033', 'retira     ', 01, 01, 1, TpRetiraPagToStr(CTe.Ide.retira), DSC_RETIRA);
+    Gerador.wCampo(tcStr, '#034', 'xDetRetira ', 01, 160, 0, CTe.Ide.xdetretira, DSC_DRET);
+  end;
+
+  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 57) then
     Gerador.wCampo(tcStr, '#035', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.ide.indIEToma), DSC_INDIETOMA);
 
-  GerarToma03;
-  GerarToma4;
-
+  if (CTe.ide.modelo = 57) then
+  begin
+    GerarToma03;
+    GerarToma4;
+  end;
+  
   if CTe.Ide.tpEmis = teFSDA
    then begin
-     Gerador.wCampo(tcDatHor, '#057', 'dhCont ', 19, 019, 1, CTe.ide.dhCont, DSC_DHCONT);
+
+     if CTe.infCTe.versao = 3 then
+       Gerador.wCampo(tcStr, '#057', 'dhCont ', 25, 25, 1, DateTimeTodh(CTe.ide.dhCont) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhCont), DSC_DHCONT)
+     else
+      Gerador.wCampo(tcDatHor, '#057', 'dhCont ', 19, 019, 1, CTe.ide.dhCont, DSC_DHCONT);
+
      Gerador.wCampo(tcStr,    '#058', 'xJust  ', 15, 256, 1, CTe.ide.xJust, DSC_XJUSTCONT);
    end;
   Gerador.wGrupo('/ide');
@@ -429,9 +460,17 @@ procedure TCTeW.GerarToma03;
 begin
   if (trim(CTe.Ide.Toma4.xNome) = '') then
   begin
-    Gerador.wGrupo('toma03', '#035');
-    Gerador.wCampo(tcStr, '#036', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma03.Toma), DSC_TOMA);
-    Gerador.wGrupo('/toma03');
+    if CTe.infCTe.versao = 3 then
+    begin
+      Gerador.wGrupo('toma3', '#035');
+      Gerador.wCampo(tcStr, '#036', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma03.Toma), DSC_TOMA);
+      Gerador.wGrupo('/toma3');
+    end
+    else begin
+      Gerador.wGrupo('toma03', '#035');
+      Gerador.wCampo(tcStr, '#036', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma03.Toma), DSC_TOMA);
+      Gerador.wGrupo('/toma03');
+    end;
   end;
 end;
 
@@ -513,11 +552,15 @@ begin
   GerarFluxo;
 
   if (CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
-     (CTe.Compl.Entrega.TipoHora <> thNaoInformado)
+     (CTe.Compl.Entrega.TipoHora <> thNaoInformado) and (CTe.ide.modelo = 57)
    then GerarEntrega;
 
-  Gerador.wCampo(tcStr, '#088', 'origCalc ', 02, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
-  Gerador.wCampo(tcStr, '#089', 'destCalc ', 02, 40, 0, CTe.Compl.destCalc, DSC_DESTCALC);
+  if (CTe.ide.modelo = 57) then
+  begin
+    Gerador.wCampo(tcStr, '#088', 'origCalc ', 02, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
+    Gerador.wCampo(tcStr, '#089', 'destCalc ', 02, 40, 0, CTe.Compl.destCalc, DSC_DESTCALC);
+  end;
+    
   Gerador.wCampo(tcStr, '#090', 'xObs     ', 01, 2000, 0, CTe.Compl.xObs, DSC_XOBS);
 
   GerarObsCont;
@@ -1680,20 +1723,26 @@ begin
   if CTe.infCTeNorm.rodo.RNTRC = 'ISENTO'
    then Gerador.wCampo(tcStr, '#02', 'RNTRC ', 06, 06, 1, CTe.infCTeNorm.rodo.RNTRC, DSC_RNTRC)
    else Gerador.wCampo(tcStr, '#02', 'RNTRC ', 08, 08, 1, OnlyNumber(CTe.infCTeNorm.rodo.RNTRC), DSC_RNTRC);
-  Gerador.wCampo(tcDat, '#03', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.rodo.dPrev, DSC_DPREV);
-  Gerador.wCampo(tcStr, '#04', 'lota  ', 01, 01, 1, TpLotacaoToStr(CTe.infCTeNorm.rodo.Lota), DSC_LOTA);
-  Gerador.wCampo(tcStr, '#05', 'CIOT  ', 12, 12, 0, CTe.infCTeNorm.rodo.CIOT, DSC_CIOT);
 
-  GerarOCC;
-  GerarValePed;
+  if CTe.infCTe.versao < 3 then
+  begin
+    Gerador.wCampo(tcDat, '#03', 'dPrev ', 10, 10, 1, CTe.infCTeNorm.rodo.dPrev, DSC_DPREV);
+    Gerador.wCampo(tcStr, '#04', 'lota  ', 01, 01, 1, TpLotacaoToStr(CTe.infCTeNorm.rodo.Lota), DSC_LOTA);
+    Gerador.wCampo(tcStr, '#05', 'CIOT  ', 12, 12, 0, CTe.infCTeNorm.rodo.CIOT, DSC_CIOT);
 
-  if CTe.infCTeNorm.rodo.Lota = ltSim then
-   GerarVeic;
+    GerarOCC;
+    GerarValePed;
 
-  GerarLacre;
+    if CTe.infCTeNorm.rodo.Lota = ltSim then
+     GerarVeic;
 
-  if CTe.infCTeNorm.rodo.Lota = ltSim then
-   GerarMoto;
+    GerarLacre;
+
+    if CTe.infCTeNorm.rodo.Lota = ltSim then
+     GerarMoto;
+  end
+  else
+    GerarOCC;
 
   Gerador.wGrupo('/rodo');
 end;

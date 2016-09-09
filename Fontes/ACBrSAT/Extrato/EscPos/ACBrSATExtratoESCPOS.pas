@@ -449,7 +449,8 @@ begin
   TagCode128 := IfThen(Suporta128c,'code128c', 'code128' );
 
   ChaveEmUmaLinha := (ImprimeChaveEmUmaLinha = rSim) or
-                     ((ImprimeChaveEmUmaLinha = rAuto) and Suporta128c);
+                     ((ImprimeChaveEmUmaLinha = rAuto) and Suporta128c and
+                      ((FPosPrinter.Colunas-2) >= Length(CFe.infCFe.ID)));
 
   if not ChaveEmUmaLinha then
   begin

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/09/2016
+-- ACBrSATExtratoESCPOS --
+[*] Ajuste para detectar corretamente se a impressora é capaz de imprimir o
+    CODE128 da Chave do SAT, em apenas uma linha. Exemplo: Sweda SI-300S, ou
+    Impressoras com suporte inferior a 46 colunas.
+
 Data: 01/09/2016
 -- pcnCFe, pcnCFeW, pcnCFeR --
 [-] Tag "cListServ" modificada para String, de acordo com a Especificação Técnica

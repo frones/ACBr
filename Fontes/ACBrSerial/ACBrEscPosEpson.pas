@@ -247,12 +247,41 @@ begin
 end;
 
 function TACBrEscPosEpson.ComandoLogo: AnsiString;
+var
+  m, KeyCode: Integer;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
-    Result := GS + '(L' + #6 + #0 + #48 + #69 +
-              AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
-              AnsiChr(FatorX)   + AnsiChr(FatorY);
+    {
+      Verificando se informou o KeyCode compatível com o comando Novo ou Antigo.
+
+      Nota: O Comando novo da Epson "GS + '(L'", não é compatível em alguns
+      Equipamentos (não Epson), mas que usam EscPosEpson...
+      Nesse caso, vamos usar o comando "FS + 'p'", para tal, informe:
+      KeyCode1 := 1..255; KeyCode2 := 0
+    }
+
+    if (KeyCode2 = 0) then
+    begin
+      if (KeyCode1 >= 48) and (KeyCode1 <= 57) then  // '0'..'9'
+        KeyCode := StrToInt( chr(KeyCode1) )
+      else
+        KeyCode := KeyCode1 ;
+
+      m := 0;
+      if FatorX > 1 then
+        m := m + 1;
+      if Fatory > 1 then
+        m := m + 2;
+
+      Result := FS + 'p' + AnsiChr(KeyCode) + AnsiChr(m);
+    end
+    else
+    begin
+      Result := GS + '(L' + #6 + #0 + #48 + #69 +
+                AnsiChr(KeyCode1) + AnsiChr(KeyCode2) +
+                AnsiChr(FatorX)   + AnsiChr(FatorY);
+    end;
   end;
 end;
 

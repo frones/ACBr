@@ -39,16 +39,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 08/09/2016
---ACBrECF
-[+] Tratamento no método GetEstadoClass e GetGrandeTotalClass para retornar a propriedade IgnorarErroSemPapel ao estado inicial para evitar problemas
-		por: Juliomar Marchetti
+Data: 09/09/2016
+-- ACBrEscPosEpson --
+[*] Ajuste no Comando de impressão de LogoTipo, para permitir informar o KeyCode
+    no formato antigo (FS+'p')... para tal, informe:
+      KeyCode1 := 1..255; KeyCode2 := 0
+
+-- ACBrEscBematech --
+[*] Ajuste para suportar KeyCodes no mesmo padrão da Epson:
+      KeyCode1 := 1..255; KeyCode2 := 0
 
 Data: 08/09/2016
---ACBrECF
+-- ACBrECF --
+[+] Tratamento no método GetEstadoClass e GetGrandeTotalClass para retornar a
+    propriedade IgnorarErroSemPapel ao estado inicial para evitar problemas
+    por: Juliomar Marchetti
+
+Data: 08/09/2016
+-- ACBrECF --
 [+] Mudança para imprimir a data do laudo
-		http://www.projetoacbr.com.br/forum/topic/32295-modifica%C3%A7%C3%A3o-do-componente-acbraacacbrpafclassacbrecf-para-atender-requisito-xxxiii-er-0204/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32295
+    por: Juliomar Marchetti
 		
 Data: 24/08/2016
 -- ACBrECFEscECF --

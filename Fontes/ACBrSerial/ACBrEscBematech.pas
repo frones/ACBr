@@ -173,17 +173,27 @@ end;
 
 function TACBrEscBematech.ComandoLogo: AnsiString;
 var
-  m: Integer;
+  m, KeyCode: Integer;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
+    if (KeyCode2 = 0) then
+    begin
+      if (KeyCode1 >= 48) and (KeyCode1 <= 57) then  // '0'..'9'
+        KeyCode := StrToInt( chr(KeyCode1) )
+      else
+        KeyCode := KeyCode1 ;
+    end
+    else
+      KeyCode := StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 1);
+
     m := 0;
     if FatorX > 1 then
       m := m + 1;
     if Fatory > 1 then
       m := m + 2;
 
-    Result := FS + 'p' + AnsiChr( StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 1)) + AnsiChr(m);
+    Result := FS + 'p' + AnsiChr(KeyCode) + AnsiChr(m);
   end;
 end;
 

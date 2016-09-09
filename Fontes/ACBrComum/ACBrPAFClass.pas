@@ -259,7 +259,7 @@ type
     fsECFsAutorizados: TACBrAACECFs;
     fsArquivoListaAutenticados: TACBrECFArquivo;
     fsVersaoER: String;
-    fsDataLaudo: TDate;
+    fsDataLaudo: TDateTime;
   public
     constructor Create ;
     destructor Destroy; override;
@@ -268,7 +268,7 @@ type
     property ArquivoListaAutenticados: TACBrECFArquivo read fsArquivoListaAutenticados write fsArquivoListaAutenticados;
   published
     property NumeroLaudo: String read fsNumeroLaudo write fsNumeroLaudo;
-    property DataLaudo: TDate read fsDataLaudo write fsDataLaudo;
+    property DataLaudo: TDateTime read fsDataLaudo write fsDataLaudo;
     property NumeroCredencimento : string read fsNumeroCredencimento write fsNumeroCredencimento;
     property VersaoER: String read fsVersaoER write fsVersaoER;
     property Empresa: TACBrECFEmpresa read fsEmpresa write fsEmpresa;

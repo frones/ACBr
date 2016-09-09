@@ -3,12 +3,14 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   Height = 521
   Top = 93
   Width = 841
+  ActiveControl = bTagFormtacaoCaracter
   Caption = 'ACBrPosPrinter - Teste'
   ClientHeight = 521
   ClientWidth = 841
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.0.4'
+  Visible = False
   object Panel1: TPanel
     Left = 256
     Height = 521
@@ -223,6 +225,15 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           OnClick = bImprimirClick
           TabOrder = 1
         end
+        object Button1: TButton
+          Left = 64
+          Height = 25
+          Top = 8
+          Width = 75
+          Caption = 'Senha'
+          OnClick = Button1Click
+          TabOrder = 2
+        end
       end
       object bTagLogo: TButton
         Left = 200
@@ -254,13 +265,13 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       TabOrder = 1
       object tsImprimir: TTabSheet
         Caption = 'Texto a Imprimir'
-        ClientHeight = 338
-        ClientWidth = 460
+        ClientHeight = 347
+        ClientWidth = 575
         object mImp: TMemo
           Left = 0
-          Height = 338
+          Height = 347
           Top = 0
-          Width = 460
+          Width = 575
           Align = alClient
           ScrollBars = ssAutoBoth
           TabOrder = 0
@@ -714,7 +725,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Top = 16
         Width = 41
         MaxValue = 126
-        MinValue = 32
         OnChange = seLogoKC1Change
         TabOrder = 0
         Value = 32
@@ -733,7 +743,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Top = 16
         Width = 41
         MaxValue = 126
-        MinValue = 32
         OnChange = seLogoKC2Change
         TabOrder = 1
         Value = 32

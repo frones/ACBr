@@ -29,6 +29,7 @@ type
     bTagsTesteInvalidas: TButton;
     bTagsTestePagCodigo: TButton;
     bImpLinhaALinha: TButton;
+    Button1: TButton;
     cbHRI: TCheckBox;
     cbGavetaSinalInvertido: TCheckBox;
     cbxModelo: TComboBox;
@@ -107,6 +108,7 @@ type
     procedure bTagsCodBarrasClick(Sender: TObject);
     procedure bTagsTestePagCodigoClick(Sender: TObject);
     procedure bImpLinhaALinhaClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure cbControlePortaChange(Sender: TObject);
     procedure cbGavetaSinalInvertidoChange(Sender: TObject);
     procedure cbHRIChange(Sender: TObject);
@@ -431,6 +433,11 @@ begin
   ACBrPosPrinter1.ImprimirLinha('</corte_total>');
 end;
 
+procedure TFrPosPrinterTeste.Button1Click(Sender: TObject);
+begin
+  ACBrPosPrinter1.Imprimir('<code93>1234'+#9+'5678</code93></corte_total>');
+end;
+
 procedure TFrPosPrinterTeste.cbControlePortaChange(Sender: TObject);
 begin
   ACBrPosPrinter1.ControlePorta := cbControlePorta.Checked;
@@ -599,6 +606,7 @@ begin
   try
      INI.WriteInteger('PosPrinter','Modelo',cbxModelo.ItemIndex);
      INI.WriteString('PosPrinter','Porta',cbxPorta.Text);
+     INI.WriteString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      INI.WriteInteger('PosPrinter','Colunas',seColunas.Value);
      INI.WriteInteger('PosPrinter','EspacoEntreLinhas',seEspLinhas.Value);
      INI.WriteInteger('PosPrinter','LinhasBuffer',seLinhasBuffer.Value);
@@ -638,6 +646,7 @@ begin
   try
      cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', Integer(ACBrPosPrinter1.Modelo));
      cbxPorta.Text := INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta);
+     ACBrPosPrinter1.Device.ParamsString := INI.ReadString('PosPrinter','DeviceParams',ACBrPosPrinter1.Device.ParamsString);
      seColunas.Value := INI.ReadInteger('PosPrinter','Colunas',ACBrPosPrinter1.ColunasFonteNormal);
      seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas',ACBrPosPrinter1.EspacoEntreLinhas);
      seLinhasBuffer.Value := INI.ReadInteger('PosPrinter','LinhasBuffer',ACBrPosPrinter1.LinhasBuffer);
@@ -671,7 +680,8 @@ begin
   if bAtivar.Caption = 'Ativar' then
     bAtivar.Click;
 
-  ACBrPosPrinter1.Imprimir(mImp.Text);
+  ACBrPosPrinter1.Buffer.Text := mImp.Lines.Text;
+  ACBrPosPrinter1.Imprimir;
 end;
 
 procedure TFrPosPrinterTeste.bImpTagsValidasClick(Sender: TObject);

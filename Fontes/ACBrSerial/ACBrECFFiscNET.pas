@@ -673,7 +673,9 @@ begin
      // Ajuste de Colunas para modelos Específicos //
      if (fsModeloECF = 'TPF2001') then
         fpColunas := 40
-     else if (pos(fsModeloECF, 'X5|3202DT|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER') > 0) then
+     else if (pos(fsModeloECF, 'X5|3202DT|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER|ZPM/1FIT LOGGER') > 0) then
+        fpColunas := 48
+     else if Pos('simulador', LowerCase(fsModeloECF)) > 0 then
         fpColunas := 48;
 
   except
@@ -865,7 +867,7 @@ end;
 
 function TACBrECFFiscNET.GetNumSerie: String;
 begin
-  Result := LeTexto( 'NumeroSerieECF' );
+  Result := Trim(LeTexto( 'NumeroSerieECF'));
 end;
 
 function TACBrECFFiscNET.GetNumSerieMFD: String;
@@ -1682,7 +1684,7 @@ begin
 
   while Length( Linha ) > 0 do
   begin
-      P := Length( Linha ) ;
+     P := Length( Linha ) ;
      if P > MaxChars then    { Acha o fim de Linha mais próximo do limite máximo }
         P := PosLast(#10, LeftStr(Linha,MaxChars) ) ;
 

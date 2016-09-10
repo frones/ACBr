@@ -63,9 +63,14 @@ Data: 10/09/2016
 [-] Método "Ativar". Caso o ECF seja Bematech e MaxLinhasBuffer = 0, limita em 5
     linhas, pois a mesma congela quando recebe um buffer muito grande.
     (por: Rodrigo Frühwirth)
--- ACBrECFEscECF --
 [-] Métodos "FechaNaoFiscal", "Sangria", "Suprimento" ajuste da quebra de linha
     das observações de acordo com as Colunas e limitado a 8 linhas.
+    (por: Rodrigo Frühwirth)
+
+-- ACBrECFFiscNET --
+[*] Método "Ativar" ajustado número de colunas para o Modelo "ZPM/1FIT LOGGER".
+    (por: Rodrigo Frühwirth)
+[-] Método "GetNumSerie", retornando com espaços em branco em alguns modelos
     (por: Rodrigo Frühwirth)
 
 Data: 09/09/2016

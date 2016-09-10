@@ -839,6 +839,12 @@ var
               Mostrar + '0' + ACodigo + BarraFim;
   end;
 
+  function MontaQrCode(ACodigo: AnsiString): AnsiString;
+  begin
+    Result := ESC + '@' + #177 + IntToLEStr(length(ACodigo)) +
+                    '2' + #3   + '0' + ACodigo;
+  end;
+
 begin
   IsEscECF := (AECFClass is TACBrECFEscECF);
 
@@ -863,8 +869,10 @@ begin
     Result := MontaCodBarras(cUPCA, Conteudo)
   else if ATag = cTagBarraCodaBar then
     Result := MontaCodBarras(cCODABAR, Conteudo)
+  else if ATag = cTagQRCode then
+    Result := MontaQrCode(Conteudo)
   else
-     Result := Conteudo;
+    Result := Conteudo;
 end;
 
 function RemoveEsc(const Campo : AnsiString) : AnsiString ;
@@ -2192,9 +2200,9 @@ begin
 end;
 
 procedure TACBrECFEpson.FechaCupom(Observacao: AnsiString; IndiceBMP : Integer);
- Var SL  : TStringList ;
-     I   : Integer ;
-     Obs : AnsiString ;
+Var
+  I, P: Integer ;
+  Obs: AnsiString ;
 begin
   Obs := Observacao ;
   if not Consumidor.Enviado then
@@ -2217,19 +2225,27 @@ begin
   if Trim(Obs) <> '' then
   begin
      Obs := AjustaLinhas(Obs,fpColunas) ;
-     SL := TStringList.create ;
-     try
-        SL.Text := Obs ;
-        EpsonComando.Comando := '0A22' ;
-        For I := 0 to 7 do
-           if I >= SL.Count then
-              EpsonComando.AddParamString( '' )
-           else
-              EpsonComando.AddParamString( SL[I] ) ;
-        EnviaComando ;
-     finally
-        SL.Free ;
-     end ;
+
+     EpsonComando.Comando := '0A22' ;
+     I := 0;
+     while (I < 8) and (Obs <> '') do
+     begin
+        P := pos(#10, Obs);
+        if P > 0 then
+         begin
+           EpsonComando.AddParamString(copy(Obs, 1, P-1));
+           delete(Obs, 1, P);
+         end
+        else
+         begin
+           EpsonComando.AddParamString(Obs);
+           Obs := '';
+         end;
+
+        Inc(I);
+     end;
+
+     EnviaComando ;
   end ;
 
   EnviaPAF ;
@@ -3051,23 +3067,19 @@ end;
 function TACBrECFEpson.GetNumUltimoItem: Integer;
 begin
   try
-    Result := RespostasComando['NumUltItem'].AsInteger;
-  except
-    try
-       EpsonComando.Comando := '0903' ;
-       EnviaComando ;
+     EpsonComando.Comando := '0903' ;
+     EnviaComando ;
 
-       RespostasComando.AddField( 'NumUltItem', EpsonResposta.Params[0] );
-       Result := StrToIntDef( EpsonResposta.Params[0],0 ) ;
-    except
-       on E : Exception do
-       begin
-          if (pos('0102',E.Message) <> 0) then
-             Result := 0
-          else
-             raise ;
-       end ;
-    end ;
+     RespostasComando.AddField( 'NumUltItem', EpsonResposta.Params[0] );
+     Result := StrToIntDef( EpsonResposta.Params[0],0 ) ;
+  except
+     on E : Exception do
+     begin
+        if (pos('0102',E.Message) <> 0) then
+           Result := 0
+        else
+           raise ;
+     end ;
   end ;
 end;
 
@@ -3166,7 +3178,7 @@ procedure TACBrECFEpson.FechaNaoFiscal(Observacao : AnsiString ;
 begin
   if Trim(Observacao) <> '' then
   begin
-     Observacao := AjustaLinhas(Observacao,50) ;
+     Observacao := AjustaLinhas(Observacao, fpColunas) ;
      SL := TStringList.create ;
      try
         SL.Text := Observacao ;
@@ -3826,6 +3838,7 @@ begin
 
   if OldAtivo then
   begin
+     sleep(1000);
      while (Resp < 5) and (not Ativo) do
      begin
         Inc( Resp ) ;

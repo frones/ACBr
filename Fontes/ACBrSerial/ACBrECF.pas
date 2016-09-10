@@ -907,8 +907,8 @@ TACBrECF = class( TACBrComponent )
 
     procedure PafMF_Binario(const PathArquivo: String);
 
-    procedure PafMF_ArqMF(const APathArquivo: String);
-    procedure PafMF_ArqMFD(const APathArquivo: String);
+    procedure PafMF_ArqMF(const APathArquivo: String; Assinar: Boolean = True);
+    procedure PafMF_ArqMFD(const APathArquivo: String; Assinar: Boolean = True);
 
     procedure GerarNotaGaucha(const DataInicial, DataFinal: TDateTime;
       const PathArquivo: String);
@@ -6972,7 +6972,7 @@ begin
   end;
 end;
 
-procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String);
+procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String; Assinar: Boolean);
 var
   EADStr: String;
 begin
@@ -6981,19 +6981,20 @@ begin
 
   Self.ArquivoMF_DLL(APathArquivo);
 
-  if FileExists(APathArquivo) then
+  if not FileExists(APathArquivo) then
+    raise EACBrEADException.CreateFmt('Arquivo MF: "%s" não foi gerado', [APathArquivo]);
+
+  if Assinar then
   begin
     // assinar o arquivo baixado da impressora
     EADStr := 'EAD' + GetACBrEAD.CalcularEADArquivo(APathArquivo);
 
     // gravar o arquivo texto com a assinatura EAD
     WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
-  end
-  else
-    raise EACBrEADException.CreateFmt('Não foi possível assinar o arquivo "%s"', [APathArquivo]);
+  end;
 end;
 
-procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String);
+procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String; Assinar: Boolean);
 var
   EADStr: String;
 begin
@@ -7002,7 +7003,10 @@ begin
 
   Self.ArquivoMFD_DLL(APathArquivo);
 
-  if FileExists(APathArquivo) then
+  if not FileExists(APathArquivo) then
+    raise EACBrEADException.CreateFmt('Arquivo MFD: "%s" não foi gerado', [APathArquivo]);
+
+  if Assinar then
   begin
     // assinar o arquivo baixado da impressora
     EADStr := 'EAD' + GetACBrEAD.CalcularEADArquivo(APathArquivo);
@@ -7010,8 +7014,6 @@ begin
     // gravar o arquivo texto com a assinatura EAD
     WriteToTXT(ChangeFileExt(APathArquivo, '.TXT'), EADStr, False, True);
   end
-  else
-    raise EACBrEADException.CreateFmt('Não foi possível assinar o arquivo "%s"', [APathArquivo]);
 end;
 
 procedure TACBrECF.ProgramarBitmapPromocional(const AIndice: Integer;

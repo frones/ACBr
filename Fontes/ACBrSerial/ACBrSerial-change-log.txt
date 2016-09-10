@@ -39,6 +39,26 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/09/2016
+-- ACBrECF --
+[*] Métodos PafMF_ArqMF e PafMF_ArqMFD adicionado novo parâmetro
+    "Assinar: Boolean = True",  que permite omitir o processo de assinatura do
+    ACBr. (por: Rodrigo Frühwirth)
+
+-- ACBrECFEpson --
+[*] Método EpsonTraduzirTagBloco implementado montagem do QrCODE.
+    (por: Rodrigo Frühwirth)
+[-] Método "GetNumUltimoItem" modificado para sempre deve ler o número do último
+    item direto do ECF para evitar leitura erronea, em casos de falta de papel
+    ou desligamento (por: Rodrigo Frühwirth)
+[-] Método "FechaNaoFiscal" estava fixo a quebra das linhas com 50 colunas e
+    deve ser pelo número de colunas da ECF. (por: Rodrigo Frühwirth)
+[-] Método "FechaPortaSerialDLL" adicionado sleep(1000) antes de tentar abrir
+    a porta novamente pelo ACBr, pois em micros muito lentos estava dando muitas
+    mensagens de retentar ao ativar a ECF. (por: Rodrigo Frühwirth)
+[-] Método "FechaCupom" ajustado para evitar perda de dados da Mensagem da
+    Observação, quando a mesma contem caracteres de controle. (por: Rodrigo Frühwirth)
+
 Data: 09/09/2016
 -- ACBrEscPosEpson --
 [*] Ajuste no Comando de impressão de LogoTipo, para permitir informar o KeyCode

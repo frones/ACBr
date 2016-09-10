@@ -227,6 +227,7 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure DestruirECFClass( AECFClass: TACBrECFClass );
 
     procedure AjustaComandosControleImpressao(var Linha: AnsiString);
+    procedure AjustaLinhasColunas(var Linhas: AnsiString; MaxLin: Integer = 0);
 
  protected
     procedure AtivarDevice;
@@ -1366,7 +1367,12 @@ begin
         fsArqMemoria := ExtractFilePath( ParamStr(0) )+'ACBrECFEscECF'+
                         Poem_Zeros( fsNumECF, 3 )+'.txt';
 
-     if IsEpson then
+     if IsBematech then
+     begin
+       if MaxLinhasBuffer = 0 then  // Bematech congela se receber um Buffer muito grande
+         MaxLinhasBuffer := 5;
+     end
+     else if IsEpson then
      begin
        fpPaginaDeCodigo := 850;
        fpColunas := 57;
@@ -1789,6 +1795,15 @@ begin
   end;
 end;
 
+procedure TACBrECFEscECF.AjustaLinhasColunas(var Linhas: AnsiString;
+  MaxLin: Integer);
+begin
+  Linhas := AjustaLinhas(Linhas, fpColunas, MaxLin, IsBematech);
+
+  if RightStr(Linhas, 1) = #10 then
+    Linhas := LeftStr(Linhas, Length(Linhas)-1) + #0;
+end;
+
 procedure TACBrECFEscECF.AtivarDevice;
 begin
   inherited Ativar;
@@ -2155,7 +2170,7 @@ begin
   Linha := ReplaceString(Linha, ESC+CR, ESC+#213);
   Linha := ReplaceString(Linha, ESC+LF, ESC+#210);
 
-  Linha := AjustaLinhas( Linha, Colunas, 0, IsBematech );  { Formata as Linhas de acordo com "Coluna" }
+  AjustaLinhasColunas( Linha, 0);  { Formata as Linhas de acordo com "Coluna" }
 
   Linha := ReplaceString(Linha, ESC+#213, ESC+CR);
   Linha := ReplaceString(Linha, ESC+#210, ESC+LF);
@@ -4088,6 +4103,7 @@ var
   Obs: String;
 begin
   Obs := Observacao ;
+  AjustaLinhasColunas(Obs, 8);
 
   if not Consumidor.Enviado then
      EnviaConsumidor;
@@ -4115,6 +4131,8 @@ end;
 procedure TACBrECFEscECF.Sangria(const Valor: Double; Obs: AnsiString;
    DescricaoCNF: String; DescricaoFPG: String; IndiceBMP: Integer);
 begin
+  AjustaLinhasColunas(Obs, 8);
+
   EscECFComando.CMD := 23;
   EscECFComando.AddParamInteger( 2 ) ;  // Sangria
   EscECFComando.AddParamDouble( Valor ) ;
@@ -4132,6 +4150,8 @@ end;
 procedure TACBrECFEscECF.Suprimento(const Valor: Double; Obs: AnsiString;
    DescricaoCNF: String; DescricaoFPG: String; IndiceBMP: Integer);
 begin
+  AjustaLinhasColunas(Obs, 8);
+
   EscECFComando.CMD := 23;
   EscECFComando.AddParamInteger( 1 ) ;  // Fundo de Troco
   EscECFComando.AddParamDouble( Valor ) ;

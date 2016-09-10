@@ -59,6 +59,15 @@ Data: 10/09/2016
 [-] Método "FechaCupom" ajustado para evitar perda de dados da Mensagem da
     Observação, quando a mesma contem caracteres de controle. (por: Rodrigo Frühwirth)
 
+-- ACBrECFEscECF --
+[-] Método "Ativar". Caso o ECF seja Bematech e MaxLinhasBuffer = 0, limita em 5
+    linhas, pois a mesma congela quando recebe um buffer muito grande.
+    (por: Rodrigo Frühwirth)
+-- ACBrECFEscECF --
+[-] Métodos "FechaNaoFiscal", "Sangria", "Suprimento" ajuste da quebra de linha
+    das observações de acordo com as Colunas e limitado a 8 linhas.
+    (por: Rodrigo Frühwirth)
+
 Data: 09/09/2016
 -- ACBrEscPosEpson --
 [*] Ajuste no Comando de impressão de LogoTipo, para permitir informar o KeyCode

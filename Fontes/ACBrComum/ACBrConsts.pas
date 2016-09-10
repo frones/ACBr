@@ -215,13 +215,13 @@ const
   cTagQRCodeLargura = '<qrcode_largura>';
   cTagQRCodeError = '<qrcode_error>';
 
-  cTAGS_BARRAS: array[0..14] of String = (
+  cTAGS_BARRAS: array[0..15] of String = (
     cTagBarraEAN8, cTagBarraEAN13, cTagBarraStd, cTagBarraInter, cTagBarraCode11,
     cTagBarraCode39, cTagBarraCode93, cTagBarraCode128, 
 	cTagBarraUPCA, cTagBarraUPCE,
     cTagBarraCodaBar, cTagBarraMSI,
-    cTagBarraCode128a, cTagBarraCode128b, cTagBarraCode128c);
-  cTAGS_BARRAS_HELP: array[0..13] of String = (
+    cTagBarraCode128a, cTagBarraCode128b, cTagBarraCode128c, cTagQRCode);
+  cTAGS_BARRAS_HELP: array[0..15] of String = (
     'Cod.Barras EAN8 - 7 numeros e 1 dig.verificador',
     'Cod.Barras EAN13 - 12 numeros e 1 dig.verificador',
     'Cod.Barras "Standard 2 of 5" - apenas números, tamanho livre',
@@ -231,11 +231,14 @@ const
     'Cod.Barras Code93 - Aceita: 0..9,A..Z,-,., ,$,/,+,%, tamanho livre',
     'Cod.Barras Code128 - Todos os caracteres ASCII, tamanho livre',
     'Cod.Barras UPCA - 11 numeros e 1 dig.verificador',
+    'Cod.Barras UPCE - 11 numeros e 1 dig.verificador',
     'Cod.Barras CodaBar - Aceita: 0..9,A..D,a..d,$,+,-,.,/,:, tamanho livre',
     'Cod.Barra MSI - Apenas números, 1 dígito verificador',
     'Cod.Barras Code128 - Subtipo A',
     'Cod.Barras Code128 - Subtipo B (padrão) = '+cTagBarraCode128,
-    'Cod.Barras Code128 - Subtipo C (informar valores em BCD)');
+    'Cod.Barras Code128 - Subtipo C (informar valores em BCD)',
+    'Cod.Barras QrCode'
+    );
 
   cTagIgnorarTags = '<ignorar_tags>';
 

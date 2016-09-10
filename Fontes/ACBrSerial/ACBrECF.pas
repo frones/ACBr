@@ -2700,7 +2700,7 @@ begin
           if OldEstado = estVenda then
              MemoAdicionaLinha( '<table width=100%><tr>'+
               '<td align=left>TOTAL R$</td>'+
-              '<td align=right><b>'+FormatFloat('###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'###,##0.00')+'</b></td>'+
               '</tr></table>') ;
 
            MemoAdicionaLinha( fsMemoRodape );
@@ -2715,7 +2715,7 @@ begin
               '</tr></table>' + sLineBreak + sLineBreak +
               '<table width=100%><tr>'+
               '<td align=left>Valor da Operacao  R$:</td>'+
-              '<td align=right><b>'+FormatFloat('#,###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'#,###,##0.00')+'</b></td>'+
               '</tr></table>' + sLineBreak + sLineBreak +
               fsMemoRodape ) ;
        end ;
@@ -2931,12 +2931,12 @@ begin
      if Qtd = Round( Qtd ) then
         StrQtd := FormatFloat('#######0',Qtd )
      else
-        StrQtd := FormatFloat('###0.000',Qtd ) ;
+        StrQtd := FormatFloatBr(Qtd,'###0.000') ;
 
      if RoundTo( ValorUnitario, -2 ) = ValorUnitario then
-        StrPreco := FormatFloat('###,##0.00',ValorUnitario )
+        StrPreco := FormatFloatBr(ValorUnitario,'###,##0.00')
      else
-        StrPreco := FormatFloat('##,##0.000',ValorUnitario ) ;
+        StrPreco := FormatFloatBr(ValorUnitario,'##,##0.000') ;
 
      if self.Arredonda then
         Total := RoundABNT( Qtd * ValorUnitario, -2)
@@ -2952,7 +2952,7 @@ begin
      Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'U', Unidade ) ;
      Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'V', StrPreco ) ;
      Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'A', AliquotaICMS ) ;
-     Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'T', FormatFloat('###,##0.00', Total ), True) ;
+     Linha := StuffMascaraItem( Linha, fsMemoMascItens, 'T', FormatFloatBr(Total,'###,##0.00'), True) ;
 
      { Quebrando a linha em várias de acordo com o tamanho das colunas }
      Buffer := '' ;
@@ -2991,9 +2991,9 @@ begin
         Total := RoundTo(Total + ValDesc, -2) ;
 
         MemoAdicionaLinha( '<table width=100%><tr>'+
-           '<td align=left>'+StrDescAcre+' '+FormatFloat('#0.00', PorcDesc)+'%</td>'+
-           '<td align=center>'+FormatFloat('##,##0.00',ValDesc)+'</td>'+
-           '<td align=right>'+FormatFloat('###,##0.00',Total)+'</td></tr></table>') ;
+           '<td align=left>'+StrDescAcre+' '+FormatFloatBr(PorcDesc,'#0.00')+'%</td>'+
+           '<td align=center>'+FormatFloatBr(ValDesc,'##,##0.00')+'</td>'+
+           '<td align=right>'+FormatFloatBr(Total,'###,##0.00')+'</td></tr></table>') ;
      end ;
    end ;
   {$ENDIF}
@@ -3083,7 +3083,7 @@ begin
          StrDescAcre := 'ACRESCIMO' ;
 
       StrDescAcre := StrDescAcre + ' ' +
-                     FormatFloat('##,##0.00',ValorDescontoAcrescimo) ;
+                     FormatFloatBr(ValorDescontoAcrescimo,'##,##0.00') ;
 
       MemoAdicionaLinha( StrDescAcre ) ;
    end ;
@@ -3503,9 +3503,9 @@ begin
       begin
         Rodape := Rodape + #10 +
         '#CF:B' + Format('%2.2d', [ PostoCombustivel[I].Bico ] ) +
-        ' EI' + FormatFloat( '0000000.000', PostoCombustivel[I].EI ) +
-        ' EF' + FormatFloat( '0000000.000', PostoCombustivel[I].EF ) +
-        ' V' + FormatFloat( '0.000', PostoCombustivel[I].Volume ) +
+        ' EI' + FormatFloatBr( PostoCombustivel[I].EI, '0000000.000' ) +
+        ' EF' + FormatFloatBr( PostoCombustivel[I].EF, '0000000.000' ) +
+        ' V' + FormatFloatBr( PostoCombustivel[I].Volume, '0.000' ) +
         ifthen( PostoCombustivel[I].Automatico, 'A', '' );
 
         if not PostoCombustivel[I].Automatico then
@@ -3519,6 +3519,15 @@ end;
 function TACBrECF.GetRodapeRestaurante: String;
 Var
   Rodape : String ;
+
+  function DescricaoTipoConta: String;
+  begin
+    if InfoRodapeCupom.Restaurante.ContaCliente then
+       Result := 'Conta de Cliente'
+    else
+       Result := 'Mesa';
+  end;
+
 begin
   Rodape := EmptyStr;
 
@@ -3542,7 +3551,7 @@ begin
 
         Rodape := Rodape + #10 + 'ECF:'
         + Format('%3.3d', [InfoRodapeCupom.Restaurante.ECF])
-        + ' - Conf. de Mesa';
+        + ' - Conf. de ' + DescricaoTipoConta;
 
           if InfoRodapeCupom.Restaurante.CER > 0 then
           begin
@@ -3556,11 +3565,9 @@ begin
       end
       else
       begin
-
-        Rodape := Rodape + #10 + 'Mesa '
-        + InfoRodapeCupom.Restaurante.Mesa
-        + ' – SEM EMISSÃO DE CONFERÊNCIA DE MESA'
-
+        Rodape := Rodape + #10 +
+                  DescricaoTipoConta + ' ' + InfoRodapeCupom.Restaurante.Mesa +
+                  ' – SEM EMISSÃO DE CONFERÊNCIA DE ' + UpperCase(DescricaoTipoConta);
       end;
   end;
 
@@ -3617,13 +3624,13 @@ begin
     begin
       Rodape := Rodape + #10 +
         'ESTABELECIMENTO INCLUÍDO NO PROGRAMA DE'#10 +
-        'CONCESSÃO DE CRÉDITOS - LEI Nº 4.159/08.';
+        'CONCESSÃO DE CRÉDITOS - LEI Nº 4.159/2008.';
     end;
 
     Rodape := Rodape + #10 + '<n>NOTA LEGAL:</n>';
 
-    Rodape := Rodape + ' ICMS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorICMS);
-    Rodape := Rodape + ' ISS = ' + FormatFloat(',#0.00', InfoRodapeCupom.NotaLegalDF.ValorISS);
+    Rodape := Rodape + ' ICMS = ' + FormatFloatBr(InfoRodapeCupom.NotaLegalDF.ValorICMS, ',#0.00');
+    Rodape := Rodape + ' ISS = ' + FormatFloatBr(InfoRodapeCupom.NotaLegalDF.ValorISS, ',#0.00');
   end;
 
   Result := ACBrStr( Rodape );
@@ -3656,11 +3663,11 @@ begin
     end
     else
     begin
-      Result :=
-        'Val.Aprox.Impostos R$' +
-        FormatFloat(',#0.00', VlImposto) +
-        FormatFloat('(,#0.00%)', VlPercentual) +
-        IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', ' Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
+      Result := 'Val.Aprox.Impostos R$' +
+                FormatFloatBr(VlImposto, ',#0.00') +
+                FormatFloatBr(VlPercentual, '(,#0.00%)') +
+                IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '',
+                       ' Fonte:' + InfoRodapeCupom.Imposto.Fonte, '');
     end;
   end
   else
@@ -3697,18 +3704,24 @@ begin
           if InformouValorAproxEstadual and InformouValorAproxMunicipal then
           begin
             Result := 'Trib aprox R$:' +
-              FormatFloat(',#0.00', VlImpostoFederal)   + ' Fed, '+
-              FormatFloat(',#0.00', VlImpostoEstadual)  + ' Est e '+
-              FormatFloat(',#0.00', VlImpostoMunicipal) + ' Mun'+
-              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+              FormatFloatBr(VlImpostoFederal, ',#0.00')   + ' Fed, '+
+              FormatFloatBr(VlImpostoEstadual, ',#0.00')  + ' Est e '+
+              FormatFloatBr(VlImpostoMunicipal, ',#0.00') + ' Mun'+
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 +
+                     'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' +
+              Trim(InfoRodapeCupom.Imposto.Chave);
           end
           else
           begin
             Result := 'Trib aprox R$:' +
-              FormatFloat(',#0.00', VlImpostoFederal) + ' Federal e '+
-              IfThen(InformouValorAproxEstadual, FormatFloat(',#0.00', VlImpostoEstadual) + ' Estadual', '') +
-              IfThen(InformouValorAproxMunicipal, FormatFloat(',#0.00', VlImpostoMunicipal) + ' Municipal', '') +
-              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+              FormatFloatBr(VlImpostoFederal, ',#0.00') + ' Federal,'+
+              IfThen(InformouValorAproxEstadual,
+                     ', '+FormatFloatBr(VlImpostoEstadual,',#0.00') + ' Estadual', '') +
+              IfThen(InformouValorAproxMunicipal,
+                     ', '+FormatFloatBr(VlImpostoMunicipal,',#0.00') + ' Municipal', '') +
+              IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '',
+                     #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' +
+              Trim(InfoRodapeCupom.Imposto.Chave);
           end;
         end
         else
@@ -3717,14 +3730,15 @@ begin
           SubtotalSemImpostos := Subtotal - (VlImpostoFederal + VlImpostoEstadual + VlImpostoMunicipal);
 
           Result := 'Você pagou aproximadamente:' + #10 +
-            'R$ ' + FormatFloat(',#0.00', VlImpostoFederal) + ' de tributos federais'+
-            // FormatFloat(' (,#0.00%)', VlPercentualFederal)
-            IfThen(InformouValorAproxEstadual,  #10 + 'R$ ' + FormatFloat(',#0.00', VlImpostoEstadual) + ' de tributos estaduais', '') +
-            // FormatFloat(' (,#0.00%)', VlPercentualEstadual)
-            IfThen(InformouValorAproxMunicipal, #10 + 'R$ ' + FormatFloat(',#0.00', VlImpostoMunicipal) + ' de tributos municipais', '') +
-            // FormatFloat(' (,#0.00%)', VlPercentualMunicipal)
-            #10 + 'R$ ' + FormatFloat(',#0.00', SubtotalSemImpostos) + ' pelos produtos/serviços'+
-            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '', #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' + Trim(InfoRodapeCupom.Imposto.Chave);
+            'R$ ' + FormatFloatBr(VlImpostoFederal, ',#0.00') + ' de tributos federais'+
+            IfThen(InformouValorAproxEstadual,
+                   #10 + 'R$ ' + FormatFloatBr(VlImpostoEstadual, ',#0.00') + ' de tributos estaduais', '') +
+            IfThen(InformouValorAproxMunicipal,
+                   #10 + 'R$ ' + FormatFloatBr(VlImpostoMunicipal, ',#0.00') + ' de tributos municipais', '') +
+            #10 + 'R$ ' + FormatFloatBr(SubtotalSemImpostos, ',#0.00') + ' pelos produtos/serviços'+
+            IfThen(Trim(InfoRodapeCupom.Imposto.Fonte) <> '',
+                   #10 + 'Fonte:' + InfoRodapeCupom.Imposto.Fonte, '') + ' ' +
+            Trim(InfoRodapeCupom.Imposto.Chave);
         end;
       end;
     end;
@@ -3975,7 +3989,7 @@ begin
       MemoAdicionaLinha( '<table width=100%><tr>'+
                          '<td align=left>'+IntToStrZero( fsMemoItens, 3)+'</td>'+
                          '<td align=left>'+CNF.Descricao+'</td>'+
-                         '<td align=right>'+FormatFloat('#,###,##0.00',Valor)+'</td>'+
+                         '<td align=right>'+FormatFloatBr(Valor,'#,###,##0.00')+'</td>'+
                          '</tr></table>' + Obs ) ;
    end ;
   {$ENDIF}
@@ -4030,7 +4044,7 @@ begin
           if OldEstado = estVenda then
              MemoAdicionaLinha( '<table width=100%><tr>'+
               '<td align=left>TOTAL R$</td>'+
-              '<td align=right><b>'+FormatFloat('###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'###,##0.00')+'</b></td>'+
               '</tr></table>') ;
 
            MemoAdicionaLinha( fsMemoRodape );
@@ -4046,7 +4060,7 @@ begin
               '</tr></table>' + sLineBreak + sLineBreak +
               '<table width=100%><tr>'+
               '<td align=left>Valor da Operacao  R$:</td>'+
-              '<td align=right><b>'+FormatFloat('#,###,##0.00',SubTot)+'</b></td>'+
+              '<td align=right><b>'+FormatFloatBr(SubTot,'#,###,##0.00')+'</b></td>'+
               '</tr></table>' + sLineBreak + sLineBreak +
               fsMemoRodape ) ;
        end ;
@@ -5644,19 +5658,24 @@ end;
          S := 'Acrescimo' ;
 
       MemoAdicionaLinha( '<table width=100%><tr>'+
-                         '<td align=left><b>SUBTOTAL   R$</b></td>'+
-                         '<td align=right>'+FormatFloat('#,###,##0.00',
-                         fsSubTotalPagto - DescontoAcrescimo)+'</td>'+
+                          '<td align=left><b>SUBTOTAL   R$</b></td>'+
+                          '<td align=right>'+
+                            FormatFloatBr(fsSubTotalPagto - DescontoAcrescimo,'#,###,##0.00')+
+                          '</td>'+
                          '</tr></table>' ) ;
       MemoAdicionaLinha( '<table width=100%><tr>'+
-                         '<td align=left><b>'+S+'  R$</b></td>'+
-                         '<td align=right>'+FormatFloat('#,###,##0.00',DescontoAcrescimo)+'</td>'+
+                          '<td align=left><b>'+S+'  R$</b></td>'+
+                          '<td align=right>'+
+                            FormatFloatBr(DescontoAcrescimo,'#,###,##0.00')+
+                          '</td>'+
                          '</tr></table>' ) ;
    end ;
 
    MemoTitulo( '<table width=100%><tr>'+
-               '<td align=left>TOTAL  R$</td>'+
-               '<td align=right>'+FormatFloat('#,###,##0.00',fsSubTotalPagto)+'</td>'+
+                '<td align=left>TOTAL  R$</td>'+
+                '<td align=right>'+
+                  FormatFloatBr(fsSubTotalPagto,'#,###,##0.00')+
+                '</td>'+
                '</tr></table>' ) ;
 
    fsMemoItens := 0 ;  { Zera para acumular o numero de Pagamentos }
@@ -5671,8 +5690,10 @@ end;
     Inc( fsMemoItens ) ;
 
     MemoAdicionaLinha( '<table width=100%><tr>'+
-                       '<td align=left><b>'+Descricao+'</b></td>'+
-                       '<td align=right>'+FormatFloat('#,###,##0.00',Valor)+'</td>'+
+                        '<td align=left><b>'+Descricao+'</b></td>'+
+                        '<td align=right>'+
+                         FormatFloatBr(Valor,'#,###,##0.00')+
+                        '</td>'+
                        '</tr></table>' ) ;
 
     Observacao := AjustaLinhas( Observacao, fsMemoColunas, 2 ) ;
@@ -5682,16 +5703,20 @@ end;
     begin
        if fsMemoItens > 1 then
           MemoAdicionaLinha( '<table width=100%><tr>'+
-                             '<td align=left><b>S O M A  R$</b></td>'+
-                             '<td align=right>'+FormatFloat('#,###,##0.00',fsTotalPago)+'</td>'+
+                              '<td align=left><b>S O M A  R$</b></td>'+
+                              '<td align=right>'+
+                                FormatFloatBr(fsTotalPago,'#,###,##0.00')+
+                              '</td>'+
                              '</tr></table>' ) ;
 
       if fsTotalPago > fsSubTotalPagto then  { Tem TROCO ? }
       begin
          Troco  := RoundTo(fsTotalPago - fsSubTotalPagto,-2) ;
          MemoTitulo( '<table width=100%><tr>'+
-                     '<td align=left>TROCO  R$</td>'+
-                     '<td align=right>'+FormatFloat('#,###,##0.00',Troco)+'</td>'+
+                      '<td align=left>TROCO  R$</td>'+
+                      '<td align=right>'+
+                        FormatFloatBr(Troco,'#,###,##0.00')+
+                      '</td>'+
                      '</tr></table>' ) ;
       end ;
    end ;
@@ -6625,7 +6650,7 @@ begin
         FormatDateTime('dd/mm/yyyy', DAVsEmitidos[I].DtEmissao),
         DAVsEmitidos[I].COO_Dav,
         DAVsEmitidos[I].COO_Cupom,
-        PadLeft(FormatFloat(',#0.00', DAVsEmitidos[I].Valor), TamanhoLinha - 28, ' ')
+        PadLeft(FormatFloatBr(DAVsEmitidos[I].Valor, ',#0.00'), TamanhoLinha - 28, ' ')
       ]));
       Relatorio.Add('');
     end;

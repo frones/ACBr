@@ -149,6 +149,7 @@ TACBrECFRodapeRestaurante = class( TPersistent )
     fsCOO:  Integer;
     fsMesa: String;
     fsImprimir: Boolean;
+    fsContaCliente: Boolean;
   public
   published
     property Imprimir : Boolean read fsImprimir write fsImprimir default False;
@@ -156,6 +157,8 @@ TACBrECFRodapeRestaurante = class( TPersistent )
     property CER      : Integer read fsCER      write fsCER stored false;
     property COO      : Integer read fsCOO      write fsCOO stored false;
     property Mesa     : String  read fsMesa     write fsMesa stored false;
+    property ContaCliente: Boolean read fsContaCliente write fsContaCliente
+       stored false default False;
 end;
 
 TACBrECFRodape = class( TPersistent )

@@ -40,10 +40,21 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 10/09/2016
+-- ACBrECFClass --
+[*] Classe "TACBrECFRodapeRestaurante", adicionado propriedade
+    "ContaCliente: Boolean" para Sinalizar o tipo de conta "Mesa" ou "Cliente"
+    (por: Rodrigo Frühwirth)
+
 -- ACBrECF --
+[*] Método "GetRodapeRestaurante", adicionado tratamento para a propriedade
+    TACBrECFRodapeRestaurante.ContaCliente, imprimndo a expressão "CONTA DE CLIENTE"
+    no lugar de "MESA" de acordo com a necessidade da aplicação.
+    (por: Rodrigo Frühwirth)
 [*] Métodos PafMF_ArqMF e PafMF_ArqMFD adicionado novo parâmetro
     "Assinar: Boolean = True",  que permite omitir o processo de assinatura do
     ACBr. (por: Rodrigo Frühwirth)
+[*] Troca de FormatFloat por FormatFloatBr para evitar formação errada de
+    decimais em Linux ou S.O. em Ingles (por: DSA)
 
 -- ACBrECFEpson --
 [*] Método EpsonTraduzirTagBloco implementado montagem do QrCODE.

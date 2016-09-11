@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2016
+[*] Modificado para omitir a atividade se ela não existir em fortes!
+		http://www.projetoacbr.com.br/forum/topic/27676-impress%C3%A3o-nfse/?page=2
+		por: Juliomar Marchetti
+		
 05/09/2016
 [-] Correção, estava invertido a chamada as functions de leitura do XML da NFS-e
     do provedor Infisc, pois este tem 2 versões.

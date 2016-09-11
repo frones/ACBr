@@ -415,7 +415,8 @@ begin
       If Servico.xItemListaServico <> '' Then
       Begin
         RLLabel16.Visible := True;
-        rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
+        if FAtividade <> '' then
+          rlmCodServico.Lines.Append('Atividade: ' + FAtividade);
         rlmCodServico.Lines.Append( Servico.ItemListaServico + ' - '+ Servico.xItemListaServico);
       End
       Else

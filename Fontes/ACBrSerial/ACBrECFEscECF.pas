@@ -4100,7 +4100,7 @@ end;
 procedure TACBrECFEscECF.FechaNaoFiscal(Observacao: AnsiString;
    IndiceBMP: Integer);
 var
-  Obs: String;
+  Obs: AnsiString;
 begin
   Obs := Observacao ;
   AjustaLinhasColunas(Obs, 8);

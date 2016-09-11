@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/09/2016
+-- ACBrECFEscECF
+[-] Correção para o tipo de dados de string para ansistring, pois no delphi ele verifica a tipagem de dado
+		por:  Juliomar Marchetti
+		
 Data: 10/09/2016
 -- ACBrECFClass --
 [*] Classe "TACBrECFRodapeRestaurante", adicionado propriedade

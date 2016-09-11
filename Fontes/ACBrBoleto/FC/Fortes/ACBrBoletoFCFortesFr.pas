@@ -665,9 +665,17 @@ begin
            TipoDoc := 'DOC.: ';
         end;
 
-        txtNomeSacadorAval2.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF;
-        txtEndSacadorAval2.Caption    := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
-                                         Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+        if NomeAvalista <> '' then
+        begin
+          txtNomeSacadorAval2.Caption   := NomeAvalista + ' - ' + TipoDoc + ' ' + CNPJCPF;
+          txtEndSacadorAval2.Caption    := Logradouro + ' ' + Numero + ' ' + Complemento + ' - ' +
+                                           Bairro + ', ' + Cidade + ' / ' + UF + ' - ' + CEP;
+        end
+        else
+        begin
+          txtNomeSacadorAval2.Caption   := '';
+          txtEndSacadorAval2.Caption    := '';
+        end;
       end;
 
       txtInstrucoes2.Lines.Text       := MensagemPadrao.Text;

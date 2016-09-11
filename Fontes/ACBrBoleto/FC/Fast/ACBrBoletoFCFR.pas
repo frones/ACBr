@@ -603,7 +603,7 @@ begin
         Field_Aceite.AsInteger := Integer(ListadeBoletos[iFor].Aceite);
         Field_DataProcessamento.AsDateTime := ListadeBoletos[iFor].DataProcessamento;
         Field_NossoNumero.AsString := ListadeBoletos[iFor].NossoNumero;
-        Field_Carteira.AsString := ListadeBoletos[iFor].Carteira;
+        Field_Carteira.AsString := Banco.MontarCampoCarteira(ListadeBoletos[iFor]);
         Field_ValorDocumento.AsCurrency := ListadeBoletos[iFor].ValorDocumento;
         Field_LocalPagamento.AsString := ListadeBoletos[iFor].LocalPagamento;
         Field_ValorMoraJuros.AsCurrency := ListadeBoletos[iFor].ValorMoraJuros;

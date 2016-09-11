@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/09/2016
+ACBrBoletoFCFR
+[-] Modificado para montar a carteira em cima do título igual é feito em fortes report
+		http://www.projetoacbr.com.br/forum/topic/30973-problema-na-homologa%C3%A7%C3%A3o-banco-do-nordeste/?do=findComment&comment=212158
+		por: Juliomar Marchetti
+		
 18/06/2016
 [*] Adição de duas propriedades para habilitar o envio das fontes e do background no boleto junto no pdf
 		http://www.projetoacbr.com.br/forum/topic/29486-fastreport-thread-ajustes/

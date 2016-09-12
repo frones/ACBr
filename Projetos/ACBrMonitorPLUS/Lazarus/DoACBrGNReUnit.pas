@@ -188,7 +188,7 @@ begin
         //Complementes da Recita
         if IniGuia.SectionExists('Complemento') then
         begin
-          c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdenfiticadorGuia','');
+          c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdentificadorGuia','');
           ///Exige Doc Origem
           c28_tipoDocOrigem      :=IniGuia.ReadInteger('Complemento','tipoDocOrigem',0);
           c04_docOrigem          :=IniGuia.ReadString('Complemento','DocOrigem','');

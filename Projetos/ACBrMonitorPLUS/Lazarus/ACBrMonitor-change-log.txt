@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2016
+[-] Corrigido problema que o identificado estava errado 
+		http://www.projetoacbr.com.br/forum/topic/31943-gnre-iniciando-testes/
+		http://www.projetoacbr.com.br/forum/topic/32159-acbrmonitorplus-gnre-campos-extras/
+		por: Juliomar Marchetti
+		
 02/09/2016
 [*] Corrigida propriedade cListServ para String;
 [*] Compilada versão assinada para o SAC. Versão modificada para 0.3.08.2.

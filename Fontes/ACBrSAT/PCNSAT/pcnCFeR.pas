@@ -79,9 +79,9 @@ end;
 
 function TCFeR.LerXml: boolean;
 var
-  ok: boolean;
+  ok, XMLContemTagsSAT: boolean;
   i, j, nItem: integer;
-  Arquivo, Itens, ItensTemp, NumItem: AnsiString;
+  Arquivo, Itens, ItensTemp, NumItem, ACampo: AnsiString;
   Aspas: String;
 begin
   Result := False;
@@ -90,15 +90,22 @@ begin
    else
     Aspas := '"';
 
-  CFe.Clear;
+  XMLContemTagsSAT := (Pos('<nserieSAT>', Leitor.Arquivo) > 0);
+
+  { Se contem apenas as Tags da aplicação (não contém as Tags geradas pelo SAT),
+    então não faz o "CFe.Clear", para evitar apagar dados padroes, definidos em
+    "TACBrSAT.InicializaCFe" }
+
+  if XMLContemTagsSAT then
+    CFe.Clear;
 
   if Leitor.rExtrai(1, 'infCFe') <> '' then
   begin
     CFe.infCFe.ID             := Leitor.rAtributo( 'Id' ) ;
     CFe.infCFe.ID             := StringReplace( UpperCase(CFe.infCFe.ID), 'CFE', '', [rfReplaceAll] ) ;
-    CFe.infCFe.versao         := StringToFloatDef(Leitor.rAtributo( 'versao' ), 0) ;
-    CFe.infCFe.versaoSB       := StrToIntDef(Leitor.rAtributo( 'versaoSB' ), 0) ;
-    CFe.infCFe.versaoDadosEnt := StringToFloatDef(Leitor.rAtributo( 'versaoDadosEnt' ), 0) ;
+    CFe.infCFe.versao         := StringToFloatDef(Leitor.rAtributo( 'versao' ), CFe.infCFe.versao) ;
+    CFe.infCFe.versaoSB       := StrToIntDef(Leitor.rAtributo( 'versaoSB' ), CFe.infCFe.versaoSB) ;
+    CFe.infCFe.versaoDadosEnt := StringToFloatDef(Leitor.rAtributo( 'versaoDadosEnt' ), CFe.infCFe.versaoDadosEnt) ;
   end ;
                                             
   (* Grupo da TAG <ide> *******************************************************)
@@ -107,7 +114,10 @@ begin
     ok := False;
     (*B02*) CFe.ide.cUF := Leitor.rCampo(tcInt, 'cUF');
     (*B03*) CFe.ide.cNF := Leitor.rCampo(tcInt, 'cNF');
-    (*B04*) CFe.ide.modelo := Leitor.rCampo(tcInt, 'mod');
+    ACampo := Leitor.rCampo(tcInt, 'mod');
+    if (ACampo <> '') then
+      (*B04*) CFe.ide.modelo := StrToIntDef( ACampo, CFe.ide.modelo);
+
     (*B05*) CFe.ide.nserieSAT := Leitor.rCampo(tcInt, 'nserieSAT');
     (*B06*) CFe.ide.nCFe := Leitor.rCampo(tcInt, 'nCFe');
     (*B07*) CFe.ide.dEmi := Leitor.rCampo(tcDatCFe, 'dEmi');
@@ -123,14 +133,23 @@ begin
   (* Grupo da TAG <emit> ******************************************************)
   if Leitor.rExtrai(1, 'emit') <> '' then
   begin
-    (*C02/C02a*)CFe.Emit.CNPJ := Leitor.rCampoCNPJCPF;
-    (*C03*)CFe.Emit.xNome := Leitor.rCampo(tcStr, 'xNome');
-    (*C04*)CFe.Emit.xFant := Leitor.rCampo(tcStr, 'xFant');
-    (*C12*)CFe.Emit.IE := Leitor.rCampo(tcStr, 'IE');
-    (*C13*)CFe.Emit.IM := Leitor.rCampo(tcStr, 'IM');
-    (*C14*)CFe.Emit.cRegTrib := StrToRegTrib(ok, Leitor.rCampo(tcStr, 'cRegTrib'));
-    (*C15*)CFe.Emit.cRegTribISSQN := StrToRegTribISSQN(ok, Leitor.rCampo(tcStr, 'cRegTribISSQN'));
-    (*C16*)CFe.Emit.indRatISSQN := StrToindRatISSQN(ok, Leitor.rCampo(tcStr, 'indRatISSQN'));
+    (*C02/C02a*)CFe.Emit.CNPJ := IfEmptyThen(Leitor.rCampoCNPJCPF, CFe.Emit.CNPJ);
+    (*C03*)CFe.Emit.xNome := IfEmptyThen(Leitor.rCampo(tcStr, 'xNome'), CFe.Emit.xNome);
+    (*C04*)CFe.Emit.xFant := IfEmptyThen(Leitor.rCampo(tcStr, 'xFant'), CFe.Emit.xFant);
+    (*C12*)CFe.Emit.IE := IfEmptyThen(Leitor.rCampo(tcStr, 'IE'), CFe.Emit.IE);
+    (*C13*)CFe.Emit.IM := IfEmptyThen(Leitor.rCampo(tcStr, 'IM'), CFe.Emit.IM);
+
+    ACampo := Leitor.rCampo(tcStr, 'cRegTrib');
+    if (ACampo <> '') then
+      (*C14*)CFe.Emit.cRegTrib := StrToRegTrib(ok, ACampo);
+
+    ACampo := Leitor.rCampo(tcStr, 'cRegTribISSQN');
+    if (ACampo <> '') then
+      (*C15*)CFe.Emit.cRegTribISSQN := StrToRegTribISSQN(ok, ACampo);
+
+    ACampo := Leitor.rCampo(tcStr, 'indRatISSQN');
+    if (ACampo <> '') then
+      (*C16*)CFe.Emit.indRatISSQN := StrToindRatISSQN(ok, ACampo);
   end;
 
   (* Grupo da TAG <emit><EnderEmit> *)
@@ -237,7 +256,7 @@ begin
     begin
       (*N06*)CFe.Det[i].Imposto.ICMS.orig         := StrToOrig(ok, Leitor.rCampo(tcStr, 'Orig'));
       (*N07*)CFe.Det[i].Imposto.ICMS.CST          := StrToCSTICMS(ok, Leitor.rCampo(tcStr, 'CST'));
-      (*N10*)CFe.Det[i].Imposto.ICMS.CSOSN       := StrToCSOSNIcms( ok,Leitor.rCampo(tcInt, 'CSOSN'));
+      (*N10*)CFe.Det[i].Imposto.ICMS.CSOSN        := StrToCSOSNIcms(ok, Leitor.rCampo(tcInt, 'CSOSN'));
       (*N08*)CFe.Det[i].Imposto.ICMS.pICMS        := Leitor.rCampo(tcDe2, 'pICMS');
       (*N09*)CFe.Det[i].Imposto.ICMS.vICMS        := Leitor.rCampo(tcDe2, 'vICMS');
     end;

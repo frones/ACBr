@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/09/2016
+-- pcnCFeR --
+[-] Método "LerXml". Ajuste para não chamar "CFe.Clear", caso o XML informado,
+    contenha apenas as Tags das Aplicação, pois isso apagaria os dados
+    informados previamente, por: TACBrSAT.InicializaCFe.
+[-] Método "LerXml". Ajuste para considerar valores já atribuidos caso não
+    encontre no XML informado, as Tags de "CFe.infCFe" e "CFe.Emit"
+    (por: DSA)
+
 Data: 09/09/2016
 -- ACBrSATExtratoESCPOS --
 [*] Ajuste para detectar corretamente se a impressora é capaz de imprimir o

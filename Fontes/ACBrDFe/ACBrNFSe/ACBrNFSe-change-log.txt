@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2016
+[-] Correção do enconding do lfm que estava com cp1252 e não utf-8
+		http://www.projetoacbr.com.br/forum/topic/32329-nfse-lazarus/
+		por : Juliomar Marchetti
+		
 11/09/2016
 [*] Modificado para omitir a atividade se ela não existir em fortes!
 		http://www.projetoacbr.com.br/forum/topic/27676-impress%C3%A3o-nfse/?page=2

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2016
+[*] Correção para o cnpj estava cortando
+		http://www.projetoacbr.com.br/forum/topic/32349-danfe-retrato-fortes-cnpj-dest-e-transp-cortando-%C3%BAltimo-d%C3%ADgito/
+		por : Juliomar Marchetti
+		
 29/08/2016
 -- ACBrNFeConfiguracoes --
 [*] Alterado o valor padrão da propriedade: IncluirQRCodeXMLNFCe para True, pois

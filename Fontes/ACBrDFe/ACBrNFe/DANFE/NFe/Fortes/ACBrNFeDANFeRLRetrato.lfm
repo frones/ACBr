@@ -1911,10 +1911,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllDestCNPJ: TRLLabel
         Tag = 703
-        Left = 529
+        Left = 523
         Height = 14
         Top = 25
-        Width = 115
+        Width = 125
+				Alignment = taCenter
         AutoSize = False
         Font.Color = clBlack
         Font.Height = -11
@@ -1945,11 +1946,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllDestCEP: TRLLabel
         Tag = 703
-        Left = 581
+        Left = 575
         Height = 14
         Top = 55
-        Width = 63
+        Width = 73
         AutoSize = False
+				Alignment = taCenter
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
@@ -6631,11 +6633,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllTransCNPJ: TRLLabel
         Tag = 703
-        Left = 621
+        Left = 615
         Height = 14
         Top = 25
-        Width = 116
+        Width = 124
         AutoSize = False
+				Alignment = taCenter
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'

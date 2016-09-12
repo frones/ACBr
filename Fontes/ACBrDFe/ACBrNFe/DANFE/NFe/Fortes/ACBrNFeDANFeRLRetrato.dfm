@@ -1537,10 +1537,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllDestCNPJ: TRLLabel
         Tag = 703
-        Left = 529
+        Left = 523
         Top = 25
-        Width = 115
+        Width = 125
         Height = 14
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1566,10 +1567,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllDestCEP: TRLLabel
         Tag = 703
-        Left = 581
+        Left = 575
         Top = 55
-        Width = 63
+        Width = 73
         Height = 14
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -5577,10 +5579,11 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
       end
       object rllTransCNPJ: TRLLabel
         Tag = 703
-        Left = 621
+        Left = 615
         Top = 25
-        Width = 116
+        Width = 124
         Height = 14
+        Alignment = taCenter
         AutoSize = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack

@@ -45,8 +45,17 @@ uses
   pnfsConversao, ACBrDelphiZXingQRCode ;
 
 type
+
+  { TfrlDANFSeRLRetrato }
+
   TfrlDANFSeRLRetrato = class(TfrlDANFSeRL)
     rlbCabecalho: TRLBand;
+    RLDraw10: TRLDraw;
+    RLDraw2: TRLDraw;
+    RLDraw3: TRLDraw;
+    RLDraw70: TRLDraw;
+    RLDraw8: TRLDraw;
+    RLDraw9: TRLDraw;
     rllNumNF0: TRLLabel;
     RLLabel13: TRLLabel;
     RLLabel12: TRLLabel;

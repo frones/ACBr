@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2016
+-- libexslt, libxml2, libxslt --
+[*] Ajustes para correta compilação no Lazarus FPC 64 bits (por: DSA)
+
 13/06/2016
 -- OpenSSLExt --
 [+] Adicionado suporte ao método: X509GetPubkey  (por: DSA)

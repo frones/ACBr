@@ -15,7 +15,11 @@ procedure Init;
 
 const
 {$IFDEF MSWINDOWS}
+  {$IFDEF CPU64}
+  LIBXSLT_SO = 'libxslt-1.dll';
+  {$ELSE}
   LIBXSLT_SO = 'libxslt.dll';
+  {$ENDIF}
 {$ELSE}
   LIBXSLT_SO = 'libxslt.so';
 {$ENDIF}
@@ -1107,7 +1111,7 @@ uses
   SysUtils;
 
 var
-  libHandle: THandle;
+  libHandle: TLibHandle;
 
 // Utility function to make sure procedure entry points are not null
 

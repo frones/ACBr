@@ -29,6 +29,9 @@ const
   
 type
 
+      {$IFNDEF FPC}
+       TLibHandle = THandle;
+      {$ENDIF}
 
       PFILE = Pointer;
       iconv_t = Cardinal;
@@ -4429,7 +4432,7 @@ uses
   SysUtils;
 
 var
-  libHandle: THandle;
+  libHandle: TLibHandle;
 
 // Utility function to make sure procedure entry points are not null
 

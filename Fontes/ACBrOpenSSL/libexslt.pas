@@ -50,7 +50,7 @@ uses
   SysUtils;
 
 var
-  libHandle: THandle;
+  libHandle: TLibHandle;
 
 // Utility function to make sure procedure entry points are not null
 

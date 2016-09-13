@@ -429,9 +429,9 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'Descricao', 01, 300, 0, '', '');
     Gerador.wGrupoNFSe('/ResponsavelISSQN');
   end
-  else begin
+  else
+  if (NFSe.Servico.Valores.IssRetido <> stNormal) then
     Gerador.wCampoNFSe(tcStr, '', 'ResponsavelRetencao', 01, 01, 0, ResponsavelRetencaoToStr(NFSe.Servico.ResponsavelRetencao), '')
-  end;
 end;
 
 procedure TNFSeW_Agili.GerarExigibilidadeISSQN;
@@ -514,10 +514,13 @@ begin
   end;
 
   GerarResponsavelISSQN;
-  Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, FormatarCnae(NFSe.Servico.CodigoCnae), '');
+  if VersaoNFSe = ve100 then
+    Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, FormatarCnae(NFSe.Servico.CodigoCnae), '')
+  else
+    Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividadeEconomica', 01, 140, 1, NFSe.Servico.CodigoCnae, '');
 
   if VersaoNFSe = ve200 then
-    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 15, 0, FormatarCnae(NFSe.Servico.CodigoCnae), '');
+    Gerador.wCampoNFSe(tcStr, '#30', 'CodigoCnae', 01, 15, 0, OnlyNumber(NFSe.Servico.CodigoCnae), '');
 
   GerarExigibilidadeISSQN;
   Gerador.wCampoNFSe(tcStr, '', 'BeneficioProcesso', 01, 30, 0, NFSe.Servico.NumeroProcesso, '');

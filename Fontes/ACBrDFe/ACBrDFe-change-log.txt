@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2016
+-- ACBrDFe, ACBrDFeSSL --
+[+] Adicionado o evento "OnAntesDeAssinar: TDFeSSLAntesDeAssinar", que permite a
+    aplicação, controlar o processo de assinatura, usando por exemplo, algum
+    utilitário externo para a assinatura. Se o valor de "ConteudoXML" for
+    modificado pela aplicação, o TDFeSSL não tentará assinar o documento
+    internamente.  (por: DSA)
+
 18/07/2016
 -- ACBrDFeOpenSSL --
 [*] Incluido o código 202 na checagem do ResultCode, uma vez que o provedor

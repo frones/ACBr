@@ -65,7 +65,9 @@ type
     FListaDeSchemas: TStringList;
     FOnStatusChange: TNotifyEvent;
     FOnGerarLog: TACBrGravarLog;
+    function GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
     procedure SetAbout(AValue: String);
+    procedure SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
     procedure SetMAIL(AValue: TACBrMail);
   protected
     FPConfiguracoes: TConfiguracoes;
@@ -120,7 +122,10 @@ type
        write FOnTransmitError;
     property OnStatusChange: TNotifyEvent read FOnStatusChange write FOnStatusChange;
     property About: String read GetAbout write SetAbout stored False;
+
     property OnGerarLog: TACBrGravarLog read FOnGerarLog write FOnGerarLog;
+    property OnAntesDeAssinar: TDFeSSLAntesDeAssinar read GetOnAntesDeAssinar
+       write SetAntesDeAssinar;
   end;
 
 implementation
@@ -202,6 +207,16 @@ end;
 procedure TACBrDFe.SetAbout(AValue: String);
 begin
   {nada aqui}
+end;
+
+function TACBrDFe.GetOnAntesDeAssinar: TDFeSSLAntesDeAssinar;
+begin
+  Result := FSSL.AntesDeAssinar;
+end;
+
+procedure TACBrDFe.SetAntesDeAssinar(AValue: TDFeSSLAntesDeAssinar);
+begin
+  FSSL.AntesDeAssinar := AValue;
 end;
 
 

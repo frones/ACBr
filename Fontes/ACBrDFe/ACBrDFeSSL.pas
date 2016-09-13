@@ -116,10 +116,15 @@ type
 
   TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap);
 
+  TDFeSSLAntesDeAssinar = procedure (var ConteudoXML: String;
+     const docElement, infElement, SignatureNode, SelectionNamespaces,
+     IdSignature: String) of object;
+
   { TDFeSSL }
 
   TDFeSSL = class(TPersistent)
   private
+    FAntesDeAssinar: TDFeSSLAntesDeAssinar;
     FArquivoPFX: String;
     FDadosPFX: AnsiString;
     FNameSpaceURI: String;
@@ -228,6 +233,8 @@ type
     property NameSpaceURI: String read FNameSpaceURI write FNameSpaceURI;
 
     property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
+
+    property AntesDeAssinar: TDFeSSLAntesDeAssinar read FAntesDeAssinar write FAntesDeAssinar;
   end;
 
 
@@ -251,6 +258,8 @@ uses strutils,
 constructor TDFeSSL.Create;
 begin
   inherited Create;
+
+  FAntesDeAssinar := Nil;
 
   Clear;
 end;
@@ -296,6 +305,7 @@ function TDFeSSL.Assinar(const ConteudoXML, docElement, infElement: String;
   ): String;
 Var
   XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois: String;
+  Assinado: Boolean;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
   // Lendo Header antes de assinar, Se Header não for UTF8 não usa... //
@@ -304,16 +314,29 @@ begin
   else
     DeclaracaoXMLAntes := '';
 
-  XmlAss := FSSLClass.Assinar( ConteudoXML, docElement, infElement,
-                               SignatureNode, SelectionNamespaces, IdSignature);
+  Assinado := False;
 
-  // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
-  if DeclaracaoXMLAntes <> '' then
+  if Assigned(FAntesDeAssinar) then
   begin
-    DeclaracaoXMLDepois := ObtemDeclaracaoXML(XmlAss);
+    XmlAss := ConteudoXML;
+    FAntesDeAssinar( XmlAss, docElement, infElement, SignatureNode,
+                     SelectionNamespaces, IdSignature);
+    Assinado := (XmlAss <> ConteudoXML);
+  end;
 
-    if DeclaracaoXMLAntes <> DeclaracaoXMLDepois then
-      XmlAss := StringReplace(XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois, []);
+  if not Assinado then
+  begin
+    XmlAss := FSSLClass.Assinar( ConteudoXML, docElement, infElement,
+                                 SignatureNode, SelectionNamespaces, IdSignature);
+
+    // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
+    if DeclaracaoXMLAntes <> '' then
+    begin
+      DeclaracaoXMLDepois := ObtemDeclaracaoXML(XmlAss);
+
+      if DeclaracaoXMLAntes <> DeclaracaoXMLDepois then
+        XmlAss := StringReplace(XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois, []);
+    end;
   end;
 
   Result := XmlAss;

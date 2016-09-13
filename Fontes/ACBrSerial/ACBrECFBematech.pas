@@ -1089,7 +1089,7 @@ begin
         ErroMsg := 'Erro retornado pela Impressora: ' + fpModeloStr + sLineBreak+sLineBreak+
                    ErroMsg ;
 
-        if (fsST1 = 128) or (fsST3 = 11) then
+        if TestBit(fsST1, 7) or (fsST3 = 11) then
            DoOnErrorSemPapel
         else
            raise EACBrECFSemResposta.create(ACBrStr(ErroMsg)) ;

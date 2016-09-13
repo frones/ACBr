@@ -39,10 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+Data: 13/09/2016
+-- ACBrECFBematech --
+[-] Ajuste para correta verificação do Erro "Sem Papel"  (por: DSA)
+
 Data: 11/09/2016
--- ACBrECFEscECF
-[-] Correção para o tipo de dados de string para ansistring, pois no delphi ele verifica a tipagem de dado
-		por:  Juliomar Marchetti
+-- ACBrECFEscECF --
+[-] Correção para o tipo de dados de string para ansistring, pois no delphi ele
+     verifica a tipagem de dado (por: Juliomar Marchetti)
 		
 Data: 10/09/2016
 -- ACBrECFClass --

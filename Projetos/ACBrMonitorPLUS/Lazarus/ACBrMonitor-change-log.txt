@@ -44,6 +44,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 13/09/2016
+-- DoACBrGNReUnit
+[-] Correção para o grupo veic, estava add a cada item
+		por : Juliomar Marchetti
+		
+13/09/2016
 [*] Conversão de correções do danfe MDFe para Lazarus.
 [*] Compilada versão assinada para o SAC. Versão modificada para 0.3.08.3.
 		por: Celso Marigo Junior

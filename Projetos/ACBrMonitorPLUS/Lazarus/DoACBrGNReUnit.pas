@@ -230,9 +230,12 @@ begin
         if IniGuia.SectionExists('CampoExtra') then
         begin
           camposExtras.Clear;
-          camposExtras.Add.CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
-          camposExtras.Add.CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
-          camposExtras.Add.CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
+          with camposExtras.Add do
+          begin
+               CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
+               CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
+               CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
+          end;
         end;
       end;
     end;

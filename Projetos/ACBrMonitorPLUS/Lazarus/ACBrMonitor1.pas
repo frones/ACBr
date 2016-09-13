@@ -256,6 +256,7 @@ type
     cbModoEmissao: TCheckBox;
     cbModoXML: TCheckBox;
     cbMonitorarPasta: TCheckBox;
+    cbRetirarAcentosNaResposta: TCheckBox;
     cbPreview: TCheckBox;
     cbRetirarAcentos: TCheckBox;
     cbRFDModelo: TComboBox;
@@ -3601,6 +3602,7 @@ begin
     cbUmaInstancia.Checked := Ini.ReadBool('ACBrMonitor', 'Uma_Instancia', True);
     cbAbas.Checked := Ini.ReadBool('ACBrMonitor', 'MostraAbas', False);
     cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', False);
+    cbRetirarAcentosNaResposta.Checked := Ini.ReadBool('ACBrMonitor', 'RetirarAcentosNaResposta', False);
     cbMonitorarPasta.OnChange := Nil;
     cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
     cbMonitorarPasta.OnChange := @cbMonitorarPastaChange;
@@ -4701,6 +4703,7 @@ begin
     Ini.WriteBool('ACBrMonitor', 'Uma_Instancia', cbUmaInstancia.Checked);
     Ini.WriteBool('ACBrMonitor', 'MostraAbas', cbAbas.Checked);
     Ini.WriteBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', cbMostrarNaBarraDeTarefas.Checked);
+    Ini.WriteBool('ACBrMonitor', 'RetirarAcentosNaResposta', cbRetirarAcentosNaResposta.Checked);
 
     { Parametros do ECF }
     Ini.WriteInteger('ECF', 'Modelo', max(cbECFModelo.ItemIndex - 1, 0));
@@ -5405,6 +5408,9 @@ begin
     begin
       if chbTCPANSI.Checked then
         Resposta := Utf8ToAnsi(Resposta);
+
+      if cbRetirarAcentosNaResposta.Checked then
+        Resposta:= TiraAcentos(Resposta);
 
       Resposta := StringReplace(Resposta, chr(3), '', [rfReplaceAll]);
       Conexao.SendString(Resposta);

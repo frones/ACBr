@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2016
+[*] Conversão de correções do danfe MDFe para Lazarus.
+[*] Compilada versão assinada para o SAC. Versão modificada para 0.3.08.3.
+		por: Celso Marigo Junior
+
+13/09/2016		
+[+] Adição da funcionalidade remover acentos das respostas em todos os comandos.
+		http://www.projetoacbr.com.br/forum/topic/32351-sugestão-remoção-de-acentos-das-respostas-do-acbrmonitorplus
+		por: Celso Marigo Junior
+				
 12/09/2016
 [-] Corrigido problema que o identificado estava errado 
 		http://www.projetoacbr.com.br/forum/topic/31943-gnre-iniciando-testes/

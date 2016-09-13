@@ -49,70 +49,100 @@ type
   { TfrlDAMDFeRLRetrato }
 
   TfrlDAMDFeRLRetrato = class(TfrlDAMDFeRL)
-    RLBarcode1: TRLBarcode;
+    rlb_2_Rodo: TRLBand;
+    rlb_3_Aereo: TRLBand;
+    rlb_4_Aquav: TRLBand;
+    rlb_5_Ferrov: TRLBand;
+    rlb_6_Observacao: TRLBand;
+    rlLabel22: TRLLabel;
+    rllMsgTeste: TRLLabel;
+    rllDataHoraImpressao: TRLLabel;
+    rllSistema: TRLLabel;
+    rlb_7_Documentos_Titulos: TRLBand;
+    rlLabel141: TRLLabel;
+    rlLabel91: TRLLabel;
+    rlLabel92: TRLLabel;
+    rlLabel96: TRLLabel;
+    rlLabel109: TRLLabel;
+    rlLabel106: TRLLabel;
+    rlLabel100: TRLLabel;
+    rlmObservacao: TRLMemo;
+    RLBand1: TRLBand;
+    RLDraw2: TRLDraw;
+    RLDraw3: TRLDraw;
+    RLDraw4: TRLDraw;
+    rlLabel12: TRLLabel;
+    rllPesoTotal: TRLLabel;
+    rllqMDFe: TRLLabel;
+    rllqNFe: TRLLabel;
+    rllqCTe: TRLLabel;
+    rlLabel23: TRLLabel;
+    rlLabel10: TRLLabel;
+    rlLabel5: TRLLabel;
+    RLBand2: TRLBand;
+    rllModal: TRLLabel;
+    subItens: TRLSubDetail;
+    rlbItens: TRLBand;
+    LinhaQuantidade: TRLDraw;
+    rlmChave1: TRLLabel;
+    rlmChave2: TRLLabel;
     rlb_1_DadosManifesto: TRLBand;
-    rlsQuadro4: TRLDraw;
-    rlsQuadro3: TRLDraw;
-    rlsQuadro2: TRLDraw;
-    rlsQuadro1: TRLDraw;
-    rlsHorizontal1: TRLDraw;
-    rlLabel17: TRLLabel;
     rliLogo: TRLImage;
     rlmEmitente: TRLMemo;
     rlmDadosEmitente: TRLMemo;
-    rlShape1: TRLDraw;
-    rlLabel74: TRLLabel;
-    rlShape2: TRLDraw;
-    rlLabel1: TRLLabel;
+    RLPanel1: TRLPanel;
+    RLPanel2: TRLPanel;
+    rllProtocolo: TRLLabel;
+    rllDescricao: TRLLabel;
+    RLPanel3: TRLPanel;
     rllChave: TRLLabel;
-    rlLabel2: TRLLabel;
+    rlLabel1: TRLLabel;
+    RLPanel4: TRLPanel;
+    RLBarcode1: TRLBarcode;
+    rlLabel74: TRLLabel;
+    rlLabel17: TRLLabel;
+    RLMemo1: TRLMemo;
+    RLPanel5: TRLPanel;
+    RLPanel6: TRLPanel;
     rllModelo: TRLLabel;
-    rlLabel3: TRLLabel;
     rllSerie: TRLLabel;
-    rlLabel4: TRLLabel;
     rllNumMDFe: TRLLabel;
+    RLSystemInfo1: TRLSystemInfo;
+    rllEmissao: TRLLabel;
+    rllUFCarrega: TRLLabel;
+    rllUFDescarrega: TRLLabel;
+    rlLabel2: TRLLabel;
+    rlLabel3: TRLLabel;
+    rlLabel4: TRLLabel;
     rlLabel25: TRLLabel;
     rlLabel33: TRLLabel;
-    rllEmissao: TRLLabel;
     rlLabel77: TRLLabel;
-    rllUFCarrega: TRLLabel;
-    rlsLinhaV09: TRLDraw;
-    rlsLinhaV08: TRLDraw;
-    rlsLinhaV07: TRLDraw;
-    rlsLinhaV06: TRLDraw;
+    RLLabel6: TRLLabel;
     rlsLinhaV05: TRLDraw;
-    rlsLinhaV10: TRLDraw;
-    rllDescricao: TRLLabel;
-    rllProtocolo: TRLLabel;
-    rllModal: TRLLabel;
-    rlLabel5: TRLLabel;
-    rlLabel10: TRLLabel;
-    rlLabel12: TRLLabel;
-    rlShape4: TRLDraw;
-    rlShape7: TRLDraw;
-    rllqCTe: TRLLabel;
-    rllqNFe: TRLLabel;
-    rllPesoTotal: TRLLabel;
-    rlb_2_Rodo: TRLBand;
-    rlShape8: TRLDraw;
+    rlsLinhaV06: TRLDraw;
+    rlsLinhaV07: TRLDraw;
+    rlsLinhaV08: TRLDraw;
+    rlsLinhaV09: TRLDraw;
+    RLDraw1: TRLDraw;
+    RLPanel7: TRLPanel;
+    rlShape10: TRLDraw;
     rlLabel35: TRLLabel;
     rlLabel9: TRLLabel;
-    rlShape9: TRLDraw;
     rlLabel13: TRLLabel;
     rlLabel14: TRLLabel;
     rlLabel15: TRLLabel;
     rlLabel16: TRLLabel;
-    rlShape10: TRLDraw;
-    rlShape11: TRLDraw;
-    rlShape12: TRLDraw;
+    RLDraw5: TRLDraw;
+    RLDraw6: TRLDraw;
+    rlmCPF: TRLMemo;
+    rlmCondutor: TRLMemo;
+    RLDraw7: TRLDraw;
+    RLDraw8: TRLDraw;
     rlmPlaca: TRLMemo;
     rlmRNTRC: TRLMemo;
-    rlmCPF: TRLMemo;
-    rlShape13: TRLDraw;
-    rlmCondutor: TRLMemo;
-    rlShape14: TRLDraw;
-    rlLabel18: TRLLabel;
-    rlShape15: TRLDraw;
+    RLDraw9: TRLDraw;
+    RLLabel7: TRLLabel;
+    RLDraw10: TRLDraw;
     rlLabel19: TRLLabel;
     rlLabel20: TRLLabel;
     rlLabel21: TRLLabel;
@@ -121,58 +151,24 @@ type
     rlmRespCNPJ: TRLMemo;
     rlmFornCNPJ: TRLMemo;
     rlmNumComprovante: TRLMemo;
-    rlb_3_Aereo: TRLBand;
-    rlb_4_Aquav: TRLBand;
-    rlb_5_Ferrov: TRLBand;
-    rlb_6_Observacao: TRLBand;
-    rlShape18: TRLDraw;
-    rlLabel22: TRLLabel;
-    rlmObservacao: TRLMemo;
-    rllMsgTeste: TRLLabel;
-    rlb_8_Documentos_Lista: TRLBand;
-    rllDataHoraImpressao: TRLLabel;
-    rllSistema: TRLLabel;
-    rlLabel23: TRLLabel;
-    rllqMDFe: TRLLabel;
-    rlShape19: TRLDraw;
-    rlb_7_Documentos_Titulos: TRLBand;
-    rlsQuadrado5: TRLDraw;
-    rlLabel141: TRLLabel;
-    rlmChave1: TRLDBText;
-    rls2: TRLDraw;
-    rlmChave2: TRLDBText;
-    rlLabel91: TRLLabel;
-    rlLabel92: TRLLabel;
-    rlLabel96: TRLLabel;
-    rlLabel109: TRLLabel;
-    rlLabel106: TRLLabel;
-    rlLabel100: TRLLabel;
-    rlShape20: TRLDraw;
+    RLPanel8: TRLPanel;
+    RLPanel9: TRLPanel;
     rlLabel24: TRLLabel;
-    rlLabel26: TRLLabel;
-    rlShape21: TRLDraw;
-    rlShape22: TRLDraw;
     rllCodEmbar: TRLLabel;
+    rlLabel26: TRLLabel;
     rllNomeEmbar: TRLLabel;
-    rlShape23: TRLDraw;
-    rlShape24: TRLDraw;
-    rlShape25: TRLDraw;
-    rlShape26: TRLDraw;
-    rlLabel27: TRLLabel;
-    rlLabel28: TRLLabel;
-    rlLabel29: TRLLabel;
-    rlLabel30: TRLLabel;
-    rlmCodCarreg: TRLMemo;
-    rlmCodDescarreg: TRLMemo;
-    rlmNomeCarreg: TRLMemo;
-    rlmNomeDescarreg: TRLMemo;
-    RLDraw1: TRLDraw;
-    RLDraw2: TRLDraw;
-    RLDraw3: TRLDraw;
-    rllUFDescarrega: TRLLabel;
+    RLLabel8: TRLLabel;
     RLLabel11: TRLLabel;
-    RLSystemInfo1: TRLSystemInfo;
-    RLMemo1: TRLMemo;
+    RLLabel18: TRLLabel;
+    RLLabel31: TRLLabel;
+    rlmCodCarreg: TRLMemo;
+    rlmNomeCarreg: TRLMemo;
+    rlmCodDescarreg: TRLMemo;
+    rlmNomeDescarreg: TRLMemo;
+    RLDraw11: TRLDraw;
+    RLDraw12: TRLDraw;
+    RLDraw13: TRLDraw;
+    RLDraw14: TRLDraw;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -180,10 +176,17 @@ type
     procedure rlb_5_FerrovBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_6_ObservacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLMDFeBeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure RLMDFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure rlbItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbItensAfterPrint(Sender: TObject);
   private
     { Private declarations }
+    FNumItem: Integer;
     FTotalPages: integer;
-    procedure Itens;
+
   public
     { Public declarations }
     procedure ProtocoloMDFe(const sProtocolo: string);
@@ -217,13 +220,10 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   vStringStream: TStringStream;
-  ImprimePagComp : Boolean;
 begin
   inherited;
-
-  ImprimePagComp                        := (RLMDFe.PageNumber = 1);
-  if ImprimePagComp then
-    rlb_1_DadosManifesto.Height         := 267
+  if  (RLMDFe.PageNumber = 1) then
+    rlb_1_DadosManifesto.Height         := 200
   else
     rlb_1_DadosManifesto.Height         := 200;
 
@@ -293,9 +293,8 @@ begin
     end;
   end;
 
-  RLBarcode1.Caption := Copy ( FMDFe.InfMDFe.Id, 5, 44 );
-  //SetBarCodeImage( Copy ( FMDFe.InfMDFe.Id, 5, 44 ), rliBarCode );
-  rllChave.Caption := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
+  RLBarcode1.Caption  := Copy ( FMDFe.InfMDFe.Id, 5, 44 );
+  rllChave.Caption    := FormatarChaveAcesso(Copy(FMDFe.InfMDFe.Id, 5, 44));
 
   if FMDFe.ide.tpEmis = teNormal then
   begin
@@ -322,31 +321,15 @@ begin
   rllEmissao.Caption      := FormatDateTimeBr(FMDFe.Ide.dhEmi);
   rllUFCarrega.Caption    := FMDFe.Ide.UFIni;
   rllUFDescarrega.Caption := FMDFe.Ide.UFFim;
+  rlb_3_Aereo.Visible     := false;
+  rlb_4_Aquav.Visible     := false;
+  rlb_5_Ferrov.Visible    := false;
 
-  // TMDFeModal = ( moRodoviario, moAereo, moAquaviario, moFerroviario );
   case FMDFe.Ide.modal of
-    moRodoviario:
-      begin
-        rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
-        rlb_3_Aereo.Visible := false;
-        rlb_4_Aquav.Visible := false;
-        rlb_5_Ferrov.Visible := false;
-      end;
-
-    moAereo:
-      begin
-        rllModal.Caption := ACBrStr('MODAL AÉREO DE CARGA');
-      end;
-
-    moAquaviario:
-      begin
-        rllModal.Caption := ACBrStr('MODAL AQUAVIÁRIO DE CARGA');
-      end;
-
-    moFerroviario:
-      begin
-        rllModal.Caption := ACBrStr('MODAL FERROVIÁRIO DE CARGA');
-      end;
+    moRodoviario  : rllModal.Caption := ACBrStr('MODAL RODOVIÁRIO DE CARGA');
+    moAereo       : rllModal.Caption := ACBrStr('MODAL AÉREO DE CARGA');
+    moAquaviario  : rllModal.Caption := ACBrStr('MODAL AQUAVIÁRIO DE CARGA');
+    moFerroviario : rllModal.Caption := ACBrStr('MODAL FERROVIÁRIO DE CARGA');
   end;
 
   rllqCTe.Caption  := FormatFloatBr(FMDFe.tot.qCTe,  '#0');
@@ -364,8 +347,6 @@ var
   i: integer;
 begin
   inherited;
-
-  //  PrintBand := RLMDFe.PageNumber = 1;
   rlb_2_Rodo.Enabled := (FMDFe.Ide.modal = moRodoviario);
 
   rlmPlaca.Lines.Clear;
@@ -410,9 +391,7 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-
-  //  PrintBand := RLMDFe.PageNumber = 1;
-  rlb_3_Aereo.Enabled := (FMDFe.Ide.modal = moAereo);
+   rlb_3_Aereo.Enabled := (FMDFe.Ide.modal = moAereo);
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlb_4_AquavBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -420,12 +399,9 @@ var
   i: integer;
 begin
   inherited;
-
-  //  PrintBand := RLMDFe.PageNumber = 1;
-  rlb_4_Aquav.Enabled := (FMDFe.Ide.modal = moAquaviario);
-
-  rllCodEmbar.Caption := FMDFe.aquav.cEmbar;
-  rllNomeEmbar.Caption := FMDFe.aquav.xEmbar;
+  rlb_4_Aquav.Enabled   := (FMDFe.Ide.modal = moAquaviario);
+  rllCodEmbar.Caption   := FMDFe.aquav.cEmbar;
+  rllNomeEmbar.Caption  := FMDFe.aquav.xEmbar;
 
   rlmCodCarreg.Lines.Clear;
   rlmNomeCarreg.Lines.Clear;
@@ -448,8 +424,6 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlb_5_FerrovBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
-
-  //  PrintBand := RLMDFe.PageNumber = 1;
   rlb_5_Ferrov.Enabled := (FMDFe.Ide.modal = moFerroviario);
 end;
 
@@ -533,145 +507,105 @@ end;
 procedure TfrlDAMDFeRLRetrato.RLMDFeBeforePrint(Sender: TObject; var PrintIt: boolean);
 begin
   inherited;
-  Itens;
   nItemControle := 0;
-  FTotalPages := 1;
-
-  RLMDFe.Title := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
+  FTotalPages   := 1;
+  RLMDFe.Title  := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
 
   with RLMDFe.Margins do
-    begin
-      TopMargin := FMargemSuperior * 10;
-      BottomMargin := FMargemInferior * 10;
-      LeftMargin := FMargemEsquerda * 10;
-      RightMargin := FMargemDireita * 10;
-    end;
+  begin
+    TopMargin     := FMargemSuperior * 10;
+    BottomMargin  := FMargemInferior * 10;
+    LeftMargin    := FMargemEsquerda * 10;
+    RightMargin   := FMargemDireita * 10;
+  end;
 end;
 
-procedure TfrlDAMDFeRLRetrato.Itens;
-var
-  I, J, nItem: integer;
+procedure TfrlDAMDFeRLRetrato.RLMDFeDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
 begin
-  //cdsItens.Close;
-  //cdsItens.CreateDataSet;
-  //cdsItens.Open;
+  inherited;
+  Eof := (RecNo > 1);
+  RecordAction := raUseIt;
+end;
+
+procedure TfrlDAMDFeRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+begin
+  inherited;
+  FNumItem      := RecNo - 1 ;
+  Eof           := (RecNo > FMDFe.infDoc.infMunDescarga.Count) ;
+  RecordAction  := raUseIt ;
+end;
+
+
+
+procedure TfrlDAMDFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
+begin
+  inherited;
+  rlmChave1.Caption := '';
+  rlmChave2.Caption := '';
+end;
+
+procedure TfrlDAMDFeRLRetrato.rlbItensBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+
+  Procedure Printar( sTemp : String; nItem : Integer );
+  begin
+    if (nItem mod 2) = 0 then
+      rlmChave1.Caption := sTemp
+    else
+      rlmChave2.Caption := sTemp;
+  end;
+
+var
+   J, nItem: integer;
+begin
+
   nItem := 0;
 
-  for I := 0 to (FMDFe.infDoc.infMunDescarga.Count - 1) do
+  with FMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
 
-    // Lista de CT-e
-    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infCTe.Count - 1) do
+   // Lista de CT-e
+    for J := 0 to ( infCTe.Count - 1) do
     begin
-      with FMDFe.infDoc.infMunDescarga.Items[I].infCTe.Items[J] do
-      begin
-        if (nItem mod 2) = 0 then
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('CHAVE1').AsString := 'CT-e          ' +
-            FormatarChaveAcesso(chCTe);
-        end
-        else
-        begin
-          cdsItens.FieldByName('CHAVE2').AsString := 'CT-e          ' +
-            FormatarChaveAcesso(chCTe);
-          cdsItens.Post;
-        end;
-        Inc(nItem);
-      end;
+      Printar( 'CT-e          ' + FormatarChaveAcesso(infCTe.Items[J].chCTe), nItem) ;
+      Inc(nItem);
     end;
 
     // Lista de CT
-    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infCT.Count - 1) do
+    for J := 0 to (infCT.Count - 1) do
     begin
-      with FMDFe.infDoc.infMunDescarga.Items[I].infCT.Items[J] do
-      begin
-        if (nItem mod 2) = 0 then
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('CHAVE1').AsString := 'CT            ' +
-            FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - ' +
-            IntToStr(serie) + '-' + nCT;
-        end
-        else
-        begin
-          cdsItens.FieldByName('CHAVE2').AsString := 'CT            ' +
-            FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - ' +
-            IntToStr(serie) + '-' + nCT;
-          cdsItens.Post;
-        end;
-        Inc(nItem);
-      end;
+      Printar( 'CT            ' + FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - '
+                                + IntToStr(infCT.Items[J].serie)     + '-'
+                                + infCT.Items[J].nCT , nItem );
+      Inc(nItem);
     end;
 
     // Lista de NF-e
-    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infNFe.Count - 1) do
+    for J := 0 to (infNFe.Count - 1) do
     begin
-      with FMDFe.infDoc.infMunDescarga.Items[I].infNFe.Items[J] do
-      begin
-        if (nItem mod 2) = 0 then
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('CHAVE1').AsString := 'NF-e          ' +
-            FormatarChaveAcesso(chNFe);
-        end
-        else
-        begin
-          cdsItens.FieldByName('CHAVE2').AsString := 'NF-e          ' +
-            FormatarChaveAcesso(chNFe);
-          cdsItens.Post;
-        end;
-        Inc(nItem);
-      end;
+      Printar( 'NF-e          ' + FormatarChaveAcesso(infNFe.Items[J].chNFe),nItem );
+      Inc(nItem);
     end;
 
     // Lista de NF
-    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infNF.Count - 1) do
+    for J := 0 to ( infNF.Count - 1) do
     begin
-      with FMDFe.infDoc.infMunDescarga.Items[I].infNF.Items[J] do
-      begin
-        if (nItem mod 2) = 0 then
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('CHAVE1').AsString := 'NF            ' +
-            FormatarCNPJouCPF(CNPJ) + ' - ' +
-            IntToStr(serie) + '-' + IntToStr(nNF);
-        end
-        else
-        begin
-          cdsItens.FieldByName('CHAVE2').AsString := 'NF            ' +
-            FormatarCNPJouCPF(CNPJ) + ' - ' +
-            IntToStr(serie) + '-' + IntToStr(nNF);
-          cdsItens.Post;
-        end;
-        Inc(nItem);
-      end;
+      Printar( 'NF            ' + FormatarCNPJouCPF(infNF.Items[J].CNPJ) + ' - '
+                                + IntToStr(infNF.Items[J].serie) + '-'
+                                + IntToStr(infNF.Items[J].nNF),nItem);
+      Inc(nItem);
     end;
 
     // Lista de MDF-e
-    for J := 0 to (FMDFe.infDoc.infMunDescarga.Items[I].infMDFeTransp.Count - 1) do
+    for J := 0 to ( infMDFeTransp.Count - 1) do
     begin
-      with FMDFe.infDoc.infMunDescarga.Items[I].infMDFeTransp.Items[J] do
-      begin
-        if (nItem mod 2) = 0 then
-        begin
-          cdsItens.Append;
-          cdsItens.FieldByName('CHAVE1').AsString := 'MDF-e         ' +
-            FormatarChaveAcesso(chMDFe);
-        end
-        else
-        begin
-          cdsItens.FieldByName('CHAVE1').AsString := 'MDF-e         ' +
-            FormatarChaveAcesso(chMDFe);
-          cdsItens.Post;
-        end;
-        Inc(nItem);
-      end;
+      Printar( 'MDF-e         ' + FormatarChaveAcesso( infMDFeTransp.Items[J].chMDFe),nItem);
+      Inc(nItem);
     end;
-
   end;
 
-  cdsItens.First;
 end;
 
 end.

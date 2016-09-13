@@ -348,6 +348,9 @@ begin
   Gerador.wCampoNFSe(tcStr, '#32', 'Discriminacao', 01, 2000, 1,
                      StringReplace(FNFSe.Servico.Discriminacao, ';', FQuebradeLinha, [rfReplaceAll, rfIgnoreCase] ), DSC_DISCR);
 
+  if FProvedor in [proPublica] then
+    Gerador.wCampoNFSe(tcStr, '', 'InformacoesComplementares', 001, 255, 0, NFSe.OutrasInformacoes, '');
+
   if FProvedor = proISSNet then
     Gerador.wCampoNFSe(tcStr, '#33', 'MunicipioPrestacaoServico', 01, 0007, 1, OnlyNumber(NFSe.Servico.CodigoMunicipio), DSC_CMUN)
   else

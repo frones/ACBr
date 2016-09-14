@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/09/2016
+-- ACBrECF --
+[*] Ajuste para correta impressão da mensagem de "Paraiba Legal"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32200
 
 Data: 13/09/2016
 -- ACBrECFBematech --

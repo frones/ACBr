@@ -773,6 +773,7 @@ begin
   Randomize;
 
   DoLog( 'ACBrSAT.Inicializado');
+
   fsInicializado := true ;
   fsPrefixoCFe := CPREFIXO_CFe;
 end ;
@@ -782,9 +783,12 @@ begin
   if not fsInicializado then exit ;
 
   fsSATClass.DesInicializar ;
-
   DoLog( 'ACBrSAT.DesInicializado');
+
   fsInicializado := false;
+  fsStatus.Clear;
+  fsResposta.Clear;
+  fsRede.Clear;
 end ;
 
 procedure TACBrSAT.VerificaInicializado ;

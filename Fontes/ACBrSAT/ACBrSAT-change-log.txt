@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/09/2016
+-- ACBrSAT --
+[*] Método "DesInicializar" modificado para zerar os valores em memória das
+    propriedades: "Status, Resposta, Rede"  (por: DSA)
+
+-- ACBrSATClass --
+[*] Valor da Constante de valor padrão do Layout do XML modificada
+    cversaoDadosEnt = 0.07;   (por: DSA)
+
 Data: 12/09/2016
 -- pcnCFeR --
 [-] Método "LerXml". Ajuste para não chamar "CFe.Clear", caso o XML informado,

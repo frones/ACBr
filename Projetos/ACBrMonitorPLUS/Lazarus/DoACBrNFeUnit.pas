@@ -675,7 +675,8 @@ begin
                             'CUF='+IntToStr(ACBrNFe1.WebServices.Enviar.CUF)+sLineBreak+
                             'NRec='+ACBrNFe1.WebServices.Enviar.Recibo+sLineBreak+
                             'DhRecbto='+DateTimeToStr( ACBrNFe1.WebServices.Enviar.dhRecbto)+sLineBreak+
-                            'TMed='+IntToStr( ACBrNFe1.WebServices.Enviar.tMed)+sLineBreak;
+                            'TMed='+IntToStr( ACBrNFe1.WebServices.Enviar.tMed)+sLineBreak+
+                            'Recibo='+ACBrNFe1.WebServices.Enviar.Recibo+sLineBreak;
 
            if ACBrNFe1.WebServices.Enviar.Recibo <> '' then
             begin
@@ -1788,6 +1789,9 @@ begin
 
         else if Cmd.Metodo = 'getpathevento' then //NFe.GetPathEvento
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento( TpcnTpEvento(StrToInt(Cmd.Params(0))) )
+
+        else if cmd.Metodo = 'getpathinu' then //NFe.GetPathInu
+           ACBrNFe1.Configuracoes.Arquivos.GetPathInu(Cmd.Params(0))
 
         else if Cmd.Metodo = 'imprimirrelatorio' then //NFe.ImprimirRelatorio(cTexto)
          begin

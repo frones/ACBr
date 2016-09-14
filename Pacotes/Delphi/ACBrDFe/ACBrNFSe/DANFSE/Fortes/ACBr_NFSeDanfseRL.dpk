@@ -66,11 +66,6 @@ requires
   designide,
   soaprtl,
   frce,
-  {$ifdef DELPHI2009_UP} 
-    vclimg,
-  {$else} 
-    vcljpg,
-  {$ENDIF}
   ACBr_NFSe,
 	dsnap;
 

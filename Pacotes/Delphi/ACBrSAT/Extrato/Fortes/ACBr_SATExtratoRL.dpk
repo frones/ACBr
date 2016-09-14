@@ -32,11 +32,6 @@ requires
   ACBr_Diversos,
   ACBr_DFeComum,
   frce,
-  {$ifdef DELPHI2009_UP} 
-    vclimg,
-  {$else} 
-    vcljpg,
-  {$ENDIF}
   ACBr_SAT;
 
 contains

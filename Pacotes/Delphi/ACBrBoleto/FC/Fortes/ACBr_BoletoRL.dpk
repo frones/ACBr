@@ -35,11 +35,6 @@ requires
   dbrtl,
   vcldb,  
   frce,
-  {$ifdef DELPHI2009_UP} 
-    vclimg,
-  {$else} 
-    vcljpg,
-  {$ENDIF}
   ACBr_Boleto;
 
 contains

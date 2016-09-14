@@ -29,11 +29,6 @@ requires
   ACBr_GNRE,
   ACBr_Comum,	
   frce,
-  {$ifdef DELPHI2009_UP} 
-    vclimg,
-  {$else} 
-    vcljpg,
-  {$ENDIF}
   dsnap;
 
 contains

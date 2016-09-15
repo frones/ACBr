@@ -540,9 +540,9 @@ begin
              Gerador.wGrupoNFSe('/IdentificacaoPrestador');
 
              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                          '<listaRps>' +
+                                          '<ListaRps>' +
                                             Notas +
-                                          '</listaRps>';
+                                          '</ListaRps>';
 
              Gerador.wGrupoNFSe('/LoteRps');
            end;

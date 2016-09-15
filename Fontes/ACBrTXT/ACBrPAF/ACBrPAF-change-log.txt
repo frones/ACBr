@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/09/2016
+[*] Validação no bloco J1 e J2 para trocar a informação por ? para validar
+		http://www.projetoacbr.com.br/forum/topic/32423-registro-j1-e-j2/
+		por : Juliomar Marchetti
+		
 06/09/2016
 [+] Adição do registro J1, J2 e dos registro V
 		por : Juliomar Marchetti

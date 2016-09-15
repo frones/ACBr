@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/09/2016 ver: 0.0.209a
+-- ACBrBancoSicred --
+[*] Ajustada geração de campos string para sem acentos (por: Celso Marigo Junior)
+http://www.projetoacbr.com.br/forum/topic/31662-problema-para-gerar-remessa-para-sicred/
+
 Data: 06/09/2016 ver: 0.0.209a
 -- ACBrBoleto --
 [*] Adicionado item tctEletronica no tipo enumerado TACBrTipoCarteira (por: Juliana Tamizou)

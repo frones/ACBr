@@ -364,29 +364,29 @@ begin
                   TipoSacado                                                            +  // 219 a 219 - Tipo de pessoa do sacado: PF ou PJ = "1" Pessoa Física "2" Pessoa Jurídica
                   IfThen(wModalidade = 'A', '0', ' ')                                   +  // 220 a 220 - Filler - (Cob. Registrada = '0', Cob. Sem Registro = ' ')
                   PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')                            +  // 221 a 234 - CIC/CGC do sacado
-                  PadRight( Sacado.NomeSacado, 40, ' ');                                   // 235 a 274 - Nome do sacado
+                  PadRight( TiraAcentos(Sacado.NomeSacado), 40, ' ');                                   // 235 a 274 - Nome do sacado
 
          if wModalidade = 'A' then
             wLinha:= wLinha +
-                     PadRight( Sacado.Logradouro + ',' + Sacado.Numero + ',' +
+                     PadRight(TiraAcentos(Sacado.Logradouro + ',' + Sacado.Numero + ',' +
                            Sacado.Bairro + ',' + Sacado.Cidade + ',' +
-                           Sacado.UF, 40)                                               +  // 275 a 314 - Endereço do sacado
+                           Sacado.UF), 40)                                               +  // 275 a 314 - Endereço do sacado
                      PadRight('', 5, '0')                                               +  // 315 a 319 - Código do sacado na cooperativa cedente (utilizar zeros)
                      PadRight('', 6, '0')                                               +  // 320 a 325 - Filler - Zeros
                      Space(1)                                                           +  // 326 a 326 - Filler - Brancos
                      PadRight( OnlyNumber(Sacado.CEP), 8 )                              +  // 327 a 334 - CEP do sacado
                      PadRight('', 5, '0')                                               +  // 335 a 339 - Código do sacado junto ao cliente (zeros quando inexistente)
                      PadRight(Sacado.SacadoAvalista.CNPJCPF, 14, ' ')                   +  // 340 a 353 - CIC/CGC do sacador avalista
-                     PadRight(Sacado.Avalista, 41, ' ')                                    // 354 a 394 - Nome do sacador avalista ---Anderson
+                     PadRight(TiraAcentos(Sacado.Avalista), 41, ' ')                                    // 354 a 394 - Nome do sacador avalista ---Anderson
          else
             wLinha:= wLinha +
-                     PadRight( Sacado.Logradouro + ',' + Sacado.Numero + ',' +
-                           Sacado.Bairro, 40)                                           +  // 275 a 314 - Endereço do sacado
+                     PadRight(TiraAcentos(Sacado.Logradouro + ',' + Sacado.Numero + ',' +
+                           Sacado.Bairro), 40)                                           +  // 275 a 314 - Endereço do sacado
                      PadRight('', 5, '0')                                               +  // 315 a 319 - Código do sacado na cooperativa beneficiário (zeros quando inexistente)
                      PadRight('', 6, '0')                                               +  // 320 a 325 - Filler - Zeros
                      Space(1)                                                           +  // 326 a 326 - Filler - Brancos
                      PadRight( OnlyNumber(Sacado.CEP), 8 )                              +  // 327 a 334 - CEP do sacado
-                     PadRight( Sacado.Cidade, 25  )                                     +  // 335 a 359 - Cidade do sacado
+                     PadRight(TiraAcentos(Sacado.Cidade), 25  )                                     +  // 335 a 359 - Cidade do sacado
                      PadRight( Sacado.UF, 2  )                                          +  // 360 a 361 - UF do sacado
                      PadRight('', 5, '0')                                               +  // 362 a 366 - Código do sacado junto ao cliente (zeros quando inexistente)
                      PadRight('', 28, ' ');                                                // 367 a 394 - Filler - Brancos
@@ -1654,16 +1654,16 @@ begin
              '01'                                                           + // 016 a 017 - Código de movimento de remessa
              TipoSacado                                                     + // 018 a 018 - Tipo de inscrição
              PadLeft(OnlyNumber(Sacado.CNPJCPF), 15, '0')                   + // 019 a 033 - Número de inscrição
-             PadRight(Sacado.NomeSacado, 40)                                + // 034 a 073 - Nome
+             PadRight(TiraAcentos(Sacado.NomeSacado), 40)                                + // 034 a 073 - Nome
              EndSacado                                                      + // 074 a 113 - Endereço
-             PadRight(Sacado.Bairro, 15)                                    + // 114 a 128 - Bairro
+             PadRight(TiraAcentos(Sacado.Bairro), 15)                                    + // 114 a 128 - Bairro
              Copy(PadLeft(OnlyNumber(Sacado.CEP),8,'0'),1,5)                + // 129 a 133 - CEP
              Copy(PadLeft(OnlyNumber(Sacado.CEP),8,'0'),6,3)                + // 134 a 136 - Sufixo do CEP
-             PadRight(Sacado.Cidade, 15)                                    + // 137 a 151 - Cidade
+             PadRight(TiraAcentos(Sacado.Cidade), 15)                                    + // 137 a 151 - Cidade
              PadLeft(UF, 2)                                                 + // 152 a 153 - Unidade da Federação
              TipoAvalista                                                   + // 154 a 154 - Tipo de inscrição
              PadRight(Sacado.SacadoAvalista.CNPJCPF, 15, '0')               + // 155 a 169 - Número de inscrição
-             PadRight(Sacado.SacadoAvalista.NomeAvalista,40,' ')            + // 170 a 209 - Nome do sacador/avalista
+             PadRight(TiraAcentos(Sacado.SacadoAvalista.NomeAvalista),40,' ')            + // 170 a 209 - Nome do sacador/avalista
              PadRight('', 3, '0')                                           + // 210 a 212 - Cód. bco corresp. na compensação
              Space(20)                                                      + // 213 a 232 - Nosso nº no banco correspondente
              Space(8);                                                        // 233 a 240 - Uso exclusivo FEBRABAN/CNAB

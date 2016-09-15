@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
-  ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
+  ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS, dateutils,
   ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
 
 const
@@ -218,8 +218,8 @@ type
     procedure btLerParamsClick(Sender : TObject) ;
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
-    procedure cbUsarEscPosClick(Sender: TObject);
-    procedure cbUsarFortesClick(Sender: TObject);
+    procedure cbUsarEscPosChange(Sender: TObject);
+    procedure cbUsarFortesChange(Sender: TObject);
     procedure cbxFormatXMLChange(Sender: TObject);
     procedure cbxModeloChange(Sender : TObject) ;
     procedure cbxRedeProxyChange(Sender: TObject);
@@ -294,10 +294,15 @@ var
   M : TpcnRegTrib ;
   N: TACBrPosPrinterModelo;
   O: TACBrPosPaginaCodigo;
+  R: pcnRede.TSegSemFio;
 begin
   cbxModelo.Items.Clear ;
   For I := Low(TACBrSATModelo) to High(TACBrSATModelo) do
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrSATModelo), integer(I) ) ) ;
+
+  cbxRedeSeg.Items.Clear ;
+  For R := Low(pcnRede.TSegSemFio) to High(pcnRede.TSegSemFio) do
+     cbxRedeSeg.Items.Add(GetEnumName(TypeInfo(pcnRede.TSegSemFio), Integer(R)));
 
   cbxAmbiente.Items.Clear ;
   For J := Low(TpcnTipoAmbiente) to High(TpcnTipoAmbiente) do
@@ -614,13 +619,13 @@ begin
   end ;
 end;
 
-procedure TForm1.cbUsarEscPosClick(Sender: TObject);
+procedure TForm1.cbUsarEscPosChange(Sender: TObject);
 begin
   cbUsarFortes.Checked := False;
   ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
 end;
 
-procedure TForm1.cbUsarFortesClick(Sender: TObject);
+procedure TForm1.cbUsarFortesChange(Sender: TObject);
 begin
   cbUsarEscPos.Checked := False;
   ACBrSAT1.Extrato := ACBrSATExtratoFortes1
@@ -967,13 +972,20 @@ begin
 end;
 
 procedure TForm1.mEnviarVendaClick(Sender : TObject) ;
+var
+  tini, tfim: TDateTime;
 begin
   if mVendaEnviar.Text = '' then
     mGerarVenda.Click;
 
   PageControl1.ActivePage := tsLog;
 
+  tini := now;
   ACBrSAT1.EnviarDadosVenda( mVendaEnviar.Text );
+  tfim := now;
+  mLog.Lines.Add('Iniciado em: '+DateTimeToStr(tini)) ;
+  mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
+  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
 
   if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
@@ -1190,14 +1202,17 @@ begin
 end;
 
 procedure TForm1.mImprimirExtratoVendaClick(Sender : TObject) ;
+var
+  tini, tfim: TDateTime;
 begin
   PrepararImpressao;
-  //ACBrSAT1.CFe.LoadFromFile('C:\temp\CFe.xml');
-  //ACBrSAT1.Extrato := ACBrSATExtratoFortes1;
-  //ACBrSATExtratoFortes1.Filtro := fiPDF;
-  //ACBrSATExtratoFortes1.NomeArquivo := 'c:\temp\meucfe.pdf';
+  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000757243865.xml');
+  tini := now;
   ACBrSAT1.ImprimirExtrato;
-  //ACBrSAT1.CFe.SaveToFile(ACBrSAT1.CalcCFeNomeArq(''));
+  tfim := now;
+  mLog.Lines.Add('Inciado em: '+DateTimeToStr(tini)) ;
+  mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
+  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
 end;
 
 procedure TForm1.mImprimirExtratoVendaResumidoClick(Sender : TObject) ;

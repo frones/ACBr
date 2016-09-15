@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/09/2016
+-- pcnRede --
+[-] Correção na tradução dos nomes de Segurança de Redes Wi-fi:
+    WPAPERSONAL, WPAENTERPRISE
+[+] Adição dos nomes de Segurança de Redes Wi-fi: WPA, WPA2
+
 Data: 13/09/2016
 -- ACBrSAT --
 [*] Método "DesInicializar" modificado para zerar os valores em memória das

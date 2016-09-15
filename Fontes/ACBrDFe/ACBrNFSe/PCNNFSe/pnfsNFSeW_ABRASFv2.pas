@@ -418,6 +418,7 @@ begin
   if FProvedor <> proGoiania then
   begin
     case FProvedor of
+      proSisPMJP,
       proVirtual: Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 0, OnlyNumber(NFSe.Servico.ItemListaServico), DSC_CLISTSERV);
 
       proNotaInteligente: Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, DSC_CLISTSERV);

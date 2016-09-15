@@ -466,7 +466,9 @@ begin
       Item := Item * 100 + 1;
 
     NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-    NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+
+    if FProvedor <> ProSisPMJP then //DJB-14/09/2016
+      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
                                      Copy(NFSe.Servico.ItemListaServico, 3, 2);
 
     if TabServicosExt then

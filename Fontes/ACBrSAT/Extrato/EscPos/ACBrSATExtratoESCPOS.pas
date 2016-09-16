@@ -450,7 +450,7 @@ begin
 
   ChaveEmUmaLinha := (ImprimeChaveEmUmaLinha = rSim) or
                      ((ImprimeChaveEmUmaLinha = rAuto) and Suporta128c and
-                      ((FPosPrinter.Colunas-2) >= Length(CFe.infCFe.ID)));
+                      ((FPosPrinter.ColunasFonteNormal -2) >= Length(CFe.infCFe.ID)));
 
   if not ChaveEmUmaLinha then
   begin

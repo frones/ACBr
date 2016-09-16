@@ -3172,7 +3172,7 @@ var
   i: Integer;
   Gerador: TGerador;
 begin
-  if FNotasFiscais.Count <= 0 then
+  if (FNotasFiscais.Count <= 0) and (FProvedor in [proGoverna,proIssDSF]) then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
   FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_CabecalhoStr;
@@ -3254,12 +3254,18 @@ begin
       TipoRps   := FTipo;
 
       // Necessário para o provedor ISSDSF
-      Transacao := FNotasFiscais.Transacao;
-      Notas     := FvNotas;
+      if FProvedor = proIssDSF then
+      begin
+        Transacao := FNotasFiscais.Transacao;
+        Notas     := FvNotas;
+      end;
 
       // Necessário para o provedor Governa
-      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
-      CodVerificacaoRPS     := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+      if FProvedor = proGoverna then
+      begin
+        ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+        CodVerificacaoRPS     := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+      end;
     end;
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSeRPS + FTagF;

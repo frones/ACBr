@@ -2813,7 +2813,7 @@ begin
         ValAliq := RoundTo( StrToIntDef( copy(AliquotaStr,2,4) ,0) / 100, -2) ;
 
         Aliquota          := TACBrECFAliquota.create ;
-        Aliquota.Indice   := IntToStrZero(fpAliquotas.Count+1,2);
+        Aliquota.Indice   := IntToStrZero(Cont, 2);
         Aliquota.Aliquota := ValAliq ;
         if AliquotaStr[1] = '0' then // Isso pode não estar certo!!!!  verificar com Daruma
           Aliquota.Tipo     := 'T'

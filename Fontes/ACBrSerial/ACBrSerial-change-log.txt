@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/09/2016
+-- ACBrECFDaruma --
+[-] Ajuste no indice da alíquota no método carregaAliquotas.
+    (por: Rodrigo Frühwirth)
+
 Data: 14/09/2016
 -- ACBrECF --
 [*] Ajuste para correta impressão da mensagem de "Paraiba Legal"

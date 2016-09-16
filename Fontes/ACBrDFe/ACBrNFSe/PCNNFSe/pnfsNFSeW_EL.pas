@@ -148,14 +148,10 @@ begin
   Gerador.wCampoNFSe(tcStr, '#26', 'Cep', 08, 008, 0, OnlyNumber(NFSe.PrestadorServico.Endereco.CEP), '');
   Gerador.wGrupoNFSe('/Endereco');
 
-  if (NFSe.PrestadorServico.Contato.Telefone <> '') or
-     (NFSe.PrestadorServico.Contato.Email <> '') then
-  begin
-    Gerador.wGrupoNFSe('Contato');
-    Gerador.wCampoNFSe(tcStr, '#27', 'Telefone', 01, 011, 0, OnlyNumber(NFSe.PrestadorServico.Contato.Telefone), '');
-    Gerador.wCampoNFSe(tcStr, '#28', 'Email   ', 01, 080, 0, NFSe.PrestadorServico.Contato.Email, '');
-    Gerador.wGrupoNFSe('/Contato');
-  end;
+  Gerador.wGrupoNFSe('Contato');
+  Gerador.wCampoNFSe(tcStr, '#27', 'Telefone', 01, 011, 0, OnlyNumber(NFSe.PrestadorServico.Contato.Telefone), '');
+  Gerador.wCampoNFSe(tcStr, '#28', 'Email   ', 01, 080, 1, NFSe.PrestadorServico.Contato.Email, '');
+  Gerador.wGrupoNFSe('/Contato');
 
   Gerador.wGrupoNFSe('/DadosPrestador');
 end;
@@ -164,56 +160,46 @@ procedure TNFSeW_EL.GerarTomador;
 var
   xMun: String;
 begin
-  if (NFSe.Tomador.IdentificacaoTomador.CpfCnpj <> '') or
-     (NFSe.Tomador.RazaoSocial <> '') or
-     (NFSe.Tomador.Endereco.Endereco <> '') or
-     (NFSe.Tomador.Contato.Telefone <> '') or
-     (NFSe.Tomador.Contato.Email <>'') then
+  Gerador.wGrupoNFSe('DadosTomador');
+  Gerador.wGrupoNFSe('IdentificacaoTomador');
+  Gerador.wCampoNFSe(tcStr, '#34', 'CpfCnpj', 11, 014, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+
+  if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
+    Gerador.wCampoNFSe(tcStr, '#35', 'IndicacaoCpfCnpj', 01, 001, 1, '1', '')
+  else
+    Gerador.wCampoNFSe(tcStr, '#35', 'IndicacaoCpfCnpj', 01, 001, 1, '2', '');
+
+  Gerador.wCampoNFSe(tcStr, '#36', 'InscricaoMunicipal', 01, 015, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
+  Gerador.wGrupoNFSe('/IdentificacaoTomador');
+  Gerador.wCampoNFSe(tcStr, '#37', 'RazaoSocial', 01, 115, 0, NFSe.Tomador.RazaoSocial, '');
+
+  Gerador.wGrupoNFSe('Endereco');
+  Gerador.wCampoNFSe(tcStr, '#38', 'LogradouroTipo'       , 01, 125, 0, NFSe.Tomador.Endereco.TipoLogradouro, '');
+  Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro'           , 01, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
+  Gerador.wCampoNFSe(tcStr, '#40', 'LogradouroNumero'     , 01, 010, 0, NFSe.Tomador.Endereco.Numero, '');
+  Gerador.wCampoNFSe(tcStr, '#41', 'LogradouroComplemento', 01, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
+  Gerador.wCampoNFSe(tcStr, '#42', 'Bairro'               , 01, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
+  Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio'      , 07, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
+
+  if (Trim(NFSe.Tomador.Endereco.xMunicipio) = '') then
   begin
-    Gerador.wGrupoNFSe('DadosTomador');
-    Gerador.wGrupoNFSe('IdentificacaoTomador');
-    Gerador.wCampoNFSe(tcStr, '#34', 'CpfCnpj', 11, 014, 1, SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
+    xMun := CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
+    xMun := Copy(xMun,1,Length(xMun)-3);
+    Gerador.wCampoNFSe(tcStr, '#44', 'Municipio', 01, 100, 0, UpperCase(xMun), '');
+  end
+  else
+    Gerador.wCampoNFSe(tcStr, '#44', 'Municipio', 01, 100, 0, NFSe.Tomador.Endereco.xMunicipio, '');
 
-    if Length(SomenteNumeros(NFSe.Tomador.IdentificacaoTomador.CpfCnpj)) <= 11 then
-      Gerador.wCampoNFSe(tcStr, '#35', 'IndicacaoCpfCnpj', 01, 001, 1, '1', '')
-    else
-      Gerador.wCampoNFSe(tcStr, '#35', 'IndicacaoCpfCnpj', 01, 001, 1, '2', '');
+  Gerador.wCampoNFSe(tcStr, '#45', 'Uf', 02, 002, 0, NFSe.Tomador.Endereco.UF, '');
+  Gerador.wCampoNFSe(tcStr, '#46', 'Cep', 08, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
+  Gerador.wGrupoNFSe('/Endereco');
 
-    Gerador.wCampoNFSe(tcStr, '#36', 'InscricaoMunicipal', 01, 015, 0, NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal, '');
-    Gerador.wGrupoNFSe('/IdentificacaoTomador');
-    Gerador.wCampoNFSe(tcStr, '#37', 'RazaoSocial', 01, 115, 0, NFSe.Tomador.RazaoSocial, '');
+  Gerador.wGrupoNFSe('Contato');
+  Gerador.wCampoNFSe(tcStr, '#47', 'Telefone', 01, 011, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
+  Gerador.wCampoNFSe(tcStr, '#48', 'Email   ', 01, 080, 1, NFSe.Tomador.Contato.Email, '');
+  Gerador.wGrupoNFSe('/Contato');
 
-    Gerador.wGrupoNFSe('Endereco');
-    Gerador.wCampoNFSe(tcStr, '#38', 'LogradouroTipo'       , 01, 125, 0, NFSe.Tomador.Endereco.TipoLogradouro, '');
-    Gerador.wCampoNFSe(tcStr, '#39', 'Logradouro'           , 01, 125, 0, NFSe.Tomador.Endereco.Endereco, '');
-    Gerador.wCampoNFSe(tcStr, '#40', 'LogradouroNumero'     , 01, 010, 0, NFSe.Tomador.Endereco.Numero, '');
-    Gerador.wCampoNFSe(tcStr, '#41', 'LogradouroComplemento', 01, 060, 0, NFSe.Tomador.Endereco.Complemento, '');
-    Gerador.wCampoNFSe(tcStr, '#42', 'Bairro'               , 01, 060, 0, NFSe.Tomador.Endereco.Bairro, '');
-    Gerador.wCampoNFSe(tcStr, '#43', 'CodigoMunicipio'      , 07, 007, 0, SomenteNumeros(NFSe.Tomador.Endereco.CodigoMunicipio), '');
-
-    if (Trim(NFSe.Tomador.Endereco.xMunicipio) = '') then
-    begin
-      xMun := CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
-      xMun := Copy(xMun,1,Length(xMun)-3);
-      Gerador.wCampoNFSe(tcStr, '#44', 'Municipio', 01, 100, 0, UpperCase(xMun), '');
-    end
-    else
-      Gerador.wCampoNFSe(tcStr, '#44', 'Municipio', 01, 100, 0, NFSe.Tomador.Endereco.xMunicipio, '');
-
-    Gerador.wCampoNFSe(tcStr, '#45', 'Uf', 02, 002, 0, NFSe.Tomador.Endereco.UF, '');
-    Gerador.wCampoNFSe(tcStr, '#46', 'Cep', 08, 008, 0, SomenteNumeros(NFSe.Tomador.Endereco.CEP), '');
-    Gerador.wGrupoNFSe('/Endereco');
-
-    if (NFSe.Tomador.Contato.Telefone <> '') or (NFSe.Tomador.Contato.Email <> '') then
-    begin
-      Gerador.wGrupoNFSe('Contato');
-      Gerador.wCampoNFSe(tcStr, '#47', 'Telefone', 01, 011, 0, SomenteNumeros(NFSe.Tomador.Contato.Telefone), '');
-      Gerador.wCampoNFSe(tcStr, '#48', 'Email   ', 01, 080, 0, NFSe.Tomador.Contato.Email, '');
-      Gerador.wGrupoNFSe('/Contato');
-    end;
-
-    Gerador.wGrupoNFSe('/DadosTomador');
-  end;
+  Gerador.wGrupoNFSe('/DadosTomador');
 end;
 
 procedure TNFSeW_EL.GerarIntermediarioServico;

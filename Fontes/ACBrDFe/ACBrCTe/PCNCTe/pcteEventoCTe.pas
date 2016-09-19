@@ -65,6 +65,13 @@ type
   TInfCorrecaoCollection  = class;
   TInfCorrecaoCollectionItem = class;
 
+  TInfGTVCollection  = class;
+  TInfGTVCollectionItem = class;
+  TInfEspecieCollection  = class;
+  TInfEspecieCollectionItem = class;
+
+  TInfRemDest = class;
+
   TInfEvento = class
   private
     FId: String;
@@ -125,8 +132,11 @@ type
     FinfCorrecao: TInfCorrecaoCollection;
     FCondUso: String;
 
+    FinfGTV: TInfGTVCollection; // GTV
+
     procedure SetCorrecao(const Value: TInfCorrecaoCollection);
     procedure setCondUso(const Value: String);
+    procedure SetGTV(const Value: TInfGTVCollection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -135,6 +145,7 @@ type
     property nProt: String      read FnProt      write FnProt;
 
     property xJust: String      read FxJust      write FxJust;
+    property xOBS: String       read FxJust      write FxJust;
 
     property vICMS: Currency    read FvICMS      write FvICMS;
     property vTPrest: Currency  read FvTPrest    write FvTPrest;
@@ -152,6 +163,8 @@ type
 
     property infCorrecao: TInfCorrecaoCollection read FinfCorrecao write SetCorrecao;
     property xCondUso: String                    read FCondUso     write setCondUso;
+
+    property infGTV: TInfGTVCollection read FinfGTV write SetGTV;
   end;
 
   TInfCorrecaoCollection = class(TCollection)
@@ -178,6 +191,87 @@ type
     property campoAlterado: String    read FcampoAlterado   write FcampoAlterado;
     property valorAlterado: String    read FvalorAlterado   write FvalorAlterado;
     property nroItemAlterado: Integer read FnroItemAlterado write FnroItemAlterado;
+  end;
+
+  TInfGTVCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TInfGTVCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfGTVCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TInfGTVCollectionItem;
+    property Items[Index: Integer]: TInfGTVCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfGTVCollectionItem = class(TCollectionItem)
+  private
+    FnDoc: String;
+    Fid: String;
+    Fserie: String;
+    Fsubserie: String;
+    FdEmi: TDateTime;
+    FnDV: Integer;
+    FqCarga: Currency;
+    FinfEspecie: TInfEspecieCollection;
+    Frem: TInfRemDest;
+    Fdest: TInfRemDest;
+    Fplaca: String;
+    FUF: String;
+    FRNTRC: String;
+
+    procedure SetEspecie(const Value: TInfEspecieCollection);
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property nDoc: String     read FnDoc     write FnDoc;
+    property id: String       read Fid       write Fid;
+    property serie: String    read Fserie    write Fserie;
+    property subserie: String read Fsubserie write Fsubserie;
+    property dEmi: TDateTime  read FdEmi     write FdEmi;
+    property nDV: Integer     read FnDV      write FnDV;
+    property qCarga: Currency read FqCarga   write FqCarga;
+    property infEspecie: TInfEspecieCollection read FinfEspecie write SetEspecie;
+    property rem: TInfRemDest  read Frem      write Frem;
+    property dest: TInfRemDest read Fdest     write Fdest;
+    property placa: String     read Fplaca    write Fplaca;
+    property UF: String        read FUF       write FUF;
+    property RNTRC: String     read FRNTRC    write FRNTRC;
+  end;
+
+  TInfEspecieCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TInfEspecieCollectionItem;
+    procedure SetItem(Index: Integer; Value: TInfEspecieCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TInfEspecieCollectionItem;
+    property Items[Index: Integer]: TInfEspecieCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TInfEspecieCollectionItem = class(TCollectionItem)
+  private
+    FtpEspecie: TEspecie;
+    FvEspecie: Currency;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property tpEspecie: TEspecie read FtpEspecie write FtpEspecie;
+    property vEspecie: Currency  read FvEspecie  write FvEspecie;
+  end;
+
+  TInfRemDest = class(TPersistent)
+  private
+    FCNPJCPF: String;
+    FIE: String;
+    FUF: String;
+    FxNome: String;
+  published
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+    property IE: String      read FIE      write FIE;
+    property UF: String      read FUF      write FUF;
+    property xNome: String   read FxNome   write FxNome;
   end;
 
   { TRetInfEvento }
@@ -314,6 +408,8 @@ begin
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    tePrestDesacordo           : Result := 'Prestação do Serviço em Desacordo';
+    teGTV                      : Result := 'Informações da GTV'
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -358,6 +454,8 @@ begin
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
+    tePrestDesacordo           : Result := 'Prestação do Serviço em Desacordo';
+    teGTV                      : Result := 'Informações da GTV'
   else
     Result := 'Não Definido';
   end;
@@ -406,11 +504,13 @@ end;
 constructor TDetEvento.Create;
 begin
   FinfCorrecao := TInfCorrecaoCollection.Create(Self);
+  FinfGTV      := TInfGTVCollection.Create(Self);
 end;
 
 destructor TDetEvento.Destroy;
 begin
   FInfCorrecao.Free;
+  FinfGTV.Free;
   inherited;
 end;
 
@@ -431,6 +531,96 @@ end;
 procedure TDetEvento.SetCorrecao(const Value: TInfCorrecaoCollection);
 begin
   FInfCorrecao.Assign(Value);
+end;
+
+procedure TDetEvento.SetGTV(const Value: TInfGTVCollection);
+begin
+  FinfGTV := Value;
+end;
+
+{ TInfGTVCollection }
+
+function TInfGTVCollection.Add: TInfGTVCollectionItem;
+begin
+  Result := TInfGTVCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TInfGTVCollection.Create(AOwner: TPersistent);
+begin
+  inherited Create(TInfGTVCollectionItem);
+end;
+
+function TInfGTVCollection.GetItem(Index: Integer): TInfGTVCollectionItem;
+begin
+  Result := TInfGTVCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfGTVCollection.SetItem(Index: Integer;
+  Value: TInfGTVCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfGTVCollectionItem }
+
+constructor TInfGTVCollectionItem.Create;
+begin
+  FinfEspecie := TInfEspecieCollection.Create(Self);
+  Frem := TInfRemDest.Create;
+  Fdest := TInfRemDest.Create;
+end;
+
+destructor TInfGTVCollectionItem.Destroy;
+begin
+  FinfEspecie.Free;
+  Frem.Free;
+  Fdest.Free;
+  inherited;
+end;
+
+procedure TInfGTVCollectionItem.SetEspecie(
+  const Value: TInfEspecieCollection);
+begin
+  FinfEspecie := Value;
+end;
+
+{ TInfEspecieCollection }
+
+function TInfEspecieCollection.Add: TInfEspecieCollectionItem;
+begin
+  Result := TInfEspecieCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TInfEspecieCollection.Create(AOwner: TPersistent);
+begin
+  inherited Create(TInfEspecieCollectionItem);
+end;
+
+function TInfEspecieCollection.GetItem(
+  Index: Integer): TInfEspecieCollectionItem;
+begin
+  Result := TInfEspecieCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TInfEspecieCollection.SetItem(Index: Integer;
+  Value: TInfEspecieCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TInfEspecieCollectionItem }
+
+constructor TInfEspecieCollectionItem.Create;
+begin
+
+end;
+
+destructor TInfEspecieCollectionItem.Destroy;
+begin
+
+  inherited;
 end;
 
 end.

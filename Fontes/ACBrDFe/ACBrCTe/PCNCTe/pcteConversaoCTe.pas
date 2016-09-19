@@ -96,6 +96,7 @@ type
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
   TpcteTipoVeiculo = (tvTracao, tvReboque);
   TIndicador = (tiSim, tiNao);
+  TEspecie = (teNumerario, teCheque, teMoeda, teOutros);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -182,6 +183,9 @@ function ModeloCTeToPrefixo(const t: TModeloCTe): String;
 
 function TIndicadorToStr(const t: TIndicador): string;
 function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+
+function TEspecieToStr(const t: TEspecie): String;
+function StrToTEspecie(out ok: Boolean; const s: String): TEspecie;
 
 implementation
 
@@ -616,6 +620,18 @@ end;
 function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 begin
   Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function TEspecieToStr(const t: TEspecie): String;
+begin
+  Result := EnumeradoToStr(t, ['1', '2', '3', '4'],
+                              [teNumerario, teCheque, teMoeda, teOutros]);
+end;
+
+function StrToTEspecie(out ok: Boolean; const s: String): TEspecie;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
+                                  [teNumerario, teCheque, teMoeda, teOutros]);
 end;
 
 end.

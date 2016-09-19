@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2016
+-- diversos --
+[*] Implementação dos 2 novos tipos de eventos a serem utilizados pela versão
+    3.00 do CT-e
+    Por: Italo Jurisato Junior
+
 08/09/2016
 -- diversos --
 [*] Correções para poder gerar, assinar e validar corretamente os modelos:

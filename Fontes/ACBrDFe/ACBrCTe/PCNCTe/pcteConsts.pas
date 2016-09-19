@@ -101,7 +101,6 @@ const
   DSC_CIOT      = 'Código Identificador da Operação de Transporte';
   DSC_NOCC      = 'Número da Ordem de Coleta';
   DSC_NCOMPRA   = 'Número do Comprovante de Compra';
-  DSC_VVALEPED  = 'Valor do Vale-Pedagio';
   DSC_CINTV     = 'Código interno do Veículo';
   DSC_TARA      = 'Tara em KG';
   DSC_CAPKG     = 'Capacidade em KG';

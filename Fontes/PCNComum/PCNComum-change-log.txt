@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2016
+-- pcnConst / pcnConversao --
+[*] Definição de 2 novos tipos de enventos a serem usados no componente ACBrCTe e
+    a transferencia de uma constante pois a mesma será usada por mais de um componente.
+    por: Italo Jurisato Junior
+
 23/08/2016
 -- diversos --
 [+] Criada a unit pcnConsts que contem as constantes de mensagens usadas na

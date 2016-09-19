@@ -125,6 +125,7 @@ const
   DSC_LACR   = 'Grupo de lacres';
   DSC_CHCTE  = 'Chave do CTe';
   DSC_LOTA   = 'Indicador de lotação';
+  DSC_VVALEPED  = 'Valor do Vale-Pedagio';
 
   DSC_RESPSEG  = 'Responsável pelo Seguro';
   DSC_XSEG     = 'Nome da Seguradora';

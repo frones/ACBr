@@ -69,6 +69,12 @@ type
   TvalePed                   = class;
   TdispCollection            = class;
   TdispCollectionItem        = class;
+  TinfANTT                   = class;
+  TinfCIOTCollection         = class;
+  TinfCIOTCollectionItem     = class;
+  TinfContratanteCollection     = class;
+  TinfContratanteCollectionItem = class;
+  TlacRodoCollection         = class;
 
   // Informações do modal Aéreo
   Taereo = class;
@@ -287,25 +293,102 @@ type
   private
     FRNTRC: String;
     FCIOT: String;
+    FinfANTT: TinfANTT;
     FveicTracao: TveicTracao;
     FveicReboque: TveicReboqueCollection;
     FvalePed: TvalePed;
     FcodAgPorto: String;
+    FlacRodo: TlacRodoCollection;
 
     procedure SetveicReboque(const Value: TveicReboqueCollection);
+    procedure SetlacRodo(const Value: TlacRodoCollection);
   public
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
   published
     property RNTRC: String                       read FRNTRC       write FRNTRC;
     property CIOT: String                        read FCIOT        write FCIOT;
+    property infANTT: TinfANTT                   read FinfANTT     write FinfANTT;
     property veicTracao: TveicTracao             read FveicTracao  write FveicTracao;
     property veicReboque: TveicReboqueCollection read FveicReboque write SetveicReboque;
     property valePed: TvalePed                   read FvalePed     write FvalePed;
     property codAgPorto: String                  read FcodAgPorto  write FcodAgPorto;
+    property lacRodo: TlacRodoCollection         read FlacRodo     write SetlacRodo;
   end;
 
- TveicTracao = class(TPersistent)
+  TinfANTT    = class(TPersistent)
+  private
+    FRNTRC: String;
+    FinfCIOT: TinfCIOTCollection;
+    FinfContratante: TinfContratanteCollection;
+    procedure SetinfCIOT(const Value: TinfCIOTCollection);
+    procedure SetinfContratante(const Value: TinfContratanteCollection);
+
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property RNTRC: String               read FRNTRC   write FRNTRC;
+    property infCIOT: TinfCIOTCollection read FinfCIOT write SetinfCIOT;
+    property infContratante: TinfContratanteCollection read FinfContratante write SetinfContratante;
+    (*
+    property cInt: String                  read FcInt     write FcInt;
+    property placa: String                 read Fplaca    write Fplaca;
+    property RENAVAM: String               read FRENAVAM  write FRENAVAM;
+    property tara: Integer                 read Ftara     write Ftara;
+    property capKG: Integer                read FcapKG    write FcapKG;
+    property capM3: Integer                read FcapM3    write FcapM3;
+    property prop: Tprop                   read Fprop     write Fprop;
+    property condutor: TcondutorCollection read Fcondutor write Setcondutor;
+    property tpRod: TpcteTipoRodado        read FtpRod    write FtpRod;
+    property tpCar: TpcteTipoCarroceria    read FtpCar    write FtpCar;
+    property UF: String                    read FUF       write FUF;
+    *)
+  end;
+
+  TinfCIOTCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfCIOTCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfCIOTCollectionItem);
+  public
+    constructor Create(AOwner: TinfANTT);
+    function Add: TinfCIOTCollectionItem;
+    property Items[Index: Integer]: TinfCIOTCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfCIOTCollectionItem = class(TCollectionItem)
+  private
+    FCIOT: String;
+    FCNPJCPF: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property CIOT: String    read FCIOT    write FCIOT;
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+  end;
+
+  TinfContratanteCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfContratanteCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfContratanteCollectionItem);
+  public
+    constructor Create(AOwner: TinfANTT);
+    function Add: TinfContratanteCollectionItem;
+    property Items[Index: Integer]: TinfContratanteCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfContratanteCollectionItem = class(TCollectionItem)
+  private
+    FCNPJCPF: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
+  end;
+
+  TveicTracao = class(TPersistent)
   private
     FcInt: String;
     Fplaca: String;
@@ -439,6 +522,7 @@ type
     FCNPJForn: String;
     FCNPJPg: String;
     FnCompra: String;
+    FvValePed: Double;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -446,6 +530,7 @@ type
     property CNPJForn: String read FCNPJForn write FCNPJForn;
     property CNPJPg: String   read FCNPJPg   write FCNPJPg;
     property nCompra: String  read FnCompra  write FnCompra;
+    property vValePed: Double read FvValePed write FvValePed;
   end;
 
   Taereo = class(TPersistent)
@@ -1083,6 +1168,16 @@ type
     property qCarga: Double  read FqCarga write FqCarga;
   end;
 
+  TlacRodoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TlacresCollectionItem;
+    procedure SetItem(Index: Integer; Value: TlacresCollectionItem);
+  public
+    constructor Create(AOwner: TRodo);
+    function Add: TlacresCollectionItem;
+    property Items[Index: Integer]: TlacresCollectionItem read GetItem write SetItem; default;
+  end;
+
   TlacresCollection = class(TCollection)
   private
     function GetItem(Index: Integer): TlacresCollectionItem;
@@ -1371,17 +1466,26 @@ end;
 constructor TRodo.Create(AOwner: TMDFe);
 begin
   inherited Create;
+  FinfANTT     := TinfANTT.Create;
   FveicTracao  := TveicTracao.Create;
   FveicReboque := TveicReboqueCollection.Create(Self);
   FvalePed     := TvalePed.Create(Self);
+  FlacRodo     := TlacRodoCollection.Create(Self);
 end;
 
 destructor TRodo.Destroy;
 begin
+  FinfANTT.Free;
   FveicTracao.Free;
   FveicReboque.Free;
   FvalePed.Free;
+  FlacRodo.Free;
   inherited;
+end;
+
+procedure TRodo.SetlacRodo(const Value: TlacRodoCollection);
+begin
+  FlacRodo := Value;
 end;
 
 procedure TRodo.SetveicReboque(const Value: TveicReboqueCollection);
@@ -2610,6 +2714,132 @@ end;
 
 procedure TSegCollection.SetItem(Index: Integer;
   Value: TSegCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfANTT }
+
+constructor TinfANTT.Create;
+begin
+  FinfCIOT := TinfCIOTCollection.Create(Self);
+  FinfContratante := TinfContratanteCollection.Create(Self);
+end;
+
+destructor TinfANTT.Destroy;
+begin
+  FinfCIOT.Free;
+  FinfContratante.Free;
+  inherited;
+end;
+
+procedure TinfANTT.SetinfCIOT(const Value: TinfCIOTCollection);
+begin
+  FinfCIOT := Value;
+end;
+
+procedure TinfANTT.SetinfContratante(
+  const Value: TinfContratanteCollection);
+begin
+  FinfContratante := Value;
+end;
+
+{ TinfCIOTCollection }
+
+function TinfCIOTCollection.Add: TinfCIOTCollectionItem;
+begin
+  Result := TinfCIOTCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfCIOTCollection.Create(AOwner: TinfANTT);
+begin
+  inherited Create(TinfCIOTCollectionItem);
+end;
+
+function TinfCIOTCollection.GetItem(
+  Index: Integer): TinfCIOTCollectionItem;
+begin
+  Result := TinfCIOTCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfCIOTCollection.SetItem(Index: Integer;
+  Value: TinfCIOTCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfCIOTCollectionItem }
+
+constructor TinfCIOTCollectionItem.Create;
+begin
+
+end;
+
+destructor TinfCIOTCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TinfContratanteCollection }
+
+function TinfContratanteCollection.Add: TinfContratanteCollectionItem;
+begin
+  Result := TinfContratanteCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfContratanteCollection.Create(AOwner: TinfANTT);
+begin
+  inherited Create(TinfContratanteCollectionItem);
+end;
+
+function TinfContratanteCollection.GetItem(
+  Index: Integer): TinfContratanteCollectionItem;
+begin
+  Result := TinfContratanteCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfContratanteCollection.SetItem(Index: Integer;
+  Value: TinfContratanteCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfContratanteCollectionItem }
+
+constructor TinfContratanteCollectionItem.Create;
+begin
+
+end;
+
+destructor TinfContratanteCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TlacRodoCollection }
+
+function TlacRodoCollection.Add: TlacresCollectionItem;
+begin
+  Result := TlacresCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TlacRodoCollection.Create(AOwner: TRodo);
+begin
+  inherited Create(TlacresCollectionItem);
+end;
+
+function TlacRodoCollection.GetItem(Index: Integer): TlacresCollectionItem;
+begin
+  Result := TlacresCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TlacRodoCollection.SetItem(Index: Integer;
+  Value: TlacresCollectionItem);
 begin
   inherited SetItem(Index, Value);
 end;

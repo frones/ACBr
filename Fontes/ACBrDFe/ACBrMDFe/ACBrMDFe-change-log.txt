@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/09/2016
+-- diversos --
+[*] Alteração em diversas units para para corrigir erros de validação ao tentar 
+    gerar o MDF-e na versão 3.00.
+    por: Italo Jurisato Junior
+
 17/08/2016
 -- diversos --
 [+] Criada a unit pmdfeConsts que contem as constantes de mensagens usadas na

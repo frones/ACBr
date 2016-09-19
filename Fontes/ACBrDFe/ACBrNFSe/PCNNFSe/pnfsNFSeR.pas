@@ -86,6 +86,7 @@ type
     function LerNFSe: Boolean;
 
     function CodCidadeToProvedor(CodCidade: String): TNFSeProvedor;
+    procedure SetxItemListaServico;
   public
     constructor Create(AOwner: TNFSe);
     destructor Destroy; override;
@@ -150,6 +151,28 @@ begin
   Result := StrToProvedor(Ok, IniParams.ReadString(CodCidade, 'Provedor', ''));
 
   IniParams.Free;
+end;
+
+procedure TNFSeR.SetxItemListaServico;
+var
+  Item: Integer;
+begin
+  NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
+
+  Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
+  if Item < 100 then
+    Item := Item * 100 + 1;
+
+  NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
+
+  if not (FProvedor in [ProRJ, ProSisPMJP]) then
+    NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
+                                     Copy(NFSe.Servico.ItemListaServico, 3, 2);
+
+  if TabServicosExt then
+    NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
+  else
+    NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
 end;
 
 function TNFSeR.LerXml: Boolean;
@@ -253,7 +276,7 @@ end;
 
 function TNFSeR.LerRPS_ABRASF_V1: Boolean;
 var
-  item, i: Integer;
+  i: Integer;
   ok: Boolean;
 begin
   if (Leitor.rExtrai(2, 'InfRps') <> '') or (Leitor.rExtrai(1, 'Rps') <> '') then
@@ -290,7 +313,6 @@ begin
     if (Leitor.rExtrai(3, 'Servico') <> '') or
        (Leitor.rExtrai(2, 'Servico') <> '') then
     begin
-      NFSe.Servico.ItemListaServico          := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
       NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
       NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
       NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
@@ -300,20 +322,7 @@ begin
       if NFSe.Servico.CodigoMunicipio = '' then
         NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'CodigoMunicipio');
 
-      Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-      if Item < 100 then
-        Item := Item * 100 + 1;
-
-      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-
-      if FProvedor <> ProRJ then
-        NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                         Copy(NFSe.Servico.ItemListaServico, 3, 2);
-
-      if TabServicosExt then
-        NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
-      else
-        NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
+      SetxItemListaServico;
 
       if length(NFSe.Servico.CodigoMunicipio) < 7 then
         NFSe.Servico.CodigoMunicipio := Copy(NFSe.Servico.CodigoMunicipio, 1, 2) +
@@ -443,7 +452,7 @@ end;
 
 function TNFSeR.LerRPS_ABRASF_V2: Boolean;
 var
-  item, i: Integer;
+  i: Integer;
   ok: Boolean;
 begin
   // Para o provedor ISSDigital
@@ -459,22 +468,8 @@ begin
   begin
     NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
     NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
-    NFSe.Servico.ItemListaServico    := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-    Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-    if Item < 100 then
-      Item := Item * 100 + 1;
-
-    NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-
-    if FProvedor <> ProSisPMJP then //DJB-14/09/2016
-      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                     Copy(NFSe.Servico.ItemListaServico, 3, 2);
-
-    if TabServicosExt then
-      NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
-     else
-       NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
+    SetxItemListaServico;
 
     //NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
     NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'CodigoMunicipio');
@@ -540,21 +535,9 @@ begin
     begin
       NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
       NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
-      NFSe.Servico.ItemListaServico    := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
       NFSe.Servico.CodigoCnae          := Leitor.rCampo(tcStr, 'CodigoCnae');
 
-      Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-      if Item < 100 then
-        Item := Item * 100 + 1;
-
-      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
-
-      if TabServicosExt then
-        NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
-      else
-        NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
+      SetxItemListaServico;
 
       NFSe.Servico.Discriminacao       := Leitor.rCampo(tcStr, 'Discriminacao');
       NFSe.Servico.Descricao           := '';
@@ -927,7 +910,7 @@ begin
   end; // fim InfDeclaracaoPrestacaoServico
 
   Result := True;
-  
+
 end;
 
 function TNFSeR.LerRPS_ISSDSF: Boolean;
@@ -1381,7 +1364,7 @@ end;
 
 function TNFSeR.LerNFSe_ABRASF_V1: Boolean;
 var
-  item, I: Integer;
+  I: Integer;
   ok: Boolean;
 begin
   if FProvedor <> proNFSeBrasil then
@@ -1402,20 +1385,7 @@ begin
 
   if (Leitor.rExtrai(3, 'Servico') <> '') then
   begin
-    NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
-
-    Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-    if Item<100 then
-      Item:=Item*100+1;
-
-    NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-    NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                     Copy(NFSe.Servico.ItemListaServico, 3, 2);
-
-    if TabServicosExt then
-      NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
-    else
-      NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
+    SetxItemListaServico;
 
     NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
     NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
@@ -1657,7 +1627,7 @@ end;
 
 function TNFSeR.LerNFSe_ABRASF_V2: Boolean;
 var
-  item, Nivel: Integer;
+  Nivel: Integer;
   ok: Boolean;
 begin
   if Leitor.rExtrai(3, 'ValoresNfse') <> '' then
@@ -1841,19 +1811,8 @@ begin
     begin
       NFSe.Servico.Valores.IssRetido   := StrToSituacaoTributaria(ok, Leitor.rCampo(tcStr, 'IssRetido'));
       NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
-      NFSe.Servico.ItemListaServico    := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
-      Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
-      if Item < 100 then Item := Item * 100 + 1;
-
-      NFSe.Servico.ItemListaServico := FormatFloat('0000', Item);
-      NFSe.Servico.ItemListaServico := Copy(NFSe.Servico.ItemListaServico, 1, 2) + '.' +
-                                       Copy(NFSe.Servico.ItemListaServico, 3, 2);
-
-      if TabServicosExt then
-        NFSe.Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(NFSe.Servico.ItemListaServico))
-      else
-        NFSe.Servico.xItemListaServico := CodigoToDesc(OnlyNumber(NFSe.Servico.ItemListaServico));
+      SetxItemListaServico;
 
       NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
       NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');

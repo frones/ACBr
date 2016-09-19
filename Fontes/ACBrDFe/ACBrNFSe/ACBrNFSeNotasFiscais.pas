@@ -350,9 +350,13 @@ end;
 function NotaFiscal.LerXML(AXML: AnsiString): Boolean;
 begin
   FNFSeR.Leitor.Arquivo := AXML;
-  FNFSeR.Provedor       := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
-  FNFSeR.ProvedorConf   := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.Provedor;
-  FNFSeR.PathIniCidades := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.Geral.PathIniCidades;
+  with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
+  begin
+    FNFSeR.Provedor       := Configuracoes.Geral.Provedor;
+    FNFSeR.ProvedorConf   := Configuracoes.Geral.Provedor;
+    FNFSeR.PathIniCidades := Configuracoes.Geral.PathIniCidades;
+    FNFSeR.TabServicosExt := Configuracoes.Arquivos.TabServicosExt;
+  end;
   FNFSeR.LerXml;
 
   FXMLOriginal := String(AXML);

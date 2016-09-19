@@ -91,9 +91,9 @@ begin
     Zera                    := ESC + '@';
     EspacoEntreLinhasPadrao := ESC + '2';
     EspacoEntreLinhas       := ESC + '3';
-    FonteNormal             := ESC + '!' + #0;
+    FonteNormal             := ESC + '!' + #0 + DC2;
     FonteA                  := DC4;
-    FonteB                  := SI;
+    FonteB                  := ESC + SI;
     LigaNegrito             := ESC + 'E';
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
@@ -104,7 +104,7 @@ begin
     DesligaItalico          := ESC + '4' + #0;
     LigaInvertido           := '';  // Existe ?
     DesligaInvertido        := '';  // Existe ?
-    LigaCondensado          := SI;
+    LigaCondensado          := ESC + SI;
     DesligaCondensado       := DC2;
     AlinhadoEsquerda        := ESC + 'j' + #0;
     AlinhadoCentro          := ESC + 'j' + #1;

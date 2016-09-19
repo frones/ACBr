@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/09/2016
+-- ACBrEscDaruma --
+[-] Ajuste no comando </fn> (fonte normal), para desligar modo condensado, na
+    DR700
+
 Data: 15/09/2016
 -- ACBrECFDaruma --
 [-] Ajuste no indice da alíquota no método carregaAliquotas.

@@ -1413,26 +1413,21 @@ begin
                               'xMotivo='  +ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.xMotivo+sLineBreak+
                               'dhResp='   +DateTimeToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.dhResp)+sLineBreak;
 
-              SL := TStringList.Create;
-              try
-                for i := 0 to ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Count -1 do
-                 begin
-                   ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+
-                             ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+'-down-nfe.xml' ;
-                   SL.Clear;
-                   SL.Add(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe);
-                   SL.SaveToFile(ArqNFe);
-                   Cmd.Resposta := Cmd.Resposta+sLineBreak+
-                                   '[NFE'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
-                                   'ChNFe='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+sLineBreak+
-                                   'cStat='+IntToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].cStat)+sLineBreak+
-                                   'xMotivo='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].xMotivo+sLineBreak+
-                                   'Arquivo='+ArqNFe+sLineBreak+
-                                   'procNFe='+SL.Text+sLineBreak;
-                 end;
-              finally
-                SL.Free;
-              end;
+              for i := 0 to ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Count -1 do
+               begin
+                 ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+
+                           ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+'-down-nfe.xml' ;
+
+                 WriteToTXT( ArqNFe, ConverteXMLtoUTF8(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe), False, False);
+
+                 Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                                 '[NFE'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
+                                 'ChNFe='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+sLineBreak+
+                                 'cStat='+IntToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].cStat)+sLineBreak+
+                                 'xMotivo='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].xMotivo+sLineBreak+
+                                 'Arquivo='+ArqNFe+sLineBreak+
+                                 'procNFe='+SL.Text+sLineBreak;
+               end;
            except
              on E: Exception do
               begin

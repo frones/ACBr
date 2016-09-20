@@ -131,12 +131,20 @@ type
 
   TnfseRegRec = ( regNenhum, regMovimento, regCancelado, regIsento, regImune,
                   regNaoIncidencia, regEstimativa, regSocLiberal,
-                  regSimplesNacional, regMEI);
+                  regSimplesNacional, regMEI );
+
   TnfseFrmRec = ( frmNenhum, frmNormal, frmRetidoNaFonte, frmSimplesNacional,
                   frmFixoAnual, frmSemRecolhimento, frmDevidoOutroMunicipio,
-                  frmFixoMensal);
+                  frmFixoMensal );
 
-  function SimNao( const t : Integer ): String;
+  TOperacao = ( toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
+                toDevolucaoSimplesRemessa, toIntermediacao );
+
+  TTributacao = ( ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
+                  ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
+                  ttTributavelFixo, ttTributavelSN, ttMEI );
+
+function SimNao( const t : Integer ): String;
 function StatusRPSToStr(const t: TnfseStatusRPS): String;
 function StrToStatusRPS(out ok: boolean; const s: String): TnfseStatusRPS;
 
@@ -237,6 +245,12 @@ function StrToTRegRec(out ok: boolean; const s: String): TNFSERegRec; //Governa
 
 function TFrmRecToStr(const t: TNFSEFrmRec): String; //Governa
 function StrToTFrmRec(out ok: boolean; const s: String): TNFSEFrmRec; //Governa
+
+function OperacaoToStr(const t: TOperacao): String;
+function StrToOperacao(out ok: boolean; const s: String): TOperacao;
+
+function TributacaoToStr(const t: TTributacao): String;
+function StrToTributacao(out ok: boolean; const s: String): TTributacao;
 
 implementation
 
@@ -18367,6 +18381,40 @@ begin
                            [frmNenhum, frmNormal, frmRetidoNaFonte,
                             frmSimplesNacional, frmFixoAnual, frmSemRecolhimento,
                             frmDevidoOutroMunicipio, frmFixoMensal]);
+end;
+
+function OperacaoToStr(const t: TOperacao): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['A', 'B', 'C', 'D', 'J'],
+                           [toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
+                            toDevolucaoSimplesRemessa, toIntermediacao]);
+end;
+
+function StrToOperacao(out ok: boolean; const s: String): TOperacao;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['A', 'B', 'C', 'D', 'J'],
+                           [toSemDeducao, toComDeducaoMateriais, toImuneIsenta,
+                            toDevolucaoSimplesRemessa, toIntermediacao]);
+end;
+
+function TributacaoToStr(const t: TTributacao): String;
+begin
+  result := EnumeradoToStr(t,
+                           ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
+                           [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
+                            ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
+                            ttTributavelFixo, ttTributavelSN, ttMEI]);
+end;
+
+function StrToTributacao(out ok: boolean; const s: String): TTributacao;
+begin
+  result := StrToEnumerado(ok, s,
+                           ['C', 'E', 'F', 'K', 'N', 'T', 'G', 'H', 'M'],
+                           [ttIsentaISS, ttNaoIncidencianoMunic, ttImune,
+                            ttExigibilidadeSusp, ttNaoTributavel, ttTributavel,
+                            ttTributavelFixo, ttTributavelSN, ttMEI]);
 end;
 
 end.

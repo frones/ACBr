@@ -991,6 +991,9 @@ begin
           NFSe.NaturezaOperacao := no4;
         end;
 
+    NFSe.Servico.Operacao := StrToOperacao(Ok, sOperacao);
+    NFSe.Servico.Tributacao := StrToTributacao(Ok, sTributacao);
+
     NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, no5 ]);
 
     NFSe.OptanteSimplesNacional := StrToEnumerado( ok,sTributacao, ['T','H'], [ snNao, snSim ]);
@@ -2439,6 +2442,9 @@ begin
                       NFSe.NaturezaOperacao := no7;
                     end;
    end;
+
+   NFSe.Servico.Operacao := StrToOperacao(Ok, sOperacao);
+   NFSe.Servico.Tributacao := StrToTributacao(Ok, sTributacao);
 
    NFSe.NaturezaOperacao := StrToEnumerado( ok,sTributacao, ['T','K'], [ NFSe.NaturezaOperacao, no5 ]);
 

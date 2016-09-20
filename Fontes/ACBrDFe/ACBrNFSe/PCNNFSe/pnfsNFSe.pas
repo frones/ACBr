@@ -379,6 +379,8 @@ type
     FDescricao: String;
     // Provedor IssDsf
     FDeducao: TDeducaoCollection;
+    FOperacao: TOperacao;
+    FTributacao: TTributacao;
     // Provedor Governa
     FUFPrestacao: String;
     // Provedor SP
@@ -407,6 +409,8 @@ type
     property Descricao: String read FDescricao write FDescricao;
     // Provedor IssDsf
     property Deducao: TDeducaoCollection read FDeducao write FDeducao;
+    property Operacao: TOperacao read FOperacao write FOperacao;
+    property Tributacao: TTributacao read FTributacao write FTributacao;
     // Provedor Governa
     property UFPrestacao: String read FUFPrestacao write FUFPrestacao;
     // Provedor SP

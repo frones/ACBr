@@ -229,6 +229,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao',          01, 10,  1, CodCidadeToCodSiafi(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
   Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacaoDescricao', 01, 30,  1, CodCidadeToCidade(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
 
+  (*
   case NFSe.NaturezaOperacao of
     no1: begin
            Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, EnumeradoToStr( NFSe.DeducaoMateriais, ['B','A'], [snSim, snNao]), '');
@@ -263,6 +264,10 @@ begin
 
   if NFse.RegimeEspecialTributacao = retMicroempresarioIndividual then
     Gerador.wCampoNFSe(tcStr, '', 'Tributacao',01, 01,  1, 'M', '');
+ *)
+
+  Gerador.wCampoNFSe(tcStr, '', 'Operacao',   01, 01, 1, OperacaoToStr(NFSe.Servico.Operacao), '');
+  Gerador.wCampoNFSe(tcStr, '', 'Tributacao', 01, 01, 1, TributacaoToStr(NFSe.Servico.Tributacao), '');
 
   Gerador.wCampoNFSe(tcDe2, '', 'ValorPIS',    01, 02, 1, NFSe.Servico.Valores.ValorPis, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorCOFINS', 01, 02, 1, NFSe.Servico.Valores.ValorCofins, '');

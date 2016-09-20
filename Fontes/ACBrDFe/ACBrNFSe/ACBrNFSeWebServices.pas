@@ -1859,7 +1859,10 @@ end;
 
 procedure TNFSeGerarLoteRPS.DefinirDadosMsg;
 var
-  I: Integer;
+  I, iTributos: Integer;
+  dDataInicial, dDataFinal: TDateTime;
+  TotalServicos, TotalDeducoes, TotalISS,
+  TotalTributos, TotalISSRetido: Double;
   TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
@@ -1899,7 +1902,7 @@ begin
       TagElemento := 'LoteRps';
     end;
 
-    if (TagElemento <> '') and not (Provedor in [proBetha, proIssDSF]) then
+    if (TagElemento <> '') and not (Provedor in [proBetha, proBethav2, proIssDSF]) then
       TagElemento := FPrefixo3 + TagElemento;
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
@@ -1914,39 +1917,124 @@ begin
 
     InicializarTagITagF;
 
+    dDataInicial   := FNotasFiscais.Items[0].NFSe.DataEmissao;
+    dDataFinal     := dDataInicial;
+    iTributos      := 0;
+    TotalServicos  := 0.0;
+    TotalDeducoes  := 0.0;
+    TotalISS       := 0.0;
+    TotalISSRetido := 0.0;
+    TotalTributos  := 0.0;
+
+    for i := 0 to FNotasFiscais.Count-1 do
+    begin
+      if FNotasFiscais.Items[i].NFSe.DataEmissao < dDataInicial then
+        dDataInicial := FNotasFiscais.Items[i].NFSe.DataEmissao;
+      if FNotasFiscais.Items[i].NFSe.DataEmissao > dDataFinal then
+        dDataFinal := FNotasFiscais.Items[i].NFSe.DataEmissao;
+
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaPis > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaCofins > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaCsll > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaInss > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaIr > 0 then
+        iTributos := iTributos + 1;
+
+      TotalServicos  := TotalServicos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
+      TotalDeducoes  := TotalDeducoes + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+      TotalISS       := TotalISS + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIss;
+      TotalISSRetido := TotalISSRetido + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIssRetido;
+      TotalTributos  := TotalTributos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIr
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorCofins
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorPis
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorInss
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorCsll;
+    end;
+
     InicializarGerarDadosMsg;
 
     with GerarDadosMsg do
     begin
-      NumeroLote := FNumeroLote; // TNFSeGerarLoteRps(Self).NumeroLote;
+      NumeroLote := FNumeroLote; // TNFSeEnviarLoteRps(Self).NumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
+
+      // Necessário para o provedor ISSDSF
+      Transacao   := FNotasFiscais.Transacao;
+      DataInicial := dDataInicial;
+      DataFinal   := dDataFinal;
+
+      ValorTotalServicos := TotalServicos;
+      ValorTotalDeducoes := TotalDeducoes;
+
+      // Necessário para o provedor Equiplano - EL
+      NumeroRps      := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+      SerieRps       := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+      OptanteSimples := FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
+
+      // Necessário para o provedor Governa
+      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
 
       if FProvedor = proCONAM then
       begin
         AliquotaIss    := FNotasFiscais.Items[0].NFSe.Servico.Valores.Aliquota;
         TipoTributacao := '4';
-        ValorIss       := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIss;
-        ValorIssRetido := FNotasFiscais.Items[0].NFSe.Servico.Valores.ValorIssRetido;
+        QtdTributos    := iTributos;
+        ValorNota      := TotalServicos;
+        ValorIss       := TotalIss;
+        ValorIssRetido := TotalIssRetido;
+        ValorTotalDeducoes := TotalDeducoes;
+        ValorTotalTributos := TotalTributos;
+        {Todo:// Acrescentados estas duas linhas abaixo por masl}
+        ExigibilidadeISS:=FNotasFiscais.Items[0].NFSe.Servico.ExigibilidadeISS;
+        DataOptanteSimples:=FNotasFiscais.Items[0].NFSe.DataOptanteSimplesNacional;
       end;
 
-      ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso; //Governa
     end;
 
-    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
+    if FProvedor = proEL then
+    begin
+      FPDadosMsg := GerarDadosMsg.Gera_DadosMsgEnviarLote;
+      FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+      FPDadosMsg := FTagI +
+                    '<identificacaoPrestador>' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ + '</identificacaoPrestador>' +
+                    '<hashIdentificador>' + FHashIdent + '</hashIdentificador>' +
+                    '<arquivo>' +
+                      StringReplace(StringReplace(FPDadosMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]) +
+                    '</arquivo>' +
+                    FTagF;
+    end
+    else
+      FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
+
   finally
     GerarDadosMsg.Free;
   end;
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar;
 
+  if (FProvedor = proThema) and (FNotasFiscais.Count < 4) then
+  begin
+    FDadosEnvelope := StringReplace(FDadosEnvelope, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+    FPSoapAction := StringReplace(FPSoapAction, 'recepcionarLoteRps', 'recepcionarLoteRpsLimitado', [rfReplaceAll]);
+  end;
+
   if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
   begin
     DefinirSignatureNode('');
 
     FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, FTagGrupo, TagElemento,
-                                  FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
-                                  xSignatureNode, xDSIGNSLote, xIdSignature);
+                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
+                                   xSignatureNode, xDSIGNSLote, xIdSignature);
+
+    // Incluido a linha abaixo por após realizar a assinatura esta gerando o
+    // atributo xmlns vazio.
+    if FProvedor <> proSP then
+      FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,
@@ -1955,7 +2043,7 @@ begin
   end
   else
     GerarException(ACBrStr('A funcionalidade [Gerar Lote] não foi disponibilizada pelo provedor: ' +
-     FPConfiguracoesNFSe.Geral.xProvedor));
+      FPConfiguracoesNFSe.Geral.xProvedor));
 
   FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
   if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados then
@@ -1965,6 +2053,7 @@ begin
   if Length(FPDadosMsg) > (500 * 1024) then
     GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
+
 end;
 
 function TNFSeGerarLoteRPS.TratarResposta: Boolean;
@@ -1991,7 +2080,15 @@ end;
 
 function TNFSeGerarLoteRPS.Executar: Boolean;
 begin
-  SalvarEnvio;
+  InicializarServico;
+  try
+    DefinirDadosMsg;
+    DefinirEnvelopeSoap;
+    SalvarEnvio;
+    TratarResposta;
+  finally
+    FinalizarServico;
+  end;
   Result := True;
 end;
 

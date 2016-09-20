@@ -48,6 +48,8 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/09/2016
+[-] Correções no método GerarLote.
+    por: Italo Jurisato Junior
 [+] Incluido as propridades Operacao e Tributacao para o provedor ISSDSF como
     elementos de DadosServicos.
     por: Italo Jurisato Junior

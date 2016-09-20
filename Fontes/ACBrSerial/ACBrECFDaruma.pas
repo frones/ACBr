@@ -355,7 +355,7 @@ Uses
     {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
     SysUtils, Math,
     {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
-    ACBrUtil, ACBrECF, ACBrConsts;
+    ACBrUtil, ACBrECF, ACBrECFEscECF, ACBrConsts;
 
 { ----------------------------- TACBrECFDaruma ------------------------------ }
 
@@ -942,7 +942,7 @@ function DarumaTraduzirTagBloco(const ATag, Conteudo: AnsiString;
 const
   // bAABCCDDEEEEEEEEEEEEE..EE
   // --------
-  // b = Comando para impressão das barras
+  // ESC b = Comando para impressão das barras
   // A = Tipo de codigo FIXO
   // B = Largura 1..5
   // C = Altura 50..200
@@ -951,36 +951,47 @@ const
   //     01 - Imprime
   // E = Codigo de barra
   // termina o comando com null
-  cEAN8     = ESC + 'b02'; // <ean8></ean8>
-  cEAN13    = ESC + 'b01'; // <ean13></ean13>
-  cSTD25    = ESC + 'b03'; // <std></std>
-  cINTER25  = ESC + 'b04'; // <inter></inter>
-  cCODE11   = ESC + 'b11'; // <code11></code11>
-  cCODE39   = ESC + 'b06'; // <code39></code39>
-  cCODE93   = ESC + 'b07'; // <code93></code93>
-  cCODE128  = ESC + 'b05'; // <code128></code128>
-  cUPCA     = ESC + 'b08'; // <upca></upca>
-  cCODABAR  = ESC + 'b09'; // <codabar></codabar>
-  cMSI      = ESC + 'b10'; // <msi></msi>
-  cBarraFim = NUL;
+  cEAN13    = 01; // <ean13></ean13>
+  cEAN8     = 02; // <ean8></ean8>
+  cSTD25    = 03; // <std></std>
+  cINTER25  = 04; // <inter></inter>
+  cCODE128  = 05; // <code128></code128>
+  cCODE39   = 06; // <code39></code39>
+  cCODE93   = 07; // <code93></code93>
+  cUPCA     = 08; // <upca></upca>
+  cCODABAR  = 09; // <codabar></codabar>
+  cMSI      = 10; // <msi></msi>
+  cCODE11   = 11; // <code11></code11>
+var
+  IsEscECF: Boolean;
 
-  function MontaCodBarras(const ATipo, ACodigo: AnsiString): AnsiString;
+  function MontaCodBarras(const ATipo: Byte; ACodigo: AnsiString): AnsiString;
   var
-    Largura: AnsiString;
-    Altura: AnsiString;
-    Mostrar: AnsiString;
+    Largura, Altura, Mostrar: Byte;
   begin
     with AECFClass do
     begin
-      Largura := IntToStrZero( max( min( ConfigBarras.LarguraLinha, 5), 2) , 1);
-      Altura  := IntToStrZero( max( min( ConfigBarras.Altura, 99), 5), 2);
-      Mostrar := IfThen(ConfigBarras.MostrarCodigo, '01', '00');
+      Largura := max( min( ConfigBarras.LarguraLinha, 5), 2);
+      if ConfigBarras.Altura = 0 then
+        Altura := ifthen(IsEscECF, 50, 5)
+      else
+        Altura  := max( min( ConfigBarras.Altura, 99), 5);
+
+      Mostrar := IfThen(ConfigBarras.MostrarCodigo, 1, 0);
     end;
 
-    Result := ATipo + Largura + Altura + Mostrar + ACodigo + cBarraFim;
+    if IsEscECF then
+      Result := ESC + 'b' + AnsiChr(ATipo) + AnsiChr(Largura) + AnsiChr(Altura) +
+                            AnsiChr(Mostrar) + ACodigo + NUL + SYN + DC2
+    else
+      Result := ESC + 'b' + IntToStrZero(ATipo,2)  + IntToStr(Largura) +
+                            IntToStrZero(Altura,2) + IntToStrZero(Mostrar,2) +
+                            ACodigo + NUL;
   end;
 
 begin
+  IsEscECF := (AECFClass is TACBrECFEscECF);
+
   if ATag = cTagBarraEAN8 then
     Result := MontaCodBarras(cEAN8, Conteudo)
   else if ATag = cTagBarraEAN13 then

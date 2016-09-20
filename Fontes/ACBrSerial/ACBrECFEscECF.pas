@@ -480,11 +480,11 @@ TACBrECFEscECF = class( TACBrECFClass )
  end ;
 
 implementation
-Uses SysUtils, Math,
-    {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-    synautil,
-    ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrConsts, ACBrUtil,
-  ACBrECFDaruma;
+Uses
+  SysUtils, Math,
+  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
+  synautil,
+  ACBrECF, ACBrECFBematech, ACBrECFEpson, ACBrECFDaruma, ACBrConsts, ACBrUtil;
 
 { TACBrECFEscECFProtocoloEpsonDLL }
 
@@ -1769,7 +1769,7 @@ var
   P: Integer;
   EhControle: Boolean;
 begin
-  if (IsEpson and (not fpDevice.IsDLLPort)) then
+  if IsDaruma or (IsEpson and (not fpDevice.IsDLLPort)) then
     Exit;
 
   P := pos(LF, Linha);
@@ -2608,8 +2608,11 @@ begin
     Result := inherited TraduzirTagBloco(ATag, Conteudo) ;
 
   // Carcateres de Controle, devem ser precedidos de ESC //
-  Result := ReplaceString( Result, NUL, ESC+NUL);
-  Result := ReplaceString( Result, LF , ESC+LF);
+  if not IsDaruma then
+  begin
+    Result := ReplaceString( Result, NUL, ESC+NUL);
+    Result := ReplaceString( Result, LF , ESC+LF);
+  end;
 
   if IsEpson then
     Result := ReplaceString( Result, CR , ESC+CR);

@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2016
+-- DoECFUnit --
+[-] Correção para retorno de informações vazias, onde era substituido pela
+    String de Resposta do ECF  (por: jjw.roberto)
+    http://www.projetoacbr.com.br/forum/topic/32241-problemas-com-comunica%C3%A7%C3%A3o-tcp/
+
 13/09/2016
 -- DoACBrGNReUnit
 [-] Correção para o grupo veic, estava add a cada item

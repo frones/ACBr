@@ -1175,8 +1175,7 @@ begin
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')') ;
 
      finally
-        if Length( Cmd.Resposta ) = 0 then
-           Cmd.Resposta := RespostaComando ;
+       { Nada a fazer aqui por enquanto... :) }
      end ;
   end ;
 end ;

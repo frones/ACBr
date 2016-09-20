@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/09/2015
+-- ACBrTEFDCliSiTef --
+[*] Acerto para a leitura correta de parcelas conforme nova documentação.
+
 Data: 12/07/2016
 -- ACBrTEFDClass --
 [+] Criada classe TACBrTEFDRespCB para armazenar informações de Correspondente Bancário;

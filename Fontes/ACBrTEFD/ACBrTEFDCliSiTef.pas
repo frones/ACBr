@@ -461,18 +461,48 @@ begin
    fpQtdLinhasComprovante := max( fpImagemComprovante1aVia.Count,
                                   fpImagemComprovante2aVia.Count ) ;
 
-   fpParcelas.Clear;
-   if TemParcelas then
-   begin
-      for I := 1 to fpQtdParcelas do
-      begin
-         Parc := TACBrTEFDRespParcela.create;
-         Parc.Vencimento := LeInformacao( 141, I).AsDate ;
-         Parc.Valor      := LeInformacao( 142, I).AsFloat ;
+//   fpParcelas.Clear;
+//   if TemParcelas then
+//   begin
+//      for I := 1 to fpQtdParcelas do
+//      begin
+//         Parc := TACBrTEFDRespParcela.create;
+//         Parc.Vencimento := LeInformacao( 141, I).AsDate ;
+//         Parc.Valor      := LeInformacao( 142, I).AsFloat ;
+//
+//         fpParcelas.Add(Parc);
+//      end;
+//   end;
 
-         fpParcelas.Add(Parc);
+  // leitura de parcelas conforme nova documentação
+  // 141 e 142 foram removidos em Setembro de 2014
+  if fpQtdParcelas > 0 then
+  begin
+    fpParcelas.Clear;
+    for I := 1 to fpQtdParcelas do
+    begin
+      Parc := TACBrTEFDRespParcela.Create;
+      if I = 1 then
+      begin
+        Parc.Vencimento := LeInformacao(140, I).AsDate;
+        Parc.Valor      := LeInformacao(524, I).AsFloat;
+      end
+      else
+      begin
+        Parc.Vencimento := IncDay(LeInformacao(140, I).AsDate, LeInformacao(508, I).AsInteger);
+        Parc.Valor      := LeInformacao(525, I).AsFloat;
       end;
-   end;
+
+      // caso não retorne os dados acima prencher com os defaults
+      if Parc.Vencimento <= 0 then
+        Parc.Vencimento := IncDay(fpDataHoraTransacaoHost, I * 30);
+
+      if Parc.Valor <= 0 then
+        Parc.Valor := fpValorTotal / fpQtdParcelas;
+
+      fpParcelas.Add(Parc);
+    end;
+  end;
 end;
 
 procedure TACBrTEFDRespCliSiTef.GravaInformacao(const Identificacao: Integer;
@@ -563,7 +593,7 @@ end;
 
 function TACBrTEFDCliSiTef.DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
 begin
-   if Assigned(xEscreveMensagemPermanentePinPad) then  
+   if Assigned(xEscreveMensagemPermanentePinPad) then
       Result := xEscreveMensagemPermanentePinPad(PAnsiChar(Mensagem))
    else
       raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
@@ -926,7 +956,7 @@ var
   sDate:AnsiString;
 begin
    sDate:= FormatDateTime('yyyymmdd',Data);
-   if Assigned(xObtemQuantidadeTransacoesPendentes) then  
+   if Assigned(xObtemQuantidadeTransacoesPendentes) then
       Result := xObtemQuantidadeTransacoesPendentes(sDate,CupomFiscal)
    else
       raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
@@ -1663,4 +1693,3 @@ end;
 
 
 end.
-

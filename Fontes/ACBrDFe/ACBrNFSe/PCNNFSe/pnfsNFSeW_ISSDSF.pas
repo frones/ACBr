@@ -224,6 +224,9 @@ begin
   Gerador.wCampoNFSe(tcDe4, '', 'AliquotaAtividade', 01, 11,  1, NFSe.Servico.Valores.Aliquota, '');
 
   // "A" a receber; "R" retido na Fonte
+  FTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
+                                       ['A','R'], [stNormal, stRetencao]);
+
   Gerador.wCampoNFSe(tcStr, '', 'TipoRecolhimento', 01, 01,  1, TipoRecolhimento, '');
 
   Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao',          01, 10,  1, CodCidadeToCodSiafi(strtoint64(NFSe.Servico.CodigoMunicipio)), '');
@@ -296,35 +299,37 @@ end;
 
 procedure TNFSeW_ISSDSF.GerarXML_ISSDSF;
 var
-  sAssinatura, sValorServico_Assinatura,
-  sTipoRecolhimentoAssinaturaRPS: String;
+  sIEEmit, SerieRPS, NumeroRPS, sDataEmis,
+  sTributacao, sSituacaoRPS, sTipoRecolhimento,
+  sValorServico, sValorDeducao, sCodAtividade,
+  sCPFCNPJTomador, sAssinatura: String;
 begin
   Gerador.Prefixo := '';
   Gerador.wGrupoNFSe('RPS ' + FIdentificador + '="rps:' + NFSe.InfID.ID + '"');
 
   FSituacao := EnumeradoToStr( NFSe.Status, ['N','C'], [srNormal, srCancelado]);
 
-  FTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                       ['A','R'], [stNormal, stRetencao]);
+  sIEEmit           := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 11);
+  SerieRPS          := PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ');
+  NumeroRPS         := Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12);
+  sDataEmis         := FormatDateTime('yyyymmdd',NFse.DataEmissaoRps);
+//  sTributacao := EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','T'], [snSim, snNao]) + ' ';
+  sTributacao       := TributacaoToStr(NFSe.Servico.Tributacao) + ' ';
+  sSituacaoRPS      := FSituacao;
+  sTipoRecolhimento := EnumeradoToStr( NFSe.Servico.Valores.IssRetido, ['N','S'], [stNormal, stRetencao]);
 
-  sTipoRecolhimentoAssinaturaRPS := EnumeradoToStr( NFSe.Servico.Valores.IssRetido,
-                                    ['N','S'], [stNormal, stRetencao]);
+  sValorServico   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
+                                (NFSe.Servico.Valores.ValorServicos -
+                                 NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
+  sValorDeducao   := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
+                                 NFSe.Servico.Valores.ValorDeducoes)), 15 );
+  sCodAtividade   := Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10 );
+  sCPFCNPJTomador := Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
 
-  sValorServico_Assinatura := Poem_Zeros( OnlyNumber( FormatFloat('#0.00',
-          (NFSe.Servico.Valores.ValorServicos - NFSe.Servico.Valores.ValorDeducoes) ) ), 15);
 
-  sAssinatura := Poem_Zeros(NFSe.Prestador.InscricaoMunicipal, 11) +
-                 PadRight( NFSe.IdentificacaoRps.Serie, 5 , ' ') +
-                 Poem_Zeros(NFSe.IdentificacaoRps.Numero, 12) +
-                 FormatDateTime('yyyymmdd',NFse.DataEmissaoRps) +
-                 EnumeradoToStr( NFSe.OptanteSimplesNacional, ['H','T'], [snSim, snNao])+
-                 ' ' +
-                 Situacao +
-                 sTipoRecolhimentoAssinaturaRPS +
-                 sValorServico_Assinatura +
-                 Poem_Zeros( OnlyNumber( FormatFloat('#0.00',NFSe.Servico.Valores.ValorDeducoes)), 15 ) +
-                 Poem_Zeros( OnlyNumber( NFSe.Servico.CodigoCnae ), 10 ) +
-                 Poem_Zeros( OnlyNumber( NFSe.Tomador.IdentificacaoTomador.CpfCnpj), 14);
+  sAssinatura := sIEEmit + SerieRPS + NumeroRPS + sDataEmis + sTributacao +
+                 sSituacaoRPS + sTipoRecolhimento + sValorServico +
+                 sValorDeducao + sCodAtividade + sCPFCNPJTomador;
 
   sAssinatura := AsciiToHex(SHA1(sAssinatura));
   sAssinatura := LowerCase(sAssinatura);

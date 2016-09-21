@@ -279,7 +279,7 @@ function StatusNFSeToStr(const t: TnfseStatusNFSe): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2'],
-                           [srNormal, srCancelado]);
+                           [snNormal, snCancelado]);
 end;
 
 function StrToStatusNFSe(out ok: boolean; const s: String): TnfseStatusNFSe;

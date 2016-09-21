@@ -1385,7 +1385,8 @@ begin
 
             if Voltar then
                Continua := 1     { Volta para o menu anterior }
-            else if not Digitado then
+            else
+            if not(Digitado) or Interromper then
                Continua := -1 ;  { Cancela operacao }
 
             if (Voltar and (Result = 10000)) or (not Digitado) then

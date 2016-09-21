@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/09/2015
+-- ACBrTEFDCliSiTef --
+[*] acerto para tratar corretamente o interromper em telas de aguardo do SITEF
+
 Data: 20/09/2015
 -- ACBrTEFDCliSiTef --
 [*] Acerto para a leitura correta de parcelas conforme nova documentação.

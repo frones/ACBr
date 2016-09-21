@@ -7,8 +7,8 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Left = 16
-    Top = -528
+    Left = 0
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -7070,10 +7070,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 696
-    Top = 106
-  end
-  inherited DataSource1: TDataSource
-    Left = 728
     Top = 106
   end
 end

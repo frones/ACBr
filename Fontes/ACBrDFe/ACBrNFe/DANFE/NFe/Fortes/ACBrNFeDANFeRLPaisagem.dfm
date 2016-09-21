@@ -2415,8 +2415,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         ParentFont = False
       end
       object rllFatura: TRLAngleLabel
-        Left = 13
-        Top = 4
+        Left = 16
+        Top = 0
         Width = 10
         Height = 48
         Angle = 90.000000000000000000
@@ -5340,10 +5340,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   end
   inherited RLPDFFilter1: TRLPDFFilter
     Left = 1024
-    Top = 31
-  end
-  inherited DataSource1: TDataSource
-    Left = 1056
     Top = 31
   end
 end

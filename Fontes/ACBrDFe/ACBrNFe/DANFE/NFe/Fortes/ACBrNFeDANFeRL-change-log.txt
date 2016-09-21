@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/09/2016
+--ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[+] Remoção dos componentes dbware
+		por: Henrique Leonardo
+
 14/09/2016
 [+] Modo paisagem em delphi e lazarus sem componentes dbware
 		por: Henrique Leonardo

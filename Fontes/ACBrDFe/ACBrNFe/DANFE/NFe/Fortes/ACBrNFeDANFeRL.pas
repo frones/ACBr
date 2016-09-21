@@ -109,8 +109,7 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
 
 type
 
@@ -119,8 +118,6 @@ type
   TfrlDANFeRL = class(TForm)
     RLNFe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
-    DataSource1: TDataSource;
-    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     function BuscaDireita(Busca, Text: String): Integer;
     procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
@@ -197,10 +194,8 @@ type
     fEspacoEntreProdutos: Integer;
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
-    cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     vAuxDiferencaPDF : integer;
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
-    procedure ConfigDataSet;
   public
     { Public declarations }
     class procedure Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
@@ -318,95 +313,6 @@ uses ACBrValidador;
 
 {$R *.dfm}
 
-procedure TfrlDANFeRL.ConfigDataSet;
-begin
- if not Assigned( cdsItens ) then
- cdsItens:=  {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}  TBufDataset.create(nil) {$ENDIF};
-
-  if cdsItens.Active then
- begin
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).EmptyDataSet;
- {$ENDIF}
-  cdsItens.Active := False;
- end;
-
- {$IFDEF BORLAND}
- if cdsItens is TClientDataSet then
-  begin
-  TClientDataSet(cdsItens).StoreDefs := False;
-  TClientDataSet(cdsItens).IndexDefs.Clear;
-  TClientDataSet(cdsItens).IndexFieldNames := '';
-  TClientDataSet(cdsItens).IndexName := '';
-  TClientDataSet(cdsItens).Aggregates.Clear;
-  TClientDataSet(cdsItens).AggFields.Clear;
-  end;
- {$ELSE}
- if cdsItens is TBufDataset then
-  begin
-  TBufDataset(cdsItens).IndexDefs.Clear;
-  TBufDataset(cdsItens).IndexFieldNames:='';
-  TBufDataset(cdsItens).IndexName:='';
-  end;
- {$ENDIF}
-
- with cdsItens do
-  if FieldCount = 0 then
-  begin
-    FieldDefs.Clear;
-    Fields.Clear;
-    FieldDefs.Add('CODIGO',ftString,60);
-    FieldDefs.Add('EAN',ftString,14);
-    FieldDefs.Add('DESCRICAO',ftString,2000);
-    FieldDefs.Add('NCM',ftString,8);
-    FieldDefs.Add('CFOP',ftString,4);
-    FieldDefs.Add('UNIDADE',ftString,6);
-    FieldDefs.Add('QTDE',ftString,18);
-    FieldDefs.Add('VALOR',ftString,18);
-    FieldDefs.Add('VALORDESC',ftString,18);
-    FieldDefs.Add('Valorliquido',ftString,18);
-    FieldDefs.Add('TOTAL',ftString,18);
-    FieldDefs.Add('CST',ftString,3);
-    FieldDefs.Add('CSOSN',ftString,4);
-    FieldDefs.Add('BICMS',ftString,18);
-    FieldDefs.Add('ALIQICMS',ftString,6);
-    FieldDefs.Add('VALORICMS',ftString,18);
-    FieldDefs.Add('BICMSST',ftString,18);
-    FieldDefs.Add('VALORICMSST',ftString,18);
-    FieldDefs.Add('ALIQIPI',ftString,6);
-    FieldDefs.Add('VALORIPI',ftString,18);
-    FieldDefs.Add('XPROD',ftString,200);
-    FieldDefs.Add('INFADIPROD',ftString,200);
-    FieldDefs.Add('ITEM',ftString,3);
-
-
-   {$IFDEF BORLAND}
-    if cdsItens is TClientDataSet then
-    TClientDataSet(cdsItens).CreateDataSet;
-   {$ELSE}
-    if cdsItens is TBufDataset then
-    TBufDataset(cdsItens).CreateDataSet;
-   {$ENDIF}
-   end;
-
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).StoreDefs := False;
- {$ENDIF}
-
-   if not cdsItens.Active then
-   cdsItens.Active := True;
-
-  {$IFDEF BORLAND}
-   if cdsItens is TClientDataSet then
-   if cdsItens.Active then
-   TClientDataSet(cdsItens).LogChanges := False;
- {$ENDIF}
-
- DataSource1.dataset := cdsItens;
-
-end;
 
 class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent;
                 ANFe: TNFe;
@@ -705,18 +611,12 @@ begin
     end ;
 end;
 
-procedure TfrlDANFeRL.FormDestroy(Sender: TObject);
-begin
-  FreeAndNil( cdsItens );
-end;
-
 procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
   {$IfNDef FPC}
    Self.Scaled := false;
    Self.ScaleBy( 96,Screen.PixelsPerInch);
   {$EndIf}
-  ConfigDataSet;
 end;
 
 procedure TfrlDANFeRL.ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);

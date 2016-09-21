@@ -12,7 +12,6 @@ object frlDANFeRL: TfrlDANFeRL
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poMainFormCenter
-  LCLVersion = '1.6.0.4'
   Visible = False
   object RLNFe: TRLReport
     Left = 8
@@ -31,7 +30,7 @@ object frlDANFeRL: TfrlDANFeRL
     ShowProgress = False
   end
   object RLPDFFilter1: TRLPDFFilter
-    DocumentInfo.Author = 'FortesReport 3.23 - Copyright Â© 1999-2009 Fortes InformÃ¡tica'
+    DocumentInfo.Author = 'FortesReport 3.23 - Copyright © 1999-2009 Fortes Informática'
     DocumentInfo.Creator = 'Projeto ACBr (Componente NF-e)'
     DisplayName = 'Documento PDF'
     left = 288

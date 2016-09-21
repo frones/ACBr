@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/09/2016
+[-] Correção de dfm que estavam em utf-8
+		por:  Juliomar Marchetti
+		
 15/09/2016
 --ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [+] Remoção dos componentes dbware

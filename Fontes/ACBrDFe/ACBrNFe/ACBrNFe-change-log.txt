@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 22/09/2016
+-- ACBrECFVirtualNFCe --
+[-] Acerto para não duplicar o rodapé.
+
+-- ACBrNFeDANFeEscPos --
+[-] Acerto para considerar os valores passados para o DANFE na impressão do tributos
+    estava considerando a tag na nota e pode acontecer de ela não ter sido informada
+
+22/09/2016
 -- ACBrNFeWebServices --
 [*] A função TratarResposta do método EnvEvento não estava levando em consideração
     o status dos eventos e sim somente o status do processamento do lote.

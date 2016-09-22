@@ -559,70 +559,74 @@ begin
   end;
 end;
 
-procedure TACBrECFVirtualNFCeClass.SubtotalizaCupomVirtual(
-  MensagemRodape: AnsiString);
+procedure TACBrECFVirtualNFCeClass.SubtotalizaCupomVirtual(MensagemRodape: AnsiString);
 var
   i, ItMaior: Integer;
   ItDescAcre: Array of Extended;
   Total, VlDescAcres, TotDescAcre, VlItMaior: Extended;
 begin
-   if fsEhVenda then
-      begin
-
-  with fsACBrNFCe do
+  if fsEhVenda then
   begin
-    if fpCupom.DescAcresSubtotal > 0 then
-      VlDescAcres := fpCupom.DescAcresSubtotal
-    else
-      VlDescAcres := -fpCupom.DescAcresSubtotal;
-
-    if VlDescAcres <> 0 then
+    with fsACBrNFCe do
     begin
-      Total       := 0;
-      ItMaior     := -1;
-      VlItMaior   := 0;
-      TotDescAcre := 0;
-      SetLength(ItDescAcre, NotasFiscais.Items[0].NFe.Det.Count);
+      if fpCupom.DescAcresSubtotal > 0 then
+        VlDescAcres := fpCupom.DescAcresSubtotal
+      else
+        VlDescAcres := -fpCupom.DescAcresSubtotal;
 
-      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
-        Total := Total + NotasFiscais.Items[0].NFe.Det[i].Prod.vProd;
-
-      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+      if VlDescAcres <> 0 then
       begin
-        ItDescAcre[i] := RoundABNT(VlDescAcres * (NotasFiscais.Items[0].NFe.Det[i].Prod.vProd / Total),2);
-        TotDescAcre   := TotDescAcre + ItDescAcre[i];
+        Total       := 0;
+        ItMaior     := -1;
+        VlItMaior   := 0;
+        TotDescAcre := 0;
 
-        if ItDescAcre[i] > VlItMaior then
+        SetLength(ItDescAcre, NotasFiscais.Items[0].NFe.Det.Count);
+
+        for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+          Total := Total + NotasFiscais.Items[0].NFe.Det[i].Prod.vProd;
+
+        for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
         begin
-          VlItMaior := ItDescAcre[i];
-          ItMaior := i;
+          ItDescAcre[i] := RoundABNT(VlDescAcres * (NotasFiscais.Items[0].NFe.Det[i].Prod.vProd / Total), 2);
+          TotDescAcre   := TotDescAcre + ItDescAcre[i];
+
+          if ItDescAcre[i] > VlItMaior then
+          begin
+            VlItMaior := ItDescAcre[i];
+            ItMaior := i;
+          end;
+        end;
+
+        if TotDescAcre <> VlDescAcres then
+          ItDescAcre[ItMaior] := ItDescAcre[ItMaior] -
+            (TotDescAcre - VlDescAcres);
+
+        for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
+        begin
+          if fpCupom.DescAcresSubtotal > 0 then
+            NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro :=
+              NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro + ItDescAcre[i]
+          else
+            NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc :=
+              NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc + ItDescAcre[i];
         end;
       end;
 
-      if TotDescAcre <> VlDescAcres then
-        ItDescAcre[ItMaior] := ItDescAcre[ItMaior] - (TotDescAcre - VlDescAcres);
+      if fpCupom.DescAcresSubtotal > 0 then
+        NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro :=
+          NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro + VlDescAcres
+      else
+        NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc :=
+          NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc + VlDescAcres;
 
-      for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
-      begin
-        if fpCupom.DescAcresSubtotal > 0 then
-           NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro := NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro + ItDescAcre[i]
-        else
-           NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc  := NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc  + ItDescAcre[i];
-      end;
+      // removido porque estava duplicando o rodape
+      // ACBrECF já guarda internamente e utiliza no fechacupom
+      //NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
     end;
-
-    if fpCupom.DescAcresSubtotal > 0 then
-      NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro := NotasFiscais.Items[0].NFe.Total.ICMSTot.vOutro + VlDescAcres
-    else
-      NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  := NotasFiscais.Items[0].NFe.Total.ICMSTot.vDesc  + VlDescAcres;
-
-    NotasFiscais.Items[0].NFe.InfAdic.infCpl := MensagemRodape;
-  end;
-
-
   end
-   else
-     inherited;
+  else
+    inherited;
 end;
 
 procedure TACBrECFVirtualNFCeClass.EfetuaPagamentoVirtual(
@@ -689,7 +693,7 @@ begin
 
     with fsACBrNFCe do
     begin
-      NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + Observacao;
+      NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + sLineBreak + Observacao;
 
       if Configuracoes.Geral.FormaEmissao = teOffLine then
       begin
@@ -797,7 +801,7 @@ begin
       fsACBrNFCe.NotasFiscais.Clear;
       fsACBrNFCe.NotasFiscais.LoadFromFile( fsNomeArqTempXML );
       fsEhVenda := True;
-    end;  
+    end;
 
   inherited LeArqINIVirtual(ConteudoINI);
 end;

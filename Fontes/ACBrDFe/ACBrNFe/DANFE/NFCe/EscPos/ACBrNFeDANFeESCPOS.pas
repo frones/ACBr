@@ -335,16 +335,19 @@ begin
   if (vTribFed+vTribEst+vTribMun) > 0 then
   begin
      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s';
-     FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib),
+     FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloat('#,###,##0.00', vTribFed + vTribEst + vTribMun),
                          FormatFloat('#,###,##0.00', vTribFed),
                          FormatFloat('#,###,##0.00', vTribEst),
                          FormatFloat('#,###,##0.00', vTribMun)]),FPosPrinter.ColunasFonteCondensada));
   end
   else
   begin
-    MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s';
-    FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib)]),
-                        FPosPrinter.ColunasFonteCondensada));
+    if FpNFe.Total.ICMSTot.vTotTrib > 0 then
+    begin
+      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s';
+      FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib)]),
+                          FPosPrinter.ColunasFonteCondensada));
+    end;
   end;
 
 end;

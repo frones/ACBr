@@ -3715,7 +3715,7 @@ begin
           else
           begin
             Result := 'Trib aprox R$:' +
-              FormatFloatBr(VlImpostoFederal, ',#0.00') + ' Federal,'+
+              FormatFloatBr(VlImpostoFederal, ',#0.00') + ' Federal'+
               IfThen(InformouValorAproxEstadual,
                      ', '+FormatFloatBr(VlImpostoEstadual,',#0.00') + ' Estadual', '') +
               IfThen(InformouValorAproxMunicipal,

@@ -166,7 +166,7 @@ begin
    then Gerador.wAlerta('EP08', 'chMDFe', '', 'Chave de MDFe inválida');
 
   // Segundo o manual a data deve conter o UTC mas no schema não contem
-  Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 27,   1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento)
+  Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento)
                                                            {+ GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
                                                                      Evento.Items[0].InfEvento.dhEvento)} );
 

@@ -255,7 +255,11 @@ begin
   Gerador.wCampo(tcStr, '#011', 'cMDF    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(MDFe.infMDFe.ID, 2), 8), DSC_CMDF);
   Gerador.wCampo(tcInt, '#012', 'cDV     ', 01, 01, 1, MDFe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#013', 'modal   ', 02, 02, 1, ModalToStr(MDFe.Ide.modal), DSC_MODAL);
-  Gerador.wCampo(tcDatHor, '#014', 'dhEmi', 19, 19, 1, MDFe.ide.dhEmi, DSC_DEMI);
+  if VersaoDF = ve100 then
+    Gerador.wCampo(tcDatHor, '#014', 'dhEmi', 19, 19, 1, MDFe.ide.dhEmi, DSC_DEMI)
+  else
+    Gerador.wCampo(tcStr, '#014', 'dhEmi', 25, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhEmi)
+                                                           + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhEmi), DSC_DEMI);
   Gerador.wCampo(tcStr, '#015', 'tpEmis  ', 01, 01, 1, tpEmisToStr(MDFe.Ide.tpEmis), DSC_TPEMIS);
   Gerador.wCampo(tcStr, '#016', 'procEmi ', 01, 01, 1, procEmiToStr(MDFe.Ide.procEmi), DSC_PROCEMI);
   Gerador.wCampo(tcStr, '#017', 'verProc ', 01, 20, 1, MDFe.Ide.verProc, DSC_VERPROC);

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2016
+-- ACBrMDFeWebServices --
+[*] Removido os status 128 e 155 na leitura do retorno do envio de um evento.
+    O motivo é que não existe os status 128 e 155.
+    Por: Italo Jurisato Junior
+
 16/09/2016
 -- diversos --
 [*] Alteração em diversas units para para corrigir erros de validação ao tentar 

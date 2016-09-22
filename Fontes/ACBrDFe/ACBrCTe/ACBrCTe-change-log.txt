@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2016
+-- ACBrCTeWebServices --
+[*] Removido os status 128 e 155 e acrescentado o 134 na leitura do retorno do
+    envio de um evento.
+    O motivo é que não existe os status 128 e 155, mas existe o 134.
+    Por: Italo Jurisato Junior
+
 16/09/2016
 -- diversos --
 [*] Implementação dos 2 novos tipos de eventos a serem utilizados pela versão

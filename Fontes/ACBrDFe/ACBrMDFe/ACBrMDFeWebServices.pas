@@ -1932,7 +1932,7 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-  Result := (FcStat in [128, 135, 136, 155]);
+  Result := (FcStat in [135, 136]);
 
   //gerar arquivo proc de evento
   if Result then
@@ -1961,8 +1961,7 @@ begin
 
 
             Leitor.Arquivo := FPDadosMsg;
-            Texto := // '<' + ENCODING_UTF8 + '>' +
-                     '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="' + ACBRMDFE_NAMESPACE + '">' +
+            Texto := '<procEventoMDFe versao="' + VersaoEvento + '" xmlns="' + ACBRMDFE_NAMESPACE + '">' +
                       '<eventoMDFe versao="' + VersaoEvento + '">' +
                        Leitor.rExtrai(1, 'infEvento', '', I + 1) +
                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +

@@ -2550,7 +2550,7 @@ begin
   FPMsg := EventoRetorno.xMotivo;
   FTpAmb := EventoRetorno.tpAmb;
 
-  Result := (FcStat in [128, 135, 136, 155]);
+  Result := (FcStat in [134, 135, 136]);
 
   //gerar arquivo proc de evento
   if Result then
@@ -2580,8 +2580,7 @@ begin
             VersaoEvento := TACBrCTe(FPDFeOwner).LerVersaoDeParams(LayCTeEvento);
 
             Leitor.Arquivo := FPDadosMsg;
-            Texto := // '<' + ENCODING_UTF8 + '>' +
-                     '<procEventoCTe versao="' + VersaoEvento + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
+            Texto := '<procEventoCTe versao="' + VersaoEvento + '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
                       '<eventoCTe versao="' + VersaoEvento + '">' +
                        Leitor.rExtrai(1, 'infEvento', '', I + 1) +
                        '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">' +

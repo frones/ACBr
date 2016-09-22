@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2016
+-- ACBrNFeWebServices --
+[*] A função TratarResposta do método EnvEvento não estava levando em consideração
+    o status dos eventos e sim somente o status do processamento do lote.
+    Foi realizado ajustes visando checar o status do evento e desta forma o arquivo
+    *-procEventoNFe.xml só será gerado caso os status sejam: 135, 136 ou 155.
+    Por: Italo Jurisato Junior
+
 12/09/2016
 [*] Correção para o cnpj estava cortando
 		http://www.projetoacbr.com.br/forum/topic/32349-danfe-retrato-fortes-cnpj-dest-e-transp-cortando-%C3%BAltimo-d%C3%ADgito/

@@ -2228,7 +2228,7 @@ begin
 
      EpsonComando.Comando := '0A22' ;
      I := 0;
-     while (I < 8) and (Obs <> '') do
+     while (I < 8) do
      begin
         P := pos(#10, Obs);
         if P > 0 then

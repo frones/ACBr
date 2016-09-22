@@ -43,6 +43,10 @@ Data: 22/09/2016
 -- ACBrECF --
 [-] Remoção de virgula a mais
 
+-- ACBrECFEpson --
+[*] Correção para Bug acidentalmente introduzido em 10/09/2016.
+    Erro: 0204 - Campos em falta.   (por: DSA)
+
 Data: 20/09/2016
 -- ACBrECFDaruma, ACBrECFEscECF --
 [-] Correções para impressão de Cod.Barras na Daruma FS800i  (por: DSA)

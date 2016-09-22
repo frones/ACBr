@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/09/2016
+-- ACBrNFeDANFeRLPaisagem --
+[-] Correção no item da segunda página desalinhado
+	http://www.projetoacbr.com.br/forum/topic/32550-primeiro-item-da-segunda-p%C3%A1gina-desalinhado-com-acbrnfedanferl/
+		por: Henrique Leonardo
+
+
 21/09/2016
 [-] Correção de dfm que estavam em utf-8
 		por:  Juliomar Marchetti

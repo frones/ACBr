@@ -2221,17 +2221,9 @@ procedure TfrlDANFeRLPaisagem.pnlItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
- // Controla os itens por página
-  with FNFe.Det.Items[fNumItem] do
-  begin
-    txtCodigo.Lines.Clear;
-    txtCodigo.Lines.Add(Prod.CProd);
-    txtEAN.Caption      := Prod.cEAN;
-    rlmDescricao.Lines.Clear;
-    rlmDescricao.Lines.Add(ManterXpod( Prod.XProd , fNumItem ));
-  end;
+ // Sem efeito remover
+ // quando houver alteração no dfm.
 end;
-
 
 procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
@@ -2239,6 +2231,11 @@ begin
   // Controla os itens por página
   with FNFe.Det.Items[fNumItem] do
   begin
+    txtCodigo.Lines.Clear;
+    txtCodigo.Lines.Add(Prod.CProd);
+    txtEAN.Caption      := Prod.cEAN;
+    rlmDescricao.Lines.Clear;
+    rlmDescricao.Lines.Add(ManterXpod( Prod.XProd , fNumItem ));
     txtNCM.Caption            := Prod.NCM;
     case FNFe.Emit.CRT of
       crtRegimeNormal,

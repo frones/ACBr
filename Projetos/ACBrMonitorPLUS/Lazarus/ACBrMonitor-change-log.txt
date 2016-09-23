@@ -43,10 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-21/09/2016
-[*]	Nova versão compilada para usuários do SAC. Versão: 0.3.08.4
-	por: Celso Marigo Junior
+23/09/2016
+-- ACBrMonitor --
+[-] Correção para o problema de Foco na janela de Preview de Impressão (por: DSA)
 
+21/09/2016
+-- ACBrMonitor --
 [*] Compilação com remoção dos DBWares das Danfes, implementado pelo hleojr
     http://www.projetoacbr.com.br/forum/topic/32497-danfes-report-sem-componentes-dbware/
 

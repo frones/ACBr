@@ -9676,7 +9676,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 8
                 Height = 15
                 Top = 24
-                Width = 21
+                Width = 20
                 Caption = 'KC1'
                 ParentColor = False
                 ParentFont = False
@@ -9685,7 +9685,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 71
                 Height = 15
                 Top = 24
-                Width = 21
+                Width = 20
                 Caption = 'KC2'
                 ParentColor = False
                 ParentFont = False
@@ -12115,6 +12115,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

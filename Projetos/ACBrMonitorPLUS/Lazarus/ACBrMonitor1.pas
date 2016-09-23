@@ -7520,10 +7520,7 @@ begin
                                    (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1);
 
   if ACBrNFe1.DANFE.MostrarPreview and MostrarPreview then
-  begin
-     Restaurar1.Click;
-     Application.BringToFront;
-  end
+    ForceForeground(Self.Handle);
 end;
 
 procedure TFrmACBrMonitor.VerificaDiretorios;

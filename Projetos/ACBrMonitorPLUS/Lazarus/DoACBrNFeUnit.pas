@@ -58,13 +58,12 @@ var
   I, J, K, nNumCopias : Integer;
   ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
-  SL     : TStringList;
   ChavesNFe: Tstrings;
   Alertas : AnsiString;
   wDiretorioAtual : String;
 
   Lines   : TStringList ;
-  sMensagemEmail: TStringList;
+  sMensagemEmail, SL: TStringList;
   MemoTXT : TMemo;
   Files  : String ;
   dtFim  : TDateTime ;
@@ -920,9 +919,12 @@ begin
            if ((Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarnfesefaz')) and (Cmd.Params(1) = '1') then
             begin
               SL := TStringList.Create;
-              SL.LoadFromFile(ArqNFe);
-              Cmd.Resposta :=  Cmd.Resposta+sLineBreak+SL.Text;
-              SL.Free;
+              try
+                SL.LoadFromFile(ArqNFe);
+                Cmd.Resposta :=  Cmd.Resposta+sLineBreak+SL.Text;
+              finally
+                SL.Free;
+              end;
             end;
 
            if (Cmd.Metodo = 'criarenviarnfe') or (Cmd.Metodo = 'criarenviarnfesefaz') or (Cmd.Metodo = 'enviarlotenfe') or (Cmd.Metodo = 'enviardpecnfe') then
@@ -1426,7 +1428,7 @@ begin
                                  'cStat='+IntToStr(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].cStat)+sLineBreak+
                                  'xMotivo='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].xMotivo+sLineBreak+
                                  'Arquivo='+ArqNFe+sLineBreak+
-                                 'procNFe='+SL.Text+sLineBreak;
+                                 'procNFe='+ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe+sLineBreak;
                end;
            except
              on E: Exception do

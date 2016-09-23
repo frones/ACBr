@@ -206,7 +206,7 @@ function ObterDescricaoServico(cCodigo: String): String;
 function ChaveAcesso(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
                      ASerie:Integer; ANumero, ACodigo: Integer;
                      AModelo: Integer=56): String;
-function RetirarPrefixos(const AXML: String): String;
+function RetirarPrefixos(const AXML: String; AProvedor: TnfseProvedor): String;
 function VersaoXML(AXML: String): String;
 function GerarNomeNFSe(AUF: Integer; ADataEmissao: TDateTime; ACNPJ: String;
                                ANumero: Int64; AModelo: Integer = 56): String;
@@ -17996,7 +17996,7 @@ begin
 //  Result := Result+NotaUtil.Modulo11(Result);
 end;
 
-function RetirarPrefixos(const AXML: String): String;
+function RetirarPrefixos(const AXML: String; AProvedor: TnfseProvedor): String;
 var
  XML: String;
 begin
@@ -18021,8 +18021,11 @@ begin
  XML := StringReplace( XML, 'R$', '', [rfReplaceAll] );
 
  // Provedor Governa, os prefixos não tem ":"
- XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );
- XML := StringReplace( XML, 'ts', '', [rfReplaceAll] );
+ if AProvedor = proGoverna then
+ begin
+   XML := StringReplace( XML, 'tc', '', [rfReplaceAll] );
+   XML := StringReplace( XML, 'ts', '', [rfReplaceAll] );
+ end;
 
  result := XML;
 end;

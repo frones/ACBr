@@ -862,7 +862,7 @@ begin
   AXMLString := StringReplace(StringReplace( AXMLString, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
 
   if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor <> proISSCuritiba then
-    AXMLString := RetirarPrefixos(AXMLString);
+    AXMLString := RetirarPrefixos(AXMLString, TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor);
 
   N := PosNFSe;
 

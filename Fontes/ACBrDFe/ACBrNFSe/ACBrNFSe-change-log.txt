@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/09/2016
+[*] Acrescentado um parâmetro contendo o provedor na função RetirarPrefixos, 
+    visto que 2 prefixos são exclusivos para um determinado provedor.
+    por: Jonatas de Alencar Alves
+
 20/09/2016
 [-] Correções no método GerarLote.
     por: Italo Jurisato Junior

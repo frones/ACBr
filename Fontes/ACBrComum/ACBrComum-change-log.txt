@@ -38,6 +38,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/09/2016
+-- ACBrUtil --
+[+] Adicionado o método: function ForceForeground(AppHandle:HWND): boolean;
+    para resolver problemas de Foco na troca de aplicações  (por: DSA)
+[+] Adicionado o método:
+    procedure WriteToFile(const Arq: String; ABinaryString: AnsiString);
+    para facilitar a escrita de arquivos de qualquer Tipo  (por: DSA)
+
 Data: 02/09/2016
 -- ACBrConsts --
 [-] Ajustado cTAGS_BARRAS e cTAGS_BARRAS_HELP que estavão com o número de elementos 

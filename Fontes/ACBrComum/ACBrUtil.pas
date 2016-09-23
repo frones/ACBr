@@ -299,6 +299,11 @@ function FlushFileToDisk( sFile: string): boolean;
 
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
+{$IfNDef NOGUI}
+function ForceForeground(AppHandle:HWND): boolean;
+{$EndIf}
+
+Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
 Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True );
 procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
@@ -2920,6 +2925,99 @@ procedure DesligarMaquina(Reboot : Boolean ; Forcar : Boolean ; LogOff : Boolean
 
       ExitWindowsEx(RebootParam, 0);
    end;
+
+{$IfNDef NOGUI}
+{$IfDef MSWINDOWS}
+// Origem: https://www.experts-exchange.com/questions/20294536/WM-ACTIVATE.html
+function ForceForeground(AppHandle:HWND): boolean;
+const
+  SPI_GETFOREGROUNDLOCKTIMEOUT = $2000;
+  SPI_SETFOREGROUNDLOCKTIMEOUT = $2001;
+var
+  ForegroundThreadID: DWORD;
+  ThisThreadID      : DWORD;
+  timeout           : DWORD;
+  OSVersionInfo     : TOSVersionInfo;
+  Win32Platform     : Integer;
+begin
+  if IsIconic(AppHandle) then
+    ShowWindow(AppHandle, SW_RESTORE);
+
+  if (GetForegroundWindow = AppHandle) then
+    Result := True
+  else
+  begin
+    Win32Platform := 0;
+    OSVersionInfo.dwOSVersionInfoSize := SizeOf(OSVersionInfo);
+    if GetVersionEx(OSVersionInfo) then
+      Win32Platform := OSVersionInfo.dwPlatformId;
+
+    { Windows 98/2000 doesn't want to foreground a window when some other window has keyboard focus}
+
+    if ((Win32Platform = VER_PLATFORM_WIN32_NT) and (OSVersionInfo.dwMajorVersion > 4)) or
+       ((Win32Platform = VER_PLATFORM_WIN32_WINDOWS) and ((OSVersionInfo.dwMajorVersion > 4) or
+       ((OSVersionInfo.dwMajorVersion = 4) and (OSVersionInfo.dwMinorVersion > 0)))) then
+    begin
+      Result := False;
+      ForegroundThreadID := GetWindowThreadProcessID(GetForegroundWindow,nil);
+      ThisThreadID := GetWindowThreadPRocessId(AppHandle,nil);
+
+      if AttachThreadInput(ThisThreadID, ForegroundThreadID, true) then
+      begin
+        BringWindowToTop(AppHandle);
+        SetForegroundWindow(AppHandle);
+        AttachThreadInput(ThisThreadID, ForegroundThreadID, false);
+        Result := (GetForegroundWindow = AppHandle);
+      end;
+
+      if not Result then
+      begin
+        SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, @timeout, 0);
+        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(0), SPIF_SENDCHANGE);
+        BringWindowToTop(AppHandle);
+        SetForegroundWindow(AppHandle);
+        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(timeout), SPIF_SENDCHANGE);
+        Result := (GetForegroundWindow = AppHandle);
+
+        if not Result then
+        begin
+          ShowWindow(AppHandle,SW_HIDE);
+          ShowWindow(AppHandle,SW_SHOWMINIMIZED);
+          ShowWindow(AppHandle,SW_SHOWNORMAL);
+          BringWindowToTop(AppHandle);
+          SetForegroundWindow(AppHandle);
+        end;
+      end;
+    end
+    else
+    begin
+      BringWindowToTop(AppHandle);
+      SetForegroundWindow(AppHandle);
+    end;
+
+    Result := (GetForegroundWindow = AppHandle);
+  end;
+end;
+{$Else}
+function ForceForeground(AppHandle:HWND): boolean;
+begin
+  Application.Restore;
+  Application.BringToFront;
+  Application.RestoreStayOnTop(True);
+  Application.ProcessMessages;
+  if Assigned( Screen.ActiveForm ) then
+    Result := (Screen.ActiveForm.Handle = AppHandle)
+  else
+    Result := False;
+end;
+{$EndIf}
+{$EndIf}
+
+
+procedure WriteToFile(const Arq: String; ABinaryString: AnsiString);
+begin
+  WriteToTXT(Arq, ABinaryString, False, False);
+end;
 
 {$ELSE}
    begin

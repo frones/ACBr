@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/09/2016
+-- ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque
+[*] Melhoria para deixar aparecer 3 casas decimais nas quantidades
+		http://www.projetoacbr.com.br/forum/topic/28811-paf-ecf-blocox-corre%C3%A7%C3%A3o-tipo-de-campo/?do=findComment&comment=215309
+		por: Juliomar Marchetti
+		
 22/02/2016
 -- ACBrBlocoX_ReducaoZ --
 [-] Acertos no nome da propriedade Identificacao e na geração de serviços.

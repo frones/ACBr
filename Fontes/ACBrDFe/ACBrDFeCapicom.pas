@@ -60,6 +60,7 @@ type
     FNumCertCarregado: String;
     FRazaoSocial: String;
     FCNPJ: String;
+    FCertificadora: String;
     FCertificado: ICertificate2;
     FCertStoreMem: IStore3;
 
@@ -82,6 +83,8 @@ type
 
     function GetCertDataVenc: TDateTime; override;
     function GetCertNumeroSerie: String; override;
+    function GetCertIssuerName: String; override;
+    function GetCertCertificadora: String; override;
     function GetCertSubjectName: String; override;
     function GetCertRazaoSocial: String; override;
     function GetCertCNPJ: String; override;
@@ -132,6 +135,7 @@ begin
   inherited Create(ADFeSSL);
   FNumCertCarregado := '';
   FRazaoSocial := '';
+  FCertificadora := '';
   FCNPJ := '';
   FCertificado := nil;
   FCertStoreMem := nil;
@@ -270,6 +274,7 @@ begin
   FNumCertCarregado := '';
   FCNPJ := '';
   FRazaoSocial := '';
+  FCertificadora := '';
 
   // Limpando objetos da MS CryptoAPI //
   if Assigned(FpCertContext) then
@@ -500,6 +505,24 @@ begin
     FRazaoSocial := GetRazaoSocialFromSubjectName( String(FCertificado.SubjectName) );
 
   Result := FRazaoSocial;
+end;
+
+function TDFeCapicom.GetCertIssuerName: String;
+begin
+  CarregarCertificadoSeNecessario;
+  if Assigned(FCertificado) then
+    Result := String(FCertificado.IssuerName)
+  else
+    Result := inherited GetCertIssuerName;
+end;
+
+function TDFeCapicom.GetCertCertificadora: String;
+begin
+  CarregarCertificadoSeNecessario;
+  if (FCertificadora = '') and Assigned(FCertificado) then
+    FCertificadora := GetCertificadoraFromSubjectName( String(FCertificado.IssuerName) );
+
+  Result := FCertificadora;
 end;
 
 function TDFeCapicom.GetCertTipo: TSSLTipoCertificado;

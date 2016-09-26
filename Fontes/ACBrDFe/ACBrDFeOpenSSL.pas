@@ -75,11 +75,13 @@ type
     FdsigCtx: xmlSecDSigCtxPtr;
     FCNPJ: String;
     FRazaoSocial: String;
+    FCertificadora: String;
     FPrivKey: pEVP_PKEY;
     FNumSerie: String;
     FCertAsDER: String;
     FValidade: TDateTime;
     FSubjectName: String;
+    FIssuerName: String;
 
     procedure Clear;
     procedure ConfiguraHTTP(const URL, SoapAction: String; MimeType: String);
@@ -109,6 +111,8 @@ type
     function GetCertSubjectName: String; override;
     function GetCertRazaoSocial: String; override;
     function GetCertCNPJ: String; override;
+    function GetCertIssuerName: String; override;
+    function GetCertCertificadora: String; override;
     function GetHTTPResultCode: Integer; override;
     function GetInternalErrorCode: Integer; override;
 
@@ -879,6 +883,22 @@ function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
     Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
   end;
 
+  function GetIssuerName( cert: pX509 ): String;
+  var
+    s: AnsiString;
+  begin
+    setlength(s, 4096);
+    {$IFDEF USE_libeay32}
+     Result := X509_NAME_oneline(X509_get_issuer_name(cert), PAnsiChar(s), Length(s));
+    {$ELSE}
+     Result := X509NameOneline(X509GetIssuerName(cert), s, Length(s));
+    {$ENDIF}
+    if copy(Result,1,1) = '/' then
+      Result := Copy(Result,2,Length(Result));
+
+    Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
+  end;
+
   function GetCNPJExt( cert: pX509): String;
   var
     ext: pX509_EXTENSION;
@@ -1026,6 +1046,8 @@ begin
           FValidade := GetNotAfter( cert );
           FSubjectName := GetSubjectName( cert );
           FRazaoSocial := GetRazaoSocialFromSubjectName( FSubjectName );
+          FIssuerName := GetIssuerName( cert );
+          FCertificadora := GetCertificadoraFromSubjectName( FIssuerName );
           FCNPJ := GetCNPJFromSubjectName( FSubjectName );
           if FCNPJ = '' then  // Não tem CNPJ no SubjectName, lendo das Extensões
             FCNPJ := GetCNPJExt( cert );
@@ -1120,6 +1142,22 @@ begin
   Result := FCNPJ;
 end;
 
+function TDFeOpenSSL.GetCertIssuerName: String;
+begin
+  if EstaVazio(FIssuerName) then
+    CarregarCertificado;
+
+  Result := FIssuerName;
+end;
+
+function TDFeOpenSSL.GetCertCertificadora: String;
+begin
+  if EstaVazio(FCertificadora) then
+    CarregarCertificado;
+
+  Result := FCertificadora;
+end;
+
 function TDFeOpenSSL.GetHTTPResultCode: Integer;
 begin
   Result := FHTTP.ResultCode;
@@ -1137,6 +1175,8 @@ begin
   FNumSerie := '';
   FValidade := 0;
   FSubjectName := '';
+  FIssuerName := '';
+  FCertificadora := '';
   FHTTP.Sock.SSL.PFX := '';
   FHTTP.Sock.SSL.KeyPassword := '';
 end;

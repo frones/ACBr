@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/09/2016
+-- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
+[+] Adicionada as propriedades:
+    CertIssuerName: String -> Retorna Emissor do Certificado
+    CertCertificadora: String -> Retorna o Nome da Certificadora. Exemplos:
+    "AC VALID" e "AC Certisign".   (por: Leonardo Gregianin)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32553
+
 13/09/2016
 -- ACBrDFe, ACBrDFeSSL --
 [+] Adicionado o evento "OnAntesDeAssinar: TDFeSSLAntesDeAssinar", que permite a

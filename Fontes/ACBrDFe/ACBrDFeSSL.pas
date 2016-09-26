@@ -63,6 +63,8 @@ type
 
     function GetCertDataVenc: TDateTime; virtual;
     function GetCertNumeroSerie: String; virtual;
+    function GetCertIssuerName: String; virtual;
+    function GetCertCertificadora: String; virtual;
     function GetCertSubjectName: String; virtual;
     function GetCertRazaoSocial: String; virtual;
     function GetCertCNPJ: String; virtual;
@@ -72,6 +74,7 @@ type
 
     function GetCNPJFromSubjectName(SubjectName: String): String;
     function GetRazaoSocialFromSubjectName(SubjectName: String): String;
+    function GetCertificadoraFromSubjectName(SubjectName: String): String;
 
     function SignatureElement(const URI: String; AddX509Data: Boolean;
       IdSignature: String = ''): String;
@@ -104,6 +107,8 @@ type
     property CertificadoLido: Boolean read FpCertificadoLido;
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
+    property CertIssuerName: String read GetCertIssuerName;
+    property CertCertificadora: String read GetCertCertificadora;
     property CertDataVenc: TDateTime read GetCertDataVenc;
     property CertSubjectName: String read GetCertSubjectName;
     property CertRazaoSocial: String read GetCertRazaoSocial;
@@ -142,6 +147,8 @@ type
 
     function GetCertCNPJ: String;
     function GetCertDataVenc: TDateTime;
+    function GetCertIssuerName: String;
+    function GetCertCertificadora: String;
     function GetCertificadoLido: Boolean;
     function GetCertNumeroSerie: String;
     function GetCertRazaoSocial: String;
@@ -207,6 +214,8 @@ type
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
     property CertDataVenc: TDateTime read GetCertDataVenc;
+    property CertCertificadora: String read GetCertCertificadora;
+    property CertIssuerName: String read GetCertIssuerName;
     property CertSubjectName: String read GetCertSubjectName;
     property CertRazaoSocial: String read GetCertRazaoSocial;
     property CertCNPJ: String read GetCertCNPJ;
@@ -489,6 +498,16 @@ begin
   Result := FSSLClass.CertificadoLido;
 end;
 
+function TDFeSSL.GetCertIssuerName: String;
+begin
+  Result := FSSLClass.CertIssuerName;
+end;
+
+function TDFeSSL.GetCertCertificadora: String;
+begin
+  Result := FSSLClass.CertCertificadora;
+end;
+
 function TDFeSSL.GetCertCNPJ: String;
 begin
   Result := FSSLClass.CertCNPJ;
@@ -712,6 +731,16 @@ begin
   Result := tpcA1;
 end;
 
+function TDFeSSLClass.GetCertIssuerName: String;
+begin
+  Result := '';
+end;
+
+function TDFeSSLClass.GetCertCertificadora: String;
+begin
+  Result := '';
+end;
+
 function TDFeSSLClass.GetCertCNPJ: String;
 begin
   Result := '';
@@ -748,6 +777,24 @@ begin
       P2 := Length(SubjectName);
 
     Result := copy(SubjectName, P1+3, P2-P1-3);
+  end;
+end;
+
+function TDFeSSLClass.GetCertificadoraFromSubjectName( SubjectName: String ): String;
+var
+  P1, P2: Integer;
+begin
+  Result := '';
+  P1 := pos('CN=',SubjectName);
+  if P1 > 0 then
+  begin
+    P2 := PosEx('RFB', SubjectName, P1);
+    if P2 < 0 then
+      P2 := PosEx(',', SubjectName, P1);
+    if P2 < 0 then
+      P2 := Length(SubjectName);
+
+    Result := trim(copy(SubjectName, P1+3, P2-P1-3));
   end;
 end;
 

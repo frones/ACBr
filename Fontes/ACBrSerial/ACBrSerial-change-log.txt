@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/09/2016
+-- ACBrECFVirtual --
+[*] Incluída procedure "GetEstadoECFVirtual" para possibilitar alteração 
+	da propriedade fpEstadoECF durante "GetEstado" por parte das classes filhas.
+	(por: Elias César)
+
 Data: 22/09/2016
 -- ACBrECF --
 [-] Remoção de virgula a mais

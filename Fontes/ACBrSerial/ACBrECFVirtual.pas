@@ -405,6 +405,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
 
     Procedure LeituraXVirtual ; virtual ;
     Procedure ReducaoZVirtual(DataHora : TDateTime = 0 ) ; virtual ;
+    procedure GetEstadoECFVirtual; virtual;
 
     Procedure AbreRelatorioGerencialVirtual(Indice: Integer = 0) ; virtual ;
     procedure AbreCupomVinculadoVirtual(COO: String; FPG: TACBrECFFormaPagamento;
@@ -2426,6 +2427,11 @@ begin
   {}
 end;
 
+procedure TACBrECFVirtualClass.GetEstadoECFVirtual;
+begin
+  {}
+end;
+
 procedure TACBrECFVirtualClass.AbreRelatorioGerencial(Indice : Integer) ;
 var
   IndiceStr: String;
@@ -3096,6 +3102,8 @@ begin
 
   if fpEstado in [estDesconhecido, estNaoInicializada] then
     fpEstado := estLivre ;
+
+  GetEstadoECFVirtual;
 
   if fpEstado <> estAnterior then
     GravaArqINI ;

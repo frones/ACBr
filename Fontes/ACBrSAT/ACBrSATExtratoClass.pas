@@ -57,6 +57,10 @@ uses SysUtils,
      {$ENDIF}
      ,ACBrBase, ACBrConsts, pcnCFe, pcnCFeCanc;
 
+const
+  cMsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", '+
+                  'disponível na AppStore (Apple) e PlayStore (Android)';
+
 type
    TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
@@ -94,6 +98,7 @@ type
     fMask_vUnCom: String;
     fMostrarPreview: Boolean;
     fMostrarSetup: Boolean;
+    fMsgAppQRCode: String;
     fNomeArquivo: String;
     fNumCopias: Integer;
     fPrinterName : String;
@@ -154,6 +159,7 @@ type
     property SoftwareHouse  : String   read fSoftwareHouse  write fSoftwareHouse;
     property Site           : String   read fSite           write fSite;
     property Filtro         : TACBrSATExtratoFiltro read fFiltro write fFiltro default fiNenhum ;
+    property MsgAppQRCode   : String   read fMsgAppQRCode   write fMsgAppQRCode;
   end ;
 
 implementation
@@ -198,6 +204,9 @@ begin
   fMask_qCom      := '0.0000';
   fMask_vUnCom    := '0.000';
   fPrinterName    := '' ;
+  fSite           := '';
+  fSoftwareHouse  := '';
+  fMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
 end;
 
 destructor TACBrSATExtratoClass.Destroy;

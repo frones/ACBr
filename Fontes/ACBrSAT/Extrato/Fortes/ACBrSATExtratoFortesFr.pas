@@ -162,6 +162,8 @@ type
     mEndEnt: TRLMemo;
     mObsContrib: TRLMemo;
     mLinhaItem: TRLMemo;
+    mMsgAppQRCode: TRLMemo;
+    mMsgAppQRCodeCanc: TRLMemo;
     pGap6: TRLPanel;
     pGap7: TRLPanel;
     pEspacoFinalCan: TRLPanel;
@@ -582,6 +584,8 @@ begin
                                                        ide.assinaturaQRCODE );
       PintarQRCode( qrcode, imgQRCode.Picture );
     end;
+
+    mMsgAppQRCode.Lines.Text := ACBrSATExtrato.MsgAppQRCode;
   end;
 end;
 
@@ -864,6 +868,8 @@ begin
       PintarQRCode( qrcode, imgQRCodeCanl.Picture );
     end;
   end;
+
+  mMsgAppQRCodeCanc.Lines.Text := ACBrSATExtrato.MsgAppQRCode;
 
 end;
 

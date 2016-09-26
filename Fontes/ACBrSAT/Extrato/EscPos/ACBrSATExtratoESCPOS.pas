@@ -478,9 +478,11 @@ begin
                 '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
   end;
 
-
   if not Cancelamento then
   begin
+    if MsgAppQRCode <> '' then
+      FBuffer.Add('</ce><c>' + QuebraLinhas(MsgAppQRCode, FPosPrinter.ColunasFonteCondensada ));
+
     if (SoftwareHouse <> '') or (Site <> '') then
       FBuffer.Add('</linha_simples>');
 
@@ -552,6 +554,9 @@ begin
                 '<qrcode_tipo>'+IntToStr(ConfigQRCodeTipo)+'</qrcode_tipo>'+
                 '<qrcode_error>'+IntToStr(ConfigQRCodeErrorLevel)+'</qrcode_error>');
   end;
+
+  if MsgAppQRCode <> '' then
+    FBuffer.Add('</ce><c>' + QuebraLinhas(MsgAppQRCode, FPosPrinter.ColunasFonteCondensada ));
 
   if FPosPrinter.CortaPapel then
     FBuffer.Add('</corte_total>')

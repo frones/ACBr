@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/09/2016
+-- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
+[+] Adicionada a propriedade " MsgAppQRCode: String", que permite definir nova
+    mensagem obrigatória, após a impressão do QRCode. Valor padrão:
+    "Consulte o QR Code pelo aplicativo  "De olho na nota"
+     disponível na AppStore (Apple) e PlayStore (Android)"
+    (por: DSA)
+
 Data: 15/09/2016
 -- pcnRede --
 [-] Correção na tradução dos nomes de Segurança de Redes Wi-fi:

@@ -700,11 +700,18 @@ begin
         NotasFiscais.Validar;
         NotasFiscais.Assinar;
         //NotasFiscais.Items[0].Confirmada := True;
+
+        // imprimir obrigatoriamente duas vias quando em off-line
+        // uma para consumidor e outra para o estabelecimento
+        DANFE.ViaConsumidor := True;
+        NotasFiscais.Items[0].Imprimir;
+
+        DANFE.ViaConsumidor := False;
+        NotasFiscais.Items[0].Imprimir;
       end
       else
       begin
         Enviar(NotasFiscais.Items[0].NFe.Ide.nNF,false,true);
-
 
         if WebServices.Enviar.cStat <> 100 then
         begin

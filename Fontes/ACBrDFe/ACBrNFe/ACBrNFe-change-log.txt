@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/09/2016
+-- ACBrECFVirtualNFCe --
+[-] Acerto para impressão de vias quando em contingência off-line, 
+    em contingência off-line é obrigatório a impressão de duas vias uma para o 
+    consumidor e outra para o estabelecimento.
+
 22/09/2016
 -- ACBrECFVirtualNFCe --
 [-] Acerto para não duplicar o rodapé.

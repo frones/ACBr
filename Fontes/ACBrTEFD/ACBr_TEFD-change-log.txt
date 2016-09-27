@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2016
+[*] pequeno acerto para quando a parcela não tem NSU
+    por Regys.silveira
+
 Data: 21/09/2015
 -- ACBrTEFDCliSiTef --
 [*] acerto para tratar corretamente o interromper em telas de aguardo do SITEF

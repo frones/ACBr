@@ -1193,33 +1193,39 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           DrawKind = dkLine
           HoldStyle = hsRelatively
         end
-        object rlmChave1: TRLLabel
+				object rlmChave1: TRLMemo
           Left = 3
           Top = 6
           Width = 354
           Height = 16
           AutoSize = False
+          Behavior = [beSiteExpander]
           Color = clWhite
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Times New Roman'
           Font.Style = []
+          Lines.Strings = (
+            'rlmChave1')
           ParentColor = False
           ParentFont = False
         end
-        object rlmChave2: TRLLabel
+				object rlmChave2: TRLMemo
           Left = 383
           Top = 6
           Width = 354
           Height = 16
           AutoSize = False
+          Behavior = [beSiteExpander]
           Color = clWhite
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Times New Roman'
           Font.Style = []
+          Lines.Strings = (
+            'rlmChave2')
           ParentColor = False
           ParentFont = False
         end

@@ -84,8 +84,8 @@ type
     subItens: TRLSubDetail;
     rlbItens: TRLBand;
     LinhaQuantidade: TRLDraw;
-    rlmChave1: TRLLabel;
-    rlmChave2: TRLLabel;
+    rlmChave1: TRLMemo;
+    rlmChave2: TRLMemo;
     rlb_1_DadosManifesto: TRLBand;
     rliLogo: TRLImage;
     rlmEmitente: TRLMemo;
@@ -542,26 +542,27 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
 begin
   inherited;
-  rlmChave1.Caption := '';
-  rlmChave2.Caption := '';
+  rlmChave1.Lines.Clear;
+  rlmChave2.Lines.Clear;
 end;
 
 procedure TfrlDAMDFeRLRetrato.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
-
+var
+   J, nItem, nLinhas : integer;
   Procedure Printar( sTemp : String; nItem : Integer );
   begin
     if (nItem mod 2) = 0 then
-      rlmChave1.Caption := sTemp
+    begin
+      rlmChave1.Lines.Add(sTemp);
+      inc(nLinhas);
+    end
     else
-      rlmChave2.Caption := sTemp;
+      rlmChave2.Lines.Add( sTemp);
   end;
-
-var
-   J, nItem: integer;
 begin
-
   nItem := 0;
+  nLinhas := 0;
 
   with FMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
@@ -606,6 +607,10 @@ begin
     end;
   end;
 
+  if nItem > 1 then
+    rlbItens.Height :=  nLinhas * 20;
+
+  inherited;
 end;
 
 end.

@@ -3,11 +3,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Height = 722
   Top = 56
   Width = 865
+  HorzScrollBar.Page = 794
+  VertScrollBar.Page = 722
   VertScrollBar.Position = 146
   AutoScroll = True
   Caption = 'Manifesto - Retrato'
   ClientHeight = 722
-  ClientWidth = 865
+  ClientWidth = 848
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -1432,12 +1434,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object rlmChave1: TRLLabel
+        object rlmChave1: TRLMemo
           Left = 3
           Height = 16
           Top = 6
           Width = 354
           AutoSize = False
+          Behavior = [beSiteExpander]
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11
@@ -1449,12 +1452,13 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object rlmChave2: TRLLabel
+        object rlmChave2: TRLMemo
           Left = 383
           Height = 16
           Top = 6
           Width = 354
           AutoSize = False
+          Behavior = [beSiteExpander]
           Color = clWhite
           Font.Color = clWindowText
           Font.Height = -11

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/09/2016
+-- ACBrMDFeDAMDFeRLRetrato --
+[*] Melhoria para imprimir diversas chaves de nf-e, ct-e e etc
+		http://www.projetoacbr.com.br/forum/topic/32630-erro-ao-imprimir-mdf-e/
+		por: Juliomar Marchetti
+
 09/09/2016
 -- ACBrMDFeDAMDFeRLRetrato --
 [*] Remoção de controles Dataset's 

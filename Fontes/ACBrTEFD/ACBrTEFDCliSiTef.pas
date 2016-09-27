@@ -494,6 +494,9 @@ begin
       end;
 
       // caso não retorne os dados acima prencher com os defaults
+      if Trim(Parc.NSUParcela) = '' then
+        Parc.NSUParcela := NSU;
+
       if Parc.Vencimento <= 0 then
         Parc.Vencimento := IncDay(fpDataHoraTransacaoHost, I * 30);
 

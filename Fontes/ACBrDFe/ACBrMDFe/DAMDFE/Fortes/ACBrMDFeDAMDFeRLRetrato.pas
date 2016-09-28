@@ -563,6 +563,8 @@ var
 begin
   nItem := 0;
   nLinhas := 0;
+  rlmChave1.Lines.Clear;
+  rlmChave2.Lines.Clear;	
 
   with FMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin

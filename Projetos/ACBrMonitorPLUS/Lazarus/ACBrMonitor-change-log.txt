@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/09/2016
+-- ACBrMonitor --
+[-] Correção para correta conversão para ANSI. (por: RODRIGO_APOIOSIS)
+    http://www.projetoacbr.com.br/forum/topic/32665-acbrmonitorplus-ansi-n%C3%A3o-funcionando/
+	
 23/09/2016
 -- ACBrMonitor --
 [-] Correção para o problema de Foco na janela de Preview de Impressão (por: DSA)

@@ -5407,7 +5407,7 @@ begin
     if Assigned(Conexao) then
     begin
       if chbTCPANSI.Checked then
-        Resposta := Utf8ToAnsi(Resposta);
+        Resposta := ACBrUTF8ToAnsi(Resposta);
 
       if cbRetirarAcentosNaResposta.Checked then
         Resposta:= TiraAcentos(Resposta);
@@ -6163,7 +6163,7 @@ begin
   Conexao := TCPBlockSocket;
   { Le o que foi enviado atravez da conexao TCP }
   if chbTCPANSI.Checked then
-    S := AnsiToUtf8(Recebido)
+    S := ACBrAnsiToUTF8(Recebido)
   else
     S := Recebido;
 

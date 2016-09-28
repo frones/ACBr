@@ -1117,9 +1117,38 @@ function TACBrBancoSantander.TipoOcorrenciaToDescricao(const TipoOcorrencia: TAC
 var
  CodOcorrencia: Integer;
 begin
-
+  Result := '';
   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
-  
+
+  { Atribuindo Ocorrências divergêntes entre CNAB240 e CNAB400 }
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      17: Result := '17-Liq. Após Baixa/Liq.Tít. não Registrado';
+      24: Result := '24-Retirada de Cartório/Manutenção em Carteira';
+      25: Result := '25-Protestado e Baixado';
+      26: Result := '26-Instrução Rejeitada';
+      51: Result := '51-Título DDA Reconhecido Pelo Sacado';
+      52: Result := '52-Título DDA Não Reconhecido Pelo Sacado';
+      53: Result := '53-Título DDA Recusado Pela CIP';
+    end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      17: Result := '17-Liquidado em Cartório';
+      24: Result := '24-Custas de Cartório';
+      25: Result := '25-Protestar Título';
+      26: Result := '26-Sustar Protesto';
+      35: Result := '35-Título DDA Reconhecido Pelo Sacado';
+      36: Result := '36-Título DDA Não Reconhecido Pelo Sacado';
+      37: Result := '37-Título DDA Recusado Pela CIP';
+    end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
   case CodOcorrencia of
     01: Result := '01-Título Não Existe';
     02: Result := '02-Entrada Tít.Confirmada';
@@ -1137,22 +1166,17 @@ begin
     14: Result := '14-Prorrogação de Vencimento';
     15: Result := '15-Confirmação de Protesto';
     16: Result := '16-Tít.Já Baixado/Liquidado';
-    17: Result := '17-Liq.após baixa/Liq.tít.não registrado';
     19: Result := '19-Recebimento da Instrução Protesto';
     20: Result := '20-Recebimento da Instrução Não Protestar';
     21: Result := '21-Tít. Enviado a Cartório';
+    22: Result := '22-Tít. Retirado de Cartório';
     23: Result := '23-Remessa a Cartório';
-    24: Result := '24-Tít. Retirado de Cartório';
-    25: Result := '25-Protestado e Baixado';
-    26: Result := '26-Instrução rejeitada';
     27: Result := '27-Confirmação alt.de outros dados';
     28: Result := '28-Débito de tarifas e custas';
     29: Result := '29-Ocorrência do sacado';
     30: Result := '30-Alteração de dados rejeitada';
     32: Result := '32-Código IOF Inválido';
-    51: Result := '51-Título DDA Reconhecido Pelo Sacado';
-    52: Result := '52-Título DDA Não Reconhecido Pelo Sacado';
-    53: Result := '53-Título DDA Recusado Pela CIP';
+    38: Result := '38-Recebimento da Instrução Não Protestar'
   end;
 end;
 
@@ -1160,6 +1184,37 @@ function TACBrBancoSantander.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
   // DONE -oJacinto Junior: Ajustar para utilizar as ocorrências corretas.
+  Result := toTipoOcorrenciaNenhum;
+
+  { Atribuindo Ocorrências divergêntes entre CNAB240 e CNAB400 }
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
+      24: Result := toRetornoRetiradoDeCartorio;
+      25: Result := toRetornoProtestado;
+      26: Result := toRetornoInstrucaoRejeitada;
+      35: Result := toRetornoTituloDDAReconhecidoPagador;
+      36: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      37: Result := toRetornoTituloDDARecusadoCIP;
+    end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      17: Result := toRetornoLiquidadoEmCartorio;
+      24: Result := toRetornoCustasCartorio;
+      25: Result := toRetornoRecebimentoInstrucaoProtestar;
+      26: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+      51: Result := toRetornoTituloDDAReconhecidoPagador;
+      52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      53: Result := toRetornoTituloDDARecusadoCIP;
+    end;
+  end;
+
+  if (Result <> toTipoOcorrenciaNenhum) then
+    Exit;
+
   case CodOcorrencia of
     01: Result := toRetornoTituloNaoExiste;
     02: Result := toRetornoRegistroConfirmado;
@@ -1177,23 +1232,17 @@ begin
     14: Result := toRetornoVencimentoAlterado;
     15: Result := toRetornoProtestado;
     16: Result := toRetornoTituloJaBaixado;
-    17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
     19: Result := toRetornoRecebimentoInstrucaoProtestar;
     20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
     21: Result := toRetornoEncaminhadoACartorio;
+    22: Result := toRetornoRetiradoDeCartorio;
     23: Result := toRetornoEntradaEmCartorio;
-    24: Result := toRetornoRetiradoDeCartorio;
-    25: Result := toRetornoBaixaPorProtesto;
-    26: Result := toRetornoInstrucaoRejeitada;
     27: Result := toRetornoAlteracaoUsoCedente;
     28: Result := toRetornoDebitoTarifas;
     29: Result := toRetornoOcorrenciasDoSacado;
     30: Result := toRetornoAlteracaoDadosRejeitados;
     32: Result := toRetornoIOFInvalido;
     38: Result := toRetornoRecebimentoInstrucaoNaoProtestar;
-    51: Result := toRetornoTituloDDAReconhecidoPagador;
-    52: Result := toRetornoTituloDDANaoReconhecidoPagador;
-    53: Result := toRetornoTituloDDARecusadoCIP;
   else
     Result := toRetornoOutrasOcorrencias;
   end;

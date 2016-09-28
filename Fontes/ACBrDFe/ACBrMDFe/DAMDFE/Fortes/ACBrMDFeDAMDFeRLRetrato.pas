@@ -610,7 +610,11 @@ begin
   end;
 
   if nItem > 1 then
-    rlbItens.Height :=  nLinhas * 20;
+  begin
+//    rlbItens.Height :=  nLinhas * 20;
+    rlmChave1.Height := nLinhas * 10;
+    rlmChave2.Height := nLinhas * 10;
+  end;
 
   inherited;
 end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 29/09/2016
+[+] Adição de registro ao Bloco K
+		http://www.projetoacbr.com.br/forum/topic/32345-novos-campos-no-bloco-k-do-efd-icmsipi-para-2017/
+		por : Juliomar Marchetti
+		
 [+] Adição do registro I157 no Sped Contábil
 		http://www.projetoacbr.com.br/forum/topic/31468-registro-i157/
 		por : Juliomar Marchetti

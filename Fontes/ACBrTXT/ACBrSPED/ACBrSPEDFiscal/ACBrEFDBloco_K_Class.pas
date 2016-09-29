@@ -58,19 +58,33 @@ type
 
     FRegistroK100Count: Integer;
     FRegistroK200Count: Integer;
+    FRegistroK210Count: Integer;
+    FRegistroK215Count: Integer;
     FRegistroK220Count: Integer;
     FRegistroK230Count: Integer;
     FRegistroK235Count: Integer;
     FRegistroK250Count: Integer;
     FRegistroK255Count: Integer;
+    FRegistroK260Count: Integer;
+    FRegistroK265Count: Integer;
+    FRegistroK270Count: Integer;
+    FRegistroK275Count: Integer;
+    FRegistroK280Count: Integer;
 
     procedure WriteRegistroK100(RegK001: TRegistroK001);
     procedure WriteRegistroK200(RegK100: TRegistroK100);
+    procedure WriteRegistroK210(RegK100: TRegistroK100);
+    procedure WriteRegistroK215(RegK210: TRegistroK210);
     procedure WriteRegistroK220(RegK100: TRegistroK100);
     procedure WriteRegistroK230(RegK100: TRegistroK100);
     procedure WriteRegistroK235(RegK230: TRegistroK230);
     procedure WriteRegistroK250(RegK100: TRegistroK100);
     procedure WriteRegistroK255(RegK250: TRegistroK250);
+    procedure WriteRegistroK260(RegK100: TRegistroK100);
+    procedure WriteRegistroK265(RegK260: TRegistroK260);
+    procedure WriteRegistroK270(RegK100: TRegistroK100);
+    procedure WriteRegistroK275(RegK270: TRegistroK270);
+    procedure WriteRegistroK280(RegK100: TRegistroK100);
 
     procedure CriaRegistros;
     procedure LiberaRegistros;
@@ -82,11 +96,18 @@ type
     function RegistroK001New: TRegistroK001;
     function RegistroK100New: TRegistroK100;
     function RegistroK200New: TRegistroK200;
+    function RegistroK210New: TRegistroK210;
+    function RegistroK215New: TRegistroK215;
     function RegistroK220New: TRegistroK220;
     function RegistroK230New: TRegistroK230;
     function RegistroK235New: TRegistroK235;
     function RegistroK250New: TRegistroK250;
     function RegistroK255New: TRegistroK255;
+    function RegistroK260New: TRegistroK260;
+    function RegistroK265New: TRegistroK265;
+    function RegistroK270New: TRegistroK270;
+    function RegistroK275New: TRegistroK275;
+    function RegistroK280New: TRegistroK280;
 
     procedure WriteRegistroK001;
     procedure WriteRegistroK990;
@@ -97,11 +118,18 @@ type
 
     property RegistroK100Count: Integer read FRegistroK100Count write FRegistroK100Count;
     property RegistroK200Count: Integer read FRegistroK200Count write FRegistroK200Count;
+    property RegistroK210Count: Integer read FRegistroK210Count write FRegistroK210Count;
+    property RegistroK215Count: Integer read FRegistroK215Count write FRegistroK215Count;
     property RegistroK220Count: Integer read FRegistroK220Count write FRegistroK220Count;
     property RegistroK230Count: Integer read FRegistroK230Count write FRegistroK230Count;
     property RegistroK235Count: Integer read FRegistroK235Count write FRegistroK235Count;
     property RegistroK250Count: Integer read FRegistroK250Count write FRegistroK250Count;
     property RegistroK255Count: Integer read FRegistroK255Count write FRegistroK255Count;
+    property RegistroK260Count: Integer read FRegistroK260Count write FRegistroK260Count;
+    property RegistroK265Count: Integer read FRegistroK265Count write FRegistroK265Count;
+    property RegistroK270Count: Integer read FRegistroK270Count write FRegistroK270Count;
+    property RegistroK275Count: Integer read FRegistroK275Count write FRegistroK275Count;
+    property RegistroK280Count: Integer read FRegistroK280Count write FRegistroK280Count;
 
   end;
 
@@ -128,9 +156,13 @@ begin
                LFill( DT_INI) +
                LFill( DT_FIN) );
           WriteRegistroK200( RegK001.RegistroK100.Items[intFor] );
+          WriteRegistroK210( RegK001.RegistroK100.Items[intFor] );
           WriteRegistroK220( RegK001.RegistroK100.Items[intFor] );
           WriteRegistroK230( RegK001.RegistroK100.Items[intFor] );
           WriteRegistroK250( RegK001.RegistroK100.Items[intFor] );
+          WriteRegistroK260( RegK001.RegistroK100.Items[intFor] );
+          WriteRegistroK270( RegK001.RegistroK100.Items[intFor] );
+          WriteRegistroK280( RegK001.RegistroK100.Items[intFor] );
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -149,7 +181,7 @@ begin
      begin
         with RegK100.RegistroK200.Items[intFor] do
         begin
-          if DT_EST <> DT_FIN then
+          if DT_EST <> RegK100.DT_FIN then
              raise Exception.Create('A data do estoque deve ser igual à data final do período de apuração – campo DT_FIN do Registro K100');
           if IND_EST in [estPropInformanteTerceiros,estPropTerceirosInformante] then
              if Trim(COD_PART) = EmptyStr then
@@ -169,6 +201,62 @@ begin
   end;
 end;
 
+procedure TBloco_K.WriteRegistroK210(RegK100: TRegistroK100);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK100.RegistroK210 ) then
+  begin
+     for intFor := 0 to RegK100.RegistroK210.Count - 1 do
+     begin
+        with RegK100.RegistroK210.Items[intFor] do
+        begin
+          if ((COD_DOC_OS <> '') or (DT_FIN_OS > 0)) and (DT_INI_OS <= 0) then
+            raise Exception.Create('O campo DT_INI_OS será obrigatório conforme informação do campo COD_DOC_OS ou DT_FIN_OS');
+          if (DT_INI_OS > RegK100.DT_FIN) or (DT_FIN_OS > RegK100.DT_INI) then
+           raise Exception.Create('A data deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+          if DT_INI_OS > DT_FIN_OS then
+            raise Exception.Create('O campo DT_INI_OS não pode ser maior do que o campo DT_FIN_OS');
+          if ((DT_INI_OS > 0) or (DT_FIN_OS > 0)) and (COD_DOC_OS = '') then
+            raise Exception.Create('O campo COD_DOC_OS será obrigatório conforme informação do campo DT_INI_OS ou DT_FIN_OS');
+
+          Add( LFill('K210') +
+               LFill( DT_INI_OS ) +
+               LFill( DT_FIN_OS ) +
+               LFill( COD_DOC_OS  ) +
+               LFill( COD_ITEM_ORI  ) +
+               DFill( QTD_ORI, 3 ) );
+
+          WriteRegistroK215(RegK100.RegistroK210.Items[intFor]);
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK210Count := FRegistroK210Count + RegK100.RegistroK210.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK215(RegK210: TRegistroK210);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK210.RegistroK215 ) then
+  begin
+     for intFor := 0 to RegK210.RegistroK215.Count - 1 do
+     begin
+        with RegK210.RegistroK215.Items[intFor] do
+        begin
+          Add( LFill('K215') +
+               LFill( COD_ITEM_DES ) +
+               DFill( QTD_DES, 3 ) );
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK215Count := FRegistroK215Count + RegK210.RegistroK215.Count;
+  end;
+end;
+
 procedure TBloco_K.WriteRegistroK220(RegK100: TRegistroK100);
 var
   intFor: integer;
@@ -179,14 +267,14 @@ begin
      begin
         with RegK100.RegistroK220.Items[intFor] do
         begin
-          if (DT_MOV < DT_INI) or (DT_MOV > DT_FIN) then
+          if (DT_MOV < RegK100.DT_INI) or (DT_MOV > RegK100.DT_FIN) then
              raise Exception.Create('A data deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
 
           Add( LFill('K220') +
                LFill( DT_MOV ) +
                LFill( COD_ITEM_ORI  ) +
                LFill( COD_ITEM_DEST  ) +
-               LFill( QTD , 0, 3 ) );
+               DFill( QTD, 3 ) );
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -205,11 +293,14 @@ begin
      begin
         with RegK100.RegistroK230.Items[intFor] do
         begin
-          if DT_INI_OP > Bloco_0.DT_FIN then
-             raise Exception.Create('O valor informado deve ser menor ou igual a DT_FIN do registro 0000');
-          if DT_FIN_OP > 0 then
-             if (DT_FIN_OP > DT_FIN)or ( DT_FIN_OP < DT_INI_OP) then
-                raise Exception.Create('Se preenchido, DT_FIN_OP deve ser menor ou igual a DT_FIN do registro K100 e maior ou igual a DT_INI_OP');
+          if ((COD_DOC_OP <> '') or (DT_FIN_OP > 0)) and (DT_INI_OP <= 0) then
+            raise Exception.Create('O campo DT_INI_OS será obrigatório conforme informação do campo COD_DOC_OP ou DT_FIN_OP');
+          if (DT_INI_OP > RegK100.DT_FIN) or (DT_FIN_OP < RegK100.DT_INI) then
+           raise Exception.Create('A data deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+          if DT_INI_OP > DT_FIN_OP then
+            raise Exception.Create('O campo DT_INI_OP não pode ser maior do que o campo DT_FIN_OP');
+          if ((DT_INI_OP > 0) or (DT_FIN_OP > 0)) and (COD_DOC_OP = '') then
+            raise Exception.Create('O campo COD_DOC_OP será obrigatório conforme informação do campo DT_INI_OS ou DT_FIN_OS');
 
           Add( LFill('K230') +
                LFill( DT_INI_OP ) +
@@ -237,11 +328,14 @@ begin
      begin
         with RegK230.RegistroK235.Items[intFor] do
         begin
+          if (DT_SAIDA < RegK230.DT_INI_OP) or (DT_SAIDA > RegK230.DT_FIN_OP) then
+           raise Exception.Create('A data de saída deve estar compreendida no período informado nos campos DT_INI_OP e DT_FIN_OP do Registro K230');
+
           Add( LFill('K235') +
-               LFill( DT_SAIDA ) +
-               LFill( COD_ITEM  ) +
+               LFill( RegK230.RegistroK235.Items[intFor].DT_SAIDA ) +
+               LFill( COD_ITEM ) +
                DFill( QTD , 3 ) +
-               LFill( COD_INS_SUBST  ));
+               LFill( COD_INS_SUBST ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
@@ -260,10 +354,13 @@ begin
      begin
         with RegK100.RegistroK250.Items[intFor] do
         begin
+          if (DT_PROD < RegK100.DT_INI) or (DT_PROD > RegK100.DT_FIN) then
+           raise Exception.Create('A data deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+
           Add( LFill('K250') +
                LFill( DT_PROD ) +
                LFill( COD_ITEM  ) +
-               LFill( QTD , 0, 3 ));
+               DFill( QTD, 3 ) );
 		  WriteRegistroK255(RegK100.RegistroK250.Items[intFor]);
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
@@ -286,13 +383,144 @@ begin
           Add( LFill('K255') +
                LFill( DT_CONS ) +
                LFill( COD_ITEM  ) +
-               LFill( QTD , 0, 3 )+
+               DFill( QTD, 3 ) +
                LFill( COD_INS_SUBST));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
      end;
      /// Variavél para armazenar a quantidade de registro do tipo.
      FRegistroK255Count := FRegistroK255Count + RegK250.RegistroK255.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK260(RegK100: TRegistroK100);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK100.RegistroK260 ) then
+  begin
+     for intFor := 0 to RegK100.RegistroK260.Count - 1 do
+     begin
+        with RegK100.RegistroK260.Items[intFor] do
+        begin
+          if (DT_SAIDA < RegK100.DT_INI) or (DT_SAIDA > RegK100.DT_FIN) then
+             raise Exception.Create('A data de saída deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
+
+          Add( LFill('K260') +
+               LFill( COD_OP_OS ) +
+               LFill( COD_ITEM ) +
+               LFill( DT_SAIDA ) +
+               DFill( QTD_SAIDA , 3 ) +
+               LFill( DT_RET ) +
+               DFill( QTD_RET , 3 ));
+
+          WriteRegistroK265(RegK100.RegistroK260.Items[intFor]);
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK260Count := FRegistroK260Count + RegK100.RegistroK260.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK265(RegK260: TRegistroK260);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK260.RegistroK265 ) then
+  begin
+     for intFor := 0 to RegK260.RegistroK265.Count - 1 do
+     begin
+        with RegK260.RegistroK265.Items[intFor] do
+        begin
+          Add( LFill('K265') +
+               LFill( COD_ITEM ) +
+               DFill( QTD_CONS , 3 ) +
+               DFill( QTD_RET , 3 ));
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK265Count := FRegistroK265Count + RegK260.RegistroK265.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK270(RegK100: TRegistroK100);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK100.RegistroK270 ) then
+  begin
+     for intFor := 0 to RegK100.RegistroK270.Count - 1 do
+     begin
+        with RegK100.RegistroK270.Items[intFor] do
+        begin
+          Add( LFill('K270') +
+               LFill( DT_INI_AP ) +
+               LFill( DT_FIN_AP ) +
+               LFill( COD_OP_OS ) +
+               LFill( COD_ITEM ) +
+               DFill( QTD_COR_POS , 3 ) +
+               DFill( QTD_COR_NEG , 3 ) +
+               LFill( ORIGEM ));
+
+		      WriteRegistroK275(RegK100.RegistroK270.Items[intFor]);
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK270Count := FRegistroK270Count + RegK100.RegistroK270.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK275(RegK270: TRegistroK270);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK270.RegistroK275 ) then
+  begin
+     for intFor := 0 to RegK270.RegistroK275.Count - 1 do
+     begin
+        with RegK270.RegistroK275.Items[intFor] do
+        begin
+          Add( LFill('K275') +
+               LFill( COD_ITEM  ) +
+               DFill( QTD_COR_POS , 3 ) +
+               DFill( QTD_COR_NEG , 3 ) +
+               LFill( COD_INS_SUBST ));
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK275Count := FRegistroK275Count + RegK270.RegistroK275.Count;
+  end;
+end;
+
+procedure TBloco_K.WriteRegistroK280(RegK100: TRegistroK100);
+var
+  intFor: integer;
+begin
+  if Assigned( RegK100.RegistroK280 ) then
+  begin
+     for intFor := 0 to RegK100.RegistroK280.Count - 1 do
+     begin
+        with RegK100.RegistroK280.Items[intFor] do
+        begin
+          if not (DT_EST < RegK100.DT_INI) then
+             raise Exception.Create('A data do estoque que está sendo corrigido deve ser anterior à data informada no campo DT_INI do Registro K100');
+
+          Add( LFill('K280') +
+               LFill( DT_EST ) +
+               LFill( COD_ITEM ) +
+               DFill( QTD_COR_POS , 3 ) +
+               DFill( QTD_COR_NEG , 3 ) +
+               LFill( IND_EST ) +
+               LFill( COD_PART ));
+        end;
+        RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;
+     end;
+     /// Variavél para armazenar a quantidade de registro do tipo.
+     FRegistroK280Count := FRegistroK280Count + RegK100.RegistroK280.Count;
   end;
 end;
 
@@ -363,6 +591,34 @@ begin
    Result := K100.RegistroK200.New(K100);
 end;
 
+function TBloco_K.RegistroK210New: TRegistroK210;
+var
+   K100: TRegistroK100;
+   K100Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   if K100Count = -1 then
+      raise Exception.Create('O registro K210 deve ser filho do registro K100, e não existe nenhum K100 pai!');
+
+   K100   := FRegistroK001.RegistroK100.Items[K100Count];
+   Result := K100.RegistroK210.New(K100);
+end;
+
+function TBloco_K.RegistroK215New: TRegistroK215;
+var
+   K210: TRegistroK210;
+   K100Count: integer;
+   K210Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   K210Count := FRegistroK001.RegistroK100.Items[K100Count].RegistroK210.Count -1;
+   if K210Count = -1 then
+      raise Exception.Create('O registro K215 deve ser filho do registro K210, e não existe nenhum K210 pai!');
+
+   K210   := FRegistroK001.RegistroK100.Items[K100Count].RegistroK210.Items[K210Count];
+   Result := K210.RegistroK215.New(K210);
+end;
+
 function TBloco_K.RegistroK220New: TRegistroK220;
 var
    K100: TRegistroK100;
@@ -430,6 +686,75 @@ begin
 
    K250   := FRegistroK001.RegistroK100.Items[K100Count].RegistroK250.Items[K250Count];
    Result := K250.RegistroK255.New(K250);
+end;
+
+function TBloco_K.RegistroK260New: TRegistroK260;
+var
+   K100: TRegistroK100;
+   K100Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   if K100Count = -1 then
+      raise Exception.Create('O registro K260 deve ser filho do registro K100, e não existe nenhum K100 pai!');
+   //
+   K100   := FRegistroK001.RegistroK100.Items[K100Count];
+   Result := K100.RegistroK260.New(K100);
+end;
+
+function TBloco_K.RegistroK265New: TRegistroK265;
+var
+   K260: TRegistroK260;
+   K100Count: integer;
+   K260Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   K260Count := FRegistroK001.RegistroK100.Items[K100Count].RegistroK260.Count -1;
+   if K260Count = -1 then
+      raise Exception.Create('O registro K265 deve ser filho do registro K260, e não existe nenhum K260 pai!');
+
+   K260   := FRegistroK001.RegistroK100.Items[K100Count].RegistroK260.Items[K260Count];
+   Result := K260.RegistroK265.New(K260);
+end;
+
+function TBloco_K.RegistroK270New: TRegistroK270;
+var
+   K100: TRegistroK100;
+   K100Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   if K100Count = -1 then
+      raise Exception.Create('O registro K270 deve ser filho do registro K100, e não existe nenhum K100 pai!');
+   //
+   K100   := FRegistroK001.RegistroK100.Items[K100Count];
+   Result := K100.RegistroK270.New(K100);
+end;
+
+function TBloco_K.RegistroK275New: TRegistroK275;
+var
+   K270: TRegistroK270;
+   K100Count: integer;
+   K270Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   K270Count := FRegistroK001.RegistroK100.Items[K100Count].RegistroK270.Count -1;
+   if K270Count = -1 then
+      raise Exception.Create('O registro K275 deve ser filho do registro K270, e não existe nenhum K270 pai!');
+
+   K270   := FRegistroK001.RegistroK100.Items[K100Count].RegistroK270.Items[K270Count];
+   Result := K270.RegistroK275.New(K270);
+end;
+
+function TBloco_K.RegistroK280New: TRegistroK280;
+var
+   K100: TRegistroK100;
+   K100Count: integer;
+begin
+   K100Count := FRegistroK001.RegistroK100.Count -1;
+   if K100Count = -1 then
+      raise Exception.Create('O registro K280 deve ser filho do registro K100, e não existe nenhum K100 pai!');
+   //
+   K100   := FRegistroK001.RegistroK100.Items[K100Count];
+   Result := K100.RegistroK280.New(K100);
 end;
 
 procedure TBloco_K.WriteRegistroK001;

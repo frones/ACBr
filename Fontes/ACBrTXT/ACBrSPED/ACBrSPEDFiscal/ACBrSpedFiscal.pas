@@ -2428,6 +2428,22 @@ begin
                QTD_REG_BLC := Bloco_K.RegistroK200Count;
             end;
          end;
+         if Bloco_K.RegistroK210Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K210';
+               QTD_REG_BLC := Bloco_K.RegistroK210Count;
+            end;
+         end;
+         if Bloco_K.RegistroK215Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K215';
+               QTD_REG_BLC := Bloco_K.RegistroK215Count;
+            end;
+         end;
          if Bloco_K.RegistroK220Count > 0 then
          begin
             with New do
@@ -2466,6 +2482,46 @@ begin
             begin
                REG_BLC := 'K255';
                QTD_REG_BLC := Bloco_K.RegistroK255Count;
+            end;
+         end;
+         if Bloco_K.RegistroK260Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K260';
+               QTD_REG_BLC := Bloco_K.RegistroK260Count;
+            end;
+         end;
+         if Bloco_K.RegistroK265Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K265';
+               QTD_REG_BLC := Bloco_K.RegistroK265Count;
+            end;
+         end;
+         if Bloco_K.RegistroK270Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K270';
+               QTD_REG_BLC := Bloco_K.RegistroK270Count;
+            end;
+         end;
+         if Bloco_K.RegistroK275Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K275';
+               QTD_REG_BLC := Bloco_K.RegistroK275Count;
+            end;
+         end;
+         if Bloco_K.RegistroK280Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'K280';
+               QTD_REG_BLC := Bloco_K.RegistroK280Count;
             end;
          end;
       end;

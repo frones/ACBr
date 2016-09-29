@@ -18,11 +18,13 @@
       <EnableI18N LFM="False"/>
     </i18n>
     <VersionInfo>
-      <MinorVersionNr Value="9"/>
-      <RevisionNr Value="1"/>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MajorVersionNr Value="1"/>
+      <BuildNr Value="1"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
-      <StringTable ProductVersion=""/>
+      <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion=""/>
     </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Debug" Default="True"/>
@@ -291,17 +293,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="3" IgnoreAll="True">
-      <Item1>
-        <Name Value="Exception"/>
-      </Item1>
-      <Item2>
-        <Name Value="RunError(5)"/>
-      </Item2>
-      <Item3>
-        <Name Value="RunError(103)"/>
-      </Item3>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

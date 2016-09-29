@@ -1823,7 +1823,7 @@ begin
            Cmd.Resposta := 'Ativo'
 
         else if Cmd.Metodo = 'versao' then //NFe.Versao
-           Cmd.Resposta := Versao
+           Cmd.Resposta := sVersaoACBr
 
         else if Cmd.Metodo = 'versaonome' then //NFe.VersaoNome
            Cmd.Resposta := {$IFDEF ACBrNFeOpenSSL} 'OpenSSL' {$ELSE} 'CAPICOM' {$ENDIF}

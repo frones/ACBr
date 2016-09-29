@@ -5189,7 +5189,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           RealBounds.Width = 0
           RealBounds.Height = 0
           SecondHolder = pnlCabecalho
-          BeforePrint = pnlItensBeforePrint
           object FundoItem: TRLLabel
             Left = 0
             Height = 128
@@ -6572,7 +6571,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
     end
   end
   inherited RLPDFFilter1: TRLPDFFilter
-    left = 1032
-    top = 40
+    left = 1024
+    top = 31
   end
 end

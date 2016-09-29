@@ -486,7 +486,6 @@ type
       var Eof: Boolean; var RecordAction: TRLRecordAction);
     procedure RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
       var Eof: Boolean; var RecordAction: TRLRecordAction);
-    procedure pnlItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     fNumItem      : Integer;
     fRecebemoDe   : string;
@@ -672,16 +671,16 @@ begin
         110,
         205,
         301,
-        302: begin
-              rllXmotivo.Caption := 'NF-e DENEGADA';
-              rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
-            end;
+        302:  begin
+                rllXmotivo.Caption := 'NF-e DENEGADA';
+                rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE DENEGAÇÃO DE USO');
+              end;
         else
-            begin
-              rllXmotivo.Caption := FNFe.procNFe.xMotivo;
-              rllDadosVariaveis3_Descricao.Visible := False;
-              rllDadosVariaveis3.Visible := False;
-            end;
+              begin
+                rllXmotivo.Caption := FNFe.procNFe.xMotivo;
+                rllDadosVariaveis3_Descricao.Visible := False;
+                rllDadosVariaveis3.Visible := False;
+              end;
       end;
     end
     else
@@ -2215,14 +2214,6 @@ begin
     lblPercValorDesc1.Caption   := ACBrStr( 'LÍQUIDO');
   end;
   pnlCabecalho1.Left  := pnlCabecalho.Width+1;
-end;
-
-procedure TfrlDANFeRLPaisagem.pnlItensBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
-begin
-  inherited;
- // Sem efeito remover
- // quando houver alteração no dfm.
 end;
 
 procedure TfrlDANFeRLPaisagem.rlbItensBeforePrint(Sender: TObject;

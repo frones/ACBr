@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2016
+[*]	Versão 1.0.0.0 do ACBrMonitorPLUS disponibilizada para Download no SAC.
+[+]	Configurado projeto para gerar número de versão utilizando o número de build do Lazarus.
+[*] Modificado danfe da NFe para não usar dbware por hleojr
+	por Celso Marigo Junior.
+
 28/09/2016
 -- ACBrMonitor --
 [-] Correção para correta conversão para ANSI. (por: RODRIGO_APOIOSIS)

@@ -47,10 +47,10 @@ uses
   pcnConversao, pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
   ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrGNRE2,
   ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
-  ACBrCTeDACTeRLClass, types, ACBrBase;
+  ACBrCTeDACTeRLClass, types, ACBrBase, fileinfo;
 
 const
-  {$I versao.txt}
+  //{$I versao.txt}
   CEstados: array[TACBrECFEstado] of string =
     ('Não Inicializada', 'Desconhecido', 'Livre', 'Venda',
     'Pagamento', 'Relatório', 'Bloqueada', 'Requer Z', 'Requer X',
@@ -1392,6 +1392,7 @@ type
 
 var
   FrmACBrMonitor: TFrmACBrMonitor;
+  sVersaoACBr : string;
 
 implementation
 
@@ -1441,6 +1442,7 @@ var
   iPagCodigoESCPOS: TACBrPosPaginaCodigo;
   iTZMode: TTimeZoneModoDeteccao;
   iFor: Integer;
+  FileVerInfo: TFileVersionInfo;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1624,11 +1626,20 @@ begin
   cbxPorta.Items.Add('c:\temp\ecf.txt');
   cbxPorta.Items.Add('/temp/ecf.txt');
 
-  TrayIcon1.Hint := 'ACBrMonitor PLUS' + Versao;
+  FileVerInfo:=TFileVersionInfo.Create(nil);
+  try
+    FileVerInfo.FileName:=paramstr(0);
+    FileVerInfo.ReadFileInfo;
+    sVersaoACBr := FileVerInfo.VersionStrings.Values['FileVersion'];
+  finally
+    FileVerInfo.Free;
+  end;
+
+  TrayIcon1.Hint := 'ACBrMonitor PLUS' + sVersaoACBr;
   TrayIcon1.BalloonTitle := TrayIcon1.Hint;
   TrayIcon1.BalloonHint := 'Projeto ACBr' + sLineBreak + 'http://acbr.sf.net';
 
-  Caption := ' ACBrMonitorPLUS ' + Versao + ' - ACBr: ' + ACBR_VERSAO + ' ';
+  Caption := ' ACBrMonitorPLUS ' + sVersaoACBr + ' ';
 
   {$IFDEF LINUX}
   rbLCBTeclado.Caption := 'Dispositivo';
@@ -3372,7 +3383,7 @@ begin
     TcpServer.Terminador := '#13,#10,#46,#13,#10';
     TcpServer.Ativo := rbTCP.Checked;
 
-    mResp.Lines.Add('ACBr MonitorPLUS Ver.' + Versao);
+    mResp.Lines.Add('ACBr MonitorPLUS Ver.' + sVersaoACBr);
     mResp.Lines.Add('Aguardando comandos ACBr');
   except
     on E: Exception do
@@ -6086,7 +6097,7 @@ procedure TFrmACBrMonitor.sbSobreClick(Sender: TObject);
 begin
   frmSobre := TfrmSobre.Create(self);
   try
-    frmSobre.lVersao.Caption := 'Ver: ' + Versao;
+    frmSobre.lVersao.Caption := 'Ver: ' + sVersaoACBr;
     frmSobre.ShowModal;
   finally
     FreeAndNil(frmSobre);
@@ -6133,7 +6144,7 @@ begin
   Conexao := TCPBlockSocket;
   mCmd.Lines.Clear;
   fsProcessar.Clear;
-  Resp := 'ACBrMonitor/ACBrNFeMonitor PLUS Ver. ' + Versao + sLineBreak + 'Conectado em: ' +
+  Resp := 'ACBrMonitor/ACBrNFeMonitor PLUS Ver. ' + sVersaoACBr + sLineBreak + 'Conectado em: ' +
     FormatDateTime('dd/mm/yy hh:nn:ss', now) + sLineBreak + 'Máquina: ' +
     Conexao.GetRemoteSinIP + sLineBreak + 'Esperando por comandos.';
 

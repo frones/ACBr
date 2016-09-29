@@ -4244,7 +4244,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           Borders.DrawRight = False
           Borders.DrawBottom = False
           SecondHolder = pnlCabecalho
-          BeforePrint = pnlItensBeforePrint
           object FundoItem: TRLLabel
             Left = 0
             Top = 0

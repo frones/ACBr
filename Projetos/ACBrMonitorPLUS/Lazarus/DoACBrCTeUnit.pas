@@ -1101,7 +1101,7 @@ begin
         else if Cmd.Metodo = 'ativo' then
            Cmd.Resposta := 'Ativo'
         else if Cmd.Metodo = 'versao' then
-           Cmd.Resposta := Versao
+           Cmd.Resposta := sVersaoACBr
         else if Cmd.Metodo ='datahora' then
            Cmd.Resposta := FormatDateTime('dd/mm/yyyy hh:nn:ss', Now )
         else if Cmd.Metodo ='data' then

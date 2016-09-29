@@ -29,6 +29,8 @@ Compression=lzma
 SolidCompression=yes
 AppMuTex=ACBrMonitor
 DisableDirPage=no
+; Comente a linha abaixo caso não deseje gerar instalador assinado.
+SignTool=Standard /d $qACBrMonitorPLUS - SAC ACBr$q /du $qhttp://www.projetoacbr.com.br$q $f
 
 [Types]
 Name: full; Description: Instalação Completa;

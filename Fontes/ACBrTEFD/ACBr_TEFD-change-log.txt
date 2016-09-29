@@ -46,6 +46,11 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
+		
+29/09/2016
+-- ACBrTEFDCliSiTef --
+[-] Alteração para inicializar variável Interromper como False no início do 
+	método ContinuarRequisicao. (por: Elias César)
 
 29/09/2016
 [+] Adição da validação para programar o evento OnAguardaResp quando o gerenciador for o sitef

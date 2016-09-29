@@ -1105,6 +1105,7 @@ begin
    fIniciouRequisicao:= True ;
    fCancelamento     := False ;
    fReimpressao      := False;
+   Interromper       := False;
    ArqBackUp         := '' ;
    Resposta          := '' ;
 

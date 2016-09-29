@@ -609,7 +609,7 @@ begin
     end;
   end;
 
-  if nItem > 1 then
+  if nItem > 2 then
   begin
 //    rlbItens.Height :=  nLinhas * 20;
     rlmChave1.Height := nLinhas * 10;

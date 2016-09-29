@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2016
+[+] Adição da validação para programar o evento OnAguardaResp quando o gerenciador for o sitef
+		por: Juliomar Marchetti
+		
 27/09/2016
 [*] pequeno acerto para quando a parcela não tem NSU
     por Regys.silveira

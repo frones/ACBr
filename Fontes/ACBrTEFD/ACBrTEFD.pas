@@ -576,8 +576,8 @@ begin
   if not Assigned( OnComandaECF )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECF" não programado' ) ) ;
 
-  //if not Assigned( OnComandaECFPagamento )  then
-  //   raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFPagamento" não programado' ) ) ;
+	if not Assigned( OnAguardaResp) and (GP = gpCliSiTef) then
+		raise EACBrTEFDErro.Create( ACBrStr('Evento "OnAguardaResp" não programado' ) ) ;
 
   if not Assigned( OnComandaECFAbreVinculado )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFAbreVinculado" não programado' ) ) ;
@@ -593,7 +593,7 @@ begin
 
   if not DirectoryExists( PathBackup ) then
      raise EACBrTEFDErro.Create( ACBrStr('Diretório de Backup não existente:'+sLineBreak+PathBackup) ) ;
-
+	
   if GP = gpNenhum then
    begin
      Erros := '' ;

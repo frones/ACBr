@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/09/2016
+-- ACBrNFSeNotasFiscais --
+[*] Melhorias na leitura e separação de varias notas contidas em lote.
+    Por: Italo Jurisato Junior
+
 23/09/2016
 [*] Acrescentado um parâmetro contendo o provedor na função RetirarPrefixos, 
     visto que 2 prefixos são exclusivos para um determinado provedor.

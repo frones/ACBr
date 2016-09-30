@@ -874,21 +874,25 @@ begin
       AXML := copy(AXMLString, 1, N + TamTAG);
       AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
 
-      //provedor SimplISS
-      N:= PosNFSeCancelamento;
-      if N > 0 then
+      // No caso do provedor SimplISS o grupo NfseCancelamento fica fora do
+      // grupo CompNfse
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proSimplISS then
       begin
-        //copia tag NfseCancelamento
-        AXML:= AXML + copy(AXMLString, 1, N + TamTAG);
-        AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
+        N:= PosNFSeCancelamento;
+        if N > 0 then
+        begin
+          // concatena o grupo NfseCancelamento ao grupo Nfse
+          AXML:= AXML + copy(AXMLString, 1, N + TamTAG);
+          AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
+        end;
       end;
 
       with Self.Add do
       begin
         LerXML(AXML);
 
-        if AGerarNFSe then // Recalcula o XML
-          GerarXML;
+//        if AGerarNFSe then // Recalcula o XML
+//          GerarXML;
       end;
 
       N := PosNFSe;

@@ -3376,8 +3376,8 @@ begin
     {$ENDIF}
   end;
 
-  { Tirando os Acentos e trocando todos os #13+#10 e '|' por #10 }
-  Observacao := StringReplace(Observacao,CR+LF,#10,[rfReplaceAll]) ;
+  { Trocando todos os #13, #13+#10 e '|' por #10 }
+  Observacao := ChangeLineBreak(Observacao, #10);
   Observacao := StringReplace(Observacao,'|',#10,[rfReplaceAll]) ;
 
   { montar o rodape quando as informações de rodapé forem passadas }

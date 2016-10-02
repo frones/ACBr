@@ -909,7 +909,7 @@ begin
 
     FInicializada := True;
     FFonteStatus := FFonteStatus - [ftCondensado, ftExpandido, ftNegrito,
-      ftSublinhado, ftItalico, ftInvertido];
+                                    ftSublinhado, ftItalico, ftInvertido];
   end
 
   else if ATag = cTagLigaInvertido then
@@ -1163,10 +1163,21 @@ begin
 end;
 
 procedure TACBrPosPrinter.DesativarPorta;
+var
+  I: Integer;
 begin
   if FDevice.Ativo then
   begin
     GravarLog('Desativando a porta: ' + FDevice.Porta);
+
+    // Espera a impressora ficar livre (se não estiver, ainda está imprimindo)
+    I := 0;
+    while (not FDevice.EmLinha(1)) and (I < 5) do
+    begin
+      GravarLog('   Porta não está Livre');
+      Inc(I);
+    end;
+
     FDevice.Desativar;
 
     if not FDevice.IsSerialPort then

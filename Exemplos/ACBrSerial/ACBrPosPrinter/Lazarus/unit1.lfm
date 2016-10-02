@@ -316,7 +316,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 7
         Height = 19
         Hint = 'Traduz as Tags de Formatação e Cod.Barras'
-        Top = 176
+        Top = 181
         Width = 88
         Caption = 'TraduzirTags'
         Checked = True
@@ -392,7 +392,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Left = 7
         Height = 19
         Hint = 'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Porta Serial após o envio'
-        Top = 152
+        Top = 142
         Width = 97
         Caption = 'Controle Porta'
         OnChange = cbControlePortaChange
@@ -577,6 +577,18 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         MaxValue = 255
         OnChange = seLinhasPularChange
         TabOrder = 11
+      end
+      object cbCortarPapel: TCheckBox
+        Left = 7
+        Height = 19
+        Hint = 'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Porta Serial após o envio'
+        Top = 162
+        Width = 85
+        Caption = 'Cortar Papel'
+        Checked = True
+        OnChange = cbCortarPapelChange
+        State = cbChecked
+        TabOrder = 12
       end
     end
     object gbCodBarrasConfig: TGroupBox

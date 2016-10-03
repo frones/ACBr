@@ -196,7 +196,7 @@ begin
  FT_Endereco            := '';
  FT_Complemento         := '';
  FT_Email               := '';
- FFormatarNumeroDocumentoNFSe := False;
+ FFormatarNumeroDocumentoNFSe := True;
  FNFSeCancelada := False;
 
  FProvedor := proNenhum;

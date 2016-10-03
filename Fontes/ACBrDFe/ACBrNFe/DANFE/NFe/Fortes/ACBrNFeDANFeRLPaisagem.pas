@@ -1020,11 +1020,7 @@ begin
     rllDadosVariaveis1b.Visible   := False;
 
     case FNFe.Ide.tpEmis of
-      teNormal,
-      teSCAN,
-      teSVCAN,
-      teSVCRS,
-      teSVCSP         : begin
+      teNormal        : begin
                           rllAvisoContingencia.Visible        := False;
                           rlbAvisoContingencia.Visible        := False;
 
@@ -1038,7 +1034,11 @@ begin
                                                                   DateTimeToStr(FNFe.procNFe.dhRecbto);
                         end;
       teContingencia,
-      teFSDA          : begin
+      teFSDA,
+      teSCAN,
+      teSVCAN,
+      teSVCRS,
+      teSVCSP           : begin
                           sChaveContingencia                  := TACBrNFe(TACBrNFeDANFeRL(Owner).ACBrNFe).GerarChaveContingencia(FNFe);
                           rlbCodigoBarrasFS.Caption           := sChaveContingencia;
                           rlbCodigoBarrasFS.Visible           := True;

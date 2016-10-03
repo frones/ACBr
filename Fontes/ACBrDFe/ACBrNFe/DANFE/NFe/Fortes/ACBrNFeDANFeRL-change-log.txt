@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/10/2016
+-- ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato
+[-] Correção para exibir os dados de contingência em retrato e paisagem em Fortes
+		http://www.projetoacbr.com.br/forum/topic/32732-nfe-e-contigencia/
+		por: Juliomar Marchetti
+		
 22/09/2016
 -- ACBrNFeDANFeRLPaisagem --
 [-] Correção no item da segunda página desalinhado

@@ -169,6 +169,7 @@ type
     RLDraw12: TRLDraw;
     RLDraw13: TRLDraw;
     RLDraw14: TRLDraw;
+    rlbNumcipio: TRLLabel;
     procedure rlb_1_DadosManifestoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_2_RodoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_3_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -222,14 +223,16 @@ var
   vStringStream: TStringStream;
 begin
   inherited;
-  if  (RLMDFe.PageNumber = 1) then
-    rlb_1_DadosManifesto.Height         := 200
-  else
-    rlb_1_DadosManifesto.Height         := 200;
+  if  (RLMDFe.PageNumber <> 1) then
+  begin
+    rlb_2_Rodo.Visible        := False;
+    RLBand2.Visible           := False;
+    RLBand1.Visible           := False;
+  end;
 
   {$IFNDEF BORLAND}
-  RLMemo1.Layout := tlCenter;
-  RLMemo1.Font.Size := 6;
+    RLMemo1.Layout := tlCenter;
+    RLMemo1.Font.Size := 6;
   {$ENDIF}
 
   if (FLogo <> '') then
@@ -511,13 +514,87 @@ begin
   FTotalPages   := 1;
   RLMDFe.Title  := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
 
-  with RLMDFe.Margins do
+  with RLMDFe do
   begin
-    TopMargin     := FMargemSuperior * 10;
-    BottomMargin  := FMargemInferior * 10;
-    LeftMargin    := FMargemEsquerda * 10;
-    RightMargin   := FMargemDireita * 10;
+    Title                 := ACBrStr('Manifesto Eletrônico de Documentos Fiscais - MDF-e');
+
+    Margins.TopMargin     := FMargemSuperior * 10;
+    Margins.BottomMargin  := FMargemInferior * 10;
+    Margins.LeftMargin    := FMargemEsquerda * 10;
+    Margins.RightMargin   := FMargemDireita * 10;
+
+    Borders.DrawTop       := true;
+    Borders.DrawLeft      := true;
+    Borders.DrawRight     := true;
+    Borders.DrawBottom    := true;
   end;
+
+  with rlb_1_DadosManifesto do
+  begin
+    Borders.DrawTop     := False;
+    Borders.DrawLeft    := False;
+    Borders.DrawRight   := False;
+    Borders.DrawBottom  := False;
+  end;
+
+  with rlb_2_Rodo do
+  begin
+    Borders.DrawTop     := True;
+    Borders.DrawLeft    := False;
+    Borders.DrawRight   := False;
+    Borders.DrawBottom  := False;
+  end;
+
+  with RLBand2 do
+  begin
+    Borders.DrawTop     := False;
+    Borders.DrawLeft    := False;
+    Borders.DrawRight   := False;
+    Borders.DrawBottom  := False;
+  end;
+
+  with RLBand1 do
+  begin
+    Borders.DrawTop     := True;
+    Borders.DrawLeft    := False;
+    Borders.DrawRight   := False;
+    Borders.DrawBottom  := False;
+  end;
+
+  with rlb_7_Documentos_Titulos do
+  begin
+    Borders.DrawTop     := True;
+    Borders.DrawLeft    := False;
+    Borders.DrawRight   := False;
+    Borders.DrawBottom  := True;
+  end;
+
+  with rlb_6_Observacao do
+  begin
+    BandType            := btFooter;
+    Borders.DrawTop     := True;
+    Borders.DrawLeft    := False;
+    Borders.DrawRight   := False;
+    Borders.DrawBottom  := False;
+  end;
+
+  subItens.Borders.DrawLeft := False;
+  subItens.Borders.DrawRight:= False;
+
+  with rlbItens do
+  begin
+    AutoSize             := True;
+    Borders.DrawTop      := False;
+    Borders.DrawLeft     := False;
+    Borders.DrawRight    := False;
+    Borders.DrawBottom   := true;
+  end;
+
+  rlmChave1.Lines.Clear;
+  rlmChave2.Lines     := rlmChave1.Lines;
+
+  rlmChave1.AutoSize  := True;
+  rlmChave2.AutoSize  := rlmChave1.AutoSize;
 end;
 
 procedure TfrlDAMDFeRLRetrato.RLMDFeDataRecord(Sender: TObject; RecNo,
@@ -526,7 +603,10 @@ begin
   inherited;
   Eof := (RecNo > 1);
   RecordAction := raUseIt;
+  rlb_6_Observacao.Visible := Eof;
 end;
+
+
 
 procedure TfrlDAMDFeRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
   CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
@@ -536,8 +616,6 @@ begin
   Eof           := (RecNo > FMDFe.infDoc.infMunDescarga.Count) ;
   RecordAction  := raUseIt ;
 end;
-
-
 
 procedure TfrlDAMDFeRLRetrato.rlbItensAfterPrint(Sender: TObject);
 begin
@@ -549,26 +627,19 @@ end;
 procedure TfrlDAMDFeRLRetrato.rlbItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 var
-   J, nItem, nLinhas : integer;
+   J, nItem : integer;
   Procedure Printar( sTemp : String; nItem : Integer );
   begin
     if (nItem mod 2) = 0 then
-    begin
-      rlmChave1.Lines.Add(sTemp);
-      inc(nLinhas);
-    end
+      rlmChave1.Lines.Add(sTemp)
     else
       rlmChave2.Lines.Add( sTemp);
   end;
 begin
   nItem := 0;
-  nLinhas := 0;
-  rlmChave1.Lines.Clear;
-  rlmChave2.Lines.Clear;	
-
   with FMDFe.infDoc.infMunDescarga.Items[FNumItem] do
   begin
-
+    rlbNumcipio.Caption   := ACBrStr(Format('Município %s ',[ FMDFe.infDoc.infMunDescarga.Items[FNumItem].xMunDescarga]));
    // Lista de CT-e
     for J := 0 to ( infCTe.Count - 1) do
     begin
@@ -576,7 +647,7 @@ begin
       Inc(nItem);
     end;
 
-    // Lista de CT
+   // Lista de CT
     for J := 0 to (infCT.Count - 1) do
     begin
       Printar( 'CT            ' + FormatarCNPJouCPF(FMDFe.emit.CNPJ) + ' - '
@@ -608,14 +679,6 @@ begin
       Inc(nItem);
     end;
   end;
-
-  if nItem > 2 then
-  begin
-//    rlbItens.Height :=  nLinhas * 20;
-    rlmChave1.Height := nLinhas * 10;
-    rlmChave2.Height := nLinhas * 10;
-  end;
-
   inherited;
 end;
 

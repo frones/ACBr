@@ -1,9 +1,8 @@
 inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   Left = 244
   Top = 56
-  Width = 865
-  Height = 722
-  VertScrollBar.Position = 146
+  Width = 863
+  VertScrollBar.Position = 519
   AutoScroll = True
   Caption = 'Manifesto - Retrato'
   Font.Height = -8
@@ -14,7 +13,7 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
   inherited RLMDFe: TRLReport
     Tag = 1
     Left = 30
-    Top = -146
+    Top = -519
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -1178,24 +1177,24 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
         Left = 1
         Top = 0
         Width = 740
-        Height = 25
+        Height = 49
         Background.Height = 487
         Background.Width = 865
         AfterPrint = rlbItensAfterPrint
         BeforePrint = rlbItensBeforePrint
         object LinhaQuantidade: TRLDraw
           Left = 374
-          Top = 0
+          Top = 16
           Width = 1
-          Height = 25
+          Height = 33
           Align = faHeight
           Angle = 90.000000000000000000
           DrawKind = dkLine
           HoldStyle = hsRelatively
         end
-				object rlmChave1: TRLMemo
+        object rlmChave1: TRLMemo
           Left = 3
-          Top = 6
+          Top = 30
           Width = 354
           Height = 16
           AutoSize = False
@@ -1211,9 +1210,9 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           ParentColor = False
           ParentFont = False
         end
-				object rlmChave2: TRLMemo
-          Left = 383
-          Top = 6
+        object rlmChave2: TRLMemo
+          Left = 381
+          Top = 30
           Width = 354
           Height = 16
           AutoSize = False
@@ -1226,6 +1225,26 @@ inherited frlDAMDFeRLRetrato: TfrlDAMDFeRLRetrato
           Font.Style = []
           Lines.Strings = (
             'rlmChave2')
+          ParentColor = False
+          ParentFont = False
+        end
+        object rlbNumcipio: TRLLabel
+          Left = 0
+          Top = 0
+          Width = 740
+          Height = 16
+          Align = faTop
+          Borders.Sides = sdCustom
+          Borders.DrawLeft = False
+          Borders.DrawTop = False
+          Borders.DrawRight = False
+          Borders.DrawBottom = True
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Times New Roman'
+          Font.Style = []
           ParentColor = False
           ParentFont = False
         end

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/10/2016
+-- ACBrSATClass --
+[*] TACBrSATConfigArquivos.CalcPath, Ajuste para remover por mascara do CNPJ
+    http://www.projetoacbr.com.br/forum/topic/32713-exemplo-acbrsat-e-acbrsatclass/
+
 Data: 26/09/2016
 -- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
 [+] Adicionada a propriedade " MsgAppQRCode: String", que permite definir nova

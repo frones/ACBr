@@ -409,7 +409,7 @@ begin
   if SepararPorCNPJ then
   begin
     if EstaVazio(CNPJ) then
-      CNPJ := TACBrSAT(fsOwner).Config.emit_CNPJ;
+      CNPJ := OnlyNumber(TACBrSAT(fsOwner).Config.emit_CNPJ);
 
     if NaoEstaVazio(CNPJ) then
       Dir := PathWithDelim(Dir) + CNPJ;

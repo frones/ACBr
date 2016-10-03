@@ -298,7 +298,7 @@ begin
     if (leitor.rExtrai(1, 'Sdt_consultaprotocoloout') <> '') or
        (leitor.rExtrai(1, 'Sdt_consultanotasprotocoloout') <> '') then
     begin
-      FInfSit.FSituacao:= Leitor.rCampo(tcStr, 'PrtXS'); {1 (Aguardando processamento)
+      FInfSit.FSituacao:= Leitor.rCampo(tcStr, 'PrtXSts'); {1 (Aguardando processamento)
                                                             2 (Em Processamento)
                                                             3 (Rejeitado)
                                                             4 (Rejeitado Parcialmente)

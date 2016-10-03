@@ -380,7 +380,7 @@ begin
  ACBrMDFe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
  case rgVersaoDF.ItemIndex of
   0: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100;
-  1: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve100a;
+  1: ACBrMDFe1.Configuracoes.Geral.VersaoDF := ve300;
  end;
 
  // Configurações -> WebServices

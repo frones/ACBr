@@ -4,11 +4,11 @@
     <PathDelim Value="\"/>
     <Version Value="9"/>
     <BuildModes Active="Default"/>
-    <Units Count="3">
+    <Units Count="7">
       <Unit0>
         <Filename Value="Demo_ACBrMDFe.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -18,11 +18,9 @@
         <ComponentName Value="frmDemo_ACBrMDFe"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="947"/>
-        <CursorPos X="60" Y="964"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="11" Y="11"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -34,83 +32,195 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLClass.pas"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="37"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <ComponentName Value="frlDAMDFeRLRetrato"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="519"/>
+        <CursorPos X="56" Y="536"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRL.pas"/>
+        <ComponentName Value="frlDAMDFeRL"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="211"/>
+        <CursorPos X="3" Y="50"/>
+        <UsageCount Value="9"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\ControlSoft Agro\Ferramentas\XE7\fortesreport-ce\Source\RLReport.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="6933"/>
+        <CursorPos Y="6950"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="18" HistoryIndex="17">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="421" Column="23" TopLine="417"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="565" TopLine="537"/>
       </Position1>
       <Position2>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="9" Column="33"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="566" TopLine="538"/>
       </Position2>
       <Position3>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="379" Column="45" TopLine="210"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="567" TopLine="539"/>
       </Position3>
       <Position4>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="189" Column="26" TopLine="163"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="569" TopLine="541"/>
       </Position4>
       <Position5>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="183" Column="20" TopLine="171"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="573" TopLine="545"/>
       </Position5>
       <Position6>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="184" Column="35" TopLine="171"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="580" TopLine="564"/>
       </Position6>
       <Position7>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="403" TopLine="385"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="589" TopLine="564"/>
       </Position7>
       <Position8>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="669" Column="58" TopLine="652"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="591" TopLine="564"/>
       </Position8>
       <Position9>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="668" Column="6" TopLine="652"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="592" TopLine="564"/>
       </Position9>
       <Position10>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="591" TopLine="564"/>
       </Position10>
       <Position11>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="286" Column="27" TopLine="264"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="592" TopLine="564"/>
       </Position11>
       <Position12>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="2" Column="3"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="591" TopLine="564"/>
       </Position12>
       <Position13>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="812" Column="42" TopLine="794"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="592" TopLine="564"/>
       </Position13>
       <Position14>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="845" Column="53" TopLine="829"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="591" TopLine="564"/>
       </Position14>
       <Position15>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="882" Column="58" TopLine="873"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="592" TopLine="564"/>
       </Position15>
       <Position16>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="890" Column="71" TopLine="873"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="596" TopLine="568"/>
       </Position16>
       <Position17>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="925" Column="60" TopLine="907"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="605" TopLine="588"/>
       </Position17>
       <Position18>
-        <Filename Value="Frm_Demo_ACBrMDFe.pas"/>
-        <Caret Line="949" Column="26" TopLine="932"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="612" TopLine="588"/>
       </Position18>
+      <Position19>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="615" TopLine="588"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="616" TopLine="588"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="620" TopLine="577"/>
+      </Position21>
+      <Position22>
+        <Filename Value="C:\ControlSoft Agro\Ferramentas\XE7\fortesreport-ce\Source\RLReport.pas"/>
+        <Caret Line="6950" TopLine="6933"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="569" Column="35" TopLine="546"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="536" Column="56" TopLine="508"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="569" Column="35" TopLine="541"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="536" Column="56" TopLine="519"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="35" Column="46" TopLine="35"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="536" Column="56" TopLine="508"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Caret Line="569" Column="35" TopLine="541"/>
+      </Position30>
     </JumpHistory>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="3">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Line Value="564"/>
+      </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Line Value="535"/>
+      </Item2>
+      <Item3>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas"/>
+        <Line Value="536"/>
+      </Item3>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

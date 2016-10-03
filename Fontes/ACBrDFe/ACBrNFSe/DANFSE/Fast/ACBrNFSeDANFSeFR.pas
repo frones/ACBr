@@ -328,7 +328,7 @@ begin
       Add('Competencia', ftString, 7);
       Add('NumeroNFSe', ftString, 16);
       Add('NFSeSubstituida', ftString, 15);
-      Add('DataEmissao', ftString, 10);
+      Add('DataEmissao', ftString, 19);
       Add('CodigoVerificacao', ftString, 15);
     end;
     CreateDataSet;
@@ -371,7 +371,7 @@ begin
       Clear;
       Add('ItemListaServico', ftString, 6);
       Add('CodigoCnae', ftString, 15);
-      Add('CodigoTributacaoMunicipio', ftString, 1);
+      Add('CodigoTributacaoMunicipio', ftString, 20);
       Add('Discriminacao', ftString, 2000);
       Add('CodigoPais', ftString, 4);
       Add('NumeroProcesso', ftString, 10);
@@ -685,13 +685,27 @@ begin
 
     with ANFSe do
     begin
-      FieldByName('Id').AsString                := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
-      FieldByName('Numero').AsString            := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero);
+			FieldByName('Id').AsString                := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
+			if(FormatarNumeroDocumentoNFSe) then 
+		  	FieldByName('Numero').AsString            := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero) 
+			else
+		  	FieldByName('Numero').AsString            := IdentificacaoRps.Numero;
       FieldByName('Serie').AsString             := IdentificacaoRPS.Serie;
-      FieldByName('Competencia').AsString       := FormatDateTime('MM"/"yyyy', DataEmissao ) ;
-      FieldByName('NFSeSubstituida').AsString   := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida);
-      FieldByName('NumeroNFSe').AsString        := FormatarNumeroDocumentoFiscalNFSe(Numero);
-      FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
+			FieldByName('Competencia').AsString       := FormatDateTime('MM"/"yyyy', DataEmissao ) ;
+
+			if(FormatarNumeroDocumentoNFSe) then
+		  	FieldByName('NFSeSubstituida').AsString   := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida)
+			else
+		  	FieldByName('NFSeSubstituida').AsString   := ANFSe.NfseSubstituida;
+
+			if(FormatarNumeroDocumentoNFSe) then
+		  	FieldByName('NumeroNFSe').AsString        := FormatarNumeroDocumentoFiscalNFSe(Numero) 
+			else
+		  	FieldByName('NumeroNFSe').AsString        := ANFSe.Numero;
+			if(Provedor = proGINFES ) then
+				FieldByName('DataEmissao').AsString       := FormatDateTimeBr(ANFSe.DataEmissao) 
+			else
+				FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
       FieldByName('CodigoVerificacao').AsString := CodigoVerificacao;
     end;
     Post;

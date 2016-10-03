@@ -12,7 +12,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.0.4'
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -1187,6 +1187,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     MargemDireita = 0.51
     MDFeCancelada = False
     MDFeEncerrado = False
+    PrintDialog = True
     left = 611
     top = 260
   end

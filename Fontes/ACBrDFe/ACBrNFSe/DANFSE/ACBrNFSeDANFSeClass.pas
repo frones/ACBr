@@ -84,6 +84,7 @@ type
     FT_Complemento   : String;
     FT_Email         : String;
     FEMail_Prestador : String;
+		FFormatarNumeroDocumentoNFSe  : Boolean;
     FUF : String;
     FAtividade : String;
     FNFSeCancelada: boolean;
@@ -145,6 +146,7 @@ type
     property TipoDANFSE: TTipoDANFSE read FTipoDANFSE   write FTipoDANFSE default tpPadrao;
     property Provedor: TNFSeProvedor read FProvedor     write FProvedor;
     property TamanhoFonte: Integer   read FTamanhoFonte write FTamanhoFonte;
+		property FormatarNumeroDocumentoNFSe : Boolean read FFormatarNumeroDocumentoNFSe write FFormatarNumeroDocumentoNFSe;
   end;
 
 implementation
@@ -194,7 +196,7 @@ begin
  FT_Endereco            := '';
  FT_Complemento         := '';
  FT_Email               := '';
-
+ FFormatarNumeroDocumentoNFSe := False;
  FNFSeCancelada := False;
 
  FProvedor := proNenhum;

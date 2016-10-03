@@ -249,6 +249,9 @@ const
   cACBrDeviceSetDataException        = 'Valor deve estar na faixa de 5 a 8.'+#10+
                                        'Normalmente os equipamentos Seriais utilizam: 7 ou 8' ;
   cACBrDeviceSetPortaException       = 'Não é possível mudar a Porta com o Dispositivo Ativo' ;
+  cACBrDeviceSetTypeException        = 'Tipo de dispositivo informado não condiz com o valor da Porta';
+  cACBrDeviceSemImpressoraPadrao     = 'Erro Nenhuma impressora Padrão foi detectada';
+  cACBrDeviceImpressoraNaoEncontrada = 'Impressora não encontrada [%s]';
   cACBrDeviceEnviaStrThreadException = 'Erro gravando em: %s ' ;
   cACBrDeviceEnviaStrFailCount       = 'Erro ao enviar dados para a porta: %s';
 

@@ -73,13 +73,22 @@ uses
   {$ENDIF}
   {$IFNDEF NOGUI}
     {$IF DEFINED(VisualCLX)}
-       QForms, QPrinters,
+       QForms,
     {$ELSEIF DEFINED(FMX)}
-       FMX.Forms, FMX.Printer,
+       FMX.Forms,
     {$ELSE}
-       Forms, Printers,
+       Forms,
     {$IFEND}
   {$ENDIF}
+  {$IF DEFINED(VisualCLX)}
+     QPrinters,
+  {$ELSEIF DEFINED(FMX)}
+     FMX.Printer,
+  {$ELSEIF DEFINED(FPC)}
+     Printers, OSPrinters,
+  {$ELSE}
+     Printers, WinSpool,
+  {$IFEND}
   ACBrConsts;
 
 type
@@ -238,6 +247,8 @@ TACBrTagProcessor = class
 
 end;
 
+TACBrDeviceType = (dtFile, dtSerial, dtTCP, dtRawPrinter, dtHook);
+
 { TACBrDevice }
 
 TACBrDevice = class( TComponent )
@@ -251,6 +262,7 @@ TACBrDevice = class( TComponent )
     fsBaud: Integer;
     fsStop: Integer ;
     fsPorta: String;
+    fsDeviceType: TACBrDeviceType;
     fsTimeOut: Integer ;
     fsAtivo: Boolean;
 
@@ -263,16 +275,22 @@ TACBrDevice = class( TComponent )
     fTCPPort: String;
 
     procedure ConfiguraSerial ;
-    procedure EnviaStringSerial(const AString : AnsiString) ;
-    procedure EnviaStringArquivo(const AString : AnsiString) ;
+    procedure EnviaStringSerial(const AString: AnsiString) ;
+    procedure EnviaStringArquivo(const AString: AnsiString) ;
     procedure EnviaStringTCP(const AString: AnsiString);
+    procedure EnviaStringRaw(const AString: AnsiString);
+    procedure EnviaStringHook(const AString: AnsiString);
     function GetParamsString: String;
+    function GetPrinterRawIndex: Integer;
+    function GetPrinterFileName: String;
+
     {$IFDEF ThreadEnviaLPT}
-    procedure EnviaStrThread( AString : AnsiString ) ;
+    procedure EnviaStringThread( AString : AnsiString ) ;
     {$ENDIF}
 
     procedure SetBaud(const Value: Integer);
     procedure SetData(const Value: Integer);
+    procedure SetDeviceType(AValue: TACBrDeviceType);
     procedure SetHardFlow(const Value: Boolean);
     function GetParity: TACBrSerialParity;
     procedure SetParity(const Value: TACBrSerialParity);
@@ -297,9 +315,11 @@ TACBrDevice = class( TComponent )
 
     property Ativo : Boolean read fsAtivo write SetAtivo ;
 
-    property Porta   : String  read fsPorta write SetPorta ;
+    property Porta: String  read fsPorta write SetPorta ;
+    property DeviceType: TACBrDeviceType read fsDeviceType write SetDeviceType;
     property TimeOut : Integer read fsTimeOut write SetTimeOut ;
     Function EmLinha( lTimeOut : Integer = 1) : Boolean  ;
+    function DeduzirTipoPorta(APorta: String): TACBrDeviceType;
 
     property ParamsString : String read GetParamsString write SetParamsString ;
 
@@ -324,6 +344,7 @@ TACBrDevice = class( TComponent )
     Function IsTXTFilePort: Boolean ;
     Function IsDLLPort: Boolean ;
     Function IsTCPPort: Boolean;
+    Function IsRawPort: Boolean;
 
     procedure AcharPortasSeriais( const AStringList : TStrings;
        UltimaPorta : Integer = 64 ) ;
@@ -360,7 +381,7 @@ TACBrDevice = class( TComponent )
         write fsHookLeString;
 end ;
 
-{ Essa classe é usada pela função EnviaStrThread para detectar se os Dados
+{ Essa classe é usada pela função EnviaStringThread para detectar se os Dados
   estao sendo "gravados" com sucesso na porta paralela ou arquivo. }
 TACBrThreadEnviaLPT = class(TThread)
   private
@@ -380,7 +401,9 @@ const
   CFailCount = 10;
 
 implementation
-Uses ACBrUtil ;
+
+Uses
+  ACBrUtil ;
 
 { TACBrTag }
 
@@ -670,7 +693,7 @@ end;
 
 procedure TACBrDevice.Ativar;
 var
-  ip: String;
+  ip, NomeArq: String;
   p: Integer;
 begin
   if fsAtivo then exit ;
@@ -678,64 +701,71 @@ begin
   if fsPorta = '' then
      raise Exception.Create(ACBrStr(cACBrDeviceAtivarPortaException));
 
-  if IsTCPPort then
-   begin
-     ip := copy(Porta,5 , 255);  //     "TCP:ip_maquina:porta"
-     p := pos(':', ip);
-     if p = 0 then
-        p := Length(ip)+1;
+  case fsDeviceType of
+    dtTCP:
+      begin
+        ip := copy(Porta,5 , 255);  //     "TCP:ip_maquina:porta"
+        p := pos(':', ip);
+        if p = 0 then
+          p := Length(ip)+1;
 
-     fTCPPort := copy(ip, p + 1, 5);
-     if fTCPPort = '' then
-        fTCPPort := '9100';
+        fTCPPort := copy(ip, p + 1, 5);
+        if fTCPPort = '' then
+          fTCPPort := '9100';
 
-     fTCPIP := copy(ip, 1, p - 1);
+        fTCPIP := copy(ip, 1, p - 1);
 
-     Socket.CloseSocket;
-     Socket.ConnectionTimeout := (TimeOut * 1000) ;
-     Socket.Connect(fTCPIP, fTCPPort);
-     Socket.Purge;
-   end
+        Socket.CloseSocket;
+        Socket.ConnectionTimeout := (TimeOut * 1000) ;
+        Socket.Connect(fTCPIP, fTCPPort);
+        Socket.Purge;
+      end;
 
-  else if IsSerialPort then
-   begin
-     try
-        Serial.CloseSocket ;  { Fecha se ficou algo aberto }
-        Serial.DeadlockTimeout := (TimeOut * 1000) ;
-        Serial.Connect( fsPorta ) ;
-        ConfiguraSerial ;
+    dtSerial:
+      begin
+        try
+          Serial.CloseSocket ;  { Fecha se ficou algo aberto }
+          Serial.DeadlockTimeout := (TimeOut * 1000) ;
+          Serial.Connect( fsPorta ) ;
+          ConfiguraSerial ;
 
-        Serial.Purge ;  { Limpa Buffer de envio e recepção }
-     except
-        on E: ESynaSerError do
-        begin
-          try
-             Serial.RaiseExcept := false ;
-             Serial.CloseSocket ;
-          finally
-             Serial.RaiseExcept := true ;
-          end ;
+          Serial.Purge ;  { Limpa Buffer de envio e recepção }
+        except
+          on E: ESynaSerError do
+          begin
+            try
+              Serial.RaiseExcept := false ;
+              Serial.CloseSocket ;
+            finally
+              Serial.RaiseExcept := true ;
+            end ;
 
-          {$IFDEF MSWINDOWS}
-           // SysErrorMessage() em Windows retorna String em ANSI, convertendo para UTF8 se necessário
-           E.Message := ACBrStr(E.Message);
-          {$ENDIF}
+            {$IFDEF MSWINDOWS}
+            // SysErrorMessage() em Windows retorna String em ANSI, convertendo para UTF8 se necessário
+            E.Message := ACBrStr(E.Message);
+            {$ENDIF}
 
-          raise;
-        end
-        else
-          raise;
-     end ;
-   end
+            raise;
+          end
+          else
+            raise;
+        end ;
+      end;
 
-  else if not IsDLLPort then
-   begin
-      { Tenta Abrir Arquivo/Porta para ver se xiste e está disponivel}
-      if IsTXTFilePort and FileExists(Porta) then
-         SysUtils.DeleteFile(Porta);
+    dtRawPrinter:
+      GetPrinterRawIndex;
 
-      EnviaStringArquivo( '' );
-   end ;
+    dtFile:
+      begin
+        NomeArq := GetPrinterFileName;
+        { Tenta Abrir Arquivo/Porta para ver se existe e está disponivel}
+        if FileExists(NomeArq) then
+          SysUtils.DeleteFile(NomeArq);
+
+        EnviaStringArquivo( '' );
+      end ;
+  else
+  end;
 
   fsAtivo := true ;
 end;
@@ -756,18 +786,20 @@ procedure TACBrDevice.Desativar;
 begin
   if not fsAtivo then exit ;
 
-  if IsTCPPort then
-     Socket.CloseSocket
+  case fsDeviceType of
+    dtTCP:
+      Socket.CloseSocket;
 
-  else if IsSerialPort then
-   begin
-     try
-        Serial.RaiseExcept := false ;
-        Serial.CloseSocket ;
-     finally
-        Serial.RaiseExcept := true ;
-     end ;
-   end ;
+    dtSerial:
+      begin
+        try
+           Serial.RaiseExcept := false ;
+           Serial.CloseSocket ;
+        finally
+           Serial.RaiseExcept := true ;
+        end ;
+      end ;
+  end;
 
   fsAtivo := false ;
 end;
@@ -802,6 +834,25 @@ begin
 
    fsData := Value ;
    ConfiguraSerial ;
+end;
+
+procedure TACBrDevice.SetDeviceType(AValue: TACBrDeviceType);
+begin
+  if fsDeviceType = AValue then Exit;
+
+  if (AValue in [dtTCP, dtRawPrinter, dtHook]) then
+  begin
+    if (DeduzirTipoPorta(fsPorta) <> AValue) then
+      raise Exception.Create( ACBrStr(cACBrDeviceSetTypeException) );
+  end;
+
+  if (AValue in [dtFile, dtSerial]) then
+  begin
+    if (DeduzirTipoPorta(fsPorta) in [dtFile, dtSerial]) then
+      raise Exception.Create( ACBrStr(cACBrDeviceSetTypeException) );
+  end;
+
+  fsDeviceType := AValue;
 end;
 
 function TACBrDevice.GetParity: TACBrSerialParity;
@@ -921,7 +972,8 @@ begin
 end;
 
 procedure TACBrDevice.SetPorta(const Value: String);
-Var StrTemp : String ;
+Var
+  StrTemp : String ;
 begin
   if fsPorta = Value then exit ;
 
@@ -932,7 +984,39 @@ begin
   if (pos('LPT',StrTemp) = 1) or (pos('COM',StrTemp) = 1) then
      fsPorta := StrTemp
   else
-     fsPorta := Value ;
+     fsPorta := Value;
+
+  fsDeviceType := DeduzirTipoPorta(fsPorta);
+end;
+
+function TACBrDevice.DeduzirTipoPorta(APorta: String): TACBrDeviceType;
+var
+  UPorta: String;
+begin
+  UPorta := UpperCase(APorta);
+
+  if APorta = '*' then
+    Result := dtRawPrinter   // usará a impressora default
+  else if (copy(UPorta, 1, 4) = 'TCP:') then
+    Result := dtTCP
+  else if (copy(UPorta, 1, 4) = 'RAW:') then
+    Result := dtRawPrinter
+  else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
+    Result := dtFile
+  else if (copy(UPorta, 1, 3) = 'COM') or
+       {$IFDEF LINUX}(pos('/dev/', APorta) = 1){$ELSE}(copy(APorta,1,4) = '\\.\'){$ENDIF} then
+    Result := dtSerial
+  else if (pos(UPorta,'USB|DLL') > 0) then
+    Result := dtHook
+  else if (Printer.Printers.IndexOf(APorta) >= 0) then
+    Result := dtRawPrinter
+  else
+  begin
+    if pos(PathDelim, APorta) > 0 then
+      Result := dtFile
+    else
+      Result := dtRawPrinter;
+  end;
 end;
 
 procedure TACBrDevice.SetTimeOut(const Value: Integer);
@@ -961,80 +1045,77 @@ function TACBrDevice.EmLinha( lTimeOut : Integer) : Boolean;
 var TempoLimite : TDateTime ;
 begin
   Result := True;
-  if IsDLLPort or IsTCPPort then
-     exit;
 
-  if not IsSerialPort then
-  begin
-     try
-        {$IFDEF ThreadEnviaLPT}
-        EnviaStrThread(#0);  { Tenta escrever algo (#0) na Porta/Arquivo }
-        {$ENDIF}
-        Result := true ;
-     except
-        Result := false ;
-     end ;
+  case fsDeviceType of
+    dtFile:
+      begin
+        try
+          {$IFDEF ThreadEnviaLPT}
+          EnviaStringThread(#0);  { Tenta escrever algo (#0) na Porta/Arquivo }
+          {$ENDIF}
+          Result := true ;
+        except
+          Result := false ;
+        end ;
+      end;
 
-     exit ;
-  end ;
+    dtSerial:
+      begin
+        Result := False;
+        if lTimeout < 1 then
+          lTimeOut := 1;
 
-  Result := false ;
-  if lTimeout < 1 then
-     lTimeOut := 1 ;
+        if not Serial.InstanceActive then
+          Exit;
 
-  if not Serial.InstanceActive then
-     exit ;
+        TempoLimite := IncSecond( now, lTimeOut);
+        while (not Result) and (Now < TempoLimite) do
+        begin
+          case HandShake of
+            hsRTS_CTS :
+              Result := Serial.CTS;
+            hsDTR_DSR :
+              Result := Serial.DSR;
+          else ;
+            Result := True;    { Nao há sinal de HandShake para verificar }
+          end;
 
-  TempoLimite := IncSecond( now, lTimeOut)  ;
-  while (not result) and (now < TempoLimite) do
-  begin
-     case HandShake of
-       hsRTS_CTS :
-          Result := Serial.CTS ;
-
-       hsDTR_DSR :
-          Result := Serial.DSR ;
-     else ;
-        Result := true ;    { Nao há sinal de HandShake para verificar }
-     end;
-
-     if not result then
-     begin
-        {$IFNDEF NOGUI}
-          if fProcessMessages then
-             Application.ProcessMessages ;  { para redesenhar a tela do programa }
-        {$ENDIF}
-        sleep(10) ;
-     end ;
-  end ;
+          if not Result then
+          begin
+            {$IFNDEF NOGUI}
+            if fProcessMessages then
+              Application.ProcessMessages ;  { para redesenhar a tela do programa }
+            {$ENDIF}
+            Sleep(10) ;
+          end ;
+        end ;
+      end;
+  end;
 end;
 
 function TACBrDevice.IsSerialPort: Boolean;
 begin
-   Result := (pos('COM', fsPorta) =  1)
-             {$IFDEF LINUX}
-               or (pos('/dev/tty', fsPorta) =  1)
-             {$ELSE}
-               or (copy(fsPorta,1,4) = '\\.\')
-             {$ENDIF}
+  Result := (fsDeviceType = dtSerial);
 end;
 
 function TACBrDevice.IsTCPPort: Boolean;
 begin
-  Result := (UpperCase(copy(Porta, 1, 4)) = 'TCP:');
+  Result := (fsDeviceType = dtTCP);
+end;
+
+function TACBrDevice.IsRawPort: Boolean;
+begin
+  Result := (fsDeviceType = dtRawPrinter);
 end;
 
 function TACBrDevice.IsTXTFilePort: Boolean;
 begin
-  Result := UpperCase(RightStr(fsPorta,4)) = '.TXT' ;
+  Result := (fsDeviceType = dtFile);
 end;
 
 function TACBrDevice.IsDLLPort : Boolean ;
-Var
-  AStr : String;
 begin
-  AStr   := UpperCase(copy(Porta,1,3));
-  Result := (pos(AStr,'USB|DLL') > 0) ;
+  Result := (fsDeviceType = dtHook);
 end ;
 
 procedure TACBrDevice.AcharPortasSeriais(const AStringList : TStrings ;
@@ -1128,6 +1209,46 @@ begin
    Result := DeviceToString( True );
 end;
 
+function TACBrDevice.GetPrinterRawIndex: Integer;
+var
+  PrnName: String;
+  PrnIndex: Integer;
+begin
+  PrnName := Porta;
+  if (copy(UpperCase(PrnName), 1, 4) = 'RAW:') then
+    PrnName := copy(PrnName, 5, Length(PrnName)) ;
+
+  if (PrnName = '*') then
+  begin
+    PrnIndex := Printer.PrinterIndex;
+    if (PrnIndex < 0) then
+    begin
+      if Printer.Printers.Count > 0 then
+        PrnIndex := 0
+      else
+      begin
+        PrnIndex := -1;
+        raise Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao))
+      end;
+    end;
+  end
+  else
+  begin
+    PrnIndex := Printer.Printers.IndexOf(PrnName);
+    if (PrnIndex < 0) then
+      raise Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]);
+  end;
+
+  Result := PrnIndex;
+end;
+
+function TACBrDevice.GetPrinterFileName: String;
+begin
+  Result := Porta;
+  if (copy(UpperCase(Result), 1, 5) = 'FILE:') then
+    Result := copy(Result, 6, Length(Result)) ;
+end;
+
 procedure TACBrDevice.SetParamsString(const Value: String);
 Var S, Linha   : String ;
   Function GetValue( LinhaParametros, Parametro : String ) : String ;
@@ -1196,25 +1317,24 @@ end;
 
 procedure TACBrDevice.EnviaString( const AString: AnsiString);
 begin
-  if IsSerialPort then
-     EnviaStringSerial( AString )
-
-  else if IsDLLPort then
-   begin
-     if Assigned( HookEnviaString ) then
-        HookEnviaString( AString );
-   end
-  else if IsTCPPort then
-    EnviaStringTCP(AString)
-
-  else
-   begin
-     {$IFNDEF ThreadEnviaLPT}
-       EnviaStringArquivo( AString )
-     {$ELSE}
-       EnviaStrThread( AString )
-     {$ENDIF} ;
-   end ;
+  case fsDeviceType of
+    dtSerial:
+      EnviaStringSerial(AString);
+    dtHook:
+      EnviaStringHook(AString);
+    dtTCP:
+      EnviaStringTCP(AString);
+    dtRawPrinter:
+      EnviaStringRaw(AString);
+    else
+    begin
+      {$IFNDEF ThreadEnviaLPT}
+      EnviaStringArquivo(AString);
+      {$ELSE}
+      EnviaStringThread(AString);
+      {$ENDIF} ;
+    end ;
+  end;
 end;
 
 procedure TACBrDevice.EnviaByte(const AByte: Byte);
@@ -1233,35 +1353,40 @@ begin
   if ATimeOut = 0 then
      ATimeOut := Self.TimeOut;
 
-  if IsTCPPort then
-   begin
-     if NumBytes > 0 then
-        Result := Socket.RecvBufferStr( NumBytes, ATimeOut)
-     else if Terminador <> '' then
-        Result := Socket.RecvTerminated( ATimeOut, Terminador)
-     else
-        Result := Socket.RecvPacket( ATimeOut );
-   end
+  case fsDeviceType of
+    dtTCP:
+      begin
+        if NumBytes > 0 then
+          Result := Socket.RecvBufferStr( NumBytes, ATimeOut)
+        else if Terminador <> '' then
+          Result := Socket.RecvTerminated( ATimeOut, Terminador)
+        else
+          Result := Socket.RecvPacket( ATimeOut );
+      end;
 
-  else if IsSerialPort then
-   begin
-     if NumBytes > 0 then
-        Result := Serial.RecvBufferStr( NumBytes, ATimeOut)
-     else if Terminador <> '' then
-        Result := Serial.RecvTerminated( ATimeOut, Terminador)
-     else
-        Result := Serial.RecvPacket( ATimeOut );
-   end
+    dtSerial:
+      begin
+        if NumBytes > 0 then
+          Result := Serial.RecvBufferStr( NumBytes, ATimeOut)
+        else if Terminador <> '' then
+          Result := Serial.RecvTerminated( ATimeOut, Terminador)
+        else
+          Result := Serial.RecvPacket( ATimeOut );
+      end;
 
-  else if IsDLLPort and Assigned( HookLeString ) then
-   begin
-     Fim := IncMilliSecond( Now, ATimeOut );
-     repeat
-        Buffer := '';
-        HookLeString( max(NumBytes,1), ATimeOut, Buffer );
-        Result := Result + Buffer;
-     until (now > Fim) or ( (NumBytes > 0) and (Length(Result) >= NumBytes) );
-   end;
+    dtHook:
+      begin
+        if Assigned( HookLeString ) then
+        begin
+          Fim := IncMilliSecond( Now, ATimeOut );
+          repeat
+            Buffer := '';
+            HookLeString( max(NumBytes,1), ATimeOut, Buffer );
+            Result := Result + Buffer;
+          until (now > Fim) or ( (NumBytes > 0) and (Length(Result) >= NumBytes) );
+        end;
+      end;
+  end;
 end;
 
 function TACBrDevice.LeByte(ATimeOut: Integer): Byte;
@@ -1273,37 +1398,46 @@ begin
   if ATimeOut = 0 then
      ATimeOut := Self.TimeOut;
 
-  if IsTCPPort then
-     Result := Socket.RecvByte( ATimeOut )
+  case fsDeviceType of
+    dtTCP:
+      Result := Socket.RecvByte(ATimeOut);
 
-  else if IsSerialPort then
-     Result := Serial.RecvByte( ATimeOut )
+    dtSerial:
+      Result := Serial.RecvByte(ATimeOut);
 
-  else if IsDLLPort and Assigned( HookLeString ) then
-   begin
-     Buffer := '';
-     HookLeString( 1, ATimeOut, Buffer );
-     if Length(Buffer) > 0 then
-        Result := Ord( Buffer[1] );
-   end;
+    dtHook:
+      begin
+        if Assigned( HookLeString ) then
+        begin
+          Buffer := '';
+          HookLeString( 1, ATimeOut, Buffer );
+          if Length(Buffer) > 0 then
+            Result := Ord( Buffer[1] );
+        end;
+      end;
+  end;
 end;
 
 procedure TACBrDevice.Limpar;
 begin
-  if IsSerialPort then
-    Serial.Purge
-  else if IsTCPPort then
-    Socket.Purge;
+  case fsDeviceType of
+    dtSerial:
+      Serial.Purge;
+    dtTCP:
+      Socket.Purge;
+  end;
 end;
 
 function TACBrDevice.BytesParaLer: Integer;
 begin
-  if IsSerialPort then
-     Result := Serial.WaitingDataEx
-  else if IsTCPPort then
-     Result := Socket.WaitingDataEx
-  else
-     Result := 0;
+  case fsDeviceType of
+    dtSerial:
+      Result := Serial.WaitingDataEx;
+    dtTCP:
+      Result := Socket.WaitingDataEx;
+    else
+      Result := 0;
+  end;
 end;
 
 procedure TACBrDevice.EnviaStringSerial(const AString : AnsiString) ;
@@ -1340,6 +1474,12 @@ begin
     raise Exception.CreateFmt(ACBrStr(cACBrDeviceEnviaStrFailCount), [Porta]);
 end ;
 
+procedure TACBrDevice.EnviaStringHook(const AString: AnsiString);
+begin
+  if Assigned( HookEnviaString ) then
+     HookEnviaString( AString );
+end;
+
 procedure TACBrDevice.EnviaStringTCP(const AString: AnsiString);
 Var
   I, Max, NBytes : Integer ;
@@ -1359,9 +1499,52 @@ begin
   end ;
 end;
 
+
+procedure TACBrDevice.EnviaStringRaw(const AString: AnsiString);
+var
+  PrnIndex: Integer;
+  PrnName, DocName: String;
+  {$IfNDef FPC}
+  HandlePrn: THandle;
+  N: DWORD;
+  DocInfo1: TDocInfo1;
+  {$EndIf}
+begin
+  DocName := 'ACBrDevice';  // TODO: permitir informar o nome em Properties
+
+  PrnIndex := GetPrinterRawIndex;
+
+  {$IfDef FPC}
+  Printer.PrinterIndex := PrnIndex;
+  Printer.Title := DocName;
+  Printer.RawMode := True;
+  Printer.BeginDoc;
+  Printer.Write(AString);
+  Printer.EndDoc;
+  {$Else}
+  PrnName := Printer.Printers[PrnIndex];
+  if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then
+    raise Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]);
+
+  with DocInfo1 do
+  begin
+    pDocName := PChar(DocName);
+    pOutputFile := nil;
+    pDataType := 'RAW';
+  end;
+
+  StartDocPrinter(HandlePrn, 1, @DocInfo1);
+  WritePrinter(HandlePrn, PChar(AString), Length(AString), N);
+  EndPagePrinter(HandlePrn);
+  EndDocPrinter(HandlePrn);
+  ClosePrinter(HandlePrn);
+  {$EndIf}
+end;
+
 procedure TACBrDevice.EnviaStringArquivo( const AString: AnsiString);
 Var
   I, Max, NBytes : Integer ;
+  NomeArq: String;
   {$IFDEF Device_Stream}
     FS     : TFileStream ;
     Buffer : AnsiString ;
@@ -1369,16 +1552,16 @@ Var
     ArqPrn : TextFile ;
   {$ENDIF}
 begin
-  if IsSerialPort then exit;
-
   I   := 1 ;
   Max := Length(AString) ;
   NBytes := fsSendBytesCount ;
   if NBytes = 0 then
      NBytes := Max ;
 
+  NomeArq := GetPrinterFileName;
+
   {$IFDEF Device_Stream}
-    FS := TFileStream.Create( Porta, IfThen( IsTXTFilePort and FileExists(Porta),
+    FS := TFileStream.Create( NomeArq, IfThen( IsTXTFilePort and FileExists(NomeArq),
        fmOpenReadWrite, fmCreate) or fmShareDenyWrite );
     try
        FS.Seek(0, soFromEnd);  // vai para EOF
@@ -1397,9 +1580,9 @@ begin
        FS.Free ;
     end;
   {$ELSE}
-    AssignFile( ArqPrn, Porta );
+    AssignFile( ArqPrn, NomeArq );
     try
-       if IsTXTFilePort and FileExists(Porta) then
+       if IsTXTFilePort and FileExists(NomeArq) then
           Append( ArqPrn )
        else
           Rewrite( ArqPrn ) ;
@@ -1429,7 +1612,7 @@ end ;
   é cancelada e é gerado um TIMEOUT. Isso evita o "travamento" do programa
   quando a porta ou arquivo não estão prontos para a gravação com o comando
   Write() }
-procedure TACBrDevice.EnviaStrThread(AString: AnsiString);
+procedure TACBrDevice.EnviaStringThread(AString: AnsiString);
 Var IsTimeOut  : Boolean ;
     TempoFinal : TDateTime ;
     UltimoBytesSent : Integer ;

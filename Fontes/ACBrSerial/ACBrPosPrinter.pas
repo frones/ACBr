@@ -360,7 +360,7 @@ type
 
     property LinhasEntreCupons: Integer read FLinhasEntreCupons
       write FLinhasEntreCupons default 21;
-    property CortaPapel: Boolean read FCortaPapel write FCortaPapel;
+    property CortaPapel: Boolean read FCortaPapel write FCortaPapel default True;
 
     property TraduzirTags: Boolean read GetTraduzirTags
       write SetTraduzirTags default True;
@@ -707,6 +707,7 @@ begin
   FPaginaDeCodigo := pc850;
   FEspacoEntreLinhas := 0;
   FControlePorta := False;
+  FCortaPapel := True;
 
   FArqLog := '';
   FOnGravarLog := nil;
@@ -946,10 +947,18 @@ begin
     TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons)
 
   else if ATag = cTagCorteParcial then
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteParcial
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
+    if CortaPapel then
+      TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteParcial;
+  end
 
   else if ATag = cTagCorteTotal then
-    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons) + FPosPrinterClass.Cmd.CorteTotal
+  begin
+    TagTraduzida := FPosPrinterClass.ComandoPuloLinhas(LinhasEntreCupons);
+    if CortaPapel then
+      TagTraduzida := TagTraduzida + FPosPrinterClass.Cmd.CorteTotal;
+  end
 
   else if ATag = cTagAbreGaveta then
     TagTraduzida := FPosPrinterClass.ComandoGaveta()
@@ -1333,7 +1342,7 @@ begin
     Ativo := True;
 
     if not (FDevice.IsSerialPort or FDevice.IsTCPPort) then
-      raise EPosPrinterException.Create('Leitura de Informações só disponivel em Portas Seriais ou TCP');
+      raise EPosPrinterException.Create(ACBrStr('Leitura de Informações só disponivel em Portas Seriais ou TCP'));
 
     Result := FPosPrinterClass.LerInfo;
   finally
@@ -1376,7 +1385,7 @@ var
   StrToPrint: AnsiString;
 begin
   if not (ControlePorta or FDevice.Ativo) then
-    raise EPosPrinterException.Create('Não está Ativo');
+    raise EPosPrinterException.Create(ACBrStr('Não está Ativo'));
 
   StrToPrint := '';
   if FBuffer.Count > 0 then

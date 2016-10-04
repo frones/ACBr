@@ -2908,28 +2908,40 @@ procedure DesligarMaquina(Reboot : Boolean ; Forcar : Boolean ; LogOff : Boolean
    end;
 
 
-    Var RebootParam : Longword ;
+Var
+  RebootParam : Longword ;
+begin
+    if WindowsNT then
+       ObtemPrivilegios;
+
+    if Reboot then
+       RebootParam := EWX_REBOOT
+    else if LogOff then
+       RebootParam := EWX_LOGOFF
+    else
+       RebootParam := EWX_SHUTDOWN  ;
+
+    if Forcar then
+       RebootParam := RebootParam or EWX_FORCE ;
+
+    ExitWindowsEx(RebootParam, 0);
+end;
+{$ELSE}
    begin
-      if WindowsNT then
-         ObtemPrivilegios;
-
+      // Precisa ser o ROOT ou a
+      // aplicação ter provilegios de ROOT  (use: su  ,  chmod u+s SeuPrograma )
       if Reboot then
-         RebootParam := EWX_REBOOT
-      else if LogOff then
-         RebootParam := EWX_LOGOFF
+         RunCommand('reboot')
       else
-         RebootParam := EWX_SHUTDOWN  ;
+         RunCommand('halt') ;
+   end ;
+{$ENDIF}
 
-      if Forcar then
-         RebootParam := RebootParam or EWX_FORCE ;
-
-      ExitWindowsEx(RebootParam, 0);
-   end;
 
 {$IfNDef NOGUI}
 {$IfDef MSWINDOWS}
 // Origem: https://www.experts-exchange.com/questions/20294536/WM-ACTIVATE.html
-function ForceForeground(AppHandle:HWND): boolean;
+function ForceForeground(AppHandle:THANDLE): boolean;
 const
   SPI_GETFOREGROUNDLOCKTIMEOUT = $2000;
   SPI_SETFOREGROUNDLOCKTIMEOUT = $2001;
@@ -3018,17 +3030,6 @@ procedure WriteToFile(const Arq: String; ABinaryString: AnsiString);
 begin
   WriteToTXT(Arq, ABinaryString, False, False);
 end;
-
-{$ELSE}
-   begin
-      // Precisa ser o ROOT ou a
-      // aplicação ter provilegios de ROOT  (use: su  ,  chmod u+s SeuPrograma )
-      if Reboot then
-         RunCommand('reboot')
-      else
-         RunCommand('halt') ;
-   end ;
-{$ENDIF}
 
 {-----------------------------------------------------------------------------
  - Grava conteudo de "AString" no arquivo "ArqTXT".

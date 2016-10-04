@@ -1004,7 +1004,7 @@ begin
   else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
     Result := dtFile
   else if (copy(UPorta, 1, 3) = 'COM') or
-       {$IFDEF LINUX}(pos('/dev/', APorta) = 1){$ELSE}(copy(APorta,1,4) = '\\.\'){$ENDIF} then
+       {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then
     Result := dtSerial
   else if (pos(UPorta,'USB|DLL') > 0) then
     Result := dtHook

@@ -57,7 +57,7 @@ Data: 02/10/2016
 [*] "FechaCupom" Ajuste para detecção de Quebra de linha com [CR]
 
 -- ACBrPosPrinter --
-[-] Ajuste para ignoarar as tags '</corte_parcial> e </corte_total> quanto
+[-] Ajuste para ignorar as tags </corte_parcial> e </corte_total> quanto
     propriedade "CortaPapel" for False.
 [-] Correção na exibição de mensagens de erro com acentuação.
 [*] Ajuste para não fechar a porta da impressora, enquanto a mesma ainda estiver

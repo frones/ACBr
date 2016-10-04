@@ -47,22 +47,22 @@ unit ACBrUtil;
 interface
 
 Uses SysUtils, Math, Classes, ACBrConsts, synautil
-    {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
-    {$IFDEF FPC}
+    {$IfDef COMPILER6_UP} ,StrUtils, DateUtils {$Else} ,ACBrD5, FileCtrl {$EndIf}
+    {$IfDef FPC}
       ,dynlibs, zstream, LazUTF8, LConvEncoding
-      {$IFDEF USE_LCLIntf} ,LCLIntf {$ENDIF}
-    {$ELSE}
+      {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
+    {$Else}
       ,ACBrZLibExGZ
-    {$ENDIF}
-    {$IFDEF MSWINDOWS}
+    {$EndIf}
+    {$IfDef MSWINDOWS}
       ,Windows, ShellAPI
-    {$else}
-      {$IFNDEF FPC}
+    {$Else}
+      {$IfNDef FPC}
         ,Libc
-      {$else}
-        ,unix, BaseUnix
-      {$endif}
-    {$endif} ;
+      {$Else}
+        ,unix, BaseUnix {$IfNDef NOGUI}, Forms{$EndIf}
+      {$EndIf}
+    {$EndIf} ;
 
 const
 {$IFDEF CPU64}
@@ -300,7 +300,7 @@ function FlushFileToDisk( sFile: string): boolean;
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 {$IfNDef NOGUI}
-function ForceForeground(AppHandle:THANDLE): boolean;
+function ForceForeground(AppHandle:THandle): boolean;
 {$EndIf}
 
 Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
@@ -2941,7 +2941,7 @@ end;
 {$IfNDef NOGUI}
 {$IfDef MSWINDOWS}
 // Origem: https://www.experts-exchange.com/questions/20294536/WM-ACTIVATE.html
-function ForceForeground(AppHandle:THANDLE): boolean;
+function ForceForeground(AppHandle:THandle): boolean;
 const
   SPI_GETFOREGROUNDLOCKTIMEOUT = $2000;
   SPI_SETFOREGROUNDLOCKTIMEOUT = $2001;
@@ -3011,7 +3011,7 @@ begin
   end;
 end;
 {$Else}
-function ForceForeground(AppHandle:Thandle): boolean;
+function ForceForeground(AppHandle:THandle): boolean;
 begin
   Application.Restore;
   Application.BringToFront;

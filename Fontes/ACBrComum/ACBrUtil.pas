@@ -300,7 +300,7 @@ function FlushFileToDisk( sFile: string): boolean;
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
 {$IfNDef NOGUI}
-function ForceForeground(AppHandle:HWND): boolean;
+function ForceForeground(AppHandle:THANDLE): boolean;
 {$EndIf}
 
 Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
@@ -3011,7 +3011,7 @@ begin
   end;
 end;
 {$Else}
-function ForceForeground(AppHandle:HWND): boolean;
+function ForceForeground(AppHandle:Thandle): boolean;
 begin
   Application.Restore;
   Application.BringToFront;

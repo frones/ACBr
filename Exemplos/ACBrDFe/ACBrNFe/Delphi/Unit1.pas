@@ -293,7 +293,7 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, pcnNFe,
   pcnConversaoNFe, ACBrDFeConfiguracoes, pcnAuxiliar, ACBrDFeSSL, pcnNFeRTXT,
-  FileCtrl;
+  FileCtrl,ACBrNFeNotasFiscais;
 
 const
   SELDIRHELP = 1000;
@@ -2022,524 +2022,500 @@ begin
 end;
 
 procedure TForm1.GerarNFe(NumNFe : String);
+Var NotaF: NotaFiscal;
+    Produto: TDetCollectionItem;
+    Servico: TDetCollectionItem;
+    Volume: TVolCollectionItem;
+    Duplicata: TDupCollectionItem;
+    ObsComplementar: TobsContCollectionItem;
+    ObsFisco: TobsFiscoCollectionItem;
+    Referenciada: TNFrefCollectionItem;
+    DI: TDICollectionItem;
+    Adicao: TAdiCollectionItem;
+    Medicamento: TMedCollectionItem;
+    Arma: TArmaCollectionItem;
+    Reboque: TreboqueCollectionItem;
+    Lacre: TLacresCollectionItem;
+    ProcReferenciado: TprocRefCollectionItem;
 begin
-  with ACBrNFe1.NotasFiscais.Add.NFe do
-   begin
-     Ide.cNF       := StrToInt(NumNFe); //Caso não seja preenchido será gerado um número aleatório pelo componente
-     Ide.natOp     := 'VENDA PRODUCAO DO ESTAB.';
-     Ide.indPag    := ipVista;
-     Ide.modelo    := 55;
-     Ide.serie     := 1;
-     Ide.nNF       := StrToInt(NumNFe);
-     Ide.dEmi      := Date;
-     Ide.dSaiEnt   := Date;
-     Ide.hSaiEnt   := Now;
-     Ide.tpNF      := tnSaida;
-     Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); ;
-     Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
-     Ide.verProc   := '1.0.0.0'; //Versão do seu sistema
-     Ide.cUF       := UFtoCUF(edtEmitUF.Text);
-     Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
-     Ide.finNFe    := fnNormal;
-     if  Assigned( ACBrNFe1.DANFE ) then
-        Ide.tpImp     := ACBrNFe1.DANFE.TipoDANFE;
+  NotaF := ACBrNFe1.NotasFiscais.Add;
+  NotaF.NFe.Ide.cNF       := StrToInt(NumNFe); //Caso não seja preenchido será gerado um número aleatório pelo componente
+  NotaF.NFe.Ide.natOp     := 'VENDA PRODUCAO DO ESTAB.';
+  NotaF.NFe.Ide.indPag    := ipVista;
+  NotaF.NFe.Ide.modelo    := 55;
+  NotaF.NFe.Ide.serie     := 1;
+  NotaF.NFe.Ide.nNF       := StrToInt(NumNFe);
+  NotaF.NFe.Ide.dEmi      := Date;
+  NotaF.NFe.Ide.dSaiEnt   := Date;
+  NotaF.NFe.Ide.hSaiEnt   := Now;
+  NotaF.NFe.Ide.tpNF      := tnSaida;
+  NotaF.NFe.Ide.tpEmis    := TpcnTipoEmissao(cbFormaEmissao.ItemIndex); ;
+  NotaF.NFe.Ide.tpAmb     := taHomologacao;  //Lembre-se de trocar esta variável quando for para ambiente de produção
+  NotaF.NFe.Ide.verProc   := '1.0.0.0'; //Versão do seu sistema
+  NotaF.NFe.Ide.cUF       := UFtoCUF(edtEmitUF.Text);
+  NotaF.NFe.Ide.cMunFG    := StrToInt(edtEmitCodCidade.Text);
+  NotaF.NFe.Ide.finNFe    := fnNormal;
+  if  Assigned( ACBrNFe1.DANFE ) then
+    NotaF.NFe.Ide.tpImp     := ACBrNFe1.DANFE.TipoDANFE;
 
-//     Ide.dhCont := date;
-//     Ide.xJust  := 'Justificativa Contingencia';
+//  NotaF.NFe.Ide.dhCont := date;
+//  NotaF.NFe.Ide.xJust  := 'Justificativa Contingencia';
 
 //Para NFe referenciada use os campos abaixo
-{     with Ide.NFref.Add do
-      begin
-        refNFe       := ''; //NFe Eletronica
+{
+  Referenciada := NotaF.NFe.Ide.NFref.Add;
+  Referenciada.refNFe       := ''; //NFe Eletronica
 
-        RefNF.cUF    := 0;  // |
-        RefNF.AAMM   := ''; // |
-        RefNF.CNPJ   := ''; // |
-        RefNF.modelo := 1;  // |- NFe Modelo 1/1A
-        RefNF.serie  := 1;  // |
-        RefNF.nNF    := 0;  // |
+  Referenciada.RefNF.cUF    := 0;  // |
+  Referenciada.RefNF.AAMM   := ''; // |
+  Referenciada.RefNF.CNPJ   := ''; // |
+  Referenciada.RefNF.modelo := 1;  // |- NFe Modelo 1/1A
+  Referenciada.RefNF.serie  := 1;  // |
+  Referenciada.RefNF.nNF    := 0;  // |
 
-        RefNFP.cUF     := 0;  // |
-        RefNFP.AAMM    := ''; // |
-        RefNFP.CNPJCPF := ''; // |
-        RefNFP.IE      := ''; // |- NF produtor Rural
-        RefNFP.modelo  := ''; // |
-        RefNFP.serie   := 1;  // |
-        RefNFP.nNF     := 0;  // |
+  Referenciada.RefNFP.cUF     := 0;  // |
+  Referenciada.RefNFP.AAMM    := ''; // |
+  Referenciada.RefNFP.CNPJCPF := ''; // |
+  Referenciada.RefNFP.IE      := ''; // |- NF produtor Rural
+  Referenciada.RefNFP.modelo  := ''; // |
+  Referenciada.RefNFP.serie   := 1;  // |
+  Referenciada.RefNFP.nNF     := 0;  // |
 
-        RefECF.modelo  := ECFModRef2B; // |
-        RefECF.nECF    := '';          // |- Cupom Fiscal
-        RefECF.nCOO    := '';          // |
-      end;
+  Referenciada.RefECF.modelo  := ECFModRef2B; // |
+  Referenciada.RefECF.nECF    := '';          // |- Cupom Fiscal
+  Referenciada.RefECF.nCOO    := '';          // |
 }
-      Emit.CNPJCPF           := edtEmitCNPJ.Text;
-      Emit.IE                := edtEmitIE.Text;
-      Emit.xNome             := edtEmitRazao.Text;
-      Emit.xFant             := edtEmitFantasia.Text;
+  NotaF.NFe.Emit.CNPJCPF           := edtEmitCNPJ.Text;
+  NotaF.NFe.Emit.IE                := edtEmitIE.Text;
+  NotaF.NFe.Emit.xNome             := edtEmitRazao.Text;
+  NotaF.NFe.Emit.xFant             := edtEmitFantasia.Text;
 
-      Emit.EnderEmit.fone    := edtEmitFone.Text;
-      Emit.EnderEmit.CEP     := StrToInt(edtEmitCEP.Text);
-      Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
-      Emit.EnderEmit.nro     := edtEmitNumero.Text;
-      Emit.EnderEmit.xCpl    := edtEmitComp.Text;
-      Emit.EnderEmit.xBairro := edtEmitBairro.Text;
-      Emit.EnderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
-      Emit.EnderEmit.xMun    := edtEmitCidade.Text;
-      Emit.EnderEmit.UF      := edtEmitUF.Text;
-      Emit.enderEmit.cPais   := 1058;
-      Emit.enderEmit.xPais   := 'BRASIL';
+  NotaF.NFe.Emit.EnderEmit.fone    := edtEmitFone.Text;
+  NotaF.NFe.Emit.EnderEmit.CEP     := StrToInt(edtEmitCEP.Text);
+  NotaF.NFe.Emit.EnderEmit.xLgr    := edtEmitLogradouro.Text;
+  NotaF.NFe.Emit.EnderEmit.nro     := edtEmitNumero.Text;
+  NotaF.NFe.Emit.EnderEmit.xCpl    := edtEmitComp.Text;
+  NotaF.NFe.Emit.EnderEmit.xBairro := edtEmitBairro.Text;
+  NotaF.NFe.Emit.EnderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+  NotaF.NFe.Emit.EnderEmit.xMun    := edtEmitCidade.Text;
+  NotaF.NFe.Emit.EnderEmit.UF      := edtEmitUF.Text;
+  NotaF.NFe.Emit.enderEmit.cPais   := 1058;
+  NotaF.NFe.Emit.enderEmit.xPais   := 'BRASIL';
 
-      Emit.IEST              := '';
-      Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
-      Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
-                                    // a inclusão de serviços na NFe
-      Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
+  NotaF.NFe.Emit.IEST              := '';
+  NotaF.NFe.Emit.IM                := '2648800'; // Preencher no caso de existir serviços na nota
+  NotaF.NFe.Emit.CNAE              := '6201500'; // Verifique na cidade do emissor da NFe se é permitido
+                                // a inclusão de serviços na NFe
+  NotaF.NFe.Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
 //Para NFe Avulsa preencha os campos abaixo
-{      Avulsa.CNPJ    := '';
-      Avulsa.xOrgao  := '';
-      Avulsa.matr    := '';
-      Avulsa.xAgente := '';
-      Avulsa.fone    := '';
-      Avulsa.UF      := '';
-      Avulsa.nDAR    := '';
-      Avulsa.dEmi    := now;
-      Avulsa.vDAR    := 0;
-      Avulsa.repEmi  := '';
-      Avulsa.dPag    := now;             }
+{
+  NotaF.NFe.Avulsa.CNPJ    := '';
+  NotaF.NFe.Avulsa.xOrgao  := '';
+  NotaF.NFe.Avulsa.matr    := '';
+  NotaF.NFe.Avulsa.xAgente := '';
+  NotaF.NFe.Avulsa.fone    := '';
+  NotaF.NFe.Avulsa.UF      := '';
+  NotaF.NFe.Avulsa.nDAR    := '';
+  NotaF.NFe.Avulsa.dEmi    := now;
+  NotaF.NFe.Avulsa.vDAR    := 0;
+  NotaF.NFe.Avulsa.repEmi  := '';
+  NotaF.NFe.Avulsa.dPag    := now;
+}
 
-      Dest.CNPJCPF           := '05481336000137';
-      Dest.IE                := '687138770110';
-      Dest.ISUF              := '';
-      Dest.xNome             := 'D.J. COM. E LOCAÇÃO DE SOFTWARES LTDA - ME';
+  NotaF.NFe.Dest.CNPJCPF           := '05481336000137';
+  NotaF.NFe.Dest.IE                := '687138770110';
+  NotaF.NFe.Dest.ISUF              := '';
+  NotaF.NFe.Dest.xNome             := 'D.J. COM. E LOCAÇÃO DE SOFTWARES LTDA - ME';
 
-      Dest.EnderDest.Fone    := '1532599600';
-      Dest.EnderDest.CEP     := 18270170;
-      Dest.EnderDest.xLgr    := 'Rua Coronel Aureliano de Camargo';
-      Dest.EnderDest.nro     := '973';
-      Dest.EnderDest.xCpl    := '';
-      Dest.EnderDest.xBairro := 'Centro';
-      Dest.EnderDest.cMun    := 3554003;
-      Dest.EnderDest.xMun    := 'Tatui';
-      Dest.EnderDest.UF      := 'SP';
-      Dest.EnderDest.cPais   := 1058;
-      Dest.EnderDest.xPais   := 'BRASIL';
+  NotaF.NFe.Dest.EnderDest.Fone    := '1532599600';
+  NotaF.NFe.Dest.EnderDest.CEP     := 18270170;
+  NotaF.NFe.Dest.EnderDest.xLgr    := 'Rua Coronel Aureliano de Camargo';
+  NotaF.NFe.Dest.EnderDest.nro     := '973';
+  NotaF.NFe.Dest.EnderDest.xCpl    := '';
+  NotaF.NFe.Dest.EnderDest.xBairro := 'Centro';
+  NotaF.NFe.Dest.EnderDest.cMun    := 3554003;
+  NotaF.NFe.Dest.EnderDest.xMun    := 'Tatui';
+  NotaF.NFe.Dest.EnderDest.UF      := 'SP';
+  NotaF.NFe.Dest.EnderDest.cPais   := 1058;
+  NotaF.NFe.Dest.EnderDest.xPais   := 'BRASIL';
 
 //Use os campos abaixo para informar o endereço de retirada quando for diferente do Remetente/Destinatário
-{      Retirada.CNPJCPF := '';
-      Retirada.xLgr    := '';
-      Retirada.nro     := '';
-      Retirada.xCpl    := '';
-      Retirada.xBairro := '';
-      Retirada.cMun    := 0;
-      Retirada.xMun    := '';
-      Retirada.UF      := '';}
+{
+  NotaF.NFe.Retirada.CNPJCPF := '';
+  NotaF.NFe.Retirada.xLgr    := '';
+  NotaF.NFe.Retirada.nro     := '';
+  NotaF.NFe.Retirada.xCpl    := '';
+  NotaF.NFe.Retirada.xBairro := '';
+  NotaF.NFe.Retirada.cMun    := 0;
+  NotaF.NFe.Retirada.xMun    := '';
+  NotaF.NFe.Retirada.UF      := '';}
 
 //Use os campos abaixo para informar o endereço de entrega quando for diferente do Remetente/Destinatário
-{      Entrega.CNPJCPF := '';
-      Entrega.xLgr    := '';
-      Entrega.nro     := '';
-      Entrega.xCpl    := '';
-      Entrega.xBairro := '';
-      Entrega.cMun    := 0;
-      Entrega.xMun    := '';
-      Entrega.UF      := '';}
+{
+  NotaF.NFe.Entrega.CNPJCPF := '';
+  NotaF.NFe.Entrega.xLgr    := '';
+  NotaF.NFe.Entrega.nro     := '';
+  NotaF.NFe.Entrega.xCpl    := '';
+  NotaF.NFe.Entrega.xBairro := '';
+  NotaF.NFe.Entrega.cMun    := 0;
+  NotaF.NFe.Entrega.xMun    := '';
+  NotaF.NFe.Entrega.UF      := '';}
 
 //Adicionando Produtos
-      with Det.Add do
-       begin
-         Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
-         Prod.cProd    := '123456';
-         Prod.cEAN     := '7896523206646';
-         Prod.xProd    := 'TESTE DE PRODUTO';
-         Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
-         Prod.EXTIPI   := '';
-         Prod.CFOP     := '5101';
-         Prod.uCom     := 'UN';
-         Prod.qCom     := 1 ;
-         Prod.vUnCom   := 100;
-         Prod.vProd    := 100 ;
+  Produto := NotaF.NFe.Det.Add;
+  Produto.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
+  Produto.Prod.cProd    := '123456';
+  Produto.Prod.cEAN     := '7896523206646';
+  Produto.Prod.xProd    := 'TESTE DE PRODUTO';
+  Produto.Prod.NCM      := '94051010'; // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+  Produto.Prod.EXTIPI   := '';
+  Produto.Prod.CFOP     := '5101';
+  Produto.Prod.uCom     := 'UN';
+  Produto.Prod.qCom     := 1 ;
+  Produto.Prod.vUnCom   := 100;
+  Produto.Prod.vProd    := 100 ;
 
-         Prod.cEANTrib  := '7896523206646';
-         Prod.uTrib     := 'UN';
-         Prod.qTrib     := 1;
-         Prod.vUnTrib   := 100;
+  Produto.Prod.cEANTrib  := '7896523206646';
+  Produto.Prod.uTrib     := 'UN';
+  Produto.Prod.qTrib     := 1;
+  Produto.Prod.vUnTrib   := 100;
 
-         Prod.vOutro    := 0;
-         Prod.vFrete    := 0;
-         Prod.vSeg      := 0;
-         Prod.vDesc     := 0;
+  Produto.Prod.vOutro    := 0;
+  Produto.Prod.vFrete    := 0;
+  Produto.Prod.vSeg      := 0;
+  Produto.Prod.vDesc     := 0;
 
-         Prod.CEST := '1111111';
+  Produto.Prod.CEST := '1111111';
 
-         infAdProd      := 'Informacao Adicional do Produto';
+  Produto.infAdProd      := 'Informacao Adicional do Produto';
 
 //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
-{         with Prod.DI.Add do
-          begin
-            nDi         := '';
-            dDi         := now;
-            xLocDesemb  := '';
-            UFDesemb    := '';
-            dDesemb     := now;
-            cExportador := '';
+{
+  DI := Produto.Prod.DI.Add;
+  DI.nDi         := '';
+  DI.dDi         := now;
+  DI.xLocDesemb  := '';
+  DI.UFDesemb    := '';
+  DI.dDesemb     := now;
+  DI.cExportador := '';
 
-            with adi.Add do
-             begin
-               nAdicao     := 1;
-               nSeqAdi     := 1;
-               cFabricante := '';
-               vDescDI     := 0;
-             end;
-          end;
+  Adicao := DI.adi.Add;
+  Adicao.nAdicao     := 1;
+  Adicao.nSeqAdi     := 1;
+  Adicao.cFabricante := '';
+  Adicao.vDescDI     := 0;
 }
+
 //Campos para venda de veículos novos
-{         with Prod.veicProd do
-          begin
-            tpOP    := toVendaConcessionaria;
-            chassi  := '';
-            cCor    := '';
-            xCor    := '';
-            pot     := '';
-            Cilin   := '';
-            pesoL   := '';
-            pesoB   := '';
-            nSerie  := '';
-            tpComb  := '';
-            nMotor  := '';
-            CMT     := '';
-            dist    := '';
-            RENAVAM := '';
-            anoMod  := 0;
-            anoFab  := 0;
-            tpPint  := '';
-            tpVeic  := 0;
-            espVeic := 0;
-            VIN     := '';
-            condVeic := cvAcabado;
-            cMod    := '';
-          end;
+{
+  Produto.Prod.veicProd.tpOP    := toVendaConcessionaria;
+  Produto.Prod.veicProd.chassi  := '';
+  Produto.Prod.veicProd.cCor    := '';
+  Produto.Prod.veicProd.xCor    := '';
+  Produto.Prod.veicProd.pot     := '';
+  Produto.Prod.veicProd.Cilin   := '';
+  Produto.Prod.veicProd.pesoL   := '';
+  Produto.Prod.veicProd.pesoB   := '';
+  Produto.Prod.veicProd.nSerie  := '';
+  Produto.Prod.veicProd.tpComb  := '';
+  Produto.Prod.veicProd.nMotor  := '';
+  Produto.Prod.veicProd.CMT     := '';
+  Produto.Prod.veicProd.dist    := '';
+  Produto.Prod.veicProd.RENAVAM := '';
+  Produto.Prod.veicProd.anoMod  := 0;
+  Produto.Prod.veicProd.anoFab  := 0;
+  Produto.Prod.veicProd.tpPint  := '';
+  Produto.Prod.veicProd.tpVeic  := 0;
+  Produto.Prod.veicProd.espVeic := 0;
+  Produto.Prod.veicProd.VIN     := '';
+  Produto.Prod.veicProd.condVeic := cvAcabado;
+  Produto.Prod.veicProd.cMod    := '';
 }
 //Campos específicos para venda de medicamentos
-{         with Prod.med.Add do
-          begin
-            nLote := '';
-            qLote := 0 ;
-            dFab  := now ;
-            dVal  := now ;
-            vPMC  := 0 ;
-          end;  }
-//Campos específicos para venda de armamento
-{         with Prod.arma.Add do
-          begin
-            nSerie := 0;
-            tpArma := taUsoPermitido ;
-            nCano  := 0 ;
-            descr  := '' ;
-          end;      }
-//Campos específicos para venda de combustível(distribuidoras)
-{         with Prod.comb do
-          begin
-            cProdANP := 0;
-            CODIF    := '';
-            qTemp    := 0;
-            UFcons   := '';
-
-            CIDE.qBCprod   := 0 ;
-            CIDE.vAliqProd := 0 ;
-            CIDE.vCIDE     := 0 ;
-
-            ICMS.vBCICMS   := 0 ;
-            ICMS.vICMS     := 0 ;
-            ICMS.vBCICMSST := 0 ;
-            ICMS.vICMSST   := 0 ;
-
-            ICMSInter.vBCICMSSTDest := 0 ;
-            ICMSInter.vICMSSTDest   := 0 ;
-
-            ICMSCons.vBCICMSSTCons := 0 ;
-            ICMSCons.vICMSSTCons   := 0 ;
-            ICMSCons.UFcons        := '' ;
-          end;}
-
-         with Imposto do
-          begin
-            // lei da transparencia nos impostos
-            vTotTrib := 0;
-
-            with ICMS do
-             begin
-               CST          := cst00;
-               ICMS.orig    := oeNacional;
-               ICMS.modBC   := dbiValorOperacao;
-               ICMS.vBC     := 100;
-               ICMS.pICMS   := 18;
-               ICMS.vICMS   := 18;
-               ICMS.modBCST := dbisMargemValorAgregado;
-               ICMS.pMVAST  := 0;
-               ICMS.pRedBCST:= 0;
-               ICMS.vBCST   := 0;
-               ICMS.pICMSST := 0;
-               ICMS.vICMSST := 0;
-               ICMS.pRedBC  := 0;
-
-
-               // partilha do ICMS e fundo de probreza
-               with ICMSUFDest do
-                begin
-                  vBCUFDest      := 0.00;
-                  pFCPUFDest     := 0.00;
-                  pICMSUFDest    := 0.00;
-                  pICMSInter     := 0.00;
-                  pICMSInterPart := 0.00;
-                  vFCPUFDest     := 0.00;
-                  vICMSUFDest    := 0.00;
-                  vICMSUFRemet   := 0.00;
-                end;
-             end;
-
-    {        with IPI do
-             begin
-               CST      := ipi99 ;
-               clEnq    := '999';
-               CNPJProd := '';
-               cSelo    := '';
-               qSelo    := 0;
-               cEnq     := '';
-
-               vBC    := 100;
-               qUnid  := 0;
-               vUnid  := 0;
-               pIPI   := 5;
-               vIPI   := 5;
-             end;    }
 {
-            with II do
-             begin
-               vBc      := 0;
-               vDespAdu := 0;
-               vII      := 0;
-               vIOF     := 0;
-             end;
+  Medicamento := Produto.Prod.med.Add;
+  Medicamento.nLote := '';
+  Medicamento.qLote := 0 ;
+  Medicamento.dFab  := now ;
+  Medicamento.dVal  := now ;
+  Medicamento.vPMC  := 0 ;
+}
 
-            with PIS do
-             begin
-               CST      := pis99;
-               PIS.vBC  := 0;
-               PIS.pPIS := 0;
-               PIS.vPIS := 0;
+//Campos específicos para venda de armamento
+{
+  Arma := Produto.Prod.arma.Add;
+  Arma.nSerie := 0;
+  Arma.tpArma := taUsoPermitido ;
+  Arma.nCano  := 0 ;
+  Arma.descr  := '' ;
+}
+//Campos específicos para venda de combustível(distribuidoras)
+{
+  Produto.Prod.comb.cProdANP := 0;
+  Produto.Prod.comb.CODIF    := '';
+  Produto.Prod.comb.qTemp    := 0;
+  Produto.Prod.comb.UFcons   := '';
 
-               PIS.qBCProd   := 0;
-               PIS.vAliqProd := 0;
-               PIS.vPIS      := 0;
-             end;
+  Produto.Prod.comb.CIDE.qBCprod   := 0 ;
+  Produto.Prod.comb.CIDE.vAliqProd := 0 ;
+  Produto.Prod.comb.CIDE.vCIDE     := 0 ;
 
-            with PISST do
-             begin
-               vBc       := 0;
-               pPis      := 0;
-               qBCProd   := 0;
-               vAliqProd := 0;
-               vPIS      := 0;
-             end;
+  Produto.Prod.comb.ICMS.vBCICMS   := 0 ;
+  Produto.Prod.comb.ICMS.vICMS     := 0 ;
+  Produto.Prod.comb.ICMS.vBCICMSST := 0 ;
+  Produto.Prod.comb.ICMS.vICMSST   := 0 ;
 
-            with COFINS do
-             begin
-               CST            := cof99;
-               COFINS.vBC     := 0;
-               COFINS.pCOFINS := 0;
-               COFINS.vCOFINS := 0;
+  Produto.Prod.comb.ICMSInter.vBCICMSSTDest := 0 ;
+  Produto.Prod.comb.ICMSInter.vICMSSTDest   := 0 ;
 
-               COFINS.qBCProd   := 0;
-               COFINS.vAliqProd := 0;
-             end;
+  Produto.Prod.comb.ICMSCons.vBCICMSSTCons := 0 ;
+  Produto.Prod.comb.ICMSCons.vICMSSTCons   := 0 ;
+  Produto.Prod.comb.ICMSCons.UFcons        := '' ;
+ }
+            // lei da transparencia nos impostos
+  Produto.Imposto.vTotTrib := 0;
+  Produto.Imposto.ICMS.CST          := cst00;
+  Produto.Imposto.ICMS.orig    := oeNacional;
+  Produto.Imposto.ICMS.modBC   := dbiValorOperacao;
+  Produto.Imposto.ICMS.vBC     := 100;
+  Produto.Imposto.ICMS.pICMS   := 18;
+  Produto.Imposto.ICMS.vICMS   := 18;
+  Produto.Imposto.ICMS.modBCST := dbisMargemValorAgregado;
+  Produto.Imposto.ICMS.pMVAST  := 0;
+  Produto.Imposto.ICMS.pRedBCST:= 0;
+  Produto.Imposto.ICMS.vBCST   := 0;
+  Produto.Imposto.ICMS.pICMSST := 0;
+  Produto.Imposto.ICMS.vICMSST := 0;
+  Produto.Imposto.ICMS.pRedBC  := 0;
 
-            with COFINSST do
-             begin
-               vBC       := 0;
-               pCOFINS   := 0;
-               qBCProd   := 0;
-               vAliqProd := 0;
-               vCOFINS   := 0;
-             end;
+       // partilha do ICMS e fundo de probreza
+  Produto.Imposto.ICMSUFDest.vBCUFDest      := 0.00;
+  Produto.Imposto.ICMSUFDest.pFCPUFDest     := 0.00;
+  Produto.Imposto.ICMSUFDest.pICMSUFDest    := 0.00;
+  Produto.Imposto.ICMSUFDest.pICMSInter     := 0.00;
+  Produto.Imposto.ICMSUFDest.pICMSInterPart := 0.00;
+  Produto.Imposto.ICMSUFDest.vFCPUFDest     := 0.00;
+  Produto.Imposto.ICMSUFDest.vICMSUFDest    := 0.00;
+  Produto.Imposto.ICMSUFDest.vICMSUFRemet   := 0.00;
+
+
+{
+  Produto.Imposto.IPI.CST      := ipi99 ;
+  Produto.Imposto.IPI.clEnq    := '999';
+  Produto.Imposto.IPI.CNPJProd := '';
+  Produto.Imposto.IPI.cSelo    := '';
+  Produto.Imposto.IPI.qSelo    := 0;
+  Produto.Imposto.IPI.cEnq     := '';
+
+  Produto.Imposto.IPI.vBC    := 100;
+  Produto.Imposto.IPI.qUnid  := 0;
+  Produto.Imposto.IPI.vUnid  := 0;
+  Produto.Imposto.IPI.pIPI   := 5;
+  Produto.Imposto.IPI.vIPI   := 5;
+}
+{
+  Produto.Imposto.II.vBc      := 0;
+  Produto.Imposto.II.vDespAdu := 0;
+  Produto.Imposto.II.vII      := 0;
+  Produto.Imposto.II.vIOF     := 0;
+
+  Produto.Imposto.PIS.CST      := pis99;
+  Produto.Imposto.PIS.vBC  := 0;
+  Produto.Imposto.PIS.pPIS := 0;
+  Produto.Imposto.PIS.vPIS := 0;
+
+  Produto.Imposto.PIS.qBCProd   := 0;
+  Produto.Imposto.PIS.vAliqProd := 0;
+  Produto.Imposto.PIS.vPIS      := 0;
+
+  Produto.Imposto.PISST.vBc       := 0;
+  Produto.Imposto.PISST.pPis      := 0;
+  Produto.Imposto.PISST.qBCProd   := 0;
+  Produto.Imposto.PISST.vAliqProd := 0;
+  Produto.Imposto.PISST.vPIS      := 0;
+
+  Produto.Imposto.COFINS.CST            := cof99;
+  Produto.Imposto.COFINS.vBC     := 0;
+  Produto.Imposto.COFINS.pCOFINS := 0;
+  Produto.Imposto.COFINS.vCOFINS := 0;
+  Produto.Imposto.COFINS.qBCProd   := 0;
+  Produto.Imposto.COFINS.vAliqProd := 0;
+
+  Produto.Imposto.COFINSST.vBC       := 0;
+  Produto.Imposto.COFINSST.pCOFINS   := 0;
+  Produto.Imposto.COFINSST.qBCProd   := 0;
+  Produto.Imposto.COFINSST.vAliqProd := 0;
+  Produto.Imposto.COFINSST.vCOFINS   := 0;
 }
 //Grupo para serviços
-{            with ISSQN do
-             begin
-               vBC       := 0;
-               vAliq     := 0;
-               vISSQN    := 0;
-               cMunFG    := 0;
-               cListServ := 1402; // Preencha este campo usando a tabela disponível
+{
+  Produto.Imposto.ISSQN.vBC       := 0;
+  Produto.Imposto.ISSQN.vAliq     := 0;
+  Produto.Imposto.ISSQN.vISSQN    := 0;
+  Produto.Imposto.ISSQN.cMunFG    := 0;
+  Produto.Imposto.ISSQN.cListServ := 1402; // Preencha este campo usando a tabela disponível
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-             end;}
-         end;
-       end ;
- {
+}
+{
 //Adicionando Serviços
-      with Det.Add do
-       begin
-         Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
-         Prod.cProd    := '123457';
-         Prod.cEAN     := '';
-         Prod.xProd    := 'Descrição do Serviço';
-         Prod.NCM      := '99';
-         Prod.EXTIPI   := '';
-         Prod.CFOP     := '5933';
-         Prod.uCom     := 'UN';
-         Prod.qCom     := 1 ;
-         Prod.vUnCom   := 100;
-         Prod.vProd    := 100 ;
+  Servico := NotaF.Nfe.Det.Add;
+  Servico.Prod.nItem    := 1; // Número sequencial, para cada item deve ser incrementado
+  Servico.Prod.cProd    := '123457';
+  Servico.Prod.cEAN     := '';
+  Servico.Prod.xProd    := 'Descrição do Serviço';
+  Servico.Prod.NCM      := '99';
+  Servico.Prod.EXTIPI   := '';
+  Servico.Prod.CFOP     := '5933';
+  Servico.Prod.uCom     := 'UN';
+  Servico.Prod.qCom     := 1 ;
+  Servico.Prod.vUnCom   := 100;
+  Servico.Prod.vProd    := 100 ;
 
-         Prod.cEANTrib  := '';
-         Prod.uTrib     := 'UN';
-         Prod.qTrib     := 1;
-         Prod.vUnTrib   := 100;
+  Servico.Prod.cEANTrib  := '';
+  Servico.Prod.uTrib     := 'UN';
+  Servico.Prod.qTrib     := 1;
+  Servico.Prod.vUnTrib   := 100;
 
-         Prod.vFrete    := 0;
-         Prod.vSeg      := 0;
-         Prod.vDesc     := 0;
+  Servico.Prod.vFrete    := 0;
+  Servico.Prod.vSeg      := 0;
+  Servico.Prod.vDesc     := 0;
 
-         infAdProd      := 'Informação Adicional do Serviço';
+  Servico.infAdProd      := 'Informação Adicional do Serviço';
 
 //Grupo para serviços
-            with Imposto.ISSQN do
-             begin
-               cSitTrib  := ISSQNcSitTribNORMAL; 
-               vBC       := 100;
-               vAliq     := 2;
-               vISSQN    := 2;
-               cMunFG    := 3554003;
-               cListServ := '1402'; // Preencha este campo usando a tabela disponível
+  Servico.Imposto.ISSQN
+  Servico.Imposto.cSitTrib  := ISSQNcSitTribNORMAL;
+  Servico.Imposto.vBC       := 100;
+  Servico.Imposto.vAliq     := 2;
+  Servico.Imposto.vISSQN    := 2;
+  Servico.Imposto.cMunFG    := 3554003;
+  Servico.Imposto.cListServ := '1402'; // Preencha este campo usando a tabela disponível
                                // em http://www.planalto.gov.br/Ccivil_03/LEIS/LCP/Lcp116.htm
-             end;
-       end ;       }
+  }
 
-      Total.ICMSTot.vBC     := 100;
-      Total.ICMSTot.vICMS   := 18;
-      Total.ICMSTot.vBCST   := 0;
-      Total.ICMSTot.vST     := 0;
-      Total.ICMSTot.vProd   := 100;
-      Total.ICMSTot.vFrete  := 0;
-      Total.ICMSTot.vSeg    := 0;
-      Total.ICMSTot.vDesc   := 0;
-      Total.ICMSTot.vII     := 0;
-      Total.ICMSTot.vIPI    := 0;
-      Total.ICMSTot.vPIS    := 0;
-      Total.ICMSTot.vCOFINS := 0;
-      Total.ICMSTot.vOutro  := 0;
-      Total.ICMSTot.vNF     := 100;
+  NotaF.NFe.Total.ICMSTot.vBC     := 100;
+  NotaF.NFe.Total.ICMSTot.vICMS   := 18;
+  NotaF.NFe.Total.ICMSTot.vBCST   := 0;
+  NotaF.NFe.Total.ICMSTot.vST     := 0;
+  NotaF.NFe.Total.ICMSTot.vProd   := 100;
+  NotaF.NFe.Total.ICMSTot.vFrete  := 0;
+  NotaF.NFe.Total.ICMSTot.vSeg    := 0;
+  NotaF.NFe.Total.ICMSTot.vDesc   := 0;
+  NotaF.NFe.Total.ICMSTot.vII     := 0;
+  NotaF.NFe.Total.ICMSTot.vIPI    := 0;
+  NotaF.NFe.Total.ICMSTot.vPIS    := 0;
+  NotaF.NFe.Total.ICMSTot.vCOFINS := 0;
+  NotaF.NFe.Total.ICMSTot.vOutro  := 0;
+  NotaF.NFe.Total.ICMSTot.vNF     := 100;
 
-      // lei da transparencia de impostos
-      Total.ICMSTot.vTotTrib := 0;
+  // lei da transparencia de impostos
+  NotaF.NFe.Total.ICMSTot.vTotTrib := 0;
 
-      // partilha do icms e fundo de probreza
-      Total.ICMSTot.vFCPUFDest   := 0.00;
-      Total.ICMSTot.vICMSUFDest  := 0.00;
-      Total.ICMSTot.vICMSUFRemet := 0.00;
+  // partilha do icms e fundo de probreza
+  NotaF.NFe.Total.ICMSTot.vFCPUFDest   := 0.00;
+  NotaF.NFe.Total.ICMSTot.vICMSUFDest  := 0.00;
+  NotaF.NFe.Total.ICMSTot.vICMSUFRemet := 0.00;
 
 
-  {    Total.ISSQNtot.vServ   := 100;
-      Total.ISSQNTot.vBC     := 100;
-      Total.ISSQNTot.vISS    := 2;
-      Total.ISSQNTot.vPIS    := 0;
-      Total.ISSQNTot.vCOFINS := 0;
+{
+  NotaF.NFe.Total.ISSQNtot.vServ   := 100;
+  NotaF.NFe.Total.ISSQNTot.vBC     := 100;
+  NotaF.NFe.Total.ISSQNTot.vISS    := 2;
+  NotaF.NFe.Total.ISSQNTot.vPIS    := 0;
+  NotaF.NFe.Total.ISSQNTot.vCOFINS := 0;
 
-      Total.retTrib.vRetPIS    := 0;
-      Total.retTrib.vRetCOFINS := 0;
-      Total.retTrib.vRetCSLL   := 0;
-      Total.retTrib.vBCIRRF    := 0;
-      Total.retTrib.vIRRF      := 0;
-      Total.retTrib.vBCRetPrev := 0;
-      Total.retTrib.vRetPrev   := 0;}
+  NotaF.NFe.Total.retTrib.vRetPIS    := 0;
+  NotaF.NFe.Total.retTrib.vRetCOFINS := 0;
+  NotaF.NFe.Total.retTrib.vRetCSLL   := 0;
+  NotaF.NFe.Total.retTrib.vBCIRRF    := 0;
+  NotaF.NFe.Total.retTrib.vIRRF      := 0;
+  NotaF.NFe.Total.retTrib.vBCRetPrev := 0;
+  NotaF.NFe.Total.retTrib.vRetPrev   := 0;}
 
-      Transp.modFrete := mfContaEmitente;
-      Transp.Transporta.CNPJCPF  := '';
-      Transp.Transporta.xNome    := '';
-      Transp.Transporta.IE       := '';
-      Transp.Transporta.xEnder   := '';
-      Transp.Transporta.xMun     := '';
-      Transp.Transporta.UF       := '';
+  NotaF.NFe.Transp.modFrete := mfContaEmitente;
+  NotaF.NFe.Transp.Transporta.CNPJCPF  := '';
+  NotaF.NFe.Transp.Transporta.xNome    := '';
+  NotaF.NFe.Transp.Transporta.IE       := '';
+  NotaF.NFe.Transp.Transporta.xEnder   := '';
+  NotaF.NFe.Transp.Transporta.xMun     := '';
+  NotaF.NFe.Transp.Transporta.UF       := '';
 
-{      Transp.retTransp.vServ    := 0;
-      Transp.retTransp.vBCRet   := 0;
-      Transp.retTransp.pICMSRet := 0;
-      Transp.retTransp.vICMSRet := 0;
-      Transp.retTransp.CFOP     := '';
-      Transp.retTransp.cMunFG   := 0;         }
+{
+  NotaF.NFe.Transp.retTransp.vServ    := 0;
+  NotaF.NFe.Transp.retTransp.vBCRet   := 0;
+  NotaF.NFe.Transp.retTransp.pICMSRet := 0;
+  NotaF.NFe.Transp.retTransp.vICMSRet := 0;
+  NotaF.NFe.Transp.retTransp.CFOP     := '';
+  NotaF.NFe.Transp.retTransp.cMunFG   := 0;
+}
 
-      Transp.veicTransp.placa := '';
-      Transp.veicTransp.UF    := '';
-      Transp.veicTransp.RNTC  := '';
+  NotaF.NFe.Transp.veicTransp.placa := '';
+  NotaF.NFe.Transp.veicTransp.UF    := '';
+  NotaF.NFe.Transp.veicTransp.RNTC  := '';
+
 //Dados do Reboque
-{      with Transp.Reboque.Add do
-       begin
-         placa := '';
-         UF    := '';
-         RNTC  := '';
-       end;}
+{
+  Reboque := NotaF.NFe.Transp.Reboque.Add;
+  Reboque.placa := '';
+  Reboque.UF    := '';
+  Reboque.RNTC  := '';
+}
 
-      with Transp.Vol.Add do
-       begin
-         qVol  := 1;
-         esp   := 'Especie';
-         marca := 'Marca';
-         nVol  := 'Numero';
-         pesoL := 100;
-         pesoB := 110;
+  Volume := NotaF.NFe.Transp.Vol.Add;
+  Volume.qVol  := 1;
+  Volume.esp   := 'Especie';
+  Volume.marca := 'Marca';
+  Volume.nVol  := 'Numero';
+  Volume.pesoL := 100;
+  Volume.pesoB := 110;
 
-         //Lacres do volume. Pode ser adicionado vários
-         //Lacres.Add.nLacre := '';
-       end;
+  //Lacres do volume. Pode ser adicionado vários
+{
+  Lacre := Volume.Lacres.Add;
+  Lacre.nLacre := '';
+}
 
-      Cobr.Fat.nFat  := 'Numero da Fatura';
-      Cobr.Fat.vOrig := 100 ;
-      Cobr.Fat.vDesc := 0 ;
-      Cobr.Fat.vLiq  := 100 ;
+  NotaF.NFe.Cobr.Fat.nFat  := 'Numero da Fatura';
+  NotaF.NFe.Cobr.Fat.vOrig := 100 ;
+  NotaF.NFe.Cobr.Fat.vDesc := 0 ;
+  NotaF.NFe.Cobr.Fat.vLiq  := 100 ;
 
-      with Cobr.Dup.Add do
-       begin
-         nDup  := '1234';
-         dVenc := now+10;
-         vDup  := 50;
-       end;
+  Duplicata := NotaF.NFe.Cobr.Dup.Add;
+  Duplicata.nDup  := '1234';
+  Duplicata.dVenc := now+10;
+  Duplicata.vDup  := 50;
 
-      with Cobr.Dup.Add do
-       begin
-         nDup  := '1235';
-         dVenc := now+10;
-         vDup  := 50;
-       end;
+  Duplicata := NotaF.NFe.Cobr.Dup.Add;
+  Duplicata.nDup  := '1235';
+  Duplicata.dVenc := now+10;
+  Duplicata.vDup  := 50;
 
 
-      InfAdic.infCpl     :=  '';
-      InfAdic.infAdFisco :=  '';
+  NotaF.NFe.InfAdic.infCpl     :=  '';
+  NotaF.NFe.InfAdic.infAdFisco :=  '';
 
-      with InfAdic.obsCont.Add do
-       begin
-         xCampo := 'ObsCont';
-         xTexto := 'Texto';
-       end;
+  ObsComplementar := NotaF.NFe.InfAdic.obsCont.Add;
+  ObsComplementar.xCampo := 'ObsCont';
+  ObsComplementar.xTexto := 'Texto';
 
-      with InfAdic.obsFisco.Add do
-       begin
-         xCampo := 'ObsFisco';
-         xTexto := 'Texto';
-       end;
+  ObsFisco := NotaF.NFe.InfAdic.obsFisco.Add;
+  ObsFisco.xCampo := 'ObsFisco';
+  ObsFisco.xTexto := 'Texto';
+
 //Processo referenciado
-{     with InfAdic.procRef.Add do
-       begin
-         nProc := '';
-         indProc := ipSEFAZ;
-       end;                 }
+{
+  ProcReferenciado := NotaF.Nfe.InfAdic.procRef.Add;
+  ProcReferenciado.nProc := '';
+  ProcReferenciado.indProc := ipSEFAZ;
+}
 
-      exporta.UFembarq   := '';;
-      exporta.xLocEmbarq := '';
+  NotaF.NFe.exporta.UFembarq   := '';;
+  NotaF.NFe.exporta.xLocEmbarq := '';
 
-      compra.xNEmp := '';
-      compra.xPed  := '';
-      compra.xCont := '';
-   end;
+  NotaF.NFe.compra.xNEmp := '';
+  NotaF.NFe.compra.xPed  := '';
+  NotaF.NFe.compra.xCont := '';
 
   ACBrNFe1.NotasFiscais.GerarNFe;
 end;

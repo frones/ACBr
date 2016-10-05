@@ -295,10 +295,6 @@ begin
         begin
           if ((COD_DOC_OP <> '') or (DT_FIN_OP > 0)) and (DT_INI_OP <= 0) then
             raise Exception.Create('O campo DT_INI_OS será obrigatório conforme informação do campo COD_DOC_OP ou DT_FIN_OP');
-          if (DT_INI_OP > RegK100.DT_FIN) or (DT_FIN_OP < RegK100.DT_INI) then
-           raise Exception.Create('A data deve estar compreendida no período informado nos campos DT_INI e DT_FIN do Registro K100');
-          if DT_INI_OP > DT_FIN_OP then
-            raise Exception.Create('O campo DT_INI_OP não pode ser maior do que o campo DT_FIN_OP');
           if ((DT_INI_OP > 0) or (DT_FIN_OP > 0)) and (COD_DOC_OP = '') then
             raise Exception.Create('O campo COD_DOC_OP será obrigatório conforme informação do campo DT_INI_OS ou DT_FIN_OS');
 
@@ -328,8 +324,8 @@ begin
      begin
         with RegK230.RegistroK235.Items[intFor] do
         begin
-          if (DT_SAIDA < RegK230.DT_INI_OP) or (DT_SAIDA > RegK230.DT_FIN_OP) then
-           raise Exception.Create('A data de saída deve estar compreendida no período informado nos campos DT_INI_OP e DT_FIN_OP do Registro K230');
+          if (DT_SAIDA < RegK230.DT_INI_OP) then
+           raise Exception.Create('A data de saída deve ser igual ou posterior ao início da produção, informado em DT_INI_OP do Registro K230');
 
           Add( LFill('K235') +
                LFill( RegK230.RegistroK235.Items[intFor].DT_SAIDA ) +

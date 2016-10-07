@@ -783,6 +783,8 @@ begin
 end ;
 
 procedure TACBrDevice.Desativar;
+var
+  I: Integer;
 begin
   if not fsAtivo then exit ;
 
@@ -792,6 +794,14 @@ begin
 
     dtSerial:
       begin
+        // Espera a impressora ficar livre (se não estiver, ainda está imprimindo)
+        if Serial.InstanceActive then
+        begin
+          I := 0;
+          while (not EmLinha(1)) and (I < 5) do
+            Inc(I);
+        end;
+
         try
            Serial.RaiseExcept := false ;
            Serial.CloseSocket ;
@@ -992,6 +1002,15 @@ end;
 function TACBrDevice.DeduzirTipoPorta(APorta: String): TACBrDeviceType;
 var
   UPorta: String;
+
+  function IsPortaParalela(const APorta: string): Boolean;
+  begin
+  {$IFDEF LINUX}
+    Result := (Pos('/dev/lp', APorta) = 1);
+  {$ELSE}
+    Result := (Pos('LPT', APorta) = 1);
+  {$ENDIF}
+  end;
 begin
   UPorta := UpperCase(APorta);
 
@@ -1002,6 +1021,8 @@ begin
   else if (copy(UPorta, 1, 4) = 'RAW:') then
     Result := dtRawPrinter
   else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
+    Result := dtFile
+  else if IsPortaParalela(UPorta) then
     Result := dtFile
   else if (copy(UPorta, 1, 3) = 'COM') or
        {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then
@@ -1213,6 +1234,36 @@ function TACBrDevice.GetPrinterRawIndex: Integer;
 var
   PrnName: String;
   PrnIndex: Integer;
+
+  function RetornaPorta: Integer;
+  var
+    I: Integer;
+    VPos: Integer;
+    VName: String;
+  begin
+    Result := -1;
+    for I := 0 to Pred(Printer.Printers.Count) do
+    begin
+      {$IFDEF MSWINDOWS}
+      VName := Printer.Printers[I];
+      if pos('\\', copy(VName, 1, 2)) > 0 then  //se for impressora na rede.
+      begin
+        VName := copy(VName, 3, Length(VName));
+        VPos := pos('\', VName);
+        VName := copy(VName, VPos + 1, Length(VName));
+      end;
+
+      if SameText(PrnName, VName) then
+      begin
+        Result := I;
+        Break;
+      end;
+      {$ELSE}
+      Printer.Printers.IndexOf(PrnName);
+      {$ENDIF}
+    end;
+  end;
+
 begin
   PrnName := Porta;
   if (copy(UpperCase(PrnName), 1, 4) = 'RAW:') then
@@ -1226,17 +1277,16 @@ begin
       if Printer.Printers.Count > 0 then
         PrnIndex := 0
       else
-      begin
-        PrnIndex := -1;
-        raise Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao))
-      end;
+        raise Exception.Create(ACBrStr(cACBrDeviceSemImpressoraPadrao));
     end;
   end
   else
   begin
-    PrnIndex := Printer.Printers.IndexOf(PrnName);
+    PrnIndex := RetornaPorta;
+
     if (PrnIndex < 0) then
-      raise Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada), [PrnName]);
+      raise Exception.CreateFmt(ACBrStr(cACBrDeviceImpressoraNaoEncontrada),
+        [PrnName]);
   end;
 
   Result := PrnIndex;
@@ -1534,7 +1584,7 @@ begin
   end;
 
   StartDocPrinter(HandlePrn, 1, @DocInfo1);
-  WritePrinter(HandlePrn, PChar(AString), Length(AString), N);
+  WritePrinter(HandlePrn, PAnsiChar(AString), Length(AString), N);
   EndPagePrinter(HandlePrn);
   EndDocPrinter(HandlePrn);
   ClosePrinter(HandlePrn);

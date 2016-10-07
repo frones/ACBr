@@ -39,6 +39,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 07/10/2016
+-- ACBrPosPrinter --
+[*] Removido detecção de porta aberta de "TACBrPosPrinter.DesativarPorta", que
+    passou para TACBrDevice   (por: DSA)
+
+-- ACBrDevice --
+[-] Método: "DeduzirTipoPorta". Correção na detecção do tipo de porta Paralela
+    (LPT, /dev/lp)  (Por: Waldir Paim)
+[*] Método "Desativar". Ajuste para não fechar a porta Serial, enquanto a mesma
+    ainda estiver Ativa e ocupada. (por: DSA)
+[-] Método: "GetPrinterRawIndex". Correção para detecção do Nome da Impressora
+    compartilhada e remoção de Hint (Por: Waldir Paim)
+[*] Método "EnviaStringRaw", remoção de Warning (Por: Waldir Paim)
+
+
 Data: 02/10/2016
 -- ACBrDevice --
 [+] Adicionado o suporte a portas "RAW", permitindo usar o "Nome da Impressora",

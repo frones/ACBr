@@ -7213,6 +7213,9 @@ begin
     ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
     ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
 
+    if ( Trim(edtLogoMarca.Text) <> '') and FileExists(edtLogoMarca.Text) then
+       ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarca.Text);
+
     try
       if NomeImpressora <> '' then
          ACBrSATExtratoFortes1.PrinterName := NomeImpressora

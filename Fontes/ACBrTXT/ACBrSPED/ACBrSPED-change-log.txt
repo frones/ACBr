@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 08/10/2016
+[+] Adição de registros no bloco e do sped icms ipi
+		http://www.projetoacbr.com.br/forum/topic/32787-novos-campos-bloco-e310/
+		por : Juliomar Marchetti
+		
 Data 05/10/2016
 [-] Correção de validações do bloco k k230
 		http://www.projetoacbr.com.br/forum/topic/32345-novos-campos-no-bloco-k-do-efd-icmsipi-para-2017/?do=findComment&comment=216233

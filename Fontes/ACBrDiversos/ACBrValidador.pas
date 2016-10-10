@@ -1016,7 +1016,7 @@ Const
   {14}    (0  ,0  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,3   ,4   ,5   ,6   ,7 ));
 
 Var
-   vDigitos : array of {$IFDEF FPC}Variant{$ELSE} String{$ENDIF} ;
+   vDigitos : array of Variant;
    xROT, yROT :  String ;
    Tamanho, FatorF, FatorG, I, xMD, xTP, yMD, yTP, DV, DVX, DVY : Integer ;
    SOMA, SOMAq, nD, M : Integer ;

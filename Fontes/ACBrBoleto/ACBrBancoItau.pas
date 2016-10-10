@@ -1063,219 +1063,322 @@ function TACBrBancoItau.TipoOcorrenciaToDescricao(
 var
  CodOcorrencia: Integer;
 begin
-
+  Result := '';
   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
 
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      94: Result := '94-Confirma Recebimento de Instrução de não Negativar';
+    end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      07: Result := '07-Liquidação Parcial – Cobrança Inteligente';
+      59: Result := '59-Baixa Por Crédito em C/C Através do Sispag';
+      64: Result := '64-Entrada Confirmada com Rateio de Crédito';
+      65: Result := '65-Pagamento com Cheque – Aguardando Compensação';
+      69: Result := '69-Cheque Devolvido';
+      71: Result := '71-Entrada Registrada Aguardando Avaliação';
+      72: Result := '72-Baixa Por Crédito em C/C Através do Sispag Sem Título Correspondente';
+      73: Result := '73-Confirmação de Entrada na Cobrança Simples – Entrada não Aceita na Cobrança Contratual';
+      76: Result := '76-Cheque Compensado';
+    end;
+  end;
+
+  if (Result <> '') then
+  Exit;
+
   case CodOcorrencia of
-    02: Result:='02-Entrada Confirmada' ;
-    03: Result:='03-Entrada Rejeitada' ;
-    //04: Result:='04-Alteração de Dados - Nova Entrada' ;
-    04: Result:='04-Alteração de Dados - Nova Entrada ou Alteração/Exclusão de Dados Acatada';
-    05: Result:='05-Alteração de Dados - Baixa' ;
-    06: Result:='06-Liquidação Normal' ;
-    07: Result:='07-Liquidação Parcial - Cobrança Inteligente (B2b)' ;
-    08: Result:='08-Liquidação Em Cartório' ;
-    09: Result:='09-Baixa Simples' ;
-    10: Result:='10-Baixa Por Ter Sido Liquidado' ;
-    11: Result:='11-Em Ser' ;
-    12: Result:='12-Abatimento Concedido' ;
-    13: Result:='13-Abatimento Cancelado' ;
-    14: Result:='14-Vencimento Alterado' ;
-    15: Result:='15-Baixas Rejeitadas' ;
-    16: Result:='16-Instruções Rejeitadas' ;
-    17: Result:='17-Alteração de Dados Rejeitados' ;
-    18: Result:='18-Cobrança Contratual - Instruções/Alterações Rejeitadas/Pendentes' ;
-    19: Result:='19-Confirma Recebimento de Instrução de Protesto' ;
-    20: Result:='20-Confirma Recebimento de Instrução de Sustação de Protesto /Tarifa' ;
-    21: Result:='21-Confirma Recebimento de Instrução de Não Protestar' ;
-    23: Result:='23-Título Enviado A Cartório/Tarifa' ;
-    24: Result:='24-Instrução de Protesto Rejeitada / Sustada / Pendente' ;
-    25: Result:='25-Alegações do Sacado' ;
-    26: Result:='26-Tarifa de Aviso de Cobrança' ;
-    27: Result:='27-Tarifa de Extrato Posição (B40x)' ;
-    28: Result:='28-Tarifa de Relação das Liquidações' ;
-    29: Result:='29-Tarifa de Manutenção de Títulos Vencidos' ;
-    30: Result:='30-Débito Mensal de Tarifas (Para Entradas e Baixas)' ;
-    32: Result:='32-Baixa por ter sido Protestado' ;
-    33: Result:='33-Custas de Protesto' ;
-    34: Result:='34-Custas de Sustação' ;
-    35: Result:='35-Custas de Cartório Distribuidor' ;
-    36: Result:='36-Custas de Edital' ;
-    37: Result:='37-Tarifa de Emissão de Boleto/Tarifa de Envio de Duplicata' ;
-    38: Result:='38-Tarifa de Instrução' ;
-    39: Result:='39-Tarifa de Ocorrências' ;
-    40: Result:='40-Tarifa Mensal de Emissão de Boleto/Tarifa Mensal de Envio De Duplicata' ;
-    41: Result:='41-Débito Mensal de Tarifas - Extrato de Posição (B4ep/B4ox)' ;
-    42: Result:='42-Débito Mensal de Tarifas - Outras Instruções' ;
-    43: Result:='43-Débito Mensal de Tarifas - Manutenção de Títulos Vencidos' ;
-    44: Result:='44-Débito Mensal de Tarifas - Outras Ocorrências' ;
-    45: Result:='45-Débito Mensal de Tarifas - Protesto' ;
-    46: Result:='46-Débito Mensal de Tarifas - Sustação de Protesto' ;
-    47: Result:='47-Baixa com Transferência para Desconto' ;
-    48: Result:='48-Custas de Sustação Judicial' ;
-    51: Result:='51-Tarifa Mensal Ref a Entradas Bancos Correspondentes na Carteira' ;
-    52: Result:='52-Tarifa Mensal Baixas na Carteira' ;
-    53: Result:='53-Tarifa Mensal Baixas em Bancos Correspondentes na Carteira' ;
-    54: Result:='54-Tarifa Mensal de Liquidações na Carteira' ;
-    55: Result:='55-Tarifa Mensal de Liquidações em Bancos Correspondentes na Carteira' ;
-    56: Result:='56-Custas de Irregularidade' ;
-    57: Result:='57-Instrução Cancelada' ;
-    59: Result:='59-Baixa por Crédito em C/C Através do Sispag' ;
-    60: Result:='60-Entrada Rejeitada Carnê' ;
-    61: Result:='61-Tarifa Emissão Aviso de Movimentação de Títulos (2154)' ;
-    62: Result:='62-Débito Mensal de Tarifa - Aviso de Movimentação de Títulos (2154)' ;
-    63: Result:='63-Título Sustado Judicialmente' ;
-    64: Result:='64-Entrada Confirmada com Rateio de Crédito' ;
-    69: Result:='69-Cheque Devolvido' ;
-    71: Result:='71-Entrada Registrada, Aguardando Avaliação' ;
-    72: Result:='72-Baixa por Crédito em C/C Através do Sispag sem Título Correspondente' ;
-    73: Result:='73-Confirmação de Entrada na Cobrança Simples - Entrada não Aceita na Cobrança Contratual' ;
-    76: Result:='76-Cheque Compensado' ;
+    02: Result := '02-Entrada Confirmada';
+    03: Result := '03-Entrada Rejeitada';
+    04: Result := '04-Alteração de Dados - Nova Entrada ou Alteração/Exclusão de Dados Acatada';
+    05: Result := '05-Alteração de Dados - Baixa';
+    06: Result := '06-Liquidação Normal';
+    07: Result := '07-Liquidação Parcial - Cobrança Inteligente' ;
+    08: Result := '08-Liquidação em Cartório';
+    09: Result := '09-Baixa Simples' ;
+    10: Result := '10-Baixa por ter sido Liquidado' ;
+    11: Result := '11-Em Ser';
+    12: Result := '12-Abatimento Concedido';
+    13: Result := '13-Abatimento Cancelado';
+    14: Result := '14-Vencimento Alterado';
+    15: Result := '15-Baixas Rejeitadas';
+    16: Result := '16-Instruções Rejeitadas';
+    17: Result := '17-Alteração/Exclusão de Dados Rejeitados';
+    18: Result := '18-Cobrança Contratual - Instruções/Alterações Rejeitadas/Pendentes';
+    19: Result := '19-Confirma Recebimento de Instrução de Protesto';
+    20: Result := '20-Confirma Recebimento de Instrução de Sustação de Protesto/Tarifa';
+    21: Result := '21-Confirma Recebimento de Instrução de não Protestar';
+    23: Result := '23-Título Enviado A Cartório/Tarifa';
+    24: Result := '24-Instrução de Protesto Rejeitada / Sustada / Pendente';
+    25: Result := '25-Alegações do Pagador';
+    26: Result := '26-Tarifa de Aviso de Cobrança';
+    27: Result := '27-Tarifa de Extrato Posição' ;
+    28: Result := '28-Tarifa de Relação das Liquidações';
+    29: Result := '29-Tarifa de Manutenção de Títulos Vencidos';
+    30: Result := '30-Débito Mensal de Tarifas';
+    32: Result := '32-Baixa por ter sido Protestado';
+    33: Result := '33-Custas de Protesto';
+    34: Result := '34-Custas de Sustação';
+    35: Result := '35-Custas de Cartório Distribuidor';
+    36: Result := '36-Custas de Edital';
+    37: Result := '37-Tarifa de Emissão de Boleto/Tarifa de Envio de Duplicata';
+    38: Result := '38-Tarifa de Instrução';
+    39: Result := '39-Tarifa de Ocorrências';
+    40: Result := '40-Tarifa Mensal de Emissão de Boleto/Tarifa Mensal de Envio De Duplicata';
+    41: Result := '41-Débito Mensal de Tarifas - Extrato de Posição';
+    42: Result := '42-Débito Mensal de Tarifas - Outras Instruções';
+    43: Result := '43-Débito Mensal de Tarifas - Manutenção de Títulos Vencidos';
+    44: Result := '44-Débito Mensal de Tarifas - Outras Ocorrências';
+    45: Result := '45-Débito Mensal de Tarifas - Protesto';
+    46: Result := '46-Débito Mensal de Tarifas - Sustação de Protesto';
+    47: Result := '47-Baixa com Transferência para Desconto';
+    48: Result := '48-Custas de Sustação Judicial';
+    51: Result := '51-Tarifa Mensal Referente a Entradas Bancos Correspondentes na Carteira';
+    52: Result := '52-Tarifa Mensal Baixas na Carteira';
+    53: Result := '53-Tarifa Mensal Baixas em Bancos Correspondentes na Carteira';
+    54: Result := '54-Tarifa Mensal de Liquidações na Carteira';
+    55: Result := '55-Tarifa Mensal de Liquidações em Bancos Correspondentes na Carteira';
+    56: Result := '56-Custas de Irregularidade';
+    57: Result := '57-Instrução Cancelada';
+    60: Result := '60-Entrada Rejeitada Carnê';
+    61: Result := '61-Tarifa Emissão Aviso de Movimentação de Títulos';
+    62: Result := '62-Débito Mensal de Tarifa - Aviso de Movimentação de Títulos';
+    63: Result := '63-Título Sustado Judicialmente';
+    74: Result := '74-Instrução de Negativação Expressa Rejeitada';
+    75: Result := '75-Confirmação de Recebimento de Instrução de Entrada em Negativação Expressa';
+    77: Result := '77-Confirmação de Recebimento de Instrução de Exclusão de Entrada em Negativação Expressa';
+    78: Result := '78-Confirmação de Recebimento de Instrução de Cancelamento de Negativação Expressa';
+    79: Result := '79-Negativação Expressa Informacional';
+    80: Result := '80-Confirmação de Entrada em Negativação Expressa – Tarifa';
+    82: Result := '82-Confirmação do Cancelamento de Negativação Expressa – Tarifa';
+    83: Result := '83-Confirmação de Exclusão de Entrada em Negativação Expressa Por Liquidação – Tarifa';
+    85: Result := '85-Tarifa Por Boleto (Até 03 Envios) Cobrança Ativa Eletrônica';
+    86: Result := '86-Tarifa Email Cobrança Ativa Eletrônica';
+    87: Result := '87-Tarifa SMS Cobrança Ativa Eletrônica';
+    88: Result := '88-Tarifa Mensal Por Boleto (Até 03 Envios) Cobrança Ativa Eletrônica';
+    89: Result := '89-Tarifa Mensal Email Cobrança Ativa Eletrônica';
+    90: Result := '90-Tarifa Mensal SMS Cobrança Ativa Eletrônica';
+    91: Result := '91-Tarifa Mensal de Exclusão de Entrada de Negativação Expressa';
+    92: Result := '92-Tarifa Mensal de Cancelamento de Negativação Expressa';
+    93: Result := '93-Tarifa Mensal de Exclusão de Negativação Expressa Por Liquidação';
   end;
 end;
 
 function TACBrBancoItau.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
-  case CodOcorrencia of
-      02: Result := toRetornoRegistroConfirmado;
-      03: Result := toRetornoRegistroRecusado;
-      04: Result := toRetornoAlteracaoDadosNovaEntrada;
-      05: Result := toRetornoAlteracaoDadosBaixa;
-      06: Result := toRetornoLiquidado;
+  Result := toTipoOcorrenciaNenhum;
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      94: Result := toRetornoConfirmaRecebimentoInstrucaoNaoNegativar;
+    end;
+  end
+  else
+  begin
+    case CodOcorrencia of
       07: Result := toRetornoLiquidadoParcialmente;
-      08: Result := toRetornoLiquidadoEmCartorio;
-      09: Result := toRetornoBaixaSimples;
-      10: Result := toRetornoBaixaPorTerSidoLiquidado;
-      11: Result := toRetornoTituloEmSer;
-      12: Result := toRetornoAbatimentoConcedido;
-      13: Result := toRetornoAbatimentoCancelado;
-      14: Result := toRetornoVencimentoAlterado;
-      15: Result := toRetornoBaixaRejeitada;
-      16: Result := toRetornoInstrucaoRejeitada;
-      17: Result := toRetornoAlteracaoDadosRejeitados;
-      18: Result := toRetornoCobrancaContratual;
-      19: Result := toRetornoRecebimentoInstrucaoProtestar;
-      20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-      21: Result := toRetornoRecebimentoInstrucaoNaoProtestar;
-      23: Result := toRetornoEncaminhadoACartorio;
-      24: Result := toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente;
-      25: Result := toRetornoAlegacaoDoSacado;
-      26: Result := toRetornoTarifaAvisoCobranca;
-      27: Result := toRetornoTarifaExtratoPosicao;
-      28: Result := toRetornoTarifaDeRelacaoDasLiquidacoes;
-      29: Result := toRetornoTarifaDeManutencaoDeTitulosVencidos;
-      30: Result := toRetornoDebitoTarifas;
-      32: Result := toRetornoBaixaPorProtesto;
-      33: Result := toRetornoCustasProtesto;
-      34: Result := toRetornoCustasSustacao;
-      35: Result := toRetornoCustasCartorioDistribuidor;
-      36: Result := toRetornoCustasEdital;
-      37: Result := toRetornoTarifaEmissaoBoletoEnvioDuplicata;
-      38: Result := toRetornoTarifaInstrucao;
-      39: Result := toRetornoTarifaOcorrencias;
-      40: Result := toRetornoTarifaMensalEmissaoBoletoEnvioDuplicata;
-      41: Result := toRetornoDebitoMensalTarifasExtradoPosicao;
-      42: Result := toRetornoDebitoMensalTarifasOutrasInstrucoes;
-      43: Result := toRetornoDebitoMensalTarifasManutencaoTitulosVencidos;
-      44: Result := toRetornoDebitoMensalTarifasOutrasOcorrencias;
-      45: Result := toRetornoDebitoMensalTarifasProtestos;
-      46: Result := toRetornoDebitoMensalTarifasSustacaoProtestos;
-      47: Result := toRetornoBaixaTransferenciaParaDesconto;
-      48: Result := toRetornoCustasSustacaoJudicial;
-      51: Result := toRetornoTarifaMensalRefEntradasBancosCorrespCarteira;
-      52: Result := toRetornoTarifaMensalBaixasCarteira;
-      53: Result := toRetornoTarifaMensalBaixasBancosCorrespCarteira;
-      54: Result := toRetornoTarifaMensalLiquidacoesCarteira;
-      55: Result := toRetornoTarifaMensalLiquidacoesBancosCorrespCarteira;
-      56: Result := toRetornoCustasIrregularidade;
-      57: Result := toRetornoInstrucaoCancelada;
       59: Result := toRetornoBaixaCreditoCCAtravesSispag;
-      60: Result := toRetornoEntradaRejeitadaCarne;
-      61: Result := toRetornoTarifaEmissaoAvisoMovimentacaoTitulos;
-      62: Result := toRetornoDebitoMensalTarifaAvisoMovimentacaoTitulos;
-      63: Result := toRetornoTituloSustadoJudicialmente;
       64: Result := toRetornoEntradaConfirmadaRateioCredito;
+      65: Result := toRetornoChequePendenteCompensacao;
       69: Result := toRetornoChequeDevolvido;
       71: Result := toRetornoEntradaRegistradaAguardandoAvaliacao;
       72: Result := toRetornoBaixaCreditoCCAtravesSispagSemTituloCorresp;
       73: Result := toRetornoConfirmacaoEntradaCobrancaSimples;
       76: Result := toRetornoChequeCompensado;
-   else
-      Result := toRetornoOutrasOcorrencias;
-   end;
+    end;
+  end;
+
+  if (Result <> toTipoOcorrenciaNenhum) then
+    Exit;
+
+  case CodOcorrencia of
+    02: Result := toRetornoRegistroConfirmado;
+    03: Result := toRetornoRegistroRecusado;
+    04: Result := toRetornoAlteracaoDadosNovaEntrada;
+    05: Result := toRetornoAlteracaoDadosBaixa;
+    06: Result := toRetornoLiquidado;
+    08: Result := toRetornoLiquidadoEmCartorio;
+    09: Result := toRetornoBaixaSimples;
+    10: Result := toRetornoBaixaPorTerSidoLiquidado;
+    11: Result := toRetornoTituloEmSer;
+    12: Result := toRetornoAbatimentoConcedido;
+    13: Result := toRetornoAbatimentoCancelado;
+    14: Result := toRetornoVencimentoAlterado;
+    15: Result := toRetornoBaixaRejeitada;
+    16: Result := toRetornoInstrucaoRejeitada;
+    17: Result := toRetornoAlteracaoDadosRejeitados;
+    18: Result := toRetornoCobrancaContratual;
+    19: Result := toRetornoRecebimentoInstrucaoProtestar;
+    20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+    21: Result := toRetornoRecebimentoInstrucaoNaoProtestar;
+    23: Result := toRetornoEncaminhadoACartorio;
+    24: Result := toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente;
+    25: Result := toRetornoAlegacaoDoSacado;
+    26: Result := toRetornoTarifaAvisoCobranca;
+    27: Result := toRetornoTarifaExtratoPosicao;
+    28: Result := toRetornoTarifaDeRelacaoDasLiquidacoes;
+    29: Result := toRetornoTarifaDeManutencaoDeTitulosVencidos;
+    30: Result := toRetornoDebitoTarifas;
+    32: Result := toRetornoBaixaPorProtesto;
+    33: Result := toRetornoCustasProtesto;
+    34: Result := toRetornoCustasSustacao;
+    35: Result := toRetornoCustasCartorioDistribuidor;
+    36: Result := toRetornoCustasEdital;
+    37: Result := toRetornoTarifaEmissaoBoletoEnvioDuplicata;
+    38: Result := toRetornoTarifaInstrucao;
+    39: Result := toRetornoTarifaOcorrencias;
+    40: Result := toRetornoTarifaMensalEmissaoBoletoEnvioDuplicata;
+    41: Result := toRetornoDebitoMensalTarifasExtradoPosicao;
+    42: Result := toRetornoDebitoMensalTarifasOutrasInstrucoes;
+    43: Result := toRetornoDebitoMensalTarifasManutencaoTitulosVencidos;
+    44: Result := toRetornoDebitoMensalTarifasOutrasOcorrencias;
+    45: Result := toRetornoDebitoMensalTarifasProtestos;
+    46: Result := toRetornoDebitoMensalTarifasSustacaoProtestos;
+    47: Result := toRetornoBaixaTransferenciaParaDesconto;
+    48: Result := toRetornoCustasSustacaoJudicial;
+    51: Result := toRetornoTarifaMensalRefEntradasBancosCorrespCarteira;
+    52: Result := toRetornoTarifaMensalBaixasCarteira;
+    53: Result := toRetornoTarifaMensalBaixasBancosCorrespCarteira;
+    54: Result := toRetornoTarifaMensalLiquidacoesCarteira;
+    55: Result := toRetornoTarifaMensalLiquidacoesBancosCorrespCarteira;
+    56: Result := toRetornoCustasIrregularidade;
+    57: Result := toRetornoInstrucaoCancelada;
+    60: Result := toRetornoEntradaRejeitadaCarne;
+    61: Result := toRetornoTarifaEmissaoAvisoMovimentacaoTitulos;
+    62: Result := toRetornoDebitoMensalTarifaAvisoMovimentacaoTitulos;
+    63: Result := toRetornoTituloSustadoJudicialmente;
+    74: Result := toRetornoInstrucaoNegativacaoExpressaRejeitada;
+    75: Result := toRetornoConfRecebimentoInstEntradaNegativacaoExpressa;
+    77: Result := toRetornoConfRecebimentoInstExclusaoEntradaNegativacaoExpressa;
+    78: Result := toRetornoConfRecebimentoInstCancelamentoNegativacaoExpressa;
+    79: Result := toRetornoNegativacaoExpressaInformacional;
+    80: Result := toRetornoConfEntradaNegativacaoExpressaTarifa;
+    82: Result := toRetornoConfCancelamentoNegativacaoExpressaTarifa;
+    83: Result := toRetornoConfExclusaoEntradaNegativacaoExpressaPorLiquidacaoTarifa;
+    85: Result := toRetornoTarifaPorBoletoAte03EnvioCobrancaAtivaEletronica;
+    86: Result := toRetornoTarifaEmailCobrancaAtivaEletronica;
+    87: Result := toRetornoTarifaSMSCobrancaAtivaEletronica;
+    88: Result := toRetornoTarifaMensalPorBoletoAte03EnvioCobrancaAtivaEletronica;
+    89: Result := toRetornoTarifaMensalEmailCobrancaAtivaEletronica;
+    90: Result := toRetornoTarifaMensalSMSCobrancaAtivaEletronica;
+    91: Result := toRetornoTarifaMensalExclusaoEntradaNegativacaoExpressa;
+    92: Result := toRetornoTarifaMensalCancelamentoNegativacaoExpressa;
+    93: Result := toRetornoTarifaMensalExclusaoNegativacaoExpressaPorLiquidacao;
+  else
+    Result := toRetornoOutrasOcorrencias;
+  end;
 end;
 
 function TACBrBancoItau.TipoOCorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
+  Result := '';
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case TipoOcorrencia of
+      toRetornoConfirmaRecebimentoInstrucaoNaoNegativar                : Result := '94';
+    end;
+  end
+  else
+  begin
+    case TipoOcorrencia of
+      toRetornoLiquidadoParcialmente                                   : Result := '07';
+      toRetornoBaixaCreditoCCAtravesSispag                             : Result := '59';
+      toRetornoEntradaConfirmadaRateioCredito                          : Result := '64';
+      toRetornoChequePendenteCompensacao                               : Result := '65';
+      toRetornoChequeDevolvido                                         : Result := '69';
+      toRetornoEntradaRegistradaAguardandoAvaliacao                    : Result := '71';
+      toRetornoBaixaCreditoCCAtravesSispagSemTituloCorresp             : Result := '72';
+      toRetornoConfirmacaoEntradaCobrancaSimples                       : Result := '73';
+      toRetornoChequeCompensado                                        : Result := '76';
+    end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
   case TipoOcorrencia of
-      toRetornoRegistroConfirmado                           : Result:='02';
-      toRetornoRegistroRecusado                             : Result:='03';
-      toRetornoAlteracaoDadosNovaEntrada                    : Result:='04';
-      toRetornoAlteracaoDadosBaixa                          : Result:='05';
-      toRetornoLiquidado                                    : Result:='06';
-      toRetornoLiquidadoParcialmente                        : Result:='07';
-      toRetornoLiquidadoEmCartorio                          : Result:='08';
-      toRetornoBaixaSimples                                 : Result:='09';
-      toRetornoBaixaPorTerSidoLiquidado                     : Result:='10';
-      toRetornoTituloEmSer                                  : Result:='11';
-      toRetornoAbatimentoConcedido                          : Result:='12';
-      toRetornoAbatimentoCancelado                          : Result:='13';
-      toRetornoVencimentoAlterado                           : Result:='14';
-      toRetornoBaixaRejeitada                               : Result:='15';
-      toRetornoInstrucaoRejeitada                           : Result:='16';
-      toRetornoAlteracaoDadosRejeitados                     : Result:='17';
-      toRetornoCobrancaContratual                           : Result:='18';
-      toRetornoRecebimentoInstrucaoProtestar                : Result:='19';
-      toRetornoRecebimentoInstrucaoSustarProtesto           : Result:='20';
-      toRetornoRecebimentoInstrucaoNaoProtestar             : Result:='21';
-      toRetornoEncaminhadoACartorio                         : Result:='23';
-      toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente  : Result:='24';
-      toRetornoAlegacaoDoSacado                             : Result:='25';
-      toRetornoTarifaAvisoCobranca                          : Result:='26';
-      toRetornoTarifaExtratoPosicao                         : Result:='27';
-      toRetornoTarifaDeRelacaoDasLiquidacoes                : Result:='28';
-      toRetornoTarifaDeManutencaoDeTitulosVencidos          : Result:='29';
-      toRetornoDebitoTarifas                                : Result:='30';
-      toRetornoBaixaPorProtesto                             : Result:='32';
-      toRetornoCustasProtesto                               : Result:='33';
-      toRetornoCustasSustacao                               : Result:='34';
-      toRetornoCustasCartorioDistribuidor                   : Result:='35';
-      toRetornoCustasEdital                                 : Result:='36';
-      toRetornoTarifaEmissaoBoletoEnvioDuplicata            : Result:='37';
-      toRetornoTarifaInstrucao                              : Result:='38';
-      toRetornoTarifaOcorrencias                            : Result:='39';
-      toRetornoTarifaMensalEmissaoBoletoEnvioDuplicata      : Result:='40';
-      toRetornoDebitoMensalTarifasExtradoPosicao            : Result:='41';
-      toRetornoDebitoMensalTarifasOutrasInstrucoes          : Result:='42';
-      toRetornoDebitoMensalTarifasManutencaoTitulosVencidos : Result:='43';
-      toRetornoDebitoMensalTarifasOutrasOcorrencias         : Result:='44';
-      toRetornoDebitoMensalTarifasProtestos                 : Result:='45';
-      toRetornoDebitoMensalTarifasSustacaoProtestos         : Result:='46';
-      toRetornoBaixaTransferenciaParaDesconto               : Result:='47';
-      toRetornoCustasSustacaoJudicial                       : Result:='48';
-      toRetornoTarifaMensalRefEntradasBancosCorrespCarteira : Result:='51';
-      toRetornoTarifaMensalBaixasCarteira                   : Result:='52';
-      toRetornoTarifaMensalBaixasBancosCorrespCarteira      : Result:='53';
-      toRetornoTarifaMensalLiquidacoesCarteira              : Result:='54';
-      toRetornoTarifaMensalLiquidacoesBancosCorrespCarteira : Result:='55';
-      toRetornoCustasIrregularidade                         : Result:='56';
-      toRetornoInstrucaoCancelada                           : Result:='57';
-      toRetornoBaixaCreditoCCAtravesSispag                  : Result:='59';
-      toRetornoEntradaRejeitadaCarne                        : Result:='60';
-      toRetornoTarifaEmissaoAvisoMovimentacaoTitulos        : Result:='61';
-      toRetornoDebitoMensalTarifaAvisoMovimentacaoTitulos   : Result:='62';
-      toRetornoTituloSustadoJudicialmente                   : Result:='63';
-      toRetornoEntradaConfirmadaRateioCredito               : Result:='64';
-      toRetornoChequeDevolvido                              : Result:='69';
-      toRetornoEntradaRegistradaAguardandoAvaliacao         : Result:='71';
-      toRetornoBaixaCreditoCCAtravesSispagSemTituloCorresp  : Result:='72';
-      toRetornoConfirmacaoEntradaCobrancaSimples            : Result:='73';
-      toRetornoChequeCompensado                             : Result:='76';
-   else
-      Result:= '02';
-   end;
+    toRetornoRegistroConfirmado                                        : Result := '02';
+    toRetornoRegistroRecusado                                          : Result := '03';
+    toRetornoAlteracaoDadosNovaEntrada                                 : Result := '04';
+    toRetornoAlteracaoDadosBaixa                                       : Result := '05';
+    toRetornoLiquidado                                                 : Result := '06';
+    toRetornoLiquidadoEmCartorio                                       : Result := '08';
+    toRetornoBaixaSimples                                              : Result := '09';
+    toRetornoBaixaPorTerSidoLiquidado                                  : Result := '10';
+    toRetornoTituloEmSer                                               : Result := '11';
+    toRetornoAbatimentoConcedido                                       : Result := '12';
+    toRetornoAbatimentoCancelado                                       : Result := '13';
+    toRetornoVencimentoAlterado                                        : Result := '14';
+    toRetornoBaixaRejeitada                                            : Result := '15';
+    toRetornoInstrucaoRejeitada                                        : Result := '16';
+    toRetornoAlteracaoDadosRejeitados                                  : Result := '17';
+    toRetornoCobrancaContratual                                        : Result := '18';
+    toRetornoRecebimentoInstrucaoProtestar                             : Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto                        : Result := '20';
+    toRetornoRecebimentoInstrucaoNaoProtestar                          : Result := '21';
+    toRetornoEncaminhadoACartorio                                      : Result := '23';
+    toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente               : Result := '24';
+    toRetornoAlegacaoDoSacado                                          : Result := '25';
+    toRetornoTarifaAvisoCobranca                                       : Result := '26';
+    toRetornoTarifaExtratoPosicao                                      : Result := '27';
+    toRetornoTarifaDeRelacaoDasLiquidacoes                             : Result := '28';
+    toRetornoTarifaDeManutencaoDeTitulosVencidos                       : Result := '29';
+    toRetornoDebitoTarifas                                             : Result := '30';
+    toRetornoBaixaPorProtesto                                          : Result := '32';
+    toRetornoCustasProtesto                                            : Result := '33';
+    toRetornoCustasSustacao                                            : Result := '34';
+    toRetornoCustasCartorioDistribuidor                                : Result := '35';
+    toRetornoCustasEdital                                              : Result := '36';
+    toRetornoTarifaEmissaoBoletoEnvioDuplicata                         : Result := '37';
+    toRetornoTarifaInstrucao                                           : Result := '38';
+    toRetornoTarifaOcorrencias                                         : Result := '39';
+    toRetornoTarifaMensalEmissaoBoletoEnvioDuplicata                   : Result := '40';
+    toRetornoDebitoMensalTarifasExtradoPosicao                         : Result := '41';
+    toRetornoDebitoMensalTarifasOutrasInstrucoes                       : Result := '42';
+    toRetornoDebitoMensalTarifasManutencaoTitulosVencidos              : Result := '43';
+    toRetornoDebitoMensalTarifasOutrasOcorrencias                      : Result := '44';
+    toRetornoDebitoMensalTarifasProtestos                              : Result := '45';
+    toRetornoDebitoMensalTarifasSustacaoProtestos                      : Result := '46';
+    toRetornoBaixaTransferenciaParaDesconto                            : Result := '47';
+    toRetornoCustasSustacaoJudicial                                    : Result := '48';
+    toRetornoTarifaMensalRefEntradasBancosCorrespCarteira              : Result := '51';
+    toRetornoTarifaMensalBaixasCarteira                                : Result := '52';
+    toRetornoTarifaMensalBaixasBancosCorrespCarteira                   : Result := '53';
+    toRetornoTarifaMensalLiquidacoesCarteira                           : Result := '54';
+    toRetornoTarifaMensalLiquidacoesBancosCorrespCarteira              : Result := '55';
+    toRetornoCustasIrregularidade                                      : Result := '56';
+    toRetornoInstrucaoCancelada                                        : Result := '57';
+    toRetornoEntradaRejeitadaCarne                                     : Result := '60';
+    toRetornoTarifaEmissaoAvisoMovimentacaoTitulos                     : Result := '61';
+    toRetornoDebitoMensalTarifaAvisoMovimentacaoTitulos                : Result := '62';
+    toRetornoTituloSustadoJudicialmente                                : Result := '63';
+    toRetornoInstrucaoNegativacaoExpressaRejeitada                     : Result := '74';
+    toRetornoConfRecebimentoInstEntradaNegativacaoExpressa             : Result := '75';
+    toRetornoConfRecebimentoInstExclusaoEntradaNegativacaoExpressa     : Result := '77';
+    toRetornoConfRecebimentoInstCancelamentoNegativacaoExpressa        : Result := '78';
+    toRetornoNegativacaoExpressaInformacional                          : Result := '79';
+    toRetornoConfEntradaNegativacaoExpressaTarifa                      : Result := '80';
+    toRetornoConfCancelamentoNegativacaoExpressaTarifa                 : Result := '82';
+    toRetornoConfExclusaoEntradaNegativacaoExpressaPorLiquidacaoTarifa : Result := '83';
+    toRetornoTarifaPorBoletoAte03EnvioCobrancaAtivaEletronica          : Result := '85';
+    toRetornoTarifaEmailCobrancaAtivaEletronica                        : Result := '86';
+    toRetornoTarifaSMSCobrancaAtivaEletronica                          : Result := '87';
+    toRetornoTarifaMensalPorBoletoAte03EnvioCobrancaAtivaEletronica    : Result := '88';
+    toRetornoTarifaMensalEmailCobrancaAtivaEletronica                  : Result := '89';
+    toRetornoTarifaMensalSMSCobrancaAtivaEletronica                    : Result := '90';
+    toRetornoTarifaMensalExclusaoEntradaNegativacaoExpressa            : Result := '91';
+    toRetornoTarifaMensalCancelamentoNegativacaoExpressa               : Result := '92';
+    toRetornoTarifaMensalExclusaoNegativacaoExpressaPorLiquidacao      : Result := '93';
+  else
+    Result := '02';
+  end;
 end;
 
 function TACBrBancoItau.CodMotivoRejeicaoToDescricao(

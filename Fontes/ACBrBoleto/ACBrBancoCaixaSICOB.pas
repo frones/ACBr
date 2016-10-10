@@ -318,36 +318,72 @@ end;
 function TACBrCaixaEconomicaSICOB.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
-  case CodOcorrencia of
-    02: Result := toRetornoRegistroConfirmado;
-    03: Result := toRetornoRegistroRecusado;
-//'04-Transferência de Carteira/Entrada
-//'05-Transferência de Carteira/Baixa
-    06: Result := toRetornoLiquidado;
-    09: Result := toRetornoBaixadoViaArquivo;
-    12: Result := toRetornoAbatimentoConcedido;
-    13: Result := toRetornoAbatimentoCancelado;
-    14: Result := toRetornoVencimentoAlterado;
-    17: Result := toRetornoLiquidadoAposBaixaouNaoRegistro;
-    19: Result := toRetornoRecebimentoInstrucaoProtestar;
-    20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-    23: Result := toRetornoEncaminhadoACartorio;
-    24: Result := toRetornoRetiradoDeCartorio;
-    25: Result := toRetornoProtestado;
-    26: Result := toRetornoInstrucaoRejeitada;
-    27: Result := toRetornoAlteracaoDadosNovaEntrada;
-    28: Result := toRetornoDebitoTarifas;
-    30: Result := toRetornoALteracaoOutrosDadosRejeitada;
-//'36-Confirmação de envio de e-mail/SMS
-//'37-Envio de e-mail/SMS rejeitado
-    43: Result := toRetornoProtestoSustado;
-    44: Result := toRetornoProtestoSustado;
-    45: Result := toRetornoAlteracaoDadosNovaEntrada;
-//'51-Título DDA reconhecido pelo sacado
-//'52-Título DDA não reconhecido pelo sacado
-//'53-Título DDA recusado pela CIP  else
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      02: Result := toRetornoRegistroConfirmado;
+      03: Result := toRetornoRegistroRecusado;
+      04: Result := toRetornoTransferenciaCarteiraEntrada;
+      05: Result := toRetornoTransferenciaCarteiraBaixa;
+      06: Result := toRetornoLiquidado;
+      09: Result := toRetornoBaixado;
+      12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
+      13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
+      14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
+      17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
+      19: Result := toRetornoRecebimentoInstrucaoProtestar;
+      20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+      23: Result := toRetornoEncaminhadoACartorio;
+      24: Result := toRetornoRetiradoDeCartorio;
+      25: Result := toRetornoBaixaPorProtesto;
+      26: Result := toRetornoInstrucaoRejeitada;
+      27: Result := toRetornoAlteracaoUsoCedente;
+      28: Result := toRetornoDebitoTarifas;
+      30: Result := toRetornoAlteracaoOutrosDadosRejeitada;
+      36: Result := toRetornoConfirmacaoEmailSMS;
+      37: Result := toRetornoEmailSMSRejeitado;
+      43: Result := toRetornoEstornoProtesto;
+      44: Result := toRetornoEstornoBaixaLiquidacao;
+      45: Result := toRetornoRecebimentoInstrucaoAlterarDados;
+      51: Result := toRetornoTituloDDAReconhecidoPagador;
+      52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      53: Result := toRetornoTituloDDARecusadoCIP;
+    end;
+  end
   else
-    Result := toRetornoOutrasOcorrencias;
+  begin
+    case CodOcorrencia of
+      01: Result := toRetornoRegistroConfirmado;
+      02: Result := toRetornoBaixado;
+      03: Result := toRetornoAbatimentoConcedido;
+      04: Result := toRetornoAbatimentoCancelado;
+      05: Result := toRetornoVencimentoAlterado;
+      06: Result := toRetornoAlteracaoUsoCedente;
+      07: Result := toRetornoPrazoProtestoAlterado;
+      08: Result := toRetornoPrazoDevolucaoAlterado;
+      09: Result := toRetornoDadosAlterados;
+      10: Result := toRetornoAlteracaoReemissaoBloquetoConfirmada;
+      11: Result := toRetornoAlteracaoOpcaoProtestoParaDevolucaoConfirmada;
+      12: Result := toRetornoAlteracaoOpcaoDevolucaoParaProtestoConfirmada;
+      20: Result := toRetornoTituloEmSer;
+      21: Result := toRetornoLiquidado;
+      22: Result := toRetornoLiquidadoEmCartorio;
+      23: Result := toRetornoBaixadoPorDevolucao;
+      24: Result := toRetornoBaixadoFrancoPagamento;
+      25: Result := toRetornoBaixaPorProtesto;
+      26: Result := toRetornoEncaminhadoACartorio;
+      27: Result := toRetornoProtestoSustado;
+      28: Result := toRetornoEstornoProtesto;
+      29: Result := toRetornoProtestoOuSustacaoEstornado;
+      30: Result := toRetornoRecebimentoInstrucaoAlterarDados;
+      31: Result := toRetornoTarifaDeManutencaoDeTitulosVencidos;
+      32: Result := toRetornoOutrasTarifasAlteracao;
+      33: Result := toRetornoEstornoBaixaLiquidacao;
+      34: Result := toRetornoTransferenciaCarteiraEntrada;
+      35: Result := toRetornoTransferenciaCarteiraBaixa;
+      99: Result := toRetornoRegistroRecusado;
+    end;
   end;
 end;
 
@@ -439,27 +475,72 @@ end;
 function TACBrCaixaEconomicaSICOB.TipoOCorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
-  case TipoOcorrencia of
-    toRetornoRegistroConfirmado                 : Result := '02';
-    toRetornoRegistroRecusado                   : Result := '03';
-    toRetornoLiquidado                          : Result := '06';
-    toRetornoBaixadoViaArquivo                  : Result := '09';
-    toRetornoAbatimentoConcedido                : Result := '12';
-    toRetornoAbatimentoCancelado                : Result := '13';
-    toRetornoVencimentoAlterado                 : Result := '14';
-    toRetornoLiquidadoAposBaixaouNaoRegistro    : Result := '17';
-    toRetornoRecebimentoInstrucaoProtestar      : Result := '19';
-    toRetornoRecebimentoInstrucaoSustarProtesto : Result := '20';
-    toRetornoEncaminhadoACartorio               : Result := '23';
-    toRetornoRetiradoDeCartorio                 : Result := '24';
-    toRetornoProtestado                         : Result := '25';
-    toRetornoInstrucaoRejeitada                 : Result := '26';
-    toRetornoAlteracaoDadosNovaEntrada          : Result := '27';
-    toRetornoDebitoTarifas                      : Result := '28';
-    toRetornoALteracaoOutrosDadosRejeitada      : Result := '30';
-    toRetornoProtestoSustado                    : Result := '43';
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case TipoOcorrencia of
+      toRetornoRegistroConfirmado                              : Result := '02';
+      toRetornoRegistroRecusado                                : Result := '03';
+      toRetornoTransferenciaCarteiraEntrada                    : Result := '04';
+      toRetornoTransferenciaCarteiraBaixa                      : Result := '05';
+      toRetornoLiquidado                                       : Result := '06';
+      toRetornoBaixado                                         : Result := '09';
+      toRetornoRecebimentoInstrucaoConcederAbatimento          : Result := '12';
+      toRetornoRecebimentoInstrucaoCancelarAbatimento          : Result := '13';
+      toRetornoRecebimentoInstrucaoAlterarVencimento           : Result := '14';
+      toRetornoLiquidadoAposBaixaOuNaoRegistro                 : Result := '17';
+      toRetornoRecebimentoInstrucaoProtestar                   : Result := '19';
+      toRetornoRecebimentoInstrucaoSustarProtesto              : Result := '20';
+      toRetornoEncaminhadoACartorio                            : Result := '23';
+      toRetornoRetiradoDeCartorio                              : Result := '24';
+      toRetornoBaixaPorProtesto                                : Result := '25';
+      toRetornoInstrucaoRejeitada                              : Result := '26';
+      toRetornoAlteracaoUsoCedente                             : Result := '27';
+      toRetornoDebitoTarifas                                   : Result := '28';
+      toRetornoAlteracaoOutrosDadosRejeitada                   : Result := '30';
+      toRetornoConfirmacaoEmailSMS                             : Result := '36';
+      toRetornoEmailSMSRejeitado                               : Result := '37';
+      toRetornoEstornoProtesto                                 : Result := '43';
+      toRetornoEstornoBaixaLiquidacao                          : Result := '44';
+      toRetornoRecebimentoInstrucaoAlterarDados                : Result := '45';
+      toRetornoTituloDDAReconhecidoPagador                     : Result := '51';
+      toRetornoTituloDDANaoReconhecidoPagador                  : Result := '52';
+      toRetornoTituloDDARecusadoCIP                            : Result := '53';
+    end;
+  end
   else
-    Result := '02';  
+  begin
+    case TipoOcorrencia of
+      toRetornoRegistroConfirmado                              : Result := '01';
+      toRetornoBaixado                                         : Result := '02';
+      toRetornoAbatimentoConcedido                             : Result := '03';
+      toRetornoAbatimentoCancelado                             : Result := '04';
+      toRetornoVencimentoAlterado                              : Result := '05';
+      toRetornoAlteracaoUsoCedente                             : Result := '06';
+      toRetornoPrazoProtestoAlterado                           : Result := '07';
+      toRetornoPrazoDevolucaoAlterado                          : Result := '08';
+      toRetornoDadosAlterados                                  : Result := '09';
+      toRetornoAlteracaoReemissaoBloquetoConfirmada            : Result := '10';
+      toRetornoAlteracaoOpcaoProtestoParaDevolucaoConfirmada   : Result := '11';
+      toRetornoAlteracaoOpcaoDevolucaoParaProtestoConfirmada   : Result := '12';
+      toRetornoTituloEmSer                                     : Result := '20';
+      toRetornoLiquidado                                       : Result := '21';
+      toRetornoLiquidadoEmCartorio                             : Result := '22';
+      toRetornoBaixadoPorDevolucao                             : Result := '23';
+      toRetornoBaixadoFrancoPagamento                          : Result := '24';
+      toRetornoBaixaPorProtesto                                : Result := '25';
+      toRetornoEncaminhadoACartorio                            : Result := '26';
+      toRetornoProtestoSustado                                 : Result := '27';
+      toRetornoEstornoProtesto                                 : Result := '28';
+      toRetornoProtestoOuSustacaoEstornado                     : Result := '29';
+      toRetornoRecebimentoInstrucaoAlterarDados                : Result := '30';
+      toRetornoTarifaDeManutencaoDeTitulosVencidos             : Result := '31';
+      toRetornoOutrasTarifasAlteracao                          : Result := '32';
+      toRetornoEstornoBaixaLiquidacao                          : Result := '33';
+      toRetornoTransferenciaCarteiraEntrada                    : Result := '34';
+      toRetornoTransferenciaCarteiraBaixa                      : Result := '35';
+      toRetornoRegistroRecusado                                : Result := '99';
+    end;
   end;
 end;
 
@@ -467,36 +548,74 @@ function TACBrCaixaEconomicaSICOB.TipoOcorrenciaToDescricao(const TipoOcorrencia
 var
   CodOcorrencia: Integer;
 begin
-  CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
-  case CodOcorrencia of
-    02: Result := '02-Entrada Confirmada';
-    03: Result := '03-Entrada Rejeitada';
-    04: Result := '04-Transferência de Carteira/Entrada';
-    05: Result := '05-Transferência de Carteira/Baixa';
-    06: Result := '06-Liquidação';
-    09: Result := '09-Baixa';
-    12: Result := '12-Confirmação Recebimento Instrução de Abatimento';
-    13: Result := '13-Confirmação Recebimento Instrução de Cancelamento Abatimento';
-    14: Result := '14-Confirmação Recebimento Instrução Alteração de Vencimento';
-    17: Result := '17-Liquidação Após Baixa ou Liquidação Título Não Registrado';
-    19: Result := '19-Confirmação Recebimento Instrução de Protesto';
-    20: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
-    23: Result := '23-Remessa a Cartório (Aponte em Cartório)';
-    24: Result := '24-Retirada de Cartório e Manutenção em Carteira';
-    25: Result := '25-Protestado e Baixado (Baixa por Ter Sido Protestado)';
-    26: Result := '26-Instrução Rejeitada';
-    27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
-    28: Result := '28-Débito de Tarifas/Custas';
-    30: Result := '30-Alteração de Dados Rejeitada';
-    36: Result := '36-Confirmação de envio de e-mail/SMS';
-    37: Result := '37-Envio de e-mail/SMS rejeitado';
-    43: Result := '43-Estorno de Protesto/Sustação';
-    44: Result := '44-Estorno de Baixa/Liquidação';
-    45: Result := '45-Alteração de dados';
-    51: Result := '51-Título DDA reconhecido pelo sacado';
-    52: Result := '52-Título DDA não reconhecido pelo sacado';
-    53: Result := '53-Título DDA recusado pela CIP';
-  end;
+   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
+
+   if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+   begin
+     case CodOcorrencia of
+       02: Result := '02-Entrada Confirmada';
+       03: Result := '03-Entrada Rejeitada';
+       04: Result := '04-Transferência de Carteira/Entrada';
+       05: Result := '05-Transferência de Carteira/Baixa';
+       06: Result := '06-Liquidação';
+       09: Result := '09-Baixa';
+       12: Result := '12-Confirmação Recebimento Instrução de Abatimento';
+       13: Result := '13-Confirmação Recebimento Instrução de Cancelamento Abatimento';
+       14: Result := '14-Confirmação Recebimento Instrução Alteração de Vencimento';
+       17: Result := '17-Liquidação Após Baixa ou Liquidação Título Não Registrado';
+       19: Result := '19-Confirmação Recebimento Instrução de Protesto';
+       20: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
+       23: Result := '23-Remessa a Cartório';
+       24: Result := '24-Retirada de Cartório e Manutenção em Carteira';
+       25: Result := '25-Protestado e Baixado';
+       26: Result := '26-Instrução Rejeitada';
+       27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
+       28: Result := '28-Débito de Tarifas/Custas';
+       30: Result := '30-Alteração de Dados Rejeitada';
+       36: Result := '36-Confirmação de envio de e-mail/SMS';
+       37: Result := '37-Envio de e-mail/SMS rejeitado';
+       43: Result := '43-Estorno de Protesto/Sustação';
+       44: Result := '44-Estorno de Baixa/Liquidação';
+       45: Result := '45-Alteração de Dados';
+       51: Result := '51-Título DDA reconhecido pelo sacado';
+       52: Result := '52-Título DDA não reconhecido pelo sacado';
+       53: Result := '53-Título DDA recusado pela CIP';
+     end;
+   end
+   else
+   begin
+     case CodOcorrencia of
+       01: Result := '01-Entrada Confirmada';
+       02: Result := '02-Baixa Confirmada';
+       03: Result := '03-Abatimento Concedido';
+       04: Result := '04-Abatimento Cancelado';
+       05: Result := '05-Vencimento Alterado';
+       06: Result := '06-Uso da Empresa Alterado';
+       07: Result := '07-Prazo de Protesto Alterado';
+       08: Result := '08-Prazo de Devolução Alterado';
+       09: Result := '09-Alteração Confirmada';
+       10: Result := '10-Alteração com Reemissão de Bloqueto Confirmada';
+       11: Result := '11-Alteração da Opção de Protesto para Devolução';
+       12: Result := '12-Alteração da Opção de Devolução para Protesto';
+       20: Result := '20-Em Ser';
+       21: Result := '21-Liquidação';
+       22: Result := '22-Liquidação em Cartório';
+       23: Result := '23-Baixa por Devolução';
+       24: Result := '24-Baixa por Franco Pagamento';
+       25: Result := '25-Baixa por Protesto';
+       26: Result := '26-Título Enviado para Cartório';
+       27: Result := '27-Sustação de Protesto';
+       28: Result := '28-Estorno de Protesto';
+       29: Result := '29-Estorno de Sustação de Protesto';
+       30: Result := '30-Alteração de Título';
+       31: Result := '31-Tarifa sobre Título Vencido';
+       32: Result := '32-Outras Tarifas de Alteração';
+       33: Result := '33-Estorno de Baixa / Liquidação';
+       34: Result := '34-Transferência de Carteira/Entrada';
+       35: Result := '35-Transferência de Carteira/Baixa';
+       99: Result := '99-Rejeição do Título';
+     end;
+   end;
 end;
 
 function TACBrCaixaEconomicaSICOB.MontarCampoCodigoCedente (

@@ -47,6 +47,40 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 10/10/2016 ver: 0.0.210	
+-- ACBrBoleto --
+[*] Inclusão de um novo TACBrTipoOcorrencia (por: Antonio Júnior)
+
+-- ACBrBancoSicredi --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoItau --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoCecred --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoCaixa --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoCaixaSICOB --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoBradesco --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoBanrisul --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoBanestes --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoBrasil --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
+-- ACBrBancoSantander --
+[*] Alterações para atribuir Tipos de Ocorrências divergêntes entre CNAB240 e CNAB400 (por: Antonio Júnior)
+
 Data: 28/09/2016 ver: 0.0.210	
 -- ACBrBoleto --
 [*] Inclusão de um novo TACBrTipoOcorrencia (por: Elias César)

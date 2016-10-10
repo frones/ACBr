@@ -1259,61 +1259,55 @@ function TACBrBancoSicredi.TipoOcorrenciaToDescricao(
 var
  CodOcorrencia: Integer;
 begin
+  Result := '';
   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
-  case ACBrBanco.ACBrBoleto.LayoutRemessa of
-    c240: begin
-      case CodOcorrencia of
-        02: Result := '02-Entrada confirmada';
-        03: Result := '03-Entrada rejeitada';
-        06: Result := '06-Liquidação';
-        07: Result := '07-Confirmação do recebimento da instrução de desconto';
-        08: Result := '08-Confirmação do recebimento do cancelamento do desconto';
-        09: Result := '09-Baixa';
-        12: Result := '12-Confirmação do recebimento da instrução de abatimento';
-        13: Result := '13-Confirmação do recebimento do cancelamento do abatimento';
-        14: Result := '14-Confirmação do recebimento da instrução de alteração de vencimento';
-        17: Result := '17-Liquidação após baixa ou liquidação de título não registrado';
-        19: Result := '19-Confirmação de recebimento de instrução de protesto';
-        20: Result := '20-Confirmação de recebimento de instrução de sustação/cancelamento de protesto';
-        23: Result := '23-Remessa a cartótio (Aponte em cartório)';
-        24: Result := '24-Retirada de cartório e manutenção em carteira';
-        25: Result := '25-Protestado e baixado (Baixa por ter sido protestado)';
-        26: Result := '26-Instrução rejeitada';
-        28: Result := '28-Débito de tarifas/custas';
-        30: Result := '30-Alteração de dados rejeitada';
-        36: Result := '36-Baixa rejeitada';
-      else
-        Result := 'Outras ocorrências';
-      end;
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      07: Result := '07-Confirmação do Recebimento da Instrução de desconto';
+      08: Result := '08-Confirmação do Recebimento do Cancelamento do desconto';
+      24: Result := '24-Retirada de Cartório e Manutenção em Carteira';
+      25: Result := '25-Protestado e Baixado';
+      26: Result := '26-Instrução Rejeitada';
+      27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
+      36: Result := '36-Baixa Rejeitada';
+      51: Result := '51-Título Dda Reconhecido Pelo Pagador';
+      52: Result := '52-Título Dda não Reconhecido Pelo Pagador';
     end;
-    c400: begin
-      case CodOcorrencia of
-        02: Result:='02-Entrada confirmada' ;
-        03: Result:='03-Entrada rejeitada' ;
-        06: Result:='06-Liquidação normal' ;
-        09: Result:='09-Baixado automaticamente via arquivo' ;
-        10: Result:='10-Baixado conforme instruções da agência' ;
-        12: Result:='12-Abatimento concedido' ;
-        13: Result:='13-Abatimento cancelado' ;
-        14: Result:='14-Vencimento alterado' ;
-        15: Result:='15-Liquidação em cartório' ;
-        17: Result:='17-Liquidação após baixa ou título não registrado' ;
-        19: Result:='19-Confirmação recebimento instrução de protesto' ;
-        20: Result:='20-Confirmação recebimento instrução sustação de protesto' ;
-        23: Result:='23-Entrada do título em cartório' ;
-        24: Result:='24-Entrada rejeitada por CEP irregular' ;
-        27: Result:='27-Baixa rejeitada' ;
-        28: Result:='28-Débito de tarifas/custas' ;
-        29: Result:='29-Ocorrências do sacado';
-        30: Result:='30-Alteração de Outros Dados Rejeitados' ;
-        32: Result:='32-Instrução Rejeitada' ;
-        33: Result:='33-Confirmação Pedido Alteração Outros Dados' ;
-        34: Result:='34-Retirado de Cartório e Manutenção Carteira' ;
-        35: Result:='35-Desagendamento do débito automático' ;
-      else
-        Result := 'Outras ocorrências';
-      end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      10: Result := '10-Baixado Conforme Instruções da Cooperativa de Crédito';
+      15: Result := '15-Liquidação em Cartório';
+      24: Result := '24-Entrada Rejeitada Por Cep Irregular';
+      27: Result := '27-Baixa Rejeitada';
+      29: Result := '29-Rejeição do Pagador';
+      32: Result := '32-Instrução Rejeitada';
+      33: Result := '33-Confirmação de Pedido de Alteração de Outros Dados';
+      34: Result := '34-Retirado de Cartório e Manutenção em Carteira';
+      35: Result := '35-Aceite do Pagador';
     end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
+  case CodOcorrencia of
+    02: Result := '02-Entrada Confirmada';
+    03: Result := '03-Entrada Rejeitada';
+    06: Result := '06-Liquidação';
+    09: Result := '09-Baixa';
+    12: Result := '12-Confirmação do Recebimento Instrução de Abatimento';
+    13: Result := '13-Confirmação do Recebimento Instrução de Cancelamento Abatimento';
+    14: Result := '14-Confirmação do Recebimento Instrução Alteração de Vencimento';
+    17: Result := '17-Liquidação após Baixa ou Liquidação Título não Registrado';
+    19: Result := '19-Confirmação do Recebimento Instrução de Protesto';
+    20: Result := '20-Confirmação do Recebimento Instrução de Sustação/Cancelamento de Protesto';
+    23: Result := '23-Entrada de Título em Cartório';
+    28: Result := '28-Débito de Tarifas Custas';
+    30: Result := '30-Alteração Rejeitada';
   end;
 end;
 
@@ -1321,120 +1315,111 @@ function TACBrBancoSicredi.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
   Result := toTipoOcorrenciaNenhum;
-  case ACBrBanco.ACBrBoleto.LayoutRemessa of
-    c240: begin
-      case CodOcorrencia of
-        02: Result := toRetornoRegistroConfirmado;
-        03: Result := toRetornoRegistroRecusado;
-        06: Result := toRetornoLiquidado;
-        07: Result := toRetornoRecebimentoInstrucaoConcederDesconto;
-        08: Result := toRetornoRecebimentoInstrucaoCancelarDesconto;
-        09: Result := toRetornoBaixado;
-        12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
-        13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
-        14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
-        17: Result := toRetornoLiquidadoAposBaixaouNaoRegistro;
-        19: Result := toRetornoRecebimentoInstrucaoProtestar;
-        20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-        23: Result := toREtornoEntradaEmCartorio;
-        24: Result := toRetornoRetiradoDeCartorio;
-        25: Result := toRetornoBaixaPorProtesto;
-        26: Result := toRetornoInstrucaoRejeitada;
-    //    27: Result :=        Confirmação do pedido de alteração de outros dados
-        28: Result := toRetornoDebitoTarifas;
-        30: Result := toRetornoAlteracaoDadosRejeitados;
-        36: Result := toRetornoBaixaRejeitada;
-    //    51: Result :=        Título DDA reconhecido pelo sacado
-    //    52: Result :=        Título DDA não reconhecido pelo sacado
-      else
-        Result := toRetornoOutrasOcorrencias;
-      end;
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      07: Result := toRetornoRecebimentoInstrucaoConcederDesconto;
+      08: Result := toRetornoRecebimentoInstrucaoCancelarDesconto;
+      24: Result := toRetornoRetiradoDeCartorio;
+      25: Result := toRetornoBaixaPorProtesto;
+      26: Result := toRetornoInstrucaoRejeitada;
+      27: Result := toRetornoAlteracaoUsoCedente;
+      36: Result := toRetornoBaixaRejeitada;
+      51: Result := toRetornoTituloDDAReconhecidoPagador;
+      52: Result := toRetornoTituloDDANaoReconhecidoPagador;
     end;
-    c400: begin
-      case CodOcorrencia of
-        02: Result := toRetornoRegistroConfirmado;
-        03: Result := toRetornoRegistroRecusado;
-        06: Result := toRetornoLiquidado;
-        09: Result := toRetornoBaixadoViaArquivo;
-        10: Result := toRetornoBaixadoInstAgencia;
-        12: Result := toRetornoAbatimentoConcedido;
-        13: Result := toRetornoAbatimentoCancelado;
-        14: Result := toRetornoVencimentoAlterado;
-        15: Result := toRetornoLiquidadoEmCartorio;
-        17: Result := toRetornoLiquidadoAposBaixaouNaoRegistro;
-        19: Result := toRetornoRecebimentoInstrucaoProtestar;
-        20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-        23: Result := toREtornoEntradaEmCartorio;
-        24: Result := toRetornoEntradaRejeitaCEPIrregular;
-        27: Result := toRetornoBaixaRejeitada;
-        28: Result := toRetornoDebitoTarifas;
-        29: Result := toRetornoOcorrenciasdoSacado;
-        30: Result := toRetornoAlteracaoDadosRejeitados;
-        32: Result := toRetornoInstrucaoRejeitada;
-        33: Result := toRetornoRecebimentoInstrucaoAlterarDados;
-        34: Result := toRetornoRetiradoDeCartorio;
-    //    35: Result :=        Aceite do sacado
-      else
-        Result := toRetornoOutrasOcorrencias;
-      end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      10: Result := toRetornoBaixadoInstAgencia;
+      15: Result := toRetornoLiquidadoEmCartorio;
+      24: Result := toRetornoEntradaRejeitaCEPIrregular;
+      27: Result := toRetornoBaixaRejeitada;
+      29: Result := toRetornoRejeicaoSacado;
+      32: Result := toRetornoInstrucaoRejeitada;
+      33: Result := toRetornoAlteracaoDadosNovaEntrada;
+      34: Result := toRetornoRetiradoDeCartorio;
+      35: Result := toRetornoAceiteSacado;
     end;
+  end;
+
+  if (Result <> toTipoOcorrenciaNenhum) then
+    Exit;
+
+  case CodOcorrencia of
+    02: Result := toRetornoRegistroConfirmado;
+    03: Result := toRetornoRegistroRecusado;
+    06: Result := toRetornoLiquidado;
+    09: Result := toRetornoBaixado;
+    12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
+    13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
+    14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
+    17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
+    19: Result := toRetornoRecebimentoInstrucaoProtestar;
+    20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+    23: Result := toRetornoEntradaEmCartorio;
+    28: Result := toRetornoDebitoTarifas;
+    30: Result := toRetornoAlteracaoDadosRejeitados;
+  else
+    Result := toRetornoOutrasOcorrencias;
   end;
 end;
 
 function TACBrBancoSicredi.TipoOCorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
-  case ACBrBanco.ACBrBoleto.LayoutRemessa of
-    c240: begin
-      case TipoOcorrencia of
-        toRetornoRegistroConfirmado:                     Result := '02';
-        toRetornoRegistroRecusado:                       Result := '03';
-        toRetornoLiquidado:                              Result := '06';
-        toRetornoRecebimentoInstrucaoConcederDesconto:   Result := '07';
-        toRetornoRecebimentoInstrucaoCancelarDesconto:   Result := '08';
-        toRetornoBaixado:                                Result := '09';
-        toRetornoRecebimentoInstrucaoConcederAbatimento: Result := '12';
-        toRetornoRecebimentoInstrucaoCancelarAbatimento: Result := '13';
-        toRetornoRecebimentoInstrucaoAlterarVencimento:  Result := '14';
-        toRetornoLiquidadoAposBaixaouNaoRegistro:        Result := '17';
-        toRetornoRecebimentoInstrucaoProtestar:          Result := '19';
-        toRetornoRecebimentoInstrucaoSustarProtesto:     Result := '20';
-        toREtornoEntradaEmCartorio:                      Result := '23';
-        toRetornoRetiradoDeCartorio:                     Result := '24';
-        toRetornoBaixaPorProtesto:                       Result := '25';
-        toRetornoInstrucaoRejeitada:                     Result := '26';
-        toRetornoDebitoTarifas:                          Result := '28';
-        toRetornoAlteracaoDadosRejeitados:               Result := '30';
-        toRetornoBaixaRejeitada:                         Result := '36';
-      else
-        Result := '00';
-      end;
+  Result := '';
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case TipoOcorrencia of
+      toRetornoRecebimentoInstrucaoConcederDesconto            : Result := '07';
+      toRetornoRecebimentoInstrucaoCancelarDesconto            : Result := '08';
+      toRetornoRetiradoDeCartorio                              : Result := '24';
+      toRetornoBaixaPorProtesto                                : Result := '25';
+      toRetornoInstrucaoRejeitada                              : Result := '26';
+      toRetornoAlteracaoUsoCedente                             : Result := '27';
+      toRetornoBaixaRejeitada                                  : Result := '36';
+      toRetornoTituloDDAReconhecidoPagador                     : Result := '51';
+      toRetornoTituloDDANaoReconhecidoPagador                  : Result := '52';
     end;
-    c400:begin
-      case TipoOcorrencia of
-        toRetornoRegistroConfirmado:                 Result := '02';
-        toRetornoRegistroRecusado:                   Result := '03';
-        toRetornoLiquidado:                          Result := '06';
-        toRetornoBaixadoViaArquivo:                  Result := '09';
-        toRetornoBaixadoInstAgencia:                 Result := '10';
-        toRetornoAbatimentoConcedido:                Result := '12';
-        toRetornoAbatimentoCancelado:                Result := '13';
-        toRetornoVencimentoAlterado:                 Result := '14';
-        toRetornoLiquidadoEmCartorio:                Result := '15';
-        toRetornoLiquidadoAposBaixaouNaoRegistro:    Result := '17';
-        toRetornoRecebimentoInstrucaoProtestar:      Result := '19';
-        toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
-        toREtornoEntradaEmCartorio:                  Result := '23';
-        toRetornoEntradaRejeitaCEPIrregular:         Result := '24';
-        toRetornoBaixaRejeitada:                     Result := '27';
-        toRetornoDebitoTarifas:                      Result := '28';
-        toRetornoAlteracaoDadosRejeitados:           Result := '30';
-        toRetornoInstrucaoRejeitada:                 Result := '32';
-        toRetornoRetiradoDeCartorio:                 Result := '34';
-      else
-        Result := '00';
-      end;
+  end
+  else
+  begin
+    case TipoOcorrencia of
+      toRetornoBaixadoInstAgencia                              : Result := '10';
+      toRetornoLiquidadoEmCartorio                             : Result := '15';
+      toRetornoEntradaRejeitaCEPIrregular                      : Result := '24';
+      toRetornoBaixaRejeitada                                  : Result := '27';
+      toRetornoRejeicaoSacado                                  : Result := '29';
+      toRetornoInstrucaoRejeitada                              : Result := '32';
+      toRetornoAlteracaoDadosNovaEntrada                       : Result := '33';
+      toRetornoRetiradoDeCartorio                              : Result := '34';
+      toRetornoAceiteSacado                                    : Result := '35';
     end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
+  case TipoOcorrencia of
+    toRetornoRegistroConfirmado                                : Result := '02';
+    toRetornoRegistroRecusado                                  : Result := '03';
+    toRetornoLiquidado                                         : Result := '06';
+    toRetornoBaixado                                           : Result := '09';
+    toRetornoRecebimentoInstrucaoConcederAbatimento            : Result := '12';
+    toRetornoRecebimentoInstrucaoCancelarAbatimento            : Result := '13';
+    toRetornoRecebimentoInstrucaoAlterarVencimento             : Result := '14';
+    toRetornoLiquidadoAposBaixaOuNaoRegistro                   : Result := '17';
+    toRetornoRecebimentoInstrucaoProtestar                     : Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto                : Result := '20';
+    toRetornoEntradaEmCartorio                                 : Result := '23';
+    toRetornoDebitoTarifas                                     : Result := '28';
+    toRetornoAlteracaoDadosRejeitados                          : Result := '30';
+  else
+    Result := '02';
   end;
 end;
 

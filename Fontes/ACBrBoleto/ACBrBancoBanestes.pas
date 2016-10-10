@@ -543,52 +543,85 @@ function TACBrBancoBanestes.TipoOcorrenciaToDescricao(
 var
  CodOcorrencia: Integer;
 begin
-
+  Result := '';
   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
 
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      29: Result := '29-Ocorrência do Sacado';
+      33: Result := '33-Confirmação da Alteração dos Dados do Rateio de Crédito';
+      34: Result := '34-Confirmação do Cancelamento dos Dados do Rateio de Crédito';
+      35: Result := '35-Confirmação do Cancelamento do Débito Automático Agendado';
+    end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
   case CodOcorrencia of
-    02: Result:='02-Entrada Confirmada' ;
-    03: Result:='03-Entrada Rejeitada' ;
-    05: Result:='05-Transferencia Carteira - Baixa' ;
-    06: Result:='06-Liquidação Normal' ;
-    07: Result:='07-Confirmação do recebimento da instrução de desconto' ;
-    08: Result:='08-Confirmação do recebimento do cancelamento do desconto' ;
-    09: Result:='09-Baixa Simples' ;
-    11: Result:='11-Em Ser' ;
-    12: Result:='12-Abatimento Concedido' ;
-    13: Result:='13-Abatimento Cancelado' ;
-    14: Result:='14-Vencimento Alterado' ;
-    17: Result:='17-Liquidação apos baixa ou liquidação e titulo não registrado' ;
-    19: Result:='19-Confirma Recebimento de Instrução de Protesto' ;
-    20: Result:='20-Confirma Recebimento de Instrução de Sustação de Protesto /Tarifa' ;
-    21: Result:='21-Solicitação de segunda via de instrumento de protesto' ;
-    22: Result:='22-Segunda via de instrumento de protesto emitida pelo cartório' ;
-    23: Result:='23-Título Enviado A Cartório/Tarifa' ;
-    24: Result:='24-Retirada de Cartório e manutenção em carteira' ;
-    25: Result:='25-Protestado e baixado' ;
-    26: Result:='26-Instrução Rejeitada' ;
-    27: Result:='27-Confirmação do Pedido de Alteração Outros dados' ;
-    28: Result:='28-Débito de tarifas/Custas' ;
-    30: Result:='30-Alteração de outros dados rejeitada' ;
-    40: Result:='40-Confirmação da alteração do numero do titulo dado pelo cedente' ;
-    42: Result:='42-Confirmação da alteração dos dados do sacado' ;
-    43: Result:='43-Confirmação da alteração dos dados do sacador avalista' ;
-    98: Result:='98-Instrução de Protesto Processada' ;
-    99: Result:='99-Remessa Rejeitada' ;
+    02: Result:= '02-Entrada Confirmada';
+    03: Result:= '03-Entrada Rejeitada';
+    04: Result:= '04-Transferência de Carteira - Entrada';
+    05: Result:= '05-Transferencia Carteira - Baixa';
+    06: Result:= '06-Liquidação';
+    07: Result:= '07-Confirmação do Recebimento da Instrução de Desconto';
+    08: Result:= '08-Confirmação do Recebimento do Cancelamento do Desconto';
+    09: Result:= '09-Baixa';
+    11: Result:= '11-Título em Carteira(Em Ser)';
+    12: Result:= '12-Confirmação do Recebimento de Instruções de Abatimento';
+    13: Result:= '13-Confirmação do Recebimento de Instrução de Cancelamento de Abatimento';
+    14: Result:= '14-Confirmação do Recebimento de Instrução de Alteração de Vencimento';
+    17: Result:= '17-Liquidação após Baixa ou Liquidação de Título não Registrado';
+    19: Result:= '19-Confirmação de Recebimento de Instrução de Protesto';
+    20: Result:= '20-Confirmação de Recebimento de Instrução de Sustação/Cancelamento de Protesto' ;
+    21: Result:= '21-Solicitação de Segunda Via de Instrumento de Protesto';
+    22: Result:= '22-Segunda Via de Instrumento de Protesto Emitida pelo Cartório';
+    23: Result:= '23-Remessa a Cartório';
+    24: Result:= '24-Retirada de Cartório e Manutenção em Carteira';
+    25: Result:= '25-Protestado e Baixado';
+    26: Result:= '26-Instrução Rejeitada';
+    27: Result:= '27-Confirmação do Pedido de Alteração Outros Dados';
+    28: Result:= '28-Débito de Tarifas/Custas';
+    30: Result:= '30-Alteração de Outros Dados Rejeitada';
+    40: Result:= '40-Confirmação da Alteração do Número do Título Dado pelo Cedente';
+    42: Result:= '42-Confirmação da Alteração dos Dados do Sacado';
+    43: Result:= '43-Confirmação da Alteração dos Dados do Sacador Avalista';
+    51: Result:= '51-Título DDA Reconhecido pelo Sacado';
+    52: Result:= '52-Título DDA Não Reconhecido pelo Sacado';
+    53: Result:= '53-Título DDA Recusado pela CIP';
+    98: Result:= '98-Instrução de Protesto Processada';
+    99: Result:= '99-Remessa Rejeitada';
   end;
 end;
 
 function TACBrBancoBanestes.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
+  Result := toTipoOcorrenciaNenhum;
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      29: Result := toRetornoOcorrenciasDoSacado;
+      33: Result := toRetornoAcertoDadosRateioCredito;
+      34: Result := toRetornoCancelamentoDadosRateio;
+      35: Result := toRetornoDesagendamentoDebitoAutomatico;
+    end;
+  end;
+
+  if (Result <> toTipoOcorrenciaNenhum) then
+    Exit;
+
   case CodOcorrencia of
       02: Result := toRetornoRegistroConfirmado;
       03: Result := toRetornoRegistroRecusado;
-      05: Result := toRetornoLiquidadoEmCartorio;
+      04: Result := toRetornoTransferenciaCarteiraEntrada;
+      05: Result := toRetornoTransferenciaCarteiraBaixa;
       06: Result := toRetornoLiquidado;
       07: Result := toRetornoRecebimentoInstrucaoConcederDesconto;
       08: Result := toRetornoRecebimentoInstrucaoCancelarDesconto;
-      09: Result := toRetornoBaixaSimples;
+      09: Result := toRetornoBaixado;
       11: Result := toRetornoTituloEmSer;
       12: Result := toRetornoAbatimentoConcedido;
       13: Result := toRetornoAbatimentoCancelado;
@@ -596,7 +629,8 @@ begin
       17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
       19: Result := toRetornoRecebimentoInstrucaoProtestar;
       20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-      21: Result := toRetornoRecebimentoInstrucaoProtestar;
+      21: Result := toRetornoSegundaViaInstrumentoProtesto;
+      22: Result := toRetornoSegundaViaInstrumentoProtestoCartorio;
       23: Result := toRetornoEncaminhadoACartorio;
       24: Result := toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente;
       25: Result := toRetornoBaixaPorProtesto;
@@ -604,55 +638,73 @@ begin
       27: Result := toRetornoDadosAlterados;
       28: Result := toRetornoDebitoTarifas;
       30: Result := toRetornoAlteracaoDadosRejeitados;
-      40: Result := toRetornoRecebimentoInstrucaoAlterarTipoCobranca;
-      42: Result := toRetornoRecebimentoInstrucaoAlterarTipoCobranca;
-      43: Result := toRetornoRecebimentoInstrucaoAlterarTipoCobranca;
-      51: Result := toRetornoTarifaMensalRefEntradasBancosCorrespCarteira;
-      52: Result := toRetornoTarifaMensalBaixasCarteira;
-      53: Result := toRetornoTarifaMensalBaixasBancosCorrespCarteira;
+      40: Result := toRetornoAlteracaoSeuNumero;
+      42: Result := toRetornoRecebimentoInstrucaoAlterarDados;
+      43: Result := toRetornoAlterarSacadorAvalista;
+      51: Result := toRetornoTituloDDAReconhecidoPagador;
+      52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      53: Result := toRetornoTituloDDARecusadoCIP;
       98: Result := toRetornoProtestado;
-      99: Result := toRetornoRegistroRecusado;
-
-   else
-      Result := toRetornoOutrasOcorrencias;
-   end;
+      99: Result := toRetornoRemessaRejeitada;
+  else
+    Result := toRetornoOutrasOcorrencias;
+  end;
 end;
 
 function TACBrBancoBanestes.TipoOCorrenciaToCod(
   const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
+  Result := '';
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case TipoOcorrencia of
+      toRetornoOcorrenciasDoSacado                    : Result := '29';
+      toRetornoAcertoDadosRateioCredito               : Result := '33';
+      toRetornoCancelamentoDadosRateio                : Result := '34';
+      toRetornoDesagendamentoDebitoAutomatico         : Result := '35';
+    end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
   case TipoOcorrencia of
-      toRetornoRegistroConfirmado                           : Result :='02';
-      toRetornoRegistroRecusado                             : Result :='03';
-      toRetornoLiquidadoEmCartorio                          : Result :='05';
-      toRetornoLiquidado                                    : Result :='06';
-      toRetornoRecebimentoInstrucaoConcederDesconto         : Result :='07';
-      toRetornoRecebimentoInstrucaoCancelarDesconto         : Result :='08';
-      toRetornoBaixaSimples                                 : Result :='09';
-      toRetornoTituloEmSer                                  : Result :='11';
-      toRetornoAbatimentoConcedido                          : Result :='12';
-      toRetornoAbatimentoCancelado                          : Result :='13';
-      toRetornoVencimentoAlterado                           : Result :='14';
-      toRetornoLiquidadoAposBaixaOuNaoRegistro              : Result :='17';
-      toRetornoRecebimentoInstrucaoProtestar                : Result :='19';
-      toRetornoRecebimentoInstrucaoSustarProtesto           : Result :='20';
-      toRetornoEncaminhadoACartorio                         : Result :='23';
-      toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente  : Result :='24';
-      toRetornoBaixaPorProtesto                             : Result :='25';
-      toRetornoInstrucaoRejeitada                           : Result :='26';
-      toRetornoDadosAlterados                               : Result :='27';
-      toRetornoDebitoTarifas                                : Result :='28';
-      toRetornoAlteracaoDadosRejeitados                     : Result :='30';
-      toRetornoRecebimentoInstrucaoAlterarTipoCobranca      : Result :='40';
-      toRetornoTarifaMensalRefEntradasBancosCorrespCarteira : Result :='51';
-      toRetornoTarifaMensalBaixasCarteira                   : Result :='52';
-      toRetornoTarifaMensalBaixasBancosCorrespCarteira      : Result :='53';
-      toRetornoProtestado                                   : Result :='98';
-
-
-   else
-      Result:= '02';
-   end;
+      toRetornoRegistroConfirmado                          : Result := '02';
+      toRetornoRegistroRecusado                            : Result := '03';
+      toRetornoTransferenciaCarteiraEntrada                : Result := '04';
+      toRetornoTransferenciaCarteiraBaixa                  : Result := '05';
+      toRetornoLiquidado                                   : Result := '06';
+      toRetornoRecebimentoInstrucaoConcederDesconto        : Result := '07';
+      toRetornoRecebimentoInstrucaoCancelarDesconto        : Result := '08';
+      toRetornoBaixado                                     : Result := '09';
+      toRetornoTituloEmSer                                 : Result := '11';
+      toRetornoAbatimentoConcedido                         : Result := '12';
+      toRetornoAbatimentoCancelado                         : Result := '13';
+      toRetornoVencimentoAlterado                          : Result := '14';
+      toRetornoLiquidadoAposBaixaOuNaoRegistro             : Result := '17';
+      toRetornoRecebimentoInstrucaoProtestar               : Result := '19';
+      toRetornoRecebimentoInstrucaoSustarProtesto          : Result := '20';
+      toRetornoSegundaViaInstrumentoProtesto               : Result := '21';
+      toRetornoSegundaViaInstrumentoProtestoCartorio       : Result := '22';
+      toRetornoEncaminhadoACartorio                        : Result := '23';
+      toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente : Result := '24';
+      toRetornoBaixaPorProtesto                            : Result := '25';
+      toRetornoInstrucaoRejeitada                          : Result := '26';
+      toRetornoDadosAlterados                              : Result := '27';
+      toRetornoDebitoTarifas                               : Result := '28';
+      toRetornoAlteracaoDadosRejeitados                    : Result := '30';
+      toRetornoAlteracaoSeuNumero                          : Result := '40';
+      toRetornoRecebimentoInstrucaoAlterarDados            : Result := '42';
+      toRetornoAlterarSacadorAvalista                      : Result := '43';
+      toRetornoTituloDDAReconhecidoPagador                 : Result := '51';
+      toRetornoTituloDDANaoReconhecidoPagador              : Result := '52';
+      toRetornoTituloDDARecusadoCIP                        : Result := '53';
+      toRetornoProtestado                                  : Result := '98';
+      toRetornoRemessaRejeitada                            : Result := '99';
+  else
+    Result := '02';
+  end;
 end;
 
 function TACBrBancoBanestes.CodMotivoRejeicaoToDescricao(

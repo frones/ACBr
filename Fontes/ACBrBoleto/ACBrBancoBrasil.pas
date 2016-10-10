@@ -1029,53 +1029,76 @@ end;
 function TACBrBancoBrasil.TipoOCorrenciaToCod (
    const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
 begin
-  case TipoOcorrencia of
-    toRetornoRegistroConfirmado                         : Result := '02';
-    toRetornoComandoRecusado                            : Result := '03';
-    toRetornoLiquidadoSemRegistro                       : Result := '05';
-    toRetornoLiquidado                                  : Result := '06';
-    toRetornoLiquidadoPorConta                          : Result := '07';
-//                                                      : Result := '08'; // 08-Liquidação por Saldo
-    toRetornoBaixado                                    : Result := '09';
-    toRetornoBaixaSolicitada                            : Result := '10';
-    toRetornoTituloEmSer                                : Result := '11';
-    toRetornoAbatimentoConcedido                        : Result := '12';
-    toRetornoAbatimentoCancelado                        : Result := '13';
-    toRetornoVencimentoAlterado                         : Result := '14';
-    toRetornoLiquidadoEmCartorio                        : Result := '15';
-//                                                      : Result := '16'; // 16-Confirmação de alteração de juros de mora
-    toRetornoLiquidadoAposBaixaOuNaoRegistro            : Result := '17';
-    toRetornoRecebimentoInstrucaoProtestar              : Result := '19';
-    toRetornoRecebimentoInstrucaoSustarProtesto,
-    toRetornoDebitoEmConta                              : Result := '20';
-    toRetornoRecebimentoInstrucaoAlterarNomeSacado      : Result := '21';
-    toRetornoRecebimentoInstrucaoAlterarEnderecoSacado  : Result := '22';
-    toRetornoEncaminhadoACartorio                       : Result := '23';
-    toRetornoProtestoSustado                            : Result := '24';
-    toRetornoJurosDispensados                           : Result := '25';
-//                                                      : Result := '26'; // 26-Alteração do número do título dado pelo Cedente (Seu número) – 10 e 15 posições
-    toRetornoDebitoTarifas,
-    toRetornoManutencaoTituloVencido                    : Result := '28';
-    toRetornoDescontoConcedido                          : Result := '31';
-    toRetornoDescontoCancelado                          : Result := '32';
-//                                                      : Result := '33'; // 33-Retificar desconto
-//                                                      : Result := '34'; // 34-Alterar data para desconto
-//                                                      : Result := '35'; // 35–Cobrar Multa
-//                                                      : Result := '36'; // 36–Dispensar Multa
-//                                                      : Result := '37'; // 37–Dispensar Indexador
-//                                                      : Result := '38'; // 38–Dispensar prazo limite para recebimento
-//                                                      : Result := '39'; // 39–Alterar prazo limite para recebimento
-    toRetornoAcertoControleParticipante                 : Result := '41';
-//                                                      : Result := '42'; // 42–Alteração do número do documento do sacado (CNPJ/CPF)
-//                                                      : Result := '44'; // 44–Título pago com cheque devolvido
-    toRetornoTituloPagoEmCheque                         : Result := '46';
-    toRetornoTipoCobrancaAlterado                       : Result := '72';
-    toRetornoDespesasProtesto                           : Result := '96';
-    toRetornoDespesasSustacaoProtesto                   : Result := '97';
-    toRetornoDebitoCustasAntecipadas                    : Result := '98';
-  else
-    Result := '02';
-  end;
+   Result := '';
+
+   if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+   begin
+     case TipoOcorrencia of
+       toRetornoTransferenciaCarteiraEntrada        : Result := '04';
+       toRetornoTransferenciaCarteiraBaixa          : Result := '05';
+       toRetornoBaixaAutomatica                     : Result := '09';
+       toRetornoBaixadoFrancoPagamento              : Result := '15';
+       toRetornoLiquidadoSemRegistro                : Result := '17';
+       toRetornoRecebimentoInstrucaoSustarProtesto  : Result := '20';
+       toRetornoRetiradoDeCartorio                  : Result := '24';
+       toRetornoBaixaPorProtesto                    : Result := '25';
+       toRetornoInstrucaoRejeitada                  : Result := '26';
+       toRetornoAlteracaoUsoCedente                 : Result := '27';
+       toRetornoDebitoTarifas                       : Result := '28';
+       toRetornoOcorrenciasDoSacado                 : Result := '29';
+       toRetornoAlteracaoDadosRejeitados            : Result := '30';
+       toRetornoChequePendenteCompensacao           : Result := '50';
+     end;
+   end
+    else
+    begin
+      case TipoOcorrencia of
+        toRetornoLiquidadoSemRegistro               : Result := '05';
+        toRetornoLiquidadoPorConta                  : Result := '08';
+        toRetornoLiquidadoSaldoRestante             : Result := '08';
+        toRetornoBaixaSolicitada                    : Result := '10';
+        toRetornoLiquidadoEmCartorio                : Result := '15';
+        toRetornoConfirmacaoAlteracaoJurosMora      : Result := '16';
+        toRetornoDebitoEmConta                      : Result := '20';
+        toRetornoNomeSacadoAlterado                 : Result := '21';
+        toRetornoEnderecoSacadoAlterado             : Result := '22';
+        toRetornoProtestoSustado                    : Result := '24';
+        toRetornoJurosDispensados                   : Result := '25';
+        toRetornoManutencaoTituloVencido            : Result := '28';
+        toRetornoDescontoConcedido                  : Result := '31';
+        toRetornoDescontoCancelado                  : Result := '32';
+        toRetornoDescontoRetificado                 : Result := '33';
+        toRetornoAlterarDataDesconto                : Result := '34';
+        toRetornoRecebimentoInstrucaoAlterarJuros   : Result := '35';
+        toRetornoRecebimentoInstrucaoDispensarJuros : Result := '36';
+        toRetornoDispensarIndexador                 : Result := '37';
+        toRetornoDispensarPrazoLimiteRecebimento    : Result := '38';
+        toRetornoAlterarPrazoLimiteRecebimento      : Result := '39';
+        toRetornoChequePendenteCompensacao          : Result := '46';
+        toRetornoTipoCobrancaAlterado               : Result := '72';
+        toRetornoDespesasProtesto                   : Result := '96';
+        toRetornoDespesasSustacaoProtesto                    : Result := '97';
+        toRetornoDebitoCustasAntecipadas            : Result := '98';
+      end;
+    end;
+
+    if (Result <> '') then
+    Exit;
+
+    case TipoOcorrencia of
+      toRetornoRegistroConfirmado                   : Result := '02';
+      toRetornoRegistroRecusado                     : Result := '03';
+      toRetornoLiquidado                            : Result := '06';
+      toRetornoTituloEmSer                          : Result := '11';
+      toRetornoAbatimentoConcedido                  : Result := '12';
+      toRetornoAbatimentoCancelado                  : Result := '13';
+      toRetornoVencimentoAlterado                   : Result := '14';
+      toRetornoRecebimentoInstrucaoProtestar        : Result := '19';
+      toRetornoEntradaEmCartorio                    : Result := '23';
+      toRetornoChequeDevolvido                      : Result := '44';
+    else
+      Result := '02';
+    end;
 end;
 
 function TACBrBancoBrasil.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;
@@ -1083,99 +1106,152 @@ var
  CodOcorrencia: Integer;
 begin
 
+  Result := '';
   CodOcorrencia := StrToIntDef(TipoOCorrenciaToCod(TipoOcorrencia),0);
 
-  Case CodOcorrencia of
-    02: Result:='02-Confirmação de Entrada de Título' ;
-    03: Result:='03-Comando recusado' ;
-    05: Result:='05-Liquidado sem registro' ;
-    06: Result:='06-Liquidação Normal' ;
-    07: Result:='07-Liquidação por Conta' ;
-    08: Result:='08-Liquidação por Saldo' ;
-    09: Result:='09-Baixa de Título' ;
-    10: Result:='10-Baixa Solicitada' ;
-    11: Result:='11-Titulos em Ser' ;
-    12: Result:='12-Abatimento Concedido' ;
-    13: Result:='13-Abatimento Cancelado' ;
-    14: Result:='14-Alteração de Vencimento do Titulo' ;
-    15: Result:='15-Liquidação em Cartório' ;
-    16: Result:='16-Confirmação de alteração de juros de mora' ;
-    17: Result:='17-Liquidação Após Baixa ou Liquidação de Título Não Registrado' ;
-    19: Result:='19-Confirmação de recebimento de instruções para protesto' ;
-    20: case ACBrBanco.ACBrBoleto.LayoutRemessa of
-          c240: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
-          c400: Result := '20-Débito em Conta';
-        end;
-    21: Result:='21-Alteração do Nome do Sacado' ;
-    22: Result:='22-Alteração do Endereço do Sacado' ;
-    23: Result:='23-Indicação de encaminhamento a cartório' ;
-    24: Result:='24-Sustar Protesto' ;
-    25: Result:='25-Dispensar Juros' ;
-    26: Result:='26-Alteração do número do título dado pelo Cedente (Seu número) - 10 e 15 posições';
-    28: case ACBrBanco.ACBrBoleto.LayoutRemessa of
-          c240: Result := '28-Débito de Tarifas/Custas';
-          c400: Result := '28-Manutenção de titulo vencido';
-        end;
-    31: Result:='31-Conceder desconto' ;
-    32: Result:='32-Não conceder desconto' ;
-    33: Result:='33-Retificar desconto' ;
-    34: Result:='34-Alterar data para desconto' ;
-    35: Result:='35-Cobrar multa' ;
-    36: Result:='36-Dispensar multa' ;
-    37: Result:='37-Dispensar indexador' ;
-    38: Result:='38-Dispensar prazo limite para recebimento' ;
-    39: Result:='39-Alterar prazo limite para recebimento' ;
-    41: Result:='41-Alteração do número do controle do participante (25 posições)' ;
-    42: Result:='42-Alteração do número do documento do sacado (CNPJ/CPF)' ;
-    44: Result:='44-Título pago com cheque devolvido' ;
-    46: Result:='46-Título pago com cheque, aguardando compensação' ;
-    72: Result:='72-Alteração de tipo de cobrança' ;
-    96: Result:='96-Despesas de Protesto' ;
-    97: Result:='97-Despesas de Sustação de Protesto' ;
-    98: Result:='98-Débito de Custas Antecipadas' ;
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      02: Result:= '02 – Entrada confirmada';
+      03: Result:= '03 – Entrada Rejeitada';
+      04: Result:= '04 – Transferência de Carteira/Entrada';
+      05: Result:= '05 – Transferência de Carteira/Baixa';
+      06: Result:= '06 – Liquidação';
+      09: Result:= '09 – Baixa';
+      11: Result:= '11 – Títulos em Carteira (em ser)';
+      12: Result:= '12 – Confirmação Recebimento Instrução de Abatimento';
+      13: Result:= '13 – Confirmação Recebimento Instrução de Cancelamento Abatimento';
+      14: Result:= '14 – Confirmação Recebimento Instrução Alteração de Vencimento';
+      15: Result:= '15 – Franco de Pagamento';
+      17: Result:= '17 – Liquidação Após Baixa ou Liquidação Título Não Registrado';
+      19: Result:= '19 – Confirmação Recebimento Instrução de Protesto';
+      20: Result:= '20 – Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
+      23: Result:= '23 – Remessa a Cartório';
+      24: Result:= '24 – Retirada de Cartório e Manutenção em Carteira';
+      25: Result:= '25 – Protestado e Baixado';
+      26: Result:= '26 – Instrução Rejeitada';
+      27: Result:= '27 – Confirmação do Pedido de Alteração de Outros Dados';
+      28: Result:= '28 – Débito de Tarifas/Custas';
+      29: Result:= '29 – Ocorrências do Sacado';
+      30: Result:= '30 – Alteração de Dados Rejeitada';
+      44: Result:= '44 – Título pago com cheque devolvido';
+      50: Result:= '50 – Título pago com cheque pendente de compensação'
+    end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      02: Result:= '02-Confirmação de Entrada de Título';
+      03: Result:= '03-Comando recusado';
+      05: Result:= '05-Liquidado sem registro';
+      06: Result:= '06-Liquidação Normal';
+      07: Result:= '07-Liquidação por Conta';
+      08: Result:= '08-Liquidação por Saldo';
+      09: Result:= '09-Baixa de Título';
+      10: Result:= '10-Baixa Solicitada';
+      11: Result:= '11-Titulos em Ser';
+      12: Result:= '12-Abatimento Concedido';
+      13: Result:= '13-Abatimento Cancelado';
+      14: Result:= '14-Alteração de Vencimento do Titulo';
+      15: Result:= '15-Liquidação em Cartório';
+      16: Result:= '16-Confirmação de alteração de juros de mora';
+      19: Result:= '19-Confirmação de recebimento de instruções para protesto';
+      20: Result:= '20-Débito em Conta';
+      21: Result:= '21-Alteração do Nome do Sacado';
+      22: Result:= '22-Alteração do Endereço do Sacado';
+      23: Result:= '23-Indicação de encaminhamento a cartório';
+      24: Result:= '24-Sustar Protesto';
+      25: Result:= '25-Dispensar Juros';
+      28: Result:= '28-Manutenção de titulo vencido';
+      31: Result:= '31-Conceder desconto';
+      32: Result:= '32-Não conceder desconto';
+      33: Result:= '33-Retificar desconto';
+      34: Result:= '34-Alterar data para desconto';
+      35: Result:= '35-Cobrar multa';
+      36: Result:= '36-Dispensar multa';
+      37: Result:= '37-Dispensar indexador';
+      38: Result:= '38-Dispensar prazo limite para recebimento';
+      39: Result:= '39-Alterar prazo limite para recebimento';
+      44: Result:= '44-Título pago com cheque devolvido';
+      46: Result:= '46-Título pago com cheque, aguardando compensação';
+      72: Result:= '72-Alteração de tipo de cobrança';
+      96: Result:= '96-Despesas de Protesto';
+      97: Result:= '97-Despesas de Sustação de Protesto';
+      98: Result:= '98-Débito de Custas Antecipadas';
+    end;
   end;
 end;
 
 function TACBrBancoBrasil.CodOcorrenciaToTipo(const CodOcorrencia:
    Integer ) : TACBrTipoOcorrencia;
 begin
- Result := toTipoOcorrenciaNenhum;
+   Result := toTipoOcorrenciaNenhum;
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case CodOcorrencia of
+      04: Result := toRetornoTransferenciaCarteiraEntrada;
+      05: Result := toRetornoTransferenciaCarteiraBaixa;
+      09: Result := toRetornoBaixaAutomatica;
+      15: Result := toRetornoBaixadoFrancoPagamento;
+      17: Result := toRetornoLiquidadoSemRegistro;
+      20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+      24: Result := toRetornoRetiradoDeCartorio;
+      25: Result := toRetornoBaixaPorProtesto;
+      26: Result := toRetornoInstrucaoRejeitada;
+      27: Result := toRetornoAlteracaoUsoCedente;
+      28: Result := toRetornoDebitoTarifas;
+      29: Result := toRetornoOcorrenciasDoSacado;
+      30: Result := toRetornoAlteracaoDadosRejeitados;
+      50: Result := toRetornoChequePendenteCompensacao;
+    end;
+  end
+  else
+  begin
+    case CodOcorrencia of
+      05: Result := toRetornoLiquidadoSemRegistro;
+      07: Result := toRetornoLiquidadoPorConta;
+      08: Result := toRetornoLiquidadoSaldoRestante;
+      10: Result := toRetornoBaixaSolicitada;
+      15: Result := toRetornoLiquidadoEmCartorio;
+      16: Result := toRetornoConfirmacaoAlteracaoJurosMora;
+      20: Result := toRetornoDebitoEmConta;
+      21: Result := toRetornoNomeSacadoAlterado;
+      22: Result := toRetornoEnderecoSacadoAlterado;
+      24: Result := toRetornoProtestoSustado;
+      25: Result := toRetornoJurosDispensados;
+      28: Result := toRetornoManutencaoTituloVencido;
+      31: Result := toRetornoDescontoConcedido;
+      32: Result := toRetornoDescontoCancelado;
+      33: Result := toRetornoDescontoRetificado;
+      34: Result := toRetornoAlterarDataDesconto;
+      35: Result := toRetornoRecebimentoInstrucaoAlterarJuros;
+      36: Result := toRetornoRecebimentoInstrucaoDispensarJuros;
+      37: Result := toRetornoDispensarIndexador;
+      38: Result := toRetornoDispensarPrazoLimiteRecebimento;
+      39: Result := toRetornoAlterarPrazoLimiteRecebimento;
+      46: Result := toRetornoChequePendenteCompensacao;
+      72: Result := toRetornoTipoCobrancaAlterado;
+      96: Result := toRetornoDespesasProtesto;
+      97: Result := toRetornoProtestoSustado;
+      98: Result := toRetornoDebitoCustasAntecipadas;
+    end;
+  end;
+
+  if (Result <> toTipoOcorrenciaNenhum) then
+    Exit;
+
   case CodOcorrencia of
     02: Result := toRetornoRegistroConfirmado;
-    03: Result := toRetornoComandoRecusado;
-    05: Result := toRetornoLiquidadoSemRegistro;
+    03: Result := toRetornoRegistroRecusado;
     06: Result := toRetornoLiquidado;
-    07: Result := toRetornoLiquidadoPorConta;
-    09: Result := toRetornoBaixado;
-    10: Result := toRetornoBaixaSolicitada;
     11: Result := toRetornoTituloEmSer;
     12: Result := toRetornoAbatimentoConcedido;
     13: Result := toRetornoAbatimentoCancelado;
     14: Result := toRetornoVencimentoAlterado;
-    15: Result := toRetornoLiquidadoEmCartorio;
-    17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
     19: Result := toRetornoRecebimentoInstrucaoProtestar;
-    20: case ACBrBanco.ACBrBoleto.LayoutRemessa of
-          c240: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-          c400: Result := toRetornoDebitoEmConta;
-        end;
-    21: Result := toRetornoRecebimentoInstrucaoAlterarNomeSacado;
-    22: Result := toRetornoRecebimentoInstrucaoAlterarEnderecoSacado;
-    23: Result := toRetornoEncaminhadoACartorio;
-    24: Result := toRetornoProtestoSustado;
-    25: Result := toRetornoJurosDispensados;
-    28: case ACBrBanco.ACBrBoleto.LayoutRemessa of
-          c240: Result := toRetornoDebitoTarifas;
-          c400: Result := toRetornoManutencaoTituloVencido;
-        end;
-    31: Result := toRetornoDescontoConcedido;
-    32: Result := toRetornoDescontoCancelado;
-    41: Result := toRetornoAcertoControleParticipante;
-    46: Result := toRetornoTituloPagoEmCheque;
-    72: Result := toRetornoTipoCobrancaAlterado;
-    96: Result := toRetornoDespesasProtesto;
-    97: Result := toRetornoDespesasSustacaoProtesto;
-    98: Result := toRetornoDebitoCustasAntecipadas;
+    23: Result := toRetornoEntradaEmCartorio;
+    44: Result := toRetornoChequeDevolvido;
   else
     Result := toRetornoOutrasOcorrencias;
   end;

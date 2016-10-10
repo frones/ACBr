@@ -1250,39 +1250,65 @@ end;
 
 function TACBrBancoSantander.TipoOCorrenciaToCod (
    const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
-begin  
+begin
+  Result := '';
+
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
+    case TipoOcorrencia of
+      toRetornoLiquidadoAposBaixaOuNaoRegistro               : Result := '17';
+      toRetornoRetiradoDeCartorio                            : Result := '24';
+      toRetornoProtestado                                    : Result := '25';
+      toRetornoInstrucaoRejeitada                            : Result := '26';
+      toRetornoTituloDDAReconhecidoPagador                   : Result := '35';
+      toRetornoTituloDDANaoReconhecidoPagador                : Result := '36';
+      toRetornoTituloDDARecusadoCIP                          : Result := '37';
+    end;
+  end
+  else
+  begin
+    case TipoOcorrencia of
+      toRetornoLiquidadoEmCartorio                           : Result := '17';
+      toRetornoCustasCartorio                                : Result := '24';
+      toRetornoRecebimentoInstrucaoProtestar                 : Result := '25';
+      toRetornoRecebimentoInstrucaoSustarProtesto            : Result := '26';
+      toRetornoTituloDDAReconhecidoPagador                   : Result := '51';
+      toRetornoTituloDDANaoReconhecidoPagador                : Result := '52';
+      toRetornoTituloDDARecusadoCIP                          : Result := '53';
+    end;
+  end;
+
+  if (Result <> '') then
+    Exit;
+
   case TipoOcorrencia of
-    toRetornoTituloNaoExiste                   : Result := '01';
-    toRetornoRegistroConfirmado                : Result := '02';
-    toRetornoRegistroRecusado                  : Result := '03';
-    toRetornoTransferenciaCarteiraEntrada      : Result := '04';
-    toRetornoTransferenciaCarteiraBaixa        : Result := '05';
-    toRetornoLiquidado                         : Result := '06';
-    toRetornoLiquidadoPorConta                 : Result := '07';
-    toRetornoLiquidadoSaldoRestante            : Result := '08';
-    toRetornoBaixaAutomatica                   : Result := '09';
-    toRetornoBaixadoInstAgencia                : Result := '10';
-    toRetornoTituloEmSer                       : Result := '11';
-    toRetornoAbatimentoConcedido               : Result := '12';
-    toRetornoAbatimentoCancelado               : Result := '13';
-    toRetornoVencimentoAlterado                : Result := '14';
-    toRetornoProtestado                        : Result := '15';
-    toRetornoTituloJaBaixado                   : Result := '16';
-    toRetornoLiquidadoAposBaixaOuNaoRegistro   : Result := '17';
-    toRetornoRecebimentoInstrucaoProtestar     : Result := '19';
-    toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
-    toRetornoEntradaEmCartorio                 : Result := '23';
-    toRetornoRetiradoDeCartorio                : Result := '24';
-    toRetornoBaixaPorProtesto                  : Result := '25';
-    toRetornoInstrucaoRejeitada                : Result := '26';
-    toRetornoAlteracaoUsoCedente               : Result := '27';
-    toRetornoDebitoTarifas                     : Result := '28';
-    toRetornoOcorrenciasDoSacado               : Result := '29';
-    toRetornoAlteracaoDadosRejeitados          : Result := '30';
-    toRetornoIOFInvalido                       : Result := '32';
-    toRetornoTituloDDAReconhecidoPagador       : Result := '51';
-    toRetornoTituloDDANaoReconhecidoPagador    : Result := '52';
-    toRetornoTituloDDARecusadoCIP              : Result := '53';
+    toRetornoTituloNaoExiste                                 : Result := '01';
+    toRetornoRegistroConfirmado                              : Result := '02';
+    toRetornoRegistroRecusado                                : Result := '03';
+    toRetornoTransferenciaCarteiraEntrada                    : Result := '04';
+    toRetornoTransferenciaCarteiraBaixa                      : Result := '05';
+    toRetornoLiquidado                                       : Result := '06';
+    toRetornoLiquidadoPorConta                               : Result := '07';
+    toRetornoLiquidadoSaldoRestante                          : Result := '08';
+    toRetornoBaixaAutomatica                                 : Result := '09';
+    toRetornoBaixadoInstAgencia                              : Result := '10';
+    toRetornoTituloEmSer                                     : Result := '11';
+    toRetornoAbatimentoConcedido                             : Result := '12';
+    toRetornoAbatimentoCancelado                             : Result := '13';
+    toRetornoVencimentoAlterado                              : Result := '14';
+    toRetornoProtestado                                      : Result := '15';
+    toRetornoTituloJaBaixado                                 : Result := '16';
+    toRetornoRecebimentoInstrucaoProtestar                   : Result := '19';
+    toRetornoRecebimentoInstrucaoSustarProtesto              : Result := '20';
+    toRetornoEncaminhadoACartorio                            : Result := '21';
+    toRetornoRetiradoDeCartorio                              : Result := '22';
+    toRetornoEntradaEmCartorio                               : Result := '23';
+    toRetornoAlteracaoUsoCedente                             : Result := '27';
+    toRetornoDebitoTarifas                                   : Result := '28';
+    toRetornoOcorrenciasDoSacado                             : Result := '29';
+    toRetornoAlteracaoDadosRejeitados                        : Result := '30';
+    toRetornoIOFInvalido                                     : Result := '32';
+    toRetornoRecebimentoInstrucaoNaoProtestar                : Result := '38';
   else
     Result := '02';
   end;

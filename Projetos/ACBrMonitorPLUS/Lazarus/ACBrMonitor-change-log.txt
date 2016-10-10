@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/10/2016
+[*]	Ajuste para imprimir logo na danfe fortes do SAT
+	por Celso Marigo Junior
+
 29/09/2016
 [*]	Versão 1.0.0.0 do ACBrMonitorPLUS disponibilizada para Download no SAC.
 [+]	Configurado projeto para gerar número de versão utilizando o número de build do Lazarus.

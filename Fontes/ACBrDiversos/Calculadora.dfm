@@ -42,6 +42,7 @@ object FrCalculadora: TFrCalculadora
   PopupMenu = PopupMenu1
   ShowHint = True
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96

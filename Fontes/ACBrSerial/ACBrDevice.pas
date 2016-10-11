@@ -247,7 +247,7 @@ TACBrTagProcessor = class
 
 end;
 
-TACBrDeviceType = (dtFile, dtSerial, dtTCP, dtRawPrinter, dtHook);
+TACBrDeviceType = (dtFile, dtSerial, dtParallel, dtTCP, dtRawPrinter, dtHook);
 
 { TACBrDevice }
 
@@ -340,9 +340,10 @@ TACBrDevice = class( TComponent )
 
     Procedure SetDefaultValues ;
 
-    Function IsSerialPort : Boolean ;
-    Function IsTXTFilePort: Boolean ;
-    Function IsDLLPort: Boolean ;
+    Function IsSerialPort : Boolean;
+    Function IsParallelPort: Boolean;
+    Function IsTXTFilePort: Boolean;
+    Function IsDLLPort: Boolean;
     Function IsTCPPort: Boolean;
     Function IsRawPort: Boolean;
 
@@ -755,11 +756,11 @@ begin
     dtRawPrinter:
       GetPrinterRawIndex;
 
-    dtFile:
+    dtFile, dtParallel:
       begin
         NomeArq := GetPrinterFileName;
         { Tenta Abrir Arquivo/Porta para ver se existe e está disponivel}
-        if FileExists(NomeArq) then
+        if IsTXTFilePort and FileExists(NomeArq) then
           SysUtils.DeleteFile(NomeArq);
 
         EnviaStringArquivo( '' );
@@ -1002,15 +1003,6 @@ end;
 function TACBrDevice.DeduzirTipoPorta(APorta: String): TACBrDeviceType;
 var
   UPorta: String;
-
-  function IsPortaParalela(const APorta: string): Boolean;
-  begin
-  {$IFDEF LINUX}
-    Result := (Pos('/dev/lp', APorta) = 1);
-  {$ELSE}
-    Result := (Pos('LPT', APorta) = 1);
-  {$ENDIF}
-  end;
 begin
   UPorta := UpperCase(APorta);
 
@@ -1022,8 +1014,8 @@ begin
     Result := dtRawPrinter
   else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
     Result := dtFile
-  else if IsPortaParalela(UPorta) then
-    Result := dtFile
+  else if {$IFDEF LINUX}(Pos('/dev/lp', APorta) = 1){$ELSE}(Pos('LPT', UPorta) = 1){$ENDIF} then
+    Result := dtParallel
   else if (copy(UPorta, 1, 3) = 'COM') or
        {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then
     Result := dtSerial
@@ -1117,6 +1109,11 @@ end;
 function TACBrDevice.IsSerialPort: Boolean;
 begin
   Result := (fsDeviceType = dtSerial);
+end;
+
+function TACBrDevice.IsParallelPort: Boolean;
+begin
+  Result := (fsDeviceType = dtParallel);
 end;
 
 function TACBrDevice.IsTCPPort: Boolean;
@@ -1611,7 +1608,7 @@ begin
   NomeArq := GetPrinterFileName;
 
   {$IFDEF Device_Stream}
-    FS := TFileStream.Create( NomeArq, IfThen( IsTXTFilePort and FileExists(NomeArq),
+    FS := TFileStream.Create( NomeArq, IfThen(IsTXTFilePort and FileExists(NomeArq),
        fmOpenReadWrite, fmCreate) or fmShareDenyWrite );
     try
        FS.Seek(0, soFromEnd);  // vai para EOF

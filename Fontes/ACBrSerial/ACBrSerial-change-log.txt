@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/10/2016
+-- ACBrDevice --
+[-] Correção para suporte a portas paralelas (por: DSA e Waldir Paim)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32722
+
 Data: 07/10/2016
 -- ACBrPosPrinter --
 [*] Removido detecção de porta aberta de "TACBrPosPrinter.DesativarPorta", que

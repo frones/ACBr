@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/10/2016
+-- ACBrNFeWebServices
+[*] Modificação adicionando as validações para os tipos de prorrogações que não devem
+		ser atribuidos ao ambiente nacional mas sim de cada estado ao pegar a url
+		http://www.projetoacbr.com.br/forum/topic/29723-pedido-de-prorrogacao-rejeicao-o-tpevento-informado-invalido/?do=findComment&comment=216720
+		por : Juliomar Marchetti
+		
 26/09/2016
 -- ACBrECFVirtualNFCe --
 [-] Acerto para impressão de vias quando em contingência off-line, 

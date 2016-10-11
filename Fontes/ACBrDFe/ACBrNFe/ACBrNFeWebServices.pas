@@ -2662,7 +2662,7 @@ begin
     UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chNFe));
   end;
 
-  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento]) then
+  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, tePedProrrog1, tePedProrrog2, teCanPedProrrog1, teCanPedProrrog2]) then
   begin
     FPLayout := LayNFeEventoAN;
     UF       := 'AN';

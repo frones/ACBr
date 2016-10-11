@@ -61,8 +61,9 @@ type
     FAlertas: String;
     FErroRegrasdeNegocios: String;
     FNomeArq: String;
-
+    FNomeArqRps: String;
     FConfirmada: Boolean;
+
     function GetProcessada: Boolean;
 
     function GetMsg: String;
@@ -96,7 +97,8 @@ type
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
       EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
 
-    property NomeArq: String read FNomeArq write FNomeArq;
+    property NomeArq: String    read FNomeArq    write FNomeArq;
+    property NomeArqRps: String read FNomeArqRps write FNomeArqRps;
 
     property NFSe: TNFSe read FNFSe;
 
@@ -278,10 +280,12 @@ begin
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasNFSeProcessadas)  then
     begin
-      if NaoEstaVazio(NomeArq) then
-        Gravar(NomeArq, FXMLAssinado)
-      else
-        Gravar(CalcularNomeArquivoCompleto(NomeArq,''), ifThen(Assina, FXMLAssinado, FXMLOriginal));
+      if NaoEstaVazio(NomeArqRps) then
+        Gravar(NomeArqRps, FXMLAssinado)
+      else begin
+        FNomeArqRps := CalcularNomeArquivoCompleto(NomeArqRps, '');
+        Gravar(NomeArqRps, ifThen(Assina, FXMLAssinado, FXMLOriginal));
+      end;
     end;
   end;
 end;
@@ -369,8 +373,8 @@ begin
   if EstaVazio(FXMLOriginal) then
     GerarXML;
 
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-  Result := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Gravar(FNomeArq, FXMLOriginal);
+  FNomeArqRps := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
+  Result := TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Gravar(FNomeArqRps, FXMLOriginal);
 end;
 
 function NotaFiscal.GravarStream(AStream: TStream): Boolean;
@@ -781,7 +785,12 @@ begin
   begin
     // Atribui Nome do arquivo a novas notas inseridas //
     for i := l to Self.Count - 1 do
-      Self.Items[i].NomeArq := CaminhoArquivo;
+    begin
+      if Pos('-rps.xml', CaminhoArquivo) > 0 then
+        Self.Items[i].NomeArqRps := CaminhoArquivo
+      else
+        Self.Items[i].NomeArq := CaminhoArquivo;
+    end;
   end;
 end;
 

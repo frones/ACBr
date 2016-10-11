@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2016
+-- ACBrNFSeNotasFiscais --
+[*] Acrescentado a propriedade NomeArqRps que após o XML do RPS ter sido gerado
+    conterá o Path + Nome.
+    Para ler essa propriedade basta executar: ACBrNFSe1.NotasFiscais.Items[x].NomeArqRps
+    Por: Italo Jurisato Junior
+
 03/10/2016
 -- pnfsConsSitLoteRpsResposta --
 [*] Correção no nome da TAG ao ler o retorno.

@@ -91,6 +91,7 @@ type
     Label29: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    Label8: TLabel;
     lImpressora: TLabel;
     lSSID: TLabel;
     lSSID1: TLabel;
@@ -192,6 +193,7 @@ type
     PageControl2 : TPageControl ;
     Panel1 : TPanel ;
     SbArqLog : TSpeedButton ;
+    seItensVenda: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
     mVendaEnviar: TSynMemo;
@@ -278,7 +280,8 @@ var
 
 implementation
 
-Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
+Uses
+  math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
   RLPrinters, Printers, ACBrSATExtratoClass;
 
 {$R *.lfm}
@@ -983,9 +986,12 @@ begin
   tini := now;
   ACBrSAT1.EnviarDadosVenda( mVendaEnviar.Text );
   tfim := now;
+  mLog.Lines.Add('------------------------------------------------') ;
   mLog.Lines.Add('Iniciado em: '+DateTimeToStr(tini)) ;
   mLog.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
-  mLog.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tini,tfim))+' segundos' ) ;
+  mLog.Lines.Add('') ;
+  mLog.Lines.Add('Tempo de Envio e Recebimento: '+ FormatFloat('##0.00',SecondSpan(tini,tfim))+' segundos' ) ;
+  mLog.Lines.Add('------------------------------------------------') ;
 
   if ACBrSAT1.Resposta.codigoDeRetorno = 6000 then
   begin
@@ -1008,8 +1014,9 @@ end;
 
 procedure TForm1.mGerarVendaClick(Sender : TObject) ;
 var
-  TotalItem, TotalGeral: Double;
+  TotalItem, TotalGeral, Pagto1: Double;
   A: Integer;
+  Loops: Integer;
 begin
   TotalGeral := 0;
   PageControl1.ActivePage := tsGerado;
@@ -1040,7 +1047,9 @@ begin
     Entrega.xMun := 'municipio';
     Entrega.UF := 'RJ';
 
-    For A := 0 to 0 do  // Ajuste aqui para vender mais itens
+    Loops := max(Trunc(seItensVenda.Value / 3)-1, 0);
+
+    For A := 0 to Loops do  // Ajuste aqui para vender mais itens
     begin
     with Det.Add do
     begin
@@ -1062,7 +1071,7 @@ begin
         xTextoDet := 'texto';
       end;
 
-      TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
       TotalGeral := TotalGeral + TotalItem;
       Imposto.vItem12741 := TotalItem * 0.12;
 
@@ -1097,7 +1106,7 @@ begin
       Prod.indRegra := irTruncamento;
       Prod.vOutro := 2;
 
-      TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
       TotalGeral := TotalGeral + TotalItem;
       Imposto.vItem12741 := TotalItem * 0.30;
 
@@ -1132,7 +1141,7 @@ begin
       Prod.vUnCom := 1.210;
       Prod.indRegra := irTruncamento;
 
-      TotalItem := (Prod.qCom * Prod.vUnCom);
+      TotalItem := RoundABNT((Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc, -2);
       TotalGeral := TotalGeral + TotalItem;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
@@ -1180,16 +1189,17 @@ begin
     Total.DescAcrEntr.vDescSubtot := 5;
     Total.vCFeLei12741 := 1.23;
 
+    Pagto1 := RoundABNT(TotalGeral/2,-2);
     with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
-      vMP := TotalGeral/2;
+      vMP := Pagto1;
     end;
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := TotalGeral/2 + 10;
+      vMP := TotalGeral - Pagto1 + 10;
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+

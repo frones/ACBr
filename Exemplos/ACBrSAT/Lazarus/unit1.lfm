@@ -2398,16 +2398,42 @@ object Form1: TForm1
             Caption = '...'
             OnClick = sbNomeDLLClick
           end
+          object seItensVenda: TSpinEdit
+            Left = 639
+            Height = 23
+            Top = 153
+            Width = 61
+            Anchors = [akTop, akRight]
+            Increment = 3
+            MaxValue = 999
+            MinValue = 3
+            TabOrder = 11
+            Value = 3
+          end
+          object Label8: TLabel
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = seItensVenda
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = seItensVenda
+            Left = 554
+            Height = 15
+            Top = 157
+            Width = 80
+            Anchors = [akTop, akRight]
+            BorderSpacing.Right = 5
+            Caption = 'Items a Vender:'
+            ParentColor = False
+          end
         end
         object tsDadosEmit: TTabSheet
           Caption = 'Dados Emitente'
-          ClientHeight = 172
-          ClientWidth = 671
+          ClientHeight = 192
+          ClientWidth = 717
           object Label11: TLabel
             Left = 12
             Height = 15
             Top = 23
-            Width = 28
+            Width = 27
             Caption = 'CNPJ'
             ParentColor = False
           end
@@ -2464,7 +2490,7 @@ object Form1: TForm1
             Left = 192
             Height = 15
             Top = 71
-            Width = 103
+            Width = 102
             Caption = 'Regime Trib. ISSQN'
             ParentColor = False
           end
@@ -2489,7 +2515,7 @@ object Form1: TForm1
             Left = 12
             Height = 15
             Top = 73
-            Width = 95
+            Width = 94
             Caption = 'Regime Tributario'
             ParentColor = False
           end
@@ -2505,13 +2531,13 @@ object Form1: TForm1
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
-          ClientHeight = 172
-          ClientWidth = 671
+          ClientHeight = 192
+          ClientWidth = 717
           object Label2: TLabel
             Left = 10
             Height = 15
             Top = 15
-            Width = 28
+            Width = 27
             Caption = 'CNPJ'
             ParentColor = False
           end
@@ -2519,7 +2545,7 @@ object Form1: TForm1
             Left = 10
             Height = 23
             Top = 31
-            Width = 312
+            Width = 358
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 0
           end
@@ -2535,15 +2561,15 @@ object Form1: TForm1
             Left = 10
             Height = 23
             Top = 89
-            Width = 577
+            Width = 623
             Anchors = [akTop, akLeft, akRight]
             TabOrder = 1
           end
         end
         object tsRede: TTabSheet
           Caption = 'Rede'
-          ClientHeight = 172
-          ClientWidth = 671
+          ClientHeight = 192
+          ClientWidth = 717
           object gbPPPoE: TGroupBox
             Left = 160
             Height = 105
@@ -2556,30 +2582,30 @@ object Form1: TForm1
             Visible = False
             object lSSID7: TLabel
               Left = 17
-              Height = 18
+              Height = 15
               Top = 4
-              Width = 47
+              Width = 40
               Caption = 'Usuario'
               ParentColor = False
             end
             object edRedeUsuario: TEdit
               Left = 64
-              Height = 26
+              Height = 23
               Top = -4
               Width = 88
               TabOrder = 0
             end
             object lSSID8: TLabel
               Left = 17
-              Height = 18
+              Height = 15
               Top = 34
-              Width = 39
+              Width = 32
               Caption = 'Senha'
               ParentColor = False
             end
             object edRedeSenha: TEdit
               Left = 64
-              Height = 26
+              Height = 23
               Top = 26
               Width = 88
               TabOrder = 1
@@ -2597,75 +2623,75 @@ object Form1: TForm1
             Visible = False
             object lSSID2: TLabel
               Left = 32
-              Height = 18
+              Height = 15
               Top = 4
-              Width = 13
+              Width = 10
               Caption = 'IP'
               ParentColor = False
             end
             object edRedeIP: TEdit
               Left = 56
-              Height = 26
+              Height = 23
               Top = -4
               Width = 88
               TabOrder = 0
             end
             object lSSID3: TLabel
               Left = 17
-              Height = 18
+              Height = 15
               Top = 34
-              Width = 32
+              Width = 28
               Caption = 'Mask'
               ParentColor = False
             end
             object edRedeMask: TEdit
               Left = 56
-              Height = 26
+              Height = 23
               Top = 26
               Width = 88
               TabOrder = 1
             end
             object lSSID4: TLabel
               Left = 0
-              Height = 18
+              Height = 15
               Top = 64
-              Width = 53
+              Width = 45
               Caption = 'Gateway'
               ParentColor = False
             end
             object edRedeGW: TEdit
               Left = 56
-              Height = 26
+              Height = 23
               Top = 56
               Width = 88
               TabOrder = 2
             end
             object lSSID5: TLabel
               Left = 152
-              Height = 18
+              Height = 15
               Top = 4
-              Width = 33
+              Width = 29
               Caption = 'DNS1'
               ParentColor = False
             end
             object lSSID6: TLabel
               Left = 152
-              Height = 18
+              Height = 15
               Top = 34
-              Width = 33
+              Width = 29
               Caption = 'DNS2'
               ParentColor = False
             end
             object edRedeDNS1: TEdit
               Left = 192
-              Height = 26
+              Height = 23
               Top = -4
               Width = 87
               TabOrder = 3
             end
             object edRedeDNS2: TEdit
               Left = 192
-              Height = 26
+              Height = 23
               Top = 26
               Width = 87
               TabOrder = 4
@@ -2708,24 +2734,24 @@ object Form1: TForm1
             Visible = False
             object lSSID: TLabel
               Left = 8
-              Height = 18
+              Height = 15
               Top = 4
-              Width = 33
+              Width = 26
               Caption = 'SSID:'
               ParentColor = False
             end
             object edRedeSSID: TEdit
               Left = 47
-              Height = 26
+              Height = 23
               Top = -4
               Width = 82
               TabOrder = 0
             end
             object Label24: TLabel
               Left = 8
-              Height = 18
+              Height = 15
               Top = 34
-              Width = 27
+              Width = 22
               Caption = 'Seg:'
               ParentColor = False
             end
@@ -2748,15 +2774,15 @@ object Form1: TForm1
             end
             object lSSID1: TLabel
               Left = 8
-              Height = 18
+              Height = 15
               Top = 64
-              Width = 39
+              Width = 32
               Caption = 'Senha'
               ParentColor = False
             end
             object edRedeCodigo: TEdit
               Left = 47
-              Height = 26
+              Height = 23
               Top = 56
               Width = 82
               TabOrder = 2
@@ -2816,15 +2842,15 @@ object Form1: TForm1
             end
             object lSSID9: TLabel
               Left = 24
-              Height = 18
+              Height = 15
               Top = 32
-              Width = 13
+              Width = 10
               Caption = 'IP'
               ParentColor = False
             end
             object edRedeProxyIP: TEdit
               Left = 49
-              Height = 26
+              Height = 23
               Top = 28
               Width = 88
               Enabled = False
@@ -2832,23 +2858,23 @@ object Form1: TForm1
             end
             object lSSID10: TLabel
               Left = 11
-              Height = 18
+              Height = 15
               Top = 62
-              Width = 32
+              Width = 28
               Caption = 'Porta'
               ParentColor = False
             end
             object lSSID11: TLabel
               Left = 3
-              Height = 18
+              Height = 15
               Top = 88
-              Width = 47
+              Width = 40
               Caption = 'Usuario'
               ParentColor = False
             end
             object edRedeProxyUser: TEdit
               Left = 49
-              Height = 26
+              Height = 23
               Top = 80
               Width = 88
               Enabled = False
@@ -2856,15 +2882,15 @@ object Form1: TForm1
             end
             object lSSID12: TLabel
               Left = 8
-              Height = 18
+              Height = 15
               Top = 114
-              Width = 39
+              Width = 32
               Caption = 'Senha'
               ParentColor = False
             end
             object edRedeProxySenha: TEdit
               Left = 49
-              Height = 26
+              Height = 23
               Top = 106
               Width = 88
               Enabled = False
@@ -2872,7 +2898,7 @@ object Form1: TForm1
             end
             object edRedeProxyPorta: TSpinEdit
               Left = 49
-              Height = 26
+              Height = 23
               Top = 54
               Width = 88
               Enabled = False
@@ -3382,6 +3408,7 @@ object Form1: TForm1
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     ImprimeDescAcrescItem = False
     left = 64
@@ -3507,6 +3534,7 @@ object Form1: TForm1
     MostrarPreview = True
     NomeArquivo = 'satcfe.pdf'
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     Margens.Topo = 50
     Margens.Fundo = 400
     EspacoFinal = 50
@@ -3533,7 +3561,6 @@ object Form1: TForm1
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 7
-    CortaPapel = True
     ArqLOG = 'c:\temp\posprinter.log'
     left = 103
     top = 279

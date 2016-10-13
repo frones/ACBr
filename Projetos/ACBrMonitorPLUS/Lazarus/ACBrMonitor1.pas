@@ -5504,7 +5504,7 @@ begin
       SL.Free;
     end;
   end;
-  pTopRespostas.Caption := 'Respostas envidas (' + IntToStr(mResp.Lines.Count) +
+  pTopRespostas.Caption := 'Respostas Enviadas (' + IntToStr(mResp.Lines.Count) +
     ' linhas)';
 
   if cbLog.Checked then

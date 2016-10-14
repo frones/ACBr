@@ -49,7 +49,7 @@ Símbolo : Significado
 
 Data: 03/10/2016
 -- ACBrSATClass --
-[*] TACBrSATConfigArquivos.CalcPath, Ajuste para remover por mascara do CNPJ
+[*] TACBrSATConfigArquivos.CalcPath, Ajuste para remover a mascara do CNPJ
     http://www.projetoacbr.com.br/forum/topic/32713-exemplo-acbrsat-e-acbrsatclass/
 
 Data: 26/09/2016

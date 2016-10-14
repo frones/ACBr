@@ -134,6 +134,7 @@ TACBrTCPServer = class( TACBrComponent )
     fsOnRecebeDados: TACBrTCPServerRecive;
     fsOnDesConecta: TACBrTCPServerDesConecta;
     fsTerminador : String;
+    fsUsaSynchronize: Boolean;
     fs_Terminador: AnsiString;
     function GetTCPBlockSocket: TTCPBlockSocket ;
     procedure SetAtivo(const Value: Boolean);
@@ -141,6 +142,7 @@ TACBrTCPServer = class( TACBrComponent )
     procedure SetPort(const Value: String);
     procedure SetTerminador( const AValue: String) ;
     procedure SetTimeOut(const Value: Integer);
+    procedure SetUsaSynchronize(AValue: Boolean);
 
     procedure VerificaAtivo ;
     function GetAtivo: Boolean;
@@ -164,8 +166,10 @@ TACBrTCPServer = class( TACBrComponent )
     property IP         : String  read fsIP         write SetIP;
     property Port       : String  read fsPort       write SetPort ;
     property TimeOut    : Integer read fsTimeOut    write SetTimeOut
-       default 5000 ;
-    property Terminador : String  read fsTerminador write SetTerminador ;
+      default 5000;
+    property Terminador    : String  read fsTerminador     write SetTerminador;
+    property UsaSynchronize: Boolean read fsUsaSynchronize write SetUsaSynchronize
+      default {$IFNDEF NOGUI}True{$ELSE}False{$ENDIF};
 
     property OnConecta     : TACBrTCPServerConecta    read  fsOnConecta
                                                       write fsOnConecta ;
@@ -375,11 +379,10 @@ begin
      begin
         fsSock.Owner := Self;
 
-        {$IFNDEF NOGUI}
-         Synchronize( CallOnConecta );
-        {$ELSE}
-         CallOnConecta ;
-        {$ENDIF}
+         if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
+           Synchronize(CallOnConecta)
+         else
+           CallOnConecta;
 
         if fsStrToSend <> '' then
         begin
@@ -440,11 +443,10 @@ begin
 
              if Assigned( fsACBrTCPServerDaemon.ACBrTCPServer.OnRecebeDados ) then
              begin
-                {$IFNDEF NOGUI}
-                 Synchronize( CallOnRecebeDados );
-                {$ELSE}
-                 CallOnRecebeDados ;
-                {$ENDIF}
+               if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
+                 Synchronize(CallOnRecebeDados)
+               else
+                 CallOnRecebeDados;
              end;
            end;
 
@@ -466,11 +468,10 @@ begin
      begin
        if not fsACBrTCPServerDaemon.Terminated then
        begin
-         {$IFNDEF NOGUI}
-          Synchronize( CallOnDesConecta );
-         {$ELSE}
-          CallOnDesConecta ;
-         {$ENDIF}
+         if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
+           Synchronize(CallOnDesConecta)
+         else
+           CallOnDesConecta;
        end;
      end;
 
@@ -529,16 +530,17 @@ end;
 
 constructor TACBrTCPServer.Create(AOwner: TComponent);
 begin
-  inherited create( AOwner );
+  inherited Create( AOwner );
 
-  fsIP   := '0.0.0.0' ;
-  fsPort := '0' ;
-  fsTimeOut := 5000 ;
-  fsTerminador  := '' ;
-  fs_Terminador := '' ;
+  fsIP             := '0.0.0.0';
+  fsPort           := '0';
+  fsTimeOut        := 5000;
+  fsTerminador     := '';
+  fs_Terminador    := '';
+  fsUsaSynchronize := {$IFNDEF NOGUI}True{$ELSE}False{$ENDIF};
 
-  fsACBrTCPServerDaemon := nil ;
-  fsThreadList := TThreadList.Create ;
+  fsACBrTCPServerDaemon := Nil;
+  fsThreadList := TThreadList.Create;
 end;
 
 destructor TACBrTCPServer.Destroy;
@@ -665,6 +667,18 @@ end;
 procedure TACBrTCPServer.SetTimeOut(const Value: Integer);
 begin
   fsTimeOut := Value;
+end;
+
+procedure TACBrTCPServer.SetUsaSynchronize(AValue: Boolean);
+begin
+  if (fsUsaSynchronize = AValue) then
+    Exit;
+
+  {$IFNDEF NOGUI}
+    fsUsaSynchronize := AValue;
+  {$ELSE}
+    fsUsaSynchronize := False;
+  {$ENDIF};
 end;
 
 procedure TACBrTCPServer.VerificaAtivo;

@@ -805,6 +805,7 @@ var
   function Asn1UtctimeNew: PASN1_UTCTIME;
   procedure Asn1UtctimeFree(a: PASN1_UTCTIME);
   function i2dX509bio(b: PBIO; x: PX509): cInt;
+  function d2iX509bio(b: pBIO; x: pX509): pX509;
   function i2dPrivateKeyBio(b: PBIO; pkey: PEVP_PKEY): cInt;
 
   // 3DES functions
@@ -1076,6 +1077,8 @@ type
   TAsn1UtctimeNew = function: PASN1_UTCTIME; cdecl;
   TAsn1UtctimeFree = procedure(a: PASN1_UTCTIME); cdecl;
   Ti2dX509bio = function(b: PBIO; x: PX509): cInt; cdecl;
+  Td2iX509bio = function(b: pBIO; x: pX509): pX509; cdecl;
+
   Ti2dPrivateKeyBio= function(b: PBIO; pkey: PEVP_PKEY): cInt; cdecl;
 
   // 3DES functions
@@ -1303,6 +1306,8 @@ var
   _Asn1UtctimeNew: TAsn1UtctimeNew = nil;
   _Asn1UtctimeFree: TAsn1UtctimeFree = nil;
   _i2dX509bio: Ti2dX509bio = nil;
+  _d2iX509bio: Td2iX509bio = nil;
+
   _i2dPrivateKeyBio: Ti2dPrivateKeyBio = nil;
   _EVP_enc_null : TEVP_CIPHERFunction = nil;
   _EVP_rc2_cbc : TEVP_CIPHERFunction = nil;
@@ -1958,7 +1963,7 @@ begin
     Result := -2;
 end;
 
-function BIO_reset(b: PBIO): cInt;
+function BIO_reset(b: pBIO): cint;
 begin
   if InitlibeaInterface and Assigned(_Bio_reset) then
     Result := _Bio_reset(b)
@@ -2097,6 +2102,14 @@ begin
     Result := _i2dX509bio(b, x)
   else
     Result := 0;
+end;
+
+function d2iX509bio(b: pBIO; x: pX509): pX509;
+begin
+  if InitlibeaInterface and Assigned(_d2iX509bio) then
+    Result := _d2iX509bio(b, x)
+  else
+    Result := Nil;
 end;
 
 function i2dPrivateKeyBio(b: PBIO; pkey: PEVP_PKEY): cInt;
@@ -2869,7 +2882,7 @@ begin
   Result := BIO_ctrl(b, BIO_C_SET_FILENAME, BIO_CLOSE or BIO_FP_READ, name);
 end;
 
-function BIO_s_file: PBIO_METHOD;
+function BIO_s_file: pBIO_METHOD;
 begin
   if InitlibeaInterface and Assigned(_BIO_s_file) then
     Result := _BIO_s_file
@@ -2921,7 +2934,7 @@ begin
     Result := -1;
 end;
 
-function BN_dec2bn(var n: PBIGNUM; const str: PChar):  cint ;
+function BN_dec2bn(var n: pBIGNUM; const str: PChar): cint;
 begin
   if InitlibeaInterface and Assigned(_BN_dec2bn) then
     Result := _BN_dec2bn(n, str)
@@ -3068,7 +3081,7 @@ begin
       Result := true;
 end;
 
-function InitlibeaInterface(AVerboseLoading: Boolean = False): Boolean;
+function InitLibeaInterface(AVerboseLoading: Boolean): Boolean;
 begin
    if not Islibealoaded then
    begin
@@ -3121,6 +3134,7 @@ begin
         _Asn1UtctimeNew := GetProcAddr(SSLUtilHandle, 'ASN1_UTCTIME_new', AVerboseLoading);
         _Asn1UtctimeFree := GetProcAddr(SSLUtilHandle, 'ASN1_UTCTIME_free', AVerboseLoading);
         _i2dX509bio := GetProcAddr(SSLUtilHandle, 'i2d_X509_bio', AVerboseLoading);
+        _d2iX509bio := GetProcAddr(SSLUtilHandle, 'd2i_X509_bio', AVerboseLoading);
         _i2dPrivateKeyBio := GetProcAddr(SSLUtilHandle, 'i2d_PrivateKey_bio', AVerboseLoading);
         _EVP_enc_null := GetProcAddr(SSLUtilHandle, 'EVP_enc_null', AVerboseLoading);;
         _EVP_rc2_cbc := GetProcAddr(SSLUtilHandle, 'EVP_rc2_cbc', AVerboseLoading);;
@@ -3345,7 +3359,7 @@ begin
 end;
 
 
-function DestroylibeaInterface: Boolean;
+function DestroyLibeaInterface: Boolean;
 begin
         if IslibeaLoaded then
         begin
@@ -3405,6 +3419,7 @@ begin
     _Asn1UtctimeNew := nil;
     _Asn1UtctimeFree := nil;
     _i2dX509bio := nil;
+    _d2iX509bio := nil;
     _i2dPrivateKeyBio := nil;
 
     // 3DES functions

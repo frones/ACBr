@@ -364,8 +364,8 @@ begin
 
     else if not EstaVazio(FpDFeSSL.DadosPFX) then
     begin
-      raise EACBrDFeException.Create(ClassName +
-        ' não suporta carga de Certificado por DadosPFX.' +
+      raise EACBrDFeException.Create(
+        'TDFeCapicom não suporta carga de Certificado por DadosPFX.' +
         sLineBreak + 'Utilize "NumeroSerie" ou "ArquivoPFX"')
     end
 

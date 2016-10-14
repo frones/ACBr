@@ -77,16 +77,26 @@ type
     FRazaoSocial: String;
     FCertificadora: String;
     FPrivKey: pEVP_PKEY;
+    FCert: pX509;
     FNumSerie: String;
     FCertAsDER: String;
     FValidade: TDateTime;
     FSubjectName: String;
     FIssuerName: String;
 
+    function BioToStr(ABio: pBIO): AnsiString;
+    procedure GetCertInfo(cert: pX509);
+    function CertToDER(cert: pX509): String;
+    function GetCNPJExt(cert: pX509): String;
+    function GetIssuerName(cert: pX509): String;
+    function GetNotAfter(cert: pX509): TDateTime;
+    function GetSerialNumber(cert: pX509): String;
+    function GetSubjectName(cert: pX509): String;
+
+    function InserirDTD(AXml: String; const DTD: String): String;
+
     procedure Clear;
     procedure ConfiguraHTTP(const URL, SoapAction: String; MimeType: String);
-    function InserirDTD(AXml: String; const DTD: String): String;
-    function LerPFXInfo(pfxdata: Ansistring): Boolean;
 
     procedure VerificarValoresPadrao(var SignatureNode: AnsiString;
       var SelectionNamespaces: AnsiString);
@@ -104,6 +114,7 @@ type
     procedure CreateCtx;
     procedure DestroyCtx;
     procedure DestroyKey;
+    procedure DestroyCert;
   protected
 
     function GetCertDataVenc: TDateTime; override;
@@ -137,6 +148,11 @@ type
 
     procedure CarregarCertificado; override;
     procedure DescarregarCertificado; override;
+
+    function LerPFXInfo(pfxdata: Ansistring): Boolean;
+    function LerX509Info(X509Certificate: Ansistring): Boolean;
+
+    property Certificado: pX509 read FCert;
   end;
 
 procedure InitXmlSec;
@@ -230,6 +246,8 @@ begin
 
   FHTTP := THTTPSend.Create;
   FdsigCtx := nil;
+  FPrivKey := nil;
+  FCert := nil;
   Clear;
 end;
 
@@ -269,7 +287,13 @@ begin
                              AnsiString(SelectionNamespaces),
                              AnsiString(infElement));
 
+  //DEBUG
+  //WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);
+
   XmlAss := AjustarXMLAssinado(XmlAss, FCertAsDER);
+
+  //DEBUG
+  //WriteToTXT('C:\TEMP\XmlSigned2.xml', XmlAss, False, False);
 
   // Removendo DTD //
   Result := StringReplace(XmlAss, DTD, '', []);
@@ -783,12 +807,25 @@ procedure TDFeOpenSSL.DestroyKey;
 begin
   if (FPrivKey <> Nil) then
   begin
-    {$IFDEF USE_libeay32}
+    {$IfDef USE_libeay32}
      EVP_PKEY_free(FPrivKey);
-    {$ELSE}
+    {$Else}
      EvpPkeyFree(FPrivKey);
-    {$ENDIF}
+    {$EndIf}
     FPrivKey := nil;
+  end;
+end;
+
+procedure TDFeOpenSSL.DestroyCert;
+begin
+  if (FCert <> Nil) then
+  begin
+    {$IfDef USE_libeay32}
+    X509_free(FCert);
+    {$Else}
+    X509free(FCert);
+    {$EndIf}
+    FCert := Nil;
   end;
 end;
 
@@ -803,8 +840,8 @@ begin
     if EstaVazio(ArquivoPFX) and EstaVazio(DadosPFX) then
     begin
       if not EstaVazio(NumeroSerie) then
-        raise EACBrDFeException.Create(ClassName +
-          ' não suporta carga de Certificado pelo número de série.' +
+        raise EACBrDFeException.Create(
+          'TDFeOpenSSL não suporta carga de Certificado pelo número de série.' +
           sLineBreak + 'Utilize "ArquivoPFX" ou "DadosPFX"')
       else
         raise EACBrDFeException.Create('Certificado não informado.' +
@@ -845,170 +882,13 @@ procedure TDFeOpenSSL.DescarregarCertificado;
 begin
   DestroyCtx;
   DestroyKey;
+  DestroyCert;
   Clear;
   FpCertificadoLido := False;
 end;
 
 function TDFeOpenSSL.LerPFXInfo(pfxdata: Ansistring): Boolean;
-
-  function GetNotAfter( cert: pX509 ): TDateTime;
-  var
-    Validade: String;
-    notAfter: PASN1_TIME;
-  begin
-    notAfter := cert.cert_info^.validity^.notAfter;
-    Validade := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(notAfter^.data) );
-    SetLength(Validade, notAfter^.length);
-    Validade := OnlyNumber(Validade);
-
-    if notAfter^.asn1_type = V_ASN1_UTCTIME then  // anos com 2 dígitos
-      Validade :=  LeftStr(IntToStrZero(YearOf(Now),4),2) + Validade;
-
-    Result := StoD(Validade);
-  end;
-
-  function GetSubjectName( cert: pX509 ): String;
-  var
-    s: AnsiString;
-  begin
-    setlength(s, 4096);
-    {$IFDEF USE_libeay32}
-     Result := X509_NAME_oneline(X509_get_subject_name(cert), PAnsiChar(s), Length(s));
-    {$ELSE}
-     Result := X509NameOneline(X509GetSubjectName(cert), s, Length(s));
-    {$ENDIF}
-    if copy(Result,1,1) = '/' then
-      Result := Copy(Result,2,Length(Result));
-
-    Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
-  end;
-
-  function GetIssuerName( cert: pX509 ): String;
-  var
-    s: AnsiString;
-  begin
-    setlength(s, 4096);
-    {$IFDEF USE_libeay32}
-     Result := X509_NAME_oneline(X509_get_issuer_name(cert), PAnsiChar(s), Length(s));
-    {$ELSE}
-     Result := X509NameOneline(X509GetIssuerName(cert), s, Length(s));
-    {$ENDIF}
-    if copy(Result,1,1) = '/' then
-      Result := Copy(Result,2,Length(Result));
-
-    Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
-  end;
-
-  function GetCNPJExt( cert: pX509): String;
-  var
-    ext: pX509_EXTENSION;
-    I, P: Integer;
-    prop: PASN1_STRING;
-    propStr: AnsiString;
-  begin
-    Result := '';
-    I := 0;
-   {$IFDEF USE_libeay32}
-    ext := X509_get_ext( cert, I);
-   {$ELSE}
-    ext := X509GetExt( cert, I);
-   {$ENDIF}
-    while (ext <> nil) do
-    begin
-      prop := ext.value;
-      propStr := PAnsiChar(prop^.data);
-      SetLength(propStr, prop^.length);
-
-      P := pos(#1#3#3#160#16, propStr);;
-      if P > 0 then
-      begin
-        Result := LeftStr(OnlyNumber(copy(propStr,P+5,16)),14);
-        exit;
-      end;
-
-      inc( I );
-      {$IFDEF USE_libeay32}
-       ext := X509_get_ext( cert, I);
-      {$ELSE}
-       ext := X509GetExt( cert, I);
-      {$ENDIF}
-    end;
-  end;
-
-  function GetSerialNumber( cert: pX509): String;
-  var
-    SN: PASN1_STRING;
-    s: AnsiString;
-  begin
-    {$IFDEF USE_libeay32}
-     SN := X509_get_serialNumber(cert);
-    {$ELSE}
-     SN := X509GetSerialNumber(cert);
-    {$ENDIF}
-    s := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(SN^.data) );
-    SetLength(s,SN.length);
-    Result := AsciiToHex(s);
-  end;
-
-  { Método clonado de ACBrEAD }
-  function BioToStr(ABio : pBIO) : AnsiString ;
-  Var
-    {$IFDEF USE_libeay32}
-     Buf : array [0..1023] of AnsiChar;
-    {$ENDIF}
-    Ret : Integer ;
-    Lin : String ;
-  begin
-    Result := '';
-
-    {$IFDEF USE_libeay32}
-     while BIO_eof( ABio ) = 0 do
-     begin
-       Ret := BIO_gets( ABio, Buf, 1024 );
-       SetString( Lin, Buf, Ret);
-       Result := Result + Lin;
-     end ;
-    {$ELSE}
-     repeat
-        SetLength(Lin,1024);
-        Ret := BioRead( ABio, Lin, 1024);
-        if Ret > 0 then
-        begin
-           Lin := copy(Lin,1,Ret) ;
-           Result := Result + Lin;
-        end ;
-     until (Ret <= 0);
-    {$ENDIF}
-  end ;
-
-  function CertToDER( cert: pX509): String;
-  var
-    MemBio: PBIO;
-    Buff: AnsiString;
-  begin
-    {$IFDEF USE_libeay32}
-     MemBio := Bio_New(Bio_S_Mem());
-     try
-       i2d_X509_bio(MemBio, cert);
-       Buff := BioToStr( MemBio );
-     finally
-       BIO_free_all( MemBio );
-     end;
-    {$ELSE}
-     MemBio := BioNew(BioSMem());
-     try
-       i2dX509bio(MemBio, cert);
-       Buff := BioToStr( MemBio );
-     finally
-       BioFreeAll( MemBio );
-     end;
-    {$ENDIF}
-
-    Result := EncodeBase64(Buff);
-  end;
-
 var
-  cert: pX509;
   ca, p12: Pointer;
   b: PBIO;
 begin
@@ -1032,35 +912,18 @@ begin
       Exit;
 
     try
-      cert := nil;
-      FPrivKey := nil;
+      DestroyCert;
+      DestroyKey;
       ca := nil;
-      try
-        {$IFDEF USE_libeay32}
-        if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), FPrivKey, cert, ca) > 0 then
-        {$ELSE}
-        if PKCS12parse(p12, FpDFeSSL.Senha, FPrivKey, cert, ca) > 0 then
-        {$ENDIF}
-        begin
-          Result := True;
-          FValidade := GetNotAfter( cert );
-          FSubjectName := GetSubjectName( cert );
-          FRazaoSocial := GetRazaoSocialFromSubjectName( FSubjectName );
-          FIssuerName := GetIssuerName( cert );
-          FCertificadora := GetCertificadoraFromSubjectName( FIssuerName );
-          FCNPJ := GetCNPJFromSubjectName( FSubjectName );
-          if FCNPJ = '' then  // Não tem CNPJ no SubjectName, lendo das Extensões
-            FCNPJ := GetCNPJExt( cert );
-
-          FNumSerie := GetSerialNumber( cert );
-          FCertAsDER := CertToDER( cert );
-        end;
-      finally
-        {$IFDEF USE_libeay32}
-         X509_free(cert);
-        {$ELSE}
-         X509free(cert);
-        {$ENDIF}
+      {$IFDEF USE_libeay32}
+      if PKCS12_parse(p12, PAnsiChar(FpDFeSSL.Senha), FPrivKey, FCert, ca) > 0 then
+      {$ELSE}
+      if PKCS12parse(p12, FpDFeSSL.Senha, FPrivKey, FCert, ca) > 0 then
+      {$ENDIF}
+      begin
+        GetCertInfo( FCert );
+        FCertAsDER := CertToDER( FCert );
+        Result := True;
       end;
     finally
       {$IFDEF USE_libeay32}
@@ -1076,6 +939,230 @@ begin
      BioFreeAll(b);
     {$ENDIF}
   end;
+end;
+
+function TDFeOpenSSL.LerX509Info(X509Certificate: Ansistring): Boolean;
+var
+  b: PBIO;
+begin
+  Result := False; 
+
+  FCertAsDER := X509Certificate;
+  X509Certificate := DecodeBase64( X509Certificate );
+
+  {$IFDEF USE_libeay32}
+   b := Bio_New(BIO_s_mem);
+   BIO_write(b, PAnsiChar(X509Certificate), Length(X509Certificate));
+  {$ELSE}
+   b := BioNew(BioSMem);
+   BioWrite(b, X509Certificate, Length(X509Certificate));
+  {$ENDIF}
+  
+  DestroyCert;
+  try
+    {$IFDEF USE_libeay32}
+     FCert := d2i_X509_bio(b, FCert);
+    {$ELSE}
+     FCert := d2iX509bio(b, FCert);
+    {$ENDIF}
+    if Assigned( FCert ) then
+    begin
+      GetCertInfo( FCert );
+      Result := True;
+    end;
+  finally
+    {$IFDEF USE_libeay32}
+     BIO_free_all(b);
+    {$ELSE}
+     BioFreeAll(b);
+    {$ENDIF}
+  end;
+end;
+
+procedure TDFeOpenSSL.GetCertInfo(cert: pX509);
+begin
+  FValidade := GetNotAfter( cert );
+  FNumSerie := GetSerialNumber( cert );
+
+  FSubjectName := GetSubjectName( cert );
+  FRazaoSocial := GetRazaoSocialFromSubjectName( FSubjectName );
+  FCNPJ := GetCNPJFromSubjectName( FSubjectName );
+  if FCNPJ = '' then  // Não tem CNPJ no SubjectName, lendo das Extensões
+    FCNPJ := GetCNPJExt( cert );
+
+  FIssuerName := GetIssuerName( cert );
+  FCertificadora := GetCertificadoraFromSubjectName( FIssuerName );
+end;
+
+
+function TDFeOpenSSL.GetNotAfter( cert: pX509 ): TDateTime;
+var
+  Validade: String;
+  notAfter: PASN1_TIME;
+begin
+  notAfter := cert.cert_info^.validity^.notAfter;
+  Validade := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(notAfter^.data) );
+  SetLength(Validade, notAfter^.length);
+  Validade := OnlyNumber(Validade);
+    if notAfter^.asn1_type = V_ASN1_UTCTIME then  // anos com 2 dígitos
+    Validade :=  LeftStr(IntToStrZero(YearOf(Now),4),2) + Validade;
+    Result := StoD(Validade);
+end;
+
+function TDFeOpenSSL.GetSubjectName( cert: pX509 ): String;
+var
+  s: AnsiString;
+  SubjectName: PX509_NAME;
+begin
+  Result := '';
+  setlength(s, 4096);
+  {$IFDEF USE_libeay32}
+   SubjectName := X509_get_subject_name(cert);
+   if Assigned(SubjectName) then
+   begin
+     X509_NAME_oneline(SubjectName, PAnsiChar(s), Length(s));
+     Result := Trim(s);
+   end;
+  {$ELSE}
+   SubjectName := X509GetSubjectName(cert);
+   if Assigned(SubjectName) then
+     Result := X509NameOneline(SubjectName, s, Length(s));
+  {$ENDIF}
+
+  if copy(Result,1,1) = '/' then
+    Result := Copy(Result,2,Length(Result));
+
+  Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
+end;
+
+function TDFeOpenSSL.GetIssuerName( cert: pX509 ): String;
+var
+  s: AnsiString;
+  IssuerName: pX509_NAME;
+begin
+  Result := '';
+  setlength(s, 4096);
+  {$IFDEF USE_libeay32}
+   IssuerName := X509_get_issuer_name(cert);
+   if Assigned(IssuerName) then
+   begin
+     X509_NAME_oneline(IssuerName, PAnsiChar(s), Length(s));
+     Result := Trim(s);
+   end;
+  {$ELSE}
+   IssuerName := X509GetIssuerName(cert);
+   if Assigned(IssuerName) then
+     Result := X509NameOneline(IssuerName, s, Length(s));
+  {$ENDIF}
+
+  if copy(Result,1,1) = '/' then
+    Result := Copy(Result,2,Length(Result));
+
+  Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
+end;
+
+function TDFeOpenSSL.GetCNPJExt( cert: pX509 ): String;
+var
+  ext: pX509_EXTENSION;
+  I, P: Integer;
+  prop: PASN1_STRING;
+  propStr: AnsiString;
+begin
+  Result := '';
+  I := 0;
+ {$IFDEF USE_libeay32}
+  ext := X509_get_ext( cert, I);
+ {$ELSE}
+  ext := X509GetExt( cert, I);
+ {$ENDIF}
+  while (ext <> nil) do
+  begin
+    prop := ext.value;
+    propStr := PAnsiChar(prop^.data);
+    SetLength(propStr, prop^.length);
+      P := pos(#1#3#3#160#16, propStr);;
+    if P > 0 then
+    begin
+      Result := LeftStr(OnlyNumber(copy(propStr,P+5,16)),14);
+      exit;
+    end;
+      inc( I );
+    {$IFDEF USE_libeay32}
+     ext := X509_get_ext( cert, I);
+    {$ELSE}
+     ext := X509GetExt( cert, I);
+    {$ENDIF}
+  end;
+end;
+
+function TDFeOpenSSL.GetSerialNumber( cert: pX509 ): String;
+var
+  SN: PASN1_STRING;
+  s: AnsiString;
+begin
+  {$IFDEF USE_libeay32}
+   SN := X509_get_serialNumber(cert);
+  {$ELSE}
+   SN := X509GetSerialNumber(cert);
+  {$ENDIF}
+  s := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(SN^.data) );
+  SetLength(s,SN.length);
+  Result := AsciiToHex(s);
+end;
+
+{ Método clonado de ACBrEAD }
+function TDFeOpenSSL.BioToStr(ABio : pBIO) : AnsiString ;
+Var
+  {$IFDEF USE_libeay32}
+   Buf : array [0..1023] of AnsiChar;
+  {$ENDIF}
+  Ret : Integer ;
+  Lin : String ;
+begin
+  Result := '';
+    {$IFDEF USE_libeay32}
+   while BIO_eof( ABio ) = 0 do
+   begin
+     Ret := BIO_gets( ABio, Buf, 1024 );
+     SetString( Lin, Buf, Ret);
+     Result := Result + Lin;
+   end ;
+  {$ELSE}
+   repeat
+      SetLength(Lin,1024);
+      Ret := BioRead( ABio, Lin, 1024);
+      if Ret > 0 then
+      begin
+         Lin := copy(Lin,1,Ret) ;
+         Result := Result + Lin;
+      end ;
+   until (Ret <= 0);
+  {$ENDIF}
+end ;
+
+function TDFeOpenSSL.CertToDER( cert: pX509 ): String;
+var
+  MemBio: PBIO;
+  Buff: AnsiString;
+begin
+  {$IFDEF USE_libeay32}
+   MemBio := Bio_New(Bio_S_Mem());
+   try
+     i2d_X509_bio(MemBio, cert);
+     Buff := BioToStr( MemBio );
+   finally
+     BIO_free_all( MemBio );
+   end;
+  {$ELSE}
+   MemBio := BioNew(BioSMem());
+   try
+     i2dX509bio(MemBio, cert);
+     Buff := BioToStr( MemBio );
+   finally
+     BioFreeAll( MemBio );
+   end;
+  {$ENDIF}
+    Result := EncodeBase64(Buff);
 end;
 
 procedure TDFeOpenSSL.VerificarValoresPadrao(var SignatureNode: AnsiString;

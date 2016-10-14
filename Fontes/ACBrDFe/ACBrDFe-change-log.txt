@@ -44,6 +44,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2016
+-- ACBrDFeSSL --
+[-] Correções no método "AjustarXMLAssinado".
+    - Caso a Tag <X509Certificate> não fosse encontrada, o Certificado X509 era
+      inserido no inicio do XML
+    - Remoção indevida de espaços no XML, após a tag "</KeyInfo>"
+
+-- ACBrDFeCapicom --
+[-] Correção na exibição de memsagem de Erro
+
+-- ACBrDFeOpenSSL --
+[+] Adicionado o método: "LerX509Info", que permite ler as informações do
+    certificado, através do conteúdo da Tag <X509Certificate>
+[*] Métodos "LerPFXInfo" tornado público
+[+] Nova Propridade publica: "Certificado: pX509"
+    (por: DSA)
+
 26/09/2016
 -- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
 [+] Adicionada as propriedades:

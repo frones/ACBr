@@ -44,6 +44,8 @@ uses
 
 Const
   CBufferSize = 32768;
+  CTagX509Ini = '<X509Certificate>';
+  CTagX509Fim = '</X509Certificate>';
 
 type
 
@@ -820,7 +822,7 @@ begin
     '<KeyInfo>' +
     IfThen(AddX509Data,
       '<X509Data>' +
-        '<X509Certificate></X509Certificate>' +
+        CTagX509Ini+CTagX509Fim+
       '</X509Data>',
       '')+
     '</KeyInfo>'+
@@ -849,7 +851,7 @@ function TDFeSSLClass.AjustarXMLAssinado(const ConteudoXML: String;
   X509DER: String): String;
 var
   XmlAss: String;
-  PosIni, PosFim: Integer;
+  PosSig, PosIni, PosFim: Integer;
 
   function RemoveEspacos( const AXML, TagIni, TagFim : String): String;
   begin
@@ -878,24 +880,48 @@ begin
   XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
   XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
 
-  PosIni := PosLast('<SignatureValue>', XmlAss);
-  if X509DER = '' then
+  PosSig := PosLast('<SignatureValue>', XmlAss);
+  if PosSig > 0 then
   begin
-    // Considerando apenas o último Certificado X509, da assinatura //
-    PosIni := PosEx('<X509Certificate>', XmlAss, PosIni) - 1;
-    PosFim := PosLast('<X509Certificate>', XmlAss);
-    XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
-  end
-  else
-  begin
-    // Remove todos Certificados adiconados, e Adiciona o X509DER informado //
-    PosIni := PosEx('<X509Certificate>', XmlAss, PosIni) + Length('<X509Certificate>') - 1;
-    PosFim := PosLast('</X509Certificate>', XmlAss);
-    XmlAss := copy(XmlAss, 1, PosIni) + X509DER + copy(XmlAss, PosFim, length(XmlAss));
+    PosIni := PosEx(CTagX509Ini, XmlAss, PosSig)-1;
+
+    if X509DER = '' then
+    begin
+      // Considerando apenas o último Certificado X509, da assinatura //
+      if PosIni >= 0 then
+      begin
+        PosFim := PosLast(CTagX509Ini, XmlAss);
+        XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+      end;
+    end
+    else
+    begin
+      // Remove todos Certificados adicionados, e Adiciona o X509DER informado //
+      PosFim := 0;
+      if PosIni <= 0 then
+      begin
+        PosIni := PosEx('<X509Certificate/>', XmlAss, PosSig)-1;
+        if PosIni >= 0 then
+          PosFim := PosIni + 18 ;
+      end
+      else
+      begin
+        PosFim := PosLast('</X509Certificate>', XmlAss);
+        if PosFim > 0 then
+          PosFim := PosFim + 18;
+      end;
+
+      if (PosIni > 0) and (PosFim > 0) then
+      begin
+        XmlAss := copy(XmlAss, 1, PosIni) +
+                  CTagX509Ini + X509DER + CTagX509Fim +
+                  copy(XmlAss, PosFim, length(XmlAss));
+      end;
+    end;
   end;
 
   // CAPICOM insere espaços em alguns Elementos da Assinatura //
-  XmlAss := RemoveEspacos(XmlAss, '<SignatureValue>', '</Signature>');
+  XmlAss := RemoveEspacos(XmlAss, '<SignatureValue>', '</KeyInfo>');
 
   Result := XmlAss;
 end;

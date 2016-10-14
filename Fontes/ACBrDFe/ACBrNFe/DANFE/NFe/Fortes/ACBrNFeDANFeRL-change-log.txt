@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/10/2016
+-- ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato
+[*] Implantação da quebra de linha em informações adicionais do produto, 
+    através do ponto e virgula ( ; ) 
+      		por: Henrique Leonardo
+
+
+
 03/10/2016
 -- ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato
 [-] Correção para exibir os dados de contingência em retrato e paisagem em Fortes

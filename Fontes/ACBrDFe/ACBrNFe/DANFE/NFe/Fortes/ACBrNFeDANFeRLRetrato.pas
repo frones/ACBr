@@ -2306,7 +2306,7 @@ begin
   if FNFe.Det.Items[inItem ].infAdProd <> '' then
   begin
     Result := sQuebraLinha;
-    Result := Result + FNFe.Det.Items[inItem ].infAdProd;
+    Result := Result + StringReplace((FNFe.Det.Items[inItem ].infAdProd), ';',  #13#10, [rfReplaceAll, rfIgnoreCase]);
   end;
 end;
 

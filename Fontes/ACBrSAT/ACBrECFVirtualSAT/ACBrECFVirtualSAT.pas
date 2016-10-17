@@ -551,13 +551,23 @@ begin
     begin
       NomeCFe := CFe.NomeArquivo;
 
-      if FileExists( NomeCFe ) then
+      if Trim(NomeCFe) <> '' then
       begin
-        CFe.LoadFromFile( NomeCFe);
-        CancelarUltimaVenda;
+        if FileExists( NomeCFe ) then
+        begin
+          CFe.LoadFromFile( NomeCFe);
+          CancelarUltimaVenda;
+        end
+        else
+          raise EACBrSATErro.Create( 'CFe não encontrado: '+NomeCFe);
       end
       else
-        raise EACBrSATErro.Create( 'CFe não encontrado: '+NomeCFe);
+      begin
+        if Trim(CFe.XMLOriginal) <> '' then
+          CancelarUltimaVenda
+        else
+          raise EACBrSATErro.Create( 'CFe não carregado.');
+      end;
     end;
 
     if Resposta.codigoDeRetorno <> 7000 then

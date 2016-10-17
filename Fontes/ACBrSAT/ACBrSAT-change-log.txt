@@ -47,9 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/10/2016
+-- ACBrECFVirtualSAT --
+[*] Acerto para que se possa cancelar um cupom que não seja o último utilizando
+    a carga do XML via XMLString e não somente por nome de arquivo.
+    por: regys.silveira
+
 Data: 03/10/2016
 -- ACBrSATClass --
-[*] TACBrSATConfigArquivos.CalcPath, Ajuste para remover a mascara do CNPJ
+[*] TACBrSATConfigArquivos.CalcPath, Ajuste para remover por mascara do CNPJ
     http://www.projetoacbr.com.br/forum/topic/32713-exemplo-acbrsat-e-acbrsatclass/
 
 Data: 26/09/2016

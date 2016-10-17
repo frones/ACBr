@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2016
+-- ACBrDFeOpenSSL --
+[*] Incluido uma verificação para remover se necessário algum prefixo de infElement
+    ao executar a função: XmlSecFindSignatureNode.
+   Alguns provedores de NFS-e tem prefixos em algumas TAGs.
+   por: Italo Jurisato Junior
+
 14/10/2016
 -- ACBrDFeSSL --
 [-] Correções no método "AjustarXMLAssinado".

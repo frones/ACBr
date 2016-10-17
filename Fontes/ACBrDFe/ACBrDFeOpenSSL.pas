@@ -661,6 +661,10 @@ begin
 
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
 
+  { Se infElement possui prefixo o mesmo tem que ser removido }
+  if Pos(':', infElement) > 0 then
+    infElement := Copy(infElement, Pos(':', infElement) +1, Length(infElement));
+
   { Se tem InfElement, procura pelo mesmo. Isso permitirá acharmos o nó de
     assinatura, relacionado a ele (mesmo pai) }
   if (InfElement <> '') then

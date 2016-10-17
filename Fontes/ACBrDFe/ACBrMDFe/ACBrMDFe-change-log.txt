@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2016
+-- pmdfeEnvEventoMDFe --
+[*] Correção na geração da tag: dhEvento, estava faltando incluir o UTC.
+   Por: Dinarte Moscon
+
 22/09/2016
 -- ACBrMDFeWebServices --
 [*] Removido os status 128 e 155 na leitura do retorno do envio de um evento.

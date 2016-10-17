@@ -165,10 +165,14 @@ begin
   if not ValidarChave(Evento.Items[0].InfEvento.chMDFe)
    then Gerador.wAlerta('EP08', 'chMDFe', '', 'Chave de MDFe inválida');
 
-  // Segundo o manual a data deve conter o UTC mas no schema não contem
-  Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento)
-                                                           {+ GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
-                                                                     Evento.Items[0].InfEvento.dhEvento)} );
+  if Versao = '3.00' then
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento)
+                                                             + GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
+                                                                       Evento.Items[0].InfEvento.dhEvento))
+  else
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento', 01, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento)
+                                                             {+ GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
+                                                                       Evento.Items[0].InfEvento.dhEvento)} );
 
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 6, 6, 1, Evento.Items[0].InfEvento.TipoEvento);
   Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 1, 2, 1, Evento.Items[0].InfEvento.nSeqEvento);

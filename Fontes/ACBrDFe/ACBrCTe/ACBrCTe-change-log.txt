@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2016
+-- ACBrCTeServicos --
+[*] Inclusão dos grupos para o modelo 67 - CT-e OS (Outros Serviços).
+    por: Italo Jurisato Junior
+
 22/09/2016
 -- ACBrCTeWebServices --
 [*] Removido os status 128 e 155 e acrescentado o 134 na leitura do retorno do

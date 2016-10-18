@@ -47,8 +47,8 @@ interface
 
 uses
   ACBrDevice,      {Units da ACBr}
-  Classes,
-  {$IFDEF COMPILER6_UP} Types, math, dateutils {$ELSE} Windows {$ENDIF};
+  {$IFDEF COMPILER6_UP} Types {$ELSE} Windows {$ENDIF},
+  SysUtils, Classes;
 
 type
 
@@ -99,8 +99,8 @@ end;
 implementation
 
 uses
-  ACBrBAL, ACBrUtil, 
-  SysUtils;
+  math, dateutils, strutils,
+  ACBrBAL, ACBrUtil, ACBrConsts;
 
 { TACBrBALClass }
 

@@ -37,6 +37,9 @@
 |*
 |* 30/08/2007: Marcio Jose da Silva
 |*  - Primeira Versao ACBrBALRinnert
+|*
+|* 10/10/2016: Elias César Vieira
+|*  - Refatoração de ACBrBALRinnert
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -44,94 +47,75 @@
 unit ACBrBALRinnert;
 
 interface
-uses ACBrBALClass, Classes;
 
-const STX = #02 ;
-      ETX = #03 ;
+uses
+  ACBrBALClass, Classes;
 
 type
-  TACBrBALRinnert = class( TACBrBALClass )
+
+  { TACBrBALRinnert }
+
+  TACBrBALRinnert = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses ACBrBAL,  
-     {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-     SysUtils, ACBrConsts;
+
+uses
+  ACBrConsts, SysUtils,
+  {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
 
 { TACBrBALGertecSerial }
 
 constructor TACBrBALRinnert.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Rinnert' ;
+  fpModeloStr := 'Rinnert';
 end;
 
-function TACBrBALRinnert.LePeso( MillisecTimeOut : Integer) : Double;
-Var TempoFinal : TDateTime ;
+function TACBrBALRinnert.LePeso(MillisecTimeOut: Integer): Double;
 begin
   { A Rinnert pode responder com Instavel inicalmente, mas depois ela poderia
-    estabilizar... Portanto o Loop abaixo tenta ler um Peso válido até o limite
-    de tempo estabelecido em "MilliSecTimeOut" ser atingido ou um Peso valido
-    retornado }
-  Result     := 0 ;
-  TempoFinal := IncMilliSecond(now,MillisecTimeOut) ;
-
-  while (Result <= 0) and (TempoFinal > now) do
-  begin
-     fpDevice.Serial.Purge ;
-     fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
-     sleep(200) ;
-     MillisecTimeOut := MilliSecondsBetween(now,TempoFinal) ;
-
-     LeSerial( MillisecTimeOut );
-
-     Result := fpUltimoPesoLido ;
-  end ;
+    estabilizar... Portanto utiliza função AguardaRespostaPeso }
+  AguardarRespostaPeso(MillisecTimeOut, True);
 end;
 
-procedure TACBrBALRinnert.LeSerial( MillisecTimeOut : Integer) ;
-Var
-  Resposta : WideString ;
+function TACBrBALRinnert.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wResposta: AnsiString;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result    := 0;
+  wResposta := aResposta;
 
-  Try
-     fpUltimaResposta := fpDevice.Serial.RecvPacket( MillisecTimeOut );
+  if (Pos('+', wResposta) > 0) then
+    wResposta := Copy(wResposta, Pos('+', wResposta) + 1, 7);
 
-     { Retira STX, ETX }
-     Resposta := fpUltimaResposta ;
-     if Pos('+',Resposta) > 0 then
-     begin
-       Resposta := copy(Resposta,Pos('+',Resposta)+1,7) ;
-     end;
+  if (Copy(wResposta, Length(wResposta), 1) = ETX) then
+    wResposta := Copy(wResposta, 1, Length(wResposta) - 1);
 
-     if copy(Resposta,Length(Resposta),1) = ETX then
-        Resposta := copy(Resposta,1,Length(Resposta)-1) ;
+  if (wResposta = EmptyStr) then
+    Exit;
 
-     { Ajustando o separador de Decimal corretamente }
-     Resposta := StringReplace(Resposta,'.',DecimalSeparator,[rfReplaceAll]) ;
-     Resposta := StringReplace(Resposta,',',DecimalSeparator,[rfReplaceAll]) ;
+  { Ajustando o separador de Decimal corretamente }
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
 
-     try
-       fpUltimoPesoLido := StrToFloat(Resposta)
-     except
-        case Trim(Resposta)[1] of
-          'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-          'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-          'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-        else
-           fpUltimoPesoLido := 0 ;
-        end;
-     end;
+  try
+    Result := StrToFloat(wResposta)
   except
-     { Peso não foi recebido (TimeOut) }
-  end ;
+    case Trim(wResposta)[1] of
+      'I': Result := -1;   { Instavel }
+      'N': Result := -2;   { Peso Negativo }
+      'S': Result := -10;  { Sobrecarga de Peso }
+    else
+      Result := 0;
+    end;
+  end;
 end;
 
 end.

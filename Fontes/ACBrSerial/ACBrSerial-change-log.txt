@@ -39,6 +39,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/10/2016
+-- ACBrBAL --
+[+] Inclusão de dois comandos: "SolicitarPeso" e "InterpretarResposta()" 
+	com objetivo de utilizar o ACBrBAL dentro do ACBrMTer.
+	(por: Elias César)
+	
+-- ACBrBALClass e filhas -- 
+[+] Incluídos os comandos "SolicitarPeso", "AguardarRespostaPeso" e 
+    "InterpretarRespostaPeso", dividindo o Comando "LePeso" em partes;
+[*] Refatoração nas classes para utilização dos novos comandos;
+[*] Modificação pra que ACBrBALClass implemente uma Balança Genérica. 
+	Com isso a ACBrBALGenerica foi excluída.
+	(por: Elias César)
+
 Data: 11/10/2016
 -- ACBrDevice --
 [-] Correção para suporte a portas paralelas (por: DSA e Waldir Paim)

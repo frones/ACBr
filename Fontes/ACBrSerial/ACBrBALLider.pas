@@ -38,21 +38,24 @@
 |* 27/05/2014: Laércio S Amici | Emerson Virissimo da Silva
 |*  - Primeira Versao ACBrBALLider
 |*
-      Protocolo Lider   -   Baseado no modelo LD2052
-      SOH 00000. #32 <E|I> STX
-
-      E=Estável  I=Instável
-
-      A balança Lider manda leituras continuamente para a COM, não necessita de
-      um comando para ler o peso.
-      A idéia é buscar o último peso estável lido, então a busca deve iniciar
-      no final do Buffer. Uma outra implementação possível seria tentar as 3
-      últimas leituras estáveis pra ver se coincidem, mas no momento não vejo
-      necessidade.
-
-      Configuração de leitura:
-      Baud Rate = 2400, Data Bits = 8, Parity = None, Stop Bits = 1,
-                        Handshaking = None
+|*      Protocolo Lider   -   Baseado no modelo LD2052
+|*      SOH 00000. #32 <E|I> STX
+|*
+|*      E=Estável  I=Instável
+|*
+|*      A balança Lider manda leituras continuamente para a COM, não necessita
+|*      de um comando para ler o peso.
+|*      A idéia é buscar o último peso estável lido, então a busca deve iniciar
+|*      no final do Buffer. Uma outra implementação possível seria tentar as 3
+|*      últimas leituras estáveis pra ver se coincidem, mas no momento não vejo
+|*      necessidade.
+|*
+|*      Configuração de leitura:
+|*      Baud Rate = 2400, Data Bits = 8, Parity = None, Stop Bits = 1,
+|*                        Handshaking = None
+|*
+|* 10/10/2016: Elias César Vieira
+|*  - Refatoração de ACBrBALLider
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -61,20 +64,22 @@ unit ACBrBALLider;
 
 interface
 
-uses ACBrBALClass,
-     Classes;
+uses
+  ACBrBALClass, Classes;
 
 type
 
-  TACBrBALLider = class( TACBrBALClass )
-  public
+  { TACBrBALLider }
 
+  TACBrBALLider = class(TACBrBALClass)
+  public
     constructor Create(AOwner: TComponent);
 
-    function LePeso(MillisecTimeOut: integer = 3000): Double; override;
+    function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
 
     procedure LeSerial(MillisecTimeOut: integer = 500); override;
-  end ;
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 
 implementation
@@ -82,9 +87,13 @@ implementation
 // TESTE DE LEITURA UTILIZANDO LOG GERADO NA BALANÇA
 // {$DEFINE DEBUG}
 
-uses ACBrConsts, math,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-     SysUtils;
+uses
+  ACBrConsts, math, SysUtils,
+  {$IFDEF COMPILER6_UP}
+    DateUtils, StrUtils
+  {$ELSE}
+    ACBrD5, Windows
+  {$ENDIF};
 
 
 { Retorna a posição da Substr em Str a partir do final }
@@ -114,56 +123,28 @@ end;
 
 constructor TACBrBALLider.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Lider' ;
+  fpModeloStr := 'Lider';
 end;
 
 
-function TACBrBALLider.LePeso(MillisecTimeOut: integer): Double;
-var
-  TempoFinal: TDateTime;
+function TACBrBALLider.LePeso(MillisecTimeOut: Integer): Double;
 begin
-  { baseado inicialmente na leitura da Filisola }
-
-  Result := -1 ;
-
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-
-  TempoFinal := IncMilliSecond(Now, MillisecTimeOut);
-
-  while (Result <= -1) and (TempoFinal > Now) do
-  begin
-    fpDevice.Limpar;
-
-    // Não precisa enviar comando de leitura de peso
-    //fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
-
-    Sleep(200);
-
-    MillisecTimeOut := Max(MilliSecondsBetween(Now, TempoFinal), 1000);
-
-    LeSerial( MillisecTimeOut );
-
-    Result := UltimoPesoLido;
-  end;
+  { Balança Lider não é necessário enviar comando de leitura... Portanto... }
+  { Utilizará a função AguardarRespostaPeso com ReenviarSolicitação = False }
+  Result := AguardarRespostaPeso(MillisecTimeOut);
 end;
 
-procedure TACBrBALLider.LeSerial(MillisecTimeOut: integer);
-var
-  Resposta: AnsiString;
-  StatusPeso: AnsiChar;
-  iPos: integer;
-
+procedure TACBrBALLider.LeSerial(MillisecTimeOut: Integer);
 {$IFDEF DEBUG}
+var
   StrDebug: TStringList;
 {$ENDIF}
 
 begin
-
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  fpUltimoPesoLido := 0;
+  fpUltimaResposta := '';
 
   try
     { Protocolo Lider   -   Baseado no modelo LD2052
@@ -179,82 +160,92 @@ begin
       Configuração de leitura:
       Baud Rate = 2400, Data Bits = 8, Parity = None, Stop Bits = 1, Handshaking = None
       ----------------------}
-{$IFDEF DEBUG}
+    {$IFDEF DEBUG}
     StrDebug := TStringList.Create;
     StrDebug.LoadFromFile('LiderDebug.txt');
     fpUltimaResposta := StrDebug.Text;
     StrDebug.Free;
-{$ELSE}
-    fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
-    GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
-{$ENDIF}
+    {$ELSE}
+    fpUltimaResposta := fpDevice.LeString(MillisecTimeOut);
+    GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+    {$ENDIF}
 
-    Resposta := fpUltimaResposta;
-
-    { Buscar último peso estável no buffer }
-    iPos := RightPos('E'+ STX, Resposta);
-
-    { Se não achou leitura estáve. buscar último peso instável no buffer }
-    if iPos = 0 then
-      iPos := RightPos('I'+ STX, Resposta);
-
-    { Se achou, isolar a leitura }
-    if (iPos > 0) then
-    begin
-      Resposta := Copy(Resposta, 1, iPos + 1);
-
-      iPos := RightPos(SOH, Resposta);
-
-      if (iPos > 0) then
-        Resposta := Copy(Resposta, iPos, Length(Resposta));
-    end;
-
-    { Retira SOH, STX }
-    if Copy(Resposta, 1, 1) = SOH then
-      Resposta := Copy(Resposta, 2, Length(Resposta));
-
-    if Copy(Resposta, Length(Resposta), 1) = STX then
-      Resposta := Copy(Resposta, 1, Length(Resposta) - 1);
-
-    { Substituir o espaço que vem após o ponto }
-    Resposta := StringReplace(Resposta, ' ', '0', [rfReplaceAll]);
-
-    { Ajustando o separador de Decimal corretamente }
-    Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-    Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
-    try
-      StatusPeso := ' ';
-      if Length(Resposta) >= 1 then
-      begin
-        StatusPeso := Copy(Resposta, Length(Resposta), 1)[1];
-
-        if (StatusPeso in ['E', 'I']) then
-          Resposta := Copy(Resposta, 1, Length(Resposta) - 1);
-      end;
-
-      fpUltimoPesoLido := StrToFloat(Resposta);
-
-      case StatusPeso of
-        'I': fpUltimoPesoLido := -1;  { Instavel }
-        'E': fpUltimoPesoLido := StrToFloat(Resposta);  { Estável }
-
-          //'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-          //'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-      else
-        fpUltimoPesoLido := 0;
-      end;
-
-    except
-      fpUltimoPesoLido := 0 ;
-    end;
-
+    fpUltimoPesoLido := InterpretarRepostaPeso(fpUltimaResposta);
   except
     { Peso não foi recebido (TimeOut) }
     fpUltimoPesoLido := -9;
   end;
 
-  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
+  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+           ' , Resposta: ' + fpUltimaResposta);
+end;
+
+function TACBrBALLider.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wResposta: AnsiString;
+  StatusPeso: AnsiChar;
+  wPos: Integer;
+begin
+  Result := 0;
+
+  if (aResposta = EmptyStr) then
+    Exit;
+
+  wResposta := aResposta;
+
+  { Buscar último peso estável no buffer }
+  wPos := RightPos('E' + STX, wResposta);
+
+  { Se não achou leitura estáve. buscar último peso instável no buffer }
+  if (wPos = 0) then
+    wPos := RightPos('I' + STX, wResposta);
+
+  { Se achou, isolar a leitura }
+  if (wPos > 0) then
+  begin
+    wResposta := Copy(wResposta, 1, wPos + 1);
+
+    wPos := RightPos(SOH, wResposta);
+
+    if (wPos > 0) then
+      wResposta := Copy(wResposta, wPos, Length(wResposta));
+  end;
+
+  { Retira SOH, STX }
+  if (Copy(wResposta, 1, 1) = SOH) then
+    wResposta := Copy(wResposta, 2, Length(wResposta));
+
+  if (Copy(wResposta, Length(wResposta), 1) = STX) then
+    wResposta := Copy(wResposta, 1, Length(wResposta) - 1);
+
+  { Substituir o espaço que vem após o ponto }
+  wResposta := StringReplace(wResposta, ' ', '0', [rfReplaceAll]);
+
+  { Ajustando o separador de Decimal corretamente }
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
+
+  try
+    StatusPeso := ' ';
+    if (Length(wResposta) >= 1) then
+    begin
+      StatusPeso := Copy(wResposta, Length(wResposta), 1)[1];
+
+      if (StatusPeso in ['E', 'I']) then
+        wResposta := Copy(wResposta, 1, Length(wResposta) - 1);
+    end;
+
+    Result := StrToFloat(wResposta);
+
+    case StatusPeso of
+      'I': Result := -1;                     { Instavel }
+      'E': Result := StrToFloat(wResposta);  { Estável }
+    else
+      Result := 0;
+    end;
+  except
+    Result := 0;
+  end;
 end;
 
 end.

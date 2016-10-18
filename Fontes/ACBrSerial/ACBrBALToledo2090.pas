@@ -37,105 +37,99 @@ unit ACBrBALToledo2090;
 
 interface
 
-uses ACBrBALClass, Classes, Dialogs;
+uses
+  ACBrBALClass, Classes, Dialogs;
 
 type
+
+  { TACBrBALToledo2090 }
+
   TACBrBALToledo2090 = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    procedure SolicitarPeso; override;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses ACBrUtil, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF},
-     SysUtils, Math ;
+
+uses
+  ACBrUtil, ACBrConsts, SysUtils, Math,
+  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF};
 
 { TACBrBALToledo }
 
 constructor TACBrBALToledo2090.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Toledo 2090' ;
+  fpModeloStr := 'Toledo 2090';
 end;
 
-function TACBrBALToledo2090.LePeso( MillisecTimeOut : Integer) : Double;
+procedure TACBrBALToledo2090.SolicitarPeso;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-
-  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
-  //fpDevice.Limpar ;                 { Limpa a Porta }
-  fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
-  sleep(200) ;
-
-  LeSerial( MillisecTimeOut );
-
-  Result := fpUltimoPesoLido ;
+  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #05);
+  //fpDevice.Limpar;          { Limpa a Porta }
+  fpDevice.EnviaString(#05);  { Envia comando solicitando o Peso }
 end;
 
-procedure TACBrBALToledo2090.LeSerial(MillisecTimeOut: Integer);
-Var
-  Resposta : String ;
-  Decimais : Integer ;
-  Protocolo: String;
-  lStrListDados : TStringList;
+function TACBrBALToledo2090.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wResposta: AnsiString;
+  wStrListDados: TStringList;
+  wDecimais: Integer;
 begin
-  fpUltimaResposta := '' ;
-  Protocolo        := '';
+  Result := 0;
+
+  if (aResposta = EmptyStr) then
+    Exit;
+
+  Result    := 0;
+  wResposta := '';
+  wDecimais := 100;
+
+  wStrListDados := TStringList.Create;
   try
+    wStrListDados.Text := StringReplace(aResposta, #$D, #13, [rfReplaceAll, rfIgnoreCase]);
+
+    { PACOTE DE DADOS INVALIDO PARA PROCESSAR }
+    if ((Copy(wStrListDados[1], 2, 1) <> #2) and (Copy(wStrListDados[1], 1, 1) <> #2)) or
+       ((Length(wStrListDados[1]) <> 17) and (Length(wStrListDados[1]) <> 16)) then
+      Exit;
+
+    if (Length(wStrListDados[1]) = 16) then
+      wDecimais := 1000;
+
+    {APENAS BLOCO PROCESSADO}
+    aResposta := wStrListDados[1];
+    wResposta := Copy(wStrListDados[1], 5, 7);
+
+    if (Length(wResposta) <= 0) then
+      Exit;
+
+    { Ajustando o separador de Decimal corretamente }
+    wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+    wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
     try
-      fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
-      GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
-
-      lStrListDados := TStringList.Create;
-      lStrListDados.Text := StringReplace(fpUltimaResposta,#$D,#13, [rfReplaceAll,rfIgnoreCase]);
-
-       {PACOTE DE DADOS INVALIDO PARA PROCESSAR}
-      if ((Copy(lStrListDados[1],2,1)  <> #2) and (Copy(lStrListDados[1],1,1) <> #2))
-          or ((Length(lStrListDados[1]) <> 17) and (Length(lStrListDados[1]) <> 16)) then
-        Exit;
-
-      if Length(lStrListDados[1]) = 16 then
-        Decimais := 1000
+      { Já existe ponto decimal ? }
+      if (Pos(DecimalSeparator, wResposta) > 0)then
+        Result := StrToFloat(wResposta)
       else
-        Decimais := 100;
+        Result := (StrToInt(wResposta) / wDecimais);
 
-      {APENAS BLOCO PROCESSADO}
-      fpUltimaResposta := lStrListDados[1];
-      Resposta := Copy(lStrListDados[1],5,7);
-      fpUltimoPesoLido := 0;
-
-      if Length(Resposta) > 0 then
-      begin
-        { Ajustando o separador de Decimal corretamente }
-        Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-        Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-        try
-          if pos(DecimalSeparator,Resposta) > 0 then  { Já existe ponto decimal ? }
-            fpUltimoPesoLido := StrToFloat(Resposta)
-          else
-            fpUltimoPesoLido := StrToInt(Resposta) / Decimais ;
-
-          case AnsiIndexText(Copy(lStrListDados[1],3,1),['x','r','s']) of
-             0 : fpUltimoPesoLido := fpUltimoPesoLido  ;  { Instavel }
-             1 : fpUltimoPesoLido := fpUltimoPesoLido*-1;  { Peso Negativo }
-             2 : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-          end;
-        except
-          fpUltimoPesoLido := 0 ;
-        end;
+      case AnsiIndexText(Copy(wStrListDados[1], 3, 1), ['x','r','s']) of
+        0: Result := Result;         { Instavel }
+        1: Result := Result * (-1);  { Peso Negativo }
+        2: Result := -10;            { Sobrecarga de Peso }
       end;
-    finally
+    except
+      Result := 0;
     end;
-  except
-    fpUltimoPesoLido := -9 ;
-  end ;
-
-  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+
-     ' , Resposta: '+Resposta+' - '+Protocolo );
+  finally
+    wStrListDados.Free;
+  end;
 end;
 
 end.

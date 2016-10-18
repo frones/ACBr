@@ -37,95 +37,102 @@
 |*
 |* 17/02/2009: Ivan Carlos Martello
 |*  - Primeira Versao ACBrBALUrano
+|*
+|* 11/10/2016 - Elias César Vieira
+|*  - Refatoração de ACBrBALUranoPOP
 ******************************************************************************}
 {$I ACBr.inc}
 
 unit ACBrBALUranoPOP;
 
 interface
-uses ACBrBALClass,
-     Classes;
+
+uses
+  ACBrBALClass, Classes;
 
 type
-  TACBrBALUranoPOP = class( TACBrBALClass )
+
+  { TACBrBALUranoPOP }
+
+  TACBrBALUranoPOP = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses
-  ACBrConsts,
-  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-  SysUtils ;
+
+uses
+  ACBrConsts, SysUtils,
+  {$IFDEF COMPILER6_UP}
+    DateUtils, StrUtils
+  {$ELSE}
+    ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALGertecSerial }
 
 constructor TACBrBALUranoPOP.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
-  fpModeloStr := 'Urano' ;
+  inherited Create(AOwner);
+
+  fpModeloStr := 'Urano';
 end;
 
 function TACBrBALUranoPOP.LePeso(MillisecTimeOut : Integer) : Double;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result := -1;
 
-  fpDevice.Limpar;
-  fpDevice.EnviaString(#05); { Envia comando solicitando o Peso }
-  sleep(600);
+  SolicitarPeso;
+  Sleep(600);
 
-  LeSerial( MillisecTimeOut );
-
+  LeSerial(MillisecTimeOut);
   Result := fpUltimoPesoLido;
 end;
 
-procedure TACBrBALUranoPOP.LeSerial( MillisecTimeOut : Integer) ;
- var
-   Resposta: String;
-   Quantos, PosDelim: integer;
+function TACBrBALUranoPOP.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wResposta: AnsiString;
+  wPos, wQtd: Integer;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result    := 0;
+  wResposta := aResposta;
+  wResposta := Copy(wResposta, Pos('PESO L:', wResposta), 16);
+
+  wPos := Pos(':', wResposta);
+
+  if (Length(wResposta) > 1) then
+  begin
+    wQtd      := (Pos('g', wResposta) - 2);
+    wQtd      := wQtd - (wPos + 1);
+    wResposta := Copy(wResposta, wPos + 2, wQtd); //123456
+  end;
+
+  if (wResposta = EmptyStr) then
+    Exit;
+
+  { Ajustando o separador de Decimal corretamente }
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
+
   try
-    fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
-    //fpUltimaResposta := 'DATA:  00/00/00 VALID.: 00/00/00      TARA:   0.000kg       PESO L:  1.542kg      R$/kg:      0.00      TOTAL R$:      0.00200000000000';
-    Resposta := fpUltimaResposta;
-    Resposta := Copy(Resposta, Pos('PESO L:', Resposta), 16);
-
-    PosDelim := pos(':', Resposta);
-
-    if Length(Resposta) > 1  then
-    begin
-      Quantos := (pos('g', Resposta) - 2);
-      Quantos := Quantos - (PosDelim + 1);
-      Resposta := Copy(Resposta, PosDelim + 2, Quantos); //123456
-    end;
-
-    { Ajustando o separador de Decimal corretamente }
-    Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-    Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
-    try
-      if pos(DecimalSeparator, Resposta) > 0 then  { Já existe ponto decimal ? }
-        fpUltimoPesoLido := StrToFloat(Resposta)
-      else
-        fpUltimoPesoLido := StrToInt(Resposta) / 1000 ;
-    except
-      case Trim(Resposta)[1] of
-        'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-        'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-        //'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-      else
-        fpUltimoPesoLido := 0 ;
-      end;
-    end;
+    { Já existe ponto decimal ? }
+    if (Pos(DecimalSeparator, wResposta) > 0) then
+      Result := StrToFloat(wResposta)
+    else
+      Result := (StrToInt(wResposta) / 1000);
   except
-     { Peso não foi recebido (TimeOut) }
-     fpUltimoPesoLido := -9;
-  end ;
+    case Trim(wResposta)[1] of
+      'I': Result := -1;     { Instavel }
+      'N': Result := -2;     { Peso Negativo }
+      //'S': Result := -10;  { Sobrecarga de Peso }
+    else
+      Result := 0;
+    end;
+  end;
 end;
 
 end.

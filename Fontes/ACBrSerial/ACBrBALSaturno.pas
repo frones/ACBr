@@ -36,6 +36,9 @@
 |*
 |* 29/03/2016: Wislei de Brito Fernandes
 |*  - Primeira Versao ACBrBALSaturno
+|*
+|* 10/10/2016: Elias César Vieira
+|*  - Refatoração de ACBrBALSaturno
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -43,107 +46,89 @@
 unit ACBrBALSaturno;
 
 interface
-uses ACBrBALClass,
-     Classes;
+
+uses
+  ACBrBALClass, Classes;
 
 type
- TACBrBALSaturno = class( TACBrBALClass )
+
+  { TACBrBALSaturno }
+
+  TACBrBALSaturno = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses ACBrUtil, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} synaser, Windows{$ENDIF},
-     SysUtils, Math, ACBrDevice,dialogs ;
+
+uses
+  ACBrUtil, ACBrConsts, SysUtils,
+  {$IFDEF COMPILER6_UP} DateUtils {$ELSE} synaser, Windows{$ENDIF};
 
 { TACBrBALSaturno }
 
 constructor TACBrBALSaturno.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Saturno' ;
+  fpModeloStr := 'Saturno';
 end;
 
-function TACBrBALSaturno.LePeso( MillisecTimeOut : Integer) : Double;
+function TACBrBALSaturno.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wAchouE, wAchouO: Boolean;
+  wPosEO: Integer;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result := 0;
 
-  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
-  fpDevice.Limpar;                  { Limpa a Porta }
-  fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
-  sleep(200) ;
+  if (aResposta = EmptyStr) then
+    Exit;
 
-  LeSerial( MillisecTimeOut );
+  wAchouE := (Pos('E', UpperCase(aResposta)) > 0);
+  wAchouO := (Pos('O', UpperCase(aResposta)) > 0);
 
-  Result := fpUltimoPesoLido ;
-end;
-
-procedure TACBrBALSaturno.LeSerial(MillisecTimeOut: Integer);
-Var
-  Resposta : AnsiString ;
-  bAchouE_O: Boolean;
-  posicaoE_O : Integer ;
-begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-  Try
-    fpUltimaResposta := trim(fpDevice.Serial.RecvPacket( MillisecTimeOut));
-    bAchouE_O := False;
-
-    // Se encontrar a letra 'E' (Estável) ou 'O' (Oscilante), captura o peso da
-    // posição 1 a 7 da string
-    if (Pos('E',UpperCase(fpUltimaResposta)) > 0) or (Pos('O',UpperCase(fpUltimaResposta)) > 0) then
-    begin
-      if Pos('E',UpperCase(fpUltimaResposta)) > 0 then
-        posicaoE_O := Pos('E',UpperCase(fpUltimaResposta))
-      else
-        posicaoE_O := Pos('O',UpperCase(fpUltimaResposta));
-
-      bAchouE_O := True;
-
-      Resposta := Copy(fpUltimaResposta,0 , posicaoE_O - 1);
-    end;
-
-    // Removendo caracteres especiais, caso encontre algum
-    if bAchouE_O then
-    begin
-      Resposta := StringReplace(Resposta, '°', '0', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '±', '1', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '²', '2', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '³', '3', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '´', '4', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, 'µ', '5', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '¶', '6', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '·', '7', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '¸', '8', [rfReplaceAll]);
-      Resposta := StringReplace(Resposta, '¹', '9', [rfReplaceAll]);
-    end;
-
-    if Length(Resposta) > 0 then
-    begin
-      try
-        fpUltimoPesoLido := StrToFloat(Resposta);
-      except
-        case Resposta[1] of
-          'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-          'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-          'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-        else
-          fpUltimoPesoLido := 0 ;
-        end;
-      end;
-    end
+  // Se encontrar a letra 'E' (Estável) ou 'O' (Oscilante), captura o peso da
+  // posição 1 a 7 da string
+  if wAchouE or wAchouO then
+  begin
+    if wAchouE then
+      wPosEO := Pos('E', UpperCase(aResposta))
     else
-      fpUltimoPesoLido := 0 ;
-  except
-    { Peso não foi recebido (TimeOut) }
-    fpUltimoPesoLido := -9 ;
-  end ;
+      wPosEO := Pos('O', UpperCase(aResposta));
+
+    aResposta := Copy(aResposta, 0, wPosEO - 1);
+
+    { Removendo caracteres especiais, caso encontre algum }
+    aResposta := StringReplace(aResposta, '°', '0', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '±', '1', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '²', '2', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '³', '3', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '´', '4', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, 'µ', '5', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '¶', '6', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '·', '7', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '¸', '8', [rfReplaceAll]);
+    aResposta := StringReplace(aResposta, '¹', '9', [rfReplaceAll]);
+  end;
+
+  if (Length(aResposta) > 0) then
+  begin
+    try
+      Result := StrToFloat(aResposta);
+    except
+      case aResposta[1] of
+        'I': Result := -1;   { Instavel }
+        'N': Result := -2;   { Peso Negativo }
+        'S': Result := -10;  { Sobrecarga de Peso }
+      else
+        Result := 0;
+      end;
+    end;
+  end
+  else
+    Result := 0;
 end;
 
 end.

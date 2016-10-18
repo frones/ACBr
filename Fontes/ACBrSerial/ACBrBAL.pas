@@ -47,13 +47,22 @@
 unit ACBrBAL;
 
 interface
-uses ACBrDevice, ACBrBase, ACBrBALClass,  {Units da ACBr}
-     SysUtils
-     {$IFNDEF NOGUI}
-       {$IFDEF VisualCLX}, QExtCtrls {$ELSE}, ExtCtrls {$ENDIF}
-     {$ENDIF}
-     {$IFDEF COMPILER6_UP}, Types {$ELSE}, Windows {$ENDIF}
-     , Classes;
+
+uses
+  ACBrDevice, ACBrBase, ACBrBALClass,  {Units da ACBr}
+  SysUtils, Classes,
+  {$IFNDEF NOGUI}
+    {$IFDEF VisualCLX}
+      QExtCtrls,
+    {$ELSE}
+      ExtCtrls,
+    {$ENDIF}
+  {$ENDIF}
+  {$IFDEF COMPILER6_UP}
+    Types
+  {$ELSE}
+    Windows
+  {$ENDIF};
 
 type
 
@@ -66,9 +75,9 @@ TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
 { TACBrBAL }
 
-TACBrBAL = class( TACBrComponent )
+TACBrBAL = class(TACBrComponent)
   private
-    fsDevice  : TACBrDevice ;   { SubComponente ACBrDevice }
+    fsDevice: TACBrDevice;  { SubComponente ACBrDevice }
     {$IFNDEF NOGUI}
       fsTimer: TTimer;
     {$ELSE}
@@ -92,7 +101,7 @@ TACBrBAL = class( TACBrComponent )
     procedure SetPosFim(const Value: Integer);
     function GetPosIni: Integer;
     function GetPosFim: Integer;
-    procedure LeSerial(Sender: TObject); virtual ;
+    procedure LeSerial(Sender: TObject); virtual;
 
     function GetPorta: String;
     function GetModeloStrClass: String;
@@ -104,12 +113,15 @@ TACBrBAL = class( TACBrComponent )
 
   public
     constructor Create(AOwner: TComponent); override;
-    Destructor Destroy  ; override ;
+    Destructor Destroy; override;
 
     procedure Ativar ;
     procedure Desativar ;
 
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double;
+    function LePeso( MillisecTimeOut: Integer = 3000): Double;
+
+    procedure SolicitarPeso;
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; virtual;
 
     property UltimoPesoLido : Double read GetUltimoPesoLido ;
     property UltimaResposta : AnsiString read GetUltimaResposta ;
@@ -133,11 +145,13 @@ TACBrBAL = class( TACBrComponent )
   end ;
 
 implementation
-Uses ACBrUtil, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert, ACBrBALMuller,
-     ACBrBALLucasTec,  ACBrBALToledo2180, ACBrBALMagna, ACBrBALDigitron,ACBrBALMagellan,
-     ACBrBALUranoPOP, ACBrBALLider, ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS, ACBrBALGenerica,
-     {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF},
-     Math;
+
+uses
+  ACBrUtil, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert,
+  ACBrBALMuller, ACBrBALLucasTec,  ACBrBALToledo2180, ACBrBALMagna,
+  ACBrBALDigitron,ACBrBALMagellan, ACBrBALUranoPOP, ACBrBALLider,
+  ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS,
+  {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
 
 { TACBrBAL }
 constructor TACBrBAL.Create(AOwner: TComponent);
@@ -172,15 +186,15 @@ end;
 
 destructor TACBrBAL.Destroy;
 begin
-  Desativar ;
+  Desativar;
 
-  fsTimer.Enabled := False ;
-  fsTimer.Free ;
+  fsTimer.Enabled := False;
+  fsTimer.Free;
 
-  if Assigned( fsBAL ) then
-     FreeAndNil( fsBAL ) ;
+  if Assigned(fsBAL) then
+    FreeAndNil(fsBAL);
 
-  FreeAndNil( fsDevice ) ;
+  FreeAndNil(fsDevice);
 
   inherited Destroy;
 end;
@@ -188,23 +202,33 @@ end;
 procedure TACBrBAL.SetModelo(const Value: TACBrBALModelo);
 var
   wArqLOG: String;
+  wPosIni, wPosFim: Integer;
 begin
-  if fsModelo = Value then exit ;
+  if (fsModelo = Value) then
+    Exit;
 
   if fsAtivo then
-     raise Exception.Create(ACBrStr('Não é possível mudar o Modelo com ACBrBAL Ativo') );
+    raise Exception.Create(ACBrStr('Não é possível mudar o Modelo com ACBrBAL Ativo'));
 
-  wArqLOG := ArqLOG ;
+  wArqLOG := ArqLOG;
+  wPosIni := 0;
+  wPosFim := 0;
 
-  FreeAndNil( fsBAL ) ;
+  if Assigned(fsBAL) then
+  begin
+    wPosIni := fsBAL.PosIni;
+    wPosFim := fsBAL.PosFim;
+  end;
+
+  FreeAndNil(fsBAL);
 
   { Instanciando uma nova classe de acordo com fsModelo }
   case Value of
-     balFilizola    : fsBAL := TACBrBALFilizola.create( Self ) ;
-     balToledo      : fsBAL := TACBrBALToledo.Create( Self );
-     balToledo2180  : fsBAL := TACBrBALToledo2180.Create( Self );
-     balUrano       : fsBAL := TACBrBALUrano.Create( Self );
-     balLucasTec    : fsBAL := TACBrBALLucasTec.Create( Self );
+     balFilizola    : fsBAL := TACBrBALFilizola.create(Self);
+     balToledo      : fsBAL := TACBrBALToledo.Create(Self);
+     balToledo2180  : fsBAL := TACBrBALToledo2180.Create(Self);
+     balUrano       : fsBAL := TACBrBALUrano.Create(Self);
+     balLucasTec    : fsBAL := TACBrBALLucasTec.Create(Self);
      balMagna       : fsBAL := TACBrBALMagna.Create(Self);
      balDigitron    : fsBAL := TACBrBALDigitron.Create(Self);
      balMagellan    : fsBAL := TACBrBALMagellan.Create(Self);
@@ -215,14 +239,15 @@ begin
      balMuller      : fsBAL := TACBrBALMuller.Create(Self);
      balSaturno     : fsBAL := TACBrBALSaturno.Create(Self);
      balAFTS        : fsBAL := TACBrBALAFTS.Create(Self);
-     balGenerica    : fsBAL := TACBrBALGenerica.Create(Self);
+     balGenerica    : fsBAL := TACBrBALClass.Create(Self);
   else
-     fsBAL := TACBrBALClass.create( Self ) ;
+     fsBAL := TACBrBALClass.Create(Self);
   end;
 
-  ArqLOG := wArqLOG;
-
-  fsModelo := Value;
+  fsBAL.PosIni := wPosIni;
+  fsBAL.PosFim := wPosFim;
+  ArqLOG       := wArqLOG;
+  fsModelo     := Value;
 end;
 
 function TACBrBAL.GetArqLOG: String;
@@ -300,22 +325,33 @@ begin
   end ;
 end;
 
+procedure TACBrBAL.SolicitarPeso;
+begin
+  fsBAL.SolicitarPeso;
+end;
+
+function TACBrBAL.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+begin
+  Result := fsBAL.InterpretarRepostaPeso(aResposta);
+end;
+
 procedure TACBrBAL.LeSerial(Sender: TObject);  { Chamado pelo Timer interno }
 begin
-  fsTimer.Enabled := False ;  { Desliga o Timer para evitar chamadas Recursivas }
+  fsTimer.Enabled := False;  { Desliga o Timer para evitar chamadas Recursivas }
 
   { Está ativo ? Tem dados esperando na porta Serial ? }
   if fsDevice.Ativo then
   begin
-     if (fsDevice.BytesParaLer > 0) then
-     begin
-        fsBAL.LeSerial( 500 ) ;
-        if Assigned( fsOnLePeso ) then
-           fsOnLePeso( UltimoPesoLido, UltimaResposta ) ;
-     end ;
-  end ;
+    if (fsDevice.BytesParaLer > 0) then
+    begin
+      fsBAL.LeSerial(500);
+
+      if Assigned(fsOnLePeso) then
+        fsOnLePeso(UltimoPesoLido, UltimaResposta);
+    end;
+  end;
   
-  fsTimer.Enabled := True ;
+  fsTimer.Enabled := True;
 end;
 
 function TACBrBAL.GetUltimoPesoLido: Double;

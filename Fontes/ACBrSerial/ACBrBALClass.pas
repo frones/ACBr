@@ -44,15 +44,16 @@
 unit ACBrBALClass;
 
 interface
-uses ACBrDevice,      {Units da ACBr}
-     Classes,
-     {$IFDEF COMPILER6_UP} Types {$ELSE} Windows {$ENDIF} ;
+
+uses
+  ACBrDevice,      {Units da ACBr}
+  Classes,
+  {$IFDEF COMPILER6_UP} Types, math, dateutils {$ELSE} Windows {$ENDIF};
 
 type
 
-{ Classe generica de BALANCA, nao implementa nenhum modelo especifico, apenas
-  declara a Classe. NAO DEVE SER INSTANCIADA. Usada apenas como base para
-  as demais Classes de BALANCA como por exemplo a classe TACBrBALFilizola }
+{ Classe generica de BALANCA, implementa um Modelo Genérico de SolicitaPeso
+  e InterpretarResposta. }
 
 { TACBrBALClass }
 
@@ -60,37 +61,44 @@ TACBrBALClass = class
   private
     procedure SetAtivo(const Value: Boolean);
   protected
-    fpDevice  : TACBrDevice ;
-    fpAtivo   : Boolean ;
+    fpDevice: TACBrDevice;
+    fpAtivo: Boolean;
     fpModeloStr: String;
     fpUltimoPesoLido: Double;
     fpUltimaResposta: AnsiString;
     fpArqLOG: String;
     fpPosIni: Integer;
     fpPosFim: Integer;
+
+    procedure GravaLog(AString: AnsiString; Traduz: Boolean = True);
+
+    function AguardarRespostaPeso(aMillisecTimeOut: Integer = 3000;
+      aReenviarSolicitarPeso: Boolean = False): Double; virtual;
   public
     constructor Create(AOwner: TComponent);
-    destructor Destroy  ; override ;
+    destructor Destroy; override;
 
-    property Ativo  : Boolean read fpAtivo write SetAtivo ;
-    procedure Ativar ; virtual ;
-    procedure Desativar ; virtual ;
+    procedure Ativar; virtual;
+    procedure Desativar; virtual;
+    procedure SolicitarPeso; virtual;
+    procedure LeSerial(MillisecTimeOut: Integer = 500); virtual;
 
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double ; virtual;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; virtual ;
-    procedure GravaLog(AString: AnsiString; Traduz :Boolean = True);
+    function LePeso(MillisecTimeOut: Integer = 3000): Double; virtual;
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; virtual;
 
-    property ModeloStr: String  read fpModeloStr ;
-    property UltimoPesoLido : Double read fpUltimoPesoLido ;
-    property UltimaResposta : AnsiString read fpUltimaResposta ;
-    property ArqLOG : String read fpArqLOG write fpArqLOG ;
-    property PosIni : Integer read fpPosIni write fpPosIni ;
-    property PosFim : Integer read fpPosFim write fpPosFim ;
+    property ModeloStr: String  read fpModeloStr;
+    property Ativo    : Boolean read fpAtivo  write SetAtivo;
+    property ArqLOG   : String  read fpArqLOG write fpArqLOG;
+    property PosIni   : Integer read fpPosIni write fpPosIni;
+    property PosFim   : Integer read fpPosFim write fpPosFim;
+
+    property UltimaResposta: AnsiString read fpUltimaResposta;
+    property UltimoPesoLido: Double     read fpUltimoPesoLido;
 end;
 
 implementation
 
-Uses
+uses
   ACBrBAL, ACBrUtil, 
   SysUtils;
 
@@ -99,22 +107,22 @@ Uses
 constructor TACBrBALClass.Create(AOwner: TComponent);
 begin
   if not (AOwner is TACBrBAL) then
-     raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrBAL'));
+    raise Exception.create(ACBrStr('Essa Classe deve ser instanciada por TACBrBAL'));
 
   { Criando ponteiro interno para as Propriedade SERIAL de ACBrBAL,
     para permitir as Classes Filhas o acesso a essas propriedades do Componente}
 
-  fpDevice    := (AOwner as TACBrBAL).Device ;
-  fpDevice.SetDefaultValues ;
+  fpDevice := (AOwner as TACBrBAL).Device;
+  fpDevice.SetDefaultValues;
 
-  fpAtivo     := false ;
-  fpModeloStr := 'Não Definida' ;
-  fpArqLOG    := '' ;
+  fpAtivo     := False;
+  fpArqLOG    := '';
+  fpModeloStr := 'Generica';
 end;
 
 destructor TACBrBALClass.Destroy;
 begin
-  fpDevice := nil ; { Apenas remove referencia (ponteiros internos) }
+  fpDevice := Nil; { Apenas remove referencia (ponteiros internos) }
 
   inherited Destroy;
 end;
@@ -122,56 +130,148 @@ end;
 procedure TACBrBALClass.SetAtivo(const Value: Boolean);
 begin
   if Value then
-     Ativar
+    Ativar
   else
-     Desativar ;
-end;
-
-procedure TACBrBALClass.Ativar;
-begin
-  if fpAtivo then exit ;
-
-  GravaLog( sLineBreak +
-            StringOfChar('-',80)+ sLineBreak +
-            'ATIVAR - '+FormatDateTime('dd/mm/yy hh:nn:ss:zzz',now)+
-            ' - Modelo: '+ModeloStr+
-            ' - Porta: '+fpDevice.Porta+
-            '         Device: '+fpDevice.DeviceToString(False) + sLineBreak +
-            StringOfChar('-',80) + sLineBreak, False );
-
-  if fpDevice.Porta <> '' then
-     fpDevice.Ativar ;
-
-  fpAtivo          := true ;
-  fpUltimaResposta := '' ;
-  fpUltimoPesoLido := 0 ;
-end;
-
-procedure TACBrBALClass.Desativar;
-begin
-  if not fpAtivo then exit ;
-
-  if fpDevice.Porta <> '' then
-     fpDevice.Desativar ;
-
-  fpAtivo := false ;
-end;
-
-function TACBrBALClass.LePeso( MillisecTimeOut : Integer): Double;
-begin
-  { Deve ser implementada na Classe Filha }
-  raise Exception.Create(ACBrStr('Função LePeso não implementada em: ')+ModeloStr);
-end;
-
-procedure TACBrBALClass.LeSerial( MillisecTimeOut : Integer) ;
-begin
-  { Deve ser implementada na Classe Filha }
-  raise Exception.Create(ACBrStr('Procedure LeSerial não implementada em: ')+ModeloStr);
+    Desativar;
 end;
 
 procedure TACBrBALClass.GravaLog(AString: AnsiString; Traduz: Boolean);
 begin
-  WriteLog(fpArqLOG,AString,Traduz);
+  WriteLog(fpArqLOG, AString, Traduz);
+end;
+
+function TACBrBALClass.AguardarRespostaPeso(aMillisecTimeOut: Integer;
+  aReenviarSolicitarPeso: Boolean): Double;
+var
+  wFinal: TDateTime;
+begin
+  Result := -1;
+  wFinal := IncMilliSecond(Now, aMillisecTimeOut);
+
+  { Aguarda Resposta da Balança. Classes filhas podem reescrever se necessário }
+  while (Result = -1) and (wFinal > Now) do
+  begin
+    if aReenviarSolicitarPeso then
+    begin
+      SolicitarPeso;
+      Sleep(200);
+    end;
+
+    aMillisecTimeOut := Max(MilliSecondsBetween(Now, wFinal), 1000);
+
+    LeSerial(aMillisecTimeOut);
+    Result := fpUltimoPesoLido;
+  end;
+end;
+
+procedure TACBrBALClass.Ativar;
+begin
+  if fpAtivo then
+    Exit;
+
+  GravaLog( sLineBreak   + StringOfChar('-',80)+ sLineBreak +
+            'ATIVAR - '  + FormatDateTime('dd/mm/yy hh:nn:ss:zzz', Now) +
+            ' - Modelo: '+ ModeloStr +
+            ' - Porta: ' + fpDevice.Porta + '         Device: ' +
+            fpDevice.DeviceToString(False) + sLineBreak +
+            StringOfChar('-', 80) + sLineBreak, False);
+
+  if (fpDevice.Porta <> '') then
+    fpDevice.Ativar;
+
+  fpAtivo          := True;
+  fpUltimaResposta := '';
+  fpUltimoPesoLido := 0;
+end;
+
+procedure TACBrBALClass.Desativar;
+begin
+  if (not fpAtivo) then
+    Exit;
+
+  if (fpDevice.Porta <> '') then
+    fpDevice.Desativar;
+
+  fpAtivo := False;
+end;
+
+procedure TACBrBALClass.SolicitarPeso;
+begin
+  { Envia comando Padrão para solicitar Peso }
+  { As classes filhas podem reescrever se necessário }
+  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #05);
+  fpDevice.Limpar;
+  fpDevice.EnviaString(#05);
+end;
+
+procedure TACBrBALClass.LeSerial(MillisecTimeOut: Integer);
+begin
+  fpUltimoPesoLido := 0;
+  fpUltimaResposta := '';
+
+  try
+    fpUltimaResposta := fpDevice.LeString(MillisecTimeOut);
+    GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
+
+    fpUltimoPesoLido := InterpretarRepostaPeso(fpUltimaResposta);
+  except
+    { Peso não foi recebido (TimeOut) }
+    fpUltimoPesoLido := -9;
+  end;
+
+  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+           ' - Resposta: ' + fpUltimaResposta);
+end;
+
+function TACBrBALClass.LePeso(MillisecTimeOut: Integer): Double;
+begin
+  Result := -1;
+
+  if (fpModeloStr = 'Generica') then
+  begin
+    AguardarRespostaPeso(MillisecTimeOut, True);
+    Exit;
+  end;
+
+  SolicitarPeso;
+  Sleep(200);
+
+  LeSerial(MillisecTimeOut);
+  Result := fpUltimoPesoLido;
+end;
+
+function TACBrBALClass.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wResposta: AnsiString;
+  wDecimais: Integer;
+begin
+  Result := 0;
+
+  if (aResposta = EmptyStr) or ((fpPosIni = 0) and (fpPosFim = 0)) then
+    Exit;
+
+  wDecimais := 1000;
+  wResposta := Trim(Copy(aResposta, fpPosIni, fpPosFim));
+
+  { Ajustando o separador de Decimal corretamente }
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
+
+  try
+    { Já existe ponto decimal ? }
+    if (Pos(DecimalSeparator, wResposta) > 0) then
+      Result := StrToFloat(wResposta)
+    else
+      Result := (StrToInt(wResposta) / wDecimais);
+  except
+    case wResposta[1] of
+      'I': Result := -1;   { Instavel }
+      'N': Result := -2;   { Peso Negativo }
+      'S': Result := -10;  { Sobrecarga de Peso }
+    else
+      Result := 0;
+    end;
+  end;
 end;
 
 end.

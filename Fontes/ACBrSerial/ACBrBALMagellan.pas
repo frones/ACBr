@@ -46,141 +46,162 @@
 unit ACBrBALMagellan;
 
 interface
-uses ACBrBALClass,
-     Classes;
+
+uses
+  ACBrBALClass, Classes;
 
 type
-  TACBrBALMagellan = class( TACBrBALClass )
+
+  { TACBrBALMagellan }
+
+  TACBrBALMagellan = class(TACBrBALClass)
+  private
+    fpDecimais: Integer;
+    function InterpretarProtocoloA(aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloB(aResposta: AnsiString): AnsiString;
+    function InterpretarProtocoloC(aResposta: AnsiString): AnsiString;
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    procedure SolicitarPeso; override;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses ACBrUtil, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF},
-     SysUtils, Math ;
+
+uses
+  ACBrUtil, ACBrConsts, SysUtils,
+  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, Windows{$ENDIF};
 
 { TACBrBALGertecSerial }
 
+function TACBrBALMagellan.InterpretarProtocoloA(aResposta: AnsiString): AnsiString;
+var
+  wStatus2: AnsiChar;
+begin
+  { Protocolo A
+  [ STX ] [ S1 ] [ PPPPPP ] [ S2 ] [ TTTTTT ] [ UUUUUU ] [ CR ] [ CS ]
+  S1 = 1 byte - Status 1
+  PPPPPP = 6 bytes - peso
+  S2 = 1 byte - Status 2
+  TTTTTT = 6 bytes - Preço Total
+  UUUUUU = 6 bytes - Preço/kg
+  CS = 1 byte - Checksum. O cálculo do checksum é feito pelo complemento
+     de 2 da soma de todos os bytes transmitidos de STX, incluindo o CR.
+
+  S1 - STATUS 1
+  bit 0 = motion flag
+  bit 1 = print flag
+  bit 2 = data do sistema ( 0 = pesagem e 1 = data )
+  bit 3 = out of range
+  bit 4 = tipo de balança ( 0 = Prix II/ Prix III e 1 = Prix I )
+  bit 5 = número de casas decimais ( 0 = 2 casas e 1 = 0 casas )
+  bit 6 = autorização de totalização ( 0 = não e 1 = sim totaliza )
+
+  S2 - STATUS 2
+  bit 0 = sétimo dígito no preço total ( 0 = sem 1 = com )
+  bit 1 = reservado
+  bit 2 = reservado
+  bit 3 = casas decimais no peso ( 0 = 3 casas e 1 = 2 casas )
+  bit 4 = reservado
+  bit 5 = reservado
+  bit 6 = operação com tara ( 0 = sem tara e 1 = com tara ) deve
+          imprimir peso líquido         }
+
+  wStatus2 := aResposta[9];
+
+  if TestBit(Ord(wStatus2), 3) then  { Bit 3 de wStatus2 ligado = 2 casas decimais }
+    fpDecimais := 100;
+
+  Result := Trim(Copy(aResposta, 3, 6));
+end;
+
+function TACBrBALMagellan.InterpretarProtocoloB(aResposta: AnsiString): AnsiString;
+var
+  wPosIni, wPosFim: Integer;
+begin
+  { Protocolo B = [ ENQ ] [ STX ] [ PESO ] [ ETX ]
+  Linha Automacao = [ STX ] [ PPPPP ] [ ETX ]  - Peso Estável;
+                    [ STX ] [ IIIII ] [ ETX ]  - Peso Instável;
+                    [ STX ] [ NNNNN ] [ ETX ]  - Peso Negativo;
+                    [ STX ] [ SSSSS ] [ ETX ]  - Peso Acima (Sobrecarga)}
+  wPosIni := Pos(STX, aResposta);
+  wPosFim := Pos(ETX, aResposta);
+
+  if (wPosFim = 0) then  // Não achou? ...Usa a String inteira
+    wPosFim := Length(aResposta) + 1;
+
+  Result := Trim(Copy(aResposta, wPosIni + 1, wPosFim - wPosIni - 1));
+end;
+
+function TACBrBALMagellan.InterpretarProtocoloC(aResposta: AnsiString): AnsiString;
+var
+  wPosIni, wPosFim: Integer;
+begin
+  { Protocolo C = [ STX ] [ PESO ] [ CR ]
+  Linha Automacao = [ STX ] [ PPPPP ] [ ETX ]  - Peso Estável;
+                    [ STX ] [ IIIII ] [ ETX ]  - Peso Instável;
+                    [ STX ] [ NNNNN ] [ ETX ]  - Peso Negativo;
+                    [ STX ] [ SSSSS ] [ ETX ]  - Peso Acima (Sobrecarga) }
+  wPosIni := Pos(STX, aResposta);
+  wPosFim := Pos(CR , aResposta);
+
+  if (wPosFim = 0) then  // Usa a String inteira
+    wPosFim := Length(aResposta) + 1;
+
+  Result := Trim(Copy(aResposta, wPosIni + 1, wPosFim - wPosIni - 1));
+end;
+
 constructor TACBrBALMagellan.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Magellan' ;
+  fpDecimais  := 1000;
+  fpModeloStr := 'Magellan';
 end;
 
-function TACBrBALMagellan.LePeso( MillisecTimeOut : Integer) : Double;
+procedure TACBrBALMagellan.SolicitarPeso;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-
-  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#087 );
-  fpDevice.Limpar ;                 { Limpa a Porta }
-  fpDevice.EnviaString( #87 );      { Envia comando solicitando o Peso }
-  sleep(200) ;
-
-  LeSerial( MillisecTimeOut );
-
-  Result := fpUltimoPesoLido ;
+  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #87);
+  fpDevice.Limpar;
+  fpDevice.EnviaString(#87);
 end;
 
-procedure TACBrBALMagellan.LeSerial( MillisecTimeOut : Integer) ;
-Var
-  Resposta : AnsiString ;
-  Decimais : Integer ;
-  St2      : AnsiChar ;
-  PI,PF    : Integer ;
+function TACBrBALMagellan.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wResposta: AnsiString;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result := 0;
 
-  Decimais := 1000 ;
-  Try
-     fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
-     GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
+  if (Length(aResposta) > 20) then
+    wResposta := InterpretarProtocoloA(aResposta)
+  else if (Pos(ETX, aResposta) > 0) then
+    wResposta := InterpretarProtocoloB(aResposta)
+  else
+    wResposta := InterpretarProtocoloC(aResposta);
 
-     if Length(fpUltimaResposta) > 20 then
-      begin
-        { Protocolo A
-          [ STX ] [ S1 ] [ PPPPPP ] [ S2 ] [ TTTTTT ] [ UUUUUU ] [ CR ] [ CS ]
-          S1 = 1 byte - Status 1
-          PPPPPP = 6 bytes - peso
-          S2 = 1 byte - Status 2
-          TTTTTT = 6 bytes - Preço Total
-          UUUUUU = 6 bytes - Preço/kg
-          CS = 1 byte - Checksum. O cálculo do checksum é feito pelo complemento
-             de 2 da soma de todos os bytes transmitidos de STX, incluindo o CR.
+  if (wResposta = EmptyStr) then
+    Exit;
 
-          S1 - STATUS 1
-          bit 0 = motion flag
-          bit 1 = print flag
-          bit 2 = data do sistema ( 0 = pesagem e 1 = data )
-          bit 3 = out of range
-          bit 4 = tipo de balança ( 0 = Prix II/ Prix III e 1 = Prix I )
-          bit 5 = número de casas decimais ( 0 = 2 casas e 1 = 0 casas )
-          bit 6 = autorização de totalização ( 0 = não e 1 = sim totaliza )
+  { Ajustando o separador de Decimal corretamente }
+  aResposta := StringReplace(aResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  aResposta := StringReplace(aResposta, ',', DecimalSeparator, [rfReplaceAll]);
 
-          S2 - STATUS 2
-          bit 0 = sétimo dígito no preço total ( 0 = sem 1 = com )
-          bit 1 = reservado
-          bit 2 = reservado
-          bit 3 = casas decimais no peso ( 0 = 3 casas e 1 = 2 casas )
-          bit 4 = reservado
-          bit 5 = reservado
-          bit 6 = operação com tara ( 0 = sem tara e 1 = com tara ) deve
-                  imprimir peso líquido         }
-
-        St2 := fpUltimaResposta[9] ;
-        if TestBit(Ord(St2),3) then   { Bit 3 de ST2 ligado = 2 casas decimais }
-           Decimais := 100 ;
-        Resposta := Trim(Copy(fpUltimaResposta,3,6));
-      end
-
-     else
-      begin
-      { Protocolo B = [ ENQ ] [ STX ] [ PESO ] [ ETX ]
-        Protocolo C = [ STX ] [ PESO ] [ CR ]
-        Linha Automacao = [ STX ] [ PPPPP ] [ ETX ]  - Peso Estável;
-                          [ STX ] [ IIIII ] [ ETX ]  - Peso Instável;
-                          [ STX ] [ NNNNN ] [ ETX ]  - Peso Negativo;
-                          [ STX ] [ SSSSS ] [ ETX ]  - Peso Acima (Sobrecarga) }
-
-        PI := pos(STX, fpUltimaResposta) ;
-        PF := pos(ETX, fpUltimaResposta) ;
-        if PF = 0 then                       { Não achou ETX, procura por CR }
-           PF := pos(CR, fpUltimaResposta) ;
-        if PF = 0 then                       { Não achou CR, usa toda a String }
-           PF := Length(fpUltimaResposta) + 1 ;
-
-        Resposta := Trim( copy( fpUltimaResposta, PI+1, PF-PI-1 )) ;
-      end ;
-
-     { Ajustando o separador de Decimal corretamente }
-     Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-     Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
-     try
-        if pos(DecimalSeparator,Resposta) > 0 then  { Já existe ponto decimal ? }
-           fpUltimoPesoLido := StrToFloat(Resposta)
-        else
-           fpUltimoPesoLido := StrToInt(Resposta) / Decimais ;
-     except
-        case Resposta[1] of
-          'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-          'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-          'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-        else
-           fpUltimoPesoLido := 0 ;
-        end;
-     end;
+  try
+    if (Pos(DecimalSeparator, aResposta) > 0) then  { Já existe ponto decimal ? }
+      Result := StrToFloat(aResposta)
+    else
+      Result := (StrToInt(aResposta) / fpDecimais);
   except
-     { Peso não foi recebido (TimeOut) }
-     fpUltimoPesoLido := -9 ;
-  end ;
-
-  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
+    case aResposta[1] of
+      'I' : Result := -1;  { Instavel }
+      'N' : Result := -2;  { Peso Negativo }
+      'S' : Result := -10;  { Sobrecarga de Peso }
+    else
+      Result := 0;
+    end;
+  end;
 end;
 
 end.

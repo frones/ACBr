@@ -38,6 +38,9 @@
 |*  - Primeira Versao ACBrBALToledo
 |* 11/04/2007 Daniel Simões de Almeida
 |*  - Corrigido para trabalhar com diversos protocolos da Toledo
+|*
+|* 11/10/2016 - Elias César Vieira
+|*  - Refatoração de ACBrBALToledo2180
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -45,94 +48,101 @@
 unit ACBrBALToledo2180;
 
 interface
-uses ACBrBALClass,
-     Classes;
+
+uses
+  ACBrBALClass, Classes;
 
 type
-  TACBrBALToledo2180 = class( TACBrBALClass )
+
+  { TACBrBALToledo2180 }
+
+  TACBrBALToledo2180 = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override;
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses ACBrUtil, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, synaser, synaser, Windows{$ENDIF},
-     SysUtils, Math ;
+
+uses
+  ACBrUtil, ACBrConsts, SysUtils, Math,
+  {$IFDEF COMPILER6_UP}
+  DateUtils, StrUtils
+  {$ELSE}
+  ACBrD5, synaser, synaser, Windows
+  {$ENDIF};
 
 { TACBrBALToledo2180 }
 
 constructor TACBrBALToledo2180.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Toledo 2180' ;
-end;
-
-function TACBrBALToledo2180.LePeso( MillisecTimeOut : Integer) : Double;
-begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-
-  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
-  fpDevice.Limpar ;                 { Limpa a Porta }
-  fpDevice.EnviaString( #05 );      { Envia comando solicitando o Peso }
-  sleep(200) ;
-
-  LeSerial( MillisecTimeOut );
-
-  Result := fpUltimoPesoLido;
+  fpModeloStr := 'Toledo 2180';
 end;
 
 procedure TACBrBALToledo2180.LeSerial(MillisecTimeOut: Integer);
-Var
-  Resposta : AnsiString ;
-  P, I     : Integer ;
-  Pesos    : array[1..5] of Double;
+var
+  wPesos: array[1..5] of Double;
+  I: Integer;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  fpUltimoPesoLido := 0;
+  fpUltimaResposta := '';
 
-  Try
-     for I := 1 to 5 do
-     begin
-        fpUltimaResposta := fpDevice.LeString( MillisecTimeOut, 0, #13);
-        GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
+  try
+    for I := 1 to 5 do
+    begin
+      fpUltimaResposta := fpDevice.LeString(MillisecTimeOut, 0, #13);
+      GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' RX <- ' + fpUltimaResposta);
 
-        P := Pos( #96, fpUltimaResposta );
+      wPesos[I] := InterpretarRepostaPeso(fpUltimaResposta);
+    end;
 
-        if P > 0 then
-        begin
-           Resposta := Copy(fpUltimaResposta, P + 1, Length(fpUltimaResposta) );
-           Resposta := Copy(Resposta,1,6);
-           Insert('.',Resposta,6);
-        end
-        else
-           Resposta := 'I';
-
-        { Ajustando o separador de Decimal corretamente }
-        Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-        Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
-        try
-           Pesos[I] := StrToFloat(Resposta)
-        except
-           Pesos[I] := 0;
-        end;
-     end;
-
-     if (Pesos[3] = Pesos[4]) and (Pesos[4] = Pesos[5]) then
-        fpUltimoPesoLido := pesos[5]
-     else
-        fpUltimoPesoLido := -1 ;
-
+    if (wPesos[3] = wPesos[4]) and (wPesos[4] = wPesos[5]) then
+      fpUltimoPesoLido := wPesos[5]
+    else
+      fpUltimoPesoLido := -1;
   except
-     { Peso não foi recebido (TimeOut) }
-     fpUltimoPesoLido := -9 ;
-  end ;
+    { Peso não foi recebido (TimeOut) }
+    fpUltimoPesoLido := -9;
+  end;
 
-  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
+  GravaLog('              UltimoPesoLido: ' + FloatToStr(fpUltimoPesoLido) +
+           ' - Resposta: ' + fpUltimaResposta);
+end;
+
+function TACBrBALToledo2180.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wPos: Integer;
+  wResposta: AnsiString;
+begin
+  Result := 0;
+
+  if (aResposta = EmptyStr) then
+    Exit;
+
+  wPos := Pos(#96, aResposta);
+
+  if (wPos > 0) then
+  begin
+    wResposta := Copy(aResposta, wPos + 1, Length(aResposta));
+    wResposta := Copy(wResposta, 1, 6);
+    Insert('.', wResposta, 6);
+  end
+  else
+    wResposta := 'I';
+
+  { Ajustando o separador de Decimal corretamente }
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
+
+  try
+    Result := StrToFloat(wResposta);
+  except
+    Result := 0;
+  end;
 end;
 
 end.

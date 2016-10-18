@@ -37,6 +37,9 @@
 |*
 |* 17/02/2009: Ivan Carlos Martello
 |*  - Primeira Versao ACBrBALUrano
+|*
+|* 11/10/2016 - Elias César Vieira
+|*  - Refatoração de ACBrBALUrano
 ******************************************************************************}
 
 {$I ACBr.inc}
@@ -44,106 +47,94 @@
 unit ACBrBALUrano;
 
 interface
-uses ACBrBALClass,
-     Classes;
+
+uses
+  ACBrBALClass, Classes;
 
 type
-  TACBrBALUrano = class( TACBrBALClass )
+
+  { TACBrBALUrano }
+
+  TACBrBALUrano = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    function LePeso(MillisecTimeOut: Integer = 3000): Double; override;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+  end;
 
 implementation
-Uses
-  ACBrConsts,
-  {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-  SysUtils, math ;
+
+uses
+  ACBrConsts, SysUtils,
+  {$IFDEF COMPILER6_UP}
+  DateUtils
+  {$ELSE}
+  ACBrD5, Windows
+  {$ENDIF};
 
 { TACBrBALGertecSerial }
 
 constructor TACBrBALUrano.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
-  fpModeloStr := 'Urano' ;
+  inherited Create(AOwner);
+
+  fpModeloStr := 'Urano';
 end;
 
 function TACBrBALUrano.LePeso(MillisecTimeOut : Integer) : Double;
-var
-  TempoFinal : TDateTime ;
 begin
-  Result := 0 ;
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
-  TempoFinal := IncMilliSecond(now,MillisecTimeOut) ;
-
-  while (Result <= 0) and (TempoFinal > now) do
-  begin
-    GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#05 );
-    fpDevice.Limpar;
-    fpDevice.EnviaString(#05); { Envia comando solicitando o Peso }
-    sleep(200);
-    MillisecTimeOut := max( MilliSecondsBetween(now,TempoFinal), 1000) ;
-    LeSerial( MillisecTimeOut );
-    Result := fpUltimoPesoLido;
-  end;
+  Result := AguardarRespostaPeso(MillisecTimeOut, True);
 end;
 
-procedure TACBrBALUrano.LeSerial( MillisecTimeOut : Integer) ;
- var
-   Resposta: String;
-   Quantos, PosDelim: integer;
+function TACBrBALUrano.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+   wResposta: String;
+   wQtd, wPos: integer;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  //aResposta := '1BT11BA131BN01BS21BD41BQ1931BB * PESO: 5,10kg1BE1BP01';
+  Result    := 0;
+  wResposta := aResposta;
+
+  wPos := Pos(':', wResposta);
+  if (wPos = 0) then
+    wPos := Pos('N0', wResposta);
+
+  if (Copy(wResposta, Pos('PESO', wResposta) - 2, 1) = ' ') then
+    wResposta := 'I'
+  else if (Copy(wResposta, wPos + 1, 1) = '-') then
+    wResposta := 'N';
+
+  if (Length(wResposta) > 1) then
+  begin
+    wQtd      := (Pos('g', wResposta) - 2);
+    wQtd      := wQtd - (wPos + 1);
+    wResposta := Copy(wResposta, wPos + 2, wQtd); //123456
+  end;
+
+  if (wResposta = EmptyStr) then
+    Exit;
+
+  { Ajustando o separador de Decimal corretamente }
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
+
   try
-    fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
-    GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
-
-    //fpUltimaResposta := '1BT11BA131BN01BS21BD41BQ1931BB * PESO: 5,10kg1BE1BP01';
-    Resposta := fpUltimaResposta;
-
-    PosDelim := pos(':', Resposta);
-    if PosDelim = 0 then
-       PosDelim := pos('N0', Resposta);
-
-    if Copy(Resposta, pos('PESO', Resposta)-2, 1) = ' ' then
-      Resposta := 'I'
-    else if Copy(Resposta, PosDelim + 1, 1) = '-' then
-      Resposta := 'N';
-
-    if Length(Resposta) > 1  then
-    begin
-      Quantos := (pos('g', Resposta) - 2);
-      Quantos := Quantos - (PosDelim + 1);
-      Resposta := Copy(Resposta, PosDelim + 2, Quantos); //123456
-    end;
-
-    { Ajustando o separador de Decimal corretamente }
-    Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-    Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
-    try
-      if pos(DecimalSeparator, Resposta) > 0 then  { Já existe ponto decimal ? }
-        fpUltimoPesoLido := StrToFloat(Resposta)
-      else
-        fpUltimoPesoLido := StrToInt(Resposta) / 1000 ;
-    except
-      case Trim(Resposta)[1] of
-        'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-        'N' : fpUltimoPesoLido := -2  ;  { Peso Negativo }
-        //'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-      else
-        fpUltimoPesoLido := 0 ;
-      end;
-    end;
+    { Já existe ponto decimal ? }
+    if (Pos(DecimalSeparator, wResposta) > 0) then
+      Result := StrToFloat(wResposta)
+    else
+      Result := (StrToInt(wResposta) / 1000);
   except
-     { Peso não foi recebido (TimeOut) }
-     fpUltimoPesoLido := -9;
-  end ;
-
-  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
+    case Trim(wResposta)[1] of
+      'I': Result := -1;     { Instavel }
+      'N': Result := -2;     { Peso Negativo }
+      //'S': Result := -10;  { Sobrecarga de Peso }
+    else
+      Result := 0;
+    end;
+  end;
 end;
 
 end.

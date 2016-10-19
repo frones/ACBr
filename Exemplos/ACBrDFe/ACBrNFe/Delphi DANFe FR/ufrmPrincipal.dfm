@@ -80,10 +80,10 @@ object frmPrincipal: TfrmPrincipal
     Top = 110
     Width = 358
     Height = 211
-    ActivePage = TabSheet1
+    ActivePage = TabArquivos
     Align = alClient
     TabOrder = 1
-    object TabSheet1: TTabSheet
+    object TabArquivos: TTabSheet
       Caption = 'Arquivos *Fr3'
       object lstbxFR3: TListBox
         Left = 0
@@ -95,7 +95,7 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 0
       end
     end
-    object TabSheet2: TTabSheet
+    object TabCustomizacao: TTabSheet
       Caption = 'Customiza'#231#227'o'
       ImageIndex = 1
       object RbCanhoto: TRadioGroup
@@ -177,6 +177,14 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 3
         end
       end
+      object rbTarjaNfeCancelada: TRadioButton
+        Left = 15
+        Top = 120
+        Width = 186
+        Height = 17
+        Caption = 'Mostra  a Tarja NFe CANCELADA'
+        TabOrder = 2
+      end
     end
   end
   object ACBrNFe1: TACBrNFe
@@ -187,8 +195,8 @@ object frmPrincipal: TfrmPrincipal
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     DANFE = ACBrNFeDANFEFR1
-    Left = 213
-    Top = 214
+    Left = 229
+    Top = 38
   end
   object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
     ACBrNFe = ACBrNFe1
@@ -236,76 +244,31 @@ object frmPrincipal: TfrmPrincipal
     QuebraLinhaEmDetalhamentoEspecifico = True
     IncorporarBackgroundPdf = True
     IncorporarFontesPdf = True
-    Left = 120
-    Top = 214
+    Left = 144
+    Top = 38
   end
   object OpenDialog1: TOpenDialog
     Filter = 'xml|*.xml'
-    Left = 32
-    Top = 214
+    Left = 56
+    Top = 38
   end
   object frxReport1: TfrxReport
+    Tag = 1
     Version = '5.5'
     DotMatrixReport = False
+    EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
     PreviewOptions.Zoom = 1.000000000000000000
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 42426.048066701390000000
-    ReportOptions.LastChange = 42426.048066701390000000
+    ReportOptions.CreateDate = 40401.475989294000000000
+    ReportOptions.LastChange = 42606.467524919000000000
     ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      ''
-      'begin'
-      ''
-      'end.')
+    ShowProgress = False
+    StoreInDFM = False
     OnReportPrint = 'frxReportOnReportPrint'
     Left = 299
     Top = 214
-    Datasets = <>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 210.000000000000000000
-      PaperHeight = 297.000000000000000000
-      PaperSize = 9
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      object ReportTitle1: TfrxReportTitle
-        FillType = ftBrush
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 718.110700000000000000
-      end
-      object MasterData1: TfrxMasterData
-        FillType = ftBrush
-        Height = 22.677180000000000000
-        Top = 102.047310000000000000
-        Width = 718.110700000000000000
-        RowCount = 0
-      end
-      object PageFooter1: TfrxPageFooter
-        FillType = ftBrush
-        Height = 22.677180000000000000
-        Top = 185.196970000000000000
-        Width = 718.110700000000000000
-      end
-      object Memo1: TfrxMemoView
-        Left = 642.520100000000000000
-        Top = 185.196970000000000000
-        Width = 75.590600000000000000
-        Height = 18.897650000000000000
-        HAlign = haRight
-        Memo.UTF8W = (
-          '[Page#]')
-      end
-    end
   end
 end

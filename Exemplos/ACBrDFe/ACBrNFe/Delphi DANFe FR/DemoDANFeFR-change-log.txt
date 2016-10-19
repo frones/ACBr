@@ -53,6 +53,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/10/2016
+-- DemoDANFeFR --- 
+[+] Opção de mostra a Tarja Nfe Cancelada
+      Por : Henrique Leonardo
+
 02/09/2016
 -- DemoDANFeFR --- 
 [+] Grupo Margem na Aba Configuração

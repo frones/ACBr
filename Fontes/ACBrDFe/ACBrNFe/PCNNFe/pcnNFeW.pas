@@ -543,7 +543,7 @@ begin
   Gerador.wCampo(tcStr, 'C08', 'xCpl   ', 01, 60, 0, nfe.Emit.enderEmit.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, 'C09', 'xBairro', 02, 60, 1, nfe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, 'C10', 'cMun   ', 01, 07, 1, cMun, DSC_CMUN);
-  if not ValidarMunicipio(nfe.Emit.EnderEmit.cMun) then
+  if not ValidarMunicipio(cMun) then
     Gerador.wAlerta('C10', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
   Gerador.wCampo(tcStr, 'C11', 'xMun   ', 02, 60, 1, xMun, DSC_XMUN);
   Gerador.wCampo(tcStr, 'C12', 'UF     ', 02, 02, 1, xUF, DSC_UF);

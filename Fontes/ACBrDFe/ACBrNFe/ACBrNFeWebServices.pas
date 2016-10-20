@@ -41,7 +41,7 @@ unit ACBrNFeWebServices;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
   pcnNFe,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConversaoNFe,
@@ -814,7 +814,16 @@ begin
     FcStat := NFeRetorno.cStat;
     FxMotivo := NFeRetorno.xMotivo;
     FcUF := NFeRetorno.cUF;
-    FdhRecbto := NFeRetorno.dhRecbto;
+    if (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) and //WebService do RS retorna horário de verão mesmo pros estados que não adotam esse horário, ao utilizar esta hora para basear a emissão da nota acontece o erro.
+       (FcUF in [11,12,14,15,16,17,21,22,24,25,27,28,29,32,33,52,53]) and
+      not IsHorarioDeVerao(CUFtoUF(FcUF), NFeRetorno.dhRetorno) then
+      FdhRecbto:= IncHour(NFeRetorno.dhRecbto,-1)
+    else if (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+       (FcUF in [11,12,14,16,17,24,25,27,28,32,33,42,53]) and
+      not IsHorarioDeVerao(CUFtoUF(FcUF), NFeRetorno.dhRetorno) then
+      FdhRecbto:= IncHour(NFeRetorno.dhRecbto,-1)
+    else
+      FdhRecbto := NFeRetorno.dhRecbto;
     FTMed := NFeRetorno.TMed;
     FdhRetorno := NFeRetorno.dhRetorno;
     FxObs := NFeRetorno.xObs;

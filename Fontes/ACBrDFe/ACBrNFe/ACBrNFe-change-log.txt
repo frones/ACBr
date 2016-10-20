@@ -47,12 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2016
+-- ACBrNFeWebServices --
+[*] TNFeStatusServico. Aplicado Workaround para problema do Servidor do RS
+    que retorna Flag de horário de verão mesmo pros estados que não
+    adotam esse horário. Retornando a Data/Hora inválida. (por: ANFM e DSA)
+
 10/10/2016
 -- ACBrNFeWebServices
 [*] Modificação adicionando as validações para os tipos de prorrogações que não devem
-		ser atribuidos ao ambiente nacional mas sim de cada estado ao pegar a url
-		http://www.projetoacbr.com.br/forum/topic/29723-pedido-de-prorrogacao-rejeicao-o-tpevento-informado-invalido/?do=findComment&comment=216720
-		por : Juliomar Marchetti
+    ser atribuidos ao ambiente nacional mas sim de cada estado ao pegar a url
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=29723
+    por : Juliomar Marchetti
 		
 26/09/2016
 -- ACBrECFVirtualNFCe --
@@ -78,8 +84,8 @@ Símbolo : Significado
 
 12/09/2016
 [*] Correção para o cnpj estava cortando
-		http://www.projetoacbr.com.br/forum/topic/32349-danfe-retrato-fortes-cnpj-dest-e-transp-cortando-%C3%BAltimo-d%C3%ADgito/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32349
+    por : Juliomar Marchetti
 		
 29/08/2016
 -- ACBrNFeConfiguracoes --
@@ -101,14 +107,14 @@ Símbolo : Significado
 18/08/2016
 -- ACBRNFeNotasFiscais
 [-] Melhoria para corrigir erro de validação de nota de ajuste
-		http://www.projetoacbr.com.br/forum/topic/31622-erro-na-valida%C3%A7%C3%A3o-da-nota-de-ajuste/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31622
+    por: Juliomar Marchetti
 		
 10/08/2016
 -- ACBrNFeDANFEFR
 [*] Melhoria para não precisar fazer a interação!
-		http://www.projetoacbr.com.br/forum/topic/31710-acbrnfe-imprimirpdf-exportando-p%C3%A1ginas-sem-necessidade/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31710
+    por: Juliomar Marchetti
 		
 29/07/2016
 -- ACBrNFeServicos
@@ -118,13 +124,13 @@ Símbolo : Significado
 27/07/2016
 -- ACBrNFeDANFEFR
 [*] Tratar para não exibir a caixa de seleção de impressora
-		http://www.projetoacbr.com.br/forum/topic/31487-impress%C3%A3o-de-eventofast-sempre-mostrando-a-sele%C3%A7%C3%A3o-de-impressoras/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=31487
+    por : Juliomar Marchetti
 		
 23/06/2016
 -- ACBrNFeServicos.ini
 [*] Ajuste no links de Goias para a QR-Code e ConsultaNFCe em produção e homologação
-		por: Juliomar Marchetti
+    por: Juliomar Marchetti
 		
 16/06/2016
 -- ACBrNFeWebServices --
@@ -182,14 +188,11 @@ Símbolo : Significado
     mesmo estivesse Cancelado e "AtualizarXMLCancelado = True"
 [*] "TNFeConsulta.TratarResposta": Remoção de bloco de código que estava comentado
 
-
 19/04/2016
 -- ACBrNFeDANFEFRDM --
 [*] Disponbilizando o uso da propriedade UsaCodigoEanImpressao
-     com a Inclusão da função ManterCodigo.
-  
+    com a Inclusão da função ManterCodigo.
     por: Henrique Leonardo
-
 
 15/04/2016
 -- pcnEventoNFe --
@@ -219,12 +222,12 @@ Símbolo : Significado
 07/04/2016
 -- DANFeRetrato, DANFeRetratoNovo --
 [-] Acerto para mostrar duplicatas na grid
-    http://www.projetoacbr.com.br/forum/topic/29235-erro-danferetratofr3/#comment-193405
-
+    http://www.projetoacbr.com.br/forum/topic/29235-erro-danferetratofr3/
 
 01/04/2016
 -- ACBrDANFCeFortesFr, ACBrDANFeRL --
-[-] Acerto para mostrar o dialogo de impressão corretamente quando não informar a impressora e não configurar para preview
+[-] Acerto para mostrar o dialogo de impressão corretamente quando não informar
+    a impressora e não configurar para preview
     por: regys.silveira
 
 31/03/2016
@@ -235,14 +238,14 @@ Símbolo : Significado
 23/03/2016
 -- DANFeRetrato.fr3, DANFeRetratoNovo.fr3 --
 [*] Correção para mostrar ISSQN, conforme post :
-      http://www.projetoacbr.com.br/forum/topic/28624-issqn-danfe-fastreport/#comment-191819
-      Por : Henrique Leonardo
+    http://www.projetoacbr.com.br/forum/topic/28624-issqn-danfe-fastreport/
+    Por : Henrique Leonardo
     
 23/03/2016
 -- ACBrNFeDANFeEventoRLRetrato
 [*] Correção para mostrar correto a informação do CEP no evento
-		http://www.projetoacbr.com.br/forum/topic/28876-erro-na-formata%C3%A7%C3%A3o-do-cep-danfe-evento-fortes/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28876
+    por : Juliomar Marchetti
 		
 21/03/2016
 -- ACBrDANFERL --
@@ -257,11 +260,11 @@ Símbolo : Significado
 16/03/2016
 --pcnNFeRTXT--
 [-] Melhoria da validação ao ler uma data ou hora vazia. 
-		por: Henrique Leonardo
+    por: Henrique Leonardo
 
 12/03/2016
 [*] Modificado para deixar alguns botões fora do preview em fast report
-		por: Juliomar Marchetti
+    por: Juliomar Marchetti
 
 11/03/2016
 -- pcnNFeW --
@@ -277,8 +280,8 @@ Símbolo : Significado
 08/03/2016
 -- ACBrDANFeRLRetrao
 [*] Ajuste para sair o canhoto somente na primeira folha
-		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27125
+    por: Juliomar Marchetti
 		
 07/03/2016   
 -- ACBrNFe, ACBrNFeDANFeRL, ACBrNFeDANFeRLPaisagem, ACBrNFeDANFeRLRetrato --
@@ -308,38 +311,39 @@ Símbolo : Significado
 03/03/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
 [*] Modificado para imprimir o codigo do produtos em varias linhas. 
-		http://www.projetoacbr.com.br/forum/topic/28420-campo-cprod-cortando-no-acbrnfedanferlfortes-report/#comment-187849
-		por : Henrique Leonardo
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=28420
+    por : Henrique Leonardo
 
 29/02/2016
 -- pcnNFeW --
 [-] Correção, estava gerando a TAG cRegTrib mesmo com o valor RTISSNenhum.
     Por: Italo Jurisato Junior
+
 -- ACBrNFeWebServices --
 [-] Correção no nome da TAG de retorno do método de Administração de CSC da NFC-e.
     Por: Italo Jurisato Junior
 
 29/02/2016
 --ACBrNFeDANFeRLRetrato
-[+] Modificado para imprimir o canhoto de recibo somente na primeira página indiferente do cabeçalho ou rodape
-		http://www.projetoacbr.com.br/forum/topic/27125-laytout-danfe-entre-acbrnfemonitor-e-acbrmonitorplus/
-		por : Juliomar Marchetti
+[+] Modificado para imprimir o canhoto de recibo somente na primeira página
+    indiferente do cabeçalho ou rodape
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=27125
+    por : Juliomar Marchetti
 		
 26/02/2016
 [*] Modificação para ler os campos novos do manual novo do TXT
-		por: Juliomar Marchetti
+    por: Juliomar Marchetti
 		
 25/02/2016
 [*] Modificação para compatibilizar os campos igual aos manuais do sefaz
-		http://www.emissornfe.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
-		http://www.emissornfehom.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
-		por : Juliomar Marchetti
+    http://www.emissornfe.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
+    http://www.emissornfehom.fazenda.sp.gov.br/v310/docs/%5BEmissor_NF-e%5D_Manual_de_layout_TXT-NF-e_v3.10.1.pdf
+    por : Juliomar Marchetti
 
 23/02/2016
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem -- 
 [*] Ajuste na critica do mostrar Dados ISSQN. 
     Por: Henrique Leonardo
-
 
 22/02/2016
 -- pcnNFeW --

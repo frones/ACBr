@@ -829,6 +829,11 @@ var
         // provedor ISSDSF
         if Result = 0 then
           Result := Pos('</Nota>', AXMLString);
+          if Result = 0 then
+          begin
+            TamTAG := 5;
+            Result := Pos('</NFe>', AXMLString);
+          end;
       end;
     end;
   end;

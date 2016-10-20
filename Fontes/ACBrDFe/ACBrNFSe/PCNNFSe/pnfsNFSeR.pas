@@ -1102,9 +1102,7 @@ begin
 
 
   if (Leitor.rExtrai(1, 'CPFCNPJTomador') <> '') then
-    begin
-      NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampoCNPJCPF;
-    end;
+    NFSe.Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampoCNPJCPF;
 
   Result := True;
 end;
@@ -2616,7 +2614,7 @@ begin
     with NFSe.Tomador do
     begin
       if (Leitor.rExtrai(2, 'CPFCNPJTomador') <> '') then
-        IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CPF');
+        IdentificacaoTomador.CpfCnpj := Leitor.rCampoCNPJCPF;
 
       if (Leitor.rExtrai(2, 'EnderecoPrestador') <> '') then
       begin
@@ -2635,7 +2633,6 @@ begin
 
     Result := True;
   end;
-
 end;
 
 function TNFSeR.LerNFSe_Infisc: Boolean;

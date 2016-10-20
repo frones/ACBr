@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/10/2016
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[*] Correções e melhorias na leitura do XML da NFS-e provedor SP.
+    Por: Douglaswf
+
 11/10/2016
 -- ACBrNFSeNotasFiscais --
 [*] Acrescentado a propriedade NomeArqRps que após o XML do RPS ter sido gerado

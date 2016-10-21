@@ -351,7 +351,7 @@ begin
 
   if VersaoNFSe = ve100 then
   begin
-    Gerador.wCampoNFSe(tcStr, '', 'Observacao            ', 01, 4000, 0, '', '');
+    Gerador.wCampoNFSe(tcStr, '', 'Observacao            ', 01, 4000, 0, NFSe.OutrasInformacoes, '');
     Gerador.wCampoNFSe(tcStr, '', 'Complemento           ', 01, 3000, 0, '', '');  // Não enviar TAG
   end;
 

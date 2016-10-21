@@ -315,10 +315,10 @@ begin
   end;
 
   rlmDadosAdicionais.Lines.EndUpdate;
-  rllDataHoraImpressao.Caption := Format('DATA E HORA DA IMPRESSÃO: %s' , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
+  rllDataHoraImpressao.Caption := Format(ACBrStr('DATA E HORA DA IMPRESSÃO: %s') , [FormatDateTime('dd/mm/yyyy hh:nn',Now)]);
 
   if FUsuario <> '' then
-    rllDataHoraImpressao.Caption := Format('%s   USUÁRIO: %s', [rllDataHoraImpressao.Caption, FUsuario]);
+    rllDataHoraImpressao.Caption := Format(ACBrStr('%s   USUÁRIO: %s'), [rllDataHoraImpressao.Caption, FUsuario]);
 
   // imprime sistema
   if FSistema <> '' then
@@ -520,7 +520,7 @@ begin
 
       rllPrestNomeEnt.Caption         := FRazaoSocial;
       rllNumNF0Ent.Caption            := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
-      rllTomadorNomeEnt.Caption       := 'Emissão:' + FormatDateTime('dd/mm/yy',DataEmissao) +
+      rllTomadorNomeEnt.Caption       := ACBrStr('Emissão:') + FormatDateTime('dd/mm/yy',DataEmissao) +
                                          '-Tomador:'+Tomador.RazaoSocial+
                                          '-Total:' + FormatFloat('##,##0.00', Servico.Valores.ValorLiquidoNfse) ;
     end;

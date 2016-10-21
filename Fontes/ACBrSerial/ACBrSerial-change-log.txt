@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/10/2016
+-- ACBrCHQBematech --
+[-] acerto para impressão correta de cheques na impressora Bematech
+
 Data: 18/10/2016
 -- ACBrBAL --
 [+] Inclusão de dois comandos: "SolicitarPeso" e "InterpretarResposta()" 

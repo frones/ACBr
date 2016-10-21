@@ -2,18 +2,23 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
   Left = 349
   Top = 55
   Caption = 'frlDANFSeRLRetrato'
-  ClientHeight = 1045
+  ClientHeight = 741
   ClientWidth = 827
+  ExplicitWidth = 843
+  ExplicitHeight = 780
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFSe: TRLReport
-    Left = 32
-    Top = 0
+    Left = 8
+    Top = -168
     Margins.LeftMargin = 6.000000000000000000
     Margins.TopMargin = 8.000000000000000000
     Margins.RightMargin = 5.099999999999999000
     Margins.BottomMargin = 8.000000000000000000
     BeforePrint = RLNFSeBeforePrint
+    OnNeedData = RLNFSeNeedData
+    ExplicitLeft = 8
+    ExplicitTop = -168
     object rlbCabecalho: TRLBand
       Left = 23
       Top = 30
@@ -645,6 +650,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Font.Style = [fsBold]
         Info = itPageNumber
         ParentFont = False
+        Text = ''
       end
       object RLSystemInfo2: TRLSystemInfo
         Left = 692
@@ -658,6 +664,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Font.Style = [fsBold]
         Info = itLastPageNumber
         ParentFont = False
+        Text = ''
       end
       object RLLabel62: TRLLabel
         Left = 681
@@ -2929,9 +2936,5 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         ParentFont = False
       end
     end
-  end
-  inherited dsItens: TDataSource
-    Left = 526
-    Top = 183
   end
 end

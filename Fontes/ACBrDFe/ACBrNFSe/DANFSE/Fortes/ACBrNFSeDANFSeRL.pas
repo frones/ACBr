@@ -61,13 +61,14 @@ type
   { TfrlDANFSeRL }
 
   TfrlDANFSeRL = class(TForm)
-    dsItens: TDatasource;
     RLNFSe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
-    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);
   private
     { Private declarations }
+    FMoreData: Boolean;
   protected    
     FACBrNFSe       : TACBrNFSe;
     FNFSe           : TNFSe;
@@ -106,7 +107,6 @@ type
     FT_Email         : String;
 
 		cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
-		procedure ConfigDataSet;
 	
     procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);    
   public
@@ -193,79 +193,12 @@ implementation
 
 procedure TfrlDANFSeRL.FormCreate(Sender: TObject);
 begin
- ConfigDataSet;
+  FMoreData := True;
 end;
 
 procedure TfrlDANFSeRL.FormDestroy(Sender: TObject);
 begin
  FreeAndNil( cdsItens );
-end;
-
-procedure TfrlDANFSeRL.ConfigDataSet;
-begin
- if not Assigned( cdsItens ) then
- cdsItens:=  {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}  TBufDataset.create(nil) {$ENDIF};
-
-  if cdsItens.Active then
- begin
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).EmptyDataSet;
- {$ENDIF}
-  cdsItens.Active := False;
- end;
-
- {$IFDEF BORLAND}
- if cdsItens is TClientDataSet then
-  begin
-  TClientDataSet(cdsItens).StoreDefs := False;
-  TClientDataSet(cdsItens).IndexDefs.Clear;
-  TClientDataSet(cdsItens).IndexFieldNames := '';
-  TClientDataSet(cdsItens).IndexName := '';
-  TClientDataSet(cdsItens).Aggregates.Clear;
-  TClientDataSet(cdsItens).AggFields.Clear;
-  end;
- {$ELSE}
- if cdsItens is TBufDataset then
-  begin
-  TBufDataset(cdsItens).IndexDefs.Clear;
-  TBufDataset(cdsItens).IndexFieldNames:='';
-  TBufDataset(cdsItens).IndexName:='';
-  end;
- {$ENDIF}
-
- with cdsItens do
-  if FieldCount = 0 then
-  begin
-    FieldDefs.Clear;
-    Fields.Clear;
-    FieldDefs.Add('DISCRIMINACAO',ftString,60);
-
-   {$IFDEF BORLAND}
-    if cdsItens is TClientDataSet then
-    TClientDataSet(cdsItens).CreateDataSet;
-   {$ELSE}
-    if cdsItens is TBufDataset then
-    TBufDataset(cdsItens).CreateDataSet;
-   {$ENDIF}
-   end;
-
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).StoreDefs := False;
- {$ENDIF}
-
-   if not cdsItens.Active then
-   cdsItens.Active := True;
-
-  {$IFDEF BORLAND}
-   if cdsItens is TClientDataSet then
-   if cdsItens.Active then
-   TClientDataSet(cdsItens).LogChanges := False;
- {$ENDIF}
-
- dsItens.dataset := cdsItens;
-
 end;
 
 procedure TfrlDANFSeRL.frlSemValorFiscalPrint(sender: TObject;
@@ -334,6 +267,12 @@ begin
   finally
    Free ;
   end ;
+end;
+
+procedure TfrlDANFSeRL.RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);
+begin
+  MoreData := FMoreData;
+  FMoreData := False;
 end;
 
 class procedure TfrlDANFSeRL.SavePDF(AOwner: TComponent; AFile: String; ANFSe: TNFSe; ALogo, AEmail,

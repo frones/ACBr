@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/10/2016
+[-] DANFE NFSe Fortes
+    Acerto feito pelo Márcio para não utilizar Datasets
+
 17/10/2016
 -- ACBrDFeOpenSSL --
 [*] Incluido uma verificação para remover se necessário algum prefixo de infElement

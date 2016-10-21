@@ -225,7 +225,6 @@ type
     procedure RLNFSeBeforePrint(Sender: TObject; var PrintIt: Boolean);
   private
     { Private declarations }
-    procedure Itens;
     function ManterAliquota(dAliquota: Double): String;
   public
     { Public declarations }
@@ -250,19 +249,6 @@ var
   FQuebradeLinha: String;
 
 { TfrlDANFSeRLRetrato }
-
-procedure TfrlDANFSeRLRetrato.Itens;
-begin
- cdsItens.Close;
- cdsItens.CreateDataSet;
- cdsItens.Open;
-
- cdsItens.Append;
- cdsItens.FieldByName('DISCRIMINACAO').AsString := FNFSe.Servico.Discriminacao;
- cdsItens.Post;
-
- cdsItens.First;
-end;
 
 procedure TfrlDANFSeRLRetrato.QuebradeLinha(const sQuebradeLinha: String);
 begin
@@ -606,9 +592,7 @@ procedure TfrlDANFSeRLRetrato.RLNFSeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   inherited;
-  Itens;
 
-  RLNFSe.DataSource := dsItens;
   RLNFSe.Title := 'NFS-e: ' + FNFSe.Numero;
 
   RLNFSe.Margins.TopMargin    := FMargemSuperior * 10;

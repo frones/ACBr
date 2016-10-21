@@ -28,6 +28,7 @@ object frlDANFSeRL: TfrlDANFSeRL
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DANFe'
     ShowProgress = False
+    OnNeedData = RLNFSeNeedData
   end
   object RLPDFFilter1: TRLPDFFilter
     DocumentInfo.Author = 'FortesReport 3.23 - Copyright '#194#169' 1999-2009 Fortes Inform'#195#161'tica'
@@ -35,9 +36,5 @@ object frlDANFSeRL: TfrlDANFSeRL
     DisplayName = 'Documento PDF'
     Left = 368
     Top = 152
-  end
-  object dsItens: TDataSource
-    Left = 438
-    Top = 167
   end
 end

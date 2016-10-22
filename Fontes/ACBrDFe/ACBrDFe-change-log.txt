@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2016
+-- ACBrDFeOpenSSL --
+[*] Implementada a leitura de CPF por Extensões do Certificado (por: DSA)
+
 21/10/2016
 [-] DANFE NFSe Fortes
     Acerto feito pelo Márcio para não utilizar Datasets

@@ -87,11 +87,12 @@ type
     function BioToStr(ABio: pBIO): AnsiString;
     procedure GetCertInfo(cert: pX509);
     function CertToDER(cert: pX509): String;
-    function GetCNPJExt(cert: pX509): String;
+    function GetCertExt(cert: pX509; FlagExt: AnsiString): String;
     function GetIssuerName(cert: pX509): String;
     function GetNotAfter(cert: pX509): TDateTime;
     function GetSerialNumber(cert: pX509): String;
     function GetSubjectName(cert: pX509): String;
+    function GetCNPJFromExtensions(cert: pX509): String;
 
     function InserirDTD(AXml: String; const DTD: String): String;
 
@@ -991,8 +992,8 @@ begin
   FSubjectName := GetSubjectName( cert );
   FRazaoSocial := GetRazaoSocialFromSubjectName( FSubjectName );
   FCNPJ := GetCNPJFromSubjectName( FSubjectName );
-  if FCNPJ = '' then  // Não tem CNPJ no SubjectName, lendo das Extensões
-    FCNPJ := GetCNPJExt( cert );
+  if FCNPJ = '' then  // Não tem CNPJ/CPF no SubjectName, lendo das Extensões
+    FCNPJ := GetCNPJFromExtensions( cert );
 
   FIssuerName := GetIssuerName( cert );
   FCertificadora := GetCertificadoraFromSubjectName( FIssuerName );
@@ -1039,6 +1040,16 @@ begin
   Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
 end;
 
+function TDFeOpenSSL.GetCNPJFromExtensions(cert: pX509): String;
+begin
+  // Procurando pela Extensão onde está o CNPJ
+  Result := LeftStr(OnlyNumber(copy(GetCertExt( cert, #1#3#3#160#16 ),1,16)),14);
+
+  // Ainda sem resposta, deve ser um eCPF, procure por CPF
+  if Result = '' then
+    Result := copy(GetCertExt( cert, #1#3#1#160#52 ),11 ,11);  // Pula DataNascimento
+end;
+
 function TDFeOpenSSL.GetIssuerName( cert: pX509 ): String;
 var
   s: AnsiString;
@@ -1065,37 +1076,40 @@ begin
   Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
 end;
 
-function TDFeOpenSSL.GetCNPJExt( cert: pX509 ): String;
+function TDFeOpenSSL.GetCertExt(cert: pX509; FlagExt: AnsiString): String;
 var
   ext: pX509_EXTENSION;
-  I, P: Integer;
+  ExtPos, P: Integer;
   prop: PASN1_STRING;
   propStr: AnsiString;
+
+  procedure LoadExtension;
+  begin
+    {$IFDEF USE_libeay32}
+     ext := X509_get_ext( cert, ExtPos);
+    {$ELSE}
+     ext := X509GetExt( cert, ExtPos);
+    {$ENDIF}
+  end;
+
 begin
   Result := '';
-  I := 0;
- {$IFDEF USE_libeay32}
-  ext := X509_get_ext( cert, I);
- {$ELSE}
-  ext := X509GetExt( cert, I);
- {$ENDIF}
+  ExtPos := 0;
+  LoadExtension;
   while (ext <> nil) do
   begin
     prop := ext.value;
     propStr := PAnsiChar(prop^.data);
     SetLength(propStr, prop^.length);
-      P := pos(#1#3#3#160#16, propStr);;
+    P := pos(FlagExt, propStr);
     if P > 0 then
     begin
-      Result := LeftStr(OnlyNumber(copy(propStr,P+5,16)),14);
+      Result := copy(propStr,P+Length(FlagExt),Length(propStr));
       exit;
     end;
-      inc( I );
-    {$IFDEF USE_libeay32}
-     ext := X509_get_ext( cert, I);
-    {$ELSE}
-     ext := X509GetExt( cert, I);
-    {$ENDIF}
+
+    inc( ExtPos );
+    LoadExtension;
   end;
 end;
 

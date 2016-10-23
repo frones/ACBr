@@ -704,6 +704,10 @@ const
 //DES modes
   DES_ENCRYPT = 1;
   DES_DECRYPT = 0;
+
+  XN_FLAG_SEP_MASK       = 983040;  //(0xf << 16)
+  XN_FLAG_SEP_CPLUS_SPC  = 131072;  //(2 << 16) ,+ spaced: more readable
+  ASN1_STRFLGS_UTF8_CONVERT = 16;
   
 var
   SSLLibHandle: TLibHandle = 0;
@@ -768,6 +772,7 @@ var
   procedure ERR_load_crypto_strings;
   function X509New: PX509;
   procedure X509Free(x: PX509);
+  function X509NAMEprintEx(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint): cInt;
   function X509NameOneline(a: PX509_NAME; var buf: String; size: cInt):String;
   function X509GetSubjectName(a: PX509):PX509_NAME;
   function X509GetIssuerName(a: PX509):PX509_NAME;
@@ -1034,6 +1039,7 @@ type
   TX509New = function: PX509; cdecl;
   TX509Free = procedure(x: PX509); cdecl;
   TX509NameOneline = function(a: PX509_NAME; buf: PChar; size: cInt):PChar; cdecl;
+  TX509NAMEprintEx = function(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint):cInt; cdecl;
   TX509GetSubjectName = function(a: PX509):PX509_NAME; cdecl;
   TX509GetIssuerName = function(a: PX509):PX509_NAME; cdecl;
   TX509NameHash = function(x: PX509_NAME):cuLong; cdecl;
@@ -1264,6 +1270,7 @@ var
   _X509New: TX509New = nil;
   _X509Free: TX509Free = nil;
   _X509NameOneline: TX509NameOneline = nil;
+  _X509NAMEprintEx:TX509NAMEprintEx = nil;
   _X509GetSubjectName: TX509GetSubjectName = nil;
   _X509GetIssuerName: TX509GetIssuerName = nil;
   _X509NameHash: TX509NameHash = nil;
@@ -1822,6 +1829,15 @@ begin
     Result := _X509NameOneline(a, PChar(buf),size)
   else
     Result := '';
+end;
+
+function X509NAMEprintEx(b: PBIO; x: PX509_NAME; indent: cInt; flags: cuint
+  ): cInt;
+begin
+  if InitlibeaInterface and Assigned(_X509NAMEprintEx) then
+    Result := _X509NAMEprintEx(b, x, indent, flags)
+  else
+    Result := 0;
 end;
 
 function X509GetSubjectName(a: PX509):PX509_NAME;
@@ -3093,6 +3109,7 @@ begin
         _X509New := GetProcAddr(SSLUtilHandle, 'X509_new', AVerboseLoading);
         _X509Free := GetProcAddr(SSLUtilHandle, 'X509_free', AVerboseLoading);
         _X509NameOneline := GetProcAddr(SSLUtilHandle, 'X509_NAME_oneline', AVerboseLoading);
+        _X509NAMEprintEx := GetProcAddr(SSLUtilHandle, 'X509_NAME_print_ex', AVerboseLoading);
         _X509GetSubjectName := GetProcAddr(SSLUtilHandle, 'X509_get_subject_name', AVerboseLoading);
         _X509GetIssuerName := GetProcAddr(SSLUtilHandle, 'X509_get_issuer_name', AVerboseLoading);
         _X509NameHash := GetProcAddr(SSLUtilHandle, 'X509_NAME_hash', AVerboseLoading);

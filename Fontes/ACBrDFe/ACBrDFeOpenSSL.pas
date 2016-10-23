@@ -94,6 +94,8 @@ type
     function GetSubjectName(cert: pX509): String;
     function GetCNPJFromExtensions(cert: pX509): String;
 
+    function X509NameToString(AX509Name: PX509_NAME): AnsiString;
+
     function InserirDTD(AXml: String; const DTD: String): String;
 
     procedure Clear;
@@ -164,7 +166,8 @@ var
 
 implementation
 
-uses Math, strutils, dateutils,
+uses
+  Math, strutils, dateutils,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   pcnAuxiliar,
   synautil, synacode;
@@ -999,7 +1002,6 @@ begin
   FCertificadora := GetCertificadoraFromSubjectName( FIssuerName );
 end;
 
-
 function TDFeOpenSSL.GetNotAfter( cert: pX509 ): TDateTime;
 var
   Validade: String;
@@ -1016,28 +1018,17 @@ end;
 
 function TDFeOpenSSL.GetSubjectName( cert: pX509 ): String;
 var
-  s: AnsiString;
-  SubjectName: PX509_NAME;
+  X509SubjectName: PX509_NAME;
 begin
   Result := '';
-  setlength(s, 4096);
   {$IFDEF USE_libeay32}
-   SubjectName := X509_get_subject_name(cert);
-   if Assigned(SubjectName) then
-   begin
-     X509_NAME_oneline(SubjectName, PAnsiChar(s), Length(s));
-     Result := Trim(s);
-   end;
+   X509SubjectName := X509_get_subject_name(cert);
   {$ELSE}
-   SubjectName := X509GetSubjectName(cert);
-   if Assigned(SubjectName) then
-     Result := X509NameOneline(SubjectName, s, Length(s));
+   X509SubjectName := X509GetSubjectName(cert);
   {$ENDIF}
 
-  if copy(Result,1,1) = '/' then
-    Result := Copy(Result,2,Length(Result));
-
-  Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
+  if Assigned(X509SubjectName) then
+    Result := X509NameToString(X509SubjectName);
 end;
 
 function TDFeOpenSSL.GetCNPJFromExtensions(cert: pX509): String;
@@ -1052,28 +1043,45 @@ end;
 
 function TDFeOpenSSL.GetIssuerName( cert: pX509 ): String;
 var
-  s: AnsiString;
-  IssuerName: pX509_NAME;
+  X509IssuerName: pX509_NAME;
 begin
   Result := '';
-  setlength(s, 4096);
   {$IFDEF USE_libeay32}
-   IssuerName := X509_get_issuer_name(cert);
-   if Assigned(IssuerName) then
-   begin
-     X509_NAME_oneline(IssuerName, PAnsiChar(s), Length(s));
-     Result := Trim(s);
-   end;
+   X509IssuerName := X509_get_issuer_name(cert);
   {$ELSE}
-   IssuerName := X509GetIssuerName(cert);
-   if Assigned(IssuerName) then
-     Result := X509NameOneline(IssuerName, s, Length(s));
+   X509IssuerName := X509GetIssuerName(cert);
   {$ENDIF}
 
-  if copy(Result,1,1) = '/' then
-    Result := Copy(Result,2,Length(Result));
+  if Assigned(X509IssuerName) then
+    Result := X509NameToString(X509IssuerName);
+end;
 
-  Result := StringReplace(Result, '/', ', ', [rfReplaceAll]);
+function TDFeOpenSSL.X509NameToString(AX509Name: PX509_NAME): AnsiString;
+var
+  MemBio: PBIO;
+  Ret: Integer;
+begin
+  {$IfDef USE_libeay32}
+   MemBio := Bio_New(BIO_s_mem());
+   try
+     Ret := X509_NAME_print_ex(MemBio, AX509Name, 0,
+            (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
+            {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
+     Result := BioToStr(MemBio);
+   finally
+     BIO_free_all(MemBio);
+   end;
+  {$Else}
+   MemBio := BioNew(BioSMem());
+   try
+     Ret := X509NAMEprintEx(MemBio, AX509Name, 0,
+            (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
+            {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
+     Result := BioToStr(MemBio);
+   finally
+     BioFreeAll(MemBio);
+   end;
+  {$EndIf}
 end;
 
 function TDFeOpenSSL.GetCertExt(cert: pX509; FlagExt: AnsiString): String;

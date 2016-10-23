@@ -44,7 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-17/10/2016
+23/10/2016
+-- ACBrDFeOpenSSL --
+[*] Modificada a implementação dos métodos: "GetSubjectName" e "GetIssuerName",
+    para usar o método do OpenSSL "X509_NAME_print_ex", a fim de resolver
+    problemas de detectação de Encoding em alguns certificados  (por: DSA)
+
+22/10/2016
 -- ACBrDFeOpenSSL --
 [*] Implementada a leitura de CPF por Extensões do Certificado (por: DSA)
 

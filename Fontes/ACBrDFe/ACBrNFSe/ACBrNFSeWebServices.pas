@@ -1148,7 +1148,8 @@ begin
     if (FProvedor = ProTecnos) and (DateToStr(FDataRecebimento) = '01/01/0001') then
       FDataRecebimento := 0;
 
-    if FProvedor in [proInfisc, proGovDigital, proVersaTecnologia, proNFSeBrasil] then
+    if FProvedor in [proGovDigital, proInfisc, proNFSeBrasil,
+                     proTecnos, proVersaTecnologia] then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
   else

@@ -384,16 +384,18 @@ end;
 
 function SimNaoInFiscToStr(const t: TnfseSimNao): String;
 begin
+//  Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada pois a tag nao existe no XML de retorno
   result := EnumeradoToStr(t,
-                           ['S','N'],
-                           [snSim, snNao]);
+                           ['N','S'],
+                           [snNao, snSim]);
 end;
 
 function StrToSimNaoInFisc(out ok: boolean; const s: String): TnfseSimNao;
 begin
+//  Invertido para que o padrão seja o Nao, pois ao consultar retornava cancelada pois a tag nao existe no XML de retorno
   Result := StrToEnumerado(ok, s,
-                           ['S','N'],
-                           [snSim, snNao]);
+                           ['N','S'],
+                           [snNao, snSim]);
 end;
 
 // Tipo RPS ********************************************************************
@@ -5826,6 +5828,7 @@ var
       4314464: Cidade := 'Pinhal Da Serra/RS';
       4314472: Cidade := 'Pinhal Grande/RS';
       4314498: Cidade := 'Pinheirinho Do Vale/RS';
+      4314548: Cidade := 'Pinto Bandeira/RS';
       4314506: Cidade := 'Pinheiro Machado/RS';
       4314555: Cidade := 'Pirapo/RS';
       4314605: Cidade := 'Piratini/RS';

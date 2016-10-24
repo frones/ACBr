@@ -3419,25 +3419,10 @@ begin
 
   while (Leitor.rExtrai(1, 'infAdic', '', Item + 1) <> '') do
   begin
-    NFSe.OutrasInformacoes := NFSe.OutrasInformacoes + Leitor.Grupo;
+    NFSe.OutrasInformacoes := NFSe.OutrasInformacoes + Leitor.rCampo(tcStr, 'infAdic');
 
     inc(Item);
   end;
-(*
-    NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcStr, 'cMun');
-    NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Servico.CodigoMunicipio, 0);
-
-    {Adicionado desta forma pois o arquivo tem varias tag <infAdic>, na forma antiga era carregado apenas a primeira}
-
-    lIndex := Pos('<infAdic>', Leitor.Arquivo);
-    if (lIndex > 0) then
-    begin
-      lTextoAposInfAdic := Trim(Copy(Leitor.Arquivo, lIndex, Length(Leitor.Arquivo)));
-      NFSe.OutrasInformacoes := Leitor.CarregarInformacoesAdicionais(lTextoAposInfAdic, 'infAdic');
-    end
-    else
-      NFSe.OutrasInformacoes := '';
-*)
   Result := True;
 end;
 

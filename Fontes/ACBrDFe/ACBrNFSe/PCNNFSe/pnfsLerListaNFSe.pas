@@ -278,6 +278,7 @@ var
   DataRecebimentoTemp: TDateTime;
   i, j, Nivel, MsgErro: Integer;
   Nivel1: Boolean;
+  lNFSe: TLerListaNFSeCollectionItem;
 begin
   Result := True;
 
@@ -613,21 +614,21 @@ begin
         inc(i); // Incrementa o contador de notas.
       end;
 
-      // Estava provocanto a inclusão de um outro elemento na lista.
-      (*
       if (Provedor = ProTecnos) then
       begin
-        with ListaNFSe.FCompNFSe.Add do
-        begin
-          FNFSe.NumeroLote    := NumeroLoteTemp;
-          FNFSe.dhRecebimento := DataRecebimentoTemp;
-          FNFSe.Protocolo     := ProtocoloTemp;
+        if (ListaNFSe.CompNFSe.Count = 0) then
+          lNFSe := ListaNFSe.CompNFSe.Add
+        else
+          lNFSe := ListaNFSe.CompNFSe.Items[0];
 
-          if (NumeroLoteTemp = '0') or (ProtocoloTemp = '0') then
-            Result := False;
-        end;
+        lNFSe.NFSe.NumeroLote    := NumeroLoteTemp;
+        lNFSe.NFSe.dhRecebimento := DataRecebimentoTemp;
+        lNFSe.NFSe.Protocolo     := ProtocoloTemp;
+
+        if (NumeroLoteTemp = '0') or (ProtocoloTemp = '0') then
+          Result := False;
       end;
-      *)
+
     end;
     
     // =======================================================================

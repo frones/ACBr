@@ -132,14 +132,17 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'cancelada', 01, 01, 1, SimNaoInFiscToStr(NFSe.Cancelada), '');
     Gerador.wCampoNFSe(tcStr, '', 'canhoto'  , 01, 01, 1, TCanhotoToStr(NFSe.Canhoto), '');
 
-    // ambiente 1- producao 2- homologacao
-    Gerador.wCampoNFSe(tcStr, '', 'ambienteEmi', 01, 01, 1, SimNaoToStr(NFSe.Producao), '');
+    {para Garibaldi - RS 4308607 Não existe as tags abaixo}
+    if (NFSe.PrestadorServico.Endereco.CodigoMunicipio <> '4308607') then
+    begin
+      { Ambiente 1- Producao 2- Homologacao }
+      Gerador.wCampoNFSe(tcStr, '', 'ambienteEmi'     , 01, 01, 1, SimNaoToStr(NFSe.Producao), '');
+      { forma de emissao 1- portal contribuinte 2- servidor web 3- submetidos via Upload no portal 4- emissao via RPS }
+      Gerador.wCampoNFSe(tcStr, '', 'formaEmi'        , 01, 01, 1, '2', '');
+      { 1- construcao civil 2- outros casos }
+      Gerador.wCampoNFSe(tcStr, '', 'empreitadaGlobal', 01, 01, 1, EmpreitadaGlobalToStr(NFSe.EmpreitadaGlobal), '');
+    end;
 
-    // forma de emissao 1- portal contribuinte 2- servidor web 3- submetidos via Upload no portal 4- emissao via RPS
-    Gerador.wCampoNFSe(tcStr, '', 'formaEmi', 01, 01, 1, '2', '');
-
-    // 1- construcao civil 2- outros casos
-    Gerador.wCampoNFSe(tcStr, '', 'empreitadaGlobal', 01, 01, 1, EmpreitadaGlobalToStr(NFSe.EmpreitadaGlobal), '');
     Gerador.wGrupoNFSe('/Id');
   end;
 end;
@@ -154,10 +157,10 @@ begin
   if VersaoNFSe = ve100 then
   begin
     Gerador.wGrupoNFSe('emit');
-    Gerador.wCampoNFSe(tcStr, '', 'CNPJ' , 01, 014, 1, NFSe.Prestador.Cnpj, '');
-    Gerador.wCampoNFSe(tcStr, '', 'xNome', 01, 100, 1, NFSe.PrestadorServico.RazaoSocial, '');
-    Gerador.wCampoNFSe(tcStr, '', 'xFant', 01, 060, 1, NFSe.PrestadorServico.NomeFantasia, '');
-    Gerador.wCampoNFSe(tcStr, '', 'IM'   , 01, 015, 1, NFSe.Prestador.InscricaoMunicipal, '');
+    Gerador.wCampoNFSe(tcStr, '', 'CNPJ'  , 01, 014, 1, NFSe.Prestador.Cnpj, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xNome' , 01, 100, 1, NFSe.PrestadorServico.RazaoSocial, '');
+    Gerador.wCampoNFSe(tcStr, '', 'xFant' , 01, 060, 1, NFSe.PrestadorServico.NomeFantasia, '');
+    Gerador.wCampoNFSe(tcStr, '', 'IM'    , 01, 015, 1, NFSe.Prestador.InscricaoMunicipal, '');
 
     Gerador.wGrupoNFSe('end');
     Gerador.wCampoNFSe(tcStr, '', 'xLgr'   , 01, 100, 1, NFSe.PrestadorServico.Endereco.Endereco, '');
@@ -671,6 +674,14 @@ begin
 end;
 
 procedure TNFSeW_Infisc.GerarXML_Infisc;
+var
+  lLimiteLinha: Integer;
+  lDeOndeIniciaCopia: Integer;
+  lTexto: String;
+  lNumeroCaracteres: Integer;
+  lResultadoDivisao: Word;
+  lResultadoSobra: Word;
+  lIndex: Integer;
 begin
   Gerador.Prefixo := '';
 
@@ -702,12 +713,31 @@ begin
     if Trim(NFSe.OutrasInformacoes) <> '' then
     begin
       Gerador.wGrupoNFSe('Observacoes');
-      Gerador.wCampoNFSe(tcStr, '', 'xinf', 01, 100, 1, copy(NFSe.OutrasInformacoes,1,100), '');
+      Gerador.wCampoNFSe(tcStr, '', 'xinf', 01, 100, 1, copy(NFSe.OutrasInformacoes, 1, 100), '');
       Gerador.wGrupoNFSe('/Observacoes');
     end;
   end
-  else
-    Gerador.wCampoNFSe(tcStr, '', 'infAdic', 01, 100, 1, NFSE.Servico.ItemListaServico, '');
+  else begin
+    lLimiteLinha := 250;
+    lDeOndeIniciaCopia := 1;
+    lTexto := NFSe.OutrasInformacoes;
+    lNumeroCaracteres := Length(lTexto);
+
+    lResultadoDivisao := lNumeroCaracteres div lLimiteLinha;
+    lResultadoSobra := lNumeroCaracteres mod lLimiteLinha;
+
+    if (lResultadoDivisao > 0) then
+    begin
+      for lIndex := 0 to lResultadoDivisao -1 do
+      begin
+        lDeOndeIniciaCopia := lIndex * lLimiteLinha;
+        Gerador.wCampoNFSe(tcStr, '', 'infAdic', 01, 100, 1, Copy(lTexto, lDeOndeIniciaCopia, lLimiteLinha), '');
+      end;
+      lDeOndeIniciaCopia := (lIndex * lLimiteLinha);
+    end;
+    if (lResultadoSobra > 0) and (lDeOndeIniciaCopia > 0) then
+      Gerador.wCampoNFSe(tcStr, '', 'infAdic', 01, 100, 1, Copy(lTexto, lIndex * lLimiteLinha, lLimiteLinha), '');
+  end;
 
   Gerador.wGrupoNFSe('/infNFSe');
 

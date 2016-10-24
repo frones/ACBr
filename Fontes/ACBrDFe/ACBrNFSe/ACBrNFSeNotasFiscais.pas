@@ -360,6 +360,7 @@ begin
     FNFSeR.ProvedorConf   := Configuracoes.Geral.Provedor;
     FNFSeR.PathIniCidades := Configuracoes.Geral.PathIniCidades;
     FNFSeR.TabServicosExt := Configuracoes.Arquivos.TabServicosExt;
+    FNFSeR.VersaoXML      := Configuracoes.Geral.ConfigXML.VersaoXML; //Alterado Dalvan
   end;
   FNFSeR.LerXml;
 

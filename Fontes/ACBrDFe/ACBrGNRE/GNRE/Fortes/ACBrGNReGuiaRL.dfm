@@ -1,8 +1,6 @@
 object frlGuiaRL: TfrlGuiaRL
   Left = 238
   Top = 216
-  Width = 683
-  Height = 395
   Caption = 'frlGuiaRL'
   ClientHeight = 339
   ClientWidth = 650

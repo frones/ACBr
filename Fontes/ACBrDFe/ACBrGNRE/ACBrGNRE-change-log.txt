@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2016
+[-] Correção da impressão da Guia do GNRE em Fortes
+		http://www.projetoacbr.com.br/forum/topic/31853-erro-ao-imprimir-gnre/
+		por : Juliomar Marchetti
+		
 03/08/2016
 [*] Adição de suporte do fortes para as guias do gnre
 		http://www.projetoacbr.com.br/forum/topic/31424-modulo-gnre-para-o-monitor-plus/

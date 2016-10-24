@@ -48,9 +48,6 @@ type
   { TfrlGuiaRLRetrato }
 
     TfrlGuiaRLRetrato = class(TfrlGuiaRL)
-      RLPDFFilter1: TRLPDFFilter;
-      RLGNRe: TRLReport;
-      dsItens: TDataSource;
       RLBand1: TRLBand;
       RLDraw1: TRLDraw;
       RLLabel1: TRLLabel;
@@ -288,8 +285,8 @@ type
   public
     { Public declarations }
   published
-  procedure CarregaDados;
-  property GNRE: TGNRERetorno read FGNRE write FGNRE;
+//  procedure CarregaDados;
+//  property GNRE: TGNRERetorno read FGNRE write FGNRE;
   end;
 
 
@@ -407,126 +404,5 @@ begin
 
   cdsItens.First;
 end;
-
-procedure TfrlGuiaRLRetrato.CarregaDados;
-  function FormatarData(Str: string): string;
-  begin
-    Result := Copy(Str, 1, 2) + '/' + Copy(Str, 3, 2) + '/' + Copy(Str, 5, 4);
-  end;
-
-  function RemoverZeros(Str: string): string;
-  begin
-    while (Trim(Str) <> '') and (Str[1] = '0') do
-      Str := Copy(Str, 2, Length(Str));
-
-    Result := Trim(Str);
-  end;
-
-begin
-  with cdsItens do
-  begin
-    Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('Ambiente', ftInteger);
-    FieldDefs.Add('SequencialGuia', ftInteger);
-    FieldDefs.Add('UFFavorecida', ftString, 2);
-    FieldDefs.Add('CodReceita', ftInteger);
-    FieldDefs.Add('TipoDocEmitente', ftInteger);
-    FieldDefs.Add('DocEmitente', ftString, 18);
-    FieldDefs.Add('RazaoSocialEmitente', ftString, 60);
-    FieldDefs.Add('EnderecoEmitente', ftString, 60);
-    FieldDefs.Add('MunicipioEmitente', ftString, 50);
-    FieldDefs.Add('UFEmitente', ftString, 2);
-    FieldDefs.Add('CEPEmitente', ftString, 8);
-    FieldDefs.Add('TelefoneEmitente', ftString, 11);
-    FieldDefs.Add('TipoDocDestinatario', ftInteger);
-    FieldDefs.Add('DocDestinatario', ftString, 18);
-    FieldDefs.Add('MunicipioDestinatario', ftString, 50);
-    FieldDefs.Add('Produto', ftString, 255);
-    FieldDefs.Add('NumDocOrigem', ftString, 18);
-    FieldDefs.Add('Convenio', ftString, 30);
-    FieldDefs.Add('InfoComplementares', ftString, 300);
-    FieldDefs.Add('DataVencimento', ftDate);
-    FieldDefs.Add('DataLimitePagamento', ftDate);
-    FieldDefs.Add('PeriodoReferencia', ftString, 1);
-    FieldDefs.Add('MesAnoReferencia', ftString, 6);
-    FieldDefs.Add('Parcela', ftString, 2);
-    FieldDefs.Add('ValorPrincipal', ftFloat);
-    FieldDefs.Add('AtualizacaoMonetaria', ftFloat);
-    FieldDefs.Add('Juros', ftFloat);
-    FieldDefs.Add('Multa', ftFloat);
-    FieldDefs.Add('RepresentacaoNumerica', ftString, 48);
-    FieldDefs.Add('CodigoBarras', ftString, 54);
-    FieldDefs.Add('QtdeVias', ftInteger);
-    FieldDefs.Add('NumeroControle', ftString, 16);
-    FieldDefs.Add('IdentificadorGuia', ftString, 10);
-    FieldDefs.Add('Reservado', ftString, 126);
-    CreateDataSet;
-    Append;
-
-    with GNRE do
-    begin
-      FieldByName('Ambiente').AsInteger := InfoCabec.Ambiente;
-      FieldByName('SequencialGuia').AsInteger := SequencialGuia;
-      FieldByName('UFFavorecida').AsString := UFFavorecida;
-      FieldByName('CodReceita').AsInteger := CodReceita;
-      FieldByName('TipoDocEmitente').AsInteger := TipoDocEmitente;
-
-      case TipoDocEmitente of
-        1:
-          FieldByName('DocEmitente').AsString := FormatMaskText
-            ('000\.000\.000\-00;0', DocEmitente);
-        2:
-          FieldByName('DocEmitente').AsString := FormatMaskText
-            ('00\.000\.000\/0000\-00;0', DocEmitente);
-        3:
-          FieldByName('DocEmitente').AsString := RemoverZeros(DocEmitente);
-      end;
-
-      FieldByName('RazaoSocialEmitente').AsString := RazaoSocialEmitente;
-      FieldByName('EnderecoEmitente').AsString := EnderecoEmitente;
-      FieldByName('MunicipioEmitente').AsString := MunicipioEmitente;
-      FieldByName('UFEmitente').AsString := UFEmitente;
-      FieldByName('CEPEmitente').AsString := CEPEmitente;
-      //FieldByName('TelefoneEmitente').AsString := RemoverZeros(TelefoneEmitente);
-      FieldByName('TipoDocDestinatario').AsInteger := TipoDocDestinatario;
-
-      case TipoDocDestinatario of
-        1:
-          FieldByName('DocDestinatario').AsString := FormatMaskText
-            ('000\.000\.000\-00;0', DocDestinatario);
-        2:
-          FieldByName('DocDestinatario').AsString := FormatMaskText
-            ('00\.000\.000\/0000\-00;0', DocDestinatario);
-        3:
-          FieldByName('DocDestinatario').AsString := RemoverZeros
-            (DocDestinatario);
-      end;
-
-      FieldByName('MunicipioDestinatario').AsString := MunicipioDestinatario;
-      FieldByName('Produto').AsString := Produto;
-      FieldByName('NumDocOrigem').AsString := RemoverZeros(NumDocOrigem);
-      FieldByName('Convenio').AsString := Convenio;
-      FieldByName('InfoComplementares').AsString := InfoComplementares;
-      FieldByName('DataVencimento').AsDateTime := StrToDate(FormatarData(DataVencimento));
-      FieldByName('DataLimitePagamento').AsDateTime := StrToDateDef(FormatarData(DataLimitePagamento), FieldByName('DataVencimento').AsDateTime);
-      FieldByName('PeriodoReferencia').AsString := PeriodoReferencia;
-      FieldByName('MesAnoReferencia').AsString := MesAnoReferencia;
-      FieldByName('Parcela').AsString := IntToStr(Parcela);
-      FieldByName('ValorPrincipal').AsCurrency := ValorPrincipal;
-      FieldByName('AtualizacaoMonetaria').AsCurrency := AtualizacaoMonetaria;
-      FieldByName('Juros').AsCurrency := Juros;
-      FieldByName('Multa').AsCurrency := Multa;
-      FieldByName('RepresentacaoNumerica').AsString := RepresentacaoNumerica;
-      FieldByName('CodigoBarras').AsString := CodigoBarras;
-      FieldByName('QtdeVias').AsInteger := QtdeVias;
-      FieldByName('NumeroControle').AsString := NumeroControle;
-      FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
-      FieldByName('Reservado').AsString := Reservado;
-    end;
-    Post;
-  end;
-end;
-
 
 end.

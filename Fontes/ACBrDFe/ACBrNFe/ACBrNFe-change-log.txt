@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2016
+-- ACBrNFeDANFEFRDM.pas
+	Modificação para melhorar desempenho quando muitos itens e não repintar o QrCode
+	http://www.projetoacbr.com.br/forum/topic/33029-altera%C3%A7%C3%B5es-de-performance-na-visualiza%C3%A7%C3%A3o-da-nfce/?do=findComment&comment=217949
+	por : Juliomar Marchetti
+	
 20/10/2016
 -- ACBrNFeWebServices --
 [*] TNFeStatusServico. Aplicado Workaround para problema do Servidor do RS

@@ -1970,7 +1970,7 @@ end;
 procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
-  CpTituloReport, CpLogomarca, CpQrCode, CpDescrProtocolo, CpTotTrib: TfrxComponent;
+  CpTituloReport, CpLogomarca, CpDescrProtocolo, CpTotTrib: TfrxComponent;
 begin
 
   qrCode := '';
@@ -2012,9 +2012,8 @@ begin
               else
                 qrcode := NFe.infNFeSupl.qrCode;
 
-              CpQrCode := frxReport.FindObject('ImgQrCode');
-              if Assigned(CpQrCode) then
-                PintarQRCode( qrcode, TfrxPictureView(CpQrCode).Picture );
+              if Assigned(Sender) and (Sender.Name = 'ImgQrCode') then
+                PintarQRCode(qrcode, TfrxPictureView(Sender).Picture);
 
               CpDescrProtocolo := frxReport.FindObject('Memo5');
               if Assigned(CpDescrProtocolo) then

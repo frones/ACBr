@@ -234,3 +234,10 @@
   {$DEFINE CONSOLE}
 {$ENDIF}
 
+// Ative a diretiva abaixo, para usar a Libxml2, libxslt, libxmlsec compilada
+// com MinGw ftp://ftp.zlatkovic.com/libxml/64bit/
+{.$DEFINE USE_MINGW}
+{$IfDef CPU64}
+ {$DEFINE USE_MINGW}
+{$EndIf}
+

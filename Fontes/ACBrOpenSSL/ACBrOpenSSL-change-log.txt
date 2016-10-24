@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/10/2016
+-- libxml2, libxmlsec, libxslt --
+[-] Correção para suporte de libxmlsec em 64 bits. Corrigindo falha ao Assinar XML
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=25670
+[*] Ajuste para permitir o uso de Libxml2, libxslt, libxmlsec compiladas por
+    MinGw (default em Win64)
+    ftp://ftp.zlatkovic.com/libxml/64bit/   (por: DSA)
+
 23/10/2016
 -- OpenSSLExt, libeay32 --
 [+] Adicionado suporte ao método: "X509_NAME_print_ex"  (por: DSA)

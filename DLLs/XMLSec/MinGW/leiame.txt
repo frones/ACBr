@@ -1,0 +1,2 @@
+DLLs Obtidas em:
+ftp://ftp.zlatkovic.com/libxml/64bit/

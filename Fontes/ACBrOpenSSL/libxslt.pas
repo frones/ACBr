@@ -15,10 +15,10 @@ procedure Init;
 
 const
 {$IFDEF MSWINDOWS}
-  {$IFDEF CPU64}
-  LIBXSLT_SO = 'libxslt-1.dll';
+  {$IFDEF USE_MINGW}
+    LIBXSLT_SO = 'libxslt-1.dll';
   {$ELSE}
-  LIBXSLT_SO = 'libxslt.dll';
+    LIBXSLT_SO = 'libxslt.dll';
   {$ENDIF}
 {$ELSE}
   LIBXSLT_SO = 'libxslt.so';

@@ -15,7 +15,7 @@ procedure Init;
 
 const
 {$IFDEF MSWINDOWS}
-  {$IFDEF CPU64}
+  {$IFDEF USE_MINGW}
     LIBXMLSEC_SO = 'libxmlsec1.dll';
   {$ELSE}
     LIBXMLSEC_SO = 'libxmlsec.dll';
@@ -25,7 +25,7 @@ const
 {$ENDIF}
 
 type
-      time_t = LongInt;
+      time_t = SizeInt;
       xmlSecSize = Cardinal;
       xmlSecSizePtr = ^xmlSecSize;
       xmlSecByte = Byte;
@@ -1688,7 +1688,7 @@ uses
   SysUtils;
 
 var
-  libHandle: THandle;
+  libHandle: TLibHandle;
 
 // Utility function to make sure procedure entry points are not null
 

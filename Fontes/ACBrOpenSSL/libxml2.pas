@@ -14,7 +14,7 @@ procedure Init;
 
 const
 {$IFDEF MSWINDOWS}
-  {$IFDEF CPU64}
+  {$IFDEF USE_MINGW}
     LIBXML2_SO = 'libxml2-2.dll';
   {$ELSE}
     LIBXML2_SO = 'libxml2.dll';
@@ -30,7 +30,13 @@ const
 type
 
       {$IFNDEF FPC}
-       TLibHandle = THandle;
+        {$IFDEF CPU64}
+          SizeInt = Int64;
+        {$ELSE}
+          SizeInt = LongInt;
+        {$ENDIF}
+        PSizeInt = ^SizeInt;
+        TLibHandle = THandle;
       {$ENDIF}
 
       PFILE = Pointer;

@@ -5320,6 +5320,7 @@ begin
       Objeto := copy(Objeto, 4, Length(Objeto) );
 
     if (UpperCase(Copy(Objeto, 1, 6)) = 'BOLETO') or
+       (UpperCase(Copy(Objeto, 1, 5)) = 'EMAIL')  or
        (UpperCase(Copy(Objeto, 1, 3)) = 'NFE')  or
        (UpperCase(Copy(Objeto, 1, 3)) = 'SAT') or
        (UpperCase(Copy(Objeto, 1, 4)) = 'MDFE') or

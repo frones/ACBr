@@ -214,7 +214,8 @@ begin
     proCONAM:      Result := LerXml_proCONAM;
     proISSDSF:     Result := LerXml_proISSDSF;
     proEquiplano:  Result := LerXML_proEquiplano;
-    proInfIsc:     Result := LerXml_proInfisc;
+    proInfisc,
+    proInfiscv11:  Result := LerXml_proInfisc;
     proEL:         Result := LerXML_proEL;
     proNFSeBrasil: Result := LerXml_proNFSeBrasil;
     proSP:         Result := LerXml_proSP;      

@@ -547,14 +547,15 @@ begin
              Gerador.wGrupoNFSe('/LoteRps');
            end;
 
-    proInfisc: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('envioLote versao="1.0"');
-                 Gerador.wCampoNFSe(tcStr, '', 'CNPJ'   , 01, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');  {@/\@}
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
-                 Gerador.wGrupoNFSe('/envioLote');
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wGrupoNFSe('envioLote versao="1.0"');
+                    Gerador.wCampoNFSe(tcStr, '', 'CNPJ'   , 01, 14, 1, Cnpj, '');
+                    Gerador.wCampoNFSe(tcStr, '', 'dhTrans', 01, 19, 1, FormatDateTime('yyyy-mm-dd hh:mm:ss', Now), '');  {@/\@}
+                    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+                    Gerador.wGrupoNFSe('/envioLote');
+                  end;
 
     proISSDSF: begin
                  Gerador.Prefixo := '';
@@ -724,11 +725,12 @@ begin
              *)
            end;
 
-    proInfisc: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'cLote', 01, 15, 1, Protocolo, '');
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'cLote', 01, 15, 1, Protocolo, '');
+                  end;
 
     proISSDSF: begin
                  // Não possui 
@@ -847,9 +849,10 @@ begin
              *)
            end;
 
-    proInfisc: begin
-                 // Não Possui
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    // Não Possui
+                  end;
 
     proISSDSF: begin
                  Gerador.Prefixo := '';
@@ -972,9 +975,10 @@ begin
                     Gerador.wCampoNFSe(tcStr, '#5', 'Versao', 4, 4, 1, '1.00', '');
                 end;
 
-    proInfisc: begin
-                 // Não Possui
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    // Não Possui
+                  end;
 
     proEquiplano: begin
                     Gerador.Prefixo := '';
@@ -1146,15 +1150,16 @@ begin
                     Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 04, 04, 1, '1.00', '');
                 end;
               
-    proInfisc: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'notaInicial', 01, 15, 1, NumeroNFSe, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'notaFinal', 01, 15, 1, NumeroNFSe, '');
-                 Gerador.wCampoNFSe(tcDat, '#1', 'emissaoInicial', 01, 15, 1, DataInicial, '');
-                 Gerador.wCampoNFSe(tcDat, '#1', 'emissaoFinal', 01, 15, 1, DataFinal, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'serieNotaFiscal', 01, 15, 1, SerieNFSe, '');
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'notaInicial', 01, 15, 1, NumeroNFSe, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'notaFinal', 01, 15, 1, NumeroNFSe, '');
+                    Gerador.wCampoNFSe(tcDat, '#1', 'emissaoInicial', 01, 15, 1, DataInicial, '');
+                    Gerador.wCampoNFSe(tcDat, '#1', 'emissaoFinal', 01, 15, 1, DataFinal, '');
+                    Gerador.wCampoNFSe(tcStr, '#1', 'serieNotaFiscal', 01, 15, 1, SerieNFSe, '');
+                  end;
 
     proEquiplano: begin
                     // Nao Possui
@@ -1496,11 +1501,12 @@ begin
                   Gerador.wGrupoNFSe('/LoteCancelamento');
                 end;
 
-    proInfisc: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    Gerador.Prefixo := '';
+                    Gerador.wCampoNFSe(tcStr, '#1', 'CNPJ', 14, 14, 1, Cnpj, '');
+                    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
+                  end;
 
     proISSDSF: begin
                  Gerador.Prefixo := '';
@@ -1605,9 +1611,10 @@ begin
                   Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
                 end;
 
-    proInfisc: begin
-                 // Nao Possui
-               end;
+    proInfisc,
+    proInfiscv11: begin
+                    // Nao Possui
+                  end;
 
     proEquiplano: begin
                     // Nao Possui
@@ -1660,11 +1667,11 @@ begin
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proActcon,
                   proBetha, proBetim, proDBSeller, proEquiplano,
-                  proFIssLex, proGinfes, proGovBR, proInfisc, proIssCuritiba,
-                  proIssDSF, proIssIntel, proIssNet, proLexsom, proNatal,
-                  proNFSEBrasil, proProdemge, proPronim, proRJ, proSalvador,
-                  proSiam, proSimplIss, proSpeedGov, proThema, proTinus,
-                  proTiplan] then
+                  proFIssLex, proGinfes, proGovBR, proInfisc, proInfiscv11,
+                  proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
+                  proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
+                  proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
+                  proTinus, proTiplan] then
     Result := '';
 end;
 
@@ -1730,11 +1737,11 @@ begin
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proActcon,
                   proBetha, proBetim, proDBSeller, proEquiplano,
-                  proFIssLex, proGinfes, proGovBR, proInfisc, proIssCuritiba,
-                  proIssDSF, proIssIntel, proIssNet, proLexsom, proNatal,
-                  proNFSEBrasil, proProdemge, proPronim, proRJ, proSalvador,
-                  proSiam, proSimplIss, proSpeedGov, proThema, proTinus,
-                  proTiplan] then
+                  proFIssLex, proGinfes, proGovBR, proInfisc, proInfiscv11,
+                  proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
+                  proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
+                  proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
+                  proTinus, proTiplan] then
     Result := '';
 end;
 
@@ -1765,11 +1772,11 @@ begin
 
   if Provedor in [proNenhum, proABRASFv1, proABRASFv2, proAbaco, proActcon,
                   proBetha, proBetim, proDBSeller, proEquiplano,
-                  proFIssLex, proGinfes, proGovBR, proInfisc, proIssCuritiba,
-                  proIssDSF, proIssIntel, proIssNet, proLexsom, proNatal,
-                  proNFSEBrasil, proProdemge, proPronim, proRJ, proSalvador,
-                  proSiam, proSimplIss, proSpeedGov, proThema, proTinus,
-                  proTiplan] then
+                  proFIssLex, proGinfes, proGovBR, proInfisc, proInfiscv11,
+                  proIssCuritiba, proIssDSF, proIssIntel, proIssNet, proLexsom,
+                  proNatal, proNFSEBrasil, proProdemge, proPronim, proRJ,
+                  proSalvador, proSiam, proSimplIss, proSpeedGov, proThema,
+                  proTinus, proTiplan] then
     Result := '';
 end;
 

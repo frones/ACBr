@@ -281,7 +281,8 @@ begin
    proEL:         Result := LerXml_proEL;
    proEquiplano:  Result := LerXml_proEquiplano;
    proGoverna:    Result := LerXml_proGoverna;
-   proInfIsc:     Result := LerXml_proInfisc;
+   proInfisc,
+   proInfiscv11:  Result := LerXml_proInfisc;
    proISSDSF:     Result := LerXml_proISSDSF;
    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
    proSP:         Result := LerXml_proSP;

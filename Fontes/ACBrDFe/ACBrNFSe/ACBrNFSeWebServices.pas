@@ -828,7 +828,8 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
-      proInfisc: FNameSpaceDad := xmlns3 + FNameSpace + '"';
+      proInfisc,
+      proInfiscv11: FNameSpaceDad := xmlns3 + FNameSpace + '"';
 
       proIssDSF: FNameSpaceDad := xmlns3 + FNameSpace + '"' +
                                   ' xmlns:tipos="http://localhost:8080/WsNFe2/tp"' +
@@ -1148,7 +1149,7 @@ begin
     if (FProvedor = ProTecnos) and (DateToStr(FDataRecebimento) = '01/01/0001') then
       FDataRecebimento := 0;
 
-    if FProvedor in [proGovDigital, proInfisc, proNFSeBrasil,
+    if FProvedor in [proGovDigital, proInfisc, proInfiscv11, proNFSeBrasil,
                      proTecnos, proVersaTecnologia] then
       FProtocolo := FRetornoNFSe.ListaNFSe.CompNFSe[0].NFSe.Protocolo;
   end
@@ -1225,7 +1226,8 @@ begin
   else begin
     case FProvedor of
       proEquiplano: EnviarLoteRps := 'enviarLoteRps' + TipoEnvio + 'Envio';
-      proInfisc:    EnviarLoteRps := 'envioLote';
+      proInfisc,
+      proInfiscv11: EnviarLoteRps := 'envioLote';
       proIssDsf:    EnviarLoteRps := 'ReqEnvioLoteRPS';
       proSP:        EnviarLoteRps := 'PedidoEnvioLoteRPS';
       proTinus:     EnviarLoteRps := 'Arg';
@@ -1388,10 +1390,11 @@ begin
                                       RetornarConteudoEntre(RPS, '<RPS', '</RPS>') +
                                      '</RPS>';
 
-        proInfisc: FvNotas := FvNotas +
-                            '<NFS-e' +
-                              RetornarConteudoEntre(RPS, '<NFS-e', '</NFS-e>') +
-                            '</NFS-e>';
+        proInfisc,
+        proInfiscv11: FvNotas := FvNotas +
+                                '<NFS-e' +
+                                  RetornarConteudoEntre(RPS, '<NFS-e', '</NFS-e>') +
+                                '</NFS-e>';
 
         proIssDSF,
         proEquiplano: FvNotas :=  FvNotas + StringReplace(RPS, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
@@ -1442,7 +1445,7 @@ begin
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
 
-         if FProvedor in [proInfisc, proGoverna] then
+         if FProvedor in [proInfisc, proInfiscv11, proGoverna] then
            FTagI := '';
        end;
 
@@ -1456,6 +1459,7 @@ begin
 
            proEL,
            proInfisc,
+           proInfiscv11,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo +
@@ -1525,6 +1529,7 @@ begin
          case FProvedor of
            proEL,
            proInfisc,
+           proInfiscv11,
            proSimplISS,
            proSP: FTagI := '<' + FTagGrupo + '>';
          else
@@ -1568,7 +1573,8 @@ begin
 
            proCONAM,
            proEL,
-           proInfisc: FTagI := '<' + FTagGrupo + '>';
+           proInfisc,
+           proInfiscv11: FTagI := '<' + FTagGrupo + '>';
 
            proSP: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
@@ -1668,7 +1674,7 @@ begin
        begin
          FTagF := '</' + FTagGrupo + '>';
 
-         if FProvedor in [proInfisc, proGoverna] then
+         if FProvedor in [proInfisc, proInfiscv11, proGoverna] then
            FTagF := '';
        end;
 
@@ -1725,6 +1731,7 @@ begin
            proCONAM,
            proEL,
            proInfisc,
+           proInfiscv11,
            proSP: FTagF := '</' + FTagGrupo + '>';
 
            proISSNet: FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
@@ -1965,7 +1972,8 @@ begin
   try
     case Provedor of
       proCONAM:     FTagGrupo := 'ws_nfe.PROCESSARPS';
-      proInfisc:    FTagGrupo := 'envioLote';
+      proInfisc,
+      proInfiscv11: FTagGrupo := 'envioLote';
       proISSDSF:    FTagGrupo := 'ReqEnvioLoteRPS';
       proEquiplano: FTagGrupo := 'enviarLoteRpsEnvio';
       proSP:        FTagGrupo := 'PedidoEnvioLoteRPS';
@@ -1977,10 +1985,11 @@ begin
     FTagGrupo := FPrefixo3 + FTagGrupo;
 
     case FProvedor of
-      proCONAM:  TagElemento := 'Reg20';
-      proInfisc: TagElemento := 'infNFSe';
-      proSP:     TagElemento := '';
-      proIssDSF: TagElemento := 'Lote';
+      proCONAM:     TagElemento := 'Reg20';
+      proInfisc,
+      proinfiscv11: TagElemento := 'infNFSe';
+      proSP:        TagElemento := '';
+      proIssDSF:    TagElemento := 'Lote';
     else
       TagElemento := 'LoteRps';
     end;
@@ -2682,7 +2691,8 @@ begin
   try
     case FProvedor of
       proCONAM:     FTagGrupo := 'ws_nfe.CONSULTAPROTOCOLO';
-      proInfisc:    FTagGrupo := 'pedidoStatusLote';
+      proInfisc,
+      proInfiscv11: FTagGrupo := 'pedidoStatusLote';
       proEquiplano: FTagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
       proSimplISS:  FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
       proSP:        FTagGrupo := 'p1:PedidoInformacoesLote';
@@ -2701,7 +2711,7 @@ begin
     begin
       Protocolo := FProtocolo; // TNFSeConsultarSituacaoLoteRPS(Self).Protocolo;
 
-      // Necessário para o provedor Equiplano - Infisc
+      // Necessário para o provedor Equiplano / Infisc
       NumeroLote := FNumeroLote; // TNFSeConsultarSituacaoLoteRPS(Self).NumeroLote;
     end;
 
@@ -2851,8 +2861,6 @@ begin
                  '4' : xSituacao := 'Lote Processado com sucesso';
                end;
              end;
-
-//      proInfisc:
 
     else begin
            case StrToSituacaoLoteRPS(Ok, FSituacao) of
@@ -3274,7 +3282,8 @@ begin
     case FProvedor of
       proPronimv2,
       proDigifred:  FTagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
-      proInfisc:    FTagGrupo := 'pedidoLoteNFSe';
+      proInfisc,
+      proInfiscv11: FTagGrupo := 'pedidoLoteNFSe';
       proISSDSF:    FTagGrupo := 'ReqConsultaNotas';
 
       proAgili,
@@ -3436,7 +3445,8 @@ begin
       proCONAM:       FTagGrupo := 'ws_nfe.CANCELANOTAELETRONICA';
       proEGoverneISS: FTagGrupo := 'request';
       proEquiplano:   FTagGrupo := 'esCancelarNfseEnvio';
-      proInfisc:      FTagGrupo := 'pedCancelaNFSe';
+      proInfisc,
+      proInfiscv11:   FTagGrupo := 'pedCancelaNFSe';
       proISSDSF:      FTagGrupo := 'ReqCancelamentoNFSe';
       proSP:          FTagGrupo := 'PedidoCancelamentoNFe';
       proTinus:       FTagGrupo := 'Arg';
@@ -3510,7 +3520,7 @@ begin
       end;
     end;
 
-    if (FProvedor = proInfisc ) then
+    if (FProvedor in [proInfisc, proInfiscv11] ) then
     begin
       Gerador := TGerador.Create;
       try
@@ -3611,6 +3621,7 @@ begin
       proISSDSF,
       proEquiplano,
       proInfisc,
+      proInfiscv11,
       proSP: docElemento := FTagGrupo;
       proGinfes: docElemento := FTagGrupo; // 'CancelarNfseEnvio';
       proISSNet: docElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
@@ -4430,7 +4441,7 @@ begin
         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
     end;
 
-    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna, proInfisc] then
+    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna, proInfisc, proInfiscv11] then
       Result := True
     else
       Result := FConsLote.Executar;
@@ -4471,7 +4482,7 @@ begin
         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
     end;
 
-    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proInfisc then
+    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc, proInfiscv11] then
       Result := True
     else
       Result := FConsLote.Executar;
@@ -4580,7 +4591,7 @@ begin
       FConsNfseRps.FTipo      := TipoRPSToStr(TACBrNFSe(FACBrNFSe).NotasFiscais.Items[0].NFSe.IdentificacaoRps.Tipo);
 
       // Provedor Infisc não possui o método Consultar NFS-e por RPS
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc] then
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proInfisc, proInfiscv11] then
         Result := True
       else
         Result := FConsNfseRps.Executar;

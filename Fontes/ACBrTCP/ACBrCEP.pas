@@ -1485,7 +1485,7 @@ begin
       on E: Exception do
       begin
         if Pos('CEP NAO ENCONTRADO', E.Message) <> 0  then
-          exit
+          raise EACBrCEPException.Create('CEP NAO ENCONTRADO')
         else
           raise EACBrCEPException.Create(
             'Ocorreu o seguinte erro ao consumir o WebService dos correios:' + sLineBreak +

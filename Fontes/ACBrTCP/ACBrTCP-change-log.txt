@@ -37,12 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/10/2016
+-- ACBrCEP --
+
 14/10/2016
 -- ACBrSocket --
 [*] Inclusão da propriedade "UsaSynchronize" para possibilitar a chamada dos
-	eventos OnConecta, OnDesconecta e OnRecebeDados sem a necessidade da
-	função Synchronize().
-	(por: Elias César)
+    eventos OnConecta, OnDesconecta e OnRecebeDados sem a necessidade da
+    função Synchronize().
+    (por: Elias César)
 
 10/08/2016
 -- ACBrCEP --
@@ -51,14 +54,14 @@ Símbolo : Significado
 05/09/2016
 -- ACBrMTerClass --
 [-] Correção de erro ao ser chamada função ComandoEco com String vazia.
-	(por: Elias César)
+    (por: Elias César)
 
 30/08/2016
 -- ACBrMTerClass --
 [-] Alteração para retirar os caracteres de controle dos dados recebidos 
-	pelo Micro Terminal apenas no momento de enviar o eco. Dessa maneira não
-	são perdidos dados como DEL, ESC, etc.
-	(por: Elias César)
+    pelo Micro Terminal apenas no momento de enviar o eco. Dessa maneira não
+    são perdidos dados como DEL, ESC, etc.
+    (por: Elias César)
 	
 -- ACBrMTerPMTG --
 [-] Alteração para limpar conteúdo dos dados antes de enviar o "ComandoEco".

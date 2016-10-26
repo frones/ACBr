@@ -769,7 +769,7 @@ begin
     while Leitor.rExtrai(1, 'seg', '', i01 + 1) <> '' do
     begin
       MDFe.seg.Add;
-      MDFe.seg[i01].respSeg := StrToTpRspSeguro(ok, Leitor.rCampo(tcStr, 'respSeg'));
+      MDFe.seg[i01].respSeg := StrToRspSeguroMDFe(ok, Leitor.rCampo(tcStr, 'respSeg'));
       MDFe.seg[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
       MDFe.seg[i01].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
       MDFe.seg[i01].CNPJ    := Leitor.rCampo(tcStr, 'CNPJ');

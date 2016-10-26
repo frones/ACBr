@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2016
+-- pmdfeConversaoMDFe --
+[*] Inclusão do Tipo de Responsável pelo Seguro e das funções de conversão.
+-- pmdfeMDFe / pmdfeMDFeR / pmdfeMDFeW --
+[*] Correção na geração e Leitura do Responsável pelo Seguro.
+    por: Italo Jurisato Junior
+
 17/10/2016
 -- pmdfeEnvEventoMDFe --
 [*] Correção na geração da tag: dhEvento, estava faltando incluir o UTC.

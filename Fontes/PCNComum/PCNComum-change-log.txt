@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2016
+-- pcnConversao --
+[*] Remoção do Tipo de Responsável pelo Seguro e das funções de conversão.
+    por: Italo Jurisato Junior
+
 16/09/2016
 -- pcnConst / pcnConversao --
 [*] Definição de 2 novos tipos de enventos a serem usados no componente ACBrCTe e

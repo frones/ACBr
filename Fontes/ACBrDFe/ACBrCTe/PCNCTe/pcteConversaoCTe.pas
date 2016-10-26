@@ -95,6 +95,7 @@ type
   TpcteTrafegoMutuo = (tmOrigem, tmDestino);
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
   TpcteTipoVeiculo = (tvTracao, tvReboque);
+  TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
   TIndicador = (tiSim, tiNao);
   TEspecie = (teNumerario, teCheque, teMoeda, teOutros);
 
@@ -186,6 +187,10 @@ function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 
 function TEspecieToStr(const t: TEspecie): String;
 function StrToTEspecie(out ok: Boolean; const s: String): TEspecie;
+
+function TpRspSeguroToStr(const t: TpcteRspSeg): String;
+function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
+function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 
 implementation
 
@@ -632,6 +637,28 @@ function StrToTEspecie(out ok: Boolean; const s: String): TEspecie;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3', '4'],
                                   [teNumerario, teCheque, teMoeda, teOutros]);
+end;
+
+function TpRspSeguroToStr(const t: TpcteRspSeg): String;
+begin
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
+end;
+
+function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
+begin
+  result := EnumeradoToStr(t, ['REMETENTE', 'EXPEDIDOR', 'RECEBEDOR',
+                               'DESTINATARIO', 'EMITENTE', 'TOMADOR SERVICO'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
+end;
+
+function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
+begin
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
+                         [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
+                          rsEmitenteCTe, rsTomadorServico]);
 end;
 
 end.

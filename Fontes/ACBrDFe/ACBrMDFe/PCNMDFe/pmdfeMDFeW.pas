@@ -374,8 +374,6 @@ begin
 end;
 
 procedure TMDFeW.GerarRodo;
-var
-  i: Integer;
 begin
   Gerador.wGrupo('rodo', '#01');
 
@@ -1046,16 +1044,23 @@ begin
   for i := 0 to MDFe.seg.Count - 1 do
   begin
     Gerador.wGrupo('seg', '#118');
+
     Gerador.wGrupo('infResp', '#119');
-    Gerador.wCampo(tcStr, '#120', 'respSeg', 01, 01, 1, TpRspSeguroToStr(MDFe.seg[i].respSeg), DSC_RESPSEG);
+    Gerador.wCampo(tcStr, '#120', 'respSeg', 01, 01, 1, RspSeguroMDFeToStr(MDFe.seg[i].respSeg), DSC_RESPSEG);
     Gerador.wCampoCNPJCPF('#121', '#122', MDFe.seg[i].CNPJCPF);
     Gerador.wGrupo('/infResp');
-    Gerador.wGrupo('infSeg', '#123');
-    Gerador.wCampo(tcStr, '#124', 'xSeg ', 01, 30, 0, MDFe.seg[i].xSeg, DSC_XSEG);
-    Gerador.wCampoCNPJ('#125', MDFe.seg[i].CNPJ, CODIGO_BRASIL, True);
+
+    if MDFe.seg[i].xSeg <> '' then
+    begin
+      Gerador.wGrupo('infSeg', '#123');
+      Gerador.wCampo(tcStr, '#124', 'xSeg', 01, 30, 1, MDFe.seg[i].xSeg, DSC_XSEG);
+      Gerador.wCampoCNPJ('#125', MDFe.seg[i].CNPJ, CODIGO_BRASIL, True);
+      Gerador.wGrupo('/infSeg');
+    end;
+
     Gerador.wCampo(tcStr, '#126', 'nApol', 01, 20, 0, MDFe.seg[i].nApol, DSC_NAPOL);
     Gerador.wCampo(tcStr, '#127', 'nAver', 01, 20, 0, MDFe.seg[i].nAver, DSC_NAVER);
-    Gerador.wGrupo('/infSeg');
+
     Gerador.wGrupo('/seg');
   end;
   if MDFe.seg.Count > 990 then

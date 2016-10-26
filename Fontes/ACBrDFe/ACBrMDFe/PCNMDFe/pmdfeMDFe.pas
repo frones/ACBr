@@ -1129,7 +1129,7 @@ type
 
   TSegCollectionItem = class(TCollectionItem)
   private
-    FrespSeg: TpcteRspSeg;
+    FrespSeg: TRspSegMDFe;
     FCNPJCPF: String;
     FxSeg: String;
     FCNPJ: String;
@@ -1139,7 +1139,7 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property respSeg: TpcteRspSeg read FrespSeg write FrespSeg;
+    property respSeg: TRspSegMDFe read FrespSeg write FrespSeg;
     property CNPJCPF: String      read FCNPJCPF write FCNPJCPF;
     property xSeg: String         read FxSeg    write FxSeg;
     property CNPJ: String         read FCNPJ    write FCNPJ;

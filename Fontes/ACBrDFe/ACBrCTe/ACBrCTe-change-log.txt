@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/10/2016
+-- pcteConversaoCTe --
+[*] Inclusão do Tipo de Responsável pelo Seguro e das funções de conversão.
+    por: Italo Jurisato Junior
+
 17/10/2016
 -- ACBrCTeServicos --
 [*] Inclusão dos grupos para o modelo 67 - CT-e OS (Outros Serviços).

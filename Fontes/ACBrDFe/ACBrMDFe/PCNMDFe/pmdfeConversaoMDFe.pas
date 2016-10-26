@@ -68,6 +68,8 @@ type
 
   TTransportadorMDFe = (ttETC, ttTAC, ttCTC);
 
+  TRspSegMDFe = (rsEmitente, rsTomadorServico);
+
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
@@ -97,6 +99,10 @@ function VersaoMDFeToDbl(const t: TVersaoMDFe): Double;
 
 function TTransportadorToStr(const t: TTransportadorMDFe): String;
 function StrToTTransportador(out ok: Boolean; const s: String): TTransportadorMDFe;
+
+function RspSeguroMDFeToStr(const t: TRspSegMDFe): String;
+function RspSeguroMDFeToStrText(const t: TRspSegMDFe): String;
+function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
 
 implementation
 
@@ -288,6 +294,24 @@ end;
 function StrToTTransportador(out ok: Boolean; const s: String): TTransportadorMDFe;
 begin
   Result := StrToEnumerado(ok, s, ['1', '2', '3'], [ttETC, ttTAC, ttCTC]);
+end;
+
+function RspSeguroMDFeToStr(const t: TRspSegMDFe): String;
+begin
+  result := EnumeradoToStr(t, ['1', '2'],
+                         [rsEmitente, rsTomadorServico]);
+end;
+
+function RspSeguroMDFeToStrText(const t: TRspSegMDFe): String;
+begin
+  result := EnumeradoToStr(t, ['EMITENTE', 'TOMADOR SERVICO'],
+                         [rsEmitente, rsTomadorServico]);
+end;
+
+function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
+begin
+  result := StrToEnumerado(ok, s, ['1', '2'],
+                         [rsEmitente, rsTomadorServico]);
 end;
 
 end.

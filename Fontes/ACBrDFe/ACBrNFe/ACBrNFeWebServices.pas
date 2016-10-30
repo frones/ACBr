@@ -548,6 +548,7 @@ type
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
+    FchNFe: String;
 
     FretDistDFeInt: TretDistDFeInt;
 
@@ -569,6 +570,7 @@ type
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
+    property chNFe: String read FchNFe write FchNFe;
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
@@ -3414,8 +3416,9 @@ begin
     DistDFeInt.TpAmb := FPConfiguracoesNFe.WebServices.Ambiente;
     DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
-    DistDFeInt.ultNSU := FultNSU;
-    DistDFeInt.NSU := FNSU;
+    DistDFeInt.ultNSU := trim(FultNSU);
+    DistDFeInt.NSU := trim(FNSU);
+    DistDFeInt.chNFe := trim(FchNFe);
     DistDFeInt.Versao := FPVersaoServico;
     DistDFeInt.GerarXML;
 
@@ -3475,7 +3478,6 @@ begin
 
   FPMsg := FretDistDFeInt.xMotivo;
   Result := (FretDistDFeInt.CStat = 137) or (FretDistDFeInt.CStat = 138);
-
 end;
 
 function TDistribuicaoDFe.GerarMsgLog: String;

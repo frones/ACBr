@@ -73,6 +73,9 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesCTe;
+    function Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+      chCTe: String): Boolean;
+
     procedure SetConfiguracoes(AValue: TConfiguracoesCTe);
   	procedure SetDACTE(const Value: TACBrCTeDACTEClass);
 
@@ -118,8 +121,15 @@ type
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
     // Método implementando acreditando que futuramente a SEFAZ vai disponibilizar
     // conforme fez para a NF-e e MDF-e
-//    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
-
+    (*
+    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
+    function DistribuicaoDFePorUltNSU(AcUFAutor: integer;
+      ACNPJCPF, AultNSU: String): Boolean;
+    function DistribuicaoDFePorNSU(AcUFAutor: integer;
+      ACNPJCPF, ANSU: String): Boolean;
+    function DistribuicaoDFePorChaveCTe(AcUFAutor: integer;
+      ACNPJCPF, AchCTe: String): Boolean;
+    *)
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamCTe: TStream = nil; NomeArq: String = ''); override;
@@ -793,22 +803,40 @@ begin
   WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, 57,
                         ASerie, ANumInicial, ANumFinal);
 end;
-{
-function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
-  ANSU: String): Boolean;
+
+function TACBrCTe.Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+  chCTe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;
+//  WebServices.DistribuicaoDFe.chCTe := AchCTe;
 
   Result := WebServices.DistribuicaoDFe.Executar;
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
-}
+(*
+function TACBrCTe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+  AultNSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, '', '');
+end;
 
+function TACBrCTe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+  ANSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
+end;
+
+function TACBrCTe.DistribuicaoDFePorChaveCTe(AcUFAutor: integer; ACNPJCPF,
+  AchCTe: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchCTe);
+end;
+*)
 procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
   sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String);
 begin

@@ -65,6 +65,9 @@ type
     // Usado no Grupo de informações para consultar um DF-e a partir de um
     // NSU específico.
     FNSU: String;
+    // Usado no Grupo de informações para consultar um DF-e a partir de uma
+    // chave de NF-e específica.
+    FchNFe: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -78,6 +81,7 @@ type
     property CNPJCPF: String         read FCNPJCPF  write FCNPJCPF;
     property ultNSU: String          read FultNSU   write FultNSU;
     property NSU: String             read FNSU      write FNSU;
+    property chNFe: String           read FchNFe    write FchNFe;
   end;
 
 implementation
@@ -119,15 +123,27 @@ begin
   Gerador.wGrupo('nfeDadosMsg');
   Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
+  Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 0, FcUFAutor, '***');
   Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF);
 
   if FNSU = '' then
   begin
-    sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
-    Gerador.wGrupo('distNSU');
-    Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
-    Gerador.wGrupo('/distNSU');
+    if FchNFe = '' then
+    begin
+      sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
+      Gerador.wGrupo('distNSU');
+      Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
+      Gerador.wGrupo('/distNSU');
+    end
+    else begin
+      Gerador.wGrupo('consChNFe');
+      Gerador.wCampo(tcStr, 'A12', 'chNFe', 44, 44, 1, FchNFe, DSC_CHAVE);
+
+      if not ValidarChave(FchNFe) then
+        Gerador.wAlerta('A12', 'chNFe', '', 'Chave de NFe inválida');
+
+      Gerador.wGrupo('/consChNFe');
+    end;
   end
   else
   begin

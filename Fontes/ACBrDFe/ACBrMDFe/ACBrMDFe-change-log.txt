@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2016
+-- Diversos --
+[+] Implementado os métodos: DistribuicaoDFePorUltNSU e DistribuicaoDFePorNSU 
+   por: Italo Jurisato Junior
+
 26/10/2016
 -- pmdfeConversaoMDFe --
 [*] Inclusão do Tipo de Responsável pelo Seguro e das funções de conversão.

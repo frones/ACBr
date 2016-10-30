@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/10/2016
+-- Diversos --
+[+] Implementado os métodos: DistribuicaoDFePorUltNSU, DistribuicaoDFePorNSU e 
+    DistribuicaoDFePorchNFe
+   por: Elton da Motta Barbosa / Italo Jurisato Junior
+
 24/10/2016
 -- ACBrNFeDANFEFRDM.pas
 	Modificação para melhorar desempenho quando muitos itens e não repintar o QrCode

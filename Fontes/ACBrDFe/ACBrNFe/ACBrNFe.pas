@@ -99,6 +99,9 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesNFe;
+    function Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+      chNFe: String): Boolean;
+
     procedure SetConfiguracoes(AValue: TConfiguracoesNFe);
     procedure SetDANFE(const Value: TACBrNFeDANFEClass);
   protected
@@ -170,8 +173,14 @@ type
 
     function AdministrarCSC(ARaizCNPJ: String; AIndOP: TpcnIndOperacao;
       AIdCSC: integer; ACodigoCSC: String): Boolean;
-    function DistribuicaoDFe(AcUFAutor: integer;
-      ACNPJCPF, AultNSU, ANSU: String): Boolean;
+    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
+      ANSU: String): Boolean;
+    function DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+      AultNSU: String): Boolean;
+    function DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+      ANSU: String): Boolean;
+    function DistribuicaoDFePorChaveNFe(AcUFAutor: integer; ACNPJCPF,
+      AchNFe: String): Boolean;
     function Inutilizar(ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
 
@@ -781,6 +790,7 @@ end;
 function TACBrNFe.ConsultaNFeDest(CNPJ: String; IndNFe: TpcnIndicadorNFe;
   IndEmi: TpcnIndicadorEmissor; ultNSU: String): Boolean;
 begin
+  // Desativar o acesso a esse serviço após 02/05/2017
   WebServices.ConsNFeDest.CNPJ := CNPJ;
   WebServices.ConsNFeDest.indNFe := IndNFe;
   WebServices.ConsNFeDest.indEmi := IndEmi;
@@ -794,6 +804,7 @@ end;
 
 function TACBrNFe.Download: Boolean;
 begin
+  // Desativar o acesso a esse serviço após 02/05/2017
   Result := WebServices.DownloadNFe.Executar;
 
   if not Result then
@@ -858,18 +869,43 @@ begin
     GerarException( WebServices.AdministrarCSCNFCe.Msg );
 end;
 
-function TACBrNFe.DistribuicaoDFe(AcUFAutor: integer;
-  ACNPJCPF, AultNSU, ANSU: String): Boolean;
+function TACBrNFe.Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+  chNFe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;
+  WebServices.DistribuicaoDFe.chNFe := chNFe;
 
   Result := WebServices.DistribuicaoDFe.Executar;
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
+end;
+
+function TACBrNFe.DistribuicaoDFe(AcUFAutor: integer;
+  ACNPJCPF, AultNSU, ANSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, ANSU, '');
+end;
+
+function TACBrNFe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+  AultNSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, '', '');
+end;
+
+function TACBrNFe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+  ANSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
+end;
+
+function TACBrNFe.DistribuicaoDFePorChaveNFe(AcUFAutor: integer; ACNPJCPF,
+  AchNFe: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchNFe);
 end;
 
 function TACBrNFe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,

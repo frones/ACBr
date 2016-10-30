@@ -387,7 +387,6 @@ type
 
   TDistribuicaoDFe = class(TMDFeWebService)
   private
-//    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
@@ -408,7 +407,6 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-//    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
@@ -2217,7 +2215,6 @@ begin
   DistDFeInt := TDistDFeInt.Create;
   try
     DistDFeInt.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
-//    DistDFeInt.cUFAutor := FcUFAutor;
     DistDFeInt.CNPJCPF := FCNPJCPF;
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;

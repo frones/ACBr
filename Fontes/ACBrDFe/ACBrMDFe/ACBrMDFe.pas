@@ -68,6 +68,8 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesMDFe;
+    function Distribuicao(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+
     procedure SetConfiguracoes(AValue: TConfiguracoesMDFe);
     procedure SetDAMDFE(const Value: TACBrMDFeDAMDFEClass);
   protected
@@ -122,7 +124,9 @@ type
     procedure SetStatus(const stNewStatus: TStatusACBrMDFe);
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
-    function DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+//    function DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+    function DistribuicaoDFePorUltNSU(ACNPJCPF, AultNSU: String): Boolean;
+    function DistribuicaoDFePorNSU(ACNPJCPF, ANSU: String): Boolean;
 
   published
     property Configuracoes: TConfiguracoesMDFe
@@ -636,9 +640,8 @@ begin
      DAMDFE.ImprimirEVENTOPDF(nil);
 end;
 
-function TACBrMDFe.DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+function TACBrMDFe.Distribuicao(ACNPJCPF, AultNSU, ANSU: String): Boolean;
 begin
-//  WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;
@@ -647,6 +650,21 @@ begin
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
+end;
+
+//function TACBrMDFe.DistribuicaoDFe(ACNPJCPF, AultNSU, ANSU: String): Boolean;
+//begin
+//  Result := Distribuicao(ACNPJCPF, AultNSU, ANSU);
+//end;
+
+function TACBrMDFe.DistribuicaoDFePorUltNSU(ACNPJCPF, AultNSU: String): Boolean;
+begin
+  Result := Distribuicao(ACNPJCPF, AultNSU, '');
+end;
+
+function TACBrMDFe.DistribuicaoDFePorNSU(ACNPJCPF, ANSU: String): Boolean;
+begin
+  Result := Distribuicao(ACNPJCPF, '', ANSU);
 end;
 
 end.

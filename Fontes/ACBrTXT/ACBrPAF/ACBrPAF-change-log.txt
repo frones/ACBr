@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/10/2016
+[-] Correção no registro Z tratar informações para upper case igual ao registro N
+		por : Juliomar Marchetti
+		
 15/09/2016
 [*] Validação no bloco J1 e J2 para trocar a informação por ? para validar
 		http://www.projetoacbr.com.br/forum/topic/32423-registro-j1-e-j2/

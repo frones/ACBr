@@ -499,18 +499,18 @@ type
     fCOD_ITEM:    String;
     fQTD_COR_POS: Double;
     fQTD_COR_NEG: Double;
-    fIND_EST:     String;
+    fIND_EST: TACBrIndEstoque;
     fCOD_PART:    String;
   public
     constructor Create(AOwner: TRegistroK100); virtual; /// Create
     destructor Destroy; override; /// Destroy
 
-    property DT_EST      : TDateTime read fDT_EST      write fDT_EST;
-    property COD_ITEM    : String    read fCOD_ITEM    write fCOD_ITEM;
-    property QTD_COR_POS : Double    read fQTD_COR_POS write fQTD_COR_POS;
-    property QTD_COR_NEG : Double    read fQTD_COR_NEG write fQTD_COR_NEG;
-    property IND_EST     : String    read fIND_EST     write fIND_EST;
-    property COD_PART    : String    read fCOD_PART    write fCOD_PART;
+    property DT_EST      : TDateTime       read fDT_EST      write fDT_EST;
+    property COD_ITEM    : String          read fCOD_ITEM    write fCOD_ITEM;
+    property QTD_COR_POS : Double          read fQTD_COR_POS write fQTD_COR_POS;
+    property QTD_COR_NEG : Double          read fQTD_COR_NEG write fQTD_COR_NEG;
+    property IND_EST     : TACBrIndEstoque read fIND_EST     write fIND_EST;
+    property COD_PART    : String          read fCOD_PART    write fCOD_PART;
   end;
 
   /// Registro K280 - Lista

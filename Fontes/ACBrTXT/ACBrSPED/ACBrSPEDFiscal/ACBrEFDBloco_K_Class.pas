@@ -510,7 +510,7 @@ begin
                LFill( COD_ITEM ) +
                DFill( QTD_COR_POS , 3 ) +
                DFill( QTD_COR_NEG , 3 ) +
-               LFill( IND_EST ) +
+               LFill( Integer(IND_EST), 0 ) +
                LFill( COD_PART ));
         end;
         RegistroK990.QTD_LIN_K := RegistroK990.QTD_LIN_K + 1;

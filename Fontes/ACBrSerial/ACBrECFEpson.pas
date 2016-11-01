@@ -2681,10 +2681,23 @@ begin
         // Isso deve ser tratado pela rotina chamadora... filtrar esses caracteres aqui, afeta a rotina de
         // TAGS de formatação (que usa caracteres de controle)
 
-        L := SL[I];
-        EpsonComando.Comando  := '0E02' ;
-        EpsonComando.AddParamString( L ) ;
-        EnviaComando ;
+        try
+          L := SL[I];
+          EpsonComando.Comando  := '0E02' ;
+          EpsonComando.AddParamString( L ) ;
+          EnviaComando ;
+        except
+          on E : Exception do
+          begin
+            if (pos('0E01',E.Message) <> 0) then   // Erro: 0E01 - Número de linhas em documento excedido.
+            begin
+              FechaRelatorio;
+              raise;
+            end
+            else
+              raise ;
+          end ;
+        end;
      end ;
   finally
      SL.Free ;

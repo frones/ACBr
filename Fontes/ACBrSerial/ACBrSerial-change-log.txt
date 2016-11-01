@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/11/2016
+-- ACBrECFEpson --
+[*] Ajuste no método "LinhaRelatorioGerencial", para que o mesmo Feche o
+    Relatório Gerencial, quando o Limite máximo de linhas for atingido.
+    http://www.projetoacbr.com.br/forum/topic/32569-certificação-paygo-passo-26
+    (por: DSA)
+
 Data: 21/10/2016
 -- ACBrCHQBematech --
 [-] acerto para impressão correta de cheques na impressora Bematech

@@ -3292,23 +3292,29 @@ begin
 
                    if (IPI.vBC > 0) or
                       (IPI.qUnid > 0) or
-                      (IPI.vIPI > 0) then
+                      (IPI.vIPI > 0) or
+                      (IPI.cEnq = '999') then
                     begin
-                      sSecao := 'IPI'+IntToStrZero(I+1,3) ;
+                      sSecao := 'IPI'+IntToStrZero(I+1,3);
+
                       with IPI do
                        begin
                          INIRec.WriteString(  sSecao,'CST',CSTIPIToStr(CST)) ;
-                         INIRec.WriteString(  sSecao,'ClasseEnquadramento',clEnq);
-                         INIRec.WriteString(  sSecao,'CNPJProdutor'       ,CNPJProd);
-                         INIRec.WriteString(  sSecao,'CodigoSeloIPI'      ,cSelo);
-                         INIRec.WriteInteger( sSecao,'QuantidadeSelos'    ,qSelo);
                          INIRec.WriteString(  sSecao,'CodigoEnquadramento',cEnq);
 
-                         INIRec.WriteFloat( sSecao,'ValorBase'   ,vBC);
-                         INIRec.WriteFloat(sSecao,'Quantidade'  ,qUnid);
-                         INIRec.WriteFloat(sSecao,'ValorUnidade',vUnid);
-                         INIRec.WriteFloat(sSecao,'Aliquota'    ,pIPI);
-                         INIRec.WriteFloat(sSecao,'Valor'       ,vIPI);
+                         if ( cEnq <> '999' ) then
+                          begin
+                            INIRec.WriteString(  sSecao,'ClasseEnquadramento',clEnq);
+                            INIRec.WriteString(  sSecao,'CNPJProdutor'       ,CNPJProd);
+                            INIRec.WriteString(  sSecao,'CodigoSeloIPI'      ,cSelo);
+                            INIRec.WriteInteger( sSecao,'QuantidadeSelos'    ,qSelo);
+
+                            INIRec.WriteFloat( sSecao,'ValorBase'   ,vBC);
+                            INIRec.WriteFloat(sSecao,'Quantidade'  ,qUnid);
+                            INIRec.WriteFloat(sSecao,'ValorUnidade',vUnid);
+                            INIRec.WriteFloat(sSecao,'Aliquota'    ,pIPI);
+                            INIRec.WriteFloat(sSecao,'Valor'       ,vIPI);
+                          end;
                        end;
                     end;
 

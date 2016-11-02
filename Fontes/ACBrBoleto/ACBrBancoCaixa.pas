@@ -828,7 +828,7 @@ end;
 function TACBrCaixaEconomica.CodOcorrenciaToTipo(
   const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
-
+  Result := toTipoOcorrenciaNenhum;
   if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
   begin
     case CodOcorrencia of

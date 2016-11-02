@@ -316,7 +316,6 @@ var
    Parc  : TACBrTEFDRespParcela;
    CB    : TACBrTEFDRespCB;
    LinStr: AnsiString;
-   TemParcelas : Boolean;
 begin
    fpValorTotal  := 0;
    fpImagemComprovante1aVia.Clear;
@@ -324,7 +323,6 @@ begin
    fpDebito    := False;
    fpCredito   := False;
    fpDigitado  := False;
-   TemParcelas := False;
 
    for I := 0 to Conteudo.Count - 1 do
    begin
@@ -380,7 +378,6 @@ begin
        134 : fpNSU                         := LinStr;
        139 : fpValorEntradaCDC             := Linha.Informacao.AsFloat;
        140 : fpDataEntradaCDC              := Linha.Informacao.AsDate;
-       141 : TemParcelas                   := True;
        156 : fpRede                        := LinStr;
        501 : fpTipoPessoa                  := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0,'J','F')[1]);
        502 : fpDocumentoPessoa             := LinStr ;
@@ -460,19 +457,6 @@ begin
 
    fpQtdLinhasComprovante := max( fpImagemComprovante1aVia.Count,
                                   fpImagemComprovante2aVia.Count ) ;
-
-//   fpParcelas.Clear;
-//   if TemParcelas then
-//   begin
-//      for I := 1 to fpQtdParcelas do
-//      begin
-//         Parc := TACBrTEFDRespParcela.create;
-//         Parc.Vencimento := LeInformacao( 141, I).AsDate ;
-//         Parc.Valor      := LeInformacao( 142, I).AsFloat ;
-//
-//         fpParcelas.Add(Parc);
-//      end;
-//   end;
 
   // leitura de parcelas conforme nova documentação
   // 141 e 142 foram removidos em Setembro de 2014

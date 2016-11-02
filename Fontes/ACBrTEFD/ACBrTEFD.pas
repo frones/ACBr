@@ -576,8 +576,8 @@ begin
   if not Assigned( OnComandaECF )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECF" não programado' ) ) ;
 
-	if not Assigned( OnAguardaResp) and (GP = gpCliSiTef) then
-		raise EACBrTEFDErro.Create( ACBrStr('Evento "OnAguardaResp" não programado' ) ) ;
+  if not Assigned( OnAguardaResp) and (GP = gpCliSiTef) then
+	raise EACBrTEFDErro.Create( ACBrStr('Evento "OnAguardaResp" não programado' ) ) ;
 
   if not Assigned( OnComandaECFAbreVinculado )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFAbreVinculado" não programado' ) ) ;

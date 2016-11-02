@@ -57,21 +57,24 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="FCL"/>
+        <PackageName Value="ACBrSerial"/>
       </Item1>
       <Item2>
-        <PackageName Value="MemDSLaz"/>
+        <PackageName Value="FCL"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="MemDSLaz"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item4>
+      <Item5>
+        <PackageName Value="LCL"/>
+      </Item5>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="MTerTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -84,6 +87,14 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="configuraserial.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfiguraSerial"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="ConfiguraSerial"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -96,24 +107,9 @@
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
-    <Parsing>
-      <SyntaxOptions>
-        <IncludeAssertionCode Value="True"/>
-      </SyntaxOptions>
-    </Parsing>
-    <CodeGeneration>
-      <Checks>
-        <IOChecks Value="True"/>
-        <RangeChecks Value="True"/>
-        <OverflowChecks Value="True"/>
-        <StackChecks Value="True"/>
-      </Checks>
-    </CodeGeneration>
     <Linking>
       <Debugging>
-        <DebugInfoType Value="dsDwarf2Set"/>
         <UseHeaptrc Value="True"/>
-        <UseExternalDbgSyms Value="True"/>
       </Debugging>
       <Options>
         <Win32>

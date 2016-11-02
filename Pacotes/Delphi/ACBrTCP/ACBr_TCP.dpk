@@ -49,12 +49,6 @@ contains
   ACBrNFPws in '..\..\..\Fontes\ACBrTCP\ACBrNFPws.pas',
   ACBrSpedTabelas in '..\..\..\Fontes\ACBrTCP\ACBrSpedTabelas.pas',
   ACBrSedex in '..\..\..\Fontes\ACBrTCP\ACBrSedex.pas',
-  ACBrNCMs in '..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas',
-  ACBrMTer in '..\..\..\Fontes\ACBrTCP\ACBrMTer.pas',
-  ACBrMTerClass in '..\..\..\Fontes\ACBrTCP\ACBrMTerClass.pas',
-  ACBrMTerVT100 in '..\..\..\Fontes\ACBrTCP\ACBrMTerVT100.pas',
-  ACBrMTerStxEtx in '..\..\..\Fontes\ACBrTCP\ACBrMTerStxEtx.pas',
-  ACBrMTerPMTG in '..\..\..\Fontes\ACBrTCP\ACBrMTerPMTG.pas';
-
+  ACBrNCMs in '..\..\..\Fontes\ACBrTCP\ACBrNCMs.pas';
 end.
 

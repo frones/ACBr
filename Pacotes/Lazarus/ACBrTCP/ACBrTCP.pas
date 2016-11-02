@@ -10,7 +10,6 @@ uses
   ACBrSocket, ACBrCEP, ACBrTCPReg, ACBrIBGE, ACBrCNIEE, ACBrSuframa, 
   ACBrDownload, ACBrDownloadClass, ACBrNFPws, ACBrConsultaCNPJ, ACBrIBPTax, 
   ACBrCotacao, ACBrMail, ACBrConsultaCPF, ACBrSpedTabelas, ACBrSedex, 
-  ACBrMTer, ACBrMTerClass, ACBrMTerVT100, ACBrMTerStxEtx, ACBrMTerPMTG, 
   LazarusPackageIntf;
 
 implementation

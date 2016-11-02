@@ -132,7 +132,7 @@ var
   S: AnsiString;
 begin
   Result := '';
-  S := LimparConteudo(aValue);
+  S := LimparConteudoParaEnviar(aValue);
 
   for I := 1 to Length(S) do
   begin

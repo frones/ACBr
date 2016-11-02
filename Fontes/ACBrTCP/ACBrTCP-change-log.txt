@@ -37,8 +37,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/11/2016
+-- ACBrTCP, ACBrMTER --
+[*] Ajuste para separação de ACBrMTER do pacote ACBrTCP. Isso se faz necessário
+    pois agora o ACBrMTER depende de ACBrTCP e ACBrSerial. A separação evita que
+    o pacote ACBrTCP tenha dependencia de ACBrSerial.
+    Para utilizar o componente ACBrMTER, será necessário instalar o pacote
+    ACBr_MTER.dpk   (por: DSA)
+
 25/10/2016
 -- ACBrCEP --
+[*] Ajuste para que o método "TACBrWSCorreiosSIGEP.BuscarPorCEP", dispare
+    esception, caso o CEP não seja encontrado
+    http://www.projetoacbr.com.br/forum/topic/3685-acbrcep-erro-ao-pesquisar-cep-%C3%BAnico/?do=findComment&comment=218256
 
 14/10/2016
 -- ACBrSocket --

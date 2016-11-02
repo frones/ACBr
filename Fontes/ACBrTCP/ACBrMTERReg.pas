@@ -31,7 +31,7 @@
 {                                                                              }
 {******************************************************************************}
 
-unit ACBrTCPReg;
+unit ACBrMTERReg;
 
 interface
 
@@ -41,27 +41,22 @@ procedure Register;
 
 implementation
 
-Uses ACBrSocket, ACBrCEP, ACBrIBGE, ACBrNFPws, ACBrCNIEE, ACBrSuframa, ACBrDownload,
-   SysUtils, ACBrIBPTax, ACBrConsultaCNPJ, ACBrConsultaCPF, ACBrCotacao, ACBrMail,
-   ACBrSpedTabelas, ACBrSedex, ACBrNCMs;
+Uses 
+   SysUtils, ACBrMTer;
 
 {$IFNDEF FPC}
-   {$R ACBrTCP.dcr}
+   {$R ACBrMTER.dcr}
 {$ENDIF}
 
 procedure Register;
 begin
-  RegisterComponents('ACBrTCP',
-    [ TACBrTCPServer, TACBrCEP, TACBrIBGE, TACBrNFPws, TACBrCNIEE, TACBrSuframa,
-      TACBrDownload, TACBrIBPTax, TACBrConsultaCNPJ, TACBrConsultaCPF, TACBrCotacao,
-      TACBrMail, TACBrSpedTabelas, TACBrSedex, TACBrNCMs ]
-  );
+  RegisterComponents('ACBrTCP', [ TACBrMTer ] );
 end;
 
 {$IFDEF FPC}
 {$IFNDEF FRAMEWORK}
 initialization
-   {$i ACBrTCP.lrs}
+   {$i ACBrMTER.lrs}
 {$ENDIF}
 {$ENDIF}
 

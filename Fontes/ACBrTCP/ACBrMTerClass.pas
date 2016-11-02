@@ -64,7 +64,6 @@ type
 
   protected
     fpModeloStr: String;
-    function LimparConteudo(aString: AnsiString): AnsiString;
 
   public
     constructor Create(aOwner: TComponent);
@@ -84,6 +83,7 @@ type
     function ComandoLimparLinha(aLinha: Integer): AnsiString; virtual;
 
     function InterpretarResposta(aRecebido: AnsiString): AnsiString; virtual;
+    function LimparConteudoParaEnviar(aString: AnsiString): AnsiString;
 
     property ModeloStr: String read fpModeloStr;
   end;
@@ -91,37 +91,14 @@ type
 
 implementation
 
-uses ACBrMTer, ACBrUtil;
+uses
+  ACBrMTer, ACBrUtil;
 
 { TACBrMTerClass }
 
 procedure TACBrMTerClass.DisparaErroNaoImplementado(NomeMetodo: String);
 begin
   raise Exception.Create(ACBrStr('Metodo: '+NomeMetodo+', não implementada em: '+ModeloStr));
-end;
-
-function TACBrMTerClass.LimparConteudo(aString: AnsiString): AnsiString;
-var
-  aChar: AnsiChar;
-  I: Integer;
-begin
-  // Função retira os caracteres estranhos da String,
-  // Usada para enviar o eco ao Micro Terminal.
-  Result := '';
-
-  if (aString = EmptyStr) then
-    Exit;
-
-  for I := 0 to Length(aString) do
-  begin
-    aChar := aString[I];
-
-    { Mantem apenas Letras/Numeros/Pontos/Sinais }
-    if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
-      Continue;
-
-    Result := Result + aChar;
-  end;
 end;
 
 constructor TACBrMTerClass.Create(aOwner: TComponent);
@@ -164,7 +141,7 @@ end;
 
 function TACBrMTerClass.ComandoEco(aValue: AnsiString): AnsiString;
 begin
-  Result := ComandoEnviarTexto(LimparConteudo(aValue));
+  Result := ComandoEnviarTexto(LimparConteudoParaEnviar(aValue));
 end;
 
 function TACBrMTerClass.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
@@ -210,11 +187,33 @@ begin
 end;
 
 function TACBrMTerClass.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+begin
+  Result := aRecebido;
+end;
+
+function TACBrMTerClass.LimparConteudoParaEnviar(aString: AnsiString): AnsiString;
 var
   aChar: AnsiChar;
   I: Integer;
 begin
-  Result := aRecebido;
+  // Função retira os caracteres estranhos da String,
+  // Usada para enviar o eco ao Micro Terminal.
+  Result := '';
+
+  if (aString = EmptyStr) then
+    Exit;
+
+  for I := 0 to Length(aString) do
+  begin
+    aChar := aString[I];
+
+    { Mantem apenas Letras/Numeros/Pontos/Sinais }
+    if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
+      Continue;
+
+    Result := Result + aChar;
+  end;
+
 end;
 
 end.

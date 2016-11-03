@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/11/2016
+-- ACBrECFFiscNET --
+[*] Ajuste para nunca tentar imprimir mais de 8 linhas do Rodapé
+    www.projetoacbr.com.br/forum/topic/15230-acbrecf-fiscnet-fechacupom/
+
 Data: 01/11/2016
 -- ACBrECFEpson --
 [*] Ajuste no método "LinhaRelatorioGerencial", para que o mesmo Feche o

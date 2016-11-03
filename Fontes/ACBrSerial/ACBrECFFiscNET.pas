@@ -1162,6 +1162,8 @@ begin
        Obs := fsPAF
     else
        Obs := fsPAF + #10 + Obs ;
+
+    Obs := AjustaLinhas(Obs, Colunas, NumMaxLinhasRodape);
   end ;
 
   { Se tiver Observações no rodape, deve enviar antes do consumidor }

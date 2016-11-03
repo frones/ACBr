@@ -46,7 +46,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P,
+  Dialogs, StdCtrls, ACBrPAF, ACBrPAF_D, ACBrPAF_E, ACBrPAF_P, ACBrPAF_V,
   ACBrPAF_R, ACBrPAF_T, ACBrPaf_H, ACBrPaf_Z, ACBrPAFRegistros, Math, ACBrEAD, jpeg, ExtCtrls,
   ComCtrls;
 
@@ -76,6 +76,7 @@ type
     mmArquivoGerado: TMemo;
     btnZ: TButton;
     cbEAD: TCheckBox;
+    Button1: TButton;
     procedure FormShow(Sender: TObject);
     procedure PreencherHeader(Header: TRegistroX1);
     function GerarDados(Tipo: Char; Tam: integer): Variant;
@@ -86,6 +87,7 @@ type
     procedure btnRegistrosPAFClick(Sender: TObject);
     procedure btnZClick(Sender: TObject);
     procedure cbEADClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     function QualquerNumero: Integer;
@@ -243,7 +245,7 @@ begin
     begin
       with RegistroZ4.New do
         begin
-          CNPJ := '99.999.999/9999-11';
+          CPF_CNPJ := '99.999.999/9999-11';
           VL_TOTAL := 10 * I;
           DATA_INI := Now;
           DATA_FIM := Now;
@@ -251,6 +253,38 @@ begin
     end;
   end;
   ACBrPAF.SaveToFile_Z('PAF_Z.TXT');
+end;
+
+procedure TForm6.Button1Click(Sender: TObject);
+var
+  V4: TRegistroV4;
+  i: integer;
+begin
+  // registro V1
+  PreencherHeader(ACBrPAF.PAF_V.RegistroV1); // preencher header do arquivo
+  PreencherHeader(ACBrPAF.PAF_V.RegistroV2); // preencher header do arquivo
+  with ACBrPAF.PAF_V do
+  begin
+    with RegistroV3 do
+      begin
+        LAUDO  := '11111';
+        NOME   := 'NOME';
+        VERSAO := '1.00';
+      end;
+    // registro Z4
+    RegistroV4.Clear;
+    for I := 1 to 5 do
+    begin
+      with RegistroV4.New do
+        begin
+          NUMUMEROFABRICACAO := '99.999.999/9999-1'+ IntToStr(I);
+          MARCAECF := 'MARCA'+IntToStr(I);
+          MFADICIONAL := 'B';
+          MODELOECF := 'MODELO'+IntToStr(I);
+        end;
+    end;
+  end;
+  ACBrPAF.SaveToFile_V('PAF_V.TXT');
 end;
 
 procedure TForm6.cbEADClick(Sender: TObject);

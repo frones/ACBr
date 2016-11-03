@@ -203,10 +203,10 @@ begin
     begin
       with FRegistroZ4.Items[intFor] do
       begin
-        Check(ValidarCNPJouCPF(CNPJ) = '', '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+        Check(ValidarCNPJouCPF(CPF_CNPJ) = '', '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CPF_CNPJ]);
 
         Add( LFill('Z4') +
-             LFill(limpaCampo(CNPJ)      , 14) +
+             LFill(limpaCampo(CPF_CNPJ)      , 14) +
              LFill(VL_TOTAL  , 14, 2) +
              LFill(DATA_INI  , 'yyyymmdd') +
              LFill(DATA_FIM  , 'yyyymmdd') +

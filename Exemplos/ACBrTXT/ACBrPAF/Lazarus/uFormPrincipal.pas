@@ -188,7 +188,7 @@ begin
     begin
       with RegistroZ4.New do
         begin
-          CNPJ := '99.999.999/9999-11';
+          CPF_CNPJ := '99.999.999/9999-11';
           VL_TOTAL := 10 * I;
           DATA_INI := Now;
           DATA_FIM := Now;

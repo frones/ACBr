@@ -59,12 +59,12 @@ type
   // REGISTRO TIPO Z4 – Totalização de vendas a CPF/CNPJ:
   TRegistroZ4 = Class
   private
-    fCNPJ: string;         /// Número do CPF/CNPJ identificado no campo previsto no item 2 do Requsito VIII.
+    fCPF_CNPJ: string;         /// Número do CPF/CNPJ identificado no campo previsto no item 2 do Requsito VIII.
     fVl_Total: Currency ;  /// Total de vendas no mês, com duas casas decimais, ao CPF/CNPJ indicado no campo 02.
     fData_INI: TDateTime;  /// Primeiro dia do mês a que se refere o relatório de vendas ao CPF/CNPJ identificado no campo 02
     fData_FIN: TDateTime;  /// Último dia do mês a que se refere o relatório de vendas ao CPF/CNPJ identificado no campo 02
   public
-    property CNPJ: string read FCNPJ write FCNPJ;
+    property CPF_CNPJ: string read FCPF_CNPJ write FCPF_CNPJ;
     property VL_TOTAL: Currency  read fVl_Total write fVl_Total;
     property DATA_INI: TDateTime read fData_INI write fData_INI;
     property DATA_FIM: TDateTime read fData_FIN write fData_FIN;

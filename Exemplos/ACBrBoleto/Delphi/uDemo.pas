@@ -155,7 +155,6 @@ begin
     Sacado.Cidade := edtCidade.Text;
     Sacado.UF := edtUF.Text;
     Sacado.CEP := OnlyNumber(edtCEP.Text);
-    ValorAbatimento := StrToCurrDef(edtValorAbatimento.Text, 0);
     LocalPagamento := edtLocalPag.Text;
     ValorMoraJuros := StrToCurrDef(edtMoraJuros.Text, 0);
     ValorDesconto := StrToCurrDef(edtValorDesconto.Text, 0);
@@ -187,7 +186,7 @@ begin
   Convertido := true;
 
   repeat
-    InputQuery('ACBrBoleto', 'Número de Boletos a incluir', NrTitulosStr);
+    InputQuery('ACBrBoleto', 'NÃºmero de Boletos a incluir', NrTitulosStr);
     try
       NrTitulos := StrToInt(NrTitulosStr);
     except
@@ -201,7 +200,7 @@ begin
 
     with Titulo do
     begin
-      LocalPagamento := 'Pagar preferêncialmente nas agências do Bradesco'; // MEnsagem exigida pelo bradesco
+      LocalPagamento := 'Pagar preferÃªncialmente nas agÃªncias do Bradesco'; // MEnsagem exigida pelo bradesco
       Vencimento := IncMonth(EncodeDate(2010, 05, 10), I);
       DataDocumento := EncodeDate(2010, 04, 10);
       NumeroDocumento := PadRight(IntToStr(I), 6, '0');

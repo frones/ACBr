@@ -257,10 +257,6 @@ begin
   FdmDanfe.frxReport.PrintOptions.ShowDialog := FShowDialog;
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
 
-//  if Assigned(ACBrNFe) then
-//   if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFCe)then
-//     FdmDanfe.frxReport.PrintOptions.PrintMode := pmSplit; 
-
   // Define a impressora
   if Length(Impressora) > 0 then
     FdmDanfe.frxReport.PrintOptions.Printer := FImpressora;
@@ -292,19 +288,22 @@ begin
       raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
   end;
 
-  for i := 0 to FdmDanfe.frxReport.PreviewPages.Count - 1 do
-  begin
-    Page := FdmDanfe.frxReport.PreviewPages.Page[i];
-    if MargemSuperior > 0 then
-      Page.TopMargin    := MargemSuperior * 10;
-    if MargemInferior > 0 then
-      Page.BottomMargin := MargemInferior * 10;
-    if MargemEsquerda > 0 then
-      Page.LeftMargin   := MargemEsquerda * 10;
-    if MargemDireita > 0 then
-      Page.RightMargin  := MargemDireita * 10;
-    FdmDanfe.frxReport.PreviewPages.ModifyPage(i, Page);
-  end;
+  if Assigned(FdmDanfe.NFe) and
+    (FdmDanfe.NFe.Ide.modelo = 55) then
+//  if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFe)then
+    for i := 0 to FdmDanfe.frxReport.PreviewPages.Count - 1 do
+    begin
+      Page := FdmDanfe.frxReport.PreviewPages.Page[i];
+      if MargemSuperior > 0 then
+        Page.TopMargin    := MargemSuperior * 10;
+      if MargemInferior > 0 then
+        Page.BottomMargin := MargemInferior * 10;
+      if MargemEsquerda > 0 then
+        Page.LeftMargin   := MargemEsquerda * 10;
+      if MargemDireita > 0 then
+        Page.RightMargin  := MargemDireita * 10;
+      FdmDanfe.frxReport.PreviewPages.ModifyPage(i, Page);
+    end;
 end;
 
 function TACBrNFeDANFEFR.PrepareReportEvento: Boolean;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2016
+--ACBrNFeDANFEFR
+[*] Modificação para aplicar a tratativa das margens somente para modelo 55 de NF-e
+		por : Juliomar Marchetti
+		
 30/10/2016
 -- Diversos --
 [+] Implementado os métodos: DistribuicaoDFePorUltNSU, DistribuicaoDFePorNSU e 

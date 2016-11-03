@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2016
+-- pcteEventoCTe
+[-] Correção a propriedade xObs estava usando para gravar as informações na xJust
+		http://www.projetoacbr.com.br/forum/topic/33266-corre%C3%A7%C3%A3o-re-impress%C3%A3o-de-evento/
+		por : Juliomar Marchetti
+		
 26/10/2016
 -- pcteConversaoCTe --
 [*] Inclusão do Tipo de Responsável pelo Seguro e das funções de conversão.

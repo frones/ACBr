@@ -114,6 +114,7 @@ type
     FnProt: String;
 
     FxJust: String;    // Cancelamento
+    FxOBS: String;    // Cancelamento
 
     FvICMS: Currency;  // EPEC
     FvTPrest: Currency;
@@ -145,7 +146,7 @@ type
     property nProt: String      read FnProt      write FnProt;
 
     property xJust: String      read FxJust      write FxJust;
-    property xOBS: String       read FxJust      write FxJust;
+    property xOBS: String       read FxOBS       write FxOBS;
 
     property vICMS: Currency    read FvICMS      write FvICMS;
     property vTPrest: Currency  read FvTPrest    write FvTPrest;

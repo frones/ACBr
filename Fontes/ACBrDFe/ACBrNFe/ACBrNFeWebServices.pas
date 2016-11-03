@@ -330,6 +330,7 @@ type
     FxMotivo: String;
     FcUF: integer;
     FdhRecbto: TDateTime;
+    FNomeArquivo: String;
 
     FXML_ProcInutNFe: String;
 
@@ -365,6 +366,7 @@ type
     property cUF: integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
     property XML_ProcInutNFe: String read FXML_ProcInutNFe;
+    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
   end;
 
   { TNFeConsultaCadastro }
@@ -2415,6 +2417,7 @@ begin
                            FPRetWS +
                           '</ProcInutNFe>';
 
+      FNomeArquivo := PathWithDelim(GerarPathPorCNPJ) + GerarPrefixoArquivo + '-procInutNFe.xml';
       if FPConfiguracoesNFe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutNFe.xml',
           FXML_ProcInutNFe, GerarPathPorCNPJ);

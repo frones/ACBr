@@ -1,13 +1,15 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 350
+  Height = 439
   Top = 87
   Caption = 'DACTe - Retrato'
+  ClientHeight = 439
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 96
-    Top = -27
+    Left = 24
+    Top = -712
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175

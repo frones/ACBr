@@ -329,6 +329,7 @@ begin
                               'nSeqEvento='+IntToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.nSeqEvento)+sLineBreak+
                               'CNPJDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.CNPJDest+sLineBreak+
                               'emailDest='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.emailDest+sLineBreak+
+                              'Arquivo='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.NomeArquivo+sLineBreak+
                               'XML='+ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[0].RetInfEvento.XML+sLineBreak;
            except
              on E: Exception do
@@ -567,7 +568,9 @@ begin
                            'XMotivo='+ACBrNFe1.WebServices.Inutilizacao.XMotivo+sLineBreak+
                            'CUF='+IntToStr(ACBrNFe1.WebServices.Inutilizacao.CUF)+sLineBreak+
                            'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
-                           'NProt='+ACBrNFe1.WebServices.Inutilizacao.Protocolo+sLineBreak;
+                           'NProt='+ACBrNFe1.WebServices.Inutilizacao.Protocolo+sLineBreak+
+                           'Arquivo='+ACBrNFe1.WebServices.Inutilizacao.NomeArquivo+sLineBreak+
+                           'XML='+ACBrNFe1.WebServices.Inutilizacao.XML_ProcInutNFe+sLineBreak;
          end
         else if Cmd.Metodo = 'imprimirinutilizacao' then
          begin
@@ -633,7 +636,7 @@ begin
            try
               ACBrNFe1.ImprimirInutilizacaoPDF;
               ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
-              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-inu.pdf';
+              ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
               Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
            except
               raise Exception.Create('Erro ao criar o arquivo PDF');
@@ -857,7 +860,7 @@ begin
 
            if (Cmd.Metodo = 'criarnfe') or (Cmd.Metodo = 'criarenviarnfe') or
               (Cmd.Metodo = 'adicionarnfe') then
-              GerarIniNFe( Cmd.Params(0)  )
+              GerarIniNFe( Cmd.Params(0) )
            else
             begin
               if (Cmd.Metodo = 'criarnfesefaz') or (Cmd.Metodo = 'criarenviarnfesefaz') or
@@ -866,7 +869,6 @@ begin
                     if (copy(Cmd.Params(0), 1, 10) <> 'NOTAFISCAL') and (copy(Cmd.Params(0), 1, 11) <> 'NOTA FISCAL') then
                        if not FileExists(Cmd.Params(0)) then
                           raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
 
                     ACBrNFe1.NotasFiscais.Clear;
                     ACBrNFe1.NotasFiscais.Add;
@@ -1107,12 +1109,33 @@ begin
              Ocultar1.Click;
          end
 
-        else if (Cmd.Metodo = 'enviarevento') or  (Cmd.Metodo = 'cartadecorrecao') then   //NFe.EnviarEvento(cIniEvento)
+        else if (Cmd.Metodo = 'enviarevento') or
+           (Cmd.Metodo = 'cartadecorrecao') or
+           (Cmd.Metodo = 'xmlenviarevento') then
          begin
            Cmd.Resposta := '';
            ACBrNFe1.EventoNFe.Evento.Clear;
 
-           GerarIniEvento( Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao') );
+           if (Cmd.Metodo = 'xmlenviarevento') then
+            begin
+             if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+              begin
+                if FileExists(Cmd.Params(0)) then
+                 begin
+                   ACBrNFe1.EventoNFe.LerXML(Cmd.Params(0));
+                   ArqEvento := Cmd.Params(0);
+                 end
+                else
+                 begin
+                   ACBrNFe1.EventoNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+                   ArqEvento := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
+                 end;
+              end
+             else
+                raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+            end
+           else
+             GerarIniEvento( Cmd.Params(0), (Cmd.Metodo = 'cartadecorrecao') );
 
            ACBrNFe1.EnviarEvento(ACBrNFe1.EventoNFe.idLote);
 
@@ -1126,7 +1149,6 @@ begin
 
            for I:= 0 to ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Count-1 do
             begin
-
               Cmd.Resposta := Cmd.Resposta+sLineBreak+
                '[EVENTO'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+
                'id='        +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.Id+sLineBreak+
@@ -1142,7 +1164,9 @@ begin
                'CNPJDest='  +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.CNPJDest+sLineBreak+
                'emailDest=' +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.emailDest+sLineBreak+
                'dhRegEvento='+DateTimeToStr(ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.dhRegEvento)+sLineBreak+
-               'nProt='     +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.nProt+sLineBreak;
+               'nProt='     +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.nProt+sLineBreak+
+               'Arquivo='   +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.NomeArquivo+sLineBreak+
+               'XML='       +ACBrNFe1.WebServices.EnvEvento.EventoRetorno.retEvento.Items[I].RetInfEvento.XML+sLineBreak;
             end;
          end
 
@@ -1569,6 +1593,84 @@ begin
                 ACBrNFe1.EnviarEmail(
                   Cmd.Params(0),
                   SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(4)),Cmd.Params(4),edtEmailAssuntoNFe.Text) ),
+                  sMensagemEmail,
+                  CC,
+                  Anexos
+                );
+
+                Cmd.Resposta := 'Email enviado com sucesso';
+             except
+                on E: Exception do
+                 begin
+                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
+                 end;
+             end;
+
+           finally
+             CC.Free;
+             Anexos.Free;
+             sMensagemEmail.Free;
+           end;
+         end
+
+        else if Cmd.Metodo = 'enviaremailinutilizacao' then //NFe.EnviarEmailInutilizacao(cEmailDestino,cArqXMLInutilizacao,cEnviaPDF,[cAssunto],[cEmailsCopias],[cAnexos])
+         begin
+           if FileExists(Cmd.Params(1)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) or
+              FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml') then
+            begin
+              if FileExists(Cmd.Params(1)) then
+              begin
+                 ACBrNFe1.InutNFe.LerXML(Cmd.Params(1));
+                 ArqEvento := Cmd.Params(1);
+              end
+              else if FileExists(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
+              begin
+                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+                 ArqEvento := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
+              end
+              else
+              begin
+                 ACBrNFe1.InutNFe.LerXML(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml');
+                 ArqEvento := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml';
+              end
+            end
+            else
+               raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
+
+           ConfiguraDANFe(True, False);
+
+           if (Cmd.Params(2) = '1') then
+            begin
+              try
+                 ACBrNFe1.ImprimirInutilizacaoPDF;
+                 ArqPDF := OnlyNumber(ACBrNFe1.InutNFe.ID);
+                 ArqPDF := PathWithDelim(ACBrNFe1.DANFE.PathPDF)+ArqPDF+'-procInutNFe.pdf';
+              except
+                 raise Exception.Create('Erro ao criar o arquivo PDF');
+              end;
+            end;
+
+           sMensagemEmail := TStringList.Create;
+           CC:=TstringList.Create;
+           Anexos:=TstringList.Create;
+           try
+             sMensagemEmail.Text := SubstituirVariaveis( mmEmailMsgNFe.Lines.Text );
+
+             CC.DelimitedText := sLineBreak;
+             CC.Text := StringReplace(Cmd.Params(4),';',sLineBreak,[rfReplaceAll]);
+
+             Anexos.DelimitedText := sLineBreak;
+             Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
+
+             Anexos.Add(ArqEvento);
+             if (Cmd.Params(2) = '1') then
+                Anexos.Add(ArqPDF);
+
+             try
+                ACBrNFe1.EnviarEmail(
+                  Cmd.Params(0),
+                  SubstituirVariaveis( IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoNFe.Text) ),
                   sMensagemEmail,
                   CC,
                   Anexos

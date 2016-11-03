@@ -43,9 +43,37 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/11/2017
+[*]	Ajsute na impressão de DACTE para usar a função ACBrSTR na impressão da situação
+	tributária. Correção para o caso abaixo:
+	http://www.projetoacbr.com.br/forum/topic/33116-impressão-do-dacte/
+	por: Celso Marigo Junior
+
+03/11/2017
+[+]	Adicionado comando NFE.XMLEnviarEvento permite envio de evento usando o XML do mesmo.
+	Sugerido em: www.projetoacbr.com.br/forum/topic/33235-envio-da-cce-em-xml
+	por: Celso Marigo Junior
+
+03/11/2016
+http://www.projetoacbr.com.br/forum/topic/32986-ajustes-no-acbrmonitor-para-an%C3%A1lise/
+-- ACBrNFeWebServices.pas --
+[*] Adicionado propriedade NomeArquivo a classe TNFeInutilizacao para armazenar o nome e 
+	caminho do arquivo gerado
+
+-- DoACBrNFeUnit.pas --
+[*] Em 'imprimirinutilizacaopdf', corrigido o retorno do nome do arquivo gerado (PDF) 
+	armazenado na variável ArqPDF, estava com final '-inu.pdf' e o correto é '-procInutNFe.pdf';
+    No retorno do evento de Cancelamento ("cancelarnfe") foi adicionado o valor "Arquivo=", 
+	contendo o caminho e nome do arquivo gerado (Linha 332);
+    No retorno do evento de Cartão de correção ("enviarevento") foram adicionados os valores
+	"Arquivo=" contendo o caminho e o nome do arquivo gerado e "XML=" contendo o conteúdo do XML gerado;
+
+[+] Criado "enviaremailinutilizacao" para envio de e-mail de inutilização permitindo o envio do XML e do PDF;		
+	
+	Contribuição do fórum, usuario: Fabio Souza. Merge: Celso Marigo Junior.
+	
 01/11/2016
-[*]	Ajuste para ler tags do IPI quando CodigoEnquadramento=999,
-	neste caso lê o CST alem do próprio código.
+[*]	Ajuste para ler tags do IPI quando CodigoEnquadramento=999, neste caso lê o CST alem do próprio código.
 	por Celso Marigo Junior
 
 08/10/2016

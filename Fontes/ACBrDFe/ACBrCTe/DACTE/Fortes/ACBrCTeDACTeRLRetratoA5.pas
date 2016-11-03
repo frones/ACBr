@@ -1189,8 +1189,8 @@ begin
   rllVlrTotServico.Caption := FormatFloatBr(msk13x2, FCTe.vPrest.vTPrest);
   rllVlrTotReceber.Caption := FormatFloatBr(msk13x2, FCTe.vPrest.vRec);
 
-  rllSitTrib.Caption := CSTICMSToStr(FCTe.Imp.ICMS.SituTrib)+'-'+
-                        CSTICMSToStrTagPosText(FCTe.Imp.ICMS.SituTrib);
+  rllSitTrib.Caption := ACBrStr(CSTICMSToStr(FCTe.Imp.ICMS.SituTrib)+'-'+
+                        CSTICMSToStrTagPosText(FCTe.Imp.ICMS.SituTrib));
 {$ELSE}
   for i := 0 to FCTe.InfCarga.InfQ.Count - 1 do
    begin

@@ -51,6 +51,10 @@ implementation
 uses
   ACBrReg, ACBrDFeRegUtil, ACBrDFeConfiguracoes;
 
+{$IFNDEF FPC}
+   {$R ACBrBlocoX.dcr}
+{$ENDIF}
+
 procedure Register;
 begin
   RegisterComponents('ACBrBlocoX', [TACBrBlocoX]);
@@ -64,9 +68,9 @@ begin
 
 end;
 
-//{$ifdef FPC}
-//initialization
-//   {$i ACBrNFe.lrs}
-//{$endif}
+{$ifdef FPC}
+initialization
+   {$i ACBrBlocoX.lrs}
+{$endif}
 
 end.

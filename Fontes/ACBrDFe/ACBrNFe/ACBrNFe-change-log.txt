@@ -49,6 +49,12 @@ Símbolo : Significado
 
 03/11/2016
 --ACBrNFeDANFEFR
+[*] implementado as funcionalidades da danfe para eventos na impressão
+		http://www.projetoacbr.com.br/forum/topic/33281-servi%C3%A7o-travando-ao-emitir-cce-carta-de-corre%C3%A7%C3%A3o-eletr%C3%B4nica/
+		por : Juliomar Marchetti
+		
+03/11/2016
+--ACBrNFeDANFEFR
 [*] Modificação para aplicar a tratativa das margens somente para modelo 55 de NF-e
 		por : Juliomar Marchetti
 		

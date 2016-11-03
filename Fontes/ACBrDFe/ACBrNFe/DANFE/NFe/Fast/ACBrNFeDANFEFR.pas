@@ -336,7 +336,11 @@ begin
 
   FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
   FdmDanfe.frxReport.PrintOptions.ShowDialog := ShowDialog;
+  FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
 
+  // Define a impressora
+  if Length(Impressora) > 0 then
+    FdmDanfe.frxReport.PrintOptions.Printer := FImpressora;
   // preparar relatorio
   if Assigned(ACBrNFe) then
   begin

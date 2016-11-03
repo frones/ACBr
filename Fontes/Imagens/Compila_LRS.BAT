@@ -143,6 +143,15 @@ echo "* Arquivos    ACBrNFe.lrs, ACBrNFeDANFeRL.lrs     gerados    *"
 echo "**************************************************************"
 echo.
 
+:BlocoX
+%1\tools\lazres.exe ACBrBlocoX.lrs TACBrBlocoX.png
+move ACBrBlocoX.lrs ..\ACBrDFe\ACBrBlocoX
+echo.
+echo "****************************************"
+echo "* Arquivo   ACBrBlocoX.lrs   gerado    *"
+echo "****************************************"
+echo.
+
 :GNRE
 %1\tools\lazres.exe ACBrGNRE.lrs TACBrGNRE.bmp 
 move ACBrGNRE.lrs ..\ACBrDFe\ACBrGNRE

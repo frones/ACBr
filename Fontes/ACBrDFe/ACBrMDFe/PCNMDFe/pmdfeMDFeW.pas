@@ -275,7 +275,11 @@ begin
 
   GerarInfMunCarrega;
   GerarInfPercurso;
-  Gerador.wCampo(tcDatHor, '#024a', 'dhIniViagem', 19, 19, 0, MDFe.ide.dhIniViagem, DSC_DHINIVIAGEM);
+  if VersaoDF = ve100 then
+    Gerador.wCampo(tcDatHor, '#024a', 'dhIniViagem', 19, 19, 0, MDFe.ide.dhIniViagem, DSC_DHINIVIAGEM)
+  else
+    Gerador.wCampo(tcStr, '#024a', 'dhIniViagem', 25, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhIniViagem)
+                                                           + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhIniViagem), DSC_DHINIVIAGEM);
 
   Gerador.wGrupo('/ide');
 end;
@@ -676,7 +680,13 @@ begin
 
   Gerador.wGrupo('trem', '#02');
   Gerador.wCampo(tcStr, '#03', 'xPref    ', 01, 10, 1, MDFe.ferrov.xPref, DSC_XPREF);
-  Gerador.wCampo(tcDatHor, '#04', 'dhTrem', 19, 19, 0, MDFe.ferrov.dhTrem, DSC_DHTREM);
+
+  if VersaoDF = ve100 then
+    Gerador.wCampo(tcDatHor, '#04', 'dhTrem', 19, 19, 0, MDFe.ferrov.dhTrem, DSC_DHTREM);
+  else
+    Gerador.wCampo(tcStr, '#04', 'dhTrem', 25, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ferrov.dhTrem)
+                                                           + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ferrov.dhTrem), DSC_DHTREM);
+
   Gerador.wCampo(tcStr, '#05', 'xOri     ', 01, 03, 1, MDFe.ferrov.xOri, DSC_XORI);
   Gerador.wCampo(tcStr, '#06', 'xDest    ', 01, 03, 1, MDFe.ferrov.xDest, DSC_XDEST);
   Gerador.wCampo(tcInt, '#07', 'qVag     ', 01, 03, 1, MDFe.ferrov.qVag, DSC_QVAG);

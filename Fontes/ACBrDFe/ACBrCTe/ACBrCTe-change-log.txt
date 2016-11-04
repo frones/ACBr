@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/11/2016
+-- pcteEnvEventoCTe --
+[*] Correção visando atender a versão 3.00, as TAG que contem Data/Hora deve possuir
+    tabém o UTC.
+    Por: Marcelo Augusto
+
 -- ACBrCTeWebServices --
 [*] Acrescentado a propriedade NomeArquivo na classe TCTeInutilizacao, com a
     finalidade de armazenar o caminho mais o nome completo do XML: *-procInutCTe.xml.

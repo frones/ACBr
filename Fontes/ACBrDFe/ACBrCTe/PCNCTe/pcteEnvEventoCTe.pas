@@ -201,7 +201,13 @@ begin
   if not ValidarChave(Evento.Items[0].InfEvento.chCTe)
    then Gerador.wAlerta('EP08', 'chCTe', '', 'Chave de CTe inválida');
 
-  Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento));
+  if Versao = '3.00' then
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, DateTimeTodh(Evento.Items[0].InfEvento.dhEvento) +
+                                                             GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
+                                                             Evento.Items[0].InfEvento.dhEvento), DSC_DEMI)
+  else
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento));
+		
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 06, 06, 1, Evento.Items[0].InfEvento.TipoEvento);
   Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 01, 02, 1, Evento.Items[0].InfEvento.nSeqEvento);
 

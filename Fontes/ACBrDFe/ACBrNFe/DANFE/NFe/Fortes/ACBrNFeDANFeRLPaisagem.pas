@@ -2235,7 +2235,7 @@ begin
     end;
     txtCFOP.Caption             := Prod.CFOP;
     txtUnidade.Caption          := Prod.UCom;
-    txtQuantidade.Caption       := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
+    txtQuantidade.Caption       := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom, (TACBrNFeDANFeRL(Owner).CasasDecimais._qCom > 0) );
     txtValorUnitario.Caption    := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
     if ( fImprimirTotalLiquido ) then
     begin

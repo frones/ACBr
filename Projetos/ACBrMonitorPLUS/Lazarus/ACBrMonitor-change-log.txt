@@ -43,13 +43,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-03/11/2017
+04/11/2016
+[*]	Na aba DFe > Impressao > NFe, substituido radio group por SpedButton na
+	seleção de decimais da quantidade, permitindo quantidade sem casas decimais.
+	Limite continua em 4 casas. Corrigidas as DANFEs do Fortes, retrato e paisagem.
+	por: Celso Marigo Junior
+
+03/11/2016
 [*]	Ajsute na impressão de DACTE para usar a função ACBrSTR na impressão da situação
 	tributária. Correção para o caso abaixo:
 	http://www.projetoacbr.com.br/forum/topic/33116-impressão-do-dacte/
 	por: Celso Marigo Junior
 
-03/11/2017
+03/11/2016
 [+]	Adicionado comando NFE.XMLEnviarEvento permite envio de evento usando o XML do mesmo.
 	Sugerido em: www.projetoacbr.com.br/forum/topic/33235-envio-da-cce-em-xml
 	por: Celso Marigo Junior

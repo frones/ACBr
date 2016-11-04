@@ -363,6 +363,7 @@ type
     Label180: TLabel;
     Label181: TLabel;
     Label190: TLabel;
+    Label191: TLabel;
     Label194: TLabel;
     Label196: TLabel;
     Label197: TLabel;
@@ -396,7 +397,6 @@ type
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
-    rgCasasDecimaisQtd: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
@@ -407,6 +407,7 @@ type
     seUSUNumeroCadastro: TSpinEdit;
     speAlturaCampos: TSpinEdit;
     spedtDecimaisVUnit: TSpinEdit;
+    spedtCasasDecimaisQtd: TSpinEdit;
     speEspBorda: TSpinEdit;
     speFonteCampos: TSpinEdit;
     speFonteEndereco: TSpinEdit;
@@ -4046,7 +4047,7 @@ begin
     fspeNFCeMargemEsq.Value := Ini.ReadFloat('DANFCe', 'MargemEsq', 0.6);
     edtPathPDF.Text :=
       Ini.ReadString('DANFE', 'PathPDF', PathApplication+'PDF');
-    rgCasasDecimaisQtd.ItemIndex := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
+    spedtCasasDecimaisQtd.Value := Ini.ReadInteger('DANFE', 'DecimaisQTD', 2);
     spedtDecimaisVUnit.Value := Ini.ReadInteger('DANFE', 'DecimaisValor', 2);
     cbxExibeResumo.Checked := Ini.ReadBool('DANFE', 'ExibeResumo', False);
     cbxImprimirTributos.Checked :=
@@ -4895,7 +4896,7 @@ begin
     Ini.WriteFloat('DANFCe', 'MargemDir', fspeNFCeMargemDir.Value);
     Ini.WriteFloat('DANFCe', 'MargemEsq', fspeNFCeMargemEsq.Value);
     Ini.WriteString('DANFE', 'PathPDF', edtPathPDF.Text);
-    Ini.WriteInteger('DANFE', 'DecimaisQTD', rgCasasDecimaisQtd.ItemIndex);
+    Ini.WriteInteger('DANFE', 'DecimaisQTD', spedtCasasDecimaisQtd.Value);
     Ini.WriteInteger('DANFE', 'DecimaisValor', spedtDecimaisVUnit.Value);
     Ini.WriteBool('DANFE', 'ExibeResumo', cbxExibeResumo.Checked);
     Ini.WriteBool('DANFE', 'ImprimirTributosItem', cbxImprimirTributos.Checked);
@@ -7483,7 +7484,7 @@ begin
     ACBrNFe1.DANFE.MargemDireita := fspeMargemDir.Value;
     ACBrNFe1.DANFE.MargemEsquerda := fspeMargemEsq.Value;
     ACBrNFe1.DANFE.PathPDF := PathWithDelim(edtPathPDF.Text);
-    ACBrNFe1.DANFE.CasasDecimais._qCom := rgCasasDecimaisQtd.ItemIndex + 2;
+    ACBrNFe1.DANFE.CasasDecimais._qCom := spedtCasasDecimaisQtd.Value;
     ACBrNFe1.DANFE.CasasDecimais._vUnCom := spedtDecimaisVUnit.Value;
     ACBrNFe1.DANFE.ExibirResumoCanhoto := cbxExibeResumo.Checked;
     ACBrNFe1.DANFE.ImprimirTotalLiquido := cbxImpValLiq.Checked;

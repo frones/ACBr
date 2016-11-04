@@ -50,6 +50,7 @@ Símbolo : Significado
 03/11/2016
 [*] Mudança no registro Z4 do campo CNPJ para CPF_CNPJ para demonstrar exatamente a informação
 		nele contida.
+		Apos atualizar vai ocorrer erro, para corrigir basta trocar o nome da propriedade de CNPJ para CPF_CNPJ!
 		http://www.projetoacbr.com.br/forum/topic/33241-sugest%C3%A3o-de-altera%C3%A7%C3%A3o-para-o-registroz4-do-acbrpaf/
 		por: Juliomar Marchetti
 		

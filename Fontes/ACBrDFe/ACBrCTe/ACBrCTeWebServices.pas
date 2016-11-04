@@ -330,6 +330,7 @@ type
     FxMotivo: String;
     FcUF: Integer;
     FdhRecbto: TDateTime;
+    FNomeArquivo: String;
 
     FXML_ProcInutCTe: String;
 
@@ -365,6 +366,7 @@ type
     property cUF: Integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
     property XML_procInutCTe: String read FXML_ProcInutCTe write FXML_ProcInutCTe;
+    property NomeArquivo: String read FNomeArquivo write FNomeArquivo;
   end;
 
   { TCTeConsultaCadastro }
@@ -2054,13 +2056,14 @@ begin
     //gerar arquivo proc de inutilizacao
     if ((CTeRetorno.cStat = 102) or (CTeRetorno.cStat = 563)) then
     begin
-      FXML_ProcInutCTe := // '<' + ENCODING_UTF8 +
+      FXML_ProcInutCTe := '<' + ENCODING_UTF8 + '>' +
                           '<ProcInutCTe versao="' + FPVersaoServico +
                               '" xmlns="' + ACBRCTE_NAMESPACE + '">' +
                             FPDadosMsg +
                             FPRetWS +
                           '</ProcInutCTe>';
 
+      FNomeArquivo := PathWithDelim(GerarPathPorCNPJ) + GerarPrefixoArquivo + '-procInutCTe.xml';
       if FPConfiguracoesCTe.Arquivos.Salvar then
         FPDFeOwner.Gravar(GerarPrefixoArquivo + '-procInutCTe.xml',
           FXML_ProcInutCTe, GerarPathPorCNPJ);

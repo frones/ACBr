@@ -179,12 +179,10 @@ begin
                LFill(ENCERRANTE_INICIAL, 15, 2) +
                LFill(ENCERRANTE_FINAL, 15, 2) +
                RFill(STATUS_ABASTECIMENTO, 10) +
-               IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', RFill(NRO_SERIE_ECF, 20), RFill('',20)) +
-               IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', LFill(DATA, 'yyyymmdd'), RFill('',8)) +
-               IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', LFill(HORA, 'hhmmss'), RFill('',6)) +
-               //IfThen(STATUS_ABASTECIMENTO = 'EMITIDO CF', LFill(COO, 6), RFill('',6)) +
+               IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, RFill(NRO_SERIE_ECF, 20), RFill('',20)) +
+               IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, LFill(DATA, 'yyyymmdd'), LFill(0,8)) +
+               IfThen(Pos(STATUS_ABASTECIMENTO,'|EMITIDOCFN|EMITIDOCFM|EMITIDOCFA|EMITIDOCFC|') > 0, LFill(HORA, 'hhmmss'), LFill(0,6)) +
                LFill(COO, 9) +
-               //IfThen(STATUS_ABASTECIMENTO = 'EMITIDO NF', LFill(NRO_NOTA_FISCAL, 6), RFill('',6)) +
                LFill(NRO_NOTA_FISCAL, 6) +
                LFill(VOLUME, 10, 3) );
         end;

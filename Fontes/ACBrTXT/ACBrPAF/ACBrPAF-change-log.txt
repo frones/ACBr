@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/11/2016
+[*] Melhoria para atender E.R. 02.04 para Postos combustíveis WriteRegistroC2 do ACBrPAF_C_Class
+		http://www.projetoacbr.com.br/forum/topic/33307-altera%C3%A7%C3%A3o-procedure-tpaf_cwriteregistroc2-da-unit-acbrpaf_c_class/
+		por : Juliomar Marchetti 
+		
 03/11/2016
 [*] Mudança no registro Z4 do campo CNPJ para CPF_CNPJ para demonstrar exatamente a informação
 		nele contida.

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/mdfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.portalfiscal.inf.br/mdfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:include schemaLocation="tiposGeralMDFe_v3.00.xsd"/>
-	<xs:include schemaLocation="consReciMDFeTiposBasico_v3.00.xsd"/>
-	<xs:include schemaLocation="eventoMDFeTiposBasico_v3.00.xsd"/>
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:complexType name="TConsSitMDFe">
 		<xs:annotation>
@@ -65,8 +63,46 @@
 					<xs:documentation>código da UF de atendimento</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="protMDFe" type="TProtMDFe" minOccurs="0"/>
-			<xs:element name="procEventoMDFe" type="TProcEvento" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="protMDFe" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any processContents="skip">
+							<xs:annotation>
+								<xs:documentation>Retornar protMDFe da versão correspondente do MDF-e autorizado</xs:documentation>
+							</xs:annotation>
+						</xs:any>
+					</xs:sequence>
+					<xs:attribute name="versao" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:whiteSpace value="preserve"/>
+								<xs:enumeration value="1.00"/>
+								<xs:enumeration value="3.00"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="procEventoMDFe" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any processContents="skip">
+							<xs:annotation>
+								<xs:documentation>Retornar procEventoMDFe da versão correspondente do evento MDF-e autorizado</xs:documentation>
+							</xs:annotation>
+						</xs:any>
+					</xs:sequence>
+					<xs:attribute name="versao" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:whiteSpace value="preserve"/>
+								<xs:enumeration value="1.00"/>
+								<xs:enumeration value="3.00"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="versao" type="TVerConsSitMDFe" use="required"/>
 	</xs:complexType>

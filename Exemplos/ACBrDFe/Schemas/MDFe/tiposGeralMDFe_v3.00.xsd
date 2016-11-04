@@ -500,8 +500,7 @@
 			<xs:whiteSpace value="preserve"/>
 			<xs:enumeration value="1"/>
 			<xs:enumeration value="2"/>
-			<xs:enumeration value="3"/>
-			<xs:enumeration value="4"/>
+			<xs:enumeration value="3"/>		
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TVerAplic">
@@ -623,7 +622,7 @@
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9]{15}"/>
 		</xs:restriction>
-	</xs:simpleType>	
+	</xs:simpleType>
 	<xs:simpleType name="TIPv4">
 		<xs:annotation>
 			<xs:documentation>Tipo IP versão 4</xs:documentation>

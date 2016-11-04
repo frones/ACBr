@@ -127,6 +127,7 @@
 							<xs:documentation>número sequencial único do Ambiente Autorizador</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
+					<xs:attribute name="ipTransmissor" type="TIPv4" use="optional"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

@@ -10223,6 +10223,1013 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Color = clBtnFace
     ParentColor = False
     TabOrder = 4
+    object PanelScroll: TPanel
+      Left = 0
+      Height = 517
+      Top = 100
+      Width = 196
+      Align = alClient
+      BevelOuter = bvNone
+      ClientHeight = 517
+      ClientWidth = 196
+      TabOrder = 0
+      object ScrollBox: TScrollBox
+        Left = 0
+        Height = 517
+        Top = 0
+        Width = 196
+        HorzScrollBar.Page = 1
+        VertScrollBar.Page = 517
+        Align = alLeft
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = True
+        BorderStyle = bsNone
+        ClientHeight = 517
+        ClientWidth = 179
+        TabOrder = 0
+        OnMouseWheelDown = ScrollBoxMouseWheelDown
+        OnMouseWheelUp = ScrollBoxMouseWheelUp
+        object btnECF: TPanel
+          Left = 0
+          Height = 30
+          Top = 100
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'ECF'
+          TabOrder = 2
+          TabStop = True
+          OnClick = btnECFClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnCadastroCont: TPanel
+          Tag = 9
+          Left = 0
+          Height = 70
+          Top = 30
+          Width = 179
+          Align = alTop
+          AutoSize = True
+          BevelOuter = bvNone
+          Caption = 'Cadastros'
+          ClientHeight = 70
+          ClientWidth = 179
+          TabOrder = 1
+          TabStop = True
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+          object btnCadastro: TPanel
+            Left = 0
+            Height = 30
+            Top = 0
+            Width = 179
+            Align = alTop
+            BevelOuter = bvNone
+            Caption = 'Cadastros'
+            TabOrder = 0
+            TabStop = True
+            OnClick = btnCadastroClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnUser: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnCadastro
+            AnchorSideTop.Control = btnCadastro
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnCadastro
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 30
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Usuários  '
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 2
+            TabStop = True
+            OnClick = btnUserClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSH: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnCadastro
+            AnchorSideTop.Control = btnUser
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnCadastro
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 50
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Software House  '
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 1
+            TabStop = True
+            OnClick = btnSHClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+        end
+        object btnImpCheque: TPanel
+          Left = 0
+          Height = 30
+          Top = 130
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Impressora Cheque'
+          TabOrder = 3
+          TabStop = True
+          OnClick = btnImpChequeClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnGaveta: TPanel
+          Left = 0
+          Height = 30
+          Top = 160
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Gaveta'
+          TabOrder = 4
+          TabStop = True
+          OnClick = btnGavetaClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnEtiqueta: TPanel
+          Left = 0
+          Height = 30
+          Top = 350
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Etiqueta'
+          TabOrder = 8
+          TabStop = True
+          OnClick = btnEtiquetaClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnBalanca: TPanel
+          Left = 0
+          Height = 30
+          Top = 320
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Balança'
+          TabOrder = 9
+          TabStop = True
+          OnClick = btnBalancaClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnRFDCont: TPanel
+          Tag = 9
+          Left = 0
+          Height = 70
+          Top = 250
+          Width = 179
+          Align = alTop
+          AutoSize = True
+          BevelOuter = bvNone
+          Caption = 'RFD'
+          ClientHeight = 70
+          ClientWidth = 179
+          TabOrder = 7
+          TabStop = True
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+          object btnRFD: TPanel
+            Left = 0
+            Height = 30
+            Top = 0
+            Width = 179
+            Align = alTop
+            BevelOuter = bvNone
+            Caption = 'RFD'
+            TabOrder = 0
+            TabStop = True
+            OnClick = btnRFDClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnRFDGeral: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnRFD
+            AnchorSideTop.Control = btnRFD
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnRFD
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 30
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Geral'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 1
+            TabStop = True
+            OnClick = btnRFDGeralClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnRFDFile: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnRFD
+            AnchorSideTop.Control = btnRFDGeral
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnRFD
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 50
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Arquivos'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 2
+            TabStop = True
+            OnClick = btnRFDFileClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+        end
+        object btnLeitorSerial: TPanel
+          Left = 0
+          Height = 30
+          Top = 220
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Leitor Serial'
+          TabOrder = 6
+          TabStop = True
+          OnClick = btnLeitorSerialClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnDisplay: TPanel
+          Left = 0
+          Height = 30
+          Top = 190
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Display'
+          TabOrder = 5
+          TabStop = True
+          OnClick = btnDisplayClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnEmail: TPanel
+          Left = 0
+          Height = 30
+          Top = 570
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'E-Mail'
+          TabOrder = 16
+          TabStop = True
+          OnClick = btnEmailClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnBoletoCont: TPanel
+          Tag = 9
+          Left = 0
+          Height = 130
+          Top = 410
+          Width = 179
+          Align = alTop
+          AutoSize = True
+          BevelOuter = bvNone
+          Caption = 'Boleto'
+          ClientHeight = 130
+          ClientWidth = 179
+          TabOrder = 11
+          TabStop = True
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+          object btnBoleto: TPanel
+            Left = 0
+            Height = 30
+            Top = 0
+            Width = 179
+            Align = alTop
+            BevelOuter = bvNone
+            Caption = 'Boleto'
+            TabOrder = 0
+            TabStop = True
+            OnClick = btnBoletoClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnBoletoCedente: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoleto
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 30
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Cedente'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 1
+            TabStop = True
+            OnClick = btnBoletoCedenteClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnBoletoConta: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoCedente
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 50
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Conta Bancária'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 2
+            TabStop = True
+            OnClick = btnBoletoContaClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnBoletoLeiaute: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoConta
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 70
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Leiaute'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 3
+            TabStop = True
+            OnClick = btnBoletoLeiauteClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnBoletoRR: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoLeiaute
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 90
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Remessa e Retorno'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 4
+            TabStop = True
+            OnClick = btnBoletoRRClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnBoletoEmail: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnBoleto
+            AnchorSideTop.Control = btnBoletoRR
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnBoleto
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 110
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'E-Mail'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 5
+            TabStop = True
+            OnClick = btnBoletoEmailClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+        end
+        object btnTC: TPanel
+          Left = 0
+          Height = 30
+          Top = 380
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Terminal de Consulta'
+          TabOrder = 10
+          TabStop = True
+          OnClick = btnTCClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnDFeCont: TPanel
+          Tag = 9
+          Left = 0
+          Height = 170
+          Top = 660
+          Width = 179
+          Align = alTop
+          AutoSize = True
+          BevelOuter = bvNone
+          Caption = 'DF-e'
+          ClientHeight = 170
+          ClientWidth = 179
+          TabOrder = 13
+          TabStop = True
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+          object btnDFe: TPanel
+            Left = 0
+            Height = 30
+            Top = 0
+            Width = 179
+            Align = alTop
+            BevelOuter = bvNone
+            Caption = 'DF-e'
+            TabOrder = 0
+            TabStop = True
+            OnClick = btnDFeClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFeGeral: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFe
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 30
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Geral'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 1
+            TabStop = True
+            OnClick = btnDFeGeralClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFeCertificados: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeGeral
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 50
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Certificados'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 2
+            TabStop = True
+            OnClick = btnDFeCertificadosClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFeWebServices: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeCertificados
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 70
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'WebServices'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 3
+            TabStop = True
+            OnClick = btnDFeWebServicesClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFeEmail: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeWebServices
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 90
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'E-Mail'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 4
+            TabStop = True
+            OnClick = btnDFeEmailClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFePrint: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeEmail
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 110
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Impressão'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 5
+            TabStop = True
+            OnClick = btnDFePrintClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFeDir: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFePrint
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 130
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Diretórios'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 7
+            TabStop = True
+            OnClick = btnDFeDirClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDFeTeste: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDFe
+            AnchorSideTop.Control = btnDFeDir
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDFe
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 150
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Teste'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 6
+            TabStop = True
+            OnClick = btnDFeTesteClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+        end
+        object btnSedex: TPanel
+          Left = 0
+          Height = 30
+          Top = 600
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Sedex'
+          TabOrder = 14
+          TabStop = True
+          OnClick = btnSedexClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnConsultas: TPanel
+          Left = 0
+          Height = 30
+          Top = 540
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Consultas'
+          TabOrder = 12
+          TabStop = True
+          OnClick = btnConsultasClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnNCM: TPanel
+          Left = 0
+          Height = 30
+          Top = 630
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'NCM'
+          TabOrder = 15
+          TabStop = True
+          OnClick = btnNCMClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnSATCont: TPanel
+          Tag = 9
+          Left = 0
+          Height = 130
+          Top = 830
+          Width = 179
+          Align = alTop
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 130
+          ClientWidth = 179
+          ParentBidiMode = False
+          TabOrder = 17
+          TabStop = True
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+          object btnSATDados: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSAT
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 30
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Dados do SAT CFe'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 0
+            TabStop = True
+            OnClick = btnSATDadosClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSATEmitente: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATDados
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 50
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Dados Emitente'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 1
+            TabStop = True
+            OnClick = btnSATEmitenteClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSATSH: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATEmitente
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 70
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Dados Software House'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 2
+            TabStop = True
+            OnClick = btnSATSHClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSATRede: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATSH
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 90
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Rede'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 3
+            TabStop = True
+            OnClick = btnSATRedeClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSATPrint: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnSAT
+            AnchorSideTop.Control = btnSATRede
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnSAT
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 110
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Impressão'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 4
+            TabStop = True
+            OnClick = btnSATPrintClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnSAT: TPanel
+            Left = 0
+            Height = 30
+            Top = 0
+            Width = 179
+            Align = alTop
+            BevelOuter = bvNone
+            Caption = 'SAT'
+            TabOrder = 5
+            TabStop = True
+            OnClick = btnSATClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+        end
+        object btnPosPrinter: TPanel
+          Left = 0
+          Height = 30
+          Top = 960
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'PosPrinter'
+          TabOrder = 19
+          TabStop = True
+          OnClick = btnPosPrinterClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+        object btnDownCont: TPanel
+          Tag = 9
+          Left = 0
+          Height = 70
+          Top = 990
+          Width = 179
+          Align = alTop
+          AutoSize = True
+          BevelOuter = bvNone
+          ClientHeight = 70
+          ClientWidth = 179
+          TabOrder = 18
+          TabStop = True
+          Visible = False
+          OnClick = btnPosPrinterClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+          object btnDown: TPanel
+            Left = 0
+            Height = 30
+            Top = 0
+            Width = 179
+            Align = alTop
+            BevelOuter = bvNone
+            Caption = 'Download XML'
+            TabOrder = 2
+            TabStop = True
+            OnClick = btnDownClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDownConf: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDown
+            AnchorSideTop.Control = btnDown
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDown
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 30
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'Configurações'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 0
+            TabStop = True
+            OnClick = btnDownConfClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+          object btnDownXml: TPanel
+            Tag = 1
+            AnchorSideLeft.Control = btnDown
+            AnchorSideTop.Control = btnDownConf
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = btnDown
+            AnchorSideRight.Side = asrBottom
+            Left = 0
+            Height = 20
+            Top = 50
+            Width = 179
+            Anchors = [akTop, akLeft, akRight]
+            BevelOuter = bvNone
+            Caption = 'XML Baixados'
+            Color = 16777139
+            ParentColor = False
+            TabOrder = 1
+            TabStop = True
+            OnClick = btnDownXmlClick
+            OnMouseEnter = ACT_ButtonMouseEnter
+            OnMouseLeave = ACT_ButtonMouseLeave
+            OnMouseWheelDown = ScrollBoxMouseWheelDown
+            OnMouseWheelUp = ScrollBoxMouseWheelUp
+          end
+        end
+        object btnMonitor: TPanel
+          Left = 0
+          Height = 30
+          Top = 0
+          Width = 179
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'Monitor'
+          Color = 13289984
+          ParentColor = False
+          TabOrder = 0
+          TabStop = True
+          OnClick = btnMonitorClick
+          OnMouseEnter = ACT_ButtonMouseEnter
+          OnMouseLeave = ACT_ButtonMouseLeave
+          OnMouseWheelDown = ScrollBoxMouseWheelDown
+          OnMouseWheelUp = ScrollBoxMouseWheelUp
+        end
+      end
+    end
     object Image2: TImage
       Left = 0
       Height = 100
@@ -10904,913 +11911,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
         82
       }
     end
-    object PanelScroll: TPanel
-      Left = 0
-      Height = 517
-      Top = 100
-      Width = 196
-      Align = alClient
-      BevelOuter = bvNone
-      ClientHeight = 517
-      ClientWidth = 196
-      TabOrder = 0
-      object ScrollBox: TScrollBox
-        Left = 0
-        Height = 517
-        Top = 0
-        Width = 196
-        HorzScrollBar.Page = 1
-        VertScrollBar.Page = 517
-        Align = alLeft
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        AutoSize = True
-        BorderStyle = bsNone
-        ClientHeight = 517
-        ClientWidth = 179
-        TabOrder = 0
-        object btnECF: TPanel
-          Left = 0
-          Height = 30
-          Top = 100
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'ECF'
-          TabOrder = 2
-          TabStop = True
-          OnClick = btnECFClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnCadastroCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 70
-          Top = 30
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          Caption = 'Cadastros'
-          ClientHeight = 70
-          ClientWidth = 179
-          TabOrder = 1
-          TabStop = True
-          object btnCadastro: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'Cadastros'
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnCadastroClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnUser: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnCadastro
-            AnchorSideTop.Control = btnCadastro
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnCadastro
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Usuários  '
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnUserClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnSH: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnCadastro
-            AnchorSideTop.Control = btnUser
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnCadastro
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Software House  '
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnSHClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-        end
-        object btnImpCheque: TPanel
-          Left = 0
-          Height = 30
-          Top = 130
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Impressora Cheque'
-          TabOrder = 3
-          TabStop = True
-          OnClick = btnImpChequeClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnMonitor: TPanel
-          Left = 0
-          Height = 30
-          Top = 0
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Monitor'
-          Color = 13289984
-          ParentColor = False
-          TabOrder = 0
-          TabStop = True
-          OnClick = btnMonitorClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnGaveta: TPanel
-          Left = 0
-          Height = 30
-          Top = 160
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Gaveta'
-          TabOrder = 4
-          TabStop = True
-          OnClick = btnGavetaClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnEtiqueta: TPanel
-          Left = 0
-          Height = 30
-          Top = 350
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Etiqueta'
-          TabOrder = 8
-          TabStop = True
-          OnClick = btnEtiquetaClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnBalanca: TPanel
-          Left = 0
-          Height = 30
-          Top = 320
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Balança'
-          TabOrder = 9
-          TabStop = True
-          OnClick = btnBalancaClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnRFDCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 70
-          Top = 250
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          Caption = 'RFD'
-          ClientHeight = 70
-          ClientWidth = 179
-          TabOrder = 7
-          TabStop = True
-          object btnRFD: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'RFD'
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnRFDClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnRFDGeral: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnRFD
-            AnchorSideTop.Control = btnRFD
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnRFD
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Geral'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnRFDGeralClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnRFDFile: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnRFD
-            AnchorSideTop.Control = btnRFDGeral
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnRFD
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Arquivos'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnRFDFileClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-        end
-        object btnLeitorSerial: TPanel
-          Left = 0
-          Height = 30
-          Top = 220
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Leitor Serial'
-          TabOrder = 6
-          TabStop = True
-          OnClick = btnLeitorSerialClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnDisplay: TPanel
-          Left = 0
-          Height = 30
-          Top = 190
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Display'
-          TabOrder = 5
-          TabStop = True
-          OnClick = btnDisplayClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnEmail: TPanel
-          Left = 0
-          Height = 30
-          Top = 570
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'E-Mail'
-          TabOrder = 13
-          TabStop = True
-          OnClick = btnEmailClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnBoletoCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 130
-          Top = 410
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          Caption = 'Boleto'
-          ClientHeight = 130
-          ClientWidth = 179
-          TabOrder = 11
-          TabStop = True
-          object btnBoleto: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'Boleto'
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnBoletoClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnBoletoCedente: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnBoleto
-            AnchorSideTop.Control = btnBoleto
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnBoleto
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Cedente'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnBoletoCedenteClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnBoletoConta: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnBoleto
-            AnchorSideTop.Control = btnBoletoCedente
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnBoleto
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Conta Bancária'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnBoletoContaClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnBoletoLeiaute: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnBoleto
-            AnchorSideTop.Control = btnBoletoConta
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnBoleto
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 70
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Leiaute'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 3
-            TabStop = True
-            OnClick = btnBoletoLeiauteClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnBoletoRR: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnBoleto
-            AnchorSideTop.Control = btnBoletoLeiaute
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnBoleto
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 90
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Remessa e Retorno'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 4
-            TabStop = True
-            OnClick = btnBoletoRRClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnBoletoEmail: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnBoleto
-            AnchorSideTop.Control = btnBoletoRR
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnBoleto
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 110
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'E-Mail'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 5
-            TabStop = True
-            OnClick = btnBoletoEmailClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-        end
-        object btnTC: TPanel
-          Left = 0
-          Height = 30
-          Top = 380
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Terminal de Consulta'
-          TabOrder = 10
-          TabStop = True
-          OnClick = btnTCClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnDFeCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 170
-          Top = 660
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          Caption = 'DF-e'
-          ClientHeight = 170
-          ClientWidth = 179
-          TabOrder = 16
-          TabStop = True
-          object btnDFe: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'DF-e'
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnDFeClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFeGeral: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFe
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Geral'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnDFeGeralClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFeCertificados: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFeGeral
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Certificados'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnDFeCertificadosClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFeWebServices: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFeCertificados
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 70
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'WebServices'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 3
-            TabStop = True
-            OnClick = btnDFeWebServicesClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFeEmail: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFeWebServices
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 90
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'E-Mail'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 4
-            TabStop = True
-            OnClick = btnDFeEmailClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFePrint: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFeEmail
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 110
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Impressão'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 5
-            TabStop = True
-            OnClick = btnDFePrintClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFeDir: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFePrint
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 130
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Diretórios'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 7
-            TabStop = True
-            OnClick = btnDFeDirClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDFeTeste: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDFe
-            AnchorSideTop.Control = btnDFeDir
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDFe
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 150
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Teste'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 6
-            TabStop = True
-            OnClick = btnDFeTesteClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-        end
-        object btnSedex: TPanel
-          Left = 0
-          Height = 30
-          Top = 600
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Sedex'
-          TabOrder = 14
-          TabStop = True
-          OnClick = btnSedexClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnConsultas: TPanel
-          Left = 0
-          Height = 30
-          Top = 540
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Consultas'
-          TabOrder = 12
-          TabStop = True
-          OnClick = btnConsultasClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnNCM: TPanel
-          Left = 0
-          Height = 30
-          Top = 630
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'NCM'
-          TabOrder = 15
-          TabStop = True
-          OnClick = btnNCMClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnSATCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 130
-          Top = 830
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 130
-          ClientWidth = 179
-          ParentBidiMode = False
-          TabOrder = 17
-          TabStop = True
-          object btnSATDados: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnSAT
-            AnchorSideTop.Control = btnSAT
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnSAT
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Dados do SAT CFe'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnSATDadosClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnSATEmitente: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnSAT
-            AnchorSideTop.Control = btnSATDados
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnSAT
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Dados Emitente'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnSATEmitenteClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnSATSH: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnSAT
-            AnchorSideTop.Control = btnSATEmitente
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnSAT
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 70
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Dados Software House'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnSATSHClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnSATRede: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnSAT
-            AnchorSideTop.Control = btnSATSH
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnSAT
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 90
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Rede'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 3
-            TabStop = True
-            OnClick = btnSATRedeClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnSATPrint: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnSAT
-            AnchorSideTop.Control = btnSATRede
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnSAT
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 110
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Impressão'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 4
-            TabStop = True
-            OnClick = btnSATPrintClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnSAT: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'SAT'
-            TabOrder = 5
-            TabStop = True
-            OnClick = btnSATClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-        end
-        object btnPosPrinter: TPanel
-          Left = 0
-          Height = 30
-          Top = 960
-          Width = 179
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'PosPrinter'
-          TabOrder = 19
-          TabStop = True
-          OnClick = btnPosPrinterClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-        end
-        object btnDownCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 70
-          Top = 990
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 70
-          ClientWidth = 179
-          TabOrder = 18
-          TabStop = True
-          Visible = False
-          OnClick = btnPosPrinterClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-          object btnDown: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'Download XML'
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnDownClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDownConf: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDown
-            AnchorSideTop.Control = btnDown
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDown
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Configurações'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnDownConfClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-          object btnDownXml: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDown
-            AnchorSideTop.Control = btnDownConf
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDown
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'XML Baixados'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnDownXmlClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-          end
-        end
-      end
-    end
   end
   object ACBrECF1: TACBrECF
     QuebraLinhaRodape = False
@@ -12130,7 +12230,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

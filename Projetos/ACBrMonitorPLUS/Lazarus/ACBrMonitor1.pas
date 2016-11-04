@@ -1196,6 +1196,10 @@ type
     procedure sbPosPrinterLogClick(Sender: TObject);
     procedure sbSerialClick(Sender: TObject);
     procedure sbSobreClick(Sender: TObject);
+    procedure ScrollBoxMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure ScrollBoxMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
     procedure sedECFLinhasEntreCuponsChange(Sender: TObject);
     procedure sedECFMaxLinhasBufferChange(Sender: TObject);
     procedure sedECFPaginaCodigoChange(Sender: TObject);
@@ -1363,6 +1367,7 @@ type
     procedure SetColorSubButtons(Sender: TObject);
     procedure SetPanel(Sender: TPanel);
     procedure SetSize25(Sender: TObject);
+    procedure SetScroll(Sender: TObject);
   public
     Conexao: TTCPBlockSocket;
 
@@ -1442,7 +1447,7 @@ var
   iImpressoraESCPOS: TACBrPosPrinterModelo;
   iPagCodigoESCPOS: TACBrPosPaginaCodigo;
   iTZMode: TTimeZoneModoDeteccao;
-  iFor: Integer;
+  iFor, J: Integer;
   FileVerInfo: TFileVersionInfo;
 begin
   {$IFDEF MSWINDOWS}
@@ -2178,6 +2183,7 @@ begin
   SetColorButtons(Sender);
   SetSize25(TPanel(Sender).Parent);
   pgConfig.ActivePage := tsACBrBoleto;
+    SetScroll(TPanel(Sender).Parent);
   // Ativa a 1a página do pegecontrol
   btnBoletoCedenteClick(btnBoletoCedente);
 end;
@@ -2388,6 +2394,7 @@ begin
   SetColorButtons(Sender);
   SetSize25(TPanel(Sender).Parent);
   pgConfig.ActivePage := tsDFe;
+    SetScroll(TPanel(Sender).Parent);
   // Ativa a 1a página do pegecontrol
   btnDFeGeralClick(btnDFeGeral);
 end;
@@ -2439,6 +2446,7 @@ begin
   SetColorButtons(Sender);
   SetSize25(TPanel(Sender).Parent);
   pgConfig.ActivePage := tsDownload;
+  SetScroll(TPanel(Sender).Parent);
   // Ativa a 1a página do pegecontrol
   btnDownConfClick(btnDownConf);
 end;
@@ -2814,6 +2822,7 @@ begin
   SetColorButtons(Sender);
   SetSize25(TPanel(Sender).Parent);
   pgConfig.ActivePage := tsRFD;
+    SetScroll(TPanel(Sender).Parent);
   // Ativa a 1a página do pegecontrol
   btnRFDGeralClick(btnRFDGeral);
 end;
@@ -2842,6 +2851,7 @@ end;
 procedure TFrmACBrMonitor.btnSATDadosClick(Sender: TObject);
 begin
   SetColorSubButtons(Sender);
+  SetScroll(TPanel(Sender).Parent);
   pgSAT.ActivePage := tsDadosSAT;
 end;
 
@@ -6106,6 +6116,20 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.ScrollBoxMouseWheelDown(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  ScrollBox.VertScrollBar.Position := ScrollBox.VertScrollBar.Position+30;
+  Application.ProcessMessages;
+end;
+
+procedure TFrmACBrMonitor.ScrollBoxMouseWheelUp(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  ScrollBox.VertScrollBar.Position := ScrollBox.VertScrollBar.Position-30;
+  Application.ProcessMessages;
+end;
+
 procedure TFrmACBrMonitor.sedECFLinhasEntreCuponsChange(Sender: TObject);
 begin
   ACBrECF1.LinhasEntreCupons := sedECFLinhasEntreCupons.Value;
@@ -7924,6 +7948,11 @@ begin
        TPanel(Sender).Controls[iFor].Height := 25;
     end;
   end;
+end;
+
+procedure TFrmACBrMonitor.SetScroll(Sender: TObject);
+begin
+  ScrollBox.VertScrollBar.Position := ScrollBox.VertScrollBar.Position+TPanel(Sender).Height;
 end;
 
 procedure TFrmACBrMonitor.SetColorSubButtons(Sender: TObject);

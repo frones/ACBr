@@ -409,7 +409,10 @@ begin
   if (Frac(dValor) > 0) or (dForcarDecimais) then
   begin
     case CasasDecimais.Formato of
-      tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      tdetInteger : if CasasDecimais._qCom = 0 then
+                      Result := FloatToStr( dValor )
+                    else
+                      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
       tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
     else
       Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));

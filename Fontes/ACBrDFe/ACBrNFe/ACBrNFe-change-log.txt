@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/11/2016
+--ACBrNFeDANFEClass,ACBrNFeDANFEFRDM
+[*] Modificação para imprimir as danfes sem casas decimais, quando a propriedade CasasDecimais._Mask_qCom igual a 0 ( zero ), 
+    Corrigidas as DANFEs do Fortes, retrato e paisagem
+		por : Henrique Leonardo
+
 03/11/2016
 --ACBrNFeDANFEFR
 [*] implementado as funcionalidades da danfe para eventos na impressão

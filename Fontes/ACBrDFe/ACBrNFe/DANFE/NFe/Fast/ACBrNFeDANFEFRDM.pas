@@ -2266,7 +2266,10 @@ begin
   With cdsParametros do
   begin
      case FieldByName('iFormato').AsInteger of
-      0 : Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));
+      0 : if FieldByName('Casas_qCom').AsInteger = 0 then
+            Result := FloatToStr( dValor )
+          else
+            FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));
       1 : Result := FormatFloatBr( dValor , FieldByName('Mask_qCom').AsString);
       else
         Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));

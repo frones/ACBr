@@ -418,7 +418,7 @@ begin
   else
     // caso contrário mostrar somente o número inteiro
     // e o separador de milhar como Ponto
-    Result := Result := FormatFloatBr( dValor , FloatMask(0));
+    Result := FormatFloatBr( dValor , FloatMask(0));
 end;
 
 

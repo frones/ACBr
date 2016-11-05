@@ -4441,7 +4441,8 @@ begin
         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
     end;
 
-    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna, proInfisc, proInfiscv11] then
+    if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proEL, proGoverna,
+                                                   proInfisc, proInfiscv11] then
       Result := True
     else
       Result := FConsLote.Executar;

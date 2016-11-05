@@ -338,7 +338,6 @@ begin
   case FProvedor of
     proCoplan,
     proDigifred,
-    proEReceita,
     proFiorilli,
     proNEAInformatica,
     proNotaInteligente,
@@ -347,7 +346,8 @@ begin
 
     proTecnos,
     proABase,
-    proProdata: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
+    proProdata,
+    proEReceita: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 1, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
     pro4R,
     profintelISS,

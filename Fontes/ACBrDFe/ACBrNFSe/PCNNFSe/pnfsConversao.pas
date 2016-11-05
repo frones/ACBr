@@ -71,7 +71,7 @@ type
                             no501, no511, no541, no551, no601, no701 );
 
   TnfseExigibilidadeISS = ( exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
-                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo );
+                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo, exiISSFixo );
 
   TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa,
                                     retSociedadeProfissionais, retCooperativa,
@@ -331,17 +331,17 @@ end;
 function ExigibilidadeISSToStr(const t: TnfseExigibilidadeISS): String;
 begin
   result := EnumeradoToStr(t,
-                           ['1','2','3','4','5','6','7'],
+                           ['1','2','3','4','5','6','7','8'],
                            [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
-                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo]);
+                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo, exiISSFixo]);
 end;
 
 function StrToExigibilidadeISS(out ok: boolean; const s: String): TnfseExigibilidadeISS;
 begin
   result := StrToEnumerado(ok, s,
-                          ['1','2','3','4','5','6','7'],
+                          ['1','2','3','4','5','6','7','8'],
                            [exiExigivel, exiNaoIncidencia, exiIsencao, exiExportacao, exiImunidade,
-                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo]);
+                            exiSuspensaDecisaoJudicial, exiSuspensaProcessoAdministrativo,exiISSFixo]);
 end;
 
 // Regime Especial de Tributação ***********************************************

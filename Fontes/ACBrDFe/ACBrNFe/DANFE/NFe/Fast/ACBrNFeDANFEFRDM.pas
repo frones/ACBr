@@ -2266,13 +2266,10 @@ begin
   With cdsParametros do
   begin
      case FieldByName('iFormato').AsInteger of
-      0 : if FieldByName('Casas_qCom').AsInteger = 0 then
-            Result := FloatToStr( dValor )
-          else
-            FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));
+      0 : Result := FormatFloatBr( dValor , FloatMask( FieldByName('Casas_qCom').AsInteger));
       1 : Result := FormatFloatBr( dValor , FieldByName('Mask_qCom').AsString);
       else
-        Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_qCom').AsInteger, 0]));
+        Result := FormatFloatBr( dValor , FloatMask( FieldByName('Casas_qCom').AsInteger));
     end;
   end;
 end;
@@ -2283,10 +2280,10 @@ begin
   With cdsParametros do
   begin
     case FieldByName('iFormato').AsInteger of
-      0 : Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_vUnCom').AsInteger, 0]));
+      0 : Result := FormatFloatBr( dValor , FloatMask( FieldByName('Mask_vUnCom').AsInteger));
       1 : Result := FormatFloatBr( dValor , FieldByName('Mask_vUnCom').AsString);
       else
-        Result := FormatFloatBr( dValor , format(FieldByName('sDisplayFormat').AsString, [FieldByName('Casas_vUnCom').AsInteger, 0]));
+        Result := FormatFloatBr( dValor , FloatMask( FieldByName('Mask_vUnCom').AsInteger));
     end;
   end;
 end;

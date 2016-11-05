@@ -409,18 +409,16 @@ begin
   if (Frac(dValor) > 0) or (dForcarDecimais) then
   begin
     case CasasDecimais.Formato of
-      tdetInteger : if CasasDecimais._qCom = 0 then
-                      Result := FloatToStr( dValor )
-                    else
-                      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      tdetInteger : Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._qCom));
       tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_qCom);
     else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat,  [CasasDecimais._qCom, 0]));
+      Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._qCom));
     end
   end
   else
     // caso contrário mostrar somente o número inteiro
-    Result := FloatToStr( dValor );
+    // e o separador de milhar como Ponto
+    Result := Result := FormatFloatBr( dValor , FloatMask(0));
 end;
 
 
@@ -428,10 +426,10 @@ function TACBrNFeDANFEClass.FormatValorUnitario( dValor : Double ) : String;
 begin
   // formatar conforme configurado
   case CasasDecimais.Formato of
-    tdetInteger : Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+    tdetInteger : Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._vUnCom));
     tdetMascara : Result := FormatFloatBr( dValor , CasasDecimais._Mask_vUnCom);
     else
-      Result := FormatFloatBr( dValor , format(sDisplayFormat, [CasasDecimais._vUnCom, 0]));
+      Result := FormatFloatBr( dValor , FloatMask( CasasDecimais._vUnCom));
   end;
 end;
 

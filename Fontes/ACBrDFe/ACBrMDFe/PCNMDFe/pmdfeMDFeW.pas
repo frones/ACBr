@@ -682,7 +682,7 @@ begin
   Gerador.wCampo(tcStr, '#03', 'xPref    ', 01, 10, 1, MDFe.ferrov.xPref, DSC_XPREF);
 
   if VersaoDF = ve100 then
-    Gerador.wCampo(tcDatHor, '#04', 'dhTrem', 19, 19, 0, MDFe.ferrov.dhTrem, DSC_DHTREM);
+    Gerador.wCampo(tcDatHor, '#04', 'dhTrem', 19, 19, 0, MDFe.ferrov.dhTrem, DSC_DHTREM)
   else
     Gerador.wCampo(tcStr, '#04', 'dhTrem', 25, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ferrov.dhTrem)
                                                            + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ferrov.dhTrem), DSC_DHTREM);

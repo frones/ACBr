@@ -2280,7 +2280,7 @@ begin
   With cdsParametros do
   begin
     case FieldByName('iFormato').AsInteger of
-      0 : Result := FormatFloatBr( dValor , FloatMask( FieldByName('Mask_vUnCom').AsInteger));
+      0 : Result := FormatFloatBr( dValor , FloatMask( FieldByName('Casas_vUnCom').AsInteger));
       1 : Result := FormatFloatBr( dValor , FieldByName('Mask_vUnCom').AsString);
       else
         Result := FormatFloatBr( dValor , FloatMask( FieldByName('Mask_vUnCom').AsInteger));

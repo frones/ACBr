@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/11/2016
+--ACBrNFeDANFEFRDM
+[-] Ajuste na FormatValorUnitario.
+	http://www.projetoacbr.com.br/forum/topic/33322-corre%C3%A7%C3%A3o-erro-impress%C3%A3o-danfe-fast-report/
+		por : Henrique Leonardo 
+
+
 05/11/2016
 --ACBrNFeDANFEClass
 [*] Ajuste na FormatQuantidade,  ter efeitos na danfe's de Nfe , e não no cupom fiscal. 

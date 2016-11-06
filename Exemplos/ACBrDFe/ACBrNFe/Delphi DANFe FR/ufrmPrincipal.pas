@@ -58,9 +58,9 @@ type
     Image1: TImage;
     frxReport1: TfrxReport;
     PageControl1: TPageControl;
-    TabArquivos: TTabSheet;
+    TabSheet1: TTabSheet;
     lstbxFR3: TListBox;
-    TabCustomizacao: TTabSheet;
+    TabSheet2: TTabSheet;
     RbCanhoto: TRadioGroup;
     GroupBox1: TGroupBox;
     Label1: TLabel;
@@ -71,7 +71,6 @@ type
     EditMargemSuperior: TEdit;
     EditMargemDireita: TEdit;
     EditMargemInferior: TEdit;
-    rbTarjaNfeCancelada: TRadioButton;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -166,37 +165,22 @@ begin
   begin
     PosCanhoto      := TPosRecibo( RbCanhoto.ItemIndex );
 
-    // Mostra  a Tarja NFe CANCELADA
-    NFeCancelada    := rbTarjaNfeCancelada.Checked;
-    { Ajustar a propriedade ProtocoloNFe conforme a sua necessidade }
-    { ProtocoloNFe := }
-
     // Margens
     MargemEsquerda  := StringToFloat( EditMargemEsquerda.Text );
     MargemSuperior  := StringToFloat( EditMargemSuperior.Text );
     MargemDireita   := StringToFloat( EditMargemDireita.Text );
     MargemInferior  := StringToFloat( EditMargemInferior.Text );
-
   end;
 end;
 
 procedure TfrmPrincipal.Initializao;
 begin
-  PageControl1.ActivePage := TabArquivos;
-
   With ACBrNFeDANFEFR1 do
   begin
     EditMargemEsquerda.Text := FloatToString( MargemEsquerda);
     EditMargemSuperior.Text := FloatToString( MargemSuperior);
     EditMargemDireita.Text  := FloatToString( MargemDireita);
     EditMargemInferior.Text := FloatToString( MargemInferior);
-    NFeCancelada            := False;
-  end;
-
-  With frxReport1 do
-  begin
-    ShowProgress  := False;
-    StoreInDFM    := False;
   end;
 end;
 

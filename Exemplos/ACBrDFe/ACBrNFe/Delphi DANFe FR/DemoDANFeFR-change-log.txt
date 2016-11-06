@@ -53,9 +53,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-19/10/2016
+06/11/2016
 -- DemoDANFeFR --- 
-[+] Opção de mostra a Tarja Nfe Cancelada
+[+] Grupo Ajuste de Decimais na Aba Configuração
+     Demostra a utilização de casas decimais por integer e mascara;
       Por : Henrique Leonardo
 
 02/09/2016

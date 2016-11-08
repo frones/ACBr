@@ -123,6 +123,8 @@ type
     Label24: TLabel;
     ACBr_Ponto_dpk: TCheckBox;
     Label25: TLabel;
+    ACBr_MTER_dpk: TCheckBox;
+    Label26: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
@@ -316,7 +318,7 @@ begin
       end;
 
       // dependencias do ACBrTEFD
-      if not(ACBr_TCP_dpk.Checked) and ACBr_TEFD_dpk.Checked then
+      if not(ACBr_TCP_dpk.Checked) and (ACBr_TEFD_dpk.Checked or ACBr_MTER_dpk.Checked ) then
         ACBr_TCP_dpk.Checked := True;
 
       // Dependencias do ACBrPaf

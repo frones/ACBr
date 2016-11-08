@@ -175,7 +175,7 @@ type
     procedure DoConecta(const TCPBlockSocket: TTCPBlockSocket;
       var Enviar: AnsiString);
     procedure DoDesconecta(const TCPBlockSocket: TTCPBlockSocket;
-      Erro: Integer; ErroDesc: AnsiString);
+      Erro: Integer; ErroDesc: String);
     procedure DoRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
       const Recebido: AnsiString; var Enviar: AnsiString);
     procedure DoConexaoRecebePeso(const aIP: AnsiString; const PesoRecebido: Double);
@@ -455,7 +455,7 @@ begin
 end;
 
 procedure TACBrMTer.DoDesconecta(const TCPBlockSocket: TTCPBlockSocket;
-  Erro: Integer; ErroDesc: AnsiString);
+  Erro: Integer; ErroDesc: String);
 var
   wIP, ErroMsg: AnsiString;
 begin

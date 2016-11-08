@@ -188,7 +188,7 @@ begin
              LFill(VLR_TROCO, 13) +
              LFill(DT_TROCO, 'yyyymmdd') +
              LFill(OnlyNumber(CPF), 14) +
-             RFill(Titulo, 7) +
+             LFill(Titulo, 7) +
              LFill(OnlyNumber(CNPJ), 14) );
       end;
       FRegistroH9.TOT_REG := FRegistroH9.TOT_REG + 1;

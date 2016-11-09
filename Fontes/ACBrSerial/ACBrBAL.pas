@@ -68,7 +68,7 @@ type
 
 TACBrBALModelo = (balNenhum, balFilizola, balToledo, balToledo2090, balToledo2180, balUrano,
                   balLucasTec, balMagna, balDigitron, balMagellan, balUranoPOP, balLider, 
-                  balRinnert, balMuller, balSaturno, balAFTS, balGenerica ) ;
+                  balRinnert, balMuller, balSaturno, balAFTS, balGenerica, balLibratek ) ;
 TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 
 { Componente ACBrBAL }
@@ -150,7 +150,7 @@ uses
   ACBrUtil, ACBrBALFilizola, ACBrBALToledo, ACBrBALUrano, ACBrBALRinnert,
   ACBrBALMuller, ACBrBALLucasTec,  ACBrBALToledo2180, ACBrBALMagna,
   ACBrBALDigitron,ACBrBALMagellan, ACBrBALUranoPOP, ACBrBALLider,
-  ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS,
+  ACBrBALToledo2090, ACBrBALSaturno, ACBrBALAFTS, ACBrBALLibratek,
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5{$ENDIF};
 
 { TACBrBAL }
@@ -240,6 +240,7 @@ begin
      balSaturno     : fsBAL := TACBrBALSaturno.Create(Self);
      balAFTS        : fsBAL := TACBrBALAFTS.Create(Self);
      balGenerica    : fsBAL := TACBrBALClass.Create(Self);
+     balLibratek    : fsBAL := TACBrBALLibratek.Create(Self);
   else
      fsBAL := TACBrBALClass.Create(Self);
   end;

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/11/2016
+-- ACBrBal, ACBrBALLibratek
+[+] Adicionado a balança libratek wt3000-i
+		http://www.projetoacbr.com.br/forum/topic/31203-acbrbal-com-balan%C3%A7a-libratek-wt3000-i/
+		por : Juliomar Marchetti
+		
 Data: 03/11/2016
 -- ACBrECFFiscNET --
 [*] Ajuste para nunca tentar imprimir mais de 8 linhas do Rodapé

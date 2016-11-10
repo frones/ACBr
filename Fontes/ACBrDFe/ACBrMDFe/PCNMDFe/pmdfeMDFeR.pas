@@ -174,6 +174,10 @@ begin
       MDFe.Rodo.CIOT       := Leitor.rCampo(tcStr, 'CIOT');
       MDFe.Rodo.codAgPorto := Leitor.rCampo(tcStr, 'codAgPorto');
 
+      if MDFe.infMDFe.versao = 3 then
+        if (Leitor.rExtrai(3, 'infANTT') <> '') then
+          MDFe.Rodo.infANTT.RNTRC:=Leitor.rCampo(tcStr, 'RNTRC');
+
       if (Leitor.rExtrai(3, 'veicTracao') <> '') or (Leitor.rExtrai(3, 'veicPrincipal') <> '')then
        begin
         MDFe.Rodo.veicTracao.cInt    := Leitor.rCampo(tcStr, 'cInt');
@@ -769,12 +773,21 @@ begin
     while Leitor.rExtrai(1, 'seg', '', i01 + 1) <> '' do
     begin
       MDFe.seg.Add;
-      MDFe.seg[i01].respSeg := StrToRspSeguroMDFe(ok, Leitor.rCampo(tcStr, 'respSeg'));
-      MDFe.seg[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
-      MDFe.seg[i01].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
-      MDFe.seg[i01].CNPJ    := Leitor.rCampo(tcStr, 'CNPJ');
+
       MDFe.seg[i01].nApol   := Leitor.rCampo(tcStr, 'nApol');
       MDFe.seg[i01].nAver   := Leitor.rCampo(tcStr, 'nAver');
+
+      if (Leitor.rExtrai(2, 'infResp') <> '') then
+      begin
+        MDFe.seg[i01].respSeg := StrToRspSeguroMDFe(ok, Leitor.rCampo(tcStr, 'respSeg'));
+        MDFe.seg[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+      end;
+      if (Leitor.rExtrai(2, 'infSeg') <> '') then
+      begin
+        MDFe.seg[i01].xSeg    := Leitor.rCampo(tcStr, 'xSeg');
+        MDFe.seg[i01].CNPJ    := Leitor.rCampo(tcStr, 'CNPJ');
+      end;
+
       inc(i01);
     end;
   end;

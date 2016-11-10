@@ -80,10 +80,10 @@ object frmPrincipal: TfrmPrincipal
     Top = 110
     Width = 358
     Height = 211
-    ActivePage = TabSheet1
+    ActivePage = TabArquivos
     Align = alClient
     TabOrder = 1
-    object TabSheet1: TTabSheet
+    object TabArquivos: TTabSheet
       Caption = 'Arquivos *Fr3'
       object lstbxFR3: TListBox
         Left = 0
@@ -95,7 +95,7 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 0
       end
     end
-    object TabSheet2: TTabSheet
+    object TabCustomizacao: TTabSheet
       Caption = 'Customiza'#231#227'o'
       ImageIndex = 1
       object RbCanhoto: TRadioGroup
@@ -177,6 +177,158 @@ object frmPrincipal: TfrmPrincipal
           TabOrder = 3
         end
       end
+      object rbTarjaNfeCancelada: TCheckBox
+        Left = 32
+        Top = 128
+        Width = 169
+        Height = 17
+        Caption = ' Mostra a Tarja de Cancelada'
+        TabOrder = 2
+      end
+    end
+    object Decimais: TTabSheet
+      Caption = 'Decimais'
+      ImageIndex = 2
+      object RgTipodedecimais: TRadioGroup
+        Left = 0
+        Top = 0
+        Width = 350
+        Height = 49
+        Align = alTop
+        Caption = 'Tipo '
+        Columns = 2
+        Items.Strings = (
+          'tdetInteger'
+          'tdetMascara')
+        TabOrder = 0
+      end
+      object PageControl2: TPageControl
+        Left = 0
+        Top = 49
+        Width = 350
+        Height = 134
+        ActivePage = TabtdetInteger
+        Align = alClient
+        TabOrder = 1
+        object TabtdetInteger: TTabSheet
+          Caption = 'tdetInteger'
+          ImageIndex = 1
+          object Label5: TLabel
+            Left = 16
+            Top = 24
+            Width = 56
+            Height = 13
+            Caption = 'Quantidade'
+          end
+          object Label6: TLabel
+            Left = 184
+            Top = 24
+            Width = 24
+            Height = 13
+            Caption = 'Valor'
+          end
+          object cbtdetInteger_qtd: TComboBox
+            Left = 16
+            Top = 48
+            Width = 56
+            Height = 21
+            AutoCloseUp = True
+            TabOrder = 0
+            Items.Strings = (
+              '0'
+              '1'
+              '2'
+              '3'
+              '4'
+              '5'
+              '6'
+              '7'
+              '8'
+              '9'
+              '10')
+          end
+          object cbtdetInteger_Vrl: TComboBox
+            Left = 184
+            Top = 48
+            Width = 56
+            Height = 21
+            AutoCloseUp = True
+            TabOrder = 1
+            Items.Strings = (
+              '0'
+              '1'
+              '2'
+              '3'
+              '4'
+              '5'
+              '6'
+              '7'
+              '8'
+              '9'
+              '10')
+          end
+        end
+        object TabtdetMascara: TTabSheet
+          Caption = 'tdetMascara'
+          ImageIndex = 2
+          object Label7: TLabel
+            Left = 5
+            Top = 5
+            Width = 56
+            Height = 13
+            Caption = 'Quantidade'
+          end
+          object Label8: TLabel
+            Left = 5
+            Top = 58
+            Width = 24
+            Height = 13
+            Caption = 'Valor'
+          end
+          object cbtdetMascara_qtd: TComboBox
+            Left = 5
+            Top = 29
+            Width = 185
+            Height = 21
+            AutoCloseUp = True
+            ItemIndex = 0
+            TabOrder = 0
+            Text = '#,###,##0.##########'
+            Items.Strings = (
+              '#,###,##0.##########'
+              '#,###,##0.0#########'
+              '#,###,##0.00########'
+              '#,###,##0.000#######'
+              '#,###,##0.0000######'
+              '#,###,##0.00000#####'
+              '#,###,##0.000000####'
+              '#,###,##0.0000000###'
+              '#,###,##0.00000000##'
+              '#,###,##0.000000000#'
+              '#,###,##0.0000000000')
+          end
+          object cbtdetMascara_Vrl: TComboBox
+            Left = 5
+            Top = 77
+            Width = 185
+            Height = 21
+            AutoCloseUp = True
+            TabOrder = 1
+            Items.Strings = (
+              '#,###,##0.##########'
+              '#,###,##0.0#########'
+              '#,###,##0.00########'
+              '#,###,##0.000#######'
+              '#,###,##0.0000######'
+              '#,###,##0.00000#####'
+              '#,###,##0.000000####'
+              '#,###,##0.0000000###'
+              '#,###,##0.00000000##'
+              '#,###,##0.000000000#'
+              '#,###,##0.0000000000')
+          end
+        end
+      end
     end
   end
   object ACBrNFe1: TACBrNFe
@@ -187,8 +339,8 @@ object frmPrincipal: TfrmPrincipal
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
     DANFE = ACBrNFeDANFEFR1
-    Left = 213
-    Top = 214
+    Left = 237
+    Top = 30
   end
   object ACBrNFeDANFEFR1: TACBrNFeDANFEFR
     ACBrNFe = ACBrNFe1
@@ -236,13 +388,13 @@ object frmPrincipal: TfrmPrincipal
     QuebraLinhaEmDetalhamentoEspecifico = True
     IncorporarBackgroundPdf = True
     IncorporarFontesPdf = True
-    Left = 120
-    Top = 214
+    Left = 48
+    Top = 22
   end
   object OpenDialog1: TOpenDialog
     Filter = 'xml|*.xml'
-    Left = 32
-    Top = 214
+    Left = 136
+    Top = 22
   end
   object frxReport1: TfrxReport
     Version = '5.5'
@@ -261,8 +413,8 @@ object frmPrincipal: TfrmPrincipal
       ''
       'end.')
     OnReportPrint = 'frxReportOnReportPrint'
-    Left = 299
-    Top = 214
+    Left = 307
+    Top = 190
     Datasets = <>
     Variables = <>
     Style = <>

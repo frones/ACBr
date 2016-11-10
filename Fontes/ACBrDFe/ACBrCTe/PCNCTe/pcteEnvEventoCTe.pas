@@ -248,7 +248,11 @@ begin
        Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
        Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
 
-       Gerador.wGrupo('toma04');
+       if Versao = '3.00' then
+         Gerador.wGrupo('toma4')
+       else
+         Gerador.wGrupo('toma04');
+
        Gerador.wCampo(tcStr, 'EP09', 'toma', 01, 01, 1, TpTomadorToStr(Evento.Items[0].InfEvento.detEvento.toma), DSC_TOMA);
        Gerador.wCampo(tcStr, 'EP10', 'UF  ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UF, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UF) then
@@ -266,7 +270,10 @@ begin
             Gerador.wAlerta('EP13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
          end;
 
-       Gerador.wGrupo('/toma04');
+       if Versao = '3.00' then
+         Gerador.wGrupo('/toma4')
+       else
+         Gerador.wGrupo('/toma04');
 
        Gerador.wCampo(tcStr, 'EP14', 'modal   ', 02, 02, 1, TpModalToStr(Evento.Items[0].InfEvento.detEvento.modal), DSC_MODAL);
        Gerador.wCampo(tcStr, 'EP15', 'UFIni   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UFIni, DSC_UF);
@@ -275,6 +282,17 @@ begin
        Gerador.wCampo(tcStr, 'EP16', 'UFFim   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UFFim, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UFFim) then
          Gerador.wAlerta('EP16', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
+
+       if Versao = '3.00' then
+       begin
+//         Gerador.wCampo(tcStr, 'EP17', 'tpCTe', 01, 01, 1, tpCTePagToStr(Evento.Items[0].InfEvento.detEvento.tpCTe), DSC_TPCTE);
+         // Segundo o Manual página 104 devemos informar o valor "0" para tpCTe
+         Gerador.wCampo(tcStr, 'EP17', 'tpCTe', 01, 01, 1, '0', DSC_TPCTE);
+         Gerador.wCampo(tcStr, 'EP18', 'dhEmi', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhEmi) +
+                                  GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
+                                  Evento.Items[0].InfEvento.detEvento.dhEmi), DSC_DEMI);
+       end;
+
        Gerador.wGrupo('/evEPECCTe');
      end;
    teMultiModal:

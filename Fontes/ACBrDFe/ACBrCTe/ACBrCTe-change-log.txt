@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/11/2016
+-- Diversos --
+[*] Correção visando atender o Evento EPEC da versão 3.00.
+    Por: Italo Jurisato Junior
+
 04/11/2016
 -- pcteEnvEventoCTe --
 [*] Correção visando atender a versão 3.00, as TAG que contem Data/Hora deve possuir

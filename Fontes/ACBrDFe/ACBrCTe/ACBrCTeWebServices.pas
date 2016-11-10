@@ -2436,6 +2436,8 @@ begin
             infEvento.detEvento.modal   := FEvento.Evento[i].InfEvento.detEvento.modal;
             infEvento.detEvento.UFIni   := FEvento.Evento[i].InfEvento.detEvento.UFIni;
             infEvento.detEvento.UFFim   := FEvento.Evento[i].InfEvento.detEvento.UFFim;
+            infEvento.detEvento.tpCTe   := FEvento.Evento[i].InfEvento.detEvento.tpCTe;
+            infEvento.detEvento.dhEmi   := FEvento.Evento[i].InfEvento.detEvento.dhEmi;
           end;
         end;
       end;

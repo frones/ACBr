@@ -126,14 +126,16 @@ type
     Fmodal: TpcteModal;
     FUFIni: String;
     FUFFim: String;
+    FtpCTe: TpcteTipoCTe;
+    FdhEmi: TDateTime;
 
     FxRegistro: String; // MultiModal
     FnDoc: String;
 
     FinfCorrecao: TInfCorrecaoCollection;
     FCondUso: String;
-
-    FinfGTV: TInfGTVCollection; // GTV
+     // GTV
+    FinfGTV: TInfGTVCollection;
 
     procedure SetCorrecao(const Value: TInfCorrecaoCollection);
     procedure setCondUso(const Value: String);
@@ -148,16 +150,18 @@ type
     property xJust: String      read FxJust      write FxJust;
     property xOBS: String       read FxOBS       write FxOBS;
 
-    property vICMS: Currency    read FvICMS      write FvICMS;
-    property vTPrest: Currency  read FvTPrest    write FvTPrest;
-    property vCarga: Currency   read FvCarga     write FvCarga;
-    property toma: TpcteTomador read Ftoma       write Ftoma;
-    property UF: String         read FUF         write FUF;
-    property CNPJCPF: String    read FCNPJCPF    write FCNPJCPF;
-    property IE: String         read FIE         write FIE;
-    property modal: TpcteModal  read Fmodal      write Fmodal;
-    property UFIni: String      read FUFIni      write FUFIni;
-    property UFFim: String      read FUFFim      write FUFFim;
+    property vICMS: Currency     read FvICMS      write FvICMS;
+    property vTPrest: Currency   read FvTPrest    write FvTPrest;
+    property vCarga: Currency    read FvCarga     write FvCarga;
+    property toma: TpcteTomador  read Ftoma       write Ftoma;
+    property UF: String          read FUF         write FUF;
+    property CNPJCPF: String     read FCNPJCPF    write FCNPJCPF;
+    property IE: String          read FIE         write FIE;
+    property modal: TpcteModal   read Fmodal      write Fmodal;
+    property UFIni: String       read FUFIni      write FUFIni;
+    property UFFim: String       read FUFFim      write FUFFim;
+    property tpCTe: TpcteTipoCTe read FtpCTe      write FtpCTe;
+    property dhEmi: TDateTime    read FdhEmi      write FdhEmi;
 
     property xRegistro: String  read FxRegistro  write FxRegistro;
     property nDoc: String       read FnDoc       write FnDoc;

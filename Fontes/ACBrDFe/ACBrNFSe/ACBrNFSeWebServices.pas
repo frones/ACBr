@@ -874,7 +874,12 @@ begin
   // %Senha%   : Representa a senha do usuário
   Texto := StringReplace(Texto, '%Municipio%', IntToStr(FPConfiguracoesNFSe.Geral.CodigoMunicipio), [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Usuario%', FPConfiguracoesNFSe.Geral.UserWeb, [rfReplaceAll]);
-  Texto := StringReplace(Texto, '%Senha%', FPConfiguracoesNFSe.Geral.SenhaWeb, [rfReplaceAll]);
+
+  // Fazer o parse da senha, pois pode ter caracteres especiais
+  if FProvedor = proSimplISS then
+    Texto := StringReplace(Texto, '%Senha%', ParseText(FPConfiguracoesNFSe.Geral.SenhaWeb, False), [rfReplaceAll])
+  else
+    Texto := StringReplace(Texto, '%Senha%', FPConfiguracoesNFSe.Geral.SenhaWeb, [rfReplaceAll]);
 
   FDadosSenha := Texto;
 end;

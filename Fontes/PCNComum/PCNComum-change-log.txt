@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/11/2016
+-- pcnConversao --
+[+] Nova função para retornar a descrição da unidade de medida 
+          function UnidMedToDescricaoStr(const t: TUnidMed): string;
+    por: Henrique Leonardo ( HleoRj )
+
 26/10/2016
 -- pcnConversao --
 [*] Remoção do Tipo de Responsável pelo Seguro e das funções de conversão.

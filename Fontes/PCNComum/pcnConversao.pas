@@ -324,6 +324,7 @@ function StrToTpProp(out ok: boolean; const s: String ): TpcteProp;
 
 function UnidMedToStr(const t: TUnidMed): string;
 function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;
+function UnidMedToDescricaoStr(const t: TUnidMed): string;
 
 function SituacaoDFeToStr(const t: TSituacaoDFe): String;
 function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
@@ -1396,6 +1397,20 @@ function UnidMedToStr(const t: TUnidMed): string;
 begin
   result := EnumeradoToStr(t, ['00', '01', '02', '03', '04', '05'],
    [uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU]);
+end;
+
+function UnidMedToDescricaoStr(const t: TUnidMed): string;
+begin
+  case t of
+    uM3       : result := 'M3';
+    uKG       : result := 'KG';
+    uTON      : result := 'TON';
+    uUNIDADE  : result := 'UND';
+    uLITROS   : result := 'L';
+    uMMBTU    : result := 'MMBTU';
+    else
+     result := 'NÃO DEFINIDO';
+  end;
 end;
 
 function StrToUnidMed(out ok: boolean; const s: String ): TUnidMed;

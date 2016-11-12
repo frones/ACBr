@@ -243,6 +243,8 @@ type
         const DocumentoVinculado : String = '');
      procedure NCN(const Rede, NSU, Finalizacao : String;
         const Valor : Double = 0; const DocumentoVinculado : String = '');
+     Function PRE(Valor : Double; DocumentoVinculado : String = '';
+        Moeda : Integer = 0 ) : Boolean; virtual;
 
      procedure FinalizarCupom( DesbloquearMouseTecladoNoTermino: Boolean = True);
      procedure CancelarTransacoesPendentes;
@@ -764,6 +766,12 @@ procedure TACBrTEFD.NCN(const Rede, NSU, Finalizacao : String;
   const Valor : Double = 0; const DocumentoVinculado : String = '');
 begin
   fTefClass.NCN( Rede, NSU, Finalizacao, Valor, DocumentoVinculado);
+end;
+
+function TACBrTEFD.PRE(Valor: Double; DocumentoVinculado: String;
+  Moeda: Integer): Boolean;
+begin
+  Result := fTefClass.PRE(Valor, DocumentoVinculado, Moeda);
 end;
 
 procedure TACBrTEFD.CancelarTransacoesPendentes;

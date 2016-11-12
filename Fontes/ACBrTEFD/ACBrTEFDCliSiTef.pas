@@ -123,6 +123,7 @@ type
       fOperacaoCHQ : Integer;
       fOperacaoCNC : Integer;
       fOperacaoCRT : Integer;
+      fOperacaoPRE : Integer;
       fOperacaoReImpressao: Integer;
       fOperador : AnsiString;
       fParametrosAdicionais : TStringList;
@@ -259,6 +260,9 @@ type
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
         Valor : Double) : Boolean; overload; override;
+     Function PRE(Valor : Double; DocumentoVinculado : String = '';
+        Moeda : Integer = 0) : Boolean; override;
+
      Function DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
      Function ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
         CupomFiscal:AnsiString):Integer;
@@ -288,6 +292,7 @@ type
      property OperacaoCRT: Integer                      read fOperacaoCRT          write fOperacaoCRT default 0;
      property OperacaoCHQ: Integer                      read fOperacaoCHQ          write fOperacaoCHQ default 1;
      property OperacaoCNC: Integer                      read fOperacaoCNC          write fOperacaoCNC default 200;
+     property OperacaoPRE: Integer                      read fOperacaoPRE          write fOperacaoPRE default 115;
      property OperacaoReImpressao: Integer              read fOperacaoReImpressao  write fOperacaoReImpressao default 112;
      property OnExibeMenu: TACBrTEFDCliSiTefExibeMenu   read fOnExibeMenu          write fOnExibeMenu;
      property OnObtemCampo: TACBrTEFDCliSiTefObtemCampo read fOnObtemCampo         write fOnObtemCampo;
@@ -543,6 +548,7 @@ begin
 
   fOperacaoATV         := 111 ; // 111 - Teste de comunicação com o SiTef
   fOperacaoReImpressao := 112 ; // 112 - Menu Re-impressão
+  fOperacaoPRE         := 115 ; // 115 - Pré-autorização
   fOperacaoADM         := 110 ; // 110 - Abre o leque das transações Gerenciais
   fOperacaoCRT         := 0 ;   // A CliSiTef permite que o operador escolha a forma
                                 // de pagamento através de menus
@@ -917,6 +923,25 @@ begin
   Respostas.Values['516'] := NSU ;
 
   Sts := FazerRequisicao( fOperacaoCNC, 'CNC' ) ;
+
+  if Sts = 10000 then
+     Sts := ContinuarRequisicao( CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante ) ;
+
+  Result := ( Sts = 0 ) ;
+
+  if not Result then
+     AvaliaErro( Sts )
+  else
+     if not CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante then
+        ProcessarResposta;
+end;
+
+function TACBrTEFDCliSiTef.PRE(Valor: Double; DocumentoVinculado: String;
+  Moeda: Integer): Boolean;
+var
+   Sts : Integer;
+begin
+  Sts := FazerRequisicao( fOperacaoPRE, 'PRE', Valor, '', fRestricoes ) ;
 
   if Sts = 10000 then
      Sts := ContinuarRequisicao( CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante ) ;

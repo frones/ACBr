@@ -46,15 +46,27 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-		
+
+12/11/2016
+-- ACBrTEFDClass --
+[-] Não estava preenchendo corretamento o nome da rede nos casos em
+    que no arquivo de resposta retornasse registros tipo 010-xxx 010-005
+    que não fosse o 010-000. por: Rodrigo Frühwirth e DSA
+    www.projetoacbr.com.br/forum/index.php?showtopic=33372
+
+-- ACBrTEFD, ACBrTEFDClass, ACBrTEFDCliSiTef --
+[+] Adicionado chamada da pré-autorização sem ser pelo módulo ADM
+    por: Rodrigo Frühwirth e DSA
+    www.projetoacbr.com.br/forum/index.php?showtopic=32788
+
 29/09/2016
 -- ACBrTEFDCliSiTef --
 [-] Alteração para inicializar variável Interromper como False no início do 
-	método ContinuarRequisicao. (por: Elias César)
+    método ContinuarRequisicao. (por: Elias César)
 
 29/09/2016
-[+] Adição da validação para programar o evento OnAguardaResp quando o gerenciador for o sitef
-		por: Juliomar Marchetti
+[+] Adição da validação para programar o evento OnAguardaResp quando o
+    gerenciador for o sitef.  por: Juliomar Marchetti
 		
 27/09/2016
 [*] pequeno acerto para quando a parcela não tem NSU

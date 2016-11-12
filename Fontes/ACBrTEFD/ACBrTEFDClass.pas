@@ -757,6 +757,8 @@ type
      Function CNC : Boolean ; overload; virtual;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
         Valor : Double) : Boolean; overload; virtual;
+     Function PRE(Valor : Double; DocumentoVinculado : String = '';
+        Moeda : Integer = 0) : Boolean; virtual;
    published
      property ArqLOG : String read fArqLOG write fArqLOG ;
      property LogDebug : Boolean read fLogDebug write fLogDebug default false;
@@ -1448,7 +1450,11 @@ begin
        7   : fpDocumentoPessoa            := Linha.Informacao.AsString;
        8   : fpDataCheque                 := Linha.Informacao.AsDate;
        9   : fpStatusTransacao            := Linha.Informacao.AsString;
-       10  : fpRede                       := Linha.Informacao.AsString;
+       10  :
+         begin
+           if Linha.Sequencia = 0 then
+             fpRede := Linha.Informacao.AsString;
+         end;
        11  : fpTipoTransacao              := Linha.Informacao.AsInteger;
        12  : fpNSU                        := Linha.Informacao.AsString;
        13  : fpCodigoAutorizacaoTransacao := Linha.Informacao.AsInteger;
@@ -2211,6 +2217,24 @@ begin
     TACBrTEFD(Owner).EstadoResp := respNenhum;
     DeleteFile( ArqReq );  // Apaga a Requisicao (caso o G.P. nao tenha apagado)
   end ;
+end;
+
+function TACBrTEFDClass.PRE(Valor: Double; DocumentoVinculado: String;
+  Moeda: Integer): Boolean;
+begin
+  IniciarRequisicao('PRE');
+  Req.DocumentoVinculado  := DocumentoVinculado;
+  Req.ValorTotal          := Valor;
+  Req.Moeda               := Moeda;
+  AdicionarIdentificacao;
+  FinalizarRequisicao;
+  LerRespostaRequisicao;
+  Result := Resp.TransacaoAprovada ;
+  try
+     ProcessarResposta ;         { Faz a Impressão e / ou exibe Mensagem ao Operador }
+  finally
+     FinalizarResposta( True ) ; { True = Apaga Arquivo de Resposta }
+  end;
 end;
 
 procedure TACBrTEFDClass.ProcessarResposta ;

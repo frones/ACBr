@@ -196,6 +196,8 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    procedure CancelaDescontoAcrescimoItem(NumItem : Integer;
+       TipoAcrescimoDesconto: String = 'D') ;override ;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '') ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
@@ -1750,6 +1752,19 @@ begin
      end;
   end;
   EnviaComando('08') ;
+end;
+
+procedure TACBrECFSwedaSTX.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
+var
+  CMD : String ;
+begin
+  CMD := '69' ;
+
+  if NumItem > 0 then
+     CMD := CMD + '|' + IntToStr(NumItem) + '|' + ifthen(TipoAcrescimoDesconto='D','2','1');
+
+  EnviaComando( CMD ) ;
 end;
 
 procedure TACBrECFSwedaSTX.CancelaItemVendido(NumItem: Integer);

@@ -383,7 +383,8 @@ TACBrECFEscECF = class( TACBrECFClass )
     Procedure CancelaCupom( NumCOOCancelar: Integer = 0 ) ; override ;
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
     procedure CancelaItemVendidoParcial( NumItem : Integer; Quantidade : Double) ; override ;
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; override ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ; override ;
 
     { Procedimentos de Cupom Não Fiscal }
     Procedure AbreNaoFiscal( CPF_CNPJ: String = ''; Nome: String = '';
@@ -2819,12 +2820,13 @@ begin
   SalvaRespostasMemoria(False);
 end;
 
-procedure TACBrECFEscECF.CancelaDescontoAcrescimoItem(NumItem: Integer);
+procedure TACBrECFEscECF.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
 begin
   with EscECFComando do
   begin
      CMD := 28 ;
-     AddParamInteger( 0 );
+     AddParamInteger( ifthen(TipoAcrescimoDesconto='D',0,1) );
      AddParamInteger( NumItem )
   end ;
 

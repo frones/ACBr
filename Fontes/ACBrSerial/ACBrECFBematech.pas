@@ -555,6 +555,8 @@ TACBrECFBematech = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    Procedure CancelaDescontoAcrescimoItem( NumItem: Integer;
+       TipoAcrescimoDesconto: String = 'D' ) ; override;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '') ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
@@ -2006,6 +2008,21 @@ begin
   EnviaComando( #93 + DescontoAcrescimo +
                 IntToStrZero( NumItem, 3) + ValDescAcresStr ) ;
 end ;
+
+procedure TACBrECFBematech.CancelaDescontoAcrescimoItem( NumItem: Integer;
+   TipoAcrescimoDesconto: String);
+begin
+  if not fs25MFD then
+     exit ;
+
+  if NumItem = 0 then
+     NumItem := NumUltItem;
+
+  if TipoAcrescimoDesconto <> 'A' then
+     TipoAcrescimoDesconto := 'D' ;
+
+  EnviaComando(#114 + TipoAcrescimoDesconto +  IntToStrZero(NumItem,3));
+end;
 
 procedure TACBrECFBematech.CarregaAliquotas;
 Var StrRet : AnsiString ;

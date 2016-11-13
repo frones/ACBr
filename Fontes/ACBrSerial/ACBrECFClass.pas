@@ -168,6 +168,8 @@ TACBrECFRodape = class( TPersistent )
     fsMD5: String;
     fsDav: String;
     fsNF: String;
+    fsPlaca: String;
+    fsQtdeKM: String;
     fsRestaurante: TACBrECFRodapeRestaurante;
     fsMinasLegal: Boolean;
     fsCupomMania: Boolean;
@@ -187,6 +189,8 @@ TACBrECFRodape = class( TPersistent )
     property NF          : String  read fsNF          write fsNF stored False;
     property DavOs       : String  read fsDavOs       write fsDavOs stored False;
     property PreVenda    : String  read fsPreVenda    write fsPreVenda stored False;
+    property Placa       : String  read fsPlaca       write fsPlaca stored false;
+    property QtdeKM      : String  read fsQtdeKM      write fsQtdeKM stored false;
     property Restaurante : TACBrECFRodapeRestaurante read fsRestaurante write fsRestaurante;
     property CupomMania  : Boolean read fsCupomMania  write fsCupomMania default False;
     property MinasLegal  : Boolean read fsMinasLegal  write fsMinasLegal default False;
@@ -1195,7 +1199,8 @@ TACBrECFClass = class
     Procedure CancelaItemVendido( NumItem : Integer ) ; virtual ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
       Quantidade : Double) ; Virtual ;
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ; Virtual ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ; Virtual ;
     Property Subtotal  : Double read GetSubTotal ;
     Property TotalPago : Double read GetTotalPago ;
 
@@ -3429,7 +3434,8 @@ begin
   ErroAbstract('DescontoAcrescimoItemAnterior');
 end ;
 
-procedure TACBrECFClass.CancelaDescontoAcrescimoItem(NumItem: Integer);
+procedure TACBrECFClass.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
 begin
   ErroAbstract('CancelaDescontoAcrescimoItem');
 end;

@@ -218,7 +218,8 @@ TACBrECFDaruma = class( TACBrECFClass )
     Procedure CancelaItemVendido( NumItem : Integer ) ; override ;
     procedure CancelaItemVendidoParcial( NumItem : Integer;
       Quantidade : Double) ; override ; // Função implementada até o momento apenas para Daruma
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer) ;override ; // Função implementada até o momento apenas para Daruma
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D') ;override ;
     Procedure LeituraX ; override ;
     Procedure LeituraXSerial( Linhas : TStringList) ; override ;
     Procedure ReducaoZ(DataHora : TDateTime = 0 ) ; override ;
@@ -2354,7 +2355,8 @@ begin
   end;
 end;
 
-procedure TACBrECFDaruma.CancelaDescontoAcrescimoItem(NumItem: Integer);
+procedure TACBrECFDaruma.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
 begin
   if fpMFD then
     EnviaComando(FS + 'F' + #205 +  IntToStrZero(NumItem,3));

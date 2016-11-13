@@ -311,6 +311,8 @@ TACBrECFEpson = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+       TipoAcrescimoDesconto: String = 'D') ;override ;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
@@ -2169,6 +2171,19 @@ begin
          end ;
      end ;
   end ;
+end;
+
+procedure TACBrECFEpson.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
+begin
+  EpsonComando.Comando  := '0A18' ;
+  EpsonComando.Extensao := '000' + ifthen(TipoAcrescimoDesconto ='D','0','1') ;
+  EpsonComando.AddParamInteger( NumItem ) ;
+  EnviaComando ;
+
+  ZeraCache;
+  RespostasComando.AddField( 'SubTotal', EpsonResposta.Params[0] );
+  RespostasComando.AddField( 'ValorCancelado', EpsonResposta.Params[1] );
 end;
 
 procedure TACBrECFEpson.CancelaItemVendido(NumItem: Integer);

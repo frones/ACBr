@@ -39,11 +39,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 13/11/2016
+-- ACBrECF, ACBrECFClass --
+[*] Método "CancelaDescontoAcrescimoItem", modificado inserindo novo parâmetro:
+    "TipoAcrescimoDesconto: String = 'D'"
+[*] Método "GetRodapePaf" modificado para atender ao requisito XXXVI do PAF-ECF
+[*] TACBrECFRodape modificado inserindo as propriedades "Placa" e "QtdeKM"
+
+-- ACBrECFBematech, ACBrECFEpson, ACBrECFFiscNET, ACBrECFSwedaSTX --
+[+] Adicionado suporte ao método: "CancelaDescontoAcrescimoItem"
+
+-- ACBrECFEscECF --
+[*] Método "CancelaDescontoAcrescimoItem" modificado para suportar o parâmetro
+    "TipoAcrescimoDesconto"
+
+-- ACBrECFFiscNET --
+[*] Método "TraduzirTag", modificado para suportar modelo "URANO/1FIT LOGGER"
+
+(por: Pedro E. Braga) - http://www.projetoacbr.com.br/forum/index.php?showtopic=32980
+
 Data: 09/11/2016
 -- ACBrBal, ACBrBALLibratek
 [+] Adicionado a balança libratek wt3000-i
-		http://www.projetoacbr.com.br/forum/topic/31203-acbrbal-com-balan%C3%A7a-libratek-wt3000-i/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/31203-acbrbal-com-balan%C3%A7a-libratek-wt3000-i/
+    por : Juliomar Marchetti
 		
 Data: 03/11/2016
 -- ACBrECFFiscNET --
@@ -64,16 +83,16 @@ Data: 21/10/2016
 Data: 18/10/2016
 -- ACBrBAL --
 [+] Inclusão de dois comandos: "SolicitarPeso" e "InterpretarResposta()" 
-	com objetivo de utilizar o ACBrBAL dentro do ACBrMTer.
-	(por: Elias César)
+    com objetivo de utilizar o ACBrBAL dentro do ACBrMTer.
+    (por: Elias César)
 	
 -- ACBrBALClass e filhas -- 
 [+] Incluídos os comandos "SolicitarPeso", "AguardarRespostaPeso" e 
     "InterpretarRespostaPeso", dividindo o Comando "LePeso" em partes;
 [*] Refatoração nas classes para utilização dos novos comandos;
 [*] Modificação pra que ACBrBALClass implemente uma Balança Genérica. 
-	Com isso a ACBrBALGenerica foi excluída.
-	(por: Elias César)
+    Com isso a ACBrBALGenerica foi excluída.
+    (por: Elias César)
 
 Data: 11/10/2016
 -- ACBrDevice --

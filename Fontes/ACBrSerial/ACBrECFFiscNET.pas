@@ -125,10 +125,10 @@ TACBrECFFiscNET = class( TACBrECFClass )
 
     // urano e demais
     xDLLReadLeMemorias : function (szPortaSerial, szNomeArquivo,
-       szSerieECF: AnsiString; bAguardaConcluirLeitura : Char) : Integer; stdcall;
+       szSerieECF: AnsiString; bAguardaConcluirLeitura : AnsiChar) : Integer; stdcall;
 
     xDLLATO17GeraArquivo : function (szArquivoBinario, szArquivoTexto, szPeriodoIni,
-       szPeriodoFIM: AnsiString; TipoPeriodo: Char;
+       szPeriodoFIM: AnsiString; TipoPeriodo: AnsiChar;
        szUsuario, szTipoLeitura: AnsiString) : Integer; stdcall;
 
     //Elgin
@@ -258,6 +258,8 @@ TACBrECFFiscNET = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+       TipoAcrescimoDesconto: String = 'D') ;override ;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
@@ -1129,6 +1131,17 @@ begin
   fsEmPagamento := false ;
     
   FechaRelatorio ;   { Fecha relatorio se ficou algum aberto (só por garantia)}
+end;
+
+procedure TACBrECFFiscNET.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
+begin
+  FiscNETComando.NomeComando := 'AcresceItemFiscal' ;
+  FiscNETComando.AddParamBool('Cancelar',True);
+  if NumItem > 0 then
+     FiscNETComando.AddParamInteger('NumItem',NumItem) ;
+
+  EnviaComando ;
 end;
 
 procedure TACBrECFFiscNET.CancelaItemVendido(NumItem: Integer);
@@ -3173,7 +3186,7 @@ var
 begin
 
   // Modelos mais antigos usam comandos "B" //
-  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K') > 0 );
+  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER') > 0 );
 
   if ATag = cTagLigaExpandido then
     Result := ifthen(CodB, cExpandidoON_B , cExpandidoON)

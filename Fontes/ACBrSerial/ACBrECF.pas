@@ -709,7 +709,8 @@ TACBrECF = class( TACBrComponent )
     Procedure CancelaCupom( NumCOOCancelar: Integer = 0) ;
     Procedure CancelaItemVendido( NumItem : Integer ) ;
     procedure CancelaItemVendidoParcial( NumItem : Integer; Quantidade : Double);
-    procedure CancelaDescontoAcrescimoItem( NumItem : Integer);
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+      TipoAcrescimoDesconto: String = 'D');
     procedure CancelaDescontoAcrescimoSubTotal(TipoAcrescimoDesconto: Char); //A -> Acrescimo D -> Desconto
 
     Property Subtotal  : Double read GetSubTotalClass ;
@@ -3094,14 +3095,15 @@ end;
 
 
 { Cancela o Acrescimo ou o Desconto do Item informado }
-procedure TACBrECF.CancelaDescontoAcrescimoItem(NumItem: Integer);
+procedure TACBrECF.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
 begin
   ComandoLOG := 'CancelaDescontoAcrescimoItem' ;
 
   if Assigned( fsAAC ) then
      fsAAC.VerificaReCarregarArquivo;
 
-  fsECF.CancelaDescontoAcrescimoItem(NumItem) ;
+  fsECF.CancelaDescontoAcrescimoItem(NumItem, TipoAcrescimoDesconto) ;
 end;
 
 procedure TACBrECF.CancelaImpressaoCheque;
@@ -3470,6 +3472,11 @@ begin
   Result := Trim(Result) + #10 + Trim(GetRodapeRestaurante);
   Result := Trim(Result) + #10 + Trim(GetRodapeUF);
   Result := Trim(Result) + #10 + Trim(GetRodapeImposto);
+
+  // atende ao requisito XXXVI do paf-ECF
+  if Trim(InfoRodapeCupom.Placa) <> '' then 
+     Result := Result + #10 + 'Placa: ' + Trim(InfoRodapeCupom.Placa);
+
   Result := Trim(Result);
   InfoRodapeCupom.PostoCombustivel.Clear;
   InfoRodapeCupom.PostoCombustivel.Imprimir := False;

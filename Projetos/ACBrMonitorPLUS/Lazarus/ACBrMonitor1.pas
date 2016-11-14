@@ -1717,7 +1717,7 @@ procedure TFrmACBrMonitor.ApplicationProperties1Exception(Sender: TObject;
 begin
   mResp.Lines.Add(E.Message);
   if cbLog.Checked then
-    WriteToTXT(ArqLogTXT, 'Exception: ' + E.Message);
+    WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+'Exception: ' + E.Message);
 
   StatusBar1.Panels[0].Text := 'Exception';
   //  MessageDlg( E.Message,mtError,[mbOk],0) ;
@@ -5361,6 +5361,10 @@ begin
         { Interpretanto o Comando }
         fsCmd.Comando := Linha;
 
+        //Log Comando
+        if cbLog.Checked then
+          WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Linha, True, True);
+
         if fsCmd.Objeto = 'ACBR' then
           DoACBr(fsCmd)
         else if fsCmd.Objeto = 'ECF' then
@@ -5520,7 +5524,7 @@ begin
     ' linhas)';
 
   if cbLog.Checked then
-    WriteToTXT(ArqLogTXT, Comando + sLineBreak + Resposta, True, True);
+    WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Resposta, True, True);
 end;
 
 {------------------------------------------------------------------------------}
@@ -7609,7 +7613,7 @@ begin
   begin
     mResp.Lines.Add(fsLinesLog);
     if cbLog.Checked then
-      WriteToTXT(ArqLogTXT, fsLinesLog, True, True);
+      WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+fsLinesLog, True, True);
     fsLinesLog := '';
   end;
 end;

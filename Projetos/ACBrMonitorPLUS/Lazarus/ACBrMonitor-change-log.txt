@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/11/2016
+[+]	Adicionado impressão de Timestamp no arquivo de logs, LOG.TXT, separada a gravação
+	neste do comando e resposta para que o timestamp detalhe o tempo de resposta do
+	ACBrMonitorPLUS.
+	por: Celso Marigo Junior
+
 04/11/2016
 [*]	Adicionado rolagem via mouse wheel, roda do mouse, no manu lateral.
 	Além disso, nos botões que tem sub-botões, coloquei para rolar para o novo menu.

@@ -691,7 +691,7 @@ begin
 			else
 		  	FieldByName('Numero').AsString            := IdentificacaoRps.Numero;
       FieldByName('Serie').AsString             := IdentificacaoRPS.Serie;
-			FieldByName('Competencia').AsString       := FormatDateTime('MM"/"yyyy', DataEmissao ) ;
+			FieldByName('Competencia').AsString       := Competencia;
 
 			if(FormatarNumeroDocumentoNFSe) then
 		  	FieldByName('NFSeSubstituida').AsString   := FormatarNumeroDocumentoFiscalNFSe(NfseSubstituida)

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2016
+--ACBrNFSeDANFSeFR
+[*] Modificado pra pegar a competencia que já vem no xml
+		http://www.projetoacbr.com.br/forum/topic/31319-corre%C3%A7%C3%A3o-de-competencia/
+		por : Juliomar Marchetti
+		
 03/10/2016
 [*] Modificações para atender layout da ginfes
 		http://www.projetoacbr.com.br/forum/topic/32545-danfse-padr%C3%A3o-ginfes/

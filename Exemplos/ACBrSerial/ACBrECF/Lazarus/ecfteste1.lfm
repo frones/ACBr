@@ -1,11 +1,12 @@
 object Form1: TForm1
-  Left = 605
-  Height = 418
-  Top = 209
-  Width = 641
+  Left = 360
+  Height = 449
+  Top = 186
+  Width = 691
+  ActiveControl = PageControl1
   Caption = 'Teste de Impressora Fiscal'
-  ClientHeight = 398
-  ClientWidth = 641
+  ClientHeight = 449
+  ClientWidth = 691
   Constraints.MinHeight = 400
   Constraints.MinWidth = 440
   Font.CharSet = ANSI_CHARSET
@@ -153,12 +154,13 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.2.0'
+  Visible = False
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 375
-    Width = 641
+    Top = 406
+    Width = 691
     Panels = <    
       item
         Width = 80
@@ -170,17 +172,17 @@ object Form1: TForm1
   end
   object PageControl1: TPageControl
     Left = 0
-    Height = 335
+    Height = 366
     Top = 0
-    Width = 641
+    Width = 691
     ActivePage = tsECF
     Align = alClient
     TabIndex = 0
     TabOrder = 0
     object tsECF: TTabSheet
       Caption = 'ECF'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       ImageIndex = 3
       object SbArqLog: TSpeedButton
         Left = 168
@@ -326,7 +328,7 @@ object Form1: TForm1
         Left = 16
         Height = 41
         Top = 175
-        Width = 599
+        Width = 649
         Anchors = [akTop, akLeft, akRight]
         Lines.Strings = (
           'Aguardando a resposta da Impressora: %d segundos'
@@ -417,7 +419,7 @@ object Form1: TForm1
         Left = 260
         Height = 21
         Top = 224
-        Width = 210
+        Width = 260
         Anchors = [akTop, akLeft, akRight]
         TabOrder = 17
       end
@@ -604,7 +606,7 @@ object Form1: TForm1
         TabOrder = 22
       end
       object Button1: TButton
-        Left = 584
+        Left = 634
         Height = 25
         Top = 224
         Width = 40
@@ -615,7 +617,7 @@ object Form1: TForm1
       end
       object edInfo: TEdit
         Cursor = crIBeam
-        Left = 502
+        Left = 552
         Height = 21
         Top = 225
         Width = 80
@@ -756,6 +758,10 @@ object Form1: TForm1
           PrintSettings.MarginTop = 0.5
           PrintSettings.MarginRight = 0.5
           PrintSettings.MarginBottom = 0.5
+          PrintSettings.Preview.Left = 480
+          PrintSettings.Preview.Top = 270
+          PrintSettings.Preview.Width = 1440
+          PrintSettings.Preview.Height = 810
           TabOrder = 1
         end
       end
@@ -1099,8 +1105,8 @@ object Form1: TForm1
     end
     object tsTagsImpressao: TTabSheet
       Caption = 'Tags de Impressao'
-      ClientHeight = 309
-      ClientWidth = 633
+      ClientHeight = 340
+      ClientWidth = 683
       object speBarrasLargura: TSpinEdit
         Left = 12
         Height = 22
@@ -1112,7 +1118,7 @@ object Form1: TForm1
         TabOrder = 0
       end
       object BitBtn6: TBitBtn
-        Left = 474
+        Left = 524
         Height = 23
         Top = 26
         Width = 133
@@ -1127,8 +1133,8 @@ object Form1: TForm1
       object MenTextoBarras: TMemo
         Left = 0
         Height = 204
-        Top = 105
-        Width = 633
+        Top = 136
+        Width = 683
         Align = alBottom
         Lines.Strings = (
           'TEXTO LIVRE'
@@ -1240,7 +1246,7 @@ object Form1: TForm1
         Left = 0
         Height = 16
         Top = 0
-        Width = 633
+        Width = 683
         Align = alTop
         Alignment = taCenter
         Caption = 'Tags de Formatação de Impressão e Código de Barras'
@@ -1270,7 +1276,7 @@ object Form1: TForm1
         TabOrder = 5
       end
       object Button2: TButton
-        Left = 551
+        Left = 601
         Height = 23
         Top = 56
         Width = 56
@@ -1333,13 +1339,13 @@ object Form1: TForm1
     end
     object tsMenuFiscal: TTabSheet
       Caption = 'Menu Fiscal'
-      ClientHeight = 309
-      ClientWidth = 539
+      ClientHeight = 340
+      ClientWidth = 683
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
         Height = 68
-        Top = 241
-        Width = 539
+        Top = 272
+        Width = 683
         ActivePage = tbsMenuFiscalTipoCOO
         Align = alBottom
         TabIndex = 1
@@ -1371,8 +1377,6 @@ object Form1: TForm1
             Top = 8
             Width = 80
             CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-            OKCaption = 'OK'
-            CancelCaption = 'Cancel'
             DefaultToday = True
             DateOrder = doNone
             ButtonWidth = 23
@@ -1386,8 +1390,6 @@ object Form1: TForm1
             Top = 8
             Width = 80
             CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
-            OKCaption = 'OK'
-            CancelCaption = 'Cancel'
             DefaultToday = True
             DateOrder = doNone
             ButtonWidth = 23
@@ -1399,7 +1401,7 @@ object Form1: TForm1
         object tbsMenuFiscalTipoCOO: TTabSheet
           Caption = 'Emissão por intervalo de COO'
           ClientHeight = 42
-          ClientWidth = 531
+          ClientWidth = 675
           ImageIndex = 1
           object Label30: TLabel
             Left = 16
@@ -1438,18 +1440,18 @@ object Form1: TForm1
       end
       object grpMenuFiscalOpcoes: TGroupBox
         Left = 0
-        Height = 241
+        Height = 272
         Top = 0
-        Width = 539
+        Width = 683
         Align = alClient
         Caption = 'Operações do Menu fiscal'
-        ClientHeight = 223
-        ClientWidth = 535
+        ClientHeight = 254
+        ClientWidth = 679
         TabOrder = 1
         object Label32: TLabel
           AnchorSideLeft.Control = grpMenuFiscalOpcoes
           AnchorSideLeft.Side = asrCenter
-          Left = 89
+          Left = 161
           Height = 13
           Top = 144
           Width = 357
@@ -1974,9 +1976,9 @@ object Form1: TForm1
         Height = 309
         Top = 0
         Width = 633
-        ActivePage = Impressao
+        ActivePage = tsDadosEmit
         Align = alClient
-        TabIndex = 3
+        TabIndex = 1
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
@@ -2550,12 +2552,12 @@ object Form1: TForm1
     object tsNFCe: TTabSheet
       Caption = 'NFCe'
       ClientHeight = 309
-      ClientWidth = 609
+      ClientWidth = 633
       object PageControl4: TPageControl
         Left = 0
         Height = 309
         Top = 0
-        Width = 609
+        Width = 633
         ActivePage = TabSheet4
         Align = alClient
         Anchors = []
@@ -2564,7 +2566,7 @@ object Form1: TForm1
         object TabSheet4: TTabSheet
           Caption = 'Certificado'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           object GroupBox2: TGroupBox
             Left = 6
             Height = 169
@@ -2712,7 +2714,7 @@ object Form1: TForm1
         object TabSheet7: TTabSheet
           Caption = 'Geral'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           ImageIndex = 1
           object rgTipoDanfe: TRadioGroup
             Left = 6
@@ -2891,7 +2893,7 @@ object Form1: TForm1
         object TabSheet8: TTabSheet
           Caption = 'WebService'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           ImageIndex = 2
           object GroupBox6: TGroupBox
             Left = 8
@@ -3072,7 +3074,7 @@ object Form1: TForm1
         object TabSheet9: TTabSheet
           Caption = 'Emitente'
           ClientHeight = 283
-          ClientWidth = 601
+          ClientWidth = 625
           ImageIndex = 3
           object Label80: TLabel
             Left = 15
@@ -3277,11 +3279,11 @@ object Form1: TForm1
     Left = 0
     Height = 40
     Hint = 'Sobre o ACBrMonitor ?'
-    Top = 335
-    Width = 641
+    Top = 366
+    Width = 691
     Align = alBottom
     ClientHeight = 40
-    ClientWidth = 641
+    ClientWidth = 691
     TabOrder = 1
     TabStop = True
     object Image1: TImage
@@ -3289,7 +3291,7 @@ object Form1: TForm1
       Left = 1
       Height = 38
       Top = 1
-      Width = 639
+      Width = 689
       Align = alClient
       OnClick = Image1Click
       Picture.Data = {
@@ -3765,7 +3767,7 @@ object Form1: TForm1
       }
     end
     object bAtivar: TBitBtn
-      Left = 528
+      Left = 578
       Height = 32
       Top = 1
       Width = 96
@@ -4040,6 +4042,10 @@ object Form1: TForm1
         object MenuItem20: TMenuItem
           Caption = 'ParametroDescontoISSQN ?'
           OnClick = MenuItem20Click
+        end
+        object MenuItem58: TMenuItem
+          Caption = 'MF Adicional ?'
+          OnClick = MenuItem58Click
         end
       end
       object N3: TMenuItem
@@ -4570,6 +4576,10 @@ object Form1: TForm1
         Caption = 'Desconto de Item Anterior'
         OnClick = MenuItem23Click
       end
+      object MenuItem56: TMenuItem
+        Caption = 'Acréscimo Item Anterior'
+        OnClick = MenuItem56Click
+      end
       object N6: TMenuItem
         Caption = '-'
       end
@@ -4624,6 +4634,10 @@ object Form1: TForm1
       object miTesteArredondamento: TMenuItem
         Caption = 'Teste Arredondamento'
         OnClick = miTesteArredondamentoClick
+      end
+      object MenuItem57: TMenuItem
+        Caption = 'Teste Rateio'
+        OnClick = MenuItem57Click
       end
     end
     object NoFiscal1: TMenuItem
@@ -4874,6 +4888,7 @@ object Form1: TForm1
   end
   object ACBrAAC1: TACBrAAC
     CriarBAK = False
+    IdentPAF.DataLaudo = 0
     IdentPAF.VersaoER = '01.07'
     IdentPAF.Paf.TipoFuncionamento = tpfStandAlone
     IdentPAF.Paf.TipoDesenvolvimento = tpdComercializavel
@@ -4921,19 +4936,16 @@ object Form1: TForm1
       item
         Name = 'Indice'
         DataType = ftInteger
-        Precision = 0
         Size = 5
       end    
       item
         Name = 'NumSerie'
         DataType = ftString
-        Precision = 0
         Size = 20
       end    
       item
         Name = 'CRO'
         DataType = ftInteger
-        Precision = 0
         Size = 6
       end    
       item
@@ -4945,8 +4957,6 @@ object Form1: TForm1
       item
         Name = 'DtHrAtualizado'
         DataType = ftDateTime
-        Precision = 0
-        Size = 0
       end>
     AfterOpen = mdsAACECFAfterOpen
     left = 88
@@ -4961,7 +4971,6 @@ object Form1: TForm1
     QuandoGravarArqINI = ACBrECFVirtualNaoFiscal1QuandoGravarArqINI
     QuandoLerArqINI = ACBrECFVirtualNaoFiscal1QuandoLerArqINI
     PosPrinter = ACBrPosPrinter1
-    ExibeAvisoLegal = True
     Colunas = 48
     NumECF = 1
     NumCRO = 1
@@ -4979,13 +4988,32 @@ object Form1: TForm1
       '------------------------------------------------'
     )
     MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
+    ExibeAvisoLegal = True
     left = 408
     top = 368
   end
   object ACBrECFVirtualSAT1: TACBrECFVirtualSAT
     QuandoGravarArqINI = ACBrECFVirtualSAT1QuandoGravarArqINI
     QuandoLerArqINI = ACBrECFVirtualSAT1QuandoLerArqINI
+    QuandoCancelarCupom = ACBrECFVirtualSAT1QuandoCancelarCupom
     PosPrinter = ACBrPosPrinter1
+    Colunas = 48
+    NumECF = 1
+    NumCRO = 1
+    CNPJ = '01.234.567/0001-22'
+    IE = '012.345.678.90'
+    IM = '1234-0'
+    Cabecalho.Strings = (
+      'Nome da Empresa'
+      'Nome da Rua , 1234  -  Bairro'
+      'Cidade  -  UF  -  99999-999'
+    )
+    CabecalhoItem.Strings = (
+      'ITEM   CODIGO             DESCRICAO'
+      '.             QTDxUNITARIO   Aliq    VALOR (R$)'
+      '</linha_simples>'
+    )
+    MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
     ACBrSAT = ACBrSAT1
     QuandoAbrirDocumento = ACBrECFVirtualSAT1QuandoAbrirDocumento
     QuandoVenderItem = ACBrECFVirtualSAT1QuandoVenderItem
@@ -5023,12 +5051,14 @@ object Form1: TForm1
     ACBrSAT = ACBrSAT1
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 336
     top = 368
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     left = 368
     top = 368
@@ -5042,6 +5072,23 @@ object Form1: TForm1
     QuandoGravarArqINI = ACBrECFVirtualNFCe1QuandoGravarArqINI
     QuandoLerArqINI = ACBrECFVirtualNFCe1QuandoLerArqINI
     PosPrinter = ACBrPosPrinter1
+    Colunas = 48
+    NumECF = 1
+    NumCRO = 1
+    CNPJ = '01.234.567/0001-22'
+    IE = '012.345.678.90'
+    IM = '1234-0'
+    Cabecalho.Strings = (
+      'Nome da Empresa'
+      'Nome da Rua , 1234  -  Bairro'
+      'Cidade  -  UF  -  99999-999'
+    )
+    CabecalhoItem.Strings = (
+      'ITEM   CODIGO             DESCRICAO'
+      '.             QTDxUNITARIO   Aliq    VALOR (R$)'
+      '</linha_simples>'
+    )
+    MascaraItem = 'III CCCCCCCCCCCCC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD QQQQQQQQ UUxVVVVVVVVV AAAAAAA TTTTTTTTTTT'
     ACBrNFCe = ACBrNFe1
     QuandoAbrirDocumento = ACBrECFVirtualNFCe1QuandoAbrirDocumento
     QuandoVenderItem = ACBrECFVirtualNFCe1QuandoVenderItem
@@ -5055,6 +5102,7 @@ object Form1: TForm1
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.VersaoDF = ve200
+    Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -5069,14 +5117,18 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = False
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -5086,14 +5138,20 @@ object Form1: TForm1
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
-    PosCanhoto = prCabecalho
-    PosPrinter = ACBrPosPrinter1
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
+    PosPrinter = ACBrPosPrinter1
     left = 520
     top = 368
   end
@@ -5102,14 +5160,18 @@ object Form1: TForm1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = False
     MargemInferior = 0.8
     MargemSuperior = 0.8
     MargemEsquerda = 0.6
     MargemDireita = 0.51
+    CasasDecimais.Formato = tdetInteger
     CasasDecimais._qCom = 2
     CasasDecimais._vUnCom = 2
+    CasasDecimais._Mask_qCom = '###,###,###,##0.00'
+    CasasDecimais._Mask_vUnCom = '###,###,###,##0.00'
     ExibirResumoCanhoto = False
     FormularioContinuo = False
     TamanhoFonte_DemaisCampos = 10
@@ -5119,16 +5181,23 @@ object Form1: TForm1
     ImprimirItens = True
     vTroco = 0
     ViaConsumidor = True
+    TamanhoLogoHeight = 0
+    TamanhoLogoWidth = 0
+    RecuoEndereco = 0
+    RecuoEmpresa = 0
+    LogoemCima = False
+    TamanhoFonteEndereco = 0
+    RecuoLogo = 0
     TributosSeparadamente = False
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
-    PosCanhoto = prCabecalho
     left = 552
     top = 368
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscBematech
+    EspacoEntreLinhas = 20
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
@@ -5136,8 +5205,7 @@ object Form1: TForm1
     ConfigQRCode.Tipo = 2
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
-    LinhasEntreCupons = 0
-    CortaPapel = False
+    LinhasEntreCupons = 7
     ControlePorta = True
     ArqLOG = 'c:\temp\posprinter.log'
     left = 232

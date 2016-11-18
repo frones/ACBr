@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="9"/>
-      <BuildNr Value="53"/>
+      <BuildNr Value="56"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable ProductVersion=""/>
@@ -56,6 +56,11 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <OtherDefines Count="1">
+              <Define0 Value="DEBUG"/>
+            </OtherDefines>
+          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Linux i386">
@@ -203,6 +208,7 @@
         <ComponentName Value="frVendeItem"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="VendeItem"/>
       </Unit6>
       <Unit7>
         <Filename Value="uDAV.pas"/>
@@ -261,31 +267,31 @@
   <Debugging>
     <Exceptions Count="9">
       <Item1>
-        <Name Value="EACBrECFSemResposta"/>
+        <Name Value="Exception"/>
       </Item1>
       <Item2>
-        <Name Value="EACBrECFNaoInicializado"/>
+        <Name Value="EACBrECFSemResposta"/>
       </Item2>
       <Item3>
         <Name Value="ESynaSerError"/>
       </Item3>
       <Item4>
-        <Name Value="Exception"/>
+        <Name Value="EACBrECFCMDInvalido"/>
       </Item4>
       <Item5>
-        <Name Value="EACBrECFErro"/>
+        <Name Value="EConvertError"/>
       </Item5>
       <Item6>
-        <Name Value="EStringListError"/>
+        <Name Value="EACBrECFOcupado"/>
       </Item6>
       <Item7>
-        <Name Value="EACBrECFCMDInvalido"/>
+        <Name Value="EACBrECFErro"/>
       </Item7>
       <Item8>
-        <Name Value="EACBrECFSemPapel"/>
+        <Name Value="EACBrECFTimeOut"/>
       </Item8>
       <Item9>
-        <Name Value="EACBrECFTimeOut"/>
+        <Name Value="EACBrECFNaoInicializado"/>
       </Item9>
     </Exceptions>
   </Debugging>

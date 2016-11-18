@@ -263,6 +263,9 @@ type
     MenuItem53: TMenuItem;
     MenuItem54: TMenuItem;
     MenuItem55: TMenuItem;
+    MenuItem56: TMenuItem;
+    MenuItem57: TMenuItem;
+    MenuItem58: TMenuItem;
     mniRelatorioGerencialComFormatacao: TMenuItem;
     mSAT: TMenuItem;
     mTotalTroco: TMenuItem;
@@ -623,6 +626,9 @@ type
       var Tratado: Boolean);
     procedure ACBrECFVirtualNFCe1QuandoVenderItem(Det: TDetCollectionItem);
     procedure ACBrECFVirtualSAT1QuandoAbrirDocumento(CFe: TCFe);
+    procedure ACBrECFVirtualSAT1QuandoCancelarCupom(
+      const NumCOOCancelar: Integer; CupomVirtual: TACBrECFVirtualClassCupom;
+      var PermiteCancelamento: Boolean);
     procedure ACBrECFVirtualSAT1QuandoEfetuarPagamento(Det: TMPCollectionItem);
     procedure ACBrECFVirtualSAT1QuandoGravarArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
@@ -715,6 +721,9 @@ type
     procedure MenuItem53Click(Sender: TObject);
     procedure MenuItem54Click(Sender: TObject);
     procedure MenuItem55Click(Sender: TObject);
+    procedure MenuItem56Click(Sender: TObject);
+    procedure MenuItem57Click(Sender: TObject);
+    procedure MenuItem58Click(Sender: TObject);
     procedure miTesteArredondamentoClick(Sender: TObject);
     procedure miEstornoCCDClick(Sender : TObject) ;
     procedure miLeituraCMC7Click(Sender: TObject);
@@ -1210,7 +1219,7 @@ begin
   if dlgDialogoSalvar.Execute then
   begin
     PathArquivo := dlgDialogoSalvar.FileName;
-    ACBrECF1.PafMF_ArqMFD(PathArquivo);
+    ACBrECF1.PafMF_ArqMFD_Binario(PathArquivo);
 
     // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
 
@@ -1228,7 +1237,7 @@ begin
   if dlgDialogoSalvar.Execute then
   begin
     PathArquivo := dlgDialogoSalvar.FileName;
-    ACBrECF1.PafMF_ArqMF(PathArquivo);
+    ACBrECF1.PafMF_ArqMF_Binario(PathArquivo);
 
     // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
 
@@ -1894,6 +1903,16 @@ begin
   mResp.Lines.Add( 'ECFVirtualSAT: Documento Aberto'  );
 end;
 
+procedure TForm1.ACBrECFVirtualSAT1QuandoCancelarCupom(
+  const NumCOOCancelar: Integer; CupomVirtual: TACBrECFVirtualClassCupom;
+  var PermiteCancelamento: Boolean);
+begin
+  mResp.Lines.Add( 'ECFVirtualSAT: Inicio de Cancelamento do Cupom: '+
+                   IntToStrZero(NumCOOCancelar,6)  );
+  PermiteCancelamento := True;
+
+end;
+
 procedure TForm1.ACBrECFVirtualSAT1QuandoEfetuarPagamento(Det: TMPCollectionItem
   );
 begin
@@ -2441,7 +2460,7 @@ end;
 
 procedure TForm1.MenuItem23Click(Sender : TObject) ;
 begin
-   ACBrECF1.DescontoAcrescimoItemAnterior( 1,'D','%', 3);
+   ACBrECF1.DescontoAcrescimoItemAnterior( 1,'D','%');
 end;
 
 procedure TForm1.MenuItem29Click(Sender: TObject);
@@ -2612,6 +2631,54 @@ end;
 procedure TForm1.MenuItem55Click(Sender: TObject);
 begin
   mResp.Lines.Add( 'TotalCancelamentos: ('+ FloatToStr(ACBrECF1.TotalCancelamentos)+')' );
+  AtualizaMemos ;
+end;
+
+procedure TForm1.MenuItem56Click(Sender: TObject);
+begin
+  ACBrECF1.DescontoAcrescimoItemAnterior( 1,'A','%');
+end;
+
+procedure TForm1.MenuItem57Click(Sender: TObject);
+var
+  SubTotal: Double;
+  Aliq: TACBrECFAliquota;
+begin
+  //http://partners.bematech.com.br/bemacast/Paginas/post.aspx?idPost=5790
+
+  ACBrECF1.CarregaFormasPagamento ;
+  if ACBrECF1.FormasPagamento.Count < 1 then
+     raise Exception.Create('Nenhuma Forma de Pagamento programada no ECF');
+
+  ACBrECF1.CarregaAliquotas;
+
+  Aliq := ACBrECF1.AchaICMSAliquota(18);
+  if not Assigned(Aliq) then
+    raise Exception.Create('Aliquota 18% não encontrada');
+
+  Aliq := ACBrECF1.AchaICMSAliquota(7);
+  if not Assigned(Aliq) then
+    raise Exception.Create('Aliquota 7% não encontrada');
+
+  ACBrECF1.CorrigeEstadoErro();
+  ACBrECF1.AbreCupom();
+  ACBrECF1.VendeItem('0001','PRODUTO 01 aliquota A', '18', 1, 369.37);
+  ACBrECF1.VendeItem('0002','PRODUTO 02 aliquota B', '07', 1, 456.99);
+  ACBrECF1.VendeItem('0003','PRODUTO 03 aliquota B', '07', 1, 277.33);
+  ACBrECF1.VendeItem('0004','PRODUTO 04 aliquota A', '18', 1, 998.13);
+  ACBrECF1.VendeItem('0005','PRODUTO 05 aliquota B', '07', 1, 554.11);
+  ACBrECF1.VendeItem('0006','PRODUTO 06 aliquota A', '18', 1, 682.77);
+
+  ACBrECF1.SubtotalizaCupom(-298.82);
+
+  SubTotal := ACBrECF1.Subtotal;
+  ACBrECF1.EfetuaPagamento(ACBrECF1.FormasPagamento[0].Indice, SubTotal);
+  ACBrECF1.FechaCupom('TESTE DE RATEIO');
+end;
+
+procedure TForm1.MenuItem58Click(Sender: TObject);
+begin
+  mResp.Lines.Add( 'MF Adicional: '+ACBrECF1.MFAdicional);
   AtualizaMemos ;
 end;
 
@@ -2994,7 +3061,7 @@ Var
   I      : Integer ;
   Arquivo: String ;
 begin
-  Arquivo := ' ' ;
+  Arquivo := 'C:\TEMP\LeituraX.txt' ;
   if not InputQuery('LeituraX Serial',
                     'Nome Arquivo (vazio lista no Memo):', Arquivo ) then
      exit ;
@@ -3682,8 +3749,18 @@ begin
 end;
 
 procedure TForm1.CancelaCupom1Click(Sender: TObject);
+var
+  NumCOO: String;
 begin
-  ACBrECF1.CancelaCupom ;
+  NumCOO := '0';
+  if ACBrECF1.Modelo in [ecfEscECF, ecfECFVirtual] then
+  begin
+     if not InputQuery('Cancelar Cupom',
+                       'Informe o número do Cupom a Cancelar', NumCOO ) then
+       exit;
+  end;
+
+  ACBrECF1.CancelaCupom( StrToIntDef(NumCOO,0) ) ;
   mResp.Lines.Add( 'CancelaCupom' );
   AtualizaMemos ;
 end;
@@ -3950,11 +4027,15 @@ begin
         if Resp = mrYes then
            mResp.Lines.Add('Estado ECF: '+EstadoECF) ;
 
-        ACBrECF1.FechaCupom('TESTE DE CUPOM');
+        //ACBrECF1.InfoRodapeCupom.CupomMania := True;
+        ACBrECF1.FechaCupom('Trib aprox R$:0,04 Federal e 0,18 Estadual|'+
+                            'Trib aprox R$:0,04 Federal e 0,18|'+
+                            '<inter>0010020002001928</inter>');
         tFim := Now ;
         mResp.Lines.Add('Finalizado em: '+DateTimeToStr(tFim)) ;
         mResp.Lines.Add('Diferença: '+ FormatFloat('###.##',SecondSpan(tIni,tFim))+' segundos' ) ;
         mResp.Lines.Add('---------------------------------');
+        mResp.Lines.Add('Venda Bruta: '+FloatToStr(ACBrECF1.VendaBruta));
         AtualizaMemos ;
      end ;
   finally

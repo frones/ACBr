@@ -2157,7 +2157,7 @@ begin
     mResp.Lines.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
     mResp.Lines.Add('LISTA_FINAL....: '+LISTA_FINAL);
     mResp.Lines.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
-    mResp.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_CFe));
+    mResp.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_ULTIMA));
     mResp.Lines.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
     mResp.Lines.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
     mResp.Lines.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));

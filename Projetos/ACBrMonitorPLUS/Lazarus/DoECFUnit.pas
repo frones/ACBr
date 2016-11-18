@@ -1053,10 +1053,6 @@ begin
                       Cmd.Params(2) )                          { Diretorio Arquivo }
           end
 					
-        else if Cmd.Metodo = 'pafmf_arquivomf' then
-          begin
-              ArquivoMF_DLL(Cmd.Params(0) )                          { Path do Arquivo }
-          end
         else if Cmd.Metodo = 'assinarblocoxestoque' then
           begin
             if FileExists(Cmd.Params(0)) then
@@ -1134,16 +1130,14 @@ begin
             FrmACBrMonitor.ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
             Cmd.Resposta := FrmACBrMonitor.ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
           end
-        else if Cmd.Metodo = 'pafmf_arquivomfd' then
-          begin
-              ArquivoMFD_DLL(Cmd.Params(0) )                          { Path do Arquivo }
-          end					
 
         else if Cmd.Metodo = 'enviacomando' then
-           if Cmd.Params(1) <> '' then
-              EnviaComando(Cmd.Params(0),StrToInt(Trim(Cmd.Params(1))))
-           else
-              EnviaComando(Cmd.Params(0))
+          begin
+             if Cmd.Params(1) <> '' then
+                EnviaComando(Cmd.Params(0),StrToInt(Trim(Cmd.Params(1))))
+             else
+                EnviaComando(Cmd.Params(0))
+          end
 
         else if Cmd.Metodo = 'assinaarquivo' then
         begin
@@ -1159,16 +1153,16 @@ begin
                     ConfigBarras.LarguraLinha := StrToInt(Trim(Cmd.Params(1)));
         end
 
-        else if Cmd.Metodo = 'pafmf_arqmf' then
+        else if (Cmd.Metodo = 'pafmf_arqmf') or (Cmd.Metodo = 'pafmf_arquivomf') or (Cmd.Metodo = 'pafmf_arqmf_binario')then
         begin
            NomeArquivo := AjustaNomeArquivoCmd( Cmd, 0 ) ;
-           PafMF_ArqMF(Cmd.Params(0));
+           PafMF_ArqMF_Binario(Cmd.Params(0));
         end
 
-        else if Cmd.Metodo = 'pafmf_arqmfd' then
+        else if (Cmd.Metodo = 'pafmf_arqmfd') or (Cmd.Metodo = 'pafmf_arquivomfd') or (Cmd.Metodo = 'pafmf_arqmfd_binario')then
         begin
            NomeArquivo := AjustaNomeArquivoCmd( Cmd, 0 ) ;
-           PafMF_ArqMFD(Cmd.Params(0));
+           PafMF_ArqMFD_Binario(Cmd.Params(0));
         end
 
         ELSE

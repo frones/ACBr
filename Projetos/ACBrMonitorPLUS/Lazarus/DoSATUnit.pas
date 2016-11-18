@@ -307,7 +307,7 @@ begin
       Result := Result + 'LISTA_INICIAL = '+LISTA_INICIAL+ sLineBreak;
       Result := Result + 'LISTA_FINAL = '+LISTA_FINAL+ sLineBreak;
       Result := Result + 'DH_CFe = '+DateTimeToStr(DH_CFe)+ sLineBreak;
-      Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_CFe)+ sLineBreak;
+      Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_ULTIMA)+ sLineBreak;
       Result := Result + 'CERT_EMISSAO = '+DateToStr(CERT_EMISSAO)+ sLineBreak;
       Result := Result + 'CERT_VENCIMENTO = '+DateToStr(CERT_VENCIMENTO)+ sLineBreak;
       Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO)

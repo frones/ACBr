@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2016
+[-]     Correção de erro de compilação, após modificações em ACBrECF
+        http://www.projetoacbr.com.br/forum/index.php?showtopic=33538
+        (por: DSA)
+[-]     Correção no Retorno de "StatusSAT.DH_ULTIMA"
+        (por: Alexandre Bassanezi)
+        http://www.projetoacbr.com.br/forum/index.php?showtopic=33293
+
 14/11/2016
 [+]	Adicionado impressão de Timestamp no arquivo de logs, LOG.TXT, separada a gravação
 	neste do comando e resposta para que o timestamp detalhe o tempo de resposta do

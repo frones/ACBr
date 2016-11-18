@@ -267,8 +267,9 @@ TACBrECFDaruma = class( TACBrECFClass )
 
 
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     Procedure IdentificaOperador ( Nome: String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
@@ -5419,16 +5420,25 @@ begin
   end;
 end;
 
-procedure TACBrECFDaruma.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFDaruma.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+  NomeArquivo, StrInicial, StrFinal: AnsiString);
 var
   Resp: Integer;
-  DirDest: AnsiString;
-  ArqDest: AnsiString;
+  DirDest, ArqDest, TipoDaruma: AnsiString;
   OldAtivo: Boolean;
 begin
   OldAtivo := Ativo;
   DirDest  := ExtractFilePath( NomeArquivo );
   ArqDest  := ExtractFileName( NomeArquivo );
+
+  case Tipo of
+    tdmfdData : TipoDaruma := 'DATAM';
+    tdmfdCOO  : TipoDaruma := 'COO';
+  else
+    TipoDaruma := 'COO';
+    StrInicial := '000001';
+    StrFinal   := '999999';
+  end;
 
   LoadDLLFunctions;
   ConfigurarDLL(DirDest);
@@ -5438,7 +5448,7 @@ begin
      SysUtils.DeleteFile( NomeArquivo );
 
      GravaLog( '   xrEfetuarDownloadMFD_ECF_Daruma' );
-     Resp := xrEfetuarDownloadMFD_ECF_Daruma( 'COO', '000001', '999999', ArqDest ) ;
+     Resp := xrEfetuarDownloadMFD_ECF_Daruma( TipoDaruma, StrInicial, StrFinal, ArqDest ) ;
 
      if (Resp <> 1) then
         raise EACBrECFErro.Create( ACBrStr( 'Erro ao executar rEfetuarDownloadMFD_ECF_Daruma.'+sLineBreak+
@@ -5449,7 +5459,7 @@ begin
   end;
 end;
 
-procedure TACBrECFDaruma.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFDaruma.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 var
   Resp: Integer;
   DirDest: AnsiString;

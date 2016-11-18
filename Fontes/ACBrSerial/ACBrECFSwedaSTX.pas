@@ -298,8 +298,9 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
       const DataFinal: TDateTime; const DirArquivos: string); override;
@@ -1156,7 +1157,7 @@ begin
 
     if Finalidade = finMF then
      begin
-       PathBin := ExtractFilePath(NomeArquivo);   // na expecificacao de requisito 2.01 pede para gerar e assinar o "Arquivo Binario" da MF também
+       PathBin := ExtractFilePath(NomeArquivo);
        PathBin := PathBin + 'MF.BIN';
        SysUtils.DeleteFile( PathBin );
 
@@ -1185,7 +1186,7 @@ begin
                             'Arquivo: "'+NomeArquivo + '" não gerado' ))
 end;
 
-procedure TACBrECFSwedaSTX.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFSwedaSTX.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 var
   Resp: Integer;
   FileMF, ArquivoMf : AnsiString;
@@ -1223,16 +1224,24 @@ begin
                             'Arquivo: "'+NomeArquivo+'" não gerado' ))
 end;
 
-procedure TACBrECFSwedaSTX.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFSwedaSTX.ArquivoMFD_Binario_DLL(
+  Tipo: TACBrECFTipoDownloadMFD; NomeArquivo, StrInicial, StrFinal: AnsiString);
 var
   Resp: Integer;
-  FileMFD, ArquivoMfd : AnsiString;
+  FileMFD, TipoSweda, ArquivoMfd : AnsiString;
   OldAtivo: Boolean;
 begin
   ArquivoMfd := fsApplicationPath+'SWEDA'+PathDelim+GetNumSerie+PathDelim+GetNumSerieMFD+'.MFD' ;
   GravaLog( '  Arquivo Binario deve estar em: '+ArquivoMfd );
 
   LoadDLLFunctions;
+
+  case Tipo of
+     tdmfdData: TipoSweda := '1';
+     tdmfdCOO : TipoSweda := '2';
+  else
+     TipoSweda := '0';
+  end;
 
   OldAtivo := Ativo ;
   try
@@ -1241,7 +1250,7 @@ begin
     // fazer o download da MF
     GravaLog( '   xECF_DownloadMFD' );
     FileMFD := ExtractFileName( NomeArquivo );
-    Resp := xECF_DownloadMFD( FileMFD, '0', '', '', '0' );
+    Resp := xECF_DownloadMFD( FileMFD, TipoSweda, StrInicial, StrFinal, '0' );
     if (Resp <> 1) then
        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar ECF_DownloadMFD.'+sLineBreak+
                                   DescricaoErroDLL(Resp) ))

@@ -39,6 +39,41 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 18/11/2016
+-- ACBrDevice --
+[+] Adicionado o tipo: TACBrECFTipoDownloadMFD = (tdmfdTotal, tdmfdData, tdmfdCOO);
+
+-- ACBrECF --
+[*] Método "ArquivoMF_DLL(NomeArquivo: AnsiString)", renomeado para:
+    "ArquivoMF_Binario_DLL(NomeArquivo: AnsiString)"
+[*] Método "ArquivoMFD_DLL(NomeArquivo: AnsiString)", renomeado para:
+    "ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString)"
+[+] Adicionado os métodos:
+   ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; DataInicial, DataFinal: TDateTime);
+   ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; COOInicial, COOFinal: Integer);
+[*] Método "PafMF_Binario(const PathArquivo: String)", removido. Use o método:
+    "PafMF_ArqMF_Binario"
+[*] Método "PafMF_ArqMF", renomeado para "PafMF_ArqMF_Binario"
+[*] Método "PafMF_ArqMFD", renomeado para "PafMF_ArqMFD_Binario", e assinatura
+    modificada para:
+    procedure PafMF_ArqMFD_Binario(const APathArquivo: String; DataInicial: TDateTime = 0;
+      DataFinal: TDateTime = 0; Assinar: Boolean = True);
+
+-- ACBrECFBematech, ACBrECFDaruma, ACBrECFEpson, ACBrECFEscECF, ACBrECFSwedaSTX --
+[*] Aplicada modificações em "ArquivoMFD_Binario_DLL", para o funcionamento por
+    Periodo de Data e Intervalo de COO
+
+-- ACBrECFEpson --
+[*] Ajuste para que métodos da DLL, para geração de MF, MFD não gravem a linha de EAD
+[*] Ajuste no Path informado para a DLL, segundo recomendações da Epson
+
+-- ACBrECFFiscNET --
+[+] Implementação inicial dos métodos: "ArquivoMF_Binario_DLL" e "ArquivoMFD_Binario_DLL"
+
+  (Por: Pedro Braga e DSA)
+  http://www.projetoacbr.com.br/forum/topic/32980-arquivo-mf-e-mfd-apos-primeira-reducao/
+
+
 Data 13/11/2016
 -- ACBrECF, ACBrECFClass --
 [*] Método "CancelaDescontoAcrescimoItem", modificado inserindo novo parâmetro:

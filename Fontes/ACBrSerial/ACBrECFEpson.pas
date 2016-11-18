@@ -189,9 +189,14 @@ TACBrECFEpson = class( TACBrECFClass )
     xEPSON_Send_From_FileEXX : function (pszLineIn:AnsiString;
        pszStatus:PAnsiChar; pszLineOut:PAnsiChar ) : Integer;
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+    xEPSON_Obter_Arquivos_Binarios : function( pszInicio:AnsiString; pszFinal:AnsiString; dwTipoEntrada:Integer;
+                                               pszArquivoMF:AnsiString; pszArquivoMFD:AnsiString ) : Integer;
+       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xEPSON_Obter_Arquivo_Binario_MF : function( pszArquivo:AnsiString ) : Integer;
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
     xEPSON_Obter_Arquivo_Binario_MFD : function ( pszArquivo:AnsiString ) : Integer;
+       {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
+    xEPSON_Config_Habilita_EAD : function (bStatusHabilitaEAD:Boolean ) : Integer;
        {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
     procedure Ativar_Epson ;
@@ -201,6 +206,7 @@ TACBrECFEpson = class( TACBrECFClass )
     procedure LoadDLLFunctions;
     procedure AbrePortaSerialDLL;
     procedure FechaPortaSerialDLL(const OldAtivo : Boolean) ;
+    function AjustarPathParaDLL(const APathAndFile: AnsiString): AnsiString;
 
     procedure ZeraCache( ZeraRespostaComando: Boolean = True ) ;
 
@@ -358,8 +364,9 @@ TACBrECFEpson = class( TACBrECFClass )
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; override ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     Procedure AbreGaveta ; override ;
 
@@ -789,7 +796,7 @@ begin
   if AECFClass.Device.IsDLLPort and (Cmd = C_OFF) then
     Cmd := 32 ;
 
-  Result := ESC + chr( Cmd );
+  Result := ESC + AnsiChr( Cmd );
 end;
 
 function EpsonTraduzirTagBloco(const ATag, Conteudo: AnsiString;
@@ -1235,8 +1242,10 @@ begin
   xEPSON_Serial_Fechar_Porta := Nil;
   xEPSON_Obter_Dados_MF_MFD := Nil;
   xEPSON_Send_From_FileEXX := Nil;
+  xEPSON_Obter_Arquivos_Binarios := Nil;
   xEPSON_Obter_Arquivo_Binario_MF := Nil;
   xEPSON_Obter_Arquivo_Binario_MFD := Nil;
+  xEPSON_Config_Habilita_EAD := Nil;
 end;
 
 destructor TACBrECFEpson.Destroy;
@@ -3827,8 +3836,10 @@ begin
    EpsonFunctionDetect('EPSON_Serial_Abrir_Porta', @xEPSON_Serial_Abrir_Porta);
    EpsonFunctionDetect('EPSON_Serial_Fechar_Porta', @xEPSON_Serial_Fechar_Porta);
    EpsonFunctionDetect('EPSON_Send_From_FileEXX', @xEPSON_Send_From_FileEXX);
+   EpsonFunctionDetect('EPSON_Obter_Arquivos_Binarios', @xEPSON_Obter_Arquivos_Binarios);
    EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MF', @xEPSON_Obter_Arquivo_Binario_MF);
    EpsonFunctionDetect('EPSON_Obter_Arquivo_Binario_MFD', @xEPSON_Obter_Arquivo_Binario_MFD);
+   EpsonFunctionDetect('EPSON_Config_Habilita_EAD', @xEPSON_Config_Habilita_EAD);
 end ;
 
 procedure TACBrECFEpson.AbrePortaSerialDLL ;
@@ -3848,6 +3859,11 @@ begin
   if Resp <> 0 then
      raise EACBrECFERRO.Create( ACBrStr('Erro: '+IntToStr(Resp)+' ao abrir a Porta com:'+sLineBreak+
         'EPSON_Serial_Abrir_Porta('+IntToStr(fpDevice.Baud)+', '+IntToStr(Porta)+')' ));
+
+  Resp := xEPSON_Config_Habilita_EAD(False);  // Desabilita assinatura pela DLL
+  if (Resp <> 0) then
+    raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar xEPSON_Config_Habilita_EAD.'+sLineBreak+
+        'Cod.: '+IntToStr(Resp) ));
 end ;
 
 procedure TACBrECFEpson.FechaPortaSerialDLL(const OldAtivo : Boolean) ;
@@ -3885,17 +3901,27 @@ begin
   end ;
 end ;
 
+function TACBrECFEpson.AjustarPathParaDLL(const APathAndFile: AnsiString): AnsiString;
+begin
+  if (pos('\', APathAndFile) > 0) and (pos('\\', APathAndFile) = 0) then
+    Result := StringReplace(APathAndFile,'\','\\',[rfReplaceAll])
+  else
+    Result := APathAndFile;
+end;
+
 procedure TACBrECFEpson.EspelhoMFD_DLL(DataInicial,
   DataFinal: TDateTime; NomeArquivo: AnsiString;
   Documentos: TACBrECFTipoDocumentoSet);
 Var
   Resp : Integer ;
-  ArqTmp, DiaIni, DiaFim : AnsiString ;
+  ArqTmp, ArqDLL, DiaIni, DiaFim : AnsiString ;
   OldAtivo : Boolean ;
 begin
   LoadDLLFunctions ;
 
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr' ;
+  ArqDLL := AjustarPathParaDLL(ArqTmp);
+
   DeleteFiles( ArqTmp + '_???.txt' ) ;
 
   OldAtivo := Ativo ;
@@ -3911,7 +3937,7 @@ begin
                                         DocumentosToNum(Documentos),
                                         0,                // 0 = Não Gera Ato Cotepe
                                         0,                // 0 = Nao Gera Sintegra
-                                        ArqTmp );
+                                        ArqDLL );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Dados_MF_MFD.'+sLineBreak+
                                        'Cod.: '+IntToStr(Resp) ))
@@ -3935,12 +3961,14 @@ procedure TACBrECFEpson.EspelhoMFD_DLL(COOInicial, COOFinal: Integer;
   NomeArquivo: AnsiString; Documentos: TACBrECFTipoDocumentoSet);
 Var
   Resp : Integer ;
-  ArqTmp, CooIni, CooFim : AnsiString ;
+  ArqTmp, ArqDLL, CooIni, CooFim : AnsiString ;
   OldAtivo : Boolean ;
 begin
   LoadDLLFunctions ;
 
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr' ;
+  ArqDLL := AjustarPathParaDLL(ArqTmp);
+
   DeleteFiles( ArqTmp + '_???.txt' ) ;
 
   OldAtivo := Ativo ;
@@ -3956,7 +3984,7 @@ begin
                                         DocumentosToNum(Documentos),
                                         0,                // 0 = Não Gera Ato Cotepe
                                         0,                // 0 = Nao Gera Sintegra
-                                        ArqTmp );
+                                        ArqDLL );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Dados_MF_MFD.'+sLineBreak+
                                        'Cod.: '+IntToStr(Resp) ))
@@ -3981,12 +4009,14 @@ procedure TACBrECFEpson.ArquivoMFD_DLL(DataInicial, DataFinal: TDateTime;
   Finalidade: TACBrECFFinalizaArqMFD);
 Var
   Resp, Tipo, Sintegra : Integer ;
-  ArqTmp, DiaIni, DiaFim : AnsiString ;
+  ArqTmp, ArqDLL, DiaIni, DiaFim : AnsiString ;
   OldAtivo : Boolean ;
 begin
   LoadDLLFunctions ;
 
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr' ;
+  ArqDLL := AjustarPathParaDLL(ArqTmp);
+
   DeleteFiles( ArqTmp + '_???.txt' ) ;
 
   Tipo     := FinalidadeParaTipo( Finalidade );
@@ -4005,7 +4035,7 @@ begin
                                         0,                // 0 = Sem Espelhos
                                         Tipo,
                                         Sintegra,
-                                        ArqTmp );
+                                        ArqDLL );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Dados_MF_MFD.'+sLineBreak+
                                        'Cod.: '+IntToStr(Resp) ))
@@ -4031,7 +4061,7 @@ procedure TACBrECFEpson.ArquivoMFD_DLL(ContInicial, ContFinal: Integer;
   TipoContador: TACBrECFTipoContador);
 Var
   Resp, Tipo, Sintegra : Integer ;
-  ArqTmp, CooIni, CooFim : AnsiString ;
+  ArqTmp, ArqDLL, CooIni, CooFim : AnsiString ;
   OldAtivo : Boolean ;
 begin
 
@@ -4046,6 +4076,8 @@ begin
   Sintegra := FinalidadeParaSintegra( Finalidade );
 
   ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr' ;
+  ArqDLL := AjustarPathParaDLL(ArqTmp);
+
   DeleteFiles( ArqTmp + '_???.txt' ) ;
 
   OldAtivo := Ativo ;
@@ -4061,7 +4093,7 @@ begin
                                         0,                // 0 = Sem Espelhos
                                         Tipo,
                                         Sintegra,
-                                        ArqTmp );
+                                        ArqDLL );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Dados_MF_MFD.'+sLineBreak+
                                        'Cod.: '+IntToStr(Resp) ))
@@ -4082,12 +4114,16 @@ begin
 end;
 
 
-procedure TACBrECFEpson.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFEpson.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 var
   Resp: Integer;
   OldAtivo: Boolean;
+  ArqDLL: AnsiString;
 begin
   LoadDLLFunctions;
+
+  DeleteFile(NomeArquivo);
+  ArqDLL := AjustarPathParaDLL(NomeArquivo);
 
   OldAtivo := Ativo ;
   try
@@ -4095,43 +4131,68 @@ begin
 
     // fazer o download da MF
     GravaLog( '   xEPSON_Obter_Arquivo_Binario_MF' );
-    Resp := xEPSON_Obter_Arquivo_Binario_MF( NomeArquivo );
+    Resp := xEPSON_Obter_Arquivo_Binario_MF( ArqDLL );
     if (Resp <> 0) then
       raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivo_Binario_MF.'+sLineBreak+
                                        'Cod.: '+IntToStr(Resp) ))
   finally
      FechaPortaSerialDLL(OldAtivo) ;
   end;
+
   if not FileExists( NomeArquivo ) then
      raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de EPSON_Obter_Arquivo_Binario_MF.'+sLineBreak+
                             'Arquivo: "'+NomeArquivo+'" não gerado' ))
-
 end;
 
-procedure TACBrECFEpson.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFEpson.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+  NomeArquivo, StrInicial, StrFinal: AnsiString);
 var
   Resp: Integer;
   OldAtivo: Boolean;
+  ArqMFD, ArqMF: AnsiString;
+  TipoEpson: Integer;
 begin
   LoadDLLFunctions;
+
+  DeleteFile(NomeArquivo);
+  ArqMFD := AjustarPathParaDLL(NomeArquivo);
 
   OldAtivo := Ativo ;
   try
     AbrePortaSerialDLL;
 
-    // fazer o download da MF
-    GravaLog( '   xEPSON_Obter_Arquivo_Binario_MFD' );
-    Resp := xEPSON_Obter_Arquivo_Binario_MFD( NomeArquivo );
-    if (Resp <> 0) then
-      raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivo_Binario_MFD.'+sLineBreak+
-                                       'Cod.: '+IntToStr(Resp) ))
+    if Tipo = tdmfdTotal then
+    begin
+      // fazer o download da MF
+      GravaLog( '   xEPSON_Obter_Arquivo_Binario_MFD' );
+      Resp := xEPSON_Obter_Arquivo_Binario_MFD( ArqMFD );
+      if (Resp <> 0) then
+        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivo_Binario_MFD.'+sLineBreak+
+                                         'Cod.: '+IntToStr(Resp) ))
+    end
+    else
+    begin
+      if Tipo = tdmfdData then
+        TipoEpson := 0
+      else
+        TipoEpson := 2; // Por COO
+
+      // fazer o download da MF e MFD
+      GravaLog( '   xEPSON_Obter_Arquivos_Binarios' );
+      ArqMF := AjustarPathParaDLL(PathWithDelim(ExtractFilePath(NomeArquivo)) + 'MF.bin');
+
+      Resp := xEPSON_Obter_Arquivos_Binarios( StrInicial, StrFinal, TipoEpson, ArqMF, ArqMFD );
+      if (Resp <> 0) then
+        raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar EPSON_Obter_Arquivos_Binarios.'+sLineBreak+
+                                         'Cod.: '+IntToStr(Resp) ))
+    end;
   finally
      FechaPortaSerialDLL(OldAtivo) ;
   end;
+
   if not FileExists( NomeArquivo ) then
      raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de EPSON_Obter_Arquivo_Binario_MFD.'+sLineBreak+
                             'Arquivo: "'+NomeArquivo+'" não gerado' ))
-
 end;
 
 function TACBrECFEpson.DocumentosToNum(
@@ -4150,7 +4211,6 @@ begin
   if docCCD in Documentos then Result := Result + 32 ;
   if docCNF in Documentos then Result := Result + 64 ;
   if docCNFCancelamento in Documentos then Result := Result + 128 ;
-
 end;
 
 function TACBrECFEpson.GetTotalAcrescimosISSQN: Double;

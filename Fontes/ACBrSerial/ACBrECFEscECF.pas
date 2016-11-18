@@ -466,8 +466,9 @@ TACBrECFEscECF = class( TACBrECFClass )
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String); override;
 
-    Procedure ArquivoMF_DLL(  NomeArquivo : AnsiString  ) ; overload ; override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); overload ; override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     Procedure IdentificaOperador(Nome : String); override;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; override ;
@@ -2528,7 +2529,7 @@ begin
   end;
 end;
 
-procedure TACBrECFEscECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFEscECF.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 var
   ECFClass: TACBrECFClass;
 begin
@@ -2539,13 +2540,14 @@ begin
 
   try
     Self.Desativar;
-    ECFClass.ArquivoMF_DLL(NomeArquivo);
+    ECFClass.ArquivoMF_Binario_DLL(NomeArquivo);
   finally
     DestruirECFClass( ECFClass );
   end;
 end;
 
-procedure TACBrECFEscECF.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFEscECF.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+  NomeArquivo, StrInicial, StrFinal: AnsiString);
 var
   ECFClass: TACBrECFClass;
 begin
@@ -2556,7 +2558,7 @@ begin
 
   try
     Self.Desativar;
-    ECFClass.ArquivoMFD_DLL(NomeArquivo);
+    ECFClass.ArquivoMFD_Binario_DLL(Tipo, NomeArquivo, StrInicial, StrFinal);
   finally
     DestruirECFClass( ECFClass );
   end;

@@ -322,8 +322,9 @@ TACBrECFFiscNET = class( TACBrECFClass )
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     Procedure ImprimeCheque(Banco : String; Valor : Double ; Favorecido,
        Cidade : String; Data : TDateTime ;Observacao : String = '') ; override ;
@@ -2953,16 +2954,144 @@ begin
   end;
 end;
 
-procedure TACBrECFFiscNET.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFFiscNET.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+Var
+  iRet : Integer;
+  PortaSerial, ModeloECF, NumFab : AnsiString;
+  CooIni, CooFim, ArqTmp : AnsiString ;
+  OldAtivo : Boolean ;
+  cFinalidade:AnsiString;
 begin
-  // TODO:
-  inherited ArquivoMF_DLL(NomeArquivo);
+  NumFab      := NumSerie;
+  ModeloECF   := SubModeloECF;
+  CooIni      := '000001';
+  CooFim      := '999999';
+  cFinalidade := 'MF';
+  PortaSerial := fpDevice.Porta ;
+
+  ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBrMF.MF' ;
+
+  if FilesExists( ArqTmp ) then DeleteFile( ArqTmp );
+  if FilesExists( NomeArquivo ) then DeleteFile( NomeArquivo );
+
+  LoadDLLFunctions;
+  OldAtivo := Ativo;
+  try
+     Ativo := False;
+
+     if pos(fsMarcaECF, 'dataregis|termoprinter') > 0 then
+      begin
+        iRet := xGera_PAF( PortaSerial, ModeloECF, ArqTmp, CooIni, CooFim );
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar Gera_PAF.'+sLineBreak+
+                                            'Cod.: '+IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+
+        if not FileExists( NomeArquivo ) then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Gera_PAF.'+sLineBreak+
+                                            ': "'+NomeArquivo + '" não gerado' ))
+      end
+
+     else if (fsMarcaECF = 'elgin') then
+      begin
+        AbrePortaSerialDLL(fpDevice.Porta, ExtractFilePath(NomeArquivo));
+
+        iRet := xElgin_LeMemoriasBinario( ArqTmp, NumFab, true );
+
+        if (iRet <> 1) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro ao executar Elgin_LeMemoriasBinario.'+sLineBreak+
+                                                   'Cod.: ' + IntToStr(iRet))) ;
+
+        if not FilesExists( ArqTmp ) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro na execução de Elgin_LeMemoriasBinario.'+sLineBreak+
+                                          'Arquivo binário não gerado!'));
+
+        xElgin_FechaPortaSerial();
+      end
+     else
+      begin
+        iRet := xDLLReadLeMemorias( PortaSerial, ArqTmp, NumFab, '1');
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar DLLReadLeMemorias.' + sLineBreak +
+                                            'Cod.: '+ IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+      end ;
+  finally
+    Ativo := OldAtivo ;
+    if AnsiUpperCase(ArqTmp) <> AnsiUpperCase(NomeArquivo) then
+      CopyFileTo(ArqTmp, NomeArquivo) ;
+  end;
 end;
 
-procedure TACBrECFFiscNET.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFFiscNET.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+  NomeArquivo, StrInicial, StrFinal: AnsiString);
+Var
+  iRet : Integer;
+  PortaSerial, ModeloECF, NumFab : AnsiString;
+  ArqTmp : AnsiString ;
+  OldAtivo : Boolean ;
 begin
-  // TODO:
-  inherited ArquivoMFD_DLL(NomeArquivo);
+  NumFab      := NumSerie;
+  ModeloECF   := SubModeloECF;
+  PortaSerial := fpDevice.Porta ;
+
+  ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBrMFD.MFD' ;
+
+  if FilesExists( ArqTmp ) then DeleteFile( ArqTmp );
+  if FilesExists( NomeArquivo ) then DeleteFile( NomeArquivo );
+
+  LoadDLLFunctions;
+  OldAtivo := Ativo;
+  try
+     Ativo := False;
+
+     if pos(fsMarcaECF, 'dataregis|termoprinter') > 0 then
+      begin
+        iRet := xGera_PAF( PortaSerial, ModeloECF, ArqTmp, StrInicial, StrFinal );
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar Gera_PAF.'+sLineBreak+
+                                            'Cod.: '+IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+
+        if not FileExists( NomeArquivo ) then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Gera_PAF.'+sLineBreak+
+                                            ': "'+NomeArquivo + '" não gerado' ))
+      end
+
+     else if (fsMarcaECF = 'elgin') then
+      begin
+        AbrePortaSerialDLL(fpDevice.Porta, ExtractFilePath(NomeArquivo));
+
+        iRet := xElgin_LeMemoriasBinario( ArqTmp, NumFab, true );
+
+        if (iRet <> 1) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro ao executar Elgin_LeMemoriasBinario.'+sLineBreak+
+                                                   'Cod.: ' + IntToStr(iRet))) ;
+
+        if not FilesExists( ArqTmp ) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro na execução de Elgin_LeMemoriasBinario.'+sLineBreak+
+                                          'Arquivo binário não gerado!'));
+
+        xElgin_FechaPortaSerial();
+      end
+     else
+      begin
+        iRet := xDLLReadLeMemorias( PortaSerial, ArqTmp, NumFab, '1');
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar DLLReadLeMemorias.' + sLineBreak +
+                                            'Cod.: '+ IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+      end ;
+  finally
+    Ativo := OldAtivo ;
+
+    if AnsiUpperCase(ArqTmp) <> AnsiUpperCase(NomeArquivo) then
+      CopyFileTo(ArqTmp, NomeArquivo) ;
+  end;
 end;
 
 function TACBrECFFiscNET.GetDadosUltimaReducaoZ: String;

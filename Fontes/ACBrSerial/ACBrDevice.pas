@@ -134,6 +134,8 @@ TACBrECFFinalizaArqMFD = (finMF, finMFD, finTDM, finRZ, finRFD, finNFP,
 { Criando tipo enumerado para o tipo do contador }
 TACBrECFTipoContador = (tpcCOO, tpcCRZ);
 
+TACBrECFTipoDownloadMFD = (tdmfdTotal, tdmfdData, tdmfdCOO);
+
 {Criando o tipo enumerado para tipo de documentos em Leitura da MFD }
 TACBrECFTipoDocumento = ( docRZ, docLX, docCF, docCFBP, docCupomAdicional,
                           docCFCancelamento, docCCD, docAdicionalCCD,

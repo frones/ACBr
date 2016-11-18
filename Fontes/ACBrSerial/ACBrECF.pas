@@ -822,8 +822,10 @@ TACBrECF = class( TACBrComponent )
        NomeArquivo : AnsiString; Documentos : TACBrECFTipoDocumentoSet = [docTodos];
        Finalidade: TACBrECFFinalizaArqMFD = finMFD; TipoContador: TACBrECFTipoContador = tpcCOO) ; overload ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString);
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); overload;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+    Procedure ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString); overload;
+    Procedure ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; DataInicial, DataFinal: TDateTime); overload;
+    Procedure ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; COOInicial, COOFinal: Integer); overload;
 
     Procedure IdentificaOperador( Nome : String) ;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ;
@@ -906,10 +908,9 @@ TACBrECF = class( TACBrComponent )
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
       const DirArquivos: String);
 
-    procedure PafMF_Binario(const PathArquivo: String);
-
-    procedure PafMF_ArqMF(const APathArquivo: String; Assinar: Boolean = True);
-    procedure PafMF_ArqMFD(const APathArquivo: String; Assinar: Boolean = True);
+    procedure PafMF_ArqMF_Binario(const APathArquivo: String; Assinar: Boolean = True);
+    procedure PafMF_ArqMFD_Binario(const APathArquivo: String; DataInicial: TDateTime = 0;
+      DataFinal: TDateTime = 0; Assinar: Boolean = True);
 
     procedure GerarNotaGaucha(const DataInicial, DataFinal: TDateTime;
       const PathArquivo: String);
@@ -4586,20 +4587,52 @@ begin
   fsECF.ArquivoMFD_DLL( ContInicial, ContFinal, NomeArquivo, Documentos, Finalidade, TipoContador ) ;
 end;
 
-procedure TACBrECF.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECF.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
 begin
    TestaSeE_MFD ;
 
-   ComandoLOG := 'ArquivoMF_DLL( ' + NomeArquivo + ' ) ';
-   fsECF.ArquivoMF_DLL( NomeArquivo ) ;
+   ComandoLOG := 'ArquivoMF_Binario_DLL( ' + NomeArquivo +' ) ';
+   fsECF.ArquivoMF_Binario_DLL(NomeArquivo) ;
 end;
 
-procedure TACBrECF.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECF.ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString);
 begin
-   TestaSeE_MFD ;
+  TestaSeE_MFD ;
 
-   ComandoLOG := 'ArquivoMFD_DLL( ' + NomeArquivo + ' ) ';
-   fsECF.ArquivoMFD_DLL( NomeArquivo ) ;
+  ComandoLOG := 'ArquivoMFD_Binario_DLL( ' + NomeArquivo +' ) ';
+  fsECF.ArquivoMFD_Binario_DLL( tdmfdTotal, NomeArquivo, '', '') ;
+end;
+
+procedure TACBrECF.ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; DataInicial,
+  DataFinal: TDateTime);
+var
+  StrInicial, StrFinal: String;
+begin
+  TestaSeE_MFD ;
+
+  StrInicial :=  FormatDateTime('ddmmyyyy', DataInicial);
+  StrFinal   :=  FormatDateTime('ddmmyyyy', DataFinal);
+
+  ComandoLOG := 'ArquivoMFD_Binario_DLL( ' + NomeArquivo + ', '+
+                StrInicial+', '+StrFinal+' ) ';
+
+  fsECF.ArquivoMFD_Binario_DLL( tdmfdData, NomeArquivo, StrInicial, StrFinal) ;
+end;
+
+procedure TACBrECF.ArquivoMFD_Binario_DLL(NomeArquivo: AnsiString; COOInicial,
+  COOFinal: Integer);
+var
+  StrInicial, StrFinal: String;
+begin
+  TestaSeE_MFD ;
+
+  StrInicial :=  IntToStrZero(COOInicial, 6);
+  StrFinal   :=  IntToStrZero(COOFinal, 6);
+
+  ComandoLOG := 'ArquivoMFD_Binario_DLL( ' + NomeArquivo + ', '+
+                StrInicial+', '+StrFinal+' ) ';
+
+  fsECF.ArquivoMFD_Binario_DLL( tdmfdCOO, NomeArquivo, StrInicial, StrFinal) ;
 end;
 
 procedure TACBrECF.ImprimeCheque(Banco: String; Valor: Double; Favorecido,
@@ -6310,15 +6343,6 @@ begin
   Self.AssinaArquivoComEAD(PathArquivo);
 end;
 
-procedure TACBrECF.PafMF_Binario(const PathArquivo: String);
-begin
-  if (not fsAtivo) then
-     raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
-
-  Self.ArquivoMF_DLL(PathArquivo);
-  Self.AssinaArquivoComEAD(PathArquivo);
-end;
-
 procedure TACBrECF.PafMF_LMFC_Espelho(const DataInicial, DataFinal: TDateTime;
   const PathArquivo: String);
 begin
@@ -7005,14 +7029,15 @@ begin
   end;
 end;
 
-procedure TACBrECF.PafMF_ArqMF(const APathArquivo: String; Assinar: Boolean);
+procedure TACBrECF.PafMF_ArqMF_Binario(const APathArquivo: String;
+  Assinar: Boolean);
 var
   EADStr: String;
 begin
   if (not fsAtivo) then
      raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
 
-  Self.ArquivoMF_DLL(APathArquivo);
+  Self.ArquivoMF_Binario_DLL(APathArquivo);
 
   if not FileExists(APathArquivo) then
     raise EACBrEADException.CreateFmt('Arquivo MF: "%s" não foi gerado', [APathArquivo]);
@@ -7027,14 +7052,15 @@ begin
   end;
 end;
 
-procedure TACBrECF.PafMF_ArqMFD(const APathArquivo: String; Assinar: Boolean);
+procedure TACBrECF.PafMF_ArqMFD_Binario(const APathArquivo: String;
+  DataInicial: TDateTime; DataFinal: TDateTime; Assinar: Boolean);
 var
   EADStr: String;
 begin
   if (not fsAtivo) then
      raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
 
-  Self.ArquivoMFD_DLL(APathArquivo);
+  Self.ArquivoMFD_Binario_DLL(APathArquivo, DataInicial, DataFinal);
 
   if not FileExists(APathArquivo) then
     raise EACBrEADException.CreateFmt('Arquivo MFD: "%s" não foi gerado', [APathArquivo]);

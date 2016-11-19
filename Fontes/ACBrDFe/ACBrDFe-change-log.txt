@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/11/2016
+-- ACBrDFeOpenSSL --
+[*] Melhorada a detecção de TimeOut na conexão com o Servidor HTTP
+    http://www.projetoacbr.com.br/forum/topic/20518-nfce-timeout/
+
 23/10/2016
 -- ACBrDFeOpenSSL --
 [*] Modificada a implementação dos métodos: "GetSubjectName" e "GetIssuerName",

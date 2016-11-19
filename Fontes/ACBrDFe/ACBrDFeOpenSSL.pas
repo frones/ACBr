@@ -1310,7 +1310,9 @@ begin
       CarregarCertificado;
   end;
 
-  FHTTP.Timeout   := FpDFeSSL.TimeOut;
+  FHTTP.Timeout := FpDFeSSL.TimeOut;
+  FHTTP.Sock.ConnectionTimeout := FpDFeSSL.TimeOut;
+
   FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
   FHTTP.ProxyPort := FpDFeSSL.ProxyPort;
   FHTTP.ProxyUser := FpDFeSSL.ProxyUser;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2016
+-- Diversos --
+[*] Implementação do provedor próprio da cidade Nova Friburgo/RJ.
+    Por: Italo Jurisato Junior
+
 09/11/2016
 -- ACBrNFSeWebServices --
 [*] Fazer o parse da senha, pois pode ter caracteres especiais.

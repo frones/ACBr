@@ -623,7 +623,7 @@ begin
   begin
     case FProvedor of
       proABase, proActcon, proAgili, proBethav2, proCoplan, proEReceita, proFiorilli,
-      proGovDigital, proISSDigital, proISSe, proMitra, proNEAInformatica,
+      proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra, proNEAInformatica,
       proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP,
       proVirtual, proVersaTecnologia,
       proVitoria: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
@@ -657,7 +657,7 @@ begin
         proSystemPro, proNEAInformatica,
         proEReceita: Gerador.wCampoNFSe(tcStr, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
-        proABase, proBethav2, proGovDigital, proNotaInteligente, proPronimv2,
+        proABase, proBethav2, proFriburgo, proGovDigital, proNotaInteligente, proPronimv2,
         proVersaTecnologia : Gerador.wCampoNFSe(tcDat, '#4', 'Competencia', 10, 10, 1, NFSe.Competencia, DSC_DEMI);
 
         proTecnos:  Gerador.wCampoNFSe(tcDatHor, '#4', 'Competencia', 19, 19, 0, NFSe.Competencia, DSC_DEMI);
@@ -668,7 +668,7 @@ begin
     end
     else begin
       if FProvedor in [proActcon, proBethav2, proCoplan, proEReceita, proFiorilli,
-                       proGovDigital, proISSDigital, proISSe, proMitra,
+                       proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
                        proNEAInformatica, proNotaInteligente, proPronimv2,
                        proProdata, proPVH, proSaatri, proSisPMJP, proSystemPro,
                        proVirtual, proVitoria, proVersaTecnologia] then

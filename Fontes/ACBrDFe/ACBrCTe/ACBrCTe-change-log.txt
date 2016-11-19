@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/11/2016
+-- ACBrCTeWebServices --
+[*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos
+    No arquivo de envio o prefixo ficava sempre zero.
+    Os mesmos arquivos estavam sendo salvos em duas pastas, ma pasta respectiva
+    do evento e na pasta CTe, alterado para salvar somente na pasta do evento.
+   Por: Italo Jurisato Junior
+
 09/11/2016
 -- Diversos --
 [*] Correção visando atender o Evento EPEC da versão 3.00.

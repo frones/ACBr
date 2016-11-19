@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/11/2016
+-- ACBrNFeWebServices --
+[*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos
+    No arquivo de envio o prefixo ficava sempre zero.
+    Os mesmos arquivos estavam sendo salvos em duas pastas, ma pasta respectiva
+    do evento e na pasta NFe, alterado para salvar somente na pasta do evento.
+   Por: Italo Jurisato Junior
+
 06/11/2016
 --ACBrNFeDANFEFRDM
 [-] Ajuste na FormatValorUnitario.

@@ -183,6 +183,8 @@ TACBrECFEscECFProtocoloEpsonDLL = class( TACBrECFEscECFProtocolo )
         pszLineOut:PAnsiChar ) : Integer;
         {$IFDEF LINUX} cdecl {$ELSE} stdcall {$ENDIF} ;
 
+     BufferOut : array [0..65536] of AnsiChar;  // 64kb
+
      procedure LoadDLLFunctions;
   public
     constructor Create(AECFEscECF: TACBrECFEscECF); override;
@@ -539,7 +541,6 @@ function TACBrECFEscECFProtocoloEpsonDLL.EnviaComando_ECF(ACmd: AnsiString
   ): AnsiString;
 var
   I: Integer;
-  aLineOut : array [0..4096] of AnsiChar;
   Resp : Integer ;
   CmdResp: AnsiString;
   SL: TStringList;
@@ -558,14 +559,14 @@ begin
     For I := 0 to EscECFComando.Params.Count-1 do
       ACmd := ACmd + StringToBinaryString( AnsiString(EscECFComando.Params[I]) ) + '|';
 
-    aLineOut[0] := #0; // Zera Buffer de Saida
+    BufferOut[0] := #0; // Zera Buffer de Saida
     ACmd := ReplaceString(ACmd, NUL, '[NULL]');
 
     GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
-    Resp := xEPSON_Send_From_FileEX( ACmd, aLineOut ) ;
+    Resp := xEPSON_Send_From_FileEX( ACmd, BufferOut ) ;
 
     ComandoEnviado  := ACmd ;
-    RespostaComando := TrimRight( aLineOut );
+    RespostaComando := TrimRight( BufferOut );
     CmdResp := RespostaComando;
     Result  := RespostaComando;
 

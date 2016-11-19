@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/11/2016
+-- ACBrECFEscECF --
+[-] Correção de Bug quando usando Epson com porta "USB"/"DLL". Evitando A.V. na
+    execução de comandos que tenham um grande retorno de dados (Ex: LeituraXSerial)
+    (por: DSA)
+
 Data: 18/11/2016
 -- ACBrDevice --
 [+] Adicionado o tipo: TACBrECFTipoDownloadMFD = (tdmfdTotal, tdmfdData, tdmfdCOO);

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/11/2016
+-- ACBrECFEscECF --
+[-] Método "GetDadosUltimaReducaoZ", Bematech MP4200. Correção para retorno de
+    "GrandeTotal" quando CRZ for superior a 256
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=33568
+
 Data: 19/11/2016
 -- ACBrECFEscECF --
 [-] Correção de Bug quando usando Epson com porta "USB"/"DLL". Evitando A.V. na

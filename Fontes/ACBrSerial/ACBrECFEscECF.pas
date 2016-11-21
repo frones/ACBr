@@ -3556,7 +3556,9 @@ begin
       para ler dados da Ultima Redução Z, se o CRZ for maior que 256.
       Se o CRZ lido for difernte do solicitado, é porque o problema ocorreu...
       Nesse caso, vamos capturar as informações de uma LeituraMemoriaFiscalSerial }
-    BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal( ECFCRZ )
+    BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal( ECFCRZ );
+    RetornaInfoECF( '8' ) ;
+    fpDadosReducaoZClass.ValorGrandeTotal := RoundTo( StrToFloatDef(EscECFResposta.Params[3],0)/100, -2);
   end
   else
   begin

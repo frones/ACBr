@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/11/16
+--ACBrCargaBal
+[*] Correção para memoria leak do componente
+		http://www.projetoacbr.com.br/forum/topic/33552-tacbrcargabal-memory-leak-vazamento-de-mem%C3%B3ria/
+		por : Juliomar Marchetti
+
 11/10/16
 -- ACBrCalculadora --
 [+] Adicionada funcionalidade para zerar o display quando pressionar ESC e

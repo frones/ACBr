@@ -979,7 +979,9 @@ begin
     FreeAndNil(Produto);
     FreeAndNil(Setor);
     FreeAndNil(Receita);
-    FreeAndNil(Nutricional);
+    FreeAndNil(Nutricional);    
+    FreeAndNil(RelacaoProdutoNutricional);
+    FreeAndNil(RelacaoProdutoReceita);
   end;
 end;
 

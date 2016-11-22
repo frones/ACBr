@@ -89,7 +89,8 @@ type
     procedure CarregaMultiModal;
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior;
-    procedure CarregaCTeAnuladoComplementado;
+		procedure CarregaCTeAnuladoComplementado;
+		procedure CarregaProdutosPerigosos;
     procedure LimpaDados;
     function ManterCep(iCep: Integer): String;
   protected
@@ -124,7 +125,8 @@ type
     cdsRodoMotorista        : TClientDataSet;
     cdsDocAnterior          : TClientDataSet;
     cdsAnuladoComple        : TClientDataSet;
-    cdsEventos              : TClientDataSet;
+		cdsEventos              : TClientDataSet;
+		cdsProdutosPerigosos    : TClientDataSet;
 
     // frxDB
     frxIdentificacao        : TfrxDBDataset;
@@ -150,7 +152,8 @@ type
     frxRodoMotorista        : TfrxDBDataset;
     frxDocAnterior          : TfrxDBDataset;
     frxAnuladoComple        : TfrxDBDataset;
-    frxEventos              : TfrxDBDataset;
+		frxEventos              : TfrxDBDataset;
+		frxProdutosPerigosos    : TfrxDBDataset;
 
     frxBarCodeObject: TfrxBarCodeObject;
 
@@ -805,6 +808,22 @@ begin
     CreateDataSet;
   end;
 
+  cdsProdutosPerigosos := TClientDataSet.Create(nil);
+  with cdsProdutosPerigosos, FieldDefs do
+  begin
+   	Close;
+   	Clear;
+		Add('nONU',        ftString, 4);
+		Add('xNomeAE',     ftString, 150);
+		Add('xClaRisco',   ftString, 40);
+		Add('grEmb',       ftString, 6);
+		Add('qTotProd',    ftString, 20);
+		Add('qVolTipo',    ftString, 60);
+		Add('pontoFulgor', ftString, 6);
+
+		CreateDataSet;
+  end;
+
   // frxDB
   frxIdentificacao := TfrxDBDataset.Create(nil);
   with frxIdentificacao do
@@ -998,6 +1017,13 @@ begin
     DataSet        := cdsEventos;
   end;
 
+  frxProdutosPerigosos := TfrxDBDataset.Create(nil);
+  with frxProdutosPerigosos do
+  begin
+		UserName       := 'ProdutosPerigosos';
+  	OpenDataSource := False;
+		DataSet        := cdsProdutosPerigosos;
+  end;
   frxBarCodeObject := TfrxBarCodeObject.Create(nil);
 end;
 
@@ -1030,6 +1056,7 @@ begin
   cdsDocAnterior.Free;
   cdsAnuladoComple.Free;
   cdsEventos.Free;
+  cdsProdutosPerigosos.Free;
 
   // frxDB
   frxIdentificacao.Free;
@@ -1057,6 +1084,7 @@ begin
   frxAnuladoComple.Free;
   frxEventos.Free;
   frxBarCodeObject.Free;
+  frxProdutosPerigosos.Free;
 
   inherited Destroy;
 end;
@@ -1263,6 +1291,7 @@ begin
   cdsDocAnterior.EmptyDataSet;
   cdsAnuladoComple.EmptyDataSet;
   cdsEventos.EmptyDataSet;
+  cdsProdutosPerigosos.EmptyDataSet;
 end;
 
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;
@@ -1373,7 +1402,8 @@ begin
     Add(frxRodoMotorista);
     Add(frxDocAnterior);
     Add(frxAnuladoComple);
-    Add(frxEventos);
+		Add(frxEventos);
+		Add(frxProdutosPerigosos);
   end;
 end;
 
@@ -1555,6 +1585,7 @@ begin
   CarregaModalAquaviario;
   CarregaDocumentoAnterior;
   CarregaCTeAnuladoComplementado;
+  CarregaProdutosPerigosos;
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosEventos;
@@ -1854,28 +1885,28 @@ begin
   { emitente }
   with cdsEmitente do
   begin
-    Append;
-    with FCTe.Emit do
-    begin
-      FieldByName('CNPJ').AsString  := FormatarCNPJouCPF(CNPJ);
-      FieldByName('XNome').AsString := xNome;
-      FieldByName('XFant').AsString := XFant;
-      with EnderEmit do
-      begin
-        FieldByName('Xlgr').AsString    := XLgr;
-        FieldByName('Nro').AsString     := Nro;
-        FieldByName('XCpl').AsString    := XCpl;
-        FieldByName('XBairro').AsString := XBairro;
-        FieldByName('CMun').AsString    := IntToStr(CMun);
-        FieldByName('XMun').AsString    := CollateBr(XMun);
-        FieldByName('UF').AsString      := UF;
-        FieldByName('CEP').AsString     := ManterCep( CEP );
-        FieldByName('Fone').AsString    := FormatarFone(Fone);
-      end;
-      FieldByName('IE').AsString := IE;
-    end;
+		Append;
+		with FCTe.Emit do
+		begin
+			FieldByName('CNPJ').AsString  := FormatarCNPJouCPF(CNPJ);
+			FieldByName('XNome').AsString := xNome;
+			FieldByName('XFant').AsString := XFant;
+			with EnderEmit do
+			begin
+		  	FieldByName('Xlgr').AsString    := XLgr;
+		  	FieldByName('Nro').AsString     := Nro;
+		  	FieldByName('XCpl').AsString    := XCpl;
+		  	FieldByName('XBairro').AsString := XBairro;
+		  	FieldByName('CMun').AsString    := IntToStr(CMun);
+		  	FieldByName('XMun').AsString    := CollateBr(XMun);
+		  	FieldByName('UF').AsString      := UF;
+		  	FieldByName('CEP').AsString     := ManterCep( CEP );
+		  	FieldByName('Fone').AsString    := FormatarFone(Fone);
+			end;
+			FieldByName('IE').AsString := IE;
+		end;
 
-    Post;
+  	Post;
   end;
 end;
 
@@ -2511,6 +2542,32 @@ begin
         end;
     end;
     Post;
+  end;
+end;
+
+procedure TACBrCTeDACTEFR.CarregaProdutosPerigosos;
+var i : Integer;
+begin
+ { ProdutosPerigosos }
+  with cdsProdutosPerigosos do
+  begin
+
+		with FCTe.infCTeNorm.peri do
+		begin
+			if FCTe.infCTeNorm.peri.Count > 0 then
+				for I := 0 to FCTe.infCTeNorm.peri.Count - 1 do
+				begin
+		  		Append;
+		  		FieldByName('nONU').AsString          := FCTe.infCTeNorm.peri.Items[i].nONU;
+		  		FieldByName('xNomeAE').AsString       := Items[i].xNomeAE;
+		  		FieldByName('xClaRisco').AsString     := Items[i].xClaRisco;
+		  		FieldByName('grEmb').AsString         := Items[i].grEmb;
+		  		FieldByName('qTotProd').AsString      := Items[i].qTotProd;
+		  		FieldByName('qVolTipo').AsString      := Items[i].qVolTipo;
+		  		FieldByName('pontoFulgor').AsString   := Items[i].pontoFulgor;
+		  		Post;
+				end;
+		end;
   end;
 end;
 

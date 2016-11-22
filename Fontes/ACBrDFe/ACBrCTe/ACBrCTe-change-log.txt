@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/11/2016
+--ACBrCTeDACTEFR
+[+] Adição de informações de produtos perigosos no dacte em fast report
+		http://www.projetoacbr.com.br/forum/topic/3559-transporte-de-produtos-perigosos/
+		por : Juliomar Marchetti
+		
 18/11/2016
 -- ACBrCTeWebServices --
 [*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos

@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lbInfo
+  ActiveControl = frameDpk.ACBr_Capicom_dpk
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Instalador ACBr'
@@ -24,7 +24,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 720
     Height = 612
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgPacotes
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1298,8 +1298,8 @@ object frmPrincipal: TfrmPrincipal
         Height = 499
         HorzScrollBar.Range = 535
         VertScrollBar.ButtonSize = 15
-        VertScrollBar.Range = 800
-        VertScrollBar.Size = 800
+        VertScrollBar.Range = 850
+        VertScrollBar.Size = 850
         VertScrollBar.Style = ssFlat
         Align = alClient
         Color = clWhite

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2016
+-- ACBrECFVirtualNFCe --
+[*] Recuperação de cupom na queda de energia
+    por: Gutierres
+
 16/11/2016
 -- ACBrNFeWebServices --
 [*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos

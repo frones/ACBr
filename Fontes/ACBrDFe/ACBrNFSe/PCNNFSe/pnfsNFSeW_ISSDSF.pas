@@ -176,6 +176,31 @@ var
   i: Integer;
   sDeducaoPor, sTipoDeducao, sTributavel: String;
 begin
+  Gerador.wGrupoNFSe('Deducoes');
+
+  for i := 0 to NFSe.Servico.Deducao.Count -1 do
+  begin
+    Gerador.wGrupoNFSe('Deducao');
+
+    sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
+                                           ['Percentual', 'Valor'], [dpPercentual, dpValor]);
+    Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
+
+    sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].TipoDeducao,
+                                            ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
+                                            [tdNenhum, tdMateriais, tdSubEmpreitada]);
+    Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
+
+    Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, OnlyNumber(NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia) , '');
+    Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir', 00, 18, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
+    Gerador.wCampoNFSe(tcDe2, '', 'ValorDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].ValorDeduzir, '');
+
+    Gerador.wGrupoNFSe('/Deducao');
+  end;
+  Gerador.wGrupoNFSe('/Deducoes');
+
   Gerador.wGrupoNFSe('Itens');
 
   for i := 0 to NFSe.Servico.ItemServico.Count -1 do
@@ -193,29 +218,6 @@ begin
   end;
 
   Gerador.wGrupoNFSe('/Itens');
-
-  for i := 0 to NFSe.Servico.Deducao.Count -1 do
-  begin
-    Gerador.wGrupoNFSe('Deducoes');
-    Gerador.wGrupoNFSe('Deducao');
-
-    sDeducaoPor := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
-                                           ['Percentual', 'Valor'], [dpPercentual, dpValor]);
-    Gerador.wCampoNFSe(tcStr, '', 'DeducaoPor', 01, 20, 1, sDeducaoPor , '');
-
-    sTipoDeducao := EnumeradoToStr( NFSe.Servico.Deducao.Items[i].DeducaoPor,
-                                            ['', 'Despesas com Materiais', 'Despesas com Sub-empreitada'],
-                                            [tdNenhum, tdMateriais, tdSubEmpreitada]);
-    Gerador.wCampoNFSe(tcStr, '', 'TipoDeducao', 00, 255, 1, sTipoDeducao , '');
-
-    Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJReferencia'   , 00, 14, 1, OnlyNumber(NFSe.Servico.Deducao.Items[i].CpfCnpjReferencia) , '');
-    Gerador.wCampoNFSe(tcStr, '', 'NumeroNFReferencia'  , 00, 10, 1, NFSe.Servico.Deducao.Items[i].NumeroNFReferencia, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'ValorTotalReferencia', 00, 18, 1, NFSe.Servico.Deducao.Items[i].ValorTotalReferencia, '');
-    Gerador.wCampoNFSe(tcDe2, '', 'PercentualDeduzir'   , 00, 08, 1, NFSe.Servico.Deducao.Items[i].PercentualDeduzir, '');
-
-    Gerador.wGrupoNFSe('/Deducao');
-    Gerador.wGrupoNFSe('/Deducoes');
-  end;
 end;
 
 procedure TNFSeW_ISSDSF.GerarValoresServico;

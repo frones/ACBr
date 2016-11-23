@@ -124,6 +124,7 @@ type
     FProvedor: TNFSeProvedor;
     FTabServicosExt: Boolean;
     FProtocolo: String;
+    FSituacao: String;
     FPathIniCidades: String;
   public
     constructor Create;
@@ -135,6 +136,7 @@ type
     property Provedor: TNFSeProvedor read FProvedor       write FProvedor;
     property TabServicosExt: Boolean read FTabServicosExt write FTabServicosExt;
     property Protocolo: String       read FProtocolo      write FProtocolo;
+    property Situacao:string         read FSituacao       write FSituacao;
     property PathIniCidades: String  read FPathIniCidades write FPathIniCidades;
   end;
 
@@ -260,6 +262,7 @@ begin
   FLeitor    := TLeitor.Create;
   FListaNfse := TListaNfse.Create;
   FProtocolo := '';
+  FSituacao  := '';
 end;
 
 destructor TRetornoNFSe.Destroy;
@@ -389,6 +392,7 @@ begin
       SituacaoTemp:= Leitor.rCampo(tcStr, 'Situacao');
       if trim(SituacaoTemp) = '' then
         SituacaoTemp := '4';
+      FSituacao := SituacaoTemp;
 
       // Ler a Lista de NFSe
       if leitor.rExtrai(2, 'ListaNfse') <> '' then

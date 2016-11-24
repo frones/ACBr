@@ -676,12 +676,13 @@ begin
     Gerador.wCampoNFSe(tcDe2, '', 'vRetPISPASEP', 01, 15, 0, NFSe.Servico.Valores.ValorPis, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vRetCOFINS', 01, 15, 0, NFSe.Servico.Valores.ValorCofins, '');
     Gerador.wCampoNFSe(tcDe2, '', 'vRetCSLL', 01, 15, 0, NFSe.Servico.Valores.ValorCsll, '');
-
-    if NFSe.Servico.Valores.ValorInss > 0 then
-    begin
-      Gerador.wCampoNFSe(tcStr, '', 'xRetINSS', 01, 02, 1, 'Retenção INSS', '');
-      Gerador.wCampoNFSe(tcDe2, '', 'vRetINSS', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
-    end;
+    Gerador.wCampoNFSe(tcDe2, '', 'vRetINSS', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
+//    if NFSe.Servico.Valores.ValorInss > 0 then
+//    begin
+//      //Felipe Não é necessario este valor
+////      Gerador.wCampoNFSe(tcStr, '', 'xRetINSS', 01, 02, 1, 'Retenção INSS', '');
+//      Gerador.wCampoNFSe(tcDe2, '', 'vRetINSS', 01, 15, 1, NFSe.Servico.Valores.ValorInss, '');
+//    end;
 
     Gerador.wGrupoNFSe('/Ret');
   end;

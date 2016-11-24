@@ -60,12 +60,13 @@ type
     procedure CarregaPrestador(ANFSe: TNFSe);
     procedure CarregaServicos(ANFSe: TNFSe);
     procedure CarregaTomador(ANFSe: TNFSe);
+    procedure CarregaTransortadora(ANFSe: TNFSe);
     procedure CarregaLogoPrefeitura;
     procedure CarregaImagemPrestadora;
 
     function ManterDocumento(sCpfCnpj: String): string;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
-		procedure SetDataSetsToFrxReport;		
+		procedure SetDataSetsToFrxReport;
   public
     frxReport   : TfrxReport; // Está como public, pois quando declarado em datamodule, tem acesso externo, e pode ser que alguem esteja usando.
     frxPDFExport: TfrxPDFExport;
@@ -75,12 +76,14 @@ type
     cdsServicos     : TClientDataSet;
     cdsParametros   : TClientDataSet;
     cdsTomador      : TClientDataSet;
+	  cdsTransportadora : TClientDataSet;
     cdsItensServico : TClientDataSet;
 
     // FrxDBs
     frxIdentificacao: TfrxDBDataset;
     frxPrestador    : TfrxDBDataset;
     frxTomador      : TfrxDBDataset;
+    frxTransportadora: TfrxDBDataset;
     frxServicos     : TfrxDBDataset;
     frxParametros   : TfrxDBDataset;
     frxItensServico : TfrxDBDataset;
@@ -117,6 +120,7 @@ begin
   frxIdentificacao.Free;
   frxPrestador.Free;
   frxTomador.Free;
+  frxTransportadora.Free;
   frxServicos.Free;
   frxParametros.Free;
   frxItensServico.Free;
@@ -126,6 +130,7 @@ begin
   cdsServicos.Free;
   cdsParametros.Free;
   cdsTomador.Free;
+  cdsTransportadora.Free;
   cdsItensServico.Free;
 
   frxReport.Free;
@@ -199,10 +204,11 @@ end;
 
 procedure TACBrNFSeDANFSeFR.SetDataSetsToFrxReport;
 begin
-  frxReport.EnabledDataSets.Clear;  
+  frxReport.EnabledDataSets.Clear;
   frxReport.EnabledDataSets.Add(frxIdentificacao);
   frxReport.EnabledDataSets.Add(frxPrestador);
   frxReport.EnabledDataSets.Add(frxTomador);
+  frxReport.EnabledDataSets.Add(frxTransportadora);
   frxReport.EnabledDataSets.Add(frxServicos);
   frxReport.EnabledDataSets.Add(frxParametros);
   frxReport.EnabledDataSets.Add(frxItensServico);
@@ -344,6 +350,7 @@ begin
       Clear;
       Add('Cnpj', ftString, 18);
       Add('InscricaoMunicipal', ftString, 15);
+      Add('InscricaoEstadual', ftString, 15);
       Add('RazaoSocial', ftString, 60);
       Add('NomeFantasia', ftString, 60);
       Add('Endereco', ftString, 60);
@@ -442,6 +449,7 @@ begin
       Clear;
       Add('CpfCnpj', ftString, 18);
       Add('InscricaoMunicipal', ftString, 15);
+      Add('InscricaoEstadual', ftString, 15);
       Add('RazaoSocial', ftString, 60);
       Add('NomeFantasia', ftString, 60);
       Add('Endereco', ftString, 60);
@@ -455,6 +463,29 @@ begin
       Add('CodigoPais', ftString, 4);
       Add('Telefone', ftString, 15);
       Add('Email', ftString, 60);
+    end;
+    CreateDataSet;
+    LogChanges := False;
+  end;
+
+  cdsTransportadora := TClientDataSet.Create(nil);
+  with cdsTransportadora do
+  begin
+    Close;
+    with FieldDefs do
+    begin
+      Clear;
+      Add('Cnpj', ftString, 18);
+      Add('InscicaoEstadual', ftString, 15);
+      Add('RazaoSocial', ftString, 60);
+      Add('Placa', ftString, 7);
+      Add('Endereco', ftString, 60);
+      Add('CodigoMunicipio', ftInteger);
+      Add('NomeMunicipio', ftString, 60);
+      Add('Sigla', ftString, 2);
+      Add('BacenPais', ftInteger);
+      Add('NomePais', ftString, 60);
+      Add('TipoFrete', ftInteger);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -474,6 +505,9 @@ begin
       Add('Tributavel', ftString, 1);
       Add('Unidade', ftString, 3);
       Add('Aliquota', ftString, 30);
+      Add('AliquotaISSST', ftString, 30);
+      Add('ValorISSST', ftString, 30);
+      Add('DescontoIncondicionado', ftString, 30);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -515,6 +549,7 @@ begin
       Clear;
       Add('Cnpj=Cnpj');
       Add('InscricaoMunicipal=InscricaoMunicipal');
+      Add('InscricaoEstadual=InscricaoEstadual');
       Add('RazaoSocial=RazaoSocial');
       Add('NomeFantasia=NomeFantasia');
       Add('Endereco=Endereco');
@@ -544,6 +579,7 @@ begin
         Clear;
         Add('CpfCnpj=CpfCnpj');
         Add('InscricaoMunicipal=InscricaoMunicipal');
+        Add('InscricaoEstadual=InscricaoEstadual');
         Add('RazaoSocial=RazaoSocial');
         Add('NomeFantasia=NomeFantasia');
         Add('Endereco=Endereco');
@@ -559,6 +595,30 @@ begin
         Add('Email=Email');
       end;
       DataSet       := cdsTomador;
+      BCDToCurrency := False;
+    end;
+
+    frxTransportadora := TfrxDBDataset.Create(nil);
+    with frxTransportadora do begin
+      UserName        := 'Transportadora';
+      CloseDataSource := False;
+      OpenDataSource  := False;
+      with FieldAliases do
+      begin
+        Clear;
+        Add('Cnpj=Cnpj');
+        Add('InscicaoEstadual=InscicaoEstadual');
+        Add('RazaoSocial=RazaoSocial');
+        Add('Placa=Placa');
+        Add('Endereco=Endereco');
+        Add('CodigoMunicipio=CodigoMunicipio');
+        Add('NomeMunicipio=NomeMunicipio');
+        Add('Sigla=Sigla');
+        Add('BacenPais=BacenPais');
+        Add('NomePais=NomePais');
+        Add('TipoFrete=TipoFrete');
+      end;
+      DataSet       := cdsTransportadora;
       BCDToCurrency := False;
     end;
 
@@ -659,6 +719,9 @@ begin
         Add('Tributavel=Tributavel');
         Add('Unidade=Unidade');
         Add('Aliquota=Aliquota');
+        Add('AliquotaISSST=AliquotaISSST');
+        Add('ValorISSST=ValorISSST');
+        Add('DescontoIncondicionado=DescontoIncondicionado');
       end;
       DataSet       := cdsItensServico;
       BCDToCurrency := False;
@@ -674,6 +737,7 @@ begin
   CarregaServicos(ANFSe);
   CarregaItensServico(ANFSe);
   CarregaParametros(ANFSe);
+  CarregaTransortadora(ANFSe);
 end;
 
 procedure TACBrNFSeDANFSeFR.CarregaIdentificacao(ANFSe: TNFSe);
@@ -686,8 +750,8 @@ begin
     with ANFSe do
     begin
 			FieldByName('Id').AsString                := IdentificacaoRps.Numero + IdentificacaoRps.Serie;
-			if(FormatarNumeroDocumentoNFSe) then 
-		  	FieldByName('Numero').AsString            := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero) 
+			if(FormatarNumeroDocumentoNFSe) then
+		  	FieldByName('Numero').AsString           := FormatarNumeroDocumentoFiscalNFSe(IdentificacaoRps.Numero)
 			else
 		  	FieldByName('Numero').AsString            := IdentificacaoRps.Numero;
       FieldByName('Serie').AsString             := IdentificacaoRPS.Serie;
@@ -702,7 +766,7 @@ begin
 		  	FieldByName('NumeroNFSe').AsString        := FormatarNumeroDocumentoFiscalNFSe(Numero) 
 			else
 		  	FieldByName('NumeroNFSe').AsString        := ANFSe.Numero;
-			if(Provedor = proGINFES ) then
+			if(Provedor in [proGINFES, proBetha] ) then  // Felipe - Otimizy Sistemas
 				FieldByName('DataEmissao').AsString       := FormatDateTimeBr(ANFSe.DataEmissao) 
 			else
 				FieldByName('DataEmissao').AsString       := FormatDateBr(DataEmissao);
@@ -731,6 +795,9 @@ begin
         cdsItensServico.FieldByName('Tributavel').AsString           := SimNaoToStr(Tributavel);
         cdsItensServico.FieldByName('Aliquota').AsString             := FormatFloatBr( Aliquota, '0.00');
         cdsItensServico.FieldByName('Unidade').AsString              := Unidade;
+        cdsItensServico.FieldByName('AliquotaISSST').AsString        := FormatFloatBr( AlicotaISSST, '0.00');
+        cdsItensServico.FieldByName('ValorISSST').AsString           := FormatFloatBr( ValorISSST, '0.00');
+        cdsItensServico.FieldByName('DescontoIncondicionado').AsString := FormatFloatBr( DescontoIncondicionado, '0.00');
         Post;
       end;
 
@@ -739,13 +806,16 @@ begin
         for I := 1 to 12 - ANFSe.Servico.ItemServico.Count do
           begin
             Append;
-            cdsItensServico.FieldByName('DiscriminacaoServico').AsString := EmptyStr ;
-            cdsItensServico.FieldByName('Quantidade').AsString           := EmptyStr ;
-            cdsItensServico.FieldByName('ValorUnitario').AsString        := EmptyStr ;
-            cdsItensServico.FieldByName('ValorTotal').AsString           := EmptyStr ;
-            cdsItensServico.FieldByName('Tributavel').AsString           := EmptyStr ;
-            cdsItensServico.FieldByName('Aliquota').AsString             := EmptyStr ;
-            cdsItensServico.FieldByName('Unidade').AsString              := EmptyStr ;
+            cdsItensServico.FieldByName('DiscriminacaoServico').AsString := EmptyStr;
+            cdsItensServico.FieldByName('Quantidade').AsString           := EmptyStr;
+            cdsItensServico.FieldByName('ValorUnitario').AsString        := EmptyStr;
+            cdsItensServico.FieldByName('ValorTotal').AsString           := EmptyStr;
+            cdsItensServico.FieldByName('Tributavel').AsString           := EmptyStr;
+            cdsItensServico.FieldByName('Aliquota').AsString             := EmptyStr;
+            cdsItensServico.FieldByName('Unidade').AsString              := EmptyStr;
+            cdsItensServico.FieldByName('AliquotaISSST').AsString        := EmptyStr;
+            cdsItensServico.FieldByName('ValorISSST').AsString           := EmptyStr;
+            cdsItensServico.FieldByName('DescontoIncondicionado').AsString := EmptyStr;
             Post;
           end;
       end;
@@ -770,7 +840,8 @@ begin
 
       with Servico do
       begin
-        FieldByName('CodigoMunicipio').AsString     := IfThen(CodigoMunicipio <> '', CodCidadeToCidade(StrToInt(CodigoMunicipio)), '');
+        FieldByName('CodigoMunicipio').AsString := IfThen(CodigoMunicipio <> '',
+          CodCidadeToCidade(StrToIntDef(ANFSe.Servico.CodigoMunicipio, 0)), '');
         FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
         FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
       end;
@@ -787,7 +858,7 @@ begin
 		
     FieldByName('Sistema').AsString   := IfThen( DANFSeClassOwner.Sistema <> '' , DANFSeClassOwner.Sistema, 'Projeto ACBr - http://acbr.sf.net');
     FieldByName('Usuario').AsString   := DANFSeClassOwner.Usuario;
-    FieldByName('Site').AsString   := DANFSeClassOwner.Site;
+    FieldByName('Site').AsString      := DANFSeClassOwner.Site;
     //FieldByName('Mensagem0').AsString := IfThen(DANFSeClassOwner.NFSeCancelada, 'NFSe CANCELADA', '');
     FieldByName('Mensagem0').AsString := IfThen(ANFSe.Cancelada = snSim, 'NFSe CANCELADA', '');  // LUIZ
     Post;
@@ -810,6 +881,7 @@ begin
       begin
         FieldByName('Cnpj').AsString               := FormatarCNPJ(Cnpj);
         FieldByName('InscricaoMunicipal').AsString := InscricaoMunicipal;
+        FieldByName('InscricaoEstadual').AsString  := FormatarIE(InscricaoEstadual, Endereco.UF);
       end;
 
       with Endereco do
@@ -892,6 +964,7 @@ begin
       FieldByName('RazaoSocial').AsString        := RazaoSocial;
       FieldByName('CpfCnpj').AsString            := ManterDocumento(IdentificacaoTomador.CpfCnpj);
       FieldByName('InscricaoMunicipal').AsString := IdentificacaoTomador.InscricaoMunicipal;
+      FieldByName('InscricaoEstadual').AsString  := IdentificacaoTomador.InscricaoEstadual;
 
       with Endereco do
       begin
@@ -912,6 +985,28 @@ begin
         FieldByName('Email').AsString    := Email;
       end;
 
+    end;
+    Post;
+  end;
+end;
+
+procedure TACBrNFSeDANFSeFR.CarregaTransortadora(ANFSe: TNFSe);
+begin
+  with cdsTransportadora do begin
+    EmptyDataSet;
+    Append;
+    with ANFSe.Transportadora do begin
+      FieldByName('Cnpj').AsString              := xCpfCnpjTrans;
+      FieldByName('RazaoSocial').AsString       := xNomeTrans;
+      FieldByName('InscicaoEstadual').AsString  := xInscEstTrans;
+      FieldByName('Placa').AsString             := xPlacaTrans;
+      FieldByName('Endereco').AsString          := xEndTrans;
+      FieldByName('CodigoMunicipio').AsInteger  := cMunTrans;
+      FieldByName('NomeMunicipio').AsString     := xMunTrans;
+      FieldByName('Sigla').AsString             := xUFTrans;
+      FieldByName('NomePais').AsString          := xPaisTrans;
+      FieldByName('BacenPais').AsInteger        := cPaisTrans;
+      FieldByName('TipoFrete').AsInteger        := Ord(vTipoFreteTrans);
     end;
     Post;
   end;

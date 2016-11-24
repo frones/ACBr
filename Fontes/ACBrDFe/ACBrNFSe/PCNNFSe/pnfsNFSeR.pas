@@ -3238,7 +3238,7 @@ var
 begin
   VersaoXML:= '1.1';
 
-  NFSe.Servico.ItemListaServico := Leitor.rCampo(tcStr, 'infAdicLT');
+  NFSe.Servico.CodigoMunicipio := Leitor.rCampo(tcStr, 'infAdicLT');
 
   if (Leitor.rExtrai(1, 'Id') <> '') then
   begin
@@ -3273,15 +3273,16 @@ begin
   if (Leitor.rExtrai(1, 'prest') <> '') then
   begin
     NFSe.Prestador.Cnpj                := Leitor.rCampo(tcStr, 'CNPJ');
+    NFSe.Prestador.InscricaoEstadual   := Leitor.rCampo(tcStr, 'IE');
     NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'xNome');
     NFSe.PrestadorServico.NomeFantasia := Leitor.rCampo(tcStr, 'xFant');
     NFSe.Prestador.InscricaoMunicipal  := Leitor.rCampo(tcStr, 'IM');
 
     NFSe.PrestadorServico.IdentificacaoPrestador.Cnpj := NFSe.Prestador.Cnpj;
     NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoMunicipal := NFSe.Prestador.InscricaoMunicipal;
+    NFSe.PrestadorServico.IdentificacaoPrestador.InscricaoEstadual := NFSe.Prestador.InscricaoEstadual;
 
     NFSe.PrestadorServico.Contato.Telefone := Leitor.rCampo(tcStr, 'fone');
-    NFSe.Prestador.InscricaoEstadual       := Leitor.rCampo(tcStr, 'IE');
     NFSe.PrestadorServico.Contato.Email    := Leitor.rCampo(tcStr, 'xEmail');
 
     if (Leitor.rExtrai(2, 'end') <> '') then
@@ -3352,6 +3353,11 @@ begin
       NFSe.Servico.ItemServico.Items[Item].ValorCsll   := Leitor.rCampo(tcDe2, 'vRetCSLL');
       NFSe.Servico.ItemServico.Items[Item].ValorInss   := Leitor.rCampo(tcDe2, 'vRetINSS');
     end;
+    if (Leitor.rExtrai(2, 'ISSST') <> '') then
+    begin
+      NFSe.Servico.ItemServico.Items[Item].AlicotaISSST := Leitor.rCampo(tcDe2, 'pISSST');
+      NFSe.Servico.ItemServico.Items[Item].ValorISSST := Leitor.rCampo(tcDe2, 'vISSST');
+    end;
 
     inc(Item);
   end;
@@ -3371,7 +3377,8 @@ begin
       if NFSe.Servico.Valores.ValorIssRetido > 0 then
       begin
         NFSe.Servico.Valores.IssRetido   := stRetencao;
-        NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
+        //Dados está sendo buscando na linha no inicio do metodo
+        //NFSe.Servico.MunicipioIncidencia := StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0);
       end;
 
     end;

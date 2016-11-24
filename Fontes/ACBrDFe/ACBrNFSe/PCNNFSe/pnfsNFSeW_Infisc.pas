@@ -483,7 +483,9 @@ begin
   Gerador.wGrupoNFSe('prest');
   Gerador.wCampoNFSe(tcStr, '', 'CNPJ' , 01, 014, 1, NFSe.Prestador.Cnpj, '');
   Gerador.wCampoNFSe(tcStr, '', 'xNome', 01, 100, 1, NFSe.PrestadorServico.RazaoSocial, '');
+  Gerador.wCampoNFSe(tcStr, '', 'xFant', 01, 60, 1, NFSe.PrestadorServico.NomeFantasia, '');
   Gerador.wCampoNFSe(tcStr, '', 'IM'   , 01, 015, 1, NFSe.Prestador.InscricaoMunicipal, '');
+  Gerador.wCampoNFSe(tcStr, '', 'xEmail' , 01, 50, 1, NFSe.PrestadorServico.Contato.Email, '');
 
   Gerador.wGrupoNFSe('end');
   Gerador.wCampoNFSe(tcStr, '', 'xLgr'   , 01, 100, 1, NFSe.PrestadorServico.Endereco.Endereco, '');
@@ -756,7 +758,9 @@ begin
   GerarValoresServico_v11;
   GerarCondicaoPagamento_v11;
 
-  Gerador.wCampoNFSe(tcStr, '', 'infAdicLT', 01, 100,  1, NFSe.PrestadorServico.Endereco.CodigoMunicipio, '');
+  // - Felipe Mesturini
+  //Quando é tributado fora do municipio temos que ter o IBGE o mesmo do localdeTributação do Serviço
+  Gerador.wCampoNFSe(tcStr, '', 'infAdicLT', 01, 100,  1, NFSe.Servico.MunicipioIncidencia, '');
 
   lLimiteLinha := 250;
   lDeOndeIniciaCopia := 1;

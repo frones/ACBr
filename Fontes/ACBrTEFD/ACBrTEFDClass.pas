@@ -433,7 +433,7 @@ type
      fpChequeDC : String;
      fpCMC7 : String;
      fpCNFEnviado : Boolean;
-     fpCodigoAutorizacaoTransacao : Integer;
+     fpCodigoAutorizacaoTransacao : String;
      fpCodigoOperadoraCelular: String;
      fpConta : String;
      fpContaDC : String;
@@ -533,7 +533,7 @@ type
      property StatusTransacao             : String    read fpStatusTransacao ;
      property TransacaoAprovada           : Boolean   read GetTransacaoAprovada ;
      property TipoTransacao               : Integer   read fpTipoTransacao ;
-     property CodigoAutorizacaoTransacao  : Integer   read fpCodigoAutorizacaoTransacao ;
+     property CodigoAutorizacaoTransacao  : String   read fpCodigoAutorizacaoTransacao ;
      property NumeroLoteTransacao         : Integer   read fpNumeroLoteTransacao ;
      property DataHoraTransacaoHost       : TDateTime read fpDataHoraTransacaoHost ;
      property DataHoraTransacaoLocal      : TDateTime read fpDataHoraTransacaoLocal ;
@@ -1308,7 +1308,7 @@ begin
    fpCheque                       := '' ;
    fpChequeDC                     := '' ;
    fpCMC7                         := '' ;
-   fpCodigoAutorizacaoTransacao   := 0 ;
+   fpCodigoAutorizacaoTransacao   := '' ;
    fpConta                        := '' ;
    fpContaDC                      := '' ;
    fpDataCheque                   := 0 ;
@@ -1457,7 +1457,7 @@ begin
          end;
        11  : fpTipoTransacao              := Linha.Informacao.AsInteger;
        12  : fpNSU                        := Linha.Informacao.AsString;
-       13  : fpCodigoAutorizacaoTransacao := Linha.Informacao.AsInteger;
+       13  : fpCodigoAutorizacaoTransacao := Linha.Informacao.AsString;
        14  : fpNumeroLoteTransacao        := Linha.Informacao.AsInteger;
        15  : fpDataHoraTransacaoHost      := Linha.Informacao.AsTimeStamp;
        16  : fpDataHoraTransacaoLocal     := Linha.Informacao.AsTimeStamp;

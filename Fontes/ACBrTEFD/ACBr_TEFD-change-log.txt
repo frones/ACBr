@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/11/2016
+-- ACBrTEFDClass, ACBrTEFDBanese, ACBrTEFDCliDTEF, ACBrTEFDCliSiTef,
+   ACBrTEFDTicketCar, ACBrTEFDVeSPague --
+[*] Propriedade: "TACBrTEFDResp.CodigoAutorizacaoTransacao" modificada de
+    Integer para String
+    www.projetoacbr.com.br/forum/index.php?showtopic=33615
+
 12/11/2016
 -- ACBrTEFDClass --
 [-] Não estava preenchendo corretamento o nome da rede nos casos em

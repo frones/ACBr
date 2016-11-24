@@ -292,7 +292,7 @@ begin
            fpValorTotal := fpValorTotal + fpSaque ;
          end;
        131 : fpInstituicao                 := LinStr;
-       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsInteger;
+       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := Linha.Informacao.AsString;
 
        135 :

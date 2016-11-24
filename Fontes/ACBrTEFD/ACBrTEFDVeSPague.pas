@@ -543,7 +543,7 @@ begin
      if Chave = 'transacao_administradora' then
         fpNomeAdministradora := Valor
      else if Chave = 'transacao_autorizacao' then
-        fpCodigoAutorizacaoTransacao := Linha.Informacao.AsInteger
+        fpCodigoAutorizacaoTransacao := Linha.Informacao.AsString
      else if Chave = 'transacao_codigo_vespague' then
         fpNumeroLoteTransacao := Linha.Informacao.AsInteger
      else if Chave = 'transacao_comprovante_1via' then

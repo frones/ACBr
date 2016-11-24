@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/11/2016 ver: 0.0.211
+-- ACBrBancoCaixa --
+[-] Correção para informar espaços em branco no campo Código do Banco Correspondente na Compensação no registro Q do CNAB240. (por: Letícia Silva)
+
 Data: 10/10/2016 ver: 0.0.210	
 -- ACBrBoleto --
 [*] Inclusão de um novo TACBrTipoOcorrencia (por: Antonio Júnior)

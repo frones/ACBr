@@ -585,9 +585,9 @@ begin
                )                                                                       + // 154 a 157 - Tipo de Inscrição
                PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 15, '0')             + // 155 a 169 - Número de inscrição
                PadRight(Sacado.SacadoAvalista.NomeAValista, 40, ' ')                   + // 170 a 209 - Nome do sacador/avalista
-               PadRight('', 3, '0')                                                    + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
-               PadRight('',20, ' ')                                                    + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
-               PadRight('', 8, ' ');                                                     // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
+               Space(3)                                                                + // 210 a 212 - Uso exclusivo FEBRABAN/CNAB
+               Space(20)                                                               + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
+               Space(8);                                                                 // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 
  {SEGMENTO R}
       Result:= Result + #13#10 +

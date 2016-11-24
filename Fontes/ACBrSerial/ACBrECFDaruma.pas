@@ -322,8 +322,8 @@ TACBrECFDaruma = class( TACBrECFClass )
     procedure LerTotaisComprovanteNaoFiscal; override ;
     Procedure ProgramaComprovanteNaoFiscal( var Descricao: String;
        Tipo : String = ''; Posicao : String = '') ; override ;
-    procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
-      const DataFinal: TDateTime; const DirArquivos: string); override;
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
 
     Property ComprovantesNaoFiscaisVinculado : TACBrECFComprovantesNaoFiscais
        read GetComprovantesNaoFiscaisVinculado ;
@@ -1344,8 +1344,8 @@ begin
     Result := ErrosEstendidos[AErro];
 end;
 
-procedure TACBrECFDaruma.PafMF_GerarCAT52(const DataInicial: TDateTime;
-   const DataFinal: TDateTime; const DirArquivos: string);
+procedure TACBrECFDaruma.PafMF_GerarCAT52(const DataInicial,
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 begin
   Self.ArquivoMFD_DLL(DataInicial, DataFinal, DirArquivos, [docTodos], finNFPTDM);
 end;

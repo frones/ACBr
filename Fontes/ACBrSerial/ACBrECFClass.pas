@@ -1301,7 +1301,7 @@ TACBrECFClass = class
        NomeArquivo, StrInicial, StrFinal: AnsiString); virtual;
 
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
-      const DirArquivos: String); virtual;
+      const DirArquivos: String; NumeroSerie: String = ''); virtual;
 
     Procedure IdentificaOperador(Nome : String); virtual;
     Procedure IdentificaPAF( NomeVersao, MD5 : String) ; virtual ;
@@ -4956,16 +4956,18 @@ begin
 end ;
 
 procedure TACBrECFClass.PafMF_GerarCAT52(const DataInicial,
-  DataFinal: TDateTime; const DirArquivos: String);
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 var
-  NomeArquivo, NumSer: String;
+  NomeArquivo: String;
   DataArquivo: TDateTime;
 begin
-  NumSer      := NumSerie;
+  if NumeroSerie = '' then
+    NumeroSerie := GetNumSerie;
+
   DataArquivo := DataInicial;
   repeat
     NomeArquivo := IncludeTrailingPathDelimiter( DirArquivos ) +
-                   NomeArqCAT52( RFDID, NumSer, DataArquivo );
+                   NomeArqCAT52( RFDID, NumeroSerie, DataArquivo );
     Self.ArquivoMFD_DLL(DataArquivo, DataArquivo, NomeArquivo, [docTodos], finNFPTDM);
 
     DataArquivo := IncDay( DataArquivo, 1 );

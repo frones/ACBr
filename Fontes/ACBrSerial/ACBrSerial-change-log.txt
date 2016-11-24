@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/11/2016
+-- ACBrECFClass, ACBrEscECF, ACBrECFBematech, ACBrECFDaruma, ACBrECFSwedaStx --
+[-] Correção para funcionamento do método "PafMF_GerarCAT52" em ACBrECFEscECF,
+    modificando a assinatura do método para receber o Número de Série como
+    parâmetro opcional:
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
+    (por: DSA)
+
 Data: 21/11/2016
 -- ACBrECFEscECF --
 [-] Método "GetDadosUltimaReducaoZ", Bematech MP4200. Correção para retorno de

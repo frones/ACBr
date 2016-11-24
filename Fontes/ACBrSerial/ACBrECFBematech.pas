@@ -664,8 +664,8 @@ TACBrECFBematech = class( TACBrECFClass )
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo: AnsiString): AnsiString; override;
 
-    procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
-      const DataFinal: TDateTime; const DirArquivos: string); override;
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
 
  end ;
 
@@ -3905,8 +3905,8 @@ begin
  //{$ENDIF}
 end;
 
-procedure TACBrECFBematech.PafMF_GerarCAT52(const DataInicial: TDateTime;
-   const DataFinal: TDateTime; const DirArquivos: string);
+procedure TACBrECFBematech.PafMF_GerarCAT52(const DataInicial,
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 var
   Resp: Integer;
   FilePath, DiaIni, DiaFim: AnsiString;

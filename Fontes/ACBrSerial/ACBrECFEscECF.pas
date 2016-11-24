@@ -466,7 +466,7 @@ TACBrECFEscECF = class( TACBrECFClass )
        TipoContador: TACBrECFTipoContador = tpcCOO ) ; overload ; override ;
 
     procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
-      const DirArquivos: String); override;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
 
     Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
     Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
@@ -2446,7 +2446,10 @@ begin
   ECFClass := CriarECFClassPorMarca;
 
   if ECFClass = nil then
+  begin
     inherited;
+    Exit;
+  end;
 
   try
     Self.Desativar;
@@ -2464,7 +2467,10 @@ begin
   ECFClass := CriarECFClassPorMarca;
 
   if ECFClass = nil then
+  begin
     inherited;
+    Exit;
+  end;
 
   try
     Self.Desativar;
@@ -2483,7 +2489,10 @@ begin
   ECFClass := CriarECFClassPorMarca;
 
   if ECFClass = nil then
+  begin
     inherited;
+    Exit;
+  end;
 
   try
     Self.Desativar;
@@ -2502,7 +2511,10 @@ begin
   ECFClass := CriarECFClassPorMarca;
 
   if ECFClass = nil then
+  begin
     inherited;
+    Exit;
+  end;
 
   try
     Self.Desativar;
@@ -2513,18 +2525,24 @@ begin
 end;
 
 procedure TACBrECFEscECF.PafMF_GerarCAT52(const DataInicial,
-  DataFinal: TDateTime; const DirArquivos: String);
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 var
   ECFClass: TACBrECFClass;
 begin
   ECFClass := CriarECFClassPorMarca;
 
   if ECFClass = nil then
+  begin
     inherited;
+    Exit;
+  end;
+
+  if NumeroSerie = '' then
+    NumeroSerie := GetNumSerie;
 
   try
     Self.Desativar;
-    ECFClass.PafMF_GerarCAT52(DataInicial, DataFinal, DirArquivos);
+    ECFClass.PafMF_GerarCAT52(DataInicial, DataFinal, DirArquivos, NumeroSerie);
   finally
     DestruirECFClass( ECFClass );
   end;

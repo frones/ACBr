@@ -302,8 +302,8 @@ TACBrECFSwedaSTX = class( TACBrECFClass )
     Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
       StrInicial, StrFinal: AnsiString); override;
 
-    procedure PafMF_GerarCAT52(const DataInicial: TDateTime;
-      const DataFinal: TDateTime; const DirArquivos: string); override;
+    procedure PafMF_GerarCAT52(const DataInicial, DataFinal: TDateTime;
+      const DirArquivos: String; NumeroSerie: String = ''); override;
 
     function TraduzirTag(const ATag: AnsiString): AnsiString; override;
     function TraduzirTagBloco(const ATag, Conteudo : AnsiString) : AnsiString ; override;
@@ -1271,8 +1271,8 @@ begin
 
 end;
 
-procedure TACBrECFSwedaSTX.PafMF_GerarCAT52(const DataInicial: TDateTime;
-   const DataFinal: TDateTime; const DirArquivos: string);
+procedure TACBrECFSwedaSTX.PafMF_GerarCAT52(const DataInicial,
+  DataFinal: TDateTime; const DirArquivos: String; NumeroSerie: String);
 var
   Resp: Integer;
   Dia, FileMF : AnsiString;

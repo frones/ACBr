@@ -18211,13 +18211,14 @@ end;
 function ExigibilidadeISSDescricao( const t: TnfseExigibilidadeISS ): String;
 begin
   case t of
-    exiExigivel                       : Result := 'Exigível';
-    exiNaoIncidencia                  : Result := 'Não Incidência';
-    exiIsencao                        : Result := 'Isenção';
-    exiExportacao                     : Result := 'Exportação';
-    exiImunidade                      : Result := 'Imunidade';
-    exiSuspensaDecisaoJudicial        : Result := 'Suspensa Decisao Judicial';
-    exiSuspensaProcessoAdministrativo : Result := 'Suspensa Processo Administrativo';
+    exiExigivel                       : Result := '1 - Exigível';
+    exiNaoIncidencia                  : Result := '2 - Não Incidência';
+    exiIsencao                        : Result := '3 - Isenção';
+    exiExportacao                     : Result := '4 - Exportação';
+    exiImunidade                      : Result := '5 - Imunidade';
+    exiSuspensaDecisaoJudicial        : Result := '6 - Suspensa Decisao Judicial';
+    exiSuspensaProcessoAdministrativo : Result := '7 - Suspensa Processo Administrativo';
+    exiISSFixo                        : Result := '8 - ISS Fixo';
   end;
 end;
 

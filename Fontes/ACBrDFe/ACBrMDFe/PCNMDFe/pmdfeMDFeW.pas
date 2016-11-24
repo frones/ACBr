@@ -278,7 +278,7 @@ begin
   if VersaoDF = ve100 then
     Gerador.wCampo(tcDatHor, '#024a', 'dhIniViagem', 19, 19, 0, MDFe.ide.dhIniViagem, DSC_DHINIVIAGEM)
   else
-    Gerador.wCampo(tcStr, '#024a', 'dhIniViagem', 25, 25, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhIniViagem)
+    Gerador.wCampo(tcStr, '#024a', 'dhIniViagem', 25, 25, 0, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhIniViagem)
                                                            + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhIniViagem), DSC_DHINIVIAGEM);
 
   Gerador.wGrupo('/ide');

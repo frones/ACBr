@@ -339,6 +339,7 @@ begin
     proCoplan,
     proDigifred,
     proFiorilli,
+    proFriburgo,
     proNEAInformatica,
     proNotaInteligente,
     proPronimv2,

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/11/2016
+-- Diversos --
+[*] Correções para o provedor Friburgo.
+    Por: Leandro
+
 18/11/2016
 -- Diversos --
 [*] Implementação do provedor próprio da cidade Nova Friburgo/RJ.

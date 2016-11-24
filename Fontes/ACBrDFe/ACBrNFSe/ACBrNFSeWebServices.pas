@@ -1295,6 +1295,13 @@ begin
                               '<' + FPrefixo4 + 'tcDeclaracaoPrestacaoServico', '</Signature>') +
                             '</Signature>'+
                          '</' + FPrefixo4 + 'Rps>';
+             proFriburgo: FvNotas := FvNotas +
+                       '<' + FPrefixo4 + 'Rps>' +
+                        '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id="' + RetornarConteudoEntre(RPS, '<Numero>', '</Numero>') + '"' +
+                          RetornarConteudoEntre(RPS,
+                            '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                          '</Signature>'+
+                       '</' + FPrefixo4 + 'Rps>';
            else
              FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps>' +

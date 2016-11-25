@@ -1482,6 +1482,9 @@ begin
 
          if FProvedor = proFISSLex then
            FTagI := '';
+
+         if FProvedor in [proDBSeller] then
+           FTagI := '<ConsultarSituacaoLoteRps>' + FTagI;
        end;
 
     LayNfseConsultaLote:
@@ -1696,6 +1699,9 @@ begin
 
          if FProvedor = proFISSLex then
            FTagF := '';
+
+         if FProvedor in [proDBSeller] then
+           FTagF := FTagF + '</ConsultarSituacaoLoteRps>';
        end;
 
     LayNfseConsultaLote:

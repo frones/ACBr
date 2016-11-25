@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2016
+-- pcnConversao --
+[+] Adicionado novo Tipo: TImprimirUnidQtdeValor = (iuComercial, iuTributavel, iuComercialETributavel)
+	http://www.projetoacbr.com.br/forum/topic/33636-impress%C3%A3o-de-nfe-com-a-unidade-comercial-e-tribut%C3%A1vel/
+	por WesleyAS / HLeorj
+
 11/11/2016
 -- pcnConversao --
 [+] Nova função para retornar a descrição da unidade de medida 

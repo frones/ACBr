@@ -152,6 +152,7 @@ type
   TUnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
 
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
+  TImprimirUnidQtdeValor = (iuComercial, iuTributavel, iuComercialETributavel);
 
 const
   TpcnTpEventoString : array[0..32] of String =('110110', '110111', '210200',

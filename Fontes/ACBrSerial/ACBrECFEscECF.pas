@@ -1759,6 +1759,9 @@ begin
   if fsDeviceParams <> '' then
   begin
      P := pos(':',fsDeviceParams);
+     if fpDevice.Ativo then
+        fpDevice.Desativar;
+
      fpDevice.Porta        := copy(fsDeviceParams,1,P-1);
      fpDevice.ParamsString := copy(fsDeviceParams,P+1,Length(fsDeviceParams));
      fsDeviceParams := '';
@@ -2529,6 +2532,9 @@ procedure TACBrECFEscECF.PafMF_GerarCAT52(const DataInicial,
 var
   ECFClass: TACBrECFClass;
 begin
+  if NumeroSerie = '' then
+    NumeroSerie := GetNumSerie;
+
   ECFClass := CriarECFClassPorMarca;
 
   if ECFClass = nil then
@@ -2536,9 +2542,6 @@ begin
     inherited;
     Exit;
   end;
-
-  if NumeroSerie = '' then
-    NumeroSerie := GetNumSerie;
 
   try
     Self.Desativar;

@@ -85,7 +85,7 @@ uses
   {$ELSEIF DEFINED(FMX)}
      FMX.Printer,
   {$ELSEIF DEFINED(FPC)}
-     Printers, OSPrinters,
+     Printers, {$IFNDEF NOGUI} OSPrinters, {$IFEND}
   {$ELSE}
      Printers, WinSpool,
   {$IFEND}

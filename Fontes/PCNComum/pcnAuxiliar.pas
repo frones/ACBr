@@ -122,6 +122,7 @@ function GetDataDaPascoa(const ano: Integer): TDateTime;
 
 function ExtrairModeloChaveAcesso(AChaveNFE: String): String;
 function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
+function ExtrairCNPJChaveAcesso(AChaveNFE: String): String;
 
 function TimeZoneConf: TTimeZoneConf;
 
@@ -934,7 +935,14 @@ end;
 
 function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
 begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
   Result := StrToIntDef(Copy(AChaveNFE,1,2), 0);
+end;
+
+function ExtrairCNPJChaveAcesso(AChaveNFE: String): String;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  Result := copy(AChaveNFE,7,14);
 end;
 
 function TimeZoneConf: TTimeZoneConf;

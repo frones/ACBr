@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/11/2016
+[-] Correção pois o campo quantidade não validava no webservice de teste
+		por Juliomar Marchetti
+		
 05/10/2016
 -- ACBrBlocoX_Estoque
 [-] Correção conforme manual e servidor sefaz para 2 casas decimais

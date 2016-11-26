@@ -282,7 +282,8 @@ begin
       Gerador.wCampo(tcDatHor, '#024a', 'dhIniViagem', 19, 19, 0, MDFe.ide.dhIniViagem, DSC_DHINIVIAGEM)
     else
       Gerador.wCampo(tcStr, '#024a', 'dhIniViagem', 25, 25, 0, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', MDFe.ide.dhIniViagem)
-  end;                                                         + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhIniViagem), DSC_DHINIVIAGEM);
+                                                             + GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhIniViagem), DSC_DHINIVIAGEM);
+  end;
 
   Gerador.wGrupo('/ide');
 end;

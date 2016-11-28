@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2016
+-- pcteCTeW --
+[*] Alterado para gerar o CST no grupo ICMSSN para a versão 3.00
+    Por: Italo Jurisato Junior
+
 22/11/2016
 --ACBrCTeDACTEFR
 [+] Adição de informações de produtos perigosos no dacte em fast report

@@ -1231,6 +1231,9 @@ end;
 procedure TCTeW.GerarICMSSN;
 begin
   Gerador.wGrupo('ICMSSN', '#248');
+  if (CTe.infCTe.versao = 3) then
+    Gerador.wCampo(tcStr, '#248', 'CST', 02, 02, 1, '90', DSC_CST);
+
   Gerador.wCampo(tcInt, '#249', 'indSN ', 01, 01, 1, CTe.Imp.ICMS.ICMSSN.indSN, DSC_INDSN);
   Gerador.wGrupo('/ICMSSN');
 end;

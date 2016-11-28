@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2016
+-- Diversos --
+[*] Correções para o provedor Friburgo.
+    Por: João Batista de Oliveira
+
 23/11/2016
 -- Diversos --
 [*] Correções para o provedor Friburgo.

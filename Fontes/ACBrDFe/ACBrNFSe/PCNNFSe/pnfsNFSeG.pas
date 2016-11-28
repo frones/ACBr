@@ -1577,7 +1577,7 @@ begin
 
          Gerador.wCampoNFSe(tcStr, '#1', 'CodigoCancelamento', 01, 01, 1, CodigoCanc, '');
 
-         if Provedor in [proPublica, proTecnos] then
+         if Provedor in [proPublica, proTecnos, proFriburgo] then
            Gerador.wCampoNFSe(tcStr, '#1', 'MotivoCancelamento', 01, 255, 1, MotivoCanc, '');
 
 //         if (Provedor in [proPublica]) and (CodigoCanc = 'C999') then

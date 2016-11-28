@@ -18227,7 +18227,7 @@ begin
   case t of
     stRetencao    : result := '1 - Sim' ;
     stNormal      : result := '2 - Não' ;
-    stSubstituicao: result := '3 - Subst.' ;
+    stSubstituicao: result := '3 - Substituição' ;
   end;
 end;
 

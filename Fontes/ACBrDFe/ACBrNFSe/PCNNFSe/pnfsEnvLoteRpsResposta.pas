@@ -137,6 +137,7 @@ type
     function LerXml_proISSDSF: Boolean;
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
+    function LerXML_proFriburgo: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -286,6 +287,7 @@ begin
    proISSDSF:     Result := LerXml_proISSDSF;
    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
    proSP:         Result := LerXml_proSP;
+   proFriburgo:   Result := LerXML_proFriburgo;
  else
    Result := LerXml_ABRASF;
  end;
@@ -487,6 +489,37 @@ begin
       end;
     end;
 
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proFriburgo: Boolean;
+var
+  i : Integer;
+begin
+  Result := False;
+  try
+    FInfRec.Protocolo                     := Leitor.rCampo(tcStr, 'Protocolo');
+    FInfRec.NumeroLote                    := Leitor.rCampo(tcStr, 'NumeroLote');
+    FInfRec.DataRecebimento               := Leitor.rCampo(tcDatHor, 'DataRecebimento');
+
+    i := 0;
+    while Leitor.rExtrai(1, 'Erro', '', i + 1) <> '' do
+    begin
+      FInfRec.MsgRetorno.Add;
+      FInfRec.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'ErroID');
+      FInfRec.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'ErroMensagem');
+      FInfRec.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'ErroSolucao');;
+
+      Inc(i);
+    end;
+
+    if FInfRec.MsgRetorno.Count > 0 then
+    begin
+      FInfRec.Protocolo := '';
+    end;
     Result := True;
   except
     Result := False;

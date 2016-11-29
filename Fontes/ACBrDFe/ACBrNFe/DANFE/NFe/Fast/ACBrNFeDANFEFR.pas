@@ -76,7 +76,7 @@ type
     FDetalhado: Boolean;
     FURLConsultaPublica:String;
     FDescricaoViaEstabelec: string;
-    FImprimirUnQtVlComercial: boolean;
+    FImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
@@ -117,7 +117,7 @@ type
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write setTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
-    property ImprimirUnQtVlComercial: boolean read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
+    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
     property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
     property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
@@ -144,7 +144,7 @@ begin
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
   FMarcaDaguaMSG:='';
-  FImprimirUnQtVlComercial:=false;
+  FImprimirUnQtVlComercial:=iuComercial;
   ExpandirDadosAdicionaisAuto:=false;
   { NFC-e }
   FvTroco := 0;

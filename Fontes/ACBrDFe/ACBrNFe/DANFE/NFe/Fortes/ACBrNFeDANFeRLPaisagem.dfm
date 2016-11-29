@@ -4486,21 +4486,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             HoldStyle = hsRelatively
             SecondHolder = rlsUnd
           end
-          object txtUnidade: TRLLabel
-            Tag = 705
-            Left = 96
-            Top = 1
-            Width = 22
-            Height = 11
-            AutoSize = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -8
-            Font.Name = 'Arial'
-            Font.Style = []
-            ParentFont = False
-            SecondHolder = lblUnd
-          end
           object LinhaQuantidade: TRLDraw
             Left = 119
             Top = 0
@@ -4512,22 +4497,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             HoldStyle = hsRelatively
             SecondHolder = rlsqtd
           end
-          object txtQuantidade: TRLLabel
-            Tag = 705
-            Left = 120
-            Top = 1
-            Width = 50
-            Height = 11
-            Alignment = taRightJustify
-            AutoSize = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -8
-            Font.Name = 'Arial'
-            Font.Style = []
-            ParentFont = False
-            SecondHolder = lblqtd
-          end
           object LinhaValorUnitario: TRLDraw
             Left = 171
             Top = 0
@@ -4538,22 +4507,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             DrawKind = dkLine
             HoldStyle = hsRelatively
             SecondHolder = rlsVunitario
-          end
-          object txtValorUnitario: TRLLabel
-            Tag = 705
-            Left = 172
-            Top = 1
-            Width = 50
-            Height = 11
-            Alignment = taRightJustify
-            AutoSize = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -8
-            Font.Name = 'Arial'
-            Font.Style = []
-            ParentFont = False
-            SecondHolder = RLLabel7
           end
           object LinhaValorTotal1: TRLDraw
             Left = 223
@@ -4820,6 +4773,53 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             HoldStyle = hsRelatively
             SecondHolder = LinhaProd15
             Transparent = False
+          end
+          object txtUnidade: TRLMemo
+            Tag = 705
+            Left = 96
+            Top = 1
+            Width = 22
+            Height = 10
+            Behavior = [beSiteExpander]
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -8
+            Font.Name = 'Arial'
+            Font.Style = []
+            ParentFont = False
+            SecondHolder = lblUnd
+          end
+          object txtQuantidade: TRLMemo
+            Tag = 705
+            Left = 120
+            Top = 1
+            Width = 50
+            Height = 10
+            Alignment = taRightJustify
+            Behavior = [beSiteExpander]
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -8
+            Font.Name = 'Arial'
+            Font.Style = []
+            ParentFont = False
+            SecondHolder = lblqtd
+          end
+          object txtValorUnitario: TRLMemo
+            Tag = 705
+            Left = 172
+            Top = 1
+            Width = 50
+            Height = 10
+            Alignment = taRightJustify
+            Behavior = [beSiteExpander]
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -8
+            Font.Name = 'Arial'
+            Font.Style = []
+            ParentFont = False
+            SecondHolder = RLLabel7
           end
         end
       end

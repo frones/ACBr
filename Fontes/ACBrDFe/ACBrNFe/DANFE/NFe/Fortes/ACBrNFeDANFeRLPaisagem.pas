@@ -388,11 +388,8 @@ type
     linhaCFOP1: TRLDraw;
     txtCFOP: TRLLabel;
     LinhaUnidade: TRLDraw;
-    txtUnidade: TRLLabel;
     LinhaQuantidade: TRLDraw;
-    txtQuantidade: TRLLabel;
     LinhaValorUnitario: TRLDraw;
-    txtValorUnitario: TRLLabel;
     LinhaValorTotal1: TRLDraw;
     txtValorTotal: TRLLabel;
     LinhaDesconto: TRLDraw;
@@ -472,6 +469,9 @@ type
     LinhaNCM: TRLDraw;
     LinhaProd15: TRLDraw;
     LinhaSepararprod: TRLDraw;
+    txtUnidade: TRLMemo;
+    txtQuantidade: TRLMemo;
+    txtValorUnitario: TRLMemo;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -2232,10 +2232,39 @@ begin
       crtSimplesExcessoReceita : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
             crtSimplesNacional : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
     end;
-    txtCFOP.Caption             := Prod.CFOP;
-    txtUnidade.Caption          := Prod.UCom;
-    txtQuantidade.Caption       := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom );
-    txtValorUnitario.Caption    := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom);
+    txtUnidade.Lines.Clear;
+    txtQuantidade.Lines.Clear;
+    txtValorUnitario.Lines.Clear;
+
+    case TACBrNFeDANFeRL(Owner).ImprimirUnQtVlComercial of
+    iuComercial:
+      begin
+        txtUnidade.Lines.Add(Prod.uCom);
+        txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom ));
+        txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom));
+      end;
+    iuTributavel:
+      begin
+        txtUnidade.Lines.Add(Prod.uTrib);
+        txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qTrib ));
+        txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnTrib ));
+      end;
+    iuComercialETributavel:
+      begin
+        if Prod.UCom = Prod.UTrib then
+        begin
+          txtUnidade.Lines.Add(Prod.uCom);
+          txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom ));
+          txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom ));
+        end
+        else
+        begin
+          txtUnidade.Lines.Add(TACBrNFeDANFeRL(Owner).ManterUnidades( Prod.uCom, Prod.uTrib ));
+          txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).ManterQuantidades( Prod.qCom, Prod.qTrib ));
+          txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).ManterValoresUnitarios( Prod.vUnCom, Prod.vUnTrib ));
+        end;
+      end;
+    end;
     if ( fImprimirTotalLiquido ) then
     begin
       // Desconto

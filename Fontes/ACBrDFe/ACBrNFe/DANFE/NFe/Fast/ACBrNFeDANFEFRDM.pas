@@ -96,7 +96,7 @@ type
     FDetalhado: Boolean;
     FURLConsultaPublica:String;
     FDescricaoViaEstabelec: string;
-    FImprimirUnQtVlComercial: boolean;
+    FImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
@@ -196,7 +196,7 @@ type
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write FTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write FTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
-    property ImprimirUnQtVlComercial: boolean read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
+    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
     property ExpandirDadosAdicionaisAuto: boolean read FExpandirDadosAdicionaisAuto write FExpandirDadosAdicionaisAuto;
     property vTroco: Currency read FvTroco write FvTroco;
     property Detalhado: Boolean read FDetalhado write FDetalhado;
@@ -475,17 +475,32 @@ begin
           FieldByName('ValorAcrescimos').AsString   := FormatFloatBr( Prod.vProd + Prod.vOutro,'###,###,##0.00');
 
           case FImprimirUnQtVlComercial of
-          true:
+          iuComercial:
             begin
               FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
               FieldByName('Quantidade').AsString    := FormatQuantidade( FieldByName('QCom').AsFloat );
               FieldByName('ValorUnitario').AsString := FormatValorUnitario( FieldByName('VUnCom').AsFloat );
             end;
-          false:
+          iuTributavel:
             begin
               FieldByName('Unidade').AsString       := FieldByName('UTrib').AsString;
               FieldByName('Quantidade').AsString    := FormatQuantidade( FieldByName('QTrib').AsFloat );
               FieldByName('ValorUnitario').AsString := FormatValorUnitario( FieldByName('VUnTrib').AsFloat);
+            end;
+          iuComercialETributavel:
+            begin
+              if FieldByName('Ucom').AsString = FieldByName('UTrib').AsString then
+              begin
+                FieldByName('Unidade').AsString       := FieldByName('Ucom').AsString;
+                FieldByName('Quantidade').AsString    := FormatQuantidade( FieldByName('QCom').AsFloat );
+                FieldByName('ValorUnitario').AsString := FormatValorUnitario( FieldByName('VUnCom').AsFloat );
+              end
+              else
+              begin
+                FieldByName('Unidade').AsString       := FDANFEClassOwner.ManterUnidades(FieldByName('Ucom').AsString, FieldByName('UTrib').AsString);
+                FieldByName('Quantidade').AsString    := FDANFEClassOwner.ManterQuantidades(FieldByName('QCom').AsFloat, FieldByName('QTrib').AsFloat);
+                FieldByName('ValorUnitario').AsString := FDANFEClassOwner.ManterValoresUnitarios(FieldByName('VUnCom').AsFloat, FieldByName('VUnTrib').AsFloat);
+              end;
             end;
           end;
           Post;

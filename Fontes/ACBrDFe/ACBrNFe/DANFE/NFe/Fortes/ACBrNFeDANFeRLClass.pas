@@ -100,6 +100,7 @@ type
     fEspacoEntreProdutos: Integer;
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
+    fImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -132,6 +133,7 @@ type
     property EspacoEntreProdutos: Integer read FEspacoEntreProdutos write FEspacoEntreProdutos default 7; // Altura dos espaços entre os produtos
     property AlternaCoresProdutos: Boolean read FAlternaCoresProdutos write FAlternaCoresProdutos default False; // Alterna as cores de fundo dos produtos para destaca-los
     property CorDestaqueProdutos: TColor read FCorDestaqueProdutos write FCorDestaqueProdutos default clWhite; // Cor usada para destacar produtos na lista alternando entre fundo coloridos e não colorido
+    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read fImprimirUnQtVlComercial write fImprimirUnQtVlComercial;
   end;
 
 implementation
@@ -188,6 +190,7 @@ begin
   fEspacoEntreProdutos  := 7;
   fAlternaCoresProdutos := False;
   fCorDestaqueProdutos  := clWhite;
+  fImprimirUnQtVlComercial := iuComercial;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;

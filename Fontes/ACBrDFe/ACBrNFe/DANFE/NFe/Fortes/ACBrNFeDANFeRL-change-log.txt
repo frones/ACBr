@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2016
+-- ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato
+[+] http://www.projetoacbr.com.br/forum/topic/33636-impress%C3%A3o-de-nfe-com-a-unidade-comercial-e-tribut%C3%A1vel/
+      		por: WesleyAS / HleoRj
+
+
+
 14/10/2016
 -- ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato
 [*] Implantação da quebra de linha em informações adicionais do produto, 

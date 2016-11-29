@@ -155,6 +155,10 @@ type
     function ManterNomeImpresso(sXNome, sXFant: String): String;
     function FormatQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String;
     function FormatValorUnitario(dValor: Double): String;
+    function ManterUnidades(sUCom, sUTrib: String): String;
+    function ManterQuantidades(dQCom, dQTrib: Double): String;
+    function ManterValoresUnitarios(dVCom, dVTrib: Double): String;
+
   published
     property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
     property Logo: String                            read FLogo                           write FLogo;
@@ -447,5 +451,30 @@ begin
   else
     Result := sXNome;
 end;
+
+function TACBrNFeDANFEClass.ManterQuantidades(dQCom, dQTrib: Double): String;
+begin
+   Result := FormatQuantidade( dQCom );
+   if dQTrib > 0 then
+      Result := Result + #13#10 + FormatQuantidade( dQTrib );
+end;
+
+function TACBrNFeDANFEClass.ManterUnidades(sUCom, sUTrib: String): String;
+begin
+   Result := Trim( sUCom );
+   if Trim( sUTrib ) <> '' then
+      Result := Result + #13#10 + Trim( sUTrib );
+end;
+
+function TACBrNFeDANFEClass.ManterValoresUnitarios(dVCom,
+  dVTrib: Double): String;
+begin
+   Result := FormatValorUnitario ( dVCom );
+   if dVTrib > 0 then
+      Result := Result + #13#10 + FormatValorUnitario ( dVTrib );
+end;
+
+
+
 
 end.

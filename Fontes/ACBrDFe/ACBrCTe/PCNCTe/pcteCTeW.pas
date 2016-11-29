@@ -2324,10 +2324,16 @@ begin
   if (CTe.Ide.tpCTe = tcComplemento) then
   begin
     Gerador.wGrupo('infCteComp', '#410');
-    Gerador.wCampo(tcEsp, '#411', 'chave   ', 44, 44, 1, OnlyNumber(CTe.infCTeComp.Chave), DSC_CHCTE);
+
+    if CTe.infCTe.versao = 2 then
+      Gerador.wCampo(tcEsp, '#411', 'chave', 44, 44, 1, OnlyNumber(CTe.infCTeComp.Chave), DSC_CHCTE)
+    else
+      Gerador.wCampo(tcEsp, '#411', 'chCTe', 44, 44, 1, OnlyNumber(CTe.infCTeComp.Chave), DSC_CHCTE);
+
     if OnlyNumber(CTe.infCTeComp.Chave) <> '' then
-     if not ValidarChave(CTe.infCTeComp.Chave) then
-      Gerador.wAlerta('#411', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
+      if not ValidarChave(CTe.infCTeComp.Chave) then
+        Gerador.wAlerta('#411', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
+
     Gerador.wGrupo('/infCteComp');
   end;
 end;

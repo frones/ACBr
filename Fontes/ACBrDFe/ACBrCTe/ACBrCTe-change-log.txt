@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2016
+-- pcteCTeW --
+[*] Ajuste no nome da tag da chave do CT-e a ser Complementado, para a versão 3.00
+    Por: Italo Jurisato Junior
+
 28/11/2016
 -- pcteCTeW --
 [*] Alterado para gerar o CST no grupo ICMSSN para a versão 3.00

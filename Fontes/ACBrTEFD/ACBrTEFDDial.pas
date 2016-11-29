@@ -60,13 +60,19 @@ type
 
    TACBrTEFDDial = class( TACBrTEFDClassTXT )
    private
+    fInicializarConfirmandoTransacoes: Boolean;
    public
      constructor Create( AOwner : TComponent ) ; override ;
+     procedure VerificarTransacoesPendentesClass; override;
+
+     property InicializarConfirmandoTransacoes: Boolean
+        read fInicializarConfirmandoTransacoes
+        write fInicializarConfirmandoTransacoes default False;
    end;
 
 implementation
 
-Uses ACBrUtil, dateutils;
+Uses ACBrUtil, dateutils, ACBrTEFD;
 
 { TACBrTEFDClass }
 
@@ -81,6 +87,34 @@ begin
   GPExeName := CACBrTEFDDial_GPExeName ;
   fpTipo    := gpTefDial;
   Name      := 'TEF_DIAL' ;
+
+  fInicializarConfirmandoTransacoes := False;
+end;
+
+procedure TACBrTEFDDial.VerificarTransacoesPendentesClass;
+var
+  Est: AnsiChar;
+  Cancelar: Boolean;
+begin
+  Cancelar := True;
+
+  if InicializarConfirmandoTransacoes then
+  begin
+    try
+      Est := TACBrTEFD(Owner).EstadoECF;
+    except
+      Est := 'O';
+    end ;
+
+    if (not (Est in ['V','P','N','O'])) then
+    begin
+      ConfirmarESolicitarImpressaoTransacoesPendentes;
+      Cancelar := False;
+    end
+  end;
+
+  if Cancelar then
+    CancelarTransacoesPendentesClass;
 end;
 
 end.

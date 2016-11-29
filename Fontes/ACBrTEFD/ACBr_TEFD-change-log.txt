@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/11/2016
+-- ACBrTEFDDial --
+[+] Adicionado Propriedade:
+    "ACBrTEFDDial.InicializarConfirmandoTransacoes: Boolean default True"
+    que permite configurar se as transações pendentes no momento da inicialização
+    devem ser canceladas ou confirmadas. (por:  Rodrigo Frühwirth e DSA)
+    http://www.projetoacbr.com.br/forum/topic/33611-skytef-client-modular/
+
 24/11/2016
 -- ACBrTEFDClass, ACBrTEFDBanese, ACBrTEFDCliDTEF, ACBrTEFDCliSiTef,
    ACBrTEFDTicketCar, ACBrTEFDVeSPague --

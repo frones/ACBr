@@ -732,6 +732,7 @@ type
      procedure AtivarGP ; virtual;
      procedure VerificaAtivo ; virtual;
 
+     procedure VerificarTransacoesPendentesClass; virtual;
      procedure CancelarTransacoesPendentesClass; virtual;
      procedure ConfirmarTransacoesAnteriores; virtual;
 
@@ -1739,7 +1740,7 @@ begin
      Resp.Clear;
   end ;
 
-  CancelarTransacoesPendentesClass ;
+  VerificarTransacoesPendentesClass;
 
   VerificaAtivo;
 end;
@@ -1768,6 +1769,11 @@ begin
     else
       raise ;
   end;
+end;
+
+procedure TACBrTEFDClass.VerificarTransacoesPendentesClass;
+begin
+  CancelarTransacoesPendentesClass;
 end;
 
 procedure TACBrTEFDClass.ATV;

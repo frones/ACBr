@@ -43,6 +43,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/11/2016
+[*]	Adicionado comando para ativar/desativar "Corta Papel" da aba "Pos Printer"
+	http://www.projetoacbr.com.br/forum/topic/33616-erro-pos-printer-corte-de-papel-não-funciona
+	por:Celso Marigo Junior
+
+28/11/2016
+[+]	Adicionado combobox para seleção da versão do CTe, na aba DFe > WebServices (NF-e/CT-e/MDF-e)
+	http://www.projetoacbr.com.br/forum/topic/33658-criarcte-cacbrschemaserro_v200xsd-não-encontrado/
+	por: Celso Marigo Junior
+
 18/11/2016
 [-]     Correção de erro de compilação, após modificações em ACBrECF
         http://www.projetoacbr.com.br/forum/index.php?showtopic=33538

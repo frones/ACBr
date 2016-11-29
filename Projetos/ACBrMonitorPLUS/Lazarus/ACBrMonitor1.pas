@@ -44,7 +44,7 @@ uses
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
   Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs,
-  pcnConversao, pcnConversaoNFe, ACBrSAT, ACBrSATExtratoESCPOS,
+  pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT, ACBrSATExtratoESCPOS,
   ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrGNRE2,
   ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
   ACBrCTeDACTeRLClass, types, ACBrBase, fileinfo;
@@ -268,6 +268,7 @@ type
     cbUsarFortes: TRadioButton;
     cbValidarDigest: TCheckBox;
     cbVersaoWS: TComboBox;
+    cbVersaoWSCTe: TComboBox;
     cbxAdicionaLiteral: TCheckBox;
     cbxAjustarAut: TCheckBox;
     cbxAmbiente: TComboBox;
@@ -364,6 +365,7 @@ type
     Label181: TLabel;
     Label190: TLabel;
     Label191: TLabel;
+    Label192: TLabel;
     Label194: TLabel;
     Label196: TLabel;
     Label197: TLabel;
@@ -3960,8 +3962,10 @@ begin
 
     cbUF.ItemIndex := cbUF.Items.IndexOf(Ini.ReadString('WebService', 'UF', 'SP'));
     rgTipoAmb.ItemIndex := Ini.ReadInteger('WebService', 'Ambiente', 0);
-    cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(Ini.ReadString(
-      'WebService', 'Versao', '3.10'));
+    cbVersaoWS.ItemIndex := cbVersaoWS.Items.IndexOf(
+      Ini.ReadString('WebService', 'Versao', '3.10'));
+    cbVersaoWSCTe.ItemIndex := cbVersaoWSCTe.Items.IndexOf(
+      Ini.ReadString('WebService','VersaoCTe','2.00'));
 
     ACBrNFe1.Configuracoes.WebServices.UF := cbUF.Text;
     ACBrNFe1.Configuracoes.WebServices.Ambiente := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex + 1));
@@ -3969,6 +3973,7 @@ begin
 
     ACBrCTe1.Configuracoes.WebServices.UF := cbUF.Text;
     ACBrCTe1.Configuracoes.WebServices.Ambiente := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex + 1));
+    ACBrCTe1.Configuracoes.Geral.VersaoDF := StrToVersaoCTe(ok, cbVersaoWSCTe.Text);
 
     ACBrMDFe1.Configuracoes.WebServices.UF := cbUF.Text;
     ACBrMDFe1.Configuracoes.WebServices.Ambiente := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex + 1));
@@ -4246,7 +4251,7 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha := INI.ReadBool('SATExtrato', 'ImprimeEmUmaLinha', False);
 
     cbxImprimirDescAcresItemSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
-    cbxImprimirItem1LinhaSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;;
+    cbxImprimirItem1LinhaSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
 
     edtEmitCNPJ.Text := INI.ReadString('SATEmit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('SATEmit','IE','');
@@ -4299,6 +4304,7 @@ begin
     cbxPagCodigo.ItemIndex  := INI.ReadInteger('PosPrinter', 'PaginaDeCodigo', Integer(ACBrPosPrinter1.PaginaDeCodigo));
     cbControlePorta.Checked := INI.ReadBool('PosPrinter', 'ControlePorta', ACBrPosPrinter1.ControlePorta);
     cbCortarPapel.Checked   := INI.ReadBool('PosPrinter', 'CortarPapel', ACBrPosPrinter1.CortaPapel);
+
     cbTraduzirTags.Checked  := INI.ReadBool('PosPrinter', 'TraduzirTags', ACBrPosPrinter1.TraduzirTags);
     cbIgnorarTags.Checked   := INI.ReadBool('PosPrinter', 'IgnorarTags', ACBrPosPrinter1.IgnorarTags);
     edPosPrinterLog.Text    := INI.ReadString('PosPrinter', 'ArqLog', ACBrPosPrinter1.ArqLOG);
@@ -4858,6 +4864,7 @@ begin
     Ini.WriteString('WebService', 'UF', cbUF.Text);
     Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmb.ItemIndex);
     Ini.WriteString('WebService', 'Versao', cbVersaoWS.Text);
+    Ini.WriteString('WebService', 'VersaoCTe', cbVersaoWSCTe.Text);
     Ini.WriteBool('WebService', 'AjustarAut', cbxAjustarAut.Checked);
     Ini.WriteString('WebService', 'Aguardar', edtAguardar.Text);
     Ini.WriteString('WebService', 'Tentativas', edtTentativas.Text);

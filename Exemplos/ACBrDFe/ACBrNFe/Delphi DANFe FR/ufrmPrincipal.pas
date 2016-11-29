@@ -85,6 +85,8 @@ type
     Label8: TLabel;
     cbtdetMascara_Vrl: TComboBox;
     rbTarjaNfeCancelada: TCheckBox;
+    Label9: TLabel;
+    CBImprimirUndQtVlComercial: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -197,6 +199,9 @@ begin
     CasasDecimais._Mask_qCom    := cbtdetMascara_qtd.Items[ cbtdetMascara_qtd.ItemIndex ] ;
     CasasDecimais._Mask_vUnCom  := cbtdetMascara_Vrl.Items[cbtdetMascara_Vrl.ItemIndex ];
 
+    // ImprimirUndQtVlComercial
+    ImprimirUnQtVlComercial     := TImprimirUnidQtdeValor( CBImprimirUndQtVlComercial.ItemIndex );
+
   end;
 end;
 
@@ -220,6 +225,10 @@ begin
     cbtdetInteger_Vrl.ItemIndex := CasasDecimais._vUnCom;
     cbtdetMascara_qtd.ItemIndex := CasasDecimais._qCom;
     cbtdetMascara_Vrl.ItemIndex := CasasDecimais._vUnCom;
+
+    // ImprimirUndQtVlComercial
+    CBImprimirUndQtVlComercial.ItemIndex  := integer( ImprimirUnQtVlComercial );
+
 
   end;
 

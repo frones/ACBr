@@ -53,6 +53,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+29/11/2016
+-- DemoDANFeFR --- 
+[+] Teste de ImprimirQtdVlComercial
+     Demostra a utilização da propriedade ImprimirQtdVlComercial
+      Por : Henrique Leonardo
+
+
 06/11/2016
 -- DemoDANFeFR --- 
 [+] Grupo Ajuste de Decimais na Aba Configuração

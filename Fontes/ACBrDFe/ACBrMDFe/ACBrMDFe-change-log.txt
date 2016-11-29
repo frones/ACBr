@@ -47,7 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-
+29/11/2016
+--ACBrMDFeWebServices
+[-] Correção de memory leak
+		www.projetoacbr.com.br/forum/topic/33733-correção-memory-leak/
+		por : Juliomar Marchetti
+		
 16/11/2016
 -- ACBrMDFeWebServices --
 [*] Correção na geração do prefixo dos arquivos de envio/retorno de eventos

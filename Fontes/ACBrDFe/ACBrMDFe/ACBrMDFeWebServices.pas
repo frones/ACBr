@@ -2071,6 +2071,7 @@ end;
 destructor TMDFeConsultaMDFeNaoEnc.Destroy;
 begin
   FinfMDFe.Free;
+  FRetConsMDFeNaoEnc.Free;
 
   inherited;
 end;

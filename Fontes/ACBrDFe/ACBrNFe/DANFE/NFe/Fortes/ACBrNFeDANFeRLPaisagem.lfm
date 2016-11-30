@@ -1,11 +1,9 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 204
-  Height = 667
   Top = 207
-  Width = 1374
+  Width = 1142
   Caption = 'frlDANFeRLPaisagem'
-  ClientHeight = 667
-  ClientWidth = 1374
+  ClientWidth = 1142
   inherited RLNFe: TRLReport
     Height = 794
     Top = 0
@@ -5499,23 +5497,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             RealBounds.Height = 0
             SecondHolder = rlsUnd
           end
-          object txtUnidade: TRLLabel
-            Tag = 705
-            Left = 96
-            Height = 11
-            Top = 1
-            Width = 22
-            AutoSize = False
-            Font.Color = clBlack
-            Font.Height = -8
-            Font.Name = 'Arial'
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-            SecondHolder = lblUnd
-          end
           object LinhaQuantidade: TRLDraw
             Left = 119
             Height = 128
@@ -5531,24 +5512,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             RealBounds.Height = 0
             SecondHolder = rlsqtd
           end
-          object txtQuantidade: TRLLabel
-            Tag = 705
-            Left = 120
-            Height = 11
-            Top = 1
-            Width = 50
-            Alignment = taRightJustify
-            AutoSize = False
-            Font.Color = clBlack
-            Font.Height = -8
-            Font.Name = 'Arial'
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-            SecondHolder = lblqtd
-          end
           object LinhaValorUnitario: TRLDraw
             Left = 171
             Height = 128
@@ -5563,24 +5526,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             RealBounds.Width = 0
             RealBounds.Height = 0
             SecondHolder = rlsVunitario
-          end
-          object txtValorUnitario: TRLLabel
-            Tag = 705
-            Left = 172
-            Height = 11
-            Top = 1
-            Width = 50
-            Alignment = taRightJustify
-            AutoSize = False
-            Font.Color = clBlack
-            Font.Height = -8
-            Font.Name = 'Arial'
-            ParentFont = False
-            RealBounds.Left = 0
-            RealBounds.Top = 0
-            RealBounds.Width = 0
-            RealBounds.Height = 0
-            SecondHolder = RLLabel7
           end
           object LinhaValorTotal1: TRLDraw
             Left = 223
@@ -5909,6 +5854,59 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             RealBounds.Height = 0
             SecondHolder = LinhaProd15
             Transparent = False
+          end
+          object txtUnidade: TRLMemo
+            Tag = 705
+            Left = 96
+            Height = 10
+            Top = 1
+            Width = 22
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -8
+            Font.Name = 'Arial'
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            SecondHolder = lblUnd
+          end
+          object txtQuantidade: TRLMemo
+            Tag = 705
+            Left = 120
+            Height = 10
+            Top = 1
+            Width = 50
+            Alignment = taRightJustify
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -8
+            Font.Name = 'Arial'
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            SecondHolder = lblqtd
+          end
+          object txtValorUnitario: TRLMemo
+            Tag = 705
+            Left = 172
+            Height = 10
+            Top = 1
+            Width = 50
+            Alignment = taRightJustify
+            Behavior = [beSiteExpander]
+            Font.Color = clBlack
+            Font.Height = -8
+            Font.Name = 'Arial'
+            ParentFont = False
+            RealBounds.Left = 0
+            RealBounds.Top = 0
+            RealBounds.Width = 0
+            RealBounds.Height = 0
+            SecondHolder = RLLabel7
           end
         end
       end

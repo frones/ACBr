@@ -331,6 +331,7 @@ type
     cbEscPosImprimirLogo: TCheckBox;
     cbEmailConfirmation: TCheckBox;
     cbxAtualizarXMLCancelado: TCheckBox;
+    cbxUnComTributavel: TComboBox;
     DBGrid3: TDBGrid;
     deUSUDataCadastro: TDateEdit;
     edtArquivoPFX: TEdit;
@@ -366,6 +367,7 @@ type
     Label190: TLabel;
     Label191: TLabel;
     Label192: TLabel;
+    Label193: TLabel;
     Label194: TLabel;
     Label196: TLabel;
     Label197: TLabel;
@@ -4068,6 +4070,7 @@ begin
     cbxImprimirTributos.Checked :=
       Ini.ReadBool('DANFE', 'ImprimirTributosItem', False);
     cbxImpValLiq.Checked := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
+    cbxUnComTributavel.ItemIndex := Ini.ReadInteger('DANFE', 'UNComercialETributavel', 0);
     cbxFormCont.Checked := Ini.ReadBool('DANFE', 'PreImpresso', False);
     cbxMostraStatus.Checked := Ini.ReadBool('DANFE', 'MostrarStatus', True);
     cbxExibirEAN.Checked := Ini.ReadBool('DANFE', 'ExibirEAN', False);
@@ -4918,6 +4921,7 @@ begin
     Ini.WriteBool('DANFE', 'ExibeResumo', cbxExibeResumo.Checked);
     Ini.WriteBool('DANFE', 'ImprimirTributosItem', cbxImprimirTributos.Checked);
     Ini.WriteBool('DANFE', 'ImprimirValLiq', cbxImpValLiq.Checked);
+    Ini.WriteInteger('DANFE', 'UNComercialETributavel', cbxUnComTributavel.ItemIndex);
     Ini.WriteBool('DANFE', 'PreImpresso', cbxFormCont.Checked);
     Ini.WriteBool('DANFE', 'MostrarStatus', cbxMostraStatus.Checked);
     Ini.WriteBool('DANFE', 'ExibirEAN', cbxExibirEAN.Checked);
@@ -7540,6 +7544,7 @@ begin
       ACBrNFeDANFeRL1.Fonte.TamanhoFonte_RazaoSocial := speFonteRazao.Value;
       ACBrNFeDANFeRL1.AltLinhaComun := speAlturaCampos.Value;
       ACBrNFeDANFeRL1.PosCanhoto := TPosRecibo( rgLocalCanhoto.ItemIndex );
+      ACBrNFeDANFeRL1.ImprimirUnQtVlComercial := TImprimirUnidQtdeValor(cbxUnComTributavel.ItemIndex);
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFCeFortes1 then
     begin

@@ -43,8 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/11/2016
+[+]	Adicionado combobox para escolher o que imprimir no campo Unidade, unidade comercial,
+	unidade tributária ou ambos.
+	por:Celso Marigo Junior
+
 29/11/2016
-[*]	Adicionado comando para ativar/desativar "Corta Papel" da aba "Pos Printer"
+[+]	Adicionado comando para ativar/desativar "Corta Papel" da aba "Pos Printer"
 	http://www.projetoacbr.com.br/forum/topic/33616-erro-pos-printer-corte-de-papel-não-funciona
 	por:Celso Marigo Junior
 

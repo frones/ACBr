@@ -1,11 +1,11 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 408
-  Height = 713
-  Top = 210
+  Left = 317
+  Height = 843
+  Top = 106
   Width = 1022
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 713
+  ClientHeight = 843
   ClientWidth = 1022
   Color = clBlack
   Constraints.MinHeight = 480
@@ -23,7 +23,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 690
+    Top = 820
     Width = 1022
     Panels = <    
       item
@@ -40,7 +40,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object pBotoes: TPanel
     Left = 0
     Height = 43
-    Top = 647
+    Top = 777
     Width = 1022
     Align = alBottom
     ClientHeight = 43
@@ -249,29 +249,29 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object pCentral: TPanel
     Left = 196
-    Height = 617
+    Height = 747
     Top = 30
     Width = 826
     Align = alClient
-    ClientHeight = 617
+    ClientHeight = 747
     ClientWidth = 826
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
     object pComandos: TPanel
       Left = 1
-      Height = 275
-      Top = 341
+      Height = 386
+      Top = 360
       Width = 824
       Align = alClient
-      ClientHeight = 275
+      ClientHeight = 386
       ClientWidth = 824
       TabOrder = 0
       object Splitter1: TSplitter
         Cursor = crVSplit
         Left = 1
         Height = 5
-        Top = 86
+        Top = 103
         Width = 822
         Align = alTop
         Beveled = True
@@ -279,18 +279,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
       end
       object pCmd: TPanel
         Left = 1
-        Height = 85
+        Height = 102
         Top = 1
         Width = 822
         Align = alTop
         Caption = 'pCmd'
-        ClientHeight = 85
+        ClientHeight = 102
         ClientWidth = 822
         Constraints.MinHeight = 70
         TabOrder = 0
         object mCmd: TMemo
           Left = 1
-          Height = 66
+          Height = 83
           Top = 18
           Width = 820
           Align = alClient
@@ -321,18 +321,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
       end
       object pRespostas: TPanel
         Left = 1
-        Height = 183
-        Top = 91
+        Height = 277
+        Top = 108
         Width = 822
         Align = alClient
         Caption = 'pRespostas'
-        ClientHeight = 183
+        ClientHeight = 277
         ClientWidth = 822
         Constraints.MinHeight = 70
         TabOrder = 2
         object mResp: TMemo
           Left = 1
-          Height = 164
+          Height = 258
           Top = 18
           Width = 820
           Align = alClient
@@ -365,23 +365,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
     end
     object pConfig: TPanel
       Left = 1
-      Height = 340
+      Height = 359
       Top = 1
       Width = 824
       Align = alTop
-      ClientHeight = 340
+      ClientHeight = 359
       ClientWidth = 824
       TabOrder = 1
       Visible = False
       object pgConfig: TPageControl
         Left = 1
-        Height = 338
+        Height = 357
         Top = 1
         Width = 822
-        ActivePage = tsSat
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 17
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -5438,17 +5438,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsDFe: TTabSheet
           Caption = 'DFe'
-          ClientHeight = 308
+          ClientHeight = 327
           ClientWidth = 814
           ImageIndex = 26
           object pgDFe: TPageControl
             Left = 0
-            Height = 308
+            Height = 327
             Top = 0
             Width = 814
-            ActivePage = tsWebServiceDFe
+            ActivePage = tsImpressaoDFe
             Align = alClient
-            TabIndex = 2
+            TabIndex = 4
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6599,21 +6599,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsImpressaoDFe: TTabSheet
               Caption = 'Impressão'
-              ClientHeight = 267
+              ClientHeight = 297
               ClientWidth = 806
               ImageIndex = 4
               object pgImpressaoDFe: TPageControl
                 Left = 0
-                Height = 267
+                Height = 297
                 Top = 0
                 Width = 806
-                ActivePage = tsImpGeralDFe
+                ActivePage = TabSheet1
                 Align = alClient
-                TabIndex = 0
+                TabIndex = 2
                 TabOrder = 0
                 object tsImpGeralDFe: TTabSheet
                   Caption = 'Geral'
-                  ClientHeight = 237
+                  ClientHeight = 267
                   ClientWidth = 798
                   object Label139: TLabel
                     Left = 2
@@ -6871,7 +6871,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object tsDadosEmpresa: TTabSheet
                   Caption = 'Dados Empresa'
-                  ClientHeight = 237
+                  ClientHeight = 267
                   ClientWidth = 798
                   ImageIndex = 1
                   object Label150: TLabel
@@ -6959,7 +6959,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
                 object TabSheet1: TTabSheet
                   Caption = 'NFe'
-                  ClientHeight = 237
+                  ClientHeight = 267
                   ClientWidth = 798
                   object speProdutosPorPagina: TSpinEdit
                     Left = 8
@@ -7268,6 +7268,29 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Font.Height = -12
                     ParentColor = False
                     ParentFont = False
+                  end
+                  object cbxUnComTributavel: TComboBox
+                    Left = 262
+                    Height = 25
+                    Top = 233
+                    Width = 220
+                    ItemHeight = 17
+                    ItemIndex = 0
+                    Items.Strings = (
+                      'Unidade Comercial'
+                      'Unidade Tributável'
+                      'Unidade Comercial e Tributável'
+                    )
+                    TabOrder = 16
+                    Text = 'Unidade Comercial'
+                  end
+                  object Label193: TLabel
+                    Left = 262
+                    Height = 17
+                    Top = 216
+                    Width = 168
+                    Caption = 'Imprimir no campo Unidade:'
+                    ParentColor = False
                   end
                 end
                 object tsImpNFCe: TTabSheet
@@ -10230,38 +10253,38 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object PanelMenu: TPanel
     Left = 0
-    Height = 617
+    Height = 747
     Top = 30
     Width = 196
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 617
+    ClientHeight = 747
     ClientWidth = 196
     Color = clBtnFace
     ParentColor = False
     TabOrder = 4
     object PanelScroll: TPanel
       Left = 0
-      Height = 517
+      Height = 647
       Top = 100
       Width = 196
       Align = alClient
       BevelOuter = bvNone
-      ClientHeight = 517
+      ClientHeight = 647
       ClientWidth = 196
       TabOrder = 0
       object ScrollBox: TScrollBox
         Left = 0
-        Height = 517
+        Height = 647
         Top = 0
         Width = 196
         HorzScrollBar.Page = 1
-        VertScrollBar.Page = 517
+        VertScrollBar.Page = 647
         Align = alLeft
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoSize = True
         BorderStyle = bsNone
-        ClientHeight = 517
+        ClientHeight = 647
         ClientWidth = 179
         TabOrder = 0
         OnMouseWheelDown = ScrollBoxMouseWheelDown
@@ -12455,6 +12478,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     ExibirEAN = False
     QuebraLinhaEmDetalhamentoEspecifico = True
     ExibeCampoFatura = False
+    ImprimirUnQtVlComercial = iuComercial
     left = 589
     top = 448
   end

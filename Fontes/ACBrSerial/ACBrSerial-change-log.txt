@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/11/2016
+-- ACBrBALMagellan --
+[-] Correção no método "InterpretarRepostaPeso" (retorno estava vazio).
+    http://www.projetoacbr.com.br/forum/topic/33744-erro-balan%C3%A7a-magellan/
+
 Data: 25/11/2016
 -- ACBrECFEscECF --
 [-] Ajuste após commit de 24/11/16, para para correto funcionamento da 

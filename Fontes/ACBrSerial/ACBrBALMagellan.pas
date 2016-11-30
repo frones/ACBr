@@ -185,8 +185,7 @@ begin
     Exit;
 
   { Ajustando o separador de Decimal corretamente }
-  aResposta := StringReplace(aResposta, '.', DecimalSeparator, [rfReplaceAll]);
-  aResposta := StringReplace(aResposta, ',', DecimalSeparator, [rfReplaceAll]);
+  aResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
 
   try
     if (Pos(DecimalSeparator, aResposta) > 0) then  { Já existe ponto decimal ? }

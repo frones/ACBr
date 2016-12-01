@@ -1136,10 +1136,10 @@ end;
 
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14, '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '99'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpDuplicataMercantil, fpOutro]);
+                               fpDuplicataMercantil, fpOutro ]);
 end;
 
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;

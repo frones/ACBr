@@ -275,12 +275,12 @@ end;
 
 function StrToVersaoDF(out ok: Boolean; const s: String): TpcnVersaoDF;
 begin
-  Result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10'], [ve200, ve300, ve310]);
+  Result := StrToEnumerado(ok, s, ['2.00', '3.00', '3.10', '4.00'], [ve200, ve300, ve310, ve400]);
 end;
 
 function VersaoDFToStr(const t: TpcnVersaoDF): String;
 begin
-  Result := EnumeradoToStr(t, ['2.00', '3.00', '3.10'], [ve200, ve300, ve310]);
+  Result := EnumeradoToStr(t, ['2.00', '3.00', '3.10', '4.00'], [ve200, ve300, ve310, ve400]);
 end;
 
  function DblToVersaoDF(out ok: Boolean; const d: Real): TpcnVersaoDF;
@@ -291,8 +291,10 @@ end;
      Result := ve200
    else if (d >= 3.0) and (d < 3.1) then
      Result := ve300
-   else if (d >= 3.10) then
+   else if (d >= 3.10) and (d < 4) then
      Result := ve310
+   else if (d >= 4) then
+     Result := ve400
    else
    begin
      Result := ve310;
@@ -306,6 +308,7 @@ end;
      ve200: Result := 2.00;
      ve300: Result := 3.00;
      ve310: Result := 3.10;
+     ve400: Result := 4.00;
    else
      Result := 0;
    end;

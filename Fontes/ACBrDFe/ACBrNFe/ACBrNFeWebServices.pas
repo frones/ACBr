@@ -674,7 +674,7 @@ begin
   FPLayout := LayNfeStatusServico;
 
   if FPConfiguracoesNFe.Geral.VersaoDF = ve400 then
-    HeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
+    FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
 end;
 
 procedure TNFeWebService.Clear;

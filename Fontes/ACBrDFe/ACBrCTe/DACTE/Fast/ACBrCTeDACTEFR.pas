@@ -1145,6 +1145,14 @@ begin
         end;
       end;
   end;
+  if cdsModalRodoviario.FieldByName('LOTACAO').AsString = 'Não' then 
+	begin
+    Child := frxReport.FindObject('ChildRodoviarioLotacao') as TfrxChild;
+		if Child <> nil then
+	 	begin
+			Child.Visible := False;
+	 	end;
+  end;
 end;
 
 function TACBrCTeDACTEFR.GetPreparedReport: TfrxReport;
@@ -1862,6 +1870,7 @@ begin
           begin
             Append;
             FieldByName('CNPJCPF').AsString := CNPJCPF;
+						FieldByName('IE').AsString      := IE;
             FieldByName('xNome').AsString   := xNome;
             FieldByName('UF').AsString      := UF;
             with idDocAnt.Items[ii].idDocAntEle.Items[iii] do
@@ -2252,7 +2261,8 @@ end;
 
 procedure TACBrCTeDACTEFR.CarregaModalRodoviario;
 var
-  i: Integer;
+  i      : Integer;
+  Child  : TfrxChild;
 begin
   if FCTe.ide.modal <> mdRodoviario then
     Exit;
@@ -2300,6 +2310,7 @@ begin
 
     Post;
   end;
+  Child := frxReport.FindObject('ChildRodoLotacao') as TfrxChild;
 
   with cdsRodoVeiculos do
   begin

@@ -230,6 +230,22 @@ const
   DSC_VFCPUFDEST = 'Valor do ICMS realtivo ao Fundo de Combate à Pobreza';
   DSC_VICMSUFDEST = 'Valor do ICMS de partilha para a UF do destinatário';
   DSC_VICMSUFREMET = 'Valor do ICMS de partilha para a UF do remetente';
+  DSC_DESCANP = 'Descrição do produto conforme ANP';
+  DSC_PGLP = 'Percentual do GLP derivado do petróleo no produto GLP';
+  DSC_PGNN = 'Percentual de Gás Natural Nacional – GLGNn para o produto GLP';
+  DSC_PGNI = 'Percentual de Gás Natural Importado – GLGNi para o produto GLP';
+  DSC_VPART = 'Valor de partida';
+  DSC_VBCFCP = 'Valor da Base de Cálculo do FCP';
+  DSC_PFCP = 'Percentual do ICMS relativo ao Fundo de Combate à Pobreza (FCP)';
+  DSC_VFCP = 'Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP)';
+  DSC_VBCFCPST = 'Valor da Base de Cálculo do FCP por Substituição Tributária';
+  DSC_PFCPST = 'Percentual do FCP retido por Substituição Tributária';
+  DSC_VFCPST = 'Valor do FCP retido por Substituição Tributária';
+  DSC_PFCPSTRET = 'Percentual do FCP retido anteriormente por Substituição Tributária';
+  DSC_VFCPSTRET = 'Valor do FCP retido por Substituição Tributária';
+  DSC_PST = 'Alíquota suportada pelo Consumidor Final';
+  DSC_VBCFCPUFDEST = 'Valor da BC FCP na UF de destino';
+  //DSC_VPART = 'Valor';
 
 implementation
 

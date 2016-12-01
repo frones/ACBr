@@ -494,6 +494,19 @@ begin
       inc(j);
     end;
 
+    (* Grupo da TAG <det><prod><rastro> *)
+    j := 0;
+    NFe.Det[i].Prod.rastro.Clear;
+    while Leitor.rExtrai(3, 'rastro', '', j + 1) <> '' do
+    begin
+      NFe.Det[i].Prod.rastro.Add;
+      (*I81*)NFe.Det[i].Prod.rastro[j].nLote := Leitor.rCampo(tcStr, 'nLote');
+      (*I82*)NFe.Det[i].Prod.rastro[j].qLote := Leitor.rCampo(tcDe3, 'qLote');
+      (*I83*)NFe.Det[i].Prod.rastro[j].dFab  := Leitor.rCampo(tcDat, 'dFab ');
+      (*I84*)NFe.Det[i].Prod.rastro[j].dVal  := Leitor.rCampo(tcDat, 'dVal ');
+      inc(j);
+    end;
+
     (* Grupo da TAG <det><prod><veicProd> *)
     if Leitor.rExtrai(3, 'veicProd') <> '' then
     begin
@@ -530,6 +543,7 @@ begin
     while Leitor.rExtrai(3, 'med', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.med.Add;
+      (*K01a*)NFe.Det[i].Prod.med[j].cProdANVISA := Leitor.rCampo(tcStr, 'cProdANVISA');
       (*K02*)NFe.Det[i].Prod.med[j].nLote := Leitor.rCampo(tcStr, 'nLote');
       (*K03*)NFe.Det[i].Prod.med[j].qLote := Leitor.rCampo(tcDe3, 'qLote');
       (*K04*)NFe.Det[i].Prod.med[j].dFab  := Leitor.rCampo(tcDat, 'dFab ');
@@ -556,9 +570,14 @@ begin
     begin
       (*L102*)NFe.Det[i].Prod.comb.cProdANP := Leitor.rCampo(tcInt, 'cProdANP');
       (*L102a*)NFe.Det[i].Prod.comb.pMixGN  := Leitor.rCampo(tcDe4, 'qMixGN');
-      (*L103*)NFe.Det[i].Prod.comb.CODIF    := Leitor.rCampo(tcEsp, 'CODIF');
-      (*L104*)NFe.Det[i].Prod.comb.qTemp    := Leitor.rCampo(tcDe4, 'qTemp');
-      (*L120*)NFe.Det[i].Prod.comb.UFcons   := Leitor.rCampo(tcStr, 'UFCons');
+      (*LA03*)NFe.Det[i].Prod.comb.descANP  := Leitor.rCampo(tcStr, 'descANP');
+      (*LA03a*)NFe.Det[i].Prod.comb.pGLP    := Leitor.rCampo(tcDe4, 'pGLP');
+      (*LA03b*)NFe.Det[i].Prod.comb.pGNn    := Leitor.rCampo(tcDe4, 'pGNn');
+      (*LA03c*)NFe.Det[i].Prod.comb.pGNi    := Leitor.rCampo(tcDe4, 'pGNi');
+      (*LA03d*)NFe.Det[i].Prod.comb.vPart   := Leitor.rCampo(tcDe2, 'vPart');
+      (*LA04*)NFe.Det[i].Prod.comb.CODIF    := Leitor.rCampo(tcEsp, 'CODIF');
+      (*LA05*)NFe.Det[i].Prod.comb.qTemp    := Leitor.rCampo(tcDe4, 'qTemp');
+      (*LA06*)NFe.Det[i].Prod.comb.UFcons   := Leitor.rCampo(tcStr, 'UFCons');
 
       (*L120*)NFe.Det[i].Prod.comb.ICMSCons.UFcons := Leitor.rCampo(tcStr, 'UFcons');
 
@@ -615,17 +634,27 @@ begin
       (*N16b*)NFe.Det[i].Imposto.ICMS.pDif       := Leitor.rCampo(tcDe4, 'pDif');
       (*N16c*)NFe.Det[i].Imposto.ICMS.vICMSDif   := Leitor.rCampo(tcDe2, 'vICMSDif');
       (*N17*)NFe.Det[i].Imposto.ICMS.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
+      (*N17a*)NFe.Det[i].Imposto.ICMS.vBCFCP     := Leitor.rCampo(tcDe2, 'vBCFCP');
+      (*N17b*)NFe.Det[i].Imposto.ICMS.pFCP       := Leitor.rCampo(tcDe4, 'pFCP');
+      (*N17c*)NFe.Det[i].Imposto.ICMS.vFCP       := Leitor.rCampo(tcDe2, 'vFCP');
       (*N18*)NFe.Det[i].Imposto.ICMS.modBCST     := StrToModBCST(ok, Leitor.rCampo(tcStr, 'modBCST'));
       (*N19*)NFe.Det[i].Imposto.ICMS.pMVAST      := Leitor.rCampo(tcDe2, 'pMVAST');
       (*N20*)NFe.Det[i].Imposto.ICMS.pRedBCST    := Leitor.rCampo(tcDe2, 'pRedBCST');
       (*N21*)NFe.Det[i].Imposto.ICMS.vBCST       := Leitor.rCampo(tcDe2, 'vBCST');
       (*N22*)NFe.Det[i].Imposto.ICMS.pICMSST     := Leitor.rCampo(tcDe2, 'pICMSST');
       (*N23*)NFe.Det[i].Imposto.ICMS.vICMSST     := Leitor.rCampo(tcDe2, 'vICMSST');
+      (*N23a*)NFe.Det[i].Imposto.ICMS.vBCFCPST   := Leitor.rCampo(tcDe2, 'vBCFCPST');
+      (*N23b*)NFe.Det[i].Imposto.ICMS.pFCPST     := Leitor.rCampo(tcDe4, 'pFCPST');
+      (*N23d*)NFe.Det[i].Imposto.ICMS.vFCPST     := Leitor.rCampo(tcDe2, 'vFCPST');
       (*N24*)NFe.Det[i].Imposto.ICMS.UFST        := Leitor.rCampo(tcStr, 'UFST');
       (*N25*)NFe.Det[i].Imposto.ICMS.pBCOp       := Leitor.rCampo(tcDe2, 'pBCOp');
       (*N26*)NFe.Det[i].Imposto.ICMS.vBCSTRet    := Leitor.rCampo(tcDe2, 'vBCSTRet');
       (*N27*)NFe.Det[i].Imposto.ICMS.vICMSSTRet  := Leitor.rCampo(tcDe2, 'vICMSSTRet');
       (*N27a*)NFe.Det[i].Imposto.ICMS.vICMSDeson := Leitor.rCampo(tcDe2, 'vICMSDeson');
+      (*N27a*)NFe.Det[i].Imposto.ICMS.vBCFCPSTRet:= Leitor.rCampo(tcDe2, 'vBCFCPSTRet');
+      (*N27b*)NFe.Det[i].Imposto.ICMS.pFCPSTRet  := Leitor.rCampo(tcDe4, 'pFCPSTRet');
+      (*N27d*)NFe.Det[i].Imposto.ICMS.vFCPSTRet  := Leitor.rCampo(tcDe2, 'vFCPSTRet');
+      (*N27e*)NFe.Det[i].Imposto.ICMS.pST        := Leitor.rCampo(tcDe4, 'pST');
       (*N28*)NFe.Det[i].Imposto.ICMS.motDesICMS  := StrTomotDesICMS(ok, Leitor.rCampo(tcStr, 'motDesICMS'));
       (*N29*)NFe.Det[i].Imposto.ICMS.pCredSN     := Leitor.rCampo(tcDe2, 'pCredSN');
       (*N30*)NFe.Det[i].Imposto.ICMS.vCredICMSSN := Leitor.rCampo(tcDe2, 'vCredICMSSN');
@@ -640,6 +669,7 @@ begin
     if Leitor.rExtrai(3, 'ICMSUFDest') <> '' then
     begin
       (*NA03*)NFe.Det[i].Imposto.ICMSUFDest.vBCUFDest      := Leitor.rCampo(tcDe2, 'vBCUFDest');
+      (*NA04*)NFe.Det[i].Imposto.ICMSUFDest.vBCFCPUFDest   := Leitor.rCampo(tcDe2, 'vBCFCPUFDest');
       (*NA05*)NFe.Det[i].Imposto.ICMSUFDest.pFCPUFDest     := Leitor.rCampo(tcDe2, 'pFCPUFDest');
       (*NA07*)NFe.Det[i].Imposto.ICMSUFDest.pICMSUFDest    := Leitor.rCampo(tcDe2, 'pICMSUFDest');
       (*NA09*)NFe.Det[i].Imposto.ICMSUFDest.pICMSInter     := Leitor.rCampo(tcDe2, 'pICMSInter');
@@ -769,14 +799,18 @@ begin
       (*W04c*)NFe.Total.ICMSTot.vFCPUFDest   := Leitor.rCampo(tcDe2, 'vFCPUFDest');
       (*W04e*)NFe.Total.ICMSTot.vICMSUFDest  := Leitor.rCampo(tcDe2, 'vICMSUFDest');
       (*W04g*)NFe.Total.ICMSTot.vICMSUFRemet := Leitor.rCampo(tcDe2, 'vICMSUFRemet');
+      (*W04h*)NFe.Total.ICMSTot.vFCP         := Leitor.rCampo(tcDe2, 'vFCP');
       (*W05*)NFe.Total.ICMSTot.vBCST         := Leitor.rCampo(tcDe2, 'vBCST');
       (*W06*)NFe.Total.ICMSTot.vST           := Leitor.rCampo(tcDe2, 'vST');
+      (*W06a*)NFe.Total.ICMSTot.vFCPST       := Leitor.rCampo(tcDe2, 'vFCPST');
+      (*W06b*)NFe.Total.ICMSTot.vFCPSTRet    := Leitor.rCampo(tcDe2, 'vFCPSTRet');
       (*W07*)NFe.Total.ICMSTot.vProd         := Leitor.rCampo(tcDe2, 'vProd');
       (*W08*)NFe.Total.ICMSTot.vFrete        := Leitor.rCampo(tcDe2, 'vFrete');
       (*W09*)NFe.Total.ICMSTot.vSeg          := Leitor.rCampo(tcDe2, 'vSeg');
       (*W10*)NFe.Total.ICMSTot.vDesc         := Leitor.rCampo(tcDe2, 'vDesc');
       (*W11*)NFe.Total.ICMSTot.vII           := Leitor.rCampo(tcDe2, 'vII');
       (*W12*)NFe.Total.ICMSTot.vIPI          := Leitor.rCampo(tcDe2, 'vIPI');
+      (*W12a*)NFe.Total.ICMSTot.vIPIDevol    := Leitor.rCampo(tcDe2, 'vIPIDevol');
       (*W13*)NFe.Total.ICMSTot.vPIS          := Leitor.rCampo(tcDe2, 'vPIS');
       (*W14*)NFe.Total.ICMSTot.vCOFINS       := Leitor.rCampo(tcDe2, 'vCOFINS');
       (*W15*)NFe.Total.ICMSTot.vOutro        := Leitor.rCampo(tcDe2, 'vOutro');
@@ -920,6 +954,7 @@ begin
         (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
         (*YA07*)NFe.pag[i].cAut  := Leitor.rCampo(tcStr, 'cAut');
        end;
+      (*YA09*)NFe.pag[i].vTroco := Leitor.rCampo(tcDe2, 'vTroco');
       inc(i);
     end;
    end;

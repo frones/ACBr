@@ -101,7 +101,7 @@ function ValidarCodigoPais(const iPais: integer): smallint;
 function ValidarCodigoUF(const Codigo: integer): boolean;
 function ValidarCNPJ(const numero: string): boolean;
 function ValidarCPF(const numero: string): boolean;
-function ValidarMod(const modelo: integer): boolean;
+function ValidarMod(const modelo: integer; versao : Real): boolean;
 function ValidarMunicipio(const Municipio: integer): boolean;
 function ValidarNumeros(const s: string): boolean;
 function ValidarUF(const UF: string): boolean;
@@ -574,11 +574,15 @@ begin
   result := (ACBrValidador.ValidarCPF(numero) = '');
 end;
 
-function ValidarMod(const modelo: integer): boolean;
+function ValidarMod(const modelo: integer; versao : Real): boolean;
 const
   MODELOS = '|1|';
+  MODELOSV4 = '|1|2|';
 begin
-  result := pos('|' + intToStr(modelo) + '|', MODELOS) > 0;
+  if versao < 4 then
+    result := pos('|' + intToStr(modelo) + '|', MODELOS) > 0
+  else
+    result := pos('|' + intToStr(modelo) + '|', MODELOSV4) > 0 ;
 end;
 
 function ValidarMunicipio(const Municipio: integer): boolean;

@@ -90,7 +90,7 @@ type
   TpcnCstIpi = (ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55);
   TpcnCstPis = (pis01, pis02, pis03, pis04, pis05, pis06, pis07, pis08, pis09, pis49, pis50, pis51, pis52, pis53, pis54, pis55, pis56, pis60, pis61, pis62, pis63, pis64, pis65, pis66, pis67, pis70, pis71, pis72, pis73, pis74, pis75, pis98, pis99);
   TpcnCstCofins = (cof01, cof02, cof03, cof04, cof05, cof06, cof07, cof08, cof09, cof49, cof50, cof51, cof52, cof53, cof54, cof55, cof56, cof60, cof61, cof62, cof63, cof64, cof65, cof66, cof67, cof70, cof71, cof72, cof73, cof74, cof75, cof98, cof99);
-  TpcnModalidadeFrete = (mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfSemFrete);
+  TpcnModalidadeFrete = (mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete);
   TpcnIndicadorProcesso = (ipSEFAZ, ipJusticaFederal, ipJusticaEstadual, ipSecexRFB, ipOutros);
   TpcnCRT = (crtSimplesNacional, crtSimplesExcessoReceita, crtRegimeNormal);
   TpcnIndicadorTotal = (itSomaTotalNFe, itNaoSomaTotalNFe );
@@ -123,11 +123,12 @@ type
 
   TpcnDestinoOperacao = (doInterna, doInterestadual, doExterior);
   TpcnConsumidorFinal = (cfNao, cfConsumidorFinal);
-  TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcOutros);
+  TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcPresencialForaEstabelecimento, pcOutros);
   TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                         fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                        fpOutro);
-  TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcOutros);
+                        fpDuplicataMercantil, fpOutro);
+  TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
+                        bcElo, bcHipercard, bcAura, bcCabal, bcOutros);
 
   TpcnRegTrib = (RTSimplesNacional, RTRegimeNormal);
   TpcnRegTribISSQN = (RTISSMicroempresaMunicipal, RTISSEstimativa, RTISSSociedadeProfissionais, RTISSCooperativa, RTISSMEI, RTISSMEEPP, RTISSNenhum);
@@ -866,12 +867,14 @@ end;
 // ??? - Modalidade do frete ***************************************************
 function modFreteToStr(const t: TpcnModalidadeFrete): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '9'], [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfSemFrete]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
+    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
 end;
 
 function StrTomodFrete(out ok: boolean; const s: string): TpcnModalidadeFrete;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '9'], [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfSemFrete]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2',  '3', '4', '9'],
+    [mfContaEmitente, mfContaDestinatario, mfContaTerceiros, mfProprioRemetente, mfProprioDestinatario, mfSemFrete]);
 end;
 
 function modFreteToDesStr(const t: TpcnModalidadeFrete): string;
@@ -1119,41 +1122,43 @@ end;
 
 function PresencaCompradorToStr(const t: TpcnPresencaComprador): string;
 begin
-  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '9'],
-                              [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcOutros]);
+  result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '9'],
+                              [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio,
+                              pcPresencialForaEstabelecimento, pcOutros]);
 end;
 
 function StrToPresencaComprador(out ok: boolean; const s: string): TpcnPresencaComprador;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '9'],
-                                  [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcOutros]);
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '9'],
+                                  [pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio,
+                                  pcPresencialForaEstabelecimento, pcOutros]);
 end;
 
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14, '99'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpOutro]);
+                               fpDuplicataMercantil, fpOutro]);
 end;
 
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
 begin
   result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja',
                                'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível',
-                               'Outro'],
+                               'Duplicata Mercantil', 'Outro'],
                                [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpOutro]);
+                               fpDuplicataMercantil, fpOutro]);
 end;
 
 
 function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '99'],
                                   [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                    fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                                   fpOutro]);
+                                   fpDuplicataMercantil, fpOutro]);
 end;
 
 function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;
@@ -1163,6 +1168,11 @@ begin
     bcMasterCard:      Result := 'MasterCard';
     bcAmericanExpress: Result := 'AmericanExpress';
     bcSorocred:        Result := 'Sorocred';
+    bcDinersClub:      Result := 'Diners Club';
+    bcElo:             Result := 'Elo';
+    bcHipercard:       Result := 'Hipercard';
+    bcAura:            Result := 'Aura';
+    bcCabal:           Result := 'Cabal';
     bcOutros:          Result := 'Outros'
   end;
 end;
@@ -1170,14 +1180,18 @@ end;
 
 function BandeiraCartaoToStr(const t: TpcnBandeiraCartao): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '99'],
-                              [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcOutros]);
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+                              [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
+                              bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
+                              bcOutros]);
 end;
 
 function StrToBandeiraCartao(out ok: boolean; const s: string): TpcnBandeiraCartao;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '99'],
-                                  [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcOutros]);
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06', '07', '08', '09', '99'],
+                                  [bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred,
+                                  bcDinersClub, bcElo, bcHipercard, bcAura, bcCabal,
+                                  bcOutros]);
 end;
 
 function RegTribToStr(const t: TpcnRegTrib ): string;

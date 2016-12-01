@@ -77,7 +77,7 @@ type
     stDownloadNFe, stAdmCSCNFCe, stDistDFeInt, stEnvioWebService);
 
   TpcnModeloDF = (moNFe, moNFCe);
-  TpcnVersaoDF = (ve200, ve300, ve310);
+  TpcnVersaoDF = (ve200, ve300, ve310, ve400);
   TpcnIndicadorNFe = (inTodas, inSemManifestacaoComCiencia, inSemManifestacaoSemCiencia);
 
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);

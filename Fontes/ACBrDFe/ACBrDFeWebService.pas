@@ -175,6 +175,7 @@ var
 begin
   { Sobrescrever apenas se realmente necessário }
 
+  FazerLog('Inicio '+ClassName, False);
   InicializarServico;
   try
     DefinirDadosMsg;

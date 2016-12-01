@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2016
+[*] Melhoria no registro J1 e J2, para a SERIE_NOTA e NUMERO_NOTA para preencher com zeros a esquerda.
+        por: Graziele Rocha
+
 04/11/2016
 [*] Melhoria para atender E.R. 02.04 para Postos combustíveis WriteRegistroC2 do ACBrPAF_C_Class
 		http://www.projetoacbr.com.br/forum/topic/33307-altera%C3%A7%C3%A3o-procedure-tpaf_cwriteregistroc2-da-unit-acbrpaf_c_class/

@@ -183,8 +183,8 @@ begin
             RFill(ORDEM_APLIC_DES_ACRES,1) +
             RFill(NOME_CLIENTE,40) +
             LFill(CPFCNPJ_CLIENTE,14) +
-            RFill(NUMERO_NOTA,10) +
-            RFill(SERIE_NOTA,3) +
+            LFill(NUMERO_NOTA,10) +
+            LFill(SERIE_NOTA,3) +
             RFill(CHAVE_NF,44) +
             RFill(IfThen(RegistroValido, TIPO_DOC[1], '?'),1) );
       end;
@@ -237,8 +237,8 @@ begin
             RFill(TOTALIZADOR_PARCIAL,7) +
             RFill(CASAS_DECIMAIS_QTDE,1) +
             RFill(CASAS_DECIMAIS_VAL_UNIT,1) +
-            RFill(NUMERO_NOTA,10) +
-            RFill(SERIE_NOTA,3) +
+            LFill(NUMERO_NOTA,10) +
+            LFill(SERIE_NOTA,3) +
             RFill(CHAVE_NF,44) +
             RFill(IfThen(RegistroValido, TIPO_DOC[1], '?'),1) );
       end;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2016
+-- ACBrCTeDACTEFR
+[-] Adição da informação da I.E. 
+		Tratamento de produtos perigosos
+		Por: Juliomar Marchetti
+		
 29/11/2016
 -- pcteCTeW --
 [*] Ajuste no nome da tag da chave do CT-e a ser Complementado, para a versão 3.00

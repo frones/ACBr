@@ -731,11 +731,12 @@ begin
   end;
 
   if FPAF_E.RegistroE2.Count > 0 then
-   begin
-     FPAF_E.WriteRegistroE2;
-     FPAF_E.WriteRegistroE3;
-     FPAF_E.WriteBuffer;
-   end;
+  begin
+    FPAF_E.WriteRegistroE2;
+  end;
+
+  FPAF_E.WriteRegistroE3;
+  FPAF_E.WriteBuffer;   
 
   if FPAF_D.RegistroD2.Count > 0 then
   begin

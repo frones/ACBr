@@ -70,6 +70,14 @@ type
     frxMunCarrega: TfrxDBDataset;
     cdsPercurso: TClientDataSet;
     frxPercurso: TfrxDBDataset;
+    frxTermCarrega: TfrxDBDataset;
+    frxTermDescarrega: TfrxDBDataset;
+    frxEmbarcaComboio: TfrxDBDataset;
+    frxInfUnidCargaVazia: TfrxDBDataset;
+    cdsTermCarrega: TClientDataSet;
+    cdsTermDescarrega: TClientDataSet;
+    cdsEmbarcaComboio: TClientDataSet;
+    cdsInfUnidCargaVazia: TClientDataSet;
     constructor Create(AOwner: TComponent); override;
     procedure frxReportGetValue(const VarName: string; var Value: Variant);
     procedure DataModuleCreate(Sender: TObject);
@@ -86,6 +94,12 @@ type
     procedure CarregaModalRodoviario;
     procedure CarregaModalAereo;
     procedure CarregaModalAquaviario;
+
+    procedure CarregaTermCarreg;
+    procedure CarregaTermDescarreg;
+    procedure CarregaEmbarcacaoComboio;
+    procedure CarregaInfUnidCargaVazia;
+
     procedure CarregaModalFerroviario;
     procedure CarregaMunCarrega;
     procedure CarregaPercurso;
@@ -127,13 +141,17 @@ begin
   CarregaEmitente;
   CarregaDocumentos;
   CarregaModal;
+
+  CarregaTermCarreg;
+  CarregaTermDescarreg;
+  CarregaEmbarcacaoComboio;
+  CarregaInfUnidCargaVazia;
 end;
 
 procedure TDMACBrMDFeDAMDFEFR.CarregaModal;
 begin
 
   // {$REGION 'Modal Rodoviario'}
-
   with cdsModalRodo, FieldDefs do
   begin
     Close;
@@ -152,7 +170,6 @@ begin
     Add('CPF', ftMemo);
     CreateDataSet;
   end;
-
   // {$ENDREGION}
 
   with CDSModalAereo, FieldDefs do
@@ -168,6 +185,7 @@ begin
     Add('dVoo', ftDateTime);
     CreateDataSet;
   end;
+
   with CDSModalAqua, FieldDefs do
   begin
     Close;
@@ -176,11 +194,13 @@ begin
     Add('CNPJAgeNav', ftString, 18);
     Add('tpEmb', ftString, 2);
     Add('cEmbar', ftString, 10);
-    Add('nViagem', ftString, 10);
+    Add('xEmbar', ftString, 60);
+    Add('nViag', ftString, 10);
     Add('cPrtEmb', ftString, 5);
     Add('cPrtDest', ftString, 5);
     CreateDataSet;
   end;
+
   with CDSModalFerrov, FieldDefs do
   begin
     Close;
@@ -204,6 +224,41 @@ begin
     Add('nSeq', ftInteger);
     Add('TU', ftCurrency);
 
+    CreateDataSet;
+  end;
+
+  with cdsTermCarrega, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('cTermCarreg', ftString, 8);
+    Add('xTermCarreg', ftString, 60);
+    CreateDataSet;
+  end;
+
+  with cdsTermDescarrega, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('cTermDescarreg', ftString, 8);
+    Add('xTermDescarreg', ftString, 60);
+    CreateDataSet;
+  end;
+
+  with cdsEmbarcaComboio, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('cEmbComb', ftString, 10);
+    CreateDataSet;
+  end;
+
+  with cdsInfUnidCargaVazia, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('idUnidCargaVazia', ftString, 20);
+    Add('tpUnidCargaVazia', ftString, 20);
     CreateDataSet;
   end;
 
@@ -246,10 +301,78 @@ begin
     FieldByName('CNPJAgeNav').AsString := FormatarCNPJ(CNPJAgeNav);
     FieldByName('tpEmb').AsString      := tpEmb;
     FieldByName('cEmbar').AsString     := cEmbar;
-    FieldByName('nViagem').AsString    := nViagem;
+    FieldByName('xEmbar').AsString     := xEmbar;
+    FieldByName('nViag').AsString      := nViagem;
     FieldByName('cPrtEmb').AsString    := cPrtEmb;
     FieldByName('cPrtDest').AsString   := cPrtDest;
     Post;
+  end;
+end;
+
+
+procedure TDMACBrMDFeDAMDFEFR.CarregaTermCarreg;
+var
+  i: integer;
+begin
+  with cdsTermCarrega, FMDFe.aquav.infTermCarreg do
+  begin
+    for i := 0 to Count - 1 do
+    begin
+      Append;
+      FieldByName('cTermCarreg').AsString := Items[i].cTermCarreg;
+      FieldByName('xTermCarreg').AsString := Items[i].xTermCarreg;
+      Post;
+    end;
+  end;
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.CarregaTermDescarreg;
+var
+  i: integer;
+begin
+  with cdsTermDescarrega, FMDFe.aquav.infTermDescarreg do
+  begin
+    for i := 0 to Count - 1 do
+    begin
+      Append;
+      FieldByName('cTermDescarreg').AsString := Items[i].cTermDescarreg;
+      FieldByName('xTermDescarreg').AsString := Items[i].xTermDescarreg;
+      Post;
+    end;
+  end;
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.CarregaEmbarcacaoComboio;
+var
+  i: integer;
+begin
+  with cdsEmbarcaComboio, FMDFe.aquav.infEmbComb do
+  begin
+    for i := 0 to Count - 1 do
+    begin
+      Append;
+      FieldByName('cEmbComb').AsString := Items[i].cEmbComb;
+      Post;
+    end;
+  end;
+end;
+
+procedure TDMACBrMDFeDAMDFEFR.CarregaInfUnidCargaVazia;
+var
+  i: integer;
+begin
+  with cdsInfUnidCargaVazia, FMDFe.aquav.infUnidCargaVazia do
+  begin
+    for i := 0 to Count - 1 do
+    begin
+      Append;
+      FieldByName('idUnidCargaVazia').AsString := Items[i].idUnidCargaVazia;
+      case Items[i].tpUnidCargaVazia of
+         ucContainer : FieldByName('tpUnidCargaVazia').AsString := '1 - Container';
+         ucULD : FieldByName('tpUnidCargaVazia').AsString := '2 - Carreta';
+      end;
+      Post;
+    end;
   end;
 end;
 
@@ -375,7 +498,6 @@ begin
       FieldByName('UFPer').AsString:=FMDFe.Ide.infPercurso[i].UFPer;
     end;
   end;
-
 end;
 
 constructor TDMACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
@@ -973,6 +1095,10 @@ begin
   frxReport.DataSets.Add(frxParametros);
   frxReport.DataSets.Add(frxPercurso);
   frxReport.DataSets.Add(frxEventos);
+  frxReport.DataSets.Add(frxTermCarrega);
+  frxReport.DataSets.Add(frxTermDescarrega);
+  frxReport.DataSets.Add(frxEmbarcaComboio);
+  frxReport.DataSets.Add(frxInfUnidCargaVazia);
 
   frxReport.EnabledDataSets.Clear;
   frxReport.EnabledDataSets.Add(frxIdentificacao);
@@ -987,6 +1113,10 @@ begin
   frxReport.EnabledDataSets.Add(frxParametros);
   frxReport.EnabledDataSets.Add(frxPercurso);
   frxReport.EnabledDataSets.Add(frxEventos);
+  frxReport.EnabledDataSets.Add(frxTermCarrega);
+  frxReport.EnabledDataSets.Add(frxTermDescarrega);
+  frxReport.EnabledDataSets.Add(frxEmbarcaComboio);
+  frxReport.EnabledDataSets.Add(frxInfUnidCargaVazia);
 end;
 
 end.

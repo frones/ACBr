@@ -3,7 +3,7 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
   Height = 442
-  Width = 437
+  Width = 722
   object cdsIdentificacao: TClientDataSet
     Aggregates = <>
     Params = <>
@@ -142,8 +142,8 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
   object cdsEventos: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 220
-    Top = 308
+    Left = 210
+    Top = 289
   end
   object frxEventos: TfrxDBDataset
     UserName = 'Eventos'
@@ -151,8 +151,8 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     OpenDataSource = False
     DataSet = cdsEventos
     BCDToCurrency = False
-    Left = 292
-    Top = 304
+    Left = 305
+    Top = 293
   end
   object cdsMunCarrega: TClientDataSet
     Aggregates = <>
@@ -183,5 +183,61 @@ object DMACBrMDFeDAMDFEFR: TDMACBrMDFeDAMDFEFR
     BCDToCurrency = False
     Left = 280
     Top = 128
+  end
+  object frxTermCarrega: TfrxDBDataset
+    UserName = 'TermCarrega'
+    CloseDataSource = False
+    DataSet = cdsTermCarrega
+    BCDToCurrency = False
+    Left = 415
+    Top = 16
+  end
+  object frxTermDescarrega: TfrxDBDataset
+    UserName = 'TermDescarrega'
+    CloseDataSource = False
+    DataSet = cdsTermDescarrega
+    BCDToCurrency = False
+    Left = 415
+    Top = 67
+  end
+  object frxEmbarcaComboio: TfrxDBDataset
+    UserName = 'EmbarcaComboio'
+    CloseDataSource = False
+    DataSet = cdsEmbarcaComboio
+    BCDToCurrency = False
+    Left = 415
+    Top = 119
+  end
+  object frxInfUnidCargaVazia: TfrxDBDataset
+    UserName = 'InfUnidCargaVazia'
+    CloseDataSource = False
+    DataSet = cdsInfUnidCargaVazia
+    BCDToCurrency = False
+    Left = 415
+    Top = 171
+  end
+  object cdsTermCarrega: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 527
+    Top = 14
+  end
+  object cdsTermDescarrega: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 527
+    Top = 66
+  end
+  object cdsEmbarcaComboio: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 527
+    Top = 118
+  end
+  object cdsInfUnidCargaVazia: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 527
+    Top = 171
   end
 end

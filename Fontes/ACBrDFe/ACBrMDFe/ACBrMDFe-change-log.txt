@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/12/2016
+[+] Adição de mudanças para o DAMDFe Aquaviario
+		http://www.projetoacbr.com.br/forum/topic/33778-mdf-e-damdfe-aquavi%C3%A1rio/
+		por : Juliomar Marchetti
+		
 29/11/2016
 --ACBrMDFeWebServices
 [-] Correção de memory leak

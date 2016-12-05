@@ -337,7 +337,7 @@ begin
   begin
     aIdentificador := ' ' + Identificador + '="' + IdLote + '"';
 
-    if Provedor in [proGovBR, proPronim, proISSDigital] then
+    if Provedor in [proGovBR, proPronim{, proISSDigital}] then
       aIdentificador := '';
   end
   else

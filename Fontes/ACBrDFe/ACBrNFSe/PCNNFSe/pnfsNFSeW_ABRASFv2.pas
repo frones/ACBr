@@ -578,7 +578,7 @@ procedure TNFSeW_ABRASFv2.GerarXML_ABRASF_v2;
 begin
   case FProvedor of
    proABase, proBethav2, proDigifred, proEReceita, proFiorilli, proGovDigital,
-   proISSDigital, proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
+   proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
    proSisPMJP: begin
                  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
                  Gerador.wGrupoNFSe('Rps');
@@ -603,6 +603,11 @@ begin
                 Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
                 Gerador.wGrupoNFSe('Rps');
               end;
+
+   proISSDigital: begin
+                    Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"' + ' xmlns="http://www.abrasf.org.br/nfse.xsd"');
+                    Gerador.wGrupoNFSe('Rps ' + FIdentificador + '="' + OnlyNumber(FNFSe.IdentificacaoRps.Numero) + '"');
+                  end;
 
    proVirtual: begin
                  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '=""');
@@ -775,7 +780,7 @@ begin
                                    OnlyNumber(FNFSe.IdentificacaoRps.Numero) +
                                    FNFSe.IdentificacaoRps.Serie;
 
-    proISSDigital: FNFSe.InfID.ID := 'rps' + ChaveAcesso(FNFSe.Prestador.cUF,
+    proISSDigital: FNFSe.InfID.ID := {'rps' + }ChaveAcesso(FNFSe.Prestador.cUF,
                                                  FNFSe.DataEmissao,
                                                  OnlyNumber(FNFSe.Prestador.Cnpj),
                                                  0, // Serie

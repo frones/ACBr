@@ -1328,7 +1328,8 @@ begin
                LFill( SER ) +
                LFill( SUB ) +
                LFill( NUM_DOC ) +
-               LFill( DT_DOC ) ) ;
+               LFill( DT_DOC ) +
+               LFill( CHV_DOCe )) ;
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;

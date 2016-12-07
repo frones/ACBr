@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 07/12/2016
+[+] Adição do C113 e 0200 para atender mudanças em janeiro
+		http://www.projetoacbr.com.br/forum/topic/33868-obrigatoriedades-bloco-c113/
+		por : Juliomar Marchetti
+		
 Data 31/10/2016
 [*] Modificação para o tipo de informação
 		http://www.projetoacbr.com.br/forum/topic/32345-novos-campos-no-bloco-k-do-efd-icmsipi-para-2017/?do=findComment&comment=218571

@@ -397,6 +397,7 @@ type
     fSUB: String;                   /// Subsérie do documento fiscal
     fNUM_DOC: String;               /// Número do documento fiscal
     fDT_DOC: TDateTime;             /// Data da emissão do documento fiscal.
+    fCHV_DOCe: string;              /// Chave do Documento Eletrônico
   public
     property IND_OPER: TACBrIndOper read fIND_OPER write fIND_OPER;
     property IND_EMIT: TACBrIndEmit read fIND_EMIT write fIND_EMIT;
@@ -406,6 +407,7 @@ type
     property SUB: String read fSUB write fSUB;
     property NUM_DOC: String read fNUM_DOC write fNUM_DOC;
     property DT_DOC: TDateTime read fDT_DOC write fDT_DOC;
+    property CHV_DOCe: String read fCHV_DOCe write fCHV_DOCe;
   end;
 
   /// Registro C113 - Lista

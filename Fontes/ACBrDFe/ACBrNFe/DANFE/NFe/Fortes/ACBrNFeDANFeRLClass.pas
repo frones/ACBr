@@ -128,7 +128,7 @@ type
                             [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico write fQuebraLinhaEmDetalhamentoEspecifico;
     property ExibeCampoFatura: Boolean        read fExibeCampoFatura      write fExibeCampoFatura;
-    property MostraDadosISSQN: Boolean read FMostraDadosISSQN write FMostraDadosISSQN default True; // Oculta o campo ISSQN mesmo possuindo inscrição municipal
+    property MostraDadosISSQN: Boolean read FMostraDadosISSQN write FMostraDadosISSQN default False; // Oculta o campo ISSQN mesmo possuindo inscrição municipal
     property AltLinhaComun: Integer read FAltLinhaComun write FAltLinhaComun default 30; // Alturas das linhas mais comuns do Danfe
     property EspacoEntreProdutos: Integer read FEspacoEntreProdutos write FEspacoEntreProdutos default 7; // Altura dos espaços entre os produtos
     property AlternaCoresProdutos: Boolean read FAlternaCoresProdutos write FAlternaCoresProdutos default False; // Alterna as cores de fundo dos produtos para destaca-los
@@ -185,7 +185,7 @@ begin
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
   fExibeCampoFatura       := False;
-  fMostraDadosISSQN     := True;
+  fMostraDadosISSQN     := False;
   fAltLinhaComun        := 30;
   fEspacoEntreProdutos  := 7;
   fAlternaCoresProdutos := False;

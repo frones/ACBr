@@ -1646,19 +1646,18 @@ end;
 
 procedure TfrlDANFeRLRetrato.ISSQN;
 begin
-  with FNFe.Total.ISSQNtot do
+  rlbISSQN.Visible  := ( ( ( FNFe.Total.ISSQNtot.vServ > 0 )    or
+                           ( FNFe.Total.ISSQNtot.vBC   > 0 )    or
+                           ( FNFe.Total.ISSQNtot.vISS  > 0 ) )  and
+                           ( FNFe.Emit.IM <> '' )          )    or
+                           ( fMostraDadosISSQN = True );
+
+  if rlbISSQN.Visible then
   begin
-    rlbISSQN.Visible  := ( ( FNFe.Total.ISSQNtot.vServ > 0 ) or
-                           ( FNFe.Total.ISSQNtot.vBC   > 0 ) or
-                           ( FNFe.Total.ISSQNtot.vISS  > 0 ) )
-                       and ( fMostraDadosISSQN = True );
-    if rlbISSQN.Visible then
-    begin
-      rllISSQNInscricao.Caption     := FNFe.Emit.IM;
-      rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ,'###,###,##0.00');
-      rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC,'###,###,##0.00');
-      rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS,'###,###,##0.00');
-    end;
+    rllISSQNInscricao.Caption     := FNFe.Emit.IM;
+    rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ,'###,###,##0.00');
+    rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC  ,'###,###,##0.00');
+    rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS ,'###,###,##0.00');
   end;
 end;
 

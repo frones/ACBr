@@ -237,7 +237,7 @@ type
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
-                    AMostraDadosISSQN: Boolean = True;
+                    AMostraDadosISSQN: Boolean = False;
                     AAltLinhaComun: Integer = 30;
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;
@@ -288,7 +288,7 @@ type
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
-                    AMostraDadosISSQN: Boolean = True;
+                    AMostraDadosISSQN: Boolean = False;
                     AAltLinhaComun: Integer = 30;
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;

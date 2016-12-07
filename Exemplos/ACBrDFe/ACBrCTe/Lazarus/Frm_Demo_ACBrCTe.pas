@@ -7,13 +7,15 @@ interface
 uses IniFiles,
   LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls,  StdCtrls, Buttons, ExtCtrls, IpHtml, pcteConversaoCTe, ACBrUtil,
-  pcnConversao, ACBrCTe, ACBrCTeDACTEClass;
+  pcnConversao, ACBrCTe, ACBrCTeDACTEClass, ACBrCTeDACTeRLClass;
 
 type
 
   { TfrmDemo_ACBrCTe }
 
   TfrmDemo_ACBrCTe = class(TForm)
+    ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
+    btnGerarPDF1: TButton;
     WBResposta: TIpHtmlPanel;
     Panel1: TPanel;
     lblColaborador: TLabel;
@@ -135,6 +137,7 @@ type
     ACBrCTe1: TACBrCTe;    
     btnEnviarEventoEmail: TButton;
     btnGerarPDFEvento: TButton;
+    procedure btnGerarPDF1Click(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -1122,6 +1125,20 @@ begin
  if OpenDialog1.Execute then
   begin
    edtCaminho.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.btnGerarPDF1Click(Sender: TObject);
+begin
+ OpenDialog1.Title := 'Selecione o CTe';
+  OpenDialog1.DefaultExt := '*.xml';
+  OpenDialog1.Filter := 'Arquivos CTe (*.xml)|*-cte.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrCTe1.Configuracoes.Arquivos.PathSalvar;
+
+ if OpenDialog1.Execute then
+  begin
+    ACBrCTe1.InutCTe.LerXML(OpenDialog1.FileName);
+    ACBrCTe1.ImprimirInutilizacao;
   end;
 end;
 

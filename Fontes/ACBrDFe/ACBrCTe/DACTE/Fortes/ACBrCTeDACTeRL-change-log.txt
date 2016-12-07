@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2016
+[+] Adição da impressão da inutilização de CT-e
+		http://www.projetoacbr.com.br/forum/topic/33618-erro-ao-imprimir-inutiliza%C3%A7%C3%A3o/
+		por : Juliomar Marchetti
+		
 03/10/2016
 -- ACBrCTeDACTeRLRetratoA5 --
 [*] Correção de impressão em A5

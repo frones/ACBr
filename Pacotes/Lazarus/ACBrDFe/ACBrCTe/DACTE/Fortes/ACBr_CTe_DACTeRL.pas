@@ -9,7 +9,8 @@ interface
 uses
   ACBrCTeDACTeRLReg, ACBrCTeDACTeRLClass, ACBrCTeDACTeRL, 
   ACBrCTeDACTeRLRetrato, ACBrCTeDACTeRLRetratoA5, ACBrCTeDAEventoRL, 
-  ACBrCTeDAEventoRLRetrato, LazarusPackageIntf;
+  ACBrCTeDAEventoRLRetrato, ACBrCTeDAInutRL, ACBrCTeDAInutRLRetrato, 
+  LazarusPackageIntf;
 
 implementation
 

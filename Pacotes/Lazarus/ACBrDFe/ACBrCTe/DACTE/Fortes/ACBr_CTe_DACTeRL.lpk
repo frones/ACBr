@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - DACTe em FortesReport - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="7">
+    <Files Count="9">
       <Item1>
         <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDACTeRLReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -45,6 +45,14 @@
         <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAEventoRLRetrato.pas"/>
         <UnitName Value="ACBrCTeDAEventoRLRetrato"/>
       </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAInutRL.pas"/>
+        <UnitName Value="ACBrCTeDAInutRL"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\Fortes\ACBrCTeDAInutRLRetrato.pas"/>
+        <UnitName Value="ACBrCTeDAInutRLRetrato"/>
+      </Item9>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

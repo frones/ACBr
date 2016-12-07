@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/12/2016
+[+] Adicionado a impressão da inutilização de CT-e
+		por: Juliomar Marchetti
+		
 30/11/2016
 [+]	Adicionado combobox para escolher o que imprimir no campo Unidade, unidade comercial,
 	unidade tributária ou ambos.

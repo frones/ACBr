@@ -55,6 +55,9 @@ uses
   ACBrCTeDAEventoRL, ACBrCTeDAEventoRLRetrato;
 
 type
+
+  { TACBrCTeDACTeRL }
+
   TACBrCTeDACTeRL = class(TACBrCTeDACTeClass)
   private
 		protected
@@ -66,6 +69,8 @@ type
     procedure ImprimirDACTePDF(CTe: TCTe = nil); override;
     procedure ImprimirEVENTO(CTe: TCTe = nil); override;
     procedure ImprimirEVENTOPDF(CTe: TCTe = nil); override;
+    procedure ImprimirINUTILIZACAO(CTe: TCTe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(CTe: TCTe = nil); override;
   published
     property PrintDialog: Boolean read FPrintDialog write FPrintDialog;
   end;
@@ -73,10 +78,12 @@ type
 implementation
 
 uses
-  StrUtils, Dialogs, ACBrUtil, ACBrCTe;
+  StrUtils, Dialogs, ACBrUtil, ACBrCTe,
+  ACBrCTeDAInutRL, ACBrCTeDAInutRLRetrato;
 
 var
   frmCTeDAEventoRL: TfrmCTeDAEventoRL;
+  frmCTeDAInutRL : TfrmCTeDAInutRL;
 
 constructor TACBrCTeDACTeRL.Create(AOwner: TComponent);
 begin
@@ -401,6 +408,38 @@ begin
   end;
 
   FreeAndNil(frmCTeDAEventoRL);
+end;
+
+procedure TACBrCTeDACTeRL.ImprimirINUTILIZACAO(CTe: TCTe);
+begin
+  frmCTeDAInutRL := TfrmCTeDAInutRLRetrato.Create(Self);
+
+  frmCTeDAInutRL.Imprimir(TACBrCTe(ACBrCTe),
+                          FLogo, FNumCopias, FSistema, FUsuario,
+                          FMostrarPreview, FMargemSuperior,
+                          FMargemInferior, FMargemEsquerda,
+                          FMargemDireita, FImpressora);
+
+  FreeAndNil(frmCTeDAInutRL);
+end;
+
+procedure TACBrCTeDACTeRL.ImprimirINUTILIZACAOPDF(CTe: TCTe);
+var
+ NomeArq: String;
+begin
+  frmCTeDAInutRL := TfrmCTeDAInutRLRetrato.Create(Self);
+
+  NomeArq := StringReplace(TACBrCTe(ACBrCTe).InutCTe.ID, 'ID', '', [rfIgnoreCase]);
+  if NomeArq = '' then
+    NomeArq := StringReplace(TACBrCTe(ACBrCTe).InutCTe.ID, 'ID', '', [rfIgnoreCase]);
+  NomeArq := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutCTe.pdf';
+
+  frmCTeDAInutRL.SavePDF(TACBrCTe(ACBrCTe),
+                         FLogo, NomeArq, FSistema, FUsuario,
+                         FMargemSuperior, FMargemInferior,
+                         FMargemEsquerda, FMargemDireita);
+
+  FreeAndNil(frmCTeDAInutRL);
 end;
 
 end.

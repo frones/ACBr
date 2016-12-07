@@ -64,7 +64,7 @@ var
 
   RetFind   : Integer;
   SearchRec : TSearchRec;
-
+  bMostrarPreview : Boolean;
 begin
  with FrmACBrMonitor do
   begin
@@ -387,7 +387,76 @@ begin
                            'DhRecbto='+DateTimeToStr(ACBrCTe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
                            'NProt='+ACBrCTe1.WebServices.Inutilizacao.Protocolo+sLineBreak;
          end
-         
+        else if Cmd.Metodo = 'imprimirinutilizacao' then
+         begin
+           if FileExists(Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml') then
+            begin
+              if FileExists(Cmd.Params(0)) then
+                 ACBrCTe1.InutCTe.LerXML(Cmd.Params(0))
+              else if FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+                 ACBrCTe1.InutCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
+              else
+                 ACBrCTe1.InutCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
+            end
+           else
+              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           bMostrarPreview := (Cmd.Params(3) = '1');
+           ConfiguraDANFe(False, bMostrarPreview );
+
+           ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
+
+           if NaoEstaVazio(Cmd.Params(1)) then
+              ACBrCTe1.DACTE.Impressora := Cmd.Params(1)
+           else
+           begin
+              if rgModoImpressaoEvento.ItemIndex = 0 then
+                 ACBrCTe1.DACTE.Impressora := cbxImpressora.Text
+              else
+                 ACBrCTe1.DACTE.Impressora := cbxImpressoraNFCe.Text;
+           end;
+
+           if NaoEstaVazio(Cmd.Params(2)) then
+              ACBrCTe1.DACTE.NumCopias := StrToIntDef(Cmd.Params(2),1);
+
+           ACBrCTe1.ImprimirInutilizacao;
+           Cmd.Resposta := 'Inutilização Impressa com sucesso';
+
+           if ACBrCTe1.DACTE.MostrarPreview then
+              Ocultar1.Click;
+
+         end
+        else if Cmd.Metodo = 'imprimirinutilizacaopdf' then
+         begin
+           if FileExists(Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
+              FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml')  then
+            begin
+              if FileExists(Cmd.Params(0)) then
+                 ACBrCTe1.InutCTe.LerXML(Cmd.Params(0))
+              else if FileExists(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
+                 ACBrCTe1.InutCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
+              else
+                 ACBrCTe1.InutCTe.LerXML(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
+            end
+           else
+              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+
+           ConfiguraDANFe(True, False);
+
+           ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
+
+           try
+              ACBrCTe1.ImprimirInutilizacaoPDF;
+              ArqPDF := OnlyNumber(ACBrCTe1.InutCTe.ID);
+              ArqPDF := PathWithDelim(ACBrCTe1.DACTE.PathPDF)+ArqPDF+'-procInutCTe.pdf';
+              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF ;
+           except
+              raise Exception.Create('Erro ao criar o arquivo PDF');
+           end;
+         end
         else if Cmd.Metodo = 'enviarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;

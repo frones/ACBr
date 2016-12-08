@@ -396,10 +396,14 @@ begin
   if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 57) and (CTe.ide.indGlobalizado = tiSim) then
     Gerador.wCampo(tcStr, '#020', 'indGlobalizado', 01, 01, 0, TindicadorToStr(CTe.ide.indGlobalizado), DSC_INDGLOBALIZADO);
 
-  Gerador.wCampo(tcStr, '#021', 'refCTE ', 44, 44, 0, OnlyNumber(CTe.Ide.refCTE), DSC_REFCTE);
-  if OnlyNumber(CTe.Ide.refCTe) <> '' then
-    if not ValidarChave(CTe.Ide.refCTe) then
-      Gerador.wAlerta('#021', 'refCTE', DSC_REFCTE, ERR_MSG_INVALIDO);
+  if (CTe.infCTe.versao < 3) then
+  begin
+    Gerador.wCampo(tcStr, '#021', 'refCTE ', 44, 44, 0, OnlyNumber(CTe.Ide.refCTE), DSC_REFCTE);
+    if OnlyNumber(CTe.Ide.refCTe) <> '' then
+      if not ValidarChave(CTe.Ide.refCTe) then
+        Gerador.wAlerta('#021', 'refCTE', DSC_REFCTE, ERR_MSG_INVALIDO);
+  end;
+
   Gerador.wCampo(tcInt, '#022', 'cMunEnv ', 07, 07, 1, CTe.ide.cMunEnv, DSC_CMUNEMI);
   if not ValidarMunicipio(CTe.ide.cMunEnv) then
     Gerador.wAlerta('#022', 'cMunEnv', DSC_CMUNEMI, ERR_MSG_INVALIDO);

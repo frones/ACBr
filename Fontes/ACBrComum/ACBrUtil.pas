@@ -80,7 +80,7 @@ const
 
 type
   TSetOfChars = set of AnsiChar;
-  TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
+  TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
 
   {$IFNDEF FPC}
    TLibHandle = THandle;
@@ -3738,6 +3738,7 @@ begin
     msk13x2 : Mask := '#,###,###,###,##0.00';
     msk15x2 : Mask := '###,###,###,###,##0.00';
     msk6x3  : Mask := '###,##0.000';
+    msk6x4  : Mask := '###,##0.0000';
     mskAliq : Mask := '#00%';
   end;
 

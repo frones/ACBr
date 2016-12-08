@@ -356,8 +356,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
       object RLDraw32: TRLDraw
-        Left = 1
-        Top = 15
+        Left = 5
+        Top = 9
         Width = 740
         Height = 1
         HelpContext = 1
@@ -5354,7 +5354,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllDadosRetira: TRLLabel
         Left = 39
-        Top = 81
+        Top = 52
         Width = 554
         Height = 14
         AutoSize = False
@@ -6345,7 +6345,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 207
         Top = 1
         Width = 1
-        Height = 103
+        Height = 79
         Brush.Style = bsClear
       end
       object RLDraw83: TRLDraw
@@ -6476,7 +6476,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel172: TRLLabel
-        Left = 212
+        Left = 271
         Top = 82
         Width = 69
         Height = 8
@@ -6795,6 +6795,19 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
           'Empresa 3')
         ParentColor = False
         ParentFont = False
+      end
+			object RLDraw28: TRLDraw
+        Left = 267
+        Height = 26
+        Top = 79
+        Width = 1
+        Angle = 0
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        DrawKind = dkLine
       end
     end
     object rlb_18_Recibo: TRLBand

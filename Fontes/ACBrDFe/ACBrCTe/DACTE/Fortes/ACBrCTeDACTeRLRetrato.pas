@@ -68,6 +68,8 @@ type
   TfrmDACTeRLRetrato = class(TfrmDACTeRL)
     RLBarcode1: TRLBarcode;
     rlb_01_Recibo: TRLBand;
+    RLDraw28: TRLDraw;
+    RLDraw34: TRLDraw;
     rlsLinhaH03: TRLDraw;
     rlmEmitente: TRLMemo;
     rlmDadosEmitente: TRLMemo;
@@ -1403,43 +1405,43 @@ begin
    begin
     //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid of
-          uM3: rlmQtdUnidMedida4.Lines.Add(FormatFloatBr(msk6x3,
+          uM3: rlmQtdUnidMedida4.Lines.Add(FormatFloatBr(msk6x4,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga));
           uKg: begin
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BRUTO'
-                then rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x3,
+                then rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
-                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga))
-                else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x3,
+                else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga));
                end;
          uTON: begin
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BRUTO'
-                then rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x3,
+                then rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BASE DE CALCULO'
-                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000))
                 else
                 if uppercase(trim(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed))='PESO BC'
-                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+                then rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000))
-                else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x3,
+                else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000));
                end;
-     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x3,
+     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uLITROS:  rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x3,
+     uLITROS:  rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x3,
+     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
                  FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
     end;
    end;
@@ -1489,47 +1491,47 @@ begin
   begin
     //UnidMed = (uM3,uKG, uTON, uUNIDADE, uLITROS, uMMBTU);
     case FCTe.InfCarga.InfQ.Items[i].cUnid of
-      uM3: rlmQtdUnidMedida4.Lines.Add(FormatFloatBr(msk6x3,
+      uM3: rlmQtdUnidMedida4.Lines.Add(FormatFloatBr(msk6x4,
           FCTe.InfCarga.InfQ.Items[i].qCarga));
       uKg:
       begin
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BRUTO' then
-          rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BASE DE CALCULO' then
-          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BC' then
-          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga))
         else
-          rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga));
       end;
       uTON:
       begin
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BRUTO' then
-          rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida1.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BASE DE CALCULO' then
-          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000))
         else
         if uppercase(trim(FCTe.InfCarga.InfQ.Items[i].tpMed)) = 'PESO BC' then
-          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida2.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000))
         else
-          rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x3,
+          rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000));
       end;
-      uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x3,
+      uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
           FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-      uLITROS: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x3,
+      uLITROS: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
           FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-      uMMBTU: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x3,
+      uMMBTU: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
           FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
     end;
   end;

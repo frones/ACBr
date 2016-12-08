@@ -38,6 +38,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/12/2016
+[+] Adição de mais um formatmask
+		por: Juliomar Marchetti
+
 Data: 24/10/2016
 -- ACBr.inc --
 [*] Ajuste para permitir a compilação em 32 e 64 bits com suporte a

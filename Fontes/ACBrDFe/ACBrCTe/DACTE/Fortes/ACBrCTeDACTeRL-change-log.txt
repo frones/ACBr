@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2016
+[*] Arrumado para atender as casas decimais e nome do motorista espaço
+		http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
+		por: Juliomar Marchetti
+
 07/12/2016
 [+] Adição da impressão da inutilização de CT-e
 		http://www.projetoacbr.com.br/forum/topic/33618-erro-ao-imprimir-inutiliza%C3%A7%C3%A3o/

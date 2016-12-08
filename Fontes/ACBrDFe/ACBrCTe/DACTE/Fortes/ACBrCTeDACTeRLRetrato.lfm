@@ -1,15 +1,15 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 350
-  Height = 439
+  Height = 596
   Top = 87
   Caption = 'DACTe - Retrato'
-  ClientHeight = 439
+  ClientHeight = 596
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 24
-    Top = -712
+    Left = 88
+    Top = 0
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
@@ -425,9 +425,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
       object RLDraw32: TRLDraw
-        Left = 1
+        Left = 5
         Height = 1
-        Top = 15
+        Top = 9
         Width = 740
         HelpContext = 1
         Angle = 0
@@ -6408,7 +6408,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllDadosRetira: TRLLabel
         Left = 39
         Height = 14
-        Top = 81
+        Top = 52
         Width = 554
         AutoSize = False
         Color = clWhite
@@ -7595,7 +7595,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw30: TRLDraw
         Left = 207
-        Height = 103
+        Height = 79
         Top = 1
         Width = 1
         Angle = 0
@@ -7781,7 +7781,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel172: TRLLabel
-        Left = 212
+        Left = 271
         Height = 8
         Top = 82
         Width = 69
@@ -8099,7 +8099,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rllCPFMotorista2: TRLLabel
-        Left = 212
+        Left = 271
         Height = 12
         Top = 91
         Width = 71
@@ -8144,6 +8144,22 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         )
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw28: TRLDraw
+        Left = 267
+        Height = 26
+        Top = 79
+        Width = 1
+        Angle = 0
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0

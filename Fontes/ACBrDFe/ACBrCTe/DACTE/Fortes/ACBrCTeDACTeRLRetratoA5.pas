@@ -1148,12 +1148,12 @@ begin
                 else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000));
                end;
-     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uLITROS:  rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
+         uUNIDADE, uLITROS, uMMBTU:
+           begin
+             rlmQtdUnidMedida5.Lines.Add(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
+             rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)+' '+
+             UnidMedToDescricaoStr(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid));
+           end;
     end;
    end;
 
@@ -1228,12 +1228,12 @@ begin
                 else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.InfCarga.InfQ.Items[i].qCarga));
                end;
-     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-     uLITROS:  rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.InfCarga.InfQ.Items[i].tpMed);
+    uUNIDADE, uLITROS, uMMBTU:
+       begin
+         rlmQtdUnidMedida5.Lines.Add(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
+         rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)+' '+
+         UnidMedToDescricaoStr(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid));
+       end;
     end;
    end;
 

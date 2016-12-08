@@ -1424,7 +1424,7 @@ begin
     uKG       : result := 'KG';
     uTON      : result := 'TON';
     uUNIDADE  : result := 'UND';
-    uLITROS   : result := 'L';
+    uLITROS   : result := 'LT';
     uMMBTU    : result := 'MMBTU';
     else
      result := 'NÃO DEFINIDO';

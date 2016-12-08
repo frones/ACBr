@@ -1437,12 +1437,12 @@ begin
                 else rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
                         FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga * 1000));
                end;
-     uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uLITROS:  rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
-     uMMBTU:   rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-                 FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga) + '/' + FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
+     uUNIDADE, uLITROS, uMMBTU:
+       begin
+               rlmQtdUnidMedida5.Lines.Add(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
+               rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)+' '+
+               UnidMedToDescricaoStr(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid));
+       end;
     end;
    end;
 
@@ -1455,10 +1455,6 @@ begin
       rlmNroApolice.Lines.Add(FCTe.infCTeNorm.seg.Items[i].nApol);
       rlmNroAverbacao.Lines.Add(FCTe.infCTeNorm.seg.Items[i].nAver);
      end;
-//    rllNomeSeguradora.Caption := FCTe.infCTeNorm.seg.Items[0].xSeg;
-//    rllRespSeguroMerc.Caption := TpRspSeguroToStrText(FCTe.infCTeNorm.seg.Items[0].respSeg);
-//    rllNroApolice.Caption := FCTe.infCTeNorm.seg.Items[0].nApol;
-//    rllNroAverbacao.Caption := FCTe.infCTeNorm.seg.Items[0].nAver;
   end;
 
   for i := 0 to (FCTe.vPrest.comp.Count - 1) do
@@ -1527,12 +1523,12 @@ begin
           rlmQtdUnidMedida3.Lines.Add(FormatFloatBr(msk6x4,
             FCTe.InfCarga.InfQ.Items[i].qCarga * 1000));
       end;
-      uUNIDADE: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-          FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-      uLITROS: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-          FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
-      uMMBTU: rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,
-          FCTe.InfCarga.InfQ.Items[i].qCarga) + ' ' + FCTe.InfCarga.InfQ.Items[i].tpMed);
+      uUNIDADE, uLITROS, uMMBTU:
+        begin
+          rlmQtdUnidMedida5.Lines.Add(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].tpMed);
+          rlmQtdUnidMedida5.Lines.Add(FormatFloatBr(msk6x4,FCTe.infCTeNorm.InfCarga.InfQ.Items[i].qCarga)+' '+
+          UnidMedToDescricaoStr(FCTe.infCTeNorm.InfCarga.InfQ.Items[i].cUnid));
+        end;
     end;
   end;
 

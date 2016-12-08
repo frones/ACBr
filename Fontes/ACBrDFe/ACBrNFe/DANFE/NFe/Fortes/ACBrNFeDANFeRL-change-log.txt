@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/12/2016
+--ACBrNFeDANFeRL
+[*] Ajustes para imprimir complemento de informações adicionais ( 30 linhas ).
+    http://www.projetoacbr.com.br/forum/topic/33898-informa%C3%A7%C3%B5es-complementares-incompletas/
+      		por: Henrique Leonardo
 
 07/12/2016
 --ACBrNFeDANFeRL,ACBrNFeDANFeRLClass, ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato

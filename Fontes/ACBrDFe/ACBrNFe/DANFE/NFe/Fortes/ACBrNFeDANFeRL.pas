@@ -662,54 +662,56 @@ begin
   if iQuantCaracteres <= iLimiteLinhas then
     iTotalLinhas := 1
   else
-    begin
-      if (iQuantCaracteres mod iLimCaracteres) > 0 then
-        iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
-      else
-        iTotalLinhas := iQuantCaracteres div iLimCaracteres;
-    end;
+  begin
+    if (iQuantCaracteres mod iLimCaracteres) > 0 then
+      iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
+    else
+      iTotalLinhas := iQuantCaracteres div iLimCaracteres;
+  end;
 
-  for i := 1 to (iTotalLinhas + 10) do
-    begin
-      sLinhaProvisoria := Copy(sTexto, iPosAtual, iLimCaracteres);
-      iUltimoEspacoLinha := BuscaDireita(' ', sLinhaProvisoria);
+  //
+  // Define o numero de linhas em complemento
+  // iTotalLinhas + 20 = 30 linhas
+  //
 
-      if iUltimoEspacoLinha = 0 then
+  for i := 1 to (iTotalLinhas + 20) do
+  begin
+    sLinhaProvisoria    := Copy(sTexto, iPosAtual, iLimCaracteres);
+    iUltimoEspacoLinha  := BuscaDireita(' ', sLinhaProvisoria);
+
+    if iUltimoEspacoLinha = 0 then
         iUltimoEspacoLinha := iQuantCaracteres;
 
-      if Pos(';', sLinhaProvisoria) = 0 then
-        begin
-          if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
-             (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
-            sLinha := sLinhaProvisoria
-          else
-            begin
-              if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
-                sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
-              else
-                begin
-                  sLinha := sLinhaProvisoria;
-                end;
-            end;
-          iPosAtual := iPosAtual + Length(sLinha);
-        end // if Pos(';', sLinhaProvisoria) = 0
+    if Pos(';', sLinhaProvisoria) = 0 then
+    begin
+      if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
+         (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
+        sLinha := sLinhaProvisoria
       else
-        begin
-          sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
-          iPosAtual := iPosAtual + (Length(sLinha));
-        end;
-
-      if sLinha > '' then
-        begin
-          if LeftStr(sLinha, 1) = ' ' then
-            sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
-          else
-            sLinha := sLinha;
-
-          rMemo.Lines.Add(sLinha);
-        end;
-
+      begin
+        if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
+          sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
+        else
+          sLinha := sLinhaProvisoria;
+      end;
+      iPosAtual := iPosAtual + Length(sLinha);
+    end // if Pos(';', sLinhaProvisoria) = 0
+    else
+    begin
+      sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
+      iPosAtual := iPosAtual + (Length(sLinha));
     end;
+
+    if sLinha > '' then
+    begin
+      if LeftStr(sLinha, 1) = ' ' then
+        sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
+      else
+        sLinha := sLinha;
+
+      rMemo.Lines.Add(sLinha);
+    end;
+  end;
 end;
 
 function TfrlDANFeRL.QuebraLinha: String;

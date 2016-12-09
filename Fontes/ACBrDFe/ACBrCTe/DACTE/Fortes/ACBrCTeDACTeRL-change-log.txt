@@ -47,6 +47,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 08/12/2016
+[*] Modificação para melhorar a visualização do campos de volumes
+		http://www.projetoacbr.com.br/forum/topic/33721-impress%C3%A3o-do-campo-da-quantidade-de-volumes-e-tipo-rodado/
+		http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
+		por : Juliomar Marchetti
+		
+08/12/2016
 [*] Arrumado para atender as casas decimais e nome do motorista espaço
 		http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
 		por: Juliomar Marchetti

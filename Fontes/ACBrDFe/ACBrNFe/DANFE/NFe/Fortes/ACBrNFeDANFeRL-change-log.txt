@@ -47,14 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/12/2016
+-- ACBrNFeDANFeRLPaisagem --
+[-] Ajuste para imprimir cfop
+      		por: Henrique Leonardo
+
+
 08/12/2016
---ACBrNFeDANFeRL
+-- ACBrNFeDANFeRL --
 [*] Ajustes para imprimir complemento de informações adicionais ( 30 linhas ).
     http://www.projetoacbr.com.br/forum/topic/33898-informa%C3%A7%C3%B5es-complementares-incompletas/
       		por: Henrique Leonardo
 
 07/12/2016
---ACBrNFeDANFeRL,ACBrNFeDANFeRLClass, ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato
+-- ACBrNFeDANFeRL,ACBrNFeDANFeRLClass, ACBrNFeDANFeRLPaisagem, acbrnfedanferlretrato --
 [*] Ajustes para imprimir a banda Mostra Dados ISSQN.
 [*] Propriedade MostraDadosISSQN valor padrão igual a false.
       		por: Henrique Leonardo / Juliomar Marchetti

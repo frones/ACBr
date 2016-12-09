@@ -2230,6 +2230,7 @@ begin
       crtSimplesExcessoReceita : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
             crtSimplesNacional : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
     end;
+    txtCFOP.Caption           := Prod.CFOP;
     txtUnidade.Lines.Clear;
     txtQuantidade.Lines.Clear;
     txtValorUnitario.Lines.Clear;

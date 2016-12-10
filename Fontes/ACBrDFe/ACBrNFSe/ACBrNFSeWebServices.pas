@@ -1171,12 +1171,13 @@ begin
       if (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'L000') and
          (FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo <> 'A0000') then
       begin
-        FPMsg := FPMsg + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak;
+        FPMsg := FPMsg + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Correcao + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Codigo + LineBreak +
-                         'Mensagem... : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak+
-                         'Correção... : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Correcao + LineBreak+
+                         'Mensagem... : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         'Correção... : ' + FRetornoNFSe.ListaNFSe.MsgRetorno.Items[i].Correcao + LineBreak +
                          'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
       end;
     end;
@@ -2218,7 +2219,8 @@ begin
       if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
          (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
       begin
-        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
+        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         RetEnvLote.infRec.MsgRetorno.Items[i].Correcao + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -2438,7 +2440,8 @@ begin
       if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
          (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
       begin
-        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak;
+        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         RetEnvLote.infRec.MsgRetorno.Items[i].Correcao + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -2858,12 +2861,13 @@ begin
   begin
     for i := 0 to RetSitLote.InfSit.MsgRetorno.Count - 1 do
     begin
-      FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak;
+      FPMsg := FPMsg + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak +
+                       RetSitLote.infSit.MsgRetorno.Items[i].Correcao + LineBreak;
 
       FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                        'Código Erro : ' + RetSitLote.infSit.MsgRetorno.Items[i].Codigo + LineBreak +
-                       'Mensagem... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak+
-                       'Correção... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Correcao + LineBreak+
+                       'Mensagem... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Mensagem + LineBreak +
+                       'Correção... : ' + RetSitLote.infSit.MsgRetorno.Items[i].Correcao + LineBreak +
                        'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
     end;
   end
@@ -3702,7 +3706,8 @@ begin
   begin
     for i := 0 to RetCancNFSe.InfCanc.MsgRetorno.Count - 1 do
     begin
-      FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak;
+      FPMsg := FPMsg + RetCancNFSe.infCanc.MsgRetorno.Items[i].Mensagem + LineBreak +
+                       RetCancNFSe.InfCanc.MsgRetorno.Items[i].Correcao + LineBreak;
 
       FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                        'Código Erro : ' + RetCancNFSe.InfCanc.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -3936,7 +3941,8 @@ begin
     begin
       for i := 0 to FNFSeRetorno.MsgRetorno.Count - 1 do
       begin
-        FPMsg := FPMsg + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + LineBreak;
+        FPMsg := FPMsg + FNFSeRetorno.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         FNFSeRetorno.MsgRetorno.Items[i].Correcao + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + FNFSeRetorno.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -4091,7 +4097,8 @@ begin
     begin
       for i := 0 to FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Count - 1 do
       begin
-        FPMsg := FPMsg + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak;
+        FPMsg := FPMsg + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Correcao + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Codigo + LineBreak +
@@ -4245,7 +4252,8 @@ begin
     begin
       for i := 0 to FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Count - 1 do
       begin
-        FPMsg := FPMsg + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak;
+        FPMsg := FPMsg + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Correcao + LineBreak;
 
         FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
                          'Código Erro : ' + FRetAbrirSessao.InfAbrirSessao.MsgRetorno.Items[i].Codigo + LineBreak +

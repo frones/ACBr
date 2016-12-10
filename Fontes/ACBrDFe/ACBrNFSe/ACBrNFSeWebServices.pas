@@ -2309,6 +2309,7 @@ end;
 procedure TNFSeEnviarSincrono.DefinirDadosMsg;
 var
   I: Integer;
+  TagElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -2325,6 +2326,15 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
+    case FProvedor of
+      proIssDSF: TagElemento := 'Lote';
+    else
+      TagElemento := 'LoteRps';
+    end;
+
+    if (TagElemento <> '') and not (Provedor in [proBetha, proBethav2, proIssDSF]) then
+      TagElemento := FPrefixo3 + TagElemento;
+
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
       for I := 0 to FNotasFiscais.Count - 1 do
@@ -2359,7 +2369,7 @@ begin
 
     FPDadosMsg := TNFSeEnviarSincrono(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                                   FPrefixo3 + 'EnviarLoteRpsSincronoEnvio',
-                                  FPrefixo3 + 'LoteRps',
+                                  TagElemento,
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
 

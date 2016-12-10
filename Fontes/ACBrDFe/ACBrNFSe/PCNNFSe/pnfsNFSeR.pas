@@ -1219,22 +1219,22 @@ begin
 
     if FProvedor = proNenhum then
     begin
-      if (Leitor.rExtrai(1, 'Servico') <> '') then
-      begin
-        CM := Leitor.rCampo(tcStr, 'CodigoMunicipio');
-        FProvedor := CodCidadeToProvedor(CM);
-      end;
-    end;
-
-    if FProvedor = proNenhum then
-    begin
       if (Leitor.rExtrai(1, 'PrestadorServico') <> '') then
       begin
         CM := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoMunicipio'));
         if CM = '' then
           CM := Leitor.rCampo(tcStr, 'Cidade');
         FProvedor := CodCidadeToProvedor(CM);
-      end
+      end;
+    end;
+
+    if FProvedor = proNenhum then
+    begin
+      if (Leitor.rExtrai(1, 'Servico') <> '') then
+      begin
+        CM := Leitor.rCampo(tcStr, 'CodigoMunicipio');
+        FProvedor := CodCidadeToProvedor(CM);
+      end;
     end;
 
     if FProvedor = proNenhum then

@@ -142,7 +142,7 @@ type
     btnLinkNFSe: TButton;
     btnGerarLoteRPS: TButton;
     btnGerarEnviarSincrono: TButton;
-    Button1: TButton;
+    btnVerificarCidade: TButton;
     ckSalvarSoap: TCheckBox;
     btnSubsNFSe: TButton;
     ACBrMail1: TACBrMail;
@@ -178,7 +178,7 @@ type
     procedure btnLinkNFSeClick(Sender: TObject);
     procedure btnGerarLoteRPSClick(Sender: TObject);
     procedure btnGerarEnviarSincronoClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnVerificarCidadeClick(Sender: TObject);
     procedure btnSubsNFSeClick(Sender: TObject);
     procedure sbtArqINIClick(Sender: TObject);
     {
@@ -388,7 +388,7 @@ begin
    ACBrNFSe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 // {$ENDIF}
 
- ACBrNFSe1.Configuracoes.Certificados.VerificarValidade :=True;
+// ACBrNFSe1.Configuracoes.Certificados.VerificarValidade := True;
 
  ACBrNFSe1.Configuracoes.Arquivos.AdicionarLiteral := True;
  ACBrNFSe1.Configuracoes.Arquivos.EmissaoPathNFSe  := True;
@@ -1177,16 +1177,25 @@ begin
  ACBrNFSe1.NotasFiscais.Clear;
 end;
 
-procedure TfrmDemo_ACBrNFSe.Button1Click(Sender: TObject);
+procedure TfrmDemo_ACBrNFSe.btnVerificarCidadeClick(Sender: TObject);
 var
- vAux, provedor : String;
+  Ok: Boolean;
+  NomeArqParams: String;
+  IniParams: TMemIniFile;
+  vAux, provedor: String;
 begin
- if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:', vAux))
-  then exit;
+  if not(InputQuery('Informe o código IBGE da cidade com 7 digitos', 'Código:', vAux)) then
+    exit;
 
-// provedor := CodCidadeToProvedor(vAux);
+  NomeArqParams := ACBrNFSe1.Configuracoes.Geral.PathIniCidades + '\Cidades.ini';
+  if not FileExists(NomeArqParams) then
+    raise Exception.Create('Arquivo de Parâmetro não encontrado: ' + NomeArqParams);
 
- ShowMessage('Provedor: ' + provedor);
+  IniParams := TMemIniFile.Create(NomeArqParams);
+  provedor := IniParams.ReadString(vAux, 'Provedor', '');
+  IniParams.Free;
+
+  ShowMessage('Provedor: ' + provedor);
 end;
 
 procedure TfrmDemo_ACBrNFSe.btnSubsNFSeClick(Sender: TObject);

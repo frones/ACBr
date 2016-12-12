@@ -303,6 +303,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Aparecida de Goiania/5201405/GO'
               'Apucarana/4101408/PR'
               'Aquiraz/2301000/CE'
+              'Aragua'#237'na/1702109/TO'
               'Araraquara/3503208/SP'
               'Araras/3503307/SP'
               'Araucaria/4101804/PR'
@@ -402,6 +403,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Montes Claros/3143302/MG'
               'Muriae/3143906/MG'
               'Natal/2408102/RN'
+              'Nova Friburgo/3303401/RJ'
               'Nova Mutum/5106224/MT'
               'Novo Hamburgo/4313409/RS'
               'Niteroi/3303302/RJ'
@@ -435,6 +437,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
               'Rondonopolis/5107602/MT'
               'Salto/3545209/SP'
               'Salvador/2927408/BA'
+              'Santa Clara do Sul/4316758/RS'
               'Santa Luzia/3157807/MG'
               'Santo Andre/3547809/SP'
               'Santos/3548500/SP'
@@ -1236,7 +1239,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         TabOrder = 12
         OnClick = btnGerarEnviarSincronoClick
       end
-      object Button1: TButton
+      object btnVerificarCidade: TButton
         Left = 8
         Top = 175
         Width = 545
@@ -1249,7 +1252,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 13
-        OnClick = Button1Click
+        OnClick = btnVerificarCidadeClick
       end
       object btnSubsNFSe: TButton
         Left = 192
@@ -1372,8 +1375,7 @@ object frmDemo_ACBrNFSe: TfrmDemo_ACBrNFSe
     Configuracoes.WebServices.IntervaloTentativas = 3000
     Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Configuracoes.Certificados.ArquivoPFX = 'C:\Erp\Certificados\ErloPneus - Ibate - Fiorilli\erlopneus.pfx'
-    Configuracoes.Certificados.Senha = 'italo'
+    Configuracoes.Certificados.VerificarValidade = False
     DANFSE = ACBrNFSeDANFSeQR1
     Left = 360
     Top = 248

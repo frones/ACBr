@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/12/2016
+-- ACBrTEFDCliDTEF --
+[-] Acerto para não interromper o loop quando houver uma mensagem perguntando
+    se deseja cancelar e o usuário clicar em NÃO.
+    por: regys.silveira
+
 28/11/2016
 -- ACBrTEFDDial --
 [+] Adicionado Propriedade:

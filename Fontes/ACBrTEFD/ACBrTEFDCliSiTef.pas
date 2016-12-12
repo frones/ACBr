@@ -1310,7 +1310,11 @@ begin
                         Mensagem := 'CONFIRMA ?';
 
                      Resposta := ifThen( (DoExibeMsg( opmYesNo, Mensagem ) = mrYes), '0', '1' ) ;
-                     {Digitado := ( Resposta <> '1') ;}
+
+                     // se a resposta a mensagem for não, não deixar interromper
+                     // voltar ao loop
+                     if Resposta = '1' then
+                       Interromper := False;
                    end ;
 
                  21 :

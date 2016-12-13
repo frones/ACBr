@@ -350,6 +350,8 @@ type
     ProgramaIdentificaoPafECF1: TMenuItem;
     ACBrECFVirtualNaoFiscal1: TACBrECFVirtualNaoFiscal;
     VendaFrentica1: TMenuItem;
+    Label46: TLabel;
+    sePaginaCodigo: TSpinEdit;
     procedure cbxModeloChange(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
@@ -563,6 +565,7 @@ type
     procedure ACBrECFVirtualNaoFiscal1LeArqINI(ConteudoINI: TStrings;
       var Tratado: Boolean);
     procedure VendaFrentica1Click(Sender: TObject);
+    procedure sePaginaCodigoChange(Sender: TObject);
   private
     { Private declarations }
     Function Converte( cmd : String) : String;
@@ -738,8 +741,9 @@ begin
         PageControl1.ActivePageIndex := 1 ;
   finally
      Self.Enabled := True ;
-     cbxModelo.ItemIndex := Integer(ACBrECF1.Modelo) ;
-     cbxPorta.Text       := ACBrECF1.Porta ;
+     cbxModelo.ItemIndex   := Integer(ACBrECF1.Modelo) ;
+     cbxPorta.Text         := ACBrECF1.Porta ;
+     sePaginaCodigo.Value  := ACBrECF1.PaginaDeCodigo;
   end ;
 end;
 
@@ -2675,6 +2679,11 @@ begin
   ACBrECF1.IntervaloAposComando := seIntervaloAposComando.Value ;
 end;
 
+procedure TForm1.sePaginaCodigoChange(Sender: TObject);
+begin
+  ACBrECF1.PaginaDeCodigo := sePaginaCodigo.Value;
+end;
+
 procedure TForm1.edSH_RazaoSocialChange(Sender: TObject);
 begin
   ACBrRFD1.SH_RazaoSocial := edSH_RazaoSocial.Text ;
@@ -3696,7 +3705,7 @@ begin
   if dlgDialogoSalvar.Execute then
   begin
     PathArquivo := dlgDialogoSalvar.FileName;
-    ACBrECF1.PafMF_ArqMFD(PathArquivo);
+    ACBrECF1.PafMF_ArqMFD_Binario(PathArquivo);
 
     // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
 
@@ -3714,7 +3723,7 @@ begin
   if dlgDialogoSalvar.Execute then
   begin
     PathArquivo := dlgDialogoSalvar.FileName;
-    ACBrECF1.PafMF_ArqMF(PathArquivo);
+    ACBrECF1.PafMF_ArqMFD_Binario(PathArquivo);
 
     // será gerado o arquivo bináio e o arquivo .txt com a assinatura EAD
 

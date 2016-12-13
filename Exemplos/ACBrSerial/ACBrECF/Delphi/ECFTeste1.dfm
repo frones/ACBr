@@ -134,6 +134,15 @@ object Form1: TForm1
         Height = 13
         Caption = 'UF'
       end
+      object Label46: TLabel
+        Left = 545
+        Top = 5
+        Width = 87
+        Height = 13
+        Caption = 'P'#225'gina de C'#243'digo:'
+        Color = clBtnFace
+        ParentColor = False
+      end
       object cbxModelo: TComboBox
         Left = 20
         Top = 25
@@ -416,6 +425,17 @@ object Form1: TForm1
         TabOrder = 20
         OnClick = chbCupomManiaClick
       end
+      object sePaginaCodigo: TSpinEdit
+        Left = 545
+        Top = 24
+        Width = 87
+        Height = 22
+        MaxValue = 9999999
+        MinValue = 0
+        TabOrder = 21
+        Value = 0
+        OnChange = sePaginaCodigoChange
+      end
     end
     object TabSheet1: TTabSheet
       Caption = 'Cmd/Resp'
@@ -557,7 +577,7 @@ object Form1: TForm1
         Left = 0
         Top = 55
         Width = 782
-        Height = 266
+        Height = 246
         ActivePage = TabSheet6
         Align = alClient
         TabOrder = 1
@@ -889,7 +909,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Width = 782
-        Height = 253
+        Height = 233
         Align = alClient
         Caption = 'Op'#231#245'es do Menu fiscal'
         TabOrder = 0
@@ -1018,7 +1038,7 @@ object Form1: TForm1
       end
       object pgcMenuFiscalTipo: TPageControl
         Left = 0
-        Top = 253
+        Top = 233
         Width = 782
         Height = 68
         ActivePage = tbsMenuFiscalTipoData
@@ -1181,6 +1201,7 @@ object Form1: TForm1
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        ExplicitWidth = 384
       end
       object speBarrasLargura: TSpinEdit
         Left = 12
@@ -1196,7 +1217,7 @@ object Form1: TForm1
       end
       object BitBtn6: TBitBtn
         Left = 576
-        Top = 26
+        Top = 22
         Width = 133
         Height = 23
         Anchors = [akTop, akRight]
@@ -1215,7 +1236,7 @@ object Form1: TForm1
         Lines.Strings = (
           'TEXTO LIVRE'
           'At'#233' 600 caracteres'
-          #193#201#218#205#211#218#225#233#237#243#250#199#231#195#213#227#245
+          #193#201#205#211#218#225#233#237#243#250#231#199#227#245#195#213#202#234#192#224
           ''
           '</linha_dupla>'
           ''
@@ -2335,7 +2356,7 @@ object Form1: TForm1
     MsgTrabalhando = 'Impressora est'#225' trabalhando'
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
-    PaginaDeCodigo = 0
+    PaginaDeCodigo = 850
     OnMsgAguarde = ACBrECF1MsgAguarde
     OnAguardandoRespostaChange = ACBrECF1AguardandoRespostaChange
     OnMsgPoucoPapel = ACBrECF1MsgPoucoPapel

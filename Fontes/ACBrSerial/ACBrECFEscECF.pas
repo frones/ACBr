@@ -4422,8 +4422,10 @@ end;
 function TACBrECFEscECF.AchaICMSAliquota(var AliquotaICMS: String
    ): TACBrECFAliquota;
 begin
-  if (upcase(AliquotaICMS[1]) = 'T') then
-    AliquotaICMS := 'TT'+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice}
+  { EscECF usa a letra T/S no Indice, e ACBrECFClass.AchaICMSAliquota(), que é
+   chamada logo abaixo, irá remove-lo, portanto vamos adicionar um T/S extra }
+  if CharInSet(upcase(AliquotaICMS[1]) , ['T','S']) then
+    AliquotaICMS := AliquotaICMS[1]+AliquotaICMS[1]+PadLeft(copy(AliquotaICMS,2,2),2,'0') ; {Indice T01, T1, T02}
 
   Result := inherited AchaICMSAliquota( AliquotaICMS );
 end;

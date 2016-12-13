@@ -1552,15 +1552,17 @@ end;
 procedure TACBrDevice.EnviaStringRaw(const AString: AnsiString);
 var
   PrnIndex: Integer;
-  PrnName, DocName: String;
+  DocName: String;
   {$IfNDef FPC}
+  PrnName: String;
   HandlePrn: THandle;
   N: DWORD;
   DocInfo1: TDocInfo1;
+  {$Else}
+  Written: integer;
   {$EndIf}
 begin
   DocName := 'ACBrDevice';  // TODO: permitir informar o nome em Properties
-
   PrnIndex := GetPrinterRawIndex;
 
   {$IfDef FPC}
@@ -1568,7 +1570,7 @@ begin
   Printer.Title := DocName;
   Printer.RawMode := True;
   Printer.BeginDoc;
-  Printer.Write(AString);
+  Printer.Write(AString[1], Length(AString), Written);
   Printer.EndDoc;
   {$Else}
   PrnName := Printer.Printers[PrnIndex];

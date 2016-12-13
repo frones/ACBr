@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/12/2016
+-- ACBrECFEscECF --
+[-] Correção para Venda de Item com aliquota de Serviço, sendo informada por
+    Indice... Exemplo: S01, S3
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=33900
+
+-- ACBrDevice --
+[*] Ajuste para compilação em FPC inferior a 3.0  (por: DSA)
+
 Data: 30/11/2016
 -- ACBrBALMagellan --
 [-] Correção no método "InterpretarRepostaPeso" (retorno estava vazio).

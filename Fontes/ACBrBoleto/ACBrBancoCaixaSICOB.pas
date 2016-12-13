@@ -389,7 +389,7 @@ end;
 
 function TACBrCaixaEconomicaSICOB.GetLocalPagamento: String;
 begin
-  Result := 'Preferencialmente nas Casas Lotéricas até o valor limite';
+  Result := ACBrStr(CInstrucaoPagamentoLoterica);
 end;
 
 function TACBrCaixaEconomicaSICOB.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;

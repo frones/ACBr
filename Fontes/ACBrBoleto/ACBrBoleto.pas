@@ -56,8 +56,9 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.211';
+  CACBrBoleto_Versao = '0.0.212';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
+  CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
   cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
   'Remessa Registrar',
@@ -624,6 +625,7 @@ type
     fNumeroBanco       : Integer;
     fTipoCobranca      : TACBrTipoCobranca;
     fBancoClass        : TACBrBancoClass;
+    fLocalPagamento    : String;
     function GetNome   : String;
     function GetDigito : Integer;
     function GetNumero : Integer;
@@ -688,7 +690,7 @@ type
     property TamanhoMaximoNossoNum :Integer read GetTamanhoMaximoNossoNum  write SetTamMaximoNossoNumero;
     property TipoCobranca : TACBrTipoCobranca read fTipoCobranca   write SetTipoCobranca;
     property OrientacoesBanco : TStringList read GetOrientacoesBanco write SetOrientacoesBanco;
-    property LocalPagamento : String    read GetLocalPagamento    write SetLocalPagamento   stored false;
+    property LocalPagamento : String read GetLocalPagamento write SetLocalPagamento;
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite);
@@ -1076,10 +1078,10 @@ type
 
     property Banco          : TACBrBanco         read fBanco                  write fBanco;
     property Cedente        : TACBrCedente       read fCedente                write fCedente ;
-    property NomeArqRemessa : String             read fNomeArqRemessa         write fNomeArqRemessa;  //SetNomeArqRemessa;
-    property DirArqRemessa  : String             read fDirArqRemessa {GetDirArqRemessa} write fDirArqRemessa; //SetNomeArqRemessa;
-    property NomeArqRetorno : String             read fNomeArqRetorno         write fNomeArqRetorno; //SetNomeArqRetorno;
-    property DirArqRetorno  : String             read fDirArqRetorno {GetDirArqRetorno} write fDirArqRetorno; //SetNomeArqRetorno;
+    property NomeArqRemessa : String             read fNomeArqRemessa         write fNomeArqRemessa;
+    property DirArqRemessa  : String             read fDirArqRemessa          write fDirArqRemessa;
+    property NomeArqRetorno : String             read fNomeArqRetorno         write fNomeArqRetorno;
+    property DirArqRetorno  : String             read fDirArqRetorno          write fDirArqRetorno;
     property NumeroArquivo  : integer            read fNumeroArquivo          write fNumeroArquivo;
     property DataArquivo    : TDateTime          read fDataArquivo            write fDataArquivo;
     property DataCreditoLanc: TDateTime          read fDataCreditoLanc        write fDataCreditoLanc;
@@ -1540,7 +1542,7 @@ function TACBrBoleto.CriarTituloNaLista: TACBrTitulo;
 var
    I : Integer;
 begin
-   I      := fListadeBoletos.Add(TACBrTitulo.Create(self));
+   I      := fListadeBoletos.Add(TACBrTitulo.Create(Self));
    Result := fListadeBoletos[I];
 end;
 
@@ -1797,7 +1799,11 @@ end;
 
 function TACBrBanco.GetLocalPagamento: String;
 begin
-   Result:= ACBrStr(fBancoClass.LocalPagamento);
+   if fLocalPagamento = '' then
+      if not (csDesigning in fACBrBoleto.ComponentState) then
+         fLocalPagamento := fBancoClass.LocalPagamento;
+
+   Result := fLocalPagamento;
 end;
 
 procedure TACBrBanco.SetDigito(const AValue: Integer);
@@ -1817,7 +1823,7 @@ end;
 
 procedure TACBrBanco.SetLocalPagamento(const AValue: String);
 begin
-  {Apenas para aparecer no ObjectInspector do D7}
+  fLocalPagamento := TrimRight(AValue);
 end;
 
 procedure TACBrBanco.SetTamMaximoNossoNumero(const Avalue: Integer);
@@ -1836,26 +1842,29 @@ begin
    if fTipoCobranca = AValue then
       exit;
 
+   if fLocalPagamento = fBancoClass.LocalPagamento then   //Usando valor Default
+      fLocalPagamento := '';
+
    fBancoClass.Free;
 
    case AValue of
      cobBancoDoBrasil  : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-     cobBancoDoNordeste:fBancoClass  := TACBrBancoNordeste.create(Self);       {004}
-     cobBanestes       : fBancoClass := TACBrBancoBanestes.create(self);       {021}
+     cobBancoDoNordeste: fBancoClass := TACBrBancoNordeste.create(Self);       {004}
+     cobBanestes       : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
      cobSantander      : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
      cobBanrisul       : fBancoClass := TACBrBanrisul.create(Self);            {041}
-     cobBRB            : fBancoClass := TACBrBancoBRB.create(self);            {070}
+     cobBRB            : fBancoClass := TACBrBancoBRB.create(Self);            {070}
      cobBancoCECRED    : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
      cobCaixaEconomica : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
      cobCaixaSicob     : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
      cobBradesco       : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
-     cobItau           : fBancoClass := TACBrBancoItau.Create(self);           {341}
+     cobItau           : fBancoClass := TACBrBancoItau.Create(Self);           {341}
      cobBancoMercantil : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
-     cobSicred         : fBancoClass := TACBrBancoSicredi.Create(self);        {748}
-     cobBancoob        : fBancoClass := TACBrBancoob.create(self);             {756}
-     cobHSBC           : fBancoClass := TACBrBancoHSBC.create(self);           {399}
-     cobBicBanco       : fBancoClass := TACBrBancoBic.create(self);            {237}
-     cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(self); {237}
+     cobSicred         : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
+     cobBancoob        : fBancoClass := TACBrBancoob.create(Self);             {756}
+     cobHSBC           : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
+     cobBicBanco       : fBancoClass := TACBrBancoBic.create(Self);            {237}
+     cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
      cobBancoSafra     : fBancoClass := TACBrBancoSafra.create(Self);          {422}
      cobSafraBradesco  : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
    else
@@ -2127,7 +2136,7 @@ end;
 
 function TACBrBancoClass.GetLocalPagamento: String;
 begin
-  Result := Format(CInstrucaoPagamento, [fpNome] );
+  Result := Format(ACBrStr(CInstrucaoPagamento), [fpNome] );
 end;
 
 function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDateTime

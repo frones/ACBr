@@ -1313,7 +1313,7 @@ begin
 
                      // se a resposta a mensagem for não, não deixar interromper
                      // voltar ao loop
-                     if Resposta = '1' then
+                     if (TipoCampo = 5013) and (Resposta = '1') then
                        Interromper := False;
                    end ;
 
@@ -1402,8 +1402,7 @@ begin
 
             if Voltar then
                Continua := 1     { Volta para o menu anterior }
-            else
-            if not(Digitado) or Interromper then
+            else if (not Digitado) or Interromper then
                Continua := -1 ;  { Cancela operacao }
 
             if (Voltar and (Result = 10000)) or (not Digitado) then

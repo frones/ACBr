@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX;..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\PCNBlocoX"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrBlocoX\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -25,7 +25,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Bloco X - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="43">
+    <Files Count="6">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX.pas"/>
         <UnitName Value="ACBrBlocoX"/>
@@ -47,6 +47,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas"/>
         <UnitName Value="ACBrBlocoX_ReducaoZ"/>
       </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\PCNBlocoX\pcnRetEnvBlocoX.pas"/>
+        <UnitName Value="pcnRetEnvBlocoX"/>
+      </Item6>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

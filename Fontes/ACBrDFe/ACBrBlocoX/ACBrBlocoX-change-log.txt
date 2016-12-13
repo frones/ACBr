@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2016
+-- ACBrBlocoX.pas --
+[*] Incluídas propriedades de retorno que serão preenchidas em TratarResposta, utilizando
+	a nova unit pcnRetEnvBlocoX para leitura do xml de resposta.
+	
+-- pcnRetEnvBlocoX.pas --
+[+] Criada unit pcnRetEnvBlocoX que fará a leitura do xml de resposta do webservice.
+
 25/11/2016
 [-] Correção pois o campo quantidade não validava no webservice de teste
 		por Juliomar Marchetti

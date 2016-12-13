@@ -33,7 +33,8 @@ interface
 
 uses
   Classes, SysUtils, ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
-  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrDFeWebService, ACBrUtil;
+  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, pcnRetEnvBlocoX, ACBrDFeWebService,
+  ACBrUtil;
 
 const
   ACBRBLOCOX_VERSAO = '1.1.0a';
@@ -54,15 +55,36 @@ const
   { TEnviarBlocoX }
 
   TEnviarBlocoX = class(TWebServiceBlocoX)
+  private
+    fEstadoProcCod: Integer;
+    fEstadoProcStr: AnsiString;
+    fRecibo: AnsiString;
+    fTipo: AnsiString;
+    fVersao: AnsiString;
     FXML : AnsiString;
 
+    fBlocoXRetorno: TRetEnvBlocoX;
+
+  protected
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
     function TratarResposta: Boolean; override;
+
   public
+    constructor Create(AOwner: TACBrDFe); override;
+    destructor Destroy; override;
+
+    procedure Clear; override;
 
     property XML: AnsiString read FXML write FXML;
+
+    property BlocoXRetorno: TRetEnvBlocoX read fBlocoXRetorno;
+    property EstadoProcCod: Integer       read fEstadoProcCod;
+    property EstadoProcStr: AnsiString    read fEstadoProcStr;
+    property Recibo       : AnsiString    read fRecibo;
+    property Tipo         : AnsiString    read fTipo;
+    property Versao       : AnsiString    read fVersao;
   end;
 
   { TConsultarBlocoX }
@@ -268,7 +290,44 @@ function TEnviarBlocoX.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarResponse')));
 
+  Clear;
+  fBlocoXRetorno.Leitor.Arquivo := FPRetWS;
+  fBlocoXRetorno.LerXml;
+
+  fEstadoProcCod := fBlocoXRetorno.EstadoProcCod;
+  fEstadoProcStr := fBlocoXRetorno.EstadoProcStr;
+  fRecibo        := fBlocoXRetorno.Recibo;
+  fTipo          := fBlocoXRetorno.Tipo;
+  fVersao        := fBlocoXRetorno.Versao;
+
   Result := (FPRetWS <> '');
+end;
+
+constructor TEnviarBlocoX.Create(AOwner: TACBrDFe);
+begin
+  inherited Create(AOwner);
+  fBlocoXRetorno := TRetEnvBlocoX.Create;
+end;
+
+destructor TEnviarBlocoX.Destroy;
+begin
+  fBlocoXRetorno.Free;
+  inherited Destroy;
+end;
+
+procedure TEnviarBlocoX.Clear;
+begin
+  inherited Clear;
+
+  fEstadoProcCod := 0;
+  fEstadoProcStr := '';
+  fRecibo        := '';
+  fTipo          := '';
+  fVersao        := '';
+
+  if Assigned(fBlocoXRetorno) then
+    fBlocoXRetorno.Free;
+  fBlocoXRetorno := TRetEnvBlocoX.Create;
 end;
 
 { TWebServiceBlocoX }

@@ -84,20 +84,20 @@ uses
   System.Runtime.InteropServices,
   System.Text,
 {$ENDIF}
+  SysUtils,
   Classes,
-  synafpc,
+  synafpc
 {$IFNDEF MSWINDOWS}
   {$IFDEF FPC}
    {$IFDEF UNIX}
-  BaseUnix,
+  , BaseUnix
    {$ENDIF UNIX}
   {$ELSE}
-   Libc,
+  , Libc
   {$ENDIF}
-  SysUtils;
 {$ELSE}
-  Windows;
-{$ENDIF}
+  , Windows
+{$ENDIF};
 
 
 {$IFDEF CIL}
@@ -614,6 +614,11 @@ var
 
   [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
     SetLastError = False, CallingConvention= CallingConvention.cdecl,
+    EntryPoint =  'RAND_poll')]
+    procedure RandPoll; external;
+
+  [DllImport(DLLUtilName, CharSet = CharSet.Ansi,
+    SetLastError = False, CallingConvention= CallingConvention.cdecl,
     EntryPoint =  'BIO_new')]
     function BioNew(b: PBIO_METHOD): PBIO; external;
 
@@ -787,6 +792,7 @@ var
   procedure OPENSSLaddallalgorithms;
   procedure CRYPTOcleanupAllExData;
   procedure RandScreen;
+  procedure RandPoll;
   function BioNew(b: PBIO_METHOD): PBIO;
   procedure BioFreeAll(b: PBIO);
   function BioSMem: PBIO_METHOD;
@@ -911,6 +917,7 @@ type
   TOPENSSLaddallalgorithms = procedure; cdecl;
   TCRYPTOcleanupAllExData = procedure; cdecl;
   TRandScreen = procedure; cdecl;
+  TRandPoll = procedure; cdecl;
   TBioNew = function(b: PBIO_METHOD): PBIO; cdecl;
   TBioFreeAll = procedure(b: PBIO); cdecl;
   TBioSMem = function: PBIO_METHOD; cdecl;
@@ -1015,6 +1022,7 @@ var
   _OPENSSLaddallalgorithms: TOPENSSLaddallalgorithms = nil;
   _CRYPTOcleanupAllExData: TCRYPTOcleanupAllExData = nil;
   _RandScreen: TRandScreen = nil;
+  _RandPoll: TRandPoll = nil;
   _BioNew: TBioNew = nil;
   _BioFreeAll: TBioFreeAll = nil;
   _BioSMem: TBioSMem = nil;
@@ -1528,6 +1536,12 @@ begin
     _RandScreen;
 end;
 
+procedure RandPoll;
+begin
+  if InitSSLInterface and Assigned(_RandPoll) then
+    _RandPoll;
+end;
+
 function BioNew(b: PBIO_METHOD): PBIO;
 begin
   if InitSSLInterface and Assigned(_BioNew) then
@@ -1948,6 +1962,7 @@ begin
         _OPENSSLaddallalgorithms := GetProcAddr(SSLUtilHandle, 'OPENSSL_add_all_algorithms_noconf');
         _CRYPTOcleanupAllExData := GetProcAddr(SSLUtilHandle, 'CRYPTO_cleanup_all_ex_data');
         _RandScreen := GetProcAddr(SSLUtilHandle, 'RAND_screen');
+        _RandPoll := GetProcAddr(SSLUtilHandle, 'RAND_poll');
         _BioNew := GetProcAddr(SSLUtilHandle, 'BIO_new');
         _BioFreeAll := GetProcAddr(SSLUtilHandle, 'BIO_free_all');
         _BioSMem := GetProcAddr(SSLUtilHandle, 'BIO_s_mem');
@@ -1997,8 +2012,8 @@ begin
           _SslLoadErrorStrings;
         if assigned(_OPENSSLaddallalgorithms) then
           _OPENSSLaddallalgorithms;
-        if assigned(_RandScreen) then
-          _RandScreen;
+        if assigned(_RandPoll) then
+          _RandPoll;
         if assigned(_CRYPTOnumlocks) and assigned(_CRYPTOsetlockingcallback) then
           InitLocks;
 {$ENDIF}
@@ -2143,6 +2158,7 @@ begin
     _OPENSSLaddallalgorithms := nil;
     _CRYPTOcleanupAllExData := nil;
     _RandScreen := nil;
+    _RandPoll := nil;
     _BioNew := nil;
     _BioFreeAll := nil;
     _BioSMem := nil;

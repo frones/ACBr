@@ -170,7 +170,7 @@ uses
   Math, strutils, dateutils,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   pcnAuxiliar,
-  synautil, synacode;
+  synautil, synacode{, blcksock};
 
 procedure InitXmlSec;
 begin
@@ -538,11 +538,11 @@ begin
     { cleanup }
     MS.Free;
 
-    if (doc <> nil) then
-      xmlFreeDoc(doc);
-
     if (dsigCtx <> nil) then
       xmlSecDSigCtxDestroy(dsigCtx);
+
+    if (doc <> nil) then
+      xmlFreeDoc(doc);
   end;
 end;
 
@@ -1310,6 +1310,7 @@ begin
       CarregarCertificado;
   end;
 
+  //fHTTP.Sock.SSL.SSLType := LT_TLSv1_2;
   FHTTP.Timeout := FpDFeSSL.TimeOut;
   FHTTP.Sock.ConnectionTimeout := FpDFeSSL.TimeOut;
 

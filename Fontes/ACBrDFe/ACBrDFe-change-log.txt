@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2016
+-- ACBrDFeOpenSSL, ssl_openssl_lib --
+[*] Melhoria no tempo de carga do OpenSSL.
+[*] Correção na ordem de liberação de Objetos em "VerificarAssinatura"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=33811
+    (por: Waldir Paim)
+
 19/11/2016
 -- ACBrDFeOpenSSL --
 [*] Melhorada a detecção de TimeOut na conexão com o Servidor HTTP

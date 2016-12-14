@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/12/2016
+-- ACBrCTe --
+[*] Descomentado os métodos DistribuicaoDFexxxx.
+    Por: Italo Jurisato Junior
+
 01/12/2016
 -- ACBrCTeDACTEFR
 [-] Adição da informação da I.E. 

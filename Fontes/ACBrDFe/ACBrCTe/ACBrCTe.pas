@@ -119,14 +119,11 @@ type
     function EnviarEvento(idLote: Integer): Boolean;
     function Inutilizar(ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
-    // Método implementando acreditando que futuramente a SEFAZ vai disponibilizar
-    // conforme fez para a NF-e e MDF-e
-    (*
-    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
     function DistribuicaoDFePorUltNSU(AcUFAutor: integer;
       ACNPJCPF, AultNSU: String): Boolean;
     function DistribuicaoDFePorNSU(AcUFAutor: integer;
       ACNPJCPF, ANSU: String): Boolean;
+    (*
     function DistribuicaoDFePorChaveCTe(AcUFAutor: integer;
       ACNPJCPF, AchCTe: String): Boolean;
     *)
@@ -818,7 +815,7 @@ begin
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
-(*
+
 function TACBrCTe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
   AultNSU: String): Boolean;
 begin
@@ -830,7 +827,7 @@ function TACBrCTe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
 end;
-
+(*
 function TACBrCTe.DistribuicaoDFePorChaveCTe(AcUFAutor: integer; ACNPJCPF,
   AchCTe: String): Boolean;
 begin

@@ -1246,6 +1246,10 @@ begin
 
   if (Leitor.rExtrai(1, 'Nfse') <> '') or (Pos('Nfse versao="2.01"', Leitor.Arquivo) > 0) then
   begin
+    NFSe.InfID.ID := Leitor.rAtributo('Id=', 'InfNfse');
+    if NFSe.InfID.ID = '' then
+      NFSe.InfID.ID := Leitor.rAtributo('id=', 'InfNfse');
+
     if (Leitor.rExtrai(2, 'InfNfse') <> '') or (Leitor.rExtrai(1, 'InfNfse') <> '') then
     begin
       NFSe.Numero            := Leitor.rCampo(tcStr, 'Numero');
@@ -1375,13 +1379,15 @@ begin
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
       NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
-      NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+      if NFSe.InfID.ID = '' then
+        NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
     end;
   end
   else
   begin
     NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRps');
-    NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+    if NFSe.InfID.ID = '' then
+      NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
   end;
 
   if (Leitor.rExtrai(3, 'Servico') <> '') then
@@ -1751,18 +1757,14 @@ begin
     Nivel := 3;
 
 //  begin
-    NFSe.InfID.ID := Leitor.rAtributo('Id=');
-    if NFSe.InfID.ID = '' then
-      NFSe.InfID.ID := Leitor.rAtributo('id=');
+//    NFSe.InfID.ID := Leitor.rAtributo('Id=');
+//    if NFSe.InfID.ID = '' then
+//      NFSe.InfID.ID := Leitor.rAtributo('id=');
 
     if FProvedor = ProTecnos then
-    begin
-      NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0));
-    end
+      NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0))
     else
-    begin
       NFSe.Competencia := Leitor.rCampo(tcStr, 'Competencia');
-    end;
 
     NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
     NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
@@ -1778,7 +1780,8 @@ begin
         NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
         NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
         NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
-        NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+        if NFSe.InfID.ID = '' then
+          NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
       end;
 
       if (Leitor.rExtrai(Nivel+1, 'RpsSubstituido') <> '') then
@@ -1797,7 +1800,8 @@ begin
         NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'Numero');
         NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'Serie');
         NFSe.IdentificacaoRps.Tipo   := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
-        NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+        if NFSe.InfID.ID = '' then
+          NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
       end;
 
       if (Leitor.rExtrai(Nivel, 'RpsSubstituido') <> '') then
@@ -2273,9 +2277,9 @@ begin
                                           NFSe.Servico.Valores.ValorDeducoes -
                                           NFSe.Servico.Valores.DescontoIncondicionado;
 
-    NFSe.InfID.ID := Leitor.rAtributo('Id=');
-    if NFSe.InfID.ID = '' then
-      NFSe.InfID.ID := Leitor.rAtributo('id=');
+//    NFSe.InfID.ID := Leitor.rAtributo('Id=');
+//    if NFSe.InfID.ID = '' then
+//      NFSe.InfID.ID := Leitor.rAtributo('id=');
 
     NFSe.Competencia := FormatDateTime('mm/yyyy', NFSe.DataEmissao);
     NFSe.OptanteSimplesNacional := _StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
@@ -2301,7 +2305,8 @@ begin
       else
         NFSe.IdentificacaoRps.Tipo := StrToTipoRPS(ok, Leitor.rCampo(tcStr, 'Tipo'));
 
-      NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+      if NFSe.InfID.ID = '' then
+        NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
     end;
   end;
 
@@ -2387,7 +2392,9 @@ begin
     NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');
     NFSe.IdentificacaoRps.Tipo   := trRPS; //StrToTipoRPS(ok, leitorAux.rCampo(tcStr, 'Tipo'));
 
-    NFSe.InfID.ID       := OnlyNumber(NFSe.IdentificacaoRps.Numero);// + NFSe.IdentificacaoRps.Serie;
+    if NFSe.InfID.ID = '' then
+      NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero);// + NFSe.IdentificacaoRps.Serie;
+      
     NFSe.SeriePrestacao := Leitor.rCampo(tcStr, 'SeriePrestacao');
 
     NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipalTomador');
@@ -2601,7 +2608,8 @@ begin
       NFSe.IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumeroRPS');
       NFSe.IdentificacaoRps.Serie  := Leitor.rCampo(tcStr, 'SerieRPS');
       NFSe.IdentificacaoRps.Tipo   := trRPS;
-      NFSe.InfID.ID                := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
+      if NFSe.InfID.ID = '' then
+        NFSe.InfID.ID := OnlyNumber(NFSe.IdentificacaoRps.Numero) + NFSe.IdentificacaoRps.Serie;
     end;
 
     if (Leitor.rExtrai(2, 'CPFCNPJPrestador') <> '') then

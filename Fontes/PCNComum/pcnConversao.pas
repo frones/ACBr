@@ -591,22 +591,22 @@ end;
 
 function CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
 begin
-     result := EnumeradoToStr(t,
-          ['00 - Entrada com Recuperação de Crédito',
-          '01 - Entrada Tributável com Alíquota Zero',
-          '02 - Entrada Isenta',
-          '03 - Entrada Não-Tributada',
-          '04 - Entrada Imune',
-          '05 - Entrada com Suspensão',
-          '49 - Outras Entradas',
-          '50 - Saída Tributada',
-          '51 - Saída Tributável com Alíquota Zero',
-          '52 - Saída Isenta',
-          '53 - Saída Não-Tributada',
-          '54 - Saída Imune',
-          '55 - Saída com Suspensão',
-          '99 - Outras Saídas'],
-          [ipi00, ipi49, ipi50, ipi99, ipi01, ipi02, ipi03, ipi04, ipi05, ipi51, ipi52, ipi53, ipi54, ipi55]);
+  case t of
+    ipi00 : Result := '00 - Entrada com Recuperação de Crédito';
+    ipi01 : Result := '01 - Entrada Tributável com Alíquota Zero';
+    ipi02 : Result := '02 - Entrada Isenta';
+    ipi03 : Result := '03 - Entrada Não-Tributada';
+    ipi04 : Result := '04 - Entrada Imune';
+    ipi05 : Result := '05 - Entrada com Suspensão';
+    ipi49 : Result := '49 - Outras Entradas';
+    ipi50 : Result := '50 - Saída Tributada';
+    ipi51 : Result := '51 - Saída Tributável com Alíquota Zero';
+    ipi52 : Result := '52 - Saída Isenta';
+    ipi53 : Result := '53 - Saída Não-Tributada';
+    ipi54 : Result := '54 - Saída Imune';
+    ipi55 : Result := '55 - Saída com Suspensão';
+    ipi99 : Result := '99 - Outras Saídas';
+  end;
 end;
 
 function OrigToStrTagPosText(const t: TpcnOrigemMercadoria): string;

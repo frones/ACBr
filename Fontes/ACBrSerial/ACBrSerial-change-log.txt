@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/12/2016
+-- ACBrDevice --
+[-] Correção na detecção de Impressora "RAW", com nome de Rede:
+	http://www.projetoacbr.com.br/forum/topic/33998-impressora-nao-encontrada-no-posprinter/
+
 Data: 13/12/2016
 -- ACBrECFEscECF --
 [-] Correção para Venda de Item com aliquota de Serviço, sendo informada por

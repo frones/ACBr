@@ -1234,33 +1234,36 @@ var
   PrnName: String;
   PrnIndex: Integer;
 
+  function RetornaNome(const ANome: string): string;
+  begin
+    Result := Copy(ANome, 3, Length(ANome));
+    Result := Copy(Result, pos('\', Result) + 1, Length(Result));
+  end;
+
   function RetornaPorta: Integer;
   var
     I: Integer;
-    VPos: Integer;
     VName: String;
   begin
-    Result := -1;
-    for I := 0 to Pred(Printer.Printers.Count) do
-    begin
-      {$IFDEF MSWINDOWS}
-      VName := Printer.Printers[I];
-      if pos('\\', copy(VName, 1, 2)) > 0 then  //se for impressora na rede.
-      begin
-        VName := copy(VName, 3, Length(VName));
-        VPos := pos('\', VName);
-        VName := copy(VName, VPos + 1, Length(VName));
-      end;
+    Result := Printer.Printers.IndexOf(PrnName);
 
-      if SameText(PrnName, VName) then
+    {$IFDEF MSWINDOWS}
+    if Result < 0 then
+    begin
+      for I := 0 to Pred(Printer.Printers.Count) do
       begin
-        Result := I;
-        Break;
+        VName := Printer.Printers[I];
+        if pos('\\', Copy(VName, 1, 2)) > 0 then
+        begin
+          if SameText(PrnName, RetornaNome(VName)) then
+          begin
+            Result := I;
+            Break;
+          end;
+        end;
       end;
-      {$ELSE}
-      Printer.Printers.IndexOf(PrnName);
-      {$ENDIF}
     end;
+    {$ENDIF}
   end;
 
 begin

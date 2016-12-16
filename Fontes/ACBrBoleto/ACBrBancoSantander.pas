@@ -693,7 +693,7 @@ begin
       with ACBrBoleto do
       begin
          wLinha:= '1'                                                         +  // 1- ID Registro
-                  IfThen(Length(Cedente.CNPJCPF) > 12,'02','01')              +  // 2 a 3
+                  IfThen(Cedente.TipoInscricao = pJuridica,'02','01')         +  // 2 a 3
                   PadLeft(trim(OnlyNumber(Cedente.CNPJCPF)),14,'0')           +  // 4 a 17
                   PadRight(trim(Cedente.CodigoTransmissao),20,'0')            +  // 18 a 37
                   PadRight( SeuNumero ,25,' ')                                +  // 38 a 62

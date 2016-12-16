@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 16/12/2016
+[*] Melhoria para validar por tipo já que o cpf ou cnpj vem com maskara e ocasiona erro.
+		http://www.projetoacbr.com.br/forum/topic/34057-santander-corre%C3%A7%C3%A3o-arquivo-remessa/
+		por: Juliomar Marchetti
+		
 Data: 13/12/2016 ver: 0.0.212
 -- ACBrBoleto --
 [+] Adicionada a possibilidade de poder configurar o valor do Local de Pagamento

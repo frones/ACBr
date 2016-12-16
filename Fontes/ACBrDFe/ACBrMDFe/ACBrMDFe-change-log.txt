@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2016
+[+] Adição das leituras do MDFe 3.00
+		http://www.projetoacbr.com.br/forum/topic/34051-lerxml-mdfe-300/
+		por: Juliomar Marchetti
+		
 01/12/2016
 [+] Adição de mudanças para o DAMDFe Aquaviario
 		http://www.projetoacbr.com.br/forum/topic/33778-mdf-e-damdfe-aquavi%C3%A1rio/

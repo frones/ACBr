@@ -176,7 +176,32 @@ begin
 
       if MDFe.infMDFe.versao = 3 then
         if (Leitor.rExtrai(3, 'infANTT') <> '') then
-          MDFe.Rodo.infANTT.RNTRC:=Leitor.rCampo(tcStr, 'RNTRC');
+        begin
+          MDFe.Rodo.infANTT.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
+
+          if Leitor.rExtrai(3, 'infCIOT') <> '' then
+          begin
+            i01 := 0;
+            while Leitor.rExtrai(4, 'infCIOT', '', i01 + 1) <> '' do
+            begin
+              MDFe.Rodo.infANTT.infCIOT.Add;
+              MDFe.Rodo.infANTT.infCIOT[i01].CIOT := Leitor.rCampo(tcStr, 'CIOT');
+              MDFe.Rodo.infANTT.infCIOT[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+              inc(i01);
+            end;
+          end;
+
+          if Leitor.rExtrai(3, 'infContratante') <> '' then
+          begin
+            i01 := 0;
+            while Leitor.rExtrai(4, 'infContratante', '', i01 + 1) <> '' do
+            begin
+              MDFe.Rodo.infANTT.infContratante.Add;
+              MDFe.Rodo.infANTT.infContratante[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+              inc(i01);
+            end;
+          end; 
+        end;
 
       if (Leitor.rExtrai(3, 'veicTracao') <> '') or (Leitor.rExtrai(3, 'veicPrincipal') <> '')then
        begin
@@ -253,6 +278,9 @@ begin
           MDFe.Rodo.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
           MDFe.Rodo.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
           MDFe.Rodo.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
+
+           if MDFe.infMDFe.versao = 3 then
+             MDFe.Rodo.valePed.disp[i01].vValePed  := Leitor.rCampo(tcDe2, 'vValePed');
           inc(i01);
         end;
        end;

@@ -498,7 +498,7 @@ begin
     with FieldDefs do
     begin
       Clear;
-      Add('DiscriminacaoServico', ftString, 80);
+      Add('DiscriminacaoServico', ftString, 256);
       Add('Quantidade', ftString, 10);
       Add('ValorUnitario', ftString, 30);
       Add('ValorTotal', ftString, 30);
@@ -840,8 +840,7 @@ begin
 
       with Servico do
       begin
-        FieldByName('CodigoMunicipio').AsString := IfThen(CodigoMunicipio <> '',
-          CodCidadeToCidade(StrToIntDef(ANFSe.Servico.CodigoMunicipio, 0)), '');
+        FieldByName('CodigoMunicipio').AsString     := IfThen(CodigoMunicipio <> '', CodigoMunicipio, '');
         FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
         FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
       end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/12/2016
+[*] Modificação para o código da cidade e aumentar o tamanho da descrição limitado a 80 antes
+		http://www.projetoacbr.com.br/forum/topic/34035-campo-discriminacaoservico-para-danfsefr3-cortando/
+		por : Juliomar Marchetti
+		
 18/11/2016
 --ACBrNFSeDANFSeFR
 [*] Modificado pra pegar a competencia que já vem no xml

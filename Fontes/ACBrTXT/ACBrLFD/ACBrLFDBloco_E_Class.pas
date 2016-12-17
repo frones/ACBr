@@ -468,9 +468,12 @@ begin
 
          Add(Astr);
 
-         WriteRegistroE020(FRegistroE001);
-         WriteRegistroE300(FRegistroE001);
-         WriteRegistroE500(FRegistroE001);
+         if IND_MOV = imlComDados then
+         begin
+           WriteRegistroE020(FRegistroE001);
+           WriteRegistroE300(FRegistroE001);
+           WriteRegistroE500(FRegistroE001);
+         end;
       end;
 
       RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;

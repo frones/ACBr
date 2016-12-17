@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 17/12/2016
+[*] Mudança para gerar os registros bloco E somente se tiver dados
+		http://www.projetoacbr.com.br/forum/topic/33970-corre%C3%A7%C3%A3o-bloco-e-acbrlfd/
+		Juliomar Marchetti 
+		
 Data 13/10/2014
 [-] Correção do registro A350 (por: Vagner Nox)
 http://www.projetoacbr.com.br/forum/index.php?/tracker/issue-45-lfd-livro-fiscal-eletr%C3%B4nico-registro-a350-com-bug/

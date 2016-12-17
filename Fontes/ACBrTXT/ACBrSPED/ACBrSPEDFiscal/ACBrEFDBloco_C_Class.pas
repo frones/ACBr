@@ -1329,7 +1329,7 @@ begin
                LFill( SUB ) +
                LFill( NUM_DOC ) +
                LFill( DT_DOC ) +
-               LFill( CHV_DOCe )) ;
+               IfThen( FBloco_0.Registro0000.COD_VER >= vlVersao110, LFill( CHV_DOCe ), EmptyStr));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;

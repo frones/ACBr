@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 17/12/2016
+[+] Mudanças para atender nova versão em janeiro de 2017 do sped fiscal
+		http://www.projetoacbr.com.br/forum/topic/33868-obrigatoriedades-bloco-c113/
+		por : Juliomar Marchetti
+		
 Data 07/12/2016
 [+] Adição do C113 e 0200 para atender mudanças em janeiro
 		http://www.projetoacbr.com.br/forum/topic/33868-obrigatoriedades-bloco-c113/

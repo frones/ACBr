@@ -1229,9 +1229,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         Lines.Strings = (
           
-            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
-            'leto, contate o benefici'#225'rio)')
+            'Instru'#231#245'es (Texto de responsabilidade do benefici'#225'rio.)')
         ParentFont = False
       end
       object txtInstrucoes2: TRLMemo
@@ -2385,9 +2383,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         Lines.Strings = (
           
-            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
-            'leto, contate o benefici'#225'rio)')
+            'Instru'#231#245'es (Texto de responsabilidade do benefici'#225'rio.)')
         ParentFont = False
       end
       object txtInstrucoes3: TRLMemo
@@ -3206,9 +3202,7 @@ object ACBRBoletoFCFortesFr: TACBRBoletoFCFortesFr
         Font.Style = []
         Lines.Strings = (
           
-            'Instru'#231#245'es (Todas as informa'#231#245'es deste bloqueto s'#227'o de exclusiva' +
-            ' responsabilidade do benefici'#225'rio. Qualquer d'#250'vida sobre este bo' +
-            'leto, contate o benefici'#225'rio)')
+            'Instru'#231#245'es (Texto de responsabilidade do benefici'#225'rio.)')
         ParentFont = False
       end
       object RLLabel124: TRLLabel

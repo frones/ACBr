@@ -6743,7 +6743,9 @@ begin
     Relatorio.Add('CEP.........: ' + IdentificacaoPaf.Empresa.Cep);
     Relatorio.Add('Telefone....: ' + IdentificacaoPaf.Empresa.Telefone);
     Relatorio.Add('Contato.....: ' + IdentificacaoPaf.Empresa.Contato);
-    Relatorio.Add('e-mail......: ' + IdentificacaoPaf.Empresa.Email);
+
+    // Removido e-mail por solicitação da POLIMIG para homologação.
+    //Relatorio.Add('e-mail......: ' + IdentificacaoPaf.Empresa.Email);
 
     Relatorio.Add('');
     Relatorio.Add('<n>IDENTIFICACAO DO PAF-ECF</n>');
@@ -6886,8 +6888,10 @@ begin
     Relatorio.Add('</linha_dupla>');
     Relatorio.Add('');
 
+    // Incluída UF após texto, por solicitação da POLIMIG durante Homologação
     if versaoPafECF >= 201 then
-      Relatorio.Add('Perfil de Requisitos Configurado: ' + AInfoPafECF.PerfilRequisitos)
+      Relatorio.Add('Perfil de Requisitos Configurado: ' + AInfoPafECF.PerfilRequisitos +
+        ' - UF: ' + fsAAC.IdentPAF.Empresa.Uf)
     else
     begin
       Relatorio.Add(QuebraLinhas(

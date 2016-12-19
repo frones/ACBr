@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/12/2016
+-- ACBrECF --
+[*] Removido e-mail do Relatório de Identificação do PAF-ECF;
+[*] Inclusão da UF no Relatório de Parâmetros de Configuração.	
+	(por: Elias César)
+
 Data: 15/12/2016
 -- ACBrDevice --
 [-] Correção na detecção de Impressora "RAW", com nome de Rede:

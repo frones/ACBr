@@ -6891,7 +6891,7 @@ begin
     // Incluída UF após texto, por solicitação da POLIMIG durante Homologação
     if versaoPafECF >= 201 then
       Relatorio.Add('Perfil de Requisitos Configurado: ' + AInfoPafECF.PerfilRequisitos +
-        ' - UF: ' + fsAAC.IdentPAF.Empresa.Uf)
+        ' - UF: ' + fsAAC.IdentPAF.Paf.UFContribuinte)
     else
     begin
       Relatorio.Add(QuebraLinhas(

@@ -156,6 +156,7 @@ type
     FTransfPreVenda: Boolean;
     FBarSimilarECFComum: Boolean;
     FBarSimilarBalanca: Boolean;
+    fUFContribuinte: String;
     FUsaImpressoraNaoFiscal: Boolean;
     FTransportePassageiro: Boolean;
     FRealizaDAVNaoFiscal: Boolean;
@@ -247,6 +248,9 @@ type
 
     // homologação 02.01
     property PerfilRequisitos: String read FPerfilRequisitos write FPerfilRequisitos;
+
+    // homologação 02.04
+    property UFContribuinte: String read fUFContribuinte write fUFContribuinte;
   end;
 
   TACBrECFIdentificacaoPAF = class( TPersistent )

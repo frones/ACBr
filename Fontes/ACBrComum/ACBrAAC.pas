@@ -326,7 +326,7 @@ begin
         begin
            fsIdentPAF.NumeroLaudo             := Ini.ReadString('PAF','NumeroLaudo','');        // Número do Laudo
            fsIdentPAF.DataLaudo               := Ini.ReadDate('PAF','EmissaoLaudo',0);          // Emissão do Laudo
-           fsIdentPAF.NumeroCredencimento     := Ini.ReadString('PAF','NumeroCredencimento','');        // Número do Laudo
+           fsIdentPAF.NumeroCredencimento     := Ini.ReadString('PAF','NumeroCredencimento','');// Número do Laudo
            fsIdentPAF.VersaoER                := Ini.ReadString('PAF','VersaoER','');           // Versão do Roteiro Executado na Homologação
            fsIdentPAF.Paf.Nome                := Ini.ReadString('PAF','Nome','');               // Nome do Sistema PAF
            fsIdentPAF.Paf.Versao              := Ini.ReadString('PAF','Versao','');             // Versão do Sistema PAF
@@ -341,6 +341,7 @@ begin
            fsIdentPAF.Paf.IntegracaoPAFECF    := TACBrPAFTipoIntegracao(Ini.ReadInteger('PAF', 'IntegracaoPAFECF', 0));
 
            fsIdentPAF.Paf.PerfilRequisitos    := Ini.ReadString('PAF', 'PerfilRequisitos', '');
+           fsIdentPAF.Paf.UFContribuinte      := Ini.ReadString('PAF', 'UFContribuinte', '');  // Sigla da UF do Contribuinte
         end ;
      end ;
 
@@ -510,6 +511,7 @@ begin
         Ini.WriteInteger('PAF', 'IntegracaoPAFECF', Integer(fsIdentPAF.Paf.IntegracaoPAFECF));
 
         Ini.WriteString('PAF', 'PerfilRequisitos', fsIdentPAF.Paf.PerfilRequisitos);
+        Ini.WriteString('PAF', 'UFContribuinte', fsIdentPAF.Paf.UFContribuinte);  // Sigla da UF do Contribuinte
      end ;
 
      if GravarConfigApp then

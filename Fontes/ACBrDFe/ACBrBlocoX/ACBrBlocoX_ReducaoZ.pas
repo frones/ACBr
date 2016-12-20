@@ -151,6 +151,7 @@ begin
   FGerador.wGrupo('Ecf');
   with TACBrBlocoX(FACBrBlocoX).ECF do
   begin
+    FGerador.wCampo(tcStr, '', 'NumeroCredenciamento', 0, 0, 1, NumeroCredenciamento);
     FGerador.wCampo(tcStr, '', 'NumeroFabricacao', 0, 0, 1, NumeroFabricacao);
     FGerador.wCampo(tcStr, '', 'Tipo', 0, 0, 1, Tipo);
     FGerador.wCampo(tcStr, '', 'Marca', 0, 0, 1, Marca);

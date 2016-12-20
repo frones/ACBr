@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2016
+[*] Mudanças para atender modificações do webservice de SC 
+		http://www.projetoacbr.com.br/forum/topic/33738-erro-envio-bloco-x-redu%C3%A7%C3%B5es-z/
+		por : Juliomar Marchetti
+		
 13/12/2016
 -- ACBrBlocoX.pas --
 [*] Incluídas propriedades de retorno que serão preenchidas em TratarResposta, utilizando

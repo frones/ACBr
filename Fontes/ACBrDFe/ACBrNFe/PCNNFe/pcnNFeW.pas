@@ -1194,9 +1194,9 @@ procedure TNFeW.GerarDetImpostoICMS(const i: Integer);
           cst81		: result := '81';
           cst90		: result := '90';
           cstPart10 ,
-          cstPart90 : result:= 'Part';
-          cstRep41,
-          cstRep60  : result:= 'ST';
+          cstPart90 : result := 'Part';
+          cstRep41  : result := 'ST';
+          cstRep60  : result :=IIf(nfe.infNFe.Versao < 4, '60', 'ST');
        end;
      end;
 begin
@@ -1212,7 +1212,8 @@ begin
                 (nfe.Det[i].Imposto.ICMS.vICMSSTDest <> 0)) then
                nfe.Det[i].Imposto.ICMS.CST := cstRep41;
 
-            if (nfe.Det[i].Imposto.ICMS.CST = cst60) and       //Ajuste para funcionar no ACBrNFeMonitor
+            if (nfe.infNFe.Versao > 4) and
+               (nfe.Det[i].Imposto.ICMS.CST = cst60) and       //Ajuste para funcionar no ACBrNFeMonitor
                ((nfe.Det[i].Imposto.ICMS.vBCSTRet <> 0) or     //Qdo passar CST 60 e algum campo de repasse de ICMS ST
                 (nfe.Det[i].Imposto.ICMS.vICMSSTRet <> 0) or   //estiver preenchido será trocado o cst para cstRep60
                 (nfe.Det[i].Imposto.ICMS.vBCSTDest <> 0) or

@@ -40,33 +40,39 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/12/2016
+-- ACBrBlocoX --
+[-] Correção de Erro de compilação em D7
+[-] Remoção de Memory Leak
+    (por: DSA)
+
+20/12/2016
 [*] Mudanças para atender modificações do webservice de SC 
-		http://www.projetoacbr.com.br/forum/topic/33738-erro-envio-bloco-x-redu%C3%A7%C3%B5es-z/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/33738-erro-envio-bloco-x-redu%C3%A7%C3%B5es-z/
+    por : Juliomar Marchetti
 		
 13/12/2016
 -- ACBrBlocoX.pas --
 [*] Incluídas propriedades de retorno que serão preenchidas em TratarResposta, utilizando
-	a nova unit pcnRetEnvBlocoX para leitura do xml de resposta.
+    a nova unit pcnRetEnvBlocoX para leitura do xml de resposta.
 	
 -- pcnRetEnvBlocoX.pas --
 [+] Criada unit pcnRetEnvBlocoX que fará a leitura do xml de resposta do webservice.
 
 25/11/2016
 [-] Correção pois o campo quantidade não validava no webservice de teste
-		por Juliomar Marchetti
+    por Juliomar Marchetti
 		
 05/10/2016
 -- ACBrBlocoX_Estoque
 [-] Correção conforme manual e servidor sefaz para 2 casas decimais
-		http://www.projetoacbr.com.br/forum/topic/32702-envio-blocox-altera%C3%A7%C3%A3o-campo-quantidade/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/32702-envio-blocox-altera%C3%A7%C3%A3o-campo-quantidade/
+    por: Juliomar Marchetti
 		
 26/09/2016
 -- ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque
 [*] Melhoria para deixar aparecer 3 casas decimais nas quantidades
-		http://www.projetoacbr.com.br/forum/topic/28811-paf-ecf-blocox-corre%C3%A7%C3%A3o-tipo-de-campo/?do=findComment&comment=215309
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/28811-paf-ecf-blocox-corre%C3%A7%C3%A3o-tipo-de-campo/?do=findComment&comment=215309
+    por: Juliomar Marchetti
 		
 22/02/2016
 -- ACBrBlocoX_ReducaoZ --

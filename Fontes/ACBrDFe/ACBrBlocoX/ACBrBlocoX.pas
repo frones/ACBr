@@ -361,12 +361,12 @@ end;
 constructor TEnviarBlocoX.Create(AOwner: TACBrDFe);
 begin
   inherited Create(AOwner);
-  fBlocoXRetorno := TRetEnvBlocoX.Create;
+  // inherited chamará "Clear", que instanciará "fBlocoXRetorno"
 end;
 
 destructor TEnviarBlocoX.Destroy;
 begin
-  fBlocoXRetorno.Free;
+  FreeAndNil( fBlocoXRetorno );
   inherited Destroy;
 end;
 
@@ -381,7 +381,7 @@ begin
   fVersao        := '';
 
   if Assigned(fBlocoXRetorno) then
-    fBlocoXRetorno.Free;
+    FreeAndNil( fBlocoXRetorno );
 
   fBlocoXRetorno := TRetEnvBlocoX.Create;
 end;

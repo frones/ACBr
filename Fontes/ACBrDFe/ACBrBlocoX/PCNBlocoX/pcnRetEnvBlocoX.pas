@@ -65,6 +65,7 @@ implementation
 
 constructor TretEnvBlocoX.Create;
 begin
+  inherited;
   fLeitor := TLeitor.Create;
 end;
 

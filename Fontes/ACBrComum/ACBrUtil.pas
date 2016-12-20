@@ -1424,10 +1424,10 @@ end;
 
 function FloatMask(const DecimalDigits: SmallInt): String;
 begin
-  Result := '0';
-
   if DecimalDigits > 0 then
-     Result := Result + '.' + StringOfChar('0',DecimalDigits)
+    Result := ',0.' + StringOfChar('0',DecimalDigits)
+  else
+    Result := '0';
 end;
 
 {-----------------------------------------------------------------------------

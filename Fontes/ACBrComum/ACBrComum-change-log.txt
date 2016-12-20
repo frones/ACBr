@@ -40,8 +40,8 @@ Símbolo : Significado
 
 Data: 20/12/2016
 -- ACBrUtil --
-[*] FormatFloatBr. Ajuste para usar separador de milhar, na mascara padrão
-    ',0.00'   (por: DSA)
+[*] FormatFloatBr e FloatMask. Ajuste para usar separador de milhar, na mascara
+    padrão ',0.00'   (por: DSA)
 
 Data: 08/12/2016
 -- ACBrUtil --

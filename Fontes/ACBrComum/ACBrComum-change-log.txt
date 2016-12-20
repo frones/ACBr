@@ -38,9 +38,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/12/2016
+-- ACBrUtil --
+[*] FormatFloatBr. Ajuste para usar separador de milhar, na mascara padrão
+    ',0.00'   (por: DSA)
+
 Data: 08/12/2016
+-- ACBrUtil --
 [+] Adição de mais um formatmask
-		por: Juliomar Marchetti
+    por: Juliomar Marchetti
 
 Data: 24/10/2016
 -- ACBr.inc --
@@ -60,7 +66,7 @@ Data: 02/09/2016
 -- ACBrConsts --
 [-] Ajustado cTAGS_BARRAS e cTAGS_BARRAS_HELP que estavão com o número de elementos 
     errados ocasionando erro ao solicitar cTAGS_BARRAS_HELP[13].
-    (por: Rodrigo Frühwirth)                          1111111111111
+    (por: Rodrigo Frühwirth)
 [+] Adicionado enumerador QrCode para que posso ser implementado nas demais ECFs.
     (por: Rodrigo Frühwirth)
 

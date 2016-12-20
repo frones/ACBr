@@ -1401,7 +1401,7 @@ Var
   {$ENDIF}
 begin
   if AFormat = '' then
-     AFormat := '0.00';
+     AFormat := ',0.00';
 
   {$IFDEF HAS_FORMATSETTINGS}
   FS := CreateFormatSettings;

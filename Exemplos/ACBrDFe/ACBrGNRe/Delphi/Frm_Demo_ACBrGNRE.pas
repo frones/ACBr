@@ -8,7 +8,7 @@ uses IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pgnreConversao, ACBrGNRE2, ACBrGNREGuiaClass,
-  ACBrDFeUtil, ACBrBase, ACBrDFe;
+  ACBrDFeUtil, ACBrBase, ACBrDFe, ACBrGNREGuiaFRDM, ACBrGNREGuiaFR;
 
 type
   TfrmDemo_ACBrGNRE = class(TForm)
@@ -113,6 +113,7 @@ type
     MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     ACBrGNRE1: TACBrGNRE;
+    ACBrGNREGuiaFR1: TACBrGNREGuiaFR;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -463,10 +464,10 @@ begin
   MemoDados.Lines.Add('Uf: '      +ACBrGNRE1.WebServices.ConsultaUF.Uf);
   MemoDados.Lines.Add('exigeUfFavorecida : ' + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeUfFavorecida = 'S', 'SIM', 'NÃO'));
   MemoDados.Lines.Add('exigeReceita: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeReceita = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeContribuinteEmitente: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeDataVencimento: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeConvenio: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeDataPagamento: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataPagamento = 'S', 'SIM', 'NÃO'));
+//  MemoDados.Lines.Add('exigeContribuinteEmitente: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
+//  MemoDados.Lines.Add('exigeDataVencimento: '     + IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
+//  MemoDados.Lines.Add('exigeConvenio: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
+//  MemoDados.Lines.Add('exigeDataPagamento: '+ IIF(ACBrGNRE1.WebServices.ConsultaUF.exigeDataPagamento = 'S', 'SIM', 'NÃO'));
 end;
 
 procedure TfrmDemo_ACBrGNRE.btnCriarEnviarClick(Sender: TObject);

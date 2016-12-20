@@ -68,7 +68,6 @@ type
     property GNRE: TGNRE read FGNRE write FGNRE;
   end;
 
-  ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
@@ -94,19 +93,26 @@ end;
 
 function TGNRER.LerXml: boolean;
 var
-  ok: boolean;
-  i, j: integer;
+  i         : integer;
   CampoExtra: TCampoExtraCollectionItem;
 begin
-  (* Grupo da TAG <TDadosGNRE> *******************************************************)
+  (* Grupo da TAG <TDadosGNRE> ****************************************************** *)
   if Leitor.rExtrai(1, 'TDadosGNRE') <> '' then
   begin
-    GNRE.c01_UfFavorecida                  := Leitor.rCampo(tcStr, 'c01_UfFavorecida');
-    GNRE.c02_receita                       := Leitor.rCampo(tcInt, 'c02_receita');
-    GNRE.c25_detalhamentoReceita           := Leitor.rCampo(tcInt, 'c25_detalhamentoReceita');
-    GNRE.c26_produto                       := Leitor.rCampo(tcInt, 'c26_produto');
-    GNRE.c27_tipoIdentificacaoEmitente     := Leitor.rCampo(tcInt, 'c27_tipoIdentificacaoEmitente');
-    GNRE.c03_idContribuinteEmitente        := Leitor.rCampo(tcStr, 'c03_idContribuinteEmitente');
+    GNRE.c01_UfFavorecida              := Leitor.rCampo(tcStr, 'c01_UfFavorecida');
+    GNRE.c02_receita                   := Leitor.rCampo(tcInt, 'c02_receita');
+    GNRE.c25_detalhamentoReceita       := Leitor.rCampo(tcInt, 'c25_detalhamentoReceita');
+    GNRE.c26_produto                   := Leitor.rCampo(tcInt, 'c26_produto');
+    GNRE.c27_tipoIdentificacaoEmitente := Leitor.rCampo(tcInt, 'c27_tipoIdentificacaoEmitente');
+    GNRE.c03_idContribuinteEmitente    := Leitor.rCampo(tcStr, 'c03_idContribuinteEmitente');
+    if Leitor.rExtrai(2, 'c03_idContribuinteEmitente') <> '' then
+    begin
+      if GNRE.c27_tipoIdentificacaoEmitente = 1 then // CNPJ
+        GNRE.c03_idContribuinteEmitente := Leitor.rCampo(tcStr, 'CNPJ')
+      else
+        GNRE.c03_idContribuinteEmitente := Leitor.rCampo(tcStr, 'CPF');
+    end;
+    Leitor.rExtrai(1, 'TDadosGNRE');
     GNRE.c28_tipoDocOrigem                 := Leitor.rCampo(tcInt, 'c28_tipoDocOrigem');
     GNRE.c04_docOrigem                     := Leitor.rCampo(tcStr, 'c04_docOrigem');
     GNRE.c06_valorPrincipal                := Leitor.rCampo(tcDe2, 'c06_valorPrincipal');
@@ -122,9 +128,18 @@ begin
     GNRE.c22_telefoneEmitente              := Leitor.rCampo(tcStr, 'c22_telefoneEmitente');
     GNRE.c34_tipoIdentificacaoDestinatario := Leitor.rCampo(tcInt, 'c34_tipoIdentificacaoDestinatario');
     GNRE.c35_idContribuinteDestinatario    := Leitor.rCampo(tcStr, 'c35_idContribuinteDestinatario');
+
+    if Leitor.rExtrai(2, 'c35_idContribuinteDestinatario') <> '' then
+    begin
+      if GNRE.c34_tipoIdentificacaoDestinatario = 1 then // CNPJ
+        GNRE.c35_idContribuinteDestinatario := Leitor.rCampo(tcStr, 'CNPJ')
+      else
+        GNRE.c35_idContribuinteDestinatario := Leitor.rCampo(tcStr, 'CPF');
+    end;
+    Leitor.rExtrai(1, 'TDadosGNRE');
     GNRE.c36_inscricaoEstadualDestinatario := Leitor.rCampo(tcStr, 'c36_inscricaoEstadualDestinatario');
     GNRE.c37_razaoSocialDestinatario       := Leitor.rCampo(tcStr, 'c37_razaoSocialDestinatario');
-    GNRE.c38_municipioDestinatario         := Leitor.rCampo(tcInt, 'c38_municipioDestinatario');
+    GNRE.c38_municipioDestinatario         := Leitor.rCampo(tcStr, 'c38_municipioDestinatario');
     GNRE.c33_dataPagamento                 := Leitor.rCampo(tcDat, 'c33_dataPagamento');
     GNRE.c42_identificadorGuia             := Leitor.rCampo(tcStr, 'c42_identificadorGuia');
   end;
@@ -143,10 +158,11 @@ begin
   begin
     while Leitor.rExtrai(2, 'campoExtra', '', i + 1) <> '' do
     begin
-      CampoExtra := GNRE.camposExtras.Add;
+      CampoExtra                   := GNRE.camposExtras.Add;
       CampoExtra.CampoExtra.codigo := Leitor.rCampo(tcInt, 'codigo');
       CampoExtra.CampoExtra.tipo   := Leitor.rCampo(tcStr, 'tipo');
       CampoExtra.CampoExtra.valor  := Leitor.rCampo(tcStr, 'valor');
+      Inc(i);
     end;
   end;
 
@@ -154,4 +170,3 @@ begin
 end;
 
 end.
-

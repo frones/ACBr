@@ -86,7 +86,9 @@ begin
 end;
 
 function TGNREW.GerarXml: boolean;
-var i: Integer;
+var
+  i  : Integer;
+  Doc: string;
 begin
   Gerador.ArquivoFormatoXML := '';
 
@@ -102,27 +104,34 @@ begin
   if GNRE.c27_tipoIdentificacaoEmitente > 0 then
     Gerador.wCampo(tcInt, '', 'c27_tipoIdentificacaoEmitente   ', 001, 001, 1, GNRE.c27_tipoIdentificacaoEmitente, '');
 
-  if GNRE.c27_tipoIdentificacaoEmitente = 1 then
+  if GNRE.c03_idContribuinteEmitente <> '' then
   begin
-    if GNRE.c03_idContribuinteEmitente <> '' then
+    Gerador.wGrupo('c03_idContribuinteEmitente');
+    if GNRE.c27_tipoIdentificacaoEmitente = 1 then
     begin
-      Gerador.wGrupo('c03_idContribuinteEmitente');
-      Gerador.wCampo(tcStr, '', 'CNPJ   ', 014, 014, 1, GNRE.c03_idContribuinteEmitente, DSC_CNPJ + ' Emitente');
-      if not ValidarCNPJ(GNRE.c03_idContribuinteEmitente) then
+      Doc := GNRE.c03_idContribuinteEmitente;
+      Doc := StringReplace(Doc, '<CNPJ>', '', [rfReplaceAll]);
+      Doc := StringReplace(Doc, '</CNPJ>', '', [rfReplaceAll]);
+      if not ValidarCNPJ(Doc) then
         Gerador.wAlerta('', 'CNPJ', DSC_CNPJ + ' Emitente', ERR_MSG_INVALIDO);
-      Gerador.wGrupo('/c03_idContribuinteEmitente');
-    end;
-  end
-  else if GNRE.c27_tipoIdentificacaoEmitente = 2 then
-  begin
-    if GNRE.c03_idContribuinteEmitente <> '' then
+
+     // Gerador.wGrupo('CNPJ');
+      Gerador.wCampo(tcStr, '', 'CNPJ   ', 014, 014, 1, GNRE.c03_idContribuinteEmitente, DSC_CNPJ + ' Emitente');
+     // Gerador.wGrupo('/CNPJ');
+    end
+    else
     begin
-      Gerador.wGrupo('c03_idContribuinteEmitente');
-      Gerador.wCampo(tcStr, '', 'CPF   ', 011, 011, 1, GNRE.c03_idContribuinteEmitente, DSC_CPF + ' Emitente');
-      if not ValidarCPF(GNRE.c03_idContribuinteEmitente) then
+      Doc := GNRE.c03_idContribuinteEmitente;
+      Doc := StringReplace(Doc, '<CPF>', '', [rfReplaceAll]);
+      Doc := StringReplace(Doc, '</CPF>', '', [rfReplaceAll]);
+      if not ValidarCPF(Doc) then
         Gerador.wAlerta('', 'CPF', DSC_CPF + ' Emitente', ERR_MSG_INVALIDO);
-      Gerador.wGrupo('/c03_idContribuinteEmitente');
+
+     // Gerador.wGrupo('CPF');
+      Gerador.wCampo(tcStr, '', 'CPF   ', 011, 011, 1, GNRE.c03_idContribuinteEmitente, DSC_CPF + ' Emitente');
+     // Gerador.wGrupo('/CPF');
     end;
+    Gerador.wGrupo('/c03_idContribuinteEmitente');
   end;
 
   if GNRE.c28_tipoDocOrigem > 0 then
@@ -166,27 +175,34 @@ begin
   if GNRE.c34_tipoIdentificacaoDestinatario > 0 then
     Gerador.wCampo(tcInt, '', 'c34_tipoIdentificacaoDestinatario   ', 001, 001, 1, GNRE.c34_tipoIdentificacaoDestinatario, '');
 
-  if GNRE.c34_tipoIdentificacaoDestinatario = 1 then
+  if GNRE.c35_idContribuinteDestinatario <> '' then
   begin
-    if GNRE.c35_idContribuinteDestinatario <> '' then
+    Gerador.wGrupo('c35_idContribuinteDestinatario');
+    if GNRE.c34_tipoIdentificacaoDestinatario = 1 then
     begin
-      Gerador.wGrupo('c35_idContribuinteDestinatario');
-      Gerador.wCampo(tcStr, '', 'CNPJ   ', 014, 014, 1, GNRE.c35_idContribuinteDestinatario, DSC_CNPJ + ' Destinatário');
-      if not ValidarCNPJ(GNRE.c35_idContribuinteDestinatario) then
+      Doc := GNRE.c35_idContribuinteDestinatario;
+      Doc := StringReplace(Doc, '<CNPJ>', '', [rfReplaceAll]);
+      Doc := StringReplace(Doc, '</CNPJ>', '', [rfReplaceAll]);
+      if not ValidarCNPJ(Doc) then
         Gerador.wAlerta('', 'CNPJ', DSC_CNPJ + ' Destinatário', ERR_MSG_INVALIDO);
-      Gerador.wGrupo('/c35_idContribuinteDestinatario');
-    end;
-  end
-  else if GNRE.c34_tipoIdentificacaoDestinatario = 2 then
-  begin
-    if GNRE.c35_idContribuinteDestinatario <> '' then
+
+     // Gerador.wGrupo('CNPJ');
+      Gerador.wCampo(tcStr, '', 'CNPJ   ', 014, 014, 1, GNRE.c35_idContribuinteDestinatario, DSC_CNPJ + ' Destinatário');
+      //Gerador.wGrupo('/CNPJ');
+    end
+    else
     begin
-      Gerador.wGrupo('c35_idContribuinteDestinatario');
-      Gerador.wCampo(tcStr, '', 'CPF   ', 011, 011, 1, GNRE.c35_idContribuinteDestinatario, DSC_CPF + ' Destinatário');
-      if not ValidarCPF(GNRE.c35_idContribuinteDestinatario) then
+      Doc := GNRE.c35_idContribuinteDestinatario;
+      Doc := StringReplace(Doc, '<CPF>', '', [rfReplaceAll]);
+      Doc := StringReplace(Doc, '</CPF>', '', [rfReplaceAll]);
+      if not ValidarCPF(Doc) then
         Gerador.wAlerta('', 'CPF', DSC_CPF + ' Destinatário', ERR_MSG_INVALIDO);
-      Gerador.wGrupo('/c35_idContribuinteDestinatario');
+
+     // Gerador.wGrupo('CPF');
+      Gerador.wCampo(tcStr, '', 'CPF   ', 011, 011, 1, GNRE.c35_idContribuinteDestinatario, DSC_CPF + ' Destinatário');
+      //Gerador.wGrupo('/CPF');
     end;
+    Gerador.wGrupo('/c35_idContribuinteDestinatario');
   end;
 
   if GNRE.c36_inscricaoEstadualDestinatario <> '' then
@@ -200,7 +216,7 @@ begin
 
   Gerador.wCampo(tcDat, '', 'c33_dataPagamento   ', 010, 010, 1, GNRE.c33_dataPagamento, '');
 
-  if (GNRE.referencia.periodo >= 0) or (GNRE.referencia.mes <> '') or  (GNRE.referencia.ano > 0) or
+  if (GNRE.referencia.periodo >= 0) or (GNRE.referencia.mes <> '') or (GNRE.referencia.ano > 0) or
     (GNRE.referencia.parcela > 0) then
   begin
     Gerador.wGrupo('c05_referencia');
@@ -224,7 +240,7 @@ begin
     for i := 0 to GNRE.camposExtras.Count - 1 do
     begin
       Gerador.wGrupo('campoExtra');
-      Gerador.wCampo(tcInt, '', 'codigo   ', 001, 003, 1, GNRE.camposExtras.Items[i].CampoExtra.codigo , '');
+      Gerador.wCampo(tcInt, '', 'codigo   ', 001, 003, 1, GNRE.camposExtras.Items[i].CampoExtra.codigo, '');
       Gerador.wCampo(tcStr, '', 'tipo   ', 001, 001, 1, GNRE.camposExtras.Items[i].CampoExtra.tipo, '');
       Gerador.wCampo(tcStr, '', 'valor   ', 001, 100, 1, GNRE.camposExtras.Items[i].CampoExtra.valor, '');
       Gerador.wGrupo('/campoExtra');

@@ -177,29 +177,6 @@ begin
   FGNRE := TGNRE.Create;
   FGNREW := TGNREW.Create(FGNRE);
   FGNRER := TGNRER.Create(FGNRE);
-  (*
-  with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
-  begin
-    FGNRE.Ide.modelo := StrToInt(ModeloDFToStr(Configuracoes.Geral.ModeloDF));
-    FGNRE.infGNRE.Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
-
-    FGNRE.Ide.tpNF := tnSaida;
-    FGNRE.Ide.indPag := ipVista;
-    FGNRE.Ide.verProc := 'ACBrGNRE';
-    FGNRE.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
-    FGNRE.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
-
-    if Assigned(FGNREGuia) then
-      FGNRE.Ide.tpImp := FGNREGuia.TipoDANFE;
-
-    FGNRE.Emit.EnderEmit.xPais := 'BRASIL';
-    FGNRE.Emit.EnderEmit.cPais := 1058;
-    FGNRE.Emit.EnderEmit.nro := 'SEM NUMERO';
-
-    FGNRE.Dest.EnderDest.xPais := 'BRASIL';
-    FGNRE.Dest.EnderDest.cPais := 1058;
-  end;
-  *)
 end;
 
 destructor Guia.Destroy;
@@ -248,18 +225,13 @@ begin
 
   with TACBrGNRE(TGuias(Collection).ACBrGNRE) do
   begin
-    FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'GNRE', 'infGNRE');
+    // FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'GNRE', 'infGNRE');
+    FXMLAssinado := String(XMLUTF8);
     FXMLOriginal := FXMLAssinado;
 
     Leitor := TLeitor.Create;
     try
       leitor.Grupo := FXMLAssinado;
-      (*
-      GNRE.signature.URI := Leitor.rAtributo('Reference URI=');
-      GNRE.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
-      GNRE.signature.SignatureValue := Leitor.rCampo(tcStr, 'SignatureValue');
-      GNRE.signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
-      *)
     finally
       Leitor.Free;
     end;
@@ -338,7 +310,8 @@ function Guia.LerXML(AXML: AnsiString): Boolean;
 begin
   Result := False;
   FGNRER.Leitor.Arquivo := AXML;
-  FGNRER.LerXml;
+
+  Result := FGNRER.LerXML;
 
   XMLOriginal := string(AXML);
 
@@ -488,18 +461,7 @@ begin
   DecodeDate(GNRE.c14_dataVencimento, wAno, wMes, wDia);
 
   chaveGNRE := 'GNRE' + OnlyNumber(GNRE.c42_identificadorGuia);
-  (*
-  Result := not
-    ((Copy(chaveGNRE, 4, 2) <> IntToStrZero(GNRE., 2)) or
-    (Copy(chaveGNRE, 6, 2)  <> Copy(FormatFloat('0000', wAno), 3, 2)) or
-    (Copy(chaveGNRE, 8, 2)  <> FormatFloat('00', wMes)) or
-    (Copy(chaveGNRE, 10, 14)<> PadLeft(OnlyNumber(GNRE.Emit.CNPJCPF), 14, '0')) or
-    (Copy(chaveGNRE, 24, 2) <> IntToStrZero(GNRE.Ide.modelo, 2)) or
-    (Copy(chaveGNRE, 26, 3) <> IntToStrZero(GNRE.Ide.serie, 3)) or
-    (Copy(chaveGNRE, 29, 9) <> IntToStrZero(GNRE.Ide.nNF, 9)) or
-    (Copy(chaveGNRE, 38, 1) <> TpEmisToStr(GNRE.Ide.tpEmis)) or
-    (Copy(chaveGNRE, 39, 8) <> IntToStrZero(GNRE.Ide.cNF, 8)));
-  *)
+
   Result := True;
 end;
 

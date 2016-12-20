@@ -1,9 +1,9 @@
 object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
   Left = 204
   Top = 131
-  Width = 871
-  Height = 568
   Caption = 'Demo ACBrGNRE'
+  ClientHeight = 529
+  ClientWidth = 855
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Left = 0
     Top = 0
     Width = 297
-    Height = 530
+    Height = 529
     Align = alLeft
     TabOrder = 0
     object lblColaborador: TLabel
@@ -295,7 +295,6 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               Font.Height = -13
               Font.Name = 'MS Sans Serif'
               Font.Style = []
-              ItemHeight = 16
               ItemIndex = 24
               ParentFont = False
               TabOrder = 1
@@ -707,8 +706,6 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 1
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -723,13 +720,15 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnSalvarConfigClick
     end
   end
   object Panel2: TPanel
     Left = 297
     Top = 0
     Width = 558
-    Height = 530
+    Height = 529
     Align = alClient
     TabOrder = 1
     object Panel3: TPanel
@@ -798,7 +797,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
       Left = 1
       Top = 137
       Width = 556
-      Height = 392
+      Height = 391
       ActivePage = TabSheet5
       Align = alClient
       TabOrder = 1
@@ -808,7 +807,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
           Left = 0
           Top = 0
           Width = 548
-          Height = 364
+          Height = 363
           Align = alClient
           TabOrder = 0
         end
@@ -887,7 +886,23 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    GNREGuia = ACBrGNREGuiaFR1
     Left = 406
     Top = 225
+  end
+  object ACBrGNREGuiaFR1: TACBrGNREGuiaFR
+    ACBrGNRE = ACBrGNRE1
+    MostrarPreview = True
+    MostrarStatus = True
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.800000000000000000
+    MargemSuperior = 0.800000000000000000
+    MargemEsquerda = 0.600000000000000000
+    MargemDireita = 0.510000000000000000
+    EspessuraBorda = 1
+    ShowDialog = False
+    Left = 408
+    Top = 280
   end
 end

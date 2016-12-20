@@ -223,6 +223,9 @@ type
     bvCadastro3: TBevel;
     bvCadastro4: TBevel;
     bvCadastro5: TBevel;
+    cbFormaEmissaoCTe: TComboBox;
+    cbFormaEmissaoMDFe: TComboBox;
+    cbFormaEmissaoGNRe: TComboBox;
     cbMostrarNaBarraDeTarefas: TCheckBox;
     cbBALModelo: TComboBox;
     cbBALPorta: TComboBox;
@@ -332,6 +335,7 @@ type
     cbEmailConfirmation: TCheckBox;
     cbxAtualizarXMLCancelado: TCheckBox;
     cbxUnComTributavel: TComboBox;
+    cbFormaEmissaoNFe: TComboBox;
     DBGrid3: TDBGrid;
     deUSUDataCadastro: TDateEdit;
     edtArquivoPFX: TEdit;
@@ -340,6 +344,7 @@ type
     edtAutoTimer: TDBEdit;
     edtBOLEmailAssunto: TEdit;
     edtBOLEmailMensagem: TMemo;
+    edtBOLLocalPagamento: TEdit;
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
@@ -351,7 +356,9 @@ type
     edtultNSU: TDBEdit;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
+    GroupBox2: TGroupBox;
     Image2: TImage;
+    imgLogoBanco: TImage;
     Label109: TLabel;
     Label110: TLabel;
     Label121: TLabel;
@@ -369,8 +376,15 @@ type
     Label192: TLabel;
     Label193: TLabel;
     Label194: TLabel;
+    Label195: TLabel;
     Label196: TLabel;
     Label197: TLabel;
+    Label198: TLabel;
+    Label199: TLabel;
+    Label200: TLabel;
+    Label201: TLabel;
+    Label202: TLabel;
+    Label203: TLabel;
     Label40: TLabel;
     Label50: TLabel;
     Label51: TLabel;
@@ -394,6 +408,7 @@ type
     mmEmailMsgCTe: TMemo;
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
+    pnLogoBanco: TPanel;
     pgDownload: TNotebook;
     pgDownConf: TPage;
     pgDownXml: TPage;
@@ -401,6 +416,7 @@ type
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
+    rdgImprimeChave1LinhaSAT: TRadioGroup;
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
@@ -885,7 +901,6 @@ type
     rbLCBTeclado: TRadioButton;
     rbTCP: TRadioButton;
     rbTXT: TRadioButton;
-    rgFormaEmissao: TRadioGroup;
     rgLocalCanhoto: TRadioGroup;
     rgModeloDanfe: TRadioGroup;
     rgModeloDANFeNFCE: TRadioGroup;
@@ -1130,6 +1145,7 @@ type
     procedure cbTraduzirTagsChange(Sender: TObject);
     procedure cbUsarEscPosClick(Sender: TObject);
     procedure cbUsarFortesClick(Sender: TObject);
+    procedure cbxBOLBancoChange(Sender: TObject);
     procedure cbxBOLF_JChange(Sender: TObject);
     procedure cbCEPWebServiceChange(Sender: TObject);
     procedure cbxImpDescPorcChange(Sender: TObject);
@@ -1372,6 +1388,8 @@ type
     procedure SetPanel(Sender: TPanel);
     procedure SetSize25(Sender: TObject);
     procedure SetScroll(Sender: TObject);
+  protected
+    procedure MostraLogoBanco;
   public
     Conexao: TTCPBlockSocket;
 
@@ -3010,6 +3028,11 @@ begin
   ACBrSAT1.Extrato := ACBrSATExtratoFortes1
 end;
 
+procedure TFrmACBrMonitor.cbxBOLBancoChange(Sender: TObject);
+begin
+  MostraLogoBanco;
+end;
+
 procedure TFrmACBrMonitor.cbxBOLF_JChange(Sender: TObject);
 begin
   if cbxBOLF_J.ItemIndex = 0 then
@@ -3764,12 +3787,14 @@ begin
     edtBOLAgencia.Text := Ini.ReadString('BOLETO', 'Agencia', '');
     edtBOLDigitoAgencia.Text := Ini.ReadString('BOLETO', 'DigitoAgencia', '');
     edtCodCliente.Text := Ini.ReadString('BOLETO', 'CodCedente', '');
+    edtBOLLocalPagamento.Text := Ini.ReadString('BOLETO', 'LocalPagamento', ACBrBoleto1.Banco.LocalPagamento);
 
     {Parametros do Boleto - Boleto}
     deBOLDirLogo.Text :=
       Ini.ReadString('BOLETO', 'DirLogos', ExtractFilePath(Application.ExeName) +
       'Logos' + PathDelim);
-//    edtBOLSH.Text := Ini.ReadString('BOLETO', 'SoftwareHouse', '');
+    MostraLogoBanco;
+
     spBOLCopias.Value := Ini.ReadInteger('BOLETO', 'Copias', 1);
     ckgBOLMostrar.Checked[0] := Ini.ReadBool('BOLETO', 'Preview', True);
     ckgBOLMostrar.Checked[1] := Ini.ReadBool('BOLETO', 'Progresso', True);
@@ -3854,13 +3879,18 @@ begin
 
 
     cbModoEmissao.Checked := Ini.ReadBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', False);
-    rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', 0);
+    //rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral', 'FormaEmissao', 0);
+    cbFormaEmissaoNFe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoNFe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
+    cbFormaEmissaoCTe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoCTe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
+    cbFormaEmissaoMDFe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoMDFe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
+    cbFormaEmissaoGNRe.ItemIndex := Ini.ReadInteger('WebService', 'FormaEmissaoGNRe', Ini.ReadInteger('Geral', 'FormaEmissao', 0));
     ckSalvar.Checked := Ini.ReadBool('Geral', 'Salvar', True);
     edtPathLogs.Text := Ini.ReadString('Geral', 'PathSalvar',PathApplication + 'Logs');
     cbxImpressora.ItemIndex := cbxImpressora.Items.IndexOf(Ini.ReadString('Geral', 'Impressora', '0'));
 
     ACBrNFe1.Configuracoes.Geral.AtualizarXMLCancelado := Ini.ReadBool('Arquivos', 'AtualizarXMLCancelado', True);
-    ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+
+    ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoNFe.ItemIndex+1));
     ACBrNFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrNFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
@@ -3873,24 +3903,23 @@ begin
     edTimeZoneStr.Caption := ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.TimeZoneStr;
     edTimeZoneStr.Enabled := (ACBrNFe1.Configuracoes.WebServices.TimeZoneConf.ModoDeteccao = tzManual);
 
-    ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+    ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoCTe.ItemIndex + 1));
     ACBrCTe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrCTe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrCTe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
     ACBrCTe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 
-    ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+    ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoMDFe.ItemIndex + 1));
     ACBrMDFe1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrMDFe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrMDFe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
     ACBrMDFe1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
 
-    ACBrGNRE1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(rgFormaEmissao.ItemIndex + 1));
+    ACBrGNRE1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoGNRe.ItemIndex + 1));
     ACBrGNRE1.Configuracoes.WebServices.Salvar := ckSalvar.Checked;
     ACBrGNRE1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
     ACBrGNRE1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
     ACBrGNRE1.Configuracoes.WebServices.TimeZoneConf.Assign( ACBrNFe1.Configuracoes.WebServices.TimeZoneConf );
-
 
     cbxAjustarAut.Checked := Ini.ReadBool('WebService', 'AjustarAut', False);
     edtAguardar.Text := Ini.ReadString('WebService', 'Aguardar', '0');
@@ -4256,6 +4285,9 @@ begin
     cbxImprimirDescAcresItemSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem;
     cbxImprimirItem1LinhaSAT.Checked := ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha;
 
+    rdgImprimeChave1LinhaSAT.ItemIndex := INI.ReadInteger('SATExtrato', 'ImprimeChaveEmUmaLinha', 0);
+    ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
+
     edtEmitCNPJ.Text := INI.ReadString('SATEmit','CNPJ','');
     edtEmitIE.Text   := INI.ReadString('SATEmit','IE','');
     edtEmitIM.Text   := INI.ReadString('SATEmit','IM','');
@@ -4525,7 +4557,8 @@ begin
     Cedente.Convenio := edtConvenio.Text;
     Cedente.CodigoTransmissao := edtCodTransmissao.Text;
 
-    Banco.TipoCobranca := TACBrTipoCobranca(cbxBOLBanco.ItemIndex);
+    Banco.TipoCobranca   := TACBrTipoCobranca(cbxBOLBanco.ItemIndex);
+    Banco.LocalPagamento := edtBOLLocalPagamento.Text;
 
     Cedente.Agencia := edtBOLAgencia.Text;
     Cedente.AgenciaDigito := edtBOLDigitoAgencia.Text;
@@ -4858,7 +4891,11 @@ begin
     Ini.WriteInteger('ACBrNFeMonitor', 'TimeoutWebService', edtTimeoutWebServices.Value);
 
     Ini.WriteInteger('Geral', 'DANFE', rgTipoDanfe.ItemIndex);
-    Ini.WriteInteger('Geral', 'FormaEmissao', rgFormaEmissao.ItemIndex);
+    //Ini.WriteInteger('Geral', 'FormaEmissao', rgFormaEmissao.ItemIndex);
+    Ini.WriteInteger('WebService', 'FormaEmissaoNFe', cbFormaEmissaoNFe.ItemIndex);
+    Ini.WriteInteger('WebService', 'FormaEmissaoCTe', cbFormaEmissaoCTe.ItemIndex);
+    Ini.WriteInteger('WebService', 'FormaEmissaoMDFe', cbFormaEmissaoMDFe.ItemIndex);
+    Ini.WriteInteger('WebService', 'FormaEmissaoGNRe', cbFormaEmissaoGNRe.ItemIndex);
     Ini.WriteString('Geral', 'LogoMarca', edtLogoMarca.Text);
     Ini.WriteBool('Geral', 'Salvar', ckSalvar.Checked);
     Ini.WriteString('Geral', 'PathSalvar', edtPathLogs.Text);
@@ -4977,6 +5014,7 @@ begin
     INI.WriteString('SATExtrato','ParamsString',ACBrSATExtratoESCPOS1.PosPrinter.Device.ParamsString);
     INI.WriteBool('SATExtrato', 'ImprimeDescAcrescItem', cbxImprimirDescAcresItemSAT.Checked);
     INI.WriteBool('SATExtrato', 'ImprimeEmUmaLinha', cbxImprimirItem1LinhaSAT.Checked);
+    INI.WriteInteger('SATExtrato', 'ImprimeChaveEmUmaLinha', rdgImprimeChave1LinhaSAT.ItemIndex);
 
     INI.WriteString('SATEmit','CNPJ',edtEmitCNPJ.Text);
     INI.WriteString('SATEmit','IE',edtEmitIE.Text);
@@ -5157,6 +5195,7 @@ begin
     ini.WriteString('BOLETO', 'Agencia', edtBOLAgencia.Text);
     ini.WriteString('BOLETO', 'DigitoAgencia', edtBOLDigitoAgencia.Text);
     ini.WriteString('BOLETO', 'CodCedente', edtCodCliente.Text);
+    ini.WriteString('BOLETO', 'LocalPagamento', edtBOLLocalPagamento.Text);
 
     {Parametros do Boleto - Boleto}
     ini.WriteString('BOLETO', 'DirLogos', PathWithoutDelim(deBOLDirLogo.Text));
@@ -6186,7 +6225,7 @@ begin
   mCmd.Lines.Clear;
   fsProcessar.Clear;
   Resp := 'ACBrMonitor/ACBrNFeMonitor PLUS Ver. ' + sVersaoACBr + sLineBreak + 'Conectado em: ' +
-    FormatDateTime('dd/mm/yy hh:nn:ss', now) + sLineBreak + 'Máquina: ' +
+    FormatDateTime('dd/mm/yy hh:nn:ss', now) + sLineBreak + 'Maquina: ' +
     Conexao.GetRemoteSinIP + sLineBreak + 'Esperando por comandos.';
 
   Resposta('', Resp);
@@ -7275,6 +7314,7 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeDescAcrescItem   := cbxImprimirDescAcresItemSAT.Checked;
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
+    ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha  := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
@@ -7969,6 +8009,27 @@ end;
 procedure TFrmACBrMonitor.SetScroll(Sender: TObject);
 begin
   ScrollBox.VertScrollBar.Position := ScrollBox.VertScrollBar.Position+TPanel(Sender).Height;
+end;
+
+procedure TFrmACBrMonitor.MostraLogoBanco;
+var
+  Banco: TACBrBanco;
+begin
+  try
+    try
+      Banco := TACBrBanco.Create(ACBrBoleto1);
+      Banco.TipoCobranca := TACBrTipoCobranca(cbxBOLBanco.ItemIndex);
+
+      pnLogoBanco.Caption := '';
+      imgLogoBanco.Picture.LoadFromFile(deBOLDirLogo.Text + PathDelim +
+        IntToStrZero(Banco.Numero, 3)+'.bmp');
+    except
+      pnLogoBanco.Caption := 'Sem logo';
+      imgLogoBanco.Picture.Clear;
+    end;
+  finally
+    Banco.Free;
+  end;
 end;
 
 procedure TFrmACBrMonitor.SetColorSubButtons(Sender: TObject);

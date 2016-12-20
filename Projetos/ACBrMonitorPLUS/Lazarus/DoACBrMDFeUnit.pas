@@ -861,10 +861,13 @@ begin
 
         else if Cmd.Metodo = 'setformaemissao' then
          begin
+           if cbModoEmissao.checked then
+             exit;
+
            if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
             begin
               ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              rgFormaEmissao.ItemIndex := ACBrMDFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+              cbFormaEmissaoMDFe.ItemIndex := ACBrMDFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
               FrmACBrMonitor.SalvarIni;
             end
            else

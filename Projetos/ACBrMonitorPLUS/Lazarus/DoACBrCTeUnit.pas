@@ -1054,10 +1054,13 @@ begin
 
         else if Cmd.Metodo = 'setformaemissao' then 
          begin
+           if cbModoEmissao.checked then
+             exit;
+
            if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
             begin
               ACBrCTe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              rgFormaEmissao.ItemIndex := ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+              cbFormaEmissaoCTe.ItemIndex := ACBrCTe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
               SalvarIni;
             end
            else

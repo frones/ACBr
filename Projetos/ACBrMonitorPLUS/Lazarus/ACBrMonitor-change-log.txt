@@ -43,6 +43,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2016
+[+] Inclusão de campo para configurar impressão de chave em uma linha no extrato do SAT,
+	para ESCPOS.	
+	por Celso Marigo Junior
+
+20/12/2016
+[+] Inclusão de campo na configuração de Conta Bancária, na aba de boletos, para
+	configuração do Local de Pagamento.
+	por Celso Marigo Junior
+
+13/12/2016
+[+]	Separada a configuração da forma de emissão de documentos, removido radio group,
+	e adicionados check-boxes para cada opção, NFe, CTe, MDFe e GNRe.
+	Ajustado para comandos de Setar Forma de Emissão serem ignorados quando selecionado
+	no monitor o combo-box para esta opção.
+	por:Celso Marigo Junior
+
 07/12/2016
 [+] Adicionado a impressão da inutilização de CT-e
 		por: Juliomar Marchetti

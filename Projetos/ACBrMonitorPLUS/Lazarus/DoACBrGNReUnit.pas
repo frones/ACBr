@@ -141,6 +141,21 @@ begin
                      'Protocolo: '+ ACBrGNRE1.WebServices.Retorno.protocolo+ sLineBreak;
 
       end
+      else if Cmd.Metodo = 'setformaemissao' then
+      begin
+         if cbModoEmissao.checked then
+             exit;
+
+         if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
+          begin
+            ACBrGNRe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+            cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+            SalvarIni;
+          end
+         else
+            raise Exception.Create('Forma de Emissão Inválida.');
+      end
+
       else
       raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')'));
     finally

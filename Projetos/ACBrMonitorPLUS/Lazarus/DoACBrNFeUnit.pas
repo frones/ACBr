@@ -1716,7 +1716,7 @@ begin
            if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
             begin
               ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              rgFormaEmissao.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+              cbFormaEmissaoNFe.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
               SalvarIni;
             end
            else

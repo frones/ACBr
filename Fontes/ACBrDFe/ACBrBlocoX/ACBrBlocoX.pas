@@ -382,6 +382,7 @@ begin
 
   if Assigned(fBlocoXRetorno) then
     fBlocoXRetorno.Free;
+
   fBlocoXRetorno := TRetEnvBlocoX.Create;
 end;
 
@@ -518,7 +519,7 @@ end;
 function TEnviarReducaoZ.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarReducaoZResult')));
-  Result := inherited;
+  Result := inherited TratarResposta;
 end;
 
 { TEnviarEstoque }
@@ -546,7 +547,7 @@ end;
 function TEnviarEstoque.TratarResposta: Boolean;
 begin
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'EnviarEstoqueResponse')));
-  Result := inherited;
+  Result := inherited TratarResposta;
 end;
 
 end.

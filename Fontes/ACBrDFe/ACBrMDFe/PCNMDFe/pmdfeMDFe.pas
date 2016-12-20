@@ -135,6 +135,9 @@ type
   TSegCollection     = class;
   TSegCollectionItem = class;
 
+  TAverCollection     = class;
+  TAverCollectionItem = class;
+
   Ttot                  = class;
   TlacresCollection     = class;
   TlacresCollectionItem = class;
@@ -1134,7 +1137,7 @@ type
     FxSeg: String;
     FCNPJ: String;
     FnApol: String;
-    FnAver: String;
+    FAver: TAverCollection;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -1144,6 +1147,26 @@ type
     property xSeg: String         read FxSeg    write FxSeg;
     property CNPJ: String         read FCNPJ    write FCNPJ;
     property nApol: String        read FnApol   write FnApol;
+    property aver: TAverCollection read FAver   write FAver;
+  end;
+
+  TAverCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TAverCollectionItem;
+    procedure SetItem(Index: Integer; Value: TAverCollectionItem);
+  public
+    constructor Create(AOwner: TSegCollectionItem);
+    function Add: TAverCollectionItem;
+    property Items[Index: Integer]: TAverCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TAverCollectionItem = class(TCollectionItem)
+  private
+    FnAver: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
     property nAver: String        read FnAver   write FnAver;
   end;
 
@@ -2685,12 +2708,12 @@ end;
 
 constructor TSegCollectionItem.Create;
 begin
-
+  FAver := TAverCollection.Create(Self);
 end;
 
 destructor TSegCollectionItem.Destroy;
 begin
-
+  FAver.Free;
   inherited;
 end;
 
@@ -2842,6 +2865,42 @@ procedure TlacRodoCollection.SetItem(Index: Integer;
   Value: TlacresCollectionItem);
 begin
   inherited SetItem(Index, Value);
+end;
+
+{ TAverCollection }
+
+function TAverCollection.Add: TAverCollectionItem;
+begin
+  Result := TAverCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TAverCollection.Create(AOwner: TSegCollectionItem);
+begin
+  inherited Create(TAverCollectionItem);
+end;
+
+function TAverCollection.GetItem(Index: Integer): TAverCollectionItem;
+begin
+  Result := TAverCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TAverCollection.SetItem(Index: Integer; Value: TAverCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TAverCollectionItem }
+
+constructor TAverCollectionItem.Create;
+begin
+
+end;
+
+destructor TAverCollectionItem.Destroy;
+begin
+
+  inherited;
 end;
 
 end.

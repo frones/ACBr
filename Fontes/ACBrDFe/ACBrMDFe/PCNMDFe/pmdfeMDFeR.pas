@@ -803,7 +803,14 @@ begin
       MDFe.seg.Add;
 
       MDFe.seg[i01].nApol   := Leitor.rCampo(tcStr, 'nApol');
-      MDFe.seg[i01].nAver   := Leitor.rCampo(tcStr, 'nAver');
+
+      i02 := 0;
+      while Leitor.rExtrai(2, 'nAver', '', i02 + 1) <> '' do
+      begin
+        MDFe.seg[i01].aver.Add;
+        MDFe.seg[i01].aver[i02].nAver := Leitor.rCampo(tcStr, 'nAver');
+        inc(i02);
+      end;
 
       if (Leitor.rExtrai(2, 'infResp') <> '') then
       begin

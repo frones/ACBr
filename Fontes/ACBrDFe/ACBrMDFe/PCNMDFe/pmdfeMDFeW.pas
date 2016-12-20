@@ -248,7 +248,7 @@ begin
   Gerador.wCampo(tcStr, '#006', 'tpAmb   ', 01, 01, 1, tpAmbToStr(MDFe.Ide.tpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, '#007', 'tpEmit  ', 01, 01, 1, TpEmitenteToStr(MDFe.Ide.tpEmit), DSC_TPEMIT);
 
-  if (VersaoDF = ve300) and (MDFe.Ide.tpEmit = teTransportadora) then
+  if (VersaoDF = ve300) then
     Gerador.wCampo(tcStr, '#007', 'tpTransp', 01, 01, 0, TTransportadorToStr(MDFe.Ide.tpTransp), DSC_TPTRANSP);
 
   Gerador.wCampo(tcInt, '#008', 'mod     ', 02, 02, 1, MDFe.ide.modelo, DSC_MOD);
@@ -1053,7 +1053,7 @@ end;
 
 procedure TMDFeW.GerarInfSeg;
 var
-  i: Integer;
+  i, k: Integer;
 begin
   for i := 0 to MDFe.seg.Count - 1 do
   begin
@@ -1073,7 +1073,11 @@ begin
     end;
 
     Gerador.wCampo(tcStr, '#126', 'nApol', 01, 20, 0, MDFe.seg[i].nApol, DSC_NAPOL);
-    Gerador.wCampo(tcStr, '#127', 'nAver', 01, 20, 0, MDFe.seg[i].nAver, DSC_NAVER);
+
+    for k := 0 to MDFe.seg[i].aver.Count - 1 do
+      Gerador.wCampo(tcStr, '#127', 'nAver', 01, 40, 0, MDFe.seg[i].aver[k].nAver, DSC_NAVER);
+    if MDFe.seg[i].aver.Count > 990 then
+      Gerador.wAlerta('#369', 'nAver', '', ERR_MSG_MAIOR_MAXIMO + '990');
 
     Gerador.wGrupo('/seg');
   end;

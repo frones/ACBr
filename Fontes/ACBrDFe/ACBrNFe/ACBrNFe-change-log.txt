@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/12/2016
+[+] Adição de informações complementares no DANFCe em Fast Report igual ao Fortes e ESCPOS
+		http://www.projetoacbr.com.br/forum/topic/34096-impressao-de-complemento-de-endereco-em-fastreport/
+		por: Juliomar Marchetti
+		
 23/11/2016
 -- ACBrECFVirtualNFCe --
 [*] Recuperação de cupom na queda de energia

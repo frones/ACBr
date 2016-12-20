@@ -561,6 +561,9 @@ begin
         if Trim(FieldByName('XLgr').AsString) <> '' then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
             Trim(FieldByName('XLgr').AsString) + ', ' + Trim(FieldByName('Nro').AsString);
+        if Trim(FieldByName('XCpl').AsString) <> '' then
+          FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +
+            Trim(FieldByName('XCpl').AsString);
 
         if Trim(FieldByName('XMun').AsString) <> '' then
           FieldByName('Consumidor').AsString := FieldByName('Consumidor').AsString + #13 +

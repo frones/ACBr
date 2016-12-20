@@ -221,8 +221,8 @@ uses
 constructor TCasasDecimais.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
-  FMask_qCom    := '###,###,###,##0.00';
-  FMask_vUnCom  := '###,###,###,##0.00';
+  FMask_qCom    := ',0.00';
+  FMask_vUnCom  := ',0.00';
   FQCom         := 2;
   FvUnCom       := 2;
 end;

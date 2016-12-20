@@ -86,8 +86,6 @@ type
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
 
-
-
     procedure GerarRodape;
     procedure GerarDadosEvento;
     procedure GerarObservacoesEvento;
@@ -214,7 +212,7 @@ begin
         sItem        :=        IntToStrZero( Prod.nItem, 3);
         sDescricao   :=                Trim( Prod.xProd);
         sUnidade     :=                Trim( Prod.uCom);
-        sVlrProduto  :=       FormatFloatBr( Prod.vProd, '###,###,##0.00');
+        sVlrProduto  :=       FormatFloatBr( Prod.vProd );
         sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
         sVlrUnitario := FormatValorUnitario( Prod.VUnCom );
         sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
@@ -251,8 +249,8 @@ begin
           if Prod.vDesc > 0 then
           begin
             LinhaCmd := '</ae><c>' + padSpace(
-                'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-0.00'), 15, ' ')
-                +IIf((Prod.vOutro > 0),'','|' + FormatFloatBr(VlrLiquido, '0.00')) ,
+                'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-,0.00'), 15, ' ')
+                +IIf((Prod.vOutro > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
                 FPosPrinter.ColunasFonteCondensada, '|');
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
           end;
@@ -261,8 +259,8 @@ begin
           if Prod.vOutro > 0 then
           begin
             LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
-                'acréscimo ' + padLeft(FormatFloatBr(Prod.vOutro, '+0.00'), 15, ' ')
-                + '|' + FormatFloatBr(VlrLiquido, '0.00'),
+                'acréscimo ' + padLeft(FormatFloatBr(Prod.vOutro, '+,0.00'), 15, ' ')
+                + '|' + FormatFloatBr(VlrLiquido),
                 FPosPrinter.ColunasFonteCondensada, '|'));
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
           end;
@@ -284,22 +282,22 @@ begin
      IntToStrZero(FpNFe.Det.Count, 3), FPosPrinter.ColunasFonteCondensada, '|'));
 
   FPosPrinter.Buffer.Add('<c>' + PadSpace('Valor Total R$|' +
-     FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vProd + FpNFe.Total.ISSQNtot.vServ),
+     FormatFloatBr(FpNFe.Total.ICMSTot.vProd + FpNFe.Total.ISSQNtot.vServ),
      FPosPrinter.ColunasFonteCondensada, '|'));
 
   if (FpNFe.Total.ICMSTot.vDesc > 0) then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Descontos|' +
-       FormatFloat('-#,###,##0.00', FpNFe.Total.ICMSTot.vDesc),
+       FormatFloatBr(FpNFe.Total.ICMSTot.vDesc, '-,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|'));
 
   if (FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg) > 0 then
     FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace('Acréscimos|' +
-       FormatFloat('+#,###,##0.00', FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg),
+       FormatFloatBr(FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg, '+,0.00'),
        FPosPrinter.ColunasFonteCondensada, '|')));
 
   if (FpNFe.Total.ICMSTot.vDesc > 0) or ((FpNFe.Total.ICMSTot.vOutro+FpNFe.Total.ICMSTot.vFrete+FpNFe.Total.ICMSTot.vSeg) > 0) then
     FPosPrinter.Buffer.Add('</ae><e>' + PadSpace('Valor a Pagar R$|' +
-       FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vNF),
+       FormatFloatBr(FpNFe.Total.ICMSTot.vNF),
        FPosPrinter.ColunasFonteCondensada div 2, '|') + '</e>');
 end;
 
@@ -315,7 +313,7 @@ begin
   for i := 0 to FpNFe.pag.Count - 1 do
   begin
     FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag) +
-       '|' + FormatFloat('#,###,##0.00', FpNFe.pag.Items[i].vPag),
+       '|' + FormatFloatBr(FpNFe.pag.Items[i].vPag),
        FPosPrinter.ColunasFonteCondensada, '|')));
     //Total := Total + FpNFe.pag.Items[i].vPag;
   end;
@@ -324,7 +322,7 @@ begin
   Troco := vTroco;
   if Troco > 0 then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
-       FormatFloat('#,###,##0.00', Troco), FPosPrinter.ColunasFonteCondensada, '|'));
+       FormatFloatBr(Troco), FPosPrinter.ColunasFonteCondensada, '|'));
 
 end;
 
@@ -335,17 +333,17 @@ begin
   if (vTribFed+vTribEst+vTribMun) > 0 then
   begin
      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s';
-     FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloat('#,###,##0.00', vTribFed + vTribEst + vTribMun),
-                         FormatFloat('#,###,##0.00', vTribFed),
-                         FormatFloat('#,###,##0.00', vTribEst),
-                         FormatFloat('#,###,##0.00', vTribMun)]),FPosPrinter.ColunasFonteCondensada));
+     FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloatBr(vTribFed + vTribEst + vTribMun),
+                         FormatFloatBr(vTribFed),
+                         FormatFloatBr(vTribEst),
+                         FormatFloatBr(vTribMun)]),FPosPrinter.ColunasFonteCondensada));
   end
   else
   begin
     if FpNFe.Total.ICMSTot.vTotTrib > 0 then
     begin
       MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s';
-      FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloat('#,###,##0.00', FpNFe.Total.ICMSTot.vTotTrib)]),
+      FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloatBr(FpNFe.Total.ICMSTot.vTotTrib)]),
                           FPosPrinter.ColunasFonteCondensada));
     end;
   end;

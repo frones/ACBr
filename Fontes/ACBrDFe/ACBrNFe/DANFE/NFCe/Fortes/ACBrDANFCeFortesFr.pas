@@ -344,7 +344,7 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
     if (Total.ICMSTot.vTotTrib > 0) then
-      lTitLei12741.Caption := lTitLei12741.Caption +' '+ FormatFloatBr(Total.ICMSTot.vTotTrib, '#,###,##0.00')
+      lTitLei12741.Caption := lTitLei12741.Caption +' '+ FormatFloatBr(Total.ICMSTot.vTotTrib)
     else
       lTitLei12741.Visible := False;
 
@@ -409,8 +409,8 @@ begin
 
     if PrintIt then
     begin
-      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+#,###,##0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
+      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+,0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc);
     end;
   end;
 end;
@@ -603,7 +603,7 @@ begin
 
     if PrintIt then
     begin
-      lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-#,###,##0.00');
+      lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-,0.00');
       if (Prod.vOutro > 0) then
       begin
         lTitDescValLiq.Visible := False;
@@ -615,7 +615,7 @@ begin
         rlbDescItem.Height := 24;
         lTitDescValLiq.Visible := True;
         lDescValLiq.Visible := True;
-        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc,'#,###,##0.00');
+        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc);
       end;
     end;
   end;
@@ -646,7 +646,7 @@ begin
     LinhaTotal  := PadLeft( ACBrNFeDANFCeFortes.FormatQuantidade(Prod.qCom), 12) +
                    PadCenter(Trim(Prod.uCom), 5) + ' X ' +
                    PadLeft(ACBrNFeDANFCeFortes.FormatValorUnitario(Prod.vUnCom), 12) +
-                   PadLeft(FormatFloatBr(Prod.vProd, '###,###,##0.00'), 12);
+                   PadLeft(FormatFloatBr(Prod.vProd), 12);
 
     mLinhaItem.Lines.Add(LinhaTotal);
   end;
@@ -659,7 +659,7 @@ begin
   with ACBrNFeDANFCeFortes.FpNFe.pag.Items[fNumPagto] do
   begin
     lMeioPagamento.Caption  := ACBrStr(FormaPagamentoToDescricao(tPag));
-    lPagamento.Caption      := FormatFloatBr(vPag,'#,###,##0.00');
+    lPagamento.Caption      := FormatFloatBr(vPag);
     fTotalPagto             := fTotalPagto + vPag;
   end;
 end;
@@ -785,7 +785,7 @@ procedure TACBrNFeDANFCeFortesFr.rlbTotalBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   lQtdTotalItensVal.Caption := IntToStrZero(ACBrNFeDANFCeFortes.FpNFe.Det.Count,3);
-  lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vNF,'#,###,##0.00');
+  lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vNF);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;
@@ -797,7 +797,7 @@ begin
   PrintIt := (Troco> 0);
 
   if PrintIt then
-    lTroco.Caption := FormatFloatBr(fACBrNFeDANFCeFortes.vTroco,'#,###,##0.00');;
+    lTroco.Caption := FormatFloatBr(fACBrNFeDANFCeFortes.vTroco);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlCancelamentoBeforePrint(Sender: TObject;

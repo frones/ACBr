@@ -48,9 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/12/2016
+-- ACBrNFeDANFEClass, ACBrNFeDANFeEscPos, ACBrDANFCeFortesFr --
+[*] Ajuste para imprimir corretamente numeros usando a formatação Brasileira
+    com pontos de milhar e decimais (por: DSA)
+
+20/12/2016
 [+] Adição de informações complementares no DANFCe em Fast Report igual ao Fortes e ESCPOS
-		http://www.projetoacbr.com.br/forum/topic/34096-impressao-de-complemento-de-endereco-em-fastreport/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/34096-impressao-de-complemento-de-endereco-em-fastreport/
+    por: Juliomar Marchetti
 		
 23/11/2016
 -- ACBrECFVirtualNFCe --
@@ -63,53 +68,52 @@ Símbolo : Significado
     No arquivo de envio o prefixo ficava sempre zero.
     Os mesmos arquivos estavam sendo salvos em duas pastas, ma pasta respectiva
     do evento e na pasta NFe, alterado para salvar somente na pasta do evento.
-   Por: Italo Jurisato Junior
+    Por: Italo Jurisato Junior
 
 06/11/2016
---ACBrNFeDANFEFRDM
+--ACBrNFeDANFEFRDM --
 [-] Ajuste na FormatValorUnitario.
-	http://www.projetoacbr.com.br/forum/topic/33322-corre%C3%A7%C3%A3o-erro-impress%C3%A3o-danfe-fast-report/
-		por : Henrique Leonardo 
-
+    http://www.projetoacbr.com.br/forum/topic/33322-corre%C3%A7%C3%A3o-erro-impress%C3%A3o-danfe-fast-report/
+    por : Henrique Leonardo
 
 05/11/2016
---ACBrNFeDANFEClass
+--ACBrNFeDANFEClass --
 [*] Ajuste na FormatQuantidade,  ter efeitos na danfe's de Nfe , e não no cupom fiscal. 
-		por : Henrique Leonardo 
+    por : Henrique Leonardo
 
 05/11/2016
---ACBrNFeDANFEClass,ACBrNFeDANFEFRDM
+--ACBrNFeDANFEClass, ACBrNFeDANFEFRDM --
 [*] Melhorias nas funções FormatQuantidade e FormatValorUnitario.
-		por : Henrique Leonardo e DSA
+    por : Henrique Leonardo e DSA
 
 04/11/2016
---ACBrNFeDANFEClass,ACBrNFeDANFEFRDM
+--ACBrNFeDANFEClass, ACBrNFeDANFEFRDM --
 [*] Modificação para imprimir as danfes sem casas decimais, quando a propriedade CasasDecimais._Mask_qCom igual a 0 ( zero ), 
     Corrigidas as DANFEs do Fortes, retrato e paisagem
-		por : Henrique Leonardo
+    por : Henrique Leonardo
 
 03/11/2016
---ACBrNFeDANFEFR
+--ACBrNFeDANFEFR --
 [*] implementado as funcionalidades da danfe para eventos na impressão
-		http://www.projetoacbr.com.br/forum/topic/33281-servi%C3%A7o-travando-ao-emitir-cce-carta-de-corre%C3%A7%C3%A3o-eletr%C3%B4nica/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/33281-servi%C3%A7o-travando-ao-emitir-cce-carta-de-corre%C3%A7%C3%A3o-eletr%C3%B4nica/
+    por : Juliomar Marchetti
 		
 03/11/2016
 --ACBrNFeDANFEFR
 [*] Modificação para aplicar a tratativa das margens somente para modelo 55 de NF-e
-		por : Juliomar Marchetti
+    por : Juliomar Marchetti
 		
 30/10/2016
 -- Diversos --
 [+] Implementado os métodos: DistribuicaoDFePorUltNSU, DistribuicaoDFePorNSU e 
     DistribuicaoDFePorchNFe
-   por: Elton da Motta Barbosa / Italo Jurisato Junior
+    por: Elton da Motta Barbosa / Italo Jurisato Junior
 
 24/10/2016
--- ACBrNFeDANFEFRDM.pas
-	Modificação para melhorar desempenho quando muitos itens e não repintar o QrCode
-	http://www.projetoacbr.com.br/forum/topic/33029-altera%C3%A7%C3%B5es-de-performance-na-visualiza%C3%A7%C3%A3o-da-nfce/?do=findComment&comment=217949
-	por : Juliomar Marchetti
+-- ACBrNFeDANFEFRDM.pas --
+   Modificação para melhorar desempenho quando muitos itens e não repintar o QrCode
+   http://www.projetoacbr.com.br/forum/topic/33029-altera%C3%A7%C3%B5es-de-performance-na-visualiza%C3%A7%C3%A3o-da-nfce/?do=findComment&comment=217949
+   por : Juliomar Marchetti
 	
 20/10/2016
 -- ACBrNFeWebServices --

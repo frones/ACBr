@@ -201,8 +201,8 @@ begin
   fImprimeQRCode  := True;
   fFiltro         := fiNenhum;
   fNomeArquivo    := '' ;
-  fMask_qCom      := '0.0000';
-  fMask_vUnCom    := '0.000';
+  fMask_qCom      := ',0.0000';
+  fMask_vUnCom    := ',0.000';
   fPrinterName    := '' ;
   fSite           := '';
   fSoftwareHouse  := '';

@@ -606,13 +606,13 @@ begin
                  Descricao+' '+
                  FormatFloatBr(Prod.qCom, ACBrSATExtrato.Mask_qCom)+' '+
                  Trim(Prod.uCom)+' X '+
-                 FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, '#,###,##0.000', ACBrSATExtrato.Mask_vUnCom))+' ';
+                 FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom))+' ';
 
     if Imposto.vItem12741 > 0 then
-      LinhaItem := LinhaItem + '('+FormatFloatBr(Imposto.vItem12741,'0.00')+') ';
+      LinhaItem := LinhaItem + '('+FormatFloatBr(Imposto.vItem12741)+') ';
 
     mLinhaItem.Lines.Text := LinhaItem;
-    lTotalItem.Caption    := FormatFloatBr(Prod.vProd,'#,###,##0.00');
+    lTotalItem.Caption    := FormatFloatBr(Prod.vProd);
   end;
 end;
 
@@ -625,8 +625,8 @@ begin
 
     if PrintIt then
     begin
-      lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-#,###,##0.00');
-      lDescValLiq.Caption := FormatFloatBr(Prod.vProd-Prod.vDesc,'#,###,##0.00');
+      lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-,0.00');
+      lDescValLiq.Caption := FormatFloatBr(Prod.vProd-Prod.vDesc);
     end;
   end;
 end;
@@ -640,8 +640,8 @@ begin
 
     if PrintIt then
     begin
-      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+#,###,##0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro,'#,###,##0.00');
+      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+,0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro);
     end;
   end;
 
@@ -653,7 +653,7 @@ begin
   with ACBrSATExtrato.CFe.Pagto.Items[fNumPagto] do
   begin
     lMeioPagamento.Caption := ACBrStr(CodigoMPToDescricao(cMP));
-    lPagamento.Caption     := FormatFloatBr(vMP,'#,###,##0.00');
+    lPagamento.Caption     := FormatFloatBr(vMP);
   end;
 end;
 
@@ -672,8 +672,8 @@ begin
 
     if PrintIt then
     begin
-      lDeducISSQN.Caption    := FormatFloatBr(Imposto.ISSQN.vDeducISSQN,'-#,###,##0.00');
-      lBaseCalcISSQN.Caption := FormatFloatBr(Imposto.ISSQN.vBC,'#,###,##0.00');
+      lDeducISSQN.Caption    := FormatFloatBr(Imposto.ISSQN.vDeducISSQN,'-,0.00');
+      lBaseCalcISSQN.Caption := FormatFloatBr(Imposto.ISSQN.vBC);
     end;
   end;
 end;
@@ -691,7 +691,7 @@ begin
     PrintIt := (not Resumido) and ((Descontos > 0) or (Acrescimos > 0));
 
     if PrintIt then
-      lSubTotal.Caption := FormatFloatBr(Total.ICMSTot.vProd,'#,###,##0.00');
+      lSubTotal.Caption := FormatFloatBr(Total.ICMSTot.vProd);
   end;
 end;
 
@@ -706,7 +706,7 @@ begin
     PrintIt   := (not Resumido) and (Descontos > 0);
 
     if PrintIt then
-      lTotDescontos.Caption := FormatFloatBr(Descontos,'#,###,##0.00');
+      lTotDescontos.Caption := FormatFloatBr(Descontos);
   end;
 end;
 
@@ -721,7 +721,7 @@ begin
     PrintIt    := (not Resumido) and (Acrescimos > 0);
 
     if PrintIt then
-      lTotAcrescimos.Caption := FormatFloatBr(Acrescimos,'#,###,##0.00');
+      lTotAcrescimos.Caption := FormatFloatBr(Acrescimos);
   end;
 end;
 
@@ -762,7 +762,7 @@ begin
     PrintIt := (Total.vCFeLei12741 > 0);
 
     if PrintIt then
-      lValLei12741.Caption := FormatFloatBr(Total.vCFeLei12741, '#,###,##0.00');
+      lValLei12741.Caption := FormatFloatBr(Total.vCFeLei12741);
   end;
 end;
 
@@ -783,7 +783,7 @@ end;
 procedure TACBrSATExtratoFortesFr.rlbTotalBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
-  lTotal.Caption := FormatFloatBr(ACBrSATExtrato.CFe.Total.vCFe,'#,###,##0.00');
+  lTotal.Caption := FormatFloatBr(ACBrSATExtrato.CFe.Total.vCFe);
 end;
 
 procedure TACBrSATExtratoFortesFr.rlbTrocoBeforePrint(Sender: TObject;
@@ -794,7 +794,7 @@ begin
     PrintIt := (Pagto.vTroco > 0);
 
     if PrintIt then
-      lTroco.Caption := FormatFloatBr(Pagto.vTroco,'#,###,##0.00');;
+      lTroco.Caption := FormatFloatBr(Pagto.vTroco);;
   end;
 end;
 
@@ -824,7 +824,7 @@ begin
                                        FormatarCNPJouCPF(Dest.CNPJCPF),[]);
     lRazaoSocialNomeCanc.Lines.Text := StringReplace(lRazaoSocialNomeCanc.Lines.Text,
                                        '<xNome>', Dest.xNome,[]);
-    lTotalCan.Caption := FormatFloatBr(Total.vCFe,'#,###,##0.00');
+    lTotalCan.Caption := FormatFloatBr(Total.vCFe);
 
     // Informações do Rodapé do Extrato //
     lNumSATCan.Caption   := Trim(IntToStr( ide.nserieSAT ));

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/12/2016
+-- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
+[*] Ajuste para imprimir corretamente numeros usando a formatação Brasileira
+    com pontos de milhar e decimais (por: DSA)
+
 Data: 17/10/2016
 -- ACBrECFVirtualSAT --
 [*] Acerto para que se possa cancelar um cupom que não seja o último utilizando

@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2016
+-- ACBrBlocoX --
+[+] Adicionado suporte a Zip e Encode64 do XML em: TEnviarBlocoX.XMLZipado
+    (por: DSA)
+
 20/12/2016
 -- ACBrBlocoX --
 [-] Correção de Erro de compilação em D7

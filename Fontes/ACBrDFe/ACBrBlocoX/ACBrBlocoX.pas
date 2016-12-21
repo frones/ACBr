@@ -58,6 +58,7 @@ const
   private
     fEstadoProcCod: Integer;
     fEstadoProcStr: AnsiString;
+    FXMLZipado: AnsiString;
     fRecibo: AnsiString;
     fTipo: AnsiString;
     fVersao: AnsiString;
@@ -65,6 +66,8 @@ const
     FXML : AnsiString;
 
     fBlocoXRetorno: TRetEnvBlocoX;
+    function GetXMLZipado: AnsiString;
+    procedure SetXML(AValue: AnsiString);
 
   protected
     procedure DefinirURL; override;
@@ -77,7 +80,8 @@ const
 
     procedure Clear; override;
     property Cnpj: String read FCnpj write FCnpj;
-    property XML: AnsiString read FXML write FXML;
+    property XML: AnsiString read FXML write SetXML;
+    property XMLZipado: AnsiString read GetXMLZipado;
 
     property BlocoXRetorno: TRetEnvBlocoX read fBlocoXRetorno;
     property EstadoProcCod: Integer       read fEstadoProcCod;
@@ -256,7 +260,7 @@ const
 implementation
 
 uses
-  ACBrBlocoX_Comum, StrUtils;
+  ACBrBlocoX_Comum, StrUtils, synacode;
 
 { TWebServices }
 
@@ -333,6 +337,20 @@ end;
 procedure TEnviarBlocoX.DefinirServicoEAction;
 begin
   FPServico:= 'http://tempuri.org/';
+end;
+
+procedure TEnviarBlocoX.SetXML(AValue: AnsiString);
+begin
+  FXML := AValue;
+  FXMLZipado := '';
+end;
+
+function TEnviarBlocoX.GetXMLZipado: AnsiString;
+begin
+  if (FXMLZipado = '') and (XML <> '') then
+    FXMLZipado := EncodeBase64(Zip(ParseText(XML,False))) ;
+
+  Result := FXMLZipado;
 end;
 
 procedure TEnviarBlocoX.DefinirURL;
@@ -501,7 +519,7 @@ procedure TEnviarReducaoZ.DefinirDadosMsg;
 begin
   FPDadosMsg := '<pCnpjEstabelecimento>'+Cnpj+'</pCnpjEstabelecimento>';
   FPDadosMsg := FPDadosMsg + '<pDataReferencia>'+FORMATDATETIME('yyyy-mm-dd',DataReferencia)+'</pDataReferencia>';
-  FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+ParseText(XML,False)+'</pXmlZipado>';
+  FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
 end;
 
 procedure TEnviarReducaoZ.DefinirServicoEAction;
@@ -529,7 +547,7 @@ begin
   FPDadosMsg := '<pCnpjEstabelecimento>'+Cnpj+'</pCnpjEstabelecimento>';
   FPDadosMsg := FPDadosMsg + '<pDataReferenciaInicial>'+FORMATDATETIME('yyyy-mm-dd',DataReferenciaInicial)+'</pDataReferenciaInicial>';
   FPDadosMsg := FPDadosMsg + '<pDataReferenciaFinal>'+FORMATDATETIME('yyyy-mm-dd',DataReferenciaFinal)+'</pDataReferenciaFinal>';
-  FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+ParseText(XML,False)+'</pXmlZipado>';
+  FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
 end;
 
 procedure TEnviarEstoque.DefinirServicoEAction;

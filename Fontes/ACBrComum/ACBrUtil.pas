@@ -323,7 +323,9 @@ function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word =
 function MatchText(const AText: String; const AValues: array of String): Boolean;
 
 function UnZip(S: TStream): AnsiString; overload;
-function UnZip(S: AnsiString): AnsiString; overload;
+function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
+function Zip(S: TStream): AnsiString; overload;
+function Zip(const ABinaryString: AnsiString): AnsiString; overload;
 
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
 
@@ -3395,11 +3397,11 @@ begin
   end;
 end;
 
-function UnZip(S: AnsiString): AnsiString; overload;
+function UnZip(const ABinaryString: AnsiString): AnsiString;
 var
   SS: TStringStream;
 begin
-  SS := TStringStream.Create(S);
+  SS := TStringStream.Create(ABinaryString);
   try
     Result := UnZip(SS);
   finally
@@ -3407,6 +3409,38 @@ begin
   end;
 end;
 
+function Zip(S: TStream): AnsiString;
+var
+  CS: Tcompressionstream;
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create('');
+  try
+    CS := Tcompressionstream.create(cldefault, SS);
+    try
+      S.Position := 0;
+      CS.CopyFrom(S, S.Size);
+    finally
+      CS.Free;
+    end;
+
+    Result := SS.DataString;
+  finally
+    SS.Free;
+  end;
+end;
+
+function Zip(const ABinaryString: AnsiString): AnsiString;
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(ABinaryString);
+  try
+    Result := Zip(SS);
+  finally
+    SS.Free;
+  end;
+end;
 
 {$ELSE}
 
@@ -3416,14 +3450,33 @@ Var
 begin
   S.Position := 0;
   DataStr := ReadStrFromStream(S, S.Size);
-  
+
   Result := UnZip(DataStr);
 end;
 
-function UnZip(S: AnsiString): AnsiString; overload;
+function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
 begin
-  Result := GZDecompressStr(S);
+  Result := GZDecompressStr(ABinaryString);
 end ;
+
+function Zip(S: TStream): AnsiString;
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create('');
+  try
+    GZCompressStream(S, SS);
+    Result := SS.DataString;
+  finally
+    SS.Free;
+  end;
+end;
+
+function Zip(const ABinaryString: AnsiString): AnsiString;
+begin
+  Result := GZCompressStr(ABinaryString);
+end;
+
 {$ENDIF}
 
 {------------------------------------------------------------------------------

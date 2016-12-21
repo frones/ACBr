@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/12/2016
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function Zip(S: TStream): AnsiString; overload;
+    function Zip(const ABinaryString: AnsiString): AnsiString; overload;
+    (por: DSA)
+
 Data: 20/12/2016
 -- ACBrUtil --
 [*] FormatFloatBr e FloatMask. Ajuste para usar separador de milhar, na mascara

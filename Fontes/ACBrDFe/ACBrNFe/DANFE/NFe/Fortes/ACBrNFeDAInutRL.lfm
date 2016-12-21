@@ -11,7 +11,8 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.2.0'
+  Visible = False
   object RLNFeInut: TRLReport
     Left = 21
     Height = 1123
@@ -21,6 +22,9 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Arial'
+    PreviewOptions.FormStyle = fsStayOnTop
+    PreviewOptions.ShowModal = True
+    PrintDialog = False
     RealBounds.Left = 0
     RealBounds.Top = 0
     RealBounds.Width = 0

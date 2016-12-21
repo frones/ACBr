@@ -69,7 +69,6 @@ type
     RLBarcode1: TRLBarcode;
     rlb_01_Recibo: TRLBand;
     RLDraw28: TRLDraw;
-    RLDraw34: TRLDraw;
     rlsLinhaH03: TRLDraw;
     rlmEmitente: TRLMemo;
     rlmDadosEmitente: TRLMemo;
@@ -585,6 +584,24 @@ type
     RLLabel200: TRLLabel;
     RLSystemInfo1: TRLSystemInfo;
     RLSystemInfo2: TRLSystemInfo;
+    rlb_06_VeiculosNovos: TRLBand;
+    RLDraw228: TRLDraw;
+    RLLabel222: TRLLabel;
+    RLDraw229: TRLDraw;
+    RLLabel229: TRLLabel;
+    RLLabel231: TRLLabel;
+    RLLabel242: TRLLabel;
+    RLLabel243: TRLLabel;
+    RLLabel244: TRLLabel;
+    RLDraw324: TRLDraw;
+    RLDraw335: TRLDraw;
+    RLDraw310: TRLDraw;
+    RLDraw411: TRLDraw;
+    CHASSI: TRLMemo;
+    COR: TRLMemo;
+    MODELO: TRLMemo;
+    VUNIT: TRLMemo;
+    VFRETE: TRLMemo;
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -605,6 +622,7 @@ type
     procedure rlb_11_ModRodLot104BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_18_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_06_ProdutosPerigososBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_06_VeiculosNovosBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_07_HeaderItensAfterPrint(Sender: TObject);
     procedure rlb_11_ModRodLot104AfterPrint(Sender: TObject);
@@ -2429,6 +2447,49 @@ begin
 {$ENDIF}
 
 end;
+procedure TfrmDACTeRLRetrato.rlb_06_VeiculosNovosBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  i: integer;
+begin
+  inherited;
+
+{$IFDEF PL_200}
+  rlb_06_VeiculosNovos.Enabled := (FCTe.infCTeNorm.veicNovos.Count > 0);
+{$ELSE}
+  rlb_06_VeiculosNovos.Enabled := (FCTe.veicNovos.Count > 0);
+{$ENDIF}
+
+  PrintIt := (RLCTe.PageNumber = 1);
+  if not rlb_06_VeiculosNovos.Enabled then
+    rlb_06_VeiculosNovos.Height := 0;
+
+  CHASSI.Lines.Clear;
+  COR.Lines.Clear;
+  MODELO.Lines.Clear;
+  VUNIT.Lines.Clear;
+  VFRETE.Lines.Clear;
+
+{$IFDEF PL_200}
+  for i := 0 to (FCTe.infCTeNorm.veicNovos.Count-1) do
+   begin
+     CHASSI.Lines.Add(FCTe.infCTeNorm.veicNovos.Items[i].chassi);
+     COR.Lines.Add(FCTe.infCTeNorm.veicNovos.Items[i].cCor + ' - ' + FCTe.infCTeNorm.veicNovos.Items[i].xCor);
+     MODELO.Lines.Add(FCTe.infCTeNorm.veicNovos.Items[i].cMod);
+     VUNIT.Lines.Add(FloatToString(FCTe.infCTeNorm.veicNovos.Items[i].vUnit,','));
+     VFRETE.Lines.Add(FloatToString(FCTe.infCTeNorm.veicNovos.Items[i].vFrete,','));
+   end;
+{$ELSE}
+  for i := 0 to (FCTe.peri.Count - 1) do
+  begin
+     CHASSI.Lines.Add(FCTe.veicNovos.Items[i].chassi);
+     COR.Lines.Add(FCTe.veicNovos.Items[i].cCor + ' - ' + FCTe.veicNovos.Items[i].xCor);
+     MODELO.Lines.Add(FCTe.veicNovos.Items[i].cMod);
+     VUNIT.Lines.Add(FloatToString(FCTe.veicNovos.Items[i].vUnit,','));
+     VFRETE.Lines.Add(FloatToString(FCTe.veicNovos.Items[i].vFrete,','));
+  end;
+{$ENDIF}
+
+end;
 
 procedure TfrmDACTeRLRetrato.RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
 begin
@@ -2447,9 +2508,13 @@ begin
 {$IFDEF PL_200}
   if FCTe.infCTeNorm.peri.Count = 0
    then rlb_06_ProdutosPerigosos.Visible := False;
+  if FCTe.infCTeNorm.veicNovos.Count = 0
+   then rlb_06_VeiculosNovos.Visible := False;
 {$ELSE}
   if FCTe.peri.Count = 0 then
     rlb_06_ProdutosPerigosos.Visible := False;
+  if FCTe.veicNovos.Count = 0
+   then rlb_06_VeiculosNovos.Visible := False;
 {$ENDIF}
 
   rlb_10_ModRodFracionado.Height := 0;

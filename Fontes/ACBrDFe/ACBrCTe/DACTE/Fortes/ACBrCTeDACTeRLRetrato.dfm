@@ -1,9 +1,9 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 187
-  Top = 84
+  Left = 237
+  Top = 11
+  Width = 990
+  Height = 813
   Caption = 'DACTe - Retrato'
-  ClientHeight = 782
-  ClientWidth = 965
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -12,16 +12,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   inherited RLCTe: TRLReport
     Left = 99
     Top = -27
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     PreviewOptions.FormStyle = fsStayOnTop
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DACT-e '
@@ -355,9 +355,27 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       ParentColor = False
       AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
+      object RLLabel20: TRLLabel
+        Left = 6
+        Top = 2
+        Width = 732
+        Height = 12
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'DOCUMENTOS ORIGIN'#193'RIOS'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
       object RLDraw32: TRLDraw
-        Left = 5
-        Top = 9
+        Left = 0
+        Top = 14
         Width = 740
         Height = 1
         HelpContext = 1
@@ -415,24 +433,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -7
-        Font.Name = 'Times New Roman'
-        Font.Style = []
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-      end
-      object RLLabel20: TRLLabel
-        Left = 6
-        Top = 2
-        Width = 732
-        Height = 12
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'DOCUMENTOS ORIGIN'#193'RIOS'
-        Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -9
         Font.Name = 'Times New Roman'
         Font.Style = []
         ParentColor = False
@@ -548,7 +548,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_09_Obs: TRLBand
       Left = 26
-      Top = 1102
+      Top = 1200
       Width = 742
       Height = 68
       BandType = btHeader
@@ -1246,21 +1246,21 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 60
         Width = 376
         Height = 34
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object rlbCodigoBarras: TRLBarcode
         Left = 339
         Top = 60
         Width = 396
         Height = 32
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Transparent = False
       end
       object RLLabel198: TRLLabel
@@ -1332,7 +1332,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_10_ModRodFracionado: TRLBand
       Left = 26
-      Top = 1170
+      Top = 1268
       Width = 742
       Height = 44
       BandType = btHeader
@@ -1556,7 +1556,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_11_ModRodLot103: TRLBand
       Left = 26
-      Top = 1214
+      Top = 1312
       Width = 742
       Height = 108
       BandType = btHeader
@@ -4361,7 +4361,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_17_Sistema: TRLBand
       Left = 26
-      Top = 1702
+      Top = 1800
       Width = 742
       Height = 16
       BandType = btHeader
@@ -4416,7 +4416,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_16_DadosExcEmitente: TRLBand
       Left = 26
-      Top = 1632
+      Top = 1730
       Width = 742
       Height = 70
       BandType = btHeader
@@ -5168,7 +5168,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_12_ModAereo: TRLBand
       Left = 26
-      Top = 1429
+      Top = 1527
       Width = 742
       Height = 97
       BandType = btHeader
@@ -5680,7 +5680,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_13_ModAquaviario: TRLBand
       Left = 26
-      Top = 1526
+      Top = 1624
       Width = 742
       Height = 92
       BandType = btHeader
@@ -6037,7 +6037,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_14_ModFerroviario: TRLBand
       Left = 26
-      Top = 1618
+      Top = 1716
       Width = 742
       Height = 7
       BandType = btHeader
@@ -6047,7 +6047,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_15_ModDutoviario: TRLBand
       Left = 26
-      Top = 1625
+      Top = 1723
       Width = 742
       Height = 7
       BandType = btHeader
@@ -6326,7 +6326,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_11_ModRodLot104: TRLBand
       Left = 26
-      Top = 1322
+      Top = 1420
       Width = 742
       Height = 107
       BandType = btHeader
@@ -6796,12 +6796,11 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentColor = False
         ParentFont = False
       end
-			object RLDraw28: TRLDraw
+      object RLDraw28: TRLDraw
         Left = 267
-        Height = 26
         Top = 79
         Width = 1
-        Angle = 0
+        Height = 26
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
         Borders.DrawTop = False
@@ -6812,7 +6811,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_18_Recibo: TRLBand
       Left = 26
-      Top = 1718
+      Top = 1816
       Width = 742
       Height = 97
       BandType = btHeader
@@ -7374,6 +7373,255 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Height = 1
         HelpContext = 1
         Brush.Style = bsClear
+      end
+    end
+    object rlb_06_VeiculosNovos: TRLBand
+      Left = 26
+      Top = 1102
+      Width = 742
+      Height = 98
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      BeforePrint = rlb_06_VeiculosNovosBeforePrint
+      object RLDraw228: TRLDraw
+        Left = 0
+        Top = 1
+        Width = 741
+        Height = 97
+        Brush.Style = bsClear
+      end
+      object RLLabel222: TRLLabel
+        Left = 6
+        Top = 3
+        Width = 732
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'INFORMA'#199#213'ES SOBRE OS VE'#205'CULOS NOVOS TRANSPORTADOS'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw229: TRLDraw
+        Left = 1
+        Top = 16
+        Width = 740
+        Height = 1
+        HelpContext = 1
+        Brush.Style = bsClear
+      end
+      object RLLabel229: TRLLabel
+        Left = 5
+        Top = 19
+        Width = 27
+        Height = 8
+        Caption = 'CHASSI'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel231: TRLLabel
+        Left = 128
+        Top = 19
+        Width = 17
+        Height = 8
+        Caption = 'COR'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel242: TRLLabel
+        Left = 337
+        Top = 19
+        Width = 59
+        Height = 8
+        Caption = 'MARCA/MODELO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel243: TRLLabel
+        Left = 510
+        Top = 19
+        Width = 78
+        Height = 8
+        Caption = 'VR. UNIT. DO VE'#205'CULO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel244: TRLLabel
+        Left = 625
+        Top = 19
+        Width = 58
+        Height = 8
+        Caption = 'FRETE UNITARIO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw324: TRLDraw
+        Left = 123
+        Top = 16
+        Width = 1
+        Height = 81
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw335: TRLDraw
+        Left = 332
+        Top = 16
+        Width = 1
+        Height = 81
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw310: TRLDraw
+        Left = 500
+        Top = 16
+        Width = 1
+        Height = 81
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLDraw411: TRLDraw
+        Left = 620
+        Top = 16
+        Width = 1
+        Height = 81
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object CHASSI: TRLMemo
+        Left = 5
+        Top = 33
+        Width = 116
+        Height = 63
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'CHASSI')
+        ParentColor = False
+        ParentFont = False
+      end
+      object COR: TRLMemo
+        Left = 128
+        Top = 33
+        Width = 201
+        Height = 63
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'COR')
+        ParentColor = False
+        ParentFont = False
+      end
+      object MODELO: TRLMemo
+        Left = 336
+        Top = 33
+        Width = 161
+        Height = 63
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'MODELO')
+        ParentColor = False
+        ParentFont = False
+      end
+      object VUNIT: TRLMemo
+        Left = 509
+        Top = 33
+        Width = 108
+        Height = 63
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'VUNIT')
+        ParentColor = False
+        ParentFont = False
+      end
+      object VFRETE: TRLMemo
+        Left = 625
+        Top = 33
+        Width = 112
+        Height = 63
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'VFRETE')
+        ParentColor = False
+        ParentFont = False
       end
     end
   end

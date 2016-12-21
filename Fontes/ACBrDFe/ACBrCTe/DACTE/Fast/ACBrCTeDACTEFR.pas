@@ -89,8 +89,9 @@ type
     procedure CarregaMultiModal;
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior;
-		procedure CarregaCTeAnuladoComplementado;
-		procedure CarregaProdutosPerigosos;
+	procedure CarregaCTeAnuladoComplementado;
+	procedure CarregaProdutosPerigosos;
+	procedure CarregaVeiculosNovos;
     procedure LimpaDados;
     function ManterCep(iCep: Integer): String;
   protected
@@ -125,8 +126,9 @@ type
     cdsRodoMotorista        : TClientDataSet;
     cdsDocAnterior          : TClientDataSet;
     cdsAnuladoComple        : TClientDataSet;
-		cdsEventos              : TClientDataSet;
-		cdsProdutosPerigosos    : TClientDataSet;
+	cdsEventos              : TClientDataSet;
+	cdsProdutosPerigosos    : TClientDataSet;
+	cdsVeiculosNovos        : TClientDataSet;
 
     // frxDB
     frxIdentificacao        : TfrxDBDataset;
@@ -152,8 +154,9 @@ type
     frxRodoMotorista        : TfrxDBDataset;
     frxDocAnterior          : TfrxDBDataset;
     frxAnuladoComple        : TfrxDBDataset;
-		frxEventos              : TfrxDBDataset;
-		frxProdutosPerigosos    : TfrxDBDataset;
+	frxEventos              : TfrxDBDataset;
+	frxProdutosPerigosos    : TfrxDBDataset;
+	frxVeiculosNovos        : TfrxDBDataset;
 
     frxBarCodeObject: TfrxBarCodeObject;
 
@@ -823,6 +826,20 @@ begin
 
 		CreateDataSet;
   end;
+  cdsVeiculosNovos := TClientDataSet.Create(nil);
+  with cdsVeiculosNovos, FieldDefs do
+  begin
+   	Close;
+   	Clear;
+		Add('Chassi', ftString, 17);
+		Add('cCor',   ftString, 4);
+		Add('xCor',   ftString, 40);
+		Add('cMod',   ftString, 6);
+        Add('vUnit',  ftFloat);
+        Add('vFrete', ftFloat);
+
+		CreateDataSet;
+  end;
 
   // frxDB
   frxIdentificacao := TfrxDBDataset.Create(nil);
@@ -1024,6 +1041,13 @@ begin
   	OpenDataSource := False;
 		DataSet        := cdsProdutosPerigosos;
   end;
+  frxVeiculosNovos := TfrxDBDataset.Create(nil);
+  with frxVeiculosNovos do
+  begin
+		UserName       := 'VeiculosNovos';
+     	OpenDataSource := False;
+		DataSet        := cdsVeiculosNovos;
+  end;
   frxBarCodeObject := TfrxBarCodeObject.Create(nil);
 end;
 
@@ -1057,6 +1081,7 @@ begin
   cdsAnuladoComple.Free;
   cdsEventos.Free;
   cdsProdutosPerigosos.Free;
+  cdsVeiculosNovos.Free;
 
   // frxDB
   frxIdentificacao.Free;
@@ -1085,6 +1110,7 @@ begin
   frxEventos.Free;
   frxBarCodeObject.Free;
   frxProdutosPerigosos.Free;
+  frxVeiculosNovos.Free;
 
   inherited Destroy;
 end;
@@ -1300,6 +1326,7 @@ begin
   cdsAnuladoComple.EmptyDataSet;
   cdsEventos.EmptyDataSet;
   cdsProdutosPerigosos.EmptyDataSet;
+  cdsVeiculosNovos.EmptyDataSet;
 end;
 
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;
@@ -1410,8 +1437,9 @@ begin
     Add(frxRodoMotorista);
     Add(frxDocAnterior);
     Add(frxAnuladoComple);
-		Add(frxEventos);
-		Add(frxProdutosPerigosos);
+	Add(frxEventos);
+	Add(frxProdutosPerigosos);
+	Add(frxVeiculosNovos);
   end;
 end;
 
@@ -1594,6 +1622,7 @@ begin
   CarregaDocumentoAnterior;
   CarregaCTeAnuladoComplementado;
   CarregaProdutosPerigosos;
+  CarregaVeiculosNovos;
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosEventos;
@@ -1870,7 +1899,7 @@ begin
           begin
             Append;
             FieldByName('CNPJCPF').AsString := CNPJCPF;
-						FieldByName('IE').AsString      := IE;
+			FieldByName('IE').AsString      := IE;
             FieldByName('xNome').AsString   := xNome;
             FieldByName('UF').AsString      := UF;
             with idDocAnt.Items[ii].idDocAntEle.Items[iii] do
@@ -2578,6 +2607,32 @@ begin
 		  		FieldByName('pontoFulgor').AsString   := Items[i].pontoFulgor;
 		  		Post;
 				end;
+		end;
+  end;
+end;
+procedure TACBrCTeDACTEFR.CarregaVeiculosNovos;
+var i : Integer;
+begin
+ { VeiculosNovos }
+  with cdsVeiculosNovos do
+  begin
+
+		with FCTe.infCTeNorm.veicNovos do
+		begin
+			if FCTe.infCTeNorm.veicNovos.Count > 0 then
+			begin
+				for I := 0 to FCTe.infCTeNorm.veicNovos.Count - 1 do
+				begin
+		  		    Append;
+		  		    FieldByName('Chassi').AsString          := FCTe.infCTeNorm.veicNovos.Items[i].chassi;
+		  		    FieldByName('cCor').AsString       := Items[i].cCor;
+		  		    FieldByName('xCor').AsString     := Items[i].xCor;
+		  		    FieldByName('cMod').AsString         := Items[i].cMod;
+		  		    FieldByName('vUnit').AsFloat      := Items[i].vUnit;
+		  		    FieldByName('vFrete').AsFloat      := Items[i].vFrete;
+		  		    Post;
+				end;
+			end;
 		end;
   end;
 end;

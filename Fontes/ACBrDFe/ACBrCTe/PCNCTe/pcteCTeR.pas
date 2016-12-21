@@ -187,7 +187,7 @@ begin
   (* Grupo da TAG <ide><toma03> ***********************************************)
   if Leitor.rExtrai(1, 'ide') <> '' then
   begin
-    if Leitor.rExtrai(2, 'toma03') <> '' then
+    if (Leitor.rExtrai(2, 'toma03') <> '') or (Leitor.rExtrai(2, 'toma3') <> '') then
     begin
       (*B29*)CTe.Ide.Toma03.Toma := StrToTpTomador(ok, Leitor.rCampo(tcStr, 'toma'));
     end;

@@ -157,7 +157,7 @@ begin
     begin
       rllOrgao.Caption := IntToStr(RetInutNFe.cUF);
 
-      case tpAmb of
+      case RetInutNFe.tpAmb of
        taProducao:    rllTipoAmbiente.Caption := ACBrStr('PRODUÇÃO');
        taHomologacao: rllTipoAmbiente.Caption := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
       end;

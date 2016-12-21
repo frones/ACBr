@@ -829,6 +829,17 @@ type
     procedure ValorUmMaiorTolerancia000001Maior;
   end;
 
+  { ZipUnzip }
+
+  ZipUnzip = class(TTestCase)
+  private
+    AStr: String;
+  protected
+    procedure SetUp; override;
+  published
+    procedure ZipAString;
+    procedure ZipAStream;
+  end;
 
 
 implementation
@@ -836,6 +847,38 @@ implementation
 uses
   Math, dateutils,
   ACBrUtil, ACBrConsts;
+
+{ ZipUnzip }
+
+procedure ZipUnzip.SetUp;
+var
+  I: Integer;
+  Linha: AnsiString;
+begin
+  For I := 0 to 255 do
+    Linha := Linha + AnsiChr(i);
+
+  AStr := '';
+  For I := 1 to 1000 do
+    AStr := AStr + Linha + sLineBreak;
+end;
+
+procedure ZipUnzip.ZipAString;
+begin
+  CheckEquals(UnZip(Zip(AStr)), AStr);
+end;
+
+procedure ZipUnzip.ZipAStream;
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(AStr);
+  try
+    CheckEquals(UnZip(Zip(SS)), AStr);
+  finally
+    SS.Free;
+  end;
+end;
 
 { ComparaValorTest }
 
@@ -3565,6 +3608,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', EAN13Test{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', ZipUnzip{$ifndef FPC}.suite{$endif});
   //TODO: WriteToTXT, WriteLog,
 end.
 

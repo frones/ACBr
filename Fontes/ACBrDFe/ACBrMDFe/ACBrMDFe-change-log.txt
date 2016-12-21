@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/12/2016
+[-] Correção tpTransp no pmdfeMDFeW
+		http://www.projetoacbr.com.br/forum/topic/33096-mdf-e-300-dados-do-seguro/?do=findComment&comment=224176
+		por: Juliomar Marchetti
+		
 20/12/2016
 [+] MDFe mudar a 0-n ocorrências da tag "nAver" e valida referente à tag "tpTransp"
 		http://www.projetoacbr.com.br/forum/topic/33096-mdf-e-300-dados-do-seguro/

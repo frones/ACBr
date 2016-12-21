@@ -248,7 +248,9 @@ begin
   Gerador.wCampo(tcStr, '#006', 'tpAmb   ', 01, 01, 1, tpAmbToStr(MDFe.Ide.tpAmb), DSC_TPAMB);
   Gerador.wCampo(tcStr, '#007', 'tpEmit  ', 01, 01, 1, TpEmitenteToStr(MDFe.Ide.tpEmit), DSC_TPEMIT);
 
-  if (VersaoDF = ve300) then
+  //tpTransp só deve ser enviado se tpEmit = teTransportadora ou
+  //tpEmit = teTranspCargaPropria e veículo de tração não for de propriedade do emitente
+  if (VersaoDF = ve300) and ((MDFe.Ide.tpEmit = teTransportadora) or ((MDFe.Ide.modal = moRodoviario) and (MDFe.Rodo.veicTracao.Prop.CNPJCPF <> '') and (MDFe.Rodo.veicTracao.Prop.CNPJCPF <> MDFe.emit.CNPJ))) then
     Gerador.wCampo(tcStr, '#007', 'tpTransp', 01, 01, 0, TTransportadorToStr(MDFe.Ide.tpTransp), DSC_TPTRANSP);
 
   Gerador.wCampo(tcInt, '#008', 'mod     ', 02, 02, 1, MDFe.ide.modelo, DSC_MOD);

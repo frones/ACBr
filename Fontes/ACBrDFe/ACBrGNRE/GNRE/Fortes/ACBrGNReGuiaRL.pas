@@ -303,6 +303,9 @@ procedure TfrlGuiaRL.CarregaDados;
     Result := Trim(Str);
   end;
 
+  var
+  sReferencia : String;
+
 begin
   with cdsItens do
   begin
@@ -342,6 +345,8 @@ begin
     FieldDefs.Add('NumeroControle', ftString, 16);
     FieldDefs.Add('IdentificadorGuia', ftString, 10);
     FieldDefs.Add('Reservado', ftString, 126);
+    FieldDefs.Add('PerMesAnoRef', ftString, 20);
+
     CreateDataSet;
     Append;
 
@@ -369,8 +374,8 @@ begin
       FieldByName('MunicipioEmitente').AsString := MunicipioEmitente;
       FieldByName('UFEmitente').AsString := UFEmitente;
       FieldByName('CEPEmitente').AsString := CEPEmitente;
-      //FieldByName('TelefoneEmitente').AsString := RemoverZeros(TelefoneEmitente);
-      FieldByName('TipoDocDestinatario').AsInteger := TipoDocDestinatario;
+      FieldByName('TelefoneEmitente').AsString      := RemoverZeros(TelefoneEmitente);
+      FieldByName('TipoDocDestinatario').AsInteger  := TipoDocDestinatario;
 
       case TipoDocDestinatario of
         1:
@@ -391,7 +396,7 @@ begin
       FieldByName('InfoComplementares').AsString := InfoComplementares;
       FieldByName('DataVencimento').AsDateTime := StrToDate(FormatarData(DataVencimento));
       FieldByName('DataLimitePagamento').AsDateTime := StrToDateDef(FormatarData(DataLimitePagamento), FieldByName('DataVencimento').AsDateTime);
-      FieldByName('PeriodoReferencia').AsString := PeriodoReferencia;
+      FieldByName('PeriodoReferencia').AsString := PeriodoReferencia ;
       FieldByName('MesAnoReferencia').AsString := MesAnoReferencia;
       FieldByName('Parcela').AsString := IntToStr(Parcela);
       FieldByName('ValorPrincipal').AsCurrency := ValorPrincipal;
@@ -404,6 +409,24 @@ begin
       FieldByName('NumeroControle').AsString := NumeroControle;
       FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
       FieldByName('Reservado').AsString := Reservado;
+
+      Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
+        0: sReferencia := 'Mensal';
+        1: sReferencia := '1a Quinzena';
+        2: sReferencia := '2a Quinzena';
+        3: sReferencia := '1o Decêndio';
+        4: sReferencia := '2o Decêndio';
+        5: sReferencia := '3o Decêndio';
+      end;
+
+      cdsItens.FieldByName('PerMesAnoRef').AsString := sReferencia + '-' + Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
+                                                                                1, Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-4) +
+                                                                                '/' +
+                                                                                Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
+                                                                                Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-3,
+                                                                                Length(cdsItens.FieldByName('MesAnoReferencia').AsString));
+
+
     end;
     Post;
   end;

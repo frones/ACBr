@@ -2,8 +2,8 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
   Left = 0
   Top = 0
   Caption = 'ACBrGNREGuiaFR_Fortes'
-  ClientHeight = 364
-  ClientWidth = 759
+  ClientHeight = 1009
+  ClientWidth = 819
   Font.Name = 'Tahoma'
   OldCreateOrder = False
   PixelsPerInch = 96
@@ -688,9 +688,9 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         ParentFont = False
       end
       object RLDBText16: TRLDBText
-        Left = 158
+        Left = 202
         Top = 247
-        Width = 317
+        Width = 283
         Height = 12
         AutoSize = False
         DataField = 'DataLimitePagamento'
@@ -743,22 +743,6 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object RLDBText18: TRLDBText
-        Left = 487
-        Top = 118
-        Width = 97
-        Height = 12
-        Alignment = taRightJustify
-        AutoSize = False
-        DataField = 'PeriodoReferencia'
-        DataSource = dsItens
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
       end
       object RLLabel25: TRLLabel
@@ -1626,9 +1610,9 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         ParentFont = False
       end
       object RLDBText34: TRLDBText
-        Left = 158
+        Left = 202
         Top = 577
-        Width = 317
+        Width = 283
         Height = 12
         AutoSize = False
         DataField = 'DataLimitePagamento'
@@ -1688,9 +1672,8 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         Top = 448
         Width = 97
         Height = 12
-        Alignment = taRightJustify
         AutoSize = False
-        DataField = 'PeriodoReferencia'
+        DataField = 'PerMesAnoRef'
         DataSource = dsItens
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1897,6 +1880,20 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDBText18: TRLDBText
+        Left = 487
+        Top = 118
+        Width = 101
+        Height = 12
+        DataField = 'PerMesAnoRef'
+        DataSource = dsItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
         ParentFont = False
       end
     end
@@ -2565,9 +2562,9 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
       ParentFont = False
     end
     object RLDBText52: TRLDBText
-      Left = 196
+      Left = 202
       Top = 945
-      Width = 317
+      Width = 283
       Height = 12
       AutoSize = False
       DataField = 'DataLimitePagamento'
@@ -2627,9 +2624,8 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
       Top = 816
       Width = 97
       Height = 12
-      Alignment = taRightJustify
       AutoSize = False
-      DataField = 'PeriodoReferencia'
+      DataField = 'PerMesAnoRef'
       DataSource = dsItens
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack

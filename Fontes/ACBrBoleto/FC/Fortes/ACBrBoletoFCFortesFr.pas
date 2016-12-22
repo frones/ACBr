@@ -52,7 +52,7 @@ uses
   ACBrBoleto ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.30a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.31a' ;
 
 type
 
@@ -646,7 +646,7 @@ begin
       txtUsoBanco2.Caption            := Titulo.UsoBanco;
       txtCarteira2.Caption            := Carteira;
       txtEspecie2.Caption             := IfThen(trim(Titulo.EspecieMod) = '','R$',Titulo.EspecieMod);
-      txtValorDocumento2.Caption      := IfThen(Titulo.ValorDocumento > 0,FormatFloat('###,###,##0.00',Titulo.ValorDocumento));
+      txtValorDocumento2.Caption      := IfThen(Titulo.ValorDocumento > 0,FormatFloat(',0.00',Titulo.ValorDocumento));
 
       with Titulo.Sacado do
       begin
@@ -763,7 +763,7 @@ begin
       txtVencCarne2.Caption           := txtVencCanhoto.Caption;
       txtCodCedenteCarne.Caption      := CodCedente;
       txtCodCedenteCarne2.Caption     := txtCodCedenteCarne.Caption;
-      txtValorCarne.Caption           := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+      txtValorCarne.Caption           := FormatFloat(',0.00',Titulo.ValorDocumento);
       txtValorCar.Caption             := txtValorCarne.Caption;
       txtNossoNumeroCarne.Caption     := NossoNum;
       txtNossoNumCan.Caption          := NossoNum;
@@ -833,7 +833,7 @@ begin
                                                 FormatDateTime('dd/mm/yyyy',Titulo.DataProcessamento));
       txtNossoNumero4.Caption         := NossoNum;
       txtEspecie4.Caption             := 'R$';
-      txtValorDocumento4.Caption      := FormatFloat('###,###,##0.00',Titulo.ValorDocumento);
+      txtValorDocumento4.Caption      := FormatFloat(',0.00',Titulo.ValorDocumento);
       txtNomeSacado4.Caption          := Titulo.Sacado.NomeSacado;
    end;
 end;

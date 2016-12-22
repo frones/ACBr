@@ -649,7 +649,7 @@ begin
           end
           else
           begin
-            if CodMotivo <> '00' then     //Após o 1º motivo os 00 significam que não existe mais motivo
+            if (CodMotivo <> '00') And (Trim(CodMotivo) <> '') then     //Após o 1º motivo os 00 significam que não existe mais motivo
             begin
               MotivoRejeicaoComando.Add(IfThen(Copy(Linha,MotivoLinha,2) = '00',
                                                '00',
@@ -937,24 +937,25 @@ begin
           end;
 
         toRetornoLiquidado:   //06
-          case AnsiIndexStr(CodMotivo, ['A8', 'H5', 'H6', 'H8', 'X1', 'X2', 'X3', 'X4', 'X5',
-                                        'X0', 'X6', 'X7', 'X8', 'X9', 'XA', 'XB']) of
+          case AnsiIndexStr(CodMotivo, ['A8',  'C7', 'H5', 'H6', 'H8', 'X1', 'X2', 'X3', 'X4', 'X5',
+                                        'X0', 'X6', 'X7', 'X8', 'X9', 'XA', 'XB', 'C7']) of
             0: Result:= 'A8-Recebimento da liquidação fora da rede Sicredi - via compensação eletrônica';
-            1: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - Via compensação';
-            2: Result:= 'H6-Recebimento de liquidação fora da rede Sicredi - VLB Superior - Via compensação';
-            3: Result:= 'H8-Recebimento de liquidação fora da rede Sicredi - Contingência Via Compe';
-            4: Result:= 'X1-Regularização centralizadora - Rede Sicredi';
-            5: Result:= 'X2-Regularização centralizadora - Compensação';
-            6: Result:= 'X3-Regularização centralizadora - Banco correspondente';
-            7: Result:= 'X4-Regularização centralizadora - VLB Inferior - via Compensação';
-            8: Result:= 'X5-Regularização centralizadora - VLB Superior - via Compensação';
-            9: Result:= 'X0-Pago com cheque';
-            10: Result:= 'X6-Pago com cheque - bloqueado 24 horas';
-            11: Result:= 'X7-Pago com cheque - bloqueado 48 horas';
-            12: Result:= 'X8-Pago com cheque - bloqueado 72 horas';
-            13: Result:= 'X9-Pago com cheque - bloqueado 96 horas';
-            14: Result:= 'XA-Pago com cheque - bloqueado 120 horas';
-            15: Result:= 'XB-Pago com cheque - bloqueado 144 horas';
+            1: Result:= 'C7-Título já baixado';
+            2: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - Via compensação';
+            3: Result:= 'H6-Recebimento de liquidação fora da rede Sicredi - VLB Superior - Via compensação';
+            4: Result:= 'H8-Recebimento de liquidação fora da rede Sicredi - Contingência Via Compe';
+            5: Result:= 'X1-Regularização centralizadora - Rede Sicredi';
+            6: Result:= 'X2-Regularização centralizadora - Compensação';
+            7: Result:= 'X3-Regularização centralizadora - Banco correspondente';
+            8: Result:= 'X4-Regularização centralizadora - VLB Inferior - via Compensação';
+            9: Result:= 'X5-Regularização centralizadora - VLB Superior - via Compensação';
+            10: Result:= 'X0-Pago com cheque';
+            11: Result:= 'X6-Pago com cheque - bloqueado 24 horas';
+            12: Result:= 'X7-Pago com cheque - bloqueado 48 horas';
+            13: Result:= 'X8-Pago com cheque - bloqueado 72 horas';
+            14: Result:= 'X9-Pago com cheque - bloqueado 96 horas';
+            15: Result:= 'XA-Pago com cheque - bloqueado 120 horas';
+            16: Result:= 'XB-Pago com cheque - bloqueado 144 horas';
           else
             case StrToInt(CodMotivo) of
                00: Result:= '00-Ocorrência aceita, liquidação normal';
@@ -1007,11 +1008,12 @@ begin
           end;
 
         toRetornoLiquidadoAposBaixaouNaoRegistro: //17
-          case AnsiIndexStr(CodMotivo,['A8', 'H5', 'H6', 'H8']) of
+          case AnsiIndexStr(CodMotivo,['A8', 'C6', 'H5', 'H6', 'H8']) of
             0: Result:= 'A8-Recebimento da liquidação fora da rede Sicredi - via compensação eletrônica';
-            1: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - via compensação';
-            2: Result:= 'H6-Recebimento de liquidação fora da rede Sicredi - VLB Superior - via compensação';
-            3: Result:= 'H8-Recebimento de liquidação fora da rede Sicredi - Contingência via compe';
+            1: Result:= 'C6-Título já liquidado';
+            2: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - via compensação';
+            3: Result:= 'H6-Recebimento de liquidação fora da rede Sicredi - VLB Superior - via compensação';
+            4: Result:= 'H8-Recebimento de liquidação fora da rede Sicredi - Contingência via compe';
           else
             case StrToInt(CodMotivo) of
               00: Result:= '00-Ocorrência aceita, liquidação após baixa';

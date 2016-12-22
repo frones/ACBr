@@ -47,6 +47,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/12/2016 ver: 0.0213
+[*] Alteração na leitura do retorno 400, adicionado toRetornoLiquidadoAposBaixaouNaoRegistro (Sicred) conforme link abaixo
+    http://www.projetoacbr.com.br/forum/topic/32876-retorno-sicredi-erro-is-not-a-valid-integer-value/
+	
+[*] Alteração na leitura do retorno 240, acrescantado o vencimento (Santander) conforme link:
+    http://www.projetoacbr.com.br/forum/topic/33162-campo-vencimento-n%C3%A3o-%C3%A9-lido-no-retorno-santander-240/ 
+
+[*] Alteração na identificação do titulo Aceito/Não Aceito (Santander) conforme link:
+    http://www.projetoacbr.com.br/forum/topic/33251-erro-na-validacao-do-arquivo-de-remessa-do-santander/ (por: Graziele Rocha)
+
+[*] Alteração no retorno liquidado (toRetornoLiquidado), incluido o retorno C7 (SICRED) conforme link:
+    http://www.projetoacbr.com.br/forum/topic/33654-erro-retorno-liquidado-sicredi-c7/ (por: Graziele Rocha)
+
 Data: 16/12/2016
 [*] Melhoria para validar por tipo já que o cpf ou cnpj vem com maskara e ocasiona erro.
 		http://www.projetoacbr.com.br/forum/topic/34057-santander-corre%C3%A7%C3%A3o-arquivo-remessa/

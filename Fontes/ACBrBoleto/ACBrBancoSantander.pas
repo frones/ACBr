@@ -516,7 +516,7 @@ begin
               '0'                                                     + // 105 - 105 / Dígito da Agência encarregada da cobrança
               Space(1)                                                + // 106 - 106 / Reservado (uso Banco)
               sEspecie                                                + // 107 – 108 / Espécie do título
-              ifThen(Aceite = atSim,  'S', 'N')                       + // 109 - 109 / Identif. de título Aceito/Não Aceito
+              ifThen(Aceite = atSim,  'A', 'N')                       + // 109 - 109 / Identif. de título Aceito/Não Aceito
               FormatDateTime('ddmmyyyy',DataDocumento)                + // 110 - 117 / Data da emissão do título
               STipoJuros                                              + // 118 - 118 / Código do juros de mora
               sDataMoraJuros                                          + // 119 - 126 / Data do juros de mora

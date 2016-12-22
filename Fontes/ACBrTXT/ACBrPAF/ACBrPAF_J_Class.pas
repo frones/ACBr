@@ -185,7 +185,7 @@ begin
             LFill(CPFCNPJ_CLIENTE,14) +
             LFill(NUMERO_NOTA,10) +
             LFill(SERIE_NOTA,3) +
-            RFill(CHAVE_NF,44) +
+            LFill(CHAVE_NF,44) +
             RFill(IfThen(RegistroValido, TIPO_DOC[1], '?'),1) );
       end;
     end;
@@ -239,7 +239,7 @@ begin
             RFill(CASAS_DECIMAIS_VAL_UNIT,1) +
             LFill(NUMERO_NOTA,10) +
             LFill(SERIE_NOTA,3) +
-            RFill(CHAVE_NF,44) +
+            LFill(CHAVE_NF,44) +
             RFill(IfThen(RegistroValido, TIPO_DOC[1], '?'),1) );
       end;
 

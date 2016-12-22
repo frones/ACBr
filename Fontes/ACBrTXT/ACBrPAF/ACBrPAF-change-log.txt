@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2016
+-- ACBrPAF_J_Class --
+[*] Alteração para preencher com 0(zeros) o campo CHAVE_NF dos Registros J1 e J2.
+	Solicitado pela POLIMIG para homologação 02.04
+	por: Elias César
+
 01/12/2016
 [*] Mudança para gerar o registro E3 mesmo não existindo o E2 pois ele deve sempre existir
 	http://www.projetoacbr.com.br/forum/topic/33792-erro-na-gera%C3%A7%C3%A3o-registro-e3/

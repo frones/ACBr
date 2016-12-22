@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2016
+[+] Adição no help dos comandos do CT-e ao Help
+		por Juliomar Marchetti
+		
 20/12/2016
 [+] Inclusão de campo para configurar impressão de chave em uma linha no extrato do SAT,
 	para ESCPOS.	

@@ -67,6 +67,7 @@ contains
   ACBrBlocoX_Comum in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Comum.pas',
   ACBrBlocoX_Estoque in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Estoque.pas',
   ACBrBlocoX_ReducaoZ in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas',
+  ACBrBlocoX_WebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_WebServices.pas',
   ACBrBlocoX_Reg in '..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Reg.pas';
 
 end.

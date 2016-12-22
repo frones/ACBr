@@ -7,8 +7,8 @@ unit ACBr_BlocoX;
 interface
 
 uses
-  ACBrBlocoX, ACBrBlocoX_Reg, ACBrBlocoX_Comum, ACBrBlocoX_Estoque, 
-  ACBrBlocoX_ReducaoZ, pcnRetEnvBlocoX, LazarusPackageIntf;
+  ACBrBlocoX, ACBrBlocoX_WebServices, ACBrBlocoX_Reg, ACBrBlocoX_Comum, 
+  ACBrBlocoX_Estoque, ACBrBlocoX_ReducaoZ, pcnRetEnvBlocoX, LazarusPackageIntf;
 
 implementation
 

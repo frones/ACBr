@@ -25,32 +25,36 @@
     </CompilerOptions>
     <Description Value="ACBr - Bloco X - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="6">
+    <Files Count="7">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX.pas"/>
         <UnitName Value="ACBrBlocoX"/>
       </Item1>
       <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_WebServices.pas"/>
+        <UnitName Value="ACBrBlocoX_WebServices"/>
+      </Item2>
+      <Item3>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Reg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrBlocoX_Reg"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Comum.pas"/>
-        <UnitName Value="ACBrBlocoX_Comum"/>
       </Item3>
       <Item4>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Estoque.pas"/>
-        <UnitName Value="ACBrBlocoX_Estoque"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Comum.pas"/>
+        <UnitName Value="ACBrBlocoX_Comum"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas"/>
-        <UnitName Value="ACBrBlocoX_ReducaoZ"/>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_Estoque.pas"/>
+        <UnitName Value="ACBrBlocoX_Estoque"/>
       </Item5>
       <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\ACBrBlocoX_ReducaoZ.pas"/>
+        <UnitName Value="ACBrBlocoX_ReducaoZ"/>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrBlocoX\PCNBlocoX\pcnRetEnvBlocoX.pas"/>
         <UnitName Value="pcnRetEnvBlocoX"/>
-      </Item6>
+      </Item7>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

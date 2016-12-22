@@ -45,12 +45,15 @@ Símbolo : Significado
     ACBrBlocoX_WebServices
 
 -- ACBrBlocoX_WebServices --
-[-] Corrigido o Suporte a Zip Nativo, (disponpivel apenas paraLazarus ou Delphi
-    XE2 ou superior).
+[-] Corrigido o Suporte a Zip Nativo, (disponível apenas para Lazarus ou DelphiXE2
+    ou superior).
 [*] Remoção de TWebServices.EnviarBlocoX, use:
     TACBrBlocoX_WebServices.EnviarReducaoZ ou TACBrBlocoX_WebServices.EnviarEstoque
 [*] Remoção de TWebServices.ValidarBlocoX, use:
     TACBrBlocoX_WebServices.ValidarReducaoZ ou TACBrBlocoX_WebServices.ValidarEstoque
+[+] Adicionada a propriedade "TEnviarBlocoX.XMLZipado", para permitir ao
+    programador, informar diretamente o seu XML com Zip e Enconde64. Nesse caso
+    o mesmo não será calculado por "TEnviarBlocoX.GetXMLZipado"
     (por: DSA)
 
 21/12/2016

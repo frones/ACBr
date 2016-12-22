@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2016
+[-] Correção para a inutilização o preview ficar em modal.
+		http://www.projetoacbr.com.br/forum/topic/34021-erro-na-aplica%C3%A7%C3%A3o-ap%C3%B3s-impress%C3%A3o-de-uma-inutiliza%C3%A7%C3%A3o-nfc-e/?do=findComment&comment=224215
+		por: Juliomar Marchetti
+		
 21/12/2016
 [*] Mudança para que a impressão de inutilização fique em modal quando chamado.
 		http://www.projetoacbr.com.br/forum/topic/34021-erro-na-aplica%C3%A7%C3%A3o-ap%C3%B3s-impress%C3%A3o-de-uma-inutiliza%C3%A7%C3%A3o-nfc-e/

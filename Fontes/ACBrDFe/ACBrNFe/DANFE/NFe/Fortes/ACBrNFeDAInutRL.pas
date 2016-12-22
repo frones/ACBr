@@ -164,7 +164,7 @@ begin
         if AMostrarPreview then
          begin
            RLNFeInut.Prepare;
-           RLNFeInut.Preview;
+           RLNFeInut.PreviewModal;
            Application.ProcessMessages;
          end else
          begin

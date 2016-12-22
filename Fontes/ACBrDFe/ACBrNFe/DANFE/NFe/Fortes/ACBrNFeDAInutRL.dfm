@@ -25,7 +25,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
     Font.Height = -13
     Font.Name = 'Arial'
     Font.Style = []
-		PreviewOptions.FormStyle = fsStayOnTop
+    PreviewOptions.FormStyle = fsStayOnTop
     PreviewOptions.ShowModal = True
     PrintDialog = False
     ShowProgress = False

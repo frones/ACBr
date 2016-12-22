@@ -938,7 +938,7 @@ begin
 
         toRetornoLiquidado:   //06
           case AnsiIndexStr(CodMotivo, ['A8',  'C7', 'H5', 'H6', 'H8', 'X1', 'X2', 'X3', 'X4', 'X5',
-                                        'X0', 'X6', 'X7', 'X8', 'X9', 'XA', 'XB', 'C7']) of
+                                        'X0', 'X6', 'X7', 'X8', 'X9', 'XA', 'XB']) of
             0: Result:= 'A8-Recebimento da liquidação fora da rede Sicredi - via compensação eletrônica';
             1: Result:= 'C7-Título já baixado';
             2: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - Via compensação';
@@ -1129,7 +1129,7 @@ begin
                             ['A1', 'A2', 'A4', 'A5', 'A6', 'B4', 'B5', 'B6', 'B7',
                              'B8', 'B9', 'C4', 'C5', 'C6', 'C7', 'D2', 'F3', 'F7', 'F8',
                              'F9', 'G1', 'G5', 'G8', 'G9', 'H1', 'L3', 'L4', 'J8',
-                             'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1']) of
+                             'I9', 'K9', 'A3', 'C8', 'C9', 'J3', 'D1', 'K1']) of
             0 : Result:= 'A1-Praça do sacado não cadastrada';
             1 : Result:= 'A2-Tipo de cobrança do título divergente com a praça do sacado';
             2 : Result:= 'A4-Cedente não cadastrado ou possui CNPJ/CPF inválido';
@@ -1165,6 +1165,7 @@ begin
             32 : Result:= 'C9-Instrução prévia de concessão de abatimento não existe ou não confirmada';
             33 : Result:= 'J3-Rua/Número inexistente no endereço';
             34 : Result:= 'D1-Título dentro do prazo de vencimento (em dia)';
+            35 : Result:= 'K1-Título apresentado em duplicidade';
           else
             case StrToInt(CodMotivo) of
               01: Result:= '01-Código do Banco inválido';

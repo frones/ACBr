@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 22/12/2016 ver: 0.0213
+[*] Alteração no retorno CNAB 400, adicionado toRetornoInstrucaoRejeitada (Sicred) conforme link:
+    http://www.projetoacbr.com.br/forum/topic/32601-erro-no-retorno-sicredi-cnab400/ 
+
 [*] Alteração na leitura do retorno 400, adicionado toRetornoLiquidadoAposBaixaouNaoRegistro (Sicred) conforme link abaixo
     http://www.projetoacbr.com.br/forum/topic/32876-retorno-sicredi-erro-is-not-a-valid-integer-value/
 	

@@ -102,7 +102,7 @@ type
     FCOD_SIT: TACBrlSituacaoDocto; /// Código da situação do documento fiscal
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
-    FNUM_DOC: Integer; /// Número do documento fiscal
+    FNUM_DOC: String; /// Número do documento fiscal
     FDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; // Código da classe da prestação
     FCOD_MUN_SERV: Integer; /// Código do município onde o serviço foi prestado
@@ -139,7 +139,7 @@ type
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property COD_MUN_SERV: Integer read FCOD_MUN_SERV write FCOD_MUN_SERV;
@@ -685,7 +685,7 @@ type
     FECF_FAB: String; /// Número de série de fabricação do ECF
     FCRO: Integer; /// Posição do Contador de Reinício de Operação
     FCRZ: Integer; /// Posição do Contador de Redução Z
-    FNUM_DOC: Integer; /// Número do documento fiscal
+    FNUM_DOC: String; /// Número do documento fiscal
     FDT_DOC: TDateTime; /// Data da emissão do documento fiscal
     FCOP: String; /// Código Fiscal de Prestações de Serviços
     FVL_ACMO_ICMS: Currency;
@@ -715,7 +715,7 @@ type
     property ECF_FAB: String read FECF_FAB write FECF_FAB;
     property CRO: Integer read FCRO write FCRO;
     property CRZ: Integer read FCRZ write FCRZ;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property COP: String read FCOP write FCOP;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;

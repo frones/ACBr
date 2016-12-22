@@ -116,7 +116,7 @@ type
     FCOD_SIT: TACBrlSituacaoDocto; /// Código do modelo do documento fiscal
     FSER: String; /// Série do documento fiscal
     FSUB: String; /// Subsérie do documento fiscal
-    FNUM_DOC: Integer; /// Número do documento fiscal
+    FNUM_DOC: String; /// Número do documento fiscal
     FDT_DOC: TDateTime; /// Data de emissão do documento fiscal ou data de pagamento no caso de substituição tributária
     FCFPS: String; /// Código Fiscal de Prestações de Serviços
     FNUM_LCTO: String; /// Número ou código de identificação do lançamento contábil
@@ -144,7 +144,7 @@ type
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SER: String read FSER write FSER;
     property SUB: String read FSUB write FSUB;
-    property NUM_DOC: Integer read FNUM_DOC write FNUM_DOC;
+    property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
     property CFPS: String read FCFPS write FCFPS;
     property NUM_LCTO: String read FNUM_LCTO write FNUM_LCTO;

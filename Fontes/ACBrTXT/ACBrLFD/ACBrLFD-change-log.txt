@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2016
+[*] Correções na geração de dados
+		http://www.projetoacbr.com.br/forum/topic/34159-corre%C3%A7%C3%A3o-blocos-a-e-b-acbrlfd/
+		Juliomar Marchetti
+		
 Data 17/12/2016
 [*] Mudança para gerar os registros bloco E somente se tiver dados
 		http://www.projetoacbr.com.br/forum/topic/33970-corre%C3%A7%C3%A3o-bloco-e-acbrlfd/

@@ -496,7 +496,7 @@ begin
              LFill(SUB) +
              LFill(NUM_DOC) +
              LFill(DT_DOC) +
-             LFill(CFPS,4) +
+             LFill(CFPS) +
              LFill(NUM_LCTO) +
              LFill(integer(COD_MUN_SERV),7) +
              DFill(VL_CONT,2) +
@@ -666,7 +666,7 @@ begin
        with RegB400.RegistroB430.Items[intFor] do
        begin
          Add( LFill('B430') +
-              LFill(CFPS,4) +
+              LFill(CFPS) +
               DFill(VL_CONT,2) +
               DFill(VL_BC_ISS,2) +
               DFill(VL_MAT_TERC,2) +

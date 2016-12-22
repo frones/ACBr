@@ -374,7 +374,7 @@ begin
                  LFill(Integer(IND_EMIT),1) +
                  LFill(COD_PART) +
                  LFill(COD_MOD)  +
-                 LFill(Integer(COD_SIT),1) +
+                 LFill(Integer(COD_SIT),2) +
                  LFill(SER) +
                  LFill(SUB) +
                  LFill(NUM_DOC) +
@@ -382,22 +382,23 @@ begin
                  LFill(COP,4) +
                  LFill(COD_MUN_SERV,7) +
                  LFill(COD_NAT) +
-                 LFill(VL_DOC) +
+                 LFill(VL_DOC,0,2, true ) +
                  LFill(integer(IND_PGTO),1 )+
                  LFill(VL_SUB) +
-                 LFill(VL_DESC) +
-                 LFill(VL_SERV) +
-                 LFill(VL_MAT_PROP) +
-                 LFill(VL_MAT_TERC) +
-                 LFill(VL_DA) +
-                 LFill(VL_BC_ISS) +
-                 LFill(VL_ISS) +
-                 LFill(VL_BC_RT_ISS) +
-                 LFill(VL_RT_ISS) +
+                 LFill(VL_DESC,0,2, true ) +
+                 LFill(VL_SERV,0,2, true ) +
+                 LFill(VL_MAT_PROP,0,2, true ) +
+                 LFill(VL_MAT_TERC,0,2, true ) +
+                 LFill(VL_DA,0,2, true ) +
+                 LFill(VL_BC_ISS,0,2, true ) +
+                 LFill(VL_ISS,0,2, true ) +
+                 LFill(VL_BC_RT_ISS,0,2, true ) +
+                 LFill(VL_RT_ISS,0,2, true ) +
                  LFill(COD_INF_OBS) );
 
          end;
          RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
+         WriteRegistroA200(RegA001.RegistroA020.Items[intFor]);
       end;
       FRegistroA020Count := FRegistroA020Count + RegA001.RegistroA020.Count;
   end;
@@ -523,7 +524,7 @@ begin
                  LFill(ECF_FAB) +
                  LFill(CRO,0) +
                  LFill(CRZ,0) +
-                 LFill(NUM_DOC,0) +
+                 LFill(NUM_DOC) +
                  LFill(DT_DOC) +
                  LFill(COP,4) +
                  LFill(VL_DOC,2) +

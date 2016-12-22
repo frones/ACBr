@@ -33,7 +33,7 @@ unit ACBrBlocoX_ReducaoZ;
 interface
 
 uses
-  ACBrBlocoX_Comum, Classes, SysUtils, StrUtils;
+  ACBrBlocoX_Comum, Classes, SysUtils;
 
 type
   TACBrBlocoX_Totalizador = class(TCollectionItem)

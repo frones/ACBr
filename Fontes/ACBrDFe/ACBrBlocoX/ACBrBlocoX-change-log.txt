@@ -39,6 +39,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/12/2016
+-- ACBrBlocoX, ACBrBlocoX_WebServices --
+[*] Separação das classes de ACBrBlocoX relacionadas a WebServices para
+    ACBrBlocoX_WebServices
+
+-- ACBrBlocoX_WebServices --
+[-] Corrigido o Suporte a Zip Nativo, (disponpivel apenas paraLazarus ou Delphi
+    XE2 ou superior).
+[*] Remoção de TWebServices.EnviarBlocoX, use:
+    TACBrBlocoX_WebServices.EnviarReducaoZ ou TACBrBlocoX_WebServices.EnviarEstoque
+[*] Remoção de TWebServices.ValidarBlocoX, use:
+    TACBrBlocoX_WebServices.ValidarReducaoZ ou TACBrBlocoX_WebServices.ValidarEstoque
+    (por: DSA)
+
 21/12/2016
 -- ACBrBlocoX --
 [+] Adicionado suporte a Zip e Encode64 do XML em: TEnviarBlocoX.XMLZipado

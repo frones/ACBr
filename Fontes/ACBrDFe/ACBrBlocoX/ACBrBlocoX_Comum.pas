@@ -131,7 +131,7 @@ type
 implementation
 
 uses
-  ACBrBlocoX, ACBrUtil, StrUtils, pcnConversao;
+  ACBrBlocoX, ACBrUtil, pcnConversao;
 
 function TipoCodigoToStr(const AValue: TACBrBlocoX_TipoCodigo): String;
 begin

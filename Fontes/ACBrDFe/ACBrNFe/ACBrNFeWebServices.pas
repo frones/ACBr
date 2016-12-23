@@ -660,6 +660,9 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrNFe,
+  {$IfNDef DFE_SEM_OPENSSL}
+   ACBrDFeOpenSSL, blcksock,
+  {$EndIf}
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
   pcnConsCad, pcnLeitor;
@@ -700,6 +703,15 @@ procedure TNFeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
   inherited InicializarServico;
+
+  {$IfNDef DFE_SEM_OPENSSL}
+  { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
+  if FPConfiguracoesNFe.Geral.VersaoDF > ve310 then
+  begin
+    if FPDFeOwner.SSL.SSLClass is TDFeOpenSSL then
+        TDFeOpenSSL(FPDFeOwner.SSL.SSLClass).SSLType := LT_TLSv1_2;
+  end;
+  {$EndIf}
 
   TACBrNFe(FPDFeOwner).SetStatus(FPStatus);
 end;

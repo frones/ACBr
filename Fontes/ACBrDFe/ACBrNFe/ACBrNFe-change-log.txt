@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2016
+-- ACBrNFeWebServices --
+[*] Método: TNFeWebService.InicializarServico, modificado para ajustar o tipo de
+    comunicação para TLS1.2, se VersaoDF > ve310 e SSLlib = libOpenSSL
+    (por: DSA)
+
 20/12/2016
 -- ACBrNFeDANFEClass, ACBrNFeDANFeEscPos, ACBrDANFCeFortesFr --
 [*] Ajuste para imprimir corretamente numeros usando a formatação Brasileira

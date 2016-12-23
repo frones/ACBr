@@ -45,7 +45,7 @@ uses
   {$ENDIF}
   Classes, SysUtils,
   ACBrDFeSSL,
-  HTTPSend, ssl_openssl,
+  HTTPSend, ssl_openssl, blcksock, ssl_openssl_lib,
   libxmlsec, libxslt, libxml2,
   {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF}  ;
 
@@ -80,6 +80,7 @@ type
     FCert: pX509;
     FNumSerie: String;
     FCertAsDER: String;
+    FSSLType: TSSLType;
     FValidade: TDateTime;
     FSubjectName: String;
     FIssuerName: String;
@@ -93,6 +94,7 @@ type
     function GetSerialNumber(cert: pX509): String;
     function GetSubjectName(cert: pX509): String;
     function GetCNPJFromExtensions(cert: pX509): String;
+    procedure SetSSLType(AValue: TSSLType);
 
     function X509NameToString(AX509Name: PX509_NAME): AnsiString;
 
@@ -156,6 +158,7 @@ type
     function LerX509Info(X509Certificate: Ansistring): Boolean;
 
     property Certificado: pX509 read FCert;
+    property SSLType: TSSLType read FSSLType write SetSSLType default LT_all;
   end;
 
 procedure InitXmlSec;
@@ -167,10 +170,10 @@ var
 implementation
 
 uses
-  Math, strutils, dateutils,
+  Math, strutils, dateutils, typinfo,
   ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
   pcnAuxiliar,
-  synautil, synacode{, blcksock};
+  synautil, synacode;
 
 procedure InitXmlSec;
 begin
@@ -252,6 +255,7 @@ begin
   FdsigCtx := nil;
   FPrivKey := nil;
   FCert := nil;
+  FSSLType := LT_all;
   Clear;
 end;
 
@@ -1041,6 +1045,41 @@ begin
     Result := copy(GetCertExt( cert, #1#3#1#160#52 ),11 ,11);  // Pula DataNascimento
 end;
 
+procedure TDFeOpenSSL.SetSSLType(AValue: TSSLType);
+var
+  SSLMethod: ssl_openssl_lib.PSSL_METHOD;
+  OpenSSLVersion: String;
+begin
+  if FSSLType = AValue then Exit;
+
+  SSLMethod := Nil;
+
+  case AValue of
+    LT_SSLv2:
+      SSLMethod := ssl_openssl_lib.SslMethodV2;
+    LT_SSLv3:
+      SSLMethod := ssl_openssl_lib.SslMethodV3;
+    LT_TLSv1:
+      SSLMethod := ssl_openssl_lib.SslMethodTLSV1;
+    LT_TLSv1_1:
+      SSLMethod := ssl_openssl_lib.SslMethodTLSV11;
+    LT_TLSv1_2:
+      SSLMethod := ssl_openssl_lib.SslMethodTLSV12;
+    LT_all:
+      SSLMethod := ssl_openssl_lib.SslMethodV23;
+  end;
+
+  if SSLMethod = Nil then
+  begin
+    OpenSSLVersion := String(SSLeay_version( 0 ));
+
+    raise EACBrDFeException.CreateFmt(ACBrStr('%s, não suporta %s'),
+          [OpenSSLVersion, GetEnumName(TypeInfo(TSSLType), integer(AValue) )]);
+  end;
+
+  FSSLType := AValue;
+end;
+
 function TDFeOpenSSL.GetIssuerName( cert: pX509 ): String;
 var
   X509IssuerName: pX509_NAME;
@@ -1310,7 +1349,7 @@ begin
       CarregarCertificado;
   end;
 
-  //fHTTP.Sock.SSL.SSLType := LT_TLSv1_2;
+  fHTTP.Sock.SSL.SSLType := FSSLType;
   FHTTP.Timeout := FpDFeSSL.TimeOut;
   FHTTP.Sock.ConnectionTimeout := FpDFeSSL.TimeOut;
 

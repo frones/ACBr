@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2016
+-- ACBrDFeOpenSSL --
+[+] Adicionada a propriedade "SSLType: TSSLType default LT_all", podendo ser:
+    (LT_all, LT_SSLv2, LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_SSHv2)
+
+-- ACBrDFe --
+[-] Correção de Bug em "LerServicoChaveDeParams". Não era capaz de ler a URL do
+    Serviço com a maior versão existente.
+    (por: DSA)
+
 13/12/2016
 -- ACBrDFeOpenSSL, ssl_openssl_lib --
 [*] Melhoria no tempo de carga do OpenSSL.

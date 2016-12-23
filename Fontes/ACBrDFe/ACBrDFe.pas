@@ -399,7 +399,7 @@ end;
 procedure TACBrDFe.LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
   var Versao: Double; var URL: String);
 var
-  Chave, K: String;
+  Chave, ChaveBase, K: String;
   SL: TStringList;
   I: integer;
   VersaoAtual, VersaoAchada: Double;
@@ -412,7 +412,8 @@ begin
   if not FPIniParams.SectionExists(NomeSessao) then
     exit;
 
-  Chave := NomeServico + '_' + FloatToString(VersaoAtual,'.','0.00');
+  ChaveBase := NomeServico + '_';
+  Chave := ChaveBase + FloatToString(VersaoAtual,'.','0.00');
 
   // Achou com busca exata ? (mesma versao) //
   if NaoEstaVazio(FPIniParams.ReadString(NomeSessao, Chave, '')) then
@@ -421,7 +422,6 @@ begin
   if VersaoAchada = 0 then
   begin
     // Procure por serviço com o mesmo nome, mas com versão inferior //
-    Chave := NomeServico + '_';
     SL := TStringList.Create;
     try
       FPIniParams.ReadSection(NomeSessao, SL);
@@ -429,9 +429,9 @@ begin
       begin
         K := SL[I];
 
-        if copy(K, 1, Length(Chave)) = Chave then
+        if copy(K, 1, Length(ChaveBase)) = ChaveBase then
         begin
-          VersaoAtual := StringToFloatDef(copy(K, Length(Chave) + 1, Length(K)), 0);
+          VersaoAtual := StringToFloatDef(copy(K, Length(ChaveBase) + 1, Length(K)), 0);
 
           if (VersaoAtual > VersaoAchada) and (VersaoAtual <= Versao) then
           begin

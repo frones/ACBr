@@ -736,6 +736,8 @@ var
   function SslMethodV2:PSSL_METHOD;
   function SslMethodV3:PSSL_METHOD;
   function SslMethodTLSV1:PSSL_METHOD;
+  function SslMethodTLSV11:PSSL_METHOD;
+  function SslMethodTLSV12:PSSL_METHOD;
   function SslMethodV23:PSSL_METHOD;
   function SslCtxUsePrivateKey(ctx: PSSL_CTX; pkey: SslPtr):cInt;
   function SslCtxUsePrivateKeyASN1(pk: cInt; ctx: PSSL_CTX; d: String; len: cLong):cInt;
@@ -976,6 +978,8 @@ var
   function BN_new(): PBIGNUM;
   function BN_hex2bn(var n: PBIGNUM; const str: PChar): cint;
   function BN_dec2bn(var n: pBIGNUM; const str: PChar): cint;
+  function BN_bn2hex(const n: pBIGNUM): PChar;
+  function BN_bn2dec(const n: pBIGNUM): PChar;
 
 function IsSSLloaded: Boolean;
 function Islibealoaded: Boolean;
@@ -1005,6 +1009,8 @@ type
   TSslMethodV2 = function:PSSL_METHOD; cdecl;
   TSslMethodV3 = function:PSSL_METHOD; cdecl;
   TSslMethodTLSV1 = function:PSSL_METHOD; cdecl;
+  TSslMethodTLSV11 = function:PSSL_METHOD; cdecl;
+  TSslMethodTLSV12 = function:PSSL_METHOD; cdecl;
   TSslMethodV23 = function:PSSL_METHOD; cdecl;
   TSslCtxUsePrivateKey = function(ctx: PSSL_CTX; pkey: sslptr):cInt; cdecl;
   TSslCtxUsePrivateKeyASN1 = function(pk: cInt; ctx: PSSL_CTX; d: sslptr; len: cInt):cInt; cdecl;
@@ -1220,6 +1226,8 @@ type
   TBN_new =  function(): PBIGNUM; cdecl;
   TBN_hex2bn = function(var n: PBIGNUM; const str: PChar): cint; cdecl;
   TBN_dec2bn = function(var n: pBIGNUM; const str: PChar): cint; cdecl;
+  TBN_bn2hex = function(const n: pBIGNUM): PChar; cdecl;
+  TBN_bn2dec = function(const n: pBIGNUM): PChar; cdecl;
 
 
 var
@@ -1236,6 +1244,8 @@ var
   _SslMethodV2: TSslMethodV2 = nil;
   _SslMethodV3: TSslMethodV3 = nil;
   _SslMethodTLSV1: TSslMethodTLSV1 = nil;
+  _SslMethodTLSV11: TSslMethodTLSV11 = nil;
+  _SslMethodTLSV12: TSslMethodTLSV12 = nil;
   _SslMethodV23: TSslMethodV23 = nil;
   _SslCtxUsePrivateKey: TSslCtxUsePrivateKey = nil;
   _SslCtxUsePrivateKeyASN1: TSslCtxUsePrivateKeyASN1 = nil;
@@ -1451,8 +1461,8 @@ var
   _BN_new: TBN_new = nil;
   _BN_hex2bn: TBN_hex2bn = nil ;
   _BN_dec2bn: TBN_dec2bn = nil ;
-
-
+  _BN_bn2hex: TBN_bn2hex = nil ;
+  _BN_bn2dec: TBN_bn2dec = nil ;
 
 
 var
@@ -1569,6 +1579,22 @@ function SslMethodTLSV1:PSSL_METHOD;
 begin
   if InitSSLEAInterface and Assigned(_SslMethodTLSV1) then
     Result := _SslMethodTLSV1
+  else
+    Result := nil;
+end;
+
+function SslMethodTLSV11:PSSL_METHOD;
+begin
+  if InitSSLEAInterface and Assigned(_SslMethodTLSV11) then
+    Result := _SslMethodTLSV11
+  else
+    Result := nil;
+end;
+
+function SslMethodTLSV12:PSSL_METHOD;
+begin
+  if InitSSLEAInterface and Assigned(_SslMethodTLSV12) then
+    Result := _SslMethodTLSV12
   else
     Result := nil;
 end;
@@ -2958,6 +2984,22 @@ begin
     Result := -1;
 end;
 
+function BN_bn2hex(const n: pBIGNUM): PChar;
+begin
+  if InitlibeaInterface and Assigned(_BN_bn2hex) then
+    Result := _BN_bn2hex(n)
+  else
+    Result := Nil;
+end;
+
+function BN_bn2dec(const n: pBIGNUM): PChar;
+begin
+  if InitlibeaInterface and Assigned(_BN_bn2dec) then
+    Result := _BN_bn2dec(n)
+  else
+    Result := Nil;
+end;
+
 {$IFNDEF WINDOWS}
 { Try to load all library versions until you find or run out }
 function LoadLibHack(const Value: String): HModule;
@@ -3037,6 +3079,8 @@ begin
         _SslMethodV2 := GetProcAddr(SSLLibHandle, 'SSLv2_method', AVerboseLoading);
         _SslMethodV3 := GetProcAddr(SSLLibHandle, 'SSLv3_method', AVerboseLoading);
         _SslMethodTLSV1 := GetProcAddr(SSLLibHandle, 'TLSv1_method', AVerboseLoading);
+        _SslMethodTLSV11 := GetProcAddr(SSLLibHandle, 'TLSv1_1_method', AVerboseLoading);
+        _SslMethodTLSV12 := GetProcAddr(SSLLibHandle, 'TLSv1_2_method', AVerboseLoading);
         _SslMethodV23 := GetProcAddr(SSLLibHandle, 'SSLv23_method', AVerboseLoading);
         _SslCtxUsePrivateKey := GetProcAddr(SSLLibHandle, 'SSL_CTX_use_PrivateKey', AVerboseLoading);
         _SslCtxUsePrivateKeyASN1 := GetProcAddr(SSLLibHandle, 'SSL_CTX_use_PrivateKey_ASN1', AVerboseLoading);
@@ -3283,6 +3327,8 @@ begin
        _BN_new := GetProcAddr(SSLUtilHandle, 'BN_new', AVerboseLoading);
        _BN_hex2bn := GetProcAddr(SSLUtilHandle, 'BN_hex2bn', AVerboseLoading);
        _BN_dec2bn := GetProcAddr(SSLUtilHandle, 'BN_dec2bn', AVerboseLoading);
+       _BN_bn2hex := GetProcAddr(SSLUtilHandle, 'BN_bn2hex', AVerboseLoading);
+       _BN_bn2dec := GetProcAddr(SSLUtilHandle, 'BN_bn2dec', AVerboseLoading);
 
        // Crypto Functions
 
@@ -3342,6 +3388,8 @@ begin
     _SslMethodV2 := nil;
     _SslMethodV3 := nil;
     _SslMethodTLSV1 := nil;
+    _SslMethodTLSV11 := nil;
+    _SslMethodTLSV12 := nil;
     _SslMethodV23 := nil;
     _SslCtxUsePrivateKey := nil;
     _SslCtxUsePrivateKeyASN1 := nil;

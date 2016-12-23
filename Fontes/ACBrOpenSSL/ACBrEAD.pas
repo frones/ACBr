@@ -113,6 +113,7 @@ type
     function GetAbout: String;
     procedure SetBufferSize(AValue: Integer);
 
+    function VerificaVersaoCompativel: Boolean;
     procedure VerificaNomeArquivo( NomeArquivo : String ) ;
     function InternalDigest( const AStream : TStream;
        const Digest: TACBrEADDgst;
@@ -508,6 +509,7 @@ end ;
 procedure TACBrEAD.LerChave(const Chave : AnsiString; Privada: Boolean) ;
 var
    A : pEVP_PKEY ;
+   B : pRSA;
    BioKey : pBIO ;
    Buffer : AnsiString;
 begin
@@ -602,10 +604,8 @@ end ;
 procedure TACBrEAD.CalcularModuloeExpoente(var Modulo, Expoente: AnsiString);
 Var
   Bio : pBIO;
-  Ver : String ;
 begin
-  Ver := OpenSSL_Version;
-  if pos('1.0',Ver) > 0 then
+  if not VerificaVersaoCompativel then
      raise EACBrEADException.Create( ACBrStr('Método CalcularModuloeExpoente ainda não é '+
                                      'compatível com OpenSSL 1.0.0 ou superior'));
 
@@ -1002,6 +1002,14 @@ begin
   end ;
 end ;
 
+function TACBrEAD.VerificaVersaoCompativel: Boolean;
+var
+  Ver : String ;
+begin
+  Ver := OpenSSL_Version;
+  Result := (CompareVersions(Ver, '1.0.0') < 0)
+end;
+
 function TACBrEAD.VerificarEAD(const AString : AnsiString) : Boolean ;
 Var
   MS : TMemoryStream ;
@@ -1113,7 +1121,7 @@ begin
     Result := (Ret = 1);
 
     // Se falhou, faz verificação manual do EAD
-    if not Result then
+    if (not Result) and VerificaVersaoCompativel then
     begin
        // Calculando o MD5 do arquivo sem a linha do EAD salva em "md5_bin" //
        EVP_DigestFinal( @md_ctx, @md5_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
@@ -1135,7 +1143,7 @@ begin
          etc, então o MD5 é criptografado antes de rodar a criptografia do RSA
          (sic)... nesse caso não temos como conferir o MD5 a não ser usando a
          DLL do eECFc (que será desenvolvida) }
-       raise EACBrEADException.Create(
+       raise EACBrEADException.Create( ACBrStr(
         'Não foi possível verificar a assinatura do arquivo:' + sLineBreak +
         sLineBreak +
         'Verifique se a chave informada é mesmo a chave correta antes de continuar.' + sLineBreak +
@@ -1145,7 +1153,7 @@ begin
         'do arquivo antes de efetuar a criptografia para a assinatura EAD o que torna ' +
         'possível a verificação da assinatura somente utilizando o aplicativo eECFc, ' +
         'somente este aplicativo possui as rotinas de descriptografia para cada fabricante.'
-       );
+       ));
     end ;
 
   finally

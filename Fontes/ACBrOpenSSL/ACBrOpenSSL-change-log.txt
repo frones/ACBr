@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/12/2016
+-- OpenSSLExt --
+[+] Adicionado suporte aos métodos: SslMethodTLSV11, SslMethodTLSV12, BN_bn2hex,
+    BN_bn2dec (por: DSA)
+
+-- ACBrEAD --
+[*] Aplicado ajuste para suportar OpenSSL 1.0.0 ou superior. Ainda continua sem
+    suporte aos métodos "EVP_DigestFinal", e "CalcularModuloeExpoente", em
+    versões superiores a 1.0.0
+
 24/10/2016
 -- libxml2, libxmlsec, libxslt --
 [-] Correção para suporte de libxmlsec em 64 bits. Corrigindo falha ao Assinar XML

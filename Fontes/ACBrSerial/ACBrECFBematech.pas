@@ -1848,7 +1848,7 @@ begin
 
      EnviaComando(#63 + AliquotaECF + ValorStr + QtdStr + DescontoStr +
                         AcrescimoStr + '01' + StringofChar('0',20) + Unidade +
-                        Codigo + #0 + Descricao  + #0) ;
+                        Codigo + #0 + copy(Descricao,1,200) + #0) ;
    end
   else
    begin

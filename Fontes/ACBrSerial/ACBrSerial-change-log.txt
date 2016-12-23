@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/12/2016
+-- ACBrECFBematech --
+  [-] Descrição só pode ter no máximo 200 caracteres (compare com linha 1887);
+  
 Data: 19/12/2016
 -- ACBrECF --
 [*] Removido e-mail do Relatório de Identificação do PAF-ECF;

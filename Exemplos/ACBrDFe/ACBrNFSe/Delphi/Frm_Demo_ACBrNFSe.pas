@@ -9,8 +9,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pnfsConversao,
-  ACBrNFSe, ACBrNFSeDANFSeClass, ACBrNFSeDANFSeQRClass, pnfsNFSe, ACBrMail,
-  ACBrBase, ACBrDFe;
+  ACBrNFSe, ACBrNFSeDANFSeClass,  pnfsNFSe, ACBrMail,
+  ACBrBase, ACBrDFe, ACBrNFSeDANFSeRLClass;
 
 type
   TfrmDemo_ACBrNFSe = class(TForm)
@@ -131,7 +131,6 @@ type
     edtCodCidade: TEdit;
     Label29: TLabel;
     ACBrNFSe1: TACBrNFSe;
-    ACBrNFSeDANFSeQR1: TACBrNFSeDANFSeQR;
     Label20: TLabel;
     edtUserWeb: TEdit;
     btnGerarEnviarNFSe: TButton;
@@ -150,6 +149,7 @@ type
     edtArqINI: TEdit;
     sbtArqINI: TSpeedButton;
     cbEmailTLS: TCheckBox;
+    ACBrNFSeDANFSeRL1: TACBrNFSeDANFSeRL;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);

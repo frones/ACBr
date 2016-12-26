@@ -171,8 +171,9 @@ procedure TACBrBancoBradesco.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; 
 var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia :String;
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
-  aCarteira, wLinha: String;
-  TipoBoleto :Char;
+  aCarteira, wLinha, ANossoNumero: String;
+  TipoBoleto , aDV:Char;
+  wTamNossoNum: Integer;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -225,7 +226,21 @@ begin
 
    with ACBrTitulo do
    begin
+      ANossoNumero := ACBrTitulo.NossoNumero;      
+      wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
+                                                   ACBrTitulo.NossoNumero);
+
+      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) then
+      begin
+        ANossoNumero      := StringOfChar('0', wTamNossoNum);
+        DigitoNossoNumero := '0';
+      end
+      else
+      begin
+        ANossoNumero      := ACBrTitulo.NossoNumero;
       DigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
+      end;
+
 
       aAgencia := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),5);
       aConta   := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),7);
@@ -303,7 +318,7 @@ begin
                   PadRight( SeuNumero,25,' ') +'000'                          +  // Numero de Controle do Participante
                   IfThen( PercentualMulta > 0, '2', '0')                  +  // Indica se exite Multa ou não
                   IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // Percentual de Multa formatado com 2 casas decimais
-                  NossoNumero + DigitoNossoNumero                         +
+                  ANossoNumero + DigitoNossoNumero                        +
                   IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +
                   TipoBoleto + ' ' + Space(10)                            +  // Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático.                  
                   ' ' + '2' + '  ' + Ocorrencia                           +  // Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + Ocorrência

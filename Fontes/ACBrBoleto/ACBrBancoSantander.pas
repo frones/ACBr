@@ -931,6 +931,7 @@ begin
         SeuNumero            := Copy(Linha, 55, 15);
         NumeroDocumento      := Copy(Linha, 55, 15);
         Carteira             := Copy(Linha, 54, 1);
+        Vencimento           := StrToDateDef(Copy(Linha, 70, 8),0);
         ValorDocumento       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
         ValorDespesaCobranca := StrToFloatDef(copy(Linha, 194, 15), 0) / 100;
         // Sacado

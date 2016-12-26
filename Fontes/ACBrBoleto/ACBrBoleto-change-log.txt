@@ -48,14 +48,17 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 22/12/2016 ver: 0.0213
+[*] Alteração no retorno CNB400, adicionado leitura do CNPJ/CPF (Bancoob) conforme link:
+    http://www.projetoacbr.com.br/forum/topic/32589-acbrbancobancoob-lerretorno400-cpfcnpj-do-sacado/ (por: Graziele Rocha)
+
 [*] Alteração no retorno CNAB 400, adicionado toRetornoInstrucaoRejeitada (Sicred) conforme link:
-    http://www.projetoacbr.com.br/forum/topic/32601-erro-no-retorno-sicredi-cnab400/ 
+    http://www.projetoacbr.com.br/forum/topic/32601-erro-no-retorno-sicredi-cnab400/ (por: Graziele Rocha)
 
 [*] Alteração na leitura do retorno 400, adicionado toRetornoLiquidadoAposBaixaouNaoRegistro (Sicred) conforme link abaixo
-    http://www.projetoacbr.com.br/forum/topic/32876-retorno-sicredi-erro-is-not-a-valid-integer-value/
+    http://www.projetoacbr.com.br/forum/topic/32876-retorno-sicredi-erro-is-not-a-valid-integer-value/ (por: Graziele Rocha)
 	
 [*] Alteração na leitura do retorno 240, acrescantado o vencimento (Santander) conforme link:
-    http://www.projetoacbr.com.br/forum/topic/33162-campo-vencimento-n%C3%A3o-%C3%A9-lido-no-retorno-santander-240/ 
+    http://www.projetoacbr.com.br/forum/topic/33162-campo-vencimento-n%C3%A3o-%C3%A9-lido-no-retorno-santander-240/ (por: Graziele Rocha)
 
 [*] Alteração na identificação do titulo Aceito/Não Aceito (Santander) conforme link:
     http://www.projetoacbr.com.br/forum/topic/33251-erro-na-validacao-do-arquivo-de-remessa-do-santander/ (por: Graziele Rocha)

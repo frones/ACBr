@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
-      <BuildNr Value="16"/>
+      <BuildNr Value="17"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion=""/>
@@ -294,10 +294,6 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="1">
-      <Item1>
-        <Name Value="Exception"/>
-      </Item1>
-    </Exceptions>
+    <Exceptions IgnoreAll="True"/>
   </Debugging>
 </CONFIG>

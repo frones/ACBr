@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/12/2016
+[*] Modificações para adequação ao refactor do bloco x:
+	- Removidos comandos ValidarBlocoX e EnviarBlocoX;
+	- Adicionados os comandos do BlocoX:
+	 - EnviarBlocoXEstoque e EnviarBlocoXReducaoZ;
+	 - ValidarBlocoXEstoque e ValidarBlocoXReducaoZ.	
+	por Celso Marigo Junior
+
 22/12/2016
 [+] Adição no help dos comandos do CT-e ao Help
 		por Juliomar Marchetti

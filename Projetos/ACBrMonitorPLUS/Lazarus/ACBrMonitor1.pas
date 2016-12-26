@@ -4101,7 +4101,7 @@ begin
     cbxImpValLiq.Checked := Ini.ReadBool('DANFE', 'ImprimirValLiq', False);
     cbxUnComTributavel.ItemIndex := Ini.ReadInteger('DANFE', 'UNComercialETributavel', 0);
     cbxFormCont.Checked := Ini.ReadBool('DANFE', 'PreImpresso', False);
-    cbxMostraStatus.Checked := Ini.ReadBool('DANFE', 'MostrarStatus', True);
+    cbxMostraStatus.Checked := Ini.ReadBool('DANFE', 'MostrarStatus', False);
     cbxExibirEAN.Checked := Ini.ReadBool('DANFE', 'ExibirEAN', False);
     cbxExibirCampoFatura.Checked := Ini.ReadBool('DANFE', 'ExibirCampoFatura', True);
     cbxExpandirLogo.Checked := Ini.ReadBool('DANFE', 'ExpandirLogo', False);
@@ -7315,6 +7315,7 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha  := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
+
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;

@@ -387,6 +387,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure INItoClass( ConteudoINI: TStrings ); virtual ;
     procedure ClasstoINI( ConteudoINI: TStrings ); virtual ;
     procedure CriarMemoriaInicial; virtual;
+    procedure CriarAliquotasPadrao;
+    procedure AtualizarMemoria;
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; virtual;
     procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; virtual ;
 
@@ -433,6 +435,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetTotalSubstituicaoTributaria: Double; override ;
     function GetTotalIsencao: Double; override ;
     function GetTotalNaoTributado: Double; override ;
+    function GetTotalSubstituicaoTributariaISSQN: Double; override;
+    function GetTotalIsencaoISSQN: Double; override;
+    function GetTotalNaoTributadoISSQN: Double; override;
     function GetNumReducoesZRestantes: String; override ;
     function GetTotalCancelamentosEmAberto: Double; override;
     function GetTotalCancelamentos: Double; override ;
@@ -1519,8 +1524,21 @@ begin
 end;
 
 procedure TACBrECFVirtualClass.AtivarVirtual;
+var
+  Atualizar: Boolean;
 begin
   fpMFD := True;
+
+  Atualizar := (fpAliquotas.Count < 6);
+  if not Atualizar then
+  begin
+    Atualizar := (fpAliquotas[3].Indice <> 'FS1') or
+                 (fpAliquotas[4].Indice <> 'IS1') or
+                 (fpAliquotas[5].Indice <> 'NS1');
+  end;
+
+  if Atualizar then
+    AtualizarMemoria;
 end;
 
 procedure TACBrECFVirtualClass.Desativar;
@@ -1620,20 +1638,38 @@ end;
 
 function TACBrECFVirtualClass.GetTotalSubstituicaoTributaria: Double;
 begin
-  Result := RoundTo( fpAliquotas[0].Total, -2 ) ;   // FF
+  Result := RoundTo( fpAliquotas[0].Total, -2 ) ;   // F1
   GravaLog('GetTotalSubstituicaoTributaria: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalIsencao: Double;
 begin
-  Result := RoundTo( fpAliquotas[1].Total, -2 ) ;   // II
+  Result := RoundTo( fpAliquotas[1].Total, -2 ) ;   // I1
   GravaLog('GetTotalIsencao: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalNaoTributado: Double;
 begin
-  Result := RoundTo( fpAliquotas[2].Total,-2 ) ;    // NN
+  Result := RoundTo( fpAliquotas[2].Total,-2 ) ;    // N1
   GravaLog('GetTotalNaoTributado: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalSubstituicaoTributariaISSQN: Double;
+begin
+  Result := RoundTo( fpAliquotas[3].Total, -2 ) ;   // FS1
+  GravaLog('GetTotalSubstituicaoTributariaISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalIsencaoISSQN: Double;
+begin
+  Result := RoundTo( fpAliquotas[4].Total, -2 ) ;   // IS1
+  GravaLog('GetTotalIsencaoISSQN: '+FloatToStr(Result));
+end;
+
+function TACBrECFVirtualClass.GetTotalNaoTributadoISSQN: Double;
+begin
+  Result := RoundTo( fpAliquotas[5].Total, -2 ) ;   // NS1
+  GravaLog('GetTotalNaoTributadoISSQN: '+FloatToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetTotalAcrescimos: Double;
@@ -2864,7 +2900,6 @@ end;
 
 procedure TACBrECFVirtualClass.CriarMemoriaInicial;
 Var
-  AliqICMS            : TACBrECFAliquota ;
   FormaPagamento      : TACBrECFFormaPagamento ;
   ComprovanteNaoFiscal: TACBrECFComprovanteNaoFiscal;
   RG: TACBrECFRelatorioGerencial;
@@ -2876,23 +2911,7 @@ begin
   except
   end ;
 
-  FreeAndNil( fpAliquotas ) ;
-  inherited CarregaAliquotas;
-
-  AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'FF' ;
-  AliqICMS.Tipo     := 'T' ;
-  fpAliquotas.Add( AliqICMS ) ;
-
-  AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'II' ;
-  AliqICMS.Tipo     := 'T' ;
-  fpAliquotas.Add( AliqICMS ) ;
-
-  AliqICMS := TACBrECFAliquota.create ;
-  AliqICMS.Indice   := 'NN' ;
-  AliqICMS.Tipo     := 'T' ;
-  fpAliquotas.Add( AliqICMS ) ;
+  CriarAliquotasPadrao;
 
   FreeAndNil( fpFormasPagamentos ) ;
   inherited CarregaFormasPagamento;
@@ -2925,6 +2944,87 @@ begin
 
   GravaArqINI ;
 end ;
+
+procedure TACBrECFVirtualClass.CriarAliquotasPadrao;
+var
+  Aliquota : TACBrECFAliquota ;
+begin
+  FreeAndNil( fpAliquotas ) ;
+  inherited CarregaAliquotas;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'F1' ;
+  Aliquota.Tipo     := 'T' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'I1' ;
+  Aliquota.Tipo     := 'T' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'N1' ;
+  Aliquota.Tipo     := 'T' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'FS1' ;
+  Aliquota.Tipo     := 'S' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'IS1' ;
+  Aliquota.Tipo     := 'S' ;
+  fpAliquotas.Add( Aliquota ) ;
+
+  Aliquota := TACBrECFAliquota.create ;
+  Aliquota.Indice   := 'NS1' ;
+  Aliquota.Tipo     := 'S' ;
+  fpAliquotas.Add( Aliquota ) ;
+end;
+
+procedure TACBrECFVirtualClass.AtualizarMemoria;
+var
+  CopiaAliquotas: TACBrECFAliquotas;
+  Aliq: TACBrECFAliquota;
+  I: Integer;
+begin
+  CopiaAliquotas := TACBrECFAliquotas.Create(True);
+  try
+    For I := 0 to fpAliquotas.Count-1 do
+    begin
+      Aliq := TACBrECFAliquota.create;
+      Aliq.Assign(fpAliquotas[I]);
+      CopiaAliquotas.Add(Aliq);
+    end;
+
+    CriarAliquotasPadrao;
+    if CopiaAliquotas.Count > 0 then
+      fpAliquotas[0].Total := CopiaAliquotas[0].Total;
+
+    if CopiaAliquotas.Count > 1 then
+      fpAliquotas[1].Total := CopiaAliquotas[1].Total;
+
+    if CopiaAliquotas.Count > 2 then
+      fpAliquotas[2].Total := CopiaAliquotas[2].Total;
+
+    if CopiaAliquotas.Count > 3 then
+    begin
+      For I := 3 to CopiaAliquotas.Count-1 do
+      begin
+        Aliq := TACBrECFAliquota.create;
+        Aliq.Assign(CopiaAliquotas[I]);
+        Aliq.Indice := IntToStrZero(fpAliquotas.Count+1, 2);  // Reposiciona o Indice
+        fpAliquotas.Add(Aliq);
+      end;
+    end;
+
+    GravaArqINI;
+  finally
+    CopiaAliquotas.Free;
+  end;
+
+end;
 
 procedure TACBrECFVirtualClass.GravaArqINI;
 var
@@ -3229,13 +3329,6 @@ begin
   GravaLog( ComandoLOG );
 
   Result := inherited AchaICMSAliquota( AliquotaICMS );
-
-  if AliquotaICMS = 'N1' then
-    AliquotaICMS := 'NN'
-  else if AliquotaICMS = 'F1' then
-    AliquotaICMS := 'FF'
-  else if AliquotaICMS = 'I1' then
-    AliquotaICMS := 'II';
 end;
 
 procedure TACBrECFVirtualClass.ProgramaAliquota( Aliquota : Double; Tipo : Char;
@@ -3273,14 +3366,7 @@ end;
 
 procedure TACBrECFVirtualClass.CarregaTotalizadoresNaoTributados;
 begin
-  if Assigned( fpTotalizadoresNaoTributados ) then
-     fpTotalizadoresNaoTributados.Free ;
-
-  fpTotalizadoresNaoTributados := TACBrECFTotalizadoresNaoTributados.create( true ) ;
-
-  fpTotalizadoresNaoTributados.New.Indice := 'F1';
-  fpTotalizadoresNaoTributados.New.Indice := 'I1';
-  fpTotalizadoresNaoTributados.New.Indice := 'N1';
+  inherited;
 end;
 
 procedure TACBrECFVirtualClass.CarregaComprovantesNaoFiscais;

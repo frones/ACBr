@@ -39,6 +39,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/12/2016
+-- ACBrECFVirtualBuffer --
+[*] Melhorias em "TACBrECFVirtualBufferClass.AddBufferRelatorio", para que
+    relatório fique mais semelhante ao de um ECF do convênio 09/09.
+    - Adicionado os Contadores: NumCRO, NumCCF, NumCNF, NumCDC
+    - Adicionado os Totalizadores: FS1, IS1, NS1
+    - Separação dos Totalizadores de ICMS e ISSQN
+
+-- ACBrECFVirtual --
+[+] Adicionado suporte aos totalizadores de isenção do ISSQN: FS1, IS1, NS1
+[+] Adicionado sobrecarga aos métodos: GetTotalSubstituicaoTributariaISSQN,
+    GetTotalIsencaoISSQN, GetTotalNaoTributadoISSQN
+[+] Adicionada rotina para efetuar migração de INI do formato antigo para o novo:
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=34210
+    (por: DSA)
+
 Data: 23/12/2016
 -- ACBrECFBematech --
   [-] Descrição só pode ter no máximo 200 caracteres (compare com linha 1887);

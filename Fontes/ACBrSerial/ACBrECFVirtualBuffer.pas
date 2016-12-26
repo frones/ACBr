@@ -452,38 +452,42 @@ end ;
 procedure TACBrECFVirtualBufferClass.AddBufferRelatorio;
 Var
   wTotalAliq, wTotalNaoFiscal, wTotalCancelado, wVendaLiquida: Double;
-  I : Integer ;
+  I, wContNaoFiscal : Integer ;
 begin
-  wTotalAliq := 0 ;
-  if fpAliquotas.Count > 2 then
-  begin
-    For I := 0 to 2 do
-      with fpAliquotas[I] do
-        wTotalAliq := RoundTo(wTotalAliq + Total,-2) ;
-  end;
-
-  wTotalNaoFiscal := 0 ;
+  wTotalNaoFiscal := 0;
+  wContNaoFiscal  := 0;
   For I := 0 to fpComprovantesNaoFiscais.Count-1 do
+  begin
     with fpComprovantesNaoFiscais[I] do
+    begin
       wTotalNaoFiscal := RoundTo(wTotalNaoFiscal + Total,-2) ;
+      wContNaoFiscal  := wContNaoFiscal + Contador;
+    end;
+  end;
 
   wTotalCancelado := fpCuponsCanceladosEmAbertoTotal + fpCuponsCanceladosTotal;
   wVendaLiquida   := max(fpVendaBruta - wTotalCancelado - fpTotalDescontos, 0);
 
   with fsBuffer do
   begin
-    Add( '</linha_simples>' ) ;
+    // CONTADORES //
     Add( PadCenter(' Contadores ',Colunas,'-') ) ;
+    Add( PadSpace('Reinicio de Operacao:|'+IntToStrZero(fpNumCRO,4),Colunas,'|') ) ;
     Add( PadSpace('Reducoes Z:|'+IntToStrZero(fpReducoesZ,4),Colunas,'|') ) ;
     Add( PadSpace('Leitura  X:|'+IntToStrZero(fpLeiturasX,6),Colunas,'|') ) ;
+    Add( PadSpace('Cupom Fiscal:|'+IntToStrZero(fpNumCCF,6), Colunas,'|') ) ;
     Add( PadSpace('Cancelamentos de Cupom:|'+IntToStrZero(fpCuponsCancelados,6), Colunas,'|') ) ;
     if fpCuponsCanceladosEmAberto > 0 then
       Add( PadSpace('Canc.Cupom em Aberto:|'+IntToStrZero(fpCuponsCanceladosEmAberto,6), Colunas,'|') ) ;
 
+    Add( PadSpace('Operação Não Fiscal:|'+IntToStrZero(wContNaoFiscal,6), Colunas,'|') ) ;
     Add( PadSpace('Cancelamentos Não Fiscal:|'+IntToStrZero(fpCNFCancelados,6), Colunas,'|') ) ;
     Add( PadSpace('COO do Primeiro Cupom:|'+IntToStrZero(fpCOOInicial,6), Colunas,'|') ) ;
     Add( PadSpace('COO do Ultimo Cupom:|'+IntToStrZero(fpCOOFinal,6),Colunas,'|'));
     Add( PadSpace('Relatorios Gerenciais:|'+IntToStrZero(fpNumCER,6),Colunas,'|') ) ;
+    Add( PadSpace('Comprovante Credito/Debito:|'+IntToStrZero(fpNumCDC,6),Colunas,'|') ) ;
+
+    // TOTALIZADORES //
     Add( PadCenter(' Totalizadores ',Colunas,'-') ) ;
     Add( PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|') ) ;
     Add( PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
@@ -503,21 +507,73 @@ begin
     Add( PadSpace('Total Não Fiscal:|'+FormatFloat('###,###,##0.00', wTotalNaoFiscal), Colunas,'|') ) ;
     Add( PadSpace('Total Não Fiscal Cancelado:|'+FormatFloat('###,###,##0.00', fpCNFCanceladosTotal), Colunas,'|') ) ;
 
-    Add( PadCenter('Total Vendido por Aliquota',Colunas,'-') ) ;
-    Add( PadSpace('F1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;
-    Add( PadSpace('I1|Isencao|'+FormatFloat('###,###,##0.00', fpAliquotas[1].Total ), Colunas,'|') ) ;
-    Add( PadSpace('N1|Nao Incidencia|'+FormatFloat('###,###,##0.00', fpAliquotas[2].Total ), Colunas,'|') ) ;
+    wTotalAliq := 0;
+    Add( PadCenter('I C M S',Colunas,'-') ) ;
+    if fpAliquotas[0].Indice = 'F1' then
+    begin
+      Add( PadSpace('F1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;
+      wTotalAliq := wTotalAliq + fpAliquotas[0].Total;
+    end;
 
-    For I := 3 to fpAliquotas.Count - 1 do
+    if fpAliquotas[1].Indice = 'I1' then
+    begin
+      Add( PadSpace('I1|Isencao|'+FormatFloat('###,###,##0.00', fpAliquotas[1].Total ), Colunas,'|') ) ;
+      wTotalAliq := wTotalAliq + fpAliquotas[1].Total;
+    end;
+
+    if fpAliquotas[2].Indice = 'N1' then
+    begin
+      Add( PadSpace('N1|Nao Incidencia|'+FormatFloat('###,###,##0.00', fpAliquotas[2].Total ), Colunas,'|') ) ;
+      wTotalAliq := wTotalAliq + fpAliquotas[2].Total;
+    end;
+
+    For I := 6 to fpAliquotas.Count - 1 do
     begin
       with fpAliquotas[I] do
       begin
-        Add( PadSpace(Indice+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
-             FormatFloat('###,###,##0.00',Total),Colunas,'|') ) ;
-        wTotalAliq := RoundTo(wTotalAliq + Total,-2) ;
+        if Tipo = 'T' then
+        begin
+          Add( PadSpace(Indice+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
+               FormatFloat('###,###,##0.00',Total),Colunas,'|') ) ;
+          wTotalAliq := RoundTo(wTotalAliq + Total,-2) ;
+        end;
       end ;
     end;
+    Add( PadSpace('T O T A L   R$|'+FormatFloat('###,###,##0.00',wTotalAliq), Colunas,'|') ) ;
 
+
+    wTotalAliq := 0;
+    Add( PadCenter('I S S Q N',Colunas,'-') ) ;
+    if fpAliquotas[3].Indice = 'FS1' then
+    begin
+      Add( PadSpace('FS1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[3].Total ), Colunas,'|') ) ;
+      wTotalAliq := wTotalAliq + fpAliquotas[3].Total;
+    end;
+
+    if fpAliquotas[4].Indice = 'IS1' then
+    begin
+      Add( PadSpace('IS1|Isencao|'+FormatFloat('###,###,##0.00', fpAliquotas[4].Total ), Colunas,'|') ) ;
+      wTotalAliq := wTotalAliq + fpAliquotas[4].Total;
+    end;
+
+    if fpAliquotas[5].Indice = 'NS1' then
+    begin
+      Add( PadSpace('NS1|Nao Incidencia|'+FormatFloat('###,###,##0.00', fpAliquotas[5].Total ), Colunas,'|') ) ;
+      wTotalAliq := wTotalAliq + fpAliquotas[5].Total;
+    end;
+
+    For I := 6 to fpAliquotas.Count - 1 do
+    begin
+      with fpAliquotas[I] do
+      begin
+        if Tipo = 'S' then
+        begin
+          Add( PadSpace(Indice+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
+               FormatFloat('###,###,##0.00',Total),Colunas,'|') ) ;
+          wTotalAliq := RoundTo(wTotalAliq + Total,-2) ;
+        end;
+      end ;
+    end;
     Add( PadSpace('T O T A L   R$|'+FormatFloat('###,###,##0.00',wTotalAliq), Colunas,'|') ) ;
 
 

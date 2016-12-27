@@ -111,7 +111,7 @@ type
     function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String;
                             AMotivoCancelamento: String = ''): Boolean;
 
-    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AChaveAcesso: String): String;
+    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String; AChaveAcesso: String = ''): String;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -568,7 +568,7 @@ begin
                                       AMotivoCancelamento);
 end;
 
-function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AChaveAcesso: String): String;
+function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String; AChaveAcesso: String = ''): String;
 var
   Texto, xNumeroNFSe, xNomeMunic: String;
 begin

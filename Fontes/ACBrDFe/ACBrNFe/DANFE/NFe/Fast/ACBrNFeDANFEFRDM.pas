@@ -2000,7 +2000,7 @@ begin
                 begin
                   CpTituloReport := frxReport.FindObject('PageHeader1');
                   if Assigned(CpTituloReport) then
-                    CpTituloReport.Visible  := ( cdsParametros.FieldByName('Imagem').AsString = '' );
+                    CpTituloReport.Visible  := ( cdsParametros.FieldByName('Imagem').AsString <> '' );
 
                   CpLogomarca := frxReport.FindObject('ImgLogo');
                   if Assigned(CpLogomarca) and Assigned(CpTituloReport) then

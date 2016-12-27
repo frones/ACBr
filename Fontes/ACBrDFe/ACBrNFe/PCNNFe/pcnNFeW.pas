@@ -225,6 +225,7 @@ var
   xProtNFe : String;
   xCNPJCPF : string;
 begin
+  Gerador.ListaDeAlertas.Clear;
 
   Usar_tcDe4 := (NFe.infNFe.Versao >= 3.10);
   Versao     := Copy(NFe.infNFe.VersaoStr, 9, 4);

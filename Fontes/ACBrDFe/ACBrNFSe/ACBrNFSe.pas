@@ -111,7 +111,7 @@ type
     function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String;
                             AMotivoCancelamento: String = ''): Boolean;
 
-    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
+    function LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AChaveAcesso: String): String;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -568,7 +568,7 @@ begin
                                       AMotivoCancelamento);
 end;
 
-function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String): String;
+function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao, AChaveAcesso: String): String;
 var
   Texto, xNumeroNFSe, xNomeMunic: String;
 begin
@@ -592,6 +592,7 @@ begin
   Texto := StringReplace(Texto, '%NumeroNFSe%', xNumeroNFSe, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%InscMunic%', Configuracoes.Geral.Emitente.InscMun, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%ChaveAcesso%', AChaveAcesso, [rfReplaceAll]);
 
   Result := Texto;
 end;

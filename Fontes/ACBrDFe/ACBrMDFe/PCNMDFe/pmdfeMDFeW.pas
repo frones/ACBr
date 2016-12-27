@@ -152,6 +152,13 @@ var
   Gerar, Ok: boolean;
   xProtMDFe: String;
 begin
+  // Carrega Layout que sera utilizado para gera o txt
+  Gerador.ListaDeAlertas.Clear;
+  Gerador.LayoutArquivoTXT.Clear;
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.ArquivoFormatoTXT := '';
+
+
   VersaoDF := DblToVersaoMDFe(Ok, MDFe.infMDFe.versao);
   chave := '';
 
@@ -165,11 +172,6 @@ begin
   MDFe.infMDFe.Id := chave;
   MDFe.ide.cDV  := RetornarDigito(MDFe.infMDFe.Id);
   MDFe.Ide.cMDF := RetornarCodigoNumerico(MDFe.infMDFe.Id, 2);
-
-  // Carrega Layout que sera utilizado para gera o txt
-  Gerador.LayoutArquivoTXT.Clear;
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.ArquivoFormatoTXT := '';
 
   {$IfDef FPC}
    Gerador.wGrupo(ENCODING_UTF8, '', False);

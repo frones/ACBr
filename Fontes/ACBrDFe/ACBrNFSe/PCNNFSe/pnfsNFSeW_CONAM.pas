@@ -324,6 +324,7 @@ end;
 
 function TNFSeW_CONAM.GerarXml: Boolean;
 begin
+  Gerador.ListaDeAlertas.Clear;
   GerarXML_CONAM;
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

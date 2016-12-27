@@ -90,6 +90,7 @@ var
   i  : Integer;
   Doc: string;
 begin
+  Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('TDadosGNRE');

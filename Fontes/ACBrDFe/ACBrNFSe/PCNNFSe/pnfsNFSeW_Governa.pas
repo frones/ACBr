@@ -238,6 +238,7 @@ end;
 
 function TNFSeW_Governa.GerarXml: Boolean;
 begin
+  Gerador.ListaDeAlertas.Clear;
   Gerador.Opcoes.DecimalChar := ',';
 
   Gerador.Prefixo := Prefixo4;

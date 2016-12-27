@@ -527,6 +527,7 @@ function TNFSeW_ABRASFv1.GerarXml: Boolean;
 var
   Gerar: Boolean;
 begin
+  Gerador.ListaDeAlertas.Clear;
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 

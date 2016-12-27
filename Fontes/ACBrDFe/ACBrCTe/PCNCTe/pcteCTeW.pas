@@ -251,6 +251,13 @@ var
   Gerar, Ok: Boolean;
   xProtCTe: String;
 begin
+  // Carrega Layout que sera utilizado para gera o txt
+  Gerador.ListaDeAlertas.Clear;
+  Gerador.LayoutArquivoTXT.Clear;
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.ArquivoFormatoTXT := '';
+
+
   VersaoDF := DblToVersaoCTe(Ok, CTe.infCTe.versao);
   chave := '';
 
@@ -265,11 +272,6 @@ begin
 
   CTe.ide.cDV := RetornarDigito(CTe.infCTe.ID);
   CTe.Ide.cCT := RetornarCodigoNumerico(CTe.infCTe.ID, 2);
-
-  // Carrega Layout que sera utilizado para gera o txt
-  Gerador.LayoutArquivoTXT.Clear;
-  Gerador.ArquivoFormatoXML := '';
-  Gerador.ArquivoFormatoTXT := '';
 
   {$IfDef FPC}
    Gerador.wGrupo(ENCODING_UTF8, '', False);

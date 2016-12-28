@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/12/2016
+[-] Correção de comando LerIniBoletos, para disparar erro quando comando enviado de forma
+	incorreta.
+	http://www.projetoacbr.com.br/forum/topic/34193-boleto-bancario-acbrmonitorplus/?do=findComment&comment=224767
+	por: Celso Marigo Junior
+
 26/12/2016
 [+] Adicionado novo exemplo de uso do socket para comunicação utilizando Java,
 	exemplo desenvolvido pelo José Mauro.

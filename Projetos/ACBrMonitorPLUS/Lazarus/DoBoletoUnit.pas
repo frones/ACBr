@@ -54,7 +54,7 @@ uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit, strutils, typinfo,
 
 procedure DoBoleto ( Cmd: TACBrCmd ) ;
 var
-  EnvioResposta, Destinatario: String;
+  Destinatario: String;
 begin
    with FrmACBrMonitor.ACBrBoleto1 do
    begin
@@ -121,7 +121,7 @@ begin
            EnviarEmail( ListadeBoletos[0].Sacado.Email,
                         FrmACBrMonitor.edtBOLEmailAssunto.Text,
                         FrmACBrMonitor.edtBOLEmailMensagem.Lines,
-                        True);
+                        True );
            Cmd.Resposta := 'E-mail enviado com sucesso!'
          end;
        end
@@ -171,7 +171,7 @@ begin
   SL         := TStringList.Create;
   try
      if (pos(#10,aStr) = 0) and FileExists(aStr) then
-        SL.LoadFromFile(aStr)
+       SL.LoadFromFile(aStr)
      else
        SL.Text := ConvertStrRecived(aStr);
 
@@ -312,14 +312,18 @@ begin
         if IniBoletos.SectionExists('Titulo') then
            IncluirTitulo(IniBoletos,'Titulo');
 
-        ContTitulos := 1;
-        NomeSessao  := 'Titulo1' ;
+        ContTitulos := 0;
+        NomeSessao  := 'Titulo1';
         while IniBoletos.SectionExists(NomeSessao)do
         begin
-           IncluirTitulo( IniBoletos, NomeSessao );
            Inc( ContTitulos );
-           NomeSessao := 'Titulo'+IntToStr( ContTitulos );
+           IncluirTitulo( IniBoletos, NomeSessao );
+           NomeSessao := 'Titulo'+IntToStr( ContTitulos+1 );
         end;
+
+        if (( not MudouDados ) and ( ContTitulos = 0 )) then
+           raise exception.Create('Erro ao ler arquivo de entrada ou '+
+             'parâmetro incorreto.');
      end;
   finally
      SL.Free;

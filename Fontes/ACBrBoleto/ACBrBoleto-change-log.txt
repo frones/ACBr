@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/12/2016
+[*] Bancoop alteração do registro CNAB240 Header posição 33 para gerar com espaços
+	ao invés de zeros.
+    por: Celso Marigo Junior
+
 Data: 22/12/2016 ver: 0.0213
 [*] Alteração no retorno CNB400, adicionado leitura do CNPJ/CPF (Bancoob) conforme link:
     http://www.projetoacbr.com.br/forum/topic/32589-acbrbancobancoob-lerretorno400-cpfcnpj-do-sacado/ (por: Graziele Rocha)

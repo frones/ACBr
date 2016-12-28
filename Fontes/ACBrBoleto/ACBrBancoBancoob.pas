@@ -679,21 +679,21 @@ begin
         pJuridica: ATipoInscricao := '2';
       end;
       { GERAR REGISTRO-HEADER DO ARQUIVO }
-      Result:= IntToStrZero(ACBrBanco.Numero, 3)        + //1 a 3 - Código do banco
-               '0000'                                   + //4 a 7 - Lote de serviço
-               '0'                                      + //8 - Tipo de registro - Registro header de arquivo
-               space(9)                                 + //9 a 17 Uso exclusivo FEBRABAN/CNAB
-               ATipoInscricao                           + //18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 14, '0')    + //19 a 32 -Número de inscrição do cedente
-               StringOfChar('0', 20)                    + // 33 a 52 - Brancos - Alteração para passar no validador
+      Result:= IntToStrZero(ACBrBanco.Numero, 3)        + // 1 a 3 - Código do banco
+               '0000'                                   + // 4 a 7 - Lote de serviço
+               '0'                                      + // 8 - Tipo de registro - Registro header de arquivo
+               space(9)                                 + // 9 a 17 Uso exclusivo FEBRABAN/CNAB
+               ATipoInscricao                           + // 18 - Tipo de inscrição do cedente
+               PadLeft(OnlyNumber(CNPJCPF), 14, '0')    + // 19 a 32 -Número de inscrição do cedente
+               StringOfChar(' ', 20)                    + // 33 a 52 - Brancos - Alteração para passar no validador
                '0'                                      + // 53 - Zeros
-               PadLeft(OnlyNumber(Agencia), 4, '0')        + //54 a 57 - Código da agência do cedente
-               PadRight(AgenciaDigito, 1, '0')              + //58 - Digito agência do cedente
-               PadLeft(OnlyNumber(Conta), 12, '0')         + // 59 a 70 - Número da conta do cedente
-               PadRight(ContaDigito, 1, '0')                + //71 - Digito conta do cedente
+               PadLeft(OnlyNumber(Agencia), 4, '0')     + // 54 a 57 - Código da agência do cedente
+               PadRight(AgenciaDigito, 1, '0')          + // 58 - Digito agência do cedente
+               PadLeft(OnlyNumber(Conta), 12, '0')      + // 59 a 70 - Número da conta do cedente
+               PadRight(ContaDigito, 1, '0')            + // 71 - Digito conta do cedente
                ' '                                      + // 72 - Dígito verificador Ag/Conta (Brancos)
-               PadRight(Nome, 30, ' ')                      + // 73 a 102 - Nome do cedente
-               PadRight('SICOOB', 30, ' ')                  + // 103 a 132 - Nome do banco
+               PadRight(Nome, 30, ' ')                  + // 73 a 102 - Nome do cedente
+               PadRight('SICOOB', 30, ' ')              + // 103 a 132 - Nome do banco
                space(10)                                + // 133 A 142 - Brancos
                '1'                                      + // 143 - Código de Remessa (1) / Retorno (2)
                FormatDateTime('ddmmyyyy', Now)          + // 144 a 151 - Data do de geração do arquivo

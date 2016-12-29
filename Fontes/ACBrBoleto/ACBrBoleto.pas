@@ -249,7 +249,7 @@ type
   TACBrTipoCobranca =
    (cobNenhum,
     cobBancoDoBrasil,
-	cobBancoDoAmazonia,
+	  cobBancoDaAmazonia,
     cobSantander,
     cobCaixaEconomica,
     cobCaixaSicob,
@@ -1850,7 +1850,7 @@ begin
 
    case AValue of
      cobBancoDoBrasil  : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-	 cobBancoDaAmazonia: fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
+	   cobBancoDaAmazonia: fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
      cobBancoDoNordeste: fBancoClass := TACBrBancoNordeste.create(Self);       {004}
      cobBanestes       : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
      cobSantander      : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}

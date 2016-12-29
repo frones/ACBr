@@ -249,6 +249,7 @@ type
   TACBrTipoCobranca =
    (cobNenhum,
     cobBancoDoBrasil,
+	cobBancoDoAmazonia,
     cobSantander,
     cobCaixaEconomica,
     cobCaixaSicob,
@@ -1155,7 +1156,7 @@ procedure Register;
 implementation
 
 Uses Forms, Math, dateutils, strutils,
-     ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoBanestes, ACBrBancoItau,
+     ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoAmazonia, ACBrBancoBanestes, ACBrBancoItau,
      ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
@@ -1849,6 +1850,7 @@ begin
 
    case AValue of
      cobBancoDoBrasil  : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+	 cobBancoDaAmazonia: fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
      cobBancoDoNordeste: fBancoClass := TACBrBancoNordeste.create(Self);       {004}
      cobBanestes       : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
      cobSantander      : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}

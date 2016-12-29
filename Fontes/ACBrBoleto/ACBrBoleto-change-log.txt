@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 28/12/2016
+[+] Adicionado Banco da Amazônia
+    contribuição de: Alexandre Xavier
+
+Data: 28/12/2016
 [*] Bancoop alteração do registro CNAB240 Header posição 33 para gerar com espaços
 	ao invés de zeros.
     por: Celso Marigo Junior

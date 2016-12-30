@@ -793,10 +793,12 @@ var
   function X509SetNotBefore(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509SetNotAfter(x: PX509; tm: PASN1_UTCTIME): cInt;
   function X509GetSerialNumber(x: PX509): PASN1_cInt;
-  function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
+  function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION;
   function EvpPkeyNew: PEVP_PKEY;
   procedure EvpPkeyFree(pk: PEVP_PKEY);
-  function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
+  function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: pRSA): cInt;
+  function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
+  function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
   function EvpGetDigestByName(Name: String): PEVP_MD;
   procedure EVPcleanup;
   function SSLeayversion(t: cInt): string;
@@ -1066,6 +1068,8 @@ type
   TEvpPkeyNew = function: PEVP_PKEY; cdecl;
   TEvpPkeyFree = procedure(pk: PEVP_PKEY); cdecl;
   TEvpPkeyAssign = function(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt; cdecl;
+  TEvpPkeyGet1RSA = function(key: PEVP_PKEY): pRSA; cdecl;
+  TEvpPkeySet1RSA = function(pkey: PEVP_PKEY; rsa: pRSA): cInt; cdecl;
   TEvpGetDigestByName = function(Name: PChar): PEVP_MD; cdecl;
   TEVPcleanup = procedure; cdecl;
   TSSLeayversion = function(t: cInt): PChar; cdecl;
@@ -1301,6 +1305,8 @@ var
   _EvpPkeyNew: TEvpPkeyNew = nil;
   _EvpPkeyFree: TEvpPkeyFree = nil;
   _EvpPkeyAssign: TEvpPkeyAssign = nil;
+  _EvpPkeySet1RSA: TEvpPkeySet1RSA = nil;
+  _EvpPkeyGet1RSA: TEvpPkeyGet1RSA = nil;
   _EvpGetDigestByName: TEvpGetDigestByName = nil;
   _EVPcleanup: TEVPcleanup = nil;
   _SSLeayversion: TSSLeayversion = nil;
@@ -2043,10 +2049,26 @@ begin
     _PKCS12free(p12);
 end;
 
-function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: Prsa): cInt;
+function EvpPkeyAssign(pkey: PEVP_PKEY; _type: cInt; key: pRSA): cInt;
 begin
   if InitlibeaInterface and Assigned(_EvpPkeyAssign) then
     Result := _EvpPkeyAssign(pkey, _type, key)
+  else
+    Result := 0;
+end;
+
+function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
+begin
+  if InitlibeaInterface and Assigned(_EvpPkeyGet1RSA) then
+    Result := _EvpPkeyGet1RSA(pkey)
+  else
+    Result := nil;
+end;
+
+function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
+begin
+  if InitlibeaInterface and Assigned(_EvpPkeySet1RSA) then
+    Result := _EvpPkeySet1RSA(pkey, rsa)
   else
     Result := 0;
 end;
@@ -2178,7 +2200,7 @@ begin
     Result := nil;
 end;
 
-function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION; cdecl;
+function X509GetExt(x: pX509; loc: integer): pX509_EXTENSION;
 begin
   if InitlibeaInterface and Assigned(_X509GetExt) then
     Result := _X509GetExt(x, loc)
@@ -3173,6 +3195,8 @@ begin
         _EvpPkeyNew := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_new', AVerboseLoading);
         _EvpPkeyFree := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_free', AVerboseLoading);
         _EvpPkeyAssign := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_assign', AVerboseLoading);
+        _EvpPkeyGet1RSA := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_get1_RSA', AVerboseLoading);
+        _EvpPkeySet1RSA := GetProcAddr(SSLUtilHandle, 'EVP_PKEY_set1_RSA', AVerboseLoading);
         _EVPCleanup := GetProcAddr(SSLUtilHandle, 'EVP_cleanup', AVerboseLoading);
         _EvpGetDigestByName := GetProcAddr(SSLUtilHandle, 'EVP_get_digestbyname', AVerboseLoading);
         _SSLeayversion := GetProcAddr(SSLUtilHandle, 'SSLeay_version', AVerboseLoading);
@@ -3463,6 +3487,8 @@ begin
     _EvpPkeyNew := nil;
     _EvpPkeyFree := nil;
     _EvpPkeyAssign := nil;
+    _EvpPkeyGet1RSA := nil;
+    _EvpPkeySet1RSA := nil;
     _EVPCleanup := nil;
     _EvpGetDigestByName := nil;
     _ErrErrorString := nil;

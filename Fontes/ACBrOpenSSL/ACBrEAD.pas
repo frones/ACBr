@@ -617,25 +617,35 @@ end ;
 
 procedure TACBrEAD.CalcularModuloeExpoente(var Modulo, Expoente: AnsiString);
 Var
-  Bio : pBIO;
+  Bio: pBIO;
+  RsaKey: pRSA;
 begin
-  if not VerificaVersaoCompativel then
-     raise EACBrEADException.Create( ACBrStr('Método CalcularModuloeExpoente ainda não é '+
-                                     'compatível com OpenSSL 1.0.0 ou superior'));
-
   LerChavePublica;
 
   Modulo   := '';
   Expoente := '';
   Bio := CriarMemBIO;
+  {$IfDef USE_libeay32}
+   RsaKey := EVP_PKEY_get1_RSA(fsKey);
+  {$Else}
+   RsaKey := EvpPkeyGet1RSA(fsKey);
+  {$EndIf}
   try
-    BN_print( Bio , fsKey.pkey.rsa.e);
-    Modulo := AnsiString(BioToStr( Bio ));
+    if (RsaKey <> Nil) then
+    begin
+      BN_print( Bio, RsaKey.e);
+      Modulo := AnsiString(BioToStr( Bio ));
 
-    BIO_reset( Bio );
-    BN_print( Bio , fsKey.pkey.rsa.d);
-    Expoente := AnsiString(BioToStr( Bio ));
+      BIO_reset( Bio );
+      BN_print( Bio, RsaKey.d);
+      Expoente := AnsiString(BioToStr( Bio ));
+    end
+    else
+      raise EACBrEADException.Create( 'Erro ao ler chave Publica RSA' );
   finally
+    if (RsaKey <> Nil) then
+      RSA_free(RsaKey);
+
     LiberarBIO( Bio ) ;
     LiberarChave;
   end ;

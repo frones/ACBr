@@ -41,7 +41,16 @@ Símbolo : Significado
 
 30/12/2016
 -- ACBrEAD --
-[-] Correção na comparação do numero de versão do OpenSSL  (Por: DSA)
+[-] Correção na comparação do numero de versão do OpenSSL
+[-] Correção no método "CalcularModuloeExpoente" para funcionar com OpenSSL 1.0.0
+    ou superior
+    (Por: DSA)
+
+-- OpenSSLExt --
+[+] Adicionado suporte aos métodos:
+    function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
+    function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
+    (por: DSA)
 
 23/12/2016
 -- OpenSSLExt --

@@ -41,9 +41,13 @@ Símbolo : Significado
 
 30/12/2016
 -- ACBrEAD --
-[-] Correção na comparação do numero de versão do OpenSSL
-[-] Correção no método "CalcularModuloeExpoente" para funcionar com OpenSSL 1.0.0
-    ou superior
+[*] Ajuste para retornar apenas os números da versão do OpenSSL
+[-] Correção de A.V. no método "CalcularModuloeExpoente" quando funcionando com
+    OpenSSL 1.0.0 ou superior
+[-] Correção de A.V. no método "VerificarEAD" quando funcionando com OpenSSL
+    1.0.0 ou superior, e fosse necessária verificação manual do EAD através da
+    chamada a rotina "RSA_public_decrypt"
+[*] Remoção de método desnecessário "VerificaVersaoCompativel"
     (Por: DSA)
 
 -- OpenSSLExt --
@@ -59,7 +63,7 @@ Símbolo : Significado
 
 -- ACBrEAD --
 [*] Aplicado ajuste para suportar OpenSSL 1.0.0 ou superior. Ainda continua sem
-    suporte aos métodos "EVP_DigestFinal", e "CalcularModuloeExpoente", em
+    suporte aos métodos "RSA_public_decrypt", e "CalcularModuloeExpoente", em
     versões superiores a 1.0.0
 
 24/10/2016

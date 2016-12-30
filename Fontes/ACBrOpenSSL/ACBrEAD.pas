@@ -113,7 +113,6 @@ type
     function GetAbout: String;
     procedure SetBufferSize(AValue: Integer);
 
-    function VerificaVersaoCompativel: Boolean;
     procedure VerificaNomeArquivo( NomeArquivo : String ) ;
     function InternalDigest( const AStream : TStream;
        const Digest: TACBrEADDgst;
@@ -1026,14 +1025,6 @@ begin
   end ;
 end ;
 
-function TACBrEAD.VerificaVersaoCompativel: Boolean;
-var
-  Ver : String ;
-begin
-  Ver := OpenSSL_Version;
-  Result := (CompareVersions(Ver, '1.0.0') < 0)
-end;
-
 function TACBrEAD.VerificarEAD(const AString : AnsiString) : Boolean ;
 Var
   MS : TMemoryStream ;
@@ -1080,6 +1071,7 @@ Var
   Memory: Pointer;
   StreamSize, PosStream, BytesToEnd: Int64;
   EADAnsi : AnsiString;
+  RsaKey: pRSA;
 begin
   EAD := Trim(EAD);
 
@@ -1110,6 +1102,7 @@ begin
   PosStream := 0;
   AStream.Position := 0;
   GetMem(Memory, BufferSize);
+  RsaKey := Nil;
   try
     // Fazendo verificação tradicional de SignDigest
     md := EVP_get_digestbyname('md5');
@@ -1145,7 +1138,7 @@ begin
     Result := (Ret = 1);
 
     // Se falhou, faz verificação manual do EAD
-    if (not Result) and VerificaVersaoCompativel then
+    if (not Result) then
     begin
        // Calculando o MD5 do arquivo sem a linha do EAD salva em "md5_bin" //
        EVP_DigestFinal( @md_ctx, @md5_bin, {$IFNDEF USE_libeay32}@{$ENDIF}md_len);
@@ -1153,8 +1146,13 @@ begin
           raise EACBrEADException.Create('Erro ao calcular MD5 do arquivo sem EAD');
 
        // Descriptografando o EAD //
+       {$IfDef USE_libeay32}
+        RsaKey := EVP_PKEY_get1_RSA(fsKey);
+       {$Else}
+        RsaKey := EvpPkeyGet1RSA(fsKey);
+       {$EndIf}
        md_len := RSA_public_decrypt( 128, @EAD_crypt, @EAD_decrypt,
-                                     fsKey.pkey.rsa, RSA_NO_PADDING);
+                                     RsaKey, RSA_NO_PADDING);
        if md_len <> 128 then
           raise EACBrEADException.Create('Erro ao descriptografar EAD');
 
@@ -1181,6 +1179,9 @@ begin
     end ;
 
   finally
+    if (RsaKey <> Nil) then
+      RSA_free(RsaKey);
+
     Freemem(Memory);
     LiberarChave;
   end ;

@@ -397,7 +397,7 @@ begin
   else begin
     if (MDFe.Rodo.infANTT.RNTRC <> '') or
        (MDFe.Rodo.infANTT.infCIOT.Count > 0) or
-       (MDFe.Rodo.valePed.disp.Count > 0) or
+       (MDFe.Rodo.infANTT.valePed.disp.Count > 0) or
        (MDFe.rodo.infANTT.infContratante.Count > 0) then
     begin
       Gerador.wGrupo('infANTT', '#02');
@@ -412,12 +412,12 @@ begin
   GerarVeiculoTracao;
   GerarVeiculoReboq;
 
-  if VersaoDF = ve100 then
+  if (VersaoDF = ve100) then
     GerarValePedagio;
 
   Gerador.wCampo(tcStr, '#45', 'codAgPorto', 01, 16, 0, MDFe.Rodo.codAgPorto, DSC_CODAGPORTO);
 
-  if VersaoDF = ve300 then
+  if VersaoDF >= ve300 then
     GerarLacRodo;
 
   Gerador.wGrupo('/rodo');
@@ -542,32 +542,54 @@ procedure TMDFeW.GerarValePedagio;
 var
   i: Integer;
 begin
-  if MDFe.rodo.valePed.disp.Count>0
-   then begin
-    Gerador.wGrupo('valePed', '#23');
-
-    for i := 0 to MDFe.rodo.valePed.disp.Count - 1 do
+  if VersaoDF = ve100 then
+  begin
+    if MDFe.rodo.valePed.disp.Count > 0 then
     begin
-      Gerador.wGrupo('disp', '#24');
-      Gerador.wCampo(tcStr, '#25', 'CNPJForn', 14, 14, 1, MDFe.Rodo.valePed.disp[i].CNPJForn, DSC_CNPJFORN);
-      if VersaoDF = ve100 then
-        Gerador.wCampo(tcStr, '#26', 'CNPJPg', 14, 14, 0, MDFe.Rodo.valePed.disp[i].CNPJPg, DSC_CNPJPG)
-      else begin
-        if Length(MDFe.Rodo.valePed.disp[i].CNPJPg) = 14 then
-          Gerador.wCampo(tcStr, '#26', 'CNPJPg', 14, 14, 0, MDFe.Rodo.valePed.disp[i].CNPJPg, DSC_CNPJPG)
-        else
-          Gerador.wCampo(tcStr, '#26', 'CPFPg', 11, 11, 0, MDFe.Rodo.valePed.disp[i].CNPJPg, DSC_CNPJPG);
-      end;
-      Gerador.wCampo(tcStr, '#27', 'nCompra ', 01, 20, 1, MDFe.Rodo.valePed.disp[i].nCompra, DSC_NCOMPRA);
-      if VersaoDF = ve300 then
-        Gerador.wCampo(tcDe2, '#20', 'vValePed ', 01, 15, 1, MDFe.rodo.valePed.disp[i].vValePed, DSC_VVALEPED);
-      Gerador.wGrupo('/disp');
-    end;
-    if MDFe.rodo.valePed.disp.Count > 990 then
-     Gerador.wAlerta('#24', 'disp', '', ERR_MSG_MAIOR_MAXIMO + '990');
+      Gerador.wGrupo('valePed', '#23');
 
-    Gerador.wGrupo('/valePed');
-   end;
+      for i := 0 to MDFe.rodo.valePed.disp.Count - 1 do
+      begin
+        Gerador.wGrupo('disp', '#24');
+        Gerador.wCampo(tcStr, '#25', 'CNPJForn', 14, 14, 1, MDFe.Rodo.valePed.disp[i].CNPJForn, DSC_CNPJFORN);
+        Gerador.wCampo(tcStr, '#26', 'CNPJPg'  , 14, 14, 0, MDFe.Rodo.valePed.disp[i].CNPJPg, DSC_CNPJPG);
+        Gerador.wCampo(tcStr, '#27', 'nCompra' , 01, 20, 1, MDFe.Rodo.valePed.disp[i].nCompra, DSC_NCOMPRA);
+        Gerador.wGrupo('/disp');
+      end;
+
+      if MDFe.rodo.valePed.disp.Count > 990 then
+        Gerador.wAlerta('#24', 'disp', '', ERR_MSG_MAIOR_MAXIMO + '990');
+
+      Gerador.wGrupo('/valePed');
+    end;
+  end
+  else
+  begin
+    if MDFe.rodo.infANTT.valePed.disp.Count > 0 then
+    begin
+      Gerador.wGrupo('valePed', '#23');
+
+      for i := 0 to MDFe.rodo.infANTT.valePed.disp.Count - 1 do
+      begin
+        Gerador.wGrupo('disp', '#24');
+        Gerador.wCampo(tcStr, '#25', 'CNPJForn', 14, 14, 1, MDFe.Rodo.infANTT.valePed.disp[i].CNPJForn, DSC_CNPJFORN);
+
+        if Length(MDFe.Rodo.infANTT.valePed.disp[i].CNPJPg) = 14 then
+          Gerador.wCampo(tcStr, '#26', 'CNPJPg', 14, 14, 0, MDFe.Rodo.infANTT.valePed.disp[i].CNPJPg, DSC_CNPJPG)
+        else
+          Gerador.wCampo(tcStr, '#26', 'CPFPg' , 11, 11, 0, MDFe.Rodo.infANTT.valePed.disp[i].CNPJPg, DSC_CNPJPG);
+
+        Gerador.wCampo(tcStr, '#27', 'nCompra' , 01, 20, 1, MDFe.Rodo.infANTT.valePed.disp[i].nCompra, DSC_NCOMPRA);
+        Gerador.wCampo(tcDe2, '#20', 'vValePed', 01, 15, 1, MDFe.Rodo.infANTT.valePed.disp[i].vValePed, DSC_VVALEPED);
+        Gerador.wGrupo('/disp');
+      end;
+
+      if MDFe.Rodo.infANTT.valePed.disp.Count > 990 then
+        Gerador.wAlerta('#24', 'disp', '', ERR_MSG_MAIOR_MAXIMO + '990');
+
+      Gerador.wGrupo('/valePed');
+    end;
+  end;
 end;
 
 procedure TMDFeW.GerarInfCIOT;
@@ -582,7 +604,7 @@ begin
     Gerador.wGrupo('/infCIOT');
   end;
   if MDFe.rodo.infANTT.infCIOT.Count > 990 then
-   Gerador.wAlerta('#04', 'infCIOT', '', ERR_MSG_MAIOR_MAXIMO + '990');
+    Gerador.wAlerta('#04', 'infCIOT', '', ERR_MSG_MAIOR_MAXIMO + '990');
 end;
 
 procedure TMDFeW.GerarInfContratante;
@@ -596,7 +618,7 @@ begin
     Gerador.wGrupo('/infContratante');
   end;
   if MDFe.rodo.infANTT.infContratante.Count > 990 then
-   Gerador.wAlerta('#15', 'infContratante', '', ERR_MSG_MAIOR_MAXIMO + '990');
+    Gerador.wAlerta('#15', 'infContratante', '', ERR_MSG_MAIOR_MAXIMO + '990');
 end;
 
 procedure TMDFeW.GerarLacRodo;

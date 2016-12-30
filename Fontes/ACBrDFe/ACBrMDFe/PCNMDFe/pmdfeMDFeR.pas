@@ -169,39 +169,50 @@ begin
   if Leitor.rExtrai(1, 'infModal') <> '' then
   begin
     if Leitor.rExtrai(2, 'rodo') <> '' then
-     begin
+    begin
       MDFe.Rodo.RNTRC      := Leitor.rCampo(tcStr, 'RNTRC', 'prop');
       MDFe.Rodo.CIOT       := Leitor.rCampo(tcStr, 'CIOT');
       MDFe.Rodo.codAgPorto := Leitor.rCampo(tcStr, 'codAgPorto');
 
-      if MDFe.infMDFe.versao = 3 then
+      if MDFe.infMDFe.versao >= 3 then
+      begin
         if (Leitor.rExtrai(3, 'infANTT') <> '') then
         begin
           MDFe.Rodo.infANTT.RNTRC := Leitor.rCampo(tcStr, 'RNTRC');
 
-          if Leitor.rExtrai(3, 'infCIOT') <> '' then
+          i01 := 0;
+          while Leitor.rExtrai(4, 'infCIOT', '', i01 + 1) <> '' do
+          begin
+            MDFe.Rodo.infANTT.infCIOT.Add;
+            MDFe.Rodo.infANTT.infCIOT[i01].CIOT := Leitor.rCampo(tcStr, 'CIOT');
+            MDFe.Rodo.infANTT.infCIOT[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+            inc(i01);
+          end;
+
+          if Leitor.rExtrai(4, 'valePed') <> '' then
           begin
             i01 := 0;
-            while Leitor.rExtrai(4, 'infCIOT', '', i01 + 1) <> '' do
+            while Leitor.rExtrai(5, 'disp', '', i01 + 1) <> '' do
             begin
-              MDFe.Rodo.infANTT.infCIOT.Add;
-              MDFe.Rodo.infANTT.infCIOT[i01].CIOT := Leitor.rCampo(tcStr, 'CIOT');
-              MDFe.Rodo.infANTT.infCIOT[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+              MDFe.Rodo.infANTT.valePed.disp.Add;
+              MDFe.Rodo.infANTT.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
+              MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+              MDFe.Rodo.infANTT.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
+              MDFe.Rodo.infANTT.valePed.disp[i01].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
+
               inc(i01);
             end;
           end;
 
-          if Leitor.rExtrai(3, 'infContratante') <> '' then
+          i01 := 0;
+          while Leitor.rExtrai(4, 'infContratante', '', i01 + 1) <> '' do
           begin
-            i01 := 0;
-            while Leitor.rExtrai(4, 'infContratante', '', i01 + 1) <> '' do
-            begin
-              MDFe.Rodo.infANTT.infContratante.Add;
-              MDFe.Rodo.infANTT.infContratante[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
-              inc(i01);
-            end;
-          end; 
+            MDFe.Rodo.infANTT.infContratante.Add;
+            MDFe.Rodo.infANTT.infContratante[i01].CNPJCPF := Leitor.rCampoCNPJCPF;
+            inc(i01);
+          end;
         end;
+      end;
 
       if (Leitor.rExtrai(3, 'veicTracao') <> '') or (Leitor.rExtrai(3, 'veicPrincipal') <> '')then
        begin
@@ -269,34 +280,35 @@ begin
         inc(i01);
       end;
 
-      if Leitor.rExtrai(3, 'valePed') <> '' then
-       begin
-        i01 := 0;
-        while Leitor.rExtrai(4, 'disp', '', i01 + 1) <> '' do
+      if MDFe.infMDFe.versao < 3 then
+      begin
+        if Leitor.rExtrai(3, 'valePed') <> '' then
         begin
-          MDFe.Rodo.valePed.disp.Add;
-          MDFe.Rodo.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
-          MDFe.Rodo.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
-          MDFe.Rodo.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
+          i01 := 0;
+          while Leitor.rExtrai(4, 'disp', '', i01 + 1) <> '' do
+          begin
+            MDFe.Rodo.valePed.disp.Add;
+            MDFe.Rodo.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
+            MDFe.Rodo.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+            MDFe.Rodo.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
 
-           if MDFe.infMDFe.versao = 3 then
-             MDFe.Rodo.valePed.disp[i01].vValePed  := Leitor.rCampo(tcDe2, 'vValePed');
-          inc(i01);
+            inc(i01);
+          end;
         end;
-       end;
+      end;
 
-     end; // fim das informações do modal Rodoviário
+    end; // fim das informações do modal Rodoviário
 
     (* Grupo da TAG <aereo> ***************************************************)
     if Leitor.rExtrai(2, 'aereo') <> '' then
-     begin
-       MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
-       MDFe.Aereo.matr    := Leitor.rCampo(tcInt, 'matr');
-       MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr, 'nVoo');
-       MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr, 'cAerEmb');
-       MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr, 'cAerDes');
-       MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat, 'dVoo');
-     end; // fim das informações do modal Aéreo
+    begin
+      MDFe.Aereo.nac     := Leitor.rCampo(tcInt, 'nac');
+      MDFe.Aereo.matr    := Leitor.rCampo(tcInt, 'matr');
+      MDFe.Aereo.nVoo    := Leitor.rCampo(tcStr, 'nVoo');
+      MDFe.Aereo.cAerEmb := Leitor.rCampo(tcStr, 'cAerEmb');
+      MDFe.Aereo.cAerDes := Leitor.rCampo(tcStr, 'cAerDes');
+      MDFe.Aereo.dVoo    := Leitor.rCampo(tcDat, 'dVoo');
+    end; // fim das informações do modal Aéreo
 
     (* Grupo da TAG <aquav> ***************************************************)
     if Leitor.rExtrai(2, 'aquav') <> '' then

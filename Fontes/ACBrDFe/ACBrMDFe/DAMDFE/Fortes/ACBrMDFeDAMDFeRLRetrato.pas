@@ -382,12 +382,25 @@ begin
   rlmRespCNPJ.Lines.Clear;
   rlmFornCNPJ.Lines.Clear;
   rlmNumComprovante.Lines.Clear;
-
-  for i := 0 to FMDFe.rodo.valePed.disp.Count - 1 do
+  
+  if FMDFe.rodo.valePed.disp.Count > 0 then
   begin
-    rlmRespCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.valePed.disp.Items[i].CNPJPg));
-    rlmFornCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.valePed.disp.Items[i].CNPJForn));
-    rlmNumComprovante.Lines.Add(FMDFe.rodo.valePed.disp.Items[i].nCompra);
+    for i := 0 to FMDFe.rodo.valePed.disp.Count - 1 do
+    begin
+      rlmRespCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.valePed.disp.Items[i].CNPJPg));
+      rlmFornCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.valePed.disp.Items[i].CNPJForn));
+      rlmNumComprovante.Lines.Add(FMDFe.rodo.valePed.disp.Items[i].nCompra);
+    end;
+  end
+  else
+  if FMDFe.rodo.infANTT.valePed.disp.Count > 0 then
+  begin
+    for i := 0 to FMDFe.rodo.infANTT.valePed.disp.Count - 1 do
+    begin
+      rlmRespCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.infANTT.valePed.disp.Items[i].CNPJPg));
+      rlmFornCNPJ.Lines.Add(FormatarCNPJ(FMDFe.rodo.infANTT.valePed.disp.Items[i].CNPJForn));
+      rlmNumComprovante.Lines.Add(FMDFe.rodo.infANTT.valePed.disp.Items[i].nCompra);
+    end;
   end;
 end;
 

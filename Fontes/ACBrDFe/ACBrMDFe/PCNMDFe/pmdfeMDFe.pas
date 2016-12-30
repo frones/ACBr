@@ -324,8 +324,10 @@ type
     FRNTRC: String;
     FinfCIOT: TinfCIOTCollection;
     FinfContratante: TinfContratanteCollection;
+    FvalePed: TvalePed;
     procedure SetinfCIOT(const Value: TinfCIOTCollection);
     procedure SetinfContratante(const Value: TinfContratanteCollection);
+
 
   public
     constructor Create; reintroduce;
@@ -334,6 +336,7 @@ type
     property RNTRC: String               read FRNTRC   write FRNTRC;
     property infCIOT: TinfCIOTCollection read FinfCIOT write SetinfCIOT;
     property infContratante: TinfContratanteCollection read FinfContratante write SetinfContratante;
+    property valePed: TvalePed                   read FvalePed     write FvalePed;
     (*
     property cInt: String                  read FcInt     write FcInt;
     property placa: String                 read Fplaca    write Fplaca;
@@ -504,7 +507,7 @@ type
 
     procedure Setdisp(const Value: TdispCollection);
   public
-    constructor Create(AOwner: TRodo);
+    constructor Create(AOwner: TObject);
     destructor Destroy; override;
   published
     property disp: TdispCollection read Fdisp write Setdisp;
@@ -1615,7 +1618,7 @@ end;
 
 { TvalePed }
 
-constructor TvalePed.Create(AOwner: TRodo);
+constructor TvalePed.Create(AOwner: TObject);
 begin
   inherited Create;
   Fdisp := TdispCollection.Create(Self);
@@ -2747,12 +2750,14 @@ constructor TinfANTT.Create;
 begin
   FinfCIOT := TinfCIOTCollection.Create(Self);
   FinfContratante := TinfContratanteCollection.Create(Self);
+  FvalePed := TvalePed.Create(Self);
 end;
 
 destructor TinfANTT.Destroy;
 begin
   FinfCIOT.Free;
   FinfContratante.Free;
+  FvalePed.Free;
   inherited;
 end;
 

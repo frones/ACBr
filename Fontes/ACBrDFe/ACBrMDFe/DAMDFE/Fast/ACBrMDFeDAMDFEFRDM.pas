@@ -430,12 +430,25 @@ begin
     begin
       FieldByName('placa').AsString     := FieldByName('placa').AsString + #13#10 + veicReboque.Items[i].placa;
       FieldByName('RNTRCProp').AsString := FieldByName('RNTRCProp').AsString + #13#10 + veicReboque.Items[i].prop.RNTRC;
-    end;
-    for i := 0 to valePed.disp.Count - 1 do
+    end;  
+    if FMDFe.rodo.valePed.disp.Count > 0 then
     begin
-      FieldByName('CNPJForn').AsString := FieldByName('CNPJForn').AsString + FormatarCNPJ(valePed.disp.Items[i].CNPJForn) + #13#10;
-      FieldByName('CNPJPg').AsString   := FieldByName('CNPJPg').AsString + FormatarCNPJ(valePed.disp.Items[i].CNPJPg) + #13#10;
-      FieldByName('nCompra').AsString  := FieldByName('nCompra').AsString + valePed.disp.Items[i].nCompra + #13#10;
+      for i := 0 to FMDFe.rodo.valePed.disp.Count - 1 do
+      begin
+        FieldByName('CNPJForn').AsString := FieldByName('CNPJForn').AsString + FormatarCNPJ(valePed.disp.Items[i].CNPJForn) + #13#10;
+        FieldByName('CNPJPg').AsString   := FieldByName('CNPJPg').AsString + FormatarCNPJ(valePed.disp.Items[i].CNPJPg) + #13#10;
+        FieldByName('nCompra').AsString  := FieldByName('nCompra').AsString + valePed.disp.Items[i].nCompra + #13#10;
+      end  
+    end
+    else   
+  	if FMDFe.rodo.infANTT.valePed.disp.Count > 0 then
+    begin
+      for i := 0 to infANTT.valePed.disp.Count - 1 do
+      begin
+        FieldByName('CNPJForn').AsString := FieldByName('CNPJForn').AsString + FormatarCNPJ(infANTT.valePed.disp.Items[i].CNPJForn) + #13#10;
+        FieldByName('CNPJPg').AsString   := FieldByName('CNPJPg').AsString + FormatarCNPJ(infANTT.valePed.disp.Items[i].CNPJPg) + #13#10;
+        FieldByName('nCompra').AsString  := FieldByName('nCompra').AsString + infANTT.valePed.disp.Items[i].nCompra + #13#10;
+      end; 
     end;
     Post;
   end;

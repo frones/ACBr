@@ -280,8 +280,22 @@ begin
 end ;
 
 function TACBrEAD.GetOpenSSL_Version: String;
+var
+  VersaoStr: String;
+  P1, P2: Integer;
 begin
-   Result := String(SSLeay_version( 0 ));
+   VersaoStr := String(SSLeay_version( 0 ));
+
+   P1 := pos(' ', VersaoStr);
+   P2 := Length(VersaoStr);
+   if P1 > 0 then
+   begin
+      P2 := PosEx(' ', VersaoStr, P1+1 );
+      if P2 = 0 then
+        P2 := Length(VersaoStr);
+   end;
+
+   Result := Trim(copy(VersaoStr, P1, P2-P1));
 end;
 
 function TACBrEAD.BioToStr(ABio : pBIO) : String ;

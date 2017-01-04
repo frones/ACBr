@@ -924,7 +924,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Width = 276
         Align = faTop
         Alignment = taCenter
-        Font.Color = clRed
+        Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         ParentFont = False
@@ -1578,7 +1578,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Width = 276
         Align = faTop
         Alignment = taCenter
-        Font.Color = clRed
+        Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         ParentFont = False

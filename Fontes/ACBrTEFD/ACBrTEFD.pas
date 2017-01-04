@@ -249,7 +249,7 @@ type
 
      procedure FinalizarCupom( DesbloquearMouseTecladoNoTermino: Boolean = True);
      procedure CancelarTransacoesPendentes;
-     procedure ConfirmarTransacoesPendentes;
+     procedure ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean = True);
      procedure ImprimirTransacoesPendentes;
 
      procedure AgruparRespostasPendentes(
@@ -798,13 +798,15 @@ begin
   end;
 end;
 
-procedure TACBrTEFD.ConfirmarTransacoesPendentes;
+procedure TACBrTEFD.ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean);
 var
-   I : Integer;
+  HouveConfirmacao: Boolean;
+  I : Integer;
 begin
-  fTefClass.GravaLog( 'ConfirmarTransacoesPendentes' ) ;
+  fTefClass.GravaLog( 'ConfirmarTransacoesPendentes' );
 
-  I := 0 ;
+  HouveConfirmacao := False;
+  I := 0;
   while I < RespostasPendentes.Count do
   begin
     try
@@ -815,11 +817,15 @@ begin
         if not CNFEnviado then
         begin
           CNF( Rede, NSU, Finalizacao, DocumentoVinculado );
-          CNFEnviado := True ;
+          CNFEnviado       := True;
+          HouveConfirmacao := True;
         end;
 
-        ApagaEVerifica( ArqRespPendente );
-        ApagaEVerifica( ArqBackup );
+        if ApagarRespostasPendentes then
+        begin
+          ApagaEVerifica( ArqRespPendente );
+          ApagaEVerifica( ArqBackup );
+        end;
 
         Inc( I ) ;
       end;
@@ -829,10 +835,11 @@ begin
   end ;
 
   try
-     if Assigned( fOnDepoisConfirmarTransacoes ) then
-        fOnDepoisConfirmarTransacoes( RespostasPendentes );
+    if HouveConfirmacao and Assigned( fOnDepoisConfirmarTransacoes ) then
+      fOnDepoisConfirmarTransacoes( RespostasPendentes );
   finally
-     RespostasPendentes.Clear;
+    if ApagarRespostasPendentes then
+      RespostasPendentes.Clear;
   end;
 end;
 
@@ -865,7 +872,7 @@ begin
   end;
 
   if fConfirmarAntesDosComprovantes then
-    ConfirmarTransacoesPendentes;
+    ConfirmarTransacoesPendentes(False);
 
   ImpressaoOk            := False ;
   Gerencial              := False ;
@@ -1145,16 +1152,13 @@ begin
         Gerencial := True ;
      end;
   finally
-    if (not fConfirmarAntesDosComprovantes) then
+    if not (fConfirmarAntesDosComprovantes or ImpressaoOk) then
     begin
-      if (not ImpressaoOk) then
-      begin
-        try ComandarECF(opeCancelaCupom); except {Exceção Muda} end;
-        CancelarTransacoesPendentes;
-      end
-      else
-        ConfirmarTransacoesPendentes;
-    end;
+      try ComandarECF(opeCancelaCupom); except {Exceção Muda} end;
+      CancelarTransacoesPendentes;
+    end
+    else
+      ConfirmarTransacoesPendentes;
 
     BloquearMouseTeclado( False );
 

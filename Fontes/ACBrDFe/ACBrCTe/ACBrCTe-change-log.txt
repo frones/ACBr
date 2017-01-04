@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/01/2017
+-- pcteDistDFeInt --
+[*] Correção na geração do XML para realizar a consulta a DistribucaoDFe.
+    Por: Italo Jurisato Junior
+
 27/12/2016
 -- pcteCTeW --
 [*] Evitar a duplicidade de alertas.

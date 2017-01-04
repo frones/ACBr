@@ -94,6 +94,7 @@ type
      fAutoFinalizarCupom : Boolean;
      fAutoEfetuarPagamento : Boolean;
      fCHQEmGerencial: Boolean;
+     fConfirmarAntesDosComprovantes: Boolean;
      fTrocoMaximo: Double;
      fEsperaSleep : Integer;
      fEstadoReq : TACBrTEFDReqEstado;
@@ -290,6 +291,8 @@ type
        default True;
      Property SuportaDesconto : Boolean read fSuportaDesconto write fSuportaDesconto
        default True;
+     property ConfirmarAntesDosComprovantes: Boolean read fConfirmarAntesDosComprovantes
+       write fConfirmarAntesDosComprovantes default False;
 
      property TEFDial    : TACBrTEFDDial     read fTefDial ;
      property TEFDisc    : TACBrTEFDDisc     read fTefDisc ;
@@ -861,6 +864,9 @@ begin
         raise EACBrTEFDECF.Create( ACBrStr(CACBrTEFD_Erro_ECFNaoLivre) ) ;
   end;
 
+  if fConfirmarAntesDosComprovantes then
+    ConfirmarTransacoesPendentes;
+
   ImpressaoOk            := False ;
   Gerencial              := False ;
   RemoverMsg             := False ;
@@ -1139,18 +1145,21 @@ begin
         Gerencial := True ;
      end;
   finally
-     if not ImpressaoOk then
+    if (not fConfirmarAntesDosComprovantes) then
+    begin
+      if (not ImpressaoOk) then
       begin
-        try ComandarECF( opeCancelaCupom ); except {Exceção Muda} end ;
+        try ComandarECF(opeCancelaCupom); except {Exceção Muda} end;
         CancelarTransacoesPendentes;
       end
-     else
-        ConfirmarTransacoesPendentes ;
+      else
+        ConfirmarTransacoesPendentes;
+    end;
 
-     BloquearMouseTeclado( False );
+    BloquearMouseTeclado( False );
 
-     if (MsgAutenticacaoAExibir <> '') then  // Tem autenticação ?
-        DoExibeMsg( opmOK, MsgAutenticacaoAExibir ) ;
+    if (MsgAutenticacaoAExibir <> '') then  // Tem autenticação ?
+      DoExibeMsg( opmOK, MsgAutenticacaoAExibir ) ;
   end;
 
   RespostasPendentes.Clear;

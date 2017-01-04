@@ -672,7 +672,6 @@ Var
   Sts : Integer ;
   ParamAdic : AnsiString ;
   Erro : String;
-  Est  : AnsiChar;
 begin
   if Inicializado then exit ;
 
@@ -734,36 +733,8 @@ begin
 
   GravaLog( Name +' Inicializado CliSiTEF' );
 
-  try
-     Est := TACBrTEFD(Owner).EstadoECF;
-  except
-     Est := 'O' ;
-     { TODO: Criar arquivo de Status da Transação
-
-         Se o ECF estiver desligado, será retornado 'O', o que fará o código
-       abaixo Cancelar Todas as Transações Pendentes, porém, pelo Roteiro do
-       TEF dedicado, é necessário confirmar a Transação se o Cupom foi
-       finalizado com sucesso.
-         Criar um arquivo de Status que seja atualizado no Fim do Cupom e no
-       inicio do CCD, de maneira que seja possível identificar o Status do
-       Documento no ECF indepentende do mesmo estar ou não ligado
-
-         Como alteranativa, é possível implementar código no Evento "OnInfoECF"
-       para buscar o Status do Documento no Banco de dados da sua aplicação, e
-       responder diferente de 'O',   (Veja exemplo nos fontes do TEFDDemo)
-     }
-  end ;
-
-  fpInicializado := True ;
-
-  TACBrTEFD(Owner).GPAtual := gpCliSiTef;
-
-  // Cupom Ficou aberto ?? Se SIM, Cancele tudo... //
-  if (Est in ['V','P','N','O']) then
-     CancelarTransacoesPendentesClass
-  else
-     // NAO, Cupom Fechado, Pode confirmar e Mandar aviso para re-imprimir //
-     ConfirmarESolicitarImpressaoTransacoesPendentes ;
+  VerificarTransacoesPendentesClass(True);
+  fpInicializado := True;
 end;
 
 procedure TACBrTEFDCliSiTef.DesInicializar;

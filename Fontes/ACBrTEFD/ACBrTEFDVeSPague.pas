@@ -194,6 +194,9 @@ type
      procedure AtivarGP ; override;
      procedure VerificaAtivo ; override;
 
+     procedure VerificarTransacoesPendentesClass(aVerificarCupom: Boolean);
+       override;
+
      Procedure ATV ; override;
      Function ADM : Boolean ; override;
      Function CRT( Valor : Double; IndiceFPG_ECF : String;
@@ -714,7 +717,7 @@ begin
   fTimeOut := AValue;
 end;
 
-Function TACBrTEFDVeSPague.Conectar : Integer;
+function TACBrTEFDVeSPague.Conectar: Integer;
 begin
   if not Assigned(fSocket) then
      fSocket := TTCPBlockSocket.Create;
@@ -724,7 +727,7 @@ begin
   Result := fSocket.LastError ;
 end ;
 
-Function TACBrTEFDVeSPague.DesConectar : Integer ;
+function TACBrTEFDVeSPague.DesConectar: Integer;
 begin
   fSocket.CloseSocket;
   Result := fSocket.LastError ;
@@ -733,8 +736,6 @@ end ;
 procedure TACBrTEFDVeSPague.Inicializar;
 var
   Erro, Tentativas : Integer ;
-  Est : AnsiChar;
-  ArqMask: String;
 begin
   if Inicializado then exit ;
 
@@ -772,46 +773,8 @@ begin
 
   ServicoIniciar;
 
-  try
-    Est := TACBrTEFD(Owner).EstadoECF;
-  except
-    Est := 'O' ;
-    { TODO: Criar arquivo de Status da Transação
-
-        Se o ECF estiver desligado, será retornado 'O', o que fará o código
-      abaixo Cancelar Todas as Transações Pendentes, porém, pelo Roteiro do
-      TEF dedicado, é necessário confirmar a Transação se o Cupom foi
-      finalizado com sucesso.
-        Criar um arquivo de Status que seja atualizado no Fim do Cupom e no
-      inicio do CCD, de maneira que seja possível identificar o Status do
-      Documento no ECF indepentende do mesmo estar ou não ligado
-
-        Como alteranativa, é possível implementar código no Evento "OnInfoECF"
-      para buscar o Status do Documento no Banco de dados da sua aplicação, e
-      responder diferente de 'O',   (Veja exemplo nos fontes do TEFDDemo)
-    }
-  end ;
-
-  fpInicializado := True ;
-
-  // Cupom Ficou aberto ?? Se SIM, Cancele tudo... //
-  if (Est in ['V','P','N','O']) then
-   begin
-     { Achando Arquivos de Backup deste GP }
-     ArqMask := TACBrTEFD(Owner).PathBackup + PathDelim + 'ACBr_' + Self.Name + '_*.tef' ;
-     if FilesExists( ArqMask ) then
-     begin
-        TACBrTEFD(Owner).DoExibeMsg( opmOK,
-           'Há pelo menos uma transação PENDENTE.'+sLineBreak+
-           'Favor realizar o DESFAZIMENTO no menu Administrativo -> pedende.'+sLineBreak+
-           'Cancelar o cupom fiscal !' ) ;
-
-        CancelarTransacoesPendentesClass;
-     end;
-   end
-  else
-     // NAO, Cupom Fechado, Pode confirmar e Mandar aviso para re-imprimir //
-     ConfirmarESolicitarImpressaoTransacoesPendentes ;
+  VerificarTransacoesPendentesClass(True);
+  fpInicializado := True;
 end;
 
 procedure TACBrTEFDVeSPague.DesInicializar ;
@@ -846,13 +809,58 @@ begin
      Inicializar;
 end ;
 
-Procedure TACBrTEFDVeSPague.ATV ;
+procedure TACBrTEFDVeSPague.VerificarTransacoesPendentesClass(
+  aVerificarCupom: Boolean);
+var
+  wEstadoECF: AnsiChar;
+  ArqMask: String;
+begin
+  try
+    wEstadoECF := TACBrTEFD(Owner).EstadoECF;
+  except
+    wEstadoECF := 'O';
+    { TODO: Criar arquivo de Status da Transação
+
+        Se o ECF estiver desligado, será retornado 'O', o que fará o código
+      abaixo Cancelar Todas as Transações Pendentes, porém, pelo Roteiro do
+      TEF dedicado, é necessário confirmar a Transação se o Cupom foi
+      finalizado com sucesso.
+        Criar um arquivo de Status que seja atualizado no Fim do Cupom e no
+      inicio do CCD, de maneira que seja possível identificar o Status do
+      Documento no ECF indepentende do mesmo estar ou não ligado
+
+        Como alteranativa, é possível implementar código no Evento "OnInfoECF"
+      para buscar o Status do Documento no Banco de dados da sua aplicação, e
+      responder diferente de 'O',   (Veja exemplo nos fontes do TEFDDemo)
+    }
+  end;
+
+  // Cupom Ficou aberto ?? Se SIM, Cancele tudo...
+  if (wEstadoECF in ['V','P','N','O']) then
+  begin
+    { Achando Arquivos de Backup deste GP }
+    ArqMask := TACBrTEFD(Owner).PathBackup + PathDelim + 'ACBr_' + Self.Name + '_*.tef';
+    if FilesExists(ArqMask) then
+    begin
+      TACBrTEFD(Owner).DoExibeMsg(opmOK, 'Há pelo menos uma transação PENDENTE.' +
+        sLineBreak + 'Favor realizar o DESFAZIMENTO no menu Administrativo -> pedende.' +
+        sLineBreak + 'Cancelar o cupom fiscal!');
+
+      CancelarTransacoesPendentesClass;
+    end;
+  end
+  else
+    // NAO, Cupom Fechado, Pode confirmar e Mandar aviso para re-imprimir
+    ConfirmarESolicitarImpressaoTransacoesPendentes;
+end;
+
+procedure TACBrTEFDVeSPague.ATV;
 begin
   ServicoIniciar;
   ServicoFinalizar;
 end;
 
-Function TACBrTEFDVeSPague.ADM : Boolean;
+function TACBrTEFDVeSPague.ADM: Boolean;
 var
   Retorno : Integer ;
   SL1, SL2 : TStringList ;
@@ -918,8 +926,8 @@ begin
   RespVS.Clear;  
 end;
 
-Function TACBrTEFDVeSPague.CRT( Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String = ''; Moeda : Integer = 0 ) : Boolean;
+function TACBrTEFDVeSPague.CRT(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; Moeda: Integer): Boolean;
 var
   Retorno : Integer ;
 begin
@@ -938,11 +946,11 @@ begin
      FinalizarRequisicao;
 end;
 
-Function TACBrTEFDVeSPague.CHQ(Valor : Double; IndiceFPG_ECF : String;
-   DocumentoVinculado : String; CMC7 : String; TipoPessoa : AnsiChar;
-   DocumentoPessoa : String; DataCheque : TDateTime; Banco : String;
-   Agencia : String; AgenciaDC : String; Conta : String; ContaDC : String;
-   Cheque : String; ChequeDC : String; Compensacao: String) : Boolean ;
+function TACBrTEFDVeSPague.CHQ(Valor: Double; IndiceFPG_ECF: String;
+  DocumentoVinculado: String; CMC7: String; TipoPessoa: AnsiChar;
+  DocumentoPessoa: String; DataCheque: TDateTime; Banco: String;
+  Agencia: String; AgenciaDC: String; Conta: String; ContaDC: String;
+  Cheque: String; ChequeDC: String; Compensacao: String): Boolean;
 var
   Retorno : Integer;
 begin
@@ -963,8 +971,8 @@ begin
      FinalizarRequisicao;
 end;
 
-Procedure TACBrTEFDVeSPague.CNF(Rede, NSU, Finalizacao : String;
-   DocumentoVinculado : String) ;
+procedure TACBrTEFDVeSPague.CNF(Rede, NSU, Finalizacao: String;
+  DocumentoVinculado: String);
 var
   P, Seq : Integer ;
   Transacao : String ;
@@ -986,8 +994,8 @@ begin
   FinalizarRequisicao;
 end;
 
-Function TACBrTEFDVeSPague.CNC(Rede, NSU : String;
-   DataHoraTransacao : TDateTime; Valor : Double) : Boolean;
+function TACBrTEFDVeSPague.CNC(Rede, NSU: String; DataHoraTransacao: TDateTime;
+  Valor: Double): Boolean;
 var
    Retorno : Integer;
    ListaParams : AnsiString ;
@@ -1006,8 +1014,8 @@ begin
   ProcessarResposta ;         { Faz a Impressão e / ou exibe Mensagem ao Operador }
 end;
 
-Procedure TACBrTEFDVeSPague.NCN(Rede, NSU, Finalizacao : String;
-   Valor : Double; DocumentoVinculado : String) ;
+procedure TACBrTEFDVeSPague.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
+  DocumentoVinculado: String);
 var
   P, Seq : Integer ;
   Transacao : String ;
@@ -1037,7 +1045,8 @@ begin
      FinalizarRequisicao;
 end;
 
-Procedure TACBrTEFDVeSPague.ExecutarTranscaoPendente( NSU : String; Valor : Double ) ;
+procedure TACBrTEFDVeSPague.ExecutarTranscaoPendente(NSU: String; Valor: Double
+  );
 var
    Retorno : Integer ;
    ListaParams : AnsiString ;
@@ -1088,9 +1097,9 @@ begin
      ReqVS.Sequencial := RespVS.Sequencial;
 end ;
 
-Function TACBrTEFDVeSPague.FazerRequisicao( Transacao : String;
-   AHeader : AnsiString = ''; Valor : Double = 0; Documento : AnsiString = '';
-   ListaParams : AnsiString = '') : Integer ;
+function TACBrTEFDVeSPague.FazerRequisicao(Transacao: String;
+  AHeader: AnsiString; Valor: Double; Documento: AnsiString;
+  ListaParams: AnsiString): Integer;
 begin
    if fpAguardandoResposta then
       raise EACBrTEFDErro.Create( ACBrStr( 'Requisição anterior não concluida' ) ) ;
@@ -1151,7 +1160,8 @@ begin
    Req.ValorTotal := Valor;
 end;
 
-Function TACBrTEFDVeSPague.ContinuarRequisicao(ImprimirComprovantes: Boolean): Integer ;
+function TACBrTEFDVeSPague.ContinuarRequisicao(ImprimirComprovantes: Boolean
+  ): Integer;
 var
   Chave, Valor : AnsiString ;
   I : Integer ;
@@ -1406,7 +1416,7 @@ begin
   end ;
 end ;
 
-Procedure TACBrTEFDVeSPague.TransmiteCmd ;
+procedure TACBrTEFDVeSPague.TransmiteCmd;
 Var
   RX : AnsiString ;
   Erro, Seq, Retorno : Integer ;
@@ -1597,8 +1607,8 @@ begin
   end ;
 end;
 
-Function TACBrTEFDVeSPague.ProcessarRespostaPagamento(
-   const IndiceFPG_ECF : String; const Valor : Double) : Boolean;
+function TACBrTEFDVeSPague.ProcessarRespostaPagamento(
+  const IndiceFPG_ECF: String; const Valor: Double): Boolean;
 var
   ImpressaoOk : Boolean;
   RespostaPendente : TACBrTEFDResp ;

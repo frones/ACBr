@@ -47,6 +47,29 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2017
+-- ACBrTEFD --
+[+] Inclusão de nova propriedade "ConfirmarAntesDosComprovantes" para possibilitar
+	a confirmação das transações logo após a impressão do cupom. 
+	Caso a propriedade esteja ativa, a confirmação será feita na procedure 
+	"ImprimirTransacoesPendentes" antes da impressão das vias;
+	
+-- ACBrTEFDClass --
+[*] Alteração para procedure "VerificarTransacoesPendentesClass" verificar o
+	estado do ECF antes de CancelarTransacoesPendentes. 
+	Caso a propriedade "ConfirmarAntesDosComprovantes" esteja ativa, será 
+	verificado se o cupom foi finalizado e irá solicitar a re-impressão dos
+	comprovantes;
+
+-- ACBrTEFDDial --
+[*] Excluída property "InicializarConfirmandoTransacoes", pois esse controle 
+	agora será feito por "TACBrTEFD.ConfirmarAntesDosComprovantes";
+	
+-- ACBrTEFDCliSiTEF -- ACBrTEFDCliDTEF -- ACBrTEFDVeSPague --
+[*] Alteração para utilizar a procedure "VerificarTransacoesPendentesClass"
+	para consultar se o cupom foi finalizado.
+	(por: Elias César)    
+
 12/12/2016
 -- ACBrTEFDCliDTEF --
 [-] Acerto para não interromper o loop quando houver uma mensagem perguntando

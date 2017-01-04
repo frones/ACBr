@@ -732,7 +732,7 @@ type
      procedure AtivarGP ; virtual;
      procedure VerificaAtivo ; virtual;
 
-     procedure VerificarTransacoesPendentesClass; virtual;
+     procedure VerificarTransacoesPendentesClass(aVerificarCupom: Boolean); virtual;
      procedure CancelarTransacoesPendentesClass; virtual;
      procedure ConfirmarTransacoesAnteriores; virtual;
 
@@ -1740,7 +1740,7 @@ begin
      Resp.Clear;
   end ;
 
-  VerificarTransacoesPendentesClass;
+  VerificarTransacoesPendentesClass(TACBrTEFD(Owner).ConfirmarAntesDosComprovantes);
 
   VerificaAtivo;
 end;
@@ -1771,9 +1771,40 @@ begin
   end;
 end;
 
-procedure TACBrTEFDClass.VerificarTransacoesPendentesClass;
+procedure TACBrTEFDClass.VerificarTransacoesPendentesClass(aVerificarCupom: Boolean);
+var
+  wEstadoECF: AnsiChar;
 begin
-  CancelarTransacoesPendentesClass;
+  if aVerificarCupom then
+  begin
+    try
+      wEstadoECF := TACBrTEFD(Owner).EstadoECF;
+    except
+      wEstadoECF := 'O';
+      { Se o ECF estiver desligado, será retornado 'O', o que fará o código
+        abaixo Cancelar Todas as Transações Pendentes, porém, pelo Roteiro do
+        TEF dedicado, é necessário confirmar a Transação se o Cupom foi
+        finalizado com sucesso.
+          Criar um arquivo de Status que seja atualizado no Fim do Cupom e no
+        inicio do CCD, de maneira que seja possível identificar o Status do
+        Documento no ECF indepentende do mesmo estar ou não ligado
+
+          Como alteranativa, é possível implementar código no Evento "OnInfoECF"
+        para buscar o Status do Documento no Banco de dados da sua aplicação, e
+        responder diferente de 'O',   (Veja exemplo nos fontes do TEFDDemo) }
+    end;
+
+    TACBrTEFD(Owner).GPAtual := Tipo;
+
+    // Cupom Ficou aberto?? ...Se SIM, Cancele tudo... //
+    if (wEstadoECF in ['V', 'P', 'N', 'O']) then
+      CancelarTransacoesPendentesClass
+    else
+      // NAO, Cupom Fechado, Pode confirmar e Mandar aviso para re-imprimir //
+      ConfirmarESolicitarImpressaoTransacoesPendentes;
+  end
+  else
+    CancelarTransacoesPendentesClass;
 end;
 
 procedure TACBrTEFDClass.ATV;

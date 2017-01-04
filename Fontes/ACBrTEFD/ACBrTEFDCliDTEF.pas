@@ -455,8 +455,7 @@ begin
 end;
 
 procedure TACBrTEFDCliDTEF.Inicializar;
-Var
-  Est  : AnsiChar;
+var
   pFabricanteAutomacao, pVersaoAutomacao, pReservado: AnsiString;
 begin
   if Inicializado then exit ;
@@ -482,16 +481,7 @@ begin
   fpInicializado := True ;
   GravaLog( Name +' Inicializado CliDTEF' );
 
-  try
-     Est := TACBrTEFD(Owner).EstadoECF;
-  except
-     Est := 'O' ;
-  end ;
-
-  if (Est in ['V','P','O']) then        // Cupom Ficou aberto ?? //
-     CancelarTransacoesPendentesClass   // SIM, Cancele tudo... //
-  else
-     ConfirmarEReimprimirTransacoesPendentes ;  // NAO, Cupom Fechado, basta re-imprimir //
+  VerificarTransacoesPendentesClass(True);
 end;
 
 procedure TACBrTEFDCliDTEF.DesInicializar;

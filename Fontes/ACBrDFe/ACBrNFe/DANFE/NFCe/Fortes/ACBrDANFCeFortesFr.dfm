@@ -769,7 +769,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Align = faTop
         Alignment = taCenter
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
+        Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []
@@ -1295,7 +1295,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Align = faTop
         Alignment = taCenter
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
+        Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []

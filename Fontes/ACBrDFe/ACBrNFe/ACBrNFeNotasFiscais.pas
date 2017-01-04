@@ -154,6 +154,7 @@ type
     function VerificarAssinatura(out Erros: String): Boolean;
     function ValidarRegrasdeNegocios(out Erros: String): Boolean;
     procedure Imprimir;
+    procedure ImprimirCancelado;
     procedure ImprimirResumido;
     procedure ImprimirPDF;
     procedure ImprimirResumidoPDF;
@@ -1475,6 +1476,12 @@ procedure TNotasFiscais.Imprimir;
 begin
   VerificarDANFE;
   TACBrNFe(FACBrNFe).DANFE.ImprimirDANFE(nil);
+end;
+
+procedure TNotasFiscais.ImprimirCancelado;
+begin
+  VerificarDANFE;
+  TACBrNFe(FACBrNFe).DANFE.ImprimirDANFECancelado(nil);
 end;
 
 procedure TNotasFiscais.ImprimirResumido;

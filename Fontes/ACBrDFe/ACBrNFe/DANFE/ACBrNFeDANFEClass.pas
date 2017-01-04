@@ -143,6 +143,7 @@ type
     destructor Destroy; override;
 
     procedure ImprimirDANFE(NFE: TNFe = nil); virtual;
+    procedure ImprimirDANFECancelado(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEPDF(NFE: TNFe = nil); virtual;
     procedure ImprimirDANFEResumidoPDF(NFE: TNFe = nil); virtual;
@@ -316,6 +317,11 @@ end;
 procedure TACBrNFeDANFEClass.ImprimirDANFE(NFE : TNFe = nil);
 begin
   ErroAbstract('Imprimir');
+end;
+
+procedure TACBrNFeDANFEClass.ImprimirDANFECancelado(NFE: TNFe);
+begin
+  ErroAbstract('ImprimirCancelado');
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirDANFEResumido(NFE : TNFe = nil);

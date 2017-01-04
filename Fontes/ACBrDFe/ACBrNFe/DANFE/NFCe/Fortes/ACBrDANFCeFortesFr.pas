@@ -76,7 +76,7 @@ type
     procedure ImprimirDANFEResumido(NFE : TNFe = nil); override ;
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
-    procedure ImprimirDANFECancelado(NFE : TNFe = nil);
+    procedure ImprimirDANFECancelado(NFE : TNFe = nil);override;
   published
   end ;
 
@@ -334,7 +334,7 @@ begin
     end;
 
     if ACBrNFeDANFCeFortes.NFeCancelada then
-      lCancelada.Caption := ACBrStr('NF-e CANCELADA');
+      lCancelada.Caption := ACBrStr('NFC-e CANCELADA');
   end;
 end;
 
@@ -396,7 +396,7 @@ begin
     end;
 
     if ACBrNFeDANFCeFortes.NFeCancelada then
-      lCanceladaCanc.Caption := ACBrStr('NF-e CANCELADA');
+      lCanceladaCanc.Caption := ACBrStr('NFC-e CANCELADA');
   end;
 end;
 

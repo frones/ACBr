@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/01/2017
+[*] Mudança do chamado para impressão do danfce
+		http://www.projetoacbr.com.br/forum/topic/34352-impress%C3%A3o-do-danfc-e-cancelado/
+		por : Juliomar Marchetti
+
 30/12/2016
 --ACBrDANFCeFortesFrA4
 [*] Adição InfAdProd na DANFCe em A4.

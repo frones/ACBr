@@ -1057,7 +1057,7 @@ begin
      begin
         with RegE300.RegistroE310.Items[intFor] do
         begin
-          if (Date <= EncodeDate(2016, 12, 31)) then begin
+          if (DT_FIN <= EncodeDate(2016, 12, 31)) then begin
             Add( LFill('E310') +
                  LFill( Integer(IND_MOV_DIFAL), 0 ) +
                  LFill( VL_SLD_CRED_ANT_DIF,0 ) +

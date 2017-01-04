@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 04/01/2017
+[-] Correção Sped Fiscal 
+		http://www.projetoacbr.com.br/forum/topic/34325-o-n%C3%BAmero-de-campos-informado-no-registro-difere-do-n%C3%BAmero-de-campos-especificado-no-leiaute-do-arquivo/
+		por : Juliomar Marchetti
+		
 Data 17/12/2016
 [+] Mudanças para atender nova versão em janeiro de 2017 do sped fiscal
 		http://www.projetoacbr.com.br/forum/topic/33868-obrigatoriedades-bloco-c113/

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/01/2017 ver: 0.0214
+[*] ACBrBancoCaixaSicob.pas
+    Ajuste das mensagens do banco para incluir a palavra "sugestóes" conforme consta no
+    manual. (Juliana Tamizou)
+
+
 Data: 28/12/2016
 [+] Adicionado Banco da Amazônia
     contribuição de: Alexandre Xavier

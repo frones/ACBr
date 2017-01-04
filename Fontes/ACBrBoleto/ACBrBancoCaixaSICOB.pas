@@ -98,7 +98,7 @@ begin
    fpTamanhoConta          := 8;
 
    fpOrientacoesBanco.Clear;
-   fpOrientacoesBanco.Add(ACBrStr('SAC CAIXA: 0800 726 0101 (informações,reclamações e elogios) ' + sLineBreak+
+   fpOrientacoesBanco.Add(ACBrStr('SAC CAIXA: 0800 726 0101 (informações, reclamações, sugestões e elogios) ' + sLineBreak+
                           'Para pessoas com deficiência auditiva ou de fala: 0800 726 2492 ' + sLineBreak +
                           'Ouvidoria: 0800 725 7474') + sLineBreak+
                           '     caixa.gov.br      ');

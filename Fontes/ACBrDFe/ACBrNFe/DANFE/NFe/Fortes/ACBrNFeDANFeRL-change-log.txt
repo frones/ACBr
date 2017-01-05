@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2017
+[+] Tratamento para gerar varios danfe em pdf separados mas impressos junto se enviado para impressora
+		http://www.projetoacbr.com.br/forum/topic/31936-danfe-fortes-impress%C3%A3o-v%C3%A1rias-notas/?page=2
+		por: Juliomar Marchetti
+		
 22/12/2016
 [-] Correção para a inutilização o preview ficar em modal.
 		http://www.projetoacbr.com.br/forum/topic/34021-erro-na-aplica%C3%A7%C3%A3o-ap%C3%B3s-impress%C3%A3o-de-uma-inutiliza%C3%A7%C3%A3o-nfc-e/?do=findComment&comment=224215

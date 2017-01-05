@@ -248,7 +248,10 @@ type
                     ARecuoEmpresa: Integer = 10;
                     ALogoemCima: Boolean = False;
                     ATamanhoFonteEndereco: Integer = 10;
-                    ARecuoLogo: Integer = 0);
+                    ARecuoLogo: Integer = 0;
+                    AUltimaNFE : Boolean = True;
+                    AArray : PObjectArray = nil);
+
 
     class procedure SavePDF(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -369,9 +372,12 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent;
                 ARecuoEmpresa: Integer;
                 ALogoemCima: Boolean;
                 ATamanhoFonteEndereco: Integer;
-                ARecuoLogo: Integer);
+                ARecuoLogo: Integer;
+                AUltimaNFE : Boolean;
+                AArray : PObjectArray);
 
-
+var Report, ReportNext : TRLCustomReport;
+    i : Integer;
 begin
   with Create ( AOwner ) do
     try
@@ -443,13 +449,39 @@ begin
       vAuxDiferencaPDF := 0;
       RLNFe.ShowProgress := FMostrarStatus;
       RLNFe.PrintDialog := not(FMostrarPreview) and (EstaVazio(FImpressora));
+      RLNFe.CompositeOptions.ResetPageNumber := True;
 
-      if FMostrarPreview then
-        RLNFe.PreviewModal
-      else
-        RLNFe.Print;
+      SetLength(AArray^,Length(AArray^) + 1);
+      AArray^[Length(AArray^) - 1] := RLNFe.Owner;
+
+      if AUltimaNFE then
+      begin
+        Report := TfrlDANFeRL(AArray^[0]).RLNFe;
+        for i := 1 to High(AArray^) do
+        begin
+          if Report.NextReport = nil then
+            Report.NextReport := TfrlDANFeRL(AArray^[i]).RLNFe
+          else
+          begin
+            ReportNext := Report.NextReport;
+            repeat
+              if ReportNext.NextReport <> nil then
+                ReportNext := ReportNext.NextReport;
+            until ReportNext.NextReport = nil;
+            ReportNext.NextReport := TfrlDANFeRL(AArray^[i]).RLNFe;
+          end;
+        end;
+        if FMostrarPreview then
+          Report.PreviewModal
+        else
+          Report.Print;
+      end;
     finally
-      Destroy;
+      if AUltimaNFE then
+      begin
+        for i := Low(AArray^) to High(AArray^) do
+          AArray^[i].Free;
+      end;
     end ;
 end;
 

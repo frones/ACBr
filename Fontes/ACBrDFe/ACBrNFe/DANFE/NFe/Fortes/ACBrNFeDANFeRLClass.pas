@@ -62,6 +62,8 @@ type
   TDetMedicamentos = set of TDetMedicamento;
   TDetArmamentos = set of TDetArmamento;
   TDetCombustiveis = set of TDetCombustivel;
+  TObjectArray = array of TObject;
+  PObjectArray = ^TObjectArray;
 
 
   TFonte = class(TComponent)
@@ -202,6 +204,7 @@ end;
 procedure TACBrNFeDANFeRL.ImprimirDANFE(NFE: TNFe = nil);
 var
  i : Integer;
+ ReportArray : TObjectArray; 
 begin
 try
   case TipoDANFE of
@@ -236,7 +239,16 @@ try
           fAltLinhaComun,
           fEspacoEntreProdutos,
           fAlternaCoresProdutos,
-          fCorDestaqueProdutos);
+          fCorDestaqueProdutos,
+          fTamanhoLogoHeight,
+          fTamanhoLogoWidth,
+          fRecuoEndereco,
+          fRecuoEmpresa,
+          fLogoEmCima,
+          fTamanhoFonteEndereco,
+          fRecuoLogo,
+          i = Pred(TACBrNFe(ACBrNFe).NotasFiscais.Count),
+          @ReportArray);
         end;
     end
   else
@@ -261,7 +273,16 @@ try
       fAltLinhaComun,
       fEspacoEntreProdutos,
       fAlternaCoresProdutos,
-      fCorDestaqueProdutos );
+      fCorDestaqueProdutos,
+      fTamanhoLogoHeight,
+      fTamanhoLogoWidth,
+      fRecuoEndereco,
+      fRecuoEmpresa,
+      fLogoEmCima,
+      fTamanhoFonteEndereco,
+      fRecuoLogo,
+      True,
+      @ReportArray);
     end;
 
   finally

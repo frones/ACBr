@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2017
+--ACBrPAF_R_Class
+[-] Correção de erro para quando o valor passar de mil ele adicionava um ponto como separador de milhar gerando o txt errado.
+		http://www.projetoacbr.com.br/forum/topic/34391-venda-bruta-saindo-errado-no-registros-do-paf/
+		por : Juliomar Marchetti
+	
 22/12/2016
 -- ACBrPAF_J_Class --
 [*] Alteração para preencher com 0(zeros) o campo CHAVE_NF dos Registros J1 e J2.

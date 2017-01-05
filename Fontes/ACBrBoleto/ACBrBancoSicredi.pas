@@ -468,6 +468,30 @@ begin
              ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
           end;
         end;
+
+        if (Trim(Sacado.SacadoAvalista.NomeAvalista) <> EmptyStr) and (Trim(Sacado.SacadoAvalista.CNPJCPF)<> EmptyStr)
+          and (Trim(Sacado.SacadoAvalista.Logradouro)<> EmptyStr) and (Trim(Sacado.SacadoAvalista.Cep)    <> EmptyStr)
+          and (Trim(Sacado.SacadoAvalista.Uf)        <> EmptyStr) and (Trim(Sacado.SacadoAvalista.Cidade) <> EmptyStr) then
+        begin
+          wLinha:=  '6'                                                            + // 001 a 001 - Identificação do registro Informativo (6)
+                    PadLeft(wNossoNumeroCompleto,15,' ')                           + // 002 a 016 - Nosso número Sicredi
+                    PadRight( NumeroDocumento,  10)                                + // 017 a 026 - Seu número
+                    PadRight('', 5, '0')                                           + // 027 a 031 - Código do pagador junto ao cliente
+                    PadLeft(Sacado.SacadoAvalista.CNPJCPF, 14, '0')                + // 032 a 045 - CPF/CNPJ do Sacador Avalista ( Obrigatório )
+                    PadRight( TiraAcentos( Sacado.SacadoAvalista.NomeAvalista
+                                          ), 41, ' ')                              + // 046 a 086 - Nome do Sacador Avalista ( Obrigatório )
+                    PadRight( TiraAcentos( Sacado.SacadoAvalista.Logradouro  + ',' +
+                                          Sacado.SacadoAvalista.Numero      + ','  +
+                                          Sacado.SacadoAvalista.Bairro      + ','  +
+                                          Sacado.SacadoAvalista.Complemento
+                                        ), 45, ' ')                                + // 087 a 131 - Endereço (Obrigatório)
+                    PadRight( TiraAcentos( Sacado.SacadoAvalista.Cidade ), 20, ' ')+ // 132 a 151 - Cidade
+                    PadRight(Sacado.SacadoAvalista.Cep, 8, ' ')                    + // 152 a 159 - CEP    ( Obrigatório )
+                    PadRight(Sacado.SacadoAvalista.Uf, 2)                          + // 160 a 161 - Estado ( Obrigatório )
+                    Space(233)                                                     + // 162 a 394 - Filler ( Deixar em Branco (sem preenchimento) )
+                    IntToStrZero( ARemessa.Count + 1, 6);                            // 395 a 400 - Número sequencial do registro
+          ARemessa.Text:= ARemessa.Text + UpperCase(wLinha);
+        end;
       end;
    end;
 end;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 05/01/2017
+--ACBrBancoBancoob
+[-] Correção para não preencher com zero a esquerda o CPF do cedente pois o banco não aceita.
+		http://www.projetoacbr.com.br/forum/topic/34383-erro-remessa-sicoob-pessoa-f%C3%ADsica/
+		(Juliomar Marchetti)
+		
 Data: 04/01/2017 ver: 0.0214
 [*] ACBrBancoCaixaSicob.pas
     Ajuste das mensagens do banco para incluir a palavra "sugestóes" conforme consta no

@@ -339,7 +339,7 @@ begin
 
          wLinha:= '1'                                                     +  // ID Registro
                   TipoCedente                                             +  // Identificação do Tipo de Inscrição do Sacado 01 - CPF 02 - CNPJ
-                  PadLeft(onlyNumber(Cedente.CNPJCPF),14,'0')             +  // Número de Inscrição do Cedente
+                  PadLeft(onlyNumber(Cedente.CNPJCPF),14,' ')             +  // Número de Inscrição do Cedente
                   PadLeft(OnlyNumber(Cedente.Agencia), 4, '0')            +  // Agência
                   PadLeft( Cedente.AgenciaDigito, 1, '0')                 +  // Agência digito
                   PadLeft( OnlyNumber(Cedente.Conta)                      +  // Conta Corrente

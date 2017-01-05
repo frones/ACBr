@@ -323,7 +323,7 @@ procedure TEnviarEstoque.DefinirDadosMsg;
 var
   wCNPJ, wDataRefInicial, wDataRefFinal: String;
 begin
-  wCNPJ     := LerTagXML(XML, 'CnpjEstabelecimento');
+  wCNPJ     := LerTagXML(XML, 'Cnpj');
   wDataRefInicial := LerTagXML(XML, 'DataReferenciaInicial');
   wDataRefFinal   := LerTagXML(XML, 'DataReferenciaFinal');
 

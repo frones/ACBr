@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/01/2017
+--ACBrBlocoX_WebServices
+[-] Correção de bug "Erro: CNPJ do estabelecimento inválido ou em branco" deve ir somente Cnpj
+		http://www.projetoacbr.com.br/forum/topic/33738-erro-envio-bloco-x-redu%C3%A7%C3%B5es-z/?do=findComment&comment=225615
+		por : Juliomar Marchetti
+		
 22/12/2016
 -- ACBrBlocoX, ACBrBlocoX_WebServices --
 [*] Separação das classes de ACBrBlocoX relacionadas a WebServices para

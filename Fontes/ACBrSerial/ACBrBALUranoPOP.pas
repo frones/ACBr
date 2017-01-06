@@ -84,7 +84,7 @@ end;
 
 function TACBrBALUranoPOP.LePeso(MillisecTimeOut : Integer) : Double;
 begin
-  Result := -1;
+  fpUltimoPesoLido := -1;
 
   SolicitarPeso;
   Sleep(600);

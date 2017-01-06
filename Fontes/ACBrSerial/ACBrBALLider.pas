@@ -235,8 +235,6 @@ begin
         wResposta := Copy(wResposta, 1, Length(wResposta) - 1);
     end;
 
-    Result := StrToFloat(wResposta);
-
     case StatusPeso of
       'I': Result := -1;                     { Instavel }
       'E': Result := StrToFloat(wResposta);  { Estável }

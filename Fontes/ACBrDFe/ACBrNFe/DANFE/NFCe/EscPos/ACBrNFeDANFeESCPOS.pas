@@ -167,14 +167,12 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
-var
-  Cmd, LinhaCmd: String;
 begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
-  FPosPrinter.Buffer.Add(Cmd + '</ce><c><n>' + FpNFe.Emit.xNome + ' ' + FormatarCNPJ(FpNFe.Emit.CNPJCPF) + '</n>');
+  FPosPrinter.Buffer.Add('</ce><c><n>' + FpNFe.Emit.xNome + ' ' + FormatarCNPJ(FpNFe.Emit.CNPJCPF) + '</n>');
   if (Trim(FpNFe.Emit.xFant) <> '') then
-     FPosPrinter.Buffer.Add(Cmd + '</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
+     FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
 
   FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +

@@ -1098,14 +1098,13 @@ end;
 function TDFeOpenSSL.X509NameToString(AX509Name: PX509_NAME): AnsiString;
 var
   MemBio: PBIO;
-  Ret: Integer;
 begin
   {$IfDef USE_libeay32}
    MemBio := Bio_New(BIO_s_mem());
    try
-     Ret := X509_NAME_print_ex(MemBio, AX509Name, 0,
-            (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
-            {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
+    X509_NAME_print_ex(MemBio, AX509Name, 0,
+    (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
+    {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
      Result := BioToStr(MemBio);
    finally
      BIO_free_all(MemBio);
@@ -1113,9 +1112,9 @@ begin
   {$Else}
    MemBio := BioNew(BioSMem());
    try
-     Ret := X509NAMEprintEx(MemBio, AX509Name, 0,
-            (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
-            {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
+     X509NAMEprintEx(MemBio, AX509Name, 0,
+     (XN_FLAG_SEP_CPLUS_SPC and XN_FLAG_SEP_MASK)
+     {$IfDef FPC} or ASN1_STRFLGS_UTF8_CONVERT{$EndIf} );
      Result := BioToStr(MemBio);
    finally
      BioFreeAll(MemBio);

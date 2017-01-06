@@ -537,7 +537,7 @@ begin
 
         try
           valorDbl := valor; // Converte Variant para Double
-          ConteudoProcessado := FloatToString( valorDbl, FOpcoes.DecimalChar, FloatMask(NumeroDecimais));
+          ConteudoProcessado := FloatToString( valorDbl, FOpcoes.DecimalChar, FloatMask(NumeroDecimais, False));
         except
           valorDbl := 0;
           ConteudoProcessado := '0.00';

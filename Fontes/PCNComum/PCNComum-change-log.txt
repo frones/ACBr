@@ -40,10 +40,16 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+Data: 06/01/2017
+-- pcnGerador --
+[-] Correção no método "TGerador.wCampo". Não estava convertendo corretamente
+    números Double e maiores do que 999, devido a modificação em ACBrUtil.FloatMask
+    (por: DSA)
+
 14/12/2016
 -- pcnConversao --
 [*] Refatoração da CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
-	http://www.projetoacbr.com.br/forum/topic/33997-corre%C3%A7%C3%A3o-na-fun%C3%A7%C3%A3o-cstipitostrtagpostext/
+    http://www.projetoacbr.com.br/forum/topic/33997-corre%C3%A7%C3%A3o-na-fun%C3%A7%C3%A3o-cstipitostrtagpostext/
     por: Henrique Leonardo ( HleoRj )
 
 30/11/2016

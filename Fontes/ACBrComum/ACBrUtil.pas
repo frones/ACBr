@@ -207,7 +207,7 @@ function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
   AFormat: String = ''): String;
 function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
 function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
-function FloatMask(const DecimalDigits: SmallInt = 2): String;
+function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String;
 Function StringToFloat( NumString : String ) : Double ;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
@@ -1424,10 +1424,18 @@ begin
   {$ENDIF}
 end;
 
-function FloatMask(const DecimalDigits: SmallInt): String;
+function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean
+  ): String;
 begin
   if DecimalDigits > 0 then
-    Result := ',0.' + StringOfChar('0',DecimalDigits)
+  begin
+    if UseThousandSeparator then
+      Result := ','
+    else
+      Result := '';
+
+    Result := Result + '0.' + StringOfChar('0',DecimalDigits)
+  end
   else
     Result := '0';
 end;

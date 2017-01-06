@@ -38,12 +38,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/01/2016
+-- ACBrUtil --
+[*] Método "FloatMask", modificado a assunatura para:
+    function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean = True): String;
+    Se "UseThousandSeparator = False", não retornará mascara com a inclusão de
+    Separadores de Milhar
+    (por: DSA)
+
 Data: 22/12/2016
---ACBrUtil
+-- ACBrUtil --
 [*] Mudança pra lazarus entender a formatação.
-		http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
-		http://www.projetoacbr.com.br/forum/topic/33721-impress%C3%A3o-do-campo-da-quantidade-de-volumes-e-tipo-rodado/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/33727-impress%C3%A3o-dos-campos-peso-aferido-kg-e-nome-do-motorista/
+    http://www.projetoacbr.com.br/forum/topic/33721-impress%C3%A3o-do-campo-da-quantidade-de-volumes-e-tipo-rodado/
+    por: Juliomar Marchetti
 		
 Data: 21/12/2016
 -- ACBrUtil --

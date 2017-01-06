@@ -866,7 +866,7 @@ begin
     begin
       ServEnt.port := 0;
       if GetServiceByName(Port, ProtoEnt.Name, ServEnt) then
-        Result := synsock.htons(ServEnt.port);
+        Result := ServEnt.port;
     end;
   end;
 end;

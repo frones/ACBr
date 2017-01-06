@@ -79,7 +79,7 @@ function TACBrBALMuller.LePeso(MillisecTimeOut: Integer): Double;
 begin
   { A Muller pode responder com Instavel inicalmente, mas depois ela poderia
     estabilizar... Portanto utiliza a função AguardarRespostaPeso }
-  AguardarRespostaPeso(MillisecTimeOut, True);
+  Result := AguardarRespostaPeso(MillisecTimeOut, True);
 end;
 
 function TACBrBALMuller.InterpretarRepostaPeso(aResposta: AnsiString): Double;

@@ -82,7 +82,7 @@ function TACBrBALRinnert.LePeso(MillisecTimeOut: Integer): Double;
 begin
   { A Rinnert pode responder com Instavel inicalmente, mas depois ela poderia
     estabilizar... Portanto utiliza função AguardaRespostaPeso }
-  AguardarRespostaPeso(MillisecTimeOut, True);
+  Result := AguardarRespostaPeso(MillisecTimeOut, True);
 end;
 
 function TACBrBALRinnert.InterpretarRepostaPeso(aResposta: AnsiString): Double;

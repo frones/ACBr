@@ -345,7 +345,7 @@ begin
                LFill(DT_MOV, 'yyyymmdd') +
                LFill(DT_EMI, 'yyyymmdd') +
                LFill(HR_EMI, 'hhmmss', False) +
-               OnlyNumber(LFill(VL_VBD, 14, 2)) +
+               LFill(VL_VBD, 14, 2) +
                RFill(PAR_ECF, 1));
         end;
      end;

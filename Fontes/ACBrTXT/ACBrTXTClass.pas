@@ -297,7 +297,7 @@ begin
      Result := FDelimitador + FormatCurr(strCurMascara, Value)
   else
   begin
-     AStr := FormatFloat(FloatMask(Decimal), Value);
+     AStr := FormatFloat(FloatMask(Decimal, False), Value);
      if Decimal > 0 then
        Delete( AStr, Length(AStr)-Decimal, 1) ;
 

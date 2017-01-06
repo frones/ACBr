@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/01/2017
+-- ACBrTXTClass --
+[-] Correção no método "TACBrTXTClass.LFill(Value: Extended;..."
+    Não estava convertendo corretamente números maiores do que 999, devido a
+    modificação em ACBrUtil.FloatMask
+    (por: DSA)
+
 Data: 22/08/2015
 -- ACBrTXTClass --   (por: DSA)
 [*] Ajuste na criação da Classe, para inicializar os campos com valores default

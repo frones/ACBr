@@ -175,7 +175,7 @@ end;
 procedure TACBrBancoBic.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia, aDiasProtesto :String;
-  Protesto, TipoSacado, TipoSacador, TipoSacadorAvalista, MensagemCedente, aConta     :String;
+  Protesto, TipoSacado, TipoSacador, TipoSacadorAvalista: String;
   aCarteira, wLinha : String;
 begin
 
@@ -184,7 +184,6 @@ begin
       DigitoNossoNumero := CalcularDigitoVerificadorArquivo(ACBrTitulo);
 
       aAgencia := '00900'; 
-      aConta   := PadLeft(OnlyNumber(ACBrBoleto.Cedente.Conta), 7, '0');
       aCarteira:= PadLeft(trim(Carteira), 2, '0');
       if aCarteira = '09' then
         aCarteira := '4';
@@ -267,20 +266,17 @@ begin
 
       with ACBrBoleto do
       begin
-         if Mensagem.Text <> '' then
-            MensagemCedente:= Mensagem[0];
-
          wLinha:= '1'                                                     +  // ID Registro
                   TipoSacador                                             +  //Tipo da Empresa Sacadora
-                  PadLeft(OnlyNumber(Cedente.CNPJCPF),15,'0')                +  //CNPJ/CPF da Empresa
+                  PadLeft(OnlyNumber(Cedente.CNPJCPF),15,'0')             +  //CNPJ/CPF da Empresa
                   Cedente.CodigoTransmissao                               +  // Código de Transmissão
                   space(9)                                                +  // Filler - 9 Brancos
                   space(25)                                               +  // Uso da Empresa
-                  '0' + PadRight(NossoNumero + DigitoNossoNumero, 7, ' ')     +  // 0 Fixo, Nosso Número + DV
+                  '0' + PadRight(NossoNumero + DigitoNossoNumero, 7, ' ') +  // 0 Fixo, Nosso Número + DV
                   space(37)                                               +  // Filler - 37 Brancos
                   aCarteira                                               +
                   Ocorrencia                                              +  // Ocorrência
-                  PadRight(SeuNumero,10,' ')                                  +  // Numero de Controle do Participante
+                  PadRight(SeuNumero,10,' ')                              +  // Numero de Controle do Participante
                   FormatDateTime( 'ddmmyy', Vencimento)                   +
                   IntToStrZero( Round( ValorDocumento * 100 ), 13)        +
                   IntToStrZero(320,3)                                     +
@@ -295,14 +291,13 @@ begin
                   IntToStrZero( round( ValorDesconto * 100 ), 13)         +
                   IntToStrZero( round( ValorIOF * 100 ), 13)              +
                   IntToStrZero( round( ValorAbatimento * 100 ), 13)       +
-
-                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),15,'0')    +
-                  PadRight( Sacado.NomeSacado, 40, ' ')                       +
-                  PadRight( Sacado.Logradouro + Sacado.Numero, 40)            +
-                  PadRight( Sacado.Bairro, 12 )                               +
-                  PadRight( Sacado.CEP, 8 )                                   +
-                  PadRight( Sacado.Cidade , 15 )                              +
-                  PadRight( Sacado.UF, 2)                                     +
+                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),15,'0') +
+                  PadRight( Sacado.NomeSacado, 40, ' ')                   +
+                  PadRight( Sacado.Logradouro + Sacado.Numero, 40)        +
+                  PadRight( Sacado.Bairro, 12 )                           +
+                  PadRight( Sacado.CEP, 8 )                               +
+                  PadRight( Sacado.Cidade , 15 )                          +
+                  PadRight( Sacado.UF, 2)                                 +
                   IfThen( PercentualMulta > 0, '2', '3')                  +  // Indica se exite Multa ou não
                   FormatDateTime( 'ddmmyy', Vencimento + 1)               +
                   IntToStrZero( round( PercentualMulta * 100 ), 13)       +  // Percentual de Multa formatado com 2 casas decimais

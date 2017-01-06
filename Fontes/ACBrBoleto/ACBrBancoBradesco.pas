@@ -140,25 +140,18 @@ end;
 
 procedure TACBrBancoBradesco.GerarRegistroHeader400(NumeroRemessa : Integer; ARemessa:TStringList);
 var
-  wLinha, ATipoInscricao: String;
+  wLinha: String;
 begin
    with ACBrBanco.ACBrBoleto.Cedente do
    begin
-      case TipoInscricao of
-         pFisica  : ATipoInscricao := '1';
-         pJuridica: ATipoInscricao := '2';
-      else
-         ATipoInscricao := ' ';
-      end;
-
       wLinha:= '0'                                             + // ID do Registro
                '1'                                             + // ID do Arquivo( 1 - Remessa)
                'REMESSA'                                       + // Literal de Remessa
                '01'                                            + // Código do Tipo de Serviço
-               PadRight( 'COBRANCA', 15 )                          + // Descrição do tipo de serviço
-               PadLeft( CodigoCedente, 20, '0')                   + // Codigo da Empresa no Banco
-               PadRight( Nome, 30)                                 + // Nome da Empresa
-               IntToStr( Numero )+ PadRight('BRADESCO', 15)        + // Código e Nome do Banco(237 - Bradesco)
+               PadRight( 'COBRANCA', 15 )                      + // Descrição do tipo de serviço
+               PadLeft( CodigoCedente, 20, '0')                + // Codigo da Empresa no Banco
+               PadRight( Nome, 30)                             + // Nome da Empresa
+               IntToStr( Numero )+ PadRight('BRADESCO', 15)    + // Código e Nome do Banco(237 - Bradesco)
                FormatDateTime('ddmmyy',Now)  + Space(08)+'MX'  + // Data de geração do arquivo + brancos
                IntToStrZero(NumeroRemessa,7) + Space(277)      + // Nr. Sequencial de Remessa + brancos
                IntToStrZero(1,6);                                // Nr. Sequencial de Remessa + brancos + Contador
@@ -172,7 +165,7 @@ var
   DigitoNossoNumero, Ocorrencia, aEspecie, aAgencia :String;
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
   aCarteira, wLinha, ANossoNumero: String;
-  TipoBoleto , aDV:Char;
+  TipoBoleto :Char;
   wTamNossoNum: Integer;
 
   function DoMontaInstrucoes1: string;

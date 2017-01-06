@@ -178,7 +178,7 @@ end;
 
 procedure TACBrBancoBradescoSICOOB.GerarRegistroTransacao400(ACBrTitulo :TACBrTitulo; aRemessa: TStringList);
 var
-  aNossoNumero, aDigitoNossoNumero, aOcorrencia, aEspecie, aConta, aAgencia, aCarteira, aProtesto,
+  aNossoNumero, aDigitoNossoNumero, aOcorrencia, aEspecie, aCarteira, aProtesto,
   aTipoSacado, aMensagemCedente,
   wLinha : String;
   TipoBoleto : Char;
@@ -234,9 +234,6 @@ begin
    begin
       aNossoNumero := MontarCampoNossoNumero(ACBrTitulo);
       aDigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
-
-      aAgencia := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),5);
-      aConta   := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),7);
       aCarteira:= IntToStrZero(StrToIntDef(trim(Carteira),0), 3);
 
       {Pegando Código da Ocorrencia}

@@ -1556,14 +1556,11 @@ function TACBrBancoSicredi.GerarRegistroTransacao240(
   ACBrTitulo: TACBrTitulo): String;
 var
     AceiteStr, CodProtesto, DiasProtesto, TipoSacado: String;
-    DigitoNossoNumero, Especie, EndSacado: String;
+    Especie, EndSacado: String;
     TipoAvalista: Char;
 begin
   with ACBrBanco.ACBrBoleto.Cedente, ACBrTitulo do
   begin
-    {Nosso Número}
-    DigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
-
     {Aceite}
     case Aceite of
       atSim: AceiteStr := 'A';

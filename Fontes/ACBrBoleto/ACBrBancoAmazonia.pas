@@ -103,7 +103,7 @@ implementation
 
 uses {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF}, StrUtils, Variants, ACBrUtil;
 
-function Modulo11BB(Valor: String; Base: Integer = 9): string;
+function Modulo11BB(const AValor: String; Base: Integer = 9): string;
 {
   Rotina muito usada para calcular dígitos verificadores
   Pega-se cada um dos dígitos contidos no parâmetro VALOR, da direita para a
@@ -116,49 +116,14 @@ function Modulo11BB(Valor: String; Base: Integer = 9): string;
   como resultado da função Modulo11.
   Obs.: Caso o resultado seja maior que 9, deverá ser substituído por 0 (ZERO).
 }
-var
-     Soma: Integer;
-     vCodigo: string;
-     vCod01: Integer;
-     vCod02: Integer;
-     vCod03: Integer;
-     vCod04: Integer;
-     vCod05: Integer;
-     vCod06: Integer;
-     vCod07: Integer;
-     vCod08: Integer;
-     vCod09: Integer;
-     vCod10: Integer;
-     vCod11: Integer;
+  function Converte(APos : SmallInt; AMultiplicador : SmallInt) : Integer;
+ begin
+   Result := StrToIntDef( Copy(AValor, APos, 1 ), 0) * AMultiplicador;
+ end;
 begin
-     vCodigo := Valor;
-     vCod01 := 0;
-     vCod02 := 0;
-     vCod03 := 0;
-     vCod04 := 0;
-     vCod05 := 0;
-     vCod06 := 0;
-     vCod07 := 0;
-     vCod08 := 0;
-     vCod09 := 0;
-     vCod10 := 0;
-     vCod11 := 0;
-     Soma := 0;
-     vCod01 := StrToInt(vCodigo[01]);
-     vCod02 := StrToInt(vCodigo[02]);
-     vCod03 := StrToInt(vCodigo[03]);
-     vCod04 := StrToInt(vCodigo[04]);
-     vCod05 := StrToInt(vCodigo[05]);
-     vCod06 := StrToInt(vCodigo[06]);
-     vCod07 := StrToInt(vCodigo[07]);
-     vCod08 := StrToInt(vCodigo[08]);
-     vCod09 := StrToInt(vCodigo[09]);
-     vCod10 := StrToInt(vCodigo[10]);
-     vCod11 := StrToInt(vCodigo[11]);
-
-     Soma := (vCod01 * 7 + vCod02 * 8 + vCod03 * 9 + vCod04 * 2 + vCod05 * 3 + vCod06 * 4 + vCod07 * 5 + vCod08 * 6 + vCod09 * 7 + vCod10 * 8 + vCod11 * 9);
-
-     Result := IntToStr(Soma mod 11);
+    Result:= IntToStr((Converte(1,7) + Converte(2, 8)+ Converte(3, 9) + Converte(4, 2) +
+             Converte(5, 3) + Converte(6, 4) + Converte(7, 5) + Converte(8, 6) +
+             Converte(9, 7) + Converte(10, 8) + Converte(11, 9)) mod 11);
 end;
 
 constructor TACBrBancoAmazonia.create(AOwner: TACBrBanco);
@@ -214,16 +179,13 @@ end;
 
 function TACBrBancoAmazonia.FormataNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 var
-     ANossoNumero, AConvenio: String;
+     ANossoNumero: String;
      wTamNossoNum: Integer;
 begin
      with ACBrTitulo do
      begin
-          AConvenio := ACBrBoleto.Cedente.Convenio;
-          ANossoNumero := NossoNumero;
-          wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira, ANossoNumero);
-
-          ANossoNumero := PadLeft(ANossoNumero, fpTamanhoMaximoNossoNum, '0')
+          wTamNossoNum := CalcularTamMaximoNossoNumero(Carteira, NossoNumero);
+          ANossoNumero := PadLeft(NossoNumero, wTamNossoNum, '0')
      end;
 
      Result := ANossoNumero;
@@ -259,11 +221,10 @@ end;
 function TACBrBancoAmazonia.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 var
      ANossoNumero: string;
-     wTamConvenio, wTamNossoNum: Integer;
+     wTamConvenio: Integer;
 begin
      ANossoNumero := FormataNossoNumero(ACBrTitulo);
      wTamConvenio := Length(ACBrBanco.ACBrBoleto.Cedente.Convenio);
-     wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira, OnlyNumber(ACBrTitulo.NossoNumero));
 
      if (wTamConvenio = 4) then
           Result := ANossoNumero + '.' + CalcularDigitoVerificador(ACBrTitulo)

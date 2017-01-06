@@ -229,7 +229,6 @@ end;
 procedure TACBrBancoCecred.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   ANossoNumero: String;
-  ADigitoNossoNumero: String;
   ATipoOcorrencia: String;
   AInstrucao: String;
   ATipoSacado: String;
@@ -248,7 +247,6 @@ begin
    with ACBrTitulo do
    begin
       ANossoNumero := FormataNossoNumero(ACBrTitulo);
-      ADigitoNossoNumero := CalcularDigitoVerificador(ACBrTitulo);
       aAgencia:= IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),4);
       aConta  := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),8);
       aModalidade := IntToStrZero(StrToIntDef(trim(ACBrBoleto.Cedente.Modalidade),0),3);

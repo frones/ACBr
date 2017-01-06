@@ -982,15 +982,10 @@ end;
 procedure TACBrCaixaEconomicaSICOB.GerarRegistroTransacao400(
   ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
-  ANossoNumero, ADigitoNossoNumero :String;
-  ATipoOcorrencia, AInstrucao      :String;
-  ATipoSacado, ATipoCendente       :String;
-  ATipoAceite, ATipoEspecieDoc     :String;
-  AMensagem, DiasProtesto          :String;
-  aDataDesconto, aAgencia, aConta  :String;
-  aModalidade,wLinha, aTipoCobranca:String;
-  ADataMoraJuros, ACodCedente         :String;
-  TamConvenioMaior6                :Boolean;
+  ANossoNumero, ADigitoNossoNumero, ATipoOcorrencia, ATipoSacado, ATipoCendente,
+  ATipoAceite, ATipoEspecieDoc, AMensagem, aDataDesconto, wLinha,
+  ADataMoraJuros, ACodCedente: String;
+  TamConvenioMaior6: Boolean;
   wCarteira: Integer;
 begin
    with ACBrTitulo do
@@ -1023,10 +1018,7 @@ begin
          ADataMoraJuros := PadLeft('', 6, '0');
 
 
-      TamConvenioMaior6:= Length(trim(ACBrBoleto.Cedente.Convenio)) > 6;
-      aAgencia:= IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Agencia),0),4);
-      aConta  := IntToStrZero(StrToIntDef(OnlyNumber(ACBrBoleto.Cedente.Conta),0),8);
-      aModalidade := IntToStrZero(StrToIntDef(trim(ACBrBoleto.Cedente.Modalidade),0),3);
+      TamConvenioMaior6 := Length(trim(ACBrBoleto.Cedente.Convenio)) > 6;
 
       {Pegando Código da Ocorrencia}
       case OcorrenciaOriginal.Tipo of
@@ -1069,53 +1061,8 @@ begin
       else if EspecieDoc = 'ND' then
          ATipoEspecieDoc   := '13';
 
-      { Pegando Tipo de Cobrança}
-      case RetornaCodCarteira(ACBrTitulo.Carteira) of
-        11,17 :
-          case ACBrBoleto.Cedente.CaracTitulo of
-            tcSimples: aTipoCobranca:='     ';
-            tcDescontada: aTipoCobranca:='04DSC';
-            tcVendor: aTipoCobranca:='08VDR';
-            tcVinculada: aTipoCobranca:='02VIN';
-          else
-            aTipoCobranca:='     ';
-          end;
-      else
-        aTipoCobranca:='     ';
-      end;
-
-
-      if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-      begin
-        DiasProtesto:='  ';
-        case (DaysBetween(DataProtesto,Vencimento)) of
-          3: // Protestar no 3º dia util após vencimento
-          begin
-            if (trim(Instrucao1) = '') or (trim(Instrucao1) = '03') then
-              AInstrucao := '03'+ PadLeft(trim(Instrucao2),2,'0');
-          end;
-          4: // Protestar no 4º dia util após vencimento
-          begin
-            if (trim(Instrucao1) = '') or (trim(Instrucao1) = '04') then
-              AInstrucao := '04'+ PadLeft(trim(Instrucao2),2,'0');
-          end;
-          5: // Protestar no 5º dia util após vencimento
-          begin
-            if (trim(Instrucao1) = '') or (trim(Instrucao1) = '05') then
-              AInstrucao := '05'+ PadLeft(trim(Instrucao2),2,'0');
-          end;
-        else
-          if (trim(Instrucao1) = '') or (trim(Instrucao1) = '06') then
-            AInstrucao := '06'+ PadLeft(trim(Instrucao2),2,'0');
-          DiasProtesto:=IntToStr(DaysBetween(DataProtesto,Vencimento));
-        end;
-       end
-      else
-       begin
-         Instrucao1:='07'; //Não Protestar
-         AInstrucao := PadLeft(Trim(Instrucao1),2,'0') + PadLeft(Trim(Instrucao2),2,'0');
-         DiasProtesto:= '  ';
-       end;
+      if not ( (DataProtesto > 0) and (DataProtesto > Vencimento) ) then
+        Instrucao1 := '07'; //Não Protestar
 
       aDataDesconto:= '000000';
 
@@ -1259,7 +1206,6 @@ var
   Titulo   : TACBrTitulo;
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
-  wCarteira: String;
 begin
 
    if (copy(ARetorno.Strings[0],143,1) <> '2') then
@@ -1340,8 +1286,6 @@ begin
       begin
          if Copy(Linha,14,1)= 'T' then //segmento T
           begin
-            wCarteira := Copy(Linha, 58, 1);
-
             ACBrBanco.TamanhoMaximoNossoNum :=
              CalcularTamMaximoNossoNumero(Carteira, '', ACBrBanco.ACBrBoleto.Cedente.Convenio);
 

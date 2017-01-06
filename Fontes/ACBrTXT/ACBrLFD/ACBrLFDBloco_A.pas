@@ -141,7 +141,7 @@ type
     property SUB: String read FSUB write FSUB;
     property NUM_DOC: String read FNUM_DOC write FNUM_DOC;
     property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
-    property COP: String read FCOP write FCOP;
+    property CFPS: String read FCOP write FCOP;
     property COD_MUN_SERV: Integer read FCOD_MUN_SERV write FCOD_MUN_SERV;
     property COD_NAT: String read FCOD_NAT write FCOD_NAT;
     property VL_DOC: Currency read FVL_DOC write FVL_DOC;

@@ -58,11 +58,15 @@ type
 
     FRegistroE020Count: Integer;
     FRegistroE025Count: Integer;
+    FRegistroE050Count: Integer;
+    FRegistroE055Count: Integer;
     FRegistroE310Count: Integer;
     FRegistroE365Count: Integer;
 
     procedure WriteRegistroE020(RegE001: TRegistroE001);
     procedure WriteRegistroE025(RegE020: TRegistroE020);
+    procedure WriteRegistroE050(RegE001: TRegistroE001);
+    procedure WriteRegistroE055(RegE050: TRegistroE050);
     procedure WriteRegistroE300(RegE001: TRegistroE001);
     procedure WriteRegistroE310(RegE300: TRegistroE300);
     procedure WriteRegistroE360(RegE300: TRegistroE300);
@@ -81,6 +85,8 @@ type
     function RegistroE005New: TRegistroE005;}
     function RegistroE020New: TRegistroE020;
     function RegistroE025New: TRegistroE025;
+    function RegistroE050New: TRegistroE050;
+    function RegistroE055New: TRegistroE055;
     function RegistroE300New: TRegistroE300;
     function RegistroE310New: TRegistroE310;
     function RegistroE360New: TRegistroE360;
@@ -96,6 +102,8 @@ type
 
     property RegistroE020Count: Integer read FRegistroE020Count write FRegistroE020Count;
     property RegistroE025Count: Integer read FRegistroE025Count write FRegistroE025Count;
+    property RegistroE050Count: Integer read FRegistroE050Count write FRegistroE050Count;
+    property RegistroE055Count: Integer read FRegistroE055Count write FRegistroE055Count;
     property RegistroE310Count: Integer read FRegistroE310Count write FRegistroE310Count;
     property RegistroE365Count: Integer read FRegistroE365Count write FRegistroE365Count;
   end;
@@ -205,6 +213,66 @@ begin
   end;
 end;
 
+procedure TBloco_E.WriteRegistroE050(RegE001: TRegistroE001);
+var
+  intFor: Integer;
+  RegE050: TRegistroE050;
+begin
+   for intFor := 0 to RegE001.RegistroE050.Count - 1 do
+   begin
+      RegE050 := RegE001.RegistroE050.Items[intFor];
+      with RegE050 do
+      begin
+         Add( LFill('E050') +
+              LFill(COD_MOD)  +
+              LFill(SER) +
+              LFill(SUB) +
+              LFill(NUM_DOC_INI) +
+              LFill(NUM_DOC_FIN) +
+              LFill(DT_DOC) +
+              LFill(NUM_LCTO) +
+              LFill(QTD_CANC,0) +
+              LFill(VL_CONT,2) +
+              LFill(VL_BC_ICMS,2) +
+              LFill(VL_ICMS,2) +
+              LFill(VL_ISNT_ICMS,2) +
+              LFill(VL_OUT_ICMS,2) +
+              LFill(COD_INF_OBS));
+      end;
+
+      WriteRegistroE055(RegE050);
+
+      RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+   end;
+
+   FRegistroE050Count := FRegistroE050Count + RegE001.RegistroE050.Count;
+end;
+
+procedure TBloco_E.WriteRegistroE055(RegE050: TRegistroE050);
+var
+  intFor: Integer;
+begin
+   if Assigned(RegE050.RegistroE055) then
+   begin
+      for intFor := 0 to RegE050.RegistroE055.Count - 1 do
+      begin
+         with RegE050.RegistroE055.Items[intFor] do
+         begin
+            Add( LFill('E055') +
+                 LFill(CFOP) +
+                 LFill(VL_CONT_P,2) +
+                 LFill(VL_BC_ICMS_P,2) +
+                 LFill(ALIQ_ICMS,2) +
+                 LFill(VL_ICMS_P,2) +
+                 LFill(VL_ISNT_ICMS_P,2) +
+                 LFill(VL_OUT_ICMS_P,2));
+         end;
+         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
+      end;
+      FRegistroE055Count := FRegistroE055Count + RegE050.RegistroE055.Count;
+  end;
+end;
+
 procedure TBloco_E.WriteRegistroE300(RegE001: TRegistroE001);
 begin
    if Assigned(RegE001.RegistroE300) then
@@ -283,12 +351,12 @@ begin
                    LFill(VL_SALDO_CREDANT,2),
                    LFill(VL_SALDO_CREDANT,0,0,false,'0', '#0.##')) +
             LFill(wVLTotalCreditos,0,0,false,'0','#0.##') +
-            IfThen(wVLTotalCreditos > 0,
-                   LFill(wVLTotalCreditos,2),
-                   LFill(wVLTotalCreditos,0,0,false,'0', '#0.##')) +
-            IfThen(wVLTotalDebito > 0,
-                   LFill(wVLTotalDebito,2),
-                   LFill(wVLTotalDebito,0,0,false,'0', '#0.##')) +
+            IfThen(wVLTotalCreditos > wVLTotalDebito,
+                   LFill(wVLTotalCreditos - wVLTotalDebito, 2),
+                   LFill(0,0,0,false,'0', '#0.##')) +
+            IfThen(wVLTotalDebito > wVLTotalCreditos,
+                   LFill(wVLTotalDebito - wVLTotalCreditos, 2),
+                   LFill(0,0,0,false,'0', '#0.##')) +
             LFill(abs(VL_DEDUCOES),0,0,false,'0','#0.##')     +
             IfThen((abs((wVLTotalCreditos - wVLTotalDebito) - VL_DEDUCOES)) > 0,
                    LFill(abs((wVLTotalCreditos - wVLTotalDebito) - VL_DEDUCOES),2),
@@ -379,6 +447,8 @@ begin
 
   FRegistroE020Count := 0;
   FRegistroE025Count := 0;
+  FRegistroE050Count := 0;
+  FRegistroE055Count := 0;
   FRegistroE310Count := 0;
   FRegistroE365Count := 0;
   FRegistroE990.QTD_LIN_E := 0;
@@ -412,7 +482,20 @@ begin
   with FRegistroE001.RegistroE020 do
     E020 := Items[ AchaUltimoPai('E020', 'E025') ];
   Result := E020.RegistroE025.New(E020);
+end;
 
+function TBloco_E.RegistroE050New: TRegistroE050;
+begin
+   Result := FRegistroE001.RegistroE050.New(FRegistroE001);
+end;
+
+function TBloco_E.RegistroE055New: TRegistroE055;
+var
+  E050: TRegistroE050;
+begin
+  with FRegistroE001.RegistroE050 do
+    E050 := Items[ AchaUltimoPai('E050', 'E055') ];
+  Result := E050.RegistroE055.New(E050);
 end;
 
 {function TBloco_E.RegistroE001New: TRegistroE001;
@@ -471,6 +554,7 @@ begin
          if IND_MOV = imlComDados then
          begin
            WriteRegistroE020(FRegistroE001);
+           WriteRegistroE050(FRegistroE001);
            WriteRegistroE300(FRegistroE001);
            WriteRegistroE500(FRegistroE001);
          end;

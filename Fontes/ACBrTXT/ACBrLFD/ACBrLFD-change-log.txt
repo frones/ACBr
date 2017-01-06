@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/01/2017
+[+] Diversas correções de erros na geração de arquivo e adição do E050
+		http://www.projetoacbr.com.br/forum/topic/34420-corre%C3%A7%C3%B5es-e-implementa%C3%A7%C3%B5es-blocos-a-c-e-acbrlfd/
+		Juliomar Marchetti
+		
 22/12/2016
 [*] Correções na geração de dados
 		http://www.projetoacbr.com.br/forum/topic/34159-corre%C3%A7%C3%A3o-blocos-a-e-b-acbrlfd/

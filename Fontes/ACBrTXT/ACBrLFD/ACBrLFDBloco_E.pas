@@ -49,6 +49,8 @@ type
   //TRegistroE005List = class;
   TRegistroE020List = class;
   TRegistroE025List = class;
+  TRegistroE050List = class;
+  TRegistroE055List = class;
   TRegistroE300 = class;
   TRegistroE310List = class;
   TRegistroE360 = class;
@@ -63,6 +65,7 @@ type
   TRegistroE001 = class(TOpenBlocos)
   private
     FRegistroE020: TRegistroE020List;
+    FRegistroE050: TRegistroE050List;
    // FRegistroE005: TRegistroE005List;
     FRegistroE300: TRegistroE300;
     FRegistroE500: TRegistroE500;
@@ -71,6 +74,7 @@ type
     destructor Destroy; override; /// Destroy
    // property RegistroE005: TRegistroE005List read FRegistroE005 write FRegistroE005;
     property RegistroE020: TRegistroE020List read FRegistroE020 write FRegistroE020;
+    property RegistroE050: TRegistroE050List read FRegistroE050 write FRegistroE050;
     property RegistroE300: TRegistroE300 read FRegistroE300 write FRegistroE300;
     property RegistroE500: TRegistroE500 read FRegistroE500 write FRegistroE500;
   end;
@@ -127,7 +131,7 @@ type
     FIND_EMIT: TACBrlEmitente;
     FIND_OPER: TACBrLTipoOperacao;
     FIND_PGTO: TACBrlTipoPagamento;
-    FNUMDOCTO: Integer;
+    FNUMDOCTO: String;
     FNUM_LCTO: String;
     FRegistroE025: TRegistroE025List;
     FSERIE: String;
@@ -156,7 +160,7 @@ type
     property COD_MOD: String read FCOD_MOD write FCOD_MOD;
     property COD_SIT: TACBrlSituacaoDocto read FCOD_SIT write FCOD_SIT;
     property SERIE: String read FSERIE write FSERIE;
-    property NUMDOCTO: Integer read FNUMDOCTO write FNUMDOCTO;
+    property NUMDOCTO: String read FNUMDOCTO write FNUMDOCTO;
     property DT_EMISSAO: TDateTime read FDT_EMISSAO write FDT_EMISSAO;
     property NUM_LCTO: String read FNUM_LCTO write FNUM_LCTO;
     property DT_ES: TDateTime read FDT_ES write FDT_ES;
@@ -244,6 +248,96 @@ type
      property Items[Index: Integer]: TRegistroE025 read GetItem write SetItem;
   end;
 
+  /// Registro E050 - REGISTRO E050: LANÇAMENTO - NOTA FISCAL DE VENDA A CONSUMIDOR (CÓDIGO 02/65)
+
+  { TRegistroE050 }
+
+  TRegistroE050 = class
+  private
+    FCOD_MOD: String;
+    FSER: String;
+    FSUB: String;
+    FNUM_DOC_INI: String;
+    FNUM_DOC_FIN: String;
+    FDT_DOC: TDateTime;
+    FNUM_LCTO: String;
+    FQTD_CANC: Integer;
+    FVL_CONT: Double;
+    FVL_BC_ICMS: Double;
+    FVL_ICMS: Double;
+    FVL_ISNT_ICMS: Double;
+    FVL_OUT_ICMS: Double;
+    FCOD_INF_OBS: String;
+    FRegistroE055: TRegistroE055List;
+  public
+    constructor Create; virtual; /// Create
+    destructor Destroy; override; /// Destroy
+
+    property COD_MOD: String read FCOD_MOD write FCOD_MOD;
+    property SER: String read FSER write FSER;
+    property SUB: String read FSUB write FSUB;
+    property NUM_DOC_INI: String read FNUM_DOC_INI write FNUM_DOC_INI;
+    property NUM_DOC_FIN: String read FNUM_DOC_FIN write FNUM_DOC_FIN;
+    property DT_DOC: TDateTime read FDT_DOC write FDT_DOC;
+    property NUM_LCTO: String read FNUM_LCTO write FNUM_LCTO;
+    property QTD_CANC: Integer read FQTD_CANC write FQTD_CANC;
+    property VL_CONT: Double read FVL_CONT write FVL_CONT;
+    property VL_BC_ICMS: Double read FVL_BC_ICMS write FVL_BC_ICMS;
+    property VL_ICMS: Double read FVL_ICMS write FVL_ICMS;
+    property VL_ISNT_ICMS: Double read FVL_ISNT_ICMS write FVL_ISNT_ICMS;
+    property VL_OUT_ICMS: Double read FVL_OUT_ICMS write FVL_OUT_ICMS;
+    property COD_INF_OBS: String read FCOD_INF_OBS write FCOD_INF_OBS;
+    property RegistroE055: TRegistroE055List read FRegistroE055 write FRegistroE055;
+  end;
+
+  /// Registro E050 - Lista
+
+  { TRegistroE050List }
+
+  TRegistroE050List = class(TACBrLFDRegistros)
+  private
+     function GetItem(Index: Integer): TRegistroE050;
+     procedure SetItem(Index: Integer; const Value: TRegistroE050);
+  public
+     function New(AOwner: TRegistroE001): TRegistroE050;
+     property Items[Index: Integer]: TRegistroE050 read GetItem write SetItem;
+  end;
+
+  { TRegistroE055 }
+
+  TRegistroE055 = class
+  private
+    FCFOP: String;
+    FVL_CONT_P: Double;
+    FVL_BC_ICMS_P: Double;
+    FALIQ_ICMS: Double;
+    FVL_ICMS_P: Double;
+    FVL_ISNT_ICMS_P: Double;
+    FVL_OUT_ICMS_P: Double;
+  public
+    property CFOP: String read FCFOP write FCFOP;
+    property VL_CONT_P: Double read FVL_CONT_P write FVL_CONT_P;
+    property VL_BC_ICMS_P: Double read FVL_BC_ICMS_P write FVL_BC_ICMS_P;
+    property ALIQ_ICMS: Double read FALIQ_ICMS write FALIQ_ICMS;
+    property VL_ICMS_P: Double read FVL_ICMS_P write FVL_ICMS_P;
+    property VL_ISNT_ICMS_P: Double read FVL_ISNT_ICMS_P write FVL_ISNT_ICMS_P;
+    property VL_OUT_ICMS_P: Double read FVL_OUT_ICMS_P write FVL_OUT_ICMS_P;
+  end;
+
+  /// Registro E055 - Lista
+
+  { TRegistroE055List }
+
+  TRegistroE055List = class(TACBrLFDRegistros)
+  private
+     function GetItem(Index: Integer): TRegistroE055;
+     procedure SetItem(Index: Integer; const Value: TRegistroE055);
+  public
+     function New(AOwner: TRegistroE050): TRegistroE055;
+     property Items[Index: Integer]: TRegistroE055 read GetItem write SetItem;
+  end;
+
+
   { TRegistroE300 }
 
   TRegistroE300 = class
@@ -321,7 +415,6 @@ type
     FVL_ODEB: Currency;
     FVL_SALDO_CREDANT: Currency;
     FVL_SALDO_CRED_TRANSP: Currency;
-    FVL_TOT_CRED: Currency;
   public
     constructor Create(AOwner: TRegistroE300); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -334,7 +427,6 @@ type
     property VL_OCRED: Currency read FVL_OCRED write FVL_OCRED;
     property VL_EST_DEB: Currency read FVL_EST_DEB write FVL_EST_DEB;
     property VL_SALDO_CREDANT: Currency read FVL_SALDO_CREDANT write FVL_SALDO_CREDANT;
-    property VL_TOT_CRED: Currency read FVL_TOT_CRED write FVL_TOT_CRED;
     property VL_SALDO_CRED_TRANSP: Currency read FVL_SALDO_CRED_TRANSP write FVL_SALDO_CRED_TRANSP;
     property VL_DEDUCOES: Currency read FVL_DEDUCOES write FVL_DEDUCOES;
     property VL_ICMS_ST_ENT: Currency read FVL_ICMS_ST_ENT write FVL_ICMS_ST_ENT;
@@ -499,6 +591,55 @@ begin
    Add(Result);
 end;
 
+{ TRegistroE050 }
+
+constructor TRegistroE050.Create;
+begin
+  FRegistroE055 := TRegistroE055List.Create;
+end;
+
+destructor TRegistroE050.Destroy;
+begin
+   FRegistroE055.Free;
+   inherited Destroy;
+end;
+
+{ TRegistroE055List }
+
+function TRegistroE055List.GetItem(Index: Integer): TRegistroE055;
+begin
+   Result := TRegistroE055(Get(Index));
+end;
+
+procedure TRegistroE055List.SetItem(Index: Integer; const Value: TRegistroE055);
+begin
+   Put(Index, Value);
+end;
+
+function TRegistroE055List.New(AOwner: TRegistroE050): TRegistroE055;
+begin
+   Result := TRegistroE055.Create;
+   Add(Result);
+end;
+
+{ TRegistroE050List }
+
+function TRegistroE050List.GetItem(Index: Integer): TRegistroE050;
+begin
+   Result := TRegistroE050(Get(Index));
+end;
+
+procedure TRegistroE050List.SetItem(Index: Integer; const Value: TRegistroE050);
+begin
+   Put(Index, Value);
+end;
+
+function TRegistroE050List.New(AOwner: TRegistroE001): TRegistroE050;
+begin
+   Result := TRegistroE050.Create;
+   Add(Result);
+end;
+
 { TRegistroE530 }
 
 constructor TRegistroE530.Create(AOwner: TRegistroE500);
@@ -576,7 +717,7 @@ begin
    inherited Destroy;
 end;
 
-{ TRegistroE020List }
+{ TRegistroE050List }
 
 {function TRegistroE020List.GetItem(Index: Integer): TRegistroE020;
 begin
@@ -624,8 +765,9 @@ end;}
 constructor TRegistroE001.Create;
 begin
    //FRegistroE005 := TRegistroE005List.Create;
-   FRegistroE300 := TRegistroE300.Create(Self);
    FRegistroE020 := TRegistroE020List.create;
+   FRegistroE050 := TRegistroE050List.create;
+   FRegistroE300 := TRegistroE300.Create(Self);
    FRegistroE500 := TRegistroE500.Create(Self);
    IND_MOV := imlSemDados;
 end;
@@ -633,6 +775,7 @@ end;
 destructor TRegistroE001.Destroy;
 begin
    FRegistroE020.Free;
+   FRegistroE050.Free;
    FRegistroE300.Free;
    FRegistroE500.Free;
    inherited Destroy;

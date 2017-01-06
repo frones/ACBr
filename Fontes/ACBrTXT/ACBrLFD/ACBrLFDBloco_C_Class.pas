@@ -663,8 +663,8 @@ begin
            LFill(SituacaoDoctoToStr(COD_SIT)) +
            LFill(SER) +
            LFill(NUM_DOC, 0) +
-           LFill(DT_EMIS) +
            LFill(DT_DOC) +
+           LFill(DT_EMIS) +
            LFill(COD_NAT) +
            LFill(VL_DOC, 2) +
            LFill(Integer(IND_PGTO), 1) +

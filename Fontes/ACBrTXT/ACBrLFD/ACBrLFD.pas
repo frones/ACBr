@@ -2199,6 +2199,22 @@ begin
                QTD_REG_BLC := Bloco_E.RegistroE025Count;
             end;
          end;
+         if Bloco_E.RegistroE050Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E050';
+               QTD_REG_BLC := Bloco_E.RegistroE050Count;
+            end;
+         end;
+         if Bloco_E.RegistroE055Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E055';
+               QTD_REG_BLC := Bloco_E.RegistroE055Count;
+            end;
+         end;
          with New do
          begin
             REG_BLC := 'E300';

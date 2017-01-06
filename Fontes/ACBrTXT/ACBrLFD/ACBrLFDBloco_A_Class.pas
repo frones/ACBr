@@ -379,7 +379,7 @@ begin
                  LFill(SUB) +
                  LFill(NUM_DOC) +
                  LFill(DT_DOC) +
-                 LFill(COP,4) +
+                 LFill(CFPS) +
                  LFill(COD_MUN_SERV,7) +
                  LFill(COD_NAT) +
                  LFill(VL_DOC,0,2, true ) +

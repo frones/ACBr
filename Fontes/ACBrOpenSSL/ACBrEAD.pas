@@ -522,7 +522,6 @@ end ;
 procedure TACBrEAD.LerChave(const Chave : AnsiString; Privada: Boolean) ;
 var
    A : pEVP_PKEY ;
-   B : pRSA;
    BioKey : pBIO ;
    Buffer : AnsiString;
 begin

@@ -37,10 +37,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2017
+-- ACBrSocket --
+[*] Refatoração em TACBrTCPServer, para não precisar criar e destruir o Daemon,
+    quando Ativar/Desativar o Servidor, a fim de evitar algumas situações de
+    Travamento ou A.V.
+[+] Adicionada a propriedade "WaitInterval: Integer defaul 200", que permite
+    definir o tempo de espera, por loop do Daemon e da conexão.
+    (por: DSA)
+
 07/11/2016
--- ACBrMTER
+-- ACBrMTer --
 [-] Ajuste procedure DoDesconecta o tipo AnsiString e String
-	por : Juliomar Marchetti 
+    por : Juliomar Marchetti
 	
 02/11/2016
 -- ACBrTCP, ACBrMTER --

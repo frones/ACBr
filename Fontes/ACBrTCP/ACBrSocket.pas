@@ -72,9 +72,11 @@ TACBrTCPServerRecive = procedure( const TCPBlockSocket : TTCPBlockSocket;
 
 TACBrTCPServerDaemon = class(TThread)
   private
-    fErroBind : Integer ;
-    fsSock : TTCPBlockSocket;
-    fsACBrTCPServer : TACBrTCPServer ;
+    fsEnabled: Boolean;
+    fsEvent: TSimpleEvent;
+    fsSock: TTCPBlockSocket;
+    fsACBrTCPServer: TACBrTCPServer ;
+    procedure SetEnabled(AValue: Boolean);
 
   protected
     property ACBrTCPServer : TACBrTCPServer read fsACBrTCPServer ;
@@ -84,8 +86,8 @@ TACBrTCPServerDaemon = class(TThread)
     Destructor Destroy; override;
     procedure Execute; override;
 
-    property TCPBlockSocket : TTCPBlockSocket read fsSock ;
-    property ErroBind : Integer read fErroBind ;
+    property TCPBlockSocket: TTCPBlockSocket read fsSock ;
+    property Enabled: Boolean read fsEnabled write SetEnabled ;
   end;
 
 { TACBrTCPServerThread }
@@ -95,10 +97,10 @@ TACBrTCPServerThread = class(TThread)
     fsACBrTCPServerDaemon : TACBrTCPServerDaemon ;
     fsEnabled: Boolean;
     fsEvent: TSimpleEvent;
-    fsSock   : TTCPBlockSocket;
-    fsStrRcv, fsStrToSend : AnsiString ;
-    fsCSock  : TSocket;
-    fsErro   : Integer ;
+    fsSock: TTCPBlockSocket;
+    fsStrRcv, fsStrToSend: AnsiString ;
+    fsClientSocket: TSocket;
+    fsErro: Integer ;
 
     function GetActive: Boolean;
     procedure SetEnabled(AValue: Boolean);
@@ -125,16 +127,17 @@ TACBrTCPServerThread = class(TThread)
 TACBrTCPServer = class( TACBrComponent )
   private
     { Propriedades do Componente ACBrTCPServer }
-    fsACBrTCPServerDaemon : TACBrTCPServerDaemon ;
+    fsACBrTCPServerDaemon: TACBrTCPServerDaemon ;
     fsTimeOut: Integer;
     fsIP: String;
     fsPort: String;
-    fsThreadList : TThreadList ;
+    fsThreadList: TThreadList ;
     fsOnConecta: TACBrTCPServerConecta;
     fsOnRecebeDados: TACBrTCPServerRecive;
     fsOnDesConecta: TACBrTCPServerDesConecta;
-    fsTerminador : String;
+    fsTerminador: String;
     fsUsaSynchronize: Boolean;
+    fsWaitsInterval: Integer;
     fs_Terminador: AnsiString;
     function GetTCPBlockSocket: TTCPBlockSocket ;
     procedure SetAtivo(const Value: Boolean);
@@ -143,6 +146,7 @@ TACBrTCPServer = class( TACBrComponent )
     procedure SetTerminador( const AValue: String) ;
     procedure SetTimeOut(const Value: Integer);
     procedure SetUsaSynchronize(AValue: Boolean);
+    procedure SetWaitInterval(AValue: Integer);
 
     procedure VerificaAtivo ;
     function GetAtivo: Boolean;
@@ -167,6 +171,7 @@ TACBrTCPServer = class( TACBrComponent )
     property Port       : String  read fsPort       write SetPort ;
     property TimeOut    : Integer read fsTimeOut    write SetTimeOut
       default 5000;
+    property WaitInterval: Integer read fsWaitsInterval write SetWaitInterval default 200;
     property Terminador    : String  read fsTerminador     write SetTerminador;
     property UsaSynchronize: Boolean read fsUsaSynchronize write SetUsaSynchronize
       default {$IFNDEF NOGUI}True{$ELSE}False{$ENDIF};
@@ -234,7 +239,11 @@ function IsAbsoluteURL(URL: String): Boolean;
 
 implementation
 
-Uses ACBrUtil, synacode, synautil {$IFNDEF NOGUI},Controls, Forms {$ENDIF} ;
+Uses
+  math,  
+  ACBrUtil,
+  synacode, synautil
+  {$IFNDEF NOGUI},Controls, Forms{$ENDIF};
 
 function GetURLBasePath(URL: String): String;
 begin
@@ -281,7 +290,6 @@ begin
     Result := True;
     Exit;
   end;
-
 end;
 
 { TACBrTCPServerDaemon }
@@ -289,46 +297,69 @@ end;
 constructor TACBrTCPServerDaemon.Create( const ACBrTCPServer : TACBrTCPServer );
 begin
   fsACBrTCPServer := ACBrTCPServer ;
-  fsSock    := TTCPBlockSocket.create ;
-  fErroBind := -9999;   // Ainda nao inicializado
+  fsEvent         := TSimpleEvent.Create;
+  fsSock          := TTCPBlockSocket.create ;
+  fsEnabled       := False;
 
-  inherited create(False) ;
-  FreeOnTerminate := False ;
+  inherited Create(False);
+  FreeOnTerminate := False;
 end;
 
 destructor TACBrTCPServerDaemon.Destroy;
 begin
+  fsSock.CloseSocket;
+  fsEnabled := False;
+  Terminate;
+  fsEvent.SetEvent;  // libera Event.WaitFor()
+  WaitFor;
+
+  fsEvent.Free;
   fsSock.Free ;
+
   inherited Destroy;
+end;
+
+procedure TACBrTCPServerDaemon.SetEnabled(AValue: Boolean);
+begin
+  if fsEnabled = AValue then Exit;
+
+  fsEnabled := AValue;
+  if not AValue then
+    fsSock.CloseSocket;
+
+  fsEvent.SetEvent;
 end;
 
 procedure TACBrTCPServerDaemon.Execute;
 var
   ClientSock : TSocket;
 begin
-  with fsSock do
+  while (not Terminated) and Assigned(fsSock) do
   begin
-//   CreateSocket ;
-     SetLinger(True,10) ;
-     Bind( fsACBrTCPServer.IP , fsACBrTCPServer.Port ) ;
-     if LastError = 0 then
-        Listen ;
+    fsEvent.ResetEvent;
 
-     fErroBind := LastError;
+    if fsEnabled then
+      fsEnabled := (fsSock.Socket <> INVALID_SOCKET);   // O Socket ainda é válido ?
 
-     while (fErroBind = 0) do
-     begin
-        if Terminated or (not Assigned(fsSock)) then
-           break ;
-
-        if CanRead( 1000 ) then
+    if fsEnabled then
+    begin
+      with fsSock do
+      begin
+        if CanRead( fsACBrTCPServer.WaitInterval ) then
         begin
-           ClientSock := Accept;
-           if lastError = 0 then
-              TACBrTCPServerThread.create(ClientSock, Self);
+          if fsEnabled and (LastError = 0) then
+          begin
+            ClientSock := Accept;
+            TACBrTCPServerThread.Create(ClientSock, Self);
+          end;
         end;
-     end ;
+      end ;
+    end
+    else
+      fsEvent.WaitFor( Cardinal(-1) );  // Espera até a chamada de ResetEvent();
   end;
+
+  Terminate;
 end;
 
 { TACBrTCPServerThread }
@@ -339,7 +370,7 @@ begin
   fsEnabled := True;
   fsEvent := TSimpleEvent.Create;
   fsACBrTCPServerDaemon := ACBrTCPServerDaemon ;
-  fsCSock  := ClientSocket ;
+  fsClientSocket := ClientSocket ;
   FreeOnTerminate := True ;
 
   inherited create(false);
@@ -355,7 +386,6 @@ begin
     WaitFor;
 
   fsEvent.Free;
-
   inherited Destroy;
 end;
 
@@ -373,110 +403,116 @@ begin
   fsErro      := 0 ;
   fsSock      := TTCPBlockSocket.Create;
   try
-     fsSock.Socket := fsCSock ;
-     fsSock.GetSins;
-     with fsSock do
-     begin
-        fsSock.Owner := Self;
+    fsSock.Socket := fsClientSocket ;
+    fsSock.GetSins;
+    with fsSock do
+    begin
+      fsSock.Owner := Self;
 
-         if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
-           Synchronize(CallOnConecta)
-         else
-           CallOnConecta;
+      if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
+        Synchronize(CallOnConecta)
+      else
+        CallOnConecta;
 
-        if fsStrToSend <> '' then
+      if (fsStrToSend <> '') then
+      begin
+        SendString( fsStrToSend );
+        fsErro := LastError ;
+      end ;
+
+      while (fsErro = 0) do
+      begin
+        fsEvent.ResetEvent;
+
+        if Terminated then
         begin
-           SendString( fsStrToSend );
-           fsErro := LastError ;
+          fsErro := -1 ;
+          break;
         end ;
 
-        while fsErro = 0 do
+        if fsSock.Socket = INVALID_SOCKET then   // O Socket ainda é válido ?
         begin
-          fsEvent.ResetEvent;
+          fsErro := -2 ;
+          break;
+        end ;
 
-           if Terminated then
-           begin
-              fsErro := -1 ;
-              break;
-           end ;
+        if not Assigned( fsACBrTCPServerDaemon ) then  // O Daemon ainda existe ?
+        begin
+          fsErro := -5 ;
+          break ;
+        end ;
 
-           if fsSock.Socket = INVALID_SOCKET then   // O Socket ainda é válido ?
-           begin
-              fsErro := -2 ;
-              break;
-           end ;
+        if not fsACBrTCPServerDaemon.Enabled then  // O Daemon não está ativo ?
+        begin
+          fsErro := -3 ;
+          break ;
+        end ;
 
-           if not Assigned( fsACBrTCPServerDaemon ) then  // O Daemon ainda existe ?
-           begin
-              fsErro := -3 ;
-              break ;
-           end ;
+        if fsACBrTCPServerDaemon.Terminated then   // O Daemon está rodando ?
+        begin
+          fsErro := -4 ;
+          break ;
+        end ;
 
-           if fsACBrTCPServerDaemon.Terminated then   // O Daemon está rodando ?
-           begin
-              fsErro := -4 ;
-              break ;
-           end ;
-
-           if not fsEnabled then
-           begin
-             fsEvent.WaitFor( Cardinal(-1) );   // Espera infinita, até chamada de SetEvent();
-             Continue;
-           end;
-
-           // Se não tem nada para ler, re-inicia o loop //
-           if not fsSock.CanRead( 200 ) then
-              Continue ;
-
-           if not Terminated then
-           begin
-             // Se tem Terminador, lê até chagar o Terminador //
-             if fsACBrTCPServerDaemon.ACBrTCPServer.StrTerminador <> '' then
-                fsStrRcv := RecvTerminated(  fsACBrTCPServerDaemon.ACBrTCPServer.TimeOut,
-                                             fsACBrTCPServerDaemon.ACBrTCPServer.StrTerminador )
-             else
-                fsStrRcv := RecvPacket( fsACBrTCPServerDaemon.ACBrTCPServer.TimeOut ) ;
-
-             fsErro := LastError ;
-             if fsErro <> 0 then
-                break;
-
-             if Assigned( fsACBrTCPServerDaemon.ACBrTCPServer.OnRecebeDados ) then
-             begin
-               if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
-                 Synchronize(CallOnRecebeDados)
-               else
-                 CallOnRecebeDados;
-             end;
-           end;
-
-           if not Terminated then
-           begin
-             if fsStrToSend <> '' then
-             begin
-                SendString( fsStrToSend );
-                fsErro := LastError ;
-             end ;
-           end;
+        if not fsEnabled then
+        begin
+          fsEvent.WaitFor( Cardinal(-1) );   // Espera infinita, até chamada de SetEvent();
+          Continue;
         end;
-     end;
 
-     Terminate;
+        // Se não tem nada para ler, re-inicia o loop //
+        if not fsSock.CanRead( fsACBrTCPServerDaemon.ACBrTCPServer.WaitInterval ) then
+          Continue ;
+
+        if not Terminated then
+        begin
+          // Se tem Terminador, lê até chagar o Terminador //
+          if fsACBrTCPServerDaemon.ACBrTCPServer.StrTerminador <> '' then
+            fsStrRcv := RecvTerminated( fsACBrTCPServerDaemon.ACBrTCPServer.TimeOut,
+                                        fsACBrTCPServerDaemon.ACBrTCPServer.StrTerminador )
+          else
+            fsStrRcv := RecvPacket( fsACBrTCPServerDaemon.ACBrTCPServer.TimeOut ) ;
+
+          fsErro := LastError ;
+          if fsErro <> 0 then
+            break;
+
+          if Assigned( fsACBrTCPServerDaemon.ACBrTCPServer.OnRecebeDados ) then
+          begin
+            if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
+              Synchronize(CallOnRecebeDados)
+            else
+              CallOnRecebeDados;
+          end;
+        end;
+
+        if not Terminated then
+        begin
+          if fsStrToSend <> '' then
+          begin
+            SendString( fsStrToSend );
+            fsErro := LastError ;
+          end ;
+        end;
+      end;
+    end;
+
+    Terminate;
   finally
-     // Chama o evento de Desconexão...
-     if Assigned(fsACBrTCPServerDaemon) then
-     begin
-       if not fsACBrTCPServerDaemon.Terminated then
-       begin
-         if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
-           Synchronize(CallOnDesConecta)
-         else
-           CallOnDesConecta;
-       end;
-     end;
+    // Chama o evento de Desconexão...
+    if Assigned(fsACBrTCPServerDaemon) then
+    begin
+      if not fsACBrTCPServerDaemon.Terminated then
+      begin
+        if fsACBrTCPServerDaemon.ACBrTCPServer.UsaSynchronize then
+          Synchronize(CallOnDesConecta)
+        else
+          CallOnDesConecta;
+      end;
+    end;
 
-     fsSock.CloseSocket ;
-     FreeAndNil(fsSock);
+    fsSock.CloseSocket ;
+    FreeAndNil(fsSock);
   end;
 end;
 
@@ -498,8 +534,8 @@ begin
   // Chama o Evento, se estiver atribuido
   if Assigned( fsACBrTCPServerDaemon.ACBrTCPServer.OnConecta ) then
   begin
-     fsStrToSend := '' ;
-     fsACBrTCPServerDaemon.ACBrTCPServer.OnConecta( fsSock, fsStrToSend ) ;
+    fsStrToSend := '' ;
+    fsACBrTCPServerDaemon.ACBrTCPServer.OnConecta( fsSock, fsStrToSend ) ;
   end ;
 end;
 
@@ -515,8 +551,8 @@ begin
   // Chama o Evento, se estiver atribuido
   if Assigned( fsACBrTCPServerDaemon.ACBrTCPServer.OnDesConecta ) then
   begin
-     ErroDesc := fsSock.GetErrorDesc( fsErro ) ;
-     fsACBrTCPServerDaemon.ACBrTCPServer.OnDesConecta( fsSock, fsErro, ErroDesc ) ;
+    ErroDesc := fsSock.GetErrorDesc( fsErro ) ;
+    fsACBrTCPServerDaemon.ACBrTCPServer.OnDesConecta( fsSock, fsErro, ErroDesc ) ;
   end ;
 end;
 
@@ -537,9 +573,10 @@ begin
   fsTimeOut        := 5000;
   fsTerminador     := '';
   fs_Terminador    := '';
+  fsWaitsInterval  := 200;
   fsUsaSynchronize := {$IFNDEF NOGUI}True{$ELSE}False{$ENDIF};
 
-  fsACBrTCPServerDaemon := Nil;
+  fsACBrTCPServerDaemon := TACBrTCPServerDaemon.Create( Self );
   fsThreadList := TThreadList.Create;
 end;
 
@@ -547,6 +584,8 @@ destructor TACBrTCPServer.Destroy;
 begin
   fsOnDesConecta := Nil;
   Desativar;
+
+  fsACBrTCPServerDaemon.Free;
   fsThreadList.Free ;
 
   inherited Destroy;
@@ -554,22 +593,22 @@ end;
 
 function TACBrTCPServer.GetAtivo: Boolean;
 begin
-  Result := Assigned( fsACBrTCPServerDaemon ) ;
+  Result := fsACBrTCPServerDaemon.Enabled ;
 end;
 
 procedure TACBrTCPServer.SetAtivo(const Value: Boolean);
 begin
   if Value then
-     Ativar
+    Ativar
   else
-     Desativar ;
+    Desativar ;
 end;
 
 function TACBrTCPServer.GetTCPBlockSocket: TTCPBlockSocket ;
 begin
-   Result := nil ;
-   if Assigned( fsACBrTCPServerDaemon ) then
-      Result := fsACBrTCPServerDaemon.TCPBlockSocket ;
+  Result := nil ;
+  if Assigned( fsACBrTCPServerDaemon ) then
+    Result := fsACBrTCPServerDaemon.TCPBlockSocket ;
 end;
 
 procedure TACBrTCPServer.Ativar;
@@ -577,22 +616,27 @@ Var
   Erro : Integer ;
   ErroDesc : String ;
 begin
-  if Assigned( fsACBrTCPServerDaemon ) then
-     exit ;
+  if Ativo then Exit;
 
-  fsACBrTCPServerDaemon := TACBrTCPServerDaemon.Create( Self );
-  // Aguarda termino do Bind //
-  while fsACBrTCPServerDaemon.ErroBind = -9999 do
-     sleep(100) ;
-
-  Erro := fsACBrTCPServerDaemon.TCPBlockSocket.LastError ;
-  ErroDesc := fsACBrTCPServerDaemon.TCPBlockSocket.LastErrorDesc;
-
-  if Erro <> 0 then
+  with fsACBrTCPServerDaemon.TCPBlockSocket do
   begin
-     Desativar;
-     raise Exception.Create( 'Erro: '+IntToStr(Erro)+' - '+ErroDesc+sLineBreak+
-                             ACBrStr('Não foi possível criar serviço na porta: ')+Port ) ;
+    CloseSocket;
+    SetLinger(True,10);
+    Bind( fsIP , fsPort );
+    if LastError = 0 then
+      Listen;
+
+    Erro     := LastError;
+    ErroDesc := LastErrorDesc;
+  end;
+
+  if Erro = 0 then
+    fsACBrTCPServerDaemon.Enabled := True  // Inicia o Loop de Escuta
+  else
+  begin
+    Desativar;
+    raise Exception.Create( 'Erro: '+IntToStr(Erro)+' - '+ErroDesc+sLineBreak+
+                            ACBrStr('Não foi possível criar serviço na porta: ')+Port ) ;
   end ;
 end;
 
@@ -601,38 +645,33 @@ var
   I: Integer;
   UmaConexao: TACBrTCPServerThread;
 begin
-  if Assigned( fsACBrTCPServerDaemon )then
-     fsACBrTCPServerDaemon.Terminate ;
+  if not Ativo then Exit;
+
+  fsACBrTCPServerDaemon.Enabled := False;
 
   with fsThreadList.LockList do
   try
-     I := Count-1;
-     while I >= 0 do
-     begin
-        UmaConexao := TACBrTCPServerThread(Items[I]);
+    I := Count-1;
+    while I >= 0 do
+    begin
+      UmaConexao := TACBrTCPServerThread(Items[I]);
         
-        // Chama o Evento de Desconexão manualmente...
-        if  Assigned( fsOnDesConecta ) then
-          fsOnDesConecta( UmaConexao.TCPBlockSocket, -5, 'TACBrTCPServer.Desativar' ) ;
+      // Chama o Evento de Desconexão manualmente...
+      if Assigned( fsOnDesConecta ) then
+        fsOnDesConecta( UmaConexao.TCPBlockSocket, -5, 'TACBrTCPServer.Desativar' ) ;
 
-        UmaConexao.Terminate;
-        Dec( I );
-     end
+      UmaConexao.Terminate;
+      Dec( I );
+    end
   finally
-     fsThreadList.UnlockList;
+    fsThreadList.UnlockList;
   end ;
 
   fsThreadList.Clear ;
 
   // Chama o Evento mais uma vez, porém sem nenhuma conexão,
-  if  Assigned( fsOnDesConecta ) then
+  if Assigned( fsOnDesConecta ) then
     fsOnDesConecta( Nil, -6, 'TACBrTCPServer.Desativar' ) ;
-
-  if Assigned( fsACBrTCPServerDaemon )then
-  begin
-    fsACBrTCPServerDaemon.WaitFor ;
-    FreeAndNil( fsACBrTCPServerDaemon ) ;
-  end;
 end;
 
 procedure TACBrTCPServer.SetIP(const Value: String);
@@ -679,6 +718,12 @@ begin
   {$ELSE}
     fsUsaSynchronize := False;
   {$ENDIF};
+end;
+
+procedure TACBrTCPServer.SetWaitInterval(AValue: Integer);
+begin
+  if fsWaitsInterval = AValue then Exit;
+  fsWaitsInterval := min( max(AValue,10), 5000);
 end;
 
 procedure TACBrTCPServer.VerificaAtivo;

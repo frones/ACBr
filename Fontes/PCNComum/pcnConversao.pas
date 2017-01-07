@@ -118,7 +118,7 @@ type
                   teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
                   teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
                   teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
-                  teMDFeAutorizado, tePrestDesacordo, teGTV);
+                  teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -162,7 +162,7 @@ type
   TTipoNavegacao = (tnInterior, tnCabotagem);
 
 const
-  TpcnTpEventoString : array[0..32] of String =('110110', '110111', '210200',
+  TpcnTpEventoString : array[0..33] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
                                                 '110112', '110113', '110114',
                                                 '110160', '310620', '510620',
@@ -172,7 +172,8 @@ const
                                                 '111502', '111503', '411500',
                                                 '411501', '411502', '411503',
                                                 '610500', '990910', '000000',
-                                                '610610', '610110', '110170');
+                                                '610610', '610110', '110170',
+                                                '310610');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',

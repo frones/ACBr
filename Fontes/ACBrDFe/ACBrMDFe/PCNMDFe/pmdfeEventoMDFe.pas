@@ -201,7 +201,8 @@ begin
     teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
     teCTeAutorizado               : Result := 'CT-e Autorizado';
     teCTeCancelado                : Result := 'CT-e Cancelado';
-    teMDFeAutorizado              : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado,
+    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';
@@ -245,7 +246,8 @@ begin
     teRegistroPassagemNFeRFID     : Result := 'Registro de Passagem para NF-e RFID';
     teCTeAutorizado               : Result := 'CT-e Autorizado';
     teCTeCancelado                : Result := 'CT-e Cancelado';
-    teMDFeAutorizado              : Result := 'MDF-e Autorizado';
+    teMDFeAutorizado,
+    teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
     teMDFeCancelado               : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     teConfInternalizacao       : Result := 'Confirmacao de Internalizacao da Mercadoria na SUFRAMA';

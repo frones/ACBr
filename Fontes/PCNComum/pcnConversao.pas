@@ -159,6 +159,8 @@ type
   TSituacaoDFe = (snAutorizado, snDenegado, snCancelado, snEncerrado);
   TImprimirUnidQtdeValor = (iuComercial, iuTributavel, iuComercialETributavel);
 
+  TTipoNavegacao = (tnInterior, tnCabotagem);
+
 const
   TpcnTpEventoString : array[0..32] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
@@ -337,6 +339,9 @@ function StrToSituacaoDFe(out ok: Boolean; const s: String): TSituacaoDFe;
 
 function modBCToStrTagPosText(const t: TpcnDeterminacaoBaseIcms): string;
 function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
+
+function TpNavegacaoToStr(const t: TTipoNavegacao): string;
+function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
 
 implementation
 
@@ -1469,6 +1474,18 @@ function StrToTpModal(out ok: boolean; const s: string): TpcteModal;
 begin
   result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '06'],
                                   [mdRodoviario, mdAereo, mdAquaviario, mdFerroviario, mdDutoviario, mdMultimodal]);
+end;
+
+function TpNavegacaoToStr(const t: TTipoNavegacao): String;
+begin
+  result := EnumeradoToStr(t, ['0','1'],
+                              [tnInterior, tnCabotagem]);
+end;
+
+function StrToTpNavegacao(out ok: boolean; const s: String): TTipoNavegacao;
+begin
+  result := StrToEnumerado(ok, s, ['0','1'],
+                                  [tnInterior, tnCabotagem]);
 end;
 
 end.

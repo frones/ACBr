@@ -145,6 +145,9 @@ const
   DSC_TPUNIDCARGA  = 'Tipo de Unidade de Carga';
   DSC_IDUNIDCARGA  = 'Identificação da Unidade de Carga';
 
+  DSC_TPNAV     = 'Tipo de Navegação';
+  DSC_IRIN      = 'Irin do navio sempre deverá ser informado';
+
   DSC_AUTXML = 'Autorizados para download do XML do DF-e';
 
   DSC_DigestValue = 'Digest Value';

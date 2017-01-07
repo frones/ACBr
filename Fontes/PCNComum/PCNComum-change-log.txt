@@ -41,6 +41,12 @@ Símbolo : Significado
 
 
 07/01/2017
+-- Diversos --
+[*] Incluido o tipo de navegação, funções de conversão e constantes pois os
+    mesmos são utilizadas pelo CT-e e MDF-e.
+    Por: Italo Jurisato Junior
+
+07/01/2017
 -- pcnLeitor --
 [*] Correção na leitura do tipo tcDatVcto.
     por: Italo Jurisato Junior

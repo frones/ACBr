@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+07/01/2017
+-- pcnLeitor --
+[*] Correção na leitura do tipo tcDatVcto.
+    por: Italo Jurisato Junior
+
 Data: 06/01/2017
 -- pcnGerador --
 [-] Correção no método "TGerador.wCampo". Não estava convertendo corretamente

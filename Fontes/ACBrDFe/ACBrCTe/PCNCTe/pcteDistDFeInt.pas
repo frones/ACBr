@@ -100,7 +100,7 @@ var
 begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('cteDadosMsg');
-  Gerador.wGrupo('distDFeInt ' + NAME_SPACE + ' versao="' + Versao + '"');
+  Gerador.wGrupo('distDFeInt ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
   Gerador.wCampo(tcStr, 'A03', 'tpAmb   ', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
   Gerador.wCampo(tcInt, 'A04', 'cUFAutor', 02, 02, 1, FcUFAutor, '***');
   Gerador.wCampoCNPJCPF('A05', 'A06', FCNPJCPF);

@@ -89,6 +89,8 @@ type
   TinfEmbCombCollectionItem        = class;
   TinfUnidCargaVaziaCollection     = class;
   TinfUnidCargaVaziaCollectionItem = class;
+  TinfUnidTranspVaziaCollection     = class;
+  TinfUnidTranspVaziaCollectionItem = class;
 
   // Informações do modal Ferroviário
   Tferrov            = class;
@@ -559,36 +561,45 @@ type
   Taquav = class(TPersistent)
   private
     FCNPJAgeNav: String;
+    Firin : String;
     FtpEmb: String;
     FcEmbar: String;
     FxEmbar: String;
     FnViagem: String;
     FcPrtEmb: String;
     FcPrtDest: String;
+    FprtTrans : String;
+    FtpNav    : TTipoNavegacao;
     FinfTermCarreg: TinfTermCarregCollection;
     FinfTermDescarreg: TinfTermDescarregCollection;
     FinfEmbComb: TinfEmbCombCollection;
     FinfUnidCargaVazia: TinfUnidCargaVaziaCollection;
+    FinfUnidTranspVazia: TinfUnidTranspVaziaCollection;
 
     procedure SetinfTermCarreg(const Value: TinfTermCarregCollection);
     procedure SetinfTermDescarreg(const Value: TinfTermDescarregCollection);
     procedure SetinfEmbComb(const Value: TinfEmbCombCollection);
     procedure SetinfUnidCargaVazia(const Value: TinfUnidCargaVaziaCollection);
+    procedure SetinfUnidTranspVazia(const Value: TinfUnidTranspVaziaCollection);
   public
     constructor Create(AOwner: TMDFe);
     destructor Destroy; override;
   published
     property CNPJAgeNav: String                              read FCNPJAgeNav        write FCNPJAgeNav;
+    property irin: String                                    read Firin              write Firin;
     property tpEmb: String                                   read FtpEmb             write FtpEmb;
     property cEmbar: String                                  read FcEmbar            write FcEmbar;
     property xEmbar: String                                  read FxEmbar            write FxEmbar;
     property nViagem: String                                 read FnViagem           write FnViagem;
     property cPrtEmb: String                                 read FcPrtEmb           write FcPrtEmb;
     property cPrtDest: String                                read FcPrtDest          write FcPrtDest;
+    property prtTrans: String                                read FprtTrans          write FprtTrans;
+    property tpNav: TTipoNavegacao                           read FtpNav             write FtpNav;
     property infTermCarreg: TinfTermCarregCollection         read FinfTermCarreg     write SetinfTermCarreg;
     property infTermDescarreg: TinfTermDescarregCollection   read FinfTermDescarreg  write SetinfTermDescarreg;
     property infEmbComb: TinfEmbCombCollection               read FinfEmbComb        write SetinfEmbComb;
     property infUnidCargaVazia: TinfUnidCargaVaziaCollection read FinfUnidCargaVazia write SetinfUnidCargaVazia;
+    property infUnidTranspVazia: TinfUnidTranspVaziaCollection read FinfUnidTranspVazia write SetinfUnidTranspVazia;
   end;
 
   TinfTermCarregCollection = class(TCollection)
@@ -648,11 +659,13 @@ type
   TinfEmbCombCollectionItem = class(TCollectionItem)
   private
     FcEmbComb: String;
+    FxBalsa  : String;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property cEmbComb: String read FcEmbComb write FcEmbComb;
+    property xBalsa: String read FxBalsa write FxBalsa;
   end;
 
   TinfUnidCargaVaziaCollection = class(TCollection)
@@ -675,6 +688,28 @@ type
   published
     property idUnidCargaVazia: String        read FidUnidCargaVazia write FidUnidCargaVazia;
     property tpUnidCargaVazia: TpcnUnidCarga read FtpUnidCargaVazia write FtpUnidCargaVazia;
+  end;
+
+  TinfUnidTranspVaziaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfUnidTranspVaziaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfUnidTranspVaziaCollectionItem);
+  public
+    constructor Create(AOwner: Taquav);
+    function Add: TinfUnidTranspVaziaCollectionItem;
+    property Items[Index: Integer]: TinfUnidTranspVaziaCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfUnidTranspVaziaCollectionItem = class(TCollectionItem)
+  private
+    FidUnidTranspVazia: String;
+    FtpUnidTranspVazia: TpcnUnidTransp;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property idUnidTranspVazia: String        read FidUnidTranspVazia write FidUnidTranspVazia;
+    property tpUnidTranspVazia: TpcnUnidTransp read FtpUnidTranspVazia write FtpUnidTranspVazia;
   end;
 
   Tferrov = class(TPersistent)
@@ -2096,6 +2131,7 @@ begin
   FinfTermDescarreg  := TinfTermDescarregCollection.Create(Self);
   FinfEmbComb        := TinfEmbCombCollection.Create(Self);
   FinfUnidCargaVazia := TinfUnidCargaVaziaCollection.Create(Self);
+  FinfUnidTranspVazia := TinfUnidTranspVaziaCollection.Create(Self);
 end;
 
 destructor Taquav.Destroy;
@@ -2104,6 +2140,7 @@ begin
   FinfTermDescarreg.Free;
   FinfEmbComb.Free;
   FinfUnidCargaVazia.Free;
+  FinfUnidTranspVazia.Free;
   inherited;
 end;
 
@@ -2126,6 +2163,12 @@ procedure Taquav.SetinfUnidCargaVazia(
   const Value: TinfUnidCargaVaziaCollection);
 begin
   FinfUnidCargaVazia := Value;
+end;
+
+procedure Taquav.SetinfUnidTranspVazia(
+  const Value: TinfUnidTranspVaziaCollection);
+begin
+  FinfUnidTranspVazia := Value;
 end;
 
 { TinfTermDescarregCollection }
@@ -2237,6 +2280,44 @@ begin
 end;
 
 destructor TinfUnidCargaVaziaCollectionItem.Destroy;
+begin
+
+  inherited;
+end;
+
+{ TinfUnidTranspVaziaCollection }
+
+function TinfUnidTranspVaziaCollection.Add: TinfUnidTranspVaziaCollectionItem;
+begin
+  Result := TinfUnidTranspVaziaCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfUnidTranspVaziaCollection.Create(AOwner: Taquav);
+begin
+  inherited Create(TinfUnidTranspVaziaCollectionItem);
+end;
+
+function TinfUnidTranspVaziaCollection.GetItem(
+  Index: Integer): TinfUnidTranspVaziaCollectionItem;
+begin
+  Result := TinfUnidTranspVaziaCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfUnidTranspVaziaCollection.SetItem(Index: Integer;
+  Value: TinfUnidTranspVaziaCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfUnidTranspVaziaCollectionItem }
+
+constructor TinfUnidTranspVaziaCollectionItem.Create;
+begin
+
+end;
+
+destructor TinfUnidTranspVaziaCollectionItem.Destroy;
 begin
 
   inherited;

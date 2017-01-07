@@ -85,17 +85,21 @@ const
 
   // Aquaviário
   DSC_CNPJAGENAV  = 'CNPJ da Agência de Navegação';
+  DSC_IRIN        = 'Irin do navio sempre deverá ser informado';
   DSC_TPEMB       = 'Tipo de Embarcação';
   DSC_CEMBAR      = 'Código da Embarcação';
   DSC_XEMBAR      = 'Nome da Embarcação';
   DSC_NVIAG       = 'Número da Viagem';
   DSC_CPRTEMB     = 'Código do Porto de Embarque';
   DSC_CPRTDEST    = 'Código do Porto de Destino';
+  DSC_PRTTRANS    = 'Porto de Transbordo';
+  DSC_TPNAV       = 'Tipo de Navegação';
   DSC_CTERMCARREG = 'Código do Terminal de Carregamento';
   DSC_XTERMCARREG = 'Nome do Terminal de Carregamento';
   DSC_CTERMDESCAR = 'Código do Terminal de Descarregamento';
   DSC_XTERMDESCAR = 'Nome do Terminal de Descarregamento';
   DSC_CEMBCOMB    = 'Código da Embarcação do comboio';
+  DSC_XBALSA      = 'Identificador da Balsa';
   
   // Ferroviário
   DSC_XPREF       = 'Prefixo do Trem';

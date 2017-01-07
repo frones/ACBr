@@ -653,51 +653,65 @@ var
 begin
   Gerador.wGrupo('aquav', '#01');
   Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
-  Gerador.wCampo(tcStr, '#03', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, DSC_TPEMB);
-  Gerador.wCampo(tcStr, '#04', 'cEmbar    ', 01, 10, 1, MDFe.aquav.cEmbar, DSC_CEMBAR);
-  Gerador.wCampo(tcStr, '#05', 'xEmbar    ', 01, 60, 1, MDFe.aquav.xEmbar, DSC_XEMBAR);
-  Gerador.wCampo(tcStr, '#05', 'nViag     ', 01, 10, 1, MDFe.aquav.nViagem, DSC_NVIAG);
-  Gerador.wCampo(tcStr, '#06', 'cPrtEmb   ', 01, 05, 1, MDFe.aquav.cPrtEmb, DSC_CPRTEMB);
-  Gerador.wCampo(tcStr, '#07', 'cPrtDest  ', 01, 05, 1, MDFe.aquav.cPrtDest, DSC_CPRTDEST);
+  Gerador.wCampo(tcStr, '#03', 'irin      ', 01, 10, 1, MDFe.aquav.irin, DSC_IRIN);
+  Gerador.wCampo(tcStr, '#04', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, DSC_TPEMB);
+  Gerador.wCampo(tcStr, '#05', 'cEmbar    ', 01, 10, 1, MDFe.aquav.cEmbar, DSC_CEMBAR);
+  Gerador.wCampo(tcStr, '#06', 'xEmbar    ', 01, 60, 1, MDFe.aquav.xEmbar, DSC_XEMBAR);
+  Gerador.wCampo(tcStr, '#07', 'nViag     ', 01, 10, 1, MDFe.aquav.nViagem, DSC_NVIAG);
+  Gerador.wCampo(tcStr, '#08', 'cPrtEmb   ', 01, 05, 1, MDFe.aquav.cPrtEmb, DSC_CPRTEMB);
+  Gerador.wCampo(tcStr, '#09', 'cPrtDest  ', 01, 05, 1, MDFe.aquav.cPrtDest, DSC_CPRTDEST);
+  Gerador.wCampo(tcStr, '#10', 'prtTrans  ', 01, 60, 0, MDFe.aquav.prtTrans, DSC_PRTTRANS);
+  Gerador.wCampo(tcStr, '#11', 'tpNav     ', 01, 01, 0, TpNavegacaoToStr(MDFe.aquav.tpNav), DSC_TPNAV);
 
   for i := 0 to MDFe.aquav.infTermCarreg.Count - 1 do
   begin
-    Gerador.wGrupo('infTermCarreg', '#08');
-    Gerador.wCampo(tcStr, '#09', 'cTermCarreg', 01, 08, 1, MDFe.aquav.infTermCarreg[i].cTermCarreg, DSC_CTERMCARREG);
-    Gerador.wCampo(tcStr, '#09', 'xTermCarreg', 01, 60, 1, MDFe.aquav.infTermCarreg[i].xTermCarreg, DSC_XTERMCARREG);
+    Gerador.wGrupo('infTermCarreg', '#12');
+    Gerador.wCampo(tcStr, '#13', 'cTermCarreg', 01, 08, 1, MDFe.aquav.infTermCarreg[i].cTermCarreg, DSC_CTERMCARREG);
+    Gerador.wCampo(tcStr, '#13', 'xTermCarreg', 01, 60, 1, MDFe.aquav.infTermCarreg[i].xTermCarreg, DSC_XTERMCARREG);
     Gerador.wGrupo('/infTermCarreg');
   end;
   if MDFe.aquav.infTermCarreg.Count > 5 then
-   Gerador.wAlerta('#08', 'infTermCarreg', '', ERR_MSG_MAIOR_MAXIMO + '5');
+   Gerador.wAlerta('#12', 'infTermCarreg', '', ERR_MSG_MAIOR_MAXIMO + '5');
 
   for i := 0 to MDFe.aquav.infTermDescarreg.Count - 1 do
   begin
-    Gerador.wGrupo('infTermDescarreg', '#10');
-    Gerador.wCampo(tcStr, '#11', 'cTermDescarreg', 01, 08, 1, MDFe.aquav.infTermDescarreg[i].cTermDescarreg, DSC_CTERMDESCAR);
-    Gerador.wCampo(tcStr, '#11', 'xTermDescarreg', 01, 60, 1, MDFe.aquav.infTermDescarreg[i].xTermDescarreg, DSC_XTERMDESCAR);
+    Gerador.wGrupo('infTermDescarreg', '#14');
+    Gerador.wCampo(tcStr, '#15', 'cTermDescarreg', 01, 08, 1, MDFe.aquav.infTermDescarreg[i].cTermDescarreg, DSC_CTERMDESCAR);
+    Gerador.wCampo(tcStr, '#15', 'xTermDescarreg', 01, 60, 1, MDFe.aquav.infTermDescarreg[i].xTermDescarreg, DSC_XTERMDESCAR);
     Gerador.wGrupo('/infTermDescarreg');
   end;
   if MDFe.aquav.infTermDescarreg.Count > 5 then
-   Gerador.wAlerta('#10', 'infTermDescarreg', '', ERR_MSG_MAIOR_MAXIMO + '5');
+   Gerador.wAlerta('#14', 'infTermDescarreg', '', ERR_MSG_MAIOR_MAXIMO + '5');
 
   for i := 0 to MDFe.aquav.infEmbComb.Count - 1 do
   begin
-    Gerador.wGrupo('infEmbComb', '#12');
-    Gerador.wCampo(tcStr, '#13', 'cEmbComb', 01, 10, 1, MDFe.aquav.infEmbComb[i].cEmbComb, DSC_CEMBCOMB);
+    Gerador.wGrupo('infEmbComb', '#16');
+    Gerador.wCampo(tcStr, '#17', 'cEmbComb', 01, 10, 1, MDFe.aquav.infEmbComb[i].cEmbComb, DSC_CEMBCOMB);
+    Gerador.wCampo(tcStr, '#18', 'xBalsa', 01, 60, 1, MDFe.aquav.infEmbComb[i].xBalsa, DSC_XBALSA);
     Gerador.wGrupo('/infEmbComb');
   end;
   if MDFe.aquav.infEmbComb.Count > 30 then
-   Gerador.wAlerta('#12', 'infEmbComb', '', ERR_MSG_MAIOR_MAXIMO + '30');
+   Gerador.wAlerta('#16', 'infEmbComb', '', ERR_MSG_MAIOR_MAXIMO + '30');
 
   for i := 0 to MDFe.aquav.infUnidCargaVazia.Count - 1 do
   begin
-    Gerador.wGrupo('infUnidCargaVazia', '#017');
-    Gerador.wCampo(tcStr, '#018', 'idUnidCargaVazia', 01, 20, 1, MDFe.aquav.infUnidCargaVazia[i].idUnidCargaVazia, DSC_IDUNIDCARGA);
-    Gerador.wCampo(tcStr, '#019', 'tpUnidCargaVazia', 01, 01, 1, UnidCargaToStr(MDFe.aquav.infUnidCargaVazia[i].tpUnidCargaVazia), DSC_TPUNIDCARGA);
+    Gerador.wGrupo('infUnidCargaVazia', '#019');
+    Gerador.wCampo(tcStr, '#020', 'idUnidCargaVazia', 01, 20, 1, MDFe.aquav.infUnidCargaVazia[i].idUnidCargaVazia, DSC_IDUNIDCARGA);
+    Gerador.wCampo(tcStr, '#021', 'tpUnidCargaVazia', 01, 01, 1, UnidCargaToStr(MDFe.aquav.infUnidCargaVazia[i].tpUnidCargaVazia), DSC_TPUNIDCARGA);
     Gerador.wGrupo('/infUnidCargaVazia');
   end;
   if MDFe.aquav.infUnidCargaVazia.Count > 999 then
-   Gerador.wAlerta('#17', 'infUnidCargaVazia', '', ERR_MSG_MAIOR_MAXIMO + '999');
+   Gerador.wAlerta('#19', 'infUnidCargaVazia', '', ERR_MSG_MAIOR_MAXIMO + '999');
+
+  for i := 0 to MDFe.aquav.infUnidTranspVazia.Count - 1 do
+  begin
+    Gerador.wGrupo('infUnidTranspVazia', '#022');
+    Gerador.wCampo(tcStr, '#023', 'idUnidTranspVazia', 01, 20, 1, MDFe.aquav.infUnidTranspVazia[i].idUnidTranspVazia, DSC_IDUNIDTRANSP);
+    Gerador.wCampo(tcStr, '#024', 'tpUnidTranspVazia', 01, 01, 1, UnidTranspToStr(MDFe.aquav.infUnidTranspVazia[i].tpUnidTranspVazia), DSC_TPUNIDTRANSP);
+    Gerador.wGrupo('/infUnidTranspVazia');
+  end;
+  if MDFe.aquav.infUnidTranspVazia.Count > 999 then
+   Gerador.wAlerta('#22', 'infUnidTranspVazia', '', ERR_MSG_MAIOR_MAXIMO + '999');
 
   Gerador.wGrupo('/aquav');
 end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2017
+-- diversos --
+[*] Implementação de tags para compatibilizar com a versão 3.00
+    Por: Hugo_Inf / Italo Jurisato Junior
+
 30/12/2016
 -- diversos --
 [*] Melhorias na leitura e escrita do XML no que se refere ao grupo <valePed>.

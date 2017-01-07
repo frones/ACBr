@@ -314,12 +314,15 @@ begin
     if Leitor.rExtrai(2, 'aquav') <> '' then
      begin
        MDFe.aquav.CNPJAgeNav := Leitor.rCampo(tcStr, 'CNPJAgeNav');
+       MDFe.aquav.irin       := Leitor.rCampo(tcStr, 'irin');
        MDFe.aquav.tpEmb      := Leitor.rCampo(tcStr, 'tpEmb');
        MDFe.aquav.cEmbar     := Leitor.rCampo(tcStr, 'cEmbar');
        MDFe.aquav.xEmbar     := Leitor.rCampo(tcStr, 'xEmbar');
        MDFe.aquav.nViagem    := Leitor.rCampo(tcStr, 'nViag');
        MDFe.aquav.cPrtEmb    := Leitor.rCampo(tcStr, 'cPrtEmb');
        MDFe.aquav.cPrtDest   := Leitor.rCampo(tcStr, 'cPrtDest');
+       MDFe.aquav.prtTrans   := Leitor.rCampo(tcStr, 'prtTrans');
+       MDFe.aquav.tpNav      := StrToTpNavegacao(ok, Leitor.rCampo(tcStr, 'tpNav'));
 
        i01 := 0;
        while Leitor.rExtrai(3, 'infTermCarreg', '', i01 + 1) <> '' do
@@ -344,6 +347,7 @@ begin
        begin
          MDFe.aquav.infEmbComb.Add;
          MDFe.aquav.infEmbComb[i01].cEmbComb := Leitor.rCampo(tcStr, 'cEmbComb');
+         MDFe.aquav.infEmbComb[i01].xBalsa   := Leitor.rCampo(tcStr, 'xBalsa');
          inc(i01);
        end;
 
@@ -353,6 +357,15 @@ begin
          MDFe.aquav.infUnidCargaVazia.Add;
          MDFe.aquav.infUnidCargaVazia[i01].idUnidCargaVazia := Leitor.rCampo(tcStr, 'idUnidCargaVazia');
          MDFe.aquav.infUnidCargaVazia[i01].tpUnidCargaVazia := StrToUnidCarga(ok, Leitor.rCampo(tcStr, 'tpUnidCargaVazia'));
+         inc(i01);
+       end;
+
+       i01 := 0;
+       while Leitor.rExtrai(3, 'infUnidTranspVazia', '', i01 + 1) <> '' do
+       begin
+         MDFe.aquav.infUnidTranspVazia.Add;
+         MDFe.aquav.infUnidTranspVazia[i01].idUnidTranspVazia := Leitor.rCampo(tcStr, 'idUnidTranspVazia');
+         MDFe.aquav.infUnidTranspVazia[i01].tpUnidTranspVazia := StrToUnidTransp(ok, Leitor.rCampo(tcStr, 'tpUnidTranspVazia'));
          inc(i01);
        end;
 

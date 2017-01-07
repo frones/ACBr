@@ -694,9 +694,10 @@ begin
 
     if Leitor.rExtrai(2, 'infCarga') <> ''
     then begin
-      CTe.infCTeNorm.infCarga.vCarga  := Leitor.rCampo(tcDe2,'vCarga');
-      CTe.infCTeNorm.InfCarga.proPred := Leitor.rCampo(tcStr,'proPred');
-      CTe.infCTeNorm.InfCarga.xOutCat := Leitor.rCampo(tcStr,'xOutCat');
+      CTe.infCTeNorm.infCarga.vCarga      := Leitor.rCampo(tcDe2,'vCarga');
+      CTe.infCTeNorm.InfCarga.proPred     := Leitor.rCampo(tcStr,'proPred');
+      CTe.infCTeNorm.InfCarga.xOutCat     := Leitor.rCampo(tcStr,'xOutCat');
+      CTe.infCTeNorm.infCarga.vCargaAverb := Leitor.rCampo(tcDe2,'vCargaAverb');
     end;
 
     i01 := 0;

@@ -1383,6 +1383,9 @@ begin
 
   GerarInfQ;
 
+  if CTe.infCTe.versao >= 3 then
+    Gerador.wCampo(tcDe2, '#250', 'vCargaAverb', 01, 15, 0, CTe.infCTeNorm.InfCarga.vCargaAverb, DSC_VTMERC);
+
   Gerador.wGrupo('/infCarga');
 end;
 

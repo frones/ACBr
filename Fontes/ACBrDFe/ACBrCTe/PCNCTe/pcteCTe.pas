@@ -1233,16 +1233,18 @@ type
     FproPred : String;
     FxOutCat : String;
     FinfQ    : TInfQCollection;
+    FvCargaAverb: Currency;
 
     procedure SetInfQ(const Value: TInfQCollection);
   public
     constructor Create(AOwner: TInfCTeNorm);
     destructor Destroy; override;
   published
-    property vCarga: Currency      read FvCarga  write FvCarga;
-    property proPred: String       read FproPred write FproPred;
-    property xOutCat: String       read FxOutCat write FxOutCat;
-    property infQ: TInfQCollection read FinfQ    write SetInfQ;
+    property vCarga: Currency      read FvCarga      write FvCarga;
+    property proPred: String       read FproPred     write FproPred;
+    property xOutCat: String       read FxOutCat     write FxOutCat;
+    property infQ: TInfQCollection read FinfQ        write SetInfQ;
+    property vCargaAverb: Currency read FvCargaAverb write FvCargaAverb;
   end;
 
   TInfQCollection = class(TCollection)

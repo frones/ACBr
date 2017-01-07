@@ -70,8 +70,6 @@ type
 
   TRspSegMDFe = (rsEmitente, rsTomadorServico);
 
-  TTipoNavegacao = (tnInterior, tnCabotagem);
-
 function StrToEnumerado(out ok: boolean; const s: string; const AString: array of string;
   const AEnumerados: array of variant): variant;
 function EnumeradoToStr(const t: variant; const AString:
@@ -105,9 +103,6 @@ function StrToTTransportador(out ok: Boolean; const s: String): TTransportadorMD
 function RspSeguroMDFeToStr(const t: TRspSegMDFe): String;
 function RspSeguroMDFeToStrText(const t: TRspSegMDFe): String;
 function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
-
-function TpNavegacaoToStr(const t: TTipoNavegacao): string;
-function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
 
 implementation
 
@@ -317,18 +312,6 @@ function StrToRspSeguroMDFe(out ok: boolean; const s: String ): TRspSegMDFe;
 begin
   result := StrToEnumerado(ok, s, ['1', '2'],
                                   [rsEmitente, rsTomadorServico]);
-end;
-
-function TpNavegacaoToStr(const t: TTipoNavegacao): String;
-begin
-  result := EnumeradoToStr(t, ['0','1'],
-                              [tnInterior, tnCabotagem]);
-end;
-
-function StrToTpNavegacao(out ok: boolean; const s: String): TTipoNavegacao;
-begin
-  result := StrToEnumerado(ok, s, ['0','1'],
-                                  [tnInterior, tnCabotagem]);
 end;
 
 end.

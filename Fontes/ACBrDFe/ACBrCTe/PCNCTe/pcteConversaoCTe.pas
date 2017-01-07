@@ -83,7 +83,6 @@ type
   TpcteTomador = ( tmRemetente, tmExpedidor, tmRecebedor, tmDestinatario, tmOutros);
   TpcteLotacao = (ltNao, ltSim);
   TpcteDirecao = (drNorte, drLeste, drSul, drOeste);
-  TpcteTipoNavegacao = (tnInterior, tnCabotagem);
   TpcteTipoTrafego = (ttProprio, ttMutuo, ttRodoferroviario, ttRodoviario);
   TpcteTipoDataPeriodo = (tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado);
   TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado);
@@ -139,9 +138,6 @@ function StrToTpLotacao(out ok: boolean; const s: String ): TpcteLotacao;
 
 function TpDirecaoToStr(const t: TpcteDirecao): string;
 function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
-
-function TpNavegacaoToStr(const t: TpcteTipoNavegacao): string;
-function StrToTpNavegacao(out ok: boolean; const s: string): TpcteTipoNavegacao;
 
 function TpTrafegoToStr(const t: TpcteTipoTrafego): string;
 function StrToTpTrafego(out ok: boolean; const s: string): TpcteTipoTrafego;
@@ -424,16 +420,6 @@ function StrToTpDirecao(out ok: boolean; const s: string): TpcteDirecao;
 begin
   result := StrToEnumerado(ok, s, ['N','L','S','O'],
                                   [drNorte , drLeste, drSul, drOeste]);
-end;
-
-function TpNavegacaoToStr(const t: TpcteTipoNavegacao): string;
-begin
-  result := EnumeradoToStr(t, ['0','1'], [tnInterior , tnCabotagem]);
-end;
-
-function StrToTpNavegacao(out ok: boolean; const s: string): TpcteTipoNavegacao;
-begin
-  result := StrToEnumerado(ok, s, ['0','1'], [tnInterior , tnCabotagem]);
 end;
 
 function TpTrafegoToStr(const t: TpcteTipoTrafego): string;

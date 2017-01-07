@@ -2032,7 +2032,7 @@ type
     FprtEmb   : String;
     FprtTrans : String;
     FprtDest  : String;
-    FtpNav    : TpcteTipoNavegacao;
+    FtpNav    : TTipoNavegacao;
     Firin     : String;
     FdetCont  : TdetContCollection;
 
@@ -2053,7 +2053,7 @@ type
     property prtEmb: String              read FprtEmb   write FprtEmb;
     property prtTrans: String            read FprtTrans write FprtTrans;
     property prtDest: String             read FprtDest  write FprtDest;
-    property tpNav: TpcteTipoNavegacao   read FtpNav    write FtpNav;
+    property tpNav: TTipoNavegacao       read FtpNav    write FtpNav;
     property irin: String                read Firin     write Firin;
     property detCont: TdetContCollection read FdetCont  write SetdetCont;
   end;

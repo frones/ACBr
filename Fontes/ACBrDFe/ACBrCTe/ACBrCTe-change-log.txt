@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/01/2017
+-- Diversos --
+[*] Migração do tipo de navegação, funções de conversão e constantes para as 
+    units do pcnComum pois o tipo, as funções e constantes são utilizadas pelo
+    CT-e e MDF-e.
+    Por: Italo Jurisato Junior
+
 03/01/2017
 -- pcteDistDFeInt --
 [*] Correção na geração do XML para realizar a consulta a DistribucaoDFe.

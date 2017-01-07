@@ -126,8 +126,6 @@ const
   DSC_PRTEMB    = 'Porto de Embarque';
   DSC_PRTTRANS  = 'Porto de Transbordo';
   DSC_PRTDEST   = 'Porto de Destino';
-  DSC_TPNAV     = 'Tipo de Navegação';
-  DSC_IRIN      = 'IRIN do Navio';
   DSC_TPTRAF    = 'Tipo de Tráfego';
   DSC_RESPFAT   = 'Responsável pelo Faturamento';
   DSC_FERREMI   = 'Ferrovia Emitente do CTe';

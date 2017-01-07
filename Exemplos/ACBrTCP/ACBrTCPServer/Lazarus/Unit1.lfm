@@ -1,38 +1,40 @@
 object Form1: TForm1
   Left = 247
-  Height = 347
+  Height = 413
   Top = 165
-  Width = 430
+  Width = 572
+  ActiveControl = edPorta
   Caption = 'ACBrTCPServer'
-  ClientHeight = 347
-  ClientWidth = 430
+  ClientHeight = 413
+  ClientWidth = 572
   Constraints.MinHeight = 240
   Constraints.MinWidth = 430
   ParentFont = True
-  LCLVersion = '0.9.29'
+  LCLVersion = '1.6.2.0'
+  Visible = False
   object Panel1: TPanel
     Left = 0
-    Height = 234
+    Height = 300
     Top = 113
-    Width = 430
+    Width = 572
     Align = alClient
-    ClientHeight = 234
-    ClientWidth = 430
+    ClientHeight = 300
+    ClientWidth = 572
     TabOrder = 1
     object Panel2: TPanel
       Left = 1
-      Height = 232
+      Height = 298
       Top = 1
-      Width = 233
+      Width = 365
       Align = alClient
-      ClientHeight = 232
-      ClientWidth = 233
+      ClientHeight = 298
+      ClientWidth = 365
       TabOrder = 0
       object mOutput: TMemo
         Left = 1
-        Height = 230
+        Height = 296
         Top = 1
-        Width = 231
+        Width = 363
         Align = alClient
         Lines.Strings = (
           'Conecte nesse servidor usando:'
@@ -43,32 +45,34 @@ object Form1: TForm1
           ''
           'telnet localhost 3434'
         )
+        ScrollBars = ssAutoBoth
         TabOrder = 0
       end
     end
     object Panel3: TPanel
-      Left = 234
-      Height = 232
+      Left = 371
+      Height = 298
       Top = 1
-      Width = 195
+      Width = 200
       Align = alRight
-      ClientHeight = 232
-      ClientWidth = 195
+      ClientHeight = 298
+      ClientWidth = 200
+      Constraints.MinWidth = 200
       TabOrder = 1
       object CheckListBox1: TCheckListBox
         Left = 1
-        Height = 179
+        Height = 245
         Top = 1
-        Width = 193
+        Width = 198
         Align = alTop
         Anchors = [akTop, akLeft, akRight, akBottom]
         ItemHeight = 0
         TabOrder = 0
       end
       object Button1: TButton
-        Left = 12
+        Left = 17
         Height = 27
-        Top = 193
+        Top = 259
         Width = 75
         Anchors = [akRight, akBottom]
         Caption = 'Matar'
@@ -76,9 +80,9 @@ object Form1: TForm1
         TabOrder = 1
       end
       object bEnviar: TButton
-        Left = 104
+        Left = 109
         Height = 27
-        Top = 193
+        Top = 259
         Width = 75
         Anchors = [akRight, akBottom]
         Caption = 'Enviar Resp'
@@ -86,55 +90,63 @@ object Form1: TForm1
         TabOrder = 2
       end
     end
+    object Splitter1: TSplitter
+      Left = 366
+      Height = 298
+      Top = 1
+      Width = 5
+      Align = alRight
+      ResizeAnchor = akRight
+    end
   end
   object Panel4: TPanel
     Left = 0
     Height = 113
     Top = 0
-    Width = 430
+    Width = 572
     Align = alTop
     ClientHeight = 113
-    ClientWidth = 430
+    ClientWidth = 572
     TabOrder = 0
     object Label1: TLabel
       Left = 8
-      Height = 16
+      Height = 15
       Top = 8
-      Width = 32
+      Width = 31
       Caption = 'Porta:'
       ParentColor = False
     end
     object Label4: TLabel
       Left = 104
-      Height = 16
+      Height = 15
       Top = 8
-      Width = 63
+      Width = 61
       Caption = 'Terminador'
       ParentColor = False
     end
     object Label5: TLabel
       Left = 200
-      Height = 16
+      Height = 15
       Top = 8
-      Width = 48
+      Width = 47
       Caption = 'TimeOut'
       ParentColor = False
     end
     object Label3: TLabel
-      Left = 315
-      Height = 16
+      Left = 458
+      Height = 15
       Top = 89
-      Width = 55
+      Width = 54
       Anchors = [akTop, akRight]
       Caption = 'Conexões:'
       ParentColor = False
       OnClick = Label3Click
     end
     object lNConexoes: TLabel
-      Left = 379
-      Height = 16
+      Left = 522
+      Height = 15
       Top = 89
-      Width = 22
+      Width = 21
       Anchors = [akTop, akRight]
       Caption = '000'
       Font.Style = [fsBold]
@@ -144,9 +156,9 @@ object Form1: TForm1
     end
     object Label2: TLabel
       Left = 9
-      Height = 16
+      Height = 15
       Top = 56
-      Width = 51
+      Width = 50
       Caption = 'Resposta:'
       ParentColor = False
     end
@@ -196,7 +208,7 @@ object Form1: TForm1
       Left = 8
       Height = 23
       Top = 72
-      Width = 273
+      Width = 407
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 4
       Text = 'OK'

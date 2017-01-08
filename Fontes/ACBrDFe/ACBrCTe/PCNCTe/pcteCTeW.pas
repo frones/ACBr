@@ -382,7 +382,7 @@ begin
   Gerador.wCampo(tcInt, '#011', 'serie   ', 01, 03, 1, CTe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, '#012', 'nCT     ', 01, 09, 1, CTe.ide.nCT, DSC_NNF);
 
-  if CTe.infCTe.versao = 3 then
+  if CTe.infCTe.versao >= 3 then
     Gerador.wCampo(tcStr, '#013', 'dhEmi', 25, 25, 1, DateTimeTodh(CTe.ide.dhEmi) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhEmi), DSC_DEMI)
   else
     Gerador.wCampo(tcDatHor, '#013', 'dhEmi', 19, 19, 1, CTe.ide.dhEmi, DSC_DEMI);
@@ -395,7 +395,7 @@ begin
   Gerador.wCampo(tcStr, '#019', 'procEmi', 01, 01, 1, procEmiToStr(CTe.Ide.procEmi), DSC_PROCEMI);
   Gerador.wCampo(tcStr, '#020', 'verProc', 01, 20, 1, CTe.Ide.verProc, DSC_VERPROC);
 
-  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 57) and (CTe.ide.indGlobalizado = tiSim) then
+  if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 57) and (CTe.ide.indGlobalizado = tiSim) then
     Gerador.wCampo(tcStr, '#020', 'indGlobalizado', 01, 01, 0, TindicadorToStr(CTe.ide.indGlobalizado), DSC_INDGLOBALIZADO);
 
   if (CTe.infCTe.versao < 3) then
@@ -416,7 +416,7 @@ begin
   Gerador.wCampo(tcStr, '#025', 'modal   ', 02, 02, 1, TpModalToStr(CTe.Ide.modal), DSC_MODAL);
   Gerador.wCampo(tcStr, '#026', 'tpServ  ', 01, 01, 1, TpServPagToStr(CTe.Ide.tpServ), DSC_TPSERV);
 
-  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 67) then
+  if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 67) then
     Gerador.wCampo(tcStr, '#035', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.ide.indIEToma), DSC_INDIETOMA);
 
   Gerador.wCampo(tcInt, '#027', 'cMunIni ', 07, 07, 1, CTe.ide.cMunIni, DSC_CMUNEMI);
@@ -440,7 +440,7 @@ begin
     Gerador.wCampo(tcStr, '#034', 'xDetRetira ', 01, 160, 0, CTe.Ide.xdetretira, DSC_DRET);
   end;
 
-  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 57) then
+  if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 57) then
     Gerador.wCampo(tcStr, '#035', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.ide.indIEToma), DSC_INDIETOMA);
 
   if (CTe.ide.modelo = 57) then
@@ -452,7 +452,7 @@ begin
   if CTe.Ide.tpEmis = teFSDA
    then begin
 
-     if CTe.infCTe.versao = 3 then
+     if CTe.infCTe.versao >= 3 then
        Gerador.wCampo(tcStr, '#057', 'dhCont ', 25, 25, 1, DateTimeTodh(CTe.ide.dhCont) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.ide.dhCont), DSC_DHCONT)
      else
       Gerador.wCampo(tcDatHor, '#057', 'dhCont ', 19, 019, 1, CTe.ide.dhCont, DSC_DHCONT);
@@ -466,7 +466,7 @@ procedure TCTeW.GerarToma03;
 begin
   if (trim(CTe.Ide.Toma4.xNome) = '') then
   begin
-    if CTe.infCTe.versao = 3 then
+    if CTe.infCTe.versao >= 3 then
     begin
       Gerador.wGrupo('toma3', '#035');
       Gerador.wCampo(tcStr, '#036', 'toma ', 01, 01, 1, TpTomadorToStr(CTe.ide.Toma03.Toma), DSC_TOMA);
@@ -1138,7 +1138,7 @@ begin
   if CTe.Imp.ICMSUFFim.pICMSInterPart <> 0 then
     GerarICMSUFFim;
 
-  if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 67) then
+  if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 67) then
     GerarinfTribFed;
 
   Gerador.wGrupo('/imp');
@@ -1237,7 +1237,7 @@ end;
 procedure TCTeW.GerarICMSSN;
 begin
   Gerador.wGrupo('ICMSSN', '#248');
-  if (CTe.infCTe.versao = 3) then
+  if (CTe.infCTe.versao >= 3) then
     Gerador.wCampo(tcStr, '#248', 'CST', 02, 02, 1, '90', DSC_CST);
 
   Gerador.wCampo(tcInt, '#249', 'indSN ', 01, 01, 1, CTe.Imp.ICMS.ICMSSN.indSN, DSC_INDSN);
@@ -1277,7 +1277,7 @@ begin
   begin
     Gerador.wGrupo('infCTeNorm', '#252');
 
-    if (CTe.infCTe.versao = 3) and (CTe.ide.modelo = 67) then
+    if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 67) then
     begin
       GerarinfServico;
       GerarinfDocRef;
@@ -1329,10 +1329,10 @@ begin
       GerarCobr;
       GerarInfCTeSub;
 
-      if (CTe.infCTe.versao = 3) and (Trim(CTe.infCTeNorm.infGlobalizado.xObs) <> '') then
+      if (CTe.infCTe.versao >= 3) and (Trim(CTe.infCTeNorm.infGlobalizado.xObs) <> '') then
         GerarInfGlobalizado;
 
-      if CTe.infCTe.versao = 3 then
+      if CTe.infCTe.versao >= 3 then
         GerarInfServVinc;
     end;
 
@@ -2245,7 +2245,7 @@ begin
      Gerador.wAlerta('#395', 'chCte', DSC_REFNFE, ERR_MSG_INVALIDO);
 
    if ((CTe.infCTe.versao = 2) and (trim(CTe.infCTeNorm.infCTeSub.tomaNaoICMS.refCteAnu) = '')) or
-      ((CTe.infCTe.versao = 3) and (trim(CTe.infCTeNorm.infCTeSub.refCteAnu) = ''))
+      ((CTe.infCTe.versao >= 3) and (trim(CTe.infCTeNorm.infCTeSub.refCteAnu) = ''))
     then begin
      Gerador.wGrupo('tomaICMS', '#396');
      if (trim(CTe.infCTeNorm.infCTeSub.tomaICMS.refNFe) <> '')
@@ -2295,7 +2295,7 @@ begin
      end;
     end;
 
-   if (CTe.infCTe.versao = 3) and (CTe.infCTeNorm.infCteSub.indAlteraToma = tiSim) then
+   if (CTe.infCTe.versao >= 3) and (CTe.infCTeNorm.infCteSub.indAlteraToma = tiSim) then
     Gerador.wCampo(tcStr, '#385', 'indAlteraToma', 01, 01, 0, TindicadorToStr(CTe.infCTeNorm.infCteSub.indAlteraToma), DSC_INDALTERATOMA);
 
    Gerador.wGrupo('/infCteSub');

@@ -593,7 +593,10 @@ end;
 
 function TACBrTCPServer.GetAtivo: Boolean;
 begin
-  Result := fsACBrTCPServerDaemon.Enabled ;
+  if Assigned( fsACBrTCPServerDaemon ) then
+    Result := fsACBrTCPServerDaemon.Enabled
+  else
+    Result := False;
 end;
 
 procedure TACBrTCPServer.SetAtivo(const Value: Boolean);

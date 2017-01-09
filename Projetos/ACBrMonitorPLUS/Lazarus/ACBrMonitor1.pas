@@ -1194,6 +1194,7 @@ type
     procedure bECFAtivarClick(Sender: TObject);
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
+    procedure pgBoletoChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
@@ -3650,7 +3651,11 @@ begin
     cbComandos.Checked := Ini.ReadBool('ACBrMonitor', 'Comandos_Remotos', False);
     cbUmaInstancia.Checked := Ini.ReadBool('ACBrMonitor', 'Uma_Instancia', True);
     cbAbas.Checked := Ini.ReadBool('ACBrMonitor', 'MostraAbas', False);
+    {$IFDEF LINUX}
+    cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', True);
+    {$ELSE}
     cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', False);
+    {$ENDIF}
     cbRetirarAcentosNaResposta.Checked := Ini.ReadBool('ACBrMonitor', 'RetirarAcentosNaResposta', False);
     cbMonitorarPasta.OnChange := Nil;
     cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
@@ -3793,7 +3798,6 @@ begin
     deBOLDirLogo.Text :=
       Ini.ReadString('BOLETO', 'DirLogos', ExtractFilePath(Application.ExeName) +
       'Logos' + PathDelim);
-    MostraLogoBanco;
 
     spBOLCopias.Value := Ini.ReadInteger('BOLETO', 'Copias', 1);
     ckgBOLMostrar.Checked[0] := Ini.ReadBool('BOLETO', 'Preview', True);
@@ -5976,6 +5980,12 @@ begin
     mResp.Lines.Add('Hora Inválida');
     meRFDHoraSwBasico.SetFocus;
   end;
+end;
+
+procedure TFrmACBrMonitor.pgBoletoChange(Sender: TObject);
+begin
+  if pgBoleto.ActivePage = tsContaBancaria then
+     MostraLogoBanco;
 end;
 
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);

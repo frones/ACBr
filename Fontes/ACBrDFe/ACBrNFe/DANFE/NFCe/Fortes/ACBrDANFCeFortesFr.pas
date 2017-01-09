@@ -338,8 +338,9 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject;
-  var PrintIt: Boolean);
+procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject; var PrintIt: Boolean);
+var
+  i:integer;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -348,10 +349,19 @@ begin
     else
       lTitLei12741.Visible := False;
 
+    lObservacoes.Visible := False;
+    if InfAdic.obsCont.Count > 0 then
+      begin
+        lObservacoes.Visible := True;
+        for I := 0 to InfAdic.obsCont.Count - 1 do
+          lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
+                                                 InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) )
+      end;
+
     if InfAdic.infCpl <> '' then
       lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) )
     else
-      lObservacoes.Visible := False;
+      lObservacoes.Visible := true;
   end;
 end;
 

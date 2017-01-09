@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/01/2017
+[+] Adição do campo obsCont no DANFC-e em Fortes A4 e impressora térmica
+		http://www.projetoacbr.com.br/forum/topic/34463-obscont-na-danfe-nfc-e-fortes/
+		por : Juliomar Marchetti
+
 04/01/2017
 [*] Mudança do chamado para impressão do danfce
 		http://www.projetoacbr.com.br/forum/topic/34352-impress%C3%A3o-do-danfc-e-cancelado/

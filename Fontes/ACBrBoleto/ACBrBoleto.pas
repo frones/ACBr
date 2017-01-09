@@ -249,7 +249,6 @@ type
   TACBrTipoCobranca =
    (cobNenhum,
     cobBancoDoBrasil,
-    cobBancoDaAmazonia,
     cobSantander,
     cobCaixaEconomica,
     cobCaixaSicob,
@@ -267,7 +266,8 @@ type
     cobBradescoSICOOB,
     cobBancoSafra,
     cobSafraBradesco,
-    cobBancoCECRED
+    cobBancoCECRED,
+    cobBancoDaAmazonia
     );
 
   TACBrTitulo = class;

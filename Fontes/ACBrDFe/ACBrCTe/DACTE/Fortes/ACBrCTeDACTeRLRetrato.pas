@@ -1870,14 +1870,14 @@ begin
   begin
     if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
     begin
-      rlDocOrig_tpDoc1.Lines.Add(cdsDocumentos.FieldByName('TIPO_1').AsString + '   '+
-      cdsDocumentos.FieldByName('CNPJCPF_1').AsString + '   '+
+      rlDocOrig_tpDoc1.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_1').AsString, 33, ' ')+
+      PadRight(cdsDocumentos.FieldByName('CNPJCPF_1').AsString, 26, ' ')+
       cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
     end;
     if cdsDocumentos.FieldByName('TIPO_2').AsString <> '' then
     begin
-      rlDocOrig_tpDoc2.Lines.Add(cdsDocumentos.FieldByName('TIPO_2').AsString+ '   '+
-      cdsDocumentos.FieldByName('CNPJCPF_2').AsString+ '   '+
+      rlDocOrig_tpDoc2.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_2').AsString, 33, ' ')+
+      PadRight(cdsDocumentos.FieldByName('CNPJCPF_2').AsString, 26, ' ')+
       cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
     end;
     cdsDocumentos.Next;
@@ -2329,24 +2329,13 @@ begin
   rlmObsExcEmitente.Lines.BeginUpdate;
   rlmObsExcEmitente.Lines.Clear;
   rlmObsFisco.Lines.Clear;
-  (*
-  if FCTe.Ide.modal = mdAereo
-   then begin
-    rlmObsExcEmitente.Lines.Add( 'O transporte coberto por este conhecimento se rege pelo código brasileiro de aeronáutica. '+
-                  'O expedidor/remetente aceita como corretas todas as especificações impressas neste conhecimento,' );
-    rlmObsExcEmitente.Lines.Add( 'certificando que os artigos perigosos descritos pela regulamentação da ICAO foram devidamente '+
-                  'informados e acondicionados para transporte aéreo.' );
-   end;
-*)
-  if FCTe.Ide.modal <> mdAereo then
-  begin
-    for i := 0 to (FCTe.Compl.ObsCont.Count - 1) do
-      with FCTe.Compl.ObsCont.Items[i] do
-      begin
-        rlmObsExcEmitente.Lines.Add(StringReplace(xCampo, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]) + ': ' +
-          StringReplace(xTexto, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
-      end;
-  end;
+
+  for i := 0 to (FCTe.Compl.ObsCont.Count - 1) do
+    with FCTe.Compl.ObsCont.Items[i] do
+    begin
+      rlmObsExcEmitente.Lines.Add(StringReplace(xCampo, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]) + ': ' +
+        StringReplace(xTexto, '&lt;BR&gt;', #13#10, [rfReplaceAll, rfIgnoreCase]));
+    end;
 
   rlmObsExcEmitente.Lines.Text := StringReplace(rlmObsExcEmitente.Lines.Text, ';', #13, [rfReplaceAll]);
   rlmObsExcEmitente.Lines.EndUpdate;

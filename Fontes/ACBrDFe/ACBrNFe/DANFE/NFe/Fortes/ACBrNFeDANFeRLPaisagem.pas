@@ -511,6 +511,7 @@ type
     function ManterDuplicatas: Integer;
     procedure AplicaParametros;
     function ManterinfAdProd(inItem: Integer): String;
+    procedure CabItens;
   public
 
   end;
@@ -963,6 +964,7 @@ begin
   Transporte;
   AddFaturaReal;
   AddFatura;
+  CabItens;
   Observacoes;
 
   // Verifica se será exibida a 'continuação das informações complementares'
@@ -2182,34 +2184,6 @@ end;
 procedure TfrlDANFeRLPaisagem.rlbCabecalhoItensBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  case FNFe.Emit.CRT of
-    crtRegimeNormal,
-    crtSimplesExcessoReceita :
-      begin
-        lblCST.Caption    := 'CST';
-        lblCST.Font.Size  := 5;
-      end;
-
-    crtSimplesNacional :
-      begin
-        lblCST.Caption    := 'CSOSN';
-        lblCST.Font.Size  := 4;
-      end;
-  end;
-
-  if ( fImprimirDescPorc ) then
-  begin
-    lblPercValorDesc.Caption := 'PERC.(%)';
-    fImprimirTotalLiquido    := false;
-  end
-  else
-    lblPercValorDesc.Caption := 'VALOR';
-
-  if ( fImprimirTotalLiquido ) then
-  begin
-    lblValorTotal.Caption       := 'DESCONTO';
-    lblPercValorDesc1.Caption   := ACBrStr( 'LÍQUIDO');
-  end;
   pnlCabecalho1.Left  := pnlCabecalho.Width+1;
 end;
 
@@ -2285,6 +2259,39 @@ begin
     txtAliqIPI.Caption          := FormatFloatBr(Imposto.IPI.PIPI    , ',#0.00');
   end;
 
+end;
+
+procedure TfrlDANFeRLPaisagem.CabItens;
+begin
+ //   Configura Cabecalho dos Itens
+  case FNFe.Emit.CRT of
+    crtRegimeNormal,
+    crtSimplesExcessoReceita :
+      begin
+        lblCST.Caption    := 'CST';
+        lblCST.Font.Size  := 5;
+      end;
+
+    crtSimplesNacional :
+      begin
+        lblCST.Caption    := 'CSOSN';
+        lblCST.Font.Size  := 4;
+      end;
+  end;
+
+  if ( fImprimirDescPorc ) then
+  begin
+    lblPercValorDesc.Caption := 'PERC.(%)';
+    fImprimirTotalLiquido    := false;
+  end
+  else
+    lblPercValorDesc.Caption := 'VALOR';
+
+  if ( fImprimirTotalLiquido ) then
+  begin
+    lblValorTotal.Caption     := 'DESCONTO';
+    lblPercValorDesc1.Caption := ACBrStr('LÍQUIDO');
+  end;
 end;
 
 end.

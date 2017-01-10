@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/01/2017
+-- ACBrNFeDANFeRLPaisagem --
+[-] Ajustes para apresentação do valor / desconto conforme a danfe Fortes retrato.
+		por: Henrique Leonardo
+
 05/01/2017
 [+] Tratamento para gerar varios danfe em pdf separados mas impressos junto se enviado para impressora
 		http://www.projetoacbr.com.br/forum/topic/31936-danfe-fortes-impress%C3%A3o-v%C3%A1rias-notas/?page=2

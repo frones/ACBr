@@ -1986,6 +1986,7 @@ begin
     pbEmailTeste.Visible := True;
     pbEmailTeste.Position := 1;
     Screen.Cursor := crHourGlass;
+    IsHTML := True;
     Application.ProcessMessages;
     try
       Send(False);

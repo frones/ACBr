@@ -310,7 +310,10 @@ begin
            FrmACBrMonitor.SalvarConfBoletos;
 
         if IniBoletos.SectionExists('Titulo') then
+        begin
            IncluirTitulo(IniBoletos,'Titulo');
+           MudouDados := true;
+        end;
 
         ContTitulos := 0;
         NomeSessao  := 'Titulo1';

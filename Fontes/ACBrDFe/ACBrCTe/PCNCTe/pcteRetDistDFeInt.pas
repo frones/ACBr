@@ -421,13 +421,14 @@ begin
       FmaxNSU   := Leitor.rCampo(tcStr, 'maxNSU');
 
       i := 0;
-      while Leitor.rExtrai(2, 'docZip', '', i + 1) <> '' do
+      while Leitor.rExtrai(2, 'DocZip', '', i + 1) <> '' do
       begin
         FdocZip.Add;
-        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'docZip');
-        FdocZip.Items[i].schema := StrToSchemaCTe(ok, Leitor.rAtributo('schema', 'docZip'));
+        FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'DocZip');
+        FdocZip.Items[i].schema := StrToSchemaCTe(ok, Leitor.rAtributo('schema', 'DocZip'));
 
-        StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
+//        StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
+        StrAux := RetornarConteudoEntre(Leitor.Grupo, '<docZip>', '</docZip');
         StrDecod := DecodeBase64(StrAux);
         FdocZip.Items[i].FInfZip := UnZip(StrDecod);
 
@@ -479,7 +480,7 @@ begin
           begin
             FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
-            oLeitorInfZip.rExtrai(1, 'infCTe');
+            oLeitorInfZip.rExtrai(1, 'infCte');
             FdocZip.Items[i].FresCTe.chCTe := copy(oLeitorInfZip.Grupo, pos('Id="CTe', oLeitorInfZip.Grupo)+7, 44);
 
             oLeitorInfZip.rExtrai(1, 'emit');

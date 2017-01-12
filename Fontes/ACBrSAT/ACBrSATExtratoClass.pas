@@ -204,8 +204,8 @@ begin
   fMask_qCom      := ',0.0000';
   fMask_vUnCom    := ',0.000';
   fPrinterName    := '' ;
-  fSite           := '';
-  fSoftwareHouse  := '';
+  fSite           := 'http://www.projetoacbr.com.br';
+  fSoftwareHouse  := 'Projeto ACBr';
   fMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
 end;
 

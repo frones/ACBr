@@ -160,10 +160,12 @@ type
     lTotDescontos: TRLLabel;
     mDestEnt: TRLMemo;
     mEndEnt: TRLMemo;
+    mMsgAppQRCode: TRLMemo;
+    mSwHouseSite: TRLMemo;
+    mMsgAppQRCodeCanc: TRLMemo;
     mObsContrib: TRLMemo;
     mLinhaItem: TRLMemo;
-    mMsgAppQRCode: TRLMemo;
-    mMsgAppQRCodeCanc: TRLMemo;
+    mSwHouseSiteCanc: TRLMemo;
     pGap6: TRLPanel;
     pGap7: TRLPanel;
     pEspacoFinalCan: TRLPanel;
@@ -586,6 +588,13 @@ begin
     end;
 
     mMsgAppQRCode.Lines.Text := ACBrSATExtrato.MsgAppQRCode;
+
+    mSwHouseSite.Lines.Clear;
+    if ACBrSATExtrato.SoftwareHouse <> '' then
+      mSwHouseSite.Lines.Add(ACBrSATExtrato.SoftwareHouse);
+
+    if ACBrSATExtrato.Site <> '' then
+      mSwHouseSite.Lines.Add(ACBrSATExtrato.Site);
   end;
 end;
 
@@ -871,6 +880,12 @@ begin
 
   mMsgAppQRCodeCanc.Lines.Text := ACBrSATExtrato.MsgAppQRCode;
 
+  mSwHouseSiteCanc.Lines.Clear;
+  if ACBrSATExtrato.SoftwareHouse <> '' then
+    mSwHouseSiteCanc.Lines.Add(ACBrSATExtrato.SoftwareHouse);
+
+  if ACBrSATExtrato.Site <> '' then
+    mSwHouseSiteCanc.Lines.Add(ACBrSATExtrato.Site);
 end;
 
 procedure TACBrSATExtratoFortesFr.rlbObsFiscoBeforePrint(Sender: TObject;

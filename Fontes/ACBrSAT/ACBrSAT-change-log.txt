@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/01/2016
+-- ACBrSATExtratoClass --
+[*] Propriedade "SoftwareHouse" definda como default "Projeto ACBr"
+[*] Propriedade "Site" definda como default "http://www.projetoacbr.com.br"
+
+-- ACBrSATExtratoFortes --
+[+] Adicionado Memo para imprimir o conteudo das propriedades "SoftwareHouse" e
+    "Site"
+[-] Correção na impressão da Mensagem do Aplicação do QRCode, quando
+    "EspacoFinal", fosse zero.
+    (por: DSA)
+
 Data: 20/12/2016
 -- ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr --
 [*] Ajuste para imprimir corretamente numeros usando a formatação Brasileira

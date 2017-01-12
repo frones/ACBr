@@ -1,14 +1,14 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 407
-  Top = 123
-  Width = 763
-  Height = 789
+  Left = 400
+  Top = 118
   Caption = 'ACBrSATExtratoFortes'
+  ClientHeight = 741
+  ClientWidth = 738
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = True
   OnCreate = FormCreate
@@ -17,19 +17,19 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   TextHeight = 13
   object rlVenda: TRLReport
     Left = 8
-    Top = -496
+    Top = -384
     Width = 302
     Height = 1512
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000
@@ -41,7 +41,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 668
       Width = 286
-      Height = 287
+      Height = 331
       AutoSize = True
       BandType = btSummary
       object RLDraw2: TRLDraw
@@ -114,14 +114,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 46
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object imgQRCode: TRLImage
         Left = 0
@@ -144,18 +144,18 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 72
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object pEspacoFinal: TRLPanel
         Left = 0
-        Top = 265
+        Top = 309
         Width = 286
         Height = 22
         Align = faBottom
@@ -171,24 +171,42 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           DrawKind = dkLine
           Pen.Style = psDot
         end
-        object mMsgAppQRCode: TRLMemo
-          Left = 0
-          Top = 0
-          Width = 286
-          Height = 24
-          Align = faTop
-          Alignment = taCenter
-          Behavior = [beSiteExpander]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Lines.Strings = (
-            'Consulte o QR Code pelo aplicativo  "De olho na nota",'
-            'dispon'#237'vel na AppStore (Apple) e PlayStore (Android)')
-          ParentFont = False
-        end
+      end
+      object mMsgAppQRCode: TRLMemo
+        Left = 0
+        Top = 265
+        Width = 286
+        Height = 24
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'dispon'#237'vel na AppStore (Apple) e PlayStore (Android)')
+        ParentFont = False
+      end
+      object mSwHouseSite: TRLMemo
+        Left = 0
+        Top = 289
+        Width = 286
+        Height = 20
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br')
+        ParentFont = False
       end
     end
     object rlsbDetItem: TRLSubDetail
@@ -872,9 +890,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 0
         Width = 286
         Height = 88
-        AutoSize = True
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        AutoSize = True
         object lEndereco: TRLMemo
           Left = 4
           Top = 42
@@ -1085,6 +1103,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Font.Name = 'Arial'
           Font.Pitch = fpVariable
           Font.Style = []
+          Font.Quality = fqDraft
           Layout = tlBottom
           ParentFont = False
         end
@@ -1101,20 +1120,20 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
   end
   object rlCancelamento: TRLReport
-    Left = 328
-    Top = -344
+    Left = 352
+    Top = -256
     Width = 302
     Height = 1134
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 300.000000000000000000
@@ -1126,7 +1145,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 303
       Width = 286
-      Height = 545
+      Height = 589
       AutoSize = True
       BandType = btSummary
       object RLDraw8: TRLDraw
@@ -1199,14 +1218,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 46
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object imgQRCodeCan: TRLImage
         Left = 0
@@ -1310,14 +1329,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 304
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object pGap7: TRLPanel
         Left = 0
@@ -1340,35 +1359,35 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 72
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object bcChaveAcessoCanl2: TRLBarcode
         Left = 0
         Top = 330
         Width = 286
         Height = 26
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
       end
       object pEspacoFinalCan: TRLPanel
         Left = 0
-        Top = 523
+        Top = 567
         Width = 286
         Height = 22
-        Align = faTop
+        Align = faBottom
         object RLDraw12: TRLDraw
           Left = 0
           Top = 21
@@ -1378,24 +1397,42 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           DrawKind = dkLine
           Pen.Style = psDot
         end
-        object mMsgAppQRCodeCanc: TRLMemo
-          Left = 0
-          Top = 0
-          Width = 286
-          Height = 24
-          Align = faTop
-          Alignment = taCenter
-          Behavior = [beSiteExpander]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Lines.Strings = (
-            'Consulte o QR Code pelo aplicativo  "De olho na nota",'
-            'dispon'#237'vel na AppStore (Apple) e PlayStore (Android)')
-          ParentFont = False
-        end
+      end
+      object mMsgAppQRCodeCanc: TRLMemo
+        Left = 0
+        Top = 523
+        Width = 286
+        Height = 24
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'dispon'#237'vel na AppStore (Apple) e PlayStore (Android)')
+        ParentFont = False
+      end
+      object mSwHouseSiteCanc: TRLMemo
+        Left = 0
+        Top = 547
+        Width = 286
+        Height = 20
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br')
+        ParentFont = False
       end
     end
     object rlbCabecalhoCan: TRLBand

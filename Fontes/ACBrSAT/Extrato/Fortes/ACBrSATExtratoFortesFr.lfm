@@ -8,12 +8,12 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   ClientWidth = 738
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.2.0'
   Visible = False
   object rlVenda: TRLReport
     Left = 8
     Height = 1512
-    Top = -496
+    Top = -384
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -36,7 +36,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 8
-      Height = 287
+      Height = 331
       Top = 668
       Width = 286
       AutoSize = True
@@ -195,7 +195,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object pEspacoFinal: TRLPanel
         Left = 0
         Height = 22
-        Top = 265
+        Top = 309
         Width = 286
         Align = faBottom
         Color = clWhite
@@ -219,27 +219,48 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object mMsgAppQRCode: TRLMemo
-          Left = 0
-          Height = 24
-          Top = 0
-          Width = 286
-          Align = faTop
-          Alignment = taCenter
-          Behavior = [beSiteExpander]
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Lines.Strings = (
-            'Consulte o QR Code pelo aplicativo  "De olho na nota",'
-            'disponível na AppStore (Apple) e PlayStore (Android)'
-          )
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
+      end
+      object mMsgAppQRCode: TRLMemo
+        Left = 0
+        Height = 24
+        Top = 265
+        Width = 286
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'disponível na AppStore (Apple) e PlayStore (Android)'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object mSwHouseSite: TRLMemo
+        Left = 0
+        Height = 20
+        Top = 289
+        Width = 286
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlsbDetItem: TRLSubDetail
@@ -1483,9 +1504,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
   end
   object rlCancelamento: TRLReport
-    Left = 328
+    Left = 352
     Height = 1134
-    Top = -344
+    Top = -256
     Width = 302
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Color = clBlack
@@ -1508,7 +1529,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbCanRodape: TRLBand
       Left = 8
-      Height = 545
+      Height = 589
       Top = 303
       Width = 286
       AutoSize = True
@@ -1833,9 +1854,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       object pEspacoFinalCan: TRLPanel
         Left = 0
         Height = 22
-        Top = 523
+        Top = 567
         Width = 286
-        Align = faTop
+        Align = faBottom
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -1854,27 +1875,48 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           RealBounds.Width = 0
           RealBounds.Height = 0
         end
-        object mMsgAppQRCodeCanc: TRLMemo
-          Left = 0
-          Height = 24
-          Top = 0
-          Width = 286
-          Align = faTop
-          Alignment = taCenter
-          Behavior = [beSiteExpander]
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Lines.Strings = (
-            'Consulte o QR Code pelo aplicativo  "De olho na nota",'
-            'disponível na AppStore (Apple) e PlayStore (Android)'
-          )
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
+      end
+      object mMsgAppQRCodeCanc: TRLMemo
+        Left = 0
+        Height = 24
+        Top = 523
+        Width = 286
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'disponível na AppStore (Apple) e PlayStore (Android)'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object mSwHouseSiteCanc: TRLMemo
+        Left = 0
+        Height = 20
+        Top = 547
+        Width = 286
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbCabecalhoCan: TRLBand

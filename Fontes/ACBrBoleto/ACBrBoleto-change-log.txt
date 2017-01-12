@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 11/01/2017 ver: 0.0.215
+--ACBrBancoBancoBrasil.pas
+[*]	Ajuste retornos considerando as diferenças entre CNAB240 e CNAB400.
+	http://www.projetoacbr.com.br/forum/topic/34344-ajuste-boleto-banco-do-brasil/
+	(Letícia Silva)
+	
 Data: 05/01/2017
 --ACBrBancoSicredi
 [+] Adicionado Sacador Avalista Tipo 6 ao Sicredi

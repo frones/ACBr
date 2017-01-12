@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/01/2017
+[-] necessário abrir e salvar no lazarus os lfm do dacte pois estavam com acentuação erradas
+		por: Juliomar Marchetti
+		
 09/01/2017
 [+] Mudanças no dacte em retrato
 		http://www.projetoacbr.com.br/forum/topic/34390-dacte-fortes/

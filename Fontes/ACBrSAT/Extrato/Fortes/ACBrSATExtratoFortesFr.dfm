@@ -1,9 +1,9 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 400
-  Top = 118
+  Left = 393
+  Top = 116
+  Width = 763
+  Height = 789
   Caption = 'ACBrSATExtratoFortes'
-  ClientHeight = 741
-  ClientWidth = 738
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,16 +20,16 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     Top = -384
     Width = 302
     Height = 1512
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 400.000000000000000000
@@ -114,14 +114,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 46
         Width = 286
         Height = 26
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object imgQRCode: TRLImage
         Left = 0
@@ -144,14 +144,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 72
         Width = 286
         Height = 26
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object pEspacoFinal: TRLPanel
         Left = 0
@@ -890,9 +890,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 0
         Width = 286
         Height = 88
+        AutoSize = True
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
-        AutoSize = True
         object lEndereco: TRLMemo
           Left = 4
           Top = 42
@@ -1103,7 +1103,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Font.Name = 'Arial'
           Font.Pitch = fpVariable
           Font.Style = []
-          Font.Quality = fqDraft
           Layout = tlBottom
           ParentFont = False
         end
@@ -1124,16 +1123,16 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     Top = -256
     Width = 302
     Height = 1134
-    Margins.LeftMargin = 2.000000000000000000
-    Margins.TopMargin = 2.000000000000000000
-    Margins.RightMargin = 2.000000000000000000
-    Margins.BottomMargin = 20.000000000000000000
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'Arial'
     Font.Style = []
+    Margins.LeftMargin = 2.000000000000000000
+    Margins.TopMargin = 2.000000000000000000
+    Margins.RightMargin = 2.000000000000000000
+    Margins.BottomMargin = 20.000000000000000000
     PageSetup.PaperSize = fpCustom
     PageSetup.PaperWidth = 80.000000000000000000
     PageSetup.PaperHeight = 300.000000000000000000
@@ -1218,14 +1217,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 46
         Width = 286
         Height = 26
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object imgQRCodeCan: TRLImage
         Left = 0
@@ -1329,14 +1328,14 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 304
         Width = 286
         Height = 26
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '3514031111111111111159'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object pGap7: TRLPanel
         Left = 0
@@ -1359,28 +1358,28 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Top = 72
         Width = 286
         Height = 26
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object bcChaveAcessoCanl2: TRLBarcode
         Left = 0
         Top = 330
         Width = 286
         Height = 26
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Align = faTop
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
         Caption = '9000001020002235664805'
         CheckSumMethod = cmNone
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object pEspacoFinalCan: TRLPanel
         Left = 0

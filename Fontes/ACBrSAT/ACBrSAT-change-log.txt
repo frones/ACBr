@@ -47,7 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 11/01/2016
+Data: 12/01/2017
+-- ACBrSAT --
+[-] Ajuste no método "EnviarEmail", para limpar o objeto TACBrMail antes do
+    envio... (por: DSA)
+
+Data: 11/01/2017
 -- ACBrSATExtratoClass --
 [*] Propriedade "SoftwareHouse" definda como default "Projeto ACBr"
 [*] Propriedade "Site" definda como default "http://www.projetoacbr.com.br"

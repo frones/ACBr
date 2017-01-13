@@ -1,6 +1,7 @@
 program ACBrMonitor;
 
 {$mode objfpc}{$H+}
+//{$IMAGEBASE $400000}
 
 uses
   {$IFDEF UNIX}

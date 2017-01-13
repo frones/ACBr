@@ -43,7 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-11/01/2016
+13/01/2017
+[+]	Versão compativel com TLS 1.2, usa as DLLs compiladas com a MINGW
+	http://www.projetoacbr.com.br/forum/topic/34177-acbrdfe-com-openssl-e-suporte-a-tls12/
+	por: Celso Marigo Junior
+
+11/01/2017
 [-] Correção no teste de email.
 	http://www.projetoacbr.com.br/forum/topic/34429-aba-e-mail-botão-testar-não-envia-body/#comment-225950
 	por: Celso Marigo Junior

@@ -55,7 +55,7 @@ Name: firewallopen; Description: "Liberar {#MyAppName}, porta 3434, no Firewall 
 Source: {#MyAppExeName}; DestDir: {app}; Flags: ignoreversion; Components: programa
 Source: banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Source: ACBrMonitorConsole.exe; DestDir: {app}; Flags: ignoreversion; Components: console
-Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion sign; Components: programa
 ;Arquivos de configuração
 Source: PRICETAB.TXT; DestDir: {app}; Flags: onlyifdoesntexist; Components: programa
 Source: ..\..\..\Fontes\ACBrDFe\ACBrNFe\ACBrNFeServicos.ini; DestDir: {app}; Flags: ignoreversion; Components: programa
@@ -92,20 +92,22 @@ Source: ACBrMonitor.pdf; DestDir: {app}; Flags: ignoreversion; Components: help
 Source: {#ACBrDIR}\DLLs\Diversos\inpout32.dll; DestDir: {syswow64}; Flags: ; Components: programa
 ;OpenSSL
 Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\openssl.exe; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
 Source: {#ACBrDIR}\DLLs\Diversos\msvcr71.dll; DestDir: {app}; Components: programa;  Flags: sharedfile 
 ;DLLs CAPICOM
 Source: {#ACBrDIR}\DLLs\Capicom\capicom.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
 Source: {#ACBrDIR}\DLLs\Capicom\msxml5.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
 Source: {#ACBrDIR}\DLLs\Capicom\msxml5r.dll; DestDir: {syswow64}; Components: programa; Flags: sharedfile
 ;DLLs XMLSec
-Source: {#ACBrDIR}\DLLs\XMLSec\libxml2.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec-openssl.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\XMLSec\iconv.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\XMLSec\libxml2.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\XMLSec\libxmlsec-openssl.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\XMLSec\libxslt.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\XMLSec\zlib1.dll; DestDir: {app}; Flags: ; Components: programa
+;Source: {#ACBrDIR}\DLLs\XMLSec\iconv.dll; DestDir: {app}; Flags: ; Components: programa
+;DLLs XMLSec-MINGW
+Source: {#ACBrDIR}\DLLs\XMLSec\MinGW\32\*.dll; DestDir: {app}; Flags: ; Components: programa
 ;Schemas da NFe
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\CTe\*.*; DestDir: {app}\Schemas; Components: programa;
 Source: {#ACBrDIR}\Exemplos\ACBrDFe\Schemas\MDFe\*.*; DestDir: {app}\Schemas; Components: programa;

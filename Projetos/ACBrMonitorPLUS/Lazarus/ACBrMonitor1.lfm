@@ -378,10 +378,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 886
-        ActivePage = tsMonitor
+        ActivePage = tsConsultas
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 12
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -4557,8 +4557,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsConsultas: TTabSheet
           Caption = 'Consultas'
-          ClientHeight = 297
-          ClientWidth = 814
+          ClientHeight = 327
+          ClientWidth = 878
           ImageIndex = 17
           object gbCEP: TGroupBox
             Left = 267
@@ -4652,7 +4652,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 6
               Height = 17
               Top = 0
-              Width = 67
+              Width = 68
               Caption = 'WebService'
               ParentColor = False
             end
@@ -4796,18 +4796,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsEmail: TTabSheet
           Caption = 'E-mail'
-          ClientHeight = 297
-          ClientWidth = 814
+          ClientHeight = 327
+          ClientWidth = 878
           ImageIndex = 23
           object gbEmailDados: TGroupBox
             Left = 0
-            Height = 265
+            Height = 295
             Top = 4
-            Width = 814
+            Width = 878
             Anchors = [akTop, akLeft, akRight, akBottom]
             Caption = 'Dados da Conta'
-            ClientHeight = 243
-            ClientWidth = 810
+            ClientHeight = 273
+            ClientWidth = 874
             TabOrder = 0
             object Label33: TLabel
               Left = 19
@@ -4839,7 +4839,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 32
-              Width = 542
+              Width = 606
               Anchors = [akTop, akLeft, akRight]
               OnExit = edEmailEnderecoExit
               TabOrder = 1
@@ -4888,7 +4888,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 248
               Height = 25
               Top = 89
-              Width = 431
+              Width = 495
               Anchors = [akTop, akLeft, akRight]
               TabOrder = 3
             end
@@ -4973,7 +4973,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 19
               Height = 10
               Top = 179
-              Width = 810
+              Width = 874
               Anchors = [akTop, akLeft, akRight]
               Max = 11
               Step = 1
@@ -4981,7 +4981,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Visible = False
             end
             object cbEmailCodificacao: TComboBox
-              Left = 690
+              Left = 754
               Height = 25
               Top = 88
               Width = 100
@@ -5103,7 +5103,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Text = 'ISO_8859_1'
             end
             object Label39: TLabel
-              Left = 690
+              Left = 754
               Height = 17
               Top = 70
               Width = 68
@@ -5511,9 +5511,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 878
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsCertificadoDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 1
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -5899,14 +5899,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsCertificadoDFe: TTabSheet
               Caption = 'Certificados'
-              ClientHeight = 267
-              ClientWidth = 806
+              ClientHeight = 297
+              ClientWidth = 870
               ImageIndex = 1
               object edtCNPJContador: TEdit
                 Left = 7
                 Height = 25
                 Top = 176
-                Width = 787
+                Width = 851
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 0
               end
@@ -5937,7 +5937,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 80
                 Height = 10
                 Top = 12
-                Width = 714
+                Width = 778
                 Anchors = [akTop, akLeft, akRight]
                 BorderSpacing.Top = 3
                 Shape = bsTopLine
@@ -5959,7 +5959,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentColor = False
               end
               object sbNumeroSerieCert: TSpeedButton
-                Left = 767
+                Left = 831
                 Height = 25
                 Top = 44
                 Width = 27
@@ -5985,7 +5985,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 7
                 Height = 25
                 Top = 44
-                Width = 758
+                Width = 822
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 1
               end
@@ -5993,7 +5993,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 7
                 Height = 25
                 Top = 132
-                Width = 787
+                Width = 851
                 Anchors = [akTop, akLeft, akRight]
                 EchoMode = emPassword
                 PasswordChar = '*'
@@ -6008,7 +6008,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentColor = False
               end
               object sbArquivoCert: TSpeedButton
-                Left = 767
+                Left = 831
                 Height = 25
                 Top = 87
                 Width = 27
@@ -6034,7 +6034,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 7
                 Height = 25
                 Top = 87
-                Width = 758
+                Width = 822
                 Anchors = [akTop, akLeft, akRight]
                 TabOrder = 3
               end
@@ -7958,7 +7958,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsTestesDFe: TTabSheet
               Caption = 'Teste'
               ClientHeight = 297
-              ClientWidth = 806
+              ClientWidth = 870
               ImageIndex = 5
               object Panel1: TPanel
                 Left = 0
@@ -7974,9 +7974,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Height = 295
                   Top = 1
                   Width = 175
-                  ActivePage = tsTesteCTe
+                  ActivePage = tsTesteNFe
                   Align = alClient
-                  TabIndex = 1
+                  TabIndex = 0
                   TabOrder = 0
                   object tsTesteNFe: TTabSheet
                     Caption = 'NF-e'
@@ -8206,16 +8206,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 177
                 Height = 297
                 Top = 0
-                Width = 629
+                Width = 693
                 Align = alClient
                 ClientHeight = 297
-                ClientWidth = 629
+                ClientWidth = 693
                 TabOrder = 1
                 object Panel3: TPanel
                   Left = 1
                   Height = 17
                   Top = 17
-                  Width = 627
+                  Width = 691
                   Align = alBottom
                   Alignment = taLeftJustify
                   Caption = 'Resposta WebService'
@@ -8231,7 +8231,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 262
                   Top = 34
-                  Width = 627
+                  Width = 691
                   Align = alBottom
                   Font.Height = -13
                   Font.Name = 'Courier New'

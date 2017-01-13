@@ -49,7 +49,8 @@ interface
 uses
   SysUtils, Classes, Graphics, ACBrCTeDACTEClass,
   pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
-  pcteEnvEventoCTe, ACBrCTe, ACBrUtil, StrUtils, DB, MaskUtils;
+  pcteEnvEventoCTe, pcteInutCTe, pcteRetInutCTe, ACBrCTe, ACBrUtil, StrUtils,
+  DB, MaskUtils;
 
 type
   EACBrCTeDACTEFR = class(Exception);
@@ -59,13 +60,16 @@ type
     FDACTEClassOwner: TACBrCTeDACTEClass;
     FCTe            : TCTe;
     FEvento         : TEventoCTe;
+    FInutilizacao   : TRetInutCTe;
     FFastFile       : String;
     FEspessuraBorda : Integer;
     FFastFileEvento : string;
+    FFastFileInutilizacao: String;
 
     procedure CriarDataSetsFrx;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
+		function GetPreparedReportInutilizacao: TfrxReport;
 
     procedure SetDataSetsToFrxReport;
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
@@ -97,8 +101,10 @@ type
   protected
     procedure CarregaDados;
     procedure CarregaDadosEventos;
+    procedure CarregaDadosInutilizacao;
     function PrepareReport(ACTE: TCTe = nil): Boolean; virtual;
     function PrepareReportEvento: Boolean; virtual;
+    function PrepareReportInutilizacao: Boolean; virtual;
   public
     frxReport   : TfrxReport;
     frxPDFExport: TfrxPDFExport;
@@ -126,9 +132,10 @@ type
     cdsRodoMotorista        : TClientDataSet;
     cdsDocAnterior          : TClientDataSet;
     cdsAnuladoComple        : TClientDataSet;
-	cdsEventos              : TClientDataSet;
-	cdsProdutosPerigosos    : TClientDataSet;
-	cdsVeiculosNovos        : TClientDataSet;
+  	cdsEventos              : TClientDataSet;
+	  cdsProdutosPerigosos    : TClientDataSet;
+  	cdsVeiculosNovos        : TClientDataSet;
+    cdsInutilizacao         : TClientDataSet;
 
     // frxDB
     frxIdentificacao        : TfrxDBDataset;
@@ -154,9 +161,10 @@ type
     frxRodoMotorista        : TfrxDBDataset;
     frxDocAnterior          : TfrxDBDataset;
     frxAnuladoComple        : TfrxDBDataset;
-	frxEventos              : TfrxDBDataset;
-	frxProdutosPerigosos    : TfrxDBDataset;
-	frxVeiculosNovos        : TfrxDBDataset;
+  	frxEventos              : TfrxDBDataset;
+	  frxProdutosPerigosos    : TfrxDBDataset;
+  	frxVeiculosNovos        : TfrxDBDataset;
+    frxInutilizacao         : TfrxDBDataset;
 
     frxBarCodeObject: TfrxBarCodeObject;
 
@@ -167,16 +175,21 @@ type
     procedure ImprimirDACTEPDF(ACTE: TCTe = nil); override;
     procedure ImprimirEVENTO(ACTE: TCTe = nil); override;
     procedure ImprimirEVENTOPDF(ACTE: TCTe = nil); override;
+    procedure ImprimirINUTILIZACAO(ACTE: TCTe = nil); override;
+    procedure ImprimirINUTILIZACAOPDF(ACTE: TCTe = nil); override;
     property CTE: TCTe read FCTe write FCTe;
     property Evento: TEventoCTe read FEvento write FEvento;
+    property Inutilizacao: TRetInutCTe read FInutilizacao write FInutilizacao;
     property DACTEClassOwner: TACBrCTeDACTEClass read FDACTEClassOwner;
 
   published
     property FastFile            : String read FFastFile write FFastFile;
     property FastFileEvento      : string read FFastFileEvento write FFastFileEvento;
+    property FastFileInutilizacao: String read FFastFileInutilizacao write FFastFileInutilizacao;
     property EspessuraBorda      : Integer read FEspessuraBorda write FEspessuraBorda;
     property PreparedReport      : TfrxReport read GetPreparedReport;
     property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
+		property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
   end;
 
 var
@@ -841,6 +854,31 @@ begin
 		CreateDataSet;
   end;
 
+  //Inutilização
+  cdsInutilizacao := TClientDataSet.Create(nil);
+  with cdsInutilizacao, FieldDefs do
+  begin
+   	Close;
+   	Clear;
+    Add('ID', ftString, 44);
+    Add('CNPJ', ftString, 20);
+    Add('nProt', ftString, 20);
+    Add('Modelo', ftInteger);
+    Add('Serie', ftInteger);
+    Add('Ano', ftInteger);
+    Add('nCTIni', ftInteger);
+    Add('nCTFin', ftInteger);
+    Add('xJust', ftString, 50);
+    Add('versao', ftString, 20);
+    Add('TpAmb', ftString, 32);
+    Add('verAplic', ftString, 20);
+    Add('cStat', ftInteger);
+    Add('xMotivo', ftString, 50);
+    Add('cUF', ftString, 2);
+    Add('dhRecbto', ftDateTime);
+		CreateDataSet;
+  end;
+
   // frxDB
   frxIdentificacao := TfrxDBDataset.Create(nil);
   with frxIdentificacao do
@@ -1048,6 +1086,13 @@ begin
      	OpenDataSource := False;
 		DataSet        := cdsVeiculosNovos;
   end;
+  frxInutilizacao  := TfrxDBDataset.Create(nil);
+  with frxInutilizacao do
+  begin
+		UserName       := 'Inutilizacao';
+    OpenDataSource := False;
+		DataSet        := cdsInutilizacao;
+  end;
   frxBarCodeObject := TfrxBarCodeObject.Create(nil);
 end;
 
@@ -1082,6 +1127,7 @@ begin
   cdsEventos.Free;
   cdsProdutosPerigosos.Free;
   cdsVeiculosNovos.Free;
+  cdsInutilizacao.Free;
 
   // frxDB
   frxIdentificacao.Free;
@@ -1111,6 +1157,7 @@ begin
   frxBarCodeObject.Free;
   frxProdutosPerigosos.Free;
   frxVeiculosNovos.Free;
+  frxInutilizacao.Free;
 
   inherited Destroy;
 end;
@@ -1207,6 +1254,19 @@ begin
   end;
 end;
 
+function TACBrCTeDACTEFR.GetPreparedReportInutilizacao: TfrxReport;
+begin
+  if Trim(FFastFileInutilizacao) = '' then
+    Result := nil
+  else
+  begin
+    if PrepareReportInutilizacao then
+      Result := frxReport
+    else
+      Result := nil;
+  end;
+end;
+
 procedure TACBrCTeDACTEFR.ImprimirDACTE(ACTE: TCTe);
 begin
   if PrepareReport(ACTE) then
@@ -1296,6 +1356,44 @@ begin
     finally
       frxPDFExport.ShowDialog := OldShowDialog;
     end;
+  end;
+end;
+
+procedure TACBrCTeDACTEFR.ImprimirINUTILIZACAO(ACTE: TCTe);
+begin
+  if PrepareReportInutilizacao then
+  begin
+    if MostrarPreview then
+      frxReport.ShowPreparedReport
+    else
+      frxReport.Print;
+  end;
+end;
+
+procedure TACBrCTeDACTEFR.ImprimirINUTILIZACAOPDF(ACTE: TCTe);
+const
+  TITULO_PDF = 'Inutilização de Numeração';
+var
+  NomeArq: String;
+begin
+  if PrepareReportInutilizacao then
+  begin
+    frxPDFExport.Author     := Sistema;
+    frxPDFExport.Creator    := Sistema;
+    frxPDFExport.Producer   := Sistema;
+    frxPDFExport.Title      := TITULO_PDF;
+    frxPDFExport.Subject    := TITULO_PDF;
+    frxPDFExport.Keywords   := TITULO_PDF;
+    frxPDFExport.ShowDialog := False;
+
+    NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).InutCTe.RetInutCTe.Id);
+
+    frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-ped-inu.pdf';
+
+    if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
+      ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
+
+    frxReport.Export(frxPDFExport);
   end;
 end;
 
@@ -1405,7 +1503,39 @@ begin
     Result := frxReport.PrepareReport;
   end
   else
-    raise EACBrCTeDACTEFR.Create('Propriedade ACBrNFe não assinalada.');
+    raise EACBrCTeDACTEFR.Create('Propriedade ACBrCTe não assinalada.');
+end;
+
+function TACBrCTeDACTEFR.PrepareReportInutilizacao: Boolean;
+begin
+  if Trim(FastFileInutilizacao) <> '' then
+  begin
+    if FileExists(FastFileInutilizacao) then
+      frxReport.LoadFromFile(FastFileInutilizacao)
+    else
+      raise EACBrCTeDACTEFR.CreateFmt('Caminho do arquivo de impressão de INUTILIZAÇÃO "%s" inválido.', [FastFileInutilizacao]);
+  end
+  else
+    raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do INUTILIZAÇÃO não assinalado.');
+
+  frxReport.PrintOptions.Copies := NumCopias;
+
+  // preparar relatorio
+  if Assigned(ACBrCTe) then
+  begin
+    if assigned(TACBrCTe(ACBrCTe).InutCTe) then
+    begin
+      Inutilizacao := TACBrCTe(ACBrCTe).InutCTe.RetInutCTe;
+      CarregaDadosInutilizacao;
+    end
+    else
+      raise EACBrCTeDACTEFR.Create('INUTILIZAÇÃO não foi assinalada.');
+
+    Result := frxReport.PrepareReport;
+  end
+  else
+    raise EACBrCTeDACTEFR.Create('Propriedade ACBrCTe não assinalada.');
+
 end;
 
 procedure TACBrCTeDACTEFR.SetDataSetsToFrxReport;
@@ -1437,9 +1567,10 @@ begin
     Add(frxRodoMotorista);
     Add(frxDocAnterior);
     Add(frxAnuladoComple);
-	Add(frxEventos);
-	Add(frxProdutosPerigosos);
-	Add(frxVeiculosNovos);
+  	Add(frxEventos);
+	  Add(frxProdutosPerigosos);
+  	Add(frxVeiculosNovos);
+    Add(frxInutilizacao);
   end;
 end;
 
@@ -1715,6 +1846,62 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TACBrCTeDACTEFR.CarregaDadosInutilizacao;
+begin
+   CarregaParametros;
+
+   with cdsInutilizacao do
+   begin
+      Close;
+      FieldDefs.Clear;
+      FieldDefs.Add('ID', ftString, 44);
+      FieldDefs.Add('CNPJ', ftString, 20);
+      FieldDefs.Add('nProt', ftString, 20);
+      FieldDefs.Add('Modelo', ftInteger);
+      FieldDefs.Add('Serie', ftInteger);
+      FieldDefs.Add('Ano', ftInteger);
+      FieldDefs.Add('nCTIni', ftInteger);
+      FieldDefs.Add('nCTFin', ftInteger);
+      FieldDefs.Add('xJust', ftString, 50);
+      FieldDefs.Add('versao', ftString, 20);
+      FieldDefs.Add('TpAmb', ftString, 32);
+      FieldDefs.Add('verAplic', ftString, 20);
+      FieldDefs.Add('cStat', ftInteger);
+      FieldDefs.Add('xMotivo', ftString, 50);
+      FieldDefs.Add('cUF', ftString, 2);
+      FieldDefs.Add('dhRecbto', ftDateTime);
+      CreateDataSet;
+
+      Append;
+
+      with FInutilizacao do
+      begin
+         FieldByName('ID').AsString         := OnlyNumber(ID);
+         FieldByName('CNPJ').AsString       := FormatarCNPJ(CNPJ);
+         FieldByName('nProt').AsString      := nProt;
+         FieldByName('Modelo').AsInteger    := Modelo;
+         FieldByName('Serie').AsInteger     := Serie;
+         FieldByName('Ano').AsInteger       := Ano;
+         FieldByName('nCTIni').AsInteger    := nCTIni;
+         FieldByName('nCTFin').AsInteger    := nCTFin;
+         FieldByName('xJust').AsString      := xJust;
+         FieldByName('versao').AsString     := versao;
+         FieldByName('verAplic').AsString   := verAplic;
+         FieldByName('cStat').AsInteger     := cStat;
+         FieldByName('xMotivo').AsString    := xMotivo;
+         FieldByName('dhRecbto').AsDateTime := dhRecbto;
+         FieldByName('cUF').AsString        := CUFtoUF(cUF);
+
+         case tpAmb of
+            taProducao:    FieldByName('tpAmb').AsString := ACBrStr('PRODUÇÃO');
+            taHomologacao: FieldByName('tpAmb').AsString := ACBrStr('HOMOLOGAÇÃO - SEM VALOR FISCAL');
+         end;
+
+         Post;
+      end;
+   end;
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosNotasFiscais;

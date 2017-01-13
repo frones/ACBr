@@ -680,7 +680,6 @@ type
      Procedure LerRespostaRequisicao ; virtual;
      procedure FinalizarResposta( ApagarArqResp : Boolean ) ; virtual;
 
-     Function CriarResposta( Tipo: TACBrTEFDTipo ): TACBrTEFDResp;
      Function CopiarResposta : String ; virtual;
 
      procedure ProcessarResposta ; virtual;
@@ -722,6 +721,7 @@ type
      property AguardandoResposta : Boolean read fpAguardandoResposta ;
 
      procedure GravaLog(AString: AnsiString; Traduz: Boolean = False);
+     Function CriarResposta( Tipo: TACBrTEFDTipo ): TACBrTEFDResp;
 
      property Inicializado : Boolean read fpInicializado write SetInicializado ;
      procedure VerificaInicializado ;
@@ -2321,16 +2321,6 @@ begin
    Resp.Clear;
 end;
 
-function TACBrTEFDClass.CriarResposta(Tipo : TACBrTEFDTipo) : TACBrTEFDResp ;
-begin
-  Case Tipo of
-    gpCliSiTef : Result := TACBrTEFDRespCliSiTef.Create;
-    gpVeSPague : Result := TACBrTEFDRespVeSPague.Create;
-  else
-    Result := TACBrTEFDRespTXT.Create;
-  end ;
-end ;
-
 procedure TACBrTEFDClass.CancelarTransacoesPendentesClass;
 Var
   ArquivosVerficar    : TStringList ;
@@ -2970,6 +2960,16 @@ begin
                           ' - ' + AString, True);
   except
   end ;
+end;
+
+function TACBrTEFDClass.CriarResposta(Tipo: TACBrTEFDTipo): TACBrTEFDResp;
+begin
+  case Tipo of
+    gpCliSiTef: Result := TACBrTEFDRespCliSiTef.Create;
+    gpVeSPague: Result := TACBrTEFDRespVeSPague.Create;
+  else
+    Result := TACBrTEFDRespTXT.Create;
+  end;
 end;
 
 { TACBrTEFDClasses }

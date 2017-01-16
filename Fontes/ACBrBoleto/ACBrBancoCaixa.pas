@@ -898,6 +898,8 @@ end;
 
 function TACBrCaixaEconomica.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): string;
 begin  
+  if (ACBrBanco.ACBrBoleto.LayoutRemessa = c240) then
+  begin
   case TipoOcorrencia of
     toRetornoRegistroConfirmado, toRetornoRegistroRecusado,
       toRetornoInstrucaoRejeitada, toRetornoALteracaoOutrosDadosRejeitada:
@@ -1006,7 +1008,24 @@ begin
     else
       Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
     end;
-
+     toRetornoLiquidado, toRetornoBaixado:
+    case CodMotivo of
+      02: Result := '02-Casa Lotérica';
+      03: Result := '03-Agências CAIXA';
+      04: Result := '04-Compensação Eletrônica';
+      05: Result := '05-Compensação Convencional';
+      06: Result := '06-Internet Banking';
+      07: Result := '07-Correspondente Bancário';
+      08: Result := '08-Em Cartório';
+      09: Result := '09-Comandada Banco';
+      10: Result := '10-Comandada Cliente via Arquivo';
+      11: Result := '11-Comandada Cliente On-line';
+      12: Result := '12-Decurso Prazo - Cliente';
+      13: Result := '13-Decurso Prazo - Banco';
+      14: Result := '14-Protestado';
+    else
+      Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
+    end;
     toRetornoDebitoTarifas:
     case CodMotivo of
       01: Result := '01-Tarifa de Extrato de Posição';
@@ -1036,26 +1055,116 @@ begin
     else
       Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
     end;
-
+    end;
+  end
+  else
+  begin
+  case TipoOcorrencia of
+    toRetornoTarifaDeManutencaoDeTitulosVencidos:
+    case CodMotivo of
+      01: Result := '01-Entrada de Título';
+      02: Result := '02-Pedido de Baixa';
+      03: Result := '03-Concessão de Abatimento';
+      04: Result := '04-Cancelamento de Abatimento';
+      05: Result := '05-Alteração de Vencimento';
+      06: Result := '06-Alteração do uso da Empresa';
+      07: Result := '07-Alteração do Prazo de Protesto';
+      08: Result := '08-Alteração do Prazo de Devolução';
+      09: Result := '09-Alteração de outros dados';
+      10: Result := '10-Alt de dados c/ emissão / emissão de bloqueto';
+      11: Result := '11-Alteração da opção de Protesto para Devolução';
+      12: Result := '12-Alteração da opção de Devolução para Protesto';
+    end;
+    toRetornoRegistroRecusado:
+    case CodMotivo of
+      01: Result := 'Remessa sem registro tipo 0';
+      02: Result := 'Identificação inválida da Empresa na CAIXA';
+      03: Result := 'Número Inválido da Remessa';
+      04: Result := 'Beneficiário não pertence a Cobrança Eletrônica';
+      05: Result := 'Código da Remessa Inválido';
+      06: Result := 'Literal da Remessa Inválido';
+      07: Result := 'Código de Serviço Inválido';
+      08: Result := 'Literal de Serviço Inválido';
+      09: Result := 'Código do Banco Inválido';
+      10: Result := 'Nome do Banco Inválido';
+      11: Result := 'Data de gravação Inválida';
+      12: Result := 'Número de Remessa já Processada';
+      13: Result := 'Tipo de registro esperado Inválido';
+      14: Result := 'Tipo de Ocorrência Inválido';
+      15: Result := 'Literal Remessa Inválida para fase de Testes';
+      16: Result := 'Identificação da empresa no Registro tipo 0 difere da identificação no Registro Tipo 1';
+      17: Result := 'Identificação na CAIXA inválida (Nosso Número)';
+      18: Result := 'Código da Carteira inválido';
+      19: Result := 'Número seqüencial do Registro Inválido';
+      20: Result := 'Tipo de Inscrição da empresa Inválido';
+      21: Result := 'Número de Inscrição da empresa Inválido';
+      22: Result := 'Literal REM.TST válida somente para a fase de Testes';
+      23: Result := 'Taxa de Comissão de Permanência Inválida';
+      24: Result := 'Nosso Número inválido para Cobrança Registrada emissão Beneficiário (14)';
+      25: Result := 'Dígito do Nosso Número não confere';
+      26: Result := 'Data de vencimento inválida';
+      27: Result := 'Valor do título inválido';
+      28: Result := 'Espécie de título Inválida';
+      29: Result := 'Código de Aceite Inválido';
+      30: Result := 'Data de emissão do título inválida';
+      31: Result := 'Instrução de Cobrança 1 Inválida';
+      32: Result := 'Instrução de Cobrança 2 Inválida';
+      33: Result := 'Instrução de Cobrança 3 Inválida';
+      34: Result := 'Valor de Juros Inválido';
+      35: Result := 'Data do Desconto Inválida';
+      36: Result := 'Valor do Desconto Inválido';
+      37: Result := 'Valor do IOF Inválido';
+      38: Result := 'Valor do Abatimento Inválido';
+      39: Result := 'Tipo de Inscrição do Pagador Inválido';
+      40: Result := 'Número de Inscrição do Pagador Inválido';
+      41: Result := 'Número de Inscrição do Pagador obrigatório';
+      42: Result := 'Nome do Pagador obrigatório';
+      43: Result := 'Endereço do Pagador obrigatório';
+      44: Result := 'CEP do Pagador Inválido';
+      45: Result := 'Cidade do Pagador obrigatório';
+      46: Result := 'Estado do Pagador obrigatório';
+      47: Result := 'Data da multa inválida';
+      48: Result := 'Valor da multa inválido';
+      49: Result := 'Prazo de protesto/devolução inválido';
+      50: Result := 'Prazo do protesto inválido';
+      51: Result := 'Prazo de devolução inválido';
+      52: Result := 'Moeda inválida';
+      53: Result := '“USO DA EMPRESA” obrigatório';
+      54: Result := 'Remessa sem registro tipo 9';
+      55: Result := 'Solicitacao nao permitida para titulo incluido somente para protesto';
+      56: Result := 'Identificacao inválida da empresa na CAIXA';
+      57: Result := 'Identificacao inválida da empresa na CAIXA';
+      58: Result := 'Identificacao inválida da empresa na CAIXA';
+      59: Result := 'Identificacao inválida da empresa na CAIXA';
+      60: Result := 'Identificação da emissão do bloqueto inválida';
+      61: Result := 'Tipo de entrega inválido';
+      62: Result := 'Modalidade do titulo inválida';
+      63: Result := 'Forma de entrega de bloq.inválida para emis. banco';
+      64: Result := 'Forma de entrega de bloq.inválida para emis.cedente';
+      65: Result := 'Forma de emissao de bloqueto inválida';
+      66: Result := 'E-mail inválido';
+      67: Result := 'Número do DDD do celular do sacado inválido';
+      68: Result := 'Número do celular do sacado inválido';
+      69: Result := 'Tipo de mensagem de envio SMS inválido';
+      70: Result := 'Envio de sms do cedente inválido';
+      71: Result := 'Reenvio de SMS diferente de SMS ou SMS e postagem inválido';
+    end;
     toRetornoLiquidado, toRetornoBaixado:
     case CodMotivo of
-      02: Result := '02-Casa Lotérica';
+      02: Result := '02-Unidade Lotérica';
       03: Result := '03-Agências CAIXA';
       04: Result := '04-Compensação Eletrônica';
-      05: Result := '05-Compensação Convencional';
       06: Result := '06-Internet Banking';
-      07: Result := '07-Correspondente Bancário';
+      07: Result := '07-Correspondente CAIXAqui';
       08: Result := '08-Em Cartório';
       09: Result := '09-Comandada Banco';
       10: Result := '10-Comandada Cliente via Arquivo';
       11: Result := '11-Comandada Cliente On-line';
-      12: Result := '12-Decurso Prazo - Cliente';
-      13: Result := '13-Decurso Prazo - Banco';
-      14: Result := '14-Protestado';
     else
       Result := IntToStrZero(CodMotivo, 2) + ' - Outros Motivos';
     end;
   end;  
+  end
 end;
 
 function TACBrCaixaEconomica.TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia): String;

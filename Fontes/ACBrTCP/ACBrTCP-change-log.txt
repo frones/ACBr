@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2017
+-- ACBrConsultaCPF
+[*] Mudança de endereço da receita para consulta
+		http://www.projetoacbr.com.br/forum/topic/34620-erro-consulta-cpf-unit-com-corre%C3%A7%C3%A3o-da-url/
+		por Juliomar Marchetti
+		
 07/01/2017
 -- ACBrSocket --
 [*] Refatoração em TACBrTCPServer, para não precisar criar e destruir o Daemon,

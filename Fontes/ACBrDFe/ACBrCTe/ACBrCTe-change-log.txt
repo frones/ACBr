@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/01/2017
+-- pcteCTe, pcteCTeR, pcteCTeW --
+[*] Mudança no grupo idDocAntEle o campo chave mudou para chCTe na 3.00
+		http://www.projetoacbr.com.br/forum/topic/34624-tag-chave-mudou-para-chcte-no-ct-e-30-na-parte-de-documentos-anteriores/
+		por: Juliomar Marchetti
+		
 07/01/2017
 -- Diversos --
 [*] Migração do tipo de navegação, funções de conversão e constantes para as 

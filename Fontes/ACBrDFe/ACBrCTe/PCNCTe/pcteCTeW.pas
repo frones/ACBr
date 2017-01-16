@@ -1689,10 +1689,20 @@ begin
       for i02 := 0 to CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle.Count - 1 do
       begin
         Gerador.wGrupo('idDocAntEle', '#358');
-        Gerador.wCampo(tcStr, '#359', 'chave ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave), DSC_CHCTE);
-        if OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) <> '' then
-         if not ValidarChave(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) then
-          Gerador.wAlerta('#359', 'chave', DSC_REFCTE, ERR_MSG_INVALIDO);
+        if (CTe.infCTe.versao >= 3) then
+        begin
+          Gerador.wCampo(tcStr, '#359', 'chCTE ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe ), DSC_CHCTE);
+          if OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe) <> '' then
+            if not ValidarChave(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chCTe) then
+              Gerador.wAlerta('#359', 'chCTE', DSC_REFCTE, ERR_MSG_INVALIDO);
+        end
+        else
+        begin
+          Gerador.wCampo(tcStr, '#359', 'chave ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave), DSC_CHCTE);
+          if OnlyNumber(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) <> '' then
+            if not ValidarChave(CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle[i02].chave) then
+              Gerador.wAlerta('#359', 'chave', DSC_REFCTE, ERR_MSG_INVALIDO);
+        end;
         Gerador.wGrupo('/idDocAntEle');
       end;
       if CTe.infCTeNorm.docAnt.emiDocAnt[i].idDocAnt[i01].idDocAntEle.Count > 990 then

@@ -1680,12 +1680,14 @@ type
 
   TIdDocAntEleCollectionItem = class(TCollectionItem)
   private
-    Fchave : String;
+    Fchave : String deprecated ;
+    FchCTe : string;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property chave: String read Fchave write Fchave;
+    property chave: String read Fchave write Fchave; deprecated 'Versão CTE 2.0';
+    property chCTe: String read FchCTe write FchCTe;
   end;
 
   TSegCollection = class(TCollection)

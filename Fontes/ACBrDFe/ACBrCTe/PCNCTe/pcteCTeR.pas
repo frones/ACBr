@@ -1034,7 +1034,10 @@ begin
           while Leitor.rExtrai(5, 'idDocAntEle', '', i03 + 1) <> '' do
           begin
             CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle.Add;
-            CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chave := Leitor.rCampo(tcStr, 'chave');
+            if (CTe.infCTe.versao >= 3) then
+              CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chCTe := Leitor.rCampo(tcStr, 'chCTe')
+            else
+              CTe.infCTeNorm.docAnt.emiDocAnt[i01].idDocAnt[i02].idDocAntEle[i03].chave := Leitor.rCampo(tcStr, 'chave');
             inc(i03);
           end;
           inc(i02);

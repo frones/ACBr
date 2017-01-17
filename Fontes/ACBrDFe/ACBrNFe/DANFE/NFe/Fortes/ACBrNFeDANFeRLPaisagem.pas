@@ -2260,7 +2260,7 @@ begin
 
 end;
 
-<<<<<<< .mine
+
 Function TfrlDANFeRLPaisagem.ManterinfAdProd(inItem : Integer ) : String;
 begin
   if Not ( TACBrNFeDANFeRL(Owner).ExibirBandInforAdicProduto ) then

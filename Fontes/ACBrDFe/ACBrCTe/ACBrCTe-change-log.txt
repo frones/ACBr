@@ -50,6 +50,7 @@ Símbolo : Significado
 16/01/2017
 -- pcteCTe, pcteCTeR, pcteCTeW --
 [*] Mudança no grupo idDocAntEle o campo chave mudou para chCTe na 3.00
+		Correção do bug
 		http://www.projetoacbr.com.br/forum/topic/34624-tag-chave-mudou-para-chcte-no-ct-e-30-na-parte-de-documentos-anteriores/
 		por: Juliomar Marchetti
 		

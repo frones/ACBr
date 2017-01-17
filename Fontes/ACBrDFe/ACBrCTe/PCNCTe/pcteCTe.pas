@@ -1680,7 +1680,7 @@ type
 
   TIdDocAntEleCollectionItem = class(TCollectionItem)
   private
-    Fchave : String deprecated ;
+    Fchave : String;
     FchCTe : string;
   public
     constructor Create; reintroduce;

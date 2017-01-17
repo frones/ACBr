@@ -103,6 +103,7 @@ type
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
     fImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
+    fExibirBandInforAdicProduto : Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -136,6 +137,8 @@ type
     property AlternaCoresProdutos: Boolean read FAlternaCoresProdutos write FAlternaCoresProdutos default False; // Alterna as cores de fundo dos produtos para destaca-los
     property CorDestaqueProdutos: TColor read FCorDestaqueProdutos write FCorDestaqueProdutos default clWhite; // Cor usada para destacar produtos na lista alternando entre fundo coloridos e não colorido
     property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read fImprimirUnQtVlComercial write fImprimirUnQtVlComercial;
+    property ExibirBandInforAdicProduto : Boolean  read fExibirBandInforAdicProduto write fExibirBandInforAdicProduto default False; // Exibir a banda de informação Adicionais do produto.
+
   end;
 
 implementation
@@ -186,13 +189,14 @@ begin
   FDetArmamentos := [da_tpArma, da_nSerie, da_nCano, da_descr];
   FDetCombustiveis := [dc_cProdANP, dc_CODIF, dc_qTemp, dc_UFCons, dc_CIDE, dc_qBCProd, dc_vAliqProd, dc_vCIDE];
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
-  fExibeCampoFatura       := False;
+  fExibeCampoFatura     := False;
   fMostraDadosISSQN     := False;
   fAltLinhaComun        := 30;
   fEspacoEntreProdutos  := 7;
   fAlternaCoresProdutos := False;
   fCorDestaqueProdutos  := clWhite;
-  fImprimirUnQtVlComercial := iuComercial;
+  fImprimirUnQtVlComercial  := iuComercial;
+  fExibirBandInforAdicProduto := False;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;

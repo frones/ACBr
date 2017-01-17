@@ -472,6 +472,12 @@ type
     txtUnidade: TRLMemo;
     txtQuantidade: TRLMemo;
     txtValorUnitario: TRLMemo;
+    RLBandInfAd: TRLBand;
+    RLDInfAdcBarra: TRLDraw;
+    RLDraw25: TRLDraw;
+    RLDraw31: TRLDraw;
+    RLMemoInfAd: TRLMemo;
+    RLDrawFinal: TRLDraw;
     procedure RLNFeBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbEmitenteBeforePrint(Sender: TObject;
       var PrintIt: Boolean);
@@ -486,10 +492,12 @@ type
       var Eof: Boolean; var RecordAction: TRLRecordAction);
     procedure RLNFeDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
       var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure RLMemoInfAdAfterPrint(Sender: TObject);
   private
     fNumItem      : Integer;
     fRecebemoDe   : string;
     sQuebraLinha  : String;
+    fTamanhoBandInf : Integer;
     procedure InitDados;
     procedure Header;
     procedure Emitente;
@@ -511,6 +519,7 @@ type
     function ManterDuplicatas: Integer;
     procedure AplicaParametros;
     function ManterinfAdProd(inItem: Integer): String;
+    function ManterBandinfAdProd(sInforAdicProduto: String): String;
     procedure CabItens;
   public
 
@@ -527,6 +536,8 @@ uses DateUtils, StrUtils,
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
+
+
 
 procedure TfrlDANFeRLPaisagem.RLNFeBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
@@ -742,9 +753,9 @@ begin
   // Se a largura da coluna 'Código do produto' for suficiente,
   // exibe o título da coluna sem abreviações
   if rlmCodProd.Width > 113 then
-    rlmCodProd.Lines.Add(ACBrStr('CÓDIGO DO PRODUTO / SERVIÇO') )
+    rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PRODUTO / SERVIÇO')
   else
-    rlmCodProd.Lines.Add(ACBrStr('CÓDIGO DO PROD. / SERV.'));
+    rlmCodProd.Lines.Text := ACBrStr('CÓDIGO DO PROD. / SERV.');
 
   // Ajusta a posição da coluna 'Descrição do produto'
   if rlmDescricaoProduto.Width > 128 then
@@ -761,9 +772,9 @@ begin
   // Se a largura da coluna 'Descrição do produto' for suficiente,
   // exibe o título da coluna sem abreviações
   if rlmDescricaoProduto.Width > 72 then
-    rlmDescricaoProduto.Lines.Add(ACBrStr('DESCRIÇÃO DO PRODUTO / SERVIÇO'))
+    rlmDescricaoProduto.Lines.Text := ACBrStr('DESCRIÇÃO DO PRODUTO / SERVIÇO')
   else
-    rlmDescricaoProduto.Lines.Add('DESCR. PROD. / SERV.');
+    rlmDescricaoProduto.Lines.Text := 'DESCR. PROD. / SERV.';
 
   case FNomeFonte of
     nfTimesNewRoman,
@@ -1531,6 +1542,8 @@ begin
   rlmDadosAdicionais.Lines.EndUpdate;
 end;
 
+
+
 procedure TfrlDANFeRLPaisagem.ISSQN;
 begin
   rlbISSQN.Visible  := ( ( ( FNFe.Total.ISSQNtot.vServ > 0 )    or
@@ -1640,6 +1653,7 @@ begin
   pnlCabecalho.Width        := pnlCabecalho.Width + iAumento;
   pnlCabecalho1.Left        := pnlCabecalho1.Left + iAumento;
   rlmDescricaoProduto.Width := rlmDescricaoProduto.Width + iAumento;
+
 end;
 
 procedure TfrlDANFeRLPaisagem.FormCreate(Sender: TObject);
@@ -2156,16 +2170,6 @@ begin
 end;
 
 
-Function TfrlDANFeRLPaisagem.ManterinfAdProd(inItem : Integer ) : String;
-begin
-  Result := '';
-  if FNFe.Det.Items[inItem ].infAdProd <> '' then
-  begin
-    Result := sQuebraLinha;
-    Result := Result + StringReplace((FNFe.Det.Items[inItem ].infAdProd), ';',  #13#10, [rfReplaceAll, rfIgnoreCase]);
-  end;
-end;
-
 Function TfrlDANFeRLPaisagem.ManterXpod( sXProd : String;  inItem : Integer ) : String;
 begin
   sQuebraLinha := QuebraLinha;
@@ -2193,48 +2197,43 @@ begin
   // Controla os itens por página
   with FNFe.Det.Items[fNumItem] do
   begin
-    txtCodigo.Lines.Clear;
-    txtCodigo.Lines.Add(Prod.CProd);
-    txtEAN.Caption      := Prod.cEAN;
-    rlmDescricao.Lines.Clear;
-    rlmDescricao.Lines.Add(ManterXpod( Prod.XProd , fNumItem ));
-    txtNCM.Caption            := Prod.NCM;
+    txtCodigo.Lines.Text    := Prod.CProd;
+    txtEAN.Caption          := Prod.cEAN;
+    rlmDescricao.Lines.Text := ManterXpod( Prod.XProd , fNumItem );
+    RLMemoInfAd.Lines.Text  := ManterBandinfAdProd( infAdProd );
+    txtNCM.Caption          := Prod.NCM;
     case FNFe.Emit.CRT of
       crtRegimeNormal,
       crtSimplesExcessoReceita : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSTICMSToStr(Imposto.ICMS.CST);
             crtSimplesNacional : txtCST.Caption := OrigToStr(Imposto.ICMS.orig) + CSOSNIcmsToStr(Imposto.ICMS.CSOSN);
     end;
-    txtCFOP.Caption           := Prod.CFOP;
-    txtUnidade.Lines.Clear;
-    txtQuantidade.Lines.Clear;
-    txtValorUnitario.Lines.Clear;
-
+    txtCFOP.Caption := Prod.CFOP;
     case TACBrNFeDANFeRL(Owner).ImprimirUnQtVlComercial of
     iuComercial:
       begin
-        txtUnidade.Lines.Add(Prod.uCom);
-        txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom ));
-        txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom));
+        txtUnidade.Lines.Text       := Prod.uCom;
+        txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom );
+        txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom);
       end;
     iuTributavel:
       begin
-        txtUnidade.Lines.Add(Prod.uTrib);
-        txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qTrib ));
-        txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnTrib ));
+        txtUnidade.Lines.Text       := Prod.uTrib;
+        txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qTrib );
+        txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnTrib );
       end;
     iuComercialETributavel:
       begin
         if Prod.UCom = Prod.UTrib then
         begin
-          txtUnidade.Lines.Add(Prod.uCom);
-          txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom ));
-          txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom ));
+          txtUnidade.Lines.Text       := Prod.uCom;
+          txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom );
+          txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).FormatValorUnitario( Prod.vUnCom );
         end
         else
         begin
-          txtUnidade.Lines.Add(TACBrNFeDANFeRL(Owner).ManterUnidades( Prod.uCom, Prod.uTrib ));
-          txtQuantidade.Lines.Add(TACBrNFeDANFeRL(Owner).ManterQuantidades( Prod.qCom, Prod.qTrib ));
-          txtValorUnitario.Lines.Add(TACBrNFeDANFeRL(Owner).ManterValoresUnitarios( Prod.vUnCom, Prod.vUnTrib ));
+          txtUnidade.Lines.Text       := TACBrNFeDANFeRL(Owner).ManterUnidades( Prod.uCom, Prod.uTrib );
+          txtQuantidade.Lines.Text    := TACBrNFeDANFeRL(Owner).ManterQuantidades( Prod.qCom, Prod.qTrib );
+          txtValorUnitario.Lines.Text := TACBrNFeDANFeRL(Owner).ManterValoresUnitarios( Prod.vUnCom, Prod.vUnTrib );
         end;
       end;
     end;
@@ -2259,6 +2258,40 @@ begin
     txtAliqIPI.Caption          := FormatFloatBr(Imposto.IPI.PIPI    , ',#0.00');
   end;
 
+end;
+
+<<<<<<< .mine
+Function TfrlDANFeRLPaisagem.ManterinfAdProd(inItem : Integer ) : String;
+begin
+  if Not ( TACBrNFeDANFeRL(Owner).ExibirBandInforAdicProduto ) then
+  begin
+    Result := Trim( FNFe.Det.Items[ inItem ].infAdProd ) ;
+    Result := StringReplace( Result , ';',  #13#10, [rfReplaceAll, rfIgnoreCase]);
+    if ( Result <> '' ) then
+      Result := sQuebraLinha + Result
+  end
+  else
+    Result := '';
+end;
+
+Function TfrlDANFeRLPaisagem.ManterBandinfAdProd( sInforAdicProduto : String ) : String;
+begin
+  Result := Trim( sInforAdicProduto ) ;
+  Result := StringReplace( Result , ';',  #13#10, [rfReplaceAll, rfIgnoreCase]);  ;
+  RLBandInfAd.Visible := ( Result <> '') and
+                         ( TACBrNFeDANFeRL(Owner).ExibirBandInforAdicProduto );
+end;
+
+procedure TfrlDANFeRLPaisagem.RLMemoInfAdAfterPrint(Sender: TObject);
+begin
+  inherited;
+  if ( pnlCanhoto.Visible ) then
+    fTamanhoBandInf   := RLDInfAdcBarra.Width
+  else
+  begin
+    RLBandInfAd.Width := fTamanhoBandInf + ( pnlCanhoto.Width + pnlDivisao.Width );
+    RLDrawFinal.Left  := RLBandInfAd.Width -1;
+  end;
 end;
 
 procedure TfrlDANFeRLPaisagem.CabItens;

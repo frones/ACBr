@@ -7,8 +7,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
-    Left = 0
-    Top = 0
+    Left = 16
+    Top = -496
+    Height = 1247
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -16,6 +17,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
+    PageSetup.PaperSize = fpA4_Plus
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Retrato'
@@ -7062,6 +7064,73 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
           Top = 0
           Width = 1
           Height = 12
+          Align = faHeight
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+      end
+      object RLBandInfAd: TRLBand
+        Left = 0
+        Top = 12
+        Width = 742
+        Height = 14
+        Background.Height = 487
+        Background.Width = 865
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        object RLDraw59: TRLDraw
+          Left = 0
+          Top = 13
+          Width = 740
+          Height = 1
+          Align = faBottomOnly
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+        object RLDraw61: TRLDraw
+          Left = 0
+          Top = 0
+          Width = 1
+          Height = 14
+          Align = faLeft
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          Visible = False
+        end
+        object RLDraw63: TRLDraw
+          Left = 0
+          Top = 0
+          Width = 1
+          Height = 14
+          Align = faHeight
+          Angle = 90.000000000000000000
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+        end
+        object RLMemoInfAd: TRLMemo
+          Tag = 705
+          Left = 4
+          Top = 1
+          Width = 736
+          Height = 10
+          Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object RLDraw2: TRLDraw
+          Left = 739
+          Top = 0
+          Width = 1
+          Height = 14
           Align = faHeight
           Angle = 90.000000000000000000
           DrawKind = dkLine

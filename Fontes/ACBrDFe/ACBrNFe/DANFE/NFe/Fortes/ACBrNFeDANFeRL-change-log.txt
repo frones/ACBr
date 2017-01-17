@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2017
+--ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[+] Nova Propriedade ExibirBandInforAdicProduto, mostra as informações adicionais numa banda ( true ) ou
+      na coluna descrição do produto ( false ).
+[*] Ajustes / remoção de variaveis;
+       		por: Henrique Leonardo
+
 10/01/2017
 -- ACBrNFeDANFeRLPaisagem --
 [-] Ajustes para apresentação do valor / desconto conforme a danfe Fortes retrato.

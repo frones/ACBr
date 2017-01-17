@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/01/2017
+--ACBrCTeDACTEFR
+[+] Informações para o CT-e 3.00
+		http://www.projetoacbr.com.br/forum/topic/34634-dacte-30-inclus%C3%A3o-de-campo/
+		por Juliomar Marchetti
+		
 07/01/2017
 -- Diversos --
 [+] Adição da impressão de Inutilização de CT-e em Fast Report

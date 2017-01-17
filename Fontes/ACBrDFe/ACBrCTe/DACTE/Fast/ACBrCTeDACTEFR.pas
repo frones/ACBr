@@ -379,6 +379,7 @@ begin
     Add('UFEmi', ftString, 2);
     Add('modal', ftString, 2);
     Add('tpServ', ftString, 50);
+    Add('indGlobalizado', ftString, 3);
     Add('cMunIni', ftString, 7);
     Add('xMunIni', ftString, 60);
     Add('UFIni', ftString, 2);
@@ -2190,6 +2191,11 @@ begin
         fpOutros: FieldByName('forPag').AsString  := 'Outros';
       end;
 
+      if indGlobalizado = tiSim then
+        FieldByName('indGlobalizado').AsString  := 'Sim'
+      else
+        FieldByName('indGlobalizado').AsString  := 'Não';
+
       FieldByName('Mod_').AsString    := IntToStr(modelo);
       FieldByName('Serie').AsString   := IntToStr(serie);
       FieldByName('NCT').AsString     := FormatarNumeroDocumentoFiscal(IntToStr(nCT));
@@ -2653,7 +2659,10 @@ begin
     FieldByName('Versao').AsString := '1.04';
 {$ENDIF}
 {$IFDEF PL_200}
-    FieldByName('Versao').AsString := '2.00';
+    if FCTe.infCTe.versao = 2 then
+      FieldByName('Versao').AsString := '2.00'
+    else
+      FieldByName('Versao').AsString := '3.00';
 {$ENDIF}
     if (FCTe.ide.tpAmb = taHomologacao) then
       FieldByName('Mensagem0').AsString := 'CTe sem Valor Fiscal - HOMOLOGAÇÃO'

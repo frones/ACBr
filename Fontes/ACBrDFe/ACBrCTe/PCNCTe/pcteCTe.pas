@@ -1686,7 +1686,7 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property chave: String read Fchave write Fchave; deprecated 'Versão CTE 2.0';
+    property chave: String read Fchave write Fchave;
     property chCTe: String read FchCTe write FchCTe;
   end;
 

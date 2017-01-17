@@ -828,7 +828,7 @@ end;
 {$Else}
 procedure TACBrValidador.ValidarEmail;
 const
-  InvalidChar = 'àâêôûãõáéíóúçüñıÀÂÊÔÛÃÕÁÉÍÓÚÇÜÑİ*;:\|#$%&*§!()][{}<>˜ˆ´ªº+¹²³';
+  InvalidChar = ' àâêôûãõáéíóúçüñıÀÂÊÔÛÃÕÁÉÍÓÚÇÜÑİ*;:\|#$%&*§!()][{}<>˜ˆ´ªº+¹²³';
 var
   i: Integer;
 begin

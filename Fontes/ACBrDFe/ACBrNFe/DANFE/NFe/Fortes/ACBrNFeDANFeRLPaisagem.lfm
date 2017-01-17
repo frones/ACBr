@@ -1,12 +1,10 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 204
   Top = 207
-  Width = 1142
   Caption = 'frlDANFeRLPaisagem'
-  ClientWidth = 1142
   inherited RLNFe: TRLReport
     Height = 794
-    Top = 0
+    Top = -128
     Width = 1123
     Background.Arrange = baDistributed
     Background.Height = 96
@@ -5468,19 +5466,19 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
           object txtCFOP: TRLLabel
             Tag = 705
             Left = 72
-            Height = 11
+            Height = 10
             Top = 1
             Width = 22
             AutoSize = False
             Font.Color = clBlack
             Font.Height = -8
             Font.Name = 'Arial'
+            Holder = lblcfop
             ParentFont = False
             RealBounds.Left = 0
             RealBounds.Top = 0
             RealBounds.Width = 0
             RealBounds.Height = 0
-            SecondHolder = lblcfop
           end
           object LinhaUnidade: TRLDraw
             Left = 95
@@ -5908,6 +5906,97 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
             RealBounds.Height = 0
             SecondHolder = RLLabel7
           end
+        end
+      end
+      object RLBandInfAd: TRLBand
+        Left = 0
+        Height = 15
+        Top = 129
+        Width = 998
+        Background.Height = 487
+        Background.Width = 865
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = False
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        object RLDInfAdcBarra: TRLDraw
+          Left = 0
+          Height = 1
+          Top = 14
+          Width = 998
+          Align = faBottom
+          Angle = 0
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLDraw25: TRLDraw
+          Left = 0
+          Height = 14
+          Top = 0
+          Width = 1
+          Align = faLeft
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Visible = False
+        end
+        object RLDraw31: TRLDraw
+          Left = 0
+          Height = 14
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLMemoInfAd: TRLMemo
+          Tag = 705
+          Left = 3
+          Height = 10
+          Top = 2
+          Width = 993
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          AfterPrint = RLMemoInfAdAfterPrint
+        end
+        object RLDrawFinal: TRLDraw
+          Left = 997
+          Height = 14
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          DrawKind = dkLine
+          HoldStyle = hsRelatively
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
         end
       end
     end
@@ -6472,7 +6561,7 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 7
         Top = 3
         Width = 108
-        Caption = 'IDENTIFICAÇAO DO EMITENTE'
+        Caption = 'IDENTIFICAÇÃO DO EMITENTE'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'

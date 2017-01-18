@@ -8,8 +8,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   TextHeight = 13
   inherited RLNFe: TRLReport
     Left = 16
-    Top = -496
-    Height = 1247
+    Top = 0
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
@@ -17,7 +16,6 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
-    PageSetup.PaperSize = fpA4_Plus
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Retrato'

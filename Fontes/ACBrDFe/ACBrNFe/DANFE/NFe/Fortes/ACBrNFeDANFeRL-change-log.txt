@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/01/2017
+-- ACBrNFeDANFeRLRetrato --
+[-] Ajuste na configuração da pagina
+                http://www.projetoacbr.com.br/forum/topic/34680-danfe-fortes-reports-cortando-banda-de-dados-adicionais/
+       		por: Henrique Leonardo
+
+18/01/2017
 --ACBrNFeDANFeRLClass--
 [-] Correçao na apresentaçao do tipo de danfe
        		por: Henrique Leonardo

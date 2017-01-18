@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/01/2017
+-- ACBrSedex --
+[-] Correção para não mostrar o local ao rastrear uma encomenda.
+    Veja: http://www.projetoacbr.com.br/forum/topic/32459-consulta-sedex/#comment-220633
+
 16/01/2017
 -- ACBrConsultaCPF
 [*] Mudança de endereço da receita para consulta

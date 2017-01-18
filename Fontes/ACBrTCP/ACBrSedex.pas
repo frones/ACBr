@@ -477,7 +477,7 @@ begin
         with retRastreio.New do
         begin
           DataHora   := StrToDateTime(Copy(SL[I], 19, 16) + ':00');
-          Local      := CopyDeAte(SL[I], '</td><td>', '</td><td><FONT');
+          Local      := CopyDeAte(SL[I], '</td><td>', '</td><td><font');
           Situacao   := CopyDeAte(SL[I], '">', '</font>');
           Observacao := vObs;
         end;

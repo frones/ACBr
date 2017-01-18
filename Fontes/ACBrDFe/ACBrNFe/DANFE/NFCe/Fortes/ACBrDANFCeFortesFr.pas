@@ -351,17 +351,18 @@ begin
 
     lObservacoes.Visible := False;
     if InfAdic.obsCont.Count > 0 then
-      begin
-        lObservacoes.Visible := True;
-        for I := 0 to InfAdic.obsCont.Count - 1 do
-          lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
+    begin
+      lObservacoes.Visible := True;
+      for I := 0 to InfAdic.obsCont.Count - 1 do
+        lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
                                                  InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) )
-      end;
+    end;
 
     if InfAdic.infCpl <> '' then
+    begin
+      lObservacoes.Visible := True;
       lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) )
-    else
-      lObservacoes.Visible := true;
+    end;
   end;
 end;
 

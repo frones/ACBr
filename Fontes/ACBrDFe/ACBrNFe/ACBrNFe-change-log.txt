@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/01/2017
+[-] Ajuste na apresentação das informações de rodapé
+        http://www.projetoacbr.com.br/forum/topic/34647-fortereport-n%C3%A3o-imprime-linha-complementar/ 
+		por : Henrique Leonardo
+
 09/01/2017
 [+] Adição do campo obsCont no DANFC-e em Fortes A4 e impressora térmica
 		http://www.projetoacbr.com.br/forum/topic/34463-obscont-na-danfe-nfc-e-fortes/

@@ -109,6 +109,7 @@ type
     FidLote: Integer;
     FEvento: TInfEventoCollection;
     FVersao: String;
+    FXML: AnsiString;
 
     procedure SetEvento(const Value: TInfEventoCollection);
   public
@@ -124,6 +125,7 @@ type
     property idLote: Integer               read FidLote  write FidLote;
     property Evento: TInfEventoCollection  read FEvento  write SetEvento;
     property Versao: String                read FVersao  write FVersao;
+    property XML: AnsiString               read FXML     write FXML;
   end;
 
 implementation
@@ -413,6 +415,7 @@ var
   RetEventoCTe: TRetEventoCTe;
   i, j: Integer;
 begin
+  FXML := AXML;
   RetEventoCTe := TRetEventoCTe.Create;
   try
      RetEventoCTe.Leitor.Arquivo := AXML;

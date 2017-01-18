@@ -212,7 +212,7 @@ var
 begin
 try
   case TipoDANFE of
-    tiRetrato      : frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);//TfrlDANFeRLRetrato.Create(Self);
+    tiRetrato      : frlDANFeRL := TfrlDANFeRLRetrato.Create(Self);
     tiPaisagem     : frlDANFeRL := TfrlDANFeRLPaisagem.Create(Self);
     tiSimplificado : frlDANFeRL := TfrlDANFeRLSimplificado.Create(Self);
   else

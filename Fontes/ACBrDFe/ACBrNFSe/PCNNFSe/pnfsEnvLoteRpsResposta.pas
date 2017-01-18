@@ -444,6 +444,14 @@ begin
       end;
 
       Result := True;
+    end
+    else
+    begin
+      i := 0;
+      FInfRec.FMsgRetorno.Add;
+      FInfRec.FMsgRetorno[i].FCodigo   := '';
+      FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
+      FInfRec.FMsgRetorno[i].FCorrecao := '';
     end;
   except
     Result := False;

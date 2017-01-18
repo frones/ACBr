@@ -349,20 +349,16 @@ begin
     else
       lTitLei12741.Visible := False;
 
-    lObservacoes.Visible := False;
-    if InfAdic.obsCont.Count > 0 then
+    for I := 0 to InfAdic.obsCont.Count - 1 do
     begin
-      lObservacoes.Visible := True;
-      for I := 0 to InfAdic.obsCont.Count - 1 do
-        lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
-                                                 InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) )
+      lObservacoes.Lines.Add( StringReplace( InfAdic.obsCont[i].xCampo + ': ' +
+                                             InfAdic.obsCont[i].xTexto, ';', #13, [rfReplaceAll] ) ) ;
     end;
 
     if InfAdic.infCpl <> '' then
-    begin
-      lObservacoes.Visible := True;
-      lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) )
-    end;
+      lObservacoes.Lines.Add( StringReplace( InfAdic.infCpl, ';', #13, [rfReplaceAll] ) );
+
+    lObservacoes.Visible := ( lObservacoes.Lines.Count > 0 );
   end;
 end;
 

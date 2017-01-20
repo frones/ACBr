@@ -368,6 +368,10 @@ begin
     if not Nivel1 then
       Nivel1 := (Leitor.rExtrai(1, 'RetornoConsulta') <> '');
 
+    //CTA
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RetornoConsultaNotas') <> '');
+
     if Nivel1 then
     begin
       // =======================================================================
@@ -430,7 +434,8 @@ begin
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'ConsultaNFSe', '', i + 1) <> '')) or     // ConsultaLote
             ((Provedor in [proISSDSF]) and (Leitor.rExtrai(Nivel, 'NotasConsultadas', '', i + 1) <> '')) or // ConsultaNFSePorRPS
             ((Provedor in [proInfisc, proInfiscv11]) and (Leitor.rExtrai(Nivel, 'resPedidoLoteNFSe', '', i + 1) <> '')) or
-            ((Provedor in [proGoverna]) and (Leitor.rExtrai(Nivel, 'InfRetConsultaNotCan', '', i + 1) <> '')) do
+            ((Provedor in [proGoverna]) and (Leitor.rExtrai(Nivel, 'InfRetConsultaNotCan', '', i + 1) <> '')) or
+            ((Provedor in [proCTA]) and (Leitor.rExtrai(Nivel, 'Nota', '', i + 1) <> '')) do
       begin
         NFSe := TNFSe.Create;
         NFSeLida := TNFSeR.Create(NFSe);
@@ -472,8 +477,19 @@ begin
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'Reg20Item');  // Provedor Conam
               if NFSe.XML = '' then
                 FNFSe.XML := SeparaDados(Leitor.Grupo, 'xml');  // Provedor NFSeBrasil
+              if NFSe.XML = '' then
+                FNFSe.XML := SeparaDados(Leitor.Grupo, 'Nota', True);
 
               // Retorno do GerarNfse e EnviarLoteRpsSincrono
+
+              // Roberto Godinho - Para o provedor CTA deve ler o Numero do Lote
+              // do arquivo de cada nota quando for Consulta por Periodo
+              if Provedor = proCTA then
+              begin
+                NumeroLoteTemp := Leitor.rCampo(tcStr, 'NumeroLote');
+                DataRecebimentoTemp := Leitor.rCampo(tcDat, 'DataProcessamento');
+              end;
+
               FNFSe.NumeroLote    := NumeroLoteTemp;
               FNFSe.dhRecebimento := DataRecebimentoTemp;
               FNFSe.Protocolo     := ProtocoloTemp;
@@ -633,6 +649,18 @@ begin
           Result := False;
       end;
 
+      // Provedor CTA - Retorno da situação do lote
+      if (Provedor = proCTA) and (Leitor.rExtrai(1, 'RetornoConsultaLote') <> '') then
+      begin
+        Protocolo                                := Leitor.rCampo(tcStr, 'NumeroLote'); // retorna o protocolo no numero do lote
+        ListaNFSe.ChaveNFeRPS.Numero             := Leitor.rCampo(tcStr, 'NumeroRPS');
+        ListaNFSe.ChaveNFeRPS.InscricaoPrestador := Leitor.rCampo(tcStr, 'InscricaoPrestador');
+        ListaNFSe.ChaveNFeRPS.CodigoVerificacao  := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+        ListaNFSe.ChaveNFeRPS.SerieRPS           := Leitor.rCampo(tcStr, 'SerieRPS');
+        ListaNFSe.ChaveNFeRPS.NumeroRPS          := Leitor.rCampo(tcStr, 'NumeroRPS');
+        ListaNFSe.Sucesso                        := Leitor.rCampo(tcStr, 'Sucesso');
+        Result := ListaNFSe.Sucesso = 'true';
+      end;
     end;
     
     // =======================================================================
@@ -717,6 +745,10 @@ begin
         ListaNfse.FMsgRetorno.Add;
         ListaNfse.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
         ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Descricao');
+        // Roberto Godinho - Provedor CTA pode retornar erros de schema substituindo a TAG <descricao> por <erro>
+        // se não tratado resulta em exception vazio.
+        if ListaNfse.FMsgRetorno[i].FMensagem = '' then
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Erro');
 
         if FProvedor = proIssDSF then
         begin

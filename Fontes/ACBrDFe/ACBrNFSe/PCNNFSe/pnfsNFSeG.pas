@@ -220,6 +220,7 @@ type
     property OptanteSimples: TnfseSimNao read FOptanteSimples write FOptanteSimples;
 
     // Layout - Governa
+    // Layout - CTA campo "ChaveAcessoPrefeitura" equivale ao "TokenEnvio"
     property ChaveAcessoPrefeitura: String read FChaveAcessoPrefeitura write FChaveAcessoPrefeitura;
     property CodVerificacaoRPS: String read FCodVerificacaoRPS write FCodVerificacaoRPS;
 
@@ -557,28 +558,30 @@ begin
                     Gerador.wGrupoNFSe('/envioLote');
                   end;
 
-    proISSDSF: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Cabecalho');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'RazaoSocialRemetente', 01, 14, 1, RazaoSocial, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
-                 Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
-                 Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
-                 Gerador.wCampoNFSe(tcInt, '#1', 'QtdRPS', 01, 14, 1, QtdeNotas, '');
-                 Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalServicos', 01, 14, 1, ValorTotalServicos, '');
-                 Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalDeducoes', 01, 14, 1, ValorTotalDeducoes, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'MetodoEnvio', 01, 02, 1, 'WS', '');
-                 Gerador.wGrupoNFSe('/Cabecalho');
+    proISSDSF,
+    proCTA: begin
+              Gerador.Prefixo := '';
+              Gerador.wGrupoNFSe('Cabecalho');
+              if Provedor = proCTA then
+                Gerador.wCampoNFSe(tcStr, '#1', 'TokenEnvio', 32, 32, 1, ChaveAcessoPrefeitura, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'RazaoSocialRemetente', 01, 14, 1, RazaoSocial, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
+              Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 01, 10, 1, DataInicial, '');
+              Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 01, 10, 1, DataFinal, '');
+              Gerador.wCampoNFSe(tcInt, '#1', 'QtdRPS', 01, 14, 1, QtdeNotas, '');
+              Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalServicos', 01, 14, 1, ValorTotalServicos, '');
+              Gerador.wCampoNFSe(tcDe2, '#1', 'ValorTotalDeducoes', 01, 14, 1, ValorTotalDeducoes, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'MetodoEnvio', 01, 02, 1, 'WS', '');
+              Gerador.wGrupoNFSe('/Cabecalho');
 
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                              '<Lote' + aIdentificador + '>' +
-                                                Notas +
-                                              '</Lote>';
-               end;
-
+              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                          '<Lote' + aIdentificador + '>' +
+                                            Notas +
+                                          '</Lote>';
+            end;
     proNFSEBrasil: begin
                      Atributo_cMun := ' codMunicipio="' + IntToStr(CodMunicipio) + '"';
 
@@ -854,15 +857,21 @@ begin
                     // Não Possui
                   end;
 
-    proISSDSF: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Cabecalho');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
-                 Gerador.wGrupoNFSe('/Cabecalho');
-               end;
+    proISSDSF,
+    proCTA: begin
+              Gerador.Prefixo := '';
+              Gerador.wGrupoNFSe('Cabecalho');
+              if Provedor = proCTA then
+                Gerador.wCampoNFSe(tcStr, '#1', 'TokenEnvio', 32, 32, 1, ChaveAcessoPrefeitura, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
+              if Provedor = proCTA then  // provedor bugado, pede o NumeroLote mas na verdade exige o Protocolo
+                Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, Protocolo, '')
+              else
+                Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 14, 1, NumeroLote, '');
+              Gerador.wGrupoNFSe('/Cabecalho');
+            end;
 
     proNFSEBrasil: begin
                      Gerador.ArquivoFormatoXML := Protocolo;
@@ -1011,20 +1020,23 @@ begin
              *)
            end;
 
-    proISSDSF: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Cabecalho');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
-                 Gerador.wGrupoNFSe('/Cabecalho');
+    proISSDSF,
+    proCTA: begin
+              Gerador.Prefixo := '';
+              Gerador.wGrupoNFSe('Cabecalho');
+              if Provedor = proCTA then
+                Gerador.wCampoNFSe(tcStr, '#1', 'TokenEnvio', 32, 32, 1, ChaveAcessoPrefeitura, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 14, 1, LowerCase(booltostr(Transacao, True)), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
+              Gerador.wGrupoNFSe('/Cabecalho');
 
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                              '<Lote' + aIdentificador + '>' +
-                                                Notas +
-                                              '</Lote>';
-               end;
+              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                          '<Lote' + aIdentificador + '>' +
+                                            Notas +
+                                          '</Lote>';
+            end;
 
     proGoverna: begin
                   Gerador.Prefixo := Prefixo4;
@@ -1067,7 +1079,6 @@ begin
              Gerador.wGrupoNFSe('/ChaveRPS');
              Gerador.wGrupoNFSe('/Detalhe');
            end;
-
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('IdentificacaoRps' + aNameSpace);
@@ -1197,18 +1208,22 @@ begin
              *)
            end;
 
-    proISSDSF: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Cabecalho');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipalPrestador', 01, 15, 1, IM, '');
-                 Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 10, 10, 1, DataInicial, '');
-                 Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 10, 10, 1, DataFinal, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'NotaInicial', 01, 15, 1, NumeroNFSe, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
-                 Gerador.wGrupoNFSe('/Cabecalho');
-               end;
+    proISSDSF,
+    proCTA: begin
+              Gerador.Prefixo := '';
+              Gerador.wGrupoNFSe('Cabecalho');
+              if Provedor = proCTA then
+                Gerador.wCampoNFSe(tcStr, '#1', 'TokenEnvio', 32, 32, 1, ChaveAcessoPrefeitura, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'InscricaoMunicipalPrestador', 01, 15, 1, IM, '');
+              Gerador.wCampoNFSe(tcDat, '#1', 'dtInicio', 10, 10, 1, DataInicial, '');
+              Gerador.wCampoNFSe(tcDat, '#1', 'dtFim', 10, 10, 1, DataFinal, '');
+              if Provedor = proISSDSF then
+                Gerador.wCampoNFSe(tcStr, '#1', 'NotaInicial', 01, 15, 1, NumeroNFSe, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
+              Gerador.wGrupoNFSe('/Cabecalho');
+            end;
 
     proSP: begin
              Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
@@ -1232,7 +1247,7 @@ begin
                Gerador.wCampoNFSe(tcStr, '#1', 'ChvAcs', 01, 15, 1, SerieNFSe, '');
                Gerador.wCampoNFSe(tcStr, '#1', 'NumNot', 01, 15, 1, NumeroNFSe, '');
                Gerador.wCampoNFSe(tcStr, '#1', 'CodVer', 01, 15, 1, NomeInter, '');
-              end     
+              end;
   else begin
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('Prestador' + aNameSpace);
@@ -1508,20 +1523,23 @@ begin
                     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas;
                   end;
 
-    proISSDSF: begin
-                 Gerador.Prefixo := '';
-                 Gerador.wGrupoNFSe('Cabecalho');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 05, 1, LowerCase(booltostr(Transacao, True)), '');
-                 Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
-                 Gerador.wGrupoNFSe('/Cabecalho');
+    proISSDSF,
+    proCTA: begin
+              Gerador.Prefixo := '';
+              Gerador.wGrupoNFSe('Cabecalho');
+              if Provedor = proCTA then
+                Gerador.wCampoNFSe(tcStr, '#1', 'TokenEnvio', 32, 32, 1, ChaveAcessoPrefeitura, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CodCidade', 04, 04, 1, CodCidadeToCodSiafi(CodMunicipio), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'CPFCNPJRemetente', 11, 14, 1, Cnpj, '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'transacao', 01, 05, 1, LowerCase(booltostr(Transacao, True)), '');
+              Gerador.wCampoNFSe(tcStr, '#1', 'Versao', 01, 05, 1, VersaoXML, '');
+              Gerador.wGrupoNFSe('/Cabecalho');
 
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                              '<Lote' + aIdentificador + '>' +
-                                                Notas +
-                                              '</Lote>';
-               end;
+              Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                          '<Lote' + aIdentificador + '>' +
+                                            Notas +
+                                          '</Lote>';
+            end;
 
     proIssCuritiba: begin
                       Gerador.Prefixo := '';

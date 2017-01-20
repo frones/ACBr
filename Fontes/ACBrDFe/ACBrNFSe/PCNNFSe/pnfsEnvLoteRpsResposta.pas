@@ -138,7 +138,7 @@ type
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
     function LerXML_proFriburgo: Boolean;
-
+    function LerXml_proCTA: Boolean;
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
@@ -288,6 +288,7 @@ begin
    proNFSeBrasil: Result := LerXml_proNFSeBrasil;
    proSP:         Result := LerXml_proSP;
    proFriburgo:   Result := LerXML_proFriburgo;
+   proCTA:        Result := LerXml_proCTA;
  else
    Result := LerXml_ABRASF;
  end;
@@ -452,6 +453,114 @@ begin
       FInfRec.FMsgRetorno[i].FCodigo   := '';
       FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
       FInfRec.FMsgRetorno[i].FCorrecao := '';
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXml_proCTA: Boolean;
+var
+  i, posI, count: Integer;
+  strAux: AnsiString;
+  leitorAux: TLeitor;
+begin
+  Result := False;
+
+  try
+    Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo, Provedor);
+    Leitor.Grupo   := Leitor.Arquivo;
+    if (leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '')
+      or (leitor.rExtrai(1, 'ReqEnvioLoteRPS') <> '')
+    then
+    begin
+      if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
+        FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+        if (FInfRec.FSucesso = 'true') then
+        begin
+          FInfRec.FNumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
+          FInfRec.FProtocolo       := Leitor.rCampo(tcStr, 'NumeroLote');
+          FinfRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'DataEnvioLote')
+        end;
+      end;
+
+      i := 0;
+      while Leitor.rExtrai(2, 'ChaveNFSeRPS', '', i + 1) <> '' do
+      begin
+        InfRec.FListaChaveNFeRPS.Add;
+        InfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.Numero := Leitor.rCampo(tcStr, 'NumeroNFe');
+        InfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+        InfRec.ListaChaveNFeRPS[i].ChaveNFeRPS.NumeroRPS := Leitor.rCampo(tcStr, 'NumeroRPS');
+        Inc(i);
+      end;
+
+      i := 0;
+      if (leitor.rExtrai(1, 'Alertas') <> '') then
+      begin
+        strAux := leitor.rExtrai(1, 'Alertas');
+        if (strAux <> '') then
+        begin
+          posI := pos('<Alerta>', strAux);
+
+          while ( posI > 0 ) do
+          begin
+            count := pos('</Alerta>', strAux) + 7;
+
+            FInfRec.FMsgRetorno.Add;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'Codigo');
+            FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Descricao');
+            FInfRec.FMsgRetorno[i].FCorrecao := '';
+
+            inc(i);
+            LeitorAux.free;
+
+            Delete(strAux, PosI, count);
+            posI := pos('<Alerta>', strAux);
+          end;
+        end;
+      end;
+
+      if (leitor.rExtrai(1, 'Erros') <> '') then
+      begin
+        strAux := leitor.rExtrai(1, 'Erros');
+        if (strAux <> '') then
+        begin
+            //i := 0 ;
+          posI := pos('<Erro>', strAux);
+
+          while (posI > 0) do
+          begin
+            count := pos('</Erro>', strAux) + 6;
+
+            FInfRec.FMsgRetorno.Add;
+
+            LeitorAux := TLeitor.Create;
+            leitorAux.Arquivo := copy(strAux, PosI, count);
+            leitorAux.Grupo   := leitorAux.Arquivo;
+
+            FInfRec.FMsgRetorno[i].FCodigo   := leitorAux.rCampo(tcStr, 'Codigo');
+            if leitorAux.rCampo(tcStr, 'Descricao') <> '' then
+              FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Descricao')
+            else
+              FInfRec.FMsgRetorno[i].FMensagem := leitorAux.rCampo(tcStr, 'Erro');
+            FInfRec.FMsgRetorno[i].FCorrecao := '';
+
+            inc(i);
+            LeitorAux.free;
+
+            Delete(strAux, PosI, count);
+            posI := pos('<Erro>', strAux);
+          end;
+        end;
+      end;
+
+      Result := True;
     end;
   except
     Result := False;

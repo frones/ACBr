@@ -299,7 +299,8 @@ begin
     proEquiplano:   Result := LerXML_proEquiplano;
     proInfisc,
     proInfiscv11:   Result := LerXml_proInfisc;
-    proISSDSF:      Result := LerXml_proISSDSF;
+    proISSDSF,
+    proCTA:         Result := LerXml_proISSDSF;
     proNFSeBrasil:  Result := LerXml_proNFSeBrasil;
     proSP:          Result := LerXml_proSP;
     proGoverna:     Result := LerXml_proGoverna;
@@ -430,7 +431,11 @@ begin
     if leitor.rExtrai(1, 'RetornoCancelamentoNFSe') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
+      begin
         FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+        if FInfCanc.FSucesso = 'S' then // provedor CTA
+          FInfCanc.DataHora := Date;
+      end;
 
       i := 0;
       if (leitor.rExtrai(2, 'NotasCanceladas') <> '') then

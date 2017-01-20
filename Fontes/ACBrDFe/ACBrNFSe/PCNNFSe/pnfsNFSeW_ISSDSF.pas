@@ -142,7 +142,8 @@ begin
   //  Gerador.wCampoNFSe(tcStr, '', 'InscricaoMunicipalTomador',  01, 011, 1, '', '');
   Gerador.wCampoNFSe(tcStr, '', 'CPFCNPJTomador',             01, 014, 1, OnlyNumber(NFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
   Gerador.wCampoNFSe(tcStr, '', 'RazaoSocialTomador',         01, 120, 1, NFSe.Tomador.RazaoSocial, '');
-  Gerador.wCampoNFSe(tcStr, '', 'DocTomadorEstrangeiro',      00, 020, 1, NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, '');
+  if FProvedor = proIssDSF then
+    Gerador.wCampoNFSe(tcStr, '', 'DocTomadorEstrangeiro',      00, 020, 1, NFSe.Tomador.IdentificacaoTomador.DocTomadorEstrangeiro, '');
 
   Gerador.wCampoNFSe(tcStr, '', 'TipoLogradouroTomador',      00, 10, 1, NFSe.Tomador.Endereco.TipoLogradouro, '');
   Gerador.wCampoNFSe(tcStr, '', 'LogradouroTomador',          01, 50, 1, NFSe.Tomador.Endereco.Endereco, '');
@@ -223,6 +224,8 @@ end;
 procedure TNFSeW_ISSDSF.GerarValoresServico;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'CodigoAtividade',   01, 09,  1, NFSe.Servico.CodigoCnae, '');
+  if FProvedor = proCTA then
+     Gerador.wCampoNFSe(tcInt, '', 'CodigoServico',          04, 05,  1, OnlyNumber(NFSe.Servico.ItemListaServico), '');
   Gerador.wCampoNFSe(tcDe4, '', 'AliquotaAtividade', 01, 11,  1, NFSe.Servico.Valores.Aliquota, '');
 
   // "A" a receber; "R" retido na Fonte

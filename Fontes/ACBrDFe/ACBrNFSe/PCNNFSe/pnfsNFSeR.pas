@@ -638,6 +638,8 @@ begin
 
      NFSe.Tomador.Endereco.xMunicipio := CodCidadeToCidade(StrToIntDef(NFSe.Tomador.Endereco.CodigoMunicipio, 0));
 
+     NFSe.Tomador.Endereco.CodigoPais     := Leitor.rCampo(tcInt, 'CodigoPais');
+
      if (Leitor.rExtrai(4, 'IdentificacaoTomador') <> '') or (Leitor.rExtrai(3, 'IdentificacaoTomador') <> '')
       then begin
        NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
@@ -2378,7 +2380,13 @@ begin
     if (FNFSe.Numero = '') then
       FNFSe.Numero := Leitor.rCampo(tcStr, 'NumeroNFe');
 
+    FNFSe.NumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
     FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificacao');
+    // Roberto Godinho : 21/07/2016
+    // Provedor CTA - A TAG "CodigoVerificacao" está retornando errada "CodigoVerificao".
+    // Enviado solicitação para correção no entanto, será implementado a leitura da TAG como esta hoje até que seja corrigida.
+    if FNFSe.CodigoVerificacao = '' then
+      FNFSe.CodigoVerificacao := Leitor.rCampo(tcStr, 'CodigoVerificao');
 
     FNFSe.DataEmissaoRps := Leitor.rCampo(tcDatHor, 'DataEmissaoRPS');
     FNFSe.Competencia    := Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),7,4) + Copy(Leitor.rCampo(tcDat, 'DataEmissaoRPS'),4,2);

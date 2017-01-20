@@ -721,7 +721,7 @@ end;
 
 function StrToCSTICMS(out ok: boolean; const s: string): TpcnCSTIcms;
 begin
-  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60', '70', '80', '81', '90', '91', '92'],
+  result := StrToEnumerado(ok, s, ['00', '10', '20', '30', '40', '41', '50', '51', '60', '70', '80', '81', '90', '90', 'SN'],
     [cst00, cst10, cst20, cst30, cst40, cst41, cst50, cst51, cst60, cst70, cst80, cst81, cst90, cstICMSOutraUF, cstICMSSN]);
 end;
 

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+19/01/2017
+-- pmdfeMDFeW --
+[*] Correção na geração do XML para versão 3.00.
+    Por: Italo Jurisato Junior
+
 07/01/2017
 -- Diversos --
 [*] Migração do tipo de navegação, funções de conversão e constantes para as 

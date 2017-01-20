@@ -653,7 +653,10 @@ var
   i: Integer;
 begin
   Gerador.wGrupo('aquav', '#01');
-  Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
+
+  if VersaoDF = ve100 then
+    Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
+
   Gerador.wCampo(tcStr, '#03', 'irin      ', 01, 10, 1, MDFe.aquav.irin, DSC_IRIN);
   Gerador.wCampo(tcStr, '#04', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, DSC_TPEMB);
   Gerador.wCampo(tcStr, '#05', 'cEmbar    ', 01, 10, 1, MDFe.aquav.cEmbar, DSC_CEMBAR);

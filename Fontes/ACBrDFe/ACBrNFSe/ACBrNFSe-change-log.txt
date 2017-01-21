@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2017
+-- ACBrNFSeWebServices -- 
+[*] Incluido a TAG a ser acinada ao cancelar uma NFS-e provedor Tecnos.
+    Por: Italo Jurisato Junior
+
 19/01/2017
 -- Diversos -- 
 [*] Implementação do provedor CTA.

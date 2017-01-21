@@ -3696,6 +3696,7 @@ begin
       proSP: docElemento := FTagGrupo;
       proGinfes: docElemento := FTagGrupo; // 'CancelarNfseEnvio';
       proISSNet: docElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
+      proTecnos: docElemento := 'InfPedidoCancelamento';
     else
       docElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
     end;

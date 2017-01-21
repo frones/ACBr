@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/01/2017
+-- pcteConversaoCTe --
+[*] Adicionado os novos valores de tipo de documento e documentos de transporte anterior.
+   por: Italo Jurisato Junior
+
 18/01/2017
 -- pcteEnvEventoCTe --
 [*] Criado a propriedade XML na classe TEventoCTe, com objetivo de armazenar o XML 

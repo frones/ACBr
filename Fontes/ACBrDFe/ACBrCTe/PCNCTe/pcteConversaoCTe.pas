@@ -86,8 +86,10 @@ type
   TpcteTipoTrafego = (ttProprio, ttMutuo, ttRodoferroviario, ttRodoviario);
   TpcteTipoDataPeriodo = (tdSemData, tdNaData, tdAteData, tdApartirData, tdNoPeriodo, tdNaoInformado);
   TpcteTipoHorarioIntervalo = (thSemHorario, thNoHorario, thAteHorario, thApartirHorario, thNoIntervalo, thNaoInformado);
-  TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdOutros);
-  TpcteTipoDocumentoAnterior = (daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros);
+  TpcteTipoDocumento = (tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros);
+  TpcteTipoDocumentoAnterior = (daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN,
+                                daCTMC, daATRE, daDTA, daCAI, daCCPI, daCA,
+                                daTIF, daBL, daOutros);
   TpcteRspPagPedagio = (rpEmitente, rpRemetente, rpExpedidor, rpRecebedor, rpDestinatario, rpTomadorServico);
   TpcteTipoDispositivo = (tdCartaoMagnetico, tdTAG, tdTicket);
   TpcteTipoPropriedade = (tpProprio, tpTerceiro);
@@ -464,30 +466,30 @@ end;
 
 function TpDocumentoToStr(const t: TpcteTipoDocumento): string;
 begin
-  result := EnumeradoToStr(t, ['00','10','99'],
-                              [tdDeclaracao, tdDutoviario, tdOutros]);
+  result := EnumeradoToStr(t, ['00', '10', '59', '65', '99'],
+                              [tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros]);
 end;
 
 function StrToTpDocumento(out ok: boolean; const s: string): TpcteTipoDocumento;
 begin
-  result := StrToEnumerado(ok, s, ['00','10','99'],
-                                  [tdDeclaracao, tdDutoviario, tdOutros]);
+  result := StrToEnumerado(ok, s, ['00', '10', '59', '65', '99'],
+                                  [tdDeclaracao, tdDutoviario, tdCFeSAT, tdNFCe, tdOutros]);
 end;
 
 function TpDocumentoAnteriorToStr(const t: TpcteTipoDocumentoAnterior): string;
 begin
-  result := EnumeradoToStr(t, ['00','01','02','03','04','05','06','07',
-                               '08','09','10','11','12','99'],
+  result := EnumeradoToStr(t, ['00', '01', '02', '03', '04', '05', '06', '07',
+                               '08', '09', '10', '11', '12', '13', '99'],
                          [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC,
-                          daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
+                          daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daBL, daOutros]);
 end;
 
 function StrToTpDocumentoAnterior(out ok: boolean; const s: string): TpcteTipoDocumentoAnterior;
 begin
-  result := StrToEnumerado(ok, s, ['00','01','02','03','04','05','06','07',
-                                   '08','09','10','11','12','99'],
+  result := StrToEnumerado(ok, s, ['00', '01', '02', '03', '04', '05', '06', '07',
+                                   '08', '09', '10', '11', '12', '13', '99'],
                          [daCTRC, daCTAC, daACT, daNF7, daNF27, daCAN, daCTMC,
-                          daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daOutros]);
+                          daATRE, daDTA, daCAI, daCCPI, daCA, daTIF, daBL, daOutros]);
 end;
 
 function RspPagPedagioToStr(const t: TpcteRspPagPedagio): string;

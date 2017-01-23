@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 23/01/2017 ver: 0.0.217
+--ACBrBoleto.pas
+[*] Ajuste SetCNPJ para setar corretamente os parâmetros de validação do documento.
+http://www.projetoacbr.com.br/forum/topic/14557-erro-ao-ler-arquivo-de-retorno-sicoob-cnab-400-cedente-pessoa-f%C3%ADsica/
+
 Data: 17/01/2017
 --ACBrBancoBancoob.pas
 [*] Ajustes no Bancoob do sicoob do cnab240 conforme o manual que existe no svn e informações dos usuários

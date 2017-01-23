@@ -225,7 +225,7 @@ begin
   except on e: Exception do
     begin
       Check(e is EACBrDFeException);
-      CheckEquals(MSG, e.Message);
+      CheckEquals(ACBrStr(MSG), e.Message);
     end
   end;
 end;
@@ -614,14 +614,14 @@ begin
   except on e: Exception do
     begin
       Check(e is EACBrDFeException);
-      CheckEquals(MSG_ESPERADA, e.Message);
+      CheckEquals(ACBrStr(MSG_ESPERADA), e.Message);
     end
   end;
 end;
 
 procedure ExtraiURITest.Nao_Possui_Aspa_Inicial_LevantaExcecao;
 const
-  XML_URI = '<xml Id=teste">';
+  XML_URI = '<xml Id=teste>';
   MSG_ESPERADA = 'Não encontrei inicio do URI: aspas inicial';
 begin
   try
@@ -629,7 +629,7 @@ begin
   except on e: Exception do
     begin
       Check(e is EACBrDFeException);
-      CheckEquals(MSG_ESPERADA, e.Message);
+      CheckEquals(ACBrStr(MSG_ESPERADA), e.Message);
     end
   end;
 end;

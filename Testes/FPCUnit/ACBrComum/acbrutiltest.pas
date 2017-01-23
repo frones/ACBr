@@ -446,8 +446,10 @@ type
   FloatMaskTest = class(TTestCase)
   published
    procedure Inteiro;
-   procedure DuasCasas;
-   procedure QuatroCasas;
+   procedure DuasCasas_Com_Separador_de_Milhar;
+   procedure DuasCasas_Sem_Separador_de_Milhar;
+   procedure QuatroCasas_Com_Separador_de_Milhar;
+   procedure QuatroCasas_Sem_Separador_de_Milhar;
   end;
 
   { StringToFloatTest }
@@ -1565,14 +1567,24 @@ begin
   CheckEquals('0',FloatMask(0));
 end;
 
-procedure FloatMaskTest.DuasCasas;
+procedure FloatMaskTest.DuasCasas_Com_Separador_de_Milhar;
 begin
-  CheckEquals('0.00',FloatMask(2));
+  CheckEquals(',0.00',FloatMask(2));
 end;
 
-procedure FloatMaskTest.QuatroCasas;
+procedure FloatMaskTest.QuatroCasas_Com_Separador_de_Milhar;
 begin
-  CheckEquals('0.0000',FloatMask(4));
+  CheckEquals(',0.0000',FloatMask(4));
+end;
+
+procedure FloatMaskTest.DuasCasas_Sem_Separador_de_Milhar;
+begin
+  CheckEquals('0.00',FloatMask(2, False));
+end;
+
+procedure FloatMaskTest.QuatroCasas_Sem_Separador_de_Milhar;
+begin
+  CheckEquals('0.0000',FloatMask(4, False));
 end;
 
 { FormatFloatBrTest }

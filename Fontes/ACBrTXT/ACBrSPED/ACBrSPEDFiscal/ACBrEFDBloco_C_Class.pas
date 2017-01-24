@@ -1883,7 +1883,25 @@ begin
                LFill( COD_PART_ULT_E ) +
                DFill( QUANT_ULT_E,3 ) +
                DFill( VL_UNIT_ULT_E,3 ) +
-               DFill( VL_UNIT_BC_ST,3 ) ) ;
+               DFill( VL_UNIT_BC_ST,3 ) +
+               ifthen(DT_INI >= EncodeDate(2017,01,01),
+               LFill( CHAVE_NFE_ULT_E ) +
+               LFill( NUM_ITEM_ULT_E ) +
+               DFill( VL_UNIT_BC_ICMS_ULT_E,2 ) +
+               DFill( ALIQ_ICMS_ULT_E,2 ) +
+               DFill( VL_UNIT_LIMITE_BC_ICMS_ULT_E,2 ) +
+               DFill( VL_UNIT_ICMS_ULT_E,3 ) +
+               DFill( ALIQ_ST_ULT_E,2 ) +
+               DFill( VL_UNIT_RES,3 ) +
+               LFill( COD_RESP_RET ) +
+               LFill( COD_MOT_RES ) +
+               LFill( CHAVE_NFE_RET ) +
+               LFill( COD_PART_NFE_RET ) +
+               LFill( SER_NFE_RET ) +
+               LFill( NUM_NFE_RET ) +
+               LFill( ITEM_NFE_RET ) +
+               LFill( COD_DA ) +
+               LFill( NUM_DA ), '') ) ;
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;

@@ -965,6 +965,23 @@ type
     fQUANT_ULT_E: Double;    /// Quantidade do item relativa a última entrada
     fVL_UNIT_ULT_E: Double;  /// Valor unitário da mercadoria constante na NF relativa a última entrada inclusive despesas acessórias.
     fVL_UNIT_BC_ST: Double;  /// Valor unitário da base de cálculo do imposto pago por substituição.
+    fCHAVE_NFE_ULT_E: String;  /// Número completo da chave da NFe relativo à última entrada
+    fNUM_ITEM_ULT_E: String;   /// Número sequencial do item na NF entrada que corresponde à mercadoria objeto de pedido de ressarcimento
+    fVL_UNIT_BC_ICMS_ULT_E: Currency; /// Valor unitário da base de cálculo da operação própria do remetente sob o regime comum de tributação
+    fALIQ_ICMS_ULT_E: Currency; /// Alíquota do ICMS aplicável à última entrada da mercadoria
+    fVL_UNIT_LIMITE_BC_ICMS_ULT_E: Currency; /// Valor unitário da base de cálculo do ICMS relativo à última entrada da mercadoria, limitado ao valor da BC da retenção (corresponde ao menor valor entre os campos VL_UNIT_BC_ST e VL_UNIT_BC_ICMS_ULT_E )
+    fVL_UNIT_ICMS_ULT_E: Currency; /// Valor unitário do crédito de ICMS sobre operações próprias do remetente, relativo à última entrada da mercadoria, decorrente da quebra da ST – equivalente a multiplicação entre os campos 13 e 14
+    fALIQ_ST_ULT_E: Currency;  /// Alíquota do ICMS ST relativa à última entrada da mercadoria
+    fVL_UNIT_RES: Currency;    /// Valor unitário do ressarcimento (parcial ou completo) de ICMS decorrente da quebra da ST
+    fCOD_RESP_RET: String;     /// Código que indica o responsável pela retenção do ICMS-ST: 1-Remetente Direto 2-Remetente Indireto 3-Próprio declarante
+    fCOD_MOT_RES: String;      /// Código do motivo do ressarcimento 1 – Venda para outra UF; 2 – Saída amparada por isenção ou não incidência; 3 – Perda ou deterioração; 4 – Furto ou roubo 9 - Outros
+    fCHAVE_NFE_RET: String;    /// Número completo da chave da NF-e emitida pelo substituto, na qual consta o valor do ICMS-ST retido
+    fCOD_PART_NFE_RET: String; /// Código do participante do emitente da NF-e em que houve a retenção do ICMS-ST – campo 02 do registro 0150
+    fSER_NFE_RET: String;      /// Série da NF-e em que houve a retenção do ICMSST
+    fNUM_NFE_RET: String;      /// Número da NF-e em que houve a retenção do ICMS-ST
+    fITEM_NFE_RET: String;     /// Número sequencial do item na NF-e em que houve a retenção do ICMS-ST, que corresponde à mercadoria objeto de pedido de ressarcimento
+    fCOD_DA: String;           /// Código do modelo do documento de arrecadação : 0 - documento estadual de arrecadação 1 – GNRE
+    fNUM_DA: String;           /// Número do documento de arrecadação estadual, se houver
   public
     property COD_MOD_ULT_E: String read FCOD_MOD_ULT_E write FCOD_MOD_ULT_E;
     property NUM_DOC_ULT_E: String read FNUM_DOC_ULT_E write FNUM_DOC_ULT_E;
@@ -974,6 +991,23 @@ type
     property QUANT_ULT_E: Double read FQUANT_ULT_E write FQUANT_ULT_E;
     property VL_UNIT_ULT_E: Double read FVL_UNIT_ULT_E write FVL_UNIT_ULT_E;
     property VL_UNIT_BC_ST: Double read FVL_UNIT_BC_ST write FVL_UNIT_BC_ST;
+    property CHAVE_NFE_ULT_E: String read fCHAVE_NFE_ULT_E write fCHAVE_NFE_ULT_E;
+    property NUM_ITEM_ULT_E: String read fNUM_ITEM_ULT_E write fNUM_ITEM_ULT_E;
+    property VL_UNIT_BC_ICMS_ULT_E: Currency read fVL_UNIT_BC_ICMS_ULT_E write fVL_UNIT_BC_ICMS_ULT_E;
+    property ALIQ_ICMS_ULT_E: Currency read fALIQ_ICMS_ULT_E write fALIQ_ICMS_ULT_E;
+    property VL_UNIT_LIMITE_BC_ICMS_ULT_E: Currency read fVL_UNIT_LIMITE_BC_ICMS_ULT_E write fVL_UNIT_LIMITE_BC_ICMS_ULT_E;
+    property VL_UNIT_ICMS_ULT_E: Currency read fVL_UNIT_ICMS_ULT_E write fVL_UNIT_ICMS_ULT_E;
+    property ALIQ_ST_ULT_E: Currency read fALIQ_ST_ULT_E write fALIQ_ST_ULT_E;
+    property VL_UNIT_RES: Currency read fVL_UNIT_RES write fVL_UNIT_RES;
+    property COD_RESP_RET: String read fCOD_RESP_RET write fCOD_RESP_RET;
+    property COD_MOT_RES: String read fCOD_MOT_RES write fCOD_MOT_RES;
+    property CHAVE_NFE_RET: String read fCHAVE_NFE_RET write fCHAVE_NFE_RET;
+    property COD_PART_NFE_RET: String read fCOD_PART_NFE_RET write fCOD_PART_NFE_RET;
+    property SER_NFE_RET: String read fSER_NFE_RET write fSER_NFE_RET;
+    property NUM_NFE_RET: String read fNUM_NFE_RET write fNUM_NFE_RET;
+    property ITEM_NFE_RET: String read fITEM_NFE_RET write fITEM_NFE_RET;
+    property COD_DA: String read fCOD_DA write fCOD_DA;
+    property NUM_DA: String read fNUM_DA write fNUM_DA;
   end;
 
   /// Registro C176 - Lista

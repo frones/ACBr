@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2017
+-- ACBrDFeUtil --
+[*] Rafatoração dos métodos: "ValidaDIRE" e "ValidaRE", aplicando simplificação
+    de código, e retornando "False", se houver caracteres não numéricos
+    (por: DSA)
+
 23/12/2016
 -- ACBrDFeOpenSSL --
 [+] Adicionada a propriedade "SSLType: TSSLType default LT_all", podendo ser:

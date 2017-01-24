@@ -153,40 +153,43 @@ end;
 
 function ValidaDIRE(AValue: String): Boolean;
 var
-  ano: integer;
+  AnoData, AnoValue: integer;
 begin
   // AValue = AANNNNNNNNNN
-  // Onde: AA Ano corrente da geração do documento
-  //       NNNNNNNNNN Número sequencial dentro do Ano ( 10 dígitos )
-  AValue := OnlyNumber(AValue);
-  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+  // Onde: AA AnoData corrente da geração do documento
+  //       NNNNNNNNNN Número sequencial dentro do AnoData ( 10 dígitos )
 
-  if length(AValue) <> 12 then
-    Result := False
-  else
-    Result := (StrToInt(copy(Avalue, 1, 2)) >= ano - 1) and
-      (StrToInt(copy(Avalue, 1, 2)) <= ano + 1);
+  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
+
+  if Result then
+  begin
+    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+    AnoValue := StrToInt(Copy(AValue, 1, 2));
+
+    Result := (AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1));
+  end;
 end;
 
 function ValidaRE(AValue: String): Boolean;
 var
-  ano: integer;
+  AnoData, AnoValue, SerieRE: integer;
 begin
   // AValue = AANNNNNNNSSS
-  // Onde: AA Ano corrente da geração do documento
-  //       NNNNNNN Número sequencial dentro do Ano ( 7 dígitos )
+  // Onde: AA AnoData corrente da geração do documento
+  //       NNNNNNN Número sequencial dentro do AnoData ( 7 dígitos )
   //       SSS Serie do RE (001, 002, ...)
-  AValue := OnlyNumber(AValue);
-  ano := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
 
-  if length(AValue) <> 12 then
-    Result := False
-  else if not ((StrToInt(copy(Avalue, 1, 2)) >= ano - 1) and
-    (StrToInt(copy(Avalue, 1, 2)) <= ano + 1)) then
-    Result := False
-  else
-    Result := (StrToInt(copy(Avalue, 10, 3)) >= 1) and
-      (StrToInt(copy(Avalue, 10, 3)) <= 999);
+  Result := StrIsNumber(AValue) and (Length(AValue) = 12);
+
+  if Result then
+  begin
+    AnoData  := StrToInt(Copy(IntToStr(YearOf(Date)), 3, 2));
+    AnoValue := StrToInt(Copy(AValue, 1, 2));
+    SerieRE  := StrToInt(Copy(AValue,10, 3));
+
+    Result := ((AnoValue >= (AnoData - 1)) and (AnoValue <= (AnoData + 1))) and
+              ((SerieRE >= 1) and (SerieRE <= 999));
+  end;
 end;
 
 function ValidaDrawback(AValue: String): Boolean;

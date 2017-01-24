@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2017
+--ACBrNFeWebSerices
+[-] Alteração para evitar A.V. ao limpar os retornos
+		http://www.projetoacbr.com.br/forum/topic/34754-acbrnfewebservicesretornoclear-gerando-av/
+		por : Juliomar Marchetti
+		
 18/01/2017
 --ACBrDANFCeFortesFr--
 [*] Otimização da informações de rodapé

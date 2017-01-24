@@ -1288,7 +1288,8 @@ begin
     FcUF := FPConfiguracoesNFe.WebServices.UFCodigo;
   end;
 
-  if Assigned(FNFeRetorno) and Assigned(FNotasFiscais) then
+  if Assigned(FNFeRetorno) and Assigned(FNotasFiscais) 
+		and Assigned(FNFeRetorno.ProtNFe) then
   begin
     // Limpa Dados dos retornos das notas Fiscais;
     for i := 0 to FNFeRetorno.ProtNFe.Count - 1 do

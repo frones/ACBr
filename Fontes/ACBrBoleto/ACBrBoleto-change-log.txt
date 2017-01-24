@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/01/2017 ver: 0.0.216
+--ACBrBoleto.pas
+[+]	Modificado a rotina de envio de boletos para permitir vários endereços
+	separados por ';'.
+	(Celso Marigo Junior)
+
 Data: 23/01/2017 ver: 0.0.217
 --ACBrBoleto.pas
 [*] Ajuste SetCNPJ para setar corretamente os parâmetros de validação do documento.

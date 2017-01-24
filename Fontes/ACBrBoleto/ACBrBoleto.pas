@@ -1590,12 +1590,30 @@ procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
   sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
 var
   i: Integer;
+  EMails: TStringList;
+  sDelimiter: Char;
 begin
   if not Assigned(FMAIL) then
     raise Exception.Create( ACBrStr('Componente ACBrMail não associado') );
 
   FMAIL.Clear;
-  FMAIL.AddAddress(sPara);
+
+  EMails := TStringList.Create;
+  try
+    if Pos( ';', sPara) > 0 then
+       sDelimiter := ';'
+    else
+       sDelimiter := ',';
+    QuebrarLinha( sPara, EMails, '"', sDelimiter);
+
+    for i := 0 to EMails.Count -1 do
+       FMAIL.AddAddress( EMails[i] );
+
+  finally
+    EMails.Free;
+  end;
+
+  //FMAIL.AddAddress(sPara);
   FMAIL.Subject := sAssunto;
 
   if Assigned(sMensagem) then

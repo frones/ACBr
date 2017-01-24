@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/01/2017
+[+] Envio de boletos por email no campo Sacado.Email, agora permitem varios endereços
+	separados por ';'.
+	por: Celso Marigo Junior
+
 13/01/2017
 [+]	Versão compativel com TLS 1.2, usa as DLLs compiladas com a MINGW
 	http://www.projetoacbr.com.br/forum/topic/34177-acbrdfe-com-openssl-e-suporte-a-tls12/

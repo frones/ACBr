@@ -40,11 +40,6 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
-19/01/2017
--- pcnConversao --
-[*] Correção na lista de valores de entrada da function StrToCSTICMS.
-    Por: DrLeite / Italo Jurisato Junior
-
 07/01/2017
 -- Diversos --
 [*] Incluido o tipo de navegação, funções de conversão e constantes pois os

@@ -51,6 +51,7 @@ type
     FDataHora: TDateTime;
     FConfirmacao: String;
     FSucesso: String;
+    FProtocolo: String;
     FMsgCanc: String;
     FMsgRetorno: TMsgRetornoCancCollection;
     FNotasCanceladas: TNotasCanceladasCollection;
@@ -65,6 +66,7 @@ type
     property DataHora: TDateTime                   read FDataHora    write FDataHora;  
     property Confirmacao: String                   read FConfirmacao write FConfirmacao;
     property Sucesso: String                       read FSucesso     write FSucesso;
+    property Protocolo: String                     read FProtocolo   write FProtocolo;
     property MsgCanc: String                       read FMsgCanc     write FMsgCanc;
     property MsgRetorno: TMsgRetornoCancCollection read FMsgRetorno  write SetMsgRetorno;
 
@@ -356,6 +358,9 @@ begin
           infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHoraCancelamento');
         InfCanc.FConfirmacao := Leitor.rAtributo('Confirmacao Id=');
         InfCanc.Sucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
+        if Provedor = proAgili then
+          InfCanc.Protocolo := Leitor.rCampo(tcStr, 'ProtocoloRequerimentoCancelamento');
 
         InfCanc.FPedido.InfID.ID := Leitor.rAtributo('InfPedidoCancelamento Id=');
         if InfCanc.FPedido.InfID.ID = '' then

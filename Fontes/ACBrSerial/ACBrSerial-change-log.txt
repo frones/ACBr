@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 26/01/2017
+-- ACBrDevice --
+[-] Correção para impressão em Modo Raw em Lazarus/FPC. Restaurando para o modo
+    anterior, para evitar problemas de impressão em outras Impressoras
+    (por: DSA)
+
 Data: 21/12/2016
 -- ACBrECFVirtualBuffer --
 [*] Melhorias em "TACBrECFVirtualBufferClass.AddBufferRelatorio", para que

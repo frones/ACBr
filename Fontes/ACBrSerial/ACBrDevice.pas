@@ -1563,6 +1563,7 @@ var
   DocInfo1: TDocInfo1;
   {$Else}
   Written: integer;
+  OldRawMode: Boolean;
   {$EndIf}
 begin
   DocName := 'ACBrDevice';  // TODO: permitir informar o nome em Properties
@@ -1571,10 +1572,16 @@ begin
   {$IfDef FPC}
   Printer.PrinterIndex := PrnIndex;
   Printer.Title := DocName;
+
+  OldRawMode := Printer.RawMode;
   Printer.RawMode := True;
-  Printer.BeginDoc;
-  Printer.Write(AString[1], Length(AString), Written);
-  Printer.EndDoc;
+  try
+    Printer.BeginDoc;
+    Printer.Write(AString[1], Length(AString), Written);
+    Printer.EndDoc;
+  finally
+    Printer.RawMode := OldRawMode;
+  end;
   {$Else}
   PrnName := Printer.Printers[PrnIndex];
   if not OpenPrinter(PChar(PrnName), HandlePrn, nil) then

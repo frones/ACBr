@@ -47,43 +47,49 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/01/2017
+-- ACBrDANFCeFortesFr, ACBrNFeDANFeEscPos --
+[*] Compatibilização de métodos "ImprimirDANFECancelado" e "ImprimirEVENTO"
+    (por: DSA)
+
 24/01/2017
---ACBrNFeWebSerices
+-- ACBrNFeWebSerices --
 [-] Alteração para evitar A.V. ao limpar os retornos
-		http://www.projetoacbr.com.br/forum/topic/34754-acbrnfewebservicesretornoclear-gerando-av/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/34754-acbrnfewebservicesretornoclear-gerando-av/
+    por : Juliomar Marchetti
 		
 18/01/2017
---ACBrDANFCeFortesFr--
+-- ACBrDANFCeFortesFr --
 [*] Otimização da informações de rodapé
-		por : Henrique Leonardo	
+    por : Henrique Leonardo
 
 18/01/2017
 [-] Ajuste na apresentação das informações de rodapé
-        http://www.projetoacbr.com.br/forum/topic/34647-fortereport-n%C3%A3o-imprime-linha-complementar/ 
-		por : Henrique Leonardo
+    http://www.projetoacbr.com.br/forum/topic/34647-fortereport-n%C3%A3o-imprime-linha-complementar/
+    por : Henrique Leonardo
 
 09/01/2017
 [+] Adição do campo obsCont no DANFC-e em Fortes A4 e impressora térmica
-		http://www.projetoacbr.com.br/forum/topic/34463-obscont-na-danfe-nfc-e-fortes/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/34463-obscont-na-danfe-nfc-e-fortes/
+    por : Juliomar Marchetti
 
 04/01/2017
 [*] Mudança do chamado para impressão do danfce
-		http://www.projetoacbr.com.br/forum/topic/34352-impress%C3%A3o-do-danfc-e-cancelado/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/34352-impress%C3%A3o-do-danfc-e-cancelado/
+    por : Juliomar Marchetti
 
 30/12/2016
---ACBrDANFCeFortesFrA4
+--ACBrDANFCeFortesFrA4 --
 [*] Adição InfAdProd na DANFCe em A4.
-		http://www.projetoacbr.com.br/forum/topic/34274-modifica%C3%A7%C3%A3o-adicionado-infadprod-no-modelo-de-nfce-a4-fortes/
-		por Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/34274-modifica%C3%A7%C3%A3o-adicionado-infadprod-no-modelo-de-nfce-a4-fortes/
+    por Juliomar Marchetti
 		
 27/12/2016
---ACBrNFeDANFEFRDM, pcnNFeW
-		Evitar a duplicidade de alertas e o outro carregar o logo na danfe simplicado também
-		http://www.projetoacbr.com.br/forum/topic/34224-danfe-simplificado-do-fast-n%C3%A3o-mostra-logo/
-		por Juliomar Marchetti
+-- ACBrNFeDANFEFRDM, pcnNFeW --
+  Evitar a duplicidade de alertas e o outro carregar o logo na danfe simplicado também
+  http://www.projetoacbr.com.br/forum/topic/34224-danfe-simplificado-do-fast-n%C3%A3o-mostra-logo/
+  por Juliomar Marchetti
+
 23/12/2016
 -- ACBrNFeWebServices --
 [*] Método: TNFeWebService.InicializarServico, modificado para ajustar o tipo de

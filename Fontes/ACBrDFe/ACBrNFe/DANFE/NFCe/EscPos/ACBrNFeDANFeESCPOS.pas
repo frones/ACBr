@@ -95,7 +95,8 @@ type
 
     procedure ImprimirDANFE(NFE: TNFe = nil); override;
     procedure ImprimirDANFEResumido(NFE: TNFe = nil); override;
-    procedure ImprimirEVENTO(NFE: TNFe = nil); override;
+    procedure ImprimirDANFECancelado(NFE: TNFe = nil); override;
+    procedure ImprimirEVENTO(NFE : TNFe = nil);override;
 
     procedure ImprimirRelatorio(const ATexto: TStrings; const AVias: Integer = 1;
       const ACortaPapel: Boolean = True; const ALogo : Boolean = True);
@@ -602,7 +603,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.ImprimirEVENTO(NFE: TNFe);
+procedure TACBrNFeDANFeESCPOS.ImprimirDANFECancelado(NFE: TNFe);
 begin
   if NFE = nil then
   begin
@@ -630,6 +631,11 @@ begin
   GerarRodape;
 
   FPosPrinter.Imprimir;
+end;
+
+procedure TACBrNFeDANFeESCPOS.ImprimirEVENTO(NFE: TNFe);
+begin
+  ImprimirDANFECancelado(NFE);
 end;
 
 procedure TACBrNFeDANFeESCPOS.ImprimirRelatorio(const ATexto: TStrings; const AVias: Integer = 1;

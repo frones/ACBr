@@ -77,6 +77,7 @@ type
     procedure ImprimirDANFEPDF(NFE : TNFe = nil); override;
     procedure ImprimirDANFEResumidoPDF(NFE : TNFe = nil);override;
     procedure ImprimirDANFECancelado(NFE : TNFe = nil);override;
+    procedure ImprimirEVENTO(NFE : TNFe = nil);override;
   published
   end ;
 
@@ -918,6 +919,11 @@ begin
     FpNFe := NFE;
 
   ImprimirCancelado(True);
+end;
+
+procedure TACBrNFeDANFCeFortes.ImprimirEVENTO(NFE: TNFe);
+begin
+  ImprimirDANFECancelado(NFE);
 end;
 
 procedure TACBrNFeDANFCeFortes.ImprimirDANFEResumido(NFE: TNFe);

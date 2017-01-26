@@ -562,8 +562,25 @@ begin
 end;
 
 function TretCancNFSe.LerXml_proEL: Boolean;
+var
+  i: Integer;
 begin
   Result := False;
+  try
+    InfCanc.FSucesso := Leitor.rCampo(tcStr, 'situacao');
+    if InfCanc.FSucesso = 'C' then
+      InfCanc.FDataHora:= Now;
+
+    i := 0;
+    while Leitor.rExtrai(1, 'mensagens', '', i + 1) <> '' do
+    begin
+      InfCanc.FMsgRetorno.Add;
+      InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'mensagens');
+      Inc(i);
+    end;
+  except
+    Result := False;
+  end;
 end;
 
 function TretCancNFSe.LerXml_proNFSeBrasil: Boolean;

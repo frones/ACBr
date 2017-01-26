@@ -73,6 +73,7 @@ type
     function LerNFSe_ISSDSF: Boolean;
     function LerNFSe_Equiplano: Boolean;
     function LerNFSe_Infisc: Boolean;
+    function LerNFSe_EL: Boolean;
     function LerNFSe_Governa: Boolean;
     function LerNFSe_CONAM: Boolean;
     function LerNFSe_Agili: Boolean;
@@ -181,7 +182,8 @@ begin
      (Pos('<Nota>', Leitor.Arquivo) > 0) or (Pos('<NFS-e>', Leitor.Arquivo) > 0) or
      (Pos('<nfse', Leitor.Arquivo) > 0) or (Pos('NumNot', Leitor.Arquivo) > 0) or
      (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) or (Pos('<Reg20Item>', Leitor.Arquivo) > 0) or
-     (Pos('<CompNfse', Leitor.Arquivo) > 0) or (Pos('<NFe', Leitor.Arquivo) > 0) then
+     (Pos('<CompNfse', Leitor.Arquivo) > 0) or (Pos('<NFe', Leitor.Arquivo) > 0) or
+     (Pos('<notasFiscais>', Leitor.Arquivo) > 0) or (Pos('<nfeRpsNotaFiscal>', Leitor.Arquivo) > 0) then
     Result := LerNFSe
   else
     if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or
@@ -1328,7 +1330,7 @@ begin
   case LayoutXML of
     loABRASFv1:    Result := LerNFSe_ABRASF_V1;
     loABRASFv2:    Result := LerNFSe_ABRASF_V2;
-    loEL:          Result := False; // Falta implementar
+    loEL:          Result := LerNFSe_EL;
     loEGoverneISS: Result := False; // Falta implementar
     loEquiplano:   Result := LerNFSe_Equiplano;
     loGoverna:     Result := LerNFSe_Governa;
@@ -2680,6 +2682,27 @@ begin
   end;
 end;
 
+function TNFSeR.LerNFSe_EL: Boolean;
+begin
+  Result := False;
+  Leitor.Grupo := Leitor.Arquivo;
+
+  if (Pos('<notasFiscais>', Leitor.Arquivo) > 0) or (Pos('<nfeRpsNotaFiscal>', Leitor.Arquivo) > 0) then
+  begin
+    NFSe.Numero                  := leitor.rCampo(tcStr, 'numero');
+    NFSe.CodigoVerificacao       := leitor.rCampo(tcStr, 'idRps');
+    NFSe.DataEmissao             := leitor.rCampo(tcDatHor, 'dataProcessamento');
+    NFSe.IdentificacaoRps.Numero := leitor.rCampo(tcStr, 'rpsNumero');
+    if (Leitor.rCampo(tcStr, 'situacao') <> 'A') then
+    begin
+      NFSe.Cancelada:= snSim;
+      NFSe.Status:= srCancelado;
+    end;
+
+    Result := True;
+  end;
+end;
+
 function TNFSeR.LerNFSe_Equiplano: Boolean;
 begin
   Result := False;
@@ -2698,7 +2721,7 @@ begin
       NFSe.Status := srCancelado;
     end;
 
- Result := True;
+    Result := True;
   end;
 end;
 

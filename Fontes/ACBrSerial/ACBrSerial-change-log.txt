@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/01/2017
+-- ACBrECFVirtual --
+[-] Alteração para incluir também o valor dos acréscimos de itens em 
+	"fpCuponsCanceladosEmAbertoTotal".
+	(por: Elias César)
+
+-- ACBrBAL --
+[-] Correção para NÃO desativar "MonitorarBalanca" após método "LePeso"
+    (por: adenilton)
+
 Data: 26/01/2017
 -- ACBrDevice --
 [-] Correção para impressão em Modo Raw em Lazarus/FPC. Restaurando para o modo

@@ -2035,7 +2035,7 @@ begin
 
     fpCupom.CancelaItem( NumItem );
 
-    fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + TotBruto;
+    fpCuponsCanceladosEmAbertoTotal := fpCuponsCanceladosEmAbertoTotal + ValorItem;
 
     { Estornando do total de Acréscimos/Descontos. VendaBruta e GT nunca são estornadas }
     if DescAcresItem < 0 then

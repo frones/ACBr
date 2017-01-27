@@ -311,8 +311,8 @@ begin
   Monitorando := MonitorarBalanca ;
 
   try
-     Monitorando := False ;
-     
+     MonitorarBalanca := False ;
+
      if not Ativado then   { Ativa caso não tenha sido ativado antes }
         Ativar ;
 

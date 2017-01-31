@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/01/2017
+-- ACBrECFVirtualSAT --
+[*] Melhoria da função CancelaCupom, quando o XML do CFe não está carregado na
+    memória o componente tentará recuperar o XML do disco automaticamente
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=34834
+    (por: PauloHenrique)
+
 Data: 12/01/2017
 -- ACBrSAT --
 [-] Ajuste no método "EnviarEmail", para limpar o objeto TACBrMail antes do

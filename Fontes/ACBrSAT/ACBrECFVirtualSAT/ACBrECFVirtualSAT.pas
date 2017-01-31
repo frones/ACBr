@@ -561,10 +561,21 @@ begin
         else
           raise EACBrSATErro.Create( 'CFe não encontrado: '+NomeCFe);
       end
+      else if Trim(CFe.XMLOriginal) <> '' then
+        CancelarUltimaVenda
       else
       begin
-        if Trim(CFe.XMLOriginal) <> '' then
-          CancelarUltimaVenda
+         NomeCFe := PathWithDelim(fsACBrSAT.ConfigArquivos.CalcPath(fsACBrSAT.ConfigArquivos.PastaCFeVenda,  CNPJ, Now()))+fsACBrSAT.ConfigArquivos.PrefixoArqCFe+OnlyNumber(ChaveCupom)+'.xml';
+
+         if not FileExists(NomeCFe) then
+           NomeCFe := PathWithDelim(fsACBrSAT.ConfigArquivos.CalcPath(fsACBrSAT.ConfigArquivos.PastaCFeVenda,  CNPJ, Now()-1))+fsACBrSAT.ConfigArquivos.PrefixoArqCFe+OnlyNumber(ChaveCupom)+'.xml';
+
+         if FileExists(NomeCFe) then
+         begin
+          CFe.LoadFromFile(NomeCFe);
+          CancelarUltimaVenda;
+         end
+
         else
           raise EACBrSATErro.Create( 'CFe não carregado.');
       end;

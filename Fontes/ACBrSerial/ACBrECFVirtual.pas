@@ -465,6 +465,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     function GetArredonda : Boolean; override ;
 
     function GetDataMovimento: TDateTime; override;
+    function GetNumCOOInicial: String; override;
  public
     Constructor Create( AECFVirtual : TACBrECFVirtual );
     Destructor Destroy  ; override ;
@@ -1616,6 +1617,12 @@ function TACBrECFVirtualClass.GetNumCFC: String;
 begin
   Result := IntToStrZero( fpCuponsCancelados + fpCuponsCanceladosEmAberto, 6 ) ;
   GravaLog('GetNumCFC: '+Result);
+end;
+
+function TACBrECFVirtualClass.GetNumCOOInicial: String;
+begin
+  Result := IntToStrZero( fpCOOInicial, 6 ) ;
+  GravaLog('GetNumCOOInicial: '+Result);
 end;
 
 function TACBrECFVirtualClass.GetNumGNFC: String;

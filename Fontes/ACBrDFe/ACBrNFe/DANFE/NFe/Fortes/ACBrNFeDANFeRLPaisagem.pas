@@ -589,7 +589,6 @@ var i, j, b, h, iAlturaCanhoto,vWidthAux, vLeftAux: Integer;
   LogoStream: TStringStream;
   vAutoSizeAux : Boolean;
 begin
-  // Carrega logomarca
   if (FLogo <> '') then
   begin
     if FileExists (FLogo) then
@@ -601,7 +600,6 @@ begin
         try
            rliLogo.Picture.Bitmap.LoadFromStream(LogoStream);
         except
-          { Para o caso do FLogo ser um arquivo não encontrado, ou um Stream Inválido }
           rliLogo.Picture := Nil;
         end;
       finally
@@ -615,7 +613,6 @@ begin
     rliMarcaDagua1.Picture.LoadFromFile(FMarcaDagua);
   end;
 
-  // Exibe o resumo da NF-e no canhoto
   if FResumoCanhoto = True then
   begin
     if FResumoCanhoto_Texto <> '' then
@@ -629,7 +626,7 @@ begin
                            'VALOR TOTAL: R$ ' +
                            FormatFloatBr(FNFe.Total.ICMSTot.vNF,
                            '###,###,###,##0.00');
-    end; // if FResumoCanhoto_Texto <> ''
+    end;
     rllResumo.Visible := True;
     iAlturaCanhoto := 25;
   end
@@ -645,32 +642,27 @@ begin
   rllDataRecebimento.Left := rliCanhoto1.Left + 3;
   rllIdentificacao.Left   := rliCanhoto1.Left + 3;
 
-  // Exibe a informação de Ambiente de Homologação
-  rllHomologacao.Visible := ( FNFe.Ide.tpAmb = taHomologacao );
-  rllHomologacao.Caption := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
+  rllHomologacao.Visible  := ( FNFe.Ide.tpAmb = taHomologacao );
+  rllHomologacao.Caption  := ACBrStr('AMBIENTE DE HOMOLOGAÇÃO - NF-E SEM VALOR FISCAL');
 
-  // Exibe a informação correta no label da chave de acesso
-  if FNFeCancelada then
+  rllDadosVariaveis3_Descricao.Visible  := True;
+  rlbCodigoBarras.Visible := False;
+  rllXmotivo.Visible      := True;
+  rlbCancelada.Visible    := FNFeCancelada;
+  if rlbCancelada.Visible then
   begin
-    rllXmotivo.Caption                    := 'NF-e CANCELADA';
     rllDadosVariaveis3_Descricao.Caption  := ACBrStr('PROTOCOLO DE HOMOLOGAÇÃO DE CANCELAMENTO');
-    rlbCodigoBarras.Visible               := False;
-    rllXmotivo.Visible                    := True;
-    rllDadosVariaveis3_Descricao.Visible  := True;
-    rlbCancelada.Visible                  := True;
-    RLLCancelada.Caption                  := 'NF-e CANCELADA';
+    rllXmotivo.Caption    := 'NF-e CANCELADA';
+    RLLCancelada.Caption  := 'NF-e CANCELADA';
   end
   else
   begin
     if FNFe.procNFe.cStat > 0 then
     begin
-      rlbCodigoBarras.Visible               := False;
-      rllXmotivo.Visible                    := True;
-      rllDadosVariaveis3_Descricao.Visible  := True;
       case FNFe.procNFe.cStat of
         100 : begin
                 rlbCodigoBarras.Visible := True;
-                rllXMotivo.Visible := False;
+                rllXMotivo.Visible      := False;
                 rllDadosVariaveis3_Descricao.Caption := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO');
               end;
         101,
@@ -699,9 +691,7 @@ begin
     begin
       if (FNFe.Ide.tpEmis in [teNormal, teSCAN]) then
       begin
-        rlbCodigoBarras.Visible := False;
         rllXmotivo.Caption := ACBrStr('NF-E NÃO ENVIADA PARA SEFAZ');
-        rllXMotivo.Visible := True;
         rllDadosVariaveis3_Descricao.Visible := False;
         rllDadosVariaveis3.Visible := False;
       end;
@@ -823,14 +813,10 @@ begin
   // Posiciona a Marca D'água
   rliMarcaDagua1.Left := rlbItens.Left + (rlbItens.Width div 2) -
                                                   (rliMarcaDagua1.Width div 2);
-   // Exibe o desenvolvedor do sistema
   rllSistema.Visible := ( FSsitema <> '' );
   rllSistema.Caption := FSsitema;
-
-  // Exibe o nome do usuário
   rllUsuario.Visible := ( FUsuario <> '' );
   rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + DateTimeToStr(Now) + ' - ' + FUsuario;
-
 
   // Oculta alguns itens do DANFE
   if FFormularioContinuo = True then
@@ -970,7 +956,6 @@ begin
   Emitente;
   Destinatario;
   Imposto;
-//  Itens;
   ISSQN;
   Transporte;
   AddFaturaReal;
@@ -996,7 +981,6 @@ begin
 end;
 
 procedure TfrlDANFeRLPaisagem.Header;
-var sChaveContingencia: String;
 begin
   with FNFe.InfNFe, FNFe.Ide do
   begin
@@ -1006,6 +990,7 @@ begin
     while rliChave.Width <  (rllChave.Width + 10 + (rllChave.Left - rliChave.Left)) do
       rllChave.Font.Size    := rllChave.Font.Size -1;//para nao truncar a chave vai diminuir o fonte
 
+    rlbCodigoBarras.Visible := True;
     rlbCodigoBarras.Caption := OnlyNumber(FNFe.InfNFe.Id);
     rllNumNF0.Caption       := ACBrStr('Nº ') + FormatFloat('000,000,000', nNF);
     rllNumNF1.Caption       := rllNumNF0.Caption;
@@ -1023,71 +1008,54 @@ begin
 
     // Configuração inicial
     rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'PROTOCOLO DE AUTORIZAÇÃO DE USO');
-    rlbCodigoBarras.Visible       := True;
-    rlbCodigoBarrasFS.Visible     := False;
-    rllAvisoContingencia.Visible  := True;
-    rlbAvisoContingencia.Visible  := True;
+    rlbCodigoBarrasFS.Visible     := ( tpEmis in [teContingencia,teFSDA] );
+    rlbAvisoContingencia.Visible  := ( tpEmis <> teNormal );
     rllAvisoContingencia.Caption  := ACBrStr( 'DANFE em Contingência - Impresso em decorrência de problemas técnicos');
-
     rllDadosVariaveis1a.Visible   := False;
     rllDadosVariaveis1b.Visible   := False;
 
     case FNFe.Ide.tpEmis of
-      teNormal        : begin
-                          rllAvisoContingencia.Visible        := False;
-                          rlbAvisoContingencia.Visible        := False;
-
-                          rllDadosVariaveis1a.Visible         := ( FNFe.procNFe.cStat > 0 );
-                          rllDadosVariaveis1b.Visible         := rllDadosVariaveis1a.Visible;
-
-                          if FProtocoloNFe <> '' then
-                            rllDadosVariaveis3.Caption        := FProtocoloNFe
-                          else
-                            rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
-                                                                  DateTimeToStr(FNFe.procNFe.dhRecbto);
-                        end;
-      teContingencia,
-      teFSDA,
+      teNormal,
       teSCAN,
       teSVCAN,
       teSVCRS,
-      teSVCSP           : begin
-                          sChaveContingencia                  := TACBrNFe(TACBrNFeDANFeRL(Owner).ACBrNFe).GerarChaveContingencia(FNFe);
-                          rlbCodigoBarrasFS.Caption           := sChaveContingencia;
-                          rlbCodigoBarrasFS.Visible           := True;
-
-                          rllDadosVariaveis3_Descricao.Caption:= 'DADOS DA NF-E';
-                          rllDadosVariaveis3.Caption          := FormatarChaveAcesso(sChaveContingencia);
-
-                          if (dhCont > 0) and (xJust > '') then
-                            rllContingencia.Caption           := ACBrStr( 'Data / Hora da entrada em contingência: ') +
-                                                                          FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
-                                                                          ' Motivo contingência: ' + xJust;
+      teSVCSP         : begin
+                          rllDadosVariaveis1a.Visible   := ( FNFe.procNFe.cStat > 0 );
+                          rllDadosVariaveis1b.Visible   := rllDadosVariaveis1a.Visible;
+                          if FProtocoloNFe <> '' then
+                            rllDadosVariaveis3.Caption  := FProtocoloNFe
+                          else
+                            rllDadosVariaveis3.Caption  := FNFe.procNFe.nProt + ' ' +
+                                                            DateTimeToStr(FNFe.procNFe.dhRecbto);
                         end;
-
+      teContingencia,
+      teFSDA          : begin
+                          rllDadosVariaveis3_Descricao.Caption:= 'DADOS DA NF-E';
+                          rlbCodigoBarrasFS.Caption     := TACBrNFe(TACBrNFeDANFeRL(Owner).ACBrNFe).GerarChaveContingencia(FNFe);
+                          rllDadosVariaveis3.Caption    := FormatarChaveAcesso(rlbCodigoBarrasFS.Caption);
+                         end;
       teDPEC          : begin
-                          rllDadosVariaveis1a.Visible         := True;
-                          rllDadosVariaveis1b.Visible         := True;
-                          rlbAvisoContingencia.Visible := not NaoEstaVazio(FNFe.procNFe.nProt);
+                          rllDadosVariaveis1a.Visible   := True;
+                          rllDadosVariaveis1b.Visible   := True;
+                          rlbAvisoContingencia.Visible  := not NaoEstaVazio(FNFe.procNFe.nProt);
                           rllAvisoContingencia.Caption  := ACBrStr('DANFE impresso em contingência - DPEC regularmente recebida pela Receita Federal do Brasil');
                           if not rlbAvisoContingencia.Visible then // DPEC TRANSMITIDO
-                            rllDadosVariaveis3.Caption        := FNFe.procNFe.nProt + ' ' +
-                                                                  IfThen(FNFe.procNFe.dhRecbto <> 0,
-                                                                  DateTimeToStr(FNFe.procNFe.dhRecbto), '')
+                            rllDadosVariaveis3.Caption  := FNFe.procNFe.nProt + ' ' +
+                                                            IfThen(FNFe.procNFe.dhRecbto <> 0,
+                                                              DateTimeToStr(FNFe.procNFe.dhRecbto), '')
                           else
                           begin
                             rllDadosVariaveis3_Descricao.Caption:= ACBrStr( 'NÚMERO DE REGISTRO DO EPEC');
                             if NaoEstaVazio( FProtocoloNFe) then
-                              rllDadosVariaveis3.Caption        := FProtocoloNFe
+                              rllDadosVariaveis3.Caption  := FProtocoloNFe
                           end;
-
-                          if (dhCont > 0) and (xJust > '') then
-                            rllContingencia.Caption             := ACBrStr( 'Data / Hora da entrada em contingência: ') +
-                                                                            FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
-                                                                            ' Motivo contingência: ' + xJust;
                         end;
 
     end;
+    if (dhCont > 0) and (xJust > '') then
+      rllContingencia.Caption := ACBrStr( 'Data / Hora da entrada em contingência: ') +
+                                            FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
+                                              ' Motivo contingência: ' + xJust;
   end;
   if rlbCodigoBarras.Visible then
     rllChave.Holder := rlbCodigoBarras;
@@ -1397,7 +1365,7 @@ begin
 
   // Protocolo de autorização, nos casos de emissão em contingência
   if (FNFe.Ide.tpEmis in [teContingencia, teFSDA]) and
-                                              (FNFe.procNFe.cStat = 100) then
+        (FNFe.procNFe.cStat = 100) then
   begin
     sProtocolo := ACBrStr('PROTOCOLO DE AUTORIZAÇÃO DE USO: ') +
                      FNFe.procNFe.nProt + ' ' + DateTimeToStr(FNFe.procNFe.dhRecbto);

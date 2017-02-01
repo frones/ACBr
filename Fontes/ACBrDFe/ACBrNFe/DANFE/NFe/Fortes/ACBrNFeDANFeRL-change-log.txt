@@ -47,11 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-18/01/2017
--- ACBrNFeDANFeRLRetrato --
-[-] Ajuste na configuração da pagina
-                http://www.projetoacbr.com.br/forum/topic/34680-danfe-fortes-reports-cortando-banda-de-dados-adicionais/
-       		por: Henrique Leonardo
+01/02/2017
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[-] Refatoração na apresentação dos dados contingência svcxx
+[*] Diversas otimizações no código. 
+     http://www.projetoacbr.com.br/forum/topic/34881-danfe-svc-an/?page=2#comment-229063
+     Por : Henrique Leonardo , Kiko Fernandes , BigWings e medeiros.sunsystem
 
 18/01/2017
 --ACBrNFeDANFeRLClass--

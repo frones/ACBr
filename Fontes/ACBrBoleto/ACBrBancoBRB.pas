@@ -227,7 +227,7 @@ end;
 procedure TACBrBancoBRB.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
   TipoPessoa: Char;
-  TipoDocumento, TipoJuros, TipoDesconto, lDataDesconto: String;
+  TipoDocumento, TipoJuros, fsTipoDesconto, lDataDesconto: String;
   Prazo1, Prazo2, wLinha, lNossoNumero: String;
 begin
   with ACBrTitulo do
@@ -287,12 +287,12 @@ begin
      { Descontos }
      if ValorDesconto > 0 then
       begin
-        TipoDesconto := '53';
+        fsTipoDesconto := '53';
         lDataDesconto := FormatDateTime('ddmmyyyy',DataDesconto);
       end
      else
       begin
-        TipoDesconto := '00';
+        fsTipoDesconto := '00';
         lDataDesconto := '00000000';
       end;
 
@@ -326,7 +326,7 @@ begin
                  TipoJuros                                                        + // Código do Tipo de Juros 00- Sem Juros ('Não Cobrar Juros'); 50-Diário ("Juro de mora ao dia de...") ou 51- Mensal ("Juro de mora ao mês de ...%")
                  FormatCurr('00000000000000', ValorMoraJuros * 100)               + // Valor do Juros (Nominal/Tx) 00000000000000 (Se não houver Juros)
                  FormatCurr('00000000000000', ValorAbatimento * 100)              + // Valor do Abatimento (Nominal/Tx) 00000000000000 (Se não houver Abatimento)
-                 TipoDesconto                                                     + // Código do Desconto 00- Sem Desconto; 52- Diário ("Desconto por dia de...") ou 53- Mensal ("Desconto Mensal de... até..."
+                 fsTipoDesconto                                                     + // Código do Desconto 00- Sem Desconto; 52- Diário ("Desconto por dia de...") ou 53- Mensal ("Desconto Mensal de... até..."
                  lDataDesconto                                                    + // Data limite para Desconto 00000000 (Se não houver Desconto)
                  FormatCurr('00000000000000', ValorDesconto * 100)                + // Valor do Desconto 00000000000000 (Se não houver Desconto)
                  Instrucao1                                                       + // Código da 1º Instrução

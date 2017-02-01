@@ -841,7 +841,10 @@ begin
                          IfThen(ValorMoraJuros > 0,
                                 IntToStrZero( round(ValorMoraJuros * 100), 15),
                                 PadLeft('', 15, '0'))                     + // 127 a 141 - Valor de juros de mora por dia
-                         '0'                                              + // 142 - Zeros
+                         TipoDescontoToString(TipoDesconto)               + // 142 - "Código do Desconto 1
+                                                                            // '0'  =  Não Conceder desconto
+                                                                            // '1'  =  Valor Fixo Até a Data Informada
+                                                                            // '2'  =  Percentual Até a Data Informada"
                          ADataDesconto                                    + // 143 a 150 - Data limite para desconto
                          IfThen(ValorDesconto > 0,
                                 IntToStrZero( round(ValorDesconto * 100), 15),

@@ -276,6 +276,7 @@ type
   TACBrBanco  = class;
   TACBrBoleto = class;
 
+  TACBrTipoDesconto = (tdNaoConcederDesconto, tdValorFixoAteDataInformada, tdPercentualAteDataInformada);
   TACBrLayoutRemessa = (c400, c240);
 
   {Tipos de ocorrências permitidas no arquivos remessa / retorno}
@@ -874,6 +875,7 @@ type
     fInstrucao3        : String;
     fLocalPagamento    : String;
     fOcorrenciaOriginal: TACBrOcorrencia;
+    fTipoDesconto      : TACBrTipoDesconto;
     fParcela           : Integer;
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
@@ -966,6 +968,7 @@ type
      property CodigoLiquidacaoDescricao : String read fCodigoLiquidacaoDescricao write fCodigoLiquidacaoDescricao;
 
      property OcorrenciaOriginal : TACBrOcorrencia read  fOcorrenciaOriginal write fOcorrenciaOriginal;
+     property TipoDesconto       : TACBrTipoDesconto read fTipoDesconto write fTipoDesconto;
 
      property MotivoRejeicaoComando          : TStrings    read fMotivoRejeicaoComando  write fMotivoRejeicaoComando;
      property DescricaoMotivoRejeicaoComando : TStrings    read fDescricaoMotivoRejeicaoComando  write fDescricaoMotivoRejeicaoComando;
@@ -1151,6 +1154,8 @@ type
     property PrinterName     : String          read fPrinterName      write fPrinterName;
   end;
 
+function TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
+
 procedure Register;
 
 implementation
@@ -1165,6 +1170,16 @@ Uses Forms, Math, dateutils, strutils,
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
 {$ENDIF}
+
+function TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
+begin
+  Result := '0';
+  case AValue of
+     tdNaoConcederDesconto : Result := '0';
+     tdValorFixoAteDataInformada : Result := '1';
+     tdPercentualAteDataInformada : Result := '2';
+  end;
+end;
 
 procedure Register;
 begin
@@ -1429,6 +1444,7 @@ begin
    fReferencia           := '';
    fVersao               := '';
    fTipoImpressao        := tipNormal;
+   fTipoDesconto         := tdNaoConcederDesconto ;
 
    fCodigoMora    := '';
    fCodigoGeracao := '2';

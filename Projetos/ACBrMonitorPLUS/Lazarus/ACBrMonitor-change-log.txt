@@ -43,6 +43,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/01/2017
+[+] Modificado formato de gravação da mensagem de email dos boletos resolvendo problemas de
+	codificação.
+	http://www.projetoacbr.com.br/forum/topic/34913-configuração-com-acentos-do-boleto-faz-acbrmonitorini-ser-salvo-em-utf-8-e-atrapalha-texto-do-email-da-nfe/
+	por: Celso Marigo Junior
+
+31/01/2017
+[+] Adicionado relatório de retorno para conferência de títulos
+	http://www.projetoacbr.com.br/forum/topic/34933-acbrmonitorplus-novo-relatório-para-conferência-de-títulos/
+	por: Celso Marigo Junior
+
+31/01/2017
+[+] Adicionao check box que permite exibir a razão social do certificado no icone do tray
+	e barra de título do monitor. Util para quem usa mais de um monitor simultaneamente.
+	por: Celso Marigo Junior
+
 24/01/2017
 [+] Envio de boletos por email no campo Sacado.Email, agora permitem varios endereços
 	separados por ';'.

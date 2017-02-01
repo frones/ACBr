@@ -2337,7 +2337,10 @@ begin
        if NomeArqRetorno = '' then
           raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
-       NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno;
+       if not FileExists(NomeArqRetorno) then
+         NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno
+       else
+         NomeArq := NomeArqRetorno;
 
        if not FilesExists( NomeArq ) then
          raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));

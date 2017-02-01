@@ -1,6 +1,6 @@
 inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
-  Left = 204
-  Top = 207
+  Left = 339
+  Top = 77
   Caption = 'frlDANFeRLPaisagem'
   inherited RLNFe: TRLReport
     Height = 794

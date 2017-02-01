@@ -43,7 +43,7 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs,
+  Printers, DbCtrls, DBGrids, ExtDlgs, SynHighlighterXML, SynMemo, PrintersDlgs,
   pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT, ACBrSATExtratoESCPOS,
   ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrGNRE2,
   ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
@@ -114,6 +114,7 @@ type
     bECFLeituraX: TBitBtn;
     bECFTestar: TBitBtn;
     bEmailTestarConf: TBitBtn;
+    bBoletoRelatorioRetorno: TBitBtn;
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel3: TBevel;
@@ -336,8 +337,10 @@ type
     cbxAtualizarXMLCancelado: TCheckBox;
     cbxUnComTributavel: TComboBox;
     cbFormaEmissaoNFe: TComboBox;
+    chkExibeRazaoSocial: TCheckBox;
     DBGrid3: TDBGrid;
     deUSUDataCadastro: TDateEdit;
+    edtBOLLogoEmpresa: TEdit;
     edtArquivoPFX: TEdit;
     edtArquivoWebServicesGNRe: TEdit;
     edtAutoExecute: TDBCheckBox;
@@ -385,6 +388,7 @@ type
     Label201: TLabel;
     Label202: TLabel;
     Label203: TLabel;
+    Label204: TLabel;
     Label40: TLabel;
     Label50: TLabel;
     Label51: TLabel;
@@ -420,6 +424,7 @@ type
     rgTipoFonte: TRadioGroup;
     sbArquivoCert: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
+    sbLogoMarca1: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     ScrollBox: TScrollBox;
     seUSUCROCadastro: TSpinEdit;
@@ -1056,6 +1061,7 @@ type
     procedure ApplicationProperties1Restore(Sender: TObject);
     procedure bAtivarClick(Sender: TObject);
     procedure bbAtivarClick(Sender: TObject);
+    procedure bBoletoRelatorioRetornoClick(Sender: TObject);
     procedure bCEPTestarClick(Sender: TObject);
     procedure bDownloadListaClick(Sender: TObject);
     procedure bEmailTestarConfClick(Sender: TObject);
@@ -1205,6 +1211,7 @@ type
     procedure sbArquivoWebServicesMDFeClick(Sender: TObject);
     procedure sbArquivoWebServicesNFeClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
+    procedure sbLogoMarca1Click(Sender: TObject);
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
@@ -3811,14 +3818,13 @@ begin
     deBolDirRetorno.Text := Ini.ReadString('BOLETO', 'DirArquivoRetorno', '');
     cbxCNAB.ItemIndex := Ini.ReadInteger('BOLETO', 'CNAB', 0);
     chkLerCedenteRetorno.Checked := Ini.ReadBool('BOLETO','LerCedenteRetorno',False);
+    edtBOLLogoEmpresa.Text := Ini.ReadString('BOLETO', 'LogoEmpresa', '');
     {Parametro do Boleto Impressora}
     cbxBOLImpressora.ItemIndex :=
       cbxBOLImpressora.Items.IndexOf(Ini.ReadString('BOLETO', 'Impressora', ''));
     {Parametros do Boleto - E-mail}
     edtBOLEmailAssunto.Text := Ini.ReadString('BOLETO', 'EmailAssuntoBoleto', '');
-    edtBOLEmailMensagem.Text :=
-      StringReplace(Ini.ReadString('BOLETO', 'EmailMensagemBoleto', ''),
-      '|', LineEnding, [rfReplaceAll]);
+    edtBOLEmailMensagem.Text := StringToBinaryString(Ini.ReadString('BOLETO', 'EmailMensagemBoleto', ''));
 
     {Parametro da Conta de tsEmailDFe}
     edEmailNome.Text := Ini.ReadString('EMAIL', 'NomeExibicao', '');
@@ -4042,6 +4048,8 @@ begin
     ACBrMDFe1.Configuracoes.Certificados.Senha := edtSenha.Text;
     ACBrBlocoX1.Configuracoes.Certificados.Senha := edtSenha.Text;
     ACBrGNRE1.Configuracoes.Certificados.Senha := edtSenha.Text;
+
+    chkExibeRazaoSocial.Checked := Ini.ReadBool('Certificado', 'ExibeRazaoSocialCertificado', False);
 
     edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
     edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
@@ -4362,6 +4370,13 @@ begin
     seLogoKC2.Value    := INI.ReadInteger('Logo', 'KC2', ACBrPosPrinter1.ConfigLogo.KeyCode2);
     seLogoFatorX.Value := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
     seLogoFatorY.Value := INI.ReadInteger('Logo', 'FatorY', ACBrPosPrinter1.ConfigLogo.FatorY);
+
+    if (chkExibeRazaoSocial.Checked and Assigned(ACBrNFe1.SSL)) then
+      if ( Pos(ACBrNFe1.SSL.CertRazaoSocial, TrayIcon1.Hint) = 0) then
+        begin
+          TrayIcon1.Hint := TrayIcon1.Hint + sLineBreak + ACBrNFe1.SSL.CertRazaoSocial;
+          FrmACBrMonitor.Caption := FrmACBrMonitor.Caption + ' [' + ACBrNFe1.SSL.CertRazaoSocial+']';
+        end;
 
     ConfiguraPosPrinter;
   finally
@@ -4880,6 +4895,7 @@ begin
     Ini.WriteString('Certificado', 'ArquivoPFX', edtArquivoPFX.Text);
     Ini.WriteString('Certificado', 'NumeroSerie', edtNumeroSerie.Text);
     GravaINICrypt(INI, 'Certificado', 'Senha', edtSenha.Text, _C);
+    Ini.WriteBool('Certificado', 'ExibeRazaoSocialCertificado', chkExibeRazaoSocial.Checked);
 
     Ini.WriteBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', cbModoEmissao.Checked);
     Ini.WriteBool('ACBrNFeMonitor', 'ModoXML', cbModoXML.Checked);
@@ -4929,7 +4945,7 @@ begin
     Ini.WriteString('NFe', 'CNPJContador', edtCNPJContador.Text);
 
     Ini.WriteString('Email', 'AssuntoNFe', edtEmailAssuntoNFe.Text);
-    Ini.WriteString('Email', 'MensagemNFe', BinaryStringToString(mmEmailMsgNFe.Lines.Text) );
+    Ini.WriteString('Email', 'MensagemNFe', BinaryStringToString(mmEmailMsgNFe.Lines.Text));
     Ini.WriteString('Email', 'AssuntoCTe', edtEmailAssuntoCTe.Text);
     Ini.WriteString('Email', 'MensagemCTe', BinaryStringToString(mmEmailMsgCTe.Lines.Text) );
     Ini.WriteString('Email', 'AssuntoMDFe', edtEmailAssuntoMDFe.Text);
@@ -5219,12 +5235,11 @@ begin
       deBolDirRetorno.Text));
     ini.WriteInteger('BOLETO', 'CNAB', cbxCNAB.ItemIndex);
     Ini.WriteBool('BOLETO','LerCedenteRetorno', chkLerCedenteRetorno.Checked);
+    Ini.WriteString('BOLETO', 'LogoEmpresa', edtBOLLogoEmpresa.Text);
 
     {Parametros do Boleto - E-mail}
     ini.WriteString('BOLETO', 'EmailAssuntoBoleto', edtBOLEmailAssunto.Text);
-    ini.WriteString('BOLETO', 'EmailMensagemBoleto',
-      StringReplace(edtBOLEmailMensagem.Text, LineEnding, '|',
-      [rfReplaceAll]));
+    ini.WriteString('BOLETO', 'EmailMensagemBoleto', BinaryStringToString(edtBOLEmailMensagem.Lines.Text));
     {Parametros do Boleto - Impressora}
     Ini.WriteString('BOLETO', 'Impressora', cbxBOLImpressora.Text);
   finally
@@ -6096,6 +6111,19 @@ begin
     AvaliaEstadoTsBAL;
   end;
 
+end;
+
+procedure TFrmACBrMonitor.sbLogoMarca1Click(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Logo';
+  OpenDialog1.DefaultExt := '*.png';
+  OpenDialog1.Filter :=
+    'Arquivos PNG (*.png)|Arquivos JPG (*.jpg)|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtBOLLogoEmpresa.Text := OpenDialog1.FileName;
+  end;
 end;
 
 procedure TFrmACBrMonitor.sbNumeroSerieCertClick(Sender: TObject);
@@ -7847,6 +7875,30 @@ begin
 
     sbSerial.Enabled := False;
     bbAtivar.Caption := 'Desativar';
+  end;
+end;
+
+procedure TFrmACBrMonitor.bBoletoRelatorioRetornoClick(Sender: TObject);
+Var
+  oldLeCendenteRetorno : Boolean;
+begin
+  OpenDialog1.Filter     := 'Arquivos RET|*.RET|Todos os Arquivos|*.*|';
+  OpenDialog1.DefaultExt := '*.ret';
+
+  if deBolDirRetorno.Text <> '' then
+     OpenDialog1.InitialDir := deBolDirRetorno.Directory
+  else
+     OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+
+  if OpenDialog1.Execute then
+  begin
+    // Gerar remessa and list report
+    oldLeCendenteRetorno := ACBrBoleto1.LeCedenteRetorno;
+    ACBrBoleto1.LeCedenteRetorno := True;
+    ACBrBoleto1.NomeArqRetorno   := OpenDialog1.FileName;
+    ACBrBoleto1.LerRetorno();
+    ImprimeRelatorioRetorno(OpenDialog1.FileName);
+    ACBrBoleto1.LeCedenteRetorno := oldLeCendenteRetorno;
   end;
 end;
 

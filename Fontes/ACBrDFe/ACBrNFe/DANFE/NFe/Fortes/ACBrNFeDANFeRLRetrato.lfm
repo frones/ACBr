@@ -1,6 +1,6 @@
 inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
-  Left = 481
-  Top = 119
+  Left = 482
+  Top = 77
   Caption = 'frlDANFeRLRetrato'
   inherited RLNFe: TRLReport
     Left = 0

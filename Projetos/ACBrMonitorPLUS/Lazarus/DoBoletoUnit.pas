@@ -46,11 +46,12 @@ procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
 procedure GravarIniRetorno(DirIniRetorno: String);
 function ListaBancos() : String;
 function ListaCaractTitulo() : String;
+procedure ImprimeRelatorioRetorno(sArqRetorno : String);
 
 implementation
 
 uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit, strutils, typinfo,
-  DoEmailUnit ;
+  DoEmailUnit, ACBrBoletoRelatorioRetorno ;
 
 procedure DoBoleto ( Cmd: TACBrCmd ) ;
 var
@@ -94,6 +95,9 @@ begin
          NomeArqRetorno := cmd.Params(1);
          LerRetorno();
          GravarIniRetorno(DirArqRetorno);
+
+         if ( Cmd.Params(2) = '1' ) then
+            ImprimeRelatorioRetorno(DirArqRetorno);
        end
 
       else if cmd.Metodo = 'enviaremail' then
@@ -537,6 +541,22 @@ begin
 
    if Result <> '' then
       Result := copy(Result,1,Length(Result)-1) ;
+end;
+
+procedure ImprimeRelatorioRetorno(sArqRetorno : String);
+var
+   fRelRetorno : TfrmACBrBoletoRelatorioRet;
+begin
+  try
+    fRelRetorno := TfrmACBrBoletoRelatorioRet.Create(FrmACBrMonitor);
+    fRelRetorno.ACBrBoleto     := FrmACBrMonitor.ACBrBoleto1;
+    fRelRetorno.ArquivoRetorno := sArqRetorno;
+    fRelRetorno.PathLogo       := FrmACBrMonitor.deBOLDirLogo.Text;
+    fRelRetorno.LogoEmpresa    := FrmACBrMonitor.edtBOLLogoEmpresa.Text;
+
+    fRelRetorno.ResumoRetornoRemessa.Preview();
+  finally
+  end;
 end;
 
 end.

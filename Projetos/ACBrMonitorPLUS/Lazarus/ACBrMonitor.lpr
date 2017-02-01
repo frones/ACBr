@@ -15,7 +15,7 @@ uses
   DoACBrUnit, DoBALUnit, DoCHQUnit, DoDISUnit, DoECFBemafi32, DoECFObserver,
   DoECFUnit, DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre, DoBoletoUnit, DoCEPUnit,
   DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,
-  DoACBrMDFeUnit, DoSATUnit, DoACBrGNReUnit;
+  DoACBrMDFeUnit, DoSATUnit, DoACBrGNReUnit, ACBrBoletoRelatorioRetorno;
 
 {$R *.res}
 var

@@ -87,7 +87,7 @@ begin
    fpTamanhoMaximoNossoNum := 7;
    fpTamanhoCarteira   := 1;
    fpTamanhoConta      := 8;
-   fpCodigosMoraAceitos:= '123';
+   fpCodigosMoraAceitos:= '012';
 end;
 
 function TACBrBancoob.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;

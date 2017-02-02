@@ -47,7 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 24/01/2017 ver: 0.0.216
+Data: 24/01/2017 ver: 0.0.218
+--ACBrBancoBancoob.pas
+[*]	Ajuste dos Códigos de Mora aceitos pelo banco.
+	(sgeinformatica)
+
+
+Data: 24/01/2017 ver: 0.0.217
 --ACBrBoleto.pas
 [+]	Modificado a rotina de envio de boletos para permitir vários endereços
 	separados por ';'.

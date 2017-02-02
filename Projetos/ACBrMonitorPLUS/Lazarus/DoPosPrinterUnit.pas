@@ -114,7 +114,7 @@ begin
         cmd.Resposta := Porta
 
       else if cmd.Metodo = 'setporta' then
-        Porta := cmd.Params(0)
+       FrmACBrMonitor.cbxPorta.Text := cmd.Params(0)
 
       else if cmd.Metodo = 'colunas' then
         cmd.Resposta := IntToStr(Colunas)

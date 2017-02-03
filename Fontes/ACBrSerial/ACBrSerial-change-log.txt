@@ -39,6 +39,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 03/02/2017
+-- ACBrECFClass --
+[*] Inclusão do novo método "TotalCancelamentosEmAbertoISSQN";
+
+-- ACBrECFVirtual --
+[*] Foram separados todos os Totalizadores entre ICMS e ISSQN. 
+	Ou seja, agora o desconto/acréscimo, subtotal e valores cancelados serão 
+	separados pelo tipo da alíquota ("T" ou "S").
+
+-- ACBrECFVirtualBuffer --
+[*] Foram separados os Totalizadores entre ICMS e ISSQN no relatório do
+	ECF Virtual (ReduçãoZ/LeituraX);
+	(por: Elias César)
+
 Data: 31/01/2017
 -- ACBrECFVirtual --
 [+] Implementado suporte ao método: "GetNumCOOInicial" (por: PauloHenrique)

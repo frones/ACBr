@@ -799,6 +799,7 @@ TACBrECFClass = class
 
     function GetTotalAcrescimosISSQN: Double; virtual ;
     function GetTotalCancelamentosISSQN: Double; virtual ;
+    function GetTotalCancelamentosEmAbertoISSQN: Double; virtual;
     function GetTotalDescontosISSQN: Double; virtual ;
     function GetTotalIsencaoISSQN: Double; virtual ;
     function GetTotalNaoTributadoISSQN: Double; virtual ;
@@ -1009,6 +1010,7 @@ TACBrECFClass = class
     Property TotalIsencao       : Double     read GetTotalIsencao ;
 
     Property TotalCancelamentosISSQN          : Double read GetTotalCancelamentosISSQN;
+    Property TotalCancelamentosEmAbertoISSQN  : Double read GetTotalCancelamentosEmAbertoISSQN;
     Property TotalDescontosISSQN              : Double read GetTotalDescontosISSQN;
     Property TotalAcrescimosISSQN             : Double read GetTotalAcrescimosISSQN;
     Property TotalSubstituicaoTributariaISSQN : Double read GetTotalSubstituicaoTributariaISSQN;
@@ -3092,6 +3094,11 @@ begin
 end;
 
 function TACBrECFClass.GetTotalCancelamentosISSQN: Double;
+begin
+  Result := 0;
+end;
+
+function TACBrECFClass.GetTotalCancelamentosEmAbertoISSQN: Double;
 begin
   Result := 0;
 end;

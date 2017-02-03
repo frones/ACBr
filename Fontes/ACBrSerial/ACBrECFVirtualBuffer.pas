@@ -450,9 +450,10 @@ begin
 end ;
 
 procedure TACBrECFVirtualBufferClass.AddBufferRelatorio;
-Var
-  wTotalAliq, wTotalNaoFiscal, wTotalCancelado, wVendaLiquida: Double;
-  I, wContNaoFiscal : Integer ;
+var
+  I, wContNaoFiscal: Integer;
+  wTotalAliq, wTotalNaoFiscal, wTotalCanceladoICMS, wTotalCanceladoISSQN,
+    wVendaLiquida: Double;
 begin
   wTotalNaoFiscal := 0;
   wContNaoFiscal  := 0;
@@ -465,8 +466,10 @@ begin
     end;
   end;
 
-  wTotalCancelado := fpCuponsCanceladosEmAbertoTotal + fpCuponsCanceladosTotal;
-  wVendaLiquida   := max(fpVendaBruta - wTotalCancelado - fpTotalDescontos, 0);
+  wTotalCanceladoICMS  := fpCuponsCanceladosEmAbertoTotalICMS + fpCuponsCanceladosTotalICMS;
+  wTotalCanceladoISSQN := fpCuponsCanceladosEmAbertoTotalISSQN + fpCuponsCanceladosTotalISSQN;
+  wVendaLiquida   := max(fpVendaBruta - wTotalCanceladoICMS - fpTotalDescontosICMS -
+    wTotalCanceladoISSQN - fpTotalDescontosISSQN, 0);
 
   with fsBuffer do
   begin
@@ -487,28 +490,46 @@ begin
     Add( PadSpace('Relatorios Gerenciais:|'+IntToStrZero(fpNumCER,6),Colunas,'|') ) ;
     Add( PadSpace('Comprovante Credito/Debito:|'+IntToStrZero(fpNumCDC,6),Colunas,'|') ) ;
 
-    // TOTALIZADORES //
-    Add( PadCenter(' Totalizadores ',Colunas,'-') ) ;
-    Add( PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|') ) ;
-    Add( PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
+    // TOTALIZADORES GERAIS //
+    Add(PadCenter(' Totalizadores ', Colunas,'-'));
+    Add(PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|'));
+    Add(PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
+    Add(PadSpace('Venda Liquida:|'+FormatFloat('###,###,##0.00', wVendaLiquida), Colunas, '|'));
+    Add(PadSpace('Total Não Fiscal:|'+FormatFloat('###,###,##0.00', wTotalNaoFiscal), Colunas,'|'));
+    Add(PadSpace('Total Não Fiscal Cancelado:|'+FormatFloat('###,###,##0.00', fpCNFCanceladosTotal), Colunas,'|'));
 
-    if fpCuponsCanceladosEmAbertoTotal > 0 then
+    // TOTALIZADORES ICMS //
+    Add(PadCenter(' Totalizadores ICMS ', Colunas,'-'));
+
+    if (fpCuponsCanceladosEmAbertoTotalICMS > 0) then
     begin
-      Add( PadSpace('Cancelados em Aberto:|'+FormatFloat('###,###,##0.00',
-           fpCuponsCanceladosEmAbertoTotal ), Colunas,'|') ) ;
-      Add( PadSpace('Cancelados:|'+FormatFloat('###,###,##0.00',
-           fpCuponsCanceladosTotal), Colunas,'|') ) ;
+      Add(PadSpace('Cancelados em Aberto:|'+FormatFloat('###,###,##0.00',
+        fpCuponsCanceladosEmAbertoTotalICMS), Colunas,'|'));
+      Add(PadSpace('Cancelados:|'+FormatFloat('###,###,##0.00',
+        fpCuponsCanceladosTotalICMS), Colunas,'|'));
     end;
 
-    Add( PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', wTotalCancelado), Colunas,'|') ) ;
-    Add( PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontos), Colunas, '|'));
-    Add( PadSpace('Venda Liquida:|'+FormatFloat('###,###,##0.00', wVendaLiquida), Colunas, '|'));
-    Add( PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimos), Colunas, '|'));
-    Add( PadSpace('Total Não Fiscal:|'+FormatFloat('###,###,##0.00', wTotalNaoFiscal), Colunas,'|') ) ;
-    Add( PadSpace('Total Não Fiscal Cancelado:|'+FormatFloat('###,###,##0.00', fpCNFCanceladosTotal), Colunas,'|') ) ;
+    Add(PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', wTotalCanceladoICMS), Colunas,'|'));
+    Add(PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontosICMS), Colunas, '|'));
+    Add(PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimosICMS), Colunas, '|'));
+
+    // TOTALIZADORES ISSQN //
+    Add(PadCenter(' Totalizadores ISSQN ', Colunas,'-'));
+
+    if (fpCuponsCanceladosEmAbertoTotalISSQN > 0) then
+    begin
+      Add(PadSpace('Cancelados em Aberto:|'+FormatFloat('###,###,##0.00',
+        fpCuponsCanceladosEmAbertoTotalISSQN), Colunas,'|'));
+      Add(PadSpace('Cancelados:|'+FormatFloat('###,###,##0.00',
+        fpCuponsCanceladosTotalISSQN), Colunas,'|'));
+    end;
+
+    Add(PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', wTotalCanceladoISSQN), Colunas,'|'));
+    Add(PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontosISSQN), Colunas, '|'));
+    Add(PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimosISSQN), Colunas, '|'));
 
     wTotalAliq := 0;
-    Add( PadCenter('I C M S',Colunas,'-') ) ;
+    Add( PadCenter('I C M S',Colunas,'-'));
     if fpAliquotas[0].Indice = 'F1' then
     begin
       Add( PadSpace('F1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;

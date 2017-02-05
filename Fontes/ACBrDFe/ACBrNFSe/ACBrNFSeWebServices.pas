@@ -1603,6 +1603,7 @@ begin
            proEGoverneISS,
            proISSDSF,
            proCTA: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
+
            proCONAM,
            proEL,
            proInfisc,
@@ -2008,12 +2009,17 @@ begin
   try
     case Provedor of
       proCONAM:     FTagGrupo := 'ws_nfe.PROCESSARPS';
+
       proInfisc,
       proInfiscv11: FTagGrupo := 'envioLote';
+
       proISSDSF, 
       proCTA:       FTagGrupo := 'ReqEnvioLoteRPS';
+
       proEquiplano: FTagGrupo := 'enviarLoteRpsEnvio';
+
       proSP:        FTagGrupo := 'PedidoEnvioLoteRPS';
+
       proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
@@ -2023,9 +2029,12 @@ begin
 
     case FProvedor of
       proCONAM:     TagElemento := 'Reg20';
+
       proInfisc,
       proinfiscv11: TagElemento := 'infNFSe';
+
       proSP:        TagElemento := '';
+
       proIssDSF,
       proCTA:       TagElemento := 'Lote';
     else
@@ -2583,7 +2592,9 @@ begin
   try
     case FProvedor of
       proSimplISS:    FTagGrupo := 'GerarNovaNfseEnvio';
+
       proEGoverneISS: FTagGrupo := 'request';
+
       proSP:          FTagGrupo := 'PedidoEnvioRPS';
     else
       FTagGrupo := 'GerarNfseEnvio';
@@ -2593,7 +2604,9 @@ begin
 
     case FProvedor of
       proBHISS:       TagElemento := 'LoteRps';
+
       proEGoverneISS: TagElemento := 'rgm:NotaFiscal';
+      
       proSP:          TagElemento := '';
     else
       TagElemento := 'Rps';
@@ -2749,11 +2762,16 @@ begin
   try
     case FProvedor of
       proCONAM:     FTagGrupo := 'ws_nfe.CONSULTAPROTOCOLO';
+
       proInfisc,
       proInfiscv11: FTagGrupo := 'pedidoStatusLote';
+
       proEquiplano: FTagGrupo := 'esConsultarSituacaoLoteRpsEnvio';
+
       proSimplISS:  FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
+
       proSP:        FTagGrupo := 'p1:PedidoInformacoesLote';
+
       proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
@@ -3001,11 +3019,16 @@ begin
   try
     case FProvedor of
       proABase:     FTagGrupo := 'ConsultaLoteRpsEnvio';
+
       proCONAM:     FTagGrupo := 'ws_nfe.CONSULTANOTASPROTOCOLO';
+
       proEquiplano: FTagGrupo := 'esConsultarLoteRpsEnvio';
+
       proISSDSF, 
       proCTA:       FTagGrupo := 'ReqConsultaLote';
+
       proSP:        FTagGrupo := 'p1:PedidoConsultaLote';
+
       proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarLoteRpsEnvio';
@@ -3145,8 +3168,11 @@ begin
     case FProvedor of
       proISSDSF,
       proCTA:       FTagGrupo := 'ReqConsultaNFSeRPS';
+
       proEquiplano: FTagGrupo := 'esConsultarNfsePorRpsEnvio';
+
       proSP:        FTagGrupo := 'p1:PedidoConsultaNFe';
+
       proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarNfseRpsEnvio';
@@ -3347,8 +3373,10 @@ begin
     case FProvedor of
       proPronimv2,
       proDigifred:  FTagGrupo := 'ConsultarNfseServicoPrestadoEnvio';
+
       proInfisc,
       proInfiscv11: FTagGrupo := 'pedidoLoteNFSe';
+
       proISSDSF, 
       proCTA:       FTagGrupo := 'ReqConsultaNotas';
 
@@ -3359,6 +3387,7 @@ begin
       proSystemPro: FTagGrupo := 'ConsultarNfseFaixaEnvio';
 
       proSP:        FTagGrupo := 'PedidoConsultaNFe';
+
       proGoverna :  FTagGrupo := 'ConsultaCancelamento';
     else
       FTagGrupo := 'ConsultarNfseEnvio';
@@ -3509,13 +3538,19 @@ begin
   try
     case FProvedor of
       proCONAM:       FTagGrupo := 'ws_nfe.CANCELANOTAELETRONICA';
+
       proEGoverneISS: FTagGrupo := 'request';
+
       proEquiplano:   FTagGrupo := 'esCancelarNfseEnvio';
+
       proInfisc,
       proInfiscv11:   FTagGrupo := 'pedCancelaNFSe';
-      proISSDSF, 
+
+      proISSDSF,
       proCTA:         FTagGrupo := 'ReqCancelamentoNFSe';
+
       proSP:          FTagGrupo := 'PedidoCancelamentoNFe';
+
       proTinus:       FTagGrupo := 'Arg';
     else
       FTagGrupo := 'CancelarNfseEnvio';
@@ -3689,13 +3724,18 @@ begin
     // mesmo assinado da propriedade FPDadosMsg
     case FProvedor of
       proBetha:  docElemento := 'Pedido';
+
       proISSDSF,
       proEquiplano,
       proInfisc,
       proInfiscv11,
       proSP: docElemento := FTagGrupo;
+
       proGinfes: docElemento := FTagGrupo; // 'CancelarNfseEnvio';
+
       proISSNet: docElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
+
+      proDBSeller,
       proTecnos: docElemento := 'InfPedidoCancelamento';
     else
       docElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;

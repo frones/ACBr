@@ -162,11 +162,11 @@ begin
 
   FGerador.wGrupo('DadosReducaoZ');
   FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferencia));
-  FGerador.wCampo(tcStr, '', 'CRZ', 1, 6, 1, CRZ);
-  FGerador.wCampo(tcStr, '', 'COO', 1, 6, 1, COO);
-  FGerador.wCampo(tcStr, '', 'CRO', 1, 9, 1, CRO);
-  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, FormatFloat('0.00',VendaBrutaDiaria));
-  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, FormatFloat('0.00',GT));
+  FGerador.wCampo(tcInt, '', 'CRZ', 4, 4, 1, CRZ);
+  FGerador.wCampo(tcInt, '', 'COO', 6, 6, 1, COO);
+  FGerador.wCampo(tcInt, '', 'CRO', 3, 3, 1, CRO);
+  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, IntToStrZero(Trunc(VendaBrutaDiaria*100),14));
+  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, IntToStrZero(Trunc(GT*100), 18));
 
   if TotalizadoresParciais.Count > 0 then
   begin
@@ -175,8 +175,8 @@ begin
     for I := 0 to TotalizadoresParciais.Count - 1 do
     begin
       FGerador.wGrupo('TotalizadorParcial');
-      FGerador.wCampo(tcStr, '', 'Nome', 0,  0, 1, TotalizadoresParciais[I].Identificacao);
-      FGerador.wCampo(tcStr, '', 'Valor',       1, 11, 1, FormatFloat('0.00',TotalizadoresParciais[I].Valor));
+      FGerador.wCampo(tcStr, '', 'Nome' , 0,  0, 1, TotalizadoresParciais[I].Identificacao);
+      FGerador.wCampo(tcStr, '', 'Valor', 1, 11, 1, FormatFloat('0.00',TotalizadoresParciais[I].Valor));
 
       with TotalizadoresParciais[I] do
       begin

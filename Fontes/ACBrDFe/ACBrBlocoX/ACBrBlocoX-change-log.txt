@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/02/2017
+-- ACBrBlocoX_ReducaoZ --
+[*] Modificação para atender aos novos tamanhos dos campos no arquivo de Redução Z.
+	(por: Elias César)
+
 05/01/2017
 --ACBrBlocoX_WebServices
 [-] Correção de bug "Erro: CNPJ do estabelecimento inválido ou em branco" deve ir somente Cnpj

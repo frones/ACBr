@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/02/2017
+-- ACBrECF --
+[*] Modificado método "TACBrECF.PafMF_ArqMFD_Binario" para gerar ArquivoMFD
+	com Tipo = "tdmfdTotal" caso a data Inicial ou Final esteja zerada.
+	(por: Elias César)
+
 Data: 03/02/2017
 -- ACBrECFClass --
 [*] Inclusão do novo método "TotalCancelamentosEmAbertoISSQN";

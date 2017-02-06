@@ -7064,7 +7064,10 @@ begin
   if (not fsAtivo) then
      raise EACBrECFNaoInicializado.create( ACBrStr(cACBrECFNaoInicializadoException) );
 
-  Self.ArquivoMFD_Binario_DLL(APathArquivo, DataInicial, DataFinal);
+  if (DataInicial = 0) or (DataFinal = 0) then
+    Self.ArquivoMFD_Binario_DLL(APathArquivo)
+  else
+    Self.ArquivoMFD_Binario_DLL(APathArquivo, DataInicial, DataFinal);
 
   if not FileExists(APathArquivo) then
     raise EACBrEADException.CreateFmt('Arquivo MFD: "%s" não foi gerado', [APathArquivo]);

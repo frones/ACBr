@@ -42,8 +42,13 @@ Símbolo : Significado
 Data: 06/02/2017
 -- ACBrECF --
 [*] Modificado método "TACBrECF.PafMF_ArqMFD_Binario" para gerar ArquivoMFD
-	com Tipo = "tdmfdTotal" caso a data Inicial ou Final esteja zerada.
-	(por: Elias César)
+    com Tipo = "tdmfdTotal" caso a data Inicial ou Final esteja zerada.
+    (por: Elias César)
+
+-- ACBrECFVirtual --
+[*] Ajuste para que ECF não fique bloqueado por Estado estRequerZ, caso exista
+    algum documento em aberto.
+    http://www.projetoacbr.com.br/forum/topic/35028-melhoria-getestado-acbrecfvirtual/
 
 Data: 03/02/2017
 -- ACBrECFClass --

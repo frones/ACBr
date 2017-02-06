@@ -3384,12 +3384,13 @@ begin
 
   if not (fpEstado in [estNaoInicializada,estDesconhecido]) then
   begin
-    if (CompareDate( now, fpDia) > 0) and
-       ( not (fpEstado in [estBloqueada,estRequerX])) then
-      fpEstado := estRequerZ ;
-
-    if (fpEstado = estBloqueada) and (CompareDate( now, fpDia) > 0) then
-      fpEstado := estRequerX ;
+    if (CompareDate(now, fpDia) > 0) then
+    begin
+       case fpEstado of
+         estLivre:     fpEstado := estRequerZ;
+         estBloqueada: fpEstado := estRequerX ;
+       end;
+    end;
   end ;
 
   if fpEstado in [estDesconhecido, estNaoInicializada] then

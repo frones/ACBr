@@ -158,6 +158,7 @@ type
   TGeralConf = class(TComponent)
   private
     FConfiguracoes: TConfiguracoes;
+    FIdentarXML: Boolean;
     FSSLLib: TSSLLib;
     FFormaEmissao: TpcnTipoEmissao;
     FFormaEmissaoCodigo: integer;
@@ -190,6 +191,7 @@ type
       write FRetirarAcentos default True;
     property RetirarEspacos: Boolean read FRetirarEspacos
       write FRetirarEspacos default True;
+    property IdentarXML: Boolean read FIdentarXML write FIdentarXML default False;
     property ValidarDigest: Boolean
       read FValidarDigest write FValidarDigest default True;
   end;
@@ -385,6 +387,7 @@ begin
   // %DESCRICAO% : Representa a Descrição da TAG
   FRetirarAcentos := True;
   FRetirarEspacos := True;
+  FIdentarXML := False;
   FValidarDigest := True;
 end;
 

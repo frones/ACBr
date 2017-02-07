@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2017
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade Geral.IdentarXML: Boolean default False
+    (por: DSA)
+
 24/01/2017
 -- ACBrDFeUtil --
 [*] Rafatoração dos métodos: "ValidaDIRE" e "ValidaRE", aplicando simplificação

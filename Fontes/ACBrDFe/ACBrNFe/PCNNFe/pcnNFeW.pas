@@ -341,8 +341,9 @@ begin
   GerarTransp;
   GerarCobr;
 
-  if (nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo <> 55) then
-     Gerarpag;
+  if ((nfe.infNFe.Versao >= 3) and (nfe.Ide.modelo <> 55)) or
+      (nfe.infNFe.Versao >= 4) then
+    Gerarpag;
 
   GerarInfAdic;
   GerarExporta;

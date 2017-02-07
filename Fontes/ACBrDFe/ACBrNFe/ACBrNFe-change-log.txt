@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2017
+-- pcnNFeW --
+[*] Ajuste para gerar as tags do grupo "pag, YA01", se Versão >= 4
+    http://www.projetoacbr.com.br/forum/topic/33789-vers%C3%A3o-400-da-nfenfce-com-acbr/?do=findComment&comment=229620
+    (por: DSA)
+
 26/01/2017
 -- ACBrDANFCeFortesFr, ACBrNFeDANFeEscPos --
 [*] Compatibilização de métodos "ImprimirDANFECancelado" e "ImprimirEVENTO"

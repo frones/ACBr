@@ -1465,6 +1465,7 @@ begin
            proEL,
            proFISSLex,
            proSimplISS: FTagI := '<' + FTagGrupo + '>';
+
            proCTA: FTagI := '<' + FTagGrupo + ' xmlns:ns1="http://localhost:8080/WsNFe2/lote" '+
                                     'xmlns:tipos="http://localhost:8080/WsNFe2/tp" '+
                                     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '+
@@ -3725,6 +3726,8 @@ begin
     case FProvedor of
       proBetha:  docElemento := 'Pedido';
 
+      proDBSeller: docElemento := FPrefixo3 + 'Pedido></' + FTagGrupo + '></CancelarNfse';
+
       proISSDSF,
       proEquiplano,
       proInfisc,
@@ -3735,7 +3738,6 @@ begin
 
       proISSNet: docElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
 
-      proDBSeller,
       proTecnos: docElemento := 'InfPedidoCancelamento';
     else
       docElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;

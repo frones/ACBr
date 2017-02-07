@@ -1,7 +1,7 @@
 object frmACBrBoletoRelatorioRet: TfrmACBrBoletoRelatorioRet
-  Left = 309
+  Left = 387
   Height = 513
-  Top = 221
+  Top = 189
   Width = 1130
   Caption = 'frmACBrBoletoRelatorioRet'
   ClientHeight = 513

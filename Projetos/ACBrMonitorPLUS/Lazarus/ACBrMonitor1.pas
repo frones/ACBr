@@ -8141,6 +8141,8 @@ begin
   if FindFirst(deBolDirRetornoRel.Text + '\*.ret', faAnyFile, Rec) = 0 then
   begin
     try
+      lsvArqsRetorno.Items.Clear;
+
       repeat
         if (Rec.Name = '.') or (Rec.Name = '..') then
           continue;

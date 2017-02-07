@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 552
+  Left = 502
   Height = 820
-  Top = 119
+  Top = 90
   Width = 1139
   ActiveControl = btMinimizar
   Align = alClient
@@ -4806,6 +4806,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Width = 651
                   Anchors = [akTop, akLeft, akRight]
                   BorderSpacing.Right = 5
+                  ReadOnly = True
                   TabOrder = 4
                 end
               end
@@ -12827,7 +12828,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

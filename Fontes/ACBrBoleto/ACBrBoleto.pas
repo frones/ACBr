@@ -1075,7 +1075,7 @@ type
     procedure ChecarDadosObrigatorios;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
-
+    function GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
   published
     property About : String read GetAbout write SetAbout stored False ;
     property MAIL  : TACBrMail read FMAIL write SetMAIL;
@@ -2342,7 +2342,7 @@ end;
 procedure TACBrBoleto.LerRetorno(AStream: TStream);
 var
   SlRetorno: TStringList;
-  NomeArq  : String;
+  NomeArq  , BancoRetorno: String;
 begin
    SlRetorno:= TStringList.Create;
    try
@@ -2351,7 +2351,7 @@ begin
      if not Assigned(AStream) then 
      begin
        if NomeArqRetorno = '' then
-          raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
+         raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
        if not FileExists(NomeArqRetorno) then
          NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno
@@ -2364,10 +2364,10 @@ begin
        SlRetorno.LoadFromFile( NomeArq );
      end
      else
-	 begin
-	   AStream.Position := 0;
+     begin
+       AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
-	 end;
+     end;
 
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+
@@ -2379,8 +2379,10 @@ begin
         240 :
           begin
             if Copy(SlRetorno.Strings[0],143,1) <> '2' then
-               Raise Exception.Create( ACBrStr( NomeArq + sLineBreak +
-                  'Não é um arquivo de Retorno de cobrança com layout CNAB240') );
+              Raise Exception.Create( ACBrStr( NomeArq + sLineBreak +
+                'Não é um arquivo de Retorno de cobrança com layout CNAB240') );
+
+            BancoRetorno  := Copy(SlRetorno.Strings[0],0,3);
             LayoutRemessa := c240 ;
           end;
 
@@ -2388,13 +2390,21 @@ begin
           begin
              if (Copy(SlRetorno.Strings[0],1,9) <> '02RETORNO')   then
                Raise Exception.Create( ACBrStr( NomeArq + sLineBreak +
-                  'Não é um arquivo de Retorno de cobrança com layout CNAB400'));
-            LayoutRemessa := c400 ;
+                 'Não é um arquivo de Retorno de cobrança com layout CNAB400'));
+
+             BancoRetorno  := Copy(SlRetorno.Strings[0],77,3);
+             LayoutRemessa := c400 ;
           end;
         else
-            raise Exception.Create( ACBrStr( NomeArq + sLineBreak+
-               'Não é um arquivo de  Retorno de cobrança CNAB240 ou CNAB400'));
+          raise Exception.Create( ACBrStr( NomeArq + sLineBreak+
+            'Não é um arquivo de  Retorno de cobrança CNAB240 ou CNAB400'));
      end;
+
+     if ( IntToStrZero(Banco.Numero, 3) <> BancoRetorno ) then
+       if LeCedenteRetorno then
+         Banco.TipoCobranca := GetTipoCobranca( StrToInt(BancoRetorno))
+       else
+         raise Exception.Create( ACBrStr( 'Arquivo de retorno de banco diferente do Cedente'));
 
      if LayoutRemessa = c240 then
         Banco.LerRetorno240(SlRetorno)
@@ -2421,6 +2431,26 @@ begin
   begin
     Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
     Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];
+  end;
+end;
+
+function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
+begin
+  case NumeroBanco of
+    001: Result := cobBancoDoBrasil;
+    008,033,353: Result := cobSantander;
+    021: Result := cobBanestes;
+    041: Result := cobBanrisul;
+    104: Result := cobCaixaEconomica;
+    237: Result := cobBradesco;
+    341: Result := cobItau;
+    389: Result := cobBancoMercantil;
+    748: Result := cobSicred;
+    756: Result := cobBancoob;
+    399: Result := cobHSBC;
+  else
+    raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
+      sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));
   end;
 end;
 

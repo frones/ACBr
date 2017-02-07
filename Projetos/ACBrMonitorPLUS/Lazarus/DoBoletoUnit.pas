@@ -138,21 +138,7 @@ begin
       else if cmd.Metodo = 'codigosmoraaceitos' then
          Cmd.Resposta := Banco.CodigosMoraAceitos
       else if cmd.Metodo = 'selecionabanco' then
-       begin
-          case StrToInt64Def(Trim(Cmd.Params(0)),0) of
-            001: Banco.TipoCobranca:= cobBancoDoBrasil;
-            008,033,353: Banco.TipoCobranca:= cobSantander;
-            021: Banco.TipoCobranca:= cobBanestes;
-            041: Banco.TipoCobranca:= cobBanrisul;
-            104: Banco.TipoCobranca:= cobCaixaEconomica;
-            237: Banco.TipoCobranca:= cobBradesco;
-            341: Banco.TipoCobranca:= cobItau;
-            389: Banco.TipoCobranca:= cobBancoMercantil;
-            748: Banco.TipoCobranca:= cobSicred;
-            756: Banco.TipoCobranca:= cobBancoob;
-            399: Banco.TipoCobranca:= cobHSBC;
-          end;
-       end
+         Banco.TipoCobranca := GetTipoCobranca(StrToInt64Def(Trim(Cmd.Params(0)),0))
       else
          raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')'));
    end;
@@ -258,23 +244,9 @@ begin
            IndiceACBr  := IniBoletos.ReadInteger('BANCO','IndiceACBr',0);
 
            if IndiceACBr > 0 then
-              Banco.TipoCobranca:= TACBrTipoCobranca(IndiceACBr)
+             Banco.TipoCobranca:= TACBrTipoCobranca(IndiceACBr)
            else if NumeroBanco > 0 then
-           begin
-              case NumeroBanco of
-                001: Banco.TipoCobranca:= cobBancoDoBrasil;
-                008,033,353: Banco.TipoCobranca:= cobSantander;
-                021: Banco.TipoCobranca:= cobBanestes;
-                041: Banco.TipoCobranca:= cobBanrisul;
-                104: Banco.TipoCobranca:= cobCaixaEconomica;
-                237: Banco.TipoCobranca:= cobBradesco;
-                341: Banco.TipoCobranca:= cobItau;
-                389: Banco.TipoCobranca:= cobBancoMercantil;
-                748: Banco.TipoCobranca:= cobSicred;
-                756: Banco.TipoCobranca:= cobBancoob;
-                399: Banco.TipoCobranca:= cobHSBC;
-              end;
-           end;
+             Banco.TipoCobranca := GetTipoCobranca(NumeroBanco);
 
            if (trim(Banco.Nome) = 'Não definido') then
               raise exception.Create('Banco não definido ou não '+
@@ -554,10 +526,14 @@ begin
     fRelRetorno.PathLogo       := FrmACBrMonitor.deBOLDirLogo.Text;
     fRelRetorno.LogoEmpresa    := FrmACBrMonitor.edtBOLLogoEmpresa.Text;
 
-    fRelRetorno.ResumoRetornoRemessa.Preview();
+    if FrmACBrMonitor.chkBOLRelMostraPreview.Checked then
+      fRelRetorno.ResumoRetornoRemessa.Preview()
+    else
+      fRelRetorno.ResumoRetornoRemessa.Print;
   finally
   end;
 end;
+
 
 end.
 

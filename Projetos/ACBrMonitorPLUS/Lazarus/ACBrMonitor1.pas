@@ -44,10 +44,11 @@ uses
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
   Printers, DbCtrls, DBGrids, ExtDlgs, SynHighlighterXML, SynMemo, PrintersDlgs,
-  pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT, ACBrSATExtratoESCPOS,
-  ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede, ACBrDFeSSL, ACBrGNRE2,
-  ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe, ACBrMDFeDAMDFeRLClass, ACBrCTe,
-  ACBrCTeDACTeRLClass, types, ACBrBase, fileinfo;
+  IpHtml, pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT,
+  ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
+  ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
+  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, ACBrBase,
+  fileinfo;
 
 const
   //{$I versao.txt}
@@ -104,6 +105,8 @@ type
     ApplicationProperties1: TApplicationProperties;
     bBALAtivar: TBitBtn;
     bBALTestar: TBitBtn;
+    bBoletoRelatorioRetorno: TBitBtn;
+    bBOLLerArqRelatorio: TBitBtn;
     bCEPTestar: TButton;
     bCHQTestar: TBitBtn;
     bDISAnimar: TBitBtn;
@@ -114,10 +117,10 @@ type
     bECFLeituraX: TBitBtn;
     bECFTestar: TBitBtn;
     bEmailTestarConf: TBitBtn;
-    bBoletoRelatorioRetorno: TBitBtn;
     Bevel1: TBevel;
     Bevel2: TBevel;
     Bevel3: TBevel;
+    btnBoletoRelatorioRetorno: TPanel;
     btnDownCont: TPanel;
     btnPost: TBitBtn;
     btnDown: TPanel;
@@ -337,10 +340,11 @@ type
     cbxAtualizarXMLCancelado: TCheckBox;
     cbxUnComTributavel: TComboBox;
     cbFormaEmissaoNFe: TComboBox;
+    chkBOLRelMostraPreview: TCheckBox;
     chkExibeRazaoSocial: TCheckBox;
     DBGrid3: TDBGrid;
+    deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
-    edtBOLLogoEmpresa: TEdit;
     edtArquivoPFX: TEdit;
     edtArquivoWebServicesGNRe: TEdit;
     edtAutoExecute: TDBCheckBox;
@@ -348,6 +352,7 @@ type
     edtBOLEmailAssunto: TEdit;
     edtBOLEmailMensagem: TMemo;
     edtBOLLocalPagamento: TEdit;
+    edtBOLLogoEmpresa: TEdit;
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
@@ -360,6 +365,8 @@ type
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    GroupBox5: TGroupBox;
     Image2: TImage;
     imgLogoBanco: TImage;
     Label109: TLabel;
@@ -388,7 +395,9 @@ type
     Label201: TLabel;
     Label202: TLabel;
     Label203: TLabel;
-    Label204: TLabel;
+    lblBOLLogoEmpresa: TLabel;
+    Label205: TLabel;
+    Label206: TLabel;
     Label40: TLabel;
     Label50: TLabel;
     Label51: TLabel;
@@ -408,6 +417,8 @@ type
     Label145: TLabel;
     lblAlturaCampos: TLabel;
     lblFonteEndereco: TLabel;
+    lsvArqsRetorno: TListView;
+    mBOLRelatorio: TMemo;
     meUSUHoraCadastro: TMaskEdit;
     mmEmailMsgCTe: TMemo;
     mmEmailMsgMDFe: TMemo;
@@ -473,6 +484,7 @@ type
     sbArquivoWebServicesNFe: TSpeedButton;
     sbArquivoWebServicesCTe: TSpeedButton;
     TabSheet1: TTabSheet;
+    tsRelatorio: TTabSheet;
     tsDownload: TTabSheet;
     tsImpCTe: TTabSheet;
     tsTesteMDFe: TTabSheet;
@@ -1062,6 +1074,7 @@ type
     procedure bAtivarClick(Sender: TObject);
     procedure bbAtivarClick(Sender: TObject);
     procedure bBoletoRelatorioRetornoClick(Sender: TObject);
+    procedure bBOLLerArqRelatorioClick(Sender: TObject);
     procedure bCEPTestarClick(Sender: TObject);
     procedure bDownloadListaClick(Sender: TObject);
     procedure bEmailTestarConfClick(Sender: TObject);
@@ -1181,7 +1194,7 @@ type
     procedure deBOLDirArquivoExit(Sender: TObject);
     procedure deBOLDirLogoExit(Sender: TObject);
     procedure deBolDirRemessaExit(Sender: TObject);
-    procedure deBolDirRetornoExit(Sender: TObject);
+    procedure BOLDirRetornoExit(Sender: TObject);
     procedure deUSUDataCadastroExit(Sender: TObject);
     procedure deRFDDataSwBasicoExit(Sender: TObject);
     procedure edBALLogChange(Sender: TObject);
@@ -1396,11 +1409,13 @@ type
     procedure SetPanel(Sender: TPanel);
     procedure SetSize25(Sender: TObject);
     procedure SetScroll(Sender: TObject);
+
   protected
     procedure MostraLogoBanco;
   public
     Conexao: TTCPBlockSocket;
 
+    procedure CarregaArquivosRetorno;
     property DISWorking: boolean read fsDisWorking write SetDisWorking;
 
     procedure SalvarConfBoletos;
@@ -2228,7 +2243,7 @@ end;
 procedure TFrmACBrMonitor.btnBoletoEmailClick(Sender: TObject);
 begin
   SetColorSubButtons(Sender);
-  pgBoleto.ActivePage := tsBoletoEmail;
+  pgBoleto.ActivePage := tsRelatorio;
 end;
 
 procedure TFrmACBrMonitor.btnBoletoLeiauteClick(Sender: TObject);
@@ -3258,15 +3273,17 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.deBolDirRetornoExit(Sender: TObject);
+procedure TFrmACBrMonitor.BOLDirRetornoExit(Sender: TObject);
 begin
-  if trim(deBolDirRetorno.Text) <> '' then
+  if trim( TDirectoryEdit(Sender).Text) <> '' then
   begin
-    if not DirectoryExists(deBolDirRetorno.Text) then
+    if not DirectoryExists(TDirectoryEdit(Sender).Text) then
     begin
-      deBolDirRetorno.Clear;
+      TDirectoryEdit(Sender).Clear;
       raise Exception.Create('Diretorio de Arquivos Retorno não encontrado.');
     end;
+
+    CarregaArquivosRetorno;
   end;
 end;
 
@@ -3816,6 +3833,8 @@ begin
     deBOLDirArquivo.Text := Ini.ReadString('BOLETO', 'DirArquivoBoleto', '');
     deBolDirRemessa.Text := Ini.ReadString('BOLETO', 'DirArquivoRemessa', '');
     deBolDirRetorno.Text := Ini.ReadString('BOLETO', 'DirArquivoRetorno', '');
+    deBolDirRetornoRel.Text := deBolDirRetorno.Text;
+
     cbxCNAB.ItemIndex := Ini.ReadInteger('BOLETO', 'CNAB', 0);
     chkLerCedenteRetorno.Checked := Ini.ReadBool('BOLETO','LerCedenteRetorno',False);
     edtBOLLogoEmpresa.Text := Ini.ReadString('BOLETO', 'LogoEmpresa', '');
@@ -6002,6 +6021,10 @@ procedure TFrmACBrMonitor.pgBoletoChange(Sender: TObject);
 begin
   if pgBoleto.ActivePage = tsContaBancaria then
      MostraLogoBanco;
+
+  if pgBoleto.ActivePage = tsRelatorio then
+     if lsvArqsRetorno.Items.Count = 0 then
+        CarregaArquivosRetorno;
 end;
 
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);
@@ -7879,27 +7902,41 @@ begin
 end;
 
 procedure TFrmACBrMonitor.bBoletoRelatorioRetornoClick(Sender: TObject);
-Var
-  oldLeCendenteRetorno : Boolean;
 begin
-  OpenDialog1.Filter     := 'Arquivos RET|*.RET|Todos os Arquivos|*.*|';
-  OpenDialog1.DefaultExt := '*.ret';
+  if ACBrBoleto1.ListadeBoletos.Count > 0 then
+    ImprimeRelatorioRetorno(lsvArqsRetorno.Selected.Caption);
 
-  if deBolDirRetorno.Text <> '' then
-     OpenDialog1.InitialDir := deBolDirRetorno.Directory
-  else
-     OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+end;
 
-  if OpenDialog1.Execute then
+procedure TFrmACBrMonitor.bBOLLerArqRelatorioClick(Sender: TObject);
+begin
+  if lsvArqsRetorno.ItemIndex > 0 then
   begin
-    // Gerar remessa and list report
-    oldLeCendenteRetorno := ACBrBoleto1.LeCedenteRetorno;
-    ACBrBoleto1.LeCedenteRetorno := True;
-    ACBrBoleto1.NomeArqRetorno   := OpenDialog1.FileName;
+    ACBrBoleto1.NomeArqRetorno := deBolDirRetornoRel.Text + PathDelim + lsvArqsRetorno.Selected.Caption;
     ACBrBoleto1.LerRetorno();
-    ImprimeRelatorioRetorno(OpenDialog1.FileName);
-    ACBrBoleto1.LeCedenteRetorno := oldLeCendenteRetorno;
-  end;
+
+     with mBOLRelatorio do
+     begin
+       Lines.BeginUpdate;
+
+       Lines.Add('Arquivo de Retorno processado com sucesso:');
+       Lines.Add('Arquivo: '+lsvArqsRetorno.Selected.Caption);
+       Lines.Add('');
+       Lines.Add('Beneficiario: '+ACBrBoleto1.Cedente.Nome);
+       Lines.Add('');
+       Lines.Add('Total de Titulos: '+ IntToStrZero(ACBrBoleto1.ListadeBoletos.Count,3));
+       Lines.Add('');
+       Lines.Add(' - Clique em Gerar Relatório para imprimir.');
+
+       Lines.EndUpdate;
+     end;
+
+     if ACBrBoleto1.ListadeBoletos.Count > 0 then
+       bBoletoRelatorioRetorno.Enabled := True;
+  end
+  else
+    MessageDlg('Atenção', 'Selecione o arquivo a carregar',
+      mtError, [mbOK], '');
 end;
 
 procedure TFrmACBrMonitor.ConfiguraPosPrinter;
@@ -8093,6 +8130,28 @@ begin
     end;
   finally
     Banco.Free;
+  end;
+end;
+
+procedure TFrmACBrMonitor.CarregaArquivosRetorno;
+var
+  Item: TListItem;
+  Rec: TRawByteSearchRec;
+begin
+  if FindFirst(deBolDirRetornoRel.Text + '\*.ret', faAnyFile, Rec) = 0 then
+  begin
+    try
+      repeat
+        if (Rec.Name = '.') or (Rec.Name = '..') then
+          continue;
+
+        Item := lsvArqsRetorno.Items.Add;
+        Item.Caption := Rec.Name;
+
+      until FindNext(Rec) <> 0;
+    finally
+      SysUtils.FindClose(Rec);
+    end;
   end;
 end;
 

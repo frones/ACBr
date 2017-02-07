@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/02/2017
+[*] Relatorio de retorno, separada rotina de leitura do arquivo da rotina de impressão
+	do relatório. Após carregar o arquivo habilita a emissão do relatório.
+	Adicionado check para exibir ou não preview antes da impressão do relatório.
+	por: Celso Marigo Junior
+
 31/01/2017
 [+] Modificado formato de gravação da mensagem de email dos boletos resolvendo problemas de
 	codificação.

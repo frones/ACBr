@@ -8,7 +8,7 @@ object Form1: TForm1
   ClientWidth = 393
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.2.0'
   object mEnviar: TMemo
     Left = 0
     Height = 90
@@ -79,7 +79,7 @@ object Form1: TForm1
     Width = 393
     Align = alClient
     Lines.Strings = (
-      'mResposta'
+      ''
     )
     ScrollBars = ssAutoBoth
     TabOrder = 2

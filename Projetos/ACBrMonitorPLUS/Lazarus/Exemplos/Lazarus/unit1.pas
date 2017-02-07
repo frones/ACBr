@@ -54,8 +54,18 @@ end;
 
 procedure TForm1.bConectarClick(Sender: TObject);
 begin
-  fSocket.Connect(edIP.Text, '3434');
-  AguardaReposta;
+  if bConectar.Caption = 'Conectar' then
+  begin
+    fSocket.Connect(edIP.Text, '3434');
+    AguardaReposta;
+    bConectar.Caption := 'Desconectar';
+  end
+  else
+  begin
+    fSocket.CloseSocket;
+    bConectar.Caption := 'Conectar';
+    AguardaReposta;
+  end;
 end;
 
 procedure TForm1.bEnviarClick(Sender: TObject);

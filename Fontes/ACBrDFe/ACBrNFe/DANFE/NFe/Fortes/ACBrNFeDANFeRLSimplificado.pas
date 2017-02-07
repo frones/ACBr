@@ -310,8 +310,9 @@ var
  Perc: Double;
 begin
   inherited;
-
-  Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
+  Perc := 0;
+  if FNFE.Total.ICMSTot.vNF > 0 then
+    Perc := (FNFE.Total.ICMSTot.vTotTrib / FNFE.Total.ICMSTot.vNF) * 100;
   rllTributos.Caption := ACBrStr('Valor aprox. dos tributos: ' +
                          FormatFloatBr(FNFE.Total.ICMSTot.vTotTrib) +
                          '(' + FormatFloatBr(Perc) + '%)(Fonte: IBPT)');

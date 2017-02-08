@@ -2236,6 +2236,8 @@ begin
   CheckEquals( extVal, RoundABNT(5233.4567567567567567567,-6), 0.00001 );
   extVal := 9999999999.46;
   CheckEquals( extVal, RoundABNT(9999999999.4567567567567567567,-2), 0.00001 );
+  extVal := 9.4121295902;
+  CheckEquals( extVal, RoundABNT(9.41212959024529,-10), 0.00001 );
 end;
 
 procedure RoundABNTTest.ValoresNegativos;
@@ -3473,6 +3475,8 @@ var
 begin
   VValor := 1 * 1.9985;
   CheckEquals(1.998, TruncTo( VValor, 3 ), 0.0001);
+  VValor := 1 * 78.22;
+  CheckEquals(78.22, TruncTo( VValor, 2 ), 0.001);
 end;
 
 procedure TruncToTest.As9999899Double;

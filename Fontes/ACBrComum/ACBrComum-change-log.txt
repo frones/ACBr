@@ -38,7 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 06/01/2016
+Data: 08/02/2017
+-- ACBrUtil --
+[*] Ajuste para que RoundABNT suporte valores várias casas decimais.
+    http://www.projetoacbr.com.br/forum/topic/35068-roundabnt-invalid-floating-point-operation/
+    (por: PauloRSA)
+
+Data: 06/01/2017
 -- ACBrUtil --
 [*] Método "FloatMask", modificado a assunatura para:
     function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean = True): String;

@@ -564,6 +564,19 @@ end;
  -----------------------------------------------------------------------------}
 function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
   const Delta: Double): Double;
+  {Funcao copiada de SimpleRoundTo do Delphi Seatle pois no Delphi XE
+   é usado Trunc no result que gera exceção em alguns casos.}
+
+  function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
+  var
+    LFactor: Extended;
+  begin
+    LFactor := IntPower(10.0, ADigit);
+    if AValue < 0 then
+      Result := Int((AValue / LFactor) - 0.5) * LFactor
+    else
+      Result := Int((AValue / LFactor) + 0.5) * LFactor;
+  end;
 var
    Pow, FracValue, PowValue : Extended;
    RestPart: Double;
@@ -577,7 +590,7 @@ Begin
    IntValue  := trunc(PowValue);
    FracValue := frac(PowValue);
 
-   PowValue := SimpleRoundTo( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
+   PowValue := SimpleRoundToEX( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
    IntCalc  := trunc( PowValue );
    FracCalc := trunc( frac( PowValue ) * 100 );
 

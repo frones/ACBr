@@ -21,7 +21,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
-      <BuildNr Value="21"/>
+      <BuildNr Value="28"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion=""/>
@@ -67,92 +67,95 @@
         <LaunchingApplication PathPlusParams="\usr\X11R6\bin\xterm -T 'Lazarus Run Output' -e $(LazarusDir)\tools\runwait.sh $(TargetCmdLine)"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="28">
+    <RequiredPackages Count="29">
       <Item1>
-        <PackageName Value="frce"/>
+        <PackageName Value="TurboPowerIPro"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBr_GNREGuiaRL"/>
+        <PackageName Value="frce"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_GNRE"/>
+        <PackageName Value="ACBr_GNREGuiaRL"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_BlocoX"/>
+        <PackageName Value="ACBr_GNRE"/>
       </Item4>
       <Item5>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="ACBr_BlocoX"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item6>
       <Item7>
-        <PackageName Value="ACBr_MDFe"/>
+        <PackageName Value="ACBr_MDFe_DAMDFeRL"/>
       </Item7>
       <Item8>
-        <PackageName Value="ACBr_CTe_DACTeRL"/>
+        <PackageName Value="ACBr_MDFe"/>
       </Item8>
       <Item9>
-        <PackageName Value="ACBr_CTe"/>
+        <PackageName Value="ACBr_CTe_DACTeRL"/>
       </Item9>
       <Item10>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBr_CTe"/>
       </Item10>
       <Item11>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item11>
       <Item12>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item12>
       <Item13>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="ACBr_SAT"/>
       </Item13>
       <Item14>
-        <PackageName Value="FCL"/>
+        <PackageName Value="SynEdit"/>
       </Item14>
       <Item15>
-        <PackageName Value="ACBr_NFe_DanfeRL"/>
+        <PackageName Value="FCL"/>
       </Item15>
       <Item16>
-        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
+        <PackageName Value="ACBr_NFe_DanfeRL"/>
       </Item16>
       <Item17>
-        <PackageName Value="ACBr_NFCe_DanfeRL"/>
+        <PackageName Value="ACBr_NFe_DanfeESCPOS"/>
       </Item17>
       <Item18>
-        <PackageName Value="ACBr_NFe"/>
+        <PackageName Value="ACBr_NFCe_DanfeRL"/>
       </Item18>
       <Item19>
-        <PackageName Value="ACBr_BoletoFC_Fortes"/>
+        <PackageName Value="ACBr_NFe"/>
       </Item19>
       <Item20>
-        <PackageName Value="ACBr_Boleto"/>
+        <PackageName Value="ACBr_BoletoFC_Fortes"/>
       </Item20>
       <Item21>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBr_Boleto"/>
       </Item21>
       <Item22>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrSerial"/>
       </Item22>
       <Item23>
-        <PackageName Value="ACBrOpenSSL"/>
+        <PackageName Value="ACBrTCP"/>
       </Item23>
       <Item24>
-        <PackageName Value="ACBrDiversos"/>
+        <PackageName Value="ACBrOpenSSL"/>
       </Item24>
       <Item25>
-        <PackageName Value="ACBrDFeComum"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item25>
       <Item26>
-        <PackageName Value="ACBrComum"/>
+        <PackageName Value="ACBrDFeComum"/>
       </Item26>
       <Item27>
-        <PackageName Value="LCLBase"/>
-        <MinVersion Major="1" Release="1" Valid="True"/>
+        <PackageName Value="ACBrComum"/>
       </Item27>
       <Item28>
-        <PackageName Value="LCL"/>
+        <PackageName Value="LCLBase"/>
+        <MinVersion Major="1" Release="1" Valid="True"/>
       </Item28>
+      <Item29>
+        <PackageName Value="LCL"/>
+      </Item29>
     </RequiredPackages>
     <Units Count="29">
       <Unit0>
@@ -304,7 +307,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions IgnoreAll="True"/>
-  </Debugging>
 </CONFIG>

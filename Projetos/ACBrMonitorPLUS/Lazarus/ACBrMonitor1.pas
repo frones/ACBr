@@ -1093,6 +1093,7 @@ type
     procedure btnBoletoContaClick(Sender: TObject);
     procedure btnBoletoEmailClick(Sender: TObject);
     procedure btnBoletoLeiauteClick(Sender: TObject);
+    procedure btnBoletoRelatorioRetornoClick(Sender: TObject);
     procedure btnBoletoRRClick(Sender: TObject);
     procedure btnCadastroClick(Sender: TObject);
     procedure btnCancelarCTeClick(Sender: TObject);
@@ -2243,13 +2244,19 @@ end;
 procedure TFrmACBrMonitor.btnBoletoEmailClick(Sender: TObject);
 begin
   SetColorSubButtons(Sender);
-  pgBoleto.ActivePage := tsRelatorio;
+  pgBoleto.ActivePage := tsBoletoEmail;
 end;
 
 procedure TFrmACBrMonitor.btnBoletoLeiauteClick(Sender: TObject);
 begin
   SetColorSubButtons(Sender);
   pgBoleto.ActivePage := tsLayoutBoleto;
+end;
+
+procedure TFrmACBrMonitor.btnBoletoRelatorioRetornoClick(Sender: TObject);
+begin
+  SetColorSubButtons(Sender);
+  pgBoleto.ActivePage := tsRelatorio;
 end;
 
 procedure TFrmACBrMonitor.btnBoletoRRClick(Sender: TObject);
@@ -3837,6 +3844,7 @@ begin
 
     cbxCNAB.ItemIndex := Ini.ReadInteger('BOLETO', 'CNAB', 0);
     chkLerCedenteRetorno.Checked := Ini.ReadBool('BOLETO','LerCedenteRetorno',False);
+    chkBOLRelMostraPreview.Checked := Ini.ReadBool('BOLETO','MostraPreviewRelRetorno',True);
     edtBOLLogoEmpresa.Text := Ini.ReadString('BOLETO', 'LogoEmpresa', '');
     {Parametro do Boleto Impressora}
     cbxBOLImpressora.ItemIndex :=
@@ -5254,6 +5262,7 @@ begin
       deBolDirRetorno.Text));
     ini.WriteInteger('BOLETO', 'CNAB', cbxCNAB.ItemIndex);
     Ini.WriteBool('BOLETO','LerCedenteRetorno', chkLerCedenteRetorno.Checked);
+    Ini.WriteBool('BOLETO','MostraPreviewRelRetorno',chkBOLRelMostraPreview.Checked);
     Ini.WriteString('BOLETO', 'LogoEmpresa', edtBOLLogoEmpresa.Text);
 
     {Parametros do Boleto - E-mail}
@@ -7324,6 +7333,7 @@ begin
 
     ConfigArquivos.PastaCFeVenda := PathWithDelim(edSATPathArqs.Text)+'Vendas';
     ConfigArquivos.PastaCFeCancelamento := PathWithDelim(edSATPathArqs.Text)+'Cancelamentos';
+    ConfigArquivos.PastaEnvio:= PathWithDelim(edSATPathArqs.Text)+'Enviados';
     ConfigArquivos.SalvarCFe := cbxSATSalvarCFe.Checked;
     ConfigArquivos.SalvarCFeCanc := cbxSATSalvarCFeCanc.Checked;
     ConfigArquivos.SalvarEnvio := cbxSATSalvarEnvio.Checked;
@@ -7910,7 +7920,7 @@ end;
 
 procedure TFrmACBrMonitor.bBOLLerArqRelatorioClick(Sender: TObject);
 begin
-  if lsvArqsRetorno.ItemIndex > 0 then
+  if lsvArqsRetorno.ItemIndex >= 0 then
   begin
     ACBrBoleto1.NomeArqRetorno := deBolDirRetornoRel.Text + PathDelim + lsvArqsRetorno.Selected.Caption;
     ACBrBoleto1.LerRetorno();

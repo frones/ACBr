@@ -165,8 +165,8 @@ begin
   FGerador.wCampo(tcInt, '', 'CRZ', 4, 4, 1, CRZ);
   FGerador.wCampo(tcInt, '', 'COO', 6, 6, 1, COO);
   FGerador.wCampo(tcInt, '', 'CRO', 3, 3, 1, CRO);
-  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, IntToStrZero(Trunc(VendaBrutaDiaria*100),14));
-  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, IntToStrZero(Trunc(GT*100), 18));
+  FGerador.wCampo(tcStr, '', 'VendaBrutaDiaria', 1, 14, 1, IntToStrZero(TruncFix(VendaBrutaDiaria*100),14));
+  FGerador.wCampo(tcStr, '', 'GT', 1, 18, 1, IntToStrZero(TruncFix(GT*100), 18));
 
   if TotalizadoresParciais.Count > 0 then
   begin

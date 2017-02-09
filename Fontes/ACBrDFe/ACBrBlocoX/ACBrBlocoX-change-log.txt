@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/02/2017
+-- ACBrBlocoX_ReducaoZ --
+[-] Correção de problema ao truncar valores. Passado a utilizar TruncFix.
+	(por: Augusto Fontana)
+
 06/02/2017
 -- ACBrBlocoX_ReducaoZ --
 [*] Modificação para atender aos novos tamanhos dos campos no arquivo de Redução Z.

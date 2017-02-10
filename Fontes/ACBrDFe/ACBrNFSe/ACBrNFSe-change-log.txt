@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2017
+-- ACBrNFSeWebServices -- 
+[*] Incluido a comdição (RetCancNFSe.InfCanc.Sucesso='S') no método TratarResposta
+    do CancelarNFSe.
+    Por: Douglas
+
 26/01/2017
 -- Diversos --
 [*] Alterações visando o provedor EL.

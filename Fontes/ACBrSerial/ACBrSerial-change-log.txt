@@ -42,9 +42,14 @@ Símbolo : Significado
 Data: 10/02/2017
 -- ACBrECFClass --
 [-] Verificado que alíquotas II, FF e NN não entram na lista de alíquotas, porém
-	a validação falhava quando o índice possuía números (exemplo: I1, F1, N2...).
-	Alterado para não considerar alíquotas zeradas ou que possuem caracteres no índice.
+    a validação falhava quando o índice possuía números (exemplo: I1, F1, N2...).
+    Alterado para não considerar alíquotas zeradas ou que possuem caracteres no índice.
     (por: Elias César)
+
+-- ACBrECFVirtual --
+[*] Adicionado registrador específico para TROCO, nas Formas de Pagamento.
+    Antes o ECFVirtual, descontava o TROCO da Forma de pagamento 01-DINHEIRO,
+    o que causava dificuldade na apuração dos resultados  (por: DSA)
 
 Data: 06/02/2017
 -- ACBrECF --

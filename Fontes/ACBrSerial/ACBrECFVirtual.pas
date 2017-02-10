@@ -403,7 +403,9 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     procedure ClasstoINI( ConteudoINI: TStrings ); virtual ;
     procedure CriarMemoriaInicial; virtual;
     procedure CriarAliquotasPadrao;
-    procedure AtualizarMemoria;
+    procedure CriarFormasPagamentoPadrao;
+    procedure AtualizarAliquotasMemoria;
+    procedure AtualizarFormasPagamentoMemoria;
     procedure LeArqINIVirtual( ConteudoINI: TStrings ) ; virtual;
     procedure GravaArqINIVirtual( ConteudoINI: TStrings ) ; virtual ;
 
@@ -1180,15 +1182,16 @@ end;
 function TACBrECFVirtualClassCupom.EfetuaPagamento(AValor: Currency;
   AObservacao: String; APosFPG: Integer): TACBrECFVirtualClassPagamentoCupom;
 begin
-  Result := fpPagamentosCupom.New;
+  AValor := fpECFVirtualClasse.RoundECF( AValor );
 
+  Result := fpPagamentosCupom.New;
   with Result do
   begin
     PosFPG     := APosFPG ;
-    ValorPago  := fpECFVirtualClasse.RoundECF( AValor ) ;
+    ValorPago  := abs(AValor) ;
     Observacao := AObservacao ;
 
-    fpTotalPago := fpTotalPago + max(ValorPago, 0);
+    fpTotalPago := fpTotalPago + max(AValor, 0);
   end;
 end;
 
@@ -1617,20 +1620,29 @@ end;
 
 procedure TACBrECFVirtualClass.AtivarVirtual;
 var
-  Atualizar: Boolean;
+  AtualizarAliq, AtualizarFPG: Boolean;
 begin
   fpMFD := True;
 
-  Atualizar := (fpAliquotas.Count < 6);
-  if not Atualizar then
+  // Verificando se precisa inserir as novas aliquotas de Serviços //
+  AtualizarAliq := (fpAliquotas.Count < 6);
+  if not AtualizarAliq then
   begin
-    Atualizar := (fpAliquotas[3].Indice <> 'FS1') or
-                 (fpAliquotas[4].Indice <> 'IS1') or
-                 (fpAliquotas[5].Indice <> 'NS1');
+    AtualizarAliq := (fpAliquotas[3].Indice <> 'FS1') or
+                     (fpAliquotas[4].Indice <> 'IS1') or
+                     (fpAliquotas[5].Indice <> 'NS1');
   end;
 
-  if Atualizar then
-    AtualizarMemoria;
+  if AtualizarAliq then
+    AtualizarAliquotasMemoria;
+
+  // Verificando se precisa inserir 00-TROCO //
+  AtualizarFPG := (fpFormasPagamentos.Count < 2);
+  if not AtualizarFPG then
+    AtualizarFPG := (fpFormasPagamentos[0].Indice <> '00');
+
+  if AtualizarFPG then
+    AtualizarFormasPagamentoMemoria;
 end;
 
 procedure TACBrECFVirtualClass.Desativar;
@@ -2298,6 +2310,7 @@ Var
   FPG : TACBrECFFormaPagamento ;
   Troco : Double ;
   Pagto : TACBrECFVirtualClassPagamentoCupom ;
+  IndiceFPG: Integer;
 begin
   GravaLog( ComandoLOG );
 
@@ -2312,8 +2325,13 @@ begin
   if FPG = nil then
     raise EACBrECFERRO.create(ACBrStr('Forma de Pagamento '+CodFormaPagto+' Inválida')) ;
 
+  IndiceFPG := StrToInt( FPG.Indice );
+  if IndiceFPG < 1 then
+    raise EACBrECFERRO.create(ACBrStr('Forma de Pagamento '+FPG.Indice+'-'+FPG.Descricao+
+                                      ' não pode ser usada para Pagamentos')) ;
+
   try
-    Pagto := fpCupom.EfetuaPagamento( Valor, Observacao, StrToInt( FPG.Indice ) - 1);
+    Pagto := fpCupom.EfetuaPagamento( Valor, Observacao, IndiceFPG);
     FPG.Total := RoundTo(FPG.Total + Pagto.ValorPago,-2) ;
 
     { Se tiver Troco, remove de 01 - DINHEIRO (indice = 0) }
@@ -2326,8 +2344,8 @@ begin
 
     if Troco > 0 then
     begin
-      FPG := fpFormasPagamentos[ 0 ] ;  // 0 = 01-Dinheiro
-      FPG.Total := RoundTo(FPG.Total - Troco,-2) ;
+      FPG := fpFormasPagamentos[ 0 ] ;  // 0 = 00-TROCO
+      FPG.Total := RoundTo(FPG.Total + Troco,-2) ;
 
       { Lançando o Troco como um pagamento no Cupom, porém negativo, com isso
         o Cancelamento de Cupom conseguir desfaze-lo }
@@ -2719,6 +2737,10 @@ begin
   if FPG = Nil then
     raise EACBrECFERRO.Create(ACBrStr('Posição de Pagamento: '+CodFormaPagto+' inválida'));
 
+  if not FPG.PermiteVinculado then
+    raise EACBrECFERRO.Create(ACBrStr('Forma de Pagamento: '+FPG.Indice+'-'+FPG.Descricao+
+                                      ' não permite Vinculado'));
+
   UsouPagamento := False ;
   I := 0 ;
   while (not UsouPagamento) and (I < fpCupom.Pagamentos.Count) do
@@ -3088,7 +3110,6 @@ end;
 
 procedure TACBrECFVirtualClass.CriarMemoriaInicial;
 Var
-  FormaPagamento      : TACBrECFFormaPagamento ;
   ComprovanteNaoFiscal: TACBrECFComprovanteNaoFiscal;
   RG: TACBrECFRelatorioGerencial;
 begin
@@ -3101,13 +3122,7 @@ begin
 
   CriarAliquotasPadrao;
 
-  FreeAndNil( fpFormasPagamentos ) ;
-  inherited CarregaFormasPagamento;
-
-  FormaPagamento := TACBrECFFormaPagamento.create ;
-  FormaPagamento.Indice    := '01' ;
-  FormaPagamento.Descricao := 'DINHEIRO' ;
-  fpFormasPagamentos.Add( FormaPagamento ) ;
+  CriarFormasPagamentoPadrao;
 
   FreeAndNil( fpRelatoriosGerenciais ) ;
   inherited CarregaRelatoriosGerenciais;
@@ -3171,7 +3186,27 @@ begin
   fpAliquotas.Add( Aliquota ) ;
 end;
 
-procedure TACBrECFVirtualClass.AtualizarMemoria;
+procedure TACBrECFVirtualClass.CriarFormasPagamentoPadrao;
+var
+  FormaPagamento: TACBrECFFormaPagamento ;
+begin
+  FreeAndNil( fpFormasPagamentos ) ;
+  inherited CarregaFormasPagamento;
+
+  FormaPagamento := TACBrECFFormaPagamento.create ;
+  FormaPagamento.Indice    := '00' ;
+  FormaPagamento.Descricao := 'TROCO' ;
+  FormaPagamento.PermiteVinculado := False;
+  fpFormasPagamentos.Add( FormaPagamento ) ;
+
+  FormaPagamento := TACBrECFFormaPagamento.create ;
+  FormaPagamento.Indice    := '01' ;
+  FormaPagamento.Descricao := 'DINHEIRO' ;
+  FormaPagamento.PermiteVinculado := False;
+  fpFormasPagamentos.Add( FormaPagamento ) ;
+end;
+
+procedure TACBrECFVirtualClass.AtualizarAliquotasMemoria;
 var
   CopiaAliquotas: TACBrECFAliquotas;
   Aliq: TACBrECFAliquota;
@@ -3212,6 +3247,42 @@ begin
     CopiaAliquotas.Free;
   end;
 
+end;
+
+procedure TACBrECFVirtualClass.AtualizarFormasPagamentoMemoria;
+var
+  CopiaFPG: TACBrECFFormasPagamento;
+  FPG: TACBrECFFormaPagamento;
+  I: Integer;
+begin
+  CopiaFPG := TACBrECFFormasPagamento.Create(True);
+  try
+    For I := 0 to fpFormasPagamentos.Count-1 do
+    begin
+      FPG := TACBrECFFormaPagamento.create;
+      FPG.Assign(fpFormasPagamentos[I]);
+      CopiaFPG.Add(FPG);
+    end;
+
+    CriarFormasPagamentoPadrao;
+
+    if CopiaFPG.Count > 0 then  // Movendo total de "Dinheiro"
+      fpFormasPagamentos[1].Total := CopiaFPG[0].Total;
+
+    if CopiaFPG.Count > 1 then  // Tem outras FPGs cadastradas ?
+    begin
+      For I := 1 to CopiaFPG.Count-1 do
+      begin
+        FPG := TACBrECFFormaPagamento.create;
+        FPG.Assign(CopiaFPG[I]);
+        fpFormasPagamentos.Add(FPG);
+      end;
+    end;
+
+    GravaArqINI;
+  finally
+    CopiaFPG.Free;
+  end;
 end;
 
 procedure TACBrECFVirtualClass.GravaArqINI;
@@ -3448,7 +3519,7 @@ begin
 
   try
     FPagto := TACBrECFFormaPagamento.create ;
-    FPagto.Indice           := IntToStrZero( fpFormasPagamentos.Count+1, 2 );
+    FPagto.Indice           := IntToStrZero( fpFormasPagamentos.Count, 2 );
     FPagto.Descricao        := Descricao ;
     FPagto.PermiteVinculado := PermiteVinculado ;
     fpFormasPagamentos.Add( FPagto ) ;

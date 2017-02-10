@@ -307,8 +307,6 @@ type
 
   end;
 
-   const
-    sDisplayFormat = '###,###,###,##0.%.*d';
 
 implementation
 

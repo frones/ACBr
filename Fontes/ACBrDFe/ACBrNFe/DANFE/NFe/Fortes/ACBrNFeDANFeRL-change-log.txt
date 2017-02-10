@@ -48,11 +48,18 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 10/02/2017
+-- ACBrNFeDANFeRL
+[-] Constante sDisplayFormat removida, por não estar em uso.
+-- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem
+[*] Removidas máscaras de formatação hard-coded.
+	por: Celso Marigo Junior
+
+10/02/2017
 -- ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [-] Ajuste na apresentação de valores com ponto decimal.
      http://www.projetoacbr.com.br/forum/topic/35132-formata%C3%A7%C3%A3o-de-valores-orienta%C3%A7%C3%A3o-paisagem/
-     Por : Henrique Leonardo
-
+     Por : Henrique Leonardo	
+	
 07/02/2017
 -- ACBrNFeDANFeRLSimplificado
 [-] Correção para evitar erro de divisão por zero

@@ -624,8 +624,7 @@ begin
                            '  -  ' +
                            'DEST. / REM.: ' + FNFe.Dest.xNome + '  -  ' +
                            'VALOR TOTAL: R$ ' +
-                           FormatFloatBr(FNFe.Total.ICMSTot.vNF,
-                           '###,###,###,##0.00');
+                           FormatFloatBr(FNFe.Total.ICMSTot.vNF,',#0.00');
     end;
     rllResumo.Visible := True;
     iAlturaCanhoto := 25;
@@ -1176,23 +1175,23 @@ var LarguraCampo: Integer;
 begin
   with FNFe.Total.ICMSTot do
   begin
-    rllBaseICMS.Caption       := FormatFloatBr(VBC, '###,###,###,##0.00');
-    rllValorICMS.Caption      := FormatFloatBr(VICMS, '###,###,###,##0.00');
-    rllBaseICMSST.Caption     := FormatFloatBr(VBCST, '###,###,###,##0.00');
-    rllValorICMSST.Caption    := FormatFloatBr(VST, '###,###,###,##0.00');
-    rllTotalProdutos.Caption  := FormatFloatBr(VProd, '###,###,###,##0.00');
-    rllValorFrete.Caption     := FormatFloatBr(VFrete, '###,###,###,##0.00');
-    rllValorSeguro.Caption    := FormatFloatBr(VSeg, '###,###,###,##0.00');
-    rllDescontos.Caption      := FormatFloatBr(VDesc, '###,###,###,##0.00');
-    rllAcessorias.Caption     := FormatFloatBr(VOutro, '###,###,###,##0.00');
-    rllValorIPI.Caption       := FormatFloatBr(VIPI, '###,###,###,##0.00');
-    rllTotalNF.Caption        := FormatFloatBr(VNF, '###,###,###,##0.00');
+    rllBaseICMS.Caption       := FormatFloatBr(VBC		, ',#0.00');
+    rllValorICMS.Caption      := FormatFloatBr(VICMS	, ',#0.00');
+    rllBaseICMSST.Caption     := FormatFloatBr(VBCST	, ',#0.00');
+    rllValorICMSST.Caption    := FormatFloatBr(VST		, ',#0.00');
+    rllTotalProdutos.Caption  := FormatFloatBr(VProd	, ',#0.00');
+    rllValorFrete.Caption     := FormatFloatBr(VFrete	, ',#0.00');
+    rllValorSeguro.Caption    := FormatFloatBr(VSeg		, ',#0.00');
+    rllDescontos.Caption      := FormatFloatBr(VDesc	, ',#0.00');
+    rllAcessorias.Caption     := FormatFloatBr(VOutro	, ',#0.00');
+    rllValorIPI.Caption       := FormatFloatBr(VIPI		, ',#0.00');
+    rllTotalNF.Caption        := FormatFloatBr(VNF		, ',#0.00');
 
     // Exibe o Valor total dos tributos se vTotTrib for informado
     // e ajusta a posição dos outros campos para "abrir espaço" para ele.
     if vTotTrib > 0 then
     begin
-      rllTotalTributos.Caption        := FormatFloatBr(vTotTrib, '###,###,###,##0.00');
+      rllTotalTributos.Caption        := FormatFloatBr(vTotTrib, ',#0.00');
       rliDivImposto4.Visible          := True;
       rllTituloTotalTributos.Visible  := True;
       rllTotalTributos.Visible        := True;
@@ -1523,9 +1522,9 @@ begin
   if rlbISSQN.Visible then
   begin
     rllISSQNInscricao.Caption     := FNFe.Emit.IM;
-    rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ,'###,###,##0.00');
-    rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC  ,'###,###,##0.00');
-    rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS ,'###,###,##0.00');
+    rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ,',#0.00');
+    rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC  ,',#0.00');
+    rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS ,',#0.00');
   end;
 end;
 
@@ -1784,9 +1783,9 @@ begin
     with FNFe.Cobr.Fat do
     begin
       RlbDadoNumero.caption         := nFat;
-      RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig,'###,###,###,##0.00');
-      RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,'###,###,###,##0.00');
-      RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,'###,###,###,##0.00');
+      RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig,',#0.00');
+      RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc,',#0.00');
+      RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq ,',#0.00');
     end;
   end
   else
@@ -1820,7 +1819,7 @@ begin
       begin
         TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
         TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
-        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,'###,###,###,##0.00');
+        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup,',#0.00');
       end;
     end;
   end;

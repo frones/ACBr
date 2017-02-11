@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/02/2017
+-- pmdfeMDFeW --
+[*] Correção na geração do XML para versão 3.00 as condições para gerar ou não
+    tab <tpTransp> estavam incorretas.
+    Por: Italo Jurisato Junior
 
 19/01/2017
 -- pmdfeMDFeW --

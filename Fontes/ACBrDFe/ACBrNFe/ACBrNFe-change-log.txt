@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2017
+--ACBrNFeServicos.ini
+[+] Adição das urls de consulta de nfc-e do sergipe
+		http://www.projetoacbr.com.br/forum/topic/35161-novas-urls-de-url-consultanfce-de-sergipe/
+		(por: Juliomar Marchetti)
+		
 08/02/2017
 -- ACBrECFVirtualNFCe --
 [*] Melhoria da função CancelaCupomVirtual, para encontrar o XML no disco, de

@@ -2152,7 +2152,7 @@ end;
 
 procedure TACBrECFVirtualClass.CancelaItemVendido(NumItem: Integer);
 var 
-  ValorItem, DescAcresItem, TotBruto: Double;
+  ValorItem, DescAcresItem, TotalCanc: Double;
   PosAliqItem: Integer;
   wTipoAliq: Char;
 begin
@@ -2174,16 +2174,19 @@ begin
       ValorItem     := TotalLiquido;
       PosAliqItem   := AliqPos;
       DescAcresItem := DescAcres;
-      TotBruto      := TotalBruto;
+      TotalCanc     := TotalBruto;
       wTipoAliq     := fpAliquotas[AliqPos].Tipo;
     end;
 
     fpCupom.CancelaItem( NumItem );
 
+    if (DescAcresItem > 0) then
+      TotalCanc := ValorItem;
+
     if (wTipoAliq = 'S') then
-      fpCuponsCanceladosEmAbertoTotalISSQN := fpCuponsCanceladosEmAbertoTotalISSQN + ValorItem
+      fpCuponsCanceladosEmAbertoTotalISSQN := fpCuponsCanceladosEmAbertoTotalISSQN + TotalCanc
     else
-      fpCuponsCanceladosEmAbertoTotalICMS  := fpCuponsCanceladosEmAbertoTotalICMS + ValorItem;
+      fpCuponsCanceladosEmAbertoTotalICMS  := fpCuponsCanceladosEmAbertoTotalICMS + TotalCanc;
 
     { Estornando do total de Acréscimos/Descontos. VendaBruta e GT nunca são estornadas }
     if (DescAcresItem < 0) then

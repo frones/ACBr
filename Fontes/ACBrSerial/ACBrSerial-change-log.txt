@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 13/02/2017
+-- ACBrECFVirtual --
+[-] Correção para atribuir corretamente os valores em "CancelaItemVendido" quando
+	o item possui acréscimo ou desconto.
+    (por: Elias César)
+
+Data: 13/02/2017
 -- ACBrECFClass --
 [-] Correção para somar os Cancelamentos ISSQN em aberto em "CancelamentoISSQN".
     (por: Elias César)

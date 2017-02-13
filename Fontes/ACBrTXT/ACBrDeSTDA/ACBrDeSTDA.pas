@@ -704,4 +704,9 @@ begin
   Bloco_G.WriteRegistroG990;
 end;
 
+{$IFDEF FPC}
+initialization
+   {$i ACBrDeSTDA.lrs}
+{$ENDIF}
+
 end.

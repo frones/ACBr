@@ -280,6 +280,7 @@ end;
 
 {$ifdef FPC}
 initialization
+  {$i ACBrSPEDPisCofinsImportar.lrs}
 {$endif}
 
 

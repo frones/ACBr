@@ -454,7 +454,7 @@ end;
 
 {$IFDEF FPC}
 initialization
-//   {$I ACBrPonto.lrs}
+   {$I ACBrPonto.lrs}
 {$ENDIF}
 
 end.

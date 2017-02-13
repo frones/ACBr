@@ -1,5 +1,4 @@
 @ECHO OFF
-@ECHO OFF
 
 if "%1" == "" goto param_default
 
@@ -35,7 +34,7 @@ echo "****************************************"
 echo.
 
 :Serial
-%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.png TACBrGAV.png TACBrCHQ.png TACBrLCB.png TACBrDIS.png TACBrBAL.png TACBrTER.png TACBrETQ.png TACBrRFD.png TACBrSMS.png TACBrPosPrinter.png
+%1\tools\lazres.exe ACBrSerial.lrs TACBrECF.png TACBrGAV.png TACBrCHQ.png TACBrLCB.png TACBrDIS.png TACBrBAL.png TACBrTER.png TACBrETQ.png TACBrRFD.png TACBrSMS.png TACBrPosPrinter.png TACBrECFVirtualNaoFiscal.png
 move ACBrSerial.lrs ..\ACBrSerial
 echo.
 echo "****************************************"
@@ -74,17 +73,23 @@ echo.
 %1\tools\lazres.exe ACBrSpedFiscal.lrs TACBrSpedFiscal.png
 %1\tools\lazres.exe ACBrSpedContabil.lrs TACBrSpedContabil.png
 %1\tools\lazres.exe ACBrSpedPisCofins.lrs TACBrSpedPisCofins.png
+%1\tools\lazres.exe ACBrSPEDPisCofinsImportar.lrs TACBrSpedPCImportar.png  
+%1\tools\lazres.exe ACBrSpedECF.lrs TACBrSpedECF.png  
+
 move ACBrSpedFiscal.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDFiscal
 move ACBrSpedContabil.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDContabil
 move ACBrSpedPisCofins.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedPisCofins
-move ACBrSpedECF.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedECF
+move ACBrSPEDPisCofinsImportar.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDPisCofinsImportar
+move ACBrSpedECF.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDECF
+
 echo.
-echo "****************************************"
-echo "* Arquivo  ACBrSpedFiscal.lrs   gerado *"
-echo "* Arquivo  ACBrSpedContabil.lrs gerado *"
-echo "* Arquivo  ACBrSpedPisCofins.lrs gerado*"
-echo "* Arquivo  ACBrSpedECF.lrs gerado      *"
-echo "****************************************"
+echo "************************************************"
+echo "* Arquivo  ACBrSpedFiscal.lrs   gerado         *"
+echo "* Arquivo  ACBrSpedContabil.lrs gerado         *"
+echo "* Arquivo  ACBrSpedPisCofins.lrs gerado        *"
+echo "* Arquivo  ACBrSPEDPisCofinsImportar.lrs gerado*"
+echo "* Arquivo  ACBrSpedECF.lrs gerado              *"
+echo "************************************************"
 echo.
 
 :PAF
@@ -127,7 +132,7 @@ move ACBrNFe.lrs ..\ACBrDFe\ACBrNFe
 %1\tools\lazres.exe ACBrNFeDANFeRL.lrs TACBrNFeDANFeRL.png
 move ACBrNFeDANFeRL.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes
 
-%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.png
+%1\tools\lazres.exe ACBrNFeDANFCeFortes.lrs TACBrNFeDANFCeFortes.png TACBrNFeDANFCeFortesA4.png
 move ACBrNFeDANFCeFortes.lrs ..\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes
 
 %1\tools\lazres.exe ACBrNFeDANFeESCPOS.lrs TACBrNFeDANFeESCPOS.png 
@@ -160,9 +165,10 @@ move ACBrGNRE.lrs ..\ACBrDFe\ACBrGNRE
 move ACBrGNREGuiaFR.lrs ..\ACBrDFe\ACBrGNRE\GNRE\Fortes
 
 echo.
-echo "****************************************"
-echo "* Arquivo    ACBrGNRE.lrs     gerado    *"
-echo "****************************************"
+echo "***********************************************"
+echo "* Arquivo    ACBrGNRE.lrs     gerado          *"
+echo "* Arquivo    ACBrGNREGuiaFR.lrs     gerado    *"
+echo "***********************************************"
 echo.
 
 :NFSe
@@ -179,10 +185,15 @@ echo.
 %1\tools\lazres.exe ACBrCTe.lrs TACBrCTe.png 
 move ACBrCTe.lrs ..\ACBrDFe\ACBrCTe
 
+%1\tools\lazres.exe ACBrCTeDACTeRL.lrs TACBrCTeDACTeRL.png 
+move ACBrCTeDACTeRL.lrs ..\ACBrDFe\ACBrCTe\DACTE\Fortes
+
+
 echo.
-echo "****************************************"
-echo "* Arquivo    ACBrCTe.lrs     gerado    *"
-echo "****************************************"
+echo "***********************************************"
+echo "* Arquivo    ACBrCTe.lrs     gerado           *"
+echo "* Arquivo    ACBrCTeDACTeRL.lrs     gerado    *"
+echo "***********************************************"
 echo.
 
 :MDFe
@@ -214,6 +225,24 @@ move ACBrSintegra.lrs ..\ACBrTXT\ACBrSintegra
 echo.
 echo "****************************************"
 echo "* Arquivo   ACBrSintegra.lrs   gerado  *"
+echo "****************************************"
+echo.
+
+:Ponto
+%1\tools\lazres.exe ACBrPonto.lrs TACBrPonto.png
+move ACBrPonto.lrs ..\ACBrTXT\ACBrPonto
+echo.
+echo "*************************************"
+echo "* Arquivo   ACBrPonto.lrs   gerado  *"
+echo "*************************************"
+echo.
+
+:DeSTDA
+%1\tools\lazres.exe ACBrDeSTDA.lrs TACBrDeSTDA.png
+move ACBrDeSTDA.lrs ..\ACBrTXT\ACBrDeSTDA
+echo.
+echo "****************************************"
+echo "* Arquivo   ACBrDeSTDA.lrs   gerado  *"
 echo "****************************************"
 echo.
 

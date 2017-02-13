@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2017
+--ACBrValidador
+[+] Melhoria na validação de e-mail	
+		http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espaço/
+		por: Juliomar Marchetti
+		
 17/01/2017
 --ACBrValidador
 [*] Adição do espaço para validar o e-mail pois o mesmo não pode ter

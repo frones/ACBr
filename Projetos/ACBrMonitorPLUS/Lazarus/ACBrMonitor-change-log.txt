@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2017
+[*] Correção na tradução de Arquivos TXT de ANSI para UTF8  (por: DSA)
+
 09/02/2017
 [*] Corrigido menu de boletos, opção email estava acessando a tela do relatório.
 	por: Celso Marigo Junior

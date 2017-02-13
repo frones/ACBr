@@ -5812,7 +5812,7 @@ begin
           SetLength(S, MS.Size);
           MS.ReadBuffer(PChar(S)^, MS.Size);
           if chbArqEntANSI.Checked then
-            S := AnsiToUtf8(S);
+            S := ACBrAnsiToUTF8(S);
           Linhas.Text := S;
         finally
           MS.Free;

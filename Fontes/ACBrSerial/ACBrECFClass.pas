@@ -3212,7 +3212,7 @@ begin
       try CancelamentoICMS  := TotalCancelamentos + TotalCancelamentosEmAberto; except end ;
       try DescontoICMS      := TotalDescontos;          except end ;
       try AcrescimoICMS     := TotalAcrescimos;         except end ;
-      try CancelamentoISSQN := TotalCancelamentosISSQN; except end ;
+      try CancelamentoISSQN := TotalCancelamentosISSQN + TotalCancelamentosEmAbertoISSQN; except end ;
       try DescontoISSQN     := TotalDescontosISSQN;     except end ;
       try AcrescimoISSQN    := TotalAcrescimosISSQN;    except end ;
       try CancelamentoOPNF  := TotalCancelamentosOPNF;  except end ;

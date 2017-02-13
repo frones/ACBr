@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/02/2017
+-- ACBrECFClass --
+[-] Correção para somar os Cancelamentos ISSQN em aberto em "CancelamentoISSQN".
+    (por: Elias César)
+
 Data: 10/02/2017
 -- ACBrECFClass --
 [-] Verificado que alíquotas II, FF e NN não entram na lista de alíquotas, porém

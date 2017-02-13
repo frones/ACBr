@@ -1,38 +1,40 @@
 {******************************************************************************}
 { Projeto: TFrmACBrConvenio115_PRN                                             }
 {                                                                              }
-{ FunÁ„o: Imprimir Nota Fiscal Modelo 21/22 a partir dos dados inseridos no    }
+{ Fun√ß√£o: Imprimir Nota Fiscal Modelo 21/22 a partir dos dados inseridos no    }
 {         componente TACBrConvenio115                                          }
 {                                                                              }
-{  Esta biblioteca È software livre; vocÍ pode redistribuÌ-la e/ou modific·-la }
-{ sob os termos da LicenÁa P˙blica Geral Menor do GNU conforme publicada pela  }
-{ Free Software Foundation; tanto a vers„o 2.1 da LicenÁa, ou (a seu critÈrio) }
-{ qualquer vers„o posterior.                                                   }
+{  Esta biblioteca √© software livre; voc√™ pode redistribu√≠-la e/ou modific√°-la }
+{ sob os termos da Licen√ßa P√∫blica Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a vers√£o 2.1 da Licen√ßa, ou (a seu crit√©rio) }
+{ qualquer vers√£o posterior.                                                   }
 {                                                                              }
-{  Esta biblioteca È distribuÌda na expectativa de que seja ˙til, porÈm, SEM   }
-{ NENHUMA GARANTIA; nem mesmo a garantia implÌcita de COMERCIABILIDADE OU      }
-{ ADEQUA«√O A UMA FINALIDADE ESPECÕFICA. Consulte a LicenÁa P˙blica Geral Menor}
-{ do GNU para mais detalhes. (Arquivo LICEN«A.TXT ou LICENSE.TXT)              }
+{  Esta biblioteca √© distribu√≠da na expectativa de que seja √∫til, por√©m, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia impl√≠cita de COMERCIABILIDADE OU      }
+{ ADEQUA√á√ÉO A UMA FINALIDADE ESPEC√çFICA. Consulte a Licen√ßa P√∫blica Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICEN√áA.TXT ou LICENSE.TXT)              }
 {                                                                              }
-{  VocÍ deve ter recebido uma cÛpia da LicenÁa P˙blica Geral Menor do GNU junto}
-{ com esta biblioteca; se n„o, escreva para a Free Software Foundation, Inc.,  }
-{ no endereÁo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
-{ VocÍ tambÈm pode obter uma copia da licenÁa em:                              }
+{  Voc√™ deve ter recebido uma c√≥pia da Licen√ßa P√∫blica Geral Menor do GNU junto}
+{ com esta biblioteca; se n√£o, escreva para a Free Software Foundation, Inc.,  }
+{ no endere√ßo 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Voc√™ tamb√©m pode obter uma copia da licen√ßa em:                              }
 { http://www.opensource.org/licenses/lgpl-license.php                          }
 {******************************************************************************}
 
 {******************************************************************************}
-{ Direitos Autorais Reservados © 2013 - JÈter Rabelo Ferreira                  }
+{ Direitos Autorais Reservados ¬© 2013 - J√©ter Rabelo Ferreira                  }
 { Contato: jeter.rabelo@jerasoft.com.br                                        }
 {******************************************************************************}
 unit uFrmACBrConvenio115_PRN;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, RLReport, RLRichFilter, DB, RLFilters, RLPDFFilter, DBCLient,
-  RLXLSFilter, ACBrConvenio115;
+  LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, RLReport, RLRichFilter, DB, BufDataset, RLFilters,
+  RLPDFFilter, RLXLSFilter, ACBrConvenio115;
 
 type
 
@@ -47,6 +49,8 @@ type
     HomePage: string;
     EMail: string
   end;
+
+  { TFrmACBrConvenio115_PRN }
 
   TFrmACBrConvenio115_PRN = class(TForm)
     RlReport: TRLReport;
@@ -265,7 +269,7 @@ type
     procedure RLLabel2BeforePrint(Sender: TObject; var Text: string; var PrintIt: Boolean);
     procedure rllResumoBeforePrint(Sender: TObject; var Text: string; var PrintIt: Boolean);
   private
-    FCds: TClientDataSet;
+    FCds: TBufDataset;
     FLogoTipo: string;
     FSistema: String;
     FUsuario: String;
@@ -291,7 +295,7 @@ implementation
 uses
   ACBrUtil, StrUtils;
 
-{$R *.dfm}
+{$R *.lfm}
 
 
 constructor TFrmACBrConvenio115_PRN.Create(AOwner: TComponent);
@@ -315,7 +319,7 @@ begin
   FSistema := 'Copyright by Jera Soft Co. - 2009/2010 - http://www.jerasoft.com.br';
   FUsuario := '';
   FConvenio115 := TACBrConvenio115.Create(nil);
-  FCds := TClientDataSet.Create(nil);
+  FCds := TBufDataset.Create(nil);
   CriarFields;
   dsRPT.DataSet := FCds;
 end;
@@ -381,7 +385,7 @@ procedure TFrmACBrConvenio115_PRN.RLLabel19BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := IntToStr(Convenio115.Mestre[0].Modelo);
+  //Text := IntToStr(Convenio115.Mestre[0].Modelo);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel20BeforePrint(Sender: TObject;
@@ -395,7 +399,7 @@ procedure TFrmACBrConvenio115_PRN.RLLabel21BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := Convenio115.Mestre[0].Serie;
+//  Text := Convenio115.Mestre[0].Serie;
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel22BeforePrint(Sender: TObject;
@@ -415,20 +419,20 @@ procedure TFrmACBrConvenio115_PRN.RLLabel27BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'Mod: ' + IntToStr(Convenio115.Mestre[0].Modelo);
+//  Text := 'Mod: ' + IntToStr(Convenio115.Mestre[0].Modelo);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel29BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'SÈrie: ' + Convenio115.Mestre[0].Serie + ' ';;
+//  Text := 'S√©rie: ' + Convenio115.Mestre[0].Serie + ' ';;
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel2BeforePrint(Sender: TObject; var Text: string;
   var PrintIt: Boolean);
 begin
-  Text := 'Impress„o: ' + FormatDateTime('dd/mm/yyyy hh:nn:ss',now);
+  Text := 'Impress√£o: ' + FormatDateTime('dd/mm/yyyy hh:nn:ss',now);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel31BeforePrint(Sender: TObject;
@@ -564,13 +568,13 @@ procedure TFrmACBrConvenio115_PRN.rllNumNF0BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'N∫ ' + FormatFloat('000,000,000', Convenio115.Mestre[0].NumeroNF);
+  Text := 'N¬∫ ' + FormatFloat('000,000,000', Convenio115.Mestre[0].NumeroNF);
 end;
 
 procedure TFrmACBrConvenio115_PRN.rllResumoBeforePrint(Sender: TObject; var Text: string;
   var PrintIt: Boolean);
 begin
-  Text := 'Referente a NOTA FISCAL DE SERVI«O DE COMUNICA«√O - Valor Total R$ ' + Format('%m', [Convenio115.Mestre[0].ValorTotal]) + ' - Emiss„o:' + FormatDateTime('dd/mm/yyyy', Convenio115.Mestre[0].DataEmissao);
+  Text := 'Referente a NOTA FISCAL DE SERVI√áO DE COMUNICA√á√ÉO - Valor Total R$ ' + Format('%m', [Convenio115.Mestre[0].ValorTotal]) + ' - Emiss√£o:' + FormatDateTime('dd/mm/yyyy', Convenio115.Mestre[0].DataEmissao);
 end;
 
 procedure TFrmACBrConvenio115_PRN.rllSistemaBeforePrint(Sender: TObject; var Text: string;
@@ -584,7 +588,7 @@ procedure TFrmACBrConvenio115_PRN.rllUsuarioBeforePrint(Sender: TObject; var Tex
 begin
    Text := '';
    if FUsuario <> '' then
-     Text := 'Usu·rio: ' + FUsuario;
+     Text := 'Usu√°rio: ' + FUsuario;
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLMemo2BeforePrint(Sender: TObject;

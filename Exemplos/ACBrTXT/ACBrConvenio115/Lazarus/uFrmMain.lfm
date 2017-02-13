@@ -1,0 +1,45 @@
+object Form3: TForm3
+  Left = 0
+  Height = 114
+  Top = 0
+  Width = 165
+  ActiveControl = Button1
+  Caption = 'Form3'
+  ClientHeight = 114
+  ClientWidth = 165
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Position = poScreenCenter
+  LCLVersion = '1.6.2.0'
+  Visible = False
+  object Button1: TButton
+    Left = 8
+    Height = 45
+    Top = 12
+    Width = 145
+    Caption = 'Gerar Convênio 115'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 8
+    Height = 45
+    Top = 60
+    Width = 145
+    Caption = 'Imprimir Nota Fiscal'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object ACBrConvenio115: TACBrConvenio115
+    Modelo = 0
+    Ano = 0
+    Mes = 0
+    Status = scv115Normal
+    NumeroArquivoSubstituido = 1
+    Ordernar = False
+    left = 32
+    top = 12
+  end
+end

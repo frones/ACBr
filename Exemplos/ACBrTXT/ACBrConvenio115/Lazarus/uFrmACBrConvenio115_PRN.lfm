@@ -1,429 +1,516 @@
 object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
   Left = 0
+  Height = 714
   Top = 0
+  Width = 801
   Caption = 'FrmACBrConvenio115_PRN'
   ClientHeight = 714
   ClientWidth = 801
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
-  TextHeight = 13
+  LCLVersion = '1.6.2.0'
+  Visible = False
   object RlReport: TRLReport
     Left = 0
+    Height = 1123
     Top = 0
     Width = 794
-    Height = 1123
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     DataSource = dsRPT
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -13
     Font.Name = 'Arial'
-    Font.Style = []
+    Margins.LeftMargin = 7
+    Margins.TopMargin = 7
+    Margins.RightMargin = 7
+    Margins.BottomMargin = 7
+    RealBounds.Left = 0
+    RealBounds.Top = 0
+    RealBounds.Width = 0
+    RealBounds.Height = 0
     object BTitulo: TRLBand
       Left = 26
+      Height = 185
       Top = 99
       Width = 742
-      Height = 185
       BandType = btTitle
       Borders.Sides = sdCustom
       Borders.DrawLeft = True
       Borders.DrawTop = True
       Borders.DrawRight = True
       Borders.DrawBottom = True
-      Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -13
       Font.Name = 'Arial'
-      Font.Style = []
       ParentFont = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object RlImagem: TRLImage
         Left = 13
+        Height = 111
         Top = 6
         Width = 345
-        Height = 111
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Scaled = True
         BeforePrint = RlImagemBeforePrint
       end
       object RlTitulo: TRLLabel
         Left = 368
+        Height = 15
         Top = 4
         Width = 370
-        Height = 15
         Alignment = taCenter
         AutoSize = False
-        Caption = 'NOTA FISCAL DE SERVI'#199'O DE COMUNICA'#199#195'O'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'NOTA FISCAL DE SERVIÇO DE COMUNICAÇÃO'
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw1: TRLDraw
         Left = 364
+        Height = 206
         Top = 0
         Width = 1
-        Height = 206
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel3: TRLLabel
         Left = 715
+        Height = 22
         Top = 22
         Width = 26
-        Height = 22
         Align = faRightOnly
-        Caption = 'N'#176
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'N°'
         Font.Color = clBlack
         Font.Height = -19
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rllNumNF0BeforePrint
       end
       object RLLabel5: TRLLabel
         Left = 368
+        Height = 18
         Top = 113
         Width = 125
-        Height = 18
-        Caption = 'Data de Emiss'#227'o:'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Data de Emissão:'
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel6: TRLLabel
         Left = 494
+        Height = 18
         Top = 113
         Width = 76
-        Height = 18
         Caption = '99/99/9999'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel6BeforePrint
       end
       object RLLabel19: TRLLabel
         Left = 433
+        Height = 18
         Top = 41
         Width = 20
-        Height = 18
         Caption = '21'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel19BeforePrint
       end
       object RLLabel21: TRLLabel
         Left = 418
+        Height = 18
         Top = 65
         Width = 20
-        Height = 18
         Caption = '01'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel21BeforePrint
       end
       object RLLabel22: TRLLabel
         Left = 424
+        Height = 18
         Top = 89
         Width = 36
-        Height = 18
         Caption = '5301'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel22BeforePrint
       end
       object RLLabel42: TRLLabel
         Left = 368
+        Height = 18
         Top = 137
         Width = 88
-        Height = 18
-        Caption = 'C.N.P.J. N'#186': '
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'C.N.P.J. Nº: '
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel43: TRLLabel
         Left = 461
+        Height = 18
         Top = 137
         Width = 133
-        Height = 18
         Caption = '00.000.000/0000-00'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel43BeforePrint
       end
       object RLLabel44: TRLLabel
         Left = 368
+        Height = 18
         Top = 161
         Width = 102
-        Height = 18
         Caption = 'Insc.Estadual:'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel45: TRLLabel
         Left = 476
+        Height = 18
         Top = 161
         Width = 116
-        Height = 18
         Caption = '00000000000000'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel45BeforePrint
       end
       object RLLabel4: TRLLabel
         Left = 368
+        Height = 18
         Top = 89
         Width = 50
-        Height = 18
         Caption = 'CFOP:'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel26: TRLLabel
         Left = 368
+        Height = 18
         Top = 65
         Width = 46
-        Height = 18
-        Caption = 'S'#233'rie:'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Série:'
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel47: TRLLabel
         Left = 368
+        Height = 18
         Top = 41
         Width = 61
-        Height = 18
         Caption = 'Modelo:'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -15
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLMemo1: TRLMemo
         Tag = 3
         Left = 4
+        Height = 16
         Top = 125
         Width = 357
-        Height = 16
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel20BeforePrint
       end
       object rlmEndereco: TRLMemo
         Tag = 3
         Left = 4
+        Height = 12
         Top = 137
         Width = 357
-        Height = 12
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rlmEnderecoBeforePrint
       end
       object rllFone: TRLLabel
         Tag = 3
         Left = 3
+        Height = 12
         Top = 160
         Width = 354
-        Height = 12
         AutoSize = False
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rllFoneBeforePrint
       end
       object RLLabel48: TRLLabel
         Tag = 3
         Left = 4
+        Height = 12
         Top = 171
         Width = 354
-        Height = 12
         AutoSize = False
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel48BeforePrint
       end
     end
     object RLBand1: TRLBand
       Left = 26
+      Height = 31
       Top = 601
       Width = 742
-      Height = 31
       BandType = btFooter
       Borders.Sides = sdCustom
       Borders.DrawLeft = False
       Borders.DrawTop = True
       Borders.DrawRight = False
       Borders.DrawBottom = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object rllSistema: TRLLabel
         Left = 0
+        Height = 14
         Top = 1
         Width = 191
-        Height = 14
         Align = faLeftOnly
         Caption = 'Copyright by Jera Soft Co. - 2009/2010'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rllSistemaBeforePrint
       end
       object RLSystemInfo1: TRLSystemInfo
         Left = 700
+        Height = 14
         Top = 17
         Width = 42
-        Height = 14
         Align = faRightBottom
         AutoSize = False
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         Info = itLastPageNumber
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Text = ' / '
       end
       object RLSystemInfo2: TRLSystemInfo
         Left = 590
+        Height = 14
         Top = 17
         Width = 110
-        Height = 14
         Align = faRightBottom
         Alignment = taRightJustify
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         Info = itPageNumber
         ParentFont = False
-        Text = 'P'#225'gina: '
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Text = 'Página: '
       end
       object rllUsuario: TRLLabel
         Left = 0
+        Height = 14
         Top = 17
         Width = 197
-        Height = 14
         Align = faLeftBottom
-        Caption = 'Usu'#225'rio:'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Usuário:'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rllUsuarioBeforePrint
       end
       object RLLabel2: TRLLabel
-        AlignWithMargins = True
         Left = 694
+        Height = 14
         Top = 1
         Width = 48
-        Height = 14
         Align = faRightOnly
         Alignment = taRightJustify
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel2BeforePrint
       end
     end
     object rlbDestinatario: TRLBand
       Left = 26
+      Height = 108
       Top = 284
       Width = 742
-      Height = 108
       BandType = btTitle
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object RLDraw2: TRLDraw
         Left = 0
+        Height = 91
         Top = 11
         Width = 740
-        Height = 91
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel7: TRLLabel
         Tag = 30
         Left = 0
+        Height = 10
         Top = 0
         Width = 61
-        Height = 10
-        Caption = 'DESTINAT'#193'RIO'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'DESTINATÁRIO'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
@@ -431,820 +518,1039 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Holder = RLDraw2
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel8: TRLLabel
         Tag = 10
         Left = 3
+        Height = 7
         Top = 14
         Width = 80
-        Height = 7
-        Caption = 'NOME / RAZ'#195'O SOCIAL'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'NOME / RAZÃO SOCIAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         Holder = RLDraw2
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestNome: TRLLabel
         Left = 4
+        Height = 14
         Top = 25
         Width = 580
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestNomeBeforePrint
       end
       object RLLabel9: TRLLabel
         Tag = 10
         Left = 3
+        Height = 7
         Top = 44
         Width = 42
-        Height = 7
-        Caption = 'ENDERE'#199'O'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'ENDEREÇO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         Holder = RLDraw2
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestEndereco: TRLLabel
         Left = 4
+        Height = 14
         Top = 55
         Width = 484
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestEnderecoBeforePrint
       end
       object RLLabel10: TRLLabel
         Tag = 10
         Left = 3
+        Height = 7
         Top = 74
         Width = 38
-        Height = 7
-        Caption = 'MUNIC'#205'PIO'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'MUNICÍPIO'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         Holder = RLDraw2
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestCidade: TRLLabel
         Left = 4
+        Height = 14
         Top = 85
         Width = 298
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestCidadeBeforePrint
       end
       object RLLabel11: TRLLabel
         Tag = 10
         Left = 316
+        Height = 7
         Top = 75
         Width = 41
-        Height = 7
         Caption = 'FONE / FAX'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestFone: TRLLabel
         Left = 320
+        Height = 14
         Top = 85
         Width = 146
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestFoneBeforePrint
       end
       object RLLabel12: TRLLabel
         Tag = 10
         Left = 497
+        Height = 7
         Top = 44
         Width = 69
-        Height = 7
         Caption = 'BAIRRO / DISTRITO'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestBairro: TRLLabel
         Left = 501
+        Height = 14
         Top = 54
         Width = 152
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestBairroBeforePrint
       end
       object RLLabel13: TRLLabel
         Tag = 10
         Left = 473
+        Height = 7
         Top = 75
         Width = 11
-        Height = 7
         Caption = 'UF'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestUF: TRLLabel
         Left = 477
+        Height = 14
         Top = 85
         Width = 38
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestUFBeforePrint
       end
       object RLLabel14: TRLLabel
         Tag = 10
         Left = 592
+        Height = 7
         Top = 15
         Width = 41
-        Height = 7
         Caption = 'CNPJ / CPF'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestCNPJ: TRLLabel
         Left = 596
+        Height = 14
         Top = 25
         Width = 112
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestCNPJBeforePrint
       end
       object RLLabel15: TRLLabel
         Tag = 10
         Left = 662
+        Height = 7
         Top = 45
         Width = 17
-        Height = 7
         Caption = 'CEP'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestCEP: TRLLabel
         Left = 666
+        Height = 14
         Top = 55
         Width = 60
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestCEPBeforePrint
       end
       object RLLabel16: TRLLabel
         Tag = 10
         Left = 522
+        Height = 7
         Top = 75
         Width = 82
-        Height = 7
-        Caption = 'INSCRI'#199#195'O ESTADUAL'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'INSCRIÇÃO ESTADUAL'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDestIE: TRLLabel
         Left = 526
+        Height = 14
         Top = 85
         Width = 203
-        Height = 14
         AutoSize = False
         Color = clWhite
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = rllDestIEBeforePrint
       end
       object RLDraw3: TRLDraw
         Left = 0
+        Height = 1
         Top = 41
         Width = 740
-        Height = 1
+        Angle = 0
         DrawKind = dkLine
         Holder = RLDraw2
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw4: TRLDraw
         Left = 0
+        Height = 1
         Top = 71
         Width = 740
-        Height = 1
+        Angle = 0
         DrawKind = dkLine
         Holder = RLDraw2
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw5: TRLDraw
         Left = 313
+        Height = 31
         Top = 72
         Width = 1
-        Height = 31
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw6: TRLDraw
         Left = 470
+        Height = 31
         Top = 72
         Width = 1
-        Height = 31
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw7: TRLDraw
         Left = 494
+        Height = 31
         Top = 42
         Width = 1
-        Height = 31
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw8: TRLDraw
         Left = 590
+        Height = 31
         Top = 12
         Width = 1
-        Height = 31
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw9: TRLDraw
         Left = 519
+        Height = 31
         Top = 72
         Width = 1
-        Height = 31
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw10: TRLDraw
         Left = 658
+        Height = 31
         Top = 41
         Width = 1
-        Height = 31
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbReciboHeader: TRLBand
       Left = 26
+      Height = 57
       Top = 26
       Width = 742
-      Height = 57
       AutoSize = True
       BandType = btHeader
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object rliCanhoto: TRLDraw
         Left = 0
+        Height = 57
         Top = 0
         Width = 740
-        Height = 57
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rliCanhoto1: TRLDraw
         Left = 0
+        Height = 1
         Top = 25
         Width = 603
-        Height = 1
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsHorizontally
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rliCanhoto2: TRLDraw
         Left = 102
+        Height = 32
         Top = 25
         Width = 1
-        Height = 32
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllRecebemosDe: TRLLabel
         Tag = 1
         Left = 4
+        Height = 7
         Top = 4
         Width = 61
-        Height = 7
         Caption = 'RECEBEMOS DE '
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllDataRecebimento: TRLLabel
         Tag = 10
         Left = 3
+        Height = 7
         Top = 28
         Width = 88
-        Height = 7
         Caption = 'DATA DE RECEBIMENTO'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllIdentificacao: TRLLabel
         Tag = 10
         Left = 105
+        Height = 7
         Top = 28
         Width = 172
-        Height = 7
-        Caption = 'IDENTIFICA'#199#195'O E ASSINATURA DO RECEBEDOR'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR'
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rliCanhoto3: TRLDraw
         Left = 602
+        Height = 57
         Top = 0
         Width = 1
-        Height = 57
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsVertically
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rllNumNF0: TRLLabel
         Left = 660
+        Height = 16
         Top = 20
         Width = 22
-        Height = 16
         Alignment = taCenter
-        Caption = 'N'#186' '
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Nº '
         Font.Color = clBlack
         Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rllNumNF0BeforePrint
       end
       object rllResumo: TRLLabel
         Left = 68
+        Height = 10
         Top = 13
         Width = 220
-        Height = 10
-        Caption = 'Referente a NOTA FISCAL DE SERVI'#199'O DE COMUNICA'#199#195'O'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Referente a NOTA FISCAL DE SERVIÇO DE COMUNICAÇÃO'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rllResumoBeforePrint
       end
       object RLLabel20: TRLLabel
         Left = 67
+        Height = 10
         Top = 3
         Width = 40
-        Height = 10
         Caption = 'EMPRESA'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel20BeforePrint
       end
       object rllNFe: TRLLabel
         Left = 608
+        Height = 16
         Top = 2
         Width = 128
-        Height = 16
         Alignment = taCenter
         AutoSize = False
         Caption = 'NOTA FISCAL'
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel27: TRLLabel
         Left = 605
+        Height = 14
         Top = 39
         Width = 48
-        Height = 14
         Caption = 'Mod.: 21'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel27BeforePrint
       end
       object RLLabel29: TRLLabel
         Left = 688
+        Height = 14
         Top = 39
         Width = 54
-        Height = 14
         Align = faRightOnly
-        Caption = 'S'#233'rie: 01'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Série: 01'
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLLabel29BeforePrint
       end
     end
     object rlbDivisaoRecibo: TRLBand
       Left = 26
+      Height = 16
       Top = 83
       Width = 742
-      Height = 16
       BandType = btHeader
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object rliDivisao: TRLDraw
         Left = 0
+        Height = 8
         Top = 5
         Width = 741
-        Height = 8
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsHorizontally
         Pen.Style = psDot
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object RLBand2: TRLBand
       Left = 26
+      Height = 43
       Top = 436
       Width = 742
-      Height = 43
       BandType = btSummary
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object RLDraw20: TRLDraw
         Left = 140
+        Height = 31
         Top = 6
         Width = 117
-        Height = 31
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel30: TRLLabel
         Tag = 30
         Left = 142
+        Height = 10
         Top = 8
         Width = 72
-        Height = 10
-        Caption = 'Base C'#225'lculo ICMS'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Base Cálculo ICMS'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel31: TRLLabel
         Tag = 10
         Left = 143
+        Height = 12
         Top = 19
         Width = 109
-        Height = 12
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'R$0,00'
         Color = 14540253
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = RLLabel31BeforePrint
       end
       object RLDraw21: TRLDraw
         Left = 260
+        Height = 31
         Top = 6
         Width = 117
-        Height = 31
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel35: TRLLabel
         Tag = 30
         Left = 262
+        Height = 10
         Top = 8
         Width = 43
-        Height = 10
         Caption = 'Valor ICMS'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel36: TRLLabel
         Tag = 10
         Left = 263
+        Height = 12
         Top = 19
         Width = 109
-        Height = 12
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'R$0,00'
         Color = 14540253
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = RLLabel36BeforePrint
       end
       object RLDraw22: TRLDraw
         Left = 380
+        Height = 31
         Top = 6
         Width = 117
-        Height = 31
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel37: TRLLabel
         Tag = 30
         Left = 382
+        Height = 10
         Top = 8
         Width = 90
-        Height = 10
-        Caption = 'Isenta ou n'#227'o Tributada'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Isenta ou não Tributada'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel38: TRLLabel
         Tag = 10
         Left = 383
+        Height = 12
         Top = 19
         Width = 109
-        Height = 12
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'R$0,00'
         Color = 14540253
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = RLLabel38BeforePrint
       end
       object RLDraw23: TRLDraw
         Left = 500
+        Height = 31
         Top = 6
         Width = 117
-        Height = 31
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel39: TRLLabel
         Tag = 30
         Left = 502
+        Height = 10
         Top = 8
         Width = 28
-        Height = 10
         Caption = 'Outros'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel41: TRLLabel
         Tag = 10
         Left = 503
+        Height = 12
         Top = 19
         Width = 109
-        Height = 12
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'R$0,00'
         Color = 14540253
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = RLLabel41BeforePrint
       end
       object RLDraw24: TRLDraw
         Left = 619
+        Height = 31
         Top = 6
         Width = 117
-        Height = 31
+        Angle = 0
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel17: TRLLabel
         Tag = 30
         Left = 621
+        Height = 10
         Top = 8
         Width = 42
-        Height = 10
         Caption = 'Valor Total'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel18: TRLLabel
         Tag = 10
         Left = 623
+        Height = 12
         Top = 19
         Width = 107
-        Height = 12
         Alignment = taRightJustify
         AutoSize = False
         Caption = 'R$0,00'
         Color = 14540253
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
         BeforePrint = RLLabel18BeforePrint
       end
       object RLDraw11: TRLDraw
         Left = 0
+        Height = 7
         Top = 0
         Width = 740
-        Height = 7
+        Angle = 0
         DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw25: TRLDraw
         Left = 0
+        Height = 6
         Top = 37
         Width = 740
-        Height = 6
+        Angle = 0
         DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw26: TRLDraw
         Left = 0
+        Height = 36
         Top = 3
         Width = 1
-        Height = 36
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw27: TRLDraw
         Left = 739
+        Height = 37
         Top = 3
         Width = 1
-        Height = 37
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbObsItem: TRLBand
       Left = 26
+      Height = 15
       Top = 490
       Width = 742
-      Height = 15
       BandType = btSummary
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object LinhaInicioItem: TRLDraw
         Left = 0
+        Height = 1
         Top = 14
         Width = 740
-        Height = 1
         Align = faBottomOnly
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rlmObsItem: TRLMemo
         Tag = 20
         Left = 2
+        Height = 8
         Top = 4
         Width = 734
-        Height = 8
         Behavior = [beSiteExpander]
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
@@ -1252,499 +1558,639 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Borders.DrawRight = False
         Borders.DrawBottom = False
         Borders.Style = bsClear
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Courier New'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = rlmObsItemBeforePrint
       end
       object LinhaObsItemEsquerda: TRLDraw
         Left = 0
+        Height = 15
         Top = 0
         Width = 1
-        Height = 15
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         Holder = rlbObsItem
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaObsItemDireita: TRLDraw
         Left = 739
+        Height = 15
         Top = 0
         Width = 1
-        Height = 15
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object RLBand3: TRLBand
       Left = 26
+      Height = 11
       Top = 505
       Width = 742
-      Height = 11
       BandType = btSummary
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object RLLabel25: TRLLabel
         Tag = 30
         Left = 0
+        Height = 10
         Top = 0
         Width = 75
-        Height = 10
         Caption = 'Reservado ao Fisco'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw14: TRLDraw
         Left = 0
+        Height = 1
         Top = 10
         Width = 740
-        Height = 1
         Align = faBottomOnly
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbCabecalhoItens: TRLBand
       Left = 26
+      Height = 30
       Top = 392
       Width = 742
-      Height = 30
       AutoSize = True
       Background.Arrange = baDistributed
       Background.Height = 96
       Background.Width = 175
       BandType = btColumnHeader
       PageBreaking = pbBeforePrint
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object rlsRectProdutos: TRLDraw
         Left = 0
+        Height = 19
         Top = 10
         Width = 740
-        Height = 19
+        Angle = 0
         Color = clWhite
         ParentColor = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
       end
       object RLLabel24: TRLLabel
         Tag = 10
         Left = 1
+        Height = 14
         Top = 12
         Width = 738
-        Height = 14
         Alignment = taCenter
         AutoSize = False
         Color = 14540253
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentColor = False
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         Transparent = False
       end
       object RLDraw12: TRLDraw
         Left = 739
+        Height = 18
         Top = 12
         Width = 1
-        Height = 18
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object lblDadosDoProduto: TRLLabel
         Tag = 30
         Left = 0
+        Height = 10
         Top = 0
         Width = 132
-        Height = 10
-        Caption = 'DADOS DO PRODUTO / SERVI'#199'OS'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'DADOS DO PRODUTO / SERVIÇOS'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rlsDivProd1: TRLDraw
         Left = 36
+        Height = 18
         Top = 10
         Width = 1
-        Height = 18
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rlsDivProd6: TRLDraw
         Left = 390
+        Height = 19
         Top = 10
         Width = 1
-        Height = 19
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rlsDivProd8: TRLDraw
         Left = 629
+        Height = 19
         Top = 10
         Width = 1
-        Height = 19
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel23: TRLLabel
         Tag = 10
         Left = 395
+        Height = 7
         Top = 16
         Width = 87
-        Height = 7
         Alignment = taCenter
         AutoSize = False
         Caption = 'B.C.ICMS'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel32: TRLLabel
         Tag = 10
         Left = 633
+        Height = 7
         Top = 16
         Width = 103
-        Height = 7
         Alignment = taCenter
         AutoSize = False
         Caption = 'VALOR TOTAL'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object rlmCodProd: TRLMemo
         Tag = 10
         Left = 3
+        Height = 7
         Top = 16
         Width = 30
-        Height = 7
         Alignment = taCenter
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         Lines.Strings = (
-          'Seq.')
+          'Seq.'
+        )
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLMemo4: TRLMemo
         Tag = 10
         Left = 40
+        Height = 7
         Top = 16
         Width = 345
-        Height = 7
         Alignment = taCenter
         AutoSize = False
         Behavior = [beSiteExpander]
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         Lines.Strings = (
-          'DESCRI'#199#195'O DO SERVI'#199'O')
+          'DESCRIÇÃO DO SERVIÇO'
+        )
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw17: TRLDraw
         Left = 485
+        Height = 19
         Top = 10
         Width = 1
-        Height = 19
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel33: TRLLabel
         Tag = 10
         Left = 488
+        Height = 7
         Top = 16
         Width = 87
-        Height = 7
         Alignment = taCenter
         AutoSize = False
         Caption = 'Vlr. ICMS'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel34: TRLLabel
         Tag = 10
         Left = 580
+        Height = 7
         Top = 16
         Width = 47
-        Height = 7
         Alignment = taCenter
         AutoSize = False
         Caption = 'Aliq.ICMS'
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -7
         Font.Name = 'Arial'
-        Font.Style = []
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw18: TRLDraw
         Left = 577
+        Height = 19
         Top = 10
         Width = 1
-        Height = 19
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object rlbItens: TRLBand
       Left = 26
+      Height = 14
       Top = 422
       Width = 742
-      Height = 14
       Background.Height = 487
       Background.Width = 865
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object txtCodigo: TRLDBText
         Left = 4
+        Height = 11
         Top = 1
         Width = 29
-        Height = 11
         Alignment = taRightJustify
         AutoSize = False
         DataField = 'N_ITEM'
         DataSource = dsRPT
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object txtQuantidade: TRLDBText
         Left = 395
+        Height = 11
         Top = 1
         Width = 87
-        Height = 11
         Alignment = taRightJustify
         AutoSize = False
         DataField = 'ICMS_BC'
         DataSource = dsRPT
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object txtValorTotal: TRLDBText
         Left = 633
+        Height = 11
         Top = 1
         Width = 103
-        Height = 11
         Alignment = taRightJustify
         AutoSize = False
         DataField = 'V_TOTAL'
         DataSource = dsRPT
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaQuantidade: TRLDraw
         Left = 390
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaValorTotal: TRLDraw
         Left = 629
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaFinal: TRLDraw
         Left = 739
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaDescricao: TRLDraw
         Left = 36
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaCodigo: TRLDraw
         Left = 0
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLLabel40: TRLLabel
         Left = 680
+        Height = 16
         Top = 16
         Width = 65
-        Height = 16
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object LinhaFimItens: TRLDraw
         Left = 0
+        Height = 1
         Top = 13
         Width = 740
-        Height = 1
         Align = faBottomOnly
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw13: TRLDraw
         Left = 739
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDBText1: TRLDBText
         Left = 40
+        Height = 13
         Top = 1
         Width = 345
-        Height = 13
         AutoSize = False
         DataField = 'DESCRICAO'
         DataSource = dsRPT
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDBText2: TRLDBText
         Left = 488
+        Height = 11
         Top = 1
         Width = 87
-        Height = 11
         Alignment = taRightJustify
         AutoSize = False
         DataField = 'ICMS_VALOR'
         DataSource = dsRPT
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw16: TRLDraw
         Left = 485
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw19: TRLDraw
         Left = 577
+        Height = 14
         Top = 0
         Width = 1
-        Height = 14
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDBText3: TRLDBText
         Left = 580
+        Height = 11
         Top = 1
         Width = 47
-        Height = 11
         Alignment = taRightJustify
         AutoSize = False
         DataField = 'ICMS_ALIQUOTA'
         DataSource = dsRPT
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object RLBand4: TRLBand
       Left = 26
+      Height = 85
       Top = 516
       Width = 742
-      Height = 85
       BandType = btSummary
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object RLDraw28: TRLDraw
         Left = 0
+        Height = 1
         Top = 84
         Width = 740
-        Height = 1
         Align = faBottomOnly
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLMemo2: TRLMemo
         Tag = 20
         Left = 2
+        Height = 9
         Top = 4
         Width = 734
-        Height = 9
         Behavior = [beSiteExpander]
         Borders.Sides = sdCustom
         Borders.DrawLeft = False
@@ -1752,65 +2198,87 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Borders.DrawRight = False
         Borders.DrawBottom = False
         Borders.Style = bsClear
-        Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Courier New'
-        Font.Style = []
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
         BeforePrint = RLMemo2BeforePrint
       end
       object RLDraw29: TRLDraw
         Left = 0
+        Height = 85
         Top = 0
         Width = 1
-        Height = 85
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         Holder = RLBand4
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw30: TRLDraw
         Left = 739
+        Height = 85
         Top = 0
         Width = 1
-        Height = 85
         Align = faHeight
-        Angle = 90.000000000000000000
+        Angle = 90
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
     object RLBand5: TRLBand
       Left = 26
+      Height = 11
       Top = 479
       Width = 742
-      Height = 11
       BandType = btSummary
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
       object RLLabel46: TRLLabel
         Tag = 30
         Left = 0
+        Height = 10
         Top = 0
         Width = 111
-        Height = 10
-        Caption = 'Informa'#231#245'es complementares'
-        Font.Charset = DEFAULT_CHARSET
+        Caption = 'Informações complementares'
         Font.Color = clBlack
         Font.Height = -8
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         HoldStyle = hsRelatively
         ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
       object RLDraw31: TRLDraw
         Left = 0
+        Height = 1
         Top = 10
         Width = 740
-        Height = 1
         Align = faBottomOnly
+        Angle = 0
         DrawKind = dkLine
         HoldStyle = hsRelatively
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
       end
     end
   end
@@ -1818,21 +2286,23 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
     DocumentInfo.Creator = 'Jera Soft Co.'
     FileName = 'relatorio'
     DisplayName = 'Documento PDF'
-    Left = 644
-    Top = 65532
+    left = 644
+    top = 65532
   end
   object RLRichFilter1: TRLRichFilter
     DisplayName = 'Formato RichText'
-    Left = 700
-    Top = 65532
+    left = 700
+    top = 65532
   end
   object RLXLSFilter1: TRLXLSFilter
+    PageSetup.HeaderMargin = 0
+    PageSetup.FooterMargin = 0
     DisplayName = 'Planilha Excel'
-    Left = 644
-    Top = 48
+    left = 644
+    top = 48
   end
   object dsRPT: TDataSource
-    Left = 572
-    Top = 65532
+    left = 572
+    top = 65532
   end
 end

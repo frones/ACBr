@@ -40,6 +40,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/02/2017
+[+] Modificações aplicadas para atender amplamente o convenio 115
+		http://www.projetoacbr.com.br/forum/topic/9099-gera%C3%A7%C3%A3o-de-arquivo-magn%C3%A9tico-conv%C3%AAnio-11503/?do=findComment&comment=230335
+		Também atualizado e adicionado exemplo para lazarus deste componente
+		http://www.projetoacbr.com.br/forum/topic/34954-alterações-impresso-nota-fiscal-modelo-21/
+		por Juliomar Marchetti
+		
 06/02/2015
 [*] Acrescimo da criação dinamica e trabalhar com o campo mestre
 	  http://www.projetoacbr.com.br/forum/index.php?/topic/9099-gera%C3%A7%C3%A3o-de-arquivo-magn%C3%A9tico-conv%C3%AAnio-11503/page-6#entry126653

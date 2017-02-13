@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 13/02/2017
+[+] Adição de validação para a chave da nfe no registro e113
+		http://www.projetoacbr.com.br/forum/topic/35090-registro-e113-faltando-chv_nfe/
+		por: Juliomar Marchetti
+		
 Data 24/01/2017
 [+] Adição de novos campos do registro C173 manual janeiro 2017
 		http://www.projetoacbr.com.br/forum/topic/34774-novos-campos-no-registro-c176-conforme-guia-pr%C3%A1tico-da-efd-vers%C3%A3o-2020-layout-11-2017/

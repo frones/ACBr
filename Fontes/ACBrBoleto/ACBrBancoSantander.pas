@@ -63,7 +63,6 @@ type
     procedure GerarRegistroTrailler400(ARemessa:TStringList);  override;
     Procedure LerRetorno240(ARetorno:TStringList); override;
     Procedure LerRetorno400(ARetorno:TStringList); override;
-
     function TipoOcorrenciaToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia) : String; override;
     function CodOcorrenciaToTipo(const CodOcorrencia:Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia):String; override;
@@ -408,25 +407,26 @@ begin
       STipoJuros := '3'; // Isento
     end;
 
+    // 0 = ISENTO
+    // 1 = Valor fixo ate a data informada – Informar o valor no campo “valor de desconto a ser concedido.
+    // 2 = Percentual ate a data informada – Informar o percentual no campo “percentual de desconto a ser concedido
+    // 3 = Valor por antecipação por dia corrido - Informar o valor no campo “valor de desconto a ser concedido
+    // 4 = Valor por antecipação dia útil - Informar o valor no campo “valor de desconto a ser concedido
+    case ACBrTitulo.TipoDesconto of
+         tdNaoConcederDesconto: sTipoDesconto := '0';
+         tdValorFixoAteDataInformada: sTipoDesconto := '1';
+         tdPercentualAteDataInformada: sTipoDesconto := '2';
+    end;
+
     if ValorDesconto > 0 then
     begin
-      sTipoDesconto := '1'; // Valor fixo ate a data informada – Informar o valor no campo “valor de desconto a ser concedido”.
       if DataDesconto <> 0 then
-      begin
-        sDataDesconto := FormatDateTime('ddmmyyyy', DataDesconto);
-        sTipoDesconto := '2';
-      end
+        sDataDesconto := FormatDateTime('ddmmyyyy', DataDesconto)
       else
-      begin
-        sTipoDesconto := '0'; // ISENTO
         sDataDesconto := PadLeft('', 8, '0');
-      end;
     end
     else
-    begin
-      sTipoDesconto := '0'; // ISENTO
-      sDataDesconto := PadLeft('', 8, '0');
-    end;
+       sDataDesconto := PadLeft('', 8, '0');
 
     {Instruções}
 

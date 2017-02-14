@@ -211,6 +211,8 @@ TACBrECFVirtualClassCupom = class
   private
     fpECFVirtualClasse: TACBrECFVirtualClass;
 
+    fpChaveDFe : String;
+
     fpAliquotasCupom  : TACBrECFVirtualClassAliquotasCupom;
     fpItensCupom      : TACBrECFVirtualClassItensCupom;
     fpPagamentosCupom : TACBrECFVirtualClassPagamentosCupom;
@@ -267,6 +269,8 @@ TACBrECFVirtualClassCupom = class
     property DescAcresSubtotalISSQN: Currency read fpDescAcresSubtotalISSQN;
 
     property ECFVirtualClasse: TACBrECFVirtualClass read fpECFVirtualClasse;
+
+    property ChaveDFe : String read fpChaveDFe   write fpChaveDFe;
 end;
 
 TACBrECFVirtualLerGravarINI = procedure(ConteudoINI: TStrings; var Tratado: Boolean) of object;
@@ -346,6 +350,8 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fsQuandoGravarArqINI: TACBrECFVirtualLerGravarINI;
     fsQuandoLerArqINI: TACBrECFVirtualLerGravarINI;
 
+    function GetChaveCupom: String;
+    procedure SetChaveCupom(AValue: String);
     procedure SetColunas(AValue: Integer);
     procedure SetDevice(AValue: TACBrDevice);
     procedure SetNumCRO(AValue: Integer);
@@ -380,7 +386,6 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     fpCOOFinal   : Integer;
     fpNumCRO     : Integer;
     fpNumCOO     : Integer;
-    fpChaveCupom : String;
     fpNumGNF     : Integer;
     fpNumGRG     : Integer;
     fpNumCDC     : Integer;
@@ -515,7 +520,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
     property IE         : String read  fpIE          write fpIE;
     property IM         : String read  fpIM          write fpIM;
 
-    property ChaveCupom : String read fpChaveCupom   write fpChaveCupom;
+    property ChaveCupom : String read GetChaveCupom   write SetChaveCupom;
 
     procedure Ativar ; override ;
     procedure Desativar ; override ;
@@ -946,6 +951,7 @@ begin
   fpSubtotalISSQN          := 0;
   fpDescAcresSubtotalICMS  := 0;
   fpDescAcresSubtotalISSQN := 0;
+  fpChaveDFe               := '';
 end;
 
 function TACBrECFVirtualClassCupom.VendeItem(ACodigo, ADescricao: String; AQtd,
@@ -1236,6 +1242,8 @@ var
 begin
   Clear;
 
+  fpChaveDFe := AIni.ReadString('Variaveis','ChaveCupom',fpChaveDFe);
+
   fpDescAcresSubtotalICMS  := AIni.ReadFloat('Cupom', 'DescontoAcrescimo', 0);
   fpDescAcresSubtotalISSQN := AIni.ReadFloat('Cupom', 'DescontoAcrescimoISSQN', 0);
 
@@ -1304,6 +1312,8 @@ var
   S: String;
   I: Integer;
 begin
+  AIni.WriteString('Variaveis', 'ChaveCupom', fpChaveDFe);
+
   AIni.WriteFloat('Cupom', 'DescontoAcrescimo', fpDescAcresSubtotalICMS);
   AIni.WriteFloat('Cupom', 'DescontoAcrescimoISSQN', fpDescAcresSubtotalISSQN);
   AIni.WriteFloat('Cupom', 'Subtotal', fpSubtotalICMS);
@@ -1577,7 +1587,6 @@ begin
   fpCOOInicial := 0 ;
   fpCOOFinal   := 0 ;
   fpNumCOO     := 0 ;
-  fpChaveCupom := '';
   fpNumGNF     := 0 ;
   fpNumGRG     := 0 ;
   fpNumCDC     := 0 ;
@@ -3009,7 +3018,6 @@ begin
 
     fpEstado      := TACBrECFEstado(Ini.ReadInteger('Variaveis','Estado',Integer(fpEstado)));
     fpNumCOO      := Ini.ReadInteger('Variaveis','NumCupom',fpNumCOO);
-    fpChaveCupom  := Ini.ReadString('Variaveis','ChaveCupom',fpChaveCupom);
     fpNumGNF      := Ini.ReadInteger('Variaveis','NumGNF',fpNumGNF);
     fpNumGRG      := Ini.ReadInteger('Variaveis','NumGRG',fpNumGRG);
     fpNumCDC      := Ini.ReadInteger('Variaveis','NumCDC',fpNumCDC);
@@ -3332,7 +3340,6 @@ begin
 
     Ini.WriteInteger('Variaveis','Estado',Integer( fpEstado) ) ;
     Ini.WriteInteger('Variaveis','NumCupom',fpNumCOO) ;
-    Ini.WriteString('Variaveis','ChaveCupom',fpChaveCupom) ;
     Ini.WriteInteger('Variaveis','NumGNF',fpNumGNF) ;
     Ini.WriteInteger('Variaveis','NumGRG',fpNumGRG) ;
     Ini.WriteInteger('Variaveis','NumCDC',fpNumCDC) ;
@@ -3434,6 +3441,16 @@ procedure TACBrECFVirtualClass.SetColunas(AValue: Integer);
 begin
   if fpColunas = AValue then Exit;
   fpColunas := AValue;
+end;
+
+function TACBrECFVirtualClass.GetChaveCupom: String;
+begin
+  Result := fpCupom.ChaveDFe;
+end;
+
+procedure TACBrECFVirtualClass.SetChaveCupom(AValue: String);
+begin
+  fpCupom.ChaveDFe := AValue;
 end;
 
 function TACBrECFVirtualClass.GetColunas: Integer;

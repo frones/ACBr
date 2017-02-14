@@ -39,10 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/02/2017
+-- ACBrECFVirtual --
+[*] Propriedade "TACBrECFVirtualClass.ChaveCupom", migrada para
+    "TACBrECFVirtualClassCupom.ChaveDFe"..  isso permite acessar e modificar
+    a Chave do DFe a ser cancelado em eventos como: "QuandoCancelarCupom", que
+    já recebia o parâmetro "CupomVirtual"  (por: DSA)
+
 Data: 13/02/2017
 -- ACBrECFVirtual --
 [-] Correção para atribuir corretamente os valores em "CancelaItemVendido" quando
-	o item possui acréscimo ou desconto.
+    o item possui acréscimo ou desconto.
     (por: Elias César)
 
 Data: 13/02/2017

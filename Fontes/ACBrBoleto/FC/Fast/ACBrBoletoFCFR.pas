@@ -69,6 +69,7 @@ type
   { TACBrBoletoFCFR }
   TACBrBoletoFCFR = class(TACBrBoletoFCClass)
   private
+    MensagemPadrao: TStringList;
     { Private declarations }
     fFastReportFile: String;
     FImpressora: String;
@@ -279,10 +280,12 @@ begin
   FIncorporarBackgroundPdf := False;
   FIncorporarFontesPdf := False;
   FdmBoleto := TdmACBrBoletoFCFR.Create(Self);
+  MensagemPadrao  := TStringList.Create;
 end;
 
 destructor TACBrBoletoFCFR.Destroy;
 begin
+  MensagemPadrao.Free;
   FdmBoleto.Free;
   inherited;
 end;
@@ -583,7 +586,9 @@ begin
         sTipoDoc := 'DOC.: ';
       end;
       // Monta mensagens de multa e juros
-      AdicionarMensagensPadroes(ListadeBoletos[iFor], ListadeBoletos[iFor].Mensagem);
+      MensagemPadrao.Clear;
+      MensagemPadrao.Text := ListadeBoletos[iFor].Mensagem;
+      AdicionarMensagensPadroes(ListadeBoletos[iFor], MensagemPadrao);
 
       with FdmBoleto.cdsTitulo do
       begin
@@ -614,7 +619,7 @@ begin
         Field_DataABatimento.AsDateTime := ListadeBoletos[iFor].DataAbatimento;
         Field_DataProtesto.AsDateTime := ListadeBoletos[iFor].DataProtesto;
         Field_PercentualMulta.AsFloat := ListadeBoletos[iFor].PercentualMulta;
-        Field_Mensagem.AsString := ListadeBoletos[iFor].Mensagem.Text;
+        Field_Mensagem.AsString := MensagemPadrao.Text;
         Field_OcorrenciaOriginal.AsInteger := Integer(ListadeBoletos[iFor].OcorrenciaOriginal);
         Field_Instrucao1.AsString := ListadeBoletos[iFor].Instrucao1;
         Field_Instrucao2.AsString := ListadeBoletos[iFor].Instrucao2;

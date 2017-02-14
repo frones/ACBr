@@ -587,7 +587,7 @@ begin
       end;
       // Monta mensagens de multa e juros
       MensagemPadrao.Clear;
-      MensagemPadrao.Text := ListadeBoletos[iFor].Mensagem;
+      MensagemPadrao.Text := ListadeBoletos[iFor].Mensagem.Text;
       AdicionarMensagensPadroes(ListadeBoletos[iFor], MensagemPadrao);
 
       with FdmBoleto.cdsTitulo do

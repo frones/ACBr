@@ -306,7 +306,6 @@ type
     FValorFaturaComecial: Currency;
     FObservacoes: string;
     function GetGrupoTensao: string;
-    function GetAutenticacaoDocumentoFiscal: string;
     procedure SetTipoAssinanteAte201612(const Value: TTipoAssinanteConv115_Tab11_1);
     procedure SetTipoUtilizacao(const Value: TProdutoConv115_Tab11_2);
     procedure SetTipoAssinante(const Value: TTipoAssinanteConv115_Tab11_8_2);
@@ -321,7 +320,6 @@ type
     property GrupoTensao: string read GetGrupoTensao;
     property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
     property NumeroNF: Integer read FNumeroNF write FNumeroNF;
-    property AutenticacaoDocumentoFiscal: string read GetAutenticacaoDocumentoFiscal; // Imprimir na Nota Fiscal
     property ValorTotal: Currency read FValorTotal write FValorTotal;
     property ICMS_BaseCalculo: Currency read FICMS_BaseCalculo write FICMS_BaseCalculo;
     property ICMS_Valor: Currency read FICMS_Valor write FICMS_Valor;
@@ -341,6 +339,7 @@ type
     property DataLeituraAtual: string read GetDataLeituraAtual;
     property Observacoes: string read FObservacoes write FObservacoes;
     property Detalhes: TACBrConvenio115Items read FDetalhes;
+    function AutenticacaoDocumentoFiscal(AVersaoAnterior: Boolean): string;
     function RegistroEAssinatura(AVersaoAnterior: Boolean): TConvenio115AssinaturaMD5;
   end;
 
@@ -497,17 +496,21 @@ begin
   inherited;
 end;
 
-function TACBrConvenio115Mestre.GetAutenticacaoDocumentoFiscal: string;
+function TACBrConvenio115Mestre.AutenticacaoDocumentoFiscal(AVersaoAnterior: Boolean): string;
+var
+  SRec: string;
 begin
-  Result := MD5String(
-    PadLeft(OnlyNumber(Destinatario.CnpjCpf), 14, '0') + { 01 - CNPJ/CPF }
-    PadLeft(IntToStr(FNumeroNF), 9, '0') + { 12 - Numero NF }
-    PadLeft(TiraPontos(FormatFloat('#,##0.00', FValorTotal)), 12, '0') + { 14 - Valor }
-    PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') + { 15 - Base ICMS }
-    PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0') +  { 16 - Valor ICMS }
-    DtOs(DataEmissao) {09 - Data da Emissão } +
-    PadLeft(OnlyNumber(FCnpjEmitente), 14, '0') { 27 - CNPJ/CPF }
-    );
+  SRec := PadLeft(OnlyNumber(Destinatario.CnpjCpf), 14, '0') + { 01 - CNPJ/CPF }
+          PadLeft(IntToStr(FNumeroNF), 9, '0') + { 12 - Numero NF }
+          PadLeft(TiraPontos(FormatFloat('#,##0.00', FValorTotal)), 12, '0') + { 14 - Valor }
+          PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') + { 15 - Base ICMS }
+          PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0');  { 16 - Valor ICMS }
+  if not AVersaoAnterior then
+    SRec := SRec +
+          DtOs(DataEmissao) {09 - Data da Emissão } +
+          PadLeft(OnlyNumber(FCnpjEmitente), 14, '0'); { 27 - CNPJ/CPF }
+
+  Result := MD5String(SRec);
 end;
 
 function TACBrConvenio115Mestre.GetDataLeituraAnterior: string;
@@ -551,7 +554,7 @@ begin
           {10} PadLeft(IntToStr(FModelo), 2, '0') +
           {11} PadLeft(FSerie, 3) +
           {12} PadLeft(IntToStr(NumeroNF), 9, '0') +
-          {13} AutenticacaoDocumentoFiscal +
+          {13} AutenticacaoDocumentoFiscal(AVersaoAnterior) +
           {14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 12, '0') +
           {15} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') +
           {16} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0') +
@@ -925,9 +928,16 @@ begin
           {12} PadRight(CodigoServico, 10) +
           {13} PadRight(TiraAcentos(DescricaoServico), 40) +
           {14} PadLeft(ClassificacaoItem, 4, '0') +
-          {15} PadRight(Unidade, 6) +
+          {15} PadRight(Unidade, 6);
+  if AVersaoAnterior then
+    SRec := SRec +
+          {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 11, '0') +
+          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 11, '0')
+  else
+    SRec := SRec +
           {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 12, '0') +
-          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 12, '0') +
+          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 12, '0');
+    SRec := SRec +
           {18} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 11, '0') +
           {19} PadLeft(TiraPontos(FormatFloat('#,##0.00', Desconto)), 11, '0') +
           {20} PadLeft(TiraPontos(FormatFloat('#,##0.00', AcrescimosDespAcessorias)), 11, '0') +

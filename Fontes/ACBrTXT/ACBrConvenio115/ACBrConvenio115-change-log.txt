@@ -42,6 +42,7 @@ Símbolo : Significado
 
 14/02/2017
 [-] Correção para o tamanho do campo estava gerando registro maior.
+		Jeter subiu mais correções e compatibilizou a arquivos antigos
 		por Juliomar Marchetti
 		
 13/02/2017

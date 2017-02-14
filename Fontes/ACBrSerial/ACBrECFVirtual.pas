@@ -3051,7 +3051,7 @@ begin
     fpTotalDescontosICMS   := Ini.ReadFloat('Variaveis', 'TotalDescontos', fpTotalDescontosICMS);
     fpTotalAcrescimosICMS  := Ini.ReadFloat('Variaveis', 'TotalAcrescimos', fpTotalAcrescimosICMS);
     fpTotalDescontosISSQN  := Ini.ReadFloat('Variaveis', 'TotalDescontosISSQN', fpTotalDescontosISSQN);
-    fpTotalAcrescimosISSQN := Ini.ReadFloat('Variaveis', 'TotalAcrescimosISSNQ', fpTotalAcrescimosISSQN);
+    fpTotalAcrescimosISSQN := Ini.ReadFloat('Variaveis', 'TotalAcrescimosISSQN', fpTotalAcrescimosISSQN);
 
     fpCupom.LoadFromINI(Ini);
 

@@ -40,6 +40,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/02/2017
+[-] Correção para o tamanho do campo estava gerando registro maior.
+		por Juliomar Marchetti
+		
 13/02/2017
 [+] Modificações aplicadas para atender amplamente o convenio 115
 		http://www.projetoacbr.com.br/forum/topic/9099-gera%C3%A7%C3%A3o-de-arquivo-magn%C3%A9tico-conv%C3%AAnio-11503/?do=findComment&comment=230335

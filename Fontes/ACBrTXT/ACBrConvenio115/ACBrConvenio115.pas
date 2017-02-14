@@ -944,7 +944,7 @@ begin
   else
   begin
     SRec := SRec +
-          {28} PadLeft(FNumeroDoContrato, 25) +
+          {28} PadLeft(FNumeroDoContrato, 15) +
           {29} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeFaturada)), 12, '0') +
           {30} PadLeft(TiraPontos(FormatFloat('#,##0.000000', TarifaAplicadaPrecoMedio)), 11, '0') +
           {31} PadLeft(TiraPontos(FormatFloat('#,##0.0000', AliquotaPis)), 6, '0') +

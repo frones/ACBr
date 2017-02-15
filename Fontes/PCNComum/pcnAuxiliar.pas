@@ -960,7 +960,10 @@ end;
 function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
 begin
   AChaveNFE := OnlyNumber(AChaveNFE);
-  Result    := StrToIntDef(Copy(AChaveNFE, 26, 9), 0);
+  if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
+    Result    := StrToIntDef(Copy(AChaveNFE, 32, 6), 0)
+  else
+    Result    := StrToIntDef(Copy(AChaveNFE, 26, 9), 0);
 end;
 
 function TimeZoneConf: TTimeZoneConf;

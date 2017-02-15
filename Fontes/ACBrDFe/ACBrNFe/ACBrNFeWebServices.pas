@@ -1941,6 +1941,7 @@ begin
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXML;
 
+    Atualiza := False;
     NFCancelada := False;
     aEventos := '';
 
@@ -2174,10 +2175,7 @@ begin
                           '</NFeDFe>';
           end;
 
-          SalvarXML := Result and
-                       FPConfiguracoesNFe.Arquivos.Salvar and
-                       ((not FPConfiguracoesNFe.Arquivos.SalvarApenasNFeProcessadas) or
-                         Processada);
+          SalvarXML := Result and FPConfiguracoesNFe.Arquivos.Salvar and Atualiza;
 
           if SalvarXML then
           begin

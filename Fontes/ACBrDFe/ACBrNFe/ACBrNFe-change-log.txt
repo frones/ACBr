@@ -47,11 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/02/2017
+-- ACBrNFeWebSerices --
+[-] WebService "TNFeConsulta". Correção para atualizar o XML do disco, com a
+    informação de cancelamento se "ConfiguracoesNFe.Geral.AtualizarXMLCancelado = True"
+    e CstatCancelada (101, 151, 155)  (por: DSA)
+
 13/02/2017
---ACBrNFeServicos.ini
+-- ACBrNFeServicos.ini --
 [+] Adição das urls de consulta de nfc-e do sergipe
-		http://www.projetoacbr.com.br/forum/topic/35161-novas-urls-de-url-consultanfce-de-sergipe/
-		(por: Juliomar Marchetti)
+    http://www.projetoacbr.com.br/forum/topic/35161-novas-urls-de-url-consultanfce-de-sergipe/
+    (por: Juliomar Marchetti)
 		
 08/02/2017
 -- ACBrECFVirtualNFCe --

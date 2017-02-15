@@ -833,9 +833,14 @@ begin
       raise Exception.Create('Detalhe não informado para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +
                              ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial);
 
-    if FMestre[I].TipoAssinanteAte201612 = tac111None then
-      raise Exception.Create('Tipo de assinante inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +
-                             ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial);
+    if Ano < 2017 then
+      if FMestre[I].TipoAssinanteAte201612 = tac111None then
+        raise Exception.Create('Tipo de assinante inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +
+                               ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial)
+    else
+      if FMestre[I].TipoAssinante = tac1182None then
+        raise Exception.Create('Tipo de assinante inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +
+                               ' - Cliente: ' + FMestre[I].Destinatario.CodigoConsumidor + '/' + FMestre[I].Destinatario.RazaoSocial);
 
     if FMestre[I].TipoUtilizacao = pc112None then
       raise Exception.Create('Tipo de utilização inválido para a Nota Fiscal: ' + IntToStr(FMestre[I].NumeroNF) +

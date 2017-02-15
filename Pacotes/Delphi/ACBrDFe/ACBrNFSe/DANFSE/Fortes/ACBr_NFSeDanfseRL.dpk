@@ -36,7 +36,7 @@
 
 package ACBr_NFSeDanfseRL;
 
-{$I ACBr.inc}
+{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -67,7 +67,7 @@ requires
   soaprtl,
   frce,
   ACBr_NFSe,
-	dsnap;
+  dsnap;
 
 contains
   ACBrNFSeDANFSeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\DANFSE\Fortes\ACBrNFSeDANFSeRL.pas' {frlDANFSeRL},

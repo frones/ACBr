@@ -32,7 +32,6 @@ requires
   ACBr_TCP;
 
 contains
-  ACBrBancoBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBradesco.pas',
   ACBrBancoBrasil in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasil.pas',
   ACBrBoleto in '..\..\..\Fontes\ACBrBoleto\ACBrBoleto.pas',
   ACBrBancoItau in '..\..\..\Fontes\ACBrBoleto\ACBrBancoItau.pas',
@@ -47,6 +46,12 @@ contains
   ACBrBancoBanestes in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBanestes.pas',
   ACBrBancoNordeste in '..\..\..\Fontes\ACBrBoleto\ACBrBancoNordeste.pas',
   ACBrBancoBRB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBRB.pas',
-  ACBrBancoBic in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBic.pas';
+  ACBrBancoBic in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBic.pas',
+  ACBrBancoBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBradesco.pas',
+  ACBrBancoBradescoSICOOB in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBradescoSICOOB.pas',
+  ACBrBancoCecred in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCecred.pas',
+  ACBrBancoSafra in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafra.pas',
+  ACBrBancoAmazonia in '..\..\..\Fontes\ACBrBoleto\ACBrBancoAmazonia.pas',
+  ACBrBancoSafraBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas';
 
 end.

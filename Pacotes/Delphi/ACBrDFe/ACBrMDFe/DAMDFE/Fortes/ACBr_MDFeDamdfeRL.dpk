@@ -35,7 +35,7 @@
 ******************************************************************************}
 package ACBr_MDFeDamdfeRL;
 
-{$I ACBr.inc}
+{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -71,8 +71,8 @@ contains
   ACBrMDFeDAMDFeRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLReg.pas',
   ACBrMDFeDAMDFeRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLClass.pas',
   ACBrMDFeDAMDFeRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRL.pas' {TfrlDAMDFeRL},
-  ACBrMDFeDAMDFeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas' { TfrlDAMDFeRLRetrato },
-  ACBrMDFeDAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAEventoRL.pas' { TfrmMDFeDAEventoRL },
-  ACBrMDFeDAEventoRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAEventoRLRetrato.pas' { TfrmMDFeDAEventoRLRetrato }; 
+  ACBrMDFeDAMDFeRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAMDFeRLRetrato.pas' {TfrlDAMDFeRLRetrato},
+  ACBrMDFeDAEventoRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAEventoRL.pas' {TfrmMDFeDAEventoRL},
+  ACBrMDFeDAEventoRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrMDFe\DAMDFE\Fortes\ACBrMDFeDAEventoRLRetrato.pas' {TfrmMDFeDAEventoRLRetrato};
 
 end.

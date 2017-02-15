@@ -43,6 +43,13 @@ contains
   ACBrDFe in '..\..\..\Fontes\ACBrDFe\ACBrDFe.pas',
   ACBrDFeRegUtil in '..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas',
   ACBrDFeException in '..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas',
-  ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas';
+  ACBrDFeSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas',
+  ACBrDFeOpenSSL in '..\..\..\Fontes\ACBrDFe\ACBrDFeOpenSSL.pas',
+  ACBrDFeQRCodeBar in '..\..\..\Fontes\ACBrDFe\ACBrDFeQRCodeBar.pas',
+  ACBrDFeCapicom in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicom.pas',
+  ACBrDFeCapicomDelphiSoap in '..\..\..\Fontes\ACBrDFe\ACBrDFeCapicomDelphiSoap.pas',
+  ACBrMSXML2_TLB in '..\..\..\Fontes\ACBrCapicom\ACBrMSXML2_TLB.pas',
+  ACBrCAPICOM_TLB in '..\..\..\Fontes\ACBrCapicom\ACBrCAPICOM_TLB.pas',
+  ACBrHTTPReqResp in '..\..\..\Fontes\ACBrCapicom\ACBrHTTPReqResp.pas';
 
 end.

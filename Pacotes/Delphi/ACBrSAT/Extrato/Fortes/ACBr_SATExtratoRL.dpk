@@ -1,6 +1,5 @@
 package ACBr_SATExtratoRL;
 
-{$I ACBr.inc}
 {$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}

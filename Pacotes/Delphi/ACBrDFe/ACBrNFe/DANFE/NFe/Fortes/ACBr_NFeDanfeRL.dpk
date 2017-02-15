@@ -44,7 +44,7 @@
 ******************************************************************************}
 package ACBr_NFeDanfeRL;
 
-{$I ACBr.inc}
+{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -87,6 +87,8 @@ contains
   ACBrNFeDANFeEventoRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeEventoRLRetrato.pas' {frlDANFeEventoRLRetrato},
   ACBrNFeDANFeRLSimplificado in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDANFeRLSimplificado.pas',
   ACBrDANFCeFortesFr in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFr.pas' {ACBrNFeDANFCeFortesFr},
-	ACBrDANFCeFortesFrA4 in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas' {ACBrNFeDANFCeFortesFrA4};
+  ACBrDANFCeFortesFrA4 in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFCe\Fortes\ACBrDANFCeFortesFrA4.pas' {ACBrNFeDANFCeFortesFrA4},
+  ACBrNFeDAInutRLRetrato in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRLRetrato.pas',
+  ACBrNFeDAInutRL in '..\..\..\..\..\..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\NFe\Fortes\ACBrNFeDAInutRL.pas' {frmNFeDAInutRL};
 
 end.

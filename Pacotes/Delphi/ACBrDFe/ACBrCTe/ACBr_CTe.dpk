@@ -113,6 +113,8 @@ contains
   pcteRetEnvEventoCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetEnvEventoCTe.pas',
   pcteRetInutCTe in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetInutCTe.pas',
   pcteSignature in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteSignature.pas',
-  ACBrCTeDACTEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas';
+  ACBrCTeDACTEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\DACTE\ACBrCTeDACTEClass.pas',
+  pcteDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteDistDFeInt.pas',
+  pcteRetDistDFeInt in '..\..\..\..\Fontes\ACBrDFe\ACBrCTe\PCNCTe\pcteRetDistDFeInt.pas';
 
 end.

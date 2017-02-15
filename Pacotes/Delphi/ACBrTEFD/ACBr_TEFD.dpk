@@ -47,6 +47,7 @@ contains
   ACBrTEFDFoxWin in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDFoxWin.pas',
   ACBrTEFDGoodCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDGoodCard.pas',
   ACBrTEFDAuttar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDAuttar.pas',
-  ACBrTEFDTicketCar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDTicketCar.pas';
+  ACBrTEFDTicketCar in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDTicketCar.pas',
+  ACBrTEFDConvCard in '..\..\..\Fontes\ACBrTEFD\ACBrTEFDConvCard.pas';
 
 end.

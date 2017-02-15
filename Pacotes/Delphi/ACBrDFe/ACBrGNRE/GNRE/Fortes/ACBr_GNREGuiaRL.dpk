@@ -1,6 +1,6 @@
 package ACBr_GNREGuiaRL;
 
-{$I ACBr.inc}
+{$R *.res}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -27,11 +27,14 @@ package ACBr_GNREGuiaRL;
 
 requires
   ACBr_GNRE,
-  ACBr_Comum,	
+  ACBr_Comum,
   frce,
   dsnap;
 
 contains
-  ACBrGNREGuiaRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaRLReg.pas';
+  ACBrGNREGuiaRLReg in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNREGuiaRLReg.pas',
+  ACBrGNReGuiaRL in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRL.pas',
+  ACBrGNReGuiaRLRetrato in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLRetrato.pas',
+  ACBrGNReGuiaRLClass in '..\..\..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\Fortes\ACBrGNReGuiaRLClass.pas';
 
 end.

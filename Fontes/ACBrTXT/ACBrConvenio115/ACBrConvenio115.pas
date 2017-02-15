@@ -575,16 +575,16 @@ begin
           {23} IntToStr(Ord(IndicadorPessoa) + 1) +
           {24} _GetTab11_8_2 +
           {25} '00' + // Telecomunicação é 00
-          {26} PadLeft(NumeroTelefonePrincipal, 12, '0') +
+          {26} PadLeft(NumeroTelefonePrincipal, 12, ' ')  +
           {27} PadLeft(OnlyNumber(FCnpjEmitente), 14, '0') +
           {28} PadRight(NumeroFaturaComercial, 20) +
           {29} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 12, '0') +
           {30} DataLeituraAnterior +
           {31} DataLeituraAtual +
           {32} PadRight('', 50) +
-          {33} PadRight('', 8) +
+          {33} PadRight('', 8, '0') +
           {34} PadRight(Observacoes, 30) +
-          {33} PadRight('', 5);
+          {35} PadRight('', 5);
   end;
   Result.Registro := SRec;
   Result.Assinatura := MD5String(Result.Registro);
@@ -700,9 +700,9 @@ begin
               {06} PadRight(TiraAcentos(FMestre[I].Destinatario.Complemento), 15) +
               {07} PadLeft(OnlyNumber(FMestre[I].Destinatario.CEP), 8, '0') +
               {08} PadRight(TiraAcentos(FMestre[I].Destinatario.Bairro), 15) +
-              {09} PadRight(TiraAcentos(FMestre[I].Destinatario.Municipio), 30) +
+              {09} PadRight(FMestre[I].Destinatario.Municipio, 30) +
               {10} PadRight(UpperCase(FMestre[I].Destinatario.UF), 2) +
-              {11} PadLeft(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, '0') +
+              {11} PadRight(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, ' ') +
               {12} PadRight(FMestre[I].Destinatario.CodigoConsumidor, 12) +
               {13} PadRight(FMestre[I].NumeroTerminalTelefonico, 12) +
               {14} PadRight(UpperCase(FMestre[I].UFTerminalTelefonico), 2);
@@ -936,8 +936,8 @@ begin
           {15} PadRight(Unidade, 6);
   if AVersaoAnterior then
     SRec := SRec +
-          {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 11, '0') +
-          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 11, '0')
+          {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 12, '0') +
+          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 12, '0')
   else
     SRec := SRec +
           {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 12, '0') +

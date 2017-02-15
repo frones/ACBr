@@ -101,15 +101,15 @@ type
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); override;
+    property PreparedReport: TfrxReport read GetPreparedReport;
+    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
+    property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
   published
     property FastFile: String read FFastFile write FFastFile;
     property FastFileEvento: String read FFastFileEvento write FFastFileEvento;
     property FastFileInutilizacao: String read FFastFileInutilizacao write FFastFileInutilizacao;
     property dmDanfe: TACBrNFeFRClass read FdmDanfe write FdmDanfe;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
-    property PreparedReport: TfrxReport read GetPreparedReport;
-    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
-		property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
     property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
     property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
@@ -457,7 +457,6 @@ procedure TACBrNFeDANFEFR.ImprimirDANFEPDF(NFE: TNFe);
 const
   TITULO_PDF = 'Nota Fiscal Eletrônica';
 var
-  I: Integer;
 	fsShowDialog : Boolean;
 begin
   if PrepareReport(NFE) then

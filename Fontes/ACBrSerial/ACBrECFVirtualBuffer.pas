@@ -492,59 +492,55 @@ begin
 
     // TOTALIZADORES GERAIS //
     Add(PadCenter(' Totalizadores ', Colunas,'-'));
-    Add(PadSpace('Totalizador Geral:|'+FormatFloat('###,###,##0.00', fpGrandeTotal ),Colunas,'|'));
-    Add(PadSpace('Venda Bruta Diaria:|'+FormatFloat('###,###,##0.00', fpVendaBruta ), Colunas, '|'));
-    Add(PadSpace('Venda Liquida:|'+FormatFloat('###,###,##0.00', wVendaLiquida), Colunas, '|'));
-    Add(PadSpace('Total Não Fiscal:|'+FormatFloat('###,###,##0.00', wTotalNaoFiscal), Colunas,'|'));
-    Add(PadSpace('Total Não Fiscal Cancelado:|'+FormatFloat('###,###,##0.00', fpCNFCanceladosTotal), Colunas,'|'));
+    Add(PadSpace('Totalizador Geral:|'+FormatFloatBr(fpGrandeTotal),Colunas,'|'));
+    Add(PadSpace('Venda Bruta Diaria:|'+FormatFloatBr(fpVendaBruta), Colunas, '|'));
+    Add(PadSpace('Venda Liquida:|'+FormatFloatBr(wVendaLiquida), Colunas, '|'));
+    Add(PadSpace('Total Não Fiscal:|'+FormatFloatBr(wTotalNaoFiscal), Colunas,'|'));
+    Add(PadSpace('Total Não Fiscal Cancelado:|'+FormatFloatBr(fpCNFCanceladosTotal), Colunas,'|'));
 
     // TOTALIZADORES ICMS //
     Add(PadCenter(' Totalizadores ICMS ', Colunas,'-'));
 
     if (fpCuponsCanceladosEmAbertoTotalICMS > 0) then
     begin
-      Add(PadSpace('Cancelados em Aberto:|'+FormatFloat('###,###,##0.00',
-        fpCuponsCanceladosEmAbertoTotalICMS), Colunas,'|'));
-      Add(PadSpace('Cancelados:|'+FormatFloat('###,###,##0.00',
-        fpCuponsCanceladosTotalICMS), Colunas,'|'));
+      Add(PadSpace('Cancelados em Aberto:|'+FormatFloatBr(fpCuponsCanceladosEmAbertoTotalICMS), Colunas,'|'));
+      Add(PadSpace('Cancelados:|'+FormatFloatBr(fpCuponsCanceladosTotalICMS), Colunas,'|'));
     end;
 
-    Add(PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', wTotalCanceladoICMS), Colunas,'|'));
-    Add(PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontosICMS), Colunas, '|'));
-    Add(PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimosICMS), Colunas, '|'));
+    Add(PadSpace('Total Cancelado:|'+FormatFloatBr(wTotalCanceladoICMS), Colunas,'|'));
+    Add(PadSpace('Total Descontos:|'+FormatFloatBr(fpTotalDescontosICMS), Colunas, '|'));
+    Add(PadSpace('Total Acrescimos:|'+FormatFloatBr(fpTotalAcrescimosICMS), Colunas, '|'));
 
     // TOTALIZADORES ISSQN //
     Add(PadCenter(' Totalizadores ISSQN ', Colunas,'-'));
 
     if (fpCuponsCanceladosEmAbertoTotalISSQN > 0) then
     begin
-      Add(PadSpace('Cancelados em Aberto:|'+FormatFloat('###,###,##0.00',
-        fpCuponsCanceladosEmAbertoTotalISSQN), Colunas,'|'));
-      Add(PadSpace('Cancelados:|'+FormatFloat('###,###,##0.00',
-        fpCuponsCanceladosTotalISSQN), Colunas,'|'));
+      Add(PadSpace('Cancelados em Aberto:|'+FormatFloatBr(fpCuponsCanceladosEmAbertoTotalISSQN), Colunas,'|'));
+      Add(PadSpace('Cancelados:|'+FormatFloatBr(fpCuponsCanceladosTotalISSQN), Colunas,'|'));
     end;
 
-    Add(PadSpace('Total Cancelado:|'+FormatFloat('###,###,##0.00', wTotalCanceladoISSQN), Colunas,'|'));
-    Add(PadSpace('Total Descontos:|'+FormatFloat('###,###,##0.00', fpTotalDescontosISSQN), Colunas, '|'));
-    Add(PadSpace('Total Acrescimos:|'+FormatFloat('###,###,##0.00', fpTotalAcrescimosISSQN), Colunas, '|'));
+    Add(PadSpace('Total Cancelado:|'+FormatFloatBr(wTotalCanceladoISSQN), Colunas,'|'));
+    Add(PadSpace('Total Descontos:|'+FormatFloatBr(fpTotalDescontosISSQN), Colunas, '|'));
+    Add(PadSpace('Total Acrescimos:|'+FormatFloatBr(fpTotalAcrescimosISSQN), Colunas, '|'));
 
     wTotalAliq := 0;
     Add( PadCenter('I C M S',Colunas,'-'));
     if fpAliquotas[0].Indice = 'F1' then
     begin
-      Add( PadSpace('F1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[0].Total ), Colunas,'|') ) ;
+      Add( PadSpace('F1|Substituicao Tributaria|'+FormatFloatBr(fpAliquotas[0].Total ), Colunas,'|') ) ;
       wTotalAliq := wTotalAliq + fpAliquotas[0].Total;
     end;
 
     if fpAliquotas[1].Indice = 'I1' then
     begin
-      Add( PadSpace('I1|Isencao|'+FormatFloat('###,###,##0.00', fpAliquotas[1].Total ), Colunas,'|') ) ;
+      Add( PadSpace('I1|Isencao|'+FormatFloatBr(fpAliquotas[1].Total ), Colunas,'|') ) ;
       wTotalAliq := wTotalAliq + fpAliquotas[1].Total;
     end;
 
     if fpAliquotas[2].Indice = 'N1' then
     begin
-      Add( PadSpace('N1|Nao Incidencia|'+FormatFloat('###,###,##0.00', fpAliquotas[2].Total ), Colunas,'|') ) ;
+      Add( PadSpace('N1|Nao Incidencia|'+FormatFloatBr(fpAliquotas[2].Total ), Colunas,'|') ) ;
       wTotalAliq := wTotalAliq + fpAliquotas[2].Total;
     end;
 
@@ -554,32 +550,32 @@ begin
       begin
         if Tipo = 'T' then
         begin
-          Add( PadSpace(Indice+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
-               FormatFloat('###,###,##0.00',Total),Colunas,'|') ) ;
+          Add( PadSpace(Indice+'|'+ Tipo + FormatFloatBr(Aliquota,'00.00')+'%|'+
+               FormatFloatBr(Total),Colunas,'|') ) ;
           wTotalAliq := RoundTo(wTotalAliq + Total,-2) ;
         end;
       end ;
     end;
-    Add( PadSpace('T O T A L   R$|'+FormatFloat('###,###,##0.00',wTotalAliq), Colunas,'|') ) ;
+    Add( PadSpace('T O T A L   R$|'+FormatFloatBr(wTotalAliq), Colunas,'|') ) ;
 
 
     wTotalAliq := 0;
     Add( PadCenter('I S S Q N',Colunas,'-') ) ;
     if fpAliquotas[3].Indice = 'FS1' then
     begin
-      Add( PadSpace('FS1|Substituicao Tributaria|'+FormatFloat('###,###,##0.00', fpAliquotas[3].Total ), Colunas,'|') ) ;
+      Add( PadSpace('FS1|Substituicao Tributaria|'+FormatFloatBr(fpAliquotas[3].Total), Colunas,'|') ) ;
       wTotalAliq := wTotalAliq + fpAliquotas[3].Total;
     end;
 
     if fpAliquotas[4].Indice = 'IS1' then
     begin
-      Add( PadSpace('IS1|Isencao|'+FormatFloat('###,###,##0.00', fpAliquotas[4].Total ), Colunas,'|') ) ;
+      Add( PadSpace('IS1|Isencao|'+FormatFloatBr(fpAliquotas[4].Total), Colunas,'|') ) ;
       wTotalAliq := wTotalAliq + fpAliquotas[4].Total;
     end;
 
     if fpAliquotas[5].Indice = 'NS1' then
     begin
-      Add( PadSpace('NS1|Nao Incidencia|'+FormatFloat('###,###,##0.00', fpAliquotas[5].Total ), Colunas,'|') ) ;
+      Add( PadSpace('NS1|Nao Incidencia|'+FormatFloatBr(fpAliquotas[5].Total), Colunas,'|') ) ;
       wTotalAliq := wTotalAliq + fpAliquotas[5].Total;
     end;
 
@@ -589,13 +585,13 @@ begin
       begin
         if Tipo = 'S' then
         begin
-          Add( PadSpace(Indice+'|'+ Tipo + FormatFloat('#0.00',Aliquota)+'%|'+
-               FormatFloat('###,###,##0.00',Total),Colunas,'|') ) ;
+          Add( PadSpace(Indice+'|'+ Tipo + FormatFloatBr(Aliquota,'00.00')+'%|'+
+               FormatFloatBr(Total),Colunas,'|') ) ;
           wTotalAliq := RoundTo(wTotalAliq + Total,-2) ;
         end;
       end ;
     end;
-    Add( PadSpace('T O T A L   R$|'+FormatFloat('###,###,##0.00',wTotalAliq), Colunas,'|') ) ;
+    Add( PadSpace('T O T A L   R$|'+FormatFloatBr(wTotalAliq), Colunas,'|') ) ;
 
 
     Add( PadCenter(' Relatorio Gerencial ',Colunas,'-') ) ;
@@ -616,7 +612,7 @@ begin
       with fpFormasPagamentos[I] do
       begin
         Add( PadSpace(Indice+'  '+PadRight(Descricao,20)+'|'+
-             FormatFloat('###,###,##0.00',Total), Colunas,'|') ) ;
+             FormatFloatBr(Total), Colunas,'|') ) ;
       end ;
     end ;
 
@@ -626,7 +622,7 @@ begin
       with fpComprovantesNaoFiscais[I] do
       begin
         Add( PadSpace(Indice+'  '+PadRight(Descricao,20)+'|'+
-             FormatFloat('###,###,##0.00',Total), Colunas,'|') ) ;
+             FormatFloatBr(Total), Colunas,'|') ) ;
       end ;
     end ;
   end ;

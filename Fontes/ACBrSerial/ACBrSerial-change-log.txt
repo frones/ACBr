@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 15/02/2017
+-- ACBrECFVirtualBuffer --
+[*] Ajuste para que as mascaras de valores do Relatório usem o "FormatFloatBr"
+    (por: DSA)
+
 Data: 14/02/2017
 -- ACBrECFVirtual --
 [*] Propriedade "TACBrECFVirtualClass.ChaveCupom", migrada para

@@ -108,7 +108,7 @@ end;
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/captcha/gerarCaptcha.asp');
+    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/captcha/gerarCaptcha.asp');
     if HTTPSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/02/2017
+-- ACBrConsultaCPF
+[+] mudança do endereço do captcha mesmo funcionando no outro faz sentido
+		http://www.projetoacbr.com.br/forum/topic/34995-erro-http-404-not-found-em-acbrconsultacpf/
+		por Juliomar Marchetti
+		
 18/01/2017
 -- ACBrSedex --
 [-] Correção para não mostrar o local ao rastrear uma encomenda.

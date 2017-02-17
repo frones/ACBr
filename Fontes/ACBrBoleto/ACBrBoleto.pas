@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.218';
+  CACBrBoleto_Versao = '0.0.219';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -911,6 +911,7 @@ type
     fDataMoraJuros        : TDateTime;
     fDataProtesto         : TDateTime;
     fDataBaixa            : TDateTime;
+    fDataLimitePagto      : TDateTime;
     fValorDespesaCobranca : Currency;
     fValorAbatimento      : Currency;
     fValorDesconto        : Currency;
@@ -980,6 +981,7 @@ type
      property DataMoraJuros                  : TDateTime read fDataMoraJuros   write fDataMoraJuros;
      property DataProtesto                   : TDateTime read fDataProtesto    write fDataProtesto;
      property DataBaixa                      : TDateTime read fDataBaixa       write fDataBaixa;
+     property DataLimitePagto                : TDateTime read fDataLimitePagto write fDataLimitePagto;
 
      property ValorDespesaCobranca : Currency read fValorDespesaCobranca  write fValorDespesaCobranca;
      property ValorAbatimento      : Currency read fValorAbatimento       write fValorAbatimento;
@@ -1430,6 +1432,7 @@ begin
    fDataMoraJuros        := 0;
    fDataProtesto         := 0;
    fDataBaixa            := 0;
+   fDataLimitePagto      := 0;
    fValorDespesaCobranca := 0;
    fValorAbatimento      := 0;
    fValorDesconto        := 0;

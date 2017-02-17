@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/02/2017 ver: 0.0.219
+-- ACBrBoleto.pas --
+[+] Incluída propriedade DataLimitePagto para informar até quando o boleto pode
+    ser pago. (Juliana Tamizou)
+ 
+-- ACBrBancoBRB.pas --
+[*] Ajuste para utilizar a propriedade DataLimitePagto para informar instrução
+    na remessa CNAB400. (Juliana Tamizou)
+[*] Ajuste para utilizar a propriedade Cedente.Convenio para informar a Agencia
+    Cobradora no arquivo remessa CNAB400. (Juliana Tamizou) 
+    
+
 Data: 24/01/2017 ver: 0.0.218
 --ACBrBancoBancoob.pas
 [*]	Ajuste dos Códigos de Mora aceitos pelo banco.

@@ -765,8 +765,7 @@ begin
         ACBrStr('EMISSÃO: ') + FormatDateTime('DD/MM/YYYY', FNFe.Ide.dEmi) +
         '  -  ' + 'DEST. / REM.: ' +
         FNFe.Dest.xNome + '  -  ' + 'VALOR TOTAL: R$ ' +
-        FormatFloatBr(FNFe.Total.ICMSTot.vNF,
-        FloatMask);
+        FormatFloatBr(FNFe.Total.ICMSTot.vNF);
     end;
     rllResumo.Visible := True;
     iAlturaCanhoto := 25;
@@ -1266,24 +1265,24 @@ var
 begin
   with FNFe.Total.ICMSTot do
   begin
-    rllBaseICMS.Caption       := FormatFloatBr(VBC   , FloatMask);
-    rllValorICMS.Caption      := FormatFloatBr(VICMS , FloatMask);
-    rllBaseICMSST.Caption     := FormatFloatBr(VBCST , FloatMask);
-    rllValorICMSST.Caption    := FormatFloatBr(VST   , FloatMask);
-    rllTotalProdutos.Caption  := FormatFloatBr(VProd , FloatMask);
-    rllValorFrete.Caption     := FormatFloatBr(VFrete, FloatMask);
-    rllValorSeguro.Caption    := FormatFloatBr(VSeg  , FloatMask);
-    rllDescontos.Caption      := FormatFloatBr(VDesc , FloatMask);
-    rllAcessorias.Caption     := FormatFloatBr(VOutro, FloatMask);
-    rllValorIPI.Caption       := FormatFloatBr(VIPI  , FloatMask);
-    rllTotalNF.Caption        := FormatFloatBr(VNF   , FloatMask);
+    rllBaseICMS.Caption       := FormatFloatBr(VBC   );
+    rllValorICMS.Caption      := FormatFloatBr(VICMS );
+    rllBaseICMSST.Caption     := FormatFloatBr(VBCST );
+    rllValorICMSST.Caption    := FormatFloatBr(VST   );
+    rllTotalProdutos.Caption  := FormatFloatBr(VProd );
+    rllValorFrete.Caption     := FormatFloatBr(VFrete);
+    rllValorSeguro.Caption    := FormatFloatBr(VSeg  );
+    rllDescontos.Caption      := FormatFloatBr(VDesc );
+    rllAcessorias.Caption     := FormatFloatBr(VOutro);
+    rllValorIPI.Caption       := FormatFloatBr(VIPI  );
+    rllTotalNF.Caption        := FormatFloatBr(VNF   );
 
     //115 460 143
     // Exibe o Valor total dos tributos se vTotTrib for informado
     // e ajusta a posição dos outros campos para "abrir espaço" para ele.
     if vTotTrib > 0 then
     begin
-      rllTotalTributos.Caption        := FormatFloatBr(vTotTrib, FloatMask);
+      rllTotalTributos.Caption        := FormatFloatBr(vTotTrib);
       rliDivImposto4.Visible          := True;
       rllTituloTotalTributos.Visible  := True;
       rllTotalTributos.Visible        := True;
@@ -1608,9 +1607,9 @@ begin
   if rlbISSQN.Visible then
   begin
     rllISSQNInscricao.Caption     := FNFe.Emit.IM;
-    rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ, FloatMask);
-    rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC  , FloatMask);
-    rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS , FloatMask);
+    rllISSQNValorServicos.Caption := FormatFloatBr(FNFe.Total.ISSQNtot.vServ);
+    rllISSQNBaseCalculo.Caption   := FormatFloatBr(FNFe.Total.ISSQNtot.vBC  );
+    rllISSQNValorISSQN.Caption    := FormatFloatBr(FNFe.Total.ISSQNtot.vISS );
   end;
 end;
 
@@ -1736,11 +1735,11 @@ begin
       for i := 0 to med.Count - 1 do
       begin
         if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE: ') + med.Items[i].nLote + sQuebraLinha;
-        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD: ' ) + FormatFloat(FloatMask(3), med.Items[i].qLote) + sQuebraLinha;
+        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD: ' ) + FormatFloatBr(med.Items[i].qLote, FloatMask(3)) + sQuebraLinha;
         if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB: ' ) + DateToStr(med.Items[i].dFab) + sQuebraLinha;
         if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL: ' ) + DateToStr(med.Items[i].dVal) + sQuebraLinha;
         if dm_vPMC  in FDetMedicamentos then Result := Result + IfThen( med.Items[i].vPMC > 0,
-                                                                  ACBrStr('PMC: R$') + FormatFloat(FloatMask, med.Items[i].vPMC),'' )
+                                                                  ACBrStr('PMC: R$') + FormatFloatBr(med.Items[i].vPMC),'' )
                                                                   + #13#10;
       end;
     end;
@@ -1781,13 +1780,13 @@ begin
       if dc_CODIF       in FDetCombustiveis then
                         if comb.CODIF > ''  then Result := Result + ACBrStr('AUTORIZAÇÃO/CODIF: ') + comb.CODIF + sQuebraLinha;
       if dc_qTemp       in FDetCombustiveis then
-                          if comb.qTemp > 0 then Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloat(FloatMask(4), comb.qTemp) + sQuebraLinha;
+                          if comb.qTemp > 0 then Result := Result + ACBrStr('QTD. FATURADA TEMP. AMBIENTE: ') +  FormatFloatBr(comb.qTemp, FloatMask(4)) + sQuebraLinha;
       if dc_UFCons      in FDetCombustiveis then Result := Result + ACBrStr('UF DE CONSUMO: ') + comb.UFcons + sQuebraLinha;
       if comb.CIDE.qBCProd > 0 then
       begin
-        if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloat(FloatMask(4), comb.CIDE.qBCProd) + sQuebraLinha;
-        if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloat(FloatMask(4), comb.CIDE.vAliqProd) + sQuebraLinha;
-        if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloat(FloatMask, comb.CIDE.vCIDE) + sQuebraLinha;
+        if dc_qBCProd   in FDetCombustiveis then Result := Result + ACBrStr('BASE DE CÁLCULO CIDE: ') + FormatFloatBr(comb.CIDE.qBCProd, FloatMask(4)) + sQuebraLinha;
+        if dc_vAliqProd in FDetCombustiveis then Result := Result + ACBrStr('ALÍQUOTA CIDE: ') + FormatFloatBr(comb.CIDE.vAliqProd, FloatMask(4)) + sQuebraLinha;
+        if dc_vCIDE     in FDetCombustiveis then Result := Result + ACBrStr('VALOR CIDE: ') + FormatFloatBr(comb.CIDE.vCIDE) + sQuebraLinha;
       end;
       if comb.encerrante.nBico > 0  then
       begin
@@ -1796,8 +1795,8 @@ begin
         if comb.encerrante.nBomba > 0 then
           Result := Result + 'BOMBA: ' + IntToStr(comb.encerrante.nBomba) + sQuebraLinha;
         Result := Result + 'TANQUE: ' + IntToStr(comb.encerrante.nTanque) + sQuebraLinha;
-        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloat(FloatMask(3), comb.encerrante.vEncIni) + sQuebraLinha;
-        Result := Result + 'NO FINAL: ' + FormatFloat(FloatMask(3), comb.encerrante.vEncFin)+ #13#10;
+        Result := Result + ACBrStr('NO INÍCIO: ' ) + FormatFloatBr(comb.encerrante.vEncIni, FloatMask(3)) + sQuebraLinha;
+        Result := Result + 'NO FINAL: ' + FormatFloatBr(comb.encerrante.vEncFin, FloatMask(3))+ #13#10;
       end
       else
         Result := Result + #13#10;
@@ -1836,9 +1835,9 @@ begin
     with FNFe.Cobr.Fat do
     begin
       RlbDadoNumero.caption         := nFat;
-      RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig, FloatMask);
-      RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc, FloatMask);
-      RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq , FloatMask);
+      RlbDadoValorOriginal.caption  := FormatFloatBr(vOrig);
+      RlbDadoValorDesconto.caption  := FormatFloatBr(vDesc);
+      RlbDadoValorLiquido.caption   := FormatFloatBr(vLiq );
     end;
   end
   else
@@ -1871,7 +1870,7 @@ begin
       begin
         TRLLabel(FindComponent('rllFatNum'    + IntToStr(x + 1))).Caption := NDup;
         TRLLabel(FindComponent('rllFatData'   + IntToStr(x + 1))).Caption := FormatDateBr(DVenc);
-        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup, FloatMask);
+        TRLLabel(FindComponent('rllFatValor'  + IntToStr(x + 1))).Caption := FormatFloatBr( VDup);
       end;
     end;
   end;
@@ -2246,19 +2245,19 @@ begin
 
     if ( fImprimirTotalLiquido ) then
     begin
-      txtValorTotal.Caption       := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), FloatMask);
-      txtValorDesconto.Caption    := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd), FloatMask);
+      txtValorTotal.Caption       := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd));
+      txtValorDesconto.Caption    := FormatFloatBr( Prod.vProd - ManterDesPro( Prod.vDesc ,Prod.vProd));
     end
     else
     begin
-      txtValorTotal.Caption      := FormatFloatBr(Prod.vProd, FloatMask);
-      txtValorDesconto.Caption   := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd), FloatMask);
+      txtValorTotal.Caption      := FormatFloatBr(Prod.vProd);
+      txtValorDesconto.Caption   := FormatFloatBr(ManterDesPro( Prod.vDesc ,Prod.vProd));
     end;
-    txtBaseICMS.Caption        := FormatFloatBr(Imposto.ICMS.VBC,   FloatMask);
-    txtValorICMS.Caption       := FormatFloatBr(Imposto.ICMS.VICMS, FloatMask);
-    txtValorIPI.Caption        := FormatFloatBr(Imposto.IPI.VIPI,   FloatMask);
-    txtAliqICMS.Caption        := FormatFloatBr(Imposto.ICMS.PICMS, FloatMask);
-    txtAliqIPI.Caption         := FormatFloatBr(Imposto.IPI.PIPI,   FloatMask);
+    txtBaseICMS.Caption        := FormatFloatBr(Imposto.ICMS.VBC  );
+    txtValorICMS.Caption       := FormatFloatBr(Imposto.ICMS.VICMS);
+    txtValorIPI.Caption        := FormatFloatBr(Imposto.IPI.VIPI  );
+    txtAliqICMS.Caption        := FormatFloatBr(Imposto.ICMS.PICMS);
+    txtAliqIPI.Caption         := FormatFloatBr(Imposto.IPI.PIPI  );
   end;
 end;
 

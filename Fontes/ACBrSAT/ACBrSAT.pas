@@ -175,9 +175,9 @@ type
     procedure ImprimirExtratoCancelamento;
 
     function CalcCFeNomeArq( Pasta: String; NomeArquivo: String = '';
-      Sufixo: String = ''): String;
+      Sufixo: String = ''; Extensao: String = '.xml'): String;
     function CalcCFeCancNomeArq( Pasta: String; NomeArquivo: String = '';
-      Sufixo: String = ''): String;
+      Sufixo: String = ''; Extensao: String = '.xml'): String;
 
     procedure EnviarEmail(sPara, sAssunto: String; NomeArq: String = '';
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
@@ -1477,7 +1477,7 @@ begin
 end;
 
 function TACBrSAT.CalcCFeNomeArq(Pasta: String; NomeArquivo: String;
-  Sufixo: String): String;
+  Sufixo: String; Extensao: String = '.xml'): String;
 var
   Dir: String;
 begin
@@ -1489,11 +1489,11 @@ begin
   if NomeArquivo = '' then
     NomeArquivo := fsConfigArquivos.PrefixoArqCFe + CFe.infCFe.ID;
 
-  Result := Dir + NomeArquivo + Sufixo + '.xml';
+  Result := Dir + NomeArquivo + Sufixo + Extensao;
 end;
 
 function TACBrSAT.CalcCFeCancNomeArq(Pasta: String; NomeArquivo: String;
-  Sufixo: String): String;
+  Sufixo: String; Extensao: String = '.xml'): String;
 var
   Dir, Chave: String;
 begin
@@ -1511,7 +1511,7 @@ begin
     NomeArquivo := fsConfigArquivos.PrefixoArqCFeCanc + Chave;
   end;
 
-  Result := Dir + NomeArquivo + Sufixo + '.xml';
+  Result := Dir + NomeArquivo + Sufixo + Extensao;
 end;
 
 function TACBrSAT.CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;

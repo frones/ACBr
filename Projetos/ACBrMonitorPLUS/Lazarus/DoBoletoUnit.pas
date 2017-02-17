@@ -148,7 +148,6 @@ end;
 procedure LerIniBoletos( aStr: AnsiString ) ;
 var
    IniBoletos: TMemIniFile;
-   SL: TStringList;
    ContTitulos: Integer;
    NomeSessao: String;
    MudouDados: boolean;
@@ -157,16 +156,9 @@ var
    wLayoutBoleto: Integer;
 begin
   MudouDados := False;
-  IniBoletos := TMemIniFile.Create('boletos.ini');
-  SL         := TStringList.Create;
+  IniBoletos := LerConverterIni(aStr);
+
   try
-     if (pos(#10,aStr) = 0) and FileExists(aStr) then
-       SL.LoadFromFile(aStr)
-     else
-       SL.Text := ConvertStrRecived(aStr);
-
-     IniBoletos.SetStrings(SL);
-
      with FrmACBrMonitor.ACBrBoleto1 do
      begin
         if IniBoletos.SectionExists('Cedente') then
@@ -305,7 +297,6 @@ begin
              'parâmetro incorreto.');
      end;
   finally
-     SL.Free;
      IniBoletos.Free;
   end ;
 end;

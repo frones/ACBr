@@ -1070,7 +1070,7 @@ begin
         else if Cmd.Metodo = 'lercte' then
          begin
            try
-              Cmd.Resposta := GerarCTeIni( Cmd.Params(0)  )
+              Cmd.Resposta := GerarCTeIni( Cmd.Params(0) );
            except
                on E: Exception do
                 begin
@@ -1203,19 +1203,12 @@ var
   I, J, K, L : Integer;
   sSecao, sFim, sCampoAdic : String;
   INIRec : TMemIniFile;
-  SL     : TStringList;
   OK     : boolean;
   fsICMSUFFim : TStrings;
 begin
- INIRec := TMemIniFile.create( 'cte.ini' );
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
- INIRec.SetStrings( SL );
- SL.Free;
- with FRMACBrMonitor do
+  INIRec := LerConverterIni(AStr);
+
+  with FRMACBrMonitor do
   begin
    try
       ACBrCTe1.Conhecimentos.Clear;
@@ -3115,21 +3108,11 @@ var
   I, J   : Integer;
   sSecao, sFim : String;
   INIRec : TMemIniFile;
-  SL     : TStringList;
   ok     : Boolean;
 begin
- INIRec := TMemIniFile.create( 'evento.ini' );
+  INIRec := LerConverterIni(AStr);
 
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free;
-
- with FrmACBrMonitor do
+  with FrmACBrMonitor do
   begin
    try
      ACBrCTe1.EventoCTe.idLote := INIRec.ReadInteger('EVENTO', 'idLote', 0);

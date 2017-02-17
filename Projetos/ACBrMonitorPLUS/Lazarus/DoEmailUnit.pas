@@ -251,17 +251,8 @@ var
   SL       : TStringList;
   sCharset : String;
 begin
-  IniDados   := TMemIniFile.Create('');
-  SL         := TStringList.Create;
-
+  IniDados   := LerConverterIni(aStr);
   try
-    if (pos(#10,aStr) = 0) and FileExists(aStr) then
-      SL.LoadFromFile(aStr)
-    else
-      SL.Text := ConvertStrRecived(aStr);
-
-    IniDados.SetStrings(SL);
-
     if IniDados.SectionExists('EMAIL') then
     begin
       with {$IFNDEF NOGUI}FrmACBrMonitor.ACBrMail1 {$ELSE}dm.ACBrMail1 {$ENDIF} do

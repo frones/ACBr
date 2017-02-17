@@ -8,17 +8,18 @@ uses
   Classes, SysUtils, CmdUnit, pcnConversao, strutils;
 
 procedure DoSAT(Cmd: TACBrCmd);
-procedure CarregarDadosVenda(aStr: String);
+procedure CarregarDadosVenda(aStr: String; aNomePDF : String = '');
 function ParamAsXML(AParam: String): String;
 procedure CarregarDadosCancelamento(aStr: String);
 function MontaDadosStatusSAT : AnsiString;
 function RespostaEnviarDadosVenda( Resultado: String): AnsiString;
-procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True) ;
+procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True);
 
 implementation
 
 uses
-  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo;
+  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo,
+  ACBrSATExtratoClass;
 
 procedure DoSAT(Cmd: TACBrCmd);
 var
@@ -220,6 +221,15 @@ begin
       ACBrSAT1.ImprimirExtratoCancelamento;
     end
 
+    else if Cmd.Metodo = 'gerarpdfextratovenda' then
+    begin
+      PrepararImpressaoSAT(cmd.Params(0),true);
+      CarregarDadosVenda(cmd.Params(0),cmd.Params(1));
+      ACBrSAT1.ImprimirExtrato;
+
+      Cmd.Resposta := '[CFe]'+sLineBreak+
+                      'NomeArquivo='+ACBrSAT1.Extrato.NomeArquivo;
+    end
     else if Cmd.Metodo = 'extrairlogs' then
       ACBrSAT1.ExtrairLogs(cmd.Params(0))
 
@@ -245,15 +255,23 @@ begin
   end;
 end;
 
-procedure CarregarDadosVenda(aStr: String);
+procedure CarregarDadosVenda(aStr: String; aNomePDF: String);
 begin
   if Trim(aStr) = '' then
     exit;
 
-  if (pos(#10,aStr) = 0) and FileExists(aStr) then
-    FrmACBrMonitor.ACBrSAT1.CFe.LoadFromFile(aStr)
-  else
-    FrmACBrMonitor.ACBrSAT1.CFe.AsXMLString := ConvertStrRecived(aStr);
+  with FrmACBrMonitor.ACBrSAT1 do
+  begin
+    if (pos(#10,aStr) = 0) and FileExists(aStr) then
+      CFe.LoadFromFile(aStr)
+    else
+      CFe.AsXMLString := ConvertStrRecived(aStr);
+
+    if ( FrmACBrMonitor.ACBrSAT1.Extrato.Filtro = TACBrSATExtratoFiltro(fiPDF) ) then
+      Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
+        CalcCFeNomeArq(ConfigArquivos.PastaCFeVenda,CFe.infCFe.ID,'','.pdf'));
+  end;
+
 end;
 
 function ParamAsXML(AParam: String): String;
@@ -338,7 +356,6 @@ end;
 procedure GerarIniCFe(AStr: WideString; ApenasTagsAplicacao: Boolean = True);
 var
   INIRec : TMemIniFile ;
-  SL     : TStringList;
   OK     : Boolean;
   I, J   : Integer;
   sSecao, sFim, sCodPro : String;
@@ -359,20 +376,8 @@ var
   end;
 
 begin
-  INIRec := TMemIniFile.create( 'nfe.ini' ) ;
+  INIRec := LerConverterIni(AStr);
   try
-    SL := TStringList.Create;
-    try
-      if (pos(#10,AStr) = 0) and FilesExists(Astr) then
-         SL.LoadFromFile(AStr)
-      else
-         Sl.Text := ConvertStrRecived( Astr );
-
-      INIRec.SetStrings( SL );
-    finally
-      SL.Free ;
-    end;
-
     with FrmACBrMonitor do
      begin
        ACBrSAT1.InicializaCFe;

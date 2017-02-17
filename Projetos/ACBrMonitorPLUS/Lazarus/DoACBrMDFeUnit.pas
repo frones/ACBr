@@ -877,7 +877,7 @@ begin
         else if Cmd.Metodo = 'lermdfe' then
          begin
            try
-              Cmd.Resposta := GerarMDFeIni( Cmd.Params(0)  )
+              Cmd.Resposta := GerarMDFeIni( Cmd.Params(0));
            except
                on E: Exception do
                 begin
@@ -1011,18 +1011,10 @@ var
   I, J, K, L, M : Integer;
   sSecao, sFim : String;
   INIRec : TMemIniFile;
-  SL     : TStringList;
   OK     : boolean;
 begin
- INIRec := TMemIniFile.create( 'MDFe.ini' );
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
+  INIRec := LerConverterIni(AStr);
 
-  INIRec.SetStrings( SL );
-  SL.Free;
   with FrmACBrMonitor do
   begin
     try

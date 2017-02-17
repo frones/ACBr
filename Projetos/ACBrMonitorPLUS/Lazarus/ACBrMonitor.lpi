@@ -157,7 +157,7 @@
         <PackageName Value="LCL"/>
       </Item29>
     </RequiredPackages>
-    <Units Count="29">
+    <Units Count="30">
       <Unit0>
         <Filename Value="ACBrMonitor.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -287,6 +287,10 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ACBrBoletoRelatorioRetorno"/>
       </Unit28>
+      <Unit29>
+        <Filename Value="DoPosPrinterUnit.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit29>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -307,4 +311,7 @@
       </Options>
     </Linking>
   </CompilerOptions>
+  <Debugging>
+    <Exceptions IgnoreAll="True"/>
+  </Debugging>
 </CONFIG>

@@ -570,6 +570,7 @@ type
     edSH_IM: TEdit;
     edSH_Linha1: TEdit;
     edSH_Linha2: TEdit;
+    edSH_Site: TEdit;
     edSH_NumeroAP: TEdit;
     edSH_RazaoSocial: TEdit;
     edSH_VersaoAP: TEdit;
@@ -1396,7 +1397,8 @@ type
     procedure Processar;
     procedure Resposta(Comando, Resposta: ansistring);
 
-    procedure AddLinesLog;
+    procedure AddLinesLog(aLineLog : String);
+    procedure AddLinesLog(aLinesLog : TStrings);
 
     procedure SetDisWorking(const Value: boolean);
 
@@ -1437,7 +1439,7 @@ type
 
     procedure AjustaACBrSAT ;
     procedure TrataErrosSAT(Sender : TObject ; E : Exception) ;
-    procedure PrepararImpressaoSAT(NomeImpressora : string = '');
+    procedure PrepararImpressaoSAT(NomeImpressora : string = ''; GerarPDF : boolean = false);
 
     procedure ConfiguraPosPrinter;
   end;
@@ -1457,7 +1459,7 @@ uses IniFiles, TypInfo, LCLType, strutils,
   ACBrECFNaoFiscal, ACBrUtil, ACBrConsts, Math, Sobre, DateUtils,
   ConfiguraSerial, DoECFBemafi32, DoECFObserver, DoETQUnit, DoEmailUnit,
   DoSedexUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrMDFeUnit, DoACBrCTeUnit,
-  DoSATUnit, DoPosPrinterUnit, DoACBrGNReUnit;
+  DoSATUnit, DoPosPrinterUnit, DoACBrGNReUnit, ACBrSATExtratoClass;
 
 {$R *.lfm}
 
@@ -1761,9 +1763,9 @@ end;
 procedure TFrmACBrMonitor.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
-  mResp.Lines.Add(E.Message);
-  if cbLog.Checked then
-    WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+'Exception: ' + E.Message);
+  AddLinesLog(E.Message);
+  //if cbLog.Checked then
+  //  WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+'Exception: ' + E.Message);
 
   StatusBar1.Panels[0].Text := 'Exception';
   //  MessageDlg( E.Message,mtError,[mbOk],0) ;
@@ -1805,19 +1807,19 @@ begin
   pbEmailTeste.Position := integer(aStatus);
   case aStatus of
     pmsStartProcess:
-      mResp.Lines.Add('Email: Iniciando processo de envio.');
+      AddLinesLog('Email: Iniciando processo de envio.');
     pmsConfigHeaders:
-      mResp.Lines.Add('Email: Configurando o cabeçalho do e-mail.');
+      AddLinesLog('Email: Configurando o cabeçalho do e-mail.');
     pmsLoginSMTP:
-      mResp.Lines.Add('Email: Logando no servidor de e-mail.');
+      AddLinesLog('Email: Logando no servidor de e-mail.');
     pmsStartSends:
-      mResp.Lines.Add('Email: Iniciando os envios.');
+      AddLinesLog('Email: Iniciando os envios.');
     pmsSendTo:
-      mResp.Lines.Add('Email: Processando lista de destinatários.');
+      AddLinesLog('Email: Processando lista de destinatários.');
     pmsSendData:
-      mResp.Lines.Add('Email: Enviando dados.');
+      AddLinesLog('Email: Enviando dados.');
     pmsLogoutSMTP:
-      mResp.Lines.Add('Email: Fazendo Logout no servidor de e-mail.');
+      AddLinesLog('Email: Fazendo Logout no servidor de e-mail.');
     pmsDone, pmsError:
     begin
       bEmailTestarConf.Enabled := True;
@@ -1827,9 +1829,9 @@ begin
       Screen.Cursor := crDefault;
 
       if aStatus = pmsError then
-        mResp.Lines.Add(ACBrMail1.GetLastSmtpError)
+        AddLinesLog(ACBrMail1.GetLastSmtpError)
       else
-        mResp.Lines.Add('Email: Enviado com sucesso');
+        AddLinesLog('Email: Enviado com sucesso');
     end;
   end;
 end;
@@ -1862,7 +1864,7 @@ end;
 procedure TFrmACBrMonitor.ACBrSAT1GravarLog(const ALogLine: String;
   var Tratado: Boolean);
 begin
-  mResp.Lines.Add(ALogLine);
+  AddLinesLog(ALogLine);
   Tratado := False;
 end;
 
@@ -1944,7 +1946,7 @@ begin
     NCMS.SaveToFile(DirNcmSalvar);
   end;
 
-  mResp.Lines.Add('Arquivo salvo em: ' + DirNcmSalvar);
+  AddLinesLog('Arquivo salvo em: ' + DirNcmSalvar);
 end;
 
 procedure TFrmACBrMonitor.bEmailTestarConfClick(Sender: TObject);
@@ -2101,7 +2103,7 @@ begin
       AMsg := 'Erro: NCM Invalido';
   end;
 
-  mResp.Lines.Add(AMsg);
+  AddLinesLog(AMsg);
 end;
 
 procedure TFrmACBrMonitor.bRSAeECFcClick(Sender: TObject);
@@ -2139,7 +2141,7 @@ begin
     exit;
 
   ACBrSedex1.Rastrear(CodRastreio);
-  mResp.Lines.Add(ProcessarRespostaRastreio);
+  AddLinesLog(ProcessarRespostaRastreio);
 end;
 
 procedure TFrmACBrMonitor.bSedexTestarClick(Sender: TObject);
@@ -2171,7 +2173,7 @@ begin
       AMsg := 'Erro na consulta';
   end;
 
-  mResp.Lines.Add(AMsg);
+  AddLinesLog(AMsg);
 end;
 
 procedure TFrmACBrMonitor.btAtivarsatClick(Sender: TObject);
@@ -2191,23 +2193,23 @@ begin
 
   with ACBrSAT1.Status do
   begin
-    mResp.Lines.Add('NSERIE.........: '+NSERIE);
-    mResp.Lines.Add('LAN_MAC........: '+LAN_MAC);
-    mResp.Lines.Add('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
-    mResp.Lines.Add('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
-    mResp.Lines.Add('MT_TOTAL.......: '+MT_TOTAL);
-    mResp.Lines.Add('MT_USADA.......: '+MT_USADA);
-    mResp.Lines.Add('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
-    mResp.Lines.Add('VER_SB.........: '+VER_SB);
-    mResp.Lines.Add('VER_LAYOUT.....: '+VER_LAYOUT);
-    mResp.Lines.Add('ULTIMO_CFe.....: '+ULTIMO_CFe);
-    mResp.Lines.Add('LISTA_INICIAL..: '+LISTA_INICIAL);
-    mResp.Lines.Add('LISTA_FINAL....: '+LISTA_FINAL);
-    mResp.Lines.Add('DH_CFe.........: '+DateTimeToStr(DH_CFe));
-    mResp.Lines.Add('DH_ULTIMA......: '+DateTimeToStr(DH_ULTIMA));
-    mResp.Lines.Add('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
-    mResp.Lines.Add('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
-    mResp.Lines.Add('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
+    AddLinesLog('NSERIE.........: '+NSERIE);
+    AddLinesLog('LAN_MAC........: '+LAN_MAC);
+    AddLinesLog('STATUS_LAN.....: '+StatusLanToStr(STATUS_LAN));
+    AddLinesLog('NIVEL_BATERIA..: '+NivelBateriaToStr(NIVEL_BATERIA));
+    AddLinesLog('MT_TOTAL.......: '+MT_TOTAL);
+    AddLinesLog('MT_USADA.......: '+MT_USADA);
+    AddLinesLog('DH_ATUAL.......: '+DateTimeToStr(DH_ATUAL));
+    AddLinesLog('VER_SB.........: '+VER_SB);
+    AddLinesLog('VER_LAYOUT.....: '+VER_LAYOUT);
+    AddLinesLog('ULTIMO_CFe.....: '+ULTIMO_CFe);
+    AddLinesLog('LISTA_INICIAL..: '+LISTA_INICIAL);
+    AddLinesLog('LISTA_FINAL....: '+LISTA_FINAL);
+    AddLinesLog('DH_CFe.........: '+DateTimeToStr(DH_CFe));
+    AddLinesLog('DH_ULTIMA......: '+DateTimeToStr(DH_ULTIMA));
+    AddLinesLog('CERT_EMISSAO...: '+DateToStr(CERT_EMISSAO));
+    AddLinesLog('CERT_VENCIMENTO: '+DateToStr(CERT_VENCIMENTO));
+    AddLinesLog('ESTADO_OPERACAO: '+EstadoOperacaoToStr(ESTADO_OPERACAO));
   end;
 
   LeDadosRedeSAT;
@@ -3036,7 +3038,7 @@ procedure TFrmACBrMonitor.btSATConfigRedeClick(Sender: TObject);
 begin
   ConfiguraRedeSAT;
 
-  mResp.Lines.Add(ACBrSAT1.ConfigurarInterfaceDeRede(ACBrSAT1.Rede.AsXMLString));
+  AddLinesLog(ACBrSAT1.ConfigurarInterfaceDeRede(ACBrSAT1.Rede.AsXMLString));
 end;
 
 procedure TFrmACBrMonitor.cbLogCompClick(Sender: TObject);
@@ -3298,7 +3300,7 @@ procedure TFrmACBrMonitor.deUSUDataCadastroExit(Sender: TObject);
 begin
   if (deUSUDataCadastro.Date = 0) then
   begin
-    mResp.Lines.Add('Data Inválida');
+    AddLinesLog('Data Inválida');
     deUSUDataCadastro.SetFocus;
   end;
 end;
@@ -3307,7 +3309,7 @@ procedure TFrmACBrMonitor.deRFDDataSwBasicoExit(Sender: TObject);
 begin
   if (deRFDDataSwBasico.Date = 0) then
   begin
-    mResp.Lines.Add('Data Inválida');
+    AddLinesLog('Data Inválida');
     deRFDDataSwBasico.SetFocus;
   end;
 end;
@@ -3322,7 +3324,7 @@ begin
   if (Trim(edEmailEndereco.Text) <> '') and not ValidarEmail(
     edEmailEndereco.Text) then
   begin
-    mResp.Lines.Add('O endereço de E-mail informado não é Válido');
+    AddLinesLog('O endereço de E-mail informado não é Válido');
     edEmailEndereco.SetFocus;
   end;
 end;
@@ -3454,8 +3456,8 @@ begin
     TcpServer.Terminador := '#13,#10,#46,#13,#10';
     TcpServer.Ativo := rbTCP.Checked;
 
-    mResp.Lines.Add('ACBr MonitorPLUS Ver.' + sVersaoACBr);
-    mResp.Lines.Add('Aguardando comandos ACBr');
+    AddLinesLog('ACBr MonitorPLUS Ver.' + sVersaoACBr);
+    AddLinesLog('Aguardando comandos ACBr');
   except
     on E: Exception do
       Erro := Erro + sLineBreak + E.Message;
@@ -3482,34 +3484,34 @@ begin
           end;
         except
         end;
-        mResp.Lines.Add(Txt);
-        mResp.Lines.Add('Porta: [' + TcpServer.Port + ']');
+        AddLinesLog(Txt);
+        AddLinesLog('Porta: [' + TcpServer.Port + ']');
       end;
     end
     else
     begin
       if MonitorarPasta then
       begin
-        mResp.Lines.Add('Monitorando Arquivos em: ' + ExtractFilePath(ArqEntTXT));
-        mResp.Lines.Add('Respostas gravadas em: ' + ExtractFilePath(ArqSaiTXT));
+        AddLinesLog('Monitorando Arquivos em: ' + ExtractFilePath(ArqEntTXT));
+        AddLinesLog('Respostas gravadas em: ' + ExtractFilePath(ArqSaiTXT));
         if ExtractFilePath(ArqEntTXT) = ExtractFilePath(ArqSaiTXT) then
         begin
-          mResp.Lines.Add('ATENÇÃO: Use diretórios diferentes para entrada e saída.');
+          AddLinesLog('ATENÇÃO: Use diretórios diferentes para entrada e saída.');
           raise Exception.Create('Use diretórios diferentes para entrada e saída.');
         end;
       end
       else
       begin
-        mResp.Lines.Add('Monitorando Comandos TXT em: ' + ArqEntTXT);
-        mResp.Lines.Add('Respostas gravadas em: ' + ArqSaiTXT);
+        AddLinesLog('Monitorando Comandos TXT em: ' + ArqEntTXT);
+        AddLinesLog('Respostas gravadas em: ' + ArqSaiTXT);
       end;
     end;
 
     if cbLog.Checked then
-      mResp.Lines.Add('Log de comandos será gravado em: ' + ArqLogTXT);
+      AddLinesLog('Log de comandos será gravado em: ' + ArqLogTXT);
 
     if cbLogComp.Checked then
-      mResp.Lines.Add('Log de mensagens da NFe/NFCe será gravado em: ' + ArqLogCompTXT);
+      AddLinesLog('Log de mensagens da NFe/NFCe será gravado em: ' + ArqLogCompTXT);
 
     { Se for NAO fiscal, desliga o AVISO antes de ativar }
     if ACBrECF1.Modelo = ecfNaoFiscal then
@@ -3533,8 +3535,6 @@ begin
   if Erro <> '' then
     raise Exception.Create(Erro);
 
-  //fsLinesLog := mResp.Lines.Text;
-  //AddLinesLog;
 end;
 
 procedure TFrmACBrMonitor.DesInicializar;
@@ -3567,9 +3567,9 @@ procedure TFrmACBrMonitor.AjustaLinhasLog;
       LogOld.LoadFromFile(AFile);
       if LogOld.Count > LinhasMax then
       begin
-        mResp.Lines.Add('Ajustando o tamanho do arquivo: ' + AFile);
-        mResp.Lines.Add('Numero de Linhas atual: ' + IntToStr(LogOld.Count));
-        mResp.Lines.Add('Reduzindo para: ' + IntToStr(LinhasMax) + ' linhas');
+        AddLinesLog('Ajustando o tamanho do arquivo: ' + AFile);
+        AddLinesLog('Numero de Linhas atual: ' + IntToStr(LogOld.Count));
+        AddLinesLog('Reduzindo para: ' + IntToStr(LinhasMax) + ' linhas');
 
         { Se for muito grande é mais rápido copiar para outra lista do que Deletar }
         if (LogOld.Count - LinhasMax) > LinhasMax then
@@ -3648,6 +3648,7 @@ begin
 
   Ini := TIniFile.Create(ACBrMonitorINI);
   try
+
     { Lendo Senha }
     //     Ini.ReadString('ACBrMonitor','TXT_Saida','SAI.TXT');
     fsHashSenha := StrToIntDef(LeINICrypt(INI, 'ACBrMonitor', 'HashSenha', _C), -1);
@@ -4452,11 +4453,11 @@ begin
     begin
       try
         ArquivoBemaFiINI := edCHQBemafiINI.Text;
-        mResp.Lines.Add('Arquivo de Cheques: ' + ArquivoBemaFiINI +
+        AddLinesLog('Arquivo de Cheques: ' + ArquivoBemaFiINI +
           sLineBreak + ' lido com sucesso.');
       except
         on E: Exception do
-          mResp.Lines.Add(E.Message);
+          AddLinesLog(E.Message);
       end;
     end;
     Ativo := CHQAtivado;
@@ -4651,7 +4652,7 @@ begin
     else
       wNomeArquivo := PathWithDelim(wNomeArquivo);
 
-    if Filtro = fiHTML then
+    if Filtro = TACBrBoletoFCFiltro(fiHTML) then
       NomeArquivo := wNomeArquivo + 'boleto.html'
     else
       NomeArquivo := wNomeArquivo + 'boleto.pdf';
@@ -4678,7 +4679,7 @@ begin
   ArqSWH := ExtractFilePath(Application.ExeName) + 'swh.ini';
   if not FileExists(ArqSWH) then
   begin
-    mResp.Lines.Add('ATENÇÃO: Arquivo "swh.ini" não encontrado.' +
+    AddLinesLog('ATENÇÃO: Arquivo "swh.ini" não encontrado.' +
       sLineBreak + '     Nenhuma Chave RSA Privada pode ser lida.' + sLineBreak);
     exit;
   end;
@@ -4692,25 +4693,33 @@ begin
       raise Exception.Create('Arquivo "swh.ini" inválido.');
 
     edSH_RazaoSocial.Text := LeINICrypt(INI, 'SWH', 'RazaoSocial', Pass);
-    edSH_COO.Text := LeINICrypt(INI, 'SWH', 'COO', Pass);
-    edSH_IE.Text := LeINICrypt(INI, 'SWH', 'IE', Pass);
-    edSH_IM.Text := LeINICrypt(INI, 'SWH', 'IM', Pass);
-    edSH_Aplicativo.Text := LeINICrypt(INI, 'SWH', 'Aplicativo', Pass);
-    edSH_NumeroAP.Text := LeINICrypt(INI, 'SWH', 'NumeroAplicativo', Pass);
-    edSH_VersaoAP.Text := LeINICrypt(INI, 'SWH', 'VersaoAplicativo', Pass);
-    edSH_Linha1.Text := LeINICrypt(INI, 'SWH', 'Linha1', Pass);
-    edSH_Linha2.Text := LeINICrypt(INI, 'SWH', 'Linha2', Pass);
+    edSH_COO.Text         := LeINICrypt(INI, 'SWH', 'COO', Pass);
+    edSH_IE.Text          := LeINICrypt(INI, 'SWH', 'IE', Pass);
+    edSH_IM.Text          := LeINICrypt(INI, 'SWH', 'IM', Pass);
+    edSH_Aplicativo.Text  := LeINICrypt(INI, 'SWH', 'Aplicativo', Pass);
+    edSH_NumeroAP.Text    := LeINICrypt(INI, 'SWH', 'NumeroAplicativo', Pass);
+    edSH_VersaoAP.Text    := LeINICrypt(INI, 'SWH', 'VersaoAplicativo', Pass);
+    edSH_Linha2.Text      := LeINICrypt(INI, 'SWH', 'Linha1', Pass);
+    edSH_Linha2.Text      := LeINICrypt(INI, 'SWH', 'Linha2', Pass);
+    edSH_Site.Text        := LeINICrypt(INI, 'SWH', 'Site', Pass);
 
-    ACBrRFD1.SH_RazaoSocial := edSH_RazaoSocial.Text;
-    ACBrRFD1.SH_COO := edSH_COO.Text;
-    ACBrRFD1.SH_CNPJ := edSH_CNPJ.Text;
-    ACBrRFD1.SH_IE := edSH_IE.Text;
-    ACBrRFD1.SH_IM := edSH_IM.Text;
-    ACBrRFD1.SH_NomeAplicativo := edSH_Aplicativo.Text;
+    ACBrRFD1.SH_RazaoSocial      := edSH_RazaoSocial.Text;
+    ACBrRFD1.SH_COO              := edSH_COO.Text;
+    ACBrRFD1.SH_CNPJ             := edSH_CNPJ.Text;
+    ACBrRFD1.SH_IE               := edSH_IE.Text;
+    ACBrRFD1.SH_IM               := edSH_IM.Text;
+    ACBrRFD1.SH_NomeAplicativo   := edSH_Aplicativo.Text;
     ACBrRFD1.SH_NumeroAplicativo := edSH_NumeroAP.Text;
     ACBrRFD1.SH_VersaoAplicativo := edSH_VersaoAP.Text;
-    ACBrRFD1.SH_Linha1 := edSH_Linha1.Text;
-    ACBrRFD1.SH_Linha2 := edSH_Linha2.Text;
+    ACBrRFD1.SH_Linha1           := edSH_Linha1.Text;
+    ACBrRFD1.SH_Linha2           := edSH_Linha2.Text;
+
+    if ( edSH_RazaoSocial.Text <> '' ) and Assigned(ACBrSAT1.Extrato) then
+    begin
+      ACBrSAT1.Extrato.SoftwareHouse := edSH_RazaoSocial.Text;
+      ACBrSAT1.Extrato.Site          := edSH_Site.Text;
+    end;
+
   finally
     Ini.Free;
   end;
@@ -4723,7 +4732,7 @@ begin
       '- Chave será utilizada para assinatura digital';
   except
     mRSAKey.Text := 'ATENÇÃO: Chave RSA Privada NÃO pode ser lida no arquivo "swh.ini".';
-    mResp.Lines.Add(mRSAKey.Text + sLineBreak);
+    AddLinesLog(mRSAKey.Text + sLineBreak);
   end;
 end;
 
@@ -5134,8 +5143,7 @@ begin
     Ini.Free;
   end;
 
-  fsLinesLog := 'Configuração geral gravada com sucesso';
-  AddLinesLog;
+  AddLinesLog('Configuração geral gravada com sucesso');
 
   SalvarConfBoletos;
   SalvarSW;
@@ -5169,8 +5177,7 @@ begin
 
         GravarINI;
 
-        fsLinesLog := 'Dados do RFD gravados com sucesso';
-        AddLinesLog;
+        AddLinesLog('Dados do RFD gravados com sucesso');
       end;
     end;
   end;
@@ -5274,8 +5281,7 @@ begin
     ini.Free;
   end;
 
-  fsLinesLog := 'Configuração de Boletos gravada com sucesso';
-  AddLinesLog;
+  AddLinesLog('Configuração de Boletos gravada com sucesso');
 end;
 
 {------------------------------------------------------------------------------}
@@ -5320,6 +5326,7 @@ begin
     GravaINICrypt(INI, 'SWH', 'VersaoAplicativo', ACBrRFD1.SH_VersaoAplicativo, Pass);
     GravaINICrypt(INI, 'SWH', 'Linha1', ACBrRFD1.SH_Linha1, Pass);
     GravaINICrypt(INI, 'SWH', 'Linha2', ACBrRFD1.SH_Linha2, Pass);
+    GravaINICrypt(INI, 'SWH', 'Site', edSH_Site.Text, Pass);
 
     if copy(mRSAKey.Text, 1, 5) = '-----' then
       GravaINICrypt(INI, 'SWH', 'RSA', Trim(mRSAKey.Text), Pass)
@@ -5341,8 +5348,7 @@ begin
     Ini.Free;
   end;
 
-  fsLinesLog := 'Dados da Sw.House gravados com sucesso';
-  AddLinesLog;
+  AddLinesLog('Dados da Sw.House gravados com sucesso');
 end;
 
 {------------------------------------------------------------------------------}
@@ -5460,8 +5466,7 @@ begin
         fsCmd.Comando := Linha;
 
         //Log Comando
-        if cbLog.Checked then
-          WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Linha, True, True);
+        AddLinesLog(FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Linha);
 
         if fsCmd.Objeto = 'ACBR' then
           DoACBr(fsCmd)
@@ -5601,28 +5606,27 @@ begin
 
   end;
 
-  mResp.Lines.Add(Comando + sLineBreak + Resposta);
-  if mResp.Lines.Count > CBufferMemoResposta then
-  begin
-    SL := TStringList.Create;
-    try
-      SL.Assign(mResp.Lines);
-      SL.BeginUpdate;
-      while SL.Count > CBufferMemoResposta do
-        SL.Delete(0);
-      SL.EndUpdate;
-
-      mResp.Lines.Assign(SL);
-      mResp.SelStart := mResp.Lines.Count;
-    finally
-      SL.Free;
-    end;
-  end;
+  //AddLinesLog(Comando);
+  //if mResp.Lines.Count > CBufferMemoResposta then
+  //begin
+  //  SL := TStringList.Create;
+  //  try
+  //    SL.Assign(mResp.Lines);
+  //    SL.BeginUpdate;
+  //    while SL.Count > CBufferMemoResposta do
+  //      SL.Delete(0);
+  //    SL.EndUpdate;
+  //
+  //    mResp.Lines.Assign(SL);
+  //    mResp.SelStart := mResp.Lines.Count;
+  //  finally
+  //    SL.Free;
+  //  end;
+  //end;
   pTopRespostas.Caption := 'Respostas Enviadas (' + IntToStr(mResp.Lines.Count) +
     ' linhas)';
 
-  if cbLog.Checked then
-    WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Resposta, True, True);
+  AddLinesLog(FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Resposta);
 end;
 
 {------------------------------------------------------------------------------}
@@ -6011,7 +6015,7 @@ begin
   try
     StrToTime(meUSUHoraCadastro.Text, ':');
   except
-    mResp.Lines.Add('Hora Inválida');
+    AddLinesLog('Hora Inválida');
     meUSUHoraCadastro.SetFocus;
   end;
 end;
@@ -6021,7 +6025,7 @@ begin
   try
     StrToTime(meRFDHoraSwBasico.Text, ':');
   except
-    mResp.Lines.Add('Hora Inválida');
+    AddLinesLog('Hora Inválida');
     meRFDHoraSwBasico.SetFocus;
   end;
 end;
@@ -6314,7 +6318,7 @@ begin
   Resp := 'ALERTA: Fim da Conexão com: ' + Conexao.GetRemoteSinIP +
     ' em: ' + FormatDateTime('dd/mm/yy hh:nn:ss', now);
 
-  mResp.Lines.Add(Resp);
+  AddLinesLog(Resp);
 end;
 
 procedure TFrmACBrMonitor.TcpServerRecebeDados(const TCPBlockSocket: TTCPBlockSocket;
@@ -6347,9 +6351,8 @@ begin
   if Indice < 0 then
   begin
     mTCConexoes.Lines.Add(IP);
-    fsLinesLog := 'T.C. Inicio Conexão IP: [' + IP + '] ID: [' + Id +
-      ']' + ' em: ' + FormatDateTime('dd/mm/yy hh:nn:ss', now);
-    AddLinesLog;
+    AddLinesLog('T.C. Inicio Conexão IP: [' + IP + '] ID: [' + Id +
+      ']' + ' em: ' + FormatDateTime('dd/mm/yy hh:nn:ss', now));
   end;
 end;
 
@@ -6363,9 +6366,8 @@ begin
      Exit;
 
   IP := TCPBlockSocket.GetRemoteSinIP;
-  fsLinesLog := 'T.C. Fim Conexão IP: [' + IP + '] em: ' +
-    FormatDateTime('dd/mm/yy hh:nn:ss', now);
-  AddLinesLog;
+  AddLinesLog('T.C. Fim Conexão IP: [' + IP + '] em: ' +
+    FormatDateTime('dd/mm/yy hh:nn:ss', now));
 
   Indice := mTCConexoes.Lines.IndexOf(IP);
   if Indice >= 0 then
@@ -6390,8 +6392,7 @@ begin
   if Comando = '' then
     exit;
 
-  fsLinesLog := 'TC: [' + TCPBlockSocket.GetRemoteSinIP + '] RX: <- [' + Comando + ']';
-  AddLinesLog;
+  AddLinesLog('TC: [' + TCPBlockSocket.GetRemoteSinIP + '] RX: <- [' + Comando + ']');
 
   if copy(Comando, 1, 1) = '#' then
   begin
@@ -6415,8 +6416,7 @@ begin
     Enviar := LeftStr(Enviar, 45);
 
     TCPBlockSocket.Tag := 0;  // Zera falhas de #live?
-    fsLinesLog := '     TX: -> [' + Enviar + ']';
-    AddLinesLog;
+    AddLinesLog('     TX: -> [' + Enviar + ']');
   end;
 end;
 
@@ -6773,7 +6773,7 @@ var
 begin
   lLCBCodigoLido.Caption := Converte(ACBrLCB1.UltimaLeitura);
 
-  mResp.Lines.Add('LCB -> ' + ACBrLCB1.UltimoCodigo);
+  AddLinesLog('LCB -> ' + ACBrLCB1.UltimoCodigo);
 
   if rbLCBTeclado.Checked then
   begin
@@ -6915,7 +6915,7 @@ begin
     SL.Clear;
     ACBrECF1.LeituraMemoriaFiscalSerial(now, now, SL);
 
-    mResp.Lines.AddStrings(SL);
+    AddLinesLog(SL);
   finally
     SL.Free;
   end;
@@ -7003,14 +7003,14 @@ var
   //SL: TStringList;
   Chave, NomeArq: ansistring;
 begin
-  mResp.Lines.Add('Calculando Chave Pública através da Chave Privada');
+  AddLinesLog('Calculando Chave Pública através da Chave Privada');
   Chave := ACBrEAD1.CalcularChavePublica;
   Chave := StringReplace(Chave, #10, sLineBreak, [rfReplaceAll]);
   NomeArq := ExtractFilePath(Application.ExeName) + 'pub_key.pem';
 
   WriteToTXT(NomeArq, Chave, False, False);
-  mResp.Lines.Add(Chave);
-  mResp.Lines.Add('Chave pública gravada no arquivo: ' + sLineBreak + NomeArq);
+  AddLinesLog(Chave);
+  AddLinesLog('Chave pública gravada no arquivo: ' + sLineBreak + NomeArq);
 
 (*
   ChDir(ExtractFilePath(Application.ExeName));
@@ -7029,9 +7029,9 @@ begin
       SL.Clear;
       SL.LoadFromFile('rsakey.pub');
 
-      mResp.Lines.AddStrings(SL);
-      mResp.Lines.Add('');
-      mResp.Lines.Add('Chave pública gravada no arquivo: "rsakey.pub"');
+      AddLinesLogStrings(SL);
+      AddLinesLog('');
+      AddLinesLog('Chave pública gravada no arquivo: "rsakey.pub"');
     except
       raise Exception.Create('Erro ao gerar Chave Publica, usando o "openssl"');
     end;
@@ -7352,7 +7352,7 @@ begin
    ACBrSAT1.DoLog( E.ClassName+' - '+Erro);
 end ;
 
-procedure TFrmACBrMonitor.PrepararImpressaoSAT(NomeImpressora : string);
+procedure TFrmACBrMonitor.PrepararImpressaoSAT(NomeImpressora : string; GerarPDF : boolean);
 begin
   if cbUsarFortes.Checked then
   begin
@@ -7364,6 +7364,11 @@ begin
     ACBrSATExtratoFortes1.Margens.Esquerda := seMargemEsquerda.Value ;
     ACBrSATExtratoFortes1.Margens.Direita  := seMargemDireita.Value ;
     ACBrSATExtratoFortes1.MostrarPreview   := cbPreview.Checked;
+
+    if ( GerarPDF ) then
+      ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiPDF)
+    else
+      ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiNenhum);
 
     if ( Trim(edtLogoMarca.Text) <> '') and FileExists(edtLogoMarca.Text) then
        ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarca.Text);
@@ -7379,6 +7384,9 @@ begin
   end
   else
   begin
+    if GerarPDF then
+      raise Exception.Create('Função gerar PDF não implementada para modo de impressão ESCPOS.');
+
     ACBrSAT1.Extrato := ACBrSATExtratoESCPOS1;
 
     ConfiguraPosPrinter;
@@ -7387,7 +7395,6 @@ begin
     ACBrSATExtratoESCPOS1.ImprimeEmUmaLinha       := cbxImprimirItem1LinhaSAT.Checked;
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
     ACBrSATExtratoESCPOS1.ImprimeChaveEmUmaLinha  := TAutoSimNao(rdgImprimeChave1LinhaSAT.ItemIndex);
-
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
@@ -7481,7 +7488,7 @@ begin
     if ACBrBAL1.UltimaResposta = '' then
     begin
       ACBrBAL1.Desativar;
-      mResp.Lines.Add('BAL -> Balança não responde!');
+      AddLinesLog('BAL -> Balança não responde!');
     end;
   end
   else
@@ -7495,9 +7502,9 @@ procedure TFrmACBrMonitor.bBALTestarClick(Sender: TObject);
 begin
   ACBrBAL1.LePeso;
   if ACBrBAL1.UltimaResposta <> '' then
-    mResp.Lines.Add(Format('BAL -> Peso Lido: %f', [ACBrBAL1.UltimoPesoLido]))
+    AddLinesLog(Format('BAL -> Peso Lido: %f', [ACBrBAL1.UltimoPesoLido]))
   else
-    mResp.Lines.Add('BAL -> Timeout');
+    AddLinesLog('BAL -> Timeout');
 end;
 
 procedure TFrmACBrMonitor.cbETQModeloChange(Sender: TObject);
@@ -7554,7 +7561,7 @@ begin
 
   AvaliaEstadoTsTC;
 
-  mResp.Lines.Add('Servidor de Terminal de Consulta: ' + IfThen(
+  AddLinesLog('Servidor de Terminal de Consulta: ' + IfThen(
     TCPServerTC.Ativo, 'ATIVADO', 'DESATIVADO'));
 end;
 
@@ -7732,17 +7739,34 @@ end;
 
 
 {------------------------------------------------------------------------------}
-procedure TFrmACBrMonitor.AddLinesLog;
-begin
-  if fsLinesLog <> '' then
+procedure TFrmACBrMonitor.AddLinesLog(aLineLog: String);
+  procedure RemoveLinesLog;
   begin
-    mResp.Lines.Add(fsLinesLog);
+    mResp.Lines.BeginUpdate;
+    while mResp.Lines.Count > 1000 do
+      mResp.Lines.Delete(0);
+
+    mResp.Lines.EndUpdate;
+  end;
+
+begin
+  if aLineLog <> '' then
+  begin
+    if ( mResp.Lines.Count > 1000 ) then
+       RemoveLinesLog;
+
+    mResp.Lines.Add(aLineLog);
     if cbLog.Checked then
-      WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+fsLinesLog, True, True);
-    fsLinesLog := '';
+      WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+aLineLog, True, True);
+    Application.ProcessMessages;
   end;
 end;
 
+procedure TFrmACBrMonitor.AddLinesLog(aLinesLog: TStrings);
+begin
+  if ( aLinesLog.Count > 0 ) then
+     mResp.Lines.AddStrings(aLinesLog);
+end;
 
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.TimerTCTimer(Sender: TObject);

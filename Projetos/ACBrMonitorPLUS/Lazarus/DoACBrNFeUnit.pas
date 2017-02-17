@@ -1998,18 +1998,9 @@ var
   versao, sSecao, sFim, sCodPro, sNumeroDI, sNumeroADI, sQtdVol,
   sNumDup, sCampoAdic, sTipo, sDia, sDeduc, sNVE : String;
   INIRec : TMemIniFile ;
-  SL     : TStringList;
   OK     : boolean;
 begin
- INIRec := TMemIniFile.create( 'nfe.ini' ) ;
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free ;
+ INIRec := LerConverterIni(AStr);
  with FrmACBrMonitor do
  begin
    try
@@ -3772,16 +3763,7 @@ var
   SL     : TStringList;
   ok     : Boolean;
 begin
- INIRec := TMemIniFile.create( 'evento.ini' ) ;
-
- SL := TStringList.Create;
- if FilesExists(Astr) then
-    SL.LoadFromFile(AStr)
- else
-    Sl.Text := ConvertStrRecived( Astr );
-
- INIRec.SetStrings( SL );
- SL.Free ;
+ INIRec := LerConverterIni(AStr);
 
  with FrmACBrMonitor do
   begin

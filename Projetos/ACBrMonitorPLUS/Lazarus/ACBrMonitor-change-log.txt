@@ -43,6 +43,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/02/2017
+[+] Adicionado comando GerarPDFExtratoVenda ao SAT.
+	Comando recebe como parâmetro XML, stream ou path, mais o nome do arquivo,
+	este opcional. Retorna o nome do arquivo na resposta.
+	por: Celso Marigo Junior
+
+16/02/2017
+[+]	Adicionado campo Site ao cadastro de Software House, e os campos Razao Social
+	e Site são agora impressos no rodapé do extrato SAT;	
+	por: Celso Marigo Junior
+
+16/02/2017
+[*]	Adicionada rotina para exclusão das linhas do memo de resposta apos contar
+	1000 linhas.
+	por: Celso Marigo Junior
+
+16/02/2017
+[*]	Centralizada a leitura de arquivos INI em função: LerConverterINI, que converte
+	o arquivo para UTF8 após ler.	
+	por: Celso Marigo Junior	
+	
 13/02/2017
 [*] Correção na tradução de Arquivos TXT de ANSI para UTF8  (por: DSA)
 

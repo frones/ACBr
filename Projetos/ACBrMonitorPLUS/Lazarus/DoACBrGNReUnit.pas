@@ -168,92 +168,85 @@ end;
 procedure LerIniGuia( aStr: AnsiString) ;
 var
   IniGuia: TMemIniFile;
-  SL: TStringList;
 begin
-  IniGuia := TMemIniFile.Create('guia.ini');
-  SL         := TStringList.Create;
+  IniGuia := LerConverterIni(aStr);
+
   try
     try
-    if (pos(#10,aStr) = 0) and FileExists(aStr) then
-      SL.LoadFromFile(aStr)
-    else
-      SL.Text := ConvertStrRecived(aStr);
-
-    IniGuia.SetStrings(SL);
-    with FrmACBrMonitor.ACBrGNRE1 do
-    begin
-      Guias.Clear;
-      with Guias.Add.GNRE do
+      with FrmACBrMonitor.ACBrGNRE1 do
       begin
-        if IniGuia.SectionExists('Emitente') then
+        Guias.Clear;
+        with Guias.Add.GNRE do
         begin
-          c27_tipoIdentificacaoEmitente :=IniGuia.ReadInteger('Emitente','tipo',0);//[1,2] INscrito na uf ou nao /////1 CNPJ - 2 CPF
-          //Se inscrito na UF Destino
-          c17_inscricaoEstadualEmitente :=IniGuia.ReadString('Emitente','IE','');  //IE inscrito na uf destino
-          //Se nao Inscrito na uf Destino
-          c03_idContribuinteEmitente    :=IniGuia.ReadString('Emitente','id','cnpjcpf'); //numero do cnpj ou cpf
-          c16_razaoSocialEmitente       :=IniGuia.ReadString('Emitente','RazaoSocial','nome');
-          c18_enderecoEmitente          :=IniGuia.ReadString('Emitente','Endereco','');
-          c19_municipioEmitente         :=IniGuia.ReadString('Emitente','Cidade','');
-          c20_ufEnderecoEmitente        :=IniGuia.ReadString('Emitente','UF','');
-          c21_cepEmitente               :=IniGuia.ReadString('Emitente','Cep','');
-          c22_telefoneEmitente          :=IniGuia.ReadString('Emitente','Telefone','');
-        end;
-
-        //Complementes da Recita
-        if IniGuia.SectionExists('Complemento') then
-        begin
-          c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdentificadorGuia','');
-          ///Exige Doc Origem
-          c28_tipoDocOrigem      :=IniGuia.ReadInteger('Complemento','tipoDocOrigem',0);
-          c04_docOrigem          :=IniGuia.ReadString('Complemento','DocOrigem','');
-          ///Exige Detalhamento Receita
-          c25_detalhamentoReceita :=IniGuia.ReadInteger('Complemento','detalhamentoReceita',0);
-          ///Exige Produto
-          c26_produto             :=IniGuia.ReadInteger('Complemento','produto',0);
-        end;
-
-        //Referencias Da Receita
-        if IniGuia.SectionExists('Referencia') then
-        begin
-          c15_convenio       :=IniGuia.ReadString('Referencia','convenio','');
-          c02_receita        :=IniGuia.ReadInteger('Referencia','receita',0);
-          c01_UfFavorecida   :=IniGuia.ReadString('Referencia','ufFavorecida','');
-          c14_dataVencimento :=StringToDateTime(IniGuia.ReadString('Referencia','dataVencimento',''));
-          c33_dataPagamento  :=StringToDateTime(IniGuia.ReadString('Referencia','dataPagamento',''));
-          referencia.ano     :=IniGuia.ReadInteger('Referencia','referenciaAno',0);
-          referencia.mes     :=IniGuia.ReadString('Referencia','referenciaMes','');
-          referencia.parcela :=IniGuia.ReadInteger('Referencia','referenciaParcela',1);
-          referencia.periodo :=IniGuia.ReadInteger('Referencia','referenciaPeriodo',0);
-          c10_valorTotal     :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorTotal',''),0);
-          c06_valorPrincipal :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorPrincipal',''),0);
-        end;
-
-        //Destinatario
-        if IniGuia.SectionExists('Destinatario') then
-        begin
-          c34_tipoIdentificacaoDestinatario :=IniGuia.ReadInteger('Destinatario','tipo',0);/// 1 CNPJ - 2 CPF
-          //Se inscrito
-          c36_inscricaoEstadualDestinatario :=IniGuia.ReadString('Destinatario','ie','');
-          //Se nao inscrito
-          c35_idContribuinteDestinatario    :=IniGuia.ReadString('Destinatario','id','cnpjcpf');
-          c37_razaoSocialDestinatario       :=IniGuia.ReadString('Destinatario','razaosocial','nome');
-          c38_municipioDestinatario         :=IniGuia.ReadString('Destinatario','cidade','');
-        end;
-
-        //Outras Informacoes
-        if IniGuia.SectionExists('CampoExtra') then
-        begin
-          camposExtras.Clear;
-          with camposExtras.Add do
+          if IniGuia.SectionExists('Emitente') then
           begin
-               CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
-               CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
-               CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
+            c27_tipoIdentificacaoEmitente :=IniGuia.ReadInteger('Emitente','tipo',0);//[1,2] INscrito na uf ou nao /////1 CNPJ - 2 CPF
+            //Se inscrito na UF Destino
+            c17_inscricaoEstadualEmitente :=IniGuia.ReadString('Emitente','IE','');  //IE inscrito na uf destino
+            //Se nao Inscrito na uf Destino
+            c03_idContribuinteEmitente    :=IniGuia.ReadString('Emitente','id','cnpjcpf'); //numero do cnpj ou cpf
+            c16_razaoSocialEmitente       :=IniGuia.ReadString('Emitente','RazaoSocial','nome');
+            c18_enderecoEmitente          :=IniGuia.ReadString('Emitente','Endereco','');
+            c19_municipioEmitente         :=IniGuia.ReadString('Emitente','Cidade','');
+            c20_ufEnderecoEmitente        :=IniGuia.ReadString('Emitente','UF','');
+            c21_cepEmitente               :=IniGuia.ReadString('Emitente','Cep','');
+            c22_telefoneEmitente          :=IniGuia.ReadString('Emitente','Telefone','');
+          end;
+
+          //Complementes da Recita
+          if IniGuia.SectionExists('Complemento') then
+          begin
+            c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdentificadorGuia','');
+            ///Exige Doc Origem
+            c28_tipoDocOrigem      :=IniGuia.ReadInteger('Complemento','tipoDocOrigem',0);
+            c04_docOrigem          :=IniGuia.ReadString('Complemento','DocOrigem','');
+            ///Exige Detalhamento Receita
+            c25_detalhamentoReceita :=IniGuia.ReadInteger('Complemento','detalhamentoReceita',0);
+            ///Exige Produto
+            c26_produto             :=IniGuia.ReadInteger('Complemento','produto',0);
+          end;
+
+          //Referencias Da Receita
+          if IniGuia.SectionExists('Referencia') then
+          begin
+            c15_convenio       :=IniGuia.ReadString('Referencia','convenio','');
+            c02_receita        :=IniGuia.ReadInteger('Referencia','receita',0);
+            c01_UfFavorecida   :=IniGuia.ReadString('Referencia','ufFavorecida','');
+            c14_dataVencimento :=StringToDateTime(IniGuia.ReadString('Referencia','dataVencimento',''));
+            c33_dataPagamento  :=StringToDateTime(IniGuia.ReadString('Referencia','dataPagamento',''));
+            referencia.ano     :=IniGuia.ReadInteger('Referencia','referenciaAno',0);
+            referencia.mes     :=IniGuia.ReadString('Referencia','referenciaMes','');
+            referencia.parcela :=IniGuia.ReadInteger('Referencia','referenciaParcela',1);
+            referencia.periodo :=IniGuia.ReadInteger('Referencia','referenciaPeriodo',0);
+            c10_valorTotal     :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorTotal',''),0);
+            c06_valorPrincipal :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorPrincipal',''),0);
+          end;
+
+          //Destinatario
+          if IniGuia.SectionExists('Destinatario') then
+          begin
+            c34_tipoIdentificacaoDestinatario :=IniGuia.ReadInteger('Destinatario','tipo',0);/// 1 CNPJ - 2 CPF
+            //Se inscrito
+            c36_inscricaoEstadualDestinatario :=IniGuia.ReadString('Destinatario','ie','');
+            //Se nao inscrito
+            c35_idContribuinteDestinatario    :=IniGuia.ReadString('Destinatario','id','cnpjcpf');
+            c37_razaoSocialDestinatario       :=IniGuia.ReadString('Destinatario','razaosocial','nome');
+            c38_municipioDestinatario         :=IniGuia.ReadString('Destinatario','cidade','');
+          end;
+
+          //Outras Informacoes
+          if IniGuia.SectionExists('CampoExtra') then
+          begin
+            camposExtras.Clear;
+            with camposExtras.Add do
+            begin
+                 CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
+                 CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
+                 CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
+            end;
           end;
         end;
       end;
-    end;
   except
     on E: Exception do
     begin
@@ -261,7 +254,6 @@ begin
     end;
   end;
   finally
-    SL.Free;
     IniGuia.Free;
   end;
 end;

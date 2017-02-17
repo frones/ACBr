@@ -281,6 +281,9 @@ begin
       if not (csDesigning in Self.ComponentState) then
          Result := ExtractFilePath(ParamStr(0)) ;
 
+   if fNomeArquivo = '' then
+     fNomeArquivo := TACBrSAT(FACBrSAT).CFe.infCFe.ID+'.pdf';
+
    Result := trim(Result + fNomeArquivo);
 end;
 

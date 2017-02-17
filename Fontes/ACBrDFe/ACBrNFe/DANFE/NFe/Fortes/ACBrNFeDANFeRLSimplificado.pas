@@ -374,7 +374,7 @@ begin
     rlmProdutoQTDE.caption      := TACBrNFeDANFeRL(Owner).FormatQuantidade( Prod.qCom);
     rlmProdutoValor.caption     := TACBrNFeDANFeRL(Owner).FormatValorUnitario(  Prod.vUnCom);
     rlmProdutoUnidade.caption   := Prod.UCom;
-    rlmProdutoTotal.caption     := FormatFloat('###,###,###,##0.00', Prod.vProd);
+    rlmProdutoTotal.caption     := FormatFloatBr(Prod.vProd);
   end;
 end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/02/2017
+-- ACBrSAT
+[-] Correção de bug em duas functions
+		por: Juliomar Marchetti
+		
 Data: 12/01/2017
 -- ACBrSAT --
 [*] Função CalcCFeNomeArq, adicionado parâmetro para poder passar a extensão

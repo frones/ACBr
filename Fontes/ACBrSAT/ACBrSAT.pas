@@ -1477,7 +1477,7 @@ begin
 end;
 
 function TACBrSAT.CalcCFeNomeArq(Pasta: String; NomeArquivo: String;
-  Sufixo: String; Extensao: String = '.xml'): String;
+  Sufixo: String; Extensao: String): String;
 var
   Dir: String;
 begin
@@ -1493,7 +1493,7 @@ begin
 end;
 
 function TACBrSAT.CalcCFeCancNomeArq(Pasta: String; NomeArquivo: String;
-  Sufixo: String; Extensao: String = '.xml'): String;
+  Sufixo: String; Extensao: String): String;
 var
   Dir, Chave: String;
 begin

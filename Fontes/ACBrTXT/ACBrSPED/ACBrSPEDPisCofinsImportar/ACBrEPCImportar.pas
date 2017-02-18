@@ -100,6 +100,9 @@ procedure Register;
 
 implementation
 
+{$IFNDEF FPC}
+ {$R ACBrSPEDPisCofinsImportar.dcr}
+{$ENDIF}
 
 procedure Register;
 begin

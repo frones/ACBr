@@ -381,7 +381,7 @@ procedure TFrmACBrConvenio115_PRN.RLLabel19BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := IntToStr(Convenio115.Mestre[0].Modelo);
+  Text := IntToStr(Convenio115.Modelo);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel20BeforePrint(Sender: TObject;
@@ -395,7 +395,7 @@ procedure TFrmACBrConvenio115_PRN.RLLabel21BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := Convenio115.Mestre[0].Serie;
+  Text := Convenio115.Serie;
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel22BeforePrint(Sender: TObject;
@@ -415,14 +415,14 @@ procedure TFrmACBrConvenio115_PRN.RLLabel27BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'Mod: ' + IntToStr(Convenio115.Mestre[0].Modelo);
+  Text := 'Mod: ' + IntToStr(Convenio115.Modelo);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel29BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'Série: ' + Convenio115.Mestre[0].Serie + ' ';;
+  Text := 'Série: ' + Convenio115.Serie + ' ';;
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel2BeforePrint(Sender: TObject; var Text: string;
@@ -590,7 +590,7 @@ end;
 procedure TFrmACBrConvenio115_PRN.RLMemo2BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := Convenio115.Mestre[0].AutenticacaoDocumentoFiscal;
+  Text := Convenio115.Mestre[0].AutenticacaoDocumentoFiscal(false);
 end;
 
 procedure TFrmACBrConvenio115_PRN.rlmEnderecoBeforePrint(Sender: TObject;

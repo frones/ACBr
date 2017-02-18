@@ -865,7 +865,7 @@ begin
     exit;
 
   // O último ponto tem que estar depois do @
-  if (PosEx('.', Documento, Pos('.', Documento) + 1) < Pos('@', Documento)) then
+  if (PosEx('.', Documento, Pos('@', Documento) + 1) < Pos('@', Documento)) then
     exit;
 
   // Testa se tem algum caracter inválido.

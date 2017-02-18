@@ -203,6 +203,14 @@ type
     procedure FormatarMaisDeOitoDigitos;
   end;
 
+  { TTestCaseACBrValidadorEmail }
+
+  TTestCaseACBrValidadorEmail = class(TTestCase)
+  published
+    procedure ValidarEmailsValidos;
+    procedure ValidarEmailsInvalidos;
+  end;
+
 implementation
 
 { TTestCaseACBrValidadorCEP }
@@ -1210,6 +1218,23 @@ begin
   CheckFalse(fACBrValidador.Validar, fACBrValidador.MsgErro);
 end;
 
+{ TTestCaseACBrValidadorEmail }
+
+procedure TTestCaseACBrValidadorEmail.ValidarEmailsInvalidos;
+begin
+  CheckNotEquals('', ValidarEmail('nome com espaco@hotmail.com'));
+  CheckNotEquals('', ValidarEmail('.comecandocomponto@uol.com.br'));
+  CheckNotEquals('', ValidarEmail('cáractersespeciais@empresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarEmailsValidos;
+begin
+  CheckEqualsString('', ValidarEmail('nome@gmail.com'));
+  CheckEqualsString('', ValidarEmail('nome@hotmail.com'));
+  CheckEqualsString('', ValidarEmail('pessoa@suaempresa.com.br'));
+  CheckEqualsString('', ValidarEmail('pessoa.cadastrada.com.nome.de.email.muito.longo@minhaempresa.com.br'));
+end;
+
 initialization
 
   RegisterTest(TTestCaseACBrValidadorCPF{$ifndef FPC}.Suite{$endif});
@@ -1218,5 +1243,7 @@ initialization
   RegisterTest(TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
+  RegisterTest(TTestCaseACBrValidadorEmail{$ifndef FPC}.Suite{$endif});
+
 end.
 

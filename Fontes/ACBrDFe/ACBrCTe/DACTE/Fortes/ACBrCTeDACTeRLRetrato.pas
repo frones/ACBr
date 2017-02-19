@@ -1871,13 +1871,13 @@ begin
     if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
     begin
       rlDocOrig_tpDoc1.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_1').AsString, 33, ' ')+
-      PadRight(cdsDocumentos.FieldByName('CNPJCPF_1').AsString, 26, ' ')+
+      PadRight(cdsDocumentos.FieldByName('CNPJCPF_1').AsString, 54, ' ')+
       cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
     end;
     if cdsDocumentos.FieldByName('TIPO_2').AsString <> '' then
     begin
       rlDocOrig_tpDoc2.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_2').AsString, 33, ' ')+
-      PadRight(cdsDocumentos.FieldByName('CNPJCPF_2').AsString, 26, ' ')+
+      PadRight(cdsDocumentos.FieldByName('CNPJCPF_2').AsString, 54, ' ')+
       cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
     end;
     cdsDocumentos.Next;

@@ -1,32 +1,36 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   Left = 237
   Top = 11
-  Width = 990
-  Height = 813
   Caption = 'DACTe - Retrato'
+  ClientHeight = 245
+  ClientWidth = 798
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
+  ExplicitWidth = 814
+  ExplicitHeight = 284
   PixelsPerInch = 96
   TextHeight = 10
   inherited RLCTe: TRLReport
-    Left = 99
-    Top = -27
+    Left = 18
+    Top = 8
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
     PreviewOptions.FormStyle = fsStayOnTop
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DACT-e '
     Title = 'DACT-e Retrato'
     BeforePrint = RLCTeBeforePrint
+    ExplicitLeft = 18
+    ExplicitTop = 8
     object rlb_01_Recibo: TRLBand
       Left = 26
       Top = 26
@@ -1246,21 +1250,21 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 60
         Width = 376
         Height = 34
-        AutoSize = False
-        BarcodeType = bcCode128C
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
+        AutoSize = False
+        BarcodeType = bcCode128C
       end
       object rlbCodigoBarras: TRLBarcode
         Left = 339
         Top = 60
         Width = 396
         Height = 32
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Transparent = False
       end
       object RLLabel198: TRLLabel
@@ -4412,6 +4416,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Style = []
         Info = itNow
         ParentFont = False
+        Text = ''
       end
     end
     object rlb_16_DadosExcEmitente: TRLBand
@@ -6756,7 +6761,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
       end
       object rllCPFMotorista2: TRLLabel
-        Left = 212
+        Left = 272
         Top = 91
         Width = 71
         Height = 12

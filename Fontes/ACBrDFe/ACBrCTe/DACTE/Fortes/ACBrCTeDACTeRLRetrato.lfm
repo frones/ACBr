@@ -1,18 +1,17 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 237
-  Height = 813
-  Top = 11
-  Width = 990
+  Left = 319
+  Height = 839
+  Top = 89
+  Width = 874
   Caption = 'DACTe - Retrato'
-  ClientHeight = 813
-  ClientWidth = 990
+  ClientHeight = 839
+  ClientWidth = 874
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 99
-    Top = -27
-    Background.Arrange = baDistributed
+    Left = 32
+    Top = 36
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
@@ -1043,10 +1042,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel8: TRLLabel
-        Left = 334
+        Left = 333
         Height = 8
         Top = 34
-        Width = 31
+        Width = 32
         Alignment = taCenter
         AutoSize = False
         Caption = 'MODELO'
@@ -1083,7 +1082,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel21: TRLLabel
-        Left = 368
+        Left = 367
         Height = 8
         Top = 34
         Width = 21
@@ -1142,11 +1141,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllNumCte: TRLLabel
-        Left = 392
+        Left = 394
         Height = 15
         Top = 42
         Width = 70
-        Alignment = taRightJustify
         AutoSize = False
         Caption = '999.999.999'
         Color = clWhite
@@ -1201,7 +1199,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllEmissao: TRLLabel
-        Left = 509
+        Left = 510
         Height = 13
         Top = 42
         Width = 58
@@ -7709,7 +7707,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel167: TRLLabel
         Left = 2
         Height = 8
-        Top = 16
+        Top = 17
         Width = 17
         Caption = 'TIPO'
         Color = clWhite
@@ -7726,7 +7724,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel169: TRLLabel
         Left = 214
-        Height = 13
+        Height = 12
         Top = 2
         Width = 524
         Alignment = taCenter
@@ -7746,7 +7744,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel170: TRLLabel
         Left = 2
-        Height = 13
+        Height = 12
         Top = 2
         Width = 202
         Alignment = taCenter
@@ -7821,7 +7819,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel174: TRLLabel
         Left = 334
         Height = 8
-        Top = 16
+        Top = 17
         Width = 87
         Caption = 'NÚMERO COMPROVANTE'
         Color = clWhite
@@ -7839,7 +7837,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel177: TRLLabel
         Left = 618
         Height = 8
-        Top = 16
+        Top = 17
         Width = 70
         Caption = 'CNPJ RESPONSÁVEL'
         Color = clWhite
@@ -7857,7 +7855,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel179: TRLLabel
         Left = 210
         Height = 8
-        Top = 16
+        Top = 17
         Width = 68
         Caption = 'CNPJ FORNECEDOR'
         Color = clWhite
@@ -7875,7 +7873,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel181: TRLLabel
         Left = 124
         Height = 8
-        Top = 16
+        Top = 17
         Width = 26
         Caption = 'RNTRC'
         Color = clWhite
@@ -7893,7 +7891,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel182: TRLLabel
         Left = 102
         Height = 8
-        Top = 16
+        Top = 17
         Width = 11
         Caption = 'UF'
         Color = clWhite
@@ -7911,7 +7909,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel183: TRLLabel
         Left = 44
         Height = 8
-        Top = 16
+        Top = 17
         Width = 25
         Caption = 'PLACA'
         Color = clWhite
@@ -8101,7 +8099,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rllCPFMotorista2: TRLLabel
-        Left = 212
+        Left = 272
         Height = 12
         Top = 91
         Width = 71
@@ -8118,8 +8116,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw98: TRLDraw
         Left = 614
-        Height = 66
-        Top = 14
+        Height = 65
+        Top = 15
         Width = 1
         Angle = 0
         Brush.Style = bsClear

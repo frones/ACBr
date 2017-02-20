@@ -3227,7 +3227,7 @@ begin
         for I := 0 to fpAliquotas.Count - 1 do
         begin
           { Deve desconsiderar alíquotas zeradas e índice FF, II, NN (ECFVirtual) }
-          if (fpAliquotas[I].Aliquota <= 0) or (not StrIsNumber(fpAliquotas[I].Indice)) then
+          if (fpAliquotas[I].Aliquota <= 0) and (not StrIsNumber(fpAliquotas[I].Indice)) then
             Continue;
 
           AliqZ := TACBrECFAliquota.Create;

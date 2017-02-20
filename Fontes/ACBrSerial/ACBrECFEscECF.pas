@@ -3860,6 +3860,13 @@ var
 
 begin
 {
+------------------------------------------------
+                   RAZÃO SOCIAL
+                  NOME FANTASIA
+                 EMDEREÇO E BAIRRO
+            CEP: 99999-999 CIDADE - UF
+     CNPJ: 99.999.999/9999-99 IE: ISENTO
+------------------------------------------------
 19/08/2016 19:03:07V               COO:000005080
 
              LEITURA MEMÓRIA FISCAL
@@ -3971,8 +3978,9 @@ FAB: BE101310100700000348                    BR
     begin
       I := 0;
       // Achando a linha de inicio //
-      if not EncontrarLinha(LinhaTracejada) then
-        Exit;
+      if not EncontrarLinha('LEITURA MEMÓRIA FISCAL') then
+        if not EncontrarLinha(LinhaTracejada) then
+          Exit;
 
       if not EncontrarLinha('CRZ') then
         Exit;

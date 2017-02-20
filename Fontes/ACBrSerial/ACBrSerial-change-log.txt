@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 20/02/2017
+-- ACBrECFEscECF --
+[*] Alteração para pegar a linha de início corretamente ao ler os dados de RZ
+	pela procedure "BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal".
+    (por: Pedro E. Braga)
+
+Data: 20/02/2017
 -- ACBrECFClass --
 [-] Correção para retornar alíquotas tributadas que possuem índice alfanumérico
 	Exemplo: T01, T02, etc.

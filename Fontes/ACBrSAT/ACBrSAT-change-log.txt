@@ -47,16 +47,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/02/2017
+-- ACBrSATExtratoClass --
+[-] Correção para A.V. em "TACBrSATExtratoClass.GetNomeArquivo"   (por: DSA)
+
 Data: 17/02/2017
--- ACBrSAT
+-- ACBrSAT --
 [-] Correção de bug em duas functions
-		por: Juliomar Marchetti
+    (por: Juliomar Marchetti)
 		
 Data: 12/01/2017
 -- ACBrSAT --
 [*] Função CalcCFeNomeArq, adicionado parâmetro para poder passar a extensão
-	do arquivo, util para poder gerar um arquivo PDF.
-	por: Celso Marigo Junior
+    do arquivo, util para poder gerar um arquivo PDF.
+    (por: Celso Marigo Junior)
 
 Data: 31/01/2017
 -- ACBrECFVirtualSAT --

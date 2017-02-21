@@ -66,7 +66,7 @@ type
   protected
     procedure Imprimir;
   public
-    procedure ImprimirExtrato(ACFe: TCFe); override;
+    procedure ImprimirExtrato(ACFe: TCFe = nil); override;
     procedure ImprimirExtratoResumido(ACFe : TCFe = nil); override;
     procedure ImprimirExtratoCancelamento(ACFe : TCFe = nil; ACFeCanc: TCFeCanc = nil); override;
   end ;

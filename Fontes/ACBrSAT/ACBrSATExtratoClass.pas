@@ -272,19 +272,30 @@ end;
 
 function TACBrSATExtratoClass.GetNomeArquivo: String;
 var
-  wPath: String;
+  wPath, wFile: String;
 begin
    wPath  := ExtractFilePath(fNomeArquivo);
+   wFile  := ExtractFileName(fNomeArquivo);
    Result := '';
 
    if wPath = '' then
+   begin
       if not (csDesigning in Self.ComponentState) then
-         Result := ExtractFilePath(ParamStr(0)) ;
+      begin
+         wPath := ExtractFilePath(ParamStr(0));  // Pasta da aplicação
+      end;
+   end;
 
-   if fNomeArquivo = '' then
-     fNomeArquivo := TACBrSAT(FACBrSAT).CFe.infCFe.ID+'.pdf';
+   if wFile = '' then
+   begin
+      if not (csDesigning in Self.ComponentState) then
+      begin
+         if Assigned(fACBrSAT) then
+           wFile := TACBrSAT(FACBrSAT).CFe.infCFe.ID+'.pdf';
+      end;
+   end;
 
-   Result := trim(Result + fNomeArquivo);
+   Result := PathWithDelim(wPath) + Trim(wFile);
 end;
 
 procedure TACBrSATExtratoClass.SetAbout(AValue: String);

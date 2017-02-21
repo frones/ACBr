@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2017
+-- ACBrTEFDCliSiTEF --
+[-] Acerto para evitar problemas quando é feito desligamento durante as mensagens do Pin-Pad
+    por Regys.silveira
+
 04/01/2017
 -- ACBrTEFD --
 [+] Inclusão de nova propriedade "ConfirmarAntesDosComprovantes" para possibilitar

@@ -135,6 +135,7 @@ type
       fPathDLL: string;
       fPortaPinPad: Integer;
       fUsaUTF8: Boolean;
+      fArqBackUp: String;
 
      xConfiguraIntSiTefInterativoEx : function (
                 pEnderecoIP: PAnsiChar;
@@ -229,6 +230,7 @@ type
      Function SuportaDesconto : Boolean ;
      Function HMS : String ;
 
+     function CopiarResposta: string; override;
    public
      property Respostas : TStringList read fRespostas ;
      property PathDLL: string read fPathDLL write fPathDLL;
@@ -1057,7 +1059,7 @@ var
   TamanhoMinimo, TamanhoMaximo : SmallInt ;
   Buffer: array [0..20000] of AnsiChar;
   Mensagem, MensagemOperador, MensagemCliente, CaptionMenu : String ;
-  Resposta, ArqBackUp : AnsiString;
+  Resposta : AnsiString;
   SL : TStringList ;
   Interromper, Digitado, GerencialAberto, FechaGerencialAberto, ImpressaoOk,
      HouveImpressao, Voltar : Boolean ;
@@ -1086,7 +1088,7 @@ begin
    fCancelamento     := False ;
    fReimpressao      := False;
    Interromper       := False;
-   ArqBackUp         := '' ;
+   fArqBackUp        := '' ;
    Resposta          := '' ;
 
    fpAguardandoResposta := True ;
@@ -1146,7 +1148,7 @@ begin
                              if not HouveImpressao then
                              begin
                                 HouveImpressao := True ;
-                                ArqBackUp      := CopiarResposta;
+                                fArqBackUp := CopiarResposta;
                              end;
 
                              SL := TStringList.Create;
@@ -1229,6 +1231,10 @@ begin
                                 SL.Free;
                              end;
                           end ;
+                        133, 952:
+                        begin
+                          fArqBackUp := CopiarResposta;
+                        end;
                      end;
                    end;
 
@@ -1393,8 +1399,8 @@ begin
             ImpressaoOk := False ;
          end;
 
-         if (ArqBackUp <> '') and FileExists( ArqBackUp ) then
-            SysUtils.DeleteFile( ArqBackUp );
+         if (fArqBackUp <> '') and FileExists( fArqBackUp ) then
+            SysUtils.DeleteFile( fArqBackUp );
 
          if HouveImpressao or ( ImprimirComprovantes and fCancelamento) then
             FinalizarTransacao( ImpressaoOk, Resp.DocumentoVinculado );
@@ -1415,6 +1421,22 @@ begin
          fpAguardandoResposta := False ;
       end;
    end ;
+end;
+
+function TACBrTEFDCliSiTef.CopiarResposta: string;
+begin
+  if Trim(fArqBackUp) <> '' then
+  begin
+    if FileExists(fArqBackUp) then
+    begin
+      if not SysUtils.DeleteFile(fArqBackUp) then
+        raise EFilerError.CreateFmt('Não foi possivel apagar o arquivo "%s" de backup: "%d - %s"!', [fArqBackUp, GetLastError, SysErrorMessage(GetLastError)]);
+    end;
+
+    fArqBackUp := '';
+  end;
+
+  Result := inherited;
 end;
 
 procedure TACBrTEFDCliSiTef.ProcessarResposta;
@@ -1591,6 +1613,7 @@ begin
      Self.Resp.IndiceFPG_ECF := IndiceFPG_ECF;
 
      { Cria Arquivo de Backup, contendo Todas as Respostas }
+
      CopiarResposta ;
 
      { Cria cópia do Objeto Resp, e salva no ObjectList "RespostasPendentes" }

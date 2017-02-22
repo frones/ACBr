@@ -77,11 +77,14 @@ type
 
     procedure GerarCabecalho;
     procedure GerarIdentificacaodoDANFE;
+    procedure GerarMensagemContingencia;
     procedure GerarDetalhesProdutosServicos;
     procedure GerarInformacoesTotais;
-    procedure GerarPagamentos(Resumido: Boolean = False);
-    procedure GerarAreaMensagemFiscal;
+    procedure GerarPagamentos;
+    procedure GerarInformacoesConsultaChaveAcesso;
     procedure GerarInformacoesConsumidor;
+    procedure GerarInformacoesIdentificacaoNFCe;
+    procedure GerarMensagemFiscal;
     procedure GerarInformacoesQRCode(Cancelamento: Boolean = False);
     procedure GerarMensagemInteresseContribuinte;
     procedure GerarTotalTributos;
@@ -171,24 +174,24 @@ procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
 begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
-  FPosPrinter.Buffer.Add('</ce><c><n>' + FpNFe.Emit.xNome + ' ' + FormatarCNPJ(FpNFe.Emit.CNPJCPF) + '</n>');
   if (Trim(FpNFe.Emit.xFant) <> '') then
      FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
+
+  FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) + ' <n>' + FpNFe.Emit.xNome + '</n>');
 
   FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Trim(FpNFe.Emit.EnderEmit.xLgr) + ', ' +
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xCpl) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xBairro) +  ' ' +
-    Trim(FpNFe.Emit.EnderEmit.xMun) + '/' + Trim(FpNFe.Emit.EnderEmit.UF) + '  ' +
-    'Cep:' + FormatarCEP(FpNFe.Emit.EnderEmit.CEP) + '  ' +
-    'Tel:' + FormatarFone(FpNFe.Emit.EnderEmit.fone)
+    Trim(FpNFe.Emit.EnderEmit.xMun) + '/' + Trim(FpNFe.Emit.EnderEmit.UF)
     , FPosPrinter.ColunasFonteCondensada)
   );
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;
 begin
-  FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETRÔNICA</n>'));
+  FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica</n>'));
+  GerarMensagemContingencia;
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarDetalhesProdutosServicos;
@@ -196,30 +199,29 @@ var
   i: Integer;
   nTamDescricao: Integer;
   VlrLiquido: Double;
-  sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
+  sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
 begin
   if ImprimirItens then
   begin
-    FPosPrinter.Buffer.Add('</ae><c>'+ACBrStr(PadSpace('#|CODIGO|DESCRIÇÃO|QTD|UN|VL UN R$|VL TOTAL R$',
+    FPosPrinter.Buffer.Add('</ae><c>'+ACBrStr(PadSpace('Código|Descrição|Qtde|Un|Valor unit.|Valor total',
                                             FPosPrinter.ColunasFonteCondensada, '|')));
 
     for i := 0 to FpNFe.Det.Count - 1 do
     begin
       with FpNFe.Det.Items[i] do
       begin
-        sItem        :=        IntToStrZero( Prod.nItem, 3);
+        sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
         sDescricao   :=                Trim( Prod.xProd);
+        sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
         sUnidade     :=                Trim( Prod.uCom);
         sVlrProduto  :=       FormatFloatBr( Prod.vProd );
-        sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
         sVlrUnitario := FormatValorUnitario( Prod.VUnCom );
-        sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
 
         if ImprimeEmUmaLinha then
         begin
-          LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
-            sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
+          LinhaCmd := sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
+            sUnidade + ' ' + sVlrUnitario + ' ' + sVlrProduto;
 
           // acerta tamanho da descrição
           nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
@@ -230,11 +232,11 @@ begin
         end
         else
         begin
-          LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
+          LinhaCmd := sCodigo + ' ' + sDescricao;
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
 
           LinhaCmd :=
-            PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
+            PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' ' +
             PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
           LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
@@ -300,10 +302,10 @@ begin
        FPosPrinter.ColunasFonteCondensada div 2, '|') + '</e>');
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarPagamentos(Resumido: Boolean = False);
+procedure TACBrNFeDANFeESCPOS.GerarPagamentos;
 var
   i: Integer;
-  {Total,} Troco: Real;
+  Troco: Real;
 begin
   //Total := 0;
   FPosPrinter.Buffer.Add('<c>' + PadSpace('FORMA DE PAGAMENTO | Valor Pago',
@@ -314,15 +316,21 @@ begin
     FPosPrinter.Buffer.Add('<c>' + ACBrStr(PadSpace(FormaPagamentoToDescricao(FpNFe.pag.Items[i].tPag) +
        '|' + FormatFloatBr(FpNFe.pag.Items[i].vPag),
        FPosPrinter.ColunasFonteCondensada, '|')));
-    //Total := Total + FpNFe.pag.Items[i].vPag;
   end;
 
-  //Troco := Total - FpNFe.Total.ICMSTot.vNF;
   Troco := vTroco;
   if Troco > 0 then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
        FormatFloatBr(Troco), FPosPrinter.ColunasFonteCondensada, '|'));
 
+end;
+
+procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsultaChaveAcesso;
+begin
+  // chave de acesso
+  FPosPrinter.Buffer.Add('</ce><c>Consulte pela Chave de Acesso em ');
+  FPosPrinter.Buffer.Add('</ce><c>'+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb));
+  FPosPrinter.Buffer.Add('</ce><c>' + FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)));
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
@@ -341,7 +349,7 @@ begin
   begin
     if FpNFe.Total.ICMSTot.vTotTrib > 0 then
     begin
-      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s';
+      MsgTributos:= 'Tributos Totais Incidentes(Lei Federal 12.741/12): R$ %s';
       FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloatBr(FpNFe.Total.ICMSTot.vTotTrib)]),
                           FPosPrinter.ColunasFonteCondensada));
     end;
@@ -361,41 +369,21 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarAreaMensagemFiscal;
+procedure TACBrNFeDANFeESCPOS.GerarMensagemContingencia;
 begin
   // se homologação imprimir o texto de homologação
-  if FpNFe.ide.tpAmb = taHomologacao then
+  if (FpNFe.ide.tpAmb = taHomologacao) then
   begin
-    FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL'));
+    FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>EMITIDA EM AMBIENTE DE HOMOLOGAÇÃO - SEM VALOR FISCAL</n>'));
   end;
 
   // se diferente de normal imprimir a emissão em contingência
-  if FpNFe.ide.tpEmis <> teNormal then
+  if (FpNFe.ide.tpEmis <> teNormal) and
+     EstaVazio(FpNFe.procNFe.nProt) then
   begin
-    FPosPrinter.Buffer.Add(ACBrStr('</ce></fn><n>EMITIDA EM CONTINGÊNCIA'));
+    FPosPrinter.Buffer.Add(ACBrStr('</ce><e>EMITIDA EM CONTINGÊNCIA</e>'));
+    FPosPrinter.Buffer.Add(ACBrStr('<c>Pendente de autorização'));
   end;
-
-  // dados da nota eletronica de consumidor
-  FPosPrinter.Buffer.Add(ACBrStr('</n></ce><c>' +
-    'Número ' + IntToStrZero(FpNFe.ide.nNF, 9) +
-    ' Série ' + IntToStrZero(FpNFe.ide.serie, 3) +
-    ' Emissão ' + DateTimeToStr(FpNFe.ide.dEmi) ));
-
-  if (FpNFe.Ide.tpEmis = teOffLine) then
-    FPosPrinter.Buffer.Add('</ce><c>'+ IfThen(ViaConsumidor, 'Via Consumidor', 'Via Estabelecimento'));
-
-  // chave de acesso
-  FPosPrinter.Buffer.Add('<c>Consulte pela Chave de Acesso em '+ TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb));
-  FPosPrinter.Buffer.Add('<c>' + FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)) + '</fn>');
-
-  // protocolo de autorização
-  if FpNFe.Ide.tpEmis <> teOffLine then
-  begin
-    FPosPrinter.Buffer.Add(ACBrStr('<c>Protocolo de Autorização: ')+Trim(FpNFe.procNFe.nProt) + ' ' +
-       IfThen(FpNFe.procNFe.dhRecbto <> 0, DateTimeToStr(FpNFe.procNFe.dhRecbto),
-              '') + '</fn>');
-  end;
-
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsumidor;
@@ -418,7 +406,7 @@ begin
         LinhaCmd := 'CONSUMIDOR CPF: ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
     end;
 
-    LinhaCmd := '<c>' + LinhaCmd + ' ' + Trim(FpNFe.Dest.xNome);
+    LinhaCmd := '</ce><c>' + LinhaCmd + ' ' + Trim(FpNFe.Dest.xNome);
     FPosPrinter.Buffer.Add(LinhaCmd);
 
     LinhaCmd := Trim(
@@ -431,6 +419,37 @@ begin
     );
     if LinhaCmd <> '' then
       FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(LinhaCmd,FPosPrinter.ColunasFonteCondensada));
+  end;
+end;
+
+procedure TACBrNFeDANFeESCPOS.GerarInformacoesIdentificacaoNFCe;
+begin
+  // dados da nota eletronica de consumidor
+  FPosPrinter.Buffer.Add(ACBrStr('</n></ce><c>' +
+    'NFC-e nº ' + IntToStrZero(FpNFe.ide.nNF, 9) +
+    ' Série ' + IntToStrZero(FpNFe.ide.serie, 3) +
+    ' ' + DateTimeToStr(FpNFe.ide.dEmi) +
+    IfThen(ViaConsumidor, ' Via Consumidor', ' Via Empresa')));
+
+  // protocolo de autorização
+  if (FpNFe.Ide.tpEmis <> teOffLine) or
+     NaoEstaVazio(FpNFe.procNFe.nProt) then
+  begin
+    FPosPrinter.Buffer.Add(ACBrStr('<c>Protocolo de Autorização: ')+Trim(FpNFe.procNFe.nProt));
+    if (FpNFe.procNFe.dhRecbto <> 0) then
+      FPosPrinter.Buffer.Add(ACBrStr('<c>Data de Autorização '+DateTimeToStr(FpNFe.procNFe.dhRecbto)+'</fn>'));
+  end;
+end;
+
+procedure TACBrNFeDANFeESCPOS.GerarMensagemFiscal;
+var
+  TextoObservacao: AnsiString;
+begin
+  TextoObservacao := Trim(FpNFe.InfAdic.infAdFisco);
+  if TextoObservacao <> '' then
+  begin
+    TextoObservacao := StringReplace(FpNFe.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);
+    FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
   end;
 end;
 
@@ -511,9 +530,12 @@ begin
     GerarDetalhesProdutosServicos;
 
   GerarInformacoesTotais;
-  GerarPagamentos(AResumido);
-  GerarAreaMensagemFiscal;
+  GerarPagamentos;
+  GerarInformacoesConsultaChaveAcesso;
   GerarInformacoesConsumidor;
+  GerarInformacoesIdentificacaoNFCe;
+  GerarMensagemFiscal;
+  GerarMensagemContingencia;
   GerarInformacoesQRCode;
   GerarMensagemInteresseContribuinte;
   GerarTotalTributos;

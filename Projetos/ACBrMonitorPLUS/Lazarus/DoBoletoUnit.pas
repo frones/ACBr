@@ -360,6 +360,7 @@ begin
          DataMoraJuros       := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataMoraJuros','')),0);
          DataProtesto        := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataProtesto','')),0);
          DataBaixa           := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataBaixa','')),0);
+         DataLimitePagto     := StrToDateDef(Trim(aIni.ReadString(Sessao,'DataLimitePagto','')),0);
          LocalPagamento      := IfThen(Trim(LocalPagto) <> '',LocalPagto,LocalPagamento);
          NumeroDocumento     := aIni.ReadString(Sessao,'NumeroDocumento',NumeroDocumento);
          EspecieDoc          := aIni.ReadString(Sessao,'Especie',EspecieDoc);

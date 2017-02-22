@@ -3792,18 +3792,16 @@ var
   AliqZ: TACBrECFAliquota;
   ValReg: Double;
 
-  function EncontrarInicioLinha(LinhaEncontrar: String): Boolean;
+  function EncontrarInicioLinha(StringEncontrar: String): Boolean;
   var
-    wIniLinha: String;
     wTamanho: Integer;
   begin
     Result   := False;
-    wTamanho := Length(LinhaEncontrar);
+    wTamanho := Length(StringEncontrar);
 
     while (I < SL.Count) do
     begin
-      wIniLinha := Copy(SL[I], 1, wTamanho);
-      Result    := (Pos(LinhaEncontrar, wIniLinha) > 0);
+      Result := (Copy(SL[I], 1, wTamanho) = StringEncontrar);
       if Result then
         Break;
 

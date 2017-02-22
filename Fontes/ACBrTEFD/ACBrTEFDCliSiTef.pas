@@ -1436,7 +1436,7 @@ begin
     fArqBackUp := '';
   end;
 
-  Result := inherited;
+  Result := inherited CopiarResposta;
 end;
 
 procedure TACBrTEFDCliSiTef.ProcessarResposta;

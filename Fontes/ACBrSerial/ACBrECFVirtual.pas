@@ -1269,10 +1269,13 @@ begin
     ItemCupom := fpItensCupom.New(Self);
     ItemCupom.AsString := T;
 
-    if (fpAliquotasCupom.Find(ItemCupom.AliqPos).Tipo = 'S') then
-      fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.TotalLiquido
-    else
-      fpSubtotalICMS  := fpSubtotalICMS + ItemCupom.TotalLiquido;
+    if fpAliquotasCupom.Count > 0 then
+    begin
+      if (fpAliquotasCupom.Find(ItemCupom.AliqPos).Tipo = 'S') then
+        fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.TotalLiquido
+      else
+        fpSubtotalICMS  := fpSubtotalICMS + ItemCupom.TotalLiquido;
+    end;
 
     Inc(I);
   end;
@@ -3114,6 +3117,8 @@ begin
       fpComprovantesNaoFiscais.Add( ComprovanteVirtual ) ;
       A := A + 1 ;
     end ;
+
+
   finally
     Ini.Free ;
   end ;

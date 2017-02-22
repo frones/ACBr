@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/02/2017
+-- ACBrECFEscECF --
+[*] Correção para encontrar a linha correta das informações 
+	em "BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal".
+    (por: Elias César)
+
 Data: 20/02/2017
 -- ACBrECFEscECF --
 [*] Alteração para pegar a linha de início corretamente ao ler os dados de RZ

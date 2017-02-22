@@ -3788,19 +3788,22 @@ procedure TACBrECFEscECF.BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal(
 var
   SL, Totalizadores: TStringList;
   I, J: Integer;
-  AStr, LinhaTracejada, NomeTotalizador: String;
+  AStr, NomeTotalizador: String;
   AliqZ: TACBrECFAliquota;
   ValReg: Double;
 
-  function EncontrarLinha(LinhaEncontrar: String): Boolean;
+  function EncontrarInicioLinha(LinhaEncontrar: String): Boolean;
   var
-    Linha: String;
+    wIniLinha: String;
+    wTamanho: Integer;
   begin
-    Result := False;
+    Result   := False;
+    wTamanho := Length(LinhaEncontrar);
+
     while (I < SL.Count) do
     begin
-      Linha := SL[I];
-      Result := (pos(LinhaEncontrar, Linha ) > 0);
+      wIniLinha := Copy(SL[I], 1, wTamanho);
+      Result    := (Pos(LinhaEncontrar, wIniLinha) > 0);
       if Result then
         Break;
 
@@ -3831,7 +3834,10 @@ var
   end;
 
   procedure ExtrairTotalizadores;
+  var
+    LinhaTracejada: String;
   begin
+    LinhaTracejada := StringOfChar('-',40);
     Totalizadores.Clear;
     while (I < SL.Count) do
     begin
@@ -3964,8 +3970,6 @@ FAB: BE101310100700000348                    BR
 ---------------------------------
   }
 
-  LinhaTracejada := StringOfChar('-',40);
-
   Totalizadores := TStringList.Create;
   SL := TStringList.Create;
   try
@@ -3978,18 +3982,16 @@ FAB: BE101310100700000348                    BR
     begin
       I := 0;
       // Achando a linha de inicio //
-      if not EncontrarLinha('LEITURA MEMÓRIA FISCAL') then
-        if not EncontrarLinha(LinhaTracejada) then
-          Exit;
-
-      if not EncontrarLinha('CRZ') then
+      if not EncontrarInicioLinha('CRZ') then
         Exit;
 
-      Inc(I);
-      CRZ              := StrToIntDef( copy(SL[I],1 ,4), -1 ) ;
-      CRO              := StrToIntDef( copy(SL[I],12,3), -1 ) ;
-      COO              := StrToIntDef( copy(SL[I],17,9), -1 ) ;
-      AStr             := copy(SL[I],28,19);
+      if not EncontrarInicioLinha(IntToStrZero(ANumCRZ, 4)) then
+        Exit;
+
+      CRZ  := StrToIntDef( copy(SL[I],1 ,4), -1 ) ;
+      CRO  := StrToIntDef( copy(SL[I],12,3), -1 ) ;
+      COO  := StrToIntDef( copy(SL[I],17,9), -1 ) ;
+      AStr := copy(SL[I],28,19);
       try
         DataDoMovimento := EncodeDate(StrToInt(copy(AStr, 7,4)),   // Ano
                                       StrToInt(copy(AStr, 4,2)),   // Mes

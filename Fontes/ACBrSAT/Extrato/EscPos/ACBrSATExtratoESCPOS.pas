@@ -139,7 +139,7 @@ end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho(Cancelamento: Boolean);
 var        
-  nCFe: String;
+  nCFe, DocsEmit: String;
 begin
   FBuffer.Clear;
   FBuffer.Add('</zera></ce></logo>');
@@ -153,10 +153,14 @@ begin
               Trim(CFe.Emit.EnderEmit.xMun)+'-'+
               FormatarCEP(CFe.Emit.EnderEmit.CEP));
 
-  FBuffer.Add( '</ae><c>'+
-               'CNPJ:'+FormatarCNPJ(CFe.Emit.CNPJ)+
-               ' IE:'+Trim(CFe.Emit.IE)+
-               ' IM:'+Trim(CFe.Emit.IM));
+  DocsEmit := 'CNPJ:'+FormatarCNPJ(CFe.Emit.CNPJ)+
+                  ' IE:'+Trim(CFe.Emit.IE);
+
+  { Verifica se existe valor no campo IM }
+  if (CFe.Emit.IM <> '') and (CFe.Emit.IM <> '0') then
+    DocsEmit := DocsEmit + ' IM:'+Trim(CFe.Emit.IM);
+
+  FBuffer.Add( '</ae><c>'+ DocsEmit);
   FBuffer.Add('</linha_simples>');
 
 

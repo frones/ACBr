@@ -47,7 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data: 21/02/2017
+Data: 22/02/2017
+-- ACBrSATExtratoESCPOS --
+[*] Ajuste para não imprimir o título "IM:" caso não existe informação em:
+    CFe.Emit.IM
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35282
+
+Data: 21//2/2017
 -- ACBrSATExtratoClass --
 [-] Correção para A.V. em "TACBrSATExtratoClass.GetNomeArquivo"   (por: DSA)
 

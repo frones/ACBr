@@ -201,19 +201,20 @@ var
   i: Integer;
   nTamDescricao: Integer;
   VlrLiquido: Double;
-  sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
+  sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
 begin
   if ImprimirItens then
   begin
-    FPosPrinter.Buffer.Add('</ae><c>'+ACBrStr(PadSpace('Código|Descrição|Qtde|Un|Valor unit.|Valor total',
+    FPosPrinter.Buffer.Add('</ae><c>'+ACBrStr(PadSpace('#|Código|Descrição|Qtde|Un|Valor unit.|Valor total',
                                             FPosPrinter.ColunasFonteCondensada, '|')));
 
     for i := 0 to FpNFe.Det.Count - 1 do
     begin
       with FpNFe.Det.Items[i] do
       begin
-        sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
+        sItem        :=        IntToStrZero( Prod.nItem, 3);
+		sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
         sDescricao   :=                Trim( Prod.xProd);
         sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
         sUnidade     :=                Trim( Prod.uCom);
@@ -222,8 +223,8 @@ begin
 
         if ImprimeEmUmaLinha then
         begin
-          LinhaCmd := sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
-            sUnidade + ' ' + sVlrUnitario + ' ' + sVlrProduto;
+          LinhaCmd := sItem + ' ' + sCodigo + ' ' + '[DesProd] ' + sQuantidade + ' ' +
+            sUnidade + ' X ' + sVlrUnitario + ' ' + sVlrProduto;
 
           // acerta tamanho da descrição
           nTamDescricao := FPosPrinter.ColunasFonteCondensada - Length(LinhaCmd) + 9;
@@ -234,11 +235,11 @@ begin
         end
         else
         begin
-          LinhaCmd := sCodigo + ' ' + sDescricao;
+          LinhaCmd := sItem + ' ' + sCodigo + ' ' + sDescricao;
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
 
           LinhaCmd :=
-            PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' ' +
+            PadRight(sQuantidade, 15) + ' ' + PadRight(sUnidade, 6) + ' X ' +
             PadRight(sVlrUnitario, 13) + '|' + sVlrProduto;
           LinhaCmd := padSpace(LinhaCmd, FPosPrinter.ColunasFonteCondensada, '|');
           FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);

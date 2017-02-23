@@ -1547,7 +1547,7 @@ begin
         FieldDefs.Add('dFab'      , ftDateTime);
         FieldDefs.Add('dVal'      , ftDateTime);
         FieldDefs.Add('DescricaoProduto', ftString, 2000);
-        FieldDefs.Add('Unidade'   , ftString, 6);
+        FieldDefs.Add('Unidade'   , ftString, 14);
         FieldDefs.Add('Quantidade', ftString, 18);
         FieldDefs.Add('ValorUnitario'   , ftString, 18);
         FieldDefs.Add('Valorliquido'    , ftString, 18);

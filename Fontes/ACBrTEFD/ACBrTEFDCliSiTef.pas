@@ -1430,7 +1430,7 @@ begin
     if FileExists(fArqBackUp) then
     begin
       if not SysUtils.DeleteFile(fArqBackUp) then
-        raise EFilerError.CreateFmt('Não foi possivel apagar o arquivo "%s" de backup: "%d - %s"!', [fArqBackUp, GetLastError, SysErrorMessage(GetLastError)]);
+        raise EFilerError.CreateFmt('Não foi possivel apagar o arquivo "%s" de backup!', [fArqBackUp]);
     end;
 
     fArqBackUp := '';

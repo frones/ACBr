@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2017
+-- ACBrTEFDCliSiTEF --
+[-] Acerto para limpar corretamenta as parcelas
+    por Regys.silveira
+
 21/02/2017
 -- ACBrTEFDCliSiTEF --
 [-] Acerto para evitar problemas quando é feito desligamento durante as mensagens do Pin-Pad

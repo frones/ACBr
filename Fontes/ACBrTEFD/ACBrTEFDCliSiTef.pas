@@ -467,9 +467,9 @@ begin
 
   // leitura de parcelas conforme nova documentação
   // 141 e 142 foram removidos em Setembro de 2014
+  fpParcelas.Clear;
   if fpQtdParcelas > 0 then
   begin
-    fpParcelas.Clear;
     for I := 1 to fpQtdParcelas do
     begin
       Parc := TACBrTEFDRespParcela.Create;

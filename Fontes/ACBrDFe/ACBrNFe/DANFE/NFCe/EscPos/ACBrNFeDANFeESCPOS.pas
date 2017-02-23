@@ -190,7 +190,9 @@ end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;
 begin
-  FPosPrinter.Buffer.Add(ACBrStr('</ce><c><n>Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica</n>'));
+  FPosPrinter.Buffer.Add('</ce><c><n>' +
+    QuebraLinhas(ACBrStr('Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica'), FPosPrinter.ColunasFonteCondensada) + 
+    '</n>');
   GerarMensagemContingencia;
 end;
 
@@ -425,11 +427,12 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarInformacoesIdentificacaoNFCe;
 begin
   // dados da nota eletronica de consumidor
-  FPosPrinter.Buffer.Add(ACBrStr('</n></ce><c>' +
+  FPosPrinter.Buffer.Add('</n></ce><c>' + StringReplace(QuebraLinhas(ACBrStr(
     'NFC-e nº ' + IntToStrZero(FpNFe.ide.nNF, 9) +
     ' Série ' + IntToStrZero(FpNFe.ide.serie, 3) +
     ' ' + DateTimeToStr(FpNFe.ide.dEmi) +
-    IfThen(ViaConsumidor, ' Via Consumidor', ' Via Empresa')));
+    IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa'))
+    , FPosPrinter.ColunasFonteCondensada, '|'), '|', ' ', [rfReplaceAll]));
 
   // protocolo de autorização
   if (FpNFe.Ide.tpEmis <> teOffLine) or

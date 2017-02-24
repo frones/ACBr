@@ -507,8 +507,8 @@ begin
   {$ENDIF}
 
   RSAKey := RSA_new;
-  RSAKey.e := bnMod;
-  RSAKey.d := bnExp;
+  RSAKey^.e := bnMod;
+  RSAKey^.d := bnExp;
 
   {$IFDEF USE_libeay32}
     Erro := EVP_PKEY_set1_RSA( fsKey, RSAKey );
@@ -631,11 +631,11 @@ begin
   try
     if (RsaKey <> Nil) then
     begin
-      BN_print( Bio, RsaKey.e);
+      BN_print( Bio, RsaKey^.e);
       Modulo := AnsiString(BioToStr( Bio ));
 
       BIO_reset( Bio );
-      BN_print( Bio, RsaKey.d);
+      BN_print( Bio, RsaKey^.d);
       Expoente := AnsiString(BioToStr( Bio ));
     end
     else

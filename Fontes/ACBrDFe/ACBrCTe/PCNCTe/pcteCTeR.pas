@@ -1420,7 +1420,10 @@ begin
   (* Grupo da TAG <infCteComp> ************************************************)
   if Leitor.rExtrai(1, 'infCteComp') <> ''
   then begin
-    CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chave');
+    if (CTe.infCTe.versao >= 3) then
+       CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chCTe')
+    else
+      CTe.InfCTeComp.Chave := Leitor.rCampo(tcStr, 'chave');
   end; // fim de infCteComp
 
   (* Grupo da TAG <infCteAnu> ************************************************)

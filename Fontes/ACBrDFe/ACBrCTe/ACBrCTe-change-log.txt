@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/02/2017
+-- pcteCTeR --
+[*] Correção na leitura da chave de um CTe Complementado
+   Por: Nellien
+		
 21/01/2017
 -- pcteConversaoCTe --
 [*] Adicionado os novos valores de tipo de documento e documentos de transporte anterior.

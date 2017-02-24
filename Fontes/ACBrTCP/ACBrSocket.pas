@@ -82,7 +82,7 @@ TACBrTCPServerDaemon = class(TThread)
     property ACBrTCPServer : TACBrTCPServer read fsACBrTCPServer ;
 
   public
-    Constructor Create( const ACBrTCPServer : TACBrTCPServer );
+    Constructor Create( const AACBrTCPServer : TACBrTCPServer );
     Destructor Destroy; override;
     procedure Execute; override;
 
@@ -294,9 +294,9 @@ end;
 
 { TACBrTCPServerDaemon }
 
-constructor TACBrTCPServerDaemon.Create( const ACBrTCPServer : TACBrTCPServer );
+constructor TACBrTCPServerDaemon.Create( const AACBrTCPServer : TACBrTCPServer );
 begin
-  fsACBrTCPServer := ACBrTCPServer ;
+  fsACBrTCPServer := AACBrTCPServer ;
   fsEvent         := TSimpleEvent.Create;
   fsSock          := TTCPBlockSocket.create ;
   fsEnabled       := False;

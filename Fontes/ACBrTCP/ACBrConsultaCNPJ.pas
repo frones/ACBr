@@ -144,18 +144,18 @@ end;
 
 function TACBrConsultaCNPJ.GetCaptchaURL : String ;
 var
-  URL, Html: String;
+  AURL, Html: String;
 begin
   try
     Self.HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao2.asp');
     Html := Self.RespHTTP.Text;
 
-    URL := 'http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/' +
+    AURL := 'http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/' +
            StrEntreStr(Html, '<img id="imgCaptcha" src="', '"');
 
     FViewState := StrEntreStr(Html, '<input type=hidden id=viewstate name=viewstate value='+'''', '''');
 
-    Result := StringReplace(URL, 'amp;', '', []);
+    Result := StringReplace(AURL, 'amp;', '', []);
   except
     on E: Exception do
     begin

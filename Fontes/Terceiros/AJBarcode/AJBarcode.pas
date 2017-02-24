@@ -290,7 +290,7 @@ type
 
   public
     { Public-Deklarationen }
-    constructor Create(Owner:TComponent); override;
+    constructor Create(AOwner:TComponent); override;
     destructor Destroy; override;
     procedure Assign(Source: TPersistent);override;
 
@@ -542,9 +542,9 @@ begin
 end;
 
 
-constructor TAsBarcode.Create(Owner:TComponent);
+constructor TAsBarcode.Create(AOwner:TComponent);
 begin
-  inherited Create(owner);
+  inherited Create(AOwner);
   FAngle := 0.0;
   FRatio := 2.0;
   FModul := 1;
@@ -1087,10 +1087,10 @@ end;
 
 var
   i, idx : integer;
-  checksum:integer;
+  chksum:integer;
 
 begin
-  checksum := 0;
+  chksum := 0;
   {Startcode}
   Result := tabelle_39[FindIdx('*')].data ;
   Result := Result + '0';
@@ -1101,15 +1101,15 @@ begin
     if idx < 0 then
       continue;
     result := result + tabelle_39[idx].data + '0';
-    Inc(checksum, tabelle_39[idx].chk);
+    Inc(chksum, tabelle_39[idx].chk);
   end;
 
-  {Calculate Checksum Data}
+  {Calculate chksum Data}
   if FCheckSum then
     begin
-    checksum := checksum mod 43;
+    chksum := chksum mod 43;
     for i:=0 to High(tabelle_39) do
-      if checksum = tabelle_39[i].chk then
+      if chksum = tabelle_39[i].chk then
       begin
         result := result + tabelle_39[i].data + '0';
         break;
@@ -1325,17 +1325,17 @@ function Find_Code128C(c:string):integer;
 
 var i, j, idx: integer;
   startcode:string;
-  checksum : integer;
+  chksum : integer;
   codeword_pos : integer;
 
 begin
   case FTyp of
     bcCode128A, bcCodeEAN128A:
-      begin checksum := 103; startcode:= StartA; end;
+      begin chksum := 103; startcode:= StartA; end;
     bcCode128B, bcCodeEAN128B:
-      begin checksum := 104; startcode:= StartB; end;
+      begin chksum := 104; startcode:= StartB; end;
     bcCode128C, bcCodeEAN128C:
-      begin checksum := 105; startcode:= StartC; end;
+      begin chksum := 105; startcode:= StartC; end;
     else
       raise Exception.CreateFmt('%s: wrong BarcodeType in Code_128', [self.ClassName]);
   end;
@@ -1354,10 +1354,10 @@ begin
       for EAN 128 barcodes
       }
       result := result + tabelle_128[102].data;
-      Inc(checksum, 102*codeword_pos);
+      Inc(chksum, 102*codeword_pos);
       Inc(codeword_pos);
       {
-      if there is no checksum at the end of the string
+      if there is no chksum at the end of the string
       the EAN128 needs one (modulo 10)
       }
       if FCheckSum then FText:=DoCheckSumming(FTEXT);
@@ -1373,7 +1373,7 @@ begin
       idx:=Find_Code128C(copy(Ftext,j,2));
       if idx < 0 then idx := Find_Code128C('00');
       result := result + tabelle_128[idx].data;
-      Inc(checksum, idx*codeword_pos);
+      Inc(chksum, idx*codeword_pos);
       Inc(codeword_pos);
     end;
   end
@@ -1384,12 +1384,12 @@ begin
       if idx < 0 then
         idx := Find_Code128AB(' ');
       result := result + tabelle_128[idx].data;
-      Inc(checksum, idx*codeword_pos);
+      Inc(chksum, idx*codeword_pos);
       Inc(codeword_pos);
     end;
 
-  checksum := checksum mod 103;
-  result := result + tabelle_128[checksum].data;
+  chksum := chksum mod 103;
+  result := result + tabelle_128[chksum].data;
 
   result := result + Stop;      {Stopcode}
   Result := Convert(Result);
@@ -1590,7 +1590,7 @@ const tabelle_MSI:array['0'..'9'] of string[8] =
 
 var
   i:integer;
-  check_even, check_odd, checksum:integer;
+  check_even, check_odd, chksum:integer;
 begin
   result := '60';    {Startcode}
   check_even := 0;
@@ -1606,13 +1606,13 @@ begin
     result := result + tabelle_MSI[FText[i]];
   end;
 
-  checksum := quersumme(check_odd*2) + check_even;
+  chksum := quersumme(check_odd*2) + check_even;
 
-  checksum := checksum mod 10;
-  if checksum > 0 then
-    checksum := 10-checksum;
+  chksum := chksum mod 10;
+  if chksum > 0 then
+    chksum := 10-chksum;
 
-  result := result + tabelle_MSI[chr(ord('0')+checksum)];
+  result := result + tabelle_MSI[chr(ord('0')+chksum)];
 
   result := result + '515'; {Stopcode}
 end;

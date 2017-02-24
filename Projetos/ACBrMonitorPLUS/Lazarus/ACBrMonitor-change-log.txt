@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/02/2017
+[+] Inclusão da leitura da tag DataLimitePagto para informar a data máxima para recebimento
+    de um boleto para bancos que possuem esta opção na remessa. 
+    por: Juliana Tamizou
+
 17/02/2017
 [+] Adicionado comando GerarPDFExtratoVenda ao SAT.
 	Comando recebe como parâmetro XML, stream ou path, mais o nome do arquivo,

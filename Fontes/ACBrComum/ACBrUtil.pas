@@ -1416,7 +1416,7 @@ Var
   {$ENDIF}
 begin
   if AFormat = '' then
-     AFormat := ',0.00';
+     AFormat := FloatMask();
 
   {$IFDEF HAS_FORMATSETTINGS}
   FS := CreateFormatSettings;
@@ -3856,7 +3856,7 @@ initialization
 {$EndIf}
   Randomized := False ;
 {$IfDef FPC}
-ACBrANSIEncoding := GetSysANSIencoding;
+  ACBrANSIEncoding := GetSysANSIencoding;
 {$EndIf}
 
 end.

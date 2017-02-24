@@ -49,7 +49,7 @@ Símbolo : Significado
 
 Data: 22/02/2017
 -- ACBrSATExtratoESCPOS --
-[*] Ajuste para não imprimir o título "IM:" caso não existe informação em:
+[*] Ajuste para não imprimir o título "IM:" caso não exista informação em:
     CFe.Emit.IM
     http://www.projetoacbr.com.br/forum/index.php?showtopic=35282
 

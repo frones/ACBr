@@ -4248,7 +4248,7 @@ begin
     edtPathDPEC.Text := Ini.ReadString('Arquivos', 'PathDPEC', PathApplication+'Arqs');
     edtPathEvento.Text := Ini.ReadString('Arquivos', 'PathEvento', PathApplication+'Arqs');
 
-    ACBrNFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
+    //ACBrNFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
     ACBrNFe1.Configuracoes.Arquivos.SepararPorMes := cbxPastaMensal.Checked;
     ACBrNFe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
     ACBrNFe1.Configuracoes.Arquivos.EmissaoPathNFe := cbxEmissaoPathNFe.Checked;
@@ -4260,7 +4260,7 @@ begin
     ACBrNFe1.Configuracoes.Arquivos.PathInu := edtPathInu.Text;
     ACBrNFe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
 
-    ACBrCTe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
+    //ACBrCTe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
     ACBrCTe1.Configuracoes.Arquivos.SepararPorMes := cbxPastaMensal.Checked;
     ACBrCTe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
     ACBrCTe1.Configuracoes.Arquivos.EmissaoPathCTe := cbxEmissaoPathNFe.Checked;
@@ -4271,7 +4271,7 @@ begin
     ACBrCTe1.Configuracoes.Arquivos.PathInu := edtPathInu.Text;
     ACBrCTe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
 
-    ACBrMDFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
+    //ACBrMDFe1.Configuracoes.Arquivos.Salvar := cbxSalvarArqs.Checked;
     ACBrMDFe1.Configuracoes.Arquivos.SepararPorMes := cbxPastaMensal.Checked;
     ACBrMDFe1.Configuracoes.Arquivos.AdicionarLiteral := cbxAdicionaLiteral.Checked;
     ACBrMDFe1.Configuracoes.Arquivos.EmissaoPathMDFe := cbxEmissaoPathNFe.Checked;
@@ -4281,7 +4281,7 @@ begin
     ACBrMDFe1.Configuracoes.Arquivos.PathMDFe := edtPathNFe.Text;
     ACBrMDFe1.Configuracoes.Arquivos.PathEvento := edtPathEvento.Text;
 
-    ACBrGNRE1.Configuracoes.Arquivos.Salvar                      := cbxSalvarArqs.Checked;
+    //ACBrGNRE1.Configuracoes.Arquivos.Salvar                      := cbxSalvarArqs.Checked;
     ACBrGNRE1.Configuracoes.Arquivos.SepararPorMes               := cbxPastaMensal.Checked;
     ACBrGNRE1.Configuracoes.Arquivos.AdicionarLiteral            := cbxAdicionaLiteral.Checked;
     ACBrGNRE1.Configuracoes.Arquivos.EmissaoPathGNRE             := cbxEmissaoPathNFe.Checked;
@@ -7743,7 +7743,7 @@ procedure TFrmACBrMonitor.AddLinesLog(aLineLog: String);
   procedure RemoveLinesLog;
   begin
     mResp.Lines.BeginUpdate;
-    while mResp.Lines.Count > 1000 do
+    while mResp.Lines.Count > 500 do
       mResp.Lines.Delete(0);
 
     mResp.Lines.EndUpdate;
@@ -7752,7 +7752,7 @@ procedure TFrmACBrMonitor.AddLinesLog(aLineLog: String);
 begin
   if aLineLog <> '' then
   begin
-    if ( mResp.Lines.Count > 1000 ) then
+    if ( mResp.Lines.Count > 500 ) then
        RemoveLinesLog;
 
     mResp.Lines.Add(aLineLog);

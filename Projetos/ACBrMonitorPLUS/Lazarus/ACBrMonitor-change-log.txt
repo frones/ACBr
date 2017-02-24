@@ -44,6 +44,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/02/2017
+[*] Modificado parâmetro para salvar XMLs, não usar a configuração de salvar em pastas
+	separadas.
+	http://www.projetoacbr.com.br/forum/topic/35316-nota-autorizada-e-imprimi-nao-autorizada/#comment-231413
+	por: Celso Marigo Junior
+
+24/02/2017
 [+] Inclusão da leitura da tag DataLimitePagto para informar a data máxima para recebimento
     de um boleto para bancos que possuem esta opção na remessa. 
     por: Juliana Tamizou

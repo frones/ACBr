@@ -837,8 +837,8 @@ begin
       adotam esse horário, ao utilizar esta hora para basear a emissão da nota
       acontece o erro. }
     if (pos('svrs.rs.gov.br', FPURL) > 0) and
-       (MinutesBetween(NFeRetorno.dhRetorno, Now) > 50) and
-       (not IsHorarioDeVerao(CUFtoUF(FcUF), NFeRetorno.dhRetorno)) then
+       (MinutesBetween(NFeRetorno.dhRecbto, Now) > 50) and
+       (not IsHorarioDeVerao(CUFtoUF(FcUF), NFeRetorno.dhRecbto)) then
       FdhRecbto:= IncHour(NFeRetorno.dhRecbto,-1)
     else
       FdhRecbto := NFeRetorno.dhRecbto;

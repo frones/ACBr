@@ -4699,7 +4699,7 @@ begin
     edSH_Aplicativo.Text  := LeINICrypt(INI, 'SWH', 'Aplicativo', Pass);
     edSH_NumeroAP.Text    := LeINICrypt(INI, 'SWH', 'NumeroAplicativo', Pass);
     edSH_VersaoAP.Text    := LeINICrypt(INI, 'SWH', 'VersaoAplicativo', Pass);
-    edSH_Linha2.Text      := LeINICrypt(INI, 'SWH', 'Linha1', Pass);
+    edSH_Linha1.Text      := LeINICrypt(INI, 'SWH', 'Linha1', Pass);
     edSH_Linha2.Text      := LeINICrypt(INI, 'SWH', 'Linha2', Pass);
     edSH_Site.Text        := LeINICrypt(INI, 'SWH', 'Site', Pass);
 

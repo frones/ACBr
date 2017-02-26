@@ -364,6 +364,7 @@ begin
     4126306: Result:= '61'; // Senges/PR
     4127106: Result:= '260';// Telemaco Borba/PR
     4127700: Result:= '136';// Toledo/PR
+    4119608: Result:= '104';// Pitanga/PR
   else
     Result:= '';
   end;

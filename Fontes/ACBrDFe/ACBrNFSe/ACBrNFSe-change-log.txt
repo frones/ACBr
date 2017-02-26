@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/02/2017
+-- pnfslerListaNFSe / pnfsNFSeW_ABRASFv2 -- 
+[*] Alterações visando o provedor Coplan.
+    Por: Paulo Henrique
+-- pnfsNFSeG -- 
+[*] Incluido a cidade Pitanga/PR.
+    Por: Junior Guillen
+-- ACBrNFSeWebServices -- 
+[*] Passado o valor corredo do parâmetro infElement no CancelarNFSe ao assinar o XML
+    (provedor Fiorilli).
+    Por: bigWings
+
 10/02/2017
 -- ACBrNFSeWebServices -- 
 [*] Incluido a comdição (RetCancNFSe.InfCanc.Sucesso='S') no método TratarResposta

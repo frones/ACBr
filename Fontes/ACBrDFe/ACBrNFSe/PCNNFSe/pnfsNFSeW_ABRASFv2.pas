@@ -281,7 +281,8 @@ begin
    proActcon,
    proPronimv2,
    proVirtual,
-   proVersaTecnologia: begin
+   proVersaTecnologia,
+   proCoplan:  begin
                  Gerador.wCampoNFSe(tcDe2, '#14', 'ValorDeducoes  ', 01, 15, 1, NFSe.Servico.Valores.ValorDeducoes, DSC_VDEDUCISS);
                  Gerador.wCampoNFSe(tcDe2, '#15', 'ValorPis       ', 01, 15, 1, NFSe.Servico.Valores.ValorPis, DSC_VPIS);
                  Gerador.wCampoNFSe(tcDe2, '#16', 'ValorCofins    ', 01, 15, 1, NFSe.Servico.Valores.ValorCofins, DSC_VCOFINS);
@@ -333,7 +334,9 @@ begin
     Gerador.wCampoNFSe(tcDe2, '#24', 'BaseCalculo', 01, 15, 0, NFSe.Servico.Valores.BaseCalculo, DSC_VBCISS);
 
   if FProvedor in [proABase, proActcon, proPronimv2, proVirtual, proVersaTecnologia] then
-    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, DSC_VINSS);
+    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 1, NFSe.Servico.Valores.ValorIss, DSC_VINSS)
+  else if FProvedor in [proCoplan] then
+    Gerador.wCampoNFSe(tcDe2, '#21', 'ValorIss', 01, 15, 0, NFSe.Servico.Valores.ValorIss, DSC_VINSS);
 
   case FProvedor of
     proCoplan,
@@ -378,6 +381,7 @@ begin
    proPronimv2,
    proTecnos,
    proVirtual,
+   proCoplan,
    proVersaTecnologia: begin
                 Gerador.wCampoNFSe(tcDe2, '#27', 'DescontoIncondicionado', 01, 15, 1, NFSe.Servico.Valores.DescontoIncondicionado, DSC_VDESCINCOND);
                 Gerador.wCampoNFSe(tcDe2, '#28', 'DescontoCondicionado  ', 01, 15, 1, NFSe.Servico.Valores.DescontoCondicionado, DSC_VDESCCOND);
@@ -391,7 +395,6 @@ begin
    proSystemPro,
    proPVH,
    proSaatri,
-   proCoplan,
    proLink3,
    proNEAInformatica,
    proNotaInteligente,
@@ -581,6 +584,10 @@ begin
    proABase, proBethav2, proDigifred, proEReceita, proFiorilli, proGovDigital,
    proISSe, proMitra, proNEAInformatica, proNotaInteligente, proPVH,
    proSisPMJP: begin
+                 Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
+                 Gerador.wGrupoNFSe('Rps');
+               end;
+   proCoplan: begin
                  Gerador.wGrupoNFSe('InfDeclaracaoPrestacaoServico ' + FIdentificador + '="' + NFSe.InfID.ID + '"');
                  Gerador.wGrupoNFSe('Rps');
                end;

@@ -3525,6 +3525,7 @@ var
   i: Integer;
   Gerador: TGerador;
   docElemento, sAssinatura: String;
+  infElemento: String;
 begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
@@ -3743,7 +3744,14 @@ begin
       docElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
     end;
 
-    AssinarXML(FPDadosMsg, docElemento, '', 'Falha ao Assinar - Cancelar NFS-e: ');
+    case FProvedor of
+      proFiorilli: infElemento := 'InfPedidoCancelamento';
+    else
+      infElemento := '';
+    end;
+
+    AssinarXML(FPDadosMsg, docElemento, infElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+
   end;
 
   if (FProvedor = proBetha) {and (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar)} then

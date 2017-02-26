@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 26/02/2017
+-- ACBrNFSeWebServices -- 
+[*] Simplificação de código.
+    Por: Italo Jurisato Junior
 -- pnfslerListaNFSe / pnfsNFSeW_ABRASFv2 -- 
 [*] Alterações visando o provedor Coplan.
     Por: Paulo Henrique

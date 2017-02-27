@@ -3604,8 +3604,6 @@ begin
       proGinfes: FdocElemento := FTagGrupo;
 
       proISSNet: FdocElemento := FPrefixo3 + 'Pedido></p1:' + FTagGrupo;
-
-      proTecnos: FdocElemento := 'InfPedidoCancelamento';
     else
       FdocElemento := FPrefixo3 + 'Pedido></' + FTagGrupo;
     end;

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2017
+-- ACBrNFSeWebServices -- 
+[*] Correção na definição da TAG para assinatura do XML de cancelamento - provedor
+    Tecnos.
+    Por: Italo Jurisato Junior
+
 26/02/2017
 -- ACBrNFSeWebServices -- 
 [*] Simplificação de código.

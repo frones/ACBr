@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/02/2017
+[+] Adicionados grupos aos inis de resposta para comandos da NFe: ConsultaCadastro,
+	ConsultaNFeDest e DistribuicaoDFe, baseado em sugestão do usuário do fórum.
+	http://www.projetoacbr.com.br/forum/topic/35401-consulta-cadastro-sugest%C3%A3o-de-altera%C3%A7%C3%A3o
+	por: Celso Marigo Junior
+
 24/02/2017
 [*] Modificado parâmetro para salvar XMLs, não usar a configuração de salvar em pastas
 	separadas.

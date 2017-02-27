@@ -802,6 +802,7 @@ begin
             ACBrNFe1.WebServices.ConsultaCadastro.Executar;
 
             Cmd.Resposta :=  Cmd.Resposta+
+                             '[CONSULTACADASTRO]'+sLineBreak+
                              ACBrNFe1.WebServices.ConsultaCadastro.Msg+sLineBreak+
                              'verAplic=' +ACBrNFe1.WebServices.ConsultaCadastro.RetConsCad.verAplic+sLineBreak+
                              'cStat='    +IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.cStat)+sLineBreak+
@@ -1183,6 +1184,7 @@ begin
                                        Cmd.Params(3));
 
               Cmd.Resposta := Cmd.Resposta+sLineBreak+
+                              '[CONSULTANFEDEST]'+sLineBreak+
                               'versao='   +ACBrNFe1.WebServices.ConsNFeDest.retConsNFeDest.versao+sLineBreak+
                               'tpAmb='    +TpAmbToStr(ACBrNFe1.WebServices.ConsNFeDest.retConsNFeDest.tpAmb)+sLineBreak+
                               'verAplic=' +ACBrNFe1.WebServices.ConsNFeDest.retConsNFeDest.verAplic+sLineBreak+
@@ -1278,6 +1280,7 @@ begin
               sTemMais := '0'; //pog para facilitar a indicacao de continuidade
 
            Cmd.Resposta:= Cmd.Resposta+sLineBreak+
+                          '[DISTRIBUICAODFE]'+sLineBreak+
                           'versao='  +ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.versao+sLineBreak+
                           'tpAmb='   +TpAmbToStr(ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.tpAmb)+sLineBreak+
                           'verAplic='+ACBrNFe1.WebServices.DistribuicaoDFe.retDistDFeInt.verAplic+sLineBreak+
@@ -2047,7 +2050,7 @@ begin
           begin
             sSecao := 'NFRef'+IntToStrZero(I,3) ;
             sFim   := INIRec.ReadString(  sSecao,'Tipo'  ,'FIM');
-            sTipo := UpperCase(INIRec.ReadString(  sSecao,'Tipo'  ,'NFe')); //NFe2 NF NFe NFP CTe ECF)            
+            sTipo := UpperCase(INIRec.ReadString( sSecao,'Tipo'  ,'NFe')); //NFe2 NF NFe NFP CTe ECF)
             if (sFim = 'FIM') or (Length(sFim) <= 0) then
              begin
                if INIRec.ReadString(sSecao,'refNFe','') <> '' then

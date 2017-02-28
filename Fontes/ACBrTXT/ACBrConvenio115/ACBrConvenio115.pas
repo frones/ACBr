@@ -11,10 +11,10 @@
 {           comunicação ou ao fornecimento de energia elétrica.                }
 {                                                                              }
 {         As informações do referido convênio pode ser encontrada em:          }
-{         http://www1.fazenda.gov.br/confaz/confaz/convenios/ICMS/1998/..%5C2003%5CCV115_03.htm }
+{         https://www.confaz.fazenda.gov.br/legislacao/convenios/2003/cv115_03 }
 {                                                                              }
 {         Programa validador e demais informações podem ser acessadas em:      }
-{         www.fazenda.sp.gov.br/download/comunica_energia.shtm                 }
+{         https://portal.fazenda.sp.gov.br/servicos/nf-comunicacao-energia/Paginas/Sobre.aspx                 }
 {                                                                              }
 {  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
 { sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
@@ -575,7 +575,7 @@ begin
           {23} IntToStr(Ord(IndicadorPessoa) + 1) +
           {24} _GetTab11_8_2 +
           {25} '00' + // Telecomunicação é 00
-          {26} PadLeft(NumeroTelefonePrincipal, 12, ' ')  +
+          {26} PadLeft(NumeroTelefonePrincipal, 12) +
           {27} PadLeft(OnlyNumber(FCnpjEmitente), 14, '0') +
           {28} PadRight(NumeroFaturaComercial, 20) +
           {29} PadLeft(TiraPontos(FormatFloat('#,##0.00', OutrosValores)), 12, '0') +
@@ -584,7 +584,7 @@ begin
           {32} PadRight('', 50) +
           {33} PadRight('', 8, '0') +
           {34} PadRight(Observacoes, 30) +
-          {35} PadRight('', 5);
+          {33} PadRight('', 5);
   end;
   Result.Registro := SRec;
   Result.Assinatura := MD5String(Result.Registro);
@@ -686,7 +686,7 @@ var
   OStr: TStringList;
   I: Integer;
   RRegistro: TConvenio115AssinaturaMD5;
-  SRec: string;
+  SRec: AnsiString;
 begin
   OStr := TStringList.Create;
   try
@@ -702,7 +702,7 @@ begin
               {08} PadRight(TiraAcentos(FMestre[I].Destinatario.Bairro), 15) +
               {09} PadRight(FMestre[I].Destinatario.Municipio, 30) +
               {10} PadRight(UpperCase(FMestre[I].Destinatario.UF), 2) +
-              {11} PadRight(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, ' ') +
+              {11} PadLeft(OnlyNumber(FMestre[I].Destinatario.Telefone), 12) +
               {12} PadRight(FMestre[I].Destinatario.CodigoConsumidor, 12) +
               {13} PadRight(FMestre[I].NumeroTerminalTelefonico, 12) +
               {14} PadRight(UpperCase(FMestre[I].UFTerminalTelefonico), 2);
@@ -721,7 +721,7 @@ begin
               {19} FMestre[I].Destinatario.CodigoDoMunicipio +
               {20} PadRight('', 5);
       end;
-      RRegistro.Registro := SRec;
+      RRegistro.Registro := String(SRec);
       RRegistro.Assinatura := MD5String(RRegistro.Registro);
       OStr.Add(RRegistro.Registro + RRegistro.Assinatura);
     end;
@@ -936,8 +936,8 @@ begin
           {15} PadRight(Unidade, 6);
   if AVersaoAnterior then
     SRec := SRec +
-          {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 12, '0') +
-          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 12, '0')
+          {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 11, '0') +
+          {17} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdePrestada)), 11, '0')
   else
     SRec := SRec +
           {16} PadLeft(TiraPontos(FormatFloat('#,##0.000', QtdeContratada)), 12, '0') +

@@ -138,7 +138,7 @@ begin
 end;
 
 procedure TACBrSATExtratoESCPOS.GerarCabecalho(Cancelamento: Boolean);
-var        
+var
   nCFe, DocsEmit: String;
 begin
   FBuffer.Clear;
@@ -181,14 +181,19 @@ begin
       nCFe := IntToStrZero( CFeCanc.ide.nCFe, 6)
     else
       nCFe := IntToStrZero( CFE.ide.nCFe, 6);
-                                      
+
     FBuffer.Add('</fn></ce><n>Extrato No. '+ nCFe );
     FBuffer.Add( ACBrStr('CUPOM FISCAL ELETRÔNICO - SAT</n>'));
   end;
 
-  FBuffer.Add('</linha_simples>');
-  FBuffer.Add('</ae><c>CPF/CNPJ do Consumidor: '+
-              ifthen(Trim(CFe.Dest.CNPJCPF)<>'',FormatarCNPJouCPF(CFe.Dest.CNPJCPF),ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')));
+  if (Trim(Cfe.Dest.CNPJCPF) <> '') or ImprimeCPFNaoInformado then
+  begin
+    FBuffer.Add('</linha_simples>');
+    FBuffer.Add('</ae><c>CPF/CNPJ do Consumidor: '+
+                IfThen( Trim(CFe.Dest.CNPJCPF)<>'',
+                        FormatarCNPJouCPF(CFe.Dest.CNPJCPF),
+                        ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')));
+  end;
 
   if Trim(CFe.Dest.xNome) <> '' then
     FBuffer.Add( ACBrStr('Razão Social/Nome: ')+CFe.Dest.xNome );
@@ -413,7 +418,7 @@ begin
     FBuffer.Add('<c>'+StringReplace(Trim(CFe.InfAdic.infCpl),';',sLineBreak,[rfReplaceAll]));
   end;
 
-  if CFe.Total.vCFeLei12741 > 0 then
+  if ImprimeMsgOlhoNoImposto and (CFe.Total.vCFeLei12741 > 0) then
   begin
     if not CabecalhoGerado then
       GerarCabecalhoObsContribuinte;

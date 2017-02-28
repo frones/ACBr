@@ -386,7 +386,8 @@ begin
   begin
     mObsContrib.Lines.Clear;
 
-    PrintIt := (InfAdic.infCpl <> '') or (Total.vCFeLei12741 > 0);
+    PrintIt := (InfAdic.infCpl <> '') or
+               (ACBrSATExtrato.ImprimeMsgOlhoNoImposto and (Total.vCFeLei12741 > 0));
 
     if PrintIt and (InfAdic.infCpl <> '') then
       mObsContrib.Lines.Text := StringReplace(InfAdic.infCpl,';',sLineBreak,[rfReplaceAll]);
@@ -429,7 +430,7 @@ var
 begin
   if AReport = rlVenda then
     // Calculando o tamanho da Página em Pixels //
-    TotalPaginaPixel := rlbsCabecalho.Height +
+    TotalPaginaPixel := (rlbsCabecalho.Height - IfThen(rlbConsumidor.Visible, 0, rlbConsumidor.Height)) +
                         rlbRodape.Height +
                         round(rlsbDetItem.Height * (ACBrSATExtrato.CFe.Det.Count * 2)) + //MULTIPLICAR P/2 AS LINHAS
                         rlObsContrib.Height
@@ -440,10 +441,10 @@ begin
                         ifthen( (ACBrSATExtrato.CFe.ide.tpAmb = taHomologacao), rlbTeste.Height, 0 ) ;
 
   Result := max( 100, 50 + round(TotalPaginaPixel/MMAsPixels));
-  
+
   // Limite do driver (Tamanho da página)
   if (Result > 3276) then
-    Result := 3276;  
+    Result := 3276;
 end;
 
 procedure TACBrSATExtratoFortesFr.PintarQRCode(QRCodeData: String; APict: TPicture);
@@ -563,10 +564,16 @@ begin
     lNumeroExtrato.Caption := StringReplace(lNumeroExtrato.Caption,'<NUMERO>',NumExtrato,[]);
 
     // CPF_CNPJ do Consumidor //
-    lCPF_CNPJ.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
-                                       FormatarCNPJouCPF(Dest.CNPJCPF),[]);
-    lRazaoSocialNome.Lines.Text := StringReplace(lRazaoSocialNome.Lines.Text,
-                                       '<xNome>', Dest.xNome,[]);
+    rlbConsumidor.Visible := ((Trim(Dest.CNPJCPF) <> '') or ACBrSATExtrato.ImprimeCPFNaoInformado);
+    if rlbConsumidor.Visible then
+    begin
+      lCPF_CNPJ.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
+                                         IfThen( Trim(Dest.CNPJCPF)<>'',
+                                                 FormatarCNPJouCPF(Dest.CNPJCPF),
+                                                 ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')),[]);
+      lRazaoSocialNome.Lines.Text := StringReplace(lRazaoSocialNome.Lines.Text,
+                                         '<xNome>', Dest.xNome,[]);
+    end;
 
     // Informações do Rodapé do Extrato //
     lNumSAT.Caption   := Trim(IntToStr( ide.nserieSAT ));
@@ -768,7 +775,7 @@ procedure TACBrSATExtratoFortesFr.pLei12741BeforePrint(Sender: TObject;
 begin
   with ACBrSATExtrato.CFe do
   begin
-    PrintIt := (Total.vCFeLei12741 > 0);
+    PrintIt := (Total.vCFeLei12741 > 0); // and (fImprimeMsgOlhoNoImposto);
 
     if PrintIt then
       lValLei12741.Caption := FormatFloatBr(Total.vCFeLei12741);

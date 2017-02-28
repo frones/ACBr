@@ -90,6 +90,9 @@ type
   private
     fACBrSAT : TComponent;
     fImprimeQRCode: Boolean;
+    fImprimeMsgOlhoNoImposto : Boolean;
+    fImprimeCPFNaoInformado : Boolean;
+
     fCFe: TCFe;
     fCFeCanc: TCFeCanc;
 
@@ -149,6 +152,9 @@ type
     property Mask_qCom      : String   read fMask_qCom      write fMask_qCom;
     property Mask_vUnCom    : String   read fMask_vUnCom    write fMask_vUnCom;
     property ImprimeQRCode  : Boolean  read fImprimeQRCode  write fImprimeQRCode  default True ;
+    property ImprimeMsgOlhoNoImposto : Boolean read fImprimeMsgOlhoNoImposto write fImprimeMsgOlhoNoImposto default True;
+    property ImprimeCPFNaoInformado : Boolean read fImprimeCPFNaoInformado write fImprimeCPFNaoInformado default True;
+                  
     {$IFNDEF NOGUI}
      property PictureLogo    : {$IFDEF FMX}TBitmap{$ELSE}TPicture{$ENDIF} read fPictureLogo    write SetPictureLogo ;
     {$ENDIF}
@@ -207,6 +213,8 @@ begin
   fSite           := 'http://www.projetoacbr.com.br';
   fSoftwareHouse  := 'Projeto ACBr';
   fMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
+  fImprimeMsgOlhoNoImposto := True;
+  fImprimeCPFNaoInformado := True;
 end;
 
 destructor TACBrSATExtratoClass.Destroy;

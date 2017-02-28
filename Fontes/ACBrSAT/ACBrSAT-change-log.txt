@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/02/2017
+-- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
+[+] Adicionada a propriedade "ImprimeMsgOlhoNoImposto : Boolean default True"
+    Se for false não imprimirá a informação do campo "Total.vCFeLei12741"
+[+] Adicionada a propriedade "ImprimeCPFNaoInformado : Boolean default True"
+    Se for false não imprimirá a informação "CONSUMIDOR NÃO IDENTIFICADO", quando
+    o campo "Dest.CNPJCPF" for vazio
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35266
+
 Data: 22/02/2017
 -- ACBrSATExtratoESCPOS --
 [*] Ajuste para não imprimir o título "IM:" caso não exista informação em:

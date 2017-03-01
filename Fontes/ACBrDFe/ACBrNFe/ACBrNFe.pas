@@ -557,8 +557,8 @@ begin
     cCSC := Copy(idNFe, 7, 8) + '20' + Copy(idNFe, 3, 2) + Copy(cIdCSC, 3, 4);
 
   sCSC := cIdCSC + cCSC;
-  sNF := StringReplace(FormatFloat('0.00', TruncFix(ValorTotalNF * 100)/100), ',', '.', [rfReplaceAll]);
-  sICMS := StringReplace(FormatFloat('0.00', TruncFix(ValorTotalICMS * 100)/100), ',', '.', [rfReplaceAll]);
+  sNF := FloatToString( ValorTotalNF, '.', FloatMask(2, False));
+  sICMS := FloatToString( ValorTotalICMS, '.', FloatMask(2, False));
 
   sEntrada := 'chNFe=' + idNFe + '&nVersao=100&tpAmb=' +
     TpAmbToStr(TipoAmbiente) + IfThen(cDest = '', '', '&cDest=' +

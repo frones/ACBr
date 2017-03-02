@@ -1953,7 +1953,7 @@ begin
     FcStat := NFeRetorno.cStat;
     FXMotivo := NFeRetorno.xMotivo;
     FcUF := NFeRetorno.cUF;
-    FNFeChave := NFeRetorno.chNfe;
+//    FNFeChave := NFeRetorno.chNfe;
     FPMsg := FXMotivo;
 
     // Verifica se a nota fiscal está cancelada pelo método antigo. Se estiver,

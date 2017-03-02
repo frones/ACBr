@@ -1458,7 +1458,7 @@ begin
     FcStat := MDFeRetorno.cStat;
     FXMotivo := MDFeRetorno.xMotivo;
     FcUF := MDFeRetorno.cUF;
-    FMDFeChave := MDFeRetorno.chMDFe;
+//    FMDFeChave := MDFeRetorno.chMDFe;
     FPMsg := FXMotivo;
 
     // <protMDFe> - Retorno dos dados do ENVIO da NF-e

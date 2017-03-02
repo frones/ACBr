@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/03/2017
+-- ACBrNFeWebServices --
+[*] Comentado a linha que em alguns casos apaga a chave do documento consultado.
+    Método TratarResposta do Consultar.
+    Por: Italo Jurisato Junior
+
 23/02/2017
 -- ACBrNFeWebSerices --
 [-] WebService "TNFeStatusServico.TratarResposta". Correção na checagem da data/hora 

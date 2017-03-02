@@ -706,7 +706,7 @@ begin
                   LFill( DT_DOC ) +
                   LFill( COD_ITEM ) +
                   LFill( VL_AJ_ITEM,0 ) +
-                  IfThen(EncodeDate(2017,1,1) >= DT_INI,LFill( CHV_NFE), ''));
+                  IfThen(DT_INI >= EncodeDate(2017,1,1),LFill( CHV_NFE), ''));
         end;
         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
      end;

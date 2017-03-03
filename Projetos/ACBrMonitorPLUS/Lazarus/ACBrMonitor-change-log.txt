@@ -43,6 +43,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/03/2017
+[-] Corrigido erro ao ler dados do certificado digital para mostrar na barra de títulos e tray icon.
+	por: Celso Marigo Junior
+	
+01/03/2017
+[-]	Corrigido erro ao ler IPI do XML relacionado ao tópico do fórum:
+	http://www.projetoacbr.com.br/forum/topic/35423-nfelernfe-vipi/#comment-232059	
+	por: Celso Marigo Junior
+
 27/02/2017
 [+] Adicionados grupos aos inis de resposta para comandos da NFe: ConsultaCadastro,
 	ConsultaNFeDest e DistribuicaoDFe, baseado em sugestão do usuário do fórum.

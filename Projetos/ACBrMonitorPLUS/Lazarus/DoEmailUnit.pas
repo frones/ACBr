@@ -49,7 +49,7 @@ function ValidarEmail(aEmail: String) : Boolean;
 
 implementation
 
-uses ACBrUtil, mimemess, RegExpr, synachar, IniFiles, UtilUnit, DoACBrUnit,
+uses ACBrUtil, mimemess, RegExpr, synachar, IniFiles, DoACBrUnit,
   ACBrMail, typinfo,
   {$IFNDEF NOGUI}ACBrMonitor1 {$ELSE}ACBrMonitorConsoleDM {$ENDIF} ;
 
@@ -248,7 +248,6 @@ end;
 procedure ConfigurarDadosEmail(aStr: String);
 var
   IniDados : TMemIniFile;
-  SL       : TStringList;
   sCharset : String;
 begin
   IniDados   := LerConverterIni(aStr);
@@ -274,7 +273,6 @@ begin
       end;
     end;
   finally
-    SL.Free;
     IniDados.Free;
   end;
 end;

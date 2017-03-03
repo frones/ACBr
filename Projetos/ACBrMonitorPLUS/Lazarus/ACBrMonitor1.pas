@@ -1197,6 +1197,7 @@ type
     procedure deBOLDirLogoExit(Sender: TObject);
     procedure deBolDirRemessaExit(Sender: TObject);
     procedure BOLDirRetornoExit(Sender: TObject);
+    procedure deBolDirRetornoRelChange(Sender: TObject);
     procedure deUSUDataCadastroExit(Sender: TObject);
     procedure deRFDDataSwBasicoExit(Sender: TObject);
     procedure edBALLogChange(Sender: TObject);
@@ -1378,11 +1379,6 @@ type
     pCanClose: boolean;
     fsSLPrecos: TStringList;
     fsDTPrecos: integer;
-    fsTipo: integer;
-    fsLinesLog: ansistring;
-    fsPosX: Integer;
-    fsPosY: Integer;
-    fsCaptura: Boolean;
 
     procedure DesInicializar;
     procedure Inicializar;
@@ -1495,7 +1491,6 @@ var
   iImpressoraESCPOS: TACBrPosPrinterModelo;
   iPagCodigoESCPOS: TACBrPosPaginaCodigo;
   iTZMode: TTimeZoneModoDeteccao;
-  iFor, J: Integer;
   FileVerInfo: TFileVersionInfo;
 begin
   {$IFDEF MSWINDOWS}
@@ -3296,6 +3291,11 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.deBolDirRetornoRelChange(Sender: TObject);
+begin
+  CarregaArquivosRetorno;
+end;
+
 procedure TFrmACBrMonitor.deUSUDataCadastroExit(Sender: TObject);
 begin
   if (deUSUDataCadastro.Date = 0) then
@@ -4399,12 +4399,16 @@ begin
     seLogoFatorX.Value := INI.ReadInteger('Logo', 'FatorX', ACBrPosPrinter1.ConfigLogo.FatorX);
     seLogoFatorY.Value := INI.ReadInteger('Logo', 'FatorY', ACBrPosPrinter1.ConfigLogo.FatorY);
 
-    if (chkExibeRazaoSocial.Checked and Assigned(ACBrNFe1.SSL)) then
-      if ( Pos(ACBrNFe1.SSL.CertRazaoSocial, TrayIcon1.Hint) = 0) then
-        begin
-          TrayIcon1.Hint := TrayIcon1.Hint + sLineBreak + ACBrNFe1.SSL.CertRazaoSocial;
-          FrmACBrMonitor.Caption := FrmACBrMonitor.Caption + ' [' + ACBrNFe1.SSL.CertRazaoSocial+']';
-        end;
+    try
+      if (chkExibeRazaoSocial.Checked and Assigned(ACBrNFe1.SSL)) then
+        if ( Pos(ACBrNFe1.SSL.CertRazaoSocial, TrayIcon1.Hint) = 0) then
+          begin
+            TrayIcon1.Hint := TrayIcon1.Hint + sLineBreak + ACBrNFe1.SSL.CertRazaoSocial;
+            FrmACBrMonitor.Caption := FrmACBrMonitor.Caption + ' [' + ACBrNFe1.SSL.CertRazaoSocial+']';
+          end;
+    except
+      AddLinesLog('Erro ao obter dados do certificado digital.');
+    end;
 
     ConfiguraPosPrinter;
   finally
@@ -5529,8 +5533,6 @@ end;
 
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.Resposta(Comando, Resposta: ansistring);
-var
-  SL: TStringList;
 begin
   if rbTCP.Checked then
   begin
@@ -5606,23 +5608,6 @@ begin
 
   end;
 
-  //AddLinesLog(Comando);
-  //if mResp.Lines.Count > CBufferMemoResposta then
-  //begin
-  //  SL := TStringList.Create;
-  //  try
-  //    SL.Assign(mResp.Lines);
-  //    SL.BeginUpdate;
-  //    while SL.Count > CBufferMemoResposta do
-  //      SL.Delete(0);
-  //    SL.EndUpdate;
-  //
-  //    mResp.Lines.Assign(SL);
-  //    mResp.SelStart := mResp.Lines.Count;
-  //  finally
-  //    SL.Free;
-  //  end;
-  //end;
   pTopRespostas.Caption := 'Respostas Enviadas (' + IntToStr(mResp.Lines.Count) +
     ' linhas)';
 
@@ -6930,9 +6915,9 @@ end;
 procedure TFrmACBrMonitor.seUSUGTCadastroKeyPress(Sender: TObject; var Key: char);
 begin
   if Key in [',', '.'] then
-    Key := DecimalSeparator;
+    Key := DefaultFormatSettings.DecimalSeparator;
 
-  if not (Key in ['0'..'9', #13, #8, DecimalSeparator]) then
+  if not (Key in ['0'..'9', #13, #8, DefaultFormatSettings.DecimalSeparator]) then
     Key := #0;
 end;
 

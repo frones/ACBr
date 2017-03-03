@@ -3398,19 +3398,16 @@ begin
                          INIRec.WriteString(  sSecao,'CST',CSTIPIToStr(CST)) ;
                          INIRec.WriteString(  sSecao,'CodigoEnquadramento',cEnq);
 
-                         if ( cEnq <> '999' ) then
-                          begin
-                            INIRec.WriteString(  sSecao,'ClasseEnquadramento',clEnq);
-                            INIRec.WriteString(  sSecao,'CNPJProdutor'       ,CNPJProd);
-                            INIRec.WriteString(  sSecao,'CodigoSeloIPI'      ,cSelo);
-                            INIRec.WriteInteger( sSecao,'QuantidadeSelos'    ,qSelo);
+                         INIRec.WriteString(  sSecao,'ClasseEnquadramento',clEnq);
+                         INIRec.WriteString(  sSecao,'CNPJProdutor'       ,CNPJProd);
+                         INIRec.WriteString(  sSecao,'CodigoSeloIPI'      ,cSelo);
+                         INIRec.WriteInteger( sSecao,'QuantidadeSelos'    ,qSelo);
 
-                            INIRec.WriteFloat( sSecao,'ValorBase'   ,vBC);
-                            INIRec.WriteFloat(sSecao,'Quantidade'  ,qUnid);
-                            INIRec.WriteFloat(sSecao,'ValorUnidade',vUnid);
-                            INIRec.WriteFloat(sSecao,'Aliquota'    ,pIPI);
-                            INIRec.WriteFloat(sSecao,'Valor'       ,vIPI);
-                          end;
+                         INIRec.WriteFloat( sSecao,'ValorBase'   ,vBC);
+                         INIRec.WriteFloat(sSecao,'Quantidade'  ,qUnid);
+                         INIRec.WriteFloat(sSecao,'ValorUnidade',vUnid);
+                         INIRec.WriteFloat(sSecao,'Aliquota'    ,pIPI);
+                         INIRec.WriteFloat(sSecao,'Valor'       ,vIPI);
                        end;
                     end;
 
@@ -3763,7 +3760,6 @@ var
   I      : Integer;
   sSecao, sFim : String;
   INIRec : TMemIniFile ;
-  SL     : TStringList;
   ok     : Boolean;
 begin
  INIRec := LerConverterIni(AStr);

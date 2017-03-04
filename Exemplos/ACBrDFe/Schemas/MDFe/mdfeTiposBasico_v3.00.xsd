@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-sofwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/mdfe" targetNamespace="http://www.portalfiscal.inf.br/mdfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralMDFe_v3.00.xsd"/>
@@ -711,7 +711,7 @@ Dados obrigatórios apenas no modal Rodoviário, depois da lei 11.442/07. Para o
 													</xs:simpleType>
 												</xs:element>
 												<xs:choice minOccurs="0">
-													<xs:element name="CNPJ" type="TCnpjOpc">
+													<xs:element name="CNPJ" type="TCnpj">
 														<xs:annotation>
 															<xs:documentation>Número do CNPJ do responsável pelo seguro</xs:documentation>
 															<xs:documentation>Obrigatório apenas se responsável pelo seguro for (2) responsável pela contratação do transporte - pessoa jurídica</xs:documentation>

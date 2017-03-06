@@ -84,7 +84,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Side = asrCenter
       Left = 902
       Height = 27
-      Hint = 'Cancela as AlteraÃ§Ãµes efetuadas'
+      Hint = 'Cancela as Alterações efetuadas'
       Top = 8
       Width = 108
       Anchors = [akRight]
@@ -175,7 +175,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideRight.Side = asrBottom
       Left = 1020
       Height = 27
-      Hint = 'Configura os equipamentos e '#13#10'MÃ©todo de Monitoramento'
+      Hint = 'Configura os equipamentos e '#13#10'Método de Monitoramento'
       Top = 8
       Width = 108
       Anchors = [akTop, akRight]
@@ -419,7 +419,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 96
               Height = 25
-              Hint = 'Numero da Porta de ServiÃ§o TCP que serÃ¡ utilizada na comunicaÃ§Ã£o'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
+              Hint = 'Número da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 5
               Width = 48
               BorderSpacing.Top = 5
@@ -453,7 +453,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 96
               Height = 25
-              Hint = 'Numero da Porta de ServiÃ§o TCP que serÃ¡ utilizada na comunicaÃ§Ã£o'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
+              Hint = 'Número da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 34
               Width = 48
               BorderSpacing.Top = 4
@@ -481,7 +481,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideBottom.Control = gbTCP
             Left = 8
             Height = 25
-            Hint = 'Configura o ACBrMonitor para conexÃµes Remotas atravÃ©s de TCP/IP'
+            Hint = 'Configura o ACBrMonitor para conexões Remotas através de TCP/IP'
             Top = 4
             Width = 71
             Caption = 'TCP/IP'
@@ -497,7 +497,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 8
             Height = 21
-            Hint = 'Permite qua a máquina que controla o ACBrMonitorPLUS'#13#10'execute comandos nessa máquina.'#13#10#13#10'                      * Use com CUIDADO *'#13#10#13#10'Habilite apenas se necessário,  e quando tiver'#13#10'certeza de quem está controlando o ACBrMonitor'
+            Hint = 'Permite qua a máquina que controla o ACBrMonitorPLUS'#13#10'execute comandos nessa máquina.'#13#10#13#10'                      * Use com CUIDADO *'#13#10#13#10'Habilite apenas se necessário, e quando tiver'#13#10'certeza de quem está controlando o ACBrMonitor'
             Top = 119
             Width = 188
             Caption = 'Permitir Comandos Remotos'
@@ -510,7 +510,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 8
             Height = 58
-            Hint = 'Evita que usuÃ¡rios abram a tela de  ConfiguraÃ§Ã£o '#13#10' '#13#10'TambÃ©m Ã© usada para proteger o arquivo de ConfiguraÃ§Ãµes'#13#10'com dados da Sw.House para geraÃ§Ã£o da RFD'
+            Hint = 'Evita que usuários abram a tela de Configuração '#13#10' '#13#10'Também é usada para proteger o arquivo de Configurações'#13#10'com dados da Sw.House para geração da RFD'
             Top = 232
             Width = 236
             BorderSpacing.Top = 2
@@ -616,7 +616,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideBottom.Side = asrBottom
               Left = 94
               Height = 25
-              Hint = 'Numero máximo de linhas no arquivo de LOG'#13#10'Se for diferente de zero, o ACBrMonitor ajustará'#13#10'o arquivo de Log sempre que for iniciado'
+              Hint = 'Número máximo de linhas no arquivo de LOG'#13#10'Se for diferente de zero, o ACBrMonitor ajustará'#13#10'o arquivo de Log sempre que for iniciado'
               Top = 34
               Width = 101
               BorderSpacing.Top = 4
@@ -695,7 +695,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 62
               Height = 25
-              Hint = 'Nome do arquivo de Entrada que serÃ¡ monitorado pelo ACBrMonitor'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
+              Hint = 'Nome do arquivo de Entrada que será monitorado pelo ACBrMonitor'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 5
               Width = 467
               Anchors = [akTop, akLeft, akRight]
@@ -710,7 +710,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 62
               Height = 25
-              Hint = 'Nome do arquivo de SaÃ­da que serÃ¡ criado pelo ACBrMonitor com as respostas'#13#10'Especifique o caminho completo.  '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
+              Hint = 'Nome do arquivo de Saída que será criado pelo ACBrMonitor com as respostas'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 34
               Width = 467
               Anchors = [akTop, akLeft, akRight]
@@ -737,7 +737,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideTop.Side = asrCenter
               Left = 605
               Height = 25
-              Hint = 'Intervalo de Tempo em Milissegundos que o ACBrMonitor'#10'verifica a presenÃ§a do arquivo de Entrada'
+              Hint = 'Intervalo de Tempo em Milissegundos que o ACBrMonitor'#10'verifica a presença do arquivo de Entrada'
               Top = 19
               Width = 49
               Anchors = [akTop, akRight]
@@ -1803,7 +1803,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sedECFMaxLinhasBuffer: TSpinEdit
                 Left = 127
                 Height = 25
-                Hint = 'Para homologaÃ§Ã£o TEF utilize 3'#13#10'(ImpressÃ£o de 3 em 3 linhas)'
+                Hint = 'Para homologação TEF utilize 3'#13#10'(Impressão de 3 em 3 linhas)'
                 Top = 9
                 Width = 78
                 MaxValue = 10
@@ -1840,7 +1840,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object sedECFLinhasEntreCupons: TSpinEdit
                 Left = 387
                 Height = 25
-                Hint = 'Para homologaÃ§Ã£o TEF utilize 3'#13#10'(ImpressÃ£o de 3 em 3 linhas)'
+                Hint = 'Para homologação TEF utilize 3'#13#10'(Impressão de 3 em 3 linhas)'
                 Top = 41
                 Width = 54
                 MaxValue = 10
@@ -2491,7 +2491,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object seDISIntByte: TSpinEdit
             Left = 16
             Height = 25
-            Hint = 'Defina o Tempo em Milisegundos para intervalo entre o envio de'#10'cada Bytes a porta de Teclado'#10#10'(aumente esse valor se as informaÃ§Ãµes nÃ£o aparecem corretamente)'
+            Hint = 'Defina o Tempo em Milisegundos para intervalo entre o envio de'#10'cada Bytes a porta de Teclado'#10#10'(aumente esse valor se as informações não aparecem corretamente)'
             Top = 84
             Width = 57
             MaxValue = 10
@@ -2520,7 +2520,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object seDISIntervalo: TSpinEdit
               Left = 20
               Height = 25
-              Hint = 'Defina o Tempo em Milisegundos para o envio de informaÃ§Ãµes ao Display'
+              Hint = 'Defina o Tempo em Milisegundos para o envio de informações ao Display'
               Top = 22
               Width = 57
               MaxValue = 1000
@@ -2540,7 +2540,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object seDISPassos: TSpinEdit
               Left = 100
               Height = 25
-              Hint = 'Numero de posiÃ§Ãµes a pular a cada AnimaÃ§Ã£o '
+              Hint = 'Número de posições a pular a cada Animação '
               Top = 22
               Width = 57
               MinValue = 1
@@ -2588,7 +2588,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
         end
         object tsLCB: TTabSheet
-          Hint = 'SE NAO LEU O CÓDIGO DE BARRAS:'#13#10#13#10'1 - Verifique se a Porta estÃ¡ correta'#13#10'2 - Experimente deixar o SUFIXO vazio. ApÃ³s uma leitura '#13#10'verifique o Sufixo correto no final de "Ultima Leitura"'
+          Hint = 'SE NÃO LEU O CÓDIGO DE BARRAS:'#13#10#13#10'1 - Verifique se a Porta está correta'#13#10'2 - Experimente deixar o SUFIXO vazio. Após uma leitura '#13#10'verifique o Sufixo correto no final de "Última Leitura"'
           Caption = 'Leitor Serial'
           ClientHeight = 327
           ClientWidth = 931
@@ -2719,7 +2719,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 347
             Height = 25
-            Hint = 'IMPORTANTE: Informar o sufixo correto Ã© importante '#13#10'para ler corretamente um cÃ³digo de cada vez.'#13#10#13#10'Passe um produto pelo leitor e verifique o cÃ³digo '#13#10'do Sufixo no Final do campo "Ultima Leitura"'
+            Hint = 'IMPORTANTE: Informar o sufixo correto é importante '#13#10'para ler corretamente um código de cada vez.'#13#10#13#10'Passe um produto pelo leitor e verifique o código '#13#10'do Sufixo no Final do campo "Última Leitura"'
             Top = 35
             Width = 515
             Anchors = [akTop, akLeft, akRight]
@@ -2755,7 +2755,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 24
             Height = 27
-            Hint = 'Configura os parÃ¢metros da Porta Serial '#13#10'Exemplo: 9600, 8, N, 1'
+            Hint = 'Configura os parâmetros da Porta Serial '#13#10'Exemplo: 9600, 8, N, 1'
             Top = 60
             Width = 78
             AutoSize = True
@@ -2824,7 +2824,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object rbLCBTeclado: TRadioButton
             Left = 142
             Height = 21
-            Hint = 'Envia CÃ³digo lidos para o Buffer de Teclado'
+            Hint = 'Envia Código lidos para o Buffer de Teclado'
             Top = 18
             Width = 66
             Caption = 'Teclado'
@@ -2836,7 +2836,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object rbLCBFila: TRadioButton
             Left = 238
             Height = 21
-            Hint = 'Acumula cÃ³digos lidos em Fila Interna.'#13#10'Use "LCB.LerFila" para ler os cÃ³digos'
+            Hint = 'Acumula códigos lidos em Fila Interna.'#13#10'Use "LCB.LerFila" para ler os códigos'
             Top = 18
             Width = 39
             Caption = 'Fila'
@@ -2846,7 +2846,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object cbLCBDispositivo: TComboBox
             Left = 142
             Height = 25
-            Hint = '* Apenas Linux *'#13#10#13#10'Especifique o dispositivo de saida '#13#10'para o envio dos cÃ³digos lidos'
+            Hint = '* Apenas Linux *'#13#10#13#10'Especifique o dispositivo de saida '#13#10'para o envio dos códigos lidos'
             Top = 43
             Width = 169
             ItemHeight = 17
@@ -2865,12 +2865,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object lLCBCodigoLido: TPanel
             Left = 134
             Height = 34
-            Hint = 'Ultima Leitura'
+            Hint = 'Última Leitura'
             Top = 160
             Width = 741
             Anchors = [akTop, akLeft, akRight]
             BevelInner = bvLowered
-            Caption = 'Ultima leitura'
+            Caption = 'Última leitura'
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 11
@@ -2904,7 +2904,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 AnchorSideTop.Side = asrCenter
                 Left = 395
                 Height = 22
-                Hint = 'Abre o diretÃ³rio RFD'
+                Hint = 'Abre o diretório RFD'
                 Top = 41
                 Width = 23
                 BorderSpacing.Left = 2
@@ -2914,7 +2914,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object chRFD: TCheckBox
                 Left = 8
                 Height = 23
-                Hint = 'Habilita / Desabilita a geraÃ§Ã£o de arquivos RFD'#13#10'Registro Fita Detalhe, instituidos pela CAT 52/07 de SP'#13#10#13#10'(Apenas para impressoras Matriciais)'
+                Hint = 'Habilita / Desabilita a geração de arquivos RFD'#13#10'Registro Fita Detalhe, instituidos pela CAT 52/07 de SP'#13#10#13#10'(Apenas para impressoras Matriciais)'
                 Top = 19
                 Width = 88
                 Caption = 'Gerar RFD'
@@ -2940,7 +2940,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Cursor = crIBeam
                 Left = 165
                 Height = 25
-                Hint = 'DiretÃ³rio para gravaÃ§Ã£o dos arquivos da RFD.'#13#10'Se nada for especificado serÃ¡ criado um subdiretÃ³rio '#13#10'"RFD" dentro da pasta do ACBrMonitor'#13#10#13#10'Para modifica-lo o componente ECF deve estar desativado'
+                Hint = 'Diretório para gravação dos arquivos da RFD.'#13#10'Se nada for especificado será criado um subdiretório '#13#10'"RFD" dentro da pasta do ACBrMonitor'#13#10#13#10'Para modifica-lo o componente ECF deve estar desativado'
                 Top = 40
                 Width = 228
                 Anchors = [akTop, akLeft, akRight]
@@ -2950,7 +2950,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object bRFDMF: TBitBtn
                 Left = 434
                 Height = 27
-                Hint = 'Captura dados Memoria Fiscal.'#13#10#13#10'Ãštil para ajudar a preencher os campos '#13#10'de ACBrRFD.ini'
+                Hint = 'Captura dados Memoria Fiscal.'#13#10#13#10'Útil para ajudar a preencher os campos '#13#10'de ACBrRFD.ini'
                 Top = 30
                 Width = 110
                 Anchors = [akTop, akRight]
@@ -3082,7 +3082,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 469
                   Height = 25
-                  Hint = 'Informe aqui a data do ultimo atestado de intervenÃ§Ã£o tÃ©cnica '#13#10'em que houve atualizaÃ§Ã£o do Sofware BÃ¡sico '#13#10' (numero de versÃ£o acrescido)'
+                  Hint = 'Informe aqui a hora do último atestado de intervenção técnica '#13#10'em que houve atualização do Sofware Básico '#13#10' (número de versão acrescido)'
                   Top = 58
                   Width = 49
                   Anchors = [akTop, akRight]
@@ -3099,7 +3099,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 321
                   Height = 25
-                  Hint = 'Informe aqui a data do ultimo atestado de intervenÃ§Ã£o tÃ©cnica'#13#10'em que houve atualizaÃ§Ã£o do Sofware BÃ¡sico'#13#10' (numero de versÃ£o acrescido)'
+                  Hint = 'Informe aqui a data do último atestado de intervenção técnica'#13#10'em que houve atualização do Sofware Básico'#13#10' (número de versão acrescido)'
                   Top = 58
                   Width = 106
                   CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
@@ -3116,7 +3116,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               object chRFDIgnoraMFD: TCheckBox
                 Left = 8
                 Height = 21
-                Hint = 'Habilita / Desabilita a geraÃ§Ã£o de arquivos RFD'#13#10'Registro Fita Detalhe, instituidos pela CAT 52/07 de SP'#13#10#13#10'(Apenas para impressoras Matriciais)'
+                Hint = 'Habilita / Desabilita a geração de arquivos RFD'#13#10'Registro Fita Detalhe, instituidos pela CAT 52/07 de SP'#13#10#13#10'(Apenas para impressoras Matriciais)'
                 Top = 42
                 Width = 125
                 Caption = 'Ignorar ECFs MFD'
@@ -3570,7 +3570,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Cursor = crIBeam
             Left = 176
             Height = 25
-            Hint = 'Numero da Porta de ServiÃ§o TCP que serÃ¡ utilizada '#13#10'pelo Servidor de Terminal de Consulta'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
+            Hint = 'Número da Porta de Serviço TCP que será utilizada '#13#10'pelo Servidor de Terminal de Consulta'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
             Top = 37
             Width = 94
             OnChange = cbxTCModeloChange
@@ -7504,7 +7504,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 95
                     Alignment = taCenter
                     Anchors = [akTop, akLeft, akRight]
-                    Caption = 'Numero de'#13#10'Itens por Página'
+                    Caption = 'Número de'#13#10'Itens por Página'
                     Font.Height = -12
                     ParentColor = False
                     ParentFont = False
@@ -7519,7 +7519,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     Width = 96
                     Alignment = taCenter
                     Anchors = [akTop, akLeft, akRight]
-                    Caption = 'Decimais'#13#10'Valor Unitario'
+                    Caption = 'Decimais'#13#10'Valor Unitário'
                     Font.Height = -12
                     ParentColor = False
                     ParentFont = False
@@ -10800,7 +10800,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Top = 0
       Width = 196
       Align = alLeft
-      Caption = '  ACBrMonitor PLUS '
+      Caption = '  ACBrMonitorPLUS  '
       Color = clGray
       Font.CharSet = ANSI_CHARSET
       Font.Color = clWhite
@@ -12855,7 +12855,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -14009,7 +14008,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Mask_vUnCom = '0.000'
     SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     left = 589
     top = 496
@@ -14020,7 +14019,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Mask_vUnCom = '0.000'
     SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 624
     top = 492
   end
@@ -14141,7 +14140,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     PrintDialog = True
-    left = 433
+    left = 432
     top = 400
   end
 end

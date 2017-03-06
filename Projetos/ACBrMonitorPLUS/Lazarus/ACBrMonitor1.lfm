@@ -419,7 +419,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 96
               Height = 25
-              Hint = 'Número da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
+              Hint = 'Numero da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 5
               Width = 48
               BorderSpacing.Top = 5
@@ -453,7 +453,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 96
               Height = 25
-              Hint = 'Número da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
+              Hint = 'Numero da Porta de Serviço TCP que será utilizada na comunicação'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
               Top = 34
               Width = 48
               BorderSpacing.Top = 4
@@ -481,7 +481,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideBottom.Control = gbTCP
             Left = 8
             Height = 25
-            Hint = 'Configura o ACBrMonitor para conexões Remotas através de TCP/IP'
+            Hint = 'Configura o ACBrMonitor para conexções Remotas através de TCP/IP'
             Top = 4
             Width = 71
             Caption = 'TCP/IP'
@@ -497,7 +497,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 8
             Height = 21
-            Hint = 'Permite qua a máquina que controla o ACBrMonitorPLUS'#13#10'execute comandos nessa máquina.'#13#10#13#10'                      * Use com CUIDADO *'#13#10#13#10'Habilite apenas se necessário, e quando tiver'#13#10'certeza de quem está controlando o ACBrMonitor'
+            Hint = 'Permite qua a máquina que controla o ACBrMonitorPLUS'#13#10'execute comandos nessa máquina.'#13#10#13#10'                      * Use com CUIDADO *'#13#10#13#10'Habilite apenas se necessário,  e quando tiver'#13#10'certeza de quem está controlando o ACBrMonitor'
             Top = 119
             Width = 188
             Caption = 'Permitir Comandos Remotos'
@@ -510,7 +510,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 8
             Height = 58
-            Hint = 'Evita que usuários abram a tela de Configuração '#13#10' '#13#10'Também é usada para proteger o arquivo de Configurações'#13#10'com dados da Sw.House para geração da RFD'
+            Hint = 'Evita que usuários abram a tela de configuração '#13#10' '#13#10'Também é usada para proteger o arquivo de configurações'#13#10'com dados da Sw.House para geração da RFD'
             Top = 232
             Width = 236
             BorderSpacing.Top = 2
@@ -695,7 +695,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 62
               Height = 25
-              Hint = 'Nome do arquivo de Entrada que será monitorado pelo ACBrMonitor'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
+              Hint = 'Nome do arquivo de entrada que será monitorado pelo ACBrMonitor'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 5
               Width = 467
               Anchors = [akTop, akLeft, akRight]
@@ -710,7 +710,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Cursor = crIBeam
               Left = 62
               Height = 25
-              Hint = 'Nome do arquivo de Saída que será criado pelo ACBrMonitor com as respostas'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
+              Hint = 'Nome do arquivo de saída que será criado pelo ACBrMonitor com as respostas'#13#10'Especifique o caminho completo.  '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 34
               Width = 467
               Anchors = [akTop, akLeft, akRight]
@@ -2540,7 +2540,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object seDISPassos: TSpinEdit
               Left = 100
               Height = 25
-              Hint = 'Número de posições a pular a cada Animação '
+              Hint = 'Numero de posições a pular a cada Animação '
               Top = 22
               Width = 57
               MinValue = 1
@@ -2588,7 +2588,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           end
         end
         object tsLCB: TTabSheet
-          Hint = 'SE NÃO LEU O CÓDIGO DE BARRAS:'#13#10#13#10'1 - Verifique se a Porta está correta'#13#10'2 - Experimente deixar o SUFIXO vazio. Após uma leitura '#13#10'verifique o Sufixo correto no final de "Última Leitura"'
+          Hint = 'SE NÃO LEU O CÓDIGO DE BARRAS:'#13#10#13#10'1 - Verifique se a Porta está correta'#13#10'2 - Experimente deixar o SUFIXO vazio. Após uma leitura '#13#10'verifique o Sufixo correto no final de "Ultima Leitura"'
           Caption = 'Leitor Serial'
           ClientHeight = 327
           ClientWidth = 931
@@ -2719,7 +2719,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             AnchorSideTop.Side = asrBottom
             Left = 347
             Height = 25
-            Hint = 'IMPORTANTE: Informar o sufixo correto é importante '#13#10'para ler corretamente um código de cada vez.'#13#10#13#10'Passe um produto pelo leitor e verifique o código '#13#10'do Sufixo no Final do campo "Última Leitura"'
+            Hint = 'IMPORTANTE: Informar o sufixo correto é importante '#13#10'para ler corretamente um código de cada vez.'#13#10#13#10'Passe um produto pelo leitor e verifique o código '#13#10'do Sufixo no Final do campo "Ultima Leitura"'
             Top = 35
             Width = 515
             Anchors = [akTop, akLeft, akRight]
@@ -2824,7 +2824,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object rbLCBTeclado: TRadioButton
             Left = 142
             Height = 21
-            Hint = 'Envia Código lidos para o Buffer de Teclado'
+            Hint = 'Envia código lidos para o Buffer de Teclado'
             Top = 18
             Width = 66
             Caption = 'Teclado'
@@ -3082,7 +3082,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 469
                   Height = 25
-                  Hint = 'Informe aqui a hora do último atestado de intervenção técnica '#13#10'em que houve atualização do Sofware Básico '#13#10' (número de versão acrescido)'
+                  Hint = 'Informe aqui a data do ultimo atestado de intervenção técnica '#13#10'em que houve atualização do Sofware Básico '#13#10' (numero de versão acrescido)'
                   Top = 58
                   Width = 49
                   Anchors = [akTop, akRight]
@@ -3099,7 +3099,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Cursor = crIBeam
                   Left = 321
                   Height = 25
-                  Hint = 'Informe aqui a data do último atestado de intervenção técnica'#13#10'em que houve atualização do Sofware Básico'#13#10' (número de versão acrescido)'
+                  Hint = 'Informe aqui a data do ultimo atestado de intervenção técnica'#13#10'em que houve atualização do Sofware Básico'#13#10' (numero de versão acrescido)'
                   Top = 58
                   Width = 106
                   CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
@@ -3570,7 +3570,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Cursor = crIBeam
             Left = 176
             Height = 25
-            Hint = 'Número da Porta de Serviço TCP que será utilizada '#13#10'pelo Servidor de Terminal de Consulta'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
+            Hint = 'Numero da Porta de Serviço TCP que será utilizada '#13#10'pelo Servidor de Terminal de Consulta'#13#10'Lembre-se que essa Porta deve ser aberta em seu FireWall ou Roteador'
             Top = 37
             Width = 94
             OnChange = cbxTCModeloChange
@@ -10800,7 +10800,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Top = 0
       Width = 196
       Align = alLeft
-      Caption = '  ACBrMonitorPLUS  '
+      Caption = '  ACBrMonitorPLUS '
       Color = clGray
       Font.CharSet = ANSI_CHARSET
       Font.Color = clWhite
@@ -12855,6 +12855,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -14008,7 +14009,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Mask_vUnCom = '0.000'
     SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     left = 589
     top = 496
@@ -14019,7 +14020,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Mask_vUnCom = '0.000'
     SoftwareHouse = 'Projeto ACBr'
     Site = 'http://www.projetoacbr.com.br'
-    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 624
     top = 492
   end
@@ -14140,7 +14141,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MargemEsquerda = 0.6
     MargemDireita = 0.51
     PrintDialog = True
-    left = 432
+    left = 433
     top = 400
   end
 end

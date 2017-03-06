@@ -2602,7 +2602,7 @@ begin
           sAssunto,
           sMensagem,
           True,  // Enviar PDF junto
-          nil,    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
+          nil,    // Lista com emails que serão enviado cópias - TStrings
           nil
         );
       finally
@@ -2642,7 +2642,7 @@ begin
         mmEmailMsgCTe.Lines
         , True  // Enviar PDF junto
         ,
-        nil    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
+        nil    // Lista com emails que serão enviado cópias - TStrings
         , nil);
       // Lista de anexos - TStrings
     except
@@ -2679,7 +2679,7 @@ begin
         mmEmailMsgMDFe.Lines
         , True  // Enviar PDF junto
         ,
-        nil    // Lista com emails que serÃ£o enviado cÃ³pias - TStrings
+        nil    // Lista com emails que serão enviado cópias - TStrings
         , nil);
       // Lista de anexos - TStrings
     except

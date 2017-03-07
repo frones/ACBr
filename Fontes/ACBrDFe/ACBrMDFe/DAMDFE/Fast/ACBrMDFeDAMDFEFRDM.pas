@@ -165,6 +165,7 @@ begin
     // Veiculos
     Add('placa', ftMemo);
     Add('RNTRCProp', ftMemo);
+    Add('RENAVAM', ftString, 11);
     // Condutor
     Add('xNome', ftMemo);
     Add('CPF', ftMemo);
@@ -417,6 +418,7 @@ begin
     if veicTracao.placa <> '' then
     begin
       FieldByName('placa').AsString     := veicTracao.placa;
+      FieldByName('RENAVAM').AsString   := veicTracao.RENAVAM;
       FieldByName('RNTRCProp').AsString := veicTracao.prop.RNTRC;
 
       for i := 0 to veicTracao.condutor.Count - 1 do
@@ -429,6 +431,7 @@ begin
     for i := 0 to veicReboque.Count - 1 do
     begin
       FieldByName('placa').AsString     := FieldByName('placa').AsString + #13#10 + veicReboque.Items[i].placa;
+      FieldByName('RENAVAM').AsString   := FieldByName('RENAVAM').AsString + #13#10 + veicReboque.Items[i].RENAVAM;
       FieldByName('RNTRCProp').AsString := FieldByName('RNTRCProp').AsString + #13#10 + veicReboque.Items[i].prop.RNTRC;
     end;  
     if FMDFe.rodo.valePed.disp.Count > 0 then

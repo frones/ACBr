@@ -109,26 +109,26 @@ type
   TGeradorOpcoes = class(TPersistent)
   private
     FDecimalChar: Char;
-    FSomenteValidar: boolean;
-    FIdentarXML: boolean;
-    FRetirarEspacos: boolean;
-    FRetirarAcentos: boolean;
-    FNivelIdentacao: integer;
-    FTamanhoIdentacao: integer;
-    FSuprimirDecimais: boolean;
-    FTagVaziaNoFormatoResumido: boolean;
+    FSomenteValidar: Boolean;
+    FIdentarXML: Boolean;
+    FRetirarEspacos: Boolean;
+    FRetirarAcentos: Boolean;
+    FNivelIdentacao: Integer;
+    FTamanhoIdentacao: Integer;
+    FSuprimirDecimais: Boolean;
+    FTagVaziaNoFormatoResumido: Boolean;
     FFormatoAlerta: string;
   public
     constructor Create;
 
   published
-    property SomenteValidar: boolean read FSomenteValidar write FSomenteValidar default False;
-    property RetirarEspacos: boolean read FRetirarEspacos write FRetirarEspacos default True;
-    property RetirarAcentos: boolean read FRetirarAcentos write FRetirarAcentos default True;
-    property IdentarXML: boolean read FIdentarXML write FIdentarXML default False;
-    property TamanhoIdentacao: integer read FTamanhoIdentacao write FTamanhoIdentacao default 3;
-    property SuprimirDecimais: boolean read FSuprimirDecimais write FSuprimirDecimais default False;
-    property TagVaziaNoFormatoResumido: boolean read FTagVaziaNoFormatoResumido write FTagVaziaNoFormatoResumido default True;
+    property SomenteValidar: Boolean read FSomenteValidar write FSomenteValidar default False;
+    property RetirarEspacos: Boolean read FRetirarEspacos write FRetirarEspacos default True;
+    property RetirarAcentos: Boolean read FRetirarAcentos write FRetirarAcentos default True;
+    property IdentarXML: Boolean read FIdentarXML write FIdentarXML default False;
+    property TamanhoIdentacao: Integer read FTamanhoIdentacao write FTamanhoIdentacao default 3;
+    property SuprimirDecimais: Boolean read FSuprimirDecimais write FSuprimirDecimais default False;
+    property TagVaziaNoFormatoResumido: Boolean read FTagVaziaNoFormatoResumido write FTagVaziaNoFormatoResumido default True;
     property FormatoAlerta: string read FFormatoAlerta write FFormatoAlerta;
     property DecimalChar: Char read FDecimalChar write FDecimalChar default '.';
   end;
@@ -335,11 +335,11 @@ begin
   // %MSG%       : Representa a mensagem de alerta
   // %DESCRICAO% : Representa a Descrição da TAG
   s := FOpcoes.FFormatoAlerta;
-  s := stringReplace(s, '%TAGNIVEL%', FTagNivel, [rfReplaceAll]);
-  s := stringReplace(s, '%TAG%', TAG, [rfReplaceAll]);
-  s := stringReplace(s, '%ID%', ID, [rfReplaceAll]);
-  s := stringReplace(s, '%MSG%', Alerta, [rfReplaceAll]);
-  s := stringReplace(s, '%DESCRICAO%', Trim(Descricao), [rfReplaceAll]);
+  s := StringReplace(s, '%TAGNIVEL%', FTagNivel, [rfReplaceAll]);
+  s := StringReplace(s, '%TAG%', TAG, [rfReplaceAll]);
+  s := StringReplace(s, '%ID%', ID, [rfReplaceAll]);
+  s := StringReplace(s, '%MSG%', Alerta, [rfReplaceAll]);
+  s := StringReplace(s, '%DESCRICAO%', Trim(Descricao), [rfReplaceAll]);
   if Trim(Alerta) <> '' then
     FListaDeAlertas.Add(s);
 end;
@@ -358,7 +358,7 @@ begin
     if TAG[1] <> '/' then
       FTagNivel := FTagNivel + '<' + TAG + '>';
     if (TAG[1] = '/') and (Copy(TAG, 2, 3) = 'det') then
-      FTagNivel := copy(FTagNivel, 1, pos('<det', FTagNivel) - 1)
+      FTagNivel := Copy(FTagNivel, 1, pos('<det', FTagNivel) - 1)
     else
       FTagNivel := StringReplace(FTagNivel, '<' + Copy(TAG, 2, MaxInt) + '>', '', []);
   end;
@@ -379,7 +379,7 @@ end;
 procedure TGerador.wCampoCNPJCPF(const ID1, ID2: string; CNPJCPF: string;
   obrigatorio: Boolean; PreencheZeros: Boolean);
 var
-  Tamanho: integer;
+  Tamanho: Integer;
   Ocorrencia: Integer;
 begin
   CNPJCPF    := SomenteNumeros(trim(CNPJCPF));
@@ -390,7 +390,7 @@ begin
   begin
     if PreencheZeros and (Tamanho <> 11) then
     begin
-      CNPJCPF := PadLeft(CNPJCPF,11,'0');
+      CNPJCPF := PadLeft(CNPJCPF, 11, '0');
       Tamanho := 11;
     end;
 
@@ -400,9 +400,9 @@ begin
   end
   else
   begin
-    if PreencheZeros and (obrigatorio or (Tamanho > 0))  and (Tamanho <> 14) then
+    if PreencheZeros and (obrigatorio or (Tamanho > 0)) and (Tamanho <> 14) then
     begin
-      CNPJCPF := PadLeft(CNPJCPF,14,'0');
+      CNPJCPF := PadLeft(CNPJCPF, 14, '0');
       Tamanho := 14;
     end;
 
@@ -411,7 +411,7 @@ begin
       wAlerta(ID1, 'CNPJ', 'CNPJ', ERR_MSG_INVALIDO);
   end;
 
-  if (not (Tamanho in[0,11,14])) then
+  if (not(Tamanho in [0, 11, 14])) then
     wAlerta(ID1 + '-' + ID2, 'CNPJ-CPF', 'CNPJ/CPF', ERR_MSG_INVALIDO);
 end;
 
@@ -422,7 +422,7 @@ begin
     wCampo(tcStr, ID, 'CNPJ', 00, 00, 1, '');
     exit;
   end;
-  CNPJ := SomenteNumeros(trim(CNPJ));
+  CNPJ := SomenteNumeros(Trim(CNPJ));
   if obrigatorio then
     wCampo(tcEsp, ID, 'CNPJ', 14, 14, 1, CNPJ, DSC_CNPJ)
   else
@@ -438,7 +438,7 @@ begin
     wCampo(tcStr, ID, 'CPF', 00, 00, 1, '');
     exit;
   end;
-  CPF := SomenteNumeros(trim(CPF));
+  CPF := SomenteNumeros(Trim(CPF));
   if obrigatorio then
     wCampo(tcEsp, ID, 'CPF', 11, 11, 1, CPF, DSC_CPF)
   else
@@ -447,9 +447,9 @@ begin
     wAlerta(ID, 'CPF', DSC_CPF, ERR_MSG_INVALIDO);
 end;
 
-procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML : Boolean = True; Atributo: String = '');
+procedure TGerador.wCampo(const Tipo: TpcnTipoCampo; ID, TAG: string; const min, max, ocorrencias: smallint; const valor: variant; const Descricao: string = ''; ParseTextoXML: Boolean = True; Atributo: String = '');
 
-  function IsEmptyDate( wAno, wMes, wDia: Word): Boolean;
+  function IsEmptyDate(wAno, wMes, wDia: Word): Boolean;
   begin
     Result := ((wAno = 1899) and (wMes = 12) and (wDia = 30));
   end;
@@ -458,9 +458,9 @@ var
   NumeroDecimais: smallint;
   valorInt, TamMin, TamMax: Integer;
   valorDbl: Double;
-  alerta, ConteudoProcessado, ATag: string;
+  Alerta, ConteudoProcessado, ATag: string;
   wAno, wMes, wDia, wHor, wMin, wSeg, wMse: Word;
-  EstaVazio: boolean;
+  EstaVazio: Boolean;
 begin
   ID                  := Trim(ID);
   Tag                 := Trim(TAG);
@@ -474,18 +474,18 @@ begin
   case Tipo of
     tcStr:
       begin
-        ConteudoProcessado := Trim( VarToStr(valor) );
+        ConteudoProcessado := Trim(VarToStr(valor));
         EstaVazio := ConteudoProcessado = '';
       end;
 
     tcDat, tcDatCFe:
       begin
-        DecodeDate( VarToDateTime(valor), wAno, wMes, wDia);
+        DecodeDate(VarToDateTime(valor), wAno, wMes, wDia);
         ConteudoProcessado := FormatFloat('0000', wAno) + '-' + FormatFloat('00', wMes) + '-' + FormatFloat('00', wDia);
         if Tipo = tcDatCFe then
           ConteudoProcessado := SomenteNumeros(ConteudoProcessado);
 
-        EstaVazio := IsEmptyDate( wAno, wMes, wDia );
+        EstaVazio := IsEmptyDate(wAno, wMes, wDia);
       end;
 
     tcDatVcto:
@@ -537,7 +537,7 @@ begin
 
         try
           valorDbl := valor; // Converte Variant para Double
-          ConteudoProcessado := FloatToString( valorDbl, FOpcoes.DecimalChar, FloatMask(NumeroDecimais, False));
+          ConteudoProcessado := FloatToString(valorDbl, FOpcoes.DecimalChar, FloatMask(NumeroDecimais, False));
         except
           valorDbl := 0;
           ConteudoProcessado := '0.00';
@@ -589,15 +589,15 @@ begin
   if (ocorrencias = 1) and (EstaVazio) and (TamMin > 0) then
     alerta := ERR_MSG_VAZIO;
 
-  if (length(ConteudoProcessado) < TamMin) and (alerta = '') and (length(ConteudoProcessado) > 1) then
-    alerta := ERR_MSG_MENOR;
+  if (length(ConteudoProcessado) < TamMin) and (Alerta = '') and (length(ConteudoProcessado) > 1) then
+    Alerta := ERR_MSG_MENOR;
 
   if length(ConteudoProcessado) > TamMax then
-     alerta := ERR_MSG_MAIOR;
+    Alerta := ERR_MSG_MAIOR;
 
   // Grava alerta //
-  if (alerta <> '') and (pos(ERR_MSG_VAZIO, alerta) = 0) and (not EstaVazio) then
-    alerta := alerta + ' [' + VarToStr(valor) + ']';
+  if (Alerta <> '') and (pos(ERR_MSG_VAZIO, Alerta) = 0) and (not EstaVazio) then
+    Alerta := Alerta + ' [' + VarToStr(valor) + ']';
 
   walerta(ID, TAG, Descricao, alerta);
   // Sai se for apenas para validar //
@@ -664,7 +664,7 @@ end;
 
 procedure TGerador.gtNivel(ID: string);
 var
-  i: integer;
+  i: Integer;
 begin
   ID := UpperCase(ID);
   FIDNivel := ID;
@@ -677,7 +677,7 @@ end;
 
 procedure TGerador.gtCampo(const Tag, ConteudoProcessado: string);
 var
-  i: integer;
+  i: Integer;
   List: TstringList;
 begin
   if FLayoutArquivoTXT.Count = 0 then
@@ -696,7 +696,7 @@ end;
 
 procedure TGerador.gtAjustarRegistros(const ID: string);
 var
-  i, j, k: integer;
+  i, j, k: Integer;
   s, idLocal: string;
   ListArquivo: TstringList;
   ListCorrigido: TstringList;
@@ -709,7 +709,7 @@ begin
   ListCorrigido := TStringList.Create;
   // Elimina registros não utilizados
   ListArquivo.Text := FArquivoFormatoTXT;
-  for i := 0 to ListArquivo.count - 1 do
+  for i := 0 to ListArquivo.Count - 1 do
   begin
     k := 0;
     for j := 0 to FLayoutArquivoTXT.count - 1 do
@@ -717,28 +717,28 @@ begin
         if pos('¨', listArquivo[i]) > 0 then
           k := 1;
     if k = 0 then
-      ListCorrigido.add(ListArquivo[i]);
+      ListCorrigido.Add(ListArquivo[i]);
   end;
   // Insere dados da chave da Nfe
-  for i := 0 to ListCorrigido.count - 1 do
+  for i := 0 to ListCorrigido.Count - 1 do
     if pos('^ID^', ListCorrigido[i]) > 1 then
       ListCorrigido[i] := StringReplace(ListCorrigido[i], '^ID^', ID, []);
   // Elimina Nome de TAG sem informação
-  for j := 0 to FLayoutArquivoTXT.count - 1 do
+  for j := 0 to FLayoutArquivoTXT.Count - 1 do
   begin
     s := FLayoutArquivoTXT[j];
     while (pos('|', s) > 0) and (pos('¨', s) > 0) do
     begin
-      s := copy(s, pos('|', s), maxInt);
-      ListTAGs.add(copy(s, 1, pos('¨', s)));
-      s := copy(s, pos('¨', s) + 1, maxInt);
+      s := Copy(s, pos('|', s), MaxInt);
+      ListTAGs.Add(Copy(s, 1, pos('¨', s)));
+      s := Copy(s, pos('¨', s) + 1, MaxInt);
     end;
   end;
-  for i := 0 to ListCorrigido.count - 1 do
-    for j := 0 to ListTAGs.count - 1 do
+  for i := 0 to ListCorrigido.Count - 1 do
+    for j := 0 to ListTAGs.Count - 1 do
       ListCorrigido[i] := StringReplace(ListCorrigido[i], ListTAGs[j], '|', []);
   // Elimina Bloco <ID>
-  for i := 0 to ListCorrigido.count - 1 do
+  for i := 0 to ListCorrigido.Count - 1 do
     if pos('>', ListCorrigido[i]) > 0 then
      begin
       ListCorrigido[i] := Trim(copy(ListCorrigido[i], pos('>', ListCorrigido[i]) + 1, maxInt));

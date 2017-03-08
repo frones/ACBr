@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2017
+[+] Adição da versão do MDFe no DAMDFe em FAst report
+		http://www.projetoacbr.com.br/forum/topic/35011-impressão-versão-do-mdfe-no-damdfe/
+		Por:  Juliomar Marchetti
+		
 07/03/2017
 [+] adição do renavam disponível para carregar no componente
 		http://www.projetoacbr.com.br/forum/topic/35506-compo-renavan-na-damdfe/

@@ -488,7 +488,7 @@ begin
     CreateDataSet;
     Append;
 
-    FieldByName('Versao').AsString := '1.00';
+    FieldByName('Versao').AsString := FloatToString(FMDFe.infMDFe.Versao,'.','#0.00');
 
     // Carregamento da imagem
     FieldByName('Imagem').AsString := Ifthen(DAMDFEClassOwner.Logo <> '', DAMDFEClassOwner.Logo,'');

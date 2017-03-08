@@ -311,6 +311,7 @@ type
     fUF_CRC: String;         /// Indicação da unidade da federação que expediu o CRC.
     fNUM_SEQ_CRC: String;    /// Número sequencial no seguinte formato: UF/ano/número
     fDT_CRC: TDateTime;      /// Data de validade do CRC do contador
+    fIND_RESP_LEGAL: string;  /// Identificação do signatário que será validado como responsável legal da empresa junto as bases da RFB
   public
     property IDENT_NOM: String read fIDENT_NOM write fIDENT_NOM;
     property IDENT_CPF: String read fIDENT_CPF write fIDENT_CPF;
@@ -322,6 +323,7 @@ type
     property UF_CRC: String read fUF_CRC write fUF_CRC;
     property NUM_SEQ_CRC: String read fNUM_SEQ_CRC write fNUM_SEQ_CRC;
     property DT_CRC: TDateTime read fDT_CRC write fDT_CRC;
+    property IND_RESP_LEGAL: String read fIND_RESP_LEGAL write fIND_RESP_LEGAL;
   end;
 
   /// Registro J930 - Lista

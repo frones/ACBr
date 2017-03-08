@@ -411,6 +411,23 @@ begin
      begin
         with FRegistroJ930.Items[intFor] do
         begin
+         /// Layout 5 a partir da escrituração ano calendário 2017
+         if DT_INI >= EncodeDate(2017,01,01) then
+         begin
+             Add( LFill('J930') +
+                  LFill(IDENT_NOM) +
+                  LFill(IDENT_CPF) +
+                  LFill(IDENT_QUALIF) +
+                  LFill(COD_ASSIN, 3) +
+                  LFill(IND_CRC) +
+                  LFill(EMAIL) +
+                  LFill(FONE) +
+                  LFill(UF_CRC) +
+                  LFill(NUM_SEQ_CRC) +
+                  LFill(DT_CRC) +
+                  LFill(IND_RESP_LEGAL)
+                  );
+         end else
          /// Layout 2 a partir da escrituração ano calendário 2013
          if DT_INI >= EncodeDate(2013,01,01) then
          begin

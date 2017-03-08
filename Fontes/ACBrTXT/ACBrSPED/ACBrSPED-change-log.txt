@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 08/03/2017
+[+] Atualização dos campos do sped contabil
+		http://www.projetoacbr.com.br/forum/topic/35354-atualização-de-layout-novos-campos/
+		por:  Juliomar Marchetti
+		
 Data 13/02/2017
 [+] Adição de validação para a chave da nfe no registro e113
 		http://www.projetoacbr.com.br/forum/topic/35090-registro-e113-faltando-chv_nfe/

@@ -211,11 +211,14 @@ type
     FSepararPorCNPJ: Boolean;
     FSepararPorModelo: Boolean;
     FSepararPorMes: Boolean;
+  	FSepararPorDia: Boolean;
   private
 
     function GetIniServicos: String;
     function GetPathSalvar: String;
     function GetPathSchemas: String;
+  	procedure SetSepararPorDia(const Value: Boolean);
+    procedure SetSepararPorMes(const Value: Boolean);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeArquivosConf: TArquivosConf); reintroduce; virtual;
@@ -234,7 +237,9 @@ type
     property SepararPorModelo: Boolean read FSepararPorModelo
       write FSepararPorModelo default False;
     property SepararPorMes: Boolean
-      read FSepararPorMes write FSepararPorMes default False;
+      read FSepararPorMes write SetSepararPorMes default False;
+	  property SepararPorDia: Boolean
+      read FSepararPorDia write SetSepararPorDia default False;
   end;
 
   { TConfiguracoes }
@@ -689,6 +694,7 @@ begin
   FIniServicos := '';
 
   FSepararPorMes := False;
+  FSepararPorDia := False;
   FAdicionarLiteral := False;
   FSepararPorCNPJ := False;
   FSepararPorModelo := False;
@@ -704,6 +710,7 @@ begin
   SepararPorCNPJ   := DeArquivosConf.SepararPorCNPJ;
   SepararPorModelo := DeArquivosConf.SepararPorModelo;
   SepararPorMes    := DeArquivosConf.SepararPorMes;
+  SepararPorDia    := DeArquivosConf.SepararPorDia;
 end;
 
 function TArquivosConf.GetPathSalvar: String;
@@ -726,6 +733,20 @@ begin
   Result := FPathSchemas;
 end;
 
+procedure TArquivosConf.SetSepararPorDia(const Value: Boolean);
+begin
+  FSepararPorDia := Value;
+  if Value then
+    FSepararPorMes := Value;
+end;
+
+procedure TArquivosConf.SetSepararPorMes(const Value: Boolean);
+begin
+  FSepararPorMes := Value;
+  if not Value then
+    FSepararPorDia := Value;
+end;
+
 function TArquivosConf.GetIniServicos: String;
 begin
   if FIniServicos = '' then
@@ -739,7 +760,7 @@ function TArquivosConf.GetPath(APath: String; ALiteral: String; CNPJ: String;
   Data: TDateTime): String;
 var
   wDia, wMes, wAno: word;
-  Dir, Modelo, AnoMes: String;
+  Dir, Modelo, AnoMes, Dia: String;
   LenLiteral: integer;
 begin
   if EstaVazio(APath) then
@@ -774,6 +795,14 @@ begin
 
     if Pos(AnoMes, Dir) <= 0 then
       Dir := PathWithDelim(Dir) + AnoMes;
+	  
+	if SepararPorDia then
+    begin
+      Dia := IntToStrZero(wDia, 2);
+
+      if Pos(Dia, Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + Dia;
+    end;
   end;
 
   LenLiteral := Length(ALiteral);

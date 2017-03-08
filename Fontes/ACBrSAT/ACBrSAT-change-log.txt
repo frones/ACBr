@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/03/2017
+[+] Adição do separador por dia dos documentos em pastas
+		http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
+		por: Juliomar Marchetti
+		
 Data: 28/02/2017
 -- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --
 [+] Adicionada a propriedade "ImprimeMsgOlhoNoImposto : Boolean default True"

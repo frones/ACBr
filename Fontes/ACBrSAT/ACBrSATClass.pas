@@ -140,12 +140,15 @@ type
     fsSalvarEnvio: Boolean;
     fsSepararPorCNPJ: Boolean;
     fsSepararPorMes: Boolean;
+	  fsSepararPorDia: Boolean;
     function GetPastaCFeCancelamento: String;
     function GetPastaCFeVenda: String;
     function GetPastaEnvio: String;
     procedure SetPastaCFeCancelamento(AValue: String);
     procedure SetPastaCFeVenda(AValue: String);
     procedure SetPastaEnvio(AValue: String);
+	  procedure SetSepararPorDia(const Value: Boolean);
+    procedure SetSepararPorMes(const Value: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -158,7 +161,8 @@ type
     property SalvarEnvio: Boolean read fsSalvarEnvio write fsSalvarEnvio default false;
 
     property SepararPorCNPJ: Boolean read fsSepararPorCNPJ write fsSepararPorCNPJ default False;
-    property SepararPorMes: Boolean read fsSepararPorMes write fsSepararPorMes default False;
+    property SepararPorMes: Boolean read fsSepararPorMes write SetSepararPorMes default False;
+	  property SepararPorDia: Boolean read fsSepararPorDia write SetSepararPorDia default False;
 
     property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
     property PastaCFeCancelamento: String read GetPastaCFeCancelamento
@@ -348,6 +352,7 @@ begin
 
   fsSepararPorCNPJ := False;
   fsSepararPorMes := False;
+  fsSepararPorDia := False;
 
   fsPrefixoArqCFe := CPREFIXO_ArqCFe;
   fsPrefixoArqCFeCanc := CPREFIXO_ArqCFeCanc;
@@ -395,11 +400,25 @@ begin
   fsPastaEnvio := PathWithoutDelim( AValue );
 end;
 
+procedure TACBrSATConfigArquivos.SetSepararPorDia(const Value: Boolean);
+begin
+  fsSepararPorDia := Value;
+  if Value then
+    fsSepararPorMes := Value;
+end;
+
+procedure TACBrSATConfigArquivos.SetSepararPorMes(const Value: Boolean);
+begin
+  fsSepararPorMes := Value;
+  if not Value then
+    fsSepararPorDia := Value;
+end;
+
 function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;
   Data: TDateTime): String;
 var
   wDia, wMes, wAno: word;
-  Dir, AnoMes: String;
+  Dir, AnoMes, Dia: String;
 begin
   if EstaVazio(APath) then
     Dir := PastaCFeVenda
@@ -425,6 +444,14 @@ begin
 
     if Pos(AnoMes, Dir) <= 0 then
       Dir := PathWithDelim(Dir) + AnoMes;
+	  
+	if SepararPorDia then
+    begin
+      Dia := IntToStrZero(wDia, 2);
+
+      if Pos(Dia, Dir) <= 0 then
+        Dir := PathWithDelim(Dir) + Dia;
+    end;
   end;
 
   with TACBrSAT(fsOwner) do

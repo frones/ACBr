@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/03/2017
+[+] adicionar um novo campo para Observações de CT-e Globalizado.
+		http://www.projetoacbr.com.br/forum/topic/35505-obs-de-ct-e-globalizado-e-documentos-de-ct-e-redespacho-e-multimodal/
+		por Juliomar Marchetti
+		
 17/01/2017
 --ACBrCTeDACTEFR
 [+] Informações para o CT-e 3.00

@@ -380,6 +380,7 @@ begin
     Add('modal', ftString, 2);
     Add('tpServ', ftString, 50);
     Add('indGlobalizado', ftString, 3);
+    Add('ObsGlobalizado', ftString, 256);
     Add('cMunIni', ftString, 7);
     Add('xMunIni', ftString, 60);
     Add('UFIni', ftString, 2);
@@ -2192,7 +2193,11 @@ begin
       end;
 
       if indGlobalizado = tiSim then
-        FieldByName('indGlobalizado').AsString  := 'Sim'
+        begin
+          FieldByName('indGlobalizado').AsString  := 'Sim';
+          if (Trim(FCTe.infCTeNorm.infGlobalizado.xObs) <> '') then
+             FieldByName('ObsGlobalizado').AsString  := FCTe.infCTeNorm.infGlobalizado.xObs;
+        end
       else
         FieldByName('indGlobalizado').AsString  := 'Não';
 

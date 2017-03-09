@@ -39,10 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/03/2017
+-- ACBrECFVirtual --
+[-] Correção de A.V. quando Ativando o ECFVirtual, que tinha cupom Aberto e um Item Cancelado
+    http://www.projetoacbr.com.br/forum/topic/35435-erro-ao-ativar-acbrecf-utilizando-ecf-virtual/?do=findComment&comment=232343
+    (por: DSA)
+
 Data: 22/02/2017
 -- ACBrECFEscECF --
 [*] Correção para encontrar a linha correta das informações 
-	em "BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal".
+    em "BematechObtemDadosUltimaReducaoZDeLeituraMemoriaFiscal".
     (por: Elias César)
 
 Data: 20/02/2017

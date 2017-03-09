@@ -1269,12 +1269,16 @@ begin
     ItemCupom := fpItensCupom.New(Self);
     ItemCupom.AsString := T;
 
-    if fpAliquotasCupom.Count > 0 then
+    if (ItemCupom.Qtd > 0) then // Não foi cancelado ?
     begin
-      if (fpAliquotasCupom.Find(ItemCupom.AliqPos).Tipo = 'S') then
-        fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.TotalLiquido
-      else
-        fpSubtotalICMS  := fpSubtotalICMS + ItemCupom.TotalLiquido;
+      AliqCupom := fpAliquotasCupom.Find(ItemCupom.AliqPos);
+      if Assigned(AliqCupom) then
+      begin
+        if (AliqCupom.Tipo = 'S') then
+          fpSubtotalISSQN := fpSubtotalISSQN + ItemCupom.TotalLiquido
+        else
+          fpSubtotalICMS  := fpSubtotalICMS + ItemCupom.TotalLiquido;
+      end;
     end;
 
     Inc(I);
@@ -3056,8 +3060,6 @@ begin
     fpTotalDescontosISSQN  := Ini.ReadFloat('Variaveis', 'TotalDescontosISSQN', fpTotalDescontosISSQN);
     fpTotalAcrescimosISSQN := Ini.ReadFloat('Variaveis', 'TotalAcrescimosISSQN', fpTotalAcrescimosISSQN);
 
-    fpCupom.LoadFromINI(Ini);
-
     inherited CarregaAliquotas ;   { Cria fpAliquotas }
     S := 'Aliquotas';
     A := 0 ;
@@ -3118,7 +3120,7 @@ begin
       A := A + 1 ;
     end ;
 
-
+    fpCupom.LoadFromINI(Ini);
   finally
     Ini.Free ;
   end ;

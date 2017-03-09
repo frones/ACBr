@@ -75,7 +75,8 @@ type
     FTagNivel: string;
     FIDNivel: string;
     FOpcoes: TGeradorOpcoes;
-    FPrefixo : string;
+    FPrefixo: string;
+    procedure addStringArquivoXML(const Value: AnsiString);
   public
     FIgnorarTagNivel: string;
     FIgnorarTagIdentacao: string;
@@ -282,6 +283,11 @@ end;
 
 { TGerador }
 
+procedure TGerador.addStringArquivoXML(const Value: AnsiString);
+begin
+  FArquivoFormatoXML := FArquivoFormatoXML + Value;
+end;
+
 constructor TGerador.Create;
 begin
   inherited;
@@ -369,9 +375,9 @@ begin
     Dec(FOpcoes.FNivelIdentacao);
   //
   if FOpcoes.IdentarXML then
-    FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '>' + #13#10
+    addStringArquivoXML(StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '>' + #13#10)
   else
-    FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + '>';
+    addStringArquivoXML('<' + TAG + '>');
   if (Identar) and (TAG[1] <> '/') then
     Inc(FOpcoes.FNivelIdentacao);
 end;
@@ -620,16 +626,16 @@ begin
     if FOpcoes.FIdentarXML then
     begin
       if FOpcoes.FTagVaziaNoFormatoResumido then
-        FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '/>' + #13#10
+        addStringArquivoXML(StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + TAG + '/>' + #13#10)
       else
-        FArquivoFormatoXML := FArquivoFormatoXML + StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + tag + '></' + tag + '>' + #13#10
+        addStringArquivoXML(StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) + '<' + TAG + '></' + TAG + '>' + #13#10)
     end
     else
     begin
       if FOpcoes.FTagVaziaNoFormatoResumido then
-        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + Atributo + '/>'
+        addStringArquivoXML('<' + tag + Atributo + '/>')
       else
-        FArquivoFormatoXML := FArquivoFormatoXML + '<' + tag + Atributo +  '></' + tag + '>';
+        addStringArquivoXML('<' + tag + Atributo + '></' + tag + '>');
     end;
     exit;
   end;
@@ -647,17 +653,17 @@ begin
                '</' + tag + '>';
 
     if FOpcoes.FIdentarXML then
-      FArquivoFormatoXML := FArquivoFormatoXML +
+      addStringArquivoXML(
          StringOfChar(' ', FOpcoes.FTamanhoIdentacao * FOpcoes.FNivelIdentacao) +
-         ATag + sLineBreak
+         ATag + sLineBreak)
     else
-      FArquivoFormatoXML := FArquivoFormatoXML + ATag;
+      addStringArquivoXML(ATag);
   end;
 end;
 
 procedure TGerador.wTexto(const Texto: string);
 begin
-  FArquivoFormatoXML := FArquivoFormatoXML + Texto;
+  addStringArquivoXML(Texto);
 end;
 
 // Gerador TXT

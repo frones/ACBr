@@ -32,9 +32,8 @@ Agradecimentos:
 - Daniel Simões de Almeida
 - André Ferreira de Moraes
 
-
 {******************************************************************************
-|*  ACBrNFeDANFEFR
+|* ACBrMDFeDAMDFEFR
 |*
 |* PROPÓSITO: Registro de Alterações
 ******************************************************************************}
@@ -46,13 +45,6 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 09/03/2017
--- ACBrNFeDANFEFR --
-[*] Alterado o nome do arquivo PDF de inutilização para: <id>-procInutNFe.pdf
-   Por : Italo Jurisato Junior
-
-10/02/2017
--- ACBrNFeDANFEFRDM --
-[*] Ajuste no tamanho do campo unidade.
-     http://www.projetoacbr.com.br/forum/topic/35347-sugest%C3%A3o-simples-na-unit-acbrnfedanfefrdmpas-envolvendo-a-propriedade-imprimirunqtvlcomercial/
-     Por : Henrique Leonardo	
-	
+-- ACBrMDFeDAMDFEFR --
+[*] Alterado o nome do arquivo PDF de eventos para: <id>-procEventoMDFe.pdf
+   Por : Marcelo Ogliari

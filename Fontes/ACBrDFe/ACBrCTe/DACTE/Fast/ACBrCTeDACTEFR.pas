@@ -34,12 +34,13 @@
 {                                                                              }
 {******************************************************************************}
 
-{ *******************************************************************************
+{******************************************************************************
   |* Historico
   |*
   |* 30/03/2011: Jeickson Gobeti
   |*  - Inicio do desenvolvimento Dacte FastReport
-  ******************************************************************************* }
+ ******************************************************************************}
+
 {$I ACBr.inc}
 
 unit ACBrCTeDACTEFR;
@@ -1390,7 +1391,7 @@ begin
 
     NomeArq := OnlyNumber(TACBrCTe(ACBrCTe).InutCTe.RetInutCTe.Id);
 
-    frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-ped-inu.pdf';
+    frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutCTe.pdf';
 
     if not DirectoryExists(ExtractFileDir(frxPDFExport.FileName)) then
       ForceDirectories(ExtractFileDir(frxPDFExport.FileName));
@@ -3150,14 +3151,12 @@ begin
   end;
 end;
 
-Function TACBrCTeDACTEFR.ManterCep( iCep : Integer ) : String;
+function TACBrCTeDACTEFR.ManterCep( iCep : Integer ) : String;
 begin
   Result := '';
   if iCep > 0 then
     Result := FormatarCEP(Poem_Zeros(iCEP, 8));
 
 end;
-
-
 
 end.

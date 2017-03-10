@@ -49,7 +49,7 @@ procedure DoACBrGNRe ( Cmd: TACBrCmd ) ;
 var
   wDiretorioAtual : String;
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
-  ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
+  ArqPDF : String;
 begin
   with FrmACBrMonitor do
   begin

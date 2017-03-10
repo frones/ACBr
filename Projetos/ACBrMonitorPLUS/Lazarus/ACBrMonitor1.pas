@@ -43,11 +43,11 @@ uses
   ACBrPosPrinter, ACBrSocket, ACBrCEP, ACBrIBGE, blcksock, ACBrValidador,
   ACBrGIF, ACBrEAD, ACBrMail, ACBrSedex, ACBrNCMs, ACBrNFe, ACBrNFeDANFeESCPOS,
   ACBrDANFCeFortesFr, ACBrNFeDANFeRLClass, ACBrBoleto, ACBrBoletoFCFortesFr,
-  Printers, DbCtrls, DBGrids, ExtDlgs, SynHighlighterXML, SynMemo, PrintersDlgs,
+  Printers, DbCtrls, DBGrids, SynHighlighterXML, SynMemo, PrintersDlgs,
   IpHtml, pcnConversao, pcnConversaoNFe, pcteConversaoCTe, ACBrSAT,
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
-  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types, ACBrBase,
+  ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
   fileinfo;
 
 const
@@ -3897,7 +3897,7 @@ begin
     edTimeZoneStr.Caption := Ini.ReadString('WebService','TimeZoneStr','');
 
     ACBrNFe1.Configuracoes.Arquivos.IniServicos := edtArquivoWebServicesNFe.Text;
-    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1) ;
+    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(rgVersaoSSL.ItemIndex+1);
     ACBrNFe1.Configuracoes.Geral.ValidarDigest := cbValidarDigest.Checked;
     ACBrNFe1.Configuracoes.Geral.RetirarAcentos := cbRetirarAcentos.Checked;
 

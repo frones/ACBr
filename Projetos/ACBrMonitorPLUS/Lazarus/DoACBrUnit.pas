@@ -44,6 +44,7 @@ Procedure DoACBr( {%H-}Cmd : TACBrCmd ) ;
 Procedure VerificaPermiteComandosRemoto ;
 Function ConvertStrRecived( AStr: AnsiString ) : AnsiString ;
 Function LerConverterIni( AStr: AnsiString ) : TMemIniFile;
+Function StringIsXML(AStr: AnsiString) : Boolean;
 
 implementation
 Uses ACBrUtil, DateUtils,
@@ -315,6 +316,11 @@ begin
   finally
     SL.Free;
   end;
+end;
+
+function StringIsXML(AStr: AnsiString): Boolean;
+begin
+  Result :=(pos('<', AStr) > 0) and (pos('>', AStr) > 0);
 end;
 
 end.

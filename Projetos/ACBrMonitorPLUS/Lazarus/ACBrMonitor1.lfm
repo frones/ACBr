@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 308
+  Left = 339
   Height = 820
-  Top = 112
+  Top = 141
   Width = 1139
   ActiveControl = btMinimizar
   Align = alClient
@@ -378,10 +378,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 939
-        ActivePage = tsACBrBoleto
+        ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
-        TabIndex = 11
+        TabIndex = 16
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -5859,9 +5859,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 931
-            ActivePage = tsImpressaoDFe
+            ActivePage = tsCertificadoDFe
             Align = alClient
-            TabIndex = 4
+            TabIndex = 1
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -10798,7 +10798,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 0
       Height = 30
       Top = 0
-      Width = 196
+      Width = 190
       Align = alLeft
       Caption = '  ACBrMonitorPLUS '
       Color = clGray

@@ -323,7 +323,7 @@ begin
                '<tpAmb>'+TpAmbToStr(CTe.procCTe.tpAmb)+'</tpAmb>'+
                '<verAplic>'+CTe.procCTe.verAplic+'</verAplic>'+
                '<chCTe>'+CTe.procCTe.chCTe+'</chCTe>'+
-               '<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',CTe.procCTe.dhRecbto)+'</dhRecbto>'+
+               '<dhRecbto>'+DateTimeTodh(CTe.procCTe.dhRecbto) + GetUTC(CodigoParaUF(CTe.ide.cUF), CTe.procCTe.dhRecbto)+'</dhRecbto>'+
                '<nProt>'+CTe.procCTe.nProt+'</nProt>'+
                '<digVal>'+CTe.procCTe.digVal+'</digVal>'+
                '<cStat>'+IntToStr(CTe.procCTe.cStat)+'</cStat>'+

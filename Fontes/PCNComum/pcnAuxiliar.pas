@@ -78,6 +78,7 @@ type
 
 function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
+function DateTimeToDataHora(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True): AnsiString;
 function IIf(const condicao: Boolean; const Verdadeiro, Falso: Variant): Variant;
@@ -161,6 +162,20 @@ begin
             IntToStrZero(wDia, 2) + 'T' +
             IntToStrZero(wHor, 2) + ':' +
             IntToStrZero(wMin, 2) + ':' +
+            IntToStrZero(wSeg, 2);
+end;
+
+function DateTimeToDataHora(DataHora: TDateTime): string;
+var
+  wAno, wMes, wDia, wHor, wMin, wSeg, wMil: word;
+begin
+  DecodeDate(DataHora, wAno, wMes, wDia);
+  DecodeTime(DataHora, wHor, wMin, wSeg, wMil);
+  Result := IntToStrZero(wDia, 2) +
+            IntToStrZero(wMes, 2) +
+            IntToStrZero(wAno, 4) +
+            IntToStrZero(wHor, 2) +
+            IntToStrZero(wMin, 2) +
             IntToStrZero(wSeg, 2);
 end;
 

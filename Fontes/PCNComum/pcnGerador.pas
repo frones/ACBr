@@ -159,6 +159,7 @@ const
   NAME_SPACE_CFE  = 'xmlns="http://www.fazenda.sp.gov.br/sat"';
   NAME_SPACE_MDFE = 'xmlns="http://www.portalfiscal.inf.br/mdfe"';
   NAME_SPACE_GNRE = 'xmlns="http://www.gnre.pe.gov.br"';
+  NAME_SPACE_SAT  = 'xmlns="http://www.fazenda.sp.gov.br/sat"';
 
   V0_02 = 'versao="0.02"';
   V1_00 = 'versao="1.00"';
@@ -258,6 +259,10 @@ const
   DSC_VRATACR = 'Rateio do acréscimo sobre subtotal';
   DSC_NUMEROCAIXA = 'Número do Caixa ao qual o SAT está conectado';
   DSC_VITEM12741 = 'Valor aproximado dos tributos do Produto ou serviço – Lei 12741/12';
+  DSC_NSERIESAT = 'Número de série do equipamento SAT';
+  DSC_DHINICIAL = 'Data e hora incial';
+  DSC_DHFINAL = 'Data e Hora Final';
+  DSC_CHAVESEGURANCA = 'Chave de segurança';
 
 implementation
 

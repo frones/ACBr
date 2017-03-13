@@ -247,6 +247,13 @@ begin
                   else
                     result:=0;
                 end;
+    tcDatHorCFe : begin
+                  if length(ConteudoTag)>0 then
+                    result := EncodeDate(StrToInt(copy(ConteudoTag, 01, 4)), StrToInt(copy(ConteudoTag, 05, 2)), StrToInt(copy(ConteudoTag, 07, 2)))+
+                      EncodeTime(StrToInt(copy(ConteudoTag, 09, 2)), StrToInt(copy(ConteudoTag, 11, 2)), StrToInt(copy(ConteudoTag, 13, 2)), 0)
+                  else
+                    result:=0;
+                end;
     tcDe2,
     tcDe3,
     tcDe4,

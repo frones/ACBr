@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/03/2017
+[-] conforme é descrito no xsd https://tributario.sef.sc.gov.br/tax.NET/sat.dfe.siv.web/xsd/estoque.xsd o campo quantidade tem o type
+		Numero1a20Mais3PrecisaoType com precisão de 3 então foi necessário enviar a correção
+		http://www.projetoacbr.com.br/forum/topic/34731-erro-de-schema-n%C3%A3o-especifcado-valida%C3%A7%C3%A3o-bloco-x-estoque/?do=findComment&comment=232573
+		por: Juliomar Marchetti
+		
+		
 09/02/2017
 -- ACBrBlocoX_ReducaoZ --
 [-] Correção de problema ao truncar valores. Passado a utilizar TruncFix.

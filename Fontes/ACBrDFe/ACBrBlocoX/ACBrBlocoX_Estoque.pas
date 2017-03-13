@@ -100,7 +100,7 @@ begin
       FGerador.wCampo(tcStr, '', 'Descricao', 0, 0, 1, Produtos[I].Descricao);
       FGerador.wCampo(tcStr, '', 'Codigo', 0, 0, 1, Produtos[I].Codigo.Numero);
       FGerador.wCampo(tcStr, '', 'CodigoTipo', 0, 0, 1,TipoCodigoToStr(Produtos[I].Codigo.Tipo));
-      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.00',Abs(Produtos[I].Quantidade)));
+      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.000',Abs(Produtos[I].Quantidade)));
       FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Produtos[I].Unidade);
       FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, formatfloat('0.00',Produtos[I].ValorUnitario));
       FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));

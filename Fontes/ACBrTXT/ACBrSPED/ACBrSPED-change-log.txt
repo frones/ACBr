@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 15/03/2017
+[-] Correção sped contabil registro J
+		http://www.projetoacbr.com.br/forum/topic/35354-atualiza%C3%A7%C3%A3o-de-layout-novos-campos/?do=findComment&comment=233291
+		por: Juliomar Marchetti
+		
 Data 08/03/2017
 [+] Atualização dos campos do sped contabil
 		http://www.projetoacbr.com.br/forum/topic/35354-atualização-de-layout-novos-campos/

@@ -702,7 +702,7 @@ begin
               {08} PadRight(TiraAcentos(FMestre[I].Destinatario.Bairro), 15) +
               {09} PadRight(FMestre[I].Destinatario.Municipio, 30) +
               {10} PadRight(UpperCase(FMestre[I].Destinatario.UF), 2) +
-              {11} PadLeft(OnlyNumber(FMestre[I].Destinatario.Telefone), 12) +
+              {11} PadRight(OnlyNumber(FMestre[I].Destinatario.Telefone), 12, ' ')  +
               {12} PadRight(FMestre[I].Destinatario.CodigoConsumidor, 12) +
               {13} PadRight(FMestre[I].NumeroTerminalTelefonico, 12) +
               {14} PadRight(UpperCase(FMestre[I].UFTerminalTelefonico), 2);

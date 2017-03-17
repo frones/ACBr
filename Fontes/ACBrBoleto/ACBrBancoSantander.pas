@@ -537,6 +537,8 @@ begin
     {SEGMENTO P - FIM}
 
     Inc(ISequencia);
+    if sCodMovimento = '01' then
+     begin
     {SEGMENTO Q}
     Result := Result + #13#10 +
               '033'                                            + // 001 - 003 / Código do Banco na compensação
@@ -608,6 +610,7 @@ begin
                                                                  // 179 - 218 / Mensagem 9
               Space(22)                                        ; // 219 - 240 / Reservado (uso Banco)
     {SEGMENTO S - FIM}
+      end;
   end;
 end;
 
@@ -712,10 +715,10 @@ begin
                   FormatDateTime( 'ddmmyy', Vencimento)                       +  // 121 a 126
                   IntToStrZero( round( ValorDocumento * 100), 13)             +  // 127 a 139
                   '033' + aAgencia                                            +  // 140 a 147
-                  PadRight(aEspecie,2) + 'N'                                  +  // 148 a 150
+                  PadLeft(aEspecie, 2) + 'N'                                  +  // 148 a 150
                   FormatDateTime( 'ddmmyy', DataDocumento )                   +  // 151 a 156
-                  PadRight(trim(Instrucao1),2,'0')                            +  // 157 a 158
-                  PadRight(trim(Instrucao2),2,'0')                            +  // 159 a 160
+                  PadLeft(trim(Instrucao1),2,'0')                             +  // 157 a 158
+                  PadLeft(trim(Instrucao2),2,'0')                             +  // 159 a 160
                   IntToStrZero( round(ValorMoraJuros * 100 ), 13)             +  // 161 a 173
                   IfThen(DataDesconto < EncodeDate(2000,01,01),
                          '000000',
@@ -723,17 +726,16 @@ begin
                   IntToStrZero( round( ValorDesconto * 100), 13)              +  // 180 a 192
                   IntToStrZero( round( ValorIOF * 100 ), 13)                  +  // 193 a 205
                   IntToStrZero( round( ValorAbatimento * 100 ), 13)           +  // 206 a 218
-                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')     +  // 219 a 233
-                  PadRight( Sacado.NomeSacado, 40, ' ')                       +  // 234 a 273
-                  PadRight( Sacado.Logradouro + ' '+ Sacado.Numero, 40, ' ')  +  // 274 a 314
+                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')     +  // 219 a 234
+                  PadRight( Sacado.NomeSacado, 40, ' ')                       +  // 235 a 274
+                  PadRight( Sacado.Logradouro + ' '+ Sacado.Numero, 40, ' ')  +  // 275 a 314
                   PadRight( Sacado.Bairro,12,' ')                             +  // 315 a 326
                   PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +  // 327 a 334
                   PadRight( Sacado.Cidade, 15, ' ') + Sacado.UF               +  // 335 a 351
 		  IfThen(ACBrBoleto.Cedente.TipoInscricao = pJuridica,
                          Space(30),
                          PadRight(Sacado.Avalista, 30, ' ' )) + ' I'          +  // 352 a 383
-                  Copy(Cedente.Conta,Length(Cedente.Conta),1)                 +  // 384 a 384
-                  Cedente.ContaDigito + Space(6)                              +  // 385 a 391
+                  Cedente.ContaDigito + Space(6)                              +  // 384 a 391
                   Protesto + ' '                                              +  // 392 a 394
                   IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
 
@@ -743,13 +745,12 @@ begin
          for I := 0 to Mensagem.count-1 do
             wLinha:= wLinha + #13#10                         +
                      '2' + space(16)                             +
-                     PadRight(Cedente.CodigoTransmissao,20,'0')      +
+                     PadLeft(Cedente.CodigoTransmissao,20,'0')   +
                      Space(10) + '01'                            +
                      PadRight(Mensagem[I],50)                        +
                      Space(283) + 'I'                            +
-                     Copy(Cedente.Conta,Length(Cedente.Conta),1) +
                      Cedente.ContaDigito                         +
-                     Space(9)                                    +
+                     Space(6) + Protesto + ' '                   +
                      IntToStrZero( aRemessa.Count  + I + 2 , 6 );
 
          aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);

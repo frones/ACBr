@@ -47,6 +47,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 17/03/2017 ver: 0.0.220
+-- ACBrBancoSantander.pas --
+[*] Ajuste para não incluir os segmentos Q, R e S para Remessa CNAB 240 para ocorrências (alteração de vencimento, baixa, etc). (Letícia Silva)
+[-] Correções remessa CNAB400. (Jean Patrick)
+
+-- ACBrBancoSicredi.pas --
+[-] Melhoria na rotina CalcularDigitoVerificador. (Jean Patrick)
+
+-- ACBrBoleto.pas --
+[*] Ajuste para atribuição de valor inicial na propridade CarteiraEnvio.
+[+] Inclusão de Ocorrências utilizadas para Remessa. (Letícia Silva)
+
+-- ACBrBancoCaixa.pas --
+[+] Inclusão de remessa para layout CNAB 400. (Letícia Silva)
+
 Data: 17/02/2017 ver: 0.0.219
 -- ACBrBoleto.pas --
 [+] Incluída propriedade DataLimitePagto para informar até quando o boleto pode

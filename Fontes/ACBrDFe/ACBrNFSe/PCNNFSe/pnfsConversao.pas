@@ -755,6 +755,12 @@ begin
   3801: r := 'Servicos de museologia.';
   3901: r := 'Servicos de ourivesaria e lapidacao (quando o material for fornecido pelo tomador do servico).';
   4001: r := 'Obras de arte sob encomenda.';
+
+  1520: r := 'Engenharia, agronomia, arquitetura, urbanismo e congêneres.';
+  2798: r := 'Licenciamento ou cessão de direito de uso de programas de computação, inclusive distribuição.';
+  4030: r := 'Medicina e biomedicina';
+  6491: r := 'Fornecimento de mão-de-obra, mesmo em caráter temporário, inclusive de empregados ou trabalhadores, avulsos ou temporários, contratados pelo prestador de serviço.';
+
   end;
 
   result := r;

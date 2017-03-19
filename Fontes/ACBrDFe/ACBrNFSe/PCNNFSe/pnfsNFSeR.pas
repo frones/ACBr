@@ -160,6 +160,10 @@ var
 begin
   NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'ItemListaServico'));
 
+  if NFSe.Servico.ItemListaServico = '' then begin
+    NFSe.Servico.ItemListaServico := OnlyNumber(Leitor.rCampo(tcStr, 'CodigoServico'));
+  end;
+
   Item := StrToIntDef(OnlyNumber(Nfse.Servico.ItemListaServico), 0);
   if Item < 100 then
     Item := Item * 100 + 1;
@@ -1083,6 +1087,8 @@ begin
       NFSe.Servico.Valores.AliquotaIR             := Leitor.rCampo(tcDe2, 'AliquotaIR');
       NFSe.Servico.Valores.AliquotaCSLL           := Leitor.rCampo(tcDe2, 'AliquotaCSLL');
     end;
+
+  SetxItemListaServico;
 
   if (Leitor.rExtrai(2, 'EnderecoTomador') <> '') then
     begin
@@ -2588,6 +2594,8 @@ begin
 
     NFSe.Servico.ItemListaServico := Leitor.rCampo(tcStr, 'CodigoServico');
     NFSe.Servico.Discriminacao    := Leitor.rCampo(tcStr, 'Discriminacao');
+
+    SetxItemListaServico;
 
     NFSe.Servico.Valores.ValorLiquidoNfse := Leitor.rCampo(tcDe2, 'ValorServicos');
     NFSe.Servico.Valores.ValorServicos    := Leitor.rCampo(tcDe2, 'ValorServicos');

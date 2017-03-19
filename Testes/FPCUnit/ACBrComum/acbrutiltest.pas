@@ -675,6 +675,7 @@ type
   TiraAcentosTest = class(TTestCase)
   published
     procedure Normal;
+    procedure ComQuebrasDeLinha;
   end;
 
   { TiraAcentoTest }
@@ -2443,6 +2444,14 @@ end;
 procedure TiraAcentosTest.Normal;
 begin
   CheckEquals('TesteACBrUtil', TiraAcentos( ACBrStr('TêstéÃCBrÜtìl')) );
+end;
+
+procedure TiraAcentosTest.ComQuebrasDeLinha;
+var
+  AStr: String;
+begin
+  AStr := 'idLote=1'#13#10'[EVENTO001]'#13#10'tpAmb=2'#13#10'chNFe=35170205481336000137550040000001361002146742'#13#10'CNPJ=05481336000137'#13#10'dhEvento=15/02/2017 17:42:11'#13#10'tpEvento=110110'#13#10'nSeqEvento=1'#13#10'versaoEvento=1.00'#13#10'xCorrecao=012345678901234567890123456789012345678901234567890123456789abcde'#13#10;
+  CheckEquals(Astr, TiraAcentos(AStr) );
 end;
 
 { StrIsIPTest }

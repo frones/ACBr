@@ -2124,6 +2124,7 @@ begin
     ConsMDFeNaoEnc.CNPJ  := OnlyNumber( FCNPJ );
 
     AjustarOpcoes(ConsMDFeNaoEnc.Gerador.Opcoes);
+    ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
 
     ConsMDFeNaoEnc.Versao := FPVersaoServico;
     ConsMDFeNaoEnc.GerarXML;

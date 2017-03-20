@@ -54,7 +54,8 @@ Símbolo : Significado
 -- ACBrMDFeWebServices --
 [*] Método: TMDFeConsultaMDFeNaoEnc.DefinirServicoEAction, juste para remoção dos
 	pontos do CNPJ.
-	(por: DSA)
+[*] Ajuste para sempre gerar o XML com acentos, para evitar erros na validação do
+    Schema  (por: DSA)
 
 13/03/2017
 [-] alteração para quando o veiculo é de pessoa fisica e propria

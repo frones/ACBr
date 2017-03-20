@@ -160,6 +160,8 @@ type
     FConfiguracoes: TConfiguracoes;
     FIdentarXML: Boolean;
     FSSLLib: TSSLLib;
+    FSSLCryptLib: TSSLCryptLib;
+    FSSLHttpLib: TSSLHttpLib;
     FFormaEmissao: TpcnTipoEmissao;
     FFormaEmissaoCodigo: integer;
     FSalvar: Boolean;
@@ -167,17 +169,28 @@ type
     FFormatoAlerta: String;
     FRetirarAcentos: Boolean;
     FRetirarEspacos: Boolean;
+    FSSLXmlSignLib: TSSLXmlSignLib;
     FValidarDigest: Boolean;
+    FCalcSSLLib: Boolean;
 
     procedure SetSSLLib(AValue: TSSLLib);
+    procedure SetSSLCryptLib(AValue: TSSLCryptLib);
+    procedure SetSSLHttpLib(AValue: TSSLHttpLib);
+    procedure CalcSSLLib;
+
     procedure SetFormaEmissao(AValue: TpcnTipoEmissao);
     function GetFormatoAlerta: String;
+    procedure SetSSLXmlSignLib(AValue: TSSLXmlSignLib);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeGeralConf: TGeralConf); reintroduce; virtual;
 
   published
     property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
+    property SSLCryptLib: TSSLCryptLib read FSSLCryptLib write SetSSLCryptLib;
+    property SSLHttpLib: TSSLHttpLib read FSSLHttpLib write SetSSLHttpLib;
+    property SSLXmlSignLib: TSSLXmlSignLib read FSSLXmlSignLib write SetSSLXmlSignLib;
+
     property FormaEmissao: TpcnTipoEmissao read FFormaEmissao
       write SetFormaEmissao default teNormal;
     property FormaEmissaoCodigo: integer read FFormaEmissaoCodigo;
@@ -370,15 +383,9 @@ begin
   inherited Create(AConfiguracoes);
 
   FConfiguracoes := AConfiguracoes;
-  {$IFNDEF MSWINDOWS}
-   FSSLLib := libOpenSSL;
-  {$ELSE}
-   {$IFDEF FPC}
-    FSSLLib := libCapicom;
-   {$ELSE}
-    FSSLLib := libCapicomDelphiSoap;
-   {$ENDIF}
-  {$ENDIF}
+  FSSLLib := libNone;
+  FSSLCryptLib := cryNone;
+  FSSLHttpLib := httpNone;
   FFormaEmissao := teNormal;
   FFormaEmissaoCodigo := StrToInt(TpEmisToStr(FFormaEmissao));
   FSalvar := True;
@@ -394,11 +401,15 @@ begin
   FRetirarEspacos := True;
   FIdentarXML := False;
   FValidarDigest := True;
+  FCalcSSLLib := True;
 end;
 
 procedure TGeralConf.Assign(DeGeralConf: TGeralConf);
 begin
   SSLLib           := DeGeralConf.SSLLib;
+  SSLCryptLib      := DeGeralConf.SSLCryptLib;
+  SSLHttpLib       := DeGeralConf.SSLHttpLib;
+  SSLXmlSignLib    := DeGeralConf.SSLXmlSignLib;
   FormaEmissao     := DeGeralConf.FormaEmissao;
   Salvar           := DeGeralConf.Salvar;
   ExibirErroSchema := DeGeralConf.ExibirErroSchema;
@@ -427,16 +438,94 @@ end;
 
 procedure TGeralConf.SetSSLLib(AValue: TSSLLib);
 begin
-  {$IFNDEF MSWINDOWS}
-  FSSLLib := libOpenSSL;  // Linux, Mac, apenas OpenSSL é suportado
-  {$ELSE}
+  FCalcSSLLib := False;
+  try
+    case AValue of
+      libNone:
+      begin
+        SSLCryptLib := cryNone;
+        SSLHttpLib := httpNone;
+        SSLXmlSignLib := xsNone;
+      end;
+
+      libOpenSSL:
+      begin
+        SSLCryptLib := cryOpenSSL;
+        SSLHttpLib := httpOpenSSL;
+        SSLXmlSignLib := xsXmlSec;
+      end;
+
+      libCapicom:
+      begin
+        SSLCryptLib := cryCapicom;
+        SSLHttpLib := httpWinINet;
+        SSLXmlSignLib := xsMsXmlCapicom;
+      end;
+
+      libCapicomDelphiSoap:
+      begin
+        SSLCryptLib := cryCapicom;
+        SSLHttpLib := httpIndy;
+        SSLXmlSignLib := xsMsXmlCapicom;
+      end;
+
+      libWinCrypt:
+      begin
+        SSLCryptLib := cryWinCrypt;
+        SSLHttpLib := httpWinHttp;
+        SSLXmlSignLib := xsMsXml;
+      end;
+    end;
+  finally
+    FCalcSSLLib := True;
+  end;
+
   FSSLLib := AValue;
-  {$IFDEF FPC}
-  if AValue = libCapicomDelphiSoap then
-    FSSLLib := libCapicom;
-  {$ENDIF}
-  {$ENDIF}
-  TACBrDFe(FConfiguracoes.Owner).SSL.SSLLib := FSSLLib;
+end;
+
+procedure TGeralConf.SetSSLCryptLib(AValue: TSSLCryptLib);
+begin
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLCryptLib := AValue;
+  FSSLCryptLib := AValue;
+  CalcSSLLib;
+end;
+
+procedure TGeralConf.SetSSLHttpLib(AValue: TSSLHttpLib);
+begin
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLHttpLib := AValue;
+  FSSLHttpLib := AValue;
+  CalcSSLLib;
+end;
+
+procedure TGeralConf.SetSSLXmlSignLib(AValue: TSSLXmlSignLib);
+begin
+  TACBrDFe(FConfiguracoes.Owner).SSL.SSLXmlSignLib := AValue;
+  FSSLXmlSignLib := AValue;
+  CalcSSLLib;
+end;
+
+
+procedure TGeralConf.CalcSSLLib;
+begin
+  if not FCalcSSLLib then Exit;
+
+  if (SSLCryptLib = cryOpenSSL) and (SSLHttpLib = httpOpenSSL) and (SSLXmlSignLib = xsXmlSec) then
+    FSSLLib := libOpenSSL
+
+  else if (SSLCryptLib = cryNone) and (SSLHttpLib = httpNone) and (SSLXmlSignLib = xsNone)then
+    FSSLLib := libNone
+
+  else if (SSLCryptLib = cryCapicom) and (SSLHttpLib = httpWinINet) and (SSLXmlSignLib = xsMsXmlCapicom) then
+    FSSLLib := libCapicom
+
+  else if (SSLCryptLib = cryCapicom) and (SSLHttpLib = httpIndy) and (SSLXmlSignLib = xsMsXmlCapicom) then
+    FSSLLib := libCapicomDelphiSoap
+
+  else if (SSLCryptLib = cryWinCrypt) and (SSLHttpLib = httpWinHttp) and (SSLXmlSignLib = xsMsXml) then
+    FSSLLib := libWinCrypt
+
+  else
+    FSSLLib := libCustom;
 end;
 
 

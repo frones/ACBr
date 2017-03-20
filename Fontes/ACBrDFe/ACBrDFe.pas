@@ -158,12 +158,16 @@ begin
     NameSpaceURI := GetNameSpaceURI;
     NumeroSerie := Configuracoes.Certificados.NumeroSerie;
     Senha := Configuracoes.Certificados.Senha;
+
     ProxyHost := Configuracoes.WebServices.ProxyHost;
     ProxyPass := Configuracoes.WebServices.ProxyPass;
     ProxyPort := Configuracoes.WebServices.ProxyPort;
     ProxyUser := Configuracoes.WebServices.ProxyUser;
     TimeOut := Configuracoes.WebServices.TimeOut;
-    SSLLib := Configuracoes.Geral.SSLLib;
+
+    SSLCryptLib := Configuracoes.Geral.SSLCryptLib;
+    SSLHttpLib := Configuracoes.Geral.SSLHttpLib;
+    SSLXmlSignLib := Configuracoes.Geral.SSLXmlSignLib;
   end;
 
   FOnGerarLog := nil;

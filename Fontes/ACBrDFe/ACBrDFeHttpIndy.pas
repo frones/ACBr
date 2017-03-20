@@ -35,75 +35,133 @@
 
 {$I ACBr.inc}
 
-unit ACBrDFeCapicomDelphiSoap;
+unit ACBrDFeHttpIndy;
 
 interface
 
 uses
   Classes, SysUtils,
-  ACBrDFeCapicom, ACBrDFeSSL,
+  ACBrDFeSSL,
   SoapHTTPClient, SOAPHTTPTrans;
 
 const
   INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;      
 
 type
-  { TDFeCapicomDelphiSoap }
+  { TDFeDelphiSoap }
 
-  TDFeCapicomDelphiSoap = class(TDFeCapicom)
+  TDFeHttpIndy = class(TDFeSSLHttpClass)
   private
     FIndyReqResp: THTTPReqResp;
-    FURL: String;
+    FMimeType: String;
 
     procedure OnBeforePost(const HTTPReqResp: THTTPReqResp; Data: Pointer);
   protected
-    procedure ConfiguraReqResp(const URL, SoapAction: String); override;
-    procedure Executar(const ConteudoXML: String; Resp: TStream); override;
+    function GetHTTPResultCode: Integer; override;
+    procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String); override;
 
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
     destructor Destroy; override;
+
+    function Enviar(const ConteudoXML: String; const AURL: String;
+      const ASoapAction: String; AMimeType: String = ''): String; override;
   end;
 
 implementation
 
 uses
   strutils, WinInet, SOAPConst,
-  ACBrCAPICOM_TLB, JwaWinCrypt,
-  ACBrUtil, ACBrDFeUtil, ACBrDFe, ACBrDFeException;
+  ACBr_WinCrypt, ACBrUtil, ACBrDFeUtil, ACBrDFe, ACBrDFeException, ACBRConsts,
+  synautil;
 
-{ TDFeCapicomDelphiSoap }
+{ TDFeDelphiSoap }
 
-constructor TDFeCapicomDelphiSoap.Create(ADFeSSL: TDFeSSL);
+constructor TDFeHttpIndy.Create(ADFeSSL: TDFeSSL);
 begin
   inherited Create(ADFeSSL);
 
   FIndyReqResp := THTTPReqResp.Create(nil);
 end;
 
-destructor TDFeCapicomDelphiSoap.Destroy;
+destructor TDFeHttpIndy.Destroy;
 begin
   FIndyReqResp.Free;
 
   inherited Destroy;
 end;
 
-procedure TDFeCapicomDelphiSoap.OnBeforePost(const HTTPReqResp: THTTPReqResp;
+function TDFeHttpIndy.Enviar(const ConteudoXML, AURL, ASoapAction: String;
+  AMimeType: String): String;
+var
+  Resp: TMemoryStream;
+begin
+  Result := '';
+
+  ConfigurarHTTP(AURL, ASoapAction, AMimeType);
+
+  Resp := TMemoryStream.Create;
+  try
+    try
+      // Enviando, dispara exceptions no caso de erro //
+      FIndyReqResp.Execute(ConteudoXML, Resp);
+    except
+      On E: Exception do
+      begin
+        raise EACBrDFeException.CreateDef( Format( cACBrDFeSSLEnviarException,
+                                           [InternalErrorCode, HTTPResultCode] ) + sLineBreak +
+                                           E.Message ) ;
+      end;
+    end;
+
+    Resp.Position := 0;
+    Result := ReadStrFromStream(Resp, Resp.Size);
+    // DEBUG //
+    //Resp.SaveToFile('c:\temp\ReqResp.xml');
+  finally
+    Resp.Free;
+  end;
+end;
+
+procedure TDFeHttpIndy.ConfigurarHTTP(const AURL, ASoapAction: String;
+  AMimeType: String);
+begin
+  with FpDFeSSL do
+  begin
+    if ProxyHost <> '' then
+    begin
+      FIndyReqResp.Proxy := ProxyHost + ':' + ProxyPort;
+      FIndyReqResp.UserName := ProxyUser;
+      FIndyReqResp.Password := ProxyPass;
+    end;
+
+    FIndyReqResp.ConnectTimeout := TimeOut;
+    FIndyReqResp.SendTimeout    := TimeOut;
+    FIndyReqResp.ReceiveTimeout := TimeOut;
+  end;
+
+  if AMimeType <> '' then
+    AMimeType := AMimeType+'; ';
+
+  FMimeType := AMimeType + 'charset=utf-8'; // Todos DFes usam UTF8
+
+  FIndyReqResp.OnBeforePost := OnBeforePost;
+  FIndyReqResp.UseUTF8InHeader := True;
+  FIndyReqResp.SoapAction := ASoapAction;
+  FIndyReqResp.URL := AURL;
+end;
+
+procedure TDFeHttpIndy.OnBeforePost(const HTTPReqResp: THTTPReqResp;
   Data: Pointer);
 var
-  CertContext: ICertContext;
-  HCertContext: Integer;
   ContentHeader: String;
 begin
   with FpDFeSSL do
   begin
     if (UseCertificateHTTP) then
     begin
-      CertContext := Certificado as ICertContext;
-      CertContext.Get_CertContext(HCertContext);
-
       if not InternetSetOption(Data, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
-        Pointer(HCertContext), SizeOf(CERT_CONTEXT)) then
+        FpDFeSSL.CertContextWinApi, SizeOf(CERT_CONTEXT)) then
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_CLIENT_CERT_CONTEXT: ' +
                                        IntToStr(GetLastError));
     end;
@@ -120,7 +178,7 @@ begin
         raise EACBrDFeException.Create('Erro ao ajustar INTERNET_OPTION_PROXY_PASSWORD: ' +
                                        IntToStr(GetLastError));
 
-    ContentHeader := Format(ContentTypeTemplate, [FMimeType+'; charset=utf-8']);
+    ContentHeader := Format(ContentTypeTemplate, [FMimeType]);
     HttpAddRequestHeaders(Data, PChar(ContentHeader), Length(ContentHeader),
                             HTTP_ADDREQ_FLAG_REPLACE);
   end;
@@ -128,35 +186,10 @@ begin
   FIndyReqResp.CheckContentType;
 end;
 
-procedure TDFeCapicomDelphiSoap.ConfiguraReqResp(const URL, SoapAction: String);
+function TDFeHttpIndy.GetHTTPResultCode: Integer;
 begin
-  with FpDFeSSL do
-  begin
-    if ProxyHost <> '' then
-    begin
-      FIndyReqResp.Proxy := ProxyHost + ':' + ProxyPort;
-      FIndyReqResp.UserName := ProxyUser;
-      FIndyReqResp.Password := ProxyPass;
-    end;
-
-    FIndyReqResp.ConnectTimeout := TimeOut;
-    FIndyReqResp.SendTimeout    := TimeOut;
-    FIndyReqResp.ReceiveTimeout := TimeOut;
-  end;
-
-  FIndyReqResp.OnBeforePost := OnBeforePost;
-  FIndyReqResp.UseUTF8InHeader := True;
-  FIndyReqResp.SoapAction := SoapAction;
-  FIndyReqResp.URL := URL;
-  FURL := URL;
+  Result := GetLastError;
 end;
-
-procedure TDFeCapicomDelphiSoap.Executar(const ConteudoXML: String;
-  Resp: TStream);
-begin
-  // Enviando, dispara exceptions no caso de erro //
-  FIndyReqResp.Execute(ConteudoXML, Resp);
-end;
-
 
 end.
+

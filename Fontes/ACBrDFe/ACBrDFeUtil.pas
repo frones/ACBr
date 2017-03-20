@@ -60,6 +60,8 @@ function ValidaRECOPI(AValue: String): Boolean;
 function ValidaNVE(AValue: string): Boolean;
 
 function XmlEstaAssinado(const AXML: String): Boolean;
+function SignatureElement(const URI: String; AddX509Data: Boolean;
+    IdSignature: String = ''): String;
 function ExtraiURI(const AXML: String): String;
 
 
@@ -262,6 +264,40 @@ begin
   Result := True;
 end;
 
+function XmlEstaAssinado(const AXML: String): Boolean;
+begin
+  Result := (pos('<signature', lowercase(AXML)) > 0);
+end;
+
+function SignatureElement(const URI: String;  AddX509Data: Boolean; IdSignature: String): String;
+begin
+  {(*}
+  Result :=
+  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + IdSignature + '>' +
+    '<SignedInfo>' +
+      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
+      '<Reference URI="' + IfThen(URI = '', '', '#' + URI) + '">' +
+        '<Transforms>' +
+          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
+          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
+        '</Transforms>' +
+        '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
+        '<DigestValue></DigestValue>' +
+      '</Reference>' +
+    '</SignedInfo>' +
+    '<SignatureValue></SignatureValue>' +
+    '<KeyInfo>' +
+    IfThen(AddX509Data,
+      '<X509Data>' +
+        '<X509Certificate></X509Certificate>'+
+      '</X509Data>',
+      '')+
+    '</KeyInfo>'+
+  '</Signature>';
+  {*)}
+end;
+
 function ExtraiURI(const AXML: String): String;
 var
   I, J: integer;
@@ -282,9 +318,5 @@ begin
   Result := copy(AXML, I + 1, J - I - 1);
 end;
 
-function XmlEstaAssinado(const AXML: String): Boolean;
-begin
-  Result := (pos('<signature', lowercase(AXML)) > 0);
-end;
 
 end.

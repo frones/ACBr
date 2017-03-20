@@ -40,74 +40,123 @@ unit ACBrDFeSSL;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, Contnrs,
+  blcksock;
 
 Const
   CBufferSize = 32768;
-  CTagX509Ini = '<X509Certificate>';
-  CTagX509Fim = '</X509Certificate>';
+
+  CDSIGNS = 'xmlns:ds="http://www.w3.org/2000/09/xmldsig#"';
+  CSIGNATURE_NODE = './/ds:Signature';
+  CDEFAULT_STORE_NAME = 'My'; //My CA Root AddressBook
+  CACBR_STORE_NAME = 'ACBrStore';
 
 type
 
-  { TDFeSSLClass }
+  TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap, libWinCrypt, libCustom);
+  TSSLCryptLib = (cryNone, cryOpenSSL, cryCapicom, cryWinCrypt);
+  TSSLHttpLib = (httpNone, httpWinINet, httpWinHttp, httpOpenSSL, httpIndy);
+  TSSLXmlSignLib = (xsNone, xsXmlSec, xsMsXml, xsMsXmlCapicom);
 
-  TSSLTipoCertificado = (tpcA1, tpcA3);
+  TSSLTipoCertificado = (tpcDesconhecido, tpcA1, tpcA3);
   TSSLDgst = (dgstMD2, dgstMD4, dgstMD5, dgstRMD160, dgstSHA, dgstSHA1, dgstSHA256, dgstSHA512) ;
   TSSLHashOutput = (outHexa, outBase64, outBinary) ;
+  TSSLStoreLocation = (slMemory, slLocalMachine, slCurrentUser, slActiveDirectory, slSmartCard);
 
   TDFeSSL = class;
 
-  TDFeSSLClass = class
+  { TDadosCertificado }
+
+  TDadosCertificado = class
   private
+    FCertificadora: String;
+    FCNPJ: String;
+    FDataVenc: TDateTime;
+    FIssuerName: String;
+    FNumeroSerie: String;
+    FRazaoSocial: String;
+    FSubjectName: String;
+    FTipo: TSSLTipoCertificado;
+    FDER64base: String;
+    procedure SetIssuerName(AValue: String);
+    procedure SetSubjectName(AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+
+    function GetCertificadoraFromIssuerName(SubjectName: String): String;
+    function GetCNPJFromSubjectName(SubjectName: String): String;
+    function GetRazaoSocialFromSubjectName(SubjectName: String): String;
+
+    property NumeroSerie: String read FNumeroSerie write FNumeroSerie;
+    property IssuerName: String read FIssuerName write SetIssuerName;
+    property Certificadora: String read FCertificadora write FCertificadora;
+    property DataVenc: TDateTime read FDataVenc write FDataVenc;
+    property SubjectName: String read FSubjectName write SetSubjectName;
+    property RazaoSocial: String read FRazaoSocial write FRazaoSocial;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property Tipo: TSSLTipoCertificado read FTipo write FTipo;
+    property DERBase64: String read FDER64base write FDER64base;
+  end;
+
+
+  { TListaCertificados }
+
+  TListaCertificados = class(TObjectList)
   protected
+    procedure SetObject (Index: Integer; Item: TDadosCertificado);
+    function GetObject (Index: Integer): TDadosCertificado;
+    procedure Insert (Index: Integer; Obj: TDadosCertificado);
+  public
+    function New: TDadosCertificado;
+    function Add (Obj: TDadosCertificado): Integer;
+    property Objects [Index: Integer]: TDadosCertificado
+      read GetObject write SetObject; default;
+  end;
+
+  { TDFeSSLCryptClass }
+
+  TDFeSSLCryptClass = class
+  private
+    procedure CarregarCertificadoSeVazio;
+
+    function GetCertDataVenc: TDateTime;
+    function GetCertNumeroSerie: String;
+    function GetCertIssuerName: String;
+    function GetCertCertificadora: String;
+    function GetCertSubjectName: String;
+    function GetCertRazaoSocial: String;
+    function GetCertCNPJ: String;
+    function GetCertTipo: TSSLTipoCertificado;
+  protected
+    FpDadosCertificado: TDadosCertificado;
+    FpListaCertificados: TListaCertificados;
     FpDFeSSL: TDFeSSL;
     FpCertificadoLido: Boolean;
 
-    function GetCertDataVenc: TDateTime; virtual;
-    function GetCertNumeroSerie: String; virtual;
-    function GetCertIssuerName: String; virtual;
-    function GetCertCertificadora: String; virtual;
-    function GetCertSubjectName: String; virtual;
-    function GetCertRazaoSocial: String; virtual;
-    function GetCertCNPJ: String; virtual;
-    function GetHTTPResultCode: Integer; virtual;
-    function GetInternalErrorCode: Integer; virtual;
-    function GetCertTipo: TSSLTipoCertificado; virtual;
+    procedure CarregarCertificadoSeNecessario;
 
-    function GetCNPJFromSubjectName(SubjectName: String): String;
-    function GetRazaoSocialFromSubjectName(SubjectName: String): String;
-    function GetCertificadoraFromSubjectName(SubjectName: String): String;
-
-    function SignatureElement(const URI: String; AddX509Data: Boolean;
-      IdSignature: String = ''): String;
-      virtual;
-    function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
-      docElement, IdSignature: String): String;
-    function AjustarXMLAssinado(const ConteudoXML: String; X509DER: String = ''): String;
+    function GetCertContextWinApi: Pointer; virtual;
+    function GetCertPFXData: AnsiString; virtual;
   public
     constructor Create(ADFeSSL: TDFeSSL); virtual;
-
-    function Assinar(const ConteudoXML, docElement, infElement: String;
-      SignatureNode: String = ''; SelectionNamespaces: String = '';
-      IdSignature: String = ''): String; virtual;
-    function Enviar(const ConteudoXML: String; const URL: String;
-      const SoapAction: String; const MimeType: String = ''): String; virtual;
-    function Validar(const ConteudoXML, ArqSchema: String;
-      out MsgErro: String): Boolean; virtual;
-    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
-      const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''): Boolean; virtual;
+    destructor Destroy; override;
+    procedure Clear; virtual;
 
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
-       const Assinar: Boolean =  False): AnsiString; virtual;
+       const Assina: Boolean =  False): AnsiString; virtual;
 
     procedure CarregarCertificado; virtual;
     procedure DescarregarCertificado; virtual;
     function SelecionarCertificado: String; virtual;
+    procedure LerCertificadosStore; virtual;
+    function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; virtual;
+
+    property CertContextWinApi: Pointer read GetCertContextWinApi;
+    property CertPFXData: AnsiString read GetCertPFXData;
 
     property CertificadoLido: Boolean read FpCertificadoLido;
-
     property CertNumeroSerie: String read GetCertNumeroSerie;
     property CertIssuerName: String read GetCertIssuerName;
     property CertCertificadora: String read GetCertCertificadora;
@@ -116,12 +165,58 @@ type
     property CertRazaoSocial: String read GetCertRazaoSocial;
     property CertCNPJ: String read GetCertCNPJ;
     property CertTipo: TSSLTipoCertificado read GetCertTipo;
+    property DadosCertificado: TDadosCertificado read FpDadosCertificado;
+    property ListaCertificados: TListaCertificados read FpListaCertificados;
+  end;
+
+  { TDFeSSLHttpClass }
+
+  TDFeSSLHttpClass = class
+  private
+  protected
+    FpDFeSSL: TDFeSSL;
+
+    function GetHTTPResultCode: Integer; virtual;
+    function GetInternalErrorCode: Integer; virtual;
+    procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String);
+      virtual;
+  public
+    constructor Create(ADFeSSL: TDFeSSL); virtual;
+    destructor Destroy; override;
+
+    function Enviar(const ConteudoXML: String; const AURL: String;
+      const ASoapAction: String; AMimeType: String = ''): String; virtual;
 
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
   end;
 
-  TSSLLib = (libNone, libOpenSSL, libCapicom, libCapicomDelphiSoap);
+
+
+  { TDFeSSLXmlSignClass }
+
+  TDFeSSLXmlSignClass = class
+  private
+
+  protected
+    FpDFeSSL: TDFeSSL;
+
+    function AdicionarSignatureElement( ConteudoXML: String; AddX509Data: Boolean;
+      docElement, IdSignature: String): String;
+    function AjustarXMLAssinado(const ConteudoXML: String; X509DER: String = ''): String;
+
+  public
+    constructor Create(ADFeSSL: TDFeSSL); virtual;
+
+    function Assinar(const ConteudoXML, docElement, infElement: String;
+      SignatureNode: String = ''; SelectionNamespaces: String = '';
+      IdSignature: String = ''): String; virtual;
+    function Validar(const ConteudoXML, ArqSchema: String;
+      out MsgErro: String): Boolean; virtual;
+    function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
+      const infElement: String; SignatureNode: String = '';
+      SelectionNamespaces: String = ''): Boolean; virtual;
+  end;
 
   TDFeSSLAntesDeAssinar = procedure (var ConteudoXML: String;
      const docElement, infElement, SignatureNode, SelectionNamespaces,
@@ -142,12 +237,20 @@ type
     FProxyUser: String;
     FSenha: AnsiString;
     FK: String;
-    FSSLClass: TDFeSSLClass;
-    FSSLLib: TSSLLib;
+    FSSLCryptClass: TDFeSSLCryptClass;
+    FSSLCryptLib: TSSLCryptLib;
+    FSSLHttpClass: TDFeSSLHttpClass;
+    FSSLHttpLib: TSSLHttpLib;
+    FSSLXmlSignClass: TDFeSSLXmlSignClass;
+    FSSLXmlSignLib: TSSLXmlSignLib;
+    FSSLType: TSSLType;
+    FStoreLocation: TSSLStoreLocation;
+    FStoreName: String;
     FTimeOut: Integer;
     FUseCertificateHTTP: Boolean;
 
     function GetCertCNPJ: String;
+    function GetCertContextWinApi: Pointer;
     function GetCertDataVenc: TDateTime;
     function GetCertIssuerName: String;
     function GetCertCertificadora: String;
@@ -155,6 +258,10 @@ type
     function GetCertNumeroSerie: String;
     function GetCertRazaoSocial: String;
     function GetCertSubjectName: String;
+    function GetCertTipo: TSSLTipoCertificado;
+    function GetDadosCertificado: TDadosCertificado;
+    function GetListaCertificados: TListaCertificados;
+
     function GetHTTPResultCode: Integer;
     function GetInternalErrorCode: Integer;
     function GetSenha: AnsiString;
@@ -164,8 +271,9 @@ type
     procedure SetNumeroSerie(AValue: String);
     procedure SetSenha(AValue: AnsiString);
 
-    procedure SetSSLLib(ASSLLib: TSSLLib);
-    function GetCertTipo: TSSLTipoCertificado;
+    procedure SetSSLCryptLib(ASSLCryptLib: TSSLCryptLib);
+    procedure SetSSLHttpLib(ASSLHttpLib: TSSLHttpLib);
+    procedure SetSSLXmlSignLib(ASSLXmlSignLib: TSSLXmlSignLib);
 
   public
     constructor Create;
@@ -177,8 +285,8 @@ type
       SignatureNode: String = ''; SelectionNamespaces: String = '';
       IdSignature: String = ''): String;
     // Envia por SoapAction o ConteudoXML (em UTF8) para URL. Retorna a resposta do Servico //
-    function Enviar(var ConteudoXML: String; const URL: String;
-      const SoapAction: String; const MimeType: String = ''): String;
+    function Enviar(var ConteudoXML: String; const AURL: String;
+      const ASoapAction: String; AMimeType: String = ''): String;
     // Valida um Arquivo contra o seu Schema. Retorna True se OK, preenche MsgErro se False //
     // ConteudoXML, DEVE estar em UTF8
     function Validar(const ConteudoXML: String; ArqSchema: String;
@@ -192,27 +300,31 @@ type
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
        const ModoSaida: TSSLHashOutput = outHexa;
-       const Assinar: Boolean =  False): AnsiString; overload;
+       const Assina: Boolean =  False): AnsiString; overload;
     function CalcHashArquivo( const NomeArquivo : String;
        const Digest: TSSLDgst;
        const ModoSaida: TSSLHashOutput = outHexa;
-       const Assinar: Boolean =  False): AnsiString; overload;
+       const Assina: Boolean =  False): AnsiString; overload;
     function CalcHash( const BinaryString : AnsiString;
        const Digest: TSSLDgst;
        const ModoSaida: TSSLHashOutput = outHexa;
-       const Assinar: Boolean =  False): AnsiString; overload;
+       const Assina: Boolean =  False): AnsiString; overload;
     function CalcHash( const AStringList : TStringList;
        const Digest: TSSLDgst;
        const ModoSaida: TSSLHashOutput = outHexa;
-       const Assinar: Boolean =  False): AnsiString; overload;
+       const Assina: Boolean =  False): AnsiString; overload;
 
     procedure CarregarCertificado;
+    procedure CarregarCertificadoSeNecessario;
     procedure DescarregarCertificado;
+    procedure LerCertificadosStore;
     function SelecionarCertificado: String;
+    function CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean; virtual;
 
     procedure ValidarCNPJCertificado(CNPJDocumento: String);
 
     property CertificadoLido: Boolean read GetCertificadoLido;
+    property CertContextWinApi: Pointer read GetCertContextWinApi;
 
     property CertNumeroSerie: String read GetCertNumeroSerie;
     property CertDataVenc: TDateTime read GetCertDataVenc;
@@ -223,12 +335,28 @@ type
     property CertCNPJ: String read GetCertCNPJ;
     property CertTipo: TSSLTipoCertificado read GetCertTipo;
 
+    property DadosCertificado: TDadosCertificado read GetDadosCertificado;
+    property ListaCertificados: TListaCertificados read GetListaCertificados;
+
     property HTTPResultCode: Integer read GetHTTPResultCode;
     property InternalErrorCode: Integer read GetInternalErrorCode;
 
+    property SSLCryptClass: TDFeSSLCryptClass read FSSLCryptClass;
+    property SSLHttpClass: TDFeSSLHttpClass read FSSLHttpClass;
+    property SSLXmlSignClass: TDFeSSLXmlSignClass read FSSLXmlSignClass;
+
   published
-    property SSLLib: TSSLLib read FSSLLib write SetSSLLib;
-    property SSLClass: TDFeSSLClass read FSSLClass;
+    property SSLCryptLib: TSSLCryptLib read FSSLCryptLib write SetSSLCryptLib
+      default cryNone;
+    property SSLHttpLib: TSSLHttpLib read FSSLHttpLib write SetSSLHttpLib
+      default httpNone;
+    property SSLXmlSignLib: TSSLXmlSignLib read FSSLXmlSignLib write SetSSLXmlSignLib
+      default xsNone;
+    property SSLType: TSSLType read FSSLType write FSSLType default LT_all;
+
+    property StoreLocation: TSSLStoreLocation read FStoreLocation
+      write FStoreLocation default slCurrentUser;
+    property StoreName: String read FStoreName write FStoreName;
 
     property ArquivoPFX: String read FArquivoPFX write SetArquivoPFX;
     property DadosPFX: AnsiString read FDadosPFX write SetDadosPFX;
@@ -243,7 +371,7 @@ type
     property TimeOut: Integer read FTimeOut write FTimeOut default 5000;
     property NameSpaceURI: String read FNameSpaceURI write FNameSpaceURI;
 
-    property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP;
+    property UseCertificateHTTP: Boolean read FUseCertificateHTTP write FUseCertificateHTTP default True;
 
     property AntesDeAssinar: TDFeSSLAntesDeAssinar read FAntesDeAssinar write FAntesDeAssinar;
   end;
@@ -251,18 +379,457 @@ type
 
 implementation
 
-uses strutils,
+uses
+  strutils,
   synacode,
   ACBrDFeUtil, ACBrValidador, ACBrUtil, ACBrDFeException
-  {$IFNDEF DFE_SEM_OPENSSL}
-   ,ACBrDFeOpenSSL
+  {$IfNDef DFE_SEM_OPENSSL}
+   ,ACBrDFeOpenSSL, ACBrDFeHttpOpenSSL, ACBrDFeXsXmlSec
+  {$EndIf}
+  {$IfNDef DFE_SEM_CAPICOM}
+   ,ACBrDFeCapicom, ACBrDFeXsMsXmlCapicom
+  {$EndIf}
+  {$IfNDef FPC}
+   ,ACBrDFeHttpIndy
+  {$EndIf}
+  {$IfDef MSWINDOWS}
+   ,ACBRDFeWinCrypt, ACBrDFeHttpWinApi, ACBrDFeXsMsXml
+  {$EndIf};
+
+{ TDadosCertificado }
+
+constructor TDadosCertificado.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDadosCertificado.Clear;
+begin
+  FCertificadora := '';
+  FCNPJ          := '';
+  FDataVenc      := 0;
+  FIssuerName    := '';
+  FNumeroSerie   := '';
+  FRazaoSocial   := '';
+  FSubjectName   := '';
+  FTipo          := tpcDesconhecido;
+  FDER64base     := '';
+end;
+
+procedure TDadosCertificado.SetSubjectName(AValue: String);
+begin
+  if FSubjectName = AValue then Exit;
+  FSubjectName := AValue;
+
+  FRazaoSocial := GetRazaoSocialFromSubjectName(FSubjectName);
+  FCNPJ := GetCNPJFromSubjectName(FSubjectName);
+end;
+
+procedure TDadosCertificado.SetIssuerName(AValue: String);
+begin
+  if FIssuerName = AValue then Exit;
+  FIssuerName := AValue;
+
+  FCertificadora := GetCertificadoraFromIssuerName( FIssuerName );
+end;
+
+function TDadosCertificado.GetCNPJFromSubjectName( SubjectName: String ): String;
+var
+  P: Integer;
+begin
+  Result := '';
+  P := pos('CN=',SubjectName);
+  if P > 0 then
+  begin
+    P := PosEx(':', SubjectName, P);
+    if P > 0 then
+    begin
+      Result := OnlyNumber(copy(SubjectName, P+1, 14));
+    end;
+  end;
+end;
+
+function TDadosCertificado.GetRazaoSocialFromSubjectName( SubjectName: String ): String;
+var
+  P1, P2: Integer;
+begin
+  Result := '';
+  P1 := pos('CN=',SubjectName);
+  if P1 > 0 then
+  begin
+    P2 := PosEx(':', SubjectName, P1);
+    if P2 <= 0 then
+      P2 := PosEx(',', SubjectName, P1);
+    if P2 <= 0 then
+      P2 := Length(SubjectName)+1;
+
+    Result := copy(SubjectName, P1+3, P2-P1-3);
+  end;
+end;
+
+function TDadosCertificado.GetCertificadoraFromIssuerName( SubjectName: String ): String;
+var
+  P1, P2: Integer;
+begin
+  Result := '';
+  P1 := pos('CN=',SubjectName);
+  if P1 > 0 then
+  begin
+    P2 := PosEx('RFB', SubjectName, P1);
+    if P2 <= 0 then
+      P2 := PosEx(',', SubjectName, P1);
+    if P2 <= 0 then
+      P2 := Length(SubjectName)+1;
+
+    Result := trim(copy(SubjectName, P1+3, P2-P1-3));
+  end;
+end;
+
+{ TListaCertificados }
+
+procedure TListaCertificados.SetObject(Index: Integer; Item: TDadosCertificado);
+begin
+  inherited SetItem (Index, Item) ;
+end;
+
+function TListaCertificados.GetObject(Index: Integer): TDadosCertificado;
+begin
+  Result := inherited GetItem(Index) as TDadosCertificado ;
+end;
+
+procedure TListaCertificados.Insert(Index: Integer; Obj: TDadosCertificado);
+begin
+  inherited Insert(Index, Obj);
+end;
+
+function TListaCertificados.New: TDadosCertificado;
+begin
+  Result := TDadosCertificado.Create;
+  Add(Result);
+end;
+
+function TListaCertificados.Add(Obj: TDadosCertificado): Integer;
+begin
+  Result := inherited Add(Obj) ;
+end;
+
+{ TDFeSSLCryptClass }
+
+constructor TDFeSSLCryptClass.Create(ADFeSSL: TDFeSSL);
+begin
+  inherited Create;
+
+  FpDadosCertificado := TDadosCertificado.Create;
+  FpListaCertificados := TListaCertificados.Create;
+  FpDFeSSL := ADFeSSL;
+  FpCertificadoLido := False;
+end;
+
+destructor TDFeSSLCryptClass.Destroy;
+begin
+  FpDadosCertificado.Free;
+  FpListaCertificados.Free;
+  inherited Destroy;
+end;
+
+procedure TDFeSSLCryptClass.Clear;
+begin
+  FpDadosCertificado.Clear;
+  FpListaCertificados.Clear;
+end;
+
+function TDFeSSLCryptClass.CalcHash(const AStream: TStream; const Digest: TSSLDgst;
+  const Assina: Boolean): AnsiString;
+begin
+  {$IfDef FPC}Result := '';{$EndIf}
+  raise EACBrDFeException.Create('"CalcHash" não suportado em: ' + ClassName);
+end;
+
+function TDFeSSLCryptClass.SelecionarCertificado: String;
+begin
+  {$IfDef FPC}Result := '';{$EndIf}
+  raise EACBrDFeException.Create('"SelecionarCertificado" não suportado em: ' +ClassName);
+end;
+
+procedure TDFeSSLCryptClass.LerCertificadosStore;
+begin
+  raise EACBrDFeException.Create('"LerCertificadosStore" não suportado em: ' +ClassName);
+end;
+
+function TDFeSSLCryptClass.CarregarCertificadoPublico(DadosX509Base64: Ansistring): Boolean;
+begin
+  {$IfDef FPC}Result := False;{$EndIf}
+  raise EACBrDFeException.Create('"CarregarCertificadoPublico" não suportado em: ' +ClassName);
+end;
+
+procedure TDFeSSLCryptClass.CarregarCertificado;
+begin
+  FpCertificadoLido := True;
+end;
+
+procedure TDFeSSLCryptClass.DescarregarCertificado;
+begin
+  Clear;
+  FpCertificadoLido := False;
+
+  if (FpDFeSSL.NumeroSerie <> '') or (FpDFeSSL.ArquivoPFX <> '') then
+    FpDFeSSL.DadosPFX := '';
+end;
+
+procedure TDFeSSLCryptClass.CarregarCertificadoSeNecessario;
+begin
+  if not CertificadoLido then
+    CarregarCertificado;
+end;
+
+procedure TDFeSSLCryptClass.CarregarCertificadoSeVazio;
+begin
+  if (FpDadosCertificado.NumeroSerie = '') then
+    CarregarCertificadoSeNecessario;
+end;
+
+function TDFeSSLCryptClass.GetCertRazaoSocial: String;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.RazaoSocial;
+end;
+
+function TDFeSSLCryptClass.GetCertContextWinApi: Pointer;
+begin
+  Result := Nil;
+end;
+
+function TDFeSSLCryptClass.GetCertPFXData: AnsiString;
+begin
+  Result := FpDFeSSL.DadosPFX;
+end;
+
+function TDFeSSLCryptClass.GetCertDataVenc: TDateTime;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.DataVenc;
+end;
+
+function TDFeSSLCryptClass.GetCertNumeroSerie: String;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.NumeroSerie;
+end;
+
+function TDFeSSLCryptClass.GetCertSubjectName: String;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.SubjectName;
+end;
+
+function TDFeSSLCryptClass.GetCertTipo: TSSLTipoCertificado;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.Tipo;
+end;
+
+function TDFeSSLCryptClass.GetCertIssuerName: String;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.IssuerName;
+end;
+
+function TDFeSSLCryptClass.GetCertCertificadora: String;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.Certificadora;
+end;
+
+function TDFeSSLCryptClass.GetCertCNPJ: String;
+begin
+  CarregarCertificadoSeVazio;
+  Result := FpDadosCertificado.CNPJ;
+end;
+
+{ TDFeSSLHttpClass }
+
+constructor TDFeSSLHttpClass.Create(ADFeSSL: TDFeSSL);
+begin
+  inherited Create;
+  FpDFeSSL := ADFeSSL;
+end;
+
+destructor TDFeSSLHttpClass.Destroy;
+begin
+  inherited Destroy;
+end;
+
+function TDFeSSLHttpClass.GetHTTPResultCode: Integer;
+begin
+  Result := 0;
+end;
+
+function TDFeSSLHttpClass.GetInternalErrorCode: Integer;
+begin
+  Result := 0;
+end;
+
+procedure TDFeSSLHttpClass.ConfigurarHTTP(const AURL, ASoapAction: String;
+  AMimeType: String);
+begin
+  raise EACBrDFeException.Create('Método "ConfigurarHTTP" não implementado em: '+ClassName);
+end;
+
+function TDFeSSLHttpClass.Enviar(const ConteudoXML: String; const AURL: String;
+  const ASoapAction: String; AMimeType: String): String;
+begin
+  {$IFDEF FPC}
+  Result := '';
   {$ENDIF}
-  {$IFNDEF DFE_SEM_CAPICOM}
-   ,ACBrDFeCapicom
-   {$IFNDEF FPC}
-    ,ACBrDFeCapicomDelphiSoap
-   {$ENDIF}
-  {$ENDIF};
+  raise EACBrDFeException.Create('Método "Enviar" não implementado em: '+ClassName);
+end;
+
+
+{ TDFeSSLXmlSignClass }
+
+constructor TDFeSSLXmlSignClass.Create(ADFeSSL: TDFeSSL);
+begin
+  inherited Create;
+  FpDFeSSL := ADFeSSL;
+end;
+
+function TDFeSSLXmlSignClass.AdicionarSignatureElement(ConteudoXML: String;
+  AddX509Data: Boolean; docElement, IdSignature: String): String;
+var
+  URI, TagEndDocElement: String;
+  I: Integer;
+begin
+  URI := ExtraiURI(ConteudoXML);
+
+  TagEndDocElement := '</' + docElement + '>';
+  I := PosLast(TagEndDocElement, ConteudoXML);
+  if I = 0 then
+    raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
+
+  Result := copy(ConteudoXML, 1, I - 1) +
+            SignatureElement(URI, AddX509Data, IdSignature) + TagEndDocElement;
+end;
+
+function TDFeSSLXmlSignClass.AjustarXMLAssinado(const ConteudoXML: String;
+  X509DER: String): String;
+var
+  XmlAss: String;
+  PosSig, PosIni, PosFim: Integer;
+
+  function RemoveEspacos( const AXML, TagIni, TagFim : String): String;
+  begin
+    Result := '';
+    PosIni := PosLast(TagIni, AXML);
+    if PosIni > 0 then
+    begin
+      PosFim := PosEx(TagFim, AXML, PosIni + 1);
+      if PosFim > 0 then
+        Result := copy(AXML, 1, PosIni - 1) +
+                  StringReplace(copy(AXML, PosIni, PosFim-PosIni), ' ', '', [rfReplaceAll])+
+                  copy(AXML, PosFim, Length(AXML));
+    end;
+
+    if Result = '' then
+      Result := AXML;
+  end;
+
+  procedure EncontrarInicioFinalTag(ATag: String; var PosIni, PosFim: Integer);
+  begin
+    PosFim := 0;
+    PosIni := PosEx('<'+ATag+'>', XmlAss, PosSig);
+    if (PosIni > 0) then
+    begin
+      PosIni := PosIni + Length(ATag)+1;
+      PosFim := PosLast('</'+ATag+'>', XmlAss);
+      if PosFim < PosIni then
+        PosFim := 0;
+    end;
+  end;
+
+begin
+  XmlAss := ConteudoXML;
+
+  // Removendo Declaração sem UTF8 Ex: <?xml version="1.0"?> //
+  if not XmlEhUTF8(ObtemDeclaracaoXML(XmlAss)) then
+    XmlAss := RemoverDeclaracaoXML(XmlAss);
+
+  // Removendo quebras de linha //
+  XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
+  XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
+
+  PosSig := PosLast('<SignatureValue>', XmlAss);
+  if PosSig > 0 then
+  begin
+    PosFim := 0;
+    if X509DER = '' then
+    begin
+      // Considerando apenas o último Certificado X509, da assinatura //
+      PosIni := PosEx('<X509Certificate>', XmlAss, PosSig)-1;
+      if PosIni >= 0 then
+      begin
+        PosFim := PosLast('<X509Certificate>', XmlAss);
+        XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
+      end;
+    end
+    else
+    begin
+      // Remove todos Certificados adicionados, e Adiciona o X509DER informado //
+      EncontrarInicioFinalTag('X509Data', PosIni, PosFim);
+      if (PosIni > 0) and (PosFim > 0) then
+      begin
+        XmlAss := copy(XmlAss, 1, PosIni) +
+                  '<X509Certificate>' + X509DER + '</X509Certificate>' +
+                  copy(XmlAss, PosFim, length(XmlAss));
+      end
+      else
+      begin
+        EncontrarInicioFinalTag('KeyInfo', PosIni, PosFim);
+        if (PosIni > 0) and (PosFim > 0) then
+        begin
+          XmlAss := copy(XmlAss, 1, PosIni) +
+                    '<X509Data><X509Certificate>' + X509DER + '</X509Certificate></X509Data>'+
+                    copy(XmlAss, PosFim, length(XmlAss));
+        end
+      end;
+    end;
+  end;
+
+  // CAPICOM insere espaços em alguns Elementos da Assinatura //
+  XmlAss := RemoveEspacos(XmlAss, '<SignatureValue>', '</KeyInfo>');
+
+  Result := XmlAss;
+end;
+
+function TDFeSSLXmlSignClass.Assinar(const ConteudoXML, docElement,
+  infElement: String; SignatureNode: String; SelectionNamespaces: String;
+  IdSignature: String): String;
+begin
+  {$IFDEF FPC}
+  Result := '';
+  {$ENDIF}
+  raise EACBrDFeException.Create(ClassName + '.Assinar, não implementado');
+end;
+
+function TDFeSSLXmlSignClass.Validar(const ConteudoXML, ArqSchema: String; out
+  MsgErro: String): Boolean;
+begin
+  {$IFDEF FPC}
+  Result := False;
+  {$ENDIF}
+  raise EACBrDFeException.Create('"Validar" não suportado em: ' + ClassName);
+end;
+
+function TDFeSSLXmlSignClass.VerificarAssinatura(const ConteudoXML: String; out
+  MsgErro: String; const infElement: String; SignatureNode: String;
+  SelectionNamespaces: String): Boolean;
+begin
+  {$IFDEF FPC}
+  Result := False;
+  {$ENDIF}
+  raise EACBrDFeException.Create('"ValidarAssinatura" não suportado em: ' + ClassName);
+
+end;
 
 { TDFeSSL }
 
@@ -286,27 +853,48 @@ begin
   FProxyUser   := '';
   FSenha       := '';
   FK           := '';
-  FSSLLib      := libNone;
+  FSSLCryptLib := cryNone;
+  FSSLHttpLib  := httpNone;
   FTimeOut     := 5000;
   FNameSpaceURI:= '';
+
+  FSSLType       := LT_all;
+  FStoreLocation := slCurrentUser;
+  FStoreName     := CDEFAULT_STORE_NAME;
 
   // Para emissão de NFS-e essas propriedades podem ter valores diferentes dos
   // atribuidos abaixo, dependendo do provedor...
   FUseCertificateHTTP := True;
 
-  if Assigned(FSSLClass) then
-    FSSLClass.Free;
+  if Assigned(FSSLCryptClass) then
+    FSSLCryptClass.Free;
 
-  FSSLClass := TDFeSSLClass.Create(Self);
+  FSSLCryptClass := TDFeSSLCryptClass.Create(Self);
+
+  if Assigned(FSSLHttpClass) then
+    FSSLHttpClass.Free;
+
+  FSSLHttpClass := TDFeSSLHttpClass.Create(Self);
+
+  if Assigned(FSSLXmlSignClass) then
+    FSSLXmlSignClass.Free;
+
+  FSSLXmlSignClass := TDFeSSLXmlSignClass.Create(Self);
 end;
 
 destructor TDFeSSL.Destroy;
 begin
-  if Assigned(FSSLClass) then
+  if Assigned(FSSLCryptClass) then
   begin
     DescarregarCertificado;
-    FreeAndNil(FSSLClass);
+    FreeAndNil(FSSLCryptClass);
   end;
+
+  if Assigned(FSSLHttpClass) then
+    FreeAndNil(FSSLHttpClass);
+
+  if Assigned(FSSLXmlSignClass) then
+    FreeAndNil(FSSLXmlSignClass);
 
   inherited Destroy;
 end;
@@ -337,8 +925,9 @@ begin
 
   if not Assinado then
   begin
-    XmlAss := FSSLClass.Assinar( ConteudoXML, docElement, infElement,
-                                 SignatureNode, SelectionNamespaces, IdSignature);
+    XmlAss := FSSLXmlSignClass.Assinar( ConteudoXML, docElement, infElement,
+                                        SignatureNode, SelectionNamespaces,
+                                        IdSignature);
 
     // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
     if DeclaracaoXMLAntes <> '' then
@@ -353,11 +942,17 @@ begin
   Result := XmlAss;
 end;
 
-function TDFeSSL.Enviar(var ConteudoXML: String; const URL: String;
-  const SoapAction: String; const MimeType: String): String;
+function TDFeSSL.Enviar(var ConteudoXML: String; const AURL: String;
+  const ASoapAction: String; AMimeType: String): String;
 begin
   // Nota: ConteudoXML, DEVE estar em UTF8 //
-  Result := FSSLClass.Enviar(ConteudoXML, URL, SoapAction, MimeType);
+  if UseCertificateHTTP then
+    CarregarCertificadoSeNecessario;
+
+  if AMimeType = '' then
+    AMimeType := 'application/soap+xml';
+
+  Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
 end;
 
 function TDFeSSL.Validar(const ConteudoXML: String; ArqSchema: String;
@@ -371,19 +966,19 @@ begin
     raise EACBrDFeException.Create('Arquivo ' + sLineBreak + ArqSchema +
       sLineBreak + 'Não encontrado');
 
-  Result := FSSLClass.Validar(ConteudoXML, ArqSchema, MsgErro);
+  Result := FSSLXmlSignClass.Validar(ConteudoXML, ArqSchema, MsgErro);
 end;
 
 function TDFeSSL.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
   SelectionNamespaces: String): Boolean;
 begin
-  Result := FSSLClass.VerificarAssinatura(ConteudoXML, MsgErro,
+  Result := FSSLXmlSignClass.VerificarAssinatura(ConteudoXML, MsgErro,
                               infElement, SignatureNode, SelectionNamespaces);
 end;
 
 function TDFeSSL.CalcHash(const AStream: TStream; const Digest: TSSLDgst;
-  const ModoSaida: TSSLHashOutput; const Assinar: Boolean): AnsiString;
+  const ModoSaida: TSSLHashOutput; const Assina: Boolean): AnsiString;
 var
   ABinStr: AnsiString;
 begin
@@ -393,7 +988,7 @@ begin
   if AStream.Size <= 0 then
     raise EACBrDFeException.CreateDef('Stream vazio');
 
-  ABinStr := FSSLClass.CalcHash(AStream, Digest, Assinar);
+  ABinStr := FSSLCryptClass.CalcHash(AStream, Digest, Assina);
 
   case ModoSaida of
     outBase64 : Result := Trim(EncodeBase64( ABinStr ));
@@ -404,44 +999,44 @@ begin
 end;
 
 function TDFeSSL.CalcHashArquivo(const NomeArquivo: String;
-  const Digest: TSSLDgst; const ModoSaida: TSSLHashOutput;
-  const Assinar: Boolean): AnsiString;
+  const Digest: TSSLDgst; const ModoSaida: TSSLHashOutput; const Assina: Boolean
+  ): AnsiString;
 Var
    FS : TFileStream ;
 begin
   FS := TFileStream.Create(NomeArquivo, fmOpenRead or fmShareDenyWrite);
   try
-    Result := CalcHash( FS, Digest, ModoSaida, Assinar );
+    Result := CalcHash( FS, Digest, ModoSaida, Assina );
   finally
     FS.Free ;
   end ;
 end;
 
 function TDFeSSL.CalcHash(const BinaryString: AnsiString;
-  const Digest: TSSLDgst; const ModoSaida: TSSLHashOutput;
-  const Assinar: Boolean): AnsiString;
+  const Digest: TSSLDgst; const ModoSaida: TSSLHashOutput; const Assina: Boolean
+  ): AnsiString;
 Var
    MS : TMemoryStream ;
 begin
   MS := TMemoryStream.Create;
   try
     MS.Write( Pointer(BinaryString)^, Length(BinaryString) );
-    Result := CalcHash( MS, Digest, ModoSaida, Assinar );
+    Result := CalcHash( MS, Digest, ModoSaida, Assina );
   finally
     MS.Free ;
   end ;
 end;
 
 function TDFeSSL.CalcHash(const AStringList: TStringList;
-  const Digest: TSSLDgst; const ModoSaida: TSSLHashOutput;
-  const Assinar: Boolean): AnsiString;
+  const Digest: TSSLDgst; const ModoSaida: TSSLHashOutput; const Assina: Boolean
+  ): AnsiString;
 Var
   MS : TMemoryStream ;
 begin
   MS := TMemoryStream.Create;
   try
     AStringList.SaveToStream( MS );
-    Result := CalcHash( MS, Digest, ModoSaida, Assinar );
+    Result := CalcHash( MS, Digest, ModoSaida, Assina );
   finally
     MS.Free ;
   end ;
@@ -449,20 +1044,41 @@ end;
 
 procedure TDFeSSL.CarregarCertificado;
 begin
-  FSSLClass.CarregarCertificado;
+  FSSLCryptClass.CarregarCertificado;
+end;
+
+procedure TDFeSSL.CarregarCertificadoSeNecessario;
+begin
+  FSSLCryptClass.CarregarCertificadoSeNecessario;
 end;
 
 procedure TDFeSSL.DescarregarCertificado;
 begin
-  FSSLClass.DescarregarCertificado;
+  if Assigned(FSSLCryptClass) then
+    FSSLCryptClass.DescarregarCertificado;
+end;
+
+procedure TDFeSSL.LerCertificadosStore;
+begin
+  FSSLCryptClass.LerCertificadosStore;
 end;
 
 function TDFeSSL.SelecionarCertificado: String;
 begin
-  Result := FSSLClass.SelecionarCertificado;
+  Result := FSSLCryptClass.SelecionarCertificado;
 
   if NaoEstaVazio(Result) then
-    FSSLClass.CarregarCertificado;
+    FSSLCryptClass.CarregarCertificado;
+end;
+
+function TDFeSSL.CarregarCertificadoPublico(DadosX509Base64: Ansistring
+  ): Boolean;
+begin
+  DescarregarCertificado;
+  if (DadosX509Base64 = '') then
+    Result := False
+  else
+    Result := FSSLCryptClass.CarregarCertificadoPublico(DadosX509Base64);
 end;
 
 { Verifica se o "CNPJDocumento", é da mesma raiz do CNPJ do Certificado }
@@ -492,57 +1108,76 @@ end;
 
 function TDFeSSL.GetCertDataVenc: TDateTime;
 begin
-  Result := FSSLClass.CertDataVenc;
+  Result := FSSLCryptClass.CertDataVenc;
 end;
 
 function TDFeSSL.GetCertificadoLido: Boolean;
 begin
-  Result := FSSLClass.CertificadoLido;
+  if Assigned(FSSLCryptClass) then
+    Result := FSSLCryptClass.CertificadoLido
+  else
+    Result := False;
 end;
 
 function TDFeSSL.GetCertIssuerName: String;
 begin
-  Result := FSSLClass.CertIssuerName;
+  Result := FSSLCryptClass.CertIssuerName;
 end;
 
 function TDFeSSL.GetCertCertificadora: String;
 begin
-  Result := FSSLClass.CertCertificadora;
+  Result := FSSLCryptClass.CertCertificadora;
 end;
 
 function TDFeSSL.GetCertCNPJ: String;
 begin
-  Result := FSSLClass.CertCNPJ;
+  Result := FSSLCryptClass.CertCNPJ;
+end;
+
+function TDFeSSL.GetCertContextWinApi: Pointer;
+begin
+  CarregarCertificadoSeNecessario;
+  Result := FSSLCryptClass.CertContextWinApi;
 end;
 
 function TDFeSSL.GetCertNumeroSerie: String;
 begin
-  Result := FSSLClass.CertNumeroSerie;
+  Result := FSSLCryptClass.CertNumeroSerie;
 end;
 
 function TDFeSSL.GetCertRazaoSocial: String;
 begin
-  Result := FSSLClass.CertRazaoSocial;
+  Result := FSSLCryptClass.CertRazaoSocial;
 end;
 
 function TDFeSSL.GetCertSubjectName: String;
 begin
-  Result := FSSLClass.CertSubjectName;
+  Result := FSSLCryptClass.CertSubjectName;
 end;
 
 function TDFeSSL.GetCertTipo: TSSLTipoCertificado;
 begin
-  Result := FSSLClass.GetCertTipo;
+  Result := FSSLCryptClass.GetCertTipo;
+end;
+
+function TDFeSSL.GetDadosCertificado: TDadosCertificado;
+begin
+  Result := FSSLCryptClass.DadosCertificado;
+end;
+
+function TDFeSSL.GetListaCertificados: TListaCertificados;
+begin
+  Result := FSSLCryptClass.ListaCertificados;
 end;
 
 function TDFeSSL.GetHTTPResultCode: Integer;
 begin
-  Result := FSSLClass.HTTPResultCode;
+  Result := FSSLHttpClass.HTTPResultCode;
 end;
 
 function TDFeSSL.GetInternalErrorCode: Integer;
 begin
-  Result := FSSLClass.InternalErrorCode;
+  Result := FSSLHttpClass.InternalErrorCode;
 end;
 
 function TDFeSSL.GetSenha: AnsiString;
@@ -555,21 +1190,24 @@ begin
   if FArquivoPFX = AValue then Exit;
   FArquivoPFX := AValue;
   FDadosPFX := '';   // Força a releitura de DadosPFX;
-  DescarregarCertificado;
+  if CertificadoLido then
+    DescarregarCertificado;
 end;
 
 procedure TDFeSSL.SetDadosPFX(AValue: AnsiString);
 begin
   if FDadosPFX = AValue then Exit;
   FDadosPFX := AValue;
-  DescarregarCertificado;
+  if CertificadoLido then
+    DescarregarCertificado;
 end;
 
 procedure TDFeSSL.SetNumeroSerie(AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
-  DescarregarCertificado;
+  if CertificadoLido then
+    DescarregarCertificado;
 end;
 
 procedure TDFeSSL.SetSenha(AValue: AnsiString);
@@ -580,350 +1218,137 @@ begin
   FK := FormatDateTime('hhnnsszzz',Now);
   FSenha := StrCrypt(AValue, FK);  // Salva Senha de forma Criptografada, para evitar "Inspect"
 
-  DescarregarCertificado;
+  if CertificadoLido then
+    DescarregarCertificado;
 end;
 
-procedure TDFeSSL.SetSSLLib(ASSLLib: TSSLLib);
+procedure TDFeSSL.SetSSLCryptLib(ASSLCryptLib: TSSLCryptLib);
 begin
-  if ASSLLib = FSSLLib then
+  if ASSLCryptLib = FSSLCryptLib then
     exit;
 
-  if Assigned(FSSLClass) then
-    FreeAndNil(FSSLClass);
+  if Assigned(FSSLCryptClass) then
+    FreeAndNil(FSSLCryptClass);
 
-  {$IFNDEF DFE_SEM_CAPICOM}
-  case ASSLLib of
-    libCapicom:
-      FSSLClass := TDFeCapicom.Create(Self);
-
-    libOpenSSL:
+  case ASSLCryptLib of
+    cryOpenSSL:
     begin
-      {$IFNDEF DFE_SEM_OPENSSL}
-       FSSLClass := TDFeOpenSSL.Create(Self);
-      {$ELSE}
+      {$IfNDef DFE_SEM_OPENSSL}
+       FSSLCryptClass := TDFeOpenSSL.Create(Self);
+      {$Else}
        raise EACBrDFeException.Create('Suporte a libOpenSSL foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
-      {$ENDIF}
+      {$EndIf}
     end;
 
-    libCapicomDelphiSoap:
+    cryCapicom:
     begin
-      {$IFNDEF FPC}
-       FSSLClass := TDFeCapicomDelphiSoap.Create(Self);
-      {$ELSE}
-       FSSLClass := TDFeCapicom.Create(Self);
-      {$ENDIF}
-    end
+      {$IfNDef DFE_SEM_CAPICOM}
+       FSSLCryptClass := TDFeCapicom.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a libCapicom foi desativado por compilação {$DEFINE DFE_SEM_CAPICOM}');
+      {$EndIf}
+    end;
+
+    cryWinCrypt:
+    begin
+      {$IfDef MSWINDOWS}
+       FSSLCryptClass := TDFeWinCrypt.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a libWinCrypt disponível apenas em MSWINDOWS');
+      {$EndIf}
+    end;
+
   else
-    FSSLClass := TDFeSSLClass.Create(Self);
+    FSSLCryptClass := TDFeSSLCryptClass.Create(Self);
   end;
-  {$ELSE}
-  case ASSLLib of
-    libOpenSSL, libCapicom, libCapicomDelphiSoap:
-      FSSLClass := TDFeOpenSSL.Create(Self);
+
+  FSSLCryptLib := ASSLCryptLib;
+end;
+
+procedure TDFeSSL.SetSSLHttpLib(ASSLHttpLib: TSSLHttpLib);
+begin
+  if ASSLHttpLib = FSSLHttpLib then
+    exit;
+
+  if Assigned(FSSLHttpClass) then
+    FreeAndNil(FSSLHttpClass);
+
+  case ASSLHttpLib of
+    httpWinINet, httpWinHttp:
+    begin
+      {$IfDef MSWINDOWS}
+       FSSLHttpClass := TDFeHttpWinHttp.Create(Self, ASSLHttpLib);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "httpWinINet" disponível apenas em MSWINDOWS');
+      {$EndIf}
+    end;
+
+    httpIndy:
+    begin
+      {$IfNDef FPC}
+       FSSLHttpClass := TDFeHttpIndy.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "httpIndy" disponível apenas Delphi');
+      {$EndIf}
+    end;
+
+    httpOpenSSL:
+    begin
+      {$IfNDef DFE_SEM_OPENSSL}
+       FSSLHttpClass := TDFeHttpOpenSSL.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "httpOpenSSL" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
+      {$EndIf}
+    end;
+
   else
-    FSSLClass := TDFeSSLClass.Create(Self);
+    FSSLHttpClass := TDFeSSLHttpClass.Create(Self);
   end;
-  {$ENDIF}
 
-  FSSLLib := ASSLLib;
+  FSSLHttpLib := ASSLHttpLib;
 end;
 
-{ TDFeSSLClass }
-
-constructor TDFeSSLClass.Create(ADFeSSL: TDFeSSL);
+procedure TDFeSSL.SetSSLXmlSignLib(ASSLXmlSignLib: TSSLXmlSignLib);
 begin
-  FpDFeSSL := ADFeSSL;
-  FpCertificadoLido := False;
-end;
+  if ASSLXmlSignLib = FSSLXmlSignLib then
+    exit;
 
-function TDFeSSLClass.Assinar(const ConteudoXML, docElement,
-  infElement: String; SignatureNode: String; SelectionNamespaces: String;
-  IdSignature: String): String;
-begin
-  {$IFDEF FPC}
-  Result := '';
-  {$ENDIF}
-  raise EACBrDFeException.Create(ClassName + '.Assinar, não implementado');
-end;
+  if Assigned(FSSLXmlSignClass) then
+    FreeAndNil(FSSLXmlSignClass);
 
-function TDFeSSLClass.Enviar(const ConteudoXML: String; const URL: String;
-  const SoapAction: String; const MimeType: String): String;
-begin
-  {$IFDEF FPC}
-  Result := '';
-  {$ENDIF}
-  raise EACBrDFeException.Create(ClassName + '.Enviar não implementado');
-end;
-
-function TDFeSSLClass.Validar(const ConteudoXML, ArqSchema: String;
-  out MsgErro: String): Boolean;
-begin
-  {$IFDEF FPC}
-  Result := False;
-  {$ENDIF}
-  raise EACBrDFeException.Create('"Validar" não suportado em: ' + ClassName);
-end;
-
-function TDFeSSLClass.VerificarAssinatura(const ConteudoXML: String; out
-  MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String): Boolean;
-begin
-  {$IFDEF FPC}
-  Result := False;
-  {$ENDIF}
-  raise EACBrDFeException.Create('"ValidarAssinatura" não suportado em: ' + ClassName);
-end;
-
-function TDFeSSLClass.CalcHash(const AStream: TStream; const Digest: TSSLDgst;
-  const Assinar: Boolean): AnsiString;
-begin
-  Result := '';
-  raise EACBrDFeException.Create('"CalcHash" não suportado em: ' + ClassName);
-end;
-
-function TDFeSSLClass.SelecionarCertificado: String;
-begin
-  Result := '';
-  raise EACBrDFeException.Create('"SelecionarCertificado" não suportado em: ' +
-    ClassName);
-end;
-
-procedure TDFeSSLClass.CarregarCertificado;
-begin
-  { nada aqui, método virtual}
-end;
-
-procedure TDFeSSLClass.DescarregarCertificado;
-begin
-  { nada aqui, método virtual}
-end;
-
-function TDFeSSLClass.GetHTTPResultCode: Integer;
-begin
-  Result := 0;
-end;
-
-function TDFeSSLClass.GetInternalErrorCode: Integer;
-begin
-  Result := 0;
-end;
-
-function TDFeSSLClass.GetCertRazaoSocial: String;
-begin
-  Result := '';
-end;
-
-function TDFeSSLClass.GetCertDataVenc: TDateTime;
-begin
-  Result := 0;
-end;
-
-function TDFeSSLClass.GetCertNumeroSerie: String;
-begin
-  Result := '';
-end;
-
-function TDFeSSLClass.GetCertSubjectName: String;
-begin
-  Result := '';
-end;
-
-function TDFeSSLClass.GetCertTipo: TSSLTipoCertificado;
-begin
-  Result := tpcA1;
-end;
-
-function TDFeSSLClass.GetCertIssuerName: String;
-begin
-  Result := '';
-end;
-
-function TDFeSSLClass.GetCertCertificadora: String;
-begin
-  Result := '';
-end;
-
-function TDFeSSLClass.GetCertCNPJ: String;
-begin
-  Result := '';
-end;
-
-function TDFeSSLClass.GetCNPJFromSubjectName( SubjectName: String ): String;
-var
-  P: Integer;
-begin
-  Result := '';
-  P := pos('CN=',SubjectName);
-  if P > 0 then
-  begin
-    P := PosEx(':', SubjectName, P);
-    if P > 0 then
+  case ASSLXmlSignLib of
+    xsMsXml:
     begin
-      Result := OnlyNumber(copy(SubjectName, P+1, 14));
-    end;
-  end;
-end;
-
-function TDFeSSLClass.GetRazaoSocialFromSubjectName( SubjectName: String ): String;
-var
-  P1, P2: Integer;
-begin
-  Result := '';
-  P1 := pos('CN=',SubjectName);
-  if P1 > 0 then
-  begin
-    P2 := PosEx(':', SubjectName, P1);
-    if P2 < 0 then
-      P2 := PosEx(',', SubjectName, P1);
-    if P2 < 0 then
-      P2 := Length(SubjectName);
-
-    Result := copy(SubjectName, P1+3, P2-P1-3);
-  end;
-end;
-
-function TDFeSSLClass.GetCertificadoraFromSubjectName( SubjectName: String ): String;
-var
-  P1, P2: Integer;
-begin
-  Result := '';
-  P1 := pos('CN=',SubjectName);
-  if P1 > 0 then
-  begin
-    P2 := PosEx('RFB', SubjectName, P1);
-    if P2 < 0 then
-      P2 := PosEx(',', SubjectName, P1);
-    if P2 < 0 then
-      P2 := Length(SubjectName);
-
-    Result := trim(copy(SubjectName, P1+3, P2-P1-3));
-  end;
-end;
-
-function TDFeSSLClass.SignatureElement(const URI: String; AddX509Data: Boolean;
-  IdSignature: String): String;
-begin
-  {(*}
-  Result :=
-  '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + IdSignature + '>' +
-    '<SignedInfo>' +
-      '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
-      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
-      '<Reference URI="' + IfThen(URI = '', '', '#' + URI) + '">' +
-        '<Transforms>' +
-          '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
-          '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
-        '</Transforms>' +
-        '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
-        '<DigestValue></DigestValue>' +
-      '</Reference>' +
-    '</SignedInfo>' +
-    '<SignatureValue></SignatureValue>' +
-    '<KeyInfo>' +
-    IfThen(AddX509Data,
-      '<X509Data>' +
-        CTagX509Ini+CTagX509Fim+
-      '</X509Data>',
-      '')+
-    '</KeyInfo>'+
-  '</Signature>';
-  {*)}
-end;
-
-function TDFeSSLClass.AdicionarSignatureElement(ConteudoXML: String;
-  AddX509Data: Boolean; docElement, IdSignature: String): String;
-var
-  URI, TagEndDocElement: String;
-  I: Integer;
-begin
-  URI := ExtraiURI(ConteudoXML);
-
-  TagEndDocElement := '</' + docElement + '>';
-  I := PosLast(TagEndDocElement, ConteudoXML);
-  if I = 0 then
-    raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
-
-  Result := copy(ConteudoXML, 1, I - 1) +
-            SignatureElement(URI, AddX509Data, IdSignature) + TagEndDocElement;
-end;
-
-function TDFeSSLClass.AjustarXMLAssinado(const ConteudoXML: String;
-  X509DER: String): String;
-var
-  XmlAss: String;
-  PosSig, PosIni, PosFim: Integer;
-
-  function RemoveEspacos( const AXML, TagIni, TagFim : String): String;
-  begin
-    Result := '';
-    PosIni := PosLast(TagIni, AXML);
-    if PosIni > 0 then
-    begin
-      PosFim := PosEx(TagFim, AXML, PosIni + 1);
-      if PosFim > 0 then
-        Result := copy(AXML, 1, PosIni - 1) +
-                  StringReplace(copy(AXML, PosIni, PosFim-PosIni), ' ', '', [rfReplaceAll])+
-                  copy(AXML, PosFim, Length(AXML));
+      {$IfDef MSWINDOWS}
+       FSSLXmlSignClass := TDFeSSLXmlSignMsXml.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "xsMsXml" disponível apenas em MSWINDOWS');
+      {$EndIf}
     end;
 
-    if Result = '' then
-      Result := AXML;
-  end;
-begin
-  XmlAss := ConteudoXML;
-
-  // Removendo Declaração sem UTF8 Ex: <?xml version="1.0"?> //
-  if not XmlEhUTF8(ObtemDeclaracaoXML(XmlAss)) then
-    XmlAss := RemoverDeclaracaoXML(XmlAss);
-
-  // Removendo quebras de linha //
-  XmlAss := StringReplace(XmlAss, #10, '', [rfReplaceAll]);
-  XmlAss := StringReplace(XmlAss, #13, '', [rfReplaceAll]);
-
-  PosSig := PosLast('<SignatureValue>', XmlAss);
-  if PosSig > 0 then
-  begin
-    PosIni := PosEx(CTagX509Ini, XmlAss, PosSig)-1;
-
-    if X509DER = '' then
+    xsXmlSec:
     begin
-      // Considerando apenas o último Certificado X509, da assinatura //
-      if PosIni >= 0 then
-      begin
-        PosFim := PosLast(CTagX509Ini, XmlAss);
-        XmlAss := copy(XmlAss, 1, PosIni) + copy(XmlAss, PosFim, length(XmlAss));
-      end;
-    end
-    else
-    begin
-      // Remove todos Certificados adicionados, e Adiciona o X509DER informado //
-      PosFim := 0;
-      if PosIni <= 0 then
-      begin
-        PosIni := PosEx('<X509Certificate/>', XmlAss, PosSig)-1;
-        if PosIni >= 0 then
-          PosFim := PosIni + 18 ;
-      end
-      else
-      begin
-        PosFim := PosLast('</X509Certificate>', XmlAss);
-        if PosFim > 0 then
-          PosFim := PosFim + 18;
-      end;
-
-      if (PosIni > 0) and (PosFim > 0) then
-      begin
-        XmlAss := copy(XmlAss, 1, PosIni) +
-                  CTagX509Ini + X509DER + CTagX509Fim +
-                  copy(XmlAss, PosFim, length(XmlAss));
-      end;
+      {$IfNDef DFE_SEM_OPENSSL}
+       FSSLXmlSignClass := TDFeSSLXmlSignXmlSec.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "xsXmlSec" foi desativado por compilação {$DEFINE DFE_SEM_OPENSSL}');
+      {$EndIf}
     end;
+
+    xsMsXmlCapicom:
+    begin
+      {$IfNDef DFE_SEM_CAPICOM}
+       FSSLXmlSignClass := TDFeSSLXmlSignMsXmlCapicom.Create(Self);
+      {$Else}
+       raise EACBrDFeException.Create('Suporte a "xsMsXmlCapicom" foi desativado por compilação {$DEFINE DFE_SEM_CAPICOM}');
+      {$EndIf}
+    end;
+
+  else
+    FSSLXmlSignClass := TDFeSSLXmlSignClass.Create(Self);
   end;
 
-  // CAPICOM insere espaços em alguns Elementos da Assinatura //
-  XmlAss := RemoveEspacos(XmlAss, '<SignatureValue>', '</KeyInfo>');
-
-  Result := XmlAss;
+  FSSLXmlSignLib := ASSLXmlSignLib;
 end;
 
 end.

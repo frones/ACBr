@@ -44,10 +44,113 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2017
+-- ACBrDFeSSL --
+[*] Amplo refactoring promovido, separando a classe "TDFeSSLClass" em 3 novas
+    classes:
+    "TDFeSSLCryptClass" - para Carregar certificados e efetuar criptografia
+    "TDFeSSLHttpClass" - para comunicação HTTP/HTTPS com suporte a Certificados
+    "TDFeSSLXmlSignClass" - Para Validar XMLs, validar assinaturas e Assinar XML
+                            com Certificados
+[+] "TSSLLib", adicionado os tipos "libWinCrypt, libCustom"
+[+] Criada nova classe "TDadosCertificado", para conter os dados do
+    certificado carregado
+[+] Criada nova classe "TListaCertificados",para conter uma lista de Objetos
+    do tipo TDadosCertificado, com todos os certificados de uma "Store", e após
+    a chamada do método "TDFeSSL.LerCertificadosStore"
+[+] Adicionada propriedade "TDFeSSL.StoreName: String", usada apenas no Windows.
+    Nome da Store a ser aberta, padrão "MY"
+[+] Adicionada propriedade "TDFeSSL.StoreLocation: TSSLStoreLocation", usada
+    apenas no Windows. Default "slCurrentUser".
+    TSSLStoreLocation = (slMemory, slLocalMachine, slCurrentUser, slActiveDirectory, slSmartCard);
+[+] Adicionado o método: "TDFeSSL.LerCertificadosStore", apenas Windows, para
+    carregar todos os Certifcados de "TDFeSSL.StoreName" para a lista de Objetos:
+    "TDFeSSL.ListaCertificados"
+[+] Adicionado a propriedade "TDFeSSL.DadosCertificado", para permitir acesso
+    aos dados do certificado carregado
+[+] Adicionada a propriedade "TDFeSSL.SSLCryptLib: TSSLCryptLib" default cryNone;
+    para definir a classe de criptografia
+    TSSLCryptLib = (cryNone, cryOpenSSL, cryCapicom, cryWinCrypt);
+[+] Adicionada a propriedade "TDFeSSL.SSLHttpLib: TSSLHttpLib" default httpNone;
+    para definir a classe de comunicação HTTP/HTTPS
+    TSSLHttpLib = (httpNone, httpWinINet, httpWinHttp, httpOpenSSL, httpIndy);
+[+] Adicionada a propriedade "TDFeSSL.SSLXmlSignLib: TSSLXmlSignLib" default xsNone;
+    para definir a classe de assinatura de validação de XML
+    TSSLXmlSignLib = (xsNone, xsXmlSec, xsMsXml, xsMsXmlCapicom);
+[+] Adicionada a propriedades "TDFeSSL"SSLType: TSSLType" default LT_all;
+    para permitir definir o tipo de criptografia em HTTPS sendo:
+    TSSLType = (LT_all, LT_SSLv2, LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_SSHv2)
+    suportado apenas em TDFeHttpOpenSSL e TDFeHttpWinHttp
+
+-- ACBrDFeConfiguracoes --
+[+] Adicionada as propriedades:
+    property SSLCryptLib: TSSLCryptLib
+    property SSLHttpLib: TSSLHttpLib
+    property SSLXmlSignLib: TSSLXmlSignLib
+[*] Propriedade "SSLLib: TSSLLib" passou a ser virtual, e mantida por
+    compatibilidade. Ajusta-la irá produzir ajustes em "SSLCryptLib",
+    "SSLHttpLib" e "SSLXmlSignLib". Exemplo:
+    if SSLLib = libOpenSSL then
+    begin
+      SSLCryptLib := cryOpenSSL;
+      SSLHttpLib := httpOpenSSL;
+      SSLXmlSignLib := xsXmlSec;
+    end;
+
+-- ACBrDFe --
+[+] Adicionado suporte a configurações de "SSLCryptLib", "SSLHttpLib",
+    "SSLXmlSignLib"
+
+-- ACBrDFeOpenSSL --
+[*] Amplo refactoring. Removido código referente a comunicação HTTP/HTTPs
+    que foi migrado para "ACBrDFeHttpOpenSSL"
+[*] Removido código referente a assinatura digital e Validação de XML,
+    que foi migrado para "ACBrDFeXsXmlSec"
+
+-- ACBRDFeWinCrypt --
+[+] Nova Unit, para manipular Certificados do Windows e efetuar assinatura
+    digital, usando a Win API WinCrypt (MSCrypto/CAPI)
+
+-- ACBrDFeCapicom --
+[*] Refactoring, para usar boa parte do código de "ACBRDFeWinCrypt"
+
+-- ACBrDFeHttpOpenSSL --
+[+] Adicionada nova Unit, derivada de ACBrDFeOpenSSL, criando implementação da
+    classe de TDFeSSLHttpClass para comunicação http e https, usando a Synapse
+    e OpenSSL
+
+-- ACBrDFeHttpWinApi --
+[+] Adicionada nova Unit, derivada de ACBrDFeCapicom, criando implementação da
+    classe de TDFeSSLHttpClass para comunicação http e https, usando as APIs do
+    Windows WinHttp ou WinINet
+
+-- ACBrDFeHttpIndy, ACBrDFeCapicomDelphiSoap --
+[*] Unit renomeada de "ACBrDFeCapicomDelphiSoap" para "ACBrDFeHttpIndy", e
+    refatorada para não depender da CAPICOM
+
+-- ACBrDFeXsXmlSec --
+[+] Adicionada nova Unit, derivada de ACBrDFeOpenSSL, criando implementação da
+    classe de TDFeSSLXmlSignClass usando a Lib XMLSEC
+
+-- ACBrDFeXsMsXml --
+[+] Adicionada nova Unit, derivada de ACBrDFeCapicom, criando implementação da
+    classe de TDFeSSLXmlSignClass usando a Lib MSXML
+
+-- ACBrDFeXsMsXmlCapicom --
+[+] Adicionada nova Unit, derivada de ACBrDFeCapicom, criando implementação da
+    classe de TDFeSSLXmlSignMsXml usando a Lib MSXML e CAPICOM
+
+-- ACBrDFeException --
+[+] Adicionado o exception "EACBrDFeExceptionNoPrivateKey"
+
+-- ACBrDFeUtil --
+[+] Adicionado o método "SignatureElement: String"
+    (por DSA)
+
 08/03/2017
 [+] Adição do separador por dia dos documentos em pastas
-		http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
+    (por: Juliomar Marchetti)
 		
 07/02/2017
 -- ACBrDFeConfiguracoes --

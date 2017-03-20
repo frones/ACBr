@@ -66,7 +66,6 @@ type
     ACBr_SPED_dpk: TCheckBox;
     ACBr_PAF_dpk: TCheckBox;
     ACBr_OpenSSL_dpk: TCheckBox;
-    ACBr_Capicom_dpk: TCheckBox;
     ACBr_PCNComum_dpk: TCheckBox;
     ACBr_NFe_dpk: TCheckBox;
     ACBr_CTe_dpk: TCheckBox;
@@ -313,7 +312,6 @@ begin
         (ACBr_NFSe_dpk.Checked) or (ACBr_MDFe_dpk.Checked) then
       begin
         ACBr_PCNComum_dpk.Checked := True;
-        ACBr_Capicom_dpk.Checked := True;
         ACBr_OpenSSL_dpk.Checked := True;
       end;
 

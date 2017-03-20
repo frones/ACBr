@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/03/2017
+-- ACBr.inc --
+[+] Adicionada a diretiva "HAS_INLINE", para FPC ou DELPHI9_UP
+[*] Definição forçada para "USE_MINGW" modificado para ficar ligado quando não for
+    Windows   (por: DSA)
+
 Data: 08/02/2017
 -- ACBrUtil --
 [*] Ajuste para que RoundABNT suporte valores várias casas decimais.

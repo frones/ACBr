@@ -9,7 +9,8 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
   ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib,
-  ACBrMail, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr;
+  ACBrMail, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrPosPrinter,
+  Spin;
 
 type
 
@@ -205,18 +206,34 @@ type
     spPathSchemas: TSpeedButton;
     ACBrMail1: TACBrMail;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
-    cbTipoEmissao: TComboBox;
-    Label43: TLabel;
-    Label44: TLabel;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     btnInutilizarImprimir: TButton;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    ACBrPosPrinter1: TACBrPosPrinter;
+    Button10: TButton;
+    seTimeOut: TSpinEdit;
+    lTimeOut: TLabel;
+    GroupBox1: TGroupBox;
     Edit1: TEdit;
     Button5: TButton;
     cbAssinar: TCheckBox;
+    Button7: TButton;
+    Button9: TButton;
+    lSSLLib: TLabel;
+    cbSSLLib: TComboBox;
+    lCryptLib: TLabel;
+    cbCryptLib: TComboBox;
+    lHttpLib: TLabel;
+    cbHttpLib: TComboBox;
+    cbXmlSignLib: TComboBox;
+    lXmlSign: TLabel;
+    btnValidarRegrasNegocio: TButton;
+    lSSLLib1: TLabel;
+    cbSSLType: TComboBox;
+    SpeedButton1: TSpeedButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);
@@ -264,13 +281,22 @@ type
     procedure sbPathDPECClick(Sender: TObject);
     procedure sbPathEventoClick(Sender: TObject);
     procedure spPathSchemasClick(Sender: TObject);
-    procedure cbTipoEmissaoChange(Sender: TObject);
     procedure btnInutilizarImprimirClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button10Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
+    procedure cbCryptLibChange(Sender: TObject);
+    procedure cbHttpLibChange(Sender: TObject);
+    procedure cbSSLLibChange(Sender: TObject);
+    procedure cbXmlSignLibChange(Sender: TObject);
+    procedure btnValidarRegrasNegocioClick(Sender: TObject);
+    procedure cbSSLTypeChange(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
     
   private
     { Private declarations }
@@ -279,6 +305,7 @@ type
     procedure GerarNFe(NumNFe : String);
     procedure GerarNFCe(NumNFe : String);
     procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+    procedure AtualizaSSLLibsCombo;
 
     procedure LoadConsulta201(XML: AnsiString);
   public
@@ -291,9 +318,9 @@ var
 implementation
 
 uses
-  strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, pcnNFe,
+  strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, blcksock, pcnNFe,
   pcnConversaoNFe, ACBrDFeConfiguracoes, pcnAuxiliar, ACBrDFeSSL, pcnNFeRTXT,
-  FileCtrl,ACBrNFeNotasFiscais;
+  FileCtrl,ACBrNFeNotasFiscais, ACBrDFeOpenSSL, Unit2, Grids;
 
 const
   SELDIRHELP = 1000;
@@ -309,7 +336,10 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
-      Ini.WriteInteger( 'Certificado','TipoEmissao' , cbTipoEmissao.ItemIndex) ;
+      Ini.WriteInteger( 'Certificado','SSLLib' , cbSSLLib.ItemIndex) ;
+      Ini.WriteInteger( 'Certificado','CryptLib' , cbCryptLib.ItemIndex) ;
+      Ini.WriteInteger( 'Certificado','HttpLib' , cbHttpLib.ItemIndex) ;
+      Ini.WriteInteger( 'Certificado','XmlSignLib' , cbXmlSignLib.ItemIndex) ;
       Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text) ;
       Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text) ;
       Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text) ;
@@ -335,6 +365,8 @@ begin
       Ini.WriteString( 'WebService','Aguardar'    ,edtAguardar.Text) ;
       Ini.WriteString( 'WebService','Tentativas'  ,edtTentativas.Text) ;
       Ini.WriteString( 'WebService','Intervalo'  ,edtIntervalo.Text) ;
+      Ini.WriteInteger( 'WebService','TimeOut'   ,seTimeOut.Value) ;
+      Ini.WriteInteger( 'WebService','SSLType' , cbSSLType.ItemIndex) ;
 
       Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text) ;
       Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text) ;
@@ -400,7 +432,10 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
-     cbTipoEmissao.ItemIndex:= Ini.ReadInteger( 'Certificado','TipoEmissao' ,0) ;
+     cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0) ;
+     cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0) ;
+     cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0) ;
+     cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0) ;
      edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
      edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
      edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
@@ -421,8 +456,15 @@ begin
       edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs') ;
       edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TpcnVersaoDF), integer(cbVersaoDF.ItemIndex) )) ;
 
+      ACBrNFe1.SSL.DescarregarCertificado;
+      
       with ACBrNFe1.Configuracoes.Geral do
        begin
+         SSLLib                := TSSLLib(cbSSLLib.ItemIndex);
+         SSLCryptLib           := TSSLCryptLib(cbCryptLib.ItemIndex);
+         SSLHttpLib            := TSSLHttpLib(cbHttpLib.ItemIndex);
+         SSLXmlSignLib         := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+         AtualizaSSLLibsCombo;
          ExibirErroSchema := cbxExibirErroSchema.Checked;
          RetirarAcentos   := cbxRetirarAcentos.Checked;
          FormatoAlerta    := edtFormatoAlerta.Text;
@@ -442,6 +484,8 @@ begin
       edtAguardar.Text       := Ini.ReadString( 'WebService','Aguardar'  ,'0') ;
       edtTentativas.Text     := Ini.ReadString( 'WebService','Tentativas','5') ;
       edtIntervalo.Text      := Ini.ReadString( 'WebService','Intervalo' ,'0') ;
+      seTimeOut.Value        := Ini.ReadInteger('WebService','TimeOut'  ,5000) ;
+      cbSSLType.ItemIndex    := Ini.ReadInteger('WebService','SSLType' , 0) ;
       edtProxyHost.Text  := Ini.ReadString( 'Proxy','Host'   ,'') ;
       edtProxyPorta.Text := Ini.ReadString( 'Proxy','Porta'  ,'') ;
       edtProxyUser.Text  := Ini.ReadString( 'Proxy','User'   ,'') ;
@@ -469,11 +513,14 @@ begin
          else
             edtIntervalo.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.IntervaloTentativas);            
 
+         TimeOut := seTimeOut.Value;
          ProxyHost := edtProxyHost.Text;
          ProxyPort := edtProxyPorta.Text;
          ProxyUser := edtProxyUser.Text;
          ProxyPass := edtProxySenha.Text;
        end;
+
+      ACBrNFe1.SSL.SSLType := TSSLType( cbSSLType.ItemIndex );
 
       cbxSalvarArqs.Checked       := Ini.ReadBool(   'Arquivos','Salvar'     ,false);
       cbxPastaMensal.Checked      := Ini.ReadBool(   'Arquivos','PastaMensal',false);
@@ -584,7 +631,7 @@ var
 begin
   DOM := TXMLDocument.Create(nil);
   try
-    lXML := LimpaXML(UTF8Decode(XML),'Signature');
+    lXML := LimpaXML(XML,'Signature');
     DOM.LoadFromXML(lXML);
     DOM.Active := True;
     TreeViewRetornoConsulta.Items.BeginUpdate;
@@ -601,6 +648,9 @@ begin
   ACBrUtil.WriteToTXT( PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml',
                         ACBrUtil.ConverteXMLtoUTF8( RetWS ), False, False);
   MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
+
+  if ACBrNFe1.NotasFiscais.Count > 0then
+    MemoResp.Lines.Add('Empresa: '+ACBrNFe1.NotasFiscais.Items[0].NFe.Emit.xNome);
 end;
 
 procedure TForm1.sbtnCaminhoCertClick(Sender: TObject);
@@ -638,11 +688,35 @@ var
  I : TpcnTipoEmissao ;
  J : TpcnModeloDF;
  K : TpcnVersaoDF;
+ U: TSSLCryptLib;
+ V: TSSLHttpLib;
+ X: TSSLXmlSignLib;
+ Y: TSSLType;
 begin
-  cbTipoEmissao.Items.Clear ;
+  cbSSLLib.Items.Clear ;
   For T := Low(TSSLLib) to High(TSSLLib) do
-    cbTipoEmissao.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
-  cbTipoEmissao.ItemIndex := 0 ;
+    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
+  cbSSLLib.ItemIndex := 0 ;
+
+  cbCryptLib.Items.Clear ;
+  For U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
+    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) ) ;
+  cbCryptLib.ItemIndex := 0 ;
+
+  cbHttpLib.Items.Clear ;
+  For V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
+    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) ) ;
+  cbHttpLib.ItemIndex := 0 ;
+
+  cbXmlSignLib.Items.Clear ;
+  For X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) ) ;
+  cbXmlSignLib.ItemIndex := 0 ;
+
+  cbSSLType.Items.Clear ;
+  For Y := Low(TSSLType) to High(TSSLType) do
+    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) ) ;
+  cbSSLType.ItemIndex := 0 ;
 
   cbFormaEmissao.Items.Clear ;
   For I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
@@ -667,9 +741,6 @@ begin
   pgRespostas.ActivePageIndex := 2;
 
   ACBrNFe1.Configuracoes.WebServices.Salvar := true;
-
-  if cbTipoEmissao.ItemIndex <> -1 then
-    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbTipoEmissao.ItemIndex);
 end;
 
 
@@ -793,12 +864,44 @@ begin
    end;
 end;
 
-procedure TForm1.cbTipoEmissaoChange(Sender: TObject);
+procedure TForm1.cbCryptLibChange(Sender: TObject);
 begin
-  if cbTipoEmissao.ItemIndex <> -1 then
-    ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbTipoEmissao.ItemIndex);
+  try
+    if cbCryptLib.ItemIndex <> -1 then
+      ACBrNFe1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
 
-  Label44.Visible :=  ACBrNFe1.Configuracoes.Geral.SSLLib = libCapicom;
+procedure TForm1.cbHttpLibChange(Sender: TObject);
+begin
+  try
+    if cbHttpLib.ItemIndex <> -1 then
+      ACBrNFe1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TForm1.cbSSLLibChange(Sender: TObject);
+begin
+  try
+    if cbSSLLib.ItemIndex <> -1 then
+      ACBrNFe1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TForm1.cbXmlSignLibChange(Sender: TObject);
+begin
+  try
+    if cbXmlSignLib.ItemIndex <> -1 then
+      ACBrNFe1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
 end;
 
 procedure TForm1.btnManifDestConfirmacaoClick(Sender: TObject);
@@ -1144,6 +1247,16 @@ begin
     end;
   end;
   Application.ProcessMessages;
+end;
+
+procedure TForm1.AtualizaSSLLibsCombo;
+begin
+ cbSSLLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLLib );
+ cbCryptLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLCryptLib );
+ cbHttpLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLHttpLib );
+ cbXmlSignLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLXmlSignLib );
+
+ cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]) ;
 end;
 
 procedure TForm1.sbtnGetCertClick(Sender: TObject);
@@ -3040,10 +3153,51 @@ begin
   begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    pgRespostas.ActivePageIndex := 0;
+    MemoResp.Lines.Add('');
+    MemoResp.Lines.Add('');
+
     if not ACBrNFe1.NotasFiscais.VerificarAssinatura(Msg) then
-      MemoDados.Lines.Add('Erro: '+Msg)
+      MemoResp.Lines.Add('Erro: '+Msg)
     else
-      ShowMessage('Assinatura Válida');  
+    begin
+      MemoResp.Lines.Add('OK: Assinatura Válida');
+      ACBrNFe1.SSL.CarregarCertificadoPublico( ACBrNFe1.NotasFiscais[0].NFe.signature.X509Certificate ) ;
+      MemoResp.Lines.Add('Assinado por: '+ ACBrNFe1.SSL.CertRazaoSocial);
+      MemoResp.Lines.Add('CNPJ: '+ ACBrNFe1.SSL.CertCNPJ);
+      MemoResp.Lines.Add('Num.Série: '+ ACBrNFe1.SSL.CertNumeroSerie);
+
+      ShowMessage('ASSINATURA VÁLIDA');
+    end;
+  end;  
+end;
+
+procedure TForm1.btnValidarRegrasNegocioClick(Sender: TObject);
+var
+  Msg : String;
+  Inicio: TDateTime;
+  Ok: Boolean;
+  Tempo: String;
+begin
+  OpenDialog1.Title := 'Selecione a NFE';
+  OpenDialog1.DefaultExt := '*-nfe.XML';
+  OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
+  if OpenDialog1.Execute then
+  begin
+    ACBrNFe1.NotasFiscais.Clear;
+    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+    Inicio := Now;
+    Ok := ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(Msg);
+    Tempo := FormatDateTime('hh:nn:ss:zzz', Now - Inicio);
+
+    if not Ok then
+    begin
+      MemoDados.Lines.Add('Erro: '+Msg);
+      ShowMessage('Erros encontrados'+ sLineBreak + 'Tempo: '+Tempo);
+    end
+    else
+      ShowMessage('Tudo OK'+sLineBreak + 'Tempo: '+Tempo);
   end;
 end;
 
@@ -3315,6 +3469,127 @@ var
 begin
   Ahash := ACBrNFe1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
   MemoResp.Lines.Add( Ahash );
+  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+var
+  Acao: String;
+  OldUseCert: Boolean;
+begin
+  Acao := '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'+
+     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '+
+     'xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/"> '+
+     ' <soapenv:Header/>'+
+     ' <soapenv:Body>' +
+     ' <cli:consultaCEP>' +
+     ' <cep>18270-170</cep>' +
+     ' </cli:consultaCEP>' +
+     ' </soapenv:Body>' +
+     ' </soapenv:Envelope>';
+
+  OldUseCert := ACBrNFe1.SSL.UseCertificateHTTP;
+  ACBrNFe1.SSL.UseCertificateHTTP := False;
+  try
+    MemoResp.Lines.Text := ACBrNFe1.SSL.Enviar(Acao, 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl', '');
+  finally
+    ACBrNFe1.SSL.UseCertificateHTTP := OldUseCert;
+  end;
+  pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TForm1.Button9Click(Sender: TObject);
+var
+  Erro, AName: String;
+begin
+  with ACBrNFe1.SSL do
+  begin
+     CarregarCertificadoPublico(MemoDados.Lines.Text);
+     MemoResp.Lines.Add(CertIssuerName);
+     MemoResp.Lines.Add(CertRazaoSocial);
+     MemoResp.Lines.Add(CertCNPJ);
+     MemoResp.Lines.Add(CertSubjectName);
+     MemoResp.Lines.Add(CertNumeroSerie);
+    //MemoDados.Lines.LoadFromFile('c:\temp\teste2.xml');
+    //MemoResp.Lines.Text := Assinar(MemoDados.Lines.Text, 'Entrada', 'Parametros');
+    //Erro := '';
+    //if VerificarAssinatura(MemoResp.Lines.Text, Erro, 'Parametros' ) then
+    //  ShowMessage('OK')
+    //else
+    //  ShowMessage('ERRO: '+Erro)
+    pgRespostas.ActivePageIndex := 0;
+  end;
+end;
+
+procedure TForm1.Button10Click(Sender: TObject);
+begin
+ ShowMessage( ACBrNFe1.SSL.CertIssuerName + sLineBreak + sLineBreak +
+              'Certificadora: '+ACBrNFe1.SSL.CertCertificadora);
+end;
+
+procedure TForm1.cbSSLTypeChange(Sender: TObject);
+begin
+  if cbSSLType.ItemIndex <> -1 then
+     ACBrNFe1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+end;
+
+procedure TForm1.SpeedButton1Click(Sender: TObject);
+var
+  I: Integer;
+  ASerie: String;
+  AddRow: Boolean;
+begin
+  frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
+  try
+    ACBrNFe1.SSL.LerCertificadosStore;
+    AddRow := False;
+
+    with frSelecionarCertificado.StringGrid1 do
+    begin
+      ColWidths[0] := 220;
+      ColWidths[1] := 250;
+      ColWidths[2] := 120;
+      ColWidths[3] := 80;
+      ColWidths[4] := 150;
+      Cells[ 0, 0 ] := 'Num.Série';
+      Cells[ 1, 0 ] := 'Razão Social';
+      Cells[ 2, 0 ] := 'CNPJ';
+      Cells[ 3, 0 ] := 'Validade';
+      Cells[ 4, 0 ] := 'Certificadora';
+    end;
+
+    For I := 0 to ACBrNFe1.SSL.ListaCertificados.Count-1 do
+    begin
+      with ACBrNFe1.SSL.ListaCertificados[I] do
+      begin
+        ASerie := NumeroSerie;
+        if (CNPJ <> '') and (Length(NumeroSerie) >= 16) then
+        begin
+          with frSelecionarCertificado.StringGrid1 do
+          begin
+            if Addrow then
+              RowCount := RowCount + 1;
+              
+            Cells[ 0, RowCount-1] := NumeroSerie;
+            Cells[ 1, RowCount-1] := RazaoSocial;
+            Cells[ 2, RowCount-1] := CNPJ;
+            Cells[ 3, RowCount-1] := FormatDateBr(DataVenc);
+            Cells[ 4, RowCount-1] := Certificadora;
+            AddRow := True;
+          end;
+        end;
+      end;
+    end;
+
+    frSelecionarCertificado.ShowModal;
+
+    if frSelecionarCertificado.ModalResult = mrOK then
+      edtNumSerie.Text := frSelecionarCertificado.StringGrid1.Cells[ 0,
+                            frSelecionarCertificado.StringGrid1.Row];
+
+  finally
+     frSelecionarCertificado.Free;
+  end;
 end;
 
 end.

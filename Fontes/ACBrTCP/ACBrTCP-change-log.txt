@@ -37,11 +37,22 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2017
+-- ACBrWinINetReqResp --
+[+] Nova Unit, apenas para Windows, movida de ACBrDFeCapicom.ACBrHTTPReqResp.
+    Permite efetuar um POST, com suporte a HTTPS e Certificado digital, usando
+    a API WinINet
+
+-- ACBrWinHTTPReqResp --
+[+] Nova Unit, apenas para Windows. Permite efetuar um POST, com suporte nativo
+    a SSL/TLS e Certificado digital, usando a API WinHttp
+    (por: DSA)
+
 16/02/2017
--- ACBrConsultaCPF
+-- ACBrConsultaCPF --
 [+] mudança do endereço do captcha mesmo funcionando no outro faz sentido
-		http://www.projetoacbr.com.br/forum/topic/34995-erro-http-404-not-found-em-acbrconsultacpf/
-		por Juliomar Marchetti
+	http://www.projetoacbr.com.br/forum/topic/34995-erro-http-404-not-found-em-acbrconsultacpf/
+	por Juliomar Marchetti
 		
 18/01/2017
 -- ACBrSedex --
@@ -51,8 +62,8 @@ Símbolo : Significado
 16/01/2017
 -- ACBrConsultaCPF
 [*] Mudança de endereço da receita para consulta
-		http://www.projetoacbr.com.br/forum/topic/34620-erro-consulta-cpf-unit-com-corre%C3%A7%C3%A3o-da-url/
-		por Juliomar Marchetti
+	http://www.projetoacbr.com.br/forum/topic/34620-erro-consulta-cpf-unit-com-corre%C3%A7%C3%A3o-da-url/
+	por Juliomar Marchetti
 		
 07/01/2017
 -- ACBrSocket --

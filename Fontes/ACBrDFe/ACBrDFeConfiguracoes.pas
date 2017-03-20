@@ -224,13 +224,13 @@ type
     FSepararPorCNPJ: Boolean;
     FSepararPorModelo: Boolean;
     FSepararPorMes: Boolean;
-  	FSepararPorDia: Boolean;
+    FSepararPorDia: Boolean;
   private
 
     function GetIniServicos: String;
     function GetPathSalvar: String;
     function GetPathSchemas: String;
-  	procedure SetSepararPorDia(const Value: Boolean);
+    procedure SetSepararPorDia(const Value: Boolean);
     procedure SetSepararPorMes(const Value: Boolean);
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
@@ -251,7 +251,7 @@ type
       write FSepararPorModelo default False;
     property SepararPorMes: Boolean
       read FSepararPorMes write SetSepararPorMes default False;
-	  property SepararPorDia: Boolean
+    property SepararPorDia: Boolean
       read FSepararPorDia write SetSepararPorDia default False;
   end;
 
@@ -881,16 +881,12 @@ begin
 
     DecodeDate(Data, wAno, wMes, wDia);
     AnoMes := IntToStr(wAno) + IntToStrZero(wMes, 2);
-
-    if Pos(AnoMes, Dir) <= 0 then
-      Dir := PathWithDelim(Dir) + AnoMes;
+    Dir := PathWithDelim(Dir) + AnoMes;
 	  
-	if SepararPorDia then
+    if SepararPorDia then
     begin
       Dia := IntToStrZero(wDia, 2);
-
-      if Pos(Dia, Dir) <= 0 then
-        Dir := PathWithDelim(Dir) + Dia;
+      Dir := PathWithDelim(Dir) + Dia;
     end;
   end;
 

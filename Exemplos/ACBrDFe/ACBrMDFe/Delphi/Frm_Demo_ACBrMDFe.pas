@@ -189,7 +189,7 @@ uses
  FileCtrl, DateUtils,
  ufrmStatus,
  pcnConversao, pmdfeConversaoMDFe,
- ACBrMDFeManifestos;
+ ACBrMDFeManifestos, ACBrUtil;
 
 const
   SELDIRHELP = 1000;
@@ -750,8 +750,8 @@ end;
 procedure TfrmDemo_ACBrMDFe.btnStatusServClick(Sender: TObject);
 begin
  ACBrMDFe1.WebServices.StatusServico.Executar;
- MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
+ MemoResp.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.StatusServico.RetWS);
+ memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.StatusServico.RetWS);
  LoadXML(MemoResp, WBResposta);
 
  PageControl2.ActivePageIndex := 5;
@@ -814,8 +814,8 @@ begin
   try
     ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc( vCNPJ );
   finally
-    MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetWS);
-    memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetornoWS);
+    MemoResp.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetWS);
+    memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetornoWS);
   end;
 
   LoadXML(MemoResp, WBResposta);
@@ -835,8 +835,8 @@ begin
  GerarMDFe(vAux);
  ACBrMDFe1.Enviar(StrToInt(vNumLote));
 
- MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
+ MemoResp.Lines.Text   := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Retorno.RetWS);
+ memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Retorno.RetWS);
  LoadXML(MemoResp, WBResposta);
 
  PageControl2.ActivePageIndex := 5;
@@ -864,8 +864,8 @@ begin
   ACBrMDFe1.WebServices.Recibo.Recibo := aux;
   ACBrMDFe1.WebServices.Recibo.Executar;
 
-  MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
+  MemoResp.Lines.Text   := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Recibo.RetWS);
+  memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Recibo.RetWS);
   LoadXML(MemoResp, WBResposta);
 end;
 
@@ -883,8 +883,8 @@ begin
    ACBrMDFe1.Consultar;
 
    ShowMessage(ACBrMDFe1.WebServices.Consulta.Protocolo);
-   MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
+   MemoResp.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Consulta.RetWS);
+   memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Consulta.RetWS);
    LoadXML(MemoResp, WBResposta);
  end;
 end;
@@ -899,8 +899,8 @@ begin
   ACBrMDFe1.WebServices.Consulta.MDFeChave := vChave;
   ACBrMDFe1.WebServices.Consulta.Executar;
 
-  MemoResp.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
-  memoRespWS.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetornoWS);
+  MemoResp.Lines.Text :=  ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Consulta.RetWS);
+  memoRespWS.Lines.Text :=  ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.Consulta.RetornoWS);
   LoadXML(MemoResp, WBResposta);
 end;
 
@@ -937,8 +937,8 @@ begin
 
    ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
 
-   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   MemoResp.Lines.Text   := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
    LoadXML(MemoResp, WBResposta);
   end;
 end;
@@ -978,8 +978,8 @@ begin
 
    ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
 
-   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   MemoResp.Lines.Text   := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   memoRespWS.Lines.Text := ACBrUTF8ToAnsi(ACBrMDFe1.WebServices.EnvEvento.RetWS);
    LoadXML(MemoResp, WBResposta);
   end;
 end;

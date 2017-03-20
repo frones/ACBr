@@ -410,7 +410,7 @@ begin
   FCNPJ          := '';
   FDataVenc      := 0;
   FIssuerName    := '';
-  FNumeroSerie   := '';
+  //FNumeroSerie   := '';
   FRazaoSocial   := '';
   FSubjectName   := '';
   FTipo          := tpcDesconhecido;
@@ -572,9 +572,6 @@ procedure TDFeSSLCryptClass.DescarregarCertificado;
 begin
   Clear;
   FpCertificadoLido := False;
-
-  if (FpDFeSSL.NumeroSerie <> '') or (FpDFeSSL.ArquivoPFX <> '') then
-    FpDFeSSL.DadosPFX := '';
 end;
 
 procedure TDFeSSLCryptClass.CarregarCertificadoSeNecessario;
@@ -839,14 +836,17 @@ begin
 
   FAntesDeAssinar := Nil;
 
+  FArquivoPFX  := '';
+  FDadosPFX    := '';
+  FNumeroSerie := '';
   Clear;
 end;
 
 procedure TDFeSSL.Clear;
 begin
-  FArquivoPFX  := '';
-  FDadosPFX    := '';
-  FNumeroSerie := '';
+  //FArquivoPFX  := '';
+  //FDadosPFX    := '';
+  //FNumeroSerie := '';
   FProxyHost   := '';
   FProxyPass   := '';
   FProxyPort   := '';

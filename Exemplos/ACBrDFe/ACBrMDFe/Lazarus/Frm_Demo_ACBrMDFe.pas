@@ -18,6 +18,7 @@ type
   { TfrmDemo_ACBrMDFe }
 
   TfrmDemo_ACBrMDFe = class(TForm)
+    Button1: TButton;
     DAMDFe: TACBrMDFeDAMDFeRL;
     WBResposta: TIpHtmlPanel;
     Panel1: TPanel;
@@ -137,6 +138,7 @@ type
     btnEnviarEventoEmail: TButton;
     btnEnviarMDFeEmail: TButton;
     btnGerarPDFEvento: TButton;
+    procedure Button1Click(Sender: TObject);
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -666,6 +668,25 @@ begin
   end;
 end;
 
+procedure TfrmDemo_ACBrMDFe.Button1Click(Sender: TObject);
+var
+  vCNPJ: String;
+begin
+  vCNPJ := '';
+
+  if not(InputQuery('WebServices Consultar não encerrados', 'Informe o CNPJ:', vCNPJ)) then
+    exit;
+
+  try
+    ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc( vCNPJ );
+  finally
+    MemoResp.Lines.Text := ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetWS;
+    memoRespWS.Lines.Text := ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetornoWS;
+  end;
+
+  LoadXML(MemoResp, WBResposta);
+end;
+
 procedure TfrmDemo_ACBrMDFe.sbtnGetCertClick(Sender: TObject);
 begin
  {$IFNDEF ACBrMDFeOpenSSL}
@@ -784,8 +805,8 @@ end;
 procedure TfrmDemo_ACBrMDFe.btnStatusServClick(Sender: TObject);
 begin
  ACBrMDFe1.WebServices.StatusServico.Executar;
- MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.StatusServico.RetWS);
+ MemoResp.Lines.Text := ACBrMDFe1.WebServices.StatusServico.RetWS;
+ memoRespWS.Lines.Text := ACBrMDFe1.WebServices.StatusServico.RetWS;
  LoadXML(MemoResp, WBResposta);
 
  PageControl2.ActivePageIndex := 5;
@@ -850,8 +871,8 @@ begin
  GerarMDFe(vAux);
  ACBrMDFe1.Enviar(StrToInt(vNumLote));
 
- MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Retorno.RetWS);
+ MemoResp.Lines.Text   := ACBrMDFe1.WebServices.Retorno.RetWS;
+ memoRespWS.Lines.Text := ACBrMDFe1.WebServices.Retorno.RetWS;
  LoadXML(MemoResp, WBResposta);
 
  PageControl2.ActivePageIndex := 5;
@@ -879,8 +900,8 @@ begin
   ACBrMDFe1.WebServices.Recibo.Recibo := aux;
   ACBrMDFe1.WebServices.Recibo.Executar;
 
-  MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
-  memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Recibo.RetWS);
+  MemoResp.Lines.Text   := ACBrMDFe1.WebServices.Recibo.RetWS;
+  memoRespWS.Lines.Text := ACBrMDFe1.WebServices.Recibo.RetWS;
   LoadXML(MemoResp, WBResposta);
 end;
 
@@ -898,8 +919,8 @@ begin
    ACBrMDFe1.Consultar;
 
    ShowMessage(ACBrMDFe1.WebServices.Consulta.Protocolo);
-   MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
+   MemoResp.Lines.Text := ACBrMDFe1.WebServices.Consulta.RetWS;
+   memoRespWS.Lines.Text := ACBrMDFe1.WebServices.Consulta.RetWS;
    LoadXML(MemoResp, WBResposta);
  end;
 end;
@@ -914,8 +935,8 @@ begin
   ACBrMDFe1.WebServices.Consulta.MDFeChave := vChave;
   ACBrMDFe1.WebServices.Consulta.Executar;
 
-  MemoResp.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetWS);
-  memoRespWS.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.Consulta.RetornoWS);
+  MemoResp.Lines.Text :=  ACBrMDFe1.WebServices.Consulta.RetWS;
+  memoRespWS.Lines.Text :=  ACBrMDFe1.WebServices.Consulta.RetornoWS;
   LoadXML(MemoResp, WBResposta);
 end;
 
@@ -950,8 +971,8 @@ begin
 
    ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
 
-   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   MemoResp.Lines.Text   := ACBrMDFe1.WebServices.EnvEvento.RetWS;
+   memoRespWS.Lines.Text := ACBrMDFe1.WebServices.EnvEvento.RetWS;
    LoadXML(MemoResp, WBResposta);
   end;
 end;
@@ -989,8 +1010,8 @@ begin
 
    ACBrMDFe1.EnviarEvento( 1 ); // 1 = Numero do Lote
 
-   MemoResp.Lines.Text   := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
-   memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.EnvEvento.RetWS);
+   MemoResp.Lines.Text   := ACBrMDFe1.WebServices.EnvEvento.RetWS;
+   memoRespWS.Lines.Text := ACBrMDFe1.WebServices.EnvEvento.RetWS;
    LoadXML(MemoResp, WBResposta);
   end;
 end;

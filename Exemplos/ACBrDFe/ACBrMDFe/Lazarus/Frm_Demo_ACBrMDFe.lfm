@@ -3,6 +3,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   Height = 568
   Top = 175
   Width = 871
+  ActiveControl = PageControl1
   Caption = 'Demo ACBrMDFe'
   ClientHeight = 568
   ClientWidth = 871
@@ -12,7 +13,8 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -95,10 +97,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         Height = 359
         Top = 0
         Width = 277
-        ActivePage = TabSheet1
+        ActivePage = TabSheet4
         Align = alClient
         MultiLine = True
-        TabIndex = 0
+        TabIndex = 3
         TabOrder = 0
         Options = [nboMultiLine]
         object TabSheet1: TTabSheet
@@ -290,7 +292,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
             object ckSalvar: TCheckBox
               Left = 8
               Height = 19
-              Top = 192
+              Top = 184
               Width = 196
               Caption = 'Salvar Arquivos de Envio e Resposta'
               Font.Color = clWindowText
@@ -906,11 +908,11 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
-      Height = 176
+      Height = 200
       Top = 1
       Width = 572
       Align = alTop
-      ClientHeight = 176
+      ClientHeight = 200
       ClientWidth = 572
       TabOrder = 0
       object btnImprimir: TButton
@@ -1048,11 +1050,20 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         OnClick = btnGerarPDFEventoClick
         TabOrder = 14
       end
+      object Button1: TButton
+        Left = 376
+        Height = 25
+        Top = 166
+        Width = 177
+        Caption = 'Consultar Não Encerrados'
+        OnClick = Button1Click
+        TabOrder = 15
+      end
     end
     object PageControl2: TPageControl
       Left = 1
-      Height = 390
-      Top = 177
+      Height = 366
+      Top = 201
       Width = 572
       ActivePage = TabSheet5
       Align = alClient
@@ -1060,11 +1071,11 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
       TabOrder = 1
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ClientHeight = 364
+        ClientHeight = 340
         ClientWidth = 564
         object MemoResp: TMemo
           Left = 0
-          Height = 364
+          Height = 340
           Top = 0
           Width = 564
           Align = alClient
@@ -1090,6 +1101,10 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
           PrintSettings.MarginTop = 0.5
           PrintSettings.MarginRight = 0.5
           PrintSettings.MarginBottom = 0.5
+          PrintSettings.Preview.Left = 480
+          PrintSettings.Preview.Top = 270
+          PrintSettings.Preview.Width = 1440
+          PrintSettings.Preview.Height = 810
           TabOrder = 0
         end
       end
@@ -1163,8 +1178,11 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
   end
   object ACBrMDFe1: TACBrMDFe
     OnStatusChange = ACBrMDFe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLCryptLib = cryOpenSSL
+    Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.RetirarAcentos = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

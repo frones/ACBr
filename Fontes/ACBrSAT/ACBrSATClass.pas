@@ -140,14 +140,14 @@ type
     fsSalvarEnvio: Boolean;
     fsSepararPorCNPJ: Boolean;
     fsSepararPorMes: Boolean;
-	  fsSepararPorDia: Boolean;
+    fsSepararPorDia: Boolean;
     function GetPastaCFeCancelamento: String;
     function GetPastaCFeVenda: String;
     function GetPastaEnvio: String;
     procedure SetPastaCFeCancelamento(AValue: String);
     procedure SetPastaCFeVenda(AValue: String);
     procedure SetPastaEnvio(AValue: String);
-	  procedure SetSepararPorDia(const Value: Boolean);
+    procedure SetSepararPorDia(const Value: Boolean);
     procedure SetSepararPorMes(const Value: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
@@ -162,7 +162,7 @@ type
 
     property SepararPorCNPJ: Boolean read fsSepararPorCNPJ write fsSepararPorCNPJ default False;
     property SepararPorMes: Boolean read fsSepararPorMes write SetSepararPorMes default False;
-	  property SepararPorDia: Boolean read fsSepararPorDia write SetSepararPorDia default False;
+    property SepararPorDia: Boolean read fsSepararPorDia write SetSepararPorDia default False;
 
     property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
     property PastaCFeCancelamento: String read GetPastaCFeCancelamento
@@ -441,16 +441,12 @@ begin
 
     DecodeDate(Data, wAno, wMes, wDia);
     AnoMes := IntToStr(wAno) + IntToStrZero(wMes, 2);
-
-    if Pos(AnoMes, Dir) <= 0 then
-      Dir := PathWithDelim(Dir) + AnoMes;
+    Dir := PathWithDelim(Dir) + AnoMes;
 	  
-	if SepararPorDia then
+    if SepararPorDia then
     begin
       Dia := IntToStrZero(wDia, 2);
-
-      if Pos(Dia, Dir) <= 0 then
-        Dir := PathWithDelim(Dir) + Dia;
+      Dir := PathWithDelim(Dir) + Dia;
     end;
   end;
 

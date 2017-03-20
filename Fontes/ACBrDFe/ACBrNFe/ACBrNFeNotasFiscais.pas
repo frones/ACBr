@@ -350,7 +350,9 @@ var
   Erro, AXML: String;
   AssEhValida: Boolean;
 begin
-  AXML := XMLAssinado;
+  AXML := FXMLAssinado;
+  if AXML = '' then
+    AXML := XMLOriginal;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin

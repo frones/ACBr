@@ -704,14 +704,9 @@ begin
   { Sobrescrever apenas se necessário }
   inherited InicializarServico;
 
-  {$IfNDef DFE_SEM_OPENSSL}
   { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
   if FPConfiguracoesNFe.Geral.VersaoDF > ve310 then
-  begin
-    if FPDFeOwner.SSL.SSLClass is TDFeOpenSSL then
-        TDFeOpenSSL(FPDFeOwner.SSL.SSLClass).SSLType := LT_TLSv1_2;
-  end;
-  {$EndIf}
+    FPDFeOwner.SSL.SSLType := LT_TLSv1_2;
 
   TACBrNFe(FPDFeOwner).SetStatus(FPStatus);
 end;
@@ -2733,7 +2728,7 @@ begin
     EventoNFe.idLote := FidLote;
 
     {(*}
-    for I := 0 to TNFeEnvEvento(Self).FEvento.Evento.Count - 1 do
+    for I := 0 to FEvento.Evento.Count - 1 do
     begin
       with EventoNFe.Evento.Add do
       begin

@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/03/2017
+-- ACBRNFeNotasFiscais --
+[*] Método "NotaFiscal.VerificarAssinatura", modificado para não tentar assinar
+    o XML, caso o mesmo não contenha a Tag de assinatura
+
+-- ACBrNFeWebServices --
+[*] Método "TNFeWebService.InicializarServico", modificado para configurar
+    automaticamente "SSL.SSLType := LT_TLSv1_2", caso "VersaoDF > ve310"
+    (por: DSA)
+
 01/03/2017
 -- ACBrNFeWebServices --
 [*] Comentado a linha que em alguns casos apaga a chave do documento consultado.

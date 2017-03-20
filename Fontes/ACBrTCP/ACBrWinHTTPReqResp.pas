@@ -239,20 +239,19 @@ begin
           if not WinHttpSetOption(pRequest, WINHTTP_OPTION_CLIENT_CERT_CONTEXT,
                                    CertContext, SizeOf(CERT_CONTEXT)) then
             raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_CLIENT_CERT_CONTEXT. Erro:' + GetWinInetError(GetLastError))
-        end
-        else
-        begin
-          flags := 0;
-          flagsLen := SizeOf(flags);
-          if not WinHttpQueryOption(pRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, @flagsLen) then
-            raise EACBrWinReqResp.Create('Falha lendo WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
-
-          flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
-                            SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
-                            SECURITY_FLAG_IGNORE_CERT_CN_INVALID;
-          if not WinHttpSetOption(pRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
-            raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
         end;
+
+        // Ignorando alguns erros de conexão //
+        flags := 0;
+        flagsLen := SizeOf(flags);
+        if not WinHttpQueryOption(pRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, @flagsLen) then
+          raise EACBrWinReqResp.Create('Falha lendo WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
+
+        flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
+                          SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                          SECURITY_FLAG_IGNORE_CERT_CN_INVALID;
+        if not WinHttpSetOption(pRequest, WINHTTP_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
+          raise EACBrWinReqResp.Create('Falha ajustando WINHTTP_OPTION_SECURITY_FLAGS. Erro:' + GetWinInetError(GetLastError));
 
         if EncodeDataToUTF8 then
           Self.Data := UTF8Encode(Self.Data);

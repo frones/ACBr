@@ -193,21 +193,19 @@ begin
           if not InternetSetOption(pRequest, INTERNET_OPTION_CLIENT_CERT_CONTEXT,
                                    CertContext, SizeOf(CERT_CONTEXT)) then
             raise EACBrWinReqResp.Create('Erro: Problema ao inserir o certificado')
-        end
-        else
-        begin
-          flags := 0;
-          flagsLen := SizeOf(flags);
-          if not InternetQueryOption(pRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
-            raise EACBrWinReqResp.Create('InternetQueryOption erro ao ler wininet flags.' + GetWininetError(GetLastError));
-
-          flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
-                            SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
-                            SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
-                            SECURITY_FLAG_IGNORE_REVOCATION;
-          if not InternetSetOption(pRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
-            raise EACBrWinReqResp.Create('InternetQueryOption erro ao ajustar INTERNET_OPTION_SECURITY_FLAGS' + GetWininetError(GetLastError));
         end;
+
+        flags := 0;
+        flagsLen := SizeOf(flags);
+        if not InternetQueryOption(pRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
+          raise EACBrWinReqResp.Create('InternetQueryOption erro ao ler wininet flags.' + GetWininetError(GetLastError));
+
+        flags := flags or SECURITY_FLAG_IGNORE_UNKNOWN_CA or
+                          SECURITY_FLAG_IGNORE_CERT_DATE_INVALID or
+                          SECURITY_FLAG_IGNORE_CERT_CN_INVALID or
+                          SECURITY_FLAG_IGNORE_REVOCATION;
+        if not InternetSetOption(pRequest, INTERNET_OPTION_SECURITY_FLAGS, @flags, flagsLen) then
+          raise EACBrWinReqResp.Create('InternetQueryOption erro ao ajustar INTERNET_OPTION_SECURITY_FLAGS' + GetWininetError(GetLastError));
 
         if trim(ProxyUser) <> '' then
           if not InternetSetOption(pRequest, INTERNET_OPTION_PROXY_USERNAME,

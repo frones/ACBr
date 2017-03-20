@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/03/2017
+-- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
+[-] Ajuste para que "WINHTTP_OPTION_SECURITY_FLAGS" seja ajustados, independente
+    do uso de Certificado digital na conexão.
+    (por: DSA)
+
 19/03/2017
 -- ACBrWinINetReqResp --
 [+] Nova Unit, apenas para Windows, movida de ACBrDFeCapicom.ACBrHTTPReqResp.

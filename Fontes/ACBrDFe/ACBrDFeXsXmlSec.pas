@@ -224,7 +224,7 @@ begin
    * name ("openssl", "nss", etc.) to load corresponding
    * xmlsec-crypto library.
    *)
-  if (xmlSecCryptoDLLoadLibrary(PAnsiChar(XMLSecCryptoLib)) < 0) then
+  if (xmlSecCryptoDLLoadLibrary(PAnsiChar(AnsiString(XMLSecCryptoLib))) < 0) then
     raise EACBrDFeException.CreateFmt( cErrXmlSecLoadCriptoLib, [XMLSecCryptoLib] );
 
   { Init crypto library }

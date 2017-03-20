@@ -9,7 +9,6 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>

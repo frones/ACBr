@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\Terceiros\CodeGear"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -28,7 +28,7 @@
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="16">
+    <Files Count="19">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -94,6 +94,18 @@
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSedex.pas"/>
         <UnitName Value="ACBrSedex"/>
       </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
+        <UnitName Value="ACBrWinReqRespClass"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
+        <UnitName Value="ACBrWinHTTPReqResp"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
+        <UnitName Value="ACBrWinINetReqResp"/>
+      </Item19>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

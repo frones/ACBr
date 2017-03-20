@@ -8,7 +8,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\ACBrCapicom"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrDFe;..\..\..\Fontes\Terceiros\Ole;..\..\..\Fontes\Terceiros\CodeGear"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrDFe\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -29,28 +29,28 @@
         <UnitName Value="ACBrDFeConfiguracoes"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeUtil.pas"/>
-        <UnitName Value="ACBrDFeUtil"/>
-      </Item2>
-      <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFe.pas"/>
-        <UnitName Value="ACBrDFe"/>
-      </Item3>
-      <Item4>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas"/>
-        <UnitName Value="ACBrDFeException"/>
-      </Item4>
-      <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas"/>
-        <UnitName Value="ACBrDFeRegUtil"/>
-      </Item5>
-      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeWebService.pas"/>
         <UnitName Value="ACBrDFeWebService"/>
-      </Item6>
-      <Item7>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeUtil.pas"/>
+        <UnitName Value="ACBrDFeUtil"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFe.pas"/>
+        <UnitName Value="ACBrDFe"/>
+      </Item4>
+      <Item5>
         <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeSSL.pas"/>
         <UnitName Value="ACBrDFeSSL"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeException.pas"/>
+        <UnitName Value="ACBrDFeException"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\Fontes\ACBrDFe\ACBrDFeRegUtil.pas"/>
+        <UnitName Value="ACBrDFeRegUtil"/>
       </Item7>
     </Files>
     <RequiredPkgs Count="3">

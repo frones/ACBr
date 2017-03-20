@@ -100,8 +100,6 @@ begin
    Modulo.Documento := ACBrTitulo.ACBrBoleto.Cedente.Agencia +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito, 2, '0') +
                        PadLeft(ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente, 5, '0') +
-                       PadLeft(ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito,2,'0')+
-                       ACBrTitulo.ACBrBoleto.Cedente.CodigoCedente +
                        FormatDateTime('yy',ACBrTitulo.DataDocumento) +
                        ACBrTitulo.CodigoGeracao + RightStr(ACBrTitulo.NossoNumero,5);
    Modulo.Calcular;

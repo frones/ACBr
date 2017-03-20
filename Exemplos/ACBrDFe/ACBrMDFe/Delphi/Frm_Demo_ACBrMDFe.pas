@@ -811,10 +811,13 @@ begin
   if not(InputQuery('WebServices Consultar não encerrados', 'Informe o CNPJ:', vCNPJ)) then
     exit;
 
-  ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc( vCNPJ );
+  try
+    ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc( vCNPJ );
+  finally
+    MemoResp.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetWS);
+    memoRespWS.Lines.Text := UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetornoWS);
+  end;
 
-  MemoResp.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetWS);
-  memoRespWS.Lines.Text :=  UTF8Encode(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.RetornoWS);
   LoadXML(MemoResp, WBResposta);
 end;
 

@@ -100,7 +100,7 @@ begin
 
  Gerador.wGrupo('consMDFeNaoEnc ' + NAME_SPACE_MDFE + ' versao="' + Versao + '"');
  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
- Gerador.wCampo(tcStr, 'CP04', 'xServ', 24, 24, 1, 'CONSULTAR NÃO ENCERRADOS', DSC_XSERV);
+ Gerador.wCampo(tcStr, 'CP04', 'xServ', 24, 24, 1, ACBrStr('CONSULTAR NÃO ENCERRADOS'), DSC_XSERV);
  Gerador.wCampo(tcEsp, 'CP05', 'CNPJ ', 14, 14, 1, OnlyNumber(FCNPJ), DSC_CNPJ);
  Gerador.wGrupo('/consMDFeNaoEnc');
 

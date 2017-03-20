@@ -2121,7 +2121,7 @@ begin
   ConsMDFeNaoEnc := TConsMDFeNaoEnc.create;
   try
     ConsMDFeNaoEnc.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
-    ConsMDFeNaoEnc.CNPJ  := FCNPJ; // TMDFeConsultaMDFeNaoEnc(Self).CNPJ;
+    ConsMDFeNaoEnc.CNPJ  := OnlyNumber( FCNPJ );
 
     AjustarOpcoes(ConsMDFeNaoEnc.Gerador.Opcoes);
 

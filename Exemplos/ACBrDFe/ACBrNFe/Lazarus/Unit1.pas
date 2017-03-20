@@ -726,16 +726,7 @@ begin
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
-var
-  FS: TFileStream;
 begin
- FS := TFileStream.Create('c:\temp\CertificadoA1_DJSystem_2017.pfx', fmOpenRead or fmShareDenyNone);
- try
-   ACBrNFe1.Configuracoes.Certificados.DadosPFX := ReadStrFromStream(FS, FS.Size);
- finally
-   FS.Free;
- end;
-
  ShowMessage( ACBrNFe1.SSL.CertCNPJ );
 end;
 
@@ -1375,6 +1366,8 @@ procedure TForm1.btnGerarNFEClick(Sender: TObject);
 var
  vAux : String;
 begin
+
+
  if not(InputQuery('WebServices Enviar', 'Numero da Nota', vAux)) then
     exit;
 

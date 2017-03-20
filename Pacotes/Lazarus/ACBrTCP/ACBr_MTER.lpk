@@ -9,6 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
@@ -45,10 +46,10 @@ http://www.projectoacbr.com.br/"/>
     </Files>
     <RequiredPkgs Count="3">
       <Item1>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrTCP"/>
       </Item1>
       <Item2>
-        <PackageName Value="ACBrTCP"/>
+        <PackageName Value="ACBrSerial"/>
       </Item2>
       <Item3>
         <PackageName Value="FCL"/>

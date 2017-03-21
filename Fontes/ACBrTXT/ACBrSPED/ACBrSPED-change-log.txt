@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 21/03/2017
+[-] Correção de enumerador no Sped contribuições
+		http://www.projetoacbr.com.br/forum/topic/35745-correção-para-svn-unit-acbrepcblocos/
+		por: Juliomar Marchetti
+		
 Data 15/03/2017
 [-] Correção sped contabil registro J
 		http://www.projetoacbr.com.br/forum/topic/35354-atualiza%C3%A7%C3%A3o-de-layout-novos-campos/?do=findComment&comment=233291

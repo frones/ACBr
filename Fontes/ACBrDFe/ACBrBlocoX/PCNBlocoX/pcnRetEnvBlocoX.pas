@@ -40,23 +40,27 @@ type
 
   TRetEnvBlocoX = class(TPersistent)
   private
+    fLeitor       : TLeitor;
+    fVersao       : AnsiString;
     fEstadoProcCod: Integer;
     fEstadoProcStr: AnsiString;
-    fLeitor       : TLeitor;
     fRecibo       : AnsiString;
     fTipo         : AnsiString;
-    fVersao       : AnsiString;
+    fMensagem     : AnsiString;
+    fDataRef      : AnsiString;
   public
     constructor Create;
     destructor Destroy; override;
     function LerXml: Boolean;
   published
+    property Leitor       : TLeitor    read fLeitor;
+    property Versao       : AnsiString read fVersao;
     property EstadoProcCod: Integer    read fEstadoProcCod;
     property EstadoProcStr: AnsiString read fEstadoProcStr;
-    property Leitor       : TLeitor    read fLeitor;
     property Recibo       : AnsiString read fRecibo;
     property Tipo         : AnsiString read fTipo;
-    property Versao       : AnsiString read fVersao;
+    property Mensagem     : AnsiString read fMensagem;
+    property DataRef      : AnsiString read fDataRef;
   end;
 
 implementation
@@ -88,6 +92,8 @@ begin
       fEstadoProcStr := Leitor.rCampo(tcStr, 'EstadoProcessamentoDescricao');
       fRecibo        := Leitor.rCampo(tcStr, 'Recibo');
       fTipo          := Leitor.rCampo(tcStr, 'Tipo');
+      fMensagem      := Leitor.rCampo(tcStr, 'Mensagem');
+      fDataRef       := Leitor.rCampo(tcStr, 'DataReferencia');
       
       Result := True;
     end;

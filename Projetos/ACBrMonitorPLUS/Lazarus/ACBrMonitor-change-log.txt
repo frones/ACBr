@@ -43,6 +43,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/03/2017
+[+] Mudanças referentes à remoção da CAPICOM, citada em: 
+	http://www.projetoacbr.com.br/forum/topic/35727-bye-bye-capicom
+	- Criada janela própria para seleção do certificado;
+	- Adicionados os campos para a configuração das libs em DFe > Certificados
+	por: Celso Marigo Junior
+
+21/03/2017
+[*]	Refatorado método de carregamento das propriedades dos componentes DFe: NFe, CTe, MDFe, GNRe e BlocoX.
+	O objetivo é melhorar a leitura do código e centralizar as configurações em um só lugar.
+	por: Celso Marigo Junior
+
+21/03/2017
+[*] Adicionado XML de consulta de situação de CTe conforme solicitado no caso:
+	http://www.projetoacbr.com.br/forum/topic/35264-acesso-ao-xml-de-resposta-do-webservice/
+	por: Celso Marigo Junior
+
+21/03/2017
+[+] Adicionado parâmetro para não gravar mensagens de log na tela do monitor.
+	http://www.projetoacbr.com.br/forum/topic/35224-respostas-na-tela-do-acbrmonitorplus-lentid%C3%A3o/
+	por: Celso Marigo Junior
+
 10/03/2017
 [*] Refatoradas as funções de carregamento de XML na classe DoACBrNFeUnit.
 	Os XMLs dos métodos podem ser passados agora via parâmetro.

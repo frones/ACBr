@@ -1,12 +1,12 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 339
-  Height = 820
-  Top = 141
-  Width = 1139
+  Left = 340
+  Height = 689
+  Top = 158
+  Width = 1110
   ActiveControl = btMinimizar
   Align = alClient
-  ClientHeight = 820
-  ClientWidth = 1139
+  ClientHeight = 689
+  ClientWidth = 1110
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -23,8 +23,8 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 797
-    Width = 1139
+    Top = 623
+    Width = 1110
     Panels = <    
       item
         Text = 'Monitor: Inativo'
@@ -40,11 +40,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
   object pBotoes: TPanel
     Left = 0
     Height = 43
-    Top = 754
-    Width = 1139
+    Top = 646
+    Width = 1110
     Align = alBottom
     ClientHeight = 43
-    ClientWidth = 1139
+    ClientWidth = 1110
     Color = clBtnFace
     Font.Height = -13
     Font.Style = [fsBold]
@@ -55,7 +55,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 41
       Top = 1
-      Width = 1137
+      Width = 1108
       Align = alClient
       Picture.Data = {
         1754506F727461626C654E6574776F726B477261706869632A02000089504E47
@@ -82,7 +82,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     end
     object bCancelar: TBitBtn
       AnchorSideTop.Side = asrCenter
-      Left = 902
+      Left = 873
       Height = 27
       Hint = 'Cancela as Alterações efetuadas'
       Top = 8
@@ -127,7 +127,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Control = pBotoes
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = bConfig
-      Left = 902
+      Left = 873
       Height = 27
       Hint = 'Esconde o ACBrMonitor'
       Top = 8
@@ -173,7 +173,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = pBotoes
       AnchorSideRight.Side = asrBottom
-      Left = 1020
+      Left = 991
       Height = 27
       Hint = 'Configura os equipamentos e '#13#10'Método de Monitoramento'
       Top = 8
@@ -249,30 +249,30 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object pCentral: TPanel
     Left = 196
-    Height = 724
+    Height = 593
     Top = 30
-    Width = 943
+    Width = 914
     Align = alClient
-    ClientHeight = 724
-    ClientWidth = 943
+    ClientHeight = 593
+    ClientWidth = 914
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
     object pComandos: TPanel
       Left = 1
-      Height = 363
+      Height = 232
       Top = 360
-      Width = 941
+      Width = 912
       Align = alClient
-      ClientHeight = 363
-      ClientWidth = 941
+      ClientHeight = 232
+      ClientWidth = 912
       TabOrder = 0
       object Splitter1: TSplitter
         Cursor = crVSplit
         Left = 1
         Height = 5
         Top = 103
-        Width = 939
+        Width = 910
         Align = alTop
         Beveled = True
         ResizeAnchor = akTop
@@ -281,18 +281,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Left = 1
         Height = 102
         Top = 1
-        Width = 939
+        Width = 910
         Align = alTop
         Caption = 'pCmd'
         ClientHeight = 102
-        ClientWidth = 939
+        ClientWidth = 910
         Constraints.MinHeight = 70
         TabOrder = 0
         object mCmd: TMemo
           Left = 1
           Height = 83
           Top = 18
-          Width = 937
+          Width = 908
           Align = alClient
           BorderStyle = bsNone
           ReadOnly = True
@@ -306,7 +306,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 1
           Height = 17
           Top = 1
-          Width = 937
+          Width = 908
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Comandos a Processar'
@@ -321,20 +321,20 @@ object FrmACBrMonitor: TFrmACBrMonitor
       end
       object pRespostas: TPanel
         Left = 1
-        Height = 254
+        Height = 123
         Top = 108
-        Width = 939
+        Width = 910
         Align = alClient
         Caption = 'pRespostas'
-        ClientHeight = 254
-        ClientWidth = 939
+        ClientHeight = 123
+        ClientWidth = 910
         Constraints.MinHeight = 70
         TabOrder = 2
         object mResp: TMemo
           Left = 1
-          Height = 235
+          Height = 104
           Top = 18
-          Width = 937
+          Width = 908
           Align = alClient
           BorderStyle = bsNone
           ReadOnly = True
@@ -349,7 +349,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 1
           Height = 17
           Top = 1
-          Width = 937
+          Width = 908
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Respostas Enviadas'
@@ -367,17 +367,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 359
       Top = 1
-      Width = 941
+      Width = 912
       Align = alTop
       ClientHeight = 359
-      ClientWidth = 941
+      ClientWidth = 912
       TabOrder = 1
       Visible = False
       object pgConfig: TPageControl
         Left = 1
         Height = 357
         Top = 1
-        Width = 939
+        Width = 910
         ActivePage = tsDFe
         Align = alClient
         Images = ImageList1
@@ -547,18 +547,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object gbLog: TGroupBox
             AnchorSideTop.Side = asrBottom
             Left = 253
-            Height = 87
+            Height = 111
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
             Top = 119
-            Width = 330
-            ClientHeight = 65
-            ClientWidth = 326
+            Width = 671
+            Anchors = [akTop, akLeft, akRight]
+            ClientHeight = 89
+            ClientWidth = 667
             Enabled = False
             TabOrder = 10
             object sbLog: TSpeedButton
               AnchorSideTop.Control = edLogArq
               AnchorSideTop.Side = asrCenter
-              Left = 298
+              Left = 639
               Height = 23
               Top = 6
               Width = 23
@@ -572,7 +573,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 94
               Height = 25
               Top = 5
-              Width = 204
+              Width = 545
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 5
               TabOrder = 0
@@ -622,6 +623,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
               BorderSpacing.Top = 4
               MaxValue = 100000
               TabOrder = 1
+            end
+            object chkMostraLogNaTela: TCheckBox
+              Left = 24
+              Height = 21
+              Top = 64
+              Width = 326
+              Caption = 'Exibir linhas do log na tela em "Respostas Enviadas"'
+              TabOrder = 2
             end
           end
           object cbLog: TCheckBox
@@ -5852,31 +5861,29 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsDFe: TTabSheet
           Caption = 'DFe'
           ClientHeight = 327
-          ClientWidth = 931
+          ClientWidth = 902
           ImageIndex = 26
           object pgDFe: TPageControl
             Left = 0
             Height = 327
             Top = 0
-            Width = 931
-            ActivePage = tsCertificadoDFe
+            Width = 902
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 1
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
               ClientHeight = 297
-              ClientWidth = 923
+              ClientWidth = 894
               object gbLogComp: TGroupBox
-                AnchorSideRight.Control = rgVersaoSSL
                 Left = 8
-                Height = 116
+                Height = 100
                 Top = 8
-                Width = 658
-                Anchors = [akTop, akLeft, akRight]
+                Width = 558
                 BorderSpacing.Right = 5
-                ClientHeight = 94
-                ClientWidth = 654
+                ClientHeight = 78
+                ClientWidth = 554
                 Enabled = False
                 TabOrder = 1
                 object Label111: TLabel
@@ -5906,7 +5913,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object SpeedButton1: TSpeedButton
-                  Left = 628
+                  Left = 528
                   Height = 25
                   Top = 8
                   Width = 23
@@ -5932,7 +5939,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 88
                   Height = 25
                   Top = 8
-                  Width = 533
+                  Width = 433
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 0
                 end
@@ -5954,51 +5961,31 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnClick = cbLogCompClick
                 TabOrder = 0
               end
-              object rgVersaoSSL: TRadioGroup
-                Left = 671
-                Height = 57
-                Top = 8
-                Width = 236
-                Anchors = [akTop, akRight]
-                AutoFill = True
-                Caption = 'Versão SSL'
-                ChildSizing.LeftRightSpacing = 6
-                ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
-                ChildSizing.EnlargeVertical = crsHomogenousChildResize
-                ChildSizing.ShrinkHorizontal = crsScaleChilds
-                ChildSizing.ShrinkVertical = crsScaleChilds
-                ChildSizing.Layout = cclLeftToRightThenTopToBottom
-                ChildSizing.ControlsPerLine = 2
-                ClientHeight = 35
-                ClientWidth = 232
-                Columns = 2
-                ItemIndex = 1
-                Items.Strings = (
-                  'OpenSSL'
-                  'CAPICOM'
-                )
-                TabOrder = 2
-              end
               object GroupBox4: TGroupBox
+                AnchorSideTop.Control = gbLogComp
+                AnchorSideTop.Side = asrBottom
+                AnchorSideRight.Control = gbLogComp
+                AnchorSideRight.Side = asrBottom
                 Left = 8
                 Height = 152
-                Top = 128
-                Width = 608
+                Top = 118
+                Width = 558
                 Anchors = [akTop, akLeft, akRight]
+                BorderSpacing.Top = 10
                 Caption = 'Arquivo com Endereços dos WebServices'
                 ClientHeight = 130
-                ClientWidth = 604
-                TabOrder = 3
+                ClientWidth = 554
+                TabOrder = 2
                 object edtArquivoWebServicesNFe: TEdit
                   Left = 55
                   Height = 25
                   Top = 1
-                  Width = 513
+                  Width = 463
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 0
                 end
                 object sbArquivoWebServicesNFe: TSpeedButton
-                  Left = 578
+                  Left = 528
                   Height = 25
                   Top = 1
                   Width = 23
@@ -6032,7 +6019,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 32
-                  Width = 512
+                  Width = 462
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 1
                 end
@@ -6045,7 +6032,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object sbArquivoWebServicesCTe: TSpeedButton
-                  Left = 578
+                  Left = 528
                   Height = 25
                   Top = 32
                   Width = 23
@@ -6071,7 +6058,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 64
-                  Width = 512
+                  Width = 462
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 2
                 end
@@ -6084,7 +6071,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object sbArquivoWebServicesMDFe: TSpeedButton
-                  Left = 578
+                  Left = 528
                   Height = 25
                   Top = 64
                   Width = 23
@@ -6118,12 +6105,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 56
                   Height = 25
                   Top = 96
-                  Width = 512
+                  Width = 462
                   Anchors = [akTop, akLeft, akRight]
                   TabOrder = 3
                 end
                 object sbArquivoWebServicesGNRe: TSpeedButton
-                  Left = 578
+                  Left = 528
                   Height = 25
                   Top = 96
                   Width = 23
@@ -6147,15 +6134,19 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
               end
               object gbDFeConfDiversas: TGroupBox
-                Left = 623
-                Height = 122
-                Top = 128
-                Width = 284
-                Anchors = [akTop, akRight]
+                AnchorSideLeft.Control = GroupBox4
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = GroupBox4
+                Left = 571
+                Height = 152
+                Top = 118
+                Width = 313
+                Anchors = [akTop, akLeft, akRight]
+                BorderSpacing.Left = 5
                 Caption = 'Diversos'
-                ClientHeight = 100
-                ClientWidth = 280
-                TabOrder = 4
+                ClientHeight = 130
+                ClientWidth = 309
+                TabOrder = 3
                 object cbRetirarAcentos: TCheckBox
                   Left = 8
                   Height = 21
@@ -6186,7 +6177,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = edtTimeoutWebServices
                   AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Control = edtTimeoutWebServices
-                  Left = 56
+                  Left = 85
                   Height = 17
                   Top = 76
                   Width = 133
@@ -6196,7 +6187,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object edtTimeoutWebServices: TSpinEdit
-                  Left = 196
+                  Left = 225
                   Height = 25
                   Top = 72
                   Width = 74
@@ -6207,17 +6198,22 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 end
               end
               object gbDFeTimeZone: TGroupBox
-                AnchorSideRight.Control = rgVersaoSSL
+                AnchorSideLeft.Control = gbLogComp
+                AnchorSideLeft.Side = asrBottom
+                AnchorSideTop.Control = gbLogComp
+                AnchorSideRight.Control = tsConfiguracaoDFe
                 AnchorSideRight.Side = asrBottom
-                Left = 671
+                Left = 571
                 Height = 54
-                Top = 70
-                Width = 236
-                Anchors = [akTop, akRight]
+                Top = 8
+                Width = 313
+                Anchors = [akTop, akLeft, akRight]
+                BorderSpacing.Left = 5
+                BorderSpacing.Right = 10
                 Caption = 'TimeZone'
                 ClientHeight = 32
-                ClientWidth = 232
-                TabOrder = 5
+                ClientWidth = 309
+                TabOrder = 4
                 object cbxTimeZoneMode: TComboBox
                   AnchorSideLeft.Side = asrCenter
                   Left = 8
@@ -6235,10 +6231,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   TabOrder = 0
                 end
                 object edTimeZoneStr: TEdit
+                  AnchorSideRight.Control = gbDFeTimeZone
+                  AnchorSideRight.Side = asrBottom
                   Left = 152
                   Height = 25
                   Top = 0
-                  Width = 70
+                  Width = 152
+                  Anchors = [akTop, akLeft, akRight]
+                  BorderSpacing.Right = 5
                   Enabled = False
                   OnEditingDone = edTimeZoneStrEditingDone
                   TabOrder = 1
@@ -6248,18 +6248,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsCertificadoDFe: TTabSheet
               Caption = 'Certificados'
               ClientHeight = 297
-              ClientWidth = 923
+              ClientWidth = 868
               ImageIndex = 1
               object edtCNPJContador: TEdit
-                Left = 7
+                Left = 272
                 Height = 25
                 Top = 176
-                Width = 904
+                Width = 552
                 Anchors = [akTop, akLeft, akRight]
-                TabOrder = 0
+                TabOrder = 4
               end
               object Label188: TLabel
-                Left = 9
+                Left = 272
                 Height = 17
                 Top = 160
                 Width = 142
@@ -6285,21 +6285,21 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 80
                 Height = 10
                 Top = 12
-                Width = 831
+                Width = 868
                 Anchors = [akTop, akLeft, akRight]
                 BorderSpacing.Top = 3
                 Shape = bsTopLine
               end
               object lblNumeroSerie: TLabel
-                Left = 7
+                Left = 272
                 Height = 17
-                Top = 28
+                Top = 24
                 Width = 164
                 Caption = 'Número de Série(CAPICOM)'
                 ParentColor = False
               end
               object lblSenha: TLabel
-                Left = 7
+                Left = 272
                 Height = 17
                 Top = 115
                 Width = 35
@@ -6307,11 +6307,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 ParentColor = False
               end
               object sbNumeroSerieCert: TSpeedButton
-                Left = 884
+                AnchorSideRight.Control = tsCertificadoDFe
+                AnchorSideRight.Side = asrBottom
+                Left = 831
                 Height = 25
                 Top = 44
                 Width = 27
                 Anchors = [akTop, akRight]
+                BorderSpacing.Right = 10
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -6330,37 +6333,42 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnClick = sbNumeroSerieCertClick
               end
               object edtNumeroSerie: TEdit
-                Left = 7
+                AnchorSideRight.Control = sbNumeroSerieCert
+                Left = 272
                 Height = 25
                 Top = 44
-                Width = 875
+                Width = 554
                 Anchors = [akTop, akLeft, akRight]
+                BorderSpacing.Right = 5
                 TabOrder = 1
               end
               object edtSenha: TEdit
-                Left = 7
+                Left = 272
                 Height = 25
                 Top = 132
-                Width = 904
+                Width = 552
                 Anchors = [akTop, akLeft, akRight]
                 EchoMode = emPassword
                 PasswordChar = '*'
-                TabOrder = 2
+                TabOrder = 3
               end
               object lblArquivoPFX: TLabel
-                Left = 7
+                Left = 272
                 Height = 17
-                Top = 71
+                Top = 72
                 Width = 130
                 Caption = 'Arquivo PFX(OpenSSL)'
                 ParentColor = False
               end
               object sbArquivoCert: TSpeedButton
-                Left = 884
+                AnchorSideRight.Control = tsCertificadoDFe
+                AnchorSideRight.Side = asrBottom
+                Left = 831
                 Height = 25
                 Top = 87
                 Width = 27
                 Anchors = [akTop, akRight]
+                BorderSpacing.Right = 10
                 Glyph.Data = {
                   76010000424D7601000000000000760000002800000020000000100000000100
                   04000000000000010000130B0000130B00001000000000000000000000000000
@@ -6379,32 +6387,146 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 OnClick = sbArquivoCertClick
               end
               object edtArquivoPFX: TEdit
-                Left = 7
+                AnchorSideRight.Control = sbArquivoCert
+                Left = 272
                 Height = 25
                 Top = 87
-                Width = 875
+                Width = 554
                 Anchors = [akTop, akLeft, akRight]
-                TabOrder = 3
+                BorderSpacing.Right = 5
+                TabOrder = 2
               end
               object chkExibeRazaoSocial: TCheckBox
-                Left = 8
+                Left = 272
                 Height = 21
                 Top = 208
                 Width = 564
                 Caption = 'Exibir a razão social do certificado na descrição do monitor (barra de títulos e icone do tray)'
-                TabOrder = 4
+                TabOrder = 5
+              end
+              object gbxConfigSSL: TGroupBox
+                Left = 8
+                Height = 197
+                Top = 32
+                Width = 257
+                Caption = 'Configuração SSL'
+                ClientHeight = 175
+                ClientWidth = 253
+                TabOrder = 0
+                object Label207: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 11
+                  Width = 44
+                  Caption = 'SSL Lib.'
+                  ParentColor = False
+                end
+                object cbSSLLib: TComboBox
+                  Left = 104
+                  Height = 25
+                  Top = 3
+                  Width = 144
+                  ItemHeight = 17
+                  OnChange = cbSSLLibChange
+                  TabOrder = 0
+                  Text = 'cbSSLLib'
+                end
+                object cbCryptLib: TComboBox
+                  AnchorSideTop.Control = cbSSLType
+                  AnchorSideTop.Side = asrBottom
+                  Left = 104
+                  Height = 25
+                  Top = 73
+                  Width = 144
+                  BorderSpacing.Top = 10
+                  ItemHeight = 17
+                  OnChange = cbCryptLibChange
+                  TabOrder = 1
+                  Text = 'cbCryptLib'
+                end
+                object Label208: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 81
+                  Width = 58
+                  Caption = 'Crypt. Lib.'
+                  ParentColor = False
+                end
+                object cbHttpLib: TComboBox
+                  AnchorSideTop.Control = cbCryptLib
+                  AnchorSideTop.Side = asrBottom
+                  Left = 104
+                  Height = 25
+                  Top = 108
+                  Width = 144
+                  BorderSpacing.Top = 10
+                  ItemHeight = 17
+                  OnChange = cbHttpLibChange
+                  TabOrder = 2
+                  Text = 'cbHttpLib'
+                end
+                object Label209: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 116
+                  Width = 54
+                  Caption = 'HTTP Lib.'
+                  ParentColor = False
+                end
+                object cbXMLSignLib: TComboBox
+                  AnchorSideTop.Control = cbHttpLib
+                  AnchorSideTop.Side = asrBottom
+                  Left = 104
+                  Height = 25
+                  Top = 143
+                  Width = 144
+                  BorderSpacing.Top = 10
+                  ItemHeight = 17
+                  OnChange = cbXMLSignLibChange
+                  TabOrder = 3
+                  Text = 'cbXMLSignLib'
+                end
+                object Label210: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 151
+                  Width = 82
+                  Caption = 'XML Sign. Lib.'
+                  ParentColor = False
+                end
+                object cbSSLType: TComboBox
+                  AnchorSideTop.Control = cbSSLLib
+                  AnchorSideTop.Side = asrBottom
+                  Left = 104
+                  Height = 25
+                  Top = 38
+                  Width = 144
+                  BorderSpacing.Top = 10
+                  ItemHeight = 17
+                  OnChange = cbSSLTypeChange
+                  TabOrder = 4
+                  Text = 'cbSSLType'
+                end
+                object Label211: TLabel
+                  Left = 8
+                  Height = 17
+                  Top = 46
+                  Width = 52
+                  Caption = 'SSL Type'
+                  ParentColor = False
+                end
               end
             end
             object tsWebServiceDFe: TTabSheet
               Caption = 'WebServices'
               ClientHeight = 297
-              ClientWidth = 923
+              ClientWidth = 868
               ImageIndex = 2
               object pgTipoWebService: TPageControl
                 Left = 0
                 Height = 297
                 Top = 0
-                Width = 923
+                Width = 868
                 ActivePage = tsWSNFe
                 Align = alClient
                 TabIndex = 0
@@ -6412,7 +6534,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsWSNFe: TTabSheet
                   Caption = 'NF-e/CT-e/MDF-e'
                   ClientHeight = 267
-                  ClientWidth = 915
+                  ClientWidth = 860
                   object gbxWSNFe: TGroupBox
                     Left = 3
                     Height = 161
@@ -6875,7 +6997,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 object tsWSNFCe: TTabSheet
                   Caption = 'NFC-e'
                   ClientHeight = 267
-                  ClientWidth = 915
+                  ClientWidth = 860
                   ImageIndex = 2
                   object Label131: TLabel
                     Left = 0
@@ -8314,7 +8436,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsTestesDFe: TTabSheet
               Caption = 'Teste'
               ClientHeight = 297
-              ClientWidth = 923
+              ClientWidth = 868
               ImageIndex = 5
               object Panel1: TPanel
                 Left = 0
@@ -8562,16 +8684,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 177
                 Height = 297
                 Top = 0
-                Width = 746
+                Width = 691
                 Align = alClient
                 ClientHeight = 297
-                ClientWidth = 746
+                ClientWidth = 691
                 TabOrder = 1
                 object Panel3: TPanel
                   Left = 1
                   Height = 17
                   Top = 17
-                  Width = 744
+                  Width = 689
                   Align = alBottom
                   Alignment = taLeftJustify
                   Caption = 'Resposta WebService'
@@ -8587,7 +8709,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   Left = 1
                   Height = 262
                   Top = 34
-                  Width = 744
+                  Width = 689
                   Align = alBottom
                   Font.Height = -13
                   Font.Name = 'Courier New'
@@ -10786,11 +10908,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 30
     Top = 0
-    Width = 1139
+    Width = 1110
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 30
-    ClientWidth = 1139
+    ClientWidth = 1110
     Color = 14671839
     ParentColor = False
     TabOrder = 3
@@ -10816,38 +10938,38 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object PanelMenu: TPanel
     Left = 0
-    Height = 724
+    Height = 593
     Top = 30
     Width = 196
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 724
+    ClientHeight = 593
     ClientWidth = 196
     Color = clBtnFace
     ParentColor = False
     TabOrder = 4
     object PanelScroll: TPanel
       Left = 0
-      Height = 624
+      Height = 493
       Top = 100
       Width = 196
       Align = alClient
       BevelOuter = bvNone
-      ClientHeight = 624
+      ClientHeight = 493
       ClientWidth = 196
       TabOrder = 0
       object ScrollBox: TScrollBox
         Left = 0
-        Height = 624
+        Height = 493
         Top = 0
         Width = 196
         HorzScrollBar.Page = 1
-        VertScrollBar.Page = 624
+        VertScrollBar.Page = 493
         Align = alLeft
         Anchors = [akTop, akLeft, akRight, akBottom]
         AutoSize = True
         BorderStyle = bsNone
-        ClientHeight = 624
+        ClientHeight = 493
         ClientWidth = 179
         TabOrder = 0
         OnMouseWheelDown = ScrollBoxMouseWheelDown
@@ -12855,7 +12977,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
-    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -12928,6 +13049,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLCryptLib = cryOpenSSL
+    Configuracoes.Geral.SSLHttpLib = httpOpenSSL
+    Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
@@ -14046,6 +14170,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLCryptLib = cryOpenSSL
+    Configuracoes.Geral.SSLHttpLib = httpOpenSSL
+    Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -14078,6 +14205,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLCryptLib = cryOpenSSL
+    Configuracoes.Geral.SSLHttpLib = httpOpenSSL
+    Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -14111,6 +14241,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
   end
   object ACBrBlocoX1: TACBrBlocoX
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
@@ -14122,6 +14255,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
     MAIL = ACBrMail1
     OnGerarLog = ACBrNFe1GerarLog
     Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLCryptLib = cryOpenSSL
+    Configuracoes.Geral.SSLHttpLib = httpOpenSSL
+    Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0

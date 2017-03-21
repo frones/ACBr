@@ -156,7 +156,8 @@ begin
                               'ChCTe='+ACBrCTe1.WebServices.Consulta.CTeChave+sLineBreak+
                               'DhRecbto='+DateTimeToStr(ACBrCTe1.WebServices.Consulta.DhRecbto)+sLineBreak+
                               'NProt='+ACBrCTe1.WebServices.Consulta.Protocolo+sLineBreak+
-                              'DigVal='+ACBrCTe1.WebServices.Consulta.protCTe.digVal+sLineBreak;
+                              'DigVal='+ACBrCTe1.WebServices.Consulta.protCTe.digVal+sLineBreak+
+                              'XML='+StringReplace(ParseText(FiltrarTextoXML(True,ChangeLineBreak(ACBrCTe1.WebServices.Consulta.RetWS,''))),'> <', '><', [rfReplaceAll])+sLineBreak;
 
            except
               raise Exception.Create(ACBrCTe1.WebServices.Consulta.Msg);

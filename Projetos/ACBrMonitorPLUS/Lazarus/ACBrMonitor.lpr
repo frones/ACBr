@@ -16,7 +16,7 @@ uses
   DoECFUnit, DoETQUnit, DoGAVUnit, DoLCBUnit, Sobre, DoBoletoUnit, DoCEPUnit,
   DoIBGEUnit, DoEmailUnit, DoNcmUnit, DoACBrNFeUnit, DoACBrCTeUnit,
   DoACBrMDFeUnit, DoSATUnit, DoACBrGNReUnit, ACBrBoletoRelatorioRetorno,
-  DoPosPrinterUnit;
+  DoPosPrinterUnit, SelecionarCertificado;
 
 {$R *.res}
 var

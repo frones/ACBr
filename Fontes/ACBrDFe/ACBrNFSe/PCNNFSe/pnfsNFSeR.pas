@@ -1766,10 +1766,13 @@ begin
   else
     Nivel := 3;
 
-//  begin
-//    NFSe.InfID.ID := Leitor.rAtributo('Id=');
-//    if NFSe.InfID.ID = '' then
-//      NFSe.InfID.ID := Leitor.rAtributo('id=');
+  if FProvedor = proSystemPro then
+  begin
+    NFSe.InfID.ID := Leitor.rAtributo('Id=');
+    if NFSe.InfID.ID = '' then
+      NFSe.InfID.ID := Leitor.rAtributo('id=');
+  end;
+
 
     if FProvedor = ProTecnos then
       NFSe.Competencia := DateTimeToStr(StrToFloatDef(Leitor.rCampo(tcDatHor, 'Competencia'), 0))

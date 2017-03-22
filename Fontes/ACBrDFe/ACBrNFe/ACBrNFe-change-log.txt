@@ -47,11 +47,6 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-22/03/2017
-[*] Modificação para recriar o printer e assim pegar as configurações da impressora 
-		http://www.projetoacbr.com.br/forum/topic/21289-dúvida-acbrnfedanfcefortes-tamanho-da-página/
-		por: Juliomar Marchetti
-	
 19/03/2017
 -- ACBRNFeNotasFiscais --
 [*] Método "NotaFiscal.VerificarAssinatura", modificado para não tentar assinar

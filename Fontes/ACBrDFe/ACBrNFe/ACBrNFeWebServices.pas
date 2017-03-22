@@ -800,6 +800,9 @@ begin
     ConsStatServ.CUF := FPConfiguracoesNFe.WebServices.UFCodigo;
 
     ConsStatServ.Versao := FPVersaoServico;
+    ConsStatServ.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    ConsStatServ.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    ConsStatServ.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     ConsStatServ.GerarXML;
 
     // Atribuindo o XML para propriedade interna //
@@ -1123,6 +1126,9 @@ begin
               AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLAssinado);
               AProcNFe.XML_Prot := FNFeRetornoSincrono.XMLprotNFe;
               AProcNFe.Versao := FPVersaoServico;
+              AProcNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+              AProcNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+              AProcNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
               AProcNFe.GerarXML;
 
               XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
@@ -1409,6 +1415,9 @@ begin
     ConsReciNFe.tpAmb := FTpAmb;
     ConsReciNFe.nRec := FRecibo;
     ConsReciNFe.Versao := FPVersaoServico;
+    ConsReciNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    ConsReciNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    ConsReciNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     ConsReciNFe.GerarXML;
 
     FPDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
@@ -1499,6 +1508,9 @@ begin
             AProcNFe.XML_NFe := RemoverDeclaracaoXML(FNotasFiscais.Items[J].XMLAssinado);
             AProcNFe.XML_Prot := AInfProt.Items[I].XMLprotNFe;
             AProcNFe.Versao := FPVersaoServico;
+            AProcNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+            AProcNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+            AProcNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
             AProcNFe.GerarXML;
 
             with FNotasFiscais.Items[J] do
@@ -1716,6 +1728,9 @@ begin
     ConsReciNFe.tpAmb := FTpAmb;
     ConsReciNFe.nRec := FRecibo;
     ConsReciNFe.Versao := FPVersaoServico;
+    ConsReciNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    ConsReciNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    ConsReciNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     ConsReciNFe.GerarXML;
 
     FPDadosMsg := ConsReciNFe.Gerador.ArquivoFormatoXML;
@@ -1904,6 +1919,9 @@ begin
     ConsSitNFe.TpAmb := FTpAmb;
     ConsSitNFe.chNFe := FNFeChave;
     ConsSitNFe.Versao := FPVersaoServico;
+    ConsSitNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    ConsSitNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    ConsSitNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     ConsSitNFe.GerarXML;
 
     FPDadosMsg := ConsSitNFe.Gerador.ArquivoFormatoXML;
@@ -2136,6 +2154,9 @@ begin
                 AProcNFe.XML_NFe := RemoverDeclaracaoXML(XMLOriginal);
                 AProcNFe.XML_Prot := NFeRetorno.XMLprotNFe;
                 AProcNFe.Versao := FPVersaoServico;
+                AProcNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+                AProcNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+                AProcNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
                 AProcNFe.GerarXML;
 
                 XMLOriginal := AProcNFe.Gerador.ArquivoFormatoXML;
@@ -2354,6 +2375,9 @@ begin
     InutNFe.nNFFin := FNumeroFinal;
     InutNFe.xJust  := FJustificativa;
     InutNFe.Versao := FPVersaoServico;
+    InutNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    InutNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    InutNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     InutNFe.GerarXML;
 
     AssinarXML(InutNFe.Gerador.ArquivoFormatoXML, 'inutNFe', 'infInut',
@@ -2568,6 +2592,9 @@ begin
     ConCadNFe.CNPJ := FCNPJ;
     ConCadNFe.CPF := FCPF;
     ConCadNFe.Versao := FPVersaoServico;
+    ConCadNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    ConCadNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    ConCadNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     ConCadNFe.GerarXML;
 
     FPDadosMsg := ConCadNFe.Gerador.ArquivoFormatoXML;
@@ -2804,6 +2831,9 @@ begin
     {*)}
 
     EventoNFe.Versao := FPVersaoServico;
+    EventoNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    EventoNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    EventoNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     EventoNFe.GerarXML;
 
     // Separa os grupos <evento> e coloca na variável Eventos
@@ -3081,6 +3111,9 @@ begin
     ConsNFeDest.indEmi := FindEmi;
     ConsNFeDest.ultNSU := FultNSU;
     ConsNFeDest.Versao := FPVersaoServico;
+    ConsNFeDest.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    ConsNFeDest.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    ConsNFeDest.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     ConsNFeDest.GerarXML;
 
     FPDadosMsg := ConsNFeDest.Gerador.ArquivoFormatoXML;
@@ -3208,6 +3241,9 @@ begin
     end;
 
     DownloadNFe.Versao := FPVersaoServico;
+    DownloadNFe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    DownloadNFe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    DownloadNFe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     DownloadNFe.GerarXML;
 
     FPDadosMsg := DownloadNFe.Gerador.ArquivoFormatoXML;
@@ -3334,6 +3370,9 @@ begin
     AdmCSCNFCe.codigoCsc := FCodigoCSC;
 
     AdmCSCNFCe.Versao := FPVersaoServico;
+    AdmCSCNFCe.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    AdmCSCNFCe.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    AdmCSCNFCe.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     AdmCSCNFCe.GerarXML;
 
     FPDadosMsg := AdmCSCNFCe.Gerador.ArquivoFormatoXML;
@@ -3447,6 +3486,9 @@ begin
     DistDFeInt.NSU := trim(FNSU);
     DistDFeInt.chNFe := trim(FchNFe);
     DistDFeInt.Versao := FPVersaoServico;
+    DistDFeInt.Gerador.Opcoes.RetirarAcentos := FPConfiguracoesNFe.Geral.RetirarAcentos;
+    DistDFeInt.Gerador.Opcoes.RetirarEspacos := FPConfiguracoesNFe.Geral.RetirarEspacos;
+    DistDFeInt.Gerador.Opcoes.IdentarXML := FPConfiguracoesNFe.Geral.IdentarXML;
     DistDFeInt.GerarXML;
 
     FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;

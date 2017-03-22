@@ -53,7 +53,7 @@ interface
 
 uses
   Classes, SysUtils, Dialogs, StrUtils,
-  ACBrNFeConfiguracoes, ACBrDFeUtil,
+  ACBrNFeConfiguracoes, ACBrDFeUtil, Printers,
   pcnNFe, pcnNFeR, pcnNFeW, pcnConversao, pcnAuxiliar, pcnLeitor;
 
 type
@@ -1480,6 +1480,7 @@ procedure TNotasFiscais.Imprimir;
 begin
   VerificarDANFE;
   TACBrNFe(FACBrNFe).DANFE.ImprimirDANFE(nil);
+  Printer.Create;
 end;
 
 procedure TNotasFiscais.ImprimirCancelado;

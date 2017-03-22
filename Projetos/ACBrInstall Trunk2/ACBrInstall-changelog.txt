@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2017
+[+] Suporte a Delphi 10.2 Tokyo
+	por (Isaque Pinheiro)
+
 07/11/2013
 [+] Adicionado o ACBr_MTER para o instalador e suas dependências
 	por (Juliomar Marchetti)

@@ -54,7 +54,7 @@ unit ACBrNFeDANFEFR;
 interface
 
 uses
-  Forms, SysUtils, Classes, Graphics, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
+  SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
   pcnNFe, pcnConversao, frxClass;
 
 type
@@ -88,7 +88,7 @@ type
 		function GetPreparedReportInutilizacao: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
     function PrepareReportEvento: Boolean;
-    function PrepareReportInutilizacao: Boolean;    
+    function PrepareReportInutilizacao: Boolean;
     procedure setTributosPercentual(const Value: TpcnPercentualTributos);
     procedure setTributosPercentualPersonalizado(const Value: double);
   public
@@ -130,7 +130,7 @@ type
 
 implementation
 
-uses ACBrNFe, ACBrUtil, StrUtils, Dialogs, pcnConversaoNFe;
+uses ACBrNFe, ACBrUtil, StrUtils, pcnConversaoNFe;
 
 constructor TACBrNFeDANFEFR.Create(AOwner: TComponent);
 begin

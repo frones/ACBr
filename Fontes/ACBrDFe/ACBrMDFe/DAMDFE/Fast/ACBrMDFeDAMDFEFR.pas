@@ -40,7 +40,7 @@ unit ACBrMDFeDAMDFEFR;
 interface
 
 uses
-  Forms, SysUtils, Classes, Graphics, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFEFRDM,
+  SysUtils, Classes, ACBrMDFeDAMDFeClass, ACBrMDFeDAMDFEFRDM,
   pcnConversao, pmdfeMDFe, frxClass, ACBrDFeUtil;
 
 type
@@ -81,7 +81,7 @@ type
 
 implementation
 
-uses ACBrMDFe, ACBrUtil, StrUtils, Dialogs;
+uses ACBrMDFe, ACBrUtil, StrUtils;
 
 constructor TACBrMDFeDAMDFEFR.Create(AOwner: TComponent);
 begin

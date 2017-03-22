@@ -48,7 +48,7 @@ unit ACBrCTeDACTEFR;
 interface
 
 uses
-  SysUtils, Classes, Graphics, ACBrCTeDACTEClass,
+  SysUtils, Classes, ACBrCTeDACTEClass,
   pcteCTe, pcnConversao, frxClass, DBClient, frxDBSet, frxBarcode, frxExportPDF,
   pcteEnvEventoCTe, pcteInutCTe, pcteRetInutCTe, ACBrCTe, ACBrUtil, StrUtils,
   DB, MaskUtils;

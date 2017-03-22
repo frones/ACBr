@@ -74,7 +74,7 @@ interface
 uses
   pcnEnvEventoNFe, pcnRetInutNFe,
   SysUtils, Classes, ACBrNFeDANFEClass, pcnNFe, frxClass, frxExportPDF, DB,
-  DBClient, frxDBSet, pcnConversao, ACBrUtil, frxBarcode, dialogs,
+  DBClient, frxDBSet, pcnConversao, ACBrUtil, frxBarcode,
   ACBrDelphiZXingQrCode, Graphics;
 
 type

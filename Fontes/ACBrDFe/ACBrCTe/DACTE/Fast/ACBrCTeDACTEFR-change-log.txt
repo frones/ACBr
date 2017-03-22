@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/03/2017
+[+] Limpeza de uses desnecessárias
+		http://www.projetoacbr.com.br/forum/topic/35775-sugestão-limpeza-dos-uses-de-algumas-units/
+		por: Juliomar Marchetti
+
 09/03/2017
 -- ACBrCTeDACTEFR --
 [*] Alterado o nome do arquivo PDF de inutilização para: <id>-procInutCTe.pdf

@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/03/2017
+-- ACBrDFeSSL --
+[*] Ajustes em "Clear", para evitar problemas quando ocorre a troca de
+    SSLCryptLib via código.
+
+-- ACBRDFeWinCrypt --
+[*] Ajustes em "CarregarCertificado", para priorizar a busca do certificado por
+    "DadosPFX" seguido de "ArquivoPFX" e depois "NumeroSerie"
+    (por: DSA)
+
 19/03/2017
 -- ACBrDFeSSL --
 [*] Amplo refactoring promovido, separando a classe "TDFeSSLClass" em 3 novas

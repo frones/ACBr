@@ -410,7 +410,7 @@ begin
   FCNPJ          := '';
   FDataVenc      := 0;
   FIssuerName    := '';
-  //FNumeroSerie   := '';
+  FNumeroSerie   := '';
   FRazaoSocial   := '';
   FSubjectName   := '';
   FTipo          := tpcDesconhecido;
@@ -835,18 +835,14 @@ begin
   inherited Create;
 
   FAntesDeAssinar := Nil;
-
-  FArquivoPFX  := '';
-  FDadosPFX    := '';
-  FNumeroSerie := '';
   Clear;
 end;
 
 procedure TDFeSSL.Clear;
 begin
-  //FArquivoPFX  := '';
-  //FDadosPFX    := '';
-  //FNumeroSerie := '';
+  FArquivoPFX  := '';
+  FDadosPFX    := '';
+  FNumeroSerie := '';
   FProxyHost   := '';
   FProxyPass   := '';
   FProxyPort   := '';
@@ -1206,6 +1202,7 @@ procedure TDFeSSL.SetNumeroSerie(AValue: String);
 begin
   if FNumeroSerie = AValue then Exit;
   FNumeroSerie := Trim(UpperCase(StringReplace(AValue, ' ', '', [rfReplaceAll])));
+  FDadosPFX := '';   // Força a releitura de DadosPFX;
   if CertificadoLido then
     DescarregarCertificado;
 end;

@@ -667,7 +667,26 @@ begin
   Clear;
   ACertContext := Nil;
 
-  if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
+
+  if (not EstaVazio(FpDFeSSL.DadosPFX)) then
+      CarregarCertificadoDeDadosPFX
+
+  else if not EstaVazio(FpDFeSSL.ArquivoPFX) then
+  begin
+    if not FileExists(FpDFeSSL.ArquivoPFX) then
+      raise EACBrDFeException.Create('Arquivo: ' + FpDFeSSL.ArquivoPFX + ' não encontrado');
+
+    PFXStream := TFileStream.Create(FpDFeSSL.ArquivoPFX, fmOpenRead or fmShareDenyNone);
+    try
+      FpDFeSSL.DadosPFX := ReadStrFromStream(PFXStream, PFXStream.Size);
+    finally
+      PFXStream.Free;
+    end;
+
+    CarregarCertificadoDeDadosPFX;
+  end
+
+  else if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
   begin
     OpenSystemStore;
     ACertContext := CertEnumCertificatesInStore(FpStore, ACertContext^);
@@ -685,28 +704,9 @@ begin
       raise EACBrDFeException.Create('Certificado "'+FpDFeSSL.NumeroSerie+'" não encontrado!');
   end
 
-  else if not EstaVazio(FpDFeSSL.ArquivoPFX) then
-  begin
-    if not FileExists(FpDFeSSL.ArquivoPFX) then
-      raise EACBrDFeException.Create('Arquivo: ' + FpDFeSSL.ArquivoPFX + ' não encontrado');
-
-    PFXStream := TFileStream.Create(FpDFeSSL.ArquivoPFX, fmOpenRead or fmShareDenyNone);
-    try
-      FpDFeSSL.DadosPFX := ReadStrFromStream(PFXStream, PFXStream.Size);
-    finally
-      PFXStream.Free;
-    end;
-
-    CarregarCertificadoDeDadosPFX;
-  end
-
-  else if (ACertContext = Nil) and (not EstaVazio(FpDFeSSL.DadosPFX)) then
-    CarregarCertificadoDeDadosPFX
-
   else
   begin
-    raise EACBrDFeException.Create(
-    'Número de Série do Certificado, ArquivoPFX ou DadosPFX não especificados !');
+    raise EACBrDFeException.Create( 'DadosPFX, ArquivoPFX ou NumeroSerie não especificados !');
   end;
 
   // Não Achou ? //

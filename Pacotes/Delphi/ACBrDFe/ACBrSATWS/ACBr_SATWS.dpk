@@ -28,7 +28,7 @@
 package ACBr_SATWS;
 
 {$R *.res}
-{$R '..\..\..\..\Fontes\ACBrDFe\ACBrSATWS\ACBrSATWS.dcr'}
+
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}

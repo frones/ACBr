@@ -47,7 +47,7 @@ unit ACBrSEF2_BlocoE;
 
 interface
 
-Uses Classes, SysUtils, {$IFDEF VER150}Controls, {$ENDIF}ACBrSEF2Conversao;
+Uses Classes, SysUtils, ACBrSEF2Conversao;
 
 type
   TRegistroSEFE003List = class;
@@ -273,7 +273,7 @@ type
     fVL_ICMS     : Double;
     fVL_ISNT_ICMS: Double;
     fVL_OUT_ICMS : Double;
-    fDT_DOC      : TDate;
+    fDT_DOC      : TDateTime;
     fRegistroE055: TRegistroSEFE055List;
     fCOP: String;
   public
@@ -287,7 +287,7 @@ type
     property SUB         : Integer read fSUB          write fSUB;          // Subsérie dos documentos fiscais
     property NUM_DOC_INI : Integer read fNUM_DOC_INI  write fNUM_DOC_INI;  // Número do primeiro documento fiscal emitido no dia
     property NUM_DOC_FIN : Integer read fNUM_DOC_FIN  write fNUM_DOC_FIN;  // Número do último documento fiscal emitido no dia
-    property DT_DOC      : TDate   read fDT_DOC       write fDT_DOC;       // Data da emissão dos documentos fiscais
+    property DT_DOC      : TDateTime read fDT_DOC     write fDT_DOC;       // Data da emissão dos documentos fiscais
     property CFOP        : String  read fCFOP         write fCFOP;         // Código da classe da operação ou prestação, conforme a tabela indicada no item 4.2.2.1
     property COP         : String  read fCOP          write fCOP;          // Código da classe da operação ou prestação, conforme a tabela indicada no item 4.2.2.1
     property VL_CONT     : Double  read fVL_CONT      write fVL_CONT;      // Valor contábil (valor dos documentos)

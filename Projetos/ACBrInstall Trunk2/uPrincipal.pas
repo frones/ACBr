@@ -235,7 +235,8 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
       try
         repeat
 
-          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history') then
+          if (oDirList.Name = '.')  or (oDirList.Name = '..') or (oDirList.Name = '__history')
+          or (oDirList.Name = '__recovery')then
             Continue;
 
           //if oDirList.Attr = faDirectory then
@@ -623,8 +624,8 @@ var
 
   function EProibido(const ADir: String): Boolean;
   const
-    LISTA_PROIBIDOS: ARRAY[0..4] OF STRING = (
-      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history'
+    LISTA_PROIBIDOS: ARRAY[0..5] OF STRING = (
+      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery'
     );
   var
     Str: String;

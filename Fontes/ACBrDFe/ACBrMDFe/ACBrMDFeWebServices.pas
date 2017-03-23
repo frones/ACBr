@@ -590,6 +590,9 @@ begin
     ConsStatServ.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesMDFe.WebServices.UFCodigo;
     ConsStatServ.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
+
     ConsStatServ.GerarXML;
 
     // Atribuindo o XML para propriedade interna //
@@ -979,6 +982,9 @@ begin
     ConsReciMDFe.tpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
     ConsReciMDFe.nRec := FRecibo;
     ConsReciMDFe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
+
     ConsReciMDFe.GerarXML;
 
     FPDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
@@ -1261,6 +1267,9 @@ begin
     ConsReciMDFe.tpAmb := FTpAmb;
     ConsReciMDFe.nRec := FRecibo;
     ConsReciMDFe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsReciMDFe.Gerador.Opcoes );
+
     ConsReciMDFe.GerarXML;
 
     FPDadosMsg := ConsReciMDFe.Gerador.ArquivoFormatoXML;
@@ -1417,6 +1426,9 @@ begin
     ConsSitMDFe.TpAmb := FTpAmb;
     ConsSitMDFe.chMDFe := FMDFeChave;
     ConsSitMDFe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsSitMDFe.Gerador.Opcoes );
+
     ConsSitMDFe.GerarXML;
 
     FPDadosMsg := ConsSitMDFe.Gerador.ArquivoFormatoXML;
@@ -1865,6 +1877,9 @@ begin
     end;
 
     EventoMDFe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( EventoMDFe.Gerador.Opcoes );
+
     EventoMDFe.GerarXML;
 
     Eventos := EventoMDFe.Gerador.ArquivoFormatoXML;
@@ -2120,13 +2135,13 @@ var
 begin
   ConsMDFeNaoEnc := TConsMDFeNaoEnc.create;
   try
-    ConsMDFeNaoEnc.TpAmb := FPConfiguracoesMDFe.WebServices.Ambiente;
-    ConsMDFeNaoEnc.CNPJ  := OnlyNumber( FCNPJ );
+    ConsMDFeNaoEnc.TpAmb  := FPConfiguracoesMDFe.WebServices.Ambiente;
+    ConsMDFeNaoEnc.CNPJ   := OnlyNumber( FCNPJ );
+    ConsMDFeNaoEnc.Versao := FPVersaoServico;
 
-    AjustarOpcoes(ConsMDFeNaoEnc.Gerador.Opcoes);
+    AjustarOpcoes( ConsMDFeNaoEnc.Gerador.Opcoes );
     ConsMDFeNaoEnc.Gerador.Opcoes.RetirarAcentos := False;  // Não funciona sem acentos
 
-    ConsMDFeNaoEnc.Versao := FPVersaoServico;
     ConsMDFeNaoEnc.GerarXML;
 
     FPDadosMsg := ConsMDFeNaoEnc.Gerador.ArquivoFormatoXML;
@@ -2236,6 +2251,9 @@ begin
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;
     DistDFeInt.Versao := FPVersaoServico;
+
+    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
+
     DistDFeInt.GerarXML;
 
     FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;

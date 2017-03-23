@@ -668,6 +668,9 @@ begin
     ConsStatServ.TpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsStatServ.CUF := FPConfiguracoesCTe.WebServices.UFCodigo;
     ConsStatServ.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsStatServ.Gerador.Opcoes );
+
     ConsStatServ.GerarXML;
 
     // Atribuindo o XML para propriedade interna //
@@ -1077,6 +1080,9 @@ begin
     ConsReciCTe.tpAmb := FPConfiguracoesCTe.WebServices.Ambiente;
     ConsReciCTe.nRec := FRecibo;
     ConsReciCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsReciCTe.Gerador.Opcoes );
+
     ConsReciCTe.GerarXML;
 
     FPDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
@@ -1372,6 +1378,9 @@ begin
     ConsReciCTe.tpAmb := FTpAmb;
     ConsReciCTe.nRec := FRecibo;
     ConsReciCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsReciCTe.Gerador.Opcoes );
+
     ConsReciCTe.GerarXML;
 
     FPDadosMsg := ConsReciCTe.Gerador.ArquivoFormatoXML;
@@ -1541,6 +1550,9 @@ begin
     ConsSitCTe.TpAmb := FTpAmb;
     ConsSitCTe.chCTe := FCTeChave;
     ConsSitCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConsSitCTe.Gerador.Opcoes );
+
     ConsSitCTe.GerarXML;
 
     FPDadosMsg := ConsSitCTe.Gerador.ArquivoFormatoXML;
@@ -1993,6 +2005,9 @@ begin
     InutCTe.nCTFin := FNumeroFinal;
     InutCTe.xJust := FJustificativa;
     InutCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( InutCTe.Gerador.Opcoes );
+
     InutCTe.GerarXML;
 
     AssinarXML(InutCTe.Gerador.ArquivoFormatoXML, 'inutCTe', 'infInut',
@@ -2203,6 +2218,9 @@ begin
     ConCadCTe.CNPJ := FCNPJ;
     ConCadCTe.CPF := FCPF;
     ConCadCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( ConCadCTe.Gerador.Opcoes );
+
     ConCadCTe.GerarXML;
 
     FPDadosMsg := ConCadCTe.Gerador.ArquivoFormatoXML;
@@ -2444,6 +2462,9 @@ begin
     end;
 
     EventoCTe.Versao := FPVersaoServico;
+
+    AjustarOpcoes( EventoCTe.Gerador.Opcoes );
+
     EventoCTe.GerarXML;
 
     Eventos := EventoCTe.Gerador.ArquivoFormatoXML;
@@ -2759,6 +2780,9 @@ begin
     DistDFeInt.ultNSU := FultNSU;
     DistDFeInt.NSU := FNSU;
     DistDFeInt.Versao := FPVersaoServico;
+
+    AjustarOpcoes( DistDFeInt.Gerador.Opcoes );
+
     DistDFeInt.GerarXML;
 
     FPDadosMsg := DistDFeInt.Gerador.ArquivoFormatoXML;

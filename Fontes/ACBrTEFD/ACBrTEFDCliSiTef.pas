@@ -307,7 +307,7 @@ implementation
 Uses
   {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
   dateutils, Math, StrUtils,
-  ACBrTEFD, ACBrConsts, ACBrUtil ;
+  ACBrTEFD, ACBrUtil ;
 
 { TACBrTEFDRespCliSiTef }
 

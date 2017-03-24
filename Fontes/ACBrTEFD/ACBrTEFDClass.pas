@@ -808,7 +808,7 @@ function NomeCampo(const Identificacao: Integer; const Sequencia: Integer ): Str
 implementation
 
 Uses dateutils, StrUtils, Math, {$IFDEF FMX} System.Types {$ELSE} types{$ENDIF},
-  ACBrConsts, ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil ;
+  ACBrTEFD, ACBrTEFDCliSiTef, ACBrTEFDVeSPague, ACBrUtil ;
 
 function NomeCampo(const Identificacao: Integer; const Sequencia: Integer): String;
 var

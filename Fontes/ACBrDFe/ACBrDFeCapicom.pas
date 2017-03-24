@@ -42,8 +42,8 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFeSSL, ACBrDFeWinCrypt,
-  ACBrCAPICOM_TLB, ACBrMSXML2_TLB,
-  ACBr_WinCrypt, Windows;
+  ACBrCAPICOM_TLB,
+  Windows;
 
 type
   { TDFeCapicom }
@@ -71,8 +71,7 @@ implementation
 
 uses
   typinfo, ActiveX, ComObj,
-  ACBrUtil, ACBrDFeException, ACBrDFeUtil, ACBrConsts,
-  synautil;
+  ACBrUtil, ACBrDFeException;
 
 { TDFeCapicom }
 

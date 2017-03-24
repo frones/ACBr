@@ -57,7 +57,7 @@ type
     procedure ConfigurarHTTP(const AURL, ASoapAction: String; AMimeType: String); override;
 
   public
-    constructor Create(ADFeSSL: TDFeSSL; WinApi: TSSLHttpLib); overload; 
+    constructor Create(ADFeSSL: TDFeSSL; WinApi: TSSLHttpLib); reintroduce;
     destructor Destroy; override;
 
     function Enviar(const ConteudoXML: String; const AURL: String;
@@ -69,7 +69,7 @@ implementation
 
 uses
   typinfo,
-  ACBrDFeException, ACBrUtil, ACBrConsts,
+  ACBrDFeException, ACBrConsts,
   synautil;
 
 { TDFeHttpWinHttp }

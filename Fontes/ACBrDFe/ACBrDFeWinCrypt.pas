@@ -108,7 +108,7 @@ implementation
 
 uses
   strutils, typinfo, comobj,
-  ACBrUtil, ACBrDFeException, ACBrConsts,
+  ACBrUtil, ACBrDFeException,
   synautil, synacode;
 
 function GetLastErrorAsHexaStr: String;
@@ -603,10 +603,11 @@ begin
     StoreFlag := CERT_SYSTEM_STORE_CURRENT_USER;
   end;
 
-  StoreProvider := CERT_STORE_PROV_SYSTEM_A;
-  {$IfNDef FPC}{$IfDef UNICODE}
+  {$IfDef DELPHI2009_UP}
    StoreProvider := CERT_STORE_PROV_SYSTEM_W;
-  {$EndIf}{$EndIf};
+  {$ELSE}
+   StoreProvider := CERT_STORE_PROV_SYSTEM_A;
+  {$ENDIF};
 
   FpStore := CertOpenStore(
       StoreProvider, 0, 0,

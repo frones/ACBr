@@ -72,7 +72,7 @@ implementation
 
 uses
   strutils, WinInet, SOAPConst,
-  ACBr_WinCrypt, ACBrUtil, ACBrDFeUtil, ACBrDFe, ACBrDFeException, ACBRConsts,
+  ACBr_WinCrypt, ACBrDFeException, ACBRConsts,
   synautil;
 
 { TDFeDelphiSoap }

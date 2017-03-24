@@ -97,7 +97,7 @@ implementation
 
 uses
   strutils, dateutils, typinfo,
-  ACBrUtil, ACBrDFeException, ACBrConsts,
+  ACBrUtil, ACBrDFeException,
   pcnAuxiliar,
   synautil, synacode;
 

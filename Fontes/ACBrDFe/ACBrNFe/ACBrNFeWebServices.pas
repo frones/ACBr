@@ -661,7 +661,7 @@ uses
   StrUtils, Math,
   ACBrUtil, ACBrNFe,
   {$IfNDef DFE_SEM_OPENSSL}
-   ACBrDFeOpenSSL, blcksock,
+   blcksock,
   {$EndIf}
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
@@ -1942,7 +1942,6 @@ begin
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXML;
 
-    Atualiza := False;
     NFCancelada := False;
     aEventos := '';
 

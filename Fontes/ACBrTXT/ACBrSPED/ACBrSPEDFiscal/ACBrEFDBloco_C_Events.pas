@@ -145,7 +145,7 @@ type
 
 implementation
 
-uses ACBrSpedFiscal;
+
 
 { TEventsBloco_0 }
 

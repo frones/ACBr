@@ -45,7 +45,7 @@ interface
 
 uses
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs, RLReport, RLBarcode,
-  RLPDFFilter, RLHTMLFilter, RLPrintDialog, RLFilters, RLPrinters,
+  RLPDFFilter, RLHTMLFilter, RLFilters, RLPrinters,
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
@@ -435,7 +435,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrUtil, strutils, RLConsts ;
+Uses ACBrUtil, strutils ;
 
 {$ifdef FPC}
   {$R *.lfm}

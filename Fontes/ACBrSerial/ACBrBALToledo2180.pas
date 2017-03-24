@@ -67,7 +67,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrConsts, SysUtils, Math,
+  ACBrConsts, SysUtils, Math,
   {$IFDEF COMPILER6_UP}
   DateUtils, StrUtils
   {$ELSE}

@@ -36,7 +36,7 @@
 unit ACBrECFVirtualNaoFiscal ;
 
 interface
-uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrConsts,
+uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil,
      Classes, SysUtils
      {$IFNDEF NOGUI}
        {$IF DEFINED(VisualCLX)}
@@ -47,7 +47,7 @@ uses ACBrECFVirtualPrinter, ACBrECFClass, ACBrUtil, ACBrConsts,
           ,Controls, Forms, Dialogs
           {$IFDEF DELPHIXE2_UP}
            , System.UITypes
-          {$ENDIF}  
+          {$ENDIF}
        {$IFEND}
      {$ENDIF} ;
 

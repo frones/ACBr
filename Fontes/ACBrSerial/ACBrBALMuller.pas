@@ -63,7 +63,7 @@ type
 
 implementation
 
-uses ACBrBAL, ACBrConsts, ACBrUtil, SysUtils,
+uses ACBrConsts, ACBrUtil, SysUtils,
      {$IFDEF Delphi6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
 
 { TACBrBALGertecSerial }

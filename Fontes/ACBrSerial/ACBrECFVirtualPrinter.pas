@@ -38,7 +38,7 @@ unit ACBrECFVirtualPrinter ;
 interface
 uses
   Classes, SysUtils,
-  ACBrDevice, ACBrECFVirtualBuffer, ACBrECFClass, ACBrUtil, ACBrConsts,
+  ACBrDevice, ACBrECFVirtualBuffer, ACBrECFClass, ACBrUtil,
   ACBrPosPrinter ;
 
 const

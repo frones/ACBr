@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/03/2017
+-- ACBRDFeWinCrypt --
+[-] Correção em "PFXDataToCertContextWinApi", que é usada por
+    "CarregarCertificado", quando informado o certificado por: "ArquivoPFX" ou
+    "DadosPFX". Para que seja possível carregar Certificados com número de série,
+    menor do que 16   (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35805
+
 22/03/2017
 -- ACBrDFeSSL --
 [*] Ajustes em "Clear", para evitar problemas quando ocorre a troca de

@@ -390,6 +390,10 @@ var
   PFXBlob: CRYPT_DATA_BLOB;
   PFXCert: PCCERT_CONTEXT;
   wsPass: WideString;
+  mCryptProviderCert: HCRYPTPROV;
+  dwKeySpec: DWORD;
+  pfCallerFreeProv: LongBool;
+  hRSAKey: HCRYPTKEY;
 begin
   PFXBlob.cbData := Length(AData);
   PFXBlob.pbData := PBYTE(AData);
@@ -414,10 +418,26 @@ begin
   PFXCert := CertEnumCertificatesInStore(AStore, PCCERT_CONTEXT(PFXCert)^);
   while (PFXCert <> Nil) and (ACertContext = Nil) do
   begin
-    // Se Tem numero de série, então é o certificado do cliente
-    if PFXCert^.pCertInfo^.SerialNumber.cbData >= 16 then
-      ACertContext := PFXCert
-    else
+    // Verificando se o Certificado tem Chave Privada
+    pfCallerFreeProv := False;
+    mCryptProviderCert := 0;
+    dwKeySpec := AT_KEYEXCHANGE;
+    if CryptAcquireCertificatePrivateKey( PFXCert, 0, Nil,
+                                          mCryptProviderCert, dwKeySpec,
+                                          pfCallerFreeProv) then
+    begin
+      hRSAKey := 0;
+      if CryptGetUserKey(mCryptProviderCert, dwKeySpec, hRSAKey) then
+        ACertContext := PFXCert;
+
+      if hRSAKey <> 0 then
+        CryptDestroyKey( hRSAKey );
+    end;
+
+    if pfCallerFreeProv and (mCryptProviderCert <> 0) then
+      CryptReleaseContext(mCryptProviderCert, 0);
+
+    if ACertContext = Nil then
       PFXCert := CertEnumCertificatesInStore(AStore, PCCERT_CONTEXT(PFXCert)^);
   end;
 

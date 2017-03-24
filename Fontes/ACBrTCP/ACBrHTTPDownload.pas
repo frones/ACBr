@@ -51,7 +51,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrUtil, ACBrDownloadClass,
+  ACBrDownloadClass,
   httpsend, blcksock, synautil;
 
 type

@@ -123,7 +123,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils;
+  ACBrUtil, ACBrValidador, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var

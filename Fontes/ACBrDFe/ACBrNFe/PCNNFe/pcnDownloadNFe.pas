@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnConsts, pcnNFeConsts;
+  pcnConversao, pcnGerador, pcnConsts;
 
 type
   TDownloadNFe          = class;

@@ -50,7 +50,7 @@ unit pcnLayoutTXT;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao;
+  SysUtils, Classes;
 
 function CarregarLayoutTXT(const versao: string): AnsiString;
 

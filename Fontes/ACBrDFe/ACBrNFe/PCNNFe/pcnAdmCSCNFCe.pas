@@ -50,7 +50,7 @@ unit pcnAdmCSCNFCe;
 interface
 
 uses
-  SysUtils, Classes, pcnConversao, pcnGerador, pcnConsts;
+  SysUtils, Classes, pcnConversao, pcnGerador;
 
 type
 

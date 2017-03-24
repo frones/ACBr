@@ -77,7 +77,7 @@
 Unit ACBrBase ;
 
 interface
-uses Classes, SysUtils, Contnrs, ACBrConsts, syncobjs,
+uses Classes, SysUtils, Contnrs, syncobjs,
      {$IFDEF COMPILER6_UP}
         Types
      {$ELSE}

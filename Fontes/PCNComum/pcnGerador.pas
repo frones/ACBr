@@ -267,7 +267,7 @@ const
 implementation
 
 uses
-  DateUtils, ACBrConsts, ACBrUtil;
+  DateUtils, ACBrUtil;
 
 { TGeradorOpcoes }
 

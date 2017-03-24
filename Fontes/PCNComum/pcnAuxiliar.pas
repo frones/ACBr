@@ -54,7 +54,7 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnConversao, synautil;
+  synautil;
 
 type
   TTimeZoneModoDeteccao = (tzSistema, tzPCN, tzManual);

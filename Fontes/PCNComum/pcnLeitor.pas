@@ -87,7 +87,7 @@ type
 implementation
 
 uses
-  ACBrConsts, ACBrUtil, StrUtils;
+  ACBrUtil, StrUtils;
 
 { TLeitor }
 

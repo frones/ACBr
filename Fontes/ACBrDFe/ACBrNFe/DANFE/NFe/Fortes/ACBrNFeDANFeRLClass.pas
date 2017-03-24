@@ -45,7 +45,7 @@ uses SysUtils, Classes,
   {$ELSE}
   Forms, Dialogs,
   {$ENDIF}
-  Graphics, RLConsts, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
+  Graphics, pcnNFe, ACBrNFeDANFEClass, pcnConversao;
 
 type
   TNomeFonte = (nfTimesNewRoman, nfCourierNew, nfArial);

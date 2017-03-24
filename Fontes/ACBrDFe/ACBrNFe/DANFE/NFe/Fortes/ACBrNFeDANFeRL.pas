@@ -109,7 +109,7 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter;
 
 type
 

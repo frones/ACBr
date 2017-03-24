@@ -53,7 +53,7 @@ uses
   {$ELSE}
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
+  pcnNFe, ACBrNFe, ACBrUtil,
   Printers,
   RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
   {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;

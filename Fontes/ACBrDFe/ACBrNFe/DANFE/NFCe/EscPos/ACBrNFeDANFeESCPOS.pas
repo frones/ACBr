@@ -113,7 +113,7 @@ implementation
 
 uses
   strutils, Math,
-  ACBrNFe, ACBrConsts, ACBrValidador, ACBrUtil, ACBrDFeUtil,
+  ACBrNFe, ACBrValidador, ACBrUtil, ACBrDFeUtil,
    pcnConversao, pcnAuxiliar;
 
 procedure Register;

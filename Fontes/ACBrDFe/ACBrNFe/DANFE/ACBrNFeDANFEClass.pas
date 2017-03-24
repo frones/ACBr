@@ -216,7 +216,7 @@ type
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, ACBrConsts;
+  ACBrNFe, ACBrUtil;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);

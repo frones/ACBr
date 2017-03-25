@@ -94,12 +94,10 @@ function TDFeSSLXmlSignMsXml.Assinar(const ConteudoXML, docElement,
   IdSignature: String): String;
 var
   AXml, XmlAss: AnsiString;
-  ProviderName, ContainerName: String;
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignatureEx;
   dsigKey: IXMLDSigKeyEx;
   signedKey: IXMLDSigKey;
-  ProviderType: DWORD;
 begin
   Result := '';
   if (CoInitialize(nil) = E_FAIL) then

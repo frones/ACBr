@@ -27,7 +27,7 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
-{.$Define DEBUG_WINHTTP}
+{$Define DEBUG_WINHTTP}
 
 unit ACBrWinHTTPReqResp;
 
@@ -45,9 +45,13 @@ uses
 
 type
 
+  TMimeTypesArray = array of String;
+
   { TACBrWinHTTPReqResp }
 
   TACBrWinHTTPReqResp = class(TACBrWinReqResp)
+  private
+    procedure SplitMimeTypes(AMimeTypeList: String; var MimeTypesArray: TMimeTypesArray);
   protected
     procedure UpdateErrorCodes(ARequest: HINTERNET); override;
   public
@@ -56,28 +60,59 @@ type
 
 implementation
 
-uses synautil;
+uses
+  strutils,
+  {$IfDef DEBUG_WINHTTP}
+   ACBrUtil,
+  {$EndIf} 
+  synautil;
 
 { TACBrWinHTTPReqResp }
 
+procedure TACBrWinHTTPReqResp.SplitMimeTypes(AMimeTypeList: String;
+  var MimeTypesArray: TMimeTypesArray);
+var
+  L, I, F, ALen: Integer;
+begin
+  SetLength(MimeTypesArray, 0);
+  if AMimeTypeList = '' then
+    Exit;
+
+  L := 0;
+  I := 1;
+  F := pos(',', AMimeTypeList);
+  if F < 1 then
+    F := Length(AMimeTypeList)+1;
+
+  while F > 0 do
+  begin
+    Inc( L );
+    SetLength(MimeTypesArray, L);
+    ALen := F-I;
+    MimeTypesArray[L-1] := Trim(copy( AMimeTypeList, I, F-I)) + #0;
+    F := PosEx(',', AMimeTypeList, F+1);
+  end;
+  SetLength(MimeTypesArray, L+1);
+  MimeTypesArray[L] := #0;
+end;
+
 procedure TACBrWinHTTPReqResp.UpdateErrorCodes(ARequest: HINTERNET);
 Var
-  bufLen: DWORD;
-  aBuffer: array [0..512] of AnsiChar;
+  AStatusCode, ASize: DWORD;
 begin
   FpInternalErrorCode := GetLastError;
   FpHTTPResultCode := 0;
 
   if Assigned(ARequest) then
   begin
-    bufLen := Length(aBuffer);
-    if not WinHttpQueryHeaders( ARequest,
-                                WINHTTP_QUERY_STATUS_CODE,
-                                WINHTTP_HEADER_NAME_BY_INDEX,
-                                @aBuffer, @bufLen, WINHTTP_NO_HEADER_INDEX ) then
-      FpHTTPResultCode := 4
-    else
-      FpHTTPResultCode := StrToIntDef( {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas(aBuffer), 0);
+    AStatusCode := 0;
+    ASize := SizeOf(DWORD);
+    if WinHttpQueryHeaders( ARequest,
+                            WINHTTP_QUERY_STATUS_CODE or WINHTTP_QUERY_FLAG_NUMBER,
+                            WINHTTP_HEADER_NAME_BY_INDEX,
+                            @AStatusCode, @ASize,
+                            WINHTTP_NO_HEADER_INDEX ) then
+      FpHTTPResultCode := AStatusCode;
   end;
 end;
 
@@ -87,12 +122,14 @@ var
   BytesRead, BytesWrite: cardinal;
   UseSSL, UseCertificate: Boolean;
   flags: Integer;
-  ANone, AHost, AProt, APort, APath, AMethod, Header: String;
+  ANone, AHost, AProt, APort, APath, AMethod, AHeader, AMimeType: String;
   wHeader: WideString;
   ConnectPort: WORD;
   RequestFlags, AccessType, flagsLen: DWORD;
   pSession, pConnection, pRequest: HINTERNET;
   HttpProxyName, HttpProxyPass: LPCWSTR;
+  pProxyConfig: TWinHttpCurrentUserIEProxyConfig;
+  MimeTypesArray: TMimeTypesArray;
   OpenRequestAcceptTypes: Pointer;
   {$IfDef DEBUG_WINHTTP}
    LogFile:String;
@@ -108,13 +145,21 @@ begin
   APath := '';
   ANone := '';
   AMethod := 'POST';
+  AMimeType := Self.MimeType;
 
   ParseURL(Url, AProt, ANone, ANone, AHost, APort, APath, ANone);
 
   UseSSL := (UpperCase(AProt) = 'HTTPS');
   UseCertificate := UseSSL and Assigned( CertContext );
 
-  if ProxyHost <> '' then
+  if (ProxyHost = '') then
+  begin
+    ZeroMemory(@pProxyConfig, SizeOf(pProxyConfig));
+    if WinHttpGetIEProxyConfigForCurrentUser(pProxyConfig) then
+      ProxyHost := String( pProxyConfig.lpszProxy );
+  end;
+
+  if (ProxyHost <> '') then
   begin
     AccessType := WINHTTP_ACCESS_TYPE_NAMED_PROXY;
     if (ProxyPort <> '') and (ProxyPort <> '0') then
@@ -213,10 +258,15 @@ begin
       else
         RequestFlags := 0;
 
-      if Self.MimeType = '' then
+
+      if AMimeType = '' then
         OpenRequestAcceptTypes := WINHTTP_DEFAULT_ACCEPT_TYPES
       else
-        OpenRequestAcceptTypes := @Self.MimeType;
+      begin
+        SetLength( MimeTypesArray, 0);
+        SplitMimeTypes(AMimeType, MimeTypesArray);
+        OpenRequestAcceptTypes := @MimeTypesArray;
+      end;
 
       {$IfDef DEBUG_WINHTTP}
        WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APath);
@@ -260,18 +310,18 @@ begin
            ( (APort <> IntToStr(INTERNET_DEFAULT_HTTPS_PORT)) and (UseSSL) ) then
           AHost := AHost +':'+ APort;
 
-        Header := 'Host: ' + AHost + sLineBreak +
-                  'Content-Type: ' + Self.MimeType + '; charset='+Charsets + SLineBreak +
+        AHeader := 'Host: ' + AHost + sLineBreak +
+                  'Content-Type: ' + AMimeType + '; charset='+Charsets + SLineBreak +
                   'Accept-Charset: ' + Charsets + SLineBreak;
 
         if Self.SOAPAction <> '' then
-          Header := Header +'SOAPAction: "' + Self.SOAPAction + '"' +SLineBreak;
+          AHeader := AHeader +'SOAPAction: "' + Self.SOAPAction + '"' +SLineBreak;
 
-        wHeader := WideString(Header);
+        wHeader := WideString(AHeader);
 
         {$IfDef DEBUG_WINHTTP}
          WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo Requisição: '+APath);
-         WriteToTXT(LogFile, Header);
+         WriteToTXT(LogFile, AHeader);
         {$EndIf}
         Resp.Size := 0;
         if not WinHttpSendRequest( pRequest,
@@ -318,6 +368,8 @@ begin
           if (BytesRead > 0) then
             Resp.Write(aBuffer, BytesRead);
         until (BytesRead <= 0);
+
+        UpdateErrorCodes(pRequest);
 
         if Resp.Size > 0 then
         begin

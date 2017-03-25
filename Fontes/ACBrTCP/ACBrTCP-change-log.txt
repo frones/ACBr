@@ -37,6 +37,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2017
+-- ACBrWinHTTPReqResp --
+[-] Correção de Erro de comunicação, causado pelo erro no tratamento de
+    "MimeTypes"
+[+] Adicionada identificação automática do Proxy do Sistema Operacional
+[-] Correção no método "UpdateErrorCodes", que não lia corretamente o valor de
+    "HTTPResultCode"
+[-] Correção para que o "HTTPResultCode" seja corretamente atribuido ao termino
+    da requisiçao
+
+-- ACBrWinINetReqResp --
+[-] Correção no método "UpdateErrorCodes", que não lia corretamente o valor de
+    "HTTPResultCode"
+[-] Correção para que o "HTTPResultCode" seja corretamente atribuido ao termino
+    da requisiçao
+
+24/03/2017
+-- ACBrWinHTTPReqResp --
+[*] Melhoria para detectar Proxy do Sistema Operacional, caso nenhum proxy tenha
+    sido informado.  (por: DSA)
+
 20/03/2017
 -- ACBrWinHTTPReqResp, ACBrWinINetReqResp --
 [-] Ajuste para que "WINHTTP_OPTION_SECURITY_FLAGS" seja ajustados, independente

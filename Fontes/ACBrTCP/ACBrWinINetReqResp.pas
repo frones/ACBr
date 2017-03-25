@@ -67,17 +67,19 @@ uses synautil;
 
 procedure TACBrWinINetReqResp.UpdateErrorCodes(ARequest: HINTERNET);
 Var
-  dummy, bufLen: DWORD;
-  aBuffer: array [0..512] of AnsiChar;
+  dummy, AStatusCode, ASize: DWORD;
 begin
   FpInternalErrorCode := GetLastError;
+  FpHTTPResultCode := 0;
 
   dummy := 0;
-  bufLen := Length(aBuffer);
-  if not HttpQueryInfo(ARequest, HTTP_QUERY_STATUS_CODE, @aBuffer, bufLen, dummy ) then
-    FpHTTPResultCode := 4
-  else
-    FpHTTPResultCode := StrToIntDef( {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas(aBuffer), 0);
+  AStatusCode := 0;
+  ASize := SizeOf(DWORD);
+  if HttpQueryInfo( ARequest,
+                    HTTP_QUERY_STATUS_CODE or HTTP_QUERY_FLAG_NUMBER,
+                    @AStatusCode, ASize,
+                    dummy ) then
+    FpHTTPResultCode := AStatusCode;
 end;
 
 procedure TACBrWinINetReqResp.Execute(Resp: TStream);
@@ -260,10 +262,10 @@ begin
           end;
         end;
 
+        UpdateErrorCodes(pRequest);
+
         if not OK then
         begin
-          UpdateErrorCodes(pRequest);
-
           //DEBUG
           //WriteToTXT('c:\temp\httpreqresp.log', FormatDateTime('hh:nn:ss:zzz', Now)+
           //   ' - Erro WinNetAPI: '+IntToStr(InternalErrorCode)+' HTTP: '+IntToStr(HTTPResultCode));

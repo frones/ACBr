@@ -27,7 +27,7 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
-{$Define DEBUG_WINHTTP}
+{.$Define DEBUG_WINHTTP}
 
 unit ACBrWinHTTPReqResp;
 
@@ -45,13 +45,9 @@ uses
 
 type
 
-  TMimeTypesArray = array of String;
-
   { TACBrWinHTTPReqResp }
 
   TACBrWinHTTPReqResp = class(TACBrWinReqResp)
-  private
-    procedure SplitMimeTypes(AMimeTypeList: String; var MimeTypesArray: TMimeTypesArray);
   protected
     procedure UpdateErrorCodes(ARequest: HINTERNET); override;
   public
@@ -61,40 +57,12 @@ type
 implementation
 
 uses
-  strutils,
   {$IfDef DEBUG_WINHTTP}
    ACBrUtil,
   {$EndIf} 
   synautil;
 
 { TACBrWinHTTPReqResp }
-
-procedure TACBrWinHTTPReqResp.SplitMimeTypes(AMimeTypeList: String;
-  var MimeTypesArray: TMimeTypesArray);
-var
-  L, I, F, ALen: Integer;
-begin
-  SetLength(MimeTypesArray, 0);
-  if AMimeTypeList = '' then
-    Exit;
-
-  L := 0;
-  I := 1;
-  F := pos(',', AMimeTypeList);
-  if F < 1 then
-    F := Length(AMimeTypeList)+1;
-
-  while F > 0 do
-  begin
-    Inc( L );
-    SetLength(MimeTypesArray, L);
-    ALen := F-I;
-    MimeTypesArray[L-1] := Trim(copy( AMimeTypeList, I, F-I)) + #0;
-    F := PosEx(',', AMimeTypeList, F+1);
-  end;
-  SetLength(MimeTypesArray, L+1);
-  MimeTypesArray[L] := #0;
-end;
 
 procedure TACBrWinHTTPReqResp.UpdateErrorCodes(ARequest: HINTERNET);
 Var
@@ -121,16 +89,13 @@ var
   aBuffer: array[0..4096] of AnsiChar;
   BytesRead, BytesWrite: cardinal;
   UseSSL, UseCertificate: Boolean;
-  flags: Integer;
   ANone, AHost, AProt, APort, APath, AMethod, AHeader, AMimeType: String;
   wHeader: WideString;
   ConnectPort: WORD;
-  RequestFlags, AccessType, flagsLen: DWORD;
+  AccessType, RequestFlags, flags, flagsLen: DWORD;
   pSession, pConnection, pRequest: HINTERNET;
   HttpProxyName, HttpProxyPass: LPCWSTR;
   pProxyConfig: TWinHttpCurrentUserIEProxyConfig;
-  MimeTypesArray: TMimeTypesArray;
-  OpenRequestAcceptTypes: Pointer;
   {$IfDef DEBUG_WINHTTP}
    LogFile:String;
   {$EndIf}
@@ -258,16 +223,6 @@ begin
       else
         RequestFlags := 0;
 
-
-      if AMimeType = '' then
-        OpenRequestAcceptTypes := WINHTTP_DEFAULT_ACCEPT_TYPES
-      else
-      begin
-        SetLength( MimeTypesArray, 0);
-        SplitMimeTypes(AMimeType, MimeTypesArray);
-        OpenRequestAcceptTypes := @MimeTypesArray;
-      end;
-
       {$IfDef DEBUG_WINHTTP}
        WriteToTXT(LogFile, FormatDateTime('hh:nn:ss:zzz', Now)+ ' - Fazendo POST: '+APath);
       {$EndIf}
@@ -276,7 +231,7 @@ begin
                                       LPCWSTR(WideString(APath)),
                                       Nil,
                                       WINHTTP_NO_REFERER,
-                                      OpenRequestAcceptTypes,
+                                      WINHTTP_DEFAULT_ACCEPT_TYPES,
                                       RequestFlags);
       UpdateErrorCodes(pRequest);
 
@@ -404,4 +359,5 @@ implementation
 {$EndIf}
 
 end.
+
 

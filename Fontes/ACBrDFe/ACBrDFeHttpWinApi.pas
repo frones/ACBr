@@ -104,6 +104,12 @@ begin
     try
       // Enviando, dispara exceptions no caso de erro //
       FWinHTTPReqResp.Execute(ConteudoXML, Resp);
+
+      // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
+      // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+      if not (FWinHTTPReqResp.HTTPResultCode in [200, 201, 202]) then
+        raise EACBrDFeException.Create('');
+
     except
       On E: Exception do
       begin

@@ -109,8 +109,9 @@ begin
   // Transmitindo //
   OK := FHTTP.HTTPMethod('POST', AURL);
 
-  // Provedor Agili (RESTFul) retorna 202 em vez de 200 //
-  OK := OK and (FHTTP.ResultCode in [200, 202]);
+  // Verifica se o ResultCode é: 200 OK; 201 Created; 202 Accepted
+  // https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+  OK := OK and (FHTTP.ResultCode in [200, 201, 202]);
   if not OK then
     raise EACBrDFeException.CreateFmt( cACBrDFeSSLEnviarException,
                                        [InternalErrorCode, HTTPResultCode] );
@@ -151,13 +152,7 @@ begin
   FHTTP.ProxyPort := FpDFeSSL.ProxyPort;
   FHTTP.ProxyUser := FpDFeSSL.ProxyUser;
   FHTTP.ProxyPass := FpDFeSSL.ProxyPass;
-
-  if AMimeType <> '' then
-    AMimeType := AMimeType+'; ';
-
-  AMimeType := AMimeType + 'charset=utf-8'; // Todos DFes usam UTF8
-  FHTTP.MimeType := AMimeType;
-
+  FHTTP.MimeType  := AMimeType;
   FHTTP.UserAgent := '';
   FHTTP.Protocol  := '1.1';
   FHTTP.AddPortNumberToHost := False;

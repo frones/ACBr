@@ -140,10 +140,7 @@ begin
     FIndyReqResp.ReceiveTimeout := TimeOut;
   end;
 
-  if AMimeType <> '' then
-    AMimeType := AMimeType+'; ';
-
-  FMimeType := AMimeType + 'charset=utf-8'; // Todos DFes usam UTF8
+  FMimeType := AMimeType;
 
   FIndyReqResp.OnBeforePost := OnBeforePost;
   FIndyReqResp.UseUTF8InHeader := True;

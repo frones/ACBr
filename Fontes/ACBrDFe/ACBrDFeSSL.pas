@@ -946,7 +946,7 @@ begin
     CarregarCertificadoSeNecessario;
 
   if AMimeType = '' then
-    AMimeType := 'application/soap+xml';
+    AMimeType := 'application/soap+xml; charset=utf-8';
 
   Result := FSSLHttpClass.Enviar(ConteudoXML, AURL, ASoapAction, AMimeType);
 end;

@@ -44,6 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/03/2017
+-- ACBrDFeHttpOpenSSL, ACBrDFeHttpIndy --
+[*] Ajuste para usar a definição MimeType, comforme recebido pela rotina chamadora
+
+-- ACBrDFeHttpWinApi --
+[*] Ajuste para disparar exceptions, caso o HTTPResultCode não seja 200,201,202
+
+-- ACBrDFeSSL --
+[*] Ajuste para que o MimeType padrão, caso nenhum tenha sido informado contenha
+    instrução de UTF8 'application/soap+xml; charset=utf-8'
+
 24/03/2017
 -- ACBRDFeWinCrypt --
 [-] Correção em "PFXDataToCertContextWinApi", que é usada por

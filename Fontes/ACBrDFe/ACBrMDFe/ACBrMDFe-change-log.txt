@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/03/2017
+-- ACBrMDFeWebServices --
+[*] Incluido a leitura da data de encerramento do retorno.
+   Por: Rafael N. Magnus
+
 20/03/2017
 -- pmdfeConsMDFeNaoEnc.pas --
 [-] Correção de geração do XML, com o Encoding de UTF8 com acentos

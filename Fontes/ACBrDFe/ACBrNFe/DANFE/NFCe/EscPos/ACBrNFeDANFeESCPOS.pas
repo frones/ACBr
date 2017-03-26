@@ -183,9 +183,12 @@ begin
     Trim(FpNFe.Emit.EnderEmit.nro) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xCpl) + '  ' +
     Trim(FpNFe.Emit.EnderEmit.xBairro) +  ' ' +
-    Trim(FpNFe.Emit.EnderEmit.xMun) + '/' + Trim(FpNFe.Emit.EnderEmit.UF)
+    Trim(FpNFe.Emit.EnderEmit.xMun) + '-' + Trim(FpNFe.Emit.EnderEmit.UF)
     , FPosPrinter.ColunasFonteCondensada)
   );
+
+  if not EstaVazio(FpNFe.Emit.EnderEmit.fone) then
+    FPosPrinter.Buffer.Add('</ce></fn>Fone: <n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+'</n>');
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;

@@ -18204,7 +18204,7 @@ begin
     retNenhum                    : Result := '0 - Nenhum';
     retMicroempresaMunicipal     : Result := '1 - Microempresa municipal';
     retEstimativa                : Result := '2 - Estimativa';
-    retSociedadeProfissionais    : Result := '3 - Sociendade de profissionais';
+    retSociedadeProfissionais    : Result := '3 - Sociedade de profissionais';
     retCooperativa               : Result := '4 - Cooperativa';
     retMicroempresarioIndividual : Result := '5 - Microempresário Individual (MEI)';
     retMicroempresarioEmpresaPP  : Result := '6 - Microempresário e Empresa de Pequeno Porte (ME EPP)';

@@ -908,9 +908,9 @@ function TNFSeWebService.ExtrairRetorno(GrupoMsgRet: String): String;
 var
   Encoding, AuxXML, XMLRet: String;
 begin
-  // Provedor DBSeller retorna a resposta em String
+  // Alguns provedores retornam a resposta em String
   // Aplicado a conversão de String para XML
-//  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
+  FPRetornoWS := StringReplace(StringReplace(FPRetornoWS, '&lt;', '<', [rfReplaceAll]), '&gt;', '>', [rfReplaceAll]);
 
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xD;'   , '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, '&#xd;'   , '', [rfReplaceAll]);
@@ -1843,7 +1843,7 @@ begin
     if CNPJ = '' then
       GerarException(ACBrStr('O CNPJ não informado em: Configuracoes.Geral.Emitente.CNPJ'));
     IM := FPConfiguracoesNFSe.Geral.Emitente.InscMun;
-    if (IM = '') and ((Provedor <> proBetha) or (FPConfiguracoes.WebServices.Ambiente = taProducao)) then
+    if (IM = '') and (Provedor <> proBetha) then
       GerarException(ACBrStr('A I.M. não informada em: Configuracoes.Geral.Emitente.InscMun'));
     RazaoSocial := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
     if RazaoSocial = '' then

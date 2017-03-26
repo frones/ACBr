@@ -667,7 +667,8 @@ begin
          else
            Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
-         Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         if (Provedor <> proBetha) or (IM <> '') then
+           Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
          Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
 
          Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
@@ -771,7 +772,8 @@ begin
          else
            Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
-         Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         if (Provedor <> proBetha) or (IM <> '') then
+           Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
          Gerador.Prefixo := Prefixo3;
          Gerador.wGrupoNFSe('/Prestador');
@@ -911,7 +913,8 @@ begin
          if Provedor = proNFSeBrasil then
            Gerador.wCampoNFSe(tcStr, '#3', 'codMunicipio', 01, 07, 1, IntToStr(CodMunicipio), '');
 
-         Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         if (Provedor <> proBetha) or (IM <> '') then
+           Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
          if Provedor = proISSDigital then
          begin
@@ -1110,7 +1113,8 @@ begin
          if Provedor = proTecnos then
            Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 115, 1, RazaoSocial, '');
 
-         Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         if (Provedor <> proBetha) or (IM <> '') then
+           Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
          if Provedor = proISSDigital then
          begin
@@ -1269,7 +1273,8 @@ begin
 //         if Provedor = proTecnos then
 //           Gerador.wCampoNFSe(tcStr, '#3', 'RazaoSocial', 01, 115, 1, RazaoSocial, '');
 
-         Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         if (Provedor <> proBetha) or (IM <> '') then
+           Gerador.wCampoNFSe(tcStr, '#4', 'InscricaoMunicipal', 01, 15, 1, IM, '');
 
          if Provedor = proISSDigital then
          begin
@@ -1589,7 +1594,8 @@ begin
          else
            Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
 
-         Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+         if (Provedor <> proBetha) or (IM <> '') then
+           Gerador.wCampoNFSe(tcStr, '#2', 'InscricaoMunicipal', 01, 15, 1, IM, '');
          Gerador.wCampoNFSe(tcInt, '#2', 'CodigoMunicipio', 01, 07, 1, CodMunicipio, '');
 
          Gerador.wGrupoNFSe('/IdentificacaoNfse');

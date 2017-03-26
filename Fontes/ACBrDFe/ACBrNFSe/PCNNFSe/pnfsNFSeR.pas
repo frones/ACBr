@@ -3047,12 +3047,13 @@ begin
       Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');
       with  Tomador.Endereco do
       begin
-        Endereco := Leitor.rCampo(tcStr, 'DesEndTmd');
+		Endereco := Leitor.rCampo(tcStr, 'LogTom');
+        Numero := Leitor.rCampo(tcStr, 'NumEndTom');;
+		Complemento := Leitor.rCampo(tcStr, 'ComplEndTom');		
         Bairro := Leitor.rCampo(tcStr, 'BairroTom');
         xMunicipio := Leitor.rCampo(tcStr, 'MunTom');
         UF := Leitor.rCampo(tcStr, 'SiglaUFTom');
         CEP := Leitor.rCampo(tcStr, 'CepTom');
-        Numero := Leitor.rCampo(tcStr, 'NumEndTom');;
       end;
 
       Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');

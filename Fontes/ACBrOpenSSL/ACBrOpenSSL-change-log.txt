@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2017
+-- libxmlsec --
+[*] Remoção da dependencia de "libxslt". (por Waldir Paim)
+    http://www.projetoacbr.com.br/forum/topic/35775-sugest%C3%A3o-limpeza-dos-uses-de-algumas-units/?do=findComment&comment=234842
+
 19/03/2017
 -- libxmlsec --
 [*] variável "libHandle" renomeada para "libXmlSecHandle"

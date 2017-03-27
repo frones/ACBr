@@ -9,7 +9,7 @@ interface
 {$ALIGN 8}
 {$MINENUMSIZE 4}
 
-uses libxml2, libxslt;
+uses libxml2;
 
 procedure Init;
 

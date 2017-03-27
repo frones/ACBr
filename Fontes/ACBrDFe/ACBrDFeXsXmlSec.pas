@@ -62,7 +62,7 @@ uses
   {$EndIf}
   Classes, SysUtils,
   ACBrDFeSSL, ACBrDFeException,
-  libxmlsec, libxslt, libxml2;
+  libxmlsec, libxml2;
 
 const
   {$IfDef USE_MSCRYPO}
@@ -177,7 +177,6 @@ begin
 
   //--Inicializar funções das units do OpenSSL
   libxml2.Init;
-  libxslt.Init;
 
   {$IfDef USE_MSCRYPO}
   if XMLSecCryptoLib = cCryptLibMSCrypto then
@@ -252,7 +251,6 @@ begin
   xmlSecShutdown();
 
   { Shutdown libxslt/libxml }
-  xsltCleanupGlobals();
   xmlCleanupParser();
 
   XMLSecLoaded := '';

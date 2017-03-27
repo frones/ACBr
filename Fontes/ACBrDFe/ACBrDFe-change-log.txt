@@ -44,6 +44,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2017
+-- ACBrDFeXsXmlSec --
+[*] Remoção da dependencia de "libxslt". (por Waldir Paim)
+
 25/03/2017
 -- ACBrDFeHttpOpenSSL, ACBrDFeHttpIndy --
 [*] Ajuste para usar a definição MimeType, comforme recebido pela rotina chamadora

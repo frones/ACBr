@@ -961,12 +961,15 @@ begin
         if RLLayout.Prepare then
         begin
           case Filtro of
-            fiPDF  : RLFiltro := RLPDFFilter1;
-            fiHTML : RLFiltro := RLHTMLFilter1;
+            fiPDF  :
+              RLFiltro := RLPDFFilter1;
+            fiHTML :
+              RLFiltro := RLHTMLFilter1;
           else
             exit ;
           end ;
 
+          RLFiltro.ShowProgress := RLLayout.ShowProgress;
           RLFiltro.FileName := NomeArquivo ;
           RLFiltro.FilterPages( RLLayout.Pages );
         end;

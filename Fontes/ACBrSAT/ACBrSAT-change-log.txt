@@ -47,10 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 27/03/2017
+-- ACBrSATExtratoFortesFr --
+[*] Ajuste para não exibir barra de Prrogresso, na geração do PDF
+    http://www.projetoacbr.com.br/forum/topic/35900-ajuste-para-evitar-falha-na-gera%C3%A7%C3%A3o-do-pdf/
+
 Data: 08/03/2017
 [+] Adição do separador por dia dos documentos em pastas
-		http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
+    por: Juliomar Marchetti
 		
 Data: 28/02/2017
 -- ACBrSATExtratoClass, ACBrSATExtratoESCPOS, ACBrSATExtratoFortes --

@@ -660,9 +660,7 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrNFe,
-  {$IfNDef DFE_SEM_OPENSSL}
-   blcksock,
-  {$EndIf}
+  blcksock,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
   pcnConsCad, pcnLeitor;

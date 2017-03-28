@@ -1258,7 +1258,7 @@ begin
 
       proSP:        EnviarLoteRps := 'PedidoEnvioLoteRPS';
 
-      proTinus:     EnviarLoteRps := 'Arg';
+//      proTinus:     EnviarLoteRps := 'Arg';
     else
       EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
     end;
@@ -2042,7 +2042,7 @@ begin
 
       proSP:        FTagGrupo := 'PedidoEnvioLoteRPS';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2805,7 +2805,7 @@ begin
 
       proSP:        FTagGrupo := 'p1:PedidoInformacoesLote';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     end;
@@ -3061,7 +3061,7 @@ begin
 
       proSP:        FTagGrupo := 'p1:PedidoConsultaLote';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarLoteRpsEnvio';
     end;
@@ -3205,7 +3205,7 @@ begin
 
       proSP:        FTagGrupo := 'p1:PedidoConsultaNFe';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarNfseRpsEnvio';
     end;
@@ -3582,7 +3582,7 @@ begin
 
       proSP:          FTagGrupo := 'PedidoCancelamentoNFe';
 
-      proTinus:       FTagGrupo := 'Arg';
+//      proTinus:       FTagGrupo := 'Arg';
     else
       FTagGrupo := 'CancelarNfseEnvio';
     end;

@@ -640,6 +640,7 @@ type
     function ManterinfAdProd(inItem: Integer): String;
     procedure CabItens;
     function ManterBandinfAdProd( sInforAdicProduto : String ): String;
+
   public
 
   end;
@@ -1437,9 +1438,7 @@ end;
 
 procedure TfrlDANFeRLRetrato.DadosAdicionais;
 var
-  sInfCompl, sInfAdFisco, sInfContr, sObsFisco, sObsProcRef, sInfInteira,
-  sProtocolo, sSuframa, sIndProc: String;
-  i: integer;
+  sProtocolo, sSuframa : String;
 begin
   rlmDadosAdicionaisAuxiliar.Lines.BeginUpdate;
   rlmDadosAdicionaisAuxiliar.Lines.Clear;
@@ -1465,92 +1464,20 @@ begin
   InsereLinhas( EnderecoEntrega  , iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
 
 
-  // Informações de interesse do fisco
-  if FNFe.InfAdic.infAdFisco > '' then
-  begin
-    if FNFe.InfAdic.infCpl > '' then
-      sInfAdFisco := FNFe.InfAdic.infAdFisco + '; '
-    else
-      sInfAdFisco := FNFe.InfAdic.infAdFisco;
-  end
-  else
-    sInfAdFisco := '';
+  InsereLinhas(   ManterDocreferenciados +
+                  ManterInfAdFisco +
+                  ManterObsFisco +
+                  ManterProcreferenciado +
+                  ManterInfContr +
+                  ManterInfCompl  ,
+                  iLimiteCaracteresLinha,
+                  rlmDadosAdicionaisAuxiliar);
 
-  // Informações de interesse do contribuinte
-  if FNFe.InfAdic.infCpl > '' then
-    sInfCompl := FNFe.InfAdic.infCpl
-  else
-    sInfCompl := '';
-
-  // Informações de uso livre do contribuinte com "xCampo" e "xTexto"
-  if FNFe.InfAdic.obsCont.Count > 0 then
-  begin
-    sInfContr := '';
-    for i := 0 to (FNFe.InfAdic.obsCont.Count - 1) do
-    begin
-      if FNFe.InfAdic.obsCont.Items[i].Index =
-        (FNFe.InfAdic.obsCont.Count - 1) then
-        sInfContr := sInfContr + FNFe.InfAdic.obsCont.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto
-      else
-        sInfContr := sInfContr + FNFe.InfAdic.obsCont.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto + '; ';
-    end; // for i := 0 to (FNFe.InfAdic.obsCont.Count - 1)
-    if (sInfCompl > '') or (sInfAdFisco > '') then
-      sInfContr := sInfContr + '; ';
-  end // if FNFe.InfAdic.obsCont.Count > 0
-  else
-    sInfContr := '';
-
-  // Informações de uso livre do fisco com "xCampo" e "xTexto"
-  if FNFe.InfAdic.obsFisco.Count > 0 then
-  begin
-    sObsFisco := '';
-    for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1) do
-    begin
-      if FNFe.InfAdic.obsFisco.Items[i].Index =
-        (FNFe.InfAdic.obsFisco.Count - 1) then
-        sObsFisco := sObsFisco + FNFe.InfAdic.obsFisco.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto
-      else
-        sObsFisco := sObsFisco + FNFe.InfAdic.obsFisco.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto + '; ';
-    end; // for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1)
-    if (sInfCompl > '') or (sInfAdFisco > '') then
-      sObsFisco := sObsFisco + '; ';
-  end // if FNFe.InfAdic.obsFisco.Count > 0
-  else
-    sObsFisco := '';
-
-  // Informações do processo referenciado
-  if FNFe.InfAdic.procRef.Count > 0 then
-  begin
-    sObsProcRef := '';
-
-    for i := 0 to (FNFe.InfAdic.procRef.Count - 1) do
-    begin
-      sIndProc := ACBrStr( indProcToDescrStr(FNFe.InfAdic.procRef.Items[i].indProc ) );
-
-      if FNFe.InfAdic.procRef.Items[i].Index =
-        (FNFe.InfAdic.procRef.Count - 1) then
-        sObsProcRef := sObsProcRef + ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
-          FNFe.InfAdic.procRef.Items[i].nProc +
-          ' - ORIGEM: ' + sIndProc
-      else
-        sObsProcRef := sObsProcRef + ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
-          FNFe.InfAdic.procRef.Items[i].nProc +
-          ' - ORIGEM: ' + sIndProc + '; ';
-    end; // for i := 0 to (FNFe.InfAdic.procRef.Count - 1)
-    if (sInfCompl > '') or (sInfAdFisco > '') then
-      sObsProcRef := sObsProcRef + '; ';
-  end // if FNFe.InfAdic.procRef.Count > 0
-  else
-    sObsProcRef := '';
-
-  sInfInteira := sInfAdFisco + sObsFisco + sObsProcRef + sInfContr + sInfCompl;
-  InsereLinhas(sInfInteira, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   rlmDadosAdicionaisAuxiliar.Lines.EndUpdate;
+
 end;
+
+
 
 procedure TfrlDANFeRLRetrato.Observacoes;
 var
@@ -2328,5 +2255,9 @@ begin
   RLBandInfAd.Visible := ( Result <> '') and
                          ( TACBrNFeDANFeRL(Owner).ExibirBandInforAdicProduto );
 end;
+
+
+
+
 
 end.

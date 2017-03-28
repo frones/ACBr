@@ -109,7 +109,7 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
 
 type
 
@@ -124,6 +124,13 @@ type
     function QuebraLinha: String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
     function TrataDocumento(sCNPJCPF: String): String;
+    function ManterDocreferenciados: String;
+    function ManterInfAdFisco: String;
+    function ManterInfCompl: String;
+    function ManterInfContr: String;
+    function ManterObsFisco: String;
+    function ManterProcreferenciado: String;
+
   private
     { Private declarations }
   protected
@@ -310,7 +317,7 @@ type
 
 implementation
 
-uses ACBrValidador;
+uses ACBrValidador,ACBrDFeUtil;
 
 {$R *.dfm}
 
@@ -777,6 +784,140 @@ begin
       Result := ' CPF: ';
 
     Result := Result + FormatarCNPJouCPF( sCNPJCPF );
+  end;
+end;
+
+
+function TfrlDANFeRL.ManterDocreferenciados : String;
+var
+  i : Integer;
+begin
+  Result := '';
+  // Informações de Documentos referenciados
+  if FNFe.Ide.NFref.Count > 0 then
+  begin
+    for i := 0 to (FNFe.ide.NFref.Count - 1) do
+    begin
+      if FNFe.ide.NFref[i].refNFe <> '' then
+        Result := Result + 'NFe Ref.: ' + FormatarChaveAcesso( FNFe.ide.NFref[i].refNFe )
+      else
+      if FNFe.ide.NFref[i].refCTe <> '' then
+        Result := Result + 'CTe Ref.: ' + FormatarChaveAcesso( FNFe.ide.NFref[i].refCTe )
+      else
+      if FNFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio then
+        Result := Result + ACBrStr('ECF Ref.: modelo: ' + ECFModRefToStr(FNFe.ide.NFref[i].RefECF.modelo) +
+          ' ECF:' +FNFe.ide.NFref[i].RefECF.nECF + ' COO:' + FNFe.ide.NFref[i].RefECF.nCOO)
+      else
+      if FNFe.ide.NFref[i].RefNF.CNPJ <> '' then
+        Result := Result + ACBrStr('NF Ref.: série: ' + IntTostr(FNFe.ide.NFref[i].RefNF.serie) +
+          ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNF.nNF) +
+          ' emit:' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNF.CNPJ) +
+          ' modelo: ' + IntTostr(FNFe.ide.NFref[i].RefNF.modelo))
+      else
+      if FNFe.ide.NFref[i].RefNFP.nNF > 0 then
+        Result := Result + ACBrStr('NFP Ref.: série: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.serie) +
+          ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.nNF) +
+          ' modelo: ' + FNFe.ide.NFref[i].RefNFP.modelo +
+          ' emit:' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNFP.CNPJCPF) +
+          ' IE:' + FNFe.ide.NFref[i].RefNFP.IE +
+          ' UF:' + CUFtoUF(FNFe.ide.NFref[i].RefNFP.cUF));
+
+    end;
+    Result := Result + '; ';
+  end;
+end;
+
+
+function TfrlDANFeRL.ManterInfAdFisco : String;
+begin
+  Result := '';
+  // Informações de interesse do fisco
+  if FNFe.InfAdic.infAdFisco > '' then
+  begin
+    if FNFe.InfAdic.infCpl > '' then
+      Result := FNFe.InfAdic.infAdFisco + '; '
+    else
+      Result := FNFe.InfAdic.infAdFisco;
+  end
+end;
+
+function TfrlDANFeRL.ManterInfCompl : String;
+begin
+  Result := '';
+ // Informações de interesse do contribuinte
+  if FNFe.InfAdic.infCpl > '' then
+    Result := FNFe.InfAdic.infCpl
+end;
+
+
+function TfrlDANFeRL.ManterInfContr : String;
+var
+  i : Integer;
+begin
+  Result := '';
+  // Informações de uso livre do contribuinte com "xCampo" e "xTexto"
+  if FNFe.InfAdic.obsCont.Count > 0 then
+  begin
+    for i := 0 to (FNFe.InfAdic.obsCont.Count - 1) do
+    begin
+      if FNFe.InfAdic.obsCont.Items[i].Index =
+        (FNFe.InfAdic.obsCont.Count - 1) then
+        Result := Result + FNFe.InfAdic.obsCont.Items[i].xCampo +
+          ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto
+      else
+        Result := Result + FNFe.InfAdic.obsCont.Items[i].xCampo +
+          ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto + '; ';
+    end;
+    Result := Result + '; ';
+  end;
+end;
+
+
+function TfrlDANFeRL.ManterObsFisco : String;
+var
+  i : Integer;
+begin
+  Result := '';
+  // Informações de uso livre do fisco com "xCampo" e "xTexto"
+  if FNFe.InfAdic.obsFisco.Count > 0 then
+  begin
+    for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1) do
+    begin
+      if FNFe.InfAdic.obsFisco.Items[i].Index =
+        (FNFe.InfAdic.obsFisco.Count - 1) then
+        Result := Result + FNFe.InfAdic.obsFisco.Items[i].xCampo +
+          ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto
+      else
+        Result := Result + FNFe.InfAdic.obsFisco.Items[i].xCampo +
+          ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto + '; ';
+    end;
+    Result := Result + '; ';
+  end;
+end;
+
+function TfrlDANFeRL.ManterProcreferenciado : String;
+var
+  i : Integer;
+  sIndProc : String;
+begin
+  Result := '';
+  // Informações do processo referenciado
+  if FNFe.InfAdic.procRef.Count > 0 then
+  begin
+    for i := 0 to (FNFe.InfAdic.procRef.Count - 1) do
+    begin
+      sIndProc := ACBrStr( indProcToDescrStr(FNFe.InfAdic.procRef.Items[i].indProc ) );
+
+      if FNFe.InfAdic.procRef.Items[i].Index = (FNFe.InfAdic.procRef.Count - 1) then
+        Result := Result + ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
+                          FNFe.InfAdic.procRef.Items[i].nProc +
+                          ' - ORIGEM: ' + sIndProc
+      else
+        Result := Result + ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
+                          FNFe.InfAdic.procRef.Items[i].nProc +
+                   ' - ORIGEM: ' + sIndProc + '; ';
+    end;
+    Result := Result + '; ';
   end;
 end;
 

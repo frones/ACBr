@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+28/03/2017
+-- ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
+[+] Ajuste para mostrar documentos referenciados em informações adicionais.
+     http://www.projetoacbr.com.br/forum/topic/35910-mostrar-chave-da-nota-fiscal-eletronica-em-notas-de-devolu%C3%A7%C3%A3o/
+[*] Refatoração de informações adicionais, com o desenvolvimento de funções para eliminação de 
+     código duplicado nas danfe retrato e paisagem
+     Por : RicardoVoigt/Henrique Leonardo	
+	
+
 10/02/2017
 -- ACBrNFeDANFeRL
 [-] Constante sDisplayFormat removida, por não estar em uso.

@@ -1275,6 +1275,7 @@ begin
   if PrepareReport(ACTE) then
   begin
     frxReport.PrintOptions.Copies := NumCopias;
+	  frxReport.PreviewOptions.AllowEdit := False;
     if MostrarPreview then
       frxReport.ShowPreparedReport
     else
@@ -1485,6 +1486,7 @@ begin
     raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
   frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PreviewOptions.AllowEdit := False;
 
   // preparar relatorio
   if Assigned(ACBrCTe) then
@@ -1522,6 +1524,7 @@ begin
     raise EACBrCTeDACTEFR.Create('Caminho do arquivo de impressão do INUTILIZAÇÃO não assinalado.');
 
   frxReport.PrintOptions.Copies := NumCopias;
+  frxReport.PreviewOptions.AllowEdit := False;
 
   // preparar relatorio
   if Assigned(ACBrCTe) then

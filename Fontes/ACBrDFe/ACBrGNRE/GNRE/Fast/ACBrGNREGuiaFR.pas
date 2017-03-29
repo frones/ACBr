@@ -117,6 +117,7 @@ begin
     begin
       dmGuia.frxReport.PrintOptions.Printer    := Impressora;
       dmGuia.frxReport.PrintOptions.Copies     := NumCopias;
+	    dmGuia.frxReport.PreviewOptions.AllowEdit := False;
       dmGuia.frxReport.PrintOptions.ShowDialog := ShowDialog;
       dmGuia.frxReport.Print;
     end;

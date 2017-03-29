@@ -244,6 +244,7 @@ begin
     raise EACBrNFSeDANFSeFR.Create('Caminho do arquivo de impressão do DANFSe não assinalado.');
 		
   frxReport.PrintOptions.Copies     := NumCopias;
+  frxReport.PreviewOptions.AllowEdit := False;
   frxReport.PrintOptions.ShowDialog := MostrarPreview;
   frxReport.ShowProgress            := Self.MostrarStatus;
 

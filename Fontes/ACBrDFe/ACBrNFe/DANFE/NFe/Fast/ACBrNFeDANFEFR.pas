@@ -256,6 +256,7 @@ begin
   FdmDanfe.frxReport.PrintOptions.Copies := FNumCopias;
   FdmDanfe.frxReport.PrintOptions.ShowDialog := FShowDialog;
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
+  FdmDanfe.frxReport.PreviewOptions.AllowEdit := False;
 
   // Define a impressora
   if Length(Impressora) > 0 then

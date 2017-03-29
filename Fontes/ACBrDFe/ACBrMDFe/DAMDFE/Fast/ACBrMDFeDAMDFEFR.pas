@@ -133,6 +133,7 @@ begin
     begin
       dmDAMDFe.frxReport.PrintOptions.ShowDialog := SelecionaImpressora;
       dmDAMDFe.frxReport.PrintOptions.Copies     := NumCopias;
+	    dmDAMDFe.frxReport.PreviewOptions.AllowEdit := False;
       dmDAMDFe.frxReport.Print;
     end;
   end;
@@ -269,6 +270,7 @@ begin
     raise EACBrMDFeDAMDFEFR.Create('Caminho do arquivo de impressão do EVENTO não assinalado.');
 
   dmDAMDFe.frxReport.PrintOptions.Copies := NumCopias;
+  dmDAMDFe.frxReport.PreviewOptions.AllowEdit := False;
 
   // preparar relatorio
   if Assigned(ACBrMDFe) then

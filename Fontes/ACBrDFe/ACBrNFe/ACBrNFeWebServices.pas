@@ -3501,7 +3501,14 @@ begin
       end;
 
       if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-        FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      begin
+        if FPConfiguracoesNFe.Arquivos.SalvarEvento then
+           if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoNFe]) then // salvar evento
+              FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocNFe]) then
+           FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      end;
     end;
   end;
 
@@ -3552,9 +3559,18 @@ begin
   else
     Data := Now;
 
-  Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
+  case AItem.schema of
+    schprocEventoNFe:
+      Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+                                                          AItem.resNFe.CNPJCPF,
+                                                          Data);
+
+
+    schprocNFe:
+      Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
                                                         AItem.resNFe.CNPJCPF,
                                                         Data);
+  end;
 end;
 
 { TNFeEnvioWebService }

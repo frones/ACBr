@@ -73,6 +73,11 @@ type
     class constructor Create;
   end;
 
+  TDFeCarregar = (tDFeNFe, tDFeEventoNFe, tDFeInutNFe,
+                  tDFeCTe, tDFeEventoCTe, tDFeInutCTe,
+                  tDFeMDFe, tDFeEventoMDFe,
+                  tDFeGNRe);
+
   { TFrmACBrMonitor }
 
   TFrmACBrMonitor = class(TForm)
@@ -1457,6 +1462,9 @@ type
     procedure ConfiguraPosPrinter;
     procedure SetComumConfig(Configuracoes : TConfiguracoes) ;
     procedure AtualizaSSLLibsCombo ;
+
+    procedure CarregarDFe( XMLorFile : String; tipoDFe : TDFeCarregar = tDFeNFe; PathDfe: String = '' ); overload;
+    procedure CarregarDFe( XMLsorFiles : TStrings; tipoDFe : TDFeCarregar = tDFeNFe; PathDfe: String = '' ); overload;
   end;
 
 var
@@ -3988,7 +3996,8 @@ begin
 
     edtCNPJContador.Text := Ini.ReadString('NFe', 'CNPJContador', '');
 
-    cbSSLLib.ItemIndex     := Ini.ReadInteger( 'Certificado','SSLLib' , 1);
+    cbSSLLib.ItemIndex     := Ini.ReadInteger( 'Certificado','SSLLib' ,
+      IfThen(Ini.ReadInteger('ACBrNFeMonitor', 'VersaoSSL', 0)=0, 1, 4));
     cbCryptLib.ItemIndex   := Ini.ReadInteger( 'Certificado','CryptLib', 0);
     cbHttpLib.ItemIndex    := Ini.ReadInteger( 'Certificado','HttpLib', 0);
     cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib', 0);
@@ -8032,6 +8041,259 @@ begin
   cbXmlSignLib.ItemIndex := Integer( ACBrNFe1.Configuracoes.Geral.SSLXmlSignLib );
 
   cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
+end;
+
+procedure TFrmACBrMonitor.CarregarDFe(XMLorFile: String; tipoDFe: TDFeCarregar;
+  PathDfe: String);
+var
+  IsXML : Boolean;
+begin
+  IsXML := StringIsXML(XMLorFile);
+  if IsXML then
+  begin
+    case tipoDFe of
+      tDFeNFe :
+      begin
+        if not ACBrNFe1.NotasFiscais.LoadFromString(XMLorFile) then
+           raise Exception.Create('Erro ao carregar a nfe.');
+      end;
+
+      tDFeEventoNFe :
+      begin
+        if not ACBrNFe1.EventoNFe.LerXMLFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar o evento da nota.');
+      end;
+
+      tDFeInutNFe :
+      begin
+        if not ACBrNFe1.InutNFe.LerXMLFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar a inutilização da nota.');
+      end;
+
+      tDFeCTe :
+      begin
+        if not ACBrCTe1.Conhecimentos.LoadFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar CTe');
+      end;
+
+      tDFeEventoCTe:
+      begin
+        if not ACBrCTe1.EventoCTe.LerXMLFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar o evento do CTe');
+      end;
+
+      tDFeInutCTe:
+      begin
+        if not ACBrCTe1.InutCTe.LerXMLFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar inutilização do CTe');
+      end;
+
+      tDFeMDFe:
+      begin
+        if not ACBrMDFe1.Manifestos.LoadFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar MDFe');
+      end;
+
+      tDFeEventoMDFe:
+      begin
+        if not ACBrMDFe1.EventoMDFe.LerXMLFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar o evento do MDFe');
+      end;
+
+      tDFeGNRe:
+      begin
+        if not ACBrGNRE1.GuiasRetorno.LoadFromString(XMLorFile) then
+          raise Exception.Create('Erro ao carregar a GNRe');
+      end;
+    end;
+  end
+  else
+  begin
+    case tipoDFe of
+      tDFeNFe :
+      begin
+        if FilesExists(XMLorFile) then
+        begin
+           if not ACBrNFe1.NotasFiscais.LoadFromFile(XMLorFile) then
+             raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
+           else
+             PathDfe := XMLorFile;
+        end
+        else
+          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
+      end;
+
+      tDFeEventoNFe :
+      begin
+        if FilesExists(XMLorFile) then
+        begin
+          if not ACBrNFe1.EventoNFe.LerXML(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end
+        else
+          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
+      end;
+
+      tDFeInutNFe :
+      begin
+        if FilesExists(XMLorFile) then
+        begin
+          if not ACBrNFe1.InutNFe.LerXML(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end
+        else
+          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
+      end;
+
+      tDFeCTe:
+      begin
+        if FilesExists(XMLorFile) then
+        begin
+          if not ACBrCTe1.Conhecimentos.LoadFromFile(XMLorFile) then
+            raise Exception.Create('Erro ao abrir do arquivo do CTe '+ XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end
+        else
+          raise Exception.Create('Arquivo do CTe '+ XMLorFile +' não encontrado.');
+      end;
+
+      tDFeEventoCTe:
+      begin
+        if FileExists(XMLorFile) then
+        begin
+          if not ACBrCTe1.EventoCTe.LerXML(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o arquivo de Evento do CTe '+XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end
+        else
+          raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
+      end;
+
+      tDFeInutCTe:
+      begin
+        if FileExists(XMLorFile) then
+        begin
+          if not ACBrCTe1.InutCTe.LerXML(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o arquivo de Inutilização do CTe '+XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end;
+      end;
+
+      tDFeMDFe:
+      begin
+        if FileExists(XMLorFile) then
+        begin
+          if not ACBrMDFe1.Manifestos.LoadFromFile(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o arquivo do Manifesto: '+XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end;
+      end;
+
+      tDFeEventoMDFe:
+      begin
+        if FileExists(XMLorFile) then
+        begin
+          if not ACBrMDFe1.EventoMDFe.LerXML(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o evento do MDFe '+XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end;
+      end;
+
+      tDFeGNRe:
+      begin
+        if FileExists(XMLorFile) then
+        begin
+          if not ACBrGNRE1.GuiasRetorno.LoadFromFile(XMLorFile) then
+            raise Exception.Create('Erro ao abrir o arquivo da Guia: '+XMLorFile)
+          else
+            PathDfe := XMLorFile;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TFrmACBrMonitor.CarregarDFe(XMLsorFiles: TStrings;
+  tipoDFe: TDFeCarregar; PathDfe: String);
+var
+  i : Integer;
+begin
+  for i := 0 to XMLsorFiles.Count -1 do
+  begin
+    try
+      CarregarDFe(XMLsorFiles[i], tipoDFe, PathDfe);
+      case tipoDFe of
+        tDFeNFe :
+        begin
+          if ACBrNFe1.NotasFiscais.Count > 0 then
+             Exit;
+        end;
+
+        tDFeEventoNFe:
+        begin
+          if ACBrNFe1.EventoNFe.Evento.Count > 0 then
+             Exit;
+        end;
+
+        tDFeInutNFe:
+        begin
+          if Assigned(ACBrNFe1.InutNFe) then
+             Exit;
+        end;
+
+        tDFeCTe:
+        begin
+          if ACBrCTe1.Conhecimentos.Count > 0 then
+             Exit;
+        end;
+
+        tDFeEventoCTe:
+        begin
+          if ACBrCTe1.EventoCTe.Evento.Count > 0 then
+             Exit;
+        end;
+
+        tDFeInutCTe:
+        begin
+          if Assigned(ACBrCTe1.InutCTe) then
+             Exit;
+        end;
+
+        tDFeMDFe:
+        begin
+          if ACBrMDFe1.Manifestos.Count > 0 then
+             Exit;
+        end;
+
+        tDFeEventoMDFe:
+        begin
+          if ACBrMDFe1.EventoMDFe.Evento.Count > 0 then
+             Exit;
+        end;
+
+        tDFeGNRe:
+        begin
+          if ACBrGNRE1.GuiasRetorno.Count > 0 then
+             Exit;
+        end;
+      end;
+    except
+      on E: Exception do
+      begin
+        if i = XMLsorFiles.Count -1 then
+          raise Exception.Create(E.Message);
+      end;
+    end;
+  end;
 end;
 
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);

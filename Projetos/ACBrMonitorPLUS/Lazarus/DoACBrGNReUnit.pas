@@ -50,6 +50,7 @@ var
   wDiretorioAtual : String;
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
   ArqPDF : String;
+  PathsGNRe: TStringList;
 begin
   with FrmACBrMonitor do
   begin
@@ -79,49 +80,42 @@ begin
       end
       else if Cmd.Metodo = 'imprimirgnre' then
       begin
-        begin
-          ACBrGNRE1.GuiasRetorno.Clear;
-           if FileExists(Cmd.Params(0)) or
-             FileExists(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-             FileExists(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt') then
-           begin
-              if FileExists(Cmd.Params(0)) then
-                ACBrGNRE1.GuiasRetorno.LoadFromFile(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                ACBrGNRE1.GuiasRetorno.LoadFromFile(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                ACBrGNRE1.GuiasRetorno.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
-           end
-           else
-           raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-           bMostrarPreview := (Cmd.Params(4) = '1');
-           if NaoEstaVazio(Cmd.Params(1)) then
-             ACBrGNRE1.GNREGuia.Impressora:= Cmd.Params(1);
+        ACBrGNRE1.GuiasRetorno.Clear;
+        PathsGNRe := TStringList.Create;
+        try
+          PathsGNRe.Append(Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
+          CarregarDFe(PathsGNRe, tDFeGNRe);
+        finally
+          PathsGNRe.Free;
+        end;
 
-           if NaoEstaVazio(Cmd.Params(2)) then
-             ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
+        bMostrarPreview := (Cmd.Params(4) = '1');
+        if NaoEstaVazio(Cmd.Params(1)) then
+          ACBrGNRE1.GNREGuia.Impressora:= Cmd.Params(1);
 
-           ACBrGNRE1.GuiasRetorno.Imprimir;
-           Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
+        if NaoEstaVazio(Cmd.Params(2)) then
+          ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
 
-           if ACBrGNRE1.GNREGuia.MostrarPreview then
-             Ocultar1.Click;
-        end
+        ACBrGNRE1.GuiasRetorno.Imprimir;
+        Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
+
+        if ACBrGNRE1.GNREGuia.MostrarPreview then
+          Ocultar1.Click;
       end
       else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
       begin
        ACBrGNRE1.GuiasRetorno.Clear;
-         if FileExists(Cmd.Params(0)) then
-           ACBrGNRE1.GuiasRetorno.LoadFromFile(Cmd.Params(0))
-         else
-            raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-         try
-           ACBrGNRE1.GuiasRetorno.ImprimirPDF;
-           ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';
-           Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrGNRE1.GNREGuia.PathPDF) + ArqPDF ;
-         except
-           raise Exception.Create('Erro ao criar o arquivo PDF');
-         end;
+       CarregarDFe(Cmd.Params(0), tDFeGNRe);
+
+       try
+         ACBrGNRE1.GuiasRetorno.ImprimirPDF;
+         ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';
+         Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrGNRE1.GNREGuia.PathPDF) + ArqPDF ;
+       except
+         raise Exception.Create('Erro ao criar o arquivo PDF');
+       end;
       end
       else if cmd.Metodo = 'gerarguia' then
       begin
@@ -143,17 +137,17 @@ begin
       end
       else if Cmd.Metodo = 'setformaemissao' then
       begin
-         if cbModoEmissao.checked then
-             exit;
+        if cbModoEmissao.checked then
+          exit;
 
-         if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
-          begin
-            ACBrGNRe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-            cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
-            SalvarIni;
-          end
-         else
-            raise Exception.Create('Forma de Emissão Inválida.');
+        if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
+        begin
+          ACBrGNRe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+          cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+          SalvarIni;
+        end
+        else
+          raise Exception.Create('Forma de Emissão Inválida.');
       end
 
       else

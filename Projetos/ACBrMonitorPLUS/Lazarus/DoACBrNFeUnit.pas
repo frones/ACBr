@@ -37,9 +37,6 @@ interface
 
 Uses Classes, TypInfo, SysUtils, CmdUnit,  StdCtrls;
 
-type
-  TDFeCarregar = (tDFeNFe, tDFeEvento, tDFeInutilizacao);
-
 Procedure DoACBrNFe( Cmd : TACBrCmd ) ;
 function UFparaCodigo(const UF: string): integer;
 function ObterCodigoMunicipio(const xMun, xUF: string): integer;
@@ -47,9 +44,6 @@ procedure GerarIniNFe( AStr: String ) ;
 function GerarNFeIni( XML : String ) : String;
 procedure GerarIniEvento( AStr: String; CCe : Boolean = False ) ;
 function SubstituirVariaveis(const ATexto: String): String;
-
-procedure CarregarDFe( XMLorFile : String; tipoDFe : TDFeCarregar = tDFeNFe; PathDfe: String = '' ); overload;
-procedure CarregarDFe( XMLsorFiles : TStrings; tipoDFe : TDFeCarregar = tDFeNFe; PathDfe: String = '' ); overload;
 
 implementation
 
@@ -152,7 +146,7 @@ begin
          begin
            ACBrNFe1.NotasFiscais.Clear;
 
-           if ValidarChave('NFe'+Cmd.Params(0)) then
+           if ValidarChave(Cmd.Params(0)) then
              ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0)
            else
            begin
@@ -283,7 +277,7 @@ begin
         else if Cmd.Metodo = 'cancelarnfe' then  //NFe.CancelarNFe(cChaveNFe,cJustificativa,cCNPJ,nEvento)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           if not ValidarChave('NFe'+Cmd.Params(0)) then
+           if not ValidarChave(Cmd.Params(0)) then
               raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
               ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0);
@@ -434,7 +428,7 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
-             CarregarDFe(PathsNFe, tDFeEvento);
+             CarregarDFe(PathsNFe, tDFeEventoNFe);
            finally
              PathsNFe.Clear;
            end;
@@ -512,7 +506,7 @@ begin
               PathsNFe.Append(Cmd.Params(0));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-              CarregarDFe(PathsNFe, tDFeInutilizacao);
+              CarregarDFe(PathsNFe, tDFeInutNFe);
            finally
              PathsNFe.Free;
            end;
@@ -1021,7 +1015,7 @@ begin
               try
                 PathsNFe.Append(Cmd.Params(0));
                 PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-                CarregarDFe(PathsNFe, tDFeEvento);
+                CarregarDFe(PathsNFe, tDFeEventoNFe);
               finally
                 PathsNFe.Free;
               end;
@@ -1309,7 +1303,7 @@ begin
                   Download.Chaves.Clear;
                   for I := 0 to ChavesNFe.Count - 1 do
                   begin
-                     if not ValidarChave('NFe'+ChavesNFe.Strings[i]) then
+                     if not ValidarChave(ChavesNFe.Strings[i]) then
                         raise Exception.Create('Chave '+ChavesNFe.Strings[i]+' inválida.');
 
                      with Download.Chaves.Add do
@@ -1415,7 +1409,7 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsNFe, tDFeEvento, ArqEvento);
+             CarregarDFe(PathsNFe, tDFeEventoNFe, ArqEvento);
            finally
              PathsNFe.Clear;
            end;
@@ -1501,7 +1495,7 @@ begin
               PathsNFe.Append(Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml');
-              CarregarDFe(PathsNFe, tDFeInutilizacao, ArqEvento);
+              CarregarDFe(PathsNFe, tDFeInutNFe, ArqEvento);
            finally
              PathsNFe.Free;
            end;
@@ -3622,117 +3616,6 @@ begin
       end;
     end;
     Result := TextoStr;
-  end;
-end;
-
-procedure CarregarDFe(XMLorFile: String; tipoDFe: TDFeCarregar; PathDfe: String);
-var
-  IsXML : Boolean;
-begin
-  with FrmACBrMonitor do
-  begin
-    IsXML := StringIsXML(XMLorFile);
-    if IsXML then
-    begin
-      case tipoDFe of
-        tDFeNFe :
-        begin
-          if not ACBrNFe1.NotasFiscais.LoadFromString(XMLorFile) then
-             raise Exception.Create('Erro ao carregar a nfe.');
-        end;
-        tDFeEvento :
-        begin
-          if not ACBrNFe1.EventoNFe.LerXMLFromString(XMLorFile) then
-            raise Exception.Create('Erro ao carregar o evento da nota.');
-        end;
-        tDFeInutilizacao :
-        begin
-          if not ACBrNFe1.InutNFe.LerXMLFromString(XMLorFile) then
-            raise Exception.Create('Erro ao carregar a inutilização da nota.');
-        end;
-      end;
-    end
-    else
-    begin
-      case tipoDFe of
-        tDFeNFe :
-        begin
-          if FilesExists(XMLorFile) then
-          begin
-             if not ACBrNFe1.NotasFiscais.LoadFromFile(XMLorFile) then
-               raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
-             else
-               PathDfe := XMLorFile;
-          end
-          else
-            raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-        end;
-        tDFeEvento :
-        begin
-          if FilesExists(XMLorFile) then
-          begin
-            if not ACBrNFe1.EventoNFe.LerXML(XMLorFile) then
-              raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
-            else
-              PathDfe := XMLorFile;
-          end
-          else
-            raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-        end;
-        tDFeInutilizacao :
-        begin
-          if FilesExists(XMLorFile) then
-          begin
-            if not ACBrNFe1.InutNFe.LerXML(XMLorFile) then
-              raise Exception.Create('Erro ao abrir o arquivo '+ XMLorFile)
-            else
-              PathDfe := XMLorFile;
-          end
-          else
-            raise Exception.Create('Arquivo '+ XMLorFile +' não encontrado.');
-        end;
-      end;
-    end;
-  end;
-end;
-
-procedure CarregarDFe(XMLsorFiles: TStrings; tipoDFe: TDFeCarregar; PathDfe: String);
-var
-  i : Integer;
-begin
-  for i := 0 to XMLsorFiles.Count -1 do
-  begin
-    try
-      CarregarDFe(XMLsorFiles[i], tipoDFe, PathDfe);
-      with FrmACBrMonitor do
-      begin
-        case tipoDFe of
-          tDFeNFe :
-          begin
-            if ACBrNFe1.NotasFiscais.Count > 0 then
-               Exit;
-          end;
-
-          tDFeEvento:
-          begin
-            if ACBrNFe1.EventoNFe.Evento.Count > 0 then
-               Exit;
-          end;
-
-          tDFeInutilizacao:
-          begin
-            if Assigned(ACBrNFe1.InutNFe) then
-               Exit;
-          end;
-        end;
-      end;
-    except
-      on E: Exception do
-      begin
-        if i = XMLsorFiles.Count -1 then
-          raise Exception.Create(E.Message);
-      end;
-    end;
   end;
 end;
 

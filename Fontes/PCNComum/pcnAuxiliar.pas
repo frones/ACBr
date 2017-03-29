@@ -471,24 +471,6 @@ begin
   except
     result := false;
   end;
-
-(*
-  if (copy(chave, 1, 3) <> 'NFe') and (copy(chave, 1, 3) <> 'CTe') then
-    exit;
-  try
-    i := 0;
-    if GerarDigito(i, copy(chave, 4, 43)) then
-      result := i = StrToInt(chave[length(chave)]);
-    if result then
-      result := ValidarCodigoUF(StrToInt(copy(somenteNumeros(chave), 1, 2)));
-    if result then
-      result := ValidarAAMM(copy(somenteNumeros(chave), 3, 4));
-    if result then
-      result := ValidarCNPJ(copy(somenteNumeros(chave), 7, 14));
-  except
-    result := false;
-  end;
-*)
 end;
 
 function ValidarAAMM(const AAMM: string): boolean;

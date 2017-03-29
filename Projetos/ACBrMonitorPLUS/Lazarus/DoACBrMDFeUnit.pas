@@ -38,8 +38,8 @@ Uses Classes, SysUtils, CmdUnit,
      ACBrUtil;
 
 Procedure DoACBrMDFe( Cmd : TACBrCmd );
-procedure GerarIniMDFe( AStr: WideString );
-function GerarMDFeIni( XML : WideString ) : WideString;
+procedure GerarIniMDFe( AStr: String );
+function GerarMDFeIni( XML : String ) : String;
 
 implementation
 
@@ -59,7 +59,7 @@ var
   sMensagemEmail: TStringList;
   CC, Anexos: Tstrings;
 
-  Memo   : TStringList;
+  Memo   , PathsMDFe: TStringList;
   Files  : String;
   dtFim  : TDateTime;
 
@@ -93,60 +93,52 @@ begin
         else if Cmd.Metodo = 'validarmdfe' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), tDFeMDFe);
            ACBrMDFe1.Manifestos.Validar;
          end
         else if Cmd.Metodo = 'assinarmdfe' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), tDFeMDFe);
            Salva := ACBrMDFe1.Configuracoes.Geral.Salvar;
+
            if not Salva then
-            begin
+           begin
              ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs');
              ACBrMDFe1.Configuracoes.Arquivos.PathSalvar := PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs';
-            end;
+           end;
+
            ACBrMDFe1.Configuracoes.Geral.Salvar := True;
            ACBrMDFe1.Manifestos.Assinar;
            ACBrMDFe1.Configuracoes.Geral.Salvar := Salva;
-           if ACBrUtil.NaoEstaVazio(ACBrMDFe1.Manifestos.Items[0].NomeArq) then
-              Cmd.Resposta := ACBrMDFe1.Manifestos.Items[0].NomeArq
+
+           if NaoEstaVazio(ACBrMDFe1.Manifestos.Items[0].NomeArq) then
+             Cmd.Resposta := ACBrMDFe1.Manifestos.Items[0].NomeArq
            else
-              Cmd.Resposta := PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+StringReplace(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase])+'-mdfe.xml';
+             Cmd.Resposta := PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+StringReplace(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID, 'MDFe', '', [rfIgnoreCase])+'-mdfe.xml';
          end
         else if Cmd.Metodo = 'consultarmdfe' then
          begin
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              ACBrMDFe1.Manifestos.Clear;
-              if FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0));
-
-              ACBrMDFe1.WebServices.Consulta.MDFeChave := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID);
-            end
+           if ValidarChave(Cmd.Params(0)) then
+             ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0)
            else
-            begin
-              // Foi necessário colocar o prefixo NFe pois a function
-              // ValidarChave só reconhece os prefixos: NFe e CTe.
-              if not ValidarChave('NFe'+Cmd.Params(0)) then
-                 raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
-              else
-                 ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
-            end;
-           try
-              ACBrMDFe1.WebServices.Consulta.Executar;
+           begin
+             PathsMDFe := TStringList.Create;
+             try
+               PathsMDFe.Append(Cmd.Params(0));
+               PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+               CarregarDFe(PathsMDFe, tDFeMDFe);
+             finally
+               PathsMDFe.Free;
+             end;
 
-              Cmd.Resposta := ACBrMDFe1.WebServices.Consulta.Msg+sLineBreak+
+             ACBrMDFe1.WebServices.Consulta.MDFeChave := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID);
+           end;
+
+           try
+             ACBrMDFe1.WebServices.Consulta.Executar;
+
+             Cmd.Resposta := ACBrMDFe1.WebServices.Consulta.Msg+sLineBreak+
                               '[CONSULTA]'+sLineBreak+
                               'Versao='+ACBrMDFe1.WebServices.Consulta.verAplic+sLineBreak+
                               'TpAmb='+TpAmbToStr(ACBrMDFe1.WebServices.Consulta.TpAmb)+sLineBreak+
@@ -160,18 +152,15 @@ begin
                               'DigVal='+ACBrMDFe1.WebServices.Consulta.protMDFe.digVal+sLineBreak;
 
            except
-              raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
+             raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
            end;
          end
         else if Cmd.Metodo = 'cancelarmdfe' then
          begin
-
-           // Foi necessário colocar o prefixo NFe pois a function
-           // ValidarChave só reconhece os prefixos: NFe e CTe.
-           if not ValidarChave('NFe'+Cmd.Params(0)) then
-              raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
+           if not ValidarChave(Cmd.Params(0)) then
+             raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
-              ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
+             ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
 
            if not ACBrMDFe1.WebServices.Consulta.Executar then
               raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
@@ -221,9 +210,6 @@ begin
          end
         else if Cmd.Metodo = 'encerrarmdfe' then
          begin
-
-           // Foi necessário colocar o prefixo NFe pois a function
-           // ValidarChave só reconhece os prefixos: NFe e CTe.
            if not ValidarChave('NFe'+Cmd.Params(0)) then
               raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
            else
@@ -285,43 +271,42 @@ begin
               Restaurar1.Click;
               Application.BringToFront;
             end;
+
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0))
-              else
-                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           PathsMDFe := TStringList.Create;
+             try
+               PathsMDFe.Append(Cmd.Params(0));
+               PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+               CarregarDFe(PathsMDFe, tDFeMDFe);
+             finally
+               PathsMDFe.Free;
+             end;
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-              ACBrMDFe1.DAMDFe.Impressora := Cmd.Params(1)
+           if NaoEstaVazio(Cmd.Params(1)) then
+             ACBrMDFe1.DAMDFe.Impressora := Cmd.Params(1)
            else
-              ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
+             ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(2)) then
-              ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(2),1)
+           if NaoEstaVazio(Cmd.Params(2)) then
+             ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(2),1)
            else
-              ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
+             ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(3)) then
-              ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(3);
+           if NaoEstaVazio(Cmd.Params(3)) then
+             ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(3);
+
            ACBrMDFe1.Manifestos.Imprimir;
            Cmd.Resposta := 'DAMDFe Impresso com sucesso';
+
            if ACBrMDFe1.DAMDFe.MostrarPreview then
-              Ocultar1.Click;
+             Ocultar1.Click;
          end
         else if Cmd.Metodo = 'imprimirdamdfepdf' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
+           CarregarDFe(Cmd.Params(0), tDFeMDFe);
 
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
+           if NaoEstaVazio(Cmd.Params(1)) then
               ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(1);
 
            try
@@ -333,7 +318,7 @@ begin
               raise Exception.Create('Erro ao criar o arquivo PDF');
            end;
          end
-        else if Cmd.Metodo = 'imprimirevento' then
+        else if ( Cmd.Metodo = 'imprimirevento') or ( Cmd.Metodo = 'imprimireventopdf' ) then
          begin
            if ACBrMDFe1.DAMDFe.MostrarPreview then
             begin
@@ -342,122 +327,81 @@ begin
             end;
 
            ACBrMDFe1.EventoMDFe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrMDFe1.EventoMDFe.LerXML(Cmd.Params(0))
-              else
-                 ACBrMDFe1.EventoMDFe.LerXML(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
-           ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(1))
-              else
-                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-            end
-           else
-            begin
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-            end;
-
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(2)) then
-              ACBrMDFe1.DAMDFe.Impressora := Cmd.Params(2)
-           else
-              ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
-
-           if ACBrUtil.NaoEstaVazio(Cmd.Params(3)) then
-              ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(3),1)
-           else
-              ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
-
-           ACBrMDFe1.ImprimirEvento;
-           Cmd.Resposta := 'Evento Impresso com sucesso';
-           if ACBrMDFe1.DAMDFe.MostrarPreview then
-              Ocultar1.Click;
-         end
-
-        else if Cmd.Metodo = 'imprimireventopdf' then
-         begin
-           ACBrMDFe1.EventoMDFe.Evento.Clear;
-           if FileExists(Cmd.Params(0)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-            begin
-              if FileExists(Cmd.Params(0)) then
-                 ACBrMDFe1.EventoMDFe.LerXML(Cmd.Params(0))
-              else
-                 ACBrMDFe1.EventoMDFe.LerXML(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
-           ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(1))
-              else
-                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-            end
-           else
-            begin
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(1)) then
-                 raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-            end;
-
+           PathsMDFe := TStringList.Create;
            try
-              ACBrMDFe1.ImprimirEventoPDF;
-              ArqPDF := OnlyNumber(ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.Id);
-              ArqPDF := PathWithDelim(ACBrMDFe1.DAMDFe.PathPDF)+ArqPDF+'-procEventoMDFe.pdf';
-              Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
-           except
-              raise Exception.Create('Erro ao criar o arquivo PDF');
+             PathsMDFe.Append(Cmd.Params(0));
+             PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             CarregarDFe(PathsMDFe, tDFeEventoMDFe);
+           finally
+             PathsMDFe.Free;
+           end;
+
+           ACBrMDFe1.Manifestos.Clear;
+           if NaoEstaVazio(Cmd.Params(1)) then
+           begin
+             PathsMDFe := TStringList.Create;
+             try
+               PathsMDFe.Append(Cmd.Params(1));
+               PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+               CarregarDFe(PathsMDFe, tDFeMDFe);
+             finally
+               PathsMDFe.Free;
+             end;
+           end;
+
+           if Cmd.Metodo = 'imprimireventopdf' then
+           begin
+             try
+                ACBrMDFe1.ImprimirEventoPDF;
+                ArqPDF := OnlyNumber(ACBrMDFe1.EventoMDFe.Evento[0].InfEvento.Id);
+                ArqPDF := PathWithDelim(ACBrMDFe1.DAMDFe.PathPDF)+ArqPDF+'-procEventoMDFe.pdf';
+                Cmd.Resposta := 'Arquivo criado em: ' + ArqPDF;
+             except
+                raise Exception.Create('Erro ao criar o arquivo PDF');
+             end;
+           end
+           else
+           begin
+             if NaoEstaVazio(Cmd.Params(2)) then
+                ACBrMDFe1.DAMDFe.Impressora := Cmd.Params(2)
+             else
+                ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
+
+             if NaoEstaVazio(Cmd.Params(3)) then
+                ACBrMDFe1.DAMDFe.NumCopias := StrToIntDef(Cmd.Params(3),1)
+             else
+                ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
+
+             ACBrMDFe1.ImprimirEvento;
+             Cmd.Resposta := 'Evento Impresso com sucesso';
+             if ACBrMDFe1.DAMDFe.MostrarPreview then
+                Ocultar1.Click;
            end;
          end
 
-
         else if Cmd.Metodo = 'inutilizarmdfe' then
          begin                            //CNPJ         //Justificat   //Ano                    //Modelo                 //Série                  //Num.Inicial            //Num.Final
-           (*
-           ACBrMDFe1.WebServices.Inutiliza(Cmd.Params(0), Cmd.Params(1), StrToInt(Cmd.Params(2)), StrToInt(Cmd.Params(3)), StrToInt(Cmd.Params(4)), StrToInt(Cmd.Params(5)), StrToInt(Cmd.Params(6)));
-
-           Cmd.Resposta := ACBrMDFe1.WebServices.Inutilizacao.Msg+sLineBreak+
-                           '[INUTILIZACAO]'+sLineBreak+
-                           'Versao='+ACBrMDFe1.WebServices.Inutilizacao.verAplic+sLineBreak+
-                           'TpAmb='+TpAmbToStr(ACBrMDFe1.WebServices.Inutilizacao.TpAmb)+sLineBreak+
-                           'VerAplic='+ACBrMDFe1.WebServices.Inutilizacao.VerAplic+sLineBreak+
-                           'CStat='+IntToStr(ACBrMDFe1.WebServices.Inutilizacao.CStat)+sLineBreak+
-                           'XMotivo='+ACBrMDFe1.WebServices.Inutilizacao.XMotivo+sLineBreak+
-                           'CUF='+IntToStr(ACBrMDFe1.WebServices.Inutilizacao.CUF)+sLineBreak+
-                           'DhRecbto='+DateTimeToStr(ACBrMDFe1.WebServices.Inutilizacao.DhRecbto)+sLineBreak+
-                           'NProt='+ACBrMDFe1.WebServices.Inutilizacao.Protocolo+sLineBreak;
-           *)                
+           raise Exception.Create('Método: MDFe.InutilizarMDFe não implementado.');
          end
+
         else if Cmd.Metodo = 'enviarmdfe' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), tDFeMDFe);
            ACBrMDFe1.Manifestos.GerarMDFe;
+
            if Cmd.Params(2) <> '0' then
               ACBrMDFe1.Manifestos.Assinar;
 
            ACBrMDFe1.Manifestos.Validar;
 
            if not(ACBrMDFe1.WebServices.StatusServico.Executar) then
-            raise Exception.Create(ACBrMDFe1.WebServices.StatusServico.Msg);
+             raise Exception.Create(ACBrMDFe1.WebServices.StatusServico.Msg);
 
            if Trim(OnlyNumber(Cmd.Params(1))) = '' then
-              ACBrMDFe1.WebServices.Enviar.Lote := '1'
+             ACBrMDFe1.WebServices.Enviar.Lote := '1'
            else
-              ACBrMDFe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(1)); //StrToIntDef( OnlyNumber(Cmd.Params(1)),1);
+             ACBrMDFe1.WebServices.Enviar.Lote := OnlyNumber(Cmd.Params(1)); //StrToIntDef( OnlyNumber(Cmd.Params(1)),1);
 
            ACBrMDFe1.WebServices.Enviar.Executar;
 
@@ -509,7 +453,7 @@ begin
                 end;
               end;
 
-              if ACBrUtil.NaoEstaVazio(Cmd.Params(4)) then
+              if NaoEstaVazio(Cmd.Params(4)) then
                  ACBrMDFe1.DAMDFe.Impressora := Cmd.Params(4)
               else
                  ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
@@ -562,46 +506,7 @@ begin
          end
         else if (Cmd.Metodo = 'consultacadastro')then
          begin
-           (*
-           ACBrMDFe1.WebServices.ConsultaCadastro.UF   := Cmd.Params(0);
-           if Cmd.Params(2) = '1' then
-              ACBrMDFe1.WebServices.ConsultaCadastro.IE := Cmd.Params(1)
-           else
-            begin
-              if Length(Cmd.Params(1)) > 11 then
-                 ACBrMDFe1.WebServices.ConsultaCadastro.CNPJ := Cmd.Params(1)
-              else
-                 ACBrMDFe1.WebServices.ConsultaCadastro.CPF := Cmd.Params(1);
-            end;
-            ACBrMDFe1.WebServices.ConsultaCadastro.Executar;
-
-            Cmd.Resposta :=  Cmd.Resposta+
-                             ACBrMDFe1.WebServices.ConsultaCadastro.Msg+sLineBreak+
-                             'VerAplic='+ACBrMDFe1.WebServices.ConsultaCadastro.verAplic+sLineBreak+
-                             'cStat='+IntToStr(ACBrMDFe1.WebServices.ConsultaCadastro.cStat)+sLineBreak+
-                             'xMotivo='+ACBrMDFe1.WebServices.ConsultaCadastro.xMotivo+sLineBreak+
-                             'DhCons='+DateTimeToStr(ACBrMDFe1.WebServices.ConsultaCadastro.DhCons)+sLineBreak+
-                             'cUF='+IntToStr(ACBrMDFe1.WebServices.ConsultaCadastro.cUF)+sLineBreak+
-                             'IE='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].IE+sLineBreak+
-                             'CNPJ='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CNPJ+sLineBreak+
-                             'CPF='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CPF+sLineBreak+
-                             'UF='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].UF+sLineBreak+
-                             'cSit='+IntToStr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].cSit)+sLineBreak+
-                             'xNome='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xNome+sLineBreak+
-                             'xFant='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xFant+sLineBreak+
-                             'xRegApur='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xRegApur+sLineBreak+
-                             'CNAE='+inttostr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CNAE)+sLineBreak+
-                             'dIniAtiv='+DFeUtil.FormatDate(DateToStr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dIniAtiv))+sLineBreak+
-                             'dUltSit='+DFeUtil.FormatDate(DateToStr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dUltSit))+sLineBreak+
-                             'dBaixa='+DFeUtil.FormatDate(DateToStr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].dBaixa))+sLineBreak+
-                             'xLgr='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xLgr+sLineBreak+
-                             'nro='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].nro+sLineBreak+
-                             'xCpl='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xCpl+sLineBreak+
-                             'xBairro='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xBairro+sLineBreak+
-                             'cMun='+inttostr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].cMun)+sLineBreak+
-                             'xMun='+ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].xMun+sLineBreak+
-                             'CEP='+inttostr(ACBrMDFe1.WebServices.ConsultaCadastro.RetConsCad.InfCad.Items[0].CEP)+sLineBreak;
-           *)
+           raise Exception.Create('Método: MDFe.ConsultaCadastro não implementado.');
          end
         else if (Cmd.Metodo = 'criarmdfe')      or (Cmd.Metodo = 'criarenviarmdfe') or
                 (Cmd.Metodo = 'criarmdfesefaz') or (Cmd.Metodo = 'criarenviarmdfesefaz') or
@@ -611,30 +516,7 @@ begin
            if (Cmd.Metodo = 'criarmdfe') or (Cmd.Metodo = 'criarenviarmdfe') or
               (Cmd.Metodo = 'adicionarmdfe') then
               GerarIniMDFe( Cmd.Params(0)  );
-           {
-           else
-            begin
-              if (Cmd.Metodo = 'criarmdfesefaz') or (Cmd.Metodo = 'criarenviarmdfesefaz') or
-                 (Cmd.Metodo = 'adicionarmdfesefaz') then
-                  begin
-                    if not FileExists(Cmd.Params(0)) then
-                       raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.')
-                    else
-                     begin
-                       ACBrMDFe1.Manifestos.Clear;
-                       ACBrMDFe1.Manifestos.Add;
-//                       NFeRTXT := TNFeRTXT.Create(ACBrMDFe1.NotasFiscais.Items[0].NFe);
-                       try
-//                          NFeRTXT.CarregarArquivo(Cmd.Params(0));
-//                          if not NFeRTXT.LerTxt then
-//                             raise Exception.Create('Arquivo inválido!');
-                       finally
-//                          NFeRTXT.Free;
-                       end;
-                     end;
-                  end;
-            end;
-            }
+
            if (Cmd.Metodo = 'adicionarmdfe')  or (Cmd.Metodo = 'adicionarmdfesefaz') then
             begin
               ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)));
@@ -787,30 +669,20 @@ begin
         else if Cmd.Metodo = 'enviaremail' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(1)) or FileExists(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)) then
-            begin
-              if FileExists(Cmd.Params(1)) then
-               begin
-                 ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(1));
-                 ArqMDFe := Cmd.Params(1);
-               end
-              else
-               begin
-                 ACBrMDFe1.Manifestos.LoadFromFile(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-                 ArqMDFe := PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1);
-               end;
-            end
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(1)+' não encontrado.');
-
-           if ACBrMDFe1.Manifestos.Count = 0 then
-              raise Exception.Create('Nenhuma MDFe encontrada no arquivo: '+ ArqMDFe);
+           PathsMDFe := TStringList.Create;
+           try
+             PathsMDFe.Append(Cmd.Params(0));
+             PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             CarregarDFe(PathsMDFe, tDFeMDFe, ArqMDFe);
+           finally
+             PathsMDFe.Free;
+           end;
 
            sMensagemEmail := TStringList.Create;
            CC := TstringList.Create;
            Anexos := TstringList.Create;
 
-            try
+           try
              sMensagemEmail.Text := mmEmailMsgMDFe.Lines.Text;
 
              CC.DelimitedText := sLineBreak;
@@ -820,26 +692,25 @@ begin
              Anexos.Text := StringReplace(Cmd.Params(5),';',sLineBreak,[rfReplaceAll]);
              try
                ACBrMDFe1.Manifestos.Items[0].EnviarEmail( Cmd.Params(0),
-                                                           IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoMDFe.Text),
-                                                           sMensagemEmail
-                                                           , (Cmd.Params(2) = '1')   // Enviar PDF junto
-                                                           , CC    // Lista com emails que serão enviado cópias - TStrings
-                                                           , Anexos); // Lista de anexos - TStrings
+                                                          IfThen(NaoEstaVazio(Cmd.Params(3)),Cmd.Params(3),edtEmailAssuntoMDFe.Text),
+                                                           sMensagemEmail,
+                                                           (Cmd.Params(2) = '1'),   // Enviar PDF junto
+                                                           CC, // Lista com emails que serão enviado cópias - TStrings
+                                                           Anexos); // Lista de anexos - TStrings
 
 
                Cmd.Resposta := 'Email enviado com sucesso';
              except
-                on E: Exception do
-                 begin
-                   raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
-                 end;
+               on E: Exception do
+               begin
+                 raise Exception.Create('Erro ao enviar email'+sLineBreak+E.Message);
+               end;
              end;
            finally
              CC.Free;
              Anexos.Free;
              sMensagemEmail.Free;
            end;
-
          end
 
         else if Cmd.Metodo = 'setcertificado' then
@@ -879,64 +750,30 @@ begin
            try
               Cmd.Resposta := GerarMDFeIni( Cmd.Params(0));
            except
-               on E: Exception do
-                begin
-                  raise Exception.Create('Erro ao gerar INI do MDFe.'+sLineBreak+E.Message);
-                end;
+             on E: Exception do
+             begin
+               raise Exception.Create('Erro ao gerar INI do MDFe.'+sLineBreak+E.Message);
+             end;
            end;
          end
 
         else if Cmd.Metodo = 'mdfetotxt' then  //1-Arquivo XML, 2-NomeArqTXT
          begin
            ACBrMDFe1.Manifestos.Clear;
-           if FileExists(Cmd.Params(0)) then
-              ACBrMDFe1.Manifestos.LoadFromFile(Cmd.Params(0))
-           else
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-
+           CarregarDFe(Cmd.Params(0), tDFeMDFe);
            ACBrMDFe1.Manifestos.Items[0].GravarXML(Cmd.Params(1));
+
            Cmd.Resposta := ChangeFileExt(ACBrMDFe1.Manifestos.Items[0].NomeArq,'.txt');
          end
 
         else if Cmd.Metodo = 'savetofile' then
          begin
-           Memo := TStringList.Create;
-           try
-              Memo.Clear;
-              Memo.Text := ConvertStrRecived( cmd.Params(1) );
-              Memo.SaveToFile( Cmd.Params(0) );
-           finally
-              Memo.Free;
-           end;
+           DoACbr(Cmd);
          end
 
         else if Cmd.Metodo = 'loadfromfile' then
          begin
-           Files := Cmd.Params(0);
-           dtFim := IncSecond(now, StrToIntDef(Cmd.Params(1),1) );
-           while now <= dtFim do
-           begin
-              if FileExists( Files ) then
-              begin
-                 Memo  := TStringList.Create;
-                 try
-                    Memo.Clear;
-                    Memo.LoadFromFile( Files );
-                    Cmd.Resposta := Memo.Text;
-                    Break;
-                 finally
-                    Memo.Free;
-                 end;
-              end;
-
-              {$IFNDEF NOGUI}
-               Application.ProcessMessages;
-              {$ENDIF}
-              sleep(100);
-           end;
-
-           if not FileExists( Cmd.Params(0) ) then
-              raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado')
+           DoACBr(Cmd);
          end
 
         else if Cmd.Metodo = 'fileexists' then
@@ -1006,7 +843,7 @@ begin
 end;
 
 
-procedure GerarIniMDFe( AStr: WideString );
+procedure GerarIniMDFe( AStr: String );
 var
   I, J, K, L, M : Integer;
   sSecao, sFim : String;
@@ -1631,7 +1468,7 @@ begin
   end;
 end;
 
-function GerarMDFeIni( XML : WideString ) : WideString;
+function GerarMDFeIni( XML : String ) : String;
 var
   I, j, y : Integer;
   sSecao : String;

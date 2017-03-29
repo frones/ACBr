@@ -43,6 +43,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/03/2017
+[*] Movidas as funções: CarregarDFe para a unit ACBrMonitor1.pas, e modificada a mesma para poder carregar
+	CTes, MDFes e GNRes;
+	Refactor no carregamentos dos CTes, MDFes e GNRes, agora em todos os comandos com carregamento, pode ser passado
+	o path ou o conteúdo do arquivo como parâmetro.
+	por: Celso Marigo Junior
+
+27/03/2017
+[+] Adicionado campo indGlobalizado ao INI do CTe.
+	http://www.projetoacbr.com.br/forum/topic/35897-ct-e-globalizado-ct-e-30-indglobalizado/
+	por: Celso Marigo Junior
+
+27/03/2017
+[*] Modificado carregamento do INI dos parâmetros, devido às mudanças das libs OpenSSL.
+	Caso antes de atualizar, estivesse usando a OpenSSL, será configurada a nova propriedade
+	para usar libOpenSSL, caso anteriormente fosse capicom, ficará setado para libWinCrypt.
+	por: Celso Marigo Junior
+
 21/03/2017
 [+] Mudanças referentes à remoção da CAPICOM, citada em: 
 	http://www.projetoacbr.com.br/forum/topic/35727-bye-bye-capicom

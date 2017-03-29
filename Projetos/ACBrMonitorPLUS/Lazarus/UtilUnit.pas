@@ -34,6 +34,7 @@ unit UtilUnit;
 {$mode objfpc}{$H+}        
 
 interface
+
 Uses SysUtils, IniFiles, Classes, ACBrUtil ;
 
 Function AcertaPath(APath : String): String;
@@ -97,7 +98,5 @@ begin
      SStream.Free ;
   end ;
 end ;
-
-
 
 end.

@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+29/03/2017
+-- ACBrNFeDANFeRL --
+[*] Refatoração de ManterDocReferenciados para retornar a informações sem quebra de linha.
+[*] Refatoração de ManterInfContr, ManterObsFisco, ManterProcreferenciado.
+     Por : Henrique Leonardo	
+
+
+
 28/03/2017
 -- ACBrNFeDANFeRL, ACBrNFeDANFeRLRetrato, ACBrNFeDANFeRLPaisagem --
 [+] Ajuste para mostrar documentos referenciados em informações adicionais.

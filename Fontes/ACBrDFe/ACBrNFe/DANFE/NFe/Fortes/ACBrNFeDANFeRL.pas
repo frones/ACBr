@@ -787,51 +787,77 @@ begin
   end;
 end;
 
-
 function TfrlDANFeRL.ManterDocreferenciados : String;
+// Informações de Documentos referenciados
+  Function MontaLadoALado(  bExecuta : Boolean;
+                            sResult : string;
+                            sInicio : String;
+                            sString : String ) : String;
+  begin
+    if bExecuta  then
+    begin
+      if sResult = '' then
+        Result := sInicio
+      else
+      if pos(sInicio,sResult)=0 then
+        Result := sResult+', '+ sInicio
+      else
+        Result := sResult+', ';
+
+      Result := Result + '(' + sString +')' ;
+    end
+    else
+      Result := sResult;
+  end;
 var
   i : Integer;
 begin
   Result := '';
-  // Informações de Documentos referenciados
   if FNFe.Ide.NFref.Count > 0 then
   begin
     for i := 0 to (FNFe.ide.NFref.Count - 1) do
     begin
-      if FNFe.ide.NFref[i].refNFe <> '' then
-        Result := Result + 'NFe Ref.: ' + FormatarChaveAcesso( FNFe.ide.NFref[i].refNFe )
-      else
-      if FNFe.ide.NFref[i].refCTe <> '' then
-        Result := Result + 'CTe Ref.: ' + FormatarChaveAcesso( FNFe.ide.NFref[i].refCTe )
-      else
-      if FNFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio then
-        Result := Result + ACBrStr('ECF Ref.: modelo: ' + ECFModRefToStr(FNFe.ide.NFref[i].RefECF.modelo) +
-          ' ECF:' +FNFe.ide.NFref[i].RefECF.nECF + ' COO:' + FNFe.ide.NFref[i].RefECF.nCOO)
-      else
-      if FNFe.ide.NFref[i].RefNF.CNPJ <> '' then
-        Result := Result + ACBrStr('NF Ref.: série: ' + IntTostr(FNFe.ide.NFref[i].RefNF.serie) +
-          ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNF.nNF) +
-          ' emit:' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNF.CNPJ) +
-          ' modelo: ' + IntTostr(FNFe.ide.NFref[i].RefNF.modelo))
-      else
-      if FNFe.ide.NFref[i].RefNFP.nNF > 0 then
-        Result := Result + ACBrStr('NFP Ref.: série: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.serie) +
-          ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.nNF) +
-          ' modelo: ' + FNFe.ide.NFref[i].RefNFP.modelo +
-          ' emit:' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNFP.CNPJCPF) +
-          ' IE:' + FNFe.ide.NFref[i].RefNFP.IE +
-          ' UF:' + CUFtoUF(FNFe.ide.NFref[i].RefNFP.cUF));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].refNFe <> '' ),
+                                  Result,
+                                  'NFe Ref.:',
+                                  FormatarChaveAcesso( FNFe.ide.NFref[i].refNFe ) );
+
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].refCTe <> '' ),
+                                  Result,
+                                  'CTe Ref.:',
+                                  FormatarChaveAcesso( FNFe.ide.NFref[i].refCTe ));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio ) ,
+                                  Result,
+                                  'ECF Ref.:',
+                                  ACBrStr('modelo: ' + ECFModRefToStr(FNFe.ide.NFref[i].RefECF.modelo) +
+                                  ' ECF: ' +FNFe.ide.NFref[i].RefECF.nECF + ' COO: ' + FNFe.ide.NFref[i].RefECF.nCOO));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefNF.CNPJ <> '' ),
+                                  Result,
+                                  'NF Ref.:',
+                                  ACBrStr('série: ' + IntTostr(FNFe.ide.NFref[i].RefNF.serie) +
+                                  ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNF.nNF) +
+                                  ' emit: ' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNF.CNPJ) +
+                                  ' modelo: ' + IntTostr(FNFe.ide.NFref[i].RefNF.modelo)));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefNFP.nNF > 0 ),
+                                  Result,
+                                  'NFP Ref.:',
+                                  ACBrStr('série: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.serie) +
+                                  ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.nNF) +
+                                  ' modelo: ' + FNFe.ide.NFref[i].RefNFP.modelo +
+                                  ' emit: ' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNFP.CNPJCPF) +
+                                  ' IE: ' + FNFe.ide.NFref[i].RefNFP.IE +
+                                  ' UF: ' + CUFtoUF(FNFe.ide.NFref[i].RefNFP.cUF)));
 
     end;
-    Result := Result + '; ';
+    Result := Result + ' ';
   end;
 end;
 
 
 function TfrlDANFeRL.ManterInfAdFisco : String;
+// Informações de interesse do fisco
 begin
   Result := '';
-  // Informações de interesse do fisco
   if FNFe.InfAdic.infAdFisco > '' then
   begin
     if FNFe.InfAdic.infCpl > '' then
@@ -842,82 +868,75 @@ begin
 end;
 
 function TfrlDANFeRL.ManterInfCompl : String;
+ // Informações de interesse do contribuinte
 begin
   Result := '';
- // Informações de interesse do contribuinte
   if FNFe.InfAdic.infCpl > '' then
     Result := FNFe.InfAdic.infCpl
 end;
 
 
 function TfrlDANFeRL.ManterInfContr : String;
+ // Informações de uso livre do contribuinte com "xCampo" e "xTexto"
 var
   i : Integer;
 begin
   Result := '';
-  // Informações de uso livre do contribuinte com "xCampo" e "xTexto"
-  if FNFe.InfAdic.obsCont.Count > 0 then
+  with FNFe.InfAdic do
   begin
-    for i := 0 to (FNFe.InfAdic.obsCont.Count - 1) do
+    if obsCont.Count > 0 then
     begin
-      if FNFe.InfAdic.obsCont.Items[i].Index =
-        (FNFe.InfAdic.obsCont.Count - 1) then
-        Result := Result + FNFe.InfAdic.obsCont.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto
-      else
-        Result := Result + FNFe.InfAdic.obsCont.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsCont.Items[i].xTexto + '; ';
+      for i := 0 to ( obsCont.Count - 1) do
+      begin
+        Result := Result + obsCont.Items[i].xCampo + ': ' + obsCont.Items[i].xTexto+
+                  ifthen( ( obsCont.Items[i].Index = ( obsCont.Count - 1) ) ,'', ';');
+      end;
+      Result := Result + '; ';
     end;
-    Result := Result + '; ';
   end;
 end;
 
-
 function TfrlDANFeRL.ManterObsFisco : String;
+ // Informações de uso livre do fisco com "xCampo" e "xTexto"
 var
   i : Integer;
 begin
   Result := '';
-  // Informações de uso livre do fisco com "xCampo" e "xTexto"
-  if FNFe.InfAdic.obsFisco.Count > 0 then
+  with FNFe.InfAdic do
   begin
-    for i := 0 to (FNFe.InfAdic.obsFisco.Count - 1) do
+    if obsFisco.Count > 0 then
     begin
-      if FNFe.InfAdic.obsFisco.Items[i].Index =
-        (FNFe.InfAdic.obsFisco.Count - 1) then
-        Result := Result + FNFe.InfAdic.obsFisco.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto
-      else
-        Result := Result + FNFe.InfAdic.obsFisco.Items[i].xCampo +
-          ': ' + FNFe.InfAdic.obsFisco.Items[i].xTexto + '; ';
+      for i := 0 to ( obsFisco.Count - 1 ) do
+      begin
+        Result := Result + obsFisco.Items[i].xCampo +': ' + obsFisco.Items[i].xTexto +
+                  ifthen( ( obsFisco.Items[i].Index = (obsFisco.Count - 1) ) ,'', ';');
+      end;
+      Result := Result + '; ';
     end;
-    Result := Result + '; ';
   end;
 end;
 
 function TfrlDANFeRL.ManterProcreferenciado : String;
+ // Informações do processo referenciado
 var
   i : Integer;
-  sIndProc : String;
 begin
   Result := '';
-  // Informações do processo referenciado
-  if FNFe.InfAdic.procRef.Count > 0 then
+  with FNFe.InfAdic do
   begin
-    for i := 0 to (FNFe.InfAdic.procRef.Count - 1) do
+    if procRef.Count > 0 then
     begin
-      sIndProc := ACBrStr( indProcToDescrStr(FNFe.InfAdic.procRef.Items[i].indProc ) );
-
-      if FNFe.InfAdic.procRef.Items[i].Index = (FNFe.InfAdic.procRef.Count - 1) then
-        Result := Result + ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
-                          FNFe.InfAdic.procRef.Items[i].nProc +
-                          ' - ORIGEM: ' + sIndProc
-      else
-        Result := Result + ACBrStr('PROCESSO OU ATO CONCESSÓRIO Nº: ') +
-                          FNFe.InfAdic.procRef.Items[i].nProc +
-                   ' - ORIGEM: ' + sIndProc + '; ';
+      for i := 0 to (procRef.Count - 1) do
+      begin
+        if procRef.Items[i].Index = (procRef.Count - 1) then
+          Result := Result + ACBrStr( 'PROCESSO OU ATO CONCESSÓRIO Nº: ' +
+                             procRef.Items[i].nProc +
+                             ' - ORIGEM: ' +
+                             indProcToDescrStr(procRef.Items[i].indProc ))+
+                  ifthen( ( procRef.Items[i].Index = (procRef.Count - 1) ) ,'', ';');
+      end;
+      Result := Result + '; ';
     end;
-    Result := Result + '; ';
   end;
 end;
 

@@ -678,6 +678,42 @@ begin
     RLPrinters.RLPrinter.Copies := FNumCopias
   else
     RLPrinters.RLPrinter.Copies := 1;
+
+  if FLogoemCima then
+  begin
+    rliLogo.Top        := 16;
+    rliLogo.Left       := 8;
+    rliLogo.Height     := 42;
+    rliLogo.Width      := 258;
+
+    rlmEmitente.Top    := 58;
+    rlmEmitente.Left   := 8;
+    rlmEmitente.Height := 28;
+    rlmEmitente.Width  := 255;
+
+    rlmEndereco.Top    := 85;
+    rlmEndereco.Left   := 8;
+    rlmEndereco.Height := 25;
+    rlmEndereco.Width  := 255;
+
+  end
+  else
+  begin
+    rliLogo.Top        := 48;
+    rliLogo.Left       := 8;
+    rliLogo.Height     := 63;
+    rliLogo.Width      := 67;
+
+    rlmEmitente.Top    := 18;
+    rlmEmitente.Left   := 8;
+    rlmEmitente.Height := 32;
+    rlmEmitente.Width  := 258;
+
+    rlmEndereco.Top    := 48;
+    rlmEndereco.Left   := 80;
+    rlmEndereco.Height := 33;
+    rlmEndereco.Width  := 185;
+  end;
 end;
 
 

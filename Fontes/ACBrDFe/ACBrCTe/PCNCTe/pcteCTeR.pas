@@ -673,6 +673,7 @@ begin
   (* Grupo da TAG <infCTeNorm> ************************************************)
   if Leitor.rExtrai(1, 'infCTeNorm') <> '' then
   begin
+    CTe.infCTeNorm.refCTeCanc := Leitor.rCampo(tcStr,'refCTeCanc');
 
     if Leitor.rExtrai(2, 'infServico') <> '' then
     begin

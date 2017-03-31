@@ -1117,6 +1117,7 @@ type
     FinfServVinc: TinfServVinc;
     FinfServico: TinfServico;
     FinfDocRef: TinfDocRefCollection;
+    FrefCTeCanc: String;
 
     procedure SetSeg(const Value: TSegCollection);
     procedure SetPeri(const Value: TPeriCollection);
@@ -1149,6 +1150,7 @@ type
 
     property infServico: TinfServico         read FinfServico write FinfServico;
     property infDocRef: TinfDocRefCollection read FinfDocRef  write SetinfDocRef;
+    property refCTeCanc: String              read FrefCTeCanc write FrefCTeCanc;
   end;
 
   TInfServico = class(TPersistent)

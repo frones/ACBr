@@ -2299,7 +2299,13 @@ begin
       end;
 
       if (FPConfiguracoesMDFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
-        FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      begin
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoMDFe]) then // salvar evento
+          FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+
+        if (FretDistDFeInt.docZip.Items[I].schema in [schprocMDFe]) then
+          FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
+      end;
     end;
   end;
 
@@ -2349,9 +2355,18 @@ begin
   else
     Data := Now;
 
-  Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resMDFe.xNome,
-                                                         AItem.resMDFe.CNPJCPF,
-                                                         Data);
+  case AItem.schema of
+    schprocEventoMDFe:
+      Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
+                                                           AItem.resMDFe.CNPJCPF,
+                                                           Data);
+
+
+    schprocMDFe:
+      Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resMDFe.xNome,
+                                                             AItem.resMDFe.CNPJCPF,
+                                                             Data);
+  end;
 end;
 (*
 procedure TDistribuicaoDFe.DefinirURL;

@@ -1843,7 +1843,7 @@ begin
     if CNPJ = '' then
       GerarException(ACBrStr('O CNPJ não informado em: Configuracoes.Geral.Emitente.CNPJ'));
     IM := FPConfiguracoesNFSe.Geral.Emitente.InscMun;
-    if (IM = '') and (Provedor <> proBetha) then
+    if (IM = '') and (not (Provedor in [proBetha, proBethav2])) then
       GerarException(ACBrStr('A I.M. não informada em: Configuracoes.Geral.Emitente.InscMun'));
     RazaoSocial := FPConfiguracoesNFSe.Geral.Emitente.RazSocial;
     if RazaoSocial = '' then
@@ -2624,7 +2624,7 @@ begin
 
       proEGoverneISS: FTagGrupo := 'request';
 
-      proPublica:     FTagGrupo := 'Rps></GerarNfseEnvio';
+      //proPublica:     FTagGrupo := 'Rps></GerarNfseEnvio';
 
       proSP:          FTagGrupo := 'PedidoEnvioRPS';
     else
@@ -2679,9 +2679,10 @@ begin
   begin
     DefinirSignatureNode('');
 
-//    case FProvedor of
-//      proPublica: FTagGrupo := FPrefixo3 + 'Rps></GerarNfseEnvio';
-//    end;
+    case FProvedor of
+      proBethav2,
+      proPublica: FTagGrupo := FPrefixo3 + 'Rps></GerarNfseEnvio';
+    end;
 
     FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,
                               FTagGrupo, TagElemento,

@@ -2012,6 +2012,8 @@ type
     property vTar: Currency read FvTar write FvTar;
   end;
 
+  { TNatCarga }
+
   TNatCarga = class(TPersistent)
   private
     FxDime    : String;
@@ -2021,6 +2023,7 @@ type
     procedure SetcinfManu(const Value: TpInfManuCollection);
   public
     constructor Create(AOwner: TAereo);
+    destructor Destroy; override;
 
     property xDime:    String              read FxDime    write FxDime;
     property cinfManu: TpInfManuCollection read FcinfManu write SetcinfManu;
@@ -4225,7 +4228,13 @@ begin
    FcinfManu := TpInfManuCollection.Create(Self);
 end;
 
-procedure TNatCarga.SetcInfManu(const Value: TpInfManuCollection);
+destructor TNatCarga.Destroy;
+begin
+  FcinfManu.Free;
+  inherited Destroy;
+end;
+
+procedure TNatCarga.SetcinfManu(const Value: TpInfManuCollection);
 begin
   FcInfManu.Assign(Value);
 end;

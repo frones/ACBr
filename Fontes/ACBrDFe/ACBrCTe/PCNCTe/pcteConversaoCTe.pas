@@ -99,6 +99,8 @@ type
   TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
   TIndicador = (tiSim, tiNao);
   TEspecie = (teNumerario, teCheque, teMoeda, teOutros);
+  TpInfManu = (imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,  imGSR,   imNR,    imAPCC,
+               imAAGA,  imPI965,  imPI966, imPI967,  imPI968, imPI969, imPI970, imOUTRO);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -189,6 +191,9 @@ function StrToTEspecie(out ok: Boolean; const s: String): TEspecie;
 function TpRspSeguroToStr(const t: TpcteRspSeg): String;
 function TpRspSeguroToStrText(const t: TpcteRspSeg): String;
 function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
+
+function TpInfManuToStr(const t: TpInfManu): string;
+function StrToTpInfManu(out ok: boolean; const s: string): TpInfManu;
 
 implementation
 
@@ -647,6 +652,20 @@ begin
   result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
                          [rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario,
                           rsEmitenteCTe, rsTomadorServico]);
+end;
+
+function TpInfManuToStr(const t: TpInfManu): string;
+begin
+  result := EnumeradoToStr(t, ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','99'],
+                              [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,  imGSR,   imNR,    imAPCC,
+                               imAAGA,  imPI965,  imPI966, imPI967,  imPI968, imPI969, imPI970, imOUTRO]);
+end;
+
+function StrToTpInfManu(out ok: boolean; const s: string): TpInfManu;
+begin
+  result := StrToEnumerado(ok, s, ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','99'],
+                                  [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,  imGSR,   imNR,    imAPCC,
+                                   imAAGA,  imPI965,  imPI966, imPI967,  imPI968, imPI969, imPI970, imOUTRO]);
 end;
 
 end.

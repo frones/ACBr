@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/03/2017
+-- Diversos --
+[*] Correção e alteração na definição do campo cInfManu.
+   Por: José S. Simione
+		
 23/02/2017
 -- pcteCTeR --
 [*] Correção na leitura da chave de um CTe Complementado

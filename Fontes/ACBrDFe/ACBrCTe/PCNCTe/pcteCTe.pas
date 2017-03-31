@@ -217,6 +217,8 @@ type
   TAereo    = class;
   TTarifa   = class;
   TNatCarga = class;
+  TpInfManuCollection     = class;
+  TpInfManuCollectionItem = class;
 
   // Informações do modal Aquaviário
   TAquav                 = class;
@@ -2013,12 +2015,37 @@ type
   TNatCarga = class(TPersistent)
   private
     FxDime    : String;
-    FcinfManu : Integer; // Alterar para ser uma lista
+    FcinfManu : TpInfManuCollection;
     FcIMP     : String;  // Alterar para ser uma lista
+
+    procedure SetcinfManu(const Value: TpInfManuCollection);
   public
-    property xDime: String     read FxDime    write FxDime;
-    property cinfManu: Integer read FcinfManu write FcinfManu;
-    property cIMP: String      read FcIMP     write FcIMP;
+    constructor Create(AOwner: TAereo);
+
+    property xDime:    String              read FxDime    write FxDime;
+    property cinfManu: TpInfManuCollection read FcinfManu write SetcinfManu;
+    property cIMP:     String              read FcIMP     write FcIMP;
+  end;
+
+  TpInfManuCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TpInfManuCollectionItem;
+    procedure SetItem(Index: Integer; Value: TpInfManuCollectionItem);
+  public
+    constructor Create(AOwner: TNatCarga);
+
+    function Add: TpInfManuCollectionItem;
+    property Items[Index: Integer]: TpInfManuCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TpInfManuCollectionItem = class(TCollectionItem)
+  private
+    FnInfManu : TpInfManu;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property nInfManu : TpInfManu  read FnInfManu   write FnInfManu;
   end;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -4183,13 +4210,59 @@ end;
 constructor TAereo.Create(AOwner: TInfCTeNorm);
 begin
   Ftarifa   := TTarifa.Create;
-  FnatCarga := TNatCarga.Create;
+  FnatCarga := TNatCarga.Create(Self);
 end;
 
 destructor TAereo.Destroy;
 begin
   Ftarifa.Free;
   FnatCarga.Free;
+  inherited;
+end;
+
+constructor TNatCarga.Create(AOwner: TAereo);
+begin
+   FcinfManu := TpInfManuCollection.Create(Self);
+end;
+
+procedure TNatCarga.SetcInfManu(const Value: TpInfManuCollection);
+begin
+  FcInfManu.Assign(Value);
+end;
+
+{ TpInfManuCollection }
+
+function TpInfManuCollection.Add: TpInfManuCollectionItem;
+begin
+  Result := TpInfManuCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TpInfManuCollection.Create(AOwner: TNatCarga);
+begin
+  inherited Create(TpInfManuCollectionItem);
+end;
+
+function TpInfManuCollection.GetItem(Index: Integer): TpInfManuCollectionItem;
+begin
+  Result := TpInfManuCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TpInfManuCollection.SetItem(Index: Integer; Value: TpInfManuCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TpInfManuCollectionItem }
+
+constructor TpInfManuCollectionItem.Create;
+begin
+
+end;
+
+destructor TpInfManuCollectionItem.Destroy;
+begin
+
   inherited;
 end;
 

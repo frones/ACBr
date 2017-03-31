@@ -722,6 +722,19 @@ begin
 end;
 
 procedure TCTeW.GerarTomador;
+
+procedure GeraIE;
+begin
+  if Trim(CTe.toma.IE) = 'ISENTO' then
+    Gerador.wCampo(tcStr, '#067', 'IE ', 00, 14, 1, CTe.toma.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, '#067', 'IE ', 00, 14, 1, OnlyNumber(CTe.toma.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.toma.IE, CTe.toma.EnderToma.UF) then
+      Gerador.wAlerta('#067', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+end;
+
 begin
   if (trim(CTe.toma.IE) <> '') or
      (trim(CTe.toma.xNome) <> '') then
@@ -733,22 +746,27 @@ begin
 
     if CTe.toma.EnderToma.cPais = 1058 then
       Gerador.wCampoCNPJCPF('#064', '#065', CTe.toma.CNPJCPF)
-     else
+    else
       Gerador.wCampo(tcStr, '#064', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    Gerador.wCampo(tcStr, '#066', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.toma.indIEToma), DSC_INDIETOMA);
+    if (CTe.infCTe.versao >= 3) then
+      Gerador.wCampo(tcStr, '#066', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.toma.indIEToma), DSC_INDIETOMA);
 
-    if trim(CTe.toma.IE) <> ''
-     then begin
-      if Trim(CTe.toma.IE) = 'ISENTO' then
-        Gerador.wCampo(tcStr, '#067', 'IE ', 00, 14, 1, CTe.toma.IE, DSC_IE)
+    if (Trim(CTe.toma.IE) <> '') then
+    begin
+      if (CTe.infCTe.versao >= 3) then
+      begin
+        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+        begin
+          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+            GeraIE;
+        end
+        else
+          GeraIE;
+      end
       else
-        Gerador.wCampo(tcStr, '#067', 'IE ', 00, 14, 1, OnlyNumber(CTe.toma.IE), DSC_IE);
-
-      if (FOpcoes.ValidarInscricoes) then
-        if not ValidarIE(CTe.toma.IE, CTe.toma.EnderToma.UF) then
-          Gerador.wAlerta('#067', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-     end;
+        GeraIE;
+    end;
 
     Gerador.wCampo(tcStr, '#068', 'xNome  ', 02, 60, 1, CTe.toma.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, '#069', 'xFant  ', 02, 60, 0, CTe.toma.xFant, DSC_XFANT);
@@ -791,6 +809,19 @@ begin
 end;
 
 procedure TCTeW.GerarRem;
+
+procedure GeraIE;
+begin
+  if Trim(CTe.Rem.IE) = 'ISENTO' then
+    Gerador.wCampo(tcStr, '#115', 'IE ', 00, 14, 1, CTe.Rem.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, '#115', 'IE ', 00, 14, 1, OnlyNumber(CTe.Rem.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.Rem.IE, CTe.Rem.EnderReme.UF) then
+      Gerador.wAlerta('#115', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+end;
+
 begin
   if (trim(CTe.Rem.CNPJCPF) <> '') or
      (trim(CTe.Rem.xNome) <> '') then
@@ -802,16 +833,21 @@ begin
 
       if CTe.Rem.enderReme.cPais = 1058 then
         Gerador.wCampoCNPJCPF('#113', '#114', CTe.Rem.CNPJCPF)
-       else
+      else
         Gerador.wCampo(tcStr, '#113', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-      if Trim(CTe.Rem.IE) = 'ISENTO'
-       then Gerador.wCampo(tcStr, '#115', 'IE ', 00, 14, 1, CTe.Rem.IE, DSC_IE)
-       else Gerador.wCampo(tcStr, '#115', 'IE ', 00, 14, 1, OnlyNumber(CTe.Rem.IE), DSC_IE);
-
-      if (FOpcoes.ValidarInscricoes)
-       then if not ValidarIE(CTe.Rem.IE, CTe.Rem.EnderReme.UF) then
-        Gerador.wAlerta('#115', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+      if (CTe.infCTe.versao >= 3) then
+      begin
+        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '0') then
+        begin
+          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+            GeraIE;
+        end
+        else
+          GeraIE;
+      end
+      else
+        GeraIE;
 
       if CTe.Ide.tpAmb = taHomologacao
        then Gerador.wCampo(tcStr, '#116', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -879,6 +915,19 @@ begin
 end;
 
 procedure TCTeW.GerarExped;
+
+procedure GeraIE;
+begin
+  if Trim(CTe.Exped.IE) = 'ISENTO' then
+    Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, CTe.Exped.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, OnlyNumber(CTe.Exped.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.Exped.IE, CTe.Exped.EnderExped.UF) then
+      Gerador.wAlerta('#145', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+end;
+
 begin
   if (trim(CTe.Exped.CNPJCPF) <> '') or
      (trim(CTe.Exped.xNome) <> '') then
@@ -890,16 +939,22 @@ begin
 
     if CTe.Exped.EnderExped.cPais = 1058 then
       Gerador.wCampoCNPJCPF('#143', '#144', CTe.Exped.CNPJCPF)
-     else
+    else
       Gerador.wCampo(tcStr, '#143', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if Trim(CTe.Exped.IE) = 'ISENTO'
-     then Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, CTe.Exped.IE, DSC_IE)
-     else Gerador.wCampo(tcStr, '#145', 'IE ', 00, 14, 1, OnlyNumber(CTe.Exped.IE), DSC_IE);
-
-    if (FOpcoes.ValidarInscricoes)
-     then if not ValidarIE(CTe.Exped.IE, CTe.Exped.EnderExped.UF) then
-      Gerador.wAlerta('#145', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+    if (CTe.infCTe.versao >= 3) then
+    begin
+      if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '1') then
+      begin
+        if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          GeraIE;
+      end
+      else
+        if (Trim(CTe.Exped.IE) <> '') then
+          GeraIE;
+    end
+    else
+      GeraIE;
 
     if CTe.Ide.tpAmb = taHomologacao
      then Gerador.wCampo(tcStr, '#146', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -942,6 +997,19 @@ begin
 end;
 
 procedure TCTeW.GerarReceb;
+
+procedure GeraIE;
+begin
+  if Trim(CTe.Receb.IE) = 'ISENTO' then
+    Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, CTe.Receb.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, OnlyNumber(CTe.Receb.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.Receb.IE, CTe.Receb.EnderReceb.UF) then
+      Gerador.wAlerta('#163', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+end;
+
 begin
   if (trim(CTe.Receb.CNPJCPF) <> '') or
      (trim(CTe.Receb.xNome) <> '') then
@@ -953,16 +1021,21 @@ begin
 
     if CTe.Receb.EnderReceb.cPais = 1058 then
       Gerador.wCampoCNPJCPF('#161', '#162', CTe.Receb.CNPJCPF)
-     else
+    else
       Gerador.wCampo(tcStr, '#161', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if Trim(CTe.Receb.IE) = 'ISENTO'
-     then Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, CTe.Receb.IE, DSC_IE)
-     else Gerador.wCampo(tcStr, '#163', 'IE ', 00, 14, 1, OnlyNumber(CTe.Receb.IE), DSC_IE);
-
-    if (FOpcoes.ValidarInscricoes)
-     then if not ValidarIE(CTe.Receb.IE, CTe.Receb.EnderReceb.UF) then
-      Gerador.wAlerta('#163', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+    if (CTe.infCTe.versao >= 3) then
+    begin
+      if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '2') then
+      begin
+        if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+          GeraIE;
+      end
+      else
+        GeraIE;
+    end
+    else
+      GeraIE;
 
     if CTe.Ide.tpAmb = taHomologacao
      then Gerador.wCampo(tcStr, '#164', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1005,6 +1078,19 @@ begin
 end;
 
 procedure TCTeW.GerarDest;
+
+procedure GeraIE;
+begin
+  if Trim(CTe.Dest.IE) = 'ISENTO' then
+    Gerador.wCampo(tcStr, '#181', 'IE ', 00, 14, 1, CTe.Dest.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, '#181', 'IE ', 00, 14, 1, OnlyNumber(CTe.Dest.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.Dest.IE, CTe.Dest.EnderDest.UF) then
+      Gerador.wAlerta('#181', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+end;
+
 begin
   if (trim(CTe.Dest.CNPJCPF) <> '') or
      (trim(CTe.Dest.xNome) <> '') then
@@ -1016,19 +1102,24 @@ begin
 
       if CTe.Dest.EnderDest.cPais = 1058 then
         Gerador.wCampoCNPJCPF('#179', '#180', CTe.Dest.CNPJCPF)
-       else
+      else
         Gerador.wCampo(tcStr, '#179', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-      if trim(CTe.Dest.IE) <> ''
-       then begin
-        if Trim(CTe.Dest.IE) = 'ISENTO'
-         then Gerador.wCampo(tcStr, '#181', 'IE ', 00, 14, 1, CTe.Dest.IE, DSC_IE)
-         else Gerador.wCampo(tcStr, '#181', 'IE ', 00, 14, 1, OnlyNumber(CTe.Dest.IE), DSC_IE);
-
-        if (FOpcoes.ValidarInscricoes)
-         then if not ValidarIE(CTe.Dest.IE, CTe.Dest.EnderDest.UF) then
-          Gerador.wAlerta('#181', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-       end;
+      if (Trim(CTe.Dest.IE) <> '') then
+      begin
+        if (CTe.infCTe.versao >= 3) then
+        begin
+          if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+          begin
+            if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+              GeraIE;
+          end
+          else
+            GeraIE;
+        end
+        else
+          GeraIE;
+      end;
 
       if CTe.Ide.tpAmb = taHomologacao
        then Gerador.wCampo(tcStr, '#182', 'xNome  ', 02, 60, 1, xRazao, DSC_XNOME)
@@ -1962,6 +2053,8 @@ begin
 end;
 
 procedure TCTeW.GerarAereo;
+var
+  i: Integer;
 begin
   Gerador.wGrupo('aereo', '#01');
   Gerador.wCampo(tcInt, '#02', 'nMinu     ', 09, 09, 0, CTe.infCTeNorm.aereo.nMinu, DSC_NMINU);
@@ -1970,21 +2063,46 @@ begin
   Gerador.wCampo(tcStr, '#05', 'xLAgEmi   ', 01, 20, 0, CTe.infCTeNorm.aereo.xLAgEmi, DSC_XLAGEMI);
   Gerador.wCampo(tcStr, '#06', 'IdT       ', 01, 14, 0, CTe.infCTeNorm.aereo.IdT, DSC_IDT);
 
-  Gerador.wGrupo('tarifa', '#07');
-  Gerador.wCampo(tcStr, '#08', 'CL     ', 01, 02, 0, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
-  Gerador.wCampo(tcStr, '#09', 'cTar   ', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
-  Gerador.wCampo(tcDe2, '#10', 'vTar   ', 01, 15, 0, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
-  Gerador.wGrupo('/tarifa');
+  if CTe.infCTe.versao >= 3 then
+  begin
+    if (trim(CTe.infCTeNorm.aereo.natCarga.xDime) <> '') or (CTe.infCTeNorm.aereo.natCarga.cinfManu.Count <> 0) then
+    begin
+      Gerador.wGrupo('natCarga', '#11');
+      Gerador.wCampo(tcStr, '#12', 'xDime', 05, 14, 0, CTe.infCTeNorm.aereo.natCarga.xDime, DSC_XDIME);
 
-  if (trim(CTe.infCTeNorm.aereo.natCarga.xDime) <> '') or (CTe.infCTeNorm.aereo.natCarga.cinfManu <> 0) or
-     (trim(CTe.infCTeNorm.aereo.natCarga.cImp) <> '')
-   then begin
-    Gerador.wGrupo('natCarga', '#11');
-    Gerador.wCampo(tcStr, '#12', 'xDime   ', 05, 14, 0, CTe.infCTeNorm.aereo.natCarga.xDime, DSC_XDIME);
-    Gerador.wCampo(tcInt, '#13', 'cInfManu', 01, 02, 0, CTe.infCTeNorm.aereo.natCarga.cinfManu, DSC_CINFMANU);
-    Gerador.wCampo(tcStr, '#14', 'cIMP    ', 03, 03, 0, CTe.infCTeNorm.aereo.natCarga.cIMP, DSC_CIMP);
-    Gerador.wGrupo('/natCarga');
-   end;
+      for i := 0 to CTe.infCTeNorm.aereo.natCarga.cinfManu.Count - 1 do
+        Gerador.wCampo(tcInt, '#13', 'cInfManu', 02, 02, 0, TpInfManuToStr(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu), DSC_CINFMANU);
+
+      Gerador.wGrupo('/natCarga');
+    end;
+
+    Gerador.wGrupo('tarifa', '#07');
+    Gerador.wCampo(tcStr, '#08', 'CL  ', 01, 02, 0, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
+    Gerador.wCampo(tcStr, '#09', 'cTar', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
+    Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 0, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
+    Gerador.wGrupo('/tarifa');
+  end
+  else
+  begin
+    Gerador.wGrupo('tarifa', '#07');
+    Gerador.wCampo(tcStr, '#08', 'CL  ', 01, 02, 0, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
+    Gerador.wCampo(tcStr, '#09', 'cTar', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
+    Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 0, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
+    Gerador.wGrupo('/tarifa');
+
+    if (trim(CTe.infCTeNorm.aereo.natCarga.xDime) <> '') or (CTe.infCTeNorm.aereo.natCarga.cinfManu.Count <> 0) or
+     (trim(CTe.infCTeNorm.aereo.natCarga.cImp) <> '') then
+     begin
+      Gerador.wGrupo('natCarga', '#11');
+      Gerador.wCampo(tcStr, '#12', 'xDime', 05, 14, 0, CTe.infCTeNorm.aereo.natCarga.xDime, DSC_XDIME);
+
+      for i := 0 to CTe.infCTeNorm.aereo.natCarga.cinfManu.Count - 1 do
+        Gerador.wCampo(tcInt, '#13', 'cInfManu', 01, 02, 0, TpInfManuToStr(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu), DSC_CINFMANU);
+
+      Gerador.wCampo(tcStr, '#14', 'cIMP', 03, 03, 1, CTe.infCTeNorm.aereo.natCarga.cIMP, DSC_CIMP);
+      Gerador.wGrupo('/natCarga');
+     end;
+  end;
 
   Gerador.wGrupo('/aereo');
 end;
@@ -1996,8 +2114,13 @@ begin
   Gerador.wGrupo('aquav', '#01');
   Gerador.wCampo(tcDe2, '#02', 'vPrest   ', 01, 15, 1, CTe.infCTeNorm.aquav.vPrest, DSC_VPREST);
   Gerador.wCampo(tcDe2, '#03', 'vAFRMM   ', 01, 15, 1, CTe.infCTeNorm.aquav.vAFRMM, DSC_VAFRMM);
-  Gerador.wCampo(tcStr, '#04', 'nBooking ', 01, 10, 0, CTe.infCTeNorm.aquav.nBooking, DSC_NBOOKING);
-  Gerador.wCampo(tcStr, '#05', 'nCtrl    ', 01, 10, 0, CTe.infCTeNorm.aquav.nCtrl, DSC_NCTRL);
+
+  if (CTe.infCTe.versao = 2) then
+  begin
+    Gerador.wCampo(tcStr, '#04', 'nBooking ', 01, 10, 0, CTe.infCTeNorm.aquav.nBooking, DSC_NBOOKING);
+    Gerador.wCampo(tcStr, '#05', 'nCtrl    ', 01, 10, 0, CTe.infCTeNorm.aquav.nCtrl, DSC_NCTRL);
+  end;
+
   Gerador.wCampo(tcStr, '#06', 'xNavio   ', 01, 60, 1, CTe.infCTeNorm.aquav.xNavio, DSC_XNAVIO);
 
   for i := 0 to CTe.infCTeNorm.aquav.balsa.Count - 1 do
@@ -2009,13 +2132,18 @@ begin
   if CTe.infCTeNorm.aquav.balsa.Count > 3 then
    Gerador.wAlerta('#07', 'balsa', DSC_XBALSA, ERR_MSG_MAIOR_MAXIMO + '3');
 
-  Gerador.wCampo(tcStr, '#09', 'nViag    ', 01, 10, 0, CTe.infCTeNorm.aquav.nViag, DSC_NVIAG);
-  Gerador.wCampo(tcStr, '#10', 'direc    ', 01, 01, 1, TpDirecaoToStr(CTe.infCTeNorm.aquav.direc), DSC_DIREC);
-  Gerador.wCampo(tcStr, '#11', 'prtEmb   ', 01, 60, 0, CTe.infCTeNorm.aquav.prtEmb, DSC_PRTEMB);
-  Gerador.wCampo(tcStr, '#12', 'prtTrans ', 01, 60, 0, CTe.infCTeNorm.aquav.prtTrans, DSC_PRTTRANS);
-  Gerador.wCampo(tcStr, '#13', 'prtDest  ', 01, 60, 0, CTe.infCTeNorm.aquav.prtDest, DSC_PRTDEST);
-  Gerador.wCampo(tcStr, '#14', 'tpNav    ', 01, 01, 1, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
-  Gerador.wCampo(tcStr, '#15', 'irin     ', 01, 10, 1, CTe.infCTeNorm.aquav.irin, DSC_IRIN);
+  Gerador.wCampo(tcStr, '#09', 'nViag', 01, 10, 0, CTe.infCTeNorm.aquav.nViag, DSC_NVIAG);
+  Gerador.wCampo(tcStr, '#10', 'direc', 01, 01, 1, TpDirecaoToStr(CTe.infCTeNorm.aquav.direc), DSC_DIREC);
+
+  if (CTe.infCTe.versao = 2) then
+  begin
+    Gerador.wCampo(tcStr, '#11', 'prtEmb  ', 01, 60, 0, CTe.infCTeNorm.aquav.prtEmb, DSC_PRTEMB);
+    Gerador.wCampo(tcStr, '#12', 'prtTrans', 01, 60, 0, CTe.infCTeNorm.aquav.prtTrans, DSC_PRTTRANS);
+    Gerador.wCampo(tcStr, '#13', 'prtDest ', 01, 60, 0, CTe.infCTeNorm.aquav.prtDest, DSC_PRTDEST);
+    Gerador.wCampo(tcStr, '#14', 'tpNav   ', 01, 01, 1, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
+  end;
+
+  Gerador.wCampo(tcStr, '#15', 'irin', 01, 10, 1, CTe.infCTeNorm.aquav.irin, DSC_IRIN);
 
   for i := 0 to CTe.infCTeNorm.aquav.detCont.Count - 1 do
    begin

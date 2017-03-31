@@ -1201,8 +1201,16 @@ begin
       if Leitor.rExtrai(3, 'natCarga') <> '' then
        begin
          CTe.infCTeNorm.aereo.natCarga.xDime     := Leitor.rCampo(tcStr,'xDime');
-         CTe.infCTeNorm.aereo.natCarga.cinfManu  := Leitor.rCampo(tcInt,'cInfManu');
          CTe.infCTeNorm.aereo.natCarga.cIMP      := Leitor.rCampo(tcStr,'cIMP');
+
+         i01 := 0;
+         CTe.infCTeNorm.aereo.natCarga.cinfManu.Clear;
+         while Leitor.rExtrai(4, 'cInfManu', '', i01 + 1) <> '' do
+         begin
+           CTe.infCTeNorm.aereo.natCarga.cinfManu.Add;
+           CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'));
+           inc(i01);
+         end;
        end;
     end; // fim das informações do modal Aéreo
 

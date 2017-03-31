@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2017
+-- ACBrNFeDAInutRL.pas --
+[*] Correção de memory leak, contribuição do fórum
+	http://www.projetoacbr.com.br/forum/topic/35951-memory-leak-ao-imprimir-com-forte-inutiliza%C3%A7%C3%A3o/
+	por: Celso Marigo Junior
 
 29/03/2017
 -- ACBrNFeDANFeRL --

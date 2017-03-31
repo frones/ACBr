@@ -2420,8 +2420,11 @@ begin
     FieldByName('cTar').AsString := aereo.tarifa.cTar;
     FieldByName('vTar').AsCurrency := aereo.tarifa.vTar;
     FieldByName('xDime').AsString := aereo.natCarga.xDime;
-    FieldByName('cInfManu').AsInteger := aereo.natCarga.cinfManu;
-    FieldByName('cIMP').AsString := aereo.natCarga.cIMP;
+    
+	if aereo.natCarga.cinfManu.Count > 0 then
+	  FieldByName('cInfManu').AsInteger := Ord(aereo.natCarga.cinfManu.Items[0].nInfManu);
+    
+	FieldByName('cIMP').AsString := aereo.natCarga.cIMP;
     FieldByName('xOrig').AsString := CTe.compl.fluxo.xOrig;
     FieldByName('xDest').AsString := CTe.compl.fluxo.xDest;
     FieldByName('xRota').AsString := CTe.compl.fluxo.xRota;

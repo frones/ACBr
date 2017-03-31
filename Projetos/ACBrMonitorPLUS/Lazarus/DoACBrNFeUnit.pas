@@ -77,6 +77,7 @@ var
 
   CC, Anexos: Tstrings;
   sTemMais,ErrosRegraNegocio: String;
+  tipoEvento: TpcnTpEvento;
 begin
  with FrmACBrMonitor do
   begin
@@ -1455,8 +1456,9 @@ begin
              // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
              if ( ArqEvento = '' ) then
              begin
-               ArqEvento := ACBrNFe1.EventoNFe.ObterNomeArquivo(teCCe);
-               ArqEvento := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(teCCe))+ArqEvento;
+               tipoEvento := ACBrNFe1.EventoNFe.Evento[0].InfEvento.tpEvento;
+               ArqEvento  := ACBrNFe1.EventoNFe.ObterNomeArquivo(tipoEvento);
+               ArqEvento  := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
                ACBrNFe1.EventoNFe.Gerador.SalvarArquivo(ArqEvento);
              end;
              Anexos.Add(ArqEvento);
@@ -1528,8 +1530,9 @@ begin
              // Se carregou evento usando XML como parâmetro, salva XML para poder anexar
              if ( ArqEvento = '' ) then
              begin
-               ArqEvento := ACBrNFe1.EventoNFe.ObterNomeArquivo(teCCe);
-               ArqEvento := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(teCCe))+ArqEvento;
+               tipoEvento := ACBrNFe1.EventoNFe.Evento[0].InfEvento.tpEvento;
+               ArqEvento  := ACBrNFe1.EventoNFe.ObterNomeArquivo(tipoEvento);
+               ArqEvento  := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.GetPathEvento(tipoEvento))+ArqEvento;
                ACBrNFe1.EventoNFe.Gerador.SalvarArquivo(ArqEvento);
              end;
              Anexos.Add(ArqEvento);

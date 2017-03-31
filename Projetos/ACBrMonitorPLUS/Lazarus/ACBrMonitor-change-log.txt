@@ -43,6 +43,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/03/2017
+[*] Ajustada propriedade do CTe: cInfManu, que passou a permitir várias no no grupo Aereo
+	- Informar valores como segue:
+	[Aereo]
+	infManu001=01
+	infManu002=99
+	infManuNNN=NN
+	por: Celso Marigo Junior
+
+31/03/2017
+[*] Correção no carregamento de eventos para ler o tipo do evento do evento carregado.
+	por: Celso Marigo Junior
+
 27/03/2017
 [*] Movidas as funções: CarregarDFe para a unit ACBrMonitor1.pas, e modificada a mesma para poder carregar
 	CTes, MDFes e GNRes;

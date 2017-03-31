@@ -448,7 +448,7 @@ end;
 
 procedure TForm1.btLerParamsClick(Sender : TObject) ;
 Var
-  ArqINI : String ;
+  ArqINI: String ;
   INI : TIniFile ;
 begin
   ArqINI := ChangeFileExt( Application.ExeName,'.ini' ) ;
@@ -500,7 +500,13 @@ begin
     seMargemDireita.Value  := INI.ReadInteger('Fortes','MargemDireita',ACBrSATExtratoFortes1.Margens.Direita);
     cbPreview.Checked      := INI.ReadBool('Fortes','Preview',True);
 
-    lImpressora.Caption := INI.ReadString('Printer','Name',Printer.PrinterName);
+    lImpressora.Caption    := INI.ReadString('Printer','Name', '');
+    if EstaVazio(lImpressora.Caption) then
+    begin
+      Printer.PrinterIndex := -1;
+      lImpressora.Caption  := Printer.Printers[Printer.PrinterIndex];
+    end;
+
     cbImprimir1Linha.Checked := INI.ReadBool('EscPos','ImprimirItemUmaLinha',cbImprimir1Linha.Checked);
 
     rgRedeTipoInter.ItemIndex := INI.ReadInteger('Rede','tipoInter',0);
@@ -723,7 +729,7 @@ begin
   OpenDialog1.Filter := 'Arquivo XML|*.xml';
   if OpenDialog1.Execute then
   begin
-     //ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
+     ACBrSAT1.CFe.LoadFromFile( OpenDialog1.FileName );
      //mRecebido.Lines.Text := ACBrSAT1.CFe.GerarXML() ;
      //PageControl1.ActivePage := tsRecebido;
      mVendaEnviar.Lines.LoadFromFile(OpenDialog1.FileName);

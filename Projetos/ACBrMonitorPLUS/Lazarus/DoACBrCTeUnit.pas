@@ -65,6 +65,7 @@ var
   RetFind   : Integer;
   SearchRec : TSearchRec;
   bMostrarPreview : Boolean;
+  tipoEvento: TpcnTpEvento;
 begin
  with FrmACBrMonitor do
   begin
@@ -909,7 +910,15 @@ begin
              Anexos.DelimitedText := sLineBreak;
              Anexos.Text := StringReplace(Cmd.Params(6),';',sLineBreak,[rfReplaceAll]);
 
+             if ( ArqEvento = '' ) then
+             begin
+               tipoEvento := ACBrCTe1.EventoCTe.Evento[0].InfEvento.tpEvento;
+               ArqEvento  := ACBrCTe1.EventoCTe.ObterNomeArquivo(tipoEvento);
+               ArqEvento  := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.GetPathEvento(ACBrCTe1.EventoCTe.Evento[0].InfEvento.tpEvento))+ArqEvento;
+               ACBrCTe1.EventoCTe.Gerador.SalvarArquivo(ArqEvento);
+             end;
              Anexos.Add(ArqEvento);
+
              if (Cmd.Params(3) = '1') then
                Anexos.Add(ArqPDF);
 
@@ -1052,7 +1061,7 @@ end;
 procedure GerarIniCTe( AStr: String );
 var
   I, J, K, L : Integer;
-  sSecao, sFim, sCampoAdic : String;
+  sSecao, sFim, sCampoAdic , sKey: String;
   INIRec : TMemIniFile;
   OK     : boolean;
   fsICMSUFFim : TStrings;
@@ -2144,8 +2153,21 @@ begin
                Aereo.tarifa.vTar := StringToFloatDef( INIRec.ReadString(sSecao,'vTar','') ,0);
 
                Aereo.natCarga.xDime    := INIRec.ReadString(sSecao,'xDime','');
-               Aereo.natCarga.cInfManu := INIRec.ReadInteger(sSecao,'cInfManu',0);
                Aereo.natCarga.cIMP     := INIRec.ReadString(sSecao,'cIMP','');
+               I := 1;
+               while true do
+                begin
+                  sKey   := 'cInfManu'+IntToStrZero(I,3);
+                  sFim   := INIRec.ReadString(sSecao,sKey,'FIM');
+                  if sFim = 'FIM' then
+                     break;
+
+                  with Aereo.natCarga.cinfManu.Add do
+                    nInfManu := StrToTpInfManu(Ok, sFim);
+
+                  Inc(I);
+                end;
+
            {$IFDEF PL_200}
               end;
            {$ENDIF}

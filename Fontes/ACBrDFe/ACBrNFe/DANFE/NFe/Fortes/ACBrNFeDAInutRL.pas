@@ -310,7 +310,10 @@ begin
 end;
 
 procedure TfrmNFeDAInutRL.FormDestroy(Sender: TObject);
-begin
+begin  
+  if Assigned(cdsItens) then
+	FreeAndNil(cdsItens);
+	
   RLNFeInut.Free;
 end;
 

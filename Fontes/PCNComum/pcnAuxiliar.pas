@@ -126,6 +126,7 @@ function ExtrairUFChaveAcesso(AChaveNFE: String): Integer;
 function ExtrairCNPJChaveAcesso(AChaveNFE: String): String;
 function ExtrairSerieChaveAcesso(AChaveNFE: String): Integer;
 function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
+function ExtraircNFChaveAcesso(AChaveNFE: String): Integer;
 
 function TimeZoneConf: TTimeZoneConf;
 
@@ -961,6 +962,15 @@ begin
     Result    := StrToIntDef(Copy(AChaveNFE, 32, 6), 0)
   else
     Result    := StrToIntDef(Copy(AChaveNFE, 26, 9), 0);
+end;
+
+function ExtraircNFChaveAcesso(AChaveNFE: String): Integer;
+begin
+  AChaveNFE := OnlyNumber(AChaveNFE);
+  if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
+    Result    := StrToIntDef(Copy(AChaveNFE, 38, 6), 0)
+  else
+    Result    := StrToIntDef(Copy(AChaveNFE, 36, 8), 0);
 end;
 
 function TimeZoneConf: TTimeZoneConf;

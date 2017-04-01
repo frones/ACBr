@@ -845,8 +845,8 @@ begin
 
            Gerador.wGrupo('/infCTe');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infCTe.Count > 4000 then
-          Gerador.wAlerta('#048', 'infCTe', '', ERR_MSG_MAIOR_MAXIMO + '4000');
+         if MDFe.infDoc.infMunDescarga[i].infCTe.Count > 10000 then
+          Gerador.wAlerta('#048', 'infCTe', '', ERR_MSG_MAIOR_MAXIMO + '10000');
 
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infCT.Count - 1 do
          begin
@@ -893,8 +893,8 @@ begin
 
            Gerador.wGrupo('/infCT');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infCT.Count > 4000 then
-          Gerador.wAlerta('#051', 'infCT', '', ERR_MSG_MAIOR_MAXIMO + '4000');
+         if MDFe.infDoc.infMunDescarga[i].infCT.Count > 10000 then
+          Gerador.wAlerta('#051', 'infCT', '', ERR_MSG_MAIOR_MAXIMO + '10000');
        end;
      // Se Tipo de Emitente for Transporte de Carga Própria
      // só pode relacionar os grupos de documentos NF-e e NT
@@ -968,8 +968,8 @@ begin
 
            Gerador.wGrupo('/infNFe');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infNFe.Count > 4000 then
-          Gerador.wAlerta('#057', 'infNFe', '', ERR_MSG_MAIOR_MAXIMO + '4000');
+         if MDFe.infDoc.infMunDescarga[i].infNFe.Count > 10000 then
+          Gerador.wAlerta('#057', 'infNFe', '', ERR_MSG_MAIOR_MAXIMO + '10000');
 
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infNF.Count - 1 do
          begin
@@ -1018,8 +1018,8 @@ begin
 
            Gerador.wGrupo('/infNF');
          end;
-         if MDFe.infDoc.infMunDescarga[i].infNF.Count > 4000 then
-          Gerador.wAlerta('#060', 'infNF', '', ERR_MSG_MAIOR_MAXIMO + '4000');
+         if MDFe.infDoc.infMunDescarga[i].infNF.Count > 10000 then
+          Gerador.wAlerta('#060', 'infNF', '', ERR_MSG_MAIOR_MAXIMO + '10000');
        end;
     end;
 
@@ -1089,8 +1089,8 @@ begin
 
          Gerador.wGrupo('/infMDFeTransp');
        end;
-       if MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count > 4000 then
-        Gerador.wAlerta('#057', 'infMDFeTransp', '', ERR_MSG_MAIOR_MAXIMO + '4000');
+       if MDFe.infDoc.infMunDescarga[i].infMDFeTransp.Count > 10000 then
+        Gerador.wAlerta('#057', 'infMDFeTransp', '', ERR_MSG_MAIOR_MAXIMO + '10000');
      end;
 
     Gerador.wGrupo('/infMunDescarga');

@@ -737,6 +737,8 @@ begin
            end;
 
        infRec.FProtocolo := Leitor.rCampo(tcStr, 'Protocolo');
+       if AnsiUpperCase(infRec.FProtocolo) = 'NAO FOI GERADO NUMERO DE PROTOCOLO PARA ESSA TRANSACAO.' then
+          infRec.FProtocolo := '';
     end;
 
     strAux := leitor.rExtrai(1, 'erros');

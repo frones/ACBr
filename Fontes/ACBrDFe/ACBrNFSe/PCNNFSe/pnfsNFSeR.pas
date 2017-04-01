@@ -576,7 +576,7 @@ begin
         NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe3, 'DescontoIncondicionado');
         NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
 
-        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli]) then
+        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')
@@ -585,6 +585,29 @@ begin
         end
         else
           NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIssRetido');
+
+        if NFSe.Servico.Valores.ValorLiquidoNfse = 0 then
+          NFSe.Servico.Valores.ValorLiquidoNfse := NFSe.Servico.Valores.ValorServicos -
+                                                   NFSe.Servico.Valores.DescontoIncondicionado -
+                                                   NFSe.Servico.Valores.DescontoCondicionado -
+                                                   // Retenções Federais
+                                                   NFSe.Servico.Valores.ValorPis -
+                                                   NFSe.Servico.Valores.ValorCofins -
+                                                   NFSe.Servico.Valores.ValorIr -
+                                                   NFSe.Servico.Valores.ValorInss -
+                                                   NFSe.Servico.Valores.ValorCsll -
+
+                                                   NFSe.Servico.Valores.OutrasRetencoes -
+                                                   NFSe.Servico.Valores.ValorIssRetido;
+
+        if NFSe.Servico.Valores.BaseCalculo = 0 then
+          NFSe.Servico.Valores.BaseCalculo := NFSe.Servico.Valores.ValorServicos -
+                                              NFSe.Servico.Valores.ValorDeducoes -
+                                              NFSe.Servico.Valores.DescontoIncondicionado;
+
+//        if NFSe.Servico.Valores.ValorIss = 0 then
+//          NFSe.Servico.Valores.ValorIss := (NFSe.Servico.Valores.BaseCalculo * NFSe.Servico.Valores.Aliquota)/100;
+
       end;
     end; // fim serviço
 
@@ -1860,7 +1883,7 @@ begin
 //        NFSe.Servico.Valores.BaseCalculo            := Leitor.rCampo(tcDe2, 'BaseCalculo');
         NFSe.Servico.Valores.Aliquota        := Leitor.rCampo(tcDe3, 'Aliquota');
 
-        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli]) then
+        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')

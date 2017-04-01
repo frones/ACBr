@@ -364,6 +364,9 @@ begin
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RespostaLoteRps') <> '');
 
+    if not Nivel1 then
+      Nivel1 := (leitor.rExtrai(1, 'RespostaConsultaNFSE') <> '');
+               
     //SP
     if not Nivel1 then
       Nivel1 := (Leitor.rExtrai(1, 'RetornoConsulta') <> '');
@@ -394,6 +397,8 @@ begin
         DataRecebimentoTemp:= Leitor.rCampo(tcDatHor, 'DataEnvioLote');
 
       ProtocoloTemp:= Leitor.rCampo(tcStr, 'Protocolo');
+      if (Provedor in [ProNFSeBrasil]) and (AnsiUpperCase(ProtocoloTemp) = 'NAO FOI GERADO NUMERO DE PROTOCOLO PARA ESSA TRANSACAO.') then
+        ProtocoloTemp := '';
       if trim(ProtocoloTemp) = '' then
         ProtocoloTemp := '0';
 
@@ -776,6 +781,21 @@ begin
         end;
 
         inc(i);
+      end;
+    end;
+
+    if FProvedor = proNFSeBrasil then
+    begin
+      i := 0;
+      if (leitor.rExtrai(2, 'erros') <> '') then
+      begin
+        while Leitor.rExtrai(3, 'erro', '', i + 1) <> '' do
+        begin
+          ListaNfse.FMsgRetorno.Add;
+          ListaNfse.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'erro');
+
+          inc(i);
+        end;
       end;
     end;
 

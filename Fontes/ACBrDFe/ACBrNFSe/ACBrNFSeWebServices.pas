@@ -922,7 +922,10 @@ begin
   if Pos('?>', FPRetornoWS) > 0 then
     FPRetornoWS := RemoverEncoding('<' + XML_V01 + '>', FPRetornoWS);
 
-  AuxXML := ParseText(FPRetornoWS);
+  if (FProvedor = proNFSeBrasil) then
+    AuxXML := ParseText(FPRetornoWS, true, false)
+  else
+    AuxXML := ParseText(FPRetornoWS);
 
   if FPConfiguracoesNFSe.Geral.RetirarAcentos then
     AuxXML := TiraAcentos(AuxXML);
@@ -3455,6 +3458,9 @@ begin
     GerarDadosMsg.Free;
   end;
 
+  if (FProvedor = proNFSeBrasil)
+    then FPDadosMsg := NumeroNFSe;
+
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSe) and (FPDadosMsg <> '') then
@@ -3742,7 +3748,8 @@ begin
         proISSNet: if FPConfiguracoesNFSe.WebServices.AmbienteCodigo = 2 then
                      CodMunicipio := 999;
                      
-        proBetha: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
+        proBetha,
+        proBethav2: CodMunicipio := StrToIntDef(FNotasFiscais.Items[0].NFSe.PrestadorServico.Endereco.CodigoMunicipio, 0);
       else
         CodMunicipio := FPConfiguracoesNFSe.Geral.CodigoMunicipio;
       end;
@@ -3775,6 +3782,9 @@ begin
     GerarDadosMsg.Free;
   end;
 
+  if (FProvedor = proNFSeBrasil)
+    then FPDadosMsg := NumeroNFSe;
+      
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then

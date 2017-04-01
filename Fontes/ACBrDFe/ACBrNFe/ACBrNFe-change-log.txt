@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[*] possível correção para evitar problemas com acentuação de pastas na distribuicaodfe
+		http://www.projetoacbr.com.br/forum/topic/35561-distribuicaodfe-erro-na-gravação-com-propriedade-separarpornome-habilitado/
+		por Juliomar Marchetti
+		
 [*] Ajuste para separar nas pastas as nfe e eventos quando usado a distribuicaodfe
 		http://www.projetoacbr.com.br/forum/topic/35578-distribuicaodfe-separar-arquivos-de-eventos-e-da-nfe/
 		

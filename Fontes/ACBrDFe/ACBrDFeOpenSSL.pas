@@ -83,12 +83,12 @@ type
   end;
 
 function CertToDERBase64(cert: pX509): AnsiString;
-function GetCertExt(cert: pX509; FlagExt: AnsiString): String;
+function GetCertExt(cert: pX509; FlagExt: AnsiString): AnsiString;
 function GetIssuerName(cert: pX509): String;
 function GetNotAfter(cert: pX509): TDateTime;
 function GetSerialNumber(cert: pX509): String;
 function GetSubjectName(cert: pX509): String;
-function GetCNPJFromExtensions(cert: pX509): String;
+function GetTaxIDFromExtensions(cert: pX509): String;
 
 function X509NameToString(AX509Name: PX509_NAME): AnsiString;
 function BioToStr(ABio: pBIO): AnsiString;
@@ -171,17 +171,7 @@ begin
     Result := X509NameToString(X509SubjectName);
 end;
 
-function GetCNPJFromExtensions(cert: pX509): String;
-begin
-  // Procurando pela Extensão onde está o CNPJ
-  Result := LeftStr(OnlyNumber(copy(GetCertExt( cert, #1#3#3#160#16 ),1,16)),14);
-
-  // Ainda sem resposta, deve ser um eCPF, procure por CPF
-  if Result = '' then
-    Result := copy(GetCertExt( cert, #1#3#1#160#52 ),11 ,11);  // Pula DataNascimento
-end;
-
-function GetCertExt(cert: pX509; FlagExt: AnsiString): String;
+function GetCertExt(cert: pX509; FlagExt: AnsiString): AnsiString;
 var
   ext: pX509_EXTENSION;
   ExtPos, P: Integer;
@@ -197,6 +187,31 @@ var
     {$ENDIF}
   end;
 
+  function AdjustAnsiOID(aOID: AnsiString): AnsiString;
+  var
+    LenOID: Integer;
+  begin
+    Result := aOID;
+    LenOID := Length(aOID);
+    if LenOID < 2 then Exit;
+    if (ord(aOID[1]) <> 4) then Exit;   // Not ANSI
+
+    LenOID := ord(aOID[2]);
+    Result := copy(aOID,3,LenOID);
+  end;
+
+  function AdjustOID(aOID: AnsiString): AnsiString;
+  var
+    LenOID: Integer;
+  begin
+    Result := '';
+    if aOID = '' then Exit;
+
+    LenOID := ord(aOID[1]);
+    Result := copy(aOID,2,LenOID);
+    if (Result <> '') and (Result[1] = #4) then  // é ANSI
+      Result := AdjustAnsiOID(Result);
+  end;
 begin
   Result := '';
   ExtPos := 0;
@@ -209,12 +224,31 @@ begin
     P := pos(FlagExt, propStr);
     if P > 0 then
     begin
-      Result := copy(propStr,P+Length(FlagExt),Length(propStr));
+      Result := AdjustOID( AnsiString( copy(propStr,P+Length(FlagExt),Length(propStr))));
       exit;
     end;
 
     inc( ExtPos );
     LoadExtension;
+  end;
+end;
+
+function GetTaxIDFromExtensions(cert: pX509): String;
+var
+  aOID: AnsiString;
+begin
+  Result := '';
+  // Procurando pela Extensão onde está o CNPJ
+  aOID := GetCertExt( cert, #1#3#3#160 );
+  if (aOID <> '') then
+    Result := copy(aOID, 1, 14);
+
+  // Ainda sem resposta, deve ser um eCPF, procure por CPF
+  if Result = '' then
+  begin
+    aOID := GetCertExt( cert, #1#3#1#160 );
+    if aOID <> ''then
+      Result := copy( aOID, 9 ,11);  // Pula DataNascimento
   end;
 end;
 
@@ -342,7 +376,7 @@ begin
     NumeroSerie := GetSerialNumber( cert );
     SubjectName := GetSubjectName( cert );
     if CNPJ = '' then  // Não tem CNPJ/CPF no SubjectName, lendo das Extensões
-      CNPJ := GetCNPJFromExtensions( cert );
+      CNPJ := GetTaxIDFromExtensions( cert );
 
     DataVenc := GetNotAfter( cert );
     IssuerName := GetIssuerName( cert );

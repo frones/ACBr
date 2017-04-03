@@ -97,6 +97,7 @@ function GetProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
 function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
 function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; AExtensionName: String ): CERT_NAME_BLOB;
+function AdjustAnsiOID(aOID: AnsiString): AnsiString;
 function GetTaxIDFromExtensions(ACertContext: PCCERT_CONTEXT): String;
 
 function CertToDERBase64(ACertContext: PCCERT_CONTEXT): AnsiString;
@@ -355,12 +356,26 @@ begin
   end;
 end;
 
+function AdjustAnsiOID(aOID: AnsiString): AnsiString;
+var
+  LenOID: Integer;
+begin
+  Result := aOID;
+  LenOID := Length(aOID);
+  if LenOID < 2 then Exit;
+  if (ord(aOID[1]) <> 4) then Exit;   // Not ANSI
+
+  LenOID := ord(aOID[2]);
+  Result := copy(aOID,3,LenOID);
+end;
+
 function GetTaxIDFromExtensions(ACertContext: PCCERT_CONTEXT
   ): String;
 var
   pExtension: PCERT_EXTENSION;
   pNameInfo: PCERT_ALT_NAME_INFO ;
   ABlob: CERT_NAME_BLOB;
+  aOID: AnsiString;
 begin
   Result := '';
 
@@ -375,13 +390,21 @@ begin
         try
           ABlob := GetOtherNameBlobFromNameInfo(pNameInfo, '2.16.76.1.3.3');  // Informações de P.F. ou P.J.
           if ABlob.cbData > 0 then
-            Result := copy(PAnsiChar(ABlob.pbData), 3, 14);
+          begin
+            aOID := PAnsiChar(ABlob.pbData);
+            aOID := AdjustAnsiOID(aOID);
+            Result := copy(aOID, 1, 14);
+          end;
 
           if (Result = '') then
           begin
             ABlob := GetOtherNameBlobFromNameInfo(pNameInfo, '2.16.76.1.3.1');  // Informações de P.F.
             if ABlob.cbData > 0 then
-              Result := copy(PAnsiChar(ABlob.pbData), 7, 11);
+            begin
+              aOID := PAnsiChar(ABlob.pbData);
+              aOID := AdjustAnsiOID(aOID);
+              Result := copy(aOID, 9, 11);
+            end;
           end;
         finally
           Freemem(pNameInfo);

@@ -51,6 +51,9 @@ Símbolo : Significado
 -- ACBrDFeWinCrypt --
 [*] Ajuste no método "GetCNPJFromExtensions", quebrando-o em vários, para permitir
     a leitura de diferentes extensões
+-- ACBrDFeOpenSSL --
+[-] Correção na interpretação do conteúdo das extensões do certificado, corrigndo
+    problemas de leitura de CPF/CNPJ de alguns certificados
     (por: DSA)
 
 27/03/2017

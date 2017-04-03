@@ -44,9 +44,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+03/04/2017
+-- ACBrDFeCapicom, ACBrDFeWinCrypt --
+[-] Possível correção para o erro "Erro Thread da crypt32", quando usando
+    "cryCapicom"
+-- ACBrDFeWinCrypt --
+[*] Ajuste no método "GetCNPJFromExtensions", quebrando-o em vários, para permitir
+    a leitura de diferentes extensões
+    (por: DSA)
+
 27/03/2017
 -- ACBrDFeXsXmlSec --
 [*] Remoção da dependencia de "libxslt". (por Waldir Paim)
+    http://www.projetoacbr.com.br/forum/topic/35775-sugest%C3%A3o-limpeza-dos-uses-de-algumas-units/?do=findComment&comment=234842
 
 25/03/2017
 -- ACBrDFeHttpOpenSSL, ACBrDFeHttpIndy --

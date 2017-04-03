@@ -93,7 +93,12 @@ function GetCertIsHardware(ACertContext: PCCERT_CONTEXT): Boolean;
 function GetProviderParamString(ACryptProvider: HCRYPTPROV; dwParam: DWORD): String;
 function GetProviderParamDWord(ACryptProvider: HCRYPTPROV; dwParam: DWORD): DWORD;
 function GetProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
-function GetCNPJFromExtensions(ACertContext: PCCERT_CONTEXT): String;
+
+function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
+function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
+function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; AExtensionName: String ): CERT_NAME_BLOB;
+function GetTaxIDFromExtensions(ACertContext: PCCERT_CONTEXT): String;
+
 function CertToDERBase64(ACertContext: PCCERT_CONTEXT): AnsiString;
 procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT;
    var ProviderType: DWORD; var ProviderName, ContainerName: String);
@@ -289,59 +294,98 @@ begin
   Result := ((ImpType and CRYPT_IMPL_HARDWARE) = CRYPT_IMPL_HARDWARE);
 end;
 
-function GetCNPJFromExtensions(ACertContext: PCCERT_CONTEXT
-  ): String;
+function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
+begin
+  Result := nil;
+  if Assigned(ACertContext) then
+    Result := CertFindExtension( LPCSTR( ExtensionName ),
+                                 ACertContext^.pCertInfo^.cExtension,
+                                 PCERT_EXTENSION(ACertContext^.pCertInfo^.rgExtension));
+end;
+
+function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
+var
+  BufferSize: DWORD;
+begin
+  Result := nil;
+  if Assigned(AExtension) then
+  begin
+    BufferSize := 0;
+    if not CryptDecodeObject( X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
+                              LPCSTR( ExtensionName ),
+                              AExtension^.Value.pbData,
+                              AExtension^.Value.cbData,
+                              0,
+                              Nil, BufferSize) then  // Pega Tamanho do Retorno
+      raise EACBrDFeException.Create(
+         'GetCertExtensionName: Falha ao obter BufferSize com "CryptDecodeObject". Erro:'+GetLastErrorAsHexaStr);
+
+    Result := AllocMem(BufferSize);
+    if not CryptDecodeObject( X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
+                              LPCSTR( ExtensionName ),
+                              AExtension^.Value.pbData,
+                              AExtension^.Value.cbData,
+                              0,
+                              Result, BufferSize) then
+      raise EACBrDFeException.Create(
+           'GetCertExtensionName: Falha ao executar "CryptDecodeObject". Erro:'+GetLastErrorAsHexaStr);
+  end;
+end;
+
+function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; AExtensionName: String ): CERT_NAME_BLOB;
 type
   ArrCERT_ALT_NAME_ENTRY = array of CERT_ALT_NAME_ENTRY;
 var
-  pExtension: PCERT_EXTENSION;
-  pNameInfo: PCERT_ALT_NAME_INFO ;
-  BufferSize: DWORD;
-  I: Int64;
+  I: Integer;
   CertNameEntry: CERT_ALT_NAME_ENTRY;
 begin
+  ZeroMemory(@Result, SizeOf(Result));
+  I := 0;
+  while (I <= ANameInfo^.cAltEntry) do
+  begin
+    CertNameEntry := ArrCERT_ALT_NAME_ENTRY(ANameInfo^.rgAltEntry)[I];
+    if (CertNameEntry.dwAltNameChoice = CERT_ALT_NAME_OTHER_NAME) and
+       (CertNameEntry.pOtherName^.pszObjId = AExtensionName) then
+    begin
+      Result := CertNameEntry.pOtherName^.Value;
+      Break;
+    end;
+
+    Inc(I);
+  end;
+end;
+
+function GetTaxIDFromExtensions(ACertContext: PCCERT_CONTEXT
+  ): String;
+var
+  pExtension: PCERT_EXTENSION;
+  pNameInfo: PCERT_ALT_NAME_INFO ;
+  ABlob: CERT_NAME_BLOB;
+begin
   Result := '';
+
   if Assigned(ACertContext) then
   begin
-    pExtension := CertFindExtension( szOID_SUBJECT_ALT_NAME2,
-                                     ACertContext^.pCertInfo^.cExtension,
-                                     PCERT_EXTENSION(ACertContext^.pCertInfo^.rgExtension));
-
-    if Assigned(pExtension) then
+    pExtension := GetCertExtension(ACertContext, szOID_SUBJECT_ALT_NAME2);
+    if pExtension <> Nil then
     begin
-      BufferSize := 0;
-      if not CryptDecodeObject( X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
-                         szOID_SUBJECT_ALT_NAME2,
-                         pExtension^.Value.pbData,
-                         pExtension^.Value.cbData,
-                         0,
-                         Nil, BufferSize) then  // Pega Tamanho do Retorno
-        raise EACBrDFeException.Create(
-           'Falha ao obter BufferSize com "CryptDecodeObject" de "GetCNPJFromExtensions". Erro:'+GetLastErrorAsHexaStr);
+      pNameInfo := DecodeCertExtensionToNameInfo(pExtension, szOID_SUBJECT_ALT_NAME2);
+      if pNameInfo <> Nil then
+      begin
+        try
+          ABlob := GetOtherNameBlobFromNameInfo(pNameInfo, '2.16.76.1.3.3');  // Informações de P.F. ou P.J.
+          if ABlob.cbData > 0 then
+            Result := copy(PAnsiChar(ABlob.pbData), 3, 14);
 
-      pNameInfo := AllocMem(BufferSize);
-      try
-        if not CryptDecodeObject( X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
-                           szOID_SUBJECT_ALT_NAME2,
-                           pExtension^.Value.pbData,
-                           pExtension^.Value.cbData,
-                           0,
-                           pNameInfo, BufferSize) then
-          raise EACBrDFeException.Create(
-             'Falha ao executar "CryptDecodeObject" em "GetCNPJFromExtensions". Erro:'+GetLastErrorAsHexaStr);
-
-        I := 0;
-        while (Result = '') and (I <= pNameInfo^.cAltEntry) do
-        begin
-          CertNameEntry := ArrCERT_ALT_NAME_ENTRY(pNameInfo^.rgAltEntry)[I];
-          if (CertNameEntry.dwAltNameChoice = 1) then
-            if CertNameEntry.pOtherName^.pszObjId = '2.16.76.1.3.3' then
-              Result := copy(PAnsiChar(CertNameEntry.pOtherName^.Value.pbData), 3, 14);
-
-          Inc(I);
+          if (Result = '') then
+          begin
+            ABlob := GetOtherNameBlobFromNameInfo(pNameInfo, '2.16.76.1.3.1');  // Informações de P.F.
+            if ABlob.cbData > 0 then
+              Result := copy(PAnsiChar(ABlob.pbData), 7, 11);
+          end;
+        finally
+          Freemem(pNameInfo);
         end;
-      finally
-        Freemem(pNameInfo);
       end;
     end;
   end;
@@ -553,7 +597,7 @@ begin
       Freemem(PFXBlob.pbData);
     end;
   finally
-    CertCloseStore(AStore, CERT_CLOSE_STORE_FORCE_FLAG);
+    CertCloseStore(AStore, CERT_CLOSE_STORE_CHECK_FLAG);
   end;
 end;
 
@@ -767,7 +811,7 @@ begin
     NumeroSerie := GetSerialNumber(ACertContext);
     SubjectName := GetSubjectName(ACertContext);
     if CNPJ = '' then
-      CNPJ := GetCNPJFromExtensions(ACertContext);
+      CNPJ := GetTaxIDFromExtensions(ACertContext);
 
     DataVenc   := GetNotAfter(ACertContext);
     IssuerName := GetIssuerName(ACertContext);
@@ -839,7 +883,7 @@ begin
     CertFreeCertificateContext(FpCertContext);
 
   if Assigned(FpStore) then
-    CertCloseStore(FpStore, CERT_CLOSE_STORE_FORCE_FLAG);
+    CertCloseStore(FpStore, CERT_CLOSE_STORE_CHECK_FLAG);
 
   FpCertContext := Nil;
   FpStore := Nil;

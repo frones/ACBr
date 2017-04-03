@@ -213,13 +213,13 @@ end;
 
 procedure TDFeCapicom.DescarregarCertificado;
 begin
+  inherited DescarregarCertificado;
+
   FCertificado := nil;
   if Assigned(FCertStoreMem) then
     FCertStoreMem.Close;
 
   FCertStoreMem := Nil;
-
-  inherited DescarregarCertificado;
 end;
 
 function TDFeCapicom.GetCNPJFromExtensions(Cert: ICertificate2): String;

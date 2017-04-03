@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 325
   Top = 96
-  Width = 868
-  Height = 632
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
+  ClientHeight = 609
+  ClientWidth = 876
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,9 +19,10 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 297
-    Height = 601
+    Height = 609
     Align = alLeft
     TabOrder = 0
+    ExplicitHeight = 593
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -96,8 +97,6 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -112,6 +111,8 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 8
@@ -391,7 +392,6 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -401,7 +401,6 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -411,7 +410,6 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -421,7 +419,6 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
-              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -553,7 +550,6 @@ object Form1: TForm1
                 Top = 104
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -584,7 +580,6 @@ object Form1: TForm1
                 Top = 142
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -600,7 +595,6 @@ object Form1: TForm1
                 Top = 181
                 Width = 248
                 Height = 21
-                ItemHeight = 0
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -693,7 +687,6 @@ object Form1: TForm1
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
-                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -766,7 +759,6 @@ object Form1: TForm1
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
-                ItemHeight = 0
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1512,27 +1504,32 @@ object Form1: TForm1
   object Panel2: TPanel
     Left = 297
     Top = 0
-    Width = 563
-    Height = 601
+    Width = 579
+    Height = 609
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 555
+    ExplicitHeight = 593
     object Panel3: TPanel
       Left = 1
       Top = 1
-      Width = 561
+      Width = 577
       Height = 300
       Align = alTop
       TabOrder = 0
+      ExplicitWidth = 553
       object PageControl3: TPageControl
         Left = 1
         Top = 1
-        Width = 559
+        Width = 575
         Height = 298
         ActivePage = tsNFe
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 551
         object tsNFe: TTabSheet
           Caption = 'NF-e'
+          ExplicitWidth = 543
           object btnImprimir: TButton
             Left = 192
             Top = 156
@@ -1780,6 +1777,7 @@ object Form1: TForm1
         object tsNFCe: TTabSheet
           Caption = 'NFC-e'
           ImageIndex = 1
+          ExplicitWidth = 543
           object btnCriarEnviarNFCe: TButton
             Left = 9
             Top = 6
@@ -1795,35 +1793,45 @@ object Form1: TForm1
     object pgRespostas: TPageControl
       Left = 1
       Top = 301
-      Width = 561
-      Height = 299
-      ActivePage = TabSheet6
+      Width = 577
+      Height = 307
+      ActivePage = Dados
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 553
+      ExplicitHeight = 291
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object MemoResp: TMemo
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 545
+          ExplicitHeight = 263
         end
       end
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 553
+          ExplicitHeight = 271
           ControlData = {
-            4C00000027390000021C00000000000000000000000000000000000000000000
+            4C000000CF3A0000D61C00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126200000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -1833,112 +1841,90 @@ object Form1: TForm1
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object memoLog: TMemo
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 545
+          ExplicitHeight = 263
         end
       end
       object TabSheet9: TTabSheet
         Caption = 'NFe'
         ImageIndex = 3
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object trvwNFe: TTreeView
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           Indent = 19
           TabOrder = 0
+          ExplicitWidth = 545
+          ExplicitHeight = 263
         end
       end
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object memoRespWS: TMemo
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
+          ExplicitWidth = 545
+          ExplicitHeight = 263
         end
       end
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object MemoDados: TMemo
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           Lines.Strings = (
-            
-              'MIIDpjCCA1CgAwIBAgIQXHBYUcS3Tq1GU/BaKiHDvjANBgkqhkiG9w0BAQsFADAW' +
-              'MRQwEgYDVQQDEwtSb290IE'
-            
-              'FnZW5jeTAeFw0xNjA2MTUwMzAwMDBaFw0yNjA2MTUwMzAwMDBaMIIBNDELMAkGA1' +
-              'UEBhMCQlIxEzARBgNVB'
-            
-              'AoTCklDUC1CcmFzaWwxNjA0BgNVBAsTLVNlY3JldGFyaWEgZGEgUmVjZWl0YSBGZ' +
-              'WRlcmFsIGRvIEJyYXNpbCAtI'
-            
-              'FJGQjEVMBMGA1UECxMMUkZCIGUtQ1BGIEEzMR0wGwYDVQQLExRDZXJ0aWZpY2Fkb' +
-              'yBkZSBUZXN0ZTE9MDs'
-            
-              'GA1UECxM0QXV0ZW50aWNhZG8gcG9yIElycmVhbCBDZXJ0aWZpY2Fkb3JhIERpZ2l' +
-              '0YWwgVmlydHVhbDFjMGEG'
-            
-              'A1UEAx5aAEEATgBEAFIAyQAgAEQATwAgAEUAUwBQAM0AUgBJAFQATwAgAFMAQQBO' +
-              'AFQATwAgAEIATwBHA'
-            
-              'EEARABPADoAMAA0ADcALgA4ADgAMQAuADkAMAA3AC0AMgA5MIIBIjANBgkqhkiG9' +
-              'w0BAQEFAAOCAQ8AMIIBC'
-            
-              'gKCAQEA7W8hG9kv9e78se/BhdgveGAFY0dzgIe8UNF9oQx6Mb56n20FcohrnWm9l' +
-              'nPX//MXzLMeGi86+nH9Egf1uU'
-            
-              'M5GJ2AQLuTjYsmf0UcpK3FZqIKc02QkmizP5AfG6X40gt6nLEMdAKenXQlzSDPU/' +
-              'VwyXRkenhWXNmdqkdJHphkNKf'
-            
-              'xcbSc7IBYalVzQyaf0S5JXYsq7G5jPwBD1B4WwD/oql4rKLdSkrPc+E9Td5eAObl' +
-              'uhkNG5Ng+jv2j'
-            '+nNW4K38d4l7s7BWVwExU6gt/EWLosd8APn'
-            
-              '+nmnlOXuFlAcVkVkYeRv7gcHoEd5SPSCGZTqvoct/igBrMoTc8BzGAkdLjwIDAQA' +
-              'Bo4GRMIGOMAwGA1UdEwEB/w'
-            
-              'QCMAAwIAYDVR0EAQH/BBYwFDAOMAwGCisGAQQBgjcCARUDAgeAMBMGA1UdJQQMMA' +
-              'oGCCsGAQUFBwMDM'
-            
-              'EcGA1UdAQRAMD6AEBLkCS0GHR1PAI1hIdwWZGOhGDAWMRQwEgYDVQQDEwtSb290I' +
-              'EFnZW5jeYIQBjdsAKoA'
-            
-              'ZIoRz7jUqlw19DANBgkqhkiG9w0BAQsFAANBAGIc3b7rVk967bDN1uu+fpvKAnHl' +
-              'WV7io1wXS'
-            '+npjqKLuWTXOZTs9klnuqsa6OrBhjeFvQZGoFOFjjixhHNbWxA=')
+            '')
           ScrollBars = ssVertical
           TabOrder = 0
           WordWrap = False
+          ExplicitLeft = 1
+          ExplicitWidth = 545
+          ExplicitHeight = 263
         end
       end
       object TabSheet11: TTabSheet
         Caption = 'RetornoConsulta NFe 2.01'
         ImageIndex = 6
+        ExplicitWidth = 545
+        ExplicitHeight = 263
         object TreeViewRetornoConsulta: TTreeView
           Left = 0
           Top = 0
-          Width = 553
-          Height = 271
+          Width = 569
+          Height = 279
           Align = alClient
           Indent = 19
           TabOrder = 0
+          ExplicitWidth = 545
+          ExplicitHeight = 263
         end
       end
     end

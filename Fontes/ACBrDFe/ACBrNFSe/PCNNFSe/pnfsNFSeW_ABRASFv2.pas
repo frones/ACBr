@@ -368,6 +368,7 @@ begin
     proGoiania: if NFSe.OptanteSimplesNacional = snSim then
                   Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
 
+    proActconv2: Gerador.wCampoNFSe(tcDe2, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
   else
     Gerador.wCampoNFSe(tcDe4, '#25', 'Aliquota', 01, 05, 0, NFSe.Servico.Valores.Aliquota, DSC_VALIQ);
   end;
@@ -636,10 +637,10 @@ begin
   if not (FProvedor in [proSystemPro]) then
   begin
     case FProvedor of
-      proABase, proActcon, proAgili, proBethav2, proCoplan, proEReceita, proFiorilli,
-      proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra, proNEAInformatica,
-      proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSisPMJP,
-      proSiam, proVirtual, proVersaTecnologia,
+      proABase, proActcon, proActconv2, proAgili, proBethav2, proCoplan, proEReceita,
+      proFiorilli, proFriburgo, proGovDigital, proISSDigital, proISSe, proMitra,
+      proNEAInformatica, proNotaInteligente, proProdata, proPronimv2, proPVH,
+      proSaatri, proSisPMJP, proSiam, proVirtual, proVersaTecnologia,
       proVitoria: Gerador.wCampoNFSe(tcDat, '#4', 'DataEmissao', 10, 10, 1, NFSe.DataEmissao, DSC_DEMI);
 
     else

@@ -135,7 +135,7 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <CommandLineParams Value="> c:\temp\stdout.txt 2> c:\temp\stderr.txt"/>
+        <CommandLineParams Value="2> c:\temp\stderr.txt"/>
       </local>
     </RunParams>
     <RequiredPackages Count="13">

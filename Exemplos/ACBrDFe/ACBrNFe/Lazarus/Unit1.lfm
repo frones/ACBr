@@ -28,7 +28,7 @@ object Form1: TForm1
       Cursor = crHandPoint
       Left = 18
       Height = 13
-      Top = 559
+      Top = 578
       Width = 261
       Caption = 'Veja a lista de Colaboradores do Projeto ACBr'
       Font.Color = clNavy
@@ -45,7 +45,7 @@ object Form1: TForm1
       Cursor = crHandPoint
       Left = 16
       Height = 13
-      Top = 574
+      Top = 590
       Width = 265
       Caption = 'Veja a lista de Patrocinadores do Projeto ACBr'
       Font.Color = clGreen
@@ -62,7 +62,7 @@ object Form1: TForm1
       Cursor = crHandPoint
       Left = 21
       Height = 13
-      Top = 590
+      Top = 602
       Width = 255
       Caption = 'Para se tornar Patrocinador do Projeto ACBr,'
       Font.Color = clRed
@@ -77,9 +77,9 @@ object Form1: TForm1
     end
     object lblDoar2: TLabel
       Cursor = crHandPoint
-      Left = 117
+      Left = 120
       Height = 13
-      Top = 607
+      Top = 614
       Width = 63
       Caption = 'clique aqui'
       Font.Color = clRed
@@ -93,9 +93,9 @@ object Form1: TForm1
       OnMouseLeave = lblMouseLeave
     end
     object btnSalvarConfig: TBitBtn
-      Left = 70
+      Left = 72
       Height = 25
-      Top = 528
+      Top = 544
       Width = 153
       Caption = 'Salvar Configurações'
       Glyph.Data = {
@@ -118,7 +118,7 @@ object Form1: TForm1
     end
     object PageControl1: TPageControl
       Left = 8
-      Height = 513
+      Height = 536
       Top = 8
       Width = 283
       ActivePage = TabSheet1
@@ -126,11 +126,11 @@ object Form1: TForm1
       TabOrder = 1
       object TabSheet1: TTabSheet
         Caption = 'Configurações'
-        ClientHeight = 487
+        ClientHeight = 510
         ClientWidth = 275
         object PageControl4: TPageControl
           Left = 0
-          Height = 487
+          Height = 510
           Top = 0
           Width = 275
           ActivePage = TabSheet3
@@ -141,7 +141,7 @@ object Form1: TForm1
           Options = [nboMultiLine]
           object TabSheet3: TTabSheet
             Caption = 'Certificado'
-            ClientHeight = 443
+            ClientHeight = 466
             ClientWidth = 267
             object gbCertificado: TGroupBox
               Left = 0
@@ -151,7 +151,7 @@ object Form1: TForm1
               Caption = 'Certificado'
               ClientHeight = 126
               ClientWidth = 261
-              TabOrder = 0
+              TabOrder = 4
               object Label1: TLabel
                 Left = 8
                 Height = 13
@@ -266,42 +266,6 @@ object Form1: TForm1
                 OnClick = sbtnGetCert1Click
               end
             end
-            object Button1: TButton
-              Left = 4
-              Height = 25
-              Top = 272
-              Width = 99
-              Caption = 'Data de Validade'
-              OnClick = Button1Click
-              TabOrder = 1
-            end
-            object Button2: TButton
-              Left = 107
-              Height = 25
-              Top = 272
-              Width = 77
-              Caption = 'Num.Série'
-              OnClick = Button2Click
-              TabOrder = 2
-            end
-            object Button3: TButton
-              Left = 4
-              Height = 25
-              Top = 304
-              Width = 99
-              Caption = 'Subject Name'
-              OnClick = Button3Click
-              TabOrder = 3
-            end
-            object Button4: TButton
-              Left = 107
-              Height = 25
-              Top = 304
-              Width = 77
-              Caption = 'CNPJ'
-              OnClick = Button4Click
-              TabOrder = 4
-            end
             object cbSSLLib: TComboBox
               Left = 80
               Height = 21
@@ -310,7 +274,7 @@ object Form1: TForm1
               ItemHeight = 13
               OnChange = cbSSLLibChange
               Style = csDropDownList
-              TabOrder = 5
+              TabOrder = 0
             end
             object lSSLLib: TLabel
               Left = 35
@@ -321,33 +285,24 @@ object Form1: TForm1
               Caption = 'SSLLib'
               ParentColor = False
             end
-            object Button10: TButton
-              Left = 188
-              Height = 25
-              Top = 304
-              Width = 76
-              Caption = 'Issuer Name'
-              OnClick = Button10Click
-              TabOrder = 6
-            end
             object Button7: TButton
-              Left = 8
+              Left = 7
               Height = 25
-              Top = 416
+              Top = 440
               Width = 128
               Caption = 'HTTPS sem Certificado'
               OnClick = Button7Click
               TabOrder = 7
             end
             object GroupBox1: TGroupBox
-              Left = 0
+              Left = -1
               Height = 72
-              Top = 344
+              Top = 368
               Width = 265
               Caption = 'Calculo de Hash e assinatura'
               ClientHeight = 54
               ClientWidth = 261
-              TabOrder = 8
+              TabOrder = 6
               object Edit1: TEdit
                 Left = 8
                 Height = 21
@@ -377,13 +332,13 @@ object Form1: TForm1
               end
             end
             object Button9: TButton
-              Left = 144
+              Left = 143
               Height = 25
-              Top = 416
+              Top = 440
               Width = 115
               Caption = 'Leitura de X509'
               OnClick = Button9Click
-              TabOrder = 9
+              TabOrder = 8
             end
             object lCryptLib: TLabel
               Left = 31
@@ -402,7 +357,7 @@ object Form1: TForm1
               ItemHeight = 13
               OnChange = cbCryptLibChange
               Style = csDropDownList
-              TabOrder = 10
+              TabOrder = 1
             end
             object lHttpLib: TLabel
               Left = 35
@@ -421,7 +376,7 @@ object Form1: TForm1
               ItemHeight = 13
               OnChange = cbHttpLibChange
               Style = csDropDownList
-              TabOrder = 11
+              TabOrder = 2
             end
             object lXmlSign: TLabel
               Left = 12
@@ -440,12 +395,84 @@ object Form1: TForm1
               ItemHeight = 13
               OnChange = cbXmlSignLibChange
               Style = csDropDownList
-              TabOrder = 12
+              TabOrder = 3
+            end
+            object GroupBox2: TGroupBox
+              Left = 0
+              Height = 98
+              Top = 264
+              Width = 265
+              Caption = 'Testes Certificado'
+              ClientHeight = 80
+              ClientWidth = 261
+              TabOrder = 5
+              object Button3: TButton
+                Left = 102
+                Height = 25
+                Top = -4
+                Width = 76
+                Caption = 'Subject Name'
+                OnClick = Button3Click
+                TabOrder = 2
+              end
+              object Button1: TButton
+                Left = 182
+                Height = 25
+                Top = 24
+                Width = 76
+                Caption = 'Validade'
+                OnClick = Button1Click
+                TabOrder = 5
+              end
+              object Button4: TButton
+                Left = 102
+                Height = 25
+                Top = 24
+                Width = 76
+                Caption = 'CNPJ'
+                OnClick = Button4Click
+                TabOrder = 4
+              end
+              object Button2: TButton
+                Left = 102
+                Height = 25
+                Top = 52
+                Width = 76
+                Caption = 'Num.Série'
+                OnClick = Button2Click
+                TabOrder = 6
+              end
+              object Button10: TButton
+                Left = 182
+                Height = 25
+                Top = -4
+                Width = 76
+                Caption = 'Issuer Name'
+                OnClick = Button10Click
+                TabOrder = 3
+              end
+              object Button8: TButton
+                Left = 12
+                Height = 25
+                Top = 14
+                Width = 76
+                Caption = 'Carregar'
+                TabOrder = 1
+              end
+              object Button11: TButton
+                Left = 12
+                Height = 25
+                Top = 42
+                Width = 76
+                Caption = 'Descarregar'
+                OnClick = Button11Click
+                TabOrder = 0
+              end
             end
           end
           object TabSheet4: TTabSheet
             Caption = 'Geral'
-            ClientHeight = 395
+            ClientHeight = 466
             ClientWidth = 267
             ImageIndex = 1
             object GroupBox3: TGroupBox
@@ -648,7 +675,7 @@ object Form1: TForm1
           end
           object TabSheet7: TTabSheet
             Caption = 'WebService'
-            ClientHeight = 443
+            ClientHeight = 466
             ClientWidth = 267
             ImageIndex = 2
             object GroupBox4: TGroupBox
@@ -2312,24 +2339,6 @@ object Form1: TForm1
           Top = 0
           Width = 587
           Align = alClient
-          Lines.Strings = (
-            'MIIDpjCCA1CgAwIBAgIQXHBYUcS3Tq1GU/BaKiHDvjANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDEwtSb290IE'
-            'FnZW5jeTAeFw0xNjA2MTUwMzAwMDBaFw0yNjA2MTUwMzAwMDBaMIIBNDELMAkGA1UEBhMCQlIxEzARBgNVB'
-            'AoTCklDUC1CcmFzaWwxNjA0BgNVBAsTLVNlY3JldGFyaWEgZGEgUmVjZWl0YSBGZWRlcmFsIGRvIEJyYXNpbCAtI'
-            'FJGQjEVMBMGA1UECxMMUkZCIGUtQ1BGIEEzMR0wGwYDVQQLExRDZXJ0aWZpY2FkbyBkZSBUZXN0ZTE9MDs'
-            'GA1UECxM0QXV0ZW50aWNhZG8gcG9yIElycmVhbCBDZXJ0aWZpY2Fkb3JhIERpZ2l0YWwgVmlydHVhbDFjMGEG'
-            'A1UEAx5aAEEATgBEAFIAyQAgAEQATwAgAEUAUwBQAM0AUgBJAFQATwAgAFMAQQBOAFQATwAgAEIATwBHA'
-            'EEARABPADoAMAA0ADcALgA4ADgAMQAuADkAMAA3AC0AMgA5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBC'
-            'gKCAQEA7W8hG9kv9e78se/BhdgveGAFY0dzgIe8UNF9oQx6Mb56n20FcohrnWm9lnPX//MXzLMeGi86+nH9Egf1uU'
-            'M5GJ2AQLuTjYsmf0UcpK3FZqIKc02QkmizP5AfG6X40gt6nLEMdAKenXQlzSDPU/VwyXRkenhWXNmdqkdJHphkNKf'
-            'xcbSc7IBYalVzQyaf0S5JXYsq7G5jPwBD1B4WwD/oql4rKLdSkrPc+E9Td5eAObluhkNG5Ng+jv2j'
-            '+nNW4K38d4l7s7BWVwExU6gt/EWLosd8APn'
-            '+nmnlOXuFlAcVkVkYeRv7gcHoEd5SPSCGZTqvoct/igBrMoTc8BzGAkdLjwIDAQABo4GRMIGOMAwGA1UdEwEB/w'
-            'QCMAAwIAYDVR0EAQH/BBYwFDAOMAwGCisGAQQBgjcCARUDAgeAMBMGA1UdJQQMMAoGCCsGAQUFBwMDM'
-            'EcGA1UdAQRAMD6AEBLkCS0GHR1PAI1hIdwWZGOhGDAWMRQwEgYDVQQDEwtSb290IEFnZW5jeYIQBjdsAKoA'
-            'ZIoRz7jUqlw19DANBgkqhkiG9w0BAQsFAANBAGIc3b7rVk967bDN1uu+fpvKAnHlWV7io1wXS'
-            '+npjqKLuWTXOZTs9klnuqsa6OrBhjeFvQZGoFOFjjixhHNbWxA='
-          )
           ScrollBars = ssVertical
           TabOrder = 0
         end
@@ -2366,6 +2375,7 @@ object Form1: TForm1
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.AtualizarXMLCancelado = True

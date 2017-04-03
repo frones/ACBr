@@ -2,11 +2,11 @@ object frSelecionarCertificado: TfrSelecionarCertificado
   Left = 0
   Height = 245
   Top = 0
-  Width = 662
+  Width = 741
   ActiveControl = StringGrid1
   Caption = 'Selecione o certificado Digital'
   ClientHeight = 245
-  ClientWidth = 662
+  ClientWidth = 741
   Position = poOwnerFormCenter
   LCLVersion = '1.6.4.0'
   Visible = False
@@ -14,7 +14,7 @@ object frSelecionarCertificado: TfrSelecionarCertificado
     Left = 0
     Height = 200
     Top = 0
-    Width = 662
+    Width = 741
     Align = alClient
     AutoEdit = False
     ColumnClickSorts = True
@@ -49,13 +49,13 @@ object frSelecionarCertificado: TfrSelecionarCertificado
     Left = 0
     Height = 45
     Top = 200
-    Width = 662
+    Width = 741
     Align = alBottom
     ClientHeight = 45
-    ClientWidth = 662
+    ClientWidth = 741
     TabOrder = 1
     object BitBtn1: TBitBtn
-      Left = 440
+      Left = 519
       Height = 30
       Top = 5
       Width = 88
@@ -66,7 +66,7 @@ object frSelecionarCertificado: TfrSelecionarCertificado
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 552
+      Left = 631
       Height = 30
       Top = 5
       Width = 88

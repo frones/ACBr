@@ -23,11 +23,13 @@ type
     btnValidarRegrasNegocio: TButton;
     Button1: TButton;
     Button10: TButton;
+    Button11: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
     Button7: TButton;
+    Button8: TButton;
     Button9: TButton;
     cbAssinar: TCheckBox;
     cbSSLLib: TComboBox;
@@ -37,6 +39,7 @@ type
     cbXmlSignLib: TComboBox;
     Edit1: TEdit;
     GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
     lSSLLib: TLabel;
     lCryptLib: TLabel;
     lHttpLib: TLabel;
@@ -226,12 +229,14 @@ type
     procedure btnInutilizarImprimirClick(Sender: TObject);
     procedure btnValidarRegrasNegocioClick(Sender: TObject);
     procedure Button10Click(Sender: TObject);
+    procedure Button11Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
     procedure Button9Click(Sender: TObject);
     procedure cbCryptLibChange(Sender: TObject);
     procedure cbHttpLibChange(Sender: TObject);
@@ -714,6 +719,11 @@ begin
               'Certificadora: '+ACBrNFe1.SSL.CertCertificadora);
 end;
 
+procedure TForm1.Button11Click(Sender: TObject);
+begin
+ ACBrNFe1.SSL.DescarregarCertificado;
+end;
+
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   ShowMessage( ACBrNFe1.SSL.CertNumeroSerie );
@@ -763,6 +773,11 @@ begin
     ACBrNFe1.SSL.UseCertificateHTTP := OldUseCert;
   end;
   pgRespostas.ActivePageIndex := 1;
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+begin
+  ACBrNFe1.SSL.CarregarCertificado;
 end;
 
 procedure TForm1.Button9Click(Sender: TObject);

@@ -36,6 +36,9 @@
 |*
 |* 26/01/2013: Nilson Sergio
 |*  - Criação e distribuição da Primeira Versao
+|* 27/03/2017: Renato Rubinho
+|*  - Geração dos Registros B440, B450 e B490
+|*  - Correção B430
 *******************************************************************************}
 
 unit ACBrLFDBloco_B_Class;
@@ -596,8 +599,11 @@ begin
           WriteRegistroB410(RegB001.RegistroB400.Items[intFor]);
           WriteRegistroB420(RegB001.RegistroB400.Items[intFor]);
           WriteRegistroB430(RegB001.RegistroB400.Items[intFor]);
+          WriteRegistroB440(RegB001.RegistroB400.Items[intFor]);
+          WriteRegistroB450(RegB001.RegistroB400.Items[intFor]);
           WriteRegistroB460(RegB001.RegistroB400.Items[intFor]);
           WriteRegistroB470(RegB001.RegistroB400.Items[intFor]);
+          WriteRegistroB490(RegB001.RegistroB400.Items[intFor]);
         end;
       end;
       RegistroB990.QTD_LIN_B := RegistroB990.QTD_LIN_B + 1;
@@ -637,8 +643,9 @@ var
 begin
   if Assigned(RegB400.RegistroB420) then
   begin
+    for intFor := 0 to RegB400.RegistroB420.Count - 1 do
     begin
-       with RegB400.RegistroB420.Items[0] do
+       with RegB400.RegistroB420.Items[intFor] do
        begin
          Add( LFill('B420') +
               DFill(VL_CONT,2) +
@@ -673,12 +680,8 @@ begin
               DFill(VL_SUB,2) +
               DFill(VL_ISNT_ISS,2) +
               DFill(VL_DED_BC,2) +
-              DFill(VL_ISNT_ISS,2) +
-              DFill(VL_DED_BC,2) +
-           //   DFill(VL_BC_ISS_RT,2) +
-           //   DFill(VL_ISS_RT,2) +
-           //   DFill(0,2) +
-           //   DFill(0,2) +
+              DFill(VL_BC_ISS_RT,2) +
+              DFill(VL_ISS_RT,2) +
               DFill(VL_ISS,2));
        end;
        RegistroB990.QTD_LIN_B := RegistroB990.QTD_LIN_B + 1;
@@ -688,13 +691,53 @@ begin
 end;
 
 procedure TBloco_B.WriteRegistroB440(RegB400: TRegistroB400);
+var
+  intFor: Integer;
 begin
-
+  if Assigned(RegB400.RegistroB440) then
+  begin
+    for intFor := 0 to RegB400.RegistroB440.Count - 1 do
+    begin
+       with RegB400.RegistroB440.Items[intFor] do
+       begin
+         Add( LFill('B440') +
+              LFill(Integer(IND_OPER), 0) +
+              LFill(COD_PART) +
+              DFill(VL_CONT_RT,2) +
+              DFill(VL_BC_ISS_RT,2) +
+              DFill(ALIQ_ISS,2) +
+              DFill(VL_ISS_RT,2));
+       end;
+       RegistroB990.QTD_LIN_B := RegistroB990.QTD_LIN_B + 1;
+    end;
+    FRegistroB440Count := FRegistroB440Count + RegB400.RegistroB440.Count;
+  end;
 end;
 
 procedure TBloco_B.WriteRegistroB450(RegB400: TRegistroB400);
+var
+  intFor: Integer;
 begin
-
+  if Assigned(RegB400.RegistroB450) then
+  begin
+    for intFor := 0 to RegB400.RegistroB450.Count - 1 do
+    begin
+       with RegB400.RegistroB450.Items[intFor] do
+       begin
+         Add( LFill('B450') +
+              LFill(Integer(IND_OPER), 0) +
+              LFill(COD_MUN_SERV,7) +
+              DFill(VL_CONT,2) +
+              DFill(VL_BC_ISS,2) +
+              DFill(VL_ISNT_ISS,2) +
+              DFill(VL_DED_BC,2) +
+              DFill(VL_ISS_RT,2) +
+              DFill(VL_ISS,2));
+       end;
+       RegistroB990.QTD_LIN_B := RegistroB990.QTD_LIN_B + 1;
+    end;
+    FRegistroB450Count := FRegistroB450Count + RegB400.RegistroB450.Count;
+  end;
 end;
 
 procedure TBloco_B.WriteRegistroB460(RegB400: TRegistroB400);
@@ -792,8 +835,30 @@ begin
 end;
 
 procedure TBloco_B.WriteRegistroB490(RegB400: TRegistroB400);
+var
+  intFor: Integer;
 begin
-
+  if Assigned(RegB400.RegistroB490) then
+  begin
+    for intFor := 0 to RegB400.RegistroB490.Count - 1 do
+    begin
+       with RegB400.RegistroB490.Items[intFor] do
+       begin
+         Add( LFill('B490') +
+              LFill(COD_OR, 2) +
+              DFill(VL_OR, 2) +
+              LFill(DT_VCTO) +
+              LFill(COD_REC) +
+              LFill(COD_MUN_SERV, 7) +
+              LFill(NUM_PROC) +
+              LFill(Integer(IND_PROC), 0) +
+              LFill(PROC) +
+              LFill(COD_INF_OBS));
+       end;
+       RegistroB990.QTD_LIN_B := RegistroB990.QTD_LIN_B + 1;
+    end;
+    FRegistroB490Count := FRegistroB490Count + RegB400.RegistroB490.Count;
+  end;
 end;
 
 procedure TBloco_B.WriteRegistroB500(RegB400: TRegistroB400);

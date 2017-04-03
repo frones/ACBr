@@ -36,6 +36,8 @@
 |*
 |* 26/01/2013: Nilson Sergio
 |*  - Criação e distribuição da Primeira Versao
+|* 27/03/2017: Renato Rubinho
+|*  - Geração do Registro A025
 *******************************************************************************}
 
 unit ACBrLFDBloco_A_Class;
@@ -58,6 +60,7 @@ type
     FRegistroA990: TRegistroA990;
 
     FRegistroA020Count: Integer;
+    FRegistroA025Count: Integer;
     FRegistroA035Count: Integer;
     FRegistroA045Count: Integer;
     FRegistroA040Count: Integer;
@@ -76,6 +79,7 @@ type
     FRegistroA380Count: Integer;
 
     procedure WriteRegistroA020(RegA001: TRegistroA001);
+    procedure WriteRegistroA025(RegA020: TRegistroA020);
     procedure WriteRegistroA035(RegA020: TRegistroA020);
     procedure WriteRegistroA040(RegA020: TRegistroA020);
     procedure WriteRegistroA045(RegA040: TRegistroA040);
@@ -101,6 +105,7 @@ type
 
     function RegistroA001New: TRegistroA001;
     function RegistroA020New: TRegistroA020;
+    function RegistroA025New: TRegistroA025;
     function RegistroA035New: TRegistroA035;
     function RegistroA040New: TRegistroA040;
     function RegistroA050New: TRegistroA050;
@@ -124,6 +129,7 @@ type
     property RegistroA990: TRegistroA990 read FRegistroA990 write FRegistroA990;
 
     property RegistroA020Count: Integer read FRegistroA020Count write FRegistroA020Count;
+    property RegistroA025Count: Integer read FRegistroA025Count write FRegistroA025Count;
     property RegistroA035Count: Integer read FRegistroA035Count write FRegistroA035Count;
     property RegistroA040Count: Integer read FRegistroA040Count write FRegistroA040Count;
     property RegistroA045Count: Integer read FRegistroA045Count write FRegistroA045Count;
@@ -166,6 +172,7 @@ begin
   FRegistroA990 := TRegistroA990.Create;
 
   FRegistroA020Count := 0;
+  FRegistroA025Count := 0;
   FRegistroA035Count := 0;
   FRegistroA040Count := 0;
   FRegistroA045Count := 0;
@@ -210,6 +217,15 @@ end;
 function TBloco_A.RegistroA020New: TRegistroA020;
 begin
   Result := FRegistroA001.RegistroA020.New(FRegistroA001);
+end;
+
+function TBloco_A.RegistroA025New: TRegistroA025;
+var
+  A020: TRegistroA020;
+begin
+  with FRegistroA001.RegistroA020 do
+    A020 := Items[ AchaUltimoPai('A020', 'A025') ];
+  Result := A020.RegistroA025.New(A020);
 end;
 
 function TBloco_A.RegistroA035New: TRegistroA035;
@@ -398,9 +414,39 @@ begin
 
          end;
          RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
+
+         WriteRegistroA025(RegA001.RegistroA020.Items[intFor]);
+
          WriteRegistroA200(RegA001.RegistroA020.Items[intFor]);
       end;
       FRegistroA020Count := FRegistroA020Count + RegA001.RegistroA020.Count;
+  end;
+end;
+
+procedure TBloco_A.WriteRegistroA025(RegA020: TRegistroA020);
+var
+  intFor: Integer;
+begin
+  if Assigned(RegA020.RegistroA025) then
+  begin
+    for intFor := 0 to RegA020.RegistroA025.Count - 1 do
+    begin
+       with RegA020.RegistroA025.Items[intFor] do
+       begin
+         Add( LFill('A025') +
+              DFill(VL_BC_IRRF,2) +
+              DFill(ALIQ_IRRF,2) +
+              DFill(VL_IRRF,2) +
+              DFill(ALIQ_PIS,2) +
+              DFill(VL_PIS,2) +
+              DFill(ALIQ_COFINS,2) +
+              DFill(VL_COFINS,2) +
+              DFill(VL_BC_PREV,2) +
+              DFill(VL_PREV,2) );
+       end;
+       RegistroA990.QTD_LIN_A := RegistroA990.QTD_LIN_A + 1;
+    end;
+    FRegistroA025Count := FRegistroA025Count + RegA020.RegistroA025.Count;
   end;
 end;
 

@@ -36,6 +36,8 @@
 |*
 |* 26/01/2013: Nilson Sergio
 |*  - Criação e distribuição da Primeira Versao
+|* 27/03/2017: Renato Rubinho
+|*  - Geração do Registro A025
 *******************************************************************************}
 
 unit ACBrLFDBloco_A;
@@ -48,7 +50,7 @@ uses
 type
 
   TRegistroA020List = class;
-  TRegistroA025 = class;
+  TRegistroA025List = class;
   TRegistroA030 = class;
   TRegistroA035 = class;
   TRegistroA040 = class;
@@ -122,7 +124,7 @@ type
     FVL_RT_ISS: Currency; /// Valor do ISS retido pelo tomador
     FCOD_INF_OBS: String; /// Código de referência à informação complementar
 
-    FRegistroA025: TRegistroA025;
+    FRegistroA025: TRegistroA025List;
     FRegistroA030: TRegistroA030;
     FRegistroA035: TRegistroA035;
     FRegistroA040: TRegistroA040;
@@ -159,7 +161,7 @@ type
     property VL_RT_ISS: Currency read FVL_RT_ISS write FVL_RT_ISS;
     property COD_INF_OBS: String read FCOD_INF_OBS write FCOD_INF_OBS;
 
-    property RegistroA025: TRegistroA025 read FRegistroA025 write FRegistroA025;
+    property RegistroA025: TRegistroA025List read FRegistroA025 write FRegistroA025;
     property RegistroA030: TRegistroA030 read FRegistroA030 write FRegistroA030;
     property RegistroA040: TRegistroA040 read FRegistroA040 write FRegistroA040;
     property RegistroA035: TRegistroA035 read FRegistroA035 write FRegistroA035;
@@ -208,6 +210,20 @@ type
     property VL_BC_PREV: Currency read FVL_BC_PREV write FVL_BC_PREV;
     property VL_PREV: Currency read FVL_PREV write FVL_PREV;
   end;
+
+  /// Registro A025 - Lista
+
+  { TRegistroA025List }
+
+  TRegistroA025List = class(TACBrLFDRegistros)
+  private
+    function GetItem(Index: Integer): TRegistroA025;
+    procedure SetItem(Index: Integer; const Value: TRegistroA025);
+  public
+    function New(AOwner: TRegistroA020): TRegistroA025;
+    property Items[Index: Integer]: TRegistroA025 read GetItem write SetItem;
+  end;
+
 
   /// Registro A030 - Complemento do Documento - Subcontratação
 
@@ -1050,7 +1066,7 @@ end;
 
 constructor TRegistroA020.Create(AOwner: TRegistroA001);
 begin
-  FRegistroA025 := TRegistroA025.Create(Self);
+  FRegistroA025 := TRegistroA025List.Create;
   FRegistroA030 := TRegistroA030.Create(Self);
   FRegistroA035 := TRegistroA035.Create(Self);
   FRegistroA040 := TRegistroA040.Create(Self);
@@ -1091,6 +1107,24 @@ end;
 
 constructor TRegistroA025.Create(AOwner: TRegistroA020);
 begin
+end;
+
+{ TRegistroA025List }
+
+function TRegistroA025List.GetItem(Index: Integer): TRegistroA025;
+begin
+  Result := TRegistroA025(Get(Index));
+end;
+
+function TRegistroA025List.New(AOwner: TRegistroA020): TRegistroA025;
+begin
+  Result := TRegistroA025.Create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroA025List.SetItem(Index: Integer; const Value: TRegistroA025);
+begin
+  Put(Index, Value);
 end;
 
 { TRegistroA030 }

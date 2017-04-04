@@ -415,10 +415,10 @@ end;
 
 function Manifesto.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
+
+  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
 
   Result := TACBrMDFe(TManifestos(Collection).ACBrMDFe).Gravar(FNomeArq, FXMLOriginal);
 end;

@@ -468,10 +468,10 @@ end;
 
 function Conhecimento.GravarXML(NomeArquivo: String; PathArquivo: String): Boolean;
 begin
-  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
-
   if EstaVazio(FXMLOriginal) then
     GerarXML;
+
+  FNomeArq := CalcularNomeArquivoCompleto(NomeArquivo, PathArquivo);
 
   Result := TACBrCTe(TConhecimentos(Collection).ACBrCTe).Gravar(FNomeArq, FXMLOriginal);
 end;

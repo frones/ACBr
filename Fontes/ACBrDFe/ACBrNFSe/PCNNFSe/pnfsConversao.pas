@@ -18028,6 +18028,7 @@ begin
  XML := StringReplace( XML, '<![CDATA[', '', [rfReplaceAll] );
  XML := StringReplace( XML, ']]>', '', [rfReplaceAll] );
  XML := StringReplace( XML, 'R$', '', [rfReplaceAll] );
+ XML := StringReplace( XML, 'tipos:', '', [rfReplaceAll] );
 
  // Provedor Governa, os prefixos não tem ":"
  if AProvedor = proGoverna then

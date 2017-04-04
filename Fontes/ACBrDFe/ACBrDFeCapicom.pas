@@ -43,7 +43,7 @@ uses
   Classes, SysUtils,
   ACBrDFeSSL, ACBrDFeWinCrypt,
   ACBrCAPICOM_TLB,
-  Windows;
+  Windows, ActiveX, ComObj;
 
 type
   { TDFeCapicom }
@@ -53,7 +53,7 @@ type
     FCertificado: ICertificate2;
     FCertStoreMem: IStore3;
 
-    function GetCNPJFromExtensions(Cert: ICertificate2): String;
+    function GetCNPJFromExtensions: String;
   protected
   public
     constructor Create(ADFeSSL: TDFeSSL); override;
@@ -70,7 +70,7 @@ type
 implementation
 
 uses
-  typinfo, ActiveX, ComObj,
+  typinfo,
   ACBrUtil, ACBrDFeException;
 
 { TDFeCapicom }
@@ -165,7 +165,7 @@ begin
       NumeroSerie := String(FCertificado.SerialNumber);
       SubjectName := String(FCertificado.SubjectName);
       if CNPJ = '' then
-        CNPJ := GetCNPJFromExtensions(FCertificado);
+        CNPJ := GetCNPJFromExtensions;
 
       DataVenc   := FCertificado.ValidToDate;
       IssuerName := String(FCertificado.IssuerName);
@@ -222,7 +222,7 @@ begin
   FCertStoreMem := Nil;
 end;
 
-function TDFeCapicom.GetCNPJFromExtensions(Cert: ICertificate2): String;
+function TDFeCapicom.GetCNPJFromExtensions: String;
 var
   i, j, p: Integer;
   AExtension: IExtension;
@@ -230,11 +230,11 @@ var
   Lista: TStringList;
 begin
   Result := '';
-  i := 0;
+  i := 1;
 
-  while (Result = '') and (i < Cert.Extensions.Count) do
+  while (Result = '') and (i <= FCertificado.Extensions.Count) do
   begin
-    AExtension := IInterface(Cert.Extensions.Item[i]) as IExtension;
+    AExtension := IInterface(FCertificado.Extensions.Item[i]) as IExtension;
     Propriedades := String(AExtension.EncodedData.Format(True));
 
     if (Pos('2.16.76.1.3.3', Propriedades) > 0) then

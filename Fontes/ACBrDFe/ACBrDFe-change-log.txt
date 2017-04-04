@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2017
+-- ACBrDFeCapicom --
+[-] Correção no método "GetCNPJFromExtensions", onde ocorria o erro:
+    "Parâmetro Incorreto"  (por: DSA)
+
 03/04/2017
 -- ACBrDFeCapicom, ACBrDFeWinCrypt --
 [-] Possível correção para o erro "Erro Thread da crypt32", quando usando

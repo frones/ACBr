@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/04/2017
+-- ACBrECFVirtual --
+[-] Método "VendeItem", correção para o caso do Desconto / Acrescimo falhar,
+    não ficar registrado o Item vendido na memória do ECF Virtual
+    (por: DSA)
+
 Data: 09/03/2017
 -- ACBrECFVirtual --
 [-] Correção de A.V. quando Ativando o ECFVirtual, que tinha cupom Aberto e um Item Cancelado

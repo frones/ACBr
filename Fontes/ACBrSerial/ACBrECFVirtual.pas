@@ -2052,16 +2052,17 @@ begin
 
     VendeItemVirtual( ItemCupom );
 
-    GravaArqINI;
+    { Se o desconto é maior que zero envia o comando de desconto/acrescimo de item anterior }
+    if ValorDescontoAcrescimo > 0 then
+       DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo,
+                                      DescontoAcrescimo,
+                                      TipoDescontoAcrescimo)    // Já chama GravaArqINI
+    else
+      GravaArqINI;
   except
     LeArqINI ;
     raise;
   end ;
-
-  { Se o desconto é maior que zero envia o comando de desconto/acrescimo de item anterior }
-  if ValorDescontoAcrescimo > 0 then
-     DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo, DescontoAcrescimo,
-        TipoDescontoAcrescimo);
 end ;
 
 procedure TACBrECFVirtualClass.DescontoAcrescimoItemAnterior(ValorDescontoAcrescimo: Double;

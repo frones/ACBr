@@ -6033,7 +6033,6 @@ end;
 procedure TFrmACBrMonitor.sbNumeroSerieCertClick(Sender: TObject);
 var
   I: Integer;
-  ASerie: String;
 begin
   //OldSSL := ACBrNFe1.Configuracoes.Geral.SSLLib;
   //
@@ -6050,8 +6049,7 @@ begin
     begin
       with ACBrNFe1.SSL.ListaCertificados[I] do
       begin
-        ASerie := NumeroSerie;
-        if (CNPJ <> '') and (Length(NumeroSerie) >= 16) then
+        if (CNPJ <> '')  then
         begin
           with frSelecionarCertificado.StringGrid1 do
           begin

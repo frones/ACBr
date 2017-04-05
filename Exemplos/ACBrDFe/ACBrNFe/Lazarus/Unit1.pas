@@ -1158,18 +1158,26 @@ begin
 end;
 
 procedure TForm1.btnImprimirClick(Sender: TObject);
+var
+   carregarMais: boolean;
 begin
+  carregarMais := true;
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
 
-  if OpenDialog1.Execute then
+  ACBrNFe1.NotasFiscais.Clear;
+  while carregarMais  do
   begin
-    ACBrNFe1.NotasFiscais.Clear;
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
-    ACBrNFe1.NotasFiscais.Imprimir;
+    if OpenDialog1.Execute then
+      ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName,False);
+    carregarMais := MessageDlg('Carregar mais XML?', mtConfirmation, mbYesNo,0)= mrYes;
   end;
+
+  if ACBrNFe1.NotasFiscais.Count > 0 then
+     ACBrNFe1.NotasFiscais.Imprimir;
+
 end;
 
 procedure TForm1.btnCriarEnviarClick(Sender: TObject);

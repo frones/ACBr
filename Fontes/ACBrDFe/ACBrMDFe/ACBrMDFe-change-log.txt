@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+04/04/2017
+-- pmdfeMDFeW --
+[*] Alterações visando resolver o problema de validação e rejeição ao informar ou
+    não o CNPJ nos grupos infResp e infSeg.
+   Por: Italo Jurisato Junior
+
 26/03/2017
 -- ACBrMDFeWebServices --
 [*] Incluido a leitura da data de encerramento do retorno.

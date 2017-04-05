@@ -1111,15 +1111,14 @@ begin
 
     Gerador.wGrupo('infResp', '#119');
     Gerador.wCampo(tcStr, '#120', 'respSeg', 01, 01, 1, RspSeguroMDFeToStr(MDFe.seg[i].respSeg), DSC_RESPSEG);
-    Gerador.wCampoCNPJCPF('#121', '#122', MDFe.seg[i].CNPJCPF);
+    Gerador.wCampoCNPJCPF('#121', '#122', MDFe.seg[i].CNPJCPF, False);
     Gerador.wGrupo('/infResp');
 
     if MDFe.seg[i].xSeg <> '' then
     begin
       Gerador.wGrupo('infSeg', '#123');
       Gerador.wCampo(tcStr, '#124', 'xSeg', 01, 30, 1, MDFe.seg[i].xSeg, DSC_XSEG);
-      if MDFe.seg[i].CNPJ <> '' then 
-        Gerador.wCampoCNPJ('#125', MDFe.seg[i].CNPJ, CODIGO_BRASIL, True);
+      Gerador.wCampoCNPJ('#125', MDFe.seg[i].CNPJ, CODIGO_BRASIL, False);
       Gerador.wGrupo('/infSeg');
     end;
 

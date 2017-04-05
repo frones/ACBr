@@ -55,6 +55,7 @@ type
     FRegistroJ001: TRegistroJ001;      /// BLOCO J - RegistroJ001
     FRegistroJ005: TRegistroJ005List;  /// BLOCO J - Lista de RegistroJ005
     FRegistroJ800: TRegistroJ800List;  /// BLOCO J - Lista de RegistroJ800
+    FRegistroJ801: TRegistroJ801List;  /// BLOCO J - Lista de RegistroJ801
     FRegistroJ900: TRegistroJ900;      /// BLOCO J - RegistroJ900
     FRegistroJ930: TRegistroJ930List;  /// BLOCO J - Lista de RegistroJ930
     FRegistroJ935: TRegistroJ935List;  /// BLOCO J - Lista de RegistroJ935
@@ -80,6 +81,7 @@ type
     procedure WriteRegistroJ001;
     procedure WriteRegistroJ005;
     procedure WriteRegistroJ800;
+    procedure WriteRegistroJ801;
     procedure WriteRegistroJ900;
     procedure WriteRegistroJ930;
     procedure WriteRegistroJ935;
@@ -90,6 +92,7 @@ type
     property RegistroJ001: TRegistroJ001     read fRegistroJ001 write fRegistroJ001;
     property RegistroJ005: TRegistroJ005List read fRegistroJ005 write fRegistroJ005;
     property RegistroJ800: TRegistroJ800List read fRegistroJ800 write fRegistroJ800;
+    property RegistroJ801: TRegistroJ801List read fRegistroJ801 write fRegistroJ801;
     property RegistroJ900: TRegistroJ900     read fRegistroJ900 write fRegistroJ900;
     property RegistroJ930: TRegistroJ930List read fRegistroJ930 write fRegistroJ930;
     property RegistroJ935: TRegistroJ935List read fRegistroJ935 write fRegistroJ935;
@@ -110,6 +113,7 @@ begin
   FRegistroJ001 := TRegistroJ001.Create;
   FRegistroJ005 := TRegistroJ005List.Create;
   FRegistroJ800 := TRegistroJ800List.Create;
+  FRegistroJ801 := TRegistroJ801List.Create;
   FRegistroJ900 := TRegistroJ900.Create;
   FRegistroJ930 := TRegistroJ930List.Create;
   FRegistroJ935 := TRegistroJ935List.Create;
@@ -128,6 +132,7 @@ begin
   FRegistroJ001.Free;
   FRegistroJ005.Free;
   FRegistroJ800.Free;
+  FRegistroJ801.Free;
   FRegistroJ900.Free;
   FRegistroJ930.Free;
   FRegistroJ935.Free;  
@@ -139,6 +144,7 @@ procedure TBloco_J.LimpaRegistros;
 begin
   FRegistroJ005.Clear;
   FRegistroJ800.Clear;
+  FRegistroJ801.Clear;
   FRegistroJ930.Clear;
   FRegistroJ935.Clear;  
 
@@ -253,17 +259,30 @@ begin
         begin
            Check(((IND_VL = 'D') or (IND_VL = 'R') or (IND_VL = 'P') or (IND_VL = 'N')), '(J-J150) No Indicador da situação do valor, deve ser informado: D ou R ou P ou N!');
            //Check(((IND_VL_ULT_DRE = 'D') or (IND_VL_ULT_DRE = 'R') or (IND_VL_ULT_DRE = 'P') or (IND_VL_ULT_DRE = 'N')), '(J-J150) No Indicador da situação do saldo valor inicial, deve ser informado: D ou R ou P ou N!');
-           ///
-           Add( LFill('J150') +
-                LFill(COD_AGL) +
-                LFill(NIVEL_AGL) +
-                LFill(DESCR_COD_AGL) +
-                LFill(VL_CTA, 19, 2) +
-                LFill(IND_VL, 1) +
-                LFill(VL_CTA_ULT_DRE, 19, 2) +
-                LFill(IND_VL_ULT_DRE)
-                );
-
+           // Layout 4 a partir da escrituração ano calendário 2015
+           if DT_INI >= EncodeDate(2015,01,01) then
+           begin
+             Add( LFill('J150') +
+                  LFill(COD_AGL) +
+                  LFill(NIVEL_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_VL, 1) +
+                  LFill(VL_CTA_ULT_DRE, 19, 2) +
+                  LFill(IND_VL_ULT_DRE, 1)
+                  );
+           end
+           else
+           // Layout 1,2,3
+           begin
+             Add( LFill('J150') +
+                  LFill(COD_AGL) +
+                  LFill(NIVEL_AGL) +
+                  LFill(DESCR_COD_AGL) +
+                  LFill(VL_CTA, 19, 2) +
+                  LFill(IND_VL, 1)
+                  );
+           end;
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
@@ -367,10 +386,41 @@ begin
      begin
         with FRegistroJ800.Items[intFor] do
         begin
-           ///
-           Add( LFill('J800') +
+           if DT_INI >= EncodeDate(2016,01,01) then
+             Add( LFill('J800') +
+                  LFill(TIPO_DOC) +
+                  LFill(DESC_RTF) +
+                  LFill(HASH_RTF) +
+                  LFill(ARQ_RTF) +
+                  LFill('J800FIM')
+                  )
+           else
+             Add( LFill('J800') +
+                  LFill(ARQ_RTF) +
+                  LFill('J800FIM')
+                  );
+        end;
+        FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
+     end;
+  end;
+end;
+
+procedure TBloco_J.WriteRegistroJ801;
+var
+intFor: integer;
+begin
+  if Assigned(FRegistroJ801) then
+  begin
+     for intFor := 0 to FRegistroJ801.Count - 1 do
+     begin
+        with FRegistroJ801.Items[intFor] do
+        begin
+           Add( LFill('J801') +
+                LFill(TIPO_DOC) +
+                LFill(DESC_RTF) +
+                LFill(HASH_RTF) +
                 LFill(ARQ_RTF) +
-                LFill('J800FIM') 
+                LFill('J801FIM')
                 );
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;

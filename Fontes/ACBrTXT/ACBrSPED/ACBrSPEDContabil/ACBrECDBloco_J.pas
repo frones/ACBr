@@ -262,8 +262,14 @@ type
 
   TRegistroJ800 = class
   private
-    fARQ_RTF: String;  /// Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
+    fTIPO_DOC: String; // Tipo de documento
+    fDESC_RTF: String; // Descrição do arquivo
+    fHASH_RTF: String; // Hash do arquivo
+    fARQ_RTF: String;  // Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
   public
+    property TIPO_DOC: String read fTIPO_DOC write fTIPO_DOC;
+    property DESC_RTF: String read fDESC_RTF write fDESC_RTF;
+    property HASH_RTF: String read fHASH_RTF write fHASH_RTF;
     property ARQ_RTF: String read fARQ_RTF write fARQ_RTF;
   end;
 
@@ -276,6 +282,32 @@ type
   public
     function New: TRegistroJ800;
     property Items[Index: Integer]: TRegistroJ800 read GetItem write SetItem;
+  end;
+
+  /// Rregistro J801 – TERMO DE VERIFICAÇÃO PARA FINS DE SUBSTITUIÇÃO DA ECD
+
+  TRegistroJ801 = class
+  private
+    fTIPO_DOC: String; // Tipo de documento
+    fDESC_RTF: String; // Descrição do arquivo
+    fHASH_RTF: String; // Hash do arquivo
+    fARQ_RTF: String;  // Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
+  public
+    property TIPO_DOC: String read fTIPO_DOC write fTIPO_DOC;
+    property DESC_RTF: String read fDESC_RTF write fDESC_RTF;
+    property HASH_RTF: String read fHASH_RTF write fHASH_RTF;
+    property ARQ_RTF: String read fARQ_RTF write fARQ_RTF;
+  end;
+
+  /// Registro J801 - Lista
+
+  TRegistroJ801List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroJ801;
+    procedure SetItem(Index: Integer; const Value: TRegistroJ801);
+  public
+    function New: TRegistroJ801;
+    property Items[Index: Integer]: TRegistroJ801 read GetItem write SetItem;
   end;
 
   /// Rregistro J900 – TERMO DE ENCERRAMENTO
@@ -573,6 +605,25 @@ procedure TRegistroJ800List.SetItem(Index: Integer; const Value: TRegistroJ800);
 begin
   Put(Index, Value);
 end;
+
+{ TRegistroJ801List }
+
+function TRegistroJ801List.GetItem(Index: Integer): TRegistroJ801;
+begin
+  Result := TRegistroJ801(Inherited Items[Index]);
+end;
+
+function TRegistroJ801List.New: TRegistroJ801;
+begin
+  Result := TRegistroJ801.Create;
+  Add(Result);
+end;
+
+procedure TRegistroJ801List.SetItem(Index: Integer; const Value: TRegistroJ801);
+begin
+  Put(Index, Value);
+end;
+
 
 { TRegistroJ930List }
 

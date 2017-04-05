@@ -140,6 +140,7 @@ type
     procedure WriteRegistroJ001;
     procedure WriteRegistroJ005;
     procedure WriteRegistroJ800;
+    procedure WriteRegistroJ801;
     procedure WriteRegistroJ900;
     procedure WriteRegistroJ930;
   	procedure WriteRegistroJ935;
@@ -837,6 +838,19 @@ begin
    Bloco_J.WriteRegistroJ800;
 end;
 
+procedure TACBrSPEDContabil.WriteRegistroJ801;
+begin
+   if Bloco_J.RegistroJ801.Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'J801';
+         QTD_REG_BLC := Bloco_J.RegistroJ801.Count;
+      end;
+   end;
+   Bloco_J.WriteRegistroJ801;
+end;
+
 procedure TACBrSPEDContabil.WriteRegistroJ900;
 begin
    with Bloco_9.Registro9900.New do
@@ -1060,6 +1074,7 @@ begin
   WriteRegistroJ001;
   WriteRegistroJ005;
   WriteRegistroJ800;
+  WriteRegistroJ801;
   WriteRegistroJ900;
   WriteRegistroJ930;
   WriteRegistroJ935;

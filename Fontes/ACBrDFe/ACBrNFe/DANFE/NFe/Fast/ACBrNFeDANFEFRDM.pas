@@ -182,6 +182,9 @@ type
     function ManterCombustivel(inItem: integer): String;
     function FormatQuantidade(dValor: Double): String;
     function FormatValorUnitario(dValor: Double): String;
+    function ManterDocreferenciados: String;
+    function ManterContingencia(swObs: String): String;
+    function ManterInfAdi(swObs: String): String;
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
@@ -793,102 +796,40 @@ end;
 
 procedure TACBrNFeFRClass.CarregaInformacoesAdicionais;
 var
-  i: Integer;
-  vTemp: TStringList;
-  IndexCampo:Integer;
-  Campos: TSplitResult;
-  BufferInfCpl: String;
-  TmpStr: String;
-  wContingencia: string;
-  wObs:string;
-  wLinhasObs: integer;
+  vTemp         : TStringList;
+  IndexCampo    : Integer;
+  Campos        : TSplitResult;
+  BufferInfCpl  : String;
+  wObs          : string;
+  wLinhasObs    : integer;
 begin
-  with cdsInformacoesAdicionais do
-  begin
-    Close;
-    CreateDataSet;
-    Append;
-
-    wLinhasObs := 0;
-    with FNFe.InfAdic do
+  wLinhasObs  := 0;
+  BufferInfCpl:= '';
+  vTemp       := TStringList.Create;
+  try
+    wObs  := ManterDocreferenciados;
+    wObs  := ManterInfAdi( wObs );
+    wObs  := ManterContingencia( wObs );
+    if Trim(wObs) <> '' then
     begin
-      TmpStr := '';
-      //Fisco
-      if Length(InfAdFisco) = 0 then InfAdFisco := '';
+      Campos := Split(';', wObs);
+      for IndexCampo := 0 to Length(Campos) - 1 do
+        vTemp.Add(Campos[IndexCampo]);
 
-      for i := 0 to ObsFisco.Count - 1 do
-      begin
-        with ObsFisco.Items[i] do
-          TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
-      end;
-      wObs := TmpStr + InfAdFisco;
-      TmpStr := '';
-
-      //Inf. Complementar
-      if Length(InfCpl) = 0 then InfCpl := '';
-
-      for i := 0 to ObsCont.Count - 1 do
-      begin
-        with ObsCont.Items[i] do
-          TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
-      end;
-      if Length(wObs) > 0 then
-        wObs := wObs + ';';
-      wObs := wObs + TmpStr + InfCpl;
-      TmpStr := '';
-
-      //Contingencia
-      if FNFe.Ide.tpEmis=teNORMAL then
-        wContingencia := ''
-      else
-      begin
-        case FNFe.Ide.tpEmis of
-          teOffLine,
-          teContingencia,
-          teFSDA,
-          teSCAN,
-          teSVCAN,
-          teSVCRS,
-          teSVCSP:
-            wContingencia := ACBrStr('DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS');
-
-          teDPEC:
-          begin
-            wContingencia := ACBrStr( 'DANFE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL');
-            wContingencia := wContingencia + ';' +
-                             ACBrStr('DATA/HORA INÍCIO: ') + IfThen(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
-                             ACBrStr('MOTIVO CONTINGÊNCIA: ') + IfThen(EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust);
-          end;
-        end;
-      end;
-      if Length(wObs) > 0 then
-        wObs := wObs + ';';
-      wObs := wObs + wContingencia;
-
-      vTemp := TStringList.Create;
-      try
-        if Trim(wObs) <> '' then
-        begin
-          Campos := Split(';', wObs);
-          for IndexCampo := 0 to Length(Campos) - 1 do
-              vTemp.Add(Campos[IndexCampo]);
-           wLinhasObs := 1; //TotalObS(vTemp.Text);
-           TmpStr := vTemp.Text;
-
-           BufferInfCpl := TmpStr;
-        end
-        else
-           BufferInfCpl := '';
-
-      finally
-        vTemp.Free;
-      end;
+      wLinhasObs    := 1; //TotalObS(vTemp.Text);
+      BufferInfCpl  := vTemp.Text;
     end;
-
-    FieldByName('OBS').AsString        := BufferInfCpl;
-    FieldByName('LinhasOBS').AsInteger := wLinhasObs;
-
-    Post;
+    with cdsInformacoesAdicionais do
+    begin
+      Close;
+      CreateDataSet;
+      Append;
+      FieldByName('OBS').AsString        := BufferInfCpl;
+      FieldByName('LinhasOBS').AsInteger := wLinhasObs;
+      Post;
+    end;
+  finally
+    vTemp.Free;
   end;
 end;
 
@@ -2314,5 +2255,132 @@ begin
   else
     Result := ' - ';
 end;
+
+
+Function TACBrNFeFRClass.ManterDocreferenciados : String;
+// Informações de Documentos referenciados
+  Function MontaLadoALado(  bExecuta : Boolean;
+                            sResult : string;
+                            sInicio : String;
+                            sString : String ) : String;
+  begin
+    if bExecuta  then
+    begin
+      if sResult = '' then
+        Result := sInicio
+      else
+      if pos(sInicio,sResult)=0 then
+        Result := sResult+', '+ sInicio
+      else
+        Result := sResult+', ';
+
+      Result := Result + '(' + sString +')' ;
+    end
+    else
+      Result := sResult;
+  end;
+var
+  i : Integer;
+begin
+  Result := '';
+  if FNFe.Ide.NFref.Count > 0 then
+  begin
+    for i := 0 to (FNFe.ide.NFref.Count - 1) do
+    begin
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].refNFe <> '' ),
+                                  Result,
+                                  'NFe Ref.:',
+                                  FormatarChaveAcesso( FNFe.ide.NFref[i].refNFe ) );
+
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].refCTe <> '' ),
+                                  Result,
+                                  'CTe Ref.:',
+                                  FormatarChaveAcesso( FNFe.ide.NFref[i].refCTe ));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio ) ,
+                                  Result,
+                                  'ECF Ref.:',
+                                  ACBrStr('modelo: ' + ECFModRefToStr(FNFe.ide.NFref[i].RefECF.modelo) +
+                                  ' ECF: ' +FNFe.ide.NFref[i].RefECF.nECF + ' COO: ' + FNFe.ide.NFref[i].RefECF.nCOO));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefNF.CNPJ <> '' ),
+                                  Result,
+                                  'NF Ref.:',
+                                  ACBrStr('série: ' + IntTostr(FNFe.ide.NFref[i].RefNF.serie) +
+                                  ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNF.nNF) +
+                                  ' emit: ' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNF.CNPJ) +
+                                  ' modelo: ' + IntTostr(FNFe.ide.NFref[i].RefNF.modelo)));
+      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefNFP.nNF > 0 ),
+                                  Result,
+                                  'NFP Ref.:',
+                                  ACBrStr('série: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.serie) +
+                                  ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.nNF) +
+                                  ' modelo: ' + FNFe.ide.NFref[i].RefNFP.modelo +
+                                  ' emit: ' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNFP.CNPJCPF) +
+                                  ' IE: ' + FNFe.ide.NFref[i].RefNFP.IE +
+                                  ' UF: ' + CUFtoUF(FNFe.ide.NFref[i].RefNFP.cUF)));
+
+    end;
+    Result := Result + ';';
+  end;
+end;
+
+
+Function TACBrNFeFRClass.ManterInfAdi( swObs : String ) : String;
+var
+  i : Integer;
+  TmpStr : String;
+begin
+  result := swObs;
+  TmpStr := '';
+  with FNFe.InfAdic do
+  begin
+
+    for i := 0 to ObsFisco.Count - 1 do
+    begin
+      with ObsFisco.Items[i] do
+        TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
+    end;
+
+    //Fisco
+    if Length(InfAdFisco) = 0 then InfAdFisco := '';
+
+    result  := result + TmpStr + InfAdFisco;
+    TmpStr  := '';
+    for i := 0 to ObsCont.Count - 1 do
+    begin
+      with ObsCont.Items[i] do
+        TmpStr := TmpStr + XCampo + ': ' + XTexto + ';';
+    end;
+    //Inf. Complementar
+    if Length(InfCpl) = 0 then InfCpl := '';
+
+    result  := result + TmpStr + InfCpl;
+  end;
+end;
+
+Function TACBrNFeFRClass.ManterContingencia( swObs : String ) : String;
+  //Contingencia
+begin
+  result := swObs;
+  case FNFe.Ide.tpEmis of
+    teNORMAL : result := result + '';
+    teOffLine,
+    teContingencia,
+    teFSDA,
+    teSCAN,
+    teSVCAN,
+    teSVCRS,
+    teSVCSP : result := result + ACBrStr('DANFE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS;');
+    teDPEC  : begin
+                result := result +
+                  ACBrStr( 'DANFE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL;')+
+                  ACBrStr('DATA/HORA INÍCIO: ') + IfThen(FNFe.ide.dhCont = 0, ' ', DateTimeToStr(FNFe.ide.dhCont)) + ';'+
+                  ACBrStr('MOTIVO CONTINGÊNCIA: ') + IfThen(EstaVazio(FNFe.ide.xJust), ' ', FNFe.ide.xJust)+';';
+              end;
+  end;
+end;
+
+
+
+
 
 end.

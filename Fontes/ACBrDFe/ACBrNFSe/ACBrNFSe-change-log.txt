@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/04/2017
+-- Diversos -- 
+[*] http://www.projetoacbr.com.br/forum/topic/36077-numero-do-encapsulamento-nfs-e-sp/?do=findComment&comment=236010.
+    Por: Bruno
+
 27/02/2017
 -- ACBrNFSeWebServices -- 
 [*] Correção na definição da TAG para assinatura do XML de cancelamento - provedor

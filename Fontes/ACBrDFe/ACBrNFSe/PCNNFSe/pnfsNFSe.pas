@@ -565,6 +565,7 @@ type
     FnCei: string;
     FnProj: string;
     FnMatri: string;
+    FnNumeroEncapsulamento : string;
   published
     property CodigoObra: String read FCodigoObra write FCodigoObra;
     property Art: String read FArt write FArt;
@@ -580,6 +581,7 @@ type
     property nCei: String read FnCei write FnCei;
     property nProj: String read FnProj write FnProj;
     property nMatri: String read FnMatri write FnMatri;
+    property nNumeroEncapsulamento : string read FnNumeroEncapsulamento write FnNumeroEncapsulamento;
   end;
 
   TParcelasCollectionItem = class(TCollectionItem)

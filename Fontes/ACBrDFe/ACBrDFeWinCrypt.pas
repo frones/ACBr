@@ -128,11 +128,11 @@ var
 begin
   WinErro := GetLastError;
   if WinErro = DWORD( NTE_KEYSET_NOT_DEF ) then
-    Result := 'Provedor de Cripotografia não encontrado!'
+    Result := 'Provedor de Criptografia não encontrado!'
   else if WinErro = DWORD( NTE_KEYSET_ENTRY_BAD ) then
-    Result := 'Estrura de Chave obtida no Provedor de Cripotografia está corrompida'
+    Result := 'Estrutura de Chave obtida no Provedor de Criptografia está corrompida'
   else
-    Result := 'Falha em obter Provedor de Cripotografia do Certificado. Erro: '+GetLastErrorAsHexaStr;
+    Result := 'Falha em obter Provedor de Criptografia do Certificado. Erro: '+GetLastErrorAsHexaStr;
 end;
 
 function MsgSetPINError: String;

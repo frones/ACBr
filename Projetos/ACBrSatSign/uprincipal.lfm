@@ -3,14 +3,16 @@ object frmPrincipal: TfrmPrincipal
   Height = 426
   Top = 152
   Width = 897
+  ActiveControl = edtCertificado
   BorderStyle = bsToolWindow
   Caption = 'ACBrSAT Sign'
   ClientHeight = 426
   ClientWidth = 897
-  OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object Bevel1: TBevel
     Left = 176
     Height = 408
@@ -266,15 +268,15 @@ object frmPrincipal: TfrmPrincipal
     ShowHint = True
     ParentShowHint = False
   end
-  object rbtTipoCapicom: TRadioButton
+  object rbtTipoWinCrypt: TRadioButton
     Left = 728
     Height = 19
     Top = 45
-    Width = 68
-    Caption = 'Capicom'
+    Width = 70
+    Caption = 'WinCrypt'
     Checked = True
     Font.Color = clMaroon
-    OnChange = rbtTipoCapicomChange
+    OnChange = rbtTipoWinCryptChange
     ParentFont = False
     TabOrder = 7
     TabStop = True

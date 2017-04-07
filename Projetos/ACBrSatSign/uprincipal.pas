@@ -9,7 +9,7 @@ uses
   Windows,
   Classes, SysUtils, strutils, IniFiles, FileUtil, Forms, Controls, Graphics,
   Dialogs, ExtCtrls, StdCtrls, Buttons, MaskEdit, Menus, ACBrGIF, ACBrUtil,
-  ACBrValidador, ACBrEnterTab, ACBrDFe, ACBrDFeSSL;
+  ACBrValidador, ACBrEnterTab, ACBrDFeSSL;
 
 const
   _C = 'tYk*5W@';
@@ -36,25 +36,26 @@ type
     Label5: TLabel;
     memCodigoVinculacao: TMemo;
     OpenDialog1: TOpenDialog;
-    rbtTipoCapicom: TRadioButton;
+    rbtTipoWinCrypt: TRadioButton;
     rbtTipoOpenSSL: TRadioButton;
     btnBuscarCertificado: TSpeedButton;
     procedure ACBrGIF1Click(Sender: TObject);
     procedure btnCopiarClick(Sender: TObject);
     procedure btnCriarAssinaturaClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure Image2Click(Sender: TObject);
     procedure LerConfiguracoes;
     procedure btnBuscarCertificadoClick(Sender: TObject);
-    procedure rbtTipoCapicomChange(Sender: TObject);
+    procedure rbtTipoWinCryptChange(Sender: TObject);
     procedure rbtTipoOpenSSLChange(Sender: TObject);
   private
-    FACBrDFe: TACBrDFe;
+    FDFeSSL: TDFeSSL;
     procedure ConfigurarDFe;
     function GetPathConfig: String;
     procedure GravarConfiguracoes;
     procedure CarregarGifBannerACBrSAC;
+    function SelecionarCertificado: String;
   public
 
   end;
@@ -65,15 +66,34 @@ var
 implementation
 
 uses
-  UtilUnit;
+  UtilUnit, Unit2;
 
 const
-  TIPO_CAPICOM = 'CAPICOM';
+  TIPO_WINCRYPT = 'WINCRYPT';
   TIPO_OPENSSL = 'OPENSSL';
 
 {$R *.lfm}
 
 { TfrmPrincipal }
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  CarregarGifBannerACBrSAC;
+
+  FDFeSSL := TDFeSSL.Create;
+
+  edtCertificado.Clear;
+  edtCNPJCliente.Clear;
+  edtCNPJSoftwareHouse.Clear;
+  memCodigoVinculacao.Clear;
+
+  LerConfiguracoes;
+end;
+
+procedure TfrmPrincipal.FormDestroy(Sender: TObject);
+begin
+  FDFeSSL.Free;
+end;
 
 procedure TfrmPrincipal.CarregarGifBannerACBrSAC;
 var
@@ -88,6 +108,45 @@ begin
   end;
 end;
 
+function TfrmPrincipal.SelecionarCertificado: String;
+var
+  I: Integer;
+begin
+  Result := '';
+
+  frSelecionarCertificado := TfrSelecionarCertificado.Create(Self);
+  try
+    FDFeSSL.LerCertificadosStore;
+
+    For I := 0 to FDFeSSL.ListaCertificados.Count-1 do
+    begin
+      with FDFeSSL.ListaCertificados[I] do
+      begin
+        if (CNPJ <> '') then
+        begin
+          with frSelecionarCertificado.StringGrid1 do
+          begin
+            RowCount := RowCount + 1;
+            Cells[ 0, RowCount-1] := NumeroSerie;
+            Cells[ 1, RowCount-1] := RazaoSocial;
+            Cells[ 2, RowCount-1] := CNPJ;
+            Cells[ 3, RowCount-1] := FormatDateBr(DataVenc);
+            Cells[ 4, RowCount-1] := Certificadora;
+          end;
+        end;
+      end;
+    end;
+
+    frSelecionarCertificado.ShowModal;
+
+    if frSelecionarCertificado.ModalResult = mrOK then
+      Result := frSelecionarCertificado.StringGrid1.Cells[ 0,
+                            frSelecionarCertificado.StringGrid1.Row];
+  finally
+     frSelecionarCertificado.Free;
+  end;
+end;
+
 function TfrmPrincipal.GetPathConfig: String;
 begin
   Result := ExtractFilePath(ParamStr(0)) + ChangeFileExt(ExtractFileName(ParamStr(0)), '.ini');
@@ -95,90 +154,71 @@ end;
 
 procedure TfrmPrincipal.ConfigurarDFe;
 begin
-  if rbtTipoCapicom.Checked then
+  if rbtTipoWinCrypt.Checked then
   begin
-    FACBrDFe.Configuracoes.Geral.SSLLib             := libCapicom;
-    FACBrDFe.Configuracoes.Certificados.NumeroSerie := edtCertificado.Text
+    FDFeSSL.SSLCryptLib := cryWinCrypt;
+    FDFeSSL.NumeroSerie := edtCertificado.Text
   end
   else
   begin
-    FACBrDFe.Configuracoes.Geral.SSLLib             := libOpenSSL;
-    FACBrDFe.Configuracoes.Certificados.ArquivoPFX  := edtCertificado.Text;
-    FACBrDFe.Configuracoes.Certificados.Senha       := edtSenhaCertificado.Text;
+    FDFeSSL.SSLCryptLib := cryOpenSSL;
+    FDFeSSL.ArquivoPFX  := edtCertificado.Text;
+    FDFeSSL.Senha       := edtSenhaCertificado.Text;
   end;
 end;
 
 procedure TfrmPrincipal.GravarConfiguracoes;
 var
-  F: TIniFile;
+  Ini: TIniFile;
 begin
-  F := TIniFile.Create(GetPathConfig);
+  Ini := TIniFile.Create(GetPathConfig);
   try
-    F.WriteString('CONFIG', 'Certificado', edtCertificado.Text);
-    F.WriteString('CONFIG', 'CNPJ_SH',     edtCNPJSoftwareHouse.Text);
-    F.WriteString('CONFIG', 'Tipo',        IfThen(rbtTipoCapicom.Checked, TIPO_CAPICOM, TIPO_OPENSSL));
-    GravaINICrypt(F, 'Certificado', 'Senha', edtSenhaCertificado.Text, _C);
+    Ini.WriteString('CONFIG', 'Certificado', edtCertificado.Text);
+    Ini.WriteString('CONFIG', 'CNPJ_SH',     edtCNPJSoftwareHouse.Text);
+    Ini.WriteString('CONFIG', 'Tipo',        IfThen(rbtTipoOpenSSL.Checked, TIPO_OPENSSL, TIPO_WINCRYPT));
+    GravaINICrypt(Ini, 'Certificado', 'Senha', edtSenhaCertificado.Text, _C);
   finally
-    F.Free;
+    Ini.Free;
   end;
 end;
 
 procedure TfrmPrincipal.LerConfiguracoes;
 var
-  F: TIniFile;
+  Ini: TIniFile;
 begin
-  F := TIniFile.Create(GetPathConfig);
+  Ini := TIniFile.Create(GetPathConfig);
   try
-    edtCertificado.Text       := F.ReadString('CONFIG', 'Certificado', '');
-    edtCNPJSoftwareHouse.Text := F.ReadString('CONFIG', 'CNPJ_SH', '');
-    rbtTipoCapicom.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_CAPICOM;
-    rbtTipoOpenSSL.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_OPENSSL;
-    edtSenhaCertificado.Text := LeINICrypt(F, 'Certificado', 'Senha', _C);
+    edtCertificado.Text       := Ini.ReadString('CONFIG', 'Certificado', '');
+    edtCNPJSoftwareHouse.Text := Ini.ReadString('CONFIG', 'CNPJ_SH', '');
+    rbtTipoOpenSSL.Checked    := Ini.ReadString('CONFIG', 'Tipo', TIPO_WINCRYPT) = TIPO_OPENSSL;
+    rbtTipoWinCrypt.Checked   := not rbtTipoOpenSSL.Checked;
+    edtSenhaCertificado.Text  := LeINICrypt(Ini, 'Certificado', 'Senha', _C);
   finally
-    F.Free;
+    Ini.Free;
   end;
-end;
-
-procedure TfrmPrincipal.FormCreate(Sender: TObject);
-begin
-  CarregarGifBannerACBrSAC;
-
-  FACBrDFe := TACBrDFe.Create(Self);
-
-  edtCertificado.Clear;
-  edtCNPJCliente.Clear;
-  edtCNPJSoftwareHouse.Clear;
-  memCodigoVinculacao.Clear;
-
-  LerConfiguracoes;
-end;
-
-procedure TfrmPrincipal.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-  FACBrDFe.Free;
 end;
 
 procedure TfrmPrincipal.Image2Click(Sender: TObject);
 begin
-  OpenURL('http://www.projetoacbr.com.br/forum/index.php?/page/SAC/sobre_o_sac.html');
+  OpenURL('http://www.projetoacbr.com.br/forum/sacv2/sobre/');
 end;
 
 procedure TfrmPrincipal.btnBuscarCertificadoClick(Sender: TObject);
 begin
-  if rbtTipoCapicom.Checked then
+  if rbtTipoWinCrypt.Checked then
   begin
-    FACBrDFe.Configuracoes.Geral.SSLLib := libCapicom;
-    edtCertificado.Text := FACBrDFe.SSL.SelecionarCertificado
+    FDFeSSL.SSLCryptLib := cryWinCrypt;
+    edtCertificado.Text := SelecionarCertificado;
   end
   else
   begin
-    FACBrDFe.Configuracoes.Geral.SSLLib := libOpenSSL;
+    FDFeSSL.SSLCryptLib := cryOpenSSL;
     if OpenDialog1.Execute then
       edtCertificado.Text := OpenDialog1.FileName;
   end;
 end;
 
-procedure TfrmPrincipal.rbtTipoCapicomChange(Sender: TObject);
+procedure TfrmPrincipal.rbtTipoWinCryptChange(Sender: TObject);
 begin
   edtCertificado.ReadOnly := True;
 end;
@@ -227,7 +267,7 @@ begin
   ConfigurarDFe;
 
   StrCodigoVinculacao      := Onlynumber(edtCNPJSoftwareHouse.Text) + Onlynumber(edtCNPJCliente.Text);
-  memCodigoVinculacao.Text := FACBrDFe.SSL.CalcHash(StrCodigoVinculacao, dgstSHA256, outBase64, True);
+  memCodigoVinculacao.Text := FDFeSSL.CalcHash(StrCodigoVinculacao, dgstSHA256, outBase64, True);
 
   ShowMessage('Código de vinculação gerado com sucesso');
   GravarConfiguracoes;

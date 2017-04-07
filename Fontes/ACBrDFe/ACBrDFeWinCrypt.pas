@@ -953,7 +953,7 @@ var
   hRSAKey, hSessKey, hExpKey: HCRYPTKEY;
   I: Integer;
   mTotal: Int64;
-  mBytesLen, mRead, dwKeySpec: DWORD;
+  mBytesLen, mRead, dwKeySpec, WinErro: DWORD;
   Memory: Pointer;
   mHashBuffer: array [0..1023] of AnsiChar;  // 1024 - Tamanho máximo do maior Hash atual
   pfCallerFreeProv: LongBool;
@@ -987,14 +987,14 @@ begin
       // Obtendo Contexto de Provedor de Criptografia, com suporte a SHA256 //
       if not CryptAcquireContext( mCryptProvider, Nil, Nil, //PAnsiChar(MS_ENH_RSA_AES_PROV),
                                  PROV_RSA_AES, CRYPT_VERIFYCONTEXT) then
-        raise EACBrDFeException.Create('CryptAcquireContext: '+MsgErroGetCryptProvider);
+        raise Exception.Create('CryptAcquireContext: '+MsgErroGetCryptProvider);
 
       if Assina then
       begin
         CarregarCertificadoSeNecessario;
 
         if not Assigned(FpCertContext) then
-          raise EACBrDFeException.Create('Certificado não pode ser carregado po MS CryptoAPI');
+          raise Exception.Create('Certificado não pode ser carregado po MS CryptoAPI');
 
         // Obtendo o Contexto do Provedor de Criptografia do Certificado //
         if CryptAcquireCertificatePrivateKey( FpCertContext, 0, Nil,
@@ -1023,16 +1023,16 @@ begin
                     if CryptExportKey( hRSAKey, hSessKey, PRIVATEKEYBLOB, 0, Memory, mBytesLen ) then
                     begin
                       if not CryptImportKey(mCryptProvider, Memory, mBytesLen, hSessKey, 0, hExpKey ) then
-                        raise EACBrDFeException.Create('CryptImportKey');
+                        raise Exception.Create('CryptImportKey');
                     end
                     else
-                      raise EACBrDFeException.Create('CryptExportKey');
+                      raise Exception.Create('CryptExportKey');
                   finally
                     Freemem(Memory);
                   end;
                 end
                 else
-                  raise EACBrDFeException.Create('CryptExportKey - len');
+                  raise Exception.Create('CryptExportKey - len');
               except
                 { Não foi capaz de Exportar/Copiar a Chave para o nosso Provedor
                   de Criptografia, então vamos usar o Provedor de Criptografia do
@@ -1044,11 +1044,11 @@ begin
               end;
             end
             else
-              raise EACBrDFeException.Create('CryptGetUserKey');
+              raise Exception.Create('CryptGetUserKey');
           end
         end
         else
-          raise EACBrDFeException.Create( MsgErroGetCryptProvider );
+          raise Exception.Create( MsgErroGetCryptProvider );
       end;
 
       if CryptCreateHash(mCryptProvider, aHashType, 0, 0, mHash) then
@@ -1062,7 +1062,7 @@ begin
             if mRead > 0 then
             begin
               if not CryptHashData(mHash, Memory, mRead, 0) then
-                raise EACBrDFeException.Create('CryptHashData');
+                raise Exception.Create('CryptHashData');
             end;
 
             mTotal := mTotal - mRead;
@@ -1083,7 +1083,7 @@ begin
               Result := Result + mHashBuffer[I-1];
           end
           else
-            raise EACBrDFeException.Create('CryptSignHash');
+            raise Exception.Create('CryptSignHash');
         end
         else
         begin
@@ -1091,11 +1091,18 @@ begin
           if CryptGetHashParam(mHash, HP_HASHVAL, @mHashBuffer, mBytesLen, 0) then
             SetString( Result, mHashBuffer, mBytesLen)
           else
-            raise EACBrDFeException.Create('CryptGetHashParam');
+            raise Exception.Create('CryptGetHashParam');
         end;
       end
       else
-        raise EACBrDFeException.Create('CryptCreateHash');
+      begin
+         WinErro := GetLastError;
+         if WinErro = DWORD( NTE_BAD_ALGID  ) then
+            raise Exception.Create('O Provedor de Criptografia não suporta o algoritmo: '+
+                                   GetEnumName(TypeInfo(TSSLDgst),Integer(Digest)))
+         else
+           raise Exception.Create('CryptCreateHash');
+      end;
 
     except
       On E: Exception do

@@ -199,7 +199,8 @@ begin
 end;
 
 procedure TACBrGIF.AtualizaImagem(Sender: TObject);
- Var OldFrame, OldIteration, STFrame : Integer ;
+Var
+  OldFrame, OldIteration, STFrame : Integer ;
 begin
   if not Assigned( fsGIF ) then
   begin
@@ -208,12 +209,12 @@ begin
   end ;
 
   if (not Assigned(Parent)) or (not Parent.Visible) then
-     exit ;
+     Exit ;
 
   {$IFDEF FPC}
   if Parent is TControl then
      if not TControl(Parent).IsVisible then
-        exit ;
+        Exit ;
   {$ENDIF}      
 
   OldFrame     := fsGIF.CurrentFrame ;
@@ -261,7 +262,7 @@ begin
      if (fsGIF.NumFrames <= 0) then
         raise Exception.Create(ACBrStr('Arquivo GIF não informado'));
 
-     fsGIF.CurrentFrame  := StartFrame ;
+     fsGIF.CurrentFrame := StartFrame ;
   end ;
 
   fsGIF.Animate   := Value ;
@@ -273,11 +274,11 @@ begin
      AtualizaImagem(self);
      Invalidate ;
 
-     if Assigned( fsOnStart) then
+     if Assigned( fsOnStart ) then
         fsOnStart( self ) ;
    end
   else
-     if Assigned( fsOnStop) then
+     if Assigned( fsOnStop ) then
         fsOnStop( self ) ;
 end;
 
@@ -295,7 +296,8 @@ begin
 end;
 
 procedure TACBrGIF.SetFilename(const Value: TFilename);
- Var NonAnimated : Boolean ;
+Var
+  NonAnimated : Boolean ;
 begin
   if (fsFilename <> '') and (Value = fsFilename) then exit ;
 
@@ -366,7 +368,7 @@ begin
                     Trunc((Height - TextHeight)/2), Name ) ;
    end
   else
-     fsGIF.Draw(Canvas,0,0,Width,Height, Left, Top);
+     fsGIF.Draw(Canvas,0,0, Width, Height, Left, Top);
 end;
 
 procedure TACBrGIF.Resize;
@@ -469,7 +471,10 @@ begin
   OldActive := Active ;
   Active := False ;
 
-  Filename := '' ;
+  fsFilename := '' ;
+
+  if Assigned( fsGIF ) then
+     FreeAndNil( fsGIF ) ;
 
   try
      NonAnimated := False ;

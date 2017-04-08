@@ -1440,14 +1440,23 @@ begin
 end;
 
 procedure TForm1.btnGerarPDFClick(Sender: TObject);
+var
+ CarregarMaisXML : Boolean = True;
 begin
+
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';
   OpenDialog1.Filter := 'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|Todos os Arquivos (*.*)|*.*';
   OpenDialog1.InitialDir := ACBrNFe1.Configuracoes.Arquivos.PathSalvar;
   ACBrNFe1.NotasFiscais.Clear;
-  if OpenDialog1.Execute then
-    ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+
+  while CarregarMaisXML do
+  begin
+    if OpenDialog1.Execute then
+      ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
+
+    CarregarMaisXML := MessageDlg('Carregar mais Notas?', mtConfirmation, mbYesNo, 0) = mrYes;
+  end;
 
   ACBrNFe1.NotasFiscais.ImprimirPDF;
 end;

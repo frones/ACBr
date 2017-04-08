@@ -427,8 +427,7 @@ begin
         FdocZip.Items[i].FNSU   := Leitor.rAtributo('NSU', 'docZip');
         FdocZip.Items[i].schema := StrToSchemaCTe(ok, Leitor.rAtributo('schema', 'docZip'));
 
-//        StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
-        StrAux := RetornarConteudoEntre(Leitor.Grupo, '<docZip>', '</docZip');
+        StrAux := RetornarConteudoEntre(Leitor.Grupo, '>', '</docZip');
         StrDecod := DecodeBase64(StrAux);
         FdocZip.Items[i].FInfZip := UnZip(StrDecod);
 
@@ -549,7 +548,7 @@ begin
               end;
             end;
 
-            if (oLeitorInfZip.rExtrai(2, 'retEvento') <> '') then
+            if (oLeitorInfZip.rExtrai(2, 'retEventoCTe') <> '') then
             begin
               FdocZip.Items[i].FprocEvento.RetinfEvento.FId          := oLeitorInfZip.rAtributo('Id', 'retEvento');
               FdocZip.Items[i].FprocEvento.RetinfEvento.FtpAmb       := StrToTpAmb(ok, oLeitorInfZip.rCampo(tcStr, 'tpAmb'));

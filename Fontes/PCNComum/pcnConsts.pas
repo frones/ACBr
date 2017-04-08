@@ -132,6 +132,7 @@ const
   DSC_NAPOL    = 'Número da Apólice';
   DSC_NAVER    = 'Número da Averbação';
   DSC_INFSEG   = 'Informações de seguro da carga';
+  DSC_UFPER    = 'Sigla da UF do percurso do veículo';
 
   DSC_NONU      = 'Número ONU/UN';
   DSC_XNOMEAE   = 'Nome apropriado para embarque do produto';

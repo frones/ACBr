@@ -51,7 +51,6 @@ const
   DSC_TPTRANSP    = 'Tipo de Transportador';
   DSC_CMUNCARREGA = 'Código do Município de Carregamento';
   DSC_XMUNCARREGA = 'Nome do Município de Carregamento';
-  DSC_UFPER       = 'Sigla da UF do percurso do veículo';
   DSC_SEGCODBARRA = 'Segundo código de barras';
   DSC_NCT         = 'Número do CT';
   DSC_SUBSERIE    = 'Subsérie do CT';

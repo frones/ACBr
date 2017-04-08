@@ -88,6 +88,7 @@ type
     procedure GerarIde;        // Nivel 1
     procedure GerarToma03;     // Nivel 2
     procedure GerarToma4;      // Nivel 2
+    procedure GerarinfPercurso;// Nivel 2
     procedure GerarEnderToma;  // Nivel 3
 
     procedure GerarCompl;      // Nivel 1
@@ -448,7 +449,10 @@ begin
     GerarToma03;
     GerarToma4;
   end;
-  
+
+  if (CTe.ide.modelo = 67) then
+    GerarInfPercurso;
+
   if CTe.Ide.tpEmis = teFSDA
    then begin
 
@@ -2567,6 +2571,20 @@ begin
   end;
   if result = '' then
     result := xMun;
+end;
+
+procedure TCTeW.GerarinfPercurso;
+var
+  i: Integer;
+begin
+  for i := 0 to CTe.Ide.infPercurso.Count - 1 do
+  begin
+    Gerador.wGrupo('infPercurso', '#023');
+    Gerador.wCampo(tcStr, '#024', 'UFPer', 2, 2, 1, CTe.Ide.infPercurso[i].UFPer, DSC_UFPER);
+    Gerador.wGrupo('/infPercurso');
+  end;
+  if CTe.Ide.infPercurso.Count > 25 then
+   Gerador.wAlerta('#023', 'infPercurso', '', ERR_MSG_MAIOR_MAXIMO + '25');
 end;
 {$ENDIF}
 

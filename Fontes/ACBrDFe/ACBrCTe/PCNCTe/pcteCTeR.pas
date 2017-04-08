@@ -180,6 +180,14 @@ begin
     if CTe.infCTe.versao = 3 then
       CTe.ide.indIEToma := StrToindIEDest(Ok, Leitor.rCampo(tcStr, 'indIEToma'));
 
+    i01 := 0;
+    while Leitor.rExtrai(2, 'infPercurso', '', i01 + 1) <> '' do
+    begin
+      CTe.Ide.infPercurso.Add;
+      CTe.Ide.infPercurso[i01].UFPer := Leitor.rCampo(tcStr, 'UFPer');
+      inc(i01);
+    end;
+
     (*#57*)CTe.Ide.dhCont := Leitor.rCampo(tcDatHor, 'dhCont');
     (*#58*)CTe.Ide.xJust  := Leitor.rCampo(tcStr, 'xJust');
   end;

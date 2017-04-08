@@ -85,6 +85,9 @@ type
   TToma4    = class;
   TEndereco = class;
 
+  TinfPercursoCollection       = class;
+  TinfPercursoCollectionItem   = class;
+
   TCompl = class;
 
   TFluxo              = class;
@@ -392,9 +395,12 @@ type
 
     FToma03 : TToma03;
     FToma4  : TToma4;
+    FinfPercurso: TinfPercursoCollection;
 
     FdhCont : TDateTime;
     FxJust  : String;
+    
+    procedure SetinfPercurso(Value: TinfPercursoCollection);
   public
     constructor Create(AOwner: TCTe);
     destructor Destroy; override;
@@ -435,6 +441,8 @@ type
     property toma03: TToma03 read FToma03 write FToma03;
     property toma4: TToma4   read FToma4  write FToma4;
 
+    property infPercurso: TinfPercursoCollection     read FinfPercurso   write SetinfPercurso;
+
     property dhCont: TDateTime read FdhCont write FdhCont;
     property xJust: String     read FxJust  write FxJust;
   end;
@@ -468,6 +476,26 @@ type
     property fone: String         read Ffone      write Ffone;
     property enderToma: TEndereco read FEnderToma write FEnderToma;
     property email: String        read Femail     write Femail;
+  end;
+
+  TinfPercursoCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TinfPercursoCollectionItem;
+    procedure SetItem(Index: Integer; Value: TinfPercursoCollectionItem);
+  public
+    constructor Create(AOwner: Tide);
+    function Add: TinfPercursoCollectionItem;
+    property Items[Index: Integer]: TinfPercursoCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TinfPercursoCollectionItem = class(TCollectionItem)
+  private
+    FUFPer: String;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property UFPer: String read FUFPer write FUFPer;
   end;
 
   TToma = class(TPersistent)
@@ -2748,13 +2776,20 @@ begin
   inherited Create;
   FToma03 := TToma03.Create;
   FToma4  := TToma4.Create( AOwner );
+  FinfPercurso := TinfPercursoCollection.Create(Self);
 end;
 
 destructor TIde.Destroy;
 begin
   FToma03.Free;
   FToma4.Free;
+  FinfPercurso.Free;
   inherited;
+end;
+
+procedure TIde.SetinfPercurso(Value: TinfPercursoCollection);
+begin
+  FinfPercurso.Assign(Value);
 end;
 
 { TToma4 }
@@ -2768,6 +2803,44 @@ end;
 destructor TToma4.Destroy;
 begin
   FEnderToma.Free;
+  inherited;
+end;
+
+{ TinfPercursoCollection }
+
+function TinfPercursoCollection.Add: TinfPercursoCollectionItem;
+begin
+  Result := TinfPercursoCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TinfPercursoCollection.Create(AOwner: Tide);
+begin
+  inherited Create(TinfPercursoCollectionItem);
+end;
+
+function TinfPercursoCollection.GetItem(
+  Index: Integer): TinfPercursoCollectionItem;
+begin
+  Result := TinfPercursoCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TinfPercursoCollection.SetItem(Index: Integer;
+  Value: TinfPercursoCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TinfPercursoCollectionItem }
+
+constructor TinfPercursoCollectionItem.Create;
+begin
+
+end;
+
+destructor TinfPercursoCollectionItem.Destroy;
+begin
+
   inherited;
 end;
 

@@ -749,7 +749,7 @@ begin
     Add('cTar', ftString, 4);
     Add('vTar', ftCurrency);
     Add('xDime', ftString, 14);
-    Add('cInfManu', ftInteger);
+    Add('cInfManu', ftString, 30);
     Add('cIMP', ftString, 3);
     Add('xOrig',ftString,15);
     Add('xDest',ftString,15);
@@ -1986,6 +1986,8 @@ begin
         FieldByName('NotaFiscal').AsString  := '';
 
         case tpDoc of
+          tdCFeSAT    : FieldByName('TextoImpressao').AsString := 'CF-e SAT            ' + DoctoRem + '                                        ' + nDoc;
+          tdNFCe      : FieldByName('TextoImpressao').AsString := 'NFC-e               ' + DoctoRem + '                                        ' + nDoc;
           tdDeclaracao: FieldByName('TextoImpressao').AsString := 'Declaração          ' + DoctoRem + '                                        ' + nDoc;
           tdOutros    : FieldByName('TextoImpressao').AsString := 'Outros              ' + DoctoRem + '                                        ' + nDoc;
           tdDutoviario: FieldByName('TextoImpressao').AsString := 'Dutoviário          ' + DoctoRem + '                                        ' + nDoc;
@@ -2076,6 +2078,7 @@ begin
                 daCA    : FieldByName('Tipo').AsString  := 'CA';
                 daTIF   : FieldByName('Tipo').AsString  := 'TIF';
                 daOutros: FieldByName('Tipo').AsString  := 'OUTROS';
+                daBL    : FieldByName('Tipo').AsString  := 'BL';
               end;
               FieldByName('Serie').AsString := idDocAnt.Items[ii].idDocAntPap.Items[iii].serie;
               FieldByName('nDoc').AsString  := IntToStr(idDocAnt.Items[ii].idDocAntPap.Items[iii].nDoc);
@@ -2087,16 +2090,27 @@ begin
           begin
             Append;
             FieldByName('CNPJCPF').AsString := CNPJCPF;
-			FieldByName('IE').AsString      := IE;
+            FieldByName('IE').AsString      := IE;
             FieldByName('xNome').AsString   := xNome;
             FieldByName('UF').AsString      := UF;
             with idDocAnt.Items[ii].idDocAntEle.Items[iii] do
             begin
               FieldByName('Tipo').AsString  := 'CT-e';
-              FieldByName('Chave').AsString := chave;
-              FieldByName('Serie').AsString := Copy(chave, 23, 3);
-              FieldByName('nDoc').AsString  := Copy(chave, 26, 9);
-              FieldByName('dEmi').AsString  := Copy(chave, 5, 2) + '/' + Copy(chave, 3, 2);
+
+              if FCTe.infCTe.versao >= 3 then
+              begin
+                FieldByName('Chave').AsString := chCTe;
+                FieldByName('Serie').AsString := Copy(chCTe, 23, 3);
+                FieldByName('nDoc').AsString  := Copy(chCTe, 26, 9);
+                FieldByName('dEmi').AsString  := Copy(chCTe, 5, 2) + '/' + Copy(chCTe, 3, 2);
+              end
+              else
+              begin
+                FieldByName('Chave').AsString := chave;
+                FieldByName('Serie').AsString := Copy(chave, 23, 3);
+                FieldByName('nDoc').AsString  := Copy(chave, 26, 9);
+                FieldByName('dEmi').AsString  := Copy(chave, 5, 2) + '/' + Copy(chave, 3, 2);
+              end;
             end;
             Post;
           end;
@@ -2399,6 +2413,8 @@ begin
 end;
 
 procedure TACBrCTeDACTEFR.CarregaModalAereo;
+var
+   i : Integer;
 begin
   if FCTe.ide.modal <> mdAereo then
     Exit;
@@ -2415,11 +2431,17 @@ begin
     FieldByName('cTar').AsString := aereo.tarifa.cTar;
     FieldByName('vTar').AsCurrency := aereo.tarifa.vTar;
     FieldByName('xDime').AsString := aereo.natCarga.xDime;
-    
-	if aereo.natCarga.cinfManu.Count > 0 then
-	  FieldByName('cInfManu').AsInteger := Ord(aereo.natCarga.cinfManu.Items[0].nInfManu);
-    
-	FieldByName('cIMP').AsString := aereo.natCarga.cIMP;
+
+    for i := 0 to CTe.infCTeNorm.aereo.natCarga.cinfManu.Count - 1 do
+    begin
+      if (i > 0) then
+         FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + ', ';
+      FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + TpInfManuToStr(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu);
+    end;
+    if (FieldByName('cInfManu').AsString <> '') then
+      FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + '.';
+
+    FieldByName('cIMP').AsString := aereo.natCarga.cIMP;
     FieldByName('xOrig').AsString := CTe.compl.fluxo.xOrig;
     FieldByName('xDest').AsString := CTe.compl.fluxo.xDest;
     FieldByName('xRota').AsString := CTe.compl.fluxo.xRota;

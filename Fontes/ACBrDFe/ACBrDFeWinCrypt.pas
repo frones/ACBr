@@ -41,8 +41,8 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrDFeSSL,
-  ACBr_WinCrypt, Windows;
+  ACBrDFeSSL, ACBrDFeException,
+  ACBr_WinCrypt, ACBr_NCrypt, Windows;
 
 const
   sz_CERT_STORE_PROV_PKCS12 = 'PKCS12';
@@ -50,6 +50,8 @@ const
    SCARD_W_CHV_BLOCKED      = $8010006C;
 
 type
+  EACBrDFeWrongPINException = EACBrDFeException;
+
   { TDFeWinCrypt }
 
   TDFeWinCrypt = class(TDFeSSLCryptClass)
@@ -81,18 +83,27 @@ type
     property Certificado: PCCERT_CONTEXT read FpCertContext;
   end;
 
-function GetLastErrorAsHexaStr: String;
-function MsgErroGetCryptProvider: String;
-function MsgSetPINError: String;
+function GetLastErrorAsHexaStr(WinErro: DWORD = 0): String;
+function MsgErroGetCryptProvider(WinErro: DWORD = 0): String;
 
 function GetSerialNumber(ACertContext: PCCERT_CONTEXT): String;
 function GetSubjectName(ACertContext: PCCERT_CONTEXT): String;
 function GetIssuerName(ACertContext: PCCERT_CONTEXT): String;
 function GetNotAfter(ACertContext: PCCERT_CONTEXT): TDateTime;
 function GetCertIsHardware(ACertContext: PCCERT_CONTEXT): Boolean;
-function GetProviderParamString(ACryptProvider: HCRYPTPROV; dwParam: DWORD): String;
-function GetProviderParamDWord(ACryptProvider: HCRYPTPROV; dwParam: DWORD): DWORD;
-function GetProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
+
+function GetProviderOrKeyIsHardware( ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
+                                     dwKeySpec: DWORD): Boolean;
+
+function GetCSPProviderParamString(ACryptProvider: HCRYPTPROV; dwParam: DWORD): String;
+function GetCSPProviderParamDWord(ACryptProvider: HCRYPTPROV; dwParam: DWORD): DWORD;
+function GetCSPProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
+procedure GetCSPProviderInfo(ACertContext: PCCERT_CONTEXT;
+   var ProviderType: DWORD; var ProviderName, ContainerName: String);
+
+function GetCNGProviderParamString(ACryptProvider: NCRYPT_KEY_HANDLE; dwParam: DWORD): String;
+function GetCNGProviderParamDWord(ACryptProvider: NCRYPT_KEY_HANDLE; dwParam: LPCWSTR): DWORD;
+function GetCNGProviderIsHardware(ACryptProvider: NCRYPT_KEY_HANDLE): Boolean;
 
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
 function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
@@ -101,8 +112,6 @@ function AdjustAnsiOID(aOID: AnsiString): AnsiString;
 function GetTaxIDFromExtensions(ACertContext: PCCERT_CONTEXT): String;
 
 function CertToDERBase64(ACertContext: PCCERT_CONTEXT): AnsiString;
-procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT;
-   var ProviderType: DWORD; var ProviderName, ContainerName: String);
 
 procedure PFXDataToCertContextWinApi( AData, APass: AnsiString; var AStore, ACertContext: Pointer);
 function ExportCertContextToPFXData( ACertContext: PCCERT_CONTEXT; APass: AnsiString): AnsiString;
@@ -114,38 +123,30 @@ implementation
 
 uses
   strutils, typinfo, comobj,
-  ACBrUtil, ACBrDFeException,
+  ACBrUtil,
   synautil, synacode;
 
-function GetLastErrorAsHexaStr: String;
+function GetLastErrorAsHexaStr(WinErro: DWORD): String;
 begin
-  Result := IntToHex(GetLastError, 8);
+  if WinErro = 0 then
+    WinErro := GetLastError;
+
+  Result := IntToHex(WinErro, 8);
 end;
 
-function MsgErroGetCryptProvider: String;
-var
-  WinErro: DWORD;
+function MsgErroGetCryptProvider(WinErro: DWORD): String;
 begin
-  WinErro := GetLastError;
+  if WinErro = 0 then
+    WinErro := GetLastError;
+
   if WinErro = DWORD( NTE_KEYSET_NOT_DEF ) then
     Result := 'Provedor de Criptografia não encontrado!'
+  else if WinErro = DWORD( NTE_BAD_KEYSET ) then
+    Result := 'O recipiente da chave não pôde ser aberto'
   else if WinErro = DWORD( NTE_KEYSET_ENTRY_BAD ) then
     Result := 'Estrutura de Chave obtida no Provedor de Criptografia está corrompida'
   else
-    Result := 'Falha em obter Provedor de Criptografia do Certificado. Erro: '+GetLastErrorAsHexaStr;
-end;
-
-function MsgSetPINError: String;
-var
-  WinError: DWORD;
-begin
-  WinError := GetLastError;
-  if WinError = SCARD_W_WRONG_CHV then
-    Result := 'O cartão não pode ser acessado porque o PIN errado foi apresentado.'
-  else if WinError = SCARD_W_CHV_BLOCKED then
-    Result := 'O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido'
-  else
-    Result := 'Falha ao Definir PIN do Certificado. Erro:'+GetLastErrorAsHexaStr;
+    Result := 'Falha em obter Provedor de Criptografia do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro);
 end;
 
 function GetSerialNumber(ACertContext: PCCERT_CONTEXT): String;
@@ -230,29 +231,42 @@ end;
 
 function GetCertIsHardware(ACertContext: PCCERT_CONTEXT): Boolean;
 var
-  mCryptProviderCert: HCRYPTPROV;
   dwKeySpec: DWORD;
   pfCallerFreeProv: LongBool;
+  ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
 begin
-  mCryptProviderCert := 0;
-  dwKeySpec := AT_KEYEXCHANGE;
+  ProviderOrKeyHandle := 0;
+  dwKeySpec := 0;
   pfCallerFreeProv := False;
 
   // Obtendo o Contexto do Provedor de Criptografia do Certificado //
-  if not CryptAcquireCertificatePrivateKey( ACertContext, 0, Nil,
-                                            mCryptProviderCert, dwKeySpec,
+  if not CryptAcquireCertificatePrivateKey( ACertContext,
+                                            CRYPT_ACQUIRE_ALLOW_NCRYPT_KEY_FLAG,
+                                            Nil,
+                                            ProviderOrKeyHandle,
+                                            dwKeySpec,
                                             pfCallerFreeProv) then
     raise EACBrDFeException.Create( MsgErroGetCryptProvider );
 
   try
-    Result := GetProviderIsHardware(mCryptProviderCert);
+    Result := GetProviderOrKeyIsHardware(ProviderOrKeyHandle, dwKeySpec);
   finally
     if pfCallerFreeProv then
-      CryptReleaseContext(mCryptProviderCert, 0);
+      CryptReleaseContext(ProviderOrKeyHandle, 0);
   end;
 end;
 
-function GetProviderParamString(ACryptProvider: HCRYPTPROV; dwParam: DWORD): String;
+function GetProviderOrKeyIsHardware(
+  ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE; dwKeySpec: DWORD
+  ): Boolean;
+begin
+  if dwKeySpec = CERT_NCRYPT_KEY_SPEC then
+    Result := GetCNGProviderIsHardware(ProviderOrKeyHandle)
+  else
+    Result := GetCSPProviderIsHardware(ProviderOrKeyHandle);
+end;
+
+function GetCSPProviderParamString(ACryptProvider: HCRYPTPROV; dwParam: DWORD): String;
 var
   pdwDataLen: DWORD;
   pbData: PBYTE;
@@ -260,14 +274,14 @@ begin
   pdwDataLen := 0;
   if not CryptGetProvParam(ACryptProvider, dwParam, nil, pdwDataLen, 0) then
     raise EACBrDFeException.Create(
-        'GetProviderParamAsString: Falha ao obter BufferSize. Erro:'+GetLastErrorAsHexaStr);
+        'GetCSPProviderParamString: Falha ao obter BufferSize. Erro:'+GetLastErrorAsHexaStr);
 
   pbData := AllocMem(pdwDataLen);
   try
     SetLength(Result, pdwDataLen);
     if not CryptGetProvParam(ACryptProvider, dwParam, pbData, pdwDataLen, 0) then
       raise EACBrDFeException.Create(
-          'GetProviderParamAsString: Falha ao Ler Retorno. Erro:'+GetLastErrorAsHexaStr);
+          'GetCSPProviderParamString: Falha ao Ler Retorno. Erro:'+GetLastErrorAsHexaStr);
 
     SetLength(Result, pdwDataLen-1);
     Move(pbData^, Result[1], pdwDataLen-1);
@@ -276,30 +290,86 @@ begin
   end;
 end;
 
-function GetProviderParamDWord(ACryptProvider: HCRYPTPROV; dwParam: DWORD
+function GetCSPProviderParamDWord(ACryptProvider: HCRYPTPROV; dwParam: DWORD
   ): DWORD;
 var
   pdwDataLen: DWORD;
 begin
   pdwDataLen := SizeOf(DWORD);
   if not CryptGetProvParam(ACryptProvider, dwParam, @Result, pdwDataLen, 0) then
-    raise EACBrDFeException.Create(
-        'GetProviderParamDWord. Erro:'+GetLastErrorAsHexaStr);
+    raise EACBrDFeException.Create('GetCSPProviderParamDWord. Erro:'+GetLastErrorAsHexaStr);
 end;
 
-function GetProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
+function GetCSPProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
 var
   ImpType: DWORD;
 begin
-  ImpType := GetProviderParamDWord(ACryptProvider, PP_IMPTYPE);
+  ImpType := GetCSPProviderParamDWord(ACryptProvider, PP_IMPTYPE);
   Result := ((ImpType and CRYPT_IMPL_HARDWARE) = CRYPT_IMPL_HARDWARE);
+end;
+
+procedure GetCSPProviderInfo(ACertContext: PCCERT_CONTEXT;
+   var ProviderType: DWORD; var ProviderName, ContainerName: String);
+var
+  dwKeySpec: DWORD;
+  mCryptProviderCert: HCRYPTPROV;
+  pfCallerFreeProv: LongBool;
+begin
+  // Obtendo o Contexto do Provedor de Criptografia do Certificado //
+  dwKeySpec := 0;
+  if not CryptAcquireCertificatePrivateKey( ACertContext,
+                                            0, Nil, mCryptProviderCert,
+                                            dwKeySpec, pfCallerFreeProv) then
+    raise EACBrDFeException.Create( MsgErroGetCryptProvider );
+
+  try
+    ProviderType  := GetCSPProviderParamDWord( mCryptProviderCert, PP_PROVTYPE);
+    ProviderName  := GetCSPProviderParamString( mCryptProviderCert, PP_NAME);
+    ContainerName := GetCSPProviderParamString( mCryptProviderCert, PP_CONTAINER);
+  finally
+    if pfCallerFreeProv then
+      CryptReleaseContext(mCryptProviderCert, 0);
+  end;
+end;
+
+
+function GetCNGProviderParamString(ACryptProvider: NCRYPT_KEY_HANDLE;
+  dwParam: DWORD): String;
+begin
+   // TODO:
+end;
+
+function GetCNGProviderParamDWord(ACryptProvider: NCRYPT_KEY_HANDLE;
+  dwParam: LPCWSTR): DWORD;
+var
+  pdwDataLen, pcbResult: DWORD;
+  Ret: SECURITY_STATUS;
+begin
+  pdwDataLen := SizeOf(DWORD);
+  pcbResult := 0;
+  Ret := NCryptGetProperty(ACryptProvider, dwParam, @Result, pdwDataLen, pcbResult, 0);
+  if (Ret <> ERROR_SUCCESS) then
+    raise EACBrDFeException.Create('GetCNGProviderParamDWord. Erro: '+IntToHex(Ret, 8));
+end;
+
+function GetCNGProviderIsHardware(ACryptProvider: NCRYPT_KEY_HANDLE): Boolean;
+var
+  ImpType: DWORD;
+begin
+  try
+    ImpType := GetCNGProviderParamDWord(ACryptProvider, NCRYPT_IMPL_TYPE_PROPERTY);
+    Result := ((ImpType and NCRYPT_IMPL_HARDWARE_FLAG) = NCRYPT_IMPL_HARDWARE_FLAG);
+  except
+    Result := True;  // TODO: Assumindo que todos certificados CNG são A3
+    // TODO: NCRYPT_IMPL_TYPE_PROPERTY não funciona com NCRYPT_KEY_HANDLE, espera NCRYPT_PROV_HANDLE
+  end;
 end;
 
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
 begin
   Result := nil;
   if Assigned(ACertContext) then
-    Result := CertFindExtension( LPCSTR( ExtensionName ),
+    Result := CertFindExtension( LPCSTR( AnsiString(ExtensionName) ),
                                  ACertContext^.pCertInfo^.cExtension,
                                  PCERT_EXTENSION(ACertContext^.pCertInfo^.rgExtension));
 end;
@@ -313,7 +383,7 @@ begin
   begin
     BufferSize := 0;
     if not CryptDecodeObject( X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
-                              LPCSTR( ExtensionName ),
+                              LPCSTR( AnsiString(ExtensionName) ),
                               AExtension^.Value.pbData,
                               AExtension^.Value.cbData,
                               0,
@@ -323,7 +393,7 @@ begin
 
     Result := AllocMem(BufferSize);
     if not CryptDecodeObject( X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
-                              LPCSTR( ExtensionName ),
+                              LPCSTR( AnsiString(ExtensionName) ),
                               AExtension^.Value.pbData,
                               AExtension^.Value.cbData,
                               0,
@@ -337,7 +407,7 @@ function GetOtherNameBlobFromNameInfo(ANameInfo: PCERT_ALT_NAME_INFO; AExtension
 type
   ArrCERT_ALT_NAME_ENTRY = array of CERT_ALT_NAME_ENTRY;
 var
-  I: Integer;
+  I: Cardinal;
   CertNameEntry: CERT_ALT_NAME_ENTRY;
 begin
   ZeroMemory(@Result, SizeOf(Result));
@@ -427,40 +497,15 @@ begin
   end;
 end;
 
-procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT;
-   var ProviderType: DWORD; var ProviderName, ContainerName: String);
-var
-  dwKeySpec: DWORD;
-  mCryptProviderCert: HCRYPTPROV;
-  pfCallerFreeProv: LongBool;
-begin
-  // Obtendo o Contexto do Provedor de Criptografia do Certificado //
-  dwKeySpec := AT_KEYEXCHANGE;
-  if not CryptAcquireCertificatePrivateKey( ACertContext,
-                                            0, Nil, mCryptProviderCert,
-                                            dwKeySpec, pfCallerFreeProv) then
-    raise EACBrDFeException.Create( MsgErroGetCryptProvider );
-
-  try
-    ProviderType  := GetProviderParamDWord( mCryptProviderCert, PP_PROVTYPE);
-    ProviderName  := GetProviderParamString( mCryptProviderCert, PP_NAME);
-    ContainerName := GetProviderParamString( mCryptProviderCert, PP_CONTAINER);
-  finally
-    if pfCallerFreeProv then
-      CryptReleaseContext(mCryptProviderCert, 0);
-  end;
-end;
-
 procedure PFXDataToCertContextWinApi(AData, APass: AnsiString; var AStore,
   ACertContext: Pointer);
 var
   PFXBlob: CRYPT_DATA_BLOB;
   PFXCert: PCCERT_CONTEXT;
   wsPass: WideString;
-  mCryptProviderCert: HCRYPTPROV;
   dwKeySpec: DWORD;
   pfCallerFreeProv: LongBool;
-  hRSAKey: HCRYPTKEY;
+  ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
 begin
   PFXBlob.cbData := Length(AData);
   PFXBlob.pbData := PBYTE(AData);
@@ -487,22 +532,20 @@ begin
   begin
     // Verificando se o Certificado tem Chave Privada
     pfCallerFreeProv := False;
-    mCryptProviderCert := 0;
-    dwKeySpec := AT_KEYEXCHANGE;
-    if CryptAcquireCertificatePrivateKey( PFXCert, 0, Nil,
-                                          mCryptProviderCert, dwKeySpec,
+    ProviderOrKeyHandle := 0;
+    dwKeySpec := 0;
+    if CryptAcquireCertificatePrivateKey( PFXCert,
+                                          CRYPT_ACQUIRE_ALLOW_NCRYPT_KEY_FLAG,
+                                          Nil,
+                                          ProviderOrKeyHandle,
+                                          dwKeySpec,
                                           pfCallerFreeProv) then
     begin
-      hRSAKey := 0;
-      if CryptGetUserKey(mCryptProviderCert, dwKeySpec, hRSAKey) then
-        ACertContext := PFXCert;
-
-      if hRSAKey <> 0 then
-        CryptDestroyKey( hRSAKey );
+      ACertContext := PFXCert
     end;
 
-    if pfCallerFreeProv and (mCryptProviderCert <> 0) then
-      CryptReleaseContext(mCryptProviderCert, 0);
+    if pfCallerFreeProv and (ProviderOrKeyHandle <> 0) then
+      CryptReleaseContext(ProviderOrKeyHandle, 0);
 
     if ACertContext = Nil then
       PFXCert := CertEnumCertificatesInStore(AStore, PCCERT_CONTEXT(PFXCert)^);
@@ -626,32 +669,67 @@ end;
 
 procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString);
 var
-  mCryptProviderCert: HCRYPTPROV;
   dwKeySpec: DWORD;
   pfCallerFreeProv: LongBool;
+  Ret: SECURITY_STATUS;
+  ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
+
+  procedure CheckPINError(WinErro: DWORD = 0);
+  begin
+    if WinErro = 0 then
+      WinErro := GetLastError;
+
+    if WinErro = 0 then
+      Exit;
+
+    if WinErro = SCARD_W_WRONG_CHV then
+      raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o PIN errado foi apresentado.')
+    else if WinErro = SCARD_W_CHV_BLOCKED then
+      raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido')
+    else
+      raise EACBrDFeException.Create('Falha ao Definir PIN do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro));
+  end;
+
 begin
-  mCryptProviderCert := 0;
-  dwKeySpec := AT_KEYEXCHANGE;
+  ProviderOrKeyHandle := 0;
+  dwKeySpec := 0;
   pfCallerFreeProv := False;
 
   // Obtendo o Contexto do Provedor de Criptografia do Certificado //
-  if not CryptAcquireCertificatePrivateKey( ACertContext, 0, Nil,
-                                            mCryptProviderCert, dwKeySpec,
+  if not CryptAcquireCertificatePrivateKey( ACertContext,
+                                            CRYPT_ACQUIRE_ALLOW_NCRYPT_KEY_FLAG,
+                                            Nil,
+                                            ProviderOrKeyHandle,
+                                            dwKeySpec,
                                             pfCallerFreeProv) then
     raise EACBrDFeException.Create( MsgErroGetCryptProvider );
 
   try
-    if not GetProviderIsHardware(mCryptProviderCert) then
-      Exit;
+    if dwKeySpec = CERT_NCRYPT_KEY_SPEC then
+    begin
+      if not GetCNGProviderIsHardware(ProviderOrKeyHandle) then
+        Exit;
 
-    if not CryptSetProvParam(mCryptProviderCert, PP_KEYEXCHANGE_PIN, PBYTE(APass), 0) then
-      raise EACBrDFeException.Create( MsgSetPINError );
+      Ret := NCryptSetProperty( ProviderOrKeyHandle,    // Não testado...
+                                NCRYPT_PIN_PROPERTY,
+                                PBYTE(APass),
+                                Length(APass)+1, 0);
+      CheckPINError(Ret);
+    end
+    else
+    begin
+      if not GetCSPProviderIsHardware(ProviderOrKeyHandle) then
+        Exit;
 
-    if not CryptSetProvParam(mCryptProviderCert, PP_SIGNATURE_PIN, PBYTE(APass), 0) then
-      raise EACBrDFeException.Create( MsgSetPINError );
+      if CryptSetProvParam(ProviderOrKeyHandle, PP_KEYEXCHANGE_PIN, PBYTE(APass), 0) then
+        CheckPINError();
+
+      if not CryptSetProvParam(ProviderOrKeyHandle, PP_SIGNATURE_PIN, PBYTE(APass), 0) then
+        CheckPINError();
+    end;
   finally
     if pfCallerFreeProv then
-      CryptReleaseContext(mCryptProviderCert, 0);
+      CryptReleaseContext(ProviderOrKeyHandle, 0);
   end;
 end;
 
@@ -811,8 +889,14 @@ begin
     try
       SetCertContextPassword(FpCertContext, FpDFeSSL.Senha);
     except
-      FpDFeSSL.Senha := '';  // A senha está errada... vamos remove-la para não tentar novamente...
-      raise;
+      On EACBrDFeWrongPINException do
+      begin
+        FpDFeSSL.Senha := '';  // A senha está errada... vamos remove-la para não tentar novamente...
+        raise;
+      end;
+
+      On E: Exception do
+        raise;
     end;
   end;
 end;
@@ -825,10 +909,13 @@ begin
     Clear;
     if CheckIsHardware then
     begin
-      if GetCertIsHardware(ACertContext) then
-        Tipo := tpcA3
-      else
-        Tipo := tpcA1;
+      try
+        if GetCertIsHardware(ACertContext) then  // Pode falhar com certificado CNG
+          Tipo := tpcA3
+        else
+          Tipo := tpcA1;
+      except
+      end;
     end;
 
     NumeroSerie := GetSerialNumber(ACertContext);
@@ -996,13 +1083,14 @@ begin
         if not Assigned(FpCertContext) then
           raise Exception.Create('Certificado não pode ser carregado po MS CryptoAPI');
 
+        // TODO: Adicionar suporte a certificados CNG
         // Obtendo o Contexto do Provedor de Criptografia do Certificado //
         if CryptAcquireCertificatePrivateKey( FpCertContext, 0, Nil,
                                               mCryptProviderCert,
                                               dwKeySpec,
                                               pfCallerFreeProv) then
         begin
-          if GetProviderIsHardware( mCryptProviderCert ) then
+          if GetCSPProviderIsHardware( mCryptProviderCert ) then
           begin
             CryptReleaseContext(mCryptProvider, 0);
             mCryptProvider := mCryptProviderCert;

@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2017
+-- ACBrDFeWinCrypt --
+[-] Ajustes para possível correção de Certificados compatível apenas com "CNG"
+    que causavam o erro "NTE_BAD_PROV_TYPE - 0x80090014", durante a carga do
+    Certificado.
+    http://www.projetoacbr.com.br/forum/topic/36017-provedor-de-criptografia/?do=findComment&comment=236710
+    (por: DSA)
+
 04/04/2017
 -- ACBrDFeCapicom --
 [-] Correção no método "GetCNPJFromExtensions", onde ocorria o erro:

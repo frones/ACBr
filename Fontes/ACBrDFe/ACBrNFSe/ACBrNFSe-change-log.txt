@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/04/2017
+[-] Alteração para o provedor ISSNet para buscar a situação do RPS by Fernando Pasquetto
+		Por Juliomar Marchetti
+		
 04/04/2017
 -- Diversos -- 
 [*] http://www.projetoacbr.com.br/forum/topic/36077-numero-do-encapsulamento-nfs-e-sp/?do=findComment&comment=236010.

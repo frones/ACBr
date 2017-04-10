@@ -1914,7 +1914,6 @@ procedure TACBrCTeDACTEFR.CarregaDadosNotasFiscais;
 var
   i       : Integer;
   DoctoRem: string;
-  NroNota : Integer;
 begin
   { dados das Notas Fiscais }
   DoctoRem := FCTe.Rem.CNPJCPF;
@@ -1964,8 +1963,7 @@ begin
         FieldByName('Serie').AsString       := Copy(chave, 23, 3);
         FieldByName('ChaveAcesso').AsString := chave;
         FieldByName('NotaFiscal').AsString  := Copy(chave, 26, 9);
-        NroNota                             := StrToInt(Copy(chave, 26, 9));
-        FieldByName('TextoImpressao').AsString := 'NF-e ' + FormatFloat('000000000', NroNota) + '      ' + chave;
+        FieldByName('TextoImpressao').AsString := Format('NF-e   %s      %s / %.9d',[chave,FieldByName('Serie').AsString, FieldByName('NotaFiscal').AsInteger]);
       end;
       Post;
     end;
@@ -1997,11 +1995,8 @@ begin
       end;
       Post;
     end;
-
-    //
     cdsDadosNotasFiscais.RecordCount;
   end;
-
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDestinatario;

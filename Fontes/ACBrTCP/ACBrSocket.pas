@@ -195,6 +195,7 @@ TACBrHTTP = class( TACBrComponent )
     fHTTPSend : THTTPSend ;
     fOnAntesAbrirHTTP : TACBrOnAntesAbrirHTTP ;
     fRespHTTP   : TStringList ;
+    FTimeOut: Integer;
     fURL        : String;
     FParseText: Boolean;
     function GetProxyHost : string ;
@@ -229,6 +230,7 @@ TACBrHTTP = class( TACBrComponent )
     property ProxyUser : string read GetProxyUser write SetProxyUser ;
     property ProxyPass : string read GetProxyPass write SetProxyPass ;
     property ParseText : Boolean read FParseText write FParseText default False;
+    property TimeOut   : Integer read FTimeOut write FTimeOut default 90000;
 
     property OnAntesAbrirHTTP : TACBrOnAntesAbrirHTTP
        read fOnAntesAbrirHTTP write fOnAntesAbrirHTTP ;
@@ -801,6 +803,7 @@ begin
   fOnAntesAbrirHTTP := nil ;
   fURL := '';
   FParseText := False;
+  FTimeOut := 90000;
 end ;
 
 destructor TACBrHTTP.Destroy ;
@@ -873,6 +876,9 @@ begin
 
     // DEBUG //
     //HTTPSend.Document.SaveToFile( 'c:\temp\HttpSend.txt' );
+
+    HTTPSend.Timeout := FTimeOut;
+    HTTPSend.Sock.ConnectionTimeout := FTimeOut;
 
     HTTPSend.HTTPMethod(Method, AURL);
 

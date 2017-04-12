@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2017
+-- ACBrSocket --
+[+] "TACBrHTTP", adicionada a propriedade TimeOut: Integer default 90000
+    (por: DSA)
+
 25/03/2017
 -- ACBrWinHTTPReqResp --
 [-] Correção de Erro de comunicação, causado pelo erro no tratamento de

@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/04/2017
+-- ACBr.inc --
+[+] Adicionada a diretiva "DFE_SEM_NCRYPT", para permitir a compatibilidade em
+    Windows XP  (o padrão é desligada)
+    http://www.projetoacbr.com.br/forum/topic/36219-ncryptdll-faltando-no-xp/
+    (por: DSA)
+
 Data: 19/03/2017
 -- ACBr.inc --
 [+] Adicionada a diretiva "HAS_INLINE", para FPC ou DELPHI9_UP

@@ -39,6 +39,36 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 12/04/2017
+-- ACBrPosPrinter --
+[+] Adicionado o comando "TACBrPosComandos.PuloDeLinha", para permitir definir
+    qual o comando a ser enviado, para pulo de linha (Ex: CR ou CR+LF)
+[*] Método "TACBrPosPrinterClass.ComandoEspacoEntreLinhas": adicionada
+    implementação genérica, para evitar repetição nas classes filhas
+
+-- ACBrEscBematech --
+[*] Refatoração para não mais descender de TACBrEscPosEpson e sim de
+    TACBrPosPrinterClass
+
+-- ACBrEscDaruma --
+[*] propriedade "RazaoColunaFonte.Condensada", modificada para usar a proporção
+    Default (0.75)
+[-] Método "ComandoQrCode". Ajuste para correta impressão de QRCodes grandes.
+    Caso a correção de Erro não tenha sido especificada, e tamanho do código
+    seja maior do que 256 caracteres, usará 'M' como correção.
+[*] Método "ComandoEspacoEntreLinhas" removido, pois usará implementação da
+    classe mãe
+
+-- ACBrEscDiebold --
+[*] Método "ComandoFonte" removido, pois foi migrado para "TACBrEscPosEpson"
+
+-- ACBrEscPosEpson --
+[*] Método "ComandoFonte" adicionado, para melhor controle e compatibilidade das
+    fontes "Negrito, Condensado, Expandido, Sublinhado",com os diversos modelos
+    de Impressoras compatíveis com Epson EscPos
+[*] Método "ComandoEspacoEntreLinhas" removido, pois usará implementação da
+    classe mãe
+
 Data: 04/04/2017
 -- ACBrECFVirtual --
 [-] Método "VendeItem", correção para o caso do Desconto / Acrescimo falhar,

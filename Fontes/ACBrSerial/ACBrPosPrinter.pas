@@ -79,6 +79,7 @@ type
     FLigaItalico: AnsiString;
     FLigaNegrito: AnsiString;
     FLigaSublinhado: AnsiString;
+    FPuloDeLinha: AnsiString;
     FZera: AnsiString;
   public
     property Zera: AnsiString read FZera write FZera;
@@ -113,6 +114,7 @@ type
     property Beep: AnsiString read FBeep write FBeep;
     property CorteTotal: AnsiString read FCorteTotal write FCorteTotal;
     property CorteParcial: AnsiString read FCorteParcial write FCorteParcial;
+    property PuloDeLinha: AnsiString read FPuloDeLinha write FPuloDeLinha;
   end;
 
   TACBrPosTipoFonte = (ftNormal, ftCondensado, ftExpandido, ftNegrito,
@@ -477,7 +479,15 @@ end;
 
 function TACBrPosPrinterClass.ComandoEspacoEntreLinhas(Espacos: byte): AnsiString;
 begin
-  Result := '';
+  if Espacos = 0 then
+    Result := Cmd.EspacoEntreLinhasPadrao
+  else
+  begin
+    if Length(Cmd.EspacoEntreLinhas) > 0 then
+      Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos)
+    else
+      Result := '';
+  end;
 end;
 
 function TACBrPosPrinterClass.ComandoPaginaCodigo(
@@ -504,7 +514,7 @@ end;
 
 function TACBrPosPrinterClass.ComandoPuloLinhas(NLinhas: Integer): AnsiString;
 begin
-  Result := AnsiString( DupeString(' '+LF,NLinhas) );
+  Result := AnsiString( DupeString(' '+Cmd.PuloDeLinha,NLinhas) );
 end;
 
 function TACBrPosPrinterClass.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
@@ -1381,7 +1391,7 @@ begin
   if FBuffer.Count > 0 then
   begin
     For i := 0 to FBuffer.Count-1 do
-      StrToPrint := StrToPrint + FBuffer[i] + CRLF;
+      StrToPrint := StrToPrint + FBuffer[i] + FPosPrinterClass.Cmd.PuloDeLinha;
   end;
   FBuffer.Clear;
 
@@ -1402,7 +1412,7 @@ begin
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);
 
   if PulaLinha then
-    StrToPrint := StrToPrint + CRLF;
+    StrToPrint := StrToPrint + FPosPrinterClass.Cmd.PuloDeLinha;
 
   //DEBUG
   //WriteLog('c:\temp\teste3.txt', StrToPrint, True);

@@ -60,7 +60,6 @@ type
     function ComandoCodBarras(const ATag: String; ACodigo: AnsiString): AnsiString;
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
-    function ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString; override;
     function ComandoLogo: AnsiString; override;
     function ComandoGaveta(NumGaveta: Integer = 1): AnsiString; override;
 
@@ -83,12 +82,13 @@ begin
 
   fpModeloStr := 'EscDaruma';
 
-  RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
+  //RazaoColunaFonte.Condensada := 0.8421;    // 48 / 57
 
 {(*}
   with Cmd  do
   begin
     Zera                    := ESC + '@';
+    PuloDeLinha             := LF;
     EspacoEntreLinhasPadrao := ESC + '2';
     EspacoEntreLinhas       := ESC + '3';
     FonteNormal             := ESC + '!' + #0 + DC2;
@@ -171,12 +171,10 @@ end;
 
 function TACBrEscDaruma.ComandoQrCode(ACodigo: AnsiString): AnsiString;
 var
-  iQtdBytes, bMenos, bMais, L: Integer;
+  L, LenQrCode: Integer;
   E: AnsiChar;
 begin
-  iQtdBytes      := Length(ACodigo);
-  bMenos         := iQtdBytes shr 8;
-  bMais          := iQtdBytes AND 255 + 2;
+  LenQrCode := Length(ACodigo);
 
   with fpPosPrinter.ConfigQRCode do
   begin
@@ -190,18 +188,19 @@ begin
       E := #0;
     end;
 
+    if LenQrCode > 256 then
+    begin
+      if LarguraModulo < 4 then
+        LarguraModulo := 4;
+
+      if E = #0 then
+        E := 'M';
+    end;
+
     Result := ESC + #129 +
-              AnsiChr(bMais) + AnsiChr(bMenos) +
+              IntToLEStr( LenQrCode+2 ) +
               AnsiChr(L) + E + ACodigo;
   end;
-end;
-
-function TACBrEscDaruma.ComandoEspacoEntreLinhas(Espacos: Byte): AnsiString;
-begin
-  if Espacos = 0 then
-    Result := Cmd.EspacoEntreLinhasPadrao
-  else
-    Result := Cmd.EspacoEntreLinhas + AnsiChr(Espacos);
 end;
 
 function TACBrEscDaruma.ComandoLogo: AnsiString;

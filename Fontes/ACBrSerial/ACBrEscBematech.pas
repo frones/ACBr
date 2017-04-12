@@ -55,7 +55,7 @@ type
 
   { TACBrEscBematech }
 
-  TACBrEscBematech = class(TACBrEscPosEpson)
+  TACBrEscBematech = class(TACBrPosPrinterClass)
   private
   public
     constructor Create(AOwner: TACBrPosPrinter);
@@ -91,24 +91,35 @@ begin
 {(*}
   with Cmd  do
   begin
+    Zera                    := ESC + '@';
+    PuloDeLinha             := LF;
+    EspacoEntreLinhasPadrao := ESC + '2';
+    EspacoEntreLinhas       := ESC + '3';
     LigaNegrito             := ESC + 'E';
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
     DesligaExpandido        := ESC + 'W' + #0;
+    LigaSublinhado          := ESC + '-' + #1;
+    DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := '';  // Modo EscBema não suporta
     DesligaInvertido        := '';  // Modo EscBema não suporta
     LigaItalico             := ESC + '4';
     DesligaItalico          := ESC + '5';
     LigaCondensado          := ESC + SI;
     DesligaCondensado       := ESC + 'H';
+    AlinhadoEsquerda        := ESC + 'a' + #0;
+    AlinhadoCentro          := ESC + 'a' + #1;
+    AlinhadoDireita         := ESC + 'a' + #2;
+    CorteTotal              := ESC + 'w';
+    CorteParcial            := ESC + 'm';
     FonteNormal             := ESC + '!' + #0 + DesligaCondensado + DesligaItalico;
     FonteA                  := DesligaCondensado;
     FonteB                  := LigaCondensado;
-    CorteTotal              := ESC + 'w';
-    CorteParcial            := ESC + 'm';
+    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
   end;
   {*)}
 
+  TagsNaoSuportadas.Add( cTagBarraMSI );
   TagsNaoSuportadas.Add( cTagBarraCode128c );
 end;
 

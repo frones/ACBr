@@ -60,7 +60,6 @@ type
       override;
     function ComandoQrCode(ACodigo: AnsiString): AnsiString; override;
     function ComandoLogo: AnsiString; override;
-    function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString; override;
 
     function LerInfo: String; override;
   end;
@@ -144,49 +143,6 @@ begin
   begin
     Result := GS + '09' + AnsiChr( min(StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 0), 9));
   end;
-end;
-
-function TACBrEscDiebold.ComandoFonte(TipoFonte: TACBrPosTipoFonte;
-  Ligar: Boolean): AnsiString;
-var
-  NovoFonteStatus: TACBrPosFonte;
-  AByte: Byte;
-begin
-  Result := '';
-  NovoFonteStatus := fpPosPrinter.FonteStatus;
-  if Ligar then
-    NovoFonteStatus := NovoFonteStatus + [TipoFonte]
-  else
-    NovoFonteStatus := NovoFonteStatus - [TipoFonte];
-
-  if TipoFonte in [ftCondensado, ftNegrito, ftExpandido, ftSublinhado] then
-  begin
-    AByte := 0;
-
-    if ftCondensado in NovoFonteStatus then
-      AByte := AByte + 1;
-
-    if ftNegrito in NovoFonteStatus then
-      AByte := AByte + 8;
-
-    if ftExpandido in NovoFonteStatus then
-      AByte := AByte + 32;
-
-    if ftSublinhado in NovoFonteStatus then
-      AByte := AByte + 128;
-
-    Result := ESC + '!' + AnsiChr(AByte);
-
-    // ESC ! desliga Invertido, enviando o comando novamente
-    if ftInvertido in NovoFonteStatus then
-      Result := Result + Cmd.LigaInvertido;
-
-    if ftItalico in NovoFonteStatus then
-      Result := Result + Cmd.LigaItalico;
-  end
-  else
-    Result := inherited ComandoFonte(TipoFonte, Ligar);
-
 end;
 
 function TACBrEscDiebold.LerInfo: String;

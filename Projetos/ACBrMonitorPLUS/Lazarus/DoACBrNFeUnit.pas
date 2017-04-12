@@ -105,7 +105,7 @@ begin
         else if Cmd.Metodo = 'validarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           CarregarDFe(Cmd.Params(0));
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            ACBrNFe1.NotasFiscais.Validar;
          end
 
@@ -113,7 +113,7 @@ begin
        else if Cmd.Metodo = 'validarnferegranegocios' then
         begin
           ACBrNFe1.NotasFiscais.Clear;
-          CarregarDFe(Cmd.Params(0), tDFeNFe);
+          CarregarDFe(Cmd.Params(0), ArqNFe);
           ACBrNFe1.NotasFiscais.ValidarRegrasdeNegocios(ErrosRegraNegocio);
 
           if NaoEstaVazio(ErrosRegraNegocio) then
@@ -124,7 +124,7 @@ begin
         else if Cmd.Metodo = 'assinarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           CarregarDFe(Cmd.Params(0));
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            Salva := ACBrNFe1.Configuracoes.Geral.Salvar;
            if not Salva then
             begin
@@ -156,7 +156,7 @@ begin
                PathsNFe.Append(Cmd.Params(0));
                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-               CarregarDFe(PathsNFe);
+               CarregarDFe(PathsNFe, ArqNFe);
              finally
                PathsNFe.Free;
              end;
@@ -342,7 +342,7 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-             CarregarDFe(PathsNFe);
+             CarregarDFe(PathsNFe, ArqNFe);
            finally
              PathsNFe.Free;
            end;
@@ -388,7 +388,7 @@ begin
          begin
            ACBrNFe1.NotasFiscais.Clear;
 
-           CarregarDFe(Cmd.Params(0));
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            ConfiguraDANFe(True, False);
 
            if NaoEstaVazio(Cmd.Params(1)) then
@@ -429,18 +429,22 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
-             CarregarDFe(PathsNFe, tDFeEventoNFe);
+             CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
            finally
-             PathsNFe.Clear;
+             PathsNFe.Free;
            end;
 
            ACBrNFe1.NotasFiscais.Clear;
-           try
-             PathsNFe.Append(Cmd.Params(1));
-             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsNFe);
-           finally
-             PathsNFe.Free;
+           if NaoEstaVazio(Cmd.Params(1)) then
+           begin
+             PathsNFe := TStringList.Create;
+             try
+               PathsNFe.Append(Cmd.Params(1));
+               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
+               CarregarDFe(PathsNFe, ArqNFe);
+             finally
+               PathsNFe.Free;
+             end;
            end;
 
            bMostrarPreview := (Cmd.Metodo = 'imprimirevento' ) and (Cmd.Params(4) = '1');
@@ -507,7 +511,7 @@ begin
               PathsNFe.Append(Cmd.Params(0));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-              CarregarDFe(PathsNFe, tDFeInutNFe);
+              CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
            finally
              PathsNFe.Free;
            end;
@@ -554,7 +558,7 @@ begin
         else if Cmd.Metodo = 'enviarnfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           CarregarDFe(Cmd.Params(0));
+           CarregarDFe(Cmd.Params(0), ArqNFe);
            ACBrNFe1.NotasFiscais.GerarNFe;
 
            if Cmd.Params(2) <> '0' then
@@ -842,7 +846,7 @@ begin
                      begin
                        while RetFind = 0 do
                         begin
-                           CarregarDFe(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+Cmd.Params(0)+PathDelim+SearchRec.Name);
+                           CarregarDFe(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+Cmd.Params(0)+PathDelim+SearchRec.Name, ArqNFe);
                            RetFind := FindNext(SearchRec);
                         end;
                         ACBrNFe1.NotasFiscais.GerarNFe;
@@ -1016,7 +1020,7 @@ begin
               try
                 PathsNFe.Append(Cmd.Params(0));
                 PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-                CarregarDFe(PathsNFe, tDFeEventoNFe);
+                CarregarDFe(PathsNFe, ArqNFe, tDFeEventoNFe);
               finally
                 PathsNFe.Free;
               end;
@@ -1361,7 +1365,7 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsNFe);
+             CarregarDFe(PathsNFe, ArqNFe);
            finally
              PathsNFe.Free;
            end;
@@ -1410,7 +1414,7 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsNFe, tDFeEventoNFe, ArqEvento);
+             CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
            finally
              PathsNFe.Clear;
            end;
@@ -1421,7 +1425,7 @@ begin
              try
                PathsNFe.Append(Cmd.Params(2));
                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-               CarregarDFe(PathsNFe, tDFeNFe, ArqNFe);
+               CarregarDFe(PathsNFe, ArqNFe);
              finally
                PathsNFe.Clear;
              end;
@@ -1497,7 +1501,7 @@ begin
               PathsNFe.Append(Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml');
-              CarregarDFe(PathsNFe, tDFeInutNFe, ArqEvento);
+              CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
            finally
              PathsNFe.Free;
            end;
@@ -1661,7 +1665,7 @@ begin
         else if Cmd.Metodo = 'nfetotxt' then  //NFe.NFetoTXT(cArqXML,cNomeArqTXT)
          begin
            ACBrNFe1.NotasFiscais.Clear;
-           CarregarDFe(Cmd.Params(0));
+           CarregarDFe(Cmd.Params(0), ArqNFe);
 
            ACBrNFe1.NotasFiscais.Items[0].GravarTXT(ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt'),Cmd.Params(1));
            Cmd.Resposta := ChangeFileExt(ACBrNFe1.NotasFiscais.Items[0].NomeArq,'.txt');

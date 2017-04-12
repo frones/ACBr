@@ -92,14 +92,14 @@ begin
         else if Cmd.Metodo = 'validarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           CarregarDFe(Cmd.Params(0),tDFeCTe);
+           CarregarDFe(Cmd.Params(0), ArqCTe,tDFeCTe);
            ACBrCTe1.Conhecimentos.Validar;
          end
 
         else if Cmd.Metodo = 'assinarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeCTe);
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
            Salva := ACBrCTe1.Configuracoes.Geral.Salvar;
 
            if not Salva then
@@ -130,7 +130,7 @@ begin
              try
                PathsCTe.Append(Cmd.Params(0));
                PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsCTe, tDFeCTe);
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
              finally
                PathsCTe.Free;
              end;
@@ -226,7 +226,7 @@ begin
            try
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsCTe, tDFeCTe);
+             CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
            finally
              PathsCTe.Free;
            end;
@@ -259,7 +259,7 @@ begin
         else if Cmd.Metodo = 'imprimirdactepdf' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeCTe);
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
 
            if NaoEstaVazio(Cmd.Params(1)) then
              ACBrCTe1.DACTe.ProtocoloCTE := Cmd.Params(1);
@@ -291,18 +291,19 @@ begin
            try
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsCTe, tDFeEventoCTe);
+             CarregarDFe(PathsCTe, ArqCTe, tDFeEventoCTe);
            finally
              PathsCTe.Free;
            end;
 
+           ACBrCTe1.Conhecimentos.Clear;
            if NaoEstaVazio(Cmd.Params(1)) then
            begin
-             ACBrCTe1.Conhecimentos.Clear;
+             PathsCTe := TStringList.Create;
              try
                PathsCTe.Append(Cmd.Params(0));
                PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsCTe, tDFeCTe);
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
              finally
                PathsCTe.Free;
              end;
@@ -360,7 +361,7 @@ begin
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-             CarregarDFe(PathsCTe, tDFeInutCTe);
+             CarregarDFe(PathsCTe, ArqCTe, tDFeInutCTe);
            finally
              PathsCTe.Free;
            end;
@@ -406,7 +407,7 @@ begin
         else if Cmd.Metodo = 'enviarcte' then
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeCTe);
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
            ACBrCTe1.Conhecimentos.GerarCTe;
 
            if Cmd.Params(2) <> '0' then
@@ -824,7 +825,7 @@ begin
            try
              PathsCTe.Append(Cmd.Params(1));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsCTe, tDFeCTe, ArqCTe);
+             CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
            finally
              PathsCTe.Free;
            end;
@@ -871,7 +872,7 @@ begin
            try
              PathsCTe.Append(Cmd.Params(1));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsCTe, tDFeEventoCTe, ArqEvento);
+             CarregarDFe(PathsCTe, ArqEvento, tDFeEventoCTe);
            finally
              PathsCTe.Free;
            end;
@@ -883,7 +884,7 @@ begin
              try
                PathsCTe.Append(Cmd.Params(2));
                PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-               CarregarDFe(PathsCTe, tDFeCTe);
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
              finally
                PathsCTe.Free;
              end;
@@ -987,7 +988,7 @@ begin
         else if Cmd.Metodo = 'ctetotxt' then  //1-Arquivo XML, 2-NomeArqTXT
          begin
            ACBrCTe1.Conhecimentos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeCTe);
+           CarregarDFe(Cmd.Params(0), ArqCTe, tDFeCTe);
            ACBrCTe1.Conhecimentos.Items[0].GravarXML(Cmd.Params(1));
            Cmd.Resposta := ChangeFileExt(ACBrCTe1.Conhecimentos.Items[0].NomeArq,'.txt');
          end
@@ -1048,8 +1049,6 @@ begin
            if Assigned( Conexao ) then
              Conexao.CloseSocket;
          end
-
-
         else //Else Final - Se chegou ate aqui, o comando é inválido
            raise Exception.Create('Comando inválido ('+Cmd.Comando+')');
      finally

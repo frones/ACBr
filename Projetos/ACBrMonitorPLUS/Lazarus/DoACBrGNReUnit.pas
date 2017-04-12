@@ -49,7 +49,7 @@ procedure DoACBrGNRe ( Cmd: TACBrCmd ) ;
 var
   wDiretorioAtual : String;
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
-  ArqPDF : String;
+  ArqPDF , ArqGNRe: String;
   PathsGNRe: TStringList;
 begin
   with FrmACBrMonitor do
@@ -86,7 +86,7 @@ begin
           PathsGNRe.Append(Cmd.Params(0));
           PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
           PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
-          CarregarDFe(PathsGNRe, tDFeGNRe);
+          CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
         finally
           PathsGNRe.Free;
         end;
@@ -107,7 +107,7 @@ begin
       else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
       begin
        ACBrGNRE1.GuiasRetorno.Clear;
-       CarregarDFe(Cmd.Params(0), tDFeGNRe);
+       CarregarDFe(Cmd.Params(0), ArqGNRe, tDFeGNRe);
 
        try
          ACBrGNRE1.GuiasRetorno.ImprimirPDF;

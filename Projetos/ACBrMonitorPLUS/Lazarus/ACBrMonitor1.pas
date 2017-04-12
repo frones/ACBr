@@ -1463,8 +1463,8 @@ type
     procedure SetComumConfig(Configuracoes : TConfiguracoes) ;
     procedure AtualizaSSLLibsCombo ;
 
-    procedure CarregarDFe( XMLorFile : String; tipoDFe : TDFeCarregar = tDFeNFe; PathDfe: String = '' ); overload;
-    procedure CarregarDFe( XMLsorFiles : TStrings; tipoDFe : TDFeCarregar = tDFeNFe; PathDfe: String = '' ); overload;
+    procedure CarregarDFe( XMLorFile : String; var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe); overload;
+    procedure CarregarDFe( XMLsorFiles : TStrings; var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe); overload;
   end;
 
 var
@@ -3761,7 +3761,8 @@ begin
     cbMostrarNaBarraDeTarefas.Checked := Ini.ReadBool('ACBrMonitor', 'MostrarNaBarraDeTarefas', False);
     {$ENDIF}
     cbRetirarAcentosNaResposta.Checked := Ini.ReadBool('ACBrMonitor', 'RetirarAcentosNaResposta', False);
-    chkMostraLogNaTela.Checked := Ini.ReadBool('ACBrMonitor', 'MostraLogEmRespostasEnviadas', True);
+    chkMostraLogNaTela.Checked := Ini.ReadBool('ACBrMonitor', 'MostraLogEmRespostasEnviadas', True)
+                                  and cbLog.Checked;
     cbMonitorarPasta.OnChange := Nil;
     cbMonitorarPasta.Checked := Ini.ReadBool('ACBrMonitor', 'MonitorarPasta', False);
     cbMonitorarPasta.OnChange := @cbMonitorarPastaChange;
@@ -5353,7 +5354,7 @@ begin
         fsCmd.Comando := Linha;
 
         //Log Comando
-        AddLinesLog(FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Linha);
+        AddLinesLog(Linha);
 
         if fsCmd.Objeto = 'ACBR' then
           DoACBr(fsCmd)
@@ -5494,7 +5495,7 @@ begin
   pTopRespostas.Caption := 'Respostas Enviadas (' + IntToStr(mResp.Lines.Count) +
     ' linhas)';
 
-  AddLinesLog(FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+Resposta);
+  AddLinesLog(Resposta);
 end;
 
 {------------------------------------------------------------------------------}
@@ -7649,17 +7650,19 @@ procedure TFrmACBrMonitor.AddLinesLog(aLineLog: String);
 begin
   if aLineLog <> '' then
   begin
-    if chkMostraLogNaTela.Checked then
-    begin
-      if ( mResp.Lines.Count > 500 ) then
-         RemoveLinesLog;
-
-      mResp.Lines.Add(aLineLog);
-    end;
-
     if cbLog.Checked then
+    begin
+      if chkMostraLogNaTela.Checked then
+      begin
+        if ( mResp.Lines.Count > 500 ) then
+           RemoveLinesLog;
+
+        mResp.Lines.Add(aLineLog);
+      end;
+
       WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+aLineLog, True, True);
-    Application.ProcessMessages;
+      Application.ProcessMessages;
+    end;
   end;
 end;
 
@@ -8041,8 +8044,8 @@ begin
   cbSSLType.Enabled := (ACBrNFe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]);
 end;
 
-procedure TFrmACBrMonitor.CarregarDFe(XMLorFile: String; tipoDFe: TDFeCarregar;
-  PathDfe: String);
+procedure TFrmACBrMonitor.CarregarDFe( XMLorFile : String; var PathDfe: String;
+  tipoDFe : TDFeCarregar = tDFeNFe);
 var
   IsXML : Boolean;
 begin
@@ -8220,15 +8223,15 @@ begin
   end;
 end;
 
-procedure TFrmACBrMonitor.CarregarDFe(XMLsorFiles: TStrings;
-  tipoDFe: TDFeCarregar; PathDfe: String);
+procedure TFrmACBrMonitor.CarregarDFe(XMLsorFiles : TStrings;
+  var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe);
 var
   i : Integer;
 begin
   for i := 0 to XMLsorFiles.Count -1 do
   begin
     try
-      CarregarDFe(XMLsorFiles[i], tipoDFe, PathDfe);
+      CarregarDFe(XMLsorFiles[i], PathDfe, tipoDFe);
       case tipoDFe of
         tDFeNFe :
         begin

@@ -60,7 +60,7 @@ var
   CC, Anexos: Tstrings;
 
   Memo   , PathsMDFe: TStringList;
-  Files  : String;
+  Files  , ArqEventoMDFe: String;
   dtFim  : TDateTime;
 
   RetFind   : Integer;
@@ -93,13 +93,13 @@ begin
         else if Cmd.Metodo = 'validarmdfe' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeMDFe);
+           CarregarDFe(Cmd.Params(0), ArqMDFe, tDFeMDFe);
            ACBrMDFe1.Manifestos.Validar;
          end
         else if Cmd.Metodo = 'assinarmdfe' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeMDFe);
+           CarregarDFe(Cmd.Params(0), ArqMDFe, tDFeMDFe);
            Salva := ACBrMDFe1.Configuracoes.Geral.Salvar;
 
            if not Salva then
@@ -127,7 +127,7 @@ begin
              try
                PathsMDFe.Append(Cmd.Params(0));
                PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsMDFe, tDFeMDFe);
+               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
              finally
                PathsMDFe.Free;
              end;
@@ -277,7 +277,7 @@ begin
              try
                PathsMDFe.Append(Cmd.Params(0));
                PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsMDFe, tDFeMDFe);
+               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
              finally
                PathsMDFe.Free;
              end;
@@ -304,7 +304,7 @@ begin
         else if Cmd.Metodo = 'imprimirdamdfepdf' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeMDFe);
+           CarregarDFe(Cmd.Params(0), ArqMDFe, tDFeMDFe);
 
            if NaoEstaVazio(Cmd.Params(1)) then
               ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(1);
@@ -331,7 +331,7 @@ begin
            try
              PathsMDFe.Append(Cmd.Params(0));
              PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsMDFe, tDFeEventoMDFe);
+             CarregarDFe(PathsMDFe, ArqEventoMDFe, tDFeEventoMDFe);
            finally
              PathsMDFe.Free;
            end;
@@ -343,7 +343,7 @@ begin
              try
                PathsMDFe.Append(Cmd.Params(1));
                PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-               CarregarDFe(PathsMDFe, tDFeMDFe);
+               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
              finally
                PathsMDFe.Free;
              end;
@@ -387,7 +387,7 @@ begin
         else if Cmd.Metodo = 'enviarmdfe' then
          begin
            ACBrMDFe1.Manifestos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeMDFe);
+           CarregarDFe(Cmd.Params(0), ArqMDFe, tDFeMDFe);
            ACBrMDFe1.Manifestos.GerarMDFe;
 
            if Cmd.Params(2) <> '0' then
@@ -673,7 +673,7 @@ begin
            try
              PathsMDFe.Append(Cmd.Params(0));
              PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsMDFe, tDFeMDFe, ArqMDFe);
+             CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
            finally
              PathsMDFe.Free;
            end;
@@ -760,7 +760,7 @@ begin
         else if Cmd.Metodo = 'mdfetotxt' then  //1-Arquivo XML, 2-NomeArqTXT
          begin
            ACBrMDFe1.Manifestos.Clear;
-           CarregarDFe(Cmd.Params(0), tDFeMDFe);
+           CarregarDFe(Cmd.Params(0), ArqMDFe, tDFeMDFe);
            ACBrMDFe1.Manifestos.Items[0].GravarXML(Cmd.Params(1));
 
            Cmd.Resposta := ChangeFileExt(ACBrMDFe1.Manifestos.Items[0].NomeArq,'.txt');

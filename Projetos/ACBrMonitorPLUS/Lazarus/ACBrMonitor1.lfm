@@ -1,7 +1,7 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 340
+  Left = 388
   Height = 689
-  Top = 158
+  Top = 181
   Width = 1110
   ActiveControl = btMinimizar
   Align = alClient
@@ -18,7 +18,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
   OnDestroy = FormDestroy
   OnShortCut = FormShortCut
   ShowHint = True
-  LCLVersion = '1.6.2.0'
+  LCLVersion = '1.6.4.0'
   Visible = True
   object StatusBar1: TStatusBar
     Left = 0
@@ -378,15 +378,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 910
-        ActivePage = tsDFe
+        ActivePage = tsMonitor
         Align = alClient
         Images = ImageList1
-        TabIndex = 16
+        TabIndex = 0
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
           ClientHeight = 327
-          ClientWidth = 931
+          ClientWidth = 902
           ImageIndex = 0
           object gbTCP: TGroupBox
             AnchorSideTop.Side = asrBottom
@@ -550,16 +550,16 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 111
             Hint = 'Registra em arquivo todas as respostas do ACBrMonitor'
             Top = 119
-            Width = 671
+            Width = 642
             Anchors = [akTop, akLeft, akRight]
             ClientHeight = 89
-            ClientWidth = 667
+            ClientWidth = 638
             Enabled = False
             TabOrder = 10
             object sbLog: TSpeedButton
               AnchorSideTop.Control = edLogArq
               AnchorSideTop.Side = asrCenter
-              Left = 639
+              Left = 610
               Height = 23
               Top = 6
               Width = 23
@@ -573,7 +573,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Left = 94
               Height = 25
               Top = 5
-              Width = 545
+              Width = 516
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 5
               TabOrder = 0
@@ -663,10 +663,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 253
             Height = 85
             Top = 29
-            Width = 671
+            Width = 642
             Anchors = [akTop, akLeft, akRight]
             ClientHeight = 63
-            ClientWidth = 667
+            ClientWidth = 638
             Enabled = False
             TabOrder = 13
             object Label6: TLabel
@@ -706,7 +706,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'Nome do arquivo de entrada que será monitorado pelo ACBrMonitor'#13#10'Especifique o caminho completo. '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 5
-              Width = 467
+              Width = 438
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 5
               TabOrder = 0
@@ -721,7 +721,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               Height = 25
               Hint = 'Nome do arquivo de saída que será criado pelo ACBrMonitor com as respostas'#13#10'Especifique o caminho completo.  '#13#10'Tenha certeza que a pasta especificada permite acesso de Leitura e Escrita'
               Top = 34
-              Width = 467
+              Width = 438
               Anchors = [akTop, akLeft, akRight]
               BorderSpacing.Top = 4
               TabOrder = 2
@@ -731,7 +731,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideRight.Control = sedIntervalo
               AnchorSideRight.Side = asrCenter
               AnchorSideBottom.Control = sedIntervalo
-              Left = 604
+              Left = 575
               Height = 17
               Top = 2
               Width = 50
@@ -744,7 +744,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object sedIntervalo: TSpinEdit
               AnchorSideTop.Control = gbTXT
               AnchorSideTop.Side = asrCenter
-              Left = 605
+              Left = 576
               Height = 25
               Hint = 'Intervalo de Tempo em Milissegundos que o ACBrMonitor'#10'verifica a presença do arquivo de Entrada'
               Top = 19
@@ -760,7 +760,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = edEntTXT
               AnchorSideTop.Side = asrCenter
-              Left = 538
+              Left = 509
               Height = 21
               Top = 7
               Width = 48
@@ -773,7 +773,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
               AnchorSideLeft.Side = asrBottom
               AnchorSideTop.Control = edSaiTXT
               AnchorSideTop.Side = asrCenter
-              Left = 538
+              Left = 509
               Height = 21
               Top = 36
               Width = 48
@@ -2887,15 +2887,15 @@ object FrmACBrMonitor: TFrmACBrMonitor
         end
         object tsRFD: TTabSheet
           Caption = 'RFD'
-          ClientHeight = 297
-          ClientWidth = 814
+          ClientHeight = 327
+          ClientWidth = 902
           ImageIndex = 13
           OnShow = tsRFDShow
           object pgConRFD: TPageControl
             Left = 0
-            Height = 297
+            Height = 327
             Top = 0
-            Width = 814
+            Width = 902
             ActivePage = tsRFDINI
             Align = alClient
             ShowTabs = False
@@ -3138,23 +3138,23 @@ object FrmACBrMonitor: TFrmACBrMonitor
             end
             object tsRFDINI: TTabSheet
               Caption = 'Arquivos'
-              ClientHeight = 289
-              ClientWidth = 806
+              ClientHeight = 319
+              ClientWidth = 894
               OnShow = tsRFDINIShow
               object Panel4: TPanel
                 Left = 0
                 Height = 30
-                Top = 259
-                Width = 806
+                Top = 289
+                Width = 894
                 Align = alBottom
                 BevelOuter = bvNone
                 ClientHeight = 30
-                ClientWidth = 806
+                ClientWidth = 894
                 TabOrder = 0
                 object bRFDINISalvar: TButton
                   AnchorSideTop.Control = Panel4
                   AnchorSideTop.Side = asrCenter
-                  Left = 710
+                  Left = 798
                   Height = 27
                   Top = 2
                   Width = 61
@@ -3191,9 +3191,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
               end
               object mRFDINI: TMemo
                 Left = 0
-                Height = 259
+                Height = 289
                 Top = 0
-                Width = 806
+                Width = 894
                 Align = alClient
                 Font.Height = 12
                 Font.Name = 'Fixedsys'
@@ -4563,7 +4563,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                     item
                       AutoSize = True
                       Caption = 'Arquivo'
-                      Width = 228
+                      Width = 57
                     end>
                   GridLines = True
                   HideSelection = False
@@ -6140,12 +6140,12 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 Left = 571
                 Height = 152
                 Top = 118
-                Width = 313
+                Width = 894
                 Anchors = [akTop, akLeft, akRight]
                 BorderSpacing.Left = 5
                 Caption = 'Diversos'
                 ClientHeight = 130
-                ClientWidth = 309
+                ClientWidth = 890
                 TabOrder = 3
                 object cbRetirarAcentos: TCheckBox
                   Left = 8
@@ -6177,7 +6177,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = edtTimeoutWebServices
                   AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Control = edtTimeoutWebServices
-                  Left = 85
+                  Left = 666
                   Height = 17
                   Top = 76
                   Width = 133
@@ -6187,7 +6187,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object edtTimeoutWebServices: TSpinEdit
-                  Left = 225
+                  Left = 806
                   Height = 25
                   Top = 72
                   Width = 74

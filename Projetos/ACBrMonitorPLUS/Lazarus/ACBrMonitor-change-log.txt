@@ -43,6 +43,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2017
+[-] Corrigida função para carregamento de DFe, path do arquivo carregado não estava sendo retornado no
+	parâmetro passado por referencia.
+	por: Celso Marigo Junior
+
+04/04/2017
+[-] Correção de erro ao enviar email de eventos de nfe, estava obrigando carregar uma NFe.
+	http://www.projetoacbr.com.br/forum/topic/26348-problema-ao-imprimir-evento-de-cancelamento-em-seguida
+	por: Celso Marigo Junior
+
+[-] Ajustado o monitor para quando o log estiver desabilitado, também seja desabilitada a exibição de log na tela.
+	por: Celso Marigo Junior
+	
 31/03/2017
 [*] Ajustada propriedade do CTe: cInfManu, que passou a permitir várias no no grupo Aereo
 	- Informar valores como segue:

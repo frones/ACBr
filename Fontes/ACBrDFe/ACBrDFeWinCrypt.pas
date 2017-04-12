@@ -42,7 +42,11 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFeSSL, ACBrDFeException,
-  ACBr_WinCrypt, ACBr_NCrypt, Windows;
+  ACBr_WinCrypt,
+  {$IfNDef DFE_SEM_NCRYPT}
+   ACBr_NCrypt,
+  {$EndIf}
+  Windows;
 
 const
   sz_CERT_STORE_PROV_PKCS12 = 'PKCS12';
@@ -101,9 +105,11 @@ function GetCSPProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
 procedure GetCSPProviderInfo(ACertContext: PCCERT_CONTEXT;
    var ProviderType: DWORD; var ProviderName, ContainerName: String);
 
+{$IfNDef DFE_SEM_NCRYPT}
 function GetCNGProviderParamString(ACryptProvider: NCRYPT_KEY_HANDLE; dwParam: DWORD): String;
 function GetCNGProviderParamDWord(ACryptProvider: NCRYPT_KEY_HANDLE; dwParam: LPCWSTR): DWORD;
 function GetCNGProviderIsHardware(ACryptProvider: NCRYPT_KEY_HANDLE): Boolean;
+{$EndIf}
 
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
 function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
@@ -260,9 +266,11 @@ function GetProviderOrKeyIsHardware(
   ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE; dwKeySpec: DWORD
   ): Boolean;
 begin
+  {$IfNDef DFE_SEM_NCRYPT}
   if dwKeySpec = CERT_NCRYPT_KEY_SPEC then
     Result := GetCNGProviderIsHardware(ProviderOrKeyHandle)
   else
+  {$EndIf}
     Result := GetCSPProviderIsHardware(ProviderOrKeyHandle);
 end;
 
@@ -333,6 +341,7 @@ begin
 end;
 
 
+{$IfNDef DFE_SEM_NCRYPT}
 function GetCNGProviderParamString(ACryptProvider: NCRYPT_KEY_HANDLE;
   dwParam: DWORD): String;
 begin
@@ -364,6 +373,7 @@ begin
     // TODO: NCRYPT_IMPL_TYPE_PROPERTY não funciona com NCRYPT_KEY_HANDLE, espera NCRYPT_PROV_HANDLE
   end;
 end;
+{$EndIf}
 
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
 begin
@@ -671,7 +681,7 @@ procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString
 var
   dwKeySpec: DWORD;
   pfCallerFreeProv: LongBool;
-  Ret: SECURITY_STATUS;
+  Ret: Longint;
   ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
 
   procedure CheckPINError(WinErro: DWORD = 0);
@@ -705,6 +715,7 @@ begin
     raise EACBrDFeException.Create( MsgErroGetCryptProvider );
 
   try
+    {$IfNDef DFE_SEM_NCRYPT}
     if dwKeySpec = CERT_NCRYPT_KEY_SPEC then
     begin
       if not GetCNGProviderIsHardware(ProviderOrKeyHandle) then
@@ -717,6 +728,7 @@ begin
       CheckPINError(Ret);
     end
     else
+    {$EndIf}
     begin
       if not GetCSPProviderIsHardware(ProviderOrKeyHandle) then
         Exit;

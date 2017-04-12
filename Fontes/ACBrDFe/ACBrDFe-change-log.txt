@@ -44,6 +44,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/04/2017
+-- ACBrDFeWinCrypt --
+[*] Ajuste para compilação com a diretiva "DFE_SEM_NCRYPT", para permitir o
+    suporte a Windows XP (por: DSA)
+
+-- ACBr_NCrypt --
+[*] Ajuste para efetuara carga da DLL com "Delayed", caso a diretiva "USE_DELAYED"
+    esteja ligada, e o compilador suporte carga tardia.. (por: Waldir Paim)
+    http://www.projetoacbr.com.br/forum/topic/36219-ncryptdll-faltando-no-xp/?do=findComment&comment=237206
+
 10/04/2017
 -- ACBrDFeWinCrypt --
 [-] Ajustes para possível correção de Certificados compatível apenas com "CNG"

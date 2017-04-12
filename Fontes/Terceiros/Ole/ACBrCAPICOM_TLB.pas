@@ -58,13 +58,16 @@ unit ACBrCAPICOM_TLB;
 {$VARPROPSETTER ON}
 interface
 
-uses Windows, ActiveX, Classes,
-  {$IFDEF FMX}
+uses Windows, ActiveX, ComObj, Classes,
+  {$IfDef FMX}
      FMX.OleServer,
-  {$ELSE}
+  {$Else}
      OleServer,
-  {$ENDIF}
-  {$IFNDEF FPC} StdVCL, {$ENDIF} Variants;
+  {$EndIf}
+  {$IfNDef FPC}
+     StdVCL,
+  {$EndIf}
+  Variants;
 
 
 // *********************************************************************//
@@ -3956,8 +3959,6 @@ resourcestring
   dtlOcxPage = 'ActiveX';
 
 implementation
-
-uses ComObj;
 
 class function CoSettings.Create: ISettings;
 begin

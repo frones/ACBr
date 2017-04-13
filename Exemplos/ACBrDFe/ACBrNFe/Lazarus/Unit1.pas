@@ -16,6 +16,7 @@ type
 
   TForm1 = class(TForm)
     ACBrMail1: TACBrMail;
+    ACBrNFe2: TACBrNFe;
     ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes;
     ACBrNFeDANFeRL1: TACBrNFeDANFeRL;
     ACBrPosPrinter1: TACBrPosPrinter;
@@ -28,6 +29,7 @@ type
     Button3: TButton;
     Button4: TButton;
     Button5: TButton;
+    Button6: TButton;
     Button7: TButton;
     Button8: TButton;
     Button9: TButton;
@@ -235,6 +237,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button8Click(Sender: TObject);
     procedure Button9Click(Sender: TObject);
@@ -745,6 +748,35 @@ begin
   Ahash := ACBrNFe1.SSL.CalcHash(Edit1.Text, dgstSHA256, outBase64, cbAssinar.Checked);
   MemoResp.Lines.Add( Ahash );
   pgRespostas.ActivePageIndex := 0;
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+var
+  AVenc: TDateTime;
+begin
+  ACBrNFe2.Configuracoes.Assign( ACBrNFe1.Configuracoes );
+
+  ACBrNFe2.WebServices.StatusServico.Executar;
+  //AVenc := ACBrNFe2.SSL.CertDataVenc;
+
+  MemoResp.Lines.Text := ACBrNFe2.WebServices.StatusServico.RetWS;
+  memoRespWS.Lines.Text := ACBrNFe2.WebServices.StatusServico.RetornoWS;
+  LoadXML(MemoResp, WBResposta);
+
+  pgRespostas.ActivePageIndex := 1;
+
+  MemoDados.Lines.Add('');
+  MemoDados.Lines.Add('* ACBrNFe2 *');
+  MemoDados.Lines.Add('Status Serviço');
+  MemoDados.Lines.Add('tpAmb: '    +TpAmbToStr(ACBrNFe2.WebServices.StatusServico.tpAmb));
+  MemoDados.Lines.Add('verAplic: ' +ACBrNFe2.WebServices.StatusServico.verAplic);
+  MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrNFe2.WebServices.StatusServico.cStat));
+  MemoDados.Lines.Add('xMotivo: '  +ACBrNFe2.WebServices.StatusServico.xMotivo);
+  MemoDados.Lines.Add('cUF: '      +IntToStr(ACBrNFe2.WebServices.StatusServico.cUF));
+  MemoDados.Lines.Add('dhRecbto: ' +DateTimeToStr(ACBrNFe2.WebServices.StatusServico.dhRecbto));
+  MemoDados.Lines.Add('tMed: '     +IntToStr(ACBrNFe2.WebServices.StatusServico.TMed));
+  MemoDados.Lines.Add('dhRetorno: '+DateTimeToStr(ACBrNFe2.WebServices.StatusServico.dhRetorno));
+  MemoDados.Lines.Add('xObs: '     +ACBrNFe2.WebServices.StatusServico.xObs);
 end;
 
 procedure TForm1.Button7Click(Sender: TObject);

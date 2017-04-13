@@ -457,6 +457,7 @@ object Form1: TForm1
                 Top = 14
                 Width = 76
                 Caption = 'Carregar'
+                OnClick = Button8Click
                 TabOrder = 1
               end
               object Button11: TButton
@@ -467,6 +468,15 @@ object Form1: TForm1
                 Caption = 'Descarregar'
                 OnClick = Button11Click
                 TabOrder = 0
+              end
+              object Button6: TButton
+                Left = 182
+                Height = 25
+                Top = 52
+                Width = 75
+                Caption = '2° ACBrNFe'
+                OnClick = Button6Click
+                TabOrder = 7
               end
             end
           end
@@ -2560,5 +2570,17 @@ object Form1: TForm1
     vTribMun = 0
     left = 656
     top = 496
+  end
+  object ACBrNFe2: TACBrNFe
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    left = 592
+    top = 376
   end
 end

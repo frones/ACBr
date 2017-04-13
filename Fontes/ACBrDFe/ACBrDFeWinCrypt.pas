@@ -123,7 +123,8 @@ procedure PFXDataToCertContextWinApi( AData, APass: AnsiString; var AStore, ACer
 function ExportCertContextToPFXData( ACertContext: PCCERT_CONTEXT; APass: AnsiString): AnsiString;
 procedure SetCertContextPassword(ACertContext: PCCERT_CONTEXT; APass: AnsiString);
 
-
+Var
+  CertificadosA3ComPin: String;
 
 implementation
 
@@ -896,10 +897,13 @@ begin
   FpCertificadoLido := True;
 
   // Se necessário atribui a Senha para o Certificado //
-  if (FpDadosCertificado.Tipo = tpcA3) and (FpDFeSSL.Senha <> '') then
+  if (FpDadosCertificado.Tipo = tpcA3) and
+     (FpDFeSSL.Senha <> '') and
+     (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) = 0) then  // Se Atribuir novamente em outra instância causa conflito... //
   begin
     try
       SetCertContextPassword(FpCertContext, FpDFeSSL.Senha);
+      CertificadosA3ComPin := CertificadosA3ComPin + FpDadosCertificado.NumeroSerie + ',';
     except
       On EACBrDFeWrongPINException do
       begin
@@ -1227,6 +1231,12 @@ begin
       CryptDestroyKey( hExpKey );
   end;
 end;
+
+initialization
+  CertificadosA3ComPin := '';
+
+finalization
+  CertificadosA3ComPin := '';
 
 end.
 

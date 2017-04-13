@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2017
+-- ACBrDFeWinCrypt --
+[-] Correção para não atribuir Senha para certificados A3, de uma segunda
+    instância do ACBrNFe, que utilize o mesmo certificado.
+    (por: DSA)
+
 12/04/2017
 -- ACBrDFeWinCrypt --
 [*] Ajuste para compilação com a diretiva "DFE_SEM_NCRYPT", para permitir o

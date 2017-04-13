@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/04/2017
+[-] Correção na rotina de Consulta de DFes, a consulta, mesmo que passasse Path completo, estava sendo
+	executada usando apenas a chave do DFe, assim o arquivo não estava sendo atualizado.
+	Isso ocorria apenas quando o Path completo não possuia acentos.
+	por: Celso Marigo Junior
+
 12/04/2017
 [-] Corrigida função para carregamento de DFe, path do arquivo carregado não estava sendo retornado no
 	parâmetro passado por referencia.

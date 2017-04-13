@@ -122,21 +122,24 @@ begin
          begin
            ACBrCTe1.Conhecimentos.Clear;
 
-           if ValidarChave(Cmd.Params(0)) then
-             ACBrCTe1.WebServices.Consulta.CTeChave := Cmd.Params(0)
-           else
-           begin
-             PathsCTe := TStringList.Create;
-             try
-               PathsCTe.Append(Cmd.Params(0));
-               PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
-             finally
-               PathsCTe.Free;
-             end;
-
-             ACBrCTe1.WebServices.Consulta.CTeChave := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID);
+           PathsCTe := TStringList.Create;
+           try
+             PathsCTe.Append(Cmd.Params(0));
+             PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+           finally
+             PathsCTe.Free;
            end;
+
+           if ACBrCTe1.Conhecimentos.Count = 0 then
+           begin
+             if ValidarChave(Cmd.Params(0)) then
+                ACBrCTe1.WebServices.Consulta.CTeChave := Cmd.Params(0)
+             else
+               raise Exception.create('Parâmetro inválido. Chave inválida ou arquivo não encontrado.');
+           end
+           else
+             ACBrCTe1.WebServices.Consulta.CTeChave := OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID);
 
            try
              ACBrCTe1.WebServices.Consulta.Executar;

@@ -119,21 +119,24 @@ begin
          end
         else if Cmd.Metodo = 'consultarmdfe' then
          begin
-           if ValidarChave(Cmd.Params(0)) then
-             ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0)
-           else
-           begin
-             PathsMDFe := TStringList.Create;
-             try
-               PathsMDFe.Append(Cmd.Params(0));
-               PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
-             finally
-               PathsMDFe.Free;
-             end;
-
-             ACBrMDFe1.WebServices.Consulta.MDFeChave := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID);
+           PathsMDFe := TStringList.Create;
+           try
+             PathsMDFe.Append(Cmd.Params(0));
+             PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+           finally
+             PathsMDFe.Free;
            end;
+
+           if ACBrMDFe1.Manifestos.Count = 0 then
+           begin
+             if ValidarChave(Cmd.Params(0)) then
+               ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0)
+             else
+               raise Exception.Create('Parâmetro inválido. Chave do MDFe inválida ou arquivo não encontrado.');
+           end
+           else
+             ACBrMDFe1.WebServices.Consulta.MDFeChave := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID);
 
            try
              ACBrMDFe1.WebServices.Consulta.Executar;

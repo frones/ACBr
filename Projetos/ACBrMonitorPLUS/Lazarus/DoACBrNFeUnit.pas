@@ -147,22 +147,25 @@ begin
          begin
            ACBrNFe1.NotasFiscais.Clear;
 
-           if ValidarChave(Cmd.Params(0)) then
-             ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0)
-           else
-           begin
-             PathsNFe := TStringList.Create;
-             try
-               PathsNFe.Append(Cmd.Params(0));
-               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-               CarregarDFe(PathsNFe, ArqNFe);
-             finally
-               PathsNFe.Free;
-             end;
-
-             ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]);
+           PathsNFe := TStringList.Create;
+           try
+             PathsNFe.Append(Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
+             CarregarDFe(PathsNFe, ArqNFe);
+           finally
+             PathsNFe.Free;
            end;
+
+           if ACBrNFe1.NotasFiscais.Count = 0 then
+           begin
+             if ValidarChave(Cmd.Params(0)) then
+               ACBrNFe1.WebServices.Consulta.NFeChave := Cmd.Params(0)
+             else
+               raise Exception.Create('Parâmetro incorreto. Chave inválida ou arquivo não encontrado.');
+           end
+           else
+             ACBrNFe1.WebServices.Consulta.NFeChave := StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID,'NFe','',[rfIgnoreCase]);
 
            try
               ACBrNFe1.WebServices.Consulta.Executar;

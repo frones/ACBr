@@ -140,7 +140,7 @@ begin
   FConfigurado := False;
 
   { Lendo as informações da Impressora, para auto configuração das colunas }
-  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+  if (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
   begin
     SL := TStringList.Create;
     try

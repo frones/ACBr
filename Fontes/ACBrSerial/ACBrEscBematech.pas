@@ -234,6 +234,9 @@ var
   B: Byte;
   Ret: AnsiString;
 begin
+  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+    exit;
+
   try
     Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
     B := Ord(Ret[1]);

@@ -39,6 +39,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/04/2017
+-- ACBrPosPrinter --
+[+] Classe "TACBrPosPrinterClass", adicionado o método Virtual "Configurar",
+    permitindo as classes filhas, a possibilidade de enviar comandos a impressora
+    após a chamada de "Ativar"
+[*] Método "TACBrPosPrinter.Imprimir", modificado para chamar "Ativar", caso
+    a porta ainda não esteja Ativa
+
+-- ACBrEscDaruma --
+[*] Adicionado mecanismo de autoconfiguração, do numero de colunas Normal e
+    Condensada.
+[*] Método "LerStatus", adicionda verificação do tipo de porta (Serial ou Eth)
+[*] Método "LerInfo", modificado para que a detecção de colunas Default seja 48
+
+-- ACBrEscBematech --
+[*] Método "LerStatus", adicionda verificação do tipo de porta (Serial ou Eth)
+(por: DSA)
+
 Data: 12/04/2017
 -- ACBrPosPrinter --
 [+] Adicionado o comando "TACBrPosComandos.PuloDeLinha", para permitir definir

@@ -173,6 +173,7 @@ type
     function ComandoPuloLinhas(NLinhas: Integer): AnsiString; virtual;
     function ComandoFonte(TipoFonte: TACBrPosTipoFonte; Ligar: Boolean): AnsiString; virtual;
 
+    procedure Configurar; virtual;
     procedure LerStatus(var AStatus: TACBrPosPrinterStatus); virtual;
     function LerInfo: String; virtual;
 
@@ -298,7 +299,6 @@ type
 
     procedure AtivarPorta;
     procedure DesativarPorta;
-
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -567,6 +567,11 @@ begin
   end;
 end;
 
+procedure TACBrPosPrinterClass.Configurar;
+begin
+  {nada aqui, método virtual}
+end;
+
 procedure TACBrPosPrinterClass.LerStatus(var AStatus: TACBrPosPrinterStatus);
 begin
   {nada aqui, método virtual}
@@ -772,6 +777,7 @@ begin
   {*)}
 
   FDevice.Ativar;
+  FPosPrinterClass.Configurar;
   FInicializada := False;
 end;
 
@@ -1386,6 +1392,9 @@ var
 begin
   if not (ControlePorta or FDevice.Ativo) then
     raise EPosPrinterException.Create(ACBrStr('Não está Ativo'));
+
+  if not Ativo then
+    Ativar;
 
   StrToPrint := '';
   if FBuffer.Count > 0 then

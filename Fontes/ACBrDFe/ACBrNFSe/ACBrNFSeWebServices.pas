@@ -845,7 +845,8 @@ begin
                                   ' xsi:schemaLocation="http://localhost:8080/WsNFe2/lote' +
                                   ' http://localhost:8080/WsNFe2/xsd/' + FxsdServico + '"';
 
-      proWebISS: FNameSpaceDad := xmlns3 + FNameSpace + '"' ;
+      proWebISS,
+      proWebISSv2: FNameSpaceDad := xmlns3 + FNameSpace + '"' ;
 //                                  ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"' +
 //                                  ' xmlns:xsd="http://www.w3.org/2001/XMLSchema"';
 
@@ -2602,7 +2603,7 @@ begin
   if FNotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if FProvedor in [proBHISS, proWebISS] then
+  if FProvedor in [proBHISS, proWebISS, proWebISSv2] then
   begin
     if FNotasFiscais.Count > 3 then
       GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +

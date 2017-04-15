@@ -87,7 +87,7 @@ type
   TnfseDeducaoPor = ( dpNenhum, dpPercentual, dpValor );
   TnfseTipoDeducao = ( tdNenhum, tdMateriais, tdSubEmpreitada );
 
-  TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+  TnfseProvedor = ( proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
                     proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
                     proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
                     profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX,
@@ -453,7 +453,7 @@ end;
 function ProvedorToStr(const t: TnfseProvedor): String;
 begin
   result := EnumeradoToStr(t,
-        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'Ginfes', 'IssDSF', 'Prodemge',
+        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'WebISSv2', 'Ginfes', 'IssDSF', 'Prodemge',
          'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
          'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim',
          'Saatri', 'FISSLEX', 'Goiania', 'ISSCuritiba', 'BHISS', 'Natal',
@@ -465,7 +465,7 @@ begin
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
          'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA'],
-        [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+        [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
          profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
@@ -483,7 +483,7 @@ end;
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
 begin
   result := StrToEnumerado(ok, s,
-        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'Ginfes', 'IssDSF', 'Prodemge',
+        ['Nenhum', 'Tiplan', 'ISSNet', 'WebISS', 'WebISSv2', 'Ginfes', 'IssDSF', 'Prodemge',
          'Abaco', 'Betha', 'Equiplano', 'ISSIntel', 'Prodam', 'GovBR', 'Recife',
          'SimplISS', 'Thema', 'RJ', 'Publica', 'fintelISS', 'Digifred', 'Betim',
          'Saatri', 'FISSLEX', 'Goiania', 'ISSCuritiba', 'BHISS', 'Natal',
@@ -495,7 +495,7 @@ begin
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
          'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA'],
-        [proNenhum, proTiplan, proISSNET, proWebISS, proGINFES, proIssDSF,
+        [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
          profintelISS, proDigifred, proBetim, proSaatri, proFISSLEX, proGoiania,
@@ -18260,7 +18260,7 @@ begin
     proISSDigital, proISSe, proLink3, proMitra, proNEAInformatica,
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
-    proVersaTecnologia: Result := loABRASFv2;
+    proVersaTecnologia, proWebISSv2: Result := loABRASFv2;
 
     proAgili,
     proAgiliv2:     Result := loAgili;

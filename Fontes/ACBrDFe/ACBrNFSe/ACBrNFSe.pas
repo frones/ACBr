@@ -486,7 +486,7 @@ begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao componente'));
 
-  if Configuracoes.Geral.Provedor in [proBHISS, proWebISS] then
+  if Configuracoes.Geral.Provedor in [proBHISS, proWebISS, proWebISSv2] then
   begin
     if NotasFiscais.Count > 3 then
       GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 3 RPS)' +

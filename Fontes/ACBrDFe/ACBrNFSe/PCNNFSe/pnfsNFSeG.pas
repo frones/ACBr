@@ -300,7 +300,7 @@ begin
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
-                    proSJP, proWebISS] then
+                    proSJP, proWebISS, proWebISSv2] then
       aVersao := '';
   end
   else
@@ -328,7 +328,8 @@ begin
     proTecnos: IdLote := '1' + IntToStrZero(YearOf(Date), 4) + CNPJ +
                          IntToStrZero(StrToIntDef(NumeroLote, 1), 16);
 
-    proWebISS: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
+    proWebISS,
+    proWebISSv2: IdLote := 'Lote' + CNPJ + IM + NumeroLote;
   else
     IdLote := NumeroLote;
   end;
@@ -1654,23 +1655,24 @@ begin
                end;
 
     proBHISS,
-    proWebISS: begin
-                 Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
+    proWebISS,
+    proWebISSv2: begin
+                   Gerador.wGrupoNFSe('LoteRps' + aIdentificador + aVersao);
 
-                 Gerador.Prefixo := Prefixo4;
-                 Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
-                 Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
-                 Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
-                 Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
+                   Gerador.Prefixo := Prefixo4;
+                   Gerador.wCampoNFSe(tcStr, '#1', 'NumeroLote', 01, 15, 1, NumeroLote, '');
+                   Gerador.wCampoNFSe(tcStr, '#2', 'Cnpj', 14, 14, 1, Cnpj, '');
+                   Gerador.wCampoNFSe(tcStr, '#3', 'InscricaoMunicipal', 01, 15, 1, IM, '');
+                   Gerador.wCampoNFSe(tcInt, '#4', 'QuantidadeRps', 01, 02, 1, QtdeNotas, '');
 
-                 Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
-                                              '<' + Prefixo4 + 'ListaRps>' +
-                                                Notas +
-                                              '</' + Prefixo4 + 'ListaRps>';
+                   Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML +
+                                                '<' + Prefixo4 + 'ListaRps>' +
+                                                  Notas +
+                                                '</' + Prefixo4 + 'ListaRps>';
 
-                 Gerador.Prefixo := Prefixo3;
-                 Gerador.wGrupoNFSe('/LoteRps');
-               end;
+                   Gerador.Prefixo := Prefixo3;
+                   Gerador.wGrupoNFSe('/LoteRps');
+                 end;
 
     proSP: begin
              Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
@@ -1711,7 +1713,7 @@ begin
                   proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
                   proISSDigital, proISSIntel, proISSNet, proLexsom, proNatal,
                   proTinus, proProdemge, proPublica, proRecife, proRJ, proSaatri,
-                  proFreire, proSimplISS, proThema, proTiplan, proWebISS,
+                  proFreire, proSimplISS, proThema, proTiplan, proWebISS, proWebISSv2,
                   proProdata, proAgili, proSpeedGov, proPronim, proSalvador,
                   proNFSEBrasil] then
     Result := '';

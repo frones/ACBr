@@ -96,14 +96,18 @@ var
   Certs: ICertificates2;
   Cert: ICertificate2;
   KeyLocation, i: Integer;
+  Inicializado: Boolean;
+  ResultInitialize: HRESULT;
 begin
   inherited CarregarCertificado;   // Carrega o Certificado com WinCrypt
   
   FpCertificadoLido := False;
 
-  if (CoInitialize(nil) = E_FAIL) then
+  ResultInitialize := CoInitialize(nil);
+  if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
 
+  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
   try
     if NaoEstaVazio(FpDFeSSL.NumeroSerie) then
     begin
@@ -180,7 +184,8 @@ begin
     FCertStoreMem.Open(CAPICOM_MEMORY_STORE, CACBR_STORE_NAME, CAPICOM_STORE_OPEN_READ_ONLY);
     FCertStoreMem.Add(FCertificado);
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 
   FpCertificadoLido := True;

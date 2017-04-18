@@ -673,9 +673,6 @@ begin
 
   FPConfiguracoesNFe := TConfiguracoesNFe(FPConfiguracoes);
   FPLayout := LayNfeStatusServico;
-
-  if FPConfiguracoesNFe.Geral.VersaoDF = ve400 then
-    FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
 end;
 
 procedure TNFeWebService.Clear;
@@ -704,7 +701,10 @@ begin
 
   { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
   if FPConfiguracoesNFe.Geral.VersaoDF > ve310 then
+  begin
     FPDFeOwner.SSL.SSLType := LT_TLSv1_2;
+    FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
+  end;
 
   TACBrNFe(FPDFeOwner).SetStatus(FPStatus);
 end;

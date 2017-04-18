@@ -98,6 +98,7 @@ function RemoverDeclaracaoXML(const AXML: String): String;
 
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
+function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -3565,6 +3566,19 @@ begin
    end;
 
   Result := copy(AString, PosIni, PosFim - (PosIni + 1));
+end;
+
+function SeparaDadosArray(const AArray: array of String; const AString: String;
+  const MantemChave: Boolean): String;
+var
+  I : Integer;
+begin
+ for I:=Low(AArray) to High(AArray) do
+ begin
+   Result := Trim(SeparaDados(AString,AArray[I], MantemChave));
+   if Result <> '' then
+      Exit;
+ end;
 end;
 
 {------------------------------------------------------------------------------

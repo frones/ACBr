@@ -700,7 +700,7 @@ begin
   inherited InicializarServico;
 
   { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
-  if FPConfiguracoesNFe.Geral.VersaoDF > ve310 then
+  if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
   begin
     FPDFeOwner.SSL.SSLType := LT_TLSv1_2;
     FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
@@ -772,8 +772,13 @@ end;
 
 procedure TNFeStatusServico.DefinirServicoEAction;
 begin
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    FPServico := GetUrlWsd + 'NfeStatusServico4';
+    FPSoapAction := FPServico + '/nfeStatusServicoNF';
+  end
   // BA usa uma notação de Serviços diferente das demais UFs
-  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+  else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
      (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
@@ -812,9 +817,9 @@ function TNFeStatusServico.TratarResposta: Boolean;
 var
   NFeRetorno: TRetConsStatServ;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeStatusServicoNF2Result');
-  if FPRetWS = '' then
-    FPRetWS := SeparaDados(FPRetornoWS, 'NfeStatusServicoNFResult');
+  FPRetWS := SeparaDadosArray(['nfeStatusServicoNF2Result',
+                               'NfeStatusServicoNFResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   NFeRetorno := TRetConsStatServ.Create;
   try
@@ -996,7 +1001,12 @@ end;
 procedure TNFeRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeAutorizacao then
-    FPServico := GetUrlWsd + 'NfeAutorizacao'
+  begin
+    if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
+      FPServico := GetUrlWsd + 'NFeAutorizacao4'
+    else
+      FPServico := GetUrlWsd + 'NfeAutorizacao';
+  end
   else
     FPServico := GetUrlWsd + 'NfeRecepcao2';
 
@@ -1010,7 +1020,7 @@ var
   indSinc: String;
 begin
   if (FPLayout = LayNfeAutorizacao) or (FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFe.Geral.VersaoDF = ve310) then
+    (FPConfiguracoesNFe.Geral.VersaoDF >= ve310) then
     indSinc := '<indSinc>' + IfThen(FSincrono, '1', '0') + '</indSinc>'
   else
     indSinc := '';
@@ -1039,17 +1049,13 @@ var
   AProcNFe: TProcNFe;
   SalvarXML: Boolean;
 begin
-  if FPLayout = LayNfeAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeAutorizacaoLoteResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeAutorizacaoResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRecepcaoLote2Result');
+  FPRetWS := SeparaDadosArray(['nfeAutorizacaoLoteResult',
+                               'nfeAutorizacaoResult',
+                               'nfeResultMsg',
+                               'nfeRecepcaoLote2Result'],FPRetornoWS );
 
   if ((FPConfiguracoesNFe.Geral.ModeloDF = moNFCe) or
-    (FPConfiguracoesNFe.Geral.VersaoDF = ve310)) and FSincrono then
+    (FPConfiguracoesNFe.Geral.VersaoDF >= ve310)) and FSincrono then
   begin
     if pos('retEnviNFe', FPRetWS) > 0 then
       AXML := StringReplace(FPRetWS, 'retEnviNFe', 'retConsSitNFe',
@@ -1393,7 +1399,12 @@ end;
 procedure TNFeRetRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
-    FPServico := GetUrlWsd + 'NfeRetAutorizacao'
+  begin
+    if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
+      FPServico := GetUrlWsd + 'NFeRetAutorizacao4'
+    else
+      FPServico := GetUrlWsd + 'NfeRetAutorizacao';
+  end
   else
     FPServico := GetUrlWsd + 'NfeRetRecepcao2';
 
@@ -1420,14 +1431,10 @@ end;
 
 function TNFeRetRecepcao.TratarResposta: Boolean;
 begin
-  if FPLayout = LayNfeRetAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoLoteResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetRecepcao2Result');
+  FPRetWS := SeparaDadosArray(['nfeRetAutorizacaoResult',
+                               'nfeRetAutorizacaoLoteResult',
+                               'nfeResultMsg',
+                               'nfeRetRecepcao2Result'],FPRetornoWS );
 
   FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFeRetorno.LerXML;
@@ -1729,14 +1736,10 @@ end;
 
 function TNFeRecibo.TratarResposta: Boolean;
 begin
-  if FPLayout = LayNfeRetAutorizacao then
-  begin
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoResult');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetAutorizacaoLoteResult');
-  end
-  else
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeRetRecepcao2Result');
+  FPRetWS := SeparaDadosArray(['nfeRetAutorizacaoResult',
+                               'nfeRetAutorizacaoLoteResult',
+                               'nfeResultMsg',
+                               'nfeRetRecepcao2Result'],FPRetornoWS );
 
   FNFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FNFeRetorno.LerXML;
@@ -1886,8 +1889,13 @@ end;
 
 procedure TNFeConsulta.DefinirServicoEAction;
 begin
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';  //NT 2016.002 diz que o nome deveria ser NFeConsulta4
+    FPSoapAction := FPServico + '/nfeConsultaNF';
+  end
   // BA usa uma notação de Serviços diferente das demais UFs
-  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+  else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
      (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
@@ -1933,9 +1941,9 @@ begin
   NFeRetorno := TRetConsSitNFe.Create;
 
   try
-    FPRetWS := SeparaDados(FPRetornoWS, 'NfeConsultaNF2Result');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'NfeConsultaNFResult');
+    FPRetWS := SeparaDadosArray(['NfeConsultaNF2Result',
+                                 'NfeConsultaNFResult',
+                                 'nfeResultMsg'],FPRetornoWS );
 
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXML;
@@ -2324,8 +2332,13 @@ procedure TNFeInutilizacao.DefinirServicoEAction;
 var
   ok: Boolean;
 begin
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    FPServico := GetUrlWsd + 'NFeInutilizacao4';
+    FPSoapAction := FPServico + '/nfeInutilizacaoNF';
+  end
   // BA usa uma notação de Serviços diferente das demais UFs
-  if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+  else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
      (StrToModeloDF(ok, IntToStr(FModelo)) = moNFe) and
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
@@ -2401,9 +2414,9 @@ var
 begin
   NFeRetorno := TRetInutNFe.Create;
   try
-    FPRetWS := SeparaDados(FPRetornoWS, 'nfeInutilizacaoNF2Result');
-    if FPRetWS = '' then
-      FPRetWS := SeparaDados(FPRetornoWS, 'nfeInutilizacaoNFResult');
+    FPRetWS := SeparaDadosArray(['nfeInutilizacaoNF2Result',
+                                 'nfeInutilizacaoNFResult',
+                                 'nfeResultMsg'],FPRetornoWS );
 
     NFeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     NFeRetorno.LerXml;

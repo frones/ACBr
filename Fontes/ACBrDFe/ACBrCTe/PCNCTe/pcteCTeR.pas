@@ -1216,7 +1216,11 @@ begin
          while Leitor.rExtrai(4, 'cInfManu', '', i01 + 1) <> '' do
          begin
            CTe.infCTeNorm.aereo.natCarga.cinfManu.Add;
-           CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'));
+           if CTe.infCTe.versao >= 3 then
+             CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManu(ok, Leitor.rCampo(tcStr,'cInfManu'))
+           else
+             CTe.infCTeNorm.aereo.natCarga.cinfManu[i01].nInfManu := StrToTpInfManuV2(ok, Leitor.rCampo(tcStr,'cInfManu'));
+
            inc(i01);
          end;
        end;

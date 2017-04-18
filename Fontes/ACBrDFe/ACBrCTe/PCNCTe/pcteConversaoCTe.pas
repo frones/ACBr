@@ -195,6 +195,9 @@ function StrToTpRspSeguro(out ok: boolean; const s: String ): TpcteRspSeg;
 function TpInfManuToStr(const t: TpInfManu): string;
 function StrToTpInfManu(out ok: boolean; const s: string): TpInfManu;
 
+function TpInfManuToStrV2(const t: TpInfManu): string;
+function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
+
 implementation
 
 uses
@@ -666,6 +669,20 @@ begin
   result := StrToEnumerado(ok, s, ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','99'],
                                   [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,  imGSR,   imNR,    imAPCC,
                                    imAAGA,  imPI965,  imPI966, imPI967,  imPI968, imPI969, imPI970, imOUTRO]);
+end;
+
+function TpInfManuToStrV2(const t: TpInfManu): string;
+begin
+  result := EnumeradoToStr(t, ['1','2','3','4','5','6','7','8','9','99'],
+                              [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,
+                               imGSR,   imNR,    imAPCC,   imAAGA,  imOUTRO]);
+end;
+
+function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
+begin
+  result := StrToEnumerado(ok, s, ['1','2','3','4','5','6','7','8','9','99'],
+                                  [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,
+                                   imGSR,   imNR,    imAPCC,   imAAGA,  imOUTRO]);
 end;
 
 end.

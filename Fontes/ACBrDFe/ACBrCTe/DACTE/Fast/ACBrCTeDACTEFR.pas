@@ -2436,7 +2436,11 @@ begin
     begin
       if (i > 0) then
          FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + ', ';
-      FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + TpInfManuToStr(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu);
+
+      if FCTe.infCTe.versao >= 3 then
+         FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + TpInfManuToStr(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu)
+      else
+         FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + TpInfManuToStrV2(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu);
     end;
     if (FieldByName('cInfManu').AsString <> '') then
       FieldByName('cInfManu').AsString := FieldByName('cInfManu').AsString + '.';

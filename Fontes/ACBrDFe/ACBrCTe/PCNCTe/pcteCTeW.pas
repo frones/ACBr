@@ -2101,7 +2101,7 @@ begin
       Gerador.wCampo(tcStr, '#12', 'xDime', 05, 14, 0, CTe.infCTeNorm.aereo.natCarga.xDime, DSC_XDIME);
 
       for i := 0 to CTe.infCTeNorm.aereo.natCarga.cinfManu.Count - 1 do
-        Gerador.wCampo(tcInt, '#13', 'cInfManu', 01, 02, 0, TpInfManuToStr(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu), DSC_CINFMANU);
+        Gerador.wCampo(tcInt, '#13', 'cInfManu', 01, 02, 0, TpInfManuToStrV2(CTe.infCTeNorm.aereo.natCarga.cinfManu.Items[i].nInfManu), DSC_CINFMANU);
 
       Gerador.wCampo(tcStr, '#14', 'cIMP', 03, 03, 1, CTe.infCTeNorm.aereo.natCarga.cIMP, DSC_CIMP);
       Gerador.wGrupo('/natCarga');

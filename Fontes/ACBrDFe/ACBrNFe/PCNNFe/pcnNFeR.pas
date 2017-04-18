@@ -100,7 +100,7 @@ var
   ok: Boolean;
   i, j, k, nItem: Integer;
   Arquivo, Itens, ItensTemp, VersaoInfNFe, NumItem: AnsiString;
-  Aspas: String;
+  Aspas, tagPag: String;
 
   function VerificaParSt(const t: TpcnCSTIcms): TpcnCSTIcms;
   // 	Verifica se existe Partilha ou St
@@ -942,7 +942,16 @@ begin
     (* Grupo da TAG <pag> ******************************************************)
     i := 0;
     NFe.pag.Clear;
-    while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
+    if NFe.infNFe.Versao >= 4 then
+    begin
+      if Leitor.rExtrai(1, 'pag') <> '' then
+        (*YA09*)NFe.pag.vTroco := Leitor.rCampo(tcDe2, 'vTroco');
+      tagPag := 'detPag';
+    end
+    else
+      tagPag := 'pag';
+
+    while Leitor.rExtrai(1, tagPag, '', i + 1) <> '' do
      begin
        NFe.pag.Add;
       (*YA02*)NFe.pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));
@@ -954,7 +963,6 @@ begin
         (*YA06*)NFe.pag[i].tBand := StrToBandeiraCartao(ok, Leitor.rCampo(tcStr, 'tBand'));
         (*YA07*)NFe.pag[i].cAut  := Leitor.rCampo(tcStr, 'cAut');
        end;
-      (*YA09*)NFe.pag[i].vTroco := Leitor.rCampo(tcDe2, 'vTroco');
       inc(i);
     end;
    end;

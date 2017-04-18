@@ -1701,14 +1701,21 @@ type
     property vDup: Currency read FvDup write FvDup;
   end;
 
+  { TpagCollection }
+
   TpagCollection = class(TCollection)
   private
+    FvTroco: Currency;
+
     function GetItem(Index: Integer): TpagCollectionItem;
     procedure SetItem(Index: Integer; Value: TpagCollectionItem);
   public
     constructor Create(AOwner: TNFe);
+
     function Add: TpagCollectionItem;
+
     property Items[Index: Integer]: TpagCollectionItem read GetItem write SetItem; default;
+    property vTroco: Currency read FvTroco write FvTroco;
   end;
 
   TpagCollectionItem = class(TCollectionItem)
@@ -1719,7 +1726,6 @@ type
     FCNPJ: String;
     FtBand: TpcnBandeiraCartao;
     FcAut: String;
-    FvTroco: Currency;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -1729,7 +1735,6 @@ type
     property CNPJ: String read FCNPJ write FCNPJ;
     property tBand: TpcnBandeiraCartao read FtBand write FtBand;
     property cAut: String read FcAut write FcAut;
-    property vTroco: Currency read FvTroco write FvTroco;
   end;
 
   TInfAdic = class(TPersistent)
@@ -3160,6 +3165,7 @@ end;
 constructor TpagCollection.Create(AOwner: TNFe);
 begin
   inherited Create(TpagCollectionItem);
+  vTroco := 0;
 end;
 
 function TpagCollection.GetItem(Index: Integer): TpagCollectionItem;

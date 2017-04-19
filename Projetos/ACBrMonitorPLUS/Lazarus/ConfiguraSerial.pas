@@ -37,13 +37,14 @@ interface
 
 uses
   SysUtils, Classes, Variants, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, ACBrDevice ;
+  Dialogs, StdCtrls, Buttons, Spin, ACBrDevice ;
 
 type
 
   { TfrConfiguraSerial }
 
   TfrConfiguraSerial = class(TForm)
+    gbSendBytes: TGroupBox;
     Label5: TLabel;
     cmbBaudRate: TComboBox;
     Label6: TLabel;
@@ -60,6 +61,10 @@ type
     BitBtn2: TBitBtn;
     chHardFlow: TCheckBox;
     chSoftFlow: TCheckBox;
+    lBuffer: TLabel;
+    lEsperaBuffer: TLabel;
+    seSendBytesCount: TSpinEdit;
+    seSendBytesInterval: TSpinEdit;
     procedure FormCreate(Sender: TObject);
     procedure cmbPortaSerialChange(Sender: TObject);
     procedure cmbBaudRateChange(Sender: TObject);
@@ -71,6 +76,8 @@ type
     procedure chSoftFlowClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure seSendBytesCountChange(Sender: TObject);
+    procedure seSendBytesIntervalChange(Sender: TObject);
   private
     { Private declarations }
     procedure VerificaFlow ;
@@ -107,6 +114,18 @@ begin
   chHardFlow.Checked       := Device.HardFlow ;
   chSoftFlow.Checked       := Device.SoftFlow ;
   cmbHandShaking.ItemIndex := Integer( Device.HandShake ) ;
+  seSendBytesCount.Value   := Device.SendBytesCount;
+  seSendBytesInterval.Value:= Device.SendBytesInterval;
+end;
+
+procedure TfrConfiguraSerial.seSendBytesCountChange(Sender: TObject);
+begin
+  Device.SendBytesCount := seSendBytesCount.Value;
+end;
+
+procedure TfrConfiguraSerial.seSendBytesIntervalChange(Sender: TObject);
+begin
+  Device.SendBytesInterval := seSendBytesInterval.Value;
 end;
 
 procedure TfrConfiguraSerial.cmbPortaSerialChange(Sender: TObject);

@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2017
+[*] Adicionada configuração das propriedades: Device.SendBytesCount e Device.SendBytesInterval na
+	janela de configuração para os componentes seriais.
+	http://www.projetoacbr.com.br/forum/topic/36331-acbrmonitor-erro-communication-error-9997-timeout-during-operation/
+	por: Celso Marigo Junior
+
 13/04/2017
 [-] Correção na rotina de Consulta de DFes, a consulta, mesmo que passasse Path completo, estava sendo
 	executada usando apenas a chave do DFe, assim o arquivo não estava sendo atualizado.

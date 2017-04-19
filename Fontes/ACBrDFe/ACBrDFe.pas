@@ -460,7 +460,7 @@ procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
   var Versao: Double; var URL: String);
 var
-  Sessao, NomeSchema, ArqSchema: String;
+  Sessao, ListaSessoes, NomeSchema, ArqSchema: String;
   VersaoAchada, VersaoSchema: Double;
 begin
   if EstaVazio(ModeloDFe) then
@@ -475,8 +475,18 @@ begin
   LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
 
   // Se não achou, verifique se está fazendo redirecionamento "Usar="
-  if EstaVazio(URL) then
+  ListaSessoes := '';  // proteção contra redirecionamento circular
+  while EstaVazio(URL) do
   begin
+    if NaoEstaVazio(Sessao) then
+    begin
+      if (Pos(Sessao, ListaSessoes) > 0) then
+        raise EACBrDFeException.Create('Redirecionamento circular detectado: Sessão "'+Sessao+'" no arquivo "'+
+          Configuracoes.WebServices.ResourceName+'"');
+
+      ListaSessoes := ListaSessoes + ';' + Sessao;
+    end;
+
     if FPIniParams.SectionExists(Sessao) then
     begin
       Sessao := FPIniParams.ReadString(Sessao, 'Usar', '');

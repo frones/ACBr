@@ -49,6 +49,11 @@ Símbolo : Significado
 [-] Ajustes nas chamadas de "CoInitialize", para que funcione com multiplas Threads
     (por: DSA)
 
+-- ACBrDFe --
+[*] Método "LerServicoDeParams", modificação para permitir múltiplos redirecionamentos
+    http://www.projetoacbr.com.br/forum/topic/36328-m%C3%BAltiplos-redirecionamentos-usar-no-lerservicodeparams/
+    (por: BigWings)
+
 -- ACBr_NCrypt --
 [*] Unit modificada, para usar carga dinâmica, e assim evitar problemas no
     Windows XP

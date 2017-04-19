@@ -38,17 +38,24 @@
 {                                                                 }
 {*****************************************************************}
 
+{ 19/04/2017
+  - Refactoring to allow Dynamic Loading from DLL, to avoid problems
+    on Windows XP (by DSA)
+}
+
 {$I ACBr.inc}
 
 unit ACBr_NCrypt;
 
-{$WEAKPACKAGEUNIT}
 {$ALIGN 8}
 
 interface
 
 uses
-  Windows, Types, ACBr_BCrypt;
+  Windows, Types, ACBr_BCrypt
+  {$IfDef FPC}
+   ,dynlibs
+  {$EndIf};
 
 {$HPPEMIT '#include <ncrypt.h>'}
 
@@ -257,9 +264,8 @@ const
 // Functions used to manage persisted keys.
 //
 
-{$EXTERNALSYM NCryptOpenStorageProvider}
 function NCryptOpenStorageProvider(out phProvider: NCRYPT_PROV_HANDLE;
-  pszProviderName: LPCWSTR; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  pszProviderName: LPCWSTR; dwFlags: DWORD): SECURITY_STATUS;
 
 const
 // AlgOperations flags for use with NCryptEnumAlgorithms()
@@ -294,14 +300,12 @@ type
   TNCryptAlgorithmName = _NCryptAlgorithmName;
 // certenrolls_end
 
-{$EXTERNALSYM NCryptEnumAlgorithms}
 function NCryptEnumAlgorithms(hProvider: NCRYPT_PROV_HANDLE;
   dwAlgOperations: DWORD; out pdwAlgCount: DWORD;
-  ppAlgList: PPNCryptAlgorithmName; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  ppAlgList: PPNCryptAlgorithmName; dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptIsAlgSupported}
 function NCryptIsAlgSupported(hProvider: NCRYPT_PROV_HANDLE; pszAlgId: LPCWSTR;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
 type
   PNCryptKeyName = ^TNCryptKeyName;
@@ -314,10 +318,9 @@ type
   end;
   TNCryptKeyName = NCryptKeyName;
 
-{$EXTERNALSYM NCryptEnumKeys}
 function NCryptEnumKeys(hProvider: NCRYPT_PROV_HANDLE; pszScope: LPCWSTR;
   out ppKeyName: PNCryptKeyName; var ppEnumState: Pointer;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
 type
   PNCryptProviderName = ^TNCryptProviderName;
@@ -328,23 +331,19 @@ type
   end;
   TNCryptProviderName = NCryptProviderName;
 
-{$EXTERNALSYM NCryptEnumStorageProviders}
 function NCryptEnumStorageProviders(out pdwProviderCount: DWORD;
   out ppProviderList: PNCryptProviderName;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptFreeBuffer}
-function NCryptFreeBuffer(pvInput: Pointer): SECURITY_STATUS; stdcall;
+function NCryptFreeBuffer(pvInput: Pointer): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptOpenKey}
 function NCryptOpenKey(hProvider: NCRYPT_PROV_HANDLE;
   out phKey: NCRYPT_KEY_HANDLE; pszKeyName: LPCWSTR;
-  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptCreatePersistedKey}
 function NCryptCreatePersistedKey(hProvider: NCRYPT_PROV_HANDLE;
   out phKey: NCRYPT_KEY_HANDLE; pszAlgId, pszKeyName: LPCWSTR;
-  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS;
 
 const
 // Standard property names.
@@ -497,30 +496,25 @@ type
   NCRYPT_SUPPORTED_LENGTHS = __NCRYPT_SUPPORTED_LENGTHS;
   TNCryptSupportedLengths = __NCRYPT_SUPPORTED_LENGTHS;
 
-{$EXTERNALSYM NCryptGetProperty}
 function NCryptGetProperty(hObject: NCRYPT_HANDLE; pszProperty: LPCWSTR;
   pbOutput: PBYTE; cbOutput: DWORD; out pcbResult: DWORD;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptSetProperty}
 function NCryptSetProperty(hObject: NCRYPT_HANDLE; pszProperty: LPCWSTR;
-  pbInput: PBYTE; cbInput, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  pbInput: PBYTE; cbInput, dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptFinalizeKey}
 function NCryptFinalizeKey(hKey: NCRYPT_KEY_HANDLE;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptEncrypt}
 function NCryptEncrypt(hKey: NCRYPT_KEY_HANDLE; pbInput: PBYTE;
   cbInput: DWORD; pPaddingInfo: Pointer; pbOutput: PBYTE;
   cbOutput: DWORD; out pcbResult: DWORD;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptDecrypt}
 function NCryptDecrypt(hKey: NCRYPT_KEY_HANDLE; pbInput: PBYTE;
   cbInput: DWORD; pPaddingInfo: Pointer; pbOutput: PBYTE;
   cbOutput: DWORD; out pcbResult: DWORD;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
 const
   {$EXTERNALSYM NCRYPT_PKCS7_ENVELOPE_BLOB}
@@ -530,97 +524,478 @@ const
   {$EXTERNALSYM NCRYPT_OPAQUETRANSPORT_BLOB}
   NCRYPT_OPAQUETRANSPORT_BLOB     = 'OpaqueTransport';
 
-{$EXTERNALSYM NCryptImportKey}
 function NCryptImportKey(hProvider: NCRYPT_PROV_HANDLE;
   hImportKey: NCRYPT_KEY_HANDLE; pszBlobType: LPCWSTR;
   pParameterList: PNCryptBufferDesc; out phKey: NCRYPT_KEY_HANDLE;
-  pbData: PBYTE; cbData, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  pbData: PBYTE; cbData, dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptExportKey}
 function NCryptExportKey(hKey, hExportKey: NCRYPT_KEY_HANDLE;
   pszBlobType: LPCWSTR; pParameterList: PNCryptBufferDesc;
   pbOutput: PBYTE; cbOutput: DWORD; out pcbResult: DWORD;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptSignHash}
 function NCryptSignHash(hKey: NCRYPT_KEY_HANDLE; pPaddingInfo: Pointer;
   pbHashValue: PBYTE; cbHashValue: DWORD; pbSignature: PBYTE;
   cbSignature: DWORD; out pcbResult: DWORD;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptVerifySignature}
 function NCryptVerifySignature(hKey: NCRYPT_KEY_HANDLE; pPaddingInfo: Pointer;
   pbHashValue: PBYTE; cbHashValue: DWORD; pbSignature: PBYTE;
-  cbSignature, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  cbSignature, dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptDeleteKey}
 function NCryptDeleteKey(hKey: NCRYPT_KEY_HANDLE;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptFreeObject}
-function NCryptFreeObject(hObject: NCRYPT_HANDLE): SECURITY_STATUS; stdcall;
+function NCryptFreeObject(hObject: NCRYPT_HANDLE): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptIsKeyHandle}
-function NCryptIsKeyHandle(hKey: NCRYPT_KEY_HANDLE): BOOL; stdcall;
+function NCryptIsKeyHandle(hKey: NCRYPT_KEY_HANDLE): BOOL;
 
-{$EXTERNALSYM NCryptTranslateHandle}
 function NCryptTranslateHandle(out phProvider: NCRYPT_PROV_HANDLE;
   out phKey: NCRYPT_KEY_HANDLE; hLegacyProv: ULONG_PTR {HCRYPTPROV};
   hLegacyKey: ULONG_PTR {HCRYPTKEY};
-  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptNotifyChangeKey}
 function NCryptNotifyChangeKey(hProvider: NCRYPT_PROV_HANDLE;
-  var phEvent: THANDLE; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  var phEvent: THANDLE; dwFlags: DWORD): SECURITY_STATUS;
 
-{$EXTERNALSYM NCryptSecretAgreement}
 function NCryptSecretAgreement(hPrivKey, hPubKey: NCRYPT_KEY_HANDLE;
   out phAgreedSecret: NCRYPT_SECRET_HANDLE;
-  dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  dwFlags: DWORD): SECURITY_STATUS;
 
 function NCryptDeriveKey(hSharedSecret: NCRYPT_SECRET_HANDLE;
   pwszKDF: LPCWSTR; pParameterList: PNCryptBufferDesc;
   pbDerivedKey: PBYTE; cbDerivedKey: DWORD; out pcbResult: DWORD;
-  dwFlags: ULONG): SECURITY_STATUS; stdcall;
+  dwFlags: ULONG): SECURITY_STATUS;
 
 const
   {$EXTERNALSYM NCRYPT_KEY_STORAGE_INTERFACE_VERSION}
   NCRYPT_KEY_STORAGE_INTERFACE_VERSION: TBCryptInterfaceVersion =
     (MajorVersion: 1; MinorVersion: 0);
 
+function CheckNCryptIsLoaded: Boolean;
+procedure LoadNCrypt;
+procedure UnLoadNCrypt;
+
 implementation
 
 const
   ncryptdll = 'ncrypt.dll';
 
+type
+  {$IFNDEF FPC}
+    TLibHandle = THandle;
+  {$ENDIF}
+
+  TNCryptOpenStorageProvider = function(out phProvider: NCRYPT_PROV_HANDLE;
+     pszProviderName: LPCWSTR; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptEnumAlgorithms = function(hProvider: NCRYPT_PROV_HANDLE;
+     dwAlgOperations: DWORD; out pdwAlgCount: DWORD;
+     ppAlgList: PPNCryptAlgorithmName; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptIsAlgSupported = function(hProvider: NCRYPT_PROV_HANDLE;
+     pszAlgId: LPCWSTR; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptEnumKeys = function(hProvider: NCRYPT_PROV_HANDLE; pszScope: LPCWSTR;
+     out ppKeyName: PNCryptKeyName; var ppEnumState: Pointer; dwFlags: DWORD):
+     SECURITY_STATUS; stdcall;
+  TNCryptEnumStorageProviders = function(out pdwProviderCount: DWORD;
+     out ppProviderList: PNCryptProviderName; dwFlags: DWORD): SECURITY_STATUS;
+     stdcall;
+  TNCryptFreeBuffer = function(pvInput: Pointer): SECURITY_STATUS; stdcall;
+  TNCryptOpenKey = function(hProvider: NCRYPT_PROV_HANDLE;
+     out phKey: NCRYPT_KEY_HANDLE; pszKeyName: LPCWSTR;
+     dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptCreatePersistedKey = function(hProvider: NCRYPT_PROV_HANDLE;
+     out phKey: NCRYPT_KEY_HANDLE; pszAlgId, pszKeyName: LPCWSTR;
+     dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptGetProperty = function(hObject: NCRYPT_HANDLE; pszProperty: LPCWSTR;
+     pbOutput: PBYTE; cbOutput: DWORD; out pcbResult: DWORD; dwFlags: DWORD):
+     SECURITY_STATUS; stdcall;
+  TNCryptSetProperty = function(hObject: NCRYPT_HANDLE; pszProperty: LPCWSTR;
+     pbInput: PBYTE; cbInput, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptFinalizeKey = function(hKey: NCRYPT_KEY_HANDLE; dwFlags: DWORD):
+     SECURITY_STATUS; stdcall;
+  TNCryptEncrypt = function(hKey: NCRYPT_KEY_HANDLE; pbInput: PBYTE;
+     cbInput: DWORD; pPaddingInfo: Pointer; pbOutput: PBYTE; cbOutput: DWORD;
+     out pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptDecrypt = function (hKey: NCRYPT_KEY_HANDLE; pbInput: PBYTE;
+     cbInput: DWORD; pPaddingInfo: Pointer; pbOutput: PBYTE; cbOutput: DWORD;
+     out pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptImportKey = function(hProvider: NCRYPT_PROV_HANDLE;
+     hImportKey: NCRYPT_KEY_HANDLE; pszBlobType: LPCWSTR;
+     pParameterList: PNCryptBufferDesc; out phKey: NCRYPT_KEY_HANDLE;
+     pbData: PBYTE; cbData, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptExportKey = function(hKey, hExportKey: NCRYPT_KEY_HANDLE;
+     pszBlobType: LPCWSTR; pParameterList: PNCryptBufferDesc; pbOutput: PBYTE;
+     cbOutput: DWORD; out pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptSignHash = function(hKey: NCRYPT_KEY_HANDLE; pPaddingInfo: Pointer;
+     pbHashValue: PBYTE; cbHashValue: DWORD; pbSignature: PBYTE;
+     cbSignature: DWORD; out pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptVerifySignature = function(hKey: NCRYPT_KEY_HANDLE; pPaddingInfo: Pointer;
+    pbHashValue: PBYTE; cbHashValue: DWORD; pbSignature: PBYTE;
+    cbSignature, dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptDeleteKey = function (hKey: NCRYPT_KEY_HANDLE;
+    dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptFreeObject = function(hObject: NCRYPT_HANDLE): SECURITY_STATUS; stdcall;
+  TNCryptIsKeyHandle = function(hKey: NCRYPT_KEY_HANDLE): BOOL; stdcall;
+  TNCryptTranslateHandle = function(out phProvider: NCRYPT_PROV_HANDLE;
+    out phKey: NCRYPT_KEY_HANDLE; hLegacyProv: ULONG_PTR {HCRYPTPROV};
+    hLegacyKey: ULONG_PTR {HCRYPTKEY}; dwLegacyKeySpec, dwFlags: DWORD):
+     SECURITY_STATUS; stdcall;
+  TNCryptNotifyChangeKey = function(hProvider: NCRYPT_PROV_HANDLE;
+    var phEvent: THANDLE; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptSecretAgreement = function (hPrivKey, hPubKey: NCRYPT_KEY_HANDLE;
+    out phAgreedSecret: NCRYPT_SECRET_HANDLE; dwFlags: DWORD): SECURITY_STATUS; stdcall;
+  TNCryptDeriveKey = function(hSharedSecret: NCRYPT_SECRET_HANDLE;
+    pwszKDF: LPCWSTR; pParameterList: PNCryptBufferDesc;
+    pbDerivedKey: PBYTE; cbDerivedKey: DWORD; out pcbResult: DWORD;
+    dwFlags: ULONG): SECURITY_STATUS; stdcall;
+
+var
+  NCryptLoaded: Boolean;
+  NCryptHandle: TLibHandle;
+
+  _NCryptOpenStorageProvider: TNCryptOpenStorageProvider;
+  _NCryptEnumAlgorithms: TNCryptEnumAlgorithms;
+  _NCryptIsAlgSupported: TNCryptIsAlgSupported;
+  _NCryptEnumKeys: TNCryptEnumKeys;
+  _NCryptEnumStorageProviders: TNCryptEnumStorageProviders;
+  _NCryptFreeBuffer: TNCryptFreeBuffer;
+  _NCryptOpenKey: TNCryptOpenKey;
+  _NCryptCreatePersistedKey: TNCryptCreatePersistedKey;
+  _NCryptGetProperty: TNCryptGetProperty;
+  _NCryptSetProperty: TNCryptSetProperty;
+  _NCryptFinalizeKey: TNCryptFinalizeKey;
+  _NCryptEncrypt: TNCryptEncrypt;
+  _NCryptDecrypt: TNCryptDecrypt;
+  _NCryptImportKey: TNCryptImportKey;
+  _NCryptExportKey: TNCryptExportKey;
+  _NCryptSignHash: TNCryptSignHash;
+  _NCryptVerifySignature: TNCryptVerifySignature;
+  _NCryptDeleteKey: TNCryptDeleteKey;
+  _NCryptFreeObject: TNCryptFreeObject;
+  _NCryptIsKeyHandle: TNCryptIsKeyHandle;
+  _NCryptTranslateHandle: TNCryptTranslateHandle;
+  _NCryptNotifyChangeKey: TNCryptNotifyChangeKey;
+  _NCryptSecretAgreement: TNCryptSecretAgreement;
+  _NCryptDeriveKey: TNCryptDeriveKey;
+
+
 {$IFDEF REMOVE_CAST_WARN}
   {$WARN SYMBOL_PLATFORM OFF}
 {$ENDIF}
 
-function NCryptOpenStorageProvider; external ncryptdll name 'NCryptOpenStorageProvider' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptEnumAlgorithms; external ncryptdll name 'NCryptEnumAlgorithms' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptIsAlgSupported; external ncryptdll name 'NCryptIsAlgSupported' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptEnumKeys; external ncryptdll name 'NCryptEnumKeys' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptEnumStorageProviders; external ncryptdll name 'NCryptEnumStorageProviders' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptFreeBuffer; external ncryptdll name 'NCryptFreeBuffer' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptOpenKey; external ncryptdll name 'NCryptOpenKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptCreatePersistedKey; external ncryptdll name 'NCryptCreatePersistedKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptGetProperty; external ncryptdll name 'NCryptGetProperty' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptSetProperty; external ncryptdll name 'NCryptSetProperty' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptFinalizeKey; external ncryptdll name 'NCryptFinalizeKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptEncrypt; external ncryptdll name 'NCryptEncrypt' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptDecrypt; external ncryptdll name 'NCryptDecrypt' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptImportKey; external ncryptdll name 'NCryptImportKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptExportKey; external ncryptdll name 'NCryptExportKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptSignHash; external ncryptdll name 'NCryptSignHash' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptVerifySignature; external ncryptdll name 'NCryptVerifySignature' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptDeleteKey; external ncryptdll name 'NCryptDeleteKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptFreeObject; external ncryptdll name 'NCryptFreeObject' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptIsKeyHandle; external ncryptdll name 'NCryptIsKeyHandle' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptTranslateHandle; external ncryptdll name 'NCryptTranslateHandle' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptNotifyChangeKey; external ncryptdll name 'NCryptNotifyChangeKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptSecretAgreement; external ncryptdll name 'NCryptSecretAgreement' {$IFDEF USE_DELAYED}delayed{$ENDIF};
-function NCryptDeriveKey; external ncryptdll name 'NCryptDeriveKey' {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function NCryptOpenStorageProvider(out phProvider: NCRYPT_PROV_HANDLE;
+  pszProviderName: LPCWSTR; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptOpenStorageProvider) then
+    Result := _NCryptOpenStorageProvider(phProvider, pszProviderName, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptEnumAlgorithms(hProvider: NCRYPT_PROV_HANDLE;
+  dwAlgOperations: DWORD; out pdwAlgCount: DWORD;
+  ppAlgList: PPNCryptAlgorithmName; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptEnumAlgorithms) then
+    Result := _NCryptEnumAlgorithms(hProvider, dwAlgOperations, pdwAlgCount, ppAlgList, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptIsAlgSupported(hProvider: NCRYPT_PROV_HANDLE; pszAlgId: LPCWSTR;
+  dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptIsAlgSupported) then
+    Result := _NCryptIsAlgSupported(hProvider, pszAlgId, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptEnumKeys(hProvider: NCRYPT_PROV_HANDLE; pszScope: LPCWSTR; out
+  ppKeyName: PNCryptKeyName; var ppEnumState: Pointer; dwFlags: DWORD
+  ): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptEnumKeys) then
+    Result := _NCryptEnumKeys(hProvider, pszScope, ppKeyName, ppEnumState, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptEnumStorageProviders(out pdwProviderCount: DWORD; out
+  ppProviderList: PNCryptProviderName; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptEnumStorageProviders) then
+    Result := _NCryptEnumStorageProviders(pdwProviderCount, ppProviderList, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptFreeBuffer(pvInput: Pointer): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptFreeBuffer) then
+    Result := _NCryptFreeBuffer(pvInput)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptOpenKey(hProvider: NCRYPT_PROV_HANDLE; out
+  phKey: NCRYPT_KEY_HANDLE; pszKeyName: LPCWSTR; dwLegacyKeySpec, dwFlags: DWORD
+  ): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptOpenKey) then
+    Result := _NCryptOpenKey(hProvider, phKey, pszKeyName, dwLegacyKeySpec, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptCreatePersistedKey(hProvider: NCRYPT_PROV_HANDLE; out
+  phKey: NCRYPT_KEY_HANDLE; pszAlgId, pszKeyName: LPCWSTR; dwLegacyKeySpec,
+  dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptCreatePersistedKey) then
+    Result := _NCryptCreatePersistedKey(hProvider, phKey, pszAlgId, pszKeyName, dwLegacyKeySpec, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptGetProperty(hObject: NCRYPT_HANDLE; pszProperty: LPCWSTR;
+  pbOutput: PBYTE; cbOutput: DWORD; out pcbResult: DWORD; dwFlags: DWORD
+  ): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptGetProperty) then
+    Result := _NCryptGetProperty(hObject, pszProperty, pbOutput, cbOutput, pcbResult, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptSetProperty(hObject: NCRYPT_HANDLE; pszProperty: LPCWSTR;
+  pbInput: PBYTE; cbInput, dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptSetProperty) then
+    Result := _NCryptSetProperty(hObject, pszProperty, pbInput, cbInput, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptFinalizeKey(hKey: NCRYPT_KEY_HANDLE; dwFlags: DWORD
+  ): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptFinalizeKey) then
+    Result := _NCryptFinalizeKey(hKey, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptEncrypt(hKey: NCRYPT_KEY_HANDLE; pbInput: PBYTE; cbInput: DWORD;
+  pPaddingInfo: Pointer; pbOutput: PBYTE; cbOutput: DWORD; out
+  pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptEncrypt) then
+    Result := _NCryptEncrypt(hKey, pbInput, cbInput, pPaddingInfo, pbOutput, cbOutput, pcbResult, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptDecrypt(hKey: NCRYPT_KEY_HANDLE; pbInput: PBYTE; cbInput: DWORD;
+  pPaddingInfo: Pointer; pbOutput: PBYTE; cbOutput: DWORD; out
+  pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptDecrypt) then
+    Result := _NCryptDecrypt(hKey, pbInput, cbInput, pPaddingInfo, pbOutput, cbOutput, pcbResult, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptImportKey(hProvider: NCRYPT_PROV_HANDLE;
+  hImportKey: NCRYPT_KEY_HANDLE; pszBlobType: LPCWSTR;
+  pParameterList: PNCryptBufferDesc; out phKey: NCRYPT_KEY_HANDLE;
+  pbData: PBYTE; cbData, dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptImportKey) then
+    Result := _NCryptImportKey(hProvider, hImportKey, pszBlobType, pParameterList, phKey, pbData, cbData, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptExportKey(hKey, hExportKey: NCRYPT_KEY_HANDLE;
+  pszBlobType: LPCWSTR; pParameterList: PNCryptBufferDesc; pbOutput: PBYTE;
+  cbOutput: DWORD; out pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptExportKey) then
+    Result := _NCryptExportKey(hKey, hExportKey, pszBlobType, pParameterList, pbOutput, cbOutput, pcbResult, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptSignHash(hKey: NCRYPT_KEY_HANDLE; pPaddingInfo: Pointer;
+  pbHashValue: PBYTE; cbHashValue: DWORD; pbSignature: PBYTE;
+  cbSignature: DWORD; out pcbResult: DWORD; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptSignHash) then
+    Result := _NCryptSignHash(hKey, pPaddingInfo, pbHashValue, cbHashValue, pbSignature, cbSignature, pcbResult, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptVerifySignature(hKey: NCRYPT_KEY_HANDLE; pPaddingInfo: Pointer;
+  pbHashValue: PBYTE; cbHashValue: DWORD; pbSignature: PBYTE; cbSignature,
+  dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptVerifySignature) then
+    Result := _NCryptVerifySignature(hKey, pPaddingInfo, pbHashValue, cbHashValue, pbSignature, cbSignature, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptDeleteKey(hKey: NCRYPT_KEY_HANDLE; dwFlags: DWORD
+  ): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptDeleteKey) then
+    Result := _NCryptDeleteKey(hKey, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptFreeObject(hObject: NCRYPT_HANDLE): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptFreeObject) then
+    Result := _NCryptFreeObject(hObject)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptIsKeyHandle(hKey: NCRYPT_KEY_HANDLE): BOOL;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptIsKeyHandle) then
+    Result := _NCryptIsKeyHandle(hKey)
+  else
+    Result := False;
+end;
+
+function NCryptTranslateHandle(out phProvider: NCRYPT_PROV_HANDLE; out
+  phKey: NCRYPT_KEY_HANDLE; hLegacyProv: ULONG_PTR; hLegacyKey: ULONG_PTR;
+  dwLegacyKeySpec, dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptTranslateHandle) then
+    Result := _NCryptTranslateHandle(phProvider, phKey, hLegacyProv, hLegacyKey, dwLegacyKeySpec, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptNotifyChangeKey(hProvider: NCRYPT_PROV_HANDLE;
+  var phEvent: THANDLE; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptNotifyChangeKey) then
+    Result := _NCryptNotifyChangeKey(hProvider, phEvent, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptSecretAgreement(hPrivKey, hPubKey: NCRYPT_KEY_HANDLE; out
+  phAgreedSecret: NCRYPT_SECRET_HANDLE; dwFlags: DWORD): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptSecretAgreement) then
+    Result := _NCryptSecretAgreement(hPrivKey, hPubKey, phAgreedSecret, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function NCryptDeriveKey(hSharedSecret: NCRYPT_SECRET_HANDLE; pwszKDF: LPCWSTR;
+  pParameterList: PNCryptBufferDesc; pbDerivedKey: PBYTE; cbDerivedKey: DWORD;
+  out pcbResult: DWORD; dwFlags: ULONG): SECURITY_STATUS;
+begin
+  if CheckNCryptIsLoaded and Assigned(_NCryptDeriveKey) then
+    Result := _NCryptDeriveKey(hSharedSecret, pwszKDF, pParameterList, pbDerivedKey, cbDerivedKey, pcbResult, dwFlags)
+  else
+    Result := ERROR_INVALID_FUNCTION;
+end;
+
+function CheckNCryptIsLoaded: Boolean;
+begin
+  LoadNCrypt;
+  Result := NCryptLoaded;
+end;
+
+procedure LoadNCrypt;
+begin
+  if NCryptLoaded then
+    Exit;
+
+  NCryptHandle := LoadLibrary(ncryptdll);
+  NCryptLoaded := (NCryptHandle <> 0);
+
+  if NCryptLoaded then
+  begin
+    _NCryptOpenStorageProvider := GetProcAddress(NCryptHandle, 'NCryptOpenStorageProvider');
+    _NCryptEnumAlgorithms := GetProcAddress(NCryptHandle, 'NCryptEnumAlgorithms');
+    _NCryptIsAlgSupported := GetProcAddress(NCryptHandle, 'NCryptIsAlgSupported');
+    _NCryptEnumKeys := GetProcAddress(NCryptHandle, 'NCryptEnumKeys');
+    _NCryptEnumStorageProviders := GetProcAddress(NCryptHandle, 'NCryptEnumStorageProviders');
+    _NCryptFreeBuffer := GetProcAddress(NCryptHandle, 'NCryptFreeBuffer');
+    _NCryptOpenKey := GetProcAddress(NCryptHandle, 'NCryptOpenKey');
+    _NCryptCreatePersistedKey := GetProcAddress(NCryptHandle, 'NCryptCreatePersistedKey');
+    _NCryptGetProperty := GetProcAddress(NCryptHandle, 'NCryptGetProperty');
+    _NCryptSetProperty := GetProcAddress(NCryptHandle, 'NCryptSetProperty');
+    _NCryptFinalizeKey := GetProcAddress(NCryptHandle, 'NCryptFinalizeKey');
+    _NCryptEncrypt := GetProcAddress(NCryptHandle, 'NCryptEncrypt');
+    _NCryptDecrypt := GetProcAddress(NCryptHandle, 'NCryptDecrypt');
+    _NCryptImportKey := GetProcAddress(NCryptHandle, 'NCryptImportKey');
+    _NCryptExportKey := GetProcAddress(NCryptHandle, 'NCryptExportKey');
+    _NCryptSignHash := GetProcAddress(NCryptHandle, 'NCryptSignHash');
+    _NCryptVerifySignature := GetProcAddress(NCryptHandle, 'NCryptVerifySignature');
+    _NCryptDeleteKey := GetProcAddress(NCryptHandle, 'NCryptDeleteKey');
+    _NCryptFreeObject := GetProcAddress(NCryptHandle, 'NCryptFreeObject');
+    _NCryptIsKeyHandle := GetProcAddress(NCryptHandle, 'NCryptIsKeyHandle');
+    _NCryptTranslateHandle := GetProcAddress(NCryptHandle, 'NCryptTranslateHandle');
+    _NCryptNotifyChangeKey := GetProcAddress(NCryptHandle, 'NCryptNotifyChangeKey');
+    _NCryptSecretAgreement := GetProcAddress(NCryptHandle, 'NCryptSecretAgreement');
+    _NCryptDeriveKey := GetProcAddress(NCryptHandle, 'NCryptDeriveKey');
+  end
+
+end;
+
+procedure UnLoadNCrypt;
+begin
+  if NCryptHandle <> 0 then
+  begin
+    FreeLibrary(NCryptHandle);
+    NCryptHandle := 0;
+  end;
+
+  _NCryptOpenStorageProvider := Nil;
+  _NCryptEnumAlgorithms := Nil;
+  _NCryptIsAlgSupported := Nil;
+  _NCryptEnumKeys := Nil;
+  _NCryptEnumStorageProviders := Nil;
+  _NCryptFreeBuffer := Nil;
+  _NCryptOpenKey := Nil;
+  _NCryptCreatePersistedKey := Nil;
+  _NCryptGetProperty := Nil;
+  _NCryptSetProperty := Nil;
+  _NCryptFinalizeKey := Nil;
+  _NCryptEncrypt := Nil;
+  _NCryptDecrypt := Nil;
+  _NCryptImportKey := Nil;
+  _NCryptExportKey := Nil;
+  _NCryptSignHash := Nil;
+  _NCryptVerifySignature := Nil;
+  _NCryptDeleteKey := Nil;
+  _NCryptFreeObject := Nil;
+  _NCryptIsKeyHandle := Nil;
+  _NCryptTranslateHandle := Nil;
+  _NCryptNotifyChangeKey := Nil;
+  _NCryptSecretAgreement := Nil;
+  _NCryptDeriveKey := Nil;
+
+  NCryptLoaded := False;
+end;
+
+initialization
+  NCryptHandle := 0;
+  UnLoadNCrypt;
+
+finalization
+  UnLoadNCrypt;
 
 end.
 

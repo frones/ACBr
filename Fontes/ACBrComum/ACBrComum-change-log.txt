@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/04/2017
+-- ACBrUtil --
+[-] Método "TruncFix". Correção de A.V. "Invalid floating point operation", quando
+    informado valores muito altos
+[+] Método "SimpleRoundToEX", passou a ser público
+    (por: DSA)
+
 Data: 12/04/2017
 -- ACBr.inc --
 [+] Adicionada a diretiva "DFE_SEM_NCRYPT", para permitir a compatibilidade em

@@ -125,7 +125,8 @@ function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
 function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
 {$EndIf}
 
-function TruncFix( X : Double ) : Integer ;
+function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
+function TruncFix( X : Extended ) : Int64 ;
 function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
   const Delta: Double = 0.00001 ): Double;
 function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
@@ -526,14 +527,30 @@ end;
 {$EndIf}
 
 {-----------------------------------------------------------------------------
+ Faz o mesmo que "SimpleRoundTo", porém divide pelo Fator, ao invés de Multiplicar.
+ Isso evita Erro A.V. de estouro de Inteiro.
+ Nota: Funcao copiada de SimpleRoundTo do Delphi Seatle
+ -----------------------------------------------------------------------------}
+function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
+var
+  LFactor: Extended;
+begin
+  LFactor := IntPower(10.0, ADigit);
+  if AValue < 0 then
+    Result := Int((AValue / LFactor) - 0.5) * LFactor
+  else
+    Result := Int((AValue / LFactor) + 0.5) * LFactor;
+end;
+
+{-----------------------------------------------------------------------------
  Corrige, bug da função Trunc.
  Deve calcular Trunc somente com variaveis e nunca com Expressoes, caso contrá-
  rio o resultado pode não ser o esperado.
  // Valores de Teste: Trunc(1,602 x 0,98) | 5 * 12,991 | 2,09 * 23,5
  -----------------------------------------------------------------------------}
-function TruncFix( X : Double ) : Integer ;
+function TruncFix( X : Extended ) : Int64 ;
 begin
-  Result := Trunc( SimpleRoundTo( X, -9) ) ;
+  Result := Trunc( SimpleRoundToEX( X, -9) ) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -565,19 +582,6 @@ end;
  -----------------------------------------------------------------------------}
 function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
   const Delta: Double): Double;
-  {Funcao copiada de SimpleRoundTo do Delphi Seatle pois no Delphi XE
-   é usado Trunc no result que gera exceção em alguns casos.}
-
-  function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
-  var
-    LFactor: Extended;
-  begin
-    LFactor := IntPower(10.0, ADigit);
-    if AValue < 0 then
-      Result := Int((AValue / LFactor) - 0.5) * LFactor
-    else
-      Result := Int((AValue / LFactor) + 0.5) * LFactor;
-  end;
 var
    Pow, FracValue, PowValue : Extended;
    RestPart: Double;

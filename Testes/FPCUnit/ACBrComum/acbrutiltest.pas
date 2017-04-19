@@ -89,6 +89,7 @@ type
     procedure AsDouble;
     procedure AsExtended;
     procedure AsCurrency;
+    procedure AsLargeExtended;
   end;
 
   { TruncToTest }
@@ -2337,6 +2338,15 @@ begin
   CheckEquals( 49, TruncFix( ACurr ) );
 end;
 
+procedure TruncFixTest.AsLargeExtended;
+var
+  AExtended: Extended;
+begin
+  AExtended := 116529560.3123 * 100;
+
+  CheckEquals( 11652956031, TruncFix( AExtended ) );
+end;
+
 { ACBrStrToAnsiTest }
 
 procedure ACBrStrToAnsiTest.ACBrStrToAnsi_TesteUTF8;
@@ -2450,7 +2460,11 @@ procedure TiraAcentosTest.ComQuebrasDeLinha;
 var
   AStr: String;
 begin
-  AStr := 'idLote=1'#13#10'[EVENTO001]'#13#10'tpAmb=2'#13#10'chNFe=35170205481336000137550040000001361002146742'#13#10'CNPJ=05481336000137'#13#10'dhEvento=15/02/2017 17:42:11'#13#10'tpEvento=110110'#13#10'nSeqEvento=1'#13#10'versaoEvento=1.00'#13#10'xCorrecao=012345678901234567890123456789012345678901234567890123456789abcde'#13#10;
+  AStr := 'idLote=1'#13#10'[EVENTO001]'#13#10'tpAmb=2'#13#10+
+          'chNFe=35170205481336000137550040000001361002146742'#13#10+
+          'CNPJ=05481336000137'#13#10'dhEvento=15/02/2017 17:42:11'#13#10+
+          'tpEvento=110110'#13#10'nSeqEvento=1'#13#10'versaoEvento=1.00'#13#10+
+          'xCorrecao=012345678901234567890123456789012345678901234567890123456789abcde'#13#10;
   CheckEquals(Astr, TiraAcentos(AStr) );
 end;
 

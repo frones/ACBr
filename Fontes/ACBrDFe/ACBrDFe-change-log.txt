@@ -45,6 +45,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 19/04/2017
+-- ACBrDFeWinCrypt --
+[*] Método "SetCertContextPassword", ajuste para que não seja disparado Exception,
+    quando o retorno for (000003F0 hex = 1008 decimal = ERROR_NO_TOKEN)
+
 -- ACBrDFeXsMsXml --
 [-] Ajustes nas chamadas de "CoInitialize", para que funcione com multiplas Threads
     (por: DSA)

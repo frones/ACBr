@@ -681,7 +681,7 @@ var
     if WinErro = 0 then
       WinErro := GetLastError;
 
-    if WinErro = 0 then
+    if (WinErro = 0) or (WinErro = ERROR_NO_TOKEN) then
       Exit;
 
     if WinErro = SCARD_W_WRONG_CHV then

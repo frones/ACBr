@@ -2439,11 +2439,16 @@ procedure TNFeW.Gerarpag;
 var
   i: Integer;
 begin
+  if (NFe.infNFe.Versao >= 4) then
+    Gerador.wGrupo('pag', 'YA01');
+
   for i := 0 to nfe.pag.Count - 1 do
   begin
-    Gerador.wGrupo('pag', 'YA01');
     if (NFe.infNFe.Versao >= 4) then
-      Gerador.wGrupo('detPag', 'YA01a');
+      Gerador.wGrupo('detPag', 'YA01a')
+    else
+      Gerador.wGrupo('pag', 'YA01');
+
     Gerador.wCampo(tcStr, 'YA02', 'tPag', 02, 02, 1, FormaPagamentoToStr(nfe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcDe2, 'YA03', 'vPag', 01, 15, 1, nfe.pag[i].vPag, DSC_VPAG);
     if(NFe.pag[i].tPag in [fpCartaoDebito,fpCartaoCredito]) and
@@ -2460,11 +2465,17 @@ begin
         Gerador.wGrupo('/card');
       end;
     if (NFe.infNFe.Versao >= 4) then
-      Gerador.wGrupo('/detPag');
-    if (NFe.infNFe.Versao >= 4) then
-      Gerador.wCampo(tcDe2, 'YA09', 'vTroco', 01, 15, 0, nfe.pag.vTroco, DSC_VPAG);
-    Gerador.wGrupo('/pag');
+      Gerador.wGrupo('/detPag')
+    else
+      Gerador.wGrupo('/pag');
   end;
+
+  if (NFe.infNFe.Versao >= 4) then
+  begin
+    Gerador.wCampo(tcDe2, 'YA09', 'vTroco', 01, 15, 0, nfe.pag.vTroco, DSC_VPAG);
+    Gerador.wGrupo('/pag')
+  end;
+
   if nfe.pag.Count > 100 then
     Gerador.wAlerta('YA01', 'pag', '', ERR_MSG_MAIOR_MAXIMO + '100');
 end;

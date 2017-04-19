@@ -59,7 +59,6 @@
 
 {.$DEFINE DFE_SEM_OPENSSL}
 {.$DEFINE DFE_SEM_CAPICOM}
-{.$DEFINE DFE_SEM_NCRYPT}
 
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
 {.$DEFINE USE_DELAYED}

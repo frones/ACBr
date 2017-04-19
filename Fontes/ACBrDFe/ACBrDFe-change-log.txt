@@ -44,6 +44,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/04/2017
+-- ACBrDFeXsMsXml --
+[-] Ajustes nas chamadas de "CoInitialize", para que funcione com multiplas Threads
+    (por: DSA)
+
+-- ACBr_NCrypt --
+[*] Unit modificada, para usar carga dinâmica, e assim evitar problemas no
+    Windows XP
+    http://www.projetoacbr.com.br/forum/topic/36219-ncryptdll-faltando-no-xp/
+    (por: DSA)
+
 17/04/2017
 -- ACBrDFeCapicom --
 [-] Método "CarregarCertificado", ajuste na chamada de "CoInitialize"

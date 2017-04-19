@@ -98,11 +98,15 @@ var
   xmldsig: IXMLDigitalSignatureEx;
   dsigKey: IXMLDSigKeyEx;
   signedKey: IXMLDSigKey;
+  ResultInitialize: HRESULT;
+  Inicializado: Boolean;
 begin
   Result := '';
-  if (CoInitialize(nil) = E_FAIL) then
+  ResultInitialize := CoInitialize(nil);
+  if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
 
+  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
   try
     FpDFeSSL.CarregarCertificadoSeNecessario;
 
@@ -188,7 +192,8 @@ begin
 
     Result := XmlAss;
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 end;
 
@@ -199,11 +204,15 @@ var
   ParseError: IXMLDOMParseError;
   Schema: XMLSchemaCache50;
   AXml: String;
+  ResultInitialize: HRESULT;
+  Inicializado: Boolean;
 begin
   Result := False;
-  if (CoInitialize(nil) = E_FAIL) then
+  ResultInitialize := CoInitialize(nil);
+  if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
 
+  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
   try
     DOMDocument := CoDOMDocument50.Create;
     Schema := CoXMLSchemaCache50.Create;
@@ -243,7 +252,8 @@ begin
       Schema := nil;
     end;
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 end;
 
@@ -256,13 +266,17 @@ var
   certNode: IXMLDOMNode;
   pKey, pKeyOut: IXMLDSigKey;
   AXml: String;
+  ResultInitialize: HRESULT;
+  Inicializado: Boolean;
 begin
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
   Result := False;
-  if (CoInitialize(nil) = E_FAIL) then
+  ResultInitialize := CoInitialize(nil);
+  if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');
 
+  Inicializado := (ResultInitialize in [ S_OK, S_FALSE ]);
   try
     xmldoc := CoDOMDocument50.Create;
     xmldsig := CoMXDigitalSignature50.Create;
@@ -323,7 +337,8 @@ begin
       xmldoc := nil;
     end;
   finally
-    CoUninitialize;
+    if Inicializado then
+      CoUninitialize;
   end;
 end;
 

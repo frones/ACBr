@@ -119,6 +119,8 @@ begin
          end
         else if Cmd.Metodo = 'consultarmdfe' then
          begin
+           ACBrMDFe1.Manifestos.Clear;
+		   
            PathsMDFe := TStringList.Create;
            try
              PathsMDFe.Append(Cmd.Params(0));

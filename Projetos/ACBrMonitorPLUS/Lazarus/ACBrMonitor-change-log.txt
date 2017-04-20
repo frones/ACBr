@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/04/2017
+[*] Correção para limpar consultas anteriores do MDFe, contribuição do link abaixo.
+	http://www.projetoacbr.com.br/forum/topic/36347-mdfe-na-consulta-não-está-limpando/
+	por: Celso Marigo Junior
+
 19/04/2017
 [*] Adicionada configuração das propriedades: Device.SendBytesCount e Device.SendBytesInterval na
 	janela de configuração para os componentes seriais.
@@ -51,7 +56,7 @@ Símbolo : Significado
 
 13/04/2017
 [-] Correção na rotina de Consulta de DFes, a consulta, mesmo que passasse Path completo, estava sendo
-	executada usando apenas a chave do DFe, assim o arquivo não estava sendo atualizado.
+	executada usando apenas a chave do DFe, assinm o arquivo não estava sendo atualizado.
 	Isso ocorria apenas quando o Path completo não possuia acentos.
 	por: Celso Marigo Junior
 

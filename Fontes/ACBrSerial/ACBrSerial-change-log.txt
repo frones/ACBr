@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/04/2017
+-- ACBrEscBematech, ACBrEscDiebold --
+[-] Correção na impressão de Cod.Barras. (bug introduzido em 12/04/2017)
+
+-- ACBrEscPosEpson --
+[*] Adicionado os métodos públicos "ComandoCodBarrasEscPosEpson" e
+    "ComandoCodBarrasEscPosNo128ABC"
+    (por: DSA)
+
 Data: 14/04/2017
 -- ACBrPosPrinter --
 [+] Classe "TACBrPosPrinterClass", adicionado o método Virtual "Configurar",

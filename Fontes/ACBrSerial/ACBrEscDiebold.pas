@@ -93,31 +93,11 @@ end;
 
 function TACBrEscDiebold.ComandoCodBarras(const ATag: String;
   ACodigo: AnsiString): AnsiString;
-var
-  P: Integer;
-  BTag: String;
 begin
-  // EscDiebold não suporta Code128C
-  if (ATag = cTagBarraCode128a) or
-     (ATag = cTagBarraCode128b) or
-     (ATag = cTagBarraCode128c) then
-    BTag := cTagBarraCode128
-  else
-    BTag := ATag;
-
-  Result := inherited ComandoCodBarras(BTag, ACodigo);
-
-  // EscDiebold não suporta notação para COD128 A, B e C do padrão EscPos
-  if (BTag = cTagBarraCode128) then
+  with fpPosPrinter.ConfigBarras do
   begin
-    P := pos('{',Result);
-    if P > 0 then
-    begin
-      Delete(Result,P,2);
-      //Alterando o caracter que contém o tamanho do código de barras
-      Result[P-1] := AnsiChr(Length(ACodigo));
-    end;
-  end;
+    Result := ComandoCodBarrasEscPosNo128ABC(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
+  end ;
 end;
 
 function TACBrEscDiebold.ComandoQrCode(ACodigo: AnsiString): AnsiString;

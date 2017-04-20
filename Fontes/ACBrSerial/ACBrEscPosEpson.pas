@@ -69,12 +69,132 @@ type
     function LerInfo: String; override;
   end;
 
+  function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
+    const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+  function ComandoCodBarrasEscPosNo128ABC(const ATag: String; ACodigo: AnsiString;
+    const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+
 
 implementation
 
 uses
   strutils, math,
   ACBrConsts, ACBrUtil;
+
+function ComandoCodBarrasEscPosEpson(const ATag: String; ACodigo: AnsiString;
+  const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+var
+  L, A, M : Integer ;
+  CmdBarCode: Char;
+  ACodBar, Cmd128, Code128c: AnsiString;
+  i, s: Integer;
+begin
+  if ATag = cTagBarraUPCA then
+    CmdBarCode := 'A'
+  else if ATag = cTagBarraUPCE then
+    CmdBarCode := 'B'
+  else if ATag = cTagBarraEAN13 then
+    CmdBarCode := 'C'
+  else if ATag = cTagBarraEAN8 then
+    CmdBarCode := 'D'
+  else if ATag = cTagBarraCode39 then
+    CmdBarCode := 'E'
+  else if ATag = cTagBarraInter then
+    CmdBarCode := 'F'
+  else if ATag = cTagBarraCodaBar then
+    CmdBarCode := 'G'
+  else if ATag = cTagBarraCode93 then
+    CmdBarCode := 'H'
+  else if (ATag = cTagBarraCode128) or (ATag = cTagBarraCode128b) then
+  begin
+    CmdBarCode := 'I';
+    Cmd128 := '{B';
+  end
+  else if ATag = cTagBarraCode128a then
+  begin
+    CmdBarCode := 'I';
+    Cmd128 := '{A';
+  end
+  else if ATag = cTagBarraCode128c then
+  begin
+    CmdBarCode := 'I';
+    Cmd128 := '{C';
+
+    // Apenas números,
+    ACodigo := AnsiString(OnlyNumber(String(ACodigo)));
+
+    s := Length(ACodigo);
+    if s mod 2 <> 0 then  // Tamanho deve ser Par
+    begin
+      ACodigo := '0'+ACodigo;
+      Inc(s);
+    end;
+
+    Code128c := '';
+    i := 1;
+    while i < s do
+    begin
+      Code128c := Code128c + AnsiChr(StrToInt(copy(String(ACodigo),i,2)));
+      i := i + 2;
+    end;
+
+    ACodigo := Code128c;
+  end
+  else if ATag = cTagBarraMSI then     // Apenas Bematech suporta
+    CmdBarCode := 'R'
+  else
+  begin
+    Result := ACodigo;
+    Exit;
+  end;
+
+  ACodBar := ACodigo;
+
+  if CmdBarCode = 'I' then // Cod128
+  begin
+    if Copy(String(ACodBar),1,1) <> '{' then
+      ACodBar := Cmd128 + ACodBar;
+  end;
+
+  L := IfThen( ALarguraLinha = 0, 2, max(min(ALarguraLinha,4),1) );
+  A := IfThen( AAltura = 0, 50, max(min(AAltura,255),1) );
+  M := IfThen( AMostrarCodigo, 2, 0 );
+
+  Result := GS + 'w' + AnsiChr( L ) + // Largura
+            GS + 'h' + AnsiChr( A ) + // Altura
+            GS + 'H' + AnsiChr( M ) + // HRI (numero impresso abaixo do cod.barras)
+            GS + 'k' + CmdBarCode + AnsiChr( Length(ACodBar) ) + ACodBar;
+end;
+
+function ComandoCodBarrasEscPosNo128ABC(const ATag: String; ACodigo: AnsiString;
+  const AMostrarCodigo: Boolean; const AAltura, ALarguraLinha: Integer): AnsiString;
+var
+  P: Integer;
+  BTag: String;
+begin
+  // EscBema não suporta Code128C
+  if (ATag = cTagBarraCode128a) or
+     (ATag = cTagBarraCode128b) or
+     (ATag = cTagBarraCode128c) then
+    BTag := cTagBarraCode128
+  else
+    BTag := ATag;
+
+  Result := ComandoCodBarrasEscPosEpson(BTag, ACodigo, AMostrarCodigo, AAltura, ALarguraLinha);
+
+  // Sem suporte a notação para COD128 A, B e C do padrão EscPos
+  if (BTag = cTagBarraCode128) then
+  begin
+    P := pos('{',Result);
+    if P > 0 then
+    begin
+      Delete(Result,P,2);
+      //Alterando o caracter que contém o tamanho do código de barras
+      Result[P-1] := AnsiChr(Length(ACodigo));
+    end;
+  end;
+end;
+
 
 { TACBrEscPosEpson }
 
@@ -163,90 +283,11 @@ end;
 
 function TACBrEscPosEpson.ComandoCodBarras(const ATag: String;
   ACodigo: AnsiString): AnsiString;
-var
-  L, A, M : Integer ;
-  CmdBarCode: Char;
-  ACodBar, Cmd128, Code128c: AnsiString;
-  i, s: Integer;
 begin
-  if ATag = cTagBarraUPCA then
-    CmdBarCode := 'A'
-  else if ATag = cTagBarraUPCE then
-    CmdBarCode := 'B'
-  else if ATag = cTagBarraEAN13 then
-    CmdBarCode := 'C'
-  else if ATag = cTagBarraEAN8 then
-    CmdBarCode := 'D'
-  else if ATag = cTagBarraCode39 then
-    CmdBarCode := 'E'
-  else if ATag = cTagBarraInter then
-    CmdBarCode := 'F'
-  else if ATag = cTagBarraCodaBar then
-    CmdBarCode := 'G'
-  else if ATag = cTagBarraCode93 then
-    CmdBarCode := 'H'
-  else if (ATag = cTagBarraCode128) or (ATag = cTagBarraCode128b) then
-  begin
-    CmdBarCode := 'I';
-    Cmd128 := '{B';
-  end
-  else if ATag = cTagBarraCode128a then
-  begin
-    CmdBarCode := 'I';
-    Cmd128 := '{A';
-  end
-  else if ATag = cTagBarraCode128c then
-  begin
-    CmdBarCode := 'I';
-    Cmd128 := '{C';
-
-    // Apenas números,
-    ACodigo := AnsiString(OnlyNumber(String(ACodigo)));
-
-    s := Length(ACodigo);
-    if s mod 2 <> 0 then  // Tamanho deve ser Par
-    begin
-      ACodigo := '0'+ACodigo;
-      Inc(s);
-    end;
-
-    Code128c := '';
-    i := 1;
-    while i < s do
-    begin
-      Code128c := Code128c + AnsiChr(StrToInt(copy(String(ACodigo),i,2)));
-      i := i + 2;
-    end;
-
-    ACodigo := Code128c;
-  end
-  else if ATag = cTagBarraMSI then     // Apenas Bematech suporta
-    CmdBarCode := 'R'
-  else
-  begin
-    Result := ACodigo;
-    Exit;
-  end;
-
-  ACodBar := ACodigo;
-
-  if CmdBarCode = 'I' then // Cod128
-  begin
-    if Copy(String(ACodBar),1,1) <> '{' then
-      ACodBar := Cmd128 + ACodBar;
-  end;
-
   with fpPosPrinter.ConfigBarras do
   begin
-    L := IfThen( LarguraLinha = 0, 2, max(min(LarguraLinha,4),1) );
-    A := IfThen( Altura = 0, 50, max(min(Altura,255),1) );
-    M := IfThen( MostrarCodigo, 2, 0 );
+    Result := ComandoCodBarrasEscPosEpson(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
   end ;
-
-  Result := GS + 'w' + AnsiChr( L ) + // Largura
-            GS + 'h' + AnsiChr( A ) + // Altura
-            GS + 'H' + AnsiChr( M ) + // HRI (numero impresso abaixo do cod.barras)
-            GS + 'k' + CmdBarCode + AnsiChr( Length(ACodBar) ) + ACodBar;
 end;
 
 function TACBrEscPosEpson.ComandoQrCode(ACodigo: AnsiString): AnsiString;

@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrEscPosEpson, ACBrConsts;
+  ACBrPosPrinter, ACBrConsts;
 
 const
   ModoEscBema = GS + #249 + #32 + #0;
@@ -78,7 +78,8 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil;
+  ACBrUtil, ACBrEscPosEpson;
+
 
 { TACBrEscBematech }
 
@@ -125,27 +126,11 @@ end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
   ACodigo: AnsiString): AnsiString;
-var
-  P: Integer;
-  BTag: String;
 begin
-  // EscBema não suporta Code128C
-  if (ATag = cTagBarraCode128a) or
-     (ATag = cTagBarraCode128b) or
-     (ATag = cTagBarraCode128c) then
-    BTag := cTagBarraCode128
-  else
-    BTag := ATag;
-
-  Result := inherited ComandoCodBarras(BTag, ACodigo);
-
-  // EscBema não suporta notação para COD128 A, B e C do padrão EscPos
-  if (BTag = cTagBarraCode128) then
+  with fpPosPrinter.ConfigBarras do
   begin
-    P := pos('{',Result);
-    if P > 0 then
-      Delete(Result,P,2);
-  end;
+    Result := ComandoCodBarrasEscPosNo128ABC(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
+  end ;
 end;
 
 function TACBrEscBematech.ComandoQrCode(ACodigo: AnsiString): AnsiString;

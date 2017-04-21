@@ -154,7 +154,7 @@ begin
     (*B15a*)CTe.Ide.procEmi := StrToprocEmi(ok, Leitor.rCampo(tcStr, 'procEmi'));
     (*B15b*)CTe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
 
-    if CTe.infCTe.versao = 3 then
+    if CTe.infCTe.versao >= 3 then
     begin
       if Leitor.rCampo(tcStr, 'indGlobalizado') = '1' then
         CTe.ide.indGlobalizado := tiSim
@@ -177,7 +177,7 @@ begin
     (*B27*)CTe.Ide.retira   := StrToTpRetira(ok, Leitor.rCampo(tcStr, 'retira'));
     (*B27a*)CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
 
-    if CTe.infCTe.versao = 3 then
+    if CTe.infCTe.versao >= 3 then
       CTe.ide.indIEToma := StrToindIEDest(Ok, Leitor.rCampo(tcStr, 'indIEToma'));
 
     i01 := 0;
@@ -350,7 +350,7 @@ begin
     end;
   end;
 
-  if CTe.infCTe.versao = 3 then
+  if CTe.infCTe.versao >= 3 then
   begin
     if Leitor.rExtrai(1, 'toma') <> '' then
     begin
@@ -1398,7 +1398,7 @@ begin
     begin
       CTe.infCTeNorm.infCTeSub.chCte := Leitor.rCampo(tcStr, 'chCte');
 
-      if CTe.infCTe.versao = 3 then
+      if CTe.infCTe.versao >= 3 then
         CTe.infCTeNorm.infCTeSub.refCteAnu := Leitor.rCampo(tcStr, 'refCteAnu');
 
       if Leitor.rExtrai(3, 'tomaICMS') <> '' then

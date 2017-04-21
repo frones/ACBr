@@ -770,9 +770,6 @@ begin
     else
       Gerador.wCampo(tcStr, '#064', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if (CTe.infCTe.versao >= 3) then
-      Gerador.wCampo(tcStr, '#066', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.toma.indIEToma), DSC_INDIETOMA);
-
     if (Trim(CTe.toma.IE) <> '') then
     begin
       if (CTe.infCTe.versao >= 3) then

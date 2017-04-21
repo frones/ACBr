@@ -501,7 +501,6 @@ type
   TToma = class(TPersistent)
   private
     FCNPJCPF: String;
-    FindIEToma: TpcnindIEDest;
     FIE: String;
     FxNome: String;
     FxFant: String;
@@ -513,7 +512,6 @@ type
     destructor Destroy; override;
   published
     property CNPJCPF: String          read FCNPJCPF   write FCNPJCPF;
-    property indIEToma: TpcnindIEDest read FindIEToma write FindIEToma;
     property IE: String               read FIE        write FIE;
     property xNome: String            read FxNome     write FxNome;
     property xFant: String            read FxFant     write FxFant;

@@ -48,7 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/04/2017
-[*] correção na geração da tag <IE> para versões diferentes do ct-e 2.00 e 3.00
+-- pcteCTe/pcteCTeR/pcteCTeW --
+[*] Correção, remoção da tag <indIEToma> dentro do grupo <toma> CT-e OS 3.00
+
+-- pcteCTeW --
+[*] Correção na geração da tag <IE> para versões diferentes do ct-e 2.00 e 3.00
     por: Italo Jurisato Junior
 
 18/04/2017

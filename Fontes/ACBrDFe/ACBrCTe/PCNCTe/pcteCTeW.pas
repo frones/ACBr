@@ -485,6 +485,19 @@ begin
 end;
 
 procedure TCTeW.GerarToma4;
+
+procedure GeraIE;
+begin
+  if Trim(CTe.Ide.Toma4.IE) = 'ISENTO' then
+    Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, CTe.Ide.Toma4.IE, DSC_IE)
+  else
+    Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, OnlyNumber(CTe.Ide.Toma4.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.Ide.Toma4.IE, CTe.Ide.Toma4.EnderToma.UF) then
+      Gerador.wAlerta('#041', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+end;
+
 begin
   if (trim(CTe.Ide.Toma4.IE) <> '') or
      (trim(CTe.Ide.Toma4.xNome) <> '') then
@@ -500,17 +513,21 @@ begin
      else
       Gerador.wCampo(tcStr, '#039', 'CNPJ', 00, 14, 1, '00000000000000', DSC_CNPJ);
 
-    if trim(CTe.Ide.Toma4.IE) <> ''
-     then begin
-      if Trim(CTe.Ide.Toma4.IE) = 'ISENTO' then
-        Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, CTe.Ide.Toma4.IE, DSC_IE)
+    if (Trim(CTe.ide.Toma4.IE) <> '') then
+    begin
+      if (CTe.infCTe.versao >= 3) then
+      begin
+        if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+        begin
+          if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
+            GeraIE;
+        end
+        else
+          GeraIE;
+      end
       else
-        Gerador.wCampo(tcStr, '#041', 'IE ', 00, 14, 1, OnlyNumber(CTe.Ide.Toma4.IE), DSC_IE);
-
-      if (FOpcoes.ValidarInscricoes) then
-        if not ValidarIE(CTe.Ide.Toma4.IE, CTe.Ide.Toma4.EnderToma.UF) then
-          Gerador.wAlerta('#041', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-     end;
+        GeraIE;
+    end;
 
     Gerador.wCampo(tcStr, '#042', 'xNome  ', 02, 60, 1, CTe.Ide.Toma4.xNome, DSC_XNOME);
     Gerador.wCampo(tcStr, '#043', 'xFant  ', 02, 60, 0, CTe.Ide.Toma4.xFant, DSC_XFANT);
@@ -1113,7 +1130,7 @@ begin
       begin
         if (CTe.infCTe.versao >= 3) then
         begin
-          if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '4') then
+          if (TpTomadorToStr(CTe.ide.Toma03.Toma) = '3') then
           begin
             if (indIEDestToStr(CTe.ide.indIEToma) <> '9') then
               GeraIE;

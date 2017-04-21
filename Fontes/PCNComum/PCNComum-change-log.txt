@@ -40,6 +40,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+21/04/2017
+-- pcnConversao --
+[*] Alterações visando a NT 2016/002 versão 1.10
+   Por: Italo Jurisato Junior
+
 08/02/2017
 -- pcnConversao --
 [*] Na function StrToCSTICMS foi trocado o valor '90' por '91' quando o 

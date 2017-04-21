@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/04/2017
+-- pcnNFeW --
+[*] Correções para deixar a geração do XML em conformidade com a NT 2016/002 versão 1.10
+   Por: Italo Jurisato Junior
+
+
 [*] possível correção para evitar problemas com acentuação de pastas na distribuicaodfe
 		http://www.projetoacbr.com.br/forum/topic/35561-distribuicaodfe-erro-na-gravação-com-propriedade-separarpornome-habilitado/
 		por Juliomar Marchetti

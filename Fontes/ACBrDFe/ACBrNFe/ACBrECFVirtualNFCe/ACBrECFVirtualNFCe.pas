@@ -530,16 +530,29 @@ procedure TACBrECFVirtualNFCeClass.DescontoAcrescimoItemAnteriorVirtual(
   ItemCupom: TACBrECFVirtualClassItemCupom; PorcDesc: Double);
 var
   Det: TDetCollectionItem;
+  i:integer;
 begin
   // Achando o Item anterior //
-  Det := fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Items[fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count - 1];
+  if Estado <> estVenda then
+     raise EACBrECFERRO.create(ACBrStr('O Estado da Impressora nao é "VENDA"')) ;
+
+  if (ItemCupom.Sequencia < 1) or (ItemCupom.Sequencia > fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count) then
+     raise EACBrECFERRO.create(ACBrStr('Item ('+IntToStrZero(ItemCupom.Sequencia,3)+') fora da Faixa.')) ;
+
+  for i:=0 to fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count -1 do
+   begin
+     if fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Items[i].Prod.nItem=ItemCupom.Sequencia then
+        Break;
+   end;
+
+  Det := fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Items[i];
 
   if ItemCupom.DescAcres > 0 then
     Det.Prod.vOutro := ItemCupom.DescAcres
   else
     Det.Prod.vDesc := -ItemCupom.DescAcres;
 
-  if fsACBrNFCe.NotasFiscais.Items[0].NFe.Emit.CRT <> crtSimplesNacional then
+  if (fsACBrNFCe.NotasFiscais.Items[0].NFe.Emit.CRT <> crtSimplesNacional) and (det.Imposto.ICMS.pICMS>0)  then
   begin
     Det.Imposto.ICMS.vBC := RoundABNT((ItemCupom.Qtd * ItemCupom.ValorUnit) + ItemCupom.DescAcres, 2);
     Det.Imposto.ICMS.vICMS := RoundABNT(Det.Imposto.ICMS.vBC * (Det.Imposto.ICMS.pICMS / 100), 2);

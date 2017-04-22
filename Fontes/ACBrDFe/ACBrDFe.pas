@@ -94,7 +94,7 @@ type
       ConteudoEhUTF8: Boolean = True): Boolean;
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil; NomeArq: String = ''); virtual;
+      StreamNFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); virtual;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; virtual;
     procedure AchaArquivoSchema(NomeSchema: String; var Versao: Double;
@@ -265,7 +265,8 @@ begin
 end;
 
 procedure TACBrDFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 var
   i : Integer;
   EMails : TStringList;
@@ -312,6 +313,13 @@ begin
   begin
     for i := 0 to sCC.Count - 1 do
       MAIL.AddCC(sCC[i]);
+  end;
+
+  //ReplyTo
+  if Assigned(sReplyTo) then
+  begin
+    for i := 0 to sReplyTo.Count - 1 do
+      MAIL.AddReplyTo(sReplyTo[i]);
   end;
 
   MAIL.Send;

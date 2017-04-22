@@ -95,7 +95,8 @@ type
     function GravarStream(AStream: TStream): Boolean;
 
     procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
-      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil);
+      EnviaPDF: Boolean = True; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
     property NomeArq: String    read FNomeArq    write FNomeArq;
     property NomeArqRps: String read FNomeArqRps write FNomeArqRps;
@@ -390,7 +391,7 @@ begin
 end;
 
 procedure NotaFiscal.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
+  EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq : String;
   AnexosEmail:TStrings;
@@ -421,7 +422,7 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamNFSe,
-                   NumID[FNFSe] +'-nfse.xml');
+                   NumID[FNFSe] +'-nfse.xml', sReplyTo);
     end;
   finally
     AnexosEmail.Free;

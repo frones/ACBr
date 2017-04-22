@@ -115,7 +115,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFe: TStream = nil; NomeArq: String = ''); override;
+      StreamNFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True;
       Sincrono: Boolean = False): Boolean; overload;
@@ -185,7 +185,8 @@ type
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
 
     procedure EnviarEmailEvento(sPara, sAssunto: String;
-      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil);
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
   published
     property Configuracoes: TConfiguracoesNFe
@@ -241,12 +242,14 @@ begin
 end;
 
 procedure TACBrNFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamNFe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stNFeEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamNFe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamNFe, NomeArq,
+      sReplyTo);
   finally
     SetStatus( stIdle );
   end;
@@ -918,7 +921,8 @@ begin
 end;
 
 procedure TACBrNFe.EnviarEmailEvento(sPara, sAssunto: String;
-  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
+  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings;
+  sReplyTo: TStrings);
 var
   NomeArq: String;
   AnexosEmail: TStrings;
@@ -935,7 +939,7 @@ begin
     NomeArq := PathWithDelim(DANFE.PathPDF) + NomeArq + '-procEventoNFe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '');
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '', sReplyTo);
   finally
     AnexosEmail.Free;
   end;

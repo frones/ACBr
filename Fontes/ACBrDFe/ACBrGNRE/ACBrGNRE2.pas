@@ -88,9 +88,9 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure EnviarEmail(sPara, sAssunto: String;
-      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamGNRE: TStream = nil; NomeArq: String = ''); override;
+    procedure EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings = nil;
+      sCC: TStrings = nil; Anexos: TStrings = nil; StreamGNRE: TStream = nil;
+      NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -157,13 +157,15 @@ begin
   inherited;
 end;
 
-procedure TACBrGNRE.EnviarEmail(sPara, sAssunto: String; sMensagem, sCC,
-  Anexos: TStrings; StreamGNRE: TStream; NomeArq: String);
+procedure TACBrGNRE.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
+  sCC: TStrings; Anexos: TStrings; StreamGNRE: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stGNREEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRE, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamGNRE,
+                          NomeArq, sReplyTo);
   finally
     SetStatus( stGNREIdle );
   end;

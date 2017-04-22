@@ -81,7 +81,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamNFSe: TStream = nil; NomeArq: String = ''); override;
+      StreamNFSe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function GerarLote(ALote: Integer): Boolean; overload;
     function GerarLote(ALote: String): Boolean; overload;
@@ -175,12 +175,14 @@ begin
 end;
 
 procedure TACBrNFSe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamNFSe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamNFSe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stNFSeEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamNFSe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamNFSe, NomeArq,
+      sReplyTo);
   finally
     SetStatus( stNFSeIdle );
   end;

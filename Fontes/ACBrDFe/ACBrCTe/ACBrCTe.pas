@@ -129,7 +129,7 @@ type
     *)
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamCTe: TStream = nil; NomeArq: String = ''); override;
+      StreamCTe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     procedure EnviarEmailEvento(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil);
@@ -835,12 +835,14 @@ begin
 end;
 *)
 procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stCTeEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq,
+     sReplyTo);
   finally
     SetStatus( stCTeIdle );
   end;

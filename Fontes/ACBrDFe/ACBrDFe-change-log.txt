@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/04/2017
+-- ACBrDFe --
+[*] Método "EnviarEmail", adicionado o parâmetro "ReplyTo: TStrings"
+    http://www.projetoacbr.com.br/forum/topic/36261-acbrnfe-erro-envio-de-e-mail-com-mensagem/?do=findComment&comment=238100
+    (por Maurício Sareto e DSA)
+
 19/04/2017
 -- ACBrDFeWinCrypt --
 [*] Método "SetCertContextPassword", ajuste para que não seja disparado Exception,

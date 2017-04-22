@@ -83,7 +83,7 @@ type
 
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamMDFe: TStream = nil; NomeArq: String = ''); override;
+      StreamMDFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
@@ -173,12 +173,14 @@ begin
 end;
 
 procedure TACBrMDFe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamMDFe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamMDFe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stMDFeEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamMDFe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamMDFe, NomeArq,
+      sReplyTo);
   finally
     SetStatus( stMDFeIdle );
   end;

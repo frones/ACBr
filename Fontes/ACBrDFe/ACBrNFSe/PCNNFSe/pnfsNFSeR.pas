@@ -2727,6 +2727,10 @@ begin
     NFSe.CodigoVerificacao       := leitor.rCampo(tcStr, 'idRps');
     NFSe.DataEmissao             := leitor.rCampo(tcDatHor, 'dataProcessamento');
     NFSe.IdentificacaoRps.Numero := leitor.rCampo(tcStr, 'rpsNumero');
+
+    if Leitor.rExtrai(1, 'idNota') <> '' then
+      NFSe.CodigoVerificacao := leitor.rCampo(tcStr, 'idNota');
+      
     if (Leitor.rCampo(tcStr, 'situacao') <> 'A') then
     begin
       NFSe.Cancelada:= snSim;

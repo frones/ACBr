@@ -300,7 +300,7 @@ begin
                     proGovBR, proIssCuritiba, proISSNET, proLexsom, proNatal,
                     proTinus, proRecife, proRJ, proSimplISS, proThema, proTiplan,
                     proAgiliv2, proFISSLex, proSpeedGov, proPronim, proSalvador,
-                    proSJP, proWebISS, proWebISSv2] then
+                    proSJP, proWebISS] then
       aVersao := '';
   end
   else
@@ -1713,7 +1713,7 @@ begin
                   proFISSLex, proGinfes, proGoiania, proGovBR, proIssCuritiba,
                   proISSDigital, proISSIntel, proISSNet, proLexsom, proNatal,
                   proTinus, proProdemge, proPublica, proRecife, proRJ, proSaatri,
-                  proFreire, proSimplISS, proThema, proTiplan, proWebISS, proWebISSv2,
+                  proFreire, proSimplISS, proThema, proTiplan, proWebISS,
                   proProdata, proAgili, proSpeedGov, proPronim, proSalvador,
                   proNFSEBrasil] then
     Result := '';

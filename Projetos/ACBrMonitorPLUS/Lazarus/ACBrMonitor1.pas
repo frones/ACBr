@@ -5418,15 +5418,15 @@ end;
 {------------------------------------------------------------------------------}
 procedure TFrmACBrMonitor.Resposta(Comando, Resposta: ansistring);
 begin
+  if cbRetirarAcentosNaResposta.Checked then
+    Resposta:= TiraAcentos(Resposta);
+
   if rbTCP.Checked then
   begin
     if Assigned(Conexao) then
     begin
       if chbTCPANSI.Checked then
         Resposta := ACBrUTF8ToAnsi(Resposta);
-
-      if cbRetirarAcentosNaResposta.Checked then
-        Resposta:= TiraAcentos(Resposta);
 
       Resposta := StringReplace(Resposta, chr(3), '', [rfReplaceAll]);
       Conexao.SendString(Resposta);

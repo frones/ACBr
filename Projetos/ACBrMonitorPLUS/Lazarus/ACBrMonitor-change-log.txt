@@ -43,6 +43,9 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+[-]	Corrigido uso do parâmetro Tira Acentos da Resposta para funcionar também em modo TXT
+	por: Celso Marigo Junior
+
 20/04/2017
 [*] Correção para limpar consultas anteriores do MDFe, contribuição do link abaixo.
 	http://www.projetoacbr.com.br/forum/topic/36347-mdfe-na-consulta-não-está-limpando/

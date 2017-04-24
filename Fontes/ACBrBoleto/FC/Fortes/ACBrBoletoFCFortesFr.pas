@@ -49,7 +49,7 @@ uses
   {$IFDEF FPC}
     LResources, StdCtrls,
   {$ENDIF}
-  ACBrBoleto ;
+  ACBrBoleto, RLRichText ;
 
 const
   CACBrBoletoFCFortes_Versao = '0.0.31a' ;
@@ -401,6 +401,8 @@ type
     lblSacador3a: TRLLabel;
     lblSacador3b: TRLLabel;
     txtEndCedenteCarne: TRLLabel;
+    memoEndCedenteCarne: TRLMemo;
+    txtOrientacoesBancoCarne: TRLMemo;
     procedure BoletoCarneBeforePrint ( Sender: TObject; var PrintIt: boolean ) ;
     procedure BoletoCarneDataCount ( Sender: TObject; var DataCount: integer ) ;
     procedure BoletoCarneDataRecord ( Sender: TObject; RecNo: integer;
@@ -775,6 +777,10 @@ begin
       txtEndCedenteCarne.Caption      := Cedente.Logradouro+' '+Cedente.NumeroRes+' '+Cedente.Complemento+' '+
                                          Cedente.Bairro+' '+Cedente.Cidade+' '+Cedente.UF+' '+Cedente.CEP;
 
+      memoEndCedenteCarne.Lines.Clear;
+      memoEndCedenteCarne.Lines.Add('Beneficiário: '+Cedente.Nome +' - '+Cedente.Logradouro+' '+Cedente.NumeroRes+' '+Cedente.Complemento+' '+
+                                         Cedente.Bairro+' '+Cedente.Cidade+' '+Cedente.UF+' '+Cedente.CEP+' '+TipoDoc+ Cedente.CNPJCPF);
+
       txtDataDocto.Caption            := FormatDateTime('dd/mm/yyyy', Titulo.DataDocumento);
       txtNumeroDocto.Caption          := Titulo.NumeroDocumento;
       txtEspecieDoc.Caption           := Titulo.EspecieDoc;
@@ -792,12 +798,13 @@ begin
                                          ' ' + Titulo.Sacado.Bairro;
       txtCidadeSacado.Caption         := Titulo.Sacado.CEP + ' '+Titulo.Sacado.Cidade +
                                          ' '+Titulo.Sacado.UF;
-      txtCPF.Caption                  := Titulo.Sacado.CNPJCPF;
-      txtCPFCarne2.Caption            := txtCPF.Caption;
+      txtCPF.Caption                  := 'CPF/CNPJ: '+Titulo.Sacado.CNPJCPF;
+      txtCPFCarne2.Caption            := Titulo.Sacado.CNPJCPF;
       mIntrucoes.Lines.Text           := MensagemPadrao.Text;
 
       txtLinhaDigitavelCarne.Caption := LinhaDigitavel;
       imgBarrasCarne.Caption := CodBarras;
+      txtOrientacoesBancoCarne.Lines.Text:=Banco.OrientacoesBanco.Text;
    end;
 end;
 

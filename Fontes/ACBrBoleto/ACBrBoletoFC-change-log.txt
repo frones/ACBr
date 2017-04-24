@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2016
+--ACBrBoletoFCFortesFR--
+[*] Ajustes na danfe para impressão de instruções do banco, contribuição do usuário do fórum, link abaixo.
+	http://www.projetoacbr.com.br/forum/topic/36319-ajuste-acbrboleto-fortes/
+	por: Celso Marigo Junior
+
 07/02/2016
 --ACBrBoleto.pas
 [*] Rotina de leitura de retorno modificada para verificar o numero do banco no arquivo de

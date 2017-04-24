@@ -166,6 +166,7 @@ type
     procedure MailProcess(const aStatus: TMailStatus);
     procedure Send(UseThreadNow: Boolean); overload;
     procedure Send; overload;
+    procedure BuildMimeMess;
     procedure Clear;
     procedure SaveToFile(const AFileName: String);
     function SaveToStream(AStream: TStream): Boolean;
@@ -358,8 +359,12 @@ end;
 
 procedure TACBrMail.SaveToFile(const AFileName: String);
 begin
+  BuildMimeMess;
+  
   if AFileName <> '' then
     fArqMIMe.SaveToFile(AFileName);
+
+  Clear;
 end;
 
 procedure TACBrMail.MailProcess(const aStatus: TMailStatus);
@@ -488,17 +493,16 @@ begin
   Send( UseThread );
 end;
 
-procedure TACBrMail.SendMail;
+procedure TACBrMail.BuildMimeMess;
 var
-  vAttempts: Byte;
-  i, c: Integer;
+  i: Integer;
   MultiPartParent, MimePartAttach : TMimePart;
   NeedMultiPartRelated, BodyHasImage: Boolean;
 
   function InternalCharsetConversion(const Value: String; CharFrom: TMimeChar;
     CharTo: TMimeChar): String;
   begin
-   Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
+    Result := string( CharsetConversion( AnsiString( Value), CharFrom, CharTo ));
   end;
 
 begin
@@ -646,8 +650,19 @@ begin
   fArqMIMe.Clear;
   fMIMEMess.Lines.SaveToStream(fArqMIMe);
 
+end;
+
+procedure TACBrMail.SendMail;
+var
+  vAttempts: Byte;
+  c, i: Integer;
+
+begin
+
+  BuildMimeMess;
+
   // DEBUG //
-  //SaveToFile('.\Mail.eml');
+  // SaveToFile('c:\app\Mail.eml'); {Para debug, comentar o Clear; da linha 367}
 
   // Login in SMTP //
   MailProcess(pmsLoginSMTP);

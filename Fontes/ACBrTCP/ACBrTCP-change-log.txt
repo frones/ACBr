@@ -37,6 +37,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2017
+-- ACBrMail --
+[+]	Adicionada função para salvar .eml antes de enviar o email. Contribuição no link abaixo, 
+	revisada pelo Jean Patrick
+	http://www.projetoacbr.com.br/forum/topic/36134-envio-de-e-mail-acbrmail-outlook-dúvida
+	por: Celso Marigo Junior	
+
 12/04/2017
 -- ACBrSocket --
 [+] "TACBrHTTP", adicionada a propriedade TimeOut: Integer default 90000

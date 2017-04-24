@@ -43,6 +43,7 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/04/2017
 [-]	Corrigido uso do parâmetro Tira Acentos da Resposta para funcionar também em modo TXT
 	por: Celso Marigo Junior
 

@@ -1986,7 +1986,8 @@ begin
 
   FProtocolo := '';
   
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeEnviarLoteRPS.DefinirURL;
@@ -2351,7 +2352,8 @@ begin
 
   FProtocolo := '';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeEnviarSincrono.DefinirURL;
@@ -2571,7 +2573,8 @@ begin
   FProtocolo := '';
   FSituacao := '';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeGerarNFSe.DefinirURL;
@@ -2764,7 +2767,8 @@ begin
 
   FSituacao := '';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirURL;
@@ -3020,7 +3024,8 @@ begin
   FPArqEnv := 'con-lot';
   FPArqResp := 'lista-nfse';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirURL;
@@ -3162,7 +3167,8 @@ begin
   FPArqEnv := 'con-nfse-rps';
   FPArqResp := 'comp-nfse';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirURL;
@@ -3372,7 +3378,8 @@ begin
   FPArqEnv := 'con-nfse';
   FPArqResp := 'lista-nfse';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeConsultarNfse.DefinirURL;
@@ -3534,7 +3541,8 @@ begin
 
   FDataHora := 0;
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeCancelarNfse.DefinirURL;
@@ -3908,7 +3916,8 @@ begin
   FDataHora := 0;
   FSituacao := '';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirURL;
@@ -4136,7 +4145,8 @@ begin
 
   FHashIdent := '';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeAbrirSessao.DefinirURL;
@@ -4285,7 +4295,8 @@ begin
   FPArqEnv := 'fec-ses';
   FPArqResp := 'sesF';
 
-  FRetornoNFSe := nil;
+  if Assigned(FRetornoNFSe) then
+    FreeAndNil(FRetornoNFSe);
 end;
 
 procedure TNFSeFecharSessao.DefinirURL;

@@ -30,7 +30,12 @@ requires
   vcl,
   designide,
   ACBr_TCP,
-  ACBr_PCNComum;
+  ACBr_PCNComum,
+  ACBr_Comum,
+  ACBr_synapse,
+  vclactnband,
+  vclx,
+  ACBr_Diversos;
 
 contains
   ACBrSATReg in '..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas',
@@ -47,6 +52,11 @@ contains
   pcnCFeCancW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancW.pas',
   pcnRede in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRede.pas',
   pcnRedeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas',
-  pcnRedeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas';
+  pcnRedeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas',
+  ACBrSATMFe_integrador in '..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas',
+  pcnEnviarPagamento in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamento.pas',
+  pcnEnviarPagamentoR in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoR.pas',
+  pcnEnviarPagamentoW in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoW.pas',
+  pcnMFeUtil in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas';
 
 end.

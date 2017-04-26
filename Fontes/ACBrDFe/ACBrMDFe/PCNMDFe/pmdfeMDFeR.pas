@@ -197,6 +197,10 @@ begin
               MDFe.Rodo.infANTT.valePed.disp.Add;
               MDFe.Rodo.infANTT.valePed.disp[i01].CNPJForn := Leitor.rCampo(tcStr, 'CNPJForn');
               MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg   := Leitor.rCampo(tcStr, 'CNPJPg');
+
+              if MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg = '' then
+                MDFe.Rodo.infANTT.valePed.disp[i01].CNPJPg := Leitor.rCampo(tcStr, 'CPFPg');
+
               MDFe.Rodo.infANTT.valePed.disp[i01].nCompra  := Leitor.rCampo(tcStr, 'nCompra');
               MDFe.Rodo.infANTT.valePed.disp[i01].vValePed := Leitor.rCampo(tcDe2, 'vValePed');
 

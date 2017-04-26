@@ -200,6 +200,13 @@ type
     cbImprimir1Linha: TCheckBox;
     N3: TMenuItem;
     CarregarXML1: TMenuItem;
+    tsMFE: TTabSheet;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    edMFEInput: TEdit;
+    edMFEOutput: TEdit;
+    edMFETimeout: TEdit;
     procedure ACBrSAT1Log(const AString: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
@@ -269,7 +276,7 @@ var
 implementation
 
 Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers;
+  RLPrinters, Printers, ACBrSATMFe_integrador;
 
 {$R *.dfm}
 
@@ -376,6 +383,13 @@ begin
     ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
     ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+
+    if Modelo = mfe_Integrador_XML then
+    begin
+      TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
+      TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
+      TACBrSATMFe_integrador_XML(SAT).Timeout     := seMFETimeout.Value;
+    end;   
   end
 end ;
 

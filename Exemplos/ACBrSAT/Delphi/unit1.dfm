@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 327
   Top = 132
+  Width = 836
+  Height = 581
   Caption = 'SAT Teste - Projeto ACBr'
-  ClientHeight = 522
-  ClientWidth = 803
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,16 +19,15 @@ object Form1: TForm1
   object Splitter1: TSplitter
     Left = 0
     Top = 202
-    Width = 803
+    Width = 820
     Height = 6
     Cursor = crVSplit
     Align = alTop
-    ExplicitWidth = 811
   end
   object PageControl1: TPageControl
     Left = 0
     Top = 208
-    Width = 803
+    Width = 820
     Height = 291
     ActivePage = tsRecebido
     Align = alClient
@@ -68,14 +67,12 @@ object Form1: TForm1
       inline mRecebido: TWebBrowser
         Left = 0
         Top = 0
-        Width = 795
+        Width = 812
         Height = 263
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 803
-        ExplicitHeight = 271
         ControlData = {
-          4C0000002A5200002F1B00000000000000000000000000000000000000000000
+          4C000000EC5300002F1B00000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -104,13 +101,12 @@ object Form1: TForm1
           Left = 1
           Top = 1
           Width = 105
-          Height = 23
+          Height = 13
           Align = alLeft
           Caption = 'Chave Cancelamento:'
           Color = clBtnFace
           ParentColor = False
           Layout = tlCenter
-          ExplicitHeight = 13
         end
         object edChaveCancelamento: TEdit
           Left = 127
@@ -131,8 +127,6 @@ object Form1: TForm1
         Height = 263
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 786
-        ExplicitHeight = 271
         ControlData = {
           4C0000002A5200002F1B00000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -145,7 +139,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 803
+    Width = 820
     Height = 202
     Align = alTop
     TabOrder = 2
@@ -172,6 +166,7 @@ object Form1: TForm1
         Width = 133
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 1
         OnChange = cbxModeloChange
         Items.Strings = (
@@ -219,7 +214,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 632
+      Width = 649
       Height = 200
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -227,9 +222,9 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 628
+        Width = 645
         Height = 183
-        ActivePage = tsDadosEmit
+        ActivePage = tsMFE
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
@@ -401,6 +396,7 @@ object Form1: TForm1
             Width = 120
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 9
           end
           object cbxSalvarCFe: TCheckBox
@@ -545,6 +541,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -553,6 +550,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -561,13 +559,14 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
+            ItemHeight = 13
             TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            620
+            637
             155)
           object Label2: TLabel
             Left = 10
@@ -798,6 +797,7 @@ object Form1: TForm1
               Width = 82
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               ItemIndex = 1
               TabOrder = 1
               Text = 'WEP'
@@ -879,6 +879,7 @@ object Form1: TForm1
               Width = 129
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               ItemIndex = 0
               TabOrder = 0
               Text = '0= N'#227'o usa proxy'
@@ -930,7 +931,7 @@ object Form1: TForm1
           object GroupBox3: TGroupBox
             Left = 0
             Top = 0
-            Width = 293
+            Width = 310
             Height = 155
             Align = alClient
             Caption = 'Fortes'
@@ -1067,7 +1068,7 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 293
+            Left = 310
             Top = 0
             Width = 327
             Height = 155
@@ -1137,6 +1138,9 @@ object Form1: TForm1
               Width = 22
               Height = 22
               Anchors = [akTop, akRight]
+              ModalResult = 1
+              TabOrder = 0
+              OnClick = btSerialClick
               Glyph.Data = {
                 36030000424D3603000000000000360000002800000010000000100000000100
                 1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
@@ -1165,9 +1169,6 @@ object Form1: TForm1
                 00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
                 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
               Layout = blGlyphTop
-              ModalResult = 1
-              TabOrder = 0
-              OnClick = btSerialClick
             end
             object cbUsarEscPos: TRadioButton
               Left = 8
@@ -1185,6 +1186,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
+              ItemHeight = 13
               TabOrder = 2
             end
             object cbxPorta: TComboBox
@@ -1193,6 +1195,7 @@ object Form1: TForm1
               Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
+              ItemHeight = 13
               TabOrder = 3
             end
             object cbxPagCodigo: TComboBox
@@ -1202,6 +1205,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
+              ItemHeight = 13
               TabOrder = 4
             end
             object seColunas: TSpinEdit
@@ -1244,13 +1248,62 @@ object Form1: TForm1
             end
           end
         end
+        object tsMFE: TTabSheet
+          Caption = 'MFE'
+          ImageIndex = 5
+          object Label30: TLabel
+            Left = 8
+            Top = 0
+            Width = 82
+            Height = 13
+            Caption = 'Pasta de Entrada'
+          end
+          object Label31: TLabel
+            Left = 8
+            Top = 40
+            Width = 74
+            Height = 13
+            Caption = 'Pasta de Sa'#237'da'
+          end
+          object Label32: TLabel
+            Left = 8
+            Top = 80
+            Width = 38
+            Height = 13
+            Caption = 'Label32'
+          end
+          object edMFEInput: TEdit
+            Left = 8
+            Top = 16
+            Width = 281
+            Height = 21
+            TabOrder = 0
+            Text = 'c:\Integrador\Input\'
+          end
+          object edMFEOutput: TEdit
+            Left = 8
+            Top = 56
+            Width = 281
+            Height = 21
+            TabOrder = 1
+            Text = 'c:\Integrador\Output\'
+          end
+          object edMFETimeout: TEdit
+            Left = 8
+            Top = 96
+            Width = 81
+            Height = 21
+            TabOrder = 2
+            Text = '30'
+          end
+        end
       end
     end
   end
   object StatusBar1: TStatusBar
     Left = 0
     Top = 499
-    Width = 803
+    Width = 820
     Height = 23
     Panels = <
       item
@@ -1424,6 +1477,8 @@ object Form1: TForm1
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = ',0.0000'
     Mask_vUnCom = ',0.000'
+    SoftwareHouse = 'Projeto ACBr'
+    Site = 'http://www.projetoacbr.com.br'
     MsgAppQRCode = 
       'Consulte o QR Code pelo aplicativo  "De olho na nota", dispon'#237've' +
       'l na AppStore (Apple) e PlayStore (Android)'

@@ -31,6 +31,7 @@ type
     btLerParams: TButton;
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
+    btMFEEnviarPagamento: TButton;
     cbUsarEscPos: TRadioButton;
     cbUsarFortes: TRadioButton;
     cbxRemoverAcentos: TCheckBox;
@@ -54,6 +55,8 @@ type
     cbImprimir1Linha: TCheckBox;
     cbxUTF8: TCheckBox;
     edChaveCancelamento: TEdit;
+    edMFEInput: TEdit;
+    edMFEOutput: TEdit;
     edLog : TEdit ;
     edRedeIP: TEdit;
     edRedeProxyPorta: TSpinEdit;
@@ -89,6 +92,9 @@ type
     Label27: TLabel;
     Label28: TLabel;
     Label29: TLabel;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;
@@ -194,12 +200,14 @@ type
     Panel1 : TPanel ;
     SbArqLog : TSpeedButton ;
     seItensVenda: TSpinEdit;
+    seMFETimeout: TSpinEdit;
     Splitter1 : TSplitter ;
     StatusBar1 : TStatusBar ;
     mVendaEnviar: TSynMemo;
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     Impressao: TTabSheet;
+    MFe: TTabSheet;
     tsRedeXML: TTabSheet;
     tsRede: TTabSheet;
     tsCancelamento: TTabSheet;
@@ -218,6 +226,7 @@ type
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
+    procedure btMFEEnviarPagamentoClick(Sender: TObject);
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
     procedure cbUsarEscPosChange(Sender: TObject);
@@ -282,7 +291,7 @@ implementation
 
 Uses
   math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers, ACBrSATExtratoClass;
+  RLPrinters, Printers, ACBrSATExtratoClass, ACBrSATMFe_integrador, pcnEnviarPagamento;
 
 {$R *.lfm}
 
@@ -395,6 +404,13 @@ begin
     ConfigArquivos.SalvarEnvio := cbxSalvarEnvio.Checked;
     ConfigArquivos.SepararPorCNPJ := cbxSepararPorCNPJ.Checked;
     ConfigArquivos.SepararPorMes := cbxSepararPorMES.Checked;
+
+    if Modelo = mfe_Integrador_XML then
+    begin
+      TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
+      TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
+      TACBrSATMFe_integrador_XML(SAT).Timeout     := seMFETimeout.Value;
+    end;
   end
 end ;
 
@@ -530,6 +546,29 @@ begin
   finally
      INI.Free ;
   end ;
+end;
+
+procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
+var
+  PagamentoMFe : TEnviarPagamento;
+begin
+  PagamentoMFe := TEnviarPagamento.Create;
+  try
+    with PagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '';
+      ChaveRequisicao := '';
+      Estabelecimento := '';
+      SerialPOS := '';
+      CNPJ := '';
+      ValorOperacaoSujeitaICMS := 0;
+      ValorTotalVenda := 0;
+    end;
+    TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
+  finally
+    PagamentoMFe.Free;
+  end;
 end;
 
 procedure TForm1.btSalvarParamsClick(Sender : TObject) ;
@@ -1082,14 +1121,18 @@ begin
       Imposto.vItem12741 := TotalItem * 0.12;
 
       Imposto.ICMS.orig := oeNacional;
-      Imposto.ICMS.CST := cst00;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn102
+      else
+        Imposto.ICMS.CST := cst00;
+
       Imposto.ICMS.pICMS := 18;
 
-      Imposto.PIS.CST := pis01;
+      Imposto.PIS.CST := pis49;
       Imposto.PIS.vBC := TotalItem;
       Imposto.PIS.pPIS := 0.0065;
 
-      Imposto.COFINS.CST := cof01;
+      Imposto.COFINS.CST := cof49;
       Imposto.COFINS.vBC := TotalItem;
       Imposto.COFINS.pCOFINS := 0.0065;
       //
@@ -1117,16 +1160,19 @@ begin
       Imposto.vItem12741 := TotalItem * 0.30;
 
       Imposto.ICMS.orig := oeNacional;
-      Imposto.ICMS.CST := cst40;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn400
+      else
+        Imposto.ICMS.CST := cst40;
 
-      Imposto.PIS.CST := pis03;
+      Imposto.PIS.CST := pis49;
       Imposto.PIS.qBCProd := TotalItem;
       Imposto.PIS.vAliqProd := 1.0223;
 
       Imposto.PISST.qBCProd := TotalItem;
       Imposto.PISST.vAliqProd := 1.0223;
 
-      Imposto.COFINS.CST := cof03;
+      Imposto.COFINS.CST := cof49;
       Imposto.COFINS.qBCProd := TotalItem;
       Imposto.COFINS.vAliqProd := 1.0223;
 
@@ -1151,14 +1197,17 @@ begin
       TotalGeral := TotalGeral + TotalItem;
 
       Imposto.ICMS.orig := oeEstrangeiraImportacaoDireta;
-      Imposto.ICMS.CSOSN := csosn102;
+      if Emit.cRegTrib = RTSimplesNacional then
+        Imposto.ICMS.CSOSN := csosn102
+      else
+        Imposto.ICMS.CST := cst60;
 
-      Imposto.PIS.CST := pis04;
+      Imposto.PIS.CST := pis49;
 
       Imposto.PISST.qBCProd := TotalItem;
       Imposto.PISST.vAliqProd := 1.1826;
 
-      Imposto.COFINS.CST := cof06;
+      Imposto.COFINS.CST := cof49;
 
       infAdProd := 'Informacoes adicionais';
     end;
@@ -1196,16 +1245,16 @@ begin
     Total.vCFeLei12741 := 1.23;
 
     Pagto1 := RoundABNT(TotalGeral/2,-2);
-    with Pagto.Add do
+{    with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
       vMP := Pagto1;
-    end;
+    end;    }
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := TotalGeral - Pagto1 + 10;
+      vMP := TotalGeral - Pagto1 + 100;
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+

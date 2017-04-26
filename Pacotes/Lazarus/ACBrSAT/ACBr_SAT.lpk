@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)"/>
     <Version Minor="1"/>
-    <Files Count="19">
+    <Files Count="20">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -93,13 +93,17 @@
       <Item18>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoR.pas"/>
         <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="pcnRedeR"/>
+        <UnitName Value="pcnEnviarPagamentoR"/>
       </Item18>
       <Item19>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoW.pas"/>
         <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="pcnRedeW"/>
+        <UnitName Value="pcnEnviarPagamentoW"/>
       </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas"/>
+        <UnitName Value="pcnMFeUtil"/>
+      </Item20>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT;..\..\..\Fontes\ACBrSAT\PCNMFe"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrSAT\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -20,7 +20,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Cupom Fiscal Eletrônico SAT - (http://www.projetoacbr.com.br/)"/>
     <Version Minor="1"/>
-    <Files Count="15">
+    <Files Count="19">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATReg.pas"/>
         <HasRegisterProc Value="True"/>
@@ -39,49 +39,67 @@
         <UnitName Value="ACBrSATDinamico_cdecl"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas"/>
-        <UnitName Value="ACBrSATDinamico_stdcall"/>
-      </Item5>
-      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas"/>
         <UnitName Value="ACBrSATExtratoClass"/>
-      </Item6>
-      <Item7>
+      </Item5>
+      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFe.pas"/>
         <UnitName Value="pcnCFe"/>
-      </Item7>
-      <Item8>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeR.pas"/>
         <UnitName Value="pcnCFeR"/>
-      </Item8>
-      <Item9>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeW.pas"/>
         <UnitName Value="pcnCFeW"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCanc.pas"/>
         <UnitName Value="pcnCFeCanc"/>
-      </Item10>
-      <Item11>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancR.pas"/>
         <UnitName Value="pcnCFeCancR"/>
-      </Item11>
-      <Item12>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancW.pas"/>
         <UnitName Value="pcnCFeCancW"/>
-      </Item12>
-      <Item13>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRede.pas"/>
         <UnitName Value="pcnRede"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas"/>
         <UnitName Value="pcnRedeR"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas"/>
         <UnitName Value="pcnRedeW"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas"/>
+        <UnitName Value="ACBrSATDinamico_stdcall"/>
       </Item15>
+      <Item16>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas"/>
+        <UnitName Value="acbrsatmfe_integrador"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamento.pas"/>
+        <UnitName Value="pcnEnviarPagamento"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoR.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="pcnRedeR"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoW.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="pcnRedeW"/>
+      </Item19>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

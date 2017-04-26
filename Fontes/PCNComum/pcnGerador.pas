@@ -596,7 +596,7 @@ begin
 
      tcBoolStr:
        begin
-         ConteudoProcessado := BoolToStr(valor,'true','false');
+         ConteudoProcessado := LowerCase(BoolToStr(valor, True));
          EstaVazio := ConteudoProcessado = '';
        end;
   end;

@@ -40,6 +40,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+26/04/2017
+-- pcnConversao --
+[-]	Correção de erro de compilação em delphi, contribuição de BigWings, tópico abaixo.
+	http://www.projetoacbr.com.br/forum/topic/36411-erro-na-instalação-acbr-revisão-13237/
+	por: Celso marigo Junior
+
 21/04/2017
 -- pcnConversao --
 [*] Alterações visando a NT 2016/002 versão 1.10

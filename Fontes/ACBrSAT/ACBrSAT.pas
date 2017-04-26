@@ -234,7 +234,7 @@ function MotivoInvalidoCancelamento(cod: integer): String;
 
 implementation
 
-Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, synautil;
+Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador, synautil;
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
 var
@@ -1353,6 +1353,7 @@ begin
   case AValue of
     satDinamico_cdecl : fsSATClass := TACBrSATDinamico_cdecl.Create( Self ) ;
     satDinamico_stdcall : fsSATClass := TACBrSATDinamico_stdcall.Create( Self ) ;
+    mfe_Integrador_XML : fsSATClass := TACBrSATMFe_integrador_XML.Create( Self ) ;
   else
     fsSATClass := TACBrSATClass.Create( Self ) ;
   end;

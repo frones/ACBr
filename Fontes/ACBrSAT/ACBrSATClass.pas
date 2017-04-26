@@ -68,7 +68,7 @@ const
                                  'Acesse nosso Forum em: http://projetoacbr.com.br/' ;
 type
 
-  TACBrSATModelo = ( satNenhum, satDinamico_cdecl, satDinamico_stdcall ) ;
+  TACBrSATModelo = ( satNenhum, satDinamico_cdecl, satDinamico_stdcall, mfe_Integrador_XML ) ;
 
   { EACBrSATErro }
 

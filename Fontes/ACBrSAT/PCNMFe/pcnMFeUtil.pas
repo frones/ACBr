@@ -1,7 +1,5 @@
 unit pcnMFeUtil;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
@@ -24,11 +22,14 @@ type
   private
     FGerador: TGerador;
     FIdentificador: TIdentificador;
+    FAdicionarParametros : Boolean;
   public
     constructor Create(AOwner: TGerador);
     destructor Destroy; override;
     procedure GerarMetodo( Valor : Integer; Componente, Metodo : String );
     procedure FinalizarMetodo;
+
+    property AdicionarParametros : Boolean read FAdicionarParametros write FAdicionarParametros default True;
   end;
 
   { TConstructor }
@@ -74,12 +75,14 @@ begin
   FIdentificador.GerarIdentificador(IntToStr(Valor));
   FGerador.wGrupo('Componente Nome="'+Componente+'"');
   FGerador.wGrupo('Metodo Nome="'+Metodo+'"');
-  FGerador.wGrupo('Parametros');
+  if AdicionarParametros then
+    FGerador.wGrupo('Parametros');
 end;
 
 procedure TMetodo.FinalizarMetodo;
 begin
-  FGerador.wGrupo('/Parametros');
+  if AdicionarParametros then
+    FGerador.wGrupo('/Parametros');
   FGerador.wGrupo('/Metodo');
   FGerador.wGrupo('/Componente');
   FGerador.wGrupo('/Integrador');

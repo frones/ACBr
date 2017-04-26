@@ -87,7 +87,7 @@ end;
 
 function TEnviarPagamentoW.GerarXml(): boolean;
 var
-  Identificador : TIdentificador;
+  Metodo : TMetodo;
   Construtor : TConstructor;
   Parametro: TParametro;
 begin
@@ -96,37 +96,37 @@ begin
   Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
 
-  Gerador.wGrupo('Integrador');
-  Identificador := TIdentificador.Create(Gerador);
+  Metodo := TMetodo.Create(Gerador);
   try
-    Identificador.GerarIdentificador(EnviarPagamento.Identificador);
+    Metodo.AdicionarParametros := False;
+    Metodo.GerarMetodo(EnviarPagamento.Identificador,'VFP-e','EnviarPagamento');
+
+    Construtor := TConstructor.Create(Gerador);
+    try
+      Construtor.GerarConstructor('chaveAcessoValidador', EnviarPagamento.ChaveAcessoValidador);
+    finally
+      Construtor.Free;
+    end;
+
+    Gerador.wGrupo('Parametros');
+
+    Parametro := TParametro.Create(Gerador);
+    try
+      Parametro.GerarParametro('chaveRequisicao'  , EnviarPagamento.ChaveRequisicao, tcStr);
+      Parametro.GerarParametro('estabelecimento'  , EnviarPagamento.Estabelecimento, tcStr);
+      Parametro.GerarParametro('serialPOS'        , EnviarPagamento.SerialPOS, tcStr);
+      Parametro.GerarParametro('Cnpj'             , EnviarPagamento.CNPJ, tcStr);
+      Parametro.GerarParametro('valorOperacaoSujeitaICMS', EnviarPagamento.ValorOperacaoSujeitaICMS, tcStr);
+      Parametro.GerarParametro('valorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcStr);
+    finally
+      Parametro.Free;
+    end;
+
+    Metodo.AdicionarParametros := True;
+    Metodo.FinalizarMetodo;
   finally
-    Identificador.Free;
+    Metodo.Free;
   end;
-
-  Construtor := TConstructor.Create(Gerador);
-  try
-    Construtor.GerarConstructor('chaveAcessoValidador', EnviarPagamento.ChaveAcessoValidador);
-  finally
-    Construtor.Free;
-  end;
-
-  Gerador.wGrupo('Parametros');
-
-  Parametro := TParametro.Create(Gerador);
-  try
-    Parametro.GerarParametro('chaveRequisicao'  , EnviarPagamento.ChaveRequisicao, tcStr);
-    Parametro.GerarParametro('estabelecimento'  , EnviarPagamento.Estabelecimento, tcStr);
-    Parametro.GerarParametro('serialPOS'        , EnviarPagamento.SerialPOS, tcStr);
-    Parametro.GerarParametro('Cnpj'             , EnviarPagamento.CNPJ, tcStr);
-    Parametro.GerarParametro('valorOperacaoSujeitaICMS', EnviarPagamento.ValorOperacaoSujeitaICMS, tcStr);
-    Parametro.GerarParametro('valorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcStr);
-  finally
-    Parametro.Free;
-  end;
-
-  Gerador.wGrupo('/Parametros');
-  Gerador.wGrupo('/Integrador');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
 end;

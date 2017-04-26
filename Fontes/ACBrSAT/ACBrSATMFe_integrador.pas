@@ -59,7 +59,7 @@ type
      function EnviaComando(Comando : String) : String;
      function PegaResposta(Resp : String) : String;
 
-     function ProcuraResposta : String;
+     function AguardaArqResposta : String;
 
      function AjustaComando(Comando : String) : String;
 
@@ -104,7 +104,7 @@ type
 
 implementation
 
-Uses ACBrUtil, pcnConversao, dateutils;
+Uses ACBrUtil, pcnConversao, dateutils, ACBrSAT;
 
 function TACBrSATMFe_integrador_XML.EnviaComando(Comando: String): String;
 var
@@ -121,11 +121,11 @@ begin
       TimeOut := IncSecond(ActualTime, 30)
     else
       TimeOut := IncSecond(ActualTime, FTimeout);
-    Result := ProcuraResposta;
+    Result := AguardaArqResposta;
     while EstaVazio(Result) and
           (ActualTime < TimeOut) do
     begin
-      Result := ProcuraResposta;
+      Result := AguardaArqResposta;
       Sleep(100);
       ActualTime := Now;
     end;
@@ -138,10 +138,12 @@ function TACBrSATMFe_integrador_XML.PegaResposta(Resp: String): String;
 begin
   FLeitor.Arquivo := Resp;
   if FLeitor.rExtrai(1, 'Resposta') <> '' then
-    Result := FLeitor.rCampo(tcStr, 'retorno');
+    Result := FLeitor.rCampo(tcStr, 'retorno')
+  else if FLeitor.rExtrai(1, 'Erro') <> '' then
+    Result := FLeitor.Grupo;
 end;
 
-function TACBrSATMFe_integrador_XML.ProcuraResposta: String;
+function TACBrSATMFe_integrador_XML.AguardaArqResposta: String;
 var
   SL, SLArqResp : TStringList;
   I : Integer;
@@ -163,7 +165,7 @@ begin
         if FLeitor.rCampo(tcInt, 'Valor') = numeroSessao then
         begin
           Result := Trim(FLeitor.Arquivo);
-          //DeleteFile(SLArqResp[I]);
+          DeleteFile(SLArqResp[I]);
         end;
       end;
     end;
@@ -521,11 +523,18 @@ end ;
 function TACBrSATMFe_integrador_XML.EnviarPagamento(Pagamento: TEnviarPagamento
   ): String;
 var
-  Resp : String;
+  Comando, Resp : String;
 begin
+  TACBrSAT(Owner).IniciaComando;
+
   Pagamento.Identificador := numeroSessao;
-  Resp := EnviaComando(Pagamento.GetXMLString);
+  Comando := Pagamento.GetXMLString;
+  TACBrSAT(Owner).fsComandoLog := 'EnviarPagamento( '+Comando+' )';
+
+
+  Resp := EnviaComando(Comando);
   Result := PegaResposta( Resp );
+  TACBrSAT(Owner).FinalizaComando( Result );
 end;
 
 end.

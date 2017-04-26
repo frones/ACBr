@@ -51,7 +51,7 @@ type
 
   TEnviarPagamento = class(TPersistent)
   private
-    FIdentificador: String;
+    FIdentificador: Integer;
     FChaveAcessoValidador: String;
     FChaveRequisicao: String;
     FEstabelecimento: String;
@@ -71,15 +71,14 @@ type
 
     property AsXMLString : AnsiString read GetXMLString write SetXMLString ;
   published
-        property Identificador: String read FIdentificador write FIdentificador;
-        property ChaveAcessoValidador: String read FChaveAcessoValidador write FChaveAcessoValidador;
-        property ChaveRequisicao: String read FChaveRequisicao write FChaveRequisicao;
-        property Estabelecimento: String read FEstabelecimento write FEstabelecimento;
-        property SerialPOS: String read FSerialPOS write FSerialPOS;
-        property CNPJ: String read FCNPJ write FCNPJ;
-        property ValorOperacaoSujeitaICMS: Currency read FValorOperacaoSujeitaICMS write FValorOperacaoSujeitaICMS;
-        property ValorTotalVenda: Currency read FValorTotalVenda write FValorTotalVenda;   		
-   
+    property Identificador: Integer read FIdentificador write FIdentificador;
+    property ChaveAcessoValidador: String read FChaveAcessoValidador write FChaveAcessoValidador;
+    property ChaveRequisicao: String read FChaveRequisicao write FChaveRequisicao;
+    property Estabelecimento: String read FEstabelecimento write FEstabelecimento;
+    property SerialPOS: String read FSerialPOS write FSerialPOS;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property ValorOperacaoSujeitaICMS: Currency read FValorOperacaoSujeitaICMS write FValorOperacaoSujeitaICMS;
+    property ValorTotalVenda: Currency read FValorTotalVenda write FValorTotalVenda;
   end;
 
 implementation
@@ -100,7 +99,7 @@ end;
 
 procedure TEnviarPagamento.Clear;
 begin
-  FIdentificador := '';
+  FIdentificador := 0;
   FChaveAcessoValidador := '';
   FChaveRequisicao := '';
   FEstabelecimento := '';
@@ -148,8 +147,7 @@ begin
   Result  := '';
   LocEnviarPagamentoW := TEnviarPagamentoW.Create(Self);
   try
-    LocEnviarPagamentoW.Gerador.Opcoes.IdentarXML := True;
-    LocEnviarPagamentoW.Gerador.Opcoes.TamanhoIdentacao := 3;
+    LocEnviarPagamentoW.Gerador.Opcoes.IdentarXML := False;
 
     LocEnviarPagamentoW.GerarXml();
     Result := LocEnviarPagamentoW.Gerador.ArquivoFormatoXML;

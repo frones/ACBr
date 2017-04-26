@@ -71,7 +71,6 @@ type
      FMAIL: TACBrMail;
 
      fsArqLOG: String;
-     fsComandoLog: String;
      fsInicializado : Boolean ;
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
@@ -101,8 +100,6 @@ type
      procedure SetNomeDLL(AValue : string) ;
 
      procedure VerificaInicializado ;
-     procedure IniciaComando ;
-     function FinalizaComando(AResult: String): String;
      procedure VerificaCondicoesImpressao( EhCancelamento: Boolean = False);
 
      procedure GravaLog(AString : AnsiString ) ;
@@ -110,8 +107,11 @@ type
     procedure SetMAIL(const AValue: TACBrMail);
     function GravarStream(AStream: TStream): Boolean;
    protected
-     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
+     fsComandoLog: String;
+     procedure IniciaComando ;
+     function FinalizaComando(AResult: String): String;
      procedure DecodificaRetorno6000;
      procedure DecodificaRetorno7000;
      property SAT : TACBrSATClass read fsSATClass ;

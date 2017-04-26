@@ -61,6 +61,7 @@ constructor TMetodo.Create(AOwner: TGerador);
 begin
   FGerador := AOwner;
   FIdentificador := TIdentificador.Create(FGerador);
+  FAdicionarParametros := True;
 end;
 
 destructor TMetodo.Destroy;

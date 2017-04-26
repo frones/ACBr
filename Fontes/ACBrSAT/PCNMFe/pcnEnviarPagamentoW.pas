@@ -88,7 +88,7 @@ end;
 function TEnviarPagamentoW.GerarXml(): boolean;
 var
   Metodo : TMetodo;
-  Construtor : TConstructor;
+  Construtor : TConstrutor;
   Parametro: TParametro;
 begin
   Gerador.LayoutArquivoTXT.Clear;
@@ -101,7 +101,7 @@ begin
     Metodo.AdicionarParametros := False;
     Metodo.GerarMetodo(EnviarPagamento.Identificador,'VFP-e','EnviarPagamento');
 
-    Construtor := TConstructor.Create(Gerador);
+    Construtor := TConstrutor.Create(Gerador);
     try
       Construtor.GerarConstructor('chaveAcessoValidador', EnviarPagamento.ChaveAcessoValidador);
     finally
@@ -113,11 +113,16 @@ begin
     Parametro := TParametro.Create(Gerador);
     try
       Parametro.GerarParametro('chaveRequisicao'  , EnviarPagamento.ChaveRequisicao, tcStr);
-      Parametro.GerarParametro('estabelecimento'  , EnviarPagamento.Estabelecimento, tcStr);
-      Parametro.GerarParametro('serialPOS'        , EnviarPagamento.SerialPOS, tcStr);
+      Parametro.GerarParametro('Estabelecimento'  , EnviarPagamento.Estabelecimento, tcStr);
+      Parametro.GerarParametro('SerialPos'        , EnviarPagamento.SerialPOS, tcStr);
       Parametro.GerarParametro('Cnpj'             , EnviarPagamento.CNPJ, tcStr);
-      Parametro.GerarParametro('valorOperacaoSujeitaICMS', EnviarPagamento.ValorOperacaoSujeitaICMS, tcStr);
-      Parametro.GerarParametro('valorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcStr);
+      Parametro.GerarParametro('IcmsBase'         , EnviarPagamento.IcmsBase, tcDe2);
+      Parametro.GerarParametro('valorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcDe2);
+      Parametro.GerarParametro('HabilitarMultiplosPagamentos', EnviarPagamento.HabilitarMultiplosPagamentos, tcBoolStr);
+      Parametro.GerarParametro('HabilitarControleAntiFraude' , EnviarPagamento.HabilitarControleAntiFraude, tcBoolStr);
+      Parametro.GerarParametro('CodigoMoeda'      , EnviarPagamento.CodigoMoeda, tcStr);
+      Parametro.GerarParametro('EmitirCupomNFCE'  , EnviarPagamento.EmitirCupomNFCE, tcBoolStr);
+      Parametro.GerarParametro('OrigemPagamento'  , EnviarPagamento.OrigemPagamento, tcStr);
     finally
       Parametro.Free;
     end;

@@ -92,7 +92,7 @@ begin
     EnviarPagamento.Estabelecimento      := Leitor.rCampo(tcStr, 'Estabelecimento');
     EnviarPagamento.CNPJ                 := Leitor.rCampo(tcStr, 'CNPJ');
     EnviarPagamento.SerialPOS            := Leitor.rCampo(tcStr, 'SerialPOS');
-    EnviarPagamento.ValorOperacaoSujeitaICMS := Leitor.rCampo(tcDe2, 'ValorOperacaoSujeitaICMS');
+    EnviarPagamento.IcmsBase             := Leitor.rCampo(tcDe2, 'IcmsBase');
     EnviarPagamento.ValorTotalVenda      := Leitor.rCampo(tcDe2, 'ValorTotalVenda');
   end ;
 

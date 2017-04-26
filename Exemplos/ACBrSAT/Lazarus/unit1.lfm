@@ -2135,7 +2135,7 @@ object Form1: TForm1
         Height = 220
         Top = 0
         Width = 725
-        ActivePage = MFe
+        ActivePage = tsMFe
         Align = alClient
         TabIndex = 5
         TabOrder = 0
@@ -3212,24 +3212,24 @@ object Form1: TForm1
             TabOrder = 1
           end
         end
-        object MFe: TTabSheet
-          Caption = 'MFe'
+        object tsMFe: TTabSheet
+          Caption = 'MFE'
           ClientHeight = 192
           ClientWidth = 717
           object Label30: TLabel
             Left = 8
             Height = 15
             Top = 8
-            Width = 40
-            Caption = 'Label30'
+            Width = 71
+            Caption = 'Pasta Entrada'
             ParentColor = False
           end
           object Label31: TLabel
             Left = 8
             Height = 15
             Top = 48
-            Width = 40
-            Caption = 'Label31'
+            Width = 78
+            Caption = 'Pasta Resposta'
             ParentColor = False
           end
           object Label32: TLabel

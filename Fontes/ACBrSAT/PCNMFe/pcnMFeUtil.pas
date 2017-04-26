@@ -32,8 +32,8 @@ type
     property AdicionarParametros : Boolean read FAdicionarParametros write FAdicionarParametros default True;
   end;
 
-  { TConstructor }
-  TConstructor = class(TPersistent)
+  { TConstrutor }
+  TConstrutor = class(TPersistent)
   private
     FGerador: TGerador;
   public
@@ -109,28 +109,28 @@ begin
   FGerador.wGrupo('/Parametro');
 end;
 
-{ TConstructor }
+{ TConstrutor }
 
-constructor TConstructor.Create(AOwner: TGerador);
+constructor TConstrutor.Create(AOwner: TGerador);
 begin
    FGerador := AOwner
 end;
 
-destructor TConstructor.Destroy;
+destructor TConstrutor.Destroy;
 begin
   inherited Destroy;
 end;
 
-procedure TConstructor.GerarConstructor(Nome, Valor: String);
+procedure TConstrutor.GerarConstructor(Nome, Valor: String);
 begin
-  FGerador.wGrupo('Constructor');
+  FGerador.wGrupo('Construtor');
   FGerador.wGrupo('Parametros');
   FGerador.wGrupo('Parametro');
-  FGerador.wCampo(tcStr, '', 'Nome', 1, 99, 1, Nome, 'Nome do Constructor');
-  FGerador.wCampo(tcStr, '', 'Valor', 1, 99, 1, Valor, 'Valor do Constructor');
+  FGerador.wCampo(tcStr, '', 'Nome', 1, 99, 1, Nome, 'Nome do Construtor');
+  FGerador.wCampo(tcStr, '', 'Valor', 1, 99, 1, Valor, 'Valor do Construtor');
   FGerador.wGrupo('/Parametro');
   FGerador.wGrupo('/Parametros');
-  FGerador.wGrupo('/Constructor');
+  FGerador.wGrupo('/Construtor');
 end;
 
 { TIdentificador }

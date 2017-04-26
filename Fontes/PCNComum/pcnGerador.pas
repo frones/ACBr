@@ -593,6 +593,12 @@ begin
         if Length(ConteudoProcessado) < TamMin then
           ConteudoProcessado := PadLeft(ConteudoProcessado, TamMin, '0');
       end;
+
+     tcBoolStr:
+       begin
+         ConteudoProcessado := BoolToStr(valor,'true','false');
+         EstaVazio := ConteudoProcessado = '';
+       end;
   end;
 
   alerta := '';

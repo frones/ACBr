@@ -57,8 +57,13 @@ type
     FEstabelecimento: String;
     FSerialPOS: String;
     FCNPJ: String;
-    FValorOperacaoSujeitaICMS: Currency;
-    FValorTotalVenda: Currency;	 
+    FIcmsBase: Currency;
+    FValorTotalVenda: Currency;
+    FHabilitarMultiplosPagamentos: Boolean;
+    FHabilitarControleAntiFraude: Boolean;
+    FCodigoMoeda: String;
+    FEmitirCupomNFCE: Boolean;
+    FOrigemPagamento: String;
   public
     constructor Create;
     destructor Destroy; override;
@@ -77,8 +82,13 @@ type
     property Estabelecimento: String read FEstabelecimento write FEstabelecimento;
     property SerialPOS: String read FSerialPOS write FSerialPOS;
     property CNPJ: String read FCNPJ write FCNPJ;
-    property ValorOperacaoSujeitaICMS: Currency read FValorOperacaoSujeitaICMS write FValorOperacaoSujeitaICMS;
+    property IcmsBase: Currency read FIcmsBase write FIcmsBase;
     property ValorTotalVenda: Currency read FValorTotalVenda write FValorTotalVenda;
+    property HabilitarMultiplosPagamentos: Boolean read FHabilitarMultiplosPagamentos write FHabilitarMultiplosPagamentos;
+    property HabilitarControleAntiFraude: Boolean read FHabilitarControleAntiFraude write FHabilitarControleAntiFraude;
+    property CodigoMoeda: String read FCodigoMoeda write FCodigoMoeda;
+    property EmitirCupomNFCE: Boolean read FEmitirCupomNFCE write FEmitirCupomNFCE;
+    property OrigemPagamento: String read FOrigemPagamento write FOrigemPagamento;
   end;
 
 implementation
@@ -105,7 +115,7 @@ begin
   FEstabelecimento := '';
   FSerialPOS := '';
   FCNPJ := '';
-  FValorOperacaoSujeitaICMS := 0;
+  FIcmsBase := 0;
   FValorTotalVenda := 0;	
 end;
 

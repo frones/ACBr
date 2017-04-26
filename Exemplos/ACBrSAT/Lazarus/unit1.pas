@@ -207,7 +207,7 @@ type
     mRecebido: TSynMemo;
     SynXMLSyn1: TSynXMLSyn;
     Impressao: TTabSheet;
-    MFe: TTabSheet;
+    tsMFe: TTabSheet;
     tsRedeXML: TTabSheet;
     tsRede: TTabSheet;
     tsCancelamento: TTabSheet;
@@ -557,13 +557,18 @@ begin
     with PagamentoMFe do
     begin
       Clear;
-      ChaveAcessoValidador := '';
-      ChaveRequisicao := '';
-      Estabelecimento := '';
-      SerialPOS := '';
-      CNPJ := '';
-      ValorOperacaoSujeitaICMS := 0;
-      ValorTotalVenda := 0;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      ChaveRequisicao := '26359854-5698-1365-9856-965478231456';
+      Estabelecimento := '0';
+      SerialPOS := '14034WL38205945';
+      CNPJ := edtEmitCNPJ.Text;
+      IcmsBase := 0.23;
+      ValorTotalVenda := 1530;
+      HabilitarMultiplosPagamentos := True;
+      HabilitarControleAntiFraude := False;
+      CodigoMoeda := 'BRL';
+      EmitirCupomNFCE := False;
+      OrigemPagamento := 'Mesa 1234';
     end;
     TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
   finally

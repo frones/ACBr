@@ -39,6 +39,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/04/2017
+-- ACBrECFNaoFiscal, ACBrECFVirtual --
+[+] Implementado suporte ao método "GetNumUltimoItem"
+    (Por: BigWings e DSA)
+
+-- ACBrECFVirtual --
+[*] Método "ClasstoINI", ajuste para não disparar exceptions quando etntar Salvar
+    e o componente não tiver sido inicializado.. (por: DSA)
+
 Data: 20/04/2017
 -- ACBrEscBematech, ACBrEscDiebold --
 [-] Correção na impressão de Cod.Barras. (bug introduzido em 12/04/2017)

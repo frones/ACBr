@@ -327,6 +327,8 @@ TACBrECFNaoFiscal = class( TACBrECFClass )
     function GetSubTotal: Double; override ;
     function GetTotalPago: Double; override ;
 
+    function GetNumUltimoItem: Integer; override ;
+
     function GetEstado: TACBrECFEstado; override ;
     function GetHorarioVerao: Boolean; override ;
     function GetArredonda : Boolean; override ;
@@ -765,6 +767,11 @@ end;
 function TACBrECFNaoFiscal.GetNumSerie: String;
 begin
   Result := fsNumSerie ;
+end;
+
+function TACBrECFNaoFiscal.GetNumUltimoItem: Integer;
+begin
+  Result := fsItensCupom.Count;
 end;
 
 function TACBrECFNaoFiscal.GetNumCRO: String;

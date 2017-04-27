@@ -493,6 +493,7 @@ TACBrECFVirtualClass = class( TACBrECFClass )
 
     function GetDataMovimento: TDateTime; override;
     function GetNumCOOInicial: String; override;
+    function GetNumUltimoItem: Integer; override;
  public
     Constructor Create( AECFVirtual : TACBrECFVirtual );
     Destructor Destroy  ; override ;
@@ -1742,6 +1743,12 @@ function TACBrECFVirtualClass.GetNumCOOInicial: String;
 begin
   Result := IntToStrZero( fpCOOInicial, 6 ) ;
   GravaLog('GetNumCOOInicial: '+Result);
+end;
+
+function TACBrECFVirtualClass.GetNumUltimoItem: Integer;
+begin
+  Result := fpCupom.Itens.Count;
+  GravaLog('GetNumUltimoItem: '+IntToStr(Result));
 end;
 
 function TACBrECFVirtualClass.GetNumGNFC: String;
@@ -3378,33 +3385,45 @@ begin
 
     fpCupom.SaveToINI( Ini );
 
-    S := 'Formas_Pagamento';
-    for A := 0 to fpFormasPagamentos.Count - 1 do
+    if Assigned(fpFormasPagamentos) then
     begin
-      with fpFormasPagamentos[A] do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Formas_Pagamento';
+      for A := 0 to fpFormasPagamentos.Count - 1 do
+      begin
+        with fpFormasPagamentos[A] do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
-    S := 'Relatorios_Gerenciais';
-    for A := 0 to fpRelatoriosGerenciais.Count - 1 do
+    if Assigned(fpRelatoriosGerenciais) then
     begin
-      with fpRelatoriosGerenciais[A] do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Relatorios_Gerenciais';
+      for A := 0 to fpRelatoriosGerenciais.Count - 1 do
+      begin
+        with fpRelatoriosGerenciais[A] do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
-    S := 'Comprovantes_nao_Fiscais';
-    for A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+    if Assigned(fpComprovantesNaoFiscais) then
     begin
-      with fpComprovantesNaoFiscais[A] do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Comprovantes_nao_Fiscais';
+      for A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+      begin
+        with fpComprovantesNaoFiscais[A] do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
-    S := 'Aliquotas';
-    for A := 0 to fpAliquotas.Count - 1 do
+    if Assigned(fpAliquotas) then
     begin
-      with fpAliquotas[A]  do
-        Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
-    end ;
+      S := 'Aliquotas';
+      for A := 0 to fpAliquotas.Count - 1 do
+      begin
+        with fpAliquotas[A]  do
+          Ini.WriteString( S ,IntToStrZero( A, 2), AsString ) ;
+      end ;
+    end;
 
     ConteudoINI.Clear;
     Ini.GetStrings( ConteudoINI );

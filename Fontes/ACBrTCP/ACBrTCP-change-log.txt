@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+27/04/2017
+-- ACBrCEP --
+[*] "TACBrWSCorreiosSIGEP", ajuste para considerar Tag "Complemento2"
+    http://www.projetoacbr.com.br/forum/topic/36218-consulta-de-cep-ws-correios
+
 24/04/2017
 -- ACBrMail --
 [+]	Adicionada função para salvar .eml antes de enviar o email. Contribuição no link abaixo, 

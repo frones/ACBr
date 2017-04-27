@@ -1505,7 +1505,7 @@ var
   s: string;
   i: Integer;
   SL1: TStringList;
-  sMun: String;
+  sMun, Complemento2: String;
 begin
   SL1 := TStringList.Create;
 
@@ -1532,11 +1532,20 @@ begin
           CEP             := LerTagXML(Buffer, 'cep');
           Tipo_Logradouro := '';
           Logradouro      := LerTagXML(Buffer, 'end');
-          Complemento     := LerTagXML(Buffer, 'complemento');
+          Complemento     := Trim(LerTagXML(Buffer, 'complemento'));
+          Complemento2    := Trim(LerTagXML(Buffer, 'complemento2'));
           Bairro          := LerTagXML(Buffer, 'bairro');
           Municipio       := LerTagXML(Buffer, 'cidade');
           UF              := LerTagXML(Buffer, 'uf');
           IBGE_Municipio  := '';
+
+          if Complemento2 <> '' then
+          begin
+            if Complemento <> ''  then
+              Complemento := Complemento + ' ';
+
+            Complemento := Complemento + Complemento2;
+          end;
 
           // Correios não retornam informação do IBGE, Fazendo busca do IBGE com ACBrIBGE //
           if (Municipio <> '') and

@@ -38,7 +38,8 @@ unit ACBrSATMFe_integrador ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATClass, pcnGerador, pcnMFeUtil, pcnLeitor, pcnEnviarPagamento;
+  Classes, SysUtils, ACBrSATClass, pcnGerador, pcnMFeUtil, pcnLeitor,
+  pcnMFePagamento;
 
 type
 
@@ -94,7 +95,8 @@ type
      function TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia: AnsiString;
        opcao : Integer; novoCodigo: AnsiString ) : String ; override;
 
-     function EnviarPagamento( Pagamento : TEnviarPagamento ): String;
+     function EnviarPagamento( Pagamento : TEnviarPagamento ): TRespostaPagamento;
+     function VerificarStatusValidador( VerificarStatusValidador : TVerificarStatusValidador ): TRespostaVerificarStatusValidador;
 
    published
      property PastaInput  : String  read FPastaInput  write FPastaInput;
@@ -521,20 +523,50 @@ begin
 end ;
 
 function TACBrSATMFe_integrador_XML.EnviarPagamento(Pagamento: TEnviarPagamento
-  ): String;
+  ): TRespostaPagamento;
 var
   Comando, Resp : String;
+  RespostaPagamento : TRespostaPagamento;
 begin
   TACBrSAT(Owner).IniciaComando;
 
   Pagamento.Identificador := numeroSessao;
-  Comando := Pagamento.GetXMLString;
+  Comando := Pagamento.AsXMLString;
   TACBrSAT(Owner).fsComandoLog := 'EnviarPagamento( '+Comando+' )';
 
 
   Resp := EnviaComando(Comando);
-  Result := PegaResposta( Resp );
-  TACBrSAT(Owner).FinalizaComando( Result );
+
+  RespostaPagamento := TRespostaPagamento.Create;
+  RespostaPagamento.AsXMLString := Resp;
+
+  Result := RespostaPagamento;
+
+  TACBrSAT(Owner).FinalizaComando( Resp );
+end;
+
+function TACBrSATMFe_integrador_XML.VerificarStatusValidador(
+  VerificarStatusValidador: TVerificarStatusValidador
+  ): TRespostaVerificarStatusValidador;
+var
+  Comando, Resp : String;
+  RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
+begin
+  TACBrSAT(Owner).IniciaComando;
+
+  VerificarStatusValidador.Identificador := numeroSessao;
+  Comando := VerificarStatusValidador.AsXMLString;
+  TACBrSAT(Owner).fsComandoLog := 'VerificarStatusValidador( '+Comando+' )';
+
+
+  Resp := EnviaComando(Comando);
+
+  RespostaVerificarStatusValidador := TRespostaVerificarStatusValidador.Create;
+  RespostaVerificarStatusValidador.AsXMLString := Resp;
+
+  Result := RespostaVerificarStatusValidador;
+
+  TACBrSAT(Owner).FinalizaComando( Resp );
 end;
 
 end.

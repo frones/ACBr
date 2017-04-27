@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2017 André Ferreira de Moraes               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -34,15 +34,16 @@
 {                                                                              }
 {******************************************************************************}
 
-unit pcnEnviarPagamentoR;
+unit pcnMFePagamentoR;
 
 interface uses
 
   SysUtils, Classes,
-  pcnConversao, pcnLeitor, pcnEnviarPagamento;
+  pcnConversao, pcnLeitor, pcnMFePagamento;
 
 type
 
+  { TEnviarPagamentoR }
   TEnviarPagamentoR = class(TPersistent)
   private
     FLeitor: TLeitor;
@@ -56,13 +57,112 @@ type
     property EnviarPagamento: TEnviarPagamento read FEnviarPagamento write FEnviarPagamento;
   end;
 
+  { TRespostaPagamentoR }
+  TRespostaPagamentoR = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    FRespostaPagamento: TRespostaPagamento;
+  public
+    constructor Create(AOwner: TRespostaPagamento);
+    destructor Destroy; override;
+    function LerXml: boolean;
+  published
+    property Leitor: TLeitor read FLeitor write FLeitor;
+    property RespostaPagamento: TRespostaPagamento read FRespostaPagamento write FRespostaPagamento;
+  end;
+
+  { TRespostaVerificarStatusValidadorR }
+  TRespostaVerificarStatusValidadorR = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    FRespostaVerificarStatusValidador: TRespostaVerificarStatusValidador;
+  public
+    constructor Create(AOwner: TRespostaVerificarStatusValidador);
+    destructor Destroy; override;
+    function LerXml: boolean;
+  published
+    property Leitor: TLeitor read FLeitor write FLeitor;
+    property RespostaVerificarStatusValidador: TRespostaVerificarStatusValidador read FRespostaVerificarStatusValidador write FRespostaVerificarStatusValidador;
+  end;
+
   ////////////////////////////////////////////////////////////////////////////////
 
 implementation
 
 uses ACBrConsts;
 
-{ TCFeR }
+{ TRespostaVerificarStatusValidadorR }
+
+constructor TRespostaVerificarStatusValidadorR.Create(
+  AOwner: TRespostaVerificarStatusValidador);
+begin
+  FLeitor := TLeitor.Create;
+  FRespostaVerificarStatusValidador := AOwner;
+end;
+
+destructor TRespostaVerificarStatusValidadorR.Destroy;
+begin
+  FLeitor.Free;
+  inherited Destroy;
+end;
+
+function TRespostaVerificarStatusValidadorR.LerXml: boolean;
+begin
+  Result := False;
+  RespostaVerificarStatusValidador.Clear;
+
+  if Leitor.rExtrai(1, 'Integrador') <> '' then
+  begin
+    RespostaVerificarStatusValidador.CodigoAutorizacao := Leitor.rCampo(tcStr, 'CodigoAutorizacao');
+    RespostaVerificarStatusValidador.Bin := Leitor.rCampo(tcStr, 'Bin');
+    RespostaVerificarStatusValidador.DonoCartao := Leitor.rCampo(tcStr, 'DonoCartao');
+    RespostaVerificarStatusValidador.DataExpiracao := Leitor.rCampo(tcStr, 'DataExpiracao');
+    RespostaVerificarStatusValidador.InstituicaoFinanceira := Leitor.rCampo(tcStr, 'InstituicaoFinanceira');
+    RespostaVerificarStatusValidador.Parcelas := Leitor.rCampo(tcInt, 'Parcelas');
+    RespostaVerificarStatusValidador.UltimosQuatroDigitos := Leitor.rCampo(tcInt, 'UltimosQuatroDigitos');
+    RespostaVerificarStatusValidador.CodigoPagamento := Leitor.rCampo(tcStr, 'CodigoPagamento');
+    RespostaVerificarStatusValidador.ValorPagamento := Leitor.rCampo(tcDe2, 'ValorPagamento');
+    RespostaVerificarStatusValidador.idFila := Leitor.rCampo(tcInt, 'idFila');
+    RespostaVerificarStatusValidador.Tipo := Leitor.rCampo(tcStr, 'Tipo');
+
+    RespostaVerificarStatusValidador.IntegradorResposta.LerResposta(Leitor.Grupo);
+  end ;
+
+  Result := True;
+end;
+
+{ TRespostaPagamentoR }
+
+constructor TRespostaPagamentoR.Create(AOwner: TRespostaPagamento);
+begin
+  FLeitor := TLeitor.Create;
+  FRespostaPagamento := AOwner;
+end;
+
+destructor TRespostaPagamentoR.Destroy;
+begin
+  FLeitor.Free;
+  inherited Destroy;
+end;
+
+function TRespostaPagamentoR.LerXml: boolean;
+begin
+  Result := False;
+  RespostaPagamento.Clear;
+
+  if Leitor.rExtrai(1, 'Integrador') <> '' then
+  begin
+    RespostaPagamento.IDPagamento     := Leitor.rCampo(tcInt, 'IDPagamento');
+    RespostaPagamento.Mensagem        := Leitor.rCampo(tcStr, 'Mensagem');
+    RespostaPagamento.StatusPagamento := Leitor.rCampo(tcStr, 'StatusPagamento');
+
+    RespostaPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
+  end ;
+
+  Result := True;
+end;
+
+{ TEnviarPagamentoR }
 
 constructor TEnviarPagamentoR.Create(AOwner: TEnviarPagamento);
 begin
@@ -77,12 +177,9 @@ begin
 end;
 
 function TEnviarPagamentoR.LerXml: boolean;
-var
-  ok: boolean;
 begin
   Result := False;
   EnviarPagamento.Clear;
-  ok := true;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
   begin

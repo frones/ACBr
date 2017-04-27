@@ -3,7 +3,7 @@
 {  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
 { mentos de Automação Comercial utilizados no Brasil                           }
 {                                                                              }
-{ Direitos Autorais Reservados (c) 2013 André Ferreira de Moraes               }
+{ Direitos Autorais Reservados (c) 2017 André Ferreira de Moraes               }
 {                                                                              }
 { Colaboradores nesse arquivo:                                                 }
 {                                                                              }
@@ -36,18 +36,17 @@
 
 {$I ACBr.inc}
 
-unit pcnEnviarPagamentoW;
+unit pcnMFePagamentoW;
 
 interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnEnviarPagamento, pcnMFeUtil, ACBrUtil;
+  pcnConversao, pcnGerador, pcnMFePagamento, pcnMFeUtil, ACBrUtil;
 
 type
 
   { TEnviarPagamentoW }
-
   TEnviarPagamentoW = class(TPersistent)
   private
     FGerador: TGerador;
@@ -63,8 +62,85 @@ type
     property Opcoes: TGeradorOpcoes read GetOpcoes ;
   end;
 
+  { TVerificarStatusValidadorW }
+  TVerificarStatusValidadorW = class(TPersistent)
+  private
+    FGerador: TGerador;
+    FVerificarStatusValidador: TVerificarStatusValidador;
+    function GetOpcoes: TGeradorOpcoes;
+  public
+    constructor Create(AOwner: TVerificarStatusValidador);
+    destructor Destroy; override;
+    function GerarXml: boolean;
+  published
+    property Gerador: TGerador read FGerador ;
+    property VerificarStatusValidador: TVerificarStatusValidador read FVerificarStatusValidador write FVerificarStatusValidador;
+    property Opcoes: TGeradorOpcoes read GetOpcoes ;
+  end;
+
 
 implementation
+
+{ TVerificarStatusValidadorW }
+
+function TVerificarStatusValidadorW.GetOpcoes: TGeradorOpcoes;
+begin
+  Result := FGerador.Opcoes;
+end;
+
+constructor TVerificarStatusValidadorW.Create(AOwner: TVerificarStatusValidador);
+begin
+  FVerificarStatusValidador := AOwner;
+  FGerador := TGerador.Create;
+end;
+
+destructor TVerificarStatusValidadorW.Destroy;
+begin
+  FGerador.Free;
+  inherited Destroy;
+end;
+
+function TVerificarStatusValidadorW.GerarXml: boolean;
+var
+  Metodo : TMetodo;
+  Construtor : TConstrutor;
+  Parametro: TParametro;
+begin
+  Gerador.LayoutArquivoTXT.Clear;
+
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.ArquivoFormatoTXT := '';
+
+  Metodo := TMetodo.Create(Gerador);
+  try
+    Metodo.AdicionarParametros := False;
+    Metodo.GerarMetodo(VerificarStatusValidador.Identificador,'VFP-e','VerificarStatusValidador');
+
+    Construtor := TConstrutor.Create(Gerador);
+    try
+      Construtor.GerarConstructor('chaveAcessoValidador', VerificarStatusValidador.ChaveAcessoValidador);
+    finally
+      Construtor.Free;
+    end;
+
+    Gerador.wGrupo('Parametros');
+
+    Parametro := TParametro.Create(Gerador);
+    try
+      Parametro.GerarParametro('idFila' , VerificarStatusValidador.IDFila, tcInt);
+      Parametro.GerarParametro('cnpj'   , VerificarStatusValidador.CNPJ, tcStr);
+    finally
+      Parametro.Free;
+    end;
+
+    Metodo.AdicionarParametros := True;
+    Metodo.FinalizarMetodo;
+  finally
+    Metodo.Free;
+  end;
+
+  Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
 
 { TEnviarPagamentoW }
 
@@ -112,12 +188,12 @@ begin
 
     Parametro := TParametro.Create(Gerador);
     try
-      Parametro.GerarParametro('chaveRequisicao'  , EnviarPagamento.ChaveRequisicao, tcStr);
+      Parametro.GerarParametro('ChaveRequisicao'  , EnviarPagamento.ChaveRequisicao, tcStr);
       Parametro.GerarParametro('Estabelecimento'  , EnviarPagamento.Estabelecimento, tcStr);
       Parametro.GerarParametro('SerialPos'        , EnviarPagamento.SerialPOS, tcStr);
       Parametro.GerarParametro('Cnpj'             , EnviarPagamento.CNPJ, tcStr);
       Parametro.GerarParametro('IcmsBase'         , EnviarPagamento.IcmsBase, tcDe2);
-      Parametro.GerarParametro('valorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcDe2);
+      Parametro.GerarParametro('ValorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcDe2);
       Parametro.GerarParametro('HabilitarMultiplosPagamentos', EnviarPagamento.HabilitarMultiplosPagamentos, tcBoolStr);
       Parametro.GerarParametro('HabilitarControleAntiFraude' , EnviarPagamento.HabilitarControleAntiFraude, tcBoolStr);
       Parametro.GerarParametro('CodigoMoeda'      , EnviarPagamento.CodigoMoeda, tcStr);

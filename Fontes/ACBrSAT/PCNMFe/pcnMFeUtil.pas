@@ -105,7 +105,8 @@ begin
   SL := TStringList.Create;
   try
     SL.Add(Comando);
-    SL.SaveToFile(PathWithDelim(FPastaInput)+'Comando.tmp');
+    SL.SaveToFile(PathWithDelim(FPastaInput)+'Comando.tmp'); // Para evitar a leitura pelo integrador antes do arquivo estar completamente gravado.
+    RenameFile(PathWithDelim(FPastaInput)+'Comando.tmp', PathWithDelim(FPastaInput)+'Comando.xml');
 
     ActualTime := Now;
     if FTimeout <= 0 then

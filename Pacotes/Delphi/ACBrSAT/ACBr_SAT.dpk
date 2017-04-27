@@ -54,9 +54,10 @@ contains
   pcnRedeR in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas',
   pcnRedeW in '..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas',
   ACBrSATMFe_integrador in '..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas',
-  pcnEnviarPagamento in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamento.pas',
-  pcnEnviarPagamentoR in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoR.pas',
-  pcnEnviarPagamentoW in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnEnviarPagamentoW.pas',
-  pcnMFeUtil in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas';
+  pcnMFeUtil in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas',
+  pcnIntegradorResposta in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas',
+  pcnMFePagamento in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamento.pas',
+  pcnMFePagamentoR in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamentoR.pas',
+  pcnMFePagamentoW in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamentoW.pas';
 
 end.

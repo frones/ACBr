@@ -172,9 +172,173 @@ type
     property Tipo: String read FTipo write FTipo;
   end;
 
+  { TRespostaFiscal }
+  TRespostaFiscal = class(TPersistent)
+  private
+    FIdentificador: Integer;
+    FChaveAcessoValidador: String;
+    FIDFila: Integer;
+    FChaveAcesso: String;
+    FNsu: String;
+    FNumerodeAprovacao: String;
+    FBandeira: String;
+    FAdquirente: String;
+    FCNPJ: String;
+    FImpressaoFiscal: String;
+    FNumeroDocumento: String;
+
+    function GetXMLString: AnsiString;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Clear ;
+
+    property AsXMLString : AnsiString read GetXMLString ;
+  published
+    property Identificador: Integer read FIdentificador write FIdentificador;
+    property ChaveAcessoValidador: String read FChaveAcessoValidador write FChaveAcessoValidador;
+    property IDFila: Integer read FIDFila write FIDFila;
+    property ChaveAcesso: String read FChaveAcesso write FChaveAcesso;
+    property Nsu: String read FNsu write FNsu;
+    property NumerodeAprovacao: String read FNumerodeAprovacao write FNumerodeAprovacao;
+    property Bandeira: String read FBandeira write FBandeira;
+    property Adquirente: String read FAdquirente write FAdquirente;
+    property CNPJ: String read FCNPJ write FCNPJ;
+    property ImpressaoFiscal: String read FImpressaoFiscal write FImpressaoFiscal;
+    property NumeroDocumento: String read FNumeroDocumento write FNumeroDocumento;
+  end;
+
+  { TStatusPagamento }
+  TStatusPagamento = class(TPersistent)
+  private
+    FIdentificador: Integer;
+    FChaveAcessoValidador: String;
+    FCodigoAutorizacao : String;
+    FBin : String;
+    FDonoCartao : String;
+    FDataExpiracao : String;
+    FInstituicaoFinanceira : String;
+    FParcelas : Integer;
+    FCodigoPagamento : String;
+    FValorPagamento : Currency;
+    FIDFila : Integer;
+    FTipo : String;
+    FUltimosQuatroDigitos : Integer;
+
+    function GetXMLString: AnsiString;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Clear ;
+
+    property AsXMLString : AnsiString read GetXMLString;
+  published
+    property Identificador: Integer read FIdentificador write FIdentificador;
+    property ChaveAcessoValidador: String read FChaveAcessoValidador write FChaveAcessoValidador;
+    property CodigoAutorizacao: String read FCodigoAutorizacao write FCodigoAutorizacao;
+    property Bin: String read FBin write FBin;
+    property DonoCartao: String read FDonoCartao write FDonoCartao;
+    property DataExpiracao: String read FDataExpiracao write FDataExpiracao;
+    property InstituicaoFinanceira: String read FInstituicaoFinanceira write FInstituicaoFinanceira;
+    property Parcelas: Integer read FParcelas write FParcelas;
+    property CodigoPagamento: String read FCodigoPagamento write FCodigoPagamento;
+    property ValorPagamento: Currency read FValorPagamento write FValorPagamento;
+    property IDFila: Integer read FIDFila write FIDFila;
+    property Tipo: String read FTipo write FTipo;
+    property UltimosQuatroDigitos: Integer read FUltimosQuatroDigitos write FUltimosQuatroDigitos;
+  end;
+
 implementation
 
 Uses pcnMFePagamentoW, pcnMFePagamentoR ;
+
+{ TStatusPagamento }
+
+function TStatusPagamento.GetXMLString: AnsiString;
+var
+  LocStatusPagamentoW : TStatusPagamentoW ;
+begin
+  Result  := '';
+  LocStatusPagamentoW := TStatusPagamentoW.Create(Self);
+  try
+    LocStatusPagamentoW.Gerador.Opcoes.IdentarXML := False;
+
+    LocStatusPagamentoW.GerarXml();
+    Result := LocStatusPagamentoW.Gerador.ArquivoFormatoXML;
+  finally
+    LocStatusPagamentoW.Free;
+  end ;
+end;
+
+constructor TStatusPagamento.Create;
+begin
+  Clear;
+end;
+
+destructor TStatusPagamento.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TStatusPagamento.Clear;
+begin
+  FIdentificador := 0;
+  FChaveAcessoValidador := '';
+  FCodigoAutorizacao := '';
+  FBin := '';
+  FDonoCartao := '';
+  FDataExpiracao := '';
+  FInstituicaoFinanceira := '';
+  FParcelas := 0;
+  FCodigoPagamento := '';
+  FValorPagamento := 0;
+  FIDFila := 0;
+  FTipo := '';
+  FUltimosQuatroDigitos := 0;
+end;
+
+{ TRespostaFiscal }
+
+function TRespostaFiscal.GetXMLString: AnsiString;
+var
+  LocRespostaFiscalW : TRespostaFiscalW ;
+begin
+  Result  := '';
+  LocRespostaFiscalW := TRespostaFiscalW.Create(Self);
+  try
+    LocRespostaFiscalW.Gerador.Opcoes.IdentarXML := False;
+
+    LocRespostaFiscalW.GerarXml();
+    Result := LocRespostaFiscalW.Gerador.ArquivoFormatoXML;
+  finally
+    LocRespostaFiscalW.Free;
+  end ;
+end;
+
+constructor TRespostaFiscal.Create;
+begin
+  Clear;
+end;
+
+destructor TRespostaFiscal.Destroy;
+begin
+  inherited Destroy;
+end;
+
+procedure TRespostaFiscal.Clear;
+begin
+  FIdentificador := 0;
+  FChaveAcessoValidador := '';
+  FIDFila := 0;
+  FChaveAcesso := '';
+  FNsu := '';
+  FNumerodeAprovacao := '';
+  FBandeira := '';
+  FAdquirente := '';
+  FCNPJ := '';
+  FImpressaoFiscal := '';
+  FNumeroDocumento := '';
+end;
 
 { TRespostaVerificarStatusValidador }
 

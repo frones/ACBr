@@ -78,8 +78,178 @@ type
     property Opcoes: TGeradorOpcoes read GetOpcoes ;
   end;
 
+  { TRespostaFiscalW }
+  TRespostaFiscalW = class(TPersistent)
+  private
+    FGerador: TGerador;
+    FRespostaFiscal: TRespostaFiscal;
+    function GetOpcoes: TGeradorOpcoes;
+  public
+    constructor Create(AOwner: TRespostaFiscal);
+    destructor Destroy; override;
+    function GerarXml: boolean;
+  published
+    property Gerador: TGerador read FGerador ;
+    property RespostaFiscal: TRespostaFiscal read FRespostaFiscal write FRespostaFiscal;
+    property Opcoes: TGeradorOpcoes read GetOpcoes ;
+  end;
+
+  { TStatusPagamentoW }
+  TStatusPagamentoW = class(TPersistent)
+  private
+    FGerador: TGerador;
+    FStatusPagamento: TStatusPagamento;
+    function GetOpcoes: TGeradorOpcoes;
+  public
+    constructor Create(AOwner: TStatusPagamento);
+    destructor Destroy; override;
+    function GerarXml: boolean;
+  published
+    property Gerador: TGerador read FGerador ;
+    property StatusPagamento: TStatusPagamento read FStatusPagamento write FStatusPagamento;
+    property Opcoes: TGeradorOpcoes read GetOpcoes ;
+  end;
+
 
 implementation
+
+{ TStatusPagamentoW }
+
+function TStatusPagamentoW.GetOpcoes: TGeradorOpcoes;
+begin
+  Result := FGerador.Opcoes;
+end;
+
+constructor TStatusPagamentoW.Create(AOwner: TStatusPagamento);
+begin
+  FStatusPagamento := AOwner;
+  FGerador := TGerador.Create;
+end;
+
+destructor TStatusPagamentoW.Destroy;
+begin
+  FGerador.Free;
+  inherited Destroy;
+end;
+
+function TStatusPagamentoW.GerarXml: boolean;
+var
+  Metodo : TMetodo;
+  Construtor : TConstrutor;
+  Parametro: TParametro;
+begin
+  Gerador.LayoutArquivoTXT.Clear;
+
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.ArquivoFormatoTXT := '';
+
+  Metodo := TMetodo.Create(Gerador);
+  try
+    Metodo.AdicionarParametros := False;
+    Metodo.GerarMetodo(StatusPagamento.Identificador,'VFP-e','EnviarStatusPagamento');
+
+    Construtor := TConstrutor.Create(Gerador);
+    try
+      Construtor.GerarConstructor('chaveAcessoValidador', StatusPagamento.ChaveAcessoValidador);
+    finally
+      Construtor.Free;
+    end;
+
+    Gerador.wGrupo('Parametros');
+
+    Parametro := TParametro.Create(Gerador);
+    try
+      Parametro.GerarParametro('CodigoAutorizacao'  , StatusPagamento.CodigoAutorizacao, tcStr);
+      Parametro.GerarParametro('Bin'                , StatusPagamento.Bin, tcStr);
+      Parametro.GerarParametro('DonoCartao'         , StatusPagamento.DonoCartao, tcStr);
+      Parametro.GerarParametro('DataExpiracao'      , StatusPagamento.DataExpiracao, tcStr);
+      Parametro.GerarParametro('InstituicaoFinanceira', StatusPagamento.InstituicaoFinanceira, tcStr);
+      Parametro.GerarParametro('Parcelas'           , StatusPagamento.Parcelas, tcInt);
+      Parametro.GerarParametro('CodigoPagamento'    , StatusPagamento.CodigoPagamento, tcStr);
+      Parametro.GerarParametro('ValorPagamento'     , StatusPagamento.ValorPagamento, tcDe2);
+      Parametro.GerarParametro('idFila'             , StatusPagamento.IDFila, tcInt);
+      Parametro.GerarParametro('Tipo'               , StatusPagamento.Tipo, tcStr);
+      Parametro.GerarParametro('UltimosQuatroDigitos', StatusPagamento.UltimosQuatroDigitos, tcInt);
+    finally
+      Parametro.Free;
+    end;
+
+    Metodo.AdicionarParametros := True;
+    Metodo.FinalizarMetodo;
+  finally
+    Metodo.Free;
+  end;
+
+  Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
+
+{ TRespostaFiscalW }
+
+function TRespostaFiscalW.GetOpcoes: TGeradorOpcoes;
+begin
+  Result := FGerador.Opcoes;
+end;
+
+constructor TRespostaFiscalW.Create(AOwner: TRespostaFiscal);
+begin
+  FRespostaFiscal := AOwner;
+  FGerador := TGerador.Create;
+end;
+
+destructor TRespostaFiscalW.Destroy;
+begin
+  FGerador.Free;
+  inherited Destroy;
+end;
+
+function TRespostaFiscalW.GerarXml: boolean;
+var
+  Metodo : TMetodo;
+  Construtor : TConstrutor;
+  Parametro: TParametro;
+begin
+  Gerador.LayoutArquivoTXT.Clear;
+
+  Gerador.ArquivoFormatoXML := '';
+  Gerador.ArquivoFormatoTXT := '';
+
+  Metodo := TMetodo.Create(Gerador);
+  try
+    Metodo.AdicionarParametros := False;
+    Metodo.GerarMetodo(RespostaFiscal.Identificador,'VFP-e','RespostaFiscal');
+
+    Construtor := TConstrutor.Create(Gerador);
+    try
+      Construtor.GerarConstructor('chaveAcessoValidador', RespostaFiscal.ChaveAcessoValidador);
+    finally
+      Construtor.Free;
+    end;
+
+    Gerador.wGrupo('Parametros');
+
+    Parametro := TParametro.Create(Gerador);
+    try
+      Parametro.GerarParametro('idFila'           , RespostaFiscal.IDFila, tcInt);
+      Parametro.GerarParametro('ChaveAcesso'      , RespostaFiscal.ChaveAcesso, tcStr);
+      Parametro.GerarParametro('Nsu'              , RespostaFiscal.Nsu, tcStr);
+      Parametro.GerarParametro('NumerodeAprovacao', RespostaFiscal.NumerodeAprovacao, tcStr);
+      Parametro.GerarParametro('Bandeira'         , RespostaFiscal.Bandeira, tcStr);
+      Parametro.GerarParametro('Adquirente'       , RespostaFiscal.Adquirente, tcStr);
+      Parametro.GerarParametro('CNPJ'             , RespostaFiscal.CNPJ, tcStr);
+      Parametro.GerarParametro('ImpressaoFiscal'  , RespostaFiscal.ImpressaoFiscal, tcStr);
+      Parametro.GerarParametro('NumeroDocumento'  , RespostaFiscal.NumeroDocumento, tcStr);
+    finally
+      Parametro.Free;
+    end;
+
+    Metodo.AdicionarParametros := True;
+    Metodo.FinalizarMetodo;
+  finally
+    Metodo.Free;
+  end;
+
+  Result := (Gerador.ListaDeAlertas.Count = 0);
+end;
 
 { TVerificarStatusValidadorW }
 

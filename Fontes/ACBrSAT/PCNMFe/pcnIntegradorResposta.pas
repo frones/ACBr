@@ -35,8 +35,6 @@
 {******************************************************************************}
 unit pcnIntegradorResposta;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses

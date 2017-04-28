@@ -107,7 +107,7 @@ type
     procedure Assign(DeArquivosConfNFe: TArquivosConfNFe); reintroduce;
 
     function GetPathInu(CNPJ: String = ''): String;
-    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
+    function GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
@@ -147,7 +147,7 @@ type
 implementation
 
 uses
-  ACBrUtil,
+  ACBrUtil, ACBrNFe,
   DateUtils;
 
 { TDownloadConfNFe }
@@ -330,14 +330,16 @@ begin
   Result := GetPath(FPathInu, 'Inu', CNPJ);
 end;
 
-function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 55): String;
+function TArquivosConfNFe.GetPathNFe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
 var
   DescricaoModelo: String;
 begin
   case Modelo of
+     0: DescricaoModelo := TACBrNFe(fpConfiguracoes.Owner).GetNomeModeloDFe;
     55: DescricaoModelo := 'NFe';
     65: DescricaoModelo := 'NFCe';
   end;
+
   Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data);
 end;
 

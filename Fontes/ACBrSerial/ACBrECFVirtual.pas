@@ -1294,7 +1294,8 @@ begin
 
     PagtoCupom := fpPagamentosCupom.New;
     PagtoCupom.AsString := T;
-    fpTotalPago := fpTotalPago + max(PagtoCupom.ValorPago,0);
+    if UpperCase(PagtoCupom.fsObservacao) <> 'TROCO' then
+      fpTotalPago := fpTotalPago + max(PagtoCupom.ValorPago,0);
     Inc( I );
   end ;
 

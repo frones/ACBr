@@ -398,11 +398,11 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','TesteFimaFim');
+  FMetodo.GerarMetodo(numeroSessao,'MF-e','TesteFimAFim');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('dadosVenda','<![CDATA[' +FComandoMFE.AjustaComando(dadosVenda)+ ']]>',tcStr, False);
-//  FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
+ // FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
   FMetodo.FinalizarMetodo;
 
   Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);

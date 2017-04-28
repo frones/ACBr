@@ -676,7 +676,7 @@ var
   Ret: Longint;
   ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_KEY_HANDLE;
 
-  procedure CheckPINError(WinErro: DWORD = 0);
+  procedure CheckPINError(WinErro: DWORD = 0; ExceptionErrosDesconhecidos: Boolean = True);
   begin
     if WinErro = 0 then
       WinErro := GetLastError;
@@ -688,7 +688,7 @@ var
       raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o PIN errado foi apresentado.')
     else if WinErro = SCARD_W_CHV_BLOCKED then
       raise EACBrDFeWrongPINException.Create('O cartão não pode ser acessado porque o número máximo de tentativas de entrada de PIN foi atingido')
-    else
+    else if ExceptionErrosDesconhecidos then
       raise EACBrDFeException.Create('Falha ao Definir PIN do Certificado. Erro: '+GetLastErrorAsHexaStr(WinErro));
   end;
 
@@ -727,7 +727,7 @@ begin
         CheckPINError();
 
       if not CryptSetProvParam(ProviderOrKeyHandle, PP_SIGNATURE_PIN, PBYTE(APass), 0) then
-        CheckPINError();
+        CheckPINError(GetLastError, False);
     end;
   finally
     if pfCallerFreeProv then

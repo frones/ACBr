@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/04/2017
+-- ACBrDFeWinCrypt --
+[*] Ajuste em "SetCertContextPassword", para não disparar erros desconhecidos na
+    atribuição de senha para "PP_SIGNATURE_PIN"
+    http://www.projetoacbr.com.br/forum/topic/36266-falha-ao-definir-pin-do-certificado-erro-80100004/
+    (por: DSA)
+
 22/04/2017
 -- ACBrDFe --
 [*] Método "EnviarEmail", adicionado o parâmetro "ReplyTo: TStrings"

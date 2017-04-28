@@ -51,6 +51,11 @@ Símbolo : Significado
     http://www.projetoacbr.com.br/forum/topic/36266-falha-ao-definir-pin-do-certificado-erro-80100004/
     (por: DSA)
 
+-- ACBrDFeConfiguracoes --
+[*] Modificada a visibilidade de variável Private, "TArquivosConf.FConfiguracoes"
+    para "TArquivosConf.fpConfiguracoes", Protected
+    (por: DSA)
+
 22/04/2017
 -- ACBrDFe --
 [*] Método "EnviarEmail", adicionado o parâmetro "ReplyTo: TStrings"

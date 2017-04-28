@@ -213,8 +213,6 @@ type
 
   TArquivosConf = class(TComponent)
   private
-    FConfiguracoes: TConfiguracoes;
-
     FPathSalvar: String;
     FPathSchemas: String;
     FIniServicos: String;
@@ -226,12 +224,13 @@ type
     FSepararPorMes: Boolean;
     FSepararPorDia: Boolean;
   private
-
     function GetIniServicos: String;
     function GetPathSalvar: String;
     function GetPathSchemas: String;
     procedure SetSepararPorDia(const Value: Boolean);
     procedure SetSepararPorMes(const Value: Boolean);
+  protected
+    fpConfiguracoes: TConfiguracoes;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
     procedure Assign(DeArquivosConf: TArquivosConf); reintroduce; virtual;
@@ -776,7 +775,7 @@ constructor TArquivosConf.Create(AConfiguracoes: TConfiguracoes);
 begin
   inherited Create(AConfiguracoes);
 
-  FConfiguracoes := AConfiguracoes;
+  fpConfiguracoes := AConfiguracoes;
   FSalvar := True;
   FPathSalvar := '';
   FPathSchemas := '';
@@ -805,7 +804,7 @@ end;
 function TArquivosConf.GetPathSalvar: String;
 begin
   if FPathSalvar = '' then
-    if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
       FPathSalvar := ApplicationPath + 'Docs';
 
   FPathSalvar := PathWithDelim(Trim(FPathSalvar));
@@ -815,7 +814,7 @@ end;
 function TArquivosConf.GetPathSchemas: String;
 begin
   if FPathSchemas = '' then
-    if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
       FPathSchemas := ApplicationPath + 'Schemas';
 
   FPathSchemas := PathWithDelim(Trim(FPathSchemas));
@@ -839,8 +838,8 @@ end;
 function TArquivosConf.GetIniServicos: String;
 begin
   if FIniServicos = '' then
-    if not (csDesigning in FConfiguracoes.Owner.ComponentState) then
-      FIniServicos := ApplicationPath + FConfiguracoes.WebServices.ResourceName+'.ini';
+    if not (csDesigning in fpConfiguracoes.Owner.ComponentState) then
+      FIniServicos := ApplicationPath + fpConfiguracoes.WebServices.ResourceName+'.ini';
 
   Result := FIniServicos;
 end;
@@ -862,7 +861,7 @@ begin
     CNPJ := OnlyNumber(CNPJ);
 
     if EstaVazio(CNPJ) then
-      CNPJ := OnlyNumber(TACBrDFe(FConfiguracoes.Owner).SSL.CertCNPJ);
+      CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
 
     if NaoEstaVazio(CNPJ) then
       Dir := PathWithDelim(Dir) + CNPJ;
@@ -870,7 +869,7 @@ begin
 
   if SepararPorModelo then
   begin
-    Modelo := TACBrDFe(FConfiguracoes.Owner).GetNomeModeloDFe;
+    Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe;
     Dir := PathWithDelim(Dir) + Modelo;
   end;
 

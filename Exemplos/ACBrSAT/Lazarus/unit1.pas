@@ -29,7 +29,9 @@ type
     bImpressora: TButton;
     bInicializar : TButton ;
     btLerParams: TButton;
+    btMFEEnviarStatusPagamento: TButton;
     btMFEVerificarStatus: TButton;
+    btMFERespostaFiscal: TButton;
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
@@ -227,7 +229,9 @@ type
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
+    procedure btMFEEnviarStatusPagamentoClick(Sender: TObject);
     procedure btMFEEnviarPagamentoClick(Sender: TObject);
+    procedure btMFERespostaFiscalClick(Sender: TObject);
     procedure btMFEVerificarStatusClick(Sender: TObject);
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
@@ -550,6 +554,36 @@ begin
   end ;
 end;
 
+procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
+var
+  StatusPagamentoMFe : TStatusPagamento;
+  RespostaStatusPagamento : TRespostaStatusPagamento;
+begin
+  StatusPagamentoMFe := TStatusPagamento.Create;
+  try
+    with StatusPagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      CodigoAutorizacao := '20551';
+      Bin := '123456';
+      DonoCartao := 'TESTE';
+      DataExpiracao := '01/01';
+      InstituicaoFinanceira:= 'STONE';
+      Parcelas := 1;
+      CodigoPagamento := '12846';
+      ValorPagamento := 1530;
+      IDFila := 1674068;
+      Tipo := '1';
+      UltimosQuatroDigitos := 12345;
+    end;
+    RespostaStatusPagamento := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarStatusPagamento(StatusPagamentoMFe);
+    ShowMessage(RespostaStatusPagamento.Retorno);
+  finally
+    StatusPagamentoMFe.Free;
+  end;
+end;
+
 procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
 var
   PagamentoMFe : TEnviarPagamento;
@@ -578,6 +612,34 @@ begin
   finally
     PagamentoMFe.Free;
   end;
+end;
+
+procedure TForm1.btMFERespostaFiscalClick(Sender: TObject);
+var
+ RespostaFiscal : TRespostaFiscal;
+ RetornoRespostaFiscal : TRetornoRespostaFiscal;
+Begin
+  RespostaFiscal := TRespostaFiscal.Create;
+    try
+      with RespostaFiscal do
+      begin
+        Clear;
+        ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+        IDFila := 1674068;
+        ChaveAcesso := '35170408723218000186599000113100000279731880';
+        Nsu := '1674068';
+        NumerodeAprovacao := '1234';
+        Bandeira := 'VISA';
+        Adquirente := 'STONE';
+        ImpressaoFiscal := '';
+        NumeroDocumento := '1674068';
+        CNPJ:= edtEmitCNPJ.Text;
+      end;
+      RetornoRespostaFiscal := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).RespostaFiscal(RespostaFiscal);
+      ShowMessage(RetornoRespostaFiscal.IdRespostaFiscal);
+    finally
+      RespostaFiscal.Free;
+    end;
 end;
 
 procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);

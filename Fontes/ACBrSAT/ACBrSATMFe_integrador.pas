@@ -38,8 +38,8 @@ unit ACBrSATMFe_integrador ;
 interface
 
 uses
-  Classes, SysUtils, ACBrSATClass, pcnGerador, pcnMFeUtil, pcnLeitor,
-  pcnMFePagamento;
+  Classes, SysUtils, ACBrSATClass, pcnGerador, pcnMFeUtil,
+  pcnVFPe;
 
 type
 
@@ -89,7 +89,7 @@ type
 
      function EnviarPagamento( Pagamento : TEnviarPagamento ): TRespostaPagamento;
      function VerificarStatusValidador( VerificarStatusValidador : TVerificarStatusValidador ): TRespostaVerificarStatusValidador;
-     function RespostaFiscal( RespostaFiscal : TRespostaFiscal ): String;
+     function RespostaFiscal( RespostaFiscal : TRespostaFiscal ): TRespostaRespostaFiscal;
      function EnviarStatusPagamento( StatusPagamento : TStatusPagamento ): String;
 
    published
@@ -155,7 +155,7 @@ begin
   FParametro.GerarParametro('assinaturaCNPJs',assinaturaCNPJs,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'AssociarAssinatura',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -178,7 +178,7 @@ begin
   FParametro.GerarParametro('cUF',cUF,tcInt);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'AtivarMFe',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -197,7 +197,7 @@ begin
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'AtualizarSoftwareMFe',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -216,7 +216,7 @@ begin
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'BloquearMFe',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -238,7 +238,7 @@ begin
   FParametro.GerarParametro('dadosCancelamento','<![CDATA[' +FComandoMFE.AjustaComando(dadosCancelamento)+ ']]>',tcStr, False);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'CancelarUltimaVenda',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -259,7 +259,7 @@ begin
   FParametro.GerarParametro('certificado',certificado,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'ComunicarCertificadoICPBRASIL',FGerador.ArquivoFormatoXML);
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
 
@@ -290,7 +290,7 @@ begin
   FParametro.GerarParametro('cNumeroDeSessao',cNumeroDeSessao,tcInt);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConsultarNumeroSessao',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -308,7 +308,7 @@ begin
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConsultarMFe',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -327,7 +327,7 @@ begin
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConsultarStatusOperacional',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -346,7 +346,7 @@ begin
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'DesbloquearMFe',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -367,7 +367,7 @@ begin
   FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarDadosVenda',FGerador.ArquivoFormatoXML);
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
 
@@ -385,7 +385,7 @@ begin
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'ExtrairLogs',FGerador.ArquivoFormatoXML);
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
 
@@ -405,7 +405,7 @@ begin
  // FParametro.GerarParametro('nrDocumento',numeroSessao,tcInt);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'TesteFimAFim',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -432,7 +432,7 @@ begin
   FParametro.GerarParametro('confNovoCodigo',novoCodigo,tcStr);
   FMetodo.FinalizarMetodo;
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,FGerador.ArquivoFormatoXML);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'TrocarCodigoDeAtivacao',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;
@@ -450,7 +450,7 @@ begin
   TACBrSAT(Owner).fsComandoLog := 'EnviarPagamento( '+Comando+' )';
 
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,Comando);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarPagamento',Comando);
 
   RespostaPagamento := TRespostaPagamento.Create;
   RespostaPagamento.AsXMLString := Resp;
@@ -474,7 +474,7 @@ begin
   TACBrSAT(Owner).fsComandoLog := 'VerificarStatusValidador( '+Comando+' )';
 
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,Comando);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
 
   RespostaVerificarStatusValidador := TRespostaVerificarStatusValidador.Create;
   RespostaVerificarStatusValidador.AsXMLString := Resp;
@@ -485,9 +485,10 @@ begin
 end;
 
 function TACBrSATMFe_integrador_XML.RespostaFiscal(
-  RespostaFiscal: TRespostaFiscal): String;
+  RespostaFiscal: TRespostaFiscal): TRespostaRespostaFiscal;
 var
   Comando, Resp : String;
+  RespostaRespostaFiscal : TRespostaRespostaFiscal;
 begin
   TACBrSAT(Owner).IniciaComando;
 
@@ -495,9 +496,12 @@ begin
   Comando := RespostaFiscal.AsXMLString;
   TACBrSAT(Owner).fsComandoLog := 'RespostaFiscal( '+Comando+' )';
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,Comando);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
 
-  Result := Resp;
+  RespostaRespostaFiscal := TRespostaRespostaFiscal.Create;
+  RespostaRespostaFiscal.AsXMLString := Resp;
+
+  Result := RespostaRespostaFiscal;
 
   TACBrSAT(Owner).FinalizaComando( Resp );
 end;
@@ -513,7 +517,7 @@ begin
   Comando := StatusPagamento.AsXMLString;
   TACBrSAT(Owner).fsComandoLog := 'EnviarStatusPagamento( '+Comando+' )';
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,Comando);
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
 
   Result := Resp;
 

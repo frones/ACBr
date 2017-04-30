@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 279
+  Left = 673
   Height = 500
-  Top = 110
+  Top = 237
   Width = 900
   ActiveControl = PageControl1
   Caption = 'SAT Teste - Projeto ACBr'
@@ -2414,13 +2414,13 @@ object Form1: TForm1
             AnchorSideTop.Control = seItensVenda
             AnchorSideTop.Side = asrCenter
             AnchorSideRight.Control = seItensVenda
-            Left = 554
+            Left = 558
             Height = 15
             Top = 157
-            Width = 80
+            Width = 76
             Anchors = [akTop, akRight]
             BorderSpacing.Right = 5
-            Caption = 'Items a Vender:'
+            Caption = 'Itens a Vender:'
             ParentColor = False
           end
         end
@@ -3273,6 +3273,15 @@ object Form1: TForm1
             Caption = 'MFE Enviar Pagamento'
             OnClick = btMFEEnviarPagamentoClick
             TabOrder = 3
+          end
+          object btMFEVerificarStatus: TButton
+            Left = 320
+            Height = 25
+            Top = 51
+            Width = 147
+            Caption = 'Verificar Status Validador'
+            OnClick = btMFEVerificarStatusClick
+            TabOrder = 4
           end
         end
       end

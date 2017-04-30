@@ -56,8 +56,8 @@ contains
   ACBrSATMFe_integrador in '..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas',
   pcnMFeUtil in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas',
   pcnIntegradorResposta in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas',
-  pcnMFePagamento in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamento.pas',
-  pcnMFePagamentoR in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamentoR.pas',
-  pcnMFePagamentoW in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamentoW.pas';
+  pcnVFPe in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPe.pas',
+  pcnVFPeR in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeR.pas',
+  pcnVFPeW in '..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeW.pas';
 
 end.

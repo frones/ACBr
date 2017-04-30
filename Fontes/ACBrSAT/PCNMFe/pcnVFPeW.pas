@@ -36,13 +36,13 @@
 
 {$I ACBr.inc}
 
-unit pcnMFePagamentoW;
+unit pcnVFPeW;
 
 interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnMFePagamento, pcnMFeUtil, ACBrUtil;
+  pcnConversao, pcnGerador, pcnVFPe, pcnMFeUtil, ACBrUtil;
 
 type
 

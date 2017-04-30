@@ -87,18 +87,18 @@
         <UnitName Value="acbrsatmfe_integrador"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamento.pas"/>
-        <UnitName Value="pcnMFePagamento"/>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPe.pas"/>
+        <UnitName Value="pcnVFPe"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamentoR.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeR.pas"/>
         <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="pcnMFePagamentoR"/>
+        <UnitName Value="pcnVFPeR"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFePagamentoW.pas"/>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeW.pas"/>
         <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="pcnMFePagamentoW"/>
+        <UnitName Value="pcnVFPeW"/>
       </Item19>
       <Item20>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas"/>

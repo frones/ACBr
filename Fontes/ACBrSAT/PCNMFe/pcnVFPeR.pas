@@ -34,12 +34,12 @@
 {                                                                              }
 {******************************************************************************}
 
-unit pcnMFePagamentoR;
+unit pcnVFPeR;
 
 interface uses
 
   SysUtils, Classes,
-  pcnConversao, pcnLeitor, pcnMFePagamento;
+  pcnConversao, pcnLeitor, pcnVFPe;
 
 type
 
@@ -84,6 +84,21 @@ type
     property Leitor: TLeitor read FLeitor write FLeitor;
     property RespostaVerificarStatusValidador: TRespostaVerificarStatusValidador read FRespostaVerificarStatusValidador write FRespostaVerificarStatusValidador;
   end;
+
+  { TRespostaPagamentoR }
+  TRespostaRespostaFiscalR = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    FRespostaRespostaFiscal: TRespostaRespostaFiscal;
+  public
+    constructor Create(AOwner: TRespostaRespostaFiscal);
+    destructor Destroy; override;
+    function LerXml: boolean;
+  published
+    property Leitor: TLeitor read FLeitor write FLeitor;
+    property RespostaRespostaFiscal: TRespostaRespostaFiscal read FRespostaRespostaFiscal write FRespostaRespostaFiscal;
+  end;
+
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -191,6 +206,34 @@ begin
     EnviarPagamento.SerialPOS            := Leitor.rCampo(tcStr, 'SerialPOS');
     EnviarPagamento.IcmsBase             := Leitor.rCampo(tcDe2, 'IcmsBase');
     EnviarPagamento.ValorTotalVenda      := Leitor.rCampo(tcDe2, 'ValorTotalVenda');
+  end ;
+
+  Result := True;
+end;
+
+{ TRespostaRespostaFiscalR }
+
+constructor TRespostaRespostaFiscalR.Create(AOwner: TRespostaRespostaFiscal);
+begin
+  FLeitor := TLeitor.Create;
+  FRespostaRespostaFiscal := AOwner;
+end;
+
+destructor TRespostaRespostaFiscalR.Destroy;
+begin
+  FLeitor.Free;
+  inherited Destroy;
+end;
+
+function TRespostaRespostaFiscalR.LerXml: boolean;
+begin
+  Result := False;
+  RespostaRespostaFiscal.Clear;
+
+  if Leitor.rExtrai(1, 'Integrador') <> '' then
+  begin
+    RespostaRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
+    RespostaRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
   end ;
 
   Result := True;

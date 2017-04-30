@@ -29,6 +29,7 @@ type
     bImpressora: TButton;
     bInicializar : TButton ;
     btLerParams: TButton;
+    btMFEVerificarStatus: TButton;
     btSalvarParams: TButton;
     btSerial: TSpeedButton;
     btMFEEnviarPagamento: TButton;
@@ -227,6 +228,7 @@ type
     procedure bInicializarClick(Sender : TObject) ;
     procedure btLerParamsClick(Sender : TObject) ;
     procedure btMFEEnviarPagamentoClick(Sender: TObject);
+    procedure btMFEVerificarStatusClick(Sender: TObject);
     procedure btSalvarParamsClick(Sender : TObject) ;
     procedure btSerialClick(Sender: TObject);
     procedure cbUsarEscPosChange(Sender: TObject);
@@ -291,7 +293,7 @@ implementation
 
 Uses
   math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers, ACBrSATExtratoClass, ACBrSATMFe_integrador, pcnEnviarPagamento;
+  RLPrinters, Printers, ACBrSATExtratoClass, ACBrSATMFe_integrador, pcnVFPe;
 
 {$R *.lfm}
 
@@ -551,6 +553,7 @@ end;
 procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
 var
   PagamentoMFe : TEnviarPagamento;
+  RespostaPagamentoMFe : TRespostaPagamento;
 begin
   PagamentoMFe := TEnviarPagamento.Create;
   try
@@ -559,8 +562,8 @@ begin
       Clear;
       ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
       ChaveRequisicao := '26359854-5698-1365-9856-965478231456';
-      Estabelecimento := '0';
-      SerialPOS := '14034WL38205945';
+      Estabelecimento := '10';
+      SerialPOS := InputBox('SerialPOS','Informe o Serial do POS','ACBr-'+RandomName(8));
       CNPJ := edtEmitCNPJ.Text;
       IcmsBase := 0.23;
       ValorTotalVenda := 1530;
@@ -570,10 +573,33 @@ begin
       EmitirCupomNFCE := False;
       OrigemPagamento := 'Mesa 1234';
     end;
-    TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
+    RespostaPagamentoMFe := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
+    ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
   finally
     PagamentoMFe.Free;
   end;
+end;
+
+procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);
+var
+  VerificarStatusValidador : TVerificarStatusValidador;
+  RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
+begin
+  VerificarStatusValidador := TVerificarStatusValidador.Create;
+  try
+    with VerificarStatusValidador do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);
+      CNPJ:= edtEmitCNPJ.Text;
+    end;
+    RespostaVerificarStatusValidador := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).VerificarStatusValidador(VerificarStatusValidador) ;
+  finally
+    VerificarStatusValidador.Free;
+  end;
+
+  ShowMessage(RespostaVerificarStatusValidador.CodigoAutorizacao);
 end;
 
 procedure TForm1.btSalvarParamsClick(Sender : TObject) ;
@@ -1047,6 +1073,13 @@ begin
   begin
     mRecebido.Lines.Text := ACBrSAT1.CFe.AsXMLString;
     PageControl1.ActivePage := tsRecebido;
+
+{    ACBrSAT1.CFe.ide.dEmi;
+    ACBrSAT1.CFe.infCFe.ID;
+    ACBrSAT1.CFe.Total.vCFe;
+    ACBrSAT1.CFe.Dest.CNPJCPF;
+    ACBrSAT1.CFe.ide.assinaturaQRCODE;      }
+
   end;
 end;
 

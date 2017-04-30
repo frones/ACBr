@@ -224,7 +224,7 @@ object Form1: TForm1
         Top = 15
         Width = 645
         Height = 183
-        ActivePage = tsMFE
+        ActivePage = tsDadosSAT
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
@@ -541,7 +541,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -550,7 +550,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -559,7 +559,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
         end
@@ -1186,7 +1186,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 2
             end
             object cbxPorta: TComboBox
@@ -1195,7 +1195,7 @@ object Form1: TForm1
               Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 3
             end
             object cbxPagCodigo: TComboBox
@@ -1205,7 +1205,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 4
             end
             object seColunas: TSpinEdit
@@ -1270,7 +1270,7 @@ object Form1: TForm1
             Top = 80
             Width = 38
             Height = 13
-            Caption = 'Label32'
+            Caption = 'Timeout'
           end
           object edMFEInput: TEdit
             Left = 8

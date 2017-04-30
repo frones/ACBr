@@ -18,7 +18,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function EnviaComando(numeroSessao: Integer; Comando : String) : String;
+    function EnviaComando(numeroSessao: Integer; Nome, Comando : String) : String;
     function PegaResposta(Resp : String) : String;
     function AguardaArqResposta(numeroSessao: Integer) : String;
     function AjustaComando(Comando : String) : String;
@@ -97,16 +97,19 @@ begin
   inherited Destroy;
 end;
 
-function TComandoMFe.EnviaComando(numeroSessao: Integer; Comando: String): String;
+function TComandoMFe.EnviaComando(numeroSessao: Integer; Nome, Comando: String): String;
 var
   SL : TStringList;
   LocTimeOut, ActualTime : TDateTime;
+  NomeArquivo : String;
 begin
+  Result := '';
   SL := TStringList.Create;
   try
+    NomeArquivo := PathWithDelim(FPastaInput)+Nome+'-'+IntToStr(numeroSessao)+'.tmp';
     SL.Add(Comando);
-    SL.SaveToFile(PathWithDelim(FPastaInput)+'Comando.tmp'); // Para evitar a leitura pelo integrador antes do arquivo estar completamente gravado.
-    RenameFile(PathWithDelim(FPastaInput)+'Comando.tmp', PathWithDelim(FPastaInput)+'Comando.xml');
+    SL.SaveToFile(NomeArquivo); // Para evitar a leitura pelo integrador antes do arquivo estar completamente gravado.
+    RenameFile(NomeArquivo, ChangeFileExt(NomeArquivo,'.xml'));
 
     ActualTime := Now;
     if FTimeout <= 0 then
@@ -124,6 +127,8 @@ begin
   finally
     SL.Free;
   end;
+  if EstaVazio(Result) then
+    raise Exception.Create('Sem Resposta do Integrador');
 end;
 
 function TComandoMFe.PegaResposta(Resp: String): String;

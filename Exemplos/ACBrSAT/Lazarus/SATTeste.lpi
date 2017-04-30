@@ -76,7 +76,7 @@
         <PackageName Value="LCL"/>
       </Item8>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="SATTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -94,6 +94,10 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

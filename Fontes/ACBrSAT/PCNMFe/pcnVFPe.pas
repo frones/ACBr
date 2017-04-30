@@ -36,7 +36,7 @@
 
 {$I ACBr.inc}
 
-unit pcnMFePagamento
+unit pcnVFPe
 ;
 
 interface
@@ -110,6 +110,26 @@ type
     property Mensagem: String read FMensagem write FMensagem;
     property StatusPagamento: String read FStatusPagamento write FStatusPagamento;
   end;
+
+  { TRespostaRespostaFiscal }
+  TRespostaRespostaFiscal = class(TPersistent)
+  private
+    FIntegradorResposta : TIntegradorResposta;
+    FIdRespostaFiscal: String;
+
+    procedure SetXMLString(AValue: AnsiString);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear;
+
+    property AsXMLString : AnsiString  write SetXMLString ;
+  published
+    property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
+    property IdRespostaFiscal: String read FIdRespostaFiscal write FIdRespostaFiscal;
+  end;
+
 
   { TVerificarStatusValidador }
   TVerificarStatusValidador = class(TPersistent)
@@ -250,7 +270,7 @@ type
 
 implementation
 
-Uses pcnMFePagamentoW, pcnMFePagamentoR ;
+Uses pcnVFPeW, pcnVFPeR ;
 
 { TStatusPagamento }
 
@@ -503,6 +523,39 @@ begin
     LocEnviarPagamentoR.LerXml;
   finally
     LocEnviarPagamentoR.Free
+  end;
+end;
+
+{ TRespostaRespostaFiscal }
+
+procedure TRespostaRespostaFiscal.Clear;
+begin
+  FIntegradorResposta.Clear;
+  FIdRespostaFiscal := '';
+end;
+
+constructor TRespostaRespostaFiscal.Create;
+begin
+  FIntegradorResposta := TIntegradorResposta.Create;
+  Clear;
+end;
+
+destructor TRespostaRespostaFiscal.Destroy;
+begin
+  FIntegradorResposta.Free;
+  inherited Destroy;
+end;
+
+procedure TRespostaRespostaFiscal.SetXMLString(AValue: AnsiString);
+var
+ LocRespostaFiscalR : TRespostaRespostaFiscalR;
+begin
+  LocRespostaFiscalR := TRespostaRespostaFiscalR.Create(Self);
+  try
+    LocRespostaFiscalR.Leitor.Arquivo := AValue;
+    LocRespostaFiscalR.LerXml;
+  finally
+    LocRespostaFiscalR.Free
   end;
 end;
 

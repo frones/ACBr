@@ -111,26 +111,6 @@ type
     property StatusPagamento: String read FStatusPagamento write FStatusPagamento;
   end;
 
-  { TRespostaRespostaFiscal }
-  TRespostaRespostaFiscal = class(TPersistent)
-  private
-    FIntegradorResposta : TIntegradorResposta;
-    FIdRespostaFiscal: String;
-
-    procedure SetXMLString(AValue: AnsiString);
-  public
-    constructor Create;
-    destructor Destroy; override;
-
-    procedure Clear;
-
-    property AsXMLString : AnsiString  write SetXMLString ;
-  published
-    property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
-    property IdRespostaFiscal: String read FIdRespostaFiscal write FIdRespostaFiscal;
-  end;
-
-
   { TVerificarStatusValidador }
   TVerificarStatusValidador = class(TPersistent)
   private
@@ -228,6 +208,25 @@ type
     property NumeroDocumento: String read FNumeroDocumento write FNumeroDocumento;
   end;
 
+  { TRetornoRespostaFiscal }
+  TRetornoRespostaFiscal = class(TPersistent)
+  private
+    FIntegradorResposta : TIntegradorResposta;
+    FIdRespostaFiscal: String;
+
+    procedure SetXMLString(AValue: AnsiString);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear;
+
+    property AsXMLString : AnsiString  write SetXMLString ;
+  published
+    property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
+    property IdRespostaFiscal: String read FIdRespostaFiscal write FIdRespostaFiscal;
+  end;
+
   { TStatusPagamento }
   TStatusPagamento = class(TPersistent)
   private
@@ -268,9 +267,61 @@ type
     property UltimosQuatroDigitos: Integer read FUltimosQuatroDigitos write FUltimosQuatroDigitos;
   end;
 
+  { TRespostaStatusPagamento }
+  TRespostaStatusPagamento = class(TPersistent)
+  private
+    FIntegradorResposta : TIntegradorResposta;
+    FRetorno: String;
+
+    procedure SetXMLString(AValue: AnsiString);
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Clear;
+
+    property AsXMLString : AnsiString  write SetXMLString ;
+  published
+    property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
+    property Retorno: String read FRetorno write FRetorno;
+  end;
+
 implementation
 
 Uses pcnVFPeW, pcnVFPeR ;
+
+{ TRespostaStatusPagamento }
+
+procedure TRespostaStatusPagamento.SetXMLString(AValue: AnsiString);
+var
+ LocRespostaStatusPagamentoR : TRespostaStatusPagamentoR;
+begin
+  LocRespostaStatusPagamentoR := TRespostaStatusPagamentoR.Create(Self);
+  try
+    LocRespostaStatusPagamentoR.Leitor.Arquivo := AValue;
+    LocRespostaStatusPagamentoR.LerXml;
+  finally
+    LocRespostaStatusPagamentoR.Free
+  end;
+end;
+
+constructor TRespostaStatusPagamento.Create;
+begin
+  FIntegradorResposta := TIntegradorResposta.Create;
+  Clear;
+end;
+
+destructor TRespostaStatusPagamento.Destroy;
+begin
+  FIntegradorResposta.Free;
+  inherited Destroy;
+end;
+
+procedure TRespostaStatusPagamento.Clear;
+begin
+  FIntegradorResposta.Clear;
+  FRetorno := '';
+end;
 
 { TStatusPagamento }
 
@@ -526,31 +577,31 @@ begin
   end;
 end;
 
-{ TRespostaRespostaFiscal }
+{ TRetornoRespostaFiscal }
 
-procedure TRespostaRespostaFiscal.Clear;
+procedure TRetornoRespostaFiscal.Clear;
 begin
   FIntegradorResposta.Clear;
   FIdRespostaFiscal := '';
 end;
 
-constructor TRespostaRespostaFiscal.Create;
+constructor TRetornoRespostaFiscal.Create;
 begin
   FIntegradorResposta := TIntegradorResposta.Create;
   Clear;
 end;
 
-destructor TRespostaRespostaFiscal.Destroy;
+destructor TRetornoRespostaFiscal.Destroy;
 begin
   FIntegradorResposta.Free;
   inherited Destroy;
 end;
 
-procedure TRespostaRespostaFiscal.SetXMLString(AValue: AnsiString);
+procedure TRetornoRespostaFiscal.SetXMLString(AValue: AnsiString);
 var
- LocRespostaFiscalR : TRespostaRespostaFiscalR;
+ LocRespostaFiscalR : TRetornoRespostaFiscalR;
 begin
-  LocRespostaFiscalR := TRespostaRespostaFiscalR.Create(Self);
+  LocRespostaFiscalR := TRetornoRespostaFiscalR.Create(Self);
   try
     LocRespostaFiscalR.Leitor.Arquivo := AValue;
     LocRespostaFiscalR.LerXml;

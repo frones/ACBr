@@ -89,8 +89,8 @@ type
 
      function EnviarPagamento( Pagamento : TEnviarPagamento ): TRespostaPagamento;
      function VerificarStatusValidador( VerificarStatusValidador : TVerificarStatusValidador ): TRespostaVerificarStatusValidador;
-     function RespostaFiscal( RespostaFiscal : TRespostaFiscal ): TRespostaRespostaFiscal;
-     function EnviarStatusPagamento( StatusPagamento : TStatusPagamento ): String;
+     function RespostaFiscal( RespostaFiscal : TRespostaFiscal ): TRetornoRespostaFiscal;
+     function EnviarStatusPagamento( StatusPagamento : TStatusPagamento ): TRespostaStatusPagamento;
 
    published
      property PastaInput  : String  read FPastaInput  write FPastaInput;
@@ -447,7 +447,7 @@ begin
 
   Pagamento.Identificador := numeroSessao;
   Comando := Pagamento.AsXMLString;
-  TACBrSAT(Owner).fsComandoLog := 'EnviarPagamento( '+Comando+' )';
+  TACBrSAT(Owner).DoLog('EnviarPagamento( '+Comando+' )');
 
 
   Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarPagamento',Comando);
@@ -471,7 +471,7 @@ begin
 
   VerificarStatusValidador.Identificador := numeroSessao;
   Comando := VerificarStatusValidador.AsXMLString;
-  TACBrSAT(Owner).fsComandoLog := 'VerificarStatusValidador( '+Comando+' )';
+  TACBrSAT(Owner).DoLog('VerificarStatusValidador( '+Comando+' )');
 
 
   Resp := FComandoMFE.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
@@ -485,41 +485,45 @@ begin
 end;
 
 function TACBrSATMFe_integrador_XML.RespostaFiscal(
-  RespostaFiscal: TRespostaFiscal): TRespostaRespostaFiscal;
+  RespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
 var
   Comando, Resp : String;
-  RespostaRespostaFiscal : TRespostaRespostaFiscal;
+  RetornoRespostaFiscal : TRetornoRespostaFiscal;
 begin
   TACBrSAT(Owner).IniciaComando;
 
   RespostaFiscal.Identificador := numeroSessao;
   Comando := RespostaFiscal.AsXMLString;
-  TACBrSAT(Owner).fsComandoLog := 'RespostaFiscal( '+Comando+' )';
+  TACBrSAT(Owner).DoLog('RespostaFiscal( '+Comando+' )');
 
   Resp := FComandoMFE.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
 
-  RespostaRespostaFiscal := TRespostaRespostaFiscal.Create;
-  RespostaRespostaFiscal.AsXMLString := Resp;
+  RetornoRespostaFiscal := TRetornoRespostaFiscal.Create;
+  RetornoRespostaFiscal.AsXMLString := Resp;
 
-  Result := RespostaRespostaFiscal;
+  Result := RetornoRespostaFiscal;
 
   TACBrSAT(Owner).FinalizaComando( Resp );
 end;
 
 function TACBrSATMFe_integrador_XML.EnviarStatusPagamento(
-  StatusPagamento: TStatusPagamento): String;
+  StatusPagamento: TStatusPagamento): TRespostaStatusPagamento;
 var
   Comando, Resp : String;
+  RespostaStatusPagamento : TRespostaStatusPagamento;
 begin
   TACBrSAT(Owner).IniciaComando;
 
   StatusPagamento.Identificador := numeroSessao;
   Comando := StatusPagamento.AsXMLString;
-  TACBrSAT(Owner).fsComandoLog := 'EnviarStatusPagamento( '+Comando+' )';
+  TACBrSAT(Owner).DoLog('EnviarStatusPagamento( '+Comando+' )');
 
   Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
 
-  Result := Resp;
+  RespostaStatusPagamento := TRespostaStatusPagamento.Create;
+  RespostaStatusPagamento.AsXMLString := Resp;
+
+  Result := RespostaStatusPagamento;
 
   TACBrSAT(Owner).FinalizaComando( Resp );
 end;

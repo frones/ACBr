@@ -85,18 +85,32 @@ type
     property RespostaVerificarStatusValidador: TRespostaVerificarStatusValidador read FRespostaVerificarStatusValidador write FRespostaVerificarStatusValidador;
   end;
 
-  { TRespostaPagamentoR }
-  TRespostaRespostaFiscalR = class(TPersistent)
+  { TRetornoRespostaFiscalR }
+  TRetornoRespostaFiscalR = class(TPersistent)
   private
     FLeitor: TLeitor;
-    FRespostaRespostaFiscal: TRespostaRespostaFiscal;
+    FRetornoRespostaFiscal: TRetornoRespostaFiscal;
   public
-    constructor Create(AOwner: TRespostaRespostaFiscal);
+    constructor Create(AOwner: TRetornoRespostaFiscal);
     destructor Destroy; override;
     function LerXml: boolean;
   published
     property Leitor: TLeitor read FLeitor write FLeitor;
-    property RespostaRespostaFiscal: TRespostaRespostaFiscal read FRespostaRespostaFiscal write FRespostaRespostaFiscal;
+    property RetornoRespostaFiscal: TRetornoRespostaFiscal read FRetornoRespostaFiscal write FRetornoRespostaFiscal;
+  end;
+
+  { TRespostaStatusPagamentoR }
+  TRespostaStatusPagamentoR = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    FRespostaStatusPagamento: TRespostaStatusPagamento;
+  public
+    constructor Create(AOwner: TRespostaStatusPagamento);
+    destructor Destroy; override;
+    function LerXml: boolean;
+  published
+    property Leitor: TLeitor read FLeitor write FLeitor;
+    property RespostaStatusPagamento: TRespostaStatusPagamento read FRespostaStatusPagamento write FRespostaStatusPagamento;
   end;
 
 
@@ -105,6 +119,34 @@ type
 implementation
 
 uses ACBrConsts;
+
+{ TRespostaStatusPagamentoR }
+
+constructor TRespostaStatusPagamentoR.Create(AOwner: TRespostaStatusPagamento);
+begin
+  FLeitor := TLeitor.Create;
+  FRespostaStatusPagamento := AOwner;
+end;
+
+destructor TRespostaStatusPagamentoR.Destroy;
+begin
+  FLeitor.Free;
+  inherited Destroy;
+end;
+
+function TRespostaStatusPagamentoR.LerXml: boolean;
+begin
+  Result := False;
+  RespostaStatusPagamento.Clear;
+
+  if Leitor.rExtrai(1, 'Integrador') <> '' then
+  begin
+    RespostaStatusPagamento.Retorno := Leitor.rCampo(tcStr, 'retorno');
+    RespostaStatusPagamento.IntegradorResposta.LerResposta(Leitor.Grupo);
+  end ;
+
+  Result := True;
+end;
 
 { TRespostaVerificarStatusValidadorR }
 
@@ -211,29 +253,29 @@ begin
   Result := True;
 end;
 
-{ TRespostaRespostaFiscalR }
+{ TRetornoRespostaFiscalR }
 
-constructor TRespostaRespostaFiscalR.Create(AOwner: TRespostaRespostaFiscal);
+constructor TRetornoRespostaFiscalR.Create(AOwner: TRetornoRespostaFiscal);
 begin
   FLeitor := TLeitor.Create;
-  FRespostaRespostaFiscal := AOwner;
+  FRetornoRespostaFiscal := AOwner;
 end;
 
-destructor TRespostaRespostaFiscalR.Destroy;
+destructor TRetornoRespostaFiscalR.Destroy;
 begin
   FLeitor.Free;
   inherited Destroy;
 end;
 
-function TRespostaRespostaFiscalR.LerXml: boolean;
+function TRetornoRespostaFiscalR.LerXml: boolean;
 begin
   Result := False;
-  RespostaRespostaFiscal.Clear;
+  RetornoRespostaFiscal.Clear;
 
   if Leitor.rExtrai(1, 'Integrador') <> '' then
   begin
-    RespostaRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
-    RespostaRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
+    RetornoRespostaFiscal.IdRespostaFiscal := Leitor.rCampo(tcStr, 'retorno');
+    RetornoRespostaFiscal.IntegradorResposta.LerResposta(Leitor.Grupo);
   end ;
 
   Result := True;

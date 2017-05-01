@@ -234,7 +234,7 @@ begin
   FMetodo.GerarMetodo(numeroSessao,'MF-e','CancelarUltimaVenda');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
-  FParametro.GerarParametro('chave',chave,tcStr);
+  FParametro.GerarParametro('chave',OnlyNumber(chave),tcStr);
   FParametro.GerarParametro('dadosCancelamento','<![CDATA[' +FComandoMFE.AjustaComando(dadosCancelamento)+ ']]>',tcStr, False);
   FMetodo.FinalizarMetodo;
 

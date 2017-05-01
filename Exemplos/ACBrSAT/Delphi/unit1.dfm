@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 327
-  Top = 132
+  Left = 419
+  Top = 232
   Width = 836
   Height = 581
   Caption = 'SAT Teste - Projeto ACBr'
@@ -224,7 +224,7 @@ object Form1: TForm1
         Top = 15
         Width = 645
         Height = 183
-        ActivePage = tsDadosSAT
+        ActivePage = tsMFE
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
@@ -541,7 +541,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -550,7 +550,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -559,7 +559,7 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
           end
         end
@@ -1186,7 +1186,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 2
             end
             object cbxPorta: TComboBox
@@ -1195,7 +1195,7 @@ object Form1: TForm1
               Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 3
             end
             object cbxPagCodigo: TComboBox
@@ -1205,7 +1205,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 0
+              ItemHeight = 13
               TabOrder = 4
             end
             object seColunas: TSpinEdit
@@ -1295,6 +1295,42 @@ object Form1: TForm1
             Height = 21
             TabOrder = 2
             Text = '30'
+          end
+          object btMFEEnviarPagamento: TButton
+            Left = 311
+            Top = 12
+            Width = 140
+            Height = 25
+            Caption = 'MFE Enviar Pagamento'
+            TabOrder = 3
+            OnClick = btMFEEnviarPagamentoClick
+          end
+          object btMFEVerificarStatus: TButton
+            Left = 311
+            Top = 44
+            Width = 140
+            Height = 25
+            Caption = 'Verificar Status Validador'
+            TabOrder = 4
+            OnClick = btMFEVerificarStatusClick
+          end
+          object btMFEEnviarStatusPagamento: TButton
+            Left = 455
+            Top = 12
+            Width = 140
+            Height = 25
+            Caption = 'Enviar Status Pagamento'
+            TabOrder = 5
+            OnClick = btMFEEnviarStatusPagamentoClick
+          end
+          object btMFERespostaFiscal: TButton
+            Left = 455
+            Top = 44
+            Width = 140
+            Height = 25
+            Caption = 'Resposta Fiscal'
+            TabOrder = 6
+            OnClick = btMFERespostaFiscalClick
           end
         end
       end
@@ -1451,7 +1487,7 @@ object Form1: TForm1
     Top = 280
   end
   object ACBrSAT1: TACBrSAT
-    Extrato = ACBrSATExtratoFortes1
+    Extrato = ACBrSATExtratoESCPOS1
     NomeDLL = 'c:\sat\SAT.DLL'
     OnGravarLog = ACBrSAT1GravarLog
     Config.infCFe_versaoDadosEnt = 0.050000000000000000
@@ -1475,6 +1511,7 @@ object Form1: TForm1
     Top = 224
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
+    ACBrSAT = ACBrSAT1
     Mask_qCom = ',0.0000'
     Mask_vUnCom = ',0.000'
     SoftwareHouse = 'Projeto ACBr'
@@ -1487,7 +1524,6 @@ object Form1: TForm1
     Top = 280
   end
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
-    ACBrSAT = ACBrSAT1
     Mask_qCom = ',0.000'
     Mask_vUnCom = ',0.00'
     PictureLogo.Data = {
@@ -2011,6 +2047,7 @@ object Form1: TForm1
     MostrarPreview = True
     NomeArquivo = 'satcfe.pdf'
     SoftwareHouse = 'Projeto ACBr - http://acbr.sf.net'
+    Site = 'http://www.projetoacbr.com.br'
     MsgAppQRCode = 
       'Consulte o QR Code pelo aplicativo  "De olho na nota", dispon'#237've' +
       'l na AppStore (Apple) e PlayStore (Android)'

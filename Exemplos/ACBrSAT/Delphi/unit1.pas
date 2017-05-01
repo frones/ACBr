@@ -207,6 +207,10 @@ type
     edMFEInput: TEdit;
     edMFEOutput: TEdit;
     edMFETimeout: TEdit;
+    btMFEEnviarPagamento: TButton;
+    btMFEVerificarStatus: TButton;
+    btMFEEnviarStatusPagamento: TButton;
+    btMFERespostaFiscal: TButton;
     procedure ACBrSAT1Log(const AString: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
@@ -255,8 +259,12 @@ type
     procedure cbxSepararPorCNPJChange(Sender: TObject);
     procedure cbxSepararPorMESChange(Sender: TObject);
     procedure CarregarXML1Click(Sender: TObject);
-    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
-    procedure ACBrSAT1GetsignAC(var Chave: AnsiString);
+    procedure btMFEEnviarPagamentoClick(Sender: TObject);
+    procedure ACBrSAT1GetcodigoDeAtivacao(var Chave: String);
+    procedure ACBrSAT1GetsignAC(var Chave: String);
+    procedure btMFEVerificarStatusClick(Sender: TObject);
+    procedure btMFEEnviarStatusPagamentoClick(Sender: TObject);
+    procedure btMFERespostaFiscalClick(Sender: TObject);
   private
     { private declarations }
 
@@ -276,7 +284,7 @@ var
 implementation
 
 Uses typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
-  RLPrinters, Printers, ACBrSATMFe_integrador;
+  RLPrinters, Printers, ACBrSATMFe_integrador, pcnVFPe;
 
 {$R *.dfm}
 
@@ -388,7 +396,7 @@ begin
     begin
       TACBrSATMFe_integrador_XML(SAT).PastaInput  := edMFEInput.Text;
       TACBrSATMFe_integrador_XML(SAT).PastaOutput := edMFEOutput.Text;
-      TACBrSATMFe_integrador_XML(SAT).Timeout     := seMFETimeout.Value;
+      TACBrSATMFe_integrador_XML(SAT).Timeout     := StrToIntDef(edMFETimeout.Text,30);
     end;   
   end
 end ;
@@ -887,7 +895,7 @@ begin
       Prod.CFOP := '5120';
       Prod.uCom := 'UN';
       Prod.qCom := 1;
-      Prod.vUnCom := 12000.00;
+      Prod.vUnCom := 200.00;
       Prod.indRegra := irTruncamento;
       Prod.vDesc := 1;
 
@@ -1016,16 +1024,16 @@ begin
     Total.vCFeLei12741 := 1.23;
 
     Pagto1 := RoundABNT(TotalGeral/2,-2);
-    with Pagto.Add do
+ {   with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
       vMP := Pagto1;
-    end;
+    end;     }
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := TotalGeral - Pagto1 + 10;
+      vMP := TotalGeral - Pagto1 + 100;
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+
@@ -1256,6 +1264,116 @@ begin
     PageControl1.ActivePage := tsRecebido;
   end ;  
 end;
+
+procedure TForm1.btMFEEnviarPagamentoClick(Sender: TObject);
+var
+  PagamentoMFe : TEnviarPagamento;
+  RespostaPagamentoMFe : TRespostaPagamento;
+begin
+  PagamentoMFe := TEnviarPagamento.Create;
+  try
+    with PagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      ChaveRequisicao := '26359854-5698-1365-9856-965478231456';
+      Estabelecimento := '10';
+      SerialPOS := InputBox('SerialPOS','Informe o Serial do POS','ACBr-'+RandomName(8));
+      CNPJ := edtEmitCNPJ.Text;
+      IcmsBase := 0.23;
+      ValorTotalVenda := 1530;
+      HabilitarMultiplosPagamentos := True;
+      HabilitarControleAntiFraude := False;
+      CodigoMoeda := 'BRL';
+      EmitirCupomNFCE := False;
+      OrigemPagamento := 'Mesa 1234';
+    end;
+    RespostaPagamentoMFe := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarPagamento(PagamentoMFe);
+    ShowMessage(IntToStr(RespostaPagamentoMFe.IDPagamento));
+  finally
+    PagamentoMFe.Free;
+  end;
+end;
+
+procedure TForm1.btMFEVerificarStatusClick(Sender: TObject);
+var
+  VerificarStatusValidador : TVerificarStatusValidador;
+  RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
+begin
+  VerificarStatusValidador := TVerificarStatusValidador.Create;
+  try
+    with VerificarStatusValidador do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      IDFila := StrToIntDef(InputBox('IDPagmento','Informe o ID do Pagamento',''),0);
+      CNPJ:= edtEmitCNPJ.Text;
+    end;
+    RespostaVerificarStatusValidador := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).VerificarStatusValidador(VerificarStatusValidador) ;
+  finally
+    VerificarStatusValidador.Free;
+  end;
+
+  ShowMessage(RespostaVerificarStatusValidador.CodigoAutorizacao);
+end;
+
+procedure TForm1.btMFEEnviarStatusPagamentoClick(Sender: TObject);
+var
+  StatusPagamentoMFe : TStatusPagamento;
+  RespostaStatusPagamento : TRespostaStatusPagamento;
+begin
+  StatusPagamentoMFe := TStatusPagamento.Create;
+  try
+    with StatusPagamentoMFe do
+    begin
+      Clear;
+      ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+      CodigoAutorizacao := '20551';
+      Bin := '123456';
+      DonoCartao := 'TESTE';
+      DataExpiracao := '01/01';
+      InstituicaoFinanceira:= 'STONE';
+      Parcelas := 1;
+      CodigoPagamento := '12846';
+      ValorPagamento := 1530;
+      IDFila := 1674068;
+      Tipo := '1';
+      UltimosQuatroDigitos := 12345;
+    end;
+    RespostaStatusPagamento := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).EnviarStatusPagamento(StatusPagamentoMFe);
+    ShowMessage(RespostaStatusPagamento.Retorno);
+  finally
+    StatusPagamentoMFe.Free;
+  end;
+end;
+
+procedure TForm1.btMFERespostaFiscalClick(Sender: TObject);
+var
+ RespostaFiscal : TRespostaFiscal;
+ RetornoRespostaFiscal : TRetornoRespostaFiscal;
+Begin
+  RespostaFiscal := TRespostaFiscal.Create;
+    try
+      with RespostaFiscal do
+      begin
+        Clear;
+        ChaveAcessoValidador := '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+        IDFila := 1674068;
+        ChaveAcesso := '35170408723218000186599000113100000279731880';
+        Nsu := '1674068';
+        NumerodeAprovacao := '1234';
+        Bandeira := 'VISA';
+        Adquirente := 'STONE';
+        ImpressaoFiscal := '';
+        NumeroDocumento := '1674068';
+        CNPJ:= edtEmitCNPJ.Text;
+      end;
+      RetornoRespostaFiscal := TACBrSATMFe_integrador_XML(ACBrSAT1.SAT).RespostaFiscal(RespostaFiscal);
+      ShowMessage(RetornoRespostaFiscal.IdRespostaFiscal);
+    finally
+      RespostaFiscal.Free;
+    end;
+end;  
 
 end.
 

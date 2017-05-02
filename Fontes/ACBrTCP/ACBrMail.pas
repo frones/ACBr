@@ -457,6 +457,7 @@ begin
     Self.OnMailProcess := OnMailProcess;
     Self.OnAfterMailProcess := OnAfterMailProcess;
     Self.OnMailException := OnMailException;
+    Self.Tag := Tag;
 
     for i := 0 to Length(Attachments) - 1 do
     begin

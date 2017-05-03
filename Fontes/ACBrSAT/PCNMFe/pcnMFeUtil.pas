@@ -121,7 +121,7 @@ begin
           (ActualTime < LocTimeOut) do
     begin
       Result := AguardaArqResposta(numeroSessao);
-      Sleep(100);
+      Sleep(50);
       ActualTime := Now;
     end;
   finally
@@ -137,7 +137,9 @@ begin
   if FLeitor.rExtrai(1, 'Resposta') <> '' then
     Result := FLeitor.rCampo(tcStr, 'retorno')
   else if FLeitor.rExtrai(1, 'Erro') <> '' then
-    Result := FLeitor.Grupo;
+    Result := FLeitor.Grupo
+  else
+    Result := Resp
 end;
 
 function TComandoMFe.AguardaArqResposta(numeroSessao: Integer): String;
@@ -150,7 +152,7 @@ begin
   try
     SLArqResp.Clear;
     FindFiles(PathWithDelim(FPastaOutput)+'*.xml',SLArqResp);
-    Sleep(100); //Tentar evitar ler arquivo enquanto está sendo escrito
+    Sleep(50); //Tentar evitar ler arquivo enquanto está sendo escrito
 
     for I:=0  to SLArqResp.Count-1 do
     begin
@@ -163,6 +165,7 @@ begin
         begin
           Result := Trim(FLeitor.Arquivo);
           DeleteFile(SLArqResp[I]);
+          Exit;
         end;
       end;
     end;
@@ -180,6 +183,7 @@ begin
     Comando := StringReplace(Comando, '  ', ' ', [rfReplaceAll]);
 
   Comando := StringReplace(Comando, '> <', '><', [rfReplaceAll]);;
+  //Comando := StringReplace(Comando,'<'+ENCODING_UTF8+'>','',[rfReplaceAll]);
   Result := Comando;
 end;
 

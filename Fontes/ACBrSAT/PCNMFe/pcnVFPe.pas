@@ -95,6 +95,7 @@ type
     FIDPagamento: Integer;
     FMensagem: String;
     FStatusPagamento: String;
+    FXML : String;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -109,6 +110,7 @@ type
     property IDPagamento: Integer read FIDPagamento write FIDPagamento;
     property Mensagem: String read FMensagem write FMensagem;
     property StatusPagamento: String read FStatusPagamento write FStatusPagamento;
+    property XML: String read FXML write SetXMLString;
   end;
 
   { TVerificarStatusValidador }
@@ -148,6 +150,7 @@ type
     FValorPagamento : Currency;
     FIDFila : Integer;
     FTipo : String;
+    FXML : String;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -170,6 +173,7 @@ type
     property ValorPagamento: Currency read FValorPagamento write FValorPagamento;
     property IDFila: Integer read FIDFila write FIDFila;
     property Tipo: String read FTipo write FTipo;
+    property XML: String read FXML write SetXMLString;
   end;
 
   { TRespostaFiscal }
@@ -213,6 +217,7 @@ type
   private
     FIntegradorResposta : TIntegradorResposta;
     FIdRespostaFiscal: String;
+    FXML: String;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -225,6 +230,7 @@ type
   published
     property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
     property IdRespostaFiscal: String read FIdRespostaFiscal write FIdRespostaFiscal;
+    property XML: String read FXML write SetXMLString;
   end;
 
   { TStatusPagamento }
@@ -272,6 +278,7 @@ type
   private
     FIntegradorResposta : TIntegradorResposta;
     FRetorno: String;
+    FXML: String;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -284,6 +291,7 @@ type
   published
     property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
     property Retorno: String read FRetorno write FRetorno;
+    property XML : String read FXML write SetXMLString;
   end;
 
 implementation
@@ -296,6 +304,7 @@ procedure TRespostaStatusPagamento.SetXMLString(AValue: AnsiString);
 var
  LocRespostaStatusPagamentoR : TRespostaStatusPagamentoR;
 begin
+  FXML := AValue;
   LocRespostaStatusPagamentoR := TRespostaStatusPagamentoR.Create(Self);
   try
     LocRespostaStatusPagamentoR.Leitor.Arquivo := AValue;
@@ -417,6 +426,7 @@ procedure TRespostaVerificarStatusValidador.SetXMLString(AValue: AnsiString);
 var
  LocRespostaVerificarStatusValidadorR : TRespostaVerificarStatusValidadorR;
 begin
+  FXMl := AValue;
   LocRespostaVerificarStatusValidadorR := TRespostaVerificarStatusValidadorR.Create(Self);
   try
     LocRespostaVerificarStatusValidadorR.Leitor.Arquivo := AValue;
@@ -496,6 +506,7 @@ procedure TRespostaPagamento.SetXMLString(AValue: AnsiString);
 var
  LocRespostaPagamentoR : TRespostaPagamentoR;
 begin
+  FXML := AValue;
   LocRespostaPagamentoR := TRespostaPagamentoR.Create(Self);
   try
     LocRespostaPagamentoR.Leitor.Arquivo := AValue;
@@ -601,6 +612,7 @@ procedure TRetornoRespostaFiscal.SetXMLString(AValue: AnsiString);
 var
  LocRespostaFiscalR : TRetornoRespostaFiscalR;
 begin
+  FXML := AValue;
   LocRespostaFiscalR := TRetornoRespostaFiscalR.Create(Self);
   try
     LocRespostaFiscalR.Leitor.Arquivo := AValue;

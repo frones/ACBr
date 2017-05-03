@@ -383,6 +383,7 @@ begin
        131 : fpInstituicao                 := LinStr;
        133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := LinStr;
+       136 : fpBin                         := Linha.Informacao.AsString;
        139 : fpValorEntradaCDC             := Linha.Informacao.AsFloat;
        140 : fpDataEntradaCDC              := Linha.Informacao.AsDate;
        156 : fpRede                        := LinStr;

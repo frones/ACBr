@@ -468,6 +468,7 @@ type
      fpTipoPessoa : AnsiChar;
      fpTipoTransacao : Integer;
      fpTrailer : String;
+     fpBin : String;
      fpValorTotal : Double;
      fpValorOriginal: Double;
      fpValorRecargaCelular: Double;
@@ -556,6 +557,7 @@ type
      property NomeAdministradora          : String    read fpNomeAdministradora ;
      property DataHoraTransacaoComprovante: TDateTime read fpDataHoraTransacaoComprovante ;
      property Trailer                     : String    read fpTrailer ;
+     property BIN                         : String    read fpBin ;
 
      property CorrespBancarios: TACBrTEFDRespListaCB read fpCorrespBancarios;
 
@@ -1334,6 +1336,7 @@ begin
    fpTipoPessoa                   := ' ';
    fpTipoTransacao                := 0 ;
    fpTrailer                      := '' ;
+   fpBin                          := '';
    fpValorTotal                   := 0 ;
    fpValorOriginal                := 0 ;
    fpSaque                        := 0 ;

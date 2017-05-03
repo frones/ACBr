@@ -41,6 +41,9 @@ uses
   Classes, SysUtils, ACBrSATClass, pcnGerador, pcnMFeUtil,
   pcnVFPe;
 
+const
+  cNomeComponente = 'MF-e-Giz';
+
 type
 
    { TACBrSATMFe_integrador_XML }
@@ -148,7 +151,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','AssociarAssinatura');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'AssociarAssinatura');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('cnpjValue',CNPJvalue,tcStr);
@@ -170,7 +173,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','AtivarMFe');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'AtivarMFe');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('subComando',subComando,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
@@ -192,7 +195,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','AtualizarSoftwareMFe');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'AtualizarSoftwareMFe');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
@@ -211,7 +214,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','BloquearMFe');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'BloquearMFe');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
@@ -231,7 +234,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','CancelarUltimaVenda');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'CancelarUltimaVenda');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('chave',OnlyNumber(chave),tcStr);
@@ -253,7 +256,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','ComunicarCertificadoICPBRASIL');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ComunicarCertificadoICPBRASIL');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('certificado',certificado,tcStr);
@@ -284,7 +287,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','ConsultarNumeroSessao');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConsultarNumeroSessao');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('cNumeroDeSessao',cNumeroDeSessao,tcInt);
@@ -304,7 +307,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','ConsultarMFe');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConsultarMFe');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FMetodo.FinalizarMetodo;
 
@@ -322,7 +325,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','ConsultarStatusOperacional');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConsultarStatusOperacional');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
@@ -341,7 +344,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','DesbloquearMFe');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'DesbloquearMFe');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
@@ -360,7 +363,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','EnviarDadosVenda');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'EnviarDadosVenda');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('dadosVenda','<![CDATA[' +FComandoMFE.AjustaComando(dadosVenda)+ ']]>',tcStr, False);
@@ -380,7 +383,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','ExtrairLogs');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ExtrairLogs');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FMetodo.FinalizarMetodo;
@@ -398,7 +401,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','TesteFimAFim');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'TesteFimAFim');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('dadosVenda','<![CDATA[' +FComandoMFE.AjustaComando(dadosVenda)+ ']]>',tcStr, False);
@@ -424,7 +427,7 @@ begin
   FGerador.ArquivoFormatoXML := '';
   FGerador.ArquivoFormatoTXT := '';
 
-  FMetodo.GerarMetodo(numeroSessao,'MF-e','TrocarCodigoDeAtivacao');
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'TrocarCodigoDeAtivacao');
   FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
   FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
   FParametro.GerarParametro('opcao',opcao,tcInt);

@@ -445,6 +445,8 @@ begin
             101 : fpID                 := Linha.Informacao.AsInteger;
             102 : fpDocumentoVinculado := LinStr;
             103 : fpValorTotal         := fpValorTotal + Linha.Informacao.AsFloat;
+            500 : fpIdPagamento      := Linha.Informacao.AsInteger ;
+            501 : fpIdRespostaFiscal := Linha.Informacao.AsInteger ;
           end;
         end;
 

@@ -44,6 +44,9 @@ uses
   SysUtils, Classes,
   pcnConversao, pcnGerador, pcnVFPe, pcnMFeUtil, ACBrUtil;
 
+const
+  cChaveAcessoIntegrador = '25CFE38D-3B92-46C0-91CA-CFF751A82D3D';
+
 type
 
   { TEnviarPagamentoW }
@@ -363,7 +366,10 @@ begin
       Parametro.GerarParametro('SerialPos'        , EnviarPagamento.SerialPOS, tcStr);
       Parametro.GerarParametro('Cnpj'             , EnviarPagamento.CNPJ, tcStr);
       Parametro.GerarParametro('IcmsBase'         , EnviarPagamento.IcmsBase, tcDe2);
-      Parametro.GerarParametro('ValorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcDe2);
+      if EnviarPagamento.ChaveAcessoValidador = cChaveAcessoIntegrador then
+        Parametro.GerarParametro('ValorTotalVenda'  ,FloatToString( EnviarPagamento.ValorTotalVenda, ',' ), tcStr)
+      else
+        Parametro.GerarParametro('ValorTotalVenda'  , EnviarPagamento.ValorTotalVenda, tcDe2);
       Parametro.GerarParametro('HabilitarMultiplosPagamentos', EnviarPagamento.HabilitarMultiplosPagamentos, tcBoolStr);
       Parametro.GerarParametro('HabilitarControleAntiFraude' , EnviarPagamento.HabilitarControleAntiFraude, tcBoolStr);
       Parametro.GerarParametro('CodigoMoeda'      , EnviarPagamento.CodigoMoeda, tcStr);

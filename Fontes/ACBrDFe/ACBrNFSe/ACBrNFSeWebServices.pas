@@ -1718,7 +1718,7 @@ begin
     LayNfseFecharSessao: FTagI := '';
   end;
 
-  // Inicializa a TagI
+  // Inicializa a TagF
   case FPLayout of
     LayNfseRecepcaoLote:
        begin
@@ -3954,9 +3954,15 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
-    FTagGrupo := FPrefixo3 + 'Pedido';
+    FTagGrupo := 'SubstituirNfseEnvio';
 
-    FinfElemento := 'infPedidoCancelamento';
+    if FProvedor <> proGinfes then
+      FTagGrupo := FPrefixo3 + FTagGrupo;
+
+    FdocElemento := FPrefixo3 + 'Pedido></' +
+                    FPrefixo3 + 'SubstituicaoNfse></' + FTagGrupo;
+
+    FinfElemento := 'InfPedidoCancelamento';
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
@@ -3970,24 +3976,24 @@ begin
 
     case FProvedor of
       proEquiplano,
-      proPublica: FURISig:= '';
+      proPublica: FURI:= '';
 
-      proDigifred:  FURISig := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
+      proDigifred:  FURI := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
 
-      proSaatri: FURISig := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+      proSaatri: FURI := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
 
       proIssIntel,
       proISSNet: begin
-                   FURISig := '';
+                   FURI := '';
                    FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                  end;
 
-      proTecnos: FURISig := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                            IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
+      proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                         IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
 
-    else  FURISig := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                      FPConfiguracoesNFSe.Geral.Emitente.InscMun +
-                      TNFSeSubstituirNfse(Self).FNumeroNFSe;
+    else  FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                  FPConfiguracoesNFSe.Geral.Emitente.InscMun +
+                  TNFSeSubstituirNfse(Self).FNumeroNFSe;
     end;
 
     InicializarTagITagF;
@@ -4040,19 +4046,26 @@ begin
 
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
+    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-//  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
-//  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingDados then
-//    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
+  FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+                '<' + FPrefixo3 + 'SubstituicaoNfse>' + 
+                 SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
+                 FvNotas  + FTagF;
+
+  if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+    FNotasFiscais.ValidarLote(FPDadosMsg,
+                              FPConfiguracoes.Arquivos.PathSchemas +
+                              FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir);
+
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir;
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Substituir NFSe] não foi disponibilizada pelo provedor: ' +
-     FPConfiguracoesNFSe.Geral.xProvedor));
+                           FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
 function TNFSeSubstituirNFSe.TratarResposta: Boolean;

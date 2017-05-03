@@ -1728,7 +1728,8 @@ begin
   else
     TagGrupo := 'Pedido';
   end;
-  Result := Gera_DadosMsgCancelarNFSe + '</' + Prefixo3 + TagGrupo + '>' + Notas;
+
+  Result := Gera_DadosMsgCancelarNFSe + '</' + Prefixo3 + TagGrupo + '>'; //+ Notas;
 
   FPossuiAlertas := (Gerador.ListaDeAlertas.Count <> 0);
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/05/2017
+[*] Alterações visando realizar a assinatura no RPS e no pedido de cancelamento no
+    método SubstituicaoNFSe.
+   Por: Italo Jurisato Junior
+
 14/04/2017
 [*] Adcionado o provedor WebISSv2 - versão 2.02 do layout ABRASF - provedor WebISS.
    Por: Mauricio Andrade

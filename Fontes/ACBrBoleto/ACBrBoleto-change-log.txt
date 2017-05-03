@@ -47,6 +47,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/04/2017 ver: 0.0.221
+-- ACBrBancoBancoob.pas --
+[*] Ajustado a Especie de titulo, acrestando a 'DMI', ajustado o Código Mora conforme caso:
+    http://www.projetoacbr.com.br/forum/topic/35703-encontramos-um-erro-na-unit-acbrbancobancoobpas/#comment-233759 (Graziele Rocha)
+
+-- ACBrBancoCaixa.pas --
+[*] Incluído validação de data zerada, conforme caso:
+    http://www.projetoacbr.com.br/forum/topic/35770-erro-e-poss%C3%ADvel-corre%C3%A7%C3%A3o-ao-extrair-data-do-retorno-da-caixa-econ%C3%B4mica-federal-e-valor-for-zerado/ 
+    (Graziele Rocha)	
+
+-- ACBrBancoBradesco.pas --
+[*] Ajuste para o componente ler a propriedade CarteiraEnvio e incluir boletos conforme modalidade informada no título na geração do arquivo de remessa.
+	http://www.projetoacbr.com.br/forum/topic/36109-remessa-bradesco/ (Letícia Silva)
+
+[*] Incluído Mensagem padrão para o limite para pagamento, conforme caso:
+    http://www.projetoacbr.com.br/forum/topic/36467-alteracao-unit-acbrboleto/ (Graziele Rocha)
+
+	
+-- ACBrBoleto.pas --
+[*] Ajuste para verificação do responsável pela emissão do boleto para atribuição da CarteiraEnvio no TACBrTitulo.Create. (Letícia Silva)
+
 Data: 17/03/2017 ver: 0.0.220
 -- ACBrBancoSantander.pas --
 [*] Ajuste para não incluir os segmentos Q, R e S para Remessa CNAB 240 para ocorrências (alteração de vencimento, baixa, etc). (Letícia Silva)

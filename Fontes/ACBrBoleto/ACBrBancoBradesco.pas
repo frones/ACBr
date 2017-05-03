@@ -255,13 +255,12 @@ begin
       end;
 
       {Pegando Tipo de Boleto}
-      case ACBrBoleto.Cedente.ResponEmissao of
-         tbCliEmite : TipoBoleto := '2';
-      else
+      if CarteiraEnvio = tceCedente then
+         TipoBoleto := '2'
+      else if CarteiraEnvio = tceBanco then
          TipoBoleto := '1';
-         if NossoNumero = EmptyStr then
-           DigitoNossoNumero := '0';
-      end;
+      if NossoNumero = EmptyStr then
+        DigitoNossoNumero := '0';
 
       {Pegando Especie}
       if trim(EspecieDoc) = 'DM' then
@@ -302,38 +301,39 @@ begin
          if Mensagem.Text <> '' then
             MensagemCedente:= Mensagem[0];
          
-         wLinha:= '1'                                                     +  // ID Registro
-                  StringOfChar( '0', 19)                                  +  // Dados p/ Débito Automático
+         
+                  wLinha:= '1'                                                     +  // 001 a 001 - ID Registro
+                  StringOfChar( '0', 19)                                  +  // 002 a 020 - Dados p/ Débito Automático
                   '0'+ aCarteira                                          +
                   aAgencia                                                +
                   aConta                                                  +
                   Cedente.ContaDigito                                     +
-                  PadRight( SeuNumero,25,' ') +'000'                          +  // Numero de Controle do Participante
-                  IfThen( PercentualMulta > 0, '2', '0')                  +  // Indica se exite Multa ou não
-                  IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // Percentual de Multa formatado com 2 casas decimais
-                  ANossoNumero + DigitoNossoNumero                        +
-                  IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +
-                  TipoBoleto + ' ' + Space(10)                            +  // Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático.                  
-                  ' ' + '2' + '  ' + Ocorrencia                           +  // Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + Ocorrência
-                  PadRight( NumeroDocumento,  10)                             +
-                  FormatDateTime( 'ddmmyy', Vencimento)                   +
-                  IntToStrZero( Round( ValorDocumento * 100 ), 13)        +
-                  StringOfChar('0',8) + PadRight(aEspecie,2) + 'N'            +  // Zeros + Especie do documento + Idntificação(valor fixo N)
-                  FormatDateTime( 'ddmmyy', DataDocumento )               +  // Data de Emissão
-                  Protesto                                                +
-                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)         +
+                  PadRight( SeuNumero,25,' ')+'000'                       +  // 038 a 062 - Numero de Controle do Participante                                                   +  // 063 a 065 - Código do Banco
+                  IfThen( PercentualMulta > 0, '2', '0')                  +  // 066 a 066 - Indica se exite Multa ou não
+                  IntToStrZero( round( PercentualMulta * 100 ), 4)        +  // 067 a 070 - Percentual de Multa formatado com 2 casas decimais
+                  ANossoNumero + DigitoNossoNumero                        +  // 071 a 082 - Identificação do Titulo + Digito de auto conferencia de número bancário
+                  IntToStrZero( round( ValorDescontoAntDia * 100), 10)    +  // 083 a 092 - Desconto Bonificação por dia
+                  TipoBoleto + ' ' + Space(10)                            +  // 093 a 104 - Tipo Boleto(Quem emite) + Identificação se emite boleto para débito automático +  Identificação Operação do Banco
+                  ' ' + '2' + '  ' + Ocorrencia                           +  // 105 a 110 - Ind. Rateio de Credito + Aviso de Debito Aut.: 2=Não emite aviso + BRANCO + Ocorrência
+                  PadRight( NumeroDocumento,  10)                         +  // 111 a 120 - Numero Documento
+                  FormatDateTime( 'ddmmyy', Vencimento)                   +  // 121 a 126 - Data Vencimento
+                  IntToStrZero( Round( ValorDocumento * 100 ), 13)        +  // 127 a 139 - Valo Titulo
+                  StringOfChar('0',8) + PadRight(aEspecie,2) + 'N'        +  // 140 a 150 - Zeros + Especie do documento + Idntificação(valor fixo N)
+                  FormatDateTime( 'ddmmyy', DataDocumento )               +  // 151 a 156 - Data de Emissão
+                  Protesto                                                +  //
+                  IntToStrZero( round(ValorMoraJuros * 100 ), 13)         +  // 161 a 173 - Valor a ser cobrado por dia de atraso
                   IfThen(DataDesconto < EncodeDate(2000,01,01),'000000',
-                         FormatDateTime( 'ddmmyy', DataDesconto))         +
-                  IntToStrZero( round( ValorDesconto * 100 ), 13)         +
-                  IntToStrZero( round( ValorIOF * 100 ), 13)              +
-                  IntToStrZero( round( ValorAbatimento * 100 ), 13)       +
-                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0')    +
-                  PadRight( Sacado.NomeSacado, 40, ' ')                       +        		
+                         FormatDateTime( 'ddmmyy', DataDesconto))         +  // 174 a 179 - Data limite para concessão desconto
+                  IntToStrZero( round( ValorDesconto * 100 ), 13)         +  // 180 a 192 - Valor Desconto
+                  IntToStrZero( round( ValorIOF * 100 ), 13)              +  // 193 a 205 - Valor IOF
+                  IntToStrZero( round( ValorAbatimento * 100 ), 13)       +  // 206 a 218 - Valor Abatimento
+                  TipoSacado + PadLeft(OnlyNumber(Sacado.CNPJCPF),14,'0') +  // 219 a 234 - Tipo de Inscrição + Número de Inscrição do Pagador
+                  PadRight( Sacado.NomeSacado, 40, ' ')                   +  // 235 a 274 - Nome do Pagador
                   PadRight(Sacado.Logradouro + ' ' + Sacado.Numero + ' '      +
                     Sacado.Bairro + ' ' + Sacado.Cidade + ' '             +
                     Sacado.UF, 40)                                        +
-                  space(12) + PadRight( Sacado.CEP, 8 )                       +
-                  PadRight( MensagemCedente, 60 );
+                  space(12) + PadRight( Sacado.CEP, 8 )                   +  // 315 a 334 - 1ª Mensagem + CEP
+                  PadRight( MensagemCedente, 60 );                           // 335 a 394 - 2ª Mensagem
 
 
          wLinha:= wLinha + IntToStrZero(aRemessa.Count + 1, 6); // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO

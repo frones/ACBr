@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.220';
+  CACBrBoleto_Versao = '0.0.221';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -1458,7 +1458,11 @@ begin
    fCodigoMora    := '';
    fCodigoGeracao := '2';
    fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
-   fCarteiraEnvio        := tceCedente;
+   
+   if ACBrBoleto.Cedente.ResponEmissao = tbCliEmite then
+     fCarteiraEnvio := tceCedente
+   else
+     fCarteiraEnvio := tceBanco;
 end;
 
 destructor TACBrTitulo.Destroy;
@@ -1752,6 +1756,8 @@ begin
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
                          ' após o vencimento.'));
       end;
+      if DataLimitePagto <> 0 then
+        AStringList.Add(ACBrStr('Não Receber após ' + IntToStr(DaysBetween(Vencimento, DataLimitePagto))+ ' dias'));
    end;
 end;
 

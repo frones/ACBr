@@ -959,7 +959,7 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, I, CodMotivo: Integer;
-  wSeuNumero: String;
+  wSeuNumero, TempData: String;
 begin
  
    if (copy(ARetorno.Strings[0],1,3) <> '104') then
@@ -972,14 +972,18 @@ begin
    rDigitoConta := Copy(ARetorno[0],64,1);
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 158, 6), 0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[1],192,2)+'/'+
-                                                             Copy(ARetorno[1],194,2)+'/'+
-                                                             Copy(ARetorno[1],198,2),0, 'DD/MM/YY' );
+   TempData := Copy(ARetorno[1],192,2) + '/' + Copy(ARetorno[1],194,2) + '/' +
+               Copy(ARetorno[1],198,2);
 
-   if StrToIntDef(Copy(ARetorno[1],200,6),0) <> 0 then
-      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(Copy(ARetorno[1],200,2)+'/'+
-                                                                  Copy(ARetorno[1],202,2)+'/'+
-                                                                  Copy(ARetorno[1],204,4),0, 'DD/MM/YY' );
+   if TempData <> '00/00/00' then
+     ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(TempData,0, 'DD/MM/YY');
+
+   TempData := Copy(ARetorno[1],200,2) + '/' + Copy(ARetorno[1],202,2) + '/' +
+               Copy(ARetorno[1],204,4);
+
+   if TempData <> '00/00/00' then
+     ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
+
    rCNPJCPF := trim( Copy(ARetorno[0],19,14)) ;
 
    if ACBrBanco.ACBrBoleto.Cedente.TipoInscricao = pJuridica then
@@ -1047,9 +1051,10 @@ begin
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
 
             //05 = Liquidação Sem Registro
-            Vencimento := StringToDateTimeDef( Copy(Linha,74,2)+'/'+
-                                               Copy(Linha,76,2)+'/'+
-                                               Copy(Linha,80,2),0, 'DD/MM/YY' );
+            TempData := Copy(Linha,74,2) + '/' + Copy(Linha,76,2) + '/' + Copy(Linha,80,2);
+
+            if TempData <> '00/00/00' then
+              Vencimento := StringToDateTimeDef( TempData,0, 'DD/MM/YY');
 
             ValorDocumento       := StrToFloatDef(Copy(Linha,82,15),0)/100;
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
@@ -1560,7 +1565,7 @@ procedure TACBrCaixaEconomica.LerRetorno400(ARetorno: TStringList);
 var
   Titulo : TACBrTitulo;
   ContLinha : Integer;
-  rAgencia, rConta, Linha, rCedente :String;
+  rAgencia, rConta, Linha, rCedente , TempData:String;
 begin
    fpTamanhoMaximoNossoNum := 15;
  
@@ -1575,9 +1580,11 @@ begin
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0],390,5),0);
 
-   ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(Copy(ARetorno[0],95,2)+'/'+
-                                                             Copy(ARetorno[0],97,2)+'/'+
-                                                             Copy(ARetorno[0],99,2),0, 'DD/MM/YY' );
+   TempData := Copy(ARetorno[0],95,2) + '/' + Copy(ARetorno[0],97,2) + '/' +
+               Copy(ARetorno[0],99,2);
+
+   if TempData <> '00/00/00' then
+     ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
 
    with ACBrBanco.ACBrBoleto do
    begin
@@ -1613,13 +1620,18 @@ begin
        NumeroDocumento             := copy(Linha,117,10);
        OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(
                                         copy(Linha,109,2),0));
-       DataOcorrencia := StringToDateTimeDef( Copy(Linha,111,2)+'/'+
-                                              Copy(Linha,113,2)+'/'+
-                                              Copy(Linha,115,2),0, 'DD/MM/YY' );
 
-       Vencimento := StringToDateTimeDef( Copy(Linha,147,2)+'/'+
-                                          Copy(Linha,149,2)+'/'+
-                                          Copy(Linha,151,2),0, 'DD/MM/YY' );
+       TempData := Copy(Linha,111,2) + '/' + Copy(Linha,113,2) + '/' +
+                   Copy(Linha,115,2);
+
+       if TempData <> '00/00/00' then
+         DataOcorrencia := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
+
+       TempData := Copy(Linha,147,2) + '/'+ Copy(Linha,149,2) + '/' +
+                   Copy(Linha,151,2);
+
+       if TempData <> '00/00/00' then
+         Vencimento := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
 
        ValorDocumento       := StrToFloatDef(Copy(Linha,153,13),0)/100;
        ValorIOF             := StrToFloatDef(Copy(Linha,215,13),0)/100;
@@ -1632,9 +1644,11 @@ begin
        NossoNumero          := Copy(Linha,59,15);
        ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100; //--Anderson: Valor tarifa
 
-       DataCredito:= StringToDateTimeDef( Copy(Linha,294,2)+'/'+
-                                          Copy(Linha,296,2)+'/'+
-                                          Copy(Linha,298,2),0, 'DD/MM/YY' );
+       TempData := Copy(Linha,294,2) + '/' + Copy(Linha,296,2) + '/' +
+                   Copy(Linha,298,2);
+
+       if TempData <> '00/00/00' then
+         DataCredito:= StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
 
        if StrToIntDef(SeuNumero,0) = 0 then
        begin

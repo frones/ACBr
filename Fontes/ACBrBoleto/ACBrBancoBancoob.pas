@@ -738,10 +738,11 @@ var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros
     ADataDesconto,ATipoAceite,NossoNum : string;
     DiasProtesto: String;
     ATipoInscricaoAvalista: Char;
-    wModalidade: String;
+    wModalidade, ValorMora: String;
 begin
   NossoNum  := RemoveString('-', MontarCampoNossoNumero(ACBrTitulo));
   ATipoInscricaoAvalista := ' ';
+  ValorMora := '';
   with ACBrTitulo do
     begin
       {SEGMENTO P}
@@ -771,7 +772,11 @@ begin
       end;
       {Pegando especie do titulo}
       if EspecieDoc = 'DM' then
-        AEspecieTitulo := '02';
+        AEspecieTitulo := '02'
+      else if EspecieDoc = 'DMI' then      // DMI Duplicata Mercantil indicada para protesto
+        AEspecieTitulo := '03'             // no campo 107 e 108 tem que sair 03 - GR7 automação em 17.03.2017
+      else
+        AEspecieTitulo := EspecieDoc;
       {Mora Juros}
       if (ValorMoraJuros > 0) then
         begin
@@ -795,6 +800,17 @@ begin
      else
         DiasProtesto := '00';
 
+     if (ValorMoraJuros > 0) and (CodigoMora = '') then
+       CodigoMora := '1'
+     else if (ValorMoraJuros = 0) and (CodigoMora = '') then
+       CodigoMora := '0';
+
+     if CodigoMora = '0' then
+       ValorMora := PadLeft('', 15, '0')
+     else if CodigoMora = '1' then
+       ValorMora := IntToStrZero(Round(ValorMoraJuros * 100), 15)
+     else if CodigoMora = '2' then
+       ValorMora := IntToStrZero(Round(ValorMoraJuros * 10000), 15);
 
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                             + //1 a 3 - Código do banco
                '0001'                                                        + //4 a 7 - Lote de serviço
@@ -838,9 +854,7 @@ begin
                          FormatDateTime('ddmmyyyy', DataDocumento)        + // 110 a 117 - Data da emissão do documento
                          CodigoMora                                       + // 118 - Codigo Mora (juros) - 1) Por dia, 2) Taxa mensal e 3) Isento
                          ADataMoraJuros                                   + //119 a 126 - Data a partir da qual serão cobrados juros
-                         IfThen(ValorMoraJuros > 0,
-                                IntToStrZero( round(ValorMoraJuros * 100), 15),
-                                PadLeft('', 15, '0'))                     + // 127 a 141 - Valor de juros de mora por dia
+                         ValorMora                                        + // 127 a 141 - Valor de juros de mora por dia
                          TipoDescontoToString(TipoDesconto)               + // 142 - "Código do Desconto 1
                                                                             // '0'  =  Não Conceder desconto
                                                                             // '1'  =  Valor Fixo Até a Data Informada

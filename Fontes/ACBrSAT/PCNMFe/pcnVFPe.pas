@@ -56,8 +56,8 @@ type
     FEstabelecimento: String;
     FSerialPOS: String;
     FCNPJ: String;
-    FIcmsBase: Currency;
-    FValorTotalVenda: Currency;
+    FIcmsBase: Double;
+    FValorTotalVenda: Double;
     FHabilitarMultiplosPagamentos: Boolean;
     FHabilitarControleAntiFraude: Boolean;
     FCodigoMoeda: String;
@@ -79,8 +79,8 @@ type
     property Estabelecimento: String read FEstabelecimento write FEstabelecimento;
     property SerialPOS: String read FSerialPOS write FSerialPOS;
     property CNPJ: String read FCNPJ write FCNPJ;
-    property IcmsBase: Currency read FIcmsBase write FIcmsBase;
-    property ValorTotalVenda: Currency read FValorTotalVenda write FValorTotalVenda;
+    property IcmsBase: Double read FIcmsBase write FIcmsBase;
+    property ValorTotalVenda: Double read FValorTotalVenda write FValorTotalVenda;
     property HabilitarMultiplosPagamentos: Boolean read FHabilitarMultiplosPagamentos write FHabilitarMultiplosPagamentos;
     property HabilitarControleAntiFraude: Boolean read FHabilitarControleAntiFraude write FHabilitarControleAntiFraude;
     property CodigoMoeda: String read FCodigoMoeda write FCodigoMoeda;
@@ -95,7 +95,7 @@ type
     FIDPagamento: Integer;
     FMensagem: String;
     FStatusPagamento: String;
-    FXML : String;
+    FXML : AnsiString;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -110,7 +110,7 @@ type
     property IDPagamento: Integer read FIDPagamento write FIDPagamento;
     property Mensagem: String read FMensagem write FMensagem;
     property StatusPagamento: String read FStatusPagamento write FStatusPagamento;
-    property XML: String read FXML write SetXMLString;
+    property XML: AnsiString read FXML write SetXMLString;
   end;
 
   { TVerificarStatusValidador }
@@ -147,10 +147,10 @@ type
     FParcelas : Integer;
     FUltimosQuatroDigitos : Integer;
     FCodigoPagamento : String;
-    FValorPagamento : Currency;
+    FValorPagamento : Double;
     FIDFila : Integer;
     FTipo : String;
-    FXML : String;
+    FXML : AnsiString;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -170,10 +170,10 @@ type
     property Parcelas: Integer read FParcelas write FParcelas;
     property UltimosQuatroDigitos: Integer read FUltimosQuatroDigitos write FUltimosQuatroDigitos;
     property CodigoPagamento: String read FCodigoPagamento write FCodigoPagamento;
-    property ValorPagamento: Currency read FValorPagamento write FValorPagamento;
+    property ValorPagamento: Double read FValorPagamento write FValorPagamento;
     property IDFila: Integer read FIDFila write FIDFila;
     property Tipo: String read FTipo write FTipo;
-    property XML: String read FXML write SetXMLString;
+    property XML: AnsiString read FXML write SetXMLString;
   end;
 
   { TRespostaFiscal }
@@ -217,7 +217,7 @@ type
   private
     FIntegradorResposta : TIntegradorResposta;
     FIdRespostaFiscal: String;
-    FXML: String;
+    FXML: AnsiString;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -230,7 +230,7 @@ type
   published
     property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
     property IdRespostaFiscal: String read FIdRespostaFiscal write FIdRespostaFiscal;
-    property XML: String read FXML write SetXMLString;
+    property XML: AnsiString read FXML write SetXMLString;
   end;
 
   { TStatusPagamento }
@@ -245,7 +245,7 @@ type
     FInstituicaoFinanceira : String;
     FParcelas : Integer;
     FCodigoPagamento : String;
-    FValorPagamento : Currency;
+    FValorPagamento : Double;
     FIDFila : Integer;
     FTipo : String;
     FUltimosQuatroDigitos : Integer;
@@ -267,7 +267,7 @@ type
     property InstituicaoFinanceira: String read FInstituicaoFinanceira write FInstituicaoFinanceira;
     property Parcelas: Integer read FParcelas write FParcelas;
     property CodigoPagamento: String read FCodigoPagamento write FCodigoPagamento;
-    property ValorPagamento: Currency read FValorPagamento write FValorPagamento;
+    property ValorPagamento: Double read FValorPagamento write FValorPagamento;
     property IDFila: Integer read FIDFila write FIDFila;
     property Tipo: String read FTipo write FTipo;
     property UltimosQuatroDigitos: Integer read FUltimosQuatroDigitos write FUltimosQuatroDigitos;
@@ -278,7 +278,7 @@ type
   private
     FIntegradorResposta : TIntegradorResposta;
     FRetorno: String;
-    FXML: String;
+    FXML: AnsiString;
 
     procedure SetXMLString(AValue: AnsiString);
   public
@@ -291,7 +291,7 @@ type
   published
     property IntegradorResposta: TIntegradorResposta read FIntegradorResposta write FIntegradorResposta;
     property Retorno: String read FRetorno write FRetorno;
-    property XML : String read FXML write SetXMLString;
+    property XML : AnsiString read FXML write SetXMLString;
   end;
 
 implementation

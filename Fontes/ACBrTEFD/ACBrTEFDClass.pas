@@ -494,6 +494,8 @@ type
      fpDataEntradaCDC:TDateTime;
      fpTipoOperacao: TACBrTEFDRespTipoOperacao;
      fpNFCeSAT: TACBrTEFDRespNFCeSAT;
+     fpIdPagamento : LongInt;
+     fpIdRespostaFiscal : LongInt;
 
      procedure SetCNFEnviado(const AValue : Boolean);
      procedure SetIndiceFPG_ECF(const AValue : String);
@@ -594,6 +596,8 @@ type
      property TipoOperacao: TACBrTEFDRespTipoOperacao read fpTipoOperacao;
 
      property NFCeSAT: TACBrTEFDRespNFCeSAT read fpNFCeSAT;
+     property IdPagamento : Integer read fpIdPagamento  write fpIdPagamento ;
+     property IdRespostaFiscal : Integer read fpIdRespostaFiscal  write fpIdRespostaFiscal ;
    end;
 
    { TACBrTEFDRespTXT }
@@ -1367,6 +1371,8 @@ begin
    fpArqRespPendente := '' ;
 
    fpNFCeSAT.Clear;
+   fpIdPagamento := 0;
+   fpIdRespostaFiscal := 0;
 end;
 
 procedure TACBrTEFDResp.LeArquivo(const NomeArquivo : String);
@@ -1515,6 +1521,8 @@ begin
        38  : fpCheque                := Linha.Informacao.AsString;
        39  : fpChequeDC              := Linha.Informacao.AsString;
        40  : fpNomeAdministradora    := Linha.Informacao.AsString;
+       131 : fpInstituicao           := Linha.Informacao.AsString;
+       136 : fpBin                   := Linha.Informacao.AsString;
        707 : fpValorOriginal         := Linha.Informacao.AsFloat;
        708 : fpSaque                 := Linha.Informacao.AsFloat;
        709 : fpDesconto              := Linha.Informacao.AsFloat;
@@ -1560,9 +1568,12 @@ begin
        899 :  // Tipos de Uso Interno do ACBrTEFD
         begin
           case Linha.Sequencia of
-            1 : fpCNFEnviado     := (UpperCase( Linha.Informacao.AsString ) = 'S' );
-            2 : fpIndiceFPG_ECF  := Linha.Informacao.AsString ;
-            3 : fpOrdemPagamento := Linha.Informacao.AsInteger ;
+              1 : fpCNFEnviado       := (UpperCase( Linha.Informacao.AsString ) = 'S' );
+              2 : fpIndiceFPG_ECF    := Linha.Informacao.AsString ;
+              3 : fpOrdemPagamento   := Linha.Informacao.AsInteger ;
+            103 : fpValorTotal       := fpValorTotal + Linha.Informacao.AsFloat;
+            500 : fpIdPagamento      := Linha.Informacao.AsInteger ;
+            501 : fpIdRespostaFiscal := Linha.Informacao.AsInteger ;
           end;
         end;
        999 : fpTrailer           := Linha.Informacao.AsString ;

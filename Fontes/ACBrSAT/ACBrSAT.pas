@@ -71,6 +71,7 @@ type
      FMAIL: TACBrMail;
 
      fsArqLOG: String;
+     fsComandoLog: String;
      fsInicializado : Boolean ;
      fsModelo : TACBrSATModelo ;
      fsConfig : TACBrSATConfig ;
@@ -109,7 +110,6 @@ type
    protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
    public
-     fsComandoLog: String;
      procedure IniciaComando ;
      function FinalizaComando(AResult: String): String;
      procedure DecodificaRetorno6000;

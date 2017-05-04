@@ -9,7 +9,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   ACBrMDFe, ACBrMDFeDAMDFeClass, ACBrMail, ACBrBase, ACBrDFe,
-  ACBrMDFeDAMDFeRLClass;
+  ACBrMDFeDAMDFEFR;
 
 type
   TfrmDemo_ACBrMDFe = class(TForm)
@@ -135,8 +135,9 @@ type
     Label29: TLabel;
     edtPathSchemas: TEdit;
     sbPathSchemas: TSpeedButton;
-    ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL;
-    Button1: TButton;
+    btnConsultarNaoEncerrados: TButton;
+    ACBrMDFeDAMDFEFR1: TACBrMDFeDAMDFEFR;
+    btnModeloFR: TButton;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -164,7 +165,8 @@ type
     procedure btnEnviarMDFeEmailClick(Sender: TObject);
     procedure btnGerarPDFEventoClick(Sender: TObject);
     procedure sbPathSchemasClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnConsultarNaoEncerradosClick(Sender: TObject);
+    procedure btnModeloFRClick(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -802,7 +804,7 @@ begin
   end;
 end;
 
-procedure TfrmDemo_ACBrMDFe.Button1Click(Sender: TObject);
+procedure TfrmDemo_ACBrMDFe.btnConsultarNaoEncerradosClick(Sender: TObject);
 var
   vCNPJ: String;
 begin
@@ -986,16 +988,21 @@ end;
 
 procedure TfrmDemo_ACBrMDFe.btnImprimirClick(Sender: TObject);
 begin
- OpenDialog1.Title := 'Selecione o MDFe';
- OpenDialog1.DefaultExt := '*-MDFe.xml';
- OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
- OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
+  if ACBrMDFeDAMDFEFR1.FastFile = '' then
+    btnModeloFR.Click;
 
- if OpenDialog1.Execute then
+  if ACBrMDFeDAMDFEFR1.FastFile = '' then Exit;
+
+  OpenDialog1.Title := 'Selecione o MDFe';
+  OpenDialog1.DefaultExt := '*-MDFe.xml';
+  OpenDialog1.Filter := 'Arquivos MDFe (*-MDFe.xml)|*-MDFe.xml|Arquivos XML (*.xml)|*.xml|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
   begin
-   ACBrMDFe1.Manifestos.Clear;
-   ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
-   ACBrMDFe1.Manifestos.Imprimir;
+    ACBrMDFe1.Manifestos.Clear;
+    ACBrMDFe1.Manifestos.LoadFromFile(OpenDialog1.FileName);
+    ACBrMDFe1.Manifestos.Imprimir;
   end;
 end;
 
@@ -1071,6 +1078,17 @@ begin
     ACBrMDFe1.EventoMDFe.LerXML(OpenDialog1.FileName);
     ACBrMDFe1.ImprimirEvento;
   end;
+end;
+
+procedure TfrmDemo_ACBrMDFe.btnModeloFRClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o modelo';
+  OpenDialog1.DefaultExt := '*.fr3';
+  OpenDialog1.Filter := 'Arquivos FR3 (*.fr3)|*.fr3|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ACBrMDFe1.Configuracoes.Arquivos.PathSalvar;
+
+  if OpenDialog1.Execute then
+    ACBrMDFeDAMDFEFR1.FastFile := OpenDialog1.FileName;
 end;
 
 procedure TfrmDemo_ACBrMDFe.btnGerarPDFEventoClick(Sender: TObject);

@@ -409,7 +409,7 @@ begin
       FieldByName('NumeroControle').AsString := NumeroControle;
       FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
       FieldByName('Reservado').AsString := Reservado;
-
+      
       Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
         0: sReferencia := 'Mensal';
         1: sReferencia := '1a Quinzena';

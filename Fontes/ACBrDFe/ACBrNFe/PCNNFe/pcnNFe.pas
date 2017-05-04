@@ -152,6 +152,8 @@ type
 
   TinfNFeSupl = class;
 
+  { TNFe }
+
   TNFe = class(TPersistent)
   private
     FinfNFe: TinfNFe;
@@ -183,6 +185,7 @@ type
     destructor Destroy; override;
 
     procedure Assign(Source: TPersistent); override;
+    procedure SetXMLString(AValue : AnsiString) ;
   published
     property infNFe: TinfNFe read FinfNFe write FinfNFe;
     property Ide: TIde read FIde write FIde;
@@ -1961,7 +1964,7 @@ const
 
 implementation
 
-Uses ACBrUtil;
+Uses ACBrUtil, pcnNFeR;
 
 procedure TNFe.Assign(Source: TPersistent);
 begin
@@ -1990,6 +1993,19 @@ begin
   end
   else
     inherited; 
+end;
+
+procedure TNFe.SetXMLString(AValue: AnsiString);
+var
+ LocNFeR : TNFeR;
+begin
+  LocNFeR := TNFeR.Create(Self);
+  try
+    LocNFeR.Leitor.Arquivo := AValue;
+    LocNFeR.LerXml;
+  finally
+    LocNFeR.Free
+  end;
 end;
 
 constructor TNFe.Create;

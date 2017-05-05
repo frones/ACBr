@@ -18,7 +18,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function EnviaComando(numeroSessao: Integer; Nome, Comando : String) : String;
+    function EnviaComando(numeroSessao: Integer; Nome, Comando : String; TimeOutComando : Integer = 0) : String;
     function PegaResposta(Resp : String) : String;
     function AguardaArqResposta(numeroSessao: Integer) : String;
     function AjustaComando(Comando : String) : String;
@@ -74,9 +74,6 @@ type
     procedure GerarParametro( Nome: String; Valor: Variant; Tipo: TpcnTipoCampo; ParseTextoXML: Boolean = True );
   end;
 
-
-
-
 implementation
 
 
@@ -97,7 +94,7 @@ begin
   inherited Destroy;
 end;
 
-function TComandoMFe.EnviaComando(numeroSessao: Integer; Nome, Comando: String): String;
+function TComandoMFe.EnviaComando(numeroSessao: Integer; Nome, Comando: String; TimeOutComando : Integer = 0): String;
 var
   SL : TStringList;
   LocTimeOut, ActualTime : TDateTime;
@@ -112,10 +109,14 @@ begin
     RenameFile(NomeArquivo, ChangeFileExt(NomeArquivo,'.xml'));
 
     ActualTime := Now;
+    if TimeOutComando > 0 then
+      FTimeout := TimeOutComando;
+
     if FTimeout <= 0 then
       LocTimeOut := IncSecond(ActualTime, 30)
     else
       LocTimeOut := IncSecond(ActualTime, FTimeout);
+
     Result := AguardaArqResposta(numeroSessao);
     while EstaVazio(Result) and
           (ActualTime < LocTimeOut) do
@@ -127,8 +128,14 @@ begin
   finally
     SL.Free;
   end;
+
   if EstaVazio(Result) then
+  begin
+    if FilesExists(ChangeFileExt(NomeArquivo,'.xml')) then
+      DeleteFile(ChangeFileExt(NomeArquivo,'.xml'));
+
     raise Exception.Create('Sem Resposta do Integrador');
+  end;
 end;
 
 function TComandoMFe.PegaResposta(Resp: String): String;
@@ -157,7 +164,11 @@ begin
     for I:=0  to SLArqResp.Count-1 do
     begin
       SL.Clear;
-      SL.LoadFromFile(SLArqResp[I]);
+      try
+        SL.LoadFromFile(SLArqResp[I]);
+      except
+        SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
+      end;
       FLeitor.Arquivo := SL.Text;
       if FLeitor.rExtrai(1, 'Identificador') <> '' then
       begin
@@ -238,7 +249,7 @@ procedure TParametro.GerarParametro(Nome: String; Valor: Variant;
 begin
   FGerador.wGrupo('Parametro');
   FGerador.wCampo(tcStr, '', 'Nome', 1, 99, 1, Nome, 'Nome do Parâmetro');
-  FGerador.wCampo(tcStr, '', 'Valor', 1, 99, 1, Valor, 'Valor do Parâmetro',ParseTextoXML);
+  FGerador.wCampo(Tipo , '', 'Valor', 1, 99, 1, Valor, 'Valor do Parâmetro',ParseTextoXML);
   FGerador.wGrupo('/Parametro');
 end;
 

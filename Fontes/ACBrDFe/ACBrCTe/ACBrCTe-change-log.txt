@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/05/2017
+-- Diversos --
+[*] Alterações visando o modelo 67 CT-e OS 3.00
+   Por: Italo Jurisato Junior
+
 21/04/2017
 -- pcteCTe/pcteCTeR/pcteCTeW --
 [*] Correção, remoção da tag <indIEToma> dentro do grupo <toma> CT-e OS 3.00

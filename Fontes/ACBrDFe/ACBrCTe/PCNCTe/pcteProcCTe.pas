@@ -141,6 +141,7 @@ var
   LocLeitor: TLeitor;
   i: Integer;
   ProtLido: Boolean; // Protocolo lido do Arquivo
+  Modelo: Integer;
 begin
   XMLCTe      := TStringList.Create;
   XMLinfProt  := TStringList.Create;
@@ -171,6 +172,8 @@ begin
         else
           ProtLido := True;
       end;
+
+      Modelo := StrToIntDef(RetornarModelo(FchCTe), 57);
 
       // Gerar arquivo pelo Recibo do CTe
       if (FPathRetConsReciCTe <> '') and (FPathRetConsSitCTe = '') and
@@ -267,10 +270,20 @@ begin
     begin
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
-      Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
-      Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>') + '</CTe>');
-      Gerador.wTexto(FXML_prot);
-      Gerador.wGrupo('/cteProc');
+      if Modelo = 57 then
+      begin
+        Gerador.wGrupo('cteProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+        Gerador.wTexto('<CTe xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTe xmlns', '</CTe>') + '</CTe>');
+        Gerador.wTexto(FXML_prot);
+        Gerador.wGrupo('/cteProc');
+      end
+      else
+      begin
+        Gerador.wGrupo('cteOSProc versao="' + Versao + '" ' + NAME_SPACE_CTE, '');
+        Gerador.wTexto('<CTeOS xmlns' + RetornarConteudoEntre(FXML_CTe, '<CTeOS xmlns', '</CTeOS>') + '</CTeOS>');
+        Gerador.wTexto(FXML_prot);
+        Gerador.wGrupo('/cteOSProc');
+      end;
     end;
 
     Result := (Gerador.ListaDeAlertas.Count = 0);

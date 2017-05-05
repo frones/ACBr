@@ -279,7 +279,12 @@ begin
   {$EndIf}
 
   if CTe.procCTe.nProt <> '' then
-    Gerador.wGrupo('cteProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '');
+  begin
+    if CTe.ide.modelo = 57 then
+      Gerador.wGrupo('cteProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '')
+    else
+      Gerador.wGrupo('cteOSProc ' + CTe.infCTe.VersaoStr + ' ' + NAME_SPACE_CTE, '');
+  end;
 
   if CTe.ide.modelo = 67 then
     Gerador.wGrupo('CTeOS ' + NAME_SPACE_CTE + ' ' + CTe.infCTe.VersaoStr)
@@ -333,7 +338,11 @@ begin
            '</protCTe>';
 
      Gerador.wTexto(xProtCTe);
-     Gerador.wGrupo('/cteProc');
+     
+     if CTe.ide.modelo = 57 then
+       Gerador.wGrupo('/cteProc')
+     else
+       Gerador.wGrupo('/cteOSProc');
    end;
 
   Gerador.gtAjustarRegistros(CTe.infCTe.ID);

@@ -134,6 +134,7 @@ type
     FTMed: Integer;
 
     FCTeRetorno: TretEnvCTe;
+    FCTeRetornoOS: TRetConsSitCTe;
 
     function GetLote: String;
     function GetRecibo: String;
@@ -781,7 +782,11 @@ begin
   if Assigned(FCTeRetorno) then
     FCTeRetorno.Free;
 
+  if Assigned(FCTeRetornoOS) then
+    FCTeRetornoOS.Free;
+
   FCTeRetorno := TretEnvCTe.Create;
+  FCTeRetornoOS := TRetConsSitCTe.Create;
 end;
 
 function TCTeRecepcao.GetLote: String;
@@ -801,7 +806,10 @@ var
   Modelo: TModeloCTe;
   Ok: Boolean;
 begin
-  FPLayout := LayCTeRecepcao;
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+    FPLayout := LayCTeRecepcao
+  else
+    FPLayout := LayCTeRecepcaoOS;
 
   if FConhecimentos.Count > 0 then    // Tem CTe ? Se SIM, use as informações do XML
   begin
@@ -844,8 +852,16 @@ end;
 
 procedure TCTeRecepcao.DefinirServicoEAction;
 begin
-  FPServico    := GetUrlWsd + 'CteRecepcao';
-  FPSoapAction := FPServico + '/cteRecepcaoLote';
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+  begin
+    FPServico    := GetUrlWsd + 'CteRecepcao';
+    FPSoapAction := FPServico + '/cteRecepcaoLote';
+  end
+  else
+  begin
+    FPServico    := GetUrlWsd + 'CteRecepcaoOS';
+    FPSoapAction := FPServico + '/cteOSRecepcao';
+  end;
 end;
 
 procedure TCTeRecepcao.DefinirDadosMsg;
@@ -855,8 +871,18 @@ var
 begin
   vCTe := '';
   for I := 0 to FConhecimentos.Count - 1 do
-    vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
-      FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
+  begin
+    case FConhecimentos.Items[I].CTe.ide.modelo of
+      57: begin
+            vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
+              FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
+          end;
+      67: begin
+            vCTe := vCTe + '<CTeOS' + RetornarConteudoEntre(
+              FConhecimentos.Items[I].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
+          end;
+    end;
+  end;
 
   FPDadosMsg := '<enviCTe xmlns="' + ACBRCTE_NAMESPACE + '" versao="' +
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
@@ -871,37 +897,155 @@ begin
 end;
 
 function TCTeRecepcao.TratarResposta: Boolean;
+var
+  I: integer;
+  chCTe, AXML, NomeXMLSalvo: String;
+  AProcCTe: TProcCTe;
+  SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'cteRecepcaoLoteResult');
+  FPRetWS := SeparaDadosArray(['cteRecepcaoLoteResult',
+                               'cteOSRecepcaoResult'], FPRetornoWS);
 
-  FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
-  FCTeRetorno.LerXml;
+  if (FPConfiguracoesCTe.Geral.ModeloDF = moCTeOS) then
+  begin
+    if pos('retCTeOS', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retCTeOS', 'retConsSitCTe',
+                                     [rfReplaceAll, rfIgnoreCase])
+    else if pos('retConsReciCTe', FPRetWS) > 0 then
+      AXML := StringReplace(FPRetWS, 'retConsReciCTe', 'retConsSitCTe',
+                                     [rfReplaceAll, rfIgnoreCase])
+    else
+      AXML := FPRetWS;
 
-  Fversao := FCTeRetorno.versao;
-  FTpAmb := FCTeRetorno.TpAmb;
-  FverAplic := FCTeRetorno.verAplic;
-  FcStat := FCTeRetorno.cStat;
-  FxMotivo := FCTeRetorno.xMotivo;
-  FdhRecbto := FCTeRetorno.infRec.dhRecbto;
-  FTMed := FCTeRetorno.infRec.tMed;
-  FcUF := FCTeRetorno.cUF;
-  FPMsg := FCTeRetorno.xMotivo;
-  FRecibo := FCTeRetorno.infRec.nRec;
+    FCTeRetornoOS.Leitor.Arquivo := ParseText(AXML);
+    FCTeRetornoOS.LerXml;
 
-  Result := (FCTeRetorno.CStat = 103);
+    Fversao := FCTeRetornoOS.versao;
+    FTpAmb := FCTeRetornoOS.TpAmb;
+    FverAplic := FCTeRetornoOS.verAplic;
+
+    // Consta no Retorno da CT-eOS
+    FRecibo := ''; // FCTeRetornoOS.nRec;
+    FcUF := FCTeRetornoOS.cUF;
+    chCTe := FCTeRetornoOS.ProtCTe.chCTe;
+
+    if (FCTeRetornoOS.protCTe.cStat > 0) then
+      FcStat := FCTeRetornoOS.protCTe.cStat
+    else
+      FcStat := FCTeRetornoOS.cStat;
+
+    if (FCTeRetornoOS.protCTe.xMotivo <> '') then
+    begin
+      FPMsg := FCTeRetornoOS.protCTe.xMotivo;
+      FxMotivo := FCTeRetornoOS.protCTe.xMotivo;
+    end
+    else
+    begin
+      FPMsg := FCTeRetornoOS.xMotivo;
+      FxMotivo := FCTeRetornoOS.xMotivo;
+    end;
+
+    // Verificar se a CT-eOS foi autorizada com sucesso
+    Result := (FCTeRetornoOS.cStat = 104) and
+      (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoOS.protCTe.cStat));
+
+    if Result then
+    begin
+      for I := 0 to TACBrCTe(FPDFeOwner).Conhecimentos.Count - 1 do
+      begin
+        with TACBrCTe(FPDFeOwner).Conhecimentos.Items[I] do
+        begin
+          if OnlyNumber(chCTe) = NumID then
+          begin
+            if (FPConfiguracoesCTe.Geral.ValidarDigest) and
+               (FCTeRetornoOS.protCTe.digVal <> '') and
+               (CTe.signature.DigestValue <> FCTeRetornoOS.protCTe.digVal) then
+            begin
+              raise EACBrCTeException.Create('DigestValue do documento ' + NumID + ' não confere.');
+            end;
+
+            CTe.procCTe.cStat := FCTeRetornoOS.protCTe.cStat;
+            CTe.procCTe.tpAmb := FCTeRetornoOS.tpAmb;
+            CTe.procCTe.verAplic := FCTeRetornoOS.verAplic;
+            CTe.procCTe.chCTe := FCTeRetornoOS.ProtCTe.chCTe;
+            CTe.procCTe.dhRecbto := FCTeRetornoOS.protCTe.dhRecbto;
+            CTe.procCTe.nProt := FCTeRetornoOS.ProtCTe.nProt;
+            CTe.procCTe.digVal := FCTeRetornoOS.protCTe.digVal;
+            CTe.procCTe.xMotivo := FCTeRetornoOS.protCTe.xMotivo;
+
+            AProcCTe := TProcCTe.Create;
+            try
+              // Processando em UTF8, para poder gravar arquivo corretamente //
+              AProcCTe.XML_CTe := RemoverDeclaracaoXML(XMLAssinado);
+              AProcCTe.XML_Prot := FCTeRetornoOS.XMLprotCTe;
+              AProcCTe.Versao := FPVersaoServico;
+              AjustarOpcoes( AProcCTe.Gerador.Opcoes );
+              AProcCTe.GerarXML;
+
+              XMLOriginal := AProcCTe.Gerador.ArquivoFormatoXML;
+
+              if FPConfiguracoesCTe.Arquivos.Salvar then
+              begin
+                SalvarXML := (not FPConfiguracoesCTe.Arquivos.SalvarApenasCTeProcessados) or
+                             Processado;
+
+                // Salva o XML da NF-e assinado e protocolado
+                if SalvarXML then
+                begin
+                  NomeXMLSalvo := '';
+                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
+                  begin
+                    FPDFeOwner.Gravar( NomeArq, XMLOriginal ); // Atualiza o XML carregado
+                    NomeXMLSalvo := NomeArq;
+                  end;
+
+                  if (NomeXMLSalvo <> CalcularNomeArquivoCompleto()) then
+                    GravarXML; // Salva na pasta baseado nas configurações do PathCTe
+                end;
+              end ;
+            finally
+              AProcCTe.Free;
+            end;
+
+            Break;
+          end;
+        end;
+      end;
+    end;
+  end
+  else
+  begin
+    FCTeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
+    FCTeRetorno.LerXml;
+
+    Fversao := FCTeRetorno.versao;
+    FTpAmb := FCTeRetorno.TpAmb;
+    FverAplic := FCTeRetorno.verAplic;
+    FcStat := FCTeRetorno.cStat;
+    FxMotivo := FCTeRetorno.xMotivo;
+    FdhRecbto := FCTeRetorno.infRec.dhRecbto;
+    FTMed := FCTeRetorno.infRec.tMed;
+    FcUF := FCTeRetorno.cUF;
+    FPMsg := FCTeRetorno.xMotivo;
+    FRecibo := FCTeRetorno.infRec.nRec;
+
+    Result := (FCTeRetorno.CStat = 103);
+  end;
 end;
 
 function TCTeRecepcao.GerarMsgLog: String;
 begin
-  Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
-                           'Ambiente: %s ' + LineBreak +
-                           'Versão Aplicativo: %s ' + LineBreak +
-                           'Status Código: %s ' + LineBreak +
-                           'Status Descrição: %s ' + LineBreak +
-                           'UF: %s ' + sLineBreak +
-                           'Recibo: %s ' + LineBreak +
-                           'Recebimento: %s ' + LineBreak +
-                           'Tempo Médio: %s ' + LineBreak),
+  {(*}
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
+    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                             'Ambiente: %s ' + LineBreak +
+                             'Versão Aplicativo: %s ' + LineBreak +
+                             'Status Código: %s ' + LineBreak +
+                             'Status Descrição: %s ' + LineBreak +
+                             'UF: %s ' + sLineBreak +
+                             'Recibo: %s ' + LineBreak +
+                             'Recebimento: %s ' + LineBreak +
+                             'Tempo Médio: %s ' + LineBreak),
                      [FCTeRetorno.versao,
                       TpAmbToStr(FCTeRetorno.TpAmb),
                       FCTeRetorno.verAplic,
@@ -911,12 +1055,44 @@ begin
                       FCTeRetorno.infRec.nRec,
                       IfThen(FCTeRetorno.InfRec.dhRecbto = 0, '',
                              FormatDateTimeBr(FCTeRetorno.InfRec.dhRecbto)),
-                      IntToStr(FCTeRetorno.InfRec.TMed)]);
+                      IntToStr(FCTeRetorno.InfRec.TMed)])
+  else
+    Result := Format(ACBrStr('Versão Layout: %s ' + LineBreak +
+                             'Ambiente: %s ' + LineBreak +
+                             'Versão Aplicativo: %s ' + LineBreak +
+                             'Status Código: %s ' + LineBreak +
+                             'Status Descrição: %s ' + LineBreak +
+                             'UF: %s ' + sLineBreak +
+                             'dhRecbto: %s ' + sLineBreak +
+                             'chCTe: %s ' + LineBreak),
+                     [FCTeRetornoOS.versao,
+                      TpAmbToStr(FCTeRetornoOS.TpAmb),
+                      FCTeRetornoOS.verAplic,
+                      IntToStr(FCTeRetornoOS.protCTe.cStat),
+                      FCTeRetornoOS.protCTe.xMotivo,
+                      CodigoParaUF(FCTeRetornoOS.cUF),
+                      FormatDateTimeBr(FCTeRetornoOS.protCTe.dhRecbto),
+                      FCTeRetornoOS.chCTe]);
+  {*)}
 end;
 
 function TCTeRecepcao.GerarPrefixoArquivo: String;
 begin
-  Result := Lote;
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTeOS then  // Esta procesando nome do Retorno Sincrono ?
+  begin
+    if FRecibo <> '' then
+    begin
+      Result := Recibo;
+      FPArqResp := 'pro-rec';
+    end
+    else
+    begin
+      Result := Lote;
+      FPArqResp := 'pro-lot';
+    end;
+  end
+  else
+    Result := Lote;
 end;
 
 { TCTeRetRecepcao }

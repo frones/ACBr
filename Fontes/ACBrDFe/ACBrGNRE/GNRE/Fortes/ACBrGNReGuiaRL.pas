@@ -53,7 +53,6 @@ type
   RLGNRe: TRLReport;
   RLPDFFilter1: TRLPDFFilter;
   procedure FormCreate(Sender: TObject);
-  procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -211,11 +210,6 @@ begin
     end;
 end;
 
-procedure TfrlGuiaRL.FormDestroy(Sender: TObject);
-begin
-     RLGNRe.Free;
-     FreeAndNil(dsItens);
-end;
 
 procedure TfrlGuiaRL.FormCreate(Sender: TObject);
 begin
@@ -409,7 +403,7 @@ begin
       FieldByName('NumeroControle').AsString := NumeroControle;
       FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
       FieldByName('Reservado').AsString := Reservado;
-      
+
       Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
         0: sReferencia := 'Mensal';
         1: sReferencia := '1a Quinzena';

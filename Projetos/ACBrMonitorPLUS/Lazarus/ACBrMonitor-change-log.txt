@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2017
+[-] Removida aba de downloads, que não estava programada corretamente.
+	por: Celso Marigo Junior
+
+24/04/2017
+[*]	Corrigido ACBrMonitorPLUS para gravar os parâmetros de comunicação serial da PosPrinter
+	por: Celso Marigo Junior
+
 24/04/2017
 [-]	Corrigido uso do parâmetro Tira Acentos da Resposta para funcionar também em modo TXT
 	por: Celso Marigo Junior

@@ -126,11 +126,6 @@ type
     Bevel2: TBevel;
     Bevel3: TBevel;
     btnBoletoRelatorioRetorno: TPanel;
-    btnDownCont: TPanel;
-    btnPost: TBitBtn;
-    btnDown: TPanel;
-    btnDownConf: TPanel;
-    btnDownXml: TPanel;
     bvCadastro: TBevel;
     bExecECFTeste: TBitBtn;
     bGAVAbrir: TBitBtn;
@@ -353,13 +348,10 @@ type
     chkBOLRelMostraPreview: TCheckBox;
     chkExibeRazaoSocial: TCheckBox;
     cbSSLLib: TComboBox;
-    DBGrid3: TDBGrid;
     deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
     edtArquivoPFX: TEdit;
     edtArquivoWebServicesGNRe: TEdit;
-    edtAutoExecute: TDBCheckBox;
-    edtAutoTimer: TDBEdit;
     edtBOLEmailAssunto: TEdit;
     edtBOLEmailMensagem: TMemo;
     edtBOLLocalPagamento: TEdit;
@@ -367,12 +359,10 @@ type
     edtEmailAssuntoCTe: TEdit;
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
-    edtidDFeAutoInc: TDBEdit;
     edTimeZoneStr: TEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
-    edtultNSU: TDBEdit;
     GroupBox10: TGroupBox;
     GroupBox11: TGroupBox;
     GroupBox2: TGroupBox;
@@ -388,7 +378,6 @@ type
     Label138: TLabel;
     Label155: TLabel;
     Label156: TLabel;
-    Label163: TLabel;
     Label165: TLabel;
     Label179: TLabel;
     Label180: TLabel;
@@ -397,10 +386,7 @@ type
     Label191: TLabel;
     Label192: TLabel;
     Label193: TLabel;
-    Label194: TLabel;
     Label195: TLabel;
-    Label196: TLabel;
-    Label197: TLabel;
     Label198: TLabel;
     Label199: TLabel;
     Label200: TLabel;
@@ -442,10 +428,6 @@ type
     mmEmailMsgMDFe: TMemo;
     mmEmailMsgNFe: TMemo;
     pnLogoBanco: TPanel;
-    pgDownload: TNotebook;
-    pgDownConf: TPage;
-    pgDownXml: TPage;
-    PanelDownMenu: TPanel;
     PanelMenu: TPanel;
     PanelScroll: TPanel;
     PanelTitle: TPanel;
@@ -503,7 +485,6 @@ type
     sbArquivoWebServicesCTe: TSpeedButton;
     TabSheet1: TTabSheet;
     tsRelatorio: TTabSheet;
-    tsDownload: TTabSheet;
     tsImpCTe: TTabSheet;
     tsTesteMDFe: TTabSheet;
     tsEmailMDFe: TTabSheet;
@@ -1130,9 +1111,6 @@ type
     procedure btnDFeTesteClick(Sender: TObject);
     procedure btnDFeWebServicesClick(Sender: TObject);
     procedure btnDisplayClick(Sender: TObject);
-    procedure btnDownClick(Sender: TObject);
-    procedure btnDownConfClick(Sender: TObject);
-    procedure btnDownXmlClick(Sender: TObject);
     procedure btnECFClick(Sender: TObject);
     procedure btnEmailClick(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
@@ -1459,7 +1437,7 @@ type
     procedure TrataErrosSAT(Sender : TObject ; E : Exception) ;
     procedure PrepararImpressaoSAT(NomeImpressora : string = ''; GerarPDF : boolean = false);
 
-    procedure ConfiguraPosPrinter;
+    procedure ConfiguraPosPrinter(SerialParams : String = '');
     procedure SetComumConfig(Configuracoes : TConfiguracoes) ;
     procedure AtualizaSSLLibsCombo ;
 
@@ -2544,28 +2522,6 @@ procedure TFrmACBrMonitor.btnDisplayClick(Sender: TObject);
 begin
   SetColorButtons(Sender);
   pgConfig.ActivePage := tsDIS;
-end;
-
-procedure TFrmACBrMonitor.btnDownClick(Sender: TObject);
-begin
-  SetColorButtons(Sender);
-  SetSize25(TPanel(Sender).Parent);
-  pgConfig.ActivePage := tsDownload;
-  SetScroll(TPanel(Sender).Parent);
-  // Ativa a 1a página do pegecontrol
-  btnDownConfClick(btnDownConf);
-end;
-
-procedure TFrmACBrMonitor.btnDownConfClick(Sender: TObject);
-begin
-  SetColorSubButtons(Sender);
-  pgDownload.PageIndex := 0; // pgDownConf
-end;
-
-procedure TFrmACBrMonitor.btnDownXmlClick(Sender: TObject);
-begin
-  SetColorSubButtons(Sender);
-  pgDownload.PageIndex := 1; // pgDownXml
 end;
 
 procedure TFrmACBrMonitor.btnECFClick(Sender: TObject);
@@ -4258,6 +4214,7 @@ begin
     AjustaACBrSAT;
 
     {Parâmetro PosPrinter}
+    ECFDeviceParams         := INI.ReadString('PosPrinter', 'SerialParams', ACBrPosPrinter1.Device.ParamsString);
     cbxModelo.ItemIndex     := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
     cbxPorta.Text           := INI.ReadString('PosPrinter', 'Porta', ACBrPosPrinter1.Porta);
     seColunas.Value         := INI.ReadInteger('PosPrinter', 'Colunas', ACBrPosPrinter1.ColunasFonteNormal);
@@ -4288,7 +4245,7 @@ begin
 
     DefineTextoTrayTitulo;
 
-    ConfiguraPosPrinter;
+    ConfiguraPosPrinter(ECFDeviceParams);
   finally
     Ini.Free;
   end;
@@ -5012,6 +4969,7 @@ begin
     INI.WriteBool('PosPrinter', 'TraduzirTags', cbTraduzirTags.Checked);
     INI.WriteBool('PosPrinter', 'IgnorarTags', cbIgnorarTags.Checked);
     INI.WriteString('PosPrinter', 'ArqLog', edPosPrinterLog.Text);
+    Ini.WriteString('PosPrinter', 'SerialParams', ACBrPosPrinter1.Device.ParamsString);
 
     INI.WriteInteger('Barras', 'Largura', seCodBarrasLargura.Value);
     INI.WriteInteger('Barras', 'Altura', seCodBarrasAltura.Value);
@@ -7877,7 +7835,7 @@ begin
       mtError, [mbOK], '');
 end;
 
-procedure TFrmACBrMonitor.ConfiguraPosPrinter;
+procedure TFrmACBrMonitor.ConfiguraPosPrinter(SerialParams : String);
 var
   OldAtivo: Boolean;
 begin
@@ -7910,6 +7868,9 @@ begin
     ACBrPosPrinter1.ConfigLogo.FatorY   := seLogoFatorY.Value;
     ACBrPosPrinter1.ConfigLogo.KeyCode1 := seLogoKC1.Value;
     ACBrPosPrinter1.ConfigLogo.KeyCode2 := seLogoKC2.Value;
+
+    if NaoEstaVazio(SerialParams) then
+      ACBrPosPrinter1.Device.ParamsString := SerialParams;
   finally
     ACBrPosPrinter1.Ativo := OldAtivo;
 

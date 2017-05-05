@@ -3532,9 +3532,5 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
     left = 156
     top = 36
   end
-  object dsItens: TDataSource
-    left = 152
-    top = 81
-  end
 end
 

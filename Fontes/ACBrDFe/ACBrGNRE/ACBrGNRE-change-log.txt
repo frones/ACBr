@@ -44,6 +44,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+--ACBrGNReGuiaRL.pas--
+[-] Correção de AV na Guia do Fortes, contribuição: BigWings
+	http://www.projetoacbr.com.br/forum/topic/36490-impress%C3%A3o-gnre-erro-no-lfm/
+	por: Celso Marigo Junior
+
 27/12/2016
 -- pgnreGNREW --
 [*] Evitar a duplicidade de alertas.

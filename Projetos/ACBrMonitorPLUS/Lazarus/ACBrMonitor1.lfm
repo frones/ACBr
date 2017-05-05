@@ -378,10 +378,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 910
-        ActivePage = tsMonitor
+        ActivePage = tsEscPos
         Align = alClient
         Images = ImageList1
-        TabIndex = 0
+        TabIndex = 18
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -1437,7 +1437,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsECF: TTabSheet
           Caption = '&ECF'
           ClientHeight = 327
-          ClientWidth = 878
+          ClientWidth = 902
           ImageIndex = 1
           object sbECFSerial: TSpeedButton
             AnchorSideLeft.Control = cbECFPorta
@@ -10247,17 +10247,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsEscPos: TTabSheet
           Caption = 'PosPrinter'
           ClientHeight = 327
-          ClientWidth = 878
+          ClientWidth = 902
           ImageIndex = 1
           object gbConfiguracao: TGroupBox
             Left = 0
             Height = 327
             Top = 0
-            Width = 878
+            Width = 902
             Align = alClient
             Caption = 'Configuração'
             ClientHeight = 305
-            ClientWidth = 874
+            ClientWidth = 898
             TabOrder = 0
             object gbCodBarras: TGroupBox
               Left = 333
@@ -10745,160 +10745,6 @@ object FrmACBrMonitor: TFrmACBrMonitor
                 TabOrder = 11
               end
             end
-          end
-        end
-        object tsDownload: TTabSheet
-          Caption = 'tsDownload'
-          ClientHeight = 327
-          ClientWidth = 878
-          object pgDownload: TNotebook
-            Left = 90
-            Height = 327
-            Top = 0
-            Width = 788
-            PageIndex = 0
-            Align = alClient
-            TabOrder = 0
-            TabStop = True
-            object pgDownConf: TPage
-              object edtultNSU: TDBEdit
-                Left = 162
-                Height = 25
-                Top = 74
-                Width = 100
-                DataField = 'ultNSU'
-                CharCase = ecNormal
-                MaxLength = 0
-                TabOrder = 0
-              end
-              object Label163: TLabel
-                Left = 84
-                Height = 17
-                Top = 78
-                Width = 75
-                Caption = 'Último NSU :'
-                ParentColor = False
-              end
-              object edtidDFeAutoInc: TDBEdit
-                Left = 162
-                Height = 25
-                Top = 48
-                Width = 101
-                DataField = 'idDFeAutoInc'
-                CharCase = ecNormal
-                MaxLength = 0
-                TabOrder = 1
-              end
-              object Label194: TLabel
-                Left = 51
-                Height = 17
-                Top = 52
-                Width = 108
-                Caption = 'Último AutoInc ID :'
-                ParentColor = False
-              end
-              object edtAutoExecute: TDBCheckBox
-                Left = 68
-                Height = 23
-                Top = 101
-                Width = 108
-                BiDiMode = bdRightToLeft
-                Caption = ': Auto Executar'
-                DataField = 'AutoExecute'
-                ParentBiDiMode = False
-                TabOrder = 2
-                ValueChecked = '1'
-                ValueUnchecked = '0'
-              end
-              object edtAutoTimer: TDBEdit
-                Left = 162
-                Height = 25
-                Top = 126
-                Width = 80
-                DataField = 'AutoTimer'
-                CharCase = ecNormal
-                Enabled = False
-                MaxLength = 0
-                TabOrder = 3
-              end
-              object Label196: TLabel
-                Left = 21
-                Height = 17
-                Top = 130
-                Width = 138
-                Caption = 'Minutos para Executar :'
-                ParentColor = False
-              end
-              object Label197: TLabel
-                Left = 22
-                Height = 36
-                Top = 152
-                Width = 465
-                AutoSize = False
-                Caption = 'Não defina intervalo de minutos curtos, isso poderá ocasionar lentidão no computador, use o bom senso, aconselho o tempo ser maior ou igual a 60 minutos.'
-                Font.Color = clRed
-                ParentColor = False
-                ParentFont = False
-                WordWrap = True
-              end
-              object btnPost: TBitBtn
-                Left = 162
-                Height = 30
-                Top = 196
-                Width = 108
-                Caption = 'Salvar'
-                ModalResult = 7
-                TabOrder = 4
-              end
-            end
-            object pgDownXml: TPage
-              object DBGrid3: TDBGrid
-                Left = 0
-                Height = 317
-                Top = 2
-                Width = 502
-                Align = alClient
-                AutoEdit = False
-                BorderSpacing.Top = 2
-                Color = clWindow
-                Columns = <                
-                  item
-                    Title.Caption = 'Chave'
-                    Width = 300
-                    FieldName = 'chNFe'
-                  end                
-                  item
-                    Title.Caption = 'Número NFe'
-                    Width = 85
-                    FieldName = 'xNumeroNFE'
-                  end                
-                  item
-                    Title.Caption = 'Emissão'
-                    Width = 85
-                    FieldName = 'dhEmi'
-                    DisplayFormat = 'DD/MM/YYYY'
-                  end                
-                  item
-                    Title.Caption = 'Emitente'
-                    Width = 260
-                    FieldName = 'xNome'
-                  end>
-                Flat = True
-                Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
-                ReadOnly = True
-                TabOrder = 0
-                TitleFont.Height = -13
-              end
-            end
-          end
-          object PanelDownMenu: TPanel
-            Left = 0
-            Height = 327
-            Top = 0
-            Width = 90
-            Align = alLeft
-            BevelOuter = bvNone
-            TabOrder = 1
           end
         end
       end
@@ -11865,97 +11711,13 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Align = alTop
           BevelOuter = bvNone
           Caption = 'PosPrinter'
-          TabOrder = 19
-          TabStop = True
-          OnClick = btnPosPrinterClick
-          OnMouseEnter = ACT_ButtonMouseEnter
-          OnMouseLeave = ACT_ButtonMouseLeave
-          OnMouseWheelDown = ScrollBoxMouseWheelDown
-          OnMouseWheelUp = ScrollBoxMouseWheelUp
-        end
-        object btnDownCont: TPanel
-          Tag = 9
-          Left = 0
-          Height = 70
-          Top = 1010
-          Width = 179
-          Align = alTop
-          AutoSize = True
-          BevelOuter = bvNone
-          ClientHeight = 70
-          ClientWidth = 179
           TabOrder = 18
           TabStop = True
-          Visible = False
           OnClick = btnPosPrinterClick
           OnMouseEnter = ACT_ButtonMouseEnter
           OnMouseLeave = ACT_ButtonMouseLeave
           OnMouseWheelDown = ScrollBoxMouseWheelDown
           OnMouseWheelUp = ScrollBoxMouseWheelUp
-          object btnDown: TPanel
-            Left = 0
-            Height = 30
-            Top = 0
-            Width = 179
-            Align = alTop
-            BevelOuter = bvNone
-            Caption = 'Download XML'
-            TabOrder = 2
-            TabStop = True
-            OnClick = btnDownClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-            OnMouseWheelDown = ScrollBoxMouseWheelDown
-            OnMouseWheelUp = ScrollBoxMouseWheelUp
-          end
-          object btnDownConf: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDown
-            AnchorSideTop.Control = btnDown
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDown
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 30
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'Configurações'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 0
-            TabStop = True
-            OnClick = btnDownConfClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-            OnMouseWheelDown = ScrollBoxMouseWheelDown
-            OnMouseWheelUp = ScrollBoxMouseWheelUp
-          end
-          object btnDownXml: TPanel
-            Tag = 1
-            AnchorSideLeft.Control = btnDown
-            AnchorSideTop.Control = btnDownConf
-            AnchorSideTop.Side = asrBottom
-            AnchorSideRight.Control = btnDown
-            AnchorSideRight.Side = asrBottom
-            Left = 0
-            Height = 20
-            Top = 50
-            Width = 179
-            Anchors = [akTop, akLeft, akRight]
-            BevelOuter = bvNone
-            Caption = 'XML Baixados'
-            Color = 16777139
-            ParentColor = False
-            TabOrder = 1
-            TabStop = True
-            OnClick = btnDownXmlClick
-            OnMouseEnter = ACT_ButtonMouseEnter
-            OnMouseLeave = ACT_ButtonMouseLeave
-            OnMouseWheelDown = ScrollBoxMouseWheelDown
-            OnMouseWheelUp = ScrollBoxMouseWheelUp
-          end
         end
         object btnMonitor: TPanel
           Left = 0
@@ -12977,6 +12739,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0

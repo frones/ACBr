@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/05/2017
+-- Diversos --
+[*] Condicionado a geração dos grupos <compl> e <infTribFed>.
+   Por: Italo Jurisato Junior
+
 04/05/2017
 -- Diversos --
 [*] Alterações visando o modelo 67 CT-e OS 3.00

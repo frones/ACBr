@@ -904,7 +904,7 @@ var
   SalvarXML: Boolean;
 begin
   FPRetWS := SeparaDadosArray(['cteRecepcaoLoteResult',
-                               'cteOSRecepcaoResult'], FPRetornoWS);
+                               'cteRecepcaoOSResult'], FPRetornoWS);
 
   if (FPConfiguracoesCTe.Geral.ModeloDF = moCTeOS) then
   begin
@@ -1068,10 +1068,11 @@ begin
                      [FCTeRetornoOS.versao,
                       TpAmbToStr(FCTeRetornoOS.TpAmb),
                       FCTeRetornoOS.verAplic,
-                      IntToStr(FCTeRetornoOS.protCTe.cStat),
-                      FCTeRetornoOS.protCTe.xMotivo,
+                      IntToStr(FCTeRetornoOS.cStat),
+                      FCTeRetornoOS.xMotivo,
                       CodigoParaUF(FCTeRetornoOS.cUF),
-                      FormatDateTimeBr(FCTeRetornoOS.protCTe.dhRecbto),
+                      IfThen(FCTeRetornoOS.protCTe.dhRecbto = 0, '',
+                             FormatDateTimeBr(FCTeRetornoOS.protCTe.dhRecbto)),
                       FCTeRetornoOS.chCTe]);
   {*)}
 end;

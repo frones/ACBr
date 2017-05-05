@@ -580,29 +580,62 @@ end;
 
 procedure TCTeW.GerarCompl;
 begin
-  Gerador.wGrupo('compl', '#059');
-  Gerador.wCampo(tcStr, '#060', 'xCaracAd  ', 01, 15, 0, CTe.Compl.xCaracAd, DSC_XCARACAD);
-  Gerador.wCampo(tcStr, '#061', 'xCaracSer ', 01, 30, 0, CTe.Compl.xCaracSer, DSC_XCARACSET);
-  Gerador.wCampo(tcStr, '#062', 'xEmi      ', 01, 20, 0, CTe.Compl.xEmi, DSC_XEMI);
-
-  GerarFluxo;
-
-  if (CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
-     (CTe.Compl.Entrega.TipoHora <> thNaoInformado) and (CTe.ide.modelo = 57)
-   then GerarEntrega;
-
   if (CTe.ide.modelo = 57) then
   begin
-    Gerador.wCampo(tcStr, '#088', 'origCalc ', 02, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
-    Gerador.wCampo(tcStr, '#089', 'destCalc ', 02, 40, 0, CTe.Compl.destCalc, DSC_DESTCALC);
+    if (trim(CTe.Compl.xCaracAd) <> '') or (trim(CTe.Compl.xCaracSer) <> '') or
+       (trim(CTe.Compl.xEmi) <> '') or (trim(CTe.Compl.fluxo.xOrig) <> '') or
+       (CTe.Compl.fluxo.pass.Count > 0) or (trim(CTe.Compl.fluxo.xDest) <> '') or
+       (trim(CTe.Compl.fluxo.xRota) <> '') or
+       ((CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
+        (CTe.Compl.Entrega.TipoHora <> thNaoInformado)) or
+       (trim(CTe.Compl.origCalc) <> '') or (trim(CTe.Compl.destCalc) <> '') or
+       (trim(CTe.Compl.xObs) <> '') or
+       (CTe.Compl.ObsCont.Count > 0) or (CTe.Compl.ObsFisco.Count > 0) then
+    begin
+      Gerador.wGrupo('compl', '#059');
+      Gerador.wCampo(tcStr, '#060', 'xCaracAd  ', 01, 15, 0, CTe.Compl.xCaracAd, DSC_XCARACAD);
+      Gerador.wCampo(tcStr, '#061', 'xCaracSer ', 01, 30, 0, CTe.Compl.xCaracSer, DSC_XCARACSET);
+      Gerador.wCampo(tcStr, '#062', 'xEmi      ', 01, 20, 0, CTe.Compl.xEmi, DSC_XEMI);
+
+      GerarFluxo;
+
+      if (CTe.Compl.Entrega.TipoData <> tdNaoInformado) and
+         (CTe.Compl.Entrega.TipoHora <> thNaoInformado) then
+        GerarEntrega;
+
+      Gerador.wCampo(tcStr, '#088', 'origCalc ', 02, 40, 0, CTe.Compl.origCalc, DSC_ORIGCALC);
+      Gerador.wCampo(tcStr, '#089', 'destCalc ', 02, 40, 0, CTe.Compl.destCalc, DSC_DESTCALC);
+      Gerador.wCampo(tcStr, '#090', 'xObs     ', 01, 2000, 0, CTe.Compl.xObs, DSC_XOBS);
+
+      GerarObsCont;
+      GerarObsFisco;
+
+      Gerador.wGrupo('/compl');
+    end;
+  end
+  else
+  begin
+    if (trim(CTe.Compl.xCaracAd) <> '') or (trim(CTe.Compl.xCaracSer) <> '') or
+       (trim(CTe.Compl.xEmi) <> '') or (trim(CTe.Compl.fluxo.xOrig) <> '') or
+       (CTe.Compl.fluxo.pass.Count > 0) or (trim(CTe.Compl.fluxo.xDest) <> '') or
+       (trim(CTe.Compl.fluxo.xRota) <> '') or (trim(CTe.Compl.xObs) <> '') or
+       (CTe.Compl.ObsCont.Count > 0) or (CTe.Compl.ObsFisco.Count > 0) then
+    begin
+      Gerador.wGrupo('compl', '#059');
+      Gerador.wCampo(tcStr, '#060', 'xCaracAd  ', 01, 15, 0, CTe.Compl.xCaracAd, DSC_XCARACAD);
+      Gerador.wCampo(tcStr, '#061', 'xCaracSer ', 01, 30, 0, CTe.Compl.xCaracSer, DSC_XCARACSET);
+      Gerador.wCampo(tcStr, '#062', 'xEmi      ', 01, 20, 0, CTe.Compl.xEmi, DSC_XEMI);
+
+      GerarFluxo;
+
+      Gerador.wCampo(tcStr, '#090', 'xObs     ', 01, 2000, 0, CTe.Compl.xObs, DSC_XOBS);
+
+      GerarObsCont;
+      GerarObsFisco;
+
+      Gerador.wGrupo('/compl');
+    end;
   end;
-    
-  Gerador.wCampo(tcStr, '#090', 'xObs     ', 01, 2000, 0, CTe.Compl.xObs, DSC_XOBS);
-
-  GerarObsCont;
-  GerarObsFisco;
-
-  Gerador.wGrupo('/compl');
 end;
 
 procedure TCTeW.GerarFluxo;
@@ -1378,13 +1411,18 @@ end;
 
 procedure TCTeW.GerarinfTribFed;
 begin
-  Gerador.wGrupo('infTribFed', '#125');
-  Gerador.wCampo(tcDe2, '#', 'vPIS   ', 01, 15, 0, CTe.Imp.infTribFed.vPIS, DSC_VPIS);
-  Gerador.wCampo(tcDe2, '#', 'vCOFINS', 01, 15, 0, CTe.Imp.infTribFed.vCOFINS, DSC_VCOFINS);
-  Gerador.wCampo(tcDe2, '#', 'vIR    ', 01, 15, 0, CTe.Imp.infTribFed.vIR, DSC_VIR);
-  Gerador.wCampo(tcDe2, '#', 'vINSS  ', 01, 15, 0, CTe.Imp.infTribFed.vINSS, DSC_VINSS);
-  Gerador.wCampo(tcDe2, '#', 'vCSLL  ', 01, 15, 0, CTe.Imp.infTribFed.vCSLL, DSC_VCSLL);
-  Gerador.wGrupo('/infTribFed');
+  if (CTe.Imp.infTribFed.vPIS > 0) or (CTe.Imp.infTribFed.vCOFINS > 0) or
+     (CTe.Imp.infTribFed.vIR > 0) or (CTe.Imp.infTribFed.vINSS > 0) or
+     (CTe.Imp.infTribFed.vCSLL > 0) then
+  begin
+    Gerador.wGrupo('infTribFed', '#125');
+    Gerador.wCampo(tcDe2, '#', 'vPIS   ', 01, 15, 0, CTe.Imp.infTribFed.vPIS, DSC_VPIS);
+    Gerador.wCampo(tcDe2, '#', 'vCOFINS', 01, 15, 0, CTe.Imp.infTribFed.vCOFINS, DSC_VCOFINS);
+    Gerador.wCampo(tcDe2, '#', 'vIR    ', 01, 15, 0, CTe.Imp.infTribFed.vIR, DSC_VIR);
+    Gerador.wCampo(tcDe2, '#', 'vINSS  ', 01, 15, 0, CTe.Imp.infTribFed.vINSS, DSC_VINSS);
+    Gerador.wCampo(tcDe2, '#', 'vCSLL  ', 01, 15, 0, CTe.Imp.infTribFed.vCSLL, DSC_VCSLL);
+    Gerador.wGrupo('/infTribFed');
+  end;
 end;
 
 procedure TCTeW.GerarInfCTeNorm;

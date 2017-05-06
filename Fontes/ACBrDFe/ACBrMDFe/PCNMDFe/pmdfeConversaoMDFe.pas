@@ -66,7 +66,7 @@ type
                      stMDFeConsulta, stMDFeRecibo, stMDFeEmail, stMDFeEvento,
                      stMDFeDistDFeInt, stMDFeEnvioWebService);
 
-  TTransportadorMDFe = (ttETC, ttTAC, ttCTC);
+  TTransportadorMDFe = (ttNenhum, ttETC, ttTAC, ttCTC);
 
   TRspSegMDFe = (rsEmitente, rsTomadorServico);
 
@@ -288,12 +288,12 @@ end;
 
 function TTransportadorToStr(const t: TTransportadorMDFe): String;
 begin
-  Result := EnumeradoToStr(t, ['1', '2', '3'], [ttETC, ttTAC, ttCTC]);
+  Result := EnumeradoToStr(t, ['0', '1', '2', '3'], [ttNenhum, ttETC, ttTAC, ttCTC]);
 end;
 
 function StrToTTransportador(out ok: Boolean; const s: String): TTransportadorMDFe;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2', '3'], [ttETC, ttTAC, ttCTC]);
+  Result := StrToEnumerado(ok, s, ['0', '1', '2', '3'], [ttNenhum, ttETC, ttTAC, ttCTC]);
 end;
 
 function RspSeguroMDFeToStr(const t: TRspSegMDFe): String;

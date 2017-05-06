@@ -254,7 +254,8 @@ begin
   // se tpEmit = teTranspCargaPropria e modal = moRodoviario e
   // veículo de tração for de propriedade do emitente
   if (VersaoDF = ve300) and
-       (Length(MDFe.Rodo.veicTracao.Prop.CNPJCPF) > 11) and
+     (Length(MDFe.Rodo.veicTracao.Prop.CNPJCPF) > 11) and
+     (MDFe.Ide.tpTransp <> ttNenhum) and
      not ( (MDFe.Ide.tpEmit = teTranspCargaPropria) and
            (MDFe.Ide.modal = moRodoviario) and
            ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or

@@ -2142,9 +2142,9 @@ begin
     end;
 
     Gerador.wGrupo('tarifa', '#07');
-    Gerador.wCampo(tcStr, '#08', 'CL  ', 01, 02, 0, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
+    Gerador.wCampo(tcStr, '#08', 'CL  ', 01, 02, 1, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
     Gerador.wCampo(tcStr, '#09', 'cTar', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
-    Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 0, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
+    Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 1, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
     Gerador.wGrupo('/tarifa');
   end
   else

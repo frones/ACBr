@@ -173,8 +173,6 @@ begin
           ProtLido := True;
       end;
 
-      Modelo := StrToIntDef(RetornarModelo(FchCTe), 57);
-
       // Gerar arquivo pelo Recibo do CTe
       if (FPathRetConsReciCTe <> '') and (FPathRetConsSitCTe = '') and
          (not ProtLido) then
@@ -268,6 +266,9 @@ begin
     if (Gerador.ListaDeAlertas.Count = 0) and
        (FXML_CTe <> '') and (FXML_prot <> '') then
     begin
+
+      Modelo := StrToIntDef(RetornarModelo(FchCTe), 57);
+
       Gerador.ArquivoFormatoXML := '';
       Gerador.wGrupo(ENCODING_UTF8, '', False);
       if Modelo = 57 then

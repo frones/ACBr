@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/05/2017
+-- ACBrCTeWebServices --
+[*] Ajustes na montagem da mensagem de envio, é diferente entre os modelos 57 e 67.
+   Por: BigWings / Italo Jurisato Junior
+
 05/05/2017
 -- Diversos --
 [*] Condicionado a geração dos grupos <compl> e <infTribFed>.

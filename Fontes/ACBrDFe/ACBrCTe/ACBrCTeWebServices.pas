@@ -870,23 +870,29 @@ var
   vCTe: String;
 begin
   vCTe := '';
-  for I := 0 to FConhecimentos.Count - 1 do
-  begin
-    case FConhecimentos.Items[I].CTe.ide.modelo of
-      57: begin
-            vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
-              FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
-          end;
-      67: begin
-            vCTe := vCTe + '<CTeOS' + RetornarConteudoEntre(
-              FConhecimentos.Items[I].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
-          end;
-    end;
-  end;
 
-  FPDadosMsg := '<enviCTe xmlns="' + ACBRCTE_NAMESPACE + '" versao="' +
-    FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
-    vCTe + '</enviCTe>';
+  if (FConhecimentos.Items[I].CTe.ide.modelo = 57) then
+  begin
+    // No modelo 57 podemos ter um lote contendo de 1 até 50 CT-e
+    for I := 0 to FConhecimentos.Count - 1 do
+      vCTe := vCTe + '<CTe' + RetornarConteudoEntre(
+                FConhecimentos.Items[I].XMLAssinado, '<CTe', '</CTe>') + '</CTe>';
+
+    FPDadosMsg := '<enviCTe xmlns="' + ACBRCTE_NAMESPACE + '" versao="' +
+                     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' +
+                     vCTe + '</enviCTe>';
+  end
+  else
+  begin
+    // No modelo 67 só podemos ter apena UM CT-e OS, pois o seu processamento é
+    // síncrono
+    if FConhecimentos.Count > 1 then
+      GerarException(ACBrStr('ERRO: Conjunto de CT-e OS transmitidos (máximo de 1 CT-e OS)' +
+             ' excedido. Quantidade atual: ' + IntToStr(FConhecimentos.Count)));
+
+    FPDadosMsg := '<CTeOS' + RetornarConteudoEntre(
+              FConhecimentos.Items[0].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
+  end;
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then

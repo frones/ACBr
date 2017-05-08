@@ -51,12 +51,12 @@ const
   CURL_SEDEX = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
 
 type
-  TACBrTpServico = (Tps41106PAC, Tps40010SEDEX, Tps40215SEDEX10,
+  TACBrTpServico = (Tps04510PAC, Tps04014SEDEX, Tps40215SEDEX10,
     Tps40290SEDEXHOJE, Tps81019eSEDEX, Tps44105MALOTE,
     Tps85480AEROGRAMA, Tps10030CARTASIMPLES, Tps10014CARTAREGISTRADA,
     Tps16012CARTAOPOSTAL, Tps20010IMPRESSO, Tps14010MALADIRETA,
-    Tps40010SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
-    Tps40290SEDEXHojeVarejo, Tps41106PACVarejo);
+    Tps04014SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
+    Tps40290SEDEXHojeVarejo, Tps04510PACVarejo);
 
   TACBrTpFormato = (TpfCaixaPacote, TpfRoloPrisma, TpfEnvelope);
 
@@ -225,7 +225,7 @@ begin
   fsMaoPropria := False;
   fnVlValorDeclarado := 0;
   fsAvisoRecebimento := False;
-  fnCdServico := Tps41106PAC;
+  fnCdServico := Tps04510PAC;
   fUrlConsulta := CURL_SEDEX;
 
   fCodigoServico := '';
@@ -252,10 +252,10 @@ var
   TpServico, TpFormato, TpMaoPropria, TpAvisoRecebimento, Buffer: string;
 begin
   case fnCdServico of
-    Tps41106PAC :
-      TpServico := '41106';
-    Tps40010SEDEX :
-      TpServico := '40010';
+    Tps04510PAC :
+      TpServico := '04510';
+    Tps04014SEDEX :
+      TpServico := '04014';
     Tps40215SEDEX10 :
       TpServico := '40215';
     Tps40290SEDEXHOJE :
@@ -276,16 +276,16 @@ begin
       TpServico := '20010';
     Tps14010MALADIRETA :
       TpServico := '14010';
-    Tps40010SEDEXVarejo :
-      TpServico := '40010';
+    Tps04014SEDEXVarejo :
+      TpServico := '04014';
     Tps40045SEDEXaCobrarVarejo :
       TpServico := '40045';
     Tps40215SEDEX10Varejo :
       TpServico := '40215';
     Tps40290SEDEXHojeVarejo :
       TpServico := '40290';
-    Tps41106PACVarejo :
-      TpServico := '41106';
+    Tps04510PACVarejo :
+      TpServico := '04510';
     else
       raise EACBrSedexException.CreateACBrStr('Tipo de Serviço Inválido');
   end;

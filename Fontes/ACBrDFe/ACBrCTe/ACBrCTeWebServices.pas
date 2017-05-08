@@ -871,7 +871,7 @@ var
 begin
   vCTe := '';
 
-  if (FConhecimentos.Items[I].CTe.ide.modelo = 57) then
+  if FPConfiguracoesCTe.Geral.ModeloDF = moCTe then
   begin
     // No modelo 57 podemos ter um lote contendo de 1 até 50 CT-e
     for I := 0 to FConhecimentos.Count - 1 do
@@ -890,7 +890,8 @@ begin
       GerarException(ACBrStr('ERRO: Conjunto de CT-e OS transmitidos (máximo de 1 CT-e OS)' +
              ' excedido. Quantidade atual: ' + IntToStr(FConhecimentos.Count)));
 
-    FPDadosMsg := '<CTeOS' + RetornarConteudoEntre(
+    if FConhecimentos.Count > 0 then
+      FPDadosMsg := '<CTeOS' + RetornarConteudoEntre(
               FConhecimentos.Items[0].XMLAssinado, '<CTeOS', '</CTeOS>') + '</CTeOS>';
   end;
 
@@ -2532,7 +2533,7 @@ begin
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
-  Modelo   := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe) ));
+  Modelo  := ModeloCTeToPrefixo( StrToModeloCTe(ok, ExtrairModeloChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe) ));
 
   case FPConfiguracoesCTe.Geral.FormaEmissao of
     teSVCRS: UF := 'SVC-RS';

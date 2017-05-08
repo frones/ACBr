@@ -404,14 +404,17 @@ begin
       FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
       FieldByName('Reservado').AsString := Reservado;
 
-      Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
-        0: sReferencia := 'Mensal';
-        1: sReferencia := '1a Quinzena';
-        2: sReferencia := '2a Quinzena';
-        3: sReferencia := '1o Decêndio';
-        4: sReferencia := '2o Decêndio';
-        5: sReferencia := '3o Decêndio';
-      end;
+      if Trim(cdsItens.FieldByName('PeriodoReferencia').Text) = '' then
+        sReferencia := 'Mensal'
+      else
+        Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
+          0: sReferencia := 'Mensal';
+          1: sReferencia := '1a Quinzena';
+          2: sReferencia := '2a Quinzena';
+          3: sReferencia := '1o Decêndio';
+          4: sReferencia := '2o Decêndio';
+          5: sReferencia := '3o Decêndio';
+        end;
 
       cdsItens.FieldByName('PerMesAnoRef').AsString := sReferencia + '-' + Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
                                                                                 1, Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-4) +

@@ -284,7 +284,6 @@ begin
     StoreInDFM     := False;
     OnGetValue := frxReportGetValue;
     PreviewOptions.Buttons :=[pbExport, pbPrint, pbZoom, pbFind, pbNavigator, pbExportQuick];
-    PreviewOptions.Zoom := 2;
   end;
 
   frxPDFExport := TfrxPDFExport.Create(FDAMDFEClassOwner);

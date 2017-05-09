@@ -8,7 +8,7 @@ uses
   IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
-  ACBrCTe, ACBrCTeDACTEClass, ACBrMail, ACBrBase, ACBrDFe, ACBrCTeDACTeRLClass;
+  ACBrCTe, ACBrCTeDACTEClass, ACBrMail, ACBrBase, ACBrDFe, ACBrCTeDACTeRLClass, ACBrDFeSSL;
 
 type
   TfrmDemo_ACBrCTe = class(TForm)
@@ -136,6 +136,16 @@ type
     btnGerarPDFInut: TButton;
     ACBrMail1: TACBrMail;
     ACBrCTeDACTeRL1: TACBrCTeDACTeRL;
+    lSSLLib: TLabel;
+    cbSSLLib: TComboBox;
+    lCryptLib: TLabel;
+    cbCryptLib: TComboBox;
+    lHttpLib: TLabel;
+    cbHttpLib: TComboBox;
+    lXmlSign: TLabel;
+    cbXmlSignLib: TComboBox;
+    lSSLLib1: TLabel;
+    cbSSLType: TComboBox;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnLogoMarcaClick(Sender: TObject);
@@ -167,6 +177,11 @@ type
     procedure btnGerarPDFEventoClick(Sender: TObject);
     procedure btnImprimirInutClick(Sender: TObject);
     procedure btnGerarPDFInutClick(Sender: TObject);
+    procedure cbSSLLibChange(Sender: TObject);
+    procedure cbSSLTypeChange(Sender: TObject);
+    procedure cbCryptLibChange(Sender: TObject);
+    procedure cbHttpLibChange(Sender: TObject);
+    procedure cbXmlSignLibChange(Sender: TObject);
     {
     procedure lblMouseEnter(Sender: TObject);
     procedure lblMouseLeave(Sender: TObject);
@@ -177,6 +192,7 @@ type
     procedure LerConfiguracao;
     procedure LoadXML(MyMemo: TMemo; MyWebBrowser: TWebBrowser);
     procedure GerarCTe(NumCTe : String);
+    procedure AtualizaSSLLibsCombo;
   public
     { Public declarations }
   end;
@@ -190,7 +206,7 @@ uses
   FileCtrl, DateUtils,
   ufrmStatus,
   pcnConversao, pcteConversaoCTe, ACBrUtil,
-  ACBrCTeConhecimentos;
+  ACBrCTeConhecimentos, blcksock, System.TypInfo;
 
 const
   SELDIRHELP = 1000;
@@ -218,6 +234,10 @@ begin
 
  Ini := TIniFile.Create( IniFile );
  try
+  Ini.WriteInteger( 'Certificado','SSLLib' , cbSSLLib.ItemIndex) ;
+  Ini.WriteInteger( 'Certificado','CryptLib' , cbCryptLib.ItemIndex) ;
+  Ini.WriteInteger( 'Certificado','HttpLib' , cbHttpLib.ItemIndex) ;
+  Ini.WriteInteger( 'Certificado','XmlSignLib' , cbXmlSignLib.ItemIndex) ;
   Ini.WriteString( 'Certificado','Caminho' ,edtCaminho.Text);
   Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text);
   Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text);
@@ -231,6 +251,7 @@ begin
   Ini.WriteString( 'WebService','UF'        ,cbUF.Text);
   Ini.WriteInteger( 'WebService','Ambiente'  ,rgTipoAmb.ItemIndex);
   Ini.WriteBool(   'WebService','Visualizar',ckVisualizar.Checked);
+  Ini.WriteInteger( 'WebService','SSLType' , cbSSLType.ItemIndex) ;
 
   Ini.WriteString( 'Proxy','Host'   ,edtProxyHost.Text);
   Ini.WriteString( 'Proxy','Porta'  ,edtProxyPorta.Text);
@@ -280,48 +301,46 @@ begin
 
  Ini := TIniFile.Create( IniFile );
  try
-  {$IFDEF ACBrCTeOpenSSL}
-   edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'');
-   edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'');
-   ACBrCTe1.Configuracoes.Certificados.Certificado  := edtCaminho.Text;
-   ACBrCTe1.Configuracoes.Certificados.Senha        := edtSenha.Text;
-   edtNumSerie.Visible := False;
-   Label25.Visible     := False;
-   sbtnGetCert.Visible := False;
-  {$ELSE}
-   edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','');
-   ACBrCTe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-   //edtNumSerie.Text := ACBrCTe1.Configuracoes.Certificados.NumeroSerie;
-   Label1.Caption := 'Informe o número de série do certificado'#13+
-                     'Disponível no Internet Explorer no menu'#13+
-                     'Ferramentas - Opções da Internet - Conteúdo '#13+
-                     'Certificados - Exibir - Detalhes - '#13+
-                     'Número do certificado';
-   Label2.Visible     := False;
-   edtCaminho.Visible := False;
-   edtSenha.Visible   := False;
-   sbtnCaminhoCert.Visible := False;
-  {$ENDIF}
+  cbSSLLib.ItemIndex     := Ini.ReadInteger( 'Certificado','SSLLib' ,0) ;
+  cbCryptLib.ItemIndex   := Ini.ReadInteger( 'Certificado','CryptLib' , 0) ;
+  cbHttpLib.ItemIndex    := Ini.ReadInteger( 'Certificado','HttpLib' , 0) ;
+  cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0) ;
+  edtCaminho.Text        := Ini.ReadString( 'Certificado','Caminho','') ;
+  edtSenha.Text          := Ini.ReadString( 'Certificado','Senha','') ;
+  edtNumSerie.Text       := Ini.ReadString( 'Certificado','NumSerie','') ;
+  ACBrCTe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+  ACBrCTe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+  ACBrCTe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
   rgFormaEmissao.ItemIndex := Ini.ReadInteger('Geral','FormaEmissao',0);
   ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      ,True);
   edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
 
-  case rgFormaEmissao.ItemIndex of
-   0: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teNormal;
-   1: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teDPEC; // o mesmo que EPEC
-   2: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teFSDA;
-   3: ACBrCTe1.Configuracoes.Geral.FormaEmissao := teSVCRS;
-   4: ACBrCTe1.Configuracoes.Geral.FormaEmissao := tESVCSP;
-  end;
-  
-  ACBrCTe1.Configuracoes.Geral.Salvar := ckSalvar.Checked;
+  ACBrCTe1.SSL.DescarregarCertificado;
+
+  with ACBrCTe1.Configuracoes.Geral do
+   begin
+     SSLLib        := TSSLLib(cbSSLLib.ItemIndex);
+     SSLCryptLib   := TSSLCryptLib(cbCryptLib.ItemIndex);
+     SSLHttpLib    := TSSLHttpLib(cbHttpLib.ItemIndex);
+     SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+     AtualizaSSLLibsCombo;
+     case rgFormaEmissao.ItemIndex of
+       0: FormaEmissao := teNormal;
+       1: FormaEmissao := teDPEC; // o mesmo que EPEC
+       2: FormaEmissao := teFSDA;
+       3: FormaEmissao := teSVCRS;
+       4: FormaEmissao := tESVCSP;
+     end;
+     Salvar := ckSalvar.Checked;
+   end;
 
   ACBrCTe1.Configuracoes.Arquivos.PathSalvar := edtPathLogs.Text;
 
   cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
   rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);
-  ckVisualizar.Checked :=Ini.ReadBool(    'WebService','Visualizar',False);
+  ckVisualizar.Checked := Ini.ReadBool(   'WebService','Visualizar',False);
+  cbSSLType.ItemIndex  := Ini.ReadInteger('WebService','SSLType' , 0) ;
   ACBrCTe1.Configuracoes.WebServices.UF         := cbUF.Text;
   ACBrCTe1.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok,IntToStr(rgTipoAmb.ItemIndex+1));
   ACBrCTe1.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
@@ -334,6 +353,8 @@ begin
   ACBrCTe1.Configuracoes.WebServices.ProxyPort := edtProxyPorta.Text;
   ACBrCTe1.Configuracoes.WebServices.ProxyUser := edtProxyUser.Text;
   ACBrCTe1.Configuracoes.WebServices.ProxyPass := edtProxySenha.Text;
+
+   ACBrCTe1.SSL.SSLType := TSSLType( cbSSLType.ItemIndex );
 
   rgTipoDACTe.ItemIndex := Ini.ReadInteger( 'Geral','DACTE'       ,0);
   edtLogoMarca.Text     := Ini.ReadString( 'Geral','LogoMarca'   ,'');
@@ -395,6 +416,227 @@ procedure TfrmDemo_ACBrCTe.GerarCTe(NumCTe: String);
 var
  i, j, CodigoMunicipio, Tomador: Integer;
 begin
+  //CTeOS
+  with ACBrCTe1.Conhecimentos.Add.CTe do
+  begin
+    Ide.cUF         := UFtoCUF(edtEmitUF.Text);
+    Ide.cCT         := StrToInt(NumCTe);
+    Ide.CFOP        := 6932;
+    Ide.natOp       := 'PRESTACAO SERVICO TRANSPORTE INICIO OUTRA UF FORA DO ESTADO';
+    Ide.modelo      := 67;
+    Ide.serie       := 32;
+    Ide.nCT         := StrToInt(NumCTe);
+    Ide.dhEmi       := Now;
+    Ide.tpImp       := tiRetrato;
+    case rgFormaEmissao.ItemIndex of
+      0: Ide.tpEmis := teNormal;
+      1: Ide.tpEmis := teDPEC;
+      2: Ide.tpEmis := teFSDA;
+      3: Ide.tpEmis := teSVCRS;
+      4: Ide.tpEmis := teSVCSP;
+    end;
+    if rgTipoAmb.ItemIndex = 0 then
+      Ide.tpAmb     := taProducao
+    else
+      Ide.tpAmb     := taHomologacao;
+    Ide.tpCTe       := tcNormal;
+    Ide.procEmi     := peAplicativoContribuinte;
+    Ide.verProc     := '3.0';
+    Ide.cMunEnv     := StrToInt(edtEmitCodCidade.Text);
+    Ide.xMunEnv     := Trim(edtEmitCidade.Text);
+    Ide.UFEnv       := Trim(edtEmitUF.Text);
+    Ide.modal       := mdRodoviario;
+    Ide.tpServ      := tsTranspValores;
+    ide.indIEToma   := inContribuinte;
+    Ide.cMunIni     := 3119401;
+    Ide.xMunIni     := 'CORONEL FABRICIANO';
+    Ide.UFIni       := 'MG';
+    Ide.cMunFim     := 2900207;
+    Ide.xMunFim     := 'ABARE';
+    Ide.UFFim       := 'BA';
+
+    {Dados do Percurso}
+    //ide.infPercurso.Add.UFPer := 'PR';
+
+    {Dados do Emitente}
+    Emit.CNPJ              := Trim(edtEmitCNPJ.Text);
+    Emit.IE                := Trim(edtEmitIE.Text);
+    Emit.xNome             := Trim(edtEmitRazao.Text);
+    Emit.xFant             := Trim(edtEmitFantasia.Text);
+    Emit.enderEmit.xLgr    := Trim(edtEmitLogradouro.Text);
+    Emit.enderEmit.nro     := Trim(edtEmitNumero.Text);
+    Emit.enderEmit.xCpl    := Trim(edtEmitComp.Text);
+    Emit.enderEmit.xBairro := Trim(edtEmitBairro.Text);
+    Emit.enderEmit.cMun    := StrToInt(edtEmitCodCidade.Text);
+    Emit.enderEmit.xMun    := Trim(edtEmitCidade.Text);
+    Emit.enderEmit.CEP     := StrToInt(edtEmitCEP.Text);
+    Emit.enderEmit.UF      := Trim(edtEmitUF.Text);
+    Emit.enderEmit.fone    := Trim(edtEmitFone.Text);
+
+    //Adiciona dados do tomador do serviço
+    toma.CNPJCPF           := '10242141000174';
+    toma.IE                := '0010834420031';
+    toma.xNome             := 'ACOUGUE E SUPERMERCADO SOUZA LTDA';
+    toma.xFant             := '';
+    toma.fone              := '';
+    toma.enderToma.xLgr    := 'RUA BELO HORIZONTE';
+    toma.enderToma.nro     := '614';
+    toma.enderToma.xCpl    := 'N D';
+    toma.enderToma.xBairro := 'CALADINA';
+    toma.enderToma.cMun    := 3119401;
+    toma.enderToma.xMun    := 'CORONEL FABRICIANO';
+    toma.enderToma.CEP     := 35171167;
+    toma.enderToma.UF      := 'MG';
+    toma.enderToma.cPais   := 1058;
+    toma.enderToma.xPais   := 'BRASIL';
+    toma.email             := '';
+
+    {Carrega valores da prestacao de servico}
+    vPrest.vTPrest         := 100.00;
+    vPrest.vRec            := 100.00;
+
+    {Carrega componentes do valor da prestacao}
+    with vPrest.comp.Add do
+    begin
+      xNome                := 'DFRNER KRTJ';
+      vComp                := 374347.00;
+    end;
+
+    {Carrega Impostos}
+    //00 - Tributação Normal ICMS
+    {Imp.ICMS.SituTrib    := cst00;
+    Imp.ICMS.ICMS00.CST  := cst00;
+    Imp.ICMS.ICMS00.vBC  := Impostos.Vbc;
+    Imp.ICMS.ICMS00.pICMS:= Impostos.Picms;
+    Imp.ICMS.ICMS00.vICMS:= Impostos.Vicms;
+
+    //40 - ICMS Isento
+    Imp.ICMS.SituTrib  := cst40;
+    Imp.ICMS.ICMS45.CST:= cst40;
+
+    //41 - ICMS não Tributada
+    Imp.ICMS.SituTrib  := cst41;
+    Imp.ICMS.ICMS45.CST:= cst41;
+
+    //51 - ICMS diferido
+    Imp.ICMS.SituTrib  := cst51;
+    Imp.ICMS.ICMS45.CST:= cst51; }
+
+    //90 - ICMS Outros
+    if Emit.enderEmit.UF = Rem.enderReme.UF then
+    begin
+      Imp.ICMS.SituTrib     := cst90;
+      Imp.ICMS.ICMS90.CST   := cst90;
+      Imp.ICMS.ICMS90.pRedBC:= 10.00;
+      Imp.ICMS.ICMS90.vBC   := 100.00;
+      Imp.ICMS.ICMS90.pICMS := 7.00;
+      Imp.ICMS.ICMS90.vICMS := 6.30;
+      Imp.ICMS.ICMS90.vCred := 0.00;
+    end
+    else
+    begin
+      Imp.ICMS.SituTrib                  := cstICMSOutraUF;
+      Imp.ICMS.ICMSOutraUF.CST           := cstICMSOutraUF; // ICMS Outros
+      Imp.ICMS.ICMSOutraUF.pRedBCOutraUF := 0;
+      Imp.ICMS.ICMSOutraUF.vBCOutraUF    := 100.00;
+      Imp.ICMS.ICMSOutraUF.pICMSOutraUF  := 7.00;
+      Imp.ICMS.ICMSOutraUF.vICMSOutraUF  := 7.00;
+    end;
+
+    //SN - Simples Nacional
+    {Imp.ICMS.SituTrib     := cstICMSSN;
+    Imp.ICMS.ICMSSN.indSN := 1;}
+
+    Imp.infAdFisco := 'Lei da Transparencia: O valor aproximado de tributos incidentes sobre o preço deste servico é de R$ 17,00 (17,00%) Fonte: IBPT';
+    imp.vTotTrib   := 17.00;
+
+    //Impostos federais
+    imp.infTribFed.vPIS    := 0;
+    imp.infTribFed.vCOFINS := 0;
+    imp.infTribFed.vIR     := 0;
+    imp.infTribFed.vINSS   := 5.00;
+    imp.infTribFed.vCSLL   := 0;
+
+    {Carrega as informacoes CTe Normal}
+    infCTeNorm.infServico.xDescServ := 'TEJEJRBEFR ERFERF TESTET JFREJ';
+    infCTeNorm.infServico.qCarga    := 5000.0000;
+
+    {Informações dos documentos referenciados}
+    {with infCTeNorm.infDocRef.Add do
+    begin
+      nDoc     := '';
+      serie    := '';
+      subserie := '';
+      dEmi     := Date;
+      vDoc     := 0.00;
+    end;}
+
+    {Carrega informacoes do seguro}
+    with infCTeNorm.Seg.Add do
+    begin
+      respSeg := rsTomadorServico;
+      xSeg    := 'TESTE';
+      nApol   := '3743784738473847';
+    end;
+
+    {Carrega Informacoes do Modal}
+    {Rodoviario}
+    infCTeNorm.rodoOS.TAF            := '454545445454';
+    infCTeNorm.rodoOS.NroRegEstadual := '';
+
+    {Carega inf veiculos do modal rodo 0-1}
+    with infCTeNorm.rodoOS.veic do
+    begin
+      placa    := 'MBC2448';
+      RENAVAM  := '00709229895';
+      UF       := 'SC';
+      //Se for de Terceiro
+      {Prop.CNPJCPF        := '';
+      Prop.xNome          := '';
+      Prop.UF             := '';
+      prop.TAF            := '';
+      prop.NroRegEstadual := '';
+      Prop.IE             := '';
+      Prop.tpProp         := tpTACAgregado;}
+    end;
+
+    {Carrega dados da CTe substituta 0-1}
+    {with infCTeNorm.infCTeSub do
+    begin
+      chCte := '';
+      //Se tomador não é Contribuinte
+        tomaNaoICMS.refCteAnu := '';
+
+      //Se tomador for Contribuinte
+        case TipoDoc of //Tipo do Documento que o Tomador Emitiu para anulação de valor do Cte Anterior
+          0: tomaICMS.refNFe := '';//NFe
+          1: tomaICMS.refCte := '';//CTe
+          2://NF
+          begin
+            tomaICMS.refNF.CNPJCPF  := '';
+            tomaICMS.refNF.modelo   := '';
+            tomaICMS.refNF.serie    := 0;
+            tomaICMS.refNF.subserie := 0;
+            tomaICMS.refNF.nro      := 0;
+            tomaICMS.refNF.valor    := 0;
+            tomaICMS.refNF.dEmi     := Date;
+          end;
+        end;
+    end;}
+
+
+    {CTe de Complemento de valor}
+      //InfCTeComp.chave := '';
+
+    {CTe de Anulacao de valores}
+      //infCteAnu.chCTe := '';
+      //infCteAnu.dEmi  := Date;
+
+    {Seleciona o dados dos Autorizados a baixar o xml}
+      //autXML.Add.CNPJCPF := '';
+  end;
+
+  //CTe
 
  // O código abaixo faz parte da minha aplicação devendo ser feitas as alterações
  // necessárias para ser utilizado na sua.
@@ -1160,7 +1402,38 @@ begin
 end;
 
 procedure TfrmDemo_ACBrCTe.FormCreate(Sender: TObject);
+var
+ T : TSSLLib;
+ U: TSSLCryptLib;
+ V: TSSLHttpLib;
+ X: TSSLXmlSignLib;
+ Y: TSSLType;
 begin
+  cbSSLLib.Items.Clear ;
+  For T := Low(TSSLLib) to High(TSSLLib) do
+    cbSSLLib.Items.Add( GetEnumName(TypeInfo(TSSLLib), integer(T) ) ) ;
+  cbSSLLib.ItemIndex := 0 ;
+
+  cbCryptLib.Items.Clear ;
+  For U := Low(TSSLCryptLib) to High(TSSLCryptLib) do
+    cbCryptLib.Items.Add( GetEnumName(TypeInfo(TSSLCryptLib), integer(U) ) ) ;
+  cbCryptLib.ItemIndex := 0 ;
+
+  cbHttpLib.Items.Clear ;
+  For V := Low(TSSLHttpLib) to High(TSSLHttpLib) do
+    cbHttpLib.Items.Add( GetEnumName(TypeInfo(TSSLHttpLib), integer(V) ) ) ;
+  cbHttpLib.ItemIndex := 0 ;
+
+  cbXmlSignLib.Items.Clear ;
+  For X := Low(TSSLXmlSignLib) to High(TSSLXmlSignLib) do
+    cbXmlSignLib.Items.Add( GetEnumName(TypeInfo(TSSLXmlSignLib), integer(X) ) ) ;
+  cbXmlSignLib.ItemIndex := 0 ;
+
+  cbSSLType.Items.Clear ;
+  For Y := Low(TSSLType) to High(TSSLType) do
+    cbSSLType.Items.Add( GetEnumName(TypeInfo(TSSLType), integer(Y) ) ) ;
+  cbSSLType.ItemIndex := 0 ;
+
  LerConfiguracao;
 end;
 
@@ -1267,6 +1540,16 @@ begin
  Application.ProcessMessages;
 end;
 
+procedure TfrmDemo_ACBrCTe.AtualizaSSLLibsCombo;
+begin
+  cbSSLLib.ItemIndex     := Integer( ACBrCTe1.Configuracoes.Geral.SSLLib );
+  cbCryptLib.ItemIndex   := Integer( ACBrCTe1.Configuracoes.Geral.SSLCryptLib );
+  cbHttpLib.ItemIndex    := Integer( ACBrCTe1.Configuracoes.Geral.SSLHttpLib );
+  cbXmlSignLib.ItemIndex := Integer( ACBrCTe1.Configuracoes.Geral.SSLXmlSignLib );
+
+  cbSSLType.Enabled      := (ACBrCTe1.Configuracoes.Geral.SSLHttpLib in [httpWinHttp, httpOpenSSL]) ;
+end;
+
 procedure TfrmDemo_ACBrCTe.ACBrCTe1GerarLog(const Mensagem: String);
 begin
  memoLog.Lines.Add(Mensagem);
@@ -1362,21 +1645,28 @@ end;
 
 procedure TfrmDemo_ACBrCTe.btnCriarEnviarClick(Sender: TObject);
 var
- vAux, vNumLote : String;
+ vAux, vNumLote, ch : String;
 begin
- if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux))
-  then exit;
+  if not(InputQuery('WebServices Enviar', 'Numero do Conhecimento', vAux))
+   then exit;
 
- if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote))
-  then exit;
+  if not(InputQuery('WebServices Enviar', 'Numero do Lote', vNumLote))
+   then exit;
 
- ACBrCTe1.Conhecimentos.Clear;
- GerarCTe(vAux);
- ACBrCTe1.Enviar(StrToInt(vNumLote));
+  ACBrCTe1.Conhecimentos.Clear;
+  GerarCTe(vAux);
+  //try
+   ACBrCTe1.Enviar(StrToInt(vNumLote));
+  {except
+    on e:Exception do
+    begin
+      ShowMessage('Erro ao enviar !  cStat: '+ IntToStr(ACBrCTe1.WebServices.Retorno.cStat) +';  '+e.Message);
+    end;
+  end;}
 
- MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
- memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
- LoadXML(MemoResp, WBResposta);
+  MemoResp.Lines.Text   := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
+  memoRespWS.Lines.Text := UTF8Encode(ACBrCTe1.WebServices.Retorno.RetWS);
+  LoadXML(MemoResp, WBResposta);
 
  PageControl2.ActivePageIndex := 5;
  MemoDados.Lines.Add('');
@@ -2160,6 +2450,52 @@ begin
    ACBrCTe1.Conhecimentos.LoadFromFile(OpenDialog1.FileName);
    ACBrCTe1.Conhecimentos.Validar;
    showmessage('Conhecimento de Transporte Eletrônico Valido');
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.cbCryptLibChange(Sender: TObject);
+begin
+  try
+    if cbCryptLib.ItemIndex <> -1 then
+      ACBrCTe1.Configuracoes.Geral.SSLCryptLib := TSSLCryptLib(cbCryptLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.cbHttpLibChange(Sender: TObject);
+begin
+  try
+    if cbHttpLib.ItemIndex <> -1 then
+      ACBrCTe1.Configuracoes.Geral.SSLHttpLib := TSSLHttpLib(cbHttpLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.cbSSLLibChange(Sender: TObject);
+begin
+  try
+    if cbSSLLib.ItemIndex <> -1 then
+      ACBrCTe1.Configuracoes.Geral.SSLLib := TSSLLib(cbSSLLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
+  end;
+end;
+
+procedure TfrmDemo_ACBrCTe.cbSSLTypeChange(Sender: TObject);
+begin
+  if cbSSLType.ItemIndex <> -1 then
+     ACBrCTe1.SSL.SSLType := TSSLType(cbSSLType.ItemIndex);
+end;
+
+procedure TfrmDemo_ACBrCTe.cbXmlSignLibChange(Sender: TObject);
+begin
+  try
+    if cbXmlSignLib.ItemIndex <> -1 then
+      ACBrCTe1.Configuracoes.Geral.SSLXmlSignLib := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
+  finally
+    AtualizaSSLLibsCombo;
   end;
 end;
 

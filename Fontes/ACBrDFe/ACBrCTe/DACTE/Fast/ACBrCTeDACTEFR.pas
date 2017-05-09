@@ -94,9 +94,11 @@ type
     procedure CarregaMultiModal;
     procedure CarregaInformacoesAdicionais;
     procedure CarregaDocumentoAnterior;
-	procedure CarregaCTeAnuladoComplementado;
-	procedure CarregaProdutosPerigosos;
-	procedure CarregaVeiculosNovos;
+		procedure CarregaCTeAnuladoComplementado;
+		procedure CarregaProdutosPerigosos;
+		procedure CarregaVeiculosNovos;
+	  procedure CarregaInfServico;
+	  procedure CarregaPercurso;
     procedure LimpaDados;
     function ManterCep(iCep: Integer): String;
   protected
@@ -137,6 +139,8 @@ type
 	  cdsProdutosPerigosos    : TClientDataSet;
   	cdsVeiculosNovos        : TClientDataSet;
     cdsInutilizacao         : TClientDataSet;
+    cdsInfServico           : TClientDataSet;
+    cdsPercurso             : TClientDataSet;
 
     // frxDB
     frxIdentificacao        : TfrxDBDataset;
@@ -166,6 +170,8 @@ type
 	  frxProdutosPerigosos    : TfrxDBDataset;
   	frxVeiculosNovos        : TfrxDBDataset;
     frxInutilizacao         : TfrxDBDataset;
+    frxInfServico           : TfrxDBDataset;
+    frxPercurso             : TfrxDBDataset;
 
     frxBarCodeObject: TfrxBarCodeObject;
 
@@ -540,6 +546,7 @@ begin
     Add('CEP', ftString, 9);
     Add('CPais', ftString, 4);
     Add('XPais', ftString, 60);
+    Add('Email', ftString, 60);
     CreateDataSet;
   end;
 
@@ -688,6 +695,10 @@ begin
     Add('placa', ftString, 7);
     Add('UF', ftString, 2);
     Add('RNTRC', ftString, 8);
+    Add('RENAVAM', ftString, 11);
+    Add('TAF', ftString, 12);
+    Add('NroRegEstadual', ftString, 25);
+    Add('CPF/CNPJ', ftString, 14);
     CreateDataSet;
   end;
 
@@ -879,6 +890,25 @@ begin
     Add('xMotivo', ftString, 50);
     Add('cUF', ftString, 2);
     Add('dhRecbto', ftDateTime);
+		CreateDataSet;
+  end;
+
+  cdsInfServico := TClientDataSet.Create(nil);
+  with cdsInfServico, FieldDefs do
+  begin
+   	Close;
+   	Clear;
+		Add('xDescServ', ftString, 30);
+    Add('qCarga', ftFloat);
+		CreateDataSet;
+  end;
+
+  cdsPercurso := TClientDataSet.Create(nil);
+  with cdsPercurso, FieldDefs do
+  begin
+   	Close;
+   	Clear;
+		Add('UFsPer', ftString, 110);
 		CreateDataSet;
   end;
 
@@ -1096,6 +1126,20 @@ begin
     OpenDataSource := False;
 		DataSet        := cdsInutilizacao;
   end;
+  frxInfServico := TfrxDBDataset.Create(nil);
+  with frxInfServico do
+  begin
+		UserName       := 'InfServico';
+    OpenDataSource := False;
+		DataSet        := cdsInfServico;
+  end;
+  frxPercurso := TfrxDBDataset.Create(nil);
+  with frxPercurso do
+  begin
+    UserName       := 'Percurso';
+    OpenDataSource := False;
+    DataSet        := cdsPercurso;
+  end;
   frxBarCodeObject := TfrxBarCodeObject.Create(nil);
 end;
 
@@ -1131,6 +1175,8 @@ begin
   cdsProdutosPerigosos.Free;
   cdsVeiculosNovos.Free;
   cdsInutilizacao.Free;
+  cdsInfServico.Free;
+  cdsPercurso.Free;
 
   // frxDB
   frxIdentificacao.Free;
@@ -1161,6 +1207,8 @@ begin
   frxProdutosPerigosos.Free;
   frxVeiculosNovos.Free;
   frxInutilizacao.Free;
+  frxInfServico.Free;
+  frxPercurso.Free;
 
   inherited Destroy;
 end;
@@ -1429,6 +1477,8 @@ begin
   cdsEventos.EmptyDataSet;
   cdsProdutosPerigosos.EmptyDataSet;
   cdsVeiculosNovos.EmptyDataSet;
+  cdsInfServico.EmptyDataSet;
+  cdsPercurso.EmptyDataSet;
 end;
 
 function TACBrCTeDACTEFR.PrepareReport(ACTE: TCTe): Boolean;
@@ -1577,6 +1627,8 @@ begin
 	  Add(frxProdutosPerigosos);
   	Add(frxVeiculosNovos);
     Add(frxInutilizacao);
+    Add(frxInfServico);
+    Add(frxPercurso);
   end;
 end;
 
@@ -1760,6 +1812,8 @@ begin
   CarregaCTeAnuladoComplementado;
   CarregaProdutosPerigosos;
   CarregaVeiculosNovos;
+  CarregaInfServico;
+  CarregaPercurso;
 end;
 
 procedure TACBrCTeDACTEFR.CarregaDadosEventos;
@@ -1941,8 +1995,8 @@ begin
         FieldByName('Serie').AsString       := serie;
         FieldByName('ChaveAcesso').AsString := '';
         FieldByName('NotaFiscal').AsString  := nDoc;
-        FieldByName('TextoImpressao').AsString := 'NF                  ' + DoctoRem + '                                        ' +
-          serie + '  /  ' + FormatFloat('000000000', StrToInt(nDoc));
+        FieldByName('TextoImpressao').AsString := 'NF              ' + DoctoRem + '                              ' +
+          serie + '  /  ' + FormatFloat('00000000000000000000', StrToInt64(nDoc));
       end;
       Post;
     end;
@@ -2244,6 +2298,9 @@ begin
         tsRedespacho: FieldByName('tpServ').AsString     := 'Redespacho';
         tsIntermediario: FieldByName('tpServ').AsString  := 'Intermediário';
         tsMultimodal: FieldByName('tpServ').AsString  := 'Vinc. Multimodal';
+        tsTranspPessoas: FieldByName('tpServ').AsString  := 'Transporte de Pessoas';
+        tsTranspValores: FieldByName('tpServ').AsString  := 'Transporte de Valores';
+        tsExcessoBagagem: FieldByName('tpServ').AsString  := 'Excesso de Bagagem';
       end;
 
       FieldByName('cMunIni').AsString := IntToStr(cMunIni);
@@ -2412,6 +2469,18 @@ begin
 
 end;
 
+procedure TACBrCTeDACTEFR.CarregaInfServico;
+begin
+  { Informações do Serviço }
+  with cdsInfServico, FCTe.infCTeNorm.infServico do
+  begin
+    Append;
+    FieldByName('xDescServ').AsString := xDescServ;
+    FieldByName('qCarga').AsFloat := qCarga;
+    Post;
+  end;
+end;
+
 procedure TACBrCTeDACTEFR.CarregaModalAereo;
 var
    i : Integer;
@@ -2521,6 +2590,38 @@ var
 begin
   if FCTe.ide.modal <> mdRodoviario then
     Exit;
+
+  if FCTe.ide.modelo = 67 then  //67-CTeOS
+  begin
+    with cdsRodoVeiculos do
+    begin
+      Append;
+      with CTE.infCTeNorm.rodoOS.veic do
+      begin
+        FieldByName('placa').AsString := placa;
+        FieldByName('RENAVAM').AsString := RENAVAM;
+        if (Length(Prop.TAF) > 0) or (Length(Prop.NroRegEstadual) > 0) then
+        begin
+          //Terceiro
+          FieldByName('UF').AsString := Prop.UF;
+          FieldByName('TAF').AsString := Prop.TAF;
+          FieldByName('NroRegEstadual').AsString := prop.NroRegEstadual;
+          FieldByName('CPF/CNPJ').AsString := prop.CNPJCPF;
+        end
+        else
+        begin
+          //Próprio
+          FieldByName('UF').AsString    := CTe.infCTeNorm.rodoOS.veic.UF;
+          FieldByName('TAF').AsString := CTe.infCTeNorm.rodoOS.TAF;
+          FieldByName('NroRegEstadual').AsString := CTe.infCTeNorm.rodoOS.NroRegEstadual;
+          FieldByName('CPF/CNPJ').AsString := CTe.Emit.CNPJ;
+        end;
+      end;
+      post;
+    end;
+    Exit;
+  end;
+
 
   with cdsModalRodoviario do
   begin
@@ -2814,6 +2915,30 @@ begin
   end;
 end;
 
+procedure TACBrCTeDACTEFR.CarregaPercurso;
+var
+  i : Integer;
+  UfsPercurso : string;
+begin
+ { Percurso }
+  with cdsPercurso do
+  begin
+    if FCTe.ide.infPercurso.Count > 0 then
+    begin
+      for I := 0 to FCTe.ide.infPercurso.Count -1 do
+      begin
+        if i = 0 then
+          UfsPercurso := FCTe.ide.infPercurso.Items[i].UFPer
+        else
+          UfsPercurso := UfsPercurso +' - '+ FCTe.ide.infPercurso.Items[i].UFPer;
+      end;
+      Append;
+      FieldByName('UFsPer').AsString := UfsPercurso;
+      Post;
+    end;
+  end;
+end;
+
 procedure TACBrCTeDACTEFR.CarregaProdutosPerigosos;
 var i : Integer;
 begin
@@ -2991,100 +3116,121 @@ begin
   begin
 
     Append;
+    if FCTe.ide.modelo = 67 then  //67-CTeOS
+    begin
+      FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.toma.CNPJCPF);
+      FieldByName('XNome').AsString   := FCTe.toma.xNome;
+      FieldByName('XFant').AsString   := FCTe.toma.XFant;
+      FieldByName('IE').AsString      := FCTe.toma.IE;
+      FieldByName('Xlgr').AsString    := FCTe.toma.enderToma.XLgr;
+      FieldByName('Nro').AsString     := FCTe.toma.enderToma.Nro;
+      FieldByName('XCpl').AsString    := FCTe.toma.enderToma.XCpl;
+      FieldByName('XBairro').AsString := FCTe.toma.enderToma.XBairro;
+      FieldByName('CMun').AsString    := IntToStr(FCTe.toma.enderToma.CMun);
+      FieldByName('XMun').AsString    := FCTe.toma.enderToma.XMun;
+      FieldByName('UF').AsString      := FCTe.toma.enderToma.UF;
+      FieldByName('CEP').AsString     := ManterCep( FCTe.toma.enderToma.CEP );
+      FieldByName('CPais').AsString   := IntToStr(FCTe.toma.enderToma.CPais);
+      FieldByName('XPais').AsString   := FCTe.toma.enderToma.XPais;
+      FieldByName('Fone').AsString    := FormatarFone(FCTe.toma.Fone);
+      FieldByName('Email').AsString   := FCTe.toma.email;
+    end
+    else
+    begin
+      case FCTe.ide.Toma03.Toma of
+        tmRemetente:
+          begin
+            FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
+            FieldByName('XNome').AsString   := FCTe.Rem.xNome;
+            FieldByName('XFant').AsString   := FCTe.Rem.XFant;
+            FieldByName('IE').AsString      := FCTe.Rem.IE;
+            FieldByName('Xlgr').AsString    := FCTe.Rem.EnderReme.XLgr;
+            FieldByName('Nro').AsString     := FCTe.Rem.EnderReme.Nro;
+            FieldByName('XCpl').AsString    := FCTe.Rem.EnderReme.XCpl;
+            FieldByName('XBairro').AsString := FCTe.Rem.EnderReme.XBairro;
+            FieldByName('CMun').AsString    := IntToStr(FCTe.Rem.EnderReme.CMun);
+            FieldByName('XMun').AsString    := FCTe.Rem.EnderReme.XMun;
+            FieldByName('UF').AsString      := FCTe.Rem.EnderReme.UF;
+            FieldByName('CEP').AsString     := ManterCep( FCTe.Rem.EnderReme.CEP );
+            FieldByName('CPais').AsString   := IntToStr(FCTe.Rem.EnderReme.CPais);
+            FieldByName('XPais').AsString   := FCTe.Rem.EnderReme.XPais;
+            FieldByName('Fone').AsString    := FormatarFone(FCTe.Rem.Fone);
+          end;
 
-    case FCTe.ide.Toma03.Toma of
-      tmRemetente:
-        begin
-          FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-          FieldByName('XNome').AsString   := FCTe.Rem.xNome;
-          FieldByName('XFant').AsString   := FCTe.Rem.XFant;
-          FieldByName('IE').AsString      := FCTe.Rem.IE;
-          FieldByName('Xlgr').AsString    := FCTe.Rem.EnderReme.XLgr;
-          FieldByName('Nro').AsString     := FCTe.Rem.EnderReme.Nro;
-          FieldByName('XCpl').AsString    := FCTe.Rem.EnderReme.XCpl;
-          FieldByName('XBairro').AsString := FCTe.Rem.EnderReme.XBairro;
-          FieldByName('CMun').AsString    := IntToStr(FCTe.Rem.EnderReme.CMun);
-          FieldByName('XMun').AsString    := FCTe.Rem.EnderReme.XMun;
-          FieldByName('UF').AsString      := FCTe.Rem.EnderReme.UF;
-          FieldByName('CEP').AsString     := ManterCep( FCTe.Rem.EnderReme.CEP );
-          FieldByName('CPais').AsString   := IntToStr(FCTe.Rem.EnderReme.CPais);
-          FieldByName('XPais').AsString   := FCTe.Rem.EnderReme.XPais;
-          FieldByName('Fone').AsString    := FormatarFone(FCTe.Rem.Fone);
-        end;
+        tmDestinatario:
+          begin
+            FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
+            FieldByName('XNome').AsString   := FCTe.Dest.xNome;
+            FieldByName('IE').AsString      := FCTe.Dest.IE;
+            FieldByName('Xlgr').AsString    := FCTe.Dest.EnderDest.XLgr;
+            FieldByName('Nro').AsString     := FCTe.Dest.EnderDest.Nro;
+            FieldByName('XCpl').AsString    := FCTe.Dest.EnderDest.XCpl;
+            FieldByName('XBairro').AsString := FCTe.Dest.EnderDest.XBairro;
+            FieldByName('CMun').AsString    := IntToStr(FCTe.Dest.EnderDest.CMun);
+            FieldByName('XMun').AsString    := FCTe.Dest.EnderDest.XMun;
+            FieldByName('UF').AsString      := FCTe.Dest.EnderDest.UF;
+            FieldByName('CEP').AsString     := ManterCep( FCTe.Dest.EnderDest.CEP );
+            FieldByName('CPais').AsString   := IntToStr(FCTe.Dest.EnderDest.CPais);
+            FieldByName('XPais').AsString   := FCTe.Dest.EnderDest.XPais;
+            FieldByName('Fone').AsString    := FormatarFone(FCTe.Dest.Fone);
+          end;
 
-      tmDestinatario:
-        begin
-          FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
-          FieldByName('XNome').AsString   := FCTe.Dest.xNome;
-          FieldByName('IE').AsString      := FCTe.Dest.IE;
-          FieldByName('Xlgr').AsString    := FCTe.Dest.EnderDest.XLgr;
-          FieldByName('Nro').AsString     := FCTe.Dest.EnderDest.Nro;
-          FieldByName('XCpl').AsString    := FCTe.Dest.EnderDest.XCpl;
-          FieldByName('XBairro').AsString := FCTe.Dest.EnderDest.XBairro;
-          FieldByName('CMun').AsString    := IntToStr(FCTe.Dest.EnderDest.CMun);
-          FieldByName('XMun').AsString    := FCTe.Dest.EnderDest.XMun;
-          FieldByName('UF').AsString      := FCTe.Dest.EnderDest.UF;
-          FieldByName('CEP').AsString     := ManterCep( FCTe.Dest.EnderDest.CEP );
-          FieldByName('CPais').AsString   := IntToStr(FCTe.Dest.EnderDest.CPais);
-          FieldByName('XPais').AsString   := FCTe.Dest.EnderDest.XPais;
-          FieldByName('Fone').AsString    := FormatarFone(FCTe.Dest.Fone);
-        end;
+        tmExpedidor:
+          begin
+            FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
+            FieldByName('XNome').AsString   := FCTe.Exped.xNome;
+            FieldByName('IE').AsString      := FCTe.Exped.IE;
+            FieldByName('Xlgr').AsString    := FCTe.Exped.EnderExped.XLgr;
+            FieldByName('Nro').AsString     := FCTe.Exped.EnderExped.Nro;
+            FieldByName('XCpl').AsString    := FCTe.Exped.EnderExped.XCpl;
+            FieldByName('XBairro').AsString := FCTe.Exped.EnderExped.XBairro;
+            FieldByName('CMun').AsString    := IntToStr(FCTe.Exped.EnderExped.CMun);
+            FieldByName('XMun').AsString    := FCTe.Exped.EnderExped.XMun;
+            FieldByName('UF').AsString      := FCTe.Exped.EnderExped.UF;
+            FieldByName('CEP').AsString     := ManterCep( FCTe.Exped.EnderExped.CEP );
+            FieldByName('CPais').AsString   := IntToStr(FCTe.Exped.EnderExped.CPais);
+            FieldByName('XPais').AsString   := FCTe.Exped.EnderExped.XPais;
+            FieldByName('Fone').AsString    := FormatarFone(FCTe.Exped.Fone);
+          end;
 
-      tmExpedidor:
-        begin
-          FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
-          FieldByName('XNome').AsString   := FCTe.Exped.xNome;
-          FieldByName('IE').AsString      := FCTe.Exped.IE;
-          FieldByName('Xlgr').AsString    := FCTe.Exped.EnderExped.XLgr;
-          FieldByName('Nro').AsString     := FCTe.Exped.EnderExped.Nro;
-          FieldByName('XCpl').AsString    := FCTe.Exped.EnderExped.XCpl;
-          FieldByName('XBairro').AsString := FCTe.Exped.EnderExped.XBairro;
-          FieldByName('CMun').AsString    := IntToStr(FCTe.Exped.EnderExped.CMun);
-          FieldByName('XMun').AsString    := FCTe.Exped.EnderExped.XMun;
-          FieldByName('UF').AsString      := FCTe.Exped.EnderExped.UF;
-          FieldByName('CEP').AsString     := ManterCep( FCTe.Exped.EnderExped.CEP );
-          FieldByName('CPais').AsString   := IntToStr(FCTe.Exped.EnderExped.CPais);
-          FieldByName('XPais').AsString   := FCTe.Exped.EnderExped.XPais;
-          FieldByName('Fone').AsString    := FormatarFone(FCTe.Exped.Fone);
-        end;
+        tmRecebedor:
+          begin
+            FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
+            FieldByName('XNome').AsString   := FCTe.Receb.xNome;
+            FieldByName('IE').AsString      := FCTe.Receb.IE;
+            FieldByName('Xlgr').AsString    := FCTe.Receb.EnderReceb.XLgr;
+            FieldByName('Nro').AsString     := FCTe.Receb.EnderReceb.Nro;
+            FieldByName('XCpl').AsString    := FCTe.Receb.EnderReceb.XCpl;
+            FieldByName('XBairro').AsString := FCTe.Receb.EnderReceb.XBairro;
+            FieldByName('CMun').AsString    := IntToStr(FCTe.Receb.EnderReceb.CMun);
+            FieldByName('XMun').AsString    := FCTe.Receb.EnderReceb.XMun;
+            FieldByName('UF').AsString      := FCTe.Receb.EnderReceb.UF;
+            FieldByName('CEP').AsString     := ManterCep( FCTe.Receb.EnderReceb.CEP);
+            FieldByName('CPais').AsString   := IntToStr(FCTe.Receb.EnderReceb.CPais);
+            FieldByName('XPais').AsString   := FCTe.Receb.EnderReceb.XPais;
+            FieldByName('Fone').AsString    := FormatarFone(FCTe.Receb.Fone);
+          end;
+      end;
 
-      tmRecebedor:
-        begin
-          FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
-          FieldByName('XNome').AsString   := FCTe.Receb.xNome;
-          FieldByName('IE').AsString      := FCTe.Receb.IE;
-          FieldByName('Xlgr').AsString    := FCTe.Receb.EnderReceb.XLgr;
-          FieldByName('Nro').AsString     := FCTe.Receb.EnderReceb.Nro;
-          FieldByName('XCpl').AsString    := FCTe.Receb.EnderReceb.XCpl;
-          FieldByName('XBairro').AsString := FCTe.Receb.EnderReceb.XBairro;
-          FieldByName('CMun').AsString    := IntToStr(FCTe.Receb.EnderReceb.CMun);
-          FieldByName('XMun').AsString    := FCTe.Receb.EnderReceb.XMun;
-          FieldByName('UF').AsString      := FCTe.Receb.EnderReceb.UF;
-          FieldByName('CEP').AsString     := ManterCep( FCTe.Receb.EnderReceb.CEP);
-          FieldByName('CPais').AsString   := IntToStr(FCTe.Receb.EnderReceb.CPais);
-          FieldByName('XPais').AsString   := FCTe.Receb.EnderReceb.XPais;
-          FieldByName('Fone').AsString    := FormatarFone(FCTe.Receb.Fone);
-        end;
-    end;
-
-    case FCTe.ide.Toma4.Toma of
-      tmOutros:
-        begin
-          FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.ide.Toma4.CNPJCPF);
-          FieldByName('XNome').AsString   := FCTe.ide.Toma4.xNome;
-          FieldByName('IE').AsString      := FCTe.ide.Toma4.IE;
-          FieldByName('Xlgr').AsString    := FCTe.ide.Toma4.EnderToma.XLgr;
-          FieldByName('Nro').AsString     := FCTe.ide.Toma4.EnderToma.Nro;
-          FieldByName('XCpl').AsString    := FCTe.ide.Toma4.EnderToma.XCpl;
-          FieldByName('XBairro').AsString := FCTe.ide.Toma4.EnderToma.XBairro;
-          FieldByName('CMun').AsString    := IntToStr(FCTe.ide.Toma4.EnderToma.CMun);
-          FieldByName('XMun').AsString    := FCTe.ide.Toma4.EnderToma.XMun;
-          FieldByName('UF').AsString      := FCTe.ide.Toma4.EnderToma.UF;
-          FieldByName('CEP').AsString     := ManterCep( FCTe.ide.Toma4.EnderToma.CEP );
-          FieldByName('CPais').AsString   := IntToStr(FCTe.ide.Toma4.EnderToma.CPais);
-          FieldByName('XPais').AsString   := FCTe.ide.Toma4.EnderToma.XPais;
-          FieldByName('Fone').AsString    := FormatarFone(FCTe.ide.Toma4.Fone);
-        end;
+      case FCTe.ide.Toma4.Toma of
+        tmOutros:
+          begin
+            FieldByName('CNPJ').AsString    := FormatarCNPJouCPF(FCTe.ide.Toma4.CNPJCPF);
+            FieldByName('XNome').AsString   := FCTe.ide.Toma4.xNome;
+            FieldByName('IE').AsString      := FCTe.ide.Toma4.IE;
+            FieldByName('Xlgr').AsString    := FCTe.ide.Toma4.EnderToma.XLgr;
+            FieldByName('Nro').AsString     := FCTe.ide.Toma4.EnderToma.Nro;
+            FieldByName('XCpl').AsString    := FCTe.ide.Toma4.EnderToma.XCpl;
+            FieldByName('XBairro').AsString := FCTe.ide.Toma4.EnderToma.XBairro;
+            FieldByName('CMun').AsString    := IntToStr(FCTe.ide.Toma4.EnderToma.CMun);
+            FieldByName('XMun').AsString    := FCTe.ide.Toma4.EnderToma.XMun;
+            FieldByName('UF').AsString      := FCTe.ide.Toma4.EnderToma.UF;
+            FieldByName('CEP').AsString     := ManterCep( FCTe.ide.Toma4.EnderToma.CEP );
+            FieldByName('CPais').AsString   := IntToStr(FCTe.ide.Toma4.EnderToma.CPais);
+            FieldByName('XPais').AsString   := FCTe.ide.Toma4.EnderToma.XPais;
+            FieldByName('Fone').AsString    := FormatarFone(FCTe.ide.Toma4.Fone);
+          end;
+      end;
     end;
     Post;
   end;

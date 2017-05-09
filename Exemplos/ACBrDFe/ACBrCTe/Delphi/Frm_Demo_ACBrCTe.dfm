@@ -98,9 +98,49 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
         TabOrder = 0
         object TabSheet1: TTabSheet
           Caption = 'Certificado'
+          object lSSLLib: TLabel
+            Left = 35
+            Top = 16
+            Width = 34
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'SSLLib'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object lCryptLib: TLabel
+            Left = 31
+            Top = 43
+            Width = 38
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'CryptLib'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object lHttpLib: TLabel
+            Left = 35
+            Top = 70
+            Width = 34
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'HttpLib'
+            Color = clBtnFace
+            ParentColor = False
+          end
+          object lXmlSign: TLabel
+            Left = 12
+            Top = 97
+            Width = 57
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'XMLSignLib'
+            Color = clBtnFace
+            ParentColor = False
+          end
           object GroupBox2: TGroupBox
             Left = 0
-            Top = 4
+            Top = 173
             Width = 265
             Height = 144
             Caption = 'Certificado'
@@ -142,7 +182,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
             end
             object Label25: TLabel
               Left = 8
-              Top = 96
+              Top = 98
               Width = 79
               Height = 13
               Caption = 'N'#250'mero de S'#233'rie'
@@ -190,6 +230,42 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
               Height = 21
               TabOrder = 2
             end
+          end
+          object cbSSLLib: TComboBox
+            Left = 80
+            Top = 8
+            Width = 160
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 1
+            OnChange = cbSSLLibChange
+          end
+          object cbCryptLib: TComboBox
+            Left = 80
+            Top = 35
+            Width = 160
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 2
+            OnChange = cbCryptLibChange
+          end
+          object cbHttpLib: TComboBox
+            Left = 80
+            Top = 62
+            Width = 160
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 3
+            OnChange = cbHttpLibChange
+          end
+          object cbXmlSignLib: TComboBox
+            Left = 80
+            Top = 89
+            Width = 160
+            Height = 21
+            Style = csDropDownList
+            TabOrder = 4
+            OnChange = cbXmlSignLibChange
           end
         end
         object TabSheet2: TTabSheet
@@ -317,7 +393,7 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
             Left = 0
             Top = 4
             Width = 265
-            Height = 141
+            Height = 186
             Caption = 'WebService'
             TabOrder = 0
             object Label6: TLabel
@@ -332,6 +408,16 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
               Font.Name = 'MS Sans Serif'
               Font.Style = []
               ParentFont = False
+            end
+            object lSSLLib1: TLabel
+              Left = 8
+              Top = 160
+              Width = 44
+              Height = 13
+              Alignment = taRightJustify
+              Caption = 'SSLType'
+              Color = clBtnFace
+              ParentColor = False
             end
             object ckVisualizar: TCheckBox
               Left = 8
@@ -404,10 +490,20 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
                 'Homologa'#231#227'o')
               TabOrder = 2
             end
+            object cbSSLType: TComboBox
+              Left = 64
+              Top = 152
+              Width = 160
+              Height = 21
+              Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
+              Style = csDropDownList
+              TabOrder = 3
+              OnChange = cbSSLTypeChange
+            end
           end
           object gbProxy: TGroupBox
             Left = 0
-            Top = 152
+            Top = 202
             Width = 265
             Height = 105
             Caption = 'Proxy'
@@ -1083,10 +1179,21 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
   object ACBrCTe1: TACBrCTe
     MAIL = ACBrMail1
     OnStatusChange = ACBrCTe1StatusChange
-    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLLib = libOpenSSL
+    Configuracoes.Geral.SSLCryptLib = cryOpenSSL
+    Configuracoes.Geral.SSLHttpLib = httpOpenSSL
+    Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.ModeloDF = moCTeOS
+    Configuracoes.Geral.VersaoDF = ve300
+    Configuracoes.Arquivos.PathSalvar = 'C:\ZettaBrasil\DeltaCTe\XMLRet\'
+    Configuracoes.Arquivos.PathSchemas = 'D:\Componentes\DelphiXE3\ACBR\Exemplos\ACBrDFe\Schemas\CTe\'
+    Configuracoes.Arquivos.PathCTe = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
+    Configuracoes.Arquivos.PathInu = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
+    Configuracoes.Arquivos.PathEvento = 'C:\ZettaBrasil\DeltaCTe\XMLRet'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.Salvar = True
     Configuracoes.WebServices.QuebradeLinha = '|'
     DACTE = ACBrCTeDACTeRL1
     Left = 330
@@ -1118,7 +1225,6 @@ object frmDemo_ACBrCTe: TfrmDemo_ACBrCTe
     CTeCancelada = False
     ExibirResumoCanhoto = False
     EPECEnviado = False
-    PosCanhoto = prCabecalho
     ImprimirDescPorc = False
     PrintDialog = True
     Left = 383

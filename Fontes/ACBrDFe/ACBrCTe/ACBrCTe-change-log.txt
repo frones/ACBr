@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/05/2017
+-- pcteRetConsSitCTe --
+[*] Ajustes na leitura da consulta a situação visando o modelo 67.
+   Por: BigWings
+
 07/05/2017
 -- ACBrCTeWebServices --
 [*] Ajustes na montagem da mensagem de envio, é diferente entre os modelos 57 e 67.

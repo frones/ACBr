@@ -1454,27 +1454,31 @@ begin
 
     versao := GetVersaoModalCTe(VersaoDF, CTe.Ide.modal);
 
-    case StrToInt(TpModalToStr(CTe.Ide.modal)) of
-     01: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
-     02: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
-     03: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
-     04: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
-     05: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
-     06: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
-    end;
+    if (CTe.Ide.tpServ <> tsTranspValores) then
+    begin
+      case StrToInt(TpModalToStr(CTe.Ide.modal)) of
+       01: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
+       02: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
+       03: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
+       04: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
+       05: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
+       06: Gerador.wGrupo('infModal versaoModal="' + versao + '"', '#366');
+      end;
 
-    case StrToInt(TpModalToStr(CTe.Ide.modal)) of
-     01: if CTe.ide.modelo = 57 then // Informações do Modal Rodoviário
-           GerarRodo
-         else
-           GerarRodoOS;
-     02: GerarAereo;      // Informações do Modal Aéreo
-     03: GerarAquav;      // Informações do Modal Aquaviário
-     04: GerarFerrov;     // Informações do Modal Ferroviário
-     05: GerarDuto;       // Informações do Modal Dutoviário
-     06: GerarMultimodal; // Informações do Multimodal
+      case StrToInt(TpModalToStr(CTe.Ide.modal)) of
+       01: if CTe.ide.modelo = 57 then // Informações do Modal Rodoviário
+             GerarRodo
+           else
+             GerarRodoOS;
+       02: GerarAereo;      // Informações do Modal Aéreo
+       03: GerarAquav;      // Informações do Modal Aquaviário
+       04: GerarFerrov;     // Informações do Modal Ferroviário
+       05: GerarDuto;       // Informações do Modal Dutoviário
+       06: GerarMultimodal; // Informações do Multimodal
+      end;
+      
+      Gerador.wGrupo('/infModal');
     end;
-    Gerador.wGrupo('/infModal');
 
     if (CTe.ide.modelo = 57) then
     begin
@@ -2150,9 +2154,9 @@ begin
   else
   begin
     Gerador.wGrupo('tarifa', '#07');
-    Gerador.wCampo(tcStr, '#08', 'CL  ', 01, 02, 0, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
+    Gerador.wCampo(tcStr, '#08', 'CL  ', 01, 02, 1, CTe.infCTeNorm.aereo.tarifa.CL, DSC_CL);
     Gerador.wCampo(tcStr, '#09', 'cTar', 01, 04, 0, CTe.infCTeNorm.aereo.tarifa.cTar, DSC_CTAR);
-    Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 0, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
+    Gerador.wCampo(tcDe2, '#10', 'vTar', 01, 15, 1, CTe.infCTeNorm.aereo.tarifa.vTar, DSC_VTAR);
     Gerador.wGrupo('/tarifa');
 
     if (trim(CTe.infCTeNorm.aereo.natCarga.xDime) <> '') or (CTe.infCTeNorm.aereo.natCarga.cinfManu.Count <> 0) or

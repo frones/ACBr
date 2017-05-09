@@ -849,8 +849,9 @@ begin
   if not Assigned( LibPointer )  then
   begin
     sLibName := NomeDLL;
-    if not FileExists(sLibName) then
-      raise EACBrSATErro.Create( 'Arquivo não encontrado: '+sLibName );
+    if ExtractFilePath(sLibName) <> '' then
+      if not FileExists(sLibName) then
+        raise EACBrSATErro.Create( 'Arquivo não encontrado: '+sLibName );
 
     if not FunctionDetect( sLibName, FuncName, LibPointer) then
     begin

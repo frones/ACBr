@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 09/05/2017
+-- ACBrSATClass --
+[*] Ajuste para permitir nomes de DLL sem o Path (por: DSA)
+
 Data 27/03/2017
 -- ACBrSATExtratoFortesFr --
 [*] Ajuste para não exibir barra de Prrogresso, na geração do PDF

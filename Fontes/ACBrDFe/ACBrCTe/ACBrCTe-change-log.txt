@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+09/05/2017
+-- ACBrCteConhecimentos --
+[*] Correção no método Validar, não existe o grupo infModal no CTeOS Transporte de Valores.
+   Por: Italo Jurisato Junior
+
 08/05/2017
 -- pcteRetConsSitCTe --
 [*] Ajustes na leitura da consulta a situação visando o modelo 67.

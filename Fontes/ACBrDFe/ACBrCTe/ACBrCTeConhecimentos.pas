@@ -338,7 +338,8 @@ begin
               '</CTeOS>';
     end;
 
-    if (FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto) then
+    if ((FCTe.ide.tpCTe = tcNormal) or (FCTe.ide.tpCTe = tcSubstituto)) and
+        (FCTe.Ide.tpServ <> tsTranspValores) then
     begin
       ModalEhValido := SSL.Validar(AXMLModal, GerarNomeArqSchemaModal(AXML, FCTe.infCTe.Versao), Erro);
 

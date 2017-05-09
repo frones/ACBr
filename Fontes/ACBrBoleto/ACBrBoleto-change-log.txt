@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/05/2017
+--ACBrBancoBancoob
+[*] Boleto SICOOB posição 221 - Código de protesto: Protestar em XX dias corridos
+		http://www.projetoacbr.com.br/forum/topic/36556-boleto-sicoob-posição-221-código-de-protesto-protestar-em-xx-dias-corridos/
+		Juliomar Marchetti
+		
 Data: 28/04/2017 ver: 0.0.221
 -- ACBrBancoBancoob.pas --
 [*] Ajustado a Especie de titulo, acrestando a 'DMI', ajustado o Código Mora conforme caso:

@@ -737,6 +737,7 @@ function TACBrBancoob.GerarRegistroTransacao240(
 var AEspecieTitulo, ATipoInscricao, ATipoOcorrencia, ATipoBoleto, ADataMoraJuros,
     ADataDesconto,ATipoAceite,NossoNum : string;
     DiasProtesto: String;
+    ProtestoBaixa: String;
     ATipoInscricaoAvalista: Char;
     wModalidade, ValorMora: String;
 begin
@@ -796,9 +797,18 @@ begin
        ADataDesconto := PadLeft('', 8, '0');
 
      if (DataProtesto > 0) then
-        DiasProtesto := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
+     begin
+        DiasProtesto  := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2);
+        case TipoDiasProtesto of 
+          diCorridos : ProtestoBaixa := '1';
+          diUteis    : ProtestoBaixa := '2';
+        end;
+     end
      else
+     begin
         DiasProtesto := '00';
+        ProtestoBaixa:= '3'; //NÃO PROTESTA
+     end;
 
      if (ValorMoraJuros > 0) and (CodigoMora = '') then
        CodigoMora := '1'
@@ -866,7 +876,7 @@ begin
                          IntToStrZero( round(ValorIOF * 100), 15)         + // 166 a 180 - Valor do IOF a ser recolhido
                          IntToStrZero( round(ValorAbatimento * 100), 15)  + // 181 a 195 - Valor do abatimento
                          PadRight(SeuNumero, 25, ' ')                     + // 196 a 220 - Identificação do título na empresa
-                         '1'                                              + // 221 - Código de protesto: Protestar em XX dias corridos
+                         ProtestoBaixa                                    + // 221 - Código de protesto: Protestar em XX dias corridos
                          DiasProtesto                                     + // 222 a 223 - Prazo para protesto (em dias corridos)
                          '0'                                              + // 224 - Código de Baixa
                          space(3)                                         + // 225 A 227 - Dias para baixa

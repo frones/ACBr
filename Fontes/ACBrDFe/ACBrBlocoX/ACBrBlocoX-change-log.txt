@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2017
+[+] Mudanças para atender aos novos layouts do bloco x paf-ecf
+		http://www.projetoacbr.com.br/forum/topic/29412-bloco-x-webservice-e-validador/?page=2
+		por : Juliomar
 13/03/2017
 [-] conforme é descrito no xsd https://tributario.sef.sc.gov.br/tax.NET/sat.dfe.siv.web/xsd/estoque.xsd o campo quantidade tem o type
 		Numero1a20Mais3PrecisaoType com precisão de 3 então foi necessário enviar a correção

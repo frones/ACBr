@@ -98,9 +98,17 @@ begin
     begin
       FGerador.wGrupo('Produto');
       FGerador.wCampo(tcStr, '', 'Descricao', 0, 0, 1, Produtos[I].Descricao);
-      FGerador.wCampo(tcStr, '', 'Codigo', 0, 0, 1, Produtos[I].Codigo.Numero);
-      FGerador.wCampo(tcStr, '', 'CodigoTipo', 0, 0, 1,TipoCodigoToStr(Produtos[I].Codigo.Tipo));
-      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.000',Abs(Produtos[I].Quantidade)));
+
+      with Produtos[I] do begin
+        FGerador.wGrupo('Codigo');
+        FGerador.wCampo(tcStr, '', 'CodigoGTIN', 0, 0, 1, Produtos[I].Codigo.CodigoGTIN);
+        FGerador.wCampo(tcStr, '', 'CodigoCEST', 0, 0, 1, Produtos[I].Codigo.CodigoCEST);
+        FGerador.wCampo(tcStr, '', 'CodigoNCMSH', 0, 0, 1,Produtos[I].Codigo.CodigoNCMSH);
+        FGerador.wCampo(tcStr, '', 'CodigoProprio', 0, 0, 1,Produtos[I].Codigo.CodigoProprio);
+        FGerador.wGrupo('/Codigo');
+      end;
+      
+      FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.00',Abs(Produtos[I].Quantidade)));
       FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Produtos[I].Unidade);
       FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, formatfloat('0.00',Produtos[I].ValorUnitario));
       FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));
@@ -108,6 +116,13 @@ begin
       FGerador.wCampo(tcStr, '', 'IsArredondado', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, 'true', 'false'));
       FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Produtos[I].Ippt));
       FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'Positivo', 'Negativo'));
+
+      FGerador.wCampo(tcStr, '', 'ValorTotalAquisicaoMercadoria', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalAquisicaoMercadoria));
+      FGerador.wCampo(tcStr, '', 'QuantidadeTotalAquisicaoMercadoria', 1, 1, 1, formatfloat('0.000',Produtos[I].QuantidadeTotalAquisicaoMercadoria));
+      FGerador.wCampo(tcStr, '', 'ValorTotalICMSDebitoFornecedor', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalICMSDebitoFornecedor));
+      FGerador.wCampo(tcStr, '', 'ValorBaseCalculoICMSST', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorBaseCalculoICMSST) );
+      FGerador.wCampo(tcStr, '', 'ValorTotalICMSST', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalICMSST));
+
       FGerador.wGrupo('/Produto');
     end;
     FGerador.wGrupo('/Produtos');

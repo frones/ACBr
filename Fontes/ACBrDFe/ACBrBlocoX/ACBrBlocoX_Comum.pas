@@ -44,10 +44,18 @@ type
   TACBrBlocoX_Codigo = class
   private
     FTipo: TACBrBlocoX_TipoCodigo;
-    FNumero: String;
+    FCodigoGTIN : string;
+    FCodigoCEST : string;
+    FCodigoNCMSH : string;
+    FCodigoProprio : string;
+
   public
     property Tipo: TACBrBlocoX_TipoCodigo read FTipo write FTipo;
-    property Numero: String read FNumero write FNumero;
+    property CodigoGTIN  : String read FCodigoGTIN write FCodigoGTIN;
+    property CodigoCEST  : String read FCodigoCEST write FCodigoCEST;
+    property CodigoNCMSH : String read FCodigoNCMSH write FCodigoNCMSH;
+    property CodigoProprio : String read FCodigoProprio write FCodigoProprio;
+
   end;
 
   TACBrBlocoX_Produto = class(TCollectionItem)
@@ -59,13 +67,26 @@ type
     FAliquota: Double;
     FUnidade: String;
     FQuantidade: double;
+    FValorDesconto : Double;
+    FValorAcrescimo : Double;
+    FValorCancelamento : Double;
+    FValorTotalLiquido : Double;
     FIndicadorArredondamento: Boolean;
     FSituacaoTributaria: TACBrBlocoX_SitTributaria;
+    FSituacaoEstoque : string;
+
+    FValorTotalAquisicaoMercadoria : Double;
+    FQuantidadeTotalAquisicaoMercadoria : Double;
+    FValorTotalICMSDebitoFornecedor : Double;
+    FValorBaseCalculoICMSST : Double;
+    FValorTotalICMSST       : Double;
+
   public
     constructor Create(Collection: TCollection); override;
     destructor Destroy; override;
 
     property Codigo: TACBrBlocoX_Codigo read FCodigo write FCodigo;
+
     property Descricao: String read FDescricao write FDescricao;
     property Quantidade: Double read FQuantidade write FQuantidade;
     property Unidade: String read FUnidade write FUnidade;
@@ -74,6 +95,19 @@ type
     property Aliquota: Double read FAliquota write FAliquota;
     property IndicadorArredondamento: Boolean read FIndicadorArredondamento write FIndicadorArredondamento;
     property Ippt: TACBrBlocoX_Ippt read FIppt write FIppt;
+    property SituacaoEstoque: String read FSituacaoEstoque write FSituacaoEstoque;
+
+    property ValorDesconto: Double  read FValorDesconto write FValorDesconto;
+    property ValorAcrescimo: Double read FValorAcrescimo write FValorAcrescimo;
+    property ValorCancelamento: Double read FValorCancelamento write FValorCancelamento;
+    property ValorTotalLiquido: Double read FValorTotalLiquido write FValorTotalLiquido;
+
+    property ValorTotalAquisicaoMercadoria: Double read FValorTotalAquisicaoMercadoria write FValorTotalAquisicaoMercadoria;
+    property QuantidadeTotalAquisicaoMercadoria: Double read FQuantidadeTotalAquisicaoMercadoria write FQuantidadeTotalAquisicaoMercadoria;
+    property ValorTotalICMSDebitoFornecedor: Double read FValorTotalICMSDebitoFornecedor write FValorTotalICMSDebitoFornecedor;
+    property ValorBaseCalculoICMSST: Double read FValorBaseCalculoICMSST write FValorBaseCalculoICMSST;
+    property ValorTotalICMSST: Double read FValorTotalICMSST write FValorTotalICMSST;
+
   end;
 
   TACBrBlocoX_Servico = class(TACBrBlocoX_Produto);

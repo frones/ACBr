@@ -1016,7 +1016,7 @@ begin
     Result := dtRawPrinter
   else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
     Result := dtFile
-  else if {$IFDEF LINUX}(Pos('/dev/lp', APorta) = 1){$ELSE}(Pos('LPT', UPorta) = 1){$ENDIF} then
+  else if {$IFDEF LINUX}((pos('/dev/', APorta) = 1) and (Pos('/lp', APorta) > 4)){$ELSE}(Pos('LPT', UPorta) = 1){$ENDIF} then
     Result := dtParallel
   else if (copy(UPorta, 1, 3) = 'COM') or
        {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then

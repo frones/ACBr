@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 09/05/2017
+-- ACBrDevice --
+[-] Ajuste na detecção de portas Paralelas, Linux (Ex: "/dev/lp?", "/dev/usb/lp?")
+    http://www.projetoacbr.com.br/forum/topic/36617-acbrposprinter-com-epson-tm-t20-usb-no-linux
+    (por: DSA)
+
 Data: 28/04/2017
 -- ACBrECFVirtual --
 [-] Correção em "LoadFromINI", para não considerar o valor do Troco, como

@@ -333,6 +333,7 @@ begin
   begin
     CTe.emit.CNPJ  := Leitor.rCampo(tcStr,'CNPJ');
     CTe.emit.IE    := Leitor.rCampo(tcStr, 'IE');
+    CTe.emit.IEST  := Leitor.rCampo(tcStr, 'IEST');
     CTe.emit.xNome := Leitor.rCampo(tcStr, 'xNome');
     CTe.emit.xFant := Leitor.rCampo(tcStr, 'xFant');
 

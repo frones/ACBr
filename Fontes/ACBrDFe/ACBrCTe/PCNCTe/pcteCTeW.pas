@@ -746,6 +746,9 @@ begin
   Gerador.wCampoCNPJ('#098', CTe.Emit.CNPJ, CODIGO_BRASIL, True);
   Gerador.wCampo(tcStr, '#099', 'IE    ', 02, 14, 1, OnlyNumber(CTe.Emit.IE), DSC_IE);
 
+  if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 57) then
+    Gerador.wCampo(tcStr, '#100', 'IEST  ', 02, 14, 1, OnlyNumber(CTe.Emit.IEST), DSC_IEST);
+
   if (FOpcoes.ValidarInscricoes)
    then if not ValidarIE(CTe.Emit.IE, CTe.Emit.enderEmit.UF) then
          Gerador.wAlerta('#099', 'IE', DSC_IE, ERR_MSG_INVALIDO);

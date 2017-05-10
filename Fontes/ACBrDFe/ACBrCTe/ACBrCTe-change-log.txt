@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+10/05/2017
+-- Diversos --
+[*] Inclusão do campo IEST bem como a constante DSC_IEST.
+   Por: Emerson Teixeira / Italo Jurisato Junior
+
 09/05/2017
 -- ACBrCteConhecimentos --
 [*] Correção no método Validar, não existe o grupo infModal no CTeOS Transporte de Valores.

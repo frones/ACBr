@@ -744,6 +744,7 @@ type
   private
     FCNPJ      : String;
     FIE        : String;
+    FIEST      : string;
     FxNome     : String;
     FxFant     : String;
     FEnderEmit : TEnderEmit;
@@ -753,6 +754,7 @@ type
   published
     property CNPJ: String          read FCNPJ      write FCNPJ;
     property IE: String            read FIE        write FIE;
+    property IEST: String          read FIEST      write FIEST;
     property xNome: String         read FxNome     write FxNome;
     property xFant: String         read FxFant     write FxFant;
     property enderEmit: TEnderEmit read FEnderEmit write FEnderEmit;

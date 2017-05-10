@@ -78,7 +78,6 @@ const
   DSC_EXTIPI = 'EX_TIPI';
   DSC_FINNFE = 'Finalidade de emissão da NFe';
   DSC_GENERO = 'Gênero do produto ou serviço';
-  DSC_IEST = 'Inscrição Estadual do Substituto tributário';
   DSC_INDPROC = 'Indicador da origem do processo';
   DSC_IPITrib = 'IPI Tributável';
   DSC_MARCA = 'Marca dos volumes transportados';

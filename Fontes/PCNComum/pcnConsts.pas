@@ -57,6 +57,7 @@ const
   DSC_VERPROC = 'Versão do Processo de emissão do DF-e';
   DSC_DHCONT = 'Data e Hora de entrada em contingencia';
   DSC_XJUSTCONT = 'Justificativa de entrada em contingencia';
+  DSC_IEST = 'Inscrição Estadual do Substituto tributário';
   DSC_XFANT = 'Nome de Fantasia';
   DSC_FONE = 'Telefone';
   DSC_EMAIL = 'Endereço de Email';

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/05/2017
+-- ACBrSocket --
+[-] Correção para não atribuir Timeout para conexão HTTP, caso o mesmo seja 0
+    (por: DSA)
+
 27/04/2017
 -- ACBrCEP --
 [*] "TACBrWSCorreiosSIGEP", ajuste para considerar Tag "Complemento2"

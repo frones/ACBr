@@ -881,8 +881,11 @@ begin
     // DEBUG //
     //HTTPSend.Document.SaveToFile( 'c:\temp\HttpSend.txt' );
 
-    HTTPSend.Timeout := FTimeOut;
-    HTTPSend.Sock.ConnectionTimeout := FTimeOut;
+    if FTimeOut > 0 then
+    begin
+      HTTPSend.Timeout := FTimeOut;
+      HTTPSend.Sock.ConnectionTimeout := FTimeOut;
+    end;
 
     HTTPSend.HTTPMethod(Method, AURL);
 

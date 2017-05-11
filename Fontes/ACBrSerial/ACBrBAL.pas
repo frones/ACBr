@@ -74,7 +74,9 @@ TACBrBALLePeso = procedure(Peso : Double; Resposta : AnsiString) of object ;
 { Componente ACBrBAL }
 
 { TACBrBAL }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
 TACBrBAL = class(TACBrComponent)
   private
     fsDevice: TACBrDevice;  { SubComponente ACBrDevice }

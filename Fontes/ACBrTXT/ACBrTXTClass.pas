@@ -53,7 +53,9 @@ type
   TErrorEvent = procedure(const MsnError: String) of object;
 
   { TACBrTXTClass }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrTXTClass = class
   private
     FLinhasBuffer: Integer;

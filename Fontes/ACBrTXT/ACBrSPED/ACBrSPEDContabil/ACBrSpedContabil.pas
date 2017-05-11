@@ -45,7 +45,7 @@ unit ACBrSpedContabil;
 interface
 
 uses
-  SysUtils, Classes, DateUtils,
+  SysUtils, Classes, DateUtils, ACBrBase,
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
@@ -57,13 +57,13 @@ const
    CACBrSpedContabil_Versao = '0.04a' ;
 
 type
-  TACBrSPEDPrected = class(TACBrSPED);
-
   /// ACBrSpedContabil - Sitema Publico de Escrituração Digital Contabil
 
   { TACBrSPEDContabil }
-
-  TACBrSPEDContabil = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSPEDContabil = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FArquivo: String;

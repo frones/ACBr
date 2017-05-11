@@ -45,7 +45,7 @@ unit ACBrPonto;
 interface
 
 uses
-  SysUtils, Classes, DateUtils,
+  SysUtils, Classes, DateUtils, ACBrBase,
   {$IFNDEF Framework}
     {$IFDEF FPC}
       LResources,
@@ -65,8 +65,10 @@ type
   // DECLARANDO O COMPONENTE:
 
   { TACBrPonto }
-
-  TACBrPonto = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrPonto = class(TACBrComponent)
   private
     FOnError: TErrorEvent;
 

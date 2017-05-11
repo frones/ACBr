@@ -59,7 +59,9 @@ type
   TACBrECFVirtualNFCeQuandoCancelarDocumento = procedure(Justificativa: string) of object;
 
   { TACBrECFVirtualNFCe }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrECFVirtualNFCe = class(TACBrECFVirtualPrinter)
   private
     function GetACBrNFCe: TACBrNFe;
@@ -100,7 +102,9 @@ type
   end;
 
   { TACBrECFVirtualNFCeClass }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrECFVirtualNFCeClass = class(TACBrECFVirtualPrinterClass)
   private
     fsACBrNFCe: TACBrNFe;

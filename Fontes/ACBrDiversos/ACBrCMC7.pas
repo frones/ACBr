@@ -51,6 +51,9 @@ uses
   SysUtils, Classes, ACBrBase, ACBrUtil;
 
 type
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrCMC7 = class(TACBrComponent)
   private
     { Private declarations }

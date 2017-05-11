@@ -43,7 +43,7 @@ unit ACBrSpedPisCofins;
 interface
 
 uses
-  SysUtils, Math, Classes,
+  SysUtils, Math, Classes, ACBrBase,
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
@@ -58,8 +58,10 @@ const
 
 type
   { TACBrSPEDPisCofins }
-
-  TACBrSPEDPisCofins = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSPEDPisCofins = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FArquivo: String;

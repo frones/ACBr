@@ -44,7 +44,7 @@ interface
 
 uses
   Classes,
-  SysUtils,
+  SysUtils, ACBrBase,
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
@@ -68,8 +68,10 @@ type
   // Permite alterar o conteúdo da linha ou coluna antes de ser adicionado ao componente da ACBR.
   TACBrSpedPCImportarLinha = procedure(var Linha: string; const LinhaI: integer) of Object;
   TACBrSpedPCImportarColuna = TACBrSpedPCImportarGetColumn;
-
-  TACBrSpedPCImportar = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSpedPCImportar = class(TACBrComponent)
   private
     FArquivo: string;
     FACBrSPEDPisCofins: TACBrSPEDPisCofins;

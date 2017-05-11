@@ -47,7 +47,7 @@ unit ACBrPAF;
 interface
 
 uses
-   SysUtils, Classes, DateUtils, math,
+   SysUtils, Classes, DateUtils, ACBrBase, math,
    {$IFNDEF NOGUI}
     {$IFDEF FPC}LResources,{$ENDIF}
     {$IF DEFINED(CLX)}
@@ -89,8 +89,10 @@ type
   // DECLARANDO O COMPONENTE - PAF-ECF:
 
   { TACBrPAF }
-
-  TACBrPAF = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrPAF = class(TACBrComponent)
   private
     FOnError: TErrorEvent;
 

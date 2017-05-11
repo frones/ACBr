@@ -60,7 +60,9 @@ uses Classes, SysUtils,
 type
 
   { TACBrSATExtratoFortes }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrSATExtratoFortes = class( TACBrSATExtratoFortesClass )
   private
   protected

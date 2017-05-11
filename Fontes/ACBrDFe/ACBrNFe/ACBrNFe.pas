@@ -41,7 +41,7 @@ unit ACBrNFe;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, ACBrBase,
   ACBrDFe, ACBrDFeException, ACBrDFeConfiguracoes,
   ACBrNFeConfiguracoes, ACBrNFeWebServices, ACBrNFeNotasFiscais,
   ACBrNFeDANFEClass,
@@ -60,8 +60,10 @@ type
   EACBrNFeException = class(EACBrDFeException);
 
   {Carta de Correção}
-
-  TCartaCorrecao = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TCartaCorrecao = class(TACBrComponent)
   private
     FCCe: TCCeNFe;
   public
@@ -72,8 +74,10 @@ type
   end;
 
   {Download}
-
-  TDownload = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TDownload = class(TACBrComponent)
   private
     FDownload: TDownloadNFe;
   public
@@ -84,7 +88,9 @@ type
   end;
 
   { TACBrNFe }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFe = class(TACBrDFe)
   private
     FDANFE: TACBrNFeDANFEClass;

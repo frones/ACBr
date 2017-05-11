@@ -59,7 +59,9 @@ uses
 
 type
   EACBrNFeDANFEFR = class(Exception);
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFEFR = class( TACBrNFeDANFEClass )
    private
     FdmDanfe: TACBrNFeFRClass;

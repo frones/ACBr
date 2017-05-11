@@ -59,7 +59,11 @@ type
 TACBrGAVModelo = (gavNenhuma, gavSerialMenno, gavSerialGerbo, gavImpressoraECF,
                  gavImpressoraComum ) ;
 
+
 { Componente ACBrGAV }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
 TACBrGAV = class( TACBrComponent )
   private
     fsDevice  : TACBrDevice ;   { SubComponente ACBrDevice }

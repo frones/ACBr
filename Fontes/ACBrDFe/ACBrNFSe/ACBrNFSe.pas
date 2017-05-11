@@ -58,7 +58,9 @@ type
   EACBrNFSeException = class(EACBrDFeException);
 
   { TACBrNFSe }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFSe = class(TACBrDFe)
   private
     FDANFSE: TACBrNFSeDANFSEClass;

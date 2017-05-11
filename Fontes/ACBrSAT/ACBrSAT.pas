@@ -52,7 +52,9 @@ type
    TACBrSATCalcPathEvent = procedure (var APath: String; ACNPJ: String; AData: TDateTime) of object;
 
    { TACBrSAT }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
    TACBrSAT = class( TACBrComponent )
    private
      fsCFe : TCFe ;

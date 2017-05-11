@@ -57,7 +57,9 @@ const
 type
 
 { TACBrECFVirtualNaoFiscal }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
 TACBrECFVirtualNaoFiscal = class( TACBrECFVirtualPrinter )
   private
     function GetExibeAvisoLegal: Boolean;

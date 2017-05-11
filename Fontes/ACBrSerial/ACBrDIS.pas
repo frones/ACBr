@@ -128,7 +128,9 @@ TACBrDISLinhas = class(TObjectList)
 { Componente ACBrDIS }
 
 { TACBrDIS }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
 TACBrDIS = class( TACBrComponent )
   private
     fsDevice  : TACBrDevice ;   { SubComponente ACBrDevice }

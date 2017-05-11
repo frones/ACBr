@@ -60,7 +60,9 @@ type
   TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
   { TACBrNFeDANFCeFortes }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFEClass )
   private
   protected

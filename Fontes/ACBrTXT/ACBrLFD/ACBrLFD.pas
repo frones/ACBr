@@ -47,7 +47,7 @@ unit ACBrLFD;
 interface
 
 uses
-  SysUtils, Math, Classes,
+  SysUtils, Math, Classes, ACBrBase,
 {$IFNDEF Framework}
   {$IFDEF FPC}
     LResources,
@@ -70,8 +70,10 @@ const
 type
 
   { TACBrLFD }
-
-  TACBrLFD = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrLFD = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FArquivo: ansistring;

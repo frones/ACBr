@@ -41,11 +41,14 @@ unit ACBrMDFeDAMDFeClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrBase,
   pmdfeMDFe, pcnConversao;
 
 type
-  TACBrMDFeDAMDFeClass = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TACBrMDFeDAMDFeClass = class(TACBrComponent)
    private
     procedure SetMDFe(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);

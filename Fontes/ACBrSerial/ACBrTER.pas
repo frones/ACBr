@@ -78,6 +78,9 @@ Type
         End;
 
     { Componente ACBrTER }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}		
     TACBrTER = Class( TACBrComponent )
         Private
             fsDevice : TACBrDevice; { SubComponente ACBrDevice }

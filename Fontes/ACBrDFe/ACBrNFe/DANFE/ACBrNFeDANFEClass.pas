@@ -48,11 +48,13 @@ unit ACBrNFeDANFEClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrBase,
   pcnNFe, pcnConversao;
 
 type
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TCasasDecimais = class(TComponent)
   private
     fFormato : TDetFormato;
@@ -75,8 +77,10 @@ type
   end;
 
   { TACBrNFeDANFEClass }
-
-  TACBrNFeDANFEClass = class( TComponent )
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+  TACBrNFeDANFEClass = class( TACBrComponent )
    private
     procedure SetNFE(const Value: TComponent);
     procedure ErroAbstract(NomeProcedure: String);

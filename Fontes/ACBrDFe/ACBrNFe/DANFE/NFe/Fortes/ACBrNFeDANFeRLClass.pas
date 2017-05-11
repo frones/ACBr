@@ -65,7 +65,9 @@ type
   TObjectArray = array of TObject;
   PObjectArray = ^TObjectArray;
 
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TFonte = class(TComponent)
   protected
     FNome: TNomeFonte;
@@ -83,7 +85,9 @@ type
                                               write FTamanhoFonte_RazaoSocial
                                               default 8;
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFeRL = class( TACBrNFeDANFEClass )
   private
     FMarcadagua: string;

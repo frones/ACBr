@@ -104,7 +104,9 @@ type
   TACBrCEPWSClass = class ;
 
   { TACBrCEP }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCEP = class( TACBrHTTP )
     private
       fWebService : TACBrCEPWebService ;
@@ -141,7 +143,9 @@ type
   end ;
 
   { TACBrCEPWSClass }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCEPWSClass = class
     private
       fOwner : TACBrCEP ;

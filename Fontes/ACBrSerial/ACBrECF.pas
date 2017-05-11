@@ -110,6 +110,9 @@ TACBrECFOnChangeEstado = procedure( const EstadoAnterior, EstadoAtual :
 { Componente ACBrECF }
 
 { TACBrECF }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
 TACBrECF = class( TACBrComponent )
   private
     fsDevice : TACBrDevice ;   { SubComponente ACBrDevice }

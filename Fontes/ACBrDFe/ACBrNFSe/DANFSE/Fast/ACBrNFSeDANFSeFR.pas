@@ -44,7 +44,9 @@ uses
 
 type
   EACBrNFSeDANFSeFR = class(Exception);
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFSeDANFSeFR = class(TACBrNFSeDANFSeClass)
   private
     FFastFile        : String;

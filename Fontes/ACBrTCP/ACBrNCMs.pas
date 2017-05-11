@@ -72,7 +72,9 @@ type
     property Objects[Index: integer]: TACBrNCM read GetObject write SetObject; default;
     procedure SaveToFile(AFileName: String);
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrNCMs = class(TACBrHTTP)
   private
     fNcms: TACBrNCMsList;

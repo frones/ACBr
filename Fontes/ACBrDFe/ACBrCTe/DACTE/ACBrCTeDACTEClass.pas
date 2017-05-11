@@ -51,11 +51,14 @@ unit ACBrCTeDACTEClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrBase,
   pcteCTE, pcnConversao;
 
 type
-  TACBrCTeDACTEClass = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrCTeDACTEClass = class(TACBrComponent)
   private
     function GetPathPDF: String;
     procedure SetPathPDF(const Value: String);

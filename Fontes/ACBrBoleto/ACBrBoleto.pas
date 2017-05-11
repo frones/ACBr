@@ -626,7 +626,9 @@ type
 
 
   { TACBrBanco }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrBanco = class(TComponent)
   private
     fACBrBoleto        : TACBrBoleto;
@@ -725,7 +727,9 @@ type
 
 
   { TACBrCedente }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCedente = class(TComponent)
   private
     fCodigoTransmissao: String;
@@ -1037,6 +1041,9 @@ type
   TACBrOcorrenciasRemessa =  Array of TACBrOcorrenciaRemessa;
 
   { TACBrBoleto }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
  TACBrBoleto = class( TACBrComponent )
   private
     fBanco: TACBrBanco;
@@ -1107,7 +1114,9 @@ type
  TACBrBoletoFCFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
  TACBrBoletoFCOnObterLogo = procedure( const PictureLogo : TPicture; const NumeroBanco: Integer ) of object ;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
  TACBrBoletoFCClass = class(TACBrComponent)
   private
     fDirLogo        : String;

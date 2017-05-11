@@ -39,12 +39,14 @@ unit ACBrNFSeDANFSeClass;
 interface
 
 uses
-  SysUtils, Classes,
+  SysUtils, Classes, ACBrBase,
   pnfsNFSe, pnfsConversao;
 
 type
-
- TACBrNFSeDANFSeClass = class( TComponent )
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
+ TACBrNFSeDANFSeClass = class( TACBrComponent )
   private
     function GetPathPDF: String;
     procedure SetPathPDF(const Value: String);

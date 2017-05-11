@@ -58,7 +58,9 @@ const
 type
 
   { TACBrSATExtratoFortesClass }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrSATExtratoFortesClass = class( TACBrSATExtratoClass )
   private
     fLarguraBobina: Integer;

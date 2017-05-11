@@ -245,7 +245,9 @@ type
   end;
 
   { TACBrPosPrinter }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrPosPrinter = class(TACBrComponent)
   private
     FColunasFonteNormal: Integer;

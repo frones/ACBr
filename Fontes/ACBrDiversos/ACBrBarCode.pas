@@ -54,6 +54,9 @@ uses
   AJBarcode ;
 
 type
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrBarCode = class ( TGraphicControl )
   private
 //  fsAbout: TACBrAboutInfo;

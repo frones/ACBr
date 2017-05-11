@@ -48,7 +48,7 @@ unit ACBrSEF2;
 
 interface
 
-uses SysUtils, Classes,
+uses SysUtils, Classes, ACBrBase,
      {$IFNDEF NOGUI}
       {$IFDEF FPC}
        LResources,
@@ -63,8 +63,10 @@ const
 
 type
   TACBrSEF2Arquivo = (aSEF, aEDOC);
-
-  TACBrSEF2 = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSEF2 = class(TACBrComponent)
   private
     fACBrTXT: TACBrTXTClass;
     fArquivo: ansistring;

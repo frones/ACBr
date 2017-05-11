@@ -93,6 +93,9 @@ type
         read GetObject write SetObject; default;
     end;
 
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}		
   TACBrIBGE = class( TACBrHTTP )
     private
       fCidades : TACBrIBGECidades ;

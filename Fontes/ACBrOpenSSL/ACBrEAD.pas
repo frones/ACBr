@@ -46,7 +46,7 @@ unit ACBrEAD;
 interface
 
 uses
-   Classes, SysUtils, strutils, ACBrConsts,
+   Classes, SysUtils, strutils, ACBrConsts, ACBrBase,
    ACBrUtil, {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
 
 const
@@ -83,8 +83,10 @@ type
   EACBrEADException = class(Exception);
 
   { TACBrEAD }
-
-  TACBrEAD = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrEAD = class(TACBrComponent)
   private
     fsOnGetChavePrivada: TACBrEADGetChave;
     fsOnGetChavePublica : TACBrEADGetChave ;

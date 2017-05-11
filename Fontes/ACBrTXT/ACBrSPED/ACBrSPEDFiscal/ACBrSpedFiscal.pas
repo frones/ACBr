@@ -47,7 +47,7 @@ unit ACBrSpedFiscal;
 interface
 
 uses
-  SysUtils, Math, Classes,
+  SysUtils, Math, Classes, ACBrBase,
 {$IFNDEF Framework}
   {$IFDEF FPC}
     LResources,
@@ -67,8 +67,10 @@ type
   /// ACBrSpedFiscal - Sitema Publico de Escrituração Digital Fiscal
 
   { TACBrSPEDFiscal }
-
-  TACBrSPEDFiscal = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSPEDFiscal = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FArquivo: String;

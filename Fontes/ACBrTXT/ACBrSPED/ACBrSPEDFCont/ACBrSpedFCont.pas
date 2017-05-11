@@ -41,7 +41,7 @@ unit ACBrSpedFCont;
 interface
 
 uses
-  SysUtils, Classes, DateUtils,
+  SysUtils, Classes, DateUtils, ACBrBase,
   {$IFDEF FPC}
     LResources,
   {$ENDIF}
@@ -56,8 +56,10 @@ type
   /// ACBrSpedFCont -  Controle Fiscal Contábil de Transição
 
   { TACBrSPEDFCont }
-
-  TACBrSPEDFCont = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSPEDFCont = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FOnError: TErrorEvent;

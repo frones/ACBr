@@ -103,7 +103,9 @@ type
     property Versao: String read FVersao write FVersao;
     property Caixa: String read FCaixa write FCaixa;
   end;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrBlocoX = class(TACBrDFe)
   private
     FPafECF: TACBrBlocoX_PafECF;

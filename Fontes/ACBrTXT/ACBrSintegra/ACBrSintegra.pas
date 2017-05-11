@@ -95,7 +95,7 @@ unit ACBrSintegra;
 
 interface
 
-uses Classes, SysUtils, Contnrs, ACBrConsts, StrUtils;
+uses Classes, SysUtils, Contnrs, ACBrConsts, ACBrBase, StrUtils;
 
 type
   TVersaoValidador = (vv523, vv524);
@@ -1443,8 +1443,10 @@ type
       read GetObject write SetObject; default;
   end;
 
-
-  TACBrSintegra = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSintegra = class(TACBrComponent)
   private
     FFileName: string;
     FRegistro10: TRegistro10;

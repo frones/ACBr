@@ -139,7 +139,9 @@ type
   end;
 
   { TACBrMTer }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrMTer = class(TACBrComponent)
   private
     fArqLog: AnsiString;

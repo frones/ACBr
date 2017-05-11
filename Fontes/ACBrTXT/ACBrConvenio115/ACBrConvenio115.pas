@@ -55,7 +55,7 @@ unit ACBrConvenio115;
 interface
 
 uses
-  SysUtils, Classes, Contnrs, ACBrConsts, StrUtils
+  SysUtils, Classes, Contnrs, ACBrConsts, StrUtils, ACBrBase
   {$IFDEF FPC}
    ,LResources
   {$ENDIF} ;
@@ -369,8 +369,10 @@ type
   end;
 
   TConvenio115TipoArquivo = (c115taMestre, c115taitem, c115taDestinatario);
-
-  TACBrConvenio115 = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrConvenio115 = class(TACBrComponent)
   private
     FSalvarEm: string;
     FMestre: TACBrConvenio115Mestres;

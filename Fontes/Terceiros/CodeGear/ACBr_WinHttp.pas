@@ -4,7 +4,7 @@ unit ACBr_WinHttp;
 interface
 
 uses
-  Windows;
+  Windows, Types;
 
 {$IF not DECLARED(PVOID)}
 type
@@ -39,7 +39,7 @@ type
 
 {$IFNDEF FPC}
   {$IFDEF CPU64}
-   PtrUInt = QWord;
+   PtrUInt = Int64{QWord};
   {$ELSE}
    PtrUInt = DWord;
   {$ENDIF}

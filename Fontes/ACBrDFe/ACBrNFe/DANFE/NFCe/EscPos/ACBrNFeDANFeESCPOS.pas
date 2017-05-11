@@ -62,7 +62,9 @@ uses
 
 type
   { TACBrNFeDANFeESCPOS }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFeESCPOS = class(TACBrNFeDANFEClass)
   private
     FPosPrinter : TACBrPosPrinter ;

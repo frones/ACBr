@@ -54,7 +54,9 @@ uses
 
 type
   EACBrGNREGuiaFR = class(Exception);
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrGNREGuiaFR = class(TACBrGNREGuiaClass)
   private
     FdmGuia        : TdmACBrGNREFR;

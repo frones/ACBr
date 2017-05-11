@@ -54,7 +54,9 @@ type
   TACBrECFVirtualSATQuandoEfetuarPagamento = procedure(Det: TMPCollectionItem) of object;
 
   { TACBrECFVirtualSAT }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrECFVirtualSAT = class(TACBrECFVirtualPrinter)
   private
     function GetACBrSAT: TACBrSAT;
@@ -88,7 +90,9 @@ type
   end;
 
   { TACBrECFVirtualSATClass }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrECFVirtualSATClass = class(TACBrECFVirtualPrinterClass)
   private
     fsACBrSAT: TACBrSAT;

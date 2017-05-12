@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 12/05/2017
+[-] Correção para hierarquia de blocos e registros
+		http://www.projetoacbr.com.br/forum/topic/36701-ecd-j800-e-j801/
+		Juliomar Marchetti
+		
 Data 05/04/2017
 [+] Adição de blocos.
 		http://www.projetoacbr.com.br/forum/topic/35178-sped-ecd-leiaute-5-bloco-k/?do=findComment&comment=236181

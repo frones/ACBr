@@ -56,6 +56,7 @@ type
     FRegistroJ005: TRegistroJ005List;  /// BLOCO J - Lista de RegistroJ005
     FRegistroJ800: TRegistroJ800List;  /// BLOCO J - Lista de RegistroJ800
     FRegistroJ801: TRegistroJ801List;  /// BLOCO J - Lista de RegistroJ801
+
     FRegistroJ900: TRegistroJ900;      /// BLOCO J - RegistroJ900
     FRegistroJ930: TRegistroJ930List;  /// BLOCO J - Lista de RegistroJ930
     FRegistroJ935: TRegistroJ935List;  /// BLOCO J - Lista de RegistroJ935
@@ -68,11 +69,18 @@ type
     FRegistroJ215Count: Integer;
 
     FBloco_0: TBloco_0;
+    FRegistroJ800Count: Integer;
+    FRegistroJ801Count: Integer;
+
     procedure WriteRegistroJ100(RegJ005: TRegistroJ005);
     procedure WriteRegistroJ150(RegJ005: TRegistroJ005);
     procedure WriteRegistroJ200(RegJ005: TRegistroJ005);
     procedure WriteRegistroJ210(RegJ005: TRegistroJ005);
     procedure WriteRegistroJ215(RegJ210: TRegistroJ210);
+    procedure WriteRegistroJ800(RegJ005: TRegistroJ005);
+    procedure WriteRegistroJ801(RegJ005: TRegistroJ005);
+
+
   public
     constructor Create; /// Create
     destructor Destroy; override; /// Destroy
@@ -80,8 +88,7 @@ type
 
     procedure WriteRegistroJ001;
     procedure WriteRegistroJ005;
-    procedure WriteRegistroJ800;
-    procedure WriteRegistroJ801;
+//    procedure WriteRegistroJ800;
     procedure WriteRegistroJ900;
     procedure WriteRegistroJ930;
     procedure WriteRegistroJ935;
@@ -92,7 +99,9 @@ type
     property RegistroJ001: TRegistroJ001     read fRegistroJ001 write fRegistroJ001;
     property RegistroJ005: TRegistroJ005List read fRegistroJ005 write fRegistroJ005;
     property RegistroJ800: TRegistroJ800List read fRegistroJ800 write fRegistroJ800;
+
     property RegistroJ801: TRegistroJ801List read fRegistroJ801 write fRegistroJ801;
+
     property RegistroJ900: TRegistroJ900     read fRegistroJ900 write fRegistroJ900;
     property RegistroJ930: TRegistroJ930List read fRegistroJ930 write fRegistroJ930;
     property RegistroJ935: TRegistroJ935List read fRegistroJ935 write fRegistroJ935;
@@ -102,6 +111,9 @@ type
     property RegistroJ200Count: Integer read FRegistroJ200Count write FRegistroJ200Count;
     property RegistroJ210Count: Integer read FRegistroJ210Count write FRegistroJ210Count;
     property RegistroJ215Count: Integer read FRegistroJ215Count write FRegistroJ215Count;
+    property RegistroJ800Count: Integer read FRegistroJ800Count write FRegistroJ800Count;
+    property RegistroJ801Count: Integer read FRegistroJ801Count write FRegistroJ801Count;
+
   end;
 
 implementation
@@ -120,6 +132,8 @@ begin
   FRegistroJ990 := TRegistroJ990.Create;
   FRegistroJ100Count := 0;
   FRegistroJ150Count := 0;
+  FRegistroJ800Count := 0;
+  FRegistroJ801Count := 0;
   FRegistroJ200Count := 0;
   FRegistroJ210Count := 0;
   FRegistroJ215Count := 0;
@@ -146,9 +160,19 @@ begin
   FRegistroJ800.Clear;
   FRegistroJ801.Clear;
   FRegistroJ930.Clear;
-  FRegistroJ935.Clear;  
+  FRegistroJ935.Clear;
+
+  FRegistroJ100Count := 0;
+  FRegistroJ150Count := 0;
+  FRegistroJ200Count := 0;
+  FRegistroJ210Count := 0;
+  FRegistroJ215Count := 0;
+  FRegistroJ800Count := 0;
+  FRegistroJ801Count := 0;
 
   FRegistroJ990.QTD_LIN_J := 0;
+
+
 end;
 
 procedure  TBloco_J.WriteRegistroJ001;
@@ -192,6 +216,8 @@ begin
         WriteRegistroJ150(FRegistroJ005.Items[intFor]);
         WriteRegistroJ200(FRegistroJ005.Items[intFor]);
         WriteRegistroJ210(FRegistroJ005.Items[intFor]);
+        WriteRegistroJ800(FRegistroJ005.Items[intFor]);
+        WriteRegistroJ801(FRegistroJ005.Items[intFor]);
 
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
@@ -258,31 +284,20 @@ begin
         with RegJ005.RegistroJ150.Items[intFor] do
         begin
            Check(((IND_VL = 'D') or (IND_VL = 'R') or (IND_VL = 'P') or (IND_VL = 'N')), '(J-J150) No Indicador da situação do valor, deve ser informado: D ou R ou P ou N!');
-           //Check(((IND_VL_ULT_DRE = 'D') or (IND_VL_ULT_DRE = 'R') or (IND_VL_ULT_DRE = 'P') or (IND_VL_ULT_DRE = 'N')), '(J-J150) No Indicador da situação do saldo valor inicial, deve ser informado: D ou R ou P ou N!');
-           // Layout 4 a partir da escrituração ano calendário 2015
-           if DT_INI >= EncodeDate(2015,01,01) then
-           begin
-             Add( LFill('J150') +
-                  LFill(COD_AGL) +
-                  LFill(NIVEL_AGL) +
-                  LFill(DESCR_COD_AGL) +
-                  LFill(VL_CTA, 19, 2) +
-                  LFill(IND_VL, 1) +
-                  LFill(VL_CTA_ULT_DRE, 19, 2) +
-                  LFill(IND_VL_ULT_DRE, 1)
-                  );
-           end
-           else
-           // Layout 1,2,3
-           begin
-             Add( LFill('J150') +
-                  LFill(COD_AGL) +
-                  LFill(NIVEL_AGL) +
-                  LFill(DESCR_COD_AGL) +
-                  LFill(VL_CTA, 19, 2) +
-                  LFill(IND_VL, 1)
-                  );
-           end;
+
+           Check(((IND_VL_ULT_DRE = 'D') or (IND_VL_ULT_DRE = 'R') or (IND_VL_ULT_DRE = 'P') or (IND_VL_ULT_DRE = 'N') or (IND_VL_ULT_DRE = '') ), '(J-J150) No Indicador da situação do saldo valor inicial, deve ser informado: D ou R ou P ou N!');
+
+           ///
+           Add( LFill('J150') +
+                LFill(COD_AGL) +
+                LFill(NIVEL_AGL) +
+                LFill(DESCR_COD_AGL) +
+                LFill(VL_CTA, 19, 2) +
+                LFill(IND_VL, 1) +
+                LFill(VL_CTA_ULT_DRE, 19, 2, True) +
+                LFill(IND_VL_ULT_DRE, 1, True)
+                );
+
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
@@ -376,6 +391,7 @@ begin
   end;
 end;
 
+{
 procedure TBloco_J.WriteRegistroJ800;
 var
 intFor: integer;
@@ -386,6 +402,29 @@ begin
      begin
         with FRegistroJ800.Items[intFor] do
         begin
+           ///
+           Add( LFill('J800') +
+                LFill(ARQ_RTF) +
+                LFill('J800FIM')
+                );
+        end;
+        FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
+     end;
+  end;
+end;
+}
+
+procedure TBloco_J.WriteRegistroJ800(RegJ005: TRegistroJ005);
+var
+intFor: integer;
+begin
+  if Assigned(RegJ005.RegistroJ800) then
+  begin
+     for intFor := 0 to RegJ005.RegistroJ800.Count - 1 do
+     begin
+        with RegJ005.RegistroJ800.Items[intFor] do
+        begin
+
            if DT_INI >= EncodeDate(2016,01,01) then
              Add( LFill('J800') +
                   LFill(TIPO_DOC) +
@@ -399,34 +438,49 @@ begin
                   LFill(ARQ_RTF) +
                   LFill('J800FIM')
                   );
+
+
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
+     FRegistroJ800Count := FRegistroJ800Count + RegJ005.RegistroJ800.Count;
   end;
 end;
 
-procedure TBloco_J.WriteRegistroJ801;
+procedure TBloco_J.WriteRegistroJ801(RegJ005: TRegistroJ005);
 var
 intFor: integer;
 begin
-  if Assigned(FRegistroJ801) then
+  if Assigned(RegJ005.RegistroJ801) then
   begin
-     for intFor := 0 to FRegistroJ801.Count - 1 do
+     for intFor := 0 to RegJ005.RegistroJ801.Count - 1 do
      begin
-        with FRegistroJ801.Items[intFor] do
+        with RegJ005.RegistroJ801.Items[intFor] do
         begin
-           Add( LFill('J801') +
-                LFill(TIPO_DOC) +
-                LFill(DESC_RTF) +
-                LFill(HASH_RTF) +
-                LFill(ARQ_RTF) +
-                LFill('J801FIM')
-                );
+
+           if DT_INI >= EncodeDate(2016,01,01) then
+             Add( LFill('J801') +
+                  LFill(TIPO_DOC) +
+                  LFill(DESC_RTF) +
+                  LFill(HASH_RTF) +
+                  LFill(ARQ_RTF) +
+                  LFill('J801FIM')
+                  )
+           else
+             Add( LFill('J801') +
+                  LFill(ARQ_RTF) +
+                  LFill('J801FIM')
+                  );
+
+
         end;
         FRegistroJ990.QTD_LIN_J := FRegistroJ990.QTD_LIN_J + 1;
      end;
+     FRegistroJ801Count := FRegistroJ801Count + RegJ005.RegistroJ801.Count;
   end;
 end;
+
+
 
 procedure TBloco_J.WriteRegistroJ900;
 var strLinha: String;
@@ -461,7 +515,7 @@ begin
      begin
         with FRegistroJ930.Items[intFor] do
         begin
-         /// Layout 5 a partir da escrituração ano calendário 2017
+         /// Layout 2 a partir da escrituração ano calendário 2013
          if DT_INI >= EncodeDate(2016,01,01) then
          begin
              Add( LFill('J930') +

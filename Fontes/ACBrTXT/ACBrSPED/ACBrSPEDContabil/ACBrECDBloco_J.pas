@@ -63,6 +63,8 @@ type
   TRegistroJ150List = class;
   TRegistroJ200List = class;
   TRegistroJ210List = class;
+  TRegistroJ800List = class;
+  TRegistroJ801List = class;
   TRegistroJ215List = class;
 
   /// Rregistro J005 – DEMONSTRAÇÕES CONTÁBEIS
@@ -77,7 +79,10 @@ type
     FRegistroJ100: TRegistroJ100List;  /// BLOCO J - Lista de RegistroJ100 (FILHO)
     FRegistroJ150: TRegistroJ150List;  /// BLOCO J - Lista de RegistroJ150 (FILHO)
     FRegistroJ200: TRegistroJ200List;  /// BLOCO J - Lista de RegistroJ200 (FILHO)
-    FRegistroJ210: TRegistroJ210List;  /// BLOCO J - Lista de RegistroJ210 (FILHO)
+    FRegistroJ210: TRegistroJ210List;
+    FRegistroJ800: TRegistroJ800List;
+    FRegistroJ801: TRegistroJ801List;
+
   public
     constructor Create; virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -90,6 +95,9 @@ type
     property RegistroJ150: TRegistroJ150List read FRegistroJ150 write FRegistroJ150;
     property RegistroJ200: TRegistroJ200List read FRegistroJ200 write FRegistroJ200;
     property RegistroJ210: TRegistroJ210List read FRegistroJ210 write FRegistroJ210;
+    property RegistroJ800: TRegistroJ800List read FRegistroJ800 write FRegistroJ800;
+    property RegistroJ801: TRegistroJ801List read FRegistroJ801 write FRegistroJ801;
+
   end;
 
   /// Registro J005 - Lista
@@ -258,8 +266,6 @@ type
   end;
 
 
-  /// Rregistro J800 – OUTRAS INFORMAÇÕES
-
   TRegistroJ800 = class
   private
     fTIPO_DOC: String; // Tipo de documento
@@ -310,6 +316,29 @@ type
     property Items[Index: Integer]: TRegistroJ801 read GetItem write SetItem;
   end;
 
+(*
+  /// Rregistro J800 – OUTRAS INFORMAÇÕES
+
+  TRegistroJ800 = class
+  private
+    fARQ_RTF: String;  /// Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
+  public
+    property ARQ_RTF: String read fARQ_RTF write fARQ_RTF;
+  end;
+
+  /// Registro J800 - Lista
+
+  TRegistroJ800List = class(TObjectList)
+  private
+    function GetItem(Index: Integer): TRegistroJ800;
+    procedure SetItem(Index: Integer; const Value: TRegistroJ800);
+  public
+    function New: TRegistroJ800;
+    property Items[Index: Integer]: TRegistroJ800 read GetItem write SetItem;
+  end;
+
+  *)
+
   /// Rregistro J900 – TERMO DE ENCERRAMENTO
 
   TRegistroJ900 = class
@@ -328,6 +357,7 @@ type
     property DT_INI_ESCR: TDateTime read fDT_INI_ESCR write fDT_INI_ESCR;
     property DT_FIN_ESCR: TDateTime read fDT_FIN_ESCR write fDT_FIN_ESCR;
   end;
+
 
   /// Rregistro J930 – IDENTIFICAÇÃO DOS SIGNATÁRIOS DA ESCRITURAÇÃO
 
@@ -606,7 +636,6 @@ begin
   Put(Index, Value);
 end;
 
-{ TRegistroJ801List }
 
 function TRegistroJ801List.GetItem(Index: Integer): TRegistroJ801;
 begin
@@ -651,6 +680,9 @@ begin
    FRegistroJ150 := TRegistroJ150List.Create;
    FRegistroJ200 := TRegistroJ200List.Create;
    FRegistroJ210 := TRegistroJ210List.Create;
+   FRegistroJ800 := TRegistroJ800List.Create;
+   FRegistroJ801 := TRegistroJ801List.Create;
+
 end;
 
 destructor TRegistroJ005.Destroy;
@@ -659,6 +691,9 @@ begin
   FRegistroJ150.Free;
   FRegistroJ200.Free;
   FRegistroJ210.Free;
+  FRegistroJ800.Free;
+  FRegistroJ801.Free;
+
   inherited;
 end;
 

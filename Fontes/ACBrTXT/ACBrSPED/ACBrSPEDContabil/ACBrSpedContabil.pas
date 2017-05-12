@@ -139,8 +139,8 @@ type
     /// BLOCO J
     procedure WriteRegistroJ001;
     procedure WriteRegistroJ005;
-    procedure WriteRegistroJ800;
-    procedure WriteRegistroJ801;
+//  procedure WriteRegistroJ800;
+//  procedure WriteRegistroJ801;
     procedure WriteRegistroJ900;
     procedure WriteRegistroJ930;
   	procedure WriteRegistroJ935;
@@ -825,6 +825,7 @@ begin
    end;
 end;
 
+{
 procedure TACBrSPEDContabil.WriteRegistroJ800;
 begin
    if Bloco_J.RegistroJ800.Count > 0 then
@@ -850,6 +851,7 @@ begin
    end;
    Bloco_J.WriteRegistroJ801;
 end;
+}
 
 procedure TACBrSPEDContabil.WriteRegistroJ900;
 begin
@@ -1073,8 +1075,8 @@ begin
 
   WriteRegistroJ001;
   WriteRegistroJ005;
-  WriteRegistroJ800;
-  WriteRegistroJ801;
+//  WriteRegistroJ800;
+//  WriteRegistroJ801;
   WriteRegistroJ900;
   WriteRegistroJ930;
   WriteRegistroJ935;

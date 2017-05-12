@@ -330,6 +330,9 @@ type
     toRemessaAlterarDadosEmissaoBloqueto,
     toRemessaAlterarProtestoDevolucao,
     toRemessaAlterarDevolucaoProtesto,
+    toRemessaNegativacaoSerasa,
+    toRemessaExcluirNegativacaoSerasa,
+
 
     {Ocorrências para arquivo retorno}
     toRetornoAbatimentoCancelado,
@@ -725,6 +728,18 @@ type
   {Definir como o boleto vai ser gerado/enviado pelo Cedente ou pelo Banco }
   TACBrCarteiraEnvio = (tceCedente, tceBanco);
 
+  {Definir codigo Desconto }
+  TACBrCodigoDesconto    = (cdSemDesconto, cdValorFixo);
+
+  {Definir codigo Juros }
+  TACBrCodigoJuros       = (cjValorDia, cjTaxaMensal, cjIsento);
+
+  {Definir codigo Multa }
+  TACBrCodigoMulta       = (cmValorFixo, cmPercentual);
+
+  {Definir se o titulo será protestado, não protestado ou negativado }
+  TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar);
+
 
   { TACBrCedente }
 	{$IFDEF RTL230_UP}
@@ -939,6 +954,11 @@ type
     fCodigoLiquidacao     : String;
     fCodigoLiquidacaoDescricao: String;
     fCarteiraEnvio        : TACBrCarteiraEnvio;
+    fCodigoNegativacao    : TACBrCodigoNegativacao;
+    fCodigoDesconto       : TACBrCodigoDesconto;
+    fCodigoMoraJuros      : TACBrCodigoJuros;
+    fCodigoMulta          : TACBrCodigoMulta;
+
     fCodigoGeracao        : String;
     fValorPago            : Currency;
     fCaracTitulo          :TACBrCaracTitulo;
@@ -965,6 +985,11 @@ type
      property UsoBanco          : String      read fUsoBanco          write fUsoBanco;
      property Carteira          : String      read fCarteira          write SetCarteira;
      property CarteiraEnvio     : TACBrCarteiraEnvio read fCarteiraEnvio write fCarteiraEnvio default tceCedente;
+     property CodigoDesconto    : TACBrCodigoDesconto    read fCodigoDesconto    write fCodigoDesconto;
+     property CodigoMoraJuros   : TACBrCodigoJuros       read fCodigoMoraJuros   write fCodigoMoraJuros;
+     property CodigoMulta       : TACBrCodigoMulta       read fCodigoMulta       write fCodigoMulta;
+     property CodigoNegativacao : TACBrCodigoNegativacao read fCodigoNegativacao write fCodigoNegativacao default cnNaoProtestar;
+     
      property EspecieMod        : String      read fEspecieMod        write fEspecieMod;
      property ValorDocumento    : Currency    read fValorDocumento    write fValorDocumento;
      property Mensagem          : TStrings    read fMensagem          write fMensagem;

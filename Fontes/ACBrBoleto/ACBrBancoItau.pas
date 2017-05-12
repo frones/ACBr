@@ -244,7 +244,7 @@ end;
 function TACBrBancoItau.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String;
 var
    ATipoInscricao, ATipoOcorrencia           :String;
-   ADataMoraJuros, ADataDesconto,ATipoAceite :String;
+   ADataMoraJuros, ADataDesconto,ATipoAceite,  ACodigoNegativacao :String;
    ATipoInscricaoAvalista: Char;
 begin
    ATipoInscricaoAvalista := ' ';
@@ -269,6 +269,19 @@ begin
         atSim :  ATipoAceite := 'A';
         atNao :  ATipoAceite := 'N';
       end;
+
+      { Pegando Tipo de Protesto/Negativação }
+      case CodigoNegativacao of
+        cnNenhum           :  ACodigoNegativacao := '0';
+        cnProtestarCorrido :  ACodigoNegativacao := '1';
+        cnProtestarUteis   :  ACodigoNegativacao := '2';
+        cnNaoProtestar     :  ACodigoNegativacao := '3';
+        cnNegativar        :  ACodigoNegativacao := '7';
+        cnNaoNegativar     :  ACodigoNegativacao := '8';
+       else
+        ACodigoNegativacao := '0';
+      end;
+
 
       {Mora Juros}
       if (ValorMoraJuros > 0) then
@@ -300,18 +313,18 @@ begin
                ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + //16 a 17 - Código de movimento
                '0'                                                        + // 18
-               PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia),4,'0')         + //19 a 22 - Agência mantenedora da conta
+               PadLeft(OnlyNumber(ACBrBoleto.Cedente.Agencia),4,'0')      + //19 a 22 - Agência mantenedora da conta
                ' '                                                        + // 23
                '0000000'                                                  + //24 a 30 - Complemento de Registro
-               PadLeft(OnlyNumber(ACBrBoleto.Cedente.Conta),5,'0')           + //31 a 35 - Número da Conta Corrente
+               PadLeft(OnlyNumber(ACBrBoleto.Cedente.Conta),5,'0')        + //31 a 35 - Número da Conta Corrente
                ' '                                                        + // 36
                ACBrBoleto.Cedente.ContaDigito                             + //37 - Dígito verificador da agência / conta
                Carteira                                                   + // 38 a 40 - Carteira
-               PadLeft(NossoNumero, 8, '0')                                  + // 41 a 48 - Nosso número - identificação do título no banco
+               PadLeft(NossoNumero, 8, '0')                               + // 41 a 48 - Nosso número - identificação do título no banco
                CalcularDigitoVerificador(ACBrTitulo)                      + // 49 - Dígito verificador da agência / conta preencher somente em cobrança sem registro
                space(8)                                                   + // 50 a 57 - Brancos
-               PadRight('', 5, '0')                                           + // 58 a 62 - Complemento
-               PadRight(NumeroDocumento, 10, ' ')                             + // 63 a 72 - Número que identifica o título na empresa [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
+               PadRight('', 5, '0')                                       + // 58 a 62 - Complemento
+               PadRight(NumeroDocumento, 10, ' ')                         + // 63 a 72 - Número que identifica o título na empresa [ Alterado conforme instruções da CSO Brasília ] {27-07-09}
 
                space(5)                                                   + // 73 a 77 - Brancos
                FormatDateTime('ddmmyyyy', Vencimento)                     + // 78 a 85 - Data de vencimento do título
@@ -324,17 +337,15 @@ begin
                '0'                                                        + // 118 - Zeros
                ADataMoraJuros                                             + //119 a 126 - Data a partir da qual serão cobrados juros
                IfThen(ValorMoraJuros > 0, IntToStrZero( round(ValorMoraJuros * 100), 15),
-                PadLeft('', 15, '0'))                                        + //127 a 141 - Valor de juros de mora por dia
+                PadLeft('', 15, '0'))                                     + //127 a 141 - Valor de juros de mora por dia
                '0'                                                        + // 142 - Zeros
-               ADataDesconto                                             + // 143 a 150 - Data limite para desconto
+               ADataDesconto                                              + // 143 a 150 - Data limite para desconto
                IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),
-               PadLeft('', 15, '0'))                                         + //151 a 165 - Valor do desconto por dia
+               PadLeft('', 15, '0'))                                      + //151 a 165 - Valor do desconto por dia
                IntToStrZero( round(ValorIOF * 100), 15)                   + //166 a 180 - Valor do IOF a ser recolhido
                IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
-               PadRight(SeuNumero, 25, ' ')                                   + //196 a 220 - Identificação do título na empresa
-               IfThen((DataProtesto <> null) and (DataProtesto > Vencimento), '1', '3') + //221 - Código de protesto: Protestar em XX dias corridos
-               IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
-                    PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00') + //222 a 223 - Prazo para protesto (em dias corridos)
+               PadRight(SeuNumero, 25, ' ')                               + //196 a 220 - Identificação do título na empresa
+               ACodigoNegativacao                                         + //221 - Código de protesto: Protestar em XX dias corridos
                '0'                                                        + // 224 - Código de Baixa
                '00'                                                       + // 225 A 226 - Dias para baixa
                '0000000000000 ';

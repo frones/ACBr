@@ -2014,7 +2014,9 @@ begin
       end;
     end;
 
-    rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev);
+    if ( dPrev > 0 ) then
+      rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev);
+
   end;
 end;
 

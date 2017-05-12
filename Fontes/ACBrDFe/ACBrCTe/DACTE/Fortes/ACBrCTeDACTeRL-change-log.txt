@@ -46,6 +46,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2017
+[-] Correção para evitar erros de data
+		http://www.projetoacbr.com.br/forum/topic/34759-impressao-de-cte-com-dados-do-conj-transportador-nao-xml/?do=findComment&comment=240127
+		por : Juliomar Marchetti
+		
 12/01/2017
 [-] necessário abrir e salvar no lazarus os lfm do dacte pois estavam com acentuação erradas
 		por: Juliomar Marchetti

@@ -937,7 +937,6 @@ begin
   cdsPercurso.EmptyDataSet;
   cdsModalFerrov.EmptyDataSet;
   cdsModalFerrovVagoes.EmptyDataSet;
-  cdsEventos.EmptyDataSet;
   cdsTermCarrega.EmptyDataSet;
   cdsTermDescarrega.EmptyDataSet;
   cdsEmbarcaComboio.EmptyDataSet;

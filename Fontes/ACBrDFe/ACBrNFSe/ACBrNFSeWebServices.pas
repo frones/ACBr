@@ -988,7 +988,7 @@ var
   FRetNFSe, PathArq, NomeArq, xCNPJ: String;
   i, l, ii: Integer;
   xData: TDateTime;
-  NovoRetorno: Boolean;
+  NovoRetorno, CondicaoNovoRetorno: Boolean;
 begin
   FRetornoNFSe := TRetornoNFSe.Create;
 
@@ -1031,7 +1031,7 @@ begin
       end;
       // Se o RPS na lista de NFS-e consultado está na lista de FNotasFiscais, então atualiza os dados da mesma. A não existencia, implica em adcionar novo ponteiro em FNotasFiscais
       // foi alterado para testar o Numero, serie e tipo, pois o numero pode voltar ao terminar a seriação.
-
+      {
       if ((not (FProvedor in [proNFSeBrasil, proEL])) and
          ((StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0)) and
            (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Serie = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Serie) and
@@ -1039,6 +1039,19 @@ begin
           (FNotasFiscais.Items[l].NFSe.InfID.ID = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.InfID.ID)) or
          ((FProvedor in [proNFSeBrasil, proEL]) and
           (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))) then
+      }
+
+      if FProvedor in [proNFSeBrasil, proEL] then
+        // Se o provedor for NFSeBrasil ou EL compara apenas o numero do RPS
+        CondicaoNovoRetorno := (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0))
+      else
+        // caso contrario compara se já esta adicionado comparando pelo número, série e (tipo ou InfId.ID)
+        CondicaoNovoRetorno := (StrToInt64Def(FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Numero, 0) = StrToInt64Def(FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Numero, 0)) and
+              (FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Serie = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Serie) and
+              ((FNotasFiscais.Items[l].NFSe.IdentificacaoRps.Tipo = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.IdentificacaoRps.Tipo) or
+              (FNotasFiscais.Items[l].NFSe.InfID.ID = FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.InfID.ID));
+
+      if CondicaoNovoRetorno then
       begin
         NovoRetorno := False;
         ii := l;
@@ -1262,7 +1275,7 @@ begin
 
       proSP:        EnviarLoteRps := 'PedidoEnvioLoteRPS';
 
-      proTinus:     EnviarLoteRps := 'Arg';
+//      proTinus:     EnviarLoteRps := 'Arg';
     else
       EnviarLoteRps := 'EnviarLoteRps' + TipoEnvio + 'Envio';
     end;
@@ -1718,7 +1731,7 @@ begin
     LayNfseFecharSessao: FTagI := '';
   end;
 
-  // Inicializa a TagF
+  // Inicializa a TagI
   case FPLayout of
     LayNfseRecepcaoLote:
        begin
@@ -2047,7 +2060,7 @@ begin
 
       proSP:        FTagGrupo := 'PedidoEnvioLoteRPS';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -2814,7 +2827,7 @@ begin
 
       proSP:        FTagGrupo := 'p1:PedidoInformacoesLote';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
     end;
@@ -3071,7 +3084,7 @@ begin
 
       proSP:        FTagGrupo := 'p1:PedidoConsultaLote';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarLoteRpsEnvio';
     end;
@@ -3216,7 +3229,7 @@ begin
 
       proSP:        FTagGrupo := 'p1:PedidoConsultaNFe';
 
-      proTinus:     FTagGrupo := 'Arg';
+//      proTinus:     FTagGrupo := 'Arg';
     else
       FTagGrupo := 'ConsultarNfseRpsEnvio';
     end;
@@ -3598,7 +3611,7 @@ begin
 
       proSP:          FTagGrupo := 'PedidoCancelamentoNFe';
 
-      proTinus:       FTagGrupo := 'Arg';
+//      proTinus:       FTagGrupo := 'Arg';
     else
       FTagGrupo := 'CancelarNfseEnvio';
     end;
@@ -3954,15 +3967,9 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
-    FTagGrupo := 'SubstituirNfseEnvio';
+    FTagGrupo := FPrefixo3 + 'Pedido';
 
-    if FProvedor <> proGinfes then
-      FTagGrupo := FPrefixo3 + FTagGrupo;
-
-    FdocElemento := FPrefixo3 + 'Pedido></' +
-                    FPrefixo3 + 'SubstituicaoNfse></' + FTagGrupo;
-
-    FinfElemento := 'InfPedidoCancelamento';
+    FinfElemento := 'infPedidoCancelamento';
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
@@ -3976,24 +3983,24 @@ begin
 
     case FProvedor of
       proEquiplano,
-      proPublica: FURI:= '';
+      proPublica: FURISig:= '';
 
-      proDigifred:  FURI := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
+      proDigifred:  FURISig := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
 
-      proSaatri: FURI := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+      proSaatri: FURISig := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
 
       proIssIntel,
       proISSNet: begin
-                   FURI := '';
+                   FURISig := '';
                    FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                  end;
 
-      proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                         IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
+      proTecnos: FURISig := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                            IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
 
-    else  FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
-                  FPConfiguracoesNFSe.Geral.Emitente.InscMun +
-                  TNFSeSubstituirNfse(Self).FNumeroNFSe;
+    else  FURISig := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+                      FPConfiguracoesNFSe.Geral.Emitente.InscMun +
+                      TNFSeSubstituirNfse(Self).FNumeroNFSe;
     end;
 
     InicializarTagITagF;
@@ -4046,26 +4053,19 @@ begin
 
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) and (FPDadosMsg <> '') then
+    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
-  FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
-                '<' + FPrefixo3 + 'SubstituicaoNfse>' + 
-                 SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
-                 FvNotas  + FTagF;
-
-  if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
-    FNotasFiscais.ValidarLote(FPDadosMsg,
-                              FPConfiguracoes.Arquivos.PathSchemas +
-                              FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir);
-
+//  FPDadosMsg := StringReplace(FPDadosMsg, '<' + ENCODING_UTF8 + '>', '', [rfReplaceAll]);
+//  if FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingDados then
+//    FPDadosMsg := '<' + ENCODING_UTF8 + '>' + FPDadosMsg;
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir;
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Substituir NFSe] não foi disponibilizada pelo provedor: ' +
-                           FPConfiguracoesNFSe.Geral.xProvedor));
+     FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
 function TNFSeSubstituirNFSe.TratarResposta: Boolean;

@@ -232,7 +232,7 @@ begin
   GerarEmit;
   GerarInfModal;
   GerarInfDoc;
-  if VersaoDF = ve300 then
+  if VersaoDF >= ve300 then
     GerarInfSeg;
   GerarTot;
   GerarLacres;
@@ -253,7 +253,7 @@ begin
   // tpTransp não deve ser gerada no XML
   // se tpEmit = teTranspCargaPropria e modal = moRodoviario e
   // veículo de tração for de propriedade do emitente
-  if (VersaoDF = ve300) and
+  if (VersaoDF >= ve300) and
      (Length(MDFe.Rodo.veicTracao.Prop.CNPJCPF) > 11) and
      (MDFe.Ide.tpTransp <> ttNenhum) and
      not ( (MDFe.Ide.tpEmit = teTranspCargaPropria) and
@@ -664,15 +664,21 @@ begin
   if VersaoDF = ve100 then
     Gerador.wCampo(tcStr, '#02', 'CNPJAgeNav', 14, 14, 1, MDFe.aquav.CNPJAgeNav, DSC_CNPJAGENAV);
 
-  Gerador.wCampo(tcStr, '#03', 'irin      ', 01, 10, 1, MDFe.aquav.irin, DSC_IRIN);
+  if VersaoDF >= ve300 then
+     Gerador.wCampo(tcStr, '#03', 'irin', 01, 10, 1, MDFe.aquav.irin, DSC_IRIN);
+
   Gerador.wCampo(tcStr, '#04', 'tpEmb     ', 02, 02, 1, MDFe.aquav.tpEmb, DSC_TPEMB);
   Gerador.wCampo(tcStr, '#05', 'cEmbar    ', 01, 10, 1, MDFe.aquav.cEmbar, DSC_CEMBAR);
   Gerador.wCampo(tcStr, '#06', 'xEmbar    ', 01, 60, 1, MDFe.aquav.xEmbar, DSC_XEMBAR);
   Gerador.wCampo(tcStr, '#07', 'nViag     ', 01, 10, 1, MDFe.aquav.nViagem, DSC_NVIAG);
   Gerador.wCampo(tcStr, '#08', 'cPrtEmb   ', 01, 05, 1, MDFe.aquav.cPrtEmb, DSC_CPRTEMB);
   Gerador.wCampo(tcStr, '#09', 'cPrtDest  ', 01, 05, 1, MDFe.aquav.cPrtDest, DSC_CPRTDEST);
-  Gerador.wCampo(tcStr, '#10', 'prtTrans  ', 01, 60, 0, MDFe.aquav.prtTrans, DSC_PRTTRANS);
-  Gerador.wCampo(tcStr, '#11', 'tpNav     ', 01, 01, 0, TpNavegacaoToStr(MDFe.aquav.tpNav), DSC_TPNAV);
+
+  if VersaoDF >= ve300 then
+  begin
+    Gerador.wCampo(tcStr, '#10', 'prtTrans  ', 01, 60, 0, MDFe.aquav.prtTrans, DSC_PRTTRANS);
+    Gerador.wCampo(tcStr, '#11', 'tpNav     ', 01, 01, 0, TpNavegacaoToStr(MDFe.aquav.tpNav), DSC_TPNAV);
+  end;
 
   for i := 0 to MDFe.aquav.infTermCarreg.Count - 1 do
   begin
@@ -698,7 +704,10 @@ begin
   begin
     Gerador.wGrupo('infEmbComb', '#16');
     Gerador.wCampo(tcStr, '#17', 'cEmbComb', 01, 10, 1, MDFe.aquav.infEmbComb[i].cEmbComb, DSC_CEMBCOMB);
-    Gerador.wCampo(tcStr, '#18', 'xBalsa', 01, 60, 1, MDFe.aquav.infEmbComb[i].xBalsa, DSC_XBALSA);
+
+    if VersaoDF >= ve300 then
+      Gerador.wCampo(tcStr, '#18', 'xBalsa', 01, 60, 1, MDFe.aquav.infEmbComb[i].xBalsa, DSC_XBALSA);
+
     Gerador.wGrupo('/infEmbComb');
   end;
   if MDFe.aquav.infEmbComb.Count > 30 then
@@ -714,16 +723,18 @@ begin
   if MDFe.aquav.infUnidCargaVazia.Count > 999 then
    Gerador.wAlerta('#19', 'infUnidCargaVazia', '', ERR_MSG_MAIOR_MAXIMO + '999');
 
-  for i := 0 to MDFe.aquav.infUnidTranspVazia.Count - 1 do
+  if VersaoDF >= ve300 then
   begin
-    Gerador.wGrupo('infUnidTranspVazia', '#022');
-    Gerador.wCampo(tcStr, '#023', 'idUnidTranspVazia', 01, 20, 1, MDFe.aquav.infUnidTranspVazia[i].idUnidTranspVazia, DSC_IDUNIDTRANSP);
-    Gerador.wCampo(tcStr, '#024', 'tpUnidTranspVazia', 01, 01, 1, UnidTranspToStr(MDFe.aquav.infUnidTranspVazia[i].tpUnidTranspVazia), DSC_TPUNIDTRANSP);
-    Gerador.wGrupo('/infUnidTranspVazia');
+    for i := 0 to MDFe.aquav.infUnidTranspVazia.Count - 1 do
+    begin
+      Gerador.wGrupo('infUnidTranspVazia', '#022');
+      Gerador.wCampo(tcStr, '#023', 'idUnidTranspVazia', 01, 20, 1, MDFe.aquav.infUnidTranspVazia[i].idUnidTranspVazia, DSC_IDUNIDTRANSP);
+      Gerador.wCampo(tcStr, '#024', 'tpUnidTranspVazia', 01, 01, 1, UnidTranspToStr(MDFe.aquav.infUnidTranspVazia[i].tpUnidTranspVazia), DSC_TPUNIDTRANSP);
+      Gerador.wGrupo('/infUnidTranspVazia');
+    end;
+    if MDFe.aquav.infUnidTranspVazia.Count > 999 then
+     Gerador.wAlerta('#22', 'infUnidTranspVazia', '', ERR_MSG_MAIOR_MAXIMO + '999');
   end;
-  if MDFe.aquav.infUnidTranspVazia.Count > 999 then
-   Gerador.wAlerta('#22', 'infUnidTranspVazia', '', ERR_MSG_MAIOR_MAXIMO + '999');
-
   Gerador.wGrupo('/aquav');
 end;
 
@@ -790,7 +801,7 @@ begin
            Gerador.wAlerta('#049', 'chCTe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#050', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].SegCodBarra, DSC_SEGCODBARRA);
 
-           if VersaoDF = ve300 then
+           if VersaoDF >= ve300 then
              Gerador.wCampo(tcStr, '#050', 'indReentrega', 1, 1, 0, MDFe.infDoc.infMunDescarga[i].infCTe[j].indReentrega, DSC_INDREENTREGA);
 
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infCTe[j].infUnidTransp.Count - 1 do
@@ -827,7 +838,7 @@ begin
              Gerador.wGrupo('/infUnidTransp');
            end;
 
-           if VersaoDF = ve300 then
+           if VersaoDF >= ve300 then
            begin
              for k := 0 to MDFe.infDoc.infMunDescarga[i].infCTe[j].peri.Count - 1 do
              begin
@@ -913,7 +924,7 @@ begin
              Gerador.wAlerta('#058', 'chNFe', DSC_REFNFE, ERR_MSG_INVALIDO);
            Gerador.wCampo(tcStr, '#059', 'SegCodBarra', 44, 44, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].SegCodBarra, DSC_SEGCODBARRA);
 
-           if VersaoDF = ve300 then
+           if VersaoDF >= ve300 then
              Gerador.wCampo(tcStr, '#050', 'indReentrega', 1, 1, 0, MDFe.infDoc.infMunDescarga[i].infNFe[j].indReentrega, DSC_INDREENTREGA);
 
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infNFe[j].infUnidTransp.Count - 1 do
@@ -950,7 +961,7 @@ begin
              Gerador.wGrupo('/infUnidTransp');
            end;
 
-           if VersaoDF = ve300 then
+           if VersaoDF >= ve300 then
            begin
              for k := 0 to MDFe.infDoc.infMunDescarga[i].infNFe[j].peri.Count - 1 do
              begin
@@ -1034,7 +1045,7 @@ begin
           if not ValidarChave(MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].chMDFe) then
            Gerador.wAlerta('#058', 'chMDFe', DSC_REFNFE, ERR_MSG_INVALIDO);
 
-         if VersaoDF = ve300 then
+         if VersaoDF >= ve300 then
            Gerador.wCampo(tcStr, '#050', 'indReentrega', 1, 1, 0, MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].indReentrega, DSC_INDREENTREGA);
 
          for k := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].infUnidTransp.Count - 1 do
@@ -1071,7 +1082,7 @@ begin
            Gerador.wGrupo('/infUnidTransp');
          end;
 
-         if VersaoDF = ve300 then
+         if VersaoDF >= ve300 then
          begin
            for k := 0 to MDFe.infDoc.infMunDescarga[i].infMDFeTransp[j].peri.Count - 1 do
            begin

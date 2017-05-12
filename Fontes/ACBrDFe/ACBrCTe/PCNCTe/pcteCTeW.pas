@@ -744,16 +744,17 @@ procedure TCTeW.GerarEmit;
 begin
   Gerador.wGrupo('emit', '#097');
   Gerador.wCampoCNPJ('#098', CTe.Emit.CNPJ, CODIGO_BRASIL, True);
-  Gerador.wCampo(tcStr, '#099', 'IE    ', 02, 14, 1, OnlyNumber(CTe.Emit.IE), DSC_IE);
+  Gerador.wCampo(tcStr, '#099', 'IE', 02, 14, 1, OnlyNumber(CTe.Emit.IE), DSC_IE);
+
+  if (FOpcoes.ValidarInscricoes) then
+    if not ValidarIE(CTe.Emit.IE, CTe.Emit.enderEmit.UF) then
+      Gerador.wAlerta('#099', 'IE', DSC_IE, ERR_MSG_INVALIDO);
 
   if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 57) then
-    Gerador.wCampo(tcStr, '#100', 'IEST  ', 02, 14, 1, OnlyNumber(CTe.Emit.IEST), DSC_IEST);
+    Gerador.wCampo(tcStr, '#100', 'IEST', 02, 14, 0, OnlyNumber(CTe.Emit.IEST), DSC_IEST);
 
-  if (FOpcoes.ValidarInscricoes)
-   then if not ValidarIE(CTe.Emit.IE, CTe.Emit.enderEmit.UF) then
-         Gerador.wAlerta('#099', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#100', 'xNome ', 02, 60, 1, CTe.Emit.xNome, DSC_XNOME);
-  Gerador.wCampo(tcStr, '#101', 'xFant ', 02, 60, 0, CTe.Emit.xFant, DSC_XFANT);
+  Gerador.wCampo(tcStr, '#101', 'xNome', 02, 60, 1, CTe.Emit.xNome, DSC_XNOME);
+  Gerador.wCampo(tcStr, '#102', 'xFant', 02, 60, 0, CTe.Emit.xFant, DSC_XFANT);
 
   GerarEnderEmit;
   Gerador.wGrupo('/emit');

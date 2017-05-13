@@ -1535,10 +1535,10 @@ begin
   begin
     Gerador.wGrupo('infDocRef', '#136');
     Gerador.wCampo(tcEsp, '#137', 'nDoc    ', 01, 20, 1, OnlyNumber(CTe.infCTeNorm.infDocRef.Items[i].nDoc), DSC_NDOC);
-    Gerador.wCampo(tcStr, '#138', 'serie   ', 01, 03, 1, CTe.infCTeNorm.infDocRef.Items[i].serie, DSC_SERIE);
-    Gerador.wCampo(tcStr, '#139', 'subserie', 01, 03, 1, CTe.infCTeNorm.infDocRef.Items[i].subserie, DSC_SERIE);
+    Gerador.wCampo(tcStr, '#138', 'serie   ', 01, 03, 0, CTe.infCTeNorm.infDocRef.Items[i].serie, DSC_SERIE);
+    Gerador.wCampo(tcStr, '#139', 'subserie', 01, 03, 0, CTe.infCTeNorm.infDocRef.Items[i].subserie, DSC_SERIE);
     Gerador.wCampo(tcDat, '#140', 'dEmi    ', 10, 10, 1, CTe.infCTeNorm.infDocRef.Items[i].dEmi, DSC_DEMI);
-    Gerador.wCampo(tcDe2, '#141', 'vDoc    ', 01, 15, 1, CTe.infCTeNorm.infDocRef.Items[i].vDoc, DSC_VNF);
+    Gerador.wCampo(tcDe2, '#141', 'vDoc    ', 01, 15, 0, CTe.infCTeNorm.infDocRef.Items[i].vDoc, DSC_VNF);
     Gerador.wGrupo('/infDocRef');
   end;
 
@@ -2084,43 +2084,46 @@ begin
   else
     Gerador.wCampo(tcStr, '#03', 'NroRegEstadual', 25, 25, 1, CTe.infCTeNorm.rodoOS.NroRegEstadual, DSC_NROREGESTADUAL);
 
-  Gerador.wGrupo('veic', '#04');
-  Gerador.wCampo(tcStr, '#05', 'placa  ', 01, 07, 1, CTe.infCTeNorm.rodoOS.veic.placa, DSC_PLACA);
-  Gerador.wCampo(tcStr, '#06', 'RENAVAM', 09, 11, 1, CTe.infCTeNorm.rodoOS.veic.RENAVAM, DSC_RENAVAM);
-
-  if (trim(CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF) <> '') or
-     (trim(CTe.infCTeNorm.rodoOS.veic.prop.xNome) <> '') then
+  if Trim(CTe.infCTeNorm.rodoOS.veic.placa) <> '' then
   begin
-      Gerador.wGrupo('prop', '#07');
-      Gerador.wCampoCNPJCPF('#08', '#09', CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF);
+    Gerador.wGrupo('veic', '#04');
+    Gerador.wCampo(tcStr, '#05', 'placa  ', 01, 07, 1, CTe.infCTeNorm.rodoOS.veic.placa, DSC_PLACA);
+    Gerador.wCampo(tcStr, '#06', 'RENAVAM', 09, 11, 1, CTe.infCTeNorm.rodoOS.veic.RENAVAM, DSC_RENAVAM);
 
-      if CTe.infCTeNorm.rodoOS.TAF <> '' then
-        Gerador.wCampo(tcStr, '#10', 'TAF           ', 12, 12, 1, CTe.infCTeNorm.rodoOS.veic.prop.TAF, DSC_TAF)
-      else
-        Gerador.wCampo(tcStr, '#11', 'NroRegEstadual', 25, 25, 1, CTe.infCTeNorm.rodoOS.veic.prop.NroRegEstadual, DSC_NROREGESTADUAL);
+    if (trim(CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF) <> '') or
+       (trim(CTe.infCTeNorm.rodoOS.veic.prop.xNome) <> '') then
+    begin
+        Gerador.wGrupo('prop', '#07');
+        Gerador.wCampoCNPJCPF('#08', '#09', CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF);
 
-      Gerador.wCampo(tcStr, '#12', 'xNome', 02, 60, 1, CTe.infCTeNorm.rodoOS.veic.prop.xNome, DSC_XNOME);
+        if CTe.infCTeNorm.rodoOS.TAF <> '' then
+          Gerador.wCampo(tcStr, '#10', 'TAF           ', 12, 12, 1, CTe.infCTeNorm.rodoOS.veic.prop.TAF, DSC_TAF)
+        else
+          Gerador.wCampo(tcStr, '#11', 'NroRegEstadual', 25, 25, 1, CTe.infCTeNorm.rodoOS.veic.prop.NroRegEstadual, DSC_NROREGESTADUAL);
 
-      if trim(CTe.infCTeNorm.rodoOS.veic.prop.IE) <> ''
-       then begin
-        if CTe.infCTeNorm.rodoOS.veic.prop.IE = 'ISENTO'
-         then Gerador.wCampo(tcStr, '#13', 'IE', 00, 14, 1, CTe.infCTeNorm.rodoOS.veic.prop.IE, DSC_IE)
-         else Gerador.wCampo(tcStr, '#13', 'IE', 02, 14, 1, OnlyNumber(CTe.infCTeNorm.rodoOS.veic.prop.IE), DSC_IE);
-        if (FOpcoes.ValidarInscricoes)
-         then if not ValidarIE(CTe.infCTeNorm.rodoOS.veic.prop.IE, CTe.infCTeNorm.rodoOS.veic.prop.UF) then
-          Gerador.wAlerta('#13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
-       end;
+        Gerador.wCampo(tcStr, '#12', 'xNome', 02, 60, 1, CTe.infCTeNorm.rodoOS.veic.prop.xNome, DSC_XNOME);
 
-      Gerador.wCampo(tcStr, '#14', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.prop.UF, DSC_CUF);
-      if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.prop.UF) then
-       Gerador.wAlerta('#14', 'UF', DSC_UF, ERR_MSG_INVALIDO);
+        if trim(CTe.infCTeNorm.rodoOS.veic.prop.IE) <> ''
+         then begin
+          if CTe.infCTeNorm.rodoOS.veic.prop.IE = 'ISENTO'
+           then Gerador.wCampo(tcStr, '#13', 'IE', 00, 14, 1, CTe.infCTeNorm.rodoOS.veic.prop.IE, DSC_IE)
+           else Gerador.wCampo(tcStr, '#13', 'IE', 02, 14, 1, OnlyNumber(CTe.infCTeNorm.rodoOS.veic.prop.IE), DSC_IE);
+          if (FOpcoes.ValidarInscricoes)
+           then if not ValidarIE(CTe.infCTeNorm.rodoOS.veic.prop.IE, CTe.infCTeNorm.rodoOS.veic.prop.UF) then
+            Gerador.wAlerta('#13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+         end;
 
-      Gerador.wCampo(tcStr, '#15', 'tpProp', 01, 01, 1, TpPropToStr(CTe.infCTeNorm.rodoOS.veic.prop.tpProp), DSC_TPPROP);
-      Gerador.wGrupo('/prop');
-    end;
+        Gerador.wCampo(tcStr, '#14', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.prop.UF, DSC_CUF);
+        if not ValidarUF(CTe.infCTeNorm.rodoOS.veic.prop.UF) then
+         Gerador.wAlerta('#14', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#16', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.UF, DSC_CUF);
-  Gerador.wGrupo('/veic');
+        Gerador.wCampo(tcStr, '#15', 'tpProp', 01, 01, 1, TpPropToStr(CTe.infCTeNorm.rodoOS.veic.prop.tpProp), DSC_TPPROP);
+        Gerador.wGrupo('/prop');
+      end;
+
+    Gerador.wCampo(tcStr, '#16', 'UF', 02, 02, 1, CTe.infCTeNorm.rodoOS.veic.UF, DSC_CUF);
+    Gerador.wGrupo('/veic');
+  end;
 
   Gerador.wGrupo('/rodoOS');
 end;

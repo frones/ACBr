@@ -39,6 +39,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 13/05/2017
+-- ACBrDevice, ACBrECFEpson
+[-] Ajuste para detecção de portas USB e DLL quando existe mais de uma exemplo : DLL1 ou USB2
+		http://www.projetoacbr.com.br/forum/topic/36702-erro-na-acbrdevice-quando-uso-epson-dll/
+		Ajuste na impressão de cheques com Epson onde estava centavos ao invés de centavo
+		http://www.projetoacbr.com.br/forum/topic/36703-ecf-epson-não-imprimia-texto-centavos-no-cheque/
+		(por: Juliomar Marchetti)
+		
 Data: 09/05/2017
 -- ACBrDevice --
 [-] Ajuste na detecção de portas Paralelas, Linux (Ex: "/dev/lp?", "/dev/usb/lp?")

@@ -3425,7 +3425,7 @@ begin
     with EpsonComando do
     begin
       Comando := 'EE1A';
-      Extensao := '0000';
+      Extensao := '0001';
       AddParamString('01');
       with posicao do
       begin

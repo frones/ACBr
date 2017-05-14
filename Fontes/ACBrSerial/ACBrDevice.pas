@@ -1010,18 +1010,18 @@ begin
 
   if APorta = '*' then
     Result := dtRawPrinter   // usará a impressora default
-  else if (Pos('TCP:',UPorta) > 0 ) then
+  else if (copy(UPorta, 1, 4) = 'TCP:') then
     Result := dtTCP
-  else if (Pos('RAW:', UPorta) > 0 ) then
+  else if (copy(UPorta, 1, 4) = 'RAW:') then
     Result := dtRawPrinter
-  else if (Pos('.TXT', UPorta) > 0 ) or (Pos('FILE:', UPorta) > 0 ) then
+  else if (RightStr(UPorta,4) = '.TXT') or (copy(UPorta, 1, 5) = 'FILE:') then
     Result := dtFile
-  else if {$IFDEF LINUX}((Pos('/dev/', APorta) = 1) and (Pos('/lp', APorta) > 4)){$ELSE}(Pos('LPT', UPorta) = 1){$ENDIF} then
+  else if {$IFDEF LINUX}((pos('/dev/', APorta) = 1) and (Pos('/lp', APorta) > 4)){$ELSE}(Pos('LPT', UPorta) = 1){$ENDIF} then
     Result := dtParallel
-  else if (Pos('COM', UPorta) > 0 ) or
+  else if (copy(UPorta, 1, 3) = 'COM') or
        {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then
     Result := dtSerial
-  else if (Pos('USB',UPorta) > 0) or (Pos('DLL',UPorta) > 0) then
+  else if (pos(copy(UPorta,1,3),'USB|DLL') > 0) then  /// Amarildo Lacerda: correção
     Result := dtHook
   else if (Printer.Printers.IndexOf(APorta) >= 0) then
     Result := dtRawPrinter

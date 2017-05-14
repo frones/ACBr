@@ -1021,7 +1021,7 @@ begin
   else if (copy(UPorta, 1, 3) = 'COM') or
        {$IFDEF MSWINDOWS}(copy(APorta,1,4) = '\\.\'){$ELSE}(pos('/dev/', APorta) = 1){$ENDIF} then
     Result := dtSerial
-  else if (pos(copy(UPorta,1,3),'USB|DLL') > 0) then  /// Amarildo Lacerda: correção
+  else if (pos(copy(UPorta,1,3),'USB|DLL') > 0) then
     Result := dtHook
   else if (Printer.Printers.IndexOf(APorta) >= 0) then
     Result := dtRawPrinter

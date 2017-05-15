@@ -522,10 +522,10 @@ begin
     if not ValidarIE(NFe.Emit.IE,NFe.Emit.EnderEmit.UF) then
       AdicionaErro('209-Rejeição: IE do emitente inválida ');
 
-    GravaLog('Validar: 208-CNPJ Emitente');
+    GravaLog('Validar: 208-CNPJ destinatário');
     if (Length(Trim(OnlyNumber(NFe.Dest.CNPJCPF))) >= 14) and
       not ValidarCNPJ(NFe.Dest.CNPJCPF) then
-      AdicionaErro('208-Rejeição: CNPJ do emitente inválido');
+      AdicionaErro('208-Rejeição: CNPJ do destinatário inválido');
 
     GravaLog('Validar: 513-EX');
     if (NFe.Retirada.UF = 'EX') and

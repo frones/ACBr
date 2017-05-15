@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/05/2017
+-- ACBRNFeNotasFiscais
+[-] Correção das informações de validação do CNPJ do destinatário estava como emitente
+		http://www.projetoacbr.com.br/forum/topic/36706-sugest%C3%A3o-de-ajuste-na-valida%C3%A7%C3%A3o-de-regra-de-neg%C3%B3cio-208-arquivo-acbrnfenotasfiscaispas/?do=findComment&comment=240480
+		(por: Juliomar Marchetti)
+		
 28/04/2017
 -- ACBrNFeConfiguracoes --
 [*] Ajuste para que o método "GetPathNFe", considere o Modelo configurado no

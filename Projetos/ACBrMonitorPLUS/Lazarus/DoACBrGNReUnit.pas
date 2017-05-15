@@ -86,7 +86,10 @@ begin
           PathsGNRe.Append(Cmd.Params(0));
           PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
           PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
-          CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
+          try
+            CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
+          except
+          end;
         finally
           PathsGNRe.Free;
         end;

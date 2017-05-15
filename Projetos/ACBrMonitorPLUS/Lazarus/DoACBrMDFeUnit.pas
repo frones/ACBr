@@ -125,7 +125,10 @@ begin
            try
              PathsMDFe.Append(Cmd.Params(0));
              PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+             try
+               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+             except
+             end;
            finally
              PathsMDFe.Free;
            end;
@@ -282,7 +285,10 @@ begin
              try
                PathsMDFe.Append(Cmd.Params(0));
                PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+               try
+                 CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+               except
+               end;
              finally
                PathsMDFe.Free;
              end;
@@ -336,7 +342,10 @@ begin
            try
              PathsMDFe.Append(Cmd.Params(0));
              PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsMDFe, ArqEventoMDFe, tDFeEventoMDFe);
+             try
+               CarregarDFe(PathsMDFe, ArqEventoMDFe, tDFeEventoMDFe);
+             except
+             end;
            finally
              PathsMDFe.Free;
            end;
@@ -348,7 +357,10 @@ begin
              try
                PathsMDFe.Append(Cmd.Params(1));
                PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+               try
+                 CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+               except
+               end;
              finally
                PathsMDFe.Free;
              end;
@@ -678,7 +690,10 @@ begin
            try
              PathsMDFe.Append(Cmd.Params(0));
              PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+             try
+               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+             except
+             end;
            finally
              PathsMDFe.Free;
            end;

@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/05/2017
+[-] Correção para AV ao carregar DFe.
+	Ajuste no componente ACBrSedex no lfm do formulario principal.
+	por: Celso Marigo Junior
+
 05/05/2017
 [-] Removida aba de downloads, que não estava programada corretamente.
 	por: Celso Marigo Junior

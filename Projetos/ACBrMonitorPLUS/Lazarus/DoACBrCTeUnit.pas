@@ -126,7 +126,10 @@ begin
            try
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             except
+             end;
            finally
              PathsCTe.Free;
            end;
@@ -229,7 +232,10 @@ begin
            try
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             except
+             end;
            finally
              PathsCTe.Free;
            end;
@@ -294,7 +300,10 @@ begin
            try
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-             CarregarDFe(PathsCTe, ArqCTe, tDFeEventoCTe);
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeEventoCTe);
+             except
+             end;
            finally
              PathsCTe.Free;
            end;
@@ -306,7 +315,10 @@ begin
              try
                PathsCTe.Append(Cmd.Params(0));
                PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+               try
+                 CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+               except
+               end;
              finally
                PathsCTe.Free;
              end;
@@ -364,7 +376,10 @@ begin
              PathsCTe.Append(Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-             CarregarDFe(PathsCTe, ArqCTe, tDFeInutCTe);
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeInutCTe);
+             except
+             end;
            finally
              PathsCTe.Free;
            end;
@@ -828,7 +843,10 @@ begin
            try
              PathsCTe.Append(Cmd.Params(1));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             try
+               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+             except
+             end;
            finally
              PathsCTe.Free;
            end;
@@ -875,7 +893,10 @@ begin
            try
              PathsCTe.Append(Cmd.Params(1));
              PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsCTe, ArqEvento, tDFeEventoCTe);
+             try
+               CarregarDFe(PathsCTe, ArqEvento, tDFeEventoCTe);
+             except
+             end;
            finally
              PathsCTe.Free;
            end;
@@ -887,7 +908,10 @@ begin
              try
                PathsCTe.Append(Cmd.Params(2));
                PathsCTe.Append(PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-               CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+               try
+                 CarregarDFe(PathsCTe, ArqCTe, tDFeCTe);
+               except
+               end;
              finally
                PathsCTe.Free;
              end;

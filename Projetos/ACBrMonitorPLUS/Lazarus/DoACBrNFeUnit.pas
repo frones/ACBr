@@ -152,7 +152,11 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-             CarregarDFe(PathsNFe, ArqNFe);
+
+             try
+               CarregarDFe(PathsNFe, ArqNFe);
+             except
+             end;
            finally
              PathsNFe.Free;
            end;
@@ -181,7 +185,8 @@ begin
                               'ChNFe='+ACBrNFe1.WebServices.Consulta.NFeChave+sLineBreak+
                               'DhRecbto='+DateTimeToStr(ACBrNFe1.WebServices.Consulta.DhRecbto)+sLineBreak+
                               'NProt='+ACBrNFe1.WebServices.Consulta.Protocolo+sLineBreak+
-                              'DigVal='+ACBrNFe1.WebServices.Consulta.protNFe.digVal+sLineBreak;
+                              'DigVal='+ACBrNFe1.WebServices.Consulta.protNFe.digVal+sLineBreak+
+                              IfThen(EstaVazio(ArqNFe),'','Arquivo='+ArqNFe+sLineBreak);
 
 
               if NaoEstaVazio(Trim(ACBrNFe1.WebServices.Consulta.retCancNFe.nProt)) then
@@ -345,7 +350,10 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-nfe.xml');
-             CarregarDFe(PathsNFe, ArqNFe);
+             try
+               CarregarDFe(PathsNFe, ArqNFe);
+             except
+             end;
            finally
              PathsNFe.Free;
            end;
@@ -432,7 +440,10 @@ begin
              PathsNFe.Append(Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-eve.xml');
-             CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
+             try
+               CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
+             except
+             end;
            finally
              PathsNFe.Free;
            end;
@@ -444,7 +455,10 @@ begin
              try
                PathsNFe.Append(Cmd.Params(1));
                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-               CarregarDFe(PathsNFe, ArqNFe);
+               try
+                 CarregarDFe(PathsNFe, ArqNFe);
+               except
+               end;
              finally
                PathsNFe.Free;
              end;
@@ -514,7 +528,10 @@ begin
               PathsNFe.Append(Cmd.Params(0));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-inu.xml');
-              CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+              try
+                CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+              except
+              end;
            finally
              PathsNFe.Free;
            end;
@@ -1023,7 +1040,11 @@ begin
               try
                 PathsNFe.Append(Cmd.Params(0));
                 PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
-                CarregarDFe(PathsNFe, ArqNFe, tDFeEventoNFe);
+
+                try
+                  CarregarDFe(PathsNFe, ArqNFe, tDFeEventoNFe);
+                except
+                end;
               finally
                 PathsNFe.Free;
               end;
@@ -1368,7 +1389,10 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsNFe, ArqNFe);
+             try
+               CarregarDFe(PathsNFe, ArqNFe);
+             except
+             end;
            finally
              PathsNFe.Free;
            end;
@@ -1417,7 +1441,10 @@ begin
            try
              PathsNFe.Append(Cmd.Params(1));
              PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
-             CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
+             try
+               CarregarDFe(PathsNFe, ArqEvento, tDFeEventoNFe);
+             except
+             end;
            finally
              PathsNFe.Clear;
            end;
@@ -1428,7 +1455,10 @@ begin
              try
                PathsNFe.Append(Cmd.Params(2));
                PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(2));
-               CarregarDFe(PathsNFe, ArqNFe);
+               try
+                 CarregarDFe(PathsNFe, ArqNFe);
+               except
+               end;
              finally
                PathsNFe.Clear;
              end;
@@ -1504,7 +1534,10 @@ begin
               PathsNFe.Append(Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1));
               PathsNFe.Append(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(1)+'-inu.xml');
-              CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+              try
+                CarregarDFe(PathsNFe, ArqEvento, tDFeInutNFe);
+              except
+              end;
            finally
              PathsNFe.Free;
            end;
@@ -1907,7 +1940,7 @@ begin
          Ide.idDest     := StrToDestinoOperacao(OK,INIRec.ReadString( 'Identificacao','idDest','1'));
 
          Ide.tpImp      := StrToTpImp(  OK, INIRec.ReadString( 'Identificacao','tpImp',TpImpToStr(ACBrNFe1.DANFE.TipoDANFE)));  //NFe2
-         Ide.tpEmis     := StrToTpEmis( OK,INIRec.ReadString( 'Identificacao','tpEmis',IntToStr(ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo)));
+         Ide.tpEmis     := StrToTpEmis( OK, INIRec.ReadString( 'Identificacao','tpEmis',IntToStr(ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo)));
 //         Ide.cDV
 //         Ide.tpAmb
          Ide.finNFe     := StrToFinNFe( OK,INIRec.ReadString( 'Identificacao','Finalidade',INIRec.ReadString( 'Identificacao','finNFe','0')));
@@ -1929,7 +1962,7 @@ begin
              begin
                if INIRec.ReadString(sSecao,'refNFe','') <> '' then
                   sTipo := 'NFE'
-               else if INIRec.ReadString(  sSecao,'refCTe'  ,'') <> '' then
+               else if INIRec.ReadString(  sSecao,'refCTe','') <> '' then
                   sTipo := 'CTE'
                else if INIRec.ReadString(  sSecao,'nECF'  ,'') <> '' then
                   sTipo :=  'ECF'
@@ -2111,7 +2144,8 @@ begin
 
                Prod.cProd    := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
                if (Length(INIRec.ReadString( sSecao,'EAN','')) > 0) or (Length(INIRec.ReadString( sSecao,'cEAN','')) > 0)  then
-                  Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
+                  Prod.cEAN  := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
+
                Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
                Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
                Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
@@ -2124,6 +2158,7 @@ begin
 
                if Length(INIRec.ReadString( sSecao,'cEANTrib','')) > 0 then
                   Prod.cEANTrib      := INIRec.ReadString( sSecao,'cEANTrib'      ,'');
+
                Prod.uTrib     := INIRec.ReadString( sSecao,'uTrib'  , Prod.uCom);
                Prod.qTrib     := StringToFloatDef( INIRec.ReadString(sSecao,'qTrib'  ,''), Prod.qCom);
                Prod.vUnTrib   := StringToFloatDef( INIRec.ReadString(sSecao,'vUnTrib','') ,Prod.vUnCom) ;

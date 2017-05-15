@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 15/05/2017
+[-] Geração do registro 900 do j800-e-j801/
+		http://www.projetoacbr.com.br/forum/topic/36701-ecd-j800-e-j801/
+		Juliomar Marchetti
+		
 Data 12/05/2017
 [-] Correção para hierarquia de blocos e registros
 		http://www.projetoacbr.com.br/forum/topic/36701-ecd-j800-e-j801/

@@ -823,6 +823,25 @@ begin
          QTD_REG_BLC := Bloco_J.RegistroJ215Count;
       end;
    end;
+   if Bloco_J.RegistroJ800Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'J800';
+         QTD_REG_BLC := Bloco_J.RegistroJ800Count;
+      end;
+   end;
+
+   if Bloco_J.RegistroJ801Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'J801';
+         QTD_REG_BLC := Bloco_J.RegistroJ801Count;
+      end;
+   end;
+
+
 end;
 
 {

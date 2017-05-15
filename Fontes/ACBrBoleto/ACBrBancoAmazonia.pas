@@ -228,6 +228,7 @@ end;
 function TACBrBancoAmazonia.GerarRegistroHeader240(NumeroRemessa: Integer): String;
 var
      ATipoInscricao: string;
+     AMensagemReservada: String;
 begin
      with ACBrBanco.ACBrBoleto.Cedente do
      begin
@@ -237,6 +238,11 @@ begin
                pJuridica:
                     ATipoInscricao := '2';
           end;
+
+          if ACBrBanco.ACBrBoleto.Homologacao then
+            AMensagemReservada := 'REMESSA-TESTE'
+          else
+            AMensagemReservada := 'REMESSA-PRODUCAO';
 
           { GERAR REGISTRO-HEADER DO ARQUIVO }
 
@@ -262,7 +268,7 @@ begin
                '090' + // 164 a 166 - Número da versão do layout do arquivo
                PadRight('', 5, '0') + // 167 a 171 - Densidade de gravação do arquivo (BPI)
                Space(20) + // 172 a 191 - Uso reservado do banco
-               PadRight('REMESSA-PRODUCAO', 20, ' ') + // 192 a 211 - Uso reservado da empresa
+               PadRight(AMensagemReservada, 20, ' ') + // 192 a 211 - Uso reservado da empresa
                PadRight('', 29, ' '); // 212 a 240 - Uso Exclusivo FEBRABAN / CNAB
 
           { GERAR REGISTRO HEADER DO LOTE }

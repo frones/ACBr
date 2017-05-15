@@ -332,6 +332,7 @@ end;
 function TACBrCaixaEconomica.GerarRegistroHeader240(NumeroRemessa : Integer): String;
 var
   ATipoInscricao: string;
+  AMensagemReservada: String;
 begin
 
    with ACBrBanco.ACBrBoleto.Cedente do
@@ -340,6 +341,11 @@ begin
          pFisica  : ATipoInscricao := '1';
          pJuridica: ATipoInscricao := '2';
       end;
+
+      if ACBrBanco.ACBrBoleto.Homologacao then
+        AMensagemReservada := 'REMESSA-TESTE'
+      else
+        AMensagemReservada := 'REMESSA-PRODUCAO';
 
           { GERAR REGISTRO-HEADER DO ARQUIVO }
 
@@ -366,7 +372,7 @@ begin
                '050'                                   + //164 a 166 - Número da versão do layout do arquivo
                PadRight('',  5, '0')                       + //167 a 171 - Densidade de gravação do arquivo (BPI)
                Space(20)                               + // 172 a 191 - Uso reservado do banco
-               PadRight('REMESSA-PRODUCAO', 20, ' ')       + // 192 a 211 - Uso reservado da empresa
+               PadRight(AMensagemReservada, 20, ' ')       + // 192 a 211 - Uso reservado da empresa
                PadRight('', 4, ' ')                        + // 212 a 215 - Versao Aplicativo Caixa
                PadRight('', 25, ' ');                        // 216 a 240 - Uso Exclusivo FEBRABAN / CNAB
 

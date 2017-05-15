@@ -1086,6 +1086,7 @@ type
     fDataArquivo : TDateTime;     {Data da geração do arquivo remessa ou retorno}
     fDataCreditoLanc : TDateTime; {Data de crédito dos lançamentos do arquivo retorno}
     fLeCedenteRetorno: boolean;
+    fHomologacao: Boolean;
     function GetAbout: String;
     procedure SetAbout(const AValue: String);
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
@@ -1120,6 +1121,7 @@ type
     property About : String read GetAbout write SetAbout stored False ;
     property MAIL  : TACBrMail read FMAIL write SetMAIL;
 
+    property Homologacao    : Boolean            read fHomologacao            write fHomologacao default False;
     property Banco          : TACBrBanco         read fBanco                  write fBanco;
     property Cedente        : TACBrCedente       read fCedente                write fCedente ;
     property NomeArqRemessa : String             read fNomeArqRemessa         write fNomeArqRemessa;

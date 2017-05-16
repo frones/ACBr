@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 16/05/2017
+[+] Bloco K no spedcontabil
+		http://www.projetoacbr.com.br/forum/topic/36747-ecd-v5-bloco-k/
+		
 Data 15/05/2017
 [-] Geração do registro 900 do j800-e-j801/
 		http://www.projetoacbr.com.br/forum/topic/36701-ecd-j800-e-j801/

@@ -38,6 +38,8 @@
 |*  - Criação e distribuição da Primeira Versao
 |* 04/03/2015: Flavio Rubens Massaro Jr.
 |* - Modificação para contemplar layout 3 referente ao ano calendario 2014
+|* 16/05/2017: Renato Rubinho
+|*  - Criação e distribuição para o layout 5
 *******************************************************************************}
 
 unit ACBrSpedContabil;
@@ -51,12 +53,13 @@ uses
   {$ENDIF}
   ACBrSped, ACBrTXTClass,
   ACBrECDBloco_0_Class, ACBrECDBloco_9_Class, ACBrECDBloco_I_Class,
-  ACBrECDBloco_J_Class;
+  ACBrECDBloco_J_Class, ACBrECDBloco_K_Class;
 
 const
    CACBrSpedContabil_Versao = '0.04a' ;
 
 type
+
   /// ACBrSpedContabil - Sitema Publico de Escrituração Digital Contabil
 
   { TACBrSPEDContabil }
@@ -82,6 +85,7 @@ type
     FBloco_9: TBloco_9;
     FBloco_I: TBloco_I;
     FBloco_J: TBloco_J;
+    FBloco_K: TBloco_K;
 
     function GetAbout: String;
     function GetDelimitador: String;
@@ -145,6 +149,10 @@ type
     procedure WriteRegistroJ930;
   	procedure WriteRegistroJ935;
     procedure WriteRegistroJ990;
+    /// BLOCO K
+    procedure WriteRegistroK001;
+    procedure WriteRegistroK030;
+    procedure WriteRegistroK990;
     /// BLOCO 9
     procedure WriteRegistro9001;
     procedure WriteRegistro9900;
@@ -161,6 +169,7 @@ type
     procedure WriteBloco_0;
     procedure WriteBloco_I;
     procedure WriteBloco_J;
+    procedure WriteBloco_K;
     procedure WriteBloco_9;
 
 
@@ -173,6 +182,7 @@ type
     property Bloco_9: TBloco_9 read FBloco_9 write FBloco_9;
     property Bloco_I: TBloco_I read FBloco_I write FBloco_I;
     property Bloco_J: TBloco_J read FBloco_J write FBloco_J;
+    property Bloco_K: TBloco_K read FBloco_K write FBloco_K;
   published
     property About: String read GetAbout write SetAbout stored False ;
     property Path: String read FPath write FPath;
@@ -193,7 +203,7 @@ procedure Register;
 
 implementation
 
-Uses ACBrUtil, ACBrECDBloco_9, ACBrECDBloco_I ;
+Uses ACBrUtil, ACBrECDBloco_9, ACBrECDBloco_I, ACBrECDBloco_K ;
 
 {$IFNDEF FPC}
  {$R ACBr_SPEDContabil.dcr}
@@ -217,10 +227,12 @@ begin
   FBloco_0 := TBloco_0.Create;
   FBloco_I := TBloco_I.Create;
   FBloco_J := TBloco_J.Create;
+  FBloco_K := TBloco_K.Create;
   FBloco_9 := TBloco_9.Create;
 
   FBloco_I.Bloco_0 := FBloco_0;
   FBloco_J.Bloco_0 := FBloco_0;
+  FBloco_K.Bloco_0 := FBloco_0;
   FBloco_9.Bloco_0 := FBloco_0;
 
 
@@ -237,6 +249,7 @@ begin
   FBloco_0.Free;
   FBloco_I.Free;
   FBloco_J.Free;
+  FBloco_K.Free;
   FBloco_9.Free;
   inherited;
 end;
@@ -246,6 +259,7 @@ begin
   FBloco_0.LimpaRegistros;
   FBloco_I.LimpaRegistros;
   FBloco_J.LimpaRegistros;
+  FBloco_K.LimpaRegistros;
   FBloco_9.LimpaRegistros;
 end;
 
@@ -261,6 +275,7 @@ begin
   FBloco_0.Delimitador := Value;
   FBloco_I.Delimitador := Value;
   FBloco_J.Delimitador := Value;
+  FBloco_K.Delimitador := Value;
   FBloco_9.Delimitador := Value;
 end;
 
@@ -276,6 +291,7 @@ begin
   FBloco_0.CurMascara := Value;
   FBloco_I.CurMascara := Value;
   FBloco_J.CurMascara := Value;
+  FBloco_K.CurMascara := Value;
   FBloco_9.CurMascara := Value;
 end;
 
@@ -291,6 +307,7 @@ begin
   FBloco_0.TrimString := Value;
   FBloco_I.TrimString := Value;
   FBloco_J.TrimString := Value;
+  FBloco_K.TrimString := Value;
   FBloco_9.TrimString := Value;
 end;
 
@@ -306,6 +323,7 @@ begin
   FBloco_0.DT_INI := Value;
   FBloco_I.DT_INI := Value;
   FBloco_J.DT_INI := Value;
+  FBloco_K.DT_INI := Value;
   FBloco_9.DT_INI := Value;
   //
   if Assigned(FBloco_0) then
@@ -326,6 +344,7 @@ begin
   FBloco_0.DT_FIN := Value;
   FBloco_I.DT_FIN := Value;
   FBloco_J.DT_FIN := Value;
+  FBloco_K.DT_FIN := Value;
   FBloco_9.DT_FIN := Value;
   //
   if Assigned(FBloco_0) then
@@ -346,6 +365,7 @@ begin
   FBloco_0.OnError := Value;
   FBloco_I.OnError := Value;
   FBloco_J.OnError := Value;
+  FBloco_K.OnError := Value;
   FBloco_9.OnError := Value;
 end;
 
@@ -357,6 +377,7 @@ begin
     WriteBloco_0;
     WriteBloco_I;
     WriteBloco_J;
+    WriteBloco_K;
     WriteBloco_9;
 
     TotalizarTermos;
@@ -538,6 +559,7 @@ begin
    Bloco_I.RegistroI030.QTD_LIN := Bloco_0.Registro0990.QTD_LIN_0 +
                                    Bloco_I.RegistroI990.QTD_LIN_I +
                                    Bloco_J.RegistroJ990.QTD_LIN_J +
+                                   Bloco_K.RegistroK990.QTD_LIN_K +
                                    Bloco_9.Registro9990.QTD_LIN_9;
    with Bloco_9.Registro9900.New do
    begin
@@ -918,6 +940,112 @@ begin
    Bloco_J.WriteRegistroJ990;
 end;
 
+procedure TACBrSPEDContabil.WriteRegistroK001;
+begin
+   if (DT_INI >= EncodeDate(2016, 1, 1)) then
+      if ((Bloco_K.RegistroK001.IND_DAD = 0) or (DT_INI >= EncodeDate(2017, 1, 1))) then
+      begin
+         with Bloco_9.Registro9900.New do
+         begin
+            REG_BLC := 'K001';
+            QTD_REG_BLC := 1;
+         end;
+         Bloco_K.WriteRegistroK001;
+      end;
+end;
+
+procedure TACBrSPEDContabil.WriteRegistroK030;
+begin
+   if Bloco_K.RegistroK001.IND_DAD = 0 then
+   begin
+      Bloco_K.WriteRegistroK030;
+
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K030';
+         QTD_REG_BLC := 1;
+      end;
+   end;
+   if Bloco_K.RegistroK100Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K100';
+         QTD_REG_BLC := Bloco_K.RegistroK100Count;
+      end;
+   end;
+   if Bloco_K.RegistroK110Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K110';
+         QTD_REG_BLC := Bloco_K.RegistroK110Count;
+      end;
+   end;
+   if Bloco_K.RegistroK115Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K115';
+         QTD_REG_BLC := Bloco_K.RegistroK115Count;
+      end;
+   end;
+   if Bloco_K.RegistroK200Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K200';
+         QTD_REG_BLC := Bloco_K.RegistroK200Count;
+      end;
+   end;
+   if Bloco_K.RegistroK210Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K210';
+         QTD_REG_BLC := Bloco_K.RegistroK210Count;
+      end;
+   end;
+   if Bloco_K.RegistroK300Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K300';
+         QTD_REG_BLC := Bloco_K.RegistroK300Count;
+      end;
+   end;
+   if Bloco_K.RegistroK310Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K310';
+         QTD_REG_BLC := Bloco_K.RegistroK310Count;
+      end;
+   end;
+   if Bloco_K.RegistroK315Count > 0 then
+   begin
+      with Bloco_9.Registro9900.New do
+      begin
+         REG_BLC := 'K315';
+         QTD_REG_BLC := Bloco_K.RegistroK315Count;
+      end;
+   end;
+end;
+
+procedure TACBrSPEDContabil.WriteRegistroK990;
+begin
+   if (DT_INI >= EncodeDate(2016, 1, 1)) then
+      if ((Bloco_K.RegistroK001.IND_DAD = 0) or (DT_INI >= EncodeDate(2017, 1, 1))) then
+      begin
+         with Bloco_9.Registro9900.New do
+         begin
+            REG_BLC := 'K990';
+            QTD_REG_BLC := 1;
+         end;
+         Bloco_K.WriteRegistroK990;
+      end;  
+end;
+
 procedure TACBrSPEDContabil.WriteRegistro9001;
 begin
    with Bloco_9.Registro9900.New do
@@ -961,6 +1089,7 @@ begin
    Bloco_9.Registro9999.QTD_LIN := Bloco_9.Registro9999.QTD_LIN + Bloco_0.Registro0990.QTD_LIN_0 +
                                                                   Bloco_I.RegistroI990.QTD_LIN_I +
                                                                   Bloco_J.RegistroJ990.QTD_LIN_J +
+                                                                  Bloco_K.RegistroK990.QTD_LIN_K +
                                                                   Bloco_9.Registro9990.QTD_LIN_9;
    Bloco_9.WriteRegistro9999;
 end;
@@ -1010,12 +1139,14 @@ begin
   InicializaBloco( Bloco_0 ) ;
   InicializaBloco( Bloco_I ) ;
   InicializaBloco( Bloco_J ) ;
+  InicializaBloco( Bloco_K ) ;
   InicializaBloco( Bloco_9 ) ;
 
   /// Preparação para totalizações de registros.
   Bloco_0.Registro0990.QTD_LIN_0 := 0;
   Bloco_I.RegistroI990.QTD_LIN_I := 0;
   Bloco_J.RegistroJ990.QTD_LIN_J := 0;
+  Bloco_K.RegistroK990.QTD_LIN_K := 0;
   Bloco_9.Registro9990.QTD_LIN_9 := 0;
   Bloco_9.Registro9999.QTD_LIN   := 0;
 
@@ -1106,12 +1237,28 @@ begin
   Bloco_J.Gravado := true;
 end;
 
+procedure TACBrSPEDContabil.WriteBloco_K;
+begin
+  if Bloco_K.Gravado then Exit;
+
+  if not Bloco_K.Gravado then
+    WriteBloco_J;
+
+  WriteRegistroK001;
+  WriteRegistroK030;
+  WriteRegistroK990;
+
+  Bloco_K.WriteBuffer;
+  Bloco_K.Conteudo.Clear;
+  Bloco_K.Gravado := true;
+end;
+
 procedure TACBrSPEDContabil.WriteBloco_9;
 begin
   if Bloco_9.Gravado then Exit;
 
   if not Bloco_9.Gravado then
-    WriteBloco_J;
+    WriteBloco_K;
 
   WriteRegistro9001;
   WriteRegistro9900;

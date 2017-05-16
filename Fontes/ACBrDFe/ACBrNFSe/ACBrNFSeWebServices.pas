@@ -4616,17 +4616,26 @@ begin
 
   if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
   begin
+    //==========================================================================
+    // Provedores que seguem a versão 1.0 do layout da ABRASF devem primeiro
+    // Consultar a Situação do Lote
     if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
     begin
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna] then
-        Result := True
+      // Provedores cuja versão é 1.0 mas não possuem o método Consulta
+      // a Situação do Lote devem ser relacionados no case abaixo.
+      case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
+        proGoverna,
+        proIssDSF: Result := True
       else
         Result := FConsSitLoteRPS.Executar;
+      end;
 
       if not (Result) then
         FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
     end;
 
+    // Provedores que não possuem o método Consultar o Lote devem ser
+    // relacionados no case abaixo.
     case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
       proEL,
       proGoverna,

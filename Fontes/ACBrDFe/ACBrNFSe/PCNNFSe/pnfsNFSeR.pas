@@ -1045,6 +1045,10 @@ begin
     NFSe.Servico.Valores.AliquotaIR             := Leitor.rCampo(tcDe2, 'AliquotaIR');
     NFSe.Servico.Valores.AliquotaCSLL           := Leitor.rCampo(tcDe2, 'AliquotaCSLL');
 
+    NFSE.OutrasInformacoes := Leitor.rCampo(tcStr, 'DescricaoRPS');
+    NFSE.MotivoCancelamento := Leitor.rCampo(tcStr, 'MotCancelamento');
+    NFSE.IntermediarioServico.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjIntermediario');
+
     if (Leitor.rExtrai(1, 'Itens') <> '') then
     begin
       Item := 0 ;
@@ -1068,10 +1072,6 @@ begin
                                                FNfse.Servico.Valores.DescontoIncondicionado+
                                                FNFSe.Servico.Valores.ValorIssRetido));
     FNfse.Servico.Valores.BaseCalculo      := NFSe.Servico.Valores.ValorLiquidoNfse;
-
-    NFSe.OutrasInformacoes := Leitor.rCampo(tcStr, 'DescricaoRPS');
-    NFSE.MotivoCancelamento := Leitor.rCampo(tcStr, 'MotCancelamento');
-    NFSe.IntermediarioServico.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjIntermediario');
   end; // fim Rps
 
   Result := True;

@@ -319,12 +319,13 @@ end;
 procedure TACBrTEFDRespCliSiTef.ConteudoToProperty;
 var
    I, wTipoOperacao, wNumCB: Integer;
-   Linha : TACBrTEFDLinha;
+   wTotalParc, wValParc: Double;
    Parc  : TACBrTEFDRespParcela;
+   Linha : TACBrTEFDLinha;
    CB    : TACBrTEFDRespCB;
    LinStr: AnsiString;
 begin
-   fpValorTotal  := 0;
+   fpValorTotal := 0;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
    fpDebito    := False;
@@ -471,8 +472,11 @@ begin
   // leitura de parcelas conforme nova documentação
   // 141 e 142 foram removidos em Setembro de 2014
   fpParcelas.Clear;
-  if fpQtdParcelas > 0 then
+  if (fpQtdParcelas > 0) then
   begin
+    wValParc   := RoundABNT((fpValorTotal / fpQtdParcelas), -2);
+    wTotalParc := 0;
+
     for I := 1 to fpQtdParcelas do
     begin
       Parc := TACBrTEFDRespParcela.Create;
@@ -495,7 +499,14 @@ begin
         Parc.Vencimento := IncDay(fpDataHoraTransacaoHost, I * 30);
 
       if Parc.Valor <= 0 then
-        Parc.Valor := fpValorTotal / fpQtdParcelas;
+      begin
+        if (I = fpQtdParcelas) then
+          wValParc := fpValorTotal - wTotalParc
+        else
+          wTotalParc := wTotalParc + wValParc;
+
+        Parc.Valor := wValParc;
+      end;
 
       fpParcelas.Add(Parc);
     end;

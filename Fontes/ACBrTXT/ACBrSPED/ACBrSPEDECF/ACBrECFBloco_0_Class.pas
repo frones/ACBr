@@ -203,10 +203,8 @@ begin
   begin
     with FRegistro0000 do
     begin
-      case COD_VER of
-        ECFVersao100: strCOD_VER := '0001';
-        ECFVersao200: strCOD_VER := '0002';
-      end;
+	  strCOD_VER := CodVerToStr(COD_VER);
+
       Add( LFill('0000') +
            LFill('LECF') +
            LFill(strCOD_VER) +
@@ -279,21 +277,42 @@ begin
         ftlIsentoIRPJ                  : strFORMA_TRIB := '9';
       end;
 
-      Add( LFill('0010') +
-           LFill(HASH_ECF_ANTERIOR) +
-           LFill(strOPT_REFIS) +
-           LFill(strOPT_PAES) +
-           LFill(strFORMA_TRIB) +
-           LFill(FORMA_APUR) +
-           LFill(COD_QUALIF_PJ) +
-           LFill(FORMA_TRIB_PER) +
-           LFill(MES_BAL_RED) +
-           LFill(TIP_ESC_PRE) +
-           LFill(TIP_ENT) +
-           LFill(FORMA_APUR_I) +
-           LFill(APUR_CSLL) +
-           LFill(OPT_EXT_RTT) +
-           LFill(DIF_FCONT) );
+      case FRegistro0000.COD_VER of
+        ECFVersao100, ECFVersao200:
+          Add( LFill('0010') +
+               LFill(HASH_ECF_ANTERIOR) +
+               LFill(strOPT_REFIS) +
+               LFill(strOPT_PAES) +
+               LFill(strFORMA_TRIB) +
+               LFill(FORMA_APUR) +
+               LFill(COD_QUALIF_PJ) +
+               LFill(FORMA_TRIB_PER) +
+               LFill(MES_BAL_RED) +
+               LFill(TIP_ESC_PRE) +
+               LFill(TIP_ENT) +
+               LFill(FORMA_APUR_I) +
+               LFill(APUR_CSLL) +
+               LFill(OPT_EXT_RTT) +
+               LFill(DIF_FCONT) );
+
+        ECFVersao300:
+          Add( LFill('0010') +
+               LFill(HASH_ECF_ANTERIOR) +
+               LFill(strOPT_REFIS) +
+               LFill(strOPT_PAES) +
+               LFill(strFORMA_TRIB) +
+               LFill(FORMA_APUR) +
+               LFill(COD_QUALIF_PJ) +
+               LFill(FORMA_TRIB_PER) +
+               LFill(MES_BAL_RED) +
+               LFill(TIP_ESC_PRE) +
+               LFill(TIP_ENT) +
+               LFill(FORMA_APUR_I) +
+               LFill(APUR_CSLL) +
+               LFill(IND_REC_RECEITA) );
+
+      end;
+
       FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
     end;
   end;
@@ -305,37 +324,78 @@ begin
   begin
     with FRegistro0020 do
     begin
-      Add( LFill('0020') +
-           LFill(IND_ALIQ_CSLL) +
-           LFill(IND_QTE_SCP) +
-           LFill(IND_ADM_FUN_CLU) +
-           LFill(IND_PART_CONS) +
-           LFill(IND_OP_EXT) +
-           LFill(IND_OP_VINC) +
-           LFill(IND_PJ_ENQUAD) +
-           LFill(IND_PART_EXT) +
-           LFill(IND_ATIV_RURAL) +
-           LFill(IND_LUC_EXP) +
-           LFill(IND_RED_ISEN) +
-           LFill(IND_FIN) +
-           LFill(IND_DOA_ELEIT) +
-           LFill(IND_PART_COLIG) +
-           LFill(IND_VEND_EXP) +
-           LFill(IND_REC_EXT) +
-           LFill(IND_ATIV_EXT) +
-           LFill(IND_COM_EXP) +
-           LFill(IND_PGTO_EXT) +
-           LFill(IND_ECOM_TI) +
-           LFill(IND_ROY_REC) +
-           LFill(IND_ROY_PAG) +
-           LFill(IND_REND_SERV) +
-           LFill(IND_PGTO_REM) +
-           LFill(IND_INOV_TEC) +
-           LFill(IND_CAP_INF) +
-           LFill(IND_PJ_HAB) +
-           LFill(IND_POLO_AM) +
-           LFill(IND_ZON_EXP) +
-           LFill(IND_AREA_COM)  );
+      case FRegistro0000.COD_VER of
+        ECFVersao100, ECFVersao200:
+
+          Add( LFill('0020') +
+               LFill(IND_ALIQ_CSLL) +
+               LFill(IND_QTE_SCP) +
+               LFill(IND_ADM_FUN_CLU) +
+               LFill(IND_PART_CONS) +
+               LFill(IND_OP_EXT) +
+               LFill(IND_OP_VINC) +
+               LFill(IND_PJ_ENQUAD) +
+               LFill(IND_PART_EXT) +
+               LFill(IND_ATIV_RURAL) +
+               LFill(IND_LUC_EXP) +
+               LFill(IND_RED_ISEN) +
+               LFill(IND_FIN) +
+               LFill(IND_DOA_ELEIT) +
+               LFill(IND_PART_COLIG) +
+               LFill(IND_VEND_EXP) +
+               LFill(IND_REC_EXT) +
+               LFill(IND_ATIV_EXT) +
+               LFill(IND_COM_EXP) +
+               LFill(IND_PGTO_EXT) +
+               LFill(IND_ECOM_TI) +
+               LFill(IND_ROY_REC) +
+               LFill(IND_ROY_PAG) +
+               LFill(IND_REND_SERV) +
+               LFill(IND_PGTO_REM) +
+               LFill(IND_INOV_TEC) +
+               LFill(IND_CAP_INF) +
+               LFill(IND_PJ_HAB) +
+               LFill(IND_POLO_AM) +
+               LFill(IND_ZON_EXP) +
+               LFill(IND_AREA_COM)  );
+
+        ECFVersao300:
+
+          Add( LFill('0020') +
+               LFill(IND_ALIQ_CSLL) +
+               LFill(IND_QTE_SCP) +
+               LFill(IND_ADM_FUN_CLU) +
+               LFill(IND_PART_CONS) +
+               LFill(IND_OP_EXT) +
+               LFill(IND_OP_VINC) +
+               LFill(IND_PJ_ENQUAD) +
+               LFill(IND_PART_EXT) +
+               LFill(IND_ATIV_RURAL) +
+               LFill(IND_LUC_EXP) +
+               LFill(IND_RED_ISEN) +
+               LFill(IND_FIN) +
+               LFill(IND_DOA_ELEIT) +
+               LFill(IND_PART_COLIG) +
+               LFill(IND_VEND_EXP) +
+               LFill(IND_REC_EXT) +
+               LFill(IND_ATIV_EXT) +
+               LFill(IND_COM_EXP) +
+               LFill(IND_PGTO_EXT) +
+               LFill(IND_ECOM_TI) +
+               LFill(IND_ROY_REC) +
+               LFill(IND_ROY_PAG) +
+               LFill(IND_REND_SERV) +
+               LFill(IND_PGTO_REM) +
+               LFill(IND_INOV_TEC) +
+               LFill(IND_CAP_INF) +
+               LFill(IND_PJ_HAB) +
+               LFill(IND_POLO_AM) +
+               LFill(IND_ZON_EXP) +
+               LFill(IND_AREA_COM) +
+               LFill(IND_PAIS_A_PAIS) );
+
+      end;
+
       FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
     end;
   end;

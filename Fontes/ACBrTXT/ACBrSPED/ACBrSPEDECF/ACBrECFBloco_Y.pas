@@ -894,14 +894,22 @@ type
 
   /// Registro Y800 - Outras Informações
 
-  TRegistroY800 = class(TBlocos)
+  TRegistroY800 = class
   private
-    fARQ_RTF: string;
+    fTIPO_DOC: String; // Tipo de documento
+    fDESC_RTF: String; // Descrição do arquivo
+    fHASH_RTF: String; // Hash do arquivo
+    fARQ_RTF: String;  // Seqüência de bytes que representem um único arquivo no formato RTF (Rich Text Format).
     function GetIND_FIM_RTF: string;
+
   public
-    property ARQ_RTF: string read fARQ_RTF write fARQ_RTF;
+    property TIPO_DOC: String read fTIPO_DOC write fTIPO_DOC;
+    property DESC_RTF: String read fDESC_RTF write fDESC_RTF;
+    property HASH_RTF: String read fHASH_RTF write fHASH_RTF;
+    property ARQ_RTF: String read fARQ_RTF write fARQ_RTF;
     property IND_FIM_RTF: string read GetIND_FIM_RTF;
   end;
+
 
   /// Registro Y800 - Lista
 

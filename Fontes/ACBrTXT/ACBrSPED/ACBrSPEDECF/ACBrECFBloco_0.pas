@@ -151,6 +151,7 @@ type
     fOPT_REFIS:   TACBrIndicador;
     fTIP_ENT:     String;
     fTIP_ESC_PRE: string;
+    fIND_REC_RECEITA: string;
   public
     property HASH_ECF_ANTERIOR: string read fHASH_ECF_ANTERIOR write fHASH_ECF_ANTERIOR;
     property OPT_REFIS: TACBrIndicador read fOPT_REFIS write fOPT_REFIS;
@@ -166,6 +167,7 @@ type
     property APUR_CSLL: string read fAPUR_CSLL write fAPUR_CSLL;
     property OPT_EXT_RTT: string read fOPT_EXT_RTT write fOPT_EXT_RTT;
     property DIF_FCONT: string read fDIF_FCONT write fDIF_FCONT;
+    property IND_REC_RECEITA: string read fIND_REC_RECEITA write fIND_REC_RECEITA;
   end;
 
   { TRegistro0020 }
@@ -202,6 +204,7 @@ type
     fIND_ROY_REC:  string;
     fIND_VEND_EXP: string;
     fIND_ZON_EXP:  string;
+    fIND_PAIS_A_PAIS: string;
   public
     property IND_ALIQ_CSLL: string read fIND_ALIQ_CSLL write fIND_ALIQ_CSLL;
     property IND_QTE_SCP: integer read fIND_QTE_SCP write fIND_QTE_SCP;
@@ -233,6 +236,8 @@ type
     property IND_POLO_AM: string read fIND_POLO_AM write fIND_POLO_AM;
     property IND_ZON_EXP: string read fIND_ZON_EXP write fIND_ZON_EXP;
     property IND_AREA_COM: string read fIND_AREA_COM write fIND_AREA_COM;
+    property IND_PAIS_A_PAIS: string read fIND_PAIS_A_PAIS write fIND_PAIS_A_PAIS;
+
   end;
 
   { TRegistro0030 }

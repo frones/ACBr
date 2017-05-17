@@ -47,9 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 17/05/2017
+[+] Adição dregistro no sped ECF
+		http://www.projetoacbr.com.br/forum/topic/36760-novas-propriedades-em-tregistro0010-tregistro0020-e-tregistroy800/
+		Juliomar Marchetti
+		
 Data 16/05/2017
 [+] Bloco K no spedcontabil
 		http://www.projetoacbr.com.br/forum/topic/36747-ecd-v5-bloco-k/
+		Juliomar Marchetti
 		
 Data 15/05/2017
 [-] Geração do registro 900 do j800-e-j801/

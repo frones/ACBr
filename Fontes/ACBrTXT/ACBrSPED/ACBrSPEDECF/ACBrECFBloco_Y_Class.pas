@@ -904,9 +904,23 @@ begin
   begin
     with FRegistroY001.RegistroY800 do
     begin
-      Add(LFill('Y800') +
-          LFill(ARQ_RTF) +
-          LFill(IND_FIM_RTF));
+
+      case Bloco_0.Registro0000.COD_VER of
+
+        ECFVersao100, ECFVersao200:
+            Add(LFill('Y800') +
+                LFill(ARQ_RTF) +
+                LFill(IND_FIM_RTF));
+
+        ECFVersao300:
+             Add( LFill('Y800') +
+                  LFill(TIPO_DOC) +
+                  LFill(DESC_RTF) +
+                  LFill(HASH_RTF) +
+                  LFill(ARQ_RTF) +
+                  LFill(IND_FIM_RTF)
+                  );
+      end;
     end;
 
     FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;

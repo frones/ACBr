@@ -407,6 +407,7 @@ type
   private
     // Entrada
     FNumeroNFSe: String;
+    FCodigoVerificacao: String;
     FCodigoCancelamento: String;
     FMotivoCancelamento: String;
     // Retorno
@@ -429,6 +430,7 @@ type
     procedure Clear; override;
 
     property NumeroNFSe: String         read FNumeroNFSe         write FNumeroNFSe;
+    property CodigoVerificacao: String  read FCodigoVerificacao  write FCodigoVerificacao;
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
 
@@ -3645,7 +3647,11 @@ begin
     end;
 
     if FNotasFiscais.Count > 0 then
-      FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;
+      begin
+        FNumeroNFSe := FNotasFiscais.Items[0].NFSe.Numero;
+        if FProvedor = proISSDSF then
+          FCodigoVerificacao := FNotasFiscais.Items[0].NFSe.CodigoVerificacao;
+      end;
 
     case FProvedor of
       proCONAM: FURI := 'Sdt_cancelanfe';

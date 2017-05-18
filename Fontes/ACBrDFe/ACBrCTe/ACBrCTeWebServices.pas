@@ -540,6 +540,8 @@ type
 
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
+    function EnviaOS(ALote: Integer): Boolean; overload;
+    function EnviaOS(ALote: String): Boolean; overload;
     procedure Inutiliza(CNPJ, AJustificativa: String;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: Integer);
 
@@ -953,8 +955,7 @@ begin
     end;
 
     // Verificar se a CT-eOS foi autorizada com sucesso
-    Result := (FCTeRetornoOS.cStat = 104) and
-      (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoOS.protCTe.cStat));
+    Result := (TACBrCTe(FPDFeOwner).CstatProcessado(FCTeRetornoOS.protCTe.cStat));
 
     if Result then
     begin
@@ -3200,6 +3201,21 @@ begin
 
   if not FRetorno.Executar then
     FRetorno.GerarException( FRetorno.Msg );
+
+  Result := True;
+end;
+
+function TWebServices.EnviaOS(ALote: Integer): Boolean;
+begin
+  Result := EnviaOS(IntToStr(ALote));
+end;
+
+function TWebServices.EnviaOS(ALote: String): Boolean;
+begin
+  FEnviar.Lote := ALote;
+
+  if not Enviar.Executar then
+    Enviar.GerarException( Enviar.Msg );
 
   Result := True;
 end;

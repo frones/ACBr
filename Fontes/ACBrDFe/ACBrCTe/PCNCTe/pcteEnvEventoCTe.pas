@@ -110,6 +110,7 @@ type
     FEvento: TInfEventoCollection;
     FVersao: String;
     FXML: AnsiString;
+    FVersaoDF: TVersaoCTe;
 
     procedure SetEvento(const Value: TInfEventoCollection);
   public
@@ -120,12 +121,13 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
   published
-    property Gerador: TGerador             read FGerador write FGerador;
-    property Opcoes: TGeradorOpcoes        read FOpcoes  write FOpcoes;
-    property idLote: Integer               read FidLote  write FidLote;
-    property Evento: TInfEventoCollection  read FEvento  write SetEvento;
-    property Versao: String                read FVersao  write FVersao;
-    property XML: AnsiString               read FXML     write FXML;
+    property Gerador: TGerador            read FGerador  write FGerador;
+    property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
+    property idLote: Integer              read FidLote   write FidLote;
+    property Evento: TInfEventoCollection read FEvento   write SetEvento;
+    property Versao: String               read FVersao   write FVersao;
+    property XML: AnsiString              read FXML      write FXML;
+    property VersaoDF: TVersaoCTe         read FVersaoDF write FVersaoDF;
   end;
 
 implementation
@@ -170,7 +172,10 @@ function TEventoCTe.GerarXML: boolean;
 var
   sDoc: String;
   i, j: Integer;
+  Ok: Boolean;
 begin
+  VersaoDF := StrToVersaoCTe(Ok, Versao);
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
 
@@ -203,7 +208,7 @@ begin
   if not ValidarChave(Evento.Items[0].InfEvento.chCTe)
    then Gerador.wAlerta('EP08', 'chCTe', '', 'Chave de CTe inválida');
 
-  if Versao = '3.00' then
+  if VersaoDF >= ve300 then
     Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, DateTimeTodh(Evento.Items[0].InfEvento.dhEvento) +
                                                              GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
                                                              Evento.Items[0].InfEvento.dhEvento), DSC_DEMI)
@@ -250,7 +255,7 @@ begin
        Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
        Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
 
-       if Versao = '3.00' then
+       if VersaoDF >= ve300 then
          Gerador.wGrupo('toma4')
        else
          Gerador.wGrupo('toma04');
@@ -272,7 +277,7 @@ begin
             Gerador.wAlerta('EP13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
          end;
 
-       if Versao = '3.00' then
+       if VersaoDF >= ve300 then
          Gerador.wGrupo('/toma4')
        else
          Gerador.wGrupo('/toma04');
@@ -285,7 +290,7 @@ begin
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UFFim) then
          Gerador.wAlerta('EP16', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
 
-       if Versao = '3.00' then
+       if VersaoDF >= ve300 then
        begin
 //         Gerador.wCampo(tcStr, 'EP17', 'tpCTe', 01, 01, 1, tpCTePagToStr(Evento.Items[0].InfEvento.detEvento.tpCTe), DSC_TPCTE);
          // Segundo o Manual página 104 devemos informar o valor "0" para tpCTe

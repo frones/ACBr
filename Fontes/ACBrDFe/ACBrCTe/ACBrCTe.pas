@@ -648,7 +648,10 @@ begin
   Conhecimentos.Assinar;
   Conhecimentos.Validar;
 
-  Result := WebServices.Envia(ALote);
+  if Configuracoes.Geral.ModeloDF = moCTeOS then
+    Result := WebServices.EnviaOS(ALote)
+  else
+    Result := WebServices.Envia(ALote);
 
   if DACTE <> nil then
   begin

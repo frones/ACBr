@@ -845,7 +845,10 @@ var
 
   function PosCTe: integer;
   begin
-    Result := pos('</CTe>', XMLStr);
+    if TACBrCTe(ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
+      Result := Pos('</CTeOS>', XMLStr)
+    else
+      Result := pos('</CTe>', XMLStr);
   end;
 
 begin

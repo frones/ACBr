@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/05/2017
+-- Diversos --
+[*] Varias alterações visando a nova versão do CT-e bem como o novo modelo CTe OS.
+   Por: BSoft
 
 10/05/2017
 -- Diversos --

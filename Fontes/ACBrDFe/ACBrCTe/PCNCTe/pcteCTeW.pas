@@ -1903,8 +1903,13 @@ begin
     Gerador.wCampo(tcStr, '#361', 'respSeg ', 01, 01, 1, TpRspSeguroToStr(CTe.infCTeNorm.seg[i].respSeg), DSC_RESPSEG);
     Gerador.wCampo(tcStr, '#362', 'xSeg    ', 01, 30, 0, CTe.infCTeNorm.seg[i].xSeg, DSC_XSEG);
     Gerador.wCampo(tcStr, '#363', 'nApol   ', 01, 20, 0, CTe.infCTeNorm.seg[i].nApol, DSC_NAPOL);
-    Gerador.wCampo(tcStr, '#364', 'nAver   ', 01, 20, 0, CTe.infCTeNorm.seg[i].nAver, DSC_NAVER);
-    Gerador.wCampo(tcDe2, '#365', 'vCarga  ', 01, 15, 0, CTe.infCTeNorm.seg[i].vCarga, DSC_VMERC);
+
+    if CTe.ide.modelo = 57 then
+    begin
+      Gerador.wCampo(tcStr, '#364', 'nAver' , 01, 20, 0, CTe.infCTeNorm.seg[i].nAver, DSC_NAVER);
+      Gerador.wCampo(tcDe2, '#365', 'vCarga', 01, 15, 0, CTe.infCTeNorm.seg[i].vCarga, DSC_VMERC);
+    end;
+
     Gerador.wGrupo('/seg');
   end;
   if CTe.infCTeNorm.seg.Count > 990 then

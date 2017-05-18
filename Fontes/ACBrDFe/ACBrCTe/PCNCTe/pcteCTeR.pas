@@ -708,16 +708,16 @@ begin
       CTe.infCTeNorm.InfCarga.proPred     := Leitor.rCampo(tcStr,'proPred');
       CTe.infCTeNorm.InfCarga.xOutCat     := Leitor.rCampo(tcStr,'xOutCat');
       CTe.infCTeNorm.infCarga.vCargaAverb := Leitor.rCampo(tcDe2,'vCargaAverb');
-    end;
 
-    i01 := 0;
-    while Leitor.rExtrai(3, 'infQ', '', i01 + 1) <> '' do
-    begin
-      CTe.infCTeNorm.InfCarga.infQ.Add;
-      CTe.infCTeNorm.InfCarga.infQ[i01].cUnid  := Leitor.rCampo(tcStr, 'cUnid');
-      CTe.infCTeNorm.InfCarga.infQ[i01].tpMed  := Leitor.rCampo(tcStr, 'tpMed');
-      CTe.infCTeNorm.InfCarga.infQ[i01].qCarga := Leitor.rCampo(tcDe4, 'qCarga');
-      inc(i01);
+      i01 := 0;
+      while Leitor.rExtrai(3, 'infQ', '', i01 + 1) <> '' do
+      begin
+        CTe.infCTeNorm.InfCarga.infQ.Add;
+        CTe.infCTeNorm.InfCarga.infQ[i01].cUnid  := Leitor.rCampo(tcStr, 'cUnid');
+        CTe.infCTeNorm.InfCarga.infQ[i01].tpMed  := Leitor.rCampo(tcStr, 'tpMed');
+        CTe.infCTeNorm.InfCarga.infQ[i01].qCarga := Leitor.rCampo(tcDe4, 'qCarga');
+        inc(i01);
+      end;
     end;
 
     if Leitor.rExtrai(2, 'infDoc') <> ''

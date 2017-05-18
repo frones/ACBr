@@ -978,6 +978,7 @@ begin
     XMLRet := RemoverEncoding('<?xml version = "1.0" encoding = "utf-8"?>', XMLRet);
     XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1"?>', XMLRet);
     XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', XMLRet);
+    XMLRet := RemoverEncoding('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>', XMLRet);
   end;
 
   Result := XMLRet;

@@ -775,6 +775,7 @@ var
   i: Integer;
 begin
   i := 0;
+  
   if (Leitor.rExtrai(1, 'CancelarResponse') <> '') then
   begin
     if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
@@ -786,6 +787,8 @@ begin
     else
       FInfCanc.FSucesso := 'true';
   end;
+
+  Result := True;
 end;
 
 function TretCancNFSe.LerXml_proGoverna: Boolean;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/05/2017
+[*] Alterações na leitura do retorno do Envio Sincrono.
+    Alguns provedores já retornam a nota outros há necessidade de realizar a consulta.
+   Por: Italo Jurisato Junior
+
 17/05/2017
 [*] Alterações visando o provedor ISSDSF - Cancelamento.
    Por: Danny

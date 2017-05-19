@@ -199,6 +199,7 @@ type
     // Entrada
     FNumeroLote: String;
     // Retorno
+    FNotaRetornada: Boolean;
     FRetEnvLote: TRetEnvLote;
 
   protected
@@ -217,6 +218,7 @@ type
 
     property NumeroLote: String read FNumeroLote;
 
+    property NotaRetornada: Boolean  read FNotaRetornada;
     property RetEnvLote: TRetEnvLote read FRetEnvLote write FRetEnvLote;
   end;
 
@@ -2484,61 +2486,72 @@ function TNFSeEnviarSincrono.TratarResposta: Boolean;
 var
   i: Integer;
 begin
-  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg);
-
-  if Assigned(FRetEnvLote) then
-    FreeAndNil(FRetEnvLote);
-  FRetEnvLote := TRetEnvLote.Create;
-
-  FRetEnvLote.Leitor.Arquivo := FPRetWS;
-  FRetEnvLote.Provedor := FProvedor;
-  FRetEnvLote.LerXml;
-
-  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
-
-  FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
-  FProtocolo       := RetEnvLote.InfRec.Protocolo;
-  if RetEnvLote.InfRec.NumeroLote <> '' then
-    FNumeroLote := RetEnvLote.InfRec.NumeroLote;
-
-  // Lista de Mensagem de Retorno
   FPMsg := '';
   FaMsg := '';
 
-  if FProtocolo <> '' then
-  begin
-    for i := 0 to FNotasFiscais.Count -1 do
-    begin
-      FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
-      FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
-    end;
-    FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
-             'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
-             'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
-             'Protocolo..... : ' + FProtocolo + LineBreak +
-             'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
-  end;
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg);
 
-  if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+  FNotaRetornada := (Pos(FPRetWS, 'CompNfse') > 0);
+
+  if FNotaRetornada then
   begin
-    for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Gerar);
+    Result := ExtrairNotasRetorno;
+  end
+  else
+  begin
+    if Assigned(FRetEnvLote) then
+      FreeAndNil(FRetEnvLote);
+    FRetEnvLote := TRetEnvLote.Create;
+
+    FRetEnvLote.Leitor.Arquivo := FPRetWS;
+    FRetEnvLote.Provedor := FProvedor;
+    FRetEnvLote.LerXml;
+
+    FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.RecSincrono);
+
+    FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
+    FProtocolo       := RetEnvLote.InfRec.Protocolo;
+    if RetEnvLote.InfRec.NumeroLote <> '' then
+      FNumeroLote := RetEnvLote.InfRec.NumeroLote;
+
+    // Lista de Mensagem de Retorno
+
+    if FProtocolo <> '' then
     begin
-      if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
-         (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
+      for i := 0 to FNotasFiscais.Count -1 do
       begin
-        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
-                         RetEnvLote.infRec.MsgRetorno.Items[i].Correcao + LineBreak;
+        FNotasFiscais.Items[i].NFSe.Protocolo     := FProtocolo;
+        FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
+      end;
+      FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+               'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
+               'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
+               'Protocolo..... : ' + FProtocolo + LineBreak +
+               'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+    end;
 
-        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
-                         'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
-                         'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
-                         'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
-                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+    if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+    begin
+      for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
+      begin
+        if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
+           (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
+        begin
+          FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                           RetEnvLote.infRec.MsgRetorno.Items[i].Correcao + LineBreak;
+
+          FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                           'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
+                           'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                           'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
+                           'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+        end;
       end;
     end;
-  end;
 
-  Result := (RetEnvLote.InfRec.Protocolo <> '');
+    Result := (RetEnvLote.InfRec.Protocolo <> '');
+  end;
 end;
 
 procedure TNFSeEnviarSincrono.FinalizarServico;
@@ -4671,32 +4684,35 @@ begin
   if not (Result) then
     FEnviarSincrono.GerarException( FEnviarSincrono.Msg );
 
-  // Alguns provedores requerem que sejam feitas as consultas para obter o XML
-  // da NFS-e
-  FConsSitLoteRPS.FProtocolo  := FEnviarSincrono.Protocolo;
-  FConsSitLoteRPS.FNumeroLote := FEnviarSincrono.NumeroLote;
-
-  FConsLote.FProtocolo := FEnviarSincrono.Protocolo;
-
-  if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
+  if not FEnviarSincrono.FNotaRetornada then
   begin
-    if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
+    // Alguns provedores requerem que sejam feitas as consultas para obter o XML
+    // da NFS-e
+    FConsSitLoteRPS.FProtocolo  := FEnviarSincrono.Protocolo;
+    FConsSitLoteRPS.FNumeroLote := FEnviarSincrono.NumeroLote;
+
+    FConsLote.FProtocolo := FEnviarSincrono.Protocolo;
+
+    if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
     begin
-      Result := FConsSitLoteRPS.Executar;
+      if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
+      begin
+        Result := FConsSitLoteRPS.Executar;
+
+        if not (Result) then
+          FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+      end;
+
+      case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
+        proInfisc,
+        proInfiscv11: Result := True
+      else
+        Result := FConsLote.Executar;
+      end;
 
       if not (Result) then
-        FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+        FConsLote.GerarException( FConsLote.Msg );
     end;
-
-    case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
-      proInfisc,
-      proInfiscv11: Result := True
-    else
-      Result := FConsLote.Executar;
-    end;
-
-    if not (Result) then
-      FConsLote.GerarException( FConsLote.Msg );
   end;
 end;
 

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/05/2017
+[+] Adição do bloco F ao ACBrSEF2
+		http://www.projetoacbr.com.br/forum/topic/36807-implementação-do-blocof-do-acbrsef2/
+		por Juliomar Marchetti
+		
 Data: 22/03/2017
 [+] Limpeza de uses desnecessárias
 	http://www.projetoacbr.com.br/forum/topic/35775-sugestão-limpeza-dos-uses-de-algumas-units/

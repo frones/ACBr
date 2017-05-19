@@ -61,6 +61,7 @@ interface
     FRegistro0150Count: Integer;
     FRegistro0200Count: Integer;
     FRegistro0205Count: Integer;
+    FRegistro0215Count: Integer;
     FRegistro0400Count: Integer;
     FRegistro0450Count: Integer;
     FRegistro0460Count: Integer;
@@ -89,6 +90,7 @@ interface
     procedure WriteRegistro0150(Reg0001: TRegistroSEF0001);
     procedure WriteRegistro0200(Reg0001: TRegistroSEF0001);
     procedure WriteRegistro0205(Reg0200: TRegistroSEF0200);
+    procedure WriteRegistro0215(Reg0200: TRegistroSEF0200);
     procedure WriteRegistro0400(Reg0001: TRegistroSEF0001);
     procedure WriteRegistro0450(Reg0001: TRegistroSEF0001);
     procedure WriteRegistro0460(Reg0450: TRegistroSEF0450);
@@ -122,11 +124,9 @@ interface
     procedure WriteRegistro0001;
     procedure WriteRegistro0990;
 
-
     property Registro0000: TRegistroSEF0000 read FRegistro0000 write FRegistro0000;
     property Registro0001: TRegistroSEF0001 read FRegistro0001 write FRegistro0001;
     property Registro0990: TRegistroSEF0990 read FRegistro0990 write FRegistro0990;
-
 
     property Registro0005Count: Integer read FRegistro0005Count write FRegistro0005Count;
     property Registro0025Count: Integer read FRegistro0025Count write FRegistro0025Count;
@@ -135,6 +135,7 @@ interface
     property Registro0150Count: Integer read FRegistro0150Count write FRegistro0150Count;
     property Registro0200Count: Integer read FRegistro0200Count write FRegistro0200Count;
     property Registro0205Count: Integer read FRegistro0205Count write FRegistro0205Count;
+    property Registro0215Count: Integer read FRegistro0215Count write FRegistro0215Count;
     property Registro0400Count: Integer read FRegistro0400Count write FRegistro0400Count;
     property Registro0450Count: Integer read FRegistro0450Count write FRegistro0450Count;
     property Registro0460Count: Integer read FRegistro0460Count write FRegistro0460Count;
@@ -198,8 +199,6 @@ begin
   end;
 end;
 
-
-
 function ConvertSEFIIIndicadorDocArregadacao(SEFIIIndicadorDocArregadacao :  TSEFIIIndicadorDocArregadacao) : string;
 begin
   case SEFIIIndicadorDocArregadacao of
@@ -210,7 +209,6 @@ begin
     daOutros : Result := '9';
   end;
 end;
-
 
 function ConvertSEFIIQualiAssinante(SEFIIQualiAssinante : TSEFIIQualiAssinante) : String;
 begin
@@ -271,7 +269,6 @@ begin
   end;
 end;
 
-
 constructor TBloco_0.Create;
 begin
   inherited;
@@ -287,7 +284,6 @@ end;
 procedure TBloco_0.WriteRegistro0000;
 var cCOD_CTD : string;
 begin
-
   if Assigned(Registro0000) then
   begin
      with Registro0000 do
@@ -664,7 +660,7 @@ begin
          /// Registros FILHOS
          WriteRegistro0205( Reg0001.Registro0200.Items[intFor] ) ;
          //WriteRegistro0210( Reg0001.Registro0200.Items[intFor] ) ;
-         //WriteRegistro0215( Reg0001.Registro0200.Items[intFor] );
+         WriteRegistro0215( Reg0001.Registro0200.Items[intFor] );
 
          Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
       end;
@@ -704,6 +700,29 @@ begin
      FRegistro0205Count := FRegistro0205Count + Reg0200.Registro0205.Count;
   end;
 end;
+
+procedure TBloco_0.WriteRegistro0215(Reg0200: TRegistroSEF0200);
+var
+  intFor: Integer;
+begin
+  if Assigned( Reg0200.Registro0215 ) then
+  begin
+    for intFor := 0 to Reg0200.Registro0215.Count - 1 do
+    begin
+       with Reg0200.Registro0215.Items[intFor] do
+       begin
+         Add(LFill('0215')           +
+             LFill( COD_ITEM_ANP )   +
+             LFill( DT_INI )         +
+             LFill( DT_FIN) ) ;
+       end;
+       Registro0990.QTD_LIN_0 := Registro0990.QTD_LIN_0 + 1;
+    end;
+    /// Variavél para armazenar a quantidade de registro do tipo.
+    FRegistro0215Count := FRegistro0215Count + Reg0200.Registro0215.Count;
+  end;
+end;
+
 procedure TBloco_0.CriaRegistros;
 begin
   FRegistro0000 := TRegistroSEF0000.Create;

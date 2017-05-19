@@ -103,14 +103,13 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
                           bfProdepe //PE001	Programa de Desenvolvimento do Estado de Pernambuco - Prodepe
                          );
 
-
   //Indicador de entrada de dados: TRegistro0030
   TSEFIIindicadorEntDados = (
                             iedDigitacaoDados,
                             iedImportacaoArquivo,
-                            iedValidacaoArqTexto
+                            iedValidacaoArqTexto,
+                            iedExportacao
                             );
-
 
   //Indicador do documento contido no arquivo:: TRegistro0030
   TSEFIIindicadorDocArquivo = (
@@ -144,7 +143,8 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
   ///Indicador de exigibilidade do Registro de Impressão de Documentos Fiscais: TRegistro0030
   TSEFIIIndicadorExigRegImpDocFiscais =(
                                         idSim,
-                                        idNao
+                                        idNao,
+                                        idVazio
                                        );
 
   //Indicador de exigibilidade do Registro de Utilização de Documentos Fiscais: TRegistro0030
@@ -264,7 +264,10 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
                               SrefMV,        //30    - Manifesto de Vôo (MV)	-
                               SrefBRP,       //31    - Bilhete/Recibo do Passageiro (BRP)	-
                               SrefNFe,       //55    - Nota Fiscal Eletrônica (NF-e)	55
-                              SrefCTe        //57    - Conhecimento de Transporte Eletrônico (CT-e)	57
+                              SrefCTe,       //57    - Conhecimento de Transporte Eletrônico (CT-e)	57
+                              SrefNFCe,      //65    -
+                              Sref98,        //98    -
+                              Sref99         //98    -
                               );
 
    TIndiceOperacao = (SefioEntrada, SefioSaida);
@@ -320,8 +323,6 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
                               esLivroCaixaPapel,
                               esNaoObrigado,
                               esVazio);
-
-
 
     { TOpenBlocos }
 
@@ -384,6 +385,10 @@ Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
     function StrToBenefFiscalICMS(var ok: boolean; const s: string): TSEFIIBeniFiscalICMS;
     function IndEntrDadosToStr(const t: TIndicadorDados): string;
     function StrToIndEntrDados(var ok: boolean; const s: string): TIndicadorDados;
+
+    function IndExigRIDFToStr(const t : TSEFIIIndicadorExigRegImpDocFiscais) : string;
+    function StrToExigRIDF(var ok: Boolean; const s: string): TSEFIIIndicadorExigRegImpDocFiscais;
+
 
     function CFOPToCOP(ACFOP : integer) : string;
 
@@ -511,6 +516,7 @@ begin
                               [impSimRegimeSimplificado, impSimRegimeIntermediario, impSimRegimeIntegral, impNaoObrigado]);
 end;
 
+
 function StrToIndExigEscrImposto(var ok: boolean; const s: string): TIndicadorExigeEscrImposto;
 begin
   result := StrToEnumerado(ok, s, ['0','1','2','9'],
@@ -582,17 +588,28 @@ end;
 
 function IndEntrDadosToStr(const t: TIndicadorDados): string;
 begin
-  result := EnumeradoToStr(t, ['0','1','2'],
-                              [iedDigitacaoDados, iedImportacaoArquivo, iedValidacaoArqTexto]);
+  result := EnumeradoToStr(t, ['0','1','2','3'],
+                              [iedDigitacaoDados, iedImportacaoArquivo, iedValidacaoArqTexto, iedExportacao]);
 
 end;
 
 function StrToIndEntrDados(var ok: boolean; const s: string): TIndicadorDados;
 begin
-  result := StrToEnumerado(ok, s, ['0','1','2'],
-                                  [iedDigitacaoDados, iedImportacaoArquivo, iedValidacaoArqTexto]);
+  result := StrToEnumerado(ok, s, ['0','1','2','3'],
+                                  [iedDigitacaoDados, iedImportacaoArquivo, iedValidacaoArqTexto, iedExportacao]);
 end;
 
+function IndExigRIDFToStr(const t : TSEFIIIndicadorExigRegImpDocFiscais) : string;
+begin
+  result := EnumeradoToStr(t, ['0','1',''],
+                              [idSim, idNao, idVazio]);
+end;
+
+function StrToExigRIDF(var ok: Boolean; const s: string): TSEFIIIndicadorExigRegImpDocFiscais;
+begin
+  result := StrToEnumerado(ok, s, ['0','1',''],
+                                  [idSim, idNao, idVazio]);
+end;
 
 function CFOPToCOP(ACFOP : integer) : string;
 begin

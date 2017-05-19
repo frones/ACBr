@@ -55,7 +55,7 @@ uses SysUtils, Classes, ACBrBase,
       {$ENDIF}
      {$ENDIF}
   ACBrTXTClass, ACBrSEF2_Bloco0_1, ACBrSEF2_BlocoE_1, ACBrSEF2_Bloco9,
-  ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2_BlocoH_1, ACBrSEF2Conversao,
+  ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2_BlocoH_1, ACBrSEF2Conversao, ACBrSEF2_BlocoF_1, ACBrSEF2_BlocoF,
   ACBrUtil, DateUtils;
 
 const
@@ -85,6 +85,7 @@ type
     fBloco_E: TBloco_E;
     fBloco_C: TBloco_C;
     fBloco_H: TBloco_H;
+    fBloco_F: TBloco_F;
     fBloco_9: TBloco_9;
 
     function GetAbout: ansistring;
@@ -126,6 +127,10 @@ type
     procedure WriteRegistroH001;
     procedure WriteRegistroH990;
 
+    /// BLOCO F
+    procedure WriteRegistroF001;
+    procedure WriteRegistroF990;
+
     /// BLOCO 9
     procedure WriteRegistro9001;
     procedure WriteRegistro9900;
@@ -142,6 +147,7 @@ type
     procedure WriteBloco_0;
     procedure WriteBloco_C(FechaBloco: boolean);
     procedure WriteBloco_H;
+    procedure WriteBloco_F;
     procedure WriteBloco_E;
     procedure WriteBloco_9;
 
@@ -154,6 +160,7 @@ type
     property Bloco_C: TBloco_C read fBloco_C write fBloco_C;
     property Bloco_E: TBloco_E read fBloco_E write fBloco_E;
     property Bloco_H: TBloco_H read fBloco_H write fBloco_H;
+    property Bloco_F: TBloco_F read fBloco_F write fBloco_F;
     property Bloco_9: TBloco_9 read fBloco_9 write fBloco_9;
   published
     property About: ansistring read GetAbout stored False;
@@ -197,6 +204,7 @@ begin
   fBloco_0 := TBloco_0.Create;
   fBloco_C := TBloco_C.Create;
   fBloco_E := TBloco_E.Create;
+  fBloco_F := TBloco_F.Create;
   fBloco_H := TBloco_H.Create;
   fBloco_9 := TBloco_9.Create;
 
@@ -213,6 +221,7 @@ begin
   fBloco_0.Free;
   fBloco_C.Free;
   fBloco_E.Free;
+  fBloco_F.Free;
   fBloco_H.Free;
   fBloco_9.Free;
 
@@ -279,6 +288,7 @@ begin
   InicializaBloco(Bloco_0);
   InicializaBloco(Bloco_C);
   InicializaBloco(Bloco_E);
+  InicializaBloco(Bloco_F);
   InicializaBloco(Bloco_H);
   InicializaBloco(Bloco_9);
 
@@ -302,6 +312,7 @@ begin
   Bloco_0.Registro0990.QTD_LIN_0 := 0;
   Bloco_C.RegistroC990.QTD_LIN_C := 0;
   Bloco_E.RegistroE990.QTD_LIN_E := 0;
+  Bloco_F.RegistroF990.QTD_LIN_F := 0;
   Bloco_H.RegistroH990.QTD_LIN_H := 0;
   Bloco_9.Registro9990.QTD_LIN_9 := 0;
 
@@ -321,6 +332,7 @@ begin
   FBloco_0.LimpaRegistros;
   FBloco_C.LimpaRegistros;
   FBloco_H.LimpaRegistros;
+  fBloco_F.LimpaRegistros;
   FBloco_E.LimpaRegistros;
   FBloco_9.LimpaRegistros;
 end;
@@ -339,6 +351,10 @@ begin
     begin
       if Bloco_E.RegistroE001.IND_MOV = icContConteudo
       then WriteBloco_E;
+
+      if (Bloco_F.RegistroF001.RegistroF200.Count > 0) then
+        WriteBloco_F;
+
       if Bloco_H.RegistroH001.IND_DAD = icContConteudo
       then WriteBloco_H;
     end;
@@ -372,6 +388,7 @@ begin
   fBloco_0.CurMascara := Value;
   fBloco_C.CurMascara := Value;
   fBloco_E.CurMascara := Value;
+  fBloco_F.CurMascara := Value;
   fBloco_H.CurMascara := Value;
   fBloco_9.CurMascara := Value;
 end;
@@ -383,6 +400,7 @@ begin
   fBloco_0.Delimitador := Value;
   fBloco_C.Delimitador := Value;
   fBloco_E.Delimitador := Value;
+  fBloco_F.Delimitador := Value;
   fBloco_H.Delimitador := Value;
   fBloco_9.Delimitador := Value;
 end;
@@ -394,6 +412,7 @@ begin
   fBloco_0.DT_FIN := Value;
   fBloco_C.DT_FIN := Value;
   fBloco_E.DT_FIN := Value;
+  fBloco_F.DT_FIN := Value;
   fBloco_H.DT_FIN := Value;
   fBloco_9.DT_FIN := Value;
 
@@ -408,6 +427,7 @@ begin
   fBloco_0.DT_INI := Value;
   fBloco_C.DT_INI := Value;
   fBloco_E.DT_INI := Value;
+  fBloco_F.DT_INI := Value;
   fBloco_H.DT_INI := Value;
   fBloco_9.DT_INI := Value;
 
@@ -427,6 +447,7 @@ begin
   fBloco_0.OnError := Value;
   fBloco_C.OnError := Value;
   fBloco_E.OnError := Value;
+  fBloco_F.OnError := Value;
   fBloco_H.OnError := Value;
   fBloco_9.OnError := Value;
 end;
@@ -443,6 +464,7 @@ begin
   fBloco_0.TrimString := Value;
   fBloco_C.TrimString := Value;
   fBloco_E.TrimString := Value;
+  fBloco_F.TrimString := Value;
   fBloco_H.TrimString := Value;
   fBloco_9.TrimString := Value;
 end;
@@ -516,6 +538,14 @@ begin
   Bloco_E.WriteBuffer;
   Bloco_E.Conteudo.Clear;
   Bloco_E.Gravado := True;
+end;
+
+procedure TACBrSEF2.WriteBloco_F;
+begin
+  WriteRegistroF001;
+  WriteRegistroF990;
+  Bloco_F.WriteBuffer;
+  Bloco_F.Gravado := True;
 end;
 
 procedure TACBrSEF2.WriteBloco_H;
@@ -612,6 +642,15 @@ begin
          begin
             REG_BLC := '0205';
             QTD_REG_BLC := Bloco_0.Registro0205Count;
+         end;
+      end;
+
+      if Bloco_0.Registro0215Count > 0 then
+      begin
+         with New do
+         begin
+            REG_BLC := '0215';
+            QTD_REG_BLC := Bloco_0.Registro0215Count;
          end;
       end;
 
@@ -1014,6 +1053,84 @@ begin
     QTD_REG_BLC := 1;
   end;
   Bloco_E.WriteRegistroE990;
+end;
+
+procedure TACBrSEF2.WriteRegistroF001;
+begin
+  Bloco_F.WriteRegistroF001;
+
+  with Bloco_9.Registro9900.New do
+  begin
+    REG_BLC := 'F001';
+    QTD_REG_BLC := 1;
+  end;
+
+  with Bloco_9.Registro9900 do
+  begin
+    if Bloco_F.RegistroF200Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'F200';
+        QTD_REG_BLC := Bloco_F.RegistroF200Count;
+      end;
+    end;
+
+    if Bloco_F.RegistroF205Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'F205';
+        QTD_REG_BLC := Bloco_F.RegistroF205Count;
+      end;
+    end;
+
+    if Bloco_F.RegistroF210Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'F210';
+        QTD_REG_BLC := Bloco_F.RegistroF210Count;
+      end;
+    end;
+
+    if Bloco_F.RegistroF215Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'F215';
+        QTD_REG_BLC := Bloco_F.RegistroF215Count;
+      end;
+    end;
+
+    if Bloco_F.RegistroF220Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'F220';
+        QTD_REG_BLC := Bloco_F.RegistroF220Count;
+      end;
+    end;
+
+    if Bloco_F.RegistroF230Count > 0 then
+    begin
+      with New do
+      begin
+        REG_BLC := 'F230';
+        QTD_REG_BLC := Bloco_F.RegistroF230Count;
+      end;
+    end;
+  end;
+end;
+
+procedure TACBrSEF2.WriteRegistroF990;
+begin
+  with Bloco_9.Registro9900.New do
+  begin
+    REG_BLC := 'F990';
+    QTD_REG_BLC := 1;
+  end;
+  Bloco_F.WriteRegistroF990;
 end;
 
 procedure TACBrSEF2.WriteRegistroH001;

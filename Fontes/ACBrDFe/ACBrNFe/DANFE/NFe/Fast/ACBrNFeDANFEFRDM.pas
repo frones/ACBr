@@ -296,7 +296,7 @@ begin
       begin
         SetLength(Step^, iPos - iLast);
         Chr := PChar(Step^);
-        for x := 1 to PCardinal(Cardinal(Step^) - SizeOf(Cardinal))^ do
+        for x := 1 to PCardinal(NativeUInt(Step^) - SizeOf(NativeUInt))^ do
         begin
           Chr^ := AString[iLast + x];
           Inc(Chr);
@@ -304,7 +304,7 @@ begin
       end else
         Step^ := '';
 
-      Cardinal(Step) := Cardinal(Step) + SizeOf(Cardinal);
+      NativeUInt(Step) := NativeUInt(Step) + SizeOf(NativeUInt);
       iLast := iPos + iDelLen;
 
       EndLoop:

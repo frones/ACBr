@@ -238,8 +238,8 @@ begin
     Result[0] := AString
   else
   begin
-    iDelLen := PCardinal(Cardinal(ADelimiter) - SizeOf(Cardinal))^;
-    iLen    := PCardinal(Cardinal(AString) - SizeOf(Cardinal))^;
+    iDelLen := PCardinal(NativeUInt(ADelimiter) - SizeOf(NativeUInt))^;
+    iLen    := PCardinal(NativeUInt(AString) - SizeOf(NativeUInt))^;
     Step    := @Result[0];
     iLast   := 0;
     iPos    := 0;
@@ -258,7 +258,7 @@ begin
       begin
         SetLength(Step^, iPos - iLast);
         Chr   := PChar(Step^);
-        for x := 1 to PCardinal(Cardinal(Step^) - SizeOf(Cardinal))^ do
+        for x := 1 to PCardinal(NativeUInt(Step^) - SizeOf(NativeUInt))^ do
         begin
           Chr^ := AString[iLast + x];
           Inc(Chr);
@@ -267,7 +267,7 @@ begin
       else
         Step^ := '';
 
-      Cardinal(Step) := Cardinal(Step) + SizeOf(Cardinal);
+      NativeUInt(Step) := NativeUInt(Step) + SizeOf(NativeUInt);
       iLast          := iPos + iDelLen;
 
     EndLoop:

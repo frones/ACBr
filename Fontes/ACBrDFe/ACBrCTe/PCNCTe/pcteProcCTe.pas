@@ -266,6 +266,7 @@ begin
     if (Gerador.ListaDeAlertas.Count = 0) and
        (FXML_CTe <> '') and (FXML_prot <> '') then
     begin
+      FchCTe := RetornarConteudoEntre(FXML_CTe, 'Id="CTe', '"');
 
       Modelo := StrToIntDef(RetornarModelo(FchCTe), 57);
 

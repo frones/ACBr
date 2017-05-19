@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/05/2017
+-- ACBrECFVirtual --
+[-] Correção para que o contador de Reduções Z (CRZ), seja impresso na Redução Z
+    de acordo com a Redução Z atual (assim como ocorre no ECF)
+    (por: DSA)
+
 Data: 13/05/2017
 -- ACBrDevice --
 [-] Ajuste para detecção de portas USB e DLL quando existe mais de uma exemplo :

@@ -2643,9 +2643,9 @@ begin
 
   try
     ZeraCupom;
-    ReducaoZVirtual( DataHora );
-
     fpReducoesZ := fpReducoesZ + 1 ;
+
+    ReducaoZVirtual( DataHora );
 
     if fpEstado = estRequerZ then
     begin

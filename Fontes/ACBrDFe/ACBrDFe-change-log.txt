@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2017
+-- ACBrDFeSSL --
+[*] Ajuste para não usar Documentos que não o CNPJ, do "SubjectName". Pois
+    alguns Certificados de empresas EPP, trazem o CPF no final do Nome.
+    (A leituta do CNPJ/CPF será feita pelas Extensões do Certificado)
+    (Por: DSA)
+
 28/04/2017
 -- ACBrDFeWinCrypt --
 [*] Ajuste em "SetCertContextPassword", para não disparar erros desconhecidos na

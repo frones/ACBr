@@ -446,6 +446,9 @@ begin
     if P > 0 then
     begin
       Result := OnlyNumber(copy(SubjectName, P+1, 14));
+      // Evita pegar CPF ou outro Documento, do SubjectName (comuns em EPP)
+      if (ValidarCNPJ(Result) <> '') then
+        Result := '';
     end;
   end;
 end;

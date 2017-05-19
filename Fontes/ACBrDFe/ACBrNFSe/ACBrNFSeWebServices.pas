@@ -109,7 +109,6 @@ type
     function GerarCabecalhoSoap: String; override;
     procedure InicializarDadosMsg(AIncluiEncodingCab: Boolean);
     procedure FinalizarServico; override;
-    function RemoverEncoding(AEncoding, AXML: String): String;
     procedure IncluirEncoding(Incluir: Boolean);
     function ExtrairRetorno(GrupoMsgRet: String): String;
     function ExtrairNotasRetorno: Boolean;
@@ -904,14 +903,9 @@ begin
   TACBrNFSe(FPDFeOwner).SetStatus(stNFSeIdle);
 end;
 
-function TNFSeWebService.RemoverEncoding(AEncoding, AXML: String): String;
-begin
-  Result := StringReplace(AXML, AEncoding, '', [rfReplaceAll])
-end;
-
 function TNFSeWebService.ExtrairRetorno(GrupoMsgRet: String): String;
 var
-  Encoding, AuxXML, XMLRet: String;
+  AuxXML, XMLRet: String;
 begin
   // Alguns provedores retornam a resposta em String
   // Aplicado a conversão de String para XML
@@ -924,8 +918,7 @@ begin
   FPRetornoWS := StringReplace(FPRetornoWS, #10       , '', [rfReplaceAll]);
   FPRetornoWS := StringReplace(FPRetornoWS, #13       , '', [rfReplaceAll]);
 
-  if Pos('?>', FPRetornoWS) > 0 then
-    FPRetornoWS := RemoverEncoding('<' + XML_V01 + '>', FPRetornoWS);
+  FPRetornoWS := RemoverDeclaracaoXML(FPRetornoWS);
 
   if (FProvedor = proNFSeBrasil) then
     AuxXML := ParseText(FPRetornoWS, true, false)
@@ -970,20 +963,7 @@ begin
   if XMLRet = '' then
     XMLRet := AuxXML;
 
-  if Pos('?>', XMLRet) > 0 then
-  begin
-    Encoding := '<?xml version=' + '''' + '1.0' + '''' +
-                   ' encoding=' + '''' + 'UTF-8' + '''' + '?>';
-
-    XMLRet := RemoverEncoding('<' + XML_V01 + '>', XMLRet);
-    XMLRet := RemoverEncoding('<' + ENCODING_UTF8 + '>', XMLRet);
-    XMLRet := RemoverEncoding('<' + ENCODING_UTF8_STD + '>', XMLRet);
-    XMLRet := RemoverEncoding(Encoding, XMLRet);
-    XMLRet := RemoverEncoding('<?xml version = "1.0" encoding = "utf-8"?>', XMLRet);
-    XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1"?>', XMLRet);
-    XMLRet := RemoverEncoding('<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>', XMLRet);
-    XMLRet := RemoverEncoding('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>', XMLRet);
-  end;
+  XMLRet := RemoverDeclaracaoXML(XMLRet);
 
   Result := XMLRet;
 end;

@@ -82,7 +82,7 @@ begin
   Buffer := StripHTML( Self.RespHTTP.Text );
 
   //DEBUG
-  WriteToTXT( 'c:\temp\bobo.txt', Buffer, False)
+  //WriteToTXT( 'c:\temp\bobo.txt', Buffer, False)
 
   (*Html := StringReplace(Html, #13#10, '', [rfReplaceAll]);
 

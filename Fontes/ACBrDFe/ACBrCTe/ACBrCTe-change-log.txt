@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/05/2017
+[*] Inclusão dos endereços do layout CTeRecepcaoOS_3.00 para os servidores SVC-RS 
+    e SVC-SP, tanto homologação quanto produção.
+   Por: Bsoft
+
 18/05/2017
 -- pcteProcCTe --
 [*] Correção, não estava obtendo de forma correta a chave do CT-e para poder pegar

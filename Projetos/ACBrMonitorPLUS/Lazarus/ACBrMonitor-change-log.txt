@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/05/2017
+[-]	Correção para gravar XML alterado na consulta. Correção anterior para o mesmo fim havia
+	se perdido.
+	http://www.projetoacbr.com.br/forum/topic/36665-n%C3%A3o-grava-xml-com-protocolo/?do=findComment&comment=241054
+	por: Celso Marigo Junior
+
 12/05/2017
 [-] Correção para AV ao carregar DFe.
 	Ajuste no componente ACBrSedex no lfm do formulario principal.

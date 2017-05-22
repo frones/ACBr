@@ -7939,7 +7939,7 @@ begin
 
     with Arquivos do
     begin
-      Salvar           := cbxSalvarArqs.Checked;
+      Salvar           := True;
       PathSalvar       := edtPathLogs.Text;
       SepararPorMes    := cbxPastaMensal.Checked;
       AdicionarLiteral := cbxAdicionaLiteral.Checked;

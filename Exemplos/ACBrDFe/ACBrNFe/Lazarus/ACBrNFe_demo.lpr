@@ -16,7 +16,7 @@ var
 begin
   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
   DeleteFile( HeapTraceFile );
-  SetHeapTraceOutput( HeapTraceFile );
+  //SetHeapTraceOutput( HeapTraceFile );
 
   RequireDerivedFormResource := True;
   Application.Initialize;

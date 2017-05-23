@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 23/05/2017
+-- ACBrBancoSantander
+[-] correção para nota promissoria
+		http://www.projetoacbr.com.br/forum/topic/36841-correção-santander-cnb-240/
+		por Juliomar Marchetti
+
 Data 15/05/2017
 -- ACBrBoleto --
 [+] propriedade homologação para gerar os dizeres de homologação corretamente em boletos 

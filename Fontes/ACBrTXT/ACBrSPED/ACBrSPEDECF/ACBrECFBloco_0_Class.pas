@@ -285,7 +285,7 @@ begin
                LFill(strOPT_PAES) +
                LFill(strFORMA_TRIB) +
                LFill(FORMA_APUR) +
-               LFill(COD_QUALIF_PJ) +
+               LFill(COD_QUALIF_PJ, 2) +
                LFill(FORMA_TRIB_PER) +
                LFill(MES_BAL_RED) +
                LFill(TIP_ESC_PRE) +
@@ -302,7 +302,7 @@ begin
                LFill(strOPT_PAES) +
                LFill(strFORMA_TRIB) +
                LFill(FORMA_APUR) +
-               LFill(COD_QUALIF_PJ) +
+               LFill(COD_QUALIF_PJ, 2) +
                LFill(FORMA_TRIB_PER) +
                LFill(MES_BAL_RED) +
                LFill(TIP_ESC_PRE) +

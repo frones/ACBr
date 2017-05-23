@@ -805,7 +805,7 @@ begin
             VLFill(TOT_ATIVO, 19, 2) +
             VLFill(VL_FOLHA, 19, 2) +
             VLFill(VL_ALIQ_RED, 4, 2) +
-            LFill(IND_REG_APUR, 1) +
+            ifThen( FBloco_0.Registro0000.COD_VER in [ ECFVersao100, ECFVersao200 ], LFill(IND_REG_APUR, 1), '' ) +
             LFill(IND_AVAL_ESTOQ, 1));
       end;
 

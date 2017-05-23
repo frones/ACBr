@@ -34,20 +34,21 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, ACBrDFeConfiguracoes, ACBrBlocoX_WebServices,
-  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque,
+  ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque, ACBrBlocoX_Comum,
   ACBrUtil;
 
 const
   ACBRBLOCOX_VERSAO = '1.1.0a';
 
 type
-
   { TConfiguracoesBlocoX }
 
   TConfiguracoesBlocoX = class(TConfiguracoes)
   public
+    FVersaoER: TVersaoER;
     procedure Assign(DeConfiguracoesBlocoX: TConfiguracoesBlocoX); overload;
   published
+    property VersaoER: TVersaoER read FVersaoER write FVersaoER;
     property Geral;
     property WebServices;
     property Certificados;

@@ -166,8 +166,14 @@ begin
 
   FGerador.wGrupo('DadosReducaoZ');
   FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferencia));
-  FGerador.wCampo(tcStr, '', 'DataEmissaoReducaoZ', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataEmissaoReducaoZ));
-  FGerador.wCampo(tcStr, '', 'HoraEmissaoReducaoZ', 0, 0, 1, HoraEmissaoReducaoZ);
+  case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
+       erv0205 :
+       begin
+            FGerador.wCampo(tcStr, '', 'DataEmissaoReducaoZ', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataEmissaoReducaoZ));
+            FGerador.wCampo(tcStr, '', 'HoraEmissaoReducaoZ', 0, 0, 1, HoraEmissaoReducaoZ);
+       end;
+  end;
+
   FGerador.wCampo(tcInt, '', 'CRZ', 4, 4, 1, CRZ);
   FGerador.wCampo(tcInt, '', 'COO', 6, 6, 1, COO);
   FGerador.wCampo(tcInt, '', 'CRO', 3, 3, 1, CRO);
@@ -193,18 +199,35 @@ begin
           begin
             FGerador.wGrupo('Produto');
             FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Produtos[X].Descricao);
-            FGerador.wCampo(tcStr, '', 'CodigoGTIN',        0, 0, 1, Produtos[X].Codigo.CodigoGTIN);
-            FGerador.wCampo(tcStr, '', 'CodigoCEST',    0, 0, 1,   Produtos[X].Codigo.CodigoCEST);
-            FGerador.wCampo(tcStr, '', 'CodigoNCMSH',    0, 0, 1,  Produtos[X].Codigo.CodigoNCMSH);
-            FGerador.wCampo(tcStr, '', 'CodigoProprio',    0, 0, 1,Produtos[X].Codigo.CodigoProprio);
+            case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
+                erv0204 :
+                begin
+                     FGerador.wCampo(tcStr, '', 'Codigo',    0, 0, 1,Produtos[X].Codigo.CodigoProprio);
+                     FGerador.wCampo(tcStr, '', 'CodigoTipo',    0, 0, 1,TipoCodigoToStr(Produtos[X].Codigo.Tipo));
+                end;
+                erv0205 :
+                begin
+                     FGerador.wCampo(tcStr, '', 'CodigoGTIN',        0, 0, 1, Produtos[X].Codigo.CodigoGTIN);
+                     FGerador.wCampo(tcStr, '', 'CodigoCEST',    0, 0, 1,   Produtos[X].Codigo.CodigoCEST);
+                     FGerador.wCampo(tcStr, '', 'CodigoNCMSH',    0, 0, 1,  Produtos[X].Codigo.CodigoNCMSH);
+                     FGerador.wCampo(tcStr, '', 'CodigoProprio',    0, 0, 1,Produtos[X].Codigo.CodigoProprio);
+                end;
+            end;
 
             FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.00',Produtos[X].Quantidade));
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Produtos[X].Unidade);
-            //FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorUnitario));
-            FGerador.wCampo(tcStr, '', 'ValorDesconto', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorDesconto));
-            FGerador.wCampo(tcStr, '', 'ValorAcrescimo', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorAcrescimo));
-            FGerador.wCampo(tcStr, '', 'ValorCancelamento', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorCancelamento));
-            FGerador.wCampo(tcStr, '', 'ValorTotalLiquido', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorTotalLiquido));
+            //FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorUnitario
+            case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
+                 // 0204 Unitario ou TotalLiquido???
+                 erv0204 : FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorTotalLiquido));
+                 erv0205 :
+                 begin
+                      FGerador.wCampo(tcStr, '', 'ValorDesconto', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorDesconto));
+                      FGerador.wCampo(tcStr, '', 'ValorAcrescimo', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorAcrescimo));
+                      FGerador.wCampo(tcStr, '', 'ValorCancelamento', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorCancelamento));
+                      FGerador.wCampo(tcStr, '', 'ValorTotalLiquido', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorTotalLiquido));
+                 end;
+            end;
 
             FGerador.wGrupo('/Produto');
           end;
@@ -216,17 +239,34 @@ begin
           begin
             FGerador.wGrupo('Servico');
             FGerador.wCampo(tcStr, '', 'Descricao',     0, 0, 1, Servicos[X].Descricao);
-            FGerador.wCampo(tcStr, '', 'CodigoGTIN',        0, 0, 1, Servicos[X].Codigo.CodigoGTIN);
-            FGerador.wCampo(tcStr, '', 'CodigoCEST',    0, 0, 1,   Servicos[X].Codigo.CodigoCEST);
-            FGerador.wCampo(tcStr, '', 'CodigoNCMSH',    0, 0, 1,  Servicos[X].Codigo.CodigoNCMSH);
-            FGerador.wCampo(tcStr, '', 'CodigoProprio',    0, 0, 1,Servicos[X].Codigo.CodigoProprio);
+            case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
+                erv0204 :
+                begin
+                     FGerador.wCampo(tcStr, '', 'Codigo',    0, 0, 1,Servicos[X].Codigo.CodigoProprio);
+                     FGerador.wCampo(tcStr, '', 'CodigoTipo',    0, 0, 1,TipoCodigoToStr(Servicos[X].Codigo.Tipo));
+                end;
+                erv0205 :
+                begin
+                    FGerador.wCampo(tcStr, '', 'CodigoGTIN',        0, 0, 1, Servicos[X].Codigo.CodigoGTIN);
+                    FGerador.wCampo(tcStr, '', 'CodigoCEST',    0, 0, 1,   Servicos[X].Codigo.CodigoCEST);
+                    FGerador.wCampo(tcStr, '', 'CodigoNCMSH',    0, 0, 1,  Servicos[X].Codigo.CodigoNCMSH);
+                    FGerador.wCampo(tcStr, '', 'CodigoProprio',    0, 0, 1,Servicos[X].Codigo.CodigoProprio);
+                end;
+            end;
             FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.00',Servicos[X].Quantidade));
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Servicos[X].Unidade);
             //FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorUnitario));
-            FGerador.wCampo(tcStr, '', 'ValorDesconto', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorDesconto));
-            FGerador.wCampo(tcStr, '', 'ValorAcrescimo', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorAcrescimo));
-            FGerador.wCampo(tcStr, '', 'ValorCancelamento', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorCancelamento));
-            FGerador.wCampo(tcStr, '', 'ValorTotalLiquido', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorTotalLiquido));
+            case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
+                 // 0204 Unitario ou TotalLiquido???
+                 erv0204 : FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorTotalLiquido));
+                 erv0205 :
+                 begin
+                    FGerador.wCampo(tcStr, '', 'ValorDesconto', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorDesconto));
+                    FGerador.wCampo(tcStr, '', 'ValorAcrescimo', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorAcrescimo));
+                    FGerador.wCampo(tcStr, '', 'ValorCancelamento', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorCancelamento));
+                    FGerador.wCampo(tcStr, '', 'ValorTotalLiquido', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorTotalLiquido));
+                 end;
+            end;
 
             FGerador.wGrupo('/Servico');
           end;

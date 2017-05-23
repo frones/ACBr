@@ -40,6 +40,7 @@ type
   TACBrBlocoX_TipoCodigo = (tpcGTIN, tpcEAN, tpcProprio);
   TACBrBlocoX_SitTributaria = (stIsento, stNaoTributado, stSubstTributaria, stTributado, stISSQN);
   TACBrBlocoX_Ippt = (ipptProprio, ipptTerceiros);
+  TVersaoER = (erv0204, erv0205);
 
   TACBrBlocoX_Codigo = class
   private

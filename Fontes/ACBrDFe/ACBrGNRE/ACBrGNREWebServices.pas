@@ -57,9 +57,6 @@ uses
   pgnreRetConsResLoteGNRE, pgnreConsConfigUF, pgnreRetConsConfigUF,
   ACBrGNREGuias, ACBrGNREConfiguracoes;
 
-//const
-//  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
-
 type
 
   { TGNREWebService }

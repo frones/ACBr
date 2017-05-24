@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 24/05/2017
+-- ACBRNFeNotasFiscais --
+[*] Método "NotaFiscal.Validar", modificado para não tentar assinar o XML, caso
+    o mesmo não contenha a Tag de assinatura
+    (por: DSA)
+
 -- ACBrNFeWebServices --
 [*] Ajuste para salvar os valores "SSLType" e "HeaderElement", que podem ser
     modificados pelo componente, caso a versão seja 4.0

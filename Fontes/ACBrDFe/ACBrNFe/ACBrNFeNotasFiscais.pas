@@ -312,7 +312,9 @@ var
   Modelo: TpcnModeloDF;
   cUF: Integer;
 begin
-  AXML := XMLAssinado;
+  AXML := FXMLAssinado;
+  if AXML = '' then
+    AXML := XMLOriginal;
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
   begin

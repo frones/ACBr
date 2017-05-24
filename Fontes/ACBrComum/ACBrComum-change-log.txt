@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 24/05/2017
+-- ACBrUtil --
+[*] Ajuste para compilação em 64bits em versões inferiores a XE2
+    http://www.projetoacbr.com.br/forum/topic/36053-instalador-n%C3%A3o-compila-pacotes-para-delphi-102-tokyo-win64/?do=findComment&comment=241530
+    (por: bsoft)
+
 Data: 19/04/2017
 -- ACBrUtil --
 [-] Método "TruncFix". Correção de A.V. "Invalid floating point operation", quando

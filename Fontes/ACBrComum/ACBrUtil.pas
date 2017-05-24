@@ -82,9 +82,14 @@ type
   TSetOfChars = set of AnsiChar;
   TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
 
-  {$IFNDEF FPC}
+  {$IfNDef FPC}
    TLibHandle = THandle;
-  {$ENDIF}
+
+   // Compatibilidade para compilar nas versões anteriores ao Delphi XE2
+   {$IfNDef DELPHIXE2_UP}
+    NativeUInt = Cardinal;
+   {$IfEnd}
+  {$EndIf}
    
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;

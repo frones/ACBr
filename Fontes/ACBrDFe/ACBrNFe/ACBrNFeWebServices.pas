@@ -43,6 +43,7 @@ interface
 uses
   Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
+  blcksock,
   pcnNFe,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConversaoNFe,
   pcnProcNFe, pcnRetCancNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe,
@@ -57,6 +58,8 @@ type
 
   TNFeWebService = class(TDFeWebService)
   private
+    FOldSSLType: TSSLType;
+    FOldHeaderElement: String;
   protected
     FPStatus: TStatusACBrNFe;
     FPLayout: TLayOut;
@@ -660,7 +663,6 @@ implementation
 uses
   StrUtils, Math,
   ACBrUtil, ACBrNFe,
-  blcksock,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
   pcnConsCad, pcnLeitor;
@@ -698,6 +700,9 @@ procedure TNFeWebService.InicializarServico;
 begin
   { Sobrescrever apenas se necessário }
   inherited InicializarServico;
+
+  FOldSSLType := FPDFeOwner.SSL.SSLType;
+  FOldHeaderElement := FPHeaderElement;
 
   { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
   if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
@@ -739,6 +744,10 @@ end;
 procedure TNFeWebService.FinalizarServico;
 begin
   { Sobrescrever apenas se necessário }
+
+  // Retornar configurações anteriores
+  FPDFeOwner.SSL.SSLType := FOldSSLType;
+  FPHeaderElement := FOldHeaderElement;
 
   TACBrNFe(FPDFeOwner).SetStatus(stIdle);
 end;

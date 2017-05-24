@@ -47,11 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2017
+-- ACBrNFeWebServices --
+[*] Ajuste para salvar os valores "SSLType" e "HeaderElement", que podem ser
+    modificados pelo componente, caso a versão seja 4.0
+    (por: BigWings)
+
 15/05/2017
 -- ACBRNFeNotasFiscais
 [-] Correção das informações de validação do CNPJ do destinatário estava como emitente
-		http://www.projetoacbr.com.br/forum/topic/36706-sugest%C3%A3o-de-ajuste-na-valida%C3%A7%C3%A3o-de-regra-de-neg%C3%B3cio-208-arquivo-acbrnfenotasfiscaispas/?do=findComment&comment=240480
-		(por: Juliomar Marchetti)
+    http://www.projetoacbr.com.br/forum/topic/36706-sugest%C3%A3o-de-ajuste-na-valida%C3%A7%C3%A3o-de-regra-de-neg%C3%B3cio-208-arquivo-acbrnfenotasfiscaispas/?do=findComment&comment=240480
+    (por: Juliomar Marchetti)
 		
 28/04/2017
 -- ACBrNFeConfiguracoes --
@@ -64,13 +70,12 @@ Símbolo : Significado
 [*] Correções para deixar a geração do XML em conformidade com a NT 2016/002 versão 1.10
    Por: Italo Jurisato Junior
 
-
 [*] possível correção para evitar problemas com acentuação de pastas na distribuicaodfe
-		http://www.projetoacbr.com.br/forum/topic/35561-distribuicaodfe-erro-na-gravação-com-propriedade-separarpornome-habilitado/
-		por Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/35561-distribuicaodfe-erro-na-gravação-com-propriedade-separarpornome-habilitado/
+    por Juliomar Marchetti
 		
 [*] Ajuste para separar nas pastas as nfe e eventos quando usado a distribuicaodfe
-		http://www.projetoacbr.com.br/forum/topic/35578-distribuicaodfe-separar-arquivos-de-eventos-e-da-nfe/
+    http://www.projetoacbr.com.br/forum/topic/35578-distribuicaodfe-separar-arquivos-de-eventos-e-da-nfe/
 		
 30/03/2017
 -- danfe fortes --

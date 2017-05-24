@@ -88,7 +88,7 @@ type
    // Compatibilidade para compilar nas versões anteriores ao Delphi XE2
    {$IfNDef DELPHIXE2_UP}
     NativeUInt = Cardinal;
-   {$IfEnd}
+   {$EndIf}
   {$EndIf}
    
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;

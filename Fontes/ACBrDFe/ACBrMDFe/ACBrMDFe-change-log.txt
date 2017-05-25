@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+24/05/2017
+-- ACBRMDFeManifestos --
+[*] Método "Manifesto.Validar", modificado para não tentar assinar o XML, caso
+    o mesmo não contenha a Tag de assinatura
+   Por: Italo Jurisato Junior
+
 26/04/2017
 -- pmdfeMDFeR --
 [*] Correção, só estava lendo o CNPJ do pagador do vale pedário, estava faltado

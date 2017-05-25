@@ -44,6 +44,25 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/05/2017
+-- ACBrDFeSSL --
+[-] Correção em "TDFeSSL.Assinar", para repor corretamente a Declaração do XML,
+    caso a mesma seja desprezada por "AjustarXMLAssinado", por não ser UTF8
+
+-- ACBrDFeWinCrypt --
+[*] Método: "GetCSPProviderInfo" renomeado para "GetProviderInfo", e refatorado
+    para suportar Certificados CNG
+[*] Método: "MsgErroGetCryptProvider", mensagem de erro por falha de hardware do
+    certificado melhorada para melhor clareza
+[+] Implementado código do método: "GetCNGProviderParamString"
+
+-- ACBrDFeXsMsXml --
+[*] Método: "VerificarAssinatura", correção na exibição da acentuação das
+    mensagens de Erro de assinatura
+[*] Método: "Assinar". Melhor documentação das duas formas de como proceder com
+    a assinatura (Antiga, usada na CAPICOM e Atual)
+    (por: DSA)
+
 19/05/2017
 -- ACBrDFeSSL --
 [*] Ajuste para não usar Documentos que não o CNPJ, do "SubjectName". Pois

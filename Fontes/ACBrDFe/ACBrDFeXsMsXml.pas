@@ -95,11 +95,17 @@ function TDFeSSLXmlSignMsXml.Assinar(const ConteudoXML, docElement,
 var
   AXml, XmlAss: AnsiString;
   xmldoc: IXMLDOMDocument3;
-  xmldsig: IXMLDigitalSignatureEx;
-  dsigKey: IXMLDSigKeyEx;
   signedKey: IXMLDSigKey;
   ResultInitialize: HRESULT;
   Inicializado: Boolean;
+  { //Antiga
+  xmldsig: IXMLDigitalSignature;
+  dsigKey: IXMLDSigKey;
+  ProviderType: DWORD;
+  ProviderName, ContainerName: String;}
+  // Ex
+  xmldsig: IXMLDigitalSignatureEx;
+  dsigKey: IXMLDSigKeyEx;
 begin
   Result := '';
   ResultInitialize := CoInitialize(nil);
@@ -142,6 +148,9 @@ begin
       //xmldoc.save('c:\temp\xmldoc.xml');
 
       // Criando Elemento de assinatura //
+      { // Antiga
+      xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignature;}
+      // Ex
       xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignatureEx;
       if (xmldsig = nil) then
         raise EACBrDFeException.Create('Erro ao criar Elemento para Assinatura');
@@ -151,17 +160,24 @@ begin
       if (xmldsig.signature = nil) then
         raise EACBrDFeException.Create('Erro ao encontrar nó para Assinatura');
 
+      // Criando Objeto para manipular a Chave Privada //
       dsigKey := Nil;
-      xmldsig.setStoreHandle( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi)^.hCertStore );
-      xmldsig.createKeyFromCertContext( FpDFeSSL.CertContextWinApi, dsigKey);
-
-      {GetProviderInfo( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi),
+      { // Antiga
+      ProviderType  := 0;
+      ProviderName  := '';
+      ContainerName := '';
+      GetProviderInfo( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi),
                        ProviderType,
                        ProviderName,
                        ContainerName);
+
       dsigKey := xmldsig.createKeyFromCSP( ProviderType,
                                            WideString(ProviderName),
-                                           WideString(ContainerName), 0);}
+                                           WideString(ContainerName), 0); }
+      // Ex
+      xmldsig.setStoreHandle( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi)^.hCertStore );
+      xmldsig.createKeyFromCertContext( FpDFeSSL.CertContextWinApi, dsigKey);
+
       if (dsigKey = nil) then
         raise EACBrDFeException.Create('Falha ao obter a Chave Privada do Certificado para Assinatura.');
 
@@ -294,7 +310,7 @@ begin
 
       if (not xmldoc.loadXML(WideString(AXml))) then
       begin
-        MsgErro := 'Não foi possível carregar o arquivo.';
+        MsgErro := ACBrStr('Não foi possível carregar o arquivo.');
         exit;
       end;
 
@@ -302,7 +318,7 @@ begin
       xmldsig.signature := xmldoc.selectSingleNode( WideString(SignatureNode));
       if (xmldsig.signature = nil) then
       begin
-        MsgErro := 'Não foi possível ler o nó de Assinatura ('+SignatureNode+')';
+        MsgErro := ACBrStr('Não foi possível ler o nó de Assinatura (')+SignatureNode+')';
         exit;
       end;
 
@@ -327,7 +343,6 @@ begin
           MsgErro := 'Erro ao verificar assinatura do arquivo: ' + E.Message;
       end;
     finally
-      MsgErro := ACBrStr(MsgErro);
       Result := (pKeyOut <> nil);
 
       pKeyOut := nil;

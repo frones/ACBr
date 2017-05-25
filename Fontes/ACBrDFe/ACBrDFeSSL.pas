@@ -929,11 +929,13 @@ begin
                                         IdSignature);
 
     // Verificando se modificou o Header do XML assinado, e voltando para o anterior //
-    if DeclaracaoXMLAntes <> '' then
+    if (DeclaracaoXMLAntes <> '') then
     begin
       DeclaracaoXMLDepois := ObtemDeclaracaoXML(XmlAss);
 
-      if DeclaracaoXMLAntes <> DeclaracaoXMLDepois then
+      if (DeclaracaoXMLDepois = '') then
+        XmlAss := DeclaracaoXMLAntes + XmlAss
+      else if (DeclaracaoXMLAntes <> DeclaracaoXMLDepois) then
         XmlAss := StringReplace(XmlAss, DeclaracaoXMLAntes, DeclaracaoXMLDepois, []);
     end;
   end;

@@ -99,12 +99,13 @@ function GetProviderOrKeyIsHardware( ProviderOrKeyHandle: HCRYPTPROV_OR_NCRYPT_K
 function GetCSPProviderParamString(ACryptProvider: HCRYPTPROV; dwParam: DWORD): String;
 function GetCSPProviderParamDWord(ACryptProvider: HCRYPTPROV; dwParam: DWORD): DWORD;
 function GetCSPProviderIsHardware(ACryptProvider: HCRYPTPROV): Boolean;
-procedure GetCSPProviderInfo(ACertContext: PCCERT_CONTEXT;
-   var ProviderType: DWORD; var ProviderName, ContainerName: String);
 
-function GetCNGProviderParamString(ACryptProvider: NCRYPT_KEY_HANDLE; dwParam: DWORD): String;
-function GetCNGProviderParamDWord(ACryptProvider: NCRYPT_KEY_HANDLE; dwParam: LPCWSTR): DWORD;
-function GetCNGProviderIsHardware(ACryptProvider: NCRYPT_KEY_HANDLE): Boolean;
+function GetCNGProviderParamString(ACryptHandle: NCRYPT_HANDLE; dwParam: LPCWSTR): String;
+function GetCNGProviderParamDWord(ACryptHandle: NCRYPT_HANDLE; dwParam: LPCWSTR): DWORD;
+function GetCNGProviderIsHardware(ACryptHandle: NCRYPT_HANDLE): Boolean;
+
+procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT;
+   out ProviderType: DWORD; out ProviderName, ContainerName: String);
 
 function GetCertExtension(ACertContext: PCCERT_CONTEXT; ExtensionName: String): PCERT_EXTENSION;
 function DecodeCertExtensionToNameInfo(AExtension: PCERT_EXTENSION; ExtensionName: String): PCERT_ALT_NAME_INFO;
@@ -142,7 +143,7 @@ begin
     WinErro := GetLastError;
 
   if WinErro = DWORD( NTE_KEYSET_NOT_DEF ) then
-    Result := 'Provedor de Criptografia não encontrado!'
+    Result := 'Provedor de Criptografia não encontrado. Verifique a configuração do Certificado'
   else if WinErro = DWORD( NTE_BAD_KEYSET ) then
     Result := 'O recipiente da chave não pôde ser aberto'
   else if WinErro = DWORD( NTE_KEYSET_ENTRY_BAD ) then
@@ -310,38 +311,35 @@ begin
   Result := ((ImpType and CRYPT_IMPL_HARDWARE) = CRYPT_IMPL_HARDWARE);
 end;
 
-procedure GetCSPProviderInfo(ACertContext: PCCERT_CONTEXT;
-   var ProviderType: DWORD; var ProviderName, ContainerName: String);
+function GetCNGProviderParamString(ACryptHandle: NCRYPT_HANDLE; dwParam: LPCWSTR
+  ): String;
 var
-  dwKeySpec: DWORD;
-  mCryptProviderCert: HCRYPTPROV;
-  pfCallerFreeProv: LongBool;
+  pdwDataLen, pcbResult: DWORD;
+  pbData: PBYTE;
+  Ret: SECURITY_STATUS;
 begin
-  // Obtendo o Contexto do Provedor de Criptografia do Certificado //
-  dwKeySpec := 0;
-  if not CryptAcquireCertificatePrivateKey( ACertContext,
-                                            0, Nil, mCryptProviderCert,
-                                            dwKeySpec, pfCallerFreeProv) then
-    raise EACBrDFeException.Create( MsgErroGetCryptProvider );
+  pdwDataLen := 0;
+  Ret := NCryptGetProperty(ACryptHandle, dwParam, nil, pdwDataLen, pcbResult, 0);
+  if (Ret <> ERROR_SUCCESS) then
+    raise EACBrDFeException.Create(
+        'GetCNGProviderParamString: Falha ao obter BufferSize. Erro:'+GetLastErrorAsHexaStr);
 
+  pbData := AllocMem(pdwDataLen);
   try
-    ProviderType  := GetCSPProviderParamDWord( mCryptProviderCert, PP_PROVTYPE);
-    ProviderName  := GetCSPProviderParamString( mCryptProviderCert, PP_NAME);
-    ContainerName := GetCSPProviderParamString( mCryptProviderCert, PP_CONTAINER);
+    SetLength(Result, pdwDataLen);
+    Ret := NCryptGetProperty(ACryptHandle, dwParam, pbData, pdwDataLen, pcbResult, 0);
+    if (Ret <> ERROR_SUCCESS) then
+      raise EACBrDFeException.Create(
+          'GetCNGProviderParamString: Falha ao Ler Retorno. Erro:'+GetLastErrorAsHexaStr);
+
+    SetLength(Result, pdwDataLen-1);
+    Move(pbData^, Result[1], pdwDataLen-1);
   finally
-    if pfCallerFreeProv then
-      CryptReleaseContext(mCryptProviderCert, 0);
+    Freemem(pbData);
   end;
 end;
 
-
-function GetCNGProviderParamString(ACryptProvider: NCRYPT_KEY_HANDLE;
-  dwParam: DWORD): String;
-begin
-   // TODO:
-end;
-
-function GetCNGProviderParamDWord(ACryptProvider: NCRYPT_KEY_HANDLE;
+function GetCNGProviderParamDWord(ACryptHandle: NCRYPT_HANDLE;
   dwParam: LPCWSTR): DWORD;
 var
   pdwDataLen, pcbResult: DWORD;
@@ -349,21 +347,53 @@ var
 begin
   pdwDataLen := SizeOf(DWORD);
   pcbResult := 0;
-  Ret := NCryptGetProperty(ACryptProvider, dwParam, @Result, pdwDataLen, pcbResult, 0);
+  Ret := NCryptGetProperty(ACryptHandle, dwParam, @Result, pdwDataLen, pcbResult, 0);
   if (Ret <> ERROR_SUCCESS) then
     raise EACBrDFeException.Create('GetCNGProviderParamDWord. Erro: '+IntToHex(Ret, 8));
 end;
 
-function GetCNGProviderIsHardware(ACryptProvider: NCRYPT_KEY_HANDLE): Boolean;
+function GetCNGProviderIsHardware(ACryptHandle: NCRYPT_HANDLE): Boolean;
 var
   ImpType: DWORD;
 begin
   try
-    ImpType := GetCNGProviderParamDWord(ACryptProvider, NCRYPT_IMPL_TYPE_PROPERTY);
+    ImpType := GetCNGProviderParamDWord(ACryptHandle, NCRYPT_IMPL_TYPE_PROPERTY);
     Result := ((ImpType and NCRYPT_IMPL_HARDWARE_FLAG) = NCRYPT_IMPL_HARDWARE_FLAG);
   except
     Result := True;  // TODO: Assumindo que todos certificados CNG são A3
     // TODO: NCRYPT_IMPL_TYPE_PROPERTY não funciona com NCRYPT_KEY_HANDLE, espera NCRYPT_PROV_HANDLE
+  end;
+end;
+
+procedure GetProviderInfo(ACertContext: PCCERT_CONTEXT; out
+  ProviderType: DWORD; out ProviderName, ContainerName: String);
+var
+  CryptKeyProvInfo: CRYPT_KEY_PROV_INFO;
+  pcbData: DWORD;
+  pvData: Pointer;
+begin
+  ZeroMemory(@CryptKeyProvInfo, SizeOf(CryptKeyProvInfo));
+
+  if not CertGetCertificateContextProperty( ACertContext,
+                                            CERT_KEY_PROV_INFO_PROP_ID,
+                                            Nil,
+                                            pcbData) then
+    raise EACBrDFeException.Create( 'GetProviderInfo: Erro obtendo BufferSize de "CERT_KEY_PROV_INFO_PROP_ID"');
+
+  pvData := AllocMem(pcbData);
+  try
+    if not CertGetCertificateContextProperty( ACertContext,
+                                              CERT_KEY_PROV_INFO_PROP_ID,
+                                              pvData,
+                                              pcbData) then
+      raise EACBrDFeException.Create( 'GetProviderInfo: Erro obtendo CERT_KEY_PROV_INFO_PROP_ID');
+
+    CryptKeyProvInfo := CRYPT_KEY_PROV_INFO( pvData^ );
+    ProviderType  := CryptKeyProvInfo.dwProvType;
+    ProviderName  := String(CryptKeyProvInfo.pwszProvName);
+    ContainerName := String(CryptKeyProvInfo.pwszContainerName);
+  finally
+    Freemem(pvData);
   end;
 end;
 

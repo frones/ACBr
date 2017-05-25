@@ -59,6 +59,9 @@ type
      FPastaInput : String;
      FPastaOutput : String;
      FTimeout : Integer;
+     procedure SetPastaInput(AValue: String);
+     procedure SetPastaOutput(AValue: String);
+     procedure SetTimeout(AValue: Integer);
    protected
      procedure LoadDLLFunctions ; override;
      procedure UnLoadDLLFunctions; override;
@@ -96,14 +99,38 @@ type
      function EnviarStatusPagamento( StatusPagamento : TStatusPagamento ): TRespostaStatusPagamento;
 
    published
-     property PastaInput  : String  read FPastaInput  write FPastaInput;
-     property PastaOutput : String  read FPastaOutput write FPastaOutput;
-     property Timeout     : Integer read FTimeout     write FTimeout default 30;
+     property PastaInput  : String  read FPastaInput  write SetPastaInput;
+     property PastaOutput : String  read FPastaOutput write SetPastaOutput;
+     property Timeout     : Integer read FTimeout     write SetTimeout default 30;
    end;
 
 implementation
 
 Uses ACBrUtil, pcnConversao, dateutils, ACBrSAT;
+
+procedure TACBrSATMFe_integrador_XML.SetPastaInput(AValue: String);
+begin
+  if FPastaInput=AValue then
+    Exit;
+  FPastaInput := AValue;
+  FComandoMFE.PastaInput := FPastaInput;
+end;
+
+procedure TACBrSATMFe_integrador_XML.SetPastaOutput(AValue: String);
+begin
+  if FPastaOutput=AValue then
+    Exit;
+  FPastaOutput := AValue;
+  FComandoMFE.PastaOutput := FPastaOutput;
+end;
+
+procedure TACBrSATMFe_integrador_XML.SetTimeout(AValue: Integer);
+begin
+  if FTimeout=AValue then
+    Exit;
+  FTimeout := AValue;
+  FComandoMFE.Timeout := FTimeout;
+end;
 
 procedure TACBrSATMFe_integrador_XML.LoadDLLFunctions;
 begin
@@ -129,6 +156,10 @@ begin
   FPastaInput  := 'C:\Integrador\Input\';
   FPastaOutput := 'C:\Integrador\Output\';
   FTimeout     := 30;
+
+  FComandoMFE.PastaInput := FPastaInput;
+  FComandoMFE.PastaOutput := FPastaOutput;
+  FComandoMFE.Timeout     := FTimeout;
 end ;
 
 destructor TACBrSATMFe_integrador_XML.Destroy;

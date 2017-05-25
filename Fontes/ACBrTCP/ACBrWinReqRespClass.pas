@@ -45,9 +45,6 @@ uses
   ACBr_WinCrypt,
   blcksock;
 
-const
-  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
-
 type
 
   { EACBrWinReqResp }
@@ -109,7 +106,7 @@ type
 implementation
 
 uses
-  ACBrUtil;
+  ACBrUtil, ACBr_WinHttp, wininet;
 
 { EACBrWinINetReqResp }
 
@@ -136,14 +133,15 @@ end;
 
 function TACBrWinReqResp.GetWinInetError(ErrorCode: DWORD): String;
 var
-  ErroMsg: AnsiString;
+  ErrorMsg: AnsiString;
   Len: DWORD;
   WinINetHandle: HMODULE;
 begin
-  Result := 'Erro: '+IntToStr(ErrorCode);
+  ErrorMsg := '';
+  Result  := 'Erro: '+IntToStr(ErrorCode);
 
   WinINetHandle := GetModuleHandle('wininet.dll');
-  SetLength(ErroMsg, 1024);
+  SetLength(ErrorMsg, 1024);
   Len := FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM or
                         FORMAT_MESSAGE_FROM_HMODULE or
                         FORMAT_MESSAGE_IGNORE_INSERTS or
@@ -152,10 +150,40 @@ begin
                         @WinINetHandle,
                         ErrorCode,
                         0,
-                        @ErroMsg[1], 1024,
+                        @ErrorMsg[1], 1024,
                         nil);
-  if Len > 0 then
-    Result := Result + ' - '+ Trim(ErroMsg);
+  if (Len > 0) then
+    ErrorMsg := Trim(ErrorMsg)
+  else
+  begin
+    case ErrorCode of
+       ERROR_WINHTTP_TIMEOUT:
+         ErrorMsg := 'TimeOut de Requisição';
+       ERROR_WINHTTP_NAME_NOT_RESOLVED:
+         ErrorMsg := 'O nome do servidor não pode ser resolvido';
+       ERROR_WINHTTP_CANNOT_CONNECT:
+         ErrorMsg := 'Conexão com o Servidor falhou';
+       ERROR_WINHTTP_CONNECTION_ERROR:
+         ErrorMsg := 'A conexão com o servidor foi redefinida ou encerrada, ou um protocolo SSL incompatível foi encontrado';
+       ERROR_INTERNET_CONNECTION_RESET:
+         ErrorMsg := 'A conexão com o servidor foi redefinida';
+       ERROR_WINHTTP_SECURE_INVALID_CA:
+         ErrorMsg := 'Certificado raiz não é confiável pelo provedor de confiança';
+       ERROR_WINHTTP_SECURE_CERT_REV_FAILED:
+         ErrorMsg := 'Revogação do Certificado não pode ser verificada porque o servidor de revogação está offline';
+       ERROR_WINHTTP_SECURE_CHANNEL_ERROR:
+         ErrorMsg := 'Erro relacionado ao Canal Seguro';
+       ERROR_WINHTTP_SECURE_FAILURE:
+         ErrorMsg := 'Um ou mais erros foram encontrados no certificado Secure Sockets Layer (SSL) enviado pelo servidor';
+       ERROR_WINHTTP_CLIENT_CERT_NO_PRIVATE_KEY:
+         ErrorMsg := 'O contexto para o certificado de cliente SSL não tem uma chave privada associada a ele. O certificado de cliente pode ter sido importado para o computador sem a chave privada';
+       ERROR_WINHTTP_CLIENT_CERT_NO_ACCESS_PRIVATE_KEY:
+         ErrorMsg := 'Falha ao obter a Chave Privada do Certificado para comunicação segura';
+    end;
+  end;
+
+  if (ErrorMsg <> '') then
+    Result := Result + ' - '+ ErrorMsg;
 end;
 
 procedure TACBrWinReqResp.UpdateErrorCodes(ARequest: Pointer);

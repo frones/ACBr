@@ -48,6 +48,9 @@ uses
   ACBrWinReqRespClass,
   ACBr_WinCrypt;
 
+const
+  INTERNET_OPTION_CLIENT_CERT_CONTEXT = 84;
+
 type
 
   { TACBrWinINetReqResp }

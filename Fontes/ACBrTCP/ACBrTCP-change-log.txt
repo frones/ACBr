@@ -37,6 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2017
+-- ACBrWinReqRespClass --
+[*] Método: "GetWinInetError", modificado para exibir informações sobre os erros:
+    12002, 12007, 12029, 12030, 12031, 12045, 12057, 12157, 12175, 12185, 12186
+    (por: DSA)
+
+-- ACBrWinINetReqResp --
+[*] Adicionada constante que foi removida de "ACBrWinReqRespClass"
+
 11/05/2017
 -- ACBrSocket --
 [-] Correção para não atribuir Timeout para conexão HTTP, caso o mesmo seja 0
@@ -49,10 +58,10 @@ Símbolo : Significado
 
 24/04/2017
 -- ACBrMail --
-[+]	Adicionada função para salvar .eml antes de enviar o email. Contribuição no link abaixo, 
-	revisada pelo Jean Patrick
-	http://www.projetoacbr.com.br/forum/topic/36134-envio-de-e-mail-acbrmail-outlook-dúvida
-	por: Celso Marigo Junior	
+[+] Adicionada função para salvar .eml antes de enviar o email. Contribuição no link abaixo,
+    revisada pelo Jean Patrick
+    http://www.projetoacbr.com.br/forum/topic/36134-envio-de-e-mail-acbrmail-outlook-dúvida
+    (por: Celso Marigo Junior)
 
 12/04/2017
 -- ACBrSocket --

@@ -999,6 +999,7 @@ begin
 
     sOperacao   := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
     sTributacao := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
+    NFSe.TipoRecolhimento := AnsiUpperCase(Leitor.rCampo(tcStr, 'TipoRecolhimento')); 
 
     if sOperacao[1] in ['A', 'B'] then
     begin
@@ -2471,6 +2472,7 @@ begin
 
     sOperacao   := AnsiUpperCase(Leitor.rCampo(tcStr, 'Operacao'));
     sTributacao := AnsiUpperCase(Leitor.rCampo(tcStr, 'Tributacao'));
+    NFSe.TipoRecolhimento := AnsiUpperCase(Leitor.rCampo(tcStr, 'TipoRecolhimento'));
 
     if (sOperacao <> '') then
     begin

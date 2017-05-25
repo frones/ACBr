@@ -406,6 +406,7 @@ begin
       Add('DescontoIncondicionado', ftCurrency);
       Add('TotalServicos', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
       Add('TotalNota', ftCurrency); // Nao usado - mantido por compatibilidade era calcfield
+      Add('Tributacao', ftString, 1);
     end;
     CreateDataSet;
     LogChanges := False;
@@ -438,6 +439,7 @@ begin
       Add('RegimeEspecialTributacao', ftString, 50);
       Add('OptanteSimplesNacional', ftString, 10);
       Add('IncentivadorCultural', ftString, 10);
+      Add('TipoRecolhimento', ftString, 1); 
     end;
     CreateDataSet;
     LogChanges := False;
@@ -664,6 +666,7 @@ begin
         Add('DescontoCondicionado=DescontoCondicionado');
         Add('DescontoIncondicionado=DescontoIncondicionado');
         Add('TotalNota=TotalNota');
+        Add('Tributacao=Tributacao'); 
       end;
       DataSet       := cdsServicos;
       BCDToCurrency := False;
@@ -700,6 +703,7 @@ begin
         Add('OptanteSimplesNacional=OptanteSimplesNacional');
         Add('RegimeEspecialTributacao=RegimeEspecialTributacao');
         Add('NaturezaOperacao=NaturezaOperacao');
+        Add('TipoRecolhimento=TipoRecolhimento'); 
       end;
       DataSet       := cdsParametros;
       BCDToCurrency := False;
@@ -846,6 +850,7 @@ begin
         FieldByName('CodigoMunicipio').AsString     := IfThen(CodigoMunicipio <> '', CodigoMunicipio, '');
         FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
         FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
+        FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento; 
       end;
 
       with ConstrucaoCivil do
@@ -928,6 +933,7 @@ begin
       FieldByName('NumeroProcesso').AsString            := NumeroProcesso;
       FieldByName('Descricao').AsString                 := Descricao;
       FieldByName('ResponsavelRetencao').AsString       := ResponsavelRetencaoToStr(ResponsavelRetencao);
+      FieldByName('Tributacao').AsString                := TributacaoToStr(Tributacao); 
 
       with Valores do
       begin

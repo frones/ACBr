@@ -2471,7 +2471,7 @@ begin
 
   FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg);
 
-  FNotaRetornada := (Pos(FPRetWS, 'CompNfse') > 0);
+  FNotaRetornada := (Pos('CompNfse', FPRetWS) > 0);
 
   if FNotaRetornada then
   begin

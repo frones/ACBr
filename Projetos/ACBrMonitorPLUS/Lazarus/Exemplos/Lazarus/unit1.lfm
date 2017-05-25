@@ -1,18 +1,18 @@
 object Form1: TForm1
-  Left = 423
+  Left = 848
   Height = 261
-  Top = 233
+  Top = 249
   Width = 393
   Caption = 'Form1'
   ClientHeight = 261
   ClientWidth = 393
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.2.0'
+  LCLVersion = '1.6.4.0'
   object mEnviar: TMemo
     Left = 0
     Height = 90
-    Top = 0
+    Top = 38
     Width = 393
     Align = alTop
     Lines.Strings = (
@@ -24,7 +24,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Height = 38
-    Top = 90
+    Top = 0
     Width = 393
     Align = alTop
     ClientHeight = 38
@@ -34,7 +34,7 @@ object Form1: TForm1
       AnchorSideLeft.Side = asrCenter
       AnchorSideTop.Control = Panel1
       AnchorSideTop.Side = asrCenter
-      Left = 297
+      Left = 312
       Height = 25
       Top = 7
       Width = 75
@@ -46,7 +46,7 @@ object Form1: TForm1
     object bConectar: TButton
       AnchorSideTop.Control = Panel1
       AnchorSideTop.Side = asrCenter
-      Left = 209
+      Left = 232
       Height = 25
       Top = 7
       Width = 75
@@ -59,16 +59,16 @@ object Form1: TForm1
       Left = 56
       Height = 23
       Top = 7
-      Width = 144
+      Width = 96
       TabOrder = 2
       Text = 'localhost'
     end
     object Label1: TLabel
-      Left = 13
+      Left = 5
       Height = 15
       Top = 10
-      Width = 38
-      Caption = 'IP Serv:'
+      Width = 46
+      Caption = 'IP/Porta:'
       ParentColor = False
     end
   end
@@ -83,5 +83,21 @@ object Form1: TForm1
     )
     ScrollBars = ssAutoBoth
     TabOrder = 2
+  end
+  object Label2: TLabel
+    Left = 88
+    Height = 15
+    Top = 11
+    Width = 38
+    Caption = 'IP Serv:'
+    ParentColor = False
+  end
+  object edPorta: TEdit
+    Left = 160
+    Height = 23
+    Top = 7
+    Width = 64
+    TabOrder = 3
+    Text = '3434'
   end
 end

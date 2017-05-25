@@ -1800,7 +1800,7 @@ begin
            Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathEvento( TpcnTpEvento(StrToInt(Cmd.Params(0))) )
 
         else if cmd.Metodo = 'getpathinu' then //NFe.GetPathInu
-           ACBrNFe1.Configuracoes.Arquivos.GetPathInu(Cmd.Params(0))
+           Cmd.Resposta := ACBrNFe1.Configuracoes.Arquivos.GetPathInu(Cmd.Params(0))
 
         else if Cmd.Metodo = 'imprimirrelatorio' then //NFe.ImprimirRelatorio(cTexto)
          begin

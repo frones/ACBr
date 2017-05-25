@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/05/2017
+[-]	Correção no comando NFe.GetPathInu, não estava retornando resposta corretamente.
+	por: Celso Marigo Junior
+
 19/05/2017
 [-]	Correção para gravar XML alterado na consulta. Correção anterior para o mesmo fim havia
 	se perdido.

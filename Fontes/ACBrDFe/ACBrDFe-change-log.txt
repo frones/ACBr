@@ -63,6 +63,11 @@ Símbolo : Significado
     a assinatura (Antiga, usada na CAPICOM e Atual)
     (por: DSA)
 
+-- ACBrDFeXsXmlSec --
+[-] Método "Assinar", correção para assinar corretamente XMLs com acentos, e sem
+    a sessão de Declaração de Encoding
+    (por: DSA)
+
 19/05/2017
 -- ACBrDFeSSL --
 [*] Ajuste para não usar Documentos que não o CNPJ, do "SubjectName". Pois

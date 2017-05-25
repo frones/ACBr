@@ -70,6 +70,7 @@ const
   {$EndIf}
 
   cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& Id ID #IMPLIED>]>';
+  cENCODING_UTF8 = '<?xml version="1.0" encoding="UTF-8"?>';
   cCryptLibMSCrypto = 'mscrypto';
   cCryptLibOpenSSL = 'openssl';
 
@@ -608,16 +609,23 @@ function TDFeSSLXmlSignXmlSec.Assinar(const ConteudoXML, docElement,
   IdSignature: String): String;
 var
   AXml, XmlAss, DTD: String;
+  TemDeclaracao: Boolean;
 begin
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
   XmlAss := '';
+
+  // Verificando se possui a Declaração do XML, se não possuir, adiciona para OpenSSL compreender o Encoding
+  TemDeclaracao := XmlEhUTF8(ConteudoXML);
+  if not TemDeclaracao then
+    AXml := cENCODING_UTF8 + RemoverDeclaracaoXML(ConteudoXML)
+  else
+    AXml := ConteudoXML;
+
   if infElement <> '' then
   begin
     DTD := StringReplace(cDTD, '&infElement&', infElement, []);
-    AXml := InserirDTD(ConteudoXML, DTD);
-  end
-  else
-    AXml := ConteudoXML;
+    AXml := InserirDTD(AXml, DTD);
+  end;
 
   // Inserindo Template da Assinatura digital //
   if (not XmlEstaAssinado(AXml)) or (SignatureNode <> '') then
@@ -633,6 +641,9 @@ begin
 
   //DEBUG
   //WriteToTXT('C:\TEMP\XmlSigned1.xml', XmlAss, False, False);
+
+  if not TemDeclaracao then
+    XmlAss := RemoverDeclaracaoXML(XmlAss);
 
   XmlAss := AjustarXMLAssinado(XmlAss, FpDFeSSL.DadosCertificado.DERBase64);
 

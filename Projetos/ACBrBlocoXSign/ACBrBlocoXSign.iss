@@ -37,14 +37,14 @@ Name: firewallopen; Description: "Liberar {#MyAppName}, porta 3434, no Firewall 
 ; Aplicação
 Source: {#MyAppExeName}; DestDir: {app}; Flags: ignoreversion; Components: programa
 
-;OpenSSL
-Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\libeay32.dll; DestDir: {app}; Flags: ; Components: programa
-Source: {#ACBrDIR}\DLLs\OpenSSL\0.9.8.14\ssleay32.dll; DestDir: {app}; Flags: ; Components: programa
+;Diversos
 Source: {#ACBrDIR}\DLLs\Diversos\msvcr71.dll; DestDir: {app}; Components: programa;  Flags: sharedfile 
+
 ;DLLs CAPICOM
 Source: {#ACBrDIR}\DLLs\Capicom\capicom.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
 Source: {#ACBrDIR}\DLLs\Capicom\msxml5.dll; DestDir: {syswow64}; Components: programa; Flags: regserver sharedfile
 Source: {#ACBrDIR}\DLLs\Capicom\msxml5r.dll; DestDir: {syswow64}; Components: programa; Flags: sharedfile
+
 ;DLLs XMLSec
 Source: {#ACBrDIR}\DLLs\XMLSec\MinGW\32\*.dll; DestDir: {app}; Flags: ; Components: programa
 

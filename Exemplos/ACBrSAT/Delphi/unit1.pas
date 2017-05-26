@@ -500,6 +500,10 @@ begin
     edRedeProxyUser.Text      := INI.ReadString('Rede','proxy_user','');
     edRedeProxySenha.Text     := INI.ReadString('Rede','proxy_senha','');
 
+    edMFEInput.Text    :=  INI.ReadString('MFE','Input','c:\Integrador\Input\');
+    edMFEOutput.Text   :=  INI.ReadString('MFE','Output','c:\Integrador\Output\');
+    seMFETimeout.Value :=  INI.ReadInteger('MFE','Timeout',30);     
+
   finally
      INI.Free ;
   end ;
@@ -576,7 +580,10 @@ begin
     INI.WriteInteger('Rede','proxy_porta',edRedeProxyPorta.Value);
     INI.WriteString('Rede','proxy_user',edRedeProxyUser.Text);
     INI.WriteString('Rede','proxy_senha',edRedeProxySenha.Text);
-    
+
+    INI.WriteString('MFE','Input',edMFEInput.Text);
+    INI.WriteString('MFE','Output',edMFEOutput.Text);
+    INI.WriteInteger('MFE','Timeout',seMFETimeout.Value);     
   finally
      INI.Free ;
   end ;
@@ -1024,16 +1031,16 @@ begin
     Total.vCFeLei12741 := 1.23;
 
     Pagto1 := RoundABNT(TotalGeral/2,-2);
- {   with Pagto.Add do
+    with Pagto.Add do
     begin
       cMP := mpCartaodeCredito;
       vMP := Pagto1;
-    end;     }
+    end;
 
     with Pagto.Add do
     begin
       cMP := mpDinheiro;
-      vMP := TotalGeral - Pagto1 + 100;
+      vMP := TotalGeral - Pagto1 + 10;
     end;
 
     InfAdic.infCpl := 'Acesse www.projetoacbr.com.br para obter mais;informações sobre o componente ACBrSAT;'+

@@ -185,14 +185,60 @@ begin
 end;
 
 procedure TfrmPrincipal.FormCreate(Sender: TObject);
+var
+  fArquivo: TStringList;
 begin
-  CarregarGifBannerACBrSAC;
-
   edtCertificado.Clear;
   edtArqBlocoX.Clear;
   memArqAssinado.Clear;
 
   LerConfiguracoes;
+
+  ConfigurarDFe;
+
+  if (UpperCase(ParamStr(2)) = '/E') or
+     (UpperCase(ParamStr(2)) = '/V') then
+  begin
+    if FilesExists(ParamStr(1)) then
+    begin
+      try
+        fArquivo := TStringList.Create;
+        fArquivo.LoadFromFile(ParamStr(1));
+        if Pos('</reducaoz>',LowerCase(fArquivo.Text)) > 0 then
+          memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(fArquivo.Text, 'ReducaoZ', 'Mensagem')
+        else if Pos('</estoque>',LowerCase(fArquivo.Text)) > 0 then
+          memArqAssinado.Text := ACBrBlocoX1.SSL.Assinar(fArquivo.Text, 'Estoque', 'Mensagem')
+        else
+          ShowMessage('Arquivo não reconhecido');
+      finally
+        fArquivo.Free;
+      end;
+
+      if (UpperCase(ParamStr(2)) = '/E') then
+        btnTransmitirClick(Self)
+      else
+        btnValidarClick(Self);
+
+      WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),memArqAssinado.Text);
+      Close;
+    end
+    else
+    begin
+      WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),'Arquivo Inválido');
+      Close;
+    end;
+  end
+  else if UpperCase(ParamStr(2)) = '/C' then
+  begin
+    ACBrBlocoX1.WebServices.ConsultarBlocoX.Recibo := ParamStr(1);
+    ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
+
+    memArqAssinado.Text := ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
+    WriteToTXT('consultar-resposta.txt',memArqAssinado.Text);
+    Close;
+  end
+  else
+     CarregarGifBannerACBrSAC;;
 end;
 
 procedure TfrmPrincipal.Image2Click(Sender: TObject);

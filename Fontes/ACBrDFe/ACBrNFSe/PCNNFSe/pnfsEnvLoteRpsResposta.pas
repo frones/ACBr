@@ -300,9 +300,9 @@ var
   iNivel: Integer;
   Ok: Boolean;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     infRec.FNumeroLote := Leitor.rCampo(tcStr, 'NumeroLote');
     infRec.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
 
@@ -355,8 +355,8 @@ begin
       inc(i);
     end;
 
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -366,9 +366,9 @@ var
   strAux: AnsiString;
   leitorAux: TLeitor;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     if leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
@@ -452,8 +452,8 @@ begin
       FInfRec.FMsgRetorno[i].FMensagem := Leitor.Grupo;
       FInfRec.FMsgRetorno[i].FCorrecao := '';
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -463,9 +463,9 @@ var
   strAux: AnsiString;
   leitorAux: TLeitor;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     Leitor.Arquivo := RetirarPrefixos(Leitor.Arquivo, Provedor);
     Leitor.Grupo   := Leitor.Arquivo;
     if (leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '')
@@ -558,8 +558,8 @@ begin
         end;
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -567,9 +567,9 @@ function TretEnvLote.LerXml_proEquiplano: Boolean;
 var
   i: Integer;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'nrLote');
     infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dtRecebimento');
     infRec.FProtocolo       := Leitor.rCampo(tcStr, 'nrProtocolo');
@@ -603,8 +603,8 @@ begin
         end;
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -612,9 +612,9 @@ function TretEnvLote.LerXML_proFriburgo: Boolean;
 var
   i : Integer;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     FInfRec.Protocolo       := Leitor.rCampo(tcStr, 'Protocolo');
     FInfRec.NumeroLote      := Leitor.rCampo(tcStr, 'NumeroLote');
     FInfRec.DataRecebimento := Leitor.rCampo(tcDatHor, 'DataRecebimento');
@@ -634,8 +634,8 @@ begin
     begin
       FInfRec.Protocolo := '';
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -643,9 +643,9 @@ function TretEnvLote.LerXml_proInfisc: Boolean;
 var
   sMotCod, sMotDes: String;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     if leitor.rExtrai(1, 'confirmaLote') <> '' then
     begin
       FInfRec.FSucesso := Leitor.rCampo(tcStr, 'sit');
@@ -670,8 +670,8 @@ begin
         InfRec.MsgRetorno[0].FCorrecao := '';
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -681,9 +681,9 @@ var
   Cod, Msg: String;
   strAux: AnsiString;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     infRec.FNumeroLote      := Leitor.rCampo(tcStr, 'numeroLote');
     infRec.FDataRecebimento := Leitor.rCampo(tcDatHor, 'dataRecebimento');
     infRec.FProtocolo       := Leitor.rCampo(tcStr, 'numeroProtocolo');
@@ -708,8 +708,8 @@ begin
           Break;
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -720,9 +720,9 @@ var
   strAux, strAux2: AnsiString;
   leitorAux: TLeitor;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     VersaoXML := '1';
     strAux := leitor.rExtrai(1, 'RespostaLoteRps');
 
@@ -787,8 +787,8 @@ begin
         posI := pos('<confirmacao>', strAux);
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -797,9 +797,9 @@ var
   i, j, MsgErro: Integer;
   Msg: String;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     if (Leitor.rExtrai(1, 'RetornoLoteRps') <> '') then
     begin
       j := 0;
@@ -840,8 +840,8 @@ begin
         inc(i);
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -850,9 +850,9 @@ var
   sMotCod,sMotDes: string;
   i: integer;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     if leitor.rExtrai(1, 'Sdt_processarpsout') <> '' then begin
         FInfRec.FSucesso := Leitor.rCampo(tcStr, 'Id');
         if (FInfRec.FSucesso = 'Arquivo Aceito') then  begin
@@ -872,8 +872,8 @@ begin
             end;
         end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 
@@ -881,9 +881,9 @@ function TretEnvLote.LerXml_proSP: Boolean;
 var
   i: Integer;
 begin
-  Result := False;
-
   try
+    Result := True;
+
     if leitor.rExtrai(1, 'RetornoEnvioLoteRPS') <> '' then
     begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
@@ -980,8 +980,8 @@ begin
         Inc(i);
       end;
     end;
-  finally
-    Result := True;
+  except
+    Result := False;
   end;
 end;
 

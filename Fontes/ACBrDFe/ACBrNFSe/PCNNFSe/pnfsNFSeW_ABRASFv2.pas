@@ -142,7 +142,8 @@ begin
      (NFSe.Tomador.Contato.Telefone <> '') or
      (NFSe.Tomador.Contato.Email <>'') then
   begin
-    if FProvedor in [proActcon, proVersaTecnologia] then
+    if (FProvedor in [proActcon, proVersaTecnologia]) or
+      ((FProvedor = proActconv2) and (FVersaoDados = 2.01)) then
       Gerador.wGrupoNFSe('TomadorServico')
     else
       Gerador.wGrupoNFSe('Tomador');

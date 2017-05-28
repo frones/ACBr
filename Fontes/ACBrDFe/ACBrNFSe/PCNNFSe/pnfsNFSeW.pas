@@ -68,6 +68,7 @@ type
     FDefTipos: String;
     FServicoEnviar: String;
     FQuebradeLinha: String;
+    FVersaoDados: Double;
 
   public
     constructor Create(ANFSeW: TNFSeW); virtual;
@@ -90,6 +91,7 @@ type
     property DefTipos: String        read FDefTipos      write FDefTipos;
     property ServicoEnviar: String   read FServicoEnviar write FServicoEnviar;
     property QuebradeLinha: String   read FQuebradeLinha write FQuebradeLinha;
+    property VersaoDados: Double     read FVersaoDados   write FVersaoDados;
   end;
 
   { TNFSeW }
@@ -228,6 +230,7 @@ begin
   FDefTipos      := '';
   FServicoEnviar := '';
   FQuebradeLinha := ';';
+  FVersaoDados   := 1.0;
 end;
 
 function TNFSeWClass.ObterNomeArquivo: String;

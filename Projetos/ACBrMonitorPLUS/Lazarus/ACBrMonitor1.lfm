@@ -378,10 +378,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Height = 357
         Top = 1
         Width = 910
-        ActivePage = tsEscPos
+        ActivePage = tsECF
         Align = alClient
         Images = ImageList1
-        TabIndex = 18
+        TabIndex = 2
         TabOrder = 0
         object tsMonitor: TTabSheet
           Caption = '&Monitor'
@@ -2600,14 +2600,14 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Hint = 'SE NÃO LEU O CÓDIGO DE BARRAS:'#13#10#13#10'1 - Verifique se a Porta está correta'#13#10'2 - Experimente deixar o SUFIXO vazio. Após uma leitura '#13#10'verifique o Sufixo correto no final de "Ultima Leitura"'
           Caption = 'Leitor Serial'
           ClientHeight = 327
-          ClientWidth = 931
+          ClientWidth = 902
           ImageIndex = 10
           OnShow = tsLCBShow
           object Bevel2: TBevel
             Left = 331
             Height = 137
             Top = 15
-            Width = 544
+            Width = 515
             Anchors = [akTop, akLeft, akRight]
             Shape = bsFrame
           end
@@ -2717,7 +2717,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 347
             Height = 25
             Top = 101
-            Width = 515
+            Width = 486
             Anchors = [akTop, akLeft, akRight]
             OnChange = edLCBPreExcluirChange
             ParentShowHint = False
@@ -2730,7 +2730,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 25
             Hint = 'IMPORTANTE: Informar o sufixo correto é importante '#13#10'para ler corretamente um código de cada vez.'#13#10#13#10'Passe um produto pelo leitor e verifique o código '#13#10'do Sufixo no Final do campo "Ultima Leitura"'
             Top = 35
-            Width = 515
+            Width = 486
             Anchors = [akTop, akLeft, akRight]
             ItemHeight = 17
             ItemIndex = 0
@@ -2876,7 +2876,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 34
             Hint = 'Última Leitura'
             Top = 160
-            Width = 741
+            Width = 712
             Anchors = [akTop, akLeft, akRight]
             BevelInner = bvLowered
             Caption = 'Última leitura'
@@ -3207,7 +3207,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsBAL: TTabSheet
           Caption = 'Balança'
           ClientHeight = 327
-          ClientWidth = 878
+          ClientWidth = 902
           ImageIndex = 14
           object Label56: TLabel
             AnchorSideLeft.Control = cbBALModelo
@@ -3346,7 +3346,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 76
             Height = 25
             Top = 176
-            Width = 690
+            Width = 714
             Anchors = [akTop, akLeft, akRight]
             OnChange = edBALLogChange
             TabOrder = 5
@@ -3354,7 +3354,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object sbBALLog: TSpeedButton
             AnchorSideTop.Control = edBALLog
             AnchorSideTop.Side = asrCenter
-            Left = 771
+            Left = 795
             Height = 23
             Top = 177
             Width = 23
@@ -5868,9 +5868,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 902
-            ActivePage = tsConfiguracaoDFe
+            ActivePage = tsDiretoriosDFe
             Align = alClient
-            TabIndex = 0
+            TabIndex = 5
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -8155,7 +8155,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             object tsDiretoriosDFe: TTabSheet
               Caption = 'Diretórios'
               ClientHeight = 297
-              ClientWidth = 923
+              ClientWidth = 894
               ImageIndex = 6
               object sbPathNFe: TSpeedButton
                 Left = 258
@@ -12469,7 +12469,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     AberturaIntervalo = 5000
     AberturaAntecipada = aaException
     left = 495
-    top = 554
+    top = 552
   end
   object ACBrDIS1: TACBrDIS
     Porta = 'COM1'

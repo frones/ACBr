@@ -43,6 +43,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/05/2017
+[-]	Correção no carregamento de guias com o ini passado via parâmetro.
+	por: Celso Marigo Junior
+	
+[-] Correção na gravação e leitura dos parâmetros de configuração serial da ECF.
+	http://www.projetoacbr.com.br/forum/topic/36778-problema-com-acbrmonitorplus/#comment-240922
+	por: Celso Marigo Junior
+
 25/05/2017
 [-]	Correção no comando NFe.GetPathInu, não estava retornando resposta corretamente.
 	por: Celso Marigo Junior

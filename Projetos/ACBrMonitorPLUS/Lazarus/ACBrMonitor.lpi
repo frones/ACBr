@@ -22,7 +22,7 @@
       <AutoIncrementBuild Value="True"/>
       <MajorVersionNr Value="1"/>
       <MinorVersionNr Value="1"/>
-      <BuildNr Value="12"/>
+      <BuildNr Value="13"/>
       <Language Value="0416"/>
       <CharSet Value="04B0"/>
       <StringTable CompanyName="ACBr" FileDescription="ACBrMonitorPLUS" ProductVersion=""/>
@@ -320,4 +320,7 @@
       </Options>
     </Linking>
   </CompilerOptions>
+  <Debugging>
+    <Exceptions IgnoreAll="True"/>
+  </Debugging>
 </CONFIG>

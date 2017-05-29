@@ -107,15 +107,15 @@ end;
 
 procedure TfrConfiguraSerial.FormShow(Sender: TObject);
 begin
-  cmbBaudRate.ItemIndex    := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud )) ;
-  cmbDataBits.ItemIndex    := cmbDataBits.Items.IndexOf(IntToStr( Device.Data )) ;
-  cmbParity.ItemIndex      := Integer( Device.Parity ) ;
-  cmbStopBits.ItemIndex    := Integer( Device.Stop ) ;
-  chHardFlow.Checked       := Device.HardFlow ;
-  chSoftFlow.Checked       := Device.SoftFlow ;
-  cmbHandShaking.ItemIndex := Integer( Device.HandShake ) ;
-  seSendBytesCount.Value   := Device.SendBytesCount;
-  seSendBytesInterval.Value:= Device.SendBytesInterval;
+  cmbBaudRate.ItemIndex     := cmbBaudRate.Items.IndexOf(IntToStr( Device.Baud )) ;
+  cmbDataBits.ItemIndex     := cmbDataBits.Items.IndexOf(IntToStr( Device.Data )) ;
+  cmbParity.ItemIndex       := Integer( Device.Parity ) ;
+  cmbStopBits.ItemIndex     := Integer( Device.Stop ) ;
+  chHardFlow.Checked        := Device.HardFlow ;
+  chSoftFlow.Checked        := Device.SoftFlow ;
+  cmbHandShaking.ItemIndex  := Integer( Device.HandShake ) ;
+  seSendBytesCount.Value    := Device.SendBytesCount;
+  seSendBytesInterval.Value := Device.SendBytesInterval;
 end;
 
 procedure TfrConfiguraSerial.seSendBytesCountChange(Sender: TObject);

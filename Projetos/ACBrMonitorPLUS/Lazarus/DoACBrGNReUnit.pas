@@ -94,6 +94,10 @@ begin
           PathsGNRe.Free;
         end;
 
+        if not (ACBrGNRE1.GuiasRetorno.Count > 0) then
+           if not ACBrGNRE1.GuiasRetorno.LoadFromString(Cmd.Params(0)) then
+              raise Exception.Create('Erro ao carregar guia. Arquivo não existe ou parâmetro incorreto.');
+
         bMostrarPreview := (Cmd.Params(4) = '1');
         if NaoEstaVazio(Cmd.Params(1)) then
           ACBrGNRE1.GNREGuia.Impressora:= Cmd.Params(1);
@@ -106,12 +110,12 @@ begin
 
         if ACBrGNRE1.GNREGuia.MostrarPreview then
           Ocultar1.Click;
+
       end
       else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
       begin
        ACBrGNRE1.GuiasRetorno.Clear;
        CarregarDFe(Cmd.Params(0), ArqGNRe, tDFeGNRe);
-
        try
          ACBrGNRE1.GuiasRetorno.ImprimirPDF;
          ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';

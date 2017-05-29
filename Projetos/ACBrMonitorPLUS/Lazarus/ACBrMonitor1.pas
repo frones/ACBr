@@ -3655,7 +3655,7 @@ var
   Ini: TIniFile;
   ECFAtivado, CHQAtivado, GAVAtivado, DISAtivado, BALAtivado,
   ETQAtivado, ESCPOSAtivado: boolean;
-  Senha, ECFDeviceParams, CHQDeviceParams, PathApplication: string;
+  Senha, POSPrDeviceParams, ECFDeviceParams, CHQDeviceParams, SATDeviceParams, PathApplication: string;
   wNomeArquivo: string;
   OK: boolean;
 begin
@@ -4214,7 +4214,7 @@ begin
     AjustaACBrSAT;
 
     {Parâmetro PosPrinter}
-    ECFDeviceParams         := INI.ReadString('PosPrinter', 'SerialParams', ACBrPosPrinter1.Device.ParamsString);
+    POSPrDeviceParams       := INI.ReadString('PosPrinter', 'SerialParams', ACBrPosPrinter1.Device.ParamsString);
     cbxModelo.ItemIndex     := INI.ReadInteger('PosPrinter', 'Modelo', Integer(ACBrPosPrinter1.Modelo));
     cbxPorta.Text           := INI.ReadString('PosPrinter', 'Porta', ACBrPosPrinter1.Porta);
     seColunas.Value         := INI.ReadInteger('PosPrinter', 'Colunas', ACBrPosPrinter1.ColunasFonteNormal);
@@ -4245,7 +4245,7 @@ begin
 
     DefineTextoTrayTitulo;
 
-    ConfiguraPosPrinter(ECFDeviceParams);
+    ConfiguraPosPrinter(POSPrDeviceParams);
   finally
     Ini.Free;
   end;

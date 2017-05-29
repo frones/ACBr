@@ -219,7 +219,7 @@ begin
         //Resposta.SaveToFile('C:\temp\cpf.txt');
 
         FCPF      := LerCampo(Resposta,'No do CPF:');
-        FNome     := LerCampo(Resposta,'Nome da Pessoa Física:');
+        FNome     := LerCampo(Resposta,'Nome:');
         FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
         FSituacao := LerCampo(Resposta,'Situação Cadastral:');
         FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');

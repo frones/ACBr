@@ -105,11 +105,6 @@
   {$DEFINE DFE_SEM_CAPICOM}
 {$ENDIF}
 
-{$IFDEF DFE_SEM_CAPICOM}
-  {$UNDEF DFE_SEM_OPENSSL}
-{$ENDIF}
-
-
 // utilizar para facilitar a manutenção do ACBr.inc, já que ele era uma cópia
 // da jedi, essa mudança permite uma evolução melhor do arquivo.
 //------------------------------------------------------------------------------

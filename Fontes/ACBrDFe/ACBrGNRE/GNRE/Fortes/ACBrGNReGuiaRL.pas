@@ -301,132 +301,137 @@ procedure TfrlGuiaRL.CarregaDados;
   sReferencia : String;
 
 begin
-  with cdsItens do
+
+  cdsItens.Close;
+  cdsItens.FieldDefs.Clear;
+  cdsItens.Fields.Clear;
+  cdsItens.FieldDefs.Add('Ambiente', ftInteger);
+  cdsItens.FieldDefs.Add('SequencialGuia', ftInteger);
+  cdsItens.FieldDefs.Add('UFFavorecida', ftString, 2);
+  cdsItens.FieldDefs.Add('CodReceita', ftInteger);
+  cdsItens.FieldDefs.Add('TipoDocEmitente', ftInteger);
+  cdsItens.FieldDefs.Add('DocEmitente', ftString, 18);
+  cdsItens.FieldDefs.Add('RazaoSocialEmitente', ftString, 60);
+  cdsItens.FieldDefs.Add('EnderecoEmitente', ftString, 60);
+  cdsItens.FieldDefs.Add('MunicipioEmitente', ftString, 50);
+  cdsItens.FieldDefs.Add('UFEmitente', ftString, 2);
+  cdsItens.FieldDefs.Add('CEPEmitente', ftString, 8);
+  cdsItens.FieldDefs.Add('TelefoneEmitente', ftString, 11);
+  cdsItens.FieldDefs.Add('TipoDocDestinatario', ftInteger);
+  cdsItens.FieldDefs.Add('DocDestinatario', ftString, 18);
+  cdsItens.FieldDefs.Add('MunicipioDestinatario', ftString, 50);
+  cdsItens.FieldDefs.Add('Produto', ftString, 255);
+  cdsItens.FieldDefs.Add('NumDocOrigem', ftString, 18);
+  cdsItens.FieldDefs.Add('Convenio', ftString, 30);
+  cdsItens.FieldDefs.Add('InfoComplementares', ftString, 300);
+  cdsItens.FieldDefs.Add('DataVencimento', ftDate);
+  cdsItens.FieldDefs.Add('DataLimitePagamento', ftDate);
+  cdsItens.FieldDefs.Add('PeriodoReferencia', ftString, 1);
+  cdsItens.FieldDefs.Add('MesAnoReferencia', ftString, 6);
+  cdsItens.FieldDefs.Add('Parcela', ftString, 2);
+  cdsItens.FieldDefs.Add('ValorPrincipal', ftFloat);
+  cdsItens.FieldDefs.Add('AtualizacaoMonetaria', ftFloat);
+  cdsItens.FieldDefs.Add('Juros', ftFloat);
+  cdsItens.FieldDefs.Add('Multa', ftFloat);
+  cdsItens.FieldDefs.Add('RepresentacaoNumerica', ftString, 48);
+  cdsItens.FieldDefs.Add('CodigoBarras', ftString, 54);
+  cdsItens.FieldDefs.Add('QtdeVias', ftInteger);
+  cdsItens.FieldDefs.Add('NumeroControle', ftString, 16);
+  cdsItens.FieldDefs.Add('IdentificadorGuia', ftString, 10);
+  cdsItens.FieldDefs.Add('Reservado', ftString, 126);
+  cdsItens.FieldDefs.Add('PerMesAnoRef', ftString, 20);
+
+  {$IFDEF BORLAND}
+   if cdsItens is TClientDataSet then
+   TClientDataSet(cdsItens).CreateDataSet;
+  {$ELSE}
+     if cdsItens is TBufDataset then
+       TBufDataset(cdsItens).CreateDataSet;
+  {$ENDIF}
+  cdsItens.Append;
+
+  with FGNRE do
   begin
-    Close;
-    FieldDefs.Clear;
-    FieldDefs.Add('Ambiente', ftInteger);
-    FieldDefs.Add('SequencialGuia', ftInteger);
-    FieldDefs.Add('UFFavorecida', ftString, 2);
-    FieldDefs.Add('CodReceita', ftInteger);
-    FieldDefs.Add('TipoDocEmitente', ftInteger);
-    FieldDefs.Add('DocEmitente', ftString, 18);
-    FieldDefs.Add('RazaoSocialEmitente', ftString, 60);
-    FieldDefs.Add('EnderecoEmitente', ftString, 60);
-    FieldDefs.Add('MunicipioEmitente', ftString, 50);
-    FieldDefs.Add('UFEmitente', ftString, 2);
-    FieldDefs.Add('CEPEmitente', ftString, 8);
-    FieldDefs.Add('TelefoneEmitente', ftString, 11);
-    FieldDefs.Add('TipoDocDestinatario', ftInteger);
-    FieldDefs.Add('DocDestinatario', ftString, 18);
-    FieldDefs.Add('MunicipioDestinatario', ftString, 50);
-    FieldDefs.Add('Produto', ftString, 255);
-    FieldDefs.Add('NumDocOrigem', ftString, 18);
-    FieldDefs.Add('Convenio', ftString, 30);
-    FieldDefs.Add('InfoComplementares', ftString, 300);
-    FieldDefs.Add('DataVencimento', ftDate);
-    FieldDefs.Add('DataLimitePagamento', ftDate);
-    FieldDefs.Add('PeriodoReferencia', ftString, 1);
-    FieldDefs.Add('MesAnoReferencia', ftString, 6);
-    FieldDefs.Add('Parcela', ftString, 2);
-    FieldDefs.Add('ValorPrincipal', ftFloat);
-    FieldDefs.Add('AtualizacaoMonetaria', ftFloat);
-    FieldDefs.Add('Juros', ftFloat);
-    FieldDefs.Add('Multa', ftFloat);
-    FieldDefs.Add('RepresentacaoNumerica', ftString, 48);
-    FieldDefs.Add('CodigoBarras', ftString, 54);
-    FieldDefs.Add('QtdeVias', ftInteger);
-    FieldDefs.Add('NumeroControle', ftString, 16);
-    FieldDefs.Add('IdentificadorGuia', ftString, 10);
-    FieldDefs.Add('Reservado', ftString, 126);
-    FieldDefs.Add('PerMesAnoRef', ftString, 20);
+    cdsItens.FieldByName('Ambiente').AsInteger := InfoCabec.Ambiente;
+    cdsItens.FieldByName('SequencialGuia').AsInteger := SequencialGuia;
+    cdsItens.FieldByName('UFFavorecida').AsString := UFFavorecida;
+    cdsItens.FieldByName('CodReceita').AsInteger := CodReceita;
+    cdsItens.FieldByName('TipoDocEmitente').AsInteger := TipoDocEmitente;
 
-    CreateDataSet;
-    Append;
-
-    with FGNRE do
-    begin
-      FieldByName('Ambiente').AsInteger := InfoCabec.Ambiente;
-      FieldByName('SequencialGuia').AsInteger := SequencialGuia;
-      FieldByName('UFFavorecida').AsString := UFFavorecida;
-      FieldByName('CodReceita').AsInteger := CodReceita;
-      FieldByName('TipoDocEmitente').AsInteger := TipoDocEmitente;
-
-      case TipoDocEmitente of
-        1:
-          FieldByName('DocEmitente').AsString := FormatMaskText
-            ('000\.000\.000\-00;0', DocEmitente);
-        2:
-          FieldByName('DocEmitente').AsString := FormatMaskText
-            ('00\.000\.000\/0000\-00;0', DocEmitente);
-        3:
-          FieldByName('DocEmitente').AsString := RemoverZeros(DocEmitente);
-      end;
-
-      FieldByName('RazaoSocialEmitente').AsString := RazaoSocialEmitente;
-      FieldByName('EnderecoEmitente').AsString := EnderecoEmitente;
-      FieldByName('MunicipioEmitente').AsString := MunicipioEmitente;
-      FieldByName('UFEmitente').AsString := UFEmitente;
-      FieldByName('CEPEmitente').AsString := CEPEmitente;
-      FieldByName('TelefoneEmitente').AsString      := RemoverZeros(TelefoneEmitente);
-      FieldByName('TipoDocDestinatario').AsInteger  := TipoDocDestinatario;
-
-      case TipoDocDestinatario of
-        1:
-          FieldByName('DocDestinatario').AsString := FormatMaskText
-            ('000\.000\.000\-00;0', DocDestinatario);
-        2:
-          FieldByName('DocDestinatario').AsString := FormatMaskText
-            ('00\.000\.000\/0000\-00;0', DocDestinatario);
-        3:
-          FieldByName('DocDestinatario').AsString := RemoverZeros
-            (DocDestinatario);
-      end;
-
-      FieldByName('MunicipioDestinatario').AsString := MunicipioDestinatario;
-      FieldByName('Produto').AsString := Produto;
-      FieldByName('NumDocOrigem').AsString := RemoverZeros(NumDocOrigem);
-      FieldByName('Convenio').AsString := Convenio;
-      FieldByName('InfoComplementares').AsString := InfoComplementares;
-      FieldByName('DataVencimento').AsDateTime := StrToDate(FormatarData(DataVencimento));
-      FieldByName('DataLimitePagamento').AsDateTime := StrToDateDef(FormatarData(DataLimitePagamento), FieldByName('DataVencimento').AsDateTime);
-      FieldByName('PeriodoReferencia').AsString := PeriodoReferencia ;
-      FieldByName('MesAnoReferencia').AsString := MesAnoReferencia;
-      FieldByName('Parcela').AsString := IntToStr(Parcela);
-      FieldByName('ValorPrincipal').AsCurrency := ValorPrincipal;
-      FieldByName('AtualizacaoMonetaria').AsCurrency := AtualizacaoMonetaria;
-      FieldByName('Juros').AsCurrency := Juros;
-      FieldByName('Multa').AsCurrency := Multa;
-      FieldByName('RepresentacaoNumerica').AsString := RepresentacaoNumerica;
-      FieldByName('CodigoBarras').AsString := CodigoBarras;
-      FieldByName('QtdeVias').AsInteger := QtdeVias;
-      FieldByName('NumeroControle').AsString := NumeroControle;
-      FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
-      FieldByName('Reservado').AsString := Reservado;
-
-      if Trim(cdsItens.FieldByName('PeriodoReferencia').Text) = '' then
-        sReferencia := 'Mensal'
-      else
-        Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
-          0: sReferencia := 'Mensal';
-          1: sReferencia := '1a Quinzena';
-          2: sReferencia := '2a Quinzena';
-          3: sReferencia := '1o Decêndio';
-          4: sReferencia := '2o Decêndio';
-          5: sReferencia := '3o Decêndio';
-        end;
-
-      cdsItens.FieldByName('PerMesAnoRef').AsString := sReferencia + '-' + Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
-                                                                                1, Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-4) +
-                                                                                '/' +
-                                                                                Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
-                                                                                Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-3,
-                                                                                Length(cdsItens.FieldByName('MesAnoReferencia').AsString));
-
-
+    case TipoDocEmitente of
+      1:
+        cdsItens.FieldByName('DocEmitente').AsString := FormatMaskText
+          ('000\.000\.000\-00;0', DocEmitente);
+      2:
+        cdsItens.FieldByName('DocEmitente').AsString := FormatMaskText
+          ('00\.000\.000\/0000\-00;0', DocEmitente);
+      3:
+        cdsItens.FieldByName('DocEmitente').AsString := RemoverZeros(DocEmitente);
     end;
-    Post;
+
+    cdsItens.FieldByName('RazaoSocialEmitente').AsString := RazaoSocialEmitente;
+    cdsItens.FieldByName('EnderecoEmitente').AsString := EnderecoEmitente;
+    cdsItens.FieldByName('MunicipioEmitente').AsString := MunicipioEmitente;
+    cdsItens.FieldByName('UFEmitente').AsString := UFEmitente;
+    cdsItens.FieldByName('CEPEmitente').AsString := CEPEmitente;
+    cdsItens.FieldByName('TelefoneEmitente').AsString      := RemoverZeros(TelefoneEmitente);
+    cdsItens.FieldByName('TipoDocDestinatario').AsInteger  := TipoDocDestinatario;
+
+    case TipoDocDestinatario of
+      1:
+        cdsItens.FieldByName('DocDestinatario').AsString := FormatMaskText
+          ('000\.000\.000\-00;0', DocDestinatario);
+      2:
+        cdsItens.FieldByName('DocDestinatario').AsString := FormatMaskText
+          ('00\.000\.000\/0000\-00;0', DocDestinatario);
+      3:
+        cdsItens.FieldByName('DocDestinatario').AsString := RemoverZeros
+          (DocDestinatario);
+    end;
+
+    cdsItens.FieldByName('MunicipioDestinatario').AsString := MunicipioDestinatario;
+    cdsItens.FieldByName('Produto').AsString := Produto;
+    cdsItens.FieldByName('NumDocOrigem').AsString := RemoverZeros(NumDocOrigem);
+    cdsItens.FieldByName('Convenio').AsString := Convenio;
+    cdsItens.FieldByName('InfoComplementares').AsString := InfoComplementares;
+    cdsItens.FieldByName('DataVencimento').AsDateTime := StrToDateDef(FormatarData(DataVencimento), 0);
+    cdsItens.FieldByName('DataLimitePagamento').AsDateTime := StrToDateDef(FormatarData(DataLimitePagamento), cdsItens.FieldByName('DataVencimento').AsDateTime);
+    cdsItens.FieldByName('PeriodoReferencia').AsString := PeriodoReferencia ;
+    cdsItens.FieldByName('MesAnoReferencia').AsString := MesAnoReferencia;
+    cdsItens.FieldByName('Parcela').AsString := IntToStr(Parcela);
+    cdsItens.FieldByName('ValorPrincipal').AsCurrency := ValorPrincipal;
+    cdsItens.FieldByName('AtualizacaoMonetaria').AsCurrency := AtualizacaoMonetaria;
+    cdsItens.FieldByName('Juros').AsCurrency := Juros;
+    cdsItens.FieldByName('Multa').AsCurrency := Multa;
+    cdsItens.FieldByName('RepresentacaoNumerica').AsString := RepresentacaoNumerica;
+    cdsItens.FieldByName('CodigoBarras').AsString := CodigoBarras;
+    cdsItens.FieldByName('QtdeVias').AsInteger := QtdeVias;
+    cdsItens.FieldByName('NumeroControle').AsString := NumeroControle;
+    cdsItens.FieldByName('IdentificadorGuia').AsString := IdentificadorGuia;
+    cdsItens.FieldByName('Reservado').AsString := Reservado;
+
+    if Trim(cdsItens.FieldByName('PeriodoReferencia').Text) = '' then
+      sReferencia := 'Mensal'
+    else
+      Case cdsItens.FieldByName('PeriodoReferencia').AsInteger of
+        0: sReferencia := 'Mensal';
+        1: sReferencia := '1a Quinzena';
+        2: sReferencia := '2a Quinzena';
+        3: sReferencia := '1o Decêndio';
+        4: sReferencia := '2o Decêndio';
+        5: sReferencia := '3o Decêndio';
+      end;
+
+    cdsItens.FieldByName('PerMesAnoRef').AsString := sReferencia + '-' + Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
+                                                                              1, Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-4) +
+                                                                              '/' +
+                                                                              Copy(cdsItens.FieldByName('MesAnoReferencia').AsString,
+                                                                              Length(cdsItens.FieldByName('MesAnoReferencia').AsString)-3,
+                                                                              Length(cdsItens.FieldByName('MesAnoReferencia').AsString));
+
+
   end;
+  cdsItens.Post;
 end;
 
 end.

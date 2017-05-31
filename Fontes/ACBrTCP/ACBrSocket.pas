@@ -951,10 +951,12 @@ begin
 
     if not OK then
        raise EACBrHTTPError.Create( 'Erro HTTP: '+IntToStr(HTTPSend.ResultCode)+' '+
-                                     HTTPSend.ResultString + sLineBreak +
-                                     'URL: '+AURL + sLineBreak + sLineBreak +
-                                     'Resposta HTTP:' + sLineBreak +
-                                     String(AjustaLinhas( AnsiString(RespHTTP.Text), 80, 20) )) ;
+                                      HTTPSend.ResultString + sLineBreak +
+                                    'Socket Error: '+IntToStr(HTTPSend.Sock.LastError)+' '+
+                                      HTTPSend.Sock.LastErrorDesc + sLineBreak +
+                                    'URL: '+AURL + sLineBreak + sLineBreak +
+                                    'Resposta HTTP:' + sLineBreak +
+                                      String(AjustaLinhas( AnsiString(RespHTTP.Text), 80, 20) )) ;
   finally
     {$IFNDEF NOGUI}
      Screen.Cursor := OldCursor;

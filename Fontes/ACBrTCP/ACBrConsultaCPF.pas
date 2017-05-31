@@ -88,7 +88,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils;
+  ACBrUtil, ACBrValidador, synautil, strutils, blcksock;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -110,6 +110,7 @@ end;
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
+    HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
     HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/captcha/gerarCaptcha.asp');
     if HTTPSend.ResultCode = 200 then
     begin

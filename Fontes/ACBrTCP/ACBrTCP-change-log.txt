@@ -37,6 +37,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/05/2016
+-- ACBrSocket --
+[+] "TACBrHTTP": Adicionado informação do Código de Erro do Socket, no caso de falha
+
+-- ACBrConsultaCPF --
+[-] Correção na comunicação com OpenSSL 1.0 ou superior... Forçando a
+    cryptografia da conexão para TLS 1
+    (por: DSA)
+
 25/05/2017
 -- ACBrWinReqRespClass --
 [*] Método: "GetWinInetError", modificado para exibir informações sobre os erros:

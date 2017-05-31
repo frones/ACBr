@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/05/2017
+[+] Adicionadas opções para desligar a capicom, openssl, carga tardia de dll e cast de strings
+    por Regys.Silveira
+
 22/03/2017
 [+] Suporte a Delphi 10.2 Tokyo
 	por (Isaque Pinheiro)

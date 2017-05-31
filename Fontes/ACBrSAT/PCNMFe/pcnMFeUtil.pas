@@ -167,6 +167,7 @@ begin
       try
         SL.LoadFromFile(SLArqResp[I]);
       except
+        Sleep(500);
         SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
       end;
       FLeitor.Arquivo := SL.Text;

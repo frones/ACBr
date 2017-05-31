@@ -176,6 +176,8 @@ begin
     (*B26*)CTe.Ide.UFFim    := Leitor.rCampo(tcStr, 'UFFim');
     (*B27*)CTe.Ide.retira   := StrToTpRetira(ok, Leitor.rCampo(tcStr, 'retira'));
     (*B27a*)CTe.Ide.xdetretira := Leitor.rCampo(tcStr, 'xDetRetira');
+    (*#57*)CTe.Ide.dhCont   := Leitor.rCampo(tcDatHor, 'dhCont');
+    (*#58*)CTe.Ide.xJust    := Leitor.rCampo(tcStr, 'xJust');
 
     if CTe.infCTe.versao >= 3 then
       CTe.ide.indIEToma := StrToindIEDest(Ok, Leitor.rCampo(tcStr, 'indIEToma'));
@@ -187,9 +189,6 @@ begin
       CTe.Ide.infPercurso[i01].UFPer := Leitor.rCampo(tcStr, 'UFPer');
       inc(i01);
     end;
-
-    (*#57*)CTe.Ide.dhCont := Leitor.rCampo(tcDatHor, 'dhCont');
-    (*#58*)CTe.Ide.xJust  := Leitor.rCampo(tcStr, 'xJust');
   end;
 
   (* Grupo da TAG <ide><toma03> ***********************************************)

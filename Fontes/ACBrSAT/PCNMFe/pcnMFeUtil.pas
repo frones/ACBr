@@ -154,7 +154,9 @@ var
   SL, SLArqResp : TStringList;
   I, J, MaxTentativas : Integer;
   Erro : Boolean;
+  Arquivo: String;
 begin
+  Result := '';
   SL := TStringList.Create;
   SLArqResp := TStringList.Create;
   try
@@ -168,6 +170,7 @@ begin
 
       try
         SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
+        Arquivo := SL.Text;
       except
         J := 0;
         MaxTentativas := 5;
@@ -177,10 +180,11 @@ begin
             Erro := False;
             Sleep(500);
             SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
+            Arquivo := SL.Text;
           except
             Erro := True;
             if J = (MaxTentativas-1) then
-              raise;
+              Arquivo := ''; //Caso não consigo abrir, retorna vazio
           end;
           if not Erro then
             Break;
@@ -188,7 +192,7 @@ begin
         end;
       end;
 
-      FLeitor.Arquivo := SL.Text;
+      FLeitor.Arquivo := Arquivo;
       if FLeitor.rExtrai(1, 'Identificador') <> '' then
       begin
         if FLeitor.rCampo(tcInt, 'Valor') = numeroSessao then

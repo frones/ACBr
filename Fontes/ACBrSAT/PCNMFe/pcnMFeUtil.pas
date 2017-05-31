@@ -152,7 +152,8 @@ end;
 function TComandoMFe.AguardaArqResposta(numeroSessao: Integer): String;
 var
   SL, SLArqResp : TStringList;
-  I : Integer;
+  I, J, MaxTentativas : Integer;
+  Erro : Boolean;
 begin
   SL := TStringList.Create;
   SLArqResp := TStringList.Create;
@@ -164,12 +165,29 @@ begin
     for I:=0  to SLArqResp.Count-1 do
     begin
       SL.Clear;
+
       try
-        SL.LoadFromFile(SLArqResp[I]);
-      except
-        Sleep(500);
         SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
+      except
+        J := 0;
+        MaxTentativas := 5;
+        while J < MaxTentativas do
+        begin
+          try
+            Erro := False;
+            Sleep(500);
+            SL.LoadFromFile(SLArqResp[I]); //ERRO: Unable to open
+          except
+            Erro := True;
+            if J = (MaxTentativas-1) then
+              raise;
+          end;
+          if not Erro then
+            Break;
+          Inc(J);
+        end;
       end;
+
       FLeitor.Arquivo := SL.Text;
       if FLeitor.rExtrai(1, 'Identificador') <> '' then
       begin

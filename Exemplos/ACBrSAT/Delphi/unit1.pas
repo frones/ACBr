@@ -7,7 +7,7 @@ uses
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
   ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
   ACBrSATExtratoFortesFr, ACBrBase, ACBrSATExtratoClass, OleCtrls, SHDocVw,
-  ACBrSATExtratoFortes, ACBrPosPrinter, jpeg;
+  ACBrSATExtratoReportClass, ACBrPosPrinter, jpeg;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -211,6 +211,7 @@ type
     btMFEVerificarStatus: TButton;
     btMFEEnviarStatusPagamento: TButton;
     btMFERespostaFiscal: TButton;
+    Image1: TImage;
     procedure ACBrSAT1Log(const AString: String);
     procedure bImpressoraClick(Sender: TObject);
     procedure bInicializarClick(Sender : TObject) ;
@@ -502,7 +503,7 @@ begin
 
     edMFEInput.Text    :=  INI.ReadString('MFE','Input','c:\Integrador\Input\');
     edMFEOutput.Text   :=  INI.ReadString('MFE','Output','c:\Integrador\Output\');
-    seMFETimeout.Value :=  INI.ReadInteger('MFE','Timeout',30);     
+    edMFETimeout.Text  :=  IntToStr(INI.ReadInteger('MFE','Timeout',30));
 
   finally
      INI.Free ;
@@ -583,7 +584,7 @@ begin
 
     INI.WriteString('MFE','Input',edMFEInput.Text);
     INI.WriteString('MFE','Output',edMFEOutput.Text);
-    INI.WriteInteger('MFE','Timeout',seMFETimeout.Value);     
+    INI.WriteInteger('MFE','Timeout',StrToIntDef(edMFETimeout.Text,0));     
   finally
      INI.Free ;
   end ;

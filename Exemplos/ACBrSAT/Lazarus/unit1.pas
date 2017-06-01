@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, SynMemo, SynHighlighterXML, PrintersDlgs, Forms,
   Controls, Graphics, Dialogs, StdCtrls, ActnList, Menus, ExtCtrls, Buttons,
-  ComCtrls, Spin, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS, dateutils,
-  ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
+  ComCtrls, Spin, RLPDFFilter, ACBrSAT, ACBrSATClass, ACBrSATExtratoESCPOS,
+  dateutils, ACBrSATExtratoFortesFr, ACBrBase, ACBrPosPrinter;
 
 const
   cAssinatura = '9d4c4eef8c515e2c1269c2e4fff0719d526c5096422bf1defa20df50ba06469'+
@@ -133,6 +133,7 @@ type
     PrintDialog1: TPrintDialog;
     rgRedeTipoInter: TRadioGroup;
     rgRedeTipoLan: TRadioGroup;
+    RLPDFFilter1: TRLPDFFilter;
     SaveDialog1: TSaveDialog;
     sbNomeDLL: TSpeedButton;
     seColunas: TSpinEdit;
@@ -296,7 +297,7 @@ var
 implementation
 
 Uses
-  math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, ConfiguraSerial,
+  math, typinfo, ACBrUtil, pcnConversao, pcnRede, synacode, IniFiles, configuraserial,
   RLPrinters, Printers, ACBrSATExtratoClass, ACBrSATMFe_integrador, pcnVFPe;
 
 {$R *.lfm}
@@ -1379,8 +1380,10 @@ var
   tini, tfim: TDateTime;
 begin
   PrepararImpressao;
-  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\CFesEnviados\CFe35150511111111111111591234567890000757243865.xml');
+  //ACBrSAT1.CFe.LoadFromFile('C:\Pascal\Comp\ACBr\trunk2\Exemplos\ACBrSAT\Lazarus\Vendas\11111111111111\201612\AD35161211111111111111591234567890001574544264.xml');
   tini := now;
+  //ACBrSATExtratoFortes1.Filtro := fiPDF;
+  //ACBrSATExtratoFortes1.ImprimirExtrato;
   ACBrSAT1.ImprimirExtrato;
   tfim := now;
   mLog.Lines.Add('Inciado em: '+DateTimeToStr(tini)) ;

@@ -12,14 +12,14 @@ object Form1: TForm1
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = True
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
     Top = 202
-    Width = 820
+    Width = 828
     Height = 6
     Cursor = crVSplit
     Align = alTop
@@ -27,8 +27,8 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 208
-    Width = 820
-    Height = 291
+    Width = 828
+    Height = 299
     ActivePage = tsRecebido
     Align = alClient
     TabOrder = 0
@@ -67,12 +67,12 @@ object Form1: TForm1
       inline mRecebido: TWebBrowser
         Left = 0
         Top = 0
-        Width = 812
-        Height = 263
+        Width = 820
+        Height = 271
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C000000EC5300002F1B00000000000000000000000000000000000000000000
+          4C000000C0540000021C00000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -139,7 +139,7 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 820
+    Width = 828
     Height = 202
     Align = alTop
     TabOrder = 2
@@ -214,7 +214,7 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 649
+      Width = 657
       Height = 200
       Align = alClient
       Caption = 'Configura'#231#227'o'
@@ -222,7 +222,7 @@ object Form1: TForm1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 645
+        Width = 653
         Height = 183
         ActivePage = tsMFE
         Align = alClient
@@ -566,7 +566,7 @@ object Form1: TForm1
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            637
+            645
             155)
           object Label2: TLabel
             Left = 10
@@ -931,7 +931,7 @@ object Form1: TForm1
           object GroupBox3: TGroupBox
             Left = 0
             Top = 0
-            Width = 310
+            Width = 318
             Height = 155
             Align = alClient
             Caption = 'Fortes'
@@ -1068,7 +1068,7 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 310
+            Left = 318
             Top = 0
             Width = 327
             Height = 155
@@ -1272,6 +1272,12 @@ object Form1: TForm1
             Height = 13
             Caption = 'Timeout'
           end
+          object Image1: TImage
+            Left = 152
+            Top = 88
+            Width = 105
+            Height = 105
+          end
           object edMFEInput: TEdit
             Left = 8
             Top = 16
@@ -1338,8 +1344,8 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 499
-    Width = 820
+    Top = 507
+    Width = 828
     Height = 23
     Panels = <
       item
@@ -2053,6 +2059,8 @@ object Form1: TForm1
       'l na AppStore (Apple) e PlayStore (Android)'
     Margens.Topo = 50
     Margens.Fundo = 400
+    LogoStretch = True
+    LogoAutoSize = False
     Left = 64
     Top = 344
   end

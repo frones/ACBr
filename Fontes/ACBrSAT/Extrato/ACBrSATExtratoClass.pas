@@ -66,26 +66,8 @@ type
 
    TACBrSATExtratoLayOut = (lCompleto, lResumido, lCancelamento) ;
 
-
-   { TACBrSATExtratoMargem }
-
-   TACBrSATExtratoMargem = class( TPersistent )
-   private
-     fDireita: Integer;
-     fEsquerda: Integer;
-     fFundo: Integer;
-     fTopo: Integer;
-   public
-     constructor create;
-   published
-     property Topo     : Integer read fTopo     write fTopo     default 2;
-     property Esquerda : Integer read fEsquerda write fEsquerda default 2;
-     property Fundo    : Integer read fFundo    write fFundo    default 4;
-     property Direita  : Integer read fDireita  write fDireita  default 2;
-   end;
-
   { TACBrSATExtratoClass }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TACBrSATExtratoClass = class( TACBrComponent )
@@ -173,18 +155,6 @@ type
 implementation
 
 uses ACBrSAT, ACBrSATClass, ACBrUtil;
-
-{ TACBrSATExtratoMargem }
-
-constructor TACBrSATExtratoMargem.create;
-begin
-  inherited create;
-
-  fDireita  := 2;
-  fEsquerda := 2;
-  fTopo     := 2;
-  fFundo    := 4;
-end;
 
 { TACBrSATExtratoClass }
 

@@ -43,7 +43,7 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-unit ACBrSATExtratoFortes;
+unit ACBrSATExtratoReportClass;
 
 interface
 
@@ -53,19 +53,44 @@ uses
   pcnConversao;
 
 const
-  CACBrSATExtratoFortes_Versao = '0.1.0' ;
+  CACBrSATExtratoReportClass_Versao = '0.2.0' ;
 
 type
 
-  { TACBrSATExtratoFortesClass }
-	{$IFDEF RTL230_UP}
+  { TACBrSATExtratoMargem }
+
+  TACBrSATExtratoMargem = class( TPersistent )
+  private
+    fDireita: Integer;
+    fEsquerda: Integer;
+    fFundo: Integer;
+    fTopo: Integer;
+  public
+    constructor create;
+  published
+    property Topo     : Integer read fTopo     write fTopo     default 2;
+    property Esquerda : Integer read fEsquerda write fEsquerda default 2;
+    property Fundo    : Integer read fFundo    write fFundo    default 4;
+    property Direita  : Integer read fDireita  write fDireita  default 2;
+  end;
+
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
-  TACBrSATExtratoFortesClass = class( TACBrSATExtratoClass )
+
+  { TACBrSATExtratoReportClass }
+
+  TACBrSATExtratoReportClass = class( TACBrSATExtratoClass )
   private
     fLarguraBobina: Integer;
     fMargens: TACBrSATExtratoMargem;
-    fEspacoFinal: integer;
+    fEspacoFinal: Integer;
+    fLogoWidth: Integer;
+    fLogoHeigth: Integer;
+    fLogoStreatch: Boolean;
+    fLogoAutoSize: Boolean;
+    fLogoCenter: Boolean;
+    fLogoVisible: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -74,24 +99,48 @@ type
     property LarguraBobina : Integer read fLarguraBobina  write fLarguraBobina default 302;
     property Margens       : TACBrSATExtratoMargem read fMargens write fMargens;
     property EspacoFinal   : Integer read fEspacoFinal write fEspacoFinal default 0;
+    property LogoWidth     : Integer read fLogoWidth write fLogoWidth default 77;
+    property LogoHeigth    : Integer read fLogoHeigth write fLogoHeigth default 50;
+    property LogoStretch   : Boolean read fLogoStreatch write fLogoStreatch default False;
+    property LogoAutoSize  : Boolean read fLogoAutoSize write fLogoAutoSize default True;
+    property LogoCenter    : Boolean read fLogoCenter write fLogoCenter default True;
+    property LogoVisible   : Boolean read fLogoVisible write fLogoVisible default True;
     property PrinterName;
   end ;
 
 implementation
 
-{ TACBrSATExtratoFortes }
+{ TACBrSATExtratoMargem }
 
-constructor TACBrSATExtratoFortesClass.Create(AOwner: TComponent);
+constructor TACBrSATExtratoMargem.create;
+begin
+  inherited create;
+
+  fDireita  := 2;
+  fEsquerda := 2;
+  fTopo     := 2;
+  fFundo    := 4;
+end;
+
+{ TACBrSATExtratoReportClass }
+
+constructor TACBrSATExtratoReportClass.Create(AOwner: TComponent);
 begin
   inherited create( AOwner );
 
   fMargens := TACBrSATExtratoMargem.create;
   fLarguraBobina := 302;
   fEspacoFinal   := 0;
-  fpAbout := 'ACBrSATExtratoFortes ver: ' + CACBrSATExtratoFortes_Versao  ;
+  fLogoWidth     := 77;
+  fLogoHeigth    := 50;
+  fLogoStreatch  := False;
+  fLogoAutoSize  := True;
+  fLogoCenter    := True;
+  fLogoVisible   := True;
+  fpAbout        := 'ACBrSATExtratoReportClass ver: ' + CACBrSATExtratoReportClass_Versao  ;
 end;
 
-destructor TACBrSATExtratoFortesClass.Destroy;
+destructor TACBrSATExtratoReportClass.Destroy;
 begin
   fMargens.Free;
 

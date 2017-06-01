@@ -47,6 +47,24 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 01/06/2017
+-- ACBrSATExtratoClass --
+[*] Unit movida para subdiretório "Fontes/ACBrSAT/Extrato"
+
+-- ACBrSATExtratoFortes, ACBrSATExtratoReportClass --
+[*] Unit "Fontes/ACBrSAT/Extrato/Fortes/ACBrSATExtratoFortes.pas" removida e
+    substituida por: "Fontes/ACBrSAT/Extrato/ACBrSATExtratoReportClass.pas"
+
+-- ACBrSATExtratoReportClass --
+[+] Adicionda as propriedades LogoWidth, LogoHeigth, LogoStretch, LogoAutoSize,
+    LogoCenter, LogoVisible.. Para permitir um melhor controle da exibição do
+    logotipo...
+    http://www.projetoacbr.com.br/forum/topic/36921-alterar-tamanho-do-logo-no-extrato-sat/
+
+-- ACBrSATExtratoFortesFr --
+[*] Layout de Relatórios do SAT, de Venda e Cancelamento, ajustados para fazer
+    uso das novas propriedades de "ACBrSATExtratoReportClass"
+
 Data 09/05/2017
 -- ACBrSATClass --
 [*] Ajuste para permitir nomes de DLL sem o Path (por: DSA)

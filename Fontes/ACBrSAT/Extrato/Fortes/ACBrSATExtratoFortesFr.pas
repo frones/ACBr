@@ -52,7 +52,7 @@ uses Classes, SysUtils,
        LResources,
      {$ENDIF}
      Forms, Graphics,
-     ACBrSATExtratoClass, ACBrSATExtratoFortes,
+     ACBrSATExtratoClass, ACBrSATExtratoReportClass,
      pcnCFe, pcnCFeCanc, pcnConversao,
      RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
      RLFilters, RLPrinters, Controls, StrUtils;
@@ -60,10 +60,10 @@ uses Classes, SysUtils,
 type
 
   { TACBrSATExtratoFortes }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
-  TACBrSATExtratoFortes = class( TACBrSATExtratoFortesClass )
+  TACBrSATExtratoFortes = class( TACBrSATExtratoReportClass )
   private
   protected
     procedure Imprimir;
@@ -81,8 +81,6 @@ type
     bcChaveAcessoCan2: TRLBarcode;
     bcChaveAcessoCanl1: TRLBarcode;
     bcChaveAcessoCanl2: TRLBarcode;
-    imgLogo: TRLImage;
-    imgLogoCan: TRLImage;
     imgQRCodeCan: TRLImage;
     imgQRCodeCanl: TRLImage;
     lBaseCalcISSQN: TRLLabel;
@@ -233,6 +231,10 @@ type
     rlsbPagamentos: TRLSubDetail;
     rlsbObsFisco: TRLSubDetail;
     rlCancelamento: TRLReport;
+    rlLogo: TRLBand;
+    imgLogo: TRLImage;
+    rlLogoCanc: TRLBand;
+    imgLogoCanc: TRLImage;
 
     procedure FormDestroy(Sender: TObject);
     procedure lCPF_CNPJBeforePrint(Sender: TObject; var OutputText: string;
@@ -328,6 +330,31 @@ begin
     rlVenda.Margins.RightMargin  := Margens.Direita;
     rlVenda.Margins.TopMargin    := Margens.Topo;
     rlVenda.Margins.BottomMargin := Margens.Fundo;
+
+    //Detalhes de Dimensionamento LogoTipo
+    {$IfNDef NOGUI}
+     rlLogo.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo);
+     if rlLogo.Visible then
+     begin
+       imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
+       imgLogo.Center   := LogoCenter;
+       imgLogo.Width    := LogoWidth;
+       imgLogo.Height   := LogoHeigth;
+       imgLogo.AutoSize := LogoAutoSize;
+       imgLogo.Stretch  := LogoStretch;
+     end;
+
+     rlLogoCanc.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo);
+     if rlLogoCanc.Visible then
+     begin
+       imgLogoCanc.Picture.Assign( ACBrSATExtrato.PictureLogo );
+       imgLogoCanc.Center   := LogoCenter;
+       imgLogoCanc.Width    := LogoWidth;
+       imgLogoCanc.Height   := LogoHeigth;
+       imgLogoCanc.AutoSize := LogoAutoSize;
+       imgLogoCanc.Stretch  := LogoStretch;
+     end;
+    {$EndIf}
 
     rlCancelamento.Width := LarguraBobina;
     rlCancelamento.Margins.LeftMargin   := Margens.Esquerda;
@@ -553,9 +580,6 @@ begin
     lRazaoSocial.Lines.Text := Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IM.Caption := CompoemCliche;
-    {$IFNDEF NOGUI}
-    imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
-    {$ENDIF}
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then
@@ -827,9 +851,6 @@ begin
     lRazaoSocialCan.Lines.Text := Emit.xNome ;
     lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
     lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;
-    {$IFNDEF NOGUI}
-    imgLogoCan.Picture.Assign( ACBrSATExtrato.PictureLogo );
-    {$ENDIF}
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then

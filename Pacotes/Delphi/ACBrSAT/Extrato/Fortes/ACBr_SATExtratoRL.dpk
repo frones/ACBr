@@ -35,6 +35,6 @@ requires
 
 contains
   ACBrSATExtratoFortesFr in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortesFr.pas',
-  ACBrSATExtratoFortes in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortes.pas';
+  ACBrSATExtratoReportClass in '..\..\..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoReportClass.pas';
 
 end.

@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT;..\..\..\Fontes\ACBrSAT\PCNMFe"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrSAT;..\..\..\Fontes\ACBrSAT\PCNSAT;..\..\..\Fontes\ACBrSAT\PCNMFe;..\..\..\Fontes\ACBrSAT\Extrato"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrSAT\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -39,70 +39,70 @@
         <UnitName Value="ACBrSATDinamico_cdecl"/>
       </Item4>
       <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATExtratoClass.pas"/>
-        <UnitName Value="ACBrSATExtratoClass"/>
-      </Item5>
-      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFe.pas"/>
         <UnitName Value="pcnCFe"/>
-      </Item6>
-      <Item7>
+      </Item5>
+      <Item6>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeR.pas"/>
         <UnitName Value="pcnCFeR"/>
-      </Item7>
-      <Item8>
+      </Item6>
+      <Item7>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeW.pas"/>
         <UnitName Value="pcnCFeW"/>
-      </Item8>
-      <Item9>
+      </Item7>
+      <Item8>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCanc.pas"/>
         <UnitName Value="pcnCFeCanc"/>
-      </Item9>
-      <Item10>
+      </Item8>
+      <Item9>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancR.pas"/>
         <UnitName Value="pcnCFeCancR"/>
-      </Item10>
-      <Item11>
+      </Item9>
+      <Item10>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnCFeCancW.pas"/>
         <UnitName Value="pcnCFeCancW"/>
-      </Item11>
-      <Item12>
+      </Item10>
+      <Item11>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRede.pas"/>
         <UnitName Value="pcnRede"/>
-      </Item12>
-      <Item13>
+      </Item11>
+      <Item12>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeR.pas"/>
         <UnitName Value="pcnRedeR"/>
-      </Item13>
-      <Item14>
+      </Item12>
+      <Item13>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNSAT\pcnRedeW.pas"/>
         <UnitName Value="pcnRedeW"/>
-      </Item14>
-      <Item15>
+      </Item13>
+      <Item14>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATDinamico_stdcall.pas"/>
         <UnitName Value="ACBrSATDinamico_stdcall"/>
-      </Item15>
-      <Item16>
+      </Item14>
+      <Item15>
         <Filename Value="..\..\..\Fontes\ACBrSAT\ACBrSATMFe_integrador.pas"/>
         <UnitName Value="acbrsatmfe_integrador"/>
-      </Item16>
-      <Item17>
+      </Item15>
+      <Item16>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPe.pas"/>
         <UnitName Value="pcnVFPe"/>
-      </Item17>
-      <Item18>
+      </Item16>
+      <Item17>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeR.pas"/>
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="pcnVFPeR"/>
-      </Item18>
-      <Item19>
+      </Item17>
+      <Item18>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnVFPeW.pas"/>
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="pcnVFPeW"/>
-      </Item19>
-      <Item20>
+      </Item18>
+      <Item19>
         <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnMFeUtil.pas"/>
         <UnitName Value="pcnMFeUtil"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoClass.pas"/>
+        <UnitName Value="ACBrSATExtratoClass"/>
       </Item20>
     </Files>
     <RequiredPkgs Count="2">

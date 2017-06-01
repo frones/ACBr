@@ -46,6 +46,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/06/2017
+[-] Correção a versão 3.00 saia a chave dos documentos originarios corretamente
+		http://www.projetoacbr.com.br/forum/topic/36994-não-esta-saindo-a-chave-de-acesso-do-documento-do-redespacho-no-fortes-report/
+
 12/05/2017
 [-] Correção para evitar erros de data
 		http://www.projetoacbr.com.br/forum/topic/34759-impressao-de-cte-com-dados-do-conj-transportador-nao-xml/?do=findComment&comment=240127

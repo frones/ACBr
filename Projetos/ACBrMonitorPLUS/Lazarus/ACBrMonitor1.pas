@@ -4552,13 +4552,6 @@ begin
     ACBrRFD1.SH_VersaoAplicativo := edSH_VersaoAP.Text;
     ACBrRFD1.SH_Linha1           := edSH_Linha1.Text;
     ACBrRFD1.SH_Linha2           := edSH_Linha2.Text;
-
-    if ( edSH_RazaoSocial.Text <> '' ) and Assigned(ACBrSAT1.Extrato) then
-    begin
-      ACBrSAT1.Extrato.SoftwareHouse := edSH_RazaoSocial.Text;
-      ACBrSAT1.Extrato.Site          := edSH_Site.Text;
-    end;
-
   finally
     Ini.Free;
   end;
@@ -7254,6 +7247,12 @@ begin
 
     ACBrSATExtratoESCPOS1.PosPrinter.Device.Ativar;
     ACBrSATExtratoESCPOS1.ImprimeQRCode := True;
+  end;
+
+  if (edSH_RazaoSocial.Text <> '') then
+  begin
+    ACBrSAT1.Extrato.SoftwareHouse := edSH_RazaoSocial.Text;
+    ACBrSAT1.Extrato.Site          := edSH_Site.Text;
   end;
 end;
 

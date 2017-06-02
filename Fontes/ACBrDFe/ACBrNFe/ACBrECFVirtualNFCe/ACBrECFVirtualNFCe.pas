@@ -712,8 +712,8 @@ begin
 
       if Configuracoes.Geral.FormaEmissao = teOffLine then
       begin
-        NotasFiscais.Validar;
         NotasFiscais.Assinar;
+        NotasFiscais.Validar;
         //NotasFiscais.Items[0].Confirmada := True;
 
         // imprimir obrigatoriamente duas vias quando em off-line

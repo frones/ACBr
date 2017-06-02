@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 02/06/2017
+-- ACBrSATExtratoFortesFr --
+[*] Ajustes para correta exibição de diversos campos, em impressoras de pouca
+    largura
+    http://www.projetoacbr.com.br/forum/topic/36756-sat-na-impressora-leopardo/
+[-] Correção para impressão de Descrições com acentuação, em IDEs com Unicode
+    (por: DSA)
+
 Data 01/06/2017
 -- ACBrSATExtratoClass --
 [*] Unit movida para subdiretório "Fontes/ACBrSAT/Extrato"

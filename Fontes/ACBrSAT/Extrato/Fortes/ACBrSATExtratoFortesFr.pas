@@ -84,20 +84,21 @@ type
     imgQRCodeCan: TRLImage;
     imgQRCodeCanl: TRLImage;
     lBaseCalcISSQN: TRLLabel;
-    lChaveAcessoCan: TRLLabel;
-    lChaveAcessoCanl: TRLLabel;
-    lCPF_CNPJ: TRLLabel;
-    lCabItem: TRLLabel;
-    lCPF_CNPJCan: TRLLabel;
-    lCupomFiscalEletronico: TRLLabel;
-    lCupomFiscalEletronicoCan: TRLLabel;
+    lCabItem: TRLMemo;
+    lChaveAcesso: TRLMemo;
+    lChaveAcessoCan: TRLMemo;
+    lChaveAcessoCanl: TRLMemo;
+    lCPF_CNPJ: TRLMemo;
+    lCPF_CNPJCan: TRLMemo;
+    lCupomFiscalEletronico: TRLMemo;
+    lCupomFiscalEletronicoCan: TRLMemo;
     lDataHoraCan: TRLLabel;
     lDataHoraCanl: TRLLabel;
     lDeducISSQN: TRLLabel;
     lDesconto: TRLLabel;
     lDescValLiq: TRLLabel;
-    lEmitCNPJ_IE_IM: TRLLabel;
-    lEmitCNPJ_IE_IMCan: TRLLabel;
+    lEmitCNPJ_IE_IM: TRLMemo;
+    lEmitCNPJ_IE_IMCan: TRLMemo;
     lEndereco: TRLMemo;
     lEnderecoCan: TRLMemo;
     lFiller1: TRLLabel;
@@ -120,20 +121,19 @@ type
     lRazaoSocialNomeCanc: TRLMemo;
     lTesteCan: TRLMemo;
     lTitCancelamento: TRLLabel;
-    lTitCancelamento1: TRLLabel;
-    lTitCancelamento2: TRLLabel;
+    lTitCancelamento1: TRLMemo;
+    lTitCancelamento2: TRLMemo;
+    lTitLei12741: TRLMemo;
+    lTitLei12743: TRLMemo;
+    lTitObsContrib: TRLMemo;
     lTitSATCan: TRLLabel;
     lTeste: TRLMemo;
     lTitDestEnt: TRLLabel;
     lTitEndEnt: TRLLabel;
-    lTitLei12741: TRLLabel;
-    lTitLei12742: TRLLabel;
-    lTitLei12743: TRLLabel;
     lTitSATCanl: TRLLabel;
     lTitTotalCan: TRLLabel;
     lTotalCan: TRLLabel;
     lValLei12741: TRLLabel;
-    lTitObsContrib: TRLLabel;
     lPagamento: TRLLabel;
     lMeioPagamento: TRLLabel;
     lTitTotAcrescimos: TRLLabel;
@@ -141,7 +141,6 @@ type
     lTitTroco: TRLLabel;
     lTitTotDescontos: TRLLabel;
     lTotAcrescimos: TRLLabel;
-    lChaveAcesso: TRLLabel;
     lSubTotal: TRLLabel;
     lNumSAT: TRLLabel;
     lTitSAT: TRLLabel;
@@ -166,6 +165,7 @@ type
     mObsContrib: TRLMemo;
     mLinhaItem: TRLMemo;
     mSwHouseSiteCanc: TRLMemo;
+    pAsterisco: TRLPanel;
     pGap6: TRLPanel;
     pGap7: TRLPanel;
     pEspacoFinalCan: TRLPanel;
@@ -208,7 +208,7 @@ type
     RLPanel1: TRLPanel;
     RLPanel2: TRLPanel;
     RLPanel3: TRLPanel;
-    RLPanel4: TRLPanel;
+    pTotalCanc: TRLPanel;
     pEspacoFinal: TRLPanel;
     rlVenda: TRLReport;
     rlObsContrib: TRLBand;
@@ -222,7 +222,6 @@ type
     mObsFisco: TRLMemo;
     lTitDadosParaEntrega: TRLLabel;
     pLei12741: TRLPanel;
-    pAsterisco: TRLPanel;
     pEndDest: TRLPanel;
     pDestEnt: TRLPanel;
     pNumSAT: TRLPanel;
@@ -243,6 +242,10 @@ type
       var PrintIt: Boolean);
     procedure pAsteriscoBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure pLei12741BeforePrint(Sender: TObject; var PrintIt: boolean);
+    procedure pNumSATBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure pNumSATCanBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure pNumSATCanclBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure pTotalCancBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlbTesteBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -579,7 +582,7 @@ begin
     lNomeFantasia.Lines.Text:= Emit.xFant ;
     lRazaoSocial.Lines.Text := Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
-    lEmitCNPJ_IE_IM.Caption := CompoemCliche;
+    lEmitCNPJ_IE_IM.Lines.Text := CompoemCliche;
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then
@@ -593,7 +596,7 @@ begin
     rlbConsumidor.Visible := ((Trim(Dest.CNPJCPF) <> '') or ACBrSATExtrato.ImprimeCPFNaoInformado);
     if rlbConsumidor.Visible then
     begin
-      lCPF_CNPJ.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
+      lCPF_CNPJ.Lines.Text := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
                                          IfThen( Trim(Dest.CNPJCPF)<>'',
                                                  FormatarCNPJouCPF(Dest.CNPJCPF),
                                                  ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')),[]);
@@ -604,9 +607,9 @@ begin
     // Informações do Rodapé do Extrato //
     lNumSAT.Caption   := Trim(IntToStr( ide.nserieSAT ));
     lDataHora.Caption := FormatDateTimeBr(ide.dEmi + ide.hEmi);
-    lChaveAcesso.Caption   := FormatarChaveAcesso(infCFe.ID);
-    bcChaveAcesso1.Caption := copy( infCFe.ID, 1,22);
-    bcChaveAcesso2.Caption := copy( infCFe.ID,23,22);
+    lChaveAcesso.Lines.Text := FormatarChaveAcesso(infCFe.ID);
+    bcChaveAcesso1.Caption := copy(infCFe.ID, 1,22);
+    bcChaveAcesso2.Caption := copy(infCFe.ID,23,22);
 
     // QRCode  //
     imgQRCode.Visible := ACBrSATExtrato.ImprimeQRCode;
@@ -643,7 +646,7 @@ begin
   begin
     lSequencia.Caption := IntToStrZero(nItem,3);
 
-    Descricao := ACBrStrToAnsi( Trim(Prod.xProd) );
+    Descricao := Trim(Prod.xProd);
     LinhaItem := Trim(Prod.cProd)+' '+
                  Descricao+' '+
                  FormatFloatBr(Prod.qCom, ACBrSATExtrato.Mask_qCom)+' '+
@@ -808,6 +811,30 @@ begin
   end;
 end;
 
+procedure TACBrSATExtratoFortesFr.pNumSATBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  lTitSAT.Width := Trunc(pNumSAT.Width / 2);
+end;
+
+procedure TACBrSATExtratoFortesFr.pNumSATCanBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  lTitSATCan.Width := Trunc(pNumSATCan.Width / 2);
+end;
+
+procedure TACBrSATExtratoFortesFr.pNumSATCanclBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  lTitSATCanl.Width := Trunc(pNumSATCancl.Width / 2);
+end;
+
+procedure TACBrSATExtratoFortesFr.pTotalCancBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  lTitTotalCan.Width := Trunc(pTotalCanc.Width / 2);
+end;
+
 procedure TACBrSATExtratoFortesFr.rlbsCabecalhoDataRecord(Sender: TObject;
   RecNo: integer; CopyNo: integer; var Eof: boolean;
   var RecordAction: TRLRecordAction);
@@ -850,7 +877,7 @@ begin
     lNomeFantasiaCan.Lines.Text:= Emit.xFant ;
     lRazaoSocialCan.Lines.Text := Emit.xNome ;
     lEnderecoCan.Lines.Text    := CompoemEnderecoCFe;
-    lEmitCNPJ_IE_IMCan.Caption := CompoemCliche;
+    lEmitCNPJ_IE_IMCan.Lines.Text := CompoemCliche;
 
     // Numero do Extrato ou Homologação //
     if (ide.tpAmb = taHomologacao) then
@@ -859,7 +886,7 @@ begin
       NumExtrato := Trim( IntToStr( ACBrSATExtrato.CFeCanc.ide.nCFe ) );
 
     // CPF_CNPJ do Consumidor //
-    lCPF_CNPJCan.Caption := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
+    lCPF_CNPJCan.Lines.Text := StringReplace(lCPF_CNPJ.Caption,'<CPF_CNPJ>',
                                        FormatarCNPJouCPF(Dest.CNPJCPF),[]);
     lRazaoSocialNomeCanc.Lines.Text := StringReplace(lRazaoSocialNomeCanc.Lines.Text,
                                        '<xNome>', Dest.xNome,[]);
@@ -868,7 +895,7 @@ begin
     // Informações do Rodapé do Extrato //
     lNumSATCan.Caption   := Trim(IntToStr( ide.nserieSAT ));
     lDataHoraCan.Caption := FormatDateTimeBr(ide.dEmi + ide.hEmi);
-    lChaveAcessoCan.Caption  := FormatarChaveAcesso(infCFe.ID);
+    lChaveAcessoCan.Lines.Text := FormatarChaveAcesso(infCFe.ID);
     bcChaveAcessoCan1.Caption := copy( infCFe.ID, 1,22);
     bcChaveAcessoCan2.Caption := copy( infCFe.ID,23,22);
 
@@ -891,7 +918,7 @@ begin
     // Informações do Rodapé do Extrato //
     lNumSATCanl.Caption   := Trim(IntToStr( ide.nserieSAT ));
     lDataHoraCanl.Caption := FormatDateTimeBr(ide.dEmi + ide.hEmi);
-    lChaveAcessoCanl.Caption  := FormatarChaveAcesso(infCFe.ID);
+    lChaveAcessoCanl.Lines.Text := FormatarChaveAcesso(infCFe.ID);
     bcChaveAcessoCanl1.Caption := copy( infCFe.ID, 1,22);
     bcChaveAcessoCanl2.Caption := copy( infCFe.ID,23,22);
 

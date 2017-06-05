@@ -106,8 +106,9 @@ begin
   if (Copy(wResposta, 1, 1) = STX) then
     wResposta := Copy(wResposta, 2, Length(wResposta));
 
-  if (Copy(wResposta, Length(wResposta), 1) = ETX) then
-    wResposta := Copy(wResposta, 1, Length(wResposta) - 1);
+  //Deverá buscar a primeira ocorrencia do TX e trarar a Sting.
+  if pos(ETX,wResposta) > 0 then
+    wResposta := Copy(wResposta, 1, pos(ETX,wResposta) - 1);
 
   if (wResposta = EmptyStr) then
     Exit;

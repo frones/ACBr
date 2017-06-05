@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+ 04/06/2017
+ -- ACBrBALFilizola --
+[*] Ajuste na função "InterpretarRepostaPeso", para considerar até o primeiro ETX
+    que encontrar.
+    (por: Fabiano Cunha)
+
 Data: 19/05/2017
 -- ACBrECFVirtual --
 [-] Correção para que o contador de Reduções Z (CRZ), seja impresso na Redução Z

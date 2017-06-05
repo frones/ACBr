@@ -1172,7 +1172,24 @@ begin
   begin
     rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
 //    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
-  end;                                                                   
+  end;
+
+  if FCTe.infCTe.versao >= 3 then
+  begin
+    if FCTe.vPrest.vRec = 0 then
+    begin
+      FCTe.Ide.forPag  := fpPago;
+    end
+    else if FCTe.vPrest.vRec = FCTe.vPrest.vTPrest then
+    begin
+      FCTe.Ide.forPag  := fpAPagar;
+    end
+    else
+    begin
+      FCTe.Ide.forPag  := fpOutros;
+    end;
+  end;
+
   rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
 //  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
 

@@ -39,6 +39,19 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/06/2017
+-- ACBrEAD --
+[+] Adicionado os métodos:
+    function VerificarAssinatura( const AString, Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ;
+    function VerificarAssinatura(const AStringList : TStringList;
+       const Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ;
+    function VerificarAssinatura(const AStream : TStream;
+       const Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ;
+   (por: DSA)
+
 27/03/2017
 -- libxmlsec --
 [*] Remoção da dependencia de "libxslt". (por Waldir Paim)

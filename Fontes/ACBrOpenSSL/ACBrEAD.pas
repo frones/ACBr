@@ -115,11 +115,16 @@ type
     function GetAbout: String;
     procedure SetBufferSize(AValue: Integer);
 
+    function GetDigestName(ADigest: TACBrEADDgst): String;
+
     procedure VerificaNomeArquivo( NomeArquivo : String ) ;
     function InternalDigest( const AStream : TStream;
-       const Digest: TACBrEADDgst;
+       const ADigest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa;
        const Assinar: Boolean =  False): AnsiString;
+    function InternalVerify( const AStream : TStream;
+       const BinarySignature: AnsiString;
+       const ADigest: TACBrEADDgst): Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
@@ -158,6 +163,15 @@ type
     function CalcularAssinatura( const AStream : TStream;
        const Digest: TACBrEADDgst;
        const OutputType: TACBrEADDgstOutput = outHexa ): AnsiString ; overload ;
+
+    function VerificarAssinatura( const AString, Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ; overload ;
+    function VerificarAssinatura(const AStringList : TStringList;
+       const Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ; overload ;
+    function VerificarAssinatura(const AStream : TStream;
+       const Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ; overload ;
 
     function CalcularEADArquivo( const NomeArquivo: String): AnsiString ; overload ;
     function CalcularEAD( const AString : AnsiString): AnsiString ; overload ;
@@ -257,6 +271,22 @@ begin
      fsBufferSize := 1024
   else
      fsBufferSize := AValue;
+end;
+
+function TACBrEAD.GetDigestName(ADigest: TACBrEADDgst): String;
+begin
+  case ADigest of
+    dgstMD2    : Result := 'md2';
+    dgstMD4    : Result := 'md4';
+    dgstMD5    : Result := 'md5';
+    dgstRMD160 : Result := 'rmd160';
+    dgstSHA    : Result := 'sha';
+    dgstSHA1   : Result := 'sha1';
+    dgstSHA256 : Result := 'sha256';
+    dgstSHA512 : Result := 'sha512';
+  else
+    Result := '';
+  end;
 end;
 
 constructor TACBrEAD.Create(AOwner : TComponent) ;
@@ -766,6 +796,40 @@ begin
   Result := InternalDigest(AStream, Digest, OutputType, True);
 end;
 
+function TACBrEAD.VerificarAssinatura(const AString, Assinatura: AnsiString;
+  const Digest: TACBrEADDgst): Boolean;
+Var
+  MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.Write( Pointer(AString)^, Length(AString) );
+    Result := VerificarAssinatura( MS, Assinatura, Digest);
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TACBrEAD.VerificarAssinatura(const AStringList: TStringList;
+  const Assinatura: AnsiString; const Digest: TACBrEADDgst): Boolean;
+Var
+  MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    AStringList.SaveToStream( MS );
+    Result := VerificarAssinatura( MS, Assinatura, Digest);
+  finally
+    MS.Free ;
+  end ;
+end;
+
+function TACBrEAD.VerificarAssinatura(const AStream: TStream;
+  const Assinatura: AnsiString; const Digest: TACBrEADDgst): Boolean;
+begin
+  Result := InternalVerify(AStream, Assinatura, Digest);
+end;
+
 function TACBrEAD.CalcularEADArquivo(const NomeArquivo : String) : AnsiString ;
 Var
    FS : TFileStream ;
@@ -822,31 +886,21 @@ begin
 end ;
 
 function TACBrEAD.InternalDigest(const AStream: TStream;
-  const Digest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput;
+  const ADigest: TACBrEADDgst; const OutputType: TACBrEADDgstOutput;
   const Assinar: Boolean): AnsiString;
 Var
   md : PEVP_MD ;
   md_len: cardinal;
   md_ctx: EVP_MD_CTX;
   md_value_bin, md_value_hex : array [0..1023] of AnsiChar;
-  NameDgst : PAnsiChar;
+  NameDgst : AnsiString;
   ABinStr, Base64Str: AnsiString;
   Memory: Pointer;
   PosStream: Int64;
   BytesRead: LongInt;
 begin
   InitOpenSSL ;
-  NameDgst := '';
-  case Digest of
-    dgstMD2    : NameDgst := 'md2';
-    dgstMD4    : NameDgst := 'md4';
-    dgstMD5    : NameDgst := 'md5';
-    dgstRMD160 : NameDgst := 'rmd160';
-    dgstSHA    : NameDgst := 'sha';
-    dgstSHA1   : NameDgst := 'sha1';
-    dgstSHA256 : NameDgst := 'sha256';
-    dgstSHA512 : NameDgst := 'sha512';
-  end ;
+  NameDgst := GetDigestName(ADigest);
 
   if Assinar then
      LerChavePrivada;
@@ -856,7 +910,7 @@ begin
   GetMem(Memory, BufferSize);
   try
     md_len := 0;
-    md := EVP_get_digestbyname( NameDgst );
+    md := EVP_get_digestbyname( PAnsiChar(NameDgst) );
     EVP_DigestInit( @md_ctx, md );
     if Assigned( fsOnProgress ) then
        fsOnProgress( PosStream, AStream.Size );
@@ -904,6 +958,57 @@ begin
     Freemem(Memory);
     LiberarChave;
   end;
+end;
+
+function TACBrEAD.InternalVerify(const AStream: TStream;
+  const BinarySignature: AnsiString; const ADigest: TACBrEADDgst): Boolean;
+Var
+  md: PEVP_MD ;
+  md_len: cardinal;
+  md_ctx: EVP_MD_CTX;
+  Ret, BytesReaded : LongInt ;
+  Memory: Pointer;
+  PosStream: Int64;
+  NameDgst: AnsiString;
+begin
+  InitOpenSSL;
+  NameDgst := GetDigestName(ADigest);
+  LerChavePublica;
+
+  PosStream := 0;
+  AStream.Position := 0;
+  GetMem(Memory, BufferSize);
+  md_len := Length(BinarySignature);
+  try
+    md := Nil;
+    md := EVP_get_digestbyname( PAnsiChar(NameDgst) );
+    if md = Nil then
+      raise EACBrEADException.Create('Erro ao carregar Digest: NameDgst');
+
+    EVP_DigestInit( @md_ctx, md ) ;
+    if Assigned( fsOnProgress ) then
+       fsOnProgress( PosStream, AStream.Size );
+
+    while (PosStream < AStream.Size) do
+    begin
+       BytesReaded := AStream.Read(Memory^,BufferSize);
+       if BytesReaded <= 0 then
+          Break;
+
+       EVP_DigestUpdate( @md_ctx, Memory, BytesReaded ) ;
+       PosStream := PosStream + BytesReaded;
+
+       if Assigned( fsOnProgress ) then
+          fsOnProgress( PosStream, AStream.Size );
+    end;
+
+    Ret := EVP_VerifyFinal( @md_ctx, @BinarySignature[1], md_len, fsKey) ;
+
+    Result := (Ret = 1);
+  finally
+    Freemem(Memory);
+    LiberarChave;
+  end ;
 end;
 
 
@@ -1134,7 +1239,7 @@ begin
           fsOnProgress( PosStream, StreamSize );
     end;
 
-    Ret := EVP_VerifyFinal( @md_ctx, @EAD_crypt, md_len, fsKey) ;
+    Ret := EVP_VerifyFinal( @md_ctx, @EAD_crypt, md_len, fsKey);
 
     Result := (Ret = 1);
 

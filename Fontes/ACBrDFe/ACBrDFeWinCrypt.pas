@@ -495,7 +495,7 @@ begin
           begin
             aOID := PAnsiChar(ABlob.pbData);
             aOID := AdjustAnsiOID(aOID);
-            Result := copy(aOID, 1, 14);
+            Result := copy(Trim(aOID), 1, 14);
           end;
 
           if (Result = '') then
@@ -505,7 +505,7 @@ begin
             begin
               aOID := PAnsiChar(ABlob.pbData);
               aOID := AdjustAnsiOID(aOID);
-              Result := copy(aOID, 9, 11);
+              Result := copy(Trim(aOID), 9, 11);
             end;
           end;
         finally

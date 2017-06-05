@@ -241,14 +241,14 @@ begin
   // Procurando pela Extensão onde está o CNPJ
   aOID := GetCertExt( cert, #1#3#3#160 );
   if (aOID <> '') then
-    Result := copy(aOID, 1, 14);
+    Result := copy(Trim(aOID), 1, 14);
 
   // Ainda sem resposta, deve ser um eCPF, procure por CPF
   if Result = '' then
   begin
     aOID := GetCertExt( cert, #1#3#1#160 );
     if aOID <> ''then
-      Result := copy( aOID, 9 ,11);  // Pula DataNascimento
+      Result := copy( Trim(aOID), 9 ,11);  // Pula DataNascimento
   end;
 end;
 

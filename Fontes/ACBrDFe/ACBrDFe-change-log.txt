@@ -44,6 +44,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2017
+-- ACBrDFeOpenSSL --
+-- ACBrDFeWinCrypt --
+[-] Acerto na leitura do CNPJ quando não está no CN, em alguns casos havia lixo 
+    no inicio da string o que fazia com que os 2 ultimo digitos do CNPJ fossem 
+    perdidos
+    por: regys.silveira
+
 24/05/2017
 -- ACBrDFeSSL --
 [-] Correção em "TDFeSSL.Assinar", para repor corretamente a Declaração do XML,

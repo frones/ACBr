@@ -180,7 +180,7 @@ type
     function AdministrarCSC(ARaizCNPJ: String; AIndOP: TpcnIndOperacao;
       AIdCSC: integer; ACodigoCSC: String): Boolean;
     function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
-      ANSU: String): Boolean;
+      ANSU: String; AchNFe: String = ''): Boolean;
     function DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
       AultNSU: String): Boolean;
     function DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
@@ -894,9 +894,9 @@ begin
 end;
 
 function TACBrNFe.DistribuicaoDFe(AcUFAutor: integer;
-  ACNPJCPF, AultNSU, ANSU: String): Boolean;
+  ACNPJCPF, AultNSU, ANSU: String; AchNFe: String = ''): Boolean;
 begin
-  Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, ANSU, '');
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, ANSU, AchNFe);
 end;
 
 function TACBrNFe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,

@@ -554,6 +554,7 @@ type
     FultNSU: String;
     FNSU: String;
     FchNFe: String;
+    FNomeArq: String;
 
     FretDistDFeInt: TretDistDFeInt;
 
@@ -576,6 +577,7 @@ type
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
     property chNFe: String read FchNFe write FchNFe;
+    property NomeArq: String read FNomeArq;
 
     property retDistDFeInt: TretDistDFeInt read FretDistDFeInt;
   end;
@@ -783,7 +785,7 @@ procedure TNFeStatusServico.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NfeStatusServico4';
+    FPServico := GetUrlWsd + 'NFeStatusServico4';
     FPSoapAction := FPServico + '/nfeStatusServicoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
@@ -3490,7 +3492,7 @@ end;
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
   I: integer;
-  AXML, NomeArq: String;
+  AXML: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'nfeDistDFeInteresseResult');
 
@@ -3501,24 +3503,24 @@ begin
   for I := 0 to FretDistDFeInt.docZip.Count - 1 do
   begin
     AXML := FretDistDFeInt.docZip.Items[I].XML;
-    NomeArq := '';
+    FNomeArq := '';
     if (AXML <> '') then
     begin
       case FretDistDFeInt.docZip.Items[I].schema of
         schresNFe:
-          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-resNFe.xml';
 
         schresEvento:
-          NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
+          FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
                      FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
                      Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
                      '-resEventoNFe.xml';
 
         schprocNFe:
-          NomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
+          FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
 
         schprocEventoNFe:
-          NomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
+          FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
                      '-procEventoNFe.xml';
       end;
 

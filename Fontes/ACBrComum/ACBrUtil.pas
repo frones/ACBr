@@ -148,6 +148,8 @@ Function AscToBcd( const ANumStr: String ; const TamanhoBCD : Byte) : AnsiString
 
 function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
 function LEStrToInt(ALEStr: AnsiString): Integer;
+function IntToBEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+function BEStrToInt(ABEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
@@ -862,6 +864,54 @@ begin
   while P <= LenLE do
   begin
     AHexStr := IntToHex(ord(ALEStr[P]),2) + AHexStr;
+    Inc( P ) ;
+  end ;
+
+  if AHexStr <> '' then
+    Result := StrToInt( '$'+AHexStr )
+  else
+    Result := 0;
+end;
+
+{-----------------------------------------------------------------------------
+  Converte um "AInteger" em uma String binária codificada como Big Endian,
+  no tamanho máximo de "BytesStr"
+  Exemplos: IntToBEStr( 106, 2 ) = chr(0) + chr(106)
+ ---------------------------------------------------------------------------- }
+function IntToBEStr(AInteger: Integer; BytesStr: Integer): AnsiString;
+var
+   AHexStr: String;
+   LenHex, P, DecVal: Integer;
+begin
+  LenHex  := BytesStr * 2 ;
+  AHexStr := IntToHex(AInteger,LenHex);
+  Result  := '' ;
+
+  P := 1;
+  while P < LenHex do
+  begin
+    DecVal := StrToInt('$'+copy(AHexStr,P,2)) ;
+    Result := Result + AnsiChar( DecVal );
+    P := P + 2 ;
+  end ;
+end;
+
+{-----------------------------------------------------------------------------
+  converte uma String binária codificada como Big Endian em Inteiro
+  Veja exemplos na function acima
+ ---------------------------------------------------------------------------- }
+function BEStrToInt(ABEStr: AnsiString): Integer;
+var
+   AHexStr: String;
+   LenBE, P : Integer ;
+begin
+  LenBE   := Length(ABEStr);
+  AHexStr := '';
+
+  P := 1;
+  while P <= LenBE do
+  begin
+    AHexStr := AHexStr + IntToHex(ord(ABEStr[P]),2);
     Inc( P ) ;
   end ;
 

@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/06/2017
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function IntToBEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+    function BEStrToInt(ABEStr: AnsiString): Integer;
+    (por: DSA)
+
 Data: 24/05/2017
 -- ACBrUtil --
 [*] Ajuste para compilação em 64bits em versões inferiores a XE2

@@ -976,12 +976,16 @@ var
   function BIO_new_mem_buf(buf: pointer; len: integer): pBIO;
   
   // Big number function
+  function BN_num_bytes(const a: PBIGNUM): cint;
   function BN_print(fp: pBIO; const a: PBIGNUM): cint;
   function BN_new(): PBIGNUM;
   function BN_hex2bn(var n: PBIGNUM; const str: PChar): cint;
-  function BN_dec2bn(var n: pBIGNUM; const str: PChar): cint;
-  function BN_bn2hex(const n: pBIGNUM): PChar;
-  function BN_bn2dec(const n: pBIGNUM): PChar;
+  function BN_dec2bn(var n: PBIGNUM; const str: PChar): cint;
+  function BN_bn2hex(const n: PBIGNUM): PChar;
+  function BN_bn2dec(const n: PBIGNUM): PChar;
+
+  function BN_bn2bin(const n: PBIGNUM; _to: Pointer): cint;
+  function BN_bin2bn(const _from: Pointer; len: Integer; ret: PBIGNUM): PBIGNUM;
 
 function IsSSLloaded: Boolean;
 function Islibealoaded: Boolean;
@@ -1226,12 +1230,16 @@ type
   TBIO_new_mem_buf = function(buf: pointer; len: integer): pBIO; cdecl;
 
   // Big number function
+  TBN_num_bytes = function(const a: PBIGNUM): cint; cdecl;
   TBN_print = function(fp: pBIO; const a: PBIGNUM): cint; cdecl;
   TBN_new =  function(): PBIGNUM; cdecl;
   TBN_hex2bn = function(var n: PBIGNUM; const str: PChar): cint; cdecl;
-  TBN_dec2bn = function(var n: pBIGNUM; const str: PChar): cint; cdecl;
-  TBN_bn2hex = function(const n: pBIGNUM): PChar; cdecl;
-  TBN_bn2dec = function(const n: pBIGNUM): PChar; cdecl;
+  TBN_dec2bn = function(var n: PBIGNUM; const str: PChar): cint; cdecl;
+  TBN_bn2hex = function(const n: PBIGNUM): PChar; cdecl;
+  TBN_bn2dec = function(const n: PBIGNUM): PChar; cdecl;
+  TBN_bn2bin = function(const n: PBIGNUM; _to: pointer): integer; cdecl;
+  TBN_bin2bn = function(const _from: pointer; len: integer; ret: PBIGNUM): PBIGNUM; cdecl;
+
 
 
 var
@@ -1463,12 +1471,15 @@ var
   _BIO_new_mem_buf: TBIO_new_mem_buf = nil;
 
   // Big number function
+  _BN_num_bytes: TBN_num_bytes = nil;
   _BN_print: TBN_print = nil;
   _BN_new: TBN_new = nil;
   _BN_hex2bn: TBN_hex2bn = nil ;
   _BN_dec2bn: TBN_dec2bn = nil ;
   _BN_bn2hex: TBN_bn2hex = nil ;
   _BN_bn2dec: TBN_bn2dec = nil ;
+  _BN_bn2bin: TBN_bn2bin = nil;
+  _BN_bin2bn: TBN_bin2bn = nil;
 
 
 var
@@ -2973,6 +2984,14 @@ end;
 
 // Big number function
 
+function BN_num_bytes(const a: PBIGNUM): cint;
+begin
+  if InitlibeaInterface and Assigned(_BN_num_bytes) then
+    Result := _BN_num_bytes(a)
+  else
+    Result := -1;
+end;
+
 function BN_print(fp : pBIO ; const a : PBIGNUM) : cint ;
 begin
   if InitlibeaInterface and Assigned(_BN_print) then
@@ -2998,7 +3017,7 @@ begin
     Result := -1;
 end;
 
-function BN_dec2bn(var n: pBIGNUM; const str: PChar): cint;
+function BN_dec2bn(var n: PBIGNUM; const str: PChar): cint;
 begin
   if InitlibeaInterface and Assigned(_BN_dec2bn) then
     Result := _BN_dec2bn(n, str)
@@ -3006,7 +3025,7 @@ begin
     Result := -1;
 end;
 
-function BN_bn2hex(const n: pBIGNUM): PChar;
+function BN_bn2hex(const n: PBIGNUM): PChar;
 begin
   if InitlibeaInterface and Assigned(_BN_bn2hex) then
     Result := _BN_bn2hex(n)
@@ -3014,10 +3033,26 @@ begin
     Result := Nil;
 end;
 
-function BN_bn2dec(const n: pBIGNUM): PChar;
+function BN_bn2dec(const n: PBIGNUM): PChar;
 begin
   if InitlibeaInterface and Assigned(_BN_bn2dec) then
     Result := _BN_bn2dec(n)
+  else
+    Result := Nil;
+end;
+
+function BN_bn2bin(const n: PBIGNUM; _to: Pointer): cint;
+begin
+  if InitlibeaInterface and Assigned(_BN_bn2bin) then
+    Result := _BN_bn2bin(n, _to)
+  else
+    Result := -1;
+end;
+
+function BN_bin2bn(const _from: Pointer; len: Integer; ret: PBIGNUM): PBIGNUM;
+begin
+  if InitlibeaInterface and Assigned(_BN_bin2bn) then
+    Result := _BN_bin2bn(_from, len, Nil)
   else
     Result := Nil;
 end;
@@ -3347,12 +3382,15 @@ begin
        _BIO_new_mem_buf := GetProcAddr(SSLUtilHandle, 'BIO_new_mem_buf', AVerboseLoading);
 
        // Big number function
+       _BN_num_bytes := GetProcAddr(SSLUtilHandle, 'BN_num_bytes', AVerboseLoading);
        _BN_print := GetProcAddr(SSLUtilHandle, 'BN_print', AVerboseLoading);
        _BN_new := GetProcAddr(SSLUtilHandle, 'BN_new', AVerboseLoading);
        _BN_hex2bn := GetProcAddr(SSLUtilHandle, 'BN_hex2bn', AVerboseLoading);
        _BN_dec2bn := GetProcAddr(SSLUtilHandle, 'BN_dec2bn', AVerboseLoading);
        _BN_bn2hex := GetProcAddr(SSLUtilHandle, 'BN_bn2hex', AVerboseLoading);
        _BN_bn2dec := GetProcAddr(SSLUtilHandle, 'BN_bn2dec', AVerboseLoading);
+       _BN_bn2bin := GetProcAddr(SSLUtilHandle, 'BN_bn2bin', AVerboseLoading);
+       _BN_bin2bn := GetProcAddr(SSLUtilHandle, 'BN_bin2bn', AVerboseLoading);
 
        // Crypto Functions
 
@@ -3642,8 +3680,6 @@ result:=false;
   result:=false;
  end;
 end;
-
-
 
 function IsSSLloaded: Boolean;
 begin

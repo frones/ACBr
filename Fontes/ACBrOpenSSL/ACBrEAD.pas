@@ -129,14 +129,22 @@ type
     constructor Create(AOwner: TComponent); override;
     Destructor Destroy  ; override;
 
-    Procedure GerarChaves( var AChavePublica : AnsiString;
-       var AChavePrivada : AnsiString ) ;
+    procedure LerChavesArquivoPFX(const AArquivoPFX, Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+    procedure LerChavesPFX(const ADadosPFX: AnsiString; const Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString); overload;
+    procedure LerChavesPFX(const AStreamPFX: TStream; const Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString); overload;
+    Procedure GerarChaves( var AChavePublica : AnsiString; var AChavePrivada : AnsiString ) ;
 
     Function GerarXMLeECFc(const NomeSwHouse, Diretorio: String): Boolean; overload;
     Function GerarXMLeECFc(const NomeSwHouse: String): AnsiString; overload;
     Procedure CalcularModuloeExpoente( var Modulo, Expoente : AnsiString );
     Function CalcularChavePublica : AnsiString ;
     Function ConverteXMLeECFcParaOpenSSL( ArquivoXML: String) : AnsiString;
+
+    function ConverteChavePublicaParaOpenSSH(const AChavePublicaOpenSSL: String): String;
+    function ConverterChavePublicaDeOpenSSH(const AChavePublicaOpenSSH: String): String;
 
     function CalcularHashArquivo( const NomeArquivo: String;
        const Digest: TACBrEADDgst;
@@ -197,6 +205,7 @@ type
 
     function MD5FromFile(const APathArquivo: String): String;
     function MD5FromString(const AString: String): String;
+
   published
     property About: String read GetAbout stored False;
     property BufferSize: Integer read fsBufferSize write SetBufferSize default CBufferSize;
@@ -256,6 +265,89 @@ begin
   Result := String(CalcularHash(AnsiString(AString), dgstMD5));
 end;
 
+function TACBrEAD.ConverteChavePublicaParaOpenSSH( const AChavePublicaOpenSSL: String): String;
+Var
+  RsaKey: pRSA;
+  Buffer, Modulo, Expoente: AnsiString;
+
+  function EncodeHexaSSH(HexaStr: String): AnsiString;
+  var
+    LenHexa: Integer;
+  begin
+    LenHexa := Length(HexaStr);
+    if odd(LenHexa) then
+    begin
+      HexaStr := '0'+HexaStr;
+      Inc( LenHexa );
+    end;
+
+    Result := IntToBEStr(Trunc(LenHexa/2), 4) + HexToAscii(HexaStr);
+  end;
+
+  function EncodeBufferSSH(ABuffer: AnsiString): AnsiString;
+  var
+    HexaStr: String;
+  begin
+    HexaStr := AsciiToHex(ABuffer);
+    Result := EncodeHexaSSH(HexaStr);
+  end;
+
+begin
+  // https://www.netmeister.org/blog/ssh2pkcs8.html
+
+  CalcularModuloeExpoente(Modulo, Expoente);
+
+  Buffer := EncodeBufferSSH('ssh-rsa') +
+            EncodeHexaSSH(Expoente)  +
+            EncodeHexaSSH('00'+Modulo);
+  Result := 'ssh-rsa '+ EncodeBase64(Buffer);
+end;
+
+function TACBrEAD.ConverterChavePublicaDeOpenSSH(
+  const AChavePublicaOpenSSH: String): String;
+
+  function LerBloco( ABinStr: AnsiString; var P: Integer ): AnsiString;
+  var
+    LenBloco: Integer;
+  begin
+    LenBloco := BEStrToInt(copy(ABinStr,P,4));
+    Result := Copy(ABinStr,P+4, LenBloco);
+    P := P + 4 + LenBloco;
+  end;
+
+var
+  ABinStr, Header, Modulo, Expoente: AnsiString;
+  P1, P2: Integer;
+  Bio: PBIO;
+  Base64Key: String;
+begin
+  P1 := pos(' ', AChavePublicaOpenSSH);
+  P2 := PosEx(' ', AChavePublicaOpenSSH, P1 + 1);
+  if P2 = 0 then
+    P2 := Length(AChavePublicaOpenSSH)+1;
+
+  Base64Key := copy(AChavePublicaOpenSSH, P1 + 1, P2-P1-1);
+
+  ABinStr := DecodeBase64(Base64Key);
+  P1 := 1;
+  Header   := LerBloco(ABinStr, P1);
+  if (Header <> 'ssh-rsa') then
+    raise EACBrEADException.Create( ACBrStr('Conteudo de chave Publica de OpenSSH inválido') );
+
+  Expoente := AsciiToHex(LerBloco(ABinStr, P1));
+  Modulo   := AsciiToHex(LerBloco(ABinStr, P1));
+
+  LerChaveModuloExpoente(Modulo, Expoente);
+
+  Bio := CriarMemBIO;
+  try
+    if PEM_write_bio_PUBKEY(Bio, fsKey) = 1 then
+      Result := AnsiString( BioToStr( Bio ) );
+  finally
+    LiberarBIO( Bio ) ;
+  end ;
+end;
+
 { ------------------------------ TACBrEAD ------------------------------ }
 
 function TACBrEAD.GetAbout: String;
@@ -309,6 +401,110 @@ begin
 
   inherited Destroy ;
 end ;
+
+procedure TACBrEAD.LerChavesArquivoPFX(const AArquivoPFX, Senha: String;
+  var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+Var
+   FS : TFileStream ;
+begin
+  VerificaNomeArquivo( AArquivoPFX );
+
+  FS := TFileStream.Create(AArquivoPFX, fmOpenRead or fmShareDenyWrite);
+  try
+    LerChavesPFX( FS, Senha, AChavePublica, AChavePrivada );
+  finally
+    FS.Free ;
+  end ;
+end;
+
+procedure TACBrEAD.LerChavesPFX(const ADadosPFX: AnsiString; const Senha: String;
+  var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+Var
+   MS : TMemoryStream ;
+begin
+  MS := TMemoryStream.Create;
+  try
+    MS.Write( Pointer(ADadosPFX)^, Length(ADadosPFX) );
+    LerChavesPFX( MS, Senha, AChavePublica, AChavePrivada );
+  finally
+    MS.Free ;
+  end ;
+end;
+
+procedure TACBrEAD.LerChavesPFX(const AStreamPFX: TStream; const Senha: String;
+  var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+var
+  ca, p12: Pointer;
+  Cert: pX509;
+  b, BioKey: PBIO;
+  PFXData: AnsiString;
+  PFXLen: Integer;
+  RsaKey: pRSA;
+begin
+  InitOpenSSL;
+
+  AChavePublica := '';
+  AChavePrivada := '';
+  AStreamPFX.Position := 0;
+  PFXLen := AStreamPFX.Size;
+  Setlength(PFXData, PFXLen);
+  PFXLen := AStreamPFX.Read(PAnsiChar(PFXData)^, PFXLen);
+  SetLength(PFXData, PFXLen);
+
+  LiberarChave;
+
+  b := CriarMemBIO;
+  try
+    {$IFDEF USE_libeay32}
+     BIO_write(b, PAnsiChar(PFXData), Length(PFXData));
+     p12 := d2i_PKCS12_bio(b, nil);
+    {$ELSE}
+     BioWrite(b, PFXData, Length(PFXData));
+     p12 := d2iPKCS12bio(b, nil);
+    {$ENDIF}
+    if not Assigned(p12) then
+      raise EACBrEADException.Create( 'Erro ao ler PFX');
+
+    try
+      ca := nil;
+      {$IFDEF USE_libeay32}
+      if PKCS12_parse(p12, PAnsiChar(Senha), fsKey, Cert, ca) > 0 then
+      {$ELSE}
+      if PKCS12parse(p12, Senha, fsKey, Cert, ca) > 0 then
+      {$ENDIF}
+      begin
+        {$IfDef USE_libeay32}
+         RsaKey := EVP_PKEY_get1_RSA(fsKey);
+        {$Else}
+         RsaKey := EvpPkeyGet1RSA(fsKey);
+        {$EndIf}
+
+        // Lendo Conteudo da Chave
+        BioKey := CriarMemBIO;
+        try
+          PEM_write_bio_RSAPrivateKey(BioKey, RsaKey, nil, nil, 0, nil, nil);
+          AChavePrivada := AnsiString(BioToStr( BioKey ));
+
+          BIO_reset( BioKey );
+          PEM_write_bio_PUBKEY( BioKey, fsKey);
+          AChavePublica := AnsiString(BioToStr( BioKey ));
+        finally
+          LiberarBIO( BioKey );
+        end ;
+      end
+      else
+        raise EACBrEADException.Create( 'Erro ao interpretar PFX');
+    finally
+      {$IFDEF USE_libeay32}
+       PKCS12_free(p12);
+      {$ELSE}
+       PKCS12free(p12);
+      {$ENDIF}
+    end;
+  finally
+    LiberarBIO(b);
+  end;
+end;
 
 function TACBrEAD.GetOpenSSL_Version: String;
 var
@@ -474,20 +670,20 @@ begin
   Result := '';
 
   if not FileExists( ArquivoXML ) then
-     raise EACBrEADException.Create( ACBrStr(AnsiString('Arquivo: ' + ArquivoXML + ' não encontrado!')) );
+    raise EACBrEADException.Create( ACBrStr(AnsiString('Arquivo: ' + ArquivoXML + ' não encontrado!')) );
 
   SL := TStringList.Create;
   try
-     SL.LoadFromFile( ArquivoXML );
-     LerChave_eECFc( AnsiString( SL.Text ) )
+    SL.LoadFromFile( ArquivoXML );
+    LerChave_eECFc( AnsiString( SL.Text ) )
   finally
-     SL.Free ;
+    SL.Free ;
   end ;
 
   Bio := CriarMemBIO;
   try
-     if PEM_write_bio_PUBKEY(Bio, fsKey) = 1 then
-        Result := AnsiString( BioToStr( Bio ) );
+    if PEM_write_bio_PUBKEY(Bio, fsKey) = 1 then
+      Result := AnsiString( BioToStr( Bio ) );
   finally
     LiberarBIO( Bio ) ;
   end ;

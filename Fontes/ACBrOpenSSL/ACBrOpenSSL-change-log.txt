@@ -39,6 +39,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2017
+-- OpenSSLExt --
+[+] Adicionado suporte para os métodos:
+    function BN_num_bytes(const a: PBIGNUM): cint;
+    function BN_bn2bin(const n: PBIGNUM; _to: Pointer): cint;
+    function BN_bin2bn(const _from: Pointer; len: Integer; ret: PBIGNUM): PBIGNUM;
+    (por: DSA)
+
+-- ACBrEAD --
+[+] Adicionado os métodos:
+    procedure LerChavesArquivoPFX(const AArquivoPFX, Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+    procedure LerChavesPFX(const ADadosPFX: AnsiString; const Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+    procedure LerChavesPFX(const AStreamPFX: TStream; const Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+
+    function ConverteChavePublicaParaOpenSSH(const AChavePublicaOpenSSL: String): String;
+    function ConverterChavePublicaDeOpenSSH(const AChavePublicaOpenSSH: String): String;
+    (por: DSA)
+
 05/06/2017
 -- ACBrEAD --
 [+] Adicionado os métodos:

@@ -7,6 +7,7 @@ object frlDANFeRL: TfrlDANFeRL
   ClientHeight = 634
   ClientWidth = 810
   Color = clBtnFace
+  PixelsPerInch = 96
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'

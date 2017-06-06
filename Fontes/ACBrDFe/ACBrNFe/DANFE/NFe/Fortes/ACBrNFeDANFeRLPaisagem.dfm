@@ -2,8 +2,8 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Left = 204
   Top = 207
   Caption = 'frlDANFeRLPaisagem'
-  ClientHeight = 667
-  ClientWidth = 1374
+  ClientWidth = 907
+  ExplicitWidth = 923
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport
@@ -5038,12 +5038,12 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       object rllNumNF1: TRLLabel
         Left = 476
         Top = 72
-        Width = 93
-        Height = 16
+        Width = 87
+        Height = 15
         Caption = 'N'#186' 000.000.000'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
-        Font.Height = -13
+        Font.Height = -12
         Font.Name = 'Arial'
         Font.Style = [fsBold]
         ParentFont = False
@@ -5056,6 +5056,12 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Alignment = taCenter
         AutoSize = False
         Caption = 'S'#201'RIE 000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
       object rliChave2: TRLDraw
         Left = 636
@@ -5374,7 +5380,13 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Height = 16
         Alignment = taRightJustify
         AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
         Info = itPageNumber
+        ParentFont = False
         Text = 'FL. '
       end
       object rllLastPage: TRLSystemInfo
@@ -5383,7 +5395,13 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
         Width = 24
         Height = 16
         AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Arial'
+        Font.Style = []
         Info = itLastPageNumber
+        ParentFont = False
         Text = '/'
       end
       object RLDraw4: TRLDraw

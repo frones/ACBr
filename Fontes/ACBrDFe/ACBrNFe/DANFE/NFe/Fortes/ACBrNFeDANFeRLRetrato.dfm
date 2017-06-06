@@ -4,8 +4,9 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
   Caption = 'frlDANFeRLRetrato'
   ClientHeight = 873
   ClientWidth = 925
+  Font.Height = -18
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 24
   inherited RLNFe: TRLReport
     Left = 16
     Top = 0
@@ -16,6 +17,7 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
     Background.Arrange = baDistributed
     Background.Height = 96
     Background.Width = 175
+    Font.Height = -20
     PreviewOptions.FormStyle = fsStayOnTop
     PrintDialog = False
     Title = 'Danfe Retrato'
@@ -827,6 +829,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 16
         Alignment = taCenter
         Caption = 'S'#201'RIE 000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
       object rliChave2: TRLDraw
         Left = 429
@@ -1166,7 +1174,13 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Height = 16
         Alignment = taRightJustify
         AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
         Info = itPageNumber
+        ParentFont = False
         Text = 'FL. '
       end
       object rllLastPage: TRLSystemInfo
@@ -1175,7 +1189,13 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Width = 24
         Height = 16
         AutoSize = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
         Info = itLastPageNumber
+        ParentFont = False
         Text = '/'
       end
       object RLDraw4: TRLDraw
@@ -6081,6 +6101,12 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         Alignment = taCenter
         AutoSize = False
         Caption = 'NF-e'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -15
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
       object rllNumNF0: TRLLabel
         Left = 625
@@ -6097,12 +6123,18 @@ inherited frlDANFeRLRetrato: TfrlDANFeRLRetrato
         ParentFont = False
       end
       object rllSERIE0: TRLLabel
-        Left = 638
+        Left = 639
         Top = 37
         Width = 68
         Height = 16
         Alignment = taCenter
         Caption = 'S'#201'RIE 000'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
       end
       object rllResumo: TRLLabel
         Left = 60

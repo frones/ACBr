@@ -652,7 +652,6 @@ procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
   {$IfNDef FPC}
    Self.Scaled := false;
-   Self.ScaleBy( 96,Screen.PixelsPerInch);
   {$EndIf}
 end;
 

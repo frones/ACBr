@@ -284,7 +284,7 @@ begin
   FExibeResumoCanhoto := false;
   FExibeResumoCanhoto_Texto := '';
   FFormularioContinuo := false;
-  FTamanhoFonte_DemaisCampos := 10;
+  FTamanhoFonte_DemaisCampos := 8;
   FProdutosPorPagina := 0;
   FImprimeNomeFantasia            := False;
   FImprimirDetalhamentoEspecifico := true;

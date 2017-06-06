@@ -14,6 +14,9 @@ type
 
   TForm1 = class(TForm)
      ACBrEAD1 : TACBrEAD ;
+     btCalcPubKey1: TBitBtn;
+     btGerarPubKeyOpenSSH: TBitBtn;
+     btLerPubKeyOpenSSH: TBitBtn;
      btRemoverEAD: TBitBtn;
      btCalcEAD : TBitBtn ;
      btCalcMD5 : TBitBtn ;
@@ -56,11 +59,14 @@ type
      procedure ACBrEAD1Progress(const PosByte, TotalSize: Int64);
      procedure btAssinarArqEADClick(Sender : TObject) ;
      procedure btAssinarClick(Sender: TObject);
+     procedure btCalcPubKey1Click(Sender: TObject);
      procedure btCalcPubKeyClick(Sender : TObject) ;
      procedure btGerarXMLeECFc1Click(Sender : TObject) ;
+     procedure btGerarPubKeyOpenSSHClick(Sender: TObject);
      procedure btGravarPrivKeyClick(Sender : TObject) ;
      procedure btGravarPubKeyClick(Sender : TObject) ;
      procedure btLerPubKeyClick(Sender : TObject) ;
+     procedure btLerPubKeyOpenSSHClick(Sender: TObject);
      procedure btNovoParChavesClick(Sender : TObject) ;
      procedure btLerPrivKeyClick(Sender : TObject) ;
      procedure btCalcEADClick(Sender : TObject) ;
@@ -302,6 +308,27 @@ begin
    mResp.Lines.Add('------------------------------');
 end;
 
+procedure TForm1.btCalcPubKey1Click(Sender: TObject);
+var
+  Senha, ChavePrivada, ChavePublica: String;
+begin
+   ChavePrivada := '';
+   ChavePublica := '';
+
+   OpenDialog1.Filter := 'pfx|*.pfx';
+   if OpenDialog1.Execute then
+   begin
+      Senha := '' ;
+      if not InputQuery('Senha','Entre com a Senha do Certificado', Senha ) then
+         exit ;
+
+     ACBrEAD1.LerChavesArquivoPFX(OpenDialog1.FileName, Senha, ChavePublica, ChavePrivada);
+
+     mPrivKey.Lines.Text := ChavePrivada;
+     mPubKey.Lines.Text  := ChavePublica;
+   end ;
+end;
+
 procedure TForm1.btCalcPubKeyClick(Sender : TObject) ;
 var
    Chave : AnsiString ;
@@ -331,6 +358,13 @@ begin
      mResp.Lines.Add('------------------------------');
   end ;
   OpenDialog1.Filter := '';
+end;
+
+procedure TForm1.btGerarPubKeyOpenSSHClick(Sender: TObject);
+begin
+  mResp.Lines.Add( '--------------- Chave Pública no formato do OpenSSH --------------- ');
+  mResp.Lines.Add( ACBrEAD1.ConverteChavePublicaParaOpenSSH(mPubKey.Lines.Text) );
+  mResp.Lines.Add( '' );
 end;
 
 procedure TForm1.btGravarPrivKeyClick(Sender : TObject) ;
@@ -371,6 +405,19 @@ begin
       edArqPubKey.Text := OpenDialog1.FileName;
       mPubKey.Lines.LoadFromFile( edArqPubKey.Text );
    end ;
+end;
+
+procedure TForm1.btLerPubKeyOpenSSHClick(Sender: TObject);
+var
+   PubKeyOpenSSH: String ;
+begin
+  PubKeyOpenSSH := '' ;
+  if not InputQuery('OpenSSH','Cole aqui o conteudo da Linha da Chave Publica', PubKeyOpenSSH ) then
+     exit ;
+
+  mResp.Lines.Add( '--------------- Chave Pública de OpenSSH, convertida para OpenSSL --------------- ');
+  mResp.Lines.AddText( ACBrEAD1.ConverterChavePublicaDeOpenSSH(PubKeyOpenSSH) );
+  mResp.Lines.Add( '' );
 end;
 
 end.

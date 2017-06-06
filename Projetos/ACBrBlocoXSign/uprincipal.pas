@@ -220,12 +220,12 @@ begin
         btnValidarClick(Self);
 
       WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),memArqAssinado.Text);
-      Close;
+      Application.Terminate;
     end
     else
     begin
       WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'-resposta.'+ExtractFileExt(ParamStr(1)),'Arquivo Inválido');
-      Close;
+      Application.Terminate;
     end;
   end
   else if UpperCase(ParamStr(2)) = '/C' then
@@ -234,8 +234,8 @@ begin
     ACBrBlocoX1.WebServices.ConsultarBlocoX.Executar;
 
     memArqAssinado.Text := ACBrBlocoX1.WebServices.ConsultarBlocoX.RetWS;
-    WriteToTXT('consultar-resposta.txt',memArqAssinado.Text);
-    Close;
+    WriteToTXT(ExtractFileNameWithoutExt(ParamStr(1))+'consultar-resposta.'+ExtractFileExt(ParamStr(1),memArqAssinado.Text);
+    Application.Terminate;
   end
   else
      CarregarGifBannerACBrSAC;;

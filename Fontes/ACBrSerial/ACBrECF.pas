@@ -2690,8 +2690,9 @@ begin
   if RFDAtivo then
      fsRFD.CancelaCupom( StrToInt(Docto) ) ;
 
-  fsMensagemRodape := '' ;
-  Consumidor.Zera ;
+  fsMensagemRodape := '';
+  Consumidor.Zera;
+  InfoRodapeCupom.Clear;
 
   {$IFNDEF NOGUI}
    if MemoAssigned then
@@ -4249,6 +4250,7 @@ begin
 
   fsMensagemRodape := '' ;
   Consumidor.Zera ;
+  InfoRodapeCupom.Clear;
 
   {$IFNDEF NOGUI}
    if MemoAssigned then

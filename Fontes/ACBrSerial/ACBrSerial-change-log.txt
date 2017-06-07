@@ -39,7 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
- 04/06/2017
+Data: 07/06/2017
+-- ACBrECF --
+[*] Alteração para limpar "InfoRodapeCupom" após fechar/cancelar cupom.
+    (por: Elias César)
+
+Data: 04/06/2017
  -- ACBrBALFilizola --
 [*] Ajuste na função "InterpretarRepostaPeso", para considerar até o primeiro ETX
     que encontrar.

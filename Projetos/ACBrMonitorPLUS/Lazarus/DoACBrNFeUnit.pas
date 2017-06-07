@@ -1181,21 +1181,20 @@ begin
            end;
          end
 
-        //NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU,nNSU,aChNFe)
-        else if (Cmd.Metodo = 'distribuicaodfe') or
-                (Cmd.Metodo = 'distribuicaodfeporchavenfe') or
-                (Cmd.Metodo = 'distribuicaodfepornsu') or
-                (Cmd.Metodo = 'distribuicaodfeporultnsu')then
+        else if (Cmd.Metodo = 'distribuicaodfe') or            //NFe.DistribuicaoDFe(cUF,cCNPJ,nUltNSU,nNSU,aChNFe)
+                (Cmd.Metodo = 'distribuicaodfeporchavenfe') or //NFe.DistribuicaoDFePorChaveNFe(cUF, cCNPJ, aChNFe)
+                (Cmd.Metodo = 'distribuicaodfepornsu') or      //NFe.DistribuicaoDFePorNSU(cUF, cCNPJ, nNSU)
+                (Cmd.Metodo = 'distribuicaodfeporultnsu')then  //NFe.DistribuicaoDFePorUltNSU(cUF, cCNPJ, nUltNSU)
          begin
            if not ValidarCNPJ(Cmd.Params(1)) then
               raise Exception.Create('CNPJ '+Cmd.Params(1)+' inválido.');
 
            try
-              if Cmd.Metodo = 'DistribuicaoDFePorChaveNFe' then
+              if Cmd.Metodo = 'distribuicaodfeporchavenfe' then
                 ACBrNFe1.DistribuicaoDFePorChaveNFe(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
-              else if Cmd.Metodo = 'DistribuicaoDFePorNSU' then
+              else if Cmd.Metodo = 'distribuicaodfepornsu' then
                 ACBrNFe1.DistribuicaoDFePorNSU(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
-              else if Cmd.Metodo = 'DistribuicaoDFePorUltNSU' then
+              else if Cmd.Metodo = 'distribuicaodfeporultnsu' then
                 ACBrNFe1.DistribuicaoDFePorUltNSU(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2))
               else
                 ACBrNFe1.DistribuicaoDFe(StrToIntDef(Cmd.Params(0),0),Cmd.Params(1),Cmd.Params(2),Cmd.Params(3),Cmd.Params(4));

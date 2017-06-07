@@ -42,7 +42,7 @@ uses
   pcnVFPe;
 
 const
-  cNomeComponente = 'MF-e-Giz';
+  cNomeComponente = 'MF-e';
 
 type
 

@@ -130,6 +130,7 @@ type
      fTecladoBloqueado : Boolean;
      fSuportaDesconto : Boolean;
      fSuportaSaque : Boolean;
+     fSuportaReajusteValor : Boolean;
      fTempoInicialMensagemOperador: TDateTime;
      fTempoInicialMensagemCliente: TDateTime;
 
@@ -293,6 +294,8 @@ type
        default True;
      Property SuportaDesconto : Boolean read fSuportaDesconto write fSuportaDesconto
        default True;
+     Property SuportaReajusteValor : Boolean read fSuportaReajusteValor write fSuportaReajusteValor
+       default False;
      property ConfirmarAntesDosComprovantes: Boolean read fConfirmarAntesDosComprovantes
        write fConfirmarAntesDosComprovantes default False;
 
@@ -426,6 +429,7 @@ begin
   fTrocoMaximo          := 0;
   fSuportaDesconto      := True;
   fSuportaSaque         := True;
+  fSuportaReajusteValor := False;
 
   fTempoInicialMensagemCliente  := 0;
   fTempoInicialMensagemOperador := 0;

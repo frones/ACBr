@@ -2154,7 +2154,7 @@ end;
 procedure TACBrTEFDClass.AdicionarIdentificacao;
 var
   TemIdentificacao : Boolean ;
-  Operacoes : String ;
+  Operacoes : Integer ;
 begin
   TemIdentificacao := False;
   
@@ -2173,19 +2173,28 @@ begin
         TemIdentificacao := True;
      end;
 
-     Operacoes := EmptyStr;
-     if SuportaSaque and not SuportaDesconto then
-        Operacoes := '1'
+     Operacoes := 0;
+     if AutoEfetuarPagamento then
+     begin
+        if SuportaSaque and not SuportaDesconto then
+           Operacoes := 1
+        else if SuportaDesconto and not SuportaSaque then
+           Operacoes := 2;
+     end
      else
-     if SuportaDesconto and not SuportaSaque then
-        Operacoes := '2';
+     begin
+        if SuportaSaque then
+           Operacoes := Operacoes + 1;
 
-     if SuportaSaque and SuportaDesconto
-        and (not AutoEfetuarPagamento) then
-        Operacoes := '3';
+        if SuportaDesconto then
+           Operacoes := Operacoes + 2;
 
-     if TemIdentificacao and (Operacoes <> EmptyStr) then
-        Req.Conteudo.GravaInformacao(706,000, Operacoes ) ;
+        if SuportaReajusteValor then
+           Operacoes := Operacoes + 64;
+     end;
+
+     if TemIdentificacao and (Operacoes > 0) then
+        Req.Conteudo.GravaInformacao(706,000, IntToStr(Operacoes) ) ;
   end;
 end;
 

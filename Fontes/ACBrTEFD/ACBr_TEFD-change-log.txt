@@ -46,8 +46,19 @@ Símbolo : Significado
 [+]     : Novo recurso
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
-	
-17/05/2017	
+
+07/06/2017
+-- ACBrTEFD --
+[+] Criada a propriedade "SuportaReajusteValor: Boolean", para informar que será
+    utilizada esta funcionalidade pelo TEF.    (por: WesleyAS)
+
+-- ACBrTEFDClass --
+[*] Alterada a rotina "AdicionarIdentificacao" para verificar a informar o flag
+    referente a propriedade "SuportaReajusteValor" no campo 706-000.
+    (por: WesleyAS)
+http://www.projetoacbr.com.br/forum/topic/36527-erro-no-roteiro-de-teste-paygo
+
+17/05/2017
 -- ACBrTEFDCliSiTEF -- 
 [*] Alteração em "ConteudoToProperty" para calcular corretamente os valores 
 	defaults das parcelas, quando elas não são informadas pelo TEF.

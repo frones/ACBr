@@ -455,6 +455,9 @@ begin
    {$Else}
     Result := Utf8ToAnsi(AUTF8String) ;
    {$EndIf}
+
+   if Result = '' then 
+     Result := AUTF8String;
   {$EndIf}
 end;
 

@@ -38,6 +38,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 08/06/2017
+-- ACBrUtil --
+[*] Ajuste no método "UTF8ToNativeString", para que não retorne vazio, caso
+    ocorra falha nas rotinas de conversão de String, nativas do Delphi
+    http://www.projetoacbr.com.br/forum/topic/36234-cancelamento-com-erro-nao-encontrei-final-elemento/
+
 Data: 06/06/2017
 -- ACBrUtil --
 [+] Adicionado os métodos:

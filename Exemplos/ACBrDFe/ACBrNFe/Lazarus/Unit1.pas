@@ -1473,8 +1473,9 @@ end;
 
 procedure TForm1.btnGerarPDFClick(Sender: TObject);
 var
- CarregarMaisXML : Boolean = True;
+ CarregarMaisXML : Boolean;
 begin
+	CarregarMaisXML :=  true;
 
   OpenDialog1.Title := 'Selecione a NFE';
   OpenDialog1.DefaultExt := '*-nfe.XML';

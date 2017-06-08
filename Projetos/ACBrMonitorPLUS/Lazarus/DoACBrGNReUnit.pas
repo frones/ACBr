@@ -69,7 +69,8 @@ begin
           end;
         end;
 
-        Cmd.Resposta := ACBrGNRE1.WebServices.Enviar.Msg+
+        
+        Cmd.Resposta := ACBrGNRE1.WebServices.Enviar.Msg+sLineBreak+
                      '[STATUS]'+sLineBreak+
                      'Ambiente='+TpAmbToStr(ACBrGNRE1.WebServices.ConsultaUF.ambiente)+sLineBreak+
                      'Codigo='+IntToStr(ACBrGNRE1.WebServices.ConsultaUF.codigo)+sLineBreak+
@@ -134,12 +135,12 @@ begin
         ACBrGNRE1.Enviar;
 
         Cmd.Resposta :=Cmd.Resposta + sLineBreak+
-                     'Envio GNRE'+ sLineBreak+
-                     'ambiente: '+ TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente)+ sLineBreak+
-                     'codigo: '+ IntToStr(ACBrGNRE1.WebServices.Retorno.codigo)+ sLineBreak+
-                     'descricao: '+ ACBrGNRE1.WebServices.Retorno.descricao+ sLineBreak+
-                     'Recibo: '+ ACBrGNRE1.WebServices.Retorno.numeroRecibo+ sLineBreak+
-                     'Protocolo: '+ ACBrGNRE1.WebServices.Retorno.protocolo+ sLineBreak;
+                     '[ENVIO]'+ sLineBreak+
+                     'Ambiente='+ TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente)+ sLineBreak+
+                     'Codigo='+ IntToStr(ACBrGNRE1.WebServices.Retorno.codigo)+ sLineBreak+
+                     'Descricao='+ ACBrGNRE1.WebServices.Retorno.descricao+ sLineBreak+
+                     'Recibo='+ ACBrGNRE1.WebServices.Retorno.numeroRecibo+ sLineBreak+
+                     'Protocolo='+ ACBrGNRE1.WebServices.Retorno.protocolo+ sLineBreak;
 
       end
       else if Cmd.Metodo = 'setformaemissao' then

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 09/06/2017
+-- ACBrSATExtratoFortesFr
+[-] Correção por estar quebrando em duas linhas	
+		http://www.projetoacbr.com.br/forum/topic/37112-impressão-pulando-linha-apos-atualizar-acbr/
+		por: Juliomar Marchetti
+		
 Data 02/06/2017
 -- ACBrSATExtratoFortesFr --
 [*] Ajustes para correta exibição de diversos campos, em impressoras de pouca

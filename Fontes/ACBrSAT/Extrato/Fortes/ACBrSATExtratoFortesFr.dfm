@@ -256,9 +256,8 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         object mLinhaItem: TRLMemo
           Left = 18
           Top = 0
-          Width = 224
+          Width = 214
           Height = 24
-          Align = faClient
           Behavior = [beSiteExpander]
           Lines.Strings = (
             '9999999999999 DESCRICAO DO PRODUTO 99,999 UN x 999,999 (99,99)')

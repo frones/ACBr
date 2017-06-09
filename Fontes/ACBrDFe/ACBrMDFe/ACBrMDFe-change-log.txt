@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2017
+[-] correção para envio da tag tptransp com veículo próprio
+		http://www.projetoacbr.com.br/forum/topic/37149-envio-da-tag-tptransp-com-veículo-próprio/
+		Por : Juliomar Marchetti
 
 24/05/2017
 -- ACBRMDFeManifestos --

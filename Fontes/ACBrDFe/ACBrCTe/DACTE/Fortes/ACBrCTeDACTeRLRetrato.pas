@@ -831,12 +831,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByname('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
           end
           else
           begin
             cdsDocumentos.FieldByname('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
 
             cdsDocumentos.Post;
           end;
@@ -1030,12 +1030,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByName('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarChaveAcesso(chave, True);
           end
           else
           begin
             cdsDocumentos.FieldByName('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarChaveAcesso(chave, True);
 
             cdsDocumentos.Post;
           end;
@@ -1173,23 +1173,6 @@ begin
     rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
 //    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
   end;
-
-  if FCTe.infCTe.versao >= 3 then
-  begin
-    if FCTe.vPrest.vRec = 0 then
-    begin
-      FCTe.Ide.forPag  := fpPago;
-    end
-    else if FCTe.vPrest.vRec = FCTe.vPrest.vTPrest then
-    begin
-      FCTe.Ide.forPag  := fpAPagar;
-    end
-    else
-    begin
-      FCTe.Ide.forPag  := fpOutros;
-    end;
-  end;
-
   rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
 //  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
 
@@ -2034,7 +2017,21 @@ begin
     if ( dPrev > 0 ) then
       rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev);
 
+    if FCTe.infCTe.versao >= 3.00 then
+    begin
+      rllTituloLotacao.Caption   := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO');
+      rlsCIOT.Enabled            := False;
+      lblCIOT.Caption            := '';
+      rllCIOT.Caption            := '';
+      rllLotacao.Caption         := '';
+      RLLabel83.Caption          := '';
+      rlsCIOT.Visible            := False;
+      RLDraw36.Visible           := False;
+      if ( FCTe.compl.Entrega.comData.dProg > 0 ) then
+        rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', FCTe.compl.Entrega.comData.dProg);
   end;
+  end;
+
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot103BeforePrint(Sender: TObject; var PrintIt: Boolean);

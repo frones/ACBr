@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.221';
+  CACBrBoleto_Versao = '0.0.222';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -1457,6 +1457,9 @@ begin
    fCarteira          := '';
    fEspecieMod        := '';
    fValorDocumento    := 0;
+   fInstrucao1        := '';
+   fInstrucao2        := '';
+   fInstrucao3        := '';
    fMensagem          := TStringList.Create;
    fInformativo       := TStringList.Create;
    fInstrucoes        := TStringList.Create;
@@ -1793,7 +1796,12 @@ begin
                          ' após o vencimento.'));
       end;
       if DataLimitePagto <> 0 then
-        AStringList.Add(ACBrStr('Não Receber após ' + IntToStr(DaysBetween(Vencimento, DataLimitePagto))+ ' dias'));
+      begin
+        if DataLimitePagto > Vencimento then
+          AStringList.Add(ACBrStr('Não Receber após ' + IntToStr(DaysBetween(Vencimento, DataLimitePagto))+ ' dias'))
+        else
+          AStringList.Add(ACBrStr('Não Receber após o Vencimento'));
+      end;
    end;
 end;
 

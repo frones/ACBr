@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/04/2017 ver: 0.0.222
+
+ACBrBoleto.pas --
+[*] Melhoria na mensagem impressa no boleto quando não é permitido realizar pagamento
+    após o vencimento. (walter@data4u.net)
+
+-- ACBrBancoBancoBRB.pas --
+[-] Ajuste para informar corretamente as instruções quando for informado limite para 
+    pagamento. (walter@data4u.net)
+
+
 Data 23/05/2017
 -- ACBrBancoSantander
 [-] correção para nota promissoria

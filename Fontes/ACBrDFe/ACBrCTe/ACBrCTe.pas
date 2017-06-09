@@ -521,31 +521,41 @@ var
   wd,wm,wa: word;
   Digito: Integer;
 begin
-  if FCTe.Ide.toma4.CNPJCPF <> '' then
+  if FCTe.Ide.modelo = 67 then
   begin
-    if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+    if FCTe.toma.enderToma.UF = 'EX' then
       wchave := '99' //exterior
     else
-      wchave := copy(inttostr(FCTe.Ide.toma4.enderToma.cMun),1,2);
+      wchave := Copy(IntToStr(FCTe.toma.enderToma.cMun), 1, 2);
   end
-  else begin
-    case FCTe.Ide.toma03.Toma of
-     tmRemetente: if FCTe.Rem.enderReme.UF = 'EX' then
-                    wchave := '99' //exterior
-                  else
-                    wchave := copy(inttostr(FCTe.Rem.enderReme.cMun), 1, 2);
-     tmExpedidor: if FCTe.Exped.enderExped.UF = 'EX' then
-                    wchave := '99' //exterior
-                  else
-                    wchave := copy(inttostr(FCTe.Exped.enderExped.cMun), 1, 2);
-     tmRecebedor: if FCTe.Receb.enderReceb.UF = 'EX' then
-                    wchave := '99' //exterior
-                  else
-                    wchave := copy(inttostr(FCTe.Receb.enderReceb.cMun), 1, 2);
-     tmDestinatario: if FCTe.Dest.EnderDest.UF = 'EX' then
-                       wchave := '99' //exterior
-                     else
-                       wchave := copy(inttostr(FCTe.Dest.EnderDest.cMun), 1, 2);
+  else
+  begin
+    if FCTe.Ide.toma4.CNPJCPF <> '' then
+    begin
+      if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+        wchave := '99' //exterior
+      else
+        wchave := copy(inttostr(FCTe.Ide.toma4.enderToma.cMun),1,2);
+    end
+    else begin
+      case FCTe.Ide.toma03.Toma of
+       tmRemetente: if FCTe.Rem.enderReme.UF = 'EX' then
+                      wchave := '99' //exterior
+                    else
+                      wchave := copy(inttostr(FCTe.Rem.enderReme.cMun), 1, 2);
+       tmExpedidor: if FCTe.Exped.enderExped.UF = 'EX' then
+                      wchave := '99' //exterior
+                    else
+                      wchave := copy(inttostr(FCTe.Exped.enderExped.cMun), 1, 2);
+       tmRecebedor: if FCTe.Receb.enderReceb.UF = 'EX' then
+                      wchave := '99' //exterior
+                    else
+                      wchave := copy(inttostr(FCTe.Receb.enderReceb.cMun), 1, 2);
+       tmDestinatario: if FCTe.Dest.EnderDest.UF = 'EX' then
+                         wchave := '99' //exterior
+                       else
+                         wchave := copy(inttostr(FCTe.Dest.EnderDest.cMun), 1, 2);
+      end;
     end;
   end;
 
@@ -556,31 +566,41 @@ begin
    else            wchave := wchave + '0'; //este valor caracteriza ERRO, valor tem q ser  2 ou 5
   end;
 
-  if FCTe.Ide.toma4.CNPJCPF <> '' then
+  if FCTe.Ide.modelo = 67 then
   begin
-    if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+    if FCTe.toma.enderToma.UF = 'EX' then
       wchave := wchave + Poem_Zeros('0', 14)
     else
-      wchave := wchave + Poem_Zeros(FCTe.Ide.toma4.CNPJCPF, 14);
+      wchave := wchave + Poem_Zeros(FCTe.toma.CNPJCPF, 14);
   end
-  else begin
-    case FCTe.Ide.toma03.Toma of
-     tmRemetente: if (FCTe.Rem.enderReme.UF='EX') then
-                    wchave := wchave + Poem_Zeros('0', 14)
-                  else
-                    wchave := wchave + Poem_Zeros(FCTe.Rem.CNPJCPF, 14);
-     tmExpedidor: if (FCTe.Exped.enderExped.UF='EX') then
-                    wchave := wchave + Poem_Zeros('0', 14)
-                  else
-                    wchave := wchave + Poem_Zeros(FCTe.Exped.CNPJCPF, 14);
-     tmRecebedor: if (FCTe.Receb.enderReceb.UF='EX') then
-                    wchave := wchave + Poem_Zeros('0', 14)
-                  else
-                    wchave := wchave + Poem_Zeros(FCTe.Receb.CNPJCPF, 14);
-     tmDestinatario: if (FCTe.Dest.EnderDest.UF='EX') then
-                       wchave := wchave + Poem_Zeros('0', 14)
-                     else
-                       wchave := wchave + Poem_Zeros(FCTe.Dest.CNPJCPF, 14);
+  else
+  begin
+    if FCTe.Ide.toma4.CNPJCPF <> '' then
+    begin
+      if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+        wchave := wchave + Poem_Zeros('0', 14)
+      else
+        wchave := wchave + Poem_Zeros(FCTe.Ide.toma4.CNPJCPF, 14);
+    end
+    else begin
+      case FCTe.Ide.toma03.Toma of
+       tmRemetente: if (FCTe.Rem.enderReme.UF='EX') then
+                      wchave := wchave + Poem_Zeros('0', 14)
+                    else
+                      wchave := wchave + Poem_Zeros(FCTe.Rem.CNPJCPF, 14);
+       tmExpedidor: if (FCTe.Exped.enderExped.UF='EX') then
+                      wchave := wchave + Poem_Zeros('0', 14)
+                    else
+                      wchave := wchave + Poem_Zeros(FCTe.Exped.CNPJCPF, 14);
+       tmRecebedor: if (FCTe.Receb.enderReceb.UF='EX') then
+                      wchave := wchave + Poem_Zeros('0', 14)
+                    else
+                      wchave := wchave + Poem_Zeros(FCTe.Receb.CNPJCPF, 14);
+       tmDestinatario: if (FCTe.Dest.EnderDest.UF='EX') then
+                         wchave := wchave + Poem_Zeros('0', 14)
+                       else
+                         wchave := wchave + Poem_Zeros(FCTe.Dest.CNPJCPF, 14);
+      end;
     end;
   end;
 

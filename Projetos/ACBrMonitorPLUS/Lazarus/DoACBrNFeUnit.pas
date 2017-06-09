@@ -106,6 +106,7 @@ begin
          begin
            ACBrNFe1.NotasFiscais.Clear;
            CarregarDFe(Cmd.Params(0), ArqNFe);
+
            ACBrNFe1.NotasFiscais.Validar;
          end
 
@@ -813,6 +814,7 @@ begin
               ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)));
               ACBrNFe1.NotasFiscais.GerarNFe;
               Alertas := ACBrNFe1.NotasFiscais.Items[0].Alertas;
+              ACBrNFe1.NotasFiscais.Assinar;
               ACBrNFe1.NotasFiscais.Validar;
               ArqNFe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)))+StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml';
               ACBrNFe1.NotasFiscais.GravarXML(ExtractFilePath(ArqNFe));
@@ -830,6 +832,7 @@ begin
                end;
               ACBrNFe1.NotasFiscais.GerarNFe;
               Alertas := ACBrNFe1.NotasFiscais.Items[0].Alertas;
+              ACBrNFe1.NotasFiscais.Assinar;
               ACBrNFe1.NotasFiscais.Validar;
               ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+StringReplace(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID, 'NFe', '', [rfIgnoreCase])+'-nfe.xml';
               ACBrNFe1.NotasFiscais.GravarXML(ArqNFe);

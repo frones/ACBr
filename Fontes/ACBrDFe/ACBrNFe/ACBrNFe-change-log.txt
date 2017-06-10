@@ -47,10 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/06/2017
+-- ACBrNFECONConfiguracoes --
+[*] Método "GetPathNFe", modificado para informar a Descrição do Modelo baseada
+    no contúdo do XML a ser Salvo.
+    (por: DSA)
+
 02/06/2017
---ACBrECFVirtualNFCe
+-- ACBrECFVirtualNFCe --
 [-] Modificar para assinar antes de validar
-		http://www.projetoacbr.com.br/forum/topic/37020-nfc-e-virtual-em-contingência-com-erro/
+    http://www.projetoacbr.com.br/forum/topic/37020-nfc-e-virtual-em-contingência-com-erro/
 		
 24/05/2017
 -- ACBRNFeNotasFiscais --

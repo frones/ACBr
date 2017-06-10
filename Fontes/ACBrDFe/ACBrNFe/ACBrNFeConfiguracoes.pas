@@ -340,7 +340,7 @@ begin
     65: DescricaoModelo := 'NFCe';
   end;
 
-  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data);
+  Result := GetPath(FPathNFe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
 end;
 
 end.

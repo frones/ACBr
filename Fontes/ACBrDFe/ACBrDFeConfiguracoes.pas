@@ -236,7 +236,7 @@ type
     procedure Assign(DeArquivosConf: TArquivosConf); reintroduce; virtual;
 
     function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
-      Data: TDateTime = 0): String; virtual;
+      Data: TDateTime = 0; ModeloDescr: String = ''): String; virtual;
   published
     property PathSalvar: String read GetPathSalvar write FPathSalvar;
     property PathSchemas: String read GetPathSchemas write FPathSchemas;
@@ -845,7 +845,7 @@ begin
 end;
 
 function TArquivosConf.GetPath(APath: String; ALiteral: String; CNPJ: String;
-  Data: TDateTime): String;
+  Data: TDateTime; ModeloDescr: String): String;
 var
   wDia, wMes, wAno: word;
   Dir, Modelo, AnoMes, Dia: String;
@@ -869,7 +869,11 @@ begin
 
   if SepararPorModelo then
   begin
-    Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe;
+    if ModeloDescr = '' then
+      Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe
+    else
+      Modelo := ModeloDescr;
+
     Dir := PathWithDelim(Dir) + Modelo;
   end;
 

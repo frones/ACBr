@@ -44,13 +44,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-05/07/2017
--- ACBrDFeOpenSSL --
--- ACBrDFeWinCrypt --
+09/06/2017
+-- ACBrDFeConfiguracoes --
+[*] Método "GetPath", modificado para permitir que a Descrição do Modelo seja
+    informada pelo método chamador. Isso permite que a Descrição do modelo seja
+    definida, pelo conteúdo do XML a ser Salvo e não apenas pelo Modelo configurado
+    no componente.
+    (por: DSA)
+
+05/06/2017
+-- ACBrDFeOpenSSL, ACBrDFeWinCrypt --
 [-] Acerto na leitura do CNPJ quando não está no CN, em alguns casos havia lixo 
     no inicio da string o que fazia com que os 2 ultimo digitos do CNPJ fossem 
     perdidos
-    por: regys.silveira
+    (por: regys.silveira)
 
 24/05/2017
 -- ACBrDFeSSL --

@@ -321,6 +321,7 @@ var
   Bio: PBIO;
   Base64Key: String;
 begin
+  Result := '';
   P1 := pos(' ', AChavePublicaOpenSSH);
   P2 := PosEx(' ', AChavePublicaOpenSSH, P1 + 1);
   if P2 = 0 then

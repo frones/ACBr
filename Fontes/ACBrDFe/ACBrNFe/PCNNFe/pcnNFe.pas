@@ -212,10 +212,12 @@ type
   TinfNFeSupl = class(TPersistent)
   private
     FqrCode: String;
+    FurlChave: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property qrCode: String read FqrCode write FqrCode;
+    property urlChave: String read FurlChave write FurlChave;
   end;
 
   TinfNFe = class(TPersistent)
@@ -634,6 +636,9 @@ type
     FnFCI: String;
     FNVE: TNVECollection;
     FCEST: String;
+    FindEscala: TpcnIndEscala;
+    FCNPJFab: String;
+    FcBenef: String;
 
     procedure SetDI(Value: TDICollection);
     procedure SetRastro(Value: TrastroCollection);
@@ -681,6 +686,9 @@ type
     property nRECOPI: String read FnRECOPI write FnRECOPI;
     property nFCI: String read FnFCI write FnFCI;
     property CEST: String read FCEST write FCEST;
+    property indEscala: TpcnIndEscala read FindEscala write FindEscala;
+    property CNPJFab: String read FCNPJFab write FCNPJFab;
+    property cBenef: String read FcBenef write FcBenef;
   end;
 
   TveicProd = class(TPersistent)
@@ -760,6 +768,7 @@ type
     FqLote: Currency;
     FdFab: TDateTime;
     FdVal: TDateTime;
+    FcAgreg: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -767,6 +776,7 @@ type
     property qLote: Currency read FqLote write FqLote;
     property dFab: TDateTime read FdFab write FdFab;
     property dVal: TDateTime read FdVal write FdVal;
+    property cAgreg: String read FcAgreg write FcAgreg;
   end;
 
   TMedCollection = class(TCollection)
@@ -3478,6 +3488,9 @@ begin
     nRECOPI := TProd(Source).nRECOPI;
     nFCI := TProd(Source).nFCI;
     CEST := TProd(Source).CEST;
+    indEscala := TProd(Source).indEscala;
+    CNPJFab := TProd(Source).CNPJFab;
+    cBenef := TProd(Source).cBenef;
   end
   else
     inherited;
@@ -3493,6 +3506,7 @@ begin
     qLote := TrastroCollectionItem(Source).qLote;
     dFab := TrastroCollectionItem(Source).dFab;
     dVal := TrastroCollectionItem(Source).dVal;
+    cAgreg := TrastroCollectionItem(Source).cAgreg;
   end
   else
     inherited;
@@ -4119,6 +4133,7 @@ begin
   if Source is TinfNFeSupl then
   begin
     qrCode := TinfNFeSupl(Source).qrCode;
+    urlChave := TinfNFeSupl(Source).urlChave;
   end
   else
     inherited;

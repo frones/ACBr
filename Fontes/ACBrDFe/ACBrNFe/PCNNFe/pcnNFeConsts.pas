@@ -245,6 +245,10 @@ const
   DSC_PST = 'Alíquota suportada pelo Consumidor Final';
   DSC_VBCFCPUFDEST = 'Valor da BC FCP na UF de destino';
   //DSC_VPART = 'Valor';
+  DSC_INDESCALA = 'Indicador de Escala de Produção';
+  DSC_CBENEF = 'Código de Benefício Fiscal na UF aplicado ao item';
+  DSC_CAGREG = 'Código de Agregação';
+  DSC_URLCHAVE = 'URL de consulta por chave de acesso a ser impressa no DANFE NFC-e';
 
 implementation
 

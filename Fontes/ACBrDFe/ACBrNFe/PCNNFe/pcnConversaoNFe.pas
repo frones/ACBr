@@ -84,6 +84,7 @@ type
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
   TpcnTipoArma = (taUsoPermitido, taUsoRestrito);
   TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
+  TpcnIndEscala = (ieRelevante, ieNaoRelevante, ieNenhum);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -134,6 +135,9 @@ function VeiculosCombustivelStr( const sTpComb : String ): String;
 function VeiculosTipoOperStr( const TtpOP : TpcnTipoOperacao ): String;
 
 function ArmaTipoStr( const TtpArma : TpcnTipoArma ): String;
+
+function IndEscalaToStr(const t: TpcnIndEscala): String;
+function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
 
 implementation
 
@@ -509,6 +513,16 @@ begin
     taUsoPermitido: result := '0-USO PERMITIDO';
     taUsoRestrito : result := '1-USO RESTRITO';
   end;
+end;
+
+function IndEscalaToStr(const t: TpcnIndEscala): String;
+begin
+  result := EnumeradoToStr(t, ['S', 'N', ''], [ieRelevante, ieNaoRelevante, ieNenhum]);
+end;
+
+function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
+begin
+  result := StrToEnumerado(ok, s, ['S', 'N', ''], [ieRelevante, ieNaoRelevante, ieNenhum]);
 end;
 
 end.

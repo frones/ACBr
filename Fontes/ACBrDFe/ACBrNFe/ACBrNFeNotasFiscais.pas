@@ -288,6 +288,10 @@ begin
                                   trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF)),
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
                                   NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
+
+        if NFe.infNFe.Versao >= 4 then
+          NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb);
+
         GerarXML;
       end;
     end;

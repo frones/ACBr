@@ -408,6 +408,12 @@ begin
     (*I04*)NFe.Det[i].Prod.xProd := Leitor.rCampo(tcStr, 'xProd');
     (*I05*)NFe.Det[i].Prod.NCM   := Leitor.rCampo(tcStr, 'NCM');
     (*I05w*)NFe.Det[i].Prod.CEST := Leitor.rCampo(tcStr, 'CEST');
+    if NFe.infNFe.Versao >= 4 then
+    begin
+      (*I05d*)NFe.Det[i].Prod.indEscala := StrToindEscala(ok, Leitor.rCampo(tcStr, 'indEscala'));
+      (*I05e*)NFe.Det[i].Prod.CNPJFab   := Leitor.rCampo(tcStr, 'CNPJFab');
+      (*I05f*)NFe.Det[i].Prod.cBenef    := Leitor.rCampo(tcStr, 'cBenef');
+    end;
     (*I06*)NFe.Det[i].Prod.EXTIPI   := Leitor.rCampo(tcStr, 'EXTIPI');
     //(*I07*)NFe.Det[i].Prod.genero := Leitor.rCampo(tcInt, 'genero');
     (*I08*)NFe.Det[i].Prod.CFOP     := Leitor.rCampo(tcEsp, 'CFOP');
@@ -500,10 +506,11 @@ begin
     while Leitor.rExtrai(3, 'rastro', '', j + 1) <> '' do
     begin
       NFe.Det[i].Prod.rastro.Add;
-      (*I81*)NFe.Det[i].Prod.rastro[j].nLote := Leitor.rCampo(tcStr, 'nLote');
-      (*I82*)NFe.Det[i].Prod.rastro[j].qLote := Leitor.rCampo(tcDe3, 'qLote');
-      (*I83*)NFe.Det[i].Prod.rastro[j].dFab  := Leitor.rCampo(tcDat, 'dFab ');
-      (*I84*)NFe.Det[i].Prod.rastro[j].dVal  := Leitor.rCampo(tcDat, 'dVal ');
+      (*I81*)NFe.Det[i].Prod.rastro[j].nLote  := Leitor.rCampo(tcStr, 'nLote');
+      (*I82*)NFe.Det[i].Prod.rastro[j].qLote  := Leitor.rCampo(tcDe3, 'qLote');
+      (*I83*)NFe.Det[i].Prod.rastro[j].dFab   := Leitor.rCampo(tcDat, 'dFab ');
+      (*I84*)NFe.Det[i].Prod.rastro[j].dVal   := Leitor.rCampo(tcDat, 'dVal ');
+      (*I85*)NFe.Det[i].Prod.rastro[j].cAgreg := Leitor.rCampo(tcStr, 'cAgreg');
       inc(j);
     end;
 
@@ -1071,6 +1078,7 @@ begin
     NFe.infNFeSupl.qrCode := Leitor.rCampo(tcStr, 'qrCode');
     NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, '<![CDATA[', '', []);
     NFe.infNFeSupl.qrCode := StringReplace(NFe.infNFeSupl.qrCode, ']]>', '', []);
+    NFe.infNFeSupl.urlChave := Leitor.rCampo(tcStr, 'urlChave');
   end;
 
   (* Grupo da TAG <protNFe> ***************************************************)

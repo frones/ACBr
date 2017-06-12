@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/06/2017
+-- Diversos --
+[*] Acrescentados os novos campos referente a versão 4.00 da NF-e/NFC-e conforme
+    a NT 2016/002 versão 1.20
+    (por: Italo Jurisato Junior)
+
 09/06/2017
 -- ACBrNFECONConfiguracoes --
 [*] Método "GetPathNFe", modificado para informar a Descrição do Modelo baseada

@@ -80,7 +80,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 110
     Width = 358
     Height = 211
-    ActivePage = TabCustomizacao
+    ActivePage = TabArquivos
     Align = alClient
     TabOrder = 1
     object TabArquivos: TTabSheet
@@ -205,6 +205,14 @@ object frmPrincipal: TfrmPrincipal
           'iuComercial'
           'iuTributavel'
           'iuComercialETributavel')
+      end
+      object rbImprimirDadosDocReferenciados: TCheckBox
+        Left = 15
+        Top = 161
+        Width = 202
+        Height = 17
+        Caption = ' Imprimir documentos referenciados'
+        TabOrder = 4
       end
     end
     object Decimais: TTabSheet
@@ -354,6 +362,9 @@ object frmPrincipal: TfrmPrincipal
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libCapicomDelphiSoap
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpIndy
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
     Configuracoes.WebServices.UF = 'SP'
@@ -409,6 +420,7 @@ object frmPrincipal: TfrmPrincipal
     QuebraLinhaEmDetalhamentoEspecifico = True
     IncorporarBackgroundPdf = True
     IncorporarFontesPdf = True
+    ImprimirDadosDocReferenciados = True
     Left = 48
     Top = 22
   end

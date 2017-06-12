@@ -87,6 +87,7 @@ type
     rbTarjaNfeCancelada: TCheckBox;
     Label9: TLabel;
     CBImprimirUndQtVlComercial: TComboBox;
+    rbImprimirDadosDocReferenciados: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btncarregarClick(Sender: TObject);
     procedure btnImprimirClick(Sender: TObject);
@@ -202,6 +203,8 @@ begin
     // ImprimirUndQtVlComercial
     ImprimirUnQtVlComercial     := TImprimirUnidQtdeValor( CBImprimirUndQtVlComercial.ItemIndex );
 
+    ImprimirDadosDocReferenciados := rbImprimirDadosDocReferenciados.Checked;
+
   end;
 end;
 
@@ -228,6 +231,8 @@ begin
 
     // ImprimirUndQtVlComercial
     CBImprimirUndQtVlComercial.ItemIndex  := integer( ImprimirUnQtVlComercial );
+
+    rbImprimirDadosDocReferenciados.Checked := ImprimirDadosDocReferenciados;
 
 
   end;

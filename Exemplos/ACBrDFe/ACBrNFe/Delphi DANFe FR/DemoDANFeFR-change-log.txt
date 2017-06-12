@@ -54,6 +54,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+12/06/2017
+-- DemoDANFeFR --- 
+[+] Teste de ImprimirDadosDocReferenciados
+     Demostra a utilização da propriedade ImprimirDadosDocReferenciados
+      Por : Henrique Leonardo
+
 29/11/2016
 -- DemoDANFeFR --- 
 [+] Teste de ImprimirQtdVlComercial

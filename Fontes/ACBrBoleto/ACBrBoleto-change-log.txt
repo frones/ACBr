@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 09/06/2017 ver: 0.0.223
+-- ACBrBancoCaixa, ACBrBoleto
+[+] Adicionado codigos de Retorno de Remessa CNAB 240, baseado no manual atualizado - Abril 2017 
+		http://www.projetoacbr.com.br/forum/topic/35027-retorno-boleto-acbrbancocaixapas-23-encaminhado-para-protesto/
+		por José M. S. Junior
+
 Data: 28/04/2017 ver: 0.0.222
 
 ACBrBoleto.pas --

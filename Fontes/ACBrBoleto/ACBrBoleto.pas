@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.222';
+  CACBrBoleto_Versao = '0.0.223';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -541,6 +541,10 @@ type
     toRetornoVencimentoAlterado,
     toRetornoRejeicaoSacado,
     toRetornoAceiteSacado,
+    toRetornoLiquidadoOnLine,
+    toRetornoEstornoLiquidacaoOnLine,
+    toRetornoConfirmacaoAlteracaoValorNominal,
+    toRetornoConfirmacaoAlteracaoValorpercentualMinimoMaximo,
     toTipoOcorrenciaNenhum
   );
 

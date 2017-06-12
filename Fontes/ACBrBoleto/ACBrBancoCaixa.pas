@@ -263,6 +263,8 @@ begin
       toRetornoRecebimentoInstrucaoAlterarVencimento           : Result := '14';
       toRetornoRecebimentoInstrucaoProtestar                   : Result := '19';
       toRetornoRecebimentoInstrucaoSustarProtesto              : Result := '20';
+      toRetornoEncaminhadoACartorio                            : Result := '23';
+      toRetornoRetiradoDeCartorio                              : Result := '24';
       toRetornoBaixaPorProtesto                                : Result := '25';
       toRetornoInstrucaoRejeitada                              : Result := '26';
       toRetornoAlteracaoUsoCedente                             : Result := '27';
@@ -277,6 +279,13 @@ begin
       toRetornoManutencaoBancoSacadoRejeitada                  : Result := '41';
       toRetornoBaixaOuLiquidacaoEstornada                      : Result := '44';
       toRetornoRecebimentoInstrucaoAlterarDados                : Result := '45';
+      toRetornoLiquidadoOnLine                                 : Result := '46';
+      toRetornoEstornoLiquidacaoOnLine                         : Result := '47';
+      toRetornoTituloDDAReconhecidoPagador                     : Result := '51';
+      toRetornoTituloDDANaoReconhecidoPagador                  : Result := '52';
+      toRetornoTituloDDARecusadoCIP                            : Result := '53';
+      toRetornoConfirmacaoAlteracaoValorNominal                : Result := '61';
+      toRetornoConfirmacaoAlteracaoValorpercentualMinimoMaximo : Result := '62';
     end;
   end
   else
@@ -1161,6 +1170,8 @@ begin
       14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
       19: Result := toRetornoRecebimentoInstrucaoProtestar;
       20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
+      23: Result := toRetornoEncaminhadoACartorio;
+      24: Result := toRetornoRetiradoDeCartorio;
       25: Result := toRetornoBaixaPorProtesto;
       26: Result := toRetornoInstrucaoRejeitada;
       27: Result := toRetornoAlteracaoUsoCedente;
@@ -1175,6 +1186,13 @@ begin
       41: Result := toRetornoManutencaoBancoSacadoRejeitada;
       44: Result := toRetornoBaixaOuLiquidacaoEstornada;
       45: Result := toRetornoRecebimentoInstrucaoAlterarDados;
+      46: Result := toRetornoLiquidadoOnLine;
+      47: Result := toRetornoEstornoLiquidacaoOnLine;
+      51: Result := toRetornoTituloDDAReconhecidoPagador;
+      52: Result := toRetornoTituloDDANaoReconhecidoPagador;
+      53: Result := toRetornoTituloDDARecusadoCIP;
+      61: Result := toRetornoConfirmacaoAlteracaoValorNominal;
+      62: Result := toRetornoConfirmacaoAlteracaoValorpercentualMinimoMaximo;
     end;
   end
   else
@@ -1505,6 +1523,8 @@ begin
       14: Result := '14-Confirmação Recebimento Instrução Alteração de Vencimento';
       19: Result := '19-Confirmação Recebimento Instrução de Protesto';
       20: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
+      23: Result := '23-Remessa a Cartório';
+      24: Result := '24-Retirada de Cartório';
       26: Result := '26-Instrução Rejeitada';
       27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
       28: Result := '28-Débito de Tarifas/Custas';
@@ -1518,6 +1538,13 @@ begin
       41: Result := '41-Manutenção de Banco de Sacado Rejeitada';
       44: Result := '44-Estorno de Baixa / Liquidação';
       45: Result := '45-Alteração de Dados';
+      46: Result := '46-Liquidação On-line';
+      47: Result := '47-Estorno de Liquidação On-line';
+      51: Result := '51-Título DDA Reconhecido pelo Sacado';
+      52: Result := '52-Título DDA Não Reconhecido pelo Sacado';
+      53: Result := '53-Título DDA Recusado pela CIP';
+      61: Result := '61-Confirmação de Alteração do Valor Nominal do Título';
+      62: Result := '62-Confirmação de Alteração do Valor/Percentual Mínimo/Máximo';
     end;
   end
   else

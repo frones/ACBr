@@ -780,13 +780,20 @@ begin
     Gerador.wCampo(tcStr, 'I04 ', 'xProd   ', 1, 120, 1, nfe.Det[i].Prod.xProd, DSC_XPROD);
   Gerador.wCampo(tcStr, 'I05 ', 'NCM     ', 02, 08,   IIf(NFe.infNFe.Versao >= 2,1,0), nfe.Det[i].Prod.NCM, DSC_NCM);
   {**}GerarDetProdNVE(i);
-  Gerador.wCampo(tcStr, 'I05w', 'CEST    ', 07, 07, 0, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);
+
   if NFe.infNFe.Versao >= 4 then
   begin
-    Gerador.wCampo(tcStr, 'I05d', 'indEscala', 01, 01, 0, indEscalaToStr(nfe.Det[i].Prod.indEscala), DSC_INDESCALA);
-    Gerador.wCampo(tcStr, 'I05e', 'CNPJFab  ', 14, 14, 0, nfe.Det[i].Prod.CNPJFab, DSC_CNPJ);
-    Gerador.wCampo(tcStr, 'I05f', 'cBenef   ', 10, 10, 0, nfe.Det[i].Prod.cBenef, DSC_CBENEF);
-  end;
+    if (nfe.Det[i].Prod.CEST <> '') then
+    begin
+      Gerador.wCampo(tcStr, 'I05c', 'CEST     ', 07, 07, 1, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);
+      Gerador.wCampo(tcStr, 'I05d', 'indEscala', 01, 01, 1, indEscalaToStr(nfe.Det[i].Prod.indEscala), DSC_INDESCALA);
+      Gerador.wCampo(tcStr, 'I05e', 'CNPJFab  ', 14, 14, 0, nfe.Det[i].Prod.CNPJFab, DSC_CNPJ);
+    end;
+    Gerador.wCampo(tcStr, 'I05f', 'cBenef', 10, 10, 0, nfe.Det[i].Prod.cBenef, DSC_CBENEF);
+  end
+  else
+    Gerador.wCampo(tcStr, 'I05w', 'CEST', 07, 07, 0, OnlyNumber(nfe.Det[i].Prod.CEST), DSC_CEST);
+
   Gerador.wCampo(tcStr, 'I06 ', 'EXTIPI  ', 02, 03, 0, nfe.Det[i].Prod.EXTIPI, DSC_EXTIPI);
   //Gerador.wCampo(tcInt, 'I07 ', 'genero  ', 02, 02, 0, nfe.Det[i].Prod.genero, DSC_GENERO);
   Gerador.wCampo(tcEsp, 'I08 ', 'CFOP    ', 04, 04, 1, OnlyNumber(nfe.Det[i].Prod.CFOP), DSC_CFOP);

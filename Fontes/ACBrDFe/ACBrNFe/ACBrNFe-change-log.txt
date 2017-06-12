@@ -49,6 +49,12 @@ Símbolo : Significado
 
 12/06/2017
 -- Diversos --
+[*] Em função de uma atualização da NT 2016/002 versão 1.20 se fez necessário 
+    alterar o campo indEscala de opcional para obrigatório.
+[*] Atualizado também a lista de Web Services da versão 4.00 do ambiente de 
+    homologação da UF MS.
+    (por: Italo Jurisato Junior)
+-- Diversos --
 [*] Acrescentados os novos campos referente a versão 4.00 da NF-e/NFC-e conforme
     a NT 2016/002 versão 1.20
     (por: Italo Jurisato Junior)

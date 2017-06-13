@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/06/2017
+[*] Validação de entrega a domicilio nfc-e
+		http://www.projetoacbr.com.br/forum/topic/37188-validação-entrega-a-domicílio/
+		por: Juliomar Marchetti
+		
 12/06/2017
 -- Diversos --
 [*] Em função de uma atualização da NT 2016/002 versão 1.20 se fez necessário 

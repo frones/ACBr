@@ -658,7 +658,8 @@ begin
 
       GravaLog('Validar: 787-NFCe entrega e Identificação');
       if (NFe.Ide.indPres = pcEntregaDomicilio) and
-        EstaVazio(Trim(nfe.Entrega.xLgr)) then
+        EstaVazio(Trim(nfe.Entrega.xLgr)) and 
+        EstaVazio(Trim(nfe.Dest.EnderDest.xLgr)) then
         AdicionaErro('787-Rejeição: NFC-e de entrega a domicílio sem a identificação do destinatário');
 
       GravaLog('Validar: 789-NFCe e destinatário');

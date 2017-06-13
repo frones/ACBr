@@ -291,9 +291,9 @@ begin
   frxPDFExport := TfrxPDFExport.Create(FDAMDFEClassOwner);
   frxPDFExport.ShowProgress := False;
 
-  frxBarCodeObject := TfrxBarCodeObject.Create(nil);
+  frxBarCodeObject := TfrxBarCodeObject.Create(Self);
 
-  cdsIdentificacao := TClientDataSet.Create(nil);
+  cdsIdentificacao := TClientDataSet.Create(Self);
   with cdsIdentificacao, FieldDefs do
   begin
     Close;
@@ -323,7 +323,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsEmitente := TClientDataSet.Create(nil);
+  cdsEmitente := TClientDataSet.Create(Self);
   with cdsEmitente, FieldDefs do
   begin
     Close;
@@ -346,7 +346,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalAereo := TClientDataSet.Create(nil);
+  cdsModalAereo := TClientDataSet.Create(Self);
   with cdsModalAereo, FieldDefs do
   begin
     Close;
@@ -361,7 +361,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalAqua := TClientDataSet.Create(nil);
+  cdsModalAqua := TClientDataSet.Create(Self);
   with cdsModalAqua, FieldDefs do
   begin
     Close;
@@ -377,7 +377,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsDocumentos := TClientDataSet.Create(nil);
+  cdsDocumentos := TClientDataSet.Create(Self);
   with cdsDocumentos, FieldDefs do
   begin
     Close;
@@ -389,7 +389,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsMunCarrega := TClientDataSet.Create(nil);
+  cdsMunCarrega := TClientDataSet.Create(Self);
   with cdsMunCarrega, FieldDefs do
   begin
     Close;
@@ -398,7 +398,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalRodo := TClientDataSet.Create(nil);
+  cdsModalRodo := TClientDataSet.Create(Self);
   with cdsModalRodo, FieldDefs do
   begin
     Close;
@@ -419,7 +419,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsParametros := TClientDataSet.Create(nil);
+  cdsParametros := TClientDataSet.Create(Self);
   with cdsParametros, FieldDefs do
   begin
     Close;
@@ -431,7 +431,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsPercurso := TClientDataSet.Create(nil);
+  cdsPercurso := TClientDataSet.Create(Self);
   with cdsPercurso, FieldDefs do
   begin
     Close;
@@ -440,7 +440,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalFerrov := TClientDataSet.Create(nil);
+  cdsModalFerrov := TClientDataSet.Create(Self);
   with cdsModalFerrov, FieldDefs do
   begin
     Close;
@@ -453,7 +453,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsModalFerrovVagoes := TClientDataSet.Create(nil);
+  cdsModalFerrovVagoes := TClientDataSet.Create(Self);
   with cdsModalFerrovVagoes, FieldDefs do
   begin
     Close;
@@ -465,7 +465,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsTermCarrega := TClientDataSet.Create(nil);
+  cdsTermCarrega := TClientDataSet.Create(Self);
   with cdsTermCarrega, FieldDefs do
   begin
     Close;
@@ -475,7 +475,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsTermDescarrega := TClientDataSet.Create(nil);
+  cdsTermDescarrega := TClientDataSet.Create(Self);
   with cdsTermDescarrega, FieldDefs do
   begin
     Close;
@@ -485,7 +485,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsEmbarcaComboio := TClientDataSet.Create(nil);
+  cdsEmbarcaComboio := TClientDataSet.Create(Self);
   with cdsEmbarcaComboio, FieldDefs do
   begin
     Close;
@@ -494,7 +494,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsEventos := TClientDataSet.Create(nil);
+  cdsEventos := TClientDataSet.Create(Self);
   with cdsEventos, FieldDefs do
   begin
     Close;
@@ -529,7 +529,7 @@ begin
     CreateDataSet;
   end;
 
-  cdsInfUnidCargaVazia := TClientDataSet.Create(nil);
+  cdsInfUnidCargaVazia := TClientDataSet.Create(Self);
   with cdsInfUnidCargaVazia, FieldDefs do
   begin
     Close;
@@ -539,7 +539,7 @@ begin
     CreateDataSet;
   end;
 
-  frxIdentificacao := TfrxDBDataset.Create(nil);
+  frxIdentificacao := TfrxDBDataset.Create(Self);
   with frxIdentificacao do
   begin
     UserName := 'Identificacao';
@@ -547,7 +547,7 @@ begin
     DataSet := cdsIdentificacao;
   end;
 
-  frxEmitente := TfrxDBDataset.Create(nil);
+  frxEmitente := TfrxDBDataset.Create(Self);
   with frxEmitente do
   begin
     UserName := 'Emitente';
@@ -555,7 +555,7 @@ begin
     DataSet := cdsEmitente;
   end;
 
-  frxModalAereo := TfrxDBDataset.Create(nil);
+  frxModalAereo := TfrxDBDataset.Create(Self);
   with frxModalAereo do
   begin
     UserName := 'ModalAereo';
@@ -563,7 +563,7 @@ begin
     DataSet := cdsModalAereo;
   end;
 
-  frxModalAqua := TfrxDBDataset.Create(nil);
+  frxModalAqua := TfrxDBDataset.Create(Self);
   with frxModalAqua do
   begin
     UserName := 'ModalAqua';
@@ -571,7 +571,7 @@ begin
     DataSet := cdsModalAqua;
   end;
 
-  frxDocumentos := TfrxDBDataset.Create(nil);
+  frxDocumentos := TfrxDBDataset.Create(Self);
   with frxDocumentos do
   begin
     UserName := 'Documentos';
@@ -579,7 +579,7 @@ begin
     DataSet := cdsDocumentos;
   end;
 
-  frxMunCarrega := TfrxDBDataset.Create(nil);
+  frxMunCarrega := TfrxDBDataset.Create(Self);
   with frxMunCarrega do
   begin
     UserName := 'MunCarrega';
@@ -587,7 +587,7 @@ begin
     DataSet := cdsMunCarrega;
   end;
 
-  frxModalRodo := TfrxDBDataset.Create(nil);
+  frxModalRodo := TfrxDBDataset.Create(Self);
   with frxModalRodo do
   begin
     UserName := 'ModalRodo';
@@ -595,7 +595,7 @@ begin
     DataSet := cdsModalRodo;
   end;
 
-  frxParametros := TfrxDBDataset.Create(nil);
+  frxParametros := TfrxDBDataset.Create(Self);
   with frxParametros do
   begin
     UserName := 'Parametros';
@@ -603,7 +603,7 @@ begin
     DataSet := cdsParametros;
   end;
 
-  frxPercurso := TfrxDBDataset.Create(nil);
+  frxPercurso := TfrxDBDataset.Create(Self);
   with frxPercurso do
   begin
     UserName := 'Percurso';
@@ -611,7 +611,7 @@ begin
     DataSet := cdsPercurso;
   end;
 
-  frxModalFerrov := TfrxDBDataset.Create(nil);
+  frxModalFerrov := TfrxDBDataset.Create(Self);
   with frxModalFerrov do
   begin
     UserName := 'ModalFerrov';
@@ -619,7 +619,7 @@ begin
     DataSet := cdsModalFerrov;
   end;
 
-  frxModalFerrovVagoes := TfrxDBDataset.Create(nil);
+  frxModalFerrovVagoes := TfrxDBDataset.Create(Self);
   with frxModalFerrovVagoes do
   begin
     UserName := 'ModalFerrovVagoes';
@@ -627,7 +627,7 @@ begin
     DataSet := cdsModalFerrovVagoes;
   end;
 
-  frxEventos := TfrxDBDataset.Create(nil);
+  frxEventos := TfrxDBDataset.Create(Self);
   with frxEventos do
   begin
     UserName := 'Eventos';
@@ -635,7 +635,7 @@ begin
     DataSet := cdsEventos;
   end;
 
-  frxTermCarrega := TfrxDBDataset.Create(nil);
+  frxTermCarrega := TfrxDBDataset.Create(Self);
   with frxTermCarrega do
   begin
     UserName := 'TermCarrega';
@@ -643,7 +643,7 @@ begin
     DataSet := cdsTermCarrega;
   end;
 
-  frxTermDescarrega := TfrxDBDataset.Create(nil);
+  frxTermDescarrega := TfrxDBDataset.Create(Self);
   with frxTermDescarrega do
   begin
     UserName := 'TermDescarrega';
@@ -651,7 +651,7 @@ begin
     DataSet := cdsTermDescarrega;
   end;
 
-  frxEmbarcaComboio := TfrxDBDataset.Create(nil);
+  frxEmbarcaComboio := TfrxDBDataset.Create(Self);
   with frxEmbarcaComboio do
   begin
     UserName := 'EmbarcaComboio';
@@ -659,7 +659,7 @@ begin
     DataSet := cdsEmbarcaComboio;
   end;
 
-  frxInfUnidCargaVazia := TfrxDBDataset.Create(nil);
+  frxInfUnidCargaVazia := TfrxDBDataset.Create(Self);
   with frxInfUnidCargaVazia do
   begin
     UserName := 'InfUnidCargaVazia';

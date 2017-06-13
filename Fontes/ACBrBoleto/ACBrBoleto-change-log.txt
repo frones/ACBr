@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 13/06/2017 ver: 0.0.224
+-- ACBrBancoSafraBradesco, ACBrBoleto
+[+] Atualização na Geração de Boleto e Arquivo de Remessa CNAB400
+		http://www.projetoacbr.com.br/forum/topic/36806-acbrboletosafrabradesco-homologado/
+		por José M. S. Junior - (Contribuição de Roberto.Godinho)
+
 Data 09/06/2017 ver: 0.0.223
 -- ACBrBancoCaixa, ACBrBoleto
 [+] Adicionado codigos de Retorno de Remessa CNAB 240, baseado no manual atualizado - Abril 2017 

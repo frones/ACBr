@@ -70,6 +70,10 @@ uses
   StrUtils,
   ACBrUtil;
 
+var
+  aTotal: Extended;
+  aCount: Integer;
+
 { TACBrBancoSafraBradesco }
 
 constructor TACBrBancoSafraBradesco.Create(AOwner: TACBrBanco);
@@ -79,7 +83,7 @@ begin
   fpDigito                := 2;
   fpNome                  := 'Bradesco';
   fpNumero                := 237;
-  fpTamanhoMaximoNossoNum := 11;
+  fpTamanhoMaximoNossoNum := 9;
   fpTamanhoAgencia        := 4;
   fpTamanhoConta          := 7;
   fpTamanhoCarteira       := 2;
@@ -89,7 +93,7 @@ function TACBrBancoSafraBradesco.CalcularDigitoVerificador(const ACBrTitulo: TAC
 begin
   Modulo.CalculoPadrao;
   Modulo.MultiplicadorFinal := 7;
-  Modulo.Documento := ACBrTitulo.Carteira + ACBrTitulo.NossoNumero;
+  Modulo.Documento := ACBrTitulo.Carteira + FormatDateTime('YY', Date) + ACBrTitulo.NossoNumero;
   Modulo.Calcular;
 
   if Modulo.ModuloFinal = 1 then
@@ -111,6 +115,7 @@ begin
       IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
       PadLeft(OnlyNumber(Cedente.Agencia), 4, '0') +
       ACBrTitulo.Carteira +
+      FormatDateTime('YY', Date) +
       ACBrTitulo.NossoNumero +
       PadLeft(RightStr(Cedente.Conta, 7), 7, '0') + '0';
 
@@ -122,7 +127,7 @@ end;
 
 function TACBrBancoSafraBradesco.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result:= ACBrTitulo.Carteira + '/' + ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
+  Result:= ACBrTitulo.Carteira + '/' + FormatDateTime('YY', Date) + ' ' + ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
 end;
 
 function TACBrBancoSafraBradesco.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
@@ -138,6 +143,8 @@ procedure TACBrBancoSafraBradesco.GerarRegistroHeader400(NumeroRemessa: Integer;
 var
   wLinha: String;
 begin
+  aTotal := 0;
+  aCount := 0;
   FNumeroRemessa := NumeroRemessa;
 
   with ACBrBanco.ACBrBoleto.Cedente do
@@ -153,7 +160,7 @@ begin
       Space(6) +                        // Brancos
       PadRight(Nome, 30) +                  // Nome da empresa
       '422' +                           // Código do banco: 422 = Banco Safra
-      PadRight('SAFRA', 11) +               // Nome do banco
+      PadRight('BANCO SAFRA', 11) +     // Nome do banco
       Space(4) +                        // Brancos
       FormatDateTime('ddmmyy', Now) +   // Data de gravação
       Space(291) +                      // Brancos
@@ -244,7 +251,7 @@ begin
         FormatDateTime('ddmmyy', Vencimento) +                       // Data de vencimento do título
         IntToStrZero(Round(ValorDocumento * 100), 13) +              // Valor nominal do título
         '422' +                                                      // Banco encarregado da cobrança: 422 = Banco Safra
-        '00000' +                                                    // Agência encarregada da cobrança
+        PadRight(Cedente.Agencia + Cedente.AgenciaDigito, 5, '0') +  // Agência encarregada da cobrança
         AEspecieDoc +                                                // Espécie do título
         ATipoAceite +                                                // Identificação de aceite do título: A = Aceito; N = Não aceito
         FormatDateTime('ddmmyy', DataDocumento) +                    // Data de emissão do título
@@ -272,6 +279,8 @@ begin
         IntToStrZero(FNumeroRemessa, 3);                             // Número sequencial da remessa
 
       wLinha := wLinha + IntToStrZero(ARemessa.Count + 1, 6); // Número sequencial do registro
+      aTotal := aTotal + ValorDocumento;
+      Inc(aCount);
 
       ARemessa.Text := ARemessa.Text + UpperCase(wLinha);
     end;
@@ -285,9 +294,9 @@ begin
   wLinha :=
     '9' +                                // Código do registro: 9 - Trailler
     Space(367) +                         // Brancos
-    Space(8) +                           // Quantidade de títulos no arquivo
-    Space(15) +                          // Valor total dos títulos
-    Space(3) +                           // Número sequencial da remessa
+    PadLeft(IntToStr(aCount), 8, '0')           + // Quantidade de títulos no arquivo
+    FormatCurr('000000000000000', aTotal * 100) + // Valor total dos títulos
+    '001' +                                       // Número sequencial da remessa
     IntToStrZero(ARemessa.Count + 1, 6); // Número sequencial do registro
 
   ARemessa.Text := ARemessa.Text + UpperCase(wLinha);

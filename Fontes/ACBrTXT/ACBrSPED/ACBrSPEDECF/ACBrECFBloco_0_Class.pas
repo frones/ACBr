@@ -58,6 +58,7 @@ type
     fRegistro0001: TRegistro0001;
     fRegistro0010: TRegistro0010;
     fRegistro0020: TRegistro0020;
+    fRegistro0021: TRegistro0021;
     fRegistro0030: TRegistro0030;
     fRegistro0035: TRegistro0035List;
     fRegistro0930: TRegistro0930List;
@@ -65,6 +66,7 @@ type
 
     FRegistro0010Count : Integer;
     FRegistro0020Count : Integer;
+    FRegistro0021Count : Integer;
     FRegistro0030Count : Integer;
     FRegistro0035Count : Integer;
     FRegistro0930Count : Integer;
@@ -80,6 +82,7 @@ type
     function Registro0001New : TRegistro0001;
     function Registro0010New : TRegistro0010;
     function Registro0020New : TRegistro0020;
+    function Registro0021New : TRegistro0021;
     function Registro0030New : TRegistro0030;
     function Registro0035New : TRegistro0035;
     function Registro0930New : TRegistro0930;
@@ -89,6 +92,7 @@ type
     procedure WriteRegistro0001;
     procedure WriteRegistro0010;
     procedure WriteRegistro0020;
+    procedure WriteRegistro0021;
     procedure WriteRegistro0030;
     procedure WriteRegistro0035(Reg0001: TRegistro0001);
     procedure WriteRegistro0930(Reg0001: TRegistro0001);
@@ -98,6 +102,7 @@ type
     property Registro0001 : TRegistro0001 read fRegistro0001 write fRegistro0001;
     property Registro0010 : TRegistro0010 read fRegistro0010 write fRegistro0010;
     property Registro0020 : TRegistro0020 read fRegistro0020 write fRegistro0020;
+    property Registro0021 : TRegistro0021 read fRegistro0021 write fRegistro0021;
     property Registro0030 : TRegistro0030 read fRegistro0030 write fRegistro0030;
     property Registro0035 : TRegistro0035List read fRegistro0035 write fRegistro0035;
     property Registro0930 : TRegistro0930List read fRegistro0930 write fRegistro0930;
@@ -105,6 +110,7 @@ type
 
     property Registro0010Count: Integer read FRegistro0010Count write FRegistro0010Count;
     property Registro0020Count: Integer read FRegistro0020Count write FRegistro0020Count;
+    property Registro0021Count: Integer read FRegistro0021Count write FRegistro0021Count;
     property Registro0030Count: Integer read FRegistro0030Count write FRegistro0030Count;
     property Registro0035Count: Integer read FRegistro0035Count write FRegistro0035Count;
     property Registro0930Count: Integer read FRegistro0930Count write FRegistro0930Count;                
@@ -125,6 +131,7 @@ begin
   fRegistro0001 := TRegistro0001.Create;
   fRegistro0010 := TRegistro0010.Create;
   fRegistro0020 := TRegistro0020.Create;
+  fRegistro0021 := TRegistro0021.Create;
   fRegistro0030 := TRegistro0030.Create;
   fRegistro0035 := TRegistro0035List.Create;
   fRegistro0930 := TRegistro0930List.Create;
@@ -133,6 +140,7 @@ begin
 
   FRegistro0010Count := 0;
   FRegistro0020Count := 0;
+  FRegistro0021Count := 0;
   FRegistro0030Count := 0;
   FRegistro0035Count := 0;
   FRegistro0930Count := 0;
@@ -178,6 +186,11 @@ end;
 function TBloco_0.Registro0020New: TRegistro0020;
 begin
   Result := FRegistro0020;
+end;
+
+function TBloco_0.Registro0021New: TRegistro0021;
+begin
+  Result := FRegistro0021;
 end;
 
 function TBloco_0.Registro0030New: TRegistro0030;
@@ -238,6 +251,7 @@ begin
       begin
         WriteRegistro0010;
         WriteRegistro0020;
+        WriteRegistro0021;
         WriteRegistro0030;
         WriteRegistro0035(FRegistro0001);
         WriteRegistro0930(FRegistro0001);
@@ -302,7 +316,7 @@ begin
                LFill(strOPT_PAES) +
                LFill(strFORMA_TRIB) +
                LFill(FORMA_APUR) +
-               LFill(COD_QUALIF_PJ, 2) +
+               LFill(COD_QUALIF_PJ) + 
                LFill(FORMA_TRIB_PER) +
                LFill(MES_BAL_RED) +
                LFill(TIP_ESC_PRE) +
@@ -398,6 +412,35 @@ begin
 
       FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
     end;
+  end;
+end;
+
+procedure TBloco_0.WriteRegistro0021;
+begin
+  if Assigned(FRegistro0021)
+    and (fRegistro0020.IND_PJ_HAB='S') then // Validação cfe manual SPED ECF
+  begin
+    with FRegistro0021 do
+    begin
+      Add( LFill('0021') +
+           LFill(IND_REPES) +
+           LFill(IND_RECAP) +
+           LFill(IND_PADIS) +
+           LFill(IND_PATVD) +
+           LFill(IND_REIDI) +
+           LFill(IND_REPENEC) +
+           LFill(IND_REICOMP) +
+           LFill(IND_RETAERO) +
+           LFill(IND_RECINE) +
+           LFill(IND_RESIDUOS_SOLIDOS) +
+           LFill(IND_RECOPA) +
+           LFill(IND_COPA_DO_MUNDO) +
+           LFill(IND_RETID) +
+           LFill(IND_REPNBL_REDES) +
+           LFill(IND_REIF) +
+           LFill(IND_OLIMPIADAS) );
+    end;
+    FRegistro0990.QTD_LIN_0 := FRegistro0990.QTD_LIN_0 + 1;
   end;
 end;
 

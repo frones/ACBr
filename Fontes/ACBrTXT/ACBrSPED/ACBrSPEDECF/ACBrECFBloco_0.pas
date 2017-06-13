@@ -50,6 +50,7 @@ uses
 type
   TRegistro0010 = class;
   TRegistro0020 = class;
+  TRegistro0021 = class;
   TRegistro0030 = class;
   TRegistro0035List = class;
   TRegistro0930List = class;
@@ -119,6 +120,7 @@ type
   private
     fRegistro0010: TRegistro0010;
     fRegistro0020: TRegistro0020;
+    fRegistro0021: TRegistro0021;
     fRegistro0030: TRegistro0030;
     fRegistro0035: TRegistro0035List;
     fRegistro0930: TRegistro0930List;
@@ -128,6 +130,7 @@ type
 
     property Registro0010 : TRegistro0010 read fRegistro0010 write fRegistro0010;
     property Registro0020 : TRegistro0020 read fRegistro0020 write fRegistro0020;
+    property Registro0021 : TRegistro0021 read fRegistro0021 write fRegistro0021;
     property Registro0030 : TRegistro0030 read fRegistro0030 write fRegistro0030;
     property Registro0035 : TRegistro0035List read fRegistro0035 write fRegistro0035;
     property Registro0930 : TRegistro0930List read fRegistro0930 write fRegistro0930;
@@ -238,6 +241,45 @@ type
     property IND_AREA_COM: string read fIND_AREA_COM write fIND_AREA_COM;
     property IND_PAIS_A_PAIS: string read fIND_PAIS_A_PAIS write fIND_PAIS_A_PAIS;
 
+  end;
+
+  { TRegistro0021 }
+
+  TRegistro0021 = class(TBlocos)
+  private
+    fIND_REPES: string;
+    fIND_RECAP: string;
+    fIND_PADIS: string;
+    fIND_PATVD: string;
+    fIND_REIDI: string;
+    fIND_REPENEC: string;
+    fIND_REICOMP: string;
+    fIND_RETAERO: string;
+    fIND_RECINE: string;
+    fIND_RESIDUOS_SOLIDOS: string;
+    fIND_RECOPA: string;
+    fIND_COPA_DO_MUNDO: string;
+    fIND_RETID: string;
+    fIND_REPNBL_REDES: string;
+    fIND_REIF: string;
+    fIND_OLIMPIADAS: string;
+  public
+    property IND_REPES: string read fIND_REPES write fIND_REPES;
+    property IND_RECAP: string read fIND_RECAP write fIND_RECAP;
+    property IND_PADIS: string read fIND_PADIS write fIND_PADIS;
+    property IND_PATVD: string read fIND_PATVD write fIND_PATVD;
+    property IND_REIDI: string read fIND_REIDI write fIND_REIDI;
+    property IND_REPENEC: string read fIND_REPENEC write fIND_REPENEC;
+    property IND_REICOMP: string read fIND_REICOMP write fIND_REICOMP;
+    property IND_RETAERO: string read fIND_RETAERO write fIND_RETAERO;
+    property IND_RECINE: string read fIND_RECINE write fIND_RECINE;
+    property IND_RESIDUOS_SOLIDOS: string read fIND_RESIDUOS_SOLIDOS write fIND_RESIDUOS_SOLIDOS;
+    property IND_RECOPA: string read fIND_RECOPA write fIND_RECOPA;
+    property IND_COPA_DO_MUNDO: string read fIND_COPA_DO_MUNDO write fIND_COPA_DO_MUNDO;
+    property IND_RETID: string read fIND_RETID write fIND_RETID;
+    property IND_REPNBL_REDES: string read fIND_REPNBL_REDES write fIND_REPNBL_REDES;
+    property IND_REIF: string read fIND_REIF write fIND_REIF;
+    property IND_OLIMPIADAS: string read fIND_OLIMPIADAS write fIND_OLIMPIADAS;
   end;
 
   { TRegistro0030 }
@@ -373,6 +415,7 @@ begin
   inherited;
   fRegistro0010 := TRegistro0010.Create;
   fRegistro0020 := TRegistro0020.Create;
+  fRegistro0021 := TRegistro0021.Create;
   fRegistro0030 := TRegistro0030.Create;
   fRegistro0035 := TRegistro0035List.Create;
   fRegistro0930 := TRegistro0930List.create;
@@ -382,6 +425,7 @@ destructor TRegistro0001.Destroy;
 begin
   fRegistro0010.Free;
   fRegistro0020.Free;
+  fRegistro0021.Free;
   fRegistro0030.Free;
   fRegistro0035.Free;
   fRegistro0930.Free;

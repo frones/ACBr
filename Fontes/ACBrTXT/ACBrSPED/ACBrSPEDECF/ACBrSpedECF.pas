@@ -808,6 +808,9 @@ begin
   if Bloco_Q.Gravado then
     exit;
 
+  if Bloco_0.Registro0000.COD_VER=ECFVersao100 then 
+    exit;
+
   if not Bloco_P.Gravado then
     WriteBloco_P;
 

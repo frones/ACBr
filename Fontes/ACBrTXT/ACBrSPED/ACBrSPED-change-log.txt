@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 13/06/2017
+[+] Adição dos registos 0021 sped ECF
+		http://www.projetoacbr.com.br/forum/topic/36848-atualização-sped-ecf-2017/
+		Juliomar Marchetti
+		
 Data 17/05/2017
 [+] Adição dregistro no sped ECF
 		http://www.projetoacbr.com.br/forum/topic/36760-novas-propriedades-em-tregistro0010-tregistro0020-e-tregistroy800/

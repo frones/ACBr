@@ -517,24 +517,43 @@ begin
     begin
       with FRegistroY001.RegistroY600.Items[intFor] do
       begin
-        Add(LFill('Y600') +
-            LFill(DT_ALT_SOC) +
-            LFill(DT_FIM_SOC) +
-            LFill(PAIS,3) +
-            LFill(IND_QUALIF_SOCIO) +
-            LFill(CPF_CNPJ) +
-            LFill(NOM_EMP) +
-            LFill(QUALIF) +
-            VLFill(PERC_CAP_TOT, 4, 2) +
-            VLFill(PERC_CAP_VOT, 4, 2) +
-            LFill(CPF_REP_LEG) +
-            LFill(QUALIF_REP_LEG) +
-            VLFill(VL_REM_TRAB, 19, 2) +
-            VLFill(VL_LUC_DIV, 19, 2) +
-            VLFill(VL_JUR_CAP, 19, 2) +
-            VLFill(VL_DEM_REND, 19, 2) +
-            VLFill(VL_IR_RET, 19, 2)
-            );
+        if Bloco_0.Registro0000.COD_VER >= ECFVersao200 then //Lay-Out 002 (devsyspro)
+        begin
+          Add(LFill('Y600') +
+              LFill(DT_ALT_SOC) +
+              LFill(DT_FIM_SOC) +
+              LFill(PAIS,3) +
+              LFill(IND_QUALIF_SOCIO) +
+              LFill(CPF_CNPJ) +
+              LFill(NOM_EMP) +
+              LFill(QUALIF) +
+              VLFill(PERC_CAP_TOT, 4, 2) +
+              VLFill(PERC_CAP_VOT, 4, 2) +
+              LFill(CPF_REP_LEG) +
+              LFill(QUALIF_REP_LEG) +
+              VLFill(VL_REM_TRAB, 19, 2) +
+              VLFill(VL_LUC_DIV, 19, 2) +
+              VLFill(VL_JUR_CAP, 19, 2) +
+              VLFill(VL_DEM_REND, 19, 2) +
+              VLFill(VL_IR_RET, 19, 2)
+              );
+        end
+        else // Lay-Out 001 (devsyspro)
+        begin
+          Add(LFill('Y600') +
+              LFill(DT_ALT_SOC) +
+              LFill(DT_FIM_SOC) +
+              LFill(PAIS,3) +
+              LFill(IND_QUALIF_SOCIO) +
+              LFill(CPF_CNPJ) +
+              LFill(NOM_EMP) +
+              LFill(QUALIF) +
+              VLFill(PERC_CAP_TOT, 4, 2) +
+              VLFill(PERC_CAP_VOT, 4, 2) +
+              LFill(CPF_REP_LEG) +
+              LFill(QUALIF_REP_LEG)
+              );
+        end;
       end;
       FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
     end;

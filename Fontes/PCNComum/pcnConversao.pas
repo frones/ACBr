@@ -1255,18 +1255,18 @@ end;
 
 function CodigoMPToStr(const t: TpcnCodigoMP ): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '90', '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
                               [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito,
                               MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente,
-                              MPValeCombustivel, mpDuplicataMercantil, mpSemPagamento, MPOutros]);
+                              MPValeCombustivel, MPOutros]);
 end;
 
 function StrToCodigoMP(out ok: boolean; const s: string): TpcnCodigoMP ;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '90',  '99'],
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '99'],
                                   [MPDinheiro, MPCheque, MPCartaodeCredito, MPCartaodeDebito,
                                   MPCreditoLoja, MPValeAlimentacao, MPValeRefeicao, MPValePresente,
-                                  MPValeCombustivel, mpDuplicataMercantil, mpSemPagamento, MPOutros]);
+                                  MPValeCombustivel, MPOutros]);
 end;
 
 function CodigoMPToDescricao(const t: TpcnCodigoMP ): string;
@@ -1274,11 +1274,11 @@ begin
   result := EnumeradoToStr(t, ['Dinheiro', 'Cheque', 'Cartão de Crédito',
                                'Cartão de Débito', 'Crédito Loja', 'Vale Alimentação',
                                'Vale Refeição', 'Vale Presente', 'Vale Combustível',
-                               'Duplicata Mercantil', 'Sem Pagamento', 'Outros'],
+                               'Outros'],
                                [MPDinheiro, MPCheque, MPCartaodeCredito,
                                MPCartaodeDebito, MPCreditoLoja, MPValeAlimentacao,
                                MPValeRefeicao, MPValePresente, MPValeCombustivel,
-                               mpDuplicataMercantil, mpSemPagamento, MPOutros]);
+                               MPOutros]);
 end;
 
 // Tipo da Unidade de Transporte ***********************************************

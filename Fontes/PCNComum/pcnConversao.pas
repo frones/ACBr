@@ -140,7 +140,7 @@ type
   TpcnindRegra = (irArredondamento, irTruncamento);
   TpcnCodigoMP = (mpDinheiro, mpCheque, mpCartaodeCredito, mpCartaodeDebito, mpCreditoLoja,
                   mpValeAlimentacao, mpValeRefeicao, mpValePresente, mpValeCombustivel,
-                  mpDuplicataMercantil, mpSemPagamento, mpOutros);
+                  mpOutros);
   TpcnUnidTransp = ( utRodoTracao, utRodoReboque, utNavio, utBalsa, utAeronave, utVagao, utOutros );
   TpcnUnidCarga  = ( ucContainer, ucULD, ucPallet, ucOutros );
   TpcnindIEDest = (inContribuinte, inIsento, inNaoContribuinte);

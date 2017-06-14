@@ -104,6 +104,7 @@ const
 
   CUTF8CodPage = 65001;
   CUTF8BOM = #239+#187+#191;
+  CUTF8DeclaracaoXML = '<?xml version="1.0" encoding="UTF-8"?>';
 
   cTimeout = 3 ;  { Tempo PADRAO para msg de falha de comunicacao }
 

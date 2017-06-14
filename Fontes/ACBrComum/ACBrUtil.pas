@@ -3765,7 +3765,7 @@ begin
   if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
   begin
     UTF8Str := NativeStringToUTF8(AXML);
-    Result := '<?xml version="1.0" encoding="UTF-8"?>' + String(UTF8Str);
+    Result := CUTF8DeclaracaoXML + String(UTF8Str);
   end
   else
     Result := AXML;

@@ -1192,7 +1192,7 @@ begin
     ide.cNF := Random(999999);
 
     Dest.CNPJCPF := '5481336000137';
-    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo muito LONGO';
+    Dest.xNome := 'D.J. SYSTEM ÁÉÍÓÚáéíóúÇç teste de nome Longo';
 
     Entrega.xLgr := 'logradouro';
     Entrega.nro := '112233';

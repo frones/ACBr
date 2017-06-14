@@ -47,6 +47,27 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 14/06/2017
+-- ACBrSAT --
+[*] Método "DecodificaRetorno6000", ajuste para inserir a Declaração de XML,
+    caso o SAT não responda com a mesma... (a Especificação do SAT, prevê que
+    todo XML enviado ou retornado deva seguir "<?xml version="1.0" encoding="UTF-8"?>"
+
+-- ACBrSATClass --
+[-] Correção em "CalcPath", para remover pontos do CNPJ, quando o mesmo é informado
+
+-- pcnCFe --
+[-] Método "GerarXML", modificado para sempre gerar o XML em UTF8, conforme a
+    Especificação técnica do SAT
+[-] Método "SetXMLString", modificado para decodificar o XML de UTF8 para a
+    String nativa da IDE (Ansi ou Unicode). Para permitir que as propriedades
+    do Objeto "CFe", sejam exibidas de forma correta.
+
+-- pcnCFeW --
+[-] Método "GerarXml" corrigido para não inserir a declaração de UTF8 em IDEs
+    que não usam UTF8 de forma nativa (Delphi)
+    (por: DSA)
+
 Data 10/06/2017
 -- ACBrSATExtratoFortesFr --
 [*] Ajuste para impressão otimizada da linha dos Itens

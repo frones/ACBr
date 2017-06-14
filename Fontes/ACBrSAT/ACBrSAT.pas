@@ -236,7 +236,9 @@ function MotivoInvalidoCancelamento(cod: integer): String;
 
 implementation
 
-Uses ACBrUtil, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador, synautil;
+Uses
+  ACBrUtil, ACBrConsts, ACBrSATDinamico_cdecl, ACBrSATDinamico_stdcall, ACBrSATMFe_integrador,
+  synautil;
 
 function MensagemCodigoRetorno(CodigoRetorno: Integer): String;
 var
@@ -1419,6 +1421,10 @@ begin
   if fsResposta.codigoDeRetorno <> 6000 then exit;
 
   XMLRecebido := DecodeBase64(fsResposta.RetornoLst[6]);
+  // Se não tem Declaracao no XML, insere a padrão. Retorno sempre deve ser em UTF8
+  if ObtemDeclaracaoXML(XMLRecebido) = '' then
+    XMLRecebido := CUTF8DeclaracaoXML + XMLRecebido;
+
   CFe.AsXMLString := XMLRecebido;
 
   if fsConfigArquivos.SalvarCFe then

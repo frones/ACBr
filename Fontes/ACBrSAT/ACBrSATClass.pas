@@ -427,6 +427,7 @@ begin
 
   if SepararPorCNPJ then
   begin
+    CNPJ := OnlyNumber(CNPJ);
     if EstaVazio(CNPJ) then
       CNPJ := OnlyNumber(TACBrSAT(fsOwner).Config.emit_CNPJ);
 

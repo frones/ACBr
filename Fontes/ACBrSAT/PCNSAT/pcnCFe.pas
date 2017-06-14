@@ -1366,16 +1366,21 @@ begin
     LocCFeW.Free;
   end ;
 
+  FXMLOriginal := ConverteXMLtoUTF8(FXMLOriginal);
   Result := FXMLOriginal;
 end;
 
 procedure TCFe.SetXMLString(AValue : AnsiString) ;
 var
- LocCFeR : TCFeR;
+  LocCFeR : TCFeR;
+  XMLStr: String;
 begin
   LocCFeR := TCFeR.Create(Self);
   try
-    LocCFeR.Leitor.Arquivo := AValue;
+    // Verifica se precisa Converter de UTF8 para a String nativa da IDE //
+    XMLStr := ConverteXMLtoNativeString(AValue);
+
+    LocCFeR.Leitor.Arquivo := XMLStr;
     LocCFeR.LerXml;
   finally
     LocCFeR.Free

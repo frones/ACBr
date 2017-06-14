@@ -766,15 +766,12 @@ begin
   FApenasTagsAplicacao := ApenasTagsAplicacao;
   Gerador.LayoutArquivoTXT.Clear;
 
-  {$IFDEF UNICODE}
-   Gerador.ArquivoFormatoXML := '<'+ENCODING_UTF8+'>';
-   if Gerador.Opcoes.IdentarXML then
-     Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + #13#10 ;
-  {$ELSE}
-   Gerador.ArquivoFormatoXML := '';
-  {$ENDIF}
-
+  Gerador.ArquivoFormatoXML := '';
   Gerador.ArquivoFormatoTXT := '';
+
+  {$IfDef FPC}
+   Gerador.wGrupo(ENCODING_UTF8, '', False);
+  {$EndIf}
 
   Gerador.wGrupo('CFe');
   Grupo := 'infCFe';

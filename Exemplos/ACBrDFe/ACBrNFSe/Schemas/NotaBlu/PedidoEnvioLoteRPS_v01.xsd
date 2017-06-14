@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://nfse.blumenau.sc.gov.br" 
+           xmlns:tipos="http://nfse.blumenau.sc.gov.br/tipos" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <xs:import namespace="http://nfse.blumenau.sc.gov.br/tipos" schemaLocation="TiposNFe_v01.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v01.xsd" />
+  <xs:element name="PedidoEnvioLoteRPS">
+    <xs:annotation>
+      <xs:documentation>Schema utilizado para PEDIDO de envio de lote de RPS.</xs:documentation>
+      <xs:documentation>Este Schema XML é utilizado pelos prestadores de serviços para substituição em lote de RPS por NFS-e.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Cabecalho" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Cabeçalho do pedido.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CPFCNPJRemetente" type="tipos:tpCPFCNPJ" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o CPF/CNPJ do Remetente autorizado a transmitir a mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="transacao" type="xs:boolean" minOccurs="0" maxOccurs="1" default="true">
+                <xs:annotation>
+                  <xs:documentation>Informe se os RPS a serem substituídos por NFS-e farão parte de uma mesma transação. True - Os RPS só serão substituídos por NFS-e se não ocorrer nenhum evento de erro durante o processamento de todo o lote; False - Os RPS válidos serão substituídos por NFS-e, mesmo que ocorram eventos de erro durante processamento de outros RPS deste lote.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="dtInicio" type="xs:date" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe a data de início do período transmitido (AAAA-MM-DD).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="dtFim" type="xs:date" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe a data final do período transmitido (AAAA-MM-DD).</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="QtdRPS"  type="tipos:tpQuantidade" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o total de RPS contidos na mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="ValorTotalServicos" type="tipos:tpValor" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o valor total dos serviços prestados dos RPS contidos na mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="ValorTotalDeducoes" type="tipos:tpValor" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Informe o valor total das deduções dos RPS contidos na mensagem XML.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Versao" type="tipos:tpVersao" use="required" fixed="1">
+              <xs:annotation>
+                <xs:documentation>Informe a Versão do Schema XML utilizado.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RPS" type="tipos:tpRPS" minOccurs="1" maxOccurs="50">
+          <xs:annotation>
+            <xs:documentation>Informe os RPS a serem substituidos por NFS-e.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Assinatura digital do contribuinte que gerou os RPS contidos na mensagem XML.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -91,6 +91,9 @@ type
     function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
     function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
+    function TesteEnviar(ALote: Integer): Boolean; overload;
+    function TesteEnviar(ALote: String): Boolean; overload;
+
     function EnviarSincrono(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
     function EnviarSincrono(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
@@ -570,6 +573,28 @@ begin
 
   Result := WebServices.SubstituiNFSe(ACodigoCancelamento, ANumeroNFSe,
                                       AMotivoCancelamento);
+end;
+
+function TACBrNFSe.TesteEnviar(ALote: Integer): Boolean;
+begin
+  TesteEnviar(IntToStr(ALote));
+end;
+
+function TACBrNFSe.TesteEnviar(ALote: String): Boolean;
+var
+  i: Integer;
+begin
+  if NotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+
+  if NotasFiscais.Count > 50 then
+    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
+      ' excedido. Quantidade atual: ' + IntToStr(NotasFiscais.Count)));
+
+  NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
+
+  Result := WebServices.TestaEnvio(ALote);
+
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String; AChaveAcesso: String = ''): String;

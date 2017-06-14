@@ -96,6 +96,7 @@ type
     Validar: Boolean;
     DefTipos: String;
     Cabecalho: String;
+    ServicoTeste: String;
     ServicoEnviar: String;
     ServicoConSit: String;
     ServicoConLot: String;
@@ -111,6 +112,7 @@ type
   end;
 
  TConfigSoapAction = record
+    Teste: String;
     Recepcionar: String;
     ConsSit: String;
     ConsLote: String;
@@ -160,6 +162,12 @@ type
     Recepcionar_IncluiEncodingDados: Boolean;
     Recepcionar_CabecalhoStr: Boolean;
     Recepcionar_DadosStr: Boolean;
+
+    Teste: String;
+    Teste_IncluiEncodingCab: Boolean;
+    Teste_IncluiEncodingDados: Boolean;
+    Teste_CabecalhoStr: Boolean;
+    Teste_DadosStr: Boolean;
 
     ConsSit: String;
     ConsSit_IncluiEncodingCab: Boolean;
@@ -598,6 +606,7 @@ begin
   FConfigSchemas.Validar := FPIniParams.ReadBool('Schemas', 'Validar', True);
   FConfigSchemas.DefTipos := FPIniParams.ReadString('Schemas', 'DefTipos', '');
   FConfigSchemas.Cabecalho := FPIniParams.ReadString('Schemas', 'Cabecalho', '');
+  FConfigSchemas.ServicoTeste  := FPIniParams.ReadString('Schemas', 'ServicoTeste', '');
   FConfigSchemas.ServicoEnviar := FPIniParams.ReadString('Schemas', 'ServicoEnviar', '');
   FConfigSchemas.ServicoConSit := FPIniParams.ReadString('Schemas', 'ServicoConSit', '');
   FConfigSchemas.ServicoConLot := FPIniParams.ReadString('Schemas', 'ServicoConLot', '');
@@ -625,6 +634,7 @@ begin
     FConfigSoapAction.FecharSessao:= FPIniParams.ReadString('SoapAction', 'FecharSessao_' + CodIBGE, '*');
   end
   else begin
+    FConfigSoapAction.Teste       := FPIniParams.ReadString('SoapAction', 'Teste', '*');
     FConfigSoapAction.Recepcionar := FPIniParams.ReadString('SoapAction', 'Recepcionar', '*');
     FConfigSoapAction.ConsSit     := FPIniParams.ReadString('SoapAction', 'ConsSit'    , '*');
     FConfigSoapAction.ConsLote    := FPIniParams.ReadString('SoapAction', 'ConsLote'   , '*');
@@ -726,6 +736,27 @@ begin
   FConfigEnvelope.Recepcionar_IncluiEncodingDados := FPIniParams.ReadBool('Recepcionar', 'IncluiEncodingDados', False);
   FConfigEnvelope.Recepcionar_CabecalhoStr := FPIniParams.ReadBool('Recepcionar', 'CabecalhoStr', FConfigXML.CabecalhoStr);
   FConfigEnvelope.Recepcionar_DadosStr := FPIniParams.ReadBool('Recepcionar', 'DadosStr', FConfigXML.DadosStr);
+
+  if(FProvedor = proNotaBlu) Then
+    begin
+      Texto := '';
+      I := 1;
+      while true do
+      begin
+        sCampo := 'Texto' + IntToStr(I);
+        sFim   := FPIniParams.ReadString('Teste', sCampo, 'FIM');
+        if (sFim = 'FIM') or (Length(sFim) <= 0) then
+          break;
+        Texto := Texto + sFim;
+        Inc(I);
+      end;
+      FConfigEnvelope.Teste := Texto;
+
+      FConfigEnvelope.Teste_IncluiEncodingCab := FPIniParams.ReadBool('Teste', 'IncluiEncodingCab', False);
+      FConfigEnvelope.Teste_IncluiEncodingDados := FPIniParams.ReadBool('Teste', 'IncluiEncodingDados', False);
+      FConfigEnvelope.Teste_CabecalhoStr := FPIniParams.ReadBool('Teste', 'CabecalhoStr', FConfigXML.CabecalhoStr);
+      FConfigEnvelope.Teste_DadosStr := FPIniParams.ReadBool('Teste', 'DadosStr', FConfigXML.DadosStr);
+    end;
 
   Texto := '';
   I := 1;

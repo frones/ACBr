@@ -304,7 +304,8 @@ begin
     proISSDSF,
     proCTA:         Result := LerXml_proISSDSF;
     proNFSeBrasil:  Result := LerXml_proNFSeBrasil;
-    proSP:          Result := LerXml_proSP;
+    proSP, 
+    proNotaBlu:     Result := LerXml_proSP;
     proGoverna:     Result := LerXml_proGoverna;
   else
     Result := LerXml_ABRASF;

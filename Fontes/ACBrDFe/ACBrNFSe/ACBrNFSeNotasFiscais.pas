@@ -628,7 +628,7 @@ var
 begin
   for i := 0 to Self.Count - 1 do
   begin
-    if Self.FConfiguracoes.Geral.Provedor = proSP then
+    if Self.FConfiguracoes.Geral.Provedor in [proSP, proNotaBlu] then
       Self.Items[i].AssinaturaAdicional;
     Self.Items[i].Assinar(Assina);
   end;

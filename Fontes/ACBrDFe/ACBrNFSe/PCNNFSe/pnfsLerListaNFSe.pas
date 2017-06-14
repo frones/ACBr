@@ -881,7 +881,7 @@ begin
       end;
     end;
 
-    if FProvedor = proSP then
+    if FProvedor in [proSP, proNotaBlu] then
     begin
       try
         if Leitor.rExtrai(1, 'RetornoConsulta') <> '' then

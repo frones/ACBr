@@ -191,6 +191,14 @@ type
     property RetEnvLote: TRetEnvLote read FRetEnvLote write FRetEnvLote;
   end;
 
+  { TNFSeTesteEnvioLoteRPS }
+
+  TNFSeTesteEnvioLoteRPS = class(TNFSeEnviarLoteRPS)
+  protected
+    procedure DefinirServicoEAction; override;
+    procedure DefinirDadosMsg; override;
+  end;
+
 { TNFSeEnviarSincrono }
 
   TNFSeEnviarSincrono = Class(TNFSeWebService)
@@ -575,6 +583,7 @@ type
     
     FGerarLoteRPS: TNFSeGerarLoteRPS;
     FEnviarLoteRPS: TNFSeEnviarLoteRPS;
+    FTesteEnvioLoteRPS: TNFSeTesteEnvioLoteRPS;
     FEnviarSincrono: TNFSeEnviarSincrono;
     FGerarNFSe: TNFSeGerarNFSe;
     FConsSitLoteRPS: TNFSeConsultarSituacaoLoteRPS;
@@ -597,6 +606,8 @@ type
 
     function Envia(ALote: Integer): Boolean; overload;
     function Envia(ALote: String): Boolean; overload;
+
+    function TestaEnvio(ALote: String): Boolean;
 
     function EnviaSincrono(ALote:Integer): Boolean; overload;
     function EnviaSincrono(ALote:String): Boolean; overload;
@@ -632,6 +643,7 @@ type
     property ACBrNFSe: TACBrDFe                            read FACBrNFSe        write FACBrNFSe;
     property GerarLoteRPS: TNFSeGerarLoteRPS               read FGerarLoteRPS    write FGerarLoteRPS;
     property EnviarLoteRPS: TNFSeEnviarLoteRPS             read FEnviarLoteRPS   write FEnviarLoteRPS;
+    property TesteEnvioLoteRPS: TNFSeTesteEnvioLoteRPS     read FTesteEnvioLoteRPS   write FTesteEnvioLoteRPS;
     property EnviarSincrono: TNFSeEnviarSincrono           read FEnviarSincrono  write FEnviarSincrono;
     property GerarNFSe: TNFSeGerarNFSe                     read FGerarNFSe       write FGerarNFSe;
     property ConsSitLoteRPS: TNFSeConsultarSituacaoLoteRPS read FConsSitLoteRPS  write FConsSitLoteRPS;
@@ -1243,7 +1255,8 @@ begin
 
       proEGoverneISS: EnviarLoteRps := 'request';
 
-      proSP:          EnviarLoteRps := 'PedidoEnvioRPS';
+      proSP, 
+      proNotaBlu:     EnviarLoteRps := 'PedidoEnvioRPS';
     else
       EnviarLoteRps := 'GerarNfseEnvio';
     end;
@@ -1258,7 +1271,8 @@ begin
       proIssDsf,
       proCTA:       EnviarLoteRps := 'ReqEnvioLoteRPS';
 
-      proSP:        EnviarLoteRps := 'PedidoEnvioLoteRPS';
+      proSP, 
+      proNotaBlu:   EnviarLoteRps := 'PedidoEnvioLoteRPS';
 
 //      proTinus:     EnviarLoteRps := 'Arg';
     else
@@ -1428,7 +1442,8 @@ begin
                                       RetornarConteudoEntre(RPS, '<RPS', '</RPS>') +
                                      '</RPS>';
 
-        proSP: FvNotas :=  FvNotas + '<RPS xmlns=""' +
+        proSP, 
+        proNotaBlu: FvNotas :=  FvNotas + '<RPS xmlns=""' +
                                       RetornarConteudoEntre(RPS, '<RPS', '</RPS>') +
                                      '</RPS>';
 
@@ -1512,6 +1527,9 @@ begin
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
+           proNotaBlu: FTagI := '<' + FTagGrupo +
+                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1543,6 +1561,9 @@ begin
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
+           proNotaBlu: FTagI := '<' + FTagGrupo +
+                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1564,6 +1585,9 @@ begin
 
            proSP: FTagI := '<' + FTagGrupo +
                              ' xmlns:p1="http://www.prefeitura.sp.gov.br/nfe" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
+
+           proNotaBlu: FTagI := '<' + FTagGrupo +
+                             ' xmlns:p1="http://nfse.blumenau.sc.gov.br" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1582,7 +1606,8 @@ begin
            proInfisc,
            proInfiscv11,
            proSimplISS,
-           proSP: FTagI := '<' + FTagGrupo + '>';
+           proSP, 
+           proNotaBlu: FTagI := '<' + FTagGrupo + '>';
          else
            FTagI := '<' + FTagGrupo + FNameSpaceDad + '>';
          end;
@@ -1628,7 +1653,8 @@ begin
            proInfisc,
            proInfiscv11: FTagI := '<' + FTagGrupo + '>';
 
-           proSP: FTagI := '<' + FTagGrupo + FNameSpaceDad +
+           proSP, 
+           proNotaBlu: FTagI := '<' + FTagGrupo + FNameSpaceDad +
                              ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">';
 
            proISSCuritiba: FTagI := '<' + FTagGrupo + FNameSpaceDad + '>' +
@@ -1783,7 +1809,8 @@ begin
            proEL,
            proInfisc,
            proInfiscv11,
-           proSP,
+           proSP, 
+           proNotaBlu,
            proCTA: FTagF := '</' + FTagGrupo + '>';
 
            proISSNet: FTagF :=  '</' + FPrefixo3 + 'Pedido>' +
@@ -2043,7 +2070,8 @@ begin
 
       proEquiplano: FTagGrupo := 'enviarLoteRpsEnvio';
 
-      proSP:        FTagGrupo := 'PedidoEnvioLoteRPS';
+      proSP, 
+      proNotaBlu:        FTagGrupo := 'PedidoEnvioLoteRPS';
 
 //      proTinus:     FTagGrupo := 'Arg';
     else
@@ -2058,7 +2086,8 @@ begin
       proInfisc,
       proinfiscv11: TagElemento := 'infNFSe';
 
-      proSP:        TagElemento := '';
+      proSP, 
+      proNotaBlu:        TagElemento := '';
 
       proIssDSF,
       proCTA:       TagElemento := 'Lote';
@@ -2202,7 +2231,7 @@ begin
 
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.
-    if FProvedor <> proSP then
+    if NOT (FProvedor in [proSP, proNotaBlu]) then
       FPDadosMsg := StringReplace(FPDadosMsg, 'xmlns=""', '', [rfReplaceAll]);
 
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
@@ -2258,8 +2287,8 @@ begin
       FNotasFiscais.Items[i].NFSe.dhRecebimento := FDataRecebimento;
       if FProvedor = proGoverna then
         FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
-
-      if FProvedor in [proCTA, proSP] then
+ 
+      if FProvedor in [proCTA, proSP, ProNotaBlu] then
       begin
         FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
         FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;
@@ -2273,7 +2302,7 @@ begin
              'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
 
-  if FProvedor = proSP then
+  if FProvedor in [proSP, ProNotaBlu] then
     Result := UpperCase(RetEnvLote.infRec.Sucesso) = UpperCase('true')
   else
     Result := (RetEnvLote.InfRec.Protocolo <> '');
@@ -2317,6 +2346,190 @@ end;
 function TNFSeEnviarLoteRPS.GerarPrefixoArquivo: String;
 begin
   Result := NumeroLote;
+end;
+
+{ TNFSeTesteEnvioLoteRPS }
+
+procedure TNFSeTesteEnvioLoteRPS.DefinirDadosMsg;
+var
+  I, iTributos: Integer;
+  dDataInicial, dDataFinal: TDateTime;
+  TotalServicos, TotalDeducoes, TotalISS,
+  TotalTributos, TotalISSRetido: Double;
+  TagElemento: String;
+begin
+
+  if FNotasFiscais.Count <= 0 then
+    GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
+
+  if FNotasFiscais.Count > 50 then
+    GerarException(ACBrStr('ERRO: Conjunto de RPS transmitidos (máximo de 50 RPS)' +
+      ' excedido. Quantidade atual: ' + IntToStr(FNotasFiscais.Count)));
+
+  FCabecalhoStr := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Teste_CabecalhoStr;
+  FDadosStr     := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Teste_DadosStr;
+  //Para o teste o schema é o mesmo do Envio
+  FxsdServico   := FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoTeste;
+
+  InicializarDadosMsg(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Teste_IncluiEncodingCab);
+
+  GerarDadosMsg := TNFSeG.Create;
+  try
+    case Provedor of
+      proNotaBlu: FTagGrupo := 'PedidoEnvioLoteRPS';
+    else
+      FTagGrupo := 'EnviarLoteRpsEnvio';
+    end;
+
+    FTagGrupo := FPrefixo3 + FTagGrupo;
+
+    case FProvedor of
+      proSP, proNotaBlu: TagElemento := '';
+    else
+      TagElemento := 'LoteRps';
+    end;
+
+    if (TagElemento <> '') and not (Provedor in [proBetha, proBethav2, proIssDSF, proCTA]) then
+      TagElemento := FPrefixo3 + TagElemento;
+
+    if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
+    begin
+      for I := 0 to FNotasFiscais.Count - 1 do
+        GerarLoteRPScomAssinatura(FNotasFiscais.Items[I].XMLAssinado);
+    end
+    else begin
+      for I := 0 to FNotasFiscais.Count - 1 do
+        GerarLoteRPSsemAssinatura(FNotasFiscais.Items[I].XMLOriginal);
+    end;
+
+    InicializarTagITagF;
+
+    dDataInicial   := FNotasFiscais.Items[0].NFSe.DataEmissao;
+    dDataFinal     := dDataInicial;
+    iTributos      := 0;
+    TotalServicos  := 0.0;
+    TotalDeducoes  := 0.0;
+    TotalISS       := 0.0;
+    TotalISSRetido := 0.0;
+    TotalTributos  := 0.0;
+
+    for i := 0 to FNotasFiscais.Count-1 do
+    begin
+      if FNotasFiscais.Items[i].NFSe.DataEmissao < dDataInicial then
+        dDataInicial := FNotasFiscais.Items[i].NFSe.DataEmissao;
+      if FNotasFiscais.Items[i].NFSe.DataEmissao > dDataFinal then
+        dDataFinal := FNotasFiscais.Items[i].NFSe.DataEmissao;
+
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaPis > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaCofins > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaCsll > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaInss > 0 then
+        iTributos := iTributos + 1;
+      if FNotasFiscais.Items[i].NFSe.Servico.Valores.AliquotaIr > 0 then
+        iTributos := iTributos + 1;
+
+      TotalServicos  := TotalServicos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorServicos;
+      TotalDeducoes  := TotalDeducoes + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+      TotalISS       := TotalISS + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIss;
+      TotalISSRetido := TotalISSRetido + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIssRetido;
+      TotalTributos  := TotalTributos + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorIr
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorCofins
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorPis
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorInss
+                                      + FNotasFiscais.Items[i].NFSe.Servico.Valores.ValorCsll;
+    end;
+
+    InicializarGerarDadosMsg;
+
+    with GerarDadosMsg do
+    begin
+      NumeroLote := FNumeroLote;
+      QtdeNotas  := FNotasFiscais.Count;
+      Notas      := FvNotas;
+
+      // Necessário para o provedor ISSDSF
+      Transacao   := FNotasFiscais.Transacao;
+      DataInicial := dDataInicial;
+      DataFinal   := dDataFinal;
+
+      ValorTotalServicos := TotalServicos;
+      ValorTotalDeducoes := TotalDeducoes;
+
+      // Necessário para o provedor Equiplano - EL
+      NumeroRps      := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Numero;
+      SerieRps       := FNotasFiscais.Items[0].NFSe.IdentificacaoRps.Serie;
+      OptanteSimples := FNotasFiscais.Items[0].NFSe.OptanteSimplesNacional;
+
+      if FProvedor = proCTA then
+        ChaveAcessoPrefeitura := FPConfiguracoesNFSe.Geral.Emitente.WebChaveAcesso
+      else // Necessário para o provedor Governa
+        ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
+
+      if FProvedor = proCONAM then
+      begin
+        AliquotaIss    := FNotasFiscais.Items[0].NFSe.Servico.Valores.Aliquota;
+        TipoTributacao := '4';
+        QtdTributos    := iTributos;
+        ValorNota      := TotalServicos;
+        ValorIss       := TotalIss;
+        ValorIssRetido := TotalIssRetido;
+        ValorTotalDeducoes := TotalDeducoes;
+        ValorTotalTributos := TotalTributos;
+        {Todo:// Acrescentados estas duas linhas abaixo por masl}
+        ExigibilidadeISS := FNotasFiscais.Items[0].NFSe.Servico.ExigibilidadeISS;
+        DataOptanteSimples := FNotasFiscais.Items[0].NFSe.DataOptanteSimplesNacional;
+      end;
+    end;
+
+    FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
+
+  finally
+    GerarDadosMsg.Free;
+  end;
+
+  FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.Teste;
+
+  if (FPDadosMsg <> '') and (FDadosEnvelope <> '') then
+  begin
+    DefinirSignatureNode('');
+
+    FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, FTagGrupo, TagElemento,
+                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
+                                   xSignatureNode, xDSIGNSLote, xIdSignature);
+
+    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+      FNotasFiscais.ValidarLote(FPDadosMsg,
+                         FPConfiguracoes.Arquivos.PathSchemas +
+                         FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoEnviar);
+  end
+  else
+    GerarException(ACBrStr('A funcionalidade [Enviar Lote] não foi disponibilizada pelo provedor: ' +
+      FPConfiguracoesNFSe.Geral.xProvedor));
+
+  IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Recepcionar_IncluiEncodingDados);
+
+  // Lote tem mais de 500kb ? //
+  if Length(FPDadosMsg) > (500 * 1024) then
+    GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
+      IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
+
+end;
+
+procedure TNFSeTesteEnvioLoteRPS.DefinirServicoEAction;
+begin
+  FPServico := 'TesteEnvioLoteRPS';
+  FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Teste;
+
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
 end;
 
 { TNFSeEnviarSincrono }
@@ -2642,7 +2855,8 @@ begin
 
       //proPublica:     FTagGrupo := 'Rps></GerarNfseEnvio';
 
-      proSP:          FTagGrupo := 'PedidoEnvioRPS';
+      proSP, 
+      proNotaBlu:     FTagGrupo := 'PedidoEnvioRPS';
     else
       FTagGrupo := 'GerarNfseEnvio';
     end;
@@ -2654,7 +2868,8 @@ begin
 
       proEGoverneISS: TagElemento := 'rgm:NotaFiscal';
 
-      proSP:          TagElemento := '';
+      proSP, 
+      proNotaBlu:     TagElemento := '';
     else
       TagElemento := 'Rps';
     end;
@@ -2821,7 +3036,8 @@ begin
 
       proSimplISS:  FTagGrupo := 'ConsultarSituacaoLoteRpsEnvio';
 
-      proSP:        FTagGrupo := 'p1:PedidoInformacoesLote';
+      proSP, 
+      proNotaBlu:   FTagGrupo := 'p1:PedidoInformacoesLote';
 
 //      proTinus:     FTagGrupo := 'Arg';
     else
@@ -3078,7 +3294,8 @@ begin
       proISSDSF,
       proCTA:       FTagGrupo := 'ReqConsultaLote';
 
-      proSP:        FTagGrupo := 'p1:PedidoConsultaLote';
+      proSP,
+      proNotaBlu:   FTagGrupo := 'p1:PedidoConsultaLote';
 
 //      proTinus:     FTagGrupo := 'Arg';
     else
@@ -3223,7 +3440,8 @@ begin
 
       proEquiplano: FTagGrupo := 'esConsultarNfsePorRpsEnvio';
 
-      proSP:        FTagGrupo := 'p1:PedidoConsultaNFe';
+      proSP, 
+      proNotaBlu:   FTagGrupo := 'p1:PedidoConsultaNFe';
 
 //      proTinus:     FTagGrupo := 'Arg';
     else
@@ -3438,7 +3656,8 @@ begin
       proTecnos,
       proSystemPro: FTagGrupo := 'ConsultarNfseFaixaEnvio';
 
-      proSP:        FTagGrupo := 'PedidoConsultaNFe';
+      proSP, 
+      proNotaBlu:   FTagGrupo := 'PedidoConsultaNFe';
 
       proGoverna :  FTagGrupo := 'ConsultaCancelamento';
     else
@@ -3605,7 +3824,8 @@ begin
       proISSDSF,
       proCTA:         FTagGrupo := 'ReqCancelamentoNFSe';
 
-      proSP:          FTagGrupo := 'PedidoCancelamentoNFe';
+      proSP,
+      proNotaBlu:     FTagGrupo := 'PedidoCancelamentoNFe';
 
 //      proTinus:       FTagGrupo := 'Arg';
     else
@@ -3624,7 +3844,8 @@ begin
       proEquiplano,
       proInfisc,
       proInfiscv11,
-      proSP:     FdocElemento := FTagGrupo;
+      proSP,
+      proNotaBlu:  FdocElemento := FTagGrupo;
 
       proGinfes: FdocElemento := FTagGrupo;
 
@@ -3655,7 +3876,8 @@ begin
       proISSCuritiba,
       proPronimv2,
       proPublica,
-      proSP: FURI:= '';
+      proSP,
+      proNotaBlu: FURI:= '';
 
       proGovDigital: FURI := TNFSeCancelarNfse(Self).FNumeroNFSe;
 
@@ -3758,7 +3980,7 @@ begin
 
     InicializarGerarDadosMsg;
 
-    if FProvedor = proSP then
+    if FProvedor in [proSP, proNotaBlu] then
     begin
       sAssinatura := Poem_Zeros(GerarDadosMsg.IM, 8) + Poem_Zeros(TNFSeCancelarNfse(Self).NumeroNFSe, 12);
       GerarDadosMsg.AssinaturaCan := FPDFeOwner.SSL.CalcHash(sAssinatura, dgstSHA1, outBase64, True);
@@ -4534,6 +4756,8 @@ begin
   FFecharSessao   := TNFSeFecharSessao.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
 
   FEnvioWebService := TNFSeEnvioWebService.Create(FACBrNFSe);
+
+  FTesteEnvioLoteRPS := TNFSeTesteEnvioLoteRPS.Create(FACBrNFSe, TACBrNFSe(FACBrNFSe).NotasFiscais);
 end;
 
 destructor TWebServices.Destroy;
@@ -4552,6 +4776,8 @@ begin
   FFecharSessao.Free;
 
   FEnvioWebService.Free;
+
+  FTesteEnvioLoteRPS.Free;
 
   inherited Destroy;
 end;
@@ -4825,6 +5051,48 @@ begin
 
     if not (Result) then
       FSubNfse.GerarException( FSubNfse.Msg );
+  end;
+end;
+
+function TWebServices.TestaEnvio(ALote: String): Boolean;
+begin
+
+  FTesteEnvioLoteRPS.FNumeroLote := ALote;
+  Result := FTesteEnvioLoteRPS.Executar;
+
+  if not (Result) then
+    FTesteEnvioLoteRPS.GerarException( FTesteEnvioLoteRPS.Msg );
+
+  FConsSitLoteRPS.FProtocolo  := FTesteEnvioLoteRPS.Protocolo;
+  FConsSitLoteRPS.FNumeroLote := FTesteEnvioLoteRPS.NumeroLote;
+
+  FConsLote.FProtocolo := FTesteEnvioLoteRPS.Protocolo;
+  FConsLote.FNumeroLote := FTesteEnvioLoteRPS.NumeroLote;
+
+  if (TACBrNFSe(FACBrNFSe).Configuracoes.Geral.ConsultaLoteAposEnvio) and (Result) then
+  begin
+    if ProvedorToVersaoNFSe(TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor) = ve100 then
+    begin
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proGoverna] then
+        Result := True
+      else
+        Result := FConsSitLoteRPS.Executar;
+
+      if not (Result) then
+        FConsSitLoteRPS.GerarException( FConsSitLoteRPS.Msg );
+    end;
+
+    case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
+      proEL,
+      proGoverna,
+      proInfisc,
+      proInfiscv11: Result := True
+    else
+      Result := FConsLote.Executar;
+    end;
+
+    if not (Result) then
+      FConsLote.GerarException( FConsLote.Msg );
   end;
 end;
 

@@ -218,7 +218,8 @@ begin
     proInfiscv11:  Result := LerXml_proInfisc;
     proEL:         Result := LerXML_proEL;
     proNFSeBrasil: Result := LerXml_proNFSeBrasil;
-    proSP:         Result := LerXml_proSP;      
+    proSP, 
+    proNotaBlu:    Result := LerXml_proSP;
   else
     Result := LerXml_ABRASF;
   end;

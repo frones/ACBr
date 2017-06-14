@@ -1,8 +1,8 @@
 object Form1: TForm1
-  Left = 419
-  Top = 232
-  Width = 836
-  Height = 581
+  Left = 251
+  Top = 135
+  Width = 888
+  Height = 561
   Caption = 'SAT Teste - Projeto ACBr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,17 +18,17 @@ object Form1: TForm1
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 202
-    Width = 828
+    Top = 226
+    Width = 872
     Height = 6
     Cursor = crVSplit
     Align = alTop
   end
   object PageControl1: TPageControl
     Left = 0
-    Top = 208
-    Width = 828
-    Height = 299
+    Top = 232
+    Width = 872
+    Height = 247
     ActivePage = tsRecebido
     Align = alClient
     TabOrder = 0
@@ -37,8 +37,8 @@ object Form1: TForm1
       object mLog: TMemo
         Left = 0
         Top = 0
-        Width = 795
-        Height = 263
+        Width = 847
+        Height = 219
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -55,8 +55,8 @@ object Form1: TForm1
       inline mVendaEnviar: TMemo
         Left = 0
         Top = 0
-        Width = 795
-        Height = 263
+        Width = 847
+        Height = 219
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
@@ -67,12 +67,12 @@ object Form1: TForm1
       inline mRecebido: TWebBrowser
         Left = 0
         Top = 0
-        Width = 820
-        Height = 271
+        Width = 864
+        Height = 219
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C000000C0540000021C00000000000000000000000000000000000000000000
+          4C0000004C590000A21600000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -84,16 +84,16 @@ object Form1: TForm1
       inline mCancelamentoEnviar: TMemo
         Left = 0
         Top = 0
-        Width = 795
-        Height = 238
+        Width = 847
+        Height = 194
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
       end
       object Panel2: TPanel
         Left = 0
-        Top = 238
-        Width = 795
+        Top = 194
+        Width = 847
         Height = 25
         Align = alBottom
         TabOrder = 1
@@ -123,12 +123,12 @@ object Form1: TForm1
       inline mRede: TWebBrowser
         Left = 0
         Top = 0
-        Width = 795
-        Height = 263
+        Width = 847
+        Height = 219
         Align = alClient
         TabOrder = 0
         ControlData = {
-          4C0000002A5200002F1B00000000000000000000000000000000000000000000
+          4C0000008A570000A21600000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -139,15 +139,15 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 828
-    Height = 202
+    Width = 872
+    Height = 226
     Align = alTop
     TabOrder = 2
     object gpOperacao: TGroupBox
       Left = 1
       Top = 1
       Width = 169
-      Height = 200
+      Height = 224
       Align = alLeft
       Caption = 'Inicializa'#231#227'o'
       TabOrder = 0
@@ -185,7 +185,7 @@ object Form1: TForm1
       end
       object GroupBox2: TGroupBox
         Left = 2
-        Top = 109
+        Top = 133
         Width = 165
         Height = 89
         Align = alBottom
@@ -202,7 +202,7 @@ object Form1: TForm1
         end
         object btSalvarParams: TButton
           Left = 31
-          Top = 52
+          Top = 51
           Width = 105
           Height = 25
           Caption = 'Salvar'
@@ -214,21 +214,24 @@ object Form1: TForm1
     object GroupBox1: TGroupBox
       Left = 170
       Top = 1
-      Width = 657
-      Height = 200
+      Width = 701
+      Height = 224
       Align = alClient
       Caption = 'Configura'#231#227'o'
       TabOrder = 1
       object PageControl2: TPageControl
         Left = 2
         Top = 15
-        Width = 653
-        Height = 183
-        ActivePage = tsMFE
+        Width = 697
+        Height = 207
+        ActivePage = tsDadosSAT
         Align = alClient
         TabOrder = 0
         object tsDadosSAT: TTabSheet
           Caption = 'Dados do SAT CFe'
+          DesignSize = (
+            689
+            179)
           object Label9: TLabel
             Left = 21
             Top = 7
@@ -285,8 +288,8 @@ object Form1: TForm1
             ParentColor = False
           end
           object Label8: TLabel
-            Left = 152
-            Top = 106
+            Left = 176
+            Top = 104
             Width = 58
             Height = 13
             Caption = 'P'#225'g.C'#243'digo:'
@@ -311,6 +314,15 @@ object Form1: TForm1
             Color = clBtnFace
             ParentColor = False
           end
+          object Label33: TLabel
+            Left = 473
+            Top = 156
+            Width = 69
+            Height = 13
+            Alignment = taRightJustify
+            Anchors = [akTop, akRight]
+            Caption = 'Itens a Vender'
+          end
           object edLog: TEdit
             Left = 17
             Top = 24
@@ -322,9 +334,10 @@ object Form1: TForm1
           object edNomeDLL: TEdit
             Left = 217
             Top = 24
-            Width = 388
+            Width = 389
             Height = 21
             Cursor = crIBeam
+            Anchors = [akLeft, akTop, akRight]
             TabOrder = 1
           end
           object edtCodigoAtivacao: TEdit
@@ -352,8 +365,8 @@ object Form1: TForm1
             Value = 1
           end
           object cbxUTF8: TCheckBox
-            Left = 16
-            Top = 103
+            Left = 123
+            Top = 106
             Width = 47
             Height = 19
             Caption = 'UTF8'
@@ -361,9 +374,9 @@ object Form1: TForm1
             OnClick = cbxUTF8Change
           end
           object sePagCod: TSpinEdit
-            Left = 152
+            Left = 176
             Top = 123
-            Width = 83
+            Width = 59
             Height = 22
             MaxValue = 65001
             MinValue = 0
@@ -380,13 +393,11 @@ object Form1: TForm1
             OnChange = sfeVersaoEntChange
           end
           object cbxFormatXML: TCheckBox
-            Left = 17
-            Top = 127
+            Left = 14
+            Top = 106
             Width = 95
             Height = 19
             Caption = 'Formatar XML'
-            Checked = True
-            State = cbChecked
             TabOrder = 8
             OnClick = cbxUTF8Change
           end
@@ -453,6 +464,26 @@ object Form1: TForm1
             State = cbChecked
             TabOrder = 14
             OnClick = cbxSepararPorMESChange
+          end
+          object cbxRemoverAcentos: TCheckBox
+            Left = 14
+            Top = 131
+            Width = 113
+            Height = 19
+            Caption = 'Remover Acentos'
+            TabOrder = 15
+            OnClick = cbxRemoverAcentosClick
+          end
+          object seItensVenda: TSpinEdit
+            Left = 548
+            Top = 151
+            Width = 58
+            Height = 22
+            Anchors = [akTop, akRight]
+            MaxValue = 999
+            MinValue = 1
+            TabOrder = 16
+            Value = 1
           end
         end
         object tsDadosEmit: TTabSheet
@@ -541,7 +572,7 @@ object Form1: TForm1
             Width = 130
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 4
           end
           object cbxIndRatISSQN: TComboBox
@@ -550,7 +581,7 @@ object Form1: TForm1
             Width = 134
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 5
           end
           object cbxRegTributario: TComboBox
@@ -559,15 +590,15 @@ object Form1: TForm1
             Width = 166
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
+            ItemHeight = 0
             TabOrder = 3
           end
         end
         object tsDadosSwHouse: TTabSheet
           Caption = 'Dados Sw.House'
           DesignSize = (
-            645
-            155)
+            689
+            179)
           object Label2: TLabel
             Left = 10
             Top = 15
@@ -589,7 +620,7 @@ object Form1: TForm1
           object edtSwHCNPJ: TEdit
             Left = 10
             Top = 31
-            Width = 329
+            Width = 322
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
@@ -931,8 +962,8 @@ object Form1: TForm1
           object GroupBox3: TGroupBox
             Left = 0
             Top = 0
-            Width = 318
-            Height = 155
+            Width = 345
+            Height = 179
             Align = alClient
             Caption = 'Fortes'
             TabOrder = 0
@@ -1068,16 +1099,16 @@ object Form1: TForm1
             end
           end
           object GroupBox4: TGroupBox
-            Left = 318
+            Left = 345
             Top = 0
             Width = 327
-            Height = 155
+            Height = 179
             Align = alRight
             Caption = 'EscPOS'
             TabOrder = 1
             DesignSize = (
               327
-              155)
+              179)
             object Label25: TLabel
               Left = 8
               Top = 39
@@ -1186,7 +1217,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 2
             end
             object cbxPorta: TComboBox
@@ -1195,7 +1226,7 @@ object Form1: TForm1
               Width = 138
               Height = 21
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 3
             end
             object cbxPagCodigo: TComboBox
@@ -1205,7 +1236,7 @@ object Form1: TForm1
               Height = 21
               Style = csDropDownList
               Anchors = [akLeft, akTop, akRight]
-              ItemHeight = 13
+              ItemHeight = 0
               TabOrder = 4
             end
             object seColunas: TSpinEdit
@@ -1344,8 +1375,8 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 507
-    Width = 828
+    Top = 479
+    Width = 872
     Height = 23
     Panels = <
       item
@@ -1511,8 +1542,6 @@ object Form1: TForm1
     Rede.tipoLan = lanDHCP
     Rede.proxy = 0
     Rede.proxy_porta = 0
-    OnGetcodigoDeAtivacao = ACBrSAT1GetcodigoDeAtivacao
-    OnGetsignAC = ACBrSAT1GetsignAC
     Left = 64
     Top = 224
   end

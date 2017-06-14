@@ -408,10 +408,7 @@ procedure TACBrSATConfigArquivos.SetSepararPorDia(const Value: Boolean);
 begin
   fsSepararPorDia := Value;
   if fsSepararPorDia then
-  begin
-    if not (fsSepararPorMes or fsSepararPorAno) then
-      fsSepararPorMes := Value;
-  end;
+    fsSepararPorMes := True;
 end;
 
 procedure TACBrSATConfigArquivos.SetSepararPorMes(const Value: Boolean);
@@ -424,8 +421,6 @@ end;
 procedure TACBrSATConfigArquivos.SetSepararPorAno(const Value: Boolean);
 begin
   fsSepararPorAno := Value;
-  if not (fsSepararPorMes or fsSepararPorAno) then
-    fsSepararPorDia := False;
 end;
 
 function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;

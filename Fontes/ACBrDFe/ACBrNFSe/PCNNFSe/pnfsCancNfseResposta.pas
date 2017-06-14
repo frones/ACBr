@@ -151,6 +151,7 @@ type
     function LerXml_proNFSeBrasil: Boolean;
     function LerXml_proSP: Boolean;
     function LerXml_proGoverna: Boolean;
+    function LerXml_proSMARAPD: Boolean;
 
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
@@ -307,6 +308,7 @@ begin
     proSP, 
     proNotaBlu:     Result := LerXml_proSP;
     proGoverna:     Result := LerXml_proGoverna;
+    proSMARAPD:     Result := LerXml_proSMARAPD;
   else
     Result := LerXml_ABRASF;
   end;
@@ -654,6 +656,26 @@ begin
     result := False;
   end;
   *)
+end;
+
+function TretCancNFSe.LerXml_proSMARAPD: Boolean;
+begin
+  try
+    if pos('sucesso', leitor.Arquivo) > 0 then
+    begin
+       InfCanc.Sucesso  := 'S';
+       InfCanc.MsgCanc  := leitor.Arquivo;
+    end
+    else
+      infCanc.DataHora := 0;
+    FInfCanc.MsgRetorno.Add;
+    FInfCanc.FMsgRetorno[0].FCodigo   := '';
+    FInfCanc.FMsgRetorno[0].FMensagem := leitor.Arquivo;
+    FInfCanc.FMsgRetorno[0].FCorrecao := '';
+    Result := True;
+  except
+    result := False;
+  end;
 end;
 
 function TretCancNFSe.LerXml_proSP: Boolean;

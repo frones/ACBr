@@ -49,6 +49,11 @@ Símbolo : Significado
 
 14/06/2017
 -- Diversos -- 
+[*] Implementação do provedor Smarapd.
+    Por: Renan Eustaquio
+
+14/06/2017
+-- Diversos -- 
 [*] Implementação do provedor NotaBlu.
     Por: Carlos Marian
 

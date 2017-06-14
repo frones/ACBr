@@ -647,6 +647,10 @@ begin
              Gerador.Opcoes.SuprimirDecimais := False;
            end;
 
+     proSMARAPD:
+          begin
+            Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Notas
+          end
   else begin
          Gerador.Prefixo := Prefixo3;
          if Provedor in [proCoplan] then
@@ -822,7 +826,7 @@ begin
                   if VersaoNFSe = ve100 then
                     Gerador.wCampoNFSe(tcStr, '', 'Versao', 4, 4, 1, '1.00', '');
                 end;
-              
+
     proCONAM: begin
                 Gerador.Prefixo := '';
                 Gerador.wGrupoNFSe('Sdt_consultanotasprotocoloin xmlns="NFe"');
@@ -883,7 +887,7 @@ begin
                      Gerador.ArquivoFormatoXML := Protocolo;
                    end;
 
-    proSP, 
+    proSP,
     proNotaBlu: begin
                   Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
                   Gerador.wGrupoNFSe('CPFCNPJRemetente');
@@ -893,6 +897,10 @@ begin
                   Gerador.wCampoNFSe(tcStr, '#3', 'NumeroLote', 01, 14, 1, NumeroLote, '');
                   Gerador.wGrupoNFSe('/Cabecalho');
                 end;
+
+    proSMARAPD: begin
+                  Gerador.ArquivoFormatoXML := '<recibo><codrecibo>'+ Protocolo +'</codrecibo></recibo>';
+               end;
 
   else begin
          Gerador.Prefixo := Prefixo3;
@@ -1568,7 +1576,7 @@ begin
                      Gerador.ArquivoFormatoXML := NumeroRps;
                    end;
 
-    proSP, 
+    proSP,
     proNotaBlu: begin
              Gerador.wGrupoNFSe('Cabecalho' + aVersao + ' xmlns=""');
              Gerador.wGrupoNFSe('CPFCNPJRemetente');
@@ -1584,6 +1592,15 @@ begin
              Gerador.wCampoNFSe(tcStr, '', 'AssinaturaCancelamento', 01, 2000, 1, AssinaturaCan, '');
              Gerador.wGrupoNFSe('/Detalhe');
            end;
+
+    proSMARAPD: begin
+                  Gerador.wGrupoNFSe('nfd');
+                  Gerador.wGrupoNFSe('inscricaomunicipalemissor>' + IM + '</inscricaomunicipalemissor');
+                  Gerador.wGrupoNFSe('numeronf>' + NumeroNFSe + '</numeronf');
+                  Gerador.wGrupoNFSe('motivocancelamento>' + MotivoCanc + '</motivocancelamento');
+                  Gerador.wGrupoNFSe('datacancelamento>' + FormatDateTime('dd/mm/yyyy', now) + '</datacancelamento');
+                  Gerador.wGrupoNFSe('/nfd');
+               end;
   else begin
          Gerador.Prefixo := Prefixo4;
          Gerador.wGrupoNFSe('IdentificacaoNfse');

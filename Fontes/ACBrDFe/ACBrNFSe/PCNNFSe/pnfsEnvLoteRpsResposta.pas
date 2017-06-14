@@ -139,6 +139,8 @@ type
     function LerXml_proSP: Boolean;
     function LerXML_proFriburgo: Boolean;
     function LerXml_proCTA: Boolean;
+    Function LerXML_proSmarapd: Boolean;
+
   published
     property Leitor: TLeitor         read FLeitor   write FLeitor;
     property InfRec: TInfRec         read FInfRec   write FInfRec;
@@ -290,6 +292,7 @@ begin
    proNotaBlu:    Result := LerXml_proSP;
    proFriburgo:   Result := LerXML_proFriburgo;
    proCTA:        Result := LerXml_proCTA;
+   proSMARAPD:    Result := LerXML_proSmarapd;
  else
    Result := LerXml_ABRASF;
  end;
@@ -981,6 +984,32 @@ begin
         Inc(i);
       end;
     end;
+  except
+    Result := False;
+  end;
+end;
+
+function TretEnvLote.LerXML_proSmarapd: Boolean;
+begin
+  try
+    if (Leitor.rExtrai(1, 'recibo') <> '') then
+    begin
+      if Leitor.rCampo(tcStr, 'Erro') <> 'false' then
+      begin
+        FInfRec.Protocolo        := Leitor.rCampo(tcStr, 'codrecibo');
+        FInfRec.DataRecebimento  := Leitor.rCampo(tcDatVcto, 'datahora');
+      end;
+    end;
+
+    if pos('Erro',leitor.Arquivo) > 0 Then
+    begin
+      FInfRec.MsgRetorno.Add;
+      FInfRec.MsgRetorno[0].FCodigo   := '';
+      FInfRec.MsgRetorno[0].FMensagem := leitor.Arquivo;
+      FInfRec.MsgRetorno[0].FCorrecao := '';
+    end;
+
+    Result := True;
   except
     Result := False;
   end;

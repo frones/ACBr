@@ -577,12 +577,10 @@ end;
 
 function TACBrNFSe.TesteEnviar(ALote: Integer): Boolean;
 begin
-  TesteEnviar(IntToStr(ALote));
+  Result := TesteEnviar(IntToStr(ALote));
 end;
 
 function TACBrNFSe.TesteEnviar(ALote: String): Boolean;
-var
-  i: Integer;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS adicionado ao Lote'));
@@ -594,7 +592,6 @@ begin
   NotasFiscais.Assinar(Configuracoes.Geral.ConfigAssinar.RPS);
 
   Result := WebServices.TestaEnvio(ALote);
-
 end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String; AChaveAcesso: String = ''): String;

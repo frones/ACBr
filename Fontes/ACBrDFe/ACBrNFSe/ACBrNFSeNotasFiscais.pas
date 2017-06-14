@@ -224,7 +224,7 @@ end;
 
 procedure NotaFiscal.Assinar(Assina: Boolean);
 var
-  XMLStr, InfElemento: String;
+  XMLStr, DocElemento, InfElemento: String;
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
@@ -257,6 +257,12 @@ begin
     end;
 
     case Configuracoes.Geral.Provedor of
+      proSMARAPD: DocElemento := 'tbnfd';
+    else
+      DocElemento := 'Rps';
+    end;
+
+    case Configuracoes.Geral.Provedor of
       proEGoverneISS: InfElemento := Configuracoes.Geral.ConfigGeral.Prefixo4 + 'NotaFiscal';
       pro4R: InfElemento := 'Rps';
       proCTA: InfElemento := 'RPS';
@@ -265,7 +271,7 @@ begin
     end;
 
     if Assina then
-      FXMLAssinado := SSL.Assinar(String(XMLUTF8), 'Rps', InfElemento)
+      FXMLAssinado := SSL.Assinar(String(XMLUTF8), DocElemento, InfElemento)
     else
       FXMLAssinado := XMLOriginal;
 
@@ -838,6 +844,11 @@ var
           begin
             TamTAG := 5;
             Result := Pos('</NFe>', AXMLString);
+            if Result = 0 then
+            begin
+              TamTAG := 7;
+              Result := Pos('</tbnfd>', AXMLString);
+            end;
           end;
       end;
     end;

@@ -139,8 +139,10 @@ type
     fsPastaEnvio: String;
     fsSalvarEnvio: Boolean;
     fsSepararPorCNPJ: Boolean;
+    fsSepararPorAno: Boolean;
     fsSepararPorMes: Boolean;
     fsSepararPorDia: Boolean;
+    fsSepararPorModelo: Boolean;
     function GetPastaCFeCancelamento: String;
     function GetPastaCFeVenda: String;
     function GetPastaEnvio: String;
@@ -149,6 +151,7 @@ type
     procedure SetPastaEnvio(AValue: String);
     procedure SetSepararPorDia(const Value: Boolean);
     procedure SetSepararPorMes(const Value: Boolean);
+    procedure SetSepararPorAno(const Value: Boolean);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -161,17 +164,17 @@ type
     property SalvarEnvio: Boolean read fsSalvarEnvio write fsSalvarEnvio default false;
 
     property SepararPorCNPJ: Boolean read fsSepararPorCNPJ write fsSepararPorCNPJ default False;
+    property SepararPorModelo: Boolean read fsSepararPorModelo write fsSepararPorModelo default False;
+    property SepararPorAno: Boolean read fsSepararPorAno write SetSepararPorAno default False;
     property SepararPorMes: Boolean read fsSepararPorMes write SetSepararPorMes default False;
     property SepararPorDia: Boolean read fsSepararPorDia write SetSepararPorDia default False;
 
     property PastaCFeVenda: String read GetPastaCFeVenda write SetPastaCFeVenda;
-    property PastaCFeCancelamento: String read GetPastaCFeCancelamento
-       write SetPastaCFeCancelamento;
+    property PastaCFeCancelamento: String read GetPastaCFeCancelamento write SetPastaCFeCancelamento;
     property PastaEnvio: String read GetPastaEnvio write SetPastaEnvio;
 
     property PrefixoArqCFe: String read fsPrefixoArqCFe write fsPrefixoArqCFe;
-    property PrefixoArqCFeCanc: String read fsPrefixoArqCFeCanc
-       write fsPrefixoArqCFeCanc;
+    property PrefixoArqCFeCanc: String read fsPrefixoArqCFeCanc write fsPrefixoArqCFeCanc;
   end;
 
   { TACBrSATRespostaClass }
@@ -351,6 +354,7 @@ begin
   fsSalvarEnvio := False;
 
   fsSepararPorCNPJ := False;
+  fsSepararPorModelo := False;
   fsSepararPorMes := False;
   fsSepararPorDia := False;
 
@@ -403,22 +407,32 @@ end;
 procedure TACBrSATConfigArquivos.SetSepararPorDia(const Value: Boolean);
 begin
   fsSepararPorDia := Value;
-  if Value then
-    fsSepararPorMes := Value;
+  if fsSepararPorDia then
+  begin
+    if not (fsSepararPorMes or fsSepararPorAno) then
+      fsSepararPorMes := Value;
+  end;
 end;
 
 procedure TACBrSATConfigArquivos.SetSepararPorMes(const Value: Boolean);
 begin
   fsSepararPorMes := Value;
-  if not Value then
-    fsSepararPorDia := Value;
+  if not fsSepararPorMes then
+    fsSepararPorDia := False;
+end;
+
+procedure TACBrSATConfigArquivos.SetSepararPorAno(const Value: Boolean);
+begin
+  fsSepararPorAno := Value;
+  if not (fsSepararPorMes or fsSepararPorAno) then
+    fsSepararPorDia := False;
 end;
 
 function TACBrSATConfigArquivos.CalcPath(APath: String; CNPJ: String;
   Data: TDateTime): String;
 var
-  wDia, wMes, wAno: word;
-  Dir, AnoMes, Dia: String;
+  wDia, wMes, wAno: Word;
+  Dir, Modelo, sAno, sMes, sDia: String;
 begin
   if EstaVazio(APath) then
     Dir := PastaCFeVenda
@@ -435,20 +449,35 @@ begin
       Dir := PathWithDelim(Dir) + CNPJ;
   end;
 
-  if SepararPorMes then
+  if SepararPorModelo then
+  begin
+    Modelo := TACBrSAT(fsOwner).GetNomeModeloCFe;
+    Dir := PathWithDelim(Dir) + Modelo;
+  end;
+
+  if (SepararPorAno or SepararPorMes or SepararPorDia) then
   begin
     if Data = 0 then
       Data := Now;
 
     DecodeDate(Data, wAno, wMes, wDia);
-    AnoMes := IntToStr(wAno) + IntToStrZero(wMes, 2);
-    Dir := PathWithDelim(Dir) + AnoMes;
-	  
+    sDia := IntToStrZero(wDia, 2);
+    sMes := IntToStrZero(wMes, 2);
+    sAno := IntToStrZero(wAno, 4);
+  end;
+
+  if SepararPorAno then
+    Dir := PathWithDelim(Dir) + sAno;
+
+  if SepararPorMes then
+  begin
+    if SepararPorAno then
+      Dir := PathWithDelim(Dir) + sMes
+    else
+      Dir := PathWithDelim(Dir) + sAno + sMes;
+
     if SepararPorDia then
-    begin
-      Dia := IntToStrZero(wDia, 2);
-      Dir := PathWithDelim(Dir) + Dia;
-    end;
+      Dir := PathWithDelim(Dir) + sDia;
   end;
 
   with TACBrSAT(fsOwner) do

@@ -121,6 +121,8 @@ type
      constructor Create( AOwner : TComponent ) ; override;
      destructor Destroy ; override;
 
+     function GetNomeModeloCFe: String;
+
      Procedure Inicializar;
      Procedure DesInicializar;
      property Inicializado : Boolean read fsInicializado write SetInicializado ;
@@ -1299,6 +1301,11 @@ end;
 function TACBrSAT.GetModeloStrClass : String ;
 begin
    Result := fsSATClass.ModeloStr;
+end;
+
+function TACBrSAT.GetNomeModeloCFe: String;
+begin
+  Result := fsPrefixoCFe;
 end;
 
 function TACBrSAT.GetsignAC : AnsiString ;

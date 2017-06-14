@@ -52,9 +52,15 @@ Data 14/06/2017
 [*] Método "DecodificaRetorno6000", ajuste para inserir a Declaração de XML,
     caso o SAT não responda com a mesma... (a Especificação do SAT, prevê que
     todo XML enviado ou retornado deva seguir "<?xml version="1.0" encoding="UTF-8"?>"
+[+] Adicionado o método "GetNomeModeloCFe"
 
 -- ACBrSATClass --
 [-] Correção em "CalcPath", para remover pontos do CNPJ, quando o mesmo é informado
+[*] Classe "TACBrSATConfigArquivos", adicionada as propriedades: "SepararPorModelo" e
+    "SepararPorAno".
+[*] Método "CalcPath", modificado para suportar as propriedades "SepararPorModelo" e
+    "SepararPorAno"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35456
 
 -- pcnCFe --
 [-] Método "GerarXML", modificado para sempre gerar o XML em UTF8, conforme a

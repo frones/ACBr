@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2017
+-- ACBrDFeConfiguracoes --
+[*] Classe "TArquivosConf", adicionada a propriedade: "SepararPorAno".
+[*] Método "GetPath", modificado para suportar a propriedades "SepararPorAno"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35456
+
 09/06/2017
 -- ACBrDFeConfiguracoes --
 [*] Método "GetPath", modificado para permitir que a Descrição do Modelo seja

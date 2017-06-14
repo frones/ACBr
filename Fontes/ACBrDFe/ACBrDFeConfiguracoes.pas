@@ -221,6 +221,7 @@ type
     FAdicionarLiteral: Boolean;
     FSepararPorCNPJ: Boolean;
     FSepararPorModelo: Boolean;
+    FSepararPorAno: Boolean;
     FSepararPorMes: Boolean;
     FSepararPorDia: Boolean;
   private
@@ -229,6 +230,7 @@ type
     function GetPathSchemas: String;
     procedure SetSepararPorDia(const Value: Boolean);
     procedure SetSepararPorMes(const Value: Boolean);
+    procedure SetSepararPorAno(const Value: Boolean);
   protected
     fpConfiguracoes: TConfiguracoes;
   public
@@ -243,15 +245,12 @@ type
     property IniServicos: String read GetIniServicos write FIniServicos;
     // Arquivos.Salvar - trata-se de arquivos com validade jurídica.
     property Salvar: Boolean read FSalvar write FSalvar default True;
-    property AdicionarLiteral: Boolean read FAdicionarLiteral
-      write FAdicionarLiteral default False;
+    property AdicionarLiteral: Boolean read FAdicionarLiteral write FAdicionarLiteral default False;
     property SepararPorCNPJ: Boolean read FSepararPorCNPJ write FSepararPorCNPJ default False;
-    property SepararPorModelo: Boolean read FSepararPorModelo
-      write FSepararPorModelo default False;
-    property SepararPorMes: Boolean
-      read FSepararPorMes write SetSepararPorMes default False;
-    property SepararPorDia: Boolean
-      read FSepararPorDia write SetSepararPorDia default False;
+    property SepararPorModelo: Boolean read FSepararPorModelo write FSepararPorModelo default False;
+    property SepararPorAno: Boolean read FSepararPorAno write SetSepararPorAno default False;
+    property SepararPorMes: Boolean read FSepararPorMes write SetSepararPorMes default False;
+    property SepararPorDia: Boolean read FSepararPorDia write SetSepararPorDia default False;
   end;
 
   { TConfiguracoes }
@@ -781,8 +780,9 @@ begin
   FPathSchemas := '';
   FIniServicos := '';
 
-  FSepararPorMes := False;
   FSepararPorDia := False;
+  FSepararPorMes := False;
+  FSepararPorAno := False;
   FAdicionarLiteral := False;
   FSepararPorCNPJ := False;
   FSepararPorModelo := False;
@@ -821,18 +821,23 @@ begin
   Result := FPathSchemas;
 end;
 
+procedure TArquivosConf.SetSepararPorAno(const Value: Boolean);
+begin
+  FSepararPorAno := Value;
+end;
+
 procedure TArquivosConf.SetSepararPorDia(const Value: Boolean);
 begin
   FSepararPorDia := Value;
-  if Value then
-    FSepararPorMes := Value;
+  if FSepararPorDia then
+    FSepararPorMes := True;
 end;
 
 procedure TArquivosConf.SetSepararPorMes(const Value: Boolean);
 begin
   FSepararPorMes := Value;
-  if not Value then
-    FSepararPorDia := Value;
+  if not FSepararPorMes then
+    FSepararPorDia := False;
 end;
 
 function TArquivosConf.GetIniServicos: String;
@@ -848,7 +853,7 @@ function TArquivosConf.GetPath(APath: String; ALiteral: String; CNPJ: String;
   Data: TDateTime; ModeloDescr: String): String;
 var
   wDia, wMes, wAno: word;
-  Dir, Modelo, AnoMes, Dia: String;
+  Dir, Modelo, sAno, sMes, sDia: String;
   LenLiteral: integer;
 begin
   if EstaVazio(APath) then
@@ -877,20 +882,29 @@ begin
     Dir := PathWithDelim(Dir) + Modelo;
   end;
 
-  if SepararPorMes then
+  if (SepararPorAno or SepararPorMes or SepararPorDia) then
   begin
     if Data = 0 then
       Data := Now;
 
     DecodeDate(Data, wAno, wMes, wDia);
-    AnoMes := IntToStr(wAno) + IntToStrZero(wMes, 2);
-    Dir := PathWithDelim(Dir) + AnoMes;
-	  
+    sDia := IntToStrZero(wDia, 2);
+    sMes := IntToStrZero(wMes, 2);
+    sAno := IntToStrZero(wAno, 4);
+  end;
+
+  if SepararPorAno then
+    Dir := PathWithDelim(Dir) + sAno;
+
+  if SepararPorMes then
+  begin
+    if SepararPorAno then
+      Dir := PathWithDelim(Dir) + sMes
+    else
+      Dir := PathWithDelim(Dir) + sAno + sMes;
+
     if SepararPorDia then
-    begin
-      Dia := IntToStrZero(wDia, 2);
-      Dir := PathWithDelim(Dir) + Dia;
-    end;
+      Dir := PathWithDelim(Dir) + sDia;
   end;
 
   LenLiteral := Length(ALiteral);

@@ -95,7 +95,7 @@ type
     procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
     destructor Destroy; override;
 
-    function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
@@ -132,7 +132,7 @@ type
 implementation
 
 uses
-  ACBrUtil, DateUtils;
+  ACBrUtil, ACBrCTe, DateUtils;
 
 { TConfiguracoesCTe }
 
@@ -235,9 +235,17 @@ begin
   inherited;
 end;
 
-function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
+var
+  DescricaoModelo: String;
 begin
-  Result := GetPath(FPathCTe, 'CTe', CNPJ, Data);
+  case Modelo of
+     0: DescricaoModelo := TACBrCTe(fpConfiguracoes.Owner).GetNomeModeloDFe;
+    57: DescricaoModelo := 'CTe';
+    67: DescricaoModelo := 'CTeOS';
+  end;
+
+  Result := GetPath(FPathCTe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
 end;
 
 function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;

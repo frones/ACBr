@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/06/2017
+-- ACBrMDFeConfiguracoes --
+[*] Método "GetPathMDFe", modificado para informar a Descrição do Modelo baseada
+    no conteúdo do XML a ser Salvo.
+    por: Italo Jurisato Junior
+
 09/06/2017
 [-] correção para envio da tag tptransp com veículo próprio
 		http://www.projetoacbr.com.br/forum/topic/37149-envio-da-tag-tptransp-com-veículo-próprio/

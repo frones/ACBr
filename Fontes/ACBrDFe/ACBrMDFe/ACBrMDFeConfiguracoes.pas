@@ -129,7 +129,6 @@ uses
 
 { TConfiguracoesMDFe }
 
-
 constructor TConfiguracoesMDFe.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -234,7 +233,7 @@ end;
 
 function TArquivosConfMDFe.GetPathMDFe(Data: TDateTime = 0; CNPJ: String = ''): String;
 begin
-  Result := GetPath(FPathMDFe, 'MDFe', CNPJ, Data);
+  Result := GetPath(FPathMDFe, 'MDFe', CNPJ, Data, 'MDFe');
 end;
 
 function TArquivosConfMDFe.GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;

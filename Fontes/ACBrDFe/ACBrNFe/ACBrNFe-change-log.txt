@@ -65,9 +65,9 @@ Símbolo : Significado
     (por: Italo Jurisato Junior)
 
 09/06/2017
--- ACBrNFECONConfiguracoes --
+-- ACBrNFeConfiguracoes --
 [*] Método "GetPathNFe", modificado para informar a Descrição do Modelo baseada
-    no contúdo do XML a ser Salvo.
+    no conteúdo do XML a ser Salvo.
     (por: DSA)
 
 02/06/2017

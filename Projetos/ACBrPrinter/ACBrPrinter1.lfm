@@ -40,18 +40,27 @@ object DataModule1: TDataModule1
   object ACBrSATExtratoFortes1: TACBrSATExtratoFortes
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    SoftwareHouse = 'Projeto ACBr'
+    Site = 'http://www.projetoacbr.com.br'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     left = 160
     top = 88
   end
   object ACBrSATExtratoESCPOS1: TACBrSATExtratoESCPOS
     Mask_qCom = '0.0000'
     Mask_vUnCom = '0.000'
+    SoftwareHouse = 'Projeto ACBr'
+    Site = 'http://www.projetoacbr.com.br'
+    MsgAppQRCode = 'Consulte o QR Code pelo aplicativo  "De olho na nota", disponível na AppStore (Apple) e PlayStore (Android)'
     PosPrinter = ACBrPosPrinter1
     left = 160
     top = 157
   end
   object ACBrNFe1: TACBrNFe
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
@@ -66,6 +75,7 @@ object DataModule1: TDataModule1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -97,7 +107,6 @@ object DataModule1: TDataModule1
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
-    PosCanhoto = prCabecalho
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
     PosPrinter = ACBrPosPrinter1
@@ -109,6 +118,7 @@ object DataModule1: TDataModule1
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.8
@@ -140,7 +150,6 @@ object DataModule1: TDataModule1
     vTribFed = 0
     vTribEst = 0
     vTribMun = 0
-    PosCanhoto = prCabecalho
     left = 352
     top = 88
   end
@@ -149,6 +158,7 @@ object DataModule1: TDataModule1
     MostrarStatus = True
     TipoDANFE = tiRetrato
     NumCopias = 1
+    ImprimeNomeFantasia = False
     ImprimirDescPorc = False
     ImprimirTotalLiquido = True
     MargemInferior = 0.7
@@ -184,6 +194,7 @@ object DataModule1: TDataModule1
     ExibirEAN = False
     QuebraLinhaEmDetalhamentoEspecifico = True
     ExibeCampoFatura = False
+    ImprimirUnQtVlComercial = iuComercial
     left = 496
     top = 24
   end

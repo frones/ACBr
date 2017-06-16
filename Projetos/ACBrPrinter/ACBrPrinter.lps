@@ -2,15 +2,15 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Release"/>
-    <Units Count="15">
+    <Units Count="4">
       <Unit0>
         <Filename Value="ACBrPrinter.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="93" Y="20"/>
-        <UsageCount Value="36"/>
+        <CursorPos X="15" Y="9"/>
+        <UsageCount Value="38"/>
       </Unit0>
       <Unit1>
         <Filename Value="ACBrPrinter1.pas"/>
@@ -18,9 +18,9 @@
         <ComponentName Value="DataModule1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <TopLine Value="210"/>
-        <CursorPos X="106" Y="242"/>
-        <UsageCount Value="36"/>
+        <TopLine Value="85"/>
+        <CursorPos X="27" Y="28"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -31,12 +31,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="407"/>
-        <CursorPos X="91" Y="428"/>
-        <UsageCount Value="36"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="163"/>
+        <CursorPos X="21" Y="229"/>
+        <UsageCount Value="38"/>
         <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="ConfiguraSerial.pas"/>
@@ -46,172 +45,9 @@
         <ResourceBaseClass Value="Form"/>
         <TopLine Value="124"/>
         <CursorPos X="3" Y="46"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="25"/>
       </Unit3>
-      <Unit4>
-        <Filename Value="..\ACBrMonitorPLUS\Lazarus\ACBrMonitor1.pas"/>
-        <ComponentName Value="FrmACBrMonitor"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="3035"/>
-        <CursorPos X="18" Y="3066"/>
-        <UsageCount Value="18"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="C:\lazarus\lcl\include\application.inc"/>
-        <TopLine Value="2150"/>
-        <CursorPos X="10" Y="2159"/>
-        <UsageCount Value="8"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="..\..\Fontes\ACBrSerial\ACBrPosPrinter.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="304"/>
-        <CursorPos X="14" Y="322"/>
-        <UsageCount Value="18"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="..\..\Fontes\ACBrDFe\ACBrNFe\DANFE\ACBrNFeDANFEClass.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="137"/>
-        <CursorPos X="14" Y="155"/>
-        <UsageCount Value="18"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="..\..\Fontes\PCNComum\pcnConversao.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="47"/>
-        <CursorPos X="3" Y="66"/>
-        <UsageCount Value="18"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="..\ACBrMonitorPLUS\Lazarus\ConfiguraSerial.pas"/>
-        <HasResources Value="True"/>
-        <UsageCount Value="20"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="932"/>
-        <CursorPos X="32" Y="928"/>
-        <UsageCount Value="11"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\objpas\types.pp"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="11"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="..\..\Exemplos\ACBrSerial\ACBrPosPrinter\Lazarus\unit1.pas"/>
-        <ComponentName Value="FrPosPrinterTeste"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit1"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="181"/>
-        <CursorPos X="3" Y="183"/>
-        <UsageCount Value="11"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-base\src\inifiles.pp"/>
-        <UnitName Value="IniFiles"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="118"/>
-        <CursorPos X="15" Y="135"/>
-        <UsageCount Value="10"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="..\..\Fontes\ACBrSerial\ACBrDevice.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="427"/>
-        <CursorPos X="15" Y="459"/>
-        <UsageCount Value="10"/>
-      </Unit14>
     </Units>
-    <JumpHistory Count="18" HistoryIndex="17">
-      <Position1>
-        <Filename Value="ACBrPrinter1.pas"/>
-        <Caret Line="154" Column="89" TopLine="134"/>
-      </Position1>
-      <Position2>
-        <Filename Value="ACBrPrinter1.pas"/>
-        <Caret Line="154" Column="89" TopLine="134"/>
-      </Position2>
-      <Position3>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="524" Column="30" TopLine="507"/>
-      </Position3>
-      <Position4>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="525" Column="30" TopLine="508"/>
-      </Position4>
-      <Position5>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="297" Column="3" TopLine="294"/>
-      </Position5>
-      <Position6>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="165" Column="25" TopLine="144"/>
-      </Position6>
-      <Position7>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="297" Column="13" TopLine="260"/>
-      </Position7>
-      <Position8>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="588" Column="84" TopLine="504"/>
-      </Position8>
-      <Position9>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="163" Column="22" TopLine="144"/>
-      </Position9>
-      <Position10>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="232" Column="13" TopLine="195"/>
-      </Position10>
-      <Position11>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="239" Column="13" TopLine="228"/>
-      </Position11>
-      <Position12>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="363" Column="13" TopLine="326"/>
-      </Position12>
-      <Position13>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="428" Column="83" TopLine="402"/>
-      </Position13>
-      <Position14>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="589" Column="42" TopLine="553"/>
-      </Position14>
-      <Position15>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="428" Column="83" TopLine="407"/>
-      </Position15>
-      <Position16>
-        <Filename Value="configuracoes.pas"/>
-      </Position16>
-      <Position17>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="428" Column="83" TopLine="392"/>
-      </Position17>
-      <Position18>
-        <Filename Value="configuracoes.pas"/>
-        <Caret Line="589" Column="49" TopLine="553"/>
-      </Position18>
-    </JumpHistory>
+    <JumpHistory HistoryIndex="-1"/>
   </ProjectSession>
-  <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="ACBrPrinter1.pas"/>
-        <Line Value="93"/>
-      </Item1>
-    </BreakPoints>
-  </Debugging>
 </CONFIG>

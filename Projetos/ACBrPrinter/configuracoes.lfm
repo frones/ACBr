@@ -8,8 +8,9 @@ object frConfiguracoes: TfrConfiguracoes
   ClientWidth = 709
   FormStyle = fsStayOnTop
   OnCreate = FormCreate
+  OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.4.4.0'
+  LCLVersion = '1.6.4.0'
   object PageControl1: TPageControl
     Left = 0
     Height = 366
@@ -561,7 +562,7 @@ object frConfiguracoes: TfrConfiguracoes
             Left = 136
             Height = 15
             Top = 257
-            Width = 122
+            Width = 123
             Caption = 'Decimais Valor Unitário'
             ParentColor = False
           end

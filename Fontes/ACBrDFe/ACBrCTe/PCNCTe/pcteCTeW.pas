@@ -2522,8 +2522,13 @@ begin
      end;
     end;
 
-   if (CTe.infCTe.versao >= 3) and (CTe.infCTeNorm.infCteSub.indAlteraToma = tiSim) then
-    Gerador.wCampo(tcStr, '#385', 'indAlteraToma', 01, 01, 0, TindicadorToStr(CTe.infCTeNorm.infCteSub.indAlteraToma), DSC_INDALTERATOMA);
+    //**************************************************************************
+    // Tag (indAlteraToma) com efeito e utilização aguardando legislação, não
+    // utilizar antes de NT específica tratar desse procedimento
+    //**************************************************************************
+
+//   if (CTe.infCTe.versao >= 3) and (CTe.infCTeNorm.infCteSub.indAlteraToma = tiSim) then
+//    Gerador.wCampo(tcStr, '#385', 'indAlteraToma', 01, 01, 0, TindicadorToStr(CTe.infCTeNorm.infCteSub.indAlteraToma), DSC_INDALTERATOMA);
 
    Gerador.wGrupo('/infCteSub');
   end;

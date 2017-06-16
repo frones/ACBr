@@ -143,6 +143,7 @@ type
     FInutilizacao: TRetInutNFe;
     FfrxInutilizacao: TfrxDBDataset;
     cdsInutilizacao: TClientDataSet;
+    FImprimirDadosDocReferenciados: Boolean;
 
     procedure frxReportBeforePrint(Sender: TfrxReportComponent);
     procedure CarregaIdentificacao;
@@ -212,6 +213,7 @@ type
     property sQuebraLinha : String read fsQuebraLinha Write    fsQuebraLinha;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
+    property ImprimirDadosDocReferenciados: Boolean read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados; 
 
     procedure SetDataSetsToFrxReport;
     procedure CarregaDadosNFe;
@@ -2283,7 +2285,7 @@ var
   i : Integer;
 begin
   Result := '';
-  if FNFe.Ide.NFref.Count > 0 then
+  if ( FImprimirDadosDocReferenciados ) and ( FNFe.Ide.NFref.Count > 0 ) then
   begin
     for i := 0 to (FNFe.ide.NFref.Count - 1) do
     begin

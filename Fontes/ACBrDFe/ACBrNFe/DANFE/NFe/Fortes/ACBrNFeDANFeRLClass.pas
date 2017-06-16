@@ -108,6 +108,7 @@ type
     fCorDestaqueProdutos: TColor;
     fImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
     fExibirBandInforAdicProduto : Boolean;
+    FImprimirDadosDocReferenciados: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -142,6 +143,7 @@ type
     property CorDestaqueProdutos: TColor read FCorDestaqueProdutos write FCorDestaqueProdutos default clWhite; // Cor usada para destacar produtos na lista alternando entre fundo coloridos e não colorido
     property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read fImprimirUnQtVlComercial write fImprimirUnQtVlComercial;
     property ExibirBandInforAdicProduto : Boolean  read fExibirBandInforAdicProduto write fExibirBandInforAdicProduto default False; // Exibir a banda de informação Adicionais do produto.
+    property ImprimirDadosDocReferenciados : Boolean  read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados;
 
   end;
 
@@ -200,7 +202,8 @@ begin
   fAlternaCoresProdutos := False;
   fCorDestaqueProdutos  := clWhite;
   fImprimirUnQtVlComercial  := iuComercial;
-  fExibirBandInforAdicProduto := False;
+  fExibirBandInforAdicProduto := False;    
+  FImprimirDadosDocReferenciados := True;
 end;
 
 destructor TACBrNFeDANFeRL.Destroy;
@@ -248,6 +251,7 @@ try
           fEspacoEntreProdutos,
           fAlternaCoresProdutos,
           fCorDestaqueProdutos,
+	  fImprimirDadosDocReferenciados,
           fTamanhoLogoHeight,
           fTamanhoLogoWidth,
           fRecuoEndereco,
@@ -282,6 +286,7 @@ try
       fEspacoEntreProdutos,
       fAlternaCoresProdutos,
       fCorDestaqueProdutos,
+      fImprimirDadosDocReferenciados,
       fTamanhoLogoHeight,
       fTamanhoLogoWidth,
       fRecuoEndereco,
@@ -342,7 +347,8 @@ begin
           fAltLinhaComun,
           fEspacoEntreProdutos,
           fAlternaCoresProdutos,
-          fCorDestaqueProdutos );
+          fCorDestaqueProdutos,
+          fImprimirDadosDocReferenciados);
         end;
     end
   else
@@ -371,7 +377,8 @@ begin
       fAltLinhaComun,
       fEspacoEntreProdutos,
       fAlternaCoresProdutos,
-      fCorDestaqueProdutos );
+      fCorDestaqueProdutos,
+      fImprimirDadosDocReferenciados);
     end;
  finally
    FreeAndNil(frlDANFeRL);

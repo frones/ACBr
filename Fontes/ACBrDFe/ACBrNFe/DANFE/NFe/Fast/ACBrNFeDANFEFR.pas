@@ -85,6 +85,7 @@ type
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
     FFastFileInutilizacao: String;
+    FImprimirDadosDocReferenciados: Boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
 		function GetPreparedReportInutilizacao: TfrxReport;
@@ -128,6 +129,7 @@ type
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico Write fQuebraLinhaEmDetalhamentoEspecifico;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
+    property ImprimirDadosDocReferenciados: Boolean read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados;
   end;
 
 implementation
@@ -157,6 +159,7 @@ begin
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
   FIncorporarFontesPdf := True;
   FIncorporarBackgroundPdf := True;
+  FImprimirDadosDocReferenciados := True;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -233,6 +236,7 @@ begin
   FdmDanfe.QuebraLinhaEmDetalhamentoEspecifico := fQuebraLinhaEmDetalhamentoEspecifico;
   FdmDanfe.IncorporarBackgroundPdf := FIncorporarFontesPdf;
   FdmDanfe.IncorporarFontesPdf := FIncorporarBackgroundPdf;
+  FdmDanfe.ImprimirDadosDocReferenciados := FImprimirDadosDocReferenciados;
 
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFile) <> '' then

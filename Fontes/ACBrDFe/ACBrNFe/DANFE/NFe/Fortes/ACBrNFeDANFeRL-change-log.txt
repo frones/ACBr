@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+13/06/2017
+-- ACBrNFeDANFeRL ACBrNFeDANFeRLClass --
+[+] Adicionada propriedade ImprimirDadosDocReferenciados para parametrizar a impressão dos documentos referenciados
+    nas informações adicionais.
+Por: Levi Junior
+
 05/04/2017
 [*] Correção para o logo expandido
 		http://www.projetoacbr.com.br/forum/topic/36094-correção-logo-expandido-nfe-fortes/

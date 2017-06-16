@@ -202,6 +202,7 @@ type
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
     vAuxDiferencaPDF : integer;
+    FImprimirDadosDocReferenciados: Boolean;
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
   public
     { Public declarations }
@@ -249,6 +250,7 @@ type
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;
                     ACorDestaqueProdutos: TColor = clWhite;
+                    AImprimirDadosDocReferenciados: Boolean = True;
                     ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
@@ -303,6 +305,7 @@ type
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;
                     ACorDestaqueProdutos: TColor = clWhite;
+                    AImprimirDadosDocReferenciados: Boolean = True;
                     ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
@@ -371,6 +374,7 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent;
                 AEspacoEntreProdutos: Integer;
                 AAlternaCoresProdutos: Boolean;
                 ACorDestaqueProdutos: TColor;
+                AImprimirDadosDocReferenciados: Boolean;
                 ATamanhoLogoHeight: Integer;
                 ATamanhoLogoWidth: Integer;
                 ARecuoEndereco: Integer;
@@ -442,6 +446,7 @@ begin
       fEspacoEntreProdutos := AEspacoEntreProdutos;
       fAlternaCoresProdutos := AAlternaCoresProdutos;
       fCorDestaqueProdutos := ACorDestaqueProdutos;
+      fImprimirDadosDocReferenciados := AImprimirDadosDocReferenciados;
 
       if not EstaVazio(FImpressora) then
         RLPrinter.PrinterName := FImpressora;
@@ -540,6 +545,7 @@ class procedure TfrlDANFeRL.SavePDF(AOwner: TComponent;
                 AEspacoEntreProdutos: Integer;
                 AAlternaCoresProdutos: Boolean;
                 ACorDestaqueProdutos: TColor;
+                AImprimirDadosDocReferenciados: Boolean;
                 ATamanhoLogoHeight: Integer;
                 ATamanhoLogoWidth: Integer;
                 ARecuoEndereco: Integer;
@@ -608,6 +614,7 @@ begin
       fEspacoEntreProdutos := AEspacoEntreProdutos;
       fAlternaCoresProdutos := AAlternaCoresProdutos;
       fCorDestaqueProdutos := ACorDestaqueProdutos;
+      FImprimirDadosDocReferenciados := AImprimirDadosDocReferenciados;
 
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
@@ -812,7 +819,7 @@ var
   i : Integer;
 begin
   Result := '';
-  if FNFe.Ide.NFref.Count > 0 then
+  if ( FImprimirDadosDocReferenciados ) and ( FNFe.Ide.NFref.Count > 0 ) then
   begin
     for i := 0 to (FNFe.ide.NFref.Count - 1) do
     begin

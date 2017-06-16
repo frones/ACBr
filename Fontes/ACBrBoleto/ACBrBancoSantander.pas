@@ -735,6 +735,7 @@ begin
 		  IfThen(ACBrBoleto.Cedente.TipoInscricao = pJuridica,
                          Space(30),
                          PadRight(Sacado.Avalista, 30, ' ' )) + ' I'          +  // 352 a 383
+                  Copy( Cedente.Conta, length( Cedente.Conta ),1 )            +  // 
                   Cedente.ContaDigito + Space(6)                              +  // 384 a 391
                   Protesto + ' '                                              +  // 392 a 394
                   IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
@@ -749,6 +750,7 @@ begin
                      Space(10) + '01'                            +
                      PadRight(Mensagem[I],50)                        +
                      Space(283) + 'I'                            +
+                     Copy( Cedente.Conta, length( Cedente.Conta ),1 )   + 
                      Cedente.ContaDigito                         +
                      Space(6) + Protesto + ' '                   +
                      IntToStrZero( aRemessa.Count  + I + 2 , 6 );

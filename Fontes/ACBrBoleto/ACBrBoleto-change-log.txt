@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 16/06/2017
+-- ACBrBancoSantander
+[-] Complemento Conta Cobrança (posições 384-385): preencher com a última posição da conta cobrança e com o dígito (CCCCCCCCC-D)
+		http://www.projetoacbr.com.br/forum/topic/35406-remessa-santander-c400-n%C3%BAmero-maior-que-400/?do=findComment&comment=244229
+		por Juliomar Marchetti (Contribuição de Jonatas de Alencar Alves)
+		
 Data 13/06/2017 ver: 0.0.224
 -- ACBrBancoSafraBradesco, ACBrBoleto
 [+] Atualização na Geração de Boleto e Arquivo de Remessa CNAB400

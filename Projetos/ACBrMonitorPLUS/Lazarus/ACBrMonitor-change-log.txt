@@ -45,6 +45,14 @@ Símbolo : Significado
 
 09/06/2017
 [*] Modificado ACBrMonitorPLUS para chamar o método NFe.AssinarNFe antes de NFe.ValidarNFe,
+	evitando tentativa de validação de XML sem assinatura, para os demais DFes: CTe, MDFe e GNRe.
+	Mais detalhes em: 
+	http://www.projetoacbr.com.br/forum/topic/37052-nfedownloadnfe-erro-servico-paralisado-sem-previsao/
+	por: Celso Marigo Junior
+	
+
+09/06/2017
+[*] Modificado ACBrMonitorPLUS para chamar o método NFe.AssinarNFe antes de NFe.ValidarNFe,
 	evitando tentativa de validação de XML sem assinatura.
 	Mais detalhes em: 
 	http://www.projetoacbr.com.br/forum/topic/37052-nfedownloadnfe-erro-servico-paralisado-sem-previsao/

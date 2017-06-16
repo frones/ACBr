@@ -539,6 +539,7 @@ begin
               ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)));
               ACBrMDFe1.Manifestos.GerarMDFe;
               Alertas := ACBrMDFe1.Manifestos.Items[0].Alertas;
+              ACBrNFe1.NotasFiscais.Assinar;
               ACBrMDFe1.Manifestos.Validar;
               ArqMDFe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)))+OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID)+'-mdfe.xml';
               ACBrMDFe1.Manifestos.GravarXML(ExtractFilePath(ArqMDFe));
@@ -556,6 +557,7 @@ begin
                end;
               ACBrMDFe1.Manifestos.GerarMDFe;
               Alertas := ACBrMDFe1.Manifestos.Items[0].Alertas;
+              ACBrMDFe1.Manifestos.Assinar;
               ACBrMDFe1.Manifestos.Validar;
               ArqMDFe := PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID)+'-mdfe.xml';
               ACBrMDFe1.Manifestos.GravarXML(ArqMDFe);

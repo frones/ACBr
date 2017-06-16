@@ -317,6 +317,8 @@ begin
   
   ACBrCTe1.Configuracoes.Geral.Salvar       := ckSalvar.Checked;
   ACBrCTe1.Configuracoes.Arquivos.PathSalvar   := edtPathLogs.Text;
+  ACBrCTe1.Configuracoes.Arquivos.PathSchemas  := 'D:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Exemplos\ACBrDFe\Schemas\CTe';
+
 
   cbUF.ItemIndex       := cbUF.Items.IndexOf(Ini.ReadString('WebService','UF','SP'));
   rgTipoAmb.ItemIndex  := Ini.ReadInteger('WebService','Ambiente'  ,0);

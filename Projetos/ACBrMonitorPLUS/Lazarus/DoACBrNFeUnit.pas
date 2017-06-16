@@ -342,7 +342,8 @@ begin
               end;
            end;
          end
-        else if Cmd.Metodo = 'imprimirdanfe' then //NFe.ImprimirDanfe(cArqXML,cImpressora,nNumCopias,cProtocolo,bMostrarPreview,cMarcaDaqgua,bViaConsumidor,bSimplificado)
+        //NFe.ImprimirDanfe(cArqXML,cImpressora,nNumCopias,cProtocolo,bMostrarPreview,cMarcaDaqgua,bViaConsumidor,bSimplificado)
+        else if Cmd.Metodo = 'imprimirdanfe' then
          begin
            ACBrNFe1.NotasFiscais.Clear;
 

@@ -543,7 +543,7 @@ begin
       edtEmitComp.Text       := Ini.ReadString( 'Emitente','Complemento','') ;
       edtEmitBairro.Text     := Ini.ReadString( 'Emitente','Bairro'     ,'') ;
       edtEmitCodCidade.Text  := Ini.ReadString( 'Emitente','CodCidade'  ,'') ;
-      edtEmitCidade.Text     :=Ini.ReadString( 'Emitente','Cidade'     ,'') ;
+      edtEmitCidade.Text     := Ini.ReadString( 'Emitente','Cidade'     ,'') ;
       edtEmitUF.Text         := Ini.ReadString( 'Emitente','UF'         ,'') ;
 
       edtSmtpHost.Text      := Ini.ReadString( 'Email','Host'   ,'') ;
@@ -2832,10 +2832,10 @@ begin
       Emit.CRT               := crtRegimeNormal;// (1-crtSimplesNacional, 2-crtSimplesExcessoReceita, 3-crtRegimeNormal)
 
       Dest.indIEDest         := inNaoContribuinte;
-      Dest.CNPJCPF           := '05481336000137';
+      Dest.CNPJCPF           := '33013890827';
 //      Dest.IE                := '687138770110'; //NFC-e não aceita IE
       Dest.ISUF              := '';
-      Dest.xNome             := 'D.J. COM. E LOCAÇÃO DE SOFTWARES LTDA - ME';
+      Dest.xNome             := 'Celso Marigo Junior';
 
       Dest.EnderDest.Fone    := '1533243333';
       Dest.EnderDest.CEP     := 18270170;

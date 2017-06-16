@@ -1,14 +1,15 @@
 object Fprincipal: TFprincipal
-  Left = 344
+  Left = 619
   Height = 500
-  Top = 65
+  Top = 255
   Width = 706
+  BorderStyle = bsDialog
   Caption = 'Consulta de CNPJ'
   ClientHeight = 500
   ClientWidth = 706
   OnCreate = FormCreate
   OnShow = FormShow
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.6.2.0'
   object Panel2: TPanel
     Left = 9
     Height = 329
@@ -68,7 +69,7 @@ object Fprincipal: TFprincipal
       ParentFont = False
     end
     object Label6: TLabel
-      Left = 486
+      Left = 536
       Height = 16
       Top = 59
       Width = 45
@@ -186,10 +187,14 @@ object Fprincipal: TFprincipal
       TabOrder = 1
     end
     object EditAbertura: TEdit
+      AnchorSideRight.Control = Panel2
+      AnchorSideRight.Side = asrBottom
       Left = 536
       Height = 24
       Top = 29
-      Width = 88
+      Width = 152
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Right = 5
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -200,7 +205,7 @@ object Fprincipal: TFprincipal
       Left = 192
       Height = 24
       Top = 77
-      Width = 288
+      Width = 338
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -208,10 +213,14 @@ object Fprincipal: TFprincipal
       TabOrder = 4
     end
     object EditNumero: TEdit
-      Left = 486
+      AnchorSideRight.Control = Panel2
+      AnchorSideRight.Side = asrBottom
+      Left = 534
       Height = 24
       Top = 77
-      Width = 138
+      Width = 154
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Right = 5
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -230,10 +239,14 @@ object Fprincipal: TFprincipal
       TabOrder = 6
     end
     object EditBairro: TEdit
+      AnchorSideRight.Control = Panel2
+      AnchorSideRight.Side = asrBottom
       Left = 344
       Height = 24
       Top = 123
-      Width = 280
+      Width = 344
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Right = 5
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -274,10 +287,14 @@ object Fprincipal: TFprincipal
       TabOrder = 10
     end
     object EditSituacao: TEdit
+      AnchorSideRight.Control = Panel2
+      AnchorSideRight.Side = asrBottom
       Left = 464
       Height = 24
       Top = 171
-      Width = 160
+      Width = 224
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Right = 5
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -343,10 +360,14 @@ object Fprincipal: TFprincipal
       ParentFont = False
     end
     object EditNaturezaJuridica: TEdit
+      AnchorSideRight.Control = Panel2
+      AnchorSideRight.Side = asrBottom
       Left = 305
       Height = 24
       Top = 219
-      Width = 319
+      Width = 383
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Right = 5
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -354,11 +375,11 @@ object Fprincipal: TFprincipal
       TabOrder = 13
     end
     object EditCNAE2: TMemo
-      Left = 2
-      Height = 63
+      Left = 8
+      Height = 56
       Top = 264
-      Width = 691
-      Align = alBottom
+      Width = 679
+      Anchors = [akRight]
       Font.Color = clWindowText
       Font.Height = -13
       Font.Name = 'Tahoma'
@@ -403,8 +424,8 @@ object Fprincipal: TFprincipal
     end
     object ButBuscar: TBitBtn
       Left = 564
-      Height = 58
-      Top = 82
+      Height = 59
+      Top = 81
       Width = 121
       Caption = 'Consultar'
       Font.Color = clWindowText
@@ -473,7 +494,7 @@ object Fprincipal: TFprincipal
       Left = 388
       Height = 43
       Top = 31
-      Width = 271
+      Width = 297
       AutoSize = False
       CharCase = ecNormal
       Font.Color = clWindowText
@@ -534,6 +555,9 @@ object Fprincipal: TFprincipal
     top = 288
   end
   object ACBrConsultaCNPJ1: TACBrConsultaCNPJ
+    ProxyHost = 'proxy.djsystem.local'
+    ProxyPort = '3128'
+    PesquisarIBGE = False
     left = 404
     top = 196
   end

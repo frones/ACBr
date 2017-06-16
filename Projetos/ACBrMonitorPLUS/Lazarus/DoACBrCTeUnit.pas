@@ -602,6 +602,7 @@ begin
               ForceDirectories(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)));
               ACBrCTe1.Conhecimentos.GerarCTe;
               Alertas := ACBrCTe1.Conhecimentos.Items[0].Alertas;
+              ACBrCTe1.Conhecimentos.Assinar;
               ACBrCTe1.Conhecimentos.Validar;
               ArqCTe := PathWithDelim(PathWithDelim(ExtractFilePath(Application.ExeName))+'Lotes'+PathDelim+'Lote'+trim(Cmd.Params(1)))+OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.xml';
               ACBrCTe1.Conhecimentos.GravarXML(ExtractFilePath(ArqCTe));
@@ -620,6 +621,7 @@ begin
                end;
               ACBrCTe1.Conhecimentos.GerarCTe;
               Alertas := ACBrCTe1.Conhecimentos.Items[0].Alertas;
+              ACBrCTe1.Conhecimentos.Assinar;
               ACBrCTe1.Conhecimentos.Validar;
               ArqCTe := PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrCTe1.Conhecimentos.Items[0].CTe.infCTe.ID)+'-cte.xml';
               ACBrCTe1.Conhecimentos.GravarXML(ArqCTe);

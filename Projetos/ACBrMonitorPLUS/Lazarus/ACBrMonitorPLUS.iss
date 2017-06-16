@@ -52,7 +52,7 @@ Name: firewallopen; Description: "Liberar {#MyAppName}, porta 3434, no Firewall 
 
 [Files]
 ; Aplicação
-Source: {#MyAppExeName}; DestDir: {app}; Flags: ignoreversion; Components: programa
+Source: {#MyAppExeName}; DestDir: {app}; Flags: ignoreversion sign; Components: programa
 Source: banner_acbrmonitor.gif; DestDir: {app}; Flags: ignoreversion; Components: programa
 ;Source: ACBrMonitorConsole.exe; DestDir: {app}; Flags: ignoreversion; Components: console
 Source: {#ACBrDIR}\Exemplos\ACBrSerial\ACBrECF\Lazarus\ECFTeste.exe; DestDir: {app}; Flags: ignoreversion sign; Components: programa

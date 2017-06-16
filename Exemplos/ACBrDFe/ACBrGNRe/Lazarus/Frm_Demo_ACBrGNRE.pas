@@ -245,23 +245,22 @@ begin
     edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'');
     ACBrGNRE1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
     ACBrGNRE1.Configuracoes.Certificados.Senha        := edtSenha.Text;
-    edtNumSerie.Visible := False;
-    Label25.Visible     := False;
-    sbtnGetCert.Visible := False;
+    //edtNumSerie.Visible := False;
+    //Label25.Visible     := False;
+    //sbtnGetCert.Visible := False;
 
     edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','');
     ACBrGNRE1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-    //edtNumSerie.Text := ACBrGNRE1.Configuracoes.Certificados.NumeroSerie;
-    Label1.Caption := 'Informe o número de série do certificado'#13+
-                      'Disponível no Internet Explorer no menu'#13+
-                      'Ferramentas - Opções da Internet - Conteúdo '#13+
-                      'Certificados - Exibir - Detalhes - '#13+
-                      'Número do certificado';
-    Label2.Visible     := False;
-    edtCaminho.Visible := False;
-    edtSenha.Visible   := False;
-    sbtnCaminhoCert.Visible := False;
-
+    edtNumSerie.Text := ACBrGNRE1.Configuracoes.Certificados.NumeroSerie;
+    //Label1.Caption := 'Informe o número de série do certificado'#13+
+    //                  'Disponível no Internet Explorer no menu'#13+
+    //                  'Ferramentas - Opções da Internet - Conteúdo '#13+
+    //                  'Certificados - Exibir - Detalhes - '#13+
+    //                  'Número do certificado';
+    //Label2.Visible     := False;
+    //edtCaminho.Visible := False;
+    //edtSenha.Visible   := False;
+    //sbtnCaminhoCert.Visible := False;
 
     ckSalvar.Checked         := Ini.ReadBool(   'Geral','Salvar'      ,True);
     edtPathLogs.Text         := Ini.ReadString( 'Geral','PathSalvar'  ,'');
@@ -451,10 +450,10 @@ begin
   MemoDados.Lines.Add('Uf: '      +ACBrGNRE1.WebServices.ConsultaUF.Uf);
   MemoDados.Lines.Add('exigeUfFavorecida : ' + IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeUfFavorecida = 'S', 'SIM', 'NÃO'));
   MemoDados.Lines.Add('exigeReceita: '     +IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeReceita = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeContribuinteEmitente: '+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeDataVencimento: '     +IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeConvenio: '+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
-  MemoDados.Lines.Add('exigeDataPagamento: '+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeDataPagamento = 'S', 'SIM', 'NÃO'));
+  //MemoDados.Lines.Add('exigeContribuinteEmitente: '+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeContribuinteEmitente = 'S', 'SIM', 'NÃO'));
+  //MemoDados.Lines.Add('exigeDataVencimento: '     +IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeDataVencimento = 'S', 'SIM', 'NÃO'));
+  //MemoDados.Lines.Add('exigeConvenio: '+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeConvenio = 'S', 'SIM', 'NÃO'));
+  //MemoDados.Lines.Add('exigeDataPagamento: '+IfThen(ACBrGNRE1.WebServices.ConsultaUF.exigeDataPagamento = 'S', 'SIM', 'NÃO'));
 end;
 
 procedure TfrmDemo_ACBrGNRE.btnCriarEnviarClick(Sender: TObject);

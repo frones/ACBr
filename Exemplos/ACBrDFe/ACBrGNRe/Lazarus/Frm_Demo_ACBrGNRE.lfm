@@ -3,6 +3,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
   Height = 568
   Top = 131
   Width = 871
+  ActiveControl = PageControl1
   Caption = 'Demo ACBrGNRE'
   ClientHeight = 568
   ClientWidth = 871
@@ -13,6 +14,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
   OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '1.6.0.4'
+  Visible = False
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -224,7 +226,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
             object sbtnPathSalvar: TSpeedButton
               Left = 233
               Height = 24
-              Top = 22
+              Top = 29
               Width = 23
               Glyph.Data = {
                 76010000424D7601000000000000760000002800000020000000100000000100
@@ -246,7 +248,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
             object edtPathLogs: TEdit
               Left = 6
               Height = 21
-              Top = 26
+              Top = 32
               Width = 228
               TabOrder = 0
             end
@@ -733,6 +735,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
               Height = 21
               Top = 58
               Width = 120
+              EchoMode = emPassword
+              PasswordChar = '*'
               TabOrder = 3
             end
             object edtEmailAssunto: TEdit
@@ -1445,10 +1449,11 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     OnGerarLog = ACBrGNRE1GerarLog
     Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.PathSchemas = 'D:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Exemplos\ACBrDFe\Schemas\GNRe\'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    left = 406
+    left = 376
     top = 224
   end
   object SynXMLSyn1: TSynXMLSyn

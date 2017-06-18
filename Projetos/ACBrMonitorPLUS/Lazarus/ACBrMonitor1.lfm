@@ -5868,9 +5868,9 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Height = 327
             Top = 0
             Width = 902
-            ActivePage = tsDiretoriosDFe
+            ActivePage = tsConfiguracaoDFe
             Align = alClient
-            TabIndex = 5
+            TabIndex = 0
             TabOrder = 0
             object tsConfiguracaoDFe: TTabSheet
               Caption = 'Geral'
@@ -6177,7 +6177,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   AnchorSideTop.Control = edtTimeoutWebServices
                   AnchorSideTop.Side = asrCenter
                   AnchorSideRight.Control = edtTimeoutWebServices
-                  Left = 666
+                  Left = 90
                   Height = 17
                   Top = 76
                   Width = 133
@@ -6187,7 +6187,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
                   ParentColor = False
                 end
                 object edtTimeoutWebServices: TSpinEdit
-                  Left = 806
+                  Left = 230
                   Height = 25
                   Top = 72
                   Width = 74
@@ -12739,6 +12739,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -14002,6 +14003,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     top = 494
   end
   object ACBrBlocoX1: TACBrBlocoX
+    Configuracoes.VersaoER = erv0204
     Configuracoes.Geral.SSLLib = libCapicom
     Configuracoes.Geral.SSLCryptLib = cryCapicom
     Configuracoes.Geral.SSLHttpLib = httpWinINet

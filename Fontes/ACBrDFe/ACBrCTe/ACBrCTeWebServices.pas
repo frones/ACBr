@@ -2528,9 +2528,6 @@ var
   VerServ: Double;
   Ok: Boolean;
 begin
-  { Verificação necessária pois somente os eventos de Cancelamento e CCe serão tratados pela SEFAZ do estado
-    os outros eventos como manifestacao de destinatários serão tratados diretamente pela RFB }
-
   VerServ := VersaoCTeToDbl(FPConfiguracoesCTe.Geral.VersaoDF);
   FCNPJ   := FEvento.Evento.Items[0].InfEvento.CNPJ;
   FTpAmb  := FEvento.Evento.Items[0].InfEvento.tpAmb;
@@ -2543,10 +2540,15 @@ begin
     UF := CUFtoUF(ExtrairUFChaveAcesso(FEvento.Evento.Items[0].InfEvento.chCTe));
   end;
 
-  if not (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento, teMultiModal]) then
-    FPLayout := LayCTeEventoAN
+  { Verificação necessária pois somente os eventos de CCe, Cancelamento,
+    Multimodal, Prestação em Desacordo e GTV serão tratados pela SEFAZ do estado
+    os outros eventos como manifestação do destinatário serão tratados diretamente pela RFB }
+
+  if (FEvento.Evento.Items[0].InfEvento.tpEvento in [teCCe, teCancelamento,
+      teMultiModal, tePrestDesacordo, teGTV]) then
+    FPLayout := LayCTeEvento
   else
-    FPLayout := LayCTeEvento;
+    FPLayout := LayCTeEventoAN;
 
   FPURL := '';
 

@@ -65,7 +65,8 @@ type
                  schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe,
-                 schdistDFeInt, schcteModalRodoviarioOS );
+                 schdistDFeInt, schcteModalRodoviarioOS, schevPrestDesacordo,
+                 schevGTV );
 
   TStatusACBrCTe = (stCTeIdle, stCTeStatusServico, stCTeRecepcao, stCTeRetRecepcao,
                     stCTeConsulta, stCTeCancelamento, stCTeInutilizacao,

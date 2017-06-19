@@ -2571,7 +2571,7 @@ end;
 procedure TCTeEnvEvento.DefinirDadosMsg;
 var
   EventoCTe: TEventoCTe;
-  I, J, F: Integer;
+  I, J, K, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
@@ -2641,6 +2641,53 @@ begin
             infEvento.detEvento.UFFim   := FEvento.Evento[i].InfEvento.detEvento.UFFim;
             infEvento.detEvento.tpCTe   := FEvento.Evento[i].InfEvento.detEvento.tpCTe;
             infEvento.detEvento.dhEmi   := FEvento.Evento[i].InfEvento.detEvento.dhEmi;
+          end;
+
+          tePrestDesacordo:
+          begin
+            SchemaEventoCTe := schevPrestDesacordo;
+            infEvento.detEvento.xOBS := FEvento.Evento[i].InfEvento.detEvento.xOBS;
+          end;
+
+          teGTV:
+          begin
+            SchemaEventoCTe := schevGTV;
+            for j := 0 to FEvento.Evento[i].InfEvento.detEvento.infGTV.Count - 1 do
+            begin
+              with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Add do
+              begin
+                nDoc     := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].nDoc;
+                id       := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].id;
+                serie    := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].serie;
+                subserie := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].subserie;
+                dEmi     := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dEmi;
+                nDV      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].nDV;
+                qCarga   := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].qCarga;
+
+                for k := 0 to FEvento.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.Count - 1 do
+                begin
+                  with EventoCTe.Evento[i].InfEvento.detEvento.infGTV.Items[j].infEspecie.Add do
+                  begin
+                    tpEspecie := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].infEspecie[k].tpEspecie;
+                    vEspecie  := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].infEspecie[k].vEspecie;
+                  end;
+                end;
+
+                rem.CNPJCPF := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.CNPJCPF;
+                rem.IE      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.IE;
+                rem.UF      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.UF;
+                rem.xNome   := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].rem.xNome;
+
+                dest.CNPJCPF := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.CNPJCPF;
+                dest.IE      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.IE;
+                dest.UF      := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.UF;
+                dest.xNome   := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].dest.xNome;
+
+                placa := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].placa;
+                UF    := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].UF;
+                RNTRC := FEvento.Evento[i].InfEvento.detEvento.infGTV[j].RNTRC;
+              end;
+            end;
           end;
         end;
       end;

@@ -197,6 +197,7 @@ type
   protected
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    function TratarResposta: Boolean; override;
   end;
 
 { TNFSeEnviarSincrono }
@@ -2561,6 +2562,63 @@ begin
       FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
     else
       FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
+end;
+
+function TNFSeTesteEnvioLoteRPS.TratarResposta: Boolean;
+var
+  i : Integer;
+begin
+  FPRetWS := ExtrairRetorno(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.GrupoMsg);
+
+  if Assigned(FRetEnvLote) then
+    FreeAndNil(FRetEnvLote);
+  FRetEnvLote := TRetEnvLote.Create;
+
+  FRetEnvLote.Leitor.Arquivo := FPRetWS;
+  FRetEnvLote.Provedor := FProvedor;
+  FRetEnvLote.LerXml;
+
+  FPRetWS := ExtrairGrupoMsgRet(FPConfiguracoesNFSe.Geral.ConfigGrupoMsgRet.Recepcionar);
+
+  FDataRecebimento := RetEnvLote.InfRec.DataRecebimento;
+  FProtocolo       := RetEnvLote.InfRec.Protocolo;
+  if RetEnvLote.InfRec.NumeroLote <> '' then
+    FNumeroLote := RetEnvLote.InfRec.NumeroLote;
+
+  // Lista de Mensagem de Retorno
+  FPMsg := '';
+  FaMsg := '';
+
+  if FProtocolo <> '' then
+  begin
+    FaMsg := 'Método........ : ' + LayOutToStr(FPLayout) + LineBreak +
+             'Numero do Lote : ' + RetEnvLote.InfRec.NumeroLote + LineBreak +
+             'Recebimento... : ' + IfThen(FDataRecebimento = 0, '', DateTimeToStr(FDataRecebimento)) + LineBreak +
+             'Protocolo..... : ' + FProtocolo + LineBreak +
+             'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+  end;
+
+  Result := UpperCase(RetEnvLote.infRec.Sucesso) = UpperCase('true');
+
+  if RetEnvLote.InfRec.MsgRetorno.Count > 0 then
+  begin
+    for i := 0 to RetEnvLote.InfRec.MsgRetorno.Count - 1 do
+    begin
+      if (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'L000') and
+         (RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo <> 'A0000') then
+      begin
+        FPMsg := FPMsg + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         RetEnvLote.infRec.MsgRetorno.Items[i].Correcao + LineBreak;
+
+        FaMsg := FaMsg + 'Método..... : ' + LayOutToStr(FPLayout) + LineBreak +
+                         'Código Erro : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Codigo + LineBreak +
+                         'Mensagem... : ' + RetEnvLote.infRec.MsgRetorno.Items[i].Mensagem + LineBreak +
+                         'Correção... : ' + RetEnvLote.InfRec.MsgRetorno.Items[i].Correcao + LineBreak +
+                         'Provedor... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
+
+      end;
+    end;
   end;
 end;
 

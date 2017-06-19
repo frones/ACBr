@@ -83,7 +83,6 @@ uses
 constructor TNFSeW_CONAM.Create(ANFSeW: TNFSeW);
 begin
   inherited Create(ANFSeW);
-  Gerador.Opcoes.DecimalChar := ',';
 end;
 
 function TNFSeW_CONAM.ObterNomeArquivo: String;
@@ -334,7 +333,6 @@ procedure TNFSeW_CONAM.GerarXML_CONAM;
 begin
 (*
   Gerador.Opcoes.RetirarEspacos := False;
-  Gerador.Opcoes.DecimalChar := ',';
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;
 *)
@@ -342,6 +340,7 @@ begin
 
   //Gerador.wGrupoNFSe('SDTRPS');
   //GerarIdentificacaoRPS;
+  Gerador.Opcoes.DecimalChar := ',';
   GerarListaServicos;
   //GerarValoresServico;
   //Gerador.wGrupoNFSe('/SDTRPS');

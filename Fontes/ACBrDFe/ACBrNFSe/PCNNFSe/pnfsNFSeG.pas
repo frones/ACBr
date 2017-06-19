@@ -466,7 +466,7 @@ begin
                   Gerador.wCampoNFSe(tcInt, '', 'TipoTrib'   , 01, 01, 0, 4 , '');
                   // Data de adesao ao simples nacional
                   Gerador.wCampoNFSe(tcStr, '', 'DtAdeSN'    , 01, 10, 0, FormatDateTime('dd/mm/yyyy', DataOptanteSimples) , '');
-                  Gerador.wCampoNFSe(tcStr, '', 'AlqIssSN_IP', 01, 06, 0, FormatFloat('##0.00', AliquotaIss) , '');
+                  Gerador.wCampoNFSe(tcDe2, '', 'AlqIssSN_IP', 01, 06, 0, AliquotaIss, '');
                 end
                 else begin
                   case ExigibilidadeISS of
@@ -495,11 +495,11 @@ begin
                 // Inicio do rodape registro 90
                 Gerador.wGrupoNFSe('Reg90');
                 Gerador.wCampoNFSe(tcStr, '', 'QtdRegNormal'  , 01, 05, 1, QtdeNotas, '');
-                Gerador.wCampoNFSe(tcStr, '', 'ValorNFS'      , 01, 16, 2, FormatFloat('############0.00', ValorTotalServicos), '');
-                Gerador.wCampoNFSe(tcStr, '', 'ValorISS'      , 01, 16, 2, FormatFloat('############0.00', ValorIss), '');
-                Gerador.wCampoNFSe(tcStr, '', 'ValorDed'      , 01, 16, 2, FormatFloat('############0.00', ValorTotalDeducoes), '');
-                Gerador.wCampoNFSe(tcStr, '', 'ValorIssRetTom', 01, 16, 2, FormatFloat('############0.00', ValorIssRetido), '');
-                Gerador.wCampoNFSe(tcStr, '', 'ValorTributos' , 01, 16, 2, FormatFloat('############0.00', ValorTotalTributos), '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorNFS'      , 01, 16, 2, ValorTotalServicos, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorISS'      , 01, 16, 2, ValorIss, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorDed'      , 01, 16, 2, ValorTotalDeducoes, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorIssRetTom', 01, 16, 2, ValorIssRetido, '');
+                Gerador.wCampoNFSe(tcDe2, '', 'ValorTributos' , 01, 16, 2, ValorTotalTributos, '');
                 Gerador.wCampoNFSe(tcStr, '', 'QtdReg30'      , 01, 05, 1, QtdTributos, '');
                 Gerador.wGrupoNFSe('/Reg90');
                 // Fim do rodape registro 90

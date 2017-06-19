@@ -48,6 +48,14 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 
+19/06/2017
+-- ACBrNFeDANFeRL ACBrNFeDANFEFRDM --
+[*] Refatoracao de ManterDocreferenciados ,
+       para utilização da função DescrModeloNFe
+    http://www.projetoacbr.com.br/forum/topic/37267-danfe-fortes-conflito-documentos-referenciados-adicionados-pelo-componente-no-danfe/#comment-244342
+    por: RicardoVoigt / Henrique Leonardo
+
+
 13/06/2017
 -- ACBrNFeDANFeRL ACBrNFeDANFeRLClass --
 [+] Adicionada propriedade ImprimirDadosDocReferenciados para parametrizar a impressão dos documentos referenciados

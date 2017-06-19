@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+19/06/2017
+-- pcnConversao --
+[+] Nova função para retornar a descrição do modelo
+	function DescrModeloNFe(chave: String):String;
+    http://www.projetoacbr.com.br/forum/topic/37267-danfe-fortes-conflito-documentos-referenciados-adicionados-pelo-componente-no-danfe/#comment-244342
+    por: RicardoVoigt / Henrique Leonardo
+
 
 26/04/2017
 -- pcnConversao --

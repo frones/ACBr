@@ -2271,7 +2271,7 @@ Function TACBrNFeFRClass.ManterDocreferenciados : String;
       if sResult = '' then
         Result := sInicio
       else
-      if pos(sInicio,sResult)=0 then
+      if pos(sInicio,sResult) = 0 then
         Result := sResult+', '+ sInicio
       else
         Result := sResult+', ';
@@ -2291,9 +2291,8 @@ begin
     begin
       Result := MontaLadoALado( ( FNFe.ide.NFref[i].refNFe <> '' ),
                                   Result,
-                                  'NFe Ref.:',
+                                  DescrModeloNFe(FNFe.ide.NFref[i].refNFe) ,
                                   FormatarChaveAcesso( FNFe.ide.NFref[i].refNFe ) );
-
       Result := MontaLadoALado( ( FNFe.ide.NFref[i].refCTe <> '' ),
                                   Result,
                                   'CTe Ref.:',

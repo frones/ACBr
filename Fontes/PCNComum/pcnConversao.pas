@@ -346,6 +346,8 @@ function modBCSTToStrTagPosText(const t: TpcnDeterminacaoBaseIcmsST): string;
 function TpNavegacaoToStr(const t: TTipoNavegacao): string;
 function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
 
+function DescrModeloNFe(chave: String):String;
+
 implementation
 
 uses
@@ -1495,6 +1497,16 @@ function StrToTpNavegacao(out ok: boolean; const s: String): TTipoNavegacao;
 begin
   result := StrToEnumerado(ok, s, ['0','1'],
                                   [tnInterior, tnCabotagem]);
+end;
+
+
+function DescrModeloNFe(chave: String):String;
+begin
+  case StrToIntDef(Copy(chave, 21, 2),0) of
+    59:   Result := 'CFe-SAT Ref.:';
+    65:   Result := 'NFCe Ref.:';
+    else  Result := 'NFe Ref.:';
+  end;
 end;
 
 end.

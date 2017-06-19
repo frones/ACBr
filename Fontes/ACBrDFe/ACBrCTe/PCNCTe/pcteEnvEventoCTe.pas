@@ -315,7 +315,7 @@ begin
        Gerador.wGrupo('evPrestDesacordo');
        Gerador.wCampo(tcStr, 'EP02', 'descEvento      ', 33, 033, 1, Evento.Items[0].InfEvento.DescEvento);
        Gerador.wCampo(tcStr, 'EP03', 'indDesacordoOper', 01, 001, 1, '1');
-       Gerador.wCampo(tcStr, 'EP04', 'xOBS            ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xOBS);
+       Gerador.wCampo(tcStr, 'EP04', 'xObs            ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xOBS);
        Gerador.wGrupo('/evPrestDesacordo');
      end;
    teGTV:

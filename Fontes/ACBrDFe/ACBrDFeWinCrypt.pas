@@ -88,6 +88,7 @@ function GetLastErrorAsHexaStr(WinErro: DWORD = 0): String;
 function MsgErroGetCryptProvider(WinErro: DWORD = 0): String;
 
 function GetSerialNumber(ACertContext: PCCERT_CONTEXT): String;
+function GetThumbPrint(ACertContext: PCCERT_CONTEXT): String;
 function GetSubjectName(ACertContext: PCCERT_CONTEXT): String;
 function GetIssuerName(ACertContext: PCCERT_CONTEXT): String;
 function GetNotAfter(ACertContext: PCCERT_CONTEXT): TDateTime;
@@ -169,6 +170,46 @@ begin
       Result := IntToHex(ByteArr[I], 2) + Result;
 
     Result := Trim(UpperCase(Result));
+  end;
+end;
+
+function GetThumbPrint(ACertContext: PCCERT_CONTEXT): String;
+var
+  I: Integer;
+  ByteArr: array of byte;
+  pcbData: DWORD;
+  pvData: Pointer;
+begin
+  Result := '';
+  if Assigned(ACertContext) then
+  begin
+    if not CertGetCertificateContextProperty( ACertContext,
+                                              CERT_HASH_PROP_ID,
+                                              Nil,
+                                              pcbData) then
+        raise EACBrDFeException.Create( 'GetHashSHA1: Erro obtendo BufferSize de "CERT_HASH_PROP_ID"');
+
+
+    pvData := AllocMem(pcbData);
+    try
+      //CryptHashCertificate(0, CALG_SHA1, 0, ACertContext^.pbCertEncoded,
+      //     ACertContext^.cbCertEncoded, pvData, pcbData);
+      if not CertGetCertificateContextProperty( ACertContext,
+                                                CERT_HASH_PROP_ID,
+                                                pvData,
+                                                pcbData) then
+        raise EACBrDFeException.Create( 'GetHashSHA1: Erro obtendo "CERT_HASH_PROP_ID"');
+
+      SetLength(ByteArr, pcbData);
+      Move(pvData^, ByteArr[0], pcbData);
+
+      For I := 0 to pcbData-1 do
+        Result := Result + IntToHex(ByteArr[I], 2);
+
+      Result := Trim(UpperCase(Result));
+    finally
+      Freemem(pvData);
+    end;
   end;
 end;
 
@@ -954,6 +995,7 @@ begin
     end;
 
     NumeroSerie := GetSerialNumber(ACertContext);
+    ThumbPrint  := GetThumbPrint(ACertContext);
     SubjectName := GetSubjectName(ACertContext);
     if CNPJ = '' then
       CNPJ := GetTaxIDFromExtensions(ACertContext);

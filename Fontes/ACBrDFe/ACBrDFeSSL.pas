@@ -69,6 +69,7 @@ type
 
   TDadosCertificado = class
   private
+    FThumbPrint: String;
     FCertificadora: String;
     FCNPJ: String;
     FDataVenc: TDateTime;
@@ -97,6 +98,7 @@ type
     property CNPJ: String read FCNPJ write FCNPJ;
     property Tipo: TSSLTipoCertificado read FTipo write FTipo;
     property DERBase64: String read FDER64base write FDER64base;
+    property ThumbPrint: String read FThumbPrint write FThumbPrint;
   end;
 
 

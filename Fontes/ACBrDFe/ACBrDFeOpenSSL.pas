@@ -87,6 +87,7 @@ function GetCertExt(cert: pX509; FlagExt: AnsiString): AnsiString;
 function GetIssuerName(cert: pX509): String;
 function GetNotAfter(cert: pX509): TDateTime;
 function GetSerialNumber(cert: pX509): String;
+function GetThumbPrint( cert: pX509 ): String;
 function GetSubjectName(cert: pX509): String;
 function GetTaxIDFromExtensions(cert: pX509): String;
 
@@ -154,6 +155,24 @@ begin
   s := {$IFDEF DELPHIXE4_UP}AnsiStrings.{$ENDIF}StrPas( PAnsiChar(SN^.data) );
   SetLength(s,SN^.length);
   Result := AsciiToHex(s);
+end;
+
+function GetThumbPrint( cert: pX509 ): String;
+var
+  md_type: PEVP_MD;
+  md_len: {$IFDEF USE_libeay32}Cardinal{$Else}Integer{$EndIf};
+  md: AnsiString;
+begin
+  md_type := EVP_get_digestbyname( 'sha1' );
+  md_len  := 0;
+  SetLength(md, EVP_MAX_MD_SIZE);
+  {$IFDEF USE_libeay32}
+   X509_digest(cert, md_type, @md[1], md_len);
+  {$ELSE}
+   X509Digest(cert, md_type, md, md_len);
+  {$ENDIF}
+  SetLength(md, md_len);
+  Result := AsciiToHex(md);
 end;
 
 function GetSubjectName( cert: pX509 ): String;
@@ -374,6 +393,7 @@ begin
   begin
     Clear;
     NumeroSerie := GetSerialNumber( cert );
+    ThumbPrint  := GetThumbPrint( cert );
     SubjectName := GetSubjectName( cert );
     if CNPJ = '' then  // Não tem CNPJ/CPF no SubjectName, lendo das Extensões
       CNPJ := GetTaxIDFromExtensions( cert );

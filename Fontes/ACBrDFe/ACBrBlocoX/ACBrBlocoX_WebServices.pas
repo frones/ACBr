@@ -433,7 +433,7 @@ end;
 
 function TValidarReducaoZ.TratarResposta: Boolean;
 begin
-  WriteToTXT('_RespValidar.xml', FPRetornoWS);
+  //WriteToTXT('_RespValidar.xml', FPRetornoWS);
   FPRetWS := Trim(ParseText(SeparaDados(FPRetornoWS, 'ValidarReducaoZResponse')));
   Result  := (FPRetWS <> '');
 end;

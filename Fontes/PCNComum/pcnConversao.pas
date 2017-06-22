@@ -130,7 +130,7 @@ type
   TpcnPresencaComprador = (pcNao, pcPresencial, pcInternet, pcTeleatendimento, pcEntregaDomicilio, pcPresencialForaEstabelecimento, pcOutros);
   TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                         fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                        fpDuplicataMercantil, fpOutro);
+                        fpDuplicataMercantil, fpSemPagamento, fpOutro);
   TpcnBandeiraCartao = (bcVisa, bcMasterCard, bcAmericanExpress, bcSorocred, bcDinersClub,
                         bcElo, bcHipercard, bcAura, bcCabal, bcOutros);
 
@@ -1153,29 +1153,29 @@ end;
 
 function FormaPagamentoToStr(const t: TpcnFormaPagamento): string;
 begin
-  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '99'],
+  result := EnumeradoToStr(t, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '90', '99'],
                               [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpDuplicataMercantil, fpOutro ]);
+                               fpDuplicataMercantil, fpSemPagamento, fpOutro ]);
 end;
 
 function FormaPagamentoToDescricao(const t: TpcnFormaPagamento): string;
 begin
   result := EnumeradoToStr(t,  ['Dinheiro', 'Cheque', 'Cartão de Crédito', 'Cartão de Débito', 'Crédito Loja',
                                'Vale Alimentação', 'Vale Refeição', 'Vale Presente', 'Vale Combustível',
-                               'Duplicata Mercantil', 'Outro'],
+                               'Duplicata Mercantil', 'Sem Pagamento', 'Outro'],
                                [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                               fpDuplicataMercantil, fpOutro]);
+                               fpDuplicataMercantil, fpSemPagamento, fpOutro]);
 end;
 
 
 function StrToFormaPagamento(out ok: boolean; const s: string): TpcnFormaPagamento;
 begin
-  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '99'],
+  result := StrToEnumerado(ok, s, ['01', '02', '03', '04', '05', '10', '11', '12', '13', '14', '90', '99'],
                                   [fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
                                    fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
-                                   fpDuplicataMercantil, fpOutro]);
+                                   fpDuplicataMercantil, fpSemPagamento, fpOutro]);
 end;
 
 function BandeiraCartaoToDescStr(const t: TpcnBandeiraCartao): string;

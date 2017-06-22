@@ -2587,10 +2587,33 @@ begin
 end;
 
 procedure TACBrECFEscECF.IdentificaOperador(Nome: String);
+var
+  aOperAtual : String;
 begin
-  EscECFComando.CMD := 154;
-  EscECFComando.AddParamString(LeftStr(Nome,20)) ;
-  EnviaComando;
+  aOperAtual := '';
+  Nome := LeftStr( Nome, 20 );
+
+  try
+    if IsBematech then
+    begin
+      RetornaInfoECF( '99|05' );
+      aOperAtual := EscECFResposta.fsParams[2];
+    end
+
+    else if IsDaruma then
+      aOperAtual := RetornaInfoECF( '130' )
+
+    else if IsEpson then
+      aOperAtual := RetornaInfoECF( '99|17' );
+  except
+  end;
+
+  if (aOperAtual <> Nome) then
+  begin
+    EscECFComando.CMD := 154;
+    EscECFComando.AddParamString( Nome );
+    EnviaComando;
+  end;
 end;
 
 procedure TACBrECFEscECF.IdentificaPAF(NomeVersao, MD5: String);

@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/06/2017
+-- ACBrECFEscECF --
+[*] Método "IdentificaOperador" modificado para verificar o Operador atual, e
+    evitar reprogramar quando for o mesmo...
+    http://www.projetoacbr.com.br/forum/topic/37303-protocolo-esc-ecf-identificar-operador/
+    (por: Filipe Natividade)
+
 Data: 07/06/2017
 -- ACBrECF --
 [*] Alteração para limpar "InfoRodapeCupom" após fechar/cancelar cupom.

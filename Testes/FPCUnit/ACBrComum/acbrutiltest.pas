@@ -14,6 +14,40 @@ uses
 
 type
 
+  { WorkingDaysBetweenTest }
+
+  WorkingDaysBetweenTest = class(TTestCase)
+  published
+    procedure WorkingDaysBetween_DataMesmaSemana;
+    procedure WorkingDaysBetween_DataPosSemana;
+    procedure WorkingDaysBetween_DataInicioSabado;
+    procedure WorkingDaysBetween_DataInicioDomingo;
+    procedure WorkingDaysBetween_DataFinalSabado;
+    procedure WorkingDaysBetween_DataFinalDomingo;
+    procedure WorkingDaysBetween_DataFinalMenor;
+    procedure WorkingDaysBetween_DataZero;
+    procedure WorkingDaysBetween_DataInicialZero;
+    procedure WorkingDaysBetween_DataFinalZero;
+  end;
+
+   { IncWorkingDayTest }
+
+  IncWorkingDayTest = class(TTestCase)
+  private
+  published
+    procedure IncWorkingDayTest_DataInicioSabado;
+    procedure IncWorkingDayTest_DataInicioDomingo;
+    procedure IncWorkingDayTest_PosSemana;
+    procedure IncWorkingDayTest_DiaFinalSabado;
+    procedure IncWorkingDayTest_DiaFinalDomingo;
+    procedure IncWorkingDayTest_ZeroDiaSabado;
+    procedure IncWorkingDayTest_ZeroDiaDomingo;
+    procedure IncWorkingDayTest_ZeroDiaSemana;
+    procedure IncWorkingDayTest_DiaNegativo;
+    procedure IncWorkingDayTest_DiaNegativoInicioSabado;
+    procedure IncWorkingDayTest_DiaNegativoInicioDomingo;
+  end;
+
   { TiraPontosTest }
 
   TiraPontosTest = class(TTestCase)
@@ -851,6 +885,232 @@ implementation
 uses
   Math, dateutils,
   ACBrUtil, ACBrConsts;
+
+{ IncWorkingDayTest }
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DataInicioSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,17);
+  WorkingDays  := 11;
+  ADateResult  := EncodeDate(2017,07,03);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DataInicioDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,18);
+  WorkingDays  := 11;
+  ADateResult  := EncodeDate(2017,07,03);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_PosSemana;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,23);
+  WorkingDays  := 10;
+  ADateResult  := EncodeDate(2017,07,07);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaFinalSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,22);
+  WorkingDays  := 2;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaFinalDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,23);
+  WorkingDays  := 1;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,24);
+  WorkingDays  := 0;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,25);
+  WorkingDays  := 0;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaSemana;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,26);
+  WorkingDays  := 0;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,19);
+  WorkingDays  := -3;
+  ADateResult  := EncodeDate(2017,06,14);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativoInicioSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,24);
+  WorkingDays  := -6;
+  ADateResult  := EncodeDate(2017,06,16);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativoInicioDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,25);
+  WorkingDays  := -6;
+  ADateResult  := EncodeDate(2017,06,16);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+{ WorkingDaysBetweenTest }
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataMesmaSemana;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,26);
+  ADateEnd := EncodeDate(2017,06,30);
+  CheckEquals(4,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataPosSemana;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,26);
+  ADateEnd := EncodeDate(2017,07,07);
+  CheckEquals(9,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicioSabado;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,24);
+  ADateEnd := EncodeDate(2017,07,03);
+  CheckEquals(6,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicioDomingo;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,25);
+  ADateEnd := EncodeDate(2017,07,03);
+  CheckEquals(6,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalSabado;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,25);
+  ADateEnd := EncodeDate(2017,07,08);
+  CheckEquals(10,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalDomingo;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,25);
+  ADateEnd := EncodeDate(2017,07,09);
+  CheckEquals(10,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalMenor;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,07,10);
+  ADateEnd := EncodeDate(2017,07,09);
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataZero;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := 0;
+  ADateEnd := 0;
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicialZero;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := 0;
+  ADateEnd := EncodeDate(2017,07,09);
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalZero;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,07,09);
+  ADateEnd := 0;
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
 
 { ZipUnzip }
 
@@ -3567,6 +3827,9 @@ begin
 end;
 
 initialization
+
+  RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', IncWorkingDayTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest{$ifndef FPC}.Suite{$endif});

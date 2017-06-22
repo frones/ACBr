@@ -36,7 +36,8 @@
 |* Historico
 |*
 |* 27/08/2015 - Ariel Guareschi - Alterado a geração do arquivo bloco Y
-|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr    
+|* 11/09/2015 - Ariel Guareschi - Identar no padrao utilizado pela ACBr
+|* 22/06/2017 - Ariel Guareschi - Alterado p/gerar bloco Y800 quando informado 
 *******************************************************************************}
 
 
@@ -923,26 +924,27 @@ begin
   begin
     with FRegistroY001.RegistroY800 do
     begin
+      if (FRegistroY001.RegistroY800.ARQ_RTF <> '') then
+      begin
+        case Bloco_0.Registro0000.COD_VER of
 
-      case Bloco_0.Registro0000.COD_VER of
-
-        ECFVersao100, ECFVersao200:
-            Add(LFill('Y800') +
-                LFill(ARQ_RTF) +
-                LFill(IND_FIM_RTF));
-
-        ECFVersao300:
-             Add( LFill('Y800') +
-                  LFill(TIPO_DOC) +
-                  LFill(DESC_RTF) +
-                  LFill(HASH_RTF) +
+          ECFVersao100, ECFVersao200:
+              Add(LFill('Y800') +
                   LFill(ARQ_RTF) +
-                  LFill(IND_FIM_RTF)
-                  );
+                  LFill(IND_FIM_RTF));
+
+          ECFVersao300:
+               Add( LFill('Y800') +
+                    LFill(TIPO_DOC) +
+                    LFill(DESC_RTF) +
+                    LFill(HASH_RTF) +
+                    LFill(ARQ_RTF) +
+                    LFill(IND_FIM_RTF)
+                    );
+        end;
+        FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
       end;
     end;
-
-    FRegistroY990.QTD_LIN := FRegistroY990.QTD_LIN + 1;
   end;
 end;
 

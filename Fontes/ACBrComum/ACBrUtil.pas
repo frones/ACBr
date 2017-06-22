@@ -338,6 +338,10 @@ function Zip(const ABinaryString: AnsiString): AnsiString; overload;
 
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
 
+function IsWorkingDay(ADate: TDateTime): Boolean;
+function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
+function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+
 {$IfDef FPC}
 var ACBrANSIEncoding: String;
 {$EndIf}
@@ -376,6 +380,68 @@ begin
     if NewLineBreak <> CR then
       Result := StringReplace(Result, CR, NewLineBreak, [rfReplaceAll]);
   end
+end;
+
+{-----------------------------------------------------------------------------
+  Retornar True, se a Data for de Segunda a Sexta-feira. Falso para Sábado e Domingo
+ -----------------------------------------------------------------------------}
+function IsWorkingDay(ADate: TDateTime): Boolean;
+begin
+  Result := (DayOfWeek(ADate) in [2..6]);
+end;
+
+{-----------------------------------------------------------------------------
+  Retornar o total de dias úteis em um período de datas, exceto feriados.
+ -----------------------------------------------------------------------------}
+function WorkingDaysBetween(StartDate, EndDate: TDateTime): Integer;
+var
+  ADate: TDateTime;
+begin
+  Result := 0;
+  if (StartDate <= 0) then
+    exit;
+
+  ADate  := IncDay(StartDate, 1);
+  while (ADate <= EndDate) do
+  begin
+    if IsWorkingDay(ADate) then
+      Inc(Result);
+
+    ADate := IncDay(ADate, 1)
+  end;
+end;
+
+{-----------------------------------------------------------------------------
+  Retornar uma data calculando apenas dias úteis, a partir de uma data inicial,
+  exceto feriados.
+ -----------------------------------------------------------------------------}
+function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+var
+  DaysToIncrement, WorkingDaysAdded: Integer;
+
+  function GetNextWorkingDay(ADate: TDateTime): TDateTime;
+  begin
+    Result := ADate;
+    while not IsWorkingDay(Result) do
+      Result := IncDay(Result, DaysToIncrement);
+  end;
+
+begin
+  DaysToIncrement := ifthen(WorkingDays < 0,-1,1);
+
+  if (WorkingDays = 0) then
+    Result := GetNextWorkingDay(ADate)
+  else
+  begin
+    Result := ADate;
+    WorkingDaysAdded := 0;
+
+    while (WorkingDaysAdded <> WorkingDays) do
+    begin
+      Result := GetNextWorkingDay( IncDay(Result, DaysToIncrement) );
+      WorkingDaysAdded := WorkingDaysAdded + DaysToIncrement;
+    end;
+  end;
 end;
 
 {-----------------------------------------------------------------------------

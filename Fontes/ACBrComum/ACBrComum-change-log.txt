@@ -38,6 +38,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 22/06/2017
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function IsWorkingDay(ADate: TDateTime): Boolean;
+      Retornar True, se a Data for de Segunda a Sexta-feira. Falso para Sábado e
+      Domingo
+    function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
+       Retornar o total de dias úteis em um período de datas, exceto feriados.
+    function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+      Retornar uma data calculando apenas dias úteis, a partir de uma data inicial,
+      exceto feriados.
+[+] Adicionado novos testes em "ACBrComumTesteCases" para os novos métodos
+    (por: Junior Santos e DSA)
+
 Data: 08/06/2017
 -- ACBrUtil --
 [*] Ajuste no método "UTF8ToNativeString", para que não retorne vazio, caso

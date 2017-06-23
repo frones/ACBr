@@ -1,0 +1,111 @@
+{******************************************************************************}
+{ Projeto: Componente ACBrBPe                                                  }
+{  Biblioteca multiplataforma de componentes Delphi para emissão de Bilhete de }
+{ Passagem Eletrônica - BPe                                                    }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2017                                        }
+{                                                                              }
+{                                                                              }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do Projeto ACBr     }
+{ Componentes localizado em http://www.sourceforge.net/projects/acbr           }
+{                                                                              }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{*******************************************************************************
+|* Historico
+|*
+|* 20/06/2017: Italo Jurisato Junior
+|*  - Doação do componente para o Projeto ACBr
+*******************************************************************************}
+
+{$I ACBr.inc}
+
+package ACBr_BPe;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'ACBr - Bilhete de Passagem Eletrônica - (http://www.projetoacbr.com.br/)'}
+{$IMPLICITBUILD OFF}
+{$DEFINE DEBUG}
+
+requires
+  rtl,
+  designide,
+  vclactnband,
+  vclx,
+  vcl,
+  ACBr_DFeComum,
+  soaprtl,
+  xmlrtl,
+  inet,
+  dbrtl,
+  dsnap;
+
+contains
+  ACBrBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPe.pas',
+  ACBrBPeBilhetes in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeBilhetes.pas',
+  ACBrBPeConfiguracoes in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeConfiguracoes.pas',
+  ACBrBPeReg in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeReg.pas',
+  ACBrBPeWebServices in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\ACBrBPeWebServices.pas',
+  pcnBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPe.pas',
+  pcnBPeR in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeR.pas',
+  pcnBPeW in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeW.pas',
+  pcnBPeConsts in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnBPeConsts.pas',
+  pcnConversaoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConversaoBPe.pas',
+  pcnProcBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnProcBPe.pas',
+  pcnConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsSitBPe.pas',
+  pcnConsStatServBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnConsStatServBPe.pas',
+  pcnEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEventoBPe.pas',
+  pcnEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnEnvEventoBPe.pas',
+  pcnDistDFeIntBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnDistDFeIntBPe.pas',
+  pcnRetEnvBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvBPe.pas',
+  pcnRetConsStatServBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsStatServBPe.pas',
+  pcnRetConsSitBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetConsSitBPe.pas',',
+  pcnRetEnvEventoBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetEnvEventoBPe.pas',
+  pcnRetDistDFeIntBPe in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\PCNBPe\pcnRetDistDFeIntBPe.pas',
+  ACBrBPeDABPEClass in '..\..\..\..\Fontes\ACBrDFe\ACBrBPe\DABPE\ACBrBPeDABPEClass.pas';
+
+end.

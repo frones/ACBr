@@ -119,6 +119,7 @@ type
     FSuprimirDecimais: Boolean;
     FTagVaziaNoFormatoResumido: Boolean;
     FFormatoAlerta: string;
+    FQuebraLinha: String;
   public
     constructor Create;
 
@@ -132,6 +133,7 @@ type
     property TagVaziaNoFormatoResumido: Boolean read FTagVaziaNoFormatoResumido write FTagVaziaNoFormatoResumido default True;
     property FormatoAlerta: string read FFormatoAlerta write FFormatoAlerta;
     property DecimalChar: Char read FDecimalChar write FDecimalChar default '.';
+    property QuebraLinha: String read FQuebraLinha write FQuebraLinha;
   end;
 
 const
@@ -160,6 +162,7 @@ const
   NAME_SPACE_MDFE = 'xmlns="http://www.portalfiscal.inf.br/mdfe"';
   NAME_SPACE_GNRE = 'xmlns="http://www.gnre.pe.gov.br"';
   NAME_SPACE_SAT  = 'xmlns="http://www.fazenda.sp.gov.br/sat"';
+  NAME_SPACE_BPE  = 'xmlns="http://www.portalfiscal.inf.br/bpe"';
 
   V0_02 = 'versao="0.02"';
   V1_00 = 'versao="1.00"';

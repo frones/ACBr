@@ -83,7 +83,6 @@ type
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
   TpcnTipoArma = (taUsoPermitido, taUsoRestrito);
-  TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
   TpcnIndEscala = (ieRelevante, ieNaoRelevante);
 
 function LayOutToServico(const t: TLayOut): String;
@@ -121,9 +120,6 @@ function StrTocondVeic(out ok: boolean; const s: string): TpcnCondicaoVeiculo;
 
 function tpArmaToStr(const t: TpcnTipoArma): string;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
-
-function tpIntegraToStr(const t: TtpIntegra): string;
-function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 
 function VeiculosRestricaoStr( const iRestricao :Integer ): String;
 function VeiculosCorDENATRANStr( const sCorDENATRAN : String ): String;
@@ -349,16 +345,6 @@ end;
 function StrTotpArma(out ok: boolean; const s: string): TpcnTipoArma;
 begin
   result := StrToEnumerado(ok, s, ['0', '1'], [taUsoPermitido, taUsoRestrito]);
-end;
-
-function tpIntegraToStr(const t: TtpIntegra): string;
-begin
-  result := EnumeradoToStr(t, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
-end;
-
-function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
-begin
-  result := StrToEnumerado(ok, s, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
 end;
 
 function VeiculosRestricaoStr( const iRestricao : Integer ): String;

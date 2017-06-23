@@ -211,10 +211,6 @@ const
   DSC_CSERVICO = 'Código do Serviço';
   DSC_CREGTRIB = 'Código do Regime Especial de Tributação';
   DSC_XLOCDESP = 'Local de Despacho';
-  DSC_VPAG = 'Valor do Pagamento';
-  DSC_TBAND = 'Bandeira da Operadora de Cartão';
-  DSC_CAUT = 'Número da Autorização';
-  DSC_TPINTEGRA = 'Tipo de Integração para pagamento';
   DSC_INFQRCODE = 'Texto com o QR-Code impresso no DANFE NFC-e.';
   DSC_NBICO = 'Número de identificação do bico';
   DSC_NBOMBA = 'Número de identificação da bomba';

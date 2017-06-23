@@ -1,0 +1,237 @@
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+//              PCN - Projeto Cooperar BPe                                    //
+//                                                                            //
+//   Descrição: Classes para geração/leitura dos arquivos xml do BPe          //
+//                                                                            //
+//        site: www.projetocooperar.org                                       //
+//       email: projetocooperar@zipmail.com.br                                //
+//       forum: http://br.groups.yahoo.com/group/projeto_cooperar_nfe/        //
+//     projeto: http://code.google.com/p/projetocooperar/                     //
+//         svn: http://projetocooperar.googlecode.com/svn/trunk/              //
+//                                                                            //
+// Coordenação: (c) 2009 - Paulo Casagrande                                   //
+//                                                                            //
+//      Equipe: Vide o arquivo leiame.txt na pasta raiz do projeto            //
+//                                                                            //
+//      Versão: Vide o arquivo leiame.txt na pasta raiz do projeto            //
+//                                                                            //
+//     Licença: GNU Lesser General Public License (GNU LGPL)                  //
+//                                                                            //
+//              - Este programa é software livre; você pode redistribuí-lo    //
+//              e/ou modificá-lo sob os termos da Licença Pública Geral GNU,  //
+//              conforme publicada pela Free Software Foundation; tanto a     //
+//              versão 2 da Licença como (a seu critério) qualquer versão     //
+//              mais nova.                                                    //
+//                                                                            //
+//              - Este programa é distribuído na expectativa de ser útil,     //
+//              mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de  //
+//              COMERCIALIZAÇÃO ou de ADEQUAÇÃO A QUALQUER PROPÓSITO EM       //
+//              PARTICULAR. Consulte a Licença Pública Geral GNU para obter   //
+//              mais detalhes. Você deve ter recebido uma cópia da Licença    //
+//              Pública Geral GNU junto com este programa; se não, escreva    //
+//              para a Free Software Foundation, Inc., 59 Temple Place,       //
+//              Suite 330, Boston, MA - 02111-1307, USA ou consulte a         //
+//              licença oficial em http://www.gnu.org/licenses/gpl.txt        //
+//                                                                            //
+//    Nota (1): - Esta  licença  não  concede  o  direito  de  uso  do nome   //
+//              "PCN  -  Projeto  Cooperar  NFe", não  podendo o mesmo ser    //
+//              utilizado sem previa autorização.                             //
+//                                                                            //
+//    Nota (2): - O uso integral (ou parcial) das units do projeto esta       //
+//              condicionado a manutenção deste cabeçalho junto ao código     //
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+{*******************************************************************************
+|* Historico
+|*
+|* 20/06/2017: Italo Jurisato Junior
+|*  - Doação do componente para o Projeto ACBr
+*******************************************************************************}
+
+{$I ACBr.inc}
+
+unit pcnRetConsSitBPe;
+
+interface
+
+uses
+  SysUtils, Classes,
+  pcnConversao, pcnLeitor, pcnProcBPe, pcnRetEnvEventoBPe;
+
+type
+
+  TRetEventoBPeCollection     = class;
+  TRetEventoBPeCollectionItem = class;
+  TRetConsSitBPe              = class;
+
+  TRetEventoBPeCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TRetEventoBPeCollectionItem;
+    procedure SetItem(Index: Integer; Value: TRetEventoBPeCollectionItem);
+  public
+    constructor Create(AOwner: TPersistent);
+    function Add: TRetEventoBPeCollectionItem;
+    property Items[Index: Integer]: TRetEventoBPeCollectionItem read GetItem write SetItem; default;
+  end;
+
+  TRetEventoBPeCollectionItem = class(TCollectionItem)
+  private
+    FRetEventoBPe: TRetEventoBPe;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+  published
+    property RetEventoBPe: TRetEventoBPe read FRetEventoBPe write FRetEventoBPe;
+  end;
+
+  TRetConsSitBPe = class(TPersistent)
+  private
+    FLeitor: TLeitor;
+    Fversao: String;
+    FtpAmb: TpcnTipoAmbiente;
+    FverAplic: String;
+    FcStat: Integer;
+    FxMotivo: String;
+    FcUF: Integer;
+    FprotBPe: TProcBPe;
+    FprocEventoBPe: TRetEventoBPeCollection;
+    FXMLprotBPe: String;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    function LerXml: Boolean;
+  published
+    property Leitor: TLeitor                        read FLeitor        write FLeitor;
+    property versao: String                         read Fversao        write Fversao;
+    property tpAmb: TpcnTipoAmbiente                read FtpAmb         write FtpAmb;
+    property verAplic: String                       read FverAplic      write FverAplic;
+    property cStat: Integer                         read FcStat         write FcStat;
+    property xMotivo: String                        read FxMotivo       write FxMotivo;
+    property cUF: Integer                           read FcUF           write FcUF;
+    property protBPe: TProcBPe                      read FprotBPe       write FprotBPe;
+    property procEventoBPe: TRetEventoBPeCollection read FprocEventoBPe write FprocEventoBPe;
+    property XMLprotBPe: String                     read FXMLprotBPe    write FXMLprotBPe;
+  end;
+
+implementation
+
+{ TRetConsSitBPe }
+
+constructor TRetConsSitBPe.Create;
+begin
+  FLeitor  := TLeitor.Create;
+  FprotBPe := TProcBPe.create;
+end;
+
+destructor TRetConsSitBPe.Destroy;
+begin
+  FLeitor.Free;
+  FprotBPe.Free;
+  if Assigned(procEventoBPe) then
+    procEventoBPe.Free;
+
+  inherited;
+end;
+
+function TRetConsSitBPe.LerXml: Boolean;
+var
+  ok: Boolean;
+  i: Integer;
+begin
+  Result := False;
+  try
+    if leitor.rExtrai(1, 'retConsSitBPe') <> '' then
+    begin
+      Fversao   := Leitor.rAtributo('versao');
+      FtpAmb    := StrToTpAmb(ok, leitor.rCampo(tcStr, 'tpAmb'));
+      FverAplic := leitor.rCampo(tcStr, 'verAplic');
+      FcStat    := leitor.rCampo(tcInt, 'cStat');
+      FxMotivo  := leitor.rCampo(tcStr, 'xMotivo');
+      FcUF      := leitor.rCampo(tcInt, 'cUF');
+
+      case FcStat of
+        100,101,104,110,150,151,155,301,302,303:
+           begin
+             if (Leitor.rExtrai(1, 'protBPe') <> '') then
+             begin
+               // A propriedade XMLprotBPe contem o XML que traz o resultado do
+               // processamento do BP-e.
+               XMLprotBPe := Leitor.Grupo;
+
+               if Leitor.rExtrai(2, 'infProt') <> '' then
+               begin
+                 protBPe.tpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+                 protBPe.verAplic := Leitor.rCampo(tcStr, 'verAplic');
+                 protBPe.chBPe    := Leitor.rCampo(tcStr, 'chBPe');
+                 protBPe.dhRecbto := Leitor.rCampo(tcDatHor, 'dhRecbto');
+                 protBPe.nProt    := Leitor.rCampo(tcStr, 'nProt');
+                 protBPe.digVal   := Leitor.rCampo(tcStr, 'digVal');
+                 protBPe.cStat    := Leitor.rCampo(tcInt, 'cStat');
+                 protBPe.xMotivo  := Leitor.rCampo(tcStr, 'xMotivo');
+               end;
+             end;
+           end;
+      end;
+
+      if Assigned(procEventoBPe) then
+        procEventoBPe.Free;
+
+      procEventoBPe := TRetEventoBPeCollection.Create(Self);
+      i:=0;
+      while Leitor.rExtrai(1, 'procEventoBPe', '', i + 1) <> '' do
+      begin
+        procEventoBPe.Add;
+        procEventoBPe.Items[i].RetEventoBPe.Leitor.Arquivo := Leitor.Grupo;
+        procEventoBPe.Items[i].RetEventoBPe.XML            := Leitor.Grupo; 
+        procEventoBPe.Items[i].RetEventoBPe.LerXml;
+        inc(i);
+      end;
+
+      Result := True;
+    end;
+  except
+    Result := False;
+  end;
+end;
+
+{ TRetEventoCollection }
+
+function TRetEventoBPeCollection.Add: TRetEventoBPeCollectionItem;
+begin
+  Result := TRetEventoBPeCollectionItem(inherited Add);
+  Result.create;
+end;
+
+constructor TRetEventoBPeCollection.Create(AOwner: TPersistent);
+begin
+  inherited Create(TRetEventoBPeCollectionItem);
+end;
+
+function TRetEventoBPeCollection.GetItem(Index: Integer): TRetEventoBPeCollectionItem;
+begin
+  Result := TRetEventoBPeCollectionItem(inherited GetItem(Index));
+end;
+
+procedure TRetEventoBPeCollection.SetItem(Index: Integer;
+  Value: TRetEventoBPeCollectionItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TRetEventoCollectionItem }
+
+constructor TRetEventoBPeCollectionItem.Create;
+begin
+  FRetEventoBPe := TRetEventoBPe.Create;
+end;
+
+destructor TRetEventoBPeCollectionItem.Destroy;
+begin
+  FRetEventoBPe.Free;
+  inherited;
+end;
+
+end.
+

@@ -80,7 +80,7 @@ function CodigoParaUF(const codigo: integer): string;
 function DateTimeTodh(DataHora: TDateTime): string;
 function DateTimeToDataHora(DataHora: TDateTime): string;
 function ExecutarAjusteTagNro(Corrigir: boolean; Nro: string): string;
-function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True): AnsiString;
+function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString; RetirarAcentos: boolean = True; SubstituirQuebrasLinha: Boolean = True; QuebraLinha: AnsiString = ';'): AnsiString;
 function IIf(const condicao: Boolean; const Verdadeiro, Falso: Variant): Variant;
 function IntToStrZero(const Numero: integer; const tamanho: integer): string;
 function GerarCodigoNumerico(numero: integer): integer;
@@ -193,7 +193,7 @@ begin
 end;
 
 function FiltrarTextoXML(const RetirarEspacos: boolean; aTexto: AnsiString;
-  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean): AnsiString;
+  RetirarAcentos: boolean; SubstituirQuebrasLinha: Boolean; QuebraLinha: AnsiString): AnsiString;
 begin
   if RetirarAcentos then
      aTexto := AnsiString(TiraAcentos(String(aTexto)));
@@ -207,7 +207,7 @@ begin
   end;
 
   if SubstituirQuebrasLinha then
-    aTexto := ChangeLineBreak( aTexto, ';');
+    aTexto := ChangeLineBreak( aTexto, QuebraLinha);
 
   Result := Trim(aTexto);
 end;

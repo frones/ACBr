@@ -118,7 +118,8 @@ type
                   teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
                   teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
                   teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
-                  teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2);
+                  teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
+                  teNaoEmbarque);
 
   TpcnIndicadorEmissor = (ieTodos, ieRaizCNPJDiferente);
   TpcnIndicadorContinuacao = (icNaoPossuiMaisDocumentos, icPossuiMaisDocumentos);
@@ -163,8 +164,10 @@ type
 
   TTipoNavegacao = (tnInterior, tnCabotagem);
 
+  TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
+
 const
-  TpcnTpEventoString : array[0..33] of String =('110110', '110111', '210200',
+  TpcnTpEventoString : array[0..34] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
                                                 '110112', '110113', '110114',
                                                 '110160', '310620', '510620',
@@ -175,7 +178,7 @@ const
                                                 '411501', '411502', '411503',
                                                 '610500', '990910', '000000',
                                                 '610610', '610110', '110170',
-                                                '310610');
+                                                '310610', '110115');
 
   DFeUF: array[0..26] of String =
   ('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA',
@@ -347,6 +350,9 @@ function TpNavegacaoToStr(const t: TTipoNavegacao): string;
 function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
 
 function DescrModeloNFe(chave: String):String;
+
+function tpIntegraToStr(const t: TtpIntegra): string;
+function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 
 implementation
 
@@ -1036,7 +1042,8 @@ begin
               'CanPedProrrog1', 'CanPedProrrog2', 'EventoFiscoPP1',
               'EventoFiscoPP2', 'EventoFiscoCPP1', 'EventoFiscoCPP2',
               'RegPassagemNFe', 'ConfInternalizacao', 'CTeAutorizado',
-              'MDFeAutorizado', 'PrestDesacordo', 'GTV'],
+              'MDFeAutorizado', 'PrestDesacordo', 'GTV', 'MDFeAutorizado2',
+              'NaoEmbarque'],
              [teCCe, teCancelamento, teManifDestConfirmacao, teManifDestCiencia,
               teManifDestDesconhecimento, teManifDestOperNaoRealizada,
               teEncerramento, teEPEC, teInclusaoCondutor, teMultiModal,
@@ -1047,7 +1054,8 @@ begin
               teCanPedProrrog1, teCanPedProrrog2, teEventoFiscoPP1,
               teEventoFiscoPP2, teEventoFiscoCPP1, teEventoFiscoCPP2,
               teRegistroPassagemNFe, teConfInternalizacao, teCTeAutorizado,
-              teMDFeAutorizado, tePrestDesacordo, teGTV]);
+              teMDFeAutorizado, tePrestDesacordo, teGTV, teMDFeAutorizado2,
+              teNaoEmbarque]);
 end;
 
 
@@ -1507,6 +1515,16 @@ begin
     65:   Result := 'NFCe Ref.:';
     else  Result := 'NFe Ref.:';
   end;
+end;
+
+function tpIntegraToStr(const t: TtpIntegra): string;
+begin
+  result := EnumeradoToStr(t, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
+end;
+
+function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
+begin
+  result := StrToEnumerado(ok, s, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
 end;
 
 end.

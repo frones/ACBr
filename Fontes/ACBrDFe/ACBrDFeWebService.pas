@@ -442,6 +442,7 @@ begin
   AOpcoes.RetirarEspacos := FPDFeOwner.Configuracoes.Geral.RetirarEspacos;
   AOpcoes.IdentarXML := FPDFeOwner.Configuracoes.Geral.IdentarXML;
   pcnAuxiliar.TimeZoneConf.Assign( FPDFeOwner.Configuracoes.WebServices.TimeZoneConf );
+  AOpcoes.QuebraLinha := FPDFeOwner.Configuracoes.WebServices.QuebradeLinha;
 end;
 
 function TDFeWebService.GerarMsgErro(E: Exception): String;

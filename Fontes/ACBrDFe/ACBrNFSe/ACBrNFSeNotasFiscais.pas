@@ -670,6 +670,8 @@ var
 begin
   AXML := XMLLote;
 
+//    raise EACBrNFSeException.Create(AXML);
+
   with TACBrNFSe(FACBrNFSe) do
   begin
     NotaEhValida := SSL.Validar(AXML, NomeArqSchema, Erro);

@@ -101,7 +101,7 @@ type
                     proNEAInformatica, proNotaInteligente, proSP, proPronimv2,
                     proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
                     proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, 
-                    proNotaBlu, proSMARAPD);
+                    proNotaBlu, proSMARAPD, proActconv201, proActconv202);
 
   TnfseAcao = (acRecepcionar, acConsSit, acConsLote, acConsNFSeRps, acConsNFSe,
                acCancelar, acGerar, acRecSincrono, acConsSecRps, acSubstituir);
@@ -466,7 +466,7 @@ begin
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
          'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA', 'NotaBlu',
-         'Smarapd'],
+         'Smarapd', 'Actconv201', 'Actconv202'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -480,7 +480,7 @@ begin
          proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP,
          proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
          proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, proNotaBlu,
-         proSMARAPD]);
+         proSMARAPD, proActconv201, proActconv202]);
 end;
 
 function StrToProvedor(out ok: boolean; const s: String): TnfseProvedor;
@@ -498,7 +498,7 @@ begin
          'EReceita', 'Governa', 'NEAInformatica', 'NotaInteligente', 'SP',
          'Pronimv2', 'ABase', 'VersaTecnologia', 'CIGA', 'Siam', 'Agiliv2',
          'Bethav2', 'Actconv2', 'Infisc-v11', 'Friburgo', 'CTA', 'NotaBlu',
-         'Smarapd'],
+         'Smarapd', 'Actconv201', 'Actconv202'],
         [proNenhum, proTiplan, proISSNET, proWebISS, proWebISSv2, proGINFES, proIssDSF,
          proProdemge, proAbaco, proBetha, proEquiplano, proISSIntel, proProdam,
          proGovBR, proRecife, proSimplISS, proThema, proRJ, proPublica,
@@ -512,7 +512,7 @@ begin
          proEReceita, proGoverna, proNEAInformatica, proNotaInteligente, proSP,
          proPronimv2, proABase, proVersaTecnologia, proCIGA, proSiam, proAgiliv2,
          proBethav2, proActconv2, proInfiscv11, proFriburgo, proCTA, proNotaBlu,
-         proSMARAPD]);
+         proSMARAPD, proActconv201, proActconv202]);
 end;
 
 // Condição de pagamento ******************************************************
@@ -18265,7 +18265,8 @@ begin
     proISSDigital, proISSe, proLink3, proMitra, proNEAInformatica,
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
-    proVersaTecnologia, proWebISSv2: Result := loABRASFv2;
+    proVersaTecnologia, proWebISSv2, proActconv201,
+    proActconv202: Result := loABRASFv2;
 
     proAgili,
     proAgiliv2:     Result := loAgili;
@@ -18297,7 +18298,8 @@ begin
     proGovDigital, proISSDigital, proISSe, proLink3, proMitra, proNEAInformatica,
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
-    proNFSEBrasil, proVersaTecnologia: Result := ve200;
+    proNFSEBrasil, proVersaTecnologia, proActconv201,
+    proActconv202: Result := ve200;
 
     proInfiscv11: Result := ve110;
   else

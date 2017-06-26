@@ -103,6 +103,7 @@ type
     FGerarDadosMsg: TNFSeG;
 
     procedure DefinirURL; override;
+    procedure DefinirServicoEAction; override;
     procedure DefinirEnvelopeSoap; override;
     procedure InicializarServico; override;
     function GerarVersaoDadosSoap: String; override;
@@ -119,6 +120,7 @@ type
     procedure InicializarTagITagF;
     procedure InicializarGerarDadosMsg;
     function ExtrairGrupoMsgRet(AGrupo: String): String;
+
   public
     constructor Create(AOwner: TACBrDFe); override;
 
@@ -695,6 +697,25 @@ begin
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
+procedure TNFSeWebService.DefinirServicoEAction;
+begin
+  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
+  end;
+
+  if FProvedor = proActconv202 then
+  begin
+    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
+      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'homologacao', [rfReplaceAll])
+    else
+      FPSoapAction := StringReplace(FPSoapAction, '%Ambiente%', 'nfseserv', [rfReplaceAll]);
+  end;
+end;
+
 procedure TNFSeWebService.DefinirEnvelopeSoap;
 var
   Texto, DadosMsg, CabMsg, NameSpace: String;
@@ -715,6 +736,8 @@ begin
   CabMsg := FPCabMsg;
   if FCabecalhoStr then
     CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);
+
+  CabMsg := StringReplace(CabMsg, '%NameSpace%', NameSpace  , [rfReplaceAll]);
 
   DadosMsg := FPDadosMsg;
   if FDadosStr then
@@ -790,6 +813,8 @@ begin
   FURISig := '';
   FURIRef := '';
 
+  FPConfiguracoesNFSe.WebServices.QuebradeLinha := FPConfiguracoesNFSe.Geral.ConfigGeral.QuebradeLinha;
+
   FNameSpace  := FPConfiguracoesNFSe.Geral.ConfigXML.NameSpace;
 
   if Pos('%NomeURL_HP%', FNameSpace) > 0 then
@@ -798,7 +823,7 @@ begin
     begin
       FNameSpace := StringReplace(FNameSpace, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll]);
 
-      if FProvedor = proActcon then
+      if FProvedor in [proActcon, proActconv202] then
         FNameSpace := StringReplace(FNameSpace, '/nfseserv/', '/homologacao/', [rfReplaceAll])
     end
     else
@@ -853,6 +878,10 @@ begin
   if FxsdServico <> '' then
   begin
     case FProvedor of
+      // incluido em 23/06/2017 por italo
+      proGovBr: FNameSpaceDad := 'xmlns:ns2="http://www.w3.org/2000/09/xmldsig#"' +
+                                 ' xmlns:ns3="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"';
+
       proInfisc,
       proInfiscv11,
       proSMARAPD: FNameSpaceDad := xmlns3 + FNameSpace + '"';
@@ -2057,13 +2086,7 @@ begin
   FPServico := 'EnviarLoteRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Recepcionar;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeEnviarLoteRPS.DefinirDadosMsg;
@@ -2223,6 +2246,8 @@ begin
       end;
     end;
 
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
+
     if FProvedor = proEL then
     begin
       FPDadosMsg := GerarDadosMsg.Gera_DadosMsgEnviarLote;
@@ -2322,6 +2347,9 @@ begin
         FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
  
       if FProvedor in [proCTA, proSP, ProNotaBlu] then
+      if (FProvedor in [proCTA, proSP]) or
+         ( (FProvedor = ProNotaBlu) and
+           (RetEnvLote.InfRec.InformacoesLote.QtdNotasProcessadas > 0) ) then
       begin
         FNotasFiscais.Items[i].NFSe.Numero := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.Numero;
         FNotasFiscais.Items[i].NFSe.CodigoVerificacao := RetEnvLote.InfRec.ListaChaveNFeRPS[I].ChaveNFeRPS.CodigoVerificacao;
@@ -2517,6 +2545,8 @@ begin
       end;
     end;
 
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
+
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarLote + FTagF;
 
   finally
@@ -2556,13 +2586,7 @@ begin
   FPServico := 'TesteEnvioLoteRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Teste;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 function TNFSeTesteEnvioLoteRPS.TratarResposta: Boolean;
@@ -2669,13 +2693,7 @@ begin
   FPServico :=  'NFSeEnviarSincrono';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.RecSincrono;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeEnviarSincrono.DefinirDadosMsg;
@@ -2727,6 +2745,8 @@ begin
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgEnviarSincrono + FTagF;
   finally
@@ -2898,13 +2918,7 @@ begin
   FPServico :=  'NFSeGerarNFSe';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Gerar;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeGerarNFSe.DefinirDadosMsg;
@@ -2985,6 +2999,8 @@ begin
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
     end;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgGerarNFSe + FTagF;
   finally
@@ -3091,13 +3107,7 @@ begin
   FPServico :=  'NFSeConsSitLoteRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsSit;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeConsultarSituacaoLoteRPS.DefinirDadosMsg;
@@ -3141,6 +3151,8 @@ begin
       // Necessário para o provedor Equiplano / Infisc
       NumeroLote := FNumeroLote; 
     end;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsSitLote + FTagF;
   finally
@@ -3346,13 +3358,7 @@ begin
   FPServico := 'NFSeConsLote';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsLote;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeConsultarLoteRPS.DefinirDadosMsg;
@@ -3398,6 +3404,8 @@ begin
       // Necessário para o provedor Equiplano - EL
       NumeroLote := FNumeroLote; 
     end;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsLote + FTagF;
   finally
@@ -3489,13 +3497,7 @@ begin
   FPServico := 'NFSeConsNfseRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfseRps;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeConsultarNfseRPS.DefinirDadosMsg;
@@ -3608,6 +3610,8 @@ begin
       end;
     end;
 
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
+
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSeRPS + FTagF;
   finally
     GerarDadosMsg.Free;
@@ -3698,13 +3702,7 @@ begin
   FPServico := 'NFSeConsNfse';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.ConsNfse;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeConsultarNfse.DefinirDadosMsg;
@@ -3765,6 +3763,8 @@ begin
       // Necessario para o provedor Infisc
       SerieNFSe := TNFSeConsultarNfse(Self).Serie;
     end;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgConsNFSe + FTagF;
   finally
@@ -3859,13 +3859,7 @@ begin
   FPServico := 'NFSeCancNfse';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Cancelar;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeCancelarNfse.DefinirDadosMsg;
@@ -4099,6 +4093,8 @@ begin
         ChaveAcessoPrefeitura := FNotasFiscais.Items[0].NFSe.Prestador.ChaveAcesso;
     end;
 
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
+
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgCancelarNFSe + FTagF;
   finally
     GerarDadosMsg.Free;
@@ -4242,13 +4238,7 @@ begin
   FPServico := 'NFSeSubNfse';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Substituir;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeSubstituirNFSe.DefinirDadosMsg;
@@ -4264,9 +4254,18 @@ begin
 
   GerarDadosMsg := TNFSeG.Create;
   try
+(*
     FTagGrupo := FPrefixo3 + 'Pedido';
+*)
+    FTagGrupo := 'SubstituirNfseEnvio';
 
-    FinfElemento := 'infPedidoCancelamento';
+    if FProvedor <> proGinfes then
+      FTagGrupo := FPrefixo3 + FTagGrupo;
+
+    FdocElemento := FPrefixo3 + 'Pedido></' +
+                    FPrefixo3 + 'SubstituicaoNfse></' + FTagGrupo;
+
+    FinfElemento := 'InfPedidoCancelamento';
 
     if FPConfiguracoesNFSe.Geral.ConfigAssinar.RPS then
     begin
@@ -4280,22 +4279,22 @@ begin
 
     case FProvedor of
       proEquiplano,
-      proPublica: FURISig:= '';
+      proPublica: FURI:= '';
 
-      proDigifred:  FURISig := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
+      proDigifred:  FURI := 'CANC' + TNFSeSubstituirNfse(Self).FNumeroNFSe;
 
-      proSaatri: FURISig := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
+      proSaatri: FURI := 'Cancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ;
 
       proIssIntel,
       proISSNet: begin
-                   FURISig := '';
+                   FURI := '';
                    FURIRef := 'http://www.w3.org/TR/2000/REC-xhtml1-20000126/';
                  end;
 
-      proTecnos: FURISig := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+      proTecnos: FURI := '2' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                             IntToStrZero(StrToInt(TNFSeSubstituirNfse(Self).FNumeroNFSe), 16);
 
-    else  FURISig := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
+    else  FURI := 'pedidoCancelamento_' + FPConfiguracoesNFSe.Geral.Emitente.CNPJ +
                       FPConfiguracoesNFSe.Geral.Emitente.InscMun +
                       TNFSeSubstituirNfse(Self).FNumeroNFSe;
     end;
@@ -4343,6 +4342,8 @@ begin
       Transacao  := FNotasFiscais.Transacao;
     end;
 
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
+
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgSubstituirNFSe + FTagF;
   finally
     GerarDadosMsg.Free;
@@ -4350,8 +4351,19 @@ begin
 
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
-  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Substituir) and (FPDadosMsg <> '') then
-    AssinarXML(FPDadosMsg, FTagGrupo, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+  if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
+    AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
+
+  FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
+                '<' + FPrefixo3 + 'SubstituicaoNfse>' +
+                 SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
+                 FvNotas  + FTagF;
+
+  if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+    FNotasFiscais.ValidarLote(FPDadosMsg,
+                              FPConfiguracoes.Arquivos.PathSchemas +
+                              FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoSubstituir);
+
 
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.Substituir_IncluiEncodingDados);
 
@@ -4359,7 +4371,7 @@ begin
 
   if (FPDadosMsg = '') or (FDadosEnvelope = '') then
     GerarException(ACBrStr('A funcionalidade [Substituir NFSe] não foi disponibilizada pelo provedor: ' +
-     FPConfiguracoesNFSe.Geral.xProvedor));
+                           FPConfiguracoesNFSe.Geral.xProvedor));
 end;
 
 function TNFSeSubstituirNFSe.TratarResposta: Boolean;
@@ -4468,13 +4480,7 @@ begin
   FPServico := 'NFSeAbrirSessao';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.AbrirSessao;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeAbrirSessao.DefinirDadosMsg;
@@ -4494,6 +4500,8 @@ begin
     InicializarTagITagF;
 
     InicializarGerarDadosMsg;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgAbrirSessao + FTagF;
   finally
@@ -4615,13 +4623,7 @@ begin
   FPServico := 'NFSeFecharSessao';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.FecharSessao;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeFecharSessao.DefinirDadosMsg;
@@ -4646,6 +4648,8 @@ begin
     begin
       HashIdent := TNFSeFecharSessao(Self).HashIdent;
     end;
+
+    AjustarOpcoes( GerarDadosMsg.Gerador.Opcoes );
 
     FPDadosMsg := FTagI + GerarDadosMsg.Gera_DadosMsgFecharSessao + FTagF;
   finally
@@ -4757,13 +4761,7 @@ procedure TNFSeEnvioWebService.DefinirServicoEAction;
 begin
   FPServico := FPSoapAction;
 
-  if Pos('%NomeURL_HP%', FPSoapAction) > 0 then
-  begin
-    if FPConfiguracoesNFSe.WebServices.Ambiente = taHomologacao then
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_H, [rfReplaceAll])
-    else
-      FPSoapAction := StringReplace(FPSoapAction, '%NomeURL_HP%', FPConfiguracoesNFSe.Geral.xNomeURL_P, [rfReplaceAll]);
-  end;
+  inherited DefinirServicoEAction;
 end;
 
 procedure TNFSeEnvioWebService.DefinirDadosMsg;

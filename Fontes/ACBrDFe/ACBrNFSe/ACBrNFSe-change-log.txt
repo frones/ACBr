@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2017
+-- Diversos --
+[*] Simplificação de código e ajustes para diversos provedores.
+    Por: Italo
+
 19/06/2017
 -- ACBrNFSeWebServices -- 
 [*] Implementado o método TratarResposta na classe TNFSeTesteEnvioLoteRPS.

@@ -241,7 +241,9 @@ Begin
   Gerador.wCampoNFSe(tcStr,     '', 'tributadonomunicipio', 01,  5, 1, 'true', '');
   Gerador.wCampoNFSe(tcStr,     '', 'numerort',             01, 02, 1, FNFSe.IdentificacaoRps.Numero, '');
   Gerador.wCampoNFSe(tcStr,     '', 'codigoseriert',        01, 02, 1, '17', '');
-  Gerador.wCampoNFSe(tcDatVcto, '', 'dataemissaort',        01, 21, 1, FNFSe.DataEmissao, '');
+  Gerador.wCampoNFSe(tcDatVcto, '', 'dataemissaort',        01, 21, 1, FNFSe.DataEmissaoRps, '');
+  if NFSe.Competencia <> '' then
+    Gerador.wCampoNFSe(tcStr, '', 'fatorgerador',           01, 21, 1, FNFSe.Competencia, '');
   Gerador.wGrupoNFSe('/nfd');
 end;
 

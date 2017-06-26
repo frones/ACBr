@@ -229,7 +229,7 @@ var
   TipoPessoa: Char;
   TipoDocumento, TipoJuros, fsTipoDesconto, lDataDesconto: String;
   Prazo1, Prazo2, wLinha, lNossoNumero, wAgenciaCB: String;
-  wDiasPagto: String;
+  wDiasPagto, wInstrucaoLimitePagto : String;
 begin
   with ACBrTitulo do
   begin
@@ -288,14 +288,20 @@ begin
       if (DataLimitePagto > 0) then
       begin
         wDiasPagto:= IntToStrZero(DaysBetween(Vencimento, DataLimitePagto),2);
+
+        if Vencimento <> DataLimitePagto then
+         wInstrucaoLimitePagto := '94'
+        else
+         wInstrucaoLimitePagto := '13';
+
         if (Instrucao1 = '00') then
          begin
-          Instrucao1:= '94';
+	      Instrucao1 := wInstrucaoLimitePagto;
           Prazo1    := wDiasPagto;
          end
         else if (Instrucao2 = '00') then
          begin
-          Instrucao2:= '94';
+          Instrucao2 := wInstrucaoLimitePagto;
           Prazo2    := wDiasPagto;
         end
       end;

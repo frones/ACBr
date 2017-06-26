@@ -47,15 +47,32 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 16/06/2017
--- ACBrBancoSantander
-[-] Complemento Conta Cobrança (posições 384-385): preencher com a última posição da conta cobrança e com o dígito (CCCCCCCCC-D)
-		http://www.projetoacbr.com.br/forum/topic/35406-remessa-santander-c400-n%C3%BAmero-maior-que-400/?do=findComment&comment=244229
-		por Juliomar Marchetti (Contribuição de Jonatas de Alencar Alves)
+Data 26/06/2017 ver: 0.0.225
+-- ACBrBancoBrasil
+[+] Atualização na função MontarCampoCarteira - Banco Brasil
+		http://www.projetoacbr.com.br/forum/topic/37344-boletos-banco-brasil-carteiras-com-varia%C3%A7%C3%A3o/
+		por José M. S. Junior
+
+-- ACBrBancoBrasilSicoob, ACBrBoleto
+[+] Atualização na Geração de Boleto e Arquivo de Remessa - Banco Brasil - Sicoob
+		http://www.projetoacbr.com.br/forum/topic/33960-implementa%C3%A7%C3%A3o-acbrbancobrasilsicoob/
+		por José M. S. Junior - (Contribuição de Roberto.Godinho)
+
+-- ACBrBoleto
+[*] Validar dias úteis na emissão do boleto para mensagem de dias para protesto 
+		http://www.projetoacbr.com.br/forum/topic/34178-problema-data-de-protesto-com-dias-uteis/
+		por José M. S. Junior
+-- ACBrBancoBRB.pas --
+[-] Alteração para que seja enviadoo código 13 para mensagem "Não receber após vencimento" conforme exigência do banco. 
+	http://www.projetoacbr.com.br/forum/topic/23606-altera%C3%A7%C3%B5es-acbrbancobrb/ (Letícia Silva)
+	
+-- ACBrBancoCaixa.pas --
+[*] Criação da Função RetornaModalidade() para que a mesma seja enviada sempre válida.
+	http://www.projetoacbr.com.br/forum/topic/36767-melhoria-no-acbrbancocaixa/ (Letícia Silva)
 		
 Data 13/06/2017 ver: 0.0.224
 -- ACBrBancoSafraBradesco, ACBrBoleto
-[+] Atualização na Geração de Boleto e Arquivo de Remessa CNAB400
+[+] Atualização na Geração de Boleto e Arquivo de Remessa - Banco Safra Bradesco
 		http://www.projetoacbr.com.br/forum/topic/36806-acbrboletosafrabradesco-homologado/
 		por José M. S. Junior - (Contribuição de Roberto.Godinho)
 

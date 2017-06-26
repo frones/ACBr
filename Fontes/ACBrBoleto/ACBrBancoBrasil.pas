@@ -84,6 +84,7 @@ type
     function CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String; override;
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; override;
     function MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String; override;
+    function MontarCampoCarteira(const ACBrTitulo: TACBrTitulo): String; override;
     function MontarCampoNossoNumero(const ACBrTitulo :TACBrTitulo): String; override;
     function GerarRegistroHeader240(NumeroRemessa : Integer): String; override;
     function GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String; override;
@@ -248,6 +249,14 @@ begin
              ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito+'/'+
              IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta,0)) +'-'+
              ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
+end;
+
+function TACBrBancoBrasil.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo
+  ): String;
+begin
+  Result := IfThen(ACBrTitulo.ACBrBoleto.Cedente.Modalidade.IsEmpty,
+                   ACBrTitulo.Carteira,
+                   ACBrTitulo.Carteira + '/' + ACBrTitulo.ACBrBoleto.Cedente.Modalidade );
 end;
 
 function TACBrBancoBrasil.MontarCampoNossoNumero (const ACBrTitulo: TACBrTitulo ) : String;

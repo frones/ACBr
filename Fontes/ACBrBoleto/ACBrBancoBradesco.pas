@@ -219,15 +219,13 @@ begin
 
    with ACBrTitulo do
    begin
-      ANossoNumero := ACBrTitulo.NossoNumero;      
+      ANossoNumero := PadLeft(OnlyNumber(ACBrTitulo.NossoNumero),11, '0');
       wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
                                                    ACBrTitulo.NossoNumero);
 
-      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) then
-      begin
-        ANossoNumero      := StringOfChar('0', wTamNossoNum);
-        DigitoNossoNumero := '0';
-      end
+
+      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (StrToIntDef(ANossoNumero) = 0) then
+        DigitoNossoNumero := '0'
       else
       begin
         ANossoNumero      := ACBrTitulo.NossoNumero;

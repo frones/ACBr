@@ -51,6 +51,7 @@ type
     function GetLocalPagamento: String; override;
    private
     fValorTotalDocs:Double;
+    function RetornaModalidade(const ACBrTitulo :TACBrTitulo): String;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function RetornaCodCarteira(Carteira: string; const ACBrTitulo : TACBrTitulo): integer;
    public
@@ -157,27 +158,53 @@ begin
   Result := ACBrStr(CInstrucaoPagamentoLoterica);
 end;
 
-function TACBrCaixaEconomica.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
+function TACBrCaixaEconomica.RetornaModalidade(const ACBrTitulo :TACBrTitulo): String;
 var
-  ANossoNumero :String;
+  AModalidade : String;
 begin
    with ACBrTitulo do
    begin
-      ANossoNumero := OnlyNumber(NossoNumero);
+    AModalidade := OnlyNumber(ACBrBoleto.Cedente.Modalidade);
 
-      if (ACBrTitulo.Carteira = 'RG') then
-      begin         {carterira registrada}
+      if (ACBrTitulo.Carteira = 'RG') then        {carterira registrada}
+        begin
         if ACBrTitulo.CarteiraEnvio = tceCedente then
-          ANossoNumero := '14'+PadLeft(ANossoNumero, 15, '0')
+          AModalidade := '14'
         else
-          ANossoNumero := '11'+PadLeft(ANossoNumero, 15, '0')
+          AModalidade := '11'
       end
       else if (ACBrTitulo.Carteira = 'SR')then     {carteira 2 sem registro}
       begin
         if ACBrTitulo.CarteiraEnvio = tceCedente then
-          ANossoNumero := '24'+PadLeft(ANossoNumero, 15, '0')
+          AModalidade := '24'
         else
-          ANossoNumero := '21'+PadLeft(ANossoNumero, 15, '0')
+          AModalidade := '21'
+      end
+      else
+         raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"') ) ;
+      end;
+
+    Result := AModalidade;
+
+  end;
+
+function TACBrCaixaEconomica.FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
+var
+  ANossoNumero, AModalidade :String;
+begin
+   with ACBrTitulo do
+   begin
+      ANossoNumero := OnlyNumber(NossoNumero);
+      AModalidade:= RetornaModalidade(ACBrTitulo);
+
+      if (ACBrTitulo.Carteira = 'RG') or (ACBrTitulo.Carteira = 'SR') then
+      begin
+        if ACBrTitulo.CarteiraEnvio = tceCedente then
+          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
+        else if (StrToIntDef(ANossoNumero,0)) <> 0  then
+          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
+        else
+          ANossoNumero := AModalidade + PadLeft(ANossoNumero, 15, '0')
       end
       else
          raise Exception.Create( ACBrStr('Carteira Inválida.'+sLineBreak+'Utilize "RG" ou "SR"') ) ;
@@ -364,8 +391,7 @@ begin
                PadRight('', 9, ' ')                        + //9 a 17 Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                          + //18 - Tipo de inscrição do cedente
                PadLeft(OnlyNumber(CNPJCPF), 14, '0')      + //19 a 32 -Número de inscrição do cedente
-               //PadRight(CodigoCedente, 18, '0') + '  '     + //33 a 52 - Código do convênio no banco [ Alterado conforme instruções da CSO Brasília ] 27-07-09
-               PadRight('',20, '0')                        +  //33 a 52 - Código do convênio no banco
+               PadRight('',20, '0')                               +  //33 a 52 - Código do convênio no banco  [ Alterado conforme instruções da CSO Brasília ] 27-07-09
                PadLeft(OnlyNumber(Agencia), 5, '0')       + //53 a 57 - Código da agência do cedente
                PadRight(AgenciaDigito, 1 , '0')            + //58 - Dígito da agência do cedente
                PadLeft(CodigoCedente, 6, '0')             + //59 a 64 - Código Cedente (Código do Convênio no Banco)
@@ -446,11 +472,14 @@ end;
 
 function TACBrCaixaEconomica.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo): String;
 var
-  ATipoOcorrencia, ATipoBoleto, ADataMoraJuros         : String;
+  ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade        : String;
   ADataDesconto, ADataMulta, ANossoNumero, ATipoAceite, AEspecieDoc: String; 
 begin
    with ACBrTitulo do
    begin
+      {Pegando a Modalidade}
+        AModalidade:= RetornaModalidade(ACBrTitulo);
+
       if ( Trim(ACBrTitulo.NossoNumero) <> '' ) then
         ANossoNumero := FormataNossoNumero(ACBrTitulo)
       else
@@ -584,7 +613,7 @@ begin
                PadRight(ACBrBoleto.Cedente.AgenciaDigito, 1 , '0')            + //23 -Dígito verificador da agência
                PadRight(ACBrBoleto.Cedente.CodigoCedente, 6, '0')             + //24 a 29 - Código do Convênio no Banco (Codigo do cedente)
                PadRight('', 11, '0')                                          + //30 a 40 - Uso Exclusivo da CAIXA
-               PadRight(Copy(ANossoNumero,1,2), 2, '0')                                                        + //41 a 42 - Modalidade da Carteira
+               PadRight(Copy(AModalidade,1,2), 2, '0')                    + //41 a 42 - Modalidade da Carteira
                PadLeft(Copy(ANossoNumero,3,17), 15, '0')                     + //43 a 57 - Nosso número - identificação do título no banco
                '1'                                                        + //58 - Cobrança Simples
                '1'                                                        + //59 - Forma de cadastramento do título no banco: com cadastramento  1-cobrança Registrada
@@ -681,7 +710,7 @@ end;
 
 procedure TACBrCaixaEconomica.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
-  ATipoOcorrencia, ATipoBoleto, ADataMoraJuros               :String;
+  ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade  :String;
   aDataDesconto, ANossoNumero, ATipoAceite, ATipoEspecieDoc  :String;
   ATipoSacado, ATipoCendente, AMensagem, wLinha              :String;
   TamConvenioMaior6                                          :Boolean;
@@ -708,8 +737,8 @@ var
                   PadLeft(OnlyNumber(ACBrBoleto.Cedente.CodigoCedente), 6, '0')  + //  22 até 27 - Código do Cedente
                   Space(4)                                                       + //  28 até 31 - Uso Exclusivo CAIXA
                   Space(25)                                                      + //  32 até 56 - Campo em Branco
-                  PadLeft(ACBrBoleto.Cedente.Modalidade, 2, '0')                 + //  57 até 58 - Modalidade
-                  PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                    + //  59 até 73 - Nosso Numero
+                  PadRight(Copy(AModalidade,1,2), 2, '0')                        + //  57 até 58 - Modalidade
+                  PadLeft(Copy(ANossoNumero, 1, 15), 15, '0')                    + //  59 até 73 - Nosso Numero
                   Space(33)                                                      + //  74 até 106 - Campos em Branco
                   '01'                                                           + // 107 até 108 - Código Carteira //PadLeft(IntToStr(RetornaCodCarteira(Carteira)),2,'0')
                   ATipoOcorrencia                                                + // 109 até 110 - Código da ocorrencia
@@ -761,6 +790,9 @@ var
 begin
    with ACBrTitulo do
    begin
+      {Pegando a Modalidade}
+      AModalidade:= RetornaModalidade(ACBrTitulo);
+
       wCarteira:= RetornaCodCarteira(Carteira, ACBrTitulo);
       if (((wCarteira = 11) or (wCarteira= 31) or (wCarteira = 51)) or
          ((wCarteira = 12) or (wCarteira = 15) or (wCarteira = 17)) and
@@ -875,8 +907,8 @@ begin
                   ATipoBoleto                                                      + // 28 a 29    - Quem emite e quem distribui
                   '00'                                                             + // 30 a 31    - Comissão de permanência - informar 00
                   PadLeft(OnlyNumber(ACBrTitulo.SeuNumero), 25)                    + // 32 até 56  - Seu numero
-                  PadLeft(ACBrBoleto.Cedente.Modalidade, 2, '0')                   + // 57 até 58  - Modalidade identificação
-                  PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                      + // 59 até 73  - Nosso Numero
+                  PadRight(Copy(AModalidade,1,2), 2, '0')                          + // 57 até 58  - Modalidade identificação
+                  PadLeft(Copy(ANossoNumero, 3, 17), 15, '0')                      + // 59 até 73  - Nosso Numero
                   Space(3)                                                         + // 74 Até 76  - Brancos
                   PadRight(AMensagem, 30)                                          + //77 até  106 - mensagem impressa
                   '01'                                                             + //107 até 108 - Código Carteira //PadLeft(IntToStr(RetornaCodCarteira(Carteira)),2,'0')
@@ -1523,8 +1555,7 @@ begin
       14: Result := '14-Confirmação Recebimento Instrução Alteração de Vencimento';
       19: Result := '19-Confirmação Recebimento Instrução de Protesto';
       20: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
-      23: Result := '23-Remessa a Cartório';
-      24: Result := '24-Retirada de Cartório';
+      25: Result := '25-Potestado e Baixado (Baixa por ter sido protestado)';
       26: Result := '26-Instrução Rejeitada';
       27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
       28: Result := '28-Débito de Tarifas/Custas';

@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.224';
+  CACBrBoleto_Versao = '0.0.225';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -267,7 +267,8 @@ type
     cobBancoSafra,
     cobSafraBradesco,
     cobBancoCECRED,
-    cobBancoDaAmazonia
+    cobBancoDaAmazonia,
+    cobBancoDoBrasilSICOOB
     );
 
   TACBrTitulo = class;
@@ -939,6 +940,7 @@ type
     fDataDesconto         : TDateTime;
     fDataMoraJuros        : TDateTime;
     fDataProtesto         : TDateTime;
+    fDiasDeProtesto       : Integer;
     fDataBaixa            : TDateTime;
     fDataLimitePagto      : TDateTime;
     fValorDespesaCobranca : Currency;
@@ -969,17 +971,21 @@ type
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(AValue: String);
+    procedure SetDiasDeProtesto(AValue: Integer);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
     procedure SetTotalParcelas ( const AValue: Integer );
     procedure SetCodigoGeracao (AValue: String);
+    procedure SetDataProtesto(AValue: TDateTime);
+    procedure SetVencimento(AValue: TDateTime);
+    procedure AtualizaDadosProtesto();
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
 
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
-     property Vencimento        : TDateTime   read fVencimento        write fVencimento;
+     property Vencimento        : TDateTime   read fVencimento        write SetVencimento;
      property DataDocumento     : TDateTime   read fDataDocumento     write fDataDocumento;
      property NumeroDocumento   : String      read fNumeroDocumento   write fNumeroDocumento ;
      property EspecieDoc        : String      read fEspecieDoc        write fEspecieDoc;
@@ -1018,7 +1024,8 @@ type
      property DataAbatimento                 : TDateTime read fDataAbatimento  write fDataAbatimento;
      property DataDesconto                   : TDateTime read fDataDesconto    write fDataDesconto;
      property DataMoraJuros                  : TDateTime read fDataMoraJuros   write fDataMoraJuros;
-     property DataProtesto                   : TDateTime read fDataProtesto    write fDataProtesto;
+     property DataProtesto                   : TDateTime read fDataProtesto    write SetDataProtesto;
+     property DiasDeProtesto                 : Integer   read fDiasDeProtesto  write SetDiasDeProtesto;
      property DataBaixa                      : TDateTime read fDataBaixa       write fDataBaixa;
      property DataLimitePagto                : TDateTime read fDataLimitePagto write fDataLimitePagto;
 
@@ -1213,7 +1220,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoItau, ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
-     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred;
+     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSICOOB;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
@@ -1415,6 +1422,15 @@ begin
   fCodigoMora := AValue;
 end;
 
+procedure TACBrTitulo.SetDiasDeProtesto(AValue: Integer);
+begin
+  if (fDiasDeProtesto = AValue) then
+    Exit;
+  fDiasDeProtesto := AValue;
+  fDataProtesto := 0;
+  AtualizaDadosProtesto();
+end;
+
 procedure TACBrTitulo.SetCodigoGeracao(AValue: String);
 begin
   if fCodigoGeracao = AValue then
@@ -1424,6 +1440,52 @@ begin
      raise Exception.Create( ACBrStr('Código de Geração Inválido!') );
 
   fCodigoGeracao := AValue;
+end;
+
+procedure TACBrTitulo.SetDataProtesto(AValue: TDateTime);
+begin
+  if (fDataProtesto = AValue) then
+    Exit;
+
+   if (fTipoDiasProtesto = diUteis) then
+     fDataProtesto:= IncWorkingDay(AValue,0)
+   else
+     fDataProtesto := Avalue;
+
+  fDiasDeProtesto := 0;
+  AtualizaDadosProtesto();
+
+end;
+
+procedure TACBrTitulo.SetVencimento(AValue: TDateTime);
+begin
+  if (fVencimento = AValue) then
+    Exit;
+
+  fVencimento := AValue;
+
+  AtualizaDadosProtesto();
+end;
+
+procedure TACBrTitulo.AtualizaDadosProtesto;
+  begin
+    if fVencimento > 0 then
+  begin
+    if (fDataProtesto > 0) then
+    begin
+      if (fTipoDiasProtesto = diUteis) then
+        fDiasDeProtesto := WorkingDaysBetween(fVencimento, fDataProtesto)
+      else
+        fDiasDeProtesto := DaysBetween(fVencimento, fDataProtesto);
+      exit;
+    end
+
+    else if (fDiasDeProtesto > 0) then
+    begin
+      fDataProtesto   := IncWorkingDay(fVencimento,fDiasDeProtesto);
+    end;
+
+  end;
 end;
 
 procedure TACBrTitulo.SetParcela ( const AValue: Integer ) ;
@@ -1480,6 +1542,7 @@ begin
    fDataDesconto         := 0;
    fDataMoraJuros        := 0;
    fDataProtesto         := 0;
+   fDiasDeProtesto       := 0;
    fDataBaixa            := 0;
    fDataLimitePagto      := 0;
    fValorDespesaCobranca := 0;
@@ -1743,7 +1806,8 @@ begin
          if TipoDiasProtesto = diCorridos then
             AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dias corridos após o vencimento'))
          else
-            AStringList.Add(ACBrStr('Protestar no ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dia útil após o vencimento'));
+            AStringList.Add(ACBrStr('Protestar no ' + ifthen(DiasDeProtesto = 0,' 1º dia útil após o vencimento',
+                                                             IntToStr(DiasDeProtesto) + ' dia útil após o vencimento')));
       end;
 
       if ValorAbatimento <> 0 then
@@ -1953,26 +2017,27 @@ begin
    fBancoClass.Free;
 
    case AValue of
-     cobBancoDoBrasil  : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-     cobBancoDaAmazonia: fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
-     cobBancoDoNordeste: fBancoClass := TACBrBancoNordeste.create(Self);       {004}
-     cobBanestes       : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
-     cobSantander      : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
-     cobBanrisul       : fBancoClass := TACBrBanrisul.create(Self);            {041}
-     cobBRB            : fBancoClass := TACBrBancoBRB.create(Self);            {070}
-     cobBancoCECRED    : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
-     cobCaixaEconomica : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
-     cobCaixaSicob     : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
-     cobBradesco       : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
-     cobItau           : fBancoClass := TACBrBancoItau.Create(Self);           {341}
-     cobBancoMercantil : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
-     cobSicred         : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
-     cobBancoob        : fBancoClass := TACBrBancoob.create(Self);             {756}
-     cobHSBC           : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
-     cobBicBanco       : fBancoClass := TACBrBancoBic.create(Self);            {237}
-     cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
-     cobBancoSafra     : fBancoClass := TACBrBancoSafra.create(Self);          {422}
-     cobSafraBradesco  : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
+     cobBancoDoBrasil       : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilSICOOB : fBancoClass := TACBrBancoBrasilSICOOB.Create(Self);   {001}
+     cobBancoDaAmazonia     : fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
+     cobBancoDoNordeste     : fBancoClass := TACBrBancoNordeste.create(Self);       {004}
+     cobBanestes            : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
+     cobSantander           : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
+     cobBanrisul            : fBancoClass := TACBrBanrisul.create(Self);            {041}
+     cobBRB                 : fBancoClass := TACBrBancoBRB.create(Self);            {070}
+     cobBancoCECRED         : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
+     cobCaixaEconomica      : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
+     cobCaixaSicob          : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
+     cobBradesco            : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
+     cobItau                : fBancoClass := TACBrBancoItau.Create(Self);           {341}
+     cobBancoMercantil      : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
+     cobSicred              : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
+     cobBancoob             : fBancoClass := TACBrBancoob.create(Self);             {756}
+     cobHSBC                : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
+     cobBicBanco            : fBancoClass := TACBrBancoBic.create(Self);            {237}
+     cobBradescoSICOOB      : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
+     cobBancoSafra          : fBancoClass := TACBrBancoSafra.create(Self);          {422}
+     cobSafraBradesco       : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;

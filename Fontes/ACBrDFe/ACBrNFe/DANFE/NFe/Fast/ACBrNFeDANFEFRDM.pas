@@ -1394,7 +1394,7 @@ begin
         FieldDefs.Add('CPais', ftString, 4);
         FieldDefs.Add('XPais', ftString, 60);
         FieldDefs.Add('Fone', ftString, 15);
-        FieldDefs.Add('IE', ftString, 14);
+        FieldDefs.Add('IE', ftString, 15);
         FieldDefs.Add('IM', ftString, 15);
         FieldDefs.Add('IEST', ftString, 15);
         FieldDefs.Add('CRT', ftString, 1);
@@ -1625,7 +1625,7 @@ begin
         FieldDefs.Add('ModFrete', ftString, 14);
         FieldDefs.Add('CNPJCPF', ftString, 18);
         FieldDefs.Add('XNome', ftString, 60);
-        FieldDefs.Add('IE', ftString, 14);
+        FieldDefs.Add('IE', ftString, 15);
         FieldDefs.Add('XEnder', ftString, 60);
         FieldDefs.Add('XMun', ftString, 60);
         FieldDefs.Add('UF', ftString, 2);

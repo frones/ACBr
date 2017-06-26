@@ -44,6 +44,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/06/2017
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade "TArquivosConf.OrdenacaoPath", que permite definir
+    a ordem de criação dos subdiretórios. Mantém a compatibilidade da ordem
+    anterior, por motivo de compatibilidade, e respeitando as propriedades:
+    SepararPorCNPJ, SepararPorModelo, SepararPorAno/Mes/Dia, AdicionarLiteral
+    http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diret%C3%B3rio-di%C3%A1rio/?do=findComment&comment=244884
+    (por: -=Ma®©oS=- e BigWings)
+
 21/06/2016
 -- ACBrDFeSSL --
 [+] Adicionada a propriedade TDadosCertificado.ThumbPrint

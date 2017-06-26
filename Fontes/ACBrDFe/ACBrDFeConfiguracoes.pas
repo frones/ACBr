@@ -47,6 +47,8 @@ uses
 
 type
 
+  TTagOrdenacaoPath = (opNenhum, opCNPJ, opModelo, opData, opLiteral);
+
   TConfiguracoes = class;
 
   { TCertificadosConf }
@@ -153,6 +155,28 @@ type
     property TimeZoneConf: TTimeZoneConf read FTimeZoneConf write FTimeZoneConf;
   end;
 
+  TOrdenacaoPathItem = class;
+
+  TOrdenacaoPath = class(TOwnedCollection)
+  private
+    function GetItem(Index: Integer): TOrdenacaoPathItem;
+    procedure SetItem(Index: Integer; Value: TOrdenacaoPathItem);
+  public
+    function Add: TOrdenacaoPathItem;
+    property Items[Index: Integer]: TOrdenacaoPathItem read GetItem write SetItem; default;
+  end;
+
+  TOrdenacaoPathItem = class(TCollectionItem)
+  private
+    FItem: TTagOrdenacaoPath;
+  protected
+    function GetDisplayName: String; override;
+  public
+    procedure Assign(Source: TPersistent); override;
+  published
+    property Item: TTagOrdenacaoPath read FItem write FItem;
+  end;
+
   { TGeralConf }
 
   TGeralConf = class(TComponent)
@@ -221,6 +245,7 @@ type
     FAdicionarLiteral: Boolean;
     FSepararPorCNPJ: Boolean;
     FSepararPorModelo: Boolean;
+    FOrdenacaoPath: TOrdenacaoPath;
     FSepararPorAno: Boolean;
     FSepararPorMes: Boolean;
     FSepararPorDia: Boolean;
@@ -235,6 +260,7 @@ type
     fpConfiguracoes: TConfiguracoes;
   public
     constructor Create(AConfiguracoes: TConfiguracoes); reintroduce; overload; virtual;
+    destructor Destroy; override;
     procedure Assign(DeArquivosConf: TArquivosConf); reintroduce; virtual;
 
     function GetPath(APath: String; ALiteral: String; CNPJ: String = '';
@@ -248,6 +274,7 @@ type
     property AdicionarLiteral: Boolean read FAdicionarLiteral write FAdicionarLiteral default False;
     property SepararPorCNPJ: Boolean read FSepararPorCNPJ write FSepararPorCNPJ default False;
     property SepararPorModelo: Boolean read FSepararPorModelo write FSepararPorModelo default False;
+    property OrdenacaoPath: TOrdenacaoPath read FOrdenacaoPath write FOrdenacaoPath;
     property SepararPorAno: Boolean read FSepararPorAno write SetSepararPorAno default False;
     property SepararPorMes: Boolean read FSepararPorMes write SetSepararPorMes default False;
     property SepararPorDia: Boolean read FSepararPorDia write SetSepararPorDia default False;
@@ -773,6 +800,7 @@ end;
 constructor TArquivosConf.Create(AConfiguracoes: TConfiguracoes);
 begin
   inherited Create(AConfiguracoes);
+  FOrdenacaoPath := TOrdenacaoPath.Create(Self, TOrdenacaoPathItem);
 
   fpConfiguracoes := AConfiguracoes;
   FSalvar := True;
@@ -788,6 +816,12 @@ begin
   FSepararPorModelo := False;
 end;
 
+destructor TArquivosConf.Destroy;
+begin
+  FOrdenacaoPath.Free;
+  inherited;
+end;
+
 procedure TArquivosConf.Assign(DeArquivosConf: TArquivosConf);
 begin
   PathSalvar       := DeArquivosConf.PathSalvar;
@@ -799,6 +833,7 @@ begin
   SepararPorModelo := DeArquivosConf.SepararPorModelo;
   SepararPorMes    := DeArquivosConf.SepararPorMes;
   SepararPorDia    := DeArquivosConf.SepararPorDia;
+  OrdenacaoPath    := DeArquivosConf.OrdenacaoPath;
 end;
 
 function TArquivosConf.GetPathSalvar: String;
@@ -851,67 +886,93 @@ end;
 
 function TArquivosConf.GetPath(APath: String; ALiteral: String; CNPJ: String;
   Data: TDateTime; ModeloDescr: String): String;
+
+  procedure AddPathOrder(AAdicionar: Boolean; AItemOrdenacaoPath: TTagOrdenacaoPath);
+  begin
+    if AAdicionar then
+      FOrdenacaoPath.Add.Item := AItemOrdenacaoPath;
+  end;
+  
 var
   wDia, wMes, wAno: word;
   Dir, Modelo, sAno, sMes, sDia: String;
-  LenLiteral: integer;
+  LenLiteral, i: integer;
 begin
   if EstaVazio(APath) then
     Dir := PathSalvar
   else
     Dir := APath;
 
-  if SepararPorCNPJ then
+  //se nao foi informada nenhuma ordenação, cria ordenação na ordem anterior (compatibilidade)
+  if (FOrdenacaoPath.Count = 0) then
   begin
-    CNPJ := OnlyNumber(CNPJ);
-
-    if EstaVazio(CNPJ) then
-      CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
-
-    if NaoEstaVazio(CNPJ) then
-      Dir := PathWithDelim(Dir) + CNPJ;
+    AddPathOrder(SepararPorCNPJ, opCNPJ);
+    AddPathOrder(SepararPorModelo, opModelo);
+    AddPathOrder((SepararPorAno or SepararPorMes or SepararPorDia), opData);
+    AddPathOrder(AdicionarLiteral, opLiteral);
   end;
 
-  if SepararPorModelo then
+  for i := 0 to FOrdenacaoPath.Count - 1 do
   begin
-    if ModeloDescr = '' then
-      Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe
-    else
-      Modelo := ModeloDescr;
+    case FOrdenacaoPath[i].Item of
+      opCNPJ:
+        begin
+          CNPJ := OnlyNumber(CNPJ);
 
-    Dir := PathWithDelim(Dir) + Modelo;
-  end;
+          if EstaVazio(CNPJ) then
+            CNPJ := OnlyNumber(TACBrDFe(fpConfiguracoes.Owner).SSL.CertCNPJ);
 
-  if (SepararPorAno or SepararPorMes or SepararPorDia) then
-  begin
-    if Data = 0 then
-      Data := Now;
+          if NaoEstaVazio(CNPJ) then
+            Dir := PathWithDelim(Dir) + CNPJ;
+        end;
 
-    DecodeDate(Data, wAno, wMes, wDia);
-    sDia := IntToStrZero(wDia, 2);
-    sMes := IntToStrZero(wMes, 2);
-    sAno := IntToStrZero(wAno, 4);
-  end;
+      opModelo:
+        begin
+          if ModeloDescr = '' then
+            Modelo := TACBrDFe(fpConfiguracoes.Owner).GetNomeModeloDFe
+          else
+            Modelo := ModeloDescr;
 
-  if SepararPorAno then
-    Dir := PathWithDelim(Dir) + sAno;
+          Dir := PathWithDelim(Dir) + Modelo;
 
-  if SepararPorMes then
-  begin
-    if SepararPorAno then
-      Dir := PathWithDelim(Dir) + sMes
-    else
-      Dir := PathWithDelim(Dir) + sAno + sMes;
+        end;
 
-    if SepararPorDia then
-      Dir := PathWithDelim(Dir) + sDia;
-  end;
+      opData:
+        begin
+          if Data = 0 then
+            Data := Now;
 
-  LenLiteral := Length(ALiteral);
-  if AdicionarLiteral and (LenLiteral > 0) then
-  begin
-    if RightStr(Dir, LenLiteral) <> ALiteral then
-      Dir := PathWithDelim(Dir) + ALiteral;
+          DecodeDate(Data, wAno, wMes, wDia);
+          sDia := IntToStrZero(wDia, 2);
+          sMes := IntToStrZero(wMes, 2);
+          sAno := IntToStrZero(wAno, 4);
+
+          if SepararPorAno then
+            Dir := PathWithDelim(Dir) + sAno;
+
+          if SepararPorMes then
+          begin
+            if SepararPorAno then
+              Dir := PathWithDelim(Dir) + sMes
+            else
+              Dir := PathWithDelim(Dir) + sAno + sMes;
+
+            if SepararPorDia then
+              Dir := PathWithDelim(Dir) + sDia;
+          end;
+        end;
+
+      opLiteral:
+        begin
+          LenLiteral := Length(ALiteral);
+
+          if (LenLiteral > 0) then
+          begin
+            if RightStr(Dir, LenLiteral) <> ALiteral then
+              Dir := PathWithDelim(Dir) + ALiteral;
+          end;
+        end;
+    end;
   end;
 
   if not DirectoryExists(Dir) then
@@ -920,7 +981,43 @@ begin
   Result := Dir;
 end;
 
+{ TOrdenacaoPath }
+
+function TOrdenacaoPath.Add: TOrdenacaoPathItem;
+begin
+  Result := TOrdenacaoPathItem(inherited Add);
+end;
+
+function TOrdenacaoPath.GetItem(Index: Integer): TOrdenacaoPathItem;
+begin
+  Result := TOrdenacaoPathItem(inherited GetItem(Index));
+end;
+
+procedure TOrdenacaoPath.SetItem(Index: Integer; Value: TOrdenacaoPathItem);
+begin
+  inherited SetItem(Index, Value);
+end;
+
+{ TOrdenacaoPathItem }
+
+procedure TOrdenacaoPathItem.Assign(Source: TPersistent);
+begin
+  if Source is TOrdenacaoPathItem then
+    FItem := TOrdenacaoPathItem(Source).FItem
+  else
+    inherited Assign(Source);
+end;
+
+function TOrdenacaoPathItem.GetDisplayName: String;
+begin
+  case FItem of
+    opNenhum:   Result := '(nenhum)';
+    opCNPJ:     Result := 'CNPJ';
+    opModelo:   Result := 'Modelo';
+    opData:     Result := 'Data';
+    opLiteral:  Result := 'Literal';
+  end;
+end;
 
 end.
 
-// TODO: Salvar senha do Certificado na memória de forma criptograda

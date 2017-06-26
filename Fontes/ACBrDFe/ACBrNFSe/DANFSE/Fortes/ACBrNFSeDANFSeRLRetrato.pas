@@ -518,7 +518,7 @@ begin
         rllPrestEmail.Caption         := IfThen( Email <> '' , Email , FEMail_Prestador);
       end;
 
-      rllPrestNomeEnt.Caption         := FRazaoSocial;
+      rllPrestNomeEnt.Caption         := IfThen(RazaoSocial <> '', RazaoSocial, FRazaoSocial);
       rllNumNF0Ent.Caption            := FormatFloat('00000000000', StrToFloatDef(Numero, 0));
       rllTomadorNomeEnt.Caption       := ACBrStr('Emissão:') + FormatDateTime('dd/mm/yy',DataEmissao) +
                                          '-Tomador:'+Tomador.RazaoSocial+

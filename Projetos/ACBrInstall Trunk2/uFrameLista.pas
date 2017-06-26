@@ -125,6 +125,7 @@ type
     ACBr_MTER_dpk: TCheckBox;
     Label26: TLabel;
     ACBr_SATWS_dpk: TCheckBox;
+    ACBr_BPe_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

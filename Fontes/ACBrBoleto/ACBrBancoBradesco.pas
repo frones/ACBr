@@ -224,7 +224,7 @@ begin
                                                    ACBrTitulo.NossoNumero);
 
 
-      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (StrToIntDef(ANossoNumero) = 0) then
+      if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (StrToIntDef(ANossoNumero,0) = 0) then
         DigitoNossoNumero := '0'
       else
       begin

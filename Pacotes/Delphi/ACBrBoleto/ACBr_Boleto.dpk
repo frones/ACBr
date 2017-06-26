@@ -52,7 +52,6 @@ contains
   ACBrBancoCecred in '..\..\..\Fontes\ACBrBoleto\ACBrBancoCecred.pas',
   ACBrBancoSafra in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafra.pas',
   ACBrBancoAmazonia in '..\..\..\Fontes\ACBrBoleto\ACBrBancoAmazonia.pas',
-  ACBrBancoSafraBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas',
-  ACBrBancooBrasilSicoob in '..\..\..\Fontes\ACBrBoleto\ACBrBancoBrasilSicoob.pas';
+  ACBrBancoSafraBradesco in '..\..\..\Fontes\ACBrBoleto\ACBrBancoSafraBradesco.pas';
 
 end.

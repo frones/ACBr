@@ -254,7 +254,7 @@ end;
 function TACBrBancoBrasil.MontarCampoCarteira(const ACBrTitulo: TACBrTitulo
   ): String;
 begin
-  Result := IfThen(ACBrTitulo.ACBrBoleto.Cedente.Modalidade.IsEmpty,
+  Result := IfThen(ACBrTitulo.ACBrBoleto.Cedente.Modalidade = '',
                    ACBrTitulo.Carteira,
                    ACBrTitulo.Carteira + '/' + ACBrTitulo.ACBrBoleto.Cedente.Modalidade );
 end;

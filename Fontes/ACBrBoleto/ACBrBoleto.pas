@@ -1221,7 +1221,7 @@ Uses Forms, Math, dateutils, strutils,
      ACBrBancoItau, ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
-     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred;
+     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSICOOB;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}

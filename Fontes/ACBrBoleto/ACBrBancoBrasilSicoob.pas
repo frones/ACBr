@@ -39,7 +39,7 @@
 
 {$I ACBr.inc}
 
-unit ACBrBancoBrasilSICOOB;
+unit ACBrBancoBrasilSicoob;
 
 interface
 

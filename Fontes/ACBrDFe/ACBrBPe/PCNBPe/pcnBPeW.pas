@@ -191,7 +191,7 @@ begin
   BPe.infBPe.ID := chave;
 
   BPe.ide.cDV := RetornarDigito(BPe.infBPe.ID);
-  BPe.Ide.cBP := RetornarCodigoNumerico(BPe.infBPe.ID, BPe.infBPe.Versao);
+  BPe.Ide.cBP := RetornarCodigoNumerico(BPe.infBPe.ID, 2);
 
   // Carrega Layout que sera utilizado para gera o txt
   Gerador.LayoutArquivoTXT.Clear;
@@ -551,7 +551,7 @@ begin
   Gerador.wCampo(tcStr, '#090', 'tpDoc', 01, 01, 1, tpDocumentoToStr(BPe.infPassagem.infPassageiro.tpDoc), DSC_TPDOC);
   Gerador.wCampo(tcStr, '#091', 'nDoc ', 02, 20, 1, BPe.infPassagem.infPassageiro.nDoc, DSC_NDOC);
   Gerador.wCampo(tcDat, '#092', 'dNasc', 10, 10, 0, BPe.infPassagem.infPassageiro.dNasc, DSC_DNASC);
-  Gerador.wCampo(tcStr, '#093', 'Fone ', 07, 12, 0, BPe.infPassagem.infPassageiro.Fone, DSC_FONE);
+  Gerador.wCampo(tcStr, '#093', 'Fone ', 07, 12, 0, OnlyNumber(BPe.infPassagem.infPassageiro.Fone), DSC_FONE);
   Gerador.wCampo(tcStr, '#094', 'Email', 01, 60, 0, BPe.infPassagem.infPassageiro.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/infPassageiro');
@@ -571,7 +571,10 @@ begin
     Gerador.wCampo(tcStr, '#099', 'tpServ      ', 01,  01, 1, tpServicoToStr(BPe.infViagem[i].tpServ), DSC_TPSERVICO);
     Gerador.wCampo(tcStr, '#100', 'tpAcomodacao', 01,  01, 1, tpAcomodacaoToStr(BPe.infViagem[i].tpAcomodacao), DSC_TPACOMODACAO);
     Gerador.wCampo(tcStr, '#101', 'tpTrecho    ', 01,  01, 1, tpTrechoToStr(BPe.infViagem[i].tpTrecho), DSC_TPTRECHO);
-    Gerador.wCampo(tcStr, '#102', 'dhConexao   ', 25,  25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
+
+    if BPe.infViagem[i].tpTrecho = ttConexao then
+      Gerador.wCampo(tcStr, '#102', 'dhConexao   ', 25,  25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
+
     Gerador.wCampo(tcStr, '#103', 'Prefixo     ', 01,  20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
     Gerador.wCampo(tcInt, '#104', 'Poltrona    ', 01,  03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
     Gerador.wCampo(tcStr, '#105', 'Plataforma  ', 02,  10, 0, BPe.infViagem[i].Plataforma, DSC_PLATAFORMA);

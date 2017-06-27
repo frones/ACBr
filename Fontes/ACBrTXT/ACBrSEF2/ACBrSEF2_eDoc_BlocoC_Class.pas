@@ -41,8 +41,10 @@
 unit ACBrSEF2_eDoc_BlocoC_Class;
 
 interface
-  Uses SysUtils, Classes, ACBrSEF2Conversao,
-  ACBrSEF2_eDoc_BlocoC;
+
+Uses
+  SysUtils, Classes,
+  ACBrSEF2Conversao, ACBrSEF2_eDoc_BlocoC;
 
 type 
 

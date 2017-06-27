@@ -43,7 +43,9 @@ unit ACBrSEF2Conversao;
 
 interface
 
-Uses SysUtils, Classes, ACBrTXTClass, contnrs, pcnConversao;
+Uses
+  SysUtils, Classes, contnrs,
+  ACBrTXTClass, pcnConversao;
 
   /// Código da finalidade do arquivo - TRegistro0000
   type TSEFIICodFinalidade = (raOriginal,     // 0 - Remessa do arquivo original

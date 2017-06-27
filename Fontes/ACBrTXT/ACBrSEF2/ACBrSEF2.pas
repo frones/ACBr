@@ -48,15 +48,16 @@ unit ACBrSEF2;
 
 interface
 
-uses SysUtils, Classes, ACBrBase,
+uses
+  SysUtils, Classes,
+  ACBrBase,
      {$IFNDEF NOGUI}
       {$IFDEF FPC}
        LResources,
       {$ENDIF}
      {$ENDIF}
   ACBrTXTClass, ACBrSEF2_Bloco0_1, ACBrSEF2_BlocoE_1, ACBrSEF2_Bloco9,
-  ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2_BlocoH_1, ACBrSEF2Conversao, ACBrSEF2_BlocoF_1, ACBrSEF2_BlocoF,
-  ACBrUtil, DateUtils;
+  ACBrSEF2_eDoc_BlocoC_Class, ACBrSEF2_BlocoH_1, ACBrSEF2Conversao, ACBrSEF2_BlocoF_1;
 
 const
   CACBrSEF2_Versao = '0.21';
@@ -179,6 +180,9 @@ type
 procedure Register;
 
 implementation
+
+Uses
+  DateUtils, ACBrUtil;
 
 {$IFNDEF FPC}
  {$R ACBrSEF2.dcr}

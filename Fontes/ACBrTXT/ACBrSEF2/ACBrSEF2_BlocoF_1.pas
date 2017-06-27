@@ -38,8 +38,8 @@ unit ACBrSEF2_BlocoF_1;
 interface
 
 Uses
-  SysUtils, Classes, Contnrs, ACBrSEF2_BlocoF, ACBrSEF2Conversao,
-  ACBrTXTClass, ACBrSEF2_Bloco9;
+  SysUtils, Classes, Contnrs,
+  ACBrSEF2_BlocoF, ACBrSEF2Conversao;
 
 type
  { TBloco_F }

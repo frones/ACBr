@@ -9,9 +9,9 @@ interface
 uses
   ACBrBoleto, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoItau, 
   ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoBanrisul, ACBrBancoSantander, 
-  ACBrBancoBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, ACBrBancoBic, 
-  ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, ACBrBancoCaixaSICOB,
-  ACBrBancoBrasilSICOOB, LazarusPackageIntf;
+  ACBrBancoBancoob, ACBrBancoHSBC, ACBrBancoNordeste, ACBrBancoBRB, 
+  ACBrBancoBic, ACBrBancoBanestes, ACBrBancoCecred, ACBrBancoCaixa, 
+  ACBrBancoCaixaSICOB, ACBrBancoBrasilSicoob, LazarusPackageIntf;
 
 implementation
 

@@ -3,7 +3,7 @@ unit uDMForte;
 interface
 
 uses
-  System.SysUtils, System.Classes, ACBrBoleto, ACBrBase, ACBrBoletoFCFortesFr;
+  SysUtils, Classes, ACBrBoleto, ACBrBase, ACBrBoletoFCFortesFr;
 
 type
   TdmForte = class(TDataModule)
@@ -20,7 +20,6 @@ var
 
 implementation
 
-{%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
 

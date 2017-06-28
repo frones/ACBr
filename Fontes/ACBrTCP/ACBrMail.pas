@@ -741,21 +741,21 @@ begin
   end;
 
   // Sending Copies to Reply To //
-  c := fReplyTo.Count;
-  if c > 0 then
-    MailProcess(pmsSendReplyTo);
-
-  for i := 0 to c - 1 do
-  begin
-    for vAttempts := 1 to fAttempts do
-    begin
-      if fSMTP.MailTo(GetEmailAddr(fReplyTo.Strings[I])) then
-        Break;
-
-      if vAttempts >= fAttempts then
-        SmtpError('SMTP Error: Unable to send ReplyTo list.');
-    end;
-  end;
+  //c := fReplyTo.Count;
+  //if c > 0 then
+  //  MailProcess(pmsSendReplyTo);
+  //
+  //for i := 0 to c - 1 do
+  //begin
+  //  for vAttempts := 1 to fAttempts do
+  //  begin
+  //    if fSMTP.MailTo(GetEmailAddr(fReplyTo.Strings[I])) then
+  //      Break;
+  //
+  //    if vAttempts >= fAttempts then
+  //      SmtpError('SMTP Error: Unable to send ReplyTo list.');
+  //  end;
+  //end;
 
   // Sending MIMEMess Data //
   MailProcess(pmsSendData);

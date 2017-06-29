@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/06/2017
+-- ACBrECFVirtual --
+[-] Correção para Zerar totalizadores de "RelatoriosGerenciais.Contador", após a
+    Redução Z.
+    http://www.projetoacbr.com.br/forum/topic/37469-contador-de-relat%C3%B3rios-gerenciais-em-acbrecfvirtual/
+
 Data: 22/06/2017
 -- ACBrECFEscECF --
 [*] Método "IdentificaOperador" modificado para verificar o Operador atual, e

@@ -2679,6 +2679,9 @@ begin
     For A := 0 to fpComprovantesNaoFiscais.Count - 1 do
       fpComprovantesNaoFiscais[A].Total := 0 ;
 
+    For A := 0 to fpRelatoriosGerenciais.Count - 1 do
+        fpRelatoriosGerenciais[A].Contador := 0 ;
+
     AbreDia;
     AbreDocumento ;
   except

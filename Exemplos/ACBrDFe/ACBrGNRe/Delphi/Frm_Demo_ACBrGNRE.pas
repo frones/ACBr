@@ -8,7 +8,7 @@ uses IniFiles, ShellAPI,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, OleCtrls, SHDocVw, StdCtrls, Buttons, ExtCtrls,
   pcnConversao, pgnreConversao, ACBrGNRE2, ACBrGNREGuiaClass,
-  ACBrDFeUtil, ACBrBase, ACBrDFe, ACBrGNREGuiaFRDM, ACBrGNREGuiaFR;
+  ACBrDFeUtil, ACBrBase, ACBrDFe, ACBrGNREGuiaFR, ACBrGNReGuiaRLClass;
 
 type
   TfrmDemo_ACBrGNRE = class(TForm)
@@ -113,7 +113,7 @@ type
     MemoDados: TMemo;
     OpenDialog1: TOpenDialog;
     ACBrGNRE1: TACBrGNRE;
-    ACBrGNREGuiaFR1: TACBrGNREGuiaFR;
+    ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
     procedure sbtnCaminhoCertClick(Sender: TObject);
     procedure sbtnGetCertClick(Sender: TObject);
     procedure sbtnPathSalvarClick(Sender: TObject);

@@ -1,7 +1,7 @@
 object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
-  Left = 204
+  Left = 273
   Height = 568
-  Top = 131
+  Top = 186
   Width = 871
   ActiveControl = PageControl1
   Caption = 'Demo ACBrGNRE'
@@ -13,8 +13,7 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
-  Visible = False
+  LCLVersion = '1.6.4.0'
   object Panel1: TPanel
     Left = 0
     Height = 568
@@ -1448,11 +1447,16 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     OnStatusChange = ACBrGNRE1StatusChange
     OnGerarLog = ACBrGNRE1GerarLog
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Arquivos.PathSchemas = 'D:\Desenvolvimento\Pascal\componentes\acbr_trunk2\trunk2\Exemplos\ACBrDFe\Schemas\GNRe\'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
+    GNREGuia = ACBrGNREGuiaRL1
     left = 376
     top = 224
   end
@@ -1462,5 +1466,19 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     WantBracesParsed = False
     left = 512
     top = 224
+  end
+  object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
+    ACBrGNRE = ACBrGNRE1
+    MostrarPreview = True
+    MostrarStatus = True
+    TamanhoPapel = tpA4
+    NumCopias = 1
+    MargemInferior = 0.8
+    MargemSuperior = 0.8
+    MargemEsquerda = 0.6
+    MargemDireita = 0.51
+    PrintDialog = True
+    left = 372
+    top = 276
   end
 end

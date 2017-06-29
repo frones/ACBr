@@ -39,261 +39,264 @@ unit ACBrGNReGuiaRLRetrato;
 interface
 
 uses
-SysUtils, Variants, Classes, db, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter, pcnConversao,
+SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, RLReport, RLBarcode, RLPDFFilter,
    ACBrGNReGuiaRL,RLFilters,pgnreGNRERetorno,maskutils;
 
 type
 
   { TfrlGuiaRLRetrato }
 
-    TfrlGuiaRLRetrato = class(TfrlGuiaRL)
-      RLBand1: TRLBand;
-      RLDraw1: TRLDraw;
-      RLLabel1: TRLLabel;
-      RLDraw2: TRLDraw;
-      RLLabel2: TRLLabel;
-      RLLabel3: TRLLabel;
-      RLDBText1: TRLDBText;
-      RLLabel4: TRLLabel;
-      RLDBText2: TRLDBText;
-      RLLabel5: TRLLabel;
-      RLDBText3: TRLDBText;
-      RLDraw3: TRLDraw;
-      RLDraw4: TRLDraw;
-      RLLabel6: TRLLabel;
-      RLDBText4: TRLDBText;
-      RLLabel7: TRLLabel;
-      RLDBText5: TRLDBText;
-      RLLabel8: TRLLabel;
-      RLDBText6: TRLDBText;
-      RLLabel9: TRLLabel;
-      RLDBText7: TRLDBText;
-      RLLabel10: TRLLabel;
-      RLDBText8: TRLDBText;
-      RLLabel11: TRLLabel;
-      RLDBText9: TRLDBText;
-      RLDraw5: TRLDraw;
-      RLDraw6: TRLDraw;
-      RLDraw7: TRLDraw;
-      RLLabel12: TRLLabel;
-      RLDBText10: TRLDBText;
-      RLLabel13: TRLLabel;
-      RLDBText11: TRLDBText;
-      RLLabel14: TRLLabel;
-      RLDBText12: TRLDBText;
-      RLDraw8: TRLDraw;
-      RLDraw9: TRLDraw;
-      RLDraw10: TRLDraw;
-      RLDraw11: TRLDraw;
-      RLDraw12: TRLDraw;
-      RLDraw13: TRLDraw;
-      RLDraw14: TRLDraw;
-      RLDraw15: TRLDraw;
-      RLDraw16: TRLDraw;
-      RLLabel15: TRLLabel;
-      RLLabel16: TRLLabel;
-      RLLabel17: TRLLabel;
-      RLDBText14: TRLDBText;
-      RLLabel18: TRLLabel;
-      RLLabel19: TRLLabel;
-      RLLabel20: TRLLabel;
-      RLLabel21: TRLLabel;
-      RLDBText13: TRLDBText;
-      RLDBText15: TRLDBText;
-      RLLabel22: TRLLabel;
-      RLDBMemo1: TRLDBMemo;
-      RLLabel23: TRLLabel;
-      RLDBText16: TRLDBText;
-      RLDBText17: TRLDBText;
-      RLDBBarcode1: TRLDBBarcode;
-      RLLabel24: TRLLabel;
-      RLDBText18: TRLDBText;
-      RLLabel25: TRLLabel;
-      RLDraw17: TRLDraw;
-      RLLabel26: TRLLabel;
-      RLLabel27: TRLLabel;
-      RLLabel28: TRLLabel;
-      RLLabel29: TRLLabel;
-      RLLabel30: TRLLabel;
-      RLLabel31: TRLLabel;
-      RLLabel32: TRLLabel;
-      RLLabel33: TRLLabel;
-      RLLabel34: TRLLabel;
-      RLLabel35: TRLLabel;
-      RLLabel36: TRLLabel;
-      RLLabel37: TRLLabel;
-      RLMemo1: TRLMemo;
-      RLMemo2: TRLMemo;
-      RLDraw18: TRLDraw;
-      RLDraw19: TRLDraw;
-      RLDraw20: TRLDraw;
-      RLDraw21: TRLDraw;
-      RLDraw22: TRLDraw;
-      RLDraw23: TRLDraw;
-      RLDraw24: TRLDraw;
-      RLDraw25: TRLDraw;
-      RLDraw26: TRLDraw;
-      RLDraw27: TRLDraw;
-      RLDraw28: TRLDraw;
-      RLDraw29: TRLDraw;
-      RLDraw30: TRLDraw;
-      RLDraw31: TRLDraw;
-      RLDraw32: TRLDraw;
-      RLDraw33: TRLDraw;
-      RLDraw34: TRLDraw;
-      RLMemo3: TRLMemo;
-      RLLabel38: TRLLabel;
-      RLLabel39: TRLLabel;
-      RLLabel40: TRLLabel;
-      RLDBText19: TRLDBText;
-      RLLabel41: TRLLabel;
-      RLDBText20: TRLDBText;
-      RLLabel42: TRLLabel;
-      RLDBText21: TRLDBText;
-      RLLabel43: TRLLabel;
-      RLDBText22: TRLDBText;
-      RLLabel44: TRLLabel;
-      RLDBText23: TRLDBText;
-      RLLabel45: TRLLabel;
-      RLDBText24: TRLDBText;
-      RLLabel46: TRLLabel;
-      RLDBText25: TRLDBText;
-      RLLabel47: TRLLabel;
-      RLDBText26: TRLDBText;
-      RLLabel48: TRLLabel;
-      RLDBText27: TRLDBText;
-      RLLabel49: TRLLabel;
-      RLDBText28: TRLDBText;
-      RLLabel50: TRLLabel;
-      RLDBText29: TRLDBText;
-      RLLabel51: TRLLabel;
-      RLDBText30: TRLDBText;
-      RLLabel52: TRLLabel;
-      RLLabel53: TRLLabel;
-      RLLabel54: TRLLabel;
-      RLDBText31: TRLDBText;
-      RLLabel55: TRLLabel;
-      RLLabel56: TRLLabel;
-      RLLabel57: TRLLabel;
-      RLLabel58: TRLLabel;
-      RLDBText32: TRLDBText;
-      RLDBText33: TRLDBText;
-      RLLabel59: TRLLabel;
-      RLDBMemo2: TRLDBMemo;
-      RLLabel60: TRLLabel;
-      RLDBText34: TRLDBText;
-      RLDBText35: TRLDBText;
-      RLDBBarcode2: TRLDBBarcode;
-      RLLabel61: TRLLabel;
-      RLDBText36: TRLDBText;
-      RLLabel62: TRLLabel;
-      RLLabel63: TRLLabel;
-      RLLabel64: TRLLabel;
-      RLLabel65: TRLLabel;
-      RLLabel66: TRLLabel;
-      RLLabel67: TRLLabel;
-      RLLabel68: TRLLabel;
-      RLLabel69: TRLLabel;
-      RLLabel70: TRLLabel;
-      RLLabel71: TRLLabel;
-      RLLabel72: TRLLabel;
-      RLMemo4: TRLMemo;
-      RLLabel73: TRLLabel;
-      RLLabel74: TRLLabel;
-      RLDraw35: TRLDraw;
-      RLDraw36: TRLDraw;
-      RLDraw37: TRLDraw;
-      RLDraw38: TRLDraw;
-      RLDraw39: TRLDraw;
-      RLDraw40: TRLDraw;
-      RLDraw41: TRLDraw;
-      RLDraw42: TRLDraw;
-      RLDraw43: TRLDraw;
-      RLDraw44: TRLDraw;
-      RLDraw45: TRLDraw;
-      RLDraw46: TRLDraw;
-      RLDraw47: TRLDraw;
-      RLDraw48: TRLDraw;
-      RLDraw49: TRLDraw;
-      RLDraw50: TRLDraw;
-      RLDraw51: TRLDraw;
-      RLMemo5: TRLMemo;
-      RLLabel75: TRLLabel;
-      RLLabel76: TRLLabel;
-      RLLabel77: TRLLabel;
-      RLDBText37: TRLDBText;
-      RLLabel78: TRLLabel;
-      RLDBText38: TRLDBText;
-      RLLabel79: TRLLabel;
-      RLDBText39: TRLDBText;
-      RLLabel80: TRLLabel;
-      RLDBText40: TRLDBText;
-      RLLabel81: TRLLabel;
-      RLDBText41: TRLDBText;
-      RLLabel82: TRLLabel;
-      RLDBText42: TRLDBText;
-      RLLabel83: TRLLabel;
-      RLDBText43: TRLDBText;
-      RLLabel84: TRLLabel;
-      RLDBText44: TRLDBText;
-      RLLabel85: TRLLabel;
-      RLDBText45: TRLDBText;
-      RLLabel86: TRLLabel;
-      RLDBText46: TRLDBText;
-      RLLabel87: TRLLabel;
-      RLDBText47: TRLDBText;
-      RLLabel88: TRLLabel;
-      RLDBText48: TRLDBText;
-      RLLabel89: TRLLabel;
-      RLLabel90: TRLLabel;
-      RLLabel91: TRLLabel;
-      RLDBText49: TRLDBText;
-      RLLabel92: TRLLabel;
-      RLLabel93: TRLLabel;
-      RLLabel94: TRLLabel;
-      RLLabel95: TRLLabel;
-      RLDBText50: TRLDBText;
-      RLDBText51: TRLDBText;
-      RLLabel96: TRLLabel;
-      RLDBMemo3: TRLDBMemo;
-      RLLabel97: TRLLabel;
-      RLDBText52: TRLDBText;
-      RLDBText53: TRLDBText;
-      RLDBBarcode3: TRLDBBarcode;
-      RLLabel98: TRLLabel;
-      RLDBText54: TRLDBText;
-      RLLabel99: TRLLabel;
-      RLLabel100: TRLLabel;
-      RLLabel101: TRLLabel;
-      RLLabel102: TRLLabel;
-      RLLabel103: TRLLabel;
-      RLLabel104: TRLLabel;
-      RLLabel105: TRLLabel;
-      RLLabel106: TRLLabel;
-      RLLabel107: TRLLabel;
-      RLLabel108: TRLLabel;
-      RLLabel109: TRLLabel;
-      RLMemo6: TRLMemo;
-      RLLabel110: TRLLabel;
-      RLLabel111: TRLLabel;
+  TfrlGuiaRLRetrato = class(TfrlGuiaRL)
+    subItens: TRLSubDetail;
+    RLBand1: TRLBand;
+    RLDraw1: TRLDraw;
+    RLDraw14: TRLDraw;
+    RLDraw2: TRLDraw;
+    RLDraw17: TRLDraw;
+    RLDraw3: TRLDraw;
+    RLDraw4: TRLDraw;
+    RLDraw5: TRLDraw;
+    RLDraw6: TRLDraw;
+    RLDraw7: TRLDraw;
+    RLDraw8: TRLDraw;
+    RLDraw9: TRLDraw;
+    RLDraw10: TRLDraw;
+    RLDraw11: TRLDraw;
+    RLDraw12: TRLDraw;
+    RLDraw13: TRLDraw;
+    RLDraw15: TRLDraw;
+    RLDraw16: TRLDraw;
+    RLMemo2: TRLMemo;
+    RLLabel1: TRLLabel;
+    RLLabel2: TRLLabel;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLLabel7: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLLabel9: TRLLabel;
+    RLLabel10: TRLLabel;
+    RLLabel11: TRLLabel;
+    RLLabel12: TRLLabel;
+    RLLabel13: TRLLabel;
+    RLLabel14: TRLLabel;
+    RLLabel15: TRLLabel;
+    RLLabel16: TRLLabel;
+    RLLabel17: TRLLabel;
+    RLLabel18: TRLLabel;
+    RLLabel19: TRLLabel;
+    RLLabel20: TRLLabel;
+    RLLabel21: TRLLabel;
+    RLLabel22: TRLLabel;
+    RLLabel23: TRLLabel;
+    RLLabel24: TRLLabel;
+    RLLabel25: TRLLabel;
+    RLLabel26: TRLLabel;
+    RLLabel27: TRLLabel;
+    RLLabel28: TRLLabel;
+    RLLabel30: TRLLabel;
+    RLLabel32: TRLLabel;
+    RLLabel33: TRLLabel;
+    RLLabel34: TRLLabel;
+    RLLabel35: TRLLabel;
+    RLLabel36: TRLLabel;
+    RLLabel37: TRLLabel;
+    RLMemo1: TRLMemo;
+    RLLabel29: TRLLabel;
+    RLLabel31: TRLLabel;
+    RLDraw18: TRLDraw;
+    RLDraw19: TRLDraw;
+    RLDraw20: TRLDraw;
+    RLDraw21: TRLDraw;
+    RLDraw22: TRLDraw;
+    RLDraw23: TRLDraw;
+    RLDraw24: TRLDraw;
+    RLDraw25: TRLDraw;
+    RLDraw26: TRLDraw;
+    RLDraw27: TRLDraw;
+    RLDraw28: TRLDraw;
+    RLDraw29: TRLDraw;
+    RLDraw30: TRLDraw;
+    RLDraw31: TRLDraw;
+    RLDraw32: TRLDraw;
+    RLDraw33: TRLDraw;
+    RLDraw34: TRLDraw;
+    RLMemo3: TRLMemo;
+    RLLabel38: TRLLabel;
+    RLLabel39: TRLLabel;
+    RLLabel40: TRLLabel;
+    RLLabel41: TRLLabel;
+    RLLabel42: TRLLabel;
+    RLLabel43: TRLLabel;
+    RLLabel44: TRLLabel;
+    RLLabel45: TRLLabel;
+    RLLabel46: TRLLabel;
+    RLLabel47: TRLLabel;
+    RLLabel48: TRLLabel;
+    RLLabel49: TRLLabel;
+    RLLabel50: TRLLabel;
+    RLLabel51: TRLLabel;
+    RLLabel52: TRLLabel;
+    RLLabel53: TRLLabel;
+    RLLabel54: TRLLabel;
+    RLLabel55: TRLLabel;
+    RLLabel56: TRLLabel;
+    RLLabel57: TRLLabel;
+    RLLabel58: TRLLabel;
+    RLLabel59: TRLLabel;
+    RLLabel60: TRLLabel;
+    RLLabel61: TRLLabel;
+    RLLabel62: TRLLabel;
+    RLLabel63: TRLLabel;
+    RLLabel64: TRLLabel;
+    RLLabel65: TRLLabel;
+    RLLabel66: TRLLabel;
+    RLLabel67: TRLLabel;
+    RLLabel68: TRLLabel;
+    RLLabel69: TRLLabel;
+    RLLabel70: TRLLabel;
+    RLLabel71: TRLLabel;
+    RLLabel72: TRLLabel;
+    RLMemo4: TRLMemo;
+    RLLabel73: TRLLabel;
+    RLLabel74: TRLLabel;
+    RazaoSocialEmitente: TRLLabel;
+    DocEmitente: TRLLabel;
+    EnderecoEmitente: TRLLabel;
+    UFFavorecida: TRLLabel;
+    CodReceita: TRLLabel;
+    MunicipioEmitente: TRLLabel;
+    UFEmitente: TRLLabel;
+    CEPEmitente: TRLLabel;
+    TelefoneEmitente: TRLLabel;
+    NumeroControle: TRLLabel;
+    DataVencimento: TRLLabel;
+    NumDocOrigem: TRLLabel;
+    MunicipioDestinatario: TRLLabel;
+    Convenio: TRLLabel;
+    Produto: TRLLabel;
+    DataLimitePagamento: TRLLabel;
+    RepresentacaoNumerica: TRLLabel;
+    RazaoSocialEmitente2: TRLLabel;
+    DocEmitente2: TRLLabel;
+    EnderecoEmitente2: TRLLabel;
+    UFFavorecida2: TRLLabel;
+    CodReceita2: TRLLabel;
+    MunicipioEmitente2: TRLLabel;
+    UFEmitente2: TRLLabel;
+    CEPEmitente2: TRLLabel;
+    TelefoneEmitente2: TRLLabel;
+    NumeroControle2: TRLLabel;
+    DataVencimento2: TRLLabel;
+    NumDocOrigem2: TRLLabel;
+    MunicipioDestinatario2: TRLLabel;
+    Convenio2: TRLLabel;
+    Produto2: TRLLabel;
+    DataLimitePagamento2: TRLLabel;
+    RepresentacaoNumerica2: TRLLabel;
+    PerMesAnoRef2: TRLLabel;
+    PerMesAnoRef: TRLLabel;
+    CodigoBarras: TRLBarcode;
+    CodigoBarras2: TRLBarcode;
+    InfoComplementares: TRLMemo;
+    InfoComplementares2: TRLMemo;
+    RLDraw35: TRLDraw;
+    RLLabel75: TRLLabel;
+    RLDraw39: TRLDraw;
+    RLDraw40: TRLDraw;
+    RLLabel80: TRLLabel;
+    UFFavorecida3: TRLLabel;
+    CodReceita3: TRLLabel;
+    RLLabel81: TRLLabel;
+    RLLabel86: TRLLabel;
+    NumeroControle3: TRLLabel;
+    RLLabel87: TRLLabel;
+    DataVencimento3: TRLLabel;
+    RLLabel88: TRLLabel;
+    NumDocOrigem3: TRLLabel;
+    RLLabel98: TRLLabel;
+    PerMesAnoRef3: TRLLabel;
+    RLLabel99: TRLLabel;
+    RLLabel100: TRLLabel;
+    RLDraw38: TRLDraw;
+    RLDraw44: TRLDraw;
+    RLLabel101: TRLLabel;
+    RLLabel102: TRLLabel;
+    RLDraw45: TRLDraw;
+    RLLabel110: TRLLabel;
+    RLLabel103: TRLLabel;
+    RLDraw46: TRLDraw;
+    RLLabel111: TRLLabel;
+    RLLabel104: TRLLabel;
+    RLDraw47: TRLDraw;
+    RLLabel105: TRLLabel;
+    RLLabel106: TRLLabel;
+    RLDraw48: TRLDraw;
+    RLLabel107: TRLLabel;
+    RLLabel108: TRLLabel;
+    RLDraw49: TRLDraw;
+    RLLabel109: TRLLabel;
+    RLMemo5: TRLMemo;
+    RLMemo6: TRLMemo;
+    RLLabel76: TRLLabel;
+    RLLabel77: TRLLabel;
+    RLLabel79: TRLLabel;
+    EnderecoEmitente3: TRLLabel;
+    RLLabel78: TRLLabel;
+    DocEmitente3: TRLLabel;
+    RazaoSocialEmitente3: TRLLabel;
+    RLLabel83: TRLLabel;
+    UFEmitente3: TRLLabel;
+    TelefoneEmitente3: TRLLabel;
+    RLLabel85: TRLLabel;
+    MunicipioEmitente3: TRLLabel;
+    RLLabel82: TRLLabel;
+    RLLabel84: TRLLabel;
+    CEPEmitente3: TRLLabel;
+    RLDraw37: TRLDraw;
+    RLLabel89: TRLLabel;
+    RLLabel90: TRLLabel;
+    RLLabel92: TRLLabel;
+    MunicipioDestinatario3: TRLLabel;
+    RLLabel93: TRLLabel;
+    RLLabel94: TRLLabel;
+    Convenio3: TRLLabel;
+    RLLabel95: TRLLabel;
+    Produto3: TRLLabel;
+    RLDraw50: TRLDraw;
+    RLLabel91: TRLLabel;
+    RLDraw36: TRLDraw;
+    RLLabel96: TRLLabel;
+    InfoComplementares3: TRLMemo;
+    RLLabel97: TRLLabel;
+    DataLimitePagamento3: TRLLabel;
+    RLDraw51: TRLDraw;
+    RepresentacaoNumerica3: TRLLabel;
+    CodigoBarras3: TRLBarcode;
+    RLDraw41: TRLDraw;
+    RLDraw42: TRLDraw;
+    RLDraw43: TRLDraw;
+    RLDraw52: TRLDraw;
+    RLDraw53: TRLDraw;
+    RLDraw55: TRLDraw;
       procedure RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
-    private
+    procedure RLGNReDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
+    procedure subItensDataRecord(Sender: TObject; RecNo, CopyNo: Integer;
+      var Eof: Boolean; var RecordAction: TRLRecordAction);
+  private
     { Private declarations }
-    FGNRE: TGNRERetorno;
-    procedure Itens;
+    FNumItem : integer;
   public
     { Public declarations }
-  published
-//  procedure CarregaDados;
-//  property GNRE: TGNRERetorno read FGNRE write FGNRE;
   end;
-
 
 implementation
 
 uses
-  StrUtils, DateUtils, pGNReGNRe, ACBrUtil, ACBrDFeUtil, ACBrValidador,ACBrGNRE2;
+  StrUtils, DateUtils, pGNReGNRe, ACBrUtil, ACBrDFeUtil, ACBrGNRE2;
 
 {$ifdef FPC}
  {$R *.lfm}
@@ -301,108 +304,193 @@ uses
  {$R *.dfm}
 {$endif}
 
-
-var
-  nItemControle: integer;
-
 procedure TfrlGuiaRLRetrato.RLBand1BeforePrint(Sender: TObject; var PrintIt: Boolean);
+
+  Function FormataPeriodoReferencia( sTexto : String) : string;
+  begin
+      Case  StrToIntDef(sTexto,0) of
+        0: Result := 'Mensal';
+        1: Result := '1a Quinzena';
+        2: Result := '2a Quinzena';
+        3: Result := '1o Decêndio';
+        4: Result := '2o Decêndio';
+        5: Result := '3o Decêndio';
+      end;
+    Result := ACBrStr( Result );
+  end;
+
+  Function  FormataMesAnoReferencia( sTexto : String ) : String;
+  begin
+    Result := sTexto;
+    if sTexto <> '' then
+      Result := '-' +
+                Copy( sTexto , 1,Length( sTexto)-4) +
+                '/' +
+                Copy( sTexto , Length( sTexto)-3,Length(sTexto));
+  end;
+
+  function FormatarData(Str: string): string;
+  begin
+    Result := Copy(Str, 1, 2) + '/' + Copy(Str, 3, 2) + '/' + Copy(Str, 5, 4);
+  end;
+
+  function RemoverZeros(Str: string): string;
+  begin
+    while (Trim(Str) <> '') and (Str[1] = '0') do
+      Str := Copy(Str, 2, Length(Str));
+
+    Result := Trim(Str);
+  end;
+
+  function FormaDoc( iTipoDocEmitente : Integer; sDocEmitente : String ): String;
+  begin
+    case iTipoDocEmitente of
+      1: result := FormatMaskText('000\.000\.000\-00;0', sDocEmitente);
+      2: result := FormatMaskText('00\.000\.000\/0000\-00;0', sDocEmitente);
+      3: result := RemoverZeros(sDocEmitente);
+    end;
+  end;
+
 begin
   // 1ª Via
-  if cdsItens.FieldByName('DocDestinatario').AsString <> '0' then
-    RLLabel18.Caption := cdsItens.FieldByName('DocDestinatario').AsString;
-
-  if cdsItens.FieldByName('Parcela').AsString <> '0' then
-    RLLabel26.Caption := cdsItens.FieldByName('Parcela').AsString;
-
-  RLLabel28.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    cdsItens.FieldByName('ValorPrincipal').AsFloat);
-
-  RLLabel30.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    cdsItens.FieldByName('AtualizacaoMonetaria').AsFloat);
-
-  if cdsItens.FieldByName('Juros').AsFloat > 0 then
-    RLLabel32.Caption := FormatFloat('R$ ###,###,###,##0.00',
-      cdsItens.FieldByName('Juros').AsFloat);
-
-  if cdsItens.FieldByName('Multa').AsFloat > 0 then
-    RLLabel34.Caption := FormatFloat('R$ ###,###,###,##0.00',
-      cdsItens.FieldByName('Multa').AsFloat);
-
-  RLLabel36.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    (cdsItens.FieldByName('ValorPrincipal')
-        .AsFloat + cdsItens.FieldByName('AtualizacaoMonetaria')
-        .AsFloat + cdsItens.FieldByName('Juros').AsFloat + cdsItens.FieldByName
-        ('Multa').AsFloat));
-
-  RLMemo2.Visible := cdsItens.FieldByName('Ambiente').AsInteger = 9;
+  RLLabel18.Caption             := FGNRe.DocDestinatario;
+  RLLabel26.Caption             := IntToStrZero( FGNRe.Parcela,3);
+  RLLabel28.Caption             := FormatFloat('R$ ###,###,###,##0.00',  FGNRe.ValorPrincipal);
+  RLLabel30.Caption             := IfThen( FGNRe.AtualizacaoMonetaria = 0 , '' ,
+                                    FormatFloat('R$ ###,###,###,##0.00', FGNRe.AtualizacaoMonetaria));
+  RLLabel32.Caption             := IfThen( FGNRe.Juros = 0 , '' ,
+                                    FormatFloat('R$ ###,###,###,##0.00', FGNRe.Juros));
+  RLLabel34.Caption             := IfThen( FGNRe.Multa = 0 , '' ,
+                                    FormatFloat('R$ ###,###,###,##0.00', FGNRe.Multa));
+  RLLabel36.Caption             := FormatFloat('R$ ###,###,###,##0.00',( FGNRe.ValorPrincipal +
+                                                                         FGNRe.AtualizacaoMonetaria+
+                                                                         FGNRe.Juros +
+                                                                         FGNRe.Multa));
+  RLMemo2.Visible               := FGNRe.InfoCabec.Ambiente = 9;
 
   // 2ª Via
-  if cdsItens.FieldByName('DocDestinatario').AsString <> '0' then
-    RLLabel55.Caption := cdsItens.FieldByName('DocDestinatario').AsString;
-
-  if cdsItens.FieldByName('Parcela').AsString <> '0' then
-    RLLabel63.Caption := cdsItens.FieldByName('Parcela').AsString;
-
-  RLLabel65.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    cdsItens.FieldByName('ValorPrincipal').AsFloat);
-
-  RLLabel66.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    cdsItens.FieldByName('AtualizacaoMonetaria').AsFloat);
-
-  if cdsItens.FieldByName('Juros').AsFloat > 0 then
-    RLLabel67.Caption := FormatFloat('R$ ###,###,###,##0.00',
-      cdsItens.FieldByName('Juros').AsFloat);
-
-  if cdsItens.FieldByName('Multa').AsFloat > 0 then
-    RLLabel69.Caption := FormatFloat('R$ ###,###,###,##0.00',
-      cdsItens.FieldByName('Multa').AsFloat);
-
-  RLLabel71.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    (cdsItens.FieldByName('ValorPrincipal')
-        .AsFloat + cdsItens.FieldByName('AtualizacaoMonetaria')
-        .AsFloat + cdsItens.FieldByName('Juros').AsFloat + cdsItens.FieldByName
-        ('Multa').AsFloat));
-
-  RLMemo3.Visible := cdsItens.FieldByName('Ambiente').AsInteger = 9;
+  RLLabel55.Caption             := RLLabel18.Caption;
+  RLLabel63.Caption             := RLLabel26.Caption;
+  RLLabel65.Caption             := RLLabel28.Caption;
+  RLLabel66.Caption             := RLLabel30.Caption;
+  RLLabel67.Caption             := RLLabel32.Caption;
+  RLLabel69.Caption             := RLLabel34.Caption;
+  RLLabel71.Caption             := RLLabel36.Caption;
+  RLMemo3.Visible               := RLMemo2.Visible;
 
   // 3ª Via
-  if cdsItens.FieldByName('DocDestinatario').AsString <> '0' then
-    RLLabel92.Caption := cdsItens.FieldByName('DocDestinatario').AsString;
+  RLLabel92.Caption             := RLLabel18.Caption;
+  RLLabel100.Caption            := RLLabel26.Caption;
+  RLLabel102.Caption            := RLLabel28.Caption;
+  RLLabel103.Caption            := RLLabel30.Caption;
+  RLLabel104.Caption            := RLLabel32.Caption;
+  RLLabel106.Caption            := RLLabel34.Caption;
+  RLLabel108.Caption            := RLLabel36.Caption;
+  RLMemo5.Visible               := RLMemo2.Visible;
 
-  if cdsItens.FieldByName('Parcela').AsString <> '0' then
-    RLLabel100.Caption := cdsItens.FieldByName('Parcela').AsString;
+  UFFavorecida.Caption          := FGNRe.UFFavorecida;
+  UFFavorecida2.Caption         := UFFavorecida.Caption;
+  UFFavorecida3.Caption         := UFFavorecida.Caption;
 
-  RLLabel102.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    cdsItens.FieldByName('ValorPrincipal').AsFloat);
+  CodReceita.Caption            := IntToStr( FGNRe.codReceita );
+  CodReceita2.Caption           := CodReceita.Caption;
+  CodReceita3.Caption           := CodReceita.Caption;
 
-  RLLabel103.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    cdsItens.FieldByName('AtualizacaoMonetaria').AsFloat);
+  RazaoSocialEmitente.Caption   := FGNRe.RazaoSocialEmitente;
+  RazaoSocialEmitente2.Caption  := RazaoSocialEmitente.Caption;
+  RazaoSocialEmitente3.Caption  := RazaoSocialEmitente.Caption;
 
-  if cdsItens.FieldByName('Juros').AsFloat > 0 then
-    RLLabel104.Caption := FormatFloat('R$ ###,###,###,##0.00',
-      cdsItens.FieldByName('Juros').AsFloat);
+  DocEmitente.Caption           := FormaDoc( FGNRe.TipoDocEmitente , FGNRe.DocEmitente );
+  DocEmitente2.Caption          := DocEmitente.Caption;
+  DocEmitente3.Caption          := DocEmitente.Caption;
 
-  if cdsItens.FieldByName('Multa').AsFloat > 0 then
-    RLLabel106.Caption := FormatFloat('R$ ###,###,###,##0.00',
-      cdsItens.FieldByName('Multa').AsFloat);
+  EnderecoEmitente.Caption      := FGNRe.EnderecoEmitente;
+  EnderecoEmitente2.Caption     := EnderecoEmitente.Caption;
+  EnderecoEmitente3.Caption     := EnderecoEmitente.Caption;
 
-  RLLabel108.Caption := FormatFloat('R$ ###,###,###,##0.00',
-    (cdsItens.FieldByName('ValorPrincipal').AsFloat + cdsItens.FieldByName
-        ('AtualizacaoMonetaria').AsFloat + cdsItens.FieldByName('Juros')
-        .AsFloat + cdsItens.FieldByName('Multa').AsFloat));
-  RLMemo5.Visible := cdsItens.FieldByName('Ambiente').AsInteger = 9;
+  CEPEmitente.Caption           := FGNRe.CEPEmitente;
+  CEPEmitente2.Caption          := CEPEmitente.Caption;
+  CEPEmitente3.Caption          := CEPEmitente.Caption;
+
+  MunicipioEmitente.Caption     := FGNRe.MunicipioEmitente;
+  MunicipioEmitente2.Caption    := MunicipioEmitente.Caption;
+  MunicipioEmitente3.Caption    := MunicipioEmitente.Caption;
+
+  UFEmitente.Caption            := FGNRe.UFEmitente;
+  UFEmitente2.Caption           := UFEmitente.Caption;
+  UFEmitente3.Caption           := UFEmitente.Caption;
+
+  TelefoneEmitente.Caption      := FGNRe.TelefoneEmitente;
+  TelefoneEmitente2.Caption     := FGNRe.TelefoneEmitente;
+  TelefoneEmitente3.Caption     := FGNRe.TelefoneEmitente;
+
+  NumeroControle.Caption        := FGNRe.NumeroControle;
+  NumeroControle2.Caption       := FGNRe.NumeroControle;
+  NumeroControle3.Caption       := FGNRe.NumeroControle;
+
+  NumDocOrigem.Caption          := FGNRe.NumDocOrigem;
+  NumDocOrigem2.Caption         := NumDocOrigem.Caption;
+  NumDocOrigem3.Caption         := NumDocOrigem.Caption;
+
+  MunicipioDestinatario.Caption := FGNRe.MunicipioDestinatario;
+  MunicipioDestinatario2.Caption:= MunicipioDestinatario.Caption;
+  MunicipioDestinatario3.Caption:= MunicipioDestinatario.Caption;
+
+  Convenio.Caption              := FGNRe.Convenio;
+  Convenio2.Caption             := Convenio.Caption;
+  Convenio3.Caption             := Convenio.Caption;
+
+  Produto.Caption               := FGNRe.Produto;
+  Produto2.Caption              := Produto.Caption;
+  Produto3.Caption              := Produto.Caption;
+
+  PerMesAnoRef.Caption          := FormataPeriodoReferencia( FGNRe.PeriodoReferencia )+
+                                    FormataMesAnoReferencia( FGNRe.MesAnoReferencia );
+  PerMesAnoRef2.Caption         := PerMesAnoRef.Caption;
+  PerMesAnoRef3.Caption         := PerMesAnoRef.Caption;
+
+  DataVencimento.Caption        := FormatarData(FGNRe.DataVencimento);
+  DataVencimento2.Caption       := DataVencimento.Caption;
+  DataVencimento3.Caption       := DataVencimento.Caption;
+
+  DataLimitePagamento.Caption   := FormatarData( IfThen( FGNRe.DataLimitePagamento = '00000000' ,
+                                                          FGNRe.DataVencimento ,
+                                                          FGNRe.DataLimitePagamento));
+
+  DataLimitePagamento2.Caption  := DataLimitePagamento.Caption;
+  DataLimitePagamento3.Caption  := DataLimitePagamento.Caption;
+
+  RepresentacaoNumerica.Caption := FormatMaskText('00000000000 0 00000000000 0 00000000000 0 00000000000 0;0',
+                                    FGNRe.RepresentacaoNumerica);
+  RepresentacaoNumerica2.Caption:= RepresentacaoNumerica.Caption;
+  RepresentacaoNumerica3.Caption:= RepresentacaoNumerica.Caption;
+
+  CodigoBarras.Caption          := OnlyNumber(FGNRe.CodigoBarras);
+  CodigoBarras2.Caption         := CodigoBarras.Caption;
+  CodigoBarras3.Caption         := CodigoBarras.Caption;
+
+  InfoComplementares.Lines.Text := FGNRe.InfoComplementares;
+  InfoComplementares2.Lines     := InfoComplementares.Lines;
+  InfoComplementares3.Lines     := InfoComplementares.Lines;
 end;
 
-procedure TfrlGuiaRLRetrato.Itens;
-var
-  I, J, nItem: integer;
+procedure TfrlGuiaRLRetrato.RLGNReDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
 begin
-  //cdsItens.Close;
-  //cdsItens.CreateDataSet;
-  //cdsItens.Open;
-  nItem := 0;
+  inherited;
+  Eof := (RecNo > 1);
+  RecordAction := raUseIt;
+end;
 
-  cdsItens.First;
+procedure TfrlGuiaRLRetrato.subItensDataRecord(Sender: TObject; RecNo,
+  CopyNo: Integer; var Eof: Boolean; var RecordAction: TRLRecordAction);
+begin
+  inherited;
+  FNumItem := RecNo - 1 ;
+  Eof := (RecNo > 1 ) ;
+  RecordAction := raUseIt;
 end;
 
 end.
+
+

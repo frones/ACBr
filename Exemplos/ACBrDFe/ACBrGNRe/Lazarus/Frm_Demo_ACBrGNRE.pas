@@ -7,13 +7,14 @@ interface
 uses IniFiles, LCLIntf, LCLType, LMessages, Messages, SysUtils, Variants,
   Classes, Graphics, Controls, Forms, Dialogs, ComCtrls, StdCtrls, Buttons,
   ExtCtrls, SynEdit, SynHighlighterXML, pcnConversao, pgnreConversao, strutils,
-  ACBrGNRE2, ACBrDFeUtil, ACBrUtil;
+  ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrDFeUtil, ACBrUtil;
 
 type
 
   { TfrmDemo_ACBrGNRE }
 
   TfrmDemo_ACBrGNRE = class(TForm)
+    ACBrGNREGuiaRL1: TACBrGNREGuiaRL;
     Panel1: TPanel;
     lblColaborador: TLabel;
     lblPatrocinador: TLabel;

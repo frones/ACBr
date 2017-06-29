@@ -882,15 +882,19 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     OnStatusChange = ACBrGNRE1StatusChange
     OnGerarLog = ACBrGNRE1GerarLog
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    GNREGuia = ACBrGNREGuiaFR1
+    GNREGuia = ACBrGNREGuiaRL1
     Left = 406
     Top = 225
   end
-  object ACBrGNREGuiaFR1: TACBrGNREGuiaFR
+  object ACBrGNREGuiaRL1: TACBrGNREGuiaRL
     ACBrGNRE = ACBrGNRE1
     MostrarPreview = True
     MostrarStatus = True
@@ -900,9 +904,8 @@ object frmDemo_ACBrGNRE: TfrmDemo_ACBrGNRE
     MargemSuperior = 0.800000000000000000
     MargemEsquerda = 0.600000000000000000
     MargemDireita = 0.510000000000000000
-    EspessuraBorda = 1
-    ShowDialog = False
-    Left = 408
-    Top = 280
+    PrintDialog = True
+    Left = 405
+    Top = 270
   end
 end

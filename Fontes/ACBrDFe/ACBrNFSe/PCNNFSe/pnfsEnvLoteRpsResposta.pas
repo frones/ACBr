@@ -896,6 +896,9 @@ begin
         if (leitor.rExtrai(3, 'InformacoesLote') <> '') then
         begin
           FInfRec.Protocolo                           := Leitor.rCampo(tcStr, 'NumeroLote');
+          if FInfRec.Protocolo = '0' then
+            FInfRec.Protocolo := '';
+            
           FInfRec.NumeroLote                          := Leitor.rCampo(tcStr, 'NumeroLote');
           FInfRec.DataRecebimento                     := Leitor.rCampo(tcDatHor, 'DataEnvioLote');
 

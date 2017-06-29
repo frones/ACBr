@@ -301,7 +301,7 @@ begin
   Gerador.wCampo(tcInt, '#007', 'Mod    ', 02, 02, 1, BPe.ide.modelo, DSC_MOD);
   Gerador.wCampo(tcInt, '#008', 'Serie  ', 01, 03, 1, BPe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, '#009', 'nBP    ', 01, 09, 1, BPe.ide.nBP, DSC_NNF);
-  Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(BPe.infBPe.ID, BPe.infBPe.Versao), 8), DSC_CNF);
+  Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(BPe.infBPe.ID, 2), 8), DSC_CNF);
   Gerador.wCampo(tcInt, '#011', 'cDV    ', 01, 01, 1, BPe.Ide.cDV, DSC_CDV);
   Gerador.wCampo(tcStr, '#012', 'Modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
   Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);
@@ -328,6 +328,7 @@ begin
   Gerador.wGrupo('Emit', '#024');
 
   Gerador.wCampoCNPJ('#025', BPe.Emit.CNPJ, CODIGO_BRASIL, True);
+
   if BPe.Emit.IE = 'ISENTO' then
     Gerador.wCampo(tcStr, '#026', 'IE', 00, 14, 1, BPe.Emit.IE, DSC_IE)
   else
@@ -368,12 +369,12 @@ begin
                      BPe.Emit.enderEmit.xMun, BPe.Emit.EnderEmit.cMun);
 
   Gerador.wGrupo('enderEmit', '#033');
-  
+
   Gerador.wCampo(tcStr, '#034', 'xLgr   ', 02, 60, 1, BPe.Emit.enderEmit.xLgr, DSC_XLGR);
   Gerador.wCampo(tcStr, '#035', 'Nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Emit.enderEmit.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#036', 'xCpl   ', 01, 60, 0, BPe.Emit.enderEmit.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#037', 'xBairro', 02, 60, 1, BPe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#038', 'cMun   ', 01, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcInt, '#038', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(cMun) then
     Gerador.wAlerta('#038', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -412,7 +413,7 @@ begin
   if BPe.Comp.IE = 'ISENTO' then
     Gerador.wCampo(tcStr, '#050', 'IE', 00, 14, 1, BPe.Comp.IE, DSC_IE)
   else
-    Gerador.wCampo(tcStr, '#050', 'IE', 00, 14, 1, OnlyNumber(BPe.Comp.IE), DSC_IE);
+    Gerador.wCampo(tcStr, '#050', 'IE', 00, 14, 0, OnlyNumber(BPe.Comp.IE), DSC_IE);
 
   if (FOpcoes.ValidarInscricoes) then
   begin
@@ -447,12 +448,12 @@ begin
   Gerador.wCampo(tcStr, '#053', 'Nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Comp.enderComp.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#054', 'xCpl   ', 01, 60, 0, BPe.Comp.enderComp.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#055', 'xBairro', 01, 60, 1, BPe.Comp.enderComp.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#056', 'cMun   ', 01, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcInt, '#056', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(cMun) then
     Gerador.wAlerta('#056', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#057', 'xMun', 02, 60, 1, xMun, DSC_XMUN);
+  Gerador.wCampo(tcStr, '#057', 'xMun', 01, 60, 1, xMun, DSC_XMUN);
   Gerador.wCampo(tcInt, '#058', 'CEP ', 08, 08, 0, BPe.Comp.enderComp.CEP, DSC_CEP);
   Gerador.wCampo(tcStr, '#059', 'UF  ', 02, 02, 1, xUF, DSC_UF);
 
@@ -464,8 +465,8 @@ begin
   if not ValidarCodigoPais(BPe.Comp.enderComp.cPais) = -1 then
     Gerador.wAlerta('#060', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#061', 'xPais', 02, 60, 0, BPe.Comp.enderComp.xPais, DSC_XPAIS);
-  Gerador.wCampo(tcStr, '#062', 'Fone ', 06, 14, 0, OnlyNumber(BPe.Comp.enderComp.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#061', 'xPais', 01, 60, 0, BPe.Comp.enderComp.xPais, DSC_XPAIS);
+  Gerador.wCampo(tcStr, '#062', 'Fone ', 07, 12, 0, OnlyNumber(BPe.Comp.enderComp.fone), DSC_FONE);
   Gerador.wCampo(tcStr, '#063', 'Email', 01, 60, 0, BPe.Comp.enderComp.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/enderComp');
@@ -498,7 +499,7 @@ begin
   Gerador.wCampo(tcStr, '#069', 'Nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Agencia.enderAgencia.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#070', 'xCpl   ', 01, 60, 0, BPe.Agencia.enderAgencia.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#071', 'xBairro', 02, 60, 1, BPe.Agencia.enderAgencia.xBairro, DSC_XBAIRRO);
-  Gerador.wCampo(tcInt, '#072', 'cMun   ', 01, 07, 1, cMun, DSC_CMUN);
+  Gerador.wCampo(tcInt, '#072', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
 
   if not ValidarMunicipio(cMun) then
     Gerador.wAlerta('#072', 'cMun', DSC_CMUN, ERR_MSG_INVALIDO);
@@ -547,7 +548,7 @@ begin
   Gerador.wGrupo('infPassageiro', '#087');
 
   Gerador.wCampo(tcStr, '#088', 'xNome', 2, 60, 1, BPe.infPassagem.infPassageiro.xNome, DSC_XNOMEPASS);
-  Gerador.wCampoCPF('#089', BPe.infPassagem.infPassageiro.CPF, CODIGO_BRASIL, True);
+  Gerador.wCampoCPF('#089', BPe.infPassagem.infPassageiro.CPF, CODIGO_BRASIL, False);
   Gerador.wCampo(tcStr, '#090', 'tpDoc', 01, 01, 1, tpDocumentoToStr(BPe.infPassagem.infPassageiro.tpDoc), DSC_TPDOC);
   Gerador.wCampo(tcStr, '#091', 'nDoc ', 02, 20, 1, BPe.infPassagem.infPassageiro.nDoc, DSC_NDOC);
   Gerador.wCampo(tcDat, '#092', 'dNasc', 10, 10, 0, BPe.infPassagem.infPassageiro.dNasc, DSC_DNASC);
@@ -573,7 +574,7 @@ begin
     Gerador.wCampo(tcStr, '#101', 'tpTrecho    ', 01,  01, 1, tpTrechoToStr(BPe.infViagem[i].tpTrecho), DSC_TPTRECHO);
 
     if BPe.infViagem[i].tpTrecho = ttConexao then
-      Gerador.wCampo(tcStr, '#102', 'dhConexao   ', 25,  25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
+      Gerador.wCampo(tcStr, '#102', 'dhConexao', 25, 25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
 
     Gerador.wCampo(tcStr, '#103', 'Prefixo     ', 01,  20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
     Gerador.wCampo(tcInt, '#104', 'Poltrona    ', 01,  03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
@@ -613,8 +614,8 @@ begin
   begin
     Gerador.wGrupo('Comp', '#116');
 
-    Gerador.wCampo(tcStr, '#117', 'tpComp', 02,  02, 1, tpComponenteToStr(BPe.infValorBPe.Comp[i].tpComp), DSC_TPCOMP);
-    Gerador.wCampo(tcDe2, '#118', 'vComp ', 00,  15, 1, BPe.infValorBPe.Comp[i].vComp, DSC_VCOMP);
+    Gerador.wCampo(tcStr, '#117', 'tpComp', 02, 02, 1, tpComponenteToStr(BPe.infValorBPe.Comp[i].tpComp), DSC_TPCOMP);
+    Gerador.wCampo(tcDe2, '#118', 'vComp ', 00, 15, 1, BPe.infValorBPe.Comp[i].vComp, DSC_VCOMP);
 
     Gerador.wGrupo('/Comp');
   end;
@@ -699,13 +700,13 @@ begin
         //Grupo do Simples Nacional
         Gerador.wGrupo('ICMSSN', '#147');
         Gerador.wCampo(tcStr, '#148', 'CST', 02, 02, 1, '90', DSC_CST);
-        Gerador.wCampo(tcStr, '#149' , 'indSN', 01, 01, 1, '', '');
+        Gerador.wCampo(tcStr, '#149' , 'indSN', 01, 01, 1, '1', '');
         Gerador.wGrupo('/ICMSSN');
       end;
 	end;
   Gerador.wGrupo('/ICMS');
 
-  Gerador.wCampo(tcDe2, '#150', 'vTotTrib  ', 01, 15, 0, BPe.Imp.vTotTrib, DSC_VTOTTRIB);
+  Gerador.wCampo(tcDe2, '#150', 'vTotTrib  ', 01,   15, 0, BPe.Imp.vTotTrib, DSC_VTOTTRIB);
   Gerador.wCampo(tcStr, '#151', 'infAdFisco', 01, 2000, 0, BPe.Imp.infAdFisco, DSC_INFADFISCO);
 
   if BPe.Imp.ICMSUFFim.vBCUFFim > 0.0 then

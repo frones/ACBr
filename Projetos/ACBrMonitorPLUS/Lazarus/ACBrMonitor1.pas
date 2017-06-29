@@ -7547,10 +7547,10 @@ begin
   end;
 
   ACBrNFe1.DANFE.MostrarPreview := (not GerarPDF) and
-                                   (cbxMostrarPreview.Checked) and
+                                   (cbxMostrarPreview.Checked or MostrarPreview) and
                                    (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1);
 
-  if ACBrNFe1.DANFE.MostrarPreview and MostrarPreview then
+  if ACBrNFe1.DANFE.MostrarPreview or MostrarPreview then
     ForceForeground(Self.Handle);
 end;
 

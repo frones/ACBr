@@ -2677,7 +2677,10 @@ begin
       fpFormasPagamentos[A].Total := 0 ;
 
     For A := 0 to fpComprovantesNaoFiscais.Count - 1 do
+    begin
       fpComprovantesNaoFiscais[A].Total := 0 ;
+      fpComprovantesNaoFiscais[A].Contador := 0 ;
+    end;
 
     For A := 0 to fpRelatoriosGerenciais.Count - 1 do
         fpRelatoriosGerenciais[A].Contador := 0 ;

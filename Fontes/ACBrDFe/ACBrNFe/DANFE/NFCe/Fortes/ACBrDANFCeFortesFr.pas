@@ -412,15 +412,18 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  vAcrescimos: Double;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vOutro > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem);
+    vAcrescimos := Prod.vFrete + Prod.vSeg + Prod.vOutro;
+    PrintIt := (not Resumido) and (vAcrescimos > 0) and (ACBrNFeDANFCeFortes.ImprimeDescAcrescItem);
 
     if PrintIt then
     begin
-      lOutro.Caption       := FormatFloatBr(Prod.vOutro,'+,0.00');
-      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc);
+      lOutro.Caption       := FormatFloatBr(vAcrescimos,'+,0.00');
+      lOutroValLiq.Caption := FormatFloatBr(Prod.vProd+vAcrescimos-Prod.vDesc);
     end;
   end;
 end;
@@ -606,6 +609,8 @@ end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  vAcrescimos : Double;
 begin
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
@@ -613,8 +618,9 @@ begin
 
     if PrintIt then
     begin
-      lDesconto.Caption   := FormatFloatBr(Prod.vDesc,'-,0.00');
-      if (Prod.vOutro > 0) then
+      lDesconto.Caption := FormatFloatBr(Prod.vDesc,'-,0.00');
+      vAcrescimos       := Prod.vFrete + Prod.vSeg + Prod.vOutro;
+      if (vAcrescimos > 0) then
       begin
         lTitDescValLiq.Visible := False;
         lDescValLiq.Visible := False;
@@ -625,7 +631,7 @@ begin
         rlbDescItem.Height := 24;
         lTitDescValLiq.Visible := True;
         lDescValLiq.Visible := True;
-        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+Prod.vOutro-Prod.vDesc);
+        lDescValLiq.Caption := FormatFloatBr(Prod.vProd+vAcrescimos-Prod.vDesc);
       end;
     end;
   end;

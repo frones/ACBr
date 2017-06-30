@@ -205,7 +205,7 @@ procedure TACBrNFeDANFeESCPOS.GerarDetalhesProdutosServicos;
 var
   i: Integer;
   nTamDescricao: Integer;
-  VlrLiquido: Double;
+  VlrAcrescimo, VlrLiquido: Double;
   sItem, sCodigo, sDescricao, sQuantidade, sUnidade, sVlrUnitario, sVlrProduto,
     LinhaCmd: String;
 begin
@@ -252,23 +252,24 @@ begin
 
         if ImprimeDescAcrescItem then
         begin
-          VlrLiquido := (Prod.qCom * Prod.vUnCom) + Prod.vOutro - Prod.vDesc;
+          VlrAcrescimo := Prod.vFrete + Prod.vSeg + Prod.vOutro;
+          VlrLiquido   := (Prod.qCom * Prod.vUnCom) + VlrAcrescimo - Prod.vDesc;
 
           // desconto
           if Prod.vDesc > 0 then
           begin
             LinhaCmd := '</ae><c>' + padSpace(
                 'desconto ' + padLeft(FormatFloatBr(Prod.vDesc, '-,0.00'), 15, ' ')
-                +IIf((Prod.vOutro > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
+                +IIf((VlrAcrescimo > 0),'','|' + FormatFloatBr(VlrLiquido)) ,
                 FPosPrinter.ColunasFonteCondensada, '|');
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);
           end;
 
-          // ascrescimo
-          if Prod.vOutro > 0 then
+          // acrescimo
+          if VlrAcrescimo > 0 then
           begin
             LinhaCmd := '</ae><c>' + ACBrStr(padSpace(
-                'acréscimo ' + padLeft(FormatFloatBr(Prod.vOutro, '+,0.00'), 15, ' ')
+                'acréscimo ' + padLeft(FormatFloatBr(VlrAcrescimo, '+,0.00'), 15, ' ')
                 + '|' + FormatFloatBr(VlrLiquido),
                 FPosPrinter.ColunasFonteCondensada, '|'));
             FPosPrinter.Buffer.Add('</ae><c>' + LinhaCmd);

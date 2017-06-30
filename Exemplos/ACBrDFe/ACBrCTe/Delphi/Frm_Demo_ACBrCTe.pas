@@ -206,7 +206,7 @@ uses
   FileCtrl, DateUtils,
   ufrmStatus,
   pcnConversao, pcteConversaoCTe, ACBrUtil,
-  ACBrCTeConhecimentos, blcksock, System.TypInfo;
+  ACBrCTeConhecimentos, blcksock, TypInfo;
 
 const
   SELDIRHELP = 1000;

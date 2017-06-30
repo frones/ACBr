@@ -50,7 +50,7 @@ uses Classes, SysUtils,
      Forms, Graphics,
      ACBrNFeDANFEClass, ACBrUtil,
      pcnNFe, pcnConversao, pcnAuxiliar, ACBrDFeUtil,
-     RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter, RLPrintDialog,
+     RLConsts, RLReport, RLBarcode, RLPDFFilter, RLHTMLFilter,
      RLFilters, RLPrinters, RLTypes, Controls;
 
 const

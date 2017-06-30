@@ -47,10 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/06/2017
+-- ACBrDANFCeFortes, ACBrNFeDANFeEscPos --
+[*] Ajuste no valor Acréscimo (frete, seguro e outras despesas)
+    http://www.projetoacbr.com.br/forum/topic/37478-ajuste-no-valor-acr%C3%A9scimo-frete-seguro-e-outras-despesas/
+    (Por: Ricardo Voigt)
+
 13/06/2017
 [*] Validação de entrega a domicilio nfc-e
-		http://www.projetoacbr.com.br/forum/topic/37188-validação-entrega-a-domicílio/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/37188-validação-entrega-a-domicílio/
+    por: Juliomar Marchetti
 		
 12/06/2017
 -- Diversos --

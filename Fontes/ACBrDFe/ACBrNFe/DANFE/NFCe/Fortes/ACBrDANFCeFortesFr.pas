@@ -602,9 +602,11 @@ begin
                       rlbMensagemFiscal.Height +
                       rlbConsumidor.Height +
                       rlsbDetItem.Height +
+                      rlbDescItem.Height +
+                      rlbOutroItem.Height +
                       Trunc((rlbDetItem.Height+5.4) * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
   // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max(100, 20+Trunc( TotalPaginaPixel / 3.75 ));
+  rlVenda.PageSetup.PaperHeight := max(200, 20+Trunc( TotalPaginaPixel / 3.75 ));
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;

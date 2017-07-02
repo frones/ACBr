@@ -453,7 +453,7 @@ begin
     FNFSeW.NFSeWClass.VersaoNFSe    := StrToVersaoNFSe(Ok, Configuracoes.Geral.ConfigXML.VersaoXML);
     FNFSeW.NFSeWClass.DefTipos      := Configuracoes.Geral.ConfigSchemas.DefTipos;
     FNFSeW.NFSeWClass.ServicoEnviar := Configuracoes.Geral.ConfigSchemas.ServicoEnviar;
-    FNFSeW.NFSeWClass.VersaoDados   := StrToFloat(StringReplace(Configuracoes.Geral.ConfigXML.VersaoDados,'.',',',[rfReplaceAll, rfIgnoreCase]));
+    FNFSeW.NFSeWClass.VersaoDados   := StringToFloat(Configuracoes.Geral.ConfigXML.VersaoDados);
 
     FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;

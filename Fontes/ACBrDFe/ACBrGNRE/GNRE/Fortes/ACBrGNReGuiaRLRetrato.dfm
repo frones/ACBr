@@ -90,21 +90,21 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLDraw55: TRLDraw
-          Left = 481
+          Left = 480
           Top = 744
           Width = 219
           Height = 27
         end
         object RLDraw53: TRLDraw
-          Left = 481
+          Left = 480
           Top = 718
           Width = 219
           Height = 27
         end
         object RLDraw52: TRLDraw
-          Left = 480
+          Left = 479
           Top = 692
-          Width = 219
+          Width = 220
           Height = 27
         end
         object RLMemo3: TRLMemo
@@ -126,69 +126,69 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLDraw49: TRLDraw
-          Left = 481
+          Left = 480
           Top = 900
           Width = 219
           Height = 27
         end
         object RLDraw48: TRLDraw
-          Left = 481
+          Left = 480
           Top = 874
           Width = 219
           Height = 27
         end
         object RLDraw47: TRLDraw
-          Left = 481
+          Left = 480
           Top = 848
           Width = 219
           Height = 27
         end
         object RLDraw46: TRLDraw
-          Left = 481
+          Left = 480
           Top = 822
           Width = 219
           Height = 27
         end
         object RLDraw45: TRLDraw
-          Left = 481
+          Left = 480
           Top = 796
           Width = 219
           Height = 27
         end
         object RLDraw44: TRLDraw
-          Left = 481
+          Left = 480
           Top = 770
-          Width = 110
+          Width = 111
           Height = 27
         end
         object RLDraw38: TRLDraw
           Left = 590
           Top = 770
-          Width = 110
+          Width = 109
           Height = 27
         end
         object RLDraw51: TRLDraw
           Left = 1
           Top = 863
-          Width = 481
+          Width = 480
           Height = 64
         end
         object RLDraw50: TRLDraw
           Left = 1
           Top = 811
-          Width = 481
+          Width = 480
           Height = 53
         end
         object RLDraw36: TRLDraw
           Left = 1
           Top = 770
-          Width = 481
+          Width = 480
           Height = 42
         end
         object RLDraw37: TRLDraw
           Left = 1
           Top = 692
-          Width = 481
+          Width = 480
           Height = 79
         end
         object RLDraw1: TRLDraw
@@ -749,7 +749,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel37: TRLLabel
-          Left = 652
+          Left = 650
           Top = 263
           Width = 47
           Height = 7
@@ -762,8 +762,8 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLMemo1: TRLMemo
-          Left = 703
-          Top = 180
+          Left = 702
+          Top = 177
           Width = 8
           Height = 84
           Alignment = taJustify
@@ -1386,7 +1386,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         end
         object RLMemo4: TRLMemo
           Left = 702
-          Top = 510
+          Top = 507
           Width = 8
           Height = 84
           Alignment = taJustify
@@ -1851,7 +1851,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object DataLimitePagamento2: TRLLabel
           Left = 167
           Top = 577
-          Width = 307
+          Width = 308
           Height = 12
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
@@ -1862,9 +1862,9 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RepresentacaoNumerica2: TRLLabel
-          Left = 3
+          Left = 2
           Top = 593
-          Width = 472
+          Width = 473
           Height = 10
           Alignment = taCenter
           AutoSize = False
@@ -1953,7 +1953,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object RLDraw35: TRLDraw
           Left = 1
           Top = 666
-          Width = 481
+          Width = 480
           Height = 27
         end
         object RLLabel75: TRLLabel
@@ -1971,19 +1971,19 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLDraw39: TRLDraw
-          Left = 481
+          Left = 480
           Top = 666
           Width = 89
           Height = 27
         end
         object RLDraw40: TRLDraw
-          Left = 569
+          Left = 568
           Top = 666
           Width = 131
           Height = 27
         end
         object RLLabel80: TRLLabel
-          Left = 488
+          Left = 487
           Top = 669
           Width = 56
           Height = 10
@@ -1996,7 +1996,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object UFFavorecida3: TRLLabel
-          Left = 488
+          Left = 487
           Top = 680
           Width = 68
           Height = 12
@@ -2008,7 +2008,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object CodReceita3: TRLLabel
-          Left = 586
+          Left = 585
           Top = 680
           Width = 52
           Height = 12
@@ -2020,7 +2020,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel81: TRLLabel
-          Left = 586
+          Left = 585
           Top = 669
           Width = 70
           Height = 10
@@ -2033,7 +2033,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel86: TRLLabel
-          Left = 488
+          Left = 487
           Top = 695
           Width = 57
           Height = 10
@@ -2046,7 +2046,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object NumeroControle3: TRLLabel
-          Left = 586
+          Left = 585
           Top = 703
           Width = 112
           Height = 12
@@ -2060,7 +2060,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel87: TRLLabel
-          Left = 488
+          Left = 487
           Top = 721
           Width = 76
           Height = 10
@@ -2073,7 +2073,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object DataVencimento3: TRLLabel
-          Left = 586
+          Left = 585
           Top = 729
           Width = 112
           Height = 12
@@ -2087,7 +2087,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel88: TRLLabel
-          Left = 488
+          Left = 487
           Top = 747
           Width = 97
           Height = 10
@@ -2100,7 +2100,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object NumDocOrigem3: TRLLabel
-          Left = 586
+          Left = 585
           Top = 755
           Width = 112
           Height = 12
@@ -2114,7 +2114,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel98: TRLLabel
-          Left = 488
+          Left = 487
           Top = 773
           Width = 83
           Height = 10
@@ -2127,7 +2127,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object PerMesAnoRef3: TRLLabel
-          Left = 488
+          Left = 487
           Top = 784
           Width = 97
           Height = 12
@@ -2140,7 +2140,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel99: TRLLabel
-          Left = 595
+          Left = 594
           Top = 773
           Width = 28
           Height = 10
@@ -2153,7 +2153,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel100: TRLLabel
-          Left = 595
+          Left = 594
           Top = 784
           Width = 103
           Height = 12
@@ -2167,7 +2167,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel101: TRLLabel
-          Left = 488
+          Left = 487
           Top = 799
           Width = 55
           Height = 10
@@ -2180,7 +2180,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel102: TRLLabel
-          Left = 488
+          Left = 487
           Top = 808
           Width = 210
           Height = 12
@@ -2194,7 +2194,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel110: TRLLabel
-          Left = 488
+          Left = 487
           Top = 826
           Width = 83
           Height = 10
@@ -2207,7 +2207,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel103: TRLLabel
-          Left = 488
+          Left = 487
           Top = 835
           Width = 210
           Height = 12
@@ -2221,7 +2221,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel111: TRLLabel
-          Left = 488
+          Left = 487
           Top = 851
           Width = 23
           Height = 10
@@ -2234,7 +2234,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel104: TRLLabel
-          Left = 488
+          Left = 487
           Top = 860
           Width = 210
           Height = 12
@@ -2248,7 +2248,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel105: TRLLabel
-          Left = 488
+          Left = 487
           Top = 877
           Width = 23
           Height = 10
@@ -2261,7 +2261,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel106: TRLLabel
-          Left = 488
+          Left = 487
           Top = 886
           Width = 210
           Height = 12
@@ -2275,7 +2275,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel107: TRLLabel
-          Left = 488
+          Left = 487
           Top = 903
           Width = 62
           Height = 10
@@ -2288,7 +2288,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel108: TRLLabel
-          Left = 488
+          Left = 487
           Top = 912
           Width = 210
           Height = 12
@@ -2302,7 +2302,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLLabel109: TRLLabel
-          Left = 613
+          Left = 612
           Top = 929
           Width = 85
           Height = 7
@@ -2315,8 +2315,8 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
           ParentFont = False
         end
         object RLMemo6: TRLMemo
-          Left = 703
-          Top = 846
+          Left = 702
+          Top = 843
           Width = 8
           Height = 84
           Alignment = taJustify
@@ -2344,7 +2344,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object RLLabel76: TRLLabel
           Left = 4
           Top = 697
-          Width = 472
+          Width = 471
           Height = 10
           Alignment = taCenter
           AutoSize = False
@@ -2461,7 +2461,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object TelefoneEmitente3: TRLLabel
           Left = 399
           Top = 757
-          Width = 77
+          Width = 76
           Height = 12
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2537,7 +2537,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object RLLabel89: TRLLabel
           Left = 4
           Top = 773
-          Width = 472
+          Width = 471
           Height = 10
           Alignment = taCenter
           AutoSize = False
@@ -2565,7 +2565,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object RLLabel92: TRLLabel
           Left = 87
           Top = 784
-          Width = 389
+          Width = 388
           Height = 12
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
@@ -2578,7 +2578,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object MunicipioDestinatario3: TRLLabel
           Left = 53
           Top = 797
-          Width = 423
+          Width = 422
           Height = 12
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
@@ -2591,7 +2591,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object RLLabel93: TRLLabel
           Left = 4
           Top = 814
-          Width = 472
+          Width = 471
           Height = 10
           Alignment = taCenter
           AutoSize = False
@@ -2619,7 +2619,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object Convenio3: TRLLabel
           Left = 91
           Top = 832
-          Width = 385
+          Width = 384
           Height = 12
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
@@ -2645,7 +2645,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object Produto3: TRLLabel
           Left = 46
           Top = 845
-          Width = 430
+          Width = 429
           Height = 12
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
@@ -2684,7 +2684,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object InfoComplementares3: TRLMemo
           Left = 126
           Top = 866
-          Width = 350
+          Width = 349
           Height = 41
           AutoSize = False
           Behavior = [beSiteExpander]
@@ -2711,7 +2711,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object DataLimitePagamento3: TRLLabel
           Left = 167
           Top = 913
-          Width = 307
+          Width = 308
           Height = 12
           AutoSize = False
           Font.Charset = DEFAULT_CHARSET
@@ -2724,7 +2724,7 @@ inherited frlGuiaRLRetrato: TfrlGuiaRLRetrato
         object RepresentacaoNumerica3: TRLLabel
           Left = 4
           Top = 929
-          Width = 472
+          Width = 471
           Height = 10
           Alignment = taCenter
           AutoSize = False

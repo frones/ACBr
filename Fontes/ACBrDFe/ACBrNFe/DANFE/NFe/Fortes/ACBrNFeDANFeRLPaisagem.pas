@@ -869,7 +869,11 @@ begin
     for i := 0 to ((TRLBand(RLNFe.Controls[b]).ControlCount) - 1) do
     begin
       //Altera o tamanho da fonte dos demais campos
-      if TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag in [3,70] then
+      if (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Tag in [3,70])
+       or(   (TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Parent = rlbFatura)
+          and(Owner <> nil)
+          and(TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Size > TACBrNFeDANFeRL(Owner).TamanhoFonte_DemaisCampos + 1))
+      then
       begin
         TRLLabel((TRLBand(RLNFe.Controls[b])).Controls[i]).Font.Style := [];
         if FNegrito then// Dados em negrito
@@ -1555,6 +1559,8 @@ begin
   iLinhasUtilizadas             := 0;
   iLimiteCaracteresLinha        := 142;
   iLimiteCaracteresContinuacao  := 204;
+  rllborda.Align                := faNone;
+  rllCinza.Align                := faNone;
 end;
 
 Function TfrlDANFeRLPaisagem.ManterVeiculos( inItem:  integer  ) : String;
@@ -1854,7 +1860,7 @@ begin
 
   // ******** Fatura ********
   base := RLDrawFaturareal.Top;
-  RLDrawFaturareal.Height:= AltLinhaComun + 1;
+  RLDrawFaturareal.Height:= AltLinhaComun + 4;
   RLDraw8.Height:=RLDrawFaturareal.Height;
 
   RLLabelPag.Top    := base + 1;
@@ -1863,7 +1869,8 @@ begin
   RLLabelDupl.Top   := RLLabelPag.Top;
   RLLabelLIQ.Top    := RLLabelPag.Top;
 
-  RLDraw27.Top := RLLabelPag.Top + RLLabelPag.Height ;
+  RLDraw27.Top := RLLabelPag.Top + RLLabelPag.Height;
+  RLLabel5.top := 1;
   RLLabel5.Height:= RLDraw27.Top - base - 2;
 
   RlbDadoPagamento.Top     := base + AltLinhaComun - RlbDadoPagamento.Height;

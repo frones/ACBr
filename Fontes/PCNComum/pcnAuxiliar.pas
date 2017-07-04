@@ -127,6 +127,7 @@ function ExtrairCNPJChaveAcesso(AChaveNFE: String): String;
 function ExtrairSerieChaveAcesso(AChaveNFE: String): Integer;
 function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
 function ExtraircNFChaveAcesso(AChaveNFE: String): Integer;
+function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;
 
 function TimeZoneConf: TTimeZoneConf;
 
@@ -971,6 +972,16 @@ begin
     Result    := StrToIntDef(Copy(AChaveNFE, 38, 6), 0)
   else
     Result    := StrToIntDef(Copy(AChaveNFE, 36, 8), 0);
+end;
+
+function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;
+begin
+  aChaveNFe := OnlyNumber(aChaveNFe);
+
+  if (pos(ExtrairModeloChaveAcesso(aChaveNFe), '55,65') = 0) then
+    Result := 0
+  else
+    Result := StrToIntDef(Copy(aChaveNFe, 35, 1), 0);
 end;
 
 function TimeZoneConf: TTimeZoneConf;

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/07/2017
+-- pcnAuxiliar --
+[+] Adicionado o método:
+    function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;
+    (por: Graziele e DSA)
+
 19/06/2017
 -- pcnConversao --
 [+] Nova função para retornar a descrição do modelo

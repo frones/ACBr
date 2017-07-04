@@ -448,8 +448,6 @@ begin
   begin
     VerServ := 1.00; //FGuias.Items[0].GNRE.infGNRE.Versao;
 
-//    if FPConfiguracoesGNRE.WebServices.Ambiente <> FGuias.Items.GNRE.Ide.Ambiente then
-//      raise EACBrGNREException.Create( CErroAmbienteDiferente );
   end
   else
   begin                   // Se não tem GNRE, use as configurações do componente
@@ -562,30 +560,7 @@ begin
     FAmbiente := FPConfiguracoesGNRE.WebServices.Ambiente;
     FcUF := FPConfiguracoesGNRE.WebServices.UFCodigo;
   end;
-  (*
-  if Assigned(FGNRERetorno) and Assigned(FGuias) then
-  begin
-    // Limpa Dados dos retornos das guias;
-    for i := 0 to FGNRERetorno.ProtGNRE.Count - 1 do
-    begin
-      for j := 0 to FGuias.Count - 1 do
-      begin
-        if OnlyNumber(FGNRERetorno.ProtGNRE.Items[i].chGNRE) = FGuias.Items[J].NumID then
-        begin
-          FGuias.Items[j].GNRE.procGNRE.verAplic := '';
-          FGuias.Items[j].GNRE.procGNRE.chGNRE   := '';
-          FGuias.Items[j].GNRE.procGNRE.dhRecbto := 0;
-          FGuias.Items[j].GNRE.procGNRE.nProt    := '';
-          FGuias.Items[j].GNRE.procGNRE.digVal   := '';
-          FGuias.Items[j].GNRE.procGNRE.cStat    := 0;
-          FGuias.Items[j].GNRE.procGNRE.xMotivo  := '';
-        end;
-      end;
-    end;
 
-    FreeAndNil(FGNRERetorno);
-  end;
-  *)
   FGNRERetorno := TTResultLote_GNRE.Create;
 end;
 
@@ -701,6 +676,9 @@ begin
 end;
 
 function TGNRERetRecepcao.TratarResposta: Boolean;
+var
+  SL: TStringList;
+  I: Integer;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'gnreRespostaMsg');
 
@@ -711,99 +689,23 @@ begin
   Fcodigo    := FGNRERetorno.codigo;
   Fdescricao := FGNRERetorno.descricao;
   Fresultado := FGNRERetorno.resultado;
-  FPMsg      := FGNRERetorno.descricao;
-
+  // Para aparecer as exceções que ocorreram / caso haja alguma
+  SL := TStringList.Create;
+  SL.Clear;
+  for I := 0 to GNRERetorno.resRejeicaGuia.Count - 1 do
+   SL.Add(GNRERetorno.resRejeicaGuia.Items[I].DescMotivoRejeicao+#13);
+  FPMsg      := FGNRERetorno.descricao + #13 + Trim(SL.Text);
+  SL.Free;
+  //
   Result := (FGNRERetorno.codigo = 401); // Lote em Processamento
 end;
 
 function TGNRERetRecepcao.TratarRespostaFinal: Boolean;
 var
   I, J: Integer;
-//  AProcGNRE: TProcGNRE;
-//  AInfProt: TProtGNRECollection;
   SalvarXML: Boolean;
 begin
   Result := False;
-  (*
-  AInfProt := FGNRERetorno.ProtGNRE;
-
-  if (AInfProt.Count > 0) then
-  begin
-    FPMsg := FGNRERetorno.ProtGNRE.Items[0].xMotivo;
-    FxMotivo := FGNRERetorno.ProtGNRE.Items[0].xMotivo;
-  end;
-
-  //Setando os retornos das notas fiscais;
-  for I := 0 to AInfProt.Count - 1 do
-  begin
-    for J := 0 to FGuias.Count - 1 do
-    begin
-      if OnlyNumber(AInfProt.Items[I].chGNRE) = FGuias.Items[J].NumID then
-      begin
-        if (FPConfiguracoesGNRE.Geral.ValidarDigest) and
-           (AInfProt.Items[I].digVal <> '') and
-           (FGuias.Items[J].GNRE.signature.DigestValue <> AInfProt.Items[I].digVal) then
-        begin
-          raise EACBrGNREException.Create('DigestValue do documento ' +
-            FGuias.Items[J].NumID + ' não confere.');
-        end;
-
-        with FGuias.Items[J] do
-        begin
-          GNRE.procGNRE.Ambiente := AInfProt.Items[I].Ambiente;
-          GNRE.procGNRE.verAplic := AInfProt.Items[I].verAplic;
-          GNRE.procGNRE.chGNRE := AInfProt.Items[I].chGNRE;
-          GNRE.procGNRE.dhRecbto := AInfProt.Items[I].dhRecbto;
-          GNRE.procGNRE.nProt := AInfProt.Items[I].nProt;
-          GNRE.procGNRE.digVal := AInfProt.Items[I].digVal;
-          GNRE.procGNRE.cStat := AInfProt.Items[I].cStat;
-          GNRE.procGNRE.xMotivo := AInfProt.Items[I].xMotivo;
-        end;
-
-        // Monta o XML da Guia assinada e com o protocolo de Autorização ou Denegação
-        if (AInfProt.Items[I].cStat = 100) or (AInfProt.Items[I].cStat = 110) or
-           (AInfProt.Items[I].cStat = 150) or (AInfProt.Items[I].cStat = 301) or
-           (AInfProt.Items[I].cStat = 302) or (AInfProt.Items[I].cStat = 303) then
-        begin
-          AProcGNRE := TProcGNRE.Create;
-          try
-            AProcGNRE.XML_GNRE := StringReplace(FGuias.Items[J].XMLAssinado,
-                                       '<' + ENCODING_UTF8 + '>', '',
-                                       [rfReplaceAll]);
-            AProcGNRE.XML_Prot := AInfProt.Items[I].XMLprotGNRE;
-            AProcGNRE.Versao := FPVersaoServico;
-            AProcGNRE.GerarXML;
-
-            with FGuias.Items[J] do
-            begin
-              XMLOriginal := AProcGNRE.Gerador.ArquivoFormatoXML;
-
-              if FPConfiguracoesGNRE.Arquivos.Salvar then
-              begin
-                SalvarXML := (not FPConfiguracoesGNRE.Arquivos.SalvarApenasGNREProcessadas) or
-                             Processada;
-
-                // Salva o XML da Guia assinada e protocolada
-                if SalvarXML then
-                begin
-                  if NaoEstaVazio(NomeArq) and FileExists(NomeArq) then
-                    FPDFeOwner.Gravar( NomeArq, XMLOriginal );  // Atualiza o XML carregado
-
-                  GravarXML; // Salva na pasta baseado nas configurações do PathGNRE
-                end;
-              end;
-            end;
-          finally
-            AProcGNRE.Free;
-          end;
-        end;
-
-        break;
-      end;
-    end;
-  end;
-  *)
-
   //Verificando se existe alguma guia confirmada
   for I := 0 to FGuias.Count - 1 do
   begin
@@ -833,12 +735,6 @@ begin
         '->' + FGuias.Items[I].Msg + LineBreak;
   end;
 
-//  if AInfProt.Count > 0 then
-//  begin
-//    FChaveGNRE := AInfProt.Items[0].chGNRE;
-//    FProtocolo := AInfProt.Items[0].nProt;
-//    FcStat := AInfProt.Items[0].cStat;
-//  end;
 end;
 
 function TGNRERetRecepcao.SalvarTXT(AResultado: String): Boolean;
@@ -865,7 +761,8 @@ begin
           SLAux.Add(SL.Strings[i]);
           Inc(GuiasOk);
           RepresentacaoNumerica := Copy(SL.Strings[i], 979, 48);
-
+          if not DirectoryExists(FPConfiguracoesGNRE.Arquivos.PathArqTXT) then
+            ForceDirectories(FPConfiguracoesGNRE.Arquivos.PathArqTXT);
           if FPConfiguracoesGNRE.Arquivos.SalvarTXT then
             SLAux.SaveToFile(PathWithDelim(FPConfiguracoesGNRE.Arquivos.PathArqTXT)+RepresentacaoNumerica+'-gnre.txt');
         end;
@@ -1232,8 +1129,7 @@ begin
 
   FRetorno.numeroRecibo := FEnviar.numero;
   if not FRetorno.Executar then
-    FRetorno.GerarException( FRetorno.Msg );
-
+    FRetorno.GerarException(FRetorno.Msg);
   Result := True;
 end;
 

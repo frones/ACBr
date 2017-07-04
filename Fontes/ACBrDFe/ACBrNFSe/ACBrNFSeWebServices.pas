@@ -2583,10 +2583,11 @@ end;
 
 procedure TNFSeTesteEnvioLoteRPS.DefinirServicoEAction;
 begin
+  inherited DefinirServicoEAction;
+
   FPServico := 'TesteEnvioLoteRPS';
   FPSoapAction := FPConfiguracoesNFSe.Geral.ConfigSoapAction.Teste;
 
-  inherited DefinirServicoEAction;
 end;
 
 function TNFSeTesteEnvioLoteRPS.TratarResposta: Boolean;

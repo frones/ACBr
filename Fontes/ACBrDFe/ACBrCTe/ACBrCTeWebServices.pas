@@ -754,7 +754,7 @@ end;
 destructor TCTeRecepcao.Destroy;
 begin
   FCTeRetorno.Free;
-
+  FCTeRetornoOS.Free;
   inherited Destroy;
 end;
 

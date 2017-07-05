@@ -669,6 +669,8 @@ begin
 
   // Login in SMTP //
   MailProcess(pmsLoginSMTP);
+  if (fSMTP.TargetHost = '') then
+    SmtpError('SMTP Error: Server not informed');
 
   for vAttempts := 1 to fAttempts do
   begin

@@ -37,6 +37,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/07/2017
+-- ACBrMail --
+[*] Método "SendMail", adicionada verificação de "Host" vazio
+    (por: DSA)
+
 28/06/2017
 -- ACBrMail --
 [-] Não enviar cópias dos emails para endereços em "ReplyTo"

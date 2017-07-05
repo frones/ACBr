@@ -52,7 +52,7 @@ uses
   ACBrBoleto, RLRichText ;
 
 const
-  CACBrBoletoFCFortes_Versao = '0.0.31a' ;
+  CACBrBoletoFCFortes_Versao = '0.0.32a' ;
 
 type
 
@@ -137,6 +137,8 @@ type
     RLLabel123: TRLMemo;
     RLLabel161: TRLMemo;
     RLLabel80: TRLMemo;
+    txtEndCedente: TRLMemo;
+    txtEndCedente1: TRLMemo;
     txtEndSacadorAval3: TRLLabel;
     RLLabel14: TRLLabel;
     RLLabel145: TRLLabel;
@@ -226,7 +228,6 @@ type
     txtOrientacoesBanco: TRLMemo;
     RLMemo2: TRLMemo;
     txtDesconto5: TRLLabel;
-    txtEndCedente1: TRLLabel;
     txtMoraMulta4: TRLLabel;
     txtNumeroBanco: TRLLabel;
     txtTotPar: TRLLabel;
@@ -367,7 +368,6 @@ type
     txtCodigoBaixa2: TRLLabel;
     txtEndSacadorAval2: TRLLabel;
     txtReferencia2: TRLLabel;
-    txtEndCedente: TRLLabel;
     txtSwHouse: TRLAngleLabel;
     RLBand2: TRLBand;
     imgBanco3: TRLImage;
@@ -691,7 +691,7 @@ begin
 
       with Titulo.ACBrBoleto.Cedente do
       begin
-         txtEndCedente.Caption := Logradouro+' '+NumeroRes+' '+Complemento+' '+
+        txtEndCedente.lines.text := Logradouro+' '+NumeroRes+' '+Complemento+' '+
                                   Bairro+' '+Cidade+' '+ UF+' '+CEP;
       end;
    end;
@@ -713,7 +713,7 @@ begin
      txtLocalPagamento3.Lines.Text   := lblLocalPagto.Lines.Text;
      txtDataVencimento3.Caption      := txtDataVencimento2.Caption;
      txtNomeCedente3.Caption         := txtNomeCedente2.Caption;
-     txtEndCedente1.Caption          := txtEndCedente.Caption  ;
+     txtEndCedente1.Lines.Text       := txtEndCedente.Lines.Text;
      txtCodigoCedente3.Caption       := txtCodigoCedente2.Caption;
      txtDataDocumento3.Caption       := txtDataDocumento2.Caption;
      txtNumeroDocumento3.Caption     := txtNumeroDocumento2.Caption;

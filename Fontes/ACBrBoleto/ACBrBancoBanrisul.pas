@@ -799,9 +799,6 @@ begin
       raise Exception.Create(ACBrStr('"'+ ACBrBanco.ACBrBoleto.NomeArqRetorno +
                                      '" não é um arquivo de retorno do(a) '+ UpperCase(Nome)));
 
-
-  fpTamanhoMaximoNossoNum:=10;
-
   rCedente       := trim(copy(ARetorno[0], 47, 30));   //Nome da Empresa
   rConvenio      := ''; //Não possui essa info
   rAgencia       := trim(Copy(ARetorno.Strings[0], 27, 4));
@@ -850,7 +847,7 @@ begin
     Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
     with Titulo do
     begin
-      NossoNumero          := Copy(Linha,63,10);
+      NossoNumero          := Copy(Linha,63,08);
       SeuNumero            := copy(Linha,117,10);
       NumeroDocumento      := copy(Linha,117,10);
 

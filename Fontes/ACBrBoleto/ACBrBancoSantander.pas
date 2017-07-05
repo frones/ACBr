@@ -752,7 +752,7 @@ begin
                      Space(283) + 'I'                            +
                      Copy( Cedente.Conta, length( Cedente.Conta ),1 )   + 
                      Cedente.ContaDigito                         +
-                     Space(6) + Protesto + ' '                   +
+                     Space(9)                                           +
                      IntToStrZero( aRemessa.Count  + I + 2 , 6 );
 
          aRemessa.Text:= aRemessa.Text + UpperCase(wLinha);

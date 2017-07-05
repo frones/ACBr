@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 03/07/2017 ver: 0.0.226
+-- ACBrBancoBanrisul
+[-] Correção na leitura do arquivo de retorno CNAB400 
+		http://www.projetoacbr.com.br/forum/topic/31343-remessa-banrisul-cnab-400-erro-nosso-numero/
+		por José M. S. Junior
+
+-- ACBrBancoSantander
+[-] Correção na geração do arquivo de remessa CNAB400
+		http://www.projetoacbr.com.br/forum/topic/37394-santander-erro-na-homologa%C3%A7%C3%A3o/
+		por José M. S. Junior
+
 Data 26/06/2017 ver: 0.0.225
 -- ACBrBancoBrasil
 [+] Atualização na função MontarCampoCarteira - Banco Brasil

@@ -376,7 +376,7 @@ var
   xJust: string;
   ChaveNFe: string;
 begin
-  xJust := 'NFCe cancelado por erro na emissão';
+  xJust := ACBrStr('NFCe cancelado por erro na emissão');
   if Assigned(fsQuandoCancelarDocumento) then
     fsQuandoCancelarDocumento(xJust);
 

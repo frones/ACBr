@@ -1444,7 +1444,6 @@ begin
      FfrxDadosProdutos  := TfrxDBDataset.Create(nil);
      with FfrxDadosProdutos do
      begin
-        Name := 'frxDadosProdutos';
         DataSet := cdsDadosProdutos;
         OpenDataSource := False;
         Enabled := False; 

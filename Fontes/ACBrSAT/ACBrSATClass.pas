@@ -588,7 +588,6 @@ TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
   {$ENDIF}
   fRetornoLst.DelimitedText := AValue;
 
-
   if fRetornoLst.Count > 1 then
   begin
     fnumeroSessao    := StrToIntDef( fRetornoLst[0], 0);

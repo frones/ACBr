@@ -43,6 +43,7 @@ uses
 
 const
   CPREFIXO_CFe = 'CFe';
+  CMAX_ERROS_SESSAO = 1;
 
 type
 
@@ -89,6 +90,10 @@ type
      fsOnConsultarNumeroSessao: TACBrSATEventoDados;
      fsOnMensagemSEFAZ: TACBrSATMensagem;
      fsOnCalcPath: TACBrSATCalcPathEvent;
+     fsValidarNumeroSessaoResposta: Boolean;
+     fsNumeroTentativasValidarSessao: Integer;
+     fsErrosSessaoCount: Integer;
+     fsSessaoAVerificar: Integer;
 
      function CodificarPaginaDeCodigoSAT(ATexto: String): AnsiString;
      function DecodificarPaginaDeCodigoSAT(ATexto: AnsiString): String;
@@ -196,9 +201,14 @@ type
      property Modelo : TACBrSATModelo read fsModelo write SetModelo
                  default satNenhum ;
 
-     property Extrato: TACBrSATExtratoClass read fsExtrato write SetExtrato ;
+     property Extrato: TACBrSATExtratoClass read fsExtrato write SetExtrato;
 
      property NomeDLL: string read fsNomeDLL write SetNomeDLL;
+
+     property ValidarNumeroSessaoResposta: Boolean read fsValidarNumeroSessaoResposta
+       write fsValidarNumeroSessaoResposta default False;
+     property NumeroTentativasValidarSessao: Integer read fsNumeroTentativasValidarSessao
+       write fsNumeroTentativasValidarSessao default CMAX_ERROS_SESSAO;
 
      property About : String read GetAbout write SetAbout stored False ;
      property ArqLOG : String read fsArqLOG write fsArqLOG ;
@@ -717,6 +727,11 @@ begin
   fsComandoLog      := '';
   fsRespostaComando := '';
 
+  fsValidarNumeroSessaoResposta := False;
+  fsNumeroTentativasValidarSessao := CMAX_ERROS_SESSAO;
+  fsErrosSessaoCount := 0;
+  fsSessaoAVerificar := 0;
+
   fsOnGetcodigoDeAtivacao := Nil;
   fsOnGetsignAC           := Nil;
   fsOnGravarLog           := Nil;
@@ -808,6 +823,7 @@ var
   AStr : String ;
 begin
   VerificaInicializado;
+  fsSessaoAVerificar := 0;
   GerarnumeroSessao;
 
   fsRespostaComando := '';
@@ -821,6 +837,7 @@ end ;
 function TACBrSAT.FinalizaComando( AResult : String ) : String ;
 var
   AStr : String ;
+  SessaoEnviada: Integer;
 begin
   fsRespostaComando := DecodificarPaginaDeCodigoSAT( AResult );
   Result := fsRespostaComando;
@@ -832,11 +849,53 @@ begin
 
   Resposta.RetornoStr := fsRespostaComando;
 
+  DoLog( AStr );
+
+  if (Resposta.numeroSessao <> numeroSessao) then
+  begin
+    if (Resposta.numeroSessao <> fsSessaoAVerificar) then
+    begin
+      if fsSessaoAVerificar = 0 then
+        SessaoEnviada := numeroSessao
+      else
+        SessaoEnviada := fsSessaoAVerificar;
+
+      AStr := Format('ERRO: Sessao retornada pelo SAT [%d], diferente da enviada [%d].',
+                     [Resposta.numeroSessao, SessaoEnviada] );
+      DoLog( '   '+AStr);
+
+      if fsValidarNumeroSessaoResposta then    // Tenta se recuperar da resposta inválida ?
+      begin
+        Inc( fsErrosSessaoCount );
+        if fsErrosSessaoCount > fsNumeroTentativasValidarSessao then
+          raise EACBrSATErro.Create(AStr);
+
+        AStr := Format('   Consultando Sessao [%d], tentativa: %d', [SessaoEnviada, fsErrosSessaoCount]);
+        DoLog(AStr);
+        ConsultarNumeroSessao(SessaoEnviada);
+        Exit;
+      end;
+    end
+    else
+    begin
+      if fsSessaoAVerificar > 0 then
+        DoLog(Format('   Sessao [%d] recuperada com sucesso',[fsSessaoAVerificar]));
+    end;
+  end
+  else
+  begin
+    if (Resposta.codigoDeRetorno = 11003) and  // 11003 = Sessão não existe
+       (fsSessaoAVerificar > 0) and
+       (fsErrosSessaoCount > 0) then
+    begin
+      raise EACBrSATErro.Create(Format('ERRO: SAT nao respondeu a sessao [%d]', [fsSessaoAVerificar] ));
+    end;
+  end;
+
+  fsErrosSessaoCount := 0;
   if Assigned(fsOnMensagemSEFAZ) then
     if (Resposta.codigoSEFAZ > 0) or (Resposta.mensagemSEFAZ <> '') then
       fsOnMensagemSEFAZ( Resposta.codigoSEFAZ, Resposta.mensagemSEFAZ );
-
-  DoLog( AStr );
 end ;
 
 procedure TACBrSAT.VerificaCondicoesImpressao(EhCancelamento: Boolean);
@@ -1022,6 +1081,7 @@ var
 begin
   fsComandoLog := 'ConsultarNumeroSessao( '+IntToStr(cNumeroDeSessao)+' )';
   IniciaComando;
+  fsSessaoAVerificar := cNumeroDeSessao;
 
   Retorno := '';
   if Assigned(fsOnConsultarNumeroSessao) then

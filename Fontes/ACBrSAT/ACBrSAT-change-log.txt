@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 06/07/2017
+-- ACBrSAT --
+[+] Adicionada a propriedade: "ValidarNumeroSessaoResposta: Boolean default False"
+    Se a mesma estiver ativa, o ACBrSAT, passará a verificar se o número de Sessão
+    retornado pelo SAT, está de acordo com o Número de Sessão do último comando
+    enviado.
+[+] Adicionada a propriedade: "NumeroTentativasValidarSessao: Integer default 1"
+    Somente tem efeito, se "ValidarNumeroSessaoResposta = True". Define quantas
+    tentativas o ACBrSAT deve fazer, para tentar recuperar a sessão correta,
+    caso seja detectado que o Número de sessão respondido, é diferente do enviado.
+    (por: DSA)
+
 Data 14/06/2017
 -- ACBrSAT --
 [*] Método "DecodificaRetorno6000", ajuste para inserir a Declaração de XML,

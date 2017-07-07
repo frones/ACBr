@@ -823,6 +823,8 @@ begin
 end;
 
 procedure TArquivosConf.Assign(DeArquivosConf: TArquivosConf);
+var
+  I: Integer;
 begin
   PathSalvar       := DeArquivosConf.PathSalvar;
   PathSchemas      := DeArquivosConf.PathSchemas;
@@ -833,7 +835,9 @@ begin
   SepararPorModelo := DeArquivosConf.SepararPorModelo;
   SepararPorMes    := DeArquivosConf.SepararPorMes;
   SepararPorDia    := DeArquivosConf.SepararPorDia;
-  OrdenacaoPath    := DeArquivosConf.OrdenacaoPath;
+  OrdenacaoPath.Clear;
+  for I := 0 to DeArquivosConf.OrdenacaoPath.Count-1 do
+    OrdenacaoPath.Add.Item := DeArquivosConf.OrdenacaoPath.Items[I].Item;
 end;
 
 function TArquivosConf.GetPathSalvar: String;

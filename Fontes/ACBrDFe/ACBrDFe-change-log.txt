@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/07/2017
+-- ACBrDFeConfiguracoes --
+[-] Correção em "TArquivosConf.Assign", onde o Objeto "OrdenacaoPath" não era
+    duplicado, mas sim copiado por referência, causando A.V. na liberação de
+    Objetos copiados.
+    (por: DSA)
+
 26/06/2017
 -- ACBrDFeConfiguracoes --
 [+] Adicionada a propriedade "TArquivosConf.OrdenacaoPath", que permite definir

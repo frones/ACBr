@@ -285,6 +285,7 @@ end;
 
 procedure TACBrBanrisul.GerarRegistroTransacao400(ACBrTitulo: TACBrTitulo; aRemessa: TStringList);
 var
+  AMensagem,
   Ocorrencia, cd, TipoSacado     :String;
   aTipoAceite , aTipoCobranca, TipoBoleto, wLinha :String;
 begin
@@ -357,6 +358,10 @@ begin
         Instrucao2 := '18'; //Apos NN dias vencimento com percentual multa
     end;
 
+    AMensagem   := '';
+    if Mensagem.Text <> '' then
+      AMensagem   := Mensagem.Strings[0];
+
     with ACBrBoleto do
     begin
       cd:= OnlyNumber(Cedente.CodigoCedente);
@@ -367,7 +372,7 @@ begin
                space(7)                                                         + // Brancos
                space(25)                                                        + // Identificação do título para o cedente (usado no arquivo de retorno)
                PadRight(NossoNumero, 8, '0')+CalculaDigitosChaveASBACE(NossoNumero) + // Nosso Número
-               space(32)                                                        + // Mensagem no bloqueto
+               PadRight( AMensagem, 32)                                         + // Mensagem no bloqueto
                space(3)                                                         + // Brancos
                aTipoCobranca                                                    + // Tipo de Carteira (Simples, Vinculada, Descontada, Vendor)
                Ocorrencia                                                       + // Código de ocorrência

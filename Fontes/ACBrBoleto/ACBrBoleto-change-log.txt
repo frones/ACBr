@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 08/07/2017 ver: 0.0.226
+-- ACBrBancoBanrisul
+[-] Correção na mensagem do cnab400/
+		http://www.projetoacbr.com.br/forum/topic/35252-banrisul-mensagem-do-cedente/?do=findComment&comment=246722
+		por Juliomar Marchetti
+
+
 Data 03/07/2017 ver: 0.0.226
 -- ACBrBancoBanrisul
 [-] Correção na leitura do arquivo de retorno CNAB400 

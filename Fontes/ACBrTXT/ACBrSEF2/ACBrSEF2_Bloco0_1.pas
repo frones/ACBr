@@ -733,6 +733,18 @@ begin
   FRegistro0990 := TRegistroSEF0990.Create;
 
   FRegistro0005Count := 0;
+  FRegistro0025Count := 0;
+  FRegistro0030Count := 0;
+  FRegistro0100Count := 0;
+  FRegistro0150Count := 0;
+  FRegistro0200Count := 0;
+  FRegistro0205Count := 0;
+  FRegistro0215Count := 0;
+  FRegistro0400Count := 0;
+  FRegistro0450Count := 0;
+  FRegistro0460Count := 0;
+  FRegistro0465Count := 0;
+  FRegistro0470Count := 0;
 
   FRegistro0990.QTD_LIN_0 := 0;
 end;

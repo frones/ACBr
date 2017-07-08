@@ -535,6 +535,8 @@ var
   qrcode: String;
   TotalPaginaPixel: Integer;
   LogoStream: TStringStream;
+  I: Integer;
+  Prod: TProd;
 begin
   fNumItem  := 0;
   fNumPagto := 0;
@@ -598,15 +600,39 @@ begin
   TotalPaginaPixel := rlbsCabecalho.Height +
                       rlbRodape.Height +
                       rlbLegenda.Height +
-                      rlbPagamento.Height +
+                      rlbTotal.Height +
+                      (rlbPagamento.Height * ACBrNFeDANFCeFortes.FpNFe.pag.Count) +
                       rlbMensagemFiscal.Height +
                       rlbConsumidor.Height +
-                      rlsbDetItem.Height +
-                      rlbDescItem.Height +
-                      rlbOutroItem.Height +
-                      Trunc((rlbDetItem.Height+5.4) * ACBrNFeDANFCeFortes.FpNFe.Det.Count) ;
+                      rlbDetItem.Height * ACBrNFeDANFCeFortes.FpNFe.Det.Count;
+
+  if (ACBrNFeDANFCeFortes.FpNFe.pag.vTroco > 0) or (ACBrNFeDANFCeFortes.vTroco > 0) then
+    TotalPaginaPixel := TotalPaginaPixel + rlbTroco.Height;
+
+  // Calcular altura das bandas variáveis
+  for I := 0 to ACBrNFeDANFCeFortes.FpNFe.Det.Count - 1 do
+  begin
+    Prod := ACBrNFeDANFCeFortes.FpNFe.Det[I].Prod;
+    // Quebra de linha na descrição do item
+    if Length(Prod.xProd) > 35 then
+      TotalPaginaPixel := TotalPaginaPixel + 12;
+    if ACBrNFeDANFCeFortes.ImprimeDescAcrescItem then
+    begin
+      if (Prod.vDesc > 0) or ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+      begin
+        // Valor líquido
+        TotalPaginaPixel := TotalPaginaPixel + 12;
+        if (Prod.vDesc > 0) then
+          TotalPaginaPixel := TotalPaginaPixel + 12;
+        if ((Prod.vFrete + Prod.vSeg + Prod.vOutro) > 0) then
+          TotalPaginaPixel := TotalPaginaPixel + 12;
+      end;
+    end;
+  end;
+
   // Pixel para Milimitros //
-  rlVenda.PageSetup.PaperHeight := max(200, 20+Trunc( TotalPaginaPixel / 3.75 ));
+  rlVenda.PageSetup.PaperHeight := max(100, 20+Trunc( TotalPaginaPixel / 3.75 ));
+
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbDescItemBeforePrint(Sender: TObject;

@@ -2384,8 +2384,8 @@ begin
     InutNFe.Versao := FPVersaoServico;
     InutNFe.GerarXML;
 
-    AssinarXML(InutNFe.Gerador.ArquivoFormatoXML, 'inutNFe', 'infInut',
-      'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
+    AssinarXML( NativeStringToUTF8( InutNFe.Gerador.ArquivoFormatoXML ),
+                'inutNFe', 'infInut', 'Falha ao assinar Inutilização Nota Fiscal Eletrônica ');
 
     FID := InutNFe.ID;
   finally
@@ -2750,7 +2750,7 @@ procedure TNFeEnvEvento.DefinirDadosMsg;
 var
   EventoNFe: TEventoNFe;
   I, J, F: integer;
-  Lote, Evento, Eventos, EventosAssinados: String;
+  Lote, Evento, Eventos, EventosAssinados: AnsiString;
 begin
   EventoNFe := TEventoNFe.Create;
   try
@@ -2841,7 +2841,7 @@ begin
     Lote := Copy(EventoNFe.Gerador.ArquivoFormatoXML, 1, I - 1);
     Eventos := SeparaDados(EventoNFe.Gerador.ArquivoFormatoXML, 'envEvento');
     I := Pos('<evento ', Eventos);
-    Eventos := Copy(Eventos, I, length(Eventos));
+    Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 
     EventosAssinados := '';
 
@@ -2856,9 +2856,7 @@ begin
         Eventos := Copy(Eventos, F + 9, length(Eventos));
 
         AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-
-        EventosAssinados := EventosAssinados + StringReplace(
-          FPDadosMsg, '<?xml version="1.0"?>', '', []);
+        EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;

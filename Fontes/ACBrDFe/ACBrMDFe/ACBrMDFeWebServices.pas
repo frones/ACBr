@@ -1829,7 +1829,7 @@ procedure TMDFeEnvEvento.DefinirDadosMsg;
 var
   EventoMDFe: TEventoMDFe;
   I, F: Integer;
-  Evento, Eventos, EventosAssinados, AXMLEvento: String;
+  Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
   EventoEhValido: Boolean;
   SchemaEventoMDFe: TSchemaMDFe;
 begin
@@ -1879,7 +1879,7 @@ begin
 
     EventoMDFe.GerarXML;
 
-    Eventos := EventoMDFe.Gerador.ArquivoFormatoXML;
+    Eventos := NativeStringToUTF8( EventoMDFe.Gerador.ArquivoFormatoXML );
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
@@ -1893,9 +1893,7 @@ begin
         Eventos := Copy(Eventos, F + 13, length(Eventos));
 
         AssinarXML(Evento, 'eventoMDFe', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-
-        EventosAssinados := EventosAssinados + StringReplace(
-          FPDadosMsg, '<?xml version="1.0"?>', '', []);
+        EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;

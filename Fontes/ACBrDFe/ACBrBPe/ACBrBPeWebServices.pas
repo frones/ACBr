@@ -1305,7 +1305,7 @@ procedure TBPeEnvEvento.DefinirDadosMsg;
 var
   EventoBPe: TEventoBPe;
   I, F: integer;
-  Lote, Evento, Eventos, EventosAssinados: String;
+  Lote, Evento, Eventos, EventosAssinados: AnsiString;
 begin
   EventoBPe := TEventoBPe.Create;
   try
@@ -1346,7 +1346,7 @@ begin
     Lote := Copy(EventoBPe.Gerador.ArquivoFormatoXML, 1, I - 1);
     Eventos := SeparaDados(EventoBPe.Gerador.ArquivoFormatoXML, 'envEvento');
     I := Pos('<evento ', Eventos);
-    Eventos := Copy(Eventos, I, length(Eventos));
+    Eventos := NativeStringToUTF8( Copy(Eventos, I, length(Eventos)) );
 
     EventosAssinados := '';
 
@@ -1361,9 +1361,7 @@ begin
         Eventos := Copy(Eventos, F + 9, length(Eventos));
 
         AssinarXML(Evento, 'evento', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-
-        EventosAssinados := EventosAssinados + StringReplace(
-          FPDadosMsg, '<?xml version="1.0"?>', '', []);
+        EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;

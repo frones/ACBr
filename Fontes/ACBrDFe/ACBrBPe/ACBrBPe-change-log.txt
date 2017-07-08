@@ -48,6 +48,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2017
+-- ACBrBPMDFFeWebServices --
+[-] Correção na classe "TMDFeEnvEvento", para assinar corretamente, XMLs com acentos.
+    (por: DSA)
+
 29/06/2017
 -- pcnBPeW --
 [*] Correções em varios campos no que diz respeito a tamanho minimo/maximo e 

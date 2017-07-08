@@ -2195,8 +2195,8 @@ begin
 
     InutCTe.GerarXML;
 
-    AssinarXML(InutCTe.Gerador.ArquivoFormatoXML, 'inutCTe', 'infInut',
-      'Falha ao assinar Inutilização de numeração.');
+    AssinarXML( NativeStringToUTF8( InutCTe.Gerador.ArquivoFormatoXML ),
+                'inutCTe', 'infInut', 'Falha ao assinar Inutilização de numeração.');
 
     FID := InutCTe.ID;
   finally
@@ -2574,7 +2574,7 @@ procedure TCTeEnvEvento.DefinirDadosMsg;
 var
   EventoCTe: TEventoCTe;
   I, J, K, F: Integer;
-  Evento, Eventos, EventosAssinados, AXMLEvento: String;
+  Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
 begin
@@ -2702,7 +2702,7 @@ begin
 
     EventoCTe.GerarXML;
 
-    Eventos := EventoCTe.Gerador.ArquivoFormatoXML;
+    Eventos := NativeStringToUTF8( EventoCTe.Gerador.ArquivoFormatoXML );
     EventosAssinados := '';
 
     // Realiza a assinatura para cada evento
@@ -2716,9 +2716,7 @@ begin
         Eventos := Copy(Eventos, F + 12, length(Eventos));
 
         AssinarXML(Evento, 'eventoCTe', 'infEvento', 'Falha ao assinar o Envio de Evento ');
-
-        EventosAssinados := EventosAssinados + StringReplace(
-          FPDadosMsg, '<?xml version="1.0"?>', '', []);
+        EventosAssinados := EventosAssinados + FPDadosMsg;
       end
       else
         Break;

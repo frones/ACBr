@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2017
+-- ACBrCFeWebServices --
+[-] Correção nas classes "TCTeInutilizacao" e "TCTeEnvEvento", para assinar
+    corretamente, XMLs com acentos.
+    (por: DSA)
 
 19/06/2017
 -- ACBrCTeWebServices / pcteConversaoCTe --

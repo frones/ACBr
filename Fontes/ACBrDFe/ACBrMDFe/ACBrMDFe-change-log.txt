@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/07/2017
+-- ACBrMDFFeWebServices --
+[-] Correção na classe "TMDFeEnvEvento", para assinar corretamente, XMLs com acentos.
+    (por: DSA)
+
 14/06/2017
 -- ACBrMDFeConfiguracoes --
 [*] Método "GetPathMDFe", modificado para informar a Descrição do Modelo baseada

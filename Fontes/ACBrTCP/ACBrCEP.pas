@@ -1298,7 +1298,7 @@ end;
 constructor TACBrWSDevMedia.Create(AOwner: TACBrCEP);
 begin
   inherited Create(AOwner);
-  fpURL := 'http://www.devmedia.com.br/devware/cep/service/';
+  fpURL := 'http://www.devmedia.com.br/api/cep/service/';
 end;
 
 procedure TACBrWSDevMedia.BuscarPorCEP(ACEP: String);

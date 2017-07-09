@@ -861,7 +861,7 @@ begin
         SessaoEnviada := fsSessaoAVerificar;
 
       AStr := Format('ERRO: Sessao retornada pelo SAT [%d], diferente da enviada [%d].',
-                     [Resposta.numeroSessao, SessaoEnviada] );
+                     [Resposta.numeroSessao, numeroSessao] );
       DoLog( '   '+AStr);
 
       if fsValidarNumeroSessaoResposta then    // Tenta se recuperar da resposta inválida ?

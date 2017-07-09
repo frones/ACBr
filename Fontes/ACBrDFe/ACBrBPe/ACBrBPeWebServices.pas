@@ -358,6 +358,8 @@ begin
 
   FPConfiguracoesBPe := TConfiguracoesBPe(FPConfiguracoes);
   FPLayout := LayBPeStatusServico;
+
+  FPBodyElement := 'bpeDadosMsg';
 end;
 
 procedure TBPeWebService.Clear;
@@ -448,8 +450,8 @@ end;
 
 procedure TBPeStatusServico.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'bpeStatusServicoBP';
-  FPSoapAction := FPServico;
+  FPServico := GetUrlWsd + 'BPeStatusServico';
+  FPSoapAction := FPServico + '/bpeStatusServicoBP';
 end;
 
 procedure TBPeStatusServico.DefinirDadosMsg;
@@ -638,7 +640,7 @@ end;
 
 procedure TBPeRecepcao.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'bpeRecepcao';
+  FPServico := GetUrlWsd + 'BPeRecepcao';
   FPSoapAction := FPServico;
 end;
 
@@ -894,8 +896,8 @@ end;
 
 procedure TBPeConsulta.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'bpeConsultaBP';
-  FPSoapAction := FPServico;
+  FPServico := GetUrlWsd + 'BPeConsulta';
+  FPSoapAction := FPServico + '/bpeConsultaBP';
 end;
 
 procedure TBPeConsulta.DefinirDadosMsg;
@@ -1297,8 +1299,8 @@ end;
 
 procedure TBPeEnvEvento.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'bpeRecepcaoEvento';
-  FPSoapAction := FPServico;
+  FPServico := GetUrlWsd + 'RecepcaoEvento';
+  FPSoapAction := FPServico + 'bpeRecepcaoEvento';
 end;
 
 procedure TBPeEnvEvento.DefinirDadosMsg;
@@ -1559,7 +1561,7 @@ begin
   FPLayout := LayDistDFeInt;
   FPArqEnv := 'con-dist-dfe';
   FPArqResp := 'dist-dfe';
-  FPBodyElement := 'BPeDistDFeInteresse';
+  FPBodyElement := 'bpeDistDFeInteresse';
   FPHeaderElement := '';
 
   if Assigned(FretDistDFeInt) then
@@ -1596,7 +1598,7 @@ end;
 procedure TDistribuicaoDFe.DefinirServicoEAction;
 begin
   FPServico := GetUrlWsd + 'BPeDistribuicaoDFe';
-  FPSoapAction := FPServico + '/BPeDistDFeInteresse';
+  FPSoapAction := FPServico + '/bpeDistDFeInteresse';
 end;
 
 procedure TDistribuicaoDFe.DefinirDadosMsg;
@@ -1626,7 +1628,7 @@ var
   I: integer;
   AXML: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'BPeDistDFeInteresseResult');
+  FPRetWS := SeparaDados(FPRetornoWS, 'bpeDistDFeInteresseResult');
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;

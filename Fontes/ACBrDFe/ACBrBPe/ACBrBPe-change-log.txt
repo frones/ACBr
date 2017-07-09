@@ -50,6 +50,11 @@ Símbolo : Significado
 
 08/07/2017
 -- ACBrBPMDFFeWebServices --
+[-] Correção das URLs de serviços e soapAction de todos os serviços.
+    por: Italo Jurisato Junior
+
+08/07/2017
+-- ACBrBPMDFFeWebServices --
 [-] Correção na classe "TBPeEnvEvento", para assinar corretamente, XMLs com acentos.
     (por: DSA)
 

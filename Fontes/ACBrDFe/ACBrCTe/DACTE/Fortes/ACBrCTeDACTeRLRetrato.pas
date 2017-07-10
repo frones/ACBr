@@ -1173,7 +1173,15 @@ begin
     rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
 //    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
   end;
-  rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
+
+  if (FCTe.infCTe.versao >= 3.00) then
+  begin
+    rllabel78.Caption             := '';
+    rllFormaPagamento.Caption     := '';
+    rlslinhav01.Height            := 31;
+  end
+  else
+    rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
 //  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
 
   // Normal **************************************************************

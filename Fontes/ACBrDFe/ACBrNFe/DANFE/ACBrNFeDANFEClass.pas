@@ -391,11 +391,36 @@ begin
 end;
 
 function TACBrNFeDANFEClass.GetPathPDF: String;
+var
+   dhEmissao: TDateTime;
+   DescricaoModelo:String;
+   vAux:TNFe;
 begin
   if Trim(FPathPDF) <> '' then
     Result := IncludeTrailingPathDelimiter(FPathPDF)
   else
-    Result := Trim(FPathPDF)
+    Result := Trim(FPathPDF);
+  //Criar diretório conforme configurado para NF-e
+  if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+  begin
+    vAux := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+    if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
+      dhEmissao := vAux.Ide.dEmi
+    else
+      dhEmissao := Now;
+    case vAux.Ide.modelo of
+      0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+      55: DescricaoModelo := 'NFe';
+      65: DescricaoModelo := 'NFCe';
+    end;
+    Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
+                           Result
+                          ,DescricaoModelo
+                          ,vAux.Emit.CNPJCPF
+                          ,vAux.Ide.dEmi
+                          ,DescricaoModelo
+                          ));
+  end;
 end;
 
 procedure TACBrNFeDANFEClass.ImprimirEVENTO(NFE: TNFe);

@@ -51,6 +51,7 @@ var
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
   ArqPDF , ArqGNRe: String;
   PathsGNRe: TStringList;
+  FormaEmissao: TpcnTipoEmissao;
 begin
   with FrmACBrMonitor do
   begin
@@ -148,14 +149,17 @@ begin
         if cbModoEmissao.checked then
           exit;
 
-        if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
+        OK := False;
+        FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+
+        if not OK then
+          raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
+        else
         begin
-          ACBrGNRe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+          ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
           cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
           SalvarIni;
-        end
-        else
-          raise Exception.Create('Forma de Emissão Inválida.');
+        end;
       end
 
       else

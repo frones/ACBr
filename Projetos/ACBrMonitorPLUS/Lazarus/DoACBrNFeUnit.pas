@@ -78,6 +78,7 @@ var
   CC, Anexos: Tstrings;
   sTemMais,ErrosRegraNegocio: String;
   tipoEvento: TpcnTpEvento;
+  FormaEmissao: TpcnTipoEmissao;
 begin
  with FrmACBrMonitor do
   begin
@@ -1644,15 +1645,23 @@ begin
          begin
            if cbModoEmissao.checked then
              exit;
-             
-           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
-            begin
-              ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              cbFormaEmissaoNFe.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
-              SalvarIni;
-            end
+
+           OK := False;
+           FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+
+           if not OK then
+             raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
            else
-              raise Exception.Create('Forma de Emissão Inválida.');
+           begin
+             if FormaEmissao in [teSVCSP] then
+                raise Exception.Create('Forma de Emissão Inválida para NFe/NFCe '+TpEmisToStr(FormaEmissao))
+             else
+             begin
+               ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+               cbFormaEmissaoNFe.ItemIndex := ACBrNFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+               SalvarIni;
+             end
+           end;
          end
 
         else if Cmd.Metodo = 'setversaodf' then //NFe.SetVersaoDF(nVersao) 2.00 3.00 3.10
@@ -2765,13 +2774,16 @@ begin
          while true do
           begin
             sSecao     := 'InfAdic'+IntToStrZero(I,3) ;
-            sCampoAdic := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','FIM')) ;
-            if (sCampoAdic = 'FIM') or (Length(sCampoAdic) <= 0) then
-               break ;
+            if not INIRec.SectionExists(sSecao) then
+            begin
+              sSecao     := 'obsCont'+IntToStrZero(I,3) ;
+              if not INIRec.SectionExists(sSecao) then
+                break;
+            end;
 
             with InfAdic.obsCont.Add do
              begin
-               xCampo := sCampoAdic;
+               xCampo := INIRec.ReadString(sSecao,'Campo',INIRec.ReadString(sSecao,'xCampo','')) ;
                xTexto := INIRec.ReadString( sSecao,'Texto',INIRec.ReadString( sSecao,'xTexto',''));
              end;
             Inc(I);

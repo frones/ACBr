@@ -1217,6 +1217,7 @@ type
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
+    procedure pgConfigChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
@@ -1504,6 +1505,8 @@ var
   V: TSSLHttpLib;
   X: TSSLXmlSignLib;
   Y: TSSLType;
+  IFormaEmissaoNFe, IFormaEmissaoCTe, IFormaEmissaoGNRe,
+    IFormaEmissaoMDFe: TpcnTipoEmissao;
 begin
   {$IFDEF MSWINDOWS}
   WindowState := wsMinimized;
@@ -1711,6 +1714,26 @@ begin
   cbxPorta.Items.Add('\\localhost\Epson');
   cbxPorta.Items.Add('c:\temp\ecf.txt');
   cbxPorta.Items.Add('/temp/ecf.txt');
+
+  cbFormaEmissaoNFe.Items.Clear;
+  for IFormaEmissaoNFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
+    cbFormaEmissaoNFe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoNFe)));
+  cbFormaEmissaoNFe.ItemIndex := 0;
+
+  cbFormaEmissaoCTe.Items.Clear;
+  for IFormaEmissaoCTe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
+    cbFormaEmissaoCTe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoCTe)));
+  cbFormaEmissaoCTe.ItemIndex := 0;
+
+  cbFormaEmissaoGNRe.Items.Clear;
+  for IFormaEmissaoGNRe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
+    cbFormaEmissaoGNRe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoGNRe)));
+  cbFormaEmissaoGNRe.ItemIndex := 0;
+
+  cbFormaEmissaoMDFe.Items.Clear;
+  for IFormaEmissaoMDFe := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
+    cbFormaEmissaoMDFe.Items.Add(GetEnumName(TypeInfo(TpcnTipoEmissao), integer(IFormaEmissaoMDFe)));
+  cbFormaEmissaoMDFe.ItemIndex := 0;
 
   FileVerInfo:=TFileVersionInfo.Create(nil);
   try
@@ -4888,7 +4911,6 @@ begin
     Ini.WriteString('Arquivos', 'PathEvento', edtPathEvento.Text);
 
     {Parametros SAT}
-
     INI.WriteInteger('SAT','Modelo',cbxModeloSAT.ItemIndex);
     INI.WriteString('SAT','ArqLog',edSATLog.Text);
     INI.WriteString('SAT','NomeDLL',edNomeDLL.Text);
@@ -5858,6 +5880,11 @@ begin
   if pgBoleto.ActivePage = tsRelatorio then
      if lsvArqsRetorno.Items.Count = 0 then
         CarregaArquivosRetorno;
+end;
+
+procedure TFrmACBrMonitor.pgConfigChange(Sender: TObject);
+begin
+
 end;
 
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);

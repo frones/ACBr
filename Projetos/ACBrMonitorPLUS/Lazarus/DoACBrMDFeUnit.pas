@@ -65,6 +65,7 @@ var
 
   RetFind   : Integer;
   SearchRec : TSearchRec;
+  FormaEmissao: TpcnTipoEmissao;
 
 //  MDFeRTXT            :  TNFeRTXT;
 begin
@@ -757,14 +758,17 @@ begin
            if cbModoEmissao.checked then
              exit;
 
-           if (StrToInt(Cmd.Params(0))>=1) and (StrToInt(Cmd.Params(0))<=9) then
-            begin
-              ACBrMDFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
-              cbFormaEmissaoMDFe.ItemIndex := ACBrMDFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
-              FrmACBrMonitor.SalvarIni;
-            end
+           OK := False;
+           FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+
+           if not OK then
+             raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
            else
-              raise Exception.Create('Forma de Emissão Inválida.');
+           begin
+             ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+             cbFormaEmissaoMDFe.ItemIndex := ACBrMDFe1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+             SalvarIni;
+           end;
          end
 
         else if Cmd.Metodo = 'lermdfe' then

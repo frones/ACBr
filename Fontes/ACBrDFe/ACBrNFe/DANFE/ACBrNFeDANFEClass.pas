@@ -417,7 +417,7 @@ begin
                            Result
                           ,DescricaoModelo
                           ,vAux.Emit.CNPJCPF
-                          ,vAux.Ide.dEmi
+                          ,dhEmissao
                           ,DescricaoModelo
                           ));
   end;

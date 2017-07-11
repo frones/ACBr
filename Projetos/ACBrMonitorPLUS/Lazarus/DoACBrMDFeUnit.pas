@@ -897,6 +897,7 @@ begin
          Ide.verProc := INIRec.ReadString('ide', 'verProc', 'ACBrMDFe');
          Ide.UFIni   := INIRec.ReadString('ide', 'UFIni', '');
          Ide.UFFim   := INIRec.ReadString('ide', 'UFFim', '');
+         Ide.tpTransp:= StrToTTransportador(OK, INIRec.ReadString('ide', 'tpTransp', '1'));
 
          I := 1;
          while true do
@@ -1538,6 +1539,8 @@ begin
          INIRec.WriteString( 'ide', 'UFIni', Ide.UFIni);
          INIRec.WriteString( 'ide', 'UFFim', Ide.UFFim);
          INIRec.WriteString( 'ide', 'dhIniViagem', DateToStr(Ide.dhIniViagem));
+         INIRec.WriteString( 'ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp);
+
 
          for i := 0 to ide.infMunCarrega.Count -1 do
          begin

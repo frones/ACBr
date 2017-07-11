@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+10/07/2017
+[*] Adicionado campos para BOLETO referente dados do Sacador Avalista
+	Método: BOLETO.IncluirTitulos
+	Mais detalhes em: 
+	http://www.projetoacbr.com.br/forum/topic/37620-sacadoravalista/
+	por: José M. S. Junior
+
 18/06/2017
 [*] Contribuição de usuário do Forum:
 	http://www.projetoacbr.com.br/forum/topic/37264-ajuste-em-configurações/

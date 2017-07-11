@@ -392,6 +392,19 @@ begin
          PercentualMulta     := aIni.ReadFloat(Sessao,'PercentualMulta',PercentualMulta);
          CodigoMora          := aIni.ReadString(Sessao,'CodigoMora','1');
          CodigoGeracao       := aIni.ReadString(Sessao,'CodigoGeracao','2');
+         Sacado.SacadoAvalista.NomeAvalista  := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.NomeAvalista','');
+         Sacado.SacadoAvalista.CNPJCPF       := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.CNPJCPF','');
+         Sacado.SacadoAvalista.Logradouro    := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Logradouro','');
+         Sacado.SacadoAvalista.Numero        := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Numero','');
+         Sacado.SacadoAvalista.Complemento   := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Complemento','');
+         Sacado.SacadoAvalista.Bairro        := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Bairro','');
+         Sacado.SacadoAvalista.Cidade        := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Cidade','');
+         Sacado.SacadoAvalista.UF            := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.UF','');
+         Sacado.SacadoAvalista.CEP           := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.CEP','');
+         Sacado.SacadoAvalista.Email         := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Email','');
+         Sacado.SacadoAvalista.Fone          := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.Fone','');
+         Sacado.SacadoAvalista.InscricaoNr   := aIni.ReadString(Sessao,'Sacado.SacadoAvalista.InscricaoNr','');
+
       end;
    end;
 end;

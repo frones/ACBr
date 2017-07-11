@@ -3,7 +3,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
   Top = 207
   Caption = 'frlDANFeRLPaisagem'
   ClientWidth = 907
-  ExplicitWidth = 923
   PixelsPerInch = 96
   TextHeight = 13
   inherited RLNFe: TRLReport

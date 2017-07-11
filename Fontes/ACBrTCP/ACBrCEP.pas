@@ -39,6 +39,15 @@
 |*
 |* 12/08/2010: Primeira Versao
 |*    Daniel Simoes de Almeida e André Moraes
+|*
+|* 11/07/2017: Versao X <DESCONHECO A VERSAO ATUAL>
+|*    Igor de Bastos Costa, igorbastosib@hotmail.com
+|*    Adicionado o WebService CepAberto http://www.cepaberto.com/
+|*    CepAberto é um repositório com edição e compartilhamento público
+|*    É necessário criar uma conta e inserir a Chave de Acesso que é
+|*    disponibilidzada na API do site em questão após a criação da conta
+|*    API Key (Chave de Acesso): http://www.cepaberto.com/api_key
+|*    Adicionado as variáveis Altitude, Latitude e Longitude
 ******************************************************************************}
 
 unit ACBrCEP ;
@@ -53,7 +62,8 @@ uses
 type
   TACBrCEPWebService = ( wsNenhum, wsBuscarCep, wsCepLivre, wsRepublicaVirtual,
                          wsBases4you, wsRNSolucoes, wsKingHost, wsByJG,
-                         wsCorreios, wsDevMedia, wsViaCep, wsCorreiosSIGEP) ;
+                         wsCorreios, wsDevMedia, wsViaCep, wsCorreiosSIGEP,
+                         wsCepAberto) ;
 
   EACBrCEPException = class ( Exception );
 
@@ -69,6 +79,9 @@ type
       fMunicipio : String ;
       fTipo_Logradouro : String ;
       fUF : String ;
+      fAltitude: string;
+      fLatitude: string;
+      fLongitude: string;
 
       function GetIBGE_UF : String ;
     public
@@ -83,6 +96,9 @@ type
       property UF              : String read fUF              write fUF ;
       property IBGE_Municipio  : String read fCodigoIBGE      write fCodigoIBGE ;
       property IBGE_UF         : String read GetIBGE_UF ;
+      property Altitude        : String read fAltitude        write fAltitude ;
+      property Latitude        : String read fLatitude        write fLatitude ;
+      property Longitude       : String read fLongitude       write fLongitude ;
   end ;
 
   { Lista de Objetos do tipo TACBrCEPEndereco }
@@ -309,6 +325,17 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
     Procedure BuscarPorCEP( ACEP : String ) ; override ;
   end;
 
+  { TACBrWSCEPAberto }
+
+  TACBrWSCEPAberto= class(TACBrCEPWSClass)
+    private
+      procedure ProcessaResposta ;
+    public
+      constructor Create( AOwner : TACBrCEP ) ; override ;
+
+      Procedure BuscarPorCEP( ACEP : String ) ; override ;
+  end ;
+
 
 implementation
 
@@ -403,6 +430,7 @@ begin
     wsDevMedia         : fACBrCEPWS := TACBrWSDevMedia.Create(Self);
     wsViaCep           : fACBrCEPWS := TACBrWSViaCEP.Create(Self);
     wsCorreiosSIGEP    : fACBrCEPWS := TACBrWSCorreiosSIGEP.Create(Self);
+    wsCepAberto        : fACBrCEPWS := TACBrWSCEPAberto.Create(Self);
   else
      fACBrCEPWS := TACBrCEPWSClass.Create( Self ) ;
   end ;
@@ -462,7 +490,6 @@ end;
 constructor TACBrCEPWSClass.Create( AOwner : TACBrCEP) ;
 begin
   inherited Create ;
-
   fOwner := AOwner;
   fpURL  := '';
 end ;
@@ -1565,6 +1592,82 @@ begin
                IBGE_Municipio := IntToStr( fACBrIBGE.Cidades[0].CodMunicio );
           end ;
 
+        end;
+      end;
+    end;
+  finally
+    SL1.Free;
+  end;
+
+  if Assigned(fOwner.OnBuscaEfetuada) then
+    fOwner.OnBuscaEfetuada(Self);
+end;
+
+{ TACBrWSCEPAberto }
+
+constructor TACBrWSCEPAberto.Create(AOwner: TACBrCEP);
+begin
+  inherited Create(AOwner);
+
+  fOwner.ParseText := False;
+  fpURL := 'http://www.cepaberto.com/api/v2/';
+end;
+
+procedure TACBrWSCEPAberto.BuscarPorCEP(ACEP: String);
+var
+  sParams: String;
+begin
+  ACEP := OnlyNumber( ACEP );
+
+  if ACEP = '' then
+    raise EACBrCEPException.Create('CEP deve ser informado');
+
+  if(Trim(fOwner.ChaveAcesso) = '')then
+    raise EACBrCEPException.Create('O WebService CepAberto necessita de uma Chave de Acesso.'+#13+'Acesse o site, crie uma conta e pegue sua Chave de Acesso em APIKey!');
+
+  fOwner.HTTPSend.Clear;
+  fOwner.HTTPSend.Headers.Add('Authorization: Token token="'+fOwner.ChaveAcesso+'"');
+  fOwner.HTTPMethod('GET', fpURL+'ceps.xml?cep=' + ACEP);
+
+  ProcessaResposta();
+end;
+
+procedure TACBrWSCEPAberto.ProcessaResposta;
+var
+  Buffer: string;
+  s: string;
+  i: Integer;
+  SL1: TStringList;
+begin
+  SL1 := TStringList.Create;
+
+  try
+    Buffer := fOwner.RespHTTP.Text;
+
+    Buffer := StringReplace(Buffer, '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<cep>', '<?xml version="1.0" encoding="UTF-8"?>'+ sLineBreak+'<resposta>', [rfReplaceAll]);
+    Buffer := StringReplace(Buffer, '</estado>'+ sLineBreak+'</cep>', '</estado>'+ sLineBreak+'</resposta>', [rfReplaceAll]);
+    Buffer := StringReplace(Buffer, sLineBreak, '', [rfReplaceAll]);
+
+    SL1.Text := Buffer;
+
+    for i := 0 to SL1.Count-1 do
+    begin
+      s := SL1.Strings[i];
+
+      if LerTagXML(s, 'cep') <> '' then
+      begin
+        with fOwner.Enderecos.New do
+        begin
+          CEP             := LerTagXML(s, 'cep');
+          Logradouro      := LerTagXML(s, 'logradouro');
+          Complemento     := LerTagXML(s, 'complemento');
+          Bairro          := LerTagXML(s, 'bairro');
+          Municipio       := LerTagXML(s, 'cidade');
+          UF              := LerTagXML(s, 'estado');
+          IBGE_Municipio  := LerTagXML(s, 'ibge');
+          Altitude        := LerTagXML(s, 'altitude');
+          Latitude        := LerTagXML(s, 'latitude');
+          Longitude       := LerTagXML(s, 'longitude');
         end;
       end;
     end;

@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/07/2017
+-- ACBrCEP
+[*] Novo webservice
+		http://www.projetoacbr.com.br/forum/topic/37657-acbrcep-novo-webservice/
+		por Juliomar Marchetti
+
 08/07/2017
 -- ACBrCEP
 [*] Modificado o endereço do webservice da devmedia

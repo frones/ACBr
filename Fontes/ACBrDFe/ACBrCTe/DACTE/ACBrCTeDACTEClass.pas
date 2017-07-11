@@ -252,11 +252,39 @@ begin
 end;
 
 function TACBrCTeDACTEClass.GetPathPDF: String;
+var
+  dhEmissao: TDateTime;
+  DescricaoModelo: String;
+  vAux: TCTe;
 begin
   if Trim(FPathPDF) <> '' then
     Result := IncludeTrailingPathDelimiter(FPathPDF)
   else
-    Result := Trim(FPathPDF)
+    Result := Trim(FPathPDF);
+
+  // Criar diretório conforme configurado para CT-e
+  if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+  begin
+    vAux := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
+    if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
+      dhEmissao := vAux.Ide.dhEmi
+    else
+      dhEmissao := Now;
+      
+    case vAux.Ide.modelo of
+      0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
+      57: DescricaoModelo := 'CTe';
+      67: DescricaoModelo := 'CTeOS';
+    end;
+
+    Result := PathWithDelim(TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
+                            Result
+                           ,DescricaoModelo
+                           ,vAux.Emit.CNPJ
+                           ,dhEmissao
+                           ,DescricaoModelo
+                           ));
+  end;
 end;
 
 procedure TACBrCTeDACTEClass.SetPathPDF(const Value: String);

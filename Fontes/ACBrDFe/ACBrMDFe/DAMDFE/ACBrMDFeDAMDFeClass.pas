@@ -222,11 +222,35 @@ begin
 end;
 
 function TACBrMDFeDAMDFeClass.GetPathPDF: String;
+var
+  dhEmissao: TDateTime;
+  DescricaoModelo: String;
+  vAux: TMDFe;
 begin
   if Trim(FPathPDF) <> '' then
     Result := IncludeTrailingPathDelimiter(FPathPDF)
   else
-    Result := Trim(FPathPDF)
+    Result := Trim(FPathPDF);
+
+  // Criar diretório conforme configurado para MDF-e
+  if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+  begin
+    vAux := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
+    if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
+      dhEmissao := vAux.Ide.dhEmi
+    else
+      dhEmissao := Now;
+
+    DescricaoModelo := 'MDFe';
+
+    Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
+                            Result
+                           ,DescricaoModelo
+                           ,vAux.Emit.CNPJ
+                           ,dhEmissao
+                           ,DescricaoModelo
+                           ));
+  end;
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetPathPDF(const Value: String);

@@ -81,10 +81,10 @@ begin
   inherited Create(AOwner);
 
   fpDigito                := 2;
-  fpNome                  := 'Bradesco';
-  fpNumero                := 237;
+  fpNome                  := 'Safra';
+  fpNumero                := 422;
   fpTamanhoMaximoNossoNum := 9;
-  fpTamanhoAgencia        := 4;
+  fpTamanhoAgencia        := 5;
   fpTamanhoConta          := 7;
   fpTamanhoCarteira       := 2;
 end;
@@ -127,7 +127,8 @@ end;
 
 function TACBrBancoSafraBradesco.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
 begin
-  Result:= ACBrTitulo.Carteira + '/' + FormatDateTime('YY', Date) + ' ' + ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
+  Result:= ACBrTitulo.Carteira + '/' + FormatDateTime('YY', Date) + ' ' +
+           ACBrTitulo.NossoNumero + '-' + CalcularDigitoVerificador(ACBrTitulo);
 end;
 
 function TACBrBancoSafraBradesco.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
@@ -179,8 +180,6 @@ var
 begin
   with ACBrTitulo do
   begin
-    // TODO -oJacinto Junior: Definir ocorrências pendentes.
-    // Definindo o código da ocorrência.
     case OcorrenciaOriginal.Tipo of
       toRemessaBaixar            : ATipoOcorrencia := '02'; // Pedido de baixa
       toRemessaConcederAbatimento: ATipoOcorrencia := '04'; // Concessão de abatimento
@@ -191,8 +190,6 @@ begin
       toRemessaProtestar         : ATipoOcorrencia := '09'; // Pedido de protesto
       toRemessaNaoProtestar      : ATipoOcorrencia := '10'; // Não protestar
       toRemessaDispensarJuros    : ATipoOcorrencia := '11'; // Não cobrar juros de mora
-//                                 : ATipoOcorrencia := '16'; // Cobrar juros de mora
-//                                 : ATipoOcorrencia := '31'; // Alteração do valor do título
     else
       ATipoOcorrencia := '01'; // Remessa
     end;
@@ -262,7 +259,6 @@ begin
           FormatDateTime('ddmmyy', DataDesconto), '000000') +        // Data limite para desconto
         IntToStrZero(Round(ValorDesconto * 100), 13) +               // Valor do desconto
         StringOfChar('0', 13) +                                      // Valor do IOF
-        // TODO -oJacinto Junior: Implementar o tratamento para multa.
         IntToStrZero(Round(ValorAbatimento * 100), 13) +             // Valor do abatimento concedido ou cancelado / multa
         TipoSacado +                                                 // Tipo de inscrição do sacado
         PadLeft(OnlyNumber(Sacado.CNPJCPF), 14, '0') +                  // Número de inscrição do sacado
@@ -312,18 +308,14 @@ var
   Linha, rCedente, rCNPJCPF: String;
   rCodEmpresa: String;
 begin
-  // DONE -oJacinto Junior: Foi necessário utilizar o número e nome do Banco Safra S/A.
-  fpNumero := 422;
-  fpNome   := 'Safra';
-
   if StrToIntDef(Copy(ARetorno.Strings[0], 77, 3), -1) <> Numero then
     raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
       ' não é um arquivo de retorno do ' + Nome));
 
   rCodEmpresa  := Trim(Copy(ARetorno[0], 27, 14));
   rCedente     := Trim(Copy(ARetorno[0], 47, 30));
-  rAgencia     := Copy(rCodEmpresa, 4, 1) + Copy(rCodEmpresa, 1, 3);
-  rConta       := Copy(rCodEmpresa, 7, ACBrBanco.TamanhoConta);
+  rAgencia     := Copy(rCodEmpresa, 1, 5);
+  rConta       := Copy(rCodEmpresa, 8, ACBrBanco.TamanhoConta);
   rDigitoConta := Copy(rCodEmpresa, 14, 1);
 
   ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 392, 3), 0);
@@ -335,7 +327,6 @@ begin
       Copy(ARetorno[0], 99, 2), 0, 'dd/mm/yy');
 
   case StrToIntDef(Copy(ARetorno[1], 2, 2), 0) of
-    // TODO -oJacinto Junior: Testar a leitura do CPF no arquivo retorno.
     1: rCNPJCPF := Copy(ARetorno[1], 7, 11);
     2: rCNPJCPF := Copy(ARetorno[1], 4, 14);
   else
@@ -366,8 +357,6 @@ begin
       Cedente.CodigoCedente := rCodEmpresa;
       Cedente.Nome          := rCedente;
       Cedente.Agencia       := rAgencia;
-      // O dígito da agência não é apresentado no arquivo retorno.
-//      Cedente.AgenciaDigito := EmptyStr;
       Cedente.Conta         := rConta;
       Cedente.ContaDigito   := rDigitoConta;
     end;
@@ -477,12 +466,9 @@ end;
 
 function TACBrBancoSafraBradesco.CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia;
 begin
-  // TODO -oJacinto Junior: Definir ocorrências pendentes.
   case CodOcorrencia of
     02: Result := toRetornoRegistroConfirmado;
     03: Result := toRetornoRegistroRecusado;
-//    04: Result := ; // '04-Transferencia de Carteira (Entrada)';
-//    05: Result := ; // '05-Transferencia de Carteira (Baixa)';
     06: Result := toRetornoLiquidado;
     07: Result := toRetornoLiquidadoParcialmente;
     09: Result := toRetornoBaixaAutomatica;
@@ -493,24 +479,13 @@ begin
     14: Result := toRetornoVencimentoAlterado;
     15: Result := toRetornoLiquidadoEmCartorio;
     16: Result := toRetornoBaixadoFrancoPagamento;
-//    17: Result := ; // '17-Entrada por Bordero Manual';
-//    18: Result := ; // '18-Alteracao de Uso do Cedente';
     19: Result := toRetornoRecebimentoInstrucaoProtestar;
     20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
-//    21: Result := ; // '21-Transferencia de Cedente';
     23: Result := toRetornoEncaminhadoACartorio;
     40: Result := toRetornoBaixaPorProtesto;
     41: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
     42: Result := toRetornoRetiradoDeCartorio;
     43: Result := toRetornoDespesasProtesto;
-//    44: Result := ; // '44-Aceite do Titulo DDA pelo Sacado';
-//    45: Result := ; // '45-Nao Aceite do Titulo DDA pelo Sacado';
-//    51: Result := ; // '51-Valor do Titulo Alterado';
-//    52: Result := ; // '52-Acerto de Data de Emissao';
-//    53: Result := ; // '53-Acerto de Cod. Especie Docto';
-//    54: Result := ; // '54-Alteracao de Seu Numero';
-//    60: Result := ; // '60-Equalizacao Vendor';
-//    77: Result := ; // '77-Alt. Instr. Cobr. - Juros;';
   else
     Result := toRetornoOutrasOcorrencias;
   end;
@@ -518,12 +493,9 @@ end;
 
 function TACBrBancoSafraBradesco.TipoOcorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String;
 begin
-  // TODO -oJacinto Junior: Definir ocorrências pendentes.
   case TipoOcorrencia of
     toRetornoRegistroConfirmado                : Result := '02';
     toRetornoRegistroRecusado                  : Result := '03';
-//                                               : Result := '04'; // '04-Transferencia de Carteira (Entrada)';
-//                                               : Result := '05'; // '05-Transferencia de Carteira (Baixa)';
     toRetornoLiquidado                         : Result := '06';
     toRetornoLiquidadoParcialmente             : Result := '07';
     toRetornoBaixaAutomatica                   : Result := '09';
@@ -534,30 +506,20 @@ begin
     toRetornoVencimentoAlterado                : Result := '14';
     toRetornoLiquidadoEmCartorio               : Result := '15';
     toRetornoBaixadoFrancoPagamento            : Result := '16';
-//                                               : Result := '17'; // '17-Entrada por Bordero Manual';
-//                                               : Result := '18'; // '18-Alteracao de Uso do Cedente';
     toRetornoRecebimentoInstrucaoProtestar     : Result := '19';
     toRetornoRecebimentoInstrucaoSustarProtesto: Result := '20';
-//                                               : Result := '21'; // '21-Transferencia de Cedente';
     toRetornoEncaminhadoACartorio              : Result := '23';
     toRetornoBaixaPorProtesto                  : Result := '40';
     toRetornoLiquidadoAposBaixaOuNaoRegistro   : Result := '41';
     toRetornoRetiradoDeCartorio                : Result := '42';
     toRetornoDespesasProtesto                  : Result := '43';
-//                                               : Result := '44'; // '44-Aceite do Titulo DDA pelo Sacado';
-//                                               : Result := '45'; // '45-Nao Aceite do Titulo DDA pelo Sacado';
-//                                               : Result := '51'; // '51-Valor do Titulo Alterado';
-//                                               : Result := '52'; // '52-Acerto de Data de Emissao';
-//                                               : Result := '53'; // '53-Acerto de Cod. Especie Docto';
-//                                               : Result := '54'; // '54-Alteracao de Seu Numero';
-//                                               : Result := '60'; // '60-Equalizacao Vendor';
-//                                               : Result := '77'; // '77-Alt. Instr. Cobr. - Juros;';
   else
     Result := '02';
   end;
 end;
 
-function TACBrBancoSafraBradesco.CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
+function TACBrBancoSafraBradesco.CodMotivoRejeicaoToDescricao(
+  const TipoOcorrencia: TACBrTipoOcorrencia; CodMotivo: Integer): String;
 begin
   case CodMotivo of
     001: Result := '001-Moeda Invalida';

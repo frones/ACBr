@@ -556,7 +556,7 @@ begin
               PadLeft(Copy(OnlyNumber(Sacado.CEP), 1, 5), 5, '0') + // 129 - 133 / Cep sacado
               PadLeft(Copy(OnlyNumber(Sacado.CEP), 6, 3), 3, '0') + // 134 - 136 / Sufixo do Cep do sacado
               PadRight(Trim(Sacado.Cidade), 15)                    + // 137 - 151 / Cidade do sacado
-              Sacado.UF                                        + // 152 - 153 / Unidade da federação do sacado
+              PadRight(Sacado.UF, 2)                                 + // 152 - 153 / Unidade da federação do sacado
               aTipoInscricao                                   + // 154 - 154 / Tipo de inscrição sacador/avalista
               PadLeft(Sacado.SacadoAvalista.CNPJCPF, 15,'0')       + // 155 - 169 / Nº de inscrição sacador/avalista
               PadRight(Sacado.SacadoAvalista.NomeAvalista,40,' ')  + // 170 - 209 / Nome do sacador/avalista
@@ -731,12 +731,13 @@ begin
                   PadRight( Sacado.Logradouro + ' '+ Sacado.Numero, 40, ' ')  +  // 275 a 314
                   PadRight( Sacado.Bairro,12,' ')                             +  // 315 a 326
                   PadRight( OnlyNumber(Sacado.CEP) , 8, ' ' )                 +  // 327 a 334
-                  PadRight( Sacado.Cidade, 15, ' ') + Sacado.UF               +  // 335 a 351
+                  PadRight( Sacado.Cidade, 15, ' ')                           +
+                  PadRight( Sacado.UF, 2 )                                    +  // 335 a 351
 		  IfThen(ACBrBoleto.Cedente.TipoInscricao = pJuridica,
                          Space(30),
                          PadRight(Sacado.Avalista, 30, ' ' )) + ' I'          +  // 352 a 383
                   Copy( Cedente.Conta, length( Cedente.Conta ),1 )            +  // 
-                  Cedente.ContaDigito + Space(6)                              +  // 384 a 391
+                  PadLeft( Cedente.ContaDigito, 1 ) + Space(6)                +  // 384 a 391
                   Protesto + ' '                                              +  // 392 a 394
                   IntToStrZero( aRemessa.Count + 1, 6 );                         // 395 a 400
 
@@ -751,7 +752,7 @@ begin
                      PadRight(Mensagem[I],50)                        +
                      Space(283) + 'I'                            +
                      Copy( Cedente.Conta, length( Cedente.Conta ),1 )   + 
-                     Cedente.ContaDigito                         +
+                     PadLeft( Cedente.ContaDigito, 1 )                           +
                      Space(9)                                           +
                      IntToStrZero( aRemessa.Count  + I + 2 , 6 );
 

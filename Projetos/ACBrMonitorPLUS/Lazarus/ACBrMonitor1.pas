@@ -3670,6 +3670,15 @@ begin
   // Ajustado LOG da NFe/NFCe //
   if (sedLogLinhasComp.Value > 0) and (cbLogComp.Checked) then
     AjustaLogFile(ArqLogCompTXT, sedLogLinhasComp.Value);
+
+  // Ajustado LOG do SAT //
+  if (edSATLog.Text <> '') then
+    AjustaLogFile(edSATLog.Text, sedLogLinhas.Value);
+
+  // Ajustado LOG do PosPrinter //
+  if (edPosPrinterLog.Text <> '') then
+    AjustaLogFile(edPosPrinterLog.Text, sedLogLinhas.Value);
+
 end;
 
 {------------------------------------------------------------------------------}

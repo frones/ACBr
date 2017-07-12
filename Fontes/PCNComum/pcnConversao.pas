@@ -66,7 +66,7 @@ type
 
   TpcnIndicadorPagamento = (ipVista, ipPrazo, ipOutras);
   TpcnTipoImpressao = (tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
-                       tiNFCe, tiMsgEletronica, tiNFCeA4);
+                       tiNFCe, tiMsgEletronica);
   TpcnPercentualTributos = (ptValorProdutos, ptValorNF, ptPersonalizado);
 
   TpcnTipoEmissao = (teNormal, teContingencia, teSCAN, teDPEC, teFSDA, teSVCAN, teSVCRS, teSVCSP, teOffLine);
@@ -438,14 +438,14 @@ function TpImpToStr(const t: TpcnTipoImpressao): string;
 begin
   result := EnumeradoToStr(t, ['0', '1', '2', '3', '4', '5', '4'],
                               [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
-                               tiNFCe, tiMsgEletronica, tiNFCeA4]);
+                               tiNFCe, tiMsgEletronica]);
 end;
 
 function StrToTpImp(out ok: boolean; const s: string): TpcnTipoImpressao;
 begin
-  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5', '4'],
+  result := StrToEnumerado(ok, s, ['0', '1', '2', '3', '4', '5'],
                                   [tiSemGeracao, tiRetrato, tiPaisagem, tiSimplificado,
-                                   tiNFCe, tiMsgEletronica, tiNFCeA4]);
+                                   tiNFCe, tiMsgEletronica]);
 end;
 
 function PercTribToStr(const t: TpcnPercentualTributos): string;

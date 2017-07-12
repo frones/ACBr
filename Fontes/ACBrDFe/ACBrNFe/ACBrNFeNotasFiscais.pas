@@ -612,7 +612,7 @@ begin
         AdicionaErro('707-NFC-e para operação interestadual ou com o exterior');
 
       GravaLog('Validar: 709-NFCe formato DANFE');
-      if (not (NFe.Ide.tpImp in [tiNFCe, tiNFCeA4, tiMsgEletronica])) then
+      if (not (NFe.Ide.tpImp in [tiNFCe, tiMsgEletronica])) then
         //B21-10
         AdicionaErro('709-Rejeição: NFC-e com formato de DANFE inválido');
 

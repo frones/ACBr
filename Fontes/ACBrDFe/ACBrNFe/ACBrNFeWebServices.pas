@@ -2607,7 +2607,8 @@ end;
 
 function TNFeConsultaCadastro.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'consultaCadastro2Result');
+  FPRetWS := SeparaDadosArray(['consultaCadastro2Result',
+                               'nfeResultMsg'],FPRetornoWS );
 
   FRetConsCad.Leitor.Arquivo := ParseText(FPRetWS);
   FRetConsCad.LerXml;
@@ -2889,7 +2890,9 @@ var
 begin
   FEvento.idLote := idLote;
 
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeRecepcaoEventoResult');
+  FPRetWS := SeparaDadosArray(['nfeRecepcaoEventoResult',
+                               'nfeResultMsg'],FPRetornoWS );
+
 
   EventoRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   EventoRetorno.LerXml;
@@ -3120,7 +3123,8 @@ end;
 
 function TNFeConsNFeDest.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeConsultaNFDestResult');
+  FPRetWS := SeparaDadosArray(['nfeConsultaNFDestResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   FretConsNFeDest.Leitor.Arquivo := ParseText(FPRetWS);
   FretConsNFeDest.LerXml;
@@ -3251,7 +3255,9 @@ var
   I: integer;
   NomeArq: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeDownloadNFResult');
+  FPRetWS := SeparaDadosArray(['nfeDownloadNFResult',
+                               'nfeResultMsg'],FPRetornoWS );
+
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FRetDownloadNFe.Leitor.Arquivo := FPRetWS;
@@ -3375,7 +3381,8 @@ end;
 
 function TAdministrarCSCNFCe.TratarResposta: Boolean;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'cscNFCeResult');
+  FPRetWS := SeparaDadosArray(['cscNFCeResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   FretAdmCSCNFCe.Leitor.Arquivo := ParseText(FPRetWS);
   FretAdmCSCNFCe.LerXml;
@@ -3492,7 +3499,8 @@ var
   I: integer;
   AXML: String;
 begin
-  FPRetWS := SeparaDados(FPRetornoWS, 'nfeDistDFeInteresseResult');
+  FPRetWS := SeparaDadosArray(['nfeDistDFeInteresseResult',
+                               'nfeResultMsg'],FPRetornoWS );
 
   // Processando em UTF8, para poder gravar arquivo corretamente //
   FretDistDFeInt.Leitor.Arquivo := FPRetWS;

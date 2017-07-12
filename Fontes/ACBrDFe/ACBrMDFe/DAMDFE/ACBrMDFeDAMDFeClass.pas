@@ -228,28 +228,34 @@ var
   vAux: TMDFe;
 begin
   if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  begin
+    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Exit;
+  end
   else
     Result := Trim(FPathPDF);
 
   // Criar diretório conforme configurado para MDF-e
-  if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+  if Assigned(ACBrMDFe) then
   begin
-    vAux := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
-    if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
-      dhEmissao := vAux.Ide.dhEmi
-    else
-      dhEmissao := Now;
+     if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+     begin
+       vAux := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
+       if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
+         dhEmissao := vAux.Ide.dhEmi
+       else
+         dhEmissao := Now;
 
-    DescricaoModelo := 'MDFe';
+       DescricaoModelo := 'MDFe';
 
-    Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
-                            Result
-                           ,DescricaoModelo
-                           ,vAux.Emit.CNPJ
-                           ,dhEmissao
-                           ,DescricaoModelo
-                           ));
+       Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
+                               Result
+                              ,DescricaoModelo
+                              ,vAux.Emit.CNPJ
+                              ,dhEmissao
+                              ,DescricaoModelo
+                              ));
+     end;
   end;
 end;
 

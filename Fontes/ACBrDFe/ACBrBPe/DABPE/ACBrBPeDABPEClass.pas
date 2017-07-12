@@ -391,28 +391,34 @@ var
   vAux: TBPe;
 begin
   if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  begin
+    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Exit;
+  end
   else
     Result := Trim(FPathPDF);
 
   // Criar diretório conforme configurado para BP-e
-  if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then
+  if Assigned(ACBrBPe) then
   begin
-    vAux := TACBrBPe(ACBrBPe).Bilhetes.Items[0].BPe;
-    if TACBrBPe(ACBrBPe).Configuracoes.Arquivos.EmissaoPathBPe then
-      dhEmissao := vAux.Ide.dhEmi
-    else
-      dhEmissao := Now;
+    if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then
+    begin
+      vAux := TACBrBPe(ACBrBPe).Bilhetes.Items[0].BPe;
+      if TACBrBPe(ACBrBPe).Configuracoes.Arquivos.EmissaoPathBPe then
+        dhEmissao := vAux.Ide.dhEmi
+      else
+        dhEmissao := Now;
 
-    DescricaoModelo := 'BPe';
+      DescricaoModelo := 'BPe';
 
-    Result := PathWithDelim(TACBrBPe(FACBrBPe).Configuracoes.Arquivos.GetPath(
-                            Result
-                           ,DescricaoModelo
-                           ,vAux.Emit.CNPJ
-                           ,dhEmissao
-                           ,DescricaoModelo
-                           ));
+      Result := PathWithDelim(TACBrBPe(FACBrBPe).Configuracoes.Arquivos.GetPath(
+                              Result
+                             ,DescricaoModelo
+                             ,vAux.Emit.CNPJ
+                             ,dhEmissao
+                             ,DescricaoModelo
+                             ));
+    end;
   end;
 end;
 

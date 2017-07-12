@@ -258,32 +258,38 @@ var
   vAux: TCTe;
 begin
   if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  begin
+    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Exit;
+  end
   else
     Result := Trim(FPathPDF);
 
   // Criar diretório conforme configurado para CT-e
-  if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+  if Assigned(ACBrCTe) then
   begin
-    vAux := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
-    if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
-      dhEmissao := vAux.Ide.dhEmi
-    else
-      dhEmissao := Now;
-      
-    case vAux.Ide.modelo of
-      0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
-      57: DescricaoModelo := 'CTe';
-      67: DescricaoModelo := 'CTeOS';
-    end;
+     if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+     begin
+       vAux := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
+       if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
+         dhEmissao := vAux.Ide.dhEmi
+       else
+         dhEmissao := Now;
 
-    Result := PathWithDelim(TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
-                            Result
-                           ,DescricaoModelo
-                           ,vAux.Emit.CNPJ
-                           ,dhEmissao
-                           ,DescricaoModelo
-                           ));
+       case vAux.Ide.modelo of
+         0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
+         57: DescricaoModelo := 'CTe';
+         67: DescricaoModelo := 'CTeOS';
+       end;
+
+       Result := PathWithDelim(TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
+                               Result
+                              ,DescricaoModelo
+                              ,vAux.Emit.CNPJ
+                              ,dhEmissao
+                              ,DescricaoModelo
+                              ));
+     end;
   end;
 end;
 

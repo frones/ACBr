@@ -397,29 +397,36 @@ var
    vAux:TNFe;
 begin
   if Trim(FPathPDF) <> '' then
-    Result := IncludeTrailingPathDelimiter(FPathPDF)
+  begin
+    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Exit;
+  end
   else
     Result := Trim(FPathPDF);
+
   //Criar diretório conforme configurado para NF-e
-  if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+  if Assigned(ACBrNFe) then
   begin
-    vAux := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-    if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
-      dhEmissao := vAux.Ide.dEmi
-    else
-      dhEmissao := Now;
-    case vAux.Ide.modelo of
-      0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
-      55: DescricaoModelo := 'NFe';
-      65: DescricaoModelo := 'NFCe';
-    end;
-    Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
-                           Result
-                          ,DescricaoModelo
-                          ,vAux.Emit.CNPJCPF
-                          ,dhEmissao
-                          ,DescricaoModelo
-                          ));
+     if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+     begin
+       vAux := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+       if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
+         dhEmissao := vAux.Ide.dEmi
+       else
+         dhEmissao := Now;
+       case vAux.Ide.modelo of
+         0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+         55: DescricaoModelo := 'NFe';
+         65: DescricaoModelo := 'NFCe';
+       end;
+       Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
+                              Result
+                             ,DescricaoModelo
+                             ,vAux.Emit.CNPJCPF
+                             ,dhEmissao
+                             ,DescricaoModelo
+                             ));
+     end;
   end;
 end;
 

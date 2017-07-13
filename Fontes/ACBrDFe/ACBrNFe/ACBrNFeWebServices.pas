@@ -785,7 +785,11 @@ procedure TNFeStatusServico.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NFeStatusServico4';
+    // SVRS e RS usam notação diferente
+    if (pos('svrs.rs.gov.br', FPURL) > 0) or (FPConfiguracoesNFe.WebServices.UFCodigo = 43) then
+      FPServico := GetUrlWsd + 'NfeStatusServico4'
+    else
+      FPServico := GetUrlWsd + 'NFeStatusServico4';
     FPSoapAction := FPServico + '/nfeStatusServicoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
@@ -1014,7 +1018,13 @@ begin
   if FPLayout = LayNfeAutorizacao then
   begin
     if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
-      FPServico := GetUrlWsd + 'NFeAutorizacao4'
+    begin
+      // SVRS e RS usam notação diferente
+      if (pos('svrs.rs.gov.br', FPURL) > 0) or (FPConfiguracoesNFe.WebServices.UFCodigo = 43) then
+        FPServico := GetUrlWsd + 'NfeAutorizacao4'
+      else
+        FPServico := GetUrlWsd + 'NFeAutorizacao4';
+    end
     else
       FPServico := GetUrlWsd + 'NfeAutorizacao';
   end
@@ -1412,7 +1422,13 @@ begin
   if FPLayout = LayNfeRetAutorizacao then
   begin
     if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
-      FPServico := GetUrlWsd + 'NFeRetAutorizacao4'
+    begin
+      // SVRS e RS usam notação diferente
+      if (pos('svrs.rs.gov.br', FPURL) > 0) or (FPConfiguracoesNFe.WebServices.UFCodigo = 43) then
+        FPServico := GetUrlWsd + 'NfeRetAutorizacao4'
+      else
+        FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
+    end
     else
       FPServico := GetUrlWsd + 'NfeRetAutorizacao';
   end
@@ -1902,7 +1918,11 @@ procedure TNFeConsulta.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';  //NT 2016.002 diz que o nome deveria ser NFeConsulta4
+    // SVRS e RS usam notação diferente
+    if (pos('svrs.rs.gov.br', FPURL) > 0) or (FPConfiguracoesNFe.WebServices.UFCodigo = 43) then
+      FPServico := GetUrlWsd + 'NfeConsultaProtocolo4'
+    else
+      FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';  //NT 2016.002 diz que o nome deveria ser NFeConsulta4
     FPSoapAction := FPServico + '/nfeConsultaNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
@@ -2345,7 +2365,11 @@ var
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NFeInutilizacao4';
+    // SVRS e RS usam notação diferente
+    if (pos('svrs.rs.gov.br', FPURL) > 0) or (FPConfiguracoesNFe.WebServices.UFCodigo = 43) then
+      FPServico := GetUrlWsd + 'NfeInutilizacao4'
+    else
+      FPServico := GetUrlWsd + 'NFeInutilizacao4';
     FPSoapAction := FPServico + '/nfeInutilizacaoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs

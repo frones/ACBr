@@ -1539,7 +1539,7 @@ begin
          INIRec.WriteString( 'ide', 'UFIni', Ide.UFIni);
          INIRec.WriteString( 'ide', 'UFFim', Ide.UFFim);
          INIRec.WriteString( 'ide', 'dhIniViagem', DateToStr(Ide.dhIniViagem));
-         INIRec.WriteString( 'ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp);
+         INIRec.WriteString( 'ide', 'tpTransp', TTransportadorToStr(Ide.tpTransp));
 
 
          for i := 0 to ide.infMunCarrega.Count -1 do

@@ -255,48 +255,47 @@ function TACBrCTeDACTEClass.GetPathPDF: String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;
-  vAux: TCTe;
+  ACTe: TCTe;
 begin
-  if Trim(FPathPDF) <> '' then
+  if (csDesigning in ComponentState) then
   begin
-    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Result := FPathPDF;
     Exit;
-  end
-  else
-    Result := Trim(FPathPDF);
+  end;
+
+  Result := PathWithDelim(FPathPDF);
 
   // Criar diretório conforme configurado para CT-e
   if Assigned(ACBrCTe) then
   begin
-     if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
-     begin
-       vAux := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
-       if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
-         dhEmissao := vAux.Ide.dhEmi
-       else
-         dhEmissao := Now;
+    if TACBrCTe(ACBrCTe).Conhecimentos.Count > 0 then
+    begin
+      ACTe := TACBrCTe(ACBrCTe).Conhecimentos.Items[0].CTe;
+      if TACBrCTe(ACBrCTe).Configuracoes.Arquivos.EmissaoPathCTe then
+        dhEmissao := ACTe.Ide.dhEmi
+      else
+        dhEmissao := Now;
 
-       case vAux.Ide.modelo of
-         0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
-         57: DescricaoModelo := 'CTe';
-         67: DescricaoModelo := 'CTeOS';
-       end;
+      case ACTe.Ide.modelo of
+        0: DescricaoModelo := TACBrCTe(FACBrCTe).GetNomeModeloDFe;
+        57: DescricaoModelo := 'CTe';
+        67: DescricaoModelo := 'CTeOS';
+      end;
 
-       Result := PathWithDelim(TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
-                               Result
-                              ,DescricaoModelo
-                              ,vAux.Emit.CNPJ
-                              ,dhEmissao
-                              ,DescricaoModelo
-                              ));
-     end;
+      Result := PathWithDelim(TACBrCTe(FACBrCTe).Configuracoes.Arquivos.GetPath(
+                              Result
+                             ,DescricaoModelo
+                             ,ACTe.Emit.CNPJ
+                             ,dhEmissao
+                             ,DescricaoModelo
+                             ));
+    end;
   end;
 end;
 
 procedure TACBrCTeDACTEClass.SetPathPDF(const Value: String);
 begin
-  if Trim(Value) <> '' then
-    FPathPDF := IncludeTrailingPathDelimiter(Value);
+  FPathPDF := PathWithDelim(Value);
 end;
 
 end.

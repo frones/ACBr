@@ -381,8 +381,7 @@ end;
 
 procedure TACBrNFeDANFEClass.SetPathPDF(const Value: String);
 begin
-  if Trim(Value) <> '' then
-    FPathPDF := IncludeTrailingPathDelimiter(Value);
+  FPathPDF := PathWithDelim(Value);
 end;
 
 procedure TACBrNFeDANFEClass.ErroAbstract(NomeProcedure: String);
@@ -393,40 +392,42 @@ end;
 function TACBrNFeDANFEClass.GetPathPDF: String;
 var
    dhEmissao: TDateTime;
-   DescricaoModelo:String;
-   vAux:TNFe;
+   DescricaoModelo: String;
+   ANFe: TNFe;
 begin
-  if Trim(FPathPDF) <> '' then
+  if (csDesigning in ComponentState) then
   begin
-    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Result := FPathPDF;
     Exit;
-  end
-  else
-    Result := Trim(FPathPDF);
+  end;
+
+  Result := PathWithDelim(FPathPDF);
 
   //Criar diretório conforme configurado para NF-e
   if Assigned(ACBrNFe) then
   begin
-     if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
-     begin
-       vAux := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
-       if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
-         dhEmissao := vAux.Ide.dEmi
-       else
-         dhEmissao := Now;
-       case vAux.Ide.modelo of
-         0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
-         55: DescricaoModelo := 'NFe';
-         65: DescricaoModelo := 'NFCe';
-       end;
-       Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
-                              Result
-                             ,DescricaoModelo
-                             ,vAux.Emit.CNPJCPF
-                             ,dhEmissao
-                             ,DescricaoModelo
-                             ));
-     end;
+    if TACBrNFe(ACBrNFe).NotasFiscais.Count > 0 then
+    begin
+      ANFe := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.EmissaoPathNFe then
+        dhEmissao := ANFe.Ide.dEmi
+      else
+        dhEmissao := Now;
+
+      case ANFe.Ide.modelo of
+        0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+        55: DescricaoModelo := 'NFe';
+        65: DescricaoModelo := 'NFCe';
+      end;
+
+      Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(
+                             Result
+                            ,DescricaoModelo
+                            ,ANFe.Emit.CNPJCPF
+                            ,dhEmissao
+                            ,DescricaoModelo
+                            ));
+    end;
   end;
 end;
 

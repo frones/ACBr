@@ -375,8 +375,7 @@ end;
 
 procedure TACBrBPeDABPEClass.SetPathPDF(const Value: String);
 begin
-  if Trim(Value) <> '' then
-    FPathPDF := IncludeTrailingPathDelimiter(Value);
+  FPathPDF := PathWithDelim(Value);
 end;
 
 procedure TACBrBPeDABPEClass.ErroAbstract(NomeProcedure: String);
@@ -388,24 +387,24 @@ function TACBrBPeDABPEClass.GetPathPDF: String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;
-  vAux: TBPe;
+  ABPe: TBPe;
 begin
-  if Trim(FPathPDF) <> '' then
+  if (csDesigning in ComponentState) then
   begin
-    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Result := FPathPDF;
     Exit;
-  end
-  else
-    Result := Trim(FPathPDF);
+  end;
+
+  Result := PathWithDelim(FPathPDF);
 
   // Criar diretório conforme configurado para BP-e
   if Assigned(ACBrBPe) then
   begin
     if TACBrBPe(ACBrBPe).Bilhetes.Count > 0 then
     begin
-      vAux := TACBrBPe(ACBrBPe).Bilhetes.Items[0].BPe;
+      ABPe := TACBrBPe(ACBrBPe).Bilhetes.Items[0].BPe;
       if TACBrBPe(ACBrBPe).Configuracoes.Arquivos.EmissaoPathBPe then
-        dhEmissao := vAux.Ide.dhEmi
+        dhEmissao := ABPe.Ide.dhEmi
       else
         dhEmissao := Now;
 
@@ -414,7 +413,7 @@ begin
       Result := PathWithDelim(TACBrBPe(FACBrBPe).Configuracoes.Arquivos.GetPath(
                               Result
                              ,DescricaoModelo
-                             ,vAux.Emit.CNPJ
+                             ,ABPe.Emit.CNPJ
                              ,dhEmissao
                              ,DescricaoModelo
                              ));

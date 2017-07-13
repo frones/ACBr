@@ -225,44 +225,43 @@ function TACBrMDFeDAMDFeClass.GetPathPDF: String;
 var
   dhEmissao: TDateTime;
   DescricaoModelo: String;
-  vAux: TMDFe;
+  AMDFe: TMDFe;
 begin
-  if Trim(FPathPDF) <> '' then
+  if (csDesigning in ComponentState) then
   begin
-    Result := IncludeTrailingPathDelimiter(FPathPDF);
+    Result := FPathPDF;
     Exit;
-  end
-  else
-    Result := Trim(FPathPDF);
+  end;
+
+  Result := PathWithDelim(FPathPDF);
 
   // Criar diretório conforme configurado para MDF-e
   if Assigned(ACBrMDFe) then
   begin
-     if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
-     begin
-       vAux := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
-       if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
-         dhEmissao := vAux.Ide.dhEmi
-       else
-         dhEmissao := Now;
+    if TACBrMDFe(ACBrMDFe).Manifestos.Count > 0 then
+    begin
+      AMDFe := TACBrMDFe(ACBrMDFe).Manifestos.Items[0].MDFe;
+      if TACBrMDFe(ACBrMDFe).Configuracoes.Arquivos.EmissaoPathMDFe then
+        dhEmissao := AMDFe.Ide.dhEmi
+      else
+        dhEmissao := Now;
 
-       DescricaoModelo := 'MDFe';
+      DescricaoModelo := 'MDFe';
 
-       Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
-                               Result
-                              ,DescricaoModelo
-                              ,vAux.Emit.CNPJ
-                              ,dhEmissao
-                              ,DescricaoModelo
-                              ));
-     end;
+      Result := PathWithDelim(TACBrMDFe(FACBrMDFe).Configuracoes.Arquivos.GetPath(
+                              Result
+                             ,DescricaoModelo
+                             ,AMDFe.Emit.CNPJ
+                             ,dhEmissao
+                             ,DescricaoModelo
+                             ));
+    end;
   end;
 end;
 
 procedure TACBrMDFeDAMDFeClass.SetPathPDF(const Value: String);
 begin
-  if Trim(Value) <> '' then
-    FPathPDF := IncludeTrailingPathDelimiter(Value);
+  FPathPDF := PathWithDelim(Value);
 end;
 
 end.

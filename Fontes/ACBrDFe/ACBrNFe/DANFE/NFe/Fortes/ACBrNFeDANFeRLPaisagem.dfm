@@ -4210,7 +4210,6 @@ inherited frlDANFeRLPaisagem: TfrlDANFeRLPaisagem
       end
     end
     object subItens: TRLSubDetail
-      AlignWithMargins = True
       Left = 99
       Top = 593
       Width = 998

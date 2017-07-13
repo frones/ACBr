@@ -709,7 +709,7 @@ begin
   { Caso seja versão 4.0, deve certificar que está usando TLS1.2 }
   if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
   begin
-    FPDFeOwner.SSL.SSLType := LT_TLSv1_2;
+   // FPDFeOwner.SSL.SSLType := LT_TLSv1_2;   // Servidor da BAHIA não está funcionando com esta configuração
     FPHeaderElement := ''; //Versão 4.00 não tem o elemento <soap12:Header>
   end;
 

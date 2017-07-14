@@ -48,6 +48,33 @@ type
     procedure IncWorkingDayTest_DiaNegativoInicioDomingo;
   end;
 
+  { FindDelimiterInTextTest }
+
+  FindDelimiterInTextTest = class(TTestCase)
+  private
+  published
+    procedure FindDelimiterInTextTest_SemDelimitador;
+    procedure FindDelimiterInTextTest_DelimitadorPipe;
+    procedure FindDelimiterInTextTest_DelimitadorVirgula;
+    procedure FindDelimiterInTextTest_DelimitadorPontoEVirgula;
+    procedure FindDelimiterInTextTest_DelimitadorCustomizado;
+  end;
+
+  { AddDelimitedTextToListTeste }
+
+  AddDelimitedTextToListTeste = class(TTestCase)
+  private
+    FSL: TStringList;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AddDelimitedTextToListTeste_StringVazia;
+    procedure AddDelimitedTextToListTeste_DoisItens;
+    procedure AddDelimitedTextToListTeste_SemDelimitador;
+    procedure AddDelimitedTextToListTeste_DelimitadorEspaco;
+  end;
+
   { TiraPontosTest }
 
   TiraPontosTest = class(TTestCase)
@@ -885,6 +912,73 @@ implementation
 uses
   Math, dateutils,
   ACBrUtil, ACBrConsts;
+
+{ AddDelimitedTextToListTeste }
+
+procedure AddDelimitedTextToListTeste.SetUp;
+begin
+  inherited SetUp;
+  FSL := TStringList.Create;
+end;
+
+procedure AddDelimitedTextToListTeste.TearDown;
+begin
+  FSL.Free;
+  inherited TearDown;
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_StringVazia;
+begin
+  CheckEquals(0, AddDelimitedTextToList('',';',FSL));
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_DoisItens;
+begin
+  CheckEquals(2, AddDelimitedTextToList('comercial@djpdv.com.br;financeiro@djpdv.com.br',';',FSL));
+  CheckEquals('comercial@djpdv.com.br', FSL[0]);
+  CheckEquals('financeiro@djpdv.com.br', FSL[1]);
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_SemDelimitador;
+begin
+  CheckEquals(1, AddDelimitedTextToList('comercial@djpdv.com.br',';',FSL));
+  CheckEquals('comercial@djpdv.com.br', FSL[0]);
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_DelimitadorEspaco;
+begin
+  CheckEquals(3, AddDelimitedTextToList('PROJETO ACBR www.projetoacbr.com.br',' ',FSL));
+  CheckEquals('PROJETO', FSL[0]);
+  CheckEquals('ACBR', FSL[1]);
+  CheckEquals('www.projetoacbr.com.br', FSL[2]);
+end;
+
+{ FindDelimiterInTextTest }
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_SemDelimitador;
+begin
+  CheckEquals(' ',FindDelimiterInText('comercial@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorPipe;
+begin
+  CheckEquals('|',FindDelimiterInText('comercial@djpdv.com.br|financeiro@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorVirgula;
+begin
+  CheckEquals(',',FindDelimiterInText('comercial@djpdv.com.br,financeiro@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorPontoEVirgula;
+begin
+  CheckEquals(';',FindDelimiterInText('comercial@djpdv.com.br;financeiro@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorCustomizado;
+begin
+  CheckEquals('&',FindDelimiterInText('comercial@djpdv.com.br&financeiro@djpdv.com.br','&'));
+end;
 
 { IncWorkingDayTest }
 
@@ -3828,6 +3922,8 @@ end;
 
 initialization
 
+  RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', FindDelimiterInTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', IncWorkingDayTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});

@@ -209,6 +209,9 @@ type
   published
     procedure ValidarEmailsValidos;
     procedure ValidarEmailsInvalidos;
+    procedure ValidarListaEmailsValidos;
+    procedure ValidarListaEmailsInvalidos;
+    procedure ValidarListaEmailsMisturandoDelimitadores;
   end;
 
 implementation
@@ -1227,12 +1230,27 @@ begin
   CheckNotEquals('', ValidarEmail('cáractersespeciais@empresa.com.br'));
 end;
 
+procedure TTestCaseACBrValidadorEmail.ValidarListaEmailsValidos;
+begin
+  CheckEquals('', ValidarEmail('comercial@djpdv.com.br;financeiro@djpdv.com.br;pessoa@suaempresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarListaEmailsInvalidos;
+begin
+  CheckNotEquals('', ValidarEmail('comercial@djpdv.com.br;nome com espaco@hotmail.com;pessoa@suaempresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarListaEmailsMisturandoDelimitadores;
+begin
+  CheckNotEquals('', ValidarEmail('comercial@djpdv.com.br;financeiro@djpdv.com.br,pessoa@suaempresa.com.br'));
+end;
+
 procedure TTestCaseACBrValidadorEmail.ValidarEmailsValidos;
 begin
-  CheckEqualsString('', ValidarEmail('nome@gmail.com'));
-  CheckEqualsString('', ValidarEmail('nome@hotmail.com'));
-  CheckEqualsString('', ValidarEmail('pessoa@suaempresa.com.br'));
-  CheckEqualsString('', ValidarEmail('pessoa.cadastrada.com.nome.de.email.muito.longo@minhaempresa.com.br'));
+  CheckEquals('', ValidarEmail('nome@gmail.com'));
+  CheckEquals('', ValidarEmail('nome@hotmail.com'));
+  CheckEquals('', ValidarEmail('pessoa@suaempresa.com.br'));
+  CheckEquals('', ValidarEmail('pessoa.cadastrada.com.nome.de.email.muito.longo@minhaempresa.com.br'));
 end;
 
 initialization

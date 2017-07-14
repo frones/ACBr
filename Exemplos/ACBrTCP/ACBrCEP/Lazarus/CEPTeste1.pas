@@ -67,6 +67,7 @@ type
     procedure bBuscarLogradouro1Click(Sender : TObject) ;
     procedure bBuscarLogradouroClick(Sender : TObject) ;
     procedure cbxWSChange(Sender : TObject) ;
+    procedure FormCreate(Sender: TObject);
   private
     procedure AjustaProxy ;
     { private declarations }
@@ -79,6 +80,9 @@ var
 
 implementation
 
+Uses
+  TypInfo;
+
 {$R *.lfm}
 
 { TForm1 }
@@ -86,6 +90,15 @@ implementation
 procedure TForm1.cbxWSChange(Sender : TObject) ;
 begin
   ACBrCEP1.WebService := TACBrCEPWebService( cbxWS.ItemIndex ) ;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  I: TACBrCEPWebService;
+begin
+  cbxWS.Items.Clear ;
+  For I := Low(TACBrCEPWebService) to High(TACBrCEPWebService) do
+     cbxWS.Items.Add( GetEnumName(TypeInfo(TACBrCEPWebService), integer(I) ) ) ;
 end;
 
 procedure TForm1.AjustaProxy ;

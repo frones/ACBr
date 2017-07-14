@@ -1622,28 +1622,13 @@ end;
 procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String; NomeArq: String;
   sMensagem: TStrings; sCC: TStrings; Anexos: TStrings; StreamCFe: TStream);
 var
-  i : Integer;
-  EMails : TStringList;
-  sDelimiter : Char;
+  i: Integer;
 begin
   if not Assigned(MAIL) then
     raise EACBrSATErro.Create('Componente ACBrMail não associado');
 
   MAIL.Clear;
-  EMails := TStringList.Create;
-  try
-    if Pos( ';', sPara) > 0 then
-       sDelimiter := ';'
-    else
-       sDelimiter := ',';
-    QuebrarLinha( sPara, EMails, '"', sDelimiter);
-
-    for i := 0 to EMails.Count -1 do
-        MAIL.AddAddress( EMails[i] );
-  finally
-    EMails.Free;
-  end;
-
+  MAIL.AddAddress(sPara);
   MAIL.Subject := sAssunto;
 
   if Assigned(sMensagem) then

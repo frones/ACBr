@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 14/07/2017
+-- ACBrSAT --
+[*] Refatoração do método "EnviarEmail" para usar o recurso recem implementado de
+    ACBrMail, para adição de lista de Emails em um comando.
+    (por: DSA)
+
 Data 06/07/2017
 -- ACBrSAT --
 [+] Adicionada a propriedade: "ValidarNumeroSessaoResposta: Boolean default False"

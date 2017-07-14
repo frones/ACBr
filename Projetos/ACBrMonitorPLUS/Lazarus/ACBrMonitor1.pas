@@ -360,6 +360,7 @@ type
     edtEmailAssuntoMDFe: TEdit;
     edtEmailAssuntoNFe: TEdit;
     edTimeZoneStr: TEdit;
+    edtLogoMarcaNFCeSAT: TEdit;
     edtNumeroSerie: TEdit;
     edtSenha: TEdit;
     edtTimeoutWebServices: TSpinEdit;
@@ -378,6 +379,7 @@ type
     Label138: TLabel;
     Label155: TLabel;
     Label156: TLabel;
+    Label163: TLabel;
     Label165: TLabel;
     Label179: TLabel;
     Label180: TLabel;
@@ -436,6 +438,7 @@ type
     sbArquivoCert: TSpeedButton;
     sbArquivoWebServicesGNRe: TSpeedButton;
     sbLogoMarca1: TSpeedButton;
+    sbLogoMarcaNFCeSAT: TSpeedButton;
     sbNumeroSerieCert: TSpeedButton;
     ScrollBox: TScrollBox;
     seUSUCROCadastro: TSpinEdit;
@@ -1229,6 +1232,7 @@ type
     procedure sbArquivoWebServicesNFeClick(Sender: TObject);
     procedure sbBALSerialClick(Sender: TObject);
     procedure sbLogoMarca1Click(Sender: TObject);
+    procedure sbLogoMarcaNFCeSATClick(Sender: TObject);
     procedure sbNumeroSerieCertClick(Sender: TObject);
     procedure sbBALLogClick(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
@@ -4045,6 +4049,7 @@ begin
 
     rgTipoDanfe.ItemIndex := Ini.ReadInteger('Geral', 'DANFE', 0);
     edtLogoMarca.Text := Ini.ReadString('Geral', 'LogoMarca', '');
+    edtLogoMarcaNFCeSAT.Text := Ini.ReadString('Geral', 'LogoMarcaNFCeSAT', '');
     rgModeloDanfe.ItemIndex := Ini.ReadInteger('DANFE', 'Modelo', 0);
     rgTamanhoPapelDacte.ItemIndex := Ini.ReadInteger('DACTE', 'TamanhoPapel', 0);
     edtSiteEmpresa.Text := Ini.ReadString('DANFE', 'Site', '');
@@ -4824,6 +4829,7 @@ begin
     Ini.WriteInteger('WebService', 'FormaEmissaoMDFe', cbFormaEmissaoMDFe.ItemIndex);
     Ini.WriteInteger('WebService', 'FormaEmissaoGNRe', cbFormaEmissaoGNRe.ItemIndex);
     Ini.WriteString('Geral', 'LogoMarca', edtLogoMarca.Text);
+    Ini.WriteString('Geral', 'LogoMarcaNFCeSAT', edtLogoMarcaNFCeSAT.Text);
     Ini.WriteBool('Geral', 'Salvar', ckSalvar.Checked);
     Ini.WriteString('Geral', 'PathSalvar', edtPathLogs.Text);
     Ini.WriteString('Geral', 'Impressora', cbxImpressora.Text);
@@ -6015,6 +6021,19 @@ begin
   if OpenDialog1.Execute then
   begin
     edtBOLLogoEmpresa.Text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TFrmACBrMonitor.sbLogoMarcaNFCeSATClick(Sender: TObject);
+begin
+  OpenDialog1.Title := 'Selecione o Logo';
+  OpenDialog1.DefaultExt := '*.png';
+  OpenDialog1.Filter :=
+    'Arquivos PNG (*.png)|Arquivos JPG (*.jpg)|Arquivos BMP (*.bmp)|*.bmp|Todos os Arquivos (*.*)|*.*';
+  OpenDialog1.InitialDir := ExtractFileDir(application.ExeName);
+  if OpenDialog1.Execute then
+  begin
+    edtLogoMarcaNFCeSAT.Text := OpenDialog1.FileName;
   end;
 end;
 
@@ -7255,7 +7274,9 @@ begin
     else
       ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiNenhum);
 
-    if ( Trim(edtLogoMarca.Text) <> '') and FileExists(edtLogoMarca.Text) then
+    if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
+       ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarcaNFCeSAT.Text)
+    else if ( Trim(edtLogoMarca.Text) <> '') and FileExists(edtLogoMarca.Text) then
        ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarca.Text);
 
     try
@@ -7565,6 +7586,8 @@ begin
       ACBrNFeDANFCeFortes1.MargemSuperior        := fspeNFCeMargemSup.Value;
       ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
       ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
+      if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
+        ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text;
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     begin
@@ -7572,6 +7595,8 @@ begin
       ACBrNFeDANFeESCPOS1.PosPrinter.Device.Porta := cbxPorta.Text;
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
+      if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
+        ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text;
 
       if not ACBrPosPrinter1.ControlePorta then
       begin

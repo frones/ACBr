@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/07/2017
+[*] Adicionado campos para informar a LogoMarca para NFC-e / SAT, separado da
+        Logomarca Padrão
+	Mais detalhes em:
+	http://www.projetoacbr.com.br/forum/topic/37698-imagem-do-logo-no-cupom-sat/#comment-247440
+	por: José M. S. Junior
+
 10/07/2017
 [*] Adicionado campos para BOLETO referente dados do Sacador Avalista
 	Método: BOLETO.IncluirTitulos

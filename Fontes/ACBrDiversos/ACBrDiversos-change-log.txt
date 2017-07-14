@@ -39,25 +39,30 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2017
+-- ACBrValidador, ACBrValidadorTest --
+[*] Método "ValidarEmail" modificado para suportar uma lista de emails
+[*] Método "FormatarFone", ajuste para não formatar números apenas com zeros
+    (por: DSA)
 
 18/02/2017
--- ACBrValidador , acbrvalidadortest -- 
+-- ACBrValidador , ACBrValidadorTest -- 
 [-] Melhoria na validação de e-mail
 [+] Novo teste de validação de e-mail  
-		http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espaço/
-		por: BigWings
+    http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espaço/
+    (por: BigWings)
 		
 17/01/2017
---ACBrValidador
+-- ACBrValidador --
 [*] Adição do espaço para validar o e-mail pois o mesmo não pode ter
-		http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espa%C3%A7o/
-		por: Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espa%C3%A7o/
+    (por: Juliomar Marchetti)
 		
 21/11/16
---ACBrCargaBal
+-- ACBrCargaBal --
 [*] Correção para memoria leak do componente
-		http://www.projetoacbr.com.br/forum/topic/33552-tacbrcargabal-memory-leak-vazamento-de-mem%C3%B3ria/
-		por : Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/33552-tacbrcargabal-memory-leak-vazamento-de-mem%C3%B3ria/
+    (por : Juliomar Marchetti)
 
 11/10/16
 -- ACBrCalculadora --

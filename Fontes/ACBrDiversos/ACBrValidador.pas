@@ -257,8 +257,32 @@ begin
 end;
 
 function ValidarEmail (const Documento : string ) : String;
+var
+  SL: TStringList;
+  sDelimiter: Char;
+  I: Integer;
 begin
-  Result := ValidarDocumento( docEmail, Documento );
+  Result := '';
+  sDelimiter := FindDelimiterInText(Documento);
+
+  if (sDelimiter = ' ') then
+    Result := ValidarDocumento( docEmail, Documento )
+  else
+  begin
+    SL := TStringList.Create;
+    try
+      AddDelimitedTextToList(Documento, sDelimiter, SL);
+
+      I := 0;
+      while (Result = '') and (I < SL.Count) do
+      begin
+        Result := ValidarDocumento( docEmail, SL[I] );
+        Inc( I );
+      end;
+    finally
+      SL.Free;
+    end;
+  end;
 end;
 
 function ValidarCEP(const ACEP, AUF: String): String;
@@ -326,7 +350,7 @@ begin
   FoneNum := RemoveZerosEsquerda(FoneNum);
 
   LenFoneNum := length(FoneNum);
-  if LenFoneNum = 0 then
+  if (LenFoneNum = 0) or (FoneNum = '0') then
     exit;
 
   if (LenFoneNum <= 9) and NaoEstaVazio(DDDPadrao) then

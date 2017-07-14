@@ -44,6 +44,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/07/2017
+-- ACBrDFe --
+[*] Refatoração do método "EnviarEmail" para usar o recurso recem implementado de
+    ACBrMail, para adição de lista de Emails em um comando.
+    (por: DSA)
+
 07/07/2017
 -- ACBrDFeConfiguracoes --
 [-] Correção em "TArquivosConf.Assign", onde o Objeto "OrdenacaoPath" não era

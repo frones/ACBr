@@ -331,6 +331,10 @@ function EAN13_DV( CodEAN13 : String ) : String ;
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
 function MatchText(const AText: String; const AValues: array of String): Boolean;
 
+function FindDelimiterInText( const AText: String; ADelimiters: String = ''): Char;
+function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
+   AStringList: TStrings): Integer;
+
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
 function Zip(S: TStream): AnsiString; overload;
@@ -3505,6 +3509,65 @@ begin
       Result := True;
       Break;
     end;
+end;
+
+{------------------------------------------------------------------------------
+  Encontra qual é o primeiro Delimitador usado, em "AText", em uma lista de
+  delimitadores, informada em "ADelimiters".
+  Se "ADelimiters" for vazio, usa como padrão ";,|"
+ ------------------------------------------------------------------------------}
+function FindDelimiterInText(const AText: String; ADelimiters: String): Char;
+var
+  I: Integer;
+  a: array of Char;
+begin
+  if (ADelimiters = '') then
+    ADelimiters := ';,|';
+
+  Result := ' ';
+  I := 1;
+  while (Result = ' ') and (I <= Length(ADelimiters)) do
+  begin
+    if (pos( ADelimiters[I], AText) > 0) then
+      Result := ADelimiters[I];
+
+    Inc(I);
+  end;
+end;
+
+{------------------------------------------------------------------------------
+  Quebra a String "AText", em várias linhas, separando-a de acordo com a ocorrência
+  de "ADelimiter", e adiciona os Itens encontrados em "AStringList".
+  Retorna o número de Itens Inseridos
+ ------------------------------------------------------------------------------}
+function AddDelimitedTextToList(const AText: String; const ADelimiter: Char;
+  AStringList: TStrings): Integer;
+var
+  SL: TStringList;
+  ADelimitedText: String;
+begin
+  Result := 0;
+  if (AText = '') then
+    Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.Delimiter := ADelimiter;
+    {$IFDEF FPC}
+     SL.StrictDelimiter := True;
+     ADelimitedText := AText;
+    {$ELSE}
+     ADelimitedText := '"' + StringReplace(AText, ADelimiter,
+                            '"' + ADelimiter + '"', [rfReplaceAll]) +
+                       '"';
+    {$ENDIF}
+    SL.DelimitedText := ADelimitedText;
+    Result := SL.Count;
+
+    AStringList.AddStrings(SL);
+  finally
+    SL.Free;
+  end;
 end;
 
 {$IFDEF FPC}

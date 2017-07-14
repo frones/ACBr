@@ -38,6 +38,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/07/2017
+-- ACBrUtil --
+[+] Adicionado os métodos:
+    function FindDelimiterInText(const AText: String; ADelimiters: String): Char;
+      Encontra qual é o primeiro Delimitador usado, em "AText", em uma lista de
+      delimitadores, informada em "ADelimiters".
+      Se "ADelimiters" for vazio, usa como padrão ";,|"
+    function AddDelimitedTextToList(const AText: String; const ADelimiter: Char;
+       AStringList: TStrings): Integer;
+     Quebra a String "AText", em várias linhas, separando-a de acordo com a ocorrência
+     de "ADelimiter", e adiciona os Itens encontrados em "AStringList".
+     Retorna o número de Itens Inseridos
+[+] Adicionado novos testes em "ACBrComumTesteCases" para os novos métodos
+    (por: DSA)
+
 Data: 22/06/2017
 -- ACBrUtil --
 [+] Adicionado os métodos:

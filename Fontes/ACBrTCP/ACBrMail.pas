@@ -156,6 +156,7 @@ type
     procedure SmtpError(const pMsgError: string);
 
     procedure DoException(E: Exception);
+    procedure AddEmailWithDelimitersToList( aEmail: String; aList: TStrings);
 
   protected
     procedure SendMail;
@@ -226,7 +227,8 @@ var
 implementation
 
 Uses
-  strutils{$IFDEF FPC}, FileUtil {$ENDIF};
+  strutils{$IFDEF FPC}, FileUtil {$ENDIF},
+  ACBrUtil;
 
 procedure SendEmailByThread(MailToClone: TACBrMail);
 var
@@ -344,6 +346,19 @@ begin
   end
   else
     raise E;
+end;
+
+procedure TACBrMail.AddEmailWithDelimitersToList(aEmail: String; aList: TStrings
+  );
+var
+  sDelimiter: Char;
+begin
+  sDelimiter := FindDelimiterInText(aEmail);
+
+  if (sDelimiter = ' ') then
+    aList.Add(aEmail)
+  else
+    AddDelimitedTextToList(aEmail, sDelimiter, aList);
 end;
 
 procedure TACBrMail.Clear;
@@ -866,7 +881,7 @@ begin
   if Trim(aName) <> '' then
     fMIMEMess.Header.ToList.Add('"' + aName + '" <' + aEmail + '>')
   else
-    fMIMEMess.Header.ToList.Add(aEmail);
+    AddEmailWithDelimitersToList(aEmail, fMIMEMess.Header.ToList);
 end;
 
 procedure TACBrMail.AddReplyTo(aEmail: string; aName: string);
@@ -874,7 +889,7 @@ begin
   if Trim(aName) <> '' then
     fReplyTo.Add('"' + aName + '" <' + aEmail + '>')
   else
-    fReplyTo.Add(aEmail);
+    AddEmailWithDelimitersToList(aEmail, fReplyTo);
 end;
 
 procedure TACBrMail.AddCC(aEmail: string; aName: string);
@@ -882,12 +897,12 @@ begin
   if Trim(aName) <> '' then
     fMIMEMess.Header.CCList.Add('"' + aName + '" <' + aEmail + '>')
   else
-    fMIMEMess.Header.CCList.Add(aEmail);
+    AddEmailWithDelimitersToList(aEmail, fMIMEMess.Header.CCList);
 end;
 
 procedure TACBrMail.AddBCC(aEmail: string);
 begin
-  fBCC.Add(aEmail);
+  AddEmailWithDelimitersToList(aEmail, fBCC);
 end;
 
 function TACBrMail.SaveToStream(AStream: TStream): Boolean;

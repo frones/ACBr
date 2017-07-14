@@ -37,17 +37,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/04/2017
+-- ACBrMail --
+[*] Métodos "AddAddress", "AddReplyTo", "AddCC" e "AddBCC", modificados para
+    permitir a passagem de uma lista de emails, separados por ';', ',' ou '|'
+    (por: DSA)
+
 11/07/2017
--- ACBrCEP
-[*] Novo webservice
-		http://www.projetoacbr.com.br/forum/topic/37657-acbrcep-novo-webservice/
-		por Juliomar Marchetti
+-- ACBrCEP --
+[+] Adicionado o WebService CepAberto http://www.cepaberto.com/
+    CepAberto é um repositório com edição e compartilhamento público
+    É necessário criar uma conta e inserir a Chave de Acesso que é
+    disponibilidzada na API do site em questão após a criação da conta
+    API Key (Chave de Acesso): http://www.cepaberto.com/api_key
+[+] Adicionado as variáveis Altitude, Latitude e Longitude
+    http://www.projetoacbr.com.br/forum/topic/37657-acbrcep-novo-webservice/
+    (por: Igor Bastos)
 
 08/07/2017
--- ACBrCEP
+-- ACBrCEP --
 [*] Modificado o endereço do webservice da devmedia
-		http://www.projetoacbr.com.br/forum/topic/11375-consulta-de-cep-pela-devmedia/?do=findComment&comment=246838
-		por Juliomar Marchetti
+    http://www.projetoacbr.com.br/forum/topic/11375-consulta-de-cep-pela-devmedia/?do=findComment&comment=246838
+    (por: Juliomar Marchetti)
 		
 05/07/2017
 -- ACBrMail --

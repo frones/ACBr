@@ -39,15 +39,6 @@
 |*
 |* 12/08/2010: Primeira Versao
 |*    Daniel Simoes de Almeida e André Moraes
-|*
-|* 11/07/2017: Versao X <DESCONHECO A VERSAO ATUAL>
-|*    Igor de Bastos Costa, igorbastosib@hotmail.com
-|*    Adicionado o WebService CepAberto http://www.cepaberto.com/
-|*    CepAberto é um repositório com edição e compartilhamento público
-|*    É necessário criar uma conta e inserir a Chave de Acesso que é
-|*    disponibilidzada na API do site em questão após a criação da conta
-|*    API Key (Chave de Acesso): http://www.cepaberto.com/api_key
-|*    Adicionado as variáveis Altitude, Latitude e Longitude
 ******************************************************************************}
 
 unit ACBrCEP ;

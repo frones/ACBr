@@ -319,12 +319,11 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
   { TACBrWSCEPAberto }
 
   TACBrWSCEPAberto= class(TACBrCEPWSClass)
-    private
-      procedure ProcessaResposta ;
-    public
-      constructor Create( AOwner : TACBrCEP ) ; override ;
-
-      Procedure BuscarPorCEP( ACEP : String ) ; override ;
+  private
+    procedure ProcessaResposta ;
+  public
+    constructor Create( AOwner : TACBrCEP ) ; override ;
+    Procedure BuscarPorCEP( ACEP : String ) ; override ;
   end ;
 
 

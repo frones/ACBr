@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/07/2017
+-- ACBrNFeWebSerices
+[-] Correção do SoapAction do RS
+		http://www.projetoacbr.com.br/forum/topic/37538-status-nfe-40-erro/?do=findComment&comment=247849
+		(por: Juliomar Marchetti)
+		
 08/07/2017
 -- ACBrNFeWebServices --
 [-] Correção nas classes "TNFeInutilizacao" e "TNFeEnvEvento", para assinar

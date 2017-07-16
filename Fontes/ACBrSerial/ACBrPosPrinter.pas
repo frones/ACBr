@@ -1331,8 +1331,13 @@ begin
     begin
       FPosPrinterClass.LerStatus( Result );
 
-      if (stGavetaAberta in Result) and ConfigGaveta.SinalInvertido then
-        Result := Result - [stGavetaAberta];
+      if ConfigGaveta.SinalInvertido then
+      begin
+        if (stGavetaAberta in Result) then
+          Result := Result - [stGavetaAberta]
+        else
+          Result := Result + [stGavetaAberta];
+      end;
     end;
   finally
     Ativo := OldAtivo;

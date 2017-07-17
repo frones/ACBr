@@ -46,6 +46,7 @@ procedure IncluirTitulo(aIni: TMemIniFile; Sessao: String);
 procedure GravarIniRetorno(DirIniRetorno: String);
 function ListaBancos() : String;
 function ListaCaractTitulo() : String;
+function ListaOcorrencias(): String;
 procedure ImprimeRelatorioRetorno(sArqRetorno : String);
 
 implementation
@@ -133,6 +134,8 @@ begin
          Cmd.Resposta := ListaBancos()
       else if cmd.Metodo = 'listacaracttitulo' then
          Cmd.Resposta := ListaCaractTitulo()
+      else if cmd.Metodo = 'listaocorrencias' then
+         Cmd.Resposta := ListaOcorrencias()
       else if cmd.Metodo = 'tamnossonumero' then
          Cmd.Resposta := IntToStr(Banco.CalcularTamMaximoNossoNumero(Cmd.Params(0)))
       else if cmd.Metodo = 'codigosmoraaceitos' then
@@ -518,6 +521,24 @@ begin
 
    if Result <> '' then
       Result := copy(Result,1,Length(Result)-1) ;
+end;
+
+function ListaOcorrencias: String;
+var
+   ITipoOcorrencia : TACBrTipoOcorrencia;
+   SOcorrencia     : AnsiString;
+begin
+  ITipoOcorrencia := Low(TACBrTipoOcorrencia);
+
+  while ( ITipoOcorrencia <= High(TACBrTipoOcorrencia) ) do
+  begin
+    SOcorrencia := GetEnumName( TypeInfo(TACBrTipoOcorrencia), Integer(ITipoOcorrencia) ) ;
+    Result := Result + copy(SOcorrencia, 3, Length(SOcorrencia)) + '|';  //Remove "to"
+    Inc(ITipoOcorrencia);
+  end;
+
+  if (Result <> '') then
+    Result := copy(Result,1,Length(Result)-1) ;
 end;
 
 procedure ImprimeRelatorioRetorno(sArqRetorno : String);

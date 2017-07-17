@@ -57,6 +57,12 @@ Símbolo : Significado
 	http://www.projetoacbr.com.br/forum/topic/37620-sacadoravalista/
 	por: José M. S. Junior
 
+[*] Adicionado Método BOLETO.ListaOcorrencias(). Retorna listagem de todos os
+        Tipos de Ocorrências.
+	Mais detalhes em:
+	http://www.projetoacbr.com.br/forum/topic/37584-retorno-boleto/
+	por: José M. S. Junior
+
 18/06/2017
 [*] Contribuição de usuário do Forum:
 	http://www.projetoacbr.com.br/forum/topic/37264-ajuste-em-configurações/

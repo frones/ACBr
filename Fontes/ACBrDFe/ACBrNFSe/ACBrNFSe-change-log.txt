@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/07/2017
+-- pnfsConversao
+[*] Novas naturezas de operação.
+    Por: Augusto Fontana
+
 29/06/2017
 -- pnfsEnvLoteRpsResposta--
 [*] Imposto a checagem do valor do protodolo retornado, o mesmo é alterado para

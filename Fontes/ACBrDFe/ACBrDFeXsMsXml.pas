@@ -287,7 +287,7 @@ var
 begin
   // Usa valores default, se não foram informados //
   VerificarValoresPadrao(SignatureNode, SelectionNamespaces);
-  Result := False;
+
   ResultInitialize := CoInitialize(nil);
   if (ResultInitialize = E_FAIL) then
     raise EACBrDFeException.Create('Erro ao inicializar biblioteca COM');

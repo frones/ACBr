@@ -1604,8 +1604,6 @@ begin
 end;
 
 procedure TACBrWSCEPAberto.BuscarPorCEP(ACEP: String);
-var
-  sParams: String;
 begin
   ACEP := OnlyNumber( ACEP );
 
@@ -1619,7 +1617,7 @@ begin
   fOwner.HTTPSend.Headers.Add('Authorization: Token token="'+fOwner.ChaveAcesso+'"');
   fOwner.HTTPMethod('GET', fpURL+'ceps.xml?cep=' + ACEP);
 
-  ProcessaResposta();
+  ProcessaResposta;
 end;
 
 procedure TACBrWSCEPAberto.ProcessaResposta;

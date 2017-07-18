@@ -242,6 +242,7 @@ var
   sMun:String;
   CountCid:Integer;
 begin
+  Result := False;
   Erro := ValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
      raise EACBrConsultaCNPJException.Create(Erro);
@@ -355,10 +356,7 @@ begin
       end;
     end
     else
-    begin
-      Result:= False;
       raise EACBrConsultaCNPJException.Create(Erro);
-    end;
   finally
     Post.Free;
   end;
@@ -408,7 +406,7 @@ end;
 
 function TACBrConsultaCNPJ.GetIBGE_UF: String;
 begin
- Result := copy(fCodigoIBGE,1,2) ;
+  Result := copy(fCodigoIBGE,1,2) ;
 end;
 
 end.

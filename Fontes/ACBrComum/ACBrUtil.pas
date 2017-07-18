@@ -3519,7 +3519,6 @@ end;
 function FindDelimiterInText(const AText: String; ADelimiters: String): Char;
 var
   I: Integer;
-  a: array of Char;
 begin
   if (ADelimiters = '') then
     ADelimiters := ';,|';

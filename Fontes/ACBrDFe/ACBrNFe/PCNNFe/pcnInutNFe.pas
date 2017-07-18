@@ -192,26 +192,21 @@ begin
   try
     // Lendo dados do pedido de inutilização, se houver...
     Leitor.Arquivo := AXML;
-    try
-      if ( leitor.rExtrai(1, 'infInut') <> '') then
-      begin
-        FIDInutilizacao := Leitor.rAtributo('Id=');
 
-                 Fversao   := Leitor.rAtributo('versao');
-        (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-        (*DR09 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
-        (*DR10 *)Fano      := Leitor.rCampo(tcInt, 'ano');
-        (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
-        (*DR12 *)FModelo   := Leitor.rCampo(tcInt, 'mod');
-        (*DR13 *)FSerie    := Leitor.rCampo(tcInt, 'serie');
-        (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');
-        (*DR15 *)FnNFFin   := Leitor.rCampo(tcInt, 'nNFFin');
-                 FxJust    := Leitor.rCampo(tcStr, 'xJust');;
-
-                 Result := True;
-      end;
-    except
-      result := False;
+    Result := ( leitor.rExtrai(1, 'infInut') <> '');
+    if Result then
+    begin
+         FIDInutilizacao := Leitor.rAtributo('Id=');
+               Fversao   := Leitor.rAtributo('versao');
+      (*DR05 *)FtpAmb    := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+      (*DR09 *)FcUF      := Leitor.rCampo(tcInt, 'cUF');
+      (*DR10 *)Fano      := Leitor.rCampo(tcInt, 'ano');
+      (*DR11 *)FCNPJ     := Leitor.rCampo(tcStr, 'CNPJ');
+      (*DR12 *)FModelo   := Leitor.rCampo(tcInt, 'mod');
+      (*DR13 *)FSerie    := Leitor.rCampo(tcInt, 'serie');
+      (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');
+      (*DR15 *)FnNFFin   := Leitor.rCampo(tcInt, 'nNFFin');
+               FxJust    := Leitor.rCampo(tcStr, 'xJust');
     end;
 
     // Lendo dados do retorno, se houver

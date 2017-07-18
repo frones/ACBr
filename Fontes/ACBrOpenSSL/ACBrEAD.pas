@@ -267,7 +267,6 @@ end;
 
 function TACBrEAD.ConverteChavePublicaParaOpenSSH( const AChavePublicaOpenSSL: String): String;
 Var
-  RsaKey: pRSA;
   Buffer, Modulo, Expoente: AnsiString;
 
   function EncodeHexaSSH(HexaStr: String): AnsiString;
@@ -469,7 +468,7 @@ begin
     try
       ca := nil;
       {$IFDEF USE_libeay32}
-      if PKCS12_parse(p12, PAnsiChar(Senha), fsKey, Cert, ca) > 0 then
+      if PKCS12_parse(p12, PAnsiChar(AnsiString( Senha )), fsKey, Cert, ca) > 0 then
       {$ELSE}
       if PKCS12parse(p12, Senha, fsKey, Cert, ca) > 0 then
       {$ENDIF}
@@ -1177,7 +1176,6 @@ begin
   GetMem(Memory, BufferSize);
   md_len := Length(BinarySignature);
   try
-    md := Nil;
     md := EVP_get_digestbyname( PAnsiChar(NameDgst) );
     if md = Nil then
       raise EACBrEADException.Create('Erro ao carregar Digest: NameDgst');

@@ -41,8 +41,7 @@ unit ACBrBancoCecred;
 interface
 
 uses
-  Classes, SysUtils,
-  ACBrBoleto;
+  Classes, SysUtils, Contnrs, ACBrBoleto;
 
 const
   CACBrBancoCecred_Versao = '0.0.1';
@@ -200,8 +199,7 @@ end;
 function TACBrBancoCecred.GerarRegistroHeader240(
   NumeroRemessa: Integer): String;
 var
-  ATipoInscricao, aConta : String;
-  aAgencia, aModalidade  : String;
+  ATipoInscricao, aConta, aAgencia: String;
 
 begin
   with ACBrBanco.ACBrBoleto.Cedente do
@@ -215,7 +213,6 @@ begin
 
     aAgencia    := PadLeft(OnlyNumber(Agencia), 5, '0');
     aConta      := PadLeft(OnlyNumber(Conta), 12, '0');
-    aModalidade := PadLeft(trim(Modalidade), 3, '0');
 
     // GERAR REGISTRO-HEADER DO ARQUIVO
     Result:= IntToStrZero(ACBrBanco.Numero, 3)               + // 1 a 3 - Código da cooperativa

@@ -44,7 +44,7 @@ unit ACBrBancoBrasilSicoob;
 interface
 
 uses
-  Classes, SysUtils, ACBrBoleto,
+  Classes, SysUtils, ACBrBoleto, Contnrs,
   {$IFDEF COMPILER6_UP} DateUtils {$ELSE} ACBrD5, FileCtrl {$ENDIF};
 
 const
@@ -628,9 +628,12 @@ begin
       if copy(Linha, 8, 1) <> '3' then // verifica se o registro (linha) é um registro detalhe (segmento J)
          Continue;
 
+      Titulo := nil;
+
       if copy(Linha, 14, 1) = 'T' then // se for segmento T cria um novo titulo
          Titulo := ACBrBanco.ACBrBoleto.CriarTituloNaLista;
 
+      if Assigned(Titulo) then
       with Titulo do
       begin
          if copy(Linha, 14, 1) = 'T' then

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 18/07/2017 ver: 0.0.227
+-- ACBrBancoCecred, ACBrBancoBrasilSicoob e ACBrBancoBradesco
+[*] Removação de warmings (waldir)
+
+
 Data 08/07/2017 ver: 0.0.226
 -- ACBrBancoBanrisul
 [-] Correção na mensagem do cnab400/

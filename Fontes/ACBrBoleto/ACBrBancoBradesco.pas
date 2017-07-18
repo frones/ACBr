@@ -166,7 +166,6 @@ var
   Protesto, TipoSacado, MensagemCedente, aConta     :String;
   aCarteira, wLinha, ANossoNumero: String;
   TipoBoleto :Char;
-  wTamNossoNum: Integer;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -220,9 +219,6 @@ begin
    with ACBrTitulo do
    begin
       ANossoNumero := PadLeft(OnlyNumber(ACBrTitulo.NossoNumero),11, '0');
-      wTamNossoNum := CalcularTamMaximoNossoNumero(ACBrTitulo.Carteira,
-                                                   ACBrTitulo.NossoNumero);
-
 
       if (ACBrBoleto.Cedente.ResponEmissao = tbBancoEmite) and (StrToIntDef(ANossoNumero,0) = 0) then
         DigitoNossoNumero := '0'
@@ -255,8 +251,9 @@ begin
       {Pegando Tipo de Boleto}
       if CarteiraEnvio = tceCedente then
          TipoBoleto := '2'
-      else if CarteiraEnvio = tceBanco then
-         TipoBoleto := '1';
+      else 
+         TipoBoleto := '1'; 
+
       if NossoNumero = EmptyStr then
         DigitoNossoNumero := '0';
 

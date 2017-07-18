@@ -1939,12 +1939,14 @@ function TACBrECFDaruma.GetEstado: TACBrECFEstado;
 Var RetCmd1,RetCmd2 : AnsiString ;
     Flag1, Flag2 : Byte ; 
 begin
-  Result := fpEstado ;  // Suprimir Warning
-  try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
+  try
     fpEstado := estDesconhecido ;
 
     if fsNumVersao = '2000' then

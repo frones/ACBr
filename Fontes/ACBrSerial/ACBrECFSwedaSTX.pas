@@ -1485,12 +1485,14 @@ Var RetCmd : AnsiString ;
     Sinalizadores : AnsiString ;
     B : Integer ;
 begin
-  Result := fpEstado ;  // Suprimir Warning
-  try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
+  try
     fpEstado := estDesconhecido ;
 
     RetCmd := EnviaComando( '34' ) ;

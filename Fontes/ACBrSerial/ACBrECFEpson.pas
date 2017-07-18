@@ -1877,13 +1877,15 @@ end;
 function TACBrECFEpson.GetEstado: TACBrECFEstado;
   Var BitS : AnsiString ;
 begin
-   Result := fpEstado ;  // Suprimir Warning
-   try
-      fpEstado := estNaoInicializada ;
-      if (not fpAtivo) then
-         exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
-      fpEstado := estDesconhecido ;
+  try
+     fpEstado := estDesconhecido ;
 
       try
          EpsonComando.Comando := '0810' ;

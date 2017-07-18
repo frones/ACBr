@@ -561,6 +561,7 @@ begin
 
     BufferOut[0] := #0; // Zera Buffer de Saida
     ACmd := ReplaceString(ACmd, NUL, '[NULL]');
+    ACmd := ChangeLineBreak(ACmd, LF);
 
     GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
     Resp := xEPSON_Send_From_FileEX( ACmd, BufferOut ) ;
@@ -1964,15 +1965,15 @@ function TACBrECFEscECF.GetEstado: TACBrECFEstado;
 Var
   FlagEst : Integer ;
 begin
-  try
-    if (not fpAtivo) then
-    begin
-      fpEstado := estNaoInicializada;
-      Result := fpEstado;
-      Exit;
-    end;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
-    fpEstado := estDesconhecido ;
+  try
+   fpEstado := estDesconhecido ;
 
     FlagEst := StrToIntDef( RetornaInfoECF( '16|5' ), -1 );
     Case FlagEst of

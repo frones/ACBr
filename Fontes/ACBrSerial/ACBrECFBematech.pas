@@ -1424,12 +1424,14 @@ Var RetCmd : AnsiString ;
     DataMov, DataHora : String ;
     B1, B2 : Byte ;
 begin
-  Result := fpEstado ;  // Suprimir Warning
-  try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
+  try
     fpEstado := estDesconhecido ;
     RetCmd   := RetornaInfoECF( '17' ) ;
 

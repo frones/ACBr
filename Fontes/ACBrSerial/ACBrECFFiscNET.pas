@@ -913,12 +913,14 @@ function TACBrECFFiscNET.GetEstado: TACBrECFEstado;
 var
   Est, Ind: Integer;
 begin
-  Result := fpEstado ;  // Suprimir Warning
-  try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
+  try
     fpEstado := estDesconhecido ;
 
     Est := LeInteiro( 'EstadoFiscal' );

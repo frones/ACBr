@@ -1107,11 +1107,14 @@ Var RetCmd, Status, Transacao : AnsiString ;
     FlagZ, FlagX : AnsiChar ;
     SubTot, Falta, Receb : Double ;
 begin
-  Result := fpEstado ;  // Suprimir Warning
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
+
   try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
 
     fpEstado := estDesconhecido ;
 

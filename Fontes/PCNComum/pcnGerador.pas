@@ -320,19 +320,16 @@ var
   ArquivoGerado: TStringList;
 begin
   // Formato de gravação somente é válido para NFe
+  Result := False;
   ArquivoGerado := TStringList.Create;
   try
-    try
-      if FormatoGravacao = fgXML then
-        ArquivoGerado.Add(FArquivoFormatoXML)
-      else
-        ArquivoGerado.Add(FArquivoFormatoTXT);
-      ArquivoGerado.SaveToFile(CaminhoArquivo);
-      Result := True;
-    except
-      Result := False;
-      raise;
-    end;
+    if FormatoGravacao = fgXML then
+      ArquivoGerado.Add(FArquivoFormatoXML)
+    else
+      ArquivoGerado.Add(FArquivoFormatoTXT);
+
+    ArquivoGerado.SaveToFile(CaminhoArquivo);
+    Result := True;
   finally
     ArquivoGerado.Free;
   end;

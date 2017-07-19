@@ -43,98 +43,7 @@ unit ACBrEFDBlocos;
 interface
 
 uses
-  SysUtils, Classes, DateUtils, ACBrSped;
-
-Const
-  /// Código da Situação Tributária referente ao IPI.
-  ipiEntradaRecuperacaoCredito = '00' ; // Entrada com recuperação de crédito
-  ipiEntradaTributradaZero     = '01' ; // Entrada tributada com alíquota zero
-  ipiEntradaIsenta             = '02' ; // Entrada isenta
-  ipiEntradaNaoTributada       = '03' ; // Entrada não-tributada
-  ipiEntradaImune              = '04' ; // Entrada imune
-  ipiEntradaComSuspensao       = '05' ; // Entrada com suspensão
-  ipiOutrasEntradas            = '49' ; // Outras entradas
-  ipiSaidaTributada            = '50' ; // Saída tributada
-  ipiSaidaTributadaZero        = '51' ; // Saída tributada com alíquota zero
-  ipiSaidaIsenta               = '52' ; // Saída isenta
-  ipiSaidaNaoTributada         = '53' ; // Saída não-tributada
-  ipiSaidaImune                = '54' ; // Saída imune
-  ipiSaidaComSuspensao         = '55' ; // Saída com suspensão
-  ipiOutrasSaidas              = '99' ; // Outras saídas
-
-  /// Código da Situação Tributária referente ao PIS.
-  pisValorAliquotaNormal                           = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  pisValorAliquotaDiferenciada                     = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
-  pisQtdeAliquotaUnidade                           = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
-  pisMonofaticaAliquotaZero                        = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
-  pisValorAliquotaPorST                            = '05' ; // Operação Tributável por Substituição Tributária
-  pisAliquotaZero                                  = '06' ; // Operação Tributável (alíquota zero).
-  pisIsentaContribuicao                            = '07' ; // Operação Isenta da Contribuição.
-  pisSemIncidenciaContribuicao                     = '08' ; // Operação Sem Incidência da Contribuição.
-  pisSuspensaoContribuicao                         = '09' ; // Operação com Suspensão da Contribuição.
-  //início alteração Raphael - Ts1Desenvolvedor
-  pisOutrasOperacoesSaida                          = '49' ; // Outras Operações de Saída
-  pisOperCredExcRecTribMercInt                     = '50' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
-  pisOperCredExcRecNaoTribMercInt                  = '51' ; // Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno
-  pisOperCredExcRecExportacao                      = '52' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
-  pisOperCredRecTribNaoTribMercInt                 = '53' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
-  pisOperCredRecTribMercIntEExportacao             = '54' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
-  pisOperCredRecNaoTribMercIntEExportacao          = '55' ; // Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
-  pisOperCredRecTribENaoTribMercIntEExportacao     = '56' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação
-  pisCredPresAquiExcRecTribMercInt                 = '60' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
-  pisCredPresAquiExcRecNaoTribMercInt              = '61' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
-  pisCredPresAquiExcExcRecExportacao               = '62' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
-  pisCredPresAquiRecTribNaoTribMercInt             = '63' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
-  pisCredPresAquiRecTribMercIntEExportacao         = '64' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
-  pisCredPresAquiRecNaoTribMercIntEExportacao      = '65' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
-  pisCredPresAquiRecTribENaoTribMercIntEExportacao = '66' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação
-  pisOutrasOperacoes_CredPresumido                 = '67' ; // Crédito Presumido - Outras Operações
-  pisOperAquiSemDirCredito                         = '70' ; // Operação de Aquisição sem Direito a Crédito
-  pisOperAquiComIsensao                            = '71' ; // Operação de Aquisição com Isenção
-  pisOperAquiComSuspensao                          = '72' ; // Operação de Aquisição com Suspensão
-  pisOperAquiAliquotaZero                          = '73' ; // Operação de Aquisição a Alíquota Zero
-  pisOperAqui_SemIncidenciaContribuicao            = '74' ; // Operação de Aquisição sem Incidência da Contribuição
-  pisOperAquiPorST                                 = '75' ; // Operação de Aquisição por Substituição Tributária
-  pisOutrasOperacoesEntrada                        = '98' ; // Outras Operações de Entrada
-  //fim alteração Raphael - Ts1Desenvolvedor
-  pisOutrasOperacoes                               = '99' ; // Outras Operações,
-
-  /// Código da Situação Tributária referente ao COFINS.
-  cofinsValorAliquotaNormal                           = '01' ; // Operação Tributável (base de cálculo = valor da operação alíquota normal (cumulativo/não cumulativo)).
-  cofinsValorAliquotaDiferenciada                     = '02' ; // Operação Tributável (base de cálculo = valor da operação (alíquota diferenciada)).
-  cofinsQtdeAliquotaUnidade                           = '03' ; // Operação Tributável (base de cálculo = quantidade vendida x alíquota por unidade de produto).
-  cofinsMonofaticaAliquotaZero                        = '04' ; // Operação Tributável (tributação monofásica (alíquota zero)).
-  cofinsValorAliquotaPorST                            = '05' ; // Operação Tributável por Substituição Tributária
-  cofinsAliquotaZero                                  = '06' ; // Operação Tributável (alíquota zero).
-  cofinsIsentaContribuicao                            = '07' ; // Operação Isenta da Contribuição.
-  cofinsSemIncidenciaContribuicao                     = '08' ; // Operação Sem Incidência da Contribuição.
-  cofinsSuspensaoContribuicao                         = '09' ; // Operação com Suspensão da Contribuição.
-  //início alteração Raphael - Ts1Desenvolvedor
-  cofinsOutrasOperacoesSaida                          = '49' ; // Outras Operações de Saída
-  cofinsOperCredExcRecTribMercInt                     = '50' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
-  cofinsOperCredExcRecNaoTribMercInt                  = '51' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
-  cofinsOperCredExcRecExportacao                      = '52' ; // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
-  cofinsOperCredRecTribNaoTribMercInt                 = '53' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
-  cofinsOperCredRecTribMercIntEExportacao             = '54' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
-  cofinsOperCredRecNaoTribMercIntEExportacao          = '55' ; // Operação com Direito a Crédito - Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação
-  cofinsOperCredRecTribENaoTribMercIntEExportacao     = '56' ; // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
-  cofinsCredPresAquiExcRecTribMercInt                 = '60' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
-  cofinsCredPresAquiExcRecNaoTribMercInt              = '61' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
-  cofinsCredPresAquiExcExcRecExportacao               = '62' ; // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
-  cofinsCredPresAquiRecTribNaoTribMercInt             = '63' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
-  cofinsCredPresAquiRecTribMercIntEExportacao         = '64' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
-  cofinsCredPresAquiRecNaoTribMercIntEExportacao      = '65' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
-  cofinsCredPresAquiRecTribENaoTribMercIntEExportacao = '66' ; // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
-  cofinsOutrasOperacoes_CredPresumido                 = '67' ; // Crédito Presumido - Outras Operações
-  cofinsOperAquiSemDirCredito                         = '70' ; // Operação de Aquisição sem Direito a Crédito
-  cofinsOperAquiComIsensao                            = '71' ; // Operação de Aquisição com Isenção
-  cofinsOperAquiComSuspensao                          = '72' ; // Operação de Aquisição com Suspensão
-  cofinsOperAquiAliquotaZero                          = '73' ; // Operação de Aquisição a Alíquota Zero
-  cofinsOperAqui_SemIncidenciaContribuicao            = '74' ; // Operação de Aquisição sem Incidência da Contribuição
-  cofinsOperAquiPorST                                 = '75' ; // Operação de Aquisição por Substituição Tributária
-  cofinsOutrasOperacoesEntrada                        = '98' ; // Outras Operações de Entrada
-  //fim alteração Raphael - Ts1Desenvolvedor
-  cofinsOutrasOperacoes                               = '99' ; // Outras Operações,
+  SysUtils, Classes, DateUtils, ACBrTXTUtils, ACBrSped;
 
 type
 
@@ -194,6 +103,7 @@ type
                    tiOutrosInsumos,        // 10 – Outros Insumos;
                    tiOutras                // 99 – Outras
                    );
+
   /// Indicador do tipo de operação:
   TACBrIndOper      = (tpEntradaAquisicao, // 0 - Entrada
                        tpSaidaPrestacao    // 1 - Saída
@@ -498,7 +408,7 @@ type
   TACBrMotivoInventario = TACBrMotInv;
 
   ///Código da Situação Tributária referente ao ICMS.
-  TACBrCstIcms = (
+  TACBrCstIcms = ( sticmsNenhum                                              ,
                    sticmsTributadaIntegralmente                              , // '000' //	Tributada integralmente
                    sticmsTributadaComCobracaPorST                            , // '010' //	Tributada e com cobrança do ICMS por substituição tributária
                    sticmsComReducao                                          , // '020' //	Com redução de base de cálculo
@@ -617,6 +527,131 @@ type
                       mDifalComOperacaoICMS    // 1 - Com operações com ICMS Diferencial de Alíquota da UF
                       );
 
+  TACBrNaturezaConta = (
+                         ncgAtivo,        // 01 - Contas de ativo
+                         ncgPassivo,      // 02 - Contas de passivo
+                         ncgLiquido,      // 03 - Patrimônio líquido
+                         ncgResultado,    // 04 - Contas de resultado
+                         ncgCompensacao,  // 05 - Contas de compensação
+                         ncgOutras        // 09 - Outras
+                        );
+
+  //Indicador do tipo de conta (0500)
+  TACBrIndCTA = (
+                   indCTASintetica,  //S Sintética
+                   indCTAnalitica    //A Analitica
+                );
+
+  TACBrCstPisCofins = (
+                    stpiscofinsOperTribuComAliqBasica,                     //01 Operação Tributável com Alíquota Básica
+                    stpiscofinsOperTribuAliqZero,                          //06 Operação Tributável a Alíquota Zero
+                    stpiscofinsOperIsentaContribuicao,                     //07 Operação Isenta da Contribuição
+                    stpiscofinsOperSemIncidenciaContribuicao,              //08 Operação sem Incidência da Contribuição
+                    stpiscofinsOperComSuspensaoContribuicao,               //09 Operação com Suspensão da Contribuição
+                    stpiscofinsOutrasOperacoesSaida,                       //49 Outras Operações de Saída
+                    stpiscofinsOutrasDespesas,                             //99 Outras Operações
+                    stpiscofinsNenhum
+                  );
+  TACBrSituacaoTribPISCOFINS = TACBrCstPisCofins;
+
+  /// Código da Situação Tributária referente ao IPI.
+  TACBrCstIpi = (
+                 stipiEntradaRecuperacaoCredito ,// '00' // Entrada com recuperação de crédito
+                 stipiEntradaTributradaZero     ,// '01' // Entrada tributada com alíquota zero
+                 stipiEntradaIsenta             ,// '02' // Entrada isenta
+                 stipiEntradaNaoTributada       ,// '03' // Entrada não-tributada
+                 stipiEntradaImune              ,// '04' // Entrada imune
+                 stipiEntradaComSuspensao       ,// '05' // Entrada com suspensão
+                 stipiOutrasEntradas            ,// '49' // Outras entradas
+                 stipiSaidaTributada            ,// '50' // Saída tributada
+                 stipiSaidaTributadaZero        ,// '51' // Saída tributada com alíquota zero
+                 stipiSaidaIsenta               ,// '52' // Saída isenta
+                 stipiSaidaNaoTributada         ,// '53' // Saída não-tributada
+                 stipiSaidaImune                ,// '54' // Saída imune
+                 stipiSaidaComSuspensao         ,// '55' // Saída com suspensão
+                 stipiOutrasSaidas              ,// '99' // Outras saídas
+                 stipiVazio
+                );
+  TACBrSituacaoTribIPI = TACBrCstIpi;
+
+  /// Código da Situação Tributária referente ao PIS.
+  TACBrCstPis = (
+                  stpisValorAliquotaNormal,                            // '01' // Operação Tributável com Alíquota Básica   // valor da operação alíquota normal (cumulativo/não cumulativo)).
+                  stpisValorAliquotaDiferenciada,                      // '02' // Operação Tributável com Alíquota Diferenciada // valor da operação (alíquota diferenciada)).
+                  stpisQtdeAliquotaUnidade,                            // '03' // Operação Tributável com Alíquota por Unidade de Medida de Produto // quantidade vendida x alíquota por unidade de produto).
+                  stpisMonofaticaAliquotaZero,                         // '04' // Operação Tributável Monofásica - Revenda a Alíquota Zero
+                  stpisValorAliquotaPorST,                             // '05' // Operação Tributável por Substituição Tributária
+                  stpisAliquotaZero,                                   // '06' // Operação Tributável a Alíquota Zero
+                  stpisIsentaContribuicao,                             // '07' // Operação Isenta da Contribuição
+                  stpisSemIncidenciaContribuicao,                      // '08' // Operação sem Incidência da Contribuição
+                  stpisSuspensaoContribuicao,                          // '09' // Operação com Suspensão da Contribuição
+                  stpisOutrasOperacoesSaida,                           // '49' // Outras Operações de Saída
+                  stpisOperCredExcRecTribMercInt,                      // '50' // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+                  stpisOperCredExcRecNaoTribMercInt,                   // '51' // Operação com Direito a Crédito – Vinculada Exclusivamente a Receita Não Tributada no Mercado Interno
+                  stpisOperCredExcRecExportacao ,                      // '52' // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
+                  stpisOperCredRecTribNaoTribMercInt,                  // '53' // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+                  stpisOperCredRecTribMercIntEExportacao,              // '54' // Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+                  stpisOperCredRecNaoTribMercIntEExportacao,           // '55' // Operação com Direito a Crédito - Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+                  stpisOperCredRecTribENaoTribMercIntEExportacao,      // '56' // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação
+                  stpisCredPresAquiExcRecTribMercInt,                  // '60' // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+                  stpisCredPresAquiExcRecNaoTribMercInt,               // '61' // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+                  stpisCredPresAquiExcExcRecExportacao,                // '62' // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
+                  stpisCredPresAquiRecTribNaoTribMercInt,              // '63' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+                  stpisCredPresAquiRecTribMercIntEExportacao,          // '64' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+                  stpisCredPresAquiRecNaoTribMercIntEExportacao,       // '65' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+                  stpisCredPresAquiRecTribENaoTribMercIntEExportacao,  // '66' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno, e de Exportação
+                  stpisOutrasOperacoes_CredPresumido,                  // '67' // Crédito Presumido - Outras Operações
+                  stpisOperAquiSemDirCredito,                          // '70' // Operação de Aquisição sem Direito a Crédito
+                  stpisOperAquiComIsensao,                             // '71' // Operação de Aquisição com Isenção
+                  stpisOperAquiComSuspensao,                           // '72' // Operação de Aquisição com Suspensão
+                  stpisOperAquiAliquotaZero,                           // '73' // Operação de Aquisição a Alíquota Zero
+                  stpisOperAqui_SemIncidenciaContribuicao,             // '74' // Operação de Aquisição sem Incidência da Contribuição
+                  stpisOperAquiPorST,                                  // '75' // Operação de Aquisição por Substituição Tributária
+                  stpisOutrasOperacoesEntrada,                         // '98' // Outras Operações de Entrada
+                  stpisOutrasOperacoes,                                // '99' // Outras Operações
+                  stpisNenhum                                          // '00' // Nenhum
+                 );
+  TACBrSituacaoTribPIS = TACBrCstPis;
+
+  /// Código da Situação Tributária referente ao COFINS.
+  TACBrCstCofins = (
+                    stcofinsValorAliquotaNormal,                           // '01' // Operação Tributável com Alíquota Básica                           // valor da operação alíquota normal (cumulativo/não cumulativo)).
+                    stcofinsValorAliquotaDiferenciada,                     // '02' // Operação Tributável com Alíquota Diferenciada                     // valor da operação (alíquota diferenciada)).
+                    stcofinsQtdeAliquotaUnidade,                           // '03' // Operação Tributável com Alíquota por Unidade de Medida de Produto // quantidade vendida x alíquota por unidade de produto).
+                    stcofinsMonofaticaAliquotaZero,                        // '04' // Operação Tributável Monofásica - Revenda a Alíquota Zero
+                    stcofinsValorAliquotaPorST,                            // '05' // Operação Tributável por Substituição Tributária
+                    stcofinsAliquotaZero,                                  // '06' // Operação Tributável a Alíquota Zero
+                    stcofinsIsentaContribuicao,                            // '07' // Operação Isenta da Contribuição
+                    stcofinsSemIncidenciaContribuicao,                     // '08' // Operação sem Incidência da Contribuição
+                    stcofinsSuspensaoContribuicao,                         // '09' // Operação com Suspensão da Contribuição
+                    stcofinsOutrasOperacoesSaida,                          // '49' // Outras Operações de Saída
+                    stcofinsOperCredExcRecTribMercInt,                     // '50' // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+                    stcofinsOperCredExcRecNaoTribMercInt,                  // '51' // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+                    stcofinsOperCredExcRecExportacao ,                     // '52' // Operação com Direito a Crédito - Vinculada Exclusivamente a Receita de Exportação
+                    stcofinsOperCredRecTribNaoTribMercInt,                 // '53' // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+                    stcofinsOperCredRecTribMercIntEExportacao,             // '54' // Operação com Direito a Crédito - Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+                    stcofinsOperCredRecNaoTribMercIntEExportacao,          // '55' // Operação com Direito a Crédito - Vinculada a Receitas Não Tributadas no Mercado Interno e de Exportação
+                    stcofinsOperCredRecTribENaoTribMercIntEExportacao,     // '56' // Operação com Direito a Crédito - Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+                    stcofinsCredPresAquiExcRecTribMercInt,                 // '60' // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+                    stcofinsCredPresAquiExcRecNaoTribMercInt,              // '61' // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita Não-Tributada no Mercado Interno
+                    stcofinsCredPresAquiExcExcRecExportacao,               // '62' // Crédito Presumido - Operação de Aquisição Vinculada Exclusivamente a Receita de Exportação
+                    stcofinsCredPresAquiRecTribNaoTribMercInt,             // '63' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno
+                    stcofinsCredPresAquiRecTribMercIntEExportacao,         // '64' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas no Mercado Interno e de Exportação
+                    stcofinsCredPresAquiRecNaoTribMercIntEExportacao,      // '65' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Não-Tributadas no Mercado Interno e de Exportação
+                    stcofinsCredPresAquiRecTribENaoTribMercIntEExportacao, // '66' // Crédito Presumido - Operação de Aquisição Vinculada a Receitas Tributadas e Não-Tributadas no Mercado Interno e de Exportação
+                    stcofinsOutrasOperacoes_CredPresumido,                 // '67' // Crédito Presumido - Outras Operações
+                    stcofinsOperAquiSemDirCredito,                         // '70' // Operação de Aquisição sem Direito a Crédito
+                    stcofinsOperAquiComIsensao,                            // '71' // Operação de Aquisição com Isenção
+                    stcofinsOperAquiComSuspensao,                          // '72' // Operação de Aquisição com Suspensão
+                    stcofinsOperAquiAliquotaZero,                          // '73' // Operação de Aquisição a Alíquota Zero
+                    stcofinsOperAqui_SemIncidenciaContribuicao,            // '74' // Operação de Aquisição sem Incidência da Contribuição
+                    stcofinsOperAquiPorST,                                 // '75' // Operação de Aquisição por Substituição Tributária
+                    stcofinsOutrasOperacoesEntrada,                        // '98' // Outras Operações de Entrada
+                    stcofinsOutrasOperacoes,                               // '99' // Outras Operações
+                    stcofinsNenhum                                         // '00' // Nenhum
+                  );
+  TACBrSituacaoTribCOFINS = TACBrCstCofins;
+
   TOpenBlocos = class
   private
     FIND_MOV: TACBrIndMov;    /// Indicador de movimento: 0- Bloco com dados informados, 1- Bloco sem dados informados.
@@ -658,6 +693,46 @@ type
   function StrToTpAssinante(AValue: string): TACBrTpAssinante;
   function IndReceitaToStr(AValue: TACBrIndReceita): string;
   function StrToIndReceita(AValue: string): TACBrIndReceita;
+
+  // Rodrigo Buschmann | Digibyte - 04/07/2017
+  function CodFinToStr(AValue: TACBrCodFin): string;
+  function StrToCodFin(AValue: string): TACBrCodFin;
+  function IndPerfilToStr(AValue: TACBrIndPerfil): string;
+  function StrToIndPerfil(AValue: string): TACBrIndPerfil;
+  function IndAtivToStr(AValue: TACBrIndAtiv): string;
+  function StrToIndAtiv(AValue: string): TACBrIndAtiv;
+  function IndMovToStr(const AValue: TACBrIndMov): string;
+  function StrToIndMov(const AValue: string): TACBrIndMov;
+  function NaturezaContaToStr(AValue: TACBrNaturezaConta): string;
+  function StrToNaturezaConta(const AValue: string): TACBrNaturezaConta;
+  function IndCTAToStr(AValue: TACBrIndCTA): string;
+  function StrToIndCTA(const AValue: string): TACBrIndCTA;
+  function IndTipoOperToStr(AVAlue: TACBrIndOper): string;
+  function StrToIndTipoOper(AVAlue: string): TACBrIndOper;
+  function EmitenteToStr(const AValue: TACBrEmitente): string;
+  function StrToEmitente(const AValue: string): TACBrEmitente;
+  function OrigemProcessoToStr(AValue: TACBrOrigemProcesso): string;
+  function StrToOrigemProcesso(const AValue: string): TACBrOrigemProcesso;
+  function DoctoImportaToStr(const AValue: TACBrDoctoImporta): string;
+  function StrToDoctoImporta(const AValue: string): TACBrDoctoImporta;
+  function CstPisToStr(AValue: TACBrCstPis): string;
+  function StrToCstPis(AValue: String): TACBrCstPis;
+  function CstPisCofinsToStr(AValue: TACBrCstPisCofins): string;
+  function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
+  function CstCofinsToStr(AValue: TACBrCstCofins): string;
+  function StrToCstCofins(AValue: String): TACBrCstCofins;
+  function CstIcmsToStr(AValue: TACBrCstIcms): string;
+  function StrToCstIcms(AValue: String): TACBrCstIcms;
+  function CstIpiToStr(AValue: TACBrCstIpi): string;
+  function StrToCstIpi(AValue: String): TACBrCstIpi;
+  function ApuracaoIPIToStr(const AValue: TACBrApuracaoIPI): string;
+  function StrToApuracaoIPI(const AValue: string): TACBrApuracaoIPI;
+  function MovimentoStToStr(AValue: TACBrMovimentoST): string;
+  function StrToMovimentoSt(AValue: string): TACBrMovimentoST;
+  function TipoAjusteToStr(AValue: TACBrIndRec): string;
+  function StrToTipoAjuste(AValue: string): TACBrTipoAjuste;
+  function OrigemDoctoToStr(AValue: TACBrOrigemDocto): string;
+  function StrToOrigemDocto(AValue: string): TACBrOrigemDocto;
 
 implementation
 
@@ -972,6 +1047,305 @@ begin
       Result := recTerceiroOutras
    else
       Result := TACBrIndReceita( StrToIntDef( AValue, 6) );
+end;
+
+function CodFinToStr(AValue: TACBrCodFin): string;
+begin
+   Result := IntToStr( Integer( AValue ) + 1 );
+end;
+
+function StrToCodFin(AValue: string): TACBrCodFin;
+begin
+   Result := TACBrCodFin( StrToIntDef( AValue, 0) );
+end;
+
+function IndPerfilToStr(AValue: TACBrIndPerfil): string;
+begin
+   if (AValue = pfPerfilA) then result := 'A'
+   else if (AValue = pfPerfilB) then result := 'B'
+   else if (AValue = pfPerfilC) then result := 'C';
+end;
+
+function StrToIndPerfil(AValue: string): TACBrIndPerfil;
+begin
+   if (AValue = 'A') then result := pfPerfilA
+   else if (AValue = 'B') then result := pfPerfilB
+   else if (AValue = 'C') then result := pfPerfilC;
+end;
+
+function IndAtivToStr(AValue: TACBrIndAtiv): string;
+begin
+   Result := IntToStr( Integer( AValue ) + 1 );
+end;
+
+function StrToIndAtiv(AValue: string): TACBrIndAtiv;
+begin
+   Result := TACBrIndAtiv( StrToIntDef( AValue, 0) );
+end;
+
+function IndMovToStr(const AValue: TACBrIndMov): string;
+begin
+  Result := IntToStr(Ord(AValue));
+end;
+
+function StrToIndMov(const AValue: string): TACBrIndMov;
+begin
+  Result := TACBrIndMov(StrToIntDef(AValue, 0));
+end;
+
+function NaturezaContaToStr(AValue: TACBrNaturezaConta): string;
+begin
+  case AValue of
+    ncgAtivo: Result := '01';
+    ncgPassivo: Result := '02';
+    ncgLiquido: Result := '03';
+    ncgResultado: Result := '04';
+    ncgCompensacao: Result := '05';
+    ncgOutras: Result := '09';
+  end;
+end;
+
+function StrToNaturezaConta(const AValue: string): TACBrNaturezaConta;
+begin
+  if (AValue = '01') then
+    Result := ncgAtivo
+  else if (AValue = '02') then
+    Result := ncgPassivo
+  else if (AValue = '03') then
+    Result := ncgLiquido
+  else if (AValue = '04') then
+    Result := ncgResultado
+  else if (AValue = '05') then
+    Result := ncgCompensacao
+  else if (AValue = '09') then
+    Result := ncgOutras
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (01,02,03,04,05 e 09)',[AValue]));
+end;
+
+function IndCTAToStr(AValue: TACBrIndCTA): string;
+begin
+  case AValue of
+    indCTASintetica: Result := 'S';
+    indCTAnalitica: Result := 'A';
+  end;
+end;
+
+function StrToIndCTA(const AValue: string): TACBrIndCTA;
+begin
+  if AValue = 'S' then
+    Result := indCTASintetica
+  else if AValue = 'A' then
+    Result := indCTAnalitica
+    else
+     raise Exception.Create(format('Valor informado [%s] deve estar entre (S e A)',[AValue]));
+end;
+
+function IndTipoOperToStr(AValue: TACBrIndOper): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToIndTipoOper(AValue: string): TACBrIndOper;
+begin
+   Result := TACBrIndOper( StrToIntDef( AValue, 0) );
+end;
+
+function EmitenteToStr(const AValue: TACBrEmitente): string;
+begin
+  Result := IntToStr(Ord(AValue));
+end;
+
+function StrToEmitente(const AValue: string): TACBrEmitente;
+begin
+  Result := TACBrEmitente(StrToIntDef(AValue, 0));
+end;
+
+function StrToOrigemProcesso(const AValue: string): TACBrOrigemProcesso;
+begin
+  if AValue = '1' then
+    Result := opJusticaFederal
+  else if AValue = '3' then
+    Result := opSecexRFB
+  else if AValue = '9' then
+    Result := opOutros
+  else
+    Result := opNenhum;
+end;
+
+function OrigemProcessoToStr(AValue: TACBrOrigemProcesso): string;
+begin
+  if (AValue = opJusticaFederal) then
+    Result := '1'
+  else if (AValue = opSecexRFB) then
+    Result := '3'
+  else if (AValue = opOutros) then
+    Result := '9'
+  else
+    Result := '';
+end;
+
+function DoctoImportaToStr(const AValue: TACBrDoctoImporta): string;
+begin
+  Result := IntToStr(Ord(AValue));
+end;
+
+function StrToDoctoImporta(const AValue: string): TACBrDoctoImporta;
+begin
+  Result := TACBrDoctoImporta(StrToIntDef(AValue, 0));
+end;
+
+function CstPisToStr(AValue: TACBrCstPis): string;
+begin
+   Result := CstPis[ Integer( AValue ) ];
+end;
+
+function StrToCstPis(AValue: String): TACBrCstPis;
+var
+   ifor: Integer;
+begin
+ Result := stpisNenhum;
+   for ifor := 0 to High(CstPis) do
+   begin
+      if AValue = CstPis[ifor] then
+      begin
+         Result := TACBrCstPis( ifor );
+         Break;
+      end;
+   end;
+end;
+
+function CstPisCofinsToStr(AValue: TACBrCstPisCofins): string;
+begin
+  Result := CstPisCofins[ Integer( AValue ) ];
+end;
+
+function StrToCstPisCofins(AValue: String): TACBrCstPisCofins;
+var
+   ifor: Integer;
+begin
+ Result := stpiscofinsNenhum;
+   for ifor := 0 to High(CstPisCofins) do
+   begin
+      if AValue = CstPisCofins[ifor] then
+      begin
+         Result := TACBrCstPisCofins( ifor );
+         Break;
+      end;
+   end;
+end;
+
+function CstCofinsToStr(AValue: TACBrCstCofins): string;
+begin
+   Result := CstCofins[ Integer( AValue ) ];
+end;
+
+function StrToCstCofins(AValue: String): TACBrCstCofins;
+var
+ifor: Integer;
+begin
+ Result := stcofinsNenhum;
+   for ifor := 0 to High(CstCofins) do
+   begin
+      if AValue = CstCofins[ifor] then
+      begin
+         Result := TACBrCstCofins( ifor );
+         Break;
+      end;
+   end;
+end;
+
+function CstIcmsToStr(AValue: TACBrCstIcms): string;
+begin
+   Result := CstIcms[ Integer( AValue ) ];
+end;
+
+function StrToCstIcms(AValue: String): TACBrCstIcms;
+var
+ifor: Integer;
+begin
+   Result := sticmsNenhum;
+   for ifor := 0 to High(CstIcms) do
+   begin
+      if AValue = CstIcms[ifor] then
+      begin
+         Result := TACBrCstIcms( ifor );
+         Break;
+      end;
+   end;
+end;
+
+function CstIpiToStr(AValue: TACBrCstIpi): string;
+begin
+   Result := CstIpi[ Integer( AValue ) ];
+end;
+
+function StrToCstIpi(AValue: String): TACBrCstIpi;
+var
+ifor: Integer;
+begin
+ Result := stipiVazio;
+   for ifor := 0 to High(CstIpi) do
+   begin
+      if AValue = CstIpi[ifor] then
+      begin
+         Result := TACBrCstIpi( ifor );
+         Break;
+      end;
+   end;
+end;
+
+function ApuracaoIPIToStr(const AValue: TACBrApuracaoIPI): string;
+begin
+  if (AValue = iaNenhum) then
+    Result := EmptyStr
+  else
+    Result := IntToStr(Ord(AValue));
+end;
+
+function StrToApuracaoIPI(const AValue: string): TACBrApuracaoIPI;
+begin
+  if AValue = EmptyStr then
+    Result := iaNenhum
+  else
+    Result := TACBrApuracaoIPI(StrToIntDef(AValue, 0));
+end;
+
+function MovimentoStToStr(AValue: TACBrMovimentoST): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToMovimentoSt(AValue: string): TACBrMovimentoST;
+begin
+   Result := TACBrMovimentoSt( StrToIntDef( AValue, 0) );
+end;
+
+function TipoAjusteToStr(AValue: TACBrIndRec): string;
+begin
+   Result := IntToStr( Integer( AValue ) );
+end;
+
+function StrToTipoAjuste(AValue: string): TACBrTipoAjuste;
+begin
+   Result := TACBrTipoAjuste( StrToIntDef( AValue, 0) );
+end;
+
+function OrigemDoctoToStr(AValue: TACBrOrigemDocto): string;
+begin
+   if AValue = odOutros then
+      Result := '9'
+   else
+      Result := IntToStr( Integer( AValue ) );
+end;
+
+
+function StrToOrigemDocto(AValue: string): TACBrOrigemDocto;
+begin
+   if AValue = '9' then
+      Result := odOutros
+   else
+      Result := TACBrOrigemDocto( StrToIntDef( AValue, 0) );
 end;
 
 end.

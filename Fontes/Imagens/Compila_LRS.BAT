@@ -75,12 +75,14 @@ echo.
 %1\tools\lazres.exe ACBrSpedPisCofins.lrs TACBrSpedPisCofins.png
 %1\tools\lazres.exe ACBrSPEDPisCofinsImportar.lrs TACBrSpedPCImportar.png  
 %1\tools\lazres.exe ACBrSpedECF.lrs TACBrSpedECF.png  
+%1\tools\lazres.exe ACBrSpedFiscalImportar.lrs TACBrSpedFiscalImportar.png  
 
 move ACBrSpedFiscal.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDFiscal
 move ACBrSpedContabil.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDContabil
 move ACBrSpedPisCofins.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedPisCofins
 move ACBrSPEDPisCofinsImportar.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDPisCofinsImportar
 move ACBrSpedECF.lrs ..\ACBrTXT\ACBrSPED\ACBrSPEDECF
+move ACBrSpedFiscalImportar.lrs ..\ACBrTXT\ACBrSPED\ACBrSpedFiscalImportar
 
 echo.
 echo "************************************************"

@@ -109,7 +109,10 @@ begin
   //Deverá buscar a primeira ocorrencia do TX e trarar a Sting.
   if pos(ETX,wResposta) > 0 then
     wResposta := Copy(wResposta, 1, pos(ETX,wResposta) - 1);
-
+  else
+    if pos(CR,wResposta) > 0 then //tratativa para o modelo C&F C6MT
+	wResposta := Copy(wResposta, 1, pos(CR,wResposta) - 1);
+	
   if (wResposta = EmptyStr) then
     Exit;
 

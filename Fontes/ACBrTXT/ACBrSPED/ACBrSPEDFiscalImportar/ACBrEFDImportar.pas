@@ -221,7 +221,7 @@ end;
 
 {$ifdef FPC}
 initialization
-  {$i ACBrSPEDFiscalImportar.lrs}
+  {$i ACBrSpedFiscalImportar.lrs}
 {$endif}
 
 

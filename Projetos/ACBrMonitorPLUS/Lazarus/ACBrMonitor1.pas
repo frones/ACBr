@@ -1389,7 +1389,6 @@ type
     procedure Inicializar;
     procedure EscondeConfig;
     procedure ExibeConfig;
-    procedure AjustaLinhasLog;
 
     procedure LerSW;
     function LerChaveSWH: ansistring;
@@ -1430,6 +1429,8 @@ type
     procedure AvaliaEstadoTsRFD;
     procedure AvaliaEstadoTsBAL;
     procedure AvaliaEstadoTsTC;
+
+    procedure AjustaLinhasLog;
 
     procedure LerIni;
     procedure SalvarIni;

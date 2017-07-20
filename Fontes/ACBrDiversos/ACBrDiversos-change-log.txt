@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2017
+-- ACBrEnterTab --
+[+] Adicionada a propriedade "UseScreenControl", para modificar o comportamento
+    da Seleçao do Próximo componente, baseado em "Screen.ActiveControl"
+    ou "Form.ActiveControl"
+    (por: DSA)
+
 14/07/2017
 -- ACBrValidador, ACBrValidadorTest --
 [*] Método "ValidarEmail" modificado para suportar uma lista de emails

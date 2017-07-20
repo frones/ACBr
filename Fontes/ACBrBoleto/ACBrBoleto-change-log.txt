@@ -47,17 +47,54 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
-Data 18/07/2017 ver: 0.0.227
--- ACBrBancoCecred, ACBrBancoBrasilSicoob e ACBrBancoBradesco
-[*] Removação de warmings (waldir)
+Data 19/07/2017 ver: 0.0.228
+-- ACBrBancoBradesco
+[-] Ajustes no arquivo de remessa CNAB40 - montagem da instrução das mensagens
+	       http://www.projetoacbr.com.br/forum/topic/37532-arquivo-de-remessa-bradesco/
+	       por: José M. S. Junior
 
+-- ACBrBancoItau
+[-] Ajustes no arquivo de remessa CNAB240
+	       http://www.projetoacbr.com.br/forum/topic/37376-erro-itau-cnb-240/
+	       por: José M. S. Junior
 
-Data 08/07/2017 ver: 0.0.226
+-- ACBrBancoCaixa
+[-] Ajustes no Cód de Ocorrência de Arquivo de retorno CNAB240 Banco Caixa Econômica
+		http://www.projetoacbr.com.br/forum/topic/37596-caixa-erro-retorno-cnab-240/
+		por José M. S. Junior
+
+[-] Ajustes na geração do arquivo de remessa CNAB400 Banco Caixa Econômica
+		http://www.projetoacbr.com.br/forum/topic/37335-caixa-layout-400-instrucao2/
+		por José M. S. Junior
+
+[*] Adicionando Ajustes na leitura de campos do arquivo de retono CNAB240 Banco Caixa Econômica
+		http://www.projetoacbr.com.br/forum/topic/37051-corre%C3%A7%C3%A3o-de-bug-e-complemento-na-tacbrcaixaeconomicalerretorno240/
+		por José M. S. Junior
+
+[+] Adicionando "Sequencia S" no arquivo de remessa CNAB240 Banco Caixa Econômica
+		http://www.projetoacbr.com.br/forum/topic/37703-mensagem-boletoremessa-caixa-cnab240/
+		por José M. S. Junior
+
+-- ACBrBancoCaixa / ACBrBoleto
+[+] Adicionado campo propriedade DataMulta, estava utilizando a mesma data de Juros Mora
+		http://www.projetoacbr.com.br/forum/topic/37722-acbrboleto-caixa-econ%C3%B4mica-federal-trocar-datamorajuros-por-datamulta/
+		por José M. S. Junior
+
+Data 08/07/2017 ver: 0.0.227
 -- ACBrBancoBanrisul
 [-] Correção na mensagem do cnab400/
 		http://www.projetoacbr.com.br/forum/topic/35252-banrisul-mensagem-do-cedente/?do=findComment&comment=246722
 		por Juliomar Marchetti
 
+
+-- ACBrBancoSantander / ACBrBancoSafraBradesco
+[-] Correção na Geração do arquivo de remessa Santander
+		http://www.projetoacbr.com.br/forum/topic/37564-remessa-santander/
+		por José M. S. Junior
+
+[*] Otimização ACBrBancoSafraBradesco
+		http://www.projetoacbr.com.br/forum/topic/36806-acbrboletosafrabradesco-homologado/
+		por José M. S. Junior
 
 Data 03/07/2017 ver: 0.0.226
 -- ACBrBancoBanrisul

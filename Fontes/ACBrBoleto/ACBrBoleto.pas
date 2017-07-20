@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.227';
+  CACBrBoleto_Versao = '0.0.228';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -939,6 +939,7 @@ type
     fDataAbatimento       : TDateTime;
     fDataDesconto         : TDateTime;
     fDataMoraJuros        : TDateTime;
+    fDataMulta            : TDateTime;
     fDataProtesto         : TDateTime;
     fDiasDeProtesto       : Integer;
     fDataBaixa            : TDateTime;
@@ -1025,6 +1026,7 @@ type
      property DataAbatimento                 : TDateTime read fDataAbatimento  write fDataAbatimento;
      property DataDesconto                   : TDateTime read fDataDesconto    write fDataDesconto;
      property DataMoraJuros                  : TDateTime read fDataMoraJuros   write fDataMoraJuros;
+     property DataMulta                      : TDateTime read fDataMulta       write fDataMulta;
      property DataProtesto                   : TDateTime read fDataProtesto    write SetDataProtesto;
      property DiasDeProtesto                 : Integer   read fDiasDeProtesto  write SetDiasDeProtesto;
      property DataBaixa                      : TDateTime read fDataBaixa       write fDataBaixa;
@@ -1553,6 +1555,7 @@ begin
    fDataAbatimento       := 0;
    fDataDesconto         := 0;
    fDataMoraJuros        := 0;
+   fDataMulta            := 0;
    fDataProtesto         := 0;
    fDiasDeProtesto       := 0;
    fDataBaixa            := 0;
@@ -1864,11 +1867,11 @@ begin
 
       if PercentualMulta <> 0 then   
       begin
-        if DataMoraJuros <> 0 then
+        if DataMulta <> 0 then
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
-                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
-                                                                IncDay(DataMoraJuros,1),DataMoraJuros))))
+                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMulta,
+                                                                IncDay(DataMulta,1),DataMulta))))
         else
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +

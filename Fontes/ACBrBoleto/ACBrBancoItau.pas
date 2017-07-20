@@ -319,7 +319,7 @@ begin
                PadLeft(OnlyNumber(ACBrBoleto.Cedente.Conta),5,'0')        + //31 a 35 - Número da Conta Corrente
                ' '                                                        + // 36
                ACBrBoleto.Cedente.ContaDigito                             + //37 - Dígito verificador da agência / conta
-               Carteira                                                   + // 38 a 40 - Carteira
+               PadLeft(Carteira, 3, ' ')                                  + // 38 a 40 - Carteira
                PadLeft(NossoNumero, 8, '0')                               + // 41 a 48 - Nosso número - identificação do título no banco
                CalcularDigitoVerificador(ACBrTitulo)                      + // 49 - Dígito verificador da agência / conta preencher somente em cobrança sem registro
                space(8)                                                   + // 50 a 57 - Brancos
@@ -346,6 +346,8 @@ begin
                IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
                PadRight(SeuNumero, 25, ' ')                               + //196 a 220 - Identificação do título na empresa
                ACodigoNegativacao                                         + //221 - Código de protesto: Protestar em XX dias corridos
+               IfThen((DataProtesto <> null) and (DataProtesto > Vencimento),
+                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00')      + //222 a 223 - Prazo para protesto
                '0'                                                        + // 224 - Código de Baixa
                '00'                                                       + // 225 A 226 - Dias para baixa
                '0000000000000 ';
@@ -763,7 +765,7 @@ begin
                                    '2'                                              + // Cocidgo da Multa X(001) 2-percentual
                                    FormatDateTime('ddmmyyyy',DataMoraJuros)         + // Data da Multa 9(008)
                                    IntToStrZero( round(PercentualMulta * 100 ), 13) + // Valor/Percentual 9(013)
-                                   space(371)                                       + // Complemento                                                                      + // COMPLEMENTO DO REGISTRO
+                                   space(371)                                       + // Complemento
                                    IntToStrZero(aRemessa.Count + 2 , 6);              // Sequencial
 
                      wLinha := wLinha + #13#10 + wLinhaMulta;

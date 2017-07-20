@@ -209,7 +209,7 @@ var
                   aAgencia                                            +
                   aConta                                              +
                   Cedente.ContaDigito                                 +
-                  NossoNumero + DigitoNossoNumero                     +
+                  ANossoNumero + DigitoNossoNumero                    +
                   IntToStrZero( aRemessa.Count + 2, 6);                  // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
      end;
   end;

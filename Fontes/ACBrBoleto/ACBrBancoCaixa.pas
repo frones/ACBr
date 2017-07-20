@@ -474,6 +474,57 @@ function TACBrCaixaEconomica.GerarRegistroTransacao240(ACBrTitulo : TACBrTitulo)
 var
   ATipoOcorrencia, ATipoBoleto, ADataMoraJuros, AModalidade        : String;
   ADataDesconto, ADataMulta, ANossoNumero, ATipoAceite, AEspecieDoc: String; 
+
+  function MontarInstrucoes2: string;
+  begin
+    Result := '';
+    with ACBrTitulo do
+    begin
+      if (Mensagem.Count <= 2) then
+      begin
+        if (Mensagem.Count = 2) then
+          Result := Copy(PadRight(Mensagem[0] +' / '+ Mensagem[1], 140, ' '), 1, 140)
+        else
+          Result := Copy(PadRight(Mensagem[0], 140, ' '), 1, 140);
+
+        Exit;
+      end;
+
+      if (Mensagem.Count >= 3) then
+      begin
+        Result := Copy(PadRight(Mensagem[2], 40, ' '), 1, 40);
+      end;
+
+      if (Mensagem.Count >= 4) then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[3], 40, ' '), 1, 40)
+      end;
+
+      if (Mensagem.Count >= 5) then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[4], 40, ' '), 1, 40)
+      end;
+
+      if (Mensagem.Count >= 6) then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[5], 40, ' '), 1, 40)
+      end;
+
+      if (Mensagem.Count >= 7) then
+      begin
+        Result := Result +
+                  Copy(PadRight(Mensagem[6], 40, ' '), 1, 40)
+      end;
+
+      // Acertar a quantidade de caracteres
+      Result := PadRight(Result, 200);
+
+    end;
+  end;
+
 begin
    with ACBrTitulo do
    begin
@@ -595,8 +646,8 @@ begin
 
       {Multa}
       if (PercentualMulta > 0) then
-        ADataMulta := IfThen(DataMoraJuros > 0,
-                             FormatDateTime('ddmmyyyy', DataMoraJuros),
+        ADataMulta := IfThen(DataMulta > 0,
+                             FormatDateTime('ddmmyyyy', DataMulta),
                              FormatDateTime('ddmmyyyy', Vencimento + 1))
       else
         ADataMulta := PadLeft('', 8, '0');
@@ -630,10 +681,12 @@ begin
                FormatDateTime('ddmmyyyy', DataDocumento)                  + //110 a 117 - Data da emissão do documento
                IfThen(ValorMoraJuros > 0, '1', '3')                       + //118 - Código de juros de mora: Valor por dia
                ADataMoraJuros                                             + //119 a 126 - Data a partir da qual serão cobrados juros
-               IfThen(ValorMoraJuros > 0, IntToStrZero( round(ValorMoraJuros * 100), 15), PadRight('', 15, '0')) + //127 a 141 - Valor de juros de mora por dia
+               IfThen(ValorMoraJuros > 0, IntToStrZero( round(ValorMoraJuros * 100), 15),
+                      PadRight('', 15, '0'))                                                   + //127 a 141 - Valor de juros de mora por dia
                IfThen(ValorDesconto > 0, '1', '0')                        + //142 - Código de desconto: Valor fixo até a data informada
                ADataDesconto                                              + //143 a 150 - Data do desconto
-               IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),PadRight('', 15, '0'))+ //151 a 165 - Valor do desconto por dia
+               IfThen(ValorDesconto > 0, IntToStrZero( round(ValorDesconto * 100), 15),
+                      PadRight('', 15, '0'))                                                   + //151 a 165 - Valor do desconto por dia
                IntToStrZero( round(ValorIOF * 100), 15)                   + //166 a 180 - Valor do IOF a ser recolhido
                IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
                PadRight(IfThen(SeuNumero<>'',SeuNumero,NumeroDocumento), 25, ' ') + //196 a 220 - Identificação do título na empresa
@@ -705,6 +758,28 @@ begin
                PadRight('', 40, ' ')                                                           + // 140 a 179 - Mensagem 4
                PadRight(Sacado.Email, 50, ' ')                                                           + // 180 a 229 - Email do Sacado P/ Envio de Informacoes
                PadRight('', 11, ' ');                                                            // 230 a 240 - Uso Exclusivo Febraban/CNAB
+
+    {SEGMENTO S}
+    if (Mensagem.Count > 0) then
+    begin
+      Result := Result + #13#10 +
+                IntToStrZero(ACBrBanco.Numero, 3)                                           + //   1 a 3   - Código do banco
+                '0001'                                                                      + // 004 - 007 / Numero do lote remessa
+                '3'                                                                         + // 008 - 008 / Tipo de registro
+                IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 4 ,5)     + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+                'S'                                                                         + // 014 - 014 / Cód. Segmento do registro detalhe
+                Space(1)                                                                    + // 015 - 015 / Reservado (uso Banco)
+                ATipoOcorrencia                                                             + // 016 - 017 / Código de movimento remessa
+                '2'                                                                         + // 018 - 018 / Identificação da impressão
+                ifthen( (Mensagem.Count <= 2), '00', '' )                                   + // 019 - 020 / Reservado (uso Banco) para tipo de impressão 1 e 2
+                MontarInstrucoes2                                                           + // 019 - 058 / Mensagem 5
+                                                                                              // 059 - 098 / Mensagem 6
+                                                                                              // 099 - 138 / Mensagem 7
+                                                                                              // 139 - 178 / Mensagem 8
+                                                                                              // 179 - 218 / Mensagem 9
+                ifthen( (Mensagem.Count <= 2), '00' + Space(78) ,Space(22));                  // 219 - 240 / Reservado (uso Banco) para tipo de impressão 3
+    end;                                                                                       // 161 - 240 / Reservado (uso Banco) para tipo de impressão 1 e 2
+    {SEGMENTO S - FIM}
       end;
 end;
 
@@ -745,37 +820,37 @@ var
                   Space(29)                                                      + // 111 ate 139 - Uso Exclusivo CAIXA
                   '104';                                                           // 140 até 142 - Código de compensação da CAIXA
 
-        if Mensagem.Count >=1 then
+        if (Mensagem.Count >= 1) then
            Result := Result +
                      Copy(PadRight(Mensagem[0], 40, ' '), 1, 40)                   // 143 até 182 - CONTEÚDO DA 1ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 40, ' ');                               // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count >= 2 then
+        if (Mensagem.Count >= 2) then
            Result := Result +
                      Copy(PadRight(Mensagem[1], 40, ' '), 1, 40)                   // 183 até 222 - CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 40, ' ');                               // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count >= 3 then
+        if (Mensagem.Count >= 3) then
            Result := Result +
                      Copy(PadRight(Mensagem[2], 40, ' '), 1, 40)                   // 223 até 262 - CONTEÚDO DA 3ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 40, ' ');                               // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count >= 4 then
+        if (Mensagem.Count >= 4) then
            Result := Result +
                      Copy(PadRight(Mensagem[3], 40, ' '), 1, 40)                   // 263 até 302 - CONTEÚDO DA 4ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 40, ' ');                               // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count >= 5 then
+        if (Mensagem.Count >= 5) then
            Result := Result +
                      Copy(PadRight(Mensagem[4], 40, ' '), 1, 40)                   // 303 até 342 - CONTEÚDO DA 5ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
            Result := Result + PadRight('', 40, ' ');                               // CONTEÚDO DO RESTANTE DAS LINHAS
 
-        if Mensagem.Count >= 6 then
+        if (Mensagem.Count >= 6) then
            Result := Result +
                      Copy(PadRight(Mensagem[5], 40, ' '), 1, 40)                   // 343 até 382 - CONTEÚDO DA 2ª LINHA DE IMPRESSÃO DA ÁREA "INSTRUÇÕES” DO BOLETO
         else
@@ -857,12 +932,14 @@ begin
       end;
 
       if (DataProtesto > 0) and (DataProtesto > Vencimento) then
-      begin
-        Instrucao1:='01'; // Protestar
-        Instrucao2:=IntToStr(DaysBetween(DataProtesto,Vencimento));
-       end
+        Instrucao1:= '01'    // Protestar
       else
         Instrucao1:='02'; //Não Protestar
+
+      Instrucao2  := '00';  //Registro Detalhe Tipo 1: Campo 25.1 - Posição 159 à 160 – Segunda Instrução de Cobrança: Inserir 00
+
+
+
 
       aDataDesconto:= '000000';
 
@@ -908,7 +985,7 @@ begin
                   '00'                                                             + // 30 a 31    - Comissão de permanência - informar 00
                   PadLeft(OnlyNumber(ACBrTitulo.SeuNumero), 25)                    + // 32 até 56  - Seu numero
                   PadRight(Copy(AModalidade,1,2), 2, '0')                          + // 57 até 58  - Modalidade identificação
-                  PadLeft(Copy(ANossoNumero, 3, 17), 15, '0')                      + // 59 até 73  - Nosso Numero
+                  PadLeft(Copy(ANossoNumero, 3, 15), 15, '0')                      + // 59 até 73  - Nosso Numero
                   Space(3)                                                         + // 74 Até 76  - Brancos
                   PadRight(AMensagem, 30)                                          + //77 até  106 - mensagem impressa
                   '01'                                                             + //107 até 108 - Código Carteira //PadLeft(IntToStr(RetornaCodCarteira(Carteira)),2,'0')
@@ -1026,7 +1103,7 @@ begin
      ACBrBanco.ACBrBoleto.DataArquivo   := StringToDateTimeDef(TempData,0, 'DD/MM/YY');
 
    TempData := Copy(ARetorno[1],200,2) + '/' + Copy(ARetorno[1],202,2) + '/' +
-               Copy(ARetorno[1],204,4);
+               Copy(ARetorno[1],206,2);
 
    if TempData <> '00/00/00' then
      ACBrBanco.ACBrBoleto.DataCreditoLanc := StringToDateTimeDef(TempData, 0, 'DD/MM/YY');
@@ -1096,7 +1173,7 @@ begin
             SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,11);
             OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
-
+	        Sacado.NomeSacado           := copy(Linha,149,40);
             //05 = Liquidação Sem Registro
             TempData := Copy(Linha,74,2) + '/' + Copy(Linha,76,2) + '/' + Copy(Linha,80,2);
 
@@ -1555,7 +1632,9 @@ begin
       14: Result := '14-Confirmação Recebimento Instrução Alteração de Vencimento';
       19: Result := '19-Confirmação Recebimento Instrução de Protesto';
       20: Result := '20-Confirmação Recebimento Instrução de Sustação/Cancelamento de Protesto';
-      25: Result := '25-Potestado e Baixado (Baixa por ter sido protestado)';
+      23: Result := '23-Remessa a Cartório';
+      24: Result := '24-Retirada de Cartório';
+      25: Result := '25-Protestado e Baixado (Baixa por ter sido protestado)';
       26: Result := '26-Instrução Rejeitada';
       27: Result := '27-Confirmação do Pedido de Alteração de Outros Dados';
       28: Result := '28-Débito de Tarifas/Custas';
@@ -1706,7 +1785,7 @@ begin
        ValorOutrosCreditos  := StrToFloatDef(Copy(Linha,280,13),0)/100;
        Carteira             := Copy(Linha,57,2);
        NossoNumero          := Copy(Linha,59,15);
-       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100; //--Anderson: Valor tarifa
+       ValorDespesaCobranca := StrToFloatDef(Copy(Linha,176,13),0)/100;
 
        TempData := Copy(Linha,294,2) + '/' + Copy(Linha,296,2) + '/' +
                    Copy(Linha,298,2);

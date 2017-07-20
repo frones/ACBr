@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/07/2017
+-- pnfsConversao
+[-] Correções na descrição do serviço de acordo com a Lei Complementar nº 157, de 2016
+		http://www.projetoacbr.com.br/forum/topic/37856-correções-na-descrição-do-serviço-de-acordo-com-a-lei-complementar-nº-157-de-2016/
+		por Juliomar Marchetti
+		
+20/07/2017
 -- Diversos --
 [*] Remoção de vários hints e warnings.
     Por: Italo Jurisato Junior

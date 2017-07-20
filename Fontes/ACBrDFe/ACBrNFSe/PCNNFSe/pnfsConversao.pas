@@ -544,12 +544,13 @@ begin
   case i of
   0101: r := 'Analise e desenvolvimento de sistemas.';
   0102: r := 'Programacao.';
-  0103: r := 'Processamento de dados e congeneres.';
-  0104: r := 'Elaboracao de programas de computadores, inclusive de jogos eletronicos.';
+  0103: r := 'Processamento, armazenamento ou hospedagem de dados, textos, imagens, videos, paginas eletronicas, aplicativos e sistemas de informacao, entre outros formatos, e congeneres.';
+  0104: r := 'Elaboracao de programas de computadores, inclusive de jogos eletronicos, independentemente da arquitetura construtiva da maquina em que o programa sera executado, incluindo tablets, smartphones e congeneres.';
   0105: r := 'Licenciamento ou cessao de direito de uso de programas de computacao.';
   0106: r := 'Assessoria e consultoria em informatica.';
   0107: r := 'Suporte tecnico em informatica, inclusive instalacao, configuracao e manutencao de programas de computacao e bancos de dados.';
   0108: r := 'Planejamento, confeccao, manutencao e atualizacao de paginas eletronicas.';
+  0109: r := 'Disponibilizacao, sem cessao definitiva, de conteudos de audio, video, imagem e texto por meio da internet, respeitada a imunidade de livros, jornais e periodicos (exceto a distribuicao de conteudos pelas prestadoras de Servico de Acesso Condicionado, de que trata a Lei no 12.485, de 12 de setembro de 2011, sujeita ao ICMS).';
   0201: r := 'Servicos de pesquisas e desenvolvimento de qualquer natureza.';
   0301: r := '(VETADO)';
   0302: r := 'Cessao de direito de uso de marcas e de sinais de propaganda.';
@@ -594,6 +595,7 @@ begin
   0603: r := 'Banhos, duchas, sauna, massagens e congeneres.';
   0604: r := 'Ginastica, danca, esportes, natacao, artes marciais e demais atividades fisicas.';
   0605: r := 'Centros de emagrecimento, spa e congeneres.';
+  0606: r := 'Aplicacao de tatuagens, piercings e congeneres.';
   0701: r := 'Engenharia, agronomia, agrimensura, arquitetura, geologia, urbanismo, paisagismo e congeneres.';
   0702: r := 'Execucao, por administracao, empreitada ou subempreitada, de obras de construcao civil, hidraulica ou eletrica e de ' +
              'outras obras semelhantes, inclusive sondagem, perfuracao de pocos, escavacao, drenagem e irrigacao, terraplanagem, ' +
@@ -608,11 +610,10 @@ begin
   0710: r := 'Limpeza, manutencao e conservacao de vias e logradouros publicos, imoveis, chamines, piscinas, parques, jardins e congeneres.';
   0711: r := 'Decoracao e jardinagem, inclusive corte e poda de arvores.';
   0712: r := 'Controle e tratamento de efluentes de qualquer natureza e de agentes fisicos, quimicos e biologicos.';
-//  0713: r := 'Atividades de pos-Colheita.';
   0713: r := 'Dedetizacao, desinfeccao, desinsetizacao, imunizacao, higienizacao, desratizacao, pulverizacao e congeneres.';
   0714: r := '(VETADO)';
   0715: r := '(VETADO)';
-  0716: r := 'Florestamento, reflorestamento, semeadura, adubacao e congeneres.';
+  0716: r := 'Florestamento, reflorestamento, semeadura, adubacao, reparacao de solo, plantio, silagem, colheita, corte e descascamento de arvores, silvicultura, exploracao florestal e dos servicos congeneres indissociaveis da formacao, manutencao e colheita de florestas, para quaisquer fins e por quaisquer meios.';
   0717: r := 'Escoramento, contencao de encostas e servicos congeneres.';
   0718: r := 'Limpeza e dragagem de rios, portos, canais, baias, lagos, lagoas, represas, acudes e congeneres.';
   0719: r := 'Acompanhamento e fiscalizacao da execucao de obras de engenharia, arquitetura e urbanismo.';
@@ -636,7 +637,7 @@ begin
   1009: r := 'Representacao de qualquer natureza, inclusive comercial.';
   1010: r := 'Distribuicao de bens de terceiros.';
   1101: r := 'Guarda e estacionamento de veiculos terrestres automotores, de aeronaves e de embarcacoes.';
-  1102: r := 'Vigilancia, seguranca ou monitoramento de bens e pessoas.';
+  1102: r := 'Vigilancia, seguranca ou monitoramento de bens, pessoas e semoventes';
   1103: r := 'Escolta, inclusive de veiculos e cargas.';
   1104: r := 'Armazenamento, deposito, carga, descarga, arrumacao e guarda de bens de qualquer especie.';
   1201: r := 'Espetaculos teatrais.';
@@ -660,13 +661,13 @@ begin
   1302: r := 'Fonografia ou gravacao de sons, inclusive trucagem, dublagem, mixagem e congeneres.';
   1303: r := 'Fotografia e cinematografia, inclusive revelacao, ampliacao, copia, reproducao, trucagem e congeneres.';
   1304: r := 'Reprografia, Microfilmagem e digitalizacao.';
-  1305: r := 'Composicao grafica, fotocomposicao, clicheria, zincografia, litografia, fotolitografia.';
+  1305: r := 'Composicao grafica, inclusive confeccao de impressos graficos, fotocomposicao, clicheria, zincografia, litografia e fotolitografia, exceto se destinados a posterior operacao de comercializacao ou industrializacao, ainda que incorporados, de qualquer forma, a outra mercadoria que deva ser objeto de posterior circulacao, tais como bulas, rotulos, etiquetas, caixas, cartuchos, embalagens e manuais tecnicos e de instrucao, quando ficarao sujeitos ao ICMS.';
   1401: r := 'Lubrificacao, limpeza, lustracao, revisao, carga e recarga, conserto, restauracao, blindagem, manutencao e conservacao ' +
              'de maquinas, veiculos, aparelhos, equipamentos, motores, elevadores ou de qualquer objeto (exceto pecas e partes empregadas, que ficam sujeitas ao ICMS).';
   1402: r := 'Assistencia tecnica.';
   1403: r := 'Recondicionamento de motores (exceto pecas e partes empregadas, que ficam sujeitas ao ICMS).';
   1404: r := 'Recauchutagem ou regeneracao de pneus.';
-  1405: r := 'Restauracao, recondicionamento, acondicionamento, pintura, beneficiamento, lavagem, secagem, tingimento, galvanoplastia, anodizacao, corte, recorte, polimento, plastificacao e congeneres, de objetos quaisquer.';
+  1405: r := 'Restauracao, recondicionamento, acondicionamento, pintura, beneficiamento, lavagem, secagem, tingimento, galvanoplastia, anodizacao, corte, recorte, plastificacao, costura, acabamento, polimento e congeneres de objetos quaisquer.';
   1406: r := 'Instalacao e montagem de aparelhos, maquinas e equipamentos, inclusive montagem industrial, prestados ao usuario final, exclusivamente com material por ele fornecido.';
   1407: r := 'Colocacao de molduras e congeneres.';
   1408: r := 'Encadernacao, gravacao e douracao de livros, revistas e congeneres.';
@@ -675,6 +676,7 @@ begin
   1411: r := 'Tapecaria e reforma de estofamentos em geral.';
   1412: r := 'Funilaria e lanternagem.';
   1413: r := 'Carpintaria e serralheria.';
+  1414: r := 'Guincho intramunicipal, guindaste e icamento.';
   1501: r := 'Administracao de fundos quaisquer, de consorcio, de cartao de credito ou debito e congeneres, de carteira de clientes, de cheques pre-datados e congeneres.';
   1502: r := 'Abertura de contas em geral, inclusive conta-corrente, conta de investimentos e aplicacao e caderneta de poupanca, no Pais e no exterior, bem como a manutencao das referidas contas ativas e inativas.';
   1503: r := 'Locacao e manutencao de cofres particulares, de terminais eletronicos, de terminais de atendimento e de bens e equipamentos em geral.';
@@ -702,7 +704,8 @@ begin
   1517: r := 'Emissao, fornecimento, devolucao, sustacao, cancelamento e oposicao de cheques quaisquer, avulso ou por talao.';
   1518: r := 'Servicos relacionados a credito imobiliario, avaliacao e vistoria de imovel ou obra, analise tecnica e juridica, emissao, ' +
              'reemissao, alteracao, transferencia e renegociacao de contrato, emissao e reemissao do termo de quitacao e demais servicos relacionados a credito imobiliario.';
-  1601: r := 'Servicos de transporte de natureza municipal.';
+  1601: r := 'Servicos de transporte coletivo municipal rodoviario, metroviario, ferroviario e aquaviario de passageiros.';
+  1602: r := 'Outros servicos de transporte de natureza municipal.';
   1701: r := 'Assessoria ou consultoria de qualquer natureza, nao contida em outros itens desta lista; analise, exame, pesquisa, coleta, compilacao e fornecimento de dados e informacoes de qualquer natureza, inclusive cadastro e similares.';
   1702: r := 'Datilografia, digitacao, estenografia, expediente, secretaria em geral, resposta audivel, redacao, edicao, interpretacao, revisao, traducao, apoio e infra-estrutura administrativa e congeneres.';
   1703: r := 'Planejamento, coordenacao, programacao ou organizacao tecnica, financeira ou administrativa.';
@@ -727,6 +730,7 @@ begin
   1722: r := 'Cobranca em geral.';
   1723: r := 'Assessoria, analise, avaliacao, atendimento, consulta, cadastro, selecao, gerenciamento de informacoes, administracao de contas a receber ou a pagar e em geral, relacionados a operacoes de faturizacao (factoring).';
   1724: r := 'Apresentacao de palestras, conferencias, seminarios e congeneres.';
+  1725: r := 'Insercao de textos, desenhos e outros materiais de propaganda e publicidade, em qualquer meio (exceto em livros, jornais, periodicos e nas modalidades de servicos de radiodifusao sonora e de sons e imagens de recepcao livre e gratuita).';
   1801: r := 'Servicos de regulacao de sinistros vinculados a contratos de seguros; inspecao e avaliacao de riscos para cobertura de contratos de seguros; prevencao e gerencia de riscos seguraveis e congeneres.';
   1901: r := 'Servicos de distribuicao e venda de bilhetes e demais produtos de loteria, bingos, cartoes, pules ou cupons de apostas, sorteios, premios, inclusive os decorrentes de titulos de capitalizacao e congeneres. a) Bingo; b) Demais casos.';
   2001: r := 'Servicos portuarios, ferroportuarios, utilizacao de porto, movimentacao de passageiros, reboque de embarcacoes, rebocador ' +
@@ -742,9 +746,10 @@ begin
   2401: r := 'Servicos de chaveiros, confeccao de carimbos, placas, sinalizacao visual, banners, adesivos e congeneres.';
   2501: r := 'Funerais, inclusive fornecimento de caixao, urna ou esquifes; aluguel de capela; transporte do corpo cadaverico; fornecimento de ' +
              'flores, coroas e outros paramentos; desembaraco de certidao de obito; fornecimento de veu, essa e outros adornos; embalsamento, embelezamento, conservacao ou restauracao de cadaveres.';
-  2502: r := 'Cremacao de corpos e partes de corpos cadavericos.';
+  2502: r := 'Translado intramunicipal e cremacao de corpos e partes de corpos cadavericos.';
   2503: r := 'Planos ou convenio funerarios.';
   2504: r := 'Manutencao e conservacao de jazigos e cemiterios.';
+  2505: r := 'Cessao de uso de espacos em cemiterios para sepultamento.';
   2601: r := 'Servicos de coleta remessa ou entrega de correspondencias, documentos, objetos, bens ou valores, inclusive pelos correios e suas agencias franqueadas; courrier e congeneres.';
   2701: r := 'Servicos de assistencia social.';
   2801: r := 'Servicos de avaliacao de bens e servicos de qualquer natureza.';

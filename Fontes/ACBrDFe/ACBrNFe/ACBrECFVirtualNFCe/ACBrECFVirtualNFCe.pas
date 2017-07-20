@@ -65,6 +65,7 @@ type
   TACBrECFVirtualNFCe = class(TACBrECFVirtualPrinter)
   private
     function GetACBrNFCe: TACBrNFe;
+    function GetImprimir2ViaOffLine: Boolean;
     function GetQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
     function GetQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
     function GetQuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem;
@@ -81,13 +82,14 @@ type
     procedure SetQuandoCancelarDocumento(
       AValue: TACBrECFVirtualNFCeQuandoCancelarDocumento);
     procedure SetACBrNFCe(AValue: TACBrNFe);
+    procedure SetImprimir2ViaOffLine(AValue: Boolean);
   protected
     procedure CreateVirtualClass; override;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   published
     property NomeArqINI;
     property ACBrNFCe: TACBrNFe read GetACBrNFCe write SetACBrNFCe;
-
+    property Imprimir2ViaOffLine : Boolean read GetImprimir2ViaOffLine write SetImprimir2ViaOffLine default True;
     property QuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento
       read GetQuandoAbrirDocumento write SetQuandoAbrirDocumento;
     property QuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem
@@ -109,6 +111,7 @@ type
   private
     fsACBrNFCe: TACBrNFe;
     fsEhVenda: Boolean;
+    fsImprimir2ViaOffLine : Boolean;
 
     fsQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
     fsQuandoEfetuarPagamento: TACBrECFVirtualNFCeQuandoEfetuarPagamento;
@@ -151,7 +154,7 @@ type
   public
     constructor Create(AECFVirtualPrinter: TACBrECFVirtualPrinter); overload; override;
     property ACBrNFCe: TACBrNFe read fsACBrNFCe write fsACBrNFCe;
-
+    property Imprimir2ViaOffLine : Boolean read fsImprimir2ViaOffLine write fsImprimir2ViaOffLine;
     property QuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento
       read fsQuandoAbrirDocumento write fsQuandoAbrirDocumento;
     property QuandoVenderItem: TACBrECFVirtualNFCeQuandoVenderItem
@@ -200,6 +203,11 @@ begin
   Result := TACBrECFVirtualNFCeClass(fpECFVirtualClass).ACBrNFCe;
 end;
 
+function TACBrECFVirtualNFCe.GetImprimir2ViaOffLine: Boolean;
+begin
+  Result := TACBrECFVirtualNFCeClass(fpECFVirtualClass).fsImprimir2ViaOffLine;
+end;
+
 procedure TACBrECFVirtualNFCe.SetACBrNFCe(AValue: TACBrNFe);
 begin
   if AValue <> ACBrNFCe then
@@ -212,6 +220,11 @@ begin
     if AValue <> nil then
       AValue.FreeNotification(Self);
   end;
+end;
+
+procedure TACBrECFVirtualNFCe.SetImprimir2ViaOffLine(AValue: Boolean);
+begin
+  TACBrECFVirtualNFCeClass(fpECFVirtualClass).fsImprimir2ViaOffLine := AValue;
 end;
 
 function TACBrECFVirtualNFCe.GetQuandoAbrirDocumento: TACBrECFVirtualNFCeQuandoAbrirDocumento;
@@ -286,6 +299,7 @@ begin
   fsDestNome := '';
   fsDestCNPJ := '';
   fsEhVenda := False;
+  fsImprimir2ViaOffLine := True;
 end;
 
 function TACBrECFVirtualNFCeClass.AdivinharFormaPagamento(const DescricaoPagto: string
@@ -679,70 +693,91 @@ var
 begin
   if fsEhVenda then
   begin
-    SomaTotais;
-
-    with fsACBrNFCe.NotasFiscais.Items[0] do
+    if (fsACBrNFCe.NotasFiscais.Items[0].Confirmada) AND (fsACBrNFCe.WebServices.Enviar.cStat = 100) and
+       (fsACBrNFCe.NotasFiscais.Items[0].NFe.signature.DigestValue = fsACBrNFCe.NotasFiscais.Items[0].NFe.procNFe.digVal) then
     begin
-      NFe.Total.ICMSTot.vTotTrib := fsvTotTrib;
-      NFe.Total.ICMSTot.vBC := fsvBC;
-      NFe.Total.ICMSTot.vICMS := fsvICMS;
-      NFe.Total.ICMSTot.vBCST := fsvBCST;
-      NFe.Total.ICMSTot.vST := fsvST;
-      NFe.Total.ICMSTot.vProd := fsvProd;
-      NFe.Total.ICMSTot.vFrete := fsvFrete;
-      NFe.Total.ICMSTot.vSeg := fsvSeg;
-      NFe.Total.ICMSTot.vDesc := fsvDesc;
-      NFe.Total.ICMSTot.vII := fsvII;
-      NFe.Total.ICMSTot.vIPI := fsvIPI;
-      NFe.Total.ICMSTot.vPIS := fsvPIS;
-      NFe.Total.ICMSTot.vCOFINS := fsvCOFINS;
-      NFe.Total.ICMSTot.vOutro := fsvOutro;
-      NFe.Total.ICMSTot.vNF := fsvNF;
+      //Caso o sistema recuperou de um travamento de impressão e a mesma ja estiver autorizada cStar = 100,
+      //não será enviado a NFCe novamente, assim evitando o erro de duplicidade NFCe
+      fsACBrNFCe.DANFE.ViaConsumidor := True;
+      fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
 
-      if Assigned(fsQuandoFecharDocumento) then
-        fsQuandoFecharDocumento(NFe);
-    end;
-
-    fsDestNome := '';
-    fsDestCNPJ := '';
-
-    with fsACBrNFCe do
+      if (fsImprimir2ViaOffLine) and (fsACBrNFCe.Configuracoes.Geral.FormaEmissao = teOffLine) then
+      begin
+        fsACBrNFCe.DANFE.ViaConsumidor := False;
+        fsACBrNFCe.NotasFiscais.Items[0].Imprimir;
+      end;
+    end
+    else
     begin
-      NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + sLineBreak + Observacao;
 
-      if Configuracoes.Geral.FormaEmissao = teOffLine then
+      SomaTotais;
+
+      with fsACBrNFCe.NotasFiscais.Items[0] do
       begin
-        NotasFiscais.Assinar;
-        NotasFiscais.Validar;
-        //NotasFiscais.Items[0].Confirmada := True;
+        NFe.Total.ICMSTot.vTotTrib := fsvTotTrib;
+        NFe.Total.ICMSTot.vBC := fsvBC;
+        NFe.Total.ICMSTot.vICMS := fsvICMS;
+        NFe.Total.ICMSTot.vBCST := fsvBCST;
+        NFe.Total.ICMSTot.vST := fsvST;
+        NFe.Total.ICMSTot.vProd := fsvProd;
+        NFe.Total.ICMSTot.vFrete := fsvFrete;
+        NFe.Total.ICMSTot.vSeg := fsvSeg;
+        NFe.Total.ICMSTot.vDesc := fsvDesc;
+        NFe.Total.ICMSTot.vII := fsvII;
+        NFe.Total.ICMSTot.vIPI := fsvIPI;
+        NFe.Total.ICMSTot.vPIS := fsvPIS;
+        NFe.Total.ICMSTot.vCOFINS := fsvCOFINS;
+        NFe.Total.ICMSTot.vOutro := fsvOutro;
+        NFe.Total.ICMSTot.vNF := fsvNF;
 
-        // imprimir obrigatoriamente duas vias quando em off-line
-        // uma para consumidor e outra para o estabelecimento
-        DANFE.ViaConsumidor := True;
-        NotasFiscais.Items[0].Imprimir;
-
-        DANFE.ViaConsumidor := False;
-        NotasFiscais.Items[0].Imprimir;
-      end
-      else
-      begin
-        Enviar(NotasFiscais.Items[0].NFe.Ide.nNF, false, true);
-
-        if WebServices.Enviar.cStat <> 100 then
-        begin
-          cStat := IntToStr(WebServices.Enviar.cStat);
-          xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo);
-
-          raise EACBrNFeException.Create('Erro ao enviar Dados da Venda:' + sLineBreak +
-            'cStat: ' + cStat + sLineBreak +
-            'xMotivo: ' + xMotivo);
-        end;
+        if Assigned(fsQuandoFecharDocumento) then
+          fsQuandoFecharDocumento(NFe);
       end;
 
-      ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
+      fsDestNome := '';
+      fsDestCNPJ := '';
 
-      if NotasFiscais.Items[0].Confirmada then
-        NotasFiscais.Items[0].Imprimir;
+      with fsACBrNFCe do
+      begin
+        NotasFiscais.Items[0].NFe.InfAdic.infCpl := NotasFiscais.Items[0].NFe.InfAdic.infCpl + sLineBreak + Observacao;
+
+        if Configuracoes.Geral.FormaEmissao = teOffLine then
+        begin
+          NotasFiscais.Validar;
+          NotasFiscais.Assinar;
+          //NotasFiscais.Items[0].Confirmada := True;
+
+          // imprimir obrigatoriamente duas vias quando em off-line
+          // uma para consumidor e outra para o estabelecimento
+          DANFE.ViaConsumidor := True;
+          NotasFiscais.Items[0].Imprimir;
+
+          if fsImprimir2ViaOffLine then
+          begin
+            DANFE.ViaConsumidor := False;
+            NotasFiscais.Items[0].Imprimir;
+          end;
+        end
+        else
+        begin
+          Enviar(NotasFiscais.Items[0].NFe.Ide.nNF, false, true);
+
+          if WebServices.Enviar.cStat <> 100 then
+          begin
+            cStat := IntToStr(WebServices.Enviar.cStat);
+            xMotivo := ACBrStrToAnsi(WebServices.Enviar.xMotivo);
+
+            raise EACBrNFeException.Create('Erro ao enviar Dados da Venda:' + sLineBreak +
+              'cStat: ' + cStat + sLineBreak +
+              'xMotivo: ' + xMotivo);
+          end;
+        end;
+
+        ChaveCupom := NotasFiscais.Items[0].NFe.infNFe.ID;
+
+        if NotasFiscais.Items[0].Confirmada then
+          NotasFiscais.Items[0].Imprimir;
+      end;
     end;
   end
   else

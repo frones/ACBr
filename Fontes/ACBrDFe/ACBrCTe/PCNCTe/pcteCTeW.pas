@@ -105,7 +105,7 @@ type
 
     procedure GerarRem;        // Nivel 1
     procedure GerarEnderReme;  // Nivel 2
-    procedure GerarLocColeta;  // Nivel 2
+//    procedure GerarLocColeta;  // Nivel 2
 
     procedure GerarExped;      // Nivel 1
     procedure GerarEnderExped; // Nivel 2
@@ -115,7 +115,7 @@ type
 
     procedure GerarDest;       // Nivel 1
     procedure GerarEnderDest;  // Nivel 2
-    procedure GerarLocEnt;     // Nivel 2
+//    procedure GerarLocEnt;     // Nivel 2
 
     procedure GerarVPrest;     // Nivel 1
     procedure GerarComp;       // Nivel 2
@@ -954,7 +954,7 @@ begin
   Gerador.wCampo(tcStr, '#129', 'xPais   ', 02, 60, 0, CTe.Rem.EnderReme.xPais, DSC_XPAIS);
   Gerador.wGrupo('/enderReme');
 end;
-
+(*
 procedure TCTeW.GerarLocColeta;
 begin
   if (trim(CTe.Rem.locColeta.CNPJCPF) <> '') or
@@ -977,7 +977,7 @@ begin
     Gerador.wGrupo('/locColeta');
   end;
 end;
-
+*)
 procedure TCTeW.GerarExped;
 
 procedure GeraIE;
@@ -1230,7 +1230,7 @@ begin
   Gerador.wCampo(tcStr, '#195', 'xPais  ', 02, 60, 0, CTe.Dest.EnderDest.xPais, DSC_XPAIS);
   Gerador.wGrupo('/enderDest');
 end;
-
+(*
 procedure TCTeW.GerarLocEnt;
 begin
   if (trim(CTe.Dest.locEnt.CNPJCPF) <> '') or
@@ -1253,7 +1253,7 @@ begin
     Gerador.wGrupo('/locEnt');
   end;
 end;
-
+*)
 procedure TCTeW.GerarVPrest;
 begin
   Gerador.wGrupo('vPrest', '#208');

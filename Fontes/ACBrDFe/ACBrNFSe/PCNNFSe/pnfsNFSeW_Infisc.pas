@@ -764,6 +764,7 @@ begin
   //Quando é tributado fora do municipio temos que ter o IBGE o mesmo do localdeTributação do Serviço
   Gerador.wCampoNFSe(tcStr, '', 'infAdicLT', 01, 100,  1, NFSe.Servico.MunicipioIncidencia, '');
 
+  lIndex := 0;
   lLimiteLinha := 250;
   lDeOndeIniciaCopia := 1;
   lTexto := NFSe.OutrasInformacoes;
@@ -774,11 +775,12 @@ begin
 
   if (lResultadoDivisao > 0) then
   begin
-    for lIndex := 0 to lResultadoDivisao -1 do
-    begin
+    repeat
       lDeOndeIniciaCopia := lIndex * lLimiteLinha;
       Gerador.wCampoNFSe(tcStr, '', 'infAdic', 01, 100, 1, Copy(lTexto, lDeOndeIniciaCopia, lLimiteLinha), '');
-    end;
+      inc(lIndex);
+    until lIndex > (lResultadoDivisao -1);
+
     lDeOndeIniciaCopia := (lIndex * lLimiteLinha);
   end;
   if (lResultadoSobra > 0) and (lDeOndeIniciaCopia > 0) then

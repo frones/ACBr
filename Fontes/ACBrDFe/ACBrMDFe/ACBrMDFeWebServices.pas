@@ -1830,13 +1830,15 @@ var
   EventoMDFe: TEventoMDFe;
   I, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  FErroValidacao: String;
   EventoEhValido: Boolean;
   SchemaEventoMDFe: TSchemaMDFe;
 begin
   EventoMDFe := TEventoMDFe.Create;
   try
     EventoMDFe.idLote := FidLote;
-
+    SchemaEventoMDFe := schErro;
+    
     for I := 0 to TMDFeEnvEvento(Self).FEvento.Evento.Count - 1 do
     begin
       with EventoMDFe.Evento.Add do
@@ -1913,6 +1915,14 @@ begin
                                     GerarNomeArqSchemaEvento(SchemaEventoMDFe,
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
+    end;
+
+    if not EventoEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+        FPMsg;
+
+      raise EACBrMDFeException.CreateDef(FErroValidacao);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

@@ -2575,12 +2575,14 @@ var
   EventoCTe: TEventoCTe;
   I, J, K, F: Integer;
   Evento, Eventos, EventosAssinados, AXMLEvento: AnsiString;
+  FErroValidacao: String;
   EventoEhValido: Boolean;
   SchemaEventoCTe: TSchemaCTe;
 begin
   EventoCTe := TEventoCTe.Create;
   try
     EventoCTe.idLote := FidLote;
+    SchemaEventoCTe := schErro;
 
     for I := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count - 1 do
     begin
@@ -2736,6 +2738,14 @@ begin
                                     GerarNomeArqSchemaEvento(SchemaEventoCTe,
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
+    end;
+
+    if not EventoEhValido then
+    begin
+      FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
+        FPMsg;
+
+      raise EACBrCTeException.CreateDef(FErroValidacao);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do

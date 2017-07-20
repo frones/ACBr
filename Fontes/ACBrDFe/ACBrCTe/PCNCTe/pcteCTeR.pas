@@ -760,14 +760,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           CTe.infCTeNorm.infDoc.infNF[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
 
@@ -851,14 +850,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           CTe.infCTeNorm.infDoc.infNFE[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
 
@@ -945,14 +943,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           CTe.infCTeNorm.infDoc.infOutros[i01].infUnidTransp[i02].qtdRat := qtdRat_UnidTransp;
 

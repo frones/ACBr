@@ -439,14 +439,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infCTe[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -527,14 +526,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infCT[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -599,14 +597,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infNFe[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -689,14 +686,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infNF[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 
@@ -760,14 +756,13 @@ begin
           pos2 := PosLast('<qtdRat>', sAux);
           pos3 := PosLast('</qtdRat>', sAux);
 
-          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) then
-            qtdRat_UnidTransp := 0.0;
-
-          if (pos1 > pos3) then
-            qtdRat_UnidTransp := 0.0;
+//          if (pos1 = 0) and (pos2 = 0) and (pos3 = 0) or (pos1 > pos3) then
+//            qtdRat_UnidTransp := 0.0;
 
           if (pos1 < pos3) then
-            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0);
+            qtdRat_UnidTransp := StrToFloatDef(Copy(sAux, pos2 + 8, pos3 -1), 0)
+          else
+            qtdRat_UnidTransp := 0.0;
 
           MDFe.infDoc.infMunDescarga[i01].infMDFeTransp[i02].infUnidTransp[i03].qtdRat := qtdRat_UnidTransp;
 

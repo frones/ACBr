@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2017
+-- Diversos --
+[*] Remoção de vários hints e warnings.
+    Por: Italo Jurisato Junior
+
 17/07/2017
 -- pnfsConversao
 [*] Novas naturezas de operação.

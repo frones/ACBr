@@ -860,20 +860,41 @@ begin
   N := PosCTe;
   while N > 0 do
   begin
-    P := pos('</cteProc>', XMLStr);
-
-    if P <= 0 then
-      P := pos('</procCTe>', XMLStr);  // CTe obtido pelo Portal da Receita
-
-    if P > 0 then
+    if TACBrCTe(ACBrCTe).Configuracoes.Geral.ModeloDF = moCTeOS then
     begin
-      ACTeXML := copy(XMLStr, 1, P + 10);
-      XMLStr := Trim(copy(XMLStr, P + 10, length(XMLStr)));
+      P := pos('</cteOSProc>', XMLStr);
+
+      if P <= 0 then
+        P := pos('</procCTeOS>', XMLStr);  // CTe obtido pelo Portal da Receita
+
+      if P > 0 then
+      begin
+        ACTeXML := copy(XMLStr, 1, P + 12);
+        XMLStr := Trim(copy(XMLStr, P + 12, length(XMLStr)));
+      end
+      else
+      begin
+        ACTeXML := copy(XMLStr, 1, N + 8);
+        XMLStr := Trim(copy(XMLStr, N + 8, length(XMLStr)));
+      end;
     end
     else
     begin
-      ACTeXML := copy(XMLStr, 1, N + 6);
-      XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
+      P := pos('</cteProc>', XMLStr);
+
+      if P <= 0 then
+        P := pos('</procCTe>', XMLStr);  // CTe obtido pelo Portal da Receita
+
+      if P > 0 then
+      begin
+        ACTeXML := copy(XMLStr, 1, P + 10);
+        XMLStr := Trim(copy(XMLStr, P + 10, length(XMLStr)));
+      end
+      else
+      begin
+        ACTeXML := copy(XMLStr, 1, N + 6);
+        XMLStr := Trim(copy(XMLStr, N + 6, length(XMLStr)));
+      end;
     end;
 
     with Self.Add do

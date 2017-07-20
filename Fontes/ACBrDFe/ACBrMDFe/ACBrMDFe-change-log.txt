@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/07/2017
+-- Diversos --
+[*] Remoção de vários hints e warnings.
+    Por: Italo Jurisato Junior
+
 08/07/2017
 -- ACBrMDFFeWebServices --
 [-] Correção na classe "TMDFeEnvEvento", para assinar corretamente, XMLs com acentos.

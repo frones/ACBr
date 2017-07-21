@@ -550,7 +550,9 @@ begin
   0106: r := 'Assessoria e consultoria em informatica.';
   0107: r := 'Suporte tecnico em informatica, inclusive instalacao, configuracao e manutencao de programas de computacao e bancos de dados.';
   0108: r := 'Planejamento, confeccao, manutencao e atualizacao de paginas eletronicas.';
-  0109: r := 'Disponibilizacao, sem cessao definitiva, de conteudos de audio, video, imagem e texto por meio da internet, respeitada a imunidade de livros, jornais e periodicos (exceto a distribuicao de conteudos pelas prestadoras de Servico de Acesso Condicionado, de que trata a Lei no 12.485, de 12 de setembro de 2011, sujeita ao ICMS).';
+  0109: r := 'Disponibilizacao, sem cessao definitiva, de conteudos de audio, video, imagem e texto por meio da internet, respeitada a imunidade de livros, jornais e periodicos (exceto a distribuicao de conteudos pelas ' +
+             'prestadoras de Servico de Acesso Condicionado, de que trata a Lei no 12.485, de 12 de setembro de 2011, sujeita ao ICMS).';
+
   0201: r := 'Servicos de pesquisas e desenvolvimento de qualquer natureza.';
   0301: r := '(VETADO)';
   0302: r := 'Cessao de direito de uso de marcas e de sinais de propaganda.';
@@ -613,7 +615,8 @@ begin
   0713: r := 'Dedetizacao, desinfeccao, desinsetizacao, imunizacao, higienizacao, desratizacao, pulverizacao e congeneres.';
   0714: r := '(VETADO)';
   0715: r := '(VETADO)';
-  0716: r := 'Florestamento, reflorestamento, semeadura, adubacao, reparacao de solo, plantio, silagem, colheita, corte e descascamento de arvores, silvicultura, exploracao florestal e dos servicos congeneres indissociaveis da formacao, manutencao e colheita de florestas, para quaisquer fins e por quaisquer meios.';
+  0716: r := 'Florestamento, reflorestamento, semeadura, adubacao, reparacao de solo, plantio, silagem, colheita, corte e descascamento de arvores, silvicultura, exploracao florestal e dos servicos congeneres indissociaveis da formacao, manutencao' +
+             ' e colheita de florestas, para quaisquer fins e por quaisquer meios.';
   0717: r := 'Escoramento, contencao de encostas e servicos congeneres.';
   0718: r := 'Limpeza e dragagem de rios, portos, canais, baias, lagos, lagoas, represas, acudes e congeneres.';
   0719: r := 'Acompanhamento e fiscalizacao da execucao de obras de engenharia, arquitetura e urbanismo.';
@@ -661,7 +664,10 @@ begin
   1302: r := 'Fonografia ou gravacao de sons, inclusive trucagem, dublagem, mixagem e congeneres.';
   1303: r := 'Fotografia e cinematografia, inclusive revelacao, ampliacao, copia, reproducao, trucagem e congeneres.';
   1304: r := 'Reprografia, Microfilmagem e digitalizacao.';
-  1305: r := 'Composicao grafica, inclusive confeccao de impressos graficos, fotocomposicao, clicheria, zincografia, litografia e fotolitografia, exceto se destinados a posterior operacao de comercializacao ou industrializacao, ainda que incorporados, de qualquer forma, a outra mercadoria que deva ser objeto de posterior circulacao, tais como bulas, rotulos, etiquetas, caixas, cartuchos, embalagens e manuais tecnicos e de instrucao, quando ficarao sujeitos ao ICMS.';
+  1305: r := 'Composicao grafica, inclusive confeccao de impressos graficos, fotocomposicao, clicheria, zincografia, litografia e fotolitografia, exceto se destinados a posterior operacao' +
+             ' de comercializacao ou industrializacao, ainda que incorporados, de qualquer forma, a outra mercadoria que deva ser objeto de posterior circulacao, tais como bulas, rotulos,' +
+             ' etiquetas, caixas, cartuchos, embalagens e manuais tecnicos e de instrucao, quando ficarao sujeitos ao ICMS.';
+             
   1401: r := 'Lubrificacao, limpeza, lustracao, revisao, carga e recarga, conserto, restauracao, blindagem, manutencao e conservacao ' +
              'de maquinas, veiculos, aparelhos, equipamentos, motores, elevadores ou de qualquer objeto (exceto pecas e partes empregadas, que ficam sujeitas ao ICMS).';
   1402: r := 'Assistencia tecnica.';

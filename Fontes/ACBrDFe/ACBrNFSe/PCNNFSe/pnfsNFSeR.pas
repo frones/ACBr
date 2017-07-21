@@ -581,7 +581,7 @@ begin
         NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe3, 'DescontoIncondicionado');
         NFSe.Servico.Valores.DescontoCondicionado   := Leitor.rCampo(tcDe2, 'DescontoCondicionado');
 
-        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2]) then
+        if (FProvedor in [proISSe, proVersaTecnologia, proNEAInformatica, proFiorilli, proPronimv2, proEReceita]) then
         begin
           if NFSe.Servico.Valores.IssRetido = stRetencao then
             NFSe.Servico.Valores.ValorIssRetido := Leitor.rCampo(tcDe2, 'ValorIss')

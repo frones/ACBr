@@ -1916,7 +1916,7 @@ begin
                                                              StringToFloatDef(FPVersaoServico, 0)),
                                     FPMsg);
     end;
-
+    (* Comentado por não estar realizando a validação corretamente
     if not EventoEhValido then
     begin
       FErroValidacao := ACBrStr('Falha na validação dos dados do Evento: ') +
@@ -1924,7 +1924,7 @@ begin
 
       raise EACBrMDFeException.CreateDef(FErroValidacao);
     end;
-
+    *)
     for I := 0 to FEvento.Evento.Count - 1 do
       FEvento.Evento[I].InfEvento.id := EventoMDFe.Evento[I].InfEvento.id;
   finally

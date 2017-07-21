@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 21/07/2017
+-- ACBrSAT --
+[+] Adicionada a propriedade "AguardandoResposta: Boolean, readonly". Ela será
+    ligada, sempre que o ACBrSAT iniciar um comando, e enviá-lo ao SAT. E será
+    desligada, quando obtiver a resposta do SAT
+[+] Adicionado o evento "OnAguardandoRespostaChange", para notificar a aplicação
+    quando o estado de "AguardandoResposta" for modificado
+    (por: DSA)
+
 Data 14/07/2017
 -- ACBrSAT --
 [*] Refatoração do método "EnviarEmail" para usar o recurso recem implementado de

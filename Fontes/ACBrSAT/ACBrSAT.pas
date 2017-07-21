@@ -61,6 +61,8 @@ type
      fsCFe : TCFe ;
      fsCFeCanc : TCFeCanc ;
      fsnumeroSessao : Integer ;
+     fsAguardandoResposta: Boolean;
+     fsOnAguardandoRespostaChange: TNotifyEvent;
      fsOnGetcodigoDeAtivacao : TACBrSATGetChave ;
      fsOnGetNumeroSessao: TACBrSATGetNumeroSessao;
      fsOnGetsignAC : TACBrSATGetChave ;
@@ -106,6 +108,7 @@ type
      procedure SetInicializado(AValue : Boolean) ;
      procedure SetModelo(AValue : TACBrSATModelo) ;
      procedure SetNomeDLL(AValue : string) ;
+     procedure SetAguardandoResposta(AValue: Boolean);
 
      procedure VerificaInicializado ;
      procedure VerificaCondicoesImpressao( EhCancelamento: Boolean = False);
@@ -141,6 +144,7 @@ type
      property signAC           : AnsiString read GetsignAC ;
 
      property RespostaComando: String read fsRespostaComando ;
+     Property AguardandoResposta : Boolean read fsAguardandoResposta ;
 
      property CFe : TCFe read fsCFe ;
      property CFeCanc : TCFeCanc read fsCFeCanc ;
@@ -224,6 +228,8 @@ type
      property OnGetsignAC : TACBrSATGetChave read fsOnGetsignAC write fsOnGetsignAC;
      property OnGetNumeroSessao : TACBrSATGetNumeroSessao read fsOnGetNumeroSessao
         write fsOnGetNumeroSessao;
+     property OnAguardandoRespostaChange : TNotifyEvent
+        read fsOnAguardandoRespostaChange write fsOnAguardandoRespostaChange ;
 
      property OnEnviarDadosVenda: TACBrSATEventoDados read fsOnEnviarDadosVenda
         write fsOnEnviarDadosVenda;
@@ -726,6 +732,7 @@ begin
   fsArqLOG          := '' ;
   fsComandoLog      := '';
   fsRespostaComando := '';
+  fsAguardandoResposta := False;
 
   fsValidarNumeroSessaoResposta := False;
   fsNumeroTentativasValidarSessao := CMAX_ERROS_SESSAO;
@@ -736,7 +743,7 @@ begin
   fsOnGetsignAC           := Nil;
   fsOnGravarLog           := Nil;
   fsOnGetNumeroSessao     := Nil;
-
+  fsOnAguardandoRespostaChange  := Nil;
   fsOnCancelarUltimaVenda       := Nil;
   fsOnConsultarNumeroSessao     := Nil;
   fsOnConsultarSAT              := Nil;
@@ -796,6 +803,7 @@ begin
   DoLog( 'ACBrSAT.Inicializado');
 
   fsInicializado := true ;
+  fsAguardandoResposta := False;
   fsPrefixoCFe := CPREFIXO_CFe;
 end ;
 
@@ -823,6 +831,9 @@ var
   AStr : String ;
 begin
   VerificaInicializado;
+  if fsAguardandoResposta then
+     raise EACBrSATErro.CreateFmt( cACBrSATOcupadoException, [numeroSessao] ) ;
+
   fsSessaoAVerificar := 0;
   GerarnumeroSessao;
 
@@ -832,6 +843,7 @@ begin
      AStr := AStr + ' - Comando: '+fsComandoLog;
 
   DoLog( AStr );
+  SetAguardandoResposta(True);
 end ;
 
 function TACBrSAT.FinalizaComando( AResult : String ) : String ;
@@ -842,14 +854,15 @@ begin
   fsRespostaComando := DecodificarPaginaDeCodigoSAT( AResult );
   Result := fsRespostaComando;
 
+  SetAguardandoResposta(False);
+
   fsComandoLog := '';
   AStr := 'NumeroSessao: '+IntToStr(numeroSessao) ;
   if fsRespostaComando <> '' then
      AStr := AStr + ' - Resposta:'+fsRespostaComando;
 
-  Resposta.RetornoStr := fsRespostaComando;
-
   DoLog( AStr );
+  Resposta.RetornoStr := fsRespostaComando;
 
   if (Resposta.numeroSessao <> numeroSessao) then
   begin
@@ -1446,6 +1459,16 @@ begin
   if FileName = '' then
     fsNomeDLL := PathWithDelim( fsNomeDLL ) + cLIBSAT;
 end ;
+
+procedure TACBrSAT.SetAguardandoResposta(AValue: Boolean);
+begin
+  if fsAguardandoResposta = AValue then
+    Exit;
+
+  fsAguardandoResposta := AValue;
+  if Assigned(fsOnAguardandoRespostaChange) then
+    fsOnAguardandoRespostaChange(Self);
+end;
 
 procedure TACBrSAT.SetExtrato(const Value: TACBrSATExtratoClass);
 Var

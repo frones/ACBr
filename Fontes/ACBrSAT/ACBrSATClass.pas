@@ -61,6 +61,8 @@ const
   cACBrSATSetModeloException   = 'Não é possível mudar o Modelo com o SAT Inicializado' ;
   cACBrSATModeloNaoDefinido    = 'Modelo de SAT não definido' ;
   cACBrSATNaoInicializado      = 'ACBrSAT não foi inicializado corretamente' ;
+  cACBrSATOcupadoException     = 'SAT ocupado!' + sLineBreak +
+                                 'Aguardando resposta da sessão %d' ;
   cACBrSATFuncaoNaoEncontrada  = 'Erro ao carregar a função: %s na Biblioteca: %s' ;
   cACBrSATCMDInvalidoException = 'Procedure: %s '+ sLineBreak +
                                  ' não implementada para o SAT: %s'+sLineBreak + sLineBreak +

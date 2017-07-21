@@ -165,8 +165,8 @@ type
 
 
      xContinuaFuncaoSiTefInterativo : function (
-                var ProximoComando: Integer;
-                var TipoCampo: Integer;
+                var ProximoComando: SmallInt;
+                var TipoCampo: LongInt;
                 var TamanhoMinimo: SmallInt;
                 var TamanhoMaximo: SmallInt;
                 pBuffer: PAnsiChar;
@@ -1069,8 +1069,9 @@ end;
 function TACBrTEFDCliSiTef.ContinuarRequisicao(ImprimirComprovantes: Boolean
   ): Integer;
 var
-  ProximoComando, TipoCampo, Continua, ItemSelecionado, I: Integer;
-  TamanhoMinimo, TamanhoMaximo : SmallInt ;
+  Continua, ItemSelecionado, I: Integer;
+  ProximoComando,TamanhoMinimo, TamanhoMaximo : SmallInt;
+  TipoCampo: LongInt;
   Buffer: array [0..20000] of AnsiChar;
   Mensagem, MensagemOperador, MensagemCliente, CaptionMenu : String ;
   Resposta : AnsiString;

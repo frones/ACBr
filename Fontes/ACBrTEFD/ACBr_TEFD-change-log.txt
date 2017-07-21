@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/07/2017
+-- ACBrTEFDCliSiTEF --
+[-] Correção para funcionamento de CliSiTef em Linux 64 bits
+    (por: DSA)
+
 07/06/2017
 -- ACBrTEFD --
 [+] Criada a propriedade "SuportaReajusteValor: Boolean", para informar que será

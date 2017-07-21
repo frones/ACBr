@@ -120,12 +120,14 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 											</xs:restriction>
 										</xs:simpleType>
 									</xs:element>
-									<xs:element name="tpBPe" type="TTipoBPe">
+									<xs:element name="tpBPe">
 										<xs:annotation>
 											<xs:documentation>Tipo do BP-e</xs:documentation>
-											<xs:documentation>1 - BP-e normal
-2 - BP-e substituição</xs:documentation>
+											<xs:documentation>0 - BP-e normal 3 - BP-e substituição</xs:documentation>
 										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="TTipoBPe"/>
+										</xs:simpleType>
 									</xs:element>
 									<xs:element name="indPres" type="TIndPres">
 										<xs:annotation>
@@ -507,9 +509,13 @@ para tpEmis diferente de 1</xs:documentation>
 													<xs:annotation>
 														<xs:documentation>Tipo do Documento de identificação</xs:documentation>
 														<xs:documentation>1-RG
+
 2-Título de Eleitor
+
 3-Passaporte
-4- ....</xs:documentation>
+
+4-CNH
+5-Outros</xs:documentation>
 													</xs:annotation>
 												</xs:element>
 												<xs:element name="nDoc">
@@ -680,7 +686,7 @@ Informar se tpTrecho = 3</xs:documentation>
 									</xs:element>
 									<xs:element name="plataforma" minOccurs="0">
 										<xs:annotation>
-											<xs:documentation>Plataforma ou carro de Embarque</xs:documentation>
+											<xs:documentation>Plataforma/carro/barco de Embarque</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
 											<xs:restriction base="TString">
@@ -688,6 +694,99 @@ Informar se tpTrecho = 3</xs:documentation>
 												<xs:minLength value="2"/>
 											</xs:restriction>
 										</xs:simpleType>
+									</xs:element>
+									<xs:element name="infTravessia" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Informações do transporte aquaviário de travessia</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="tpVeiculo">
+													<xs:annotation>
+														<xs:documentation>Tipo do veículo transportado</xs:documentation>
+														<xs:documentation>01-Motocicleta
+02-Automóvel
+03-Automóvel com reboque
+04-Caminhonete
+05-Caminhonete com reboque
+06-Micro-onibus
+07-Van
+08-Ônibus - 2 ou 3 eixos
+09-Ônibus 4 eixos
+10-Caminhão 3/4
+11-Caminhão toco
+12-Caminhão Truck
+13-Carreta
+14-Bi-Trem
+15-Rodo-Trem - 9 eixos
+16-Romeu e Julieta - 7 eixos
+17-Jamanta - 6 eixos
+18-Jamanta - 5 eixos
+19-Jamanta - 4 eixos
+20-Trator de esteira
+21-Pá mecânica
+22-Patrol
+23-Trator de Pneu Grande
+24-Trator de Pneu com reboque
+25-Trator de Pneu sem reboque
+26-Carroça
+27-Mobilete
+28-Bicicleta
+29-Passageiro
+99-Outros</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="preserve"/>
+															<xs:enumeration value="01"/>
+															<xs:enumeration value="02"/>
+															<xs:enumeration value="03"/>
+															<xs:enumeration value="04"/>
+															<xs:enumeration value="05"/>
+															<xs:enumeration value="06"/>
+															<xs:enumeration value="07"/>
+															<xs:enumeration value="08"/>
+															<xs:enumeration value="09"/>
+															<xs:enumeration value="10"/>
+															<xs:enumeration value="11"/>
+															<xs:enumeration value="12"/>
+															<xs:enumeration value="13"/>
+															<xs:enumeration value="14"/>
+															<xs:enumeration value="15"/>
+															<xs:enumeration value="16"/>
+															<xs:enumeration value="17"/>
+															<xs:enumeration value="18"/>
+															<xs:enumeration value="19"/>
+															<xs:enumeration value="20"/>
+															<xs:enumeration value="21"/>
+															<xs:enumeration value="22"/>
+															<xs:enumeration value="23"/>
+															<xs:enumeration value="24"/>
+															<xs:enumeration value="25"/>
+															<xs:enumeration value="26"/>
+															<xs:enumeration value="27"/>
+															<xs:enumeration value="28"/>
+															<xs:enumeration value="29"/>
+															<xs:enumeration value="99"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="sitVeiculo">
+													<xs:annotation>
+														<xs:documentation>Situação do veículo transportado</xs:documentation>
+														<xs:documentation>01 - Vazio; 02 - Carregado; 03 - Não se aplica</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:whiteSpace value="preserve"/>
+															<xs:enumeration value="1"/>
+															<xs:enumeration value="2"/>
+															<xs:enumeration value="3"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>
@@ -733,6 +832,7 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 07 - Acordo Coletivo
 08 - Profissional em Deslocamento
 09 - Profissional da Empresa
+10 - Jovem 
 99 - Outros</xs:documentation>
 										</xs:annotation>
 										<xs:simpleType>
@@ -747,6 +847,7 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 												<xs:enumeration value="07"/>
 												<xs:enumeration value="08"/>
 												<xs:enumeration value="09"/>
+												<xs:enumeration value="10"/>
 												<xs:enumeration value="99"/>
 											</xs:restriction>
 										</xs:simpleType>
@@ -1066,7 +1167,7 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 									<xs:whiteSpace value="preserve"/>
 									<xs:minLength value="50"/>
 									<xs:maxLength value="1000"/>
-									<xs:pattern value="((HTTPS?|https?)://.*\?chBPe=[0-9]{44}&amp;tpAmb=[1-2](&amp;jwt=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1}&amp;pKey=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
+									<xs:pattern value="((HTTPS?|https?)://.*\?chBPe=[0-9]{44}&amp;tpAmb=[1-2](&amp;jwt=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1}&amp;fPrint=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>
@@ -1732,8 +1833,8 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:whiteSpace value="preserve"/>
-			<xs:enumeration value="1"/>
-			<xs:enumeration value="2"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TTipoSubstituicao">

@@ -1501,7 +1501,13 @@ begin
   //GravarLog('CodificarPaginaDeCodigo: '+IntToStr(NumPagCod) );
 
   if NumPagCod > 0 then
+  begin
+    {$IfDef MSWINDOWS}
     Result := TranslateString(ACBrStrToAnsi(ATexto), NumPagCod)
+    {$Else}
+    Result := TranslateString(ATexto, NumPagCod)
+    {$EndIf}
+  end
   else
     Result := TiraAcentos(ATexto);
 end;

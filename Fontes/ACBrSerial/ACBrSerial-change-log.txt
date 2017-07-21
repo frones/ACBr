@@ -39,11 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/07/2017
+-- ACBrPosPrinter --
+[-] Correção para impressão com acentos, no Linux
+    (por: DSA)
+
 Data: 19/07/2017
--- ACBrBALFilizola
+-- ACBrBALFilizola --
 [+] Ajuste para o modelo C&F C6MT
-		http://www.projetoacbr.com.br/forum/topic/36644-integração-balança-cf-c6mt-filizola/
-		(por: Juliomar Marchetti)
+    http://www.projetoacbr.com.br/forum/topic/36644-integração-balança-cf-c6mt-filizola/
+    (por: Juliomar Marchetti)
 		
 Data: 18/07/2017
 -- ACBrECFEscECF --

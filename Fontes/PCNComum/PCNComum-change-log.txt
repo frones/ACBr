@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2017
+-- pcnConversao --
+[-] Remoção da função DescrModeloNFe. Sendo espicífica para as danfe's ( Fast Report / Fortes Report ).
+    	por: Henrique Leonardo
+
 04/07/2017
 -- pcnAuxiliar --
 [+] Adicionado o método:

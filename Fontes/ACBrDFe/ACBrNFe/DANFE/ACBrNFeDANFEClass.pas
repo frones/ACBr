@@ -163,6 +163,8 @@ type
     function ManterUnidades(sUCom, sUTrib: String): String;
     function ManterQuantidades(dQCom, dQTrib: Double): String;
     function ManterValoresUnitarios(dVCom, dVTrib: Double): String;
+    function ManterDocreferenciados(bImprimirDadosDocReferenciados: Boolean;
+      sQuebraLinha: String = ' '): String;
 
   published
     property ACBrNFe: TComponent                     read FACBrNFe                        write SetNFE;
@@ -220,7 +222,7 @@ type
 implementation
 
 uses
-  ACBrNFe, ACBrUtil;
+  ACBrNFe, ACBrUtil,ACBrDFeUtil,ACBrValidador;
 
 //Casas Decimais
 constructor TCasasDecimais.Create(AOwner: TComponent);
@@ -517,7 +519,79 @@ begin
       Result := Result + #13#10 + FormatValorUnitario ( dVTrib );
 end;
 
+function TACBrNFeDANFEClass.ManterDocreferenciados( bImprimirDadosDocReferenciados : Boolean; sQuebraLinha : String = ' ' ) : String;
+// Informações de Documentos referenciados
+  function DescrModeloNFe(chave: String):String;
+  begin
+    case StrToIntDef(Copy(chave, 21, 2),0) of
+      59:   Result := 'CFe-SAT Ref.:';
+      65:   Result := 'NFCe Ref.:';
+      else  Result := 'NFe Ref.:';
+    end;
+  end;
+  Function MontaLadoALado(  bExecuta : Boolean;
+                            sResult : string;
+                            sInicio : String;
+                            sString : String ) : String;
+  begin
+    if bExecuta  then
+    begin
+      if sResult = '' then
+        Result := sInicio
+      else
+      if pos(sInicio,sResult) = 0 then
+        Result := sResult+', '+ sInicio
+      else
+        Result := sResult+', ';
 
+      Result := Result + '(' + sString +')' ;
+    end
+    else
+      Result := sResult;
+  end;
+var
+  i : Integer;
+  ANFe: TNFe;
+begin
+  ANFe    := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
+  Result  := '';
+  if ( bImprimirDadosDocReferenciados ) and ( ANFe.Ide.NFref.Count > 0 ) then
+  begin
+    for i := 0 to (ANFe.ide.NFref.Count - 1) do
+    begin
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].refNFe <> '' ),
+                                  Result,
+                                  DescrModeloNFe(ANFe.ide.NFref[i].refNFe) ,
+                                  FormatarChaveAcesso( ANFe.ide.NFref[i].refNFe ) );
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].refCTe <> '' ),
+                                  Result,
+                                  'CTe Ref.:',
+                                  FormatarChaveAcesso( ANFe.ide.NFref[i].refCTe ));
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio ) ,
+                                  Result,
+                                  'ECF Ref.:',
+                                  ACBrStr('modelo: ' + ECFModRefToStr(ANFe.ide.NFref[i].RefECF.modelo) +
+                                  ' ECF: ' +ANFe.ide.NFref[i].RefECF.nECF + ' COO: ' + ANFe.ide.NFref[i].RefECF.nCOO));
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].RefNF.CNPJ <> '' ),
+                                  Result,
+                                  'NF Ref.:',
+                                  ACBrStr('série: ' + IntTostr(ANFe.ide.NFref[i].RefNF.serie) +
+                                  ' número: ' + IntTostr(ANFe.ide.NFref[i].RefNF.nNF) +
+                                  ' emit: ' + FormatarCNPJouCPF(ANFe.ide.NFref[i].RefNF.CNPJ) +
+                                  ' modelo: ' + IntTostr(ANFe.ide.NFref[i].RefNF.modelo)));
+      Result := MontaLadoALado( ( ANFe.ide.NFref[i].RefNFP.nNF > 0 ),
+                                  Result,
+                                  'NFP Ref.:',
+                                  ACBrStr('série: ' + IntTostr(ANFe.ide.NFref[i].RefNFP.serie) +
+                                  ' número: ' + IntTostr(ANFe.ide.NFref[i].RefNFP.nNF) +
+                                  ' modelo: ' + ANFe.ide.NFref[i].RefNFP.modelo +
+                                  ' emit: ' + FormatarCNPJouCPF(ANFe.ide.NFref[i].RefNFP.CNPJCPF) +
+                                  ' IE: ' + ANFe.ide.NFref[i].RefNFP.IE +
+                                  ' UF: ' + CUFtoUF(ANFe.ide.NFref[i].RefNFP.cUF)));
 
+    end;
+    Result := Result + sQuebraLinha;
+  end;
+end;
 
 end.

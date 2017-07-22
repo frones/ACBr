@@ -1483,7 +1483,7 @@ begin
   InsereLinhas( EnderecoEntrega  , iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
 
 
-  InsereLinhas(   ManterDocreferenciados +
+  InsereLinhas( TACBrNFeDANFeRL(Owner).ManterDocreferenciados( FImprimirDadosDocReferenciados )  +
                   ManterInfAdFisco +
                   ManterObsFisco +
                   ManterProcreferenciado +

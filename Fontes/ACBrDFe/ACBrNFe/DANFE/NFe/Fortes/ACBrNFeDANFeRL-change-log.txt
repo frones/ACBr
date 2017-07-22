@@ -47,6 +47,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+22/07/2017
+-- ACBrNFeDANFEClass --
+[+] Adicionada a função ManterDocReferenciados para retornar a informações de documentos referenciados.
+
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
+[*] Refatoração de ManterDocreferenciados, evitando duplicidade do código nas danfe's ( Fast Report / Fortes Report ). 
+
+-- ACBrNFeDANFeRL --
+[-] Remoção da função ManterDocreferenciados e da unit ACbrUtil, sem utilidade na unit. 
+    	por: Henrique Leonardo
+
 
 19/06/2017
 -- ACBrNFeDANFeRL ACBrNFeDANFEFRDM --
@@ -54,7 +65,6 @@ Símbolo : Significado
        para utilização da função DescrModeloNFe
     http://www.projetoacbr.com.br/forum/topic/37267-danfe-fortes-conflito-documentos-referenciados-adicionados-pelo-componente-no-danfe/#comment-244342
     por: RicardoVoigt / Henrique Leonardo
-
 
 13/06/2017
 -- ACBrNFeDANFeRL ACBrNFeDANFeRLClass --

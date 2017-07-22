@@ -124,7 +124,6 @@ type
     function QuebraLinha: String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
     function TrataDocumento(sCNPJCPF: String): String;
-    function ManterDocreferenciados: String;
     function ManterInfAdFisco: String;
     function ManterInfCompl: String;
     function ManterInfContr: String;
@@ -320,7 +319,7 @@ type
 
 implementation
 
-uses ACBrValidador,ACBrDFeUtil;
+uses ACBrValidador;
 
 {$R *.dfm}
 
@@ -792,72 +791,6 @@ begin
     Result := Result + FormatarCNPJouCPF( sCNPJCPF );
   end;
 end;
-
-function TfrlDANFeRL.ManterDocreferenciados : String;
-// Informações de Documentos referenciados
-  Function MontaLadoALado(  bExecuta : Boolean;
-                            sResult : string;
-                            sInicio : String;
-                            sString : String ) : String;
-  begin
-    if bExecuta  then
-    begin
-      if sResult = '' then
-        Result := sInicio
-      else
-      if pos(sInicio,sResult) = 0 then
-        Result := sResult+', '+ sInicio
-      else
-        Result := sResult+', ';
-
-      Result := Result + '(' + sString +')' ;
-    end
-    else
-      Result := sResult;
-  end;
-var
-  i : Integer;
-begin
-  Result := '';
-  if ( FImprimirDadosDocReferenciados ) and ( FNFe.Ide.NFref.Count > 0 ) then
-  begin
-    for i := 0 to (FNFe.ide.NFref.Count - 1) do
-    begin
-      Result := MontaLadoALado( ( FNFe.ide.NFref[i].refNFe <> '' ),
-                                  Result,
-                                  DescrModeloNFe(FNFe.ide.NFref[i].refNFe) ,
-                                  FormatarChaveAcesso( FNFe.ide.NFref[i].refNFe ) );
-      Result := MontaLadoALado( ( FNFe.ide.NFref[i].refCTe <> '' ),
-                                  Result,
-                                  'CTe Ref.:',
-                                  FormatarChaveAcesso( FNFe.ide.NFref[i].refCTe ));
-      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefECF.modelo <> ECFModRefVazio ) ,
-                                  Result,
-                                  'ECF Ref.:',
-                                  ACBrStr('modelo: ' + ECFModRefToStr(FNFe.ide.NFref[i].RefECF.modelo) +
-                                  ' ECF: ' +FNFe.ide.NFref[i].RefECF.nECF + ' COO: ' + FNFe.ide.NFref[i].RefECF.nCOO));
-      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefNF.CNPJ <> '' ),
-                                  Result,
-                                  'NF Ref.:',
-                                  ACBrStr('série: ' + IntTostr(FNFe.ide.NFref[i].RefNF.serie) +
-                                  ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNF.nNF) +
-                                  ' emit: ' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNF.CNPJ) +
-                                  ' modelo: ' + IntTostr(FNFe.ide.NFref[i].RefNF.modelo)));
-      Result := MontaLadoALado( ( FNFe.ide.NFref[i].RefNFP.nNF > 0 ),
-                                  Result,
-                                  'NFP Ref.:',
-                                  ACBrStr('série: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.serie) +
-                                  ' número: ' + IntTostr(FNFe.ide.NFref[i].RefNFP.nNF) +
-                                  ' modelo: ' + FNFe.ide.NFref[i].RefNFP.modelo +
-                                  ' emit: ' + FormatarCNPJouCPF(FNFe.ide.NFref[i].RefNFP.CNPJCPF) +
-                                  ' IE: ' + FNFe.ide.NFref[i].RefNFP.IE +
-                                  ' UF: ' + CUFtoUF(FNFe.ide.NFref[i].RefNFP.cUF)));
-
-    end;
-    Result := Result + ' ';
-  end;
-end;
-
 
 function TfrlDANFeRL.ManterInfAdFisco : String;
 // Informações de interesse do fisco

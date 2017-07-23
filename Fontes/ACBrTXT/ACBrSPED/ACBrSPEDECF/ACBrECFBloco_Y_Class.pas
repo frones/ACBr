@@ -624,8 +624,8 @@ begin
       begin
         Add(LFill('Y620') +
             LFill(DT_EVENTO) +
-            LFill(IND_RELAC) +
-            LFill(PAIS) +
+            LFill(IND_RELAC, 1) +
+            LFill(PAIS, 3) +
             LFill(CNPJ, 14, True) +
             LFill(NOM_EMP) +
             VLFill(VALOR_REAIS, 19, 2) +
@@ -681,7 +681,7 @@ begin
       begin
         Add(LFill('Y640') +
             LFill(CNPJ, 14) +
-            LFill(COND_DECL) +
+            LFill(COND_DECL, 1) +
             VLFill(VL_CONS, 19, 2) +
             LFill(CNPJ_LID, 14) +
             VLFill(VL_DECL,19));

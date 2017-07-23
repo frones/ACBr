@@ -942,7 +942,7 @@ end;
 
 procedure TACBrSPEDContabil.WriteRegistroK001;
 begin
-   if (DT_INI >= EncodeDate(2016, 1, 1)) then
+   if ((DT_INI >= EncodeDate(2016, 1, 1)) and (Bloco_0.Registro0000.IND_ESC_CONS = 'S')) then
       if ((Bloco_K.RegistroK001.IND_DAD = 0) or (DT_INI >= EncodeDate(2017, 1, 1))) then
       begin
          with Bloco_9.Registro9900.New do
@@ -1034,7 +1034,7 @@ end;
 
 procedure TACBrSPEDContabil.WriteRegistroK990;
 begin
-   if (DT_INI >= EncodeDate(2016, 1, 1)) then
+   if ((DT_INI >= EncodeDate(2016, 1, 1)) and (Bloco_0.Registro0000.IND_ESC_CONS = 'S')) then
       if ((Bloco_K.RegistroK001.IND_DAD = 0) or (DT_INI >= EncodeDate(2017, 1, 1))) then
       begin
          with Bloco_9.Registro9900.New do

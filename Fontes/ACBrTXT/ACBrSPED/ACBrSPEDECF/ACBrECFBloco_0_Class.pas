@@ -343,7 +343,7 @@ begin
 
           Add( LFill('0020') +
                LFill(IND_ALIQ_CSLL) +
-               LFill(IND_QTE_SCP) +
+               LFill(IND_QTE_SCP, 3) +
                LFill(IND_ADM_FUN_CLU) +
                LFill(IND_PART_CONS) +
                LFill(IND_OP_EXT) +
@@ -377,7 +377,7 @@ begin
 
           Add( LFill('0020') +
                LFill(IND_ALIQ_CSLL) +
-               LFill(IND_QTE_SCP) +
+               LFill(IND_QTE_SCP, 3) +
                LFill(IND_ADM_FUN_CLU) +
                LFill(IND_PART_CONS) +
                LFill(IND_OP_EXT) +

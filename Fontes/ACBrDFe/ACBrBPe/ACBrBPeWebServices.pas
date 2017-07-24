@@ -46,7 +46,7 @@ unit ACBrBPeWebServices;
 interface
 
 uses
-  Classes, SysUtils, dateutils, blcksock,
+  Classes, SysUtils, dateutils, blcksock, synacode,
   ACBrDFe, ACBrDFeWebService,
   pcnAuxiliar, pcnConversao, pcnBPe, pcnConversaoBPe, pcnProcBPe,
   pcnEnvEventoBPe, pcnRetEnvEventoBPe, pcnRetConsSitBPe, pcnDistDFeIntBPe,
@@ -86,11 +86,11 @@ type
     Fversao: String;
     FtpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
-    FcUF: integer;
+    FcUF: Integer;
     FdhRecbto: TDateTime;
-    FTMed: integer;
+    FTMed: Integer;
     FdhRetorno: TDateTime;
     FxObs: String;
   protected
@@ -106,11 +106,11 @@ type
     property versao: String read Fversao;
     property tpAmb: TpcnTipoAmbiente read FtpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
-    property cUF: integer read FcUF;
+    property cUF: Integer read FcUF;
     property dhRecbto: TDateTime read FdhRecbto;
-    property TMed: integer read FTMed;
+    property TMed: Integer read FTMed;
     property dhRetorno: TDateTime read FdhRetorno;
     property xObs: String read FxObs;
   end;
@@ -124,11 +124,12 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FxMotivo: String;
     FdhRecbto: TDateTime;
-    FTMed: integer;
+    FTMed: Integer;
+    FMsgZip: Boolean;
 
     FBPeRetorno: TretEnvBPe;
 
@@ -150,12 +151,14 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property xMotivo: String read FxMotivo;
     property dhRecbto: TDateTime read FdhRecbto;
-    property TMed: integer read FTMed;
+    property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
+    property MsgZip: Boolean read FMsgZip write FMsgZip;
+
     property BPeRetorno: TretEnvBPe read FBPeRetorno;
   end;
 
@@ -172,8 +175,8 @@ type
     Fversao: String;
     FTpAmb: TpcnTipoAmbiente;
     FverAplic: String;
-    FcStat: integer;
-    FcUF: integer;
+    FcStat: Integer;
+    FcUF: Integer;
     FRetBPeDFe: String;
 
     FprotBPe: TProcBPe;
@@ -202,8 +205,8 @@ type
     property versao: String read Fversao;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
     property verAplic: String read FverAplic;
-    property cStat: integer read FcStat;
-    property cUF: integer read FcUF;
+    property cStat: Integer read FcStat;
+    property cUF: Integer read FcUF;
     property RetBPeDFe: String read FRetBPeDFe;
 
     property protBPe: TProcBPe read FprotBPe;
@@ -214,9 +217,9 @@ type
 
   TBPeEnvEvento = class(TBPeWebService)
   private
-    FidLote: integer;
+    FidLote: Integer;
     FEvento: TEventoBPe;
-    FcStat: integer;
+    FcStat: Integer;
     FxMotivo: String;
     FTpAmb: TpcnTipoAmbiente;
     FCNPJ: String;
@@ -239,8 +242,8 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property idLote: integer read FidLote write FidLote;
-    property cStat: integer read FcStat;
+    property idLote: Integer read FidLote write FidLote;
+    property cStat: Integer read FcStat;
     property xMotivo: String read FxMotivo;
     property TpAmb: TpcnTipoAmbiente read FTpAmb;
 
@@ -251,7 +254,7 @@ type
 
   TDistribuicaoDFe = class(TBPeWebService)
   private
-    FcUFAutor: integer;
+    FcUFAutor: Integer;
     FCNPJCPF: String;
     FultNSU: String;
     FNSU: String;
@@ -274,7 +277,7 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property cUFAutor: integer read FcUFAutor write FcUFAutor;
+    property cUFAutor: Integer read FcUFAutor write FcUFAutor;
     property CNPJCPF: String read FCNPJCPF write FCNPJCPF;
     property ultNSU: String read FultNSU write FultNSU;
     property NSU: String read FNSU write FNSU;
@@ -328,8 +331,8 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: integer): Boolean; overload;
-    function Envia(ALote: String): Boolean; overload;
+    function Envia(ALote: Integer; aMsgZip: Boolean = False): Boolean; overload;
+    function Envia(ALote: String; aMsgZip: Boolean = False): Boolean; overload;
 
     property ACBrBPe: TACBrDFe read FACBrBPe write FACBrBPe;
     property StatusServico: TBPeStatusServico read FStatusServico write FStatusServico;
@@ -478,7 +481,7 @@ function TBPeStatusServico.TratarResposta: Boolean;
 var
   BPeRetorno: TRetConsStatServ;
 begin
-  FPRetWS := SeparaDadosArray(['bpeResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
 
   BPeRetorno := TRetConsStatServ.Create;
   try
@@ -497,7 +500,7 @@ begin
     if (pos('svrs.rs.gov.br', FPURL) > 0) and
        (MinutesBetween(BPeRetorno.dhRecbto, Now) > 50) and
        (not IsHorarioDeVerao(CUFtoUF(FcUF), BPeRetorno.dhRecbto)) then
-      FdhRecbto:= IncHour(BPeRetorno.dhRecbto,-1)
+      FdhRecbto:= IncHour(BPeRetorno.dhRecbto, -1)
     else
       FdhRecbto := BPeRetorno.dhRecbto;
 
@@ -656,7 +659,15 @@ begin
        RetornarConteudoEntre(FBilhetes.Items[0].XMLAssinado, '<BPe', '</BPe>') +
        '</BPe>';
 
-  FPDadosMsg := Zip(FPDadosMsg);
+  if FMsgZip then
+  begin
+    FPBodyElement := 'bpeDadosMsgZip';
+
+    FPDadosMsg := Zip(FPDadosMsg);
+    FPDadosMsg := EncodeBase64(FPDadosMsg);
+  end
+  else
+    FPBodyElement := 'bpeDadosMsg';
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
@@ -666,12 +677,12 @@ end;
 
 function TBPeRecepcao.TratarResposta: Boolean;
 var
-  I: integer;
+  I: Integer;
   chBPe, NomeXMLSalvo: String;
   AProcBPe: TProcBPe;
   SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['bpeResultMsg'],FPRetornoWS );
+  FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
 
   FBPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
   FBPeRetorno.LerXml;
@@ -848,7 +859,7 @@ begin
   NumChave := OnlyNumber(AValue);
 
   if not ValidarChave(NumChave) then
-     raise EACBrBPeException.Create('Chave "'+AValue+'" inválida.');
+     raise EACBrBPeException.Create('Chave "' + AValue + '" inválida.');
 
   FBPeChave := NumChave;
 end;
@@ -929,12 +940,12 @@ var
   SalvarXML, BPCancelado, Atualiza: Boolean;
   aEventos, sPathBPe, NomeXMLSalvo: String;
   AProcBPe: TProcBPe;
-  I, J, Inicio, Fim: integer;
+  I, J, Inicio, Fim: Integer;
   dhEmissao: TDateTime;
 begin
   BPeRetorno := TRetConsSitBPe.Create;
   try
-    FPRetWS := SeparaDadosArray(['bpeResultMsg'],FPRetornoWS );
+    FPRetWS := SeparaDadosArray(['bpeResultMsg'], FPRetornoWS );
 
     BPeRetorno.Leitor.Arquivo := ParseText(FPRetWS);
     BPeRetorno.LerXML;
@@ -1306,7 +1317,7 @@ end;
 procedure TBPeEnvEvento.DefinirDadosMsg;
 var
   EventoBPe: TEventoBPe;
-  I, F: integer;
+  I, F: Integer;
   Lote, Evento, Eventos, EventosAssinados: AnsiString;
 begin
   EventoBPe := TEventoBPe.Create;
@@ -1378,7 +1389,7 @@ begin
 
     with TACBrBPe(FPDFeOwner) do
     begin
-      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico,0)), FPMsg);
+      SSL.Validar(FPDadosMsg, GerarNomeArqSchema(FPLayout, StringToFloatDef(FPVersaoServico, 0)), FPMsg);
     end;
 
     for I := 0 to FEvento.Evento.Count - 1 do
@@ -1391,7 +1402,7 @@ end;
 function TBPeEnvEvento.TratarResposta: Boolean;
 var
   Leitor: TLeitor;
-  I, J: integer;
+  I, J: Integer;
   NomeArq, PathArq, VersaoEvento, Texto: String;
 begin
   FEvento.idLote := idLote;
@@ -1469,7 +1480,7 @@ begin
               Texto := ParseText(Texto);
             end;
 
-            // Se o evento for rejeitado a propriedade XML conterá uma string vazia
+            // Se o evento for rejeitado a propriedade XML conterá uma String vazia
             FEventoRetorno.retEvento.Items[J].RetinfEvento.XML := Texto;
             FEvento.Evento.Items[I].RetinfEvento.XML := Texto;
 
@@ -1625,7 +1636,7 @@ end;
 
 function TDistribuicaoDFe.TratarResposta: Boolean;
 var
-  I: integer;
+  I: Integer;
   AXML: String;
 begin
   FPRetWS := SeparaDados(FPRetornoWS, 'bpeDistDFeInteresseResult');
@@ -1825,14 +1836,15 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: integer): Boolean;
+function TWebServices.Envia(ALote: Integer; aMsgZip: Boolean = False): Boolean;
 begin
-  Result := Envia(IntToStr(ALote));
+  Result := Envia(IntToStr(ALote), aMsgZip);
 end;
 
-function TWebServices.Envia(ALote: String): Boolean;
+function TWebServices.Envia(ALote: String; aMsgZip: Boolean = False): Boolean;
 begin
   FEnviar.Lote := ALote;
+  FEnviar.MsgZip := aMsgZip;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );

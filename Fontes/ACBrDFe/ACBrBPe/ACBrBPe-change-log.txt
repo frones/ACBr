@@ -48,6 +48,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2017
+-- Diversos --
+[-] Correções em diversas units e o acrescimo da propriedade MsgZip: Boolean no 
+    método Enviar com o objetivo de definir se o BP-e será enviado compactado ou
+    não.
+    por: Italo Jurisato Junior
+
 08/07/2017
 -- ACBrBPMDFFeWebServices --
 [-] Correção das URLs de serviços e soapAction de todos os serviços.

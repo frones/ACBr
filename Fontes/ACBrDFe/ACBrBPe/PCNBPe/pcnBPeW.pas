@@ -291,19 +291,19 @@ end;
 
 procedure TBPeW.GerarIde;
 begin
-  Gerador.wGrupo('Ide', '#004');
+  Gerador.wGrupo('ide', '#004');
 
   Gerador.wCampo(tcInt, '#005', 'cUF', 02, 02, 1, BPe.ide.cUF, DSC_CUF);
   if not ValidarCodigoUF(BPe.ide.cUF) then
     Gerador.wAlerta('#005', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
   Gerador.wCampo(tcStr, '#006', 'tpAmb  ', 01, 01, 1, tpAmbToStr(BPe.Ide.tpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcInt, '#007', 'Mod    ', 02, 02, 1, BPe.ide.modelo, DSC_MOD);
-  Gerador.wCampo(tcInt, '#008', 'Serie  ', 01, 03, 1, BPe.ide.serie, DSC_SERIE);
+  Gerador.wCampo(tcInt, '#007', 'mod    ', 02, 02, 1, BPe.ide.modelo, DSC_MOD);
+  Gerador.wCampo(tcInt, '#008', 'serie  ', 01, 03, 1, BPe.ide.serie, DSC_SERIE);
   Gerador.wCampo(tcInt, '#009', 'nBP    ', 01, 09, 1, BPe.ide.nBP, DSC_NNF);
   Gerador.wCampo(tcStr, '#010', 'cBP    ', 08, 08, 1, IntToStrZero(RetornarCodigoNumerico(BPe.infBPe.ID, 2), 8), DSC_CNF);
   Gerador.wCampo(tcInt, '#011', 'cDV    ', 01, 01, 1, BPe.Ide.cDV, DSC_CDV);
-  Gerador.wCampo(tcStr, '#012', 'Modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
+  Gerador.wCampo(tcStr, '#012', 'modal  ', 01, 01, 1, ModalBPeToStr(BPe.ide.modal), DSC_MODALBPE);
   Gerador.wCampo(tcStr, '#013', 'dhEmi  ', 25, 25, 1, DateTimeTodh(BPe.ide.dhEmi) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.ide.dhEmi), DSC_DEMI);
   Gerador.wCampo(tcStr, '#014', 'tpEmis ', 01, 01, 1, tpEmisToStr(BPe.Ide.tpEmis), DSC_TPEMIS);
   Gerador.wCampo(tcStr, '#015', 'verProc', 01, 20, 1, BPe.Ide.verProc, DSC_VERPROC);
@@ -320,12 +320,12 @@ begin
     Gerador.wCampo(tcStr, '#023', 'xJust ', 15, 256, 1, BPe.ide.xJust, DSC_XJUSTCONT);
   end;
 
-  Gerador.wGrupo('/Ide');
+  Gerador.wGrupo('/ide');
 end;
 
 procedure TBPeW.GerarEmit;
 begin
-  Gerador.wGrupo('Emit', '#024');
+  Gerador.wGrupo('emit', '#024');
 
   Gerador.wCampoCNPJ('#025', BPe.Emit.CNPJ, CODIGO_BRASIL, True);
 
@@ -356,7 +356,7 @@ begin
 
   Gerador.wCampo(tcStr, '#044', 'TAR', 01, 20, 0, BPe.Emit.TAR, DSC_TAR);
 
-  Gerador.wGrupo('/Emit');
+  Gerador.wGrupo('/emit');
 end;
 
 procedure TBPeW.GerarEnderEmit;
@@ -371,7 +371,7 @@ begin
   Gerador.wGrupo('enderEmit', '#033');
 
   Gerador.wCampo(tcStr, '#034', 'xLgr   ', 02, 60, 1, BPe.Emit.enderEmit.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#035', 'Nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Emit.enderEmit.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#035', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Emit.enderEmit.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#036', 'xCpl   ', 01, 60, 0, BPe.Emit.enderEmit.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#037', 'xBairro', 02, 60, 1, BPe.Emit.enderEmit.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#038', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
@@ -386,8 +386,8 @@ begin
   if not ValidarUF(xUF) then
     Gerador.wAlerta('#041', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#042', 'Fone ', 07, 12, 0, OnlyNumber(BPe.Emit.enderEmit.fone), DSC_FONE);
-  Gerador.wCampo(tcStr, '#043', 'Email', 01, 60, 0, BPe.Emit.enderEmit.Email, DSC_EMAIL);
+  Gerador.wCampo(tcStr, '#042', 'fone ', 07, 12, 0, OnlyNumber(BPe.Emit.enderEmit.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#043', 'email', 01, 60, 0, BPe.Emit.enderEmit.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/enderEmit');
 end;
@@ -398,7 +398,7 @@ var
 const
   HOM_NOME = 'BP-E EMITIDO EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL';
 begin
-  Gerador.wGrupo('Comp', '#045');
+  Gerador.wGrupo('comp', '#045');
 
   if BPe.Ide.tpAmb = taProducao then
     Gerador.wCampo(tcStr, '#046', 'xNome', 02, 60, 1, BPe.Comp.xNome, DSC_XNOME)
@@ -428,7 +428,7 @@ begin
 
   GerarEnderComp(UF);
 
-  Gerador.wGrupo('/Comp');
+  Gerador.wGrupo('/comp');
 end;
 
 procedure TBPeW.GerarEnderComp(var UF: String);
@@ -445,7 +445,7 @@ begin
   Gerador.wGrupo('enderComp', '#051');
 
   Gerador.wCampo(tcStr, '#052', 'xLgr   ', 02, 60, 1, BPe.Comp.enderComp.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#053', 'Nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Comp.enderComp.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#053', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Comp.enderComp.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#054', 'xCpl   ', 01, 60, 0, BPe.Comp.enderComp.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#055', 'xBairro', 01, 60, 1, BPe.Comp.enderComp.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#056', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
@@ -466,22 +466,22 @@ begin
     Gerador.wAlerta('#060', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
 
   Gerador.wCampo(tcStr, '#061', 'xPais', 01, 60, 0, BPe.Comp.enderComp.xPais, DSC_XPAIS);
-  Gerador.wCampo(tcStr, '#062', 'Fone ', 07, 12, 0, OnlyNumber(BPe.Comp.enderComp.fone), DSC_FONE);
-  Gerador.wCampo(tcStr, '#063', 'Email', 01, 60, 0, BPe.Comp.enderComp.Email, DSC_EMAIL);
+  Gerador.wCampo(tcStr, '#062', 'fone ', 07, 12, 0, OnlyNumber(BPe.Comp.enderComp.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#063', 'email', 01, 60, 0, BPe.Comp.enderComp.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/enderComp');
 end;
 
 procedure TBPeW.GerarAgencia;
 begin
-  Gerador.wGrupo('Agencia', '#064');
+  Gerador.wGrupo('agencia', '#064');
 
   Gerador.wCampo(tcStr, '#065', 'xNome', 02, 60, 1, BPe.Agencia.xNome, DSC_XNOME);
   Gerador.wCampoCNPJ('#066', BPe.Agencia.CNPJ, CODIGO_BRASIL, True);
 
   GerarEnderAgencia;
 
-  Gerador.wGrupo('/Agencia');
+  Gerador.wGrupo('/agencia');
 end;
 
 procedure TBPeW.GerarEnderAgencia;
@@ -496,7 +496,7 @@ begin
   Gerador.wGrupo('enderAgencia', '#067');
 
   Gerador.wCampo(tcStr, '#068', 'xLgr   ', 02, 60, 1, BPe.Agencia.enderAgencia.xLgr, DSC_XLGR);
-  Gerador.wCampo(tcStr, '#069', 'Nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Agencia.enderAgencia.nro), DSC_NRO);
+  Gerador.wCampo(tcStr, '#069', 'nro    ', 01, 60, 1, ExecutarAjusteTagNro(FOpcoes.FAjustarTagNro, BPe.Agencia.enderAgencia.nro), DSC_NRO);
   Gerador.wCampo(tcStr, '#070', 'xCpl   ', 01, 60, 0, BPe.Agencia.enderAgencia.xCpl, DSC_XCPL);
   Gerador.wCampo(tcStr, '#071', 'xBairro', 02, 60, 1, BPe.Agencia.enderAgencia.xBairro, DSC_XBAIRRO);
   Gerador.wCampo(tcInt, '#072', 'cMun   ', 07, 07, 1, cMun, DSC_CMUN);
@@ -511,8 +511,8 @@ begin
   if not ValidarUF(xUF) then
     Gerador.wAlerta('#075', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#076', 'Fone ', 07, 12, 0, OnlyNumber(BPe.Agencia.enderAgencia.fone), DSC_FONE);
-  Gerador.wCampo(tcStr, '#077', 'Email', 01, 60, 0, BPe.Agencia.enderAgencia.Email, DSC_EMAIL);
+  Gerador.wCampo(tcStr, '#076', 'fone ', 07, 12, 0, OnlyNumber(BPe.Agencia.enderAgencia.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#077', 'email', 01, 60, 0, BPe.Agencia.enderAgencia.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/enderAgencia');
 end;
@@ -552,8 +552,8 @@ begin
   Gerador.wCampo(tcStr, '#090', 'tpDoc', 01, 01, 1, tpDocumentoToStr(BPe.infPassagem.infPassageiro.tpDoc), DSC_TPDOC);
   Gerador.wCampo(tcStr, '#091', 'nDoc ', 02, 20, 1, BPe.infPassagem.infPassageiro.nDoc, DSC_NDOC);
   Gerador.wCampo(tcDat, '#092', 'dNasc', 10, 10, 0, BPe.infPassagem.infPassageiro.dNasc, DSC_DNASC);
-  Gerador.wCampo(tcStr, '#093', 'Fone ', 07, 12, 0, OnlyNumber(BPe.infPassagem.infPassageiro.Fone), DSC_FONE);
-  Gerador.wCampo(tcStr, '#094', 'Email', 01, 60, 0, BPe.infPassagem.infPassageiro.Email, DSC_EMAIL);
+  Gerador.wCampo(tcStr, '#093', 'fone ', 07, 12, 0, OnlyNumber(BPe.infPassagem.infPassageiro.Fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#094', 'email', 01, 60, 0, BPe.infPassagem.infPassageiro.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/infPassageiro');
 end;
@@ -576,9 +576,9 @@ begin
     if BPe.infViagem[i].tpTrecho = ttConexao then
       Gerador.wCampo(tcStr, '#102', 'dhConexao', 25, 25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);
 
-    Gerador.wCampo(tcStr, '#103', 'Prefixo     ', 01,  20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
-    Gerador.wCampo(tcInt, '#104', 'Poltrona    ', 01,  03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
-    Gerador.wCampo(tcStr, '#105', 'Plataforma  ', 02,  10, 0, BPe.infViagem[i].Plataforma, DSC_PLATAFORMA);
+    Gerador.wCampo(tcStr, '#103', 'prefixo     ', 01,  20, 0, BPe.infViagem[i].Prefixo, DSC_PREFIXO);
+    Gerador.wCampo(tcInt, '#104', 'poltrona    ', 01,  03, 0, BPe.infViagem[i].Poltrona, DSC_POLTRONA);
+    Gerador.wCampo(tcStr, '#105', 'plataforma  ', 02,  10, 0, BPe.infViagem[i].Plataforma, DSC_PLATAFORMA);
 
     if BPe.infViagem[i].infTravessia.tpVeiculo <> tvNenhum then
     begin
@@ -649,7 +649,7 @@ var
     end;
   end;
 begin
-  Gerador.wGrupo('Imp', '#119');
+  Gerador.wGrupo('imp', '#119');
 
   Gerador.wGrupo('ICMS', '#120');
 
@@ -712,7 +712,7 @@ begin
   if BPe.Imp.ICMSUFFim.vBCUFFim > 0.0 then
     GerarImpICMSUFFim;
 
-  Gerador.wGrupo('/Imp');
+  Gerador.wGrupo('/imp');
 end;
 
 procedure TBPeW.GerarImpICMSUFFim;
@@ -737,7 +737,7 @@ var
 begin
   for i := 0 to BPe.pag.Count - 1 do
   begin
-    Gerador.wGrupo('Pag', '#161');
+    Gerador.wGrupo('pag', '#161');
 
     Gerador.wCampo(tcStr, '#162', 'tPag', 02, 02, 1, FormaPagamentoToStr(BPe.pag[i].tPag), DSC_TPAG);
     Gerador.wCampo(tcDe2, '#163', 'vPag', 01, 15, 1, BPe.pag[i].vPag, DSC_VPAG);
@@ -758,11 +758,11 @@ begin
       Gerador.wGrupo('/Card');
     end;
 
-    Gerador.wGrupo('/Pag');
+    Gerador.wGrupo('/pag');
   end;
 
   if BPe.pag.Count > 10 then
-    Gerador.wAlerta('#161', 'Pag', '', ERR_MSG_MAIOR_MAXIMO + '10');
+    Gerador.wAlerta('#161', 'pag', '', ERR_MSG_MAIOR_MAXIMO + '10');
 end;
 
 procedure TBPeW.GerarautXML;

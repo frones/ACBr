@@ -133,7 +133,7 @@ begin
 
     BPe.Ide.cDV    := Leitor.rCampo(tcInt, 'cDV');
 
-    BPe.Ide.modal  := StrToModalBPe(Ok, Leitor.rCampo(tcStr, 'Modal'));
+    BPe.Ide.modal  := StrToModalBPe(Ok, Leitor.rCampo(tcStr, 'modal'));
     BPe.ide.dhEmi   := Leitor.rCampo(tcDatHor, 'dhEmi');
     BPe.Ide.tpEmis  := StrToTpEmis(ok, Leitor.rCampo(tcStr, 'tpEmis'));
     BPe.Ide.verProc := Leitor.rCampo(tcStr, 'verProc');
@@ -147,7 +147,7 @@ begin
     BPe.Ide.xJust   := Leitor.rCampo(tcStr, 'xJust');
   end;
 
-  if Leitor.rExtrai(1, 'Emit') <> '' then
+  if Leitor.rExtrai(1, 'emit') <> '' then
   begin
     BPe.Emit.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
     BPe.Emit.IE    := Leitor.rCampo(tcStr, 'IE');
@@ -162,7 +162,7 @@ begin
     if Leitor.rExtrai(2, 'enderEmit') <> '' then
     begin
       BPe.Emit.enderEmit.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-      BPe.Emit.enderEmit.nro     := Leitor.rCampo(tcStr, 'Nro');
+      BPe.Emit.enderEmit.nro     := Leitor.rCampo(tcStr, 'nro');
       BPe.Emit.enderEmit.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
       BPe.Emit.enderEmit.xBairro := Leitor.rCampo(tcStr, 'xBairro');
       BPe.Emit.EnderEmit.cMun    := Leitor.rCampo(tcInt, 'cMun');
@@ -170,11 +170,11 @@ begin
       BPe.Emit.enderEmit.CEP     := Leitor.rCampo(tcInt, 'CEP');
       BPe.Emit.enderEmit.UF      := Leitor.rCampo(tcStr, 'UF');
       BPe.Emit.enderEmit.fone    := Leitor.rCampo(tcStr, 'fone');
-      BPe.Emit.enderEmit.Email   := Leitor.rCampo(tcStr, 'Email');
+      BPe.Emit.enderEmit.Email   := Leitor.rCampo(tcStr, 'email');
     end;
   end;
 
-  if Leitor.rExtrai(1, 'Comp') <> '' then
+  if Leitor.rExtrai(1, 'comp') <> '' then
   begin
     BPe.Comp.xNome         := Leitor.rCampo(tcStr, 'xNome');
     BPe.Comp.CNPJCPF       := Leitor.rCampoCNPJCPF;
@@ -184,7 +184,7 @@ begin
     if Leitor.rExtrai(2, 'enderComp') <> '' then
     begin
       BPe.Comp.enderComp.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-      BPe.Comp.enderComp.nro     := Leitor.rCampo(tcStr, 'Nro');
+      BPe.Comp.enderComp.nro     := Leitor.rCampo(tcStr, 'nro');
       BPe.Comp.enderComp.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
       BPe.Comp.enderComp.xBairro := Leitor.rCampo(tcStr, 'xBairro');
       BPe.Comp.EnderComp.cMun    := Leitor.rCampo(tcInt, 'cMun');
@@ -202,11 +202,11 @@ begin
         BPe.Comp.enderComp.xPais := 'BRASIL';
 
       BPe.Comp.enderComp.fone    := Leitor.rCampo(tcStr, 'fone');
-      BPe.Comp.enderComp.Email   := Leitor.rCampo(tcStr, 'Email');
+      BPe.Comp.enderComp.Email   := Leitor.rCampo(tcStr, 'email');
     end;
   end;
 
-  if Leitor.rExtrai(1, 'Agencia') <> '' then
+  if Leitor.rExtrai(1, 'agencia') <> '' then
   begin
     BPe.Agencia.xNome := Leitor.rCampo(tcStr, 'xNome');
     BPe.Agencia.CNPJ  := Leitor.rCampo(tcStr, 'CNPJ');
@@ -214,7 +214,7 @@ begin
     if Leitor.rExtrai(2, 'enderAgencia') <> '' then
     begin
       BPe.Agencia.enderAgencia.xLgr    := Leitor.rCampo(tcStr, 'xLgr');
-      BPe.Agencia.enderAgencia.nro     := Leitor.rCampo(tcStr, 'Nro');
+      BPe.Agencia.enderAgencia.nro     := Leitor.rCampo(tcStr, 'nro');
       BPe.Agencia.enderAgencia.xCpl    := Leitor.rCampo(tcStr, 'xCpl');
       BPe.Agencia.enderAgencia.xBairro := Leitor.rCampo(tcStr, 'xBairro');
       BPe.Agencia.EnderAgencia.cMun    := Leitor.rCampo(tcInt, 'cMun');
@@ -222,7 +222,7 @@ begin
       BPe.Agencia.enderAgencia.CEP     := Leitor.rCampo(tcInt, 'CEP');
       BPe.Agencia.enderAgencia.UF      := Leitor.rCampo(tcStr, 'UF');
       BPe.Agencia.enderAgencia.fone    := Leitor.rCampo(tcStr, 'fone');
-      BPe.Agencia.enderAgencia.Email   := Leitor.rCampo(tcStr, 'Email');
+      BPe.Agencia.enderAgencia.Email   := Leitor.rCampo(tcStr, 'email');
     end;
   end;
 
@@ -247,8 +247,8 @@ begin
       BPe.infPassagem.infPassageiro.tpDoc := StrTotpDocumento(ok, Leitor.rCampo(tcStr, 'tpDoc'));
       BPe.infPassagem.infPassageiro.nDoc  := Leitor.rCampo(tcStr, 'nDoc');
       BPe.infPassagem.infPassageiro.dNasc := Leitor.rCampo(tcDat, 'dNasc');
-      BPe.infPassagem.infPassageiro.Fone  := Leitor.rCampo(tcStr, 'Fone');
-      BPe.infPassagem.infPassageiro.Email := Leitor.rCampo(tcStr, 'Email');
+      BPe.infPassagem.infPassageiro.Fone  := Leitor.rCampo(tcStr, 'fone');
+      BPe.infPassagem.infPassageiro.Email := Leitor.rCampo(tcStr, 'email');
     end;
   end;
 
@@ -264,9 +264,9 @@ begin
     BPe.infViagem[i].tpAcomodacao := StrTotpAcomodacao(ok, Leitor.rCampo(tcStr, 'tpAcomodacao'));
     BPe.infViagem[i].tpTrecho     := StrTotpTrecho(ok, Leitor.rCampo(tcStr, 'tpTrecho'));
     BPe.infViagem[i].dhConexao    := Leitor.rCampo(tcDatHor, 'dhConexao');
-    BPe.infViagem[i].Prefixo      := Leitor.rCampo(tcStr, 'Prefixo');
-    BPe.infViagem[i].Poltrona     := Leitor.rCampo(tcInt, 'Poltrona');
-    BPe.infViagem[i].Plataforma   := Leitor.rCampo(tcStr, 'Plataforma');
+    BPe.infViagem[i].Prefixo      := Leitor.rCampo(tcStr, 'prefixo');
+    BPe.infViagem[i].Poltrona     := Leitor.rCampo(tcInt, 'poltrona');
+    BPe.infViagem[i].Plataforma   := Leitor.rCampo(tcStr, 'plataforma');
 
     if Leitor.rExtrai(2, 'infTravessia') <> '' then
     begin
@@ -298,7 +298,7 @@ begin
     end;
   end;
 
-  if Leitor.rExtrai(1, 'Imp') <> '' then
+  if Leitor.rExtrai(1, 'imp') <> '' then
   begin
     BPe.Imp.vTotTrib   := Leitor.rCampo(tcDe2, 'vTotTrib');
     BPe.Imp.infAdFisco := Leitor.rCampo(tcStr, 'infAdFisco');
@@ -336,7 +336,7 @@ begin
 
   i := 0;
   BPe.Pag.Clear;
-  while Leitor.rExtrai(1, 'Pag', '', i + 1) <> '' do
+  while Leitor.rExtrai(1, 'pag', '', i + 1) <> '' do
   begin
     BPe.Pag.Add;
     BPe.Pag[i].tPag := StrToFormaPagamento(ok, Leitor.rCampo(tcStr, 'tPag'));

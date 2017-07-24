@@ -75,7 +75,7 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesBPe;
-    function Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+    function Distribuicao(AcUFAutor: Integer; ACNPJCPF, AultNSU, ANSU,
       chBPe: String): Boolean;
 
     procedure SetConfiguracoes(AValue: TConfiguracoesBPe);
@@ -93,29 +93,29 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamBPe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function Enviar(ALote: integer; Imprimir: Boolean = True): Boolean; overload;
-    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(ALote: Integer; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean; overload;
+    function Enviar(ALote: String; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
     function EhAutorizacao(AVersao: TVersaoBPe; AUFCodigo: Integer): Boolean;
 
-    function CstatConfirmada(AValue: integer): Boolean;
-    function CstatProcessado(AValue: integer): Boolean;
-    function CstatCancelada(AValue: integer): Boolean;
+    function CstatConfirmada(AValue: Integer): Boolean;
+    function CstatProcessado(AValue: Integer): Boolean;
+    function CstatCancelada(AValue: Integer): Boolean;
 
-    function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
+    function Cancelamento(AJustificativa: String; ALote: Integer = 0): Boolean;
     function Consultar( AChave: String = ''): Boolean;
-    function EnviarEvento(idLote: integer): Boolean;
+    function EnviarEvento(idLote: Integer): Boolean;
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOutBPe; var Versao: Double;
       var URL: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOutBPe): String; reintroduce; overload;
 
-    function GetURLConsultaBPe(const CUF: integer;
+    function GetURLConsultaBPe(const CUF: Integer;
       const TipoAmbiente: TpcnTipoAmbiente): String;
-    function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
+    function GetURLQRCode(const CUF: Integer; const TipoAmbiente: TpcnTipoAmbiente;
       const AChaveBPe: String; const DigestValue: String): String;
 
     function IdentificaSchema(const AXML: String): TSchemaBPe;
@@ -132,13 +132,13 @@ type
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
 
-    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
+    function DistribuicaoDFe(AcUFAutor: Integer; ACNPJCPF, AultNSU,
       ANSU: String; AchBPe: String = ''): Boolean;
-    function DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+    function DistribuicaoDFePorUltNSU(AcUFAutor: Integer; ACNPJCPF,
       AultNSU: String): Boolean;
-    function DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+    function DistribuicaoDFePorNSU(AcUFAutor: Integer; ACNPJCPF,
       ANSU: String): Boolean;
-    function DistribuicaoDFePorChaveBPe(AcUFAutor: integer; ACNPJCPF,
+    function DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; ACNPJCPF,
       AchBPe: String): Boolean;
 
     procedure EnviarEmailEvento(sPara, sAssunto: String;
@@ -259,7 +259,7 @@ begin
   Result := ACBRBPe_NAMESPACE;
 end;
 
-function TACBrBPe.CstatConfirmada(AValue: integer): Boolean;
+function TACBrBPe.CstatConfirmada(AValue: Integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302, 303: Result := True;
@@ -268,7 +268,7 @@ begin
   end;
 end;
 
-function TACBrBPe.CstatProcessado(AValue: integer): Boolean;
+function TACBrBPe.CstatProcessado(AValue: Integer): Boolean;
 begin
   case AValue of
     100, 110, 150, 301, 302, 303: Result := True;
@@ -277,7 +277,7 @@ begin
   end;
 end;
 
-function TACBrBPe.CstatCancelada(AValue: integer): Boolean;
+function TACBrBPe.CstatCancelada(AValue: Integer): Boolean;
 begin
   case AValue of
     101, 151, 155: Result := True;
@@ -294,7 +294,7 @@ end;
 function TACBrBPe.IdentificaSchema(const AXML: String): TSchemaBPe;
 var
   lTipoEvento: String;
-  I: integer;
+  I: Integer;
 begin
 
   Result := schBPe;
@@ -373,13 +373,13 @@ begin
     Versao, URL);
 end;
 
-function TACBrBPe.GetURLConsultaBPe(const CUF: integer;
+function TACBrBPe.GetURLConsultaBPe(const CUF: Integer;
   const TipoAmbiente: TpcnTipoAmbiente): String;
 begin
   Result := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaBPe', 0);
 end;
 
-function TACBrBPe.GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
+function TACBrBPe.GetURLQRCode(const CUF: Integer; const TipoAmbiente: TpcnTipoAmbiente;
   const AChaveBPe: String; const DigestValue: String): String;
 var
   Passo1, Passo2, urlUF, idBPe, tpEmis, JSON, Token, fprint: String;
@@ -405,7 +405,7 @@ begin
                   '"tpAmb":' + TpAmbToStr(TipoAmbiente) +
             '}';
     Token := '&jwt=';    // concatenar com o resultado do algoritmo JWS aplicado sobre o objeto JSON
-    fprint := '&print='; // concatenar com o resultado da obtenção do Fingerprint do certificado digital
+    fprint := '&fprint='; // concatenar com o resultado da obtenção do Fingerprint do certificado digital
                          // (caso ele tenha caracteres dois pontos “: ”, estes devem ser retirados)
     Passo2 := Token + fprint;
 
@@ -431,9 +431,9 @@ begin
   end;
 end;
 
-function TACBrBPe.Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
+function TACBrBPe.Cancelamento(AJustificativa: String; ALote: Integer = 0): Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   if Bilhetes.Count = 0 then
     GerarException(ACBrStr('ERRO: Nenhum Bilhete Eletrônico Informado!'));
@@ -468,7 +468,7 @@ end;
 
 function TACBrBPe.Consultar(AChave: String): Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   if (Bilhetes.Count = 0) and EstaVazio(AChave) then
     GerarException(ACBrStr('ERRO: Nenhum Bilhete Eletrônico ou Chave Informada!'));
@@ -491,14 +491,14 @@ begin
   Result := True;
 end;
 
-function TACBrBPe.Enviar(ALote: integer; Imprimir: Boolean = True): Boolean;
+function TACBrBPe.Enviar(ALote: Integer; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean;
 begin
-  Result := Enviar(IntToStr(ALote), Imprimir);
+  Result := Enviar(IntToStr(ALote), Imprimir, aMsgZip);
 end;
 
-function TACBrBPe.Enviar(ALote: String; Imprimir: Boolean): Boolean;
+function TACBrBPe.Enviar(ALote: String; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean;
 var
-  i: integer;
+  i: Integer;
 begin
   if Bilhetes.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NF-e adicionada ao Lote'));
@@ -510,7 +510,7 @@ begin
   Bilhetes.Assinar;
   Bilhetes.Validar;
 
-  Result := WebServices.Envia(ALote);
+  Result := WebServices.Envia(ALote, aMsgZip);
 
   if DABPE <> nil then
   begin
@@ -526,9 +526,9 @@ begin
   end;
 end;
 
-function TACBrBPe.EnviarEvento(idLote: integer): Boolean;
+function TACBrBPe.EnviarEvento(idLote: Integer): Boolean;
 var
-  i, j: integer;
+  i, j: Integer;
   chBPe: String;
 begin
   if EventoBPe.Evento.Count <= 0 then
@@ -562,7 +562,7 @@ begin
         end ;
 
         if j = Bilhetes.Count then
-          GerarException( ACBrStr('Não existe BPe com a chave ['+chBPe+'] carregada') );
+          GerarException( ACBrStr('Não existe BPe com a chave [' + chBPe + '] carregada') );
       end
       else
         j := 0;
@@ -627,7 +627,7 @@ begin
     DABPE.ImprimirEVENTOPDF(nil);
 end;
 
-function TACBrBPe.Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+function TACBrBPe.Distribuicao(AcUFAutor: Integer; ACNPJCPF, AultNSU, ANSU,
   chBPe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
@@ -642,25 +642,25 @@ begin
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
 
-function TACBrBPe.DistribuicaoDFe(AcUFAutor: integer;
+function TACBrBPe.DistribuicaoDFe(AcUFAutor: Integer;
   ACNPJCPF, AultNSU, ANSU: String; AchBPe: String = ''): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, ANSU, AchBPe);
 end;
 
-function TACBrBPe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+function TACBrBPe.DistribuicaoDFePorUltNSU(AcUFAutor: Integer; ACNPJCPF,
   AultNSU: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, '', '');
 end;
 
-function TACBrBPe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+function TACBrBPe.DistribuicaoDFePorNSU(AcUFAutor: Integer; ACNPJCPF,
   ANSU: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
 end;
 
-function TACBrBPe.DistribuicaoDFePorChaveBPe(AcUFAutor: integer; ACNPJCPF,
+function TACBrBPe.DistribuicaoDFePorChaveBPe(AcUFAutor: Integer; ACNPJCPF,
   AchBPe: String): Boolean;
 begin
   Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchBPe);

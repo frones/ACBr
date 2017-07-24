@@ -83,9 +83,9 @@ type
 
   TArquivosConfBPe = class(TArquivosConf)
   private
-    FEmissaoPathBPe: boolean;
-    FSalvarEvento: boolean;
-    FSalvarApenasBPeProcessadas: boolean;
+    FEmissaoPathBPe: Boolean;
+    FSalvarEvento: Boolean;
+    FSalvarApenasBPeProcessadas: Boolean;
     FPathBPe: String;
     FPathEvento: String;
     FDownloadBPe: TDownloadConfBPe;
@@ -98,11 +98,11 @@ type
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
   published
-    property EmissaoPathBPe: boolean read FEmissaoPathBPe
+    property EmissaoPathBPe: Boolean read FEmissaoPathBPe
       write FEmissaoPathBPe default False;
-    property SalvarEvento: boolean read FSalvarEvento
+    property SalvarEvento: Boolean read FSalvarEvento
       write FSalvarEvento default False;
-    property SalvarApenasBPeProcessadas: boolean
+    property SalvarApenasBPeProcessadas: Boolean
       read FSalvarApenasBPeProcessadas write FSalvarApenasBPeProcessadas default False;
     property PathBPe: String read FPathBPe write FPathBPe;
     property PathEvento: String read FPathEvento write FPathEvento;

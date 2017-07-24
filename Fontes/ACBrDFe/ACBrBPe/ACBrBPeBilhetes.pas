@@ -371,12 +371,12 @@ begin
 
     for I:=0 to BPe.autXML.Count-1 do
     begin
-      GravaLog('Validar: 325-'+IntToStr(I)+'-CPF download');
+      GravaLog('Validar: 325-' + IntToStr(I) + '-CPF download');
       if (Length(Trim(OnlyNumber(BPe.autXML[I].CNPJCPF))) <= 11) and
         not ValidarCPF(BPe.autXML[I].CNPJCPF) then
         AdicionaErro('325-Rejeição: CPF autorizado para download inválido');
 
-      GravaLog('Validar: 323-'+IntToStr(I)+'-CNPJ download');
+      GravaLog('Validar: 323-' + IntToStr(I) + '-CNPJ download');
       if (Length(Trim(OnlyNumber(BPe.autXML[I].CNPJCPF))) > 11) and
         not ValidarCNPJ(BPe.autXML[I].CNPJCPF) then
         AdicionaErro('323-Rejeição: CNPJ autorizado para download inválido');
@@ -388,12 +388,12 @@ begin
 
   if not Result then
   begin
-    Erros := ACBrStr('Erro(s) nas Regras de negócios do Bilhete: '+
-                     IntToStr(BPe.Ide.nBP) + sLineBreak +
-                     Erros);
+    Erros := ACBrStr('Erro(s) nas Regras de negócios do Bilhete: ' +
+                     IntToStr(BPe.Ide.nBP) + sLineBreak + Erros);
   end;
 
-  GravaLog('Fim da Validação. Tempo: '+FormatDateTime('hh:nn:ss:zzz', Now - Agora)+sLineBreak+
+  GravaLog('Fim da Validação. Tempo: ' +
+           FormatDateTime('hh:nn:ss:zzz', Now - Agora) + sLineBreak +
            'Erros:' + Erros);
 
   //DEBUG
@@ -480,7 +480,7 @@ begin
       end;
 
       EnviarEmail( sPara, sAssunto, sMensagem, sCC, AnexosEmail, StreamBPe,
-                   NumID +'-bpe.xml', sReplyTo);
+                   NumID + '-bpe.xml', sReplyTo);
     end;
   finally
     AnexosEmail.Free;
@@ -605,7 +605,7 @@ var
 begin
   DecodeDate(BPe.ide.dhEmi, wAno, wMes, wDia);
 
-  chaveBPe := 'BPe'+OnlyNumber(BPe.infBPe.ID);
+  chaveBPe := 'BPe' + OnlyNumber(BPe.infBPe.ID);
   {(*}
   Result := not
     ((Copy(chaveBPe, 4, 2) <> IntToStrZero(BPe.Ide.cUF, 2)) or

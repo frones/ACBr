@@ -199,12 +199,12 @@ end;
 
 function tpBPeToStr(const t: TTipoBPe): String;
 begin
-  Result := EnumeradoToStr(t, ['1', '2'], [tbNormal, tbSubstituicao]);
+  Result := EnumeradoToStr(t, ['0', '3'], [tbNormal, tbSubstituicao]);
 end;
 
 function StrToTpBPe(out ok: Boolean; const s: String): TTipoBPe;
 begin
-  Result := StrToEnumerado(ok, s, ['1', '2'], [tbNormal, tbSubstituicao]);
+  Result := StrToEnumerado(ok, s, ['0', '3'], [tbNormal, tbSubstituicao]);
 end;
 
 function ModalBPeToStr(const t: TModalBPe): String;
@@ -415,7 +415,7 @@ end;
 function tpDescontoToStr(const t: TTipoDesconto): string;
 begin
   result := EnumeradoToStr(t,
-                           ['00', '01', '02', '03', '04', '05', '06', '07', '08',
+                           ['', '01', '02', '03', '04', '05', '06', '07', '08',
                             '09', '10', '99'],
                            [tdNenhum, tdTarifaPromocional, tdIdoso, tdCrianca,
                             tdDeficiente, tdEstudante, tdAnimalDomestico,
@@ -426,7 +426,7 @@ end;
 function StrTotpDesconto(out ok: boolean; const s: string): TTipoDesconto;
 begin
   result := StrToEnumerado(ok, s,
-                           ['00', '01', '02', '03', '04', '05', '06', '07', '08',
+                           ['', '01', '02', '03', '04', '05', '06', '07', '08',
                             '09', '10', '99'],
                            [tdNenhum, tdTarifaPromocional, tdIdoso, tdCrianca,
                             tdDeficiente, tdEstudante, tdAnimalDomestico,

@@ -76,6 +76,8 @@ end;
 
 procedure TfrmPrincipal.btnBuscarCertificadoClick(Sender: TObject);
 begin
+  ConfigurarDFe;
+
   if rbtTipoCapicom.Checked then
     edtCertificado.Text := FACBrDFe.SSL.SelecionarCertificado
   else

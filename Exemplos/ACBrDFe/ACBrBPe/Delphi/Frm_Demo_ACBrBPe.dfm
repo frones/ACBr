@@ -1,6 +1,6 @@
 object frm_DemoACBrBPe: Tfrm_DemoACBrBPe
   Left = 200
-  Top = 130
+  Top = 124
   Width = 928
   Height = 644
   Caption = 'Demo ACBrBPe'

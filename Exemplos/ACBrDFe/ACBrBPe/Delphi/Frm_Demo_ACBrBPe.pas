@@ -323,8 +323,8 @@ Begin
    Emit.IEST  := '';
    Emit.xNome := edtEmitRazao.Text;
    Emit.xFant := edtEmitFantasia.Text;
-   Emit.IM    := '';
-   Emit.CNAE  := '';
+   Emit.IM    := '123';
+   Emit.CNAE  := '1234567';
    Emit.CRT   := crtRegimeNormal;
    Emit.TAR   := '';
 
@@ -343,17 +343,17 @@ Begin
    // Dados do Comprador
    //
    Comp.xNome   := 'Nome do Comprador';
-   Comp.CNPJCPF := '00000000000000';
+   Comp.CNPJCPF := '11111111111111';
    Comp.IE      := '';
 
    Comp.EnderComp.xLgr    := 'Nome do Logradouro';
    Comp.EnderComp.Nro     := 'Numero';
    Comp.EnderComp.xCpl    := 'Complemento';
    Comp.EnderComp.xBairro := 'Bairro';
-   Comp.EnderComp.cMun    := StrToInt('Codigo IBGE da cidade do comprador');
+   Comp.EnderComp.cMun    := 3503208; //StrToInt('Codigo IBGE da cidade do comprador');
    Comp.EnderComp.xMun    := 'Nome da Cidade';
    Comp.EnderComp.CEP     := StrToIntDef('00000000', 0);
-   Comp.EnderComp.UF      := 'UF';
+   Comp.EnderComp.UF      := 'SP';
    Comp.EnderComp.cPais   := 1058;
    Comp.EnderComp.xPais   := 'BRASIL';
    Comp.EnderComp.fone    := 'Telefone do comprador';
@@ -363,16 +363,16 @@ Begin
    // Dados da Agencia
    //
    Agencia.xNome := 'Nome da Agencia';
-   Agencia.CNPJ  := '00000000000000';
+   Agencia.CNPJ  := '11111111111111';
 
    Agencia.EnderAgencia.xLgr    := 'Nome do Logradouro';
    Agencia.EnderAgencia.Nro     := 'Numero';
    Agencia.EnderAgencia.xCpl    := 'Complemento';
    Agencia.EnderAgencia.xBairro := 'Bairro';
-   Agencia.EnderAgencia.cMun    := StrToInt('Codigo IBGE da cidade da Agencia');
+   Agencia.EnderAgencia.cMun    := 3503208; //StrToInt('Codigo IBGE da cidade da Agencia');
    Agencia.EnderAgencia.xMun    := 'Nome da Cidade';
    Agencia.EnderAgencia.CEP     := StrToIntDef('00000000', 0);
-   Agencia.EnderAgencia.UF      := 'UF';
+   Agencia.EnderAgencia.UF      := 'SP';
    Agencia.EnderAgencia.fone    := 'Telefone da Agencia';
    Agencia.enderAgencia.email   := 'endereco@provedor.com.br';
 
@@ -385,21 +385,21 @@ Begin
    //
    // Informações sobre a Passagem
    //
-   infPassagem.cLocOrig := 'Codigo da Localidade de Origem';
+   infPassagem.cLocOrig := '1234567'; // Codigo da Localidade de Origem
    infPassagem.xLocOrig := 'Descrição da Localidade de Origem';
-   infPassagem.cLocDest := 'Codigo da Localidade de Destino';
+   infPassagem.cLocDest := '1234567'; // Codigo da Localidade de Destino
    infPassagem.xLocDest := 'Descrição da Localidade de Destino';
    infPassagem.dhEmb    := Now;
    //
    // Informações sobre o Passageiro
    //
    infPassagem.infPassageiro.xNome := 'Nome do Passageiro';
-   infPassagem.infPassageiro.CPF   := '00000000000';
+   infPassagem.infPassageiro.CPF   := '11111111111';
    infPassagem.infPassageiro.tpDoc := tdRG;
-   infPassagem.infPassageiro.nDoc  := 'Numero do documento';
-   infPassagem.infPassageiro.dNasc := StrToDate('10/10/1970');
-   infPassagem.infPassageiro.Fone  := 'telefone do passageiro';
-   infPassagem.infPassageiro.Email := 'email do passageiro';
+   infPassagem.infPassageiro.nDoc  := '12345678'; // Numero do documento
+//   infPassagem.infPassageiro.dNasc := StrToDate('10/10/1970');
+   infPassagem.infPassageiro.Fone  := '33445566'; // telefone do passageiro
+   infPassagem.infPassageiro.Email := 'passageiro@provedor.com.br';
 
    //
    // Informações sobre a Viagem
@@ -413,7 +413,7 @@ Begin
      tpServ       := tsConvencionalComSanitario;
      tpAcomodacao := taAssento;
      tpTrecho     := ttNormal;
-//     dhConexao    := ** Informar se o tpTrecho dor ttConexao
+//     dhConexao    := ** Informar se o tpTrecho for ttConexao
      prefixo      := 'Prefixo da linha';
      Poltrona     := 21;
      //
@@ -501,7 +501,7 @@ Begin
    infAdic.infCpl     := 'Informações Complementares';
   end;
 
- ACBrBPe1.Bilhetes.GerarBPe;
+// ACBrBPe1.Bilhetes.GerarBPe;
 end;
 
 procedure Tfrm_DemoACBrBPe.GravarConfiguracao;
@@ -909,7 +909,7 @@ begin
 
   ACBrBPe1.Bilhetes.GerarBPe;
 
-  ACBrBPe1.Enviar(vNumLote,True);
+  ACBrBPe1.Enviar(vNumLote, True, True);
 
   MemoResp.Lines.Text := ACBrBPe1.WebServices.Enviar.RetWS;
   memoRespWS.Lines.Text := ACBrBPe1.WebServices.Enviar.RetornoWS;

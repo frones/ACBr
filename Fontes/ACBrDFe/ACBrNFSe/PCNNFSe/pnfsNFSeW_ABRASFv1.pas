@@ -329,10 +329,20 @@ begin
 
   if FProvedor <> proNFSeBrasil then
   begin
-    if FProvedor in [proISSNet, proWebISS, proIssCuritiba, proAbaco, proRecife, proBetha] then
-      Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, OnlyNumber(NFSe.Servico.ItemListaServico), DSC_CLISTSERV)
+    case FProvedor of
+      proISSNet,
+      proWebISS,
+      proIssCuritiba,
+      proAbaco,
+      proRecife,
+      proBetha: Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, OnlyNumber(NFSe.Servico.ItemListaServico), DSC_CLISTSERV);
+
+      proSimplISS: Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, ifThen(copy(NFSe.Servico.ItemListaServico, 1, 1) = '0',
+                                                                       copy(NFSe.Servico.ItemListaServico, 2, length(NFSe.Servico.ItemListaServico)),
+                                                                       NFSe.Servico.ItemListaServico));
     else
       Gerador.wCampoNFSe(tcStr, '#29', 'ItemListaServico', 01, 05, 1, NFSe.Servico.ItemListaServico, DSC_CLISTSERV);
+    end;
   end;
 
   if FProvedor = proNFSeBrasil then

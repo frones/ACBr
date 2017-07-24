@@ -522,7 +522,11 @@ end;
 
 function TACBrNFSe.ConsultarSituacao(AProtocolo: String; const ANumLote: String): Boolean;
 begin
-  Result := WebServices.ConsultaSituacao(AProtocolo, ANumLote);
+  try
+    Result := WebServices.ConsultaSituacao(AProtocolo, ANumLote);
+  except
+    Result := False;
+  end;
 end;
 
 function TACBrNFSe.ConsultarLoteRps(ANumLote, AProtocolo: string): Boolean;

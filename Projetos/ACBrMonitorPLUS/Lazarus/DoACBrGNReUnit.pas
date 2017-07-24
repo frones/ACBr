@@ -117,7 +117,18 @@ begin
       else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
       begin
        ACBrGNRE1.GuiasRetorno.Clear;
-       CarregarDFe(Cmd.Params(0), ArqGNRe, tDFeGNRe);
+       PathsGNRe := TStringList.Create;
+        try
+          PathsGNRe.Append(Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
+          try
+            CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
+          except
+          end;
+        finally
+          PathsGNRe.Free;
+        end;
        try
          ACBrGNRE1.GuiasRetorno.ImprimirPDF;
          ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';

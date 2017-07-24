@@ -597,7 +597,8 @@ begin
 
 
   // Calculando o tamanho da Pagina em Pixels //
-  TotalPaginaPixel := rlbsCabecalho.Height +
+  TotalPaginaPixel := imgLogo.Height +
+                      rlbsCabecalho.Height +
                       rlbRodape.Height +
                       rlbLegenda.Height +
                       rlbTotal.Height +

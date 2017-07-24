@@ -45,6 +45,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/07/2017
+-- ACBrNFeDANFEFRDM --
+[*] Refatoração de ManterDocreferenciados, para utilizar as informações de NFe corrente.
+    	por: Henrique Leonardo
+
 22/07/2017
 -- ACBrNFeDANFEFRDM --
 [*] Refatoração de ManterDocreferenciados, evitando duplicidade do código nas danfe's ( Fast Report / Fortes Report ). 

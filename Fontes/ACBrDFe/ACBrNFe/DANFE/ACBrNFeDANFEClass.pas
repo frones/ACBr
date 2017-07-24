@@ -163,7 +163,7 @@ type
     function ManterUnidades(sUCom, sUTrib: String): String;
     function ManterQuantidades(dQCom, dQTrib: Double): String;
     function ManterValoresUnitarios(dVCom, dVTrib: Double): String;
-    function ManterDocreferenciados(bImprimirDadosDocReferenciados: Boolean;
+    function ManterDocreferenciados( aNFE: TNFe;bImprimirDadosDocReferenciados: Boolean;
       sQuebraLinha: String = ' '): String;
 
   published
@@ -519,7 +519,7 @@ begin
       Result := Result + #13#10 + FormatValorUnitario ( dVTrib );
 end;
 
-function TACBrNFeDANFEClass.ManterDocreferenciados( bImprimirDadosDocReferenciados : Boolean; sQuebraLinha : String = ' ' ) : String;
+function TACBrNFeDANFEClass.ManterDocreferenciados( aNFE: TNFe;bImprimirDadosDocReferenciados : Boolean; sQuebraLinha : String = ' ' ) : String;
 // Informações de Documentos referenciados
   function DescrModeloNFe(chave: String):String;
   begin
@@ -551,9 +551,7 @@ function TACBrNFeDANFEClass.ManterDocreferenciados( bImprimirDadosDocReferenciad
   end;
 var
   i : Integer;
-  ANFe: TNFe;
 begin
-  ANFe    := TACBrNFe(ACBrNFe).NotasFiscais.Items[0].NFe;
   Result  := '';
   if ( bImprimirDadosDocReferenciados ) and ( ANFe.Ide.NFref.Count > 0 ) then
   begin

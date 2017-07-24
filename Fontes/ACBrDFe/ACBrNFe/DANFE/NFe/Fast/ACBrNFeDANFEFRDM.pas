@@ -808,7 +808,7 @@ begin
   BufferInfCpl:= '';
   vTemp       := TStringList.Create;
   try
-    wObs  := FDANFEClassOwner.ManterDocreferenciados( FImprimirDadosDocReferenciados , ';' );
+    wObs  := FDANFEClassOwner.ManterDocreferenciados( FNFe,FImprimirDadosDocReferenciados , ';' );
     wObs  := ManterInfAdi( wObs );
     wObs  := ManterContingencia( wObs );
     if Trim(wObs) <> '' then

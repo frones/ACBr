@@ -1399,6 +1399,8 @@ type
 
     procedure AddLinesLog(aLineLog : String);
     procedure AddLinesLog(aLinesLog : TStrings);
+    procedure AddLinesLogFile(const ArqFileLog: String; aLineLogFile: AnsiString;
+      const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True);
 
     procedure SetDisWorking(const Value: boolean);
 
@@ -1820,11 +1822,8 @@ procedure TFrmACBrMonitor.ApplicationProperties1Exception(Sender: TObject;
   E: Exception);
 begin
   AddLinesLog(E.Message);
-  //if cbLog.Checked then
-  //  WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+'Exception: ' + E.Message);
 
   StatusBar1.Panels[0].Text := 'Exception';
-  //  MessageDlg( E.Message,mtError,[mbOk],0) ;
 end;
 
 procedure TFrmACBrMonitor.ACBrEAD1GetChavePrivada(var Chave: ansistring);
@@ -1896,7 +1895,7 @@ procedure TFrmACBrMonitor.ACBrNFe1GerarLog(const ALogLine: string;
   var Tratado: boolean);
 begin
   if cbLogComp.Checked then
-    WriteToTXT(ArqLogCompTXT, ALogLine + sLineBreak);
+    AddLinesLogFile(ArqLogCompTXT, ALogLine);
 end;
 
 procedure TFrmACBrMonitor.ACBrSAT1GetcodigoDeAtivacao(var Chave: AnsiString);
@@ -5439,7 +5438,7 @@ begin
       if chbArqSaiANSI.Checked then
         Resposta := Utf8ToAnsi(Resposta);
 
-      WriteToTXT(ArqSaiTMP, Resposta);
+      AddLinesLogFile(ArqSaiTMP, Resposta);
 
       if (fsProcessar.Count < 1) then    // É final do Lote TXT ?
         RenameFile(ArqSaiTMP, ArqSaiTXT);
@@ -5449,15 +5448,15 @@ begin
     begin
       if copy(Resposta, 1, 3) <> 'OK:' then
       begin
-        WriteToTXT(ExtractFilePath(ArqSaiTMP) + 'STATUS.TXT', '0,0,0');
+        AddLinesLogFile(ExtractFilePath(ArqSaiTMP)+'STATUS.TXT', '0,0,0');
       end
       else
       begin
-        WriteToTXT(ExtractFilePath(ArqSaiTMP) + 'STATUS.TXT', '6,0,0');
+        AddLinesLogFile(ExtractFilePath(ArqSaiTMP) + 'STATUS.TXT', '6,0,0');
         Resposta := StringReplace(Resposta, 'OK: ', '', [rfReplaceAll]);
         Resposta := StringReplace(Resposta, '/', '', [rfReplaceAll]);
         Resposta := StringReplace(Resposta, ':', '', [rfReplaceAll]);
-        WriteToTXT(ArqSaiTMP, Resposta);
+        AddLinesLogFile(ArqSaiTMP, Resposta);
         RenameFile(ArqSaiTMP, ArqSaiTXT);
       end;
     end
@@ -5466,7 +5465,7 @@ begin
     begin
       if copy(Resposta, 1, 3) <> 'OK:' then
       begin
-        WriteToTXT(ExtractFilePath(ArqSaiTMP) + 'DARUMA.RET', '-27;006;000;000');
+        AddLinesLogFile(ExtractFilePath(ArqSaiTMP) + 'DARUMA.RET', '-27;006;000;000');
       end
       else
       begin
@@ -5474,7 +5473,7 @@ begin
         Resposta := StringReplace(Resposta, '/', '', [rfReplaceAll]);
         Resposta := StringReplace(Resposta, ':', '', [rfReplaceAll]);
         Resposta := '001;006;000;000;' + Resposta;
-        WriteToTXT(ArqSaiTMP, Resposta);
+        AddLinesLogFile(ArqSaiTMP, Resposta);
         RenameFile(ArqSaiTMP, ExtractFilePath(ArqSaiTMP) + 'DARUMA.RET');
       end;
     end;
@@ -6713,8 +6712,6 @@ begin
         FileClose(fd);
       end;
 
-    //   WriteToTXT('/dev/stdin',Codigo,False);
-    //   RunCommand('echo','"TESTE'+Codigo+'" > /dev/tty1',true) ;
      {$ENDIF}
   end;
 end;
@@ -6918,7 +6915,7 @@ begin
   Chave := StringReplace(Chave, #10, sLineBreak, [rfReplaceAll]);
   NomeArq := ExtractFilePath(Application.ExeName) + 'pub_key.pem';
 
-  WriteToTXT(NomeArq, Chave, False, False);
+  AddLinesLogFile(NomeArq, Chave, False, False);
   AddLinesLog(Chave);
   AddLinesLog('Chave pública gravada no arquivo: ' + sLineBreak + NomeArq);
 
@@ -7679,7 +7676,8 @@ begin
         mResp.Lines.Add(aLineLog);
       end;
 
-      WriteToTXT(ArqLogTXT, FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - '+aLineLog, True, True);
+      AddLinesLogFile(ArqLogTXT, aLineLog, True, True);
+
       Application.ProcessMessages;
     end;
   end;
@@ -7689,6 +7687,22 @@ procedure TFrmACBrMonitor.AddLinesLog(aLinesLog: TStrings);
 begin
   if chkMostraLogNaTela.Checked and ( aLinesLog.Count > 0 ) then
      mResp.Lines.AddStrings(aLinesLog);
+end;
+
+procedure TFrmACBrMonitor.AddLinesLogFile(const ArqFileLog: String; aLineLogFile: AnsiString;
+  const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True);
+var
+  sDateTime: String;
+begin
+  sDateTime := FormatDateTime('dd/mm/yyyy hh:nn:ss',Now);
+  try
+    WriteToTXT(ArqFileLog, sDateTime+' - '+aLineLogFile, AppendIfExists, AddLineBreak);
+  except
+    on E: Exception do
+    begin
+      mResp.Lines.Add(sDateTime+' - Erro ao escrever no arquivo: '+ArqFileLog+' ['+E.Message+']');
+    end;
+  end;
 end;
 
 {------------------------------------------------------------------------------}

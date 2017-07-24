@@ -1383,7 +1383,14 @@ begin
                  ArqNFe := PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+
                            ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].chNFe+'-down-nfe.xml' ;
 
-                 WriteToTXT( ArqNFe, ConverteXMLtoUTF8(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe), False, False);
+                 try
+                   WriteToTXT( ArqNFe, ConverteXMLtoUTF8(ACBrNFe1.WebServices.DownloadNFe.retDownloadNFe.retNFe.Items[i].procNFe), False, False);
+                 except
+                   on E: Exception do
+                   begin
+                     Cmd.Resposta := Cmd.Resposta+sLineBreak+'Erro ao escrever no arquivo: '+ArqNFe+' ['+E.Message+']';
+                   end;
+                 end;
 
                  Cmd.Resposta := Cmd.Resposta+sLineBreak+
                                  '[NFE'+Trim(IntToStrZero(I+1,3))+']'+sLineBreak+

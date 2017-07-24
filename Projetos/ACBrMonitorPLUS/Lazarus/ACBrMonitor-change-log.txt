@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+24/07/2017
+[*]	Melhorada gravação de logs em arquivos TXT. Criada a função: AddLinesLogFile,
+	esta função trata "exceptions" disparadas pela WriteToTXT, substituidos locais
+	que usavam diretamente a WriteToTXT.
+	http://www.projetoacbr.com.br/forum/topic/36012-acbr-monitorplus-ver10033-fechando-sozinho/
+	por: Celso Marigo Junior
+
 13/07/2017
 [*] Adicionado campos para informar a LogoMarca para NFC-e / SAT, separado da
         Logomarca Padrão

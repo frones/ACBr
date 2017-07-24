@@ -1,12 +1,12 @@
 object FrmACBrMonitor: TFrmACBrMonitor
-  Left = 383
+  Left = -7
   Height = 689
-  Top = 137
-  Width = 1110
+  Top = 138
+  Width = 1078
   ActiveControl = btMinimizar
   Align = alClient
   ClientHeight = 689
-  ClientWidth = 1110
+  ClientWidth = 1078
   Color = clBlack
   Constraints.MinHeight = 480
   Constraints.MinWidth = 590
@@ -24,7 +24,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 23
     Top = 623
-    Width = 1110
+    Width = 1078
     Panels = <    
       item
         Text = 'Monitor: Inativo'
@@ -41,10 +41,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 43
     Top = 646
-    Width = 1110
+    Width = 1078
     Align = alBottom
     ClientHeight = 43
-    ClientWidth = 1110
+    ClientWidth = 1078
     Color = clBtnFace
     Font.Height = -13
     Font.Style = [fsBold]
@@ -55,7 +55,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 41
       Top = 1
-      Width = 1108
+      Width = 1076
       Align = alClient
       Picture.Data = {
         1754506F727461626C654E6574776F726B477261706869632A02000089504E47
@@ -82,7 +82,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     end
     object bCancelar: TBitBtn
       AnchorSideTop.Side = asrCenter
-      Left = 873
+      Left = 841
       Height = 27
       Hint = 'Cancela as Alterações efetuadas'
       Top = 8
@@ -127,7 +127,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Control = pBotoes
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = bConfig
-      Left = 873
+      Left = 841
       Height = 27
       Hint = 'Esconde o ACBrMonitor'
       Top = 8
@@ -173,7 +173,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = pBotoes
       AnchorSideRight.Side = asrBottom
-      Left = 991
+      Left = 959
       Height = 27
       Hint = 'Configura os equipamentos e '#13#10'Método de Monitoramento'
       Top = 8
@@ -251,10 +251,10 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 196
     Height = 593
     Top = 30
-    Width = 914
+    Width = 882
     Align = alClient
     ClientHeight = 593
-    ClientWidth = 914
+    ClientWidth = 882
     Color = clBtnFace
     ParentColor = False
     TabOrder = 1
@@ -262,17 +262,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 232
       Top = 360
-      Width = 912
+      Width = 880
       Align = alClient
       ClientHeight = 232
-      ClientWidth = 912
+      ClientWidth = 880
       TabOrder = 0
       object Splitter1: TSplitter
         Cursor = crVSplit
         Left = 1
         Height = 5
         Top = 103
-        Width = 910
+        Width = 878
         Align = alTop
         Beveled = True
         ResizeAnchor = akTop
@@ -281,18 +281,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Left = 1
         Height = 102
         Top = 1
-        Width = 910
+        Width = 878
         Align = alTop
         Caption = 'pCmd'
         ClientHeight = 102
-        ClientWidth = 910
+        ClientWidth = 878
         Constraints.MinHeight = 70
         TabOrder = 0
         object mCmd: TMemo
           Left = 1
           Height = 83
           Top = 18
-          Width = 908
+          Width = 876
           Align = alClient
           BorderStyle = bsNone
           ReadOnly = True
@@ -306,7 +306,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 1
           Height = 17
           Top = 1
-          Width = 908
+          Width = 876
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Comandos a Processar'
@@ -323,18 +323,18 @@ object FrmACBrMonitor: TFrmACBrMonitor
         Left = 1
         Height = 123
         Top = 108
-        Width = 910
+        Width = 878
         Align = alClient
         Caption = 'pRespostas'
         ClientHeight = 123
-        ClientWidth = 910
+        ClientWidth = 878
         Constraints.MinHeight = 70
         TabOrder = 2
         object mResp: TMemo
           Left = 1
           Height = 104
           Top = 18
-          Width = 908
+          Width = 876
           Align = alClient
           BorderStyle = bsNone
           ReadOnly = True
@@ -349,7 +349,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           Left = 1
           Height = 17
           Top = 1
-          Width = 908
+          Width = 876
           Align = alTop
           BevelOuter = bvNone
           Caption = 'Respostas Enviadas'
@@ -367,17 +367,17 @@ object FrmACBrMonitor: TFrmACBrMonitor
       Left = 1
       Height = 359
       Top = 1
-      Width = 912
+      Width = 880
       Align = alTop
       ClientHeight = 359
-      ClientWidth = 912
+      ClientWidth = 880
       TabOrder = 1
       Visible = False
       object pgConfig: TPageControl
         Left = 1
         Height = 357
         Top = 1
-        Width = 910
+        Width = 878
         ActivePage = tsBAL
         Align = alClient
         Images = ImageList1
@@ -3207,7 +3207,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
         object tsBAL: TTabSheet
           Caption = 'Balança'
           ClientHeight = 327
-          ClientWidth = 902
+          ClientWidth = 870
           ImageIndex = 14
           object Label56: TLabel
             AnchorSideLeft.Control = cbBALModelo
@@ -3346,7 +3346,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
             Left = 76
             Height = 25
             Top = 176
-            Width = 714
+            Width = 682
             Anchors = [akTop, akLeft, akRight]
             OnChange = edBALLogChange
             TabOrder = 5
@@ -3354,7 +3354,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
           object sbBALLog: TSpeedButton
             AnchorSideTop.Control = edBALLog
             AnchorSideTop.Side = asrCenter
-            Left = 795
+            Left = 763
             Height = 23
             Top = 177
             Width = 23
@@ -10791,11 +10791,11 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Left = 0
     Height = 30
     Top = 0
-    Width = 1110
+    Width = 1078
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 30
-    ClientWidth = 1110
+    ClientWidth = 1078
     Color = 14671839
     ParentColor = False
     TabOrder = 3
@@ -12776,6 +12776,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
       'Ouvidoria: 0800 725 7474 (reclamações não solucionadas e denúncias)'
       '     caixa.gov.br      '
     )
+    Cedente.TipoDocumento = Tradicional
     Cedente.TipoInscricao = pJuridica
     NumeroArquivo = 0
     DataArquivo = 0
@@ -12854,6 +12855,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.ValidarDigest = False
     Configuracoes.Geral.IncluirQRCodeXMLNFCe = False
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.Salvar = True
@@ -13974,6 +13976,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -14009,6 +14012,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
@@ -14060,6 +14064,7 @@ object FrmACBrMonitor: TFrmACBrMonitor
     Configuracoes.Geral.SSLHttpLib = httpOpenSSL
     Configuracoes.Geral.SSLXmlSignLib = xsXmlSec
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'

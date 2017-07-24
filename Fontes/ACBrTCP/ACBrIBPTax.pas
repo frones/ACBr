@@ -474,7 +474,7 @@ begin
   if AExcecao < 0 then
     raise EACBrIBPTax.Create('Informe 0 quando não houver exceção ou o código da exceção.');
 
-  UrlConsulta := 'http://iws.ibpt.org.br/api/deolhonoimposto/produto' +
+  UrlConsulta := 'http://iws.ibpt.org.br/api/deolhonoimposto/produtos' +
                    '?token='  + Self.AjustaParam(FToken) +
                    '&cnpj='   + Self.AjustaParam(OnlyNumber(FCNPJEmpresa)) +
                    '&codigo=' + Self.AjustaParam(ANCM) +

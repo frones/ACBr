@@ -150,7 +150,7 @@ begin
   Gerador.wGrupo('eventoBPe ' + NAME_SPACE_BPE + ' versao="' + Versao + '"');
   for i := 0 to Evento.Count - 1 do
   begin
-    Evento.Items[i].InfEvento.id := 'ID'+
+    Evento.Items[i].InfEvento.id := 'ID' +
                                       Evento.Items[i].InfEvento.TipoEvento +
                                       OnlyNumber(Evento.Items[i].InfEvento.chBPe) +
                                       Format('%.2d', [Evento.Items[i].InfEvento.nSeqEvento]);
@@ -180,7 +180,7 @@ begin
     if not ValidarChave(Evento.Items[i].InfEvento.chBPe) then
       Gerador.wAlerta('EP08', 'chBPe', '', 'Chave de BPe inválida');
 
-    Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',Evento.Items[i].InfEvento.dhEvento)+
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 50, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[i].InfEvento.dhEvento) +
                                                            GetUTC(CodigoParaUF(Evento.Items[i].InfEvento.cOrgao), Evento.Items[i].InfEvento.dhEvento));
     Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 06, 06, 1, Evento.Items[i].InfEvento.TipoEvento);
     Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 01, 02, 1, Evento.Items[i].InfEvento.nSeqEvento);
@@ -191,18 +191,18 @@ begin
       teCancelamento:
           begin
             Gerador.wGrupo('evCancBPe', 'EP01');
-            Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
-            Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
-            Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+            Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 060, 1, Evento.Items[i].InfEvento.DescEvento);
+            Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 015, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[i].InfEvento.detEvento.xJust);
             Gerador.wGrupo('/evCancBPe');
           end;
 
       teNaoEmbarque:
           begin
             Gerador.wGrupo('evNaoEmbBPe', 'EP01');
-            Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 060, 1,  Evento.Items[i].InfEvento.DescEvento);
-            Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 015, 1,  Evento.Items[i].InfEvento.detEvento.nProt);
-            Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1,  Evento.Items[i].InfEvento.detEvento.xJust);
+            Gerador.wCampo(tcStr, 'EP02', 'descEvento', 05, 060, 1, Evento.Items[i].InfEvento.DescEvento);
+            Gerador.wCampo(tcStr, 'EP03', 'nProt     ', 15, 015, 1, Evento.Items[i].InfEvento.detEvento.nProt);
+            Gerador.wCampo(tcStr, 'EP04', 'xJust     ', 15, 255, 1, Evento.Items[i].InfEvento.detEvento.xJust);
             Gerador.wGrupo('/evNaoEmbBPe');
           end;
     end;

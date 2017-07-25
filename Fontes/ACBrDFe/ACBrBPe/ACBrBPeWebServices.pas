@@ -47,7 +47,7 @@ interface
 
 uses
   Classes, SysUtils, dateutils, blcksock, synacode,
-  ACBrDFe, ACBrDFeWebService,
+  ACBrDFe, ACBrDFeUtil, ACBrDFeWebService,
   pcnAuxiliar, pcnConversao, pcnBPe, pcnConversaoBPe, pcnProcBPe,
   pcnEnvEventoBPe, pcnRetEnvEventoBPe, pcnRetConsSitBPe, pcnDistDFeIntBPe,
   pcnRetDistDFeIntBPe, pcnRetEnvBPe, ACBrBPeBilhetes, ACBrBPeConfiguracoes;
@@ -129,7 +129,7 @@ type
     FxMotivo: String;
     FdhRecbto: TDateTime;
     FTMed: Integer;
-    FMsgZip: Boolean;
+    FMsgUnZip: String;
 
     FBPeRetorno: TretEnvBPe;
 
@@ -138,6 +138,7 @@ type
     procedure DefinirURL; override;
     procedure DefinirServicoEAction; override;
     procedure DefinirDadosMsg; override;
+    procedure SalvarEnvio; override;
     function TratarResposta: Boolean; override;
 
     function GerarMsgLog: String; override;
@@ -157,7 +158,7 @@ type
     property dhRecbto: TDateTime read FdhRecbto;
     property TMed: Integer read FTMed;
     property Lote: String read GetLote write FLote;
-    property MsgZip: Boolean read FMsgZip write FMsgZip;
+    property MsgUnZip: String read FMsgUnZip write FMsgUnZip;
 
     property BPeRetorno: TretEnvBPe read FBPeRetorno;
   end;
@@ -331,8 +332,8 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: Integer; aMsgZip: Boolean = False): Boolean; overload;
-    function Envia(ALote: String; aMsgZip: Boolean = False): Boolean; overload;
+    function Envia(ALote: Integer): Boolean; overload;
+    function Envia(ALote: String): Boolean; overload;
 
     property ACBrBPe: TACBrDFe read FACBrBPe write FACBrBPe;
     property StatusServico: TBPeStatusServico read FStatusServico write FStatusServico;
@@ -461,6 +462,8 @@ procedure TBPeStatusServico.DefinirDadosMsg;
 var
   ConsStatServ: TConsStatServ;
 begin
+  FPBodyElement := 'bpeDadosMsg';
+
   ConsStatServ := TConsStatServ.Create;
   try
     ConsStatServ.TpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
@@ -649,6 +652,8 @@ end;
 
 procedure TBPeRecepcao.DefinirDadosMsg;
 begin
+  FPBodyElement := 'bpeDadosMsgZip';
+
   // No envio só podemos ter apena UM BP-e, pois o seu processamento é síncrono
   if FBilhetes.Count > 1 then
     GerarException(ACBrStr('ERRO: Conjunto de BP-e transmitidos (máximo de 1 BP-e)' +
@@ -659,20 +664,42 @@ begin
        RetornarConteudoEntre(FBilhetes.Items[0].XMLAssinado, '<BPe', '</BPe>') +
        '</BPe>';
 
-  if FMsgZip then
-  begin
-    FPBodyElement := 'bpeDadosMsgZip';
+  FMsgUnZip := FPDadosMsg;
 
-    FPDadosMsg := Zip(FPDadosMsg);
-    FPDadosMsg := EncodeBase64(FPDadosMsg);
-  end
-  else
-    FPBodyElement := 'bpeDadosMsg';
+  FPDadosMsg := Zip(FPDadosMsg);
+  FPDadosMsg := EncodeBase64(FPDadosMsg);
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
     GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
       IntToStr(trunc(Length(FPDadosMsg) / 1024)) + ' Kbytes'));
+end;
+
+procedure TBPeRecepcao.SalvarEnvio;
+var
+  Prefixo, ArqEnv: String;
+  IsUTF8: Boolean;
+begin
+  if FPArqEnv = '' then
+    exit;
+
+  Prefixo := GerarPrefixoArquivo;
+
+  if FPConfiguracoes.Geral.Salvar then
+  begin
+    ArqEnv := Prefixo + '-' + FPArqEnv + '.xml';
+
+    IsUTF8  := XmlEstaAssinado(FMsgUnZip);
+    FPDFeOwner.Gravar(ArqEnv, FMsgUnZip, '', IsUTF8);
+  end;
+
+  if FPConfiguracoes.WebServices.Salvar then
+  begin
+    ArqEnv := Prefixo + '-' + FPArqEnv + '-soap.xml';
+
+    IsUTF8  := XmlEstaAssinado(FPEnvelopeSoap);
+    FPDFeOwner.Gravar(ArqEnv, FPEnvelopeSoap, '', IsUTF8);
+  end;
 end;
 
 function TBPeRecepcao.TratarResposta: Boolean;
@@ -915,6 +942,8 @@ procedure TBPeConsulta.DefinirDadosMsg;
 var
   ConsSitBPe: TConsSitBPe;
 begin
+  FPBodyElement := 'bpeDadosMsg';
+
   ConsSitBPe := TConsSitBPe.Create;
   try
     ConsSitBPe.TpAmb := FTpAmb;
@@ -1320,6 +1349,8 @@ var
   I, F: Integer;
   Lote, Evento, Eventos, EventosAssinados: AnsiString;
 begin
+  FPBodyElement := 'bpeDadosMsg';
+
   EventoBPe := TEventoBPe.Create;
   try
     EventoBPe.idLote := FidLote;
@@ -1616,6 +1647,8 @@ procedure TDistribuicaoDFe.DefinirDadosMsg;
 var
   DistDFeInt: TDistDFeInt;
 begin
+  FPBodyElement := 'bpeDadosMsg';
+
   DistDFeInt := TDistDFeInt.Create;
   try
     DistDFeInt.TpAmb := FPConfiguracoesBPe.WebServices.Ambiente;
@@ -1836,15 +1869,14 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: Integer; aMsgZip: Boolean = False): Boolean;
+function TWebServices.Envia(ALote: Integer): Boolean;
 begin
-  Result := Envia(IntToStr(ALote), aMsgZip);
+  Result := Envia(IntToStr(ALote));
 end;
 
-function TWebServices.Envia(ALote: String; aMsgZip: Boolean = False): Boolean;
+function TWebServices.Envia(ALote: String): Boolean;
 begin
   FEnviar.Lote := ALote;
-  FEnviar.MsgZip := aMsgZip;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );

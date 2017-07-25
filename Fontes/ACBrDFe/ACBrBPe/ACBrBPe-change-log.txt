@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2017
+-- Diversos --
+[-] Removido a propriedade MsgZip: Boolean do método Enviar, pois o envio do BP-e 
+    sempre será compactado os demais métodos não.
+    por: Italo Jurisato Junior
+
 24/07/2017
 -- Diversos --
 [-] Correções em diversas units e o acrescimo da propriedade MsgZip: Boolean no 

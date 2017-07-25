@@ -78,8 +78,8 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function GerarXML: boolean;
-    function ObterNomeArquivo: string;
+    function GerarXML: Boolean;
+    function ObterNomeArquivo: String;
   published
     property Gerador: TGerador       read FGerador  write FGerador;
     property Versao: String          read FVersao   write FVersao;
@@ -109,11 +109,11 @@ begin
   inherited;
 end;
 
-function TDistDFeInt.ObterNomeArquivo: string;
+function TDistDFeInt.ObterNomeArquivo: String;
 var
   DataHora: TDateTime;
   Year, Month, Day, Hour, Min, Sec, Milli: Word;
-  AAAAMMDDTHHMMSS: string;
+  AAAAMMDDTHHMMSS: String;
 begin
   Datahora := now;
   DecodeTime(DataHora, Hour, Min, Sec, Milli);
@@ -123,7 +123,7 @@ begin
   Result := AAAAMMDDTHHMMSS + '-con-dist-dfe.xml';
 end;
 
-function TDistDFeInt.GerarXML: boolean;
+function TDistDFeInt.GerarXML: Boolean;
 var
  sNSU: String;
 begin
@@ -138,7 +138,7 @@ begin
   begin
     if FchBPe = '' then
     begin
-      sNSU := IntToStrZero(StrToIntDef(FultNSU,0),15);
+      sNSU := IntToStrZero(StrToIntDef(FultNSU, 0), 15);
       Gerador.wGrupo('distNSU');
       Gerador.wCampo(tcStr, 'A08', 'ultNSU', 01, 15, 1, sNSU, DSC_ULTNSU);
       Gerador.wGrupo('/distNSU');
@@ -155,7 +155,7 @@ begin
   end
   else
   begin
-    sNSU := IntToStrZero(StrToIntDef(FNSU,0),15);
+    sNSU := IntToStrZero(StrToIntDef(FNSU, 0), 15);
     Gerador.wGrupo('consNSU');
     Gerador.wCampo(tcStr, 'A10', 'NSU', 01, 15, 1, sNSU, DSC_NSU);
     Gerador.wGrupo('/consNSU');

@@ -151,7 +151,7 @@ var
   wCstat: String;
   xProtBPe: String;
   nProtLoc: String;
-  xUF: string;    
+  xUF: String;    
   LocLeitor: TLeitor;
   i: Integer;
   ProtLido: Boolean; //Protocolo lido do arquivo
@@ -211,7 +211,7 @@ begin
                 break;
               end;
 
-              I := I + 1;
+              inc(I);
             end;
           finally
             LocLeitor.Free;
@@ -240,7 +240,7 @@ begin
           nProtLoc := RetornarConteudoEntre(XMLinfProt2.text, '<nProt>', '</nProt>');
 
           xProtBPe := '<protBPe versao="' + Versao + '">' +
-                       '<infProt Id="ID'+ nProtLoc +'">'+
+                       '<infProt Id="ID'+ nProtLoc +'">' +
                         PreencherTAG('tpAmb', XMLinfProt.text) +
                         PreencherTAG('verAplic', XMLinfProt.text) +
                         PreencherTAG('chBPe', XMLinfProt.text) +
@@ -256,10 +256,10 @@ begin
 
       if ProtLido then
       begin
-        if Copy(FverAplic,1,2) = 'SV' then
+        if Copy(FverAplic, 1, 2) = 'SV' then
           xUF := CodigoParaUF(StrToIntDef(Copy(FchBPe, 1, 2), 0))
         else
-          xUF := Copy(FverAplic,1,2);
+          xUF := Copy(FverAplic, 1, 2);
 
         xProtBPe := '<protBPe versao="' + Versao + '">' +
                      '<infProt Id="' + IIf( Pos('ID', FnProt) > 0, FnProt, 'ID' + FnProt ) + '">' +
@@ -267,7 +267,7 @@ begin
                       '<verAplic>' + FverAplic + '</verAplic>' +
                       '<chBPe>' + FchBPe + '</chBPe>' +
                       '<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', FdhRecbto) +
-                                     GetUTC(xUF,FdhRecbto) + '</dhRecbto>'+
+                                     GetUTC(xUF, FdhRecbto) + '</dhRecbto>' +
                       '<nProt>' + FnProt + '</nProt>' +
                       '<digVal>' + FdigVal + '</digVal>' +
                       '<cStat>' + IntToStr(FcStat) + '</cStat>' +

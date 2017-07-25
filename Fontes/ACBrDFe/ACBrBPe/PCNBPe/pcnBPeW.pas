@@ -173,7 +173,7 @@ var
   chave: AnsiString;
   Gerar: Boolean;
   xProtBPe : String;
-  xCNPJCPF : string;
+  xCNPJCPF : String;
 begin
   Gerador.ListaDeAlertas.Clear;
 
@@ -186,7 +186,7 @@ begin
       BPe.ide.nBP, StrToInt(TpEmisToStr(BPe.ide.tpEmis)), BPe.ide.dhEmi, xCNPJCPF) then
     Gerador.wAlerta('A01', 'infBPe', DSC_CHAVE, ERR_MSG_GERAR_CHAVE);
 
-  chave := StringReplace(chave,'NFe','BPe',[rfReplaceAll]);
+  chave := StringReplace(chave, 'NFe', 'BPe', [rfReplaceAll]);
 
   BPe.infBPe.ID := chave;
 
@@ -246,16 +246,16 @@ begin
      xProtBPe :=
        (**)'<protBPe ' + BPe.infBPe.VersaoStr + '>' +
      (******)'<infProt>'+
-     (*********)'<tpAmb>'+TpAmbToStr(BPe.procBPe.tpAmb)+'</tpAmb>'+
-     (*********)'<verAplic>'+BPe.procBPe.verAplic+'</verAplic>'+
-     (*********)'<chBPe>'+BPe.procBPe.chBPe+'</chBPe>'+
-     (*********)'<dhRecbto>'+FormatDateTime('yyyy-mm-dd"T"hh:nn:ss',BPe.procBPe.dhRecbto)+
-                             IIf(FBPe.infBPe.Versao >= 3.10, GetUTC(CodigoParaUF(FBPe.Ide.cUF),BPe.procBPe.dhRecbto),'')+'</dhRecbto>'+
-     (*********)'<nProt>'+BPe.procBPe.nProt+'</nProt>'+
-     (*********)'<digVal>'+BPe.procBPe.digVal+'</digVal>'+
-     (*********)'<cStat>'+IntToStr(BPe.procBPe.cStat)+'</cStat>'+
-     (*********)'<xMotivo>'+BPe.procBPe.xMotivo+'</xMotivo>'+
-     (******)'</infProt>'+
+     (*********)'<tpAmb>' + TpAmbToStr(BPe.procBPe.tpAmb) + '</tpAmb>' +
+     (*********)'<verAplic>' + BPe.procBPe.verAplic + '</verAplic>' +
+     (*********)'<chBPe>' + BPe.procBPe.chBPe + '</chBPe>' +
+     (*********)'<dhRecbto>' + FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', BPe.procBPe.dhRecbto) +
+                               GetUTC(CodigoParaUF(FBPe.Ide.cUF), BPe.procBPe.dhRecbto) + '</dhRecbto>' +
+     (*********)'<nProt>' + BPe.procBPe.nProt + '</nProt>' +
+     (*********)'<digVal>' + BPe.procBPe.digVal + '</digVal>' +
+     (*********)'<cStat>' + IntToStr(BPe.procBPe.cStat) + '</cStat>' +
+     (*********)'<xMotivo>' + BPe.procBPe.xMotivo + '</xMotivo>' +
+     (******)'</infProt>' +
      (****)'</protBPe>';
 
      Gerador.wTexto(xProtBPe);
@@ -547,7 +547,7 @@ procedure TBPeW.GerarinfPassageiro;
 begin
   Gerador.wGrupo('infPassageiro', '#087');
 
-  Gerador.wCampo(tcStr, '#088', 'xNome', 2, 60, 1, BPe.infPassagem.infPassageiro.xNome, DSC_XNOMEPASS);
+  Gerador.wCampo(tcStr, '#088', 'xNome', 02, 60, 1, BPe.infPassagem.infPassageiro.xNome, DSC_XNOMEPASS);
   Gerador.wCampoCPF('#089', BPe.infPassagem.infPassageiro.CPF, CODIGO_BRASIL, False);
   Gerador.wCampo(tcStr, '#090', 'tpDoc', 01, 01, 1, tpDocumentoToStr(BPe.infPassagem.infPassageiro.tpDoc), DSC_TPDOC);
   Gerador.wCampo(tcStr, '#091', 'nDoc ', 02, 20, 1, BPe.infPassagem.infPassageiro.nDoc, DSC_NDOC);
@@ -699,8 +699,8 @@ begin
       begin
         //Grupo do Simples Nacional
         Gerador.wGrupo('ICMSSN', '#147');
-        Gerador.wCampo(tcStr, '#148', 'CST', 02, 02, 1, '90', DSC_CST);
-        Gerador.wCampo(tcStr, '#149' , 'indSN', 01, 01, 1, '1', '');
+        Gerador.wCampo(tcStr, '#148', 'CST  ', 02, 02, 1, '90', DSC_CST);
+        Gerador.wCampo(tcStr, '#149', 'indSN', 01, 01, 1, '1', '');
         Gerador.wGrupo('/ICMSSN');
       end;
 	end;

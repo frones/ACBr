@@ -130,35 +130,35 @@ function StrToSchemaBPe(out ok: Boolean; const s: String): TSchemaBPe;
 function LayOutBPeToServico(const t: TLayOutBPe): String;
 function ServicoToLayOutBPe(out ok: Boolean; const s: String): TLayOutBPe;
 
-function tpSubstituicaoToStr(const t: TTipoSubstituicao): string;
-function StrTotpSubstituicao(out ok: boolean; const s: string): TTipoSubstituicao;
+function tpSubstituicaoToStr(const t: TTipoSubstituicao): String;
+function StrTotpSubstituicao(out ok: Boolean; const s: String): TTipoSubstituicao;
 
-function tpDocumentoToStr(const t: TTipoDocumento): string;
-function StrTotpDocumento(out ok: boolean; const s: string): TTipoDocumento;
+function tpDocumentoToStr(const t: TTipoDocumento): String;
+function StrTotpDocumento(out ok: Boolean; const s: String): TTipoDocumento;
 
-function tpViagemToStr(const t: TTipoViagem): string;
-function StrTotpViagem(out ok: boolean; const s: string): TTipoViagem;
+function tpViagemToStr(const t: TTipoViagem): String;
+function StrTotpViagem(out ok: Boolean; const s: String): TTipoViagem;
 
-function tpServicoToStr(const t: TTipoServico): string;
-function StrTotpServico(out ok: boolean; const s: string): TTipoServico;
+function tpServicoToStr(const t: TTipoServico): String;
+function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
 
-function tpAcomodacaoToStr(const t: TTipoAcomodacao): string;
-function StrTotpAcomodacao(out ok: boolean; const s: string): TTipoAcomodacao;
+function tpAcomodacaoToStr(const t: TTipoAcomodacao): String;
+function StrTotpAcomodacao(out ok: Boolean; const s: String): TTipoAcomodacao;
 
-function tpTrechoToStr(const t: TTipoTrecho): string;
-function StrTotpTrecho(out ok: boolean; const s: string): TTipoTrecho;
+function tpTrechoToStr(const t: TTipoTrecho): String;
+function StrTotpTrecho(out ok: Boolean; const s: String): TTipoTrecho;
 
-function tpVeiculoToStr(const t: TTipoVeiculo): string;
-function StrTotpVeiculo(out ok: boolean; const s: string): TTipoVeiculo;
+function tpVeiculoToStr(const t: TTipoVeiculo): String;
+function StrTotpVeiculo(out ok: Boolean; const s: String): TTipoVeiculo;
 
-function SitVeiculoToStr(const t: TSitVeiculo): string;
-function StrToSitVeiculo(out ok: boolean; const s: string): TSitVeiculo;
+function SitVeiculoToStr(const t: TSitVeiculo): String;
+function StrToSitVeiculo(out ok: Boolean; const s: String): TSitVeiculo;
 
-function tpDescontoToStr(const t: TTipoDesconto): string;
-function StrTotpDesconto(out ok: boolean; const s: string): TTipoDesconto;
+function tpDescontoToStr(const t: TTipoDesconto): String;
+function StrTotpDesconto(out ok: Boolean; const s: String): TTipoDesconto;
 
-function tpComponenteToStr(const t: TTipoComponente): string;
-function StrTotpComponente(out ok: boolean; const s: string): TTipoComponente;
+function tpComponenteToStr(const t: TTipoComponente): String;
+function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
 
 implementation
 
@@ -246,14 +246,14 @@ var
   P: Integer;
   SchemaStr: String;
 begin
-  P := pos('_',s);
+  P := pos('_', s);
   if p > 0 then
-    SchemaStr := copy(s,1,P-1)
+    SchemaStr := copy(s, 1, P-1)
   else
     SchemaStr := s;
 
-  if LeftStr(SchemaStr,3) <> 'sch' then
-    SchemaStr := 'sch'+SchemaStr;
+  if LeftStr(SchemaStr, 3) <> 'sch' then
+    SchemaStr := 'sch' + SchemaStr;
 
   Result := TSchemaBPe( GetEnumValue(TypeInfo(TSchemaBPe), SchemaStr ) );
 end;
@@ -276,49 +276,49 @@ begin
       LayBPeEvento, LayBPeEventoAN, LayDistDFeInt ] );
 end;
 
-function tpSubstituicaoToStr(const t: TTipoSubstituicao): string;
+function tpSubstituicaoToStr(const t: TTipoSubstituicao): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                            [tsRemarcacao, tsTransferencia, tsTransfRemarcacao]);
 end;
 
-function StrTotpSubstituicao(out ok: boolean; const s: string): TTipoSubstituicao;
+function StrTotpSubstituicao(out ok: Boolean; const s: String): TTipoSubstituicao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [tsRemarcacao, tsTransferencia, tsTransfRemarcacao]);
 end;
 
-function tpDocumentoToStr(const t: TTipoDocumento): string;
+function tpDocumentoToStr(const t: TTipoDocumento): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5'],
                            [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
 end;
 
-function StrTotpDocumento(out ok: boolean; const s: string): TTipoDocumento;
+function StrTotpDocumento(out ok: Boolean; const s: String): TTipoDocumento;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5'],
                            [tdRG, tdTituloEleitor, tdPassaporte, tdCNH, tdOutros]);
 end;
 
-function tpViagemToStr(const t: TTipoViagem): string;
+function tpViagemToStr(const t: TTipoViagem): String;
 begin
   result := EnumeradoToStr(t,
                            ['00', '01'],
                            [tvRegular, tvExtra]);
 end;
 
-function StrTotpViagem(out ok: boolean; const s: string): TTipoViagem;
+function StrTotpViagem(out ok: Boolean; const s: String): TTipoViagem;
 begin
   result := StrToEnumerado(ok, s,
                            ['00', '01'],
                            [tvRegular, tvExtra]);
 end;
 
-function tpServicoToStr(const t: TTipoServico): string;
+function tpServicoToStr(const t: TTipoServico): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -327,7 +327,7 @@ begin
                             tsSemiurbano, tsLongitudinal, tsTravessia]);
 end;
 
-function StrTotpServico(out ok: boolean; const s: string): TTipoServico;
+function StrTotpServico(out ok: Boolean; const s: String): TTipoServico;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -336,35 +336,35 @@ begin
                             tsSemiurbano, tsLongitudinal, tsTravessia]);
 end;
 
-function tpAcomodacaoToStr(const t: TTipoAcomodacao): string;
+function tpAcomodacaoToStr(const t: TTipoAcomodacao): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3', '4', '5'],
                            [taAssento, taRede, taRedeComAr, taCabine, taOutros]);
 end;
 
-function StrTotpAcomodacao(out ok: boolean; const s: string): TTipoAcomodacao;
+function StrTotpAcomodacao(out ok: Boolean; const s: String): TTipoAcomodacao;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3', '4', '5'],
                            [taAssento, taRede, taRedeComAr, taCabine, taOutros]);
 end;
 
-function tpTrechoToStr(const t: TTipoTrecho): string;
+function tpTrechoToStr(const t: TTipoTrecho): String;
 begin
   result := EnumeradoToStr(t,
                            ['1', '2', '3'],
                            [ttNormal, ttTrechoInicial, ttConexao]);
 end;
 
-function StrTotpTrecho(out ok: boolean; const s: string): TTipoTrecho;
+function StrTotpTrecho(out ok: Boolean; const s: String): TTipoTrecho;
 begin
   result := StrToEnumerado(ok, s,
                            ['1', '2', '3'],
                            [ttNormal, ttTrechoInicial, ttConexao]);
 end;
 
-function tpVeiculoToStr(const t: TTipoVeiculo): string;
+function tpVeiculoToStr(const t: TTipoVeiculo): String;
 begin
   result := EnumeradoToStr(t,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -381,7 +381,7 @@ begin
                             tvCarroca, tvMobilete, tvBicicleta, tvPassageiro, tvOutros]);
 end;
 
-function StrTotpVeiculo(out ok: boolean; const s: string): TTipoVeiculo;
+function StrTotpVeiculo(out ok: Boolean; const s: String): TTipoVeiculo;
 begin
   result := StrToEnumerado(ok, s,
                            ['00', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -398,21 +398,21 @@ begin
                             tvCarroca, tvMobilete, tvBicicleta, tvPassageiro, tvOutros]);
 end;
 
-function SitVeiculoToStr(const t: TSitVeiculo): string;
+function SitVeiculoToStr(const t: TSitVeiculo): String;
 begin
   result := EnumeradoToStr(t,
                            ['01', '02', '03'],
                            [svVazio, svCarregado, svNaoSeAplica]);
 end;
 
-function StrToSitVeiculo(out ok: boolean; const s: string): TSitVeiculo;
+function StrToSitVeiculo(out ok: Boolean; const s: String): TSitVeiculo;
 begin
   result := StrToEnumerado(ok, s,
                            ['01', '02', '03'],
                            [svVazio, svCarregado, svNaoSeAplica]);
 end;
 
-function tpDescontoToStr(const t: TTipoDesconto): string;
+function tpDescontoToStr(const t: TTipoDesconto): String;
 begin
   result := EnumeradoToStr(t,
                            ['', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -423,7 +423,7 @@ begin
                             tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
 end;
 
-function StrTotpDesconto(out ok: boolean; const s: string): TTipoDesconto;
+function StrTotpDesconto(out ok: Boolean; const s: String): TTipoDesconto;
 begin
   result := StrToEnumerado(ok, s,
                            ['', '01', '02', '03', '04', '05', '06', '07', '08',
@@ -434,7 +434,7 @@ begin
                             tdProfissionaldaEmpresa, tdJovem, tdOutrosDesc]);
 end;
 
-function tpComponenteToStr(const t: TTipoComponente): string;
+function tpComponenteToStr(const t: TTipoComponente): String;
 begin
   result := EnumeradoToStr(t,
                            ['01', '02', '03', '04', '05', '06', '99'],
@@ -442,7 +442,7 @@ begin
                             tcSVI, tcOutros]);
 end;
 
-function StrTotpComponente(out ok: boolean; const s: string): TTipoComponente;
+function StrTotpComponente(out ok: Boolean; const s: String): TTipoComponente;
 begin
   result := StrToEnumerado(ok, s,
                            ['01', '02', '03', '04', '05', '06', '99'],

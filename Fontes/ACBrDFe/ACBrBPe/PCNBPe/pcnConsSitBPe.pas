@@ -107,9 +107,9 @@ begin
   Gerador.ArquivoFormatoXML := '';
 
   Gerador.wGrupo('consSitBPe ' + NAME_SPACE_BPE + ' versao="' + Versao + '"');
-  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 001, 001, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, 'CP04', 'xServ', 009, 009, 1, 'CONSULTAR', DSC_XSERV);
-  Gerador.wCampo(tcEsp, 'CP05', 'chBPe', 044, 044, 1, FchBPe, DSC_CHBPE);
+  Gerador.wCampo(tcStr, 'CP03', 'tpAmb', 01, 01, 1, tpAmbToStr(FtpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, 'CP04', 'xServ', 09, 09, 1, 'CONSULTAR', DSC_XSERV);
+  Gerador.wCampo(tcEsp, 'CP05', 'chBPe', 44, 44, 1, FchBPe, DSC_CHBPE);
   Gerador.wGrupo('/consSitBPe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);

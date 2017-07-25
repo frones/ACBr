@@ -294,7 +294,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function LerXml: boolean;
+    function LerXml: Boolean;
     function LerXMLFromFile(CaminhoArquivo: String): Boolean;
   published
     property Leitor: TLeitor           read FLeitor   write FLeitor;
@@ -407,9 +407,9 @@ begin
   FdocZip := Value;
 end;
 
-function TRetDistDFeInt.LerXml: boolean;
+function TRetDistDFeInt.LerXml: Boolean;
 var
-  ok: boolean;
+  ok: Boolean;
   i: Integer;
   StrAux, StrDecod: AnsiString;
   oLeitorInfZip: TLeitor;
@@ -490,7 +490,7 @@ begin
             FdocZip.Items[i].XML := IIF(Pos(ENCODING_UTF8, oLeitorInfZip.Grupo) > 0, '', '<' + ENCODING_UTF8 + '>') + oLeitorInfZip.Grupo;
 
             oLeitorInfZip.rExtrai(1, 'infBPe');
-            FdocZip.Items[i].FresBPe.chBPe := copy(oLeitorInfZip.Grupo, pos('Id="BPe', oLeitorInfZip.Grupo)+7, 44);
+            FdocZip.Items[i].FresBPe.chBPe := copy(oLeitorInfZip.Grupo, pos('Id="BPe', oLeitorInfZip.Grupo) + 7, 44);
 
             oLeitorInfZip.rExtrai(1, 'emit');
             FdocZip.Items[i].FresBPe.FCNPJCPF := oLeitorInfZip.rCampo(tcStr, 'CNPJ');

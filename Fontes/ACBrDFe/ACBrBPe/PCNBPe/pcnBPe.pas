@@ -770,7 +770,7 @@ begin
   if FVersao <= 0 then
      Result := V1_00
   else
-     Result := 'versao="'+FloatToString(FVersao,'.','#0.00')+'"';
+     Result := 'versao="' + FloatToString(FVersao, '.', '#0.00') + '"';
 end;
 
 {Ide}

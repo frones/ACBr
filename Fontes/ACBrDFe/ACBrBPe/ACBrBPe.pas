@@ -93,8 +93,8 @@ type
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
       StreamBPe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
-    function Enviar(ALote: Integer; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean; overload;
-    function Enviar(ALote: String; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean; overload;
+    function Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean; overload;
+    function Enviar(ALote: String; Imprimir: Boolean = True): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -491,12 +491,12 @@ begin
   Result := True;
 end;
 
-function TACBrBPe.Enviar(ALote: Integer; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean;
+function TACBrBPe.Enviar(ALote: Integer; Imprimir: Boolean = True): Boolean;
 begin
-  Result := Enviar(IntToStr(ALote), Imprimir, aMsgZip);
+  Result := Enviar(IntToStr(ALote), Imprimir);
 end;
 
-function TACBrBPe.Enviar(ALote: String; Imprimir: Boolean = True; aMsgZip: Boolean = False): Boolean;
+function TACBrBPe.Enviar(ALote: String; Imprimir: Boolean = True): Boolean;
 var
   i: Integer;
 begin
@@ -510,7 +510,7 @@ begin
   Bilhetes.Assinar;
   Bilhetes.Validar;
 
-  Result := WebServices.Envia(ALote, aMsgZip);
+  Result := WebServices.Envia(ALote);
 
   if DABPE <> nil then
   begin

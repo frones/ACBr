@@ -1,7 +1,7 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 367
+  Left = 513
   Height = 733
-  Top = 4
+  Top = 176
   Width = 772
   Caption = 'ACBrSATExtratoFortes'
   ClientHeight = 733
@@ -1530,18 +1530,19 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       RealBounds.Height = 0
       Visible = False
       object imgLogo: TRLImage
-        Left = 142
+        Left = 0
         Height = 1
         Top = 0
-        Width = 1
-        Align = faCenterTop
+        Width = 286
+        Align = faTop
         AutoSize = True
-        Behavior = [beSiteExpander]
         Center = True
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Scaled = True
+        Transparent = False
       end
     end
   end
@@ -2359,18 +2360,19 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       RealBounds.Height = 0
       Visible = False
       object imgLogoCanc: TRLImage
-        Left = 142
+        Left = 0
         Height = 1
         Top = 0
-        Width = 1
-        Align = faCenterTop
+        Width = 286
+        Align = faTop
         AutoSize = True
-        Behavior = [beSiteExpander]
         Center = True
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        Scaled = True
+        Transparent = False
       end
     end
   end

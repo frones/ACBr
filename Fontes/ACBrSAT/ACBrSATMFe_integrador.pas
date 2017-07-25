@@ -302,8 +302,18 @@ function TACBrSATMFe_integrador_XML.ConfigurarInterfaceDeRede(
 Var
   Resp : String;
 begin
-{  Resp := xSAT_ConfigurarInterfaceDeRede( numeroSessao,
-                 String(codigoDeAtivacao), String(dadosConfiguracao) ) ; }
+  FGerador.LayoutArquivoTXT.Clear;
+
+  FGerador.ArquivoFormatoXML := '';
+  FGerador.ArquivoFormatoTXT := '';
+
+  FMetodo.GerarMetodo(numeroSessao,cNomeComponente,'ConfigurarInterfaceDeRede');
+  FParametro.GerarParametro('numeroSessao',numeroSessao,tcInt);
+  FParametro.GerarParametro('codigoDeAtivacao',codigoDeAtivacao,tcStr);
+  FParametro.GerarParametro('dadosConfiguracao',dadosConfiguracao,tcStr);
+  FMetodo.FinalizarMetodo;
+
+  Resp := FComandoMFE.EnviaComando(numeroSessao,'ConfigurarInterfaceDeRede',FGerador.ArquivoFormatoXML);
 
   Result := FComandoMFE.PegaResposta( Resp );
 end ;

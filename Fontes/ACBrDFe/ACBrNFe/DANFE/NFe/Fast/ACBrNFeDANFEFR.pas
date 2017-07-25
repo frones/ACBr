@@ -113,9 +113,9 @@ type
     property FastFileInutilizacao: String read FFastFileInutilizacao write FFastFileInutilizacao;
     property dmDanfe: TACBrNFeFRClass read FdmDanfe write FdmDanfe;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
-    property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
+    property ShowDialog: Boolean read FShowDialog write FShowDialog default false;
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
-    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
+    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;
     property TributosFonte: string read FTributosFonte write FTributosFonte;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write setTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;

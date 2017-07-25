@@ -103,7 +103,7 @@ begin
   Result := '';
   SL := TStringList.Create;
   try
-    NomeArquivo := PathWithDelim(FPastaInput)+Nome+'-'+IntToStr(numeroSessao)+'.tmp';
+    NomeArquivo := PathWithDelim(FPastaInput)+LowerCase(Nome+'-'+IntToStr(numeroSessao)+'.tmp');
     SL.Add(Comando);
     SL.SaveToFile(NomeArquivo); // Para evitar a leitura pelo integrador antes do arquivo estar completamente gravado.
     RenameFile(NomeArquivo, ChangeFileExt(NomeArquivo,'.xml'));

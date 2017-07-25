@@ -1400,7 +1400,8 @@ type
     procedure AddLinesLog(aLineLog : String);
     procedure AddLinesLog(aLinesLog : TStrings);
     procedure AddLinesLogFile(const ArqFileLog: String; aLineLogFile: AnsiString;
-      const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True);
+      const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
+      const PrintDateTime: Boolean = False);
 
     procedure SetDisWorking(const Value: boolean);
 
@@ -7676,7 +7677,7 @@ begin
         mResp.Lines.Add(aLineLog);
       end;
 
-      AddLinesLogFile(ArqLogTXT, aLineLog, True, True);
+      AddLinesLogFile(ArqLogTXT, aLineLog, True, True, True);
 
       Application.ProcessMessages;
     end;
@@ -7690,17 +7691,20 @@ begin
 end;
 
 procedure TFrmACBrMonitor.AddLinesLogFile(const ArqFileLog: String; aLineLogFile: AnsiString;
-  const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True);
+  const AppendIfExists : Boolean; const AddLineBreak : Boolean; const PrintDateTime: Boolean);
 var
   sDateTime: String;
 begin
-  sDateTime := FormatDateTime('dd/mm/yyyy hh:nn:ss',Now);
+  sDateTime := '';
+  if PrintDateTime then
+     sDateTime := FormatDateTime('dd/mm/yyyy hh:nn:ss',Now)+' - ';
+
   try
-    WriteToTXT(ArqFileLog, sDateTime+' - '+aLineLogFile, AppendIfExists, AddLineBreak);
+    WriteToTXT(ArqFileLog, sDateTime+aLineLogFile, AppendIfExists, AddLineBreak);
   except
     on E: Exception do
     begin
-      mResp.Lines.Add(sDateTime+' - Erro ao escrever no arquivo: '+ArqFileLog+' ['+E.Message+']');
+      mResp.Lines.Add(sDateTime+'Erro ao escrever no arquivo: '+ArqFileLog+' ['+E.Message+']');
     end;
   end;
 end;

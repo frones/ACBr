@@ -43,6 +43,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/07/2017
+[-]	Correção na gravação de arquivos de resposta, estava adicionando data+hora, devido aba
+	criação da função AddLinesLogFile
+	por: Celso Marigo Junior
+
 24/07/2017
 [*]	Melhorada gravação de logs em arquivos TXT. Criada a função: AddLinesLogFile,
 	esta função trata "exceptions" disparadas pela WriteToTXT, substituidos locais

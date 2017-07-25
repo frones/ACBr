@@ -909,7 +909,7 @@ begin
 
   ACBrBPe1.Bilhetes.GerarBPe;
 
-  ACBrBPe1.Enviar(vNumLote, True, True);
+  ACBrBPe1.Enviar(vNumLote, True);
 
   MemoResp.Lines.Text := ACBrBPe1.WebServices.Enviar.RetWS;
   memoRespWS.Lines.Text := ACBrBPe1.WebServices.Enviar.RetornoWS;

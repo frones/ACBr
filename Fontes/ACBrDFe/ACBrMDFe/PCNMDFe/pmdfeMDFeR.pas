@@ -391,10 +391,13 @@ begin
        while Leitor.rExtrai(3, 'vag', '', i01 + 1) <> '' do
        begin
          MDFe.ferrov.vag.Add;
-         MDFe.ferrov.vag[i01].serie := Leitor.rCampo(tcStr, 'serie');
-         MDFe.ferrov.vag[i01].nVag  := Leitor.rCampo(tcInt, 'nVag');
-         MDFe.ferrov.vag[i01].nSeq  := Leitor.rCampo(tcInt, 'nSeq');
-         MDFe.ferrov.vag[i01].TU    := Leitor.rCampo(tcDe3, 'TU');
+         MDFe.ferrov.vag[i01].pesoBC := Leitor.rCampo(tcDe3, 'pesoBC');
+         MDFe.ferrov.vag[i01].pesoR  := Leitor.rCampo(tcDe3, 'pesoR');
+         MDFe.ferrov.vag[i01].tpVag  := Leitor.rCampo(tcStr, 'tpVag');
+         MDFe.ferrov.vag[i01].serie  := Leitor.rCampo(tcStr, 'serie');
+         MDFe.ferrov.vag[i01].nVag   := Leitor.rCampo(tcInt, 'nVag');
+         MDFe.ferrov.vag[i01].nSeq   := Leitor.rCampo(tcInt, 'nSeq');
+         MDFe.ferrov.vag[i01].TU     := Leitor.rCampo(tcDe3, 'TU');
          inc(i01);
        end;
 

@@ -761,10 +761,18 @@ begin
   for i := 0 to MDFe.ferrov.vag.Count - 1 do
   begin
     Gerador.wGrupo('vag', '#08');
-    Gerador.wCampo(tcStr, '#09', 'serie', 3, 3, 1, MDFe.ferrov.vag[i].serie, DSC_NSERIE);
-    Gerador.wCampo(tcInt, '#10', 'nVag ', 1, 8, 1, MDFe.ferrov.vag[i].nVag, DSC_NVAG);
-    Gerador.wCampo(tcInt, '#11', 'nSeq ', 1, 3, 0, MDFe.ferrov.vag[i].nSeq, DSC_NSEQ);
-    Gerador.wCampo(tcDe3, '#12', 'TU   ', 1, 7, 1, MDFe.ferrov.vag[i].TU, DSC_TU);
+
+    if MDFe.infMDFe.versao >= 3 then
+    begin
+      Gerador.wCampo(tcDe3, '#09', 'pesoBC', 1, 7, 1, MDFe.ferrov.vag[i].pesoBC, '****');
+      Gerador.wCampo(tcDe3, '#10', 'pesoR ', 1, 7, 1, MDFe.ferrov.vag[i].pesoR, '****');
+      Gerador.wCampo(tcStr, '#11', 'tpVag ', 1, 3, 0, MDFe.ferrov.vag[i].tpVag, '****');
+    end;
+
+    Gerador.wCampo(tcStr, '#12', 'serie', 3, 3, 1, MDFe.ferrov.vag[i].serie, DSC_NSERIE);
+    Gerador.wCampo(tcInt, '#13', 'nVag ', 1, 8, 1, MDFe.ferrov.vag[i].nVag, DSC_NVAG);
+    Gerador.wCampo(tcInt, '#14', 'nSeq ', 1, 3, 0, MDFe.ferrov.vag[i].nSeq, DSC_NSEQ);
+    Gerador.wCampo(tcDe3, '#15', 'TU   ', 1, 7, 1, MDFe.ferrov.vag[i].TU, DSC_TU);
     Gerador.wGrupo('/vag');
   end;
   if MDFe.ferrov.vag.Count > 990 then

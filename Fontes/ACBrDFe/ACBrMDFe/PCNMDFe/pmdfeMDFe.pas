@@ -746,6 +746,9 @@ type
 
   TvagCollectionItem = class(TCollectionItem)
   private
+    FpesoBC: Double;
+    FpesoR: Double;
+    FtpVag: String;
     Fserie: String;
     FnVag: Integer;
     FnSeq: Integer;
@@ -754,10 +757,13 @@ type
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
-    property serie: String read Fserie write Fserie;
-    property nVag: Integer read FnVag  write FnVag;
-    property nSeq: Integer read FnSeq  write FnSeq;
-    property TU: Double    read FTU    write FTU;
+    property pesoBC: Double read FpesoBC write FpesoBC;
+    property pesoR: Double  read FpesoR  write FpesoR;
+    property tpVag: String  read FtpVag  write FtpVag;
+    property serie: String  read Fserie  write Fserie;
+    property nVag: Integer  read FnVag   write FnVag;
+    property nSeq: Integer  read FnSeq   write FnSeq;
+    property TU: Double     read FTU     write FTU;
   end;
 
   TPeriCTeCollection = class(TCollection)

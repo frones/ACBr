@@ -154,6 +154,7 @@ type
      property PrefixoCFe: String read fsPrefixoCFe;
 
      procedure InicializaCFe( ACFe : TCFe = nil );
+     function VerificarVersaoSAT(const VersaoLayout: Double = 0): Double;
 
      procedure DoLog(AString : String ) ;
 
@@ -805,6 +806,9 @@ begin
   fsInicializado := true ;
   fsAguardandoResposta := False;
   fsPrefixoCFe := CPREFIXO_CFe;
+
+  if (fsConfig.infCFe_versaoDadosEnt <= 0) then
+    fsConfig.infCFe_versaoDadosEnt := VerificarVersaoSAT;
 end ;
 
 procedure TACBrSAT.DesInicializar ;
@@ -1640,6 +1644,20 @@ begin
   AStream.Size := 0;
   WriteStrToStream(AStream, AnsiString(CFe.XMLOriginal));
   Result := True;
+end;
+
+function TACBrSAT.VerificarVersaoSAT(const VersaoLayout: Double): Double;
+begin
+  ConsultarStatusOperacional;
+  if (Resposta.codigoDeRetorno <> 10000) then
+    raise EACBrSATErro.Create('VerificarVersaoSAT: Erro ao ConsultarStatusOperacional');
+
+  Result := StringToFloatDef(Status.VER_LAYOUT, -1);
+  if Result <= 0 then
+    raise EACBrSATErro.Create('VerificarVersaoSAT: Falha ao ler versão do SAT');
+
+  if (VersaoLayout > 0) and (VersaoLayout > Result) then
+    raise EACBrSATErro.CreateFmt('VerificarVersaoSAT: SAT não suporta a versão [%f]', [VersaoLayout]);
 end;
 
 procedure TACBrSAT.EnviarEmail(sPara, sAssunto: String; NomeArq: String;

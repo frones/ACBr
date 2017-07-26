@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 26/07/2017
+-- ACBrSAT --
+[+] Adicionado o método:
+    function TACBrSAT.VerificarVersaoSAT(VersaoLayout: Double): Double;
+    que permite Detectar a versão atual do SAT, ou verificar se a versão do SAT
+    é inferior a versão desejada.
+[+] Método "Iniciar", modificado para detectar a versão do SAT, se a configuração
+    da versão em "ACBrSAT.Config.infCFe_versaoDadosEnt" estiver zerada
+    (por: DSA)
+
 Data 21/07/2017
 -- ACBrSAT --
 [+] Adicionada a propriedade "AguardandoResposta: Boolean, readonly". Ela será

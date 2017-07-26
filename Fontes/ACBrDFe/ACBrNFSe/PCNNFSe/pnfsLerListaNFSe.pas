@@ -951,6 +951,17 @@ begin
       end;
     end;
 
+    if FProvedor in [proNotaBlu] then
+    begin
+      try
+        if Leitor.rExtrai(1, 'RetornoEnvioRPS') <> '' then
+          ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+        Result := True;
+      except
+        Result := False;
+      end;
+    end;
+
     if FProvedor = proCONAM then
     begin
       if leitor.rExtrai(2, 'Messages') <> '' then

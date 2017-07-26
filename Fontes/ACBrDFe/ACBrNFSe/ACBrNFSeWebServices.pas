@@ -1259,8 +1259,11 @@ begin
                'Protocolo..... : ' + FProtocolo + LineBreak +
                'Provedor...... : ' + FPConfiguracoesNFSe.Geral.xProvedor + LineBreak;
   end;
-
-  Result := (FDataRecebimento <> 0);
+  // Validação de sucesso para provedores que não retornam data de recebimento
+  if FProvedor in [ProNotaBlu] then
+    Result := UpperCase(FRetornoNFSe.ListaNFSe.Sucesso) = UpperCase('true')
+  else // Validação através da data de recebimento
+    Result := (FDataRecebimento <> 0);
 end;
 
 function TNFSeWebService.GerarRetornoNFSe(ARetNFSe: String): String;

@@ -441,7 +441,10 @@ begin
       if (leitor.rExtrai(2, 'Cabecalho') <> '') then
       begin
         FInfCanc.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
+
         if FInfCanc.FSucesso = 'S' then // provedor CTA
+          FInfCanc.DataHora := Date
+        else if FInfCanc.FSucesso = 'true' then // provedor ISSDSF
           FInfCanc.DataHora := Date;
       end;
 

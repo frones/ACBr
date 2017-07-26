@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+26/07/2017
+-- Diversos --
+[*] Implementação do provedor Sigep.
+    Por: Renan Garcia de Oliveira
+
 24/07/2017
 -- pnfsNFSeW_ABRASFv1
 [*] Ajustes NFSe - Provedor SimplISS

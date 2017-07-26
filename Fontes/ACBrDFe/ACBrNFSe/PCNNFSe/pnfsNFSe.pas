@@ -473,9 +473,13 @@ type
   private
     FTelefone: String;
     FEmail: String;
+    FDDD: String;
+    FTipoTelefone: string;
   published
     property Telefone: String read FTelefone write FTelefone;
     property Email: String read FEmail write FEmail;
+    property DDD: String read FDDD write FDDD;
+    property TipoTelefone: string read FTipoTelefone write FTipoTelefone;
   end;
 
  TDadosPrestador = class(TPersistent)

@@ -70,6 +70,10 @@ const
   DSC_OUTRASINF = 'Outras Informações';
   DSC_SENHA = 'Senha';
   DSC_FRASESECRETA = 'Frase Secreta';
+  DSC_USUARIO = 'Usuario';
+  DSC_ASSINATURA = 'Assinatura';
+  DSC_DDD = 'DDD';
+  DSC_TPTELEFONE = 'Tipo Telefone';
 
 implementation
 

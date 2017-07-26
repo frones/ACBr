@@ -753,6 +753,8 @@ begin
     proPronim:   DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/ABRASF/arquivos/nfse.xsd"', '', [rfReplaceAll]);
 
     proPronimV2: DadosMsg := StringReplace(DadosMsg, ' xmlns="http://www.abrasf.org.br/nfse.xsd"', '', [rfReplaceAll]);
+
+    proSigep:    DadosMsg := Copy(DadosMsg, (pos('&lt;p:credenciais',DadosMsg)), length(DadosMsg));
   end;
 
   // %SenhaMsg%  : Representa a Mensagem que contem o usuário e senha
@@ -858,6 +860,12 @@ begin
   else
     xmlns4 := 'xmlns="';
 
+  if FProvedor = proSigep then
+  begin
+    xmlns3 := '';
+    xmlns2 := '';
+    xmlns4 := '';
+  end;
 
   if AIncluiEncodingCab then
     FPCabMsg := '<' + ENCODING_UTF8 + '>' + FPCabMsg;
@@ -904,6 +912,8 @@ begin
                               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
                               'xmlns:xsd="http://www.w3.org/2001/XMLSchema" ' +
                               'xsi:schemaLocation="' + FNameSpace + FSeparador + FxsdServico + ' ' + FxsdServico + ' "';
+
+      proSigep: FNameSpaceDad :=  FNameSpace;
 
       else begin
         if (FSeparador = '') then
@@ -1358,6 +1368,9 @@ begin
 
       FxDSIGNSLote := 'xmlns:' + StringReplace(xPrefixo, ':', '', []) + '=' +
                        Copy(FPDadosMsg, i, j - i);
+
+      if FProvedor = proSigep then
+        FxDSIGNSLote := 'xmlns:ds=';
     end;
   end;
 end;
@@ -1378,6 +1391,13 @@ begin
              proFriburgo: FvNotas := FvNotas +
                        '<' + FPrefixo4 + 'Rps>' +
                         '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico Id="' + RetornarConteudoEntre(RPS, '<Numero>', '</Numero>') + '"' +
+                          RetornarConteudoEntre(RPS,
+                            '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
+                          '</Signature>'+
+                       '</' + FPrefixo4 + 'Rps>';
+
+             proSigep: FvNotas := FvNotas +
+                       '<' + FPrefixo4 + 'credenciais>' +
                           RetornarConteudoEntre(RPS,
                             '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</Signature>') +
                           '</Signature>'+
@@ -1457,6 +1477,14 @@ begin
                             RetornarConteudoEntre(RPS,
                             '<' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico', '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
                           '</' + FPrefixo4 + 'DeclaracaoPrestacaoServico>';
+
+             proSigep: FvNotas := FvNotas +
+                      '<' + FPrefixo4 + 'credenciais>' +
+                          RetornarConteudoEntre(RPS,
+                         '<' + FPrefixo4 + 'credenciais>' , '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>') +
+//                         '</' + FPrefixo4 + 'Rps>' +
+                         '</' + FPrefixo4 + 'InfDeclaracaoPrestacaoServico>'+
+                      '</' + FPrefixo4 + 'Rps>';
            else
              FvNotas := FvNotas +
                       '<' + FPrefixo4 + 'Rps>' +
@@ -2441,6 +2469,7 @@ begin
   try
     case Provedor of
       proNotaBlu: FTagGrupo := 'PedidoEnvioLoteRPS';
+      proSigep:   FTagGrupo := 'Rps';
     else
       FTagGrupo := 'EnviarLoteRpsEnvio';
     end;
@@ -3020,6 +3049,8 @@ begin
     case FProvedor of
       proBethav2,
       proPublica: FTagGrupo := FPrefixo3 + 'Rps></GerarNfseEnvio';
+
+      proSigep: FTagGrupo := FPrefixo3 + 'Rps></' + FPrefixo3 + 'GerarNfseEnvio';
     end;
 
     FPDadosMsg := TNFSeGerarNFSe(Self).FNotasFiscais.AssinarLote(FPDadosMsg,

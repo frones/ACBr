@@ -67,7 +67,7 @@ begin
   begin
      if Modelo = etqPpla then
       begin
-        ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G');
+        ImprimirTexto(orNormal, 2, 2, 2, 190, 5, 'BISCOITO MARILAN RECH 335G', 0, True);
         ImprimirTexto(orNormal, 2, 2, 1, 158, 5, 'CHOC BRANCO');
         ImprimirBarras(orNormal, 'F', '2', '2', 32, 0, '7896003701685', 90, becSIM);
         ImprimirTexto(orNormal, 3, 3, 2, 15, 300, 'R$');
@@ -75,7 +75,7 @@ begin
       end
      else
       begin
-        ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G');
+        ImprimirTexto(orNormal, 2, 2, 2, 15, 55, 'BISCOITO MARILAN RECH 335G', 0, True);
         ImprimirTexto(orNormal, 3, 2, 1, 60, 55, 'CHOC BRANCO');
         ImprimirBarras(orNormal, 'E30', '2', '2', 95, 55, '7896003701685', 90, becSIM);
         ImprimirTexto(orNormal, 3, 3, 2, 110, 355, 'R$');

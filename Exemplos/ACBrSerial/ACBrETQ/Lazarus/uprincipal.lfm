@@ -1,7 +1,7 @@
 object FPrincipal: TFPrincipal
-  Left = 619
+  Left = 606
   Height = 220
-  Top = 218
+  Top = 219
   Width = 516
   ActiveControl = cbModelo
   BorderIcons = [biSystemMenu, biMinimize]
@@ -12,7 +12,7 @@ object FPrincipal: TFPrincipal
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Position = poScreenCenter
-  LCLVersion = '1.2.2.0'
+  LCLVersion = '1.6.4.0'
   object Label1: TLabel
     Left = 16
     Height = 13
@@ -51,7 +51,7 @@ object FPrincipal: TFPrincipal
     Top = 25
     Width = 94
     ItemHeight = 13
-    ItemIndex = 4
+    ItemIndex = 1
     Items.Strings = (
       'etqNenhuma'
       'etqPpla'
@@ -62,15 +62,14 @@ object FPrincipal: TFPrincipal
     OnChange = cbModeloChange
     Style = csDropDownList
     TabOrder = 0
-    Text = 'etqEpl2'
+    Text = 'etqPpla'
   end
   object cbPorta: TComboBox
-    Left = 124
+    Left = 125
     Height = 21
     Top = 25
     Width = 113
     ItemHeight = 13
-    ItemIndex = 5
     Items.Strings = (
       'LPT1'
       'LPT2'
@@ -82,7 +81,7 @@ object FPrincipal: TFPrincipal
       'Digite a porta'
     )
     TabOrder = 1
-    Text = '\\localhost\ZEBRA'
+    Text = 'COM4'
   end
   object eCopias: TEdit
     Left = 16

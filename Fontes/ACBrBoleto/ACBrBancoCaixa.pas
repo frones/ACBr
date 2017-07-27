@@ -74,6 +74,7 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodigoLiquidacao_Descricao( CodLiquidacao : Integer) : String;
+    function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
    end;
 
 implementation
@@ -539,21 +540,8 @@ begin
       {SEGMENTO P}
 
       {Pegando o Tipo de Ocorrencia}
-      case OcorrenciaOriginal.Tipo of
-        toRemessaBaixar                        : ATipoOcorrencia := '02';
-        toRemessaConcederAbatimento            : ATipoOcorrencia := '04';
-        toRemessaCancelarAbatimento            : ATipoOcorrencia := '05';
-        toRemessaAlterarVencimento             : ATipoOcorrencia := '06';
-        toRemessaConcederDesconto              : ATipoOcorrencia := '07';
-        toRemessaCancelarDesconto              : ATipoOcorrencia := '08';
-        toRemessaProtestar                     : ATipoOcorrencia := '09';
-        toRemessaCancelarInstrucaoProtestoBaixa: ATipoOcorrencia := '10';
-        toRemessaCancelarInstrucaoProtesto     : ATipoOcorrencia := '11';
-        toRemessaDispensarJuros                : ATipoOcorrencia := '13';
-        toRemessaAlterarNomeEnderecoSacado     : ATipoOcorrencia := '31';
-      else
-        ATipoOcorrencia := '01';
-      end;
+
+      ATipoOcorrencia := TipoOcorrenciaToCodRemessa(OcorrenciaOriginal.Tipo);
 
       { Pegando o Aceite do Titulo }
       case Aceite of
@@ -1335,6 +1323,26 @@ begin
       34: Result := toRetornoDebitoTarifas;
       99: Result := toRetornoRegistroRecusado;
     end;
+  end;
+end;
+
+
+function TACBrCaixaEconomica.TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): string;
+begin
+  case TipoOcorrencia of
+    toRemessaBaixar                        : Result := '02';
+    toRemessaConcederAbatimento            : Result := '04';
+    toRemessaCancelarAbatimento            : Result := '05';
+    toRemessaAlterarVencimento             : Result := '06';
+    toRemessaConcederDesconto              : Result := '07';
+    toRemessaCancelarDesconto              : Result := '08';
+    toRemessaProtestar                     : Result := '09';
+    toRemessaCancelarInstrucaoProtestoBaixa: Result := '10';
+    toRemessaCancelarInstrucaoProtesto     : Result := '11';
+    toRemessaDispensarJuros                : Result := '13';
+    toRemessaAlterarNomeEnderecoSacado     : Result := '31';
+  else
+    Result := '01';
   end;
 end;
 

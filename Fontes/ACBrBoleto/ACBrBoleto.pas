@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.228';
+  CACBrBoleto_Versao = '0.0.229';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -581,6 +581,7 @@ type
     fpOrientacoesBanco: TStringList;
     fpCodigosMoraAceitos: String;
     fpCodigosGeracaoAceitos: String;
+    fpNumeroCorrespondente: Integer;
 
     function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
@@ -602,6 +603,7 @@ type
     property CodigosMoraAceitos: String read fpCodigosMoraAceitos;
     property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
     property LocalPagamento  : String read GetLocalPagamento;
+    property NumeroCorrespondente : Integer read fpNumeroCorrespondente;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
@@ -613,6 +615,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String; overload; virtual;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
+    function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
 
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoNossoNumero(const ACBrTitulo : TACBrTitulo): String; virtual;
@@ -655,6 +658,7 @@ type
     function GetCodigosMoraAceitos: String;
     function GetCodigosGeracaoAceitos: string;
     function GetLocalPagamento: String;
+    function GetNumeroCorrespondente: Integer;
 
     procedure SetDigito(const AValue: Integer);
     procedure SetNome(const AValue: String);
@@ -663,6 +667,7 @@ type
     procedure SetTamMaximoNossoNumero(Const Avalue:Integer);
     procedure SetOrientacoesBanco(Const Avalue: TStringList);
     procedure SetLocalPagamento(const AValue: String);
+    procedure SetNumeroCorrespondente(const AValue: Integer);
   public
     constructor Create( AOwner : TComponent); override;
     destructor Destroy ; override ;
@@ -681,6 +686,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
+    function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia ): String;
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 
@@ -709,6 +715,7 @@ type
     property TipoCobranca : TACBrTipoCobranca read fTipoCobranca   write SetTipoCobranca;
     property OrientacoesBanco : TStringList read GetOrientacoesBanco write SetOrientacoesBanco;
     property LocalPagamento : String read GetLocalPagamento write SetLocalPagamento;
+    property NumeroCorrespondente : Integer read GetNumeroCorrespondente write SetNumeroCorrespondente default 0;
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite);
@@ -1989,6 +1996,11 @@ begin
    Result := fLocalPagamento;
 end;
 
+function TACBrBanco.GetNumeroCorrespondente: Integer;
+begin
+  Result:=  BancoClass.NumeroCorrespondente ;
+end;
+
 procedure TACBrBanco.SetDigito(const AValue: Integer);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
@@ -2007,6 +2019,11 @@ end;
 procedure TACBrBanco.SetLocalPagamento(const AValue: String);
 begin
   fLocalPagamento := TrimRight(AValue);
+end;
+
+procedure TACBrBanco.SetNumeroCorrespondente(const AValue: Integer);
+begin
+  {Apenas para aparecer no ObjectInspector do D7}
 end;
 
 procedure TACBrBanco.SetTamMaximoNossoNumero(const Avalue: Integer);
@@ -2084,7 +2101,12 @@ end;
 
 function TACBrBanco.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia;
 begin
-   Result:= fBancoClass.CodOcorrenciaToTipo(CodOcorrencia);
+   Result:= fBancoClass.CodOcorrenciaToTipoRemessa(CodOcorrencia);
+end;
+
+function TACBrBanco.TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
+begin
+   Result:= fBancoClass.TipoOcorrenciaToCodRemessa(TipoOcorrencia);
 end;
 
 function TACBrBanco.CalcularDigitoVerificador ( const ACBrTitulo: TACBrTitulo
@@ -2186,6 +2208,7 @@ begin
    fpTamanhoConta          := 10;
    fpCodigosMoraAceitos    := '12';
    fpCodigosGeracaoAceitos := '0123456789';
+   fpNumeroCorrespondente  := 0;
    fpModulo                := TACBrCalcDigito.Create;
    fpOrientacoesBanco      := TStringList.Create;
 end;
@@ -2305,6 +2328,13 @@ function TACBrBancoClass.CodOcorrenciaToTipoRemessa(const CodOcorrencia : Intege
 begin
   Result := toRemessaRegistrar;
 end ;
+
+function TACBrBancoClass.TipoOcorrenciaToCodRemessa(const TipoOcorrencia : TACBrTipoOcorrencia
+  ) : String ;
+begin
+  Result := '01';
+end ;
+
 {
  function TACBrBancoClass.GetNumero: Integer;
 begin
@@ -2543,7 +2573,8 @@ begin
             'Não é um arquivo de  Retorno de cobrança CNAB240 ou CNAB400'));
      end;
 
-     if ( IntToStrZero(Banco.Numero, 3) <> BancoRetorno ) then
+     if ( IntToStrZero(Banco.Numero, 3) <> BancoRetorno )
+        and ( IntToStrZero(Banco.NumeroCorrespondente, 3) <> BancoRetorno )  then
        if LeCedenteRetorno then
          Banco.TipoCobranca := GetTipoCobranca( StrToInt(BancoRetorno))
        else

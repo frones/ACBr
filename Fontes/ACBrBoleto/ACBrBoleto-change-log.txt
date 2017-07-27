@@ -47,6 +47,38 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 24/07/2017 ver: 0.0.229
+
+-- ACBrBoleto
+[+] Inclusao de propriedade NumeroCorrespondente com valor default 0 para bancos sem correspondente e atribuidos para classes de
+    bancos com correspondente.
+    Ajustado rotina LerRetorno() de forma a validar também o número do correspondente.
+    obs: Para os bancos correspondentes específicos, a propriedade LeCedenteRetorno deverá estar desabilitada, uma vez que como o retorno não diz 
+         se se trata do retorno do banco como respondente ou não, não seria possível ao componente setar corretamente a propriedade TipoCobranca
+
+    http://www.projetoacbr.com.br/forum/topic/37871-erro-em-procedure-tacbrboletolerretornoastream-tstream/
+    por: José M. S. Junior
+
+-- ACBrBancoBradescoSicoob ACBrBancoBrasilSicoob
+[+] Ajuste para definir corretamente a propridade NumeroCorrespondente e usar a mesma em suas rotinas internas	       
+    http://www.projetoacbr.com.br/forum/topic/37871-erro-em-procedure-tacbrboletolerretornoastream-tstream/
+    por: José M. S. Junior
+
+-- ACBrBoleto ACBrBancoCaixa
+[*] Ajustes na função de Retorno de Código de Ocorrência de Remessa
+	       http://www.projetoacbr.com.br/forum/topic/35653-acbrboleto-remessa-cnab-240-tipoocorrencia/
+	       por: José M. S. Junior
+
+-- ACBrBancoItau
+[*] Ajustes no Arquivo de Remessa (trailer_lote) CNAB240
+	       http://www.projetoacbr.com.br/forum/topic/19157-homolaga%C3%A7%C3%A3o-arquivo-remessa-ita%C3%BA-cnab-240/?tab=comments#comment-248739
+	       por: José M. S. Junior
+
+-- ACBrBancoBancoob
+[*] Ajustes na validação das Ocorrências de retorno CNAB240
+	       http://www.projetoacbr.com.br/forum/topic/35567-banco-sicoob-756-remessa-240/
+	       por: José M. S. Junior
+
 Data 19/07/2017 ver: 0.0.228
 -- ACBrBancoBradesco
 [-] Ajustes no arquivo de remessa CNAB40 - montagem da instrução das mensagens

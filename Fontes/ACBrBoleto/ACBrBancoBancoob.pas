@@ -755,7 +755,9 @@ begin
         toRemessaAlterarVencimento         : ATipoOcorrencia := '06';
         toRemessaConcederDesconto          : ATipoOcorrencia := '07';
         toRemessaCancelarDesconto          : ATipoOcorrencia := '08';
+        toRemessaProtestar                 : ATipoOcorrencia := '09';
         toRemessaCancelarInstrucaoProtesto : ATipoOcorrencia := '10';
+        toRemessaOutrasOcorrencias         : ATipoOcorrencia := '31';
       else
        ATipoOcorrencia := '01';
       end;

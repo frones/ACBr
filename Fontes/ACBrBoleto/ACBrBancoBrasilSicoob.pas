@@ -83,8 +83,6 @@ implementation
 
 uses StrUtils, ACBrUtil, Variants, ACBrValidador;
 
-const
-  CNumeroSICOOB = 756;
 
 constructor TACBrBancoBrasilSICOOB.create(AOwner: TACBrBanco);
 begin
@@ -96,6 +94,7 @@ begin
    fpTamanhoConta   := 8;
    fpTamanhoAgencia := 4;
    fpTamanhoCarteira:= 2;
+   fpNumeroCorrespondente:= 756;
 end;
 
 function TACBrBancoBrasilSICOOB.CalcularDigitoVerificador(
@@ -395,7 +394,7 @@ function TACBrBancoBrasilSICOOB.GerarRegistroHeader240(
 begin
    with ACBrBanco.ACBrBoleto.Cedente do
    begin
-     Result:= IntToStr(CNumeroSICOOB)                            + //001 a 003 - Código do banco SICOOB
+     Result:= IntToStr(ACBrBanco.NumeroCorrespondente)           + //001 a 003 - Código do banco SICOOB
               '0000'                                             + //004 a 007 - Lote de serviço
               '1'                                                + //008 - Tipo de registro - Registro header de arquivo
               'R'                                                + //009 - Tipo de operação R = Remessa
@@ -588,7 +587,7 @@ var
 begin
    // informação do Header
    // Verifica se o arquivo pertence ao banco
-   if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> CNumeroSICOOB then
+   if StrToIntDef(copy(ARetorno.Strings[0], 1, 3),-1) <> ACBrBanco.NumeroCorrespondente then
       raise Exception.create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não' + 'é um arquivo de retorno do ' + Nome));
 

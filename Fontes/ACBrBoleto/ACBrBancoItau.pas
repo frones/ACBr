@@ -44,6 +44,8 @@ type
   { TACBrBancoItau}
 
   TACBrBancoItau = class(TACBrBancoClass)
+   private
+     fValorTotalDocs: Double;
    protected
    public
     Constructor create(AOwner: TACBrBanco);
@@ -86,6 +88,7 @@ begin
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 5;
    fpTamanhoCarteira       := 3;
+   fValorTotalDocs         := 0;
 end;
 
 function TACBrBancoItau.CalcularDigitoVerificador(const ACBrTitulo: TACBrTitulo ): String;
@@ -305,6 +308,8 @@ begin
       else
          ADataDesconto := PadLeft('', 8, '0');
 
+      fValorTotalDocs:= fValorTotalDocs  + ValorDocumento;
+
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
                '3'                                                        + //8 - Tipo do registro: Registro detalhe
@@ -330,7 +335,7 @@ begin
                FormatDateTime('ddmmyyyy', Vencimento)                     + // 78 a 85 - Data de vencimento do título
                IntToStrZero( round( ValorDocumento * 100), 15)            + // 86 a 100 - Valor nominal do título
                '00000'                                                    + // 101 a 105 - Agência cobradora. // Ficando com Zeros o Itaú definirá a agência cobradora pelo CEP do sacado
-               ' '                                                        + // 106 - Dígito da agência cobradora
+               '0'                                                        + // 106 - Dígito da agência cobradora
                PadRight(EspecieDoc,2)                                                 + // 107 a 108 - Espécie do documento
                ATipoAceite                             + // 109 - Identificação de título Aceito / Não aceito
                FormatDateTime('ddmmyyyy', DataDocumento)                  + // 110 a 117 - Data da emissão do documento
@@ -413,12 +418,12 @@ begin
             '5'                                                        + //Tipo do registro: Registro trailer do lote
             Space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB
             IntToStrZero(wRegsLote + 2, 6)                        + //Quantidade de Registro da Remessa (Somando 1 para o header do lote e 1 para o trailer do lote)
-            PadLeft('', 6, '0')                                           + //Quantidade de títulos em cobrança simples
-            PadLeft('',17, '0')                                           + //Valor dos títulos em cobrança simples
+            IntToStrZero(wRegsLote, 6)                                 + //Quantidade de títulos em cobrança simples
+            IntToStrZero( round( fValorTotalDocs * 100), 17)           + //Valor dos títulos em cobrança simples
             PadLeft('', 6, '0')                                           + //Quantidade títulos em cobrança vinculada
             PadLeft('',17, '0')                                           + //Valor dos títulos em cobrança vinculada
             PadLeft('',46, '0')                                           + //Complemento
-            PadRight('', 8, ' ')                                           + //Referencia do aviso bancario
+            PadRight('', 8, '0')                                       + //Referencia do aviso bancario
             space(117);
 
    {GERAR REGISTRO TRAILER DO ARQUIVO}
@@ -435,6 +440,8 @@ begin
                                                                                     1 para o trailer do arquivo}
             PadLeft('', 6, '0')                                           + //Complemento
             space(205);
+
+   fValorTotalDocs := 0;
 end;
 
 procedure TACBrBancoItau.GerarRegistroHeader400(

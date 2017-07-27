@@ -89,6 +89,7 @@ begin
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 7;
    fpTamanhoCarteira       := 2;
+   fpNumeroCorrespondente  := 756;
 end;
 
 function TACBrBancoBradescoSICOOB.CalcularFatorVencimento(
@@ -166,7 +167,7 @@ begin
                PadLeft( Agencia + AgenciaDigito, 13, '0')         + // Código da Cooperativa
                PadLeft( CodigoCedente, 7, '0')                    + // Código de Cobrança
                PadRight( Nome, 30)                                 + // Nome da Empresa
-               IntToStr( 756 ) + PadRight('BANCOOB', 15)           + // Código e Nome do Banco(756 - Sicoob)
+               IntToStrZero( ACBrBanco.NumeroCorrespondente, 3  ) + PadRight('BANCOOB', 15)   + // Código e Nome do Banco(756 - Sicoob)
                FormatDateTime('ddmmyy',Now)  + Space(08)       + // Data de geração do arquivo + brancos
                'SX'                                            + // Identificação do Sistema
                IntToStrZero(NumeroRemessa,7) + Space(277)      + // Nr. Sequencial de Remessa + brancos
@@ -370,7 +371,7 @@ var
   rConta, rDigitoConta      :String;
   Linha, rCedente, rCNPJCPF :String;
 begin
-   if StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> 756 then
+   if ( StrToIntDef(copy(ARetorno.Strings[0],77,3),-1) <> ACBrBanco.NumeroCorrespondente ) then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
 

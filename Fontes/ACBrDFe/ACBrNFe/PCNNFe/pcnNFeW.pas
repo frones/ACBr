@@ -1005,7 +1005,7 @@ begin
   begin
     Gerador.wGrupo('med', 'K01');
     if NFe.infNFe.Versao >= 4 then
-      Gerador.wCampo(tcStr, 'K01a', 'cProdANVISA', 13, 13, 1, nfe.Det[i].Prod.med[j].nLote, DSC_NLOTE);
+      Gerador.wCampo(tcStr, 'K01a', 'cProdANVISA', 13, 13, 1, nfe.Det[i].Prod.med[j].cProdANVISA, DSC_CPRODANVISA);
     if NFe.infNFe.Versao < 4 then
     begin
       Gerador.wCampo(tcStr, 'K02', 'nLote', 01, 20, 1, nfe.Det[i].Prod.med[j].nLote, DSC_NLOTE);
@@ -1065,9 +1065,9 @@ begin
     begin
       Gerador.wCampo(tcStr, 'LA03', 'descANP', 02, 95, 1, nfe.Det[i].Prod.comb.descANP, DSC_DESCANP);
       Gerador.wCampo(tcDe4, 'LA03a', 'pGLP  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
-      Gerador.wCampo(tcDe4, 'LA03b', 'pGNn  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGNN);
-      Gerador.wCampo(tcDe4, 'LA03c', 'pGNi  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGNI);
-      Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.pGLP, DSC_VPART);
+      Gerador.wCampo(tcDe4, 'LA03b', 'pGNn  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
+      Gerador.wCampo(tcDe4, 'LA03c', 'pGNi  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
+      Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
     end;
 
     if (trim(nfe.Det[i].Prod.comb.CODIF)) <> '' then Gerador.wCampo(tcEsp, 'L103', 'CODIF   ', 00, 21, 1, nfe.Det[i].Prod.comb.CODIF, DSC_CODIF);

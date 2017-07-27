@@ -93,6 +93,7 @@ const
   DSC_NDI = 'Numero do Documento de Importação DI/DSI/DA';
   DSC_nDAR = 'Número do Documento Arrecadação de Receita';
   DSC_NLOTE = 'Número do Lote do medicamento';
+  DSC_CPRODANVISA = 'Código de Produto da ANVISA';
   DSC_NMOTOR = 'Número de Motor';
   DSC_NPROC = 'Identificador do processo ou ato concessório';
   DSC_NSEQADIC = 'Numero seqüencial do item dentro da adição';

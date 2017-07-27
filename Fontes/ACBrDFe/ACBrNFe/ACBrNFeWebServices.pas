@@ -2743,8 +2743,16 @@ end;
 
 procedure TNFeEnvEvento.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'RecepcaoEvento';
-  FPSoapAction := FPServico;
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    FPServico := GetUrlWsd + 'NFeRecepcaoEvento4';
+    FPSoapAction := FPServico;
+  end
+  else
+  begin
+    FPServico := GetUrlWsd + 'RecepcaoEvento';
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeEnvEvento.DefinirDadosMsg;

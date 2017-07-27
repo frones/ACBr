@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 27/07/2017
+-- ACBrETQPpla --
+[*] Adicionada o suporte ao atributo de impressão invertida, em PPLA
+    http://www.projetoacbr.com.br/forum/topic/37251-imprimir-texto-com-tarja-acbretq-ppla/
+
 Data: 21/07/2017
 -- ACBrPosPrinter --
 [-] Correção para impressão com acentos, no Linux

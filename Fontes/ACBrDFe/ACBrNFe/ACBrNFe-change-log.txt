@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2017
+[*] Incluido as URLs de homologação da NF-e 4.00 para a UF CE.
+    Removido "?wsdl" do final das URLs de homologação da NF-e 4.00 da UF PR. 
+    Alterado algumas letras de maiuscula para minuscula das URLs de homologação da NF-e 4.00 da UF SP.
+    Incluido a URL de homologação da NF-e 4.00 para o Web Service "RecepcaoEvento" para UF SP.
+    por: Italo Jurisato Junior
+
 20/07/2017
 -- ACBrECFVirtualNFCe
 [*] Fechamento do cupom virtual melhorias

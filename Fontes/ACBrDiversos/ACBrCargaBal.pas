@@ -413,16 +413,16 @@ end;
 function TACBrCargaBal.GetNutriUndPorcaoToledo(Tipo: TACBrCargaBalNutriUndPorcao): String;
 begin
    case Tipo of
-    tpGramas : Result := '0';
+    tpGramas     : Result := '0';
     tpMililitros : Result := '1';
-    tpUnidades : Result := '2';
+    tpUnidades   : Result := '2';
    end;
 end;
 
 function TACBrCargaBal.GetNutriPartDecimalToledo(Tipo: TACBrCargaBalNutriPartdecimal): String;
 begin
    case Tipo of
-    tpPara0 : Result := '0';
+    tpPara0  : Result := '0';
     tpPara14 : Result := '1';
     tpPara13 : Result := '2';
     tpPara12 : Result := '3';
@@ -444,33 +444,33 @@ end;
 function TACBrCargaBal.GetNutriMedCaseiraToledo(Tipo: TACBrCargaBalNutriMedCaseira): String;
 begin
   case tipo of
-    tpColherSopa : Result := '00';
-    tpColherCafe : Result := '01';
-    tpColherCha : Result := '02';
-    tpXicara : Result := '03';
-    tpDeXicara : Result := '04';
-    tpUnidade : Result := '05';
-    tpPacote : Result := '06';
-    tpFatia : Result := '07';
-    tpFatiaFina : Result := '08';
-    tpPedaco : Result := '09';
-    tpFolha : Result := '10';
-    tpPao : Result := '11';
-    tpBiscoito : Result := '12';
+    tpColherSopa  : Result := '00';
+    tpColherCafe  : Result := '01';
+    tpColherCha   : Result := '02';
+    tpXicara      : Result := '03';
+    tpDeXicara    : Result := '04';
+    tpUnidade     : Result := '05';
+    tpPacote      : Result := '06';
+    tpFatia       : Result := '07';
+    tpFatiaFina   : Result := '08';
+    tpPedaco      : Result := '09';
+    tpFolha       : Result := '10';
+    tpPao         : Result := '11';
+    tpBiscoito    : Result := '12';
     tpBisnaguinha : Result := '13';
-    tpDisco : Result := '14';
-    tpCopo : Result := '15';
-    tpPorcao : Result := '16';
-    tpTablete : Result := '17';
-    tpSache : Result := '18';
-    tpAlmodega : Result := '19';
-    tpBife : Result := '20';
-    tpFile : Result := '21';
-    tpConcha : Result := '22';
-    tpBala : Result := '23';
-    tpPratoFundo : Result := '24';
-    tpPitada : Result := '25';
-    tpLata : Result := '26';
+    tpDisco       : Result := '14';
+    tpCopo        : Result := '15';
+    tpPorcao      : Result := '16';
+    tpTablete     : Result := '17';
+    tpSache       : Result := '18';
+    tpAlmodega    : Result := '19';
+    tpBife        : Result := '20';
+    tpFile        : Result := '21';
+    tpConcha      : Result := '22';
+    tpBala        : Result := '23';
+    tpPratoFundo  : Result := '24';
+    tpPitada      : Result := '25';
+    tpLata        : Result := '26';
     end;
 end;
 

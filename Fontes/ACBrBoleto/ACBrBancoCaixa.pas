@@ -74,6 +74,7 @@ type
     function CodOcorrenciaToTipo(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOCorrenciaToCod(const TipoOcorrencia: TACBrTipoOcorrencia): String; override;
     function CodigoLiquidacao_Descricao( CodLiquidacao : Integer) : String;
+    function CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer): TACBrTipoOcorrencia; override;
     function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): string; override;
    end;
 
@@ -1073,7 +1074,7 @@ var
   MotivoLinha, I, CodMotivo: Integer;
   wSeuNumero, TempData: String;
 begin
- 
+
    if (copy(ARetorno.Strings[0],1,3) <> '104') then
       raise Exception.Create(ACBrStr(ACBrBanco.ACBrBoleto.NomeArqRetorno +
                              'não é um arquivo de retorno do '+ Nome));
@@ -1326,6 +1327,25 @@ begin
   end;
 end;
 
+function TACBrCaixaEconomica.CodOcorrenciaToTipoRemessa(
+  const CodOcorrencia: Integer): TACBrTipoOcorrencia;
+begin
+  case CodOcorrencia of
+    02: Result :=     toRemessaBaixar;
+    04: Result :=     toRemessaConcederAbatimento;
+    05: Result :=     toRemessaCancelarAbatimento;
+    06: Result :=     toRemessaAlterarVencimento;
+    07: Result :=     toRemessaConcederDesconto;
+    08: Result :=     toRemessaCancelarDesconto;
+    09: Result :=     toRemessaProtestar;
+    10: Result :=     toRemessaCancelarInstrucaoProtestoBaixa;
+    11: Result :=     toRemessaCancelarInstrucaoProtesto;
+    13: Result :=     toRemessaDispensarJuros;
+    31: Result :=     toRemessaAlterarNomeEnderecoSacado;
+  else
+    Result := toRemessaRegistrar;
+  end;
+end;
 
 function TACBrCaixaEconomica.TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): string;
 begin

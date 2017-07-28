@@ -1668,7 +1668,12 @@ end;
 procedure TNFeRecibo.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
-    FPServico := GetUrlWsd + 'NfeRetAutorizacao'
+  begin
+    if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
+      FPServico := GetUrlWsd + 'NFeRetAutorizacao4'
+    else
+      FPServico := GetUrlWsd + 'NfeRetAutorizacao';
+  end
   else
     FPServico := GetUrlWsd + 'NfeRetRecepcao2';
 
@@ -2744,15 +2749,11 @@ end;
 procedure TNFeEnvEvento.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
-  begin
-    FPServico := GetUrlWsd + 'NFeRecepcaoEvento4';
-    FPSoapAction := FPServico;
-  end
+    FPServico := GetUrlWsd + 'NFeRecepcaoEvento4'
   else
-  begin
     FPServico := GetUrlWsd + 'RecepcaoEvento';
-    FPSoapAction := FPServico;
-  end;
+
+  FPSoapAction := FPServico;
 end;
 
 procedure TNFeEnvEvento.DefinirDadosMsg;

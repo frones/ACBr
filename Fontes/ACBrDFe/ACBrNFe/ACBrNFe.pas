@@ -344,7 +344,7 @@ end;
 function TACBrNFe.EhAutorizacao( AVersao: TpcnVersaoDF; AModelo: TpcnModeloDF;
   AUFCodigo: Integer ): Boolean;
 begin
-  Result := (AVersao = ve310) or (AVersao = ve400);
+  Result := (AVersao >= ve310);
 
   if AModelo = moNFCe then
     Result := not (AUFCodigo in [13]); // AM

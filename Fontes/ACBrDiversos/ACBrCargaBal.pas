@@ -140,7 +140,7 @@ type
     FTipoValidade: TACBrCargaBalTipoValidade;
     FSetor: TACBrCargaBalSetor;
     FNutricional: TACBrCargaBalNutricional;
-    FTara : TACBrCargaBalTaras;
+    FTara: TACBrCargaBalTaras;
     FCodigoTexto1: Integer;
     FCodigoTexto2: Integer;
     FCodigoTexto3: Integer;
@@ -240,16 +240,6 @@ uses
   ACBrConsts;
 
 { TACBrCargaBalSetor }
-
-
-function TACBrCargaBal.GetNomeArquivoTaras: String;
-begin
-  case FModelo of
-    modToledo,
-    modToledoMGV5 : Result := 'TARA.TXT';
-  end;
-end;
-
 constructor TACBrCargaBalSetor.Create;
 begin
   FCodigo    := 0;
@@ -351,7 +341,6 @@ begin
 end;
 
 { TACBrCargaBal }
-
 constructor TACBrCargaBal.Create(AOwner: TComponent);
 begin
   inherited;
@@ -399,6 +388,14 @@ function TACBrCargaBal.LFill(Valor: Integer; Tamanho: Integer;
   Caracter: Char = '0'): string;
 begin
   Result := LFill(IntToStr(Valor), Tamanho, Caracter);
+end;
+
+function TACBrCargaBal.GetNomeArquivoTaras: String;
+begin
+  case FModelo of
+    modToledo,
+    modToledoMGV5 : Result := 'TARA.TXT';
+  end;
 end;
 
 function TACBrCargaBal.GetNomeArquivoProduto: String;

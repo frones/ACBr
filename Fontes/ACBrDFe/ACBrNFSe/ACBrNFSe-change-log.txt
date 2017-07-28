@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2017
+-- Diversos --
+[*] Alterado o tipo da propriedade VersaoDados de Double para String, pois a 
+    versão de dados do provedor Abaco é V2010, portanto alfanumerico e não
+    numérico.
+    Por: Italo Jurisato Junior
+
 27/07/2017
 -- pnfsNFSeW_ABRASFv2 --
 [*] Ajustes visando o provedor Sigep (não estava validando).

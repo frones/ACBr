@@ -58,7 +58,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnEventoBPe, pcnConsts, pcnBPeConsts;
+  pcnConversao, pcnGerador, pcnEventoBPe, pcnConsts, pcnBPeConsts, pcnSignature;
 
 type
   TInfEventoCollection     = class;
@@ -80,11 +80,13 @@ type
   private
     FInfEvento: TInfEvento;
     FRetInfEvento: TRetInfEvento;
+    Fsignature: Tsignature;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
+    property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
@@ -208,6 +210,14 @@ begin
     end;
     Gerador.wGrupo('/detEvento');
     Gerador.wGrupo('/infEvento');
+
+    if Evento.Items[i].signature.URI <> '' then
+    begin
+      Evento.Items[i].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+      Evento.Items[i].signature.GerarXML;
+      Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+    end;
+
   end;
   Gerador.wGrupo('/eventoBPe');
 
@@ -273,6 +283,11 @@ begin
         infEvento.detEvento.vICMS := RetEventoBPe.InfEvento.detEvento.vICMS;
         infEvento.detEvento.vST   := RetEventoBPe.InfEvento.detEvento.vST;
 
+        signature.URI             := RetEventoBPe.signature.URI;
+        signature.DigestValue     := RetEventoBPe.signature.DigestValue;
+        signature.SignatureValue  := RetEventoBPe.signature.SignatureValue;
+        signature.X509Certificate := RetEventoBPe.signature.X509Certificate;
+
         if RetEventoBPe.retEvento.Count > 0 then
          begin
            FRetInfEvento.Id := RetEventoBPe.retEvento.Items[0].RetInfEvento.Id;
@@ -327,12 +342,14 @@ end;
 constructor TInfEventoCollectionItem.Create;
 begin
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
 destructor TInfEventoCollectionItem.Destroy;
 begin
   FInfEvento.Free;
+  Fsignature.Free;
   FRetInfEvento.Free;
   inherited;
 end;

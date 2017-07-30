@@ -851,7 +851,7 @@ Formato ”CFOP9999”.</xs:documentation>
 															</xs:restriction>
 														</xs:simpleType>
 													</xs:element>
-													<xs:element minOccurs="1" name="indEscala">
+													<xs:element minOccurs="0" name="indEscala">
 														<xs:simpleType>
 															<xs:restriction base="xs:string">
 																<xs:enumeration value="S"/>
@@ -2821,7 +2821,7 @@ A exigência do preenchimento das informações do ICMS diferido fica à critér
 																							<xs:documentation>Valor do ICMS ST</xs:documentation>
 																						</xs:annotation>
 																					</xs:element>
-																					<xs:sequence>
+																					<xs:sequence minOccurs="0">
 																						<xs:element name="vBCFCPST" type="TDec_1302">
 																							<xs:annotation>
 																								<xs:documentation>Valor da Base de cálculo do FCP.</xs:documentation>

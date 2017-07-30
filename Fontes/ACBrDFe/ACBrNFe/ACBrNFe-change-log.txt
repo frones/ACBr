@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2017
+-- pcnEnvEventoNFe / pcnRetEnvEventoNFe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de um evento.
+    por: Italo Jurisato Junior
+
 28/07/2017
 [*] Incluido as URLs de homologação da NF-e 4.00 para a UF CE.
     Removido "?wsdl" do final das URLs de homologação da NF-e 4.00 da UF PR. 

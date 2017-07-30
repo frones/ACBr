@@ -51,7 +51,7 @@ interface
 
 uses
   SysUtils, Classes,
-   pcnConversao, pcnLeitor, pcnEventoNFe;
+   pcnConversao, pcnLeitor, pcnEventoNFe, pcnSignature;
 
 type
   TRetInfEventoCollection     = class;
@@ -90,6 +90,7 @@ type
     FxMotivo: String;
     FretEvento: TRetInfEventoCollection;
     FInfEvento: TInfEvento;
+    Fsignature: Tsignature;
     FXML: AnsiString;
   public
     constructor Create;
@@ -105,6 +106,7 @@ type
     property cStat: Integer                     read FcStat     write FcStat;
     property xMotivo: String                    read FxMotivo   write FxMotivo;
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
+    property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property XML: AnsiString                    read FXML       write FXML;
   end;
@@ -180,49 +182,57 @@ begin
     if (Leitor.rExtrai(1, 'evento') <> '') then
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
-       begin
-         infEvento.ID           := Leitor.rAtributo('Id');
-         InfEvento.cOrgao       := Leitor.rCampo(tcInt, 'cOrgao');
-         infEvento.tpAmb        := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
-         infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CNPJ');
-         infEvento.chNFe        := Leitor.rCampo(tcStr, 'chNFe');
-         infEvento.dhEvento     := Leitor.rCampo(tcDatHor, 'dhEvento');
-         infEvento.tpEvento     := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
-         infEvento.nSeqEvento   := Leitor.rCampo(tcInt, 'nSeqEvento');
-         infEvento.VersaoEvento := Leitor.rCampo(tcDe2, 'verEvento');
+      begin
+        infEvento.ID           := Leitor.rAtributo('Id');
+        InfEvento.cOrgao       := Leitor.rCampo(tcInt, 'cOrgao');
+        infEvento.tpAmb        := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
+        infEvento.CNPJ         := Leitor.rCampo(tcStr, 'CNPJ');
+        infEvento.chNFe        := Leitor.rCampo(tcStr, 'chNFe');
+        infEvento.dhEvento     := Leitor.rCampo(tcDatHor, 'dhEvento');
+        infEvento.tpEvento     := StrToTpEvento(ok,Leitor.rCampo(tcStr, 'tpEvento'));
+        infEvento.nSeqEvento   := Leitor.rCampo(tcInt, 'nSeqEvento');
+        infEvento.VersaoEvento := Leitor.rCampo(tcDe2, 'verEvento');
 
-         if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
-         begin
-           infEvento.DetEvento.xCorrecao := Leitor.rCampo(tcStr, 'xCorrecao');
-           infEvento.DetEvento.xCondUso  := Leitor.rCampo(tcStr, 'xCondUso');
-           infEvento.DetEvento.nProt     := Leitor.rCampo(tcStr, 'nProt');
-           infEvento.DetEvento.xJust     := Leitor.rCampo(tcStr, 'xJust');
+        if Leitor.rExtrai(3, 'detEvento', '', i + 1) <> '' then
+        begin
+          infEvento.DetEvento.xCorrecao := Leitor.rCampo(tcStr, 'xCorrecao');
+          infEvento.DetEvento.xCondUso  := Leitor.rCampo(tcStr, 'xCondUso');
+          infEvento.DetEvento.nProt     := Leitor.rCampo(tcStr, 'nProt');
+          infEvento.DetEvento.xJust     := Leitor.rCampo(tcStr, 'xJust');
 
-           InfEvento.detEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
-           infEvento.detEvento.tpAutor     := StrToTipoAutor(ok, Leitor.rCampo(tcStr, 'tpAutor'));
-           infEvento.detEvento.verAplic    := Leitor.rCampo(tcStr, 'verAplic');
-           infEvento.detEvento.dhEmi       := Leitor.rCampo(tcDatHor, 'dhEmi');
-           infEvento.detEvento.tpNF        := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
-           infEvento.detEvento.IE          := Leitor.rCampo(tcStr, 'IE');
+          InfEvento.detEvento.cOrgaoAutor := Leitor.rCampo(tcInt, 'cOrgaoAutor');
+          infEvento.detEvento.tpAutor     := StrToTipoAutor(ok, Leitor.rCampo(tcStr, 'tpAutor'));
+          infEvento.detEvento.verAplic    := Leitor.rCampo(tcStr, 'verAplic');
+          infEvento.detEvento.dhEmi       := Leitor.rCampo(tcDatHor, 'dhEmi');
+          infEvento.detEvento.tpNF        := StrToTpNF(ok, Leitor.rCampo(tcStr, 'tpNF'));
+          infEvento.detEvento.IE          := Leitor.rCampo(tcStr, 'IE');
 
 //           infEvento.detEvento.vNF         := Leitor.rCampo(tcDe2, 'vNF');
 //           infEvento.detEvento.vICMS       := Leitor.rCampo(tcDe2, 'vICMS');
 //           infEvento.detEvento.vST         := Leitor.rCampo(tcDe2, 'vST');
 
-           if Leitor.rExtrai(4, 'dest', '', i + 1) <> '' then
-           begin
-             infEvento.detEvento.dest.UF            := Leitor.rCampo(tcStr, 'UF');
-             infEvento.detEvento.dest.CNPJCPF       := Leitor.rCampoCNPJCPF;
-             infEvento.detEvento.dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
-             infEvento.detEvento.dest.IE            := Leitor.rCampo(tcStr, 'IE');
+          if Leitor.rExtrai(4, 'dest', '', i + 1) <> '' then
+          begin
+            infEvento.detEvento.dest.UF            := Leitor.rCampo(tcStr, 'UF');
+            infEvento.detEvento.dest.CNPJCPF       := Leitor.rCampoCNPJCPF;
+            infEvento.detEvento.dest.idEstrangeiro := Leitor.rCampo(tcStr, 'idEstrangeiro');
+            infEvento.detEvento.dest.IE            := Leitor.rCampo(tcStr, 'IE');
 
-             // Alterado em 22/07/2014 por Italo
-             // para ficar em conformidade com o Schema
-             infEvento.detEvento.vNF   := Leitor.rCampo(tcDe2, 'vNF');
-             infEvento.detEvento.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
-             infEvento.detEvento.vST   := Leitor.rCampo(tcDe2, 'vST');
-           end;
-         end;
+            // Alterado em 22/07/2014 por Italo
+            // para ficar em conformidade com o Schema
+            infEvento.detEvento.vNF   := Leitor.rCampo(tcDe2, 'vNF');
+            infEvento.detEvento.vICMS := Leitor.rCampo(tcDe2, 'vICMS');
+            infEvento.detEvento.vST   := Leitor.rCampo(tcDe2, 'vST');
+          end;
+        end;
+      end;
+
+      if Leitor.rExtrai(2, 'Signature', '', i + 1) <> '' then
+      begin
+        signature.URI             := Leitor.rAtributo('Reference URI=');
+        signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
+        signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
+        signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
       end;
     end;
 

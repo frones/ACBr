@@ -161,6 +161,7 @@ begin
   FLeitor := TLeitor.Create;
   FretEvento := TRetInfEventoCollection.Create(Self);
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
 end;
 
 destructor TRetEventoNFe.Destroy;
@@ -168,6 +169,7 @@ begin
   FLeitor.Free;
   FretEvento.Free;
   FInfEvento.Free;
+  Fsignature.Free;
   inherited;
 end;
 

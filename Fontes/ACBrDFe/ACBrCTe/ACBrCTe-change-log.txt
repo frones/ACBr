@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2017
+-- pcteEnvEventoCTe / pcteRetEnvEventoCTe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de um evento.
+    por: Italo Jurisato Junior
+
 20/07/2017
 -- Diversos --
 [*] Remoção de vários hints e warnings.

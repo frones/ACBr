@@ -55,7 +55,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteEventoCTe,
-  ACBrUtil, pcnConsts, pcteConsts, pcteConversaoCTe;
+  ACBrUtil, pcnConsts, pcteConsts, pcteConversaoCTe, pcteSignature;
 
 type
   TInfEventoCollection     = class;
@@ -77,11 +77,13 @@ type
   private
     FInfEvento: TInfEvento;
     FRetInfEvento: TRetInfEvento;
+    Fsignature: Tsignature;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
+    property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
@@ -392,6 +394,14 @@ begin
   end;
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
+
+  if Evento.Items[i].signature.URI <> '' then
+  begin
+    Evento.Items[i].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+    Evento.Items[i].signature.GerarXMLCTe;
+    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+  end;
+
   Gerador.wGrupo('/eventoCTe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -452,6 +462,11 @@ begin
         infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
         infEvento.detEvento.xCondUso   := RetEventoCTe.InfEvento.DetEvento.xCondUso;
         infEvento.detEvento.xOBS       := RetEventoCTe.InfEvento.detEvento.xOBS;
+
+        signature.URI             := RetEventoCTe.signature.URI;
+        signature.DigestValue     := RetEventoCTe.signature.DigestValue;
+        signature.SignatureValue  := RetEventoCTe.signature.SignatureValue;
+        signature.X509Certificate := RetEventoCTe.signature.X509Certificate;
 
         for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
         begin
@@ -549,12 +564,14 @@ end;
 constructor TInfEventoCollectionItem.Create;
 begin
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
 destructor TInfEventoCollectionItem.Destroy;
 begin
   FInfEvento.Free;
+  Fsignature.Free;
   FRetInfEvento.Free;
   inherited;
 end;

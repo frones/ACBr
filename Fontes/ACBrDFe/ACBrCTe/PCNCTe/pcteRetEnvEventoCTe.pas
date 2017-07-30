@@ -54,7 +54,8 @@ uses
 {$IFNDEF VER130}
   Variants,
 {$ENDIF}
-  pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe, pcteConversaoCTe;
+  pcnAuxiliar, pcnConversao, pcnLeitor, pcteEventoCTe, pcteConversaoCTe,
+  pcteSignature;
 
 type
   TRetInfEventoCollection     = class;
@@ -94,6 +95,7 @@ type
     FInfEvento: TInfEvento;
     FretEvento: TRetInfEventoCollection;
     FXML: AnsiString;
+    Fsignature: Tsignature;
   public
     constructor Create;
     destructor Destroy; override;
@@ -108,6 +110,7 @@ type
     property cStat: Integer                     read FcStat     write FcStat;
     property xMotivo: String                    read FxMotivo   write FxMotivo;
     property InfEvento: TInfEvento              read FInfEvento write FInfEvento;
+    property signature: Tsignature              read Fsignature write Fsignature;
     property retEvento: TRetInfEventoCollection read FretEvento write FretEvento;
     property XML: AnsiString                    read FXML       write FXML;
   end;
@@ -158,6 +161,7 @@ begin
   FLeitor    := TLeitor.Create;
   FretEvento := TRetInfEventoCollection.Create(Self);
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
 end;
 
 destructor TRetEventoCTe.Destroy;
@@ -165,6 +169,7 @@ begin
   FLeitor.Free;
   FretEvento.Free;
   FInfEvento.Free;
+  Fsignature.Free;
   inherited;
 end;
 
@@ -182,7 +187,7 @@ begin
     begin
       if Leitor.rExtrai(2, 'infEvento', '', i + 1) <> '' then
        begin
-         infEvento.Id         := Leitor.rAtributo('Id=', 'infEvento'); 
+         infEvento.Id         := Leitor.rAtributo('Id=', 'infEvento');
          infEvento.cOrgao     := Leitor.rCampo(tcInt, 'cOrgao');
          infEvento.tpAmb      := StrToTpAmb(ok, Leitor.rCampo(tcStr, 'tpAmb'));
          infEvento.CNPJ       := Leitor.rCampo(tcStr, 'CNPJ');
@@ -274,6 +279,15 @@ begin
 
          end;
       end;
+
+      if Leitor.rExtrai(2, 'Signature', '', i + 1) <> '' then
+      begin
+        signature.URI             := Leitor.rAtributo('Reference URI=');
+        signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
+        signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
+        signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
+      end;
+
     end;
 
     if (Leitor.rExtrai(1, 'retEnvEvento') <> '') or

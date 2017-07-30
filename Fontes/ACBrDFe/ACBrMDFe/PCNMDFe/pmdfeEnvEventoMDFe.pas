@@ -46,7 +46,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pmdfeEventoMDFe,
-  ACBrUtil, pcnConsts;
+  ACBrUtil, pcnConsts, pmdfeSignature;
 
 type
   TInfEventoCollection     = class;
@@ -68,11 +68,13 @@ type
   private
     FInfEvento: TInfEvento;
     FRetInfEvento: TRetInfEvento;
+    Fsignature: Tsignature;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
+    property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
   end;
 
@@ -208,6 +210,14 @@ begin
   end;
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
+
+  if Evento.Items[0].signature.URI <> '' then
+  begin
+    Evento.Items[0].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+    Evento.Items[0].signature.GerarXML;
+    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[0].signature.Gerador.ArquivoFormatoXML;
+  end;
+
   Gerador.wGrupo('/eventoMDFe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -241,24 +251,29 @@ begin
      Result := RetEventoMDFe.LerXml;
      with FEvento.Add do
       begin
-         infEvento.Id         := RetEventoMDFe.InfEvento.Id;
-         InfEvento.cOrgao     := RetEventoMDFe.InfEvento.cOrgao;
-         infEvento.tpAmb      := RetEventoMDFe.InfEvento.tpAmb;
-         infEvento.CNPJ       := RetEventoMDFe.InfEvento.CNPJ;
-         infEvento.chMDFe     := RetEventoMDFe.InfEvento.chMDFe;
-         infEvento.dhEvento   := RetEventoMDFe.InfEvento.dhEvento;
-         infEvento.tpEvento   := RetEventoMDFe.InfEvento.tpEvento;
-         infEvento.nSeqEvento := RetEventoMDFe.InfEvento.nSeqEvento;
+        infEvento.Id         := RetEventoMDFe.InfEvento.Id;
+        InfEvento.cOrgao     := RetEventoMDFe.InfEvento.cOrgao;
+        infEvento.tpAmb      := RetEventoMDFe.InfEvento.tpAmb;
+        infEvento.CNPJ       := RetEventoMDFe.InfEvento.CNPJ;
+        infEvento.chMDFe     := RetEventoMDFe.InfEvento.chMDFe;
+        infEvento.dhEvento   := RetEventoMDFe.InfEvento.dhEvento;
+        infEvento.tpEvento   := RetEventoMDFe.InfEvento.tpEvento;
+        infEvento.nSeqEvento := RetEventoMDFe.InfEvento.nSeqEvento;
 
-         infEvento.VersaoEvento         := RetEventoMDFe.InfEvento.VersaoEvento;
-         infEvento.detEvento.descEvento := RetEventoMDFe.InfEvento.detEvento.descEvento;
-         infEvento.detEvento.nProt      := RetEventoMDFe.InfEvento.detEvento.nProt;
-         infEvento.detEvento.dtEnc      := RetEventoMDFe.InfEvento.detEvento.dtEnc;
-         infEvento.detEvento.cUF        := RetEventoMDFe.InfEvento.detEvento.cUF;
-         infEvento.detEvento.cMun       := RetEventoMDFe.InfEvento.detEvento.cMun;
-         infEvento.detEvento.xJust      := RetEventoMDFe.InfEvento.detEvento.xJust;
-         infEvento.detEvento.xNome      := RetEventoMDFe.InfEvento.detEvento.xNome;
-         infEvento.detEvento.CPF        := RetEventoMDFe.InfEvento.detEvento.CPF;
+        infEvento.VersaoEvento         := RetEventoMDFe.InfEvento.VersaoEvento;
+        infEvento.detEvento.descEvento := RetEventoMDFe.InfEvento.detEvento.descEvento;
+        infEvento.detEvento.nProt      := RetEventoMDFe.InfEvento.detEvento.nProt;
+        infEvento.detEvento.dtEnc      := RetEventoMDFe.InfEvento.detEvento.dtEnc;
+        infEvento.detEvento.cUF        := RetEventoMDFe.InfEvento.detEvento.cUF;
+        infEvento.detEvento.cMun       := RetEventoMDFe.InfEvento.detEvento.cMun;
+        infEvento.detEvento.xJust      := RetEventoMDFe.InfEvento.detEvento.xJust;
+        infEvento.detEvento.xNome      := RetEventoMDFe.InfEvento.detEvento.xNome;
+        infEvento.detEvento.CPF        := RetEventoMDFe.InfEvento.detEvento.CPF;
+
+        signature.URI             := RetEventoMDFe.signature.URI;
+        signature.DigestValue     := RetEventoMDFe.signature.DigestValue;
+        signature.SignatureValue  := RetEventoMDFe.signature.SignatureValue;
+        signature.X509Certificate := RetEventoMDFe.signature.X509Certificate;
 
         if RetEventoMDFe.retEvento.Count > 0 then
          begin
@@ -314,12 +329,14 @@ end;
 constructor TInfEventoCollectionItem.Create;
 begin
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
 destructor TInfEventoCollectionItem.Destroy;
 begin
   FInfEvento.Free;
+  Fsignature.Free;
   FRetInfEvento.Free;
   inherited;
 end;

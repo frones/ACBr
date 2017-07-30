@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/07/2017
+-- pmdfeEnvEventoNFe / pmdfeRetEnvEventoNFe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de um evento.
+    por: Italo Jurisato Junior
+
 26/07/2017
 -- Diversos --
 [*] Inclusão de novos campos (Versão 3.00) modal Ferroviário.

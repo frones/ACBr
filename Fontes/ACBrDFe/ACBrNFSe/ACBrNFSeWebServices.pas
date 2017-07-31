@@ -2173,8 +2173,9 @@ begin
       proinfiscv11: TagElemento := 'infNFSe';
 
       proSP, 
-      proNotaBlu,
-      proSMARAPD:   TagElemento := '';
+      proNotaBlu:   TagElemento := '';
+
+      proSMARAPD:   TagElemento := 'nfd';
 
       proIssDSF,
       proCTA:       TagElemento := 'Lote';

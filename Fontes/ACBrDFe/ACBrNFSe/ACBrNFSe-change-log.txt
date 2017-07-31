@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2017
+-- ACBrNFSeWebServices--
+[*] Possível alteração, informado a tag a ser assinada em docElemento, provedor
+    SmarAPD.
+    Por: Italo Jurisato Junior
+
 28/07/2017
 -- Diversos --
 [*] Alterado o tipo da propriedade VersaoDados de Double para String, pois a 

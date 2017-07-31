@@ -39,6 +39,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/07/2017
+-- ACBrECFSwedaSTX --
+[-] acerto para gera corretamente a descrição da marca da impressora sweda mesmo 
+    quando usando stx para evitar diferenças com o arquivo da SEFAZ, o que acaba 
+    atrapalhando encontrar a impressora no CNIEE;
+    por: regys.silveira
+
 Data: 27/07/2017
 -- ACBrETQPpla --
 [*] Adicionada o suporte ao atributo de impressão invertida, em PPLA

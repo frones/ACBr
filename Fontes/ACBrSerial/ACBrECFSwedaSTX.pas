@@ -372,7 +372,7 @@ begin
   fsRespostasComando := '' ;
   fsFalhasRX         := 0 ;
   fsPoucoPapel       := False;
-  fpModeloStr        := 'SwedaSTX' ;
+  fpModeloStr        := 'SWEDA' ;
   fpRFDID            := 'SW' ;
   fpIdentificaConsumidorRodape := True ;
 end;

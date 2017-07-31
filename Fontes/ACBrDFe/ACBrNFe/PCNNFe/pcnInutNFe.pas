@@ -59,7 +59,7 @@ interface
 
 uses
   SysUtils, Classes,
-  pcnConversao, pcnGerador, pcnRetInutNFe, pcnLeitor, pcnConsts;
+  pcnConversao, pcnGerador, pcnRetInutNFe, pcnLeitor, pcnConsts, pcnSignature;
 
 type
 
@@ -81,6 +81,7 @@ type
     FIDInutilizacao: String;
     FVersao: String;
     FRetInutNFe: TRetInutNFe;
+    Fsignature: Tsignature;
   public
     constructor Create;
     destructor Destroy; override;
@@ -103,6 +104,7 @@ type
     property ID: String              read FIDInutilizacao write FIDInutilizacao;
     property Versao: String          read FVersao     write FVersao;
     property RetInutNFe: TRetInutNFe read FRetInutNFe write FRetInutNFe;
+    property signature: Tsignature   read Fsignature  write Fsignature;
   end;
 
 implementation
@@ -117,6 +119,7 @@ begin
   FGerador    := TGerador.Create;
   FRetInutNFe := TRetInutNFe.Create;
   FLeitor     := TLeitor.Create;
+  Fsignature  := Tsignature.Create;
 end;
 
 destructor TinutNFe.Destroy;
@@ -124,6 +127,7 @@ begin
   FGerador.Free;
   FRetInutNFe.Free;
   FLeitor.Free;
+  Fsignature.Free;
   inherited;
 end;
 
@@ -164,6 +168,14 @@ begin
      FiltrarTextoXML( Gerador.Opcoes.RetirarEspacos, FxJust,
                       Gerador.Opcoes.RetirarAcentos), DSC_XJUST);
   Gerador.wGrupo('/infInut');
+
+  if signature.URI <> '' then
+  begin
+    signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+    signature.GerarXML;
+    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + signature.Gerador.ArquivoFormatoXML;
+  end;
+
   Gerador.wGrupo('/inutNFe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -207,6 +219,14 @@ begin
       (*DR14 *)FnNFIni   := Leitor.rCampo(tcInt, 'nNFIni');
       (*DR15 *)FnNFFin   := Leitor.rCampo(tcInt, 'nNFFin');
                FxJust    := Leitor.rCampo(tcStr, 'xJust');
+    end;
+
+    if Leitor.rExtrai(1, 'Signature') <> '' then
+    begin
+      signature.URI             := Leitor.rAtributo('Reference URI=');
+      signature.DigestValue     := Leitor.rCampo(tcStr, 'DigestValue');
+      signature.SignatureValue  := Leitor.rCampo(tcStr, 'SignatureValue');
+      signature.X509Certificate := Leitor.rCampo(tcStr, 'X509Certificate');
     end;
 
     // Lendo dados do retorno, se houver

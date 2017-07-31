@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/07/2017
+-- pcnInutNFe -- 
+[*] Adicionado a leitura das tags referente a assinatura ao executar o método
+    LoadFromString ao carregar o XML de uma Inutilização de numeros.
+    por: Italo Jurisato Junior
+
 30/07/2017
 -- pcnEnvEventoNFe / pcnRetEnvEventoNFe -- 
 [*] Adicionado a leitura das tags referente a assinatura ao executar o método

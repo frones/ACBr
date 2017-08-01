@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 01/08/2017
+-- ACBrDevice --
+[*] Ajuste em "Ativar", para não parar por falha quando tenta fechar Socket
+    anterior
+    (por: DSA)
+
 Data: 31/07/2017
 -- ACBrECFSwedaSTX --
 [-] acerto para gera corretamente a descrição da marca da impressora sweda mesmo 

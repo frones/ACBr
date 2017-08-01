@@ -308,6 +308,7 @@ TACBrDevice = class( TComponent )
     procedure SetParamsString(const Value: String);
     function GetMaxBandwidth: Integer;
     procedure SetMaxBandwidth(const Value: Integer);
+    procedure TryCloseSocket;
   public
     Serial : TBlockSerial ;
     Socket : TBlockSocket ;
@@ -718,7 +719,7 @@ begin
 
         fTCPIP := copy(ip, 1, p - 1);
 
-        Socket.CloseSocket;
+        TryCloseSocket;
         Socket.ConnectionTimeout := (TimeOut * 1000) ;
         Socket.Connect(fTCPIP, fTCPPort);
         Socket.Purge;
@@ -727,7 +728,7 @@ begin
     dtSerial:
       begin
         try
-          Serial.CloseSocket ;  { Fecha se ficou algo aberto }
+          TryCloseSocket;  { Fecha se ficou algo aberto }
           Serial.DeadlockTimeout := (TimeOut * 1000) ;
           Serial.Connect( fsPorta ) ;
           ConfiguraSerial ;
@@ -736,12 +737,7 @@ begin
         except
           on E: ESynaSerError do
           begin
-            try
-              Serial.RaiseExcept := false ;
-              Serial.CloseSocket ;
-            finally
-              Serial.RaiseExcept := true ;
-            end ;
+            TryCloseSocket;
 
             {$IFDEF MSWINDOWS}
             // SysErrorMessage() em Windows retorna String em ANSI, convertendo para UTF8 se necessário
@@ -786,34 +782,10 @@ begin
 end ;
 
 procedure TACBrDevice.Desativar;
-var
-  I: Integer;
 begin
   if not fsAtivo then exit ;
 
-  case fsDeviceType of
-    dtTCP:
-      Socket.CloseSocket;
-
-    dtSerial:
-      begin
-        // Espera a impressora ficar livre (se não estiver, ainda está imprimindo)
-        if Serial.InstanceActive then
-        begin
-          I := 0;
-          while (not EmLinha(1)) and (I < 5) do
-            Inc(I);
-        end;
-
-        try
-           Serial.RaiseExcept := false ;
-           Serial.CloseSocket ;
-        finally
-           Serial.RaiseExcept := true ;
-        end ;
-      end ;
-  end;
-
+  TryCloseSocket;
   fsAtivo := false ;
 end;
 
@@ -932,6 +904,31 @@ begin
      Socket.MaxBandwidth := Value
   else
      Serial.MaxBandwidth := Value ;
+end;
+
+procedure TACBrDevice.TryCloseSocket;
+begin
+  case fsDeviceType of
+    dtTCP:
+      begin
+        try
+          Socket.RaiseExcept := False;
+          Socket.CloseSocket;
+        finally
+          Socket.RaiseExcept := True;
+        end;
+      end;
+
+    dtSerial:
+      begin
+        try
+          Serial.RaiseExcept := False;
+          Serial.CloseSocket ;
+        finally
+          Serial.RaiseExcept := True;
+        end ;
+      end ;
+  end;
 end;
 
 procedure TACBrDevice.Assign(Source: TPersistent);

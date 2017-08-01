@@ -83,7 +83,7 @@ type
   TpcnTipoOperacao = (toVendaConcessionaria, toFaturamentoDireto, toVendaDireta, toOutros);
   TpcnCondicaoVeiculo = (cvAcabado, cvInacabado, cvSemiAcabado);
   TpcnTipoArma = (taUsoPermitido, taUsoRestrito);
-  TpcnIndEscala = (ieRelevante, ieNaoRelevante);
+  TpcnIndEscala = (ieRelevante, ieNaoRelevante, ieNenhum);
 
 function LayOutToServico(const t: TLayOut): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOut;
@@ -503,12 +503,14 @@ end;
 
 function IndEscalaToStr(const t: TpcnIndEscala): String;
 begin
-  result := EnumeradoToStr(t, ['S', 'N'], [ieRelevante, ieNaoRelevante]);
+  result := EnumeradoToStr(t, ['S', 'N', ''],
+                              [ieRelevante, ieNaoRelevante, ieNenhum]);
 end;
 
 function StrToIndEscala(out ok: Boolean; const s: String): TpcnIndEscala;
 begin
-  result := StrToEnumerado(ok, s, ['S', 'N'], [ieRelevante, ieNaoRelevante]);
+  result := StrToEnumerado(ok, s, ['S', 'N', ''],
+                                  [ieRelevante, ieNaoRelevante, ieNenhum]);
 end;
 
 end.

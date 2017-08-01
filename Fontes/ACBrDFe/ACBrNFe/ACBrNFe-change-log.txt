@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2017
+-- pcnConversaoNFe / pcnNFeW -- 
+[*] Acrescentado o valor ieNenhum ao tipo TpcnIndEscala, pois com o novo Schema
+    disponibilizado pela SEFAZ a tag indEscala parassa a ser opcional, se 
+    atribuir o valor ieNenhum ao campo indEscala a tag não será gerada.
+    por: Italo Jurisato Junior
+
 31/07/2017
 -- pcnInutNFe -- 
 [*] Adicionado a leitura das tags referente a assinatura ao executar o método

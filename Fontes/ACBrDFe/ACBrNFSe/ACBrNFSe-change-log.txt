@@ -47,8 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/08/2017
+-- ACBrNFSeNotasFiscais --
+[*] Para o provedor SmarAPD não esta sendo informado corretamente o parãmetro
+    infElemento ao chamar o método Assinar para assinar o RPS.
+    Por: Italo Jurisato Junior
+
 31/07/2017
--- ACBrNFSeWebServices--
+-- ACBrNFSeWebServices --
 [*] Possível alteração, informado a tag a ser assinada em docElemento, provedor
     SmarAPD.
     Por: Italo Jurisato Junior

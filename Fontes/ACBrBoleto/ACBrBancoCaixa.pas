@@ -51,6 +51,7 @@ type
     function GetLocalPagamento: String; override;
    private
     fValorTotalDocs:Double;
+    fQtRegLote: Integer;
     function RetornaModalidade(const ACBrTitulo :TACBrTitulo): String;
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
     function RetornaCodCarteira(Carteira: string; const ACBrTitulo : TACBrTitulo): integer;
@@ -94,6 +95,7 @@ begin
    fpTamanhoMaximoNossoNum := 15;
    fpTamanhoCarteira       := 2;
    fValorTotalDocs         := 0;
+   fQtRegLote              := 0;
 
    fpOrientacoesBanco.Clear;
    fpOrientacoesBanco.Add(ACBrStr(
@@ -645,7 +647,7 @@ begin
       Result:= IntToStrZero(ACBrBanco.Numero, 3)                          + //1 a 3 - Código do banco
                '0001'                                                     + //4 a 7 - Lote de serviço
                '3'                                                        + //8 - Tipo do registro: Registro detalhe
-               IntToStrZero((3*ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+1,5) + //9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+               IntToStrZero(fQtRegLote + 1,5)                             + //9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
                'P'                                                        + //14 - Código do segmento do registro detalhe
                ' '                                                        + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                            + //16 a 17 - Código de movimento
@@ -690,12 +692,14 @@ begin
                PadRight('', 10 , '0')                                         + //230 a 239 - Uso Exclusivo CAIXA
                ' ';                                                         //240 - Uso exclusivo FEBRABAN/CNAB
 
+      Inc(fQtRegLote);
+
       {SEGMENTO Q}
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                                       + //1 a 3 - Código do banco
                '0001'                                                                  + //4 a 7 - Número do lote
                '3'                                                                     + //8 - Tipo do registro: Registro detalhe
-               IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 2 ,5) + //9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+               IntToStrZero(fQtRegLote + 1,5)                                          + //9 a 13 - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
                'Q'                                                                     + //14 - Código do segmento do registro detalhe
                ' '                                                                     + //15 - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                                         + //16 a 17 - Código de movimento
@@ -723,12 +727,14 @@ begin
                Space(20)                                                               + // 213 a 232 - Uso exclusivo FEBRABAN/CNAB
                Space(8);                                                                 // 233 a 240 - Uso exclusivo FEBRABAN/CNAB
 
+      Inc(fQtRegLote);
+
  {SEGMENTO R}
       Result:= Result + #13#10 +
                IntToStrZero(ACBrBanco.Numero, 3)                                           + //   1 a 3   - Código do banco
                '0001'                                                                      + //   4 a 7   - Número do lote
                '3'                                                                         + //   8 a 8   - Tipo do registro: Registro detalhe
-               IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 3 ,5)     + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+               IntToStrZero(fQtRegLote + 1,5)                                              + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
                'R'                                                                         + //  14 a 14  - Código do segmento do registro detalhe
                ' '                                                                         + //  15 a 15  - Uso exclusivo FEBRABAN/CNAB: Branco
                ATipoOcorrencia                                                             + //  16 a 17  - Tipo Ocorrencia
@@ -748,6 +754,8 @@ begin
                PadRight(Sacado.Email, 50, ' ')                                                           + // 180 a 229 - Email do Sacado P/ Envio de Informacoes
                PadRight('', 11, ' ');                                                            // 230 a 240 - Uso Exclusivo Febraban/CNAB
 
+    Inc(fQtRegLote);
+
     {SEGMENTO S}
     if (Mensagem.Count > 0) then
     begin
@@ -755,7 +763,7 @@ begin
                 IntToStrZero(ACBrBanco.Numero, 3)                                           + //   1 a 3   - Código do banco
                 '0001'                                                                      + // 004 - 007 / Numero do lote remessa
                 '3'                                                                         + // 008 - 008 / Tipo de registro
-                IntToStrZero((3 * ACBrBoleto.ListadeBoletos.IndexOf(ACBrTitulo))+ 4 ,5)     + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
+                IntToStrZero(fQtRegLote + 1,5)                                              + //   9 a 13  - Número seqüencial do registro no lote - Cada título tem 2 registros (P e Q)
                 'S'                                                                         + // 014 - 014 / Cód. Segmento do registro detalhe
                 Space(1)                                                                    + // 015 - 015 / Reservado (uso Banco)
                 ATipoOcorrencia                                                             + // 016 - 017 / Código de movimento remessa
@@ -767,6 +775,8 @@ begin
                                                                                               // 139 - 178 / Mensagem 8
                                                                                               // 179 - 218 / Mensagem 9
                 ifthen( (Mensagem.Count <= 2), '00' + Space(78) ,Space(22));                  // 219 - 240 / Reservado (uso Banco) para tipo de impressão 3
+
+      Inc(fQtRegLote);
     end;                                                                                       // 161 - 240 / Reservado (uso Banco) para tipo de impressão 1 e 2
     {SEGMENTO S - FIM}
       end;
@@ -1033,7 +1043,7 @@ begin
             '0001'                                                     + //Lote de Serviço
             '5'                                                        + //Tipo do registro: Registro trailer do lote
             Space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB
-            IntToStrZero((3* wQTDTitulos + 2 ), 6)                     + //Quantidade de Registro no Lote (Registros P,Q,R, header e trailer do lote)
+            IntToStrZero((fQtRegLote + 2 ), 6)                         + //Quantidade de Registro no Lote (Registros P,Q,R, header e trailer do lote)
             IntToStrZero((wQTDTitulos), 6)                             + //Quantidade títulos em cobrança
             IntToStrZero( round( fValorTotalDocs * 100), 17)           + //Valor dos títulos em carteiras}
             PadRight('', 6, '0')                                           + //Quantidade títulos em cobrança
@@ -1050,9 +1060,11 @@ begin
             '9'                                                        + //Tipo do registro: Registro trailer do arquivo
             PadRight('',9,' ')                                             + //Uso exclusivo FEBRABAN/CNAB}
             '000001'                                                   + //Quantidade de lotes do arquivo (Registros P,Q,R, header e trailer do lote e do arquivo)
-            IntToStrZero((3* wQTDTitulos)+4, 6)                        + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
+            IntToStrZero(fQtRegLote+4, 6)                              + //Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
             PadRight('',6,' ')                                             + //Uso exclusivo FEBRABAN/CNAB}
             PadRight('',205,' ');                                            //Uso exclusivo FEBRABAN/CNAB}
+
+   fQtRegLote := 0;
 end;
 
 procedure TACBrCaixaEconomica.GerarRegistroTrailler400(ARemessa: TStringList);

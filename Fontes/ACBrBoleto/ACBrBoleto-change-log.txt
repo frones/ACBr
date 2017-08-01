@@ -47,6 +47,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 28/07/2017 ver: 0.0.230
+
+-- ACBrBancoCaixa
+[*] Ajuste na remessa CNAB240  na Quantidade de Registros do Lote devido a inclusão da Sequencia "S" que é opcional
+    http://www.projetoacbr.com.br/forum/topic/37703-mensagem-boletoremessa-caixa-cnab240/
+    por: José M. S. Junior
+
+-- ACBrBancoBancoob
+[*] Ajuste na Versão do layout para Remessa
+    http://www.projetoacbr.com.br/forum/topic/37608-sicoob-arquivo-remessa-cnab-240-atualizado-julho2017/
+    por: José M. S. Junior
+
 Data 24/07/2017 ver: 0.0.229
 
 -- ACBrBoleto

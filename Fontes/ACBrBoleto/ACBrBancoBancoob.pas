@@ -699,7 +699,7 @@ begin
                FormatDateTime('ddmmyyyy', Now)          + // 144 a 151 - Data do de geração do arquivo
                FormatDateTime('hhmmss', Now)            + // 152 a 157 - Hora de geração do arquivo
                '000001'                                 + // 158 a 163 - Número sequencial do arquivo retorno
-               '081'                                    + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
+               '087'                                    + // 164 a 166 - Número da versão do layout do arquivo  //Alteração para passar no Validador
                '00000'                                  + // 167 a 171 - Zeros
                space(54)                                + // 172 a 225 - 54 Brancos
                space(3)                                 + // 226 a 228 - zeros
@@ -712,7 +712,7 @@ begin
                'R'                                     + //9 - Tipo de operação: R (Remessa) ou T (Retorno)
                '01'                                    + //10 a 11 - Tipo de serviço: 01 (Cobrança)
                '  '                                    + //12 a 13 - Forma de lançamento: preencher com ZEROS no caso de cobrança
-               '040'                                   + //14 a 16 - Número da versão do layout do lote
+               '045'                                   + //14 a 16 - Número da versão do layout do lote
                ' '                                     + //17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                          + //18 - Tipo de inscrição do cedente
                PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente

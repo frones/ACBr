@@ -829,7 +829,7 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..7]: String;
+  TagF: Array[1..7] of String;
 
   function PosNFSe: Integer;
   begin

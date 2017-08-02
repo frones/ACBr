@@ -2950,7 +2950,8 @@ begin
         NFSe.MotivoCancelamento := Leitor.rCampo(tcStr, 'dsCancelamento');
         NFSe.Status := srCancelado;
       end;
-
+    end;
+    
     Result := True;
   end;
 end;

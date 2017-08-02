@@ -49,6 +49,9 @@ Símbolo : Significado
 
 02/08/2017
 -- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[-] Correções em erros de sintaxe.
+    Por: Italo Jurisato Junior
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
 [*] Alterações visando a leitura correta do XML da NFS-e provedor Equiplano.
     Por: Fernando Damke
 -- pnfsNFSeW_SP --

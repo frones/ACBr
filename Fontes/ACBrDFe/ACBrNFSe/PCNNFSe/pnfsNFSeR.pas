@@ -2789,7 +2789,8 @@ begin
     NFSe.PrestadorServico.RazaoSocial   := Leitor.rCampo(tcStr, 'RazaoSocialPrestador');
     NFSe.PrestadorServico.Contato.Email := Leitor.rCampo(tcStr, 'EmailPrestador');
 
-    NFSe.Tomador.RazaoSocial := Leitor.rCampo(tcStr, 'RazaoSocialTomador');
+    NFSe.Tomador.RazaoSocial   := Leitor.rCampo(tcStr, 'RazaoSocialTomador');
+    NFSe.Tomador.Contato.Email := Leitor.rCampo(tcStr, 'EmailTomador');
 
     if (Leitor.rExtrai(2, 'ChaveNFe') <> '') then
     begin
@@ -2832,7 +2833,7 @@ begin
       if (Leitor.rExtrai(2, 'CPFCNPJTomador') <> '') then
         IdentificacaoTomador.CpfCnpj := Leitor.rCampoCNPJCPF;
 
-      Contato.Email := Leitor.rCampo(tcStr, 'EmailTomador');
+//      Contato.Email := Leitor.rCampo(tcStr, 'EmailTomador');
 
       if (Leitor.rExtrai(2, 'EnderecoTomador') <> '') then
       begin

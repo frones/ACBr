@@ -187,7 +187,7 @@ begin
      (Pos('<nfse', Leitor.Arquivo) > 0) or (Pos('NumNot', Leitor.Arquivo) > 0) or
      (Pos('<ConsultaNFSe>', Leitor.Arquivo) > 0) or (Pos('<Reg20Item>', Leitor.Arquivo) > 0) or
      (Pos('<CompNfse', Leitor.Arquivo) > 0) or (Pos('<NFe', Leitor.Arquivo) > 0) or
-     (Pos('<notasFiscais>', Leitor.Arquivo) > 0) or (Pos('<nfeRpsNotaFiscal>', Leitor.Arquivo) > 0) then
+     (Pos('<notasFiscais>', Leitor.Arquivo) > 0) or (Pos('<nfeRpsNotaFiscal>', Leitor.Arquivo) > 0) or (Pos('<nfs', Leitor.Arquivo) > 0) then
     Result := LerNFSe
   else
     if (Pos('<Rps', Leitor.Arquivo) > 0) or (Pos('<rps', Leitor.Arquivo) > 0) or
@@ -1703,7 +1703,7 @@ begin
     end;
   end; // fim ValoresNfse
 
-  if Leitor.rExtrai(3, 'PrestadorServico') <> '' then
+  if (Leitor.rExtrai(3, 'PrestadorServico') <> '') or (Leitor.rExtrai(3, 'DadosPrestador') <> '') then
   begin
     NFSe.PrestadorServico.RazaoSocial  := Leitor.rCampo(tcStr, 'RazaoSocial');
     NFSe.PrestadorServico.NomeFantasia := Leitor.rCampo(tcStr, 'NomeFantasia');
@@ -1875,7 +1875,7 @@ begin
       NFSe.Servico.CodigoCnae                := Leitor.rCampo(tcStr, 'CodigoCnae');
       NFSe.Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodigoTributacaoMunicipio');
       NFSe.Servico.Discriminacao             := Leitor.rCampo(tcStr, 'Discriminacao');
-      NFSe.Servico.Descricao                 := '';
+      NFSe.Servico.Descricao                 := Leitor.rCampo(tcStr, 'Descricao');
       NFSe.Servico.CodigoMunicipio           := Leitor.rCampo(tcStr, 'CodigoMunicipio');
       NFSe.Servico.CodigoPais                := Leitor.rCampo(tcInt, 'CodigoPais');
       if (FProvedor = proABAse) then
@@ -2951,7 +2951,7 @@ begin
         NFSe.Status := srCancelado;
       end;
     end;
-    
+
     Result := True;
   end;
 end;

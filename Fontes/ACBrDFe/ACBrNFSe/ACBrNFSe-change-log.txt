@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 02/08/2017
+-- pnfsNFSeR --
+[*] Correção para o provedor FIntelISS para retornar os dados do prestador.
+    Por: Fernando Damke
 -- ACBrNFSeNotasFiscais / pnfsNFSeR --
 [-] Correções em erros de sintaxe.
     Por: Italo Jurisato Junior

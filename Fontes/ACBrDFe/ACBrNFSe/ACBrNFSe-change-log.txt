@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2017
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[*] Alterações visando a leitura correta do XML da NFS-e provedor Equiplano.
+    Por: Fernando Damke
+-- pnfsNFSeW_SP --
+[*] Alterado de 2 para 4 casas decimais o campo PercentualCargaTributaria do 
+    provedor SP.
+    Por: Rubenstz
+
 01/08/2017
 -- ACBrNFSeNotasFiscais --
 [*] Para o provedor SmarAPD não esta sendo informado corretamente o parãmetro

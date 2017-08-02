@@ -291,7 +291,8 @@ begin
     begin
       if NaoEstaVazio(NomeArqRps) then
         Gravar(NomeArqRps, FXMLAssinado)
-      else begin
+      else
+      begin
         FNomeArqRps := CalcularNomeArquivoCompleto(NomeArqRps, '');
         Gravar(NomeArqRps, ifThen(Assina, FXMLAssinado, FXMLOriginal));
       end;
@@ -400,15 +401,15 @@ end;
 procedure NotaFiscal.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
   EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
-  NomeArq : String;
+  NomeArq: String;
   AnexosEmail:TStrings;
-  StreamNFSe : TMemoryStream;
+  StreamNFSe: TMemoryStream;
 begin
   if not Assigned(TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).MAIL) then
     raise EACBrNFSeException.Create('Componente ACBrMail não associado');
 
   AnexosEmail := TStringList.Create;
-  StreamNFSe := TMemoryStream.Create;
+  StreamNFSe  := TMemoryStream.Create;
   try
     AnexosEmail.Clear;
     if Assigned(Anexos) then
@@ -459,15 +460,17 @@ begin
     FNFSeW.NFSeWClass.Gerador.Opcoes.FormatoAlerta  := Configuracoes.Geral.FormatoAlerta;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarAcentos := Configuracoes.Geral.RetirarAcentos;
     FNFSeW.NFSeWClass.Gerador.Opcoes.RetirarEspacos := Configuracoes.Geral.RetirarEspacos;
-    FNFSeW.NFSeWClass.Gerador.Opcoes.IdentarXML := Configuracoes.Geral.IdentarXML;
+    FNFSeW.NFSeWClass.Gerador.Opcoes.IdentarXML     := Configuracoes.Geral.IdentarXML;
+
     pcnAuxiliar.TimeZoneConf.Assign( Configuracoes.WebServices.TimeZoneConf );
   end;
 
   FNFSeW.GerarXml;
-  XMLOriginal := FNFSeW.NFSeWClass.Gerador.ArquivoFormatoXML;
+  XMLOriginal  := FNFSeW.NFSeWClass.Gerador.ArquivoFormatoXML;
   FXMLAssinado := '';
 
   FAlertas := FNFSeW.NFSeWClass.Gerador.ListaDeAlertas.Text;
+
   Result := XMLOriginal;
 end;
 
@@ -753,7 +756,7 @@ begin
       Erros := Erros + Self.Items[i].ErroValidacao + sLineBreak;
     end;
   end;
-*)  
+*)
 end;
 
 function TNotasFiscais.ValidarRegrasdeNegocios(out Erros: String): Boolean;
@@ -825,36 +828,28 @@ var
   VersaoNFSe: TVersaoNFSe;
   Ok: Boolean;
   AXML: AnsiString;
-  N, TamTAG: integer;
+  N, TamTAG, i: integer;
+  TagF: Array[1..7]: String;
 
   function PosNFSe: Integer;
   begin
-    // Provedor Infisc
-    TamTAG := 7;
-    Result := Pos('</NFS-e>', AXMLString);
-    if Result = 0 then
-    begin
-      TamTAG := 10;
-      Result := Pos('</CompNfse>', AXMLString);
-      if Result = 0 then
-      begin
-        TamTAG := 6;
-        Result := Pos('</Nfse>', AXMLString);
-        // provedor ISSDSF
-        if Result = 0 then
-          Result := Pos('</Nota>', AXMLString);
-          if Result = 0 then
-          begin
-            TamTAG := 5;
-            Result := Pos('</NFe>', AXMLString);
-            if Result = 0 then
-            begin
-              TamTAG := 7;
-              Result := Pos('</tbnfd>', AXMLString);
-            end;
-          end;
-      end;
-    end;
+    TagF[1] := '</NFS-e>';
+    TagF[2] := '</CompNfse>';
+    TagF[3] := '</Nfse>';
+    TagF[4] := '</Nota>';
+    TagF[5] := '</NFe>';
+    TagF[6] := '</tbnfd>';
+    TagF[7] := '</nfs>';
+
+    i := 0;
+    Result := 0;
+
+    repeat
+      inc(i);
+      TamTAG := Length(TagF[i]) -1;
+      Result := Pos(TagF[i], AXMLString);
+    until (i = 7) or (Result <> 0);
+
   end;
 
   //provedor SimplISS
@@ -931,7 +926,8 @@ begin
       N := PosNFSe;
     end;
   end
-  else begin
+  else
+  begin
     N := PosRPS;
     // Ler os XMLs dos RPS
     while N > 0 do

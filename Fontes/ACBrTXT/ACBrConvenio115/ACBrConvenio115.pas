@@ -319,6 +319,10 @@ type
     property TipoUtilizacao: TProdutoConv115_Tab11_2 read FTipoUtilizacao write SetTipoUtilizacao;
     property GrupoTensao: string read GetGrupoTensao;
     property DataEmissao: TDateTime read FDataEmissao write FDataEmissao;
+
+    property Modelo: SmallInt read FModelo write FModelo;
+    property Serie: String read FSerie write FSerie;
+
     property NumeroNF: Integer read FNumeroNF write FNumeroNF;
     property ValorTotal: Currency read FValorTotal write FValorTotal;
     property ICMS_BaseCalculo: Currency read FICMS_BaseCalculo write FICMS_BaseCalculo;
@@ -868,7 +872,6 @@ begin
       FMestre[I].Detalhes[A].FUF := FMestre[I].Destinatario.UF;
       FMestre[I].Detalhes[A].FDataEmissao := FMestre[I].DataEmissao;
       FMestre[I].Detalhes[A].FModelo := FModelo;
-      FMestre[I].Detalhes[A].FSerie := Serie;
       FMestre[I].Detalhes[A].FSerie := Serie;
       FMestre[I].Detalhes[A].FNumeroNF := FMestre[I].NumeroNF;
       Inc(ICount);

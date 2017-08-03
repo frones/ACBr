@@ -322,36 +322,13 @@ begin
 
       with Titulo do
       begin
-         if aIni.ReadInteger(Sessao,'Aceite',1) = 0 then
-            Aceite := atSim
-         else
-            Aceite := atNao;
-
-         try
-            Sacado.Pessoa := TACBrPessoa( aIni.ReadInteger(Sessao,'Sacado.Pessoa',2) );
-         except
-            Sacado.Pessoa := pOutras;
-         end ;
-
-         try
-            OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(
+         Aceite        := TACBrAceiteTitulo(aIni.ReadInteger(Sessao,'Aceite',1));
+         Sacado.Pessoa := TACBrPessoa( aIni.ReadInteger(Sessao,'Sacado.Pessoa',2) );
+         Sacado.Pessoa := TACBrPessoa( aIni.ReadInteger(Sessao,'Sacado.Pessoa',2) );
+         OcorrenciaOriginal.Tipo := TACBrTipoOcorrencia(
                aini.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0) ) ;
-         except
-            OcorrenciaOriginal.Tipo := toRemessaRegistrar ;
-         end ;
-
-         try
-           TipoDiasProtesto := TACBrTipoDiasIntrucao(aIni.ReadInteger(Sessao,'TipoDiasProtesto',0));
-         except
-           TipoDiasProtesto := diCorridos;
-         end;
-
-         try
-           TipoImpressao := TACBrTipoImpressao(aIni.ReadInteger(Sessao,'TipoImpressao',1));
-         except
-           TipoImpressao := tipNormal;
-         end;
-
+         TipoDiasProtesto := TACBrTipoDiasIntrucao(aIni.ReadInteger(Sessao,'TipoDiasProtesto',0));
+         TipoImpressao := TACBrTipoImpressao(aIni.ReadInteger(Sessao,'TipoImpressao',1));
 
          LocalPagto := aIni.ReadString(Sessao,'LocalPagamento','');
 

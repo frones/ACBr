@@ -43,6 +43,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/08/2017
+[*] Adicionado campos "TipoDesconto" para ACBrBoleto (0: tdNaoConcederDesconto,
+        1: tdValorFixoAteDataInformada, 2: tdPercentualAteDataInformada);
+	http://www.projetoacbr.com.br/forum/topic/35289-boleto-sicoob-desconto/
+	por: José M. S. Junior
+
 25/07/2017
 [-]	Correção na gravação de arquivos de resposta, estava adicionando data+hora, devido aba
 	criação da função AddLinesLogFile

@@ -47,6 +47,28 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 02/08/2017 ver: 0.0.231
+
+-- ACBrBancoItau
+[*] Ajuste na validação de Data de Multa na geração de remessa CNAB400
+    http://www.projetoacbr.com.br/forum/topic/38095-cobran%C3%A7a-ita%C3%BA-tratamento-da-datamulta-no-registro-complemento-opcional-multa/
+    por: José M. S. Junior
+
+-- ACBrBancoCaixa
+[*] Ajuste na validação do campo código Mora na geração de remessa CNAB240
+    http://www.projetoacbr.com.br/forum/topic/37623-remessa-caixa-econ%C3%B4mica-federal/
+    por: José M. S. Junior
+
+-- ACBrBoleto
+[*] Adicionado banco Cecred na função GetTipoCobranca
+    http://www.projetoacbr.com.br/forum/topic/33742-identifica%C3%A7%C3%A3o-do-banco-cecred-no-combo-do-acbrmonitor/
+    por: José M. S. Junior
+
+-- ACBrBancoBanrisul
+[*] Ajuste na geração de remessa - campo em branco
+    http://www.projetoacbr.com.br/forum/topic/37997-boleto-banrisul-campo-datadesconto-na-remessa/
+    por: José M. S. Junior
+
 Data 28/07/2017 ver: 0.0.230
 
 -- ACBrBancoCaixa

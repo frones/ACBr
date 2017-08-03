@@ -770,7 +770,8 @@ begin
                    begin
                      wLinhaMulta:= '2'                                              + // Tipo de registro - 2 OPCIONAL – COMPLEMENTO DETALHE - MULTA
                                    '2'                                              + // Cocidgo da Multa X(001) 2-percentual
-                                   FormatDateTime('ddmmyyyy',DataMoraJuros)         + // Data da Multa 9(008)
+                                   ifThen((DataMulta > 0),
+                                           FormatDateTime('ddmmyyyy',  DataMulta), '00000000')      + // Data da Multa 9(008)
                                    IntToStrZero( round(PercentualMulta * 100 ), 13) + // Valor/Percentual 9(013)
                                    space(371)                                       + // Complemento
                                    IntToStrZero(aRemessa.Count + 2 , 6);              // Sequencial

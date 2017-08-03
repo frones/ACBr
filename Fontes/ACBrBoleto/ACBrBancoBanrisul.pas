@@ -388,7 +388,7 @@ begin
                PadLeft(trim(Instrucao2), 2)                                        + // 2ª Instrução
                PadLeft(trim(CodigoMora), 1)                                        + // Código de mora (0=Valor diário; 1=Taxa Mensal)
                IntToStrZero(Round(ValorMoraJuros*100), 12)                      + // Valor ao dia ou Taxa Mensal de juros
-               IfThen(DataDesconto = 0, '      ',                                 //volmir 27-01-16
+               IfThen(DataDesconto = 0, '000000',                                 //volmir 27-01-16
                       FormatDateTime('ddmmyy', DataDesconto))                   + // Data para concessão de desconto
                IntToStrZero(Round(ValorDesconto*100), 13)                       + // Valor do desconto a ser concedido
                IntToStrZero(Round(ValorIOF*100), 13)                            + // Valor IOF (para carteira "X" é: taxa juros + IOF + zeros)

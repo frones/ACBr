@@ -1735,7 +1735,8 @@ begin
 
      // Avisa a aplicação, que está em Espera //
      Interromper := False;
-     OnAguardaResp( 'TempoMinimoMensagemFinal', TempoCorrido, Interromper ) ;
+     if Assigned( OnAguardaResp ) then
+       OnAguardaResp( 'TempoMinimoMensagemFinal', TempoCorrido, Interromper ) ;
 
      Sleep(EsperaSleep) ;
      {$IFNDEF NOGUI}

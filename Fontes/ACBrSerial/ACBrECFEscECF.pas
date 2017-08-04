@@ -1865,9 +1865,22 @@ begin
 end;
 
 function TACBrECFEscECF.GetNumCupom: String;
+var
+  I: Integer;
 begin
-  RetornaInfoECF( '1|1' ) ;
-  Result := EscECFResposta.Params[1] ;
+  I := 0;
+  Result := '';
+  while (I < cNumFalhasMax) and (Result = '') do
+  begin
+    RetornaInfoECF( '1|1' );
+    if EscECFResposta.Params.Count > 1 then
+    begin
+      if EscECFResposta.Params[0] = '1' then
+        Result := EscECFResposta.Params[1] ;
+    end;
+
+    Inc( I );
+  end;
 end;
 
 function TACBrECFEscECF.GetNumECF: String;

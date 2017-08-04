@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/08/2017
+-- ACBrECFEscECF --
+[*] Ajuste no método "GetNumCupom", para efetuar checagem do Retorno da Impressora.
+    (Em algumas raras situações o ECF Bematech respondeu o como o registrador errado)
+    (por: DSA)
+
 Data: 01/08/2017
 -- ACBrDevice --
 [*] Ajuste em "Ativar", para não parar por falha quando tenta fechar Socket

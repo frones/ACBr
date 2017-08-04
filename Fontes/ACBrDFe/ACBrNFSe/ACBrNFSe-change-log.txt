@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/08/2017
+-- pnfsNFSeR --
+[*] Acrescentado a leitura do grupo <Construcaocivil> e <Intermediario>.
+    Por: Léo
+
 02/08/2017
 -- pnfsNFSeR --
 [*] Correção para o provedor FIntelISS para retornar os dados do prestador.

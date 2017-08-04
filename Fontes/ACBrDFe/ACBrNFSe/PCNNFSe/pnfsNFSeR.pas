@@ -1799,6 +1799,17 @@ begin
     NFSe.OrgaoGerador.Uf              := Leitor.rCampo(tcStr, 'Uf');
   end; // fim OrgaoGerador
 
+  if Leitor.rExtrai(3, 'ConstrucaoCivil') <> '' then
+  begin
+    NFSe.ConstrucaoCivil.CodigoObra   := Leitor.rCampo(tcStr, 'CodigoObra');
+    NFSe.ConstrucaoCivil.Art          := Leitor.rCampo(tcStr, 'Art');
+  end;
+
+  if Leitor.rExtrai(3, 'Intermediario') <> '' then
+  begin
+    NFSe.IntermediarioServico.CpfCnpj := Leitor.rCampo(tcStr, 'Cnpj');
+  end;
+
   if (Leitor.rExtrai(3, 'InfDeclaracaoPrestacaoServico') <> '') or
      (Leitor.rExtrai(3, 'DeclaracaoPrestacaoServico') <> '') then
     Nivel := 4

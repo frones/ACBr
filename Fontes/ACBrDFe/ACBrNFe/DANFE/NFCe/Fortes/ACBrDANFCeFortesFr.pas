@@ -631,6 +631,15 @@ begin
     end;
   end;
 
+  for I := 0 to ACBrNFeDANFCeFortes.FpNFe.InfAdic.obsCont.Count - 1 do
+  begin
+    with ACBrNFeDANFCeFortes.FpNFe.InfAdic.obsCont.Items[I] do
+      TotalPaginaPixel := TotalPaginaPixel + lObservacoes.Height * (1 + CountStr(xCampo + xTexto, ';'));
+  end;
+
+  TotalPaginaPixel := TotalPaginaPixel + lObservacoes.Height *
+    (1 + CountStr(ACBrNFeDANFCeFortes.FpNFe.InfAdic.infCpl, ';'));
+
   // Pixel para Milimitros //
   rlVenda.PageSetup.PaperHeight := max(100, 20+Trunc( TotalPaginaPixel / 3.75 ));
 

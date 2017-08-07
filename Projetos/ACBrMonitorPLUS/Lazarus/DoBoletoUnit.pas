@@ -329,6 +329,7 @@ begin
                aini.ReadInteger(Sessao,'OcorrenciaOriginal.TipoOcorrencia',0) ) ;
          TipoDiasProtesto := TACBrTipoDiasIntrucao(aIni.ReadInteger(Sessao,'TipoDiasProtesto',0));
          TipoImpressao := TACBrTipoImpressao(aIni.ReadInteger(Sessao,'TipoImpressao',1));
+         TipoDesconto := TACBrTipoDesconto(aIni.ReadInteger(Sessao,'TipoDesconto',0));
 
          LocalPagto := aIni.ReadString(Sessao,'LocalPagamento','');
 

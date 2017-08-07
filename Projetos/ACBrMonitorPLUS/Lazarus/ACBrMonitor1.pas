@@ -7274,9 +7274,7 @@ begin
       ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiNenhum);
 
     if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
-       ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarcaNFCeSAT.Text)
-    else if ( Trim(edtLogoMarca.Text) <> '') and FileExists(edtLogoMarca.Text) then
-       ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarca.Text);
+       ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarcaNFCeSAT.Text);
 
     try
       if NomeImpressora <> '' then
@@ -7586,7 +7584,9 @@ begin
       ACBrNFeDANFCeFortes1.MargemDireita         := fspeNFCeMargemDir.Value;
       ACBrNFeDANFCeFortes1.MargemEsquerda        := fspeNFCeMargemEsq.Value;
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
-        ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text;
+        ACBrNFeDANFCeFortes1.Logo                := edtLogoMarcaNFCeSAT.Text
+      else
+        ACBrNFeDANFCeFortes1.Logo                := '';
     end
     else if ACBrNFe1.DANFE = ACBrNFeDANFeESCPOS1 then
     begin
@@ -7595,7 +7595,9 @@ begin
       ACBrNFeDANFeESCPOS1.ImprimeEmUmaLinha := cbxImprimirItem1LinhaNFCe.Checked;
       ACBrNFeDANFeESCPOS1.ImprimeDescAcrescItem := cbxImprimirDescAcresItemNFCe.Checked;
       if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
-        ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text;
+        ACBrNFeDANFeESCPOS1.Logo                := edtLogoMarcaNFCeSAT.Text
+      else
+        ACBrNFeDANFeESCPOS1.Logo                := '';
 
       if not ACBrPosPrinter1.ControlePorta then
       begin

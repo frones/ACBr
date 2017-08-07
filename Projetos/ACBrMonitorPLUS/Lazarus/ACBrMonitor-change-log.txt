@@ -43,6 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2017
+[*] Alteração na validação do campo para informar a LogoMarca para NFC-e / SAT, separado da
+        Logomarca Padrão
+	Mais detalhes em:
+	http://www.projetoacbr.com.br/forum/topic/37698-imagem-do-logo-no-cupom-sat/#comment-247440
+	por: José M. S. Junior
+
 02/08/2017
 [*] Adicionado campos "TipoDesconto" para ACBrBoleto (0: tdNaoConcederDesconto,
         1: tdValorFixoAteDataInformada, 2: tdPercentualAteDataInformada);

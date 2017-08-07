@@ -140,6 +140,8 @@ const
   DSC_INDNEG    = 'Indicador Negociável';
 
   DSC_PONTOFULGOR  = 'Ponto de Fulgor';
+  DSC_QTOTEMB      = 'Quantidade Total de Embalagens';
+  DSC_UNIAP        = 'Unidade de Medida';
 
   DSC_NCONT            = 'Identificação do Container';
   DSC_DETCONT          = 'Detalhamento dos Containers';

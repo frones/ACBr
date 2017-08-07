@@ -1357,6 +1357,8 @@ begin
       CTe.infCTeNorm.peri[i01].qTotProd    := Leitor.rCampo(tcStr, 'qTotProd');
       CTe.infCTeNorm.peri[i01].qVolTipo    := Leitor.rCampo(tcStr, 'qVolTipo');
       CTe.infCTeNorm.peri[i01].pontoFulgor := Leitor.rCampo(tcStr, 'pontoFulgor');
+      CTe.infCTeNorm.peri[i01].qTotEmb     := Leitor.rCampo(tcStr, 'qTotEmb');
+      CTe.infCTeNorm.peri[i01].uniAP       := StrToUniMed(ok, Leitor.rCampo(tcStr, 'uniAP'));
       inc(i01);
     end;
 

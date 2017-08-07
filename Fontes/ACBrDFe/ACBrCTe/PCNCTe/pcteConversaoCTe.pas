@@ -100,8 +100,9 @@ type
   TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
   TIndicador = (tiSim, tiNao);
   TEspecie = (teNumerario, teCheque, teMoeda, teOutros);
-  TpInfManu = (imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,  imGSR,   imNR,    imAPCC,
-               imAAGA,  imPI965,  imPI966, imPI967,  imPI968, imPI969, imPI970, imOUTRO);
+  TpInfManu = (imCEEAV, imAPCDEA, imSAC, imAPDENR, imAPQI, imGSR, imNR, imAPCC,
+               imAAGA, imPI965, imPI966, imPI967, imPI968, imPI969, imPI970, imOUTRO);
+  TpUniMed = (umKG, umKGG, umLitros, umTI, umUnidades);
 
 function LayOutToServico(const t: TLayOutCTe): String;
 function ServicoToLayOut(out ok: Boolean; const s: String): TLayOutCTe;
@@ -198,6 +199,9 @@ function StrToTpInfManu(out ok: boolean; const s: string): TpInfManu;
 
 function TpInfManuToStrV2(const t: TpInfManu): string;
 function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
+
+function UniMedToStr(const t: TpUniMed): String;
+function StrToUniMed(out ok: Boolean; const s: String): TpUniMed;
 
 implementation
 
@@ -675,15 +679,27 @@ end;
 function TpInfManuToStrV2(const t: TpInfManu): string;
 begin
   result := EnumeradoToStr(t, ['1','2','3','4','5','6','7','8','9','99'],
-                              [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,
-                               imGSR,   imNR,    imAPCC,   imAAGA,  imOUTRO]);
+                              [imCEEAV, imAPCDEA, imSAC, imAPDENR, imAPQI,
+                               imGSR, imNR, imAPCC, imAAGA, imOUTRO]);
 end;
 
 function StrToTpInfManuV2(out ok: boolean; const s: string): TpInfManu;
 begin
   result := StrToEnumerado(ok, s, ['1','2','3','4','5','6','7','8','9','99'],
-                                  [imCEEAV, imAPCDEA, imSAC,   imAPDENR, imAPQI,
-                                   imGSR,   imNR,    imAPCC,   imAAGA,  imOUTRO]);
+                                  [imCEEAV, imAPCDEA, imSAC, imAPDENR, imAPQI,
+                                   imGSR, imNR, imAPCC, imAAGA, imOUTRO]);
+end;
+
+function UniMedToStr(const t: TpUniMed): String;
+begin
+  result := EnumeradoToStr(t, ['1','2','3','4','5'],
+                              [umKG, umKGG, umLitros, umTI, umUnidades]);
+end;
+
+function StrToUniMed(out ok: Boolean; const s: String): TpUniMed;
+begin
+  result := StrToEnumerado(ok, s, ['1','2','3','4','5'],
+                                  [umKG, umKGG, umLitros, umTI, umUnidades]);
 end;
 
 end.

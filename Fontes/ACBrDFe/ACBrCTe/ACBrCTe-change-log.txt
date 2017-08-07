@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 07/08/2017
+-- Diversos -- 
+[*] Adicionado os campos novos do grupo <peri> versão 3.00.
+    por: Italo Jurisato Junior
+
 -- pcteEnvEventoCTe -- 
 [*] Correção do indice usado nos campos da assinatura.
     por: Giulia Carlini

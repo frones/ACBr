@@ -2413,6 +2413,8 @@ type
     FqTotProd    : String;
     FqVolTipo    : String;
     FpontoFulgor : String;
+    FqTotEmb: String;
+    FuniAP: TpUniMed;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -2424,6 +2426,8 @@ type
     property qTotProd: String    read FqTotProd    write FqTotProd;
     property qVolTipo: String    read FqVolTipo    write FqVolTipo;
     property pontoFulgor: String read FpontoFulgor write FpontoFulgor;
+    property qTotEmb: String     read FqTotEmb     write FqTotEmb;
+    property uniAP: TpUniMed     read FuniAP       write FuniAP;
   end;
 
   TVeicNovosCollection = class(TCollection)

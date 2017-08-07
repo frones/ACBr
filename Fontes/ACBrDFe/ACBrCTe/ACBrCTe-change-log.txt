@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+07/08/2017
+-- pcteEnvEventoCTe -- 
+[*] Correção do indice usado nos campos da assinatura.
+    por: Giulia Carlini
+
 31/07/2017
 -- pcteInutCTe -- 
 [*] Adicionado a leitura das tags referente a assinatura ao executar o método

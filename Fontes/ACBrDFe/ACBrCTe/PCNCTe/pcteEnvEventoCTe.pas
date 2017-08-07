@@ -395,11 +395,11 @@ begin
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
 
-  if Evento.Items[i].signature.URI <> '' then
+  if Evento.Items[0].signature.URI <> '' then
   begin
-    Evento.Items[i].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
-    Evento.Items[i].signature.GerarXMLCTe;
-    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[i].signature.Gerador.ArquivoFormatoXML;
+    Evento.Items[0].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+    Evento.Items[0].signature.GerarXMLCTe;
+    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[0].signature.Gerador.ArquivoFormatoXML;
   end;
 
   Gerador.wGrupo('/eventoCTe');

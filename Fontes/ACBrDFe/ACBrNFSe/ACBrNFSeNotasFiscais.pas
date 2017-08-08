@@ -842,7 +842,6 @@ var
     TagF[7] := '</nfs>';
 
     i := 0;
-    Result := 0;
 
     repeat
       inc(i);

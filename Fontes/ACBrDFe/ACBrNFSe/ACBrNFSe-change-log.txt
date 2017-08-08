@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/08/2017
+-- ACBrNFSeNotasFiscais / pnfsNFSeR --
+[-] Correções na leitura do XML da NFS-e ABRASF versão 1.00 ajuste na extração
+    de grupos quando não existe o grupo <InfNfse>, neste caso é preciso retroceder
+    um nível.
+    Por: Italo Jurisato Junior
+
 04/08/2017
 -- pnfsNFSeR --
 [*] Acrescentado a leitura do grupo <Construcaocivil> e <Intermediario>.

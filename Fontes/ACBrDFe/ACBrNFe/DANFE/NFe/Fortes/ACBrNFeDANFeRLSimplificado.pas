@@ -244,7 +244,7 @@ begin
     rlmDestinatario.Lines.Add(ACBrStr('CPF/CNPJ: ' + FormatarCNPJouCPF(CNPJCPF) +
                               ' IE: ' + IE));
   end;
-
+  rllMsgTipoEmissao.Visible := False;
   if FNFe.Ide.tpAmb = taHomologacao then
   begin
      rllMsgTipoEmissao.Caption := ACBrStr('HOMOLOGAÇÂO - SEM VALOR FISCAL');

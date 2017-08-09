@@ -12,6 +12,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Style = []
   OldCreateOrder = True
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object RLNFeInut: TRLReport

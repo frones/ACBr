@@ -11,6 +11,7 @@ object frmNFeDAInutRL: TfrmNFeDAInutRL
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
+	OnDestroy = FormDestroy
   LCLVersion = '1.6.2.0'
   Visible = False
   object RLNFeInut: TRLReport

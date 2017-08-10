@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, ACBrGIF, ACBrUtil,
-  ACBrValidador, ACBrEnterTab, ACBrDFe, ACBrDFeSSL, Vcl.Mask, ACBrBase, IniFiles;
+  ACBrValidador, ACBrEnterTab, ACBrDFe, ACBrDFeSSL, Vcl.Mask, ACBrBase, IniFiles,
+  Vcl.ExtCtrls;
 
 type
   TfrmPrincipal = class(TForm)
@@ -14,8 +15,6 @@ type
     btnBuscarCertificado: TSpeedButton;
     Label1: TLabel;
     OpenDialog1: TOpenDialog;
-    rbtTipoCapicom: TRadioButton;
-    rbtTipoOpenSSL: TRadioButton;
     edtCNPJSoftwareHouse: TMaskEdit;
     Label2: TLabel;
     Label3: TLabel;
@@ -26,6 +25,7 @@ type
     btnCriarAssinatura: TSpeedButton;
     edtSenhaCertificado: TEdit;
     Label5: TLabel;
+    rbtTipoCert: TRadioGroup;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnBuscarCertificadoClick(Sender: TObject);
@@ -47,6 +47,7 @@ var
   const
     TIPO_CAPICOM = 'CAPICOM';
     TIPO_OPENSSL = 'OPENSSL';
+    TIPO_NATIVO  = 'NATIVO';
 
 implementation
 
@@ -78,12 +79,13 @@ procedure TfrmPrincipal.btnBuscarCertificadoClick(Sender: TObject);
 begin
   ConfigurarDFe;
 
-  if rbtTipoCapicom.Checked then
-    edtCertificado.Text := FACBrDFe.SSL.SelecionarCertificado
-  else
-  begin
-    if OpenDialog1.Execute then
-      edtCertificado.Text := OpenDialog1.FileName;
+  case rbtTipoCert.ItemIndex of
+    0, 2: edtCertificado.Text := FACBrDFe.SSL.SelecionarCertificado;
+    1:
+      begin
+        if OpenDialog1.Execute then
+          edtCertificado.Text := OpenDialog1.FileName;
+      end;
   end;
 end;
 
@@ -129,17 +131,29 @@ end;
 
 procedure TfrmPrincipal.ConfigurarDFe;
 begin
-  if rbtTipoCapicom.Checked then
-  begin
-    FACBrDFe.Configuracoes.Geral.SSLLib             := libCapicom;
-    FACBrDFe.Configuracoes.Certificados.NumeroSerie := edtCertificado.Text;
-    FACBrDFe.Configuracoes.Certificados.Senha       := edtSenhaCertificado.Text
-  end
-  else
-  begin
-    FACBrDFe.Configuracoes.Geral.SSLLib             := libOpenSSL;
-    FACBrDFe.Configuracoes.Certificados.ArquivoPFX  := edtCertificado.Text;
-    FACBrDFe.Configuracoes.Certificados.Senha       := edtSenhaCertificado.Text;
+  case rbtTipoCert.ItemIndex of
+    0: // nativo
+      begin
+        FACBrDFe.Configuracoes.Geral.SSLLib             := libWinCrypt;
+        FACBrDFe.Configuracoes.Certificados.NumeroSerie := edtCertificado.Text;
+        FACBrDFe.Configuracoes.Certificados.Senha       := edtSenhaCertificado.Text;
+      end;
+
+    1: // openssl
+      begin
+        FACBrDFe.Configuracoes.Geral.SSLLib       := libOpenSSL;
+        FACBrDFe.Configuracoes.Certificados.Senha := edtSenhaCertificado.Text;
+
+        if FileExists(edtCertificado.Text) then
+          FACBrDFe.Configuracoes.Certificados.ArquivoPFX  := edtCertificado.Text;
+      end;
+
+    2: // capicom
+      begin
+        FACBrDFe.Configuracoes.Geral.SSLLib             := libCapicom;
+        FACBrDFe.Configuracoes.Certificados.NumeroSerie := edtCertificado.Text;
+        FACBrDFe.Configuracoes.Certificados.Senha       := edtSenhaCertificado.Text
+      end;
   end;
 end;
 
@@ -150,10 +164,7 @@ begin
   try
     F.WriteString('CONFIG', 'Certificado', edtCertificado.Text);
     F.WriteString('CONFIG', 'CNPJ_SH',     edtCNPJSoftwareHouse.Text);
-    if rbtTipoCapicom.Checked then
-      F.WriteString('CONFIG', 'Tipo', TIPO_CAPICOM)
-    else
-      F.WriteString('CONFIG', 'Tipo', TIPO_OPENSSL);
+    F.WriteInteger('CONFIG', 'Tipo',       rbtTipoCert.ItemIndex);
   finally
     F.Free;
   end;
@@ -167,7 +178,7 @@ begin
   try
     edtCertificado.Text       := F.ReadString('CONFIG', 'Certificado', '');
     edtCNPJSoftwareHouse.Text := F.ReadString('CONFIG', 'CNPJ_SH', '');
-    rbtTipoCapicom.Checked    := F.ReadString('CONFIG', 'Tipo', TIPO_CAPICOM) = TIPO_CAPICOM;
+    rbtTipoCert.ItemIndex     := F.ReadInteger('CONFIG', 'Tipo', 0);
   finally
     F.Free;
   end;

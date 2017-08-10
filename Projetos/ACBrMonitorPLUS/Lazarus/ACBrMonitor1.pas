@@ -48,7 +48,7 @@ uses
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
-  fileinfo, ACBrDFeConfiguracoes;
+  fileinfo, ACBrDFeConfiguracoes, pmdfeConversaoMDFe;
 
 const
   //{$I versao.txt}
@@ -268,6 +268,7 @@ type
     cbRetirarAcentos: TCheckBox;
     cbCryptLib: TComboBox;
     cbHttpLib: TComboBox;
+    cbVersaoWSMDFe: TComboBox;
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
     chkMostraLogNaTela: TCheckBox;
@@ -388,6 +389,7 @@ type
     Label191: TLabel;
     Label192: TLabel;
     Label193: TLabel;
+    Label194: TLabel;
     Label195: TLabel;
     Label198: TLabel;
     Label199: TLabel;
@@ -1220,7 +1222,6 @@ type
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
-    procedure pgConfigChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
@@ -3987,6 +3988,8 @@ begin
       Ini.ReadString('WebService', 'Versao', '3.10'));
     cbVersaoWSCTe.ItemIndex := cbVersaoWSCTe.Items.IndexOf(
       Ini.ReadString('WebService','VersaoCTe','2.00'));
+    cbVersaoWSMDFe.ItemIndex := cbVersaoWSMDFe.Items.IndexOf(
+      Ini.ReadString('WebService','VersaoMDFe','1.00'));
 
     edtCNPJContador.Text := Ini.ReadString('NFe', 'CNPJContador', '');
 
@@ -4839,6 +4842,7 @@ begin
     Ini.WriteInteger('WebService', 'Ambiente', rgTipoAmb.ItemIndex);
     Ini.WriteString('WebService', 'Versao', cbVersaoWS.Text);
     Ini.WriteString('WebService', 'VersaoCTe', cbVersaoWSCTe.Text);
+    Ini.WriteString('WebService', 'VersaoMDFe', cbVersaoWSMDFe.Text);
     Ini.WriteBool('WebService', 'AjustarAut', cbxAjustarAut.Checked);
     Ini.WriteString('WebService', 'Aguardar', edtAguardar.Text);
     Ini.WriteString('WebService', 'Tentativas', edtTentativas.Text);
@@ -5896,11 +5900,6 @@ begin
   if pgBoleto.ActivePage = tsRelatorio then
      if lsvArqsRetorno.Items.Count = 0 then
         CarregaArquivosRetorno;
-end;
-
-procedure TFrmACBrMonitor.pgConfigChange(Sender: TObject);
-begin
-
 end;
 
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);
@@ -8058,6 +8057,7 @@ begin
   else if Configuracoes is TConfiguracoesMDFe then
   begin
     TConfiguracoesMDFe(Configuracoes).Geral.FormaEmissao := StrToTpEmis(OK, IntToStr(cbFormaEmissaoMDFe.ItemIndex + 1));
+    TConfiguracoesMDFe(Configuracoes).Geral.VersaoDF     := StrToVersaoMDFe(ok, cbVersaoWSMDFe.Text);
 
     TConfiguracoesMDFe(Configuracoes).Arquivos.IniServicos     := edtArquivoWebServicesMDFe.Text;
     TConfiguracoesMDFe(Configuracoes).Arquivos.EmissaoPathMDFe := cbxEmissaoPathNFe.Checked;

@@ -287,10 +287,11 @@ begin
                                   onlyNumber(NFe.infNFe.ID),
                                   trim(IfThen(NFe.Dest.idEstrangeiro <> '', NFe.Dest.idEstrangeiro, NFe.Dest.CNPJCPF)),
                                   NFe.Ide.dEmi, NFe.Total.ICMSTot.vNF,
-                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue);
+                                  NFe.Total.ICMSTot.vICMS, NFe.signature.DigestValue,
+                                  NFe.infNFe.Versao);
 
         if NFe.infNFe.Versao >= 4 then
-          NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb);
+          NFe.infNFeSupl.urlChave := GetURLConsultaNFCe(NFe.Ide.cUF, NFe.Ide.tpAmb, NFe.infNFe.Versao);
 
         GerarXML;
       end;

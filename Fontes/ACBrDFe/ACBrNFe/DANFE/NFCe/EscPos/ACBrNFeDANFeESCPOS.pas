@@ -338,7 +338,7 @@ procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsultaChaveAcesso;
 begin
   // chave de acesso
   FPosPrinter.Buffer.Add('</ce><c>Consulte pela Chave de Acesso em ');
-  FPosPrinter.Buffer.Add('</ce><c>'+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb));
+  FPosPrinter.Buffer.Add('</ce><c>'+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb, FpNFe.infNFe.Versao));
   FPosPrinter.Buffer.Add('</ce><c>' + FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)));
 end;
 
@@ -483,7 +483,8 @@ begin
       FpNFe.ide.dEmi,
       FpNFe.Total.ICMSTot.vNF,
       FpNFe.Total.ICMSTot.vICMS,
-      FpNFe.signature.DigestValue)
+      FpNFe.signature.DigestValue,
+      FpNFe.infNfe.Versao)
   else
     qrcode := FpNFe.infNFeSupl.qrCode;
 

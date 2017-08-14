@@ -497,7 +497,8 @@ begin
                                      ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue);
+                                     signature.DigestValue,
+                                     infNFe.Versao);
     PintarQRCode( qrcode, imgQRCode.Picture );
 
     lProtocolo.Caption := ACBrStr('Protocolo de Autorização: '+procNFe.nProt+
@@ -614,7 +615,14 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel35BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
- Text := ACBrStr('Consulte pela Chave de Acesso em '+ TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLConsultaNFCe(self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.cUF,self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb));
+  Text := ACBrStr(
+    'Consulte pela Chave de Acesso em ' +
+    TACBrNFe(self.FACBrNFeDANFCeFortesA4.ACBrNFe).GetURLConsultaNFCe(
+      self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.cUF,
+      self.FACBrNFeDANFCeFortesA4.FpNFe.Ide.tpAmb,
+      self.FACBrNFeDANFCeFortesA4.FpNFe.infNFe.Versao
+      )
+    );
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel37BeforePrint(Sender: TObject;

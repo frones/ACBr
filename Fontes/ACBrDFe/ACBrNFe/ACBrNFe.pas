@@ -151,10 +151,12 @@ type
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
 
     function GetURLConsultaNFCe(const CUF: integer;
-      const TipoAmbiente: TpcnTipoAmbiente): String;
+      const TipoAmbiente: TpcnTipoAmbiente;
+      const Versao: Double): String;
     function GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
       const AChaveNFe, Destinatario: String; const DataHoraEmissao: TDateTime;
-      const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String): String;
+      const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String;
+      const Versao: Double): String;
 
     function IdentificaSchema(const AXML: String): TSchemaNFe;
     function GerarNomeArqSchema(const ALayOut: TLayOut; VersaoServico: Double
@@ -531,19 +533,21 @@ begin
 end;
 
 function TACBrNFe.GetURLConsultaNFCe(const CUF: integer;
-  const TipoAmbiente: TpcnTipoAmbiente): String;
+  const TipoAmbiente: TpcnTipoAmbiente;
+  const Versao: Double): String;
 begin
-  Result := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaNFCe', 0);
+  Result := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-ConsultaNFCe', Versao);
 end;
 
 function TACBrNFe.GetURLQRCode(const CUF: integer; const TipoAmbiente: TpcnTipoAmbiente;
   const AChaveNFe, Destinatario: String; const DataHoraEmissao: TDateTime;
-  const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String): String;
+  const ValorTotalNF, ValorTotalICMS: currency; const DigestValue: String;
+  const Versao: Double): String;
 var
   idNFe, sdhEmi_HEX, sdigVal_HEX, sNF, sICMS, cIdCSC, cCSC, sCSC,
   sEntrada, cHashQRCode, urlUF, cDest: String;
 begin
-  urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
+  urlUF := LerURLDeParams('NFCe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', Versao);
   idNFe := OnlyNumber(AChaveNFe);
   cDest := Trim(Destinatario);
 

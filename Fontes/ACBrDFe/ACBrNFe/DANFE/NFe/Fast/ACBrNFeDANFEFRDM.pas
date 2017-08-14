@@ -784,7 +784,7 @@ begin
           FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
       end;
 
-      FieldByName('URL').AsString := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLConsultaNFCe(FNFe.Ide.cUF, FNFe.Ide.tpAmb);
+      FieldByName('URL').AsString := TACBrNFe(DANFEClassOwner.ACBrNFe).GetURLConsultaNFCe(FNFe.Ide.cUF, FNFe.Ide.tpAmb, FNFe.infNFe.Versao);
     end
     else
     begin
@@ -1967,7 +1967,8 @@ begin
                        NFe.ide.dEmi,
                        NFe.Total.ICMSTot.vNF,
                        NFe.Total.ICMSTot.vICMS,
-                       NFe.signature.DigestValue )
+                       NFe.signature.DigestValue,
+                       NFe.infNFe.Versao)
               else
                 qrcode := NFe.infNFeSupl.qrCode;
 

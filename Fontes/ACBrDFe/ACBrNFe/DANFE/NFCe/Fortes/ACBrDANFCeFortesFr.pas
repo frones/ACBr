@@ -326,7 +326,7 @@ begin
     );
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
-       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
+       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao));
 
     lChaveDeAcesso.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
@@ -395,7 +395,7 @@ begin
     );
 
     lTitConsulteChaveCanc.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em '+
-       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF,Ide.tpAmb));
+       TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao));
 
     lChaveDeAcessoCanc.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
@@ -581,7 +581,8 @@ begin
                                      ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue)
+                                     signature.DigestValue,
+                                     infNFe.Versao)
     else
       qrcode := infNFeSupl.qrCode;
 
@@ -898,7 +899,8 @@ begin
                                      ifthen(Dest.idEstrangeiro <> '',Dest.idEstrangeiro, OnlyNumber(Dest.CNPJCPF)),
                                      ide.dEmi,
                                      Total.ICMSTot.vNF, Total.ICMSTot.vICMS,
-                                     signature.DigestValue)
+                                     signature.DigestValue,
+                                     infNFe.Versao)
     else
       qrcode := infNFeSupl.qrCode;
 

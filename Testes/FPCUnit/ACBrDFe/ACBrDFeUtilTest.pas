@@ -114,11 +114,22 @@ type
     procedure XML_Nao_Assinado_RetornaFalso;
   end;
 
+  URLServicosTest = class(TTestCase)
+  private
+    NomeArquivo: string;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure CheckURLNFCe;
+  end;
+
 implementation
 
 uses
-  Math, dateutils,
-  ACBrUtil, ACBrDFeUtil, ACBrConsts, ACBrValidador, ACBrDFeException;
+  Math, dateutils, IniFiles,
+  pcnConversao,
+  ACBrUtil, ACBrDFeUtil, ACBrConsts, ACBrValidador, ACBrDFeException, ACBrNFe;
 
 { FormatarNumeroDocumentoFiscalTest }
 
@@ -671,6 +682,58 @@ begin
   CheckFalse(XmlEstaAssinado(XML));
 end;
 
+{ URLServicosTest }
+
+procedure URLServicosTest.SetUp;
+var
+  Ini: TIniFile;
+begin
+  inherited;
+  NomeArquivo := ExtractFilePath(ParamStr(0)) + 'ACBrNFeServicos.ini';
+
+  Ini := TIniFile.Create(NomeArquivo);
+  try
+    Ini.WriteString('NFCe_PR_H', 'URL-QRCode', 'http://www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe');
+    Ini.WriteString('NFCe_PR_H', 'URL-QRCode_4.00', 'http://www.fazenda.pr.gov.br/nfce/qrcode');
+    Ini.WriteString('NFCe_PR_H', 'URL-ConsultaNFCe', 'http://www.fazenda.pr.gov.br');
+    Ini.UpdateFile;
+  finally
+    Ini.Free;
+  end;
+
+end;
+
+procedure URLServicosTest.TearDown;
+begin
+  inherited;
+  if FileExists(NomeArquivo) then
+    DeleteFile(NomeArquivo);
+end;
+
+procedure URLServicosTest.CheckURLNFCe;
+var
+  ACBrNFe: TACBrNFe;
+  URL: string;
+begin
+
+  ACBrNFe := TACBrNFe.Create(nil);
+  try
+    URL := ACBrNFe.GetURLQRCode(41, taHomologacao, '', '', Now, 100.00, 18.00, '', 4.00);
+    URL := Copy(URL, 1, Pos('?', URL) - 1);
+    CheckEquals('http://www.fazenda.pr.gov.br/nfce/qrcode', URL, 'URLQRCode');
+
+    URL := ACBrNFe.GetURLQRCode(41, taHomologacao, '', '', Now, 100.00, 18.00, '', 3.10);
+    URL := Copy(URL, 1, Pos('?', URL) - 1);
+    CheckEquals('http://www.dfeportal.fazenda.pr.gov.br/dfe-portal/rest/servico/consultaNFCe', URL, 'URLQRCode');
+
+    CheckEquals('http://www.fazenda.pr.gov.br', ACBrNFe.GetURLConsultaNFCe(41, taHomologacao, 4.00), 'URLConsultaNFCe');
+    CheckEquals('http://www.fazenda.pr.gov.br', ACBrNFe.GetURLConsultaNFCe(41, taHomologacao, 3.10), 'URLConsultaNFCe');
+  finally
+    ACBrNFe.Free;
+  end;
+
+end;
+
 initialization
   RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarNumeroDocumentoFiscalTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrDFe.ACBrDFeUtil', FormatarChaveAcessoTest{$ifndef FPC}.suite{$endif});
@@ -683,5 +746,7 @@ initialization
   RegisterTest('ACBrDFe.ACBrDFeUtil', ValidaRECOPITest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrDFe.ACBrDFeUtil', ExtraiURITest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrDFe.ACBrDFeUtil', XmlEstaAssinadoTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrDFe.URLServicos', URLServicosTest{$ifndef FPC}.suite{$endif});
+
 end.
 

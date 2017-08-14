@@ -83,7 +83,17 @@ begin
 
   wDecimais := 100;
   wResposta := Copy(aResposta, 1, 10);
-  wResposta := Trim(Copy(aResposta, 2, 7));
+
+  { Retira STX, ETX }
+  if (Copy(wResposta, 1, 1) = STX) then
+    wResposta := Copy(wResposta, 2, Length(wResposta));
+
+  //Deverá buscar a primeira ocorrencia do TX e trarar a String.
+  if pos(ETX,wResposta) > 0 then
+    wResposta := Copy(wResposta, 1, pos(ETX,wResposta) - 1);
+
+  if (wResposta = EmptyStr) then
+    Exit;
 
   { Ajustando o separador de Decimal corretamente }
   wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
@@ -91,7 +101,7 @@ begin
 
   try
     { Já existe ponto decimal ? }
-    if (Pos(DecimalSeparator, wResposta) > 0) then
+    if (Pos(DecimalSeparator, String(wResposta)) > 0) then
       Result := StrToFloat(wResposta)
     else
       Result := (StrToInt(wResposta) / wDecimais);

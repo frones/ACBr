@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 14/08/2017
+-- ACBrBALDigitron --
+[-] Corrreção na leitura do valor, considerando STX e ETX
+    http://www.projetoacbr.com.br/forum/topic/38234-correção-na-classe-da-balança-digitron/
+
 Data: 04/08/2017
 -- ACBrECFEscECF --
 [*] Ajuste no método "GetNumCupom", para efetuar checagem do Retorno da Impressora.

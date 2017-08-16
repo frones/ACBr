@@ -54,6 +54,12 @@ Símbolo : Significado
     acontecia um erro de estrutura no modo off-line
     por: regys.silveira
 
+14/08/2017
+-- ACBrNFe, ACBRNFeNotasFiscais --
+[*] Ajustes para QRCode em NFCe 4.0,
+    http://www.projetoacbr.com.br/forum/topic/38060-nfc-e-40-paran%C3%A1-pr-exception-na-transmiss%C3%A3o/?tab=comments#comment-251062
+    (por BigWings)
+
 10/08/2017
 -- ACBrNFeServicos -- 
 [-] Correção na URL de homologação do QR-Code de TO.

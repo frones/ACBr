@@ -298,7 +298,7 @@ end;
 
 procedure TDFeWebService.EnviarDados;
 Var
-  Tentar, Tratado: Boolean;
+  Tentar, Tratado, TemCertificadoConfigurado: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -318,7 +318,11 @@ begin
     Tentar := False;
     Tratado := False;
 
-    if (FPConfiguracoes.Certificados.NumeroSerie <> '') then  // Tem Certificado carregado ?
+    TemCertificadoConfigurado := (FPConfiguracoes.Certificados.NumeroSerie <> '') or
+                                 (FPConfiguracoes.Certificados.DadosPFX <> '') or
+                                 (FPConfiguracoes.Certificados.ArquivoPFX <> '');
+
+    if TemCertificadoConfigurado then
       if FPConfiguracoes.Certificados.VerificarValidade then
          if (FPDFeOwner.SSL.CertDataVenc < Now) then
            raise EACBrDFeException.Create('Data de Validade do Certificado já expirou: '+

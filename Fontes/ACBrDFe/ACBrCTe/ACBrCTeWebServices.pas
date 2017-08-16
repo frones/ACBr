@@ -3055,6 +3055,7 @@ begin
         (*
         schresCTe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-resCTe.xml';
+
         schresEvento:
           NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
              FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
@@ -3131,7 +3132,6 @@ begin
       Result := FPConfiguracoesCTe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
                                                           AItem.resCTe.CNPJCPF,
                                                           Data);
-
 
     schprocCTe:
       Result := FPConfiguracoesCTe.Arquivos.GetPathDownload(AItem.resCTe.xNome,

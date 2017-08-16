@@ -1500,12 +1500,17 @@ begin
         GerarInfServVinc;
     end;
 
-    if (CTe.ide.modelo = 67) and (CTe.Ide.tpServ = tsTranspValores) then
+    if CTe.ide.modelo = 67 then
     begin
-      Gerador.wCampo(tcEsp, '#', 'refCTeCanc', 44, 44, 0, OnlyNumber(CTe.infCTeNorm.refCTeCanc), DSC_CHCTE);
-      if OnlyNumber(CTe.infCTeNorm.refCTeCanc) <> '' then
-        if not ValidarChave(CTe.infCTeNorm.refCTeCanc) then
-          Gerador.wAlerta('#', 'refCTeCanc', DSC_REFNFE, ERR_MSG_INVALIDO);
+      GerarInfCTeSub;
+
+      if CTe.Ide.tpServ = tsTranspValores then
+      begin
+        Gerador.wCampo(tcEsp, '#', 'refCTeCanc', 44, 44, 0, OnlyNumber(CTe.infCTeNorm.refCTeCanc), DSC_CHCTE);
+        if OnlyNumber(CTe.infCTeNorm.refCTeCanc) <> '' then
+          if not ValidarChave(CTe.infCTeNorm.refCTeCanc) then
+            Gerador.wAlerta('#', 'refCTeCanc', DSC_REFNFE, ERR_MSG_INVALIDO);
+      end;
     end;
 
     Gerador.wGrupo('/infCTeNorm');

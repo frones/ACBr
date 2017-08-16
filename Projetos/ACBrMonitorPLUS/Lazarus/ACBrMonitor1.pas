@@ -271,6 +271,7 @@ type
     cbVersaoWSMDFe: TComboBox;
     cbXMLSignLib: TComboBox;
     cbSSLType: TComboBox;
+    chkVerificarValidadeCertificado: TCheckBox;
     chkMostraLogNaTela: TCheckBox;
     cbRFDModelo: TComboBox;
     cbSenha: TCheckBox;
@@ -4004,6 +4005,7 @@ begin
     edtNumeroSerie.Text := Ini.ReadString('Certificado', 'NumeroSerie', '');
     edtSenha.Text := LeINICrypt(INI, 'Certificado', 'Senha', _C);
     chkExibeRazaoSocial.Checked := Ini.ReadBool('Certificado', 'ExibeRazaoSocialCertificado', False);
+    chkVerificarValidadeCertificado.Checked := Ini.ReadBool('Certificado', 'VerificarValidade', False);
 
     edtProxyHost.Text := Ini.ReadString('Proxy', 'Host', '');
     edtProxyPorta.Text := Ini.ReadString('Proxy', 'Porta', '');
@@ -4812,6 +4814,7 @@ begin
     Ini.WriteString('Certificado', 'NumeroSerie', edtNumeroSerie.Text);
     GravaINICrypt(INI, 'Certificado', 'Senha', edtSenha.Text, _C);
     Ini.WriteBool('Certificado', 'ExibeRazaoSocialCertificado', chkExibeRazaoSocial.Checked);
+    Ini.WriteBool('Certificado', 'VerificarValidade', chkVerificarValidadeCertificado.Checked);
 
     Ini.WriteBool('ACBrNFeMonitor', 'IgnorarComandoModoEmissao', cbModoEmissao.Checked);
     Ini.WriteBool('ACBrNFeMonitor', 'ModoXML', cbModoXML.Checked);
@@ -7981,6 +7984,7 @@ begin
       ArquivoPFX  := edtArquivoPFX.Text;
       NumeroSerie := edtNumeroSerie.Text;
       Senha       := edtSenha.Text;
+      VerificarValidade := chkVerificarValidadeCertificado.Checked;
     end;
 
     with WebServices do

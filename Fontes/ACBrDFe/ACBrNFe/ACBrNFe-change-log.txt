@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+16/08/2017
+-- ACBrECFVirtualNFCe --
+[-] Acerto na ordem de assinatura e validação do NFC-e virtual para evitar erro
+    estava validando antes de assinar, então com as ultimas alterações sempre
+    acontecia um erro de estrutura no modo off-line
+    por: regys.silveira
+
 10/08/2017
 -- ACBrNFeServicos -- 
 [-] Correção na URL de homologação do QR-Code de TO.

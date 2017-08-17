@@ -610,9 +610,9 @@ TrocarCodigoDeAtivacao.......: numeroSessao, EEEEE, mensagem, cod, mensagemSEFAZ
 
   if fRetornoLst.Count > index+2 then
   begin
-    fmensagemRetorno := fRetornoLst[index];
+    fmensagemRetorno := Trim(fRetornoLst[index]);
     fcodigoSEFAZ     := StrToIntDef( fRetornoLst[index+1], 0);
-    fmensagemSEFAZ   := fRetornoLst[index+2];
+    fmensagemSEFAZ   := Trim(fRetornoLst[index+2]);
   end
   else
     fmensagemRetorno := AValue;

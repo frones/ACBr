@@ -727,8 +727,9 @@ begin
   Versao := 0;
   FPVersaoServico := '';
   FPURL := '';
+  FPServico := '';
 
-  TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL);
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL, FPServico);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
@@ -785,7 +786,8 @@ procedure TNFeStatusServico.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NFeStatusServico4';
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeStatusServico4';
     FPSoapAction := FPServico + '/nfeStatusServicoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
@@ -1003,7 +1005,8 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
@@ -1013,15 +1016,23 @@ procedure TNFeRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeAutorizacao then
   begin
-    if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
-      FPServico := GetUrlWsd + 'NFeAutorizacao4'
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400)  then
+    begin
+      if EstaVazio(FPServico) then
+        FPServico := GetUrlWsd + 'NFeAutorizacao4';
+      FPSoapAction := FPServico + '/nfeAutorizacaoLote';
+    end
     else
+    begin
       FPServico := GetUrlWsd + 'NfeAutorizacao';
+      FPSoapAction := FPServico;
+    end;
   end
   else
+  begin
     FPServico := GetUrlWsd + 'NfeRecepcao2';
-
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeRecepcao.DefinirDadosMsg;
@@ -1401,7 +1412,8 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
@@ -1411,15 +1423,23 @@ procedure TNFeRetRecepcao.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
   begin
-    if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
-      FPServico := GetUrlWsd + 'NFeRetAutorizacao4'
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    begin
+      if EstaVazio(FPServico) then
+        FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
+      FPSoapAction := FPServico +'/nfeRetAutorizacaoLote';
+    end
     else
+    begin
       FPServico := GetUrlWsd + 'NfeRetAutorizacao';
+      FPSoapAction := FPServico;
+    end;
   end
   else
+  begin
     FPServico := GetUrlWsd + 'NfeRetRecepcao2';
-
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeRetRecepcao.DefinirDadosMsg;
@@ -1669,15 +1689,23 @@ procedure TNFeRecibo.DefinirServicoEAction;
 begin
   if FPLayout = LayNfeRetAutorizacao then
   begin
-    if FPConfiguracoesNFe.Geral.VersaoDF >= ve400 then
-      FPServico := GetUrlWsd + 'NFeRetAutorizacao4'
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+    begin
+      if EstaVazio(FPServico) then
+        FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
+      FPSoapAction := FPServico + '/nfeRetAutorizacaoLote';
+    end
     else
+    begin
       FPServico := GetUrlWsd + 'NfeRetAutorizacao';
+      FPSoapAction := FPServico;
+    end;
   end
   else
+  begin
     FPServico := GetUrlWsd + 'NfeRetRecepcao2';
-
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeRecibo.DefinirURL;
@@ -1726,7 +1754,8 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
@@ -1897,7 +1926,8 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
@@ -1907,19 +1937,23 @@ procedure TNFeConsulta.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';  //NT 2016.002 diz que o nome deveria ser NFeConsulta4
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';
     FPSoapAction := FPServico + '/nfeConsultaNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
-  else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
-     (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
-     (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
-     (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
-    FPServico := GetUrlWsd + 'NfeConsulta'
   else
-    FPServico := GetUrlWsd + 'NfeConsulta2';
+  begin
+    if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
+       (FPConfiguracoesNFe.Geral.ModeloDF = moNFe) and
+       (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
+       (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
+      FPServico := GetUrlWsd + 'NfeConsulta'
+    else
+      FPServico := GetUrlWsd + 'NfeConsulta2';
 
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeConsulta.DefinirDadosMsg;
@@ -2338,7 +2372,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
@@ -2350,7 +2385,8 @@ var
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
   begin
-    FPServico := GetUrlWsd + 'NFeInutilizacao4';
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeInutilizacao4';
     FPSoapAction := FPServico + '/nfeInutilizacaoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
@@ -2359,7 +2395,8 @@ begin
      (FPConfiguracoesNFe.Geral.VersaoDF = ve310) and
      (FPConfiguracoesNFe.Geral.FormaEmissao = teNormal) then
   begin
-    FPServico := GetUrlWsd + 'NfeInutilizacao';
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NfeInutilizacao';
     FPSoapAction := FPServico + '/NfeInutilizacao';
   end
   else
@@ -2563,8 +2600,17 @@ end;
 
 procedure TNFeConsultaCadastro.DefinirServicoEAction;
 begin
-  FPServico := GetUrlWsd + 'CadConsultaCadastro2';
-  FPSoapAction := FPServico;
+  if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'CadConsultaCadastro4';
+    FPSoapAction := FPServico + '/consultaCadastro';
+  end
+  else
+  begin
+    FPServico := GetUrlWsd + 'CadConsultaCadastro2';
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeConsultaCadastro.DefinirURL;
@@ -2584,7 +2630,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
@@ -2740,7 +2787,8 @@ begin
     FTpAmb,
     LayOutToServico(FPLayout),
     VerServ,
-    FPURL
+    FPURL,
+    FPServico
   );
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
@@ -2749,11 +2797,16 @@ end;
 procedure TNFeEnvEvento.DefinirServicoEAction;
 begin
   if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
-    FPServico := GetUrlWsd + 'NFeRecepcaoEvento4'
+  begin
+    if EstaVazio(FPServico) then
+      FPServico := GetUrlWsd + 'NFeRecepcaoEvento4';
+    FPSoapAction := FPServico + '/nfeRecepcaoEvento';
+  end
   else
+  begin
     FPServico := GetUrlWsd + 'RecepcaoEvento';
-
-  FPSoapAction := FPServico;
+    FPSoapAction := FPServico;
+  end;
 end;
 
 procedure TNFeEnvEvento.DefinirDadosMsg;
@@ -3098,7 +3151,7 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL);
+    FPURL, FPServico);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3220,7 +3273,7 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL);
+    FPURL, FPServico);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3470,7 +3523,7 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL);
+    FPURL, FPServico);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;

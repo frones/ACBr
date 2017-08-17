@@ -102,9 +102,14 @@ type
 
     procedure LerServicoChaveDeParams(const NomeSessao, NomeServico: String;
       var Versao: Double; var URL: String);
+    procedure LerWSDLDeParams(const NomeSessao, NomeServico: String;
+      var Versao: Double; var Servico: String);
     procedure LerServicoDeParams(const ModeloDFe, UF: String;
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
-      var Versao: Double; var URL: String);
+      var Versao: Double; var URL: String); overload;
+    procedure LerServicoDeParams(const ModeloDFe, UF: String;
+      const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
+      var Versao: Double; var URL: String; var Servico: String);overload;
     function LerVersaoDeParams(const ModeloDFe, UF: String;
       const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
       VersaoBase: Double): Double; virtual;
@@ -448,9 +453,24 @@ begin
     URL := FPIniParams.ReadString(NomeSessao, NomeServico, '');
 end;
 
+procedure TACBrDFe.LerWSDLDeParams(const NomeSessao, NomeServico: String;
+  var Versao: Double; var Servico: String);
+begin
+  LerServicoChaveDeParams(NomeSessao,NomeServico,Versao,Servico);
+end;
+
 procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
   var Versao: Double; var URL: String);
+var
+  Servico: String;
+begin
+  LerServicoDeParams(ModeloDFe, UF, TipoAmbiente, NomeServico, Versao, URL, Servico);
+end;
+
+procedure TACBrDFe.LerServicoDeParams(const ModeloDFe, UF: String;
+  const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
+  var Versao: Double; var URL: String; var Servico: String);
 var
   Sessao, ListaSessoes, NomeSchema, ArqSchema: String;
   VersaoAchada, VersaoSchema: Double;
@@ -464,7 +484,8 @@ begin
   Sessao := ModeloDFe + '_' + UF + '_' + IfThen(TipoAmbiente = taProducao, 'P', 'H');
   VersaoAchada := Versao;
 
-  LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+  LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL );
+  LerWSDLDeParams( FPIniParams.ReadString(Sessao, 'WSDL', ''), NomeServico, VersaoAchada, Servico );
 
   // Se não achou, verifique se está fazendo redirecionamento "Usar="
   ListaSessoes := '';  // proteção contra redirecionamento circular
@@ -485,7 +506,8 @@ begin
       if NaoEstaVazio(Sessao) then
       begin
         VersaoAchada := Versao;
-        LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL);
+        LerServicoChaveDeParams( Sessao, NomeServico, VersaoAchada, URL );
+        LerWSDLDeParams(  FPIniParams.ReadString(Sessao, 'WSDL', ''), NomeServico, VersaoAchada, Servico );
       end;
     end
     else
@@ -506,7 +528,6 @@ begin
 
   Versao := VersaoAchada;
 end;
-
 function TACBrDFe.LerVersaoDeParams(const ModeloDFe, UF: String;
   const TipoAmbiente: TpcnTipoAmbiente; const NomeServico: String;
   VersaoBase: Double): Double;

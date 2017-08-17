@@ -147,7 +147,7 @@ type
 
     function NomeServicoToNomeSchema(const NomeServico: String): String; override;
     procedure LerServicoDeParams(LayOutServico: TLayOut; var Versao: Double;
-      var URL: String); reintroduce; overload;
+      var URL: String; var Servico: String); reintroduce; overload;
     function LerVersaoDeParams(LayOutServico: TLayOut): String; reintroduce; overload;
 
     function GetURLConsultaNFCe(const CUF: integer;
@@ -513,7 +513,7 @@ begin
 end;
 
 procedure TACBrNFe.LerServicoDeParams(LayOutServico: TLayOut;
-  var Versao: Double; var URL: String);
+  var Versao: Double; var URL: String; var Servico: String);
 var
   AUF: String;
 begin
@@ -527,9 +527,10 @@ begin
 
   Versao := VersaoDFToDbl(Configuracoes.Geral.VersaoDF);
   URL := '';
+  Servico := '';
   LerServicoDeParams(GetNomeModeloDFe, AUF,
     Configuracoes.WebServices.Ambiente, LayOutToServico(LayOutServico),
-    Versao, URL);
+    Versao, URL, Servico);
 end;
 
 function TACBrNFe.GetURLConsultaNFCe(const CUF: integer;

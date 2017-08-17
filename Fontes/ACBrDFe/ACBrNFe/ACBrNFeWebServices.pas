@@ -728,8 +728,9 @@ begin
   FPVersaoServico := '';
   FPURL := '';
   FPServico := '';
+  FPSoapAction := '';
 
-  TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL, FPServico);
+  TACBrNFe(FPDFeOwner).LerServicoDeParams(FPLayout, Versao, FPURL, FPServico, FPSoapAction);
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
 
@@ -788,7 +789,8 @@ begin
   begin
     if EstaVazio(FPServico) then
       FPServico := GetUrlWsd + 'NFeStatusServico4';
-    FPSoapAction := FPServico + '/nfeStatusServicoNF';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeStatusServicoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
   else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
@@ -1006,8 +1008,8 @@ begin
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -1020,7 +1022,8 @@ begin
     begin
       if EstaVazio(FPServico) then
         FPServico := GetUrlWsd + 'NFeAutorizacao4';
-      FPSoapAction := FPServico + '/nfeAutorizacaoLote';
+      if EstaVazio(FPSoapAction) then
+        FPSoapAction := FPServico + '/nfeAutorizacaoLote';
     end
     else
     begin
@@ -1413,8 +1416,8 @@ begin
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -1427,7 +1430,8 @@ begin
     begin
       if EstaVazio(FPServico) then
         FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
-      FPSoapAction := FPServico +'/nfeRetAutorizacaoLote';
+      if EstaVazio(FPSoapAction) then
+        FPSoapAction := FPServico +'/nfeRetAutorizacaoLote';
     end
     else
     begin
@@ -1693,7 +1697,8 @@ begin
     begin
       if EstaVazio(FPServico) then
         FPServico := GetUrlWsd + 'NFeRetAutorizacao4';
-      FPSoapAction := FPServico + '/nfeRetAutorizacaoLote';
+      if EstaVazio(FPSoapAction) then
+        FPSoapAction := FPServico + '/nfeRetAutorizacaoLote';
     end
     else
     begin
@@ -1755,8 +1760,8 @@ begin
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -1927,8 +1932,8 @@ begin
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -1939,7 +1944,8 @@ begin
   begin
     if EstaVazio(FPServico) then
       FPServico := GetUrlWsd + 'NFeConsultaProtocolo4';
-    FPSoapAction := FPServico + '/nfeConsultaNF';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeConsultaNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
   else
@@ -2373,8 +2379,8 @@ begin
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -2387,7 +2393,8 @@ begin
   begin
     if EstaVazio(FPServico) then
       FPServico := GetUrlWsd + 'NFeInutilizacao4';
-    FPSoapAction := FPServico + '/nfeInutilizacaoNF';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeInutilizacaoNF';
   end
   // BA usa uma notação de Serviços diferente das demais UFs
   else if (FPConfiguracoesNFe.WebServices.UFCodigo = 29) and // 29 = BA
@@ -2604,7 +2611,8 @@ begin
   begin
     if EstaVazio(FPServico) then
       FPServico := GetUrlWsd + 'CadConsultaCadastro4';
-    FPSoapAction := FPServico + '/consultaCadastro';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/consultaCadastro';
   end
   else
   begin
@@ -2631,8 +2639,8 @@ begin
     LayOutToServico(FPLayout),
     Versao,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -2788,8 +2796,8 @@ begin
     LayOutToServico(FPLayout),
     VerServ,
     FPURL,
-    FPServico
-  );
+    FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(VerServ, '.', '0.00');
 end;
@@ -2800,7 +2808,8 @@ begin
   begin
     if EstaVazio(FPServico) then
       FPServico := GetUrlWsd + 'NFeRecepcaoEvento4';
-    FPSoapAction := FPServico + '/nfeRecepcaoEvento';
+    if EstaVazio(FPSoapAction) then
+      FPSoapAction := FPServico + '/nfeRecepcaoEvento';
   end
   else
   begin
@@ -3151,7 +3160,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL, FPServico);
+    FPURL, FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3273,7 +3283,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL, FPServico);
+    FPURL, FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;
@@ -3523,7 +3534,8 @@ begin
     FPConfiguracoesNFe.WebServices.Ambiente,
     LayOutToServico(FPLayout),
     Versao,
-    FPURL, FPServico);
+    FPURL, FPServico,
+    FPSoapAction);
 
   FPVersaoServico := FloatToString(Versao, '.', '0.00');
 end;

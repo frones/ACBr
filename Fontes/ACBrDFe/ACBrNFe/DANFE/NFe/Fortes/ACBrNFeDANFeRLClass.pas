@@ -348,7 +348,14 @@ begin
           fEspacoEntreProdutos,
           fAlternaCoresProdutos,
           fCorDestaqueProdutos,
-          fImprimirDadosDocReferenciados);
+          fImprimirDadosDocReferenciados,
+          FTamanhoLogoHeight,
+          FTamanhoLogoWidth,
+          FRecuoEndereco,
+          FRecuoEmpresa,
+          FLogoEmCima,
+          FTamanhoFonteEndereco,
+          FRecuoLogo);
         end;
     end
   else
@@ -378,7 +385,14 @@ begin
       fEspacoEntreProdutos,
       fAlternaCoresProdutos,
       fCorDestaqueProdutos,
-      fImprimirDadosDocReferenciados);
+      fImprimirDadosDocReferenciados,
+      FTamanhoLogoHeight,
+      FTamanhoLogoWidth,
+      FRecuoEndereco,
+      FRecuoEmpresa,
+      FLogoEmCima,
+      FTamanhoFonteEndereco,
+      FRecuoLogo);
     end;
  finally
    FreeAndNil(frlDANFeRL);

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+18/08/2017
+-- pcteConversaoCTe --
+[-] Correção em tipo enumerado schconsStatServ para schconsStatServCTe, para
+    permitir encontrar o Schema correto
+    (por: DSA)
 
 16/08/2017
 -- pcteCTeW -- 

@@ -61,7 +61,7 @@ type
 
   TSchemaCTe = ( schErro, schCTe, schCTeOS, schcancCTe, schInutCTe, schEventoCTe,
                  schresCTe, schresEvento, schprocCTe, schprocEventoCTe,
-                 schconsReciCTe, schconsSitCTe, schconsStatServ, schconsCad,
+                 schconsReciCTe, schconsSitCTe, schconsStatServCTe, schconsCad,
                  schcteModalAereo, schcteModalAquaviario, schcteModalDutoviario,
                  schcteModalFerroviario, schcteModalRodoviario, schcteMultiModal,
                  schevEPECCTe, schevCancCTe, schevRegMultimodal, schevCCeCTe,
@@ -243,7 +243,7 @@ begin
     LayCTeCancelamento:  Result := schcancCTe;
     LayCTeInutilizacao:  Result := schInutCTe;
     LayCTeConsulta:      Result := schconsSitCTe;
-    LayCTeStatusServico: Result := schconsStatServ;
+    LayCTeStatusServico: Result := schconsStatServCTe;
     LayCTeCadastro:      Result := schconsCad;
     LayCTeEvento,
     LayCTeEventoAN:      Result := schEventoCTe;

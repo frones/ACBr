@@ -66,9 +66,61 @@ type
   { TfrmDACTeRLRetrato }
 
   TfrmDACTeRLRetrato = class(TfrmDACTeRL)
+    rlb_CTeOS_PrestacaoServico: TRLBand;
+    rlb_Dados_Seguradora: TRLBand;
+    rlb_03_DadosDACTe_OS: TRLBand;
+    rlb_Fluxo_Carga: TRLBand;
     RLBarcode1: TRLBarcode;
     rlb_01_Recibo: TRLBand;
+    rlDocOrig_tpDoc3: TRLMemo;
+    RLDraw110: TRLDraw;
+    RLDraw111: TRLDraw;
+    RLDraw112: TRLDraw;
+    RLDraw113: TRLDraw;
     RLDraw28: TRLDraw;
+    RLDraw29: TRLDraw;
+    RLDraw34: TRLDraw;
+    RLDraw35: TRLDraw;
+    RLLabel201: TRLLabel;
+    RLLabel202: TRLLabel;
+    RLLabel203: TRLLabel;
+    RLLabel204: TRLLabel;
+    RLLabel205: TRLLabel;
+    RLLabel206: TRLLabel;
+    RLLabel207: TRLLabel;
+    RLLabel208: TRLLabel;
+    RLLabel209: TRLLabel;
+    RLLabel210: TRLLabel;
+    RLLabel211: TRLLabel;
+    RLLabel212: TRLLabel;
+    RLLabel213: TRLLabel;
+    RLLabel214: TRLLabel;
+    RLLabel215: TRLLabel;
+    RLLabel216: TRLLabel;
+    RLLabel217: TRLLabel;
+    RLLabel218: TRLLabel;
+    RLLabel219: TRLLabel;
+    RLLabel221: TRLLabel;
+    RLLabel223: TRLLabel;
+    RLLabel224: TRLLabel;
+    rllCEPToma1: TRLLabel;
+    rllCnpjToma1: TRLLabel;
+    rllDestPrestacao1: TRLLabel;
+    rllEnderecoToma1: TRLLabel;
+    rllFoneToma1: TRLLabel;
+    rllInscEstToma1: TRLLabel;
+    rllMunToma1: TRLLabel;
+    rllApolice: TRLMemo;
+    rllOrigPrestacao1: TRLLabel;
+    rllPaisToma1: TRLLabel;
+    rllPercursoVeiculo: TRLLabel;
+    rllRazaoToma1: TRLLabel;
+    rllSiglaOrigem: TRLLabel;
+    rllSiglaDestino: TRLLabel;
+    rllSiglaPassagem: TRLMemo;
+    rllResponsavelSeguro: TRLMemo;
+    rllNomeSeguradora: TRLMemo;
+    rllTituloSeguro: TRLLabel;
     rlsLinhaH03: TRLDraw;
     rlmEmitente: TRLMemo;
     rlmDadosEmitente: TRLMemo;
@@ -288,6 +340,9 @@ type
     rlLabel62: TRLLabel;
     rlLabel63: TRLLabel;
     rlLabel64: TRLLabel;
+    rlsLinhaH7: TRLDraw;
+    rlsLinhaV12: TRLDraw;
+    rlsLinhaV13: TRLDraw;
     rlsQuadro01: TRLDraw;
     rlsQuadro02: TRLDraw;
     rlsQuadro04: TRLDraw;
@@ -582,6 +637,9 @@ type
     rlDocOrig_tpDoc2: TRLMemo;
     RLLabel199: TRLLabel;
     RLLabel200: TRLLabel;
+    rlsQuadro10: TRLDraw;
+    rlsQuadro10_Fluxo: TRLDraw;
+    rlsQuadro3: TRLDraw;
     RLSystemInfo1: TRLSystemInfo;
     RLSystemInfo2: TRLSystemInfo;
     rlb_06_VeiculosNovos: TRLBand;
@@ -605,6 +663,8 @@ type
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_03_DadosDACTe_OSBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
     procedure rlb_04_DadosNotaFiscalBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_05_ComplementoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_06_ValorPrestacaoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -623,9 +683,22 @@ type
     procedure rlb_18_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_06_ProdutosPerigososBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_06_VeiculosNovosBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlb_CTeOS_PrestacaoServicoBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure rlb_Dados_SeguradoraBeforePrint(Sender: TObject;
+      var PrintIt: Boolean);
+    procedure rlb_Fluxo_CargaBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLCTeBeforePrint(Sender: TObject; var PrintIt: boolean);
     procedure rlb_07_HeaderItensAfterPrint(Sender: TObject);
     procedure rlb_11_ModRodLot104AfterPrint(Sender: TObject);
+    procedure cabecalhoVersao30();
+    procedure tomadorMod67();
+    procedure dadosNotaFiscalVersao30();
+    procedure modalRodoviarioVersao30();
+    procedure modalRodoviarioMod67();
+    procedure fluxoCargaVersao30();
+    procedure prestacaoServicoMod67();
+    procedure dadosSeguradoraMod67();
   private
     Linhas : Integer;
     procedure Itens;
@@ -831,12 +904,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByname('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
           end
           else
           begin
             cdsDocumentos.FieldByname('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
 
             cdsDocumentos.Post;
           end;
@@ -1030,12 +1103,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByName('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByName('CNPJCPF_1').AsString := FormatarChaveAcesso(chave, True);
           end
           else
           begin
             cdsDocumentos.FieldByName('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarChaveAcesso(IfThen(FCTe.infCTe.versao >= 3, chCTe, chave));
+            cdsDocumentos.FieldByName('CNPJCPF_2').AsString := FormatarChaveAcesso(chave, True);
 
             cdsDocumentos.Post;
           end;
@@ -1068,6 +1141,9 @@ begin
   rllNumCte2.Caption := FormatFloat('000,000,000', FCTe.Ide.nCT);
   // TpcteTipoCTe = (tcNormal, tcComplemento, tcAnulacao, tcSubstituto);
   rlb_01_Recibo.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento);
+
+  if (FCTe.ide.modelo = 67) then
+    rlLabel140.Caption := 'CT-E OS';
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_01_Recibo_AereoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -1122,7 +1198,7 @@ begin
 
   rllModal.Caption   := ACBrStr( TpModalToStrText(FCTe.Ide.modal) );
   rllModelo.Caption  := IntToStr(FCTe.Ide.modelo);
-  rllSerie.Caption   := IntToStr(FCTe.Ide.serie);  //FormatFloat( '000', FCTe.Ide.serie);
+  rllSerie.Caption   := IntToStr(FCTe.Ide.serie);
   rllNumCte.Caption  := FormatFloat('000,000,000', FCTe.Ide.nCT);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [FTotalPages]);
 //  rllPageNumber.Caption   := format('%2.2d', [RLCTe.PageNumber]) + '/' + format('%2.2d', [RLCTe.rlPrinter.PageCount]);
@@ -1163,26 +1239,21 @@ begin
 
   rllTipoCte.Caption     := tpCTToStrText(FCTe.Ide.tpCTe);
   rllTipoServico.Caption := TpServToStrText(FCTe.Ide.tpServ);
-  if FCTe.Ide.Toma4.xNome = '' then
-  begin
-    rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
-//    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma03.Toma);
-  end
-  else
-  begin
-    rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
-//    rlTomadorServico.Caption := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
-  end;
 
-  if (FCTe.infCTe.versao >= 3.00) then
+  // CTe 3.0 **************************************************************
+
+  if (FCTe.infCTe.versao >= 3.00) then   //Campos referente a versão 3.00
+    cabecalhoVersao30()
+  else                                   //Campos referente a versão 2.00
   begin
-    rllabel78.Caption             := '';
-    rllFormaPagamento.Caption     := '';
-    rlslinhav01.Height            := 31;
-  end
-  else
-    rllFormaPagamento.Caption := tpforPagToStrText(FCTe.Ide.forPag);
-//  rlFormaPgto.Caption       := tpforPagToStrText(FCTe.Ide.forPag);
+    if FCTe.Ide.Toma4.xNome = '' then
+      rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma03.Toma)
+    else
+      rllTomaServico.Caption   := TpTomadorToStrText(FCTe.Ide.Toma4.toma);
+
+    rllFormaPagamento.Caption  := tpforPagToStrText(FCTe.Ide.forPag);
+
+  end;
 
   // Normal **************************************************************
   if FCTe.Ide.tpEmis in [teNormal, teSCAN, teSVCSP, teSVCRS] then
@@ -1261,6 +1332,10 @@ var
   i: integer;
 begin
   inherited;
+  rlb_03_DadosDACTe.Enabled := not(FCTe.ide.modelo = 67);
+  if not (rlb_03_DadosDACTe.Enabled) then
+    rlb_03_DadosDACTe.Height := 0;
+
   PrintIt := RLCTe.PageNumber = 1;
 
   rllNatOperacao.Caption := FormatFloat('0000', FCTe.Ide.CFOP) + ' - ' + FCTe.Ide.natOp;
@@ -1413,11 +1488,6 @@ begin
   rlmRespSeguroMerc.Lines.Clear;
   rlmNroApolice.Lines.Clear;
   rlMNroAverbacao.Lines.Clear;
-
-  //  rllNomeSeguradora.Caption := '';
-  //  rllRespSeguroMerc.Caption := '';
-  //  rllNroApolice.Caption     := '';
-  //  rllNroAverbacao.Caption   := '';
 
   rlmCompNome1.Lines.Clear;
   rlmCompNome2.Lines.Clear;
@@ -1779,13 +1849,27 @@ begin
 {$ENDIF}
 end;
 
+procedure TfrmDACTeRLRetrato.rlb_03_DadosDACTe_OSBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  tomadorMod67();
+  PrintIt := RLCTe.PageNumber = 1;
+end;
+
 procedure TfrmDACTeRLRetrato.rlb_04_DadosNotaFiscalBeforePrint(Sender: TObject; var PrintIt: Boolean);
 begin
   inherited;
   PrintIt := RLCTe.PageNumber = 1;
 
   // Imprime os dados da da Nota Fiscal se o Tipo de CTe for Normal ou Substituto
-  rlb_04_DadosNotaFiscal.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcSubstituto);
+  rlb_04_DadosNotaFiscal.Enabled := ( ((FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcSubstituto))
+                                    and (FCTe.ide.modelo <> 67) );
+  if not(rlb_04_DadosNotaFiscal.Enabled) then
+    rlb_04_DadosNotaFiscal.Height := 0
+  else
+    dadosNotaFiscalVersao30();
+
+
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_05_ComplementoBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -1855,51 +1939,60 @@ begin
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_07_HeaderItensBeforePrint(Sender: TObject; var PrintIt: Boolean);
-var
-  i : Integer;
 begin
   inherited;
-	//PrintIt := RLCTe.PageNumber = 1;
+  //PrintIt := RLCTe.PageNumber = 1;
 
-  rlb_07_HeaderItens.Enabled := (FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
-    (FCTe.Ide.tpCTe = tcSubstituto);
-
-  rlDocOrig_tpDoc1.Lines.Clear;
-  rlDocOrig_tpDoc2.Lines.Clear;
-
-  //cdsDocumentos.First;
-
-  if (RLCTe.PageNumber<=1) then
-    cdsDocumentos.First
-  else
-    PrintIt := (not cdsDocumentos.eof);
-
-  while not cdsDocumentos.Eof do
+  rlb_07_HeaderItens.Enabled := ( ((FCTe.Ide.tpCTe = tcNormal) or (FCTe.Ide.tpCTe = tcComplemento) or
+    (FCTe.Ide.tpCTe = tcSubstituto)) and (FCTe.ide.modelo <> 67) );
+  if (rlb_07_HeaderItens.Enabled) then
   begin
-    if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
-    begin
-      rlDocOrig_tpDoc1.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_1').AsString, 33, ' ')+
-      PadRight(cdsDocumentos.FieldByName('CNPJCPF_1').AsString, 54, ' ')+
-      cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
-    end;
-    if cdsDocumentos.FieldByName('TIPO_2').AsString <> '' then
-    begin
-      rlDocOrig_tpDoc2.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_2').AsString, 33, ' ')+
-      PadRight(cdsDocumentos.FieldByName('CNPJCPF_2').AsString, 54, ' ')+
-      cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
-    end;
-    cdsDocumentos.Next;
 
-    if (RLCTe.PageNumber>1) then
-      inc(Linhas);
-    if ((cdsDocumentos.recno > 4) and (RLCTe.PageNumber=1) or (Linhas>70)) then
-      break;
+    rlDocOrig_tpDoc1.Lines.Clear;
+    rlDocOrig_tpDoc2.Lines.Clear;
+
+    //cdsDocumentos.First;
+
+    if (RLCTe.PageNumber<=1) then
+      cdsDocumentos.First
+    else
+      PrintIt := (not cdsDocumentos.eof);
+
+    while not cdsDocumentos.Eof do
+    begin
+      if cdsDocumentos.FieldByName('TIPO_1').AsString <> '' then
+      begin
+        rlDocOrig_tpDoc1.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_1').AsString, 33, ' ')+
+        PadRight(cdsDocumentos.FieldByName('CNPJCPF_1').AsString, 54, ' ')+
+        cdsDocumentos.FieldByName('DOCUMENTO_1').AsString);
+      end;
+      if cdsDocumentos.FieldByName('TIPO_2').AsString <> '' then
+      begin
+        rlDocOrig_tpDoc2.Lines.Add(PadRight(cdsDocumentos.FieldByName('TIPO_2').AsString, 33, ' ')+
+        PadRight(cdsDocumentos.FieldByName('CNPJCPF_2').AsString, 54, ' ')+
+        cdsDocumentos.FieldByName('DOCUMENTO_2').AsString);
+      end;
+      cdsDocumentos.Next;
+
+      if (RLCTe.PageNumber>1) then
+        inc(Linhas);
+      if ((cdsDocumentos.recno > 4) and (RLCTe.PageNumber=1) or (Linhas>70)) then
+        break;
+
+    end;
+
+    rlDocOrig_tpDoc1.Height := Round( rlDocOrig_tpDoc1.Lines.Count * 12);
+    rlDocOrig_tpDoc2.Height := Round(rlDocOrig_tpDoc2.Lines.Count * 12);
+    rld_07_headerItens.Height := rlb_07_HeaderItens.Height - 12;
+
+  end
+  else
+  begin
+    rlb_07_HeaderItens.AutoSize := False;
+    rlb_07_HeaderItens.Height   := 0;
 
   end;
 
-  rlDocOrig_tpDoc1.Height := Round( rlDocOrig_tpDoc1.Lines.Count * 12);
-  rlDocOrig_tpDoc2.Height := Round(rlDocOrig_tpDoc2.Lines.Count * 12);
-  rld_07_headerItens.Height := rlb_07_HeaderItens.Height - 12;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_09_ObsBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -1983,8 +2076,11 @@ begin
 
   // Imprime as Informações Especificas do Modal se o Tipo de CTe for Normal
   rlb_10_ModRodFracionado.Enabled := (FCTe.Ide.tpCTe = tcNormal) and (FCTe.Ide.modal = mdRodoviario);
-  rlb_11_ModRodLot103.Enabled := False;
-  rlb_11_ModRodLot104.Enabled := False;
+  if not (rlb_10_ModRodFracionado.Enabled) then
+    rlb_10_ModRodFracionado.Height := 0;
+
+  rlb_11_ModRodLot103.Enabled      := False;
+  rlb_11_ModRodLot104.Enabled      := False;
 
 {$IFDEF PL_200}
   with FCTe.infCTeNorm.rodo do
@@ -2004,39 +2100,33 @@ begin
     rllCIOT.Enabled := True;
     rllCIOT.Caption := CIOT;
 {$ENDIF}
-
-    case Lota of
-      ltNao:
-      begin
-        rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA');
-        rllLotacao.Caption := ACBrStr('NÃO');
-      end;
-      ltsim:
-      begin
-        rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - LOTAÇÃO');
-        rllLotacao.Caption := 'SIM';
-        if Versao = 103 then
-          rlb_11_ModRodLot103.Enabled := True
-        else
-          rlb_11_ModRodLot104.Enabled := True;
-      end;
-    end;
-
-    if ( dPrev > 0 ) then
-      rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev);
-
-    if FCTe.infCTe.versao >= 3.00 then
+    if rlb_10_ModRodFracionado.Enabled then
     begin
-      rllTituloLotacao.Caption   := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO');
-      rlsCIOT.Enabled            := False;
-      lblCIOT.Caption            := '';
-      rllCIOT.Caption            := '';
-      rllLotacao.Caption         := '';
-      RLLabel83.Caption          := '';
-      rlsCIOT.Visible            := False;
-      RLDraw36.Visible           := False;
-      if ( FCTe.compl.Entrega.comData.dProg > 0 ) then
-        rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', FCTe.compl.Entrega.comData.dProg);
+      if (FCTe.infCTe.versao >= 3.00) then
+        modalRodoviarioVersao30()
+      else
+      begin
+        case Lota of
+          ltNao:
+          begin
+            rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - CARGA FRACIONADA');
+            rllLotacao.Caption := ACBrStr('NÃO');
+          end;
+          ltsim:
+          begin
+            rllTituloLotacao.Caption := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO - LOTAÇÃO');
+            rllLotacao.Caption := 'SIM';
+            if Versao = 103 then
+              rlb_11_ModRodLot103.Enabled := True
+            else
+              rlb_11_ModRodLot104.Enabled := True;
+          end;
+        end;
+
+        if ( dPrev > 0 ) then
+          rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', dPrev);
+
+      end;
     end;
   end;
 
@@ -2139,6 +2229,289 @@ begin
 
   if ((cdsDocumentos.recNo>4) and (rlCte.PageNumber=1)) then
     RLCte.newpage;
+end;
+
+procedure TfrmDACTeRLRetrato.cabecalhoVersao30;
+begin
+  if (FCTe.ide.modelo <> 67) then   //67-CTeOS
+  begin
+    rlLabel28.Caption               := ACBrStr('INDICADOR DO CT-E GLOBALIZADO');
+    rllabel78.Caption               := ACBrStr('INFORMAÇÕES DO CT-E GLOBALIZADO');
+
+    if FCTe.ide.indGlobalizado = tiSim then
+    begin
+      rllTomaServico.Caption        := 'SIM';
+      if (Trim(FCTe.infCTeNorm.infGlobalizado.xObs) <> '') then
+         rllFormaPagamento.Caption  := FCTe.infCTeNorm.infGlobalizado.xObs;
+
+    end
+    else
+      rllTomaServico.Caption        := ACBrStr('NÃO');
+
+  end
+  else
+  begin
+    rlLabel28.Caption               := ACBrStr('CÓDIGO FISCAL DE OPERAÇÕES E PRESTAÇÕES - NATUREZA DA OPERAÇÃO');
+    rllabel78.Caption               := '';
+    rlsLinhaV01.Height              := 31;
+    rllTomaServico.AutoSize         := true;
+    rllTomaServico.Caption          := FormatFloat('0000', FCTe.Ide.CFOP) + ' - ' + FCTe.Ide.natOp;
+    rllFormaPagamento.Caption       := '';
+
+  end;
+end;
+
+procedure TfrmDACTeRLRetrato.tomadorMod67;
+var
+  I: Integer;
+begin
+  rlb_03_DadosDACTe_OS.Enabled := (FCTe.ide.modelo = 67);
+  if (rlb_03_DadosDACTe_OS.Enabled) then
+  begin
+
+    rllOrigPrestacao1.Caption := FCTe.Ide.xMunIni + ' - ' + FCTe.Ide.UFIni + ' - ' + FormatFloat('000', FCTe.Ide.cMunIni);
+    rllDestPrestacao1.Caption := FCTe.Ide.xMunFim + ' - ' + FCTe.Ide.UFFim + ' - ' + FormatFloat('000', FCTe.Ide.cMunFim);
+
+    for I := 0 to FCTe.ide.infPercurso.Count -1 do
+    begin
+      if I = 0 then
+        rllPercursoVeiculo.Caption := FCTe.ide.infPercurso.Items[I].UFPer
+      else
+        rllPercursoVeiculo.Caption := rllPercursoVeiculo.Caption +' - '+ FCTe.ide.infPercurso.Items[I].UFPer;
+    end;
+
+    with FCTe.toma do
+    begin
+      rllRazaoToma1.Caption         := xNome;
+      rllEnderecoToma1.Caption      := EnderToma.xLgr + ', ' + EnderToma.nro +
+                                    ' - ' + EnderToma.xCpl + ' - ' + EnderToma.xBairro;
+      rllCEPToma1.Caption           := FormatarCEP(EnderToma.CEP);
+      rllMunToma1.Caption           := EnderToma.xMun + ' - ' + EnderToma.UF;
+      rllCnpjToma1.Caption          := FormatarCNPJouCPF(CNPJCPF);
+      rllPaisToma1.Caption          := EnderToma.xPais;
+      rllInscEstToma1.Caption       := IE;
+      rllFoneToma1.Caption          := FormatarFone(fone);
+
+    end;
+
+  end
+  else
+   rlb_03_DadosDACTe_OS.Height := 0;
+
+end;
+
+procedure TfrmDACTeRLRetrato.dadosNotaFiscalVersao30;
+begin
+  //Valida a Versão para ocultar campos na tela
+  with FCTe.infCTe do
+  begin
+    rlLabel5.Visible                    := not(versao >= 3.00);
+    rlLabel37.Visible                   := not(versao >= 3.00);
+    rlmNomeSeguradora.Visible           := not(versao >= 3.00);
+    rlmRespSeguroMerc.Visible           := not(versao >= 3.00);
+    rlLabel39.Visible                   := not(versao >= 3.00);
+    rlmNroApolice.Visible               := not(versao >= 3.00);
+    rllabel40.Visible                   := not(versao >= 3.00);
+    rlmNroAverbacao.Visible             := not(versao >= 3.00);
+    RLDraw62.Visible                    := not(versao >= 3.00);
+    RLDraw61.Visible                    := not(versao >= 3.00);
+    RLDraw7.Visible                     := not(versao >= 3.00);
+    RLDraw8.Visible                     := not(versao >= 3.00);
+
+  end;
+
+  //Valida a Versão para reposicionar campos na tela
+  if (FCTe.infCTe.versao >= 3.00) then
+  begin
+    RLDraw58.Left            := 148;
+    RLDraw59.Left            := 296;
+    RLDraw100.Left           := 444;
+    RLDraw60.Left            := 592;
+
+    RLLabel35.Width          := 136;
+    RLLabel35.Left           := 5;
+    rlmQtdUnidMedida1.Width  := 136;
+    rlmQtdUnidMedida1.Left   := 5;
+
+    RLLabel36.Width          := 136;
+    RLLabel36.Left           := 154;
+    rlmQtdUnidMedida2.Width  := 136;
+    rlmQtdUnidMedida2.Left   := 154;
+
+    RLLabel41.Width          := 136;
+    RLLabel41.Left           := 304;
+    rlmQtdUnidMedida3.Width  := 136;
+    rlmQtdUnidMedida3.Left   := 304;
+
+    RLLabel73.Width          := 136;
+    RLLabel73.Left           := 449;
+    rlmQtdUnidMedida4.Width  := 136;
+    rlmQtdUnidMedida4.Left   := 449;
+
+    RLLabel43.Width          := 136;
+    RLLabel43.Left           := 600;
+    rlmQtdUnidMedida5.Width  := 136;
+    rlmQtdUnidMedida5.Left   := 600;
+
+  end;
+end;
+
+procedure TfrmDACTeRLRetrato.modalRodoviarioVersao30;
+begin
+  rllTituloLotacao.Caption   := ACBrStr('DADOS ESPECÍFICOS DO MODAL RODOVIÁRIO');
+  rlsCIOT.Enabled            := False;
+  lblCIOT.Caption            := '';
+  rllCIOT.Caption            := '';
+  rllLotacao.Caption         := '';
+  RLLabel83.Caption          := '';
+  rlsCIOT.Visible            := False;
+  RLDraw36.Visible           := False;
+
+  if ( FCTe.compl.Entrega.comData.dProg > 0 ) then
+    rllDtPrevEntrega.Caption := FormatDateTime('DD/MM/YYYY', FCTe.compl.Entrega.comData.dProg);
+
+  if (FCTe.ide.modelo = 67) then
+    modalRodoviarioMod67();
+
+end;
+
+procedure TfrmDACTeRLRetrato.modalRodoviarioMod67;
+var
+  lTAF, lREG, lCNPJ : String;
+begin
+  with FCTE.infCTeNorm.rodoOS.veic do
+  begin
+    if (Length(Prop.TAF) > 0) or (Length(Prop.NroRegEstadual) > 0) then
+    begin
+      //Terceiro
+      lTAF  := Prop.TAF;
+      lREG  := prop.NroRegEstadual;
+      lCNPJ := prop.CNPJCPF;
+    end
+    else
+    begin
+      //Próprio
+      lTAF  := FCTe.infCTeNorm.rodoOS.TAF;
+      lREG  := FCTe.infCTeNorm.rodoOS.NroRegEstadual;
+      lCNPJ := FCTe.Emit.CNPJ;
+    end;
+  end;
+
+  rlsCIOT.Visible            := True;
+  RLDraw36.Visible           := True;
+  RLDraw37.Visible           := True;
+  RLDraw38.Visible           := True;
+
+  rlsCIOT.Left               := 148;
+  RLDraw36.Left              := 296;
+  RLDraw37.Left              := 444;
+  RLDraw38.Left              := 592;
+
+  RLLabel11.Visible          := True;
+  rllRntrcEmpresa.Visible    := True;
+  RLLabel11.Caption          := ACBrStr('TERMO AUTORIZAÇÃO DE FRETAMENTO');
+  rllRntrcEmpresa.Caption    := lTAF;
+
+  lblCIOT.Visible            := True;
+  rllCIOT.Visible            := True;
+  lblCIOT.Left               := 154;
+  rllCIOT.Left               := 154;
+  lblCIOT.Caption            := ACBrStr('Nº DE REGISTRO ESTADUAL');
+  rllCIOT.Caption            := lREG;
+
+  RLLabel83.Visible          := True;
+  rllLotacao.Visible         := True;
+  RLLabel83.Left             := 301;
+  rllLotacao.Left            := 301;
+  RLLabel83.Caption          := ACBrStr('PLACA DO VEÍCULO');
+  rllLotacao.Caption         := FCTE.infCTeNorm.rodoOS.veic.placa;
+
+  RLLabel84.Visible          := True;
+  rllDtPrevEntrega.Visible   := True;
+  RLLabel84.Left             := 449;
+  rllDtPrevEntrega.Left      := 449;
+  RLLabel84.Caption          := ACBrStr('RENAVAM DO VEÍCULO');
+  rllDtPrevEntrega.Caption   := FCTE.infCTeNorm.rodoOS.veic.RENAVAM;
+
+  RLLabel216.Visible         := True;
+  RLLabel85.Visible          := True;
+  RLLabel85.Width            := 70;
+  RLLabel216.Left            := 597;
+  RLLabel85.Left             := 597;
+  RLLabel216.Caption         := ACBrStr('CNPJ/CPF');
+  RLLabel85.Caption          := lCNPJ;
+end;
+
+procedure TfrmDACTeRLRetrato.fluxoCargaVersao30;
+var
+  i : Integer;
+begin
+  rllSiglaPassagem.Lines.Clear;
+
+  rlb_Fluxo_Carga.Enabled := ((FCTe.infCTe.versao >= 3.00) and (FCTe.ide.modelo <> 67));
+  if (rlb_Fluxo_Carga.Enabled) then
+  begin
+    rllSiglaOrigem.Caption       := FCTe.compl.fluxo.xOrig;
+    rllSiglaDestino.Caption      := FCTe.compl.fluxo.xDest;
+
+    for i := 0 to (FCTe.compl.fluxo.pass.Count-1) do
+      rllSiglaPassagem.Lines.Add(FCTe.compl.fluxo.pass.Items[i].xPass);
+  end
+  else
+    rlb_Fluxo_Carga.Height := 0;
+
+end;
+
+procedure TfrmDACTeRLRetrato.prestacaoServicoMod67;
+begin
+  rlb_CTeOS_PrestacaoServico.Enabled := (FCTe.ide.modelo = 67);
+  if (rlb_CTeOS_PrestacaoServico.Enabled) then
+  begin
+    rlb_CTeOS_PrestacaoServico.AutoSize := True;
+    rlDocOrig_tpDoc3.Lines.Clear;
+
+    rlDocOrig_tpDoc3.Lines.Add('  ' +  IfThen(FCTe.infCTeNorm.infServico.qCarga = 0, '',
+                               FormatFloatBr(msk6x4,FCTe.infCTeNorm.infServico.qCarga))
+                               + Space(25) + FCTe.infCTeNorm.infServico.xDescServ);
+
+  end
+  else
+  begin
+    rlb_CTeOS_PrestacaoServico.Height := 0;
+  end;
+end;
+
+procedure TfrmDACTeRLRetrato.dadosSeguradoraMod67;
+var
+  I: Integer;
+begin
+  rlb_Dados_Seguradora.Enabled := ((FCTe.ide.modelo = 67) or (FCTe.Ide.modal = mdMultimodal));
+  if (rlb_Dados_Seguradora.Enabled) then
+  begin
+    rllNomeSeguradora.Lines.Clear;
+    rllApolice.Lines.Clear;
+    rllResponsavelSeguro.Lines.Clear;
+
+    if (FCTE.infCTeNorm.seg.Count > 0) then
+    begin
+      for I := 0 to FCTE.infCTeNorm.seg.Count - 1 do
+      begin
+        case FCTE.infCTeNorm.seg.Items[I].respSeg of
+          rsRemetente     : rllResponsavelSeguro.Lines.Add('Remetente');
+          rsExpedidor     : rllResponsavelSeguro.Lines.Add('Expedidor');
+          rsRecebedor     : rllResponsavelSeguro.Lines.Add('Recebedor');
+          rsDestinatario  : rllResponsavelSeguro.Lines.Add('Destinatário');
+          rsEmitenteCTe   : rllResponsavelSeguro.Lines.Add('Emitente');
+          rsTomadorServico: rllResponsavelSeguro.Lines.Add('Tomador');
+        end;
+        rllNomeSeguradora.Lines.Add(FCTE.infCTeNorm.seg.Items[I].xSeg);
+        rllApolice.Lines.Add(FCTE.infCTeNorm.seg.Items[I].nApol);
+
+      end;
+    end;
+  end
+  else
+    rlb_Dados_Seguradora.Height := 0;
 end;
 
 procedure TfrmDACTeRLRetrato.rlb_11_ModRodLot104BeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -2501,6 +2874,27 @@ begin
      VFRETE.Lines.Add(FloatToString(FCTe.veicNovos.Items[i].vFrete,','));
   end;
 {$ENDIF}
+
+end;
+
+procedure TfrmDACTeRLRetrato.rlb_CTeOS_PrestacaoServicoBeforePrint(
+  Sender: TObject; var PrintIt: Boolean);
+begin
+  prestacaoServicoMod67();
+
+end;
+
+procedure TfrmDACTeRLRetrato.rlb_Dados_SeguradoraBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  dadosSeguradoraMod67();
+
+end;
+
+procedure TfrmDACTeRLRetrato.rlb_Fluxo_CargaBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  fluxoCargaVersao30();
 
 end;
 

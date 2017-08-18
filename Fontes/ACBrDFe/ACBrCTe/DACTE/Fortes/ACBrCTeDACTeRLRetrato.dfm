@@ -1,25 +1,27 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 237
-  Top = 11
+  Left = 418
+  Top = 133
+  Width = 907
+  Height = 832
+  VertScrollBar.Position = 346
   Caption = 'DACTe - Retrato'
-  ClientHeight = 245
-  ClientWidth = 798
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
+  PixelsPerInch = 96
+  TextHeight = 10
   inherited RLCTe: TRLReport
-    Left = 18
-    Top = 8
-    Margins.LeftMargin = 7.000000000000000000
-    Margins.TopMargin = 7.000000000000000000
-    Margins.RightMargin = 7.000000000000000000
-    Margins.BottomMargin = 7.000000000000000000
-    Background.Arrange = baDistributed
+    Left = 16
+    Top = -330
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
     Font.Height = -8
     Font.Name = 'Courier New'
+    Margins.LeftMargin = 7.000000000000000000
+    Margins.TopMargin = 7.000000000000000000
+    Margins.RightMargin = 7.000000000000000000
+    Margins.BottomMargin = 7.000000000000000000
     PreviewOptions.FormStyle = fsStayOnTop
     PreviewOptions.ShowModal = True
     PreviewOptions.Caption = 'DACT-e '
@@ -339,7 +341,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_07_HeaderItens: TRLBand
       Left = 26
-      Top = 1021
+      Top = 1162
       Width = 742
       Height = 81
       AutoSize = True
@@ -546,7 +548,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_09_Obs: TRLBand
       Left = 26
-      Top = 1200
+      Top = 1385
       Width = 742
       Height = 68
       BandType = btHeader
@@ -629,7 +631,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Left = 26
       Top = 258
       Width = 742
-      Height = 188
+      Height = 184
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -658,9 +660,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         DrawKind = dkLine
       end
       object rlsLinhaV01: TRLDraw
-        Left = 174
+        Left = 176
         Top = 124
-        Width = 3
+        Width = 1
         Height = 60
         Angle = 90.000000000000000000
         Brush.Style = bsClear
@@ -856,9 +858,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel8: TRLLabel
-        Left = 334
+        Left = 333
         Top = 34
-        Width = 31
+        Width = 32
         Height = 8
         Alignment = taCenter
         AutoSize = False
@@ -891,7 +893,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel21: TRLLabel
-        Left = 368
+        Left = 367
         Top = 34
         Width = 21
         Height = 8
@@ -943,11 +945,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllNumCte: TRLLabel
-        Left = 392
+        Left = 394
         Top = 42
         Width = 70
         Height = 15
-        Alignment = taRightJustify
         AutoSize = False
         Caption = '999.999.999'
         Color = clWhite
@@ -995,7 +996,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllEmissao: TRLLabel
-        Left = 509
+        Left = 510
         Top = 42
         Width = 58
         Height = 13
@@ -1090,7 +1091,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllTomaServico: TRLLabel
         Left = 4
         Top = 166
-        Width = 150
+        Width = 170
         Height = 15
         AutoSize = False
         Color = clWhite
@@ -1244,21 +1245,21 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Top = 60
         Width = 376
         Height = 34
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
       end
       object rlbCodigoBarras: TRLBarcode
         Left = 339
         Top = 60
         Width = 396
         Height = 32
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         Alignment = taCenter
         AutoSize = False
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
         Transparent = False
       end
       object RLLabel198: TRLLabel
@@ -1330,7 +1331,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_10_ModRodFracionado: TRLBand
       Left = 26
-      Top = 1268
+      Top = 1497
       Width = 742
       Height = 44
       BandType = btHeader
@@ -1413,12 +1414,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
       end
       object rllLotacao: TRLLabel
-        Left = 154
+        Left = 162
         Top = 25
-        Width = 34
-        Height = 13
-        Alignment = taCenter
-        AutoSize = False
+        Width = 18
+        Height = 12
         Caption = 'SIM'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -1432,7 +1431,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllDtPrevEntrega: TRLLabel
         Left = 196
         Top = 25
-        Width = 69
+        Width = 72
         Height = 12
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -1446,8 +1445,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel85: TRLLabel
         Left = 304
-        Top = 24
-        Width = 434
+        Top = 26
+        Width = 432
         Height = 11
         Alignment = taCenter
         AutoSize = False
@@ -1551,10 +1550,27 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Brush.Style = bsClear
         DrawKind = dkLine
       end
+      object RLLabel216: TRLLabel
+        Left = 302
+        Top = 17
+        Width = 90
+        Height = 8
+        Caption = 'MSG MODAL RODOVIARIO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+        Visible = False
+      end
     end
     object rlb_11_ModRodLot103: TRLBand
       Left = 26
-      Top = 1312
+      Top = 1541
       Width = 742
       Height = 108
       BandType = btHeader
@@ -2162,7 +2178,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_03_DadosDACTe: TRLBand
       Left = 26
-      Top = 446
+      Top = 442
       Width = 742
       Height = 202
       BandType = btHeader
@@ -2746,7 +2762,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 432
         Top = 62
         Width = 303
-        Height = 19
+        Height = 10
         AutoSize = False
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -3613,7 +3629,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_04_DadosNotaFiscal: TRLBand
       Left = 26
-      Top = 648
+      Top = 713
       Width = 742
       Height = 90
       BandType = btHeader
@@ -4159,7 +4175,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_05_Complemento: TRLBand
       Left = 26
-      Top = 738
+      Top = 803
       Width = 742
       Height = 81
       BandType = btHeader
@@ -4359,7 +4375,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_17_Sistema: TRLBand
       Left = 26
-      Top = 1800
+      Top = 2029
       Width = 742
       Height = 16
       BandType = btHeader
@@ -4410,12 +4426,11 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Style = []
         Info = itNow
         ParentFont = False
-        Text = ''
       end
     end
     object rlb_16_DadosExcEmitente: TRLBand
       Left = 26
-      Top = 1730
+      Top = 1959
       Width = 742
       Height = 70
       BandType = btHeader
@@ -4520,7 +4535,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_ValorPrestacao: TRLBand
       Left = 26
-      Top = 903
+      Top = 1044
       Width = 742
       Height = 118
       BandType = btHeader
@@ -5167,7 +5182,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_12_ModAereo: TRLBand
       Left = 26
-      Top = 1527
+      Top = 1756
       Width = 742
       Height = 97
       BandType = btHeader
@@ -5679,7 +5694,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_13_ModAquaviario: TRLBand
       Left = 26
-      Top = 1624
+      Top = 1853
       Width = 742
       Height = 92
       BandType = btHeader
@@ -6036,7 +6051,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_14_ModFerroviario: TRLBand
       Left = 26
-      Top = 1716
+      Top = 1945
       Width = 742
       Height = 7
       BandType = btHeader
@@ -6046,7 +6061,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_15_ModDutoviario: TRLBand
       Left = 26
-      Top = 1723
+      Top = 1952
       Width = 742
       Height = 7
       BandType = btHeader
@@ -6325,7 +6340,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_11_ModRodLot104: TRLBand
       Left = 26
-      Top = 1420
+      Top = 1649
       Width = 742
       Height = 107
       BandType = btHeader
@@ -6408,7 +6423,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel167: TRLLabel
         Left = 2
-        Top = 16
+        Top = 17
         Width = 17
         Height = 8
         Caption = 'TIPO'
@@ -6426,7 +6441,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 214
         Top = 2
         Width = 524
-        Height = 13
+        Height = 12
         Alignment = taCenter
         AutoSize = False
         Caption = 'INFORMA'#199#213'ES REFERENTES AO VALE-PED'#193'GIO'
@@ -6444,7 +6459,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 2
         Top = 2
         Width = 202
-        Height = 13
+        Height = 12
         Alignment = taCenter
         AutoSize = False
         Caption = 'IDENTIFICA'#199#195'O DO CONJ. TRANSPORTADOR'
@@ -6508,7 +6523,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel174: TRLLabel
         Left = 334
-        Top = 16
+        Top = 17
         Width = 87
         Height = 8
         Caption = 'N'#218'MERO COMPROVANTE'
@@ -6524,7 +6539,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel177: TRLLabel
         Left = 618
-        Top = 16
+        Top = 17
         Width = 70
         Height = 8
         Caption = 'CNPJ RESPONS'#193'VEL'
@@ -6540,7 +6555,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel179: TRLLabel
         Left = 210
-        Top = 16
+        Top = 17
         Width = 68
         Height = 8
         Caption = 'CNPJ FORNECEDOR'
@@ -6556,7 +6571,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel181: TRLLabel
         Left = 124
-        Top = 16
+        Top = 17
         Width = 26
         Height = 8
         Caption = 'RNTRC'
@@ -6572,7 +6587,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel182: TRLLabel
         Left = 102
-        Top = 16
+        Top = 17
         Width = 11
         Height = 8
         Caption = 'UF'
@@ -6588,7 +6603,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel183: TRLLabel
         Left = 44
-        Top = 16
+        Top = 17
         Width = 25
         Height = 8
         Caption = 'PLACA'
@@ -6770,9 +6785,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw98: TRLDraw
         Left = 614
-        Top = 14
+        Top = 15
         Width = 1
-        Height = 66
+        Height = 65
         Brush.Style = bsClear
       end
       object rlmCNPJPg: TRLMemo
@@ -6810,7 +6825,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_18_Recibo: TRLBand
       Left = 26
-      Top = 1816
+      Top = 2045
       Width = 742
       Height = 97
       BandType = btHeader
@@ -7119,9 +7134,9 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_ProdutosPerigosos: TRLBand
       Left = 26
-      Top = 819
+      Top = 884
       Width = 742
-      Height = 84
+      Height = 83
       BandType = btHeader
       Color = clWhite
       ParentColor = False
@@ -7376,7 +7391,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_VeiculosNovos: TRLBand
       Left = 26
-      Top = 1102
+      Top = 1287
       Width = 742
       Height = 98
       BandType = btHeader
@@ -7623,5 +7638,818 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         ParentFont = False
       end
     end
+    object rlb_Fluxo_Carga: TRLBand
+      Left = 26
+      Top = 1243
+      Width = 742
+      Height = 44
+      BandType = btHeader
+      BeforePrint = rlb_Fluxo_CargaBeforePrint
+      object rlsQuadro10_Fluxo: TRLDraw
+        Left = 0
+        Top = 1
+        Width = 741
+        Height = 42
+        Brush.Style = bsClear
+      end
+      object RLLabel201: TRLLabel
+        Left = 6
+        Top = 2
+        Width = 732
+        Height = 12
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'PREVIS'#195'O DO FLUXO DA CARGA'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw34: TRLDraw
+        Left = 0
+        Top = 14
+        Width = 740
+        Height = 1
+        HelpContext = 1
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object RLLabel202: TRLLabel
+        Left = 2
+        Top = 17
+        Width = 234
+        Height = 8
+        Caption = 'SIGLA/C'#211'D. INT. DA FILIAL/PORTO/ESTA'#199#195'O/AEROPORTO DE ORIGEM'
+        Color = clWhite
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Pitch = fpVariable
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel203: TRLLabel
+        Left = 246
+        Top = 16
+        Width = 244
+        Height = 8
+        Caption = 'SIGLA/C'#211'D. INT. DA FILIAL/PORTO/ESTA'#199#195'O/AEROPORTO DE PASSAGEM'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel204: TRLLabel
+        Left = 496
+        Top = 17
+        Width = 236
+        Height = 8
+        Caption = 'SIGLA/C'#211'D. INT. DA FILIAL/PORTO/ESTA'#199#195'O/AEROPORTO DE DESTINO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw110: TRLDraw
+        Left = 494
+        Top = 15
+        Width = 1
+        Height = 28
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object RLDraw111: TRLDraw
+        Left = 241
+        Top = 15
+        Width = 1
+        Height = 27
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object rllSiglaOrigem: TRLLabel
+        Left = 8
+        Top = 26
+        Width = 59
+        Height = 12
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllSiglaDestino: TRLLabel
+        Left = 502
+        Top = 26
+        Width = 62
+        Height = 12
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllSiglaPassagem: TRLMemo
+        Left = 248
+        Top = 26
+        Width = 188
+        Height = 12
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'Pass')
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object rlb_03_DadosDACTe_OS: TRLBand
+      Left = 26
+      Top = 644
+      Width = 742
+      Height = 69
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      BeforePrint = rlb_03_DadosDACTe_OSBeforePrint
+      object rlsQuadro3: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 741
+        Height = 68
+        Brush.Style = bsClear
+      end
+      object rlsLinhaH7: TRLDraw
+        Left = 1
+        Top = 28
+        Width = 740
+        Height = 1
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object RLLabel205: TRLLabel
+        Left = 4
+        Top = 3
+        Width = 78
+        Height = 8
+        Caption = 'IN'#205'CIO DA PRESTA'#199#195'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel206: TRLLabel
+        Left = 504
+        Top = 3
+        Width = 88
+        Height = 8
+        Caption = 'T'#201'RMINO DA PRESTA'#199#195'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel207: TRLLabel
+        Left = 240
+        Top = 3
+        Width = 83
+        Height = 8
+        Caption = 'PERCURSO DO VE'#205'CULO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rlsLinhaV12: TRLDraw
+        Left = 235
+        Top = 0
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+      object rlsLinhaV13: TRLDraw
+        Left = 500
+        Top = 0
+        Width = 1
+        Height = 29
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object rllOrigPrestacao1: TRLLabel
+        Left = 3
+        Top = 11
+        Width = 228
+        Height = 15
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllDestPrestacao1: TRLLabel
+        Left = 504
+        Top = 11
+        Width = 233
+        Height = 15
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllPercursoVeiculo: TRLLabel
+        Left = 238
+        Top = 11
+        Width = 260
+        Height = 15
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllCEPToma1: TRLLabel
+        Left = 673
+        Top = 31
+        Width = 64
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel208: TRLLabel
+        Left = 653
+        Top = 32
+        Width = 15
+        Height = 8
+        Caption = 'CEP'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllMunToma1: TRLLabel
+        Left = 416
+        Top = 31
+        Width = 233
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel209: TRLLabel
+        Left = 374
+        Top = 32
+        Width = 38
+        Height = 8
+        Caption = 'MUNIC'#205'PIO'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel210: TRLLabel
+        Left = 4
+        Top = 32
+        Width = 81
+        Height = 8
+        Caption = 'TOMADOR DO SERVI'#199'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllRazaoToma1: TRLLabel
+        Left = 89
+        Top = 31
+        Width = 280
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllPaisToma1: TRLLabel
+        Left = 520
+        Top = 40
+        Width = 214
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel211: TRLLabel
+        Left = 500
+        Top = 43
+        Width = 17
+        Height = 8
+        Caption = 'PA'#205'S'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllEnderecoToma1: TRLLabel
+        Left = 48
+        Top = 40
+        Width = 445
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel212: TRLLabel
+        Left = 4
+        Top = 43
+        Width = 39
+        Height = 8
+        Caption = 'ENDERE'#199'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllFoneToma1: TRLLabel
+        Left = 402
+        Top = 50
+        Width = 85
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel213: TRLLabel
+        Left = 378
+        Top = 55
+        Width = 20
+        Height = 8
+        Caption = 'FONE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllInscEstToma1: TRLLabel
+        Left = 260
+        Top = 50
+        Width = 111
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel214: TRLLabel
+        Left = 178
+        Top = 55
+        Width = 78
+        Height = 8
+        Caption = 'INSCRI'#199#195'O ESTADUAL'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllCnpjToma1: TRLLabel
+        Left = 40
+        Top = 50
+        Width = 130
+        Height = 13
+        AutoSize = False
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel215: TRLLabel
+        Left = 3
+        Top = 55
+        Width = 34
+        Height = 8
+        Caption = 'CNPJ/CPF'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+    end
+    object rlb_Dados_Seguradora: TRLBand
+      Left = 26
+      Top = 1453
+      Width = 742
+      Height = 44
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      BeforePrint = rlb_Dados_SeguradoraBeforePrint
+      object rlsQuadro10: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 741
+        Height = 43
+        Brush.Style = bsClear
+      end
+      object RLDraw29: TRLDraw
+        Left = 1
+        Top = 15
+        Width = 740
+        Height = 1
+        HelpContext = 1
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object rllTituloSeguro: TRLLabel
+        Left = 6
+        Top = 2
+        Width = 732
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'SEGURO DA VIAGEM'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw112: TRLDraw
+        Left = 246
+        Top = 15
+        Width = 1
+        Height = 28
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object RLDraw113: TRLDraw
+        Left = 492
+        Top = 16
+        Width = 1
+        Height = 28
+        Angle = 90.000000000000000000
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        Transparent = False
+      end
+      object RLLabel217: TRLLabel
+        Left = 8
+        Top = 17
+        Width = 51
+        Height = 8
+        Caption = 'RESPONS'#193'VEL'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel218: TRLLabel
+        Left = 252
+        Top = 17
+        Width = 84
+        Height = 8
+        Caption = 'NOME DA SEGURADORA'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel219: TRLLabel
+        Left = 500
+        Top = 17
+        Width = 75
+        Height = 8
+        Caption = 'N'#218'MERO DA AP'#211'LICE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object rllResponsavelSeguro: TRLMemo
+        Left = 9
+        Top = 25
+        Width = 224
+        Height = 12
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'Resp Seguro')
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllNomeSeguradora: TRLMemo
+        Left = 252
+        Top = 25
+        Width = 224
+        Height = 12
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'Nome Seguradora')
+        ParentColor = False
+        ParentFont = False
+      end
+      object rllApolice: TRLMemo
+        Left = 501
+        Top = 25
+        Width = 224
+        Height = 12
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'Apolice')
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object rlb_CTeOS_PrestacaoServico: TRLBand
+      Left = 26
+      Top = 967
+      Width = 742
+      Height = 77
+      BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Color = clWhite
+      ParentColor = False
+      BeforePrint = rlb_CTeOS_PrestacaoServicoBeforePrint
+      object rlDocOrig_tpDoc3: TRLMemo
+        Left = 3
+        Top = 26
+        Width = 737
+        Height = 47
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        Lines.Strings = (
+          'QTD 1                           DESC 1                          '
+          'QTD 2                           DESC 2                     '
+          'QTD 3                           DESC 3                         '
+          'QTD 4                           DESC 4                          ')
+        ParentColor = False
+        ParentFont = False
+      end
+      object RLLabel221: TRLLabel
+        Left = 5
+        Top = 17
+        Width = 47
+        Height = 8
+        Caption = 'QUANTIDADE'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel223: TRLLabel
+        Left = 84
+        Top = 17
+        Width = 136
+        Height = 8
+        Caption = 'DESCRI'#199#195'O DOS SERVI'#199'OS PRESTADOS'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLLabel224: TRLLabel
+        Left = 7
+        Top = 1
+        Width = 732
+        Height = 12
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'INFORMA'#199#213'ES DA PRESTA'#199#195'O DO SERVI'#199'O'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDraw35: TRLDraw
+        Left = 0
+        Top = 14
+        Width = 740
+        Height = 1
+        HelpContext = 1
+        Brush.Style = bsClear
+        DrawKind = dkLine
+      end
+    end
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    Left = 128
+    Top = 16
+  end
+  inherited Datasource1: TDataSource
+    Left = 176
+    Top = 16
   end
 end

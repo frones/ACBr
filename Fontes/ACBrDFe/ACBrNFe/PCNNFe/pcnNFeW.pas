@@ -939,7 +939,7 @@ procedure TNFeW.GerarDetProdRastro(const i: Integer);
 var
   j: Integer;
 begin
-  for j := 0 to nfe.Det[i].Prod.med.Count - 1 do
+  for j := 0 to nfe.Det[i].Prod.rastro.Count - 1 do
   begin
     Gerador.wGrupo('rastro', 'I80');
     Gerador.wCampo(tcStr, 'I81', 'nLote ', 01, 20, 1, nfe.Det[i].Prod.rastro[j].nLote, DSC_NLOTE);

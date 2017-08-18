@@ -44,6 +44,7 @@ uses Classes, SysUtils,
 
 const
   ACBrECFVirtualNFCe_VERSAO = '0.1.0a';
+  cItemCancelado = '*cancelado*';
   estCupomAberto = [estVenda, estPagamento];
 
 type
@@ -364,20 +365,23 @@ begin
   begin
     for i := 0 to Det.Count - 1 do
     begin
-      fsvTotTrib := fsvTotTrib + Det.Items[i].Imposto.vTotTrib;
-      fsvBC := fsvBC + Det.Items[i].Imposto.ICMS.vBC;
-      fsvICMS := fsvICMS + Det.Items[i].Imposto.ICMS.vICMS;
-      fsvBCST := fsvBCST + Det.Items[i].Imposto.ICMS.vBCST;
-      fsvST := fsvST + Det.Items[i].Imposto.ICMS.vICMSST;
-      fsvProd := fsvProd + Det.Items[i].Prod.vProd;
-      fsvFrete := fsvFrete + Det.Items[i].Prod.vFrete;
-      fsvSeg := fsvSeg + Det.Items[i].Prod.vSeg;
-      fsvDesc := fsvDesc + Det.Items[i].Prod.vDesc;
-      fsvII := fsvII + Det.Items[i].Imposto.II.vII;
-      fsvIPI := fsvIPI + Det.Items[i].Imposto.IPI.vIPI;
-      fsvPIS := fsvPIS + Det.Items[i].Imposto.PIS.vPIS;
-      fsvCOFINS := fsvCOFINS + Det.Items[i].Imposto.COFINS.vCOFINS;
-      fsvOutro := fsvOutro + Det.Items[i].Prod.vOutro;
+      if Det.Items[i].Prod.cProd <> cItemCancelado then
+      begin
+        fsvTotTrib := fsvTotTrib + Det.Items[i].Imposto.vTotTrib;
+        fsvBC := fsvBC + Det.Items[i].Imposto.ICMS.vBC;
+        fsvICMS := fsvICMS + Det.Items[i].Imposto.ICMS.vICMS;
+        fsvBCST := fsvBCST + Det.Items[i].Imposto.ICMS.vBCST;
+        fsvST := fsvST + Det.Items[i].Imposto.ICMS.vICMSST;
+        fsvProd := fsvProd + Det.Items[i].Prod.vProd;
+        fsvFrete := fsvFrete + Det.Items[i].Prod.vFrete;
+        fsvSeg := fsvSeg + Det.Items[i].Prod.vSeg;
+        fsvDesc := fsvDesc + Det.Items[i].Prod.vDesc;
+        fsvII := fsvII + Det.Items[i].Imposto.II.vII;
+        fsvIPI := fsvIPI + Det.Items[i].Imposto.IPI.vIPI;
+        fsvPIS := fsvPIS + Det.Items[i].Imposto.PIS.vPIS;
+        fsvCOFINS := fsvCOFINS + Det.Items[i].Imposto.COFINS.vCOFINS;
+        fsvOutro := fsvOutro + Det.Items[i].Prod.vOutro;
+      end;
     end;
   end;
 
@@ -584,7 +588,10 @@ begin
     if (NumItem > NotasFiscais.Items[0].NFe.Det.Count) or (NumItem < 1) then
       exit;
 
-    NotasFiscais.Items[0].NFe.Det.Delete(NumItem - 1);
+    NotasFiscais.Items[0].NFe.Det[NumItem - 1].Prod.cProd := cItemCancelado;
+    NotasFiscais.Items[0].NFe.Det[NumItem - 1].Prod.vProd := 0;
+    NotasFiscais.Items[0].NFe.Det[NumItem - 1].Prod.vDesc := 0;
+    NotasFiscais.Items[0].NFe.Det[NumItem - 1].Prod.vOutro:= 0;
   end;
 end;
 
@@ -613,17 +620,23 @@ begin
         SetLength(ItDescAcre, NotasFiscais.Items[0].NFe.Det.Count);
 
         for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
-          Total := Total + NotasFiscais.Items[0].NFe.Det[i].Prod.vProd;
+        begin
+          if NotasFiscais.Items[0].NFe.Det[i].Prod.cProd <> cItemCancelado then
+            Total := Total + NotasFiscais.Items[0].NFe.Det[i].Prod.vProd;
+        end;
 
         for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
         begin
-          ItDescAcre[i] := RoundABNT(VlDescAcres * (NotasFiscais.Items[0].NFe.Det[i].Prod.vProd / Total), 2);
-          TotDescAcre := TotDescAcre + ItDescAcre[i];
-
-          if ItDescAcre[i] > VlItMaior then
+          if NotasFiscais.Items[0].NFe.Det[i].Prod.cProd <> cItemCancelado then
           begin
-            VlItMaior := ItDescAcre[i];
-            ItMaior := i;
+            ItDescAcre[i] := RoundABNT(VlDescAcres * (NotasFiscais.Items[0].NFe.Det[i].Prod.vProd / Total), 2);
+            TotDescAcre := TotDescAcre + ItDescAcre[i];
+
+            if ItDescAcre[i] > VlItMaior then
+            begin
+              VlItMaior := ItDescAcre[i];
+              ItMaior := i;
+            end;
           end;
         end;
 
@@ -633,12 +646,15 @@ begin
 
         for i := 0 to NotasFiscais.Items[0].NFe.Det.Count - 1 do
         begin
-          if fpCupom.DescAcresSubtotal > 0 then
-            NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro :=
-              NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro + ItDescAcre[i]
-          else
-            NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc :=
-              NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc + ItDescAcre[i];
+          if NotasFiscais.Items[0].NFe.Det[i].Prod.cProd <> cItemCancelado then
+          begin
+            if fpCupom.DescAcresSubtotal > 0 then
+              NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro :=
+                NotasFiscais.Items[0].NFe.Det[i].Prod.vOutro + ItDescAcre[i]
+            else
+              NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc :=
+                NotasFiscais.Items[0].NFe.Det[i].Prod.vDesc + ItDescAcre[i];
+          end;
         end;
       end;
 
@@ -689,6 +705,7 @@ end;
 procedure TACBrECFVirtualNFCeClass.FechaCupomVirtual(Observacao: AnsiString;
   IndiceBMP: Integer);
 var
+  i: Integer;
   cStat, xMotivo: string;
 begin
   if fsEhVenda then
@@ -709,6 +726,12 @@ begin
     end
     else
     begin
+      for i := 1 to fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count do
+      begin
+        fsACBrNFCe.NotasFiscais.Items[0].NFe.Det[i].Prod.nItem := i;
+        if fsACBrNFCe.NotasFiscais.Items[0].NFe.Det[i].Prod.cProd = cItemCancelado then
+          fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Delete(i)
+      end;
 
       SomaTotais;
 

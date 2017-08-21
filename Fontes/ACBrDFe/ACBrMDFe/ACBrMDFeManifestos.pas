@@ -222,7 +222,11 @@ var
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
 begin
-  TACBrMDFe(TManifestos(Collection).ACBrMDFe).SSL.ValidarCNPJCertificado( MDFe.Emit.CNPJ );
+  with TACBrMDFe(TManifestos(Collection).ACBrMDFe) do
+  begin
+    if not Assigned(SSL.AntesDeAssinar) then
+      SSL.ValidarCNPJCertificado( MDFe.Emit.CNPJ );
+  end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;

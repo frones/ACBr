@@ -48,6 +48,13 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/08/2017
+-- ACBrNFe --
+[*] Métodos ConsultaNFeDest e Download comentados, pois a SEFAZ desativou,
+    devemos agora utlizar o método DistribuicaoDFe.
+[+] Incluido as URLs de Homologação da NF-e versão 4.00 de Pernambuco.
+   Por: Italo Jurisato Junior
+
+21/08/2017
 -- ACBRNFeNotasFiscais --
 [*] Método "NotaFiscal.Assinar", ajuste para não verificar o CNPJ, quando processo
     de assintura ocorrer externo ao ACBr

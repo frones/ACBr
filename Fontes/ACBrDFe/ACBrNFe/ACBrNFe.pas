@@ -357,9 +357,9 @@ var
   lTipoEvento: String;
   I: integer;
 begin
-
   Result := schNfe;
   I := pos('<infNFe', AXML);
+
   if I = 0 then
   begin
     I := pos('<infCanc', AXML);
@@ -699,7 +699,6 @@ begin
   end;
 end;
 
-
 function TACBrNFe.EnviarCartaCorrecao(idLote: integer): Boolean;
 var
   i: integer;
@@ -810,6 +809,10 @@ function TACBrNFe.ConsultaNFeDest(CNPJ: String; IndNFe: TpcnIndicadorNFe;
   IndEmi: TpcnIndicadorEmissor; ultNSU: String): Boolean;
 begin
   // Desativar o acesso a esse serviço após 02/05/2017
+  Result := False;
+  GerarException('Após 02/05/2017 o Web Service ConsultaNFeDest foi desativado pela SEFAZ.'+#13+
+                 'Favor utilizar o método DistribuicaoDFe.');
+  (*
   WebServices.ConsNFeDest.CNPJ := CNPJ;
   WebServices.ConsNFeDest.indNFe := IndNFe;
   WebServices.ConsNFeDest.indEmi := IndEmi;
@@ -819,15 +822,21 @@ begin
 
   if not Result then
     GerarException( WebServices.ConsNFeDest.Msg );
+  *)
 end;
 
 function TACBrNFe.Download: Boolean;
 begin
   // Desativar o acesso a esse serviço após 02/05/2017
+  Result := False;
+  GerarException('Após 02/05/2017 o Web Service DownloadNFe foi desativado pela SEFAZ.'+#13+
+                 'Favor utilizar o método DistribuicaoDFe.');
+  (*
   Result := WebServices.DownloadNFe.Executar;
 
   if not Result then
     GerarException( WebServices.DownloadNFe.Msg );
+  *)
 end;
 
 function TACBrNFe.NomeServicoToNomeSchema(const NomeServico: String): String;

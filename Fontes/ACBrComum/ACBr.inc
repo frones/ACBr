@@ -246,7 +246,7 @@
 
 // ZLib em D7 contem muitos bugs e não suporta GZip de forma correta
 {$IfNDef FPC}        
- {$IfNDef DELPHI9_UP}
+ {$IfNDef DELPHIXE2_UP}
   {$Define USE_ZLibExGZ}
  {$EndIf}
 {$Else}

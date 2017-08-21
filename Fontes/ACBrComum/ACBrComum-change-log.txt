@@ -52,7 +52,8 @@ Data: 21/08/2017
 -- ACBr.inc --
 [*] Adicionado suporte a diretiva {$DEFINE USE_ZLibExGZ}, que permite usar as
     Units da biblioteca ZLibExGZ ao invés das nativas do Delphi.
-    (Delphi7 não tem suporte a GZip, nesse caso esta diretiva sempre estará ligada)
+    (Delphi XE e inferiores não tem suporte a GZip, nesse caso esta diretiva
+     sempre estará ligada)
     (por: DSA)
 
 Data: 14/07/2017

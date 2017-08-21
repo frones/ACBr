@@ -60,7 +60,7 @@ type
   EACBrNFeException = class(EACBrDFeException);
 
   {Carta de Correção}
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TCartaCorrecao = class(TACBrComponent)
@@ -74,7 +74,7 @@ type
   end;
 
   {Download}
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TDownload = class(TACBrComponent)
@@ -88,7 +88,7 @@ type
   end;
 
   { TACBrNFe }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TACBrNFe = class(TACBrDFe)
@@ -668,7 +668,8 @@ begin
   Result := Enviar(IntToStr(ALote), Imprimir, Sincrono, Zipado);
 end;
 
-function TACBrNFe.Enviar(ALote: String; Imprimir: Boolean; Sincrono: Boolean; Zipado: Boolean = False): Boolean;
+function TACBrNFe.Enviar(ALote: String; Imprimir, Sincrono,
+  Zipado: Boolean): Boolean;
 var
   i: integer;
 begin
@@ -697,6 +698,7 @@ begin
     end;
   end;
 end;
+
 
 function TACBrNFe.EnviarCartaCorrecao(idLote: integer): Boolean;
 var

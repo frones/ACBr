@@ -3809,12 +3809,15 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: integer; const ASincrono: Boolean; AZipado: Boolean = False): Boolean;
+
+function TWebServices.Envia(ALote: integer; const ASincrono: Boolean;
+  AZipado: Boolean): Boolean;
 begin
   Result := Envia(IntToStr(ALote), ASincrono, AZipado );
 end;
 
-function TWebServices.Envia(ALote: String; const ASincrono: Boolean; AZipado: Boolean = False): Boolean;
+function TWebServices.Envia(ALote: String; const ASincrono: Boolean;
+  AZipado: Boolean): Boolean;
 begin
   FEnviar.Lote := ALote;
   FEnviar.Sincrono := ASincrono;

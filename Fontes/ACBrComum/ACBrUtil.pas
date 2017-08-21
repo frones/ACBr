@@ -46,23 +46,23 @@ unit ACBrUtil;
 
 interface
 
-Uses SysUtils, Math, Classes, ACBrConsts, synautil
-    {$IfDef COMPILER6_UP} ,StrUtils, DateUtils {$Else} ,ACBrD5, FileCtrl {$EndIf}
-    {$IfDef FPC}
-      ,dynlibs, zstream, LazUTF8, LConvEncoding
-      {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
+Uses
+  SysUtils, Math, Classes,
+  ACBrConsts,
+  {$IfDef COMPILER6_UP} StrUtils, DateUtils {$Else} ACBrD5, FileCtrl {$EndIf}
+  {$IfDef FPC}
+    ,dynlibs, LazUTF8, LConvEncoding
+    {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
+  {$EndIf}
+  {$IfDef MSWINDOWS}
+    ,Windows, ShellAPI
+  {$Else}
+    {$IfNDef FPC}
+      ,Libc
     {$Else}
-      ,ACBrZLibExGZ
+      ,unix, BaseUnix {$IfNDef NOGUI}, Forms{$EndIf}
     {$EndIf}
-    {$IfDef MSWINDOWS}
-      ,Windows, ShellAPI
-    {$Else}
-      {$IfNDef FPC}
-        ,Libc
-      {$Else}
-        ,unix, BaseUnix {$IfNDef NOGUI}, Forms{$EndIf}
-      {$EndIf}
-    {$EndIf} ;
+  {$EndIf} ;
 
 const
 {$IFDEF CPU64}
@@ -337,7 +337,7 @@ function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
 
 function UnZip(S: TStream): AnsiString; overload;
 function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
-function Zip(S: TStream): AnsiString; overload;
+function Zip(AStream: TStream): AnsiString; overload;
 function Zip(const ABinaryString: AnsiString): AnsiString; overload;
 
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
@@ -363,6 +363,10 @@ procedure LoadBlockInput;
 {$ENDIF}
 
 implementation
+
+Uses
+  synautil,
+  ACBrCompress;
 
 var
   Randomized : Boolean ;
@@ -3569,127 +3573,25 @@ begin
   end;
 end;
 
-{$IFDEF FPC}
 function UnZip(S: TStream): AnsiString;
-{ Descompacta um arquivo padrão GZIP de Stream... Fontes:
-  http://wiki.freepascal.org/paszlib
-  http://www.gocher.me/GZIP
-}
-var
-  DS: TDecompressionStream;
-  MS: TMemoryStream;
-  readCount: integer;
-  Buf: array[0..1023] of byte;
-  hdr: longword;
 begin
-  S.Position := 0; // goto start of input stream
-  hdr := S.ReadDWord;
-  if (hdr and $00088B1F) = $00088B1F then // gzip header (deflate method)
-    S.Position := 10     // Pula cabeçalho gzip
-  else if (hdr and $00009C78) = $00009C78 then // zlib header
-    S.Position := 2      // Pula cabeçalho zlib
-  else
-    S.Position := 0;
-
-  MS := TMemoryStream.Create;
-  DS := Tdecompressionstream.Create(S, (S.Position > 0) );
-  Buf[0] := 0;
-  try
-    repeat
-      readCount := DS.Read(Buf, SizeOf(Buf));
-      if readCount <> 0 then
-        MS.Write(Buf, readCount);
-    until readCount < SizeOf(Buf);
-
-    MS.Position := 0;
-    Result := ReadStrFromStream(MS, MS.Size);
-  finally
-    DS.Free;
-    MS.Free;
-  end;
+  Result := ACBrCompress.DeCompress(S);
 end;
 
 function UnZip(const ABinaryString: AnsiString): AnsiString;
-var
-  SS: TStringStream;
 begin
-  SS := TStringStream.Create(ABinaryString);
-  try
-    Result := UnZip(SS);
-  finally
-    SS.Free;
-  end;
+  Result := ACBrCompress.DeCompress(ABinaryString);
 end;
 
-function Zip(S: TStream): AnsiString;
-var
-  CS: Tcompressionstream;
-  SS: TStringStream;
+function Zip(AStream: TStream): AnsiString;
 begin
-  SS := TStringStream.Create('');
-  try
-    CS := Tcompressionstream.create(cldefault, SS);
-    try
-      S.Position := 0;
-      CS.CopyFrom(S, S.Size);
-    finally
-      CS.Free;
-    end;
-
-    Result := SS.DataString;
-  finally
-    SS.Free;
-  end;
-end;
-
-function Zip(const ABinaryString: AnsiString): AnsiString;
-var
-  SS: TStringStream;
-begin
-  SS := TStringStream.Create(ABinaryString);
-  try
-    Result := Zip(SS);
-  finally
-    SS.Free;
-  end;
-end;
-
-{$ELSE}
-
-function UnZip(S: TStream): AnsiString;
-Var
-  DataStr: AnsiString;
-begin
-  S.Position := 0;
-  DataStr := ReadStrFromStream(S, S.Size);
-
-  Result := UnZip(DataStr);
-end;
-
-function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
-begin
-  Result := GZDecompressStr(ABinaryString);
-end ;
-
-function Zip(S: TStream): AnsiString;
-var
-  SS: TStringStream;
-begin
-  SS := TStringStream.Create('');
-  try
-    GZCompressStream(S, SS);
-    Result := SS.DataString;
-  finally
-    SS.Free;
-  end;
+  Result := ACBrCompress.ZLibCompress(AStream);
 end;
 
 function Zip(const ABinaryString: AnsiString): AnsiString;
 begin
-  Result := GZCompressStr(ABinaryString);
+ Result := ACBrCompress.ZLibCompress(ABinaryString);
 end;
-
-{$ENDIF}
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web

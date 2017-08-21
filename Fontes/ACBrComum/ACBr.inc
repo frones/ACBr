@@ -63,6 +63,10 @@
 // Descomente essa linha, para usar a carga de DLL tardia, nas Units do OpenSSL  (Apenas Delphi)
 {.$DEFINE USE_DELAYED}
 
+// Descomente essa linha, para usar ZLibExGZ de \ACBr\Fontes\Terceiros\ZLibExGZ
+// ZLib de D7 contém bugs e está incompleta. Caso contrário usará compactação nativa, unit "ZLib"
+{.$DEFINE USE_ZLibExGZ}
+
 // Para Remover Warnings de CAST causados por WideString/String/AnsiString, descomente a linha abaixo. (Apenas Delphi)
 {.$DEFINE REMOVE_CAST_WARN}
 
@@ -238,5 +242,14 @@
 {.$DEFINE USE_MINGW}
 {$IfNDef MSWINDOWS}
   {$DEFINE USE_MINGW}
+{$EndIf}
+
+// ZLib em D7 contem muitos bugs e não suporta GZip de forma correta
+{$IfNDef FPC}        
+ {$IfNDef DELPHI9_UP}
+  {$Define USE_ZLibExGZ}
+ {$EndIf}
+{$Else}
+ {$UnDef USE_ZLibExGZ} // ZLibExGZ não é compatível com FPC
 {$EndIf}
 

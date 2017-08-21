@@ -38,6 +38,23 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 21/08/2017
+-- ACBrCompress --
+[+] Adicionada nova Unit para centralizar todo tratamento da compactação e
+    descompactação de Strings e Streams, nos formatos ZLib, GZip e ZipFile.
+    Faz o uso nativo das classes de compactação do Lazarus/Delphi.
+    (por: DSA)
+
+-- ACBrUtil --
+[*] Métodos Zip e UnZip, modificados para usar a Unit ACBrCompress
+    (por: DSA)
+
+-- ACBr.inc --
+[*] Adicionado suporte a diretiva {$DEFINE USE_ZLibExGZ}, que permite usar as
+    Units da biblioteca ZLibExGZ ao invés das nativas do Delphi.
+    (Delphi7 não tem suporte a GZip, nesse caso esta diretiva sempre estará ligada)
+    (por: DSA)
+
 Data: 14/07/2017
 -- ACBrUtil --
 [+] Adicionado os métodos:

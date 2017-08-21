@@ -43,7 +43,7 @@ interface
 uses
   Classes, SysUtils, dateutils,
   ACBrDFe, ACBrDFeWebService,
-  blcksock,
+  blcksock, synacode,
   pcnNFe,
   pcnRetConsReciNFe, pcnRetConsCad, pcnAuxiliar, pcnConversao, pcnConversaoNFe,
   pcnProcNFe, pcnRetCancNFe, pcnEnvEventoNFe, pcnRetEnvEventoNFe,
@@ -133,6 +133,7 @@ type
     FdhRecbto: TDateTime;
     FTMed: integer;
     FSincrono: Boolean;
+    FZipado: Boolean;
 
     FNFeRetornoSincrono: TRetConsSitNFe;
     FNFeRetorno: TretEnvNFe;
@@ -164,6 +165,7 @@ type
     property TMed: integer read FTMed;
     property Lote: String read GetLote write FLote;
     property Sincrono: Boolean read FSincrono write FSincrono;
+    property Zipado: Boolean read FZipado write FZipado;
   end;
 
   { TNFeRetRecepcao }
@@ -633,9 +635,9 @@ type
     constructor Create(AOwner: TACBrDFe); overload;
     destructor Destroy; override;
 
-    function Envia(ALote: integer; const ASincrono: Boolean = False): Boolean;
+    function Envia(ALote: integer; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
-    function Envia(ALote: String; const ASincrono: Boolean = False): Boolean;
+    function Envia(ALote: String; const ASincrono: Boolean = False; AZipado: Boolean = False): Boolean;
       overload;
     procedure Inutiliza(CNPJ, AJustificativa: String;
       Ano, Modelo, Serie, NumeroInicial, NumeroFinal: integer);
@@ -664,7 +666,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrNFe,
+  ACBrUtil, ACBrCompress, ACBrNFe,
   pcnGerador, pcnConsStatServ, pcnRetConsStatServ,
   pcnConsSitNFe, pcnInutNFe, pcnRetInutNFe, pcnConsReciNFe,
   pcnConsCad, pcnLeitor;
@@ -908,6 +910,7 @@ begin
 
   FNotasFiscais := ANotasFiscais;
   FSincrono := False;
+  FZipado := False;
 end;
 
 destructor TNFeRecepcao.Destroy;
@@ -1036,6 +1039,18 @@ begin
     FPServico := GetUrlWsd + 'NfeRecepcao2';
     FPSoapAction := FPServico;
   end;
+
+  if FZipado then
+  begin
+    if (FPConfiguracoesNFe.Geral.VersaoDF >= ve400) then
+      FPSoapAction := FPSoapAction+'ZIP'
+    else
+      FPSoapAction := FPSoapAction+'LoteZip';
+
+    FPBodyElement:= 'nfeDadosMsgZip';
+  end
+  else
+    FPBodyElement := 'nfeDadosMsg';
 end;
 
 procedure TNFeRecepcao.DefinirDadosMsg;
@@ -1059,6 +1074,12 @@ begin
     FPVersaoServico + '">' + '<idLote>' + FLote + '</idLote>' + indSinc +
     vNotas + '</enviNFe>';
 
+  if FZipado then
+  begin
+    FPDadosMsg := GZipCompress(FPDadosMsg);
+    FPDadosMsg := EncodeBase64(FPDadosMsg);
+  end;
+
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then
     GerarException(ACBrStr('Tamanho do XML de Dados superior a 500 Kbytes. Tamanho atual: ' +
@@ -1076,6 +1097,7 @@ var
 begin
   FPRetWS := SeparaDadosArray(['nfeAutorizacaoLoteResult',
                                'nfeAutorizacaoResult',
+                               'nfeAutorizacaoLoteZipResult',
                                'nfeResultMsg',
                                'nfeRecepcaoLote2Result'],FPRetornoWS );
 
@@ -3787,20 +3809,21 @@ begin
   inherited Destroy;
 end;
 
-function TWebServices.Envia(ALote: integer; const ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: integer; const ASincrono: Boolean; AZipado: Boolean = False): Boolean;
 begin
-  Result := Envia(IntToStr(ALote), ASincrono);
+  Result := Envia(IntToStr(ALote), ASincrono, AZipado );
 end;
 
-function TWebServices.Envia(ALote: String; const ASincrono: Boolean): Boolean;
+function TWebServices.Envia(ALote: String; const ASincrono: Boolean; AZipado: Boolean = False): Boolean;
 begin
   FEnviar.Lote := ALote;
   FEnviar.Sincrono := ASincrono;
+  FEnviar.Zipado := AZipado;
 
   if not Enviar.Executar then
     Enviar.GerarException( Enviar.Msg );
 
-  if not ASincrono then
+  if not ASincrono or ((FEnviar.Recibo <> '') and (FEnviar.cStat = 103)) then
   begin
     FRetorno.Recibo := FEnviar.Recibo;
     if not FRetorno.Executar then

@@ -124,7 +124,7 @@ type
       StreamNFe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     function Enviar(ALote: integer; Imprimir: Boolean = True;
-      Sincrono: Boolean = False): Boolean; overload;
+      Sincrono: Boolean = False; Zipado: Boolean = False): Boolean; overload;
 
     function GetNomeModeloDFe: String; override;
     function GetNameSpaceURI: String; override;
@@ -136,7 +136,7 @@ type
     function CstatCancelada(AValue: integer): Boolean;
 
     function Enviar(ALote: String; Imprimir: Boolean = True;
-      Sincrono: Boolean = False): Boolean; overload;
+      Sincrono: Boolean = False; Zipado: Boolean = False): Boolean; overload;
     function Cancelamento(AJustificativa: String; ALote: integer = 0): Boolean;
     function Consultar( AChave: String = ''): Boolean;
     function EnviarCartaCorrecao(idLote: integer): Boolean;
@@ -663,12 +663,12 @@ begin
 end;
 
 function TACBrNFe.Enviar(ALote: integer; Imprimir: Boolean = True;
-  Sincrono: Boolean = False): Boolean;
+  Sincrono: Boolean = False; Zipado: Boolean = False): Boolean;
 begin
-  Result := Enviar(IntToStr(ALote), Imprimir, Sincrono);
+  Result := Enviar(IntToStr(ALote), Imprimir, Sincrono, Zipado);
 end;
 
-function TACBrNFe.Enviar(ALote: String; Imprimir: Boolean; Sincrono: Boolean): Boolean;
+function TACBrNFe.Enviar(ALote: String; Imprimir: Boolean; Sincrono: Boolean; Zipado: Boolean = False): Boolean;
 var
   i: integer;
 begin
@@ -682,7 +682,7 @@ begin
   NotasFiscais.Assinar;
   NotasFiscais.Validar;
 
-  Result := WebServices.Envia(ALote, Sincrono);
+  Result := WebServices.Envia(ALote, Sincrono, Zipado);
 
   if DANFE <> nil then
   begin

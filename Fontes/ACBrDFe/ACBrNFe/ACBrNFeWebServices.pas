@@ -1075,10 +1075,7 @@ begin
     vNotas + '</enviNFe>';
 
   if FZipado then
-  begin
-    FPDadosMsg := GZipCompress(FPDadosMsg);
-    FPDadosMsg := EncodeBase64(FPDadosMsg);
-  end;
+    FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then

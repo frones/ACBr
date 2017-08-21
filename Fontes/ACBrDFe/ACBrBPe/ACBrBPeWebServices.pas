@@ -350,7 +350,7 @@ implementation
 
 uses
   StrUtils, Math,
-  ACBrUtil, ACBrBPe,
+  ACBrUtil, ACBrCompress, ACBrBPe,
   pcnGerador, pcnLeitor, pcnConsStatServBPe, pcnRetConsStatServBPe,
   pcnConsSitBPe;
 
@@ -666,8 +666,7 @@ begin
 
   FMsgUnZip := FPDadosMsg;
 
-  FPDadosMsg := GZipCompress(FPDadosMsg);
-  FPDadosMsg := EncodeBase64(FPDadosMsg);
+  FPDadosMsg := EncodeBase64(GZipCompress(FPDadosMsg));
 
   // Lote tem mais de 500kb ? //
   if Length(FPDadosMsg) > (500 * 1024) then

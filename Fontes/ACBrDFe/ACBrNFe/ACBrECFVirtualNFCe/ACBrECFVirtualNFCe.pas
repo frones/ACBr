@@ -726,11 +726,14 @@ begin
     end
     else
     begin
-      for i := 1 to fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count do
+      i := 0;
+      while i < fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Count do
       begin
-        fsACBrNFCe.NotasFiscais.Items[0].NFe.Det[i].Prod.nItem := i;
+        fsACBrNFCe.NotasFiscais.Items[0].NFe.Det[i].Prod.nItem := i + 1;
         if fsACBrNFCe.NotasFiscais.Items[0].NFe.Det[i].Prod.cProd = cItemCancelado then
           fsACBrNFCe.NotasFiscais.Items[0].NFe.Det.Delete(i)
+        else
+          Inc(i);
       end;
 
       SomaTotais;

@@ -898,12 +898,22 @@ type
 
   ZipUnzip = class(TTestCase)
   private
-    AStr: String;
+    fStr: String;
+    fTituloACBr: String;
+    fTituloCompressDeflateAndEncoded64: String;
+    fTituloCompressGZipAndEncoded64: String;
   protected
     procedure SetUp; override;
   published
-    procedure ZipAString;
-    procedure ZipAStream;
+    procedure DeflateCompressDecompressAString;
+    procedure DeflateCompressDecompressAStream;
+    procedure DeflateCompressAndEncode64;
+    procedure GZipCompressDecompressAsString;
+    procedure GZipCompressDecompressAsStream;
+    procedure GZipCompressAndEncode64;
+    procedure ZipFileCompressDecompressAString;
+    procedure Decode64AndDeCompressDeflate;
+    procedure Decode64AndDeCompressGZip;
   end;
 
 
@@ -911,7 +921,8 @@ implementation
 
 uses
   Math, dateutils,
-  ACBrUtil, ACBrConsts;
+  synacode,
+  ACBrUtil, ACBrCompress, ACBrConsts;
 
 { AddDelimitedTextToListTeste }
 
@@ -1213,29 +1224,125 @@ var
   I: Integer;
   Linha: AnsiString;
 begin
+  fTituloACBr := 'Projeto ACBr - A MAIOR COMUNIDADE DE AUTOMACAO COMERCIAL DO BRASIL - http://www.projetoacbr.com.br/';
+
+  // Valores obtidos em: http://www.txtwizard.net/compression
+  fTituloCompressDeflateAndEncoded64 := 'eJwljEEKgCAUBa/yL5Du2z21hZD9sDxARRBBKCJ4/YxgVgMzc473WSJBq0wdgRwse9LswmQNzEANhJUdNPjzg9cWIxkm5bHYsVVXKamXstYq0v/bjj2LIz5iz/IFhyIdrg==';
+  {$IfNDef USE_ZLibExGZ}
+  fTituloCompressGZipAndEncoded64 := 'H4sIAAAAAAAA/yWMQQqAIBQFr/IvkO7bPbWFkP2wPEBFEEEoInj9jGBWAzNzjvdZIkGrTB2BHCx70uzCZA3MQA2ElR00+POD1xYjGSblsdixVVcpqZey1irS/9uOPYsjPmLP8gVzteS/YwAAAA==';
+  {$Else}
+  fTituloCompressGZipAndEncoded64 := 'H4sIAAAAAAAAACWMQQqAIBQFr/IvkO7bPbWFkP2wPEBFEEEoInj9jGBWAzNzjvdZIkGrTB2BHCx70uzCZA3MQA2ElR00+POD1xYjGSblsdixVVcpqZey1irS/9uOPYsjPmLP8gVzteS/YwAAAA==';
+  {$EndIf} 
+
   For I := 0 to 255 do
     Linha := Linha + AnsiChr(i);
 
-  AStr := '';
+  fStr := '';
   For I := 1 to 1000 do
-    AStr := AStr + Linha + sLineBreak;
+    fStr := fStr + Linha + sLineBreak;
 end;
 
-procedure ZipUnzip.ZipAString;
+procedure ZipUnzip.DeflateCompressDecompressAString;
+var
+  AZipStr, AUnZipStr: AnsiString;
+  L1, L2: Integer;
 begin
-  CheckEquals(UnZip(Zip(AStr)), AStr);
+  AZipStr   := Zip(fStr);
+  AUnZipStr := UnZip(AZipStr);
+  L1 := length(fStr);
+  L2 := length(AUnZipStr);
+  CheckEquals(L1, L2);
+  CheckEquals(AUnZipStr, fStr);
 end;
 
-procedure ZipUnzip.ZipAStream;
+procedure ZipUnzip.GZipCompressDecompressAsString;
+var
+  AZipStr, AUnZipStr: AnsiString;
+  L1, L2: Integer;
+begin
+  AZipStr   := GZipCompress(fStr);
+  AUnZipStr := UnZip(AZipStr);
+  L1 := length(fStr);
+  L2 := length(AUnZipStr);
+  CheckEquals(L1, L2);
+  CheckEquals(AUnZipStr, fStr);
+end;
+
+procedure ZipUnzip.GZipCompressDecompressAsStream;
 var
   SS: TStringStream;
 begin
-  SS := TStringStream.Create(AStr);
+  SS := TStringStream.Create(fStr);
   try
-    CheckEquals(UnZip(Zip(SS)), AStr);
+    CheckEquals(UnZip(GZipCompress(SS)), fStr);
   finally
     SS.Free;
   end;
+end;
+
+procedure ZipUnzip.DeflateCompressDecompressAStream;
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(fStr);
+  try
+    CheckEquals(UnZip(Zip(SS)), fStr);
+  finally
+    SS.Free;
+  end;
+end;
+
+procedure ZipUnzip.DeflateCompressAndEncode64;
+var
+  ResultEncoded: String;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultEncoded := EncodeBase64(Zip(fTituloACBr));
+
+  CheckEquals(ResultEncoded, fTituloCompressDeflateAndEncoded64);
+end;
+
+procedure ZipUnzip.Decode64AndDeCompressDeflate;
+var
+  ResultDeCompress: AnsiString;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultDeCompress := UnZip( DecodeBase64(fTituloCompressDeflateAndEncoded64) );
+
+  CheckEquals(ResultDeCompress, fTituloACBr);
+end;
+
+procedure ZipUnzip.GZipCompressAndEncode64;
+var
+  ResultEncoded: String;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultEncoded := EncodeBase64(GZipCompress(fTituloACBr));
+
+  CheckEquals(ResultEncoded, fTituloCompressGZipAndEncoded64);
+end;
+
+procedure ZipUnzip.ZipFileCompressDecompressAString;
+var
+  AZipStr, AUnZipStr: AnsiString;
+  L1, L2: Integer;
+begin
+  AZipStr   := ZipFileCompress(fStr);
+  AUnZipStr := UnZip(AZipStr);
+  L1 := length(fStr);
+  L2 := length(AUnZipStr);
+  CheckEquals(L1, L2);
+  CheckEquals(AUnZipStr, fStr);
+end;
+
+procedure ZipUnzip.Decode64AndDeCompressGZip;
+var
+  ResultDeCompress: AnsiString;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultDeCompress := UnZip( DecodeBase64(fTituloCompressGZipAndEncoded64) );
+
+  CheckEquals(ResultDeCompress, fTituloACBr);
 end;
 
 { ComparaValorTest }

@@ -666,7 +666,7 @@ begin
 
   FMsgUnZip := FPDadosMsg;
 
-  FPDadosMsg := Zip(FPDadosMsg);
+  FPDadosMsg := GZipCompress(FPDadosMsg);
   FPDadosMsg := EncodeBase64(FPDadosMsg);
 
   // Lote tem mais de 500kb ? //

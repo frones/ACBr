@@ -44,6 +44,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+21/02/2017
+-- ACBrDFeWinCrypt --
+[-] Correção para remover o numero de Série do Certificado, de "CertificadosA3ComPin",
+    quando Descarregar o Certificado.
+    http://www.projetoacbr.com.br/forum/topic/38349-problemas-com-pin-a3-assinatura-de-xml/
+    (por: DSA)
+
 16/08/2017
 -- ACBrDFeWebService --
 [*] Metodo "TDFeWebService.EnviarDados", ajuste para verificar a Validade do

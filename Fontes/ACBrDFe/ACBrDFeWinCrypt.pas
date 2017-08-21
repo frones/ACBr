@@ -1065,6 +1065,10 @@ end;
 
 procedure TDFeWinCrypt.DescarregarCertificado;
 begin
+  if (FpDadosCertificado.NumeroSerie <> '') then
+   if (pos(FpDadosCertificado.NumeroSerie, CertificadosA3ComPin) > 0) then
+     CertificadosA3ComPin := StringReplace( CertificadosA3ComPin, FpDadosCertificado.NumeroSerie + ',', '', [rfReplaceAll]);
+
   // Limpando objetos da MS CryptoAPI //
   if Assigned(FpCertContext) then
     CertFreeCertificateContext(FpCertContext);
@@ -1075,6 +1079,7 @@ begin
   FpCertContext := Nil;
   FpStore := Nil;
   FpPFXData := '';
+
 
   inherited DescarregarCertificado;
 end;

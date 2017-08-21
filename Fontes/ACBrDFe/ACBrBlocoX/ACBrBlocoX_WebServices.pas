@@ -33,13 +33,6 @@ interface
 
 uses
   Classes, SysUtils,
-  {$IfDef FPC}
-   zipper,
-  {$Else}
-   {$IfDef DELPHIXE2_UP}
-    System.Zip,
-   {$EndIf}
-  {$EndIf}
   ACBrDFe, pcnRetEnvBlocoX, ACBrDFeWebService,
   ACBrUtil;
 
@@ -188,7 +181,8 @@ function ZipFile(const DadosXML: AnsiString; const NomeArquivo: String): AnsiStr
 implementation
 
 uses
-  StrUtils, synacode;
+  StrUtils,
+  synacode, ACBrCompress;
 
 { TWebServiceBlocoX }
 
@@ -480,52 +474,9 @@ begin
   inherited Destroy;
 end;
 
-{$IfDef FPC}
 function ZipFile(const DadosXML: AnsiString; const NomeArquivo: String): AnsiString;
-var
-  Z: TZipper;
-  SSIn, SSOut: TStringStream;
 begin
-  Z     := TZipper.Create;
-  SSIn  := TStringStream.Create(DadosXML);
-  SSOut := TStringStream.Create('');
-  try
-    Z.Entries.AddFileEntry(SSIn, NomeArquivo);
-    Z.SaveToStream(SSOut);
-    Result := SSOut.DataString;
-  finally
-    Z.Free;
-    SSIn.Free;
-    SSOut.Free;
-  end;
+  Result := ACBrCompress.ZipFileCompress(DadosXML, NomeArquivo);
 end;
-{$Else}
- {$IfDef DELPHIXE2_UP}
-  function ZipFile(const DadosXML: AnsiString; const NomeArquivo: String): AnsiString;
-  var
-    Z: TZipFile;
-    SSIn, SSOut: TStringStream;
-  begin
-    Z := TZipFile.Create;
-    SSIn  := TStringStream.Create(DadosXML);
-    SSOut := TStringStream.Create('');
-    try
-      Z.Open(SSOut, zmWrite);
-      Z.Add(SSIn,NomeArquivo);
-      Z.Close;
-      Result := SSOut.DataString;
-    finally
-      Z.Free;
-      SSIn.Free;
-      SSOut.Free;
-    end;
-  end;
- {$Else}
-  function ZipFile(const DadosXML: AnsiString; const NomeArquivo: String): AnsiString;
-  begin
-    Result := '';
-  end;
- {$EndIf}
-{$EndIf}
 
 end.

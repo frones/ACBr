@@ -235,7 +235,13 @@ begin
     // Verifica somente se for ambiente de produção.
     // Tem provedor que devemos informar um CNPJ de emitente padrão para testes.
     if TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).Configuracoes.WebServices.Ambiente = taProducao then
-      TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.ValidarCNPJCertificado( NFSe.Prestador.CNPJ );
+    begin
+      with TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe) do
+      begin
+        if not Assigned(SSL.AntesDeAssinar) then
+          SSL.ValidarCNPJCertificado( NFSe.Prestador.CNPJ );
+      end;
+    end;
   end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas

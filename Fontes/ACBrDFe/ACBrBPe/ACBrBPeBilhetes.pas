@@ -232,7 +232,11 @@ var
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
 begin
-  TACBrBPe(TBilhetes(Collection).ACBrBPe).SSL.ValidarCNPJCertificado( BPe.Emit.CNPJ );
+  with TACBrBPe(TBilhetes(Collection).ACBrBPe) do
+  begin
+    if not Assigned(SSL.AntesDeAssinar) then
+      SSL.ValidarCNPJCertificado( BPe.Emit.CNPJ );
+  end;
 
   // Gera novamente, para processar propriedades que podem ter sido modificadas
   XMLStr := GerarXML;

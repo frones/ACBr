@@ -43,8 +43,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
 16/08/2017
 [+] Adicionado o Parâmetro em DFe / Certificado. "Verificar a Validade do Certificado"
+
+15/08/2017
+[+] Adicionado as Tags para Atender NFe-e 4.0
+	por: José M. S. Junior
 
 08/08/2017
 [+] Adicionado as Tags para Atender MDF-e 3.0

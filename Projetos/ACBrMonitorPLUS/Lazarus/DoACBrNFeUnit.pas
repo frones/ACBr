@@ -2184,7 +2184,10 @@ begin
                Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
                Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
                Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
-               Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'      ,'');
+               Prod.indEscala:= StrToIndEscala(OK, INIRec.ReadString( sSecao,'indEscala' ,'') ); //NF-e 4.0
+               Prod.CNPJFab  := INIRec.ReadString( sSecao,'CNPJFab'   ,'');                      //NF-e 4.0
+               Prod.cBenef   := INIRec.ReadString( sSecao,'cBenef'    ,'');                      //NF-e 4.0
+               Prod.EXTIPI   := INIRec.ReadString( sSecao,'EXTIPI'    ,'');
                Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
                Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
                Prod.qCom     := StringToFloatDef( INIRec.ReadString(sSecao,'Quantidade'   ,INIRec.ReadString(sSecao,'qCom'  ,'')) ,0) ;
@@ -2226,6 +2229,27 @@ begin
                      Break;   
                   Inc(J);
                 end;
+
+               // Grupo I80. Rastreabilidade de produto - NF-e 4.0
+
+               J := 1 ;
+               while true do
+               begin
+                 sSecao  := 'rastro'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
+                 sFim    := INIRec.ReadString(sSecao,'nLote','') ;
+                 if (sFim <> '') then
+                    with Prod.rastro.Add do
+                    begin
+                      nLote    := sFim;
+                      qLote    := StringToFloatDef( INIRec.ReadString( sSecao,'qLote',''), 0 );
+                      dFab     := StringToDateTime( INIRec.ReadString( sSecao,'dFab','0') );
+                      dVal     := StringToDateTime( INIRec.ReadString( sSecao,'dVal','0') );
+                      cAgreg   := INIRec.ReadString( sSecao,'cAgreg','');
+                    end
+                 else
+                    Break;
+                 Inc(J);
+               end;
 
                J := 1 ;
                while true do
@@ -2298,7 +2322,7 @@ begin
               sFim   := INIRec.ReadString( sSecao,'pDevol','FIM') ;
               if (sFim <> 'FIM') then
                begin
-                 pDevol := StringToFloatDef( INIRec.ReadString(sSecao,'pDevol','') ,0);
+                 pDevol := StringToFloatDef( sFim ,0);
                  vIPIDevol := StringToFloatDef( INIRec.ReadString(sSecao,'vIPIDevol','') ,0);
                end;
 
@@ -2343,22 +2367,23 @@ begin
 
                J := 1 ;
                while true do
-                begin
-                  sSecao := 'Medicamento'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
-                  sFim   := INIRec.ReadString(sSecao,'nLote','FIM') ;
-                  if (sFim = 'FIM') or (Length(sFim) <= 0) then
-                     break;
+               begin
+                 sSecao := 'Medicamento'+IntToStrZero(I,3)+IntToStrZero(J,3) ;
+                 sFim   := INIRec.ReadString(sSecao,'nLote',INIRec.ReadString(sSecao,'cProdANVISA','FIM')) ;
+                 if (sFim = 'FIM') or (Length(sFim) <= 0) then
+                   break;
 
                  with Prod.med.Add do
-                  begin
-                    nLote := sFim;
-                    qLote := StringToFloatDef(INIRec.ReadString( sSecao,'qLote',''),0) ;
-                    dFab  := StringToDateTime(INIRec.ReadString( sSecao,'dFab','0')) ;
-                    dVal  := StringToDateTime(INIRec.ReadString( sSecao,'dVal','0')) ;
-                    vPMC  := StringToFloatDef(INIRec.ReadString( sSecao,'vPMC',''),0) ;
-                   end;
-                  Inc(J)
-                end;
+                 begin
+                   nLote :=       INIRec.ReadString( sSecao,'nLote','');
+                   cProdANVISA:=  INIRec.ReadString( sSecao,'cProdANVISA','');   //NF-e 4.0
+                   qLote := StringToFloatDef(INIRec.ReadString( sSecao,'qLote',''),0) ;
+                   dFab  := StringToDateTime(INIRec.ReadString( sSecao,'dFab','0')) ;
+                   dVal  := StringToDateTime(INIRec.ReadString( sSecao,'dVal','0')) ;
+                   vPMC  := StringToFloatDef(INIRec.ReadString( sSecao,'vPMC',''),0) ;
+                 end;
+                 Inc(J)
+               end;
 
                J := 1 ;
                while true do
@@ -2384,8 +2409,13 @@ begin
                begin
                  with Prod.comb do
                   begin
-                    cProdANP := INIRec.ReadInteger( sSecao,'cProdANP',0) ;
+                    cProdANP := StrToIntDef( sFim, 0 ) ;
                     pMixGN   := StringToFloatDef(INIRec.ReadString( sSecao,'pMixGN',''),0) ;
+                    descANP  := INIRec.ReadString(  sSecao,'descANP'   ,'');                         //NF-e 4.0
+                    pGLP     := StringToFloatDef( INIRec.ReadString( sSecao,'pGLP'   ,''), 0);       //NF-e 4.0
+                    pGNn     := StringToFloatDef( INIRec.ReadString( sSecao,'pGNn'   ,''), 0);       //NF-e 4.0
+                    pGNi     := StringToFloatDef( INIRec.ReadString( sSecao,'pGNi'   ,''), 0);       //NF-e 4.0
+                    vPart    := StringToFloatDef( INIRec.ReadString( sSecao,'vPart'  ,''), 0);       //NF-e 4.0
                     CODIF    := INIRec.ReadString(  sSecao,'CODIF'   ,'') ;
                     qTemp    := StringToFloatDef(INIRec.ReadString( sSecao,'qTemp',''),0) ;
                     UFcons   := INIRec.ReadString( sSecao,'UFCons','') ;
@@ -2443,16 +2473,26 @@ begin
                         ICMS.vBC        := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase',INIRec.ReadString(sSecao,'vBC'  ,'')) ,0);
                         ICMS.pICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota' ,INIRec.ReadString(sSecao,'pICMS','')) ,0);
                         ICMS.vICMS      := StringToFloatDef( INIRec.ReadString(sSecao,'Valor'    ,INIRec.ReadString(sSecao,'vICMS','')) ,0);
+                        ICMS.vBCFCP     := StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCP', INIRec.ReadString(sSecao,'vBCFCP','')) ,0) ;          //NF-e 4.0
+                        ICMS.pFCP       := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCP', INIRec.ReadString(sSecao,'pFCP','')) ,0) ;           //NF-e 4.0
+                        ICMS.vFCP       := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCP', INIRec.ReadString(sSecao,'vFCP','')) ,0) ;                //NF-e 4.0
                         ICMS.modBCST    := StrTomodBCST(OK, INIRec.ReadString(sSecao,'ModalidadeST',INIRec.ReadString(sSecao,'modBCST','0')));
                         ICMS.pMVAST     := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualMargemST' ,INIRec.ReadString(sSecao,'pMVAST' ,'')) ,0);
                         ICMS.pRedBCST   := StringToFloatDef( INIRec.ReadString(sSecao,'PercentualReducaoST',INIRec.ReadString(sSecao,'pRedBCST','')) ,0);
                         ICMS.vBCST      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBaseST',INIRec.ReadString(sSecao,'vBCST','')) ,0);
                         ICMS.pICMSST    := StringToFloatDef( INIRec.ReadString(sSecao,'AliquotaST' ,INIRec.ReadString(sSecao,'pICMSST' ,'')) ,0);
                         ICMS.vICMSST    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorST'    ,INIRec.ReadString(sSecao,'vICMSST'    ,'')) ,0);
+                        ICMS.vBCFCPST   := StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCPST', INIRec.ReadString(sSecao,'vBCFCPST','')) ,0) ;      //NF-e 4.0
+                        ICMS.pFCPST     := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCPST', INIRec.ReadString(sSecao,'pFCPST','')) ,0) ;       //NF-e 4.0
+                        ICMS.vFCPST     := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCPST', INIRec.ReadString(sSecao,'vFCPST','')) ,0) ;            //NF-e 4.0
                         ICMS.UFST       := INIRec.ReadString(sSecao,'UFST'    ,'');                           //NFe2
                         ICMS.pBCOp      := StringToFloatDef( INIRec.ReadString(sSecao,'pBCOp'    ,'') ,0);    //NFe2
                         ICMS.vBCSTRet   := StringToFloatDef( INIRec.ReadString(sSecao,'vBCSTRet','') ,0);     //NFe2
+                        ICMS.pST        := StringToFloatDef( INIRec.ReadString(sSecao,'pST','') ,0);                                                          //NF-e 4.0
                         ICMS.vICMSSTRet := StringToFloatDef( INIRec.ReadString(sSecao,'vICMSSTRet','') ,0);   //NFe2
+                        ICMS.vBCFCPSTRet:= StringToFloatDef( INIRec.ReadString( sSecao,'ValorBaseFCPSTRes', INIRec.ReadString(sSecao,'vBCFCPSTRet','')) ,0) ; //NF-e 4.0
+                        ICMS.pFCPSTRet  := StringToFloatDef( INIRec.ReadString( sSecao,'PercentualFCPSTRet', INIRec.ReadString(sSecao,'pFCPSTRet','')) ,0) ;  //NF-e 4.0
+                        ICMS.vFCPSTRet  := StringToFloatDef( INIRec.ReadString( sSecao,'ValorFCPSTRet', INIRec.ReadString(sSecao,'vFCPSTRet','')) ,0) ;       //NF-e 4.0
                         ICMS.motDesICMS := StrTomotDesICMS(OK, INIRec.ReadString(sSecao,'motDesICMS','0'));   //NFe2
                         ICMS.pCredSN    := StringToFloatDef( INIRec.ReadString(sSecao,'pCredSN','') ,0);      //NFe2
                         ICMS.vCredICMSSN:= StringToFloatDef( INIRec.ReadString(sSecao,'vCredICMSSN','') ,0);  //NFe2
@@ -2471,7 +2511,8 @@ begin
                     begin
                       with ICMSUFDest do
                       begin
-                        vBCUFDest      := StringToFloatDef( INIRec.ReadString(sSecao,'vBCUFDest','') ,0);
+                        vBCUFDest      := StringToFloatDef( sFim ,0);
+                        vBCFCPUFDest   := StringToFloatDef( INIRec.ReadString(sSecao,'vBCFCPUFDest','') ,0);                                                  //NF-e 4.0
                         pICMSUFDest    := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSUFDest','') ,0);
                         pICMSInter     := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSInter','') ,0);
                         pICMSInterPart := StringToFloatDef( INIRec.ReadString(sSecao,'pICMSInterPart','') ,0);
@@ -2488,7 +2529,7 @@ begin
                     begin
                      with IPI do
                       begin
-                        CST      := StrToCSTIPI(OK, INIRec.ReadString( sSecao,'CST','')) ;
+                        CST      := StrToCSTIPI(OK, sFim ) ;
                         clEnq    := INIRec.ReadString(  sSecao,'ClasseEnquadramento',INIRec.ReadString(  sSecao,'clEnq'   ,''));
                         CNPJProd := INIRec.ReadString(  sSecao,'CNPJProdutor'       ,INIRec.ReadString(  sSecao,'CNPJProd',''));
                         cSelo    := INIRec.ReadString(  sSecao,'CodigoSeloIPI'      ,INIRec.ReadString(  sSecao,'cSelo'   ,''));
@@ -2509,7 +2550,7 @@ begin
                     begin
                      with II do
                       begin
-                        vBc      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'          ,INIRec.ReadString(sSecao,'vBC'     ,'')) ,0);
+                        vBc      := StringToFloatDef( sFim ,0);
                         vDespAdu := StringToFloatDef( INIRec.ReadString(sSecao,'ValorDespAduaneiras',INIRec.ReadString(sSecao,'vDespAdu','')) ,0);
                         vII      := StringToFloatDef( INIRec.ReadString(sSecao,'ValorII'            ,INIRec.ReadString(sSecao,'vII'     ,'')) ,0);
                         vIOF     := StringToFloatDef( INIRec.ReadString(sSecao,'ValorIOF'           ,INIRec.ReadString(sSecao,'vIOF'    ,'')) ,0);
@@ -2522,7 +2563,7 @@ begin
                     begin
                      with PIS do
                        begin
-                        CST :=  StrToCSTPIS(OK, INIRec.ReadString( sSecao,'CST','01'));
+                        CST :=  StrToCSTPIS(OK, sFim);
 
                         PIS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
                         PIS.pPIS      := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pPIS'     ,'')) ,0);
@@ -2555,7 +2596,7 @@ begin
                     begin
                      with COFINS do
                       begin
-                        CST := StrToCSTCOFINS(OK, INIRec.ReadString( sSecao,'CST','01'));
+                        CST := StrToCSTCOFINS(OK, sFim);
 
                         COFINS.vBC       := StringToFloatDef( INIRec.ReadString(sSecao,'ValorBase'    ,INIRec.ReadString(sSecao,'vBC'      ,'')) ,0);
                         COFINS.pCOFINS   := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'     ,INIRec.ReadString(sSecao,'pCOFINS'  ,'')) ,0);
@@ -2621,17 +2662,21 @@ begin
          Total.ICMSTot.vBC     := StringToFloatDef( INIRec.ReadString('Total','BaseICMS'     ,INIRec.ReadString('Total','vBC'     ,'')) ,0) ;
          Total.ICMSTot.vICMS   := StringToFloatDef( INIRec.ReadString('Total','ValorICMS'    ,INIRec.ReadString('Total','vICMS'   ,'')) ,0) ;
          Total.ICMSTot.vICMSDeson := StringToFloatDef( INIRec.ReadString('Total','vICMSDeson',''),0) ;
+         Total.ICMSTot.vFCP       := StringToFloatDef( INIRec.ReadString('Total','ValorFCP',  INIRec.ReadString('Total','vFCP','')) ,0) ;              //NF-e 4.0
          Total.ICMSTot.vICMSUFDest := StringToFloatDef( INIRec.ReadString('Total','vICMSUFDest',''),0) ;
          Total.ICMSTot.vICMSUFRemet := StringToFloatDef( INIRec.ReadString('Total','vICMSUFRemet',''),0) ;
          Total.ICMSTot.vFCPUFDest :=  StringToFloatDef( INIRec.ReadString('Total','vFCPUFDest',''),0) ;
          Total.ICMSTot.vBCST   := StringToFloatDef( INIRec.ReadString('Total','BaseICMSSubstituicao' ,INIRec.ReadString('Total','vBCST','')) ,0) ;
          Total.ICMSTot.vST     := StringToFloatDef( INIRec.ReadString('Total','ValorICMSSubstituicao',INIRec.ReadString('Total','vST'  ,'')) ,0) ;
+         Total.ICMSTot.vFCPST  := StringToFloatDef( INIRec.ReadString('Total','ValorFCPST',INIRec.ReadString('Total','vFCPST'  ,'')) ,0) ;            //NF-e 4.0
+         Total.ICMSTot.vFCPSTRet:= StringToFloatDef( INIRec.ReadString('Total','ValorFCPSTRet',INIRec.ReadString('Total','vFCPSTRet'  ,'')) ,0) ;     //NF-e 4.0
          Total.ICMSTot.vProd   := StringToFloatDef( INIRec.ReadString('Total','ValorProduto' ,INIRec.ReadString('Total','vProd'  ,'')) ,0) ;
          Total.ICMSTot.vFrete  := StringToFloatDef( INIRec.ReadString('Total','ValorFrete'   ,INIRec.ReadString('Total','vFrete' ,'')) ,0) ;
          Total.ICMSTot.vSeg    := StringToFloatDef( INIRec.ReadString('Total','ValorSeguro'  ,INIRec.ReadString('Total','vSeg'   ,'')) ,0) ;
          Total.ICMSTot.vDesc   := StringToFloatDef( INIRec.ReadString('Total','ValorDesconto',INIRec.ReadString('Total','vDesc'  ,'')) ,0) ;
          Total.ICMSTot.vII     := StringToFloatDef( INIRec.ReadString('Total','ValorII'      ,INIRec.ReadString('Total','vII'    ,'')) ,0) ;
          Total.ICMSTot.vIPI    := StringToFloatDef( INIRec.ReadString('Total','ValorIPI'     ,INIRec.ReadString('Total','vIPI'   ,'')) ,0) ;
+         Total.ICMSTot.vIPIDevol:= StringToFloatDef( INIRec.ReadString('Total','ValorIPIDevol',INIRec.ReadString('Total','vIPIDevol'  ,'')) ,0) ;     //NF-e 4.0
          Total.ICMSTot.vPIS    := StringToFloatDef( INIRec.ReadString('Total','ValorPIS'     ,INIRec.ReadString('Total','vPIS'   ,'')) ,0) ;
          Total.ICMSTot.vCOFINS := StringToFloatDef( INIRec.ReadString('Total','ValorCOFINS'  ,INIRec.ReadString('Total','vCOFINS','')) ,0) ;
          Total.ICMSTot.vOutro  := StringToFloatDef( INIRec.ReadString('Total','ValorOutrasDespesas',INIRec.ReadString('Total','vOutro','')) ,0) ;
@@ -2762,7 +2807,7 @@ begin
                break ;
 
             with pag.Add do
-             begin
+            begin
                tPag  := StrToFormaPagamento(OK,sFim);
                vPag  := StringToFloatDef( INIRec.ReadString(sSecao,'vPag','') ,0) ;
 
@@ -2770,9 +2815,10 @@ begin
                CNPJ  := INIRec.ReadString(sSecao,'CNPJ','');
                tBand := StrToBandeiraCartao(OK,INIRec.ReadString(sSecao,'tBand','99'));
                cAut  := INIRec.ReadString(sSecao,'cAut','');
-             end;
+            end;
+            pag.vTroco:= StringToFloatDef( INIRec.ReadString(sSecao,'vTroco','') ,0) ;  //NF-e 4.0
             Inc(I);
-          end;
+         end;
 
          InfAdic.infAdFisco :=  INIRec.ReadString( 'DadosAdicionais','Fisco'      ,INIRec.ReadString( 'DadosAdicionais','infAdFisco',''));
          InfAdic.infCpl     :=  INIRec.ReadString( 'DadosAdicionais','Complemento',INIRec.ReadString( 'DadosAdicionais','infCpl'    ,''));
@@ -2831,7 +2877,7 @@ begin
          sFim   := INIRec.ReadString( 'Exporta','UFembarq',INIRec.ReadString( 'Exporta','UFSaidaPais','FIM')) ;
          if (sFim <> 'FIM') then
           begin
-            exporta.UFembarq   := INIRec.ReadString( 'Exporta','UFembarq','') ;;
+            exporta.UFembarq   := INIRec.ReadString( 'Exporta','UFembarq','') ;
             exporta.xLocEmbarq := INIRec.ReadString( 'Exporta','xLocEmbarq','');
 
             exporta.UFSaidaPais := INIRec.ReadString( 'Exporta','UFSaidaPais','');
@@ -3728,7 +3774,7 @@ begin
          begin
            infEvento.cOrgao := INIRec.ReadInteger( sSecao,'cOrgao' ,0);
            infEvento.CNPJ   := INIRec.ReadString(  sSecao,'CNPJ' ,'');
-           infEvento.chNFe  := INIRec.ReadString(  sSecao,'chNFe' ,'');
+           infEvento.chNFe  := sFim;
            infEvento.dhEvento :=  StringToDateTime(INIRec.ReadString(  sSecao,'dhEvento' ,''));
            if CCe then
             begin

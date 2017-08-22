@@ -48,6 +48,12 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 21/08/2017
+-- Diversos --
+[*] Ajustes para o provedor Infisc
+    http://www.projetoacbr.com.br/forum/topic/38408-ajustes-infisc-caxias-do-sul-e-farroupilha/
+   Por: Tiago Tecchio
+ 
+21/08/2017
 -- ACBrNFeNotasFiscais --
 [*] Método "NotaFiscal.Assinar", ajuste para não verificar o CNPJ, quando processo
     de assintura ocorrer externo ao ACBr

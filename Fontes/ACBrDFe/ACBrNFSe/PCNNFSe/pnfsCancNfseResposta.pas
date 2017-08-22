@@ -550,9 +550,11 @@ begin
          InfCanc.FPedido.IdentificacaoNfse.Cnpj   := Leitor.rCampo(tcStr, 'CNPJ');
          InfCanc.FPedido.IdentificacaoNfse.Numero := Leitor.rCampo(tcStr, 'chvAcessoNFS-e');
          InfCanc.FDataHora                        := Leitor.rCampo(tcDatHor, 'dhRecbto');
+         InfCanc.Protocolo                        := Leitor.rCampo(tcStr, 'nProt');
       end
       else if (InfCanc.FSucesso = '200') then // 200-Rejeitado
       begin
+        InfCanc.Protocolo := Leitor.rCampo(tcStr, 'nProt');
         sMotDes := Leitor.rCampo(tcStr, 'mot');
         if Pos('Error', sMotDes) > 0 then
           sMotCod := SomenteNumeros(copy(sMotDes, 1, Pos(' ', sMotDes)))

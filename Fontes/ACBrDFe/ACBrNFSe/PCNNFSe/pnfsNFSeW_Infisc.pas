@@ -389,6 +389,8 @@ begin
     Gerador.wGrupoNFSe('/Ret');
   end;
 
+  // incluir tag 'fat' aqui!
+
   // Total Retenção ISSQN
   Gerador.wGrupoNFSe('ISS');
   Gerador.wCampoNFSe(tcDe2, '', 'vBCISS'  , 01, 15, 1, dTotBCISS, '');
@@ -401,8 +403,23 @@ begin
 end;
 
 procedure TNFSeW_Infisc.GerarCondicaoPagamento_v10;
+var
+  i: Integer;
 begin
-  // acrecentar se preciso
+  if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
+  begin
+    Gerador.wGrupoNFSe('cobr');
+    for i := 0 to NFSe.CondicaoPagamento.Parcelas.Count -1 do
+    begin
+      Gerador.wGrupoNFSe('dup');
+      Gerador.wCampoNFSe(tcStr, '', 'nDup',  01,  9,  1, NFSe.CondicaoPagamento.Parcelas[i].Parcela, '');
+      Gerador.wCampoNFSe(tcDat, '', 'dVenc', 01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].DataVencimento, DSC_DEMI);
+      Gerador.wCampoNFSe(tcDe2, '', 'vDup',  01, 15,  1, NFSe.CondicaoPagamento.Parcelas[i].Valor, '');
+      Gerador.wCampoNFSe(tcStr, '', 'bBol',  01,  1,  1, '2', '');
+      Gerador.wGrupoNFSe('/dup');
+    end;
+    Gerador.wGrupoNFSe('/cobr');
+  end;
 end;
 
 procedure TNFSeW_Infisc.GerarXML_Infisc_v10;

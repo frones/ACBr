@@ -334,6 +334,7 @@ begin
     z.Open(outStream, zmWrite);
     z.Add(inStream, AFileName);
     z.Close;
+    Result := True;
   finally
     z.Free;
   end;
@@ -440,6 +441,7 @@ begin
     z.Read(0, s, h);
     try
       outStream.CopyFrom(s, s.Size);
+      Result := True;
     finally
       s.Free;
     end;

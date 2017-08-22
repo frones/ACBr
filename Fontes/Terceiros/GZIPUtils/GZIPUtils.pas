@@ -192,8 +192,6 @@ begin
   adler32in := 0;
   modificationtime := 0;
   crcGZin := 0;
-  crcH := 0;
-  crc := 0;
   crcHeader := 0;
   hdr := 0;
   len := 0;
@@ -423,7 +421,6 @@ begin
   if len = 0 then
     len := S.Size;
 
-  len := S.Size;
   while (len > 0) do
   begin
     if len < NMAX then
@@ -456,9 +453,6 @@ begin
   Result := (Result shl 16) or (Result shr 16);
 end;
 {$EndIf}
-
-end.
-
 
 (*
 // deflate raw stream
@@ -503,3 +497,6 @@ end;
 result := not (inflateEnd(zstream) < 0);
 outStream.SetSize(zstream.total_out);
 *)
+
+end.
+

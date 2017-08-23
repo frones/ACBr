@@ -37,6 +37,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2017
+-- ACBrMail --
+[*] Remoção da verificação de autenticação, após o Login no SMTP
+    (alguns servidores não requerem login)
+    (por: DSA)
+
 14/04/2017
 -- ACBrMail --
 [*] Métodos "AddAddress", "AddReplyTo", "AddCC" e "AddBCC", modificados para

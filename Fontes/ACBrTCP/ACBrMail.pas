@@ -689,7 +689,7 @@ begin
 
   for vAttempts := 1 to fAttempts do
   begin
-    if fSMTP.Login and fSMTP.AuthDone then
+    if fSMTP.Login then
       Break;
 
     if vAttempts >= fAttempts then

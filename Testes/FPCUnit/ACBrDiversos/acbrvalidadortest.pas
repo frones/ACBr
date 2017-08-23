@@ -208,7 +208,14 @@ type
   TTestCaseACBrValidadorEmail = class(TTestCase)
   published
     procedure ValidarEmailsValidos;
-    procedure ValidarEmailsInvalidos;
+    procedure EmailInvalidoComEspacos;
+    procedure EmailInvalidoComecandoComPonto;
+    procedure EmailInvalidoComecandoComArroba;
+    procedure EmailInvalidoComDoisPontosSeguidos;
+    procedure EmailInvalidoArrobaComPonto;
+    procedure EmailInvalidoTerminandoComPonto;
+    procedure EmailInvalidoTerminandoComArroba;
+    procedure EmailInvalidoComCarecteresEspeciais;
     procedure ValidarListaEmailsValidos;
     procedure ValidarListaEmailsInvalidos;
     procedure ValidarListaEmailsMisturandoDelimitadores;
@@ -1223,10 +1230,43 @@ end;
 
 { TTestCaseACBrValidadorEmail }
 
-procedure TTestCaseACBrValidadorEmail.ValidarEmailsInvalidos;
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComEspacos;
 begin
   CheckNotEquals('', ValidarEmail('nome com espaco@hotmail.com'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComecandoComPonto;
+begin
   CheckNotEquals('', ValidarEmail('.comecandocomponto@uol.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComecandoComArroba;
+begin
+  CheckNotEquals('', ValidarEmail('@example.com'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComDoisPontosSeguidos;
+begin
+  CheckNotEquals('', ValidarEmail('John..Doe@example.com'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoArrobaComPonto;
+begin
+  CheckNotEquals('', ValidarEmail('JohnDoe@.example.com.'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoTerminandoComPonto;
+begin
+  CheckNotEquals('', ValidarEmail('JohnDoe@example.com.'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoTerminandoComArroba;
+begin
+  CheckNotEquals('', ValidarEmail('JohnDoe@'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComCarecteresEspeciais;
+begin
   CheckNotEquals('', ValidarEmail('cáractersespeciais@empresa.com.br'));
 end;
 

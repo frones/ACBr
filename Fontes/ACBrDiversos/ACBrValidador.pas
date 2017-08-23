@@ -60,10 +60,6 @@
 ******************************************************************************}
 {$I ACBr.inc}
 
-{$IfNDef FPC}
-  {$UnDef HAS_REGEXPR}   // Todo: Implementar usando "TRegEx"
-{$EndIf}
-
 unit ACBrValidador;
 
 interface
@@ -221,9 +217,6 @@ function MascaraIE(AValue : String; UF : String) : String;
 implementation
 uses
  {$IfDef COMPILER6_UP} Variants , Math, StrUtils, {$EndIf}
- {$IfDef HAS_REGEXPR}
-  {$IfDef FPC} RegExpr, {$Else} RegularExpressions,{$EndIf}
- {$EndIf}
   ACBrUtil;
 
 function ValidarCPF(const Documento : String) : String ;
@@ -834,25 +827,6 @@ begin
   end ;
 end;
 
-{$IfDef HAS_REGEXPR}
-procedure TACBrValidador.ValidarEmail;
-var
-  vRegex: TRegExpr;
-begin
-  vRegex := TRegExpr.Create;
-  try
-    vRegex.Expression := '^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}' +
-                         '\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\' +
-                         '.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$';
-    if not vRegex.Exec(Documento) then
-      fsMsgErro := 'e-mail inv·lido!'
-    else
-      fsMsgErro := '';
-  finally
-    vRegex.Free;
-  end;
-end;
-{$Else}
 procedure TACBrValidador.ValidarEmail;
 const
   InvalidChar = ' ‡‚ÍÙ˚„ı·ÈÌÛ˙Á¸Ò˝¿¬ ‘€√’¡…Õ”⁄«‹—›*;:\|#$%&*ß!()][{}<>òà¥™∫+π≤≥';
@@ -883,6 +857,10 @@ begin
   if (Pos('.', Documento) = 0) then
     exit;
 
+  // Verificando se h· dois pontos juntos
+  if (Pos('..', Documento) > 0) then
+    exit;
+
   // N„o pode comeÁar ou terminar com @ ou ponto
   if CharInSet(Documento[1], ['@', '.']) or CharInSet(Documento[Length(Documento)], ['@', '.']) then
     exit;
@@ -905,7 +883,6 @@ begin
   // Tudo OK
   fsMsgErro := '' ;
 end;
-{$EndIf}
 
 Procedure TACBrValidador.ValidarCEP ;
 begin
@@ -1839,5 +1816,47 @@ begin
   fsFormulaDigito := frModulo11 ;
 end;
 
+(*{$IfDef HAS_REGEXPR}
+const
+  cEmailRegex = '^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}' +
+                '\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\' +
+                '.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$';
+
+Uses
+  {$IfDef HAS_REGEXPR}
+   {$IfDef FPC} RegExpr, {$Else} RegularExpressions,{$EndIf}
+  {$EndIf}
+
+Implementation
+
+{$IfDef FPC}
+procedure TACBrValidador.ValidarEmail;
+var
+  vRegex: TRegExpr;
+begin
+  vRegex := TRegExpr.Create;
+  try
+    vRegex.Expression := cEmailRegex;
+    if not vRegex.Exec(Documento) then
+      fsMsgErro := 'e-mail inv·lido!'
+    else
+      fsMsgErro := '';
+  finally
+    vRegex.Free;
+  end;
+end;
+{$Else}
+procedure TACBrValidador.ValidarEmail;
+var
+  vRegex: TRegEx;
+begin
+  if not vRegex.IsMatch(Documento, cEmailRegex) then
+    fsMsgErro := 'e-mail inv·lido!'
+  else
+    fsMsgErro := '';
+end;
+{$EndIf}
+{$EndIf}
+*)
 end.
 

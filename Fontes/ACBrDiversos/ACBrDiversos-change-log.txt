@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/07/2017
+-- ACBrValidador --
+[*] Método "TACBrValidador.ValidarEmail". Ajustes para sempre usar validação por
+    código  (por: DSA)
+
 20/07/2017
 -- ACBrEnterTab --
 [+] Adicionada a propriedade "UseScreenControl", para modificar o comportamento

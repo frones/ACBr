@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+23/08/2017
+-- ACBrNFSeWebServices --
+[*] Possível correção no método Cancelar para o provedor Tecnos.
+   Por: Italo Jurisato Junior
+
 21/08/2017
 -- Diversos --
 [*] Ajustes para o provedor Infisc

@@ -3963,7 +3963,8 @@ begin
     end;
 
     case FProvedor of
-      proFiorilli: FinfElemento := 'InfPedidoCancelamento';
+      proFiorilli,
+      proTecnos: FinfElemento := 'InfPedidoCancelamento';
     else
       FinfElemento := '';
     end;

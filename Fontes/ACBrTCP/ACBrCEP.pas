@@ -324,6 +324,7 @@ TACBrWSDevMedia = class(TACBrCEPWSClass)
   public
     constructor Create( AOwner : TACBrCEP ) ; override ;
     Procedure BuscarPorCEP( ACEP : String ) ; override ;
+    Procedure BuscarPorLogradouro( AMunicipio, ATipo_Logradouro,ALogradouro, AUF, ABairro : String ); override;
   end ;
 
 
@@ -1594,6 +1595,44 @@ begin
 end;
 
 { TACBrWSCEPAberto }
+
+procedure TACBrWSCEPAberto.BuscarPorLogradouro(AMunicipio, ATipo_Logradouro,
+  ALogradouro, AUF, ABairro: String);
+var
+  Parametros: String;
+begin
+  if(Trim(fOwner.ChaveAcesso) = '')then
+    raise EACBrCEPException.Create('O WebService CepAberto necessita de uma Chave de Acesso.'#13+
+                                   'Acesse o site, crie uma conta e pegue sua Chave de Acesso em APIKey!');
+
+  if AUF = '' then
+     raise EACBrCEPException.Create('UF deve ser informado.');
+
+  if AMunicipio = '' then
+     raise EACBrCEPException.Create('Munícipio deve ser informado.');
+
+  if ALogradouro = '' then
+     raise EACBrCEPException.Create('Logradouro deve ser informado.');
+
+  AUF         := fOwner.AjustaParam(AUF);
+  AMunicipio  := fOwner.AjustaParam(AMunicipio);
+  ALogradouro := fOwner.AjustaParam(ALogradouro);
+  ABairro     := fOwner.AjustaParam(ABairro);
+
+  // estado, cidade e logradouro são obrigatórios
+  Parametros := 'estado=' + AUF +
+                '&cidade=' + AMunicipio +
+                '&logradouro=' + ALogradouro;
+
+  if ABairro <> '' then
+    Parametros := Parametros + '&bairro=' + ABairro;
+
+  fOwner.HTTPSend.Clear;
+  fOwner.HTTPSend.Headers.Add('Authorization: Token token="'+fOwner.ChaveAcesso+'"');
+  fOwner.HTTPMethod('GET', fpURL+'ceps.xml?' + Parametros);
+
+  ProcessaResposta;
+end;
 
 constructor TACBrWSCEPAberto.Create(AOwner: TACBrCEP);
 begin

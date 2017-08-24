@@ -102,7 +102,8 @@ type
     function ConsultarSituacao(AProtocolo: String;
                                const ANumLote: String = ''): Boolean;
     function ConsultarLoteRps(ANumLote, AProtocolo: string): Boolean;
-    function ConsultarNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
+    function ConsultarNFSeporRps(ANumero, ASerie, ATipo: String;
+                                 const ANumLote: String = ''): Boolean;
     function ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;
       ANumeroNFSe: String = ''; APagina: Integer = 1;
       ACNPJTomador: String = ''; AIMTomador: String = '';
@@ -534,12 +535,13 @@ begin
   Result := WebServices.ConsultaLoteRps(ANumLote, AProtocolo);
 end;
 
-function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
+function TACBrNFSe.ConsultarNFSeporRps(ANumero, ASerie, ATipo: String;
+                                       const ANumLote: String = ''): Boolean;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhum RPS carregado ao componente'));
 
-  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo);
+  Result := WebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo, ANumLote);
 end;
 
 function TACBrNFSe.ConsultarNFSe(ADataInicial, ADataFinal: TDateTime;

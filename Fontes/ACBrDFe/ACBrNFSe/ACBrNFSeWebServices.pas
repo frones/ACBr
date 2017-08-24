@@ -351,6 +351,7 @@ type
     FNumeroRps: String;
     FSerie: String;
     FTipo: String;
+    FNumeroLote: String;
 
   protected
     procedure DefinirURL; override;
@@ -366,9 +367,11 @@ type
     destructor Destroy; override;
     procedure Clear; override;
 
-    property NumeroRps: String read FNumeroRps write FNumeroRps;
-    property Serie: String     read FSerie     write FSerie;
-    property Tipo: String      read FTipo      write FTipo;
+    property NumeroRps: String  read FNumeroRps  write FNumeroRps;
+    property Serie: String      read FSerie      write FSerie;
+    property Tipo: String       read FTipo       write FTipo;
+    //usado pelo provedor IssDsf
+    property NumeroLote: String read FNumeroLote write FNumeroLote;
   end;
 
 { TNFSeConsultarNFSe }
@@ -623,7 +626,8 @@ type
                              AProtocolo: String): Boolean;
     function ConsultaNFSeporRps(ANumero,
                                 ASerie,
-                                ATipo: String): Boolean;
+                                ATipo: String;
+                                const ANumLote: String = ''): Boolean;
     function ConsultaNFSe(ADataInicial,
                           ADataFinal: TDateTime;
                           NumeroNFSe: String = '';
@@ -2240,7 +2244,7 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroLote := FNumeroLote; 
+      NumeroLote := FNumeroLote;
       QtdeNotas  := FNotasFiscais.Count;
       Notas      := FvNotas;
 
@@ -3627,15 +3631,16 @@ begin
 
     with GerarDadosMsg do
     begin
-      NumeroRps := FNumeroRPS; 
+      NumeroRps := FNumeroRPS;
       SerieRps  := FSerie;
       TipoRps   := FTipo;
 
       // Necessário para o provedor ISSDSF e CTA
       if FProvedor in [proIssDSF, proCTA] then
       begin
-        Transacao := FNotasFiscais.Transacao;
-        Notas     := FvNotas;
+        NumeroLote := FNumeroLote;
+        Transacao  := FNotasFiscais.Transacao;
+        Notas      := FvNotas;
       end;
 
       // Necessário para o provedor Governa
@@ -5057,11 +5062,13 @@ begin
     FConsLote.GerarException( FConsLote.Msg );
 end;
 
-function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo: String): Boolean;
+function TWebServices.ConsultaNFSeporRps(ANumero, ASerie, ATipo: String;
+                                         const ANumLote: String = ''): Boolean;
 begin
-  FConsNfseRps.FNumeroRps := ANumero;
-  FConsNfseRps.FSerie     := ASerie;
-  FConsNfseRps.FTipo      := ATipo;
+  FConsNfseRps.FNumeroRps  := ANumero;
+  FConsNfseRps.FSerie      := ASerie;
+  FConsNfseRps.FTipo       := ATipo;
+  FConsNfseRps.FNumeroLote := ANumLote;
 
   Result := FConsNfseRps.Executar;
 

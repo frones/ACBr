@@ -1617,8 +1617,8 @@ begin
                LFill( VL_BC_ICMS,0,2, booConsiderarComoValorNulo ) +
                LFill( VL_ICMS,0,2, booConsiderarComoValorNulo ) +
                LFill( COD_INF,0, booConsiderarComoValorNulo ) +
-               LFill( VL_PIS,0,2, booConsiderarComoValorNulo ) +   
-               LFill( VL_COFINS,0,2, booConsiderarComoValorNulo ) +  
+               LFill( VL_PIS,0,2, True ) +
+               LFill( VL_COFINS,0,2, True ) +
                LFill( COD_CTA,0, booConsiderarComoValorNulo ) +
                LFill( intTP_ASSINANTE, 0, booConsiderarComoValorNulo ) ) ;
         end;

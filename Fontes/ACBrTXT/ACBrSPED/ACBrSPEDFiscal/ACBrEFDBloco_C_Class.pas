@@ -2688,8 +2688,8 @@ begin
                 LFill( VL_BC_ICMS_ST,0,2 ) +
                 LFill( VL_ICMS_ST,0,2 ) +
                 LFill( COD_INF ) +
-                LFill( VL_PIS,0,2 ) +
-                LFill( VL_COFINS,0,2 ) +
+                LFill( VL_PIS,0,2, True ) +
+                LFill( VL_COFINS,0,2, True ) +
                 LFill( intTP_LIGACAO, 0, True ) +
                 LFill( strCOD_GRUPO_TENSAO ) ) ;
         end;

@@ -45,6 +45,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 Data: 13/06/2017
+[-] Adição de campos para o MDFe 3.00
+		http://www.projetoacbr.com.br/forum/topic/38490-damdfefr-disponibilizados-novos-campos-mdf-e-3/
+		por : Juliomar Marchetti
+		
+Data: 13/06/2017
 [-] Correção de memory leaks 
 		http://www.projetoacbr.com.br/forum/topic/33733-corre%C3%A7%C3%A3o-memory-leak/?do=findComment&comment=243867
 		por : Juliomar Marchetti

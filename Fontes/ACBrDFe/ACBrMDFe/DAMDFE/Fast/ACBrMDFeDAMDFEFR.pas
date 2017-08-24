@@ -77,6 +77,7 @@ type
     cdsTermDescarrega: TClientDataSet;
     cdsEmbarcaComboio: TClientDataSet;
     cdsInfUnidCargaVazia: TClientDataSet;
+    cdsSeg: TClientDataSet;
 
     frxIdentificacao: TfrxDBDataset;
     frxEmitente: TfrxDBDataset;
@@ -94,6 +95,7 @@ type
     frxTermDescarrega: TfrxDBDataset;
     frxEmbarcaComboio: TfrxDBDataset;
     frxInfUnidCargaVazia: TfrxDBDataset;
+    frxSeg: TfrxDBDataset;
 
     procedure CarregaIdentificacao;
     procedure CarregaParametros;
@@ -112,6 +114,7 @@ type
     procedure CarregaModalFerroviario;
     procedure CarregaMunCarrega;
     procedure CarregaPercurso;
+    procedure CarregaSeguro;
 
     function  GetPreparedReport: TfrxReport;
     function  GetPreparedReportEvento: TfrxReport;
@@ -416,6 +419,9 @@ begin
     // Condutor
     Add('xNome', ftMemo);
     Add('CPF', ftMemo);
+    //infCIOT
+    Add('infCIOT_CIOT', ftString, 12);
+    Add('infCIOT_CNPJCPF', ftString, 20);
     CreateDataSet;
   end;
 
@@ -536,6 +542,21 @@ begin
     Clear;
     Add('idUnidCargaVazia', ftString, 20);
     Add('tpUnidCargaVazia', ftString, 20);
+    CreateDataSet;
+  end;
+
+  cdsSeg := TClientDataSet.Create(Self);
+  with cdsSeg, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('infResp_respSeg', ftInteger);
+    Add('infResp_respSegStr', ftString, 20);
+    Add('infResp_CNPJCPF', ftString, 20);
+    Add('infSeg_xSeg', ftString, 30);
+    Add('infSeg_CNPJ', ftString, 20);
+    Add('nApol', ftString, 20);
+    Add('nAver', ftMemo);
     CreateDataSet;
   end;
 
@@ -665,6 +686,14 @@ begin
     UserName := 'InfUnidCargaVazia';
     OpenDataSource := False;
     DataSet := cdsInfUnidCargaVazia;
+  end;
+
+  frxSeg := TfrxDBDataset.Create(Self);
+  with frxSeg do
+  begin
+    UserName        := 'Seg';
+    OpenDataSource  := False;
+    DataSet         := cdsSeg;
   end;
 end;
 
@@ -922,6 +951,7 @@ begin
   frxReport.EnabledDataSets.Add(frxTermDescarrega);
   frxReport.EnabledDataSets.Add(frxEmbarcaComboio);
   frxReport.EnabledDataSets.Add(frxInfUnidCargaVazia);
+  frxReport.EnabledDataSets.Add(frxSeg);
 end;
 
 procedure TACBrMDFeDAMDFEFR.LimpaDados;
@@ -941,6 +971,7 @@ begin
   cdsTermDescarrega.EmptyDataSet;
   cdsEmbarcaComboio.EmptyDataSet;
   cdsInfUnidCargaVazia.EmptyDataSet;
+  cdsSeg.EmptyDataSet;
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaDados;
@@ -957,6 +988,9 @@ begin
   CarregaTermDescarreg;
   CarregaEmbarcacaoComboio;
   CarregaInfUnidCargaVazia;
+
+  if (FMDFe.infMDFe.versao = 3) then
+    CarregaSeguro;
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaParametros;
@@ -1317,7 +1351,6 @@ begin
   end;
 end;
 
-
 procedure TACBrMDFeDAMDFEFR.CarregaEmbarcacaoComboio;
 var
   i: integer;
@@ -1434,6 +1467,7 @@ begin
         FieldByName('xNome').AsString := FieldByName('xNome').AsString + veicTracao.condutor.Items[i].xNome + #13#10;
       end;
     end;
+
     for i := 0 to veicReboque.Count - 1 do
     begin
       FieldByName('placa').AsString     := FieldByName('placa').AsString + #13#10 + FormatarPlaca(FMDFe.rodo.veicReboque.Items[i].placa);
@@ -1460,6 +1494,16 @@ begin
         FieldByName('nCompra').AsString  := FieldByName('nCompra').AsString + infANTT.valePed.disp.Items[i].nCompra + #13#10;
       end;
     end;
+
+    if (FMDFe.rodo.infANTT.infCIOT.Count > 0) then
+    begin
+      for i := 0 to FMDFe.rodo.infANTT.infCIOT.Count - 1 do
+      begin
+        FieldByName('infCIOT_CIOT').AsString    := FieldByName('infCIOT_CIOT').AsString + infANTT.infCIOT.Items[i].CIOT + #13#10;
+        FieldByName('infCIOT_CNPJCPF').AsString := FieldByName('infCIOT_CNPJCPF').AsString + FormatarCNPJouCPF(infANTT.infCIOT.Items[i].CNPJCPF) + #13#10;
+      end;
+    end;
+
     Post;
   end;
 end;
@@ -1517,6 +1561,33 @@ begin
         FieldByName('dtEnc').AsDateTime       := InfEvento.detEvento.dtEnc;
         FieldByName('cUf').AsInteger          := InfEvento.detEvento.cUF;
         FieldByName('cMun').AsInteger         := InfEvento.detEvento.cMun;
+      end;
+
+      Post;
+    end;
+  end;
+end;
+
+procedure TACBrMDFeDAMDFEFR.CarregaSeguro;
+var
+  i, x: Integer;
+begin
+  with cdsSeg, FMDFe.seg do
+  begin
+    for i := 0 to Count - 1 do
+    begin
+      Append;
+      FieldByName('infResp_respSeg').AsInteger    := StrToInt(RspSeguroMDFeToStr(Items[i].respSeg));
+      FieldByName('infResp_respSegStr').AsString  := RspSeguroMDFeToStrText(Items[i].respSeg);
+      FieldByName('infResp_CNPJCPF').AsString     := FormatarCNPJouCPF(Items[i].CNPJCPF);
+      FieldByName('infSeg_xSeg').AsString         := Items[i].xSeg;
+      FieldByName('infSeg_CNPJ').AsString         := FormatarCNPJ(Items[i].CNPJ);
+      FieldByName('nApol').AsString               := Items[i].nApol;
+
+      with Items[i].aver do
+      begin
+        for x := 0 to Count - 1 do
+          FieldByName('nAver').AsString := FieldByName('nAver').AsString + Items[x].nAver + #13#10;
       end;
 
       Post;

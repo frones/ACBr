@@ -346,7 +346,7 @@ procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
 var
   MsgTributos : String;
 begin
-  if (vTribFed+vTribEst+vTribMun) > 0 then
+  if TributosSeparadamente and ((vTribFed+vTribEst+vTribMun) > 0) then
   begin
      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s';
      FPosPrinter.Buffer.Add('<c>' + QuebraLinhas(Format(MsgTributos,[FormatFloatBr(vTribFed + vTribEst + vTribMun),

@@ -890,6 +890,7 @@ end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
+
   Function ManterValorTributosLinha : String;
   Var
     sFederal, sEstadual , sMunicipal : String;
@@ -925,7 +926,7 @@ procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
     end;
   end;
 begin
-  if self.FACBrNFeDANFCeFortesA4.TributosSeparadamente = false then
+  if not self.FACBrNFeDANFCeFortesA4.TributosSeparadamente then
     Text := ManterValorTributosLinha
   else
     Text := 'Você pagou aproximadamente : ';

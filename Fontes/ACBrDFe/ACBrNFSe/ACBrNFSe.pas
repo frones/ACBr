@@ -112,7 +112,8 @@ type
 
     function CancelarNFSe(ACodigoCancelamento: String;
                           ANumeroNFSe: String = '';
-                          AMotivoCancelamento: String = ''): Boolean;
+                          AMotivoCancelamento: String = '';
+                          const ANumLote: String = ''): Boolean;
 
     function SubstituirNFSe(ACodigoCancelamento, ANumeroNFSe: String;
                             AMotivoCancelamento: String = ''): Boolean;
@@ -553,14 +554,15 @@ begin
             ASerie);
 end;
 
-function TACBrNFSe.CancelarNFSe(ACodigoCancelamento, ANumeroNFSe,
-  AMotivoCancelamento: String): Boolean;
+function TACBrNFSe.CancelarNFSe(ACodigoCancelamento: String;
+  ANumeroNFSe: String = ''; AMotivoCancelamento: String = '';
+  const ANumLote: String = ''): Boolean;
 begin
   if NotasFiscais.Count <= 0 then
     GerarException(ACBrStr('ERRO: Nenhuma NFS-e carregada ao componente'));
 
   Result := WebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
-                                    AMotivoCancelamento);
+                                    AMotivoCancelamento, ANumLote);
 end;
 
 function TACBrNFSe.SubstituirNFSe(ACodigoCancelamento,

@@ -425,6 +425,8 @@ type
     FCodigoVerificacao: String;
     FCodigoCancelamento: String;
     FMotivoCancelamento: String;
+    FNumeroLote: String;
+
     // Retorno
     FDataHora: TDateTime;
     FRetCancNFSe: TRetCancNFSe;
@@ -448,6 +450,8 @@ type
     property CodigoVerificacao: String  read FCodigoVerificacao  write FCodigoVerificacao;
     property CodigoCancelamento: String read FCodigoCancelamento write FCodigoCancelamento;
     property MotivoCancelamento: String read FMotivoCancelamento write FMotivoCancelamento;
+    //usado pelo provedor IssDsf
+    property NumeroLote: String         read FNumeroLote         write FNumeroLote;
 
     property DataHora: TDateTime        read FDataHora           write FDataHora;
 
@@ -641,7 +645,8 @@ type
 
     function CancelaNFSe(ACodigoCancelamento: String;
                          ANumeroNFSe: String = '';
-                         AMotivoCancelamento: String = ''): Boolean;
+                         AMotivoCancelamento: String = '';
+                         const ANumLote: String = ''): Boolean;
 
     function SubstituiNFSe(ACodigoCancelamento,
                            ANumeroNFSe: String;
@@ -4122,6 +4127,7 @@ begin
       ValorNota  := FNotasFiscais.Items[0].NFSe.ValoresNfse.ValorLiquidoNfse;
 
       // Necessário para o provedor ISSDSF
+      NumeroLote := FNumeroLote;
       Transacao  := FNotasFiscais.Transacao;
       NumeroLote := FNotasFiscais.NumeroLote;
       Notas      := FvNotas;
@@ -5097,12 +5103,14 @@ begin
     FConsNfse.GerarException( FConsNfse.Msg );
 end;
 
-function TWebServices.CancelaNFSe(ACodigoCancelamento, ANumeroNFSe,
-  AMotivoCancelamento: String): Boolean;
+function TWebServices.CancelaNFSe(ACodigoCancelamento: String;
+  ANumeroNFSe: String = ''; AMotivoCancelamento: String = '';
+  const ANumLote: String = ''): Boolean;
 begin
   FCancNfse.FCodigoCancelamento := ACodigoCancelamento;
   FCancNfse.FNumeroNFSe         := ANumeroNFSe;
   FCancNfse.FMotivoCancelamento := AMotivoCancelamento;
+  FCancNfse.FNumeroLote         := ANumLote;
 
   Result := FCancNfse.Executar;
 

@@ -814,8 +814,8 @@ begin
   // Posiciona a Marca D'água
   rliMarcaDagua1.Left := rlbItens.Left + (rlbItens.Width div 2) -
                                                   (rliMarcaDagua1.Width div 2);
-  rllSistema.Visible := ( FSsitema <> '' );
-  rllSistema.Caption := FSsitema;
+  rllSistema.Visible := ( FSistema <> '' );
+  rllSistema.Caption := FSistema;
   rllUsuario.Visible := ( FUsuario <> '' );
   rllUsuario.Caption := ACBrStr('DATA / HORA DA IMPRESSÃO: ') + DateTimeToStr(Now) + ' - ' + FUsuario;
 
@@ -952,7 +952,9 @@ begin
   end;
 
   if TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco > 0 then
-    RLMEndereco.Font.Size:= TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco;
+    RLMEndereco.Font.Size:= TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco
+  else
+    RLMEndereco.Font.Size := 7;
 
   AplicaParametros; // Aplica os parâmetros escolhidos
 
@@ -1069,10 +1071,11 @@ end;
 
 procedure TfrlDANFeRLPaisagem.Emitente;
 var
-  vWidthAux, vLeftAux : integer;
   sTemp : String;
 begin
   //emit
+  rlmEmitente.AutoSize  := False;
+  rlmEndereco.AutoSize  := False;
   with FNFe.Emit do
   begin
     if FRecebemoDe = '' then
@@ -1083,12 +1086,6 @@ begin
     rllInscrEstSubst.caption      := IEST;
     rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF );
     rlmEmitente.Lines.Text        := TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant );
-    vWidthAux                     := rlmEmitente.Width;
-    vLeftAux                      := rlmEmitente.Left;
-    rlmEmitente.AutoSize          := True;
-    rlmEmitente.AutoSize          := False;
-    rlmEmitente.Left              := vLeftAux;
-    rlmEmitente.Width             := vWidthAux;
     rlmEndereco.Top               := rlmEmitente.Top + rlmEmitente.Height;
     rlmEndereco.Lines.Clear;
     with EnderEmit do
@@ -1104,10 +1101,9 @@ begin
       rlmEndereco.Lines.add(sTemp );
     end;
   end;
-  if FSite <> '' then
-      rlmEndereco.Lines.Add(FSite);
-  if FEmail <> '' then
-      rlmEndereco.Lines.Add(FEmail);
+  if FSite <> ''  then rlmEndereco.Lines.Add(FSite);
+  if FEmail <> '' then rlmEndereco.Lines.Add(FEmail);
+
   rlmEndereco.Height:= rliEmitente.Height - rlmEndereco.Top - 15;
 end;
 

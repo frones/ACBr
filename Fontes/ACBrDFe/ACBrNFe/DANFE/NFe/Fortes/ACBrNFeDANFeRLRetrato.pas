@@ -619,8 +619,6 @@ type
     procedure Header;
     procedure Emitente;
     procedure Destinatario;
-    Function  EnderecoRetirada : String;
-    Function  EnderecoEntrega : String;
     procedure Imposto;
     procedure Transporte;
     procedure DadosAdicionais;
@@ -802,8 +800,8 @@ begin
   rllDataRecebimento.Top  := rliCanhoto1.Top + 3;
   rllIdentificacao.Top    := rliCanhoto1.Top + 3;
 
-  rllSistema.Visible      := ( FSsitema <> '' );
-  rllSistema.Caption      := FSsitema;
+  rllSistema.Visible      := ( FSistema <> '' );
+  rllSistema.Caption      := FSistema;
 
   rllUsuario.Visible      := ( FUsuario <> '' );
   rllUsuario.Caption      := ACBrStr('DATA / HORA DA IMPRESSÃO: ') +
@@ -1047,7 +1045,9 @@ begin
   end;
 
   if TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco > 0 then
-    RLMEndereco.Font.Size:= TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco;
+    RLMEndereco.Font.Size:= TACBrNFeDANFeRL(Owner).TamanhoFonteEndereco
+  else
+    RLMEndereco.Font.Size := 7;
 
   AplicaParametros; // Aplica os parâmetros escolhidos, após alterar o tamanho das fontes.
 
@@ -1169,10 +1169,11 @@ end;
 
 procedure TfrlDANFeRLRetrato.Emitente;
 var
-  vWidthAux, vLeftAux : integer;
   sTemp : String;
 begin
   //emit
+  rlmEmitente.AutoSize := False;
+  rlmEndereco.AutoSize := False;
   with FNFe.Emit do
   begin
     if FRecebemoDe = '' then
@@ -1183,12 +1184,6 @@ begin
     rllInscrEstSubst.Caption      := IEST;
     rllCNPJ.Caption               := FormatarCNPJouCPF(CNPJCPF);
     rlmEmitente.Lines.Text        := TACBrNFeDANFeRL(Owner).ManterNomeImpresso( XNome , XFant );
-    vWidthAux                     := rlmEmitente.Width;
-    vLeftAux                      := rlmEmitente.Left;
-    rlmEmitente.AutoSize          := True;
-    rlmEmitente.AutoSize          := False;
-    rlmEmitente.Left              := vLeftAux;
-    rlmEmitente.Width             := vWidthAux;
     rlmEndereco.Top               := rlmEmitente.Top + rlmEmitente.Height;
     rlmEndereco.Lines.Clear;
     with EnderEmit do
@@ -1204,9 +1199,8 @@ begin
       rlmEndereco.Lines.add(sTemp );
     end;
   end;
-  if FSite  <> '' then rlmEndereco.Lines.add (FSite);
-  if FEmail <> '' then rlmEndereco.Lines.add (FEmail);
-
+  if FSite  <> '' then rlmEndereco.Lines.add(FSite);
+  if FEmail <> '' then rlmEndereco.Lines.add(FEmail);
   rlmEndereco.Height:= rliEmitente.Height - rlmEndereco.Top - 15;
 end;
 
@@ -1235,48 +1229,6 @@ begin
       rllDestFONE.Caption       := FormatarFone(Fone);
     end;
   end;
-end;
-
-Function  TfrlDANFeRLRetrato.EnderecoEntrega : String;
-begin
-  Result := '';
-  // Descomentar para utilizar
-  //  if FNFe.Entrega.xLgr > '' then
-  //  begin
-  //    with FNFe.Entrega do
-  //    begin
-  //      Result := XLgr +
-  //                    IfThen(Nro = '0', '', ', ' + Nro) +
-  //                    IfThen(xCpl = '','', ' - ' + xCpl );
-  //
-  //
-  //      Result := 'LOCAL DE ENTREGA: ' + Result + ' - ' +
-  //                    xBairro + ' - ' + xMun + '-' + UF +
-  //                    TrataDocumento(CNPJCPF);
-  //
-  //
-  //    end;
-  //  end;
-end;
-
-Function TfrlDANFeRLRetrato.EnderecoRetirada : String;
-begin
-  Result := '';
-  // Descomentar para utilizar
-  //   if FNFe.Retirada.xLgr > '' then
-  //   begin
-  //     with FNFe.Retirada do
-  //     begin
-  //       Result  := XLgr +
-  //                     IfThen(Nro = '0', '', ', ' + Nro) +
-  //                     IfThen(xCpl = '','', ' - ' + xCpl );
-  //
-  //       Result  := 'LOCAL DE RETIRADA: ' + Result  + ' - ' +
-  //                     xBairro + ' - ' + xMun + '-' + UF +
-  //                     TrataDocumento(CNPJCPF);
-  //
-  //     end;
-  //   end;
 end;
 
 procedure TfrlDANFeRLRetrato.Imposto;
@@ -1478,11 +1430,6 @@ begin
     InsereLinhas(sSuframa, iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
   end;
 
-  InsereLinhas( EnderecoRetirada , iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-
-  InsereLinhas( EnderecoEntrega  , iLimiteCaracteresLinha, rlmDadosAdicionaisAuxiliar);
-
-
   InsereLinhas( TACBrNFeDANFeRL(Owner).ManterDocreferenciados( FNFe,FImprimirDadosDocReferenciados )  +
                   ManterInfAdFisco +
                   ManterObsFisco +
@@ -1495,8 +1442,6 @@ begin
   rlmDadosAdicionaisAuxiliar.Lines.EndUpdate;
 
 end;
-
-
 
 procedure TfrlDANFeRLRetrato.Observacoes;
 var

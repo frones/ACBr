@@ -50,9 +50,9 @@
 |*    "Imprimir" e "SavePDF"
 |* 05/02/2010: Peterson de Cerqueira Matos
 |*  - Tratamento das propriedades "Email", "ResumoCanhoto", "Fax", "NumCopias",
-|*    "Ssitema", "Site", "Usuario" em "ACBrNFeDANFeClass"
+|*    "Sistema", "Site", "Usuario" em "ACBrNFeDANFeClass"
 |*  - Acréscimo dos parâmetros "AEmail", "AResumoCanhoto", "AFax", "ANumCopias",
-|*    "ASsitema", "ASite", "AUsuario" nas Class procedures
+|*    "Asistema", "ASite", "AUsuario" nas Class procedures
 |*    "Imprimir" e "SavePDF"
 |* 13/02/2010: Peterson de Cerqueira Matos
 |*  - Correção na exibição do 'Preview' para modo 'PREVIEWMODAL'
@@ -141,7 +141,7 @@ type
     FResumoCanhoto: Boolean;
     FFax: String;
     FNumCopias: Integer;
-    FSsitema: String;
+    FSistema: String;
     FSite: String;
     FUsuario: String;
     FPosCanhoto: TPosRecibo;
@@ -397,7 +397,7 @@ begin
       FResumoCanhoto := AResumoCanhoto;
       FFax := AFax;
       FNumCopias := ANumCopias;
-      FSsitema := ASistema;
+      FSistema := ASistema;
       FSite := ASite;
       FUsuario := AUsuario;
       FPosCanhoto := APosCanhoto;
@@ -566,7 +566,7 @@ begin
       FResumoCanhoto := AResumoCanhoto;
       FFax := AFax;
       FNumCopias := ANumCopias;
-      FSsitema := ASistema;
+      FSistema := ASistema;
       FSite := ASite;
       FUsuario := AUsuario;
       FPosCanhoto := APosCanhoto;

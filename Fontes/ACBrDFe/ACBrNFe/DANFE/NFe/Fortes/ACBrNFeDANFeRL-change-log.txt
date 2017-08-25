@@ -47,6 +47,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2017
+-- ACBrNFeDANFEClass ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
+[+] Configuração padrão do tamanho da fonte ( 7 ) no endereço do emitente
+[*] Ajuste nome da variável ( FSsitema )
+[*] Refatoração do procedimento Emitente( Remoção de variáveis , código duplicado e novos padrões de controle );
+[-] Remoção código obsoleto EnderecoEntrega e EnderecoRetirada ( ACBrNFeDANFeRLRetrato )
+    	por: Henrique Leonardo
+
+
 23/07/2017
 -- ACBrNFeDANFEClass ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
 [*] Refatoração de ManterDocreferenciados, para utilizar as informações de NFe corrente.

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+25/08/2017
+-- ACBrNFSeWebServices --
+[*] Acrescentado mais uma condição para verificar se a nota foi cancelada ou não.
+    O provedor ISSDSF retorna o valor "True" e não "S" na tag Sucesso.
+   Por: Marcio Lopes
+
 23/08/2017
 -- ACBrNFSe / ACBrNFSeWebServices --
 [*] Acrescentado o parâmetro ANumLote (quarto) no método CAncelarNFSe, pois

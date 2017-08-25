@@ -4209,7 +4209,7 @@ begin
                 'Numero da NFSe : ' + TNFSeCancelarNfse(Self).FNumeroNFSe + LineBreak +
                 'Data Hora..... : ' + ifThen(FDataHora = 0, '', DateTimeToStr(FDataHora)) + LineBreak;
 
-  Result := (FDataHora > 0) or (RetCancNFSe.InfCanc.Sucesso='S');
+  Result := (FDataHora > 0) or (RetCancNFSe.InfCanc.Sucesso='S') or (UpperCase(RetCancNFSe.InfCanc.Sucesso)='TRUE');
 end;
 
 procedure TNFSeCancelarNFSe.SalvarResposta;

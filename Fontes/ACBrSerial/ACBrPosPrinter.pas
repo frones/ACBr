@@ -245,7 +245,7 @@ type
   end;
 
   { TACBrPosPrinter }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}
   TACBrPosPrinter = class(TACBrComponent)
@@ -333,7 +333,6 @@ type
     function LerStatusImpressora: TACBrPosPrinterStatus;
     function LerInfoImpressora: String;
 
-    property Device: TACBrDevice read FDevice;
     property Buffer: TStringList read FBuffer;
 
     property Colunas: Integer read GetColunas;
@@ -349,6 +348,7 @@ type
   published
     property Modelo: TACBrPosPrinterModelo read FModelo write SetModelo default ppTexto;
     property Porta: String read GetPorta write SetPorta;
+    property Device: TACBrDevice read FDevice;
 
     property PaginaDeCodigo: TACBrPosPaginaCodigo
       read FPaginaDeCodigo write FPaginaDeCodigo default pc850;
@@ -602,6 +602,10 @@ begin
   inherited Create(AOwner);
 
   FDevice := TACBrDevice.Create(Self);
+  FDevice.Name := 'ACBrDevice' ;      { Apenas para aparecer no Object Inspector}
+  {$IFDEF COMPILER6_UP}
+  FDevice.SetSubComponent( true );{ para gravar no DFM/XFM }
+  {$ENDIF}
   FPosPrinterClass := TACBrPosPrinterClass.Create(Self);
   FModelo := ppTexto;
   FTipoAlinhamento := alEsquerda;

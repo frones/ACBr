@@ -39,6 +39,17 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 25/08/2017
+-- ACBrDevice --
+[+] Adicionada a propriedade "NomeDocumento", que é usada apenas no modo de
+    impressão "RAW", e permite definir o nome do documento que será apresentado
+    no Spooler.
+
+-- ACBrPosPrinter --
+[*] Propriedade "Device", modificada para Published, para permitir editar em
+    tempo de projeto (Object Inspector), os valores de ACBrDevice
+    (por: DSA)
+
 Data: 14/08/2017
 -- ACBrBALDigitron --
 [-] Corrreção na leitura do valor, considerando STX e ETX

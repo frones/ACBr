@@ -264,6 +264,7 @@ TACBrDevice = class( TComponent )
     fsBaud: Integer;
     fsStop: Integer ;
     fsPorta: String;
+    fsNomeDocumento: String;
     fsDeviceType: TACBrDeviceType;
     fsTimeOut: Integer ;
     fsAtivo: Boolean;
@@ -282,6 +283,7 @@ TACBrDevice = class( TComponent )
     procedure EnviaStringTCP(const AString: AnsiString);
     procedure EnviaStringRaw(const AString: AnsiString);
     procedure EnviaStringHook(const AString: AnsiString);
+    function GetNomeDocumento: String;
     function GetParamsString: String;
     function GetPrinterRawIndex: Integer;
     function GetPrinterFileName: String;
@@ -293,6 +295,7 @@ TACBrDevice = class( TComponent )
     procedure SetBaud(const Value: Integer);
     procedure SetData(const Value: Integer);
     procedure SetDeviceType(AValue: TACBrDeviceType);
+    procedure SetNomeDocumento(AValue: String);
     procedure SetHardFlow(const Value: Boolean);
     function GetParity: TACBrSerialParity;
     procedure SetParity(const Value: TACBrSerialParity);
@@ -373,6 +376,8 @@ TACBrDevice = class( TComponent )
                          default false ;
      property HardFlow : Boolean read fsHardFlow write SetHardFlow
                          default false ;
+
+     property NomeDocumento : String read GetNomeDocumento write SetNomeDocumento;
 
      { propriedade que ativa/desativa o processamento de mensagens do windows }
      property ProcessMessages : Boolean read fProcessMessages
@@ -658,6 +663,7 @@ begin
 
   fsHookEnviaString := nil;
   fsHookLeString    := nil;
+  fsNomeDocumento   := '';
 
   SetDefaultValues ;
 end;
@@ -838,6 +844,11 @@ begin
   end;
 
   fsDeviceType := AValue;
+end;
+
+procedure TACBrDevice.SetNomeDocumento(AValue: String);
+begin
+  fsNomeDocumento := Trim(AValue);
 end;
 
 function TACBrDevice.GetParity: TACBrSerialParity;
@@ -1529,6 +1540,15 @@ begin
      HookEnviaString( AString );
 end;
 
+function TACBrDevice.GetNomeDocumento: String;
+begin
+  if fsNomeDocumento = '' then
+     if not (csDesigning in ComponentState) then
+        fsNomeDocumento := ClassName;
+
+  Result := fsNomeDocumento;
+end;
+
 procedure TACBrDevice.EnviaStringTCP(const AString: AnsiString);
 Var
   I, Max, NBytes : Integer ;
@@ -1552,23 +1572,22 @@ end;
 procedure TACBrDevice.EnviaStringRaw(const AString: AnsiString);
 var
   PrnIndex: Integer;
-  DocName: String;
   {$IfNDef FPC}
   PrnName: String;
   HandlePrn: THandle;
   N: DWORD;
   DocInfo1: TDocInfo1;
+  DocName: String;
   {$Else}
   Written: integer;
   OldRawMode: Boolean;
   {$EndIf}
 begin
-  DocName := 'ACBrDevice';  // TODO: permitir informar o nome em Properties
   PrnIndex := GetPrinterRawIndex;
 
   {$IfDef FPC}
   Printer.PrinterIndex := PrnIndex;
-  Printer.Title := DocName;
+  Printer.Title := NomeDocumento;
 
   OldRawMode := Printer.RawMode;
   Printer.RawMode := True;
@@ -1586,6 +1605,7 @@ begin
 
   with DocInfo1 do
   begin
+    DocName  := NomeDocumento;
     pDocName := PChar(DocName);
     pOutputFile := nil;
     pDataType := 'RAW';

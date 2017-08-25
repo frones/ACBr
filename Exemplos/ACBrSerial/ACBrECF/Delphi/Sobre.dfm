@@ -11,9 +11,10 @@ object frmSobre: TfrmSobre
   Font.Charset = ANSI_CHARSET
   Font.Color = clBlack
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Tahoma'
   Font.Pitch = fpVariable
   Font.Style = []
+  Font.Quality = fqClearType
   KeyPreview = True
   OldCreateOrder = True
   Position = poDesktopCenter
@@ -340,13 +341,13 @@ object frmSobre: TfrmSobre
   object lColaboradores: TLabel
     Left = 5
     Top = 206
-    Width = 480
-    Height = 750
-    Caption =
-      '* Administradores:'#13#10'- Daniel Simões de Almeida'#13#10'- André Ferreira' +
+    Width = 453
+    Height = 686
+    Caption = 
+      '* Administradores:'#13#10'- Daniel Sim'#245'es de Almeida'#13#10'- Andr'#233' Ferreira' +
       ' de Moraes'#13#10#13#10'* Desenvolvedores:'#13#10'- Airton Stodulski            ' +
       '   ECFDataRegis'#13#10'- Anderson Rogerio Bejatto       ECFDataRegis, ' +
-      'TACBrTroco, ECFBugFix, TACBrETQ'#13#10'- Rodrigo Frühwirth            ' +
+      'TACBrTroco, ECFBugFix, TACBrETQ'#13#10'- Rodrigo Fr'#252'hwirth            ' +
       '  ECFIChash'#13#10'- Gabriel Rodrigo Frones         TACBrTER'#13#10'- Fabio ' +
       'Farias                   TACBrBAL, ECFBugFix, DISKeyTec'#13#10'- Walmi' +
       'r Silva                   TACBrBAL, BalancaTeste.dpr'#13#10'- Rennes M' +
@@ -354,21 +355,21 @@ object frmSobre: TfrmSobre
       'o Silva       ECFUrano, ECFBugFix'#13#10'- Vinicius de Oliveira       ' +
       '    TACBrFala'#13#10'- Carlos do Nascimento Filho     ECFDaruma, ECFYa' +
       'nco'#13#10'- Thiago Delgado Pinto           Compatibilidade com BCB6'#13#10 +
-      '- Nei José Van Lare Junior       ECFFiscNET'#13#10'- Jhony Alceu Perei' +
+      '- Nei Jos'#233' Van Lare Junior       ECFFiscNET'#13#10'- Jhony Alceu Perei' +
       'ra            ECFDaruma'#13#10'- Alan Lucas                     ECFSch' +
       'alter, ECFSweda'#13#10'- Ederson Selvati                ECFDaruma, ECF' +
-      'Bematech, ECFSweda'#13#10'- José Luís Schiavo              ECFDaruma'#13#10 +
+      'Bematech, ECFSweda'#13#10'- Jos'#233' Lu'#237's Schiavo              ECFDaruma'#13#10 +
       '- Andrews Ricardo Bejatto        TACBrETQ'#13#10'- Douglas Fernando Sc' +
       'heibler     Lazarus'#13#10'- Wagner Leandro Bueno Angelo    Lazarus'#13#10'-' +
       ' Maicon da Silva Evangelista    ECFDaruma'#13#10'- Eduardo Durieux Lop' +
       'es          ECFEpson'#13#10#13#10'* Colaboradores:'#13#10'- Alexandre Rocha L.Ma' +
-      'rcondes    Administração'#13#10'- Mauro Sano (Sweda)             Empre' +
+      'rcondes    Administra'#231#227'o'#13#10'- Mauro Sano (Sweda)             Empre' +
       'stimo de ECFs'#13#10'- Valmor Florez                  ECFBugFix (Schal' +
       'ter)'#13#10'- Licerio Jose Rodrigues Neto    ECFBugFix (Mecaf, Sweda, ' +
       'NaoFiscal)'#13#10'- Adriano Alves Dornelas         ECFBugFix'#13#10'- Lucian' +
       'o Donato                 ACBr.INC D2006'#13#10'- Gabriel Fernandes    ' +
       '          ECFBugFix (Mecaf)'#13#10'- Juliano Pereira dos Santos     EC' +
-      'FBufFix (Daruma FS600)'#13#10'- Fábio Rogério Baía             ACBrMon' +
+      'FBufFix (Daruma FS600)'#13#10'- F'#225'bio Rog'#233'rio Ba'#237'a             ACBrMon' +
       'itor (TCP)'#13#10'- Waldir Paim                    LCBTeste (conf.seri' +
       'al)'#13#10'- Diogo Augusto Pereira          ACBrCMC7'#13#10'- Marcos Agostin' +
       'i                ECFBugFix (NaoFiscal)'#13#10'- Andre Bohn            ' +
@@ -381,9 +382,10 @@ object frmSobre: TfrmSobre
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -12
-    Font.Name = 'Fixedsys'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = []
+    Font.Quality = fqClearType
     ParentFont = False
     Transparent = True
     OnMouseDown = FormMouseDown
@@ -401,9 +403,10 @@ object frmSobre: TfrmSobre
     Font.Charset = ANSI_CHARSET
     Font.Color = clTeal
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
+    Font.Quality = fqClearType
     ParentFont = False
     Transparent = True
     OnClick = lACBrClick
@@ -416,13 +419,14 @@ object frmSobre: TfrmSobre
     Cursor = crHandPoint
     Alignment = taCenter
     AutoSize = False
-    Caption = 'Daniel Simões de Almeida - www.djsystem.com.br'
+    Caption = 'Daniel Sim'#245'es de Almeida - www.djsystem.com.br'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -13
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
+    Font.Quality = fqClearType
     ParentFont = False
     Transparent = True
     OnClick = lDesenvolvedoresClick
@@ -439,9 +443,10 @@ object frmSobre: TfrmSobre
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
     Font.Height = -19
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = []
+    Font.Quality = fqClearType
     ParentFont = False
     Transparent = True
     OnClick = lACBrClick
@@ -459,9 +464,10 @@ object frmSobre: TfrmSobre
     Font.Charset = ANSI_CHARSET
     Font.Color = clRed
     Font.Height = -19
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
+    Font.Quality = fqClearType
     ParentColor = False
     ParentFont = False
     Transparent = True
@@ -478,9 +484,10 @@ object frmSobre: TfrmSobre
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -13
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
+    Font.Quality = fqClearType
     ParentFont = False
     Transparent = True
   end
@@ -495,9 +502,10 @@ object frmSobre: TfrmSobre
     Font.Charset = ANSI_CHARSET
     Font.Color = clRed
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Tahoma'
     Font.Pitch = fpVariable
     Font.Style = [fsBold]
+    Font.Quality = fqClearType
     ParentFont = False
     Transparent = True
   end
@@ -507,9 +515,10 @@ object frmSobre: TfrmSobre
     Width = 75
     Height = 25
     Caption = '&Ajuda'
+    Kind = bkHelp
+    NumGlyphs = 2
     TabOrder = 0
     OnClick = bAjudaClick
-    Kind = bkHelp
   end
   object BitBtn1: TBitBtn
     Left = 403
@@ -519,9 +528,6 @@ object frmSobre: TfrmSobre
     Cancel = True
     Caption = 'OK'
     Default = True
-    ModalResult = 1
-    TabOrder = 1
-    OnClick = BitBtn1Click
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       04000000000068010000120B0000120B00001000000010000000000000000000
@@ -539,7 +545,10 @@ object frmSobre: TfrmSobre
       3338F38F000033333333333333A223333333333333338F830000333333333333
       333A333333333333333338330000333333333333333333333333333333333333
       0000}
+    ModalResult = 1
     NumGlyphs = 2
+    TabOrder = 1
+    OnClick = BitBtn1Click
   end
   object Timer1: TTimer
     Interval = 100

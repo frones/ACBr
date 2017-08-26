@@ -825,7 +825,7 @@ begin
             GravaLog( '    Falha SYN - RX <- '+EscECFResposta.Resposta, True);
             fsSincronizou       := False;  // Força a sincronização
             fsTentouSincronizar := True;   // Evita loop infinito, no caso de ocorrer o mesmo erro
-            Self.EnviaComando_ECF();           // Gera chamada recursiva
+            Self.EnviaComando_ECF();       // Gera chamada recursiva
             exit;
           end;
 
@@ -954,12 +954,12 @@ begin
         begin
           if (fsWAKCounter > 0) and                // Já esteve ocupada antes ?
              (EscECFComando.fsCMD in [22,26]) and  // Foi um comando de "Leitura de Informações" ?
-             IsBematech and
+             (IsBematech or IsDaruma) and
              (( fsWAKCounter * cEsperaWAK ) >= (TimeOut*1000)) then  // Atingiu o TimeOut ?
           begin
              // Muitos pedidos de Status... Bematech entrou em Loop... envie o comando novamente...
-            GravaLog('*** Bematech em possível loop: '+IntToStr(fsWAKCounter)+
-                     ' respostas de Ocupada. Reenviando o último comando');
+            GravaLog('*** ECF em possível loop infinito: '+IntToStr(fsWAKCounter)+
+                     ' respostas de ocupado. Reenviando o último comando');
             GravaLog('        Reenvio TX -> ' + ComandoEnviado, True);
             Device.EnviaString(ComandoEnviado);
             Retorno := '';

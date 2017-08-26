@@ -302,6 +302,7 @@ destructor TACBrCargaBalItem.Destroy;
 begin
   FSetor.Free;
   FNutricional.Free;
+  FTara.Free;
   inherited;
 end;
 

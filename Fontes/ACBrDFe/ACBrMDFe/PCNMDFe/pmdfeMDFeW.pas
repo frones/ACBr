@@ -243,16 +243,17 @@ end;
 procedure TMDFeW.GerarIde;
 begin
   Gerador.wGrupo('ide', '#004');
-  Gerador.wCampo(tcInt, '#005', 'cUF     ', 02, 02, 1, MDFe.ide.cUF, DSC_CUF);
+  Gerador.wCampo(tcInt, '#005', 'cUF', 02, 02, 1, MDFe.ide.cUF, DSC_CUF);
   if not ValidarCodigoUF(MDFe.ide.cUF) then
     Gerador.wAlerta('#005', 'cUF', DSC_CUF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#006', 'tpAmb   ', 01, 01, 1, tpAmbToStr(MDFe.Ide.tpAmb), DSC_TPAMB);
-  Gerador.wCampo(tcStr, '#007', 'tpEmit  ', 01, 01, 1, TpEmitenteToStr(MDFe.Ide.tpEmit), DSC_TPEMIT);
+  Gerador.wCampo(tcStr, '#006', 'tpAmb ', 01, 01, 1, tpAmbToStr(MDFe.Ide.tpAmb), DSC_TPAMB);
+  Gerador.wCampo(tcStr, '#007', 'tpEmit', 01, 01, 1, TpEmitenteToStr(MDFe.Ide.tpEmit), DSC_TPEMIT);
 
   // tpTransp não deve ser gerada no XML
   // se tpEmit = teTranspCargaPropria e modal = moRodoviario e
   // veículo de tração for de propriedade do emitente
+  (*
   if (VersaoDF >= ve300) and
      ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or (Length(MDFe.Rodo.veicTracao.Prop.CNPJCPF) >= 11)) and
      (MDFe.Ide.tpTransp <> ttNenhum) and
@@ -260,6 +261,9 @@ begin
            (MDFe.Ide.modal = moRodoviario) and
            ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or
             (MDFe.Rodo.veicTracao.Prop.CNPJCPF = MDFe.emit.CNPJ)) ) then
+    Gerador.wCampo(tcStr, '#007', 'tpTransp', 01, 01, 0, TTransportadorToStr(MDFe.Ide.tpTransp), DSC_TPTRANSP);
+  *)
+  if (VersaoDF >= ve300) and (MDFe.Ide.tpTransp <> ttNenhum) then
     Gerador.wCampo(tcStr, '#007', 'tpTransp', 01, 01, 0, TTransportadorToStr(MDFe.Ide.tpTransp), DSC_TPTRANSP);
 
   Gerador.wCampo(tcInt, '#008', 'mod     ', 02, 02, 1, MDFe.ide.modelo, DSC_MOD);

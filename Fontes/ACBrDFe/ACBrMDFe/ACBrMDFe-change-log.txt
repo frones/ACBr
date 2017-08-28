@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2017
+-- ACBrMDFeManifestos --
+[*] Inicio da implementação das Regras de Validação em ValidarRegrasdeNegocios.
+   Por: Italo Jurisato Junior
+
 21/08/2017
 -- ACBrMDFeManifestos --
 [*] Método "Manifesto.Assinar", ajuste para não verificar o CNPJ, quando processo

@@ -382,11 +382,36 @@ begin
   begin
     Erros := '';
 
-    GravaLog('Validar: 502-Chave de acesso');
-    if not ValidarConcatChave then  //A03-10
-      AdicionaErro(
-        '502-Rejeição: Erro na Chave de Acesso - Campo Id não corresponde à concatenação dos campos correspondentes');
+    GravaLog('Regra: G001 - Validar: 252-Ambiente');
+    if (MDFe.Ide.tpAmb <> Configuracoes.WebServices.Ambiente) then
+      AdicionaErro('252-Rejeição: Tipo do ambiente do MDF-e difere do ambiente do Web Service');
 
+    GravaLog('Regra: G002 - Validar 226-UF');
+    if copy(IntToStr(MDFe.Emit.EnderEmit.cMun), 1, 2) <> IntToStr(Configuracoes.WebServices.UFCodigo) then
+      AdicionaErro('226-Rejeição: Código da UF do Emitente diverge da UF autorizadora');
+
+    GravaLog('Regra: G003 - Validar 247-UF');
+    if MDFe.Emit.EnderEmit.UF <> Configuracoes.WebServices.UF then
+      AdicionaErro('247-Rejeição: Sigla da UF do Emitente difere da UF do Web Service');
+
+    GravaLog('Regra: G004 - Validar: 227-Chave de acesso');
+    if not ValidarConcatChave then
+      AdicionaErro('227-Rejeição: Chave de Acesso do Campo Id difere da concatenação dos campos correspondentes');
+
+    GravaLog('Regra: G005 - Validar: 666-Ano da Chave');
+    if Copy(MDFe.infMDFe.ID, 7, 2) < '2012' then
+      AdicionaErro('666-Rejeição: Ano da chave de acesso é inferior a 2012');
+
+    GravaLog('Regra: G018 - Validar: 458-Tipo de Transportador');
+    if (Configuracoes.Geral.VersaoDF >= ve300) and (MDFe.Ide.tpTransp <> ttNenhum) and
+        (MDFe.Ide.tpEmit = teTranspCargaPropria) and
+        (MDFe.Ide.modal = moRodoviario) and ((MDFe.Rodo.veicTracao.Prop.CNPJCPF = '') or
+        (MDFe.Rodo.veicTracao.Prop.CNPJCPF = MDFe.emit.CNPJ))  then
+      AdicionaErro('458-Rejeição: Tipo de transportador (tpTransp) não deve ser preenchido');
+
+    // *************************************************************************
+    // No total são 93 regras de validação, portanto faltam muitas para serem
+    // acrescentadas nessa rotina.
   end;
 
   Result := EstaVazio(Erros);

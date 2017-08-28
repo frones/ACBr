@@ -882,7 +882,7 @@ begin
       if NFe.infNFe.Versao < 4 then
       begin
         GravaLog('Validar: 768-NFe com formas de pagamento');
-        if NFe.pag.Count > 0 then
+        if (NFe.pag.Count > 0) and (NFe.Ide.modelo = 55) then
           AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
       end;
     end;

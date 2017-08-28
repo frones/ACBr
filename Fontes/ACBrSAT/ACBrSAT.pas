@@ -991,34 +991,58 @@ end ;
 
 function TACBrSAT.AssociarAssinatura(CNPJvalue, assinaturaCNPJs : AnsiString
   ) : String ;
+var
+  SATResp: String;
 begin
   CNPJvalue := OnlyNumber(CNPJvalue);
   fsComandoLog := 'AssociarAssinatura( '+CNPJvalue+', '+assinaturaCNPJs+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.AssociarAssinatura( CNPJvalue, assinaturaCNPJs ) );
+  try
+    SATResp := fsSATClass.AssociarAssinatura( CNPJvalue, assinaturaCNPJs );
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.AtivarSAT(subComando : Integer ; CNPJ : AnsiString ;
   cUF : Integer) : String ;
+var
+  SATResp: String;
 begin
   CNPJ := OnlyNumber(CNPJ);
   fsComandoLog := 'AtivarSAT( '+IntToStr(subComando)+', '+CNPJ+', '+IntToStr(cUF)+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.AtivarSAT( subComando, CNPJ, cUF ) );
+  try
+    SATResp := fsSATClass.AtivarSAT( subComando, CNPJ, cUF )
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.AtualizarSoftwareSAT : String ;
+var
+  SATResp: String;
 begin
   fsComandoLog := 'AtualizarSoftwareSAT';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.AtualizarSoftwareSAT );
+  try
+    SATResp := fsSATClass.AtualizarSoftwareSAT;
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.BloquearSAT : String ;
+var
+  SATResp: String;
 begin
   fsComandoLog := 'BloquearSAT';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.BloquearSAT );
+  try
+    SATResp := fsSATClass.BloquearSAT;
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.CancelarUltimaVenda: String ;
@@ -1037,7 +1061,7 @@ function TACBrSAT.CancelarUltimaVenda(chave, dadosCancelamento : AnsiString
   ) : String ;
 var
   NomeCFe: String;
-  Retorno: String;
+  SATResp: String;
 begin
   fsComandoLog := 'CancelarUltimaVenda( '+chave+', '+dadosCancelamento+' )';
 
@@ -1060,27 +1084,36 @@ begin
   end;
 
   IniciaComando;
+  try
+    SATResp := '';
+    if Assigned(fsOnCancelarUltimaVenda) then
+      fsOnCancelarUltimaVenda(dadosCancelamento, SATResp);
 
-  Retorno := '';
-  if Assigned(fsOnCancelarUltimaVenda) then
-    fsOnCancelarUltimaVenda(dadosCancelamento, Retorno);
-
-  if EstaVazio(Retorno) then
-    Retorno := fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento);
-
-  Result := FinalizaComando( Retorno ) ;
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.CancelarUltimaVenda(chave, dadosCancelamento);
+  finally
+    Result := FinalizaComando( SATResp ) ;
+  end;
 
   DecodificaRetorno7000;
 end ;
 
 function TACBrSAT.ComunicarCertificadoICPBRASIL(certificado : AnsiString) : String ;
+var
+  SATResp: String;
 begin
   fsComandoLog := 'ComunicarCertificadoICPBRASIL( '+certificado+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.ComunicarCertificadoICPBRASIL( certificado ) );
+  try
+    SATResp := fsSATClass.ComunicarCertificadoICPBRASIL( certificado );
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.ConfigurarInterfaceDeRede(dadosConfiguracao : AnsiString ) : String ;
+var
+  SATResp: String;
 begin
   if dadosConfiguracao = '' then
     dadosConfiguracao := Rede.AsXMLString
@@ -1089,25 +1122,31 @@ begin
 
   fsComandoLog := 'ConfigurarInterfaceDeRede( '+dadosConfiguracao+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.ConfigurarInterfaceDeRede( dadosConfiguracao ) );
+  try
+    SATResp := fsSATClass.ConfigurarInterfaceDeRede( dadosConfiguracao );
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.ConsultarNumeroSessao(cNumeroDeSessao : Integer ) : String ;
 var
-  Retorno:string;
+  SATResp: String;
 begin
   fsComandoLog := 'ConsultarNumeroSessao( '+IntToStr(cNumeroDeSessao)+' )';
   IniciaComando;
-  fsSessaoAVerificar := cNumeroDeSessao;
+  try
+    fsSessaoAVerificar := cNumeroDeSessao;
 
-  Retorno := '';
-  if Assigned(fsOnConsultarNumeroSessao) then
-    fsOnConsultarNumeroSessao(IntToStr(cNumeroDeSessao), Retorno);
+    SATResp := '';
+    if Assigned(fsOnConsultarNumeroSessao) then
+      fsOnConsultarNumeroSessao(IntToStr(cNumeroDeSessao), SATResp);
 
-  if EstaVazio(Retorno) then
-    Retorno := fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao );
-
-  Result := FinalizaComando( Retorno );
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.ConsultarNumeroSessao( cNumeroDeSessao );
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 
   DecodificaRetorno6000;
   DecodificaRetorno7000;
@@ -1115,38 +1154,40 @@ end ;
 
 function TACBrSAT.ConsultarSAT : String ;
 var
-  Retorno:string;
+  SATResp: String;
 begin
   fsComandoLog := 'ConsultarSAT';
   IniciaComando;
+  try
+    SATResp := '';
+    if Assigned(fsOnConsultarSAT) then
+      fsOnConsultarSAT(SATResp);
 
-  Retorno := '';
-  if Assigned(fsOnConsultarSAT) then
-    fsOnConsultarSAT(Retorno);
-
-  if EstaVazio(Retorno) then
-    Retorno := fsSATClass.ConsultarSAT;
-
-  Result := FinalizaComando( Retorno );
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.ConsultarSAT;
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.ConsultarStatusOperacional : String ;
 Var
   ok: Boolean;
   I: Integer;
-  AStr, Retorno:String;
+  AStr, SATResp: String;
 begin
   fsComandoLog := 'ConsultarStatusOperacional';
   IniciaComando;
+  try
+    SATResp := '';
+    if Assigned(fsOnConsultaStatusOperacional) then
+      fsOnConsultaStatusOperacional(SATResp);
 
-  Retorno := '';
-  if Assigned(fsOnConsultaStatusOperacional) then
-    fsOnConsultaStatusOperacional(Retorno);
-
-  if EstaVazio(Retorno) then
-    Retorno := fsSATClass.ConsultarStatusOperacional;
-
-  Result := FinalizaComando( Retorno ) ;
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.ConsultarStatusOperacional;
+  finally
+    Result := FinalizaComando( SATResp ) ;
+  end;
 
   ok := True;
 
@@ -1203,10 +1244,16 @@ begin
 end ;
 
 function TACBrSAT.DesbloquearSAT : String ;
+var
+  SATResp: String;
 begin
   fsComandoLog := 'DesbloquearSAT';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.DesbloquearSAT );
+  try
+    SATResp := fsSATClass.DesbloquearSAT;
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.EnviarDadosVenda: String;
@@ -1216,7 +1263,7 @@ end;
 
 function TACBrSAT.EnviarDadosVenda(dadosVenda : AnsiString) : String ;
 var
-  NomeCFe, Retorno: String;
+  NomeCFe, SATResp: String;
 begin
   dadosVenda := Trim(dadosVenda);
 
@@ -1228,26 +1275,27 @@ begin
   dadosVenda := ConverteXMLtoUTF8(dadosVenda);
 
   IniciaComando;
+  try
+    if fsConfigArquivos.SalvarEnvio then
+    begin
+      NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PastaEnvio,
+                                 fsConfigArquivos.PrefixoArqCFe +
+                                 FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
+                                 IntToStrZero(numeroSessao, 6),
+                                 '-env');
+      WriteToTXT(NomeCFe, dadosVenda, False, False);
+      DoLog('  Gravando XML Venda enviado: '+NomeCFe);
+    end;
 
-  if fsConfigArquivos.SalvarEnvio then
-  begin
-    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PastaEnvio,
-                               fsConfigArquivos.PrefixoArqCFe +
-                               FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
-                               IntToStrZero(numeroSessao, 6),
-                               '-env');
-    WriteToTXT(NomeCFe, dadosVenda, False, False);
-    DoLog('  Gravando XML Venda enviado: '+NomeCFe);
+    SATResp := '';
+    if assigned(fsOnEnviarDadosVenda) then
+      fsOnEnviarDadosVenda(dadosVenda, SATResp);
+
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.EnviarDadosVenda( dadosVenda );
+  finally
+    Result := FinalizaComando( SATResp );
   end;
-
-  Retorno := '';
-  if assigned(fsOnEnviarDadosVenda) then
-    fsOnEnviarDadosVenda(dadosVenda, Retorno);
-
-  if EstaVazio(Retorno) then
-    Retorno := fsSATClass.EnviarDadosVenda( dadosVenda );
-
-  Result := FinalizaComando( Retorno );
 
   DecodificaRetorno6000;
 end ;
@@ -1287,19 +1335,20 @@ end;
 procedure TACBrSAT.ExtrairLogs(AStream: TStream);
 var
   LogBin : AnsiString;
-  Retorno: String;
+  SATResp: String;
 begin
   fsComandoLog := 'ExtrairLogs';
   IniciaComando;
+  try
+    SATResp := '';
+    if Assigned(fsOnExtrairLogs) then
+      fsOnExtrairLogs(SATResp);
 
-  Retorno := '';
-  if Assigned(fsOnExtrairLogs) then
-    fsOnExtrairLogs(Retorno);
-
-  if EstaVazio(Retorno) then
-    Retorno := fsSATClass.ExtrairLogs;
-
-  FinalizaComando( Retorno );
+    if EstaVazio(SATResp) then
+      SATResp := fsSATClass.ExtrairLogs;
+  finally
+    FinalizaComando( SATResp );
+  end;
 
   // TODO: Criar verificação para os retornos: 15002, e 11098 - SAT em processamento
 
@@ -1316,23 +1365,26 @@ end;
 
 function TACBrSAT.TesteFimAFim(dadosVenda : AnsiString) : String ;
 var
-  XMLRecebido, NomeCFe : String;
+  XMLRecebido, NomeCFe , SATResp: String;
 begin
   fsComandoLog := 'TesteFimAFim(' +dadosVenda+' )';
   IniciaComando;
+  try
+    if fsConfigArquivos.SalvarEnvio then
+    begin
+      NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PastaEnvio,
+                                 fsConfigArquivos.PrefixoArqCFe +
+                                 FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
+                                 IntToStrZero(numeroSessao, 6),
+                                 '-teste-env');
+      WriteToTXT(NomeCFe, dadosVenda, False, False);
+      DoLog('  Gravando XML TesteFimAFim enviado: '+NomeCFe);
+    end;
 
-  if fsConfigArquivos.SalvarEnvio then
-  begin
-    NomeCFe := CalcCFeNomeArq( fsConfigArquivos.PastaEnvio,
-                               fsConfigArquivos.PrefixoArqCFe +
-                               FormatDateTime('YYYYMMDDHHNNSS',Now) + '-' +
-                               IntToStrZero(numeroSessao, 6),
-                               '-teste-env');
-    WriteToTXT(NomeCFe, dadosVenda, False, False);
-    DoLog('  Gravando XML TesteFimAFim enviado: '+NomeCFe);
+    SATResp := fsSATClass.TesteFimAFim( dadosVenda );
+  finally
+    Result := FinalizaComando( SATResp );
   end;
-
-  Result := FinalizaComando( fsSATClass.TesteFimAFim( dadosVenda ) );
 
   if fsResposta.codigoDeRetorno = 9000 then
   begin
@@ -1350,12 +1402,17 @@ end ;
 
 function TACBrSAT.TrocarCodigoDeAtivacao(codigoDeAtivacaoOuEmergencia: AnsiString;
   opcao: Integer; novoCodigo: AnsiString): String;
+var
+  SATResp: String;
 begin
   fsComandoLog := 'TrocarCodigoDeAtivacao('+ codigoDeAtivacaoOuEmergencia+', '+
                   IntToStr(opcao)+ ', '+novoCodigo+' )';
   IniciaComando;
-  Result := FinalizaComando( fsSATClass.TrocarCodigoDeAtivacao(
-                                codigoDeAtivacaoOuEmergencia, opcao, novoCodigo ));
+  try
+    SATResp := fsSATClass.TrocarCodigoDeAtivacao( codigoDeAtivacaoOuEmergencia, opcao, novoCodigo );
+  finally
+    Result := FinalizaComando( SATResp );
+  end;
 end ;
 
 function TACBrSAT.GetAbout : String ;

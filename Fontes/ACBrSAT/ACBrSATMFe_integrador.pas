@@ -484,92 +484,86 @@ end ;
 function TACBrSATMFe_integrador_XML.EnviarPagamento(Pagamento: TEnviarPagamento
   ): TRespostaPagamento;
 var
-  Comando, Resp : String;
-  RespostaPagamento : TRespostaPagamento;
+  Comando, SATResp : String;
 begin
+  Result := Nil;
   TACBrSAT(Owner).IniciaComando;
+  try
+    Pagamento.Identificador := numeroSessao;
+    Comando := Pagamento.AsXMLString;
+    TACBrSAT(Owner).DoLog('EnviarPagamento( '+Comando+' )');
 
-  Pagamento.Identificador := numeroSessao;
-  Comando := Pagamento.AsXMLString;
-  TACBrSAT(Owner).DoLog('EnviarPagamento( '+Comando+' )');
+    SATResp := FComandoMFE.EnviaComando(numeroSessao,'EnviarPagamento',Comando);
 
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarPagamento',Comando);
-
-  RespostaPagamento := TRespostaPagamento.Create;
-  RespostaPagamento.AsXMLString := Resp;
-
-  Result := RespostaPagamento;
-
-  TACBrSAT(Owner).FinalizaComando( Resp );
+    Result := TRespostaPagamento.Create;
+    Result.AsXMLString := SATResp;
+  finally
+    TACBrSAT(Owner).FinalizaComando( SATResp );
+  end;
 end;
 
 function TACBrSATMFe_integrador_XML.VerificarStatusValidador(
   VerificarStatusValidador: TVerificarStatusValidador
   ): TRespostaVerificarStatusValidador;
 var
-  Comando, Resp : String;
-  RespostaVerificarStatusValidador : TRespostaVerificarStatusValidador;
+  Comando, SATResp : String;
 begin
+  Result := Nil;
   TACBrSAT(Owner).IniciaComando;
+  try
+    VerificarStatusValidador.Identificador := numeroSessao;
+    Comando := VerificarStatusValidador.AsXMLString;
+    TACBrSAT(Owner).DoLog('VerificarStatusValidador( '+Comando+' )');
 
-  VerificarStatusValidador.Identificador := numeroSessao;
-  Comando := VerificarStatusValidador.AsXMLString;
-  TACBrSAT(Owner).DoLog('VerificarStatusValidador( '+Comando+' )');
+    SATResp := FComandoMFE.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
 
-
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'VerificarStatusValidador',Comando);
-
-  RespostaVerificarStatusValidador := TRespostaVerificarStatusValidador.Create;
-  RespostaVerificarStatusValidador.AsXMLString := Resp;
-
-  Result := RespostaVerificarStatusValidador;
-
-  TACBrSAT(Owner).FinalizaComando( Resp );
+    Result := TRespostaVerificarStatusValidador.Create;
+    Result.AsXMLString := SATResp;
+  finally
+    TACBrSAT(Owner).FinalizaComando( SATResp );
+  end;
 end;
 
 function TACBrSATMFe_integrador_XML.RespostaFiscal(
   RespostaFiscal: TRespostaFiscal): TRetornoRespostaFiscal;
 var
-  Comando, Resp : String;
-  RetornoRespostaFiscal : TRetornoRespostaFiscal;
+  Comando, SATResp : String;
 begin
+  Result := Nil;
   TACBrSAT(Owner).IniciaComando;
+  try
+    RespostaFiscal.Identificador := numeroSessao;
+    Comando := RespostaFiscal.AsXMLString;
+    TACBrSAT(Owner).DoLog('RespostaFiscal( '+Comando+' )');
 
-  RespostaFiscal.Identificador := numeroSessao;
-  Comando := RespostaFiscal.AsXMLString;
-  TACBrSAT(Owner).DoLog('RespostaFiscal( '+Comando+' )');
+    SATResp := FComandoMFE.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'RespostaFiscal',Comando);
-
-  RetornoRespostaFiscal := TRetornoRespostaFiscal.Create;
-  RetornoRespostaFiscal.AsXMLString := Resp;
-
-  Result := RetornoRespostaFiscal;
-
-  TACBrSAT(Owner).FinalizaComando( Resp );
+    Result := TRetornoRespostaFiscal.Create;
+    Result.AsXMLString := SATResp;
+  finally
+    TACBrSAT(Owner).FinalizaComando( SATResp );
+  end;
 end;
 
 function TACBrSATMFe_integrador_XML.EnviarStatusPagamento(
   StatusPagamento: TStatusPagamento): TRespostaStatusPagamento;
 var
   Comando, Resp : String;
-  RespostaStatusPagamento : TRespostaStatusPagamento;
 begin
+  Result := Nil;
   TACBrSAT(Owner).IniciaComando;
+  try
+    StatusPagamento.Identificador := numeroSessao;
+    Comando := StatusPagamento.AsXMLString;
+    TACBrSAT(Owner).DoLog('EnviarStatusPagamento( '+Comando+' )');
 
-  StatusPagamento.Identificador := numeroSessao;
-  Comando := StatusPagamento.AsXMLString;
-  TACBrSAT(Owner).DoLog('EnviarStatusPagamento( '+Comando+' )');
+    Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
 
-  Resp := FComandoMFE.EnviaComando(numeroSessao,'EnviarStatusPagamento',Comando);
-
-  RespostaStatusPagamento := TRespostaStatusPagamento.Create;
-  RespostaStatusPagamento.AsXMLString := Resp;
-
-  Result := RespostaStatusPagamento;
-
-  TACBrSAT(Owner).FinalizaComando( Resp );
+    Result := TRespostaStatusPagamento.Create;
+    Result.AsXMLString := Resp;
+  finally
+    TACBrSAT(Owner).FinalizaComando( Resp );
+  end;
 end;
 
 end.

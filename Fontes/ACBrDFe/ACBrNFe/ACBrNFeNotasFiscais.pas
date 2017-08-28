@@ -877,9 +877,14 @@ begin
          (NFe.Dest.indIEDest <> inNaoContribuinte) then
         AdicionaErro('790-Rejeição: Operação com Exterior para destinatário Contribuinte de ICMS');
 
-      GravaLog('Validar: 768-NFe com formas de pagamento');
-      if NFe.pag.Count > 0 then
-        AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
+      // Alterado p/Icozeira - p/Versão 4 da NFe 55 é obrigatorio envio das formas de pagamento
+      // NT_2016_002_v1.20 - ver pagina 43
+      if NFe.infNFe.Versao < 4 then
+      begin
+        GravaLog('Validar: 768-NFe com formas de pagamento');
+        if NFe.pag.Count > 0 then
+          AdicionaErro('768-Rejeição: NF-e não deve possuir o grupo de Formas de Pagamento');
+      end;
     end;
 
     for I:=0 to NFe.autXML.Count-1 do

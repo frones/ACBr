@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+28/08/2017
+-- ACBRNFeNotasFiscais --
+[*] Atualização da regra de validação para a versão 4.00
+    http://www.projetoacbr.com.br/forum/topic/38525-regras-de-valida%C3%A7%C3%A3o-da-nfe-55-ajuste/
+
 21/08/2017
 -- ACBrNFe --
 [*] Métodos ConsultaNFeDest e Download comentados, pois a SEFAZ desativou,

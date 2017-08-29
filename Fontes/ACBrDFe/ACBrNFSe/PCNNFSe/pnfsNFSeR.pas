@@ -299,12 +299,7 @@ begin
       NFSe.DataEmissao := Leitor.rCampo(tcDatHor, 'DataEmissao');
 
     NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
-
-    if FProvedor in [proAbaco] then
-      NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Copy(Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'), 2, 1))
-    else
-      NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
-
+    NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
     NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
     NFSe.IncentivadorCultural     := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
     NFSe.Status                   := StrToStatusRPS(ok, Leitor.rCampo(tcStr, 'Status'));
@@ -822,9 +817,9 @@ begin
     end
     else
     begin
-      NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
+      NFSe.RegimeEspecialTributacao    := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
       NFSe.Servico.ResponsavelRetencao := StrToResponsavelRetencao(ok, Leitor.rCampo(tcStr, 'ResponsavelRetencao'));
-      NFSe.Servico.ExigibilidadeISS := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeIss'));
+      NFSe.Servico.ExigibilidadeISS    := StrToExigibilidadeISS(ok, Leitor.rCampo(tcStr, 'ExigibilidadeIss'));
       NFSe.Servico.CodigoMunicipio     := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
       NFSe.Servico.MunicipioIncidencia := Leitor.rCampo(tcInt, 'MunicipioIncidencia');
     end;
@@ -1358,12 +1353,7 @@ begin
       end;
 
       NFSe.NaturezaOperacao         := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
-
-      if FProvedor in [proAbaco] then
-        NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Copy(Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'), 2, 1))
-      else
-        NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
-
+      NFSe.RegimeEspecialTributacao := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
       NFSe.OptanteSimplesNacional   := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
 
       if FProvedor = ProTecnos then
@@ -3010,12 +3000,12 @@ begin
     // Dados do prestador
     if (Leitor.rExtrai(2, 'DadosPrestador') <> '') then
     begin
-      NFSe.PrestadorServico.RazaoSocial    := leitor.rCampo(tcStr, 'RazaoSocial');
-      NFSe.PrestadorServico.NomeFantasia   := leitor.rCampo(tcStr, 'NomeFantasia');
-      NFSe.IncentivadorCultural            := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
-      NFSe.OptanteSimplesNacional          := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
-      NFSe.NaturezaOperacao                := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
-      NFSe.RegimeEspecialTributacao        := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
+      NFSe.PrestadorServico.RazaoSocial  := leitor.rCampo(tcStr, 'RazaoSocial');
+      NFSe.PrestadorServico.NomeFantasia := leitor.rCampo(tcStr, 'NomeFantasia');
+      NFSe.IncentivadorCultural          := StrToSimNao(ok, Leitor.rCampo(tcStr, 'IncentivadorCultural'));
+      NFSe.OptanteSimplesNacional        := StrToSimNao(ok, Leitor.rCampo(tcStr, 'OptanteSimplesNacional'));
+      NFSe.NaturezaOperacao              := StrToNaturezaOperacao(ok, Leitor.rCampo(tcStr, 'NaturezaOperacao'));
+      NFSe.RegimeEspecialTributacao      := StrToRegimeEspecialTributacao(ok, Leitor.rCampo(tcStr, 'RegimeEspecialTributacao'));
 
       if (Leitor.rExtrai(3, 'IdentificacaoPrestador') <> '') then
       begin

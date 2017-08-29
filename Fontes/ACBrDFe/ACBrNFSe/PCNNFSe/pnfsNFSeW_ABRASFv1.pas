@@ -495,8 +495,13 @@ begin
 
   if not (FProvedor in [proPublica, proDBSeller]) then
   begin
-    if (NFSe.RegimeEspecialTributacao <> retNenhum) then
-      Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN);
+    if FProvedor in [proAbaco] then
+      Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 02, 02, 0, '0' + RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN)
+    else
+    begin
+      if (NFSe.RegimeEspecialTributacao <> retNenhum) then
+        Gerador.wCampoNFSe(tcStr, '#6', 'RegimeEspecialTributacao', 01, 01, 0, RegimeEspecialTributacaoToStr(NFSe.RegimeEspecialTributacao), DSC_REGISSQN);
+    end;
   end;
 
   if FProvedor <>  proNFSeBrasil then

@@ -561,7 +561,7 @@ begin
 
     BufferOut[0] := #0; // Zera Buffer de Saida
     ACmd := ReplaceString(ACmd, NUL, '[NULL]');
-    ACmd := ChangeLineBreak(ACmd, LF);
+    //ACmd := ChangeLineBreak(ACmd, LF);
 
     GravaLog( '   xEPSON_Send_From_FileEX -> '+ACmd, True );
     Resp := xEPSON_Send_From_FileEX( ACmd, BufferOut ) ;

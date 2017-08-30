@@ -138,6 +138,7 @@ type
     FvTribMun: Currency; //total tributos municipais
     FFonteTributos: String;
     FChaveTributos: String;
+    FImprimirTributos : Boolean;
 
     FPosCanhoto: TPosRecibo;
 
@@ -207,7 +208,8 @@ type
     property LogoemCima: Boolean                     read FLogoEmCima                     write FLogoEmCima;
     property TamanhoFonteEndereco: Integer           read FTamanhoFonteEndereco           write FTamanhoFonteEndereco;
     property RecuoLogo: Integer                      read FRecuoLogo                      write FRecuoLogo;
-    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente;
+    property ImprimirTributos: Boolean               read FImprimirTributos               write FImprimirTributos default True;
+    property TributosSeparadamente: Boolean          read FTributosSeparadamente          write FTributosSeparadamente default False;
     property vTribFed: Currency                      read FvTribFed                       write FvTribFed;
     property vTribEst: Currency                      read FvTribEst                       write FvTribEst;
     property vTribMun: Currency                      read FvTribMun                       write FvTribMun;
@@ -299,7 +301,8 @@ begin
   FViaConsumidor:= True;
   FvTroco       := 0.0;
 
-  FTributosSeparadamente:= False;
+  FImprimirTributos      := True;
+  FTributosSeparadamente := False;
   FvTribFed:= 0.0;
   FvTribEst:= 0.0;
   FvTribMun:= 0.0;

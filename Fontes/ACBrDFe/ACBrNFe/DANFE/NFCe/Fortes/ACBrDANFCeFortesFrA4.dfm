@@ -1,9 +1,9 @@
 object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Left = 0
   Top = 0
+  Width = 1028
+  Height = 784
   Caption = 'frmACBrDANFCeFortesFrA4'
-  ClientHeight = 745
-  ClientWidth = 995
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -274,7 +274,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = []
         Layout = tlCenter
         ParentFont = False
-				BeforePrint = RLLabel14BeforePrint
+        BeforePrint = RLLabel14BeforePrint
       end
       object RLLabel15: TRLLabel
         Left = 552
@@ -289,7 +289,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Font.Style = []
         Layout = tlCenter
         ParentFont = False
-				BeforePrint = RLLabel15BeforePrint
+        BeforePrint = RLLabel15BeforePrint
       end
     end
     object subItens: TRLSubDetail
@@ -671,6 +671,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Borders.DrawTop = False
         Borders.DrawRight = True
         Borders.DrawBottom = True
+        BeforePrint = RLBand9BeforePrint
         object RLLabel31: TRLLabel
           Left = 312
           Top = 0
@@ -730,7 +731,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         Left = 0
         Top = 142
         Width = 718
-        Height = 93
+        Height = 89
         AutoSize = True
         Borders.Sides = sdCustom
         Borders.DrawLeft = True
@@ -840,7 +841,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 235
+        Top = 231
         Width = 718
         Height = 44
         AutoSize = True
@@ -904,7 +905,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
       end
       object rlbRodape: TRLBand
         Left = 0
-        Top = 279
+        Top = 275
         Width = 718
         Height = 173
         AutoSize = True

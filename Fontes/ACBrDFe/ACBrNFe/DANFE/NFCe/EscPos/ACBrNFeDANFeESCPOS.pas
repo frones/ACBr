@@ -346,6 +346,9 @@ procedure TACBrNFeDANFeESCPOS.GerarTotalTributos;
 var
   MsgTributos : String;
 begin
+  if not ImprimirTributos then
+    Exit;
+
   if TributosSeparadamente and ((vTribFed+vTribEst+vTribMun) > 0) then
   begin
      MsgTributos:= 'Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s';
@@ -363,7 +366,6 @@ begin
                           FPosPrinter.ColunasFonteCondensada));
     end;
   end;
-
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarMensagemInteresseContribuinte;

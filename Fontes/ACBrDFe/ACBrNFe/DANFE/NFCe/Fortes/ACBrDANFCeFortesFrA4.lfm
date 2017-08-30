@@ -11,7 +11,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
   Font.Height = -11
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.4.0'
   object rlReportA4: TRLReport
     Left = 8
     Height = 1123
@@ -797,6 +797,7 @@ object frmACBrDANFCeFortesFrA4: TfrmACBrDANFCeFortesFrA4
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
+        BeforePrint = RLBand9BeforePrint
         object RLLabel31: TRLLabel
           Left = 312
           Height = 16

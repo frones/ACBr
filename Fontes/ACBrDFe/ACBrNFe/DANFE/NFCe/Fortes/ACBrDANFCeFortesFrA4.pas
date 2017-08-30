@@ -168,6 +168,7 @@ type
     lCancelada: TRLLabel;
     procedure lNomeFantasiaBeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
+    procedure RLBand9BeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure RLLabel14BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLLabel15BeforePrint(Sender: TObject; var Text: string;
@@ -337,6 +338,12 @@ begin
   Text := self.FACBrNFeDANFCeFortesA4.FpNFe.Emit.xFant;
 end;
 
+procedure TfrmACBrDANFCeFortesFrA4.RLBand9BeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := self.FACBrNFeDANFCeFortesA4.ImprimirTributos;
+end;
+
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel14BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
@@ -439,13 +446,14 @@ end;
 procedure TfrmACBrDANFCeFortesFrA4.RLBand13BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vOutro > 0;
+  PrintIt := (self.FACBrNFeDANFCeFortesA4.FpNFe.Total.ICMSTot.vOutro > 0);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand15BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
-  PrintIt := self.FACBrNFeDANFCeFortesA4.TributosSeparadamente;
+  with self.FACBrNFeDANFCeFortesA4 do
+    PrintIt := ImprimirTributos and TributosSeparadamente;
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand8BeforePrint(Sender: TObject;
@@ -926,7 +934,9 @@ procedure TfrmACBrDANFCeFortesFrA4.RLLabel31BeforePrint(Sender: TObject;
     end;
   end;
 begin
-  if not self.FACBrNFeDANFCeFortesA4.TributosSeparadamente then
+  if not self.FACBrNFeDANFCeFortesA4.ImprimirTributos then
+    Text := ''
+  else if not self.FACBrNFeDANFCeFortesA4.TributosSeparadamente then
     Text := ManterValorTributosLinha
   else
     Text := 'Você pagou aproximadamente : ';

@@ -47,6 +47,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/08/2017
+-- ACBrNFeDANFE* --
+[+] Adicionada a propriedade "ImprimirTributos: Boolean default True".
+    Quando Falsa suprime toda a impressão dos Tributos pelo ACBr
+    http://www.projetoacbr.com.br/forum/topic/38342-solicitacao-de-melhoria-tributosseparadamente/
+    (por: DSA)
+
 28/08/2017
 -- ACBRNFeNotasFiscais --
 [*] Atualização da regra de validação para a versão 4.00

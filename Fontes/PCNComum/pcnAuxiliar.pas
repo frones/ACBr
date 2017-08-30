@@ -953,25 +953,28 @@ end;
 function ExtrairSerieChaveAcesso(AChaveNFE: String): Integer;
 begin
   AChaveNFE := OnlyNumber(AChaveNFE);
-  Result    := StrToIntDef(Copy(AChaveNFE, 23, 3), 0);
+  if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
+    Result := StrToIntDef(Copy(AChaveNFE, 23, 9), 0)
+  else
+    Result := StrToIntDef(Copy(AChaveNFE, 23, 3), 0);
 end;
 
 function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
 begin
   AChaveNFE := OnlyNumber(AChaveNFE);
   if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
-    Result    := StrToIntDef(Copy(AChaveNFE, 32, 6), 0)
+    Result := StrToIntDef(Copy(AChaveNFE, 32, 6), 0)
   else
-    Result    := StrToIntDef(Copy(AChaveNFE, 26, 9), 0);
+    Result := StrToIntDef(Copy(AChaveNFE, 26, 9), 0);
 end;
 
 function ExtraircNFChaveAcesso(AChaveNFE: String): Integer;
 begin
   AChaveNFE := OnlyNumber(AChaveNFE);
   if ExtrairModeloChaveAcesso(AChaveNFE) = '59' then  //SAT
-    Result    := StrToIntDef(Copy(AChaveNFE, 38, 6), 0)
+    Result := StrToIntDef(Copy(AChaveNFE, 38, 6), 0)
   else
-    Result    := StrToIntDef(Copy(AChaveNFE, 36, 8), 0);
+    Result := StrToIntDef(Copy(AChaveNFE, 36, 8), 0);
 end;
 
 function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;

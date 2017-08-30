@@ -39,6 +39,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2017
+-- pcnAuxiliar --
+[*] Método "ExtrairSerieChaveAcesso", modificado para retornar o Numero de Série, quando for SAT
+
 22/07/2017
 -- pcnConversao --
 [-] Remoção da função DescrModeloNFe. Sendo espicífica para as danfe's ( Fast Report / Fortes Report ).

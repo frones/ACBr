@@ -44,6 +44,21 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+30/08/2017
+-- ACBrDFeOpenSSL --
+[+] Adicionado suporte a Logs de Debug da Synapse, que podem ser ligados com
+    a diretiva {$Define SYNADEBUG}
+
+-- ACBrDFeXsMsXml --
+[-] Detectado problemas na assinatura gerada, em algumas raras situações.
+    Provavelmente o problema se deve ao uso do objeto "IXMLDigitalSignatureEx"
+    Método "Assinar" modificado, para usar o objeto "IXMLDigitalSignature",
+    ficando compatível com o utilizado em ACBrDFeXsMsXmlCapicom.
+
+-- ACBrDFeXsXmlSec --
+[+] Método "XmlSecSign" modificado para exibir mais informações de erro, no caso
+    de falha da Assinatura
+
 21/02/2017
 -- ACBrDFeWinCrypt --
 [-] Correção para remover o numero de Série do Certificado, de "CertificadosA3ComPin",

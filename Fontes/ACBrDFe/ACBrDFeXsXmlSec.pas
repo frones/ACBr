@@ -55,7 +55,7 @@ uses
    AnsiStrings,
   {$EndIf}
   {$IfDef USE_MSCRYPO}
-   windows, WinCrypt,
+   windows, ACBr_WinCrypt,
    {$IfDef FPC}
     DynLibs,
    {$EndIf}
@@ -564,6 +564,7 @@ var
   SignNode: xmlNodePtr;
   buffer: PAnsiChar;
   bufSize, SignResult: integer;
+  xmlsecMsg: PAnsiChar;
 begin
   doc := Nil;
   Result := '';
@@ -584,7 +585,10 @@ begin
     { sign the template }
     SignResult := xmlSecDSigCtxSign(FdsigCtx, SignNode);
     if (SignResult < 0) then
-      raise EACBrDFeException.CreateFmt(cErrDSigSign, [SignResult]);
+    begin
+      xmlsecMsg := xmlSecErrorsGetMsg(2);
+      raise EACBrDFeException.CreateFmt(cErrDSigSign + sLineBreak + xmlsecMsg, [SignResult]);
+    end;
 
     { print signed document to stdout }
     // xmlDocDump(stdout, doc);

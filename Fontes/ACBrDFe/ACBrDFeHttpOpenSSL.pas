@@ -34,6 +34,7 @@
 {******************************************************************************}
 
 {$I ACBr.inc}
+{.$Define SYNADEBUG}
 
 unit ACBrDFeHttpOpenSSL;
 
@@ -43,7 +44,8 @@ uses
   Classes, SysUtils,
   HTTPSend, ssl_openssl, ssl_openssl_lib, blcksock,
   ACBrDFeSSL,
-  {$IFDEF USE_libeay32}libeay32{$ELSE} OpenSSLExt{$ENDIF};
+  {$IfDef SYNADEBUG}synadbg,{$EndIf}
+  {$IfDef USE_libeay32}libeay32{$Else} OpenSSLExt{$EndIf};
 
 type
 
@@ -52,6 +54,9 @@ type
   TDFeHttpOpenSSL = class(TDFeSSLHttpClass)
   private
     FHTTP: THTTPSend;
+    {$IfDef SYNADEBUG}
+     FSynaDebug: TSynaDebug;
+    {$EndIf}
     procedure VerificarSSLType(AValue: TSSLType);
 
   protected
@@ -80,11 +85,20 @@ constructor TDFeHttpOpenSSL.Create(ADFeSSL: TDFeSSL);
 begin
   inherited;
   FHTTP := THTTPSend.Create;
+
+  {$IfDef SYNADEBUG}
+  FSynaDebug := TsynaDebug.Create;
+  FHTTP.Sock.OnStatus := FSynaDebug.HookStatus;
+  FHTTP.Sock.OnMonitor := FSynaDebug.HookMonitor;
+  {$EndIf}
 end;
 
 destructor TDFeHttpOpenSSL.Destroy;
 begin
   FHTTP.Free;
+  {$IfDef SYNADEBUG}
+  FSynaDebug.Free;
+  {$EndIf}
   inherited Destroy;
 end;
 
@@ -147,14 +161,16 @@ begin
 
   FHTTP.Timeout := FpDFeSSL.TimeOut;
   FHTTP.Sock.ConnectionTimeout := FpDFeSSL.TimeOut;
+  //FHTTP.Sock.SSL.Ciphers := 'DEFAULT:AES128-SHA';
 
   FHTTP.ProxyHost := FpDFeSSL.ProxyHost;
   FHTTP.ProxyPort := FpDFeSSL.ProxyPort;
   FHTTP.ProxyUser := FpDFeSSL.ProxyUser;
   FHTTP.ProxyPass := FpDFeSSL.ProxyPass;
   FHTTP.MimeType  := AMimeType;
-  FHTTP.UserAgent := '';
+  FHTTP.UserAgent := 'Synapse OpenSSL ACBr/1.0';
   FHTTP.Protocol  := '1.1';
+  //FHTTP.Sock.SSL.VerifyCert := False;
   FHTTP.AddPortNumberToHost := False;
 
   if ASoapAction <> '' then

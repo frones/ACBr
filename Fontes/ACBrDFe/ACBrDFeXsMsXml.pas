@@ -70,7 +70,7 @@ implementation
 uses
   strutils,
   ACBrUtil, ACBrDFeUtil, ACBrDFeException,
-  ACBr_WinCrypt{, ACBrDFeWinCrypt};
+  ACBr_WinCrypt, ACBrDFeWinCrypt;
 
 { TDFeSSLXmlSignMsXml }
 
@@ -98,14 +98,14 @@ var
   signedKey: IXMLDSigKey;
   ResultInitialize: HRESULT;
   Inicializado: Boolean;
-  { //Antiga
+  // Código Compatíval com TDFeSSLXmlSignMsXmlCapicom
   xmldsig: IXMLDigitalSignature;
   dsigKey: IXMLDSigKey;
   ProviderType: DWORD;
-  ProviderName, ContainerName: String;}
-  // Ex
+  ProviderName, ContainerName: String;
+  { // Nova implementação usando IXMLDigitalSignatureEx. porem, falha em algumas raras situações
   xmldsig: IXMLDigitalSignatureEx;
-  dsigKey: IXMLDSigKeyEx;
+  dsigKey: IXMLDSigKeyEx;}
 begin
   Result := '';
   ResultInitialize := CoInitialize(nil);
@@ -148,10 +148,10 @@ begin
       //xmldoc.save('c:\temp\xmldoc.xml');
 
       // Criando Elemento de assinatura //
-      { // Antiga
-      xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignature;}
-      // Ex
-      xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignatureEx;
+      // Código Compatíval com TDFeSSLXmlSignMsXmlCapicom
+      xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignature;
+      { // Nova implementação usando IXMLDigitalSignatureEx
+      xmldsig := CreateComObject(CLASS_MXDigitalSignature50) as IXMLDigitalSignatureEx;}
       if (xmldsig = nil) then
         raise EACBrDFeException.Create('Erro ao criar Elemento para Assinatura');
 
@@ -162,7 +162,7 @@ begin
 
       // Criando Objeto para manipular a Chave Privada //
       dsigKey := Nil;
-      { // Antiga
+      // Código Compatíval com TDFeSSLXmlSignMsXmlCapicom
       ProviderType  := 0;
       ProviderName  := '';
       ContainerName := '';
@@ -173,10 +173,10 @@ begin
 
       dsigKey := xmldsig.createKeyFromCSP( ProviderType,
                                            WideString(ProviderName),
-                                           WideString(ContainerName), 0); }
-      // Ex
+                                           WideString(ContainerName), 0);
+      { // Nova implementação usando IXMLDigitalSignatureEx
       xmldsig.setStoreHandle( PCCERT_CONTEXT(FpDFeSSL.CertContextWinApi)^.hCertStore );
-      xmldsig.createKeyFromCertContext( FpDFeSSL.CertContextWinApi, dsigKey);
+      xmldsig.createKeyFromCertContext( FpDFeSSL.CertContextWinApi, dsigKey);}
 
       if (dsigKey = nil) then
         raise EACBrDFeException.Create('Falha ao obter a Chave Privada do Certificado para Assinatura.');
@@ -197,7 +197,7 @@ begin
        XmlAss := NativeStringToUTF8( String(XmlAss) );
       {$EndIf}
 
-      // Ajustando o XML... CAPICOM insere um cabeçalho inválido
+      // Ajustando o XML... MsXml, insere um cabeçalho inválido
       XmlAss := AjustarXMLAssinado(XmlAss, FpDFeSSL.DadosCertificado.DERBase64);
     finally
       xmldoc := nil;

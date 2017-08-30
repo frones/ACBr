@@ -69,18 +69,17 @@ TACBrETQClass = class
     procedure SetAtivo(const Value: Boolean);
     procedure SetTemperatura(const Value: Integer);
     procedure SetAvanco(const Value: Integer);
-    procedure SetAdicionarComandoP(const Value: Boolean);
 
   protected
-    fpDevice  : TACBrDevice ;
-    fpAtivo   : Boolean ;
+    fpDevice: TACBrDevice;
+    fpAtivo: Boolean;
+    fpBackFeed: TACBrETQBackFeed;
     fpModeloStr: String;
     fpListaCmd: TStringList;
     fpCmd: AnsiString;
     fpLimparMemoria : Boolean;
     fpEtqFinalizada: Boolean;
     fpEtqInicializada: Boolean;
-    FpAdicionarComandoP: Boolean;
 
     procedure SetUnidade(const AValue: TACBrETQUnidade); virtual;
     procedure SetDPI(const AValue : TACBrETQDPI) ; virtual;
@@ -102,8 +101,8 @@ TACBrETQClass = class
     property Avanco: Integer read FAvanco write SetAvanco;
     property Unidade: TACBrETQUnidade read FUnidade write SetUnidade;
     property DPI: TACBrETQDPI read FDPI write SetDPI;
-    property LimparMemoria: Boolean read fpLimparMemoria write fpLimparMemoria ;
-    property AdicionarComandoP: Boolean read FpAdicionarComandoP write SetAdicionarComandoP;
+    property LimparMemoria: Boolean read fpLimparMemoria write fpLimparMemoria;
+    property BackFeed: TACBrETQBackFeed read fpBackFeed write fpBackFeed;
 
     property ArqLOG: String read fpArqLOG write fpArqLOG;
     property OnGravarLog: TACBrGravarLog read fpOnGravarLog write fpOnGravarLog;
@@ -427,11 +426,6 @@ procedure TACBrETQClass.CalcularComandoFinaliza(Copias: Integer;
   AvancoEtq: Integer);
 begin
   // Sem Implementação
-end;
-
-procedure TACBrETQClass.SetAdicionarComandoP(const Value: Boolean);
-begin
-  FpAdicionarComandoP := Value;
 end;
 
 end.

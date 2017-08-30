@@ -71,9 +71,11 @@ TACBrETQ = class( TACBrComponent )
     fsETQ    : TACBrETQClass ;
 
     function GetArqLOG: String;
+    function GetBackFeed: TACBrETQBackFeed;
     function GetLimparMemoria : Boolean;
     function GetOnGravarLog: TACBrGravarLog;
     procedure SetArqLOG(AValue: String);
+    procedure SetBackFeed(AValue: TACBrETQBackFeed);
     procedure SetLimparMemoria(const AValue : Boolean);
     procedure SetModelo(const Value: TACBrETQModelo);
     procedure SetOnGravarLog(AValue: TACBrGravarLog);
@@ -90,8 +92,6 @@ TACBrETQ = class( TACBrComponent )
     procedure SetUnidade(const AValue: TACBrETQUnidade);
     function GetDPI : TACBrETQDPI ;
     procedure SetDPI(const AValue : TACBrETQDPI) ;
-    function GetAdicionarComandoP: Boolean;
-    procedure SetAdicionarComandoP(const Value: Boolean);
     function GetEtqFinalizada: Boolean;
     function GetEtqInicializada: Boolean;
   protected
@@ -142,9 +142,8 @@ TACBrETQ = class( TACBrComponent )
       default 0 ;
     property LimparMemoria: Boolean read GetLimparMemoria write SetLimparMemoria
       default True ;
-
-   property AdicionarComandoP: Boolean read GetAdicionarComandoP write SetAdicionarComandoP
-     default False;
+    property BackFeed: TACBrETQBackFeed read GetBackFeed write SetBackFeed
+      default bfNone;
 
    property ArqLOG: String read GetArqLOG write SetArqLOG;
    property OnGravarLog: TACBrGravarLog read GetOnGravarLog write SetOnGravarLog;
@@ -288,6 +287,11 @@ begin
   Result := fsETQ.ArqLOG;
 end;
 
+function TACBrETQ.GetBackFeed: TACBrETQBackFeed;
+begin
+  Result := fsETQ.BackFeed;
+end;
+
 function TACBrETQ.GetOnGravarLog: TACBrGravarLog;
 begin
   Result := fsETQ.OnGravarLog;
@@ -296,6 +300,11 @@ end;
 procedure TACBrETQ.SetArqLOG(AValue: String);
 begin
   fsETQ.ArqLOG := AValue;
+end;
+
+procedure TACBrETQ.SetBackFeed(AValue: TACBrETQBackFeed);
+begin
+  fsETQ.BackFeed := AValue;
 end;
 
 function TACBrETQ.GetEtqFinalizada: Boolean;
@@ -386,7 +395,7 @@ end;
 
 procedure TACBrETQ.SetTemperatura(const Value: Integer);
 begin
-  fsETQ.Temperatura:= Value;
+  fsETQ.Temperatura := Value;
 end;
 
 function TACBrETQ.GetTemperatura: Integer;
@@ -477,16 +486,6 @@ end;
 procedure TACBrETQ.SetDPI(const AValue : TACBrETQDPI) ;
 begin
   fsETQ.DPI := AValue;
-end;
-
-function TACBrETQ.GetAdicionarComandoP: Boolean;
-begin
-  Result := fsETQ.AdicionarComandoP
-end;
-
-procedure TACBrETQ.SetAdicionarComandoP(const Value: Boolean);
-begin
- fsETQ.AdicionarComandoP := Value;
 end;
 
 end.

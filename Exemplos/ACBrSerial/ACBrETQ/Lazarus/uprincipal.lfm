@@ -1,47 +1,59 @@
 object FPrincipal: TFPrincipal
-  Left = 606
-  Height = 220
-  Top = 219
+  Left = 584
+  Height = 238
+  Top = 176
   Width = 516
   ActiveControl = cbModelo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Impressão de Etiquetas'
-  ClientHeight = 220
+  ClientHeight = 238
   ClientWidth = 516
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Position = poScreenCenter
   LCLVersion = '1.6.4.0'
-  object Label1: TLabel
+  object lbModelo: TLabel
+    AnchorSideLeft.Control = cbModelo
+    AnchorSideBottom.Control = cbModelo
     Left = 16
     Height = 13
-    Top = 10
+    Top = 12
     Width = 38
+    Anchors = [akLeft, akBottom]
     Caption = 'Modelo:'
     ParentColor = False
   end
-  object Label2: TLabel
-    Left = 124
+  object lbPorta: TLabel
+    AnchorSideLeft.Control = cbPorta
+    AnchorSideBottom.Control = cbPorta
+    Left = 125
     Height = 13
-    Top = 10
+    Top = 12
     Width = 28
+    Anchors = [akLeft, akBottom]
     Caption = 'Porta:'
     ParentColor = False
   end
-  object Label3: TLabel
+  object lbCopias: TLabel
+    AnchorSideLeft.Control = eCopias
+    AnchorSideBottom.Control = eCopias
     Left = 16
     Height = 13
-    Top = 173
+    Top = 192
     Width = 47
+    Anchors = [akLeft, akBottom]
     Caption = 'Nº Copias'
     ParentColor = False
   end
-  object Label4: TLabel
+  object lbAvanco: TLabel
+    AnchorSideLeft.Control = eAvanco
+    AnchorSideBottom.Control = eAvanco
     Left = 16
     Height = 13
-    Top = 128
+    Top = 147
     Width = 59
+    Anchors = [akLeft, akBottom]
     Caption = 'Avanço Etq:'
     ParentColor = False
   end
@@ -86,7 +98,7 @@ object FPrincipal: TFPrincipal
   object eCopias: TEdit
     Left = 16
     Height = 21
-    Top = 188
+    Top = 205
     Width = 94
     OnKeyPress = eCopiasKeyPress
     TabOrder = 5
@@ -95,7 +107,7 @@ object FPrincipal: TFPrincipal
   object eAvanco: TEdit
     Left = 16
     Height = 21
-    Top = 143
+    Top = 160
     Width = 94
     OnKeyPress = eCopiasKeyPress
     TabOrder = 4
@@ -104,7 +116,7 @@ object FPrincipal: TFPrincipal
   object bEtqSimples: TButton
     Left = 124
     Height = 25
-    Top = 128
+    Top = 145
     Width = 113
     BorderSpacing.InnerBorder = 4
     Caption = 'Etiqueta Simples'
@@ -114,7 +126,7 @@ object FPrincipal: TFPrincipal
   object bEtqCarreiras: TButton
     Left = 124
     Height = 25
-    Top = 156
+    Top = 173
     Width = 113
     BorderSpacing.InnerBorder = 4
     Caption = 'Etiqueta 3 Colunas'
@@ -123,7 +135,7 @@ object FPrincipal: TFPrincipal
   end
   object Image1: TImage
     Left = 251
-    Height = 111
+    Height = 126
     Top = 10
     Width = 250
     Picture.Data = {
@@ -241,26 +253,26 @@ object FPrincipal: TFPrincipal
       02040000010080004100
     }
   end
-  object Label5: TLabel
+  object lbNomeImg: TLabel
     Left = 251
     Height = 13
-    Top = 136
+    Top = 153
     Width = 111
     Caption = 'Nome Imagem Memória'
     ParentColor = False
   end
-  object Edit1: TEdit
+  object edNomeImg: TEdit
     Left = 380
     Height = 21
-    Top = 128
+    Top = 145
     Width = 121
     TabOrder = 10
     Text = 'ACBR'
   end
   object bCarregarImg: TButton
-    Left = 250
+    Left = 251
     Height = 25
-    Top = 184
+    Top = 201
     Width = 121
     Caption = 'Carregar Imagem'
     OnClick = bCarregarImgClick
@@ -269,16 +281,16 @@ object FPrincipal: TFPrincipal
   object bImprimirImagem: TButton
     Left = 380
     Height = 25
-    Top = 184
+    Top = 201
     Width = 121
     Caption = 'Imprimir Imagem'
     OnClick = bImprimirImagemClick
     TabOrder = 14
   end
   object ckMemoria: TCheckBox
-    Left = 16
+    Left = 125
     Height = 19
-    Top = 102
+    Top = 115
     Width = 94
     Caption = 'Limpar Memória'
     Checked = True
@@ -288,7 +300,7 @@ object FPrincipal: TFPrincipal
   object rbStream: TRadioButton
     Left = 380
     Height = 19
-    Top = 158
+    Top = 175
     Width = 87
     Caption = 'De um Stream'
     TabOrder = 12
@@ -296,19 +308,22 @@ object FPrincipal: TFPrincipal
   object rbArquivo: TRadioButton
     Left = 281
     Height = 19
-    Top = 158
+    Top = 175
     Width = 90
     Caption = 'De um Arquivo'
     Checked = True
     TabOrder = 11
     TabStop = True
   end
-  object Label6: TLabel
+  object lbDPI: TLabel
+    AnchorSideLeft.Control = cbDPI
+    AnchorSideBottom.Control = cbDPI
     Left = 16
     Height = 13
-    Top = 55
-    Width = 72
-    Caption = 'DPI Impressora'
+    Top = 57
+    Width = 75
+    Anchors = [akLeft, akBottom]
+    Caption = 'DPI Impressora:'
     ParentColor = False
   end
   object cbDPI: TComboBox
@@ -327,12 +342,15 @@ object FPrincipal: TFPrincipal
     TabOrder = 3
     Text = 'dpi203'
   end
-  object Label7: TLabel
+  object lbTemperatura: TLabel
+    AnchorSideLeft.Control = eTemperatura
+    AnchorSideBottom.Control = eTemperatura
     Left = 124
     Height = 13
-    Top = 55
-    Width = 60
-    Caption = 'Temperatura'
+    Top = 57
+    Width = 63
+    Anchors = [akLeft, akBottom]
+    Caption = 'Temperatura:'
     ParentColor = False
   end
   object eTemperatura: TEdit
@@ -347,12 +365,39 @@ object FPrincipal: TFPrincipal
   object bEtqBloco: TButton
     Left = 124
     Height = 25
-    Top = 184
+    Top = 201
     Width = 113
     BorderSpacing.InnerBorder = 4
     Caption = 'Bloco de Etiquetas'
     OnClick = bEtqBlocoClick
     TabOrder = 9
+  end
+  object cbBackFeed: TComboBox
+    Left = 16
+    Height = 21
+    Top = 115
+    Width = 94
+    ItemHeight = 13
+    ItemIndex = 0
+    Items.Strings = (
+      'bfNone'
+      'bfOn'
+      'bfOff'
+    )
+    Style = csDropDownList
+    TabOrder = 15
+    Text = 'bfNone'
+  end
+  object lbBackFeed: TLabel
+    AnchorSideLeft.Control = cbBackFeed
+    AnchorSideBottom.Control = cbBackFeed
+    Left = 16
+    Height = 13
+    Top = 102
+    Width = 52
+    Anchors = [akLeft, akBottom]
+    Caption = 'BackFeed:'
+    ParentColor = False
   end
   object ACBrETQ: TACBrETQ
     Porta = 'LPT1'

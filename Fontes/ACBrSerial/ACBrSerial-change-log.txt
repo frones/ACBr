@@ -39,6 +39,18 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 30/08/2017
+-- ACBrETQ --
+[+] Inclusão de nova propriedade "BackFeed", baseada na contribuição do usuário conforme:
+    http://www.projetoacbr.com.br/forum/topic/38559-etiqueta-pplb-da-argox-com-back-feed/
+	(por: Felippi)
+[*] Exclusão da propriedade "AdicionarComandoP", pois estava obsoleta. Os comandos 
+	utilizados por ela ('P' e 'N') já são enviados em outros momentos do código.
+	
+-- ACBrETQClass, ACBrETQPEpl2 --
+[+] Implementação da nova propriedade "BackFeed".
+[*] Exclusão da propriedade e implementação referente à "AdicionarComandoP".
+
 Data: 26/08/2017
 -- ACBrECFEscECF --
 [-] Ajuste para problema de Loop infinito em Daruma FS800I

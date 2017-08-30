@@ -122,6 +122,8 @@ TACBrETQOrientacao = (orNormal, or270, or180, or90);
 
 TACBrETQBarraExibeCodigo = (becPadrao, becSIM, becNAO);
 
+TACBrETQBackFeed = (bfNone, bfOn, bfOff);
+
 {Criando o tipo enumerado para tipos de código de barras }
 TACBrTipoCodBarra =  ( barEAN13, barEAN8, barSTANDARD, barINTERLEAVED,
                        barCODE128, barCODE39, barCODE93, barUPCA,

@@ -38,6 +38,13 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 31/08/2017
+-- GZIPUtils --
+[-] Correção no método "unzipStream". Em algumas raras situações o Stream não
+    era descompatado, pois o código original da GZipUtils modificava o tamanho
+    do Stream de Entrada, o que não é esperado pot "Tdecompressionstream"
+    (por: DSA)
+
 Data: 21/08/2017
 -- ACBrCompress --
 [+] Adicionada nova Unit para centralizar todo tratamento da compactação e

@@ -489,6 +489,12 @@ begin
         EstaVazio := ConteudoProcessado = '';
       end;
 
+    tcStrOrig:
+      begin
+        ConteudoProcessado := VarToStr(valor);
+        EstaVazio := ConteudoProcessado = '';
+      end;
+
     tcDat, tcDatCFe:
       begin
         DecodeDate(VarToDateTime(valor), wAno, wMes, wDia);

@@ -2288,11 +2288,12 @@ begin
         (*
         schresMDFe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resMDFe.chMDFe + '-resMDFe.xml';
+
         schresEvento:
           NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-             FretDistDFeInt.docZip.Items[I].resEvento.chMDFe +
-             Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-             '-resEventoMDFe.xml';
+                     FretDistDFeInt.docZip.Items[I].resEvento.chMDFe +
+                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+                     '-resEventoMDFe.xml';
         *)
         schprocMDFe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resMDFe.chMDFe + '-mdfe.xml';
@@ -2364,7 +2365,6 @@ begin
       Result := FPConfiguracoesMDFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
                                                            AItem.resMDFe.CNPJCPF,
                                                            Data);
-
 
     schprocMDFe:
       Result := FPConfiguracoesMDFe.Arquivos.GetPathDownload(AItem.resMDFe.xNome,

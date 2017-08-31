@@ -3611,25 +3611,25 @@ begin
 
         schresEvento:
           FNomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-                     FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
-                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-                     '-resEventoNFe.xml';
+                      FretDistDFeInt.docZip.Items[I].resEvento.chNFe +
+                      Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+                      '-resEventoNFe.xml';
 
         schprocNFe:
           FNomeArq := FretDistDFeInt.docZip.Items[I].resNFe.chNFe + '-nfe.xml';
 
         schprocEventoNFe:
           FNomeArq := OnlyNumber(FretDistDFeInt.docZip.Items[I].procEvento.Id) +
-                     '-procEventoNFe.xml';
+                      '-procEventoNFe.xml';
       end;
 
       if (FPConfiguracoesNFe.Arquivos.Salvar) and NaoEstaVazio(NomeArq) then
       begin
         if FPConfiguracoesNFe.Arquivos.SalvarEvento then
-           if (FretDistDFeInt.docZip.Items[I].schema in [schprocEventoNFe]) then // salvar evento
+           if (FretDistDFeInt.docZip.Items[I].schema in [schresEvento, schprocEventoNFe]) then // salvar evento
               FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
 
-        if (FretDistDFeInt.docZip.Items[I].schema in [schprocNFe]) then
+        if (FretDistDFeInt.docZip.Items[I].schema in [schresNFe, schprocNFe]) then
            FPDFeOwner.Gravar(NomeArq, AXML, GerarPathDistribuicao(FretDistDFeInt.docZip.Items[I]));
       end;
     end;
@@ -3683,12 +3683,13 @@ begin
     Data := Now;
 
   case AItem.schema of
+    schresEvento,
     schprocEventoNFe:
       Result := FPConfiguracoesNFe.Arquivos.GetPathEvento(AItem.procEvento.tpEvento,
                                                           AItem.resNFe.CNPJCPF,
                                                           Data);
 
-
+    schresNFe,
     schprocNFe:
       Result := FPConfiguracoesNFe.Arquivos.GetPathDownload(AItem.resNFe.xNome,
                                                         AItem.resNFe.CNPJCPF,

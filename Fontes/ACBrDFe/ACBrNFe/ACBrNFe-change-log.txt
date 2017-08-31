@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+31/08/2017
+-- ACBrNFeWebServices --
+[*] Corrigito a função TDistribuicaoDFe.TratarResposta, pois não estava
+    salvando os XML dos resumos de notas e de eventos.
+   Por: Italo Jurisato Junior
+
 29/08/2017
 -- ACBrNFeDANFE* --
 [+] Adicionada a propriedade "ImprimirTributos: Boolean default True".

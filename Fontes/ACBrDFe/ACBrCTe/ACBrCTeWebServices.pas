@@ -3058,9 +3058,9 @@ begin
 
         schresEvento:
           NomeArq := OnlyNumber(TpEventoToStr(FretDistDFeInt.docZip.Items[I].resEvento.tpEvento) +
-             FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
-             Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
-             '-resEventoCTe.xml';
+                     FretDistDFeInt.docZip.Items[I].resEvento.chCTe +
+                     Format('%.2d', [FretDistDFeInt.docZip.Items[I].resEvento.nSeqEvento])) +
+                     '-resEventoCTe.xml';
         *)
         schprocCTe:
           NomeArq := FretDistDFeInt.docZip.Items[I].resCTe.chCTe + '-cte.xml';

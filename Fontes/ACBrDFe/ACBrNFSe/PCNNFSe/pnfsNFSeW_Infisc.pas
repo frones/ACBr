@@ -71,6 +71,7 @@ type
     procedure GerarListaServicos_v11;
     procedure GerarValoresServico_v11;
     procedure GerarCondicaoPagamento_v11;
+    procedure GerarDespesasAdicionaisNaoTributaveis;
 
     procedure GerarXML_Infisc_v11;
 
@@ -708,6 +709,9 @@ begin
   if NFSe.CondicaoPagamento.Parcelas.Count > 0 then
     Gerador.wCampoNFSe(tcDe2, '', 'vtLiqFaturas', 01, 15, 1, NFSe.Servico.Valores.ValorLiquidoNfse, '');
 
+  if NFSe.Servico.Valores.ValorDespesasNaoTributaveis > 0 then
+    Gerador.wCampoNFSe(tcDe2, '', 'vtDespesas', 01, 15, 1, NFSe.Servico.Valores.ValorDespesasNaoTributaveis, '');
+
   // Total Retenção ISSQN
   if SituacaoTributariaToStr(NFSe.Servico.Valores.IssRetido) = '1' then
   begin  // 1 - stRetencao
@@ -774,6 +778,7 @@ begin
 
   GerarTransportadora;
   GerarListaServicos_v11;
+  GerarDespesasAdicionaisNaoTributaveis;
   GerarValoresServico_v11;
   GerarCondicaoPagamento_v11;
 
@@ -870,6 +875,30 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'numeroProj',  01,  15, 0, NFSe.ConstrucaoCivil.nProj,  ''); //num. projeto
   Gerador.wCampoNFSe(tcStr, '', 'numeroMatri', 01,  15, 0, NFSe.ConstrucaoCivil.nMatri, ''); //num. matricula
   Gerador.wGrupoNFSe('/dadosDaObra');
+end;
+
+procedure TNFSeW_Infisc.GerarDespesasAdicionaisNaoTributaveis;
+var
+  lItem: Integer;
+  lItemDepesa: TDespesaCollectionItem;
+begin
+  //Criação de desepsas adicionais não tributaveis
+  {Usado para inclusão de serviços que não são tributaveis e agregam valor no total da nota}
+  if NFSe.Despesa.Count > 0 then
+  begin
+    Gerador.wGrupoNFSe('despesas');
+    for lItem := 0 to Pred(NFSe.Despesa.Count) do
+    begin
+      lItemDepesa := NFSe.Despesa.Items[lItem];
+      Gerador.wGrupoNFSe('despesa');
+      Gerador.wCampoNFSe(tcStr, '', 'nItemDesp',    01, 100, 1, lItemDepesa.nItemDesp, '');
+      Gerador.wCampoNFSe(tcStr, '', 'xDesp',  01, 100, 1, lItemDepesa.xDesp, '');
+      Gerador.wCampoNFSe(tcDat, '', 'dDesp', 01, 15,  1, lItemDepesa.dDesp, DSC_DEMI);
+      Gerador.wCampoNFSe(tcDe2, '', 'vDesp',  01, 15,  1, lItemDepesa.vDesp, '');
+      Gerador.wGrupoNFSe('/despesa');
+    end;
+    Gerador.wGrupoNFSe('/despesas');
+  end;
 end;
 
 end.

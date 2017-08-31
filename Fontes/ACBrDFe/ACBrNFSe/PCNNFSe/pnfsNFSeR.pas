@@ -3681,11 +3681,24 @@ begin
     inc(Item);
   end;
 
+  Item := 0;
+  if (Leitor.rExtrai(1, 'despesas') <> '') then
+  begin
+    NFSe.Despesa.Add;
+    NFSe.Despesa.Items[Item].nItemDesp := Leitor.rCampo(tcStr, 'nItemDesp');
+    NFSe.Despesa.Items[Item].xDesp := Leitor.rCampo(tcStr, 'xDesp');
+    NFSe.Despesa.Items[Item].dDesp := Leitor.rCampo(tcDat, 'dDesp');
+    NFSe.Despesa.Items[Item].vDesp := Leitor.rCampo(tcDe2, 'vDesp');
+    inc(Item);
+  end;
+
   if (Leitor.rExtrai(1, 'total') <> '') then
   begin
     NFSe.Servico.Valores.ValorServicos          := Leitor.rCampo(tcDe2, 'vServ');
     NFSe.Servico.Valores.DescontoIncondicionado := Leitor.rCampo(tcDe2, 'vDesc');
     NFSe.Servico.Valores.ValorLiquidoNfse       := Leitor.rCampo(tcDe2, 'vtLiq');
+
+    NFSe.Servico.Valores.ValorDespesasNaoTributaveis := Leitor.rCampo(tcDe2, 'vtDespesas');
 
     if (Leitor.rExtrai(2, 'ISS') <> '') then
     begin

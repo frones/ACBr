@@ -907,9 +907,9 @@ begin
       AXML := copy(AXMLString, 1, N + TamTAG);
       AXMLString := Trim(copy(AXMLString, N + TamTAG + 1, length(AXMLString)));
 
-      // No caso do provedor SimplISS o grupo NfseCancelamento fica fora do
+      // No caso dos provedores [SimplISS, Betha e Tecnos] o grupo NfseCancelamento fica fora do
       // grupo CompNfse
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor = proSimplISS then
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSimplISS, proBetha, proTecnos] then
       begin
         N:= PosNFSeCancelamento;
         if N > 0 then

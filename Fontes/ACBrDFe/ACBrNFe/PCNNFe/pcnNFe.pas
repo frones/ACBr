@@ -1728,6 +1728,7 @@ type
     function Add: TpagCollectionItem;
 
     property Items[Index: Integer]: TpagCollectionItem read GetItem write SetItem; default;
+  published
     property vTroco: Currency read FvTroco write FvTroco;
   end;
 

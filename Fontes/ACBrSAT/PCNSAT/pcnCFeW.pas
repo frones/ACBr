@@ -187,6 +187,8 @@ begin
 end;
 
 procedure TCFeW.GerarEmit;
+var
+  InscEst : String;
 begin
   Gerador.wGrupo('emit', 'C01');
   Gerador.wCampoCNPJCPF('C02', 'C02', CFe.Emit.CNPJ);
@@ -198,7 +200,10 @@ begin
 
   (**)GerarEmitEnderEmit;
 
-  Gerador.wCampo(tcStr, 'C12', 'IE      ', 2, 14, 1, SomenteNumeros(CFe.Emit.IE), DSC_IE);
+  InscEst := Trim(SomenteNumeros(CFe.Emit.IE));
+  if Length(InscEst) < 12 then  //Caso a IE possua menos do que 12 dígitos, o AC deve preencher com espaços à direita. ER 2.21.08
+    InscEst := PadLeft(InscEst,12,' ');
+  Gerador.wCampo(tcStr, 'C12', 'IE      ', 2, 14, 1, InscEst, DSC_IE);
   if (trim(CFe.Emit.IM) <> '') then
     Gerador.wCampo(tcStr, 'C13', 'IM      ', 01, 15, 1, CFe.Emit.IM, DSC_IM);
 

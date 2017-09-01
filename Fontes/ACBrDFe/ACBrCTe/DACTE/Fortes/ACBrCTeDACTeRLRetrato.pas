@@ -904,12 +904,12 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByname('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
+            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chCTe);
           end
           else
           begin
             cdsDocumentos.FieldByname('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
+            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chCTe);
 
             cdsDocumentos.Post;
           end;

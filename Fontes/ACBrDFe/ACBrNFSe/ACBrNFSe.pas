@@ -619,6 +619,7 @@ begin
   // %NumeroNFSe%    : Representa o Numero da NFS-e
   // %NomeMunicipio% : Representa o Nome do Municipio
   // %InscMunic%     : Representa a Inscrição Municipal do Emitente
+  // %Cnpj%          : Representa o CNPJ do Emitente
 
   xNumeroNFSe := IntToStr(ANumeroNFSe);
 
@@ -627,6 +628,7 @@ begin
   Texto := StringReplace(Texto, '%NomeMunicipio%', xNomeMunic, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%InscMunic%', Configuracoes.Geral.Emitente.InscMun, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%ChaveAcesso%', AChaveAcesso, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%Cnpj%', Configuracoes.Geral.Emitente.CNPJ, [rfReplaceAll]);
 
   Result := Texto;
 end;

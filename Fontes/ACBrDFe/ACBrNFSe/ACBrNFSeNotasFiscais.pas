@@ -835,7 +835,7 @@ var
   Ok: Boolean;
   AXML: AnsiString;
   N, TamTAG, i: integer;
-  TagF: Array[1..7] of String;
+  TagF: Array[1..9] of String;
 
   function PosNFSe: Integer;
   begin
@@ -846,6 +846,9 @@ var
     TagF[5] := '</NFe>';
     TagF[6] := '</tbnfd>';
     TagF[7] := '</nfs>';
+    // Necessários para o Provedor EL
+    TagF[8] := '</nfeRpsNotaFiscal>';
+    TagF[9] := '</notasFiscais>';
 
     i := 0;
 
@@ -853,7 +856,7 @@ var
       inc(i);
       TamTAG := Length(TagF[i]) -1;
       Result := Pos(TagF[i], AXMLString);
-    until (i = 7) or (Result <> 0);
+    until (i = 9) or (Result <> 0);
 
   end;
 

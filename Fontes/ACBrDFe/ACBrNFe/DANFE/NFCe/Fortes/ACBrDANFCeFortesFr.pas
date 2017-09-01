@@ -60,7 +60,7 @@ type
   TACBrSATExtratoFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
   { TACBrNFeDANFCeFortes }
-	{$IFDEF RTL230_UP}
+  {$IFDEF RTL230_UP}
   [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
   {$ENDIF RTL230_UP}	
   TACBrNFeDANFCeFortes = class( TACBrNFeDANFEClass )
@@ -344,13 +344,36 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject; var PrintIt: Boolean);
 var
   i:integer;
+  MsgTributos: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
-    if (Total.ICMSTot.vTotTrib > 0) then
-      lTitLei12741.Caption := lTitLei12741.Caption +' '+ FormatFloatBr(Total.ICMSTot.vTotTrib)
+    MsgTributos := '';
+
+    with ACBrNFeDANFCeFortes do
+    begin
+      if ImprimirTributos then
+      begin
+        if TributosSeparadamente and ((vTribFed+vTribEst+vTribMun) > 0) then
+        begin
+           MsgTributos := Format('Tributos Incidentes Lei Federal 12.741/12 - Total R$ %s Federal R$ %s Estadual R$ %s Municipal R$ %s',
+                                 [FormatFloatBr(vTribFed + vTribEst + vTribMun),
+                                  FormatFloatBr(vTribFed),
+                                  FormatFloatBr(vTribEst),
+                                  FormatFloatBr(vTribMun)]);
+        end
+        else if (Total.ICMSTot.vTotTrib > 0) then
+        begin
+          MsgTributos:= Format('Tributos Totais Incidentes(Lei Federal 12.741/12): R$ %s',
+                               [FormatFloatBr(Total.ICMSTot.vTotTrib)]);
+        end;
+      end;
+    end;
+
+    if (MsgTributos = '') then
+      lTitLei12741.Visible := False
     else
-      lTitLei12741.Visible := False;
+      lTitLei12741.Caption := MsgTributos;
 
     for I := 0 to InfAdic.obsCont.Count - 1 do
     begin

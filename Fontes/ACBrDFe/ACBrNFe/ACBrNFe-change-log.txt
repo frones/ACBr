@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+01/09/2017
+-- ACBrDANFCeFortesFr --
+[+] Adicionado suporte as propriedades "ImprimirTributos" e "TributosSeparadamente"
+    http://www.projetoacbr.com.br/forum/topic/38342-solicitacao-de-melhoria-tributosseparadamente/?page=2#comment-253535
+    (por: DSA)
+
 31/08/2017
 -- ACBrNFeWebServices --
 [*] Corrigito a função TDistribuicaoDFe.TratarResposta, pois não estava

@@ -684,12 +684,18 @@ begin
             cdsDocumentos.Append;
 
             cdsDocumentos.FieldByname('TIPO_1').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
+            if FCTe.infCTe.versao >= 3 then
+              cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chCTe)
+            else
+              cdsDocumentos.FieldByname('CNPJCPF_1').AsString := FormatarChaveAcesso(chave);
           end
           else
           begin
             cdsDocumentos.FieldByname('TIPO_2').AsString := 'CT-E';
-            cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
+            if FCTe.infCTe.versao >= 3 then
+              cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chCTe)
+            else
+              cdsDocumentos.FieldByname('CNPJCPF_2').AsString := FormatarChaveAcesso(chave);
 
             cdsDocumentos.Post;
           end;

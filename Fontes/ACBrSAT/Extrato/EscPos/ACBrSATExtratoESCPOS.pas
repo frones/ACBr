@@ -507,6 +507,8 @@ begin
       FBuffer.Add('</ce><c>' + Site);
   end;
 
+  FBuffer.Add('</zera>');
+  
   if CortaPapel then
   begin
     if FPosPrinter.CortaPapel then
@@ -570,6 +572,8 @@ begin
 
   if MsgAppQRCode <> '' then
     FBuffer.Add('</ce><c>' + QuebraLinhas(MsgAppQRCode, FPosPrinter.ColunasFonteCondensada ));
+	
+  FBuffer.Add('</zera>');	
 
   if FPosPrinter.CortaPapel then
     FBuffer.Add('</corte_total>')

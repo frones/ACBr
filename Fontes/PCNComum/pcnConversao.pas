@@ -166,6 +166,7 @@ type
 
   TtpIntegra = (tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado);
 
+  TIndicador = (tiSim, tiNao);
 const
   TpcnTpEventoString : array[0..34] of String =('110110', '110111', '210200',
                                                 '210210', '210220', '210240',
@@ -351,6 +352,9 @@ function StrToTpNavegacao(out ok: boolean; const s: string): TTipoNavegacao;
 
 function tpIntegraToStr(const t: TtpIntegra): string;
 function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
+
+function TIndicadorToStr(const t: TIndicador): string;
+function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 
 implementation
 
@@ -1514,6 +1518,16 @@ end;
 function StrTotpIntegra(out ok: boolean; const s: string): TtpIntegra;
 begin
   result := StrToEnumerado(ok, s, ['', '1', '2'], [tiNaoInformado, tiPagIntegrado, tiPagNaoIntegrado]);
+end;
+
+function TIndicadorToStr(const t: TIndicador): string;
+begin
+  Result := EnumeradoToStr(t, ['1', '0'], [tiSim, tiNao]);
+end;
+
+function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
+begin
+  Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
 end;
 
 end.

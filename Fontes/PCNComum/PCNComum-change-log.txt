@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/09/2017
+-- pcnConversao --
+[+] Inclusão do tipo TIndicador e suas funções.
+   Por: Italo Jurisato Junior
+
 30/08/2017
 -- pcnAuxiliar --
 [*] Método "ExtrairSerieChaveAcesso", modificado para retornar o Numero de Série, quando for SAT

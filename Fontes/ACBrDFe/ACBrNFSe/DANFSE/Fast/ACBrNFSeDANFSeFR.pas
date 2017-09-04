@@ -808,7 +808,7 @@ begin
         Post;
       end;
 
-    if ANFSe.Servico.ItemServico.Count < 12 then
+    if (ANFSe.Servico.ItemServico.Count > 0) AND (ANFSe.Servico.ItemServico.Count < 12) then
       begin
         for I := 1 to 12 - ANFSe.Servico.ItemServico.Count do
           begin
@@ -847,10 +847,10 @@ begin
 
       with Servico do
       begin
-        FieldByName('CodigoMunicipio').AsString     := IfThen(CodigoMunicipio <> '', CodigoMunicipio, '');
+        FieldByName('CodigoMunicipio').AsString     := CodCidadeToCidade(StrToIntDef(IfThen(CodigoMunicipio <> '', CodigoMunicipio, ''),0));
         FieldByName('ExigibilidadeISS').AsString    := ExigibilidadeISSDescricao(ExigibilidadeISS);
         FieldByName('MunicipioIncidencia').AsString := CodCidadeToCidade(StrToIntDef(CodigoMunicipio, 0));
-        FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento; 
+        FieldByName('TipoRecolhimento').AsString    := TipoRecolhimento;
       end;
 
       with ConstrucaoCivil do

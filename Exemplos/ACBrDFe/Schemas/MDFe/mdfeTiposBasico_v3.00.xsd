@@ -39,8 +39,9 @@ Tabela do IBGE de código de unidades da federação.</xs:documentation>
 											<xs:documentation>Tipo do Emitente
 </xs:documentation>
 											<xs:documentation>1 - Prestador de serviço de transporte 
-2 - Transportador de Carga Própria
-OBS: Deve ser preenchido com 2 para emitentes de NF-e e pelas transportadoras quando estiverem fazendo transporte de carga própria</xs:documentation>
+2 - Transportador de Carga Própria 3 - Prestador de serviço de transporte que emitirá CT-e Globalizado 
+
+OBS: Deve ser preenchido com 2 para emitentes de NF-e e pelas transportadoras quando estiverem fazendo transporte de carga própria. Deve ser preenchido com 3 para transportador de carga que emitirá à posteriori CT-e Globalizado relacionando as NF-e.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
 									<xs:element name="tpTransp" type="TTransp" minOccurs="0">
@@ -203,6 +204,16 @@ Informar 'EX' para operações com o exterior.</xs:documentation>
 											<xs:documentation>Data e hora previstos de inicio da viagem</xs:documentation>
 											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
 										</xs:annotation>
+									</xs:element>
+									<xs:element name="indCanalVerde" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Indicador de participação do Canal Verde</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="1"/>
+											</xs:restriction>
+										</xs:simpleType>
 									</xs:element>
 								</xs:sequence>
 							</xs:complexType>

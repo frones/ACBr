@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 04/09/2017
+-- pcteConversaoCTe --
+[-] Remoção do tipo TIndicador e suas funções.
+   Por: Italo Jurisato Junior
+
+04/09/2017
 -- pcteCTeW -- 
 [*] Incluido a chamada para gerar o grupo <cobr> para o modelo 67 - CTe OS e
     a tag <tpNav> conforme consta na NT 2017/002.

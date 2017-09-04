@@ -98,7 +98,6 @@ type
   TpcnindNegociavel = (inNaoNegociavel, inNegociavel);
   TpcteTipoVeiculo = (tvTracao, tvReboque);
   TpcteRspSeg = (rsRemetente, rsExpedidor, rsRecebedor, rsDestinatario, rsEmitenteCTe, rsTomadorServico);
-  TIndicador = (tiSim, tiNao);
   TEspecie = (teNumerario, teCheque, teMoeda, teOutros);
   TpInfManu = (imCEEAV, imAPCDEA, imSAC, imAPDENR, imAPQI, imGSR, imNR, imAPCC,
                imAAGA, imPI965, imPI966, imPI967, imPI968, imPI969, imPI970, imOUTRO);
@@ -183,9 +182,6 @@ function GetVersaoModalCTe(AVersaoDF: TVersaoCTe; AModal: TpcteModal): string;
 function ModeloCTeToStr(const t: TModeloCTe): String;
 function StrToModeloCTe(out ok: Boolean; const s: String): TModeloCTe;
 function ModeloCTeToPrefixo(const t: TModeloCTe): String;
-
-function TIndicadorToStr(const t: TIndicador): string;
-function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
 
 function TEspecieToStr(const t: TEspecie): String;
 function StrToTEspecie(out ok: Boolean; const s: String): TEspecie;
@@ -616,16 +612,6 @@ begin
   else
     Result := 'CTe';
   end;
-end;
-
-function TIndicadorToStr(const t: TIndicador): string;
-begin
-  Result := EnumeradoToStr(t, ['1', '0'], [tiSim, tiNao]);
-end;
-
-function StrToTIndicador(out ok: boolean; const s: string): TIndicador;
-begin
-  Result := StrToEnumerado(ok, s, ['1', '0'], [tiSim, tiNao]);
 end;
 
 function TEspecieToStr(const t: TEspecie): String;

@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 04/08/2017
+-- ACBrECF, ACBrECFClass --
+[*] Modificações em "GetRodapePaf" introduzindo o campo "InfoRodapeCupom.DavFarm"
+    para Farmácias de manipulação
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=38657
+
 Data: 30/08/2017
 -- ACBrECFEscECF --
 [-] Revertida modificação implementada em: 18/07/2017.

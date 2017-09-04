@@ -3465,6 +3465,10 @@ begin
   if Trim(InfoRodapeCupom.Dav) <> EmptyStr then
     Result := Result + GetQuebraLinha('DAV' + Trim(InfoRodapeCupom.Dav));
 
+  // atende ao requisito do paf-ECF VI item 5
+  if Trim(InfoRodapeCupom.DavFarm) <> EmptyStr then
+    Result := Result + GetQuebraLinha('Fórmula manipulada conf. DAV nº : ' + Trim(InfoRodapeCupom.DavFarm));
+
   // atende ao requisito do paf-ECF LI item 1
   if Trim(InfoRodapeCupom.DavOs) <> EmptyStr then
     Result := Result + GetQuebraLinha('DAV-OS' + Trim(InfoRodapeCupom.DavOs));

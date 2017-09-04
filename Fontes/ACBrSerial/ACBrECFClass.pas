@@ -167,6 +167,7 @@ TACBrECFRodape = class( TPersistent )
     fsDavOs: String;
     fsMD5: String;
     fsDav: String;
+    fsDavFarm: String;
     fsNF: String;
     fsPlaca: String;
     fsQtdeKM: String;
@@ -186,6 +187,7 @@ TACBrECFRodape = class( TPersistent )
   published
     property MD5         : String  read fsMD5         write SetMD5;
     property Dav         : String  read fsDav         write fsDav   stored False;
+    property DavFarm     : String  read fsDavFarm     write fsDavFarm stored False;
     property NF          : String  read fsNF          write fsNF stored False;
     property DavOs       : String  read fsDavOs       write fsDavOs stored False;
     property PreVenda    : String  read fsPreVenda    write fsPreVenda stored False;
@@ -5398,6 +5400,7 @@ end;
 procedure TACBrECFRodape.Clear;
 begin
   fsDav        := EmptyStr;
+  fsDavFarm    := EmptyStr;
   fsDavOs      := EmptyStr;
   fsPreVenda   := EmptyStr;
   fsNF         := EmptyStr;

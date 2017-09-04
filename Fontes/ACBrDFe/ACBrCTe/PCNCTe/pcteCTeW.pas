@@ -1511,6 +1511,8 @@ begin
           if not ValidarChave(CTe.infCTeNorm.refCTeCanc) then
             Gerador.wAlerta('#', 'refCTeCanc', DSC_REFNFE, ERR_MSG_INVALIDO);
       end;
+
+      GerarCobr;
     end;
 
     Gerador.wGrupo('/infCTeNorm');
@@ -2210,13 +2212,13 @@ begin
   Gerador.wCampo(tcStr, '#06', 'xNavio   ', 01, 60, 1, CTe.infCTeNorm.aquav.xNavio, DSC_XNAVIO);
 
   for i := 0 to CTe.infCTeNorm.aquav.balsa.Count - 1 do
-   begin
+  begin
     Gerador.wGrupo('balsa', '#07');
     Gerador.wCampo(tcStr, '#08', 'xBalsa', 01, 60, 1, CTe.infCTeNorm.aquav.balsa.Items[i].xBalsa, DSC_XBALSA);
     Gerador.wGrupo('/balsa');
-   end;
+  end;
   if CTe.infCTeNorm.aquav.balsa.Count > 3 then
-   Gerador.wAlerta('#07', 'balsa', DSC_XBALSA, ERR_MSG_MAIOR_MAXIMO + '3');
+    Gerador.wAlerta('#07', 'balsa', DSC_XBALSA, ERR_MSG_MAIOR_MAXIMO + '3');
 
   Gerador.wCampo(tcStr, '#09', 'nViag', 01, 10, 0, CTe.infCTeNorm.aquav.nViag, DSC_NVIAG);
   Gerador.wCampo(tcStr, '#10', 'direc', 01, 01, 1, TpDirecaoToStr(CTe.infCTeNorm.aquav.direc), DSC_DIREC);
@@ -2232,53 +2234,56 @@ begin
   Gerador.wCampo(tcStr, '#15', 'irin', 01, 10, 1, CTe.infCTeNorm.aquav.irin, DSC_IRIN);
 
   for i := 0 to CTe.infCTeNorm.aquav.detCont.Count - 1 do
-   begin
+  begin
     Gerador.wGrupo('detCont', '#16');
     Gerador.wCampo(tcStr, '#17', 'nCont', 01, 20, 1, CTe.infCTeNorm.aquav.detCont.Items[i].nCont, DSC_NCONT);
 
     for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Count - 1 do
-     begin
+    begin
       Gerador.wGrupo('Lacre', '#18');
       Gerador.wCampo(tcStr, '#19', 'nLacre', 01, 20, 1, CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Items[j].nLacre, DSC_NLACRE);
       Gerador.wGrupo('/Lacre');
-     end;
+    end;
     if CTe.infCTeNorm.aquav.detCont.Items[i].Lacre.Count > 3 then
-     Gerador.wAlerta('#18', 'Lacre', DSC_NLACRE, ERR_MSG_MAIOR_MAXIMO + '3');
+      Gerador.wAlerta('#18', 'Lacre', DSC_NLACRE, ERR_MSG_MAIOR_MAXIMO + '3');
 
     if (CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count > 0) or
        (CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count > 0) then
-     begin
+    begin
       Gerador.wGrupo('infDoc', '#20');
 
       for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count - 1 do
-       begin
+      begin
         Gerador.wGrupo('infNF', '#21');
         Gerador.wCampo(tcStr, '#22', 'serie  ', 01, 03, 1, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Items[j].serie, DSC_SERIE);
         Gerador.wCampo(tcEsp, '#23', 'nDoc   ', 01, 20, 1, OnlyNumber(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Items[j].nDoc), DSC_NDOC);
         Gerador.wCampo(tcDe2, '#24', 'unidRat', 01, 05, 0, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Items[j].unidRat, DSC_QTDRAT);
-       end;
+      end;
       if CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNF.Count > 999 then
-       Gerador.wAlerta('#21', 'infNF', DSC_INFNF, ERR_MSG_MAIOR_MAXIMO + '999');
+        Gerador.wAlerta('#21', 'infNF', DSC_INFNF, ERR_MSG_MAIOR_MAXIMO + '999');
 
       for j := 0 to CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count - 1 do
-       begin
+      begin
         Gerador.wGrupo('infNFe', '#25');
         Gerador.wCampo(tcStr, '#26', 'chave  ', 44, 44, 1, OnlyNumber(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave), DSC_REFNFE);
         if OnlyNumber(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave) <> '' then
-        if not ValidarChave(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave) then
-         Gerador.wAlerta('#26', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
+          if not ValidarChave(CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].chave) then
+            Gerador.wAlerta('#26', 'chave', DSC_REFNFE, ERR_MSG_INVALIDO);
         Gerador.wCampo(tcDe2, '#27', 'unidRat', 01, 05, 0, CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Items[j].unidRat, DSC_QTDRAT);
-       end;
+      end;
       if CTe.infCTeNorm.aquav.detCont.Items[i].infDoc.infNFe.Count > 999 then
-       Gerador.wAlerta('#25', 'infNFe', DSC_INFNF, ERR_MSG_MAIOR_MAXIMO + '999');
+        Gerador.wAlerta('#25', 'infNFe', DSC_INFNF, ERR_MSG_MAIOR_MAXIMO + '999');
 
       Gerador.wGrupo('/infDoc');
-     end;
+    end;
 
     Gerador.wGrupo('/detCont');
-   end;
+  end;
   if CTe.infCTeNorm.aquav.detCont.Count > 999 then
-   Gerador.wAlerta('#16', 'detCont', DSC_DETCONT, ERR_MSG_MAIOR_MAXIMO + '999');
+    Gerador.wAlerta('#16', 'detCont', DSC_DETCONT, ERR_MSG_MAIOR_MAXIMO + '999');
+
+  if CTe.infCTe.versao >= 3 then
+    Gerador.wCampo(tcStr, '#28', 'tpNav', 01, 01, 1, TpNavegacaoToStr(CTe.infCTeNorm.aquav.tpNav), DSC_TPNAV);
 
   Gerador.wGrupo('/aquav');
 end;

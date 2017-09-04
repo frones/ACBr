@@ -44,7 +44,8 @@ uses
   SysUtils, StrUtils, Classes;
 
 type
-  TTpEmitenteMDFe = (teTransportadora, teTranspCargaPropria);
+  TTpEmitenteMDFe = (teTransportadora, teTranspCargaPropria,
+                     teTranspCTeGlobalizado);
 
   TModalMDFe      = (moRodoviario, moAereo, moAquaviario, moFerroviario);
 
@@ -139,15 +140,17 @@ end;
 function TpEmitenteToStr(const t: TTpEmitenteMDFe): String;
 begin
   result := EnumeradoToStr(t,
-                           ['1', '2'],
-                           [teTransportadora, teTranspCargaPropria]);
+                           ['1', '2', '3'],
+                           [teTransportadora, teTranspCargaPropria,
+                            teTranspCTeGlobalizado]);
 end;
 
 function StrToTpEmitente(out ok: Boolean; const s: String): TTpEmitenteMDFe;
 begin
   result := StrToEnumerado(ok, s,
-                           ['1', '2'],
-                           [teTransportadora, teTranspCargaPropria]);
+                           ['1', '2', '3'],
+                           [teTransportadora, teTranspCargaPropria,
+                            teTranspCTeGlobalizado]);
 end;
 
 function LayOutToSchema(const t: TLayOutMDFe): TSchemaMDFe;

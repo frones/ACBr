@@ -301,6 +301,9 @@ begin
                                                                GetUTC(CodigoParaUF(MDFe.ide.cUF), MDFe.ide.dhIniViagem), DSC_DHINIVIAGEM);
   end;
 
+  if (MDFe.infMDFe.versao >= 3) and (MDFe.ide.indCanalVerde = tiSim) then
+    Gerador.wCampo(tcStr, '#024b', 'indCanalVerde', 01, 01, 0, TindicadorToStr(MDFe.ide.indCanalVerde), DSC_INDCANALVERDE);
+
   Gerador.wGrupo('/ide');
 end;
 

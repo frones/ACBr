@@ -223,6 +223,7 @@ type
     FinfMunCarrega: TinfMunCarregaCollection;
     FinfPercurso: TinfPercursoCollection;
     FdhIniViagem: TDateTime;
+    FindCanalVerde: TIndicador;
 
     procedure SetinfMunCarrega(Value: TinfMunCarregaCollection);
     procedure SetinfPercurso(Value: TinfPercursoCollection);
@@ -249,6 +250,7 @@ type
     property infMunCarrega: TinfMunCarregaCollection read FinfMunCarrega write SetinfMunCarrega;
     property infPercurso: TinfPercursoCollection     read FinfPercurso   write SetinfPercurso;
     property dhIniViagem: TDateTime                  read FdhIniViagem   write FdhIniViagem;
+    property indCanalVerde: TIndicador               read FindCanalVerde write FindCanalVerde;
   end;
 
   Temit = class(TPersistent)

@@ -108,6 +108,8 @@ const
   DSC_NSEQ        = 'Sequência do vagão na composição';
   DSC_TU          = 'Tonelada Útil';
 
+  DSC_INDCANALVERDE = 'Indicador de Canal Verde';
+  
 implementation
 
 end.

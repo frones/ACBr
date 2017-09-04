@@ -123,6 +123,14 @@ begin
     MDFe.Ide.UFFim       := Leitor.rCampo(tcStr, 'UFFim');
     MDFe.Ide.dhIniViagem := Leitor.rCampo(tcDatHor, 'dhIniViagem');
 
+    if MDFe.infMDFe.versao >= 3 then
+    begin
+      if Leitor.rCampo(tcStr, 'indCanalVerde') = '1' then
+        MDFe.ide.indCanalVerde := tiSim
+      else
+        MDFe.ide.indCanalVerde := tiNao;
+    end;
+
     i01 := 0;
     while Leitor.rExtrai(2, 'infMunCarrega', '', i01 + 1) <> '' do
     begin

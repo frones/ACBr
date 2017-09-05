@@ -742,6 +742,9 @@ begin
   else
     NameSpace := FPConfiguracoesNFSe.Geral.ConfigNameSpace.Homologacao;
 
+  if FProvedor = proSafeWeb then
+    FPCabMsg := StringReplace(FPCabMsg, '%SenhaMsg%' , FDadosSenha, [rfReplaceAll]);
+    
   CabMsg := FPCabMsg;
   if FCabecalhoStr then
     CabMsg := StringReplace(StringReplace(CabMsg, '<', '&lt;', [rfReplaceAll]), '>', '&gt;', [rfReplaceAll]);

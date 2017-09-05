@@ -107,12 +107,11 @@ begin
         if NaoEstaVazio(Cmd.Params(2)) then
           ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
 
+        AntesDeImprimir(bMostrarPreview);
         ACBrGNRE1.GuiasRetorno.Imprimir;
+        DepoisDeImprimir;
+
         Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
-
-        if ACBrGNRE1.GNREGuia.MostrarPreview then
-          Ocultar1.Click;
-
       end
       else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
       begin

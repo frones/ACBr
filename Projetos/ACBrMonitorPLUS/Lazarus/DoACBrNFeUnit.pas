@@ -391,11 +391,11 @@ begin
                 ACBrNFe1.DANFE.TipoDANFE := tiSimplificado;
             end;
 
+           AntesDeImprimir(bMostrarPreview);
            ACBrNFe1.NotasFiscais.Imprimir;
-           Cmd.Resposta := 'Danfe Impresso com sucesso';
+           DepoisDeImprimir;
 
-           if ACBrNFe1.DANFE.MostrarPreview then
-             Ocultar1.Click;
+           Cmd.Resposta := 'Danfe Impresso com sucesso';
          end
 
         else if Cmd.Metodo = 'imprimirdanfepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
@@ -423,7 +423,10 @@ begin
             end;
 
            try
+              AntesDeImprimir(False);
               ACBrNFe1.NotasFiscais.ImprimirPDF;
+              DepoisDeImprimir;
+
               ArqPDF := OnlyNumber(ACBrNFe1.NotasFiscais.Items[0].NFe.infNFe.ID)+'-nfe.pdf';
 
               Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrNFe1.DANFE.PathPDF) + ArqPDF ;
@@ -487,11 +490,10 @@ begin
              if NaoEstaVazio(Cmd.Params(3)) then
                ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(3),1);
 
+             AntesDeImprimir(bMostrarPreview);
              ACBrNFe1.ImprimirEvento;
+             DepoisDeImprimir;
              Cmd.Resposta := 'Evento Impresso com sucesso';
-
-             if ACBrNFe1.DANFE.MostrarPreview then
-               Ocultar1.Click;
            end
            else
            begin
@@ -558,11 +560,10 @@ begin
              if NaoEstaVazio(Cmd.Params(2)) then
                ACBrNFe1.DANFE.NumCopias := StrToIntDef(Cmd.Params(2),1);
 
+             AntesDeImprimir(bMostrarPreview);
              ACBrNFe1.ImprimirInutilizacao;
+             DepoisDeImprimir;
              Cmd.Resposta := 'Inutilização Impressa com sucesso';
-
-             if ACBrNFe1.DANFE.MostrarPreview then
-               Ocultar1.Click;
            end
            else
            begin
@@ -654,7 +655,9 @@ begin
                    if NaoEstaVazio(Cmd.Params(4)) then
                      ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
 
+                   AntesDeImprimir(False);
                    ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                   DepoisDeImprimir;
                  end;
                end;
             end
@@ -667,12 +670,11 @@ begin
                  if NaoEstaVazio(Cmd.Params(4)) then
                     ACBrNFe1.DANFE.Impressora := Cmd.Params(4);
 
+                 AntesDeImprimir(False);
                  ACBrNFe1.NotasFiscais.Items[0].Imprimir;
+                 DepoisDeImprimir;
                end;
             end;
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-             Ocultar1.Click;
          end
 
         //NFe.ReciboNFe(nRecibo)
@@ -1018,7 +1020,9 @@ begin
                            if NaoEstaVazio(cImpressora) then
                              ACBrNFe1.DANFE.Impressora := cImpressora;
 
+                           AntesDeImprimir(bMostrarPreview);
                            ACBrNFe1.NotasFiscais.Items[i].Imprimir;
+                           DepoisDeImprimir;
                          end;
 
                         break;
@@ -1027,9 +1031,6 @@ begin
                   end;
                end;
             end;
-
-           if ACBrNFe1.DANFE.MostrarPreview then
-             Ocultar1.Click;
          end
 
         else if (Cmd.Metodo = 'enviarevento') or

@@ -222,11 +222,6 @@ begin
          end
         else if Cmd.Metodo = 'imprimirdacte' then
          begin
-           if ACBrCTe1.DACTe.MostrarPreview then
-           begin
-             Restaurar1.Click;
-             Application.BringToFront;
-           end;
 
            ACBrCTe1.Conhecimentos.Clear;
            PathsCTe := TStringList.Create;
@@ -256,13 +251,13 @@ begin
 			  
 	   if Cmd.Params(4) = '1' then
 	     ACBrCTe1.DACTe.CTeCancelada := True;
-			 
+
+           AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
            ACBrCTe1.Conhecimentos.Imprimir;
+           DepoisDeImprimir;
 
            Cmd.Resposta := 'Dacte Impresso com sucesso';
-           if ACBrCTe1.DACTe.MostrarPreview then
-             Ocultar1.Click;
-		   
+
 	   ACBrCTe1.DACTe.CTeCancelada := False;
          end
 
@@ -290,12 +285,6 @@ begin
 
         else if ( Cmd.Metodo = 'imprimirevento' ) or ( Cmd.Metodo = 'imprimireventopdf' ) then
          begin
-           if ACBrCTe1.DACTe.MostrarPreview then
-           begin
-             Restaurar1.Click;
-             Application.BringToFront;
-           end;
-
            ACBrCTe1.EventoCTe.Evento.Clear;
            PathsCTe := TStringList.Create;
            try
@@ -348,10 +337,11 @@ begin
              else
                ACBrCTe1.DACTe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
 
+             AntesDeImprimir(ACBrCTe1.DACTE.MostrarPreview);
              ACBrCTe1.ImprimirEvento;
+             DepoisDeImprimir;
+
              Cmd.Resposta := 'Evento Impresso com sucesso';
-             if ACBrCTe1.DACTe.MostrarPreview then
-               Ocultar1.Click;
            end;
          end
 
@@ -386,7 +376,6 @@ begin
            end;
 
            bMostrarPreview := ( (Cmd.Params(3) = '1') and (Cmd.Metodo <> 'imprimirinutilizacaopdf') );
-           ConfiguraDANFe(False, bMostrarPreview );
            ACBrCTe1.DACTE := ACBrCTeDACTeRL1;
 
            if Cmd.Metodo = 'imprimirinutilizacaopdf' then
@@ -415,11 +404,11 @@ begin
              if NaoEstaVazio(Cmd.Params(2)) then
                 ACBrCTe1.DACTE.NumCopias := StrToIntDef(Cmd.Params(2),1);
 
+             AntesDeImprimir(bMostrarPreview);
              ACBrCTe1.ImprimirInutilizacao;
-             Cmd.Resposta := 'Inutilização Impressa com sucesso';
+             DepoisDeImprimir;
 
-             if ACBrCTe1.DACTE.MostrarPreview then
-                Ocultar1.Click;
+             Cmd.Resposta := 'Inutilização Impressa com sucesso';
            end;
          end
 
@@ -498,7 +487,11 @@ begin
                  ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
 
               if ACBrCTe1.Conhecimentos.Items[i].Confirmado and (Cmd.Params(3) = '1') then
-                 ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+              begin
+                AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
+                ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+                DepoisDeImprimir;
+              end;
             end;
          end
          
@@ -733,16 +726,15 @@ begin
                                    'NProt='+ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[i].nProt+sLineBreak+
                                    'DigVal='+ACBrCTe1.WebServices.Retorno.CTeRetorno.ProtCTe.Items[i].digVal+sLineBreak+
                                    'Arquivo='+PathWithDelim(ACBrCTe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrCTe1.Conhecimentos.Items[j].CTe.infCTe.ID)+'-CTe.xml'+sLineBreak;
-                        if (Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview then
-                         begin
-                           Restaurar1.Click;
-                           Application.BringToFront;
-                         end;
+
                         ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
                         if ACBrCTe1.Conhecimentos.Items[i].Confirmado and (Cmd.Params(2) = '1') then
+                         begin
+                           AntesDeImprimir((Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview);
                            ACBrCTe1.Conhecimentos.Items[i].Imprimir;
-                        if (Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview then
-                           Ocultar1.Click;
+                           DepoisDeImprimir;
+                         end;
+
                         break;
                       end;
                     end;
@@ -1154,6 +1146,7 @@ begin
           Ide.toma03.Toma := StrToTpTomador(OK,INIRec.ReadString('toma3','toma','0'));
 
           Ide.indGlobalizado := StrToTIndicador(OK, INIRec.ReadString('ide','indGlobalizado','0'));
+          Ide.indIEToma      := StrToindIEDest(OK, INIRec.ReadString('ide','indIEToma','1'));
 
           if INIRec.ReadString('toma4','xNome','') <> '' then
            begin
@@ -1884,6 +1877,7 @@ begin
           infCTeNorm.infCarga.vCarga   := StringToFloatDef( INIRec.ReadString('infCarga','vCarga','') ,0);
           infCTeNorm.infCarga.proPred  := INIRec.ReadString('infCarga','proPred','');
           infCTeNorm.infCarga.xOutCat  := INIRec.ReadString('infCarga','xOutCat','');
+          infCTeNorm.infCarga.vCargaAverb  := StringToFloatDef( INIRec.ReadString('infCarga','vCargaAverb','') ,0);
 
           I := 1;
           while true do
@@ -1974,13 +1968,13 @@ begin
                while true do
                 begin
                   sSecao := 'idDocAnt'+IntToStrZero(I,3)+IntToStrZero(J,3);
-                  sFim   := INIRec.ReadString(sSecao,'nDoc',INIRec.ReadString(sSecao,'chave','FIM'));
+                  sFim   := INIRec.ReadString(sSecao,'nDoc',INIRec.ReadString(sSecao,'chCTe','FIM'));
                   if sFim = 'FIM' then
                     break;
                   with idDocAnt.Add do
                    begin
-                     if INIRec.ReadString(sSecao,'chave','') <> '' then
-                       idDocAntEle.Add.chave := INIRec.ReadString(sSecao,'chave','')
+                     if INIRec.ReadString(sSecao,'chCTe','') <> '' then
+                       idDocAntEle.Add.chCTe := INIRec.ReadString(sSecao,'chCTe','')
                      else
                       begin
                         with idDocAntPap.Add do
@@ -2677,9 +2671,10 @@ begin
           INIRec.WriteString('ide', 'retira', TpRetiraPagToStr(Ide.retira));
           INIRec.WriteString('ide', 'xDetRetira', Ide.xDetRetira);
           INIRec.WriteString('ide','indGlobalizado', TIndicadorToStr(Ide.indGlobalizado));
+          INIRec.WriteString('ide','indIEToma', indIEDestToStr(Ide.indIEToma));
 
           INIRec.WriteString('toma3', 'toma', TpTomadorToStr(Ide.toma03.Toma));
-          {
+
           Ide.toma4.CNPJCPF := INIRec.ReadString('toma4','CNPJCPF','');
           Ide.toma4.IE      := INIRec.ReadString('toma4','IE','');
           Ide.toma4.xNome   := INIRec.ReadString('toma4','xNome','');
@@ -2701,7 +2696,7 @@ begin
               xPais   := INIRec.ReadString('toma4','xPais','');
             end;
           Ide.toma4.email   := INIRec.ReadString('toma4','email','');
-          }
+
           INIRec.WriteString('ide', 'dhCont', DateToStr(Ide.dhCont));
           INIRec.WriteString('ide', 'xJust', Ide.xJust);
 

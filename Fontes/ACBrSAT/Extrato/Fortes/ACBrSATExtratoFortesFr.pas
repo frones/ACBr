@@ -340,22 +340,29 @@ begin
      if rlLogo.Visible then
      begin
        imgLogo.Picture.Assign( ACBrSATExtrato.PictureLogo );
+       rlLogo.BandType  := btHeader;
+       rlLogo.Top       := 0;
+       rlLogo.Height    := LogoHeigth;
        imgLogo.Center   := LogoCenter;
        imgLogo.Width    := LogoWidth;
        imgLogo.Height   := LogoHeigth;
        imgLogo.AutoSize := LogoAutoSize;
        imgLogo.Stretch  := LogoStretch;
+       rlLogo.AutoSize  := True;
      end;
 
      rlLogoCanc.Visible := LogoVisible and Assigned(ACBrSATExtrato.PictureLogo);
      if rlLogoCanc.Visible then
      begin
        imgLogoCanc.Picture.Assign( ACBrSATExtrato.PictureLogo );
+       rlLogoCanc.BandType  := btHeader;
+       rlLogoCanc.Top       := 0;
        imgLogoCanc.Center   := LogoCenter;
        imgLogoCanc.Width    := LogoWidth;
        imgLogoCanc.Height   := LogoHeigth;
        imgLogoCanc.AutoSize := LogoAutoSize;
        imgLogoCanc.Stretch  := LogoStretch;
+       rlLogoCanc.AutoSize  := True;
      end;
     {$EndIf}
 

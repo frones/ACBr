@@ -57,6 +57,17 @@ uses ACBrBoleto, ACBrUtil, ACBrMonitor1, DoACBrUnit, strutils, typinfo,
 procedure DoBoleto ( Cmd: TACBrCmd ) ;
 var
   Destinatario: String;
+
+  procedure Imprime;
+  begin
+    with FrmACBrMonitor do
+    begin
+      AntesDeImprimir(ckgBOLMostrar.Checked[0]);
+      ACBrBoleto1.Imprimir;
+      DepoisDeImprimir;
+    end;
+  end;
+
 begin
    with FrmACBrMonitor.ACBrBoleto1 do
    begin
@@ -74,7 +85,7 @@ begin
          if Cmd.Params(0) <> '' then
             ACBrBoletoFC.PrinterName := Cmd.Params(0);
 
-         Imprimir
+         Imprime;
        end
 
       else if cmd.Metodo = 'gerarpdf' then
@@ -118,7 +129,7 @@ begin
        begin
         LerIniBoletos(Cmd.Params(0));
         if Cmd.Params(1) = 'I' then
-          Imprimir
+          Imprime
         else if Cmd.Params(1)= 'P' then
           GerarPDF
         else if Cmd.Params(1)= 'E' then

@@ -37,6 +37,7 @@ unit ACBrMonitor1;
 interface
 
 uses
+  {$IFDEF MSWINDOWS} windows, {$ENDIF}
   SysUtils, Classes, Forms, CmdUnit, ACBrECF, ACBrDIS, ACBrGAV, ACBrDevice,
   ACBrCHQ, ACBrLCB, ACBrRFD, Dialogs, ExtCtrls, Menus, Buttons, StdCtrls,
   ComCtrls, Controls, Graphics, Spin, MaskEdit, EditBtn, ACBrBAL, ACBrETQ,
@@ -1387,6 +1388,10 @@ type
     fsSLPrecos: TStringList;
     fsDTPrecos: integer;
 
+    FWasHidden: Boolean;
+    FLastHandle: Integer;
+    function IsVisible : Boolean; virtual;
+
     procedure DesInicializar;
     procedure Inicializar;
     procedure EscondeConfig;
@@ -1454,6 +1459,9 @@ type
 
     procedure CarregarDFe( XMLorFile : String; var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe); overload;
     procedure CarregarDFe( XMLsorFiles : TStrings; var PathDfe: String; tipoDFe : TDFeCarregar = tDFeNFe); overload;
+
+    procedure AntesDeImprimir(ShowPreview: Boolean = true);
+    procedure DepoisDeImprimir;
   end;
 
 var
@@ -1535,6 +1543,9 @@ begin
   fsProcessar := TStringList.Create;
   fsInicioLoteTXT := False;
 
+  FWasHidden := False;
+  FLastHandle:= 0;
+
   Inicio := True;
   ArqSaiTXT := '';
   ArqSaiTMP := '';
@@ -1568,7 +1579,6 @@ begin
   FalseBoolStrs[0] := 'False';
   FalseBoolStrs[1] := 'F';
   FalseBoolStrs[2] := 'Falso';
-
 
   { Criando lista de Bancos disponiveis }
   cbxBOLBanco.Items.Clear;
@@ -2786,7 +2796,10 @@ begin
     ACBrNFe1.NotasFiscais.Clear;
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ConfiguraDANFe(False, False);
+
+    AntesDeImprimir(False);
     ACBrNFe1.NotasFiscais.Imprimir;
+    DepoisDeImprimir;
   end;
 end;
 
@@ -7614,8 +7627,8 @@ begin
                                    (cbxMostrarPreview.Checked or MostrarPreview) and
                                    (ACBrNFe1.DANFE <> ACBrNFeDANFeESCPOS1);
 
-  if ACBrNFe1.DANFE.MostrarPreview or MostrarPreview then
-    ForceForeground(Self.Handle);
+  //if ACBrNFe1.DANFE.MostrarPreview or MostrarPreview then
+  //  ForceForeground(Self.Handle);
 end;
 
 procedure TFrmACBrMonitor.VerificaDiretorios;
@@ -8343,6 +8356,30 @@ begin
   end;
 end;
 
+procedure TFrmACBrMonitor.AntesDeImprimir(ShowPreview: Boolean);
+begin
+  FWasHidden := not IsVisible;
+
+  if ShowPreview then
+  begin
+    {$IfDef MSWINDOWS}
+    FLastHandle := GetForegroundWindow;
+    {$EndIf}
+
+    ForceForeground(Self.Handle);
+  end;
+end;
+
+procedure TFrmACBrMonitor.DepoisDeImprimir;
+begin
+  if FWasHidden and IsVisible then
+  begin
+    FWasHidden := False;
+    Application.Minimize;
+    Application.ProcessMessages;
+  end;
+end;
+
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);
 var
   frConfiguraSerial: TfrConfiguraSerial;
@@ -8473,6 +8510,11 @@ begin
     else
        TPanel(Sender).Color := TCores.SubButtons;
   end;
+end;
+
+function TFrmACBrMonitor.IsVisible: Boolean;
+begin
+  Result := IsControlVisible and ((Parent = nil) or (Parent.IsVisible));
 end;
 
 procedure TFrmACBrMonitor.SetColorButtons(Sender: TObject);

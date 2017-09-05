@@ -226,7 +226,8 @@ begin
               ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
 
            if not ACBrMDFe1.WebServices.Consulta.Executar then
-              raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
+             if (ACBrMDFe1.WebServices.Consulta.cStat <> 460) then //Consulta a uma Chave de Acesso muito antiga
+               raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
 
            ACBrMDFe1.EventoMDFe.Evento.Clear;
            with ACBrMDFe1.EventoMDFe.Evento.Add do
@@ -274,14 +275,32 @@ begin
               raise Exception.Create(ACBrMDFe1.WebServices.EnvEvento.EventoRetorno.xMotivo);
            end;
          end
+
+        else if Cmd.Metodo = 'consultamdfenaoenc' then
+        begin
+          if not ValidarCNPJ(Cmd.Params(0)) then
+            raise Exception.Create('CNPJ '+Cmd.Params(0)+' invalido.');
+          try
+            ACBrMDFe1.WebServices.ConsultaMDFeNaoEnc( Cmd.Params(0) );
+            Cmd.Resposta := ACBrMDFe1.WebServices.ConsMDFeNaoEnc.Msg+sLineBreak+
+                           '[NAOENCERRADOS]'+sLineBreak+
+                           'Versao='+ACBrMDFe1.WebServices.ConsMDFeNaoEnc.verAplic+sLineBreak+
+                           'TpAmb='+TpAmbToStr(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.TpAmb)+sLineBreak+
+                           'VerAplic='+ACBrMDFe1.WebServices.ConsMDFeNaoEnc.VerAplic+sLineBreak+
+                           'CUF='+IntToStr(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.CUF)+sLineBreak+
+                           'CNPJ='+ACBrMDFe1.WebServices.ConsMDFeNaoEnc.CNPJ+sLineBreak+
+                           'CStat='+IntToStr(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.CStat)+sLineBreak+
+                           'XMotivo='+ACBrMDFe1.WebServices.ConsMDFeNaoEnc.XMotivo+sLineBreak+
+                           'CUF='+IntToStr(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.CUF)+sLineBreak+
+                           'ChMDFe='+ACBrMDFe1.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].chMDFe+sLineBreak+
+                           'NProt='+ACBrMDFe1.WebServices.ConsMDFeNaoEnc.InfMDFe.Items[0].nProt+sLineBreak;
+          except
+            raise Exception.Create(ACBrMDFe1.WebServices.ConsMDFeNaoEnc.Msg);
+          end;
+        end
+
         else if Cmd.Metodo = 'imprimirdamdfe' then
          begin
-           if ACBrMDFe1.DAMDFe.MostrarPreview then
-            begin
-              Restaurar1.Click;
-              Application.BringToFront;
-            end;
-
            ACBrMDFe1.Manifestos.Clear;
            PathsMDFe := TStringList.Create;
              try
@@ -308,11 +327,10 @@ begin
            if NaoEstaVazio(Cmd.Params(3)) then
              ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(3);
 
+           AntesDeImprimir(ACBrMDFe1.DAMDFe.MostrarPreview);
            ACBrMDFe1.Manifestos.Imprimir;
+           DepoisDeImprimir;
            Cmd.Resposta := 'DAMDFe Impresso com sucesso';
-
-           if ACBrMDFe1.DAMDFe.MostrarPreview then
-             Ocultar1.Click;
          end
         else if Cmd.Metodo = 'imprimirdamdfepdf' then
          begin
@@ -333,12 +351,6 @@ begin
          end
         else if ( Cmd.Metodo = 'imprimirevento') or ( Cmd.Metodo = 'imprimireventopdf' ) then
          begin
-           if ACBrMDFe1.DAMDFe.MostrarPreview then
-            begin
-              Restaurar1.Click;
-              Application.BringToFront;
-            end;
-
            ACBrMDFe1.EventoMDFe.Evento.Clear;
            PathsMDFe := TStringList.Create;
            try
@@ -391,10 +403,10 @@ begin
              else
                 ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
 
+             AntesDeImprimir(ACBrMDFe1.DAMDFE.MostrarPreview);
              ACBrMDFe1.ImprimirEvento;
+             DepoisDeImprimir;
              Cmd.Resposta := 'Evento Impresso com sucesso';
-             if ACBrMDFe1.DAMDFe.MostrarPreview then
-                Ocultar1.Click;
            end;
          end
 
@@ -478,7 +490,11 @@ begin
                  ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
 
               if ACBrMDFe1.Manifestos.Items[i].Confirmado and (Cmd.Params(3) = '1') then
-                 ACBrMDFe1.Manifestos.Items[i].Imprimir;
+              begin
+                AntesDeImprimir(ACBrMDFe1.DAMDFe.MostrarPreview);
+                ACBrMDFe1.Manifestos.Items[i].Imprimir;
+                DepoisDeImprimir;
+              end;
             end;
          end
         else if (Cmd.Metodo = 'recibomdfe')then
@@ -670,16 +686,15 @@ begin
                                    'NProt='+ACBrMDFe1.WebServices.Retorno.MDFeRetorno.ProtMDFe.Items[i].nProt+sLineBreak+
                                    'DigVal='+ACBrMDFe1.WebServices.Retorno.MDFeRetorno.ProtMDFe.Items[i].digVal+sLineBreak+
                                    'Arquivo='+PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+OnlyNumber(ACBrMDFe1.Manifestos.Items[j].MDFe.infMDFe.ID)+'-MDFe.xml'+sLineBreak;
-                        if (Cmd.Params(2) = '1') and ACBrMDFe1.DAMDFe.MostrarPreview then
-                         begin
-                           Restaurar1.Click;
-                           Application.BringToFront;
-                         end;
+
                         ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
                         if ACBrMDFe1.Manifestos.Items[i].Confirmado and (Cmd.Params(2) = '1') then
+                         begin
+                           AntesDeImprimir((Cmd.Params(2) = '1') and ACBrMDFe1.DAMDFe.MostrarPreview);
                            ACBrMDFe1.Manifestos.Items[i].Imprimir;
-                        if (Cmd.Params(2) = '1') and ACBrMDFe1.DAMDFe.MostrarPreview then
-                           Ocultar1.Click;
+                           DepoisDeImprimir;
+                         end;
+
                         break;
                       end;
                     end;

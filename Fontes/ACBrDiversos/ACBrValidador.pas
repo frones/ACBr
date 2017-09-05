@@ -205,6 +205,7 @@ function FormatarSUFRAMA( const AValue: String ) : String ;
 
 Function FormatarMascaraNumerica(ANumValue, Mascara: String): String;
 
+Function OnlyCNPJorCPF( const Documento : String ) : String ;
 
 function ValidarDocumento( const TipoDocto : TACBrValTipoDocto;
   const Documento : String; const Complemento : String = '') : String ;
@@ -307,6 +308,19 @@ begin
       Result := ValidarCPF( Documento )
    else
       Result := ValidarCNPJ( Documento ) ;
+end;
+
+{ Retorna apenas números, e apenas se o conteúdo for CPF ou CNPJ, caso contrário
+    retorna vazio }
+function OnlyCNPJorCPF(const Documento: String): String;
+var
+  NumDocto: String;
+begin
+  NumDocto := OnlyNumber(Documento);
+  if EstaVazio( ValidarCNPJouCPF(NumDocto) ) then
+    Result := NumDocto
+  else
+    Result := '';
 end;
 
 function ValidarDocumento(const TipoDocto : TACBrValTipoDocto ;

@@ -252,9 +252,12 @@ begin
 	   if Cmd.Params(4) = '1' then
 	     ACBrCTe1.DACTe.CTeCancelada := True;
 
-           AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
-           ACBrCTe1.Conhecimentos.Imprimir;
-           DepoisDeImprimir;
+           try
+             AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
+             ACBrCTe1.Conhecimentos.Imprimir;
+           finally
+             DepoisDeImprimir;
+           end;
 
            Cmd.Resposta := 'Dacte Impresso com sucesso';
 
@@ -337,9 +340,12 @@ begin
              else
                ACBrCTe1.DACTe.NumCopias := StrToIntDef(edtNumCopia.Text,1);
 
-             AntesDeImprimir(ACBrCTe1.DACTE.MostrarPreview);
-             ACBrCTe1.ImprimirEvento;
-             DepoisDeImprimir;
+             try
+               AntesDeImprimir(ACBrCTe1.DACTE.MostrarPreview);
+               ACBrCTe1.ImprimirEvento;
+             finally
+               DepoisDeImprimir;
+             end;
 
              Cmd.Resposta := 'Evento Impresso com sucesso';
            end;
@@ -404,9 +410,12 @@ begin
              if NaoEstaVazio(Cmd.Params(2)) then
                 ACBrCTe1.DACTE.NumCopias := StrToIntDef(Cmd.Params(2),1);
 
-             AntesDeImprimir(bMostrarPreview);
-             ACBrCTe1.ImprimirInutilizacao;
-             DepoisDeImprimir;
+             try
+               AntesDeImprimir(bMostrarPreview);
+               ACBrCTe1.ImprimirInutilizacao;
+             finally
+               DepoisDeImprimir;
+             end;
 
              Cmd.Resposta := 'Inutilização Impressa com sucesso';
            end;
@@ -488,9 +497,12 @@ begin
 
               if ACBrCTe1.Conhecimentos.Items[i].Confirmado and (Cmd.Params(3) = '1') then
               begin
-                AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
-                ACBrCTe1.Conhecimentos.Items[i].Imprimir;
-                DepoisDeImprimir;
+                try
+                  AntesDeImprimir(ACBrCTe1.DACTe.MostrarPreview);
+                  ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+                finally
+                  DepoisDeImprimir;
+                end;
               end;
             end;
          end
@@ -730,9 +742,12 @@ begin
                         ACBrCTe1.DACTe.Impressora := cbxImpressora.Text;
                         if ACBrCTe1.Conhecimentos.Items[i].Confirmado and (Cmd.Params(2) = '1') then
                          begin
-                           AntesDeImprimir((Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview);
-                           ACBrCTe1.Conhecimentos.Items[i].Imprimir;
-                           DepoisDeImprimir;
+                           try
+                             AntesDeImprimir((Cmd.Params(2) = '1') and ACBrCTe1.DACTe.MostrarPreview);
+                             ACBrCTe1.Conhecimentos.Items[i].Imprimir;
+                           finally
+                             DepoisDeImprimir;
+                           end;
                          end;
 
                         break;

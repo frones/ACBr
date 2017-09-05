@@ -327,9 +327,13 @@ begin
            if NaoEstaVazio(Cmd.Params(3)) then
              ACBrMDFe1.DAMDFe.ProtocoloMDFe := Cmd.Params(3);
 
-           AntesDeImprimir(ACBrMDFe1.DAMDFe.MostrarPreview);
-           ACBrMDFe1.Manifestos.Imprimir;
-           DepoisDeImprimir;
+           try
+             AntesDeImprimir(ACBrMDFe1.DAMDFe.MostrarPreview);
+             ACBrMDFe1.Manifestos.Imprimir;
+           finally
+             DepoisDeImprimir;
+           end;
+
            Cmd.Resposta := 'DAMDFe Impresso com sucesso';
          end
         else if Cmd.Metodo = 'imprimirdamdfepdf' then
@@ -403,9 +407,13 @@ begin
              else
                 ACBrMDFe1.DAMDFe.NumCopias := edtNumCopia.Value;
 
-             AntesDeImprimir(ACBrMDFe1.DAMDFE.MostrarPreview);
-             ACBrMDFe1.ImprimirEvento;
-             DepoisDeImprimir;
+             try
+               AntesDeImprimir(ACBrMDFe1.DAMDFE.MostrarPreview);
+               ACBrMDFe1.ImprimirEvento;
+             finally
+               DepoisDeImprimir;
+             end;
+
              Cmd.Resposta := 'Evento Impresso com sucesso';
            end;
          end
@@ -491,9 +499,12 @@ begin
 
               if ACBrMDFe1.Manifestos.Items[i].Confirmado and (Cmd.Params(3) = '1') then
               begin
-                AntesDeImprimir(ACBrMDFe1.DAMDFe.MostrarPreview);
-                ACBrMDFe1.Manifestos.Items[i].Imprimir;
-                DepoisDeImprimir;
+                try
+                  AntesDeImprimir(ACBrMDFe1.DAMDFe.MostrarPreview);
+                  ACBrMDFe1.Manifestos.Items[i].Imprimir;
+                finally
+                  DepoisDeImprimir;
+                end;
               end;
             end;
          end
@@ -690,9 +701,12 @@ begin
                         ACBrMDFe1.DAMDFe.Impressora := cbxImpressora.Text;
                         if ACBrMDFe1.Manifestos.Items[i].Confirmado and (Cmd.Params(2) = '1') then
                          begin
-                           AntesDeImprimir((Cmd.Params(2) = '1') and ACBrMDFe1.DAMDFe.MostrarPreview);
-                           ACBrMDFe1.Manifestos.Items[i].Imprimir;
-                           DepoisDeImprimir;
+                           try
+                             AntesDeImprimir((Cmd.Params(2) = '1') and ACBrMDFe1.DAMDFe.MostrarPreview);
+                             ACBrMDFe1.Manifestos.Items[i].Imprimir;
+                           finally
+                             DepoisDeImprimir;
+                           end;
                          end;
 
                         break;

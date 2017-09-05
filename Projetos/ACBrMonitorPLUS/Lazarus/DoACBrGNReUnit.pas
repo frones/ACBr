@@ -107,9 +107,12 @@ begin
         if NaoEstaVazio(Cmd.Params(2)) then
           ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
 
-        AntesDeImprimir(bMostrarPreview);
-        ACBrGNRE1.GuiasRetorno.Imprimir;
-        DepoisDeImprimir;
+        try
+          AntesDeImprimir(bMostrarPreview);
+          ACBrGNRE1.GuiasRetorno.Imprimir;
+        finally
+          DepoisDeImprimir;
+        end;
 
         Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
       end

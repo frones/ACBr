@@ -62,9 +62,12 @@ var
   begin
     with FrmACBrMonitor do
     begin
-      AntesDeImprimir(ckgBOLMostrar.Checked[0]);
-      ACBrBoleto1.Imprimir;
-      DepoisDeImprimir;
+      try
+        AntesDeImprimir(ckgBOLMostrar.Checked[0]);
+        ACBrBoleto1.Imprimir;
+      finally
+        DepoisDeImprimir;
+      end;
     end;
   end;
 

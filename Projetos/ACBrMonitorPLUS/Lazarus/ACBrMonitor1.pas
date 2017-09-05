@@ -2797,9 +2797,12 @@ begin
     ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
     ConfiguraDANFe(False, False);
 
-    AntesDeImprimir(False);
-    ACBrNFe1.NotasFiscais.Imprimir;
-    DepoisDeImprimir;
+    try
+      AntesDeImprimir(False);
+      ACBrNFe1.NotasFiscais.Imprimir;
+    finally
+      DepoisDeImprimir;
+    end;
   end;
 end;
 
@@ -3452,6 +3455,8 @@ begin
   Visible := True;
   Application.ShowMainForm := True;
   Application.Restore;
+  Application.BringToFront;
+  Application.ProcessMessages;
 end;
 
 {------------------------------------------------------------------------------}
@@ -8362,6 +8367,9 @@ begin
 
   if ShowPreview then
   begin
+    if FWasHidden then
+      Restaurar1.Click;
+
     {$IfDef MSWINDOWS}
     FLastHandle := GetForegroundWindow;
     {$EndIf}

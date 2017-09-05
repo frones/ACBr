@@ -250,7 +250,7 @@ type
     property infMunCarrega: TinfMunCarregaCollection read FinfMunCarrega write SetinfMunCarrega;
     property infPercurso: TinfPercursoCollection     read FinfPercurso   write SetinfPercurso;
     property dhIniViagem: TDateTime                  read FdhIniViagem   write FdhIniViagem;
-    property indCanalVerde: TIndicador               read FindCanalVerde write FindCanalVerde;
+    property indCanalVerde: TIndicador               read FindCanalVerde write FindCanalVerde default tiNao;
   end;
 
   Temit = class(TPersistent)
@@ -1459,6 +1459,7 @@ begin
   inherited Create;
   FinfMunCarrega := TinfMunCarregaCollection.Create(Self);
   FinfPercurso   := TinfPercursoCollection.Create(Self);
+  FindCanalVerde := tiNao;
 end;
 
 destructor TIde.Destroy;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/09/2017
+-- pmdfeMDFe --
+[*] Definido o valor tiNao como padrão para a tag <indCanalVerde>.
+    Por: BigWings
+
 04/09/2017
 -- Diversos --
 [*] Acrescentado a tag <indCanalVerde> conforme NT 2017/003.

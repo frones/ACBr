@@ -1177,11 +1177,9 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 								<xs:documentation>O boarding Pass poderá ser gerado no padrão PDF417 e impresso no DABPE opcionalmente pelo emitente para colocar informações operacionais do bilhete e/ou prestar informações para a agência reguladora do setor</xs:documentation>
 							</xs:annotation>
 							<xs:simpleType>
-								<xs:restriction base="xs:string">
-									<xs:whiteSpace value="preserve"/>
+								<xs:restriction base="TString">
 									<xs:minLength value="50"/>
 									<xs:maxLength value="1000"/>
-									<xs:pattern value=""/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>

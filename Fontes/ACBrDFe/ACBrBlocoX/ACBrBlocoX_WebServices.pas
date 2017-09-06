@@ -34,7 +34,7 @@ interface
 uses
   Classes, SysUtils,
   ACBrDFe, pcnRetEnvBlocoX, ACBrDFeWebService,
-  ACBrUtil;
+  ACBrUtil, pcnConversao;
 
 const
   ACBRBLOCOX_VERSAO = '1.1.0a';
@@ -195,7 +195,10 @@ end;
 
 procedure TWebServiceBlocoX.DefinirURL;
 begin
-  FPURL := 'http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx';
+  if (FPConfiguracoes.WebServices.Ambiente = taProducao) then
+    FPURL := 'http://webservices.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx'
+  else
+    FPURL := 'http://webservices.sathomologa.sef.sc.gov.br/wsDfeSiv/Recepcao.asmx';
 end;
 
 function TWebServiceBlocoX.GerarVersaoDadosSoap: String;
@@ -283,13 +286,23 @@ end;
 
 procedure TEnviarReducaoZ.DefinirDadosMsg;
 var
-  wCNPJ, wDataRef: String;
+  wCNPJ, wCredECF, wDataRef: String;
+  PI, PF: integer;
 begin
   wCNPJ     := LerTagXML(XML, 'Cnpj');
   wDataRef  := LerTagXML(XML, 'DataReferencia');
-
+  //
+  PI := Pos('<NumeroCredenciamento>', XML);
+  PI := PosEx('<NumeroCredenciamento>', XML, PI + Length('NumeroCredenciamento'));
+  PI := PI + Length('NumeroCredenciamento') + 2;
+  PF := PosEx('</NumeroCredenciamento>', XML, PI);
+  if PF = 0 then
+     PF := Length(XML);
+  wCredECF := copy(XML, PI, PF-PI);
+  //
   FPDadosMsg := '<pCnpjEstabelecimento>'+wCNPJ+'</pCnpjEstabelecimento>';
   FPDadosMsg := FPDadosMsg + '<pDataReferencia>'+wDataRef+'</pDataReferencia>';
+  FPDadosMsg := FPDadosMsg + '<pNumeroCredenciamentoEcf>'+wCredECF+'</pNumeroCredenciamentoEcf>';
   FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
 end;
 
@@ -315,15 +328,14 @@ end;
 
 procedure TEnviarEstoque.DefinirDadosMsg;
 var
-  wCNPJ, wDataRefInicial, wDataRefFinal: String;
+  wCNPJ, wDataRef: String;
 begin
   wCNPJ     := LerTagXML(XML, 'Cnpj');
-  wDataRefInicial := LerTagXML(XML, 'DataReferenciaInicial');
-  wDataRefFinal   := LerTagXML(XML, 'DataReferenciaFinal');
+  wDataRef := LerTagXML(XML, 'DataReferencia');
+
 
   FPDadosMsg := '<pCnpjEstabelecimento>'+wCNPJ+'</pCnpjEstabelecimento>';
-  FPDadosMsg := FPDadosMsg + '<pDataReferenciaInicial>'+wDataRefInicial+'</pDataReferenciaInicial>';
-  FPDadosMsg := FPDadosMsg + '<pDataReferenciaFinal>'+wDataRefFinal+'</pDataReferenciaFinal>';
+  FPDadosMsg := FPDadosMsg + '<pDataReferencia>'+wDataRef+'</pDataReferencia>';
   FPDadosMsg := FPDadosMsg + '<pXmlZipado>'+XMLZipado+'</pXmlZipado>';
 end;
 

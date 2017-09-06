@@ -37,8 +37,7 @@ uses
 type
   TACBrBlocoX_Estoque = class(TACBrBlocoX_BaseFile)
   private
-    FDataReferenciaFinal: TDateTime;
-    FDataReferenciaInicial: TDateTime;
+    FDataReferencia: TDateTime;
     FProdutos: TACBrBlocoX_Produtos;
   public
     constructor Create(AOwner: TComponent); override;
@@ -47,8 +46,7 @@ type
     procedure GerarXML(const Assinar: Boolean = True); override;
     procedure SaveToFile(const AXmlFileName: string; const AAssinar: Boolean = True); override;
 
-    property DataReferenciaInicial: TDateTime read FDataReferenciaInicial write FDataReferenciaInicial;
-    property DataReferenciaFinal: TDateTime read FDataReferenciaFinal write FDataReferenciaFinal;
+    property DataReferencia: TDateTime read FDataReferencia write FDataReferencia;
     property Produtos: TACBrBlocoX_Produtos read FProdutos write FProdutos;
   end;
 
@@ -88,8 +86,7 @@ begin
   GerarDadosPafECF;
 
   FGerador.wGrupo('DadosEstoque');
-  FGerador.wCampo(tcStr, '', 'DataReferenciaInicial', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferenciaInicial));
-  FGerador.wCampo(tcStr, '', 'DataReferenciaFinal', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataReferenciaFinal));
+  FGerador.wCampo(tcStr, '', 'DataReferencia', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd', DataReferencia));
 
   if Produtos.Count > 0 then
   begin
@@ -109,34 +106,32 @@ begin
            erv0205 :
            begin
               with Produtos[I] do begin
-                FGerador.wGrupo('Codigo');
                 FGerador.wCampo(tcStr, '', 'CodigoGTIN', 0, 0, 1, Produtos[I].Codigo.CodigoGTIN);
                 FGerador.wCampo(tcStr, '', 'CodigoCEST', 0, 0, 1, Produtos[I].Codigo.CodigoCEST);
                 FGerador.wCampo(tcStr, '', 'CodigoNCMSH', 0, 0, 1,Produtos[I].Codigo.CodigoNCMSH);
                 FGerador.wCampo(tcStr, '', 'CodigoProprio', 0, 0, 1,Produtos[I].Codigo.CodigoProprio);
-                FGerador.wGrupo('/Codigo');
-                FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.00',Abs(Produtos[I].Quantidade)));
+                FGerador.wCampo(tcStr, '', 'Quantidade', 1, 20, 1, formatfloat('0.000',Abs(Produtos[I].Quantidade)));
+                FGerador.wCampo(tcStr, '', 'QuantidadeTotalAquisicao', 1, 1, 1, formatfloat('0.000',Produtos[I].QuantidadeTotalAquisicaoMercadoria));
               end;
            end;
       end;
       FGerador.wCampo(tcStr, '', 'Unidade', 0, 0, 1, Produtos[I].Unidade);
-      FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, formatfloat('0.00',Produtos[I].ValorUnitario));
-      FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));
-      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FormatFloat('0.00',Produtos[I].Aliquota));
-      FGerador.wCampo(tcStr, '', 'IsArredondado', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, 'true', 'false'));
-      FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Produtos[I].Ippt));
-      FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'Positivo', 'Negativo'));
-
+      FGerador.wCampo(tcStr, '', 'ValorUnitario', 1, 20, 1, formatfloat('0.000',Produtos[I].ValorUnitario));
       case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
            erv0205 :
            begin
-              FGerador.wCampo(tcStr, '', 'ValorTotalAquisicaoMercadoria', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalAquisicaoMercadoria));
-              FGerador.wCampo(tcStr, '', 'QuantidadeTotalAquisicaoMercadoria', 1, 1, 1, formatfloat('0.000',Produtos[I].QuantidadeTotalAquisicaoMercadoria));
+              FGerador.wCampo(tcStr, '', 'ValorTotalAquisicao', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalAquisicaoMercadoria));
               FGerador.wCampo(tcStr, '', 'ValorTotalICMSDebitoFornecedor', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalICMSDebitoFornecedor));
               FGerador.wCampo(tcStr, '', 'ValorBaseCalculoICMSST', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorBaseCalculoICMSST) );
               FGerador.wCampo(tcStr, '', 'ValorTotalICMSST', 1, 1, 1, formatfloat('0.00',Produtos[I].ValorTotalICMSST));
            end;
       end;
+
+      FGerador.wCampo(tcStr, '', 'SituacaoTributaria', 1, 1, 1, SituacaoTributariaToStr(Produtos[I].SituacaoTributaria));
+      FGerador.wCampo(tcStr, '', 'Aliquota', 4, 4, 1, FormatFloat('0.00',Produtos[I].Aliquota));
+      FGerador.wCampo(tcStr, '', 'IsArredondado', 1, 1, 1, IfThen(Produtos[I].IndicadorArredondamento, 'true', 'false'));
+      FGerador.wCampo(tcStr, '', 'Ippt', 1, 1, 1, IpptToStr(Produtos[I].Ippt));
+      FGerador.wCampo(tcStr, '', 'SituacaoEstoque', 1, 1, 1, IfThen(Produtos[I].Quantidade >= 0, 'Positivo', 'Negativo'));
 
       FGerador.wGrupo('/Produto');
     end;

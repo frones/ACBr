@@ -73,8 +73,7 @@ type
     FCRZ: Integer;
     FCOO: Integer;
     FDataReferencia: TDateTime;
-    FDataEmissaoReducaoZ  : TDateTime;
-    FHoraEmissaoReducaoZ  : String;
+    FDhEmissaoReducaoZ  : TDateTime;
     FTotalizadoresParciais: TACBrBlocoX_Totalizadores;
   public
     constructor Create(AOwner: TComponent); override;
@@ -84,8 +83,7 @@ type
     procedure SaveToFile(const AXmlFileName: string; const AAssinar: Boolean = True); override;
 
     property DataReferencia: TDateTime read FDataReferencia write FDataReferencia;
-    property DataEmissaoReducaoZ: TDateTime read FDataEmissaoReducaoZ write FDataEmissaoReducaoZ;
-    property HoraEmissaoReducaoZ: string read FHoraEmissaoReducaoZ write FHoraEmissaoReducaoZ;
+    property DataHoraEmissaoReducaoZ: TDateTime read FDhEmissaoReducaoZ write FDhEmissaoReducaoZ;
     property CRZ: Integer read FCRZ write FCRZ;
     property COO: Integer read FCOO write FCOO;
     property CRO: Integer read FCRO write FCRO;
@@ -97,7 +95,7 @@ type
 implementation
 
 uses
-  pcnConversao, pcnGerador, ACBrUtil, ACBrBlocoX;
+  pcnConversao, pcnGerador, ACBrUtil, ACBrBlocoX, pcnAuxiliar;
 
 
 { TACBrBlocoX_Totalizadores }
@@ -169,8 +167,7 @@ begin
   case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
        erv0205 :
        begin
-            FGerador.wCampo(tcStr, '', 'DataEmissaoReducaoZ', 0, 0, 1, FORMATDATETIME('yyyy-mm-dd',DataEmissaoReducaoZ));
-            FGerador.wCampo(tcStr, '', 'HoraEmissaoReducaoZ', 0, 0, 1, HoraEmissaoReducaoZ);
+            FGerador.wCampo(tcStr, '', 'DataHoraEmissao', 0, 0, 1, DateTimeTodh(DataHoraEmissaoReducaoZ));
        end;
   end;
 
@@ -214,9 +211,8 @@ begin
                 end;
             end;
 
-            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.00',Produtos[X].Quantidade));
+            FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.000',Produtos[X].Quantidade));
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Produtos[X].Unidade);
-            //FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorUnitario
             case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
                  // 0204 Unitario ou TotalLiquido???
                  erv0204 : FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Produtos[X].ValorTotalLiquido));
@@ -255,7 +251,6 @@ begin
             end;
             FGerador.wCampo(tcStr, '', 'Quantidade',    0, 0, 1, FormatFloat('0.00',Servicos[X].Quantidade));
             FGerador.wCampo(tcStr, '', 'Unidade',       0, 0, 1, Servicos[X].Unidade);
-            //FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorUnitario));
             case TACBrBlocoX(FACBrBlocoX).Configuracoes.VersaoER of
                  // 0204 Unitario ou TotalLiquido???
                  erv0204 : FGerador.wCampo(tcStr, '', 'ValorUnitario', 0, 0, 1, FormatFloat('0.00',Servicos[X].ValorTotalLiquido));

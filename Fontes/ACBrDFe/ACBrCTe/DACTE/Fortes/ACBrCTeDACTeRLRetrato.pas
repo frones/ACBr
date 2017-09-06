@@ -602,7 +602,6 @@ type
     rlmNroApolice: TRLMemo;
     rlmNroAverbacao: TRLMemo;
     rlb_06_ProdutosPerigosos: TRLBand;
-    RLDraw101: TRLDraw;
     rlLabel192: TRLLabel;
     RLDraw102: TRLDraw;
     rlLabel193: TRLLabel;

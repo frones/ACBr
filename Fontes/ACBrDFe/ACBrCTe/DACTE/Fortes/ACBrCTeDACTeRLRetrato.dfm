@@ -1,6 +1,6 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 418
-  Top = 133
+  Left = 1893
+  Top = 76
   Width = 907
   Height = 832
   VertScrollBar.Position = 346
@@ -12,7 +12,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
   TextHeight = 10
   inherited RLCTe: TRLReport
     Left = 16
-    Top = -330
+    Top = 19
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
@@ -7137,17 +7137,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       Top = 884
       Width = 742
       Height = 83
+      AutoSize = True
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_06_ProdutosPerigososBeforePrint
-      object RLDraw101: TRLDraw
-        Left = 0
-        Top = 1
-        Width = 741
-        Height = 81
-        Brush.Style = bsClear
-      end
       object RLLabel192: TRLLabel
         Left = 6
         Top = 3
@@ -7175,7 +7174,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Brush.Style = bsClear
       end
       object RLLabel193: TRLLabel
-        Left = 5
+        Left = 10
         Top = 19
         Width = 36
         Height = 8
@@ -7191,7 +7190,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel194: TRLLabel
-        Left = 84
+        Left = 83
         Top = 19
         Width = 69
         Height = 8
@@ -7258,7 +7257,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 80
         Top = 16
         Width = 1
-        Height = 66
+        Height = 15
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7267,7 +7266,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 300
         Top = 16
         Width = 1
-        Height = 66
+        Height = 14
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7276,7 +7275,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 500
         Top = 16
         Width = 1
-        Height = 66
+        Height = 15
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -7285,18 +7284,23 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 620
         Top = 16
         Width = 1
-        Height = 66
+        Height = 15
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
       end
       object rlmNumONU: TRLMemo
-        Left = 5
-        Top = 33
-        Width = 68
-        Height = 45
-        AutoSize = False
+        Left = 0
+        Top = 30
+        Width = 81
+        Height = 52
+        Alignment = taCenter
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7304,17 +7308,24 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = []
         Lines.Strings = (
-          'NUM ONU')
+          'NUM ONU'
+          ''
+          ''
+          '')
         ParentColor = False
         ParentFont = False
       end
       object rlmNomeApropriado: TRLMemo
-        Left = 85
-        Top = 33
-        Width = 212
-        Height = 45
-        AutoSize = False
+        Left = 80
+        Top = 30
+        Width = 221
+        Height = 52
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7322,17 +7333,24 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = []
         Lines.Strings = (
-          'Nome Apropriado')
+          'Nome Apropriado'
+          ''
+          ''
+          '')
         ParentColor = False
         ParentFont = False
       end
       object rlmClasse: TRLMemo
-        Left = 309
-        Top = 33
-        Width = 188
-        Height = 45
-        AutoSize = False
+        Left = 300
+        Top = 30
+        Width = 201
+        Height = 52
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7340,17 +7358,24 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = []
         Lines.Strings = (
-          'Classe')
+          'Classe'
+          ''
+          ''
+          '')
         ParentColor = False
         ParentFont = False
       end
       object rlmGrupoEmbalagem: TRLMemo
-        Left = 509
-        Top = 33
-        Width = 108
-        Height = 45
-        AutoSize = False
+        Left = 500
+        Top = 30
+        Width = 121
+        Height = 52
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7358,17 +7383,24 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = []
         Lines.Strings = (
-          'Grupo de Embalagem')
+          'Grupo de Embalagem'
+          ''
+          ''
+          '')
         ParentColor = False
         ParentFont = False
       end
       object rlmQtdeProduto: TRLMemo
-        Left = 625
-        Top = 33
-        Width = 112
-        Height = 45
-        AutoSize = False
+        Left = 620
+        Top = 30
+        Width = 122
+        Height = 52
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -7376,7 +7408,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Font.Name = 'Times New Roman'
         Font.Style = []
         Lines.Strings = (
-          'Quantidade')
+          'Quantidade'
+          ''
+          ''
+          '')
         ParentColor = False
         ParentFont = False
       end

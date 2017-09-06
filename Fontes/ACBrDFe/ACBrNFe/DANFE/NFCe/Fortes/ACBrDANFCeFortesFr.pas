@@ -871,11 +871,15 @@ procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;
 var
   Troco : Currency ;
 begin
-  Troco   := fACBrNFeDANFCeFortes.vTroco;
+  Troco := ACBrNFeDANFCeFortes.FpNFe.pag.vTroco;
+  if Troco = 0 then
+  begin
+    Troco := fACBrNFeDANFCeFortes.vTroco;
+  end;
   PrintIt := (Troco> 0);
 
   if PrintIt then
-    lTroco.Caption := FormatFloatBr(fACBrNFeDANFCeFortes.vTroco);
+    lTroco.Caption := FormatFloatBr(Troco);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlCancelamentoBeforePrint(Sender: TObject;

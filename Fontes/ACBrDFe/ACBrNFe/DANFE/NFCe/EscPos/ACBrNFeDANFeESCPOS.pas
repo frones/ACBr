@@ -327,7 +327,11 @@ begin
        FPosPrinter.ColunasFonteCondensada, '|')));
   end;
 
-  Troco := vTroco;
+  Troco := FpNFe.pag.vTroco;
+  if Troco = 0 then
+  begin
+    Troco := vTroco;
+  end;
   if Troco > 0 then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
        FormatFloatBr(Troco), FPosPrinter.ColunasFonteCondensada, '|'));

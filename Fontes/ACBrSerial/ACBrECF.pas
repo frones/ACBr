@@ -2581,7 +2581,7 @@ begin
   if Assigned( fOnAntesAbreCupom ) then
      fOnAntesAbreCupom( CPF_CNPJ, Nome, Endereco);
 
-  if Trim(CPF_CNPJ) + Trim(Nome) + Trim(Endereco) <> '' then
+  if Trim(CPF_CNPJ) <> '' then
      IdentificaConsumidor(CPF_CNPJ, Nome, Endereco);
 
   if fsIdentificarOperador then

@@ -458,8 +458,15 @@ end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLBand8BeforePrint(Sender: TObject;
   var PrintIt: Boolean);
+var
+  Troco : Currency ;
 begin
-  PrintIt := self.FACBrNFeDANFCeFortesA4.vTroco > 0;
+  Troco := FACBrNFeDANFCeFortesA4.FpNFe.pag.vTroco;
+  if Troco = 0 then
+  begin
+    Troco := FACBrNFeDANFCeFortesA4.vTroco;
+  end;
+  PrintIt := (Troco> 0);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.rlbConsumidorBeforePrint(Sender: TObject;
@@ -591,8 +598,15 @@ end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel30BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
+ var
+  Troco : Currency ;
 begin
-  Text := FormatFloat('R$ ,0.00', self.FACBrNFeDANFCeFortesA4.vTroco);
+  Troco := FACBrNFeDANFCeFortesA4.FpNFe.pag.vTroco;
+  if Troco = 0 then
+  begin
+    Troco := FACBrNFeDANFCeFortesA4.vTroco;
+  end;
+  Text := FormatFloat('R$ ,0.00', Troco);
 end;
 
 procedure TfrmACBrDANFCeFortesFrA4.RLLabel32BeforePrint(Sender: TObject;

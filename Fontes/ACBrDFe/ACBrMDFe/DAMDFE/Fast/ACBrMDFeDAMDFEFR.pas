@@ -78,6 +78,8 @@ type
     cdsEmbarcaComboio: TClientDataSet;
     cdsInfUnidCargaVazia: TClientDataSet;
     cdsSeg: TClientDataSet;
+    cdsContratantes: TClientDataSet;
+    cdsPeri: TClientDataSet;
 
     frxIdentificacao: TfrxDBDataset;
     frxEmitente: TfrxDBDataset;
@@ -96,6 +98,8 @@ type
     frxEmbarcaComboio: TfrxDBDataset;
     frxInfUnidCargaVazia: TfrxDBDataset;
     frxSeg: TfrxDBDataset;
+    frxPeri: TfrxDBDataset;
+    frxContratantes: TfrxDBDataset;
 
     procedure CarregaIdentificacao;
     procedure CarregaParametros;
@@ -115,6 +119,8 @@ type
     procedure CarregaMunCarrega;
     procedure CarregaPercurso;
     procedure CarregaSeguro;
+    procedure CarregaContratantes;
+    procedure CarregaPeri;
 
     function  GetPreparedReport: TfrxReport;
     function  GetPreparedReportEvento: TfrxReport;
@@ -323,6 +329,8 @@ begin
     Add('qNF', ftInteger);
     Add('qMDFe', ftInteger);
     Add('qCarga', ftCurrency);
+    Add('dhIniViagem', ftDateTime);
+    Add('Lacres', ftMemo);
     CreateDataSet;
   end;
 
@@ -412,6 +420,7 @@ begin
     Add('CNPJForn', ftMemo);
     Add('CNPJPg', ftMemo);
     Add('nCompra', ftMemo);
+    Add('vValePed', ftMemo);
     // Veiculos
     Add('placa', ftMemo);
     Add('RNTRCProp', ftMemo);
@@ -422,6 +431,7 @@ begin
     //infCIOT
     Add('infCIOT_CIOT', ftString, 12);
     Add('infCIOT_CNPJCPF', ftString, 20);
+    Add('codAgPorto', ftString,16);
     CreateDataSet;
   end;
 
@@ -560,6 +570,30 @@ begin
     CreateDataSet;
   end;
 
+  cdsContratantes := TClientDataSet.Create(Self);
+  with cdsContratantes, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('CNPJCPF',ftString,20);
+    CreateDataSet;
+  end;
+
+  cdsPeri := TClientDataSet.Create(Self);
+  with cdsPeri, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('Chave', ftString, 44);
+    Add('nONU', ftString, 4);
+    Add('xNomeAE', ftString, 150);
+    Add('xClaRisco', ftString, 40);
+    Add('grEmb', ftString, 6);
+    Add('qTotProd', ftString, 20);
+    Add('qVolTipo', ftString, 60);
+    CreateDataSet;
+  end;
+
   frxIdentificacao := TfrxDBDataset.Create(Self);
   with frxIdentificacao do
   begin
@@ -695,6 +729,23 @@ begin
     OpenDataSource  := False;
     DataSet         := cdsSeg;
   end;
+
+  frxContratantes := TfrxDBDataset.Create(Self);
+  with frxContratantes do
+  begin
+    UserName := 'Contratantes';
+    OpenDataSource := False;
+    DataSet := cdsContratantes;
+  end;
+
+  frxPeri := TfrxDBDataset.Create(Self);
+  with frxPeri do
+  begin
+    UserName := 'Peri';
+    OpenDataSource := False;
+    DataSet := cdsPeri;
+  end;
+
 end;
 
 destructor TACBrMDFeDAMDFEFR.Destroy;
@@ -952,6 +1003,8 @@ begin
   frxReport.EnabledDataSets.Add(frxEmbarcaComboio);
   frxReport.EnabledDataSets.Add(frxInfUnidCargaVazia);
   frxReport.EnabledDataSets.Add(frxSeg);
+  frxReport.EnabledDataSets.Add(frxContratantes);
+  frxReport.EnabledDataSets.Add(frxPeri);
 end;
 
 procedure TACBrMDFeDAMDFEFR.LimpaDados;
@@ -972,6 +1025,73 @@ begin
   cdsEmbarcaComboio.EmptyDataSet;
   cdsInfUnidCargaVazia.EmptyDataSet;
   cdsSeg.EmptyDataSet;
+  cdsContratantes.EmptyDataSet;
+  cdsPeri.EmptyDataSet;
+end;
+
+procedure TACBrMDFeDAMDFEFR.CarregaContratantes;
+var i:integer;
+begin
+  with cdsContratantes, FMDFe.rodo.infANTT do
+  begin
+    Append;
+    for I := 0 to infContratante.Count - 1 do
+    begin
+      if Length(infContratante[i].CNPJCPF)=11 then
+        FieldByName('CNPJCPF').AsString         := FormatarCPF(infContratante[i].CNPJCPF)
+      else
+        FieldByName('CNPJCPF').AsString         := FormatarCNPJ(infContratante[i].CNPJCPF);
+    end;
+    Post;
+  end;
+end;
+
+procedure TACBrMDFeDAMDFEFR.CarregaPeri;
+var i,j,k : integer;
+begin
+  with cdsPeri, FMDFe.infDoc do
+  begin
+    with FMDFe.infDoc do
+    begin
+      for i := 0 to infMunDescarga.Count - 1 do
+      begin
+        with infMunDescarga.Items[i] do
+        begin
+          for j := 0 to infCTe.Count - 1 do
+          begin
+            for k := 0 to infCTe[j].peri.Count - 1 do
+            begin
+              Append;
+              FieldByName('chave').AsString  := infCTe[j].chCTe;
+              FieldByName('nONU').AsString  := infCTe[j].peri[k].nONU;
+              FieldByName('xNomeAE').AsString  := infCTe[j].peri[k].xNomeAE;
+              FieldByName('xClaRisco').AsString  := infCTe[j].peri[k].xClaRisco;
+              FieldByName('grEmb').AsString  := infCTe[j].peri[k].grEmb;
+              FieldByName('qTotProd').AsString  := infCTe[j].peri[k].qTotProd;
+              FieldByName('qVolTipo').AsString  := infCTe[j].peri[k].qVolTipo;
+              Post;
+            end;
+          end;
+          for j := 0 to infNFe.Count - 1 do
+          begin
+            for k := 0 to infNFe[j].peri.Count - 1 do
+            begin
+              Append;
+              FieldByName('chave').AsString  := infNFe[j].chNFe;
+              FieldByName('nONU').AsString  := infNFe[j].peri[k].nONU;
+              FieldByName('xNomeAE').AsString  := infNFe[j].peri[k].xNomeAE;
+              FieldByName('xClaRisco').AsString  := infNFe[j].peri[k].xClaRisco;
+              FieldByName('grEmb').AsString  := infNFe[j].peri[k].grEmb;
+              FieldByName('qTotProd').AsString  := infNFe[j].peri[k].qTotProd;
+              FieldByName('qVolTipo').AsString  := infNFe[j].peri[k].qVolTipo;
+              Post;
+            end;
+          end;
+        end;
+      end;
+    end;
+
+  end;
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaDados;
@@ -990,7 +1110,11 @@ begin
   CarregaInfUnidCargaVazia;
 
   if (FMDFe.infMDFe.versao = 3) then
+  begin
     CarregaSeguro;
+    CarregaContratantes;
+    CarregaPeri;
+  end;
 end;
 
 procedure TACBrMDFeDAMDFEFR.CarregaParametros;
@@ -1018,6 +1142,7 @@ var
   IndexCampo:Integer;
   TmpStr:String;
   BufferObs:String;
+  I:integer;
 begin
   with cdsIdentificacao do
   begin
@@ -1089,6 +1214,15 @@ begin
       vTemp.Free;
     end;
     FieldByName('OBS').AsString := BufferObs;
+    FieldByName('dhIniViagem').AsDateTime := FMDFe.Ide.dhIniViagem;
+
+    for I := 0 to FMDFe.lacres.Count - 1 do
+    begin
+      if FieldByName('Lacres').AsString<>'' then
+        FieldByName('Lacres').AsString:=FieldByName('Lacres').AsString+'; ';
+      FieldByName('Lacres').AsString:=FieldByName('Lacres').AsString+FMDFe.lacres[i].nLacre;
+    end;
+
 
     Post;
   end;
@@ -1492,6 +1626,7 @@ begin
         FieldByName('CNPJForn').AsString := FieldByName('CNPJForn').AsString + FormatarCNPJ(infANTT.valePed.disp.Items[i].CNPJForn) + #13#10;
         FieldByName('CNPJPg').AsString   := FieldByName('CNPJPg').AsString + FormatarCNPJ(infANTT.valePed.disp.Items[i].CNPJPg) + #13#10;
         FieldByName('nCompra').AsString  := FieldByName('nCompra').AsString + infANTT.valePed.disp.Items[i].nCompra + #13#10;
+        FieldByName('vValePed').AsString  := FieldByName('vValePed').AsString + formatFloat('#,#0.00',infANTT.valePed.disp.Items[i].vValePed) + #13#10;
       end;
     end;
 
@@ -1503,6 +1638,8 @@ begin
         FieldByName('infCIOT_CNPJCPF').AsString := FieldByName('infCIOT_CNPJCPF').AsString + FormatarCNPJouCPF(infANTT.infCIOT.Items[i].CNPJCPF) + #13#10;
       end;
     end;
+
+    FieldByName('codAgPorto').AsString := FMDFe.rodo.codAgPorto;
 
     Post;
   end;
@@ -1587,7 +1724,11 @@ begin
       with Items[i].aver do
       begin
         for x := 0 to Count - 1 do
-          FieldByName('nAver').AsString := FieldByName('nAver').AsString + Items[x].nAver + #13#10;
+        begin
+          if not(FieldByName('nAver').AsString='') then
+            FieldByName('nAver').AsString:=FieldByName('nAver').AsString + #13#10; // fiz esta verificação para não jogar quebra de linha desnecessariamente na impressão.
+          FieldByName('nAver').AsString := FieldByName('nAver').AsString + Items[x].nAver;
+        end;
       end;
 
       Post;

@@ -288,6 +288,8 @@ type
 
     FCodigoMunicipio: Integer;
     FProvedor: TnfseProvedor;
+    FxLinkURL_H: String;
+    FxLinkURL_P: String;
     FxProvedor: String;
     FxMunicipio: String;
     FxUF: String;
@@ -327,6 +329,8 @@ type
     // Alguns provedores possui o nome da cidade na URL dos WebServer
     property xNomeURL_H: String read FxNomeURL_H;
     property xNomeURL_P: String read FxNomeURL_P;
+    property xLinkURL_H: String read FxLinkURL_H;
+    property xLinkURL_P: String read FxLinkURL_P;
     property SenhaWeb: String read FSenhaWeb write FSenhaWeb;
     property UserWeb: String read FUserWeb write FUserWeb;
     property CNPJPrefeitura: String read FCNPJPrefeitura write FCNPJPrefeitura;
@@ -538,6 +542,8 @@ begin
   FxUF        := FPIniParams.ReadString(CodIBGE, 'UF'       , '');
   FxNomeURL_H := FPIniParams.ReadString(CodIBGE, 'NomeURL_H', '');
   FxNomeURL_P := FPIniParams.ReadString(CodIBGE, 'NomeURL_P', '');
+  FxLinkURL_H := FPIniParams.ReadString(CodIBGE, 'LinkURL_H', '');
+  FxLinkURL_P := FPIniParams.ReadString(CodIBGE, 'LinkURL_P', '');
 
   FPIniParams.Free;
 

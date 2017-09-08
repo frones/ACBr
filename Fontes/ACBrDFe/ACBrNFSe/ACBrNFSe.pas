@@ -604,16 +604,18 @@ end;
 
 function TACBrNFSe.LinkNFSe(ANumeroNFSe: Integer; ACodVerificacao: String; AChaveAcesso: String = ''): String;
 var
-  Texto, xNumeroNFSe, xNomeMunic: String;
+  Texto, xNumeroNFSe, xNomeMunic, xLink: String;
 begin
   if Configuracoes.WebServices.Ambiente = taProducao then
   begin
     Texto := Configuracoes.Geral.ConfigGeral.ProLinkNFSe;
     xNomeMunic := Configuracoes.Geral.xNomeURL_P;
+    xLink := Configuracoes.Geral.xLinkURL_P;
   end
   else begin
     Texto := Configuracoes.Geral.ConfigGeral.HomLinkNFSe;
     xNomeMunic := Configuracoes.Geral.xNomeURL_H;
+    xLink := Configuracoes.Geral.xLinkURL_H;
   end;
   // %CodVerif%      : Representa o Código de Verificação da NFS-e
   // %NumeroNFSe%    : Representa o Numero da NFS-e
@@ -629,6 +631,7 @@ begin
   Texto := StringReplace(Texto, '%InscMunic%', Configuracoes.Geral.Emitente.InscMun, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%ChaveAcesso%', AChaveAcesso, [rfReplaceAll]);
   Texto := StringReplace(Texto, '%Cnpj%', Configuracoes.Geral.Emitente.CNPJ, [rfReplaceAll]);
+  Texto := StringReplace(Texto, '%LinkURL%', xLink, [rfReplaceAll]);
 
   Result := Texto;
 end;

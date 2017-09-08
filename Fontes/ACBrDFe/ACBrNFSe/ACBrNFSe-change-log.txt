@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/09/2017
+-- ACBrNFConfiguracoes / ACBrNFSe  --
+[*] Acrescentado as propriedades LinkURL_P e LinkURL_H para melhor montagem do Link da NFS-e
+   Por: André Medeiros
+
 05/09/2017
 -- Diversos --
 [+] Inclusão do provedor SafeWeb.

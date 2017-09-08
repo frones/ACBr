@@ -1322,6 +1322,7 @@ begin
      Background    := IncorporarBackgroundPdf;
      EmbeddedFonts := IncorporarFontesPdf;
      Subject       := 'Exportando DANFE para PDF';
+     ShowProgress  := False;
   end;
 
   // cdsIdentificacao

@@ -357,6 +357,7 @@ begin
     Background     := True;
     PrintOptimized := True;
     Subject        := 'Exportando DACTe para PDF';
+    ShowProgress   := False;
   end;
   // CDS
   cdsIdentificacao := TClientDataSet.Create(nil);

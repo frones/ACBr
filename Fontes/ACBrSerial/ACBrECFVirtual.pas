@@ -966,6 +966,9 @@ begin
   if fpCNFsCupom.Count > 0 then
     raise EACBrECFERRO.Create(ACBrStr('Cupom Não Fiscal já iniciado')) ;
 
+  if fpItensCupom.Count >= 999 then
+    raise EACBrECFERRO.Create(ACBrStr('Máximo de Itens já atingido (999)')) ;
+
   Result := fpItensCupom.New(Self);
 
   with Result do
@@ -1191,6 +1194,9 @@ end;
 function TACBrECFVirtualClassCupom.EfetuaPagamento(AValor: Currency;
   AObservacao: String; APosFPG: Integer): TACBrECFVirtualClassPagamentoCupom;
 begin
+  if fpPagamentosCupom.Count >= 999 then
+    raise EACBrECFERRO.Create(ACBrStr('Máximo de Pagamentos já atingido (999)')) ;
+
   AValor := fpECFVirtualClasse.RoundECF( AValor );
 
   Result := fpPagamentosCupom.New;
@@ -1252,7 +1258,7 @@ begin
 
   S := 'Cupom_Aliquotas';
   I := 0 ;
-  while true do
+  while (I < 100) do
   begin
     T := AIni.ReadString(S, IntToStrZero(I, 2), '*FIM*');
     if T = '*FIM*' then break;
@@ -1264,7 +1270,7 @@ begin
 
   S := 'Cupom_Items';
   I := 0 ;
-  while True do
+  while (I < 1000) do
   begin
     T := AIni.ReadString(S, IntToStrZero(I, 3), '*FIM*');
     if T = '*FIM*' then Break;
@@ -1289,9 +1295,9 @@ begin
 
   S := 'Cupom_Pagamentos';
   I := 0 ;
-  while true do
+  while (I < 1000) do
   begin
-    T := AIni.ReadString( S, IntToStrZero(I,2), '*FIM*') ;
+    T := AIni.ReadString( S, IntToStrZero(I, 3), '*FIM*') ;
     if T = '*FIM*' then break ;
 
     PagtoCupom := fpPagamentosCupom.New;
@@ -1303,9 +1309,9 @@ begin
 
   S := 'Cupom_Comprovantes_Nao_Fiscais';
   I := 0 ;
-  while true do
+  while (I < 100) do
   begin
-    T := AIni.ReadString( S, IntToStrZero(I,2), '*FIM*') ;
+    T := AIni.ReadString( S, IntToStrZero(I, 2), '*FIM*') ;
     if T = '*FIM*' then break ;
 
     CNFCupom := fpCNFsCupom.New;
@@ -1335,14 +1341,14 @@ begin
   for I := 0 to Itens.Count - 1 do
   begin
     with Itens[I] do
-      AIni.WriteString(S, IntToStrZero(I,3), AsString);
+      AIni.WriteString(S, IntToStrZero(I, 3), AsString);
   end;
 
   S := 'Cupom_Pagamentos';
   for I := 0 to Pagamentos.Count - 1 do
   begin
     with Pagamentos[I] do
-      AIni.WriteString(S ,IntToStrZero(I, 2), AsString);
+      AIni.WriteString(S ,IntToStrZero(I, 3), AsString);
   end;
 
   S := 'Cupom_Comprovantes_Nao_Fiscais';

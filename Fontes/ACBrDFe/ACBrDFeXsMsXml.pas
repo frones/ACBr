@@ -62,7 +62,8 @@ type
        out MsgErro: String): Boolean; override;
      function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
        const infElement: String; SignatureNode: String = '';
-       SelectionNamespaces: String = ''): Boolean; override;
+       SelectionNamespaces: String = ''; IdSignature: String = ''): Boolean;
+       override;
    end;
 
 implementation
@@ -275,7 +276,7 @@ end;
 
 function TDFeSSLXmlSignMsXml.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String): Boolean;
+  SelectionNamespaces: String; IdSignature: String): Boolean;
 var
   xmldoc: IXMLDOMDocument3;
   xmldsig: IXMLDigitalSignature;

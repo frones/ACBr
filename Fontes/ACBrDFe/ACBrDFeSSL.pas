@@ -217,7 +217,7 @@ type
       out MsgErro: String): Boolean; virtual;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
       const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''): Boolean; virtual;
+      SelectionNamespaces: String = ''; IdSignature: String = ''): Boolean; virtual;
   end;
 
   TDFeSSLAntesDeAssinar = procedure (var ConteudoXML: String;
@@ -250,6 +250,7 @@ type
     FStoreName: String;
     FTimeOut: Integer;
     FUseCertificateHTTP: Boolean;
+    FSSLDgst: TSSLDgst;
 
     function GetCertCNPJ: String;
     function GetCertContextWinApi: Pointer;
@@ -297,7 +298,7 @@ type
     // ConteudoXML, DEVE estar em UTF8
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
       const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''): Boolean;
+      SelectionNamespaces: String = ''; IdSignature: String = ''): Boolean;
 
     function CalcHash( const AStream : TStream;
        const Digest: TSSLDgst;
@@ -355,6 +356,7 @@ type
     property SSLXmlSignLib: TSSLXmlSignLib read FSSLXmlSignLib write SetSSLXmlSignLib
       default xsNone;
     property SSLType: TSSLType read FSSLType write FSSLType default LT_all;
+    property SSLDgst: TSSLDgst read FSSLDgst write FSSLDgst default dgstSHA1;
 
     property StoreLocation: TSSLStoreLocation read FStoreLocation
       write FStoreLocation default slCurrentUser;
@@ -702,7 +704,7 @@ var
   URI, TagEndDocElement: String;
   I: Integer;
 begin
-  URI := ExtraiURI(ConteudoXML);
+  URI := ExtraiURI(ConteudoXML, IdSignature);
 
   TagEndDocElement := '</' + docElement + '>';
   I := PosLast(TagEndDocElement, ConteudoXML);
@@ -710,7 +712,8 @@ begin
     raise EACBrDFeException.Create('Não encontrei final do elemento: ' + TagEndDocElement);
 
   Result := copy(ConteudoXML, 1, I - 1) +
-            SignatureElement(URI, AddX509Data, IdSignature) + TagEndDocElement;
+            SignatureElement(URI, AddX509Data, IdSignature, FpDFeSSL.SSLDgst) +
+            TagEndDocElement;
 end;
 
 function TDFeSSLXmlSignClass.AjustarXMLAssinado(const ConteudoXML: String;
@@ -824,13 +827,12 @@ end;
 
 function TDFeSSLXmlSignClass.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String): Boolean;
+  SelectionNamespaces: String; IdSignature: String): Boolean;
 begin
   {$IFDEF FPC}
   Result := False;
   {$ENDIF}
   raise EACBrDFeException.Create('"ValidarAssinatura" não suportado em: ' + ClassName);
-
 end;
 
 { TDFeSSL }
@@ -860,6 +862,7 @@ begin
   FNameSpaceURI:= '';
 
   FSSLType       := LT_all;
+  FSSLDgst       := dgstSHA1;
   FStoreLocation := slCurrentUser;
   FStoreName     := CDEFAULT_STORE_NAME;
 
@@ -974,10 +977,11 @@ end;
 
 function TDFeSSL.VerificarAssinatura(const ConteudoXML: String; out
   MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String): Boolean;
+  SelectionNamespaces: String; IdSignature: String): Boolean;
 begin
   Result := FSSLXmlSignClass.VerificarAssinatura(ConteudoXML, MsgErro,
-                              infElement, SignatureNode, SelectionNamespaces);
+                              infElement, SignatureNode, SelectionNamespaces,
+                              IdSignature);
 end;
 
 function TDFeSSL.CalcHash(const AStream: TStream; const Digest: TSSLDgst;

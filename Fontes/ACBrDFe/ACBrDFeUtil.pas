@@ -41,7 +41,8 @@ unit ACBrDFeUtil;
 interface
 
 uses
-  Classes, StrUtils, SysUtils;
+  Classes, StrUtils, SysUtils,
+  ACBrDFeSSL;
 
 function FormatarNumeroDocumentoFiscal(AValue: String): String;
 function FormatarNumeroDocumentoFiscalNFSe(AValue: String): String;
@@ -61,8 +62,8 @@ function ValidaNVE(AValue: string): Boolean;
 
 function XmlEstaAssinado(const AXML: String): Boolean;
 function SignatureElement(const URI: String; AddX509Data: Boolean;
-    IdSignature: String = ''): String;
-function ExtraiURI(const AXML: String): String;
+    IdSignature: String = ''; const Digest: TSSLDgst = dgstSHA1): String;
+function ExtraiURI(const AXML: String; IdSignature: String = ''): String;
 
 
 implementation
@@ -269,20 +270,36 @@ begin
   Result := (pos('<signature', lowercase(AXML)) > 0);
 end;
 
-function SignatureElement(const URI: String;  AddX509Data: Boolean; IdSignature: String): String;
+function SignatureElement(const URI: String; AddX509Data: Boolean;
+  IdSignature: String; const Digest: TSSLDgst): String;
+var
+  MethodAlgorithm, DigestAlgorithm: String;
 begin
+  case Digest of
+    dgstSHA256:
+      begin
+        MethodAlgorithm := 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256';
+        DigestAlgorithm := 'http://www.w3.org/2001/04/xmlenc#sha256';
+      end;
+    else
+      begin
+        MethodAlgorithm := 'http://www.w3.org/2000/09/xmldsig#rsa-sha1';
+        DigestAlgorithm := 'http://www.w3.org/2000/09/xmldsig#sha1';
+      end;
+  end;
+
   {(*}
   Result :=
   '<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"' + IdSignature + '>' +
     '<SignedInfo>' +
       '<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
-      '<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />' +
+      '<SignatureMethod Algorithm="'+MethodAlgorithm+'" />' +
       '<Reference URI="' + IfThen(URI = '', '', '#' + URI) + '">' +
         '<Transforms>' +
           '<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />' +
           '<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />' +
         '</Transforms>' +
-        '<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />' +
+        '<DigestMethod Algorithm="'+DigestAlgorithm+'" />' +
         '<DigestValue></DigestValue>' +
       '</Reference>' +
     '</SignedInfo>' +
@@ -298,14 +315,17 @@ begin
   {*)}
 end;
 
-function ExtraiURI(const AXML: String): String;
+function ExtraiURI(const AXML: String; IdSignature: String): String;
 var
   I, J: integer;
 begin
   Result := '';
-  I := PosEx('Id=', AXML, 6);
+  if IdSignature = '' then
+    IdSignature := 'Id';
+
+  I := PosEx(IdSignature+'=', AXML);
   if I = 0 then       // XML não tem URI
-    exit ;
+    Exit;
 
   I := PosEx('"', AXML, I + 2);
   if I = 0 then

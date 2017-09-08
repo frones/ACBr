@@ -69,7 +69,8 @@ const
    LIBXMLSEC_MSCRYPTO_SO = 'libxmlsec-mscrypto.dll';
   {$EndIf}
 
-  cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& Id ID #IMPLIED>]>';
+  cDTD = '<!DOCTYPE test [<!ATTLIST &infElement& &IdAttribute& ID #IMPLIED>]>';
+
   cENCODING_UTF8 = '<?xml version="1.0" encoding="UTF-8"?>';
   cCryptLibMSCrypto = 'mscrypto';
   cCryptLibOpenSSL = 'openssl';
@@ -123,7 +124,8 @@ type
       out MsgErro: String): Boolean; override;
     function VerificarAssinatura(const ConteudoXML: String; out MsgErro: String;
       const infElement: String; SignatureNode: String = '';
-      SelectionNamespaces: String = ''): Boolean; override;
+      SelectionNamespaces: String = ''; IdSignature: String = ''): Boolean;
+      override;
   end;
 
 procedure InitXmlSec( XMLSecCryptoLib: String );
@@ -612,7 +614,7 @@ function TDFeSSLXmlSignXmlSec.Assinar(const ConteudoXML, docElement,
   infElement: String; SignatureNode: String; SelectionNamespaces: String;
   IdSignature: String): String;
 var
-  AXml, XmlAss, DTD: String;
+  AXml, XmlAss, DTD, IdAttr: String;
   TemDeclaracao: Boolean;
 begin
   // Nota: "ConteudoXML" já deve estar convertido para UTF8 //
@@ -627,7 +629,11 @@ begin
 
   if infElement <> '' then
   begin
+    IdAttr := IfEmptyThen(IdSignature, 'Id');
+
     DTD := StringReplace(cDTD, '&infElement&', infElement, []);
+    DTD := StringReplace( DTD, '&IdAttribute&', IdAttr, []);
+
     AXml := InserirDTD(AXml, DTD);
   end;
 
@@ -748,14 +754,14 @@ end;
 
 function TDFeSSLXmlSignXmlSec.VerificarAssinatura(const ConteudoXML: String;
   out MsgErro: String; const infElement: String; SignatureNode: String;
-  SelectionNamespaces: String): Boolean;
+  SelectionNamespaces: String; IdSignature: String): Boolean;
 var
   doc: xmlDocPtr;
   SignNode: xmlNodePtr;
   dsigCtx: xmlSecDSigCtxPtr;
   mngr: xmlSecKeysMngrPtr;
-  X509Certificate, DTD: String;
-  AXml, asSignatureNode, asSelectionNamespaces: AnsiString;
+  AXml, X509Certificate, DTD, IdAttr: String;
+  asSignatureNode, asSelectionNamespaces: AnsiString;
   MS: TMemoryStream;
 begin
   InitXmlSec;
@@ -765,10 +771,18 @@ begin
   VerificarValoresPadrao(asSignatureNode, asSelectionNamespaces);
 
   Result := False;
+  AXml := ConteudoXML;
+  X509Certificate := LerTagXML(AXml, 'X509Certificate' );
 
-  X509Certificate := LerTagXML(ConteudoXML, 'X509Certificate' );
-  DTD  := StringReplace(cDTD, '&infElement&', infElement, []);
-  AXml := AnsiString(InserirDTD(ConteudoXML, DTD));
+  if infElement <> '' then
+  begin
+    IdAttr := IfEmptyThen(IdSignature, 'Id');
+
+    DTD := StringReplace(cDTD, '&infElement&', infElement, []);
+    DTD := StringReplace( DTD, '&IdAttribute&', IdAttr, []);
+
+    AXml := InserirDTD(AXml, DTD);
+  end;
 
   doc := nil;
   dsigCtx := nil;

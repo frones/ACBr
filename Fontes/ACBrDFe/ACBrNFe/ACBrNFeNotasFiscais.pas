@@ -179,7 +179,7 @@ type
 implementation
 
 uses
-  ACBrNFe, ACBrUtil, pcnConversaoNFe, synautil;
+  ACBrNFe, ACBrUtil, pcnConversaoNFe, synautil, dateutils;
 
 { NotaFiscal }
 
@@ -384,7 +384,7 @@ function NotaFiscal.ValidarRegrasdeNegocios: Boolean;
 var
   Erros: String;
   I: Integer;
-  Agora: TDateTime;
+  Inicio, Agora: TDateTime;
   fsvTotTrib, fsvBC, fsvICMS, fsvICMSDeson, fsvBCST, fsvST, fsvProd, fsvFrete : Currency;
   fsvSeg, fsvDesc, fsvII, fsvIPI, fsvPIS, fsvCOFINS, fsvOutro, fsvServ, fsvNF, fsvTotPag : Currency;
   FaturamentoDireto, NFImportacao : Boolean;
@@ -401,7 +401,8 @@ var
   end;
 
 begin
-  Agora := Now;
+  Inicio := Now;
+  Agora := IncMinute(Now,5);  //Aceita uma tolerância de até 5 minutos, devido ao sincronismo de horário do servidor da Empresa e o servidor da SEFAZ.
   GravaLog('Inicio da Validação');
 
   with TACBrNFe(TNotasFiscais(Collection).ACBrNFe) do
@@ -599,7 +600,7 @@ begin
     if (NFe.Ide.modelo = 65) then  //Regras válidas apenas para NFC-e - 65
     begin
       GravaLog('Validar: 704-NFCe Data atrasada');
-      if (NFe.Ide.dEmi < Agora - StrToTime('00:05:00')) and
+      if (NFe.Ide.dEmi < IncMinute(Agora,-10)) and
         (NFe.Ide.tpEmis in [teNormal, teSCAN, teSVCAN, teSVCRS]) then
         //B09-40
         AdicionaErro('704-Rejeição: NFC-e com Data-Hora de emissão atrasada');
@@ -1161,7 +1162,7 @@ begin
                      Erros);
   end;
 
-  GravaLog('Fim da Validação. Tempo: '+FormatDateTime('hh:nn:ss:zzz', Now - Agora)+sLineBreak+
+  GravaLog('Fim da Validação. Tempo: '+FormatDateTime('hh:nn:ss:zzz', Now - Inicio)+sLineBreak+
            'Erros:' + Erros);
 
   //DEBUG

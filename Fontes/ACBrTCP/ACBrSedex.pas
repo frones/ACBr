@@ -418,7 +418,7 @@ procedure TACBrSedex.Rastrear(const CodRastreio: String);
 var
   SL: TStringList;
   I, Cont: integer;
-  vObs, Erro: String;
+  vObs, Erro, vData, vLocal: String;
 
   function CopyDeAte(Texto, TextIni, TextFim: string): string;
   var
@@ -440,7 +440,7 @@ begin
 
   try
     Self.HTTPGet(
-      'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI='
+      'http://www.websro.com.br//detalhes.php?P_COD_UNI='
       + CodRastreio);
   except
     on E: Exception do
@@ -471,20 +471,24 @@ begin
 
     for I := cont downto 0 do
     begin
-      if Pos('colspan', SL[I]) > 0 then
-        vObs := CopyDeAte(SL[I], 'colspan=2>', '</td></tr>')
-
-      else if Pos('rowspan', SL[I]) > 0 then
+      if Pos('rowspan', SL[I]) > 0 then
       begin
+        vData :=  Copy(SL[I], 25, 16) + ':00';
         with retRastreio.New do
         begin
-          DataHora   := StrToDateTime(Copy(SL[I], 19, 16) + ':00');
-          Local      := CopyDeAte(SL[I], '</td><td>', '</td><td><font');
-          Situacao   := CopyDeAte(SL[I], '">', '</font>');
+          DataHora   := StrToDateTime(vData);
+          Local      := vLocal;
+          Situacao   := vObs;
           Observacao := vObs;
         end;
+      end;
 
-        vObs := '';
+      if Pos('colspan="2"', SL[I]) > 0 then
+      begin
+        if Pos('colspan="2"><strong>', SL[I]) > 0 then
+          vObs := UTF8Decode(CopyDeAte(SL[I], 'colspan="2"><strong><strong>', '</strong></strong></td>'))
+        else
+          vLocal :=UTF8Decode(CopyDeAte(SL[I], '<tr>  <td colspan="2">Local:', '</td>'));
       end;
     end;
   finally

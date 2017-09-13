@@ -114,6 +114,9 @@ function CalcDigitoCMC7(Documento : String; Inicial, Final : integer) : String;
 
 implementation
 
+uses
+  ACBrValidador;
+
 function FormataCMC7(const ACMC7: String): String;
 var
   CMC7: String;
@@ -130,61 +133,27 @@ begin
 end;
 
 function CalculaC1(Chave: String): Integer;
-var
-  I, Soma, Mult: integer;
 begin
   if Length(Chave) <> 10 then
     raise Exception.Create('Parâmetros inválidos para o cálculo do C1.');
-  Mult := 8;
-  Soma := 0;
-  for I := 1 to Length(Chave) do
-  begin
-    Soma := Soma + (StrToInt(Chave[I]) * Mult);
-    Inc(Mult);
-    if Mult = 10 then
-      Mult := 2;
-  end;
-  Result := Soma mod 11;
+
+  Result := StrToInt( Modulo11(Chave) );
 end;
 
 function CalculaC2(Chave: String): Integer;
-var
-  I, Soma, Mult: integer;
 begin
   if Length(Chave) <> 10 then
     raise Exception.Create('Parâmetros inválidos para o cálculo do C2.');
-  Mult := 11;
-  Soma := 0;
-  for I := 1 to Length(Chave) do
-  begin
-    Soma := Soma + (StrToInt(Chave[I]) * Mult);
-    Dec(Mult);
-  end;
-  Soma := Soma mod 11;
-  if (Soma = 0) or (Soma = 1) then
-    Result := 0
-  else
-    Result := 11 - Soma;
+
+  Result := StrToInt( Modulo11(Chave) );
 end;
 
 function CalculaC3(Chave: String): Integer;
-var
-  I, Soma, Mult: integer;
 begin
   if Length(Chave) <> 6 then
     raise Exception.Create('Parâmetros inválidos para o cálculo do C3.');
-  Mult := 7;
-  Soma := 0;
-  for I := 1 to Length(Chave) do
-  begin
-    Soma := Soma + (StrToInt(Chave[I]) * Mult);
-    Dec(Mult);
-  end;
-  Soma := Soma mod 11;
-  if (Soma = 0) or (Soma = 1) then
-    Result := 0
-  else
-    Result := 11 - Soma;
+
+  Result := StrToInt( Modulo11(Chave) );
 end;
 
 function CalcDigitoCMC7(Documento : String; Inicial, Final : integer) : String;
@@ -300,7 +269,7 @@ begin
   CodBanco := StrToIntDef(Banco,0);
   case CodBanco of
       1: Result := 2;    // 001 - Banco do Brasil
-     33: Result := 4;    // 033 - Santander / Banespa
+     33: Result := 2;    // 033 - Santander / Banespa
      41: Result := 0;    // 041 - Banrisul Obs: Este banco utiliza todo o campo para o número da conta
     104: Result := 0;    // 104 - CEF. Utiliza apenas 7, mas os 3 primeiros são necessários para calcular o dv
 //  237: Result := 3;    // 237 - Bradesco

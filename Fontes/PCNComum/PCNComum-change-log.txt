@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2017
+-- pcnConversao --
+[*] Alteração para atender a versão 1.30 da NT 2016/002
+   Por: Italo Jurisato Junior
+
 04/09/2017
 -- pcnConversao --
 [+] Inclusão do tipo TIndicador e suas funções.

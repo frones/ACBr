@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/09/2017
+-- pnfsNFSeW_Equiplano --
+[*] Ateração visando a possíbilidade de lançar mais de um serviço.
+   Por: Cesar Eduardo Formentão Schmitz
+
 08/09/2017
 -- ACBrNFConfiguracoes / ACBrNFSe  --
 [*] Acrescentado as propriedades LinkURL_P e LinkURL_H para melhor montagem do Link da NFS-e

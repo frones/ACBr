@@ -1064,9 +1064,9 @@ begin
     else
     begin
       Gerador.wCampo(tcStr, 'LA03', 'descANP', 02, 95, 1, nfe.Det[i].Prod.comb.descANP, DSC_DESCANP);
-      Gerador.wCampo(tcDe4, 'LA03a', 'pGLP  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
-      Gerador.wCampo(tcDe4, 'LA03b', 'pGNn  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
-      Gerador.wCampo(tcDe4, 'LA03c', 'pGNi  ', 01,  5, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
+      Gerador.wCampo(tcDe4, 'LA03a', 'pGLP  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGLP, DSC_PGLP);
+      Gerador.wCampo(tcDe4, 'LA03b', 'pGNn  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGNn, DSC_PGNN);
+      Gerador.wCampo(tcDe4, 'LA03c', 'pGNi  ', 01,  7, 0, nfe.Det[i].Prod.comb.pGNi, DSC_PGNI);
       Gerador.wCampo(tcDe2, 'LA03d', 'vPart ', 01, 15, 0, nfe.Det[i].Prod.comb.vPart, DSC_VPART);
     end;
 

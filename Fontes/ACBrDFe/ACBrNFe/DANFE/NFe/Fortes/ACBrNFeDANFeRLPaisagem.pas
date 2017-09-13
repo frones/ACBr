@@ -524,6 +524,7 @@ type
     function ManterinfAdProd(inItem: Integer): String;
     function ManterBandinfAdProd(sInforAdicProduto: String): String;
     procedure CabItens;
+    function ManterRastro(inItem: integer): String;
   public
 
   end;
@@ -1596,6 +1597,29 @@ begin
   end;
 end;
 
+Function TfrlDANFeRLPaisagem.ManterRastro( inItem:  integer  ) : String;
+Var
+  i : Integer;
+begin
+  Result := '';
+  { rastreabilidade do produto}
+  with FNFe.Det.Items[inItem].Prod do
+  begin
+    if Rastro.Count > 0 then
+    begin
+      Result := sQuebraLinha;
+      for i := 0 to Rastro.Count - 1 do
+      begin
+        Result := Result + 'LOTE: ' + rastro.Items[i].nLote+ sQuebraLinha;
+        Result := Result + 'QTD: '  + FormatFloatBr(rastro.Items[i].qLote)+ sQuebraLinha;
+        Result := Result + 'FAB: '  + FormatDateBr(rastro.Items[i].dFab)+ sQuebraLinha;
+        Result := Result + 'VAL: '  + FormatDateBr(rastro.Items[i].dVal)+ sQuebraLinha;
+        Result := Result + ACBrStr('C.AGREGAÇÃO: ' ) + rastro.Items[i].cAgreg+ #13#10;
+      end;
+    end;
+  end;
+end;
+
 Function TfrlDANFeRLPaisagem.ManterMedicamentos( inItem:  integer ) : String;
 Var
   i : Integer;
@@ -1608,10 +1632,15 @@ begin
       Result := sQuebraLinha;
       for i := 0 to med.Count - 1 do
       begin
-        if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE: ') + med.Items[i].nLote + sQuebraLinha;
-        if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD: ' ) + FormatFloatBr(med.Items[i].qLote, FloatMask(3)) + sQuebraLinha;
-        if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB: ' ) + DateToStr(med.Items[i].dFab) + sQuebraLinha;
-        if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL: ' ) + DateToStr(med.Items[i].dVal) + sQuebraLinha;
+        if FNFe.infNFe.Versao >= 4 then
+          Result := Result + 'C.P. ANVISA '+ med.Items[i].cProdANVISA+ sQuebraLinha
+        else
+        begin
+          if dm_nLote in FDetMedicamentos then Result := Result + ACBrStr('LOTE: ') + med.Items[i].nLote + sQuebraLinha;
+          if dm_qLote in FDetMedicamentos then Result := Result + ACBrStr('QTD: ' ) + FormatFloatBr(med.Items[i].qLote, FloatMask(3)) + sQuebraLinha;
+          if dm_dFab  in FDetMedicamentos then Result := Result + ACBrStr('FAB: ' ) + DateToStr(med.Items[i].dFab) + sQuebraLinha;
+          if dm_dVal  in FDetMedicamentos then Result := Result + ACBrStr('VAL: ' ) + DateToStr(med.Items[i].dVal) + sQuebraLinha;
+        end;
         if dm_vPMC  in FDetMedicamentos then Result := Result + IfThen( med.Items[i].vPMC > 0,
                                                                   ACBrStr('PMC: R$') + FormatFloatBr(med.Items[i].vPMC),'' )
                                                                   + #13#10;
@@ -2072,6 +2101,7 @@ begin
   begin
     Result := Result + ManterVeiculos( inItem );
     Result := Result + ManterMedicamentos( inItem );
+    Result := Result + ManterRastro( inItem );
     Result := Result + ManterArma( inItem );
     Result := Result + ManterCombustivel( inItem );
   end;

@@ -343,8 +343,15 @@ type
     property DataLeituraAtual: string read GetDataLeituraAtual;
     property Observacoes: string read FObservacoes write FObservacoes;
     property Detalhes: TACBrConvenio115Items read FDetalhes;
-    function AutenticacaoDocumentoFiscal(AVersaoAnterior: Boolean): string;
+    function AutenticacaoDocumentoFiscal: string;
     function RegistroEAssinatura(AVersaoAnterior: Boolean): TConvenio115AssinaturaMD5;
+    class function MontaAutenticacaoDocumentoFiscal(ACnpjCpf: string;
+                                                    ANumeroNF: Integer;
+                                                    AValorTotal: Double;
+                                                    AIcmsBaseCalculo: Double;
+                                                    AIcmsValor: Double;
+                                                    ADataEmissao: TDateTime;
+                                                    ACnpjEmitente: string): string;
   end;
 
   { Lista de objetos do tipo TConvenio115Mestre }
@@ -502,21 +509,15 @@ begin
   inherited;
 end;
 
-function TACBrConvenio115Mestre.AutenticacaoDocumentoFiscal(AVersaoAnterior: Boolean): string;
-var
-  SRec: string;
+function TACBrConvenio115Mestre.AutenticacaoDocumentoFiscal: string;
 begin
-  SRec := PadLeft(OnlyNumber(Destinatario.CnpjCpf), 14, '0') + { 01 - CNPJ/CPF }
-          PadLeft(IntToStr(FNumeroNF), 9, '0') + { 12 - Numero NF }
-          PadLeft(TiraPontos(FormatFloat('#,##0.00', FValorTotal)), 12, '0') + { 14 - Valor }
-          PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') + { 15 - Base ICMS }
-          PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0');  { 16 - Valor ICMS }
-  if not AVersaoAnterior then
-    SRec := SRec +
-          DtOs(DataEmissao) {09 - Data da Emissão } +
-          PadLeft(OnlyNumber(FCnpjEmitente), 14, '0'); { 27 - CNPJ/CPF }
-
-  Result := MD5String(SRec);
+  Result := MontaAutenticacaoDocumentoFiscal(Destinatario.CnpjCpf,
+                                             NumeroNF,
+                                             ValorTotal,
+                                             ICMS_BaseCalculo,
+                                             ICMS_Valor,
+                                             DataEmissao,
+                                             FCnpjEmitente);
 end;
 
 function TACBrConvenio115Mestre.GetDataLeituraAnterior: string;
@@ -534,6 +535,28 @@ end;
 function TACBrConvenio115Mestre.GetGrupoTensao: string;
 begin
   Result := '00';
+end;
+
+class function TACBrConvenio115Mestre.MontaAutenticacaoDocumentoFiscal(ACnpjCpf: string;
+                                                                       ANumeroNF: Integer;
+                                                                       AValorTotal: Double;
+                                                                       AIcmsBaseCalculo: Double;
+                                                                       AIcmsValor: Double;
+                                                                       ADataEmissao: TDateTime;
+                                                                       ACnpjEmitente: string): string;
+var
+  SRec: string;
+begin
+  SRec := PadLeft(OnlyNumber(ACnpjCpf), 14, '0') +                                  { 01 - CNPJ/CPF }
+          PadLeft(IntToStr(aNumeroNF), 9, '0') +                                    { 12 - Numero NF }
+          PadLeft(TiraPontos(FormatFloat('#,##0.00', AValorTotal)), 12, '0') +      { 14 - Valor }
+          PadLeft(TiraPontos(FormatFloat('#,##0.00', AIcmsBaseCalculo)), 12, '0') + { 15 - Base ICMS }
+          PadLeft(TiraPontos(FormatFloat('#,##0.00', AIcmsValor)), 12, '0');        { 16 - Valor ICMS }
+  if ADataEmissao >= EncodeDate(2017,1,1) then
+    SRec := SRec +
+            DtOs(ADataEmissao)                                                      { 09 - Data da Emissão } +
+            PadLeft(OnlyNumber(ACnpjEmitente), 14, '0');                            { 27 - CNPJ/CPF }
+  Result := MD5String(SRec);
 end;
 
 function TACBrConvenio115Mestre.RegistroEAssinatura(AVersaoAnterior: Boolean): TConvenio115AssinaturaMD5;
@@ -560,7 +583,7 @@ begin
           {10} PadLeft(IntToStr(FModelo), 2, '0') +
           {11} PadLeft(FSerie, 3) +
           {12} PadLeft(IntToStr(NumeroNF), 9, '0') +
-          {13} AutenticacaoDocumentoFiscal(AVersaoAnterior) +
+          {13} AutenticacaoDocumentoFiscal +
           {14} PadLeft(TiraPontos(FormatFloat('#,##0.00', ValorTotal)), 12, '0') +
           {15} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_BaseCalculo)), 12, '0') +
           {16} PadLeft(TiraPontos(FormatFloat('#,##0.00', ICMS_Valor)), 12, '0') +

@@ -45,6 +45,15 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/09/2017
+-- ACBrNFeDANFEFRDM --
+[+] Adicionado ManterRastro para imprimir os dados da Tag Rastro.
+[*] Refatoração do ManterMedicamento para versão 4.0.
+[*] Ajuste no troco na versão 4.0
+    	por: Henrique Leonardo
+
+
+
 23/07/2017
 -- ACBrNFeDANFEFRDM --
 [*] Refatoração de ManterDocreferenciados, para utilizar as informações de NFe corrente.

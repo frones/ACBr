@@ -905,10 +905,12 @@ end;
 function modFreteToDesStr(const t: TpcnModalidadeFrete): string;
 begin
   case t  of
-    mfContaEmitente     : result := '0 - EMITENTE';
-    mfContaDestinatario : result := '1 - DEST/REM';
-    mfContaTerceiros    : result := '2 - TERCEIROS';
-    mfSemFrete          : result := '9 - SEM FRETE';
+    mfContaEmitente       : result := '0 - EMITENTE';
+    mfContaDestinatario   : result := '1 - DEST/REM';
+    mfContaTerceiros      : result := '2 - TERCEIROS';
+    mfProprioRemetente    : result := '3 - PROP/REMT';
+    mfProprioDestinatario : result := '4 - PROP/DEST';
+    mfSemFrete            : result := '9 - SEM FRETE';
   end;
 end;
 

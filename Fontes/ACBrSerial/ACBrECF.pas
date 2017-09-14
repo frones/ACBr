@@ -1191,7 +1191,7 @@ Function GetECFComponente( AECFClass: TACBrECFClass ): TACBrECF;
 
 implementation
 Uses {$IFDEF COMPILER6_UP} StrUtils {$ELSE}ACBrD5 ,Windows {$ENDIF},
-     Math, IniFiles,
+     Math, IniFiles, TypInfo,
      ACBrUtil, ACBrECFBematech, ACBrECFNaoFiscal, ACBrECFDaruma, ACBrECFSchalter,
      ACBrECFMecaf, ACBrECFSweda, ACBrECFDataRegis, ACBrECFUrano, ACBrECFYanco,
      ACBrECFICash, ACBrECFQuattro, ACBrECFFiscNET, ACBrECFEpson, ACBrECFNCR,
@@ -2279,6 +2279,7 @@ begin
        end;
     end ;
   finally
+     fsECF.GravaLog('  '+GetEnumName(TypeInfo(TACBrECFEstado), Integer(Result)));
      IgnorarErroSemPapel := wIgnorarErroSemPapel;
   end;
 end;

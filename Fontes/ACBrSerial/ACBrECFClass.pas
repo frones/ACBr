@@ -1999,7 +1999,7 @@ begin
 
   if not fpDevice.Ativo then
   begin
-     GravaLog('-- Ativando a porta: ' + fpDevice.Porta);
+     GravaLog('   Ativando a porta: ' + fpDevice.Porta);
      fpDevice.Ativar;
   end;
 end;
@@ -2008,7 +2008,7 @@ procedure TACBrECFClass.DesativarPorta;
 begin
   if not Assigned(fpDevice) then exit;
 
-  GravaLog('-- Desativando a porta: ' + fpDevice.Porta);
+  GravaLog('   Desativando a porta: ' + fpDevice.Porta);
   fpDevice.Desativar;
 end;
 

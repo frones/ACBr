@@ -1712,13 +1712,21 @@ Procedure TfrlDANFeRLPaisagem.AddFaturaReal;
 begin
   rlbFaturaReal.Visible := fExibeCampoFatura;
 
-  case FNFe.Ide.indPag of
-    ipVista : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO À VISTA');
-    ipPrazo : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO À PRAZO');
-    ipOutras: begin
-                RlbDadoPagamento.caption  := 'OUTROS';
-                rlbFaturaReal.Visible     := NaoEstaVazio(FNFe.Cobr.Fat.nFat) and fExibeCampoFatura;
-              end;
+  if FNFe.infNFe.Versao >= 4 then
+  begin
+    RlbDadoPagamento.Caption := ACBrStr('DADOS DA FATURA');
+    rlbFaturaReal.Visible    := NaoEstaVazio(FNFe.Cobr.Fat.nFat) and fExibeCampoFatura;
+  end
+  else
+  begin
+    case FNFe.Ide.indPag of
+      ipVista : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO À VISTA');
+      ipPrazo : RlbDadoPagamento.caption  := ACBrStr('PAGAMENTO A PRAZO');
+      ipOutras: begin
+                  RlbDadoPagamento.caption  := 'OUTROS';
+                  rlbFaturaReal.Visible     := NaoEstaVazio(FNFe.Cobr.Fat.nFat) and fExibeCampoFatura;
+                end;
+    end;
   end;
 
   if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then

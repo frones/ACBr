@@ -691,10 +691,15 @@ begin
 
       FieldByName('iForma').asInteger := Integer( FNFe.Ide.indPag);
 
-      case FNFe.Ide.indPag of
-        ipVista : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À VISTA');
-        ipPrazo : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À PRAZO');
-        ipOutras: FieldByName('Pagamento').AsString := ACBrStr('OUTROS');
+      if FNFe.infNFe.Versao >= 4 then
+        FieldByName('Pagamento').AsString := ACBrStr('DADOS DA FATURA')
+      else
+      begin
+        case FNFe.Ide.indPag of
+          ipVista : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO À VISTA');
+          ipPrazo : FieldByName('Pagamento').AsString := ACBrStr('PAGAMENTO A PRAZO');
+          ipOutras: FieldByName('Pagamento').AsString := ACBrStr('OUTROS');
+        end;
       end;
 
       if NaoEstaVazio(FNFe.Cobr.Fat.nFat) then
@@ -707,7 +712,12 @@ begin
           FieldByName('vLiq').AsFloat   := vLiq;
         end;
       end;
-      Post;
+
+      if ((FNFe.infNFe.Versao >= 4) or (FNFe.Ide.indPag = ipOutras)) and EstaVazio(FNFe.Cobr.Fat.nFat) then
+        Cancel
+      else
+        Post;
+
     end;
   end;
 end;

@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+14/09/2017
+-- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --
+[*] Refatoração no DANFE para não mostrar a informação do pagamento na versão 4.0.
+        https://www.projetoacbr.com.br/forum/topic/38687-danfe-nfe-40/#comment-254961
+    	por: BigWings
 
 13/09/2017
 -- ACBrNFeDANFeRLRetrato ACBrNFeDANFeRLPaisagem --

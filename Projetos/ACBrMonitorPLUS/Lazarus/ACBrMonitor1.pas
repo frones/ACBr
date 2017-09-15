@@ -7294,7 +7294,12 @@ begin
       ACBrSATExtratoFortes1.Filtro := TACBrSATExtratoFiltro(fiNenhum);
 
     if ( Trim(edtLogoMarcaNFCeSAT.Text) <> '') and FileExists(edtLogoMarcaNFCeSAT.Text) then
+    begin
+       ACBrSATExtratoFortes1.LogoVisible := True;
        ACBrSATExtratoFortes1.PictureLogo.LoadFromFile(edtLogoMarcaNFCeSAT.Text);
+    end
+    else
+      ACBrSATExtratoFortes1.LogoVisible := False;
 
     try
       if NomeImpressora <> '' then

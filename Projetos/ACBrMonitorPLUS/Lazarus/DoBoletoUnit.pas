@@ -344,6 +344,7 @@ begin
          TipoDiasProtesto := TACBrTipoDiasIntrucao(aIni.ReadInteger(Sessao,'TipoDiasProtesto',0));
          TipoImpressao := TACBrTipoImpressao(aIni.ReadInteger(Sessao,'TipoImpressao',1));
          TipoDesconto := TACBrTipoDesconto(aIni.ReadInteger(Sessao,'TipoDesconto',0));
+         MultaValorFixo := aIni.ReadBool(Sessao,'MultaValorFixo',False);
 
          LocalPagto := aIni.ReadString(Sessao,'LocalPagamento','');
 

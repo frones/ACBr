@@ -220,14 +220,37 @@ begin
          end
         else if Cmd.Metodo = 'encerrarmdfe' then
          begin
-           if not ValidarChave('NFe'+Cmd.Params(0)) then
-              raise Exception.Create('Chave '+Cmd.Params(0)+' inválida.')
-           else
-              ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0);
+           ACBrMDFe1.Manifestos.Clear;
 
-           if not ACBrMDFe1.WebServices.Consulta.Executar then
+           PathsMDFe := TStringList.Create;
+           try
+             PathsMDFe.Append(Cmd.Params(0));
+             PathsMDFe.Append(PathWithDelim(ACBrMDFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+             try
+               CarregarDFe(PathsMDFe, ArqMDFe, tDFeMDFe);
+             except
+                raise Exception.Create('Erro ao Carregar MDFe em: '+PathsMDFe.Text);
+             end;
+           finally
+             PathsMDFe.Free;
+           end;
+
+           if (ACBrMDFe1.Manifestos.Count = 0) then
+           begin
+             if ValidarChave(Cmd.Params(0)) then
+               ACBrMDFe1.WebServices.Consulta.MDFeChave := Cmd.Params(0)
+             else
+               raise Exception.Create('Parâmetro inválido. Chave do MDFe inválida ou arquivo não encontrado.');
+           end
+           else
+             ACBrMDFe1.WebServices.Consulta.MDFeChave := OnlyNumber(ACBrMDFe1.Manifestos.Items[0].MDFe.infMDFe.ID);
+
+           if not (ACBrMDFe1.WebServices.Consulta.Executar) then
              if (ACBrMDFe1.WebServices.Consulta.cStat <> 460) then //Consulta a uma Chave de Acesso muito antiga
-               raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg);
+               raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg)
+             else if (ACBrMDFe1.Manifestos.Count = 0) then    //Consulta dados atraves do XML para retorno = 460
+               raise Exception.Create(ACBrMDFe1.WebServices.Consulta.Msg +
+                                      '. Informe o caminho completo do XML para Encerrar este MDFe.');
 
            ACBrMDFe1.EventoMDFe.Evento.Clear;
            with ACBrMDFe1.EventoMDFe.Evento.Add do
@@ -246,7 +269,11 @@ begin
              infEvento.tpEvento := teEncerramento;
              infEvento.chMDFe   := ACBrMDFe1.WebServices.Consulta.MDFeChave;
 
-             infEvento.detEvento.nProt := ACBrMDFe1.WebServices.Consulta.Protocolo;
+             if (ACBrMDFe1.Manifestos.Count = 0) then
+               infEvento.detEvento.nProt := ACBrMDFe1.WebServices.Consulta.Protocolo
+             else
+               infEvento.detEvento.nProt := ACBrMDFe1.Manifestos.Items[0].MDFe.procMDFe.nProt;
+
              infEvento.detEvento.dtEnc := StringToDateTime(Cmd.Params(1));
              infEvento.detEvento.cUF   := StrToIntDef(copy(Cmd.Params(2), 1, 2), 1);
              infEvento.detEvento.cMun  := StrToIntDef(Cmd.Params(2), 1);

@@ -399,7 +399,7 @@ begin
       AdicionaErro('227-Rejeição: Chave de Acesso do Campo Id difere da concatenação dos campos correspondentes');
 
     GravaLog('Regra: G005 - Validar: 666-Ano da Chave');
-    if Copy(MDFe.infMDFe.ID, 7, 2) < '2012' then
+    if Copy(MDFe.infMDFe.ID, 7, 2) < '12' then
       AdicionaErro('666-Rejeição: Ano da chave de acesso é inferior a 2012');
 
     GravaLog('Regra: G018 - Validar: 458-Tipo de Transportador');

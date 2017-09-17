@@ -1405,7 +1405,7 @@ begin
 
   Leitor.Grupo := Leitor.Arquivo;
 
-  if Leitor.rExtrai(1, 'NfseCancelamento') <> '' then
+  if ((Leitor.rExtrai(1, 'NfseCancelamento') <> '') or (Leitor.rExtrai(1, 'CancelamentoNfse') <> '')) then
   begin
     NFSe.NfseCancelamento.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
     if NFSe.NfseCancelamento.DataHora = 0 then

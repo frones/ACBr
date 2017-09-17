@@ -860,11 +860,13 @@ var
 
   end;
 
-  //provedor SimplISS
+  //provedor SimplISS, FISSLex
   function PosNFSeCancelamento: Integer;
   begin
     TamTAG := 18;
     Result := Pos('</NfseCancelamento>', AXMLString);
+    if Result=0 then
+       Result := Pos('</CancelamentoNfse>', AXMLString);
   end;
 
   function PosRPS: Integer;
@@ -912,7 +914,7 @@ begin
 
       // No caso dos provedores [SimplISS, Betha e Tecnos] o grupo NfseCancelamento fica fora do
       // grupo CompNfse
-      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSimplISS, proBetha, proTecnos] then
+      if TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor in [proSimplISS, proBetha, proTecnos, proFISSLEX] then
       begin
         N:= PosNFSeCancelamento;
         if N > 0 then

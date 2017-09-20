@@ -478,7 +478,8 @@ var
    ATipoCedente, ATipoSacado, ATipoOcorrencia    :String;
    ADataMoraJuros, ADataDesconto, ATipoAceite    :String;
    ATipoEspecieDoc, ANossoNumero,wLinha,wCarteira :String;
-   wLinhaMulta :String; 
+   wLinhaMulta :String;
+   iSequencia : integer;
 
   function DoMontaInstrucoes1: string;
   begin
@@ -673,7 +674,7 @@ begin
                    '00'                                                                           + // COMPLEMENTO DE REGISTRO
                    PadLeft(OnlyNumber(Cedente.Conta), 5, '0')                                     + // NÚMERO DA CONTA CORRENTE DA EMPRESA
                    PadRight(Cedente.ContaDigito, 1)                                               + // DÍGITO DE AUTO CONFERÊNCIA AG/CONTA EMPRESA
-                   Carteira                                                                       + // NÚMERO DA CARTEIRA NO BANCO
+                   PadLeft(Carteira,3,' ')                                                        + // NÚMERO DA CARTEIRA NO BANCO
                    PadLeft(NossoNumero, 8, '0')                                                   + // IDENTIFICAÇÃO DO TÍTULO NO BANCO
                    Copy(ANossoNumero, Length(ANossoNumero), 1)                                    + // DAC DO NOSSO NÚMERO
                    '0'                                                                            + // 0 - R$
@@ -723,7 +724,7 @@ begin
                    PadRight(SeuNumero, 25, ' ')                                                   + // IDENTIFICAÇÃO DO TÍTULO NA EMPRESA
                    PadLeft(NossoNumero, 8, '0')                                                   + // IDENTIFICAÇÃO DO TÍTULO NO BANCO
                    '0000000000000'                                                                + // QUANTIDADE DE MOEDA VARIÁVEL
-                   Carteira                                                                       + // NÚMERO DA CARTEIRA NO BANCO
+                   PadLeft(Carteira,3,' ')                                                        + // NÚMERO DA CARTEIRA NO BANCO
                    space(21)                                                                      + // IDENTIFICAÇÃO DA OPERAÇÃO NO BANCO
                    'I'                                                                            + // CÓDIGO DA CARTEIRA
                    ATipoOcorrencia                                                                + // IDENTIFICAÇÃO DA OCORRÊNCIA
@@ -764,19 +765,44 @@ begin
                            PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00')+ // PRAZO
                    space(1)                                                                       + // BRANCOS
                    IntToStrZero(aRemessa.Count + 1, 6);                                             // Nº SEQÜENCIAL DO REGISTRO NO ARQUIVO
-                   
+
+                   iSequencia := aRemessa.Count + 1;
+
                    //Registro Complemento Detalhe - Multa
                    if PercentualMulta > 0 then
                    begin
+                     inc( iSequencia );
                      wLinhaMulta:= '2'                                              + // Tipo de registro - 2 OPCIONAL – COMPLEMENTO DETALHE - MULTA
                                    '2'                                              + // Cocidgo da Multa X(001) 2-percentual
                                    ifThen((DataMulta > 0),
                                            FormatDateTime('ddmmyyyy',  DataMulta), '00000000')      + // Data da Multa 9(008)
                                    IntToStrZero( round(PercentualMulta * 100 ), 13) + // Valor/Percentual 9(013)
                                    space(371)                                       + // Complemento
-                                   IntToStrZero(aRemessa.Count + 2 , 6);              // Sequencial
+                                   IntToStrZero(iSequencia , 6);                      // Sequencial
 
                      wLinha := wLinha + #13#10 + wLinhaMulta;
+                   end;
+
+                   //OPCIONAL – COBRANÇA E-MAIL E/OU DADOS DO SACADOR AVALISTA
+                   if Sacado.SacadoAvalista.Email <> '' then
+                   begin
+                     inc( iSequencia );
+                     wLinhaMulta:= '5'                                                          + // Tipo de registro - 5 IDENTIFICAÇÃO DO REGISTRO TRANSAÇÃO
+                                   PadRight(Sacado.SacadoAvalista.Email, 120, ' ')              + // ENDEREÇO DE E-MAIL ENDEREÇO DE E-MAIL DO PAGADOR
+                                   ATipoSacado                                                  + // CÓDIGO DE INSCRIÇÃO IDENT. DO TIPO DE INSCRIÇÃO DO SACADOR/AVALISTA
+                                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CNPJCPF), 14, '0')  + // NÚMERO DE INSCRIÇÃO NÚMERO DE INSCRIÇÃO DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.Logradouro + ' '+
+                                   Sacado.SacadoAvalista.Numero + ' ' +
+                                   Sacado.SacadoAvalista.Complemento , 40, ' ')                 + // RUA, Nº E COMPLEMENTO DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.Bairro, 12, ' ')              + // BAIRRO DO SACADOR AVALISTA
+                                   PadLeft(OnlyNumber(Sacado.SacadoAvalista.CEP), 8, '0')       + // CEP DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.Cidade, 15, ' ')              + // CIDADE DO SACADOR AVALISTA
+                                   PadRight(Sacado.SacadoAvalista.UF, 2, ' ')                   + // UF (ESTADO) DO SACADOR AVALISTA
+                                   space(180)                                                   + // COMPLEMENTO DE REGISTRO
+                                   IntToStrZero(iSequencia , 6);                                  // Sequencial
+
+                     wLinha := wLinha + #13#10 + wLinhaMulta;
+
                    end;
 
         end;

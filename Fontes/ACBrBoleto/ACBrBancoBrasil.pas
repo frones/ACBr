@@ -77,6 +77,7 @@ type
    protected
    private
     function FormataNossoNumero(const ACBrTitulo :TACBrTitulo): String;
+    function NossoNumeroSemFormatacaoLerRetorno(const Convenio, Carteira, Linha: String): String;
     procedure LerRetorno400Pos6(ARetorno: TStringList);
     procedure LerRetorno400Pos7(ARetorno: TStringList);
    public
@@ -195,6 +196,25 @@ begin
       ANossoNumero := PadLeft(AConvenio, 7, '0') + RightStr(ANossoNumero, 10);
   end;
   Result := ANossoNumero;
+end;
+
+function TACBrBancoBrasil.NossoNumeroSemFormatacaoLerRetorno(const Convenio,
+  Carteira, Linha: String): String;
+begin
+
+  //Utiliza Mesma Regra da Funcão FormataNossoNumero para Extrair apenas o campo Nosso Número do Retorno
+  if ( ((Carteira = '16') or (Carteira = '18')) and
+      (Length(Convenio) = 6) and (Length(trim(copy (Linha, 38, 20) )) = 17) ) then
+    Result := copy(Linha, 38, 17)  // Utiliza 17 posições correspondente Nosso Numero
+  else if ( Length(Convenio) <= 4 ) then
+    Result := copy(Linha, 42, 7)  // Elimina 4 posições do Convênio e utiliza 7 posições correspondente Nosso Numero
+  else if ( (Length(Convenio) > 4) and (Length(Convenio) <= 6) ) then
+    Result := copy(Linha, 44, 5)  // Elimina 6 posições do Convênio e utiliza 5 posições correspondente Nosso Numero
+  else if ( Length(Convenio) = 7 ) then
+    Result := copy(Linha, 45, 10) // Elimina 7 posições do Convênio e utiliza 10 posições correspondente Nosso Numero
+  else
+    Result := copy (Linha, 38, 20);
+
 end;
 
 
@@ -570,12 +590,12 @@ begin
               ' '                                                                     + // 15 - 15 Uso exclusivo FEBRABAN/CNAB: Branco
               ATipoOcorrencia                                                         + // 16 - 17 Tipo Ocorrencia
               PadLeft('', 48, '0')                                                    + // 18 - 65 Brancos (Não definido pelo FEBRAN)
-              IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0')   + // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
-              IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
-                      FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')          + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
-              IfThen(PercentualMulta > 0,
-                     IntToStrZero(round(PercentualMulta * 100), 15),
-              PadRight('', 15, '0'))                                                  + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
+              IfThen((PercentualMulta > 0),
+                     IfThen(MultaValorFixo,'1','2'), '0')                             + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
+              IfThen((PercentualMulta > 0),
+                      FormatDateTime('ddmmyyyy', DataMulta), '00000000')              + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+              IfThen((PercentualMulta > 0),
+                     IntToStrZero(round(PercentualMulta * 100), 15),PadRight('', 15, '0'))  + // 75 - 89 Valor / Percentual de multa. Informar zeros se não cobrar
               PadRight('',110,' ')                                                    + // 90 - 199
               PadRight('',8,'0')                                                      + // 200 - 207
               StringOfChar('0', 33);                                                    // 208 - 240 Zeros (De acordo com o manual de particularidades BB)
@@ -677,7 +697,7 @@ begin
 
    with ACBrTitulo do
    begin
-     wCarteira:= strtoint(Carteira);
+     wCarteira:= StrToIntDef(Carteira,0);
      if ((wCarteira = 11) or (wCarteira= 31) or (wCarteira = 51)) or
         (((wCarteira = 12) or (wCarteira = 15) or (wCarteira = 17)) and
          (ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite)) then
@@ -886,7 +906,8 @@ begin
        wLinha:= wLinha + sLineBreak                              +
                 '5'                                              + //Tipo Registro
                 '99'                                             + //Tipo de Serviço (Cobrança de Multa)
-                IfThen(PercentualMulta > 0, '2','9')             + //Cod. Multa 2- Percentual 9-Sem Multa
+                IfThen((PercentualMulta > 0),
+                       IfThen(MultaValorFixo,'1','2'), '9')      + //Cod. 1-Cobrar Multa Valor Fixo / 2-Percentual / 9-Não cobrar multa
                 IfThen(PercentualMulta > 0,
                        FormatDateTime('ddmmyy', DataMoraJuros),
                                       '000000')                  + //Data Multa
@@ -988,11 +1009,9 @@ begin
                Vencimento := StringToDateTimeDef(TempData, 0, 'DDMMYY');
 
             ValorDocumento := StrToFloatDef(copy(Linha, 82, 15), 0) / 100;
-           
-            if Length(ACBrBoleto.Cedente.Convenio) = 6 then
-              NossoNumero := copy(Linha, 44, 10)
-            else
-              NossoNumero := copy(Linha, 45, 10);
+
+            NossoNumero := NossoNumeroSemFormatacaoLerRetorno(ACBrBoleto.Cedente.Convenio, Carteira, Linha);
+
             ValorDespesaCobranca := StrToFloatDef(copy(Linha, 199, 15), 0) / 100;
 
             OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(copy(Linha, 16, 2), 0));

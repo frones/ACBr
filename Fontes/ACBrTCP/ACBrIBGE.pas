@@ -52,7 +52,7 @@ uses
   ACBrSocket ;
 
 const
-  CIBGE_URL = 'http://www.ibge.gov.br/home/geociencias/areaterritorial/area.php' ;
+  CIBGE_URL = 'https://www.ibge.gov.br/home/geociencias/areaterritorial/area.php' ;
 
 type
 

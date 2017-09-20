@@ -102,6 +102,7 @@ Type
                                           //[TT] é o número do Terminal ['00'..'99'];
                                           //[...] é a String que ainda falta para girar.
 
+            function GetDuplaConfirmacao: Boolean;
             Procedure SetModelo( Const Value : TACBrTERModelo );
             Procedure SetPorta( Const Value : String );
             Procedure SetAtivo( Const Value : Boolean );
@@ -111,6 +112,7 @@ Type
             Function GetPorta : String;
             Function GetModeloStrClass : String;
             Procedure SetIntervalo( Const Value : Integer );
+            Procedure SetDuplaConfirmacao( Const Value: Boolean);
         Public
             Constructor Create( AOwner: TComponent ); Override;
             Destructor Destroy; Override;
@@ -139,6 +141,7 @@ Type
             Property Intervalo : Integer Read fsIntervalo Write SetIntervalo Default 200;
             Property Comutadora : Boolean Read fsComutadora Write fsComutadora Default False; //Possui Comutadora gerenciando vários Terminais?
             Property Rotacao : TACBrRotacao Read fsRotacao;
+            Property DuplaConfirmacao : Boolean Read GetDuplaConfirmacao Write SetDuplaConfirmacao;
             { Instancia do Componente ACBrDevice, será passada para fsTER.create }
             Property Device : TACBrDevice Read fsDevice;
             Property OnRecebeChar : TACBrTERRecebeChar Read fsOnRecebeChar Write fsOnRecebeChar;
@@ -205,6 +208,8 @@ Begin
 End;
 
 Procedure TACBrTER.SetModelo( Const Value: TACBrTERModelo );
+var
+    wDuplaConfirmacao: Boolean;
 Begin
     If fsModelo = Value Then
         Exit;
@@ -212,6 +217,7 @@ Begin
     If fsAtivo Then
         Raise Exception.Create( ACBrStr('Não é possível mudar o Modelo com ACBrTER Ativo') );
 
+    wDuplaConfirmacao := DuplaConfirmacao;
     FreeAndNil( fsTER );
 
     { Instanciando uma nova classe de acordo com fsModelo }
@@ -221,10 +227,16 @@ Begin
         fsTER := TACBrTERClass.Create( Self );
     End;
 
+    DuplaConfirmacao := wDuplaConfirmacao;
     fsModelo := Value;
 End;
 
-Procedure TACBrTER.SetAtivo( Const Value: Boolean );
+function TACBrTER.GetDuplaConfirmacao: Boolean;
+begin
+  Result := fsTER.DuplaConfirmacao;
+end;
+
+procedure TACBrTER.SetAtivo(const Value: Boolean);
 Begin
     If Value Then
         Ativar
@@ -232,7 +244,12 @@ Begin
         Desativar;
 End;
 
-Procedure TACBrTER.Ativar;
+procedure TACBrTER.SetDuplaConfirmacao(const Value: Boolean);
+begin
+  fsTER.DuplaConfirmacao := Value;
+end;
+
+procedure TACBrTER.Ativar;
 Begin
     If fsAtivo Then
         Exit;

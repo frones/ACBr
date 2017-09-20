@@ -39,6 +39,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 20/09/2017
+-- ACBrTER, ACBrTERClass, ACBrTERWilbor --
+[+] Inclusão do parâmetro "DuplaConfirmacao", baseado na contribuição de usuário do fórum.
+	(por: Natanael.Ribeiro)
+
 Data: 08/09/2017
 -- ACBrECFVirtual --
 [-] Ajuste para permitir mais de 100 pagamentos no Cupom.

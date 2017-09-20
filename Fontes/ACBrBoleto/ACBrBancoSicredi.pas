@@ -1032,12 +1032,13 @@ begin
           end;
 
         toRetornoLiquidadoAposBaixaouNaoRegistro: //17
-          case AnsiIndexStr(CodMotivo,['A8', 'C6', 'H5', 'H6', 'H8']) of
+          case AnsiIndexStr(CodMotivo,['A8', 'C6', 'H5', 'H6', 'H8', 'C7']) of
             0: Result:= 'A8-Recebimento da liquidação fora da rede Sicredi - via compensação eletrônica';
             1: Result:= 'C6-Título já liquidado';
             2: Result:= 'H5-Recebimento de liquidação fora da rede Sicredi - VLB Inferior - via compensação';
             3: Result:= 'H6-Recebimento de liquidação fora da rede Sicredi - VLB Superior - via compensação';
             4: Result:= 'H8-Recebimento de liquidação fora da rede Sicredi - Contingência via compe';
+            5: Result:= 'C7-Título já baixado';
           else
             case StrToInt(CodMotivo) of
               00: Result:= '00-Ocorrência aceita, liquidação após baixa';
@@ -1473,7 +1474,7 @@ begin
               Space(20)                                                     + // 033 a 052 - Código do convênio no banco (O SICREDI não valida este campo; cfe Manual Agosto 2010 pág. 35)
               PadLeft(OnlyNumber(Agencia), 5, '0')                          + // 053 a 057 - Agência mantenedora da conta
               Space(1)                                                      + // 058 a 058 - Dígito verificador da agência
-              PadLeft(OnlyNumber(CodigoCedente), 12, '0')                   + // 059 a 070 - Código do cedente
+              PadLeft(OnlyNumber(Conta), 12, '0')                           + // 059 a 070 - Número da Conta
               PadRight(ContaDigito, 1, '0')                                 + // 071 a 071 - DV Conta
               Space(1)                                                      + // 072 a 072 - Dígito verificador da ag
               PadRight(Nome, 30)                                            + // 073 a 102 - Nome da empresa
@@ -1504,7 +1505,7 @@ begin
               Space(20)                                                     + // 034 a 053 - Código do convênio no banco (O SICREDI não valida este campo; cfe Manual Agosto 2010 pág. 35)
               PadLeft(OnlyNumber(Agencia), 5, '0')                          + // 054 a 058 - Agência mantenedora da conta
               Space(1)                                                      + // 059 a 059 - Dígito verificador da agência
-              PadLeft(OnlyNumber(CodigoCedente), 12, '0')                   + // 060 a 071 - Código do cedente
+              PadLeft(OnlyNumber(Conta), 12, '0')                           + // 060 a 071 - Número da Canta
               PadRight(ContaDigito,1)                                       + // 072 a 072 - Zeros
               Space(1)                                                      + // 073 a 073 - Dígito verificador da coop/ag/conta
               PadRight(Nome, 30)                                            + // 074 a 103 - Nome da empresa

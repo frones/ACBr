@@ -198,7 +198,13 @@ begin
      begin
           FatorVencimento := CalcularFatorVencimento(ACBrTitulo.Vencimento);
 
-          CodigoBarras := PadLeft(OnlyNumber(IntToStr(fpNumero)), 3, '0') + '9' + FatorVencimento + IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) + PadLeft(OnlyNumber(Cedente.Agencia), fpTamanhoAgencia, '0') + PadLeft(OnlyNumber(Cedente.AgenciaDigito), 1, '0') + PadLeft(OnlyNumber(Cedente.Convenio), 4, '0') + PadLeft(OnlyNumber(ACBrTitulo.NossoNumero), fpTamanhoMaximoNossoNum, '0') + '8';
+          CodigoBarras := PadLeft(OnlyNumber(IntToStr(fpNumero)), 3, '0') + '9' +
+                          FatorVencimento +
+                          IntToStrZero(Round(ACBrTitulo.ValorDocumento * 100), 10) +
+                          PadLeft(OnlyNumber(Cedente.Agencia), fpTamanhoAgencia, '0') +
+                          PadLeft(OnlyNumber(Cedente.AgenciaDigito), 1, '0') +
+                          PadLeft(OnlyNumber(Cedente.Convenio), 4, '0') +
+                          PadLeft(OnlyNumber(ACBrTitulo.NossoNumero), fpTamanhoMaximoNossoNum, '0') + '0';
 
           DigitoCodBarras := CalcularDigitoCodigoBarras(CodigoBarras);
      end;
@@ -208,7 +214,10 @@ end;
 
 function TACBrBancoAmazonia.MontarCampoCodigoCedente(const ACBrTitulo: TACBrTitulo): String;
 begin
-     Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia + '-' + ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito + ' / ' + IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta, 0)) + '-' + ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
+     Result := ACBrTitulo.ACBrBoleto.Cedente.Agencia + '-' +
+               ACBrTitulo.ACBrBoleto.Cedente.AgenciaDigito + ' / ' +
+               IntToStr(StrToIntDef(ACBrTitulo.ACBrBoleto.Cedente.Conta, 0)) + '-' +
+               ACBrTitulo.ACBrBoleto.Cedente.ContaDigito;
 end;
 
 function TACBrBancoAmazonia.MontarCampoNossoNumero(const ACBrTitulo: TACBrTitulo): String;
@@ -304,7 +313,7 @@ var
      ATipoOcorrencia, ATipoBoleto: String;
      ADataMoraJuros, ADataDesconto: String;
      ANossoNumero, ATipoAceite: String;
-     aAgencia, aConta, aDV: String;
+     aAgencia, aConta: String;
      wTamConvenio, wTamNossoNum: Integer;
      wCarteira, wTipoDocumento: Integer;
      ACaracTitulo: Char;
@@ -319,21 +328,6 @@ begin
           if (Integer(ACBrBoleto.Cedente.TipoDocumento) > 0) then
                wTipoDocumento := Integer(ACBrBoleto.Cedente.TipoDocumento)
           else wTipoDocumento := 1;
-
-          if (((wCarteira = 11) or (wCarteira = 31) or (wCarteira = 51)) or ((wCarteira = 12) or (wCarteira = 15) or (wCarteira = 17))) and ((ACBrBoleto.Cedente.ResponEmissao <> tbCliEmite) and (StrToIntDef(NossoNumero, 0) = 0)) then
-          begin
-               ANossoNumero := StringOfChar('0', 20);
-               aDV := ' ';
-          end
-          else
-          begin
-               ANossoNumero := FormataNossoNumero(ACBrTitulo);
-
-               if (wTamConvenio = 7) or ((wTamConvenio = 6) and (wTamNossoNum = 17)) then
-                    aDV := ''
-               else
-                    aDV := CalcularDigitoVerificador(ACBrTitulo);
-          end;
 
           aAgencia := PadLeft(ACBrBoleto.Cedente.Agencia, 5, '0');
           aConta := PadLeft(ACBrBoleto.Cedente.Conta, 12, '0');
@@ -444,7 +438,7 @@ begin
                aConta + // 24 a 35 - Número da conta corrente
                PadRight(ACBrBoleto.Cedente.ContaDigito, 1, '0') + // 36 - Dígito verificador da conta
                ' ' + // 37 - Dígito verificador da agência / conta
-               PadRight(ANossoNumero + aDV, 20, ' ') + // 38 a 57 - Nosso número - identificação do título no banco
+               PadRight(ANossoNumero, 20, ' ') + // 38 a 57 - Nosso número - identificação do título no banco
                PadRight(IntToStr(wCarteira), 1, '0') + // 58 - Cobrança Simples
                '1' + // 59 - Forma de cadastramento do título no banco: com cadastramento
                IntToStr(wTipoDocumento) + // 60 - Tipo de documento: Tradicional
@@ -507,13 +501,13 @@ begin
                ATipoOcorrencia + // 16 - 17 Tipo Ocorrencia
                PadLeft('', 1, '0') + // 18 - Código do desconto 2
                PadLeft('', 8, '0') + // 19 a 26 - Data do desconto 2
-               PadLeft('', 13, '0') + // 27 a 41 - Percentual concedido
+               PadLeft('', 15, '0') + // 27 a 41 - Percentual concedido
                PadLeft('', 1, '0') + // 42 - Código do desconto 3
                PadLeft('', 8, '0') + // 43 a 50 - Data do desconto 3
-               PadLeft('', 13, '0') + // 51 a 65 - Percentual concedido
-               IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0') + // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
-               IfThen((PercentualMulta <> null) and (PercentualMulta > 0), FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000') + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
-               IfThen(PercentualMulta > 0, IntToStrZero(Round(PercentualMulta * 100), 15), PadRight('', 15, '0')) + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
+               PadLeft('', 15, '0') + // 51 a 65 - Percentual concedido
+               IfThen((PercentualMulta > 0), '2', '0') + // 66 - 66 1-Cobrar Multa / 0-Não cobrar multa
+               IfThen((PercentualMulta > 0), FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000') + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+               IfThen((PercentualMulta > 0), IntToStrZero(Round(PercentualMulta * 100), 15), PadRight('', 15, '0')) + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
                PadLeft('', 10, ' ') + // 90 a 99 - Informação do Sacado
                PadLeft('', 40, ' ') + // 100 a 139 - Mensagem 3
                PadLeft('', 40, ' ') + // 140 a 179 - Mensagem 4
@@ -537,7 +531,7 @@ begin
           '0001' + // 4 a 7 - Número do lote
           '5' + // 8 - Tipo do registro: Registro trailer do lote
           Space(9) + // 9 a 17 - Uso exclusivo FEBRABAN/CNAB
-          IntToStrZero((3 * (ARemessa.Count - 3)), 6) + // 18 a 23 - Quantidade de Registro da Remessa
+          IntToStrZero((3 * (ARemessa.Count-1)) + 1, 6) + // 18 a 23 - Quantidade de Registro da Remessa
           PadRight('', 6, '0') + // 24 a 29 - Quantidade títulos em cobrança
           PadRight('', 17, '0') + // 30 a 46 - Valor dos títulos em carteiras}
           PadRight('', 6, '0') + // 47 a 52 - Quantidade títulos em cobrança
@@ -555,7 +549,7 @@ begin
           '9' + // 8 - Tipo do registro: Registro trailer do arquivo
           Space(9) + // 9 a 17 - Uso exclusivo FEBRABAN/CNAB}
           '000001' + // 18 a 23 - Quantidade de lotes do arquivo}
-          IntToStrZero(((ARemessa.Count - 3) * 3) + 4, 6) + // 24 a 29 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora}
+          IntToStrZero((3 * (ARemessa.Count-1)) + 4, 6) + // 24 a 29 - Quantidade de registros do arquivo, inclusive este registro que está sendo criado agora
           Space(6) + // 30 a 35 - Uso exclusivo FEBRABAN/CNAB}
           Space(205); // 36 a 240 - Uso exclusivo FEBRABAN/CNAB}
 end;

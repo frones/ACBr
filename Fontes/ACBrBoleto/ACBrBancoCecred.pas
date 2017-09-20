@@ -512,7 +512,7 @@ begin
              StringOfChar('0', 8)                                                    + // 43 a 50 - Data do desconto 3
              StringOfChar('0', 15)                                                   + // 51 a 65 - Valor/Percentual de desconto 3
              aCodMulta                                                               + // 66 a 66 - Codigo Multa (1-Valor fixo / 2-Percentual)
-             IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
+             IfThen((PercentualMulta > 0),
                      FormatDateTime('ddmmyyyy', DataMoraJuros), '00000000')          + // 67 a 74 - Data Multa (se nao informar será a partir do vcto)
              aValorMulta                                                             + // 75 a 89 - valor/Percentual de multa dependando do cod da multa. Informar zeros se não cobrar
              StringOfChar(' ', 10)                                                   + // 90 a 99 - Informacao ao sacado

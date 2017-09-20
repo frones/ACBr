@@ -311,10 +311,7 @@ begin
       else
          wRespEntrega := '1';
 
-      if (DataProtesto > 0) then
-         DiasProtesto := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2)
-      else
-         DiasProtesto := '00';
+      DiasProtesto := IntToStrZero(DiasDeProtesto,2);
          
       { Data do Primeiro Desconto}
       if ( DataDesconto <> 0 ) then
@@ -715,19 +712,19 @@ begin
                '045'                                   + //14 a 16 - Número da versão do layout do lote
                ' '                                     + //17 - Uso exclusivo FEBRABAN/CNAB
                ATipoInscricao                          + //18 - Tipo de inscrição do cedente
-               PadLeft(OnlyNumber(CNPJCPF), 15, '0')      + //19 a 33 -Número de inscrição do cedente
+               PadLeft(OnlyNumber(CNPJCPF), 15, '0')   + //19 a 33 -Número de inscrição do cedente
                space(20)                               + //34 a 53 - Brancos
                '0'                                     + // 54 - Zeros
-               PadLeft(OnlyNumber(Agencia), 4, '0')       + //55 a 58 - Código da agência do cedente
-               PadLeft(AgenciaDigito, 1, '0')             + //59 - Digito da agencia do cedente
-               PadLeft(OnlyNumber(Conta), 12, '0')        + //60 - 71  Número da conta do cedente
-               PadLeft(ContaDigito, 1, '0')               + //72 - Digito da conta
+               PadLeft(OnlyNumber(Agencia), 4, '0')    + //55 a 58 - Código da agência do cedente
+               PadLeft(AgenciaDigito, 1, '0')          + //59 - Digito da agencia do cedente
+               PadLeft(OnlyNumber(Conta), 12, '0')     + //60 - 71  Número da conta do cedente
+               PadLeft(ContaDigito, 1, '0')            + //72 - Digito da conta
                ' '                                     + //73
-               PadRight(Nome, 30, ' ')                     + //74 a 103 - Nome do cedente
+               PadRight(Nome, 30, ' ')                 + //74 a 103 - Nome do cedente
                space(80)                               + // 104 a 183 - Brancos
-               PadLeft(IntToStr(NumeroRemessa) , 08, '0')       + // 184 a 191 - Número sequência do arquivo retorno.
+               PadLeft(IntToStr(NumeroRemessa) , 08, '0') + // 184 a 191 - Número sequência do arquivo retorno.
                FormatDateTime('ddmmyyyy', Now)         + //192 a 199 - Data de geração do arquivo
-               PadLeft('', 8, '0')                        + //200 a 207 - Data do crédito - Só para arquivo retorno
+               PadLeft('', 8, '0')                     + //200 a 207 - Data do crédito - Só para arquivo retorno
                space(33);                                //208 a 240 - Uso exclusivo FEBRABAN/CNAB
     end;
 end;
@@ -798,19 +795,16 @@ begin
      else
        ADataDesconto := PadLeft('', 8, '0');
 
+     DiasProtesto  := IntToStrZero(DiasDeProtesto,2);
      if (DataProtesto > 0) then
      begin
-        DiasProtesto  := IntToStrZero(DaysBetween(DataProtesto,Vencimento),2);
-        case TipoDiasProtesto of 
-          diCorridos : ProtestoBaixa := '1';
-          diUteis    : ProtestoBaixa := '2';
-        end;
+       case TipoDiasProtesto of
+         diCorridos : ProtestoBaixa := '1';
+         diUteis    : ProtestoBaixa := '2';
+       end;
      end
      else
-     begin
-        DiasProtesto := '00';
-        ProtestoBaixa:= '3'; //NÃO PROTESTA
-     end;
+       ProtestoBaixa:= '3';
 
      if (ValorMoraJuros > 0) and (CodigoMora = '') then
        CodigoMora := '1'
@@ -947,11 +941,12 @@ begin
                '0'                                                        + // 42
                PadLeft('0', 8, '0')                                       + // 43-50 data do desconto 3
                PadLeft('0', 15, '0')                                      + // 51-65 Valor ou percentual a ser concedido
-               IfThen((PercentualMulta > 0), '2', '0')                    + // 66 Código da multa - 1) valor fixo e 2) valor percentual
-               IfThen((PercentualMulta <> null) and (PercentualMulta > 0),
+               IfThen((PercentualMulta > 0),
+                       IfThen(MultaValorFixo,'1','2'), '0')               + // 66 Código da multa - 1 valor fixo / 2 valor percentual / 0 Sem Multa
+               IfThen((PercentualMulta > 0),
                        FormatDateTime('ddmmyyyy', DataMoraJuros),
                                       '00000000')                         + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
-               IfThen(PercentualMulta > 0,
+               IfThen((PercentualMulta > 0),
                       IntToStrZero(round(PercentualMulta * 100), 15),
                       PadLeft('', 15, '0'))                               + // 75 - 89 Percentual de multa. Informar zeros se não cobrar
                space(10);                                                   // 90-99 Informações do sacado
@@ -1006,11 +1001,11 @@ begin
            Space(9)                                                   + //Uso exclusivo FEBRABAN/CNAB
            IntToStrZero(((4 * (ARemessa.Count-1))+2), 6)              + //Quantidade de Registro da Remessa
            IntToStrZero(ARemessa.Count-1, 6)                          + // Quantidade de títulos em cobrança simples
-           PadLeft('',17, '0')                                           + //Valor dos títulos em cobrança simples
-           PadLeft('', 6, '0')                                           + //Quantidade títulos em cobrança vinculada
-           PadLeft('',17, '0')                                           + //Valor dos títulos em cobrança vinculada
-           PadLeft('',46, '0')                                           + //Complemento
-           PadRight('', 8, ' ')                                           + //Referencia do aviso bancario
+           PadLeft('',17, '0')                                        + //Valor dos títulos em cobrança simples
+           PadLeft('', 6, '0')                                        + //Quantidade títulos em cobrança vinculada
+           PadLeft('',17, '0')                                        + //Valor dos títulos em cobrança vinculada
+           PadLeft('',46, '0')                                        + //Complemento
+           PadRight('', 8, ' ')                                       + //Referencia do aviso bancario
            space(117);
   {GERAR REGISTRO TRAILER DO ARQUIVO}
   Result:= Result + #13#10 +

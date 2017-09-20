@@ -670,7 +670,7 @@ begin
                PadRight(AEspecieDoc, 2)                                       + // 107 a 108 - Espécie do documento
                ATipoAceite                                                + //109 - Identificação de título Aceito / Não aceito
                FormatDateTime('ddmmyyyy', DataDocumento)                  + //110 a 117 - Data da emissão do documento
-               PadRight(CodigoMora, 1, '3')                               + //118 - Código de juros de mora: Valor por dia
+               IfThen( (ValorMoraJuros > 0) and (CodigoMora= ''), '1', PadRight(CodigoMora, 1, '3') )   + //118 - Código de juros de mora: Valor por dia
                ADataMoraJuros                                             + //119 a 126 - Data a partir da qual serão cobrados juros
                IfThen(ValorMoraJuros > 0, IntToStrZero( round(ValorMoraJuros * 100), 15),
                       PadRight('', 15, '0'))                                                   + //127 a 141 - Valor de juros de mora por dia
@@ -681,9 +681,9 @@ begin
                IntToStrZero( round(ValorIOF * 100), 15)                   + //166 a 180 - Valor do IOF a ser recolhido
                IntToStrZero( round(ValorAbatimento * 100), 15)            + //181 a 195 - Valor do abatimento
                PadRight(IfThen(SeuNumero<>'',SeuNumero,NumeroDocumento), 25, ' ') + //196 a 220 - Identificação do título na empresa
-               IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento), '1', '3') + //221 - Código de protesto: Protestar em XX dias corridos
-               IfThen((DataProtesto <> 0) and (DataProtesto > Vencimento),
-                    PadLeft(IntToStr(DaysBetween(DataProtesto, Vencimento)), 2, '0'), '00') + //222 a 223 - Prazo para protesto (em dias corridos)
+               IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0), '1', '3') + //221 - Código de protesto: Protestar em XX dias corridos
+               IfThen((DataProtesto <> 0) and (DiasDeProtesto > 0),
+                    PadLeft(IntToStr(DiasDeProtesto), 2, '0'), '00') + //222 a 223 - Prazo para protesto (em dias corridos)
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento), '1', '2') + //224 - Código para baixa/devolução: Não baixar/não devolver
                IfThen((DataBaixa <> 0) and (DataBaixa > Vencimento),
                  PadLeft(IntToStr(DaysBetween(DataBaixa, Vencimento)), 3, '0'), '000') + //225 a 227 - Prazo para baixa/devolução (em dias corridos)
@@ -744,14 +744,15 @@ begin
                PadLeft('', 1,  '0')                                                           + //  42 a 42  - Código do Desconto 3
                PadLeft('', 8,  '0')                                                           + //  43 a 50  - Data do Desconto 3
                PadLeft('', 15, '0')                                                           + //  51 a 65  - Valor/Percentual a ser concedido
-               IfThen((PercentualMulta <> null) and (PercentualMulta > 0), '2', '0')       + //  66 a 66  - Código da Multa
-               ADataMulta                                                                  + //  67 a 74  - Data da Multa
+               IfThen((PercentualMulta > 0),
+                       IfThen(MultaValorFixo,'1','2'), '0')                                   + //  66 a 66  - Código da Multa
+               ADataMulta                                                                     + //  67 a 74  - Data da Multa
                IfThen(PercentualMulta > 0, IntToStrZero(round(PercentualMulta * 100), 15),
                       PadRight('', 15, '0'))                                                   + //  75 a 89  - Valor/Percentual a ser aplicado
                PadRight('', 10, ' ')                                                           + //  90 a 99  - Informação ao Sacado
                PadRight('', 40, ' ')                                                           + // 100 a 139 - Mensagem 3
                PadRight('', 40, ' ')                                                           + // 140 a 179 - Mensagem 4
-               PadRight(Sacado.Email, 50, ' ')                                                           + // 180 a 229 - Email do Sacado P/ Envio de Informacoes
+               PadRight(Sacado.Email, 50, ' ')                                                 + // 180 a 229 - Email do Sacado P/ Envio de Informacoes
                PadRight('', 11, ' ');                                                            // 230 a 240 - Uso Exclusivo Febraban/CNAB
 
     Inc(fQtRegLote);
@@ -767,7 +768,7 @@ begin
                 'S'                                                                         + // 014 - 014 / Cód. Segmento do registro detalhe
                 Space(1)                                                                    + // 015 - 015 / Reservado (uso Banco)
                 ATipoOcorrencia                                                             + // 016 - 017 / Código de movimento remessa
-                '2'                                                                         + // 018 - 018 / Identificação da impressão
+                ifthen( (Mensagem.Count <= 2), '2', '3' )                                   + // 018 - 018 / Identificação da impressão
                 ifthen( (Mensagem.Count <= 2), '00', '' )                                   + // 019 - 020 / Reservado (uso Banco) para tipo de impressão 1 e 2
                 MontarInstrucoes2                                                           + // 019 - 058 / Mensagem 5
                                                                                               // 059 - 098 / Mensagem 6
@@ -1085,6 +1086,7 @@ var
   rAgencia, rConta,rDigitoConta: String;
   MotivoLinha, I, CodMotivo: Integer;
   wSeuNumero, TempData: String;
+  codOcorrencia : String;
 begin
 
    if (copy(ARetorno.Strings[0],1,3) <> '104') then
@@ -1173,8 +1175,9 @@ begin
           begin
             SeuNumero                   := Trim(copy(Linha,106,25));
             NumeroDocumento             := copy(Linha,59,11);
-            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(copy(Linha,16,2),0));
-	        Sacado.NomeSacado           := copy(Linha,149,40);
+            codOcorrencia               := copy(Linha,16,2);
+            OcorrenciaOriginal.Tipo     := CodOcorrenciaToTipo(StrToIntDef(codOcorrencia,0));
+	    Sacado.NomeSacado           := copy(Linha,149,40);
             //05 = Liquidação Sem Registro
             TempData := Copy(Linha,74,2) + '/' + Copy(Linha,76,2) + '/' + Copy(Linha,80,2);
 
@@ -1185,9 +1188,20 @@ begin
             ValorDespesaCobranca := StrToFloatDef(Copy(Linha,199,15),0)/100;
             NossoNumero          := Copy(Linha,42,15);  
             Carteira             := Copy(Linha,40,2);
-            CodigoLiquidacao     := Copy(Linha,214,02);
-            CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
-            
+
+            if (CodOcorrencia  = '06' ) or (CodOcorrencia  = '09' ) or
+               (CodOcorrencia  = '17' ) then
+            begin
+              CodigoLiquidacao     := Copy(Linha,214,02);
+              CodigoLiquidacaoDescricao := CodigoLiquidacao_Descricao( StrToIntDef(CodigoLiquidacao,0) );
+              case StrToIntDef(Copy(Linha,216,02),0) of
+                01: Liquidacao.FormaPagto := 'Dinheiro';
+                02: Liquidacao.FormaPagto := 'Cheque';
+              else
+                Liquidacao.FormaPagto := '';
+              end;
+            end;
+
             // prevenir quando o seunumero não vem informado no arquivo
             wSeuNumero := StringReplace(SeuNumero, '0','',[rfReplaceAll]);
             if (AnsiSameText(wSeuNumero, EmptyStr)) then
@@ -1195,27 +1209,24 @@ begin
               SeuNumero := NossoNumero;
               NumeroDocumento := NossoNumero
             end;            
-          
-            MotivoLinha := 214;
 
-            for I := 0 to 4 do
+            if (CodOcorrencia  = '02' ) or (CodOcorrencia  = '03' ) or
+               (CodOcorrencia  = '26' ) or (CodOcorrencia  = '30' ) then
             begin
+              MotivoLinha := 214;
               CodMotivo := StrToIntDef(IfThen(Copy(Linha, MotivoLinha, 2) = '00', '00', Copy(Linha, MotivoLinha, 2)), 0);
 
-              if CodMotivo <> 0 then
+              if (CodMotivo <> 0) then
               begin
-                MotivoRejeicaoComando.Add(IfThen(Copy(Linha, MotivoLinha, 2) = '00', '00', Copy(Linha, MotivoLinha, 2)));
+                MotivoRejeicaoComando.Add(IntToStr(CodMotivo));
                 DescricaoMotivoRejeicaoComando.Add(CodMotivoRejeicaoToDescricao(OcorrenciaOriginal.Tipo, CodMotivo));
               end;
-
-              MotivoLinha := MotivoLinha + 2; // Incrementa a coluna dos motivos.
             end;
-            
+
             // informações do local de pagamento
             Liquidacao.Banco      := StrToIntDef(Copy(Linha,97,3), -1);
             Liquidacao.Agencia    := Copy(Linha,100,5);
             Liquidacao.Origem     := '';
-            Liquidacao.FormaPagto := '';
 
             // quando a liquidação ocorre nos canais da caixa o banco vem zero
             // então acertar
@@ -1278,6 +1289,7 @@ begin
       12: Result := toRetornoRecebimentoInstrucaoConcederAbatimento;
       13: Result := toRetornoRecebimentoInstrucaoCancelarAbatimento;
       14: Result := toRetornoRecebimentoInstrucaoAlterarVencimento;
+      17: Result := toRetornoLiquidadoAposBaixaOuNaoRegistro;
       19: Result := toRetornoRecebimentoInstrucaoProtestar;
       20: Result := toRetornoRecebimentoInstrucaoSustarProtesto;
       23: Result := toRetornoEncaminhadoACartorio;

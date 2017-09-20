@@ -56,7 +56,7 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.231';
+  CACBrBoleto_Versao = '0.0.233';
   CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
   CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
@@ -2299,7 +2299,7 @@ begin
   Result := '';
 end ;
 
-function TACBrBancoClass.CodOcorrenciaToTipo(const CodOcorrencia : Integer
+  function TACBrBancoClass.CodOcorrenciaToTipo(const CodOcorrencia : Integer
   ) : TACBrTipoOcorrencia ;
 begin
   Result := toRemessaRegistrar;

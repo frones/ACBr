@@ -394,8 +394,7 @@ begin
 
     if (ValorMoraJuros > 0) then
     begin
-      STipoJuros := '1';  // Valor por dia
-//      STipoJuros := '2';  // Taxa Mensal
+      STipoJuros := IfThen( (CodigoMora <> ''), CodigoMora, '1');    //1- Valor por dia  2- Taxa Mensal
       if DataMoraJuros <> 0 then
         sDataMoraJuros := FormatDateTime('ddmmyyyy', DataMoraJuros)
       else
@@ -578,12 +577,15 @@ begin
               Space(1)                                                   + // 015 - 015 / Reservado (uso Banco)
               sCodMovimento                                              + // 016 - 017 / Código de movimento remessa
               '0'                                                        + // 018 - 018 / Código do desconto 2
-              PadLeft('', 8, '0')                                           + // 019 - 026 / Data do desconto 2
+              PadLeft('', 8, '0')                                        + // 019 - 026 / Data do desconto 2
               IntToStrZero(0, 15)                                        + // 027 - 041 / Valor/Percentual a ser concedido
               Space(24)                                                  + // 042 – 065 / Reservado (uso Banco)
-              '1'                                                        + // 066 - 066 / Código da multa
-              sDataMoraJuros                                             + // 067 - 074 / Data da multa
-              IntToStrZero(round(ValorDocumento * PercentualMulta), 15)  + // 075 - 089 / Valor/Percentual a ser aplicado
+              IfThen((PercentualMulta > 0),
+                     IfThen(MultaValorFixo,'1','2'), '0')                                           + // 66 - 66 1-Cobrar Multa Valor Fixo / 2-Percentual / 0-Não cobrar multa
+              IfThen((PercentualMulta > 0),
+                      FormatDateTime('ddmmyyyy', DataMulta), '00000000')                            + // 67 - 74 Se cobrar informe a data para iniciar a cobrança ou informe zeros se não cobrar
+              IfThen((PercentualMulta > 0), IntToStrZero(round(PercentualMulta * 100), 15),
+                     PadRight('', 15, '0'))                                                         + // 075 - 089 / Valor/Percentual a ser aplicado
               Space(10)                                                  + // 090 - 099 / Reservado (uso Banco)
               MontarInstrucoes1                                          + // 100 - 139 / Mensagem 3
                                                                            // 140 - 179 / Mensagem 4
@@ -885,7 +887,13 @@ begin
   rAgenciaDigito := Copy(ARetorno[0], 37, 1);
   rConta         := PadLeft(OnlyNumber(Copy(ARetorno[0], 38, 9)), fpTamanhoConta, '0');
   rContaDigito   := Copy(ARetorno[0], 47, 1);
-  rCNPJCPF       := RightStr(OnlyNumber(Copy(ARetorno[0], 18, 15)), 14);
+
+  case StrToIntDef(Copy(ARetorno[0],17,1),0) of
+    1: rCNPJCPF := Copy(ARetorno[0],22,11);
+    2: rCNPJCPF := Copy(ARetorno[0],18,15);
+  else
+   rCNPJCPF := Copy(ARetorno[0],18,15);
+  end;
 
   with ACBrBanco.ACBrBoleto do
   begin
@@ -933,9 +941,11 @@ begin
       begin
         NossoNumero          := Copy(Linha, 41, ACBrBanco.TamanhoMaximoNossoNum);
         SeuNumero            := Copy(Linha, 55, 15);
-        NumeroDocumento      := Copy(Linha, 55, 15);
+        NumeroDocumento      := Copy(Linha, 101, 12);
         Carteira             := Copy(Linha, 54, 1);
-        Vencimento           := StrToDateDef(Copy(Linha, 70, 8),0);
+        Vencimento           := StringToDateTimeDef(Copy(Linha, 70, 2)+'/'+
+                                                    Copy(Linha, 72, 2)+'/'+
+                                                    Copy(Linha, 74,4),0, 'DD/MM/YYYY' );
         ValorDocumento       := StrToFloatDef(copy(Linha, 78, 15), 0) / 100;
         ValorDespesaCobranca := StrToFloatDef(copy(Linha, 194, 15), 0) / 100;
         // Sacado
@@ -988,7 +998,12 @@ begin
    rConta   := PadLeft( OnlyNumber(rConta),fpTamanhoConta,'0');
    rDigitoConta := Copy(ARetorno[1],385,1);
 
-   rCNPJCPF := OnlyNumber( Copy(ARetorno[1],04,14) );
+   case StrToIntDef(Copy(ARetorno[1],2,2),0) of
+      01: rCNPJCPF := Copy(ARetorno[1],7,11);
+      02: rCNPJCPF := Copy(ARetorno[1],4,14);
+   else
+     rCNPJCPF := Copy(ARetorno[1],4,14);
+   end;
 
    ACBrBanco.ACBrBoleto.DataCreditoLanc :=
      StringToDateTimeDef(Copy(ARetorno[0], 95, 2) + '/' +
@@ -1036,7 +1051,7 @@ begin
       with Titulo do
       begin
          SeuNumero   := copy(Linha,38,25);
-         NossoNumero := Copy(Linha,63,08);
+         NossoNumero := Copy(Linha,63,07);
          Carteira    := Copy(Linha,108,1);
 
          OcorrenciaOriginal.Tipo := CodOcorrenciaToTipo(StrToIntDef(

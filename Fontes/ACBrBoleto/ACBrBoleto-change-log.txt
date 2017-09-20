@@ -47,15 +47,73 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data 19/09/2017 ver: 0.0.233
+-- ACBrBancoCaixa
+[*] Ajuste no Arquivo de Remessa e Retorno CNAB240 - Validação campo CódigoMora
+    http://www.projetoacbr.com.br/forum/topic/18191-problema-retorno-caixa-economica/
+    http://www.projetoacbr.com.br/forum/topic/38589-segmento-s-cobcaixaeconomica-240/
+    http://www.projetoacbr.com.br/forum/topic/38740-informa%C3%A7%C3%A3o-de-protesto-remessa-caixa-cnab240/
+    https://www.projetoacbr.com.br/forum/topic/37623-remessa-caixa-econ%C3%B4mica-federal/
+    por: José M. S. Junior
+
+-- ACBrBancoSicred
+[*] Ajuste no Arquivo de Remessa CNAB240 - Campo Conta Corrente
+    https://www.projetoacbr.com.br/forum/topic/33654-erro-retorno-liquidado-sicredi-c7/
+    https://www.projetoacbr.com.br/forum/topic/38373-sicredi/
+    por: José M. S. Junior
+
+-- ACBrBancoSantander
+[*] Ajuste no Arquivo de Remessa CNAB240 - Validação Multa na geração do arquivo
+    https://www.projetoacbr.com.br/forum/topic/38314-acbr-boleto-santander/
+    https://www.projetoacbr.com.br/forum/topic/24515-erro-remessa-santander-posi%C3%A7%C3%B5es-118p-e-066r/
+    http://www.projetoacbr.com.br/forum/topic/38314-acbr-boleto-santander/
+
+[*] Validações no Arquivo de Retorno CNAB400 e CNAB240 
+    http://www.projetoacbr.com.br/forum/topic/38609-retorno-santander-pessoa-f%C3%ADsica/
+    http://www.projetoacbr.com.br/forum/topic/34055-corre%C3%A7%C3%A3o-arquivo-retorno-santander-nosso-n%C3%BAmero/
+    http://www.projetoacbr.com.br/forum/topic/38238-boleto-banco-santander-retorno-240/
+    por: José M. S. Junior
+
+-- ACBrBancoItau
+[*] Ajuste no Arquivo de Remessa CNAB400 - adicionado COBRANÇA E-MAIL E/OU DADOS DO SACADOR AVALISTA
+    http://www.projetoacbr.com.br/forum/topic/38285-cobran%C3%A7a-ita%C3%BA-cobran%C3%A7a-e-mail-eou-dados-do-sacador-avalista/
+
+-- ACBrBancoBancoob
+[*] Ajuste no Arquivo de Remessa CNAB240 referente validação da Multa Valor Fixo ou Percentual
+    http://www.projetoacbr.com.br/forum/topic/38593-remessa-multa-por-valor-e-percentual/
+
+-- ACBrBancoBrasil
+[*] Ajuste no Arquivo de Retorno CNAB240 referente leitura campo Nosso Numero
+    http://www.projetoacbr.com.br/forum/topic/38567-problema-com-retorno-cnab-240-banco-do-brasil/
+    http://www.projetoacbr.com.br/forum/topic/38557-problema-com-retorno-cnab-240-banco-do-brasil/?page=0#comment-253096
+    por: José M. S. Junior
+
+[*] Ajuste no Arquivo de Remessa CNAB240 CNAB240 referente validação da Multa Valor Fixo ou Percentual
+    http://www.projetoacbr.com.br/forum/topic/38593-remessa-multa-por-valor-e-percentual/
+    http://www.projetoacbr.com.br/forum/topic/25727-classe-tacbrtitulo-n%C3%A3o-suporta-multa-fixa/
+    por: José M. S. Junior
+
+Data 07/08/2017 ver: 0.0.232
+
+-- ACBrBancoBancoob
+[*] Ajuste no Arquivo de Remessa CNAB240 referente a dias de protesto
+    http://www.projetoacbr.com.br/forum/topic/36556-boleto-sicoob-posi%C3%A7%C3%A3o-221-c%C3%B3digo-de-protesto-protestar-em-xx-dias-corridos/
+    por: José M. S. Junior
+
+-- ACBrBancoAmazonia
+[*] Ajuste para homologação Arquivo de Remessa CNAB240 e Validação de Boleto
+    http://www.projetoacbr.com.br/forum/topic/38102-banco-da-amaz%C3%B4nia-arquivo-remessa-cnab-240/
+    por: José M. S. Junior
+
 Data 02/08/2017 ver: 0.0.231
 
 -- ACBrBancoItau
-[*] Ajuste na validação de Data de Multa na geração de remessa CNAB400
+[*] Ajuste na validação de Data de Multa na geração de remessa Itaú CNAB400
     http://www.projetoacbr.com.br/forum/topic/38095-cobran%C3%A7a-ita%C3%BA-tratamento-da-datamulta-no-registro-complemento-opcional-multa/
     por: José M. S. Junior
 
 -- ACBrBancoCaixa
-[*] Ajuste na validação do campo código Mora na geração de remessa CNAB240
+[*] Ajuste na validação do campo código Mora na geração de remessa Caixa CNAB240
     http://www.projetoacbr.com.br/forum/topic/37623-remessa-caixa-econ%C3%B4mica-federal/
     por: José M. S. Junior
 
@@ -65,7 +123,7 @@ Data 02/08/2017 ver: 0.0.231
     por: José M. S. Junior
 
 -- ACBrBancoBanrisul
-[*] Ajuste na geração de remessa - campo em branco
+[*] Ajuste na geração de remessa - campo em branco CNAB400
     http://www.projetoacbr.com.br/forum/topic/37997-boleto-banrisul-campo-datadesconto-na-remessa/
     por: José M. S. Junior
 
@@ -77,7 +135,7 @@ Data 28/07/2017 ver: 0.0.230
     por: José M. S. Junior
 
 -- ACBrBancoBancoob
-[*] Ajuste na Versão do layout para Remessa
+[*] Ajuste na Versão do layout para Remessa CNAB240
     http://www.projetoacbr.com.br/forum/topic/37608-sicoob-arquivo-remessa-cnab-240-atualizado-julho2017/
     por: José M. S. Junior
 
@@ -99,7 +157,7 @@ Data 24/07/2017 ver: 0.0.229
     por: José M. S. Junior
 
 -- ACBrBoleto ACBrBancoCaixa
-[*] Ajustes na função de Retorno de Código de Ocorrência de Remessa
+[*] Ajustes na função de Retorno de Código de Ocorrência de Remessa CNAB240
 	       http://www.projetoacbr.com.br/forum/topic/35653-acbrboleto-remessa-cnab-240-tipoocorrencia/
 	       por: José M. S. Junior
 

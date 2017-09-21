@@ -364,7 +364,6 @@ end;
 procedure TACBrMail.Clear;
 begin
   ClearAttachments;
-  fSMTP.Reset;
   fMIMEMess.Header.Clear;
   fMIMEMess.Clear;
   fReplyTo.Clear;

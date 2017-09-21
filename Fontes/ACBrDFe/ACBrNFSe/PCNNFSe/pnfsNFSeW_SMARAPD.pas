@@ -87,7 +87,7 @@ procedure TNFSeW_SMARAPD.GerarIdentificacaoRPS;
 begin
   Gerador.wCampoNFSe(tcStr,     '', 'numeronfd',                 01, 12, 1, '0', '');
   Gerador.wCampoNFSe(tcStr,     '', 'codseriedocumento',         01, 12, 1, FNFSe.IdentificacaoRps.Serie, '');
-  Gerador.wCampoNFSe(tcStr,     '', 'codnaturezaoperacao',       01, 12, 1, FNFSe.NaturezaOperacao, '');
+  Gerador.wCampoNFSe(tcStr,     '', 'codnaturezaoperacao',       01, 12, 1, NaturezaOperacaoToStr(FNFSe.NaturezaOperacao), '');
   Gerador.wCampoNFSe(tcStr,     '', 'codigocidade',              01, 12, 1, '3', '');
   Gerador.wCampoNFSe(tcStr,     '', 'inscricaomunicipalemissor', 01, 11, 1, FNFSe.Prestador.InscricaoMunicipal, '');
   Gerador.wCampoNFSe(tcDatVcto, '', 'dataemissao',               01, 21, 1, FNFSe.DataEmissao, '');

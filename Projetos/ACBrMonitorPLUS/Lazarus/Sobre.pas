@@ -37,7 +37,7 @@ interface
 
 uses
   SysUtils, Classes, Variants, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, Buttons;
+  Dialogs, StdCtrls, ExtCtrls, Buttons, HelpIntfs;
 
 type
 
@@ -153,10 +153,10 @@ begin
 end;
 
 procedure TfrmSobre.bAjudaClick(Sender: TObject);
-Var
-  DirApp : String ;
 begin
- DirApp := ExtractFilePath(Application.ExeName) ;
+ ShowHelpOrErrorForKeyword('','ACBrMonitor/Apresentacao.htm');
+
+ {DirApp := ExtractFilePath(Application.ExeName) ;
  {$IFDEF Linux}
   if FileExists(DirApp+'ACBrMonitor.htm') and DirectoryExists(DirApp+'files') then
      OpenURL(DirApp+'ACBrMonitor.htm')
@@ -165,6 +165,7 @@ begin
  {$ELSE}
   RunCommand( DirApp+'ACBrMonitor.chm');
  {$ENDIF}
+ }
 end;
 
 procedure TfrmSobre.FormShortCut(Key: Integer; Shift: TShiftState;

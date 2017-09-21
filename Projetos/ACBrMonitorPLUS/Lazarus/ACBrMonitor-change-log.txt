@@ -43,6 +43,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+20/09/2017
+[+] Adicionado Funcionalidade de chamada de Ajuda nas telas (F1). Através do .chm, utilizando lhelp do lazarus
+	por: José M. S. Junior
+
 14/09/2017
 [+] Adicionado Funcionalidades para Geração e Configuarão do CTe OS Modelo 67
 	http://www.projetoacbr.com.br/forum/topic/38751-erro-erro-ao-gerar-ini-da-cte-list-index-0-out-of-bounds/

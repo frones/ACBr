@@ -49,7 +49,7 @@ uses
   ACBrSATExtratoESCPOS, ACBrSATExtratoFortesFr, ACBrSATClass, pcnRede,
   ACBrDFeSSL, ACBrGNRE2, ACBrGNReGuiaRLClass, ACBrBlocoX, ACBrMDFe,
   ACBrMDFeDAMDFeRLClass, ACBrCTe, ACBrCTeDACTeRLClass, types,
-  fileinfo, ACBrDFeConfiguracoes, pmdfeConversaoMDFe;
+  fileinfo, ACBrDFeConfiguracoes, LazHelpCHM, pmdfeConversaoMDFe;
 
 const
   //{$I versao.txt}
@@ -60,6 +60,7 @@ const
   CBufferMemoResposta = 10000;              { Maximo de Linhas no MemoResposta }
   _C = 'tYk*5W@';
   UTF8BOM : AnsiString = #$EF#$BB#$BF;
+  HelpShortcut = 'F1';
 
 type
   TCores = class
@@ -351,6 +352,7 @@ type
     chkBOLRelMostraPreview: TCheckBox;
     chkExibeRazaoSocial: TCheckBox;
     cbSSLLib: TComboBox;
+    CHMHelpDatabase1: TCHMHelpDatabase;
     deBolDirRetornoRel: TDirectoryEdit;
     deUSUDataCadastro: TDateEdit;
     edtArquivoPFX: TEdit;
@@ -427,6 +429,7 @@ type
     Label145: TLabel;
     lblAlturaCampos: TLabel;
     lblFonteEndereco: TLabel;
+    LHelpConnector1: TLHelpConnector;
     lsvArqsRetorno: TListView;
     mBOLRelatorio: TMemo;
     meUSUHoraCadastro: TMaskEdit;
@@ -1224,6 +1227,7 @@ type
     procedure meUSUHoraCadastroExit(Sender: TObject);
     procedure meRFDHoraSwBasicoExit(Sender: TObject);
     procedure pgBoletoChange(Sender: TObject);
+    procedure pgConfigChange(Sender: TObject);
     procedure rgRedeTipoInterClick(Sender: TObject);
     procedure rgRedeTipoLanClick(Sender: TObject);
     procedure SbArqLog2Click(Sender: TObject);
@@ -1462,6 +1466,7 @@ type
 
     procedure AntesDeImprimir(ShowPreview: Boolean = true);
     procedure DepoisDeImprimir;
+    procedure HelptabSheet;
   end;
 
 var
@@ -5923,6 +5928,11 @@ begin
         CarregaArquivosRetorno;
 end;
 
+procedure TFrmACBrMonitor.pgConfigChange(Sender: TObject);
+begin
+  HelptabSheet;
+end;
+
 procedure TFrmACBrMonitor.rgRedeTipoInterClick(Sender: TObject);
 begin
   gbWiFi.Visible := (rgRedeTipoInter.ItemIndex = 1);
@@ -8391,6 +8401,34 @@ begin
     Application.Minimize;
     Application.ProcessMessages;
   end;
+end;
+
+procedure TFrmACBrMonitor.HelptabSheet;
+begin
+  case pgConfig.TabIndex of
+    0:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Monitor.htm';
+    1:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Usuario.htm';
+    2:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/ECF.htm';
+    3:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/ImpressaodeCheque.htm';
+    4:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Gaveta1.htm';
+    5:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Display.htm';
+    6:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/LeitorSerial.htm';
+    7:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Geral.htm';
+    8:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Balanca.htm';
+    9:   FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Etiqueta.htm';
+    10:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/TerminaldeConsulta.htm';
+    11:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Cedente.htm';
+    12:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/ConsultasCEPIBGE.htm';
+    13:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/EMail.htm';
+    14:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Sedex.htm';
+    15:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/NCM.htm';
+    16:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Geral1.htm';
+    17:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/DadosdoSATCFe.htm';
+    18:  FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/PosPrinter.htm';
+  else
+    FrmACBrMonitor.HelpKeyword := 'ACBrMonitor/Monitor.htm';
+  end;
+
 end;
 
 procedure TFrmACBrMonitor.sbSerialClick(Sender: TObject);

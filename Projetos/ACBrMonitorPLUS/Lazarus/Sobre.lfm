@@ -1,7 +1,7 @@
 object frmSobre: TfrmSobre
-  Left = 483
+  Left = 488
   Height = 278
-  Top = 287
+  Top = 344
   Width = 500
   ActiveControl = bAjuda
   BorderIcons = [biSystemMenu]
@@ -15,7 +15,7 @@ object frmSobre: TfrmSobre
   OnCreate = FormCreate
   OnShortCut = FormShortCut
   Position = poDesktopCenter
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.6.4.0'
   object Image1: TImage
     Left = 0
     Height = 278
@@ -650,10 +650,10 @@ object frmSobre: TfrmSobre
     AnchorSideLeft.Control = Owner
     AnchorSideLeft.Side = asrCenter
     Cursor = crHandPoint
-    Left = 228
+    Left = 229
     Height = 15
     Top = 62
-    Width = 44
+    Width = 43
     Alignment = taCenter
     Caption = 'Ver: 0.00'
     ParentColor = False

@@ -3203,8 +3203,6 @@ var
   sDataTemp: String;
   ValorIssRet: Double;  //Edson
 begin
-  NFSe.dhRecebimento := StrToDateTime(FormatDateTime('dd/mm/yyyy', now));
-
   bRPS := False;
   bNota := False;
 
@@ -3230,6 +3228,12 @@ begin
         DataEmissao := StrToDate(sDataTemp);
         Competencia := FormatDateTime('mm/yyyy', StrToDate(sDataTemp));
       end;
+
+      sDataTemp := Leitor.rCampo(tcStr, 'DtEmiRps');
+      DataEmissaoRps := StrToDate(sDataTemp);
+
+      sDataTemp := Leitor.rCampo(tcStr, 'DtHrGerNf');
+      dhRecebimento := StrToDateTimeDef(sDataTemp, Now);
 
       IdentificacaoRps.Numero := Leitor.rCampo(tcStr, 'NumRps');
       IdentificacaoRps.Serie:= Leitor.rCampo(tcStr, 'SerRps');
@@ -3292,16 +3296,22 @@ begin
       Tomador.IdentificacaoTomador.CpfCnpj := Leitor.rCampo(tcStr, 'CpfCnpjTom');
       with  Tomador.Endereco do
       begin
-		Endereco := Leitor.rCampo(tcStr, 'LogTom');
+        Endereco := Leitor.rCampo(tcStr, 'LogTom');
         Numero := Leitor.rCampo(tcStr, 'NumEndTom');;
-		Complemento := Leitor.rCampo(tcStr, 'ComplEndTom');		
+        Complemento := Leitor.rCampo(tcStr, 'ComplEndTom');
         Bairro := Leitor.rCampo(tcStr, 'BairroTom');
         xMunicipio := Leitor.rCampo(tcStr, 'MunTom');
         UF := Leitor.rCampo(tcStr, 'SiglaUFTom');
         CEP := Leitor.rCampo(tcStr, 'CepTom');
       end;
 
-      Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');
+//      Servico.CodigoTributacaoMunicipio := Leitor.rCampo(tcStr, 'CodSrv');
+      Servico.ItemListaServico := Leitor.rCampo(tcStr, 'CodSrv');
+
+      if TabServicosExt then
+        Servico.xItemListaServico := ObterDescricaoServico(OnlyNumber(Servico.ItemListaServico))
+      else
+        Servico.xItemListaServico := CodigoToDesc(OnlyNumber(Servico.ItemListaServico));
       {
        todo: almp1
        deveria substrituir "\\" por "nova linha"

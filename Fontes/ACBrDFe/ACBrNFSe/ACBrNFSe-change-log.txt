@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 20/09/2017
+-- pnfsNFSeR --
+[-] Correções visando o provedor CONAM.
+   Por: André Medeiros
+
 -- pnfsConversao / pnfsNFSeW_SMARAPD --
 [*] https://www.projetoacbr.com.br/forum/topic/37221-servidor-smarapd/?do=findComment&comment=255098.
    Por: André Medeiros

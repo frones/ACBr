@@ -481,7 +481,7 @@ File ::3786C984-8A44-A720-CA3D-F13991467728 -name ../../../../.././Exemplos/ACBr
 File ::24135ED9-8865-9BF2-D85E-E1DECDDE8021 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 File ::8F3DAA96-5DEB-35F4-6C69-B765F80C4D86 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 FileGroup ::D72C857D-E06A-2F05-C239-833B1C202243 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name lhelp -parent FileGroups
-File ::1590C86F-AE05-8172-ECAA-6A04E071434C -name lhelp/lhelp -parent D72C857D-E06A-2F05-C239-833B1C202243
+File ::1590C86F-AE05-8172-ECAA-6A04E071434C -name lhelp -location ../../lhelp -parent D72C857D-E06A-2F05-C239-833B1C202243
 Component ::1E2CC756-1740-1A0F-E382-93742C781FAC -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Programa -parent Components
 Component ::657CC324-EE3E-9286-FD2D-927A572F8C0C -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Documentacao -parent Components
 Component ::A259A169-F947-20BF-81F9-4472A940DA0A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Exemplos -parent Components
@@ -2235,7 +2235,7 @@ Solaris-x86,RootInstallDir
 {/usr/local/<%ShortAppName%>}
 
 TarArchive,Active
-{Yes}
+{No}
 
 TarArchive,BuildSeparateArchives
 {No}

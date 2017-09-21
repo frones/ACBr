@@ -81,7 +81,7 @@ InstallPassword
 {}
 
 InstallVersion
-{0.3.5.0}
+{1.1.0.28}
 
 Language,ca
 {No}
@@ -192,7 +192,7 @@ UpgradeApplicationID
 {}
 
 Version
-{0.3.6.0}
+{1.1.0.28}
 
 ViewReadme
 {Yes}
@@ -296,6 +296,7 @@ File ::6937F8CF-C870-9448-1208-CF654C94BABB -name 749.bmp -parent F26D2079-31D4-
 File ::ACF1B73C-55DB-224A-780C-A39FFA61BB93 -name 756.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
 File ::84E5B9FC-6A00-4621-6EB1-EFDFAFA58A34 -name 004.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
 File ::E3E9A3E0-F1A3-000E-03F6-E19ABA269ACA -name 085.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
+File ::233CB41F-15BC-AE78-8433-9862802E2D5C -name 003.bmp -parent F26D2079-31D4-5099-50B2-94E21F9936E9
 File ::472F8213-0157-F7E3-E98F-F6735B076476 -name ../.././banner_acbrmonitor.gif -location ../../ -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
 File ::20707BF3-DE14-9902-9907-DF625284E1C2 -name ../../../../.././Fontes/ACBrDFe/ACBrNFe/ACBrNFeServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBrNFe -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
 File ::9680F732-7974-E4E2-3BB8-64206291946C -name ../../../../.././Fontes/ACBrDFe/ACBrCTe/ACBrCTeServicos.ini -location ../../../../.././Fontes/ACBrDFe/ACBrCTe -parent 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2
@@ -479,6 +480,8 @@ File ::2C76A86D-9AAD-BABF-2808-2280CC07AA9E -name ../../../../.././Exemplos/ACBr
 File ::3786C984-8A44-A720-CA3D-F13991467728 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposBasico_v3.10_OPENSSL.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 File ::24135ED9-8865-9BF2-D85E-E1DECDDE8021 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/tiposDistDFe_v1.00.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
 File ::8F3DAA96-5DEB-35F4-6C69-B765F80C4D86 -name ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/xmldsig-core-schema_v1.01.xsd -location ../../../../.././Exemplos/ACBrDFe/Schemas/NFe/ -parent 34708C26-EE14-548D-CACD-DF451C26305A
+FileGroup ::D72C857D-E06A-2F05-C239-833B1C202243 -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows TarArchive ZipArchive} -name lhelp -parent FileGroups
+File ::1590C86F-AE05-8172-ECAA-6A04E071434C -name lhelp/lhelp -parent D72C857D-E06A-2F05-C239-833B1C202243
 Component ::1E2CC756-1740-1A0F-E382-93742C781FAC -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Programa -parent Components
 Component ::657CC324-EE3E-9286-FD2D-927A572F8C0C -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Documentacao -parent Components
 Component ::A259A169-F947-20BF-81F9-4472A940DA0A -setup Install -active Yes -platforms {AIX-ppc FreeBSD-4-x86 FreeBSD-5-x86 FreeBSD-6-x86 FreeBSD-7-x86 HPUX-hppa Linux-x86 Linux-x86_64 Solaris-sparc Solaris-x86 Windows} -name Exemplos -parent Components
@@ -756,7 +759,7 @@ array set Properties {
 {Programas do ACBrMonitor}
 
 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2,FileSize
-{25117536}
+{26035529}
 
 15133E1A-7B55-8242-7D70-0B8ACE8BF3C2,Name
 {Program Files}
@@ -789,7 +792,7 @@ array set Properties {
 {1}
 
 1E2CC756-1740-1A0F-E382-93742C781FAC,FileGroups
-{15133E1A-7B55-8242-7D70-0B8ACE8BF3C2 A7445EB0-8070-6A51-67CA-70F86582B322 34708C26-EE14-548D-CACD-DF451C26305A}
+{15133E1A-7B55-8242-7D70-0B8ACE8BF3C2 A7445EB0-8070-6A51-67CA-70F86582B322 34708C26-EE14-548D-CACD-DF451C26305A D72C857D-E06A-2F05-C239-833B1C202243}
 
 1E2CC756-1740-1A0F-E382-93742C781FAC,Name
 {Programa}
@@ -822,7 +825,7 @@ array set Properties {
 {<%InstallDir%>/Exemplos}
 
 273C89D4-5D0E-4060-1ED2-A90A3AE647DF,FileSize
-{78272}
+{74488}
 
 273C89D4-5D0E-4060-1ED2-A90A3AE647DF,Name
 {Exemplos}
@@ -886,6 +889,9 @@ array set Properties {
 
 34708C26-EE14-548D-CACD-DF451C26305A,Destination
 {<%InstallDir%>/Schemas}
+
+34708C26-EE14-548D-CACD-DF451C26305A,FileSize
+{1114953}
 
 34708C26-EE14-548D-CACD-DF451C26305A,Name
 {Schemas}
@@ -1278,7 +1284,7 @@ A0AAD91A-0EEE-FEE2-D547-23427A537F3A,Destination
 {<%InstallDir%>}
 
 A0AAD91A-0EEE-FEE2-D547-23427A537F3A,FileSize
-{3373535}
+{17448567}
 
 A0AAD91A-0EEE-FEE2-D547-23427A537F3A,Name
 {Documentacao}
@@ -1347,7 +1353,7 @@ A7445EB0-8070-6A51-67CA-70F86582B322,Destination
 {<%InstallDir%>}
 
 A7445EB0-8070-6A51-67CA-70F86582B322,FileSize
-{3251232}
+{0}
 
 A7445EB0-8070-6A51-67CA-70F86582B322,Name
 {ACBrMonitorConsole}
@@ -1606,6 +1612,12 @@ D6299F5D-5B27-7374-6636-C4AEFA7A55B1,Conditions
 
 D6299F5D-5B27-7374-6636-C4AEFA7A55B1,ExitType
 {Finish}
+
+D72C857D-E06A-2F05-C239-833B1C202243,Destination
+{<%InstallDir%>}
+
+D72C857D-E06A-2F05-C239-833B1C202243,Name
+{lhelp}
 
 D8D5EC15-C724-2ADA-0BE5-621B472C7745,Background
 {#FFFFFF}
@@ -2007,7 +2019,7 @@ HPUX-hppa,RootInstallDir
 {/usr/local/<%ShortAppName%>}
 
 Linux-x86,Active
-{Yes}
+{No}
 
 Linux-x86,BuildSeparateArchives
 {No}
@@ -2061,7 +2073,7 @@ Linux-x86,RootInstallDir
 {/opt/<%ShortAppName%>}
 
 Linux-x86_64,Active
-{No}
+{Yes}
 
 Linux-x86_64,BuildSeparateArchives
 {No}
@@ -2223,7 +2235,7 @@ Solaris-x86,RootInstallDir
 {/usr/local/<%ShortAppName%>}
 
 TarArchive,Active
-{No}
+{Yes}
 
 TarArchive,BuildSeparateArchives
 {No}

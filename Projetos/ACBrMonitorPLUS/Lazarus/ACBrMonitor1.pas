@@ -1538,6 +1538,8 @@ begin
   FpUmask(0);
   {$ENDIF}
 
+  LHelpConnector1.LHelpPath := 'lhelp'+PathDelim+'lhelp';
+
   // Seta as definições iniciais para navegação
   SetColorButtons(btnMonitor);
 

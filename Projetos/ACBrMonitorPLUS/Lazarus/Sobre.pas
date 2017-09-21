@@ -155,17 +155,6 @@ end;
 procedure TfrmSobre.bAjudaClick(Sender: TObject);
 begin
  ShowHelpOrErrorForKeyword('','ACBrMonitor/Apresentacao.htm');
-
- {DirApp := ExtractFilePath(Application.ExeName) ;
- {$IFDEF Linux}
-  if FileExists(DirApp+'ACBrMonitor.htm') and DirectoryExists(DirApp+'files') then
-     OpenURL(DirApp+'ACBrMonitor.htm')
-  else
-     OpenURL('http://acbr.sourceforge.net/ACBrMonitor.htm');
- {$ELSE}
-  RunCommand( DirApp+'ACBrMonitor.chm');
- {$ENDIF}
- }
 end;
 
 procedure TfrmSobre.FormShortCut(Key: Integer; Shift: TShiftState;

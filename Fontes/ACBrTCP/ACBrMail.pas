@@ -127,6 +127,7 @@ type
     fAttachments         : TMailAttachments;
     fReplyTo             : TStringList;
     fBCC                 : TStringList;
+    fTimeOut             : Integer;
     fUseThread           : boolean;
 
     fDefaultCharsetCode  : TMimeChar;
@@ -207,6 +208,7 @@ type
     property ReadingConfirmation: boolean read fReadingConfirmation write fReadingConfirmation default False;
     property IsHTML: boolean read fIsHTML write fIsHTML default False;
     property UseThread: boolean read fUseThread write fUseThread default False;
+    property TimeOut: Integer read fTimeOut write fTimeOut default 0;
     property Attempts: Byte read fAttempts write fAttempts;
     property From: string read fFrom write fFrom;
     property FromName: string read fFromName write fFromName;
@@ -398,6 +400,7 @@ begin
   fAltBody := TStringList.Create;
   fBody := TStringList.Create;
   fArqMIMe := TMemoryStream.Create;
+  fTimeOut := 0;
 
   fOnBeforeMailProcess := nil;
   fOnAfterMailProcess := nil;
@@ -673,10 +676,14 @@ procedure TACBrMail.SendMail;
 var
   vAttempts: Byte;
   c, i: Integer;
-
 begin
-
   BuildMimeMess;
+
+  if fTimeOut > 0 then
+  begin
+    fSMTP.Timeout := fTimeOut;
+    fSMTP.Sock.ConnectionTimeout := fTimeOut;
+  end;
 
   // DEBUG //
   // SaveToFile('c:\app\Mail.eml'); {Para debug, comentar o Clear; da linha 367}

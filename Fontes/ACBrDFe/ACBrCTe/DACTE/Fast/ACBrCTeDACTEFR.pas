@@ -2371,22 +2371,20 @@ begin
         if Length(wObs) > 0 then
           wObs := wObs + ';';
         wObs   := wObs + wSubstituto;
-
       end;
 {$ENDIF}
       // Contingencia
-      if FCTe.ide.TpEmis = teNormal then
-        wContingencia := ''
-      else
+      wContingencia := '';
+      if (FCTe.ide.TpEmis = teContingencia) or (FCTe.ide.TpEmis = teFSDA) or (FCTe.ide.TpEmis = teSCAN) then
+        wContingencia := 'DACTE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS'
+      else if FCTe.ide.TpEmis = teDPEC then
+        wContingencia := 'DACTE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL';
+      if wContingencia <> '' then
       begin
-        if (FCTe.ide.TpEmis = teContingencia) or (FCTe.ide.TpEmis = teFSDA) or (FCTe.ide.TpEmis = teSCAN) then
-          wContingencia := 'DACTE EM CONTINGÊNCIA, IMPRESSO EM DECORRÊNCIA DE PROBLEMAS TÉCNICOS'
-        else if FCTe.ide.TpEmis = teDPEC then
-          wContingencia := 'DACTE IMPRESSO EM CONTINGÊNCIA - DPEC REGULARMENTE RECEBIDA PELA RECEITA FEDERAL DO BRASIL';
+        if Length(wObs) > 0 then
+          wObs := wObs + ';';
+        wObs   := wObs + wContingencia;
       end;
-      if Length(wObs) > 0 then
-        wObs := wObs + ';';
-      wObs   := wObs + wContingencia;
 
       vTemp := TStringList.Create;
       try

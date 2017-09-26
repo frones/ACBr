@@ -59,14 +59,19 @@ begin
 end;
 
 procedure TNFSeW_SMARAPD.GerarCondicaoPagamento;
+var
+  i: Integer;
 begin
-  Gerador.wCampoNFSe(tcStr,  '', 'NroFatura',        01, 12, 1, '0', '');
-//  Gerador.wGrupoNFSe('tbfatura');
-//  Gerador.wGrupoNFSe('fatura');
-//  Gerador.wCampoNFSe(tcStr,  '', 'vencimentofatura', 01, 12, 1, '', '');
-//  Gerador.wCampoNFSe(tcStr,  '', 'valorfatura',      01, 12, 1, '', '');
-//  Gerador.wGrupoNFSe('/fatura');
-//  Gerador.wGrupoNFSe('/tbfatura');
+  Gerador.wGrupoNFSe('tbfatura');
+  for i := 0 to FNFSe.CondicaoPagamento.Parcelas.Count - 1 do
+    begin
+      Gerador.wGrupoNFSe('fatura');
+      Gerador.wCampoNFSe(tcStr,    '', 'numfatura',        01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].Parcela, '');
+      Gerador.wCampoNFSe(tcDatVcto,'', 'vencimentofatura', 01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].DataVencimento, '');
+      Gerador.wCampoNFSe(tcDe2,    '', 'valorfatura',      01, 12, 1, FNFSe.CondicaoPagamento.Parcelas.Items[i].Valor, '');
+      Gerador.wGrupoNFSe('/fatura');
+    end;
+  Gerador.wGrupoNFSe('/tbfatura');
 end;
 
 procedure TNFSeW_SMARAPD.GerarConstrucaoCivil;
@@ -172,7 +177,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'cpfcnpjtomador',            01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
   Gerador.wCampoNFSe(tcStr, '', 'inscricaoestadualtomador',  01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), '');
   Gerador.wCampoNFSe(tcStr, '', 'inscricaomunicipaltomador', 01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal), '');
-  Gerador.wCampoNFSe(tcStr, '', 'observacao',                01,  14, 1, '','');
+  Gerador.wCampoNFSe(tcStr, '', 'observacao',                01, 110, 1, FNFSe.OutrasInformacoes,'');
 end;
 
 procedure TNFSeW_SMARAPD.GerarTransportadora;

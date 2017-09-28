@@ -452,10 +452,10 @@ begin
           FieldByName('ChaveNFe').AsString          := FNFe.infNFe.ID;
           FieldByName('cProd').AsString             := FDANFEClassOwner.ManterCodigo( Prod.cEAN,Prod.cProd);
           FieldByName('cEAN').AsString              := Prod.cEAN;
-          FieldByName('XProd').AsString             :=   StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
-          FieldByName('VProd').AsString             :=     ManterVprod( Prod.VProd , Prod.vDesc );
+          FieldByName('XProd').AsString             := StringReplace( Prod.xProd, ';', #13, [rfReplaceAll]);
+          FieldByName('VProd').AsString             := ManterVprod( Prod.VProd , Prod.vDesc );
           FieldByName('vTotTrib').AsString          := ManterdvTotTrib( Imposto.vTotTrib );
-          FieldByName('infAdProd').AsString         :=  ManterInfAProd( inItem, infAdProd );
+          FieldByName('infAdProd').AsString         := ManterInfAProd( inItem, infAdProd );
           FieldByName('DescricaoProduto').AsString  := ManterDescricaoProduto( FieldByName('XProd').AsString , FieldByName('infAdProd').AsString );
           FieldByName('NCM').AsString               := Prod.NCM;
           FieldByName('EXTIPI').AsString            := Prod.EXTIPI;
@@ -472,8 +472,8 @@ begin
           FieldByName('vSeg').AsString              := FormatFloatBr( Prod.vSeg   ,'###,###,##0.00');
           FieldByName('vOutro').AsString            := FormatFloatBr( Prod.vOutro ,'###,###,##0.00');
           FieldByName('vDesc').AsString             := FormatFloatBr( ManterVDesc( Prod.vDesc , Prod.VUnCom , Prod.QCom),'###,###,##0.00');
-          FieldByName('ORIGEM').AsString            :=     OrigToStr( Imposto.ICMS.orig);
-          FieldByName('CST').AsString               :=     ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
+          FieldByName('ORIGEM').AsString            := OrigToStr( Imposto.ICMS.orig);
+          FieldByName('CST').AsString               := ManterCst( FNFe.Emit.CRT , Imposto.ICMS.CSOSN , Imposto.ICMS.CST );
           FieldByName('VBC').AsString               := FormatFloatBr( Imposto.ICMS.vBC        ,'###,###,##0.00');
           FieldByName('PICMS').AsString             := FormatFloatBr( Imposto.ICMS.pICMS      ,'###,###,##0.00');
           FieldByName('VICMS').AsString             := FormatFloatBr( Imposto.ICMS.vICMS      ,'###,###,##0.00');
@@ -797,7 +797,7 @@ begin
       else
       begin
         if FNFe.Ide.tpEmis <> teNormal then
-          FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA')
+          FieldByName('MensagemFiscal').AsString := ACBrStr('EMITIDA EM CONTINGÊNCIA'+LineBreak+'Pendente de autorização')
         else
           FieldByName('MensagemFiscal').AsString := ACBrStr('ÁREA DE MENSAGEM FISCAL');
       end;
@@ -1842,6 +1842,7 @@ begin
       begin
          FieldDefs.Add('tPag', ftString, 50);
          FieldDefs.Add('vPag', ftFloat);
+         FieldDefs.Add('vTroco', ftFloat);
          FieldDefs.Add('CNPJ', ftString, 50);
          FieldDefs.Add('tBand', ftString, 50);
          FieldDefs.Add('cAut', ftString, 20);
@@ -1948,7 +1949,7 @@ end;
 procedure TACBrNFeFRClass.frxReportBeforePrint(Sender: TfrxReportComponent);
 var
   qrcode: String;
-  CpTituloReport, CpLogomarca, CpDescrProtocolo, CpTotTrib: TfrxComponent;
+  CpTituloReport, CpLogomarca, CpDescrProtocolo, CpTotTrib, CpContingencia1, CpContingencia2 : TfrxComponent;
 begin
 
   qrCode := '';
@@ -1994,13 +1995,22 @@ begin
               if Assigned(Sender) and (Sender.Name = 'ImgQrCode') then
                 PintarQRCode(qrcode, TfrxPictureView(Sender).Picture);
 
-              CpDescrProtocolo := frxReport.FindObject('Memo5');
+              CpDescrProtocolo := frxReport.FindObject('Memo25');
               if Assigned(CpDescrProtocolo) then
                 CpDescrProtocolo.Visible := cdsParametros.FieldByName('Contingencia_Valor').AsString <> '';
 
               CpTotTrib := frxReport.FindObject('ValorTributos');
               if Assigned(CpTotTrib) then
                 CpTotTrib.Visible := cdsCalculoImposto.FieldByName('VTotTrib').AsFloat > 0;
+
+              // ajusta Informação de contingência no NFCe
+              CpContingencia1 := frxReport.FindObject('ChildContingenciaCabecalho');
+              if Assigned(CpContingencia1) then
+                CpContingencia1.Visible := FNFe.Ide.tpEmis <> teNormal;
+
+              CpContingencia2 := frxReport.FindObject('ChildContingenciaIdentificacao');
+              if Assigned(CpContingencia2) then
+                CpContingencia2.Visible := FNFe.Ide.tpEmis <> teNormal;
             end;
     end;
   end;

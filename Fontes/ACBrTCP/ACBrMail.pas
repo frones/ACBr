@@ -229,7 +229,7 @@ var
 implementation
 
 Uses
-  strutils{$IFDEF FPC}, FileUtil {$ENDIF},
+  strutils,
   ACBrUtil;
 
 procedure SendEmailByThread(MailToClone: TACBrMail);
@@ -834,18 +834,8 @@ var
   i: integer;
 begin
 
-  {$IFDEF FPC}
-  if not FileExistsUTF8(aFileName) then
-  begin
-    if not FileExists(aFileName) then
-      DoException( Exception.Create('Add Attachment: File not Exists.') );
-  end
-  else
-    aFileName := Utf8ToAnsi(aFileName);
-  {$ELSE}
   if not FileExists(aFileName) then
     DoException( Exception.Create('Add Attachment: File not Exists.') );
-  {$ENDIF}
 
   i := Length(fAttachments);
   SetLength(fAttachments, i + 1);

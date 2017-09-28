@@ -1,9 +1,9 @@
 object Form1: TForm1
   Left = 325
-  Top = 96
+  Top = 98
+  Width = 892
+  Height = 647
   Caption = 'ACBrNFe - Demonstra'#231#227'o'
-  ClientHeight = 609
-  ClientWidth = 876
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,6 @@ object Form1: TForm1
     Height = 609
     Align = alLeft
     TabOrder = 0
-    ExplicitHeight = 593
     object lblColaborador: TLabel
       Left = 18
       Top = 540
@@ -97,6 +96,8 @@ object Form1: TForm1
       Width = 153
       Height = 25
       Caption = 'Salvar Configura'#231#245'es'
+      TabOrder = 0
+      OnClick = btnSalvarConfigClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000130B0000130B00001000000000000000000000000000
@@ -111,8 +112,6 @@ object Form1: TForm1
         99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
         93337FFFF7737777733300000033333333337777773333333333}
       NumGlyphs = 2
-      TabOrder = 0
-      OnClick = btnSalvarConfigClick
     end
     object PageControl1: TPageControl
       Left = 8
@@ -128,7 +127,7 @@ object Form1: TForm1
           Top = 0
           Width = 275
           Height = 476
-          ActivePage = TabSheet3
+          ActivePage = TabSheet4
           Align = alClient
           MultiLine = True
           TabOrder = 0
@@ -392,6 +391,7 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               TabOrder = 9
               OnChange = cbSSLLibChange
             end
@@ -401,6 +401,7 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               TabOrder = 10
               OnChange = cbCryptLibChange
             end
@@ -410,6 +411,7 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               TabOrder = 11
               OnChange = cbHttpLibChange
             end
@@ -419,6 +421,7 @@ object Form1: TForm1
               Width = 160
               Height = 21
               Style = csDropDownList
+              ItemHeight = 13
               TabOrder = 12
               OnChange = cbXmlSignLibChange
             end
@@ -550,6 +553,7 @@ object Form1: TForm1
                 Top = 104
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 2
               end
               object cbxAtualizarXML: TCheckBox
@@ -580,6 +584,7 @@ object Form1: TForm1
                 Top = 142
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 6
               end
               object cbxRetirarAcentos: TCheckBox
@@ -595,6 +600,7 @@ object Form1: TForm1
                 Top = 181
                 Width = 248
                 Height = 21
+                ItemHeight = 13
                 TabOrder = 8
               end
               object edtIdToken: TEdit
@@ -687,6 +693,7 @@ object Form1: TForm1
                 Font.Height = -13
                 Font.Name = 'MS Sans Serif'
                 Font.Style = []
+                ItemHeight = 16
                 ItemIndex = 24
                 ParentFont = False
                 TabOrder = 1
@@ -759,6 +766,7 @@ object Form1: TForm1
                 Height = 21
                 Hint = 'Depende de configura'#231#227'o de  SSL.HttpLib'
                 Style = csDropDownList
+                ItemHeight = 13
                 TabOrder = 5
                 OnChange = cbSSLTypeChange
               end
@@ -1508,8 +1516,6 @@ object Form1: TForm1
     Height = 609
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 555
-    ExplicitHeight = 593
     object Panel3: TPanel
       Left = 1
       Top = 1
@@ -1517,7 +1523,6 @@ object Form1: TForm1
       Height = 300
       Align = alTop
       TabOrder = 0
-      ExplicitWidth = 553
       object PageControl3: TPageControl
         Left = 1
         Top = 1
@@ -1526,10 +1531,8 @@ object Form1: TForm1
         ActivePage = tsNFe
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 551
         object tsNFe: TTabSheet
           Caption = 'NF-e'
-          ExplicitWidth = 543
           object btnImprimir: TButton
             Left = 192
             Top = 156
@@ -1777,7 +1780,6 @@ object Form1: TForm1
         object tsNFCe: TTabSheet
           Caption = 'NFC-e'
           ImageIndex = 1
-          ExplicitWidth = 543
           object btnCriarEnviarNFCe: TButton
             Left = 9
             Top = 6
@@ -1798,12 +1800,8 @@ object Form1: TForm1
       ActivePage = Dados
       Align = alClient
       TabOrder = 1
-      ExplicitWidth = 553
-      ExplicitHeight = 291
       object TabSheet5: TTabSheet
         Caption = 'Respostas'
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object MemoResp: TMemo
           Left = 0
           Top = 0
@@ -1812,15 +1810,11 @@ object Form1: TForm1
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitWidth = 545
-          ExplicitHeight = 263
         end
       end
       object TabSheet6: TTabSheet
         Caption = 'XML Resposta'
         ImageIndex = 1
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object WBResposta: TWebBrowser
           Left = 0
           Top = 0
@@ -1828,8 +1822,6 @@ object Form1: TForm1
           Height = 279
           Align = alClient
           TabOrder = 0
-          ExplicitWidth = 553
-          ExplicitHeight = 271
           ControlData = {
             4C000000CF3A0000D61C00000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
@@ -1841,8 +1833,6 @@ object Form1: TForm1
       object TabSheet8: TTabSheet
         Caption = 'Log'
         ImageIndex = 2
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object memoLog: TMemo
           Left = 0
           Top = 0
@@ -1851,15 +1841,11 @@ object Form1: TForm1
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitWidth = 545
-          ExplicitHeight = 263
         end
       end
       object TabSheet9: TTabSheet
         Caption = 'NFe'
         ImageIndex = 3
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object trvwNFe: TTreeView
           Left = 0
           Top = 0
@@ -1868,15 +1854,11 @@ object Form1: TForm1
           Align = alClient
           Indent = 19
           TabOrder = 0
-          ExplicitWidth = 545
-          ExplicitHeight = 263
         end
       end
       object TabSheet10: TTabSheet
         Caption = 'Retorno Completo WS'
         ImageIndex = 4
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object memoRespWS: TMemo
           Left = 0
           Top = 0
@@ -1885,15 +1867,11 @@ object Form1: TForm1
           Align = alClient
           ScrollBars = ssVertical
           TabOrder = 0
-          ExplicitWidth = 545
-          ExplicitHeight = 263
         end
       end
       object Dados: TTabSheet
         Caption = 'Dados'
         ImageIndex = 5
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object MemoDados: TMemo
           Left = 0
           Top = 0
@@ -1905,16 +1883,11 @@ object Form1: TForm1
           ScrollBars = ssVertical
           TabOrder = 0
           WordWrap = False
-          ExplicitLeft = 1
-          ExplicitWidth = 545
-          ExplicitHeight = 263
         end
       end
       object TabSheet11: TTabSheet
         Caption = 'RetornoConsulta NFe 2.01'
         ImageIndex = 6
-        ExplicitWidth = 545
-        ExplicitHeight = 263
         object TreeViewRetornoConsulta: TTreeView
           Left = 0
           Top = 0
@@ -1923,8 +1896,6 @@ object Form1: TForm1
           Align = alClient
           Indent = 19
           TabOrder = 0
-          ExplicitWidth = 545
-          ExplicitHeight = 263
         end
       end
     end
@@ -1935,8 +1906,8 @@ object Form1: TForm1
       'Arquivos NFE (*-nfe.XML)|*-nfe.XML|Arquivos XML (*.XML)|*.XML|To' +
       'dos os Arquivos (*.*)|*.*'
     Title = 'Selecione a NFe'
-    Left = 688
-    Top = 376
+    Left = 515
+    Top = 343
   end
   object ACBrNFe1: TACBrNFe
     MAIL = ACBrMail1
@@ -1949,17 +1920,17 @@ object Form1: TForm1
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoDF = ve200
     Configuracoes.Geral.AtualizarXMLCancelado = True
+    Configuracoes.Arquivos.OrdenacaoPath = <>
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 15000
     Configuracoes.WebServices.AjustaAguardaConsultaRet = True
     Configuracoes.WebServices.TimeOut = 20000
     Configuracoes.WebServices.QuebradeLinha = '|'
-    DANFE = ACBrNFeDANFeESCPOS1
-    Left = 445
-    Top = 369
+    DANFE = ACBrNFeDANFeRL1
+    Left = 322
+    Top = 343
   end
   object ACBrNFeDANFeESCPOS1: TACBrNFeDANFeESCPOS
-    ACBrNFe = ACBrNFe1
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiSemGeracao
@@ -1991,11 +1962,10 @@ object Form1: TForm1
     LogoemCima = False
     TamanhoFonteEndereco = 0
     RecuoLogo = 0
-    TributosSeparadamente = False
     ImprimeEmUmaLinha = False
     PosPrinter = ACBrPosPrinter1
-    Left = 556
-    Top = 426
+    Left = 417
+    Top = 343
   end
   object ACBrMail1: TACBrMail
     Host = '127.0.0.1'
@@ -2005,10 +1975,11 @@ object Form1: TForm1
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
-    Left = 555
-    Top = 380
+    Left = 482
+    Top = 343
   end
   object ACBrNFeDANFeRL1: TACBrNFeDANFeRL
+    ACBrNFe = ACBrNFe1
     MostrarPreview = True
     MostrarStatus = True
     TipoDANFE = tiRetrato
@@ -2040,14 +2011,14 @@ object Form1: TForm1
     LogoemCima = False
     TamanhoFonteEndereco = 0
     RecuoLogo = 0
-    TributosSeparadamente = False
     LarguraCodProd = 54
     ExibirEAN = False
     QuebraLinhaEmDetalhamentoEspecifico = True
     ExibeCampoFatura = False
     ImprimirUnQtVlComercial = iuComercial
-    Left = 452
-    Top = 428
+    ImprimirDadosDocReferenciados = True
+    Left = 355
+    Top = 343
   end
   object ACBrNFeDANFCeFortes1: TACBrNFeDANFCeFortes
     MostrarPreview = True
@@ -2082,10 +2053,9 @@ object Form1: TForm1
     LogoemCima = False
     TamanhoFonteEndereco = 0
     RecuoLogo = 0
-    TributosSeparadamente = False
     ImprimeEmUmaLinha = False
-    Left = 590
-    Top = 429
+    Left = 386
+    Top = 343
   end
   object ACBrPosPrinter1: TACBrPosPrinter
     Modelo = ppEscPosEpson
@@ -2099,7 +2069,7 @@ object Form1: TForm1
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 5
-    Left = 518
-    Top = 485
+    Left = 449
+    Top = 343
   end
 end

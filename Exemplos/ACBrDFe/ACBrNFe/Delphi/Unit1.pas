@@ -8,9 +8,8 @@ uses IniFiles, ShellAPI, pcnRetConsReciNFe,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Buttons, ComCtrls, OleCtrls, SHDocVw,
   ACBrNFe, pcnConversao, ACBrUtil, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
-  ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib,
-  ACBrMail, ACBrNFeDANFeRLClass, ACBrDANFCeFortesFr, ACBrPosPrinter,
-  Spin;
+  ACBrBase, ACBrDFe, XMLIntf, XMLDoc, zlib, ACBrMail, ACBrNFeDANFeRLClass,
+  ACBrDANFCeFortesFr, ACBrPosPrinter, Spin;
 
 type
 
@@ -320,7 +319,8 @@ implementation
 uses
   strutils, math, TypInfo, DateUtils, ufrmStatus, synacode, blcksock, pcnNFe,
   pcnConversaoNFe, ACBrDFeConfiguracoes, pcnAuxiliar, ACBrDFeSSL, pcnNFeRTXT,
-  FileCtrl,ACBrNFeNotasFiscais, ACBrDFeOpenSSL, Unit2, Grids;
+  FileCtrl,ACBrNFeNotasFiscais, ACBrDFeOpenSSL, Unit2, Grids,
+  ACBrNFeConfiguracoes;
 
 const
   SELDIRHELP = 1000;
@@ -344,8 +344,8 @@ begin
       Ini.WriteString( 'Certificado','Senha'   ,edtSenha.Text) ;
       Ini.WriteString( 'Certificado','NumSerie',edtNumSerie.Text) ;
 
-      Ini.WriteBool(   'Geral','AtualizarXML'      ,ckSalvar.Checked) ;
-      Ini.WriteBool(   'Geral','ExibirErroSchema'      ,ckSalvar.Checked) ;
+      Ini.WriteBool(   'Geral','AtualizarXML'      ,cbxAtualizarXML.Checked) ;
+      Ini.WriteBool(   'Geral','ExibirErroSchema'  ,cbxExibirErroSchema.Checked) ;
       Ini.WriteString( 'Geral','FormatoAlerta'  ,edtFormatoAlerta.Text) ;
       Ini.WriteInteger( 'Geral','FormaEmissao',cbFormaEmissao.ItemIndex) ;
       Ini.WriteInteger( 'Geral','ModeloDF',cbModeloDF.ItemIndex) ;
@@ -432,32 +432,36 @@ begin
 
   Ini := TIniFile.Create( IniFile );
   try
-     cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0) ;
-     cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0) ;
-     cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0) ;
-     cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0) ;
-     edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
-     edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
-     edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
-     ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
-     ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
-     ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
+      cbSSLLib.ItemIndex:= Ini.ReadInteger( 'Certificado','SSLLib' ,0) ;
+      cbCryptLib.ItemIndex := Ini.ReadInteger( 'Certificado','CryptLib' , 0) ;
+      cbHttpLib.ItemIndex := Ini.ReadInteger( 'Certificado','HttpLib' , 0) ;
+      cbXmlSignLib.ItemIndex := Ini.ReadInteger( 'Certificado','XmlSignLib' , 0) ;
+      edtCaminho.Text  := Ini.ReadString( 'Certificado','Caminho' ,'') ;
+      edtSenha.Text    := Ini.ReadString( 'Certificado','Senha'   ,'') ;
+      edtNumSerie.Text := Ini.ReadString( 'Certificado','NumSerie','') ;
+      ACBrNFe1.Configuracoes.Certificados.ArquivoPFX  := edtCaminho.Text;
+      ACBrNFe1.Configuracoes.Certificados.Senha       := edtSenha.Text;
+      ACBrNFe1.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
 
       cbxAtualizarXML.Checked    := Ini.ReadBool(   'Geral','AtualizarXML',True) ;
       cbxExibirErroSchema.Checked    := Ini.ReadBool(   'Geral','ExibirErroSchema',True) ;
       edtFormatoAlerta.Text    := Ini.ReadString( 'Geral','FormatoAlerta'  ,'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.') ;
       cbFormaEmissao.ItemIndex := Ini.ReadInteger( 'Geral','FormaEmissao',0) ;
       cbModeloDF.ItemIndex := Ini.ReadInteger( 'Geral','ModeloDF',0) ;
+      if cbModeloDF.ItemIndex = 0 then
+         ACBrNFe1.DANFE := ACBrNFeDANFeRL1
+      else
+         ACBrNFe1.DANFE := ACBrNFeDANFCeFortes1 ;
       cbVersaoDF.ItemIndex := Ini.ReadInteger( 'Geral','VersaoDF',0) ;
       edtIdToken.Text      := Ini.ReadString( 'Geral','IdToken'  ,'') ;
       edtToken.Text        := Ini.ReadString( 'Geral','Token'  ,'') ;
-      ckSalvar.Checked     := Ini.ReadBool(   'Geral','Salvar'      ,True) ;
+      ckSalvar.Checked     := Ini.ReadBool(   'Geral','Salvar',True) ;
       cbxRetirarAcentos.Checked := Ini.ReadBool(   'Geral','RetirarAcentos',True) ;
       edtPathLogs.Text     := Ini.ReadString( 'Geral','PathSalvar'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Logs') ;
       edtPathSchemas.Text  := Ini.ReadString( 'Geral','PathSchemas'  ,PathWithDelim(ExtractFilePath(Application.ExeName))+'Schemas\'+GetEnumName(TypeInfo(TpcnVersaoDF), integer(cbVersaoDF.ItemIndex) )) ;
 
       ACBrNFe1.SSL.DescarregarCertificado;
-      
+
       with ACBrNFe1.Configuracoes.Geral do
        begin
          SSLLib                := TSSLLib(cbSSLLib.ItemIndex);
@@ -465,6 +469,7 @@ begin
          SSLHttpLib            := TSSLHttpLib(cbHttpLib.ItemIndex);
          SSLXmlSignLib         := TSSLXmlSignLib(cbXmlSignLib.ItemIndex);
          AtualizaSSLLibsCombo;
+         AtualizarXMLCancelado := cbxAtualizarXML.Checked;
          ExibirErroSchema := cbxExibirErroSchema.Checked;
          RetirarAcentos   := cbxRetirarAcentos.Checked;
          FormatoAlerta    := edtFormatoAlerta.Text;
@@ -511,7 +516,7 @@ begin
          if NaoEstaVazio(edtIntervalo.Text) then
             IntervaloTentativas := ifThen(StrToInt(edtIntervalo.Text)<1000,StrToInt(edtIntervalo.Text)*1000,StrToInt(edtIntervalo.Text))
          else
-            edtIntervalo.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.IntervaloTentativas);            
+            edtIntervalo.Text := IntToStr(ACBrNFe1.Configuracoes.WebServices.IntervaloTentativas);
 
          TimeOut := seTimeOut.Value;
          ProxyHost := edtProxyHost.Text;
@@ -583,7 +588,7 @@ begin
        begin
          ACBrNFe1.DANFE.TipoDANFE  := StrToTpImp(OK,IntToStr(rgTipoDanfe.ItemIndex+1));
          ACBrNFe1.DANFE.Logo       := edtLogoMarca.Text;
-       end;      
+       end;
   finally
      Ini.Free ;
   end;
@@ -1310,7 +1315,7 @@ begin
 
   MemoDados.Lines.Add('');
   MemoDados.Lines.Add('Consulta Cadastro');
- MemoDados.Lines.Add('versao: ' +ACBrNFe1.WebServices.ConsultaCadastro.versao);
+  MemoDados.Lines.Add('versao: ' +ACBrNFe1.WebServices.ConsultaCadastro.versao);
   MemoDados.Lines.Add('verAplic: ' +ACBrNFe1.WebServices.ConsultaCadastro.verAplic);
   MemoDados.Lines.Add('cStat: '    +IntToStr(ACBrNFe1.WebServices.ConsultaCadastro.cStat));
   MemoDados.Lines.Add('xMotivo: '  +ACBrNFe1.WebServices.ConsultaCadastro.xMotivo);
@@ -1334,7 +1339,7 @@ begin
     if OpenDialog1.Execute then
       ACBrNFe1.NotasFiscais.LoadFromFile(OpenDialog1.FileName);
 
-    CarregarMaisXML := MessageDlg('Carregar mais Notas?', mtConfirmation, mbYesNo, 0) = mrYes;
+    CarregarMaisXML := MessageDlg('Carregar mais Notas?', mtConfirmation, mbYesNoCancel, 0) = mrYes;
   end;
 
   ACBrNFe1.NotasFiscais.ImprimirPDF; 

@@ -82,7 +82,7 @@ Símbolo : Significado
     de falha da Assinatura
     (por: DSA)
 
-21/02/2017
+21/08/2017
 -- ACBrDFeWinCrypt --
 [-] Correção para remover o numero de Série do Certificado, de "CertificadosA3ComPin",
     quando Descarregar o Certificado.

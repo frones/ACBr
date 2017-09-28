@@ -71,8 +71,8 @@ http://www.projetoacbr.com.br/forum/topic/36527-erro-no-roteiro-de-teste-paygo
 17/05/2017
 -- ACBrTEFDCliSiTEF -- 
 [*] Alteração em "ConteudoToProperty" para calcular corretamente os valores 
-	defaults das parcelas, quando elas não são informadas pelo TEF.
-	(por: Elias César)  
+    defaults das parcelas, quando elas não são informadas pelo TEF.
+    (por: Elias César)
 
 23/02/2017
 -- ACBrTEFDCliSiTEF --

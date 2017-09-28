@@ -38,6 +38,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 28/09/2017
+-- ACBrUtil --
+[-] Correção no método "DesligarMaquina", para Linux... usando o comando
+    "shutdown"   (por: DSA)
+
 Data: 31/08/2017
 -- GZIPUtils --
 [-] Correção no método "unzipStream". Em algumas raras situações o Stream não

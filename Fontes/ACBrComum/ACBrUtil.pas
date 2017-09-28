@@ -3091,9 +3091,9 @@ end;
       // Precisa ser o ROOT ou a
       // aplicação ter provilegios de ROOT  (use: su  ,  chmod u+s SeuPrograma )
       if Reboot then
-         RunCommand('reboot')
+         RunCommand('shutdown -r now')
       else
-         RunCommand('halt') ;
+         RunCommand('shutdown -h now') ;
    end ;
 {$ENDIF}
 

@@ -2,7 +2,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
   Left = 473
   Top = 85
   Width = 796
-  Height = 797
+  Height = 780
   Caption = 'ACBrNFeDANFCeFortesFr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -39,7 +39,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 2
-      Top = 377
+      Top = 416
       Width = 276
       Height = 209
       AutoSize = True
@@ -306,11 +306,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Left = 2
       Top = 194
       Width = 276
-      Height = 65
+      Height = 104
       OnDataRecord = rlsbPagamentosDataRecord
       object rlbPagamento: TRLBand
         Left = 0
-        Top = 42
+        Top = 80
         Width = 276
         Height = 12
         AutoSize = True
@@ -345,7 +345,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbTroco: TRLBand
         Left = 0
-        Top = 54
+        Top = 92
         Width = 276
         Height = 12
         AutoSize = True
@@ -389,7 +389,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 0
         Top = 0
         Width = 276
-        Height = 42
+        Height = 29
         AutoSize = True
         BandType = btHeader
         Font.Charset = DEFAULT_CHARSET
@@ -453,9 +453,16 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Style = [fsBold]
           ParentFont = False
         end
+      end
+      object rlbPagamentoTitulo: TRLBand
+        Left = 0
+        Top = 68
+        Width = 276
+        Height = 12
+        AutoSize = True
         object lTitFormaPagto: TRLLabel
           Left = 8
-          Top = 30
+          Top = 0
           Width = 112
           Height = 12
           Caption = 'FORMA DE PAGAMENTO'
@@ -463,16 +470,121 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
-          Font.Style = [fsBold]
+          Font.Style = []
           ParentFont = False
         end
         object lTitValorPago: TRLLabel
           Left = 212
-          Top = 30
+          Top = 0
           Width = 48
           Height = 12
           Alignment = taRightJustify
           Caption = 'Valor Pago'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+      end
+      object rlbTotalAcrescimo: TRLBand
+        Left = 0
+        Top = 29
+        Width = 276
+        Height = 13
+        AutoSize = True
+        BeforePrint = rlbTotalAcrescimoBeforePrint
+        object lTitTotalAcrescimo: TRLLabel
+          Left = 8
+          Top = 2
+          Width = 80
+          Height = 11
+          Caption = 'Acr'#233'scimos R$'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object lTotalAcrescimo: TRLLabel
+          Left = 216
+          Top = 2
+          Width = 44
+          Height = 11
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+      end
+      object rlbTotalDesconto: TRLBand
+        Left = 0
+        Top = 42
+        Width = 276
+        Height = 13
+        AutoSize = True
+        BeforePrint = rlbTotalDescontoBeforePrint
+        object lTitTotalDesconto: TRLLabel
+          Left = 8
+          Top = 2
+          Width = 66
+          Height = 11
+          Caption = 'Descontos R$'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object lTotalDesconto: TRLLabel
+          Left = 216
+          Top = 2
+          Width = 44
+          Height = 11
+          Alignment = taRightJustify
+          Caption = '99.999,99'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+      end
+      object rlbTotalAPagar: TRLBand
+        Left = 0
+        Top = 55
+        Width = 276
+        Height = 13
+        AutoSize = True
+        BeforePrint = rlbTotalAPagarBeforePrint
+        object lTitTotalAPagar: TRLLabel
+          Left = 8
+          Top = 2
+          Width = 80
+          Height = 11
+          Caption = 'TOTAL A PAGAR R$'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object lTotalAPagar: TRLLabel
+          Left = 216
+          Top = 2
+          Width = 44
+          Height = 11
+          Alignment = taRightJustify
+          Caption = '99.999,99'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -632,7 +744,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbConsumidor: TRLBand
       Left = 2
-      Top = 341
+      Top = 380
       Width = 276
       Height = 36
       BandType = btSummary
@@ -677,7 +789,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbMensagemFiscal: TRLBand
       Left = 2
-      Top = 259
+      Top = 298
       Width = 276
       Height = 82
       AutoSize = True

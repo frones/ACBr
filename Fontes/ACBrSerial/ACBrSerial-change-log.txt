@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 29/09/2017
+-- ACBrBALMicheletti, ACBrBAL
+[+] Inclusão da balança Micheletti
+		https://www.projetoacbr.com.br/forum/topic/33420-balança-micheletti/
+	(por: Juliomar Marchetti)
+
 Data: 20/09/2017
 -- ACBrTER, ACBrTERClass, ACBrTERWilbor --
 [+] Inclusão do parâmetro "DuplaConfirmacao", baseado na contribuição de usuário do fórum.

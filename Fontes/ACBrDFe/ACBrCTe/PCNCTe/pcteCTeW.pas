@@ -375,6 +375,8 @@ begin
 end;
 
 procedure TCTeW.GerarIde;
+var
+ Obrigatorio: Integer;
 begin
   Gerador.wGrupo('ide', '#004');
   Gerador.wCampo(tcInt, '#005', 'cUF     ', 02, 02, 1, CTe.ide.cUF, DSC_CUF);
@@ -429,19 +431,24 @@ begin
   if (CTe.infCTe.versao >= 3) and (CTe.ide.modelo = 67) then
     Gerador.wCampo(tcStr, '#035', 'indIEToma', 01, 01, 1, indIEDestToStr(CTe.ide.indIEToma), DSC_INDIETOMA);
 
-  Gerador.wCampo(tcInt, '#027', 'cMunIni ', 07, 07, 1, CTe.ide.cMunIni, DSC_CMUNEMI);
-  if not ValidarMunicipio(CTe.ide.cMunIni) then
+  if (CTe.ide.modelo = 57) then
+    Obrigatorio := 1
+  else
+    Obrigatorio := 0;
+
+  Gerador.wCampo(tcInt, '#027', 'cMunIni ', 07, 07, Obrigatorio, CTe.ide.cMunIni, DSC_CMUNEMI);
+  if (Obrigatorio = 1) and not ValidarMunicipio(CTe.ide.cMunIni) then
     Gerador.wAlerta('#027', 'cMunIni', DSC_CMUNEMI, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#028', 'xMunIni ', 02, 60, 1, CTe.ide.xMunIni, DSC_XMUN);
-  Gerador.wCampo(tcStr, '#029', 'UFIni   ', 02, 02, 1, CTe.ide.UFIni, DSC_UF);
-  if not ValidarUF(CTe.ide.UFIni) then
+  Gerador.wCampo(tcStr, '#028', 'xMunIni ', 02, 60, Obrigatorio, CTe.ide.xMunIni, DSC_XMUN);
+  Gerador.wCampo(tcStr, '#029', 'UFIni   ', 02, 02, Obrigatorio, CTe.ide.UFIni, DSC_UF);
+  if (Obrigatorio = 1) and not ValidarUF(CTe.ide.UFIni) then
     Gerador.wAlerta('#029', 'UFIni', DSC_UF, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcInt, '#030', 'cMunFim ', 07, 07, 1, CTe.ide.cMunFim, DSC_CMUNEMI);
-  if not ValidarMunicipio(CTe.ide.cMunFim) then
+  Gerador.wCampo(tcInt, '#030', 'cMunFim ', 07, 07, Obrigatorio, CTe.ide.cMunFim, DSC_CMUNEMI);
+  if (Obrigatorio = 1) and not ValidarMunicipio(CTe.ide.cMunFim) then
     Gerador.wAlerta('#030', 'cMunFim', DSC_CMUNEMI, ERR_MSG_INVALIDO);
-  Gerador.wCampo(tcStr, '#031', 'xMunFim    ', 02, 60, 1, CTe.ide.xMunFim, DSC_XMUN);
-  Gerador.wCampo(tcStr, '#032', 'UFFim      ', 02, 02, 1, CTe.ide.UFFim, DSC_UF);
-  if not ValidarUF(CTe.ide.UFFim) then
+  Gerador.wCampo(tcStr, '#031', 'xMunFim    ', 02, 60, Obrigatorio, CTe.ide.xMunFim, DSC_XMUN);
+  Gerador.wCampo(tcStr, '#032', 'UFFim      ', 02, 02, Obrigatorio, CTe.ide.UFFim, DSC_UF);
+  if (Obrigatorio = 1) and not ValidarUF(CTe.ide.UFFim) then
     Gerador.wAlerta('#032', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
 
   if (CTe.ide.modelo = 57) then

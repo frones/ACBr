@@ -48,6 +48,10 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2017
+-- pcteCTeW --
+[*] Alterado a geração das TAGs de inicio e fim da prestação do serviço.
+    Para o CT-e elas são obrigatórias, mas para o CT-e OS são opcionais.
+   Por: Italo Jurisato Junior / BigWings
 -- pcteEventoCTe --
 [*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.
    Por: Italo Jurisato Junior

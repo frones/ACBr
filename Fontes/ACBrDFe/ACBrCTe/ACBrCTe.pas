@@ -823,7 +823,8 @@ function TACBrCTe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,
   ANumInicial, ANumFinal: Integer): Boolean;
 begin
   Result := True;
-  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, 57,
+  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno,
+                        Configuracoes.Geral.ModeloDFCodigo,
                         ASerie, ANumInicial, ANumFinal);
 end;
 

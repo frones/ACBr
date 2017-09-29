@@ -417,7 +417,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 92
         Width = 276
         AutoSize = True
-        BandType = btSummary
+        BandType = btFooter
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
@@ -547,6 +547,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 68
         Width = 276
         AutoSize = True
+        BandType = btHeader
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -589,6 +590,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 29
         Width = 276
         AutoSize = True
+        BandType = btHeader
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -634,6 +636,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 42
         Width = 276
         AutoSize = True
+        BandType = btHeader
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -679,6 +682,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 55
         Width = 276
         AutoSize = True
+        BandType = btHeader
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0

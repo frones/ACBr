@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 29/09/2017
+-- pcteEventoCTe --
+[*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.
+   Por: Italo Jurisato Junior
 -- ACBrCTe --
 [-] Ao chamar o método Inutiliza estava fixo o modelo (57), impedindo dessa forma
     Inutilizar um numero do modelo 67 (CTeOS), agora o modelo é lido da configuração.

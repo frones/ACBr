@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2017
+-- pcnEventoNFe --
+[*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.
+   Por: Italo Jurisato Junior
+
 28/09/2017
 -- ACBrNFeServicos --
 [*] Removido as chamadas de WSDL_V4_SP e SOAP_V4_SP, pois a SEFAZ-SP corrigiu o

@@ -300,7 +300,8 @@ begin
     teCTeCancelado                : Result := 'CT-e Cancelado';
     teMDFeAutorizado,
     teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
-    teMDFeCancelado               : Result := 'MDF-e Cancelado';
+    teMDFeCancelado,
+    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     tePedProrrog1,
     tePedProrrog2              : Result := 'Pedido de Prorrogacao';
@@ -354,7 +355,8 @@ begin
     teCTeCancelado                : Result := 'CT-e Cancelado';
     teMDFeAutorizado,
     teMDFeAutorizado2             : Result := 'MDF-e Autorizado';
-    teMDFeCancelado               : Result := 'MDF-e Cancelado';
+    teMDFeCancelado,
+    teMDFeCancelado2              : Result := 'MDF-e Cancelado';
     teVistoriaSuframa             : Result := 'Vistoria SUFRAMA';
     tePedProrrog1,
     tePedProrrog2              : Result := 'Pedido de Prorrogacao';

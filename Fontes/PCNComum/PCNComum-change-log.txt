@@ -39,6 +39,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2017
+-- pcnConversao --
+[*] Incluido o evento 310611 (Cancelamento de MDF-e) esse código de evento é
+    Retornado pelo DistribuicaoDFe quando um MDF-e esta cancelado.
+   Por: Italo Jurisato Junior
+
 14/09/2017
 -- pcnConversao --
 [*] Ajuste em modFreteToDesStr para versão 4.0.

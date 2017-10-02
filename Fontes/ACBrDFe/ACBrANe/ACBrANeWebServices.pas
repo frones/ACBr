@@ -426,7 +426,7 @@ begin
     FPMsg := FInfoDescricao;
   end;
 
-  Result := (FErroCodigo <> '') or (FInfoCodigo <> '');
+  Result := (FErroCodigo <> '') or (FInfoCodigo <> '') or (FProtocolo <> '');
 end;
 
 function TANeAverbar.GerarMsgLog: String;
@@ -465,6 +465,32 @@ begin
                     FNumeroAverbacao,
                     FInfoCodigo,
                     FInfoDescricao]);
+  end;
+
+  if (FProtocolo <> '') and (FErroCodigo = '') and (FInfoCodigo = '') then
+  begin
+  Result := Format(ACBrStr('Averbação:' + LineBreak +
+                           ' Data     : %s ' + LineBreak +
+                           ' Protocolo: %s ' + LineBreak +
+                           ' Numero   : %s ' + LineBreak + LineBreak +
+                           'Dados do Seguro:' + LineBreak +
+                           ' Numero Averbação: %s' + LineBreak +
+                           ' CNPJ Seguradora: %s' + LineBreak +
+                           ' Nome Seguradora: %s' + LineBreak +
+                           ' Numero Apolice : %s' + LineBreak +
+                           ' Tipo Movimento : %s' + LineBreak +
+                           ' Valor Averbado : %s' + LineBreak +
+                           ' Ramo Averbado  : %s' + LineBreak),
+                   [IfThen(FdhAverbacao = 0, '', FormatDateTimeBr(FdhAverbacao)),
+                    FProtocolo,
+                    FNumeroAverbacao,
+                    ANeRetorno.Averbado.DadosSeguro.Items[0].NumeroAverbacao,
+                    ANeRetorno.Averbado.DadosSeguro.Items[0].CNPJSeguradora,
+                    ANeRetorno.Averbado.DadosSeguro.Items[0].NomeSeguradora,
+                    ANeRetorno.Averbado.DadosSeguro.Items[0].NumApolice,
+                    ANeRetorno.Averbado.DadosSeguro.Items[0].TpMov,
+                    FloatToStr(ANeRetorno.Averbado.DadosSeguro.Items[0].ValorAverbado),
+                    ANeRetorno.Averbado.DadosSeguro.Items[0].RamoAverbado]);
   end;
 end;
 

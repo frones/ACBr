@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2017
+-- pcteCTe --
+[*] Definido o valor tiNao como padrão para o campo indGlobalizado.
+   Por: Italo Jurisato Junior
+
 29/09/2017
 -- pcteCTeW --
 [*] Alterado a geração das TAGs de inicio e fim da prestação do serviço.

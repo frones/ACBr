@@ -421,7 +421,7 @@ type
     property tpCTe: TpcteTipoCTe          read FtpCTe          write FtpCTe;
     property procEmi: TpcnProcessoEmissao read FprocEmi        write FprocEmi;
     property verProc: String              read FverProc        write FverProc;
-    property indGlobalizado: TIndicador   read FindGlobalizado write FindGlobalizado;
+    property indGlobalizado: TIndicador   read FindGlobalizado write FindGlobalizado default tiNao;
     property refCTe: String               read FrefCTe         write FrefCTe;
     property cMunEnv: Integer             read FcMunEnv        write FcMunEnv;
     property xMunEnv: String              read FxMunEnv        write FxMunEnv;

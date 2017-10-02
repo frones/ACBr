@@ -47,6 +47,10 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+02/10/2017
+[*] Incluido a leitura do grupo <Response> do arquivo de retorno.
+    Por: Italo Jurisato Junior
+
 26/09/2017
 [*] Correção da URL de produção.
     Por: Italo Jurisato Junior

@@ -430,115 +430,122 @@ var
   i: Integer;
 begin
   Result := False;
+
   try
     Leitor.Grupo := Leitor.Arquivo;
 
     FXML := Leitor.Grupo;
-    
+
     if (leitor.rExtrai(1, 'ns1:averbaCTeResponse') <> '') or
        (leitor.rExtrai(1, 'ns1:averbaNFeResponse') <> '') then
     begin
-      FNumero  := Leitor.rCampo(tcStr, 'Numero');
-      FSerie   := Leitor.rCampo(tcStr, 'Serie');
-      FFilial  := Leitor.rCampo(tcStr, 'Filial');
-      FCNPJCli := Leitor.rCampo(tcStr, 'CNPJCli');
-      FTpDoc   := Leitor.rCampo(tcInt, 'TpDoc');
-      FInfAdic := Leitor.rCampo(tcStr, 'InfAdic');
-
-      if (leitor.rExtrai(2, 'Erros') <> '') then
+      if (leitor.rExtrai(2, 'Response') <> '') then
       begin
-        i := 0;
-        while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+        FNumero  := Leitor.rCampo(tcStr, 'Numero');
+        FSerie   := Leitor.rCampo(tcStr, 'Serie');
+        FFilial  := Leitor.rCampo(tcStr, 'Filial');
+        FCNPJCli := Leitor.rCampo(tcStr, 'CNPJCli');
+        FTpDoc   := Leitor.rCampo(tcInt, 'TpDoc');
+        FInfAdic := Leitor.rCampo(tcStr, 'InfAdic');
+
+        if (leitor.rExtrai(3, 'Erros') <> '') then
         begin
-          Erros.FErro.Add;
-          Erros.FErro[i].FCodigo         := Leitor.rCampo(tcStr, 'Codigo');
-          Erros.FErro[i].FDescricao      := Leitor.rCampo(tcStr, 'Descricao');
-          Erros.FErro[i].FValorEsperado  := Leitor.rCampo(tcStr, 'ValorEsperado');
-          Erros.FErro[i].FValorInformado := Leitor.rCampo(tcStr, 'ValorInformado');
+          i := 0;
+          while Leitor.rExtrai(4, 'Erro', '', i + 1) <> '' do
+          begin
+            Erros.FErro.Add;
+            Erros.FErro[i].FCodigo         := Leitor.rCampo(tcStr, 'Codigo');
+            Erros.FErro[i].FDescricao      := Leitor.rCampo(tcStr, 'Descricao');
+            Erros.FErro[i].FValorEsperado  := Leitor.rCampo(tcStr, 'ValorEsperado');
+            Erros.FErro[i].FValorInformado := Leitor.rCampo(tcStr, 'ValorInformado');
 
-          inc(i);
+            inc(i);
+          end;
         end;
-      end;
 
-      if leitor.rExtrai(2, 'Averbado') <> '' then
-      begin
-        Averbado.FdhAverbacao := Leitor.rCampo(tcDatHor, 'dhAverbacao');
-        Averbado.FProtocolo   := Leitor.rCampo(tcStr, 'Protocolo');
-
-        i := 0;
-        while Leitor.rExtrai(3, 'DadosSeguro', '', i + 1) <> '' do
+        if leitor.rExtrai(3, 'Averbado') <> '' then
         begin
-          Averbado.FDadosSeguro.Add;
-          Averbado.FDadosSeguro[i].FNumeroAverbacao := Leitor.rCampo(tcStr, 'NumeroAverbacao');
-          Averbado.FDadosSeguro[i].FCNPJSeguradora  := Leitor.rCampo(tcStr, 'CNPJSeguradora');
-          Averbado.FDadosSeguro[i].FNomeSeguradora  := Leitor.rCampo(tcStr, 'NomeSeguradora');
-          Averbado.FDadosSeguro[i].FNumApolice      := Leitor.rCampo(tcStr, 'NumApolice');
-          Averbado.FDadosSeguro[i].FTpMov           := Leitor.rCampo(tcStr, 'TpMov');
-          Averbado.FDadosSeguro[i].FTpDDR           := Leitor.rCampo(tcStr, 'TpDDR');
-          Averbado.FDadosSeguro[i].FValorAverbado   := Leitor.rCampo(tcDe2, 'ValorAverbado');
-          Averbado.FDadosSeguro[i].FRamoAverbado    := Leitor.rCampo(tcStr, 'RamoAverbado');
+          Averbado.FdhAverbacao := Leitor.rCampo(tcDatHor, 'dhAverbacao');
+          Averbado.FProtocolo   := Leitor.rCampo(tcStr, 'Protocolo');
 
-          inc(i);
+          i := 0;
+          while Leitor.rExtrai(4, 'DadosSeguro', '', i + 1) <> '' do
+          begin
+            Averbado.FDadosSeguro.Add;
+            Averbado.FDadosSeguro[i].FNumeroAverbacao := Leitor.rCampo(tcStr, 'NumeroAverbacao');
+            Averbado.FDadosSeguro[i].FCNPJSeguradora  := Leitor.rCampo(tcStr, 'CNPJSeguradora');
+            Averbado.FDadosSeguro[i].FNomeSeguradora  := Leitor.rCampo(tcStr, 'NomeSeguradora');
+            Averbado.FDadosSeguro[i].FNumApolice      := Leitor.rCampo(tcStr, 'NumApolice');
+            Averbado.FDadosSeguro[i].FTpMov           := Leitor.rCampo(tcStr, 'TpMov');
+            Averbado.FDadosSeguro[i].FTpDDR           := Leitor.rCampo(tcStr, 'TpDDR');
+            Averbado.FDadosSeguro[i].FValorAverbado   := Leitor.rCampo(tcDe2, 'ValorAverbado');
+            Averbado.FDadosSeguro[i].FRamoAverbado    := Leitor.rCampo(tcStr, 'RamoAverbado');
+
+            inc(i);
+          end;
         end;
-      end;
 
-      if leitor.rExtrai(2, 'Infos') <> '' then
-      begin
-        i := 0;
-        while Leitor.rExtrai(3, 'Info', '', i + 1) <> '' do
+        if leitor.rExtrai(3, 'Infos') <> '' then
         begin
-          Infos.FInfo.Add;
-          Infos.FInfo[i].FCodigo    := Leitor.rCampo(tcStr, 'Codigo');
-          Infos.FInfo[i].FDescricao := Leitor.rCampo(tcStr, 'Descricao');
+          i := 0;
+          while Leitor.rExtrai(4, 'Info', '', i + 1) <> '' do
+          begin
+            Infos.FInfo.Add;
+            Infos.FInfo[i].FCodigo    := Leitor.rCampo(tcStr, 'Codigo');
+            Infos.FInfo[i].FDescricao := Leitor.rCampo(tcStr, 'Descricao');
 
-          inc(i);
+            inc(i);
+          end;
         end;
-      end;
 
-      Result := True;
+        Result := True;
+      end;
     end;
 
     if leitor.rExtrai(1, 'ns1:declaraMDFeResponse') <> '' then
     begin
-      FNumero := Leitor.rCampo(tcStr, 'Numero');
-      FSerie  := Leitor.rCampo(tcStr, 'Serie');
-      FFilial := Leitor.rCampo(tcStr, 'Filial');
-
-      if (leitor.rExtrai(2, 'Erros') <> '') then
+      if (leitor.rExtrai(2, 'Response') <> '') then
       begin
-        i := 0;
-        while Leitor.rExtrai(3, 'Erro', '', i + 1) <> '' do
+        FNumero := Leitor.rCampo(tcStr, 'Numero');
+        FSerie  := Leitor.rCampo(tcStr, 'Serie');
+        FFilial := Leitor.rCampo(tcStr, 'Filial');
+
+        if (leitor.rExtrai(3, 'Erros') <> '') then
         begin
-          Erros.FErro.Add;
-          Erros.FErro[i].FCodigo         := Leitor.rCampo(tcStr, 'Codigo');
-          Erros.FErro[i].FDescricao      := Leitor.rCampo(tcStr, 'Descricao');
-          Erros.FErro[i].FValorEsperado  := Leitor.rCampo(tcStr, 'ValorEsperado');
-          Erros.FErro[i].FValorInformado := Leitor.rCampo(tcStr, 'ValorInformado');
+          i := 0;
+          while Leitor.rExtrai(4, 'Erro', '', i + 1) <> '' do
+          begin
+            Erros.FErro.Add;
+            Erros.FErro[i].FCodigo         := Leitor.rCampo(tcStr, 'Codigo');
+            Erros.FErro[i].FDescricao      := Leitor.rCampo(tcStr, 'Descricao');
+            Erros.FErro[i].FValorEsperado  := Leitor.rCampo(tcStr, 'ValorEsperado');
+            Erros.FErro[i].FValorInformado := Leitor.rCampo(tcStr, 'ValorInformado');
 
-          inc(i);
+            inc(i);
+          end;
         end;
-      end;
 
-      if (leitor.rExtrai(2, 'Declarado') <> '') then
-      begin
-        Declarado.FdhChancela := Leitor.rCampo(tcDatHor, 'dhChancela');
-        Declarado.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
-      end;
-
-      if leitor.rExtrai(2, 'Infos') <> '' then
-      begin
-        i := 0;
-        while Leitor.rExtrai(3, 'Info', '', i + 1) <> '' do
+        if (leitor.rExtrai(3, 'Declarado') <> '') then
         begin
-          Infos.FInfo.Add;
-          Infos.FInfo[i].FCodigo    := Leitor.rCampo(tcStr, 'Codigo');
-          Infos.FInfo[i].FDescricao := Leitor.rCampo(tcStr, 'Descricao');
-
-          inc(i);
+          Declarado.FdhChancela := Leitor.rCampo(tcDatHor, 'dhChancela');
+          Declarado.FProtocolo  := Leitor.rCampo(tcStr, 'Protocolo');
         end;
-      end;
 
-      Result := True;
+        if leitor.rExtrai(3, 'Infos') <> '' then
+        begin
+          i := 0;
+          while Leitor.rExtrai(4, 'Info', '', i + 1) <> '' do
+          begin
+            Infos.FInfo.Add;
+            Infos.FInfo[i].FCodigo    := Leitor.rCampo(tcStr, 'Codigo');
+            Infos.FInfo[i].FDescricao := Leitor.rCampo(tcStr, 'Descricao');
+
+            inc(i);
+          end;
+        end;
+
+        Result := True;
+      end;
     end;
 
   except

@@ -775,7 +775,7 @@ begin
   PrintIt := vAcrescimos > 0;
 
   if PrintIt then
-    lTotalAcrescimo.Caption := FormatFloatBr(vAcrescimos);
+    lTotalAcrescimo.Caption := '+' + FormatFloatBr(vAcrescimos);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalAPagarBeforePrint(Sender: TObject;
@@ -917,7 +917,7 @@ begin
   PrintIt := ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc > 0;
 
   if PrintIt then
-    lTotalDesconto.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc);
+    lTotalDesconto.Caption := '-' + FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vDesc);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTrocoBeforePrint(Sender: TObject;

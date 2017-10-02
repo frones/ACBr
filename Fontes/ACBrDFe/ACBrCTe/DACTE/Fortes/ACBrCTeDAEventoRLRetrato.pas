@@ -349,66 +349,81 @@ begin
   if FCTe <> nil then
   begin
     PrintIt := True;
-
-    if FCTe.Ide.Toma4.xNome = '' then
-    begin
-      case FCTe.Ide.Toma03.Toma of
-        tmRemetente:
+    case FCTe.Ide.modelo of
+      57:
+      begin
+        if FCTe.Ide.Toma4.xNome = '' then
         begin
-          rllRazaoTomador.Caption := FCTe.Rem.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
-          rllEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
-          rllBairroTomador.Caption := FCTe.Rem.EnderReme.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FCTe.Rem.EnderReme.CEP);
-          rllMunTomador.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
-          rllFoneTomador.Caption := FormatarFone(FCTe.Rem.fone);
-          rllInscEstTomador.Caption := FCTe.Rem.IE;
-        end;
-        tmExpedidor:
+          case FCTe.Ide.Toma03.Toma of
+            tmRemetente:
+            begin
+              rllRazaoTomador.Caption := FCTe.Rem.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Rem.CNPJCPF);
+              rllEnderecoTomador.Caption := FCTe.Rem.EnderReme.xLgr + ', ' + FCTe.Rem.EnderReme.nro;
+              rllBairroTomador.Caption := FCTe.Rem.EnderReme.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(FCTe.Rem.EnderReme.CEP);
+              rllMunTomador.Caption := FCTe.Rem.EnderReme.xMun + ' - ' + FCTe.Rem.EnderReme.UF;
+              rllFoneTomador.Caption := FormatarFone(FCTe.Rem.fone);
+              rllInscEstTomador.Caption := FCTe.Rem.IE;
+            end;
+            tmExpedidor:
+            begin
+              rllRazaoTomador.Caption := FCTe.Exped.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
+              rllEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
+              rllBairroTomador.Caption := FCTe.Exped.EnderExped.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(FCTe.Exped.EnderExped.CEP);
+              rllMunTomador.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
+              rllFoneTomador.Caption := FormatarFone(FCTe.Exped.fone);
+              rllInscEstTomador.Caption := FCTe.Exped.IE;
+            end;
+            tmRecebedor:
+            begin
+              rllRazaoTomador.Caption := FCTe.Receb.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
+              rllEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
+              rllBairroTomador.Caption := FCTe.Receb.EnderReceb.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(FCTe.Receb.EnderReceb.CEP);
+              rllMunTomador.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
+              rllFoneTomador.Caption := FormatarFone(FCTe.Receb.fone);
+              rllInscEstTomador.Caption := FCTe.Receb.IE;
+            end;
+            tmDestinatario:
+            begin
+              rllRazaoTomador.Caption := FCTe.Dest.xNome;
+              rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
+              rllEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
+              rllBairroTomador.Caption := FCTe.Dest.EnderDest.xBairro;
+              rllCEPTomador.Caption := FormatarCEP(FCTe.Dest.EnderDest.CEP);
+              rllMunTomador.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
+              rllFoneTomador.Caption := FormatarFone(FCTe.Dest.fone);
+              rllInscEstTomador.Caption := FCTe.Dest.IE;
+            end;
+          end;
+        end
+        else
         begin
-          rllRazaoTomador.Caption := FCTe.Exped.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Exped.CNPJCPF);
-          rllEnderecoTomador.Caption := FCTe.Exped.EnderExped.xLgr + ', ' + FCTe.Exped.EnderExped.nro;
-          rllBairroTomador.Caption := FCTe.Exped.EnderExped.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FCTe.Exped.EnderExped.CEP);
-          rllMunTomador.Caption := FCTe.Exped.EnderExped.xMun + ' - ' + FCTe.Exped.EnderExped.UF;
-          rllFoneTomador.Caption := FormatarFone(FCTe.Exped.fone);
-          rllInscEstTomador.Caption := FCTe.Exped.IE;
-        end;
-        tmRecebedor:
-        begin
-          rllRazaoTomador.Caption := FCTe.Receb.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Receb.CNPJCPF);
-          rllEnderecoTomador.Caption := FCTe.Receb.EnderReceb.xLgr + ', ' + FCTe.Receb.EnderReceb.nro;
-          rllBairroTomador.Caption := FCTe.Receb.EnderReceb.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FCTe.Receb.EnderReceb.CEP);
-          rllMunTomador.Caption := FCTe.Receb.EnderReceb.xMun + ' - ' + FCTe.Receb.EnderReceb.UF;
-          rllFoneTomador.Caption := FormatarFone(FCTe.Receb.fone);
-          rllInscEstTomador.Caption := FCTe.Receb.IE;
-        end;
-        tmDestinatario:
-        begin
-          rllRazaoTomador.Caption := FCTe.Dest.xNome;
-          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Dest.CNPJCPF);
-          rllEnderecoTomador.Caption := FCTe.Dest.EnderDest.xLgr + ', ' + FCTe.Dest.EnderDest.nro;
-          rllBairroTomador.Caption := FCTe.Dest.EnderDest.xBairro;
-          rllCEPTomador.Caption := FormatarCEP(FCTe.Dest.EnderDest.CEP);
-          rllMunTomador.Caption := FCTe.Dest.EnderDest.xMun + ' - ' + FCTe.Dest.EnderDest.UF;
-          rllFoneTomador.Caption := FormatarFone(FCTe.Dest.fone);
-          rllInscEstTomador.Caption := FCTe.Dest.IE;
+          rllRazaoTomador.Caption := FCTe.Ide.Toma4.xNome;
+          rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
+          rllEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
+          rllBairroTomador.Caption := FCTe.Ide.Toma4.EnderToma.xBairro;
+          rllCEPTomador.Caption := FormatarCEP(FCTe.Ide.Toma4.EnderToma.CEP);
+          rllMunTomador.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
+          rllFoneTomador.Caption := FormatarFone(FCTe.Ide.Toma4.fone);
+          rllInscEstTomador.Caption := FCTe.Ide.Toma4.IE;
         end;
       end;
-    end
-    else
-    begin
-      rllRazaoTomador.Caption := FCTe.Ide.Toma4.xNome;
-      rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.Ide.Toma4.CNPJCPF);
-      rllEnderecoTomador.Caption := FCTe.Ide.Toma4.EnderToma.xLgr + ', ' + FCTe.Ide.Toma4.EnderToma.nro;
-      rllBairroTomador.Caption := FCTe.Ide.Toma4.EnderToma.xBairro;
-      rllCEPTomador.Caption := FormatarCEP(FCTe.Ide.Toma4.EnderToma.CEP);
-      rllMunTomador.Caption := FCTe.Ide.Toma4.EnderToma.xMun + ' - ' + FCTe.Ide.Toma4.EnderToma.UF;
-      rllFoneTomador.Caption := FormatarFone(FCTe.Ide.Toma4.fone);
-      rllInscEstTomador.Caption := FCTe.Ide.Toma4.IE;
+      67:
+      begin
+        rllRazaoTomador.Caption := FCTe.toma.xNome;
+        rllCNPJTomador.Caption := FormatarCNPJouCPF(FCTe.toma.CNPJCPF);
+        rllEnderecoTomador.Caption := FCTe.toma.EnderToma.xLgr + ', ' + FCTe.toma.EnderToma.nro;
+        rllBairroTomador.Caption := FCTe.toma.EnderToma.xBairro;
+        rllCEPTomador.Caption := FormatarCEP(FCTe.toma.EnderToma.CEP);
+        rllMunTomador.Caption := FCTe.toma.EnderToma.xMun + ' - ' + FCTe.toma.EnderToma.UF;
+        rllFoneTomador.Caption := FormatarFone(FCTe.toma.fone);
+        rllInscEstTomador.Caption := FCTe.toma.IE;
+      end;
     end;
   end;
 end;

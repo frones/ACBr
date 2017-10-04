@@ -912,8 +912,12 @@ var
   AProcCTe: TProcCTe;
   SalvarXML: Boolean;
 begin
-  FPRetWS := SeparaDadosArray(['cteRecepcaoLoteResult',
-                               'cteRecepcaoOSResult'], FPRetornoWS);
+  FPRetWS := SeparaDadosArray(['cteRecepcaoLoteResult'
+                              ,'cteRecepcaoOSResult'
+                              ,'cteOSRecepcaoResult'
+                              ,'cteRecepcaoOSCTResult'
+                              ]
+                             , FPRetornoWS);
 
   if (FPConfiguracoesCTe.Geral.ModeloDF = moCTeOS) then
   begin

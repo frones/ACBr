@@ -39,7 +39,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbQRCode: TRLBand
       Left = 8
-      Top = 417
+      Top = 409
       Width = 279
       Height = 137
       AutoSize = True
@@ -236,11 +236,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Left = 8
       Top = 174
       Width = 279
-      Height = 104
+      Height = 96
       OnDataRecord = rlsbPagamentosDataRecord
       object rlbPagamento: TRLBand
         Left = 0
-        Top = 83
+        Top = 71
         Width = 279
         Height = 12
         AutoSize = True
@@ -276,7 +276,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbTroco: TRLBand
         Left = 0
-        Top = 95
+        Top = 83
         Width = 279
         Height = 12
         AutoSize = True
@@ -321,7 +321,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 0
         Top = 0
         Width = 279
-        Height = 30
+        Height = 24
         AutoSize = True
         BandType = btHeader
         Font.Charset = DEFAULT_CHARSET
@@ -333,7 +333,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         BeforePrint = rlbTotalBeforePrint
         object lTitTotal: TRLLabel
           Left = 8
-          Top = 18
+          Top = 12
           Width = 80
           Height = 12
           Caption = 'VALOR TOTAL R$'
@@ -346,7 +346,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
         object lTotal: TRLLabel
           Left = 224
-          Top = 18
+          Top = 12
           Width = 44
           Height = 11
           Alignment = taRightJustify
@@ -361,7 +361,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
         object lQtdItens: TRLLabel
           Left = 8
-          Top = 6
+          Top = 0
           Width = 102
           Height = 12
           Caption = 'QTD. TOTAL DE ITENS'
@@ -374,7 +374,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
         object lQtdTotalItensVal: TRLLabel
           Left = 237
-          Top = 6
+          Top = 0
           Width = 31
           Height = 12
           Alignment = taRightJustify
@@ -390,7 +390,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbPagamentoTitulo: TRLBand
         Left = 0
-        Top = 71
+        Top = 59
         Width = 279
         Height = 12
         AutoSize = True
@@ -426,15 +426,15 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbTotalAcrescimo: TRLBand
         Left = 0
-        Top = 30
+        Top = 24
         Width = 279
-        Height = 14
+        Height = 12
         AutoSize = True
         BandType = btHeader
         BeforePrint = rlbTotalAcrescimoBeforePrint
         object lTitTotalAcrescimo: TRLLabel
           Left = 8
-          Top = 2
+          Top = 0
           Width = 67
           Height = 12
           Caption = 'Acr'#233'scimos R$'
@@ -447,7 +447,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
         object lTotalAcrescimo: TRLLabel
           Left = 224
-          Top = 2
+          Top = 0
           Width = 44
           Height = 11
           Alignment = taRightJustify
@@ -463,15 +463,15 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbTotalDesconto: TRLBand
         Left = 0
-        Top = 44
+        Top = 36
         Width = 279
-        Height = 14
+        Height = 12
         AutoSize = True
         BandType = btHeader
         BeforePrint = rlbTotalDescontoBeforePrint
         object lTitTotalDesconto: TRLLabel
           Left = 8
-          Top = 2
+          Top = 0
           Width = 63
           Height = 12
           Caption = 'Descontos R$'
@@ -484,7 +484,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
         object lTotalDesconto: TRLLabel
           Left = 224
-          Top = 2
+          Top = 0
           Width = 44
           Height = 11
           Alignment = taRightJustify
@@ -500,15 +500,15 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbTotalAPagar: TRLBand
         Left = 0
-        Top = 58
+        Top = 48
         Width = 279
-        Height = 13
+        Height = 11
         AutoSize = True
         BandType = btHeader
         BeforePrint = rlbTotalAPagarBeforePrint
         object lTitTotalAPagar: TRLLabel
           Left = 8
-          Top = 2
+          Top = 0
           Width = 90
           Height = 11
           Caption = 'VALOR A PAGAR R$'
@@ -521,7 +521,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         end
         object lTotalAPagar: TRLLabel
           Left = 224
-          Top = 2
+          Top = 0
           Width = 44
           Height = 11
           Alignment = taRightJustify
@@ -705,7 +705,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbChaveDeAcesso: TRLBand
       Left = 8
-      Top = 278
+      Top = 270
       Width = 279
       Height = 35
       AutoSize = True
@@ -761,7 +761,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbConsumidor: TRLBand
       Left = 8
-      Top = 313
+      Top = 305
       Width = 279
       Height = 81
       AutoSize = True
@@ -884,7 +884,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbMensagemFiscal: TRLBand
       Left = 8
-      Top = 394
+      Top = 386
       Width = 279
       Height = 23
       AutoSize = True
@@ -916,7 +916,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbRodape: TRLBand
       Left = 8
-      Top = 704
+      Top = 696
       Width = 279
       Height = 72
       AutoSize = True
@@ -1005,7 +1005,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
     end
     object rlbQRLateral: TRLBand
       Left = 8
-      Top = 554
+      Top = 546
       Width = 279
       Height = 150
       AutoSize = True

@@ -3090,10 +3090,11 @@ end;
    begin
       // Precisa ser o ROOT ou a
       // aplicação ter provilegios de ROOT  (use: su  ,  chmod u+s SeuPrograma )
+      //
       if Reboot then
-         RunCommand('shutdown -r now')
+         RunCommand('sudo shutdown -r now')
       else
-         RunCommand('shutdown -h now') ;
+         RunCommand('sudo shutdown -h now') ;
    end ;
 {$ENDIF}
 

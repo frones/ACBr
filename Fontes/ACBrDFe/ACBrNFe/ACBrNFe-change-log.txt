@@ -47,6 +47,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+04/10/2017
+-- ACBrDANFCeFortesFr/ACBrNFeDANFeESCPOS --
+[*] Compatibilizado com Manual de Especificacoes Tecnicas do DANFE NFC-e QR Code  - Versao 4.2
+[*] Implementado o uso da propriedade ImprimeNomeFantasia
+-- ACBrDANFCeFortesFr/ACBrSATExtratoFortesFr --
+[-] Correção para informar corretamente largura e margens dos relatórios
+-- ACBrDANFCeFortesFr --
+[+] Adicionado propriedade QRCodeLateral, para permitir a impressão conforme manual 4.2
+	Por: André Ferreira de Moraes
+
 29/09/2017
 -- pcnEventoNFe --
 [*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.

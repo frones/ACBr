@@ -99,6 +99,7 @@ type
     lMensagemFiscal: TRLMemo;
     lMensagemFiscal1: TRLMemo;
     lMsgContingencia: TRLMemo;
+    lMsgDANFCe: TRLLabel;
     lNomeConsumidor: TRLMemo;
     lNomeConsumidor1: TRLMemo;
     lNumeroSerie: TRLLabel;
@@ -166,7 +167,6 @@ type
     lQtdTotalItensVal: TRLLabel;
     rlbsCabecalho: TRLSubDetail;
     rlbMsgDANFe: TRLBand;
-    lMsgDANFCe: TRLLabel;
     rlbDadosCliche: TRLBand;
     pLogoeCliche: TRLPanel;
     lEndereco: TRLMemo;
@@ -312,11 +312,7 @@ begin
   fACBrNFeDANFCeFortes          := TACBrNFeDANFCeFortes(Owner) ;  // Link para o Pai
 
   //Pega as marges que for defina na classe pai.
-  rlVenda.Margins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
-  rlVenda.Margins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
-  rlVenda.Margins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
-  rlVenda.Margins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
-
+  rlVenda.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
   rlVenda.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
   rlVenda.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
   rlVenda.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
@@ -340,6 +336,11 @@ begin
   begin
     PrintIt := True ;
 
+    if EstaVazio(procNFe.nProt) then
+      Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Empresa')
+    else
+      Via := '';
+
     if ACBrNFeDANFCeFortes.QRCodeLateral then
     begin
       lContingencia1.Lines.Clear;
@@ -359,6 +360,11 @@ begin
 
       lContingencia1.Visible   := NaoEstaVazio(Trim(lContingencia1.Lines.Text));
       lMensagemFiscal1.Visible := NaoEstaVazio(Trim(lMensagemFiscal1.Lines.Text));
+
+      lNumeroSerie1.Lines.Text := ACBrStr(
+        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
+        'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
+        DateTimeToStr(Ide.dEmi)+Via );
     end
     else
     begin
@@ -380,16 +386,10 @@ begin
       lContingencia.Visible   := NaoEstaVazio(Trim(lContingencia.Lines.Text));
       lMensagemFiscal.Visible := NaoEstaVazio(Trim(lMensagemFiscal.Lines.Text));
 
-      if EstaVazio(procNFe.nProt) then
-        Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Empresa')
-      else
-        Via := '';
-
       lNumeroSerie.Caption := ACBrStr(
         'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
         'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
-        DateTimeToStr(Ide.dEmi)+Via
-      );
+        DateTimeToStr(Ide.dEmi)+Via );
     end;
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');
@@ -448,7 +448,7 @@ begin
   HeightTotal := HeightTotal + ifthen(lMensagemFiscal1.Visible,lMensagemFiscal1.Height,0);
   HeightTotal := HeightTotal + ifthen(lContingencia1.Visible,lContingencia1.Height,0);
 
-  rlbQRLateral.Height :=  max(rlbQRLateral.Height, HeightTotal);
+  rlbQRLateral.Height :=  max(rlpImgQRCodeLateral.Height, HeightTotal);
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbRodapeBeforePrint(Sender: TObject;
@@ -681,7 +681,10 @@ begin
 
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
-    lNomeFantasia.Lines.Text:= Emit.xFant ;
+    lNomeFantasia.Visible := ACBrNFeDANFCeFortes.ImprimeNomeFantasia;
+    if lNomeFantasia.Visible then;
+      lNomeFantasia.Lines.Text:= Emit.xFant ;
+
     lRazaoSocial.Lines.Text := FormatarCNPJ(Emit.CNPJCPF)+' '+Emit.xNome ;
     lEndereco.Lines.Text    := CompoemEnderecoCFe;
 
@@ -758,16 +761,6 @@ begin
                                          Trim(Dest.EnderDest.xMun);
 
       lEnderecoConsumidor1.Visible := NaoEstaVazio(Trim(lEnderecoConsumidor1.Lines.Text));
-
-      if EstaVazio(procNFe.nProt) then
-        Via := ' Via ' + IfThen(fACBrNFeDANFCeFortes.ViaConsumidor, 'Consumidor', 'Empresa')
-      else
-        Via := '';
-
-      lNumeroSerie1.Lines.Text := ACBrStr(
-        'NFC-e nº ' + IntToStrZero(Ide.nNF, 9) + ' ' +
-        'Série ' + IntToStrZero(Ide.serie, 3) + ' ' +
-        DateTimeToStr(Ide.dEmi)+Via );
 
       if not EstaVazio(Trim(procNFe.nProt)) then
       begin

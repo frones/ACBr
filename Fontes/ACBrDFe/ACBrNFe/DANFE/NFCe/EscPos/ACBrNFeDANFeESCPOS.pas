@@ -79,7 +79,7 @@ type
 
     procedure GerarCabecalho;
     procedure GerarIdentificacaodoDANFE;
-    procedure GerarMensagemContingencia;
+    procedure GerarMensagemContingencia(CaracterDestaque : Char);
     procedure GerarDetalhesProdutosServicos;
     procedure GerarInformacoesTotais;
     procedure GerarPagamentos;
@@ -190,7 +190,9 @@ begin
   );
 
   if not EstaVazio(FpNFe.Emit.EnderEmit.fone) then
-    FPosPrinter.Buffer.Add('</ce></fn>Fone: <n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+'</n>');
+    FPosPrinter.Buffer.Add('</ce></fn><c>Fone: <n>'+ FormatarFone(FpNFe.Emit.EnderEmit.fone)+'</n> I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
+  else
+    FPosPrinter.Buffer.Add('</ce></fn><c>I.E.: '+FormatarIE(FpNFe.Emit.IE,FpNFe.Emit.EnderEmit.UF))
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarIdentificacaodoDANFE;
@@ -198,7 +200,7 @@ begin
   FPosPrinter.Buffer.Add('</ce><c><n>' +
     QuebraLinhas(ACBrStr('Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica'), FPosPrinter.ColunasFonteCondensada) + 
     '</n>');
-  GerarMensagemContingencia;
+  GerarMensagemContingencia('=');
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarDetalhesProdutosServicos;
@@ -219,12 +221,12 @@ begin
       with FpNFe.Det.Items[i] do
       begin
         sItem        :=        IntToStrZero( Prod.nItem, 3);
-		sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
+	sCodigo      :=        ManterCodigo( Prod.cEAN , Prod.cProd );
         sDescricao   :=                Trim( Prod.xProd);
         sQuantidade  :=    FormatQuantidade( Prod.QCom, False );
         sUnidade     :=                Trim( Prod.uCom);
-        sVlrProduto  :=       FormatFloatBr( Prod.vProd );
         sVlrUnitario := FormatValorUnitario( Prod.VUnCom );
+        sVlrProduto  :=       FormatFloatBr( Prod.vProd );
 
         if ImprimeEmUmaLinha then
         begin
@@ -317,7 +319,7 @@ var
   Troco: Real;
 begin
   //Total := 0;
-  FPosPrinter.Buffer.Add('<c>' + PadSpace('FORMA DE PAGAMENTO | Valor Pago',
+  FPosPrinter.Buffer.Add('<c>' + PadSpace('FORMA DE PAGAMENTO | VALOR PAGO R$',
      FPosPrinter.ColunasFonteCondensada, '|'));
 
   for i := 0 to FpNFe.pag.Count - 1 do
@@ -327,11 +329,8 @@ begin
        FPosPrinter.ColunasFonteCondensada, '|')));
   end;
 
-  Troco := FpNFe.pag.vTroco;
-  if Troco = 0 then
-  begin
-    Troco := vTroco;
-  end;
+  Troco := IIf(FpNFe.pag.vTroco > 0,FpNFe.pag.vTroco,vTroco);
+
   if Troco > 0 then
     FPosPrinter.Buffer.Add('<c>' + PadSpace('Troco R$|' +
        FormatFloatBr(Troco), FPosPrinter.ColunasFonteCondensada, '|'));
@@ -341,7 +340,7 @@ end;
 procedure TACBrNFeDANFeESCPOS.GerarInformacoesConsultaChaveAcesso;
 begin
   // chave de acesso
-  FPosPrinter.Buffer.Add('</ce><c>Consulte pela Chave de Acesso em ');
+  FPosPrinter.Buffer.Add('</ce><c><n>Consulte pela Chave de Acesso em</n>');
   FPosPrinter.Buffer.Add('</ce><c>'+TACBrNFe(ACBrNFe).GetURLConsultaNFCe(FpNFe.ide.cUF, FpNFe.ide.tpAmb, FpNFe.infNFe.Versao));
   FPosPrinter.Buffer.Add('</ce><c>' + FormatarChaveAcesso(OnlyNumber(FpNFe.infNFe.ID)));
 end;
@@ -384,7 +383,7 @@ begin
   end;
 end;
 
-procedure TACBrNFeDANFeESCPOS.GerarMensagemContingencia;
+procedure TACBrNFeDANFeESCPOS.GerarMensagemContingencia(CaracterDestaque : Char);
 begin
   // se homologação imprimir o texto de homologação
   if (FpNFe.ide.tpAmb = taHomologacao) then
@@ -396,8 +395,8 @@ begin
   if (FpNFe.ide.tpEmis <> teNormal) and
      EstaVazio(FpNFe.procNFe.nProt) then
   begin
-    FPosPrinter.Buffer.Add(ACBrStr('</ce><e>EMITIDA EM CONTINGÊNCIA</e>'));
-    FPosPrinter.Buffer.Add(ACBrStr('<c>Pendente de autorização'));
+    FPosPrinter.Buffer.Add(ACBrStr('</c></ce><e><n>EMITIDA EM CONTINGÊNCIA</n></e>'));
+    FPosPrinter.Buffer.Add(ACBrStr('<c><n>'+PadCenter('Pendente de autorização',FPosPrinter.ColunasFonteCondensada, CaracterDestaque)+'</n>'));
   end;
 end;
 
@@ -412,17 +411,17 @@ begin
   else
   begin
     if FpNFe.Dest.idEstrangeiro <> '' then
-      LinhaCmd := 'CONSUMIDOR Id. Estrangeiro: ' + FpNFe.Dest.idEstrangeiro
+      LinhaCmd := 'CONSUMIDOR - Id. Estrangeiro ' + FpNFe.Dest.idEstrangeiro
     else
     begin
       if Length(Trim(FpNFe.Dest.CNPJCPF)) > 11 then
-        LinhaCmd := 'CONSUMIDOR CNPJ: ' + FormatarCNPJ(FpNFe.Dest.CNPJCPF)
+        LinhaCmd := 'CONSUMIDOR - CNPJ ' + FormatarCNPJ(FpNFe.Dest.CNPJCPF)
       else
-        LinhaCmd := 'CONSUMIDOR CPF: ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
+        LinhaCmd := 'CONSUMIDOR - CPF ' + FormatarCPF(FpNFe.Dest.CNPJCPF);
     end;
 
-    LinhaCmd := '</ce><c>' + LinhaCmd + ' ' + Trim(FpNFe.Dest.xNome);
-    FPosPrinter.Buffer.Add(LinhaCmd);
+    LinhaCmd := '</ce><c><n>' + LinhaCmd + '</n> ' + Trim(FpNFe.Dest.xNome);
+    FPosPrinter.Buffer.Add(QuebraLinhas(LinhaCmd, FPosPrinter.ColunasFonteCondensada));
 
     LinhaCmd := Trim(
       Trim(FpNFe.Dest.EnderDest.xLgr) + ' ' +
@@ -438,22 +437,28 @@ begin
 end;
 
 procedure TACBrNFeDANFeESCPOS.GerarInformacoesIdentificacaoNFCe;
+var
+  Via : String;
 begin
+  if EstaVazio(Trim(FpNFe.procNFe.nProt)) then
+    Via := IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa')
+  else
+    Via := '';
   // dados da nota eletronica de consumidor
-  FPosPrinter.Buffer.Add('</n></ce><c>' + StringReplace(QuebraLinhas(ACBrStr(
-    'NFC-e nº ' + IntToStrZero(FpNFe.ide.nNF, 9) +
-    ' Série ' + IntToStrZero(FpNFe.ide.serie, 3) +
+  FPosPrinter.Buffer.Add('</ce><c><n>' + StringReplace(QuebraLinhas(ACBrStr(
+    'NFC-e nº ' + IntToStrZero(FpNFe.Ide.nNF, 9) +
+    ' Série ' + IntToStrZero(FpNFe.Ide.serie, 3) +
     ' ' + DateTimeToStr(FpNFe.ide.dEmi) +
-    IfThen(ViaConsumidor, '|Via Consumidor', '|Via Empresa'))
+    Via+'</n>')
     , FPosPrinter.ColunasFonteCondensada, '|'), '|', ' ', [rfReplaceAll]));
 
   // protocolo de autorização
   if (FpNFe.Ide.tpEmis <> teOffLine) or
      NaoEstaVazio(FpNFe.procNFe.nProt) then
   begin
-    FPosPrinter.Buffer.Add(ACBrStr('<c>Protocolo de Autorização: ')+Trim(FpNFe.procNFe.nProt));
+    FPosPrinter.Buffer.Add(ACBrStr('<c><n>Protocolo de Autorização:</n> ')+Trim(FpNFe.procNFe.nProt));
     if (FpNFe.procNFe.dhRecbto <> 0) then
-      FPosPrinter.Buffer.Add(ACBrStr('<c>Data de Autorização '+DateTimeToStr(FpNFe.procNFe.dhRecbto)+'</fn>'));
+      FPosPrinter.Buffer.Add(ACBrStr('<c><n>Data de Autorização</n> '+DateTimeToStr(FpNFe.procNFe.dhRecbto)+'</fn>'));
   end;
 end;
 
@@ -552,7 +557,7 @@ begin
   GerarInformacoesConsumidor;
   GerarInformacoesIdentificacaoNFCe;
   GerarMensagemFiscal;
-  GerarMensagemContingencia;
+  GerarMensagemContingencia(#32);
   GerarInformacoesQRCode;
   GerarMensagemInteresseContribuinte;
   GerarTotalTributos;

@@ -1,6 +1,6 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
-  Left = 521
-  Top = 118
+  Left = 485
+  Top = 76
   Width = 796
   Height = 926
   Caption = 'ACBrNFeDANFCeFortesFr'
@@ -710,26 +710,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Height = 35
       AutoSize = True
       BandType = btSummary
+      InsideMargins.LeftMargin = 1.000000000000000000
+      InsideMargins.RightMargin = 1.000000000000000000
       BeforePrint = rlbChaveDeAcessoBeforePrint
-      object lChaveDeAcesso: TRLLabel
-        Left = 0
-        Top = 23
-        Width = 286
-        Height = 12
-        Align = faTop
-        Alignment = taCenter
-        Caption = '9999 9999 9999 9999 9999 9999 9999 9999 9999 9999 9999'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
-      end
       object lTitConsulteChave: TRLMemo
-        Left = 0
+        Left = 4
         Top = 0
-        Width = 286
+        Width = 278
         Height = 11
         Align = faTop
         Alignment = taCenter
@@ -743,19 +730,38 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           'Consulte pela Chave de Acesso em')
         ParentFont = False
       end
-      object lURLConsulta: TRLLabel
-        Left = 0
+      object lURLConsulta: TRLMemo
+        Left = 4
         Top = 11
-        Width = 286
+        Width = 278
         Height = 12
         Align = faTop
         Alignment = taCenter
-        Caption = 'URL CONSULTA'
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
         Font.Style = []
+        Lines.Strings = (
+          'URL CONSULTA')
+        ParentFont = False
+      end
+      object lChaveDeAcesso: TRLMemo
+        Left = 4
+        Top = 23
+        Width = 278
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          '9999 9999 9999 9999 9999 9999 9999 9999 9999 9999 9999')
         ParentFont = False
       end
     end
@@ -766,11 +772,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Height = 81
       AutoSize = True
       BandType = btSummary
+      InsideMargins.LeftMargin = 1.000000000000000000
+      InsideMargins.RightMargin = 1.000000000000000000
       BeforePrint = rlbChaveDeAcessoBeforePrint
       object lProtocolo: TRLLabel
-        Left = 0
+        Left = 4
         Top = 46
-        Width = 286
+        Width = 278
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -784,9 +792,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lNumeroSerie: TRLLabel
-        Left = 0
+        Left = 4
         Top = 35
-        Width = 286
+        Width = 278
         Height = 11
         Align = faTop
         Alignment = taCenter
@@ -799,9 +807,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lDataAutorizacao: TRLLabel
-        Left = 0
+        Left = 4
         Top = 58
-        Width = 286
+        Width = 278
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -815,9 +823,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lConsumidor: TRLMemo
-        Left = 0
+        Left = 4
         Top = 0
-        Width = 286
+        Width = 278
         Height = 11
         Align = faTop
         Alignment = taCenter
@@ -833,9 +841,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Transparent = False
       end
       object lEnderecoConsumidor: TRLMemo
-        Left = 0
+        Left = 4
         Top = 23
-        Width = 286
+        Width = 278
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -850,9 +858,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lNomeConsumidor: TRLMemo
-        Left = 0
+        Left = 4
         Top = 11
-        Width = 286
+        Width = 278
         Height = 12
         Align = faTop
         Alignment = taCenter
@@ -867,9 +875,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         ParentFont = False
       end
       object lContingencia: TRLMemo
-        Left = 0
+        Left = 4
         Top = 70
-        Width = 286
+        Width = 278
         Height = 11
         Align = faTop
         Alignment = taCenter

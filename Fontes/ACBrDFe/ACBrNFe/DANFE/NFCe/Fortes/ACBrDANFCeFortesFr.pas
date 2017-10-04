@@ -89,6 +89,7 @@ type
   TACBrNFeDANFCeFortesFr = class(TForm)
     imgQRCodeLateral: TRLImage;
     lCancelada: TRLLabel;
+    lChaveDeAcesso: TRLMemo;
     lConsumidor: TRLMemo;
     lConsumidor1: TRLMemo;
     lContingencia: TRLMemo;
@@ -110,7 +111,6 @@ type
     lProtocolo1: TRLMemo;
     lSistema: TRLLabel;
     lTitLei12741: TRLLabel;
-    lURLConsulta: TRLLabel;
     lNomeFantasia: TRLMemo;
     lNomeFantasiaCanc: TRLMemo;
     lRazaoSocial: TRLMemo;
@@ -123,6 +123,7 @@ type
     lTotalAcrescimo: TRLLabel;
     lTotalAPagar: TRLLabel;
     lTotalDesconto: TRLLabel;
+    lURLConsulta: TRLMemo;
     pGap6: TRLPanel;
     pGap9: TRLPanel;
     rlbConsumidor: TRLBand;
@@ -174,7 +175,6 @@ type
     rlbLegenda: TRLBand;
     lLegendaItens: TRLLabel;
     rlbChaveDeAcesso: TRLBand;
-    lChaveDeAcesso: TRLLabel;
     lTitConsulteChave: TRLMemo;
     RLHTMLFilter1: TRLHTMLFilter;
     RLPDFFilter1: TRLPDFFilter;
@@ -393,13 +393,13 @@ begin
     end;
 
     lTitConsulteChave.Lines.Text := ACBrStr('Consulte pela Chave de Acesso em');
-    lURLConsulta.Caption := TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao);
+    lURLConsulta.Lines.Text := TACBrNFe(fACBrNFeDANFCeFortes.ACBrNFe).GetURLConsultaNFCe(Ide.cUF, Ide.tpAmb, infNFe.Versao);
 
-    lChaveDeAcesso.Caption := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
+    lChaveDeAcesso.Lines.Text := FormatarChaveAcesso(OnlyNumber(infNFe.ID));
 
     if (Ide.tpEmis = teNormal ) and (procNFe.cStat = 0) then
     begin
-      lChaveDeAcesso.Caption    := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
+      lChaveDeAcesso.Lines.Text := ACBrStr('NFC-E NÃO ENVIADA PARA SEFAZ');
       lChaveDeAcesso.Font.Color := clRed;
     end;
 

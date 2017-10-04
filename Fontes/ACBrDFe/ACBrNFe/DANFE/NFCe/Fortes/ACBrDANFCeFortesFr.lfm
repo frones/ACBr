@@ -869,33 +869,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Width = 286
       AutoSize = True
       BandType = btSummary
+      InsideMargins.LeftMargin = 1
+      InsideMargins.RightMargin = 1
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlbChaveDeAcessoBeforePrint
-      object lChaveDeAcesso: TRLLabel
-        Left = 0
-        Height = 12
-        Top = 23
-        Width = 286
-        Align = faTop
-        Alignment = taCenter
-        Caption = '9999 9999 9999 9999 9999 9999 9999 9999 9999 9999 9999'
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object lTitConsulteChave: TRLMemo
-        Left = 0
+        Left = 4
         Height = 11
         Top = 0
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
@@ -912,17 +897,40 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object lURLConsulta: TRLLabel
-        Left = 0
+      object lURLConsulta: TRLMemo
+        Left = 4
         Height = 12
         Top = 11
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
-        Caption = 'URL CONSULTA'
+        Behavior = [beSiteExpander]
         Font.Color = clBlack
         Font.Height = -9
         Font.Name = 'Arial'
+        Lines.Strings = (
+          'URL CONSULTA'
+        )
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object lChaveDeAcesso: TRLMemo
+        Left = 4
+        Height = 12
+        Top = 23
+        Width = 278
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          '9999 9999 9999 9999 9999 9999 9999 9999 9999 9999 9999'
+        )
         ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
@@ -937,16 +945,18 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       Width = 286
       AutoSize = True
       BandType = btSummary
+      InsideMargins.LeftMargin = 1
+      InsideMargins.RightMargin = 1
       RealBounds.Left = 0
       RealBounds.Top = 0
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlbChaveDeAcessoBeforePrint
       object lProtocolo: TRLLabel
-        Left = 0
+        Left = 4
         Height = 12
         Top = 46
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Caption = 'Protocolo de Autorização: 999999999999999 '
@@ -961,10 +971,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
       end
       object lNumeroSerie: TRLLabel
-        Left = 0
+        Left = 4
         Height = 11
         Top = 35
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Caption = 'Número 999999999 Série 999'
@@ -979,10 +989,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
       end
       object lDataAutorizacao: TRLLabel
-        Left = 0
+        Left = 4
         Height = 12
         Top = 58
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Caption = 'Data de Autorizaçao DD/MM/AAAA HH:MM:SS'
@@ -997,10 +1007,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
       end
       object lConsumidor: TRLMemo
-        Left = 0
+        Left = 4
         Height = 11
         Top = 0
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
@@ -1019,10 +1029,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Transparent = False
       end
       object lEnderecoConsumidor: TRLMemo
-        Left = 0
+        Left = 4
         Height = 12
         Top = 23
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
@@ -1039,10 +1049,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
       end
       object lNomeConsumidor: TRLMemo
-        Left = 0
+        Left = 4
         Height = 12
         Top = 11
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]
@@ -1059,10 +1069,10 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
       end
       object lContingencia: TRLMemo
-        Left = 0
+        Left = 4
         Height = 11
         Top = 70
-        Width = 286
+        Width = 278
         Align = faTop
         Alignment = taCenter
         Behavior = [beSiteExpander]

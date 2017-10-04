@@ -1128,7 +1128,8 @@ procedure TACBrNFeDANFCeFortesFr.rlbTotalBeforePrint(Sender: TObject;
 begin
   lQtdTotalItensVal.Caption := IntToStrZero(ACBrNFeDANFCeFortes.FpNFe.Det.Count,3);
   lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vProd+
-                                  ACBrNFeDANFCeFortes.FpNFe.Total.ISSQNtot.vServ); 
+                                  ACBrNFeDANFCeFortes.FpNFe.Total.ISSQNtot.vServ);
+end;
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalDescontoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);

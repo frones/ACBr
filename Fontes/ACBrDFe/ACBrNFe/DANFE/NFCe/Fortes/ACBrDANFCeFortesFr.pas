@@ -619,7 +619,7 @@ end;
 
 function TACBrNFeDANFCeFortesFr.CompoemEnderecoCFe: String;
 var
-  Endereco, CEP: String;
+  Endereco: String;
 begin
   with ACBrNFeDANFCeFortes.FpNFe do
   begin
@@ -1127,8 +1127,8 @@ procedure TACBrNFeDANFCeFortesFr.rlbTotalBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 begin
   lQtdTotalItensVal.Caption := IntToStrZero(ACBrNFeDANFCeFortes.FpNFe.Det.Count,3);
-  lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vProd); //+vServ?
-end;
+  lTotal.Caption := FormatFloatBr(ACBrNFeDANFCeFortes.FpNFe.Total.ICMSTot.vProd+
+                                  ACBrNFeDANFCeFortes.FpNFe.Total.ISSQNtot.vServ); 
 
 procedure TACBrNFeDANFCeFortesFr.rlbTotalDescontoBeforePrint(Sender: TObject;
   var PrintIt: Boolean);

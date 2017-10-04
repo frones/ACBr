@@ -328,11 +328,11 @@ begin
 
   with fACBrSATExtrato do
   begin
-    rlVenda.Width := LarguraBobina;
-    rlVenda.Margins.LeftMargin   := Margens.Esquerda;
-    rlVenda.Margins.RightMargin  := Margens.Direita;
-    rlVenda.Margins.TopMargin    := Margens.Topo;
-    rlVenda.Margins.BottomMargin := Margens.Fundo;
+    rlVenda.PageSetup.PaperWidth := LarguraBobina/3.775;
+    rlVenda.InsideMargins.LeftMargin   := Margens.Esquerda;
+    rlVenda.InsideMargins.RightMargin  := Margens.Direita;
+    rlVenda.InsideMargins.TopMargin    := Margens.Topo;
+    rlVenda.InsideMargins.BottomMargin := Margens.Fundo;
 
     //Detalhes de Dimensionamento LogoTipo
     {$IfNDef NOGUI}

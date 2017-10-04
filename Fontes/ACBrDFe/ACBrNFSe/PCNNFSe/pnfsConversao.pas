@@ -18342,7 +18342,7 @@ begin
     proNotaInteligente, proProdata, proPronimv2, proPVH, proSaatri, proSiam,
     proSisPMJP, proSystemPro, proTecnos, proVirtual, proVitoria,
     proNFSEBrasil, proVersaTecnologia, proActconv201, proSafeWeb,
-    proActconv202: Result := ve200;
+    proActconv202, proWebISSv2: Result := ve200;
 
     proInfiscv11: Result := ve110;
   else

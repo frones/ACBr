@@ -176,7 +176,7 @@ procedure TACBrNFeDANFeESCPOS.GerarCabecalho;
 begin
   FPosPrinter.Buffer.Add('</zera></ce></logo>');
 
-  if (Trim(FpNFe.Emit.xFant) <> '') then
+  if (Trim(FpNFe.Emit.xFant) <> '') and ImprimeNomeFantasia then
      FPosPrinter.Buffer.Add('</ce><c><n>' +  FpNFe.Emit.xFant + '</n>');
 
   FPosPrinter.Buffer.Add('</ce><c>'+ FormatarCNPJ(FpNFe.Emit.CNPJCPF) + ' <n>' + FpNFe.Emit.xNome + '</n>');

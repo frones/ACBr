@@ -105,6 +105,7 @@ type
     FEmail: String;
     FImprimeDescPorc: Boolean;
     FProtocoloNFe: String;
+    FLarguraBobina: Integer;
     FMargemInferior: Double;
     FMargemSuperior: Double;
     FMargemEsquerda: Double;
@@ -186,6 +187,7 @@ type
     property ImprimirDescPorc: Boolean               read FImprimeDescPorc                write FImprimeDescPorc;
     property ImprimirTotalLiquido: Boolean           read FImprimirTotalLiquido           write FImprimirTotalLiquido;
     property ProtocoloNFe: String                    read FProtocoloNFe                   write FProtocoloNFe;
+    property LarguraBobina : Integer                 read FLarguraBobina                  write FLarguraBobina default 302;
     property MargemInferior: Double                  read FMargemInferior                 write FMargemInferior;
     property MargemSuperior: Double                  read FMargemSuperior                 write FMargemSuperior;
     property MargemEsquerda: Double                  read FMargemEsquerda                 write FMargemEsquerda;
@@ -283,6 +285,7 @@ begin
   FEmail     := '';
   FImprimeDescPorc := False;
   FProtocoloNFe    := '';
+  FLarguraBobina   := 302;
   FMargemInferior  := 0.8;
   FMargemSuperior  := 0.8;
   FMargemEsquerda  := 0.6;

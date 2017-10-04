@@ -123,6 +123,7 @@ type
     FImprimeEmUmaLinha: Boolean;
     FUsaCodigoEanImpressao: Boolean;
     FImprimeDescAcrescItem: Boolean;
+    FQRCodeLateral: Boolean;
 
     FTamanhoLogoHeight: Integer;
     FTamanhoLogoWidth: Integer;
@@ -219,6 +220,7 @@ type
     property ImprimeEmUmaLinha: Boolean              read FImprimeEmUmaLinha              write FImprimeEmUmaLinha default True;
     property ImprimeDescAcrescItem: Boolean          read FImprimeDescAcrescItem          write FImprimeDescAcrescItem default True;
     property UsaCodigoEanImpressao: Boolean          read FUsaCodigoEanImpressao          write FUsaCodigoEanImpressao default False;
+    property QRCodeLateral: Boolean                  read FQRCodeLateral                  write FQRCodeLateral default False;
   end;
 
 implementation
@@ -311,6 +313,7 @@ begin
   FImprimeEmUmaLinha     := True;
   FImprimeDescAcrescItem := True;
   FUsaCodigoEanImpressao := False;
+  FQRCodeLateral         := False;
 
   {$IFDEF COMPILER6_UP}
       FCasasDecimais.SetSubComponent( true );{ para gravar no DFM/XFM }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
+<!-- edited with XMLSpy v2014 rel. 2 (http://www.altova.com) by PRIVATE (private) -->
 <xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.portalfiscal.inf.br/bpe" targetNamespace="http://www.portalfiscal.inf.br/bpe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposGeralBPe_v1.00.xsd"/>
@@ -328,7 +328,7 @@ para tpEmis diferente de 1</xs:documentation>
 											<xs:annotation>
 												<xs:documentation>Número do CNPJ</xs:documentation>
 												<xs:documentation>Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.
-												Informar os zeros não significativos.</xs:documentation>
+							Informar os zeros não significativos.</xs:documentation>
 											</xs:annotation>
 										</xs:element>
 										<xs:element name="CPF" type="TCpf">
@@ -387,10 +387,10 @@ para tpEmis diferente de 1</xs:documentation>
 										<xs:annotation>
 											<xs:documentation>Número do CNPJ</xs:documentation>
 											<xs:documentation>Em caso de empresa não estabelecida no Brasil, será informado o CNPJ com zeros.
-												Informar os zeros não significativos.</xs:documentation>
+							Informar os zeros não significativos.</xs:documentation>
 										</xs:annotation>
 									</xs:element>
-									<xs:element name="enderAgencia" type="TEndeEmi">
+									<xs:element name="enderAgencia" type="TEndereco">
 										<xs:annotation>
 											<xs:documentation>Endereço da agência</xs:documentation>
 										</xs:annotation>
@@ -524,8 +524,8 @@ para tpEmis diferente de 1</xs:documentation>
 													</xs:annotation>
 													<xs:simpleType>
 														<xs:restriction base="TString">
-															<xs:maxLength value="20"/>
 															<xs:minLength value="2"/>
+															<xs:maxLength value="20"/>
 														</xs:restriction>
 													</xs:simpleType>
 												</xs:element>
@@ -651,6 +651,12 @@ para tpEmis diferente de 1</xs:documentation>
 												<xs:enumeration value="3"/>
 											</xs:restriction>
 										</xs:simpleType>
+									</xs:element>
+									<xs:element name="dhViagem" type="TDateTimeUTC">
+										<xs:annotation>
+											<xs:documentation>Data e hora de referencia para a viagem</xs:documentation>
+											<xs:documentation>Formato AAAA-MM-DDTHH:MM:DD TZD</xs:documentation>
+										</xs:annotation>
 									</xs:element>
 									<xs:element name="dhConexao" type="TDateTimeUTC" minOccurs="0">
 										<xs:annotation>
@@ -1167,7 +1173,7 @@ Informar 0.00 em caso de passagem comercializada sem nenhum desconto</xs:documen
 									<xs:whiteSpace value="preserve"/>
 									<xs:minLength value="50"/>
 									<xs:maxLength value="1000"/>
-									<xs:pattern value="((HTTPS?|https?)://.*\?chBPe=[0-9]{44}&amp;tpAmb=[1-2](&amp;jwt=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1}&amp;fPrint=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
+									<xs:pattern value="((HTTPS?|https?)://.*\?chBPe=[0-9]{44}&amp;tpAmb=[1-2](&amp;sign=[!-ÿ]{1}[ -ÿ]{0,}[!-ÿ]{1}|[!-ÿ]{1})?)"/>
 								</xs:restriction>
 							</xs:simpleType>
 						</xs:element>

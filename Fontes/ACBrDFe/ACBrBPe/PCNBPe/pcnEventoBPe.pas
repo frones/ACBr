@@ -287,7 +287,7 @@ function TInfEvento.getDescEvento: String;
 begin
   case fTpEvento of
     teCancelamento: Result := 'Cancelamento';
-    teNaoEmbarque : Result := 'Não Embarque';
+    teNaoEmbarque : Result := 'Nao Embarque';
   else
     raise EventoException.Create('Descrição do Evento não Implementado!');
   end;
@@ -311,7 +311,7 @@ function TInfEvento.DescricaoTipoEvento(TipoEvento: TpcnTpEvento): String;
 begin
   case TipoEvento of
     teCancelamento: Result := 'CANCELAMENTO DE BP-e';
-    teNaoEmbarque : Result := 'NÃO EMBARQUE';
+    teNaoEmbarque : Result := 'NAO EMBARQUE';
   else
     Result := 'Não Definido';
   end;

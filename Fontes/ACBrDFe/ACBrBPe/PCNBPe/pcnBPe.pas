@@ -324,7 +324,7 @@ type
   private
     FxNome: String;
     FCNPJ: String;
-    FenderAgencia: TenderEmit;
+    FenderAgencia: TenderComp;
   public
     constructor Create(AOwner: TBPe);
     destructor Destroy; override;
@@ -333,7 +333,7 @@ type
   published
     property xNome: String read FxNome write FxNome;
     property CNPJ: String read FCNPJ write FCNPJ;
-    property EnderAgencia: TEnderEmit read FEnderAgencia write FEnderAgencia;
+    property EnderAgencia: TEnderComp read FEnderAgencia write FEnderAgencia;
   end;
 
   TinfBPeSub = class(TPersistent)
@@ -412,6 +412,7 @@ type
     FtpServ: TTipoServico;
     FtpAcomodacao: TTipoAcomodacao;
     FtpTrecho: TTipoTrecho;
+    FdhViagem: TDateTime;
     FdhConexao: TDateTime;
     FPrefixo: String;
     FPoltrona: Integer;
@@ -429,6 +430,7 @@ type
     property tpServ: TTipoServico read FtpServ write FtpServ;
     property tpAcomodacao: TTipoAcomodacao read FtpAcomodacao write FtpAcomodacao;
     property tpTrecho: TTipoTrecho read FtpTrecho write FtpTrecho;
+    property dhViagem: TDateTime read FdhViagem write FdhViagem;
     property dhConexao: TDateTime read FdhConexao write FdhConexao;
     property Prefixo: String read FPrefixo write FPrefixo;
     property Poltrona: Integer read FPoltrona write FPoltrona;
@@ -936,7 +938,7 @@ end;
 constructor TAgencia.Create(AOwner: TBPe);
 begin
   inherited Create;
-  FEnderAgencia := TEnderEmit.Create;
+  FEnderAgencia := TEnderComp.Create;
 end;
 
 destructor TAgencia.Destroy;
@@ -1055,6 +1057,7 @@ begin
     tpServ := TInfViagemCollectionItem(Source).tpServ;
     tpAcomodacao := TInfViagemCollectionItem(Source).tpAcomodacao;
     tpTrecho := TInfViagemCollectionItem(Source).tpTrecho;
+    dhViagem := TInfViagemCollectionItem(Source).dhViagem;
     dhConexao := TInfViagemCollectionItem(Source).dhConexao;
     Prefixo := TInfViagemCollectionItem(Source).Prefixo;
     Poltrona := TInfViagemCollectionItem(Source).Poltrona;

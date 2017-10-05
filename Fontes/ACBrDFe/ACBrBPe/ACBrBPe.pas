@@ -382,14 +382,14 @@ end;
 function TACBrBPe.GetURLQRCode(const CUF: Integer; const TipoAmbiente: TpcnTipoAmbiente;
   const AChaveBPe: String; const DigestValue: String): String;
 var
-  Passo1, Passo2, urlUF, idBPe, tpEmis, JSON, Token, fprint: String;
+  Passo1, Passo2, urlUF, idBPe, tpEmis, Sign: String;
 begin
   urlUF := LerURLDeParams('BPe', CUFtoUF(CUF), TipoAmbiente, 'URL-QRCode', 0);
   idBPe := OnlyNumber(AChaveBPe);
   tpEmis := Copy(idBPe, 35, 1);
 
   if Pos('?', urlUF) > 0 then
-    Passo1 := urlUF + '&' + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente)
+    Passo1 := urlUF + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente)
   else
     Passo1 := urlUF + '?' + 'chBPe=' + idBPe + '&tpAmb=' + TpAmbToStr(TipoAmbiente);
 
@@ -401,24 +401,11 @@ begin
   else
   begin
     // Tipo de Emissão em Contingência
-    JSON := '{' + '"chBPe":"'+ idBPe + '"' +
-                  '"tpAmb":' + TpAmbToStr(TipoAmbiente) +
-            '}';
-    Token := '&jwt=';    // concatenar com o resultado do algoritmo JWS aplicado sobre o objeto JSON
-    fprint := '&fprint='; // concatenar com o resultado da obtenção do Fingerprint do certificado digital
-                         // (caso ele tenha caracteres dois pontos “: ”, estes devem ser retirados)
-    Passo2 := Token + fprint;
+    Sign := AsciiToHex(SHA1(idBPe));
+    Passo2 := '&sign=' + Sign;
 
     Result := Passo1 + Passo2;
   end;
-
-  (*
-  sdhEmi_HEX := AsciiToHex(DateTimeTodh(DataHoraEmissao) +
-                GetUTC(CodigoParaUF(CUF), DataHoraEmissao));
-  sdigVal_HEX := AsciiToHex(DigestValue);
-
-  cHashQRCode := AsciiToHex(SHA1(sEntrada + sCSC));
-  *)
 end;
 
 procedure TACBrBPe.SetStatus(const stNewStatus: TStatusACBrBPe);

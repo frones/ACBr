@@ -48,6 +48,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/10/2017
+-- Diversos -- 
+[*] Alterações para deixar o componente em conformidade com a Nota Técnica
+    2017/001.
+    por: Italo Jurisato Junior
+
 21/08/2017
 -- ACBrBPeBilhetes --
 [*] Método "Bilhete.Assinar", ajuste para não verificar o CNPJ, quando processo

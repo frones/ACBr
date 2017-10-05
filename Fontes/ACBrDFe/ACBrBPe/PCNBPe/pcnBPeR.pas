@@ -221,6 +221,16 @@ begin
       BPe.Agencia.enderAgencia.xMun    := Leitor.rCampo(tcStr, 'xMun');
       BPe.Agencia.enderAgencia.CEP     := Leitor.rCampo(tcInt, 'CEP');
       BPe.Agencia.enderAgencia.UF      := Leitor.rCampo(tcStr, 'UF');
+      BPe.Agencia.enderAgencia.cPais   := Leitor.rCampo(tcInt, 'cPais');
+
+      if BPe.Agencia.enderAgencia.cPais = 0 then
+        BPe.Agencia.enderAgencia.cPais := 1058;
+
+      BPe.Agencia.enderAgencia.xPais   := Leitor.rCampo(tcStr, 'xPais');
+
+      if BPe.Agencia.enderAgencia.xPais = '' then
+        BPe.Agencia.enderAgencia.xPais := 'BRASIL';
+
       BPe.Agencia.enderAgencia.fone    := Leitor.rCampo(tcStr, 'fone');
       BPe.Agencia.enderAgencia.Email   := Leitor.rCampo(tcStr, 'email');
     end;
@@ -263,6 +273,7 @@ begin
     BPe.infViagem[i].tpServ       := StrTotpServico(ok, Leitor.rCampo(tcStr, 'tpServ'));
     BPe.infViagem[i].tpAcomodacao := StrTotpAcomodacao(ok, Leitor.rCampo(tcStr, 'tpAcomodacao'));
     BPe.infViagem[i].tpTrecho     := StrTotpTrecho(ok, Leitor.rCampo(tcStr, 'tpTrecho'));
+    BPe.infViagem[i].dhViagem     := Leitor.rCampo(tcDatHor, 'dhViagem');
     BPe.infViagem[i].dhConexao    := Leitor.rCampo(tcDatHor, 'dhConexao');
     BPe.infViagem[i].Prefixo      := Leitor.rCampo(tcStr, 'prefixo');
     BPe.infViagem[i].Poltrona     := Leitor.rCampo(tcInt, 'poltrona');

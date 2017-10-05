@@ -89,6 +89,7 @@ const
   DSC_TPSERVICO = 'Tipo de Serviço';
   DSC_TPACOMODACAO = 'Tipo de Acomodação';
   DSC_TPTRECHO = 'Tipo de Trecho';
+  DSC_DHVIAGEM = 'Data e Hora da Viagem';
   DSC_DHCONEXAO = 'Data e Hora da Conexão';
   DSC_INFVIAGEM = 'Informações da Viagem';
   DSC_PREFIXO = 'Prefixo da Linha';

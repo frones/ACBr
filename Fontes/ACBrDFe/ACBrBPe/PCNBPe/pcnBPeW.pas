@@ -84,7 +84,7 @@ type
     procedure GerarEnderComp(var UF: String);
 
     procedure GerarAgencia;
-    procedure GerarEnderAgencia;
+    procedure GerarEnderAgencia(var UF: String);
 
     procedure GerarinfBPeSub;
     procedure GerarinfPassagem;
@@ -473,18 +473,20 @@ begin
 end;
 
 procedure TBPeW.GerarAgencia;
+var
+  UF: String;
 begin
   Gerador.wGrupo('agencia', '#064');
 
   Gerador.wCampo(tcStr, '#065', 'xNome', 02, 60, 1, BPe.Agencia.xNome, DSC_XNOME);
   Gerador.wCampoCNPJ('#066', BPe.Agencia.CNPJ, CODIGO_BRASIL, True);
 
-  GerarEnderAgencia;
+  GerarEnderAgencia(UF);
 
   Gerador.wGrupo('/agencia');
 end;
 
-procedure TBPeW.GerarEnderAgencia;
+procedure TBPeW.GerarEnderAgencia(var UF: String);
 var
   cMun: Integer;
   xMun: String;
@@ -492,6 +494,8 @@ var
 begin
   AjustarMunicipioUF(xUF, xMun, cMun, CODIGO_BRASIL, BPe.Agencia.enderAgencia.UF,
                      BPe.Agencia.enderAgencia.xMun, BPe.Agencia.EnderAgencia.cMun);
+
+  UF := xUF;
 
   Gerador.wGrupo('enderAgencia', '#067');
 
@@ -511,8 +515,14 @@ begin
   if not ValidarUF(xUF) then
     Gerador.wAlerta('#075', 'UF', DSC_UF, ERR_MSG_INVALIDO);
 
-  Gerador.wCampo(tcStr, '#076', 'fone ', 07, 12, 0, OnlyNumber(BPe.Agencia.enderAgencia.fone), DSC_FONE);
-  Gerador.wCampo(tcStr, '#077', 'email', 01, 60, 0, BPe.Agencia.enderAgencia.Email, DSC_EMAIL);
+  Gerador.wCampo(tcStr, '#075a', 'cPais', 01, 04, 0, IIf(BPe.Agencia.enderAgencia.cPais <> 0, IntToStrZero(BPe.Agencia.enderAgencia.cPais,4), ''), DSC_CPAIS);
+
+  if not ValidarCodigoPais(BPe.Agencia.enderAgencia.cPais) = -1 then
+    Gerador.wAlerta('#060', 'cPais', DSC_CPAIS, ERR_MSG_INVALIDO);
+
+  Gerador.wCampo(tcStr, '#075b', 'xPais', 01, 60, 0, BPe.Agencia.enderAgencia.xPais, DSC_XPAIS);
+  Gerador.wCampo(tcStr, '#076',  'fone ', 07, 12, 0, OnlyNumber(BPe.Agencia.enderAgencia.fone), DSC_FONE);
+  Gerador.wCampo(tcStr, '#077',  'email', 01, 60, 0, BPe.Agencia.enderAgencia.Email, DSC_EMAIL);
 
   Gerador.wGrupo('/enderAgencia');
 end;
@@ -572,6 +582,8 @@ begin
     Gerador.wCampo(tcStr, '#099', 'tpServ      ', 01,  01, 1, tpServicoToStr(BPe.infViagem[i].tpServ), DSC_TPSERVICO);
     Gerador.wCampo(tcStr, '#100', 'tpAcomodacao', 01,  01, 1, tpAcomodacaoToStr(BPe.infViagem[i].tpAcomodacao), DSC_TPACOMODACAO);
     Gerador.wCampo(tcStr, '#101', 'tpTrecho    ', 01,  01, 1, tpTrechoToStr(BPe.infViagem[i].tpTrecho), DSC_TPTRECHO);
+
+    Gerador.wCampo(tcStr, '#102a', 'dhViagem', 25, 25, 1, DateTimeTodh(BPe.infViagem[i].dhViagem) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhViagem), DSC_DHVIAGEM);
 
     if BPe.infViagem[i].tpTrecho = ttConexao then
       Gerador.wCampo(tcStr, '#102', 'dhConexao', 25, 25, 0, DateTimeTodh(BPe.infViagem[i].dhConexao) + GetUTC(CodigoParaUF(BPe.ide.cUF), BPe.infViagem[i].dhConexao), DSC_DHCONEXAO);

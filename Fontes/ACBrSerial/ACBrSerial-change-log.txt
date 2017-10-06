@@ -39,6 +39,20 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 06/10/2017
+-- ACBrPosPrinter --
+[+] Adicionada a propriedade: "VerificarImpressora: Boolean default False"
+    Quando "True", o ACBrPosPrinter usará o método "LerStatusImpressora",  a cada
+    execução do método "Imprimir", e interpretará as respostas da Impressora,
+    emitindo erros no caso de "Tampa Aberta, Sem Papel, OffLine, Erro".
+    IMPORTANTE: A leitura de Status da impressora, somente funciona em Portas
+                Seriais ou TCP
+[*] Método "Imprimir". Ajuste para converter todos as Quebras de Linha da
+    String recebida para impressão, para o valor definido em "Cmd.PuloDeLinha"
+[*] Método "Imprimir". Ajuste para esvaziar o Buffer interno de ACBrPosPrinter
+    mesmo quando houver falha na impressão.
+    (por: DSA)
+
 Data: 30/09/2017
 -- ACBrBALMicheletti --
 [-] Acertos para compilar corretamente em qualquer versão do Delphi mais atual.

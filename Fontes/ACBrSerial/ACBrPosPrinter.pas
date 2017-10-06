@@ -273,6 +273,7 @@ type
     FTipoAlinhamento: TACBrPosTipoAlinhamento;
     FFonteStatus: TACBrPosFonte;
     FInicializada: Boolean;
+    FVerificarImpressora: Boolean;
 
     function GetAtivo: Boolean;
     function GetColunasFonteCondensada: Integer;
@@ -370,8 +371,8 @@ type
       write SetTraduzirTags default True;
     property IgnorarTags: Boolean read GetIgnorarTags write SetIgnorarTags default False;
     property LinhasBuffer: Integer read FLinhasBuffer write FLinhasBuffer default 0;
-    property ControlePorta: Boolean
-      read FControlePorta write FControlePorta default False;
+    property ControlePorta: Boolean read FControlePorta write FControlePorta default False;
+    property VerificarImpressora: Boolean read FVerificarImpressora write FVerificarImpressora default False;
 
     property OnGravarLog: TACBrGravarLog read FOnGravarLog write FOnGravarLog;
     property ArqLOG: String read FArqLog write FArqLog;
@@ -729,6 +730,7 @@ begin
   FEspacoEntreLinhas := 0;
   FControlePorta := False;
   FCortaPapel := True;
+  FVerificarImpressora := False;
 
   FArqLog := '';
   FOnGravarLog := nil;
@@ -1400,33 +1402,58 @@ procedure TACBrPosPrinter.Imprimir(AString: AnsiString; PulaLinha: Boolean;
 var
   i: Integer;
   StrToPrint: AnsiString;
+  PrnStatus: TACBrPosPrinterStatus;
+  MsgErro: String;
 begin
-  if not (ControlePorta or FDevice.Ativo) then
-    raise EPosPrinterException.Create(ACBrStr('Não está Ativo'));
+  try
+    if not (ControlePorta or FDevice.Ativo) then
+      raise EPosPrinterException.Create(ACBrStr('Não está Ativo'));
 
-  if not Ativo then
-    Ativar;
+    if not Ativo then
+      Ativar;
 
-  StrToPrint := '';
-  if FBuffer.Count > 0 then
-  begin
-    For i := 0 to FBuffer.Count-1 do
-      StrToPrint := StrToPrint + FBuffer[i] + FPosPrinterClass.Cmd.PuloDeLinha;
+    if VerificarImpressora then
+    begin
+      MsgErro := '';
+      PrnStatus := LerStatusImpressora;
+
+      if stTampaAberta in PrnStatus then
+        MsgErro := 'com Tampa Aberta'
+      else if stSemPapel in PrnStatus then
+        MsgErro := 'Sem Papel'
+      else if stOffLine in PrnStatus then
+        MsgErro := 'Desligada'
+      else if stErro in PrnStatus then
+        MsgErro := 'em Erro';
+
+      if (MsgErro <> '') then
+        raise EPosPrinterException.Create('Impressora '+MsgErro);
+    end;
+
+    StrToPrint := '';
+    if (FBuffer.Count > 0) then
+    begin
+      For i := 0 to FBuffer.Count-1 do
+        StrToPrint := StrToPrint + FBuffer[i] + FPosPrinterClass.Cmd.PuloDeLinha;
+    end;
+  finally
+    FBuffer.Clear;
   end;
-  FBuffer.Clear;
 
   StrToPrint := StrToPrint + AString;
 
   GravarLog('Imprimir, Copias:' + IntToStr(Copias)+
             ', DecodificarTags:'+IfThen(DecodificarTags,'SIM','NAO')+
             ', TraduzirTags:'+IfThen(TraduzirTags,'SIM','NAO') );
-  GravarLog( StrToPrint );
+  GravarLog( TranslateUnprintable(StrToPrint) );
 
   if CodificarPagina then
     StrToPrint := CodificarPaginaDeCodigo(StrToPrint);
 
   //DEBUG
   //WriteLog('c:\temp\teste2.txt', StrToPrint, True);
+
+  StrToPrint := ChangeLineBreak(StrToPrint, FPosPrinterClass.Cmd.PuloDeLinha);
 
   if DecodificarTags then
     StrToPrint := FTagProcessor.DecodificarTagsFormatacao(StrToPrint);

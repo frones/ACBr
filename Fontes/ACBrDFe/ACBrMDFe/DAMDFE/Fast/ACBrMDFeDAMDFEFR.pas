@@ -331,6 +331,7 @@ begin
     Add('qCarga', ftCurrency);
     Add('dhIniViagem', ftDateTime);
     Add('Lacres', ftMemo);
+	  Add('vCarga', ftCurrency);
     CreateDataSet;
   end;
 
@@ -1193,6 +1194,7 @@ begin
         FieldByName('qCarga').AsCurrency := qCarga * 1000
       else
         FieldByName('qCarga').AsCurrency := qCarga;
+	    FieldByName('vCarga').AsCurrency := vCarga;
     end;
 
     // Incluido por Paulo Hostert em 18/11/2014.

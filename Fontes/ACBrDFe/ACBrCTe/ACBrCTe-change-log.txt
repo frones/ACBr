@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/10/2017
+-- pcteCTeW --
+[*] Alterações visando gerar o campo vICMS mesmo que o mesmo tenha o valor zero.
+   Por: BSoft / Mauricio Sareto
+
 04/10/2017
 -- Diversos --
 [*] https://www.projetoacbr.com.br/forum/topic/39173-contribui%C3%A7%C3%A3o-ct-e-os-nos-estados-do-ms-e-mt/.

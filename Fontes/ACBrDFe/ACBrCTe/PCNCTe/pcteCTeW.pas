@@ -1421,16 +1421,23 @@ begin
 end;
 
 procedure TCTeW.GerarinfTribFed;
+  function InformarINSS: Integer;
+  begin
+    if (Length(SomenteNumeros(Trim(CTe.toma.CNPJCPF))) = 14) and (CTe.Ide.tpServ in [tsTranspPessoas, tsExcessoBagagem]) then
+      Result := 1
+    else
+      Result := 0;
+  end;
 begin
   if (CTe.Imp.infTribFed.vPIS > 0) or (CTe.Imp.infTribFed.vCOFINS > 0) or
-     (CTe.Imp.infTribFed.vIR > 0) or (CTe.Imp.infTribFed.vINSS > 0) or
+     (CTe.Imp.infTribFed.vIR > 0) or ((CTe.Imp.infTribFed.vINSS > 0) or (InformarINSS = 1)) or
      (CTe.Imp.infTribFed.vCSLL > 0) then
   begin
     Gerador.wGrupo('infTribFed', '#125');
     Gerador.wCampo(tcDe2, '#', 'vPIS   ', 01, 15, 0, CTe.Imp.infTribFed.vPIS, DSC_VPIS);
     Gerador.wCampo(tcDe2, '#', 'vCOFINS', 01, 15, 0, CTe.Imp.infTribFed.vCOFINS, DSC_VCOFINS);
     Gerador.wCampo(tcDe2, '#', 'vIR    ', 01, 15, 0, CTe.Imp.infTribFed.vIR, DSC_VIR);
-    Gerador.wCampo(tcDe2, '#', 'vINSS  ', 01, 15, 0, CTe.Imp.infTribFed.vINSS, DSC_VINSS);
+    Gerador.wCampo(tcDe2, '#', 'vINSS  ', 01, 15, InformarINSS, CTe.Imp.infTribFed.vINSS, DSC_VINSS);
     Gerador.wCampo(tcDe2, '#', 'vCSLL  ', 01, 15, 0, CTe.Imp.infTribFed.vCSLL, DSC_VCSLL);
     Gerador.wGrupo('/infTribFed');
   end;
@@ -2107,7 +2114,7 @@ begin
   begin
     Gerador.wGrupo('veic', '#04');
     Gerador.wCampo(tcStr, '#05', 'placa  ', 01, 07, 1, CTe.infCTeNorm.rodoOS.veic.placa, DSC_PLACA);
-    Gerador.wCampo(tcStr, '#06', 'RENAVAM', 09, 11, 1, CTe.infCTeNorm.rodoOS.veic.RENAVAM, DSC_RENAVAM);
+    Gerador.wCampo(tcStr, '#06', 'RENAVAM', 09, 11, 0, CTe.infCTeNorm.rodoOS.veic.RENAVAM, DSC_RENAVAM);
 
     if (trim(CTe.infCTeNorm.rodoOS.veic.prop.CNPJCPF) <> '') or
        (trim(CTe.infCTeNorm.rodoOS.veic.prop.xNome) <> '') then

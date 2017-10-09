@@ -659,6 +659,21 @@ type
     MODELO: TRLMemo;
     VUNIT: TRLMemo;
     VFRETE: TRLMemo;
+    rlpnlTributosFederais: TRLPanel;
+    RLDraw101: TRLDraw;
+    RLDraw114: TRLDraw;
+    RLDraw115: TRLDraw;
+    RLDraw116: TRLDraw;
+    RLLabel220: TRLLabel;
+    rlblVlrCOFINS: TRLLabel;
+    RLLabel226: TRLLabel;
+    rlblVlrIR: TRLLabel;
+    RLLabel228: TRLLabel;
+    rlblVlrINSS: TRLLabel;
+    RLLabel232: TRLLabel;
+    rlblVlrCSLL: TRLLabel;
+    RLLabel2: TRLLabel;
+    rlblVlrPIS: TRLLabel;
     procedure rlb_01_ReciboBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_02_CabecalhoBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlb_03_DadosDACTeBeforePrint(Sender: TObject; var PrintIt: Boolean);
@@ -1120,7 +1135,6 @@ begin
         end;
       end;
     end;
-
   end;
 {$ENDIF}
 
@@ -1850,6 +1864,14 @@ begin
       rllICMS_ST.Caption := '';
     end;
   end;
+  if FCTe.ide.modelo = 67 then
+  begin
+    rlblVlrPIS.Caption := FormatFloatBr(msk13x2, FCTe.imp.infTribFed.vPIS);
+    rlblVlrCOFINS.Caption := FormatFloatBr(msk13x2, FCTe.imp.infTribFed.vCOFINS);
+    rlblVlrIR.Caption := FormatFloatBr(msk13x2, FCTe.imp.infTribFed.vIR);
+    rlblVlrINSS.Caption := FormatFloatBr(msk13x2, FCTe.imp.infTribFed.vINSS);
+    rlblVlrCSLL.Caption := FormatFloatBr(msk13x2, FCTe.imp.infTribFed.vCSLL);
+  end;
 {$ENDIF}
 end;
 
@@ -2452,7 +2474,8 @@ var
 begin
   rllSiglaPassagem.Lines.Clear;
 
-  rlb_Fluxo_Carga.Enabled := ((FCTe.infCTe.versao >= 3.00) and (FCTe.ide.modelo <> 67));
+  rlb_Fluxo_Carga.Enabled := ((FCTe.infCTe.versao >= 3.00) and (FCTe.ide.modelo <> 67) and
+                                               (FCTe.ide.modal = mdAereo)) ;
   if (rlb_Fluxo_Carga.Enabled) then
   begin
     rllSiglaOrigem.Caption       := FCTe.compl.fluxo.xOrig;
@@ -2523,6 +2546,8 @@ var
   i: integer;
 begin
   inherited;
+  PrintIt := RLCTe.PageNumber = 1;
+
   rlmTipo2.Lines.Clear;
   rlmPlaca2.Lines.Clear;
   rlmUF2.Lines.Clear;
@@ -2921,11 +2946,25 @@ begin
    then rlb_06_ProdutosPerigosos.Visible := False;
   if FCTe.infCTeNorm.veicNovos.Count = 0
    then rlb_06_VeiculosNovos.Visible := False;
+
+  if FCTe.ide.modelo = 67 then //CteOS
+  begin
+    rlpnlTributosFederais.Visible := True;
+    rlb_06_ValorPrestacao.Height := 144;
+  end
+  else
+  begin
+    rlpnlTributosFederais.Visible := False;
+    rlb_06_ValorPrestacao.Height := 117;
+  end;
 {$ELSE}
   if FCTe.peri.Count = 0 then
     rlb_06_ProdutosPerigosos.Visible := False;
   if FCTe.veicNovos.Count = 0
    then rlb_06_VeiculosNovos.Visible := False;
+
+  rlpnlTributosFederais.Visible := False;
+  rlb_06_ValorPrestacao.Height := 117;
 {$ENDIF}
 
   rlb_10_ModRodFracionado.Height := 0;

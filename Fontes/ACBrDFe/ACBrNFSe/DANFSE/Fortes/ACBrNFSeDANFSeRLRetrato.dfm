@@ -541,7 +541,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 110
         Top = 138
         Width = 1
-        Height = 36
+        Height = 40
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -563,7 +563,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       object rllNumeroRps: TRLLabel
         Left = 122
         Top = 157
-        Width = 82
+        Width = 94
+        Alignment = taCenter
+        AutoSize = False
         Height = 15
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -576,7 +578,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 224
         Top = 139
         Width = 1
-        Height = 35
+        Height = 39
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -696,7 +698,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 436
         Top = 139
         Width = 1
-        Height = 35
+        Height = 39
         Angle = 90.000000000000000000
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -717,8 +719,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       end
       object rllMunicipioPrestacaoServico: TRLLabel
         Left = 236
+        AutoSize = False
         Top = 157
-        Width = 167
+        Width = 196
         Height = 15
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

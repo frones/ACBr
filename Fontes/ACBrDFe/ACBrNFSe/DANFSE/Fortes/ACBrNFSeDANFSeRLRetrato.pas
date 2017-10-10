@@ -329,6 +329,9 @@ begin
   begin
     rllSistema.Caption := '';
   end;
+
+  //Exibe canhoto
+  rlbCanhoto.Visible:= FImprimeCanhoto;
 end;
 
 procedure TfrlDANFSeRLRetrato.rlbCabecalhoBeforePrint(Sender: TObject;

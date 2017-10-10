@@ -587,7 +587,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       end
       object RLDraw9: TRLDraw
         Left = 110
-        Height = 36
+        Height = 40
         Top = 138
         Width = 1
         Angle = 90
@@ -619,7 +619,9 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 122
         Height = 15
         Top = 157
-        Width = 82
+        Width = 94
+        Alignment = taCenter
+        AutoSize = False
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'
@@ -632,7 +634,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       end
       object RLDraw10: TRLDraw
         Left = 224
-        Height = 35
+        Height = 39
         Top = 139
         Width = 1
         Angle = 90
@@ -782,7 +784,7 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
       end
       object RLDraw11: TRLDraw
         Left = 436
-        Height = 35
+        Height = 39
         Top = 139
         Width = 1
         Angle = 90
@@ -814,7 +816,8 @@ inherited frlDANFSeRLRetrato: TfrlDANFSeRLRetrato
         Left = 236
         Height = 15
         Top = 157
-        Width = 167
+        Width = 196
+        AutoSize = False
         Font.Color = clWindowText
         Font.Height = -13
         Font.Name = 'Times New Roman'

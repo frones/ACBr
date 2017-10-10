@@ -120,7 +120,8 @@ begin
           , T_Endereco
           , T_Complemento
           , T_Email
-          , PrintDialog);
+          , PrintDialog
+          , ImprimeCanhoto);
 			  end;
 		  end
 		  else
@@ -157,7 +158,8 @@ begin
           , T_Endereco
           , T_Complemento
           , T_Email
-          , PrintDialog);
+          , PrintDialog
+          , ImprimeCanhoto);
 	 finally
 		  frlDANFSeRLRetrato.Free;
 	 end;
@@ -209,7 +211,8 @@ begin
           , T_Fone
           , T_Endereco
           , T_Complemento
-          , T_Email);
+          , T_Email
+          , ImprimeCanhoto);
       end;
 	  end
 	  else
@@ -247,7 +250,8 @@ begin
         , T_Fone
         , T_Endereco
         , T_Complemento
-        , T_Email);
+        , T_Email
+        , ImprimeCanhoto);
 	  end;
   finally
 	  frlDANFSeRLRetrato.Free;

@@ -105,6 +105,7 @@ type
     FT_Endereco      : String;
     FT_Complemento   : String;
     FT_Email         : String;
+    FImprimeCanhoto  : Boolean;
 
 		cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
 	
@@ -144,7 +145,8 @@ type
                              AT_Endereco            : String = '';
                              AT_Complemento         : String = '';
                              AT_Email               : String = '';                             
-                             APrintDialog    : Boolean = True);
+                             APrintDialog    : Boolean = True;
+                             AImprimeCanhoto : Boolean = True);
 
     class procedure SavePDF(AOwner: TComponent;
 														AFile           : String;
@@ -177,7 +179,8 @@ type
                             AT_Fone                : String = '';
                             AT_Endereco            : String = '';
                             AT_Complemento         : String = '';
-                            AT_Email               : String = '');
+                            AT_Email               : String = '';
+                            AImprimeCanhoto : Boolean = True);
   end;
 
 var
@@ -214,7 +217,7 @@ class procedure TfrlDANFSeRL.Imprimir(AOwner: TComponent; ANFSe: TNFSe; ALogo, A
   AImpressora, APrestLogo, APrefeitura, ARazaoSocial, AEndereco,
   AComplemento, AFone, AMunicipio, AInscMunicipal, AEMail_Prestador, AUF,
   AT_InscEstadual, AT_InscMunicipal, AOutrasInformacaoesImp, AAtividade, AT_Fone,
-  AT_Endereco, AT_Complemento, AT_Email : String; APrintDialog: Boolean);
+  AT_Endereco, AT_Complemento, AT_Email : String; APrintDialog, AImprimeCanhoto: Boolean);
 begin
  with Create ( AOwner ) do
   try
@@ -249,6 +252,7 @@ begin
    FT_Endereco            := AT_Endereco;
    FT_Complemento         := AT_Complemento;
    FT_Email               := AT_Email;
+   FImprimeCanhoto        := AImprimeCanhoto;
 
    if FImpressora > '' then
      RLPrinter.PrinterName := FImpressora;
@@ -281,7 +285,7 @@ class procedure TfrlDANFSeRL.SavePDF(AOwner: TComponent; AFile: String; ANFSe: T
   APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
   AInscMunicipal, AEMail_Prestador, AUF, AT_InscEstadual, AT_InscMunicipal,
   AOutrasInformacaoesImp, AAtividade, AT_Fone,
-  AT_Endereco, AT_Complemento, AT_Email : String);
+  AT_Endereco, AT_Complemento, AT_Email : String; AImprimeCanhoto: Boolean);
 begin
   with Create ( AOwner ) do
    try
@@ -316,6 +320,8 @@ begin
     FT_Endereco            := AT_Endereco;
     FT_Complemento         := AT_Complemento;
     FT_Email               := AT_Email;
+
+    FImprimeCanhoto := AImprimeCanhoto;
 
     with RLPDFFilter1.DocumentInfo do
       begin

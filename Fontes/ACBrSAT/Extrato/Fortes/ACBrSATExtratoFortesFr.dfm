@@ -1,6 +1,6 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 510
-  Top = 176
+  Left = 415
+  Top = 134
   Width = 805
   Height = 789
   Caption = 'ACBrSATExtratoFortes'
@@ -656,89 +656,37 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Align = faTop
         Caption = 'DADOS PARA ENTREGA'
       end
-      object pEndDest: TRLPanel
+      object mEndEnt: TRLMemo
         Left = 0
         Top = 22
         Width = 286
         Height = 12
         Align = faTop
-        AutoExpand = True
-        AutoSize = True
-        object mEndEnt: TRLMemo
-          Left = 61
-          Top = 0
-          Width = 225
-          Height = 12
-          Align = faClient
-          Behavior = [beSiteExpander]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Lines.Strings = (
-            '<Logradouro, 99 - Bairro - Cidade>')
-          ParentFont = False
-        end
-        object lTitEndEnt: TRLLabel
-          Left = 0
-          Top = 0
-          Width = 61
-          Height = 12
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Endere'#231'o:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Layout = tlCenter
-          ParentFont = False
-        end
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          '<Logradouro, 99 - Bairro - Cidade>')
+        ParentFont = False
       end
-      object pDestEnt: TRLPanel
+      object mDestEnt: TRLMemo
         Left = 0
         Top = 34
         Width = 286
         Height = 12
         Align = faTop
-        AutoExpand = True
-        AutoSize = True
-        object lTitDestEnt: TRLLabel
-          Left = 0
-          Top = 0
-          Width = 61
-          Height = 12
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Destinat'#225'rio:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Layout = tlCenter
-          ParentFont = False
-        end
-        object mDestEnt: TRLMemo
-          Left = 61
-          Top = 0
-          Width = 225
-          Height = 12
-          Align = faClient
-          Behavior = [beSiteExpander]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Lines.Strings = (
-            '<Nome do Destinat'#225'rio>')
-          ParentFont = False
-        end
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          '<Nome do Destinat'#225'rio>')
+        ParentFont = False
       end
     end
     object rlObsContrib: TRLBand
@@ -1091,7 +1039,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 253
         Width = 286
-        Height = 27
+        Height = 28
         BeforePrint = rlbLegendaBeforePrint
         object RLDraw4: TRLDraw
           Left = 0
@@ -1104,7 +1052,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object RLDraw5: TRLDraw
           Left = 0
-          Top = 19
+          Top = 20
           Width = 286
           Height = 8
           Align = faTop
@@ -1115,7 +1063,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Left = 0
           Top = 8
           Width = 286
-          Height = 11
+          Height = 12
           Align = faTop
           Alignment = taCenter
           Behavior = [beSiteExpander]

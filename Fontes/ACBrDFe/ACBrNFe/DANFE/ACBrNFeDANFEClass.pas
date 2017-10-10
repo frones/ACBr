@@ -425,10 +425,14 @@ begin
       else
         dhEmissao := Now;
 
-      case ANFe.Ide.modelo of
-        0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
-        55: DescricaoModelo := 'NFe';
-        65: DescricaoModelo := 'NFCe';
+      DescricaoModelo := '';
+      if TACBrNFe(ACBrNFe).Configuracoes.Arquivos.AdicionarLiteral then
+      begin
+         case ANFe.Ide.modelo of
+           0: DescricaoModelo := TACBrNFe(FACBrNFe).GetNomeModeloDFe;
+           55: DescricaoModelo := 'NFe';
+           65: DescricaoModelo := 'NFCe';
+         end;
       end;
 
       Result := PathWithDelim(TACBrNFe(FACBrNFe).Configuracoes.Arquivos.GetPath(

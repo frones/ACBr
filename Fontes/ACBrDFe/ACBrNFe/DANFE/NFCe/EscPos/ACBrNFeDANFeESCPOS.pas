@@ -469,7 +469,7 @@ begin
   TextoObservacao := Trim(FpNFe.InfAdic.infAdFisco);
   if TextoObservacao <> '' then
   begin
-    TextoObservacao := StringReplace(FpNFe.InfAdic.infCpl, ';', sLineBreak, [rfReplaceAll]);
+    TextoObservacao := StringReplace(FpNFe.InfAdic.infAdFisco, ';', sLineBreak, [rfReplaceAll]);
     FPosPrinter.Buffer.Add('<c>' + TextoObservacao);
   end;
 end;

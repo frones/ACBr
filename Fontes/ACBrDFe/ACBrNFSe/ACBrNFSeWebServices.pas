@@ -5142,7 +5142,8 @@ begin
 
       case TACBrNFSe(FACBrNFSe).Configuracoes.Geral.Provedor of
         proInfisc,
-        proInfiscv11: Result := True
+        proInfiscv11,
+        proSafeWeb : Result := True
       else
         Result := FConsNfseRps.Executar;
       end;

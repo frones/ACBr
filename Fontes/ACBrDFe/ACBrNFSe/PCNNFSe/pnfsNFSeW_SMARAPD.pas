@@ -130,7 +130,10 @@ begin
     Gerador.wCampoNFSe(tcStr, '', 'codatividade'  , 01, 020, 1, FNFSe.Servico.ItemServico[i].CodLCServ, '');
     Gerador.wCampoNFSe(tcDe2, '', 'valorunitario' , 01, 015, 1, FNFSe.Servico.ItemServico[i].ValorUnitario, '');
     Gerador.wCampoNFSe(tcDe2, '', 'aliquota'      , 01, 015, 1, FNFSe.Servico.ItemServico[i].Aliquota, '');
-    Gerador.wCampoNFSe(tcStr, '', 'impostoretido' , 01, 005, 1, FNFSe.Servico.Valores.IssRetido , '');
+    if FNFSe.Servico.Valores.IssRetido in [stNormal,stSubstituicao] then
+      Gerador.wCampoNFSe(tcStr, '', 'impostoretido', 01, 005, 1, 'False', '')
+    else
+      Gerador.wCampoNFSe(tcStr, '', 'impostoretido', 01, 005, 1, 'True', '');
     Gerador.wGrupoNFSe('/servico');
   end;
   Gerador.wGrupoNFSe('/tbservico');
@@ -149,11 +152,13 @@ end;
 
 procedure TNFSeW_SMARAPD.GerarServicoValores;
 begin
-  Gerador.wCampoNFSe(tcStr, '', 'pis', 01, 02, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'cofins', 01, 02, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'csll', 01, 02, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'irrf', 01, 02, 1, '', '');
-  Gerador.wCampoNFSe(tcStr, '', 'inss', 01, 02, 1, '0', '');
+  Gerador.wCampoNFSe(tcDe2, '', 'pis', 01, 02, 1, FNFSe.Servico.Valores.ValorPis, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'cofins', 01, 02, 1, FNFSe.Servico.Valores.ValorCofins, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'csll', 01, 02, 1, FNFSe.Servico.Valores.ValorCsll, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'irrf', 01, 02, 1, FNFSe.Servico.Valores.ValorIr, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'inss', 01, 02, 1, FNFSe.Servico.Valores.ValorInss, '');
+  Gerador.wCampoNFSe(tcStr, '', 'descdeducoesconstrucao', 01, 500, 1, FNFSe.Servico.Valores.JustificativaDeducao, '');
+  Gerador.wCampoNFSe(tcDe2, '', 'totaldeducoesconstrucao', 01, 02, 1, FNFSe.Servico.Valores.ValorDeducoes, '');
 end;
 
 procedure TNFSeW_SMARAPD.GerarTomador;
@@ -177,7 +182,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'cpfcnpjtomador',            01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.CpfCnpj), '');
   Gerador.wCampoNFSe(tcStr, '', 'inscricaoestadualtomador',  01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.InscricaoEstadual), '');
   Gerador.wCampoNFSe(tcStr, '', 'inscricaomunicipaltomador', 01,  14, 1, SomenteNumeros(FNFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal), '');
-  Gerador.wCampoNFSe(tcStr, '', 'observacao',                01, 110, 1, FNFSe.OutrasInformacoes,'');
+  Gerador.wCampoNFSe(tcStr, '', 'observacao',                01, 500, 1, FNFSe.OutrasInformacoes,'');
 end;
 
 procedure TNFSeW_SMARAPD.GerarTransportadora;

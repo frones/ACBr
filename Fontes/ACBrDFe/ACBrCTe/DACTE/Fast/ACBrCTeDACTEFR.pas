@@ -100,6 +100,7 @@ type
 		procedure CarregaProdutosPerigosos;
 		procedure CarregaVeiculosNovos;
 	  procedure CarregaInfServico;
+    procedure CarregaInfTribFed;
 	  procedure CarregaPercurso;
     procedure LimpaDados;
     function ManterCep(iCep: Integer): String;
@@ -142,6 +143,7 @@ type
   	cdsVeiculosNovos        : TClientDataSet;
     cdsInutilizacao         : TClientDataSet;
     cdsInfServico           : TClientDataSet;
+    cdsInfTribFed           : TClientDataSet;
     cdsPercurso             : TClientDataSet;
 
     // frxDB
@@ -173,6 +175,7 @@ type
   	frxVeiculosNovos        : TfrxDBDataset;
     frxInutilizacao         : TfrxDBDataset;
     frxInfServico           : TfrxDBDataset;
+    frxInfTribFed           : TfrxDBDataset;
     frxPercurso             : TfrxDBDataset;
 
     frxBarCodeObject: TfrxBarCodeObject;
@@ -906,6 +909,19 @@ begin
 		CreateDataSet;
   end;
 
+  cdsInfTribFed := TClientDataSet.Create(nil);
+  with cdsInfTribFed, FieldDefs do
+  begin
+    Close;
+    Clear;
+    Add('vPIS', ftFloat);
+    Add('vCOFINS', ftFloat);
+    Add('vIR', ftFloat);
+    Add('vINSS', ftFloat);
+    Add('vCSLL', ftFloat);
+		CreateDataSet;
+  end;
+
   cdsPercurso := TClientDataSet.Create(nil);
   with cdsPercurso, FieldDefs do
   begin
@@ -1136,6 +1152,13 @@ begin
     OpenDataSource := False;
 		DataSet        := cdsInfServico;
   end;
+  frxInfTribFed := TfrxDBDataset.Create(nil);
+  with frxInfTribFed do
+  begin
+		UserName       := 'InfTribFed';
+    OpenDataSource := False;
+		DataSet        := cdsInfTribFed;
+  end;
   frxPercurso := TfrxDBDataset.Create(nil);
   with frxPercurso do
   begin
@@ -1179,6 +1202,7 @@ begin
   cdsVeiculosNovos.Free;
   cdsInutilizacao.Free;
   cdsInfServico.Free;
+  cdsInfTribFed.Free;
   cdsPercurso.Free;
 
   // frxDB
@@ -1211,6 +1235,7 @@ begin
   frxVeiculosNovos.Free;
   frxInutilizacao.Free;
   frxInfServico.Free;
+  frxInfTribFed.Free;
   frxPercurso.Free;
 
   inherited Destroy;
@@ -1481,6 +1506,7 @@ begin
   cdsProdutosPerigosos.EmptyDataSet;
   cdsVeiculosNovos.EmptyDataSet;
   cdsInfServico.EmptyDataSet;
+  cdsInfTribFed.EmptyDataSet;
   cdsPercurso.EmptyDataSet;
 end;
 
@@ -1631,6 +1657,7 @@ begin
   	Add(frxVeiculosNovos);
     Add(frxInutilizacao);
     Add(frxInfServico);
+    Add(frxInfTribFed);
     Add(frxPercurso);
   end;
 end;
@@ -1816,6 +1843,7 @@ begin
   CarregaProdutosPerigosos;
   CarregaVeiculosNovos;
   CarregaInfServico;
+  CarregaInfTribFed;
   CarregaPercurso;
 end;
 
@@ -2478,6 +2506,20 @@ begin
     Append;
     FieldByName('xDescServ').AsString := xDescServ;
     FieldByName('qCarga').AsFloat := qCarga;
+    Post;
+  end;
+end;
+
+procedure TACBrCTeDACTEFR.CarregaInfTribFed;
+begin
+  with cdsInfTribFed, FCTe.imp.infTribFed do
+  begin
+    Append;
+    FieldByName('vPIS').AsFloat := vPIS;
+    FieldByName('vCOFINS').AsFloat := vCOFINS;
+    FieldByName('vIR').AsFloat := vIR;
+    FieldByName('vINSS').AsFloat := vINSS;
+    FieldByName('vCSLL').AsFloat := vCSLL;
     Post;
   end;
 end;

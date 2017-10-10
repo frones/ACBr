@@ -4444,7 +4444,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida5: TRLMemo
         Left = 328
-        Height = 36
+        Height = 48
         Top = 38
         Width = 84
         Alignment = taRightJustify
@@ -4468,7 +4468,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida3: TRLMemo
         Left = 166
-        Height = 36
+        Height = 48
         Top = 38
         Width = 76
         Alignment = taRightJustify
@@ -4492,7 +4492,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida2: TRLMemo
         Left = 86
-        Height = 36
+        Height = 48
         Top = 38
         Width = 76
         Alignment = taRightJustify
@@ -4516,7 +4516,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida1: TRLMemo
         Left = 5
-        Height = 36
+        Height = 48
         Top = 38
         Width = 76
         Alignment = taRightJustify

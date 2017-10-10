@@ -3732,7 +3732,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 328
         Top = 38
         Width = 84
-        Height = 36
+        Height = 48
         Alignment = taRightJustify
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -3753,7 +3753,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 166
         Top = 38
         Width = 76
-        Height = 36
+        Height = 48
         Alignment = taRightJustify
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -3774,7 +3774,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 86
         Top = 38
         Width = 76
-        Height = 36
+        Height = 48
         Alignment = taRightJustify
         AutoSize = False
         Behavior = [beSiteExpander]
@@ -3795,7 +3795,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 5
         Top = 38
         Width = 76
-        Height = 36
+        Height = 48
         Alignment = taRightJustify
         AutoSize = False
         Behavior = [beSiteExpander]

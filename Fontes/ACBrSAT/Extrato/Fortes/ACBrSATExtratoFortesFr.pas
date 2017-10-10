@@ -128,8 +128,6 @@ type
     lTitObsContrib: TRLMemo;
     lTitSATCan: TRLLabel;
     lTeste: TRLMemo;
-    lTitDestEnt: TRLLabel;
-    lTitEndEnt: TRLLabel;
     lTitSATCanl: TRLLabel;
     lTitTotalCan: TRLLabel;
     lTotalCan: TRLLabel;
@@ -222,8 +220,6 @@ type
     mObsFisco: TRLMemo;
     lTitDadosParaEntrega: TRLLabel;
     pLei12741: TRLPanel;
-    pEndDest: TRLPanel;
-    pDestEnt: TRLPanel;
     pNumSAT: TRLPanel;
     RLPDFFilter1: TRLPDFFilter;
     rlsbDetItem: TRLSubDetail;
@@ -328,11 +324,17 @@ begin
 
   with fACBrSATExtrato do
   begin
-    rlVenda.PageSetup.PaperWidth := LarguraBobina/3.775;
-    rlVenda.InsideMargins.LeftMargin   := Margens.Esquerda;
-    rlVenda.InsideMargins.RightMargin  := Margens.Direita;
-    rlVenda.InsideMargins.TopMargin    := Margens.Topo;
-    rlVenda.InsideMargins.BottomMargin := Margens.Fundo;
+    rlVenda.Width := LarguraBobina;
+    rlVenda.Margins.LeftMargin   := Margens.Esquerda;
+    rlVenda.Margins.RightMargin  := Margens.Direita;
+    rlVenda.Margins.TopMargin    := Margens.Topo;
+    rlVenda.Margins.BottomMargin := Margens.Fundo;
+
+    rlCancelamento.Width := LarguraBobina;
+    rlCancelamento.Margins.LeftMargin   := Margens.Esquerda;
+    rlCancelamento.Margins.RightMargin  := Margens.Direita;
+    rlCancelamento.Margins.TopMargin    := Margens.Topo;
+    rlCancelamento.Margins.BottomMargin := Margens.Fundo;
 
     //Detalhes de Dimensionamento LogoTipo
     {$IfNDef NOGUI}
@@ -365,12 +367,6 @@ begin
        rlLogoCanc.AutoSize  := True;
      end;
     {$EndIf}
-
-    rlCancelamento.Width := LarguraBobina;
-    rlCancelamento.Margins.LeftMargin   := Margens.Esquerda;
-    rlCancelamento.Margins.RightMargin  := Margens.Direita;
-    rlCancelamento.Margins.TopMargin    := Margens.Topo;
-    rlCancelamento.Margins.BottomMargin := Margens.Fundo;
   end;
 end;
 
@@ -410,10 +406,10 @@ begin
       if (Entrega.xMun <> '') then
         Endereco := Endereco + ' - '+Entrega.xMun;
 
-      mEndEnt.Lines.Add( Endereco );
+      mEndEnt.Lines.Add( ACBrStr('Endereco: '+Endereco) );
 
       if (Dest.xNome <> '' ) then
-        mDestEnt.Lines.Add( Dest.xNome );
+        mDestEnt.Lines.Add( ACBrStr('Destinatário: '+Dest.xNome) );
     end;
   end;
 end;
@@ -995,6 +991,7 @@ begin
 
       // Largura e Margens do Relatório //
       RLLayout.Width := LarguraBobina;
+      RLLayout.PageSetup.PaperWidth := LarguraBobina/3.775;
       RLLayout.Margins.LeftMargin   := Margens.Esquerda;
       RLLayout.Margins.RightMargin  := Margens.Direita;
       RLLayout.Margins.TopMargin    := Margens.Topo;

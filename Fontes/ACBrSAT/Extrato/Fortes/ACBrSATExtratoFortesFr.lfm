@@ -898,107 +898,43 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
-      object pEndDest: TRLPanel
+      object mEndEnt: TRLMemo
         Left = 0
         Height = 12
         Top = 22
         Width = 286
         Align = faTop
-        AutoExpand = True
-        AutoSize = True
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          '<Logradouro, 99 - Bairro - Cidade>'
+        )
+        ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        object mEndEnt: TRLMemo
-          Left = 61
-          Height = 12
-          Top = 0
-          Width = 225
-          Align = faClient
-          Behavior = [beSiteExpander]
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Lines.Strings = (
-            '<Logradouro, 99 - Bairro - Cidade>'
-          )
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object lTitEndEnt: TRLLabel
-          Left = 0
-          Height = 12
-          Top = 0
-          Width = 61
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Endereço:'
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Layout = tlCenter
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
       end
-      object pDestEnt: TRLPanel
+      object mDestEnt: TRLMemo
         Left = 0
         Height = 12
         Top = 34
         Width = 286
         Align = faTop
-        AutoExpand = True
-        AutoSize = True
+        Behavior = [beSiteExpander]
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Lines.Strings = (
+          '<Nome do Destinatário>'
+        )
+        ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        object lTitDestEnt: TRLLabel
-          Left = 0
-          Height = 12
-          Top = 0
-          Width = 61
-          Align = faLeft
-          Alignment = taRightJustify
-          AutoSize = False
-          Caption = 'Destinatário:'
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Layout = tlCenter
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
-        object mDestEnt: TRLMemo
-          Left = 61
-          Height = 12
-          Top = 0
-          Width = 225
-          Align = faClient
-          Behavior = [beSiteExpander]
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Lines.Strings = (
-            '<Nome do Destinatário>'
-          )
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
       end
     end
     object rlObsContrib: TRLBand
@@ -1458,7 +1394,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Height = 27
+        Height = 28
         Top = 253
         Width = 286
         RealBounds.Left = 0
@@ -1483,7 +1419,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         object RLDraw5: TRLDraw
           Left = 0
           Height = 8
-          Top = 19
+          Top = 20
           Width = 286
           Align = faTop
           Angle = 0
@@ -1496,7 +1432,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lCabItem: TRLMemo
           Left = 0
-          Height = 11
+          Height = 12
           Top = 8
           Width = 286
           Align = faTop

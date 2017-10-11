@@ -317,6 +317,12 @@ begin
   rlVenda.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
   rlVenda.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
   rlVenda.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
+
+  rlCancelamento.PageSetup.PaperWidth  := fACBrNFeDANFCeFortes.LarguraBobina/3.775;
+  rlCancelamento.InsideMargins.LeftMargin    := fACBrNFeDANFCeFortes.MargemEsquerda ;
+  rlCancelamento.InsideMargins.RightMargin   := fACBrNFeDANFCeFortes.MargemDireita ;
+  rlCancelamento.InsideMargins.TopMargin     := fACBrNFeDANFCeFortes.MargemSuperior ;
+  rlCancelamento.InsideMargins.BottomMargin  := fACBrNFeDANFCeFortes.MargemInferior ;
 end;
 
 procedure TACBrNFeDANFCeFortesFr.rlVendaDataRecord(Sender: TObject;

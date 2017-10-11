@@ -1,8 +1,8 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
-  Left = 485
-  Top = 76
+  Left = 539
+  Top = 96
   Width = 796
-  Height = 926
+  Height = 823
   Caption = 'ACBrNFeDANFCeFortesFr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -544,17 +544,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       OnDataRecord = rlbsCabecalhoDataRecord
       object rlbMsgDANFe: TRLBand
         Left = 0
-        Top = 60
+        Top = 41
         Width = 286
         Height = 8
         AutoSize = True
         object lMsgDANFCe: TRLLabel
-          Left = 8
+          Left = 0
           Top = 0
-          Width = 274
+          Width = 286
           Height = 8
+          Align = faTop
           Alignment = taCenter
-          Anchors = [fkLeft, fkRight]
           Caption = 'DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETR'#212'NICA'
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -570,23 +570,23 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Left = 0
         Top = 0
         Width = 286
-        Height = 60
+        Height = 41
         AutoSize = True
         object pLogoeCliche: TRLPanel
           Left = 0
           Top = 0
           Width = 286
-          Height = 60
+          Height = 41
           Align = faTop
           AutoExpand = True
           AutoSize = True
           object lEndereco: TRLMemo
-            Left = 8
-            Top = 30
-            Width = 264
-            Height = 30
+            Left = 0
+            Top = 29
+            Width = 286
+            Height = 12
+            Align = faTop
             Alignment = taCenter
-            Anchors = [fkLeft, fkRight]
             Behavior = [beSiteExpander]
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
@@ -627,12 +627,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             ParentFont = False
           end
           object lRazaoSocial: TRLMemo
-            Left = 8
+            Left = 0
             Top = 17
-            Width = 264
-            Height = 13
+            Width = 286
+            Height = 12
+            Align = faTop
             Alignment = taCenter
-            Anchors = [fkLeft, fkRight]
             Behavior = [beSiteExpander]
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
@@ -647,7 +647,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Top = 90
+        Top = 71
         Width = 286
         Height = 12
         AutoSize = True
@@ -672,7 +672,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbMsgContingencia: TRLBand
         Left = 0
-        Top = 68
+        Top = 49
         Width = 286
         Height = 22
         AutoSize = True

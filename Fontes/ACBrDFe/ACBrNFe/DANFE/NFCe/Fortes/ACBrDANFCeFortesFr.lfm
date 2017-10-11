@@ -659,7 +659,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbMsgDANFe: TRLBand
         Left = 0
         Height = 8
-        Top = 60
+        Top = 41
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -667,12 +667,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Width = 0
         RealBounds.Height = 0
         object lMsgDANFCe: TRLLabel
-          Left = 8
+          Left = 0
           Height = 8
           Top = 0
-          Width = 274
+          Width = 286
+          Align = faTop
           Alignment = taCenter
-          Anchors = [fkLeft, fkRight]
           Caption = 'DOCUMENTO AUXILIAR DA NOTA FISCAL DE CONSUMIDOR ELETRÔNICA'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
@@ -691,7 +691,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       end
       object rlbDadosCliche: TRLBand
         Left = 0
-        Height = 60
+        Height = 41
         Top = 0
         Width = 286
         AutoSize = True
@@ -701,7 +701,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Height = 0
         object pLogoeCliche: TRLPanel
           Left = 0
-          Height = 60
+          Height = 41
           Top = 0
           Width = 286
           Align = faTop
@@ -712,12 +712,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Width = 0
           RealBounds.Height = 0
           object lEndereco: TRLMemo
-            Left = 8
-            Height = 30
-            Top = 30
-            Width = 264
+            Left = 0
+            Height = 12
+            Top = 29
+            Width = 286
+            Align = faTop
             Alignment = taCenter
-            Anchors = [fkLeft, fkRight]
             Behavior = [beSiteExpander]
             Font.Color = clBlack
             Font.Height = -9
@@ -769,12 +769,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
             RealBounds.Height = 0
           end
           object lRazaoSocial: TRLMemo
-            Left = 8
-            Height = 13
+            Left = 0
+            Height = 12
             Top = 17
-            Width = 264
+            Width = 286
+            Align = faTop
             Alignment = taCenter
-            Anchors = [fkLeft, fkRight]
             Behavior = [beSiteExpander]
             Font.Color = clBlack
             Font.Height = -9
@@ -793,7 +793,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbLegenda: TRLBand
         Left = 0
         Height = 12
-        Top = 90
+        Top = 71
         Width = 286
         AutoSize = True
         RealBounds.Left = 0
@@ -822,7 +822,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
       object rlbMsgContingencia: TRLBand
         Left = 0
         Height = 22
-        Top = 68
+        Top = 49
         Width = 286
         AutoSize = True
         Color = clSilver

@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+11/10/2017
+-- ACBrMDFeConfiguracoes --
+[*] Método "GetPathDownload", modificado para manter somente letras e numeros
+    do nome da empresa usado para cria o PathDownload.
+    por: Italo Jurisato Junior
+
 29/09/2017
 -- pmdfeEventoMDFe --
 [*] Incluido o valor MDFeCancelado2 que se refere ao evento 310611.

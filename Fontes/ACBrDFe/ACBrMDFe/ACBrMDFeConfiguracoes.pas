@@ -245,7 +245,7 @@ begin
      FDownloadMDFe.PathDownload := PathSalvar;
 
   if (FDownloadMDFe.SepararPorNome) and (NaoEstaVazio(xNome)) then
-     rPathDown := rPathDown + PathWithDelim(FDownloadMDFe.PathDownload) + TiraAcentos(xNome)
+     rPathDown := rPathDown + PathWithDelim(FDownloadMDFe.PathDownload) + OnlyAlphaNum(xNome)
   else
      rPathDown := FDownloadMDFe.PathDownload;
 

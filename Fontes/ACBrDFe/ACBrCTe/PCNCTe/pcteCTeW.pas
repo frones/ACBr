@@ -1423,7 +1423,8 @@ end;
 procedure TCTeW.GerarinfTribFed;
   function InformarINSS: Integer;
   begin
-    if (Length(SomenteNumeros(Trim(CTe.toma.CNPJCPF))) = 14) and (CTe.Ide.tpServ in [tsTranspPessoas, tsExcessoBagagem]) then
+    if ((Length(SomenteNumeros(Trim(CTe.toma.CNPJCPF))) = 14) or (CTe.toma.EnderToma.cPais <> 1058))
+      and (CTe.Ide.tpServ in [tsTranspPessoas, tsExcessoBagagem]) then
       Result := 1
     else
       Result := 0;

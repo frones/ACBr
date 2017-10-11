@@ -48,6 +48,11 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 11/10/2017
+-- pcteCTeW --
+[*] Quando é uma operação onde o tomador é do exterior deve gerar a tag vInss.
+   Por: Mauricio Sareto
+
+11/10/2017
 -- ACBrCTeConfiguracoes --
 [*] Método "GetPathDownload", modificado para manter somente letras e numeros
     do nome da empresa usado para cria o PathDownload.

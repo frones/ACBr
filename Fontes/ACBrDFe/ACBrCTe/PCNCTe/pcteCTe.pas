@@ -2526,7 +2526,7 @@ type
     property refCteAnu: String         read FrefCteAnu     write FrefCteAnu;
     property tomaICMS: TTomaICMS       read FtomaICMS      write FtomaICMS;
     property tomaNaoICMS: TTomaNaoICMS read FtomaNaoICMS   write FtomaNaoICMS;
-    property indAlteraToma: TIndicador read FindAlteraToma write FindAlteraToma;
+    property indAlteraToma: TIndicador read FindAlteraToma write FindAlteraToma default tiNao;
   end;
 
   TTomaICMS = class(TPersistent)

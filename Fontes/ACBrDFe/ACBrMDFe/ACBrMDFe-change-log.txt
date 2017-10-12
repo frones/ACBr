@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/10/2017
+-- pmdfeMDFeW --
+[*] Correção na geração do grupo de documentos, não estava gerando quanto o
+    tpEmit = 3.
+    por: Thiago
+
 11/10/2017
 -- ACBrMDFeConfiguracoes --
 [*] Método "GetPathDownload", modificado para manter somente letras e numeros

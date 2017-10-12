@@ -1839,7 +1839,7 @@ begin
     EventoMDFe.idLote := FidLote;
     SchemaEventoMDFe := schErro;
     
-    for I := 0 to TMDFeEnvEvento(Self).FEvento.Evento.Count - 1 do
+    for I := 0 to FEvento.Evento.Count - 1 do
     begin
       with EventoMDFe.Evento.Add do
       begin

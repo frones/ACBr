@@ -928,7 +928,7 @@ begin
      // Obs: É considerado Emitente de Transporte de Carga Própria os
      //      Emitentes de NF-e e transportadoras quando estiverem fazendo
      //      transporte de carga própria.
-     teTranspCargaPropria:
+     teTranspCargaPropria, teTranspCTeGlobalizado:
        begin
          for j := 0 to MDFe.infDoc.infMunDescarga[i].infNFe.Count - 1 do
          begin

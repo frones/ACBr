@@ -2588,7 +2588,7 @@ begin
     EventoCTe.idLote := FidLote;
     SchemaEventoCTe := schErro;
 
-    for I := 0 to TCTeEnvEvento(Self).FEvento.Evento.Count - 1 do
+    for I := 0 to FEvento.Evento.Count - 1 do
     begin
       with EventoCTe.Evento.Add do
       begin

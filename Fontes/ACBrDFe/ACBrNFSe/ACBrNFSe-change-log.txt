@@ -47,6 +47,14 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+12/10/2017
+-- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
+[*] Possivel correção para os casos dos provedores cujo atributo ID não é Id.
+   Por: Italo Jurisato Junior
+-- pnfsNFSeR --
+[-] Correções visando o provedor proActconv202.
+   Por: Leonard Miranda
+
 09/10/2017
 -- Diversos --
 [*] Alteração visando o provedor SmartAPD

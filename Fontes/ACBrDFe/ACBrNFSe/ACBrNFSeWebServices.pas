@@ -2330,6 +2330,15 @@ begin
     FPDadosMsg := FNotasFiscais.AssinarLote(FPDadosMsg, FTagGrupo, TagElemento,
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
 
     // Incluido a linha abaixo por após realizar a assinatura esta gerando o
     // atributo xmlns vazio.
@@ -2608,6 +2617,15 @@ begin
                                    FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                    xSignatureNode, xDSIGNSLote, xIdSignature);
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       FNotasFiscais.ValidarLote(FPDadosMsg,
                          FPConfiguracoes.Arquivos.PathSchemas +
@@ -2811,6 +2829,15 @@ begin
                                   FPConfiguracoesNFSe.Geral.ConfigAssinar.Lote,
                                   xSignatureNode, xDSIGNSLote, xIdSignature);
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
     if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeEnviarSincrono(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                  FPConfiguracoes.Arquivos.PathSchemas +
@@ -3071,7 +3098,16 @@ begin
                               FPConfiguracoesNFSe.Geral.ConfigAssinar.LoteGerar,
                               xSignatureNode, xDSIGNSLote, xIdSignature);
 
-    if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
+     (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+   if FPConfiguracoesNFSe.Geral.ConfigSchemas.Validar then
       TNFSeGerarNFSe(Self).FNotasFiscais.ValidarLote(FPDadosMsg,
                           FPConfiguracoes.Arquivos.PathSchemas +
                           FPConfiguracoesNFSe.Geral.ConfigSchemas.ServicoGerar);
@@ -3210,8 +3246,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsSit) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Situação do Lote: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+  
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsSit;
@@ -3466,8 +3514,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsLote) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar Lote de RPS: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+    
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsLote;
@@ -3672,8 +3732,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSeRps) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe por RPS: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+    
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSeRps;
@@ -3826,8 +3898,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.ConsNFSe) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Consultar NFSe: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+    
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.ConsNFSe;
@@ -4158,8 +4242,19 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;  
   if FProvedor = proBetha then
     FPDadosMsg := '<' + FTagGrupo + FNameSpaceDad + '>' + FPDadosMsg + '</' + FTagGrupo + '>';
 
@@ -4404,8 +4499,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.Cancelar) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FdocElemento, FinfElemento, 'Falha ao Assinar - Cancelar NFS-e: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+    
   FPDadosMsg := '<' + FPrefixo3 + 'SubstituirNfseEnvio' + FNameSpaceDad + '>' +
                 '<' + FPrefixo3 + 'SubstituicaoNfse>' +
                  SeparaDados(FPDadosMsg, FPrefixo3 + 'Pedido', True) +
@@ -4563,8 +4670,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.AbrirSessao) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Abrir Sessão: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+    
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.AbrirSessao;
@@ -4711,8 +4830,20 @@ begin
   // O procedimento recebe como parametro o XML a ser assinado e retorna o
   // mesmo assinado da propriedade FPDadosMsg
   if (FPConfiguracoesNFSe.Geral.ConfigAssinar.FecharSessao) and (FPDadosMsg <> '') then
+  begin
     AssinarXML(FPDadosMsg, FTagGrupo, '', 'Falha ao Assinar - Fechar Sessão: ');
 
+    (*
+    i := Pos('URI=""', FPDadosMsg);
+
+    // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+    // atributo URI ao realizar a assinatura.
+    if i > 0 then
+      FPDadosMsg := Copy(FPDadosMsg, 1, i+4) + '#' + NFSe.InfID.ID +
+                    Copy(FPDadosMsg, i+5, length(FPDadosMsg));
+    *)
+  end;
+    
   IncluirEncoding(FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao_IncluiEncodingDados);
 
   FDadosEnvelope := FPConfiguracoesNFSe.Geral.ConfigEnvelope.FecharSessao;

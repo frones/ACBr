@@ -228,6 +228,7 @@ var
   XMLUTF8: AnsiString;
   Leitor: TLeitor;
   Ok: Boolean;
+  i: Integer;
 begin
   // Verifica se foi informado o Numero de Série do Certificado.
   if ( TACBrNFSe(TNotasFiscais(Collection).ACBrNFSe).SSL.NumeroSerie <> '' ) then
@@ -284,6 +285,14 @@ begin
 
     Leitor := TLeitor.Create;
     try
+      i := Pos('URI=""', FXMLAssinado);
+
+      // Inclui o conteudo do atribuito ID caso ele não tenha sido incluido no
+      // atributo URI ao realizar a assinatura.
+      if i > 0 then
+        FXMLAssinado := Copy(FXMLAssinado, 1, i+4) + '#' + NFSe.InfID.ID +
+                        Copy(FXMLAssinado, i+5, length(FXMLAssinado));
+
       leitor.Grupo := FXMLAssinado;
       NFSe.signature.URI := Leitor.rAtributo('Reference URI=');
       NFSe.signature.DigestValue := Leitor.rCampo(tcStr, 'DigestValue');
@@ -292,6 +301,7 @@ begin
     finally
       Leitor.Free;
     end;
+
     if Configuracoes.Arquivos.Salvar and
       (not Configuracoes.Arquivos.SalvarApenasNFSeProcessadas)  then
     begin

@@ -1187,8 +1187,48 @@ begin
     FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Telefone := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Contato.Telefone;
     FNotasFiscais.Items[ii].NFSe.PrestadorServico.Contato.Email    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.PrestadorServico.Contato.Email;
 
+    FNotasFiscais.Items[ii].NFSe.Tomador.IdentificacaoTomador.CpfCnpj            := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.IdentificacaoTomador.CpfCnpj;
+    FNotasFiscais.Items[ii].NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.IdentificacaoTomador.InscricaoMunicipal;
+
+    FNotasFiscais.Items[ii].NFSe.Tomador.RazaoSocial := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.RazaoSocial;
+
+    FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.Endereco        := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.Endereco;
+    FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.Numero          := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.Numero;
+    FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.Complemento     := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.Complemento;
+    FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.Bairro          := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.Bairro;
     FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.xMunicipio      := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.xMunicipio;
     FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.CodigoMunicipio := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.CodigoMunicipio;
+    FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.UF              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.UF;
+    FNotasFiscais.Items[ii].NFSe.Tomador.Endereco.CEP             := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Endereco.CEP;
+
+    FNotasFiscais.Items[ii].NFSe.Tomador.Contato.Telefone := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Contato.Telefone;
+    FNotasFiscais.Items[ii].NFSe.Tomador.Contato.Email    := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Tomador.Contato.Email;
+
+    // Incluido em 13/10/2017
+    FNotasFiscais.Items[ii].NFSe.Servico.ItemListaServico          := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.ItemListaServico;
+    FNotasFiscais.Items[ii].NFSe.Servico.xItemListaServico         := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.xItemListaServico;
+    FNotasFiscais.Items[ii].NFSe.Servico.CodigoCnae                := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.CodigoCnae;
+    FNotasFiscais.Items[ii].NFSe.Servico.CodigoTributacaoMunicipio := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.CodigoTributacaoMunicipio;
+    FNotasFiscais.Items[ii].NFSe.Servico.Discriminacao             := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Discriminacao;
+    FNotasFiscais.Items[ii].NFSe.Servico.CodigoMunicipio           := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.CodigoMunicipio;
+    FNotasFiscais.Items[ii].NFSe.Servico.ExigibilidadeISS          := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.ExigibilidadeISS;
+
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorServicos          := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorServicos;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorDeducoes          := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorDeducoes;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorPis               := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorPis;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorCofins            := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorCofins;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorInss              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorInss;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorIr                := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorIr;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorCsll              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorCsll;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.IssRetido              := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.IssRetido;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorIss               := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorIss;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.OutrasRetencoes        := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.OutrasRetencoes;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.BaseCalculo            := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.BaseCalculo;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.Aliquota               := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.Aliquota;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorLiquidoNFSe       := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorLiquidoNFSe;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.ValorIssRetido         := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.ValorIssRetido;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.DescontoCondicionado   := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.DescontoCondicionado;
+    FNotasFiscais.Items[ii].NFSe.Servico.Valores.DescontoIncondicionado := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.Servico.Valores.DescontoIncondicionado;
 
     FNotasFiscais.Items[ii].NFSe.NfseCancelamento.DataHora := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NfseCancelamento.DataHora;
     FNotasFiscais.Items[ii].NFSe.NfseCancelamento.Pedido.CodigoCancelamento := FRetornoNFSe.ListaNFSe.CompNFSe.Items[i].NFSe.NfseCancelamento.Pedido.CodigoCancelamento;

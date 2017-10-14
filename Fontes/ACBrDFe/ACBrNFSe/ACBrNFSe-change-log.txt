@@ -47,6 +47,12 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+13/10/2017
+-- ACBrNFSeWebServices --
+[*] Alteração para o provedor DBSeller, não estava retornando logo após o envio
+    os dados do tomador e do serviço.
+   Por: Italo Jurisato Junior
+
 12/10/2017
 -- ACBrNFSeWebServices / ACBrNFSeNotasFiscais --
 [*] Possivel correção para os casos dos provedores cujo atributo ID não é Id.

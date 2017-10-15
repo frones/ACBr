@@ -336,7 +336,7 @@ begin
       Add('Tipo', ftString, 1);
       Add('Competencia', ftString, 7);
       Add('NumeroNFSe', ftString, 16);
-      Add('NFSeSubstituida', ftString, 15);
+      Add('NFSeSubstituida', ftString, 16);
       Add('DataEmissao', ftString, 19);
       Add('CodigoVerificacao', ftString, 15);
     end;

@@ -1588,8 +1588,14 @@ begin
   with cdsModalRodo, FMDFe.rodo do
   begin
     Append;
-    FieldByName('RNTRC').AsString := RNTRC;
+
+    if (FMDFe.infMDFe.versao >= 3) then
+      FieldByName('RNTRC').AsString := infANTT.RNTRC
+    else
+      FieldByName('RNTRC').AsString := RNTRC;
+
     FieldByName('CIOT').AsString  := CIOT;
+
     if veicTracao.placa <> '' then
     begin
       FieldByName('placa').AsString     := FormatarPlaca(veicTracao.placa);

@@ -349,6 +349,50 @@ begin
         end;
       end;
     end
+    else if Provedor = proISSNET then
+    begin
+      if (Leitor.rExtrai(1, 'NfseCancelamento') <> '') then
+      begin
+        if (Leitor.rExtrai(2, 'Confirmacao') <> '') then
+        begin
+          if (Leitor.rExtrai(3, 'Pedido') <> '') then
+          begin
+            if (Leitor.rExtrai(4, 'InfPedidoCancelamento') <> '') then
+            begin
+              if (Leitor.rExtrai(5, 'IdentificacaoNfse') <> '') then
+              begin
+                InfCanc.FPedido.IdentificacaoNfse.Numero             := Leitor.rCampo(tcStr, 'Numero');
+                InfCanc.FPedido.IdentificacaoNfse.Cnpj               := Leitor.rCampo(tcStr, 'CpfCnpj');
+                InfCanc.FPedido.IdentificacaoNfse.InscricaoMunicipal := Leitor.rCampo(tcStr, 'InscricaoMunicipal');
+              end;
+            end;
+          end;
+          if (Leitor.rExtrai(3, 'InfConfirmacaoCancelamento') <> '') then
+          begin
+            InfCanc.Sucesso  := Leitor.rCampo(tcStr, 'Sucesso');
+            infCanc.DataHora := Leitor.rCampo(tcDatHor, 'DataHora');
+          end;
+        end;
+      end;
+
+      if (Leitor.rExtrai(1, 'CancelarNfseResposta') <> '') then
+      begin
+        if (Leitor.rExtrai(2, 'ListaMensagemRetorno') <> '') then
+        begin
+          i := 0;
+          while Leitor.rExtrai(3, 'MensagemRetorno', '', i + 1) <> '' do
+          begin
+            InfCanc.FMsgRetorno.Add;
+            InfCanc.FMsgRetorno[i].FCodigo   := Leitor.rCampo(tcStr, 'Codigo');
+            InfCanc.FMsgRetorno[i].FMensagem := Leitor.rCampo(tcStr, 'Mensagem');
+            InfCanc.FMsgRetorno[i].FCorrecao := Leitor.rCampo(tcStr, 'Correcao');
+
+            Inc(i);
+          end;
+        end;
+      end;
+
+    end
     else
     begin
       if (leitor.rExtrai(1, 'CancelarNfseResposta') <> '') or

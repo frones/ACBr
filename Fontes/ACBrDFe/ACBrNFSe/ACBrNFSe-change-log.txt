@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+15/10/2017
+-- pnfsNFSeG / pnfsCancNfseResposta --
+[*] https://www.projetoacbr.com.br/forum/topic/38927-cancelamento-provedor-issnet/?do=findComment&comment=257223
+   Por: Filipe Sortica
+
 13/10/2017
 -- ACBrNFSeWebServices --
 [*] Alteração para o provedor DBSeller, não estava retornando logo após o envio

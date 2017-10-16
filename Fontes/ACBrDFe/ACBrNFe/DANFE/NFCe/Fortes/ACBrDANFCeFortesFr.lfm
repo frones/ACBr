@@ -1175,22 +1175,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         RealBounds.Top = 0
         RealBounds.Width = 0
         RealBounds.Height = 0
-        object lTitLei12741: TRLLabel
-          Left = 0
-          Height = 12
-          Top = 12
-          Width = 286
-          Align = faTop
-          Caption = '   Tributos Incidentes Lei Federal 12.741/12 - Total R$'
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          ParentFont = False
-          RealBounds.Left = 0
-          RealBounds.Top = 0
-          RealBounds.Width = 0
-          RealBounds.Height = 0
-        end
         object lSistema: TRLLabel
           Left = 0
           Height = 10
@@ -1222,6 +1206,26 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Arial'
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object lTitLei12741: TRLMemo
+          Left = 0
+          Height = 12
+          Top = 12
+          Width = 286
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Lines.Strings = (
+            'Tributos Incidentes Lei Federal 12.741/12 - Total R$'
+          )
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0

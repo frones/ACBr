@@ -110,12 +110,12 @@ type
     lProtocolo: TRLLabel;
     lProtocolo1: TRLMemo;
     lSistema: TRLLabel;
-    lTitLei12741: TRLLabel;
     lNomeFantasia: TRLMemo;
     lNomeFantasiaCanc: TRLMemo;
     lRazaoSocial: TRLMemo;
     lRazaoSocialCanc: TRLMemo;
     lTitFormaPagto: TRLLabel;
+    lTitLei12741: TRLMemo;
     lTitTotalAcrescimo: TRLLabel;
     lTitTotalAPagar: TRLLabel;
     lTitTotalDesconto: TRLLabel;
@@ -490,7 +490,7 @@ begin
     if (MsgTributos = '') then
       lTitLei12741.Visible := False
     else
-      lTitLei12741.Caption := MsgTributos;
+      lTitLei12741.Lines.Text := MsgTributos;
 
     for I := 0 to InfAdic.obsCont.Count - 1 do
     begin

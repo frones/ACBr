@@ -1,8 +1,8 @@
 object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
-  Left = 539
-  Top = 96
+  Left = 513
+  Top = 117
   Width = 796
-  Height = 823
+  Height = 926
   Caption = 'ACBrNFeDANFCeFortesFr'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -165,6 +165,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Top = 36
         Width = 286
         Height = 24
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
         BeforePrint = rlbOutroItemBeforePrint
         object lTitAcrescimo: TRLLabel
           Left = 18
@@ -208,9 +214,9 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           ParentFont = False
         end
         object lOutroValLiq: TRLLabel
-          Left = 233
+          Left = 236
           Top = 13
-          Width = 34
+          Width = 31
           Height = 10
           Alignment = taRightJustify
           Anchors = [fkRight]
@@ -950,20 +956,6 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-        object lTitLei12741: TRLLabel
-          Left = 0
-          Top = 12
-          Width = 286
-          Height = 12
-          Align = faTop
-          Caption = '   Tributos Incidentes Lei Federal 12.741/12 - Total R$'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-        end
         object lSistema: TRLLabel
           Left = 0
           Top = 24
@@ -994,6 +986,23 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Height = -9
           Font.Name = 'Arial'
           Font.Style = []
+          ParentFont = False
+        end
+        object lTitLei12741: TRLMemo
+          Left = 0
+          Top = 12
+          Width = 286
+          Height = 12
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Style = []
+          Lines.Strings = (
+            'Tributos Incidentes Lei Federal 12.741/12 - Total R$')
           ParentFont = False
         end
       end

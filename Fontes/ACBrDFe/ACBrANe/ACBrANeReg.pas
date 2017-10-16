@@ -66,7 +66,7 @@ uses
 
 procedure Register;
 begin
-  RegisterComponents('ACBrDFe', [TACBrANe]);
+  RegisterComponents('ACBrANe', [TACBrANe]);
 
   RegisterPropertyEditor(TypeInfo(TCertificadosConf), TConfiguracoes, 'Certificados',
     TClassProperty);

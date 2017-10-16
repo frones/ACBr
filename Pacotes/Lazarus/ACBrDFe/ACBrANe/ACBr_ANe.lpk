@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="ACBr_ANe"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Juliomar Marchetti"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe;..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe"/>
+        <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrDFe\ACBrANe\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Description Value="ACBr - Averbação Eletrônica Nacional - (http://www.projetoacbr.com.br/)"/>
+    <License Value="LGPL"/>
+    <Files Count="10">
+      <Item1>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeWebServices.pas"/>
+        <Type Value="Include"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANe.pas"/>
+        <UnitName Value="ACBrANe"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeConfiguracoes.pas"/>
+        <UnitName Value="ACBrANeConfiguracoes"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeDocumentos.pas"/>
+        <UnitName Value="ACBrANeDocumentos"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\ACBrANeReg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrANeReg"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaRetEnvANe.pas"/>
+        <UnitName Value="pcaRetEnvANe"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANe.pas"/>
+        <UnitName Value="pcaANe"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANeR.pas"/>
+        <UnitName Value="pcaANeR"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaANeW.pas"/>
+        <UnitName Value="pcaANeW"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrANe\PCNANe\pcaConversao.pas"/>
+        <UnitName Value="pcaConversao"/>
+      </Item10>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="ACBrDFeComum"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

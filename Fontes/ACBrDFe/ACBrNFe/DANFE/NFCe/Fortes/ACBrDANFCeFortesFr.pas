@@ -671,7 +671,7 @@ end;
 procedure TACBrNFeDANFCeFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  qrcode, Via: String;
+  qrcode: String;
   TotalPaginaPixel: Integer;
   LogoStream: TStringStream;
   I: Integer;
@@ -942,12 +942,25 @@ procedure TACBrNFeDANFCeFortesFr.rlbDetItemBeforePrint(Sender: TObject;
 var
   LinhaItem, LinhaTotal, sDescricao : string;
   nTamDescricao, maxCaracter: Integer;
+  {$IFNDEF FPC}
+    BMP : TBitmap;
+  {$ENDIF}
 begin
   PrintIt := not Resumido;
   if not PrintIt then exit;
 
   mLinhaItem.Lines.Clear ;
-  maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth({$IFDEF FPC} mLinhaItem.Canvas {$ELSE} Canvas {$ENDIF}, mLinhaItem.Width);
+  {$IFNDEF FPC}
+    BMP:=TBitMap.Create;
+    try
+      BMP.Canvas.Font.Assign(mLinhaItem.Font);
+      maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth( BMP.Canvas, mLinhaItem.Width);
+    finally
+      BMP.Free;
+    end;
+  {$ELSE}
+    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth( mLinhaItem.Canvas, mLinhaItem.Width);
+  {$ENDIF}
   with ACBrNFeDANFCeFortes.FpNFe.Det.Items[fNumItem] do
   begin
     if ACBrNFeDANFCeFortes.ImprimeEmUmaLinha then
@@ -1040,10 +1053,23 @@ procedure TACBrNFeDANFCeFortesFr.rlbLegendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
   maxCaracter : Integer;
+  {$IFNDEF FPC}
+    BMP : TBitmap;
+  {$ENDIF}
 begin
   PrintIt := not Resumido;
 
-  maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth({$IFDEF FPC} lLegendaItens.Canvas {$ELSE} Canvas {$ENDIF}, lLegendaItens.Width);
+  {$IFNDEF FPC}
+    BMP:=TBitMap.Create;
+    try
+      BMP.Canvas.Font.Assign(mLinhaItem.Font);
+    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth(BMP.Canvas, lLegendaItens.Width);
+    finally
+      BMP.Free;
+    end;
+  {$ELSE}
+    maxCaracter := ACBrNFeDANFCeFortes.CalcularCaractesWidth(lLegendaItens.Canvas, lLegendaItens.Width);
+  {$ENDIF}
 
   lLegendaItens.Caption := PadSpace(ACBrStr('#|Código|Descrição|Qtde|Un|Valor unit.|Valor total'),maxCaracter, '|');
 end;

@@ -91,7 +91,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Courier New'
-          Font.Style = []
+          Font.Style = [fsBold]
           Lines.Strings = (
             '123456789012345678901234567890123456789012345678901234')
           ParentFont = False

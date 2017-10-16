@@ -5579,7 +5579,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllDadosRetira: TRLLabel
         Left = 39
-        Top = 52
+        Top = 80
         Width = 554
         Height = 14
         AutoSize = False

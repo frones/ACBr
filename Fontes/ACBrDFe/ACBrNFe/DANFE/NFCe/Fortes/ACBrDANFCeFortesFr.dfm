@@ -106,33 +106,33 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object lTitDesconto: TRLLabel
           Left = 18
           Top = 1
-          Width = 34
+          Width = 38
           Height = 10
           Caption = 'Desconto'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object lTitDescValLiq: TRLLabel
           Left = 18
           Top = 13
-          Width = 47
+          Width = 52
           Height = 10
           Caption = 'Valor L'#237'quido'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object lDesconto: TRLLabel
-          Left = 236
+          Left = 233
           Top = 1
-          Width = 31
+          Width = 34
           Height = 10
           Alignment = taRightJustify
           Anchors = [fkRight]
@@ -141,13 +141,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object lDescValLiq: TRLLabel
-          Left = 236
+          Left = 233
           Top = 13
-          Width = 31
+          Width = 34
           Height = 10
           Alignment = taRightJustify
           Anchors = [fkRight]
@@ -156,7 +156,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
       end
@@ -169,33 +169,33 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         object lTitAcrescimo: TRLLabel
           Left = 18
           Top = 1
-          Width = 38
+          Width = 40
           Height = 10
           Caption = 'Acr'#233'scimo'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object lTitOutroValLiq: TRLLabel
           Left = 18
           Top = 13
-          Width = 47
+          Width = 52
           Height = 10
           Caption = 'Valor L'#237'quido'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object lOutro: TRLLabel
-          Left = 236
+          Left = 233
           Top = 1
-          Width = 31
+          Width = 34
           Height = 10
           Alignment = taRightJustify
           Anchors = [fkRight]
@@ -204,13 +204,13 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
         object lOutroValLiq: TRLLabel
-          Left = 236
+          Left = 233
           Top = 13
-          Width = 31
+          Width = 34
           Height = 10
           Alignment = taRightJustify
           Anchors = [fkRight]
@@ -219,7 +219,7 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
       end

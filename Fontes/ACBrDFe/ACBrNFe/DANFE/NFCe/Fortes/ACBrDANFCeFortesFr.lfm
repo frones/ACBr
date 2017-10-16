@@ -128,11 +128,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Left = 18
           Height = 10
           Top = 1
-          Width = 34
+          Width = 38
           Caption = 'Desconto'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -143,11 +144,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Left = 18
           Height = 10
           Top = 13
-          Width = 47
+          Width = 52
           Caption = 'Valor Líquido'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -155,16 +157,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lDesconto: TRLLabel
-          Left = 236
+          Left = 233
           Height = 10
           Top = 1
-          Width = 31
+          Width = 34
           Alignment = taRightJustify
           Anchors = [fkRight]
           Caption = '99.999,99'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -172,16 +175,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lDescValLiq: TRLLabel
-          Left = 236
+          Left = 233
           Height = 10
           Top = 13
-          Width = 31
+          Width = 34
           Alignment = taRightJustify
           Anchors = [fkRight]
           Caption = '99.999,99'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -194,6 +198,11 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
         Height = 24
         Top = 36
         Width = 286
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
         RealBounds.Left = 0
         RealBounds.Top = 0
         RealBounds.Width = 0
@@ -203,11 +212,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Left = 18
           Height = 10
           Top = 1
-          Width = 38
+          Width = 40
           Caption = 'Acréscimo'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -218,11 +228,12 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           Left = 18
           Height = 10
           Top = 13
-          Width = 47
+          Width = 52
           Caption = 'Valor Líquido'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0
@@ -230,16 +241,17 @@ object ACBrNFeDANFCeFortesFr: TACBrNFeDANFCeFortesFr
           RealBounds.Height = 0
         end
         object lOutro: TRLLabel
-          Left = 236
+          Left = 233
           Height = 10
           Top = 1
-          Width = 31
+          Width = 34
           Alignment = taRightJustify
           Anchors = [fkRight]
           Caption = '99.999,99'
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Arial'
+          Font.Style = [fsBold]
           ParentFont = False
           RealBounds.Left = 0
           RealBounds.Top = 0

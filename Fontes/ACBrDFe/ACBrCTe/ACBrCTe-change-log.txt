@@ -47,6 +47,11 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+17/10/2017
+-- pcteCTe / ACBrCTeConhecimentos --
+[*] Inicialização dos campos indGlobalizado e indAlteraToma com o valor tiNao.
+   Por: Italo Jurisato Junior
+
 11/10/2017
 -- pcteCTeW --
 [*] Quando é uma operação onde o tomador é do exterior deve gerar a tag vInss.

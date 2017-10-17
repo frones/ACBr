@@ -2729,6 +2729,8 @@ begin
 
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
+
+  Fide.indGlobalizado := tiNao;
 end;
 
 destructor TCTe.Destroy;
@@ -3233,6 +3235,8 @@ begin
   FinfServVinc := TinfServVinc.Create(Self);
   FinfDocRef := TinfDocRefCollection.Create(Self);
   FinfServico := TinfServico.Create;
+
+  FinfCteSub.indAlteraToma := tiNao;
 end;
 
 destructor TInfCTeNorm.Destroy;

@@ -184,6 +184,9 @@ begin
     FCTe.Ide.verProc := 'ACBrCTe';
     FCTe.Ide.tpAmb := Configuracoes.WebServices.Ambiente;
     FCTe.Ide.tpEmis := Configuracoes.Geral.FormaEmissao;
+    FCTe.ide.indGlobalizado := tiNao;
+    
+    FCTe.infCTeNorm.infCteSub.indAlteraToma := tiNao;
 
     if Assigned(DACTE) then
       FCTe.Ide.tpImp := DACTE.TipoDACTE;

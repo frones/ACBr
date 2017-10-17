@@ -2729,8 +2729,6 @@ begin
 
   FProcCTe   := TProcCTe.create;
   Fsignature := Tsignature.create;
-
-  Fide.indGlobalizado := tiNao;
 end;
 
 destructor TCTe.Destroy;
@@ -2783,6 +2781,7 @@ begin
   FToma03 := TToma03.Create;
   FToma4  := TToma4.Create( AOwner );
   FinfPercurso := TinfPercursoCollection.Create(Self);
+  FindGlobalizado := tiNao;
 end;
 
 destructor TIde.Destroy;
@@ -3235,8 +3234,6 @@ begin
   FinfServVinc := TinfServVinc.Create(Self);
   FinfDocRef := TinfDocRefCollection.Create(Self);
   FinfServico := TinfServico.Create;
-
-  FinfCteSub.indAlteraToma := tiNao;
 end;
 
 destructor TInfCTeNorm.Destroy;
@@ -4844,6 +4841,7 @@ constructor TInfCteSub.Create(AOwner: TInfCTeNorm);
 begin
   FtomaICMS    := TTomaICMS.Create(Self);
   FtomaNaoICMS := TTomaNaoICMS.Create;
+  FindAlteraToma := tiNao;
 end;
 
 destructor TInfCteSub.Destroy;

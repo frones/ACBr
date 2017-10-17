@@ -1063,7 +1063,7 @@ begin
     if (dhCont > 0) and (xJust > '') then
       rllContingencia.Caption := ACBrStr( 'Data / Hora da entrada em contingência: ') +
                                  FormatDateTime('dd/mm/yyyy hh:nn:ss', dhCont) +
-                                 ACBrStr(' Motivo contingência: ' + xJust);
+                                 ACBrStr(' Motivo contingência: ') + xJust;
   end;
   if rlbCodigoBarras.Visible then
     rllChave.Holder := rlbCodigoBarras;

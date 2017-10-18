@@ -143,7 +143,6 @@ type
     lNumSAT: TRLLabel;
     lTitSAT: TRLLabel;
     bcChaveAcesso1: TRLBarcode;
-    lSequencia: TRLLabel;
     lTitDeducISSQN: TRLLabel;
     lTitSubTotal: TRLLabel;
     lTitDesconto: TRLLabel;
@@ -153,7 +152,6 @@ type
     lTitBaseCalcISSQN: TRLLabel;
     lTotal: TRLLabel;
     lTroco: TRLLabel;
-    lTotalItem: TRLLabel;
     lTotDescontos: TRLLabel;
     mDestEnt: TRLMemo;
     mEndEnt: TRLMemo;
@@ -181,7 +179,6 @@ type
     rlDadosEntrega: TRLBand;
     rlbPagamento: TRLBand;
     rlbObsFisco: TRLBand;
-    rlbGap: TRLBand;
     rlbDescontos: TRLBand;
     rlbAcrescimos: TRLBand;
     rlbTotal: TRLBand;
@@ -242,6 +239,7 @@ type
     procedure pNumSATCanBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure pNumSATCanclBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure pTotalCancBeforePrint(Sender: TObject; var PrintIt: Boolean);
+    procedure rlbConsumidorBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rlbsCabecalhoDataRecord(Sender: TObject; RecNo: integer;
       CopyNo: integer; var Eof: boolean; var RecordAction: TRLRecordAction);
     procedure rlbTesteBeforePrint(Sender: TObject; var PrintIt: boolean);
@@ -284,6 +282,7 @@ type
     procedure PintarQRCode(QRCodeData: String; APict: TPicture);
     function CompoemEnderecoCFe: String ;
     function CompoemCliche: String;
+    function CalcularCaractesWidth( Canvas : TCanvas; WidthTotal : Integer ): Integer;
   public
     { Public declarations }
     property ACBrSATExtrato : TACBrSATExtratoFortes read fACBrSATExtrato ;
@@ -561,6 +560,24 @@ begin
   Result := CNPJ_IE_IM;
 end;
 
+function TACBrSATExtratoFortesFr.CalcularCaractesWidth(Canvas: TCanvas;
+  WidthTotal: Integer): Integer;
+var
+  maxCaracter : Integer;
+  LinhaAjustada : String;
+begin
+  maxCaracter := 1;
+  LinhaAjustada := '*';
+
+  while (Canvas.TextWidth(LinhaAjustada) < WidthTotal) do
+  begin
+    LinhaAjustada := LinhaAjustada + '*';
+    maxCaracter := maxCaracter + 1;
+  end;
+
+  Result := maxCaracter;
+end;
+
 procedure TACBrSATExtratoFortesFr.rlVendaBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
@@ -603,8 +620,10 @@ begin
                                          IfThen( Trim(Dest.CNPJCPF)<>'',
                                                  FormatarCNPJouCPF(Dest.CNPJCPF),
                                                  ACBrStr('CONSUMIDOR NÃO IDENTIFICADO')),[]);
-      lRazaoSocialNome.Lines.Text := StringReplace(lRazaoSocialNome.Lines.Text,
-                                         '<xNome>', Dest.xNome,[]);
+      lRazaoSocialNome.Visible := (Trim(ACBrSATExtrato.CFe.Dest.xNome) <> '');
+      if lRazaoSocialNome.Visible then
+         lRazaoSocialNome.Lines.Text := StringReplace(lRazaoSocialNome.Lines.Text,
+                                            '<xNome>', Dest.xNome,[]);
     end;
 
     // Informações do Rodapé do Extrato //
@@ -640,27 +659,80 @@ end;
 procedure TACBrSATExtratoFortesFr.rlbDetItemBeforePrint(Sender: TObject;
   var PrintIt: boolean);
 var
-  LinhaItem, Descricao: String;
+  LinhaItem, LinhaTotal, sCodigo, sDescricao, sVlrImpostos: String;
+  nTamDescricao, maxCaracter: Integer;
+  {$IFNDEF FPC}
+    BMP : TBitmap;
+  {$ENDIF}
 begin
   PrintIt := not Resumido;
   if not PrintIt then exit;
 
+  mLinhaItem.Lines.Clear ;
+  {$IFNDEF FPC}
+    BMP:=TBitMap.Create;
+    try
+      BMP.Canvas.Font.Assign(mLinhaItem.Font);
+      maxCaracter := CalcularCaractesWidth( BMP.Canvas, mLinhaItem.Width);
+    finally
+      BMP.Free;
+    end;
+  {$ELSE}
+    maxCaracter := CalcularCaractesWidth(mLinhaItem.Canvas , mLinhaItem.Width);
+  {$ENDIF}
+
+
   with ACBrSATExtrato.CFe.Det.Items[fNumItem] do
   begin
-    lSequencia.Caption := IntToStrZero(nItem,3);
-
-    Descricao := Trim(Prod.xProd);
-    LinhaItem := Trim(Prod.cProd)+' '+
-                 Descricao+' '+
-                 FormatFloatBr(Prod.qCom, ACBrSATExtrato.Mask_qCom)+' '+
-                 Trim(Prod.uCom)+' X '+
-                 FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom))+' ';
+    if (Length( Trim( Prod.cEAN ) ) > 0) and (ACBrSATExtrato.UsaCodigoEanImpressao) then
+      sCodigo := Trim(Prod.cEAN)
+    else
+      sCodigo := Trim(Prod.cProd);
 
     if Imposto.vItem12741 > 0 then
-      LinhaItem := LinhaItem + '('+FormatFloatBr(Imposto.vItem12741)+') ';
+      sVlrImpostos := ' ('+FormatFloatBr(Imposto.vItem12741)+') '
+    else
+      sVlrImpostos := ' ';
 
-    mLinhaItem.Lines.Text := LinhaItem;
-    lTotalItem.Caption    := FormatFloatBr(Prod.vProd);
+    if ACBrSATExtrato.ImprimeEmUmaLinha then
+    begin
+      LinhaItem := IntToStrZero(nItem,3) + ' ' + sCodigo +
+                   ' ' + '[DesProd] ' +  ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) + ' ' +
+                   Trim( Prod.uCom) + ' X ' +
+                   FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)) +
+                   sVlrImpostos +
+                   FormatFloatBr( Prod.vProd );
+
+      // acerta tamanho da descrição
+      nTamDescricao := maxCaracter - Length(LinhaItem);
+      sDescricao := PadRight(Copy(Trim(Prod.xProd), 1, nTamDescricao), nTamDescricao);
+
+      LinhaItem := StringReplace(LinhaItem, '[DesProd]', sDescricao, [rfReplaceAll]);
+
+      mLinhaItem.Lines.Add(LinhaItem);
+    end
+    else
+    begin
+      LinhaItem := IntToStrZero(nItem,3) + ' ' +
+                               sCodigo + ' ' +
+                               Trim(Prod.xProd);
+
+      if Trim(infAdProd) <> '' then
+        LinhaItem := LinhaItem + '-'+ StringReplace( infAdProd, ';',#13,[rfReplaceAll]);
+
+      mLinhaItem.Lines.Add(LinhaItem);
+
+      sVlrImpostos := sVlrImpostos + '|';
+      //Centraliza os valores. A fonte dos itens foi mudada para Courier New, Pois esta o espaço tem o mesmo tamanho dos demais caractere.
+      LinhaTotal  := '|'+ ACBrSATExtrato.FormatQuantidade(Prod.qCom, False) +'|'+
+                     Trim(Prod.uCom) + ' X ' +
+                     FormatFloatBr(Prod.vUnCom, IfThen(Prod.EhCombustivel, ',0.000', ACBrSATExtrato.Mask_vUnCom)) +'|'+
+                     sVlrImpostos +
+                     FormatFloatBr(Prod.vProd) ;
+      LinhaTotal  := PadSpace( ACBrStr(LinhaTotal), maxCaracter-9, '|') ;
+
+      mLinhaItem.Lines.Add(LinhaTotal);
+    end;
   end;
 end;
 
@@ -669,7 +741,7 @@ procedure TACBrSATExtratoFortesFr.rlbDescItemBeforePrint(Sender: TObject;
 begin
   with ACBrSATExtrato.CFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vDesc > 0) ;
+    PrintIt := (not Resumido) and (Prod.vDesc > 0) and ACBrSATExtrato.ImprimeDescAcrescItem ;
 
     if PrintIt then
     begin
@@ -684,7 +756,7 @@ procedure TACBrSATExtratoFortesFr.rlbOutroItemBeforePrint(Sender: TObject;
 begin
   with ACBrSATExtrato.CFe.Det.Items[fNumItem] do
   begin
-    PrintIt := (not Resumido) and (Prod.vOutro > 0);
+    PrintIt := (not Resumido) and (Prod.vOutro > 0) and ACBrSATExtrato.ImprimeDescAcrescItem ;
 
     if PrintIt then
     begin
@@ -787,7 +859,7 @@ end;
 procedure TACBrSATExtratoFortesFr.lCPF_CNPJBeforePrint(Sender: TObject;
   var OutputText: string; var PrintIt: boolean);
 begin
-  PrintIt := (ACBrSATExtrato.CFe.Dest.CNPJCPF <> '') ;
+  PrintIt := (ACBrSATExtrato.CFe.Dest.CNPJCPF <> '') or ACBrSATExtrato.ImprimeCPFNaoInformado ;
 end;
 
 procedure TACBrSATExtratoFortesFr.lRazaoSocialNomeBeforePrint(Sender: TObject;
@@ -836,6 +908,12 @@ procedure TACBrSATExtratoFortesFr.pTotalCancBeforePrint(Sender: TObject;
   var PrintIt: Boolean);
 begin
   lTitTotalCan.Width := Trunc(pTotalCanc.Width / 2);
+end;
+
+procedure TACBrSATExtratoFortesFr.rlbConsumidorBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  PrintIt := ((Trim(ACBrSATExtrato.CFe.Dest.CNPJCPF) <> '') or ACBrSATExtrato.ImprimeCPFNaoInformado);
 end;
 
 procedure TACBrSATExtratoFortesFr.rlbsCabecalhoDataRecord(Sender: TObject;

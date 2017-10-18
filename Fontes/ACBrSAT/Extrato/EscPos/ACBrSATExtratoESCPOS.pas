@@ -62,10 +62,7 @@ type
   private
     FBuffer:TStringList;
     FImprimeChaveEmUmaLinha: TAutoSimNao;
-    FImprimeDescAcrescItem: Boolean;
-    FImprimeEmUmaLinha: Boolean;
     FPosPrinter : TACBrPosPrinter ;
-    FUsaCodigoEanImpressao: Boolean;
 
     procedure ImprimirCopias ;
     procedure SetPosPrinter(AValue: TACBrPosPrinter);
@@ -92,12 +89,6 @@ type
   published
     property PosPrinter : TACBrPosPrinter read FPosPrinter write SetPosPrinter;
 
-    property ImprimeEmUmaLinha: Boolean read FImprimeEmUmaLinha
-      write FImprimeEmUmaLinha default True;
-    property ImprimeDescAcrescItem: Boolean read FImprimeDescAcrescItem
-      write FImprimeDescAcrescItem default True;
-    property UsaCodigoEanImpressao: Boolean read FUsaCodigoEanImpressao
-      write FUsaCodigoEanImpressao default False;
     property ImprimeChaveEmUmaLinha: TAutoSimNao read FImprimeChaveEmUmaLinha
       write FImprimeChaveEmUmaLinha default rAuto;
 
@@ -128,9 +119,6 @@ begin
   FBuffer := TStringList.create;
   FPosPrinter := Nil;
 
-  FImprimeEmUmaLinha := True;
-  FImprimeDescAcrescItem := True;
-  FUsaCodigoEanImpressao := False;
   FImprimeChaveEmUmaLinha := rAuto;
 end;
 

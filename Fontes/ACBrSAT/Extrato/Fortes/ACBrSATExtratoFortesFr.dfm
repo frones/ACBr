@@ -1,8 +1,8 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 415
-  Top = 134
+  Left = 531
+  Top = 32
   Width = 805
-  Height = 789
+  Height = 1019
   Caption = 'ACBrSATExtratoFortes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   TextHeight = 13
   object rlVenda: TRLReport
     Left = 32
-    Top = -104
+    Top = 0
     Width = 302
     Height = 1512
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
@@ -39,7 +39,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 8
-      Top = 625
+      Top = 649
       Width = 286
       Height = 331
       AutoSize = True
@@ -219,7 +219,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       Left = 8
       Top = 289
       Width = 286
-      Height = 169
+      Height = 193
       AllowedBands = [btDetail, btSummary]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -232,41 +232,29 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 0
         Width = 286
-        Height = 24
+        Height = 12
         AutoSize = True
         BeforePrint = rlbDetItemBeforePrint
-        object lTotalItem: TRLLabel
-          Left = 242
-          Top = 0
-          Width = 44
-          Height = 24
-          Align = faClientRight
-          Alignment = taRightJustify
-          Caption = '99.999,99'
-          Layout = tlBottom
-        end
-        object lSequencia: TRLLabel
+        object mLinhaItem: TRLMemo
           Left = 0
           Top = 0
-          Width = 18
-          Height = 24
-          Align = faClientLeft
-          Caption = '001'
-        end
-        object mLinhaItem: TRLMemo
-          Left = 18
-          Top = 0
-          Width = 222
-          Height = 24
-          Anchors = [fkLeft, fkRight]
+          Width = 286
+          Height = 12
+          Align = faTop
           Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
           Lines.Strings = (
-            '9999999999999 DESCRICAO DO PRODUTO 99,999 UN x 999,999 (99,99)')
+            '999999999 DESCRICAO PRODUTO 99,999 UN x 999,999 (99,99)')
+          ParentFont = False
         end
       end
       object rlbDescItem: TRLBand
         Left = 0
-        Top = 24
+        Top = 12
         Width = 286
         Height = 24
         BeforePrint = rlbDescItemBeforePrint
@@ -310,7 +298,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbOutroItem: TRLBand
         Left = 0
-        Top = 48
+        Top = 36
         Width = 286
         Height = 24
         BeforePrint = rlbOutroItemBeforePrint
@@ -354,7 +342,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDeducISSQN: TRLBand
         Left = 0
-        Top = 72
+        Top = 60
         Width = 286
         Height = 24
         BeforePrint = rlbDeducISSQNBeforePrint
@@ -398,7 +386,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbSubTotal: TRLBand
         Left = 0
-        Top = 103
+        Top = 84
         Width = 286
         Height = 14
         AutoSize = True
@@ -429,7 +417,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDescontos: TRLBand
         Left = 0
-        Top = 117
+        Top = 98
         Width = 286
         Height = 14
         AutoSize = True
@@ -460,7 +448,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbAcrescimos: TRLBand
         Left = 0
-        Top = 131
+        Top = 112
         Width = 286
         Height = 14
         AutoSize = True
@@ -491,9 +479,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbTotal: TRLBand
         Left = 0
-        Top = 145
+        Top = 126
         Width = 286
         Height = 24
+        AutoSize = True
         BandType = btSummary
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -522,18 +511,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Layout = tlCenter
         end
       end
-      object rlbGap: TRLBand
-        Left = 0
-        Top = 96
-        Width = 286
-        Height = 7
-        BandType = btSummary
-        BeforePrint = rlbGapBeforePrint
-      end
     end
     object rlsbPagamentos: TRLSubDetail
       Left = 8
-      Top = 458
+      Top = 482
       Width = 286
       Height = 32
       OnDataRecord = rlsbPagamentosDataRecord
@@ -565,7 +546,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 14
         Width = 286
-        Height = 16
+        Height = 14
         AutoSize = True
         BandType = btSummary
         Font.Charset = DEFAULT_CHARSET
@@ -578,24 +559,36 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         object lTitTroco: TRLLabel
           Left = -2
           Top = 0
-          Width = 56
-          Height = 16
+          Width = 47
+          Height = 14
           Caption = 'Troco R$'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
         object lTroco: TRLLabel
-          Left = 225
+          Left = 235
           Top = 0
-          Width = 61
-          Height = 16
+          Width = 51
+          Height = 14
           Align = faRight
           Alignment = taRightJustify
           Caption = '99.999,99'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
       end
     end
     object rlsbObsFisco: TRLSubDetail
       Left = 8
-      Top = 490
+      Top = 514
       Width = 286
       Height = 20
       Font.Charset = DEFAULT_CHARSET
@@ -633,7 +626,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlDadosEntrega: TRLBand
       Left = 8
-      Top = 510
+      Top = 534
       Width = 286
       Height = 46
       AutoSize = True
@@ -691,7 +684,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlObsContrib: TRLBand
       Left = 8
-      Top = 556
+      Top = 580
       Width = 286
       Height = 69
       AutoSize = True
@@ -952,7 +945,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         BeforePrint = rlbTesteBeforePrint
         object lFiller1: TRLLabel
           Left = 0
-          Top = 42
+          Top = 70
           Width = 286
           Height = 14
           Align = faTop
@@ -962,7 +955,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lFiller2: TRLLabel
           Left = 0
-          Top = 56
+          Top = 42
           Width = 286
           Height = 14
           Align = faTop
@@ -972,7 +965,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lFiller3: TRLLabel
           Left = 0
-          Top = 70
+          Top = 56
           Width = 286
           Height = 14
           Align = faTop
@@ -1001,6 +994,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Height = 40
         AutoSize = True
+        BeforePrint = rlbConsumidorBeforePrint
         object lRazaoSocialNome: TRLMemo
           Left = 0
           Top = 26

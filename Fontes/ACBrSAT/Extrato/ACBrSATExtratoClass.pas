@@ -94,6 +94,10 @@ type
     {$ENDIF}
     fSoftwareHouse: String;
     fSite: String;
+    fImprimeDescAcrescItem: Boolean;
+    fImprimeEmUmaLinha: Boolean;
+    fUsaCodigoEanImpressao: Boolean;
+
 
     procedure ErroAbstract(NomeProcedure : String) ;
     function GetAbout: String;
@@ -128,6 +132,8 @@ type
 
     function CalcularConteudoQRCode(ID: String; dEmi_hEmi: TDateTime;
       Valor: Double; CNPJCPF: String; assinaturaQRCODE: String): String;
+
+    function FormatQuantidade(dValor: Double; dForcarDecimais: Boolean = True): String;
   published
     property ACBrSAT  : TComponent  read FACBrSAT write SetSAT ;
 
@@ -150,6 +156,10 @@ type
     property Site           : String   read fSite           write fSite;
     property Filtro         : TACBrSATExtratoFiltro read fFiltro write fFiltro default fiNenhum ;
     property MsgAppQRCode   : String   read fMsgAppQRCode   write fMsgAppQRCode;
+
+    property ImprimeEmUmaLinha: Boolean     read fImprimeEmUmaLinha     write fImprimeEmUmaLinha     default True;
+    property ImprimeDescAcrescItem: Boolean read fImprimeDescAcrescItem write fImprimeDescAcrescItem default True;
+    property UsaCodigoEanImpressao: Boolean read fUsaCodigoEanImpressao write fUsaCodigoEanImpressao default False;
   end ;
 
 implementation
@@ -187,6 +197,9 @@ begin
   fMsgAppQRCode   := ACBrStr(cMsgAppQRCode);
   fImprimeMsgOlhoNoImposto := True;
   fImprimeCPFNaoInformado := True;
+  fImprimeEmUmaLinha := True;
+  fImprimeDescAcrescItem := True;
+  fUsaCodigoEanImpressao := False;
 end;
 
 destructor TACBrSATExtratoClass.Destroy;
@@ -221,6 +234,16 @@ begin
             FloatToString(Valor,'.','0.00') + '|' +
             Trim(CNPJCPF) + '|' +
             assinaturaQRCODE;
+end;
+
+function TACBrSATExtratoClass.FormatQuantidade(dValor: Double;
+  dForcarDecimais: Boolean): String;
+begin
+  if (Frac(dValor) > 0) or (dForcarDecimais) then
+    Result := FormatFloatBr(dValor, Mask_qCom)
+  else
+    // caso contrário mostrar somente o número inteiro
+    Result := FloatToStr( dValor );
 end;
 
 procedure TACBrSATExtratoClass.ImprimirExtratoResumido(ACFe: TCFe);

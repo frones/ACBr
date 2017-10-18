@@ -366,7 +366,7 @@ begin
 
     if not Nivel1 then
       Nivel1 := (leitor.rExtrai(1, 'RespostaConsultaNFSE') <> '');
-               
+
     //SP
     if not Nivel1 then
       Nivel1 := (Leitor.rExtrai(1, 'RetornoConsulta') <> '');
@@ -638,7 +638,7 @@ begin
               FNFSe.NFSeCancelamento.Pedido.CodigoCancelamento := NFSeLida.NFSe.NFSeCancelamento.Pedido.CodigoCancelamento;
               FNFSe.Cancelada := NFSeLida.NFSe.Cancelada;
               FNFSe.Status := NFSeLida.NFSe.Status;
-              
+
               FNFSe.NFSeSubstituidora := NFSeLida.NFSe.NFSeSubstituidora;
             end;
 
@@ -688,7 +688,7 @@ begin
         Result := ListaNFSe.Sucesso = 'true';
       end;
     end;
-    
+
     // =======================================================================
     // Extrai a Lista de Mensagens de Erro
     // =======================================================================
@@ -890,7 +890,8 @@ begin
     if FProvedor in [proSP, proNotaBlu] then
     begin
       try
-        if Leitor.rExtrai(1, 'RetornoConsulta') <> '' then
+        if (Leitor.rExtrai(1, 'RetornoConsulta') <> '') or
+           (Leitor.rExtrai(1, 'RetornoEnvioRPS') <> '') then
         begin
           ListaNFSe.FSucesso := Leitor.rCampo(tcStr, 'Sucesso');
 

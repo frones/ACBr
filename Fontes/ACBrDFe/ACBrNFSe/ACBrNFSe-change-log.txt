@@ -48,6 +48,9 @@ Símbolo : Significado
 [-]     : Correção de Bug (assim esperamos)
 
 18/10/2017
+-- pnfsConversao --
+[*] Acrescentados novos tipos de Regime de tributação na classe TnfseRegimeEspecialTributacao.
+   Por: Italo Jurisato Junior
 -- pnfsLerListaNFSe --
 [*] Possível correção na leitura do retorno do método Gerar com o provedor SP.
    Por: Italo Jurisato Junior

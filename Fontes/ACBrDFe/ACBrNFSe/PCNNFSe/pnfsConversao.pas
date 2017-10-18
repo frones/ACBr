@@ -78,7 +78,9 @@ type
   TnfseRegimeEspecialTributacao = ( retNenhum, retMicroempresaMunicipal, retEstimativa,
                                     retSociedadeProfissionais, retCooperativa,
                                     retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
-                                    retLucroReal, retLucroPresumido, retSimplesNacional);
+                                    retLucroReal, retLucroPresumido, retSimplesNacional,
+                                    retEmpresaIndividualRELI, retEmpresaPP, retMicroEmpresario,
+                                    retOutros);
 
   TnfseSimNao = ( snSim, snNao );
   TnfseCondicaoPagamento = (cpAVista, cpNaApresentacao, cpAPrazo, cpCartaoCredito, cpCartaoDebito);
@@ -361,21 +363,27 @@ end;
 function RegimeEspecialTributacaoToStr(const t: TnfseRegimeEspecialTributacao): String;
 begin
   result := EnumeradoToStr(t,
-                           ['0','1','2','3','4','5','6','7','8','9'],
+                           ['0','1','2','3','4','5','6','7','8','9', '11', '12',
+                            '13', '14'],
                            [retNenhum, retMicroempresaMunicipal, retEstimativa,
                             retSociedadeProfissionais, retCooperativa,
                             retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
-                            retLucroReal, retLucroPresumido, retSimplesNacional]);
+                            retLucroReal, retLucroPresumido, retSimplesNacional,
+                            retEmpresaIndividualRELI, retEmpresaPP, retMicroEmpresario,
+                            retOutros]);
 end;
 
 function StrToRegimeEspecialTributacao(out ok: boolean; const s: String): TnfseRegimeEspecialTributacao;
 begin
   result := StrToEnumerado(ok, s,
-                          ['0','1','2','3','4','5','6','7','8','9'],
+                          ['0','1','2','3','4','5','6','7','8','9', '11', '12',
+                           '13', '14'],
                           [retNenhum, retMicroempresaMunicipal, retEstimativa,
                            retSociedadeProfissionais, retCooperativa,
                            retMicroempresarioIndividual, retMicroempresarioEmpresaPP,
-                           retLucroReal, retLucroPresumido, retSimplesNacional]);
+                           retLucroReal, retLucroPresumido, retSimplesNacional,
+                           retEmpresaIndividualRELI, retEmpresaPP, retMicroEmpresario,
+                           retOutros]);
 end;
 
 // Sim/Nao *********************************************************************
@@ -18261,6 +18269,10 @@ begin
     retLucroReal                 : Result := '7 - Lucro Real';
     retLucroPresumido            : Result := '8 - Lucro Presumido';
     retSimplesNacional           : Result := '9 - Simples Nacional';
+    retEmpresaIndividualRELI     : Result := '11 - Empresa Individual de Resp. Limitada (EIRELI)';
+    retEmpresaPP                 : Result := '12 - Empresa de Pequeno Porte (EPP)';
+    retMicroEmpresario           : Result := '13 - Microempresário';
+    retOutros                    : Result := '14 - Outros/Sem Vinculo';
   end;
 end;
 

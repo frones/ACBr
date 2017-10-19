@@ -50,7 +50,9 @@ type
   TACBrCalculadoraDisplayChange = procedure(Sender: TObject; Valor : Double) of object;
 
   { TACBrCalculadora }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCalculadora = class ( TACBrComponent )
   private
     FBorderStyle : TFormBorderStyle;

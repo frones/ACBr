@@ -86,7 +86,7 @@ begin
           with Produtos.Add do
           begin
             Codigo.Tipo             := tpcGTIN;
-            Codigo.Numero           := '7891234567891';
+            Codigo.CodigoGTIN           := '7891234567891';
             Descricao               := 'PRODUTO TESTE ' + IntToStr(I);
             ValorUnitario           := 1.23;
             Ippt                    := ipptTerceiros;
@@ -134,7 +134,7 @@ begin
         begin
           with TotalizadoresParciais.Add do
           begin
-            Identificao := '00T1234';
+            Identificacao := '00T1234';
             Valor       := 1234.56;
 
             for X := 1 to 2 do
@@ -142,7 +142,7 @@ begin
               with Produtos.Add do
               begin
                 Codigo.Tipo   := tpcProprio;
-                Codigo.Numero := IntToStr(X);
+                Codigo.CodigoProprio := IntToStr(X);
                 Descricao     := 'PRODUTO ' + IntToStr(X);
                 Quantidade    := 1234556;
                 Unidade       := 'UN';
@@ -155,7 +155,7 @@ begin
               with Servicos.Add do
               begin
                 Codigo.Tipo   := tpcProprio;
-                Codigo.Numero := IntToStr(X);
+                Codigo.CodigoProprio := IntToStr(X);
                 Descricao     := 'SERVICO ' + IntToStr(X);
                 Quantidade    := 1234556;
                 Unidade       := 'UN';

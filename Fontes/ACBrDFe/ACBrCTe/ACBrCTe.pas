@@ -61,7 +61,9 @@ type
   EACBrCTeException = class(EACBrDFeException);
 
   { TACBrCTe }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCTe = class(TACBrDFe)
   private
     FDACTe: TACBrCTeDACTEClass;
@@ -73,6 +75,9 @@ type
     FWebServices: TWebServices;
 
     function GetConfiguracoes: TConfiguracoesCTe;
+    function Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+      chCTe: String): Boolean;
+
     procedure SetConfiguracoes(AValue: TConfiguracoesCTe);
   	procedure SetDACTE(const Value: TACBrCTeDACTEClass);
 
@@ -116,16 +121,21 @@ type
     function EnviarEvento(idLote: Integer): Boolean;
     function Inutilizar(ACNPJ, AJustificativa: String;
       AAno, ASerie, ANumInicial, ANumFinal: Integer): Boolean;
-    // Método implementando acreditando que futuramente a SEFAZ vai disponibilizar
-    // conforme fez para a NF-e e MDF-e
-//    function DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU: String): Boolean;
-
+    function DistribuicaoDFePorUltNSU(AcUFAutor: integer;
+      ACNPJCPF, AultNSU: String): Boolean;
+    function DistribuicaoDFePorNSU(AcUFAutor: integer;
+      ACNPJCPF, ANSU: String): Boolean;
+    (*
+    function DistribuicaoDFePorChaveCTe(AcUFAutor: integer;
+      ACNPJCPF, AchCTe: String): Boolean;
+    *)
     procedure EnviarEmail(sPara, sAssunto: String;
       sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
-      StreamCTe: TStream = nil; NomeArq: String = ''); override;
+      StreamCTe: TStream = nil; NomeArq: String = ''; sReplyTo: TStrings = nil); override;
 
     procedure EnviarEmailEvento(sPara, sAssunto: String;
-      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil);
+      sMensagem: TStrings = nil; sCC: TStrings = nil; Anexos: TStrings = nil;
+      sReplyTo: TStrings = nil);
 
     procedure ImprimirEvento;
     procedure ImprimirEventoPDF;
@@ -239,7 +249,7 @@ end;
 
 function TACBrCTe.GetNomeModeloDFe: String;
 begin
-  Result := 'CTe';
+  Result := ModeloCTeToPrefixo( Configuracoes.Geral.ModeloDF );
 end;
 
 function TACBrCTe.GetNameSpaceURI: String;
@@ -357,7 +367,10 @@ var
  I: Integer;
  Ok: Boolean;
 begin
-  Result := schCTe;
+  if Configuracoes.Geral.ModeloDF = moCTe then
+    Result := schCTe
+  else
+    Result := schCTeOS;
 
   I := pos('<infCte', AXML);
   if I = 0  then
@@ -397,27 +410,32 @@ begin
   I := pos( '<rodo>', XML);
   if I = 0 then
   begin
-    I := pos( '<aereo>', XML);
-    if I> 0 then
-      Result := schcteModalAereo
+    I := pos( '<rodoOS>', XML);
+    if I > 0 then
+      Result := schcteModalRodoviarioOS
     else begin
-      I := pos( '<aquav>', XML);
-      if I> 0 then
-        Result := schcteModalAquaviario
+      I := pos( '<aereo>', XML);
+      if I > 0 then
+        Result := schcteModalAereo
       else begin
-        I := pos( '<duto>', XML);
-        if I> 0 then
-          Result := schcteModalDutoviario
+        I := pos( '<aquav>', XML);
+        if I > 0 then
+          Result := schcteModalAquaviario
         else begin
-          I := pos( '<ferrov>', XML);
-          if I> 0 then
-            Result := schcteModalFerroviario
+          I := pos( '<duto>', XML);
+          if I > 0 then
+            Result := schcteModalDutoviario
           else begin
-            I := pos( '<multimodal>', XML);
-            if I> 0 then
-              Result := schcteMultiModal
-            else
-              Result := schErro;
+            I := pos( '<ferrov>', XML);
+            if I > 0 then
+              Result := schcteModalFerroviario
+            else begin
+              I := pos( '<multimodal>', XML);
+              if I > 0 then
+                Result := schcteMultiModal
+              else
+                Result := schErro;
+            end;
           end;
         end;
       end;
@@ -503,31 +521,41 @@ var
   wd,wm,wa: word;
   Digito: Integer;
 begin
-  if FCTe.Ide.toma4.CNPJCPF <> '' then
+  if FCTe.Ide.modelo = 67 then
   begin
-    if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+    if FCTe.toma.enderToma.UF = 'EX' then
       wchave := '99' //exterior
     else
-      wchave := copy(inttostr(FCTe.Ide.toma4.enderToma.cMun),1,2);
+      wchave := Copy(IntToStr(FCTe.toma.enderToma.cMun), 1, 2);
   end
-  else begin
-    case FCTe.Ide.toma03.Toma of
-     tmRemetente: if FCTe.Rem.enderReme.UF = 'EX' then
-                    wchave := '99' //exterior
-                  else
-                    wchave := copy(inttostr(FCTe.Rem.enderReme.cMun), 1, 2);
-     tmExpedidor: if FCTe.Exped.enderExped.UF = 'EX' then
-                    wchave := '99' //exterior
-                  else
-                    wchave := copy(inttostr(FCTe.Exped.enderExped.cMun), 1, 2);
-     tmRecebedor: if FCTe.Receb.enderReceb.UF = 'EX' then
-                    wchave := '99' //exterior
-                  else
-                    wchave := copy(inttostr(FCTe.Receb.enderReceb.cMun), 1, 2);
-     tmDestinatario: if FCTe.Dest.EnderDest.UF = 'EX' then
-                       wchave := '99' //exterior
-                     else
-                       wchave := copy(inttostr(FCTe.Dest.EnderDest.cMun), 1, 2);
+  else
+  begin
+    if FCTe.Ide.toma4.CNPJCPF <> '' then
+    begin
+      if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+        wchave := '99' //exterior
+      else
+        wchave := copy(inttostr(FCTe.Ide.toma4.enderToma.cMun),1,2);
+    end
+    else begin
+      case FCTe.Ide.toma03.Toma of
+       tmRemetente: if FCTe.Rem.enderReme.UF = 'EX' then
+                      wchave := '99' //exterior
+                    else
+                      wchave := copy(inttostr(FCTe.Rem.enderReme.cMun), 1, 2);
+       tmExpedidor: if FCTe.Exped.enderExped.UF = 'EX' then
+                      wchave := '99' //exterior
+                    else
+                      wchave := copy(inttostr(FCTe.Exped.enderExped.cMun), 1, 2);
+       tmRecebedor: if FCTe.Receb.enderReceb.UF = 'EX' then
+                      wchave := '99' //exterior
+                    else
+                      wchave := copy(inttostr(FCTe.Receb.enderReceb.cMun), 1, 2);
+       tmDestinatario: if FCTe.Dest.EnderDest.UF = 'EX' then
+                         wchave := '99' //exterior
+                       else
+                         wchave := copy(inttostr(FCTe.Dest.EnderDest.cMun), 1, 2);
+      end;
     end;
   end;
 
@@ -538,31 +566,41 @@ begin
    else            wchave := wchave + '0'; //este valor caracteriza ERRO, valor tem q ser  2 ou 5
   end;
 
-  if FCTe.Ide.toma4.CNPJCPF <> '' then
+  if FCTe.Ide.modelo = 67 then
   begin
-    if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+    if FCTe.toma.enderToma.UF = 'EX' then
       wchave := wchave + Poem_Zeros('0', 14)
     else
-      wchave := wchave + Poem_Zeros(FCTe.Ide.toma4.CNPJCPF, 14);
+      wchave := wchave + Poem_Zeros(FCTe.toma.CNPJCPF, 14);
   end
-  else begin
-    case FCTe.Ide.toma03.Toma of
-     tmRemetente: if (FCTe.Rem.enderReme.UF='EX') then
-                    wchave := wchave + Poem_Zeros('0', 14)
-                  else
-                    wchave := wchave + Poem_Zeros(FCTe.Rem.CNPJCPF, 14);
-     tmExpedidor: if (FCTe.Exped.enderExped.UF='EX') then
-                    wchave := wchave + Poem_Zeros('0', 14)
-                  else
-                    wchave := wchave + Poem_Zeros(FCTe.Exped.CNPJCPF, 14);
-     tmRecebedor: if (FCTe.Receb.enderReceb.UF='EX') then
-                    wchave := wchave + Poem_Zeros('0', 14)
-                  else
-                    wchave := wchave + Poem_Zeros(FCTe.Receb.CNPJCPF, 14);
-     tmDestinatario: if (FCTe.Dest.EnderDest.UF='EX') then
-                       wchave := wchave + Poem_Zeros('0', 14)
-                     else
-                       wchave := wchave + Poem_Zeros(FCTe.Dest.CNPJCPF, 14);
+  else
+  begin
+    if FCTe.Ide.toma4.CNPJCPF <> '' then
+    begin
+      if FCTe.Ide.toma4.enderToma.UF = 'EX' then
+        wchave := wchave + Poem_Zeros('0', 14)
+      else
+        wchave := wchave + Poem_Zeros(FCTe.Ide.toma4.CNPJCPF, 14);
+    end
+    else begin
+      case FCTe.Ide.toma03.Toma of
+       tmRemetente: if (FCTe.Rem.enderReme.UF='EX') then
+                      wchave := wchave + Poem_Zeros('0', 14)
+                    else
+                      wchave := wchave + Poem_Zeros(FCTe.Rem.CNPJCPF, 14);
+       tmExpedidor: if (FCTe.Exped.enderExped.UF='EX') then
+                      wchave := wchave + Poem_Zeros('0', 14)
+                    else
+                      wchave := wchave + Poem_Zeros(FCTe.Exped.CNPJCPF, 14);
+       tmRecebedor: if (FCTe.Receb.enderReceb.UF='EX') then
+                      wchave := wchave + Poem_Zeros('0', 14)
+                    else
+                      wchave := wchave + Poem_Zeros(FCTe.Receb.CNPJCPF, 14);
+       tmDestinatario: if (FCTe.Dest.EnderDest.UF='EX') then
+                         wchave := wchave + Poem_Zeros('0', 14)
+                       else
+                         wchave := wchave + Poem_Zeros(FCTe.Dest.CNPJCPF, 14);
+      end;
     end;
   end;
 
@@ -630,7 +668,10 @@ begin
   Conhecimentos.Assinar;
   Conhecimentos.Validar;
 
-  Result := WebServices.Envia(ALote);
+  if Configuracoes.Geral.ModeloDF = moCTeOS then
+    Result := WebServices.EnviaOS(ALote)
+  else
+    Result := WebServices.Envia(ALote);
 
   if DACTE <> nil then
   begin
@@ -782,39 +823,60 @@ function TACBrCTe.Inutilizar(ACNPJ, AJustificativa: String; AAno, ASerie,
   ANumInicial, ANumFinal: Integer): Boolean;
 begin
   Result := True;
-  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno, 57,
+  WebServices.Inutiliza(ACNPJ, AJustificativa, AAno,
+                        Configuracoes.Geral.ModeloDFCodigo,
                         ASerie, ANumInicial, ANumFinal);
 end;
-{
-function TACBrCTe.DistribuicaoDFe(AcUFAutor: integer; ACNPJCPF, AultNSU,
-  ANSU: String): Boolean;
+
+function TACBrCTe.Distribuicao(AcUFAutor: integer; ACNPJCPF, AultNSU, ANSU,
+  chCTe: String): Boolean;
 begin
   WebServices.DistribuicaoDFe.cUFAutor := AcUFAutor;
   WebServices.DistribuicaoDFe.CNPJCPF := ACNPJCPF;
   WebServices.DistribuicaoDFe.ultNSU := AultNSU;
   WebServices.DistribuicaoDFe.NSU := ANSU;
+//  WebServices.DistribuicaoDFe.chCTe := AchCTe;
 
   Result := WebServices.DistribuicaoDFe.Executar;
 
   if not Result then
     GerarException( WebServices.DistribuicaoDFe.Msg );
 end;
-}
 
+function TACBrCTe.DistribuicaoDFePorUltNSU(AcUFAutor: integer; ACNPJCPF,
+  AultNSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, AultNSU, '', '');
+end;
+
+function TACBrCTe.DistribuicaoDFePorNSU(AcUFAutor: integer; ACNPJCPF,
+  ANSU: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', ANSU, '');
+end;
+(*
+function TACBrCTe.DistribuicaoDFePorChaveCTe(AcUFAutor: integer; ACNPJCPF,
+  AchCTe: String): Boolean;
+begin
+  Result := Distribuicao(AcUFAutor, ACNPJCPF, '', '', AchCTe);
+end;
+*)
 procedure TACBrCTe.EnviarEmail(sPara, sAssunto: String; sMensagem: TStrings;
-  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String);
+  sCC: TStrings; Anexos: TStrings; StreamCTe: TStream; NomeArq: String;
+  sReplyTo: TStrings);
 begin
   SetStatus( stCTeEmail );
 
   try
-    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq);
+    inherited EnviarEmail(sPara, sAssunto, sMensagem, sCC, Anexos, StreamCTe, NomeArq,
+     sReplyTo);
   finally
     SetStatus( stCTeIdle );
   end;
 end;
 
 procedure TACBrCTe.EnviarEmailEvento(sPara, sAssunto: String;
-  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings);
+  sMensagem: TStrings; sCC: TStrings; Anexos: TStrings; sReplyTo: TStrings);
 var
   NomeArq: String;
   AnexosEmail: TStrings;
@@ -831,7 +893,7 @@ begin
     NomeArq := PathWithDelim(DACTE.PathPDF) + NomeArq + '-procEventoCTe.pdf';
     AnexosEmail.Add(NomeArq);
 
-    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '');
+    EnviarEmail(sPara, sAssunto, sMensagem, sCC, AnexosEmail, nil, '', sReplyTo);
   finally
     AnexosEmail.Free;
   end;

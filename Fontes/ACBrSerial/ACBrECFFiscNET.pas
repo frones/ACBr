@@ -125,10 +125,10 @@ TACBrECFFiscNET = class( TACBrECFClass )
 
     // urano e demais
     xDLLReadLeMemorias : function (szPortaSerial, szNomeArquivo,
-       szSerieECF: AnsiString; bAguardaConcluirLeitura : Char) : Integer; stdcall;
+       szSerieECF: AnsiString; bAguardaConcluirLeitura : AnsiChar) : Integer; stdcall;
 
     xDLLATO17GeraArquivo : function (szArquivoBinario, szArquivoTexto, szPeriodoIni,
-       szPeriodoFIM: AnsiString; TipoPeriodo: Char;
+       szPeriodoFIM: AnsiString; TipoPeriodo: AnsiChar;
        szUsuario, szTipoLeitura: AnsiString) : Integer; stdcall;
 
     //Elgin
@@ -258,6 +258,8 @@ TACBrECFFiscNET = class( TACBrECFClass )
     Procedure DescontoAcrescimoItemAnterior( ValorDescontoAcrescimo : Double = 0;
        DescontoAcrescimo : String = 'D'; TipoDescontoAcrescimo : String = '%';
        NumItem : Integer = 0 ) ;  override ;
+    procedure CancelaDescontoAcrescimoItem( NumItem : Integer;
+       TipoAcrescimoDesconto: String = 'D') ;override ;
     Procedure SubtotalizaCupom( DescontoAcrescimo : Double = 0;
        MensagemRodape : AnsiString  = '' ) ; override ;
     Procedure EfetuaPagamento( CodFormaPagto : String; Valor : Double;
@@ -320,8 +322,9 @@ TACBrECFFiscNET = class( TACBrECFClass )
        Finalidade: TACBrECFFinalizaArqMFD = finMFD;
        TipoContador: TACBrECFTipoContador = tpcCOO  ) ; override ;
 
-    Procedure ArquivoMF_DLL(NomeArquivo: AnsiString); override ;
-    Procedure ArquivoMFD_DLL(NomeArquivo: AnsiString); override ;
+    Procedure ArquivoMF_Binario_DLL(NomeArquivo: AnsiString); override;
+    Procedure ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD; NomeArquivo,
+      StrInicial, StrFinal: AnsiString); override;
 
     Procedure ImprimeCheque(Banco : String; Valor : Double ; Favorecido,
        Cidade : String; Data : TDateTime ;Observacao : String = '') ; override ;
@@ -360,7 +363,8 @@ TACBrECFFiscNET = class( TACBrECFClass )
 
 implementation
 Uses ACBrECF, ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils{$ELSE} ACBrD5, Windows{$ENDIF},
+     {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+     {$IFDEF COMPILER6_UP} DateUtils, StrUtils, {$ELSE} ACBrD5, {$ENDIF}
      SysUtils, Math, IniFiles ;
 
 { -------------------------  TACBrECFFiscNETComando -------------------------- }
@@ -672,7 +676,9 @@ begin
      // Ajuste de Colunas para modelos Específicos //
      if (fsModeloECF = 'TPF2001') then
         fpColunas := 40
-     else if (pos(fsModeloECF, 'X5|3202DT|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER') > 0) then
+     else if (pos(fsModeloECF, 'X5|3202DT|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER|ZPM/1FIT LOGGER') > 0) then
+        fpColunas := 48
+     else if Pos('simulador', LowerCase(fsModeloECF)) > 0 then
         fpColunas := 48;
 
   except
@@ -864,7 +870,7 @@ end;
 
 function TACBrECFFiscNET.GetNumSerie: String;
 begin
-  Result := LeTexto( 'NumeroSerieECF' );
+  Result := Trim(LeTexto( 'NumeroSerieECF'));
 end;
 
 function TACBrECFFiscNET.GetNumSerieMFD: String;
@@ -907,12 +913,14 @@ function TACBrECFFiscNET.GetEstado: TACBrECFEstado;
 var
   Est, Ind: Integer;
 begin
-  Result := fpEstado ;  // Suprimir Warning
-  try
-    fpEstado := estNaoInicializada ;
-    if (not fpAtivo) then
-      exit ;
+  fpEstado := estNaoInicializada ;
+  if (not fpAtivo) then
+  begin
+    Result := fpEstado ;
+    Exit ;
+  end;
 
+  try
     fpEstado := estDesconhecido ;
 
     Est := LeInteiro( 'EstadoFiscal' );
@@ -1128,6 +1136,17 @@ begin
   FechaRelatorio ;   { Fecha relatorio se ficou algum aberto (só por garantia)}
 end;
 
+procedure TACBrECFFiscNET.CancelaDescontoAcrescimoItem(NumItem: Integer;
+  TipoAcrescimoDesconto: String);
+begin
+  FiscNETComando.NomeComando := 'AcresceItemFiscal' ;
+  FiscNETComando.AddParamBool('Cancelar',True);
+  if NumItem > 0 then
+     FiscNETComando.AddParamInteger('NumItem',NumItem) ;
+
+  EnviaComando ;
+end;
+
 procedure TACBrECFFiscNET.CancelaItemVendido(NumItem: Integer);
 begin
   FiscNETComando.NomeComando := 'CancelaItemFiscal' ;
@@ -1159,6 +1178,8 @@ begin
        Obs := fsPAF
     else
        Obs := fsPAF + #10 + Obs ;
+
+    Obs := AjustaLinhas(Obs, Colunas, NumMaxLinhasRodape);
   end ;
 
   { Se tiver Observações no rodape, deve enviar antes do consumidor }
@@ -1681,7 +1702,7 @@ begin
 
   while Length( Linha ) > 0 do
   begin
-      P := Length( Linha ) ;
+     P := Length( Linha ) ;
      if P > MaxChars then    { Acha o fim de Linha mais próximo do limite máximo }
         P := PosLast(#10, LeftStr(Linha,MaxChars) ) ;
 
@@ -2653,7 +2674,7 @@ begin
      AbrePortaSerialDLL( PortaSerial, ExtractFilePath( NomeArquivo ) ) ;
 
      ArqTmp := ExtractFilePath( NomeArquivo ) ;
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
 
      iRet := xElgin_DownloadMFD(ArqTmp + '.mfd', '1', DiaIni, DiaFim, '');
      if (iRet <> 1) then
@@ -2671,7 +2692,7 @@ begin
         raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Elgin_FormatoDadosMFD.'+sLineBreak+
                                          'Arquivo: "' + NomeArquivo + '" não gerado' )) ;
      xElgin_FechaPortaSerial();
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
   finally
     Ativo := OldAtivo ;
   end;
@@ -2706,7 +2727,7 @@ begin
      AbrePortaSerialDLL( PortaSerial, ExtractFilePath( NomeArquivo ) ) ;
 
      ArqTmp := ExtractFilePath( NomeArquivo ) ;
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
 
      iRet := xElgin_DownloadMFD(ArqTmp + '.mfd', '2', CooIni, CooFim, Prop);
      if (iRet <> 1) then
@@ -2724,7 +2745,7 @@ begin
         raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Elgin_FormatoDadosMFD.'+sLineBreak+
                                          'Arquivo: "' + NomeArquivo + '" não gerado' )) ;
      xElgin_FechaPortaSerial();
-     DeleteFile( ArqTmp + '.mfd' ) ;
+     SysUtils.DeleteFile( ArqTmp + '.mfd' ) ;
   finally
     Ativo := OldAtivo ;
   end;
@@ -2816,7 +2837,7 @@ begin
       begin
         ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.TDM' ;
         if FileExists( NomeArquivo ) then
-           DeleteFile( NomeArquivo ) ;
+           SysUtils.DeleteFile( NomeArquivo ) ;
 
         DiaIni := FormatDateTime('yyyymmdd', DataInicial);
         DiaFim := FormatDateTime('yyyymmdd', DataFinal);
@@ -2913,7 +2934,7 @@ begin
       begin
         ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBr.TDM' ;
         if FileExists( NomeArquivo ) then
-           DeleteFile( NomeArquivo ) ;
+           SysUtils.DeleteFile( NomeArquivo ) ;
 
         iRet := xDLLReadLeMemorias( PortaSerial, ArqTmp, NumFab, '1');
 
@@ -2935,16 +2956,144 @@ begin
   end;
 end;
 
-procedure TACBrECFFiscNET.ArquivoMF_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFFiscNET.ArquivoMF_Binario_DLL(NomeArquivo: AnsiString);
+Var
+  iRet : Integer;
+  PortaSerial, ModeloECF, NumFab : AnsiString;
+  CooIni, CooFim, ArqTmp : AnsiString ;
+  OldAtivo : Boolean ;
+  cFinalidade:AnsiString;
 begin
-  // TODO:
-  inherited ArquivoMF_DLL(NomeArquivo);
+  NumFab      := NumSerie;
+  ModeloECF   := SubModeloECF;
+  CooIni      := '000001';
+  CooFim      := '999999';
+  cFinalidade := 'MF';
+  PortaSerial := fpDevice.Porta ;
+
+  ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBrMF.MF' ;
+
+  if FilesExists( ArqTmp ) then DeleteFile( ArqTmp );
+  if FilesExists( NomeArquivo ) then DeleteFile( NomeArquivo );
+
+  LoadDLLFunctions;
+  OldAtivo := Ativo;
+  try
+     Ativo := False;
+
+     if pos(fsMarcaECF, 'dataregis|termoprinter') > 0 then
+      begin
+        iRet := xGera_PAF( PortaSerial, ModeloECF, ArqTmp, CooIni, CooFim );
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar Gera_PAF.'+sLineBreak+
+                                            'Cod.: '+IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+
+        if not FileExists( NomeArquivo ) then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Gera_PAF.'+sLineBreak+
+                                            ': "'+NomeArquivo + '" não gerado' ))
+      end
+
+     else if (fsMarcaECF = 'elgin') then
+      begin
+        AbrePortaSerialDLL(fpDevice.Porta, ExtractFilePath(NomeArquivo));
+
+        iRet := xElgin_LeMemoriasBinario( ArqTmp, NumFab, true );
+
+        if (iRet <> 1) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro ao executar Elgin_LeMemoriasBinario.'+sLineBreak+
+                                                   'Cod.: ' + IntToStr(iRet))) ;
+
+        if not FilesExists( ArqTmp ) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro na execução de Elgin_LeMemoriasBinario.'+sLineBreak+
+                                          'Arquivo binário não gerado!'));
+
+        xElgin_FechaPortaSerial();
+      end
+     else
+      begin
+        iRet := xDLLReadLeMemorias( PortaSerial, ArqTmp, NumFab, '1');
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar DLLReadLeMemorias.' + sLineBreak +
+                                            'Cod.: '+ IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+      end ;
+  finally
+    Ativo := OldAtivo ;
+    if AnsiUpperCase(ArqTmp) <> AnsiUpperCase(NomeArquivo) then
+      CopyFileTo(ArqTmp, NomeArquivo) ;
+  end;
 end;
 
-procedure TACBrECFFiscNET.ArquivoMFD_DLL(NomeArquivo: AnsiString);
+procedure TACBrECFFiscNET.ArquivoMFD_Binario_DLL(Tipo: TACBrECFTipoDownloadMFD;
+  NomeArquivo, StrInicial, StrFinal: AnsiString);
+Var
+  iRet : Integer;
+  PortaSerial, ModeloECF, NumFab : AnsiString;
+  ArqTmp : AnsiString ;
+  OldAtivo : Boolean ;
 begin
-  // TODO:
-  inherited ArquivoMFD_DLL(NomeArquivo);
+  NumFab      := NumSerie;
+  ModeloECF   := SubModeloECF;
+  PortaSerial := fpDevice.Porta ;
+
+  ArqTmp := ExtractFilePath( NomeArquivo ) + 'ACBrMFD.MFD' ;
+
+  if FilesExists( ArqTmp ) then DeleteFile( ArqTmp );
+  if FilesExists( NomeArquivo ) then DeleteFile( NomeArquivo );
+
+  LoadDLLFunctions;
+  OldAtivo := Ativo;
+  try
+     Ativo := False;
+
+     if pos(fsMarcaECF, 'dataregis|termoprinter') > 0 then
+      begin
+        iRet := xGera_PAF( PortaSerial, ModeloECF, ArqTmp, StrInicial, StrFinal );
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar Gera_PAF.'+sLineBreak+
+                                            'Cod.: '+IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+
+        if not FileExists( NomeArquivo ) then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro na execução de Gera_PAF.'+sLineBreak+
+                                            ': "'+NomeArquivo + '" não gerado' ))
+      end
+
+     else if (fsMarcaECF = 'elgin') then
+      begin
+        AbrePortaSerialDLL(fpDevice.Porta, ExtractFilePath(NomeArquivo));
+
+        iRet := xElgin_LeMemoriasBinario( ArqTmp, NumFab, true );
+
+        if (iRet <> 1) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro ao executar Elgin_LeMemoriasBinario.'+sLineBreak+
+                                                   'Cod.: ' + IntToStr(iRet))) ;
+
+        if not FilesExists( ArqTmp ) then
+           raise EACBrECFERRO.Create(ACBrStr('Erro na execução de Elgin_LeMemoriasBinario.'+sLineBreak+
+                                          'Arquivo binário não gerado!'));
+
+        xElgin_FechaPortaSerial();
+      end
+     else
+      begin
+        iRet := xDLLReadLeMemorias( PortaSerial, ArqTmp, NumFab, '1');
+
+        if iRet <> 0 then
+           raise EACBrECFERRO.Create( ACBrStr( 'Erro ao executar DLLReadLeMemorias.' + sLineBreak +
+                                            'Cod.: '+ IntToStr(iRet) + ' - ' +
+                                            GetErroAtoCotepe1704(iRet) )) ;
+      end ;
+  finally
+    Ativo := OldAtivo ;
+
+    if AnsiUpperCase(ArqTmp) <> AnsiUpperCase(NomeArquivo) then
+      CopyFileTo(ArqTmp, NomeArquivo) ;
+  end;
 end;
 
 function TACBrECFFiscNET.GetDadosUltimaReducaoZ: String;
@@ -3168,7 +3317,7 @@ var
 begin
 
   // Modelos mais antigos usam comandos "B" //
-  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K') > 0 );
+  CodB := (pos(fsModeloECF,'3202DT|X5|ELGIN FIT|ELGIN K|URANO/1FIT LOGGER') > 0 );
 
   if ATag = cTagLigaExpandido then
     Result := ifthen(CodB, cExpandidoON_B , cExpandidoON)

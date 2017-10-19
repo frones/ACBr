@@ -8,17 +8,18 @@ uses
   Classes, SysUtils, CmdUnit, pcnConversao, strutils;
 
 procedure DoSAT(Cmd: TACBrCmd);
-procedure CarregarDadosVenda(aStr: String);
+procedure CarregarDadosVenda(aStr: String; aNomePDF : String = '');
 function ParamAsXML(AParam: String): String;
 procedure CarregarDadosCancelamento(aStr: String);
 function MontaDadosStatusSAT : AnsiString;
 function RespostaEnviarDadosVenda( Resultado: String): AnsiString;
-procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True) ;
+procedure GerarIniCFe( AStr: WideString; ApenasTagsAplicacao: Boolean = True);
 
 implementation
 
 uses
-  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo;
+  ACBrMonitor1,ACBrUtil,DoACBrUnit,IniFiles, pcnAuxiliar, typinfo,
+  ACBrSATExtratoClass;
 
 procedure DoSAT(Cmd: TACBrCmd);
 var
@@ -200,26 +201,35 @@ begin
 
     else if Cmd.Metodo = 'imprimirextratovenda' then
     begin
-      PrepararImpressaoSAT;
+      PrepararImpressaoSAT(cmd.Params(1));
       CarregarDadosVenda(cmd.Params(0));
       ACBrSAT1.ImprimirExtrato;
     end
 
     else if Cmd.Metodo = 'imprimirextratoresumido' then
     begin
-      PrepararImpressaoSAT;
+      PrepararImpressaoSAT(cmd.Params(1));
       CarregarDadosVenda(cmd.Params(0));
       ACBrSAT1.ImprimirExtratoResumido;
     end
 
     else if Cmd.Metodo = 'imprimirextratocancelamento' then
     begin
-      PrepararImpressaoSAT;
+      PrepararImpressaoSAT(cmd.Params(2));
       CarregarDadosVenda(cmd.Params(0));
       CarregarDadosCancelamento(cmd.Params(1));
       ACBrSAT1.ImprimirExtratoCancelamento;
     end
 
+    else if Cmd.Metodo = 'gerarpdfextratovenda' then
+    begin
+      PrepararImpressaoSAT(cmd.Params(0),true);
+      CarregarDadosVenda(cmd.Params(0),cmd.Params(1));
+      ACBrSAT1.ImprimirExtrato;
+
+      Cmd.Resposta := '[CFe]'+sLineBreak+
+                      'NomeArquivo='+ACBrSAT1.Extrato.NomeArquivo;
+    end
     else if Cmd.Metodo = 'extrairlogs' then
       ACBrSAT1.ExtrairLogs(cmd.Params(0))
 
@@ -245,15 +255,23 @@ begin
   end;
 end;
 
-procedure CarregarDadosVenda(aStr: String);
+procedure CarregarDadosVenda(aStr: String; aNomePDF: String);
 begin
   if Trim(aStr) = '' then
     exit;
 
-  if (pos(#10,aStr) = 0) and FileExists(aStr) then
-    FrmACBrMonitor.ACBrSAT1.CFe.LoadFromFile(aStr)
-  else
-    FrmACBrMonitor.ACBrSAT1.CFe.AsXMLString := ConvertStrRecived(aStr);
+  with FrmACBrMonitor.ACBrSAT1 do
+  begin
+    if (pos(#10,aStr) = 0) and FileExists(aStr) then
+      CFe.LoadFromFile(aStr)
+    else
+      CFe.AsXMLString := ConvertStrRecived(aStr);
+
+    if ( FrmACBrMonitor.ACBrSAT1.Extrato.Filtro = TACBrSATExtratoFiltro(fiPDF) ) then
+      Extrato.NomeArquivo := IfThen(aNomePDF <> '', aNomePDF ,
+        CalcCFeNomeArq(ConfigArquivos.PastaCFeVenda,CFe.infCFe.ID,'','.pdf'));
+  end;
+
 end;
 
 function ParamAsXML(AParam: String): String;
@@ -307,7 +325,7 @@ begin
       Result := Result + 'LISTA_INICIAL = '+LISTA_INICIAL+ sLineBreak;
       Result := Result + 'LISTA_FINAL = '+LISTA_FINAL+ sLineBreak;
       Result := Result + 'DH_CFe = '+DateTimeToStr(DH_CFe)+ sLineBreak;
-      Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_CFe)+ sLineBreak;
+      Result := Result + 'DH_ULTIMA = '+DateTimeToStr(DH_ULTIMA)+ sLineBreak;
       Result := Result + 'CERT_EMISSAO = '+DateToStr(CERT_EMISSAO)+ sLineBreak;
       Result := Result + 'CERT_VENCIMENTO = '+DateToStr(CERT_VENCIMENTO)+ sLineBreak;
       Result := Result + 'ESTADO_OPERACAO = '+EstadoOperacaoToStr(ESTADO_OPERACAO)
@@ -338,7 +356,6 @@ end;
 procedure GerarIniCFe(AStr: WideString; ApenasTagsAplicacao: Boolean = True);
 var
   INIRec : TMemIniFile ;
-  SL     : TStringList;
   OK     : Boolean;
   I, J   : Integer;
   sSecao, sFim, sCodPro : String;
@@ -359,20 +376,8 @@ var
   end;
 
 begin
-  INIRec := TMemIniFile.create( 'nfe.ini' ) ;
+  INIRec := LerConverterIni(AStr);
   try
-    SL := TStringList.Create;
-    try
-      if (pos(#10,AStr) = 0) and FilesExists(Astr) then
-         SL.LoadFromFile(AStr)
-      else
-         Sl.Text := ConvertStrRecived( Astr );
-
-      INIRec.SetStrings( SL );
-    finally
-      SL.Free ;
-    end;
-
     with FrmACBrMonitor do
      begin
        ACBrSAT1.InicializaCFe;
@@ -443,9 +448,10 @@ begin
                 infAdProd      := INIRec.ReadString(sSecao,'infAdProd','');
 
                 Prod.cProd    := INIRec.ReadString( sSecao,'Codigo'   ,INIRec.ReadString( sSecao,'cProd'   ,''));
-                Prod.cEAN      := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
+                Prod.cEAN     := INIRec.ReadString( sSecao,'EAN'      ,INIRec.ReadString( sSecao,'cEAN'      ,''));
                 Prod.xProd    := INIRec.ReadString( sSecao,'Descricao',INIRec.ReadString( sSecao,'xProd',''));
-                Prod.NCM       := INIRec.ReadString( sSecao,'NCM'      ,'');
+                Prod.NCM      := INIRec.ReadString( sSecao,'NCM'      ,'');
+                Prod.CEST     := INIRec.ReadString( sSecao,'CEST'      ,'');
                 Prod.CFOP     := INIRec.ReadString( sSecao,'CFOP'     ,'');
                 Prod.uCom     := INIRec.ReadString( sSecao,'Unidade'  ,INIRec.ReadString( sSecao,'uCom'  ,''));
                 Prod.EhCombustivel := (INIRec.ReadInteger( sSecao,'Combustivel',0)=1);
@@ -571,7 +577,7 @@ begin
                           vAliq     := StringToFloatDef( INIRec.ReadString(sSecao,'Aliquota'    ,INIRec.ReadString(sSecao,'vAliq' ,'')) ,0);
                           vISSQN    := StringToFloatDef( INIRec.ReadString(sSecao,'ValorISSQN'  ,INIRec.ReadString(sSecao,'vISSQN','')) ,0);
                           cMunFG    := INIRec.ReadInteger(sSecao,'MunicipioFatoGerador', INIRec.ReadInteger(sSecao,'cMunFG',0));
-                          cListServ := INIRec.ReadInteger(sSecao,'CodigoServico',INIRec.ReadInteger(sSecao,'cListServ',0));
+                          cListServ := INIRec.ReadString(sSecao,'CodigoServico',INIRec.ReadString(sSecao,'cListServ',''));
                           cServTribMun := INIRec.ReadString(sSecao,'cServTribMun','');
                           cNatOp    := INIRec.ReadInteger(sSecao,'cNatOp',0);
                           indIncFisc:= StrToindIncentivo(OK,INIRec.ReadString(sSecao,'indIncFisc','0'));

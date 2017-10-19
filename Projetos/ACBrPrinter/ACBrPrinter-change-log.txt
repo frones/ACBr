@@ -1,0 +1,52 @@
+{******************************************************************************}
+{ Projeto: ACBrMonitor                                                         }
+{  Executavel que faz uso do conjunto de componentes ACBr para emissão de NFe  }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2006 Daniel Simoes de Almeida               }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na página do Projeto ACBr     }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo   }
+{ sob os termos da Licença Pública Geral GNU, conforme publicada pela Free     }
+{ Software Foundation; tanto a versão 2 da Licença como (a seu critério)       }
+{ qualquer versão mais nova.                                                   }
+{                                                                              }
+{  Este programa é distribuído na expectativa de ser útil, mas SEM NENHUMA     }
+{ GARANTIA; nem mesmo a garantia implícita de COMERCIALIZAÇÃO OU DE ADEQUAÇÃO A}
+{ QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para  }
+{ obter mais detalhes. (Arquivo LICENCA.TXT ou LICENSE.TXT)                    }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este}
+{ programa; se não, escreva para a Free Software Foundation, Inc., 59 Temple   }
+{ Place, Suite 330, Boston, MA 02111-1307, USA. Você também pode obter uma     }
+{ copia da licença em:  http://www.opensource.org/licenses/gpl-license.php     }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{******************************************************************************
+|* ACBrPrinter
+|*
+|* PROPÓSITO: Registro de Alterações
+******************************************************************************}
+
+Mais informações sobre o ACBrPrinter em:
+http://anfm.blogspot.com.br/2015/07/acbrprinter-utilitario-para-impressao.html
+http://www.projetoacbr.com.br/forum/files/file/385-acbrprinter-sac/
+
+Símbolo : Significado
+
+[+]     : Novo recurso
+[*]     : Recurso modificado/melhorado
+[-]     : Correção de Bug (assim esperamos)
+
+Versão 1.0.0.1    16/06/17
+[+]    Primeira versão distribuida no SAC do ACBrPrinter
+
+16/06/17
+[-] Modificada rotina de gravação do arquivo de configurações para adicionar
+	extensão .ini
+	por: Celso Marigo Junior

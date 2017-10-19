@@ -9,7 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes"/>
+        <OtherUnitFiles Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes;..\..\..\..\..\Fontes\ACBrSAT\Extrato"/>
         <UnitOutputDirectory Value="..\..\..\..\..\Lib\Lazarus\ACBrSAT\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Other>
@@ -32,8 +32,8 @@
         <Type Value="LFM"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\Fortes\ACBrSATExtratoFortes.pas"/>
-        <UnitName Value="ACBrSATExtratoFortes"/>
+        <Filename Value="..\..\..\..\..\Fontes\ACBrSAT\Extrato\ACBrSATExtratoReportClass.pas"/>
+        <UnitName Value="ACBrSATExtratoReportClass"/>
       </Item3>
     </Files>
     <RequiredPkgs Count="3">

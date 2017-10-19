@@ -41,19 +41,15 @@ interface
 uses
 Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, pgnreConversao,pgnreGNRERetorno,pgnreGNRE, ACBrGNRE2,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
 
 type
 
   { TfrlGuiaRL }
 
   TfrlGuiaRL = class(TForm)
-  dsItens: TDatasource;
   RLGNRe: TRLReport;
   RLPDFFilter1: TRLPDFFilter;
-  procedure FormCreate(Sender: TObject);
-  procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -73,8 +69,6 @@ type
     FMargemEsquerda: double;
     FMargemDireita: double;
     FImpressora: string;
-    cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
-    procedure ConfigDataSet;
   public
     { Public declarations }
     class procedure Imprimir(AOwner: TComponent;
@@ -110,9 +104,6 @@ type
 
 implementation
 
-uses
-  MaskUtils, ACBrUtil;
-
 {$ifdef FPC}
  {$R *.lfm}
 {$else}
@@ -136,7 +127,6 @@ class procedure TfrlGuiaRL.Imprimir(AOwner: TComponent;
   APrintDialog: Boolean = True);
 begin
   with Create(AOwner) do
-    //with TfrlGuiaRL do
     try
       FGNRe := AGNRe;
       FEmail := AEmail;
@@ -180,7 +170,6 @@ class procedure TfrlGuiaRL.SavePDF(AOwner: TComponent;
   AMargemDireita: double = 0.51);
 begin
   with Create(AOwner) do
-    //with TfrlGuiaRL do
     try
       FGNRe := AGNRe;
       FEmail := AEmail;
@@ -205,84 +194,6 @@ begin
     finally
       Free;
     end;
-end;
-
-procedure TfrlGuiaRL.FormDestroy(Sender: TObject);
-begin
-     RLGNRe.Free;
-     FreeAndNil(dsItens);
-end;
-
-procedure TfrlGuiaRL.FormCreate(Sender: TObject);
-begin
-  ConfigDataSet;
-end;
-
-procedure TfrlGuiaRL.ConfigDataSet;
-begin
-  if not Assigned(cdsItens) then
-    cdsItens := {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE} TBufDataset.Create(nil){$ENDIF};
-
-  if cdsItens.Active then
-  begin
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).EmptyDataSet;
- {$ENDIF}
-    cdsItens.Active := False;
-  end;
-
- {$IFDEF BORLAND}
- if cdsItens is TClientDataSet then
-  begin
-  TClientDataSet(cdsItens).StoreDefs := False;
-  TClientDataSet(cdsItens).IndexDefs.Clear;
-  TClientDataSet(cdsItens).IndexFieldNames := '';
-  TClientDataSet(cdsItens).IndexName := '';
-  TClientDataSet(cdsItens).Aggregates.Clear;
-  TClientDataSet(cdsItens).AggFields.Clear;
-  end;
- {$ELSE}
-  if cdsItens is TBufDataset then
-  begin
-    TBufDataset(cdsItens).IndexDefs.Clear;
-    TBufDataset(cdsItens).IndexFieldNames := '';
-    TBufDataset(cdsItens).IndexName := '';
-  end;
- {$ENDIF}
-
-  with cdsItens do
-    if FieldCount = 0 then
-    begin
-      FieldDefs.Clear;
-      Fields.Clear;
-      FieldDefs.Add('CHAVE1', ftString, 84);
-      FieldDefs.Add('CHAVE2', ftString, 84);
-
-   {$IFDEF BORLAND}
-    if cdsItens is TClientDataSet then
-    TClientDataSet(cdsItens).CreateDataSet;
-   {$ELSE}
-      if cdsItens is TBufDataset then
-        TBufDataset(cdsItens).CreateDataSet;
-   {$ENDIF}
-    end;
-
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).StoreDefs := False;
- {$ENDIF}
-
-  if not cdsItens.Active then
-    cdsItens.Active := True;
-
-  {$IFDEF BORLAND}
-   if cdsItens is TClientDataSet then
-   if cdsItens.Active then
-   TClientDataSet(cdsItens).LogChanges := False;
- {$ENDIF}
-
-  dsItens.dataset := cdsItens;
 end;
 
 end.

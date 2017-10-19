@@ -9,7 +9,6 @@
       <Title Value="ACBrBlocoXSign"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
-      <Icon Value="0"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -74,7 +73,7 @@
     </SearchPaths>
     <Linking>
       <Debugging>
-        <GenerateDebugInfo Value="False"/>
+        <UseHeaptrc Value="True"/>
       </Debugging>
       <Options>
         <Win32>

@@ -1,0 +1,155 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2010   Macgayver Armini Apolonio            }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida  -  daniel@djsystem.com.br  -  www.djsystem.com.br  }
+{              Praça Anita Costa, 34 - Tatuí - SP - 18270-410                  }
+{                                                                              }
+{******************************************************************************}
+
+{******************************************************************************
+|* Historico
+|*
+|* 23/02/2015: Macgayver Armini Apolonio - Criação
+|* 03/07/2017: Rodrigo Buschmann | Digibyte - Importação ICMS IPI
+*******************************************************************************}
+unit ACBrEFDBase;
+
+interface
+
+uses
+  Classes,
+  SysUtils,
+  Variants,
+  ACBrSpedFiscal;
+
+type
+
+  // Permite interceptar os valores inseridos pela ACBR.
+  TACBrSpedFiscalImportarGetColumn = procedure(var Coluna: string; const ColunaI: integer) of Object;
+
+  TACBrSpedFiscalImportar_Base = class
+  private
+    FAntesInserirValor: TACBrSpedFiscalImportarGetColumn;
+  protected
+    Indice: integer;
+    Delimitador: TStrings;
+    FACBrSPEDFiscal: TACBrSPEDFiscal;
+
+    function Head: string;
+    function Valor: string; // Procedimento Base para os outros valores
+    function ValorI: integer;
+    function ValorF: Currency;
+    function ValorFV: Variant;
+    function ValorD: TDateTime;
+
+  public
+    constructor Create;
+
+    procedure AnalisaRegistro(const inDelimitador: TStrings); virtual;
+
+    property ACBrSpedFiscal: TACBrSPEDFiscal read FACBrSPEDFiscal write FACBrSPEDFiscal;
+    property AntesInserirValor: TACBrSpedFiscalImportarGetColumn read FAntesInserirValor write FAntesInserirValor;
+  end;
+
+implementation
+
+{ TBaseIndice }
+
+procedure TACBrSpedFiscalImportar_Base.AnalisaRegistro(const inDelimitador: TStrings);
+begin
+  Delimitador := inDelimitador;
+end;
+
+constructor TACBrSpedFiscalImportar_Base.Create;
+begin
+  Indice := 1;
+end;
+
+function TACBrSpedFiscalImportar_Base.Head: string;
+begin
+  Result := Delimitador[1];
+end;
+
+function TACBrSpedFiscalImportar_Base.Valor: string;
+var
+  vValor: string;
+begin
+  Indice := Indice + 1;
+  vValor := Delimitador[Indice];
+
+  if Assigned(FAntesInserirValor) then
+    FAntesInserirValor(vValor, Indice);
+
+  Result := vValor;
+end;
+
+function TACBrSpedFiscalImportar_Base.ValorD: TDateTime;
+var
+  S: string;
+begin
+  S := Valor;
+  if S <> EmptyStr then
+    Result := EncodeDate(StrToInt(Copy(S, 5, 4)), StrToInt(Copy(S, 3, 2)),StrToInt(Copy(S, 1, 2)))
+  else
+    Result := 0;
+end;
+
+function TACBrSpedFiscalImportar_Base.ValorI: integer;
+var
+  S: string;
+begin
+  S := Valor;
+  if S <> EmptyStr then
+    Result := StrToInt(S)
+  else
+    Result := 0;
+end;
+
+function TACBrSpedFiscalImportar_Base.ValorF: Currency;
+var
+  S: string;
+begin
+  S := Valor;
+  if S <> EmptyStr then
+    Result := StrToFloat(S)
+  else
+    Result := 0;
+end;
+
+function TACBrSpedFiscalImportar_Base.ValorFV: Variant;
+var
+  S: string;
+begin
+  S := Valor;
+  if S = EmptyStr then
+    Result := Null
+  else
+    Result := StrToFloat(S);
+end;
+
+end.

@@ -44,6 +44,458 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+08/09/2017
+-- ACBrDFeSSL, ACBrDFeXsMsXml, ACBrDFeXsXmlSec --
+[*] Método "TDFeSSLXmlSignClass.VerificarAssinatura", modificado para receber
+    como parâmetro: IdSignature: String = '' (ficando igual ao método "Assinar")
+    Isso permitirá a verificação de assinaturas que usa um padrão de ID diferente
+    de "Id"
+[+] Adicionado a propriedade "SSLDgst: TSSLDgst", para permitir que o método
+    "Assinar" gere assinaturas dgstSHA256
+
+-- ACBrDFeXsXmlSec --
+[*] Métodos "Assinar" e "VerificarAssinatura" modificados para fazer uso do
+    parâmetro "IdSignature".
+
+-- ACBrDFeUtil --
+[*] Método "SignatureElement" modificado para receber como parâmetro extra
+    "Digest: TSSLDgst = dgstSHA1". Isso permite gerar templates de assinatura
+    para SHA256
+[*] Método "ExtraiURI" modificado para receber como parâmetro extra
+    "IdSignature: String = ''". Isso permite diferente tipos de ID como por
+    exemplo: "Id", "id", etc
+    (por: DSA)
+
+30/08/2017
+-- ACBrDFeOpenSSL --
+[+] Adicionado suporte a Logs de Debug da Synapse, que podem ser ligados com
+    a diretiva {$Define SYNADEBUG}
+
+-- ACBrDFeXsMsXml --
+[-] Detectado problemas na assinatura gerada, em algumas raras situações.
+    Provavelmente o problema se deve ao uso do objeto "IXMLDigitalSignatureEx"
+    Método "Assinar" modificado, para usar o objeto "IXMLDigitalSignature",
+    ficando compatível com o utilizado em ACBrDFeXsMsXmlCapicom.
+
+-- ACBrDFeXsXmlSec --
+[+] Método "XmlSecSign" modificado para exibir mais informações de erro, no caso
+    de falha da Assinatura
+    (por: DSA)
+
+21/08/2017
+-- ACBrDFeWinCrypt --
+[-] Correção para remover o numero de Série do Certificado, de "CertificadosA3ComPin",
+    quando Descarregar o Certificado.
+    http://www.projetoacbr.com.br/forum/topic/38349-problemas-com-pin-a3-assinatura-de-xml/
+    (por: DSA)
+
+16/08/2017
+-- ACBrDFeWebService --
+[*] Metodo "TDFeWebService.EnviarDados", ajuste para verificar a Validade do
+    Certificado, mesmo quando configurado para usar DadosPFX ou ArquivoPFX
+    (por: DSA)
+
+25/07/2017
+-- Diversos --
+[*] Correções visando o provedor NotaBlu.
+    Por: Augusto Fontana
+
+14/07/2017
+-- ACBrDFe --
+[*] Refatoração do método "EnviarEmail" para usar o recurso recem implementado de
+    ACBrMail, para adição de lista de Emails em um comando.
+    (por: DSA)
+
+07/07/2017
+-- ACBrDFeConfiguracoes --
+[-] Correção em "TArquivosConf.Assign", onde o Objeto "OrdenacaoPath" não era
+    duplicado, mas sim copiado por referência, causando A.V. na liberação de
+    Objetos copiados.
+    (por: DSA)
+
+26/06/2017
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade "TArquivosConf.OrdenacaoPath", que permite definir
+    a ordem de criação dos subdiretórios. Mantém a compatibilidade da ordem
+    anterior, por motivo de compatibilidade, e respeitando as propriedades:
+    SepararPorCNPJ, SepararPorModelo, SepararPorAno/Mes/Dia, AdicionarLiteral
+    http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diret%C3%B3rio-di%C3%A1rio/?do=findComment&comment=244884
+    (por: -=Ma®©oS=- e BigWings)
+
+21/06/2016
+-- ACBrDFeSSL --
+[+] Adicionada a propriedade TDadosCertificado.ThumbPrint
+
+-- ACBrDFeWinCrypt, ACBrDFeOpenSSL --
+[+] Adicionado o método "GetThumbPrint".
+[*] Método "GetCertInfo" modificado para preencher "DadosCertificado.ThumbPrint"
+    (por: DSA)
+
+14/06/2017
+-- ACBrDFeConfiguracoes --
+[*] Classe "TArquivosConf", adicionada a propriedade: "SepararPorAno".
+[*] Método "GetPath", modificado para suportar a propriedades "SepararPorAno"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35456
+
+09/06/2017
+-- ACBrDFeConfiguracoes --
+[*] Método "GetPath", modificado para permitir que a Descrição do Modelo seja
+    informada pelo método chamador. Isso permite que a Descrição do modelo seja
+    definida, pelo conteúdo do XML a ser Salvo e não apenas pelo Modelo configurado
+    no componente.
+    (por: DSA)
+
+05/06/2017
+-- ACBrDFeOpenSSL, ACBrDFeWinCrypt --
+[-] Acerto na leitura do CNPJ quando não está no CN, em alguns casos havia lixo 
+    no inicio da string o que fazia com que os 2 ultimo digitos do CNPJ fossem 
+    perdidos
+    (por: regys.silveira)
+
+24/05/2017
+-- ACBrDFeSSL --
+[-] Correção em "TDFeSSL.Assinar", para repor corretamente a Declaração do XML,
+    caso a mesma seja desprezada por "AjustarXMLAssinado", por não ser UTF8
+
+-- ACBrDFeWinCrypt --
+[*] Método: "GetCSPProviderInfo" renomeado para "GetProviderInfo", e refatorado
+    para suportar Certificados CNG
+[*] Método: "MsgErroGetCryptProvider", mensagem de erro por falha de hardware do
+    certificado melhorada para melhor clareza
+[+] Implementado código do método: "GetCNGProviderParamString"
+
+-- ACBrDFeXsMsXml --
+[*] Método: "VerificarAssinatura", correção na exibição da acentuação das
+    mensagens de Erro de assinatura
+[*] Método: "Assinar". Melhor documentação das duas formas de como proceder com
+    a assinatura (Antiga, usada na CAPICOM e Atual)
+    (por: DSA)
+
+-- ACBrDFeXsXmlSec --
+[-] Método "Assinar", correção para assinar corretamente XMLs com acentos, e sem
+    a sessão de Declaração de Encoding
+    (por: DSA)
+
+19/05/2017
+-- ACBrDFeSSL --
+[*] Ajuste para não usar Documentos que não o CNPJ, do "SubjectName". Pois
+    alguns Certificados de empresas EPP, trazem o CPF no final do Nome.
+    (A leituta do CNPJ/CPF será feita pelas Extensões do Certificado)
+    (Por: DSA)
+
+28/04/2017
+-- ACBrDFeWinCrypt --
+[*] Ajuste em "SetCertContextPassword", para não disparar erros desconhecidos na
+    atribuição de senha para "PP_SIGNATURE_PIN"
+    http://www.projetoacbr.com.br/forum/topic/36266-falha-ao-definir-pin-do-certificado-erro-80100004/
+    (por: DSA)
+
+-- ACBrDFeConfiguracoes --
+[*] Modificada a visibilidade de variável Private, "TArquivosConf.FConfiguracoes"
+    para "TArquivosConf.fpConfiguracoes", Protected
+    (por: DSA)
+
+22/04/2017
+-- ACBrDFe --
+[*] Método "EnviarEmail", adicionado o parâmetro "ReplyTo: TStrings"
+    http://www.projetoacbr.com.br/forum/topic/36261-acbrnfe-erro-envio-de-e-mail-com-mensagem/?do=findComment&comment=238100
+    (por Maurício Sareto e DSA)
+
+19/04/2017
+-- ACBrDFeWinCrypt --
+[*] Método "SetCertContextPassword", ajuste para que não seja disparado Exception,
+    quando o retorno for (000003F0 hex = 1008 decimal = ERROR_NO_TOKEN)
+
+-- ACBrDFeXsMsXml --
+[-] Ajustes nas chamadas de "CoInitialize", para que funcione com multiplas Threads
+    (por: DSA)
+
+-- ACBrDFe --
+[*] Método "LerServicoDeParams", modificação para permitir múltiplos redirecionamentos
+    http://www.projetoacbr.com.br/forum/topic/36328-m%C3%BAltiplos-redirecionamentos-usar-no-lerservicodeparams/
+    (por: BigWings)
+
+-- ACBr_NCrypt --
+[*] Unit modificada, para usar carga dinâmica, e assim evitar problemas no
+    Windows XP
+    http://www.projetoacbr.com.br/forum/topic/36219-ncryptdll-faltando-no-xp/
+    (por: DSA)
+
+17/04/2017
+-- ACBrDFeCapicom --
+[-] Método "CarregarCertificado", ajuste na chamada de "CoInitialize"
+    http://www.projetoacbr.com.br/forum/topic/24934-erro-de-coinitialize-na-emiss%C3%A3o-de-nfe-usando-thread/#comment-237508
+
+13/04/2017
+-- ACBrDFeWinCrypt --
+[-] Correção para não atribuir Senha para certificados A3, de uma segunda
+    instância do ACBrNFe, que utilize o mesmo certificado.
+    (por: DSA)
+
+12/04/2017
+-- ACBrDFeWinCrypt --
+[*] Ajuste para compilação com a diretiva "DFE_SEM_NCRYPT", para permitir o
+    suporte a Windows XP (por: DSA)
+
+-- ACBr_NCrypt --
+[*] Ajuste para efetuara carga da DLL com "Delayed", caso a diretiva "USE_DELAYED"
+    esteja ligada, e o compilador suporte carga tardia.. (por: Waldir Paim)
+    http://www.projetoacbr.com.br/forum/topic/36219-ncryptdll-faltando-no-xp/?do=findComment&comment=237206
+
+10/04/2017
+-- ACBrDFeWinCrypt --
+[-] Ajustes para possível correção de Certificados compatível apenas com "CNG"
+    que causavam o erro "NTE_BAD_PROV_TYPE - 0x80090014", durante a carga do
+    Certificado.
+    http://www.projetoacbr.com.br/forum/topic/36017-provedor-de-criptografia/?do=findComment&comment=236710
+    (por: DSA)
+
+04/04/2017
+-- ACBrDFeCapicom --
+[-] Correção no método "GetCNPJFromExtensions", onde ocorria o erro:
+    "Parâmetro Incorreto"  (por: DSA)
+
+03/04/2017
+-- ACBrDFeCapicom, ACBrDFeWinCrypt --
+[-] Possível correção para o erro "Erro Thread da crypt32", quando usando
+    "cryCapicom"
+-- ACBrDFeWinCrypt --
+[*] Ajuste no método "GetCNPJFromExtensions", quebrando-o em vários, para permitir
+    a leitura de diferentes extensões
+-- ACBrDFeOpenSSL --
+[-] Correção na interpretação do conteúdo das extensões do certificado, corrigndo
+    problemas de leitura de CPF/CNPJ de alguns certificados
+    (por: DSA)
+
+27/03/2017
+-- ACBrDFeXsXmlSec --
+[*] Remoção da dependencia de "libxslt". (por Waldir Paim)
+    http://www.projetoacbr.com.br/forum/topic/35775-sugest%C3%A3o-limpeza-dos-uses-de-algumas-units/?do=findComment&comment=234842
+
+25/03/2017
+-- ACBrDFeHttpOpenSSL, ACBrDFeHttpIndy --
+[*] Ajuste para usar a definição MimeType, comforme recebido pela rotina chamadora
+
+-- ACBrDFeHttpWinApi --
+[*] Ajuste para disparar exceptions, caso o HTTPResultCode não seja 200,201,202
+
+-- ACBrDFeSSL --
+[*] Ajuste para que o MimeType padrão, caso nenhum tenha sido informado contenha
+    instrução de UTF8 'application/soap+xml; charset=utf-8'
+
+24/03/2017
+-- ACBRDFeWinCrypt --
+[-] Correção em "PFXDataToCertContextWinApi", que é usada por
+    "CarregarCertificado", quando informado o certificado por: "ArquivoPFX" ou
+    "DadosPFX". Para que seja possível carregar Certificados com número de série,
+    menor do que 16   (por: DSA)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=35805
+
+22/03/2017
+-- ACBrDFeSSL --
+[*] Ajustes em "Clear", para evitar problemas quando ocorre a troca de
+    SSLCryptLib via código.
+
+-- ACBRDFeWinCrypt --
+[*] Ajustes em "CarregarCertificado", para priorizar a busca do certificado por
+    "DadosPFX" seguido de "ArquivoPFX" e depois "NumeroSerie"
+    (por: DSA)
+
+19/03/2017
+-- ACBrDFeSSL --
+[*] Amplo refactoring promovido, separando a classe "TDFeSSLClass" em 3 novas
+    classes:
+    "TDFeSSLCryptClass" - para Carregar certificados e efetuar criptografia
+    "TDFeSSLHttpClass" - para comunicação HTTP/HTTPS com suporte a Certificados
+    "TDFeSSLXmlSignClass" - Para Validar XMLs, validar assinaturas e Assinar XML
+                            com Certificados
+[+] "TSSLLib", adicionado os tipos "libWinCrypt, libCustom"
+[+] Criada nova classe "TDadosCertificado", para conter os dados do
+    certificado carregado
+[+] Criada nova classe "TListaCertificados",para conter uma lista de Objetos
+    do tipo TDadosCertificado, com todos os certificados de uma "Store", e após
+    a chamada do método "TDFeSSL.LerCertificadosStore"
+[+] Adicionada propriedade "TDFeSSL.StoreName: String", usada apenas no Windows.
+    Nome da Store a ser aberta, padrão "MY"
+[+] Adicionada propriedade "TDFeSSL.StoreLocation: TSSLStoreLocation", usada
+    apenas no Windows. Default "slCurrentUser".
+    TSSLStoreLocation = (slMemory, slLocalMachine, slCurrentUser, slActiveDirectory, slSmartCard);
+[+] Adicionado o método: "TDFeSSL.LerCertificadosStore", apenas Windows, para
+    carregar todos os Certifcados de "TDFeSSL.StoreName" para a lista de Objetos:
+    "TDFeSSL.ListaCertificados"
+[+] Adicionado a propriedade "TDFeSSL.DadosCertificado", para permitir acesso
+    aos dados do certificado carregado
+[+] Adicionada a propriedade "TDFeSSL.SSLCryptLib: TSSLCryptLib" default cryNone;
+    para definir a classe de criptografia
+    TSSLCryptLib = (cryNone, cryOpenSSL, cryCapicom, cryWinCrypt);
+[+] Adicionada a propriedade "TDFeSSL.SSLHttpLib: TSSLHttpLib" default httpNone;
+    para definir a classe de comunicação HTTP/HTTPS
+    TSSLHttpLib = (httpNone, httpWinINet, httpWinHttp, httpOpenSSL, httpIndy);
+[+] Adicionada a propriedade "TDFeSSL.SSLXmlSignLib: TSSLXmlSignLib" default xsNone;
+    para definir a classe de assinatura de validação de XML
+    TSSLXmlSignLib = (xsNone, xsXmlSec, xsMsXml, xsMsXmlCapicom);
+[+] Adicionada a propriedades "TDFeSSL"SSLType: TSSLType" default LT_all;
+    para permitir definir o tipo de criptografia em HTTPS sendo:
+    TSSLType = (LT_all, LT_SSLv2, LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_SSHv2)
+    suportado apenas em TDFeHttpOpenSSL e TDFeHttpWinHttp
+
+-- ACBrDFeConfiguracoes --
+[+] Adicionada as propriedades:
+    property SSLCryptLib: TSSLCryptLib
+    property SSLHttpLib: TSSLHttpLib
+    property SSLXmlSignLib: TSSLXmlSignLib
+[*] Propriedade "SSLLib: TSSLLib" passou a ser virtual, e mantida por
+    compatibilidade. Ajusta-la irá produzir ajustes em "SSLCryptLib",
+    "SSLHttpLib" e "SSLXmlSignLib". Exemplo:
+    if SSLLib = libOpenSSL then
+    begin
+      SSLCryptLib := cryOpenSSL;
+      SSLHttpLib := httpOpenSSL;
+      SSLXmlSignLib := xsXmlSec;
+    end;
+
+-- ACBrDFe --
+[+] Adicionado suporte a configurações de "SSLCryptLib", "SSLHttpLib",
+    "SSLXmlSignLib"
+
+-- ACBrDFeOpenSSL --
+[*] Amplo refactoring. Removido código referente a comunicação HTTP/HTTPs
+    que foi migrado para "ACBrDFeHttpOpenSSL"
+[*] Removido código referente a assinatura digital e Validação de XML,
+    que foi migrado para "ACBrDFeXsXmlSec"
+
+-- ACBRDFeWinCrypt --
+[+] Nova Unit, para manipular Certificados do Windows e efetuar assinatura
+    digital, usando a Win API WinCrypt (MSCrypto/CAPI)
+
+-- ACBrDFeCapicom --
+[*] Refactoring, para usar boa parte do código de "ACBRDFeWinCrypt"
+
+-- ACBrDFeHttpOpenSSL --
+[+] Adicionada nova Unit, derivada de ACBrDFeOpenSSL, criando implementação da
+    classe de TDFeSSLHttpClass para comunicação http e https, usando a Synapse
+    e OpenSSL
+
+-- ACBrDFeHttpWinApi --
+[+] Adicionada nova Unit, derivada de ACBrDFeCapicom, criando implementação da
+    classe de TDFeSSLHttpClass para comunicação http e https, usando as APIs do
+    Windows WinHttp ou WinINet
+
+-- ACBrDFeHttpIndy, ACBrDFeCapicomDelphiSoap --
+[*] Unit renomeada de "ACBrDFeCapicomDelphiSoap" para "ACBrDFeHttpIndy", e
+    refatorada para não depender da CAPICOM
+
+-- ACBrDFeXsXmlSec --
+[+] Adicionada nova Unit, derivada de ACBrDFeOpenSSL, criando implementação da
+    classe de TDFeSSLXmlSignClass usando a Lib XMLSEC
+
+-- ACBrDFeXsMsXml --
+[+] Adicionada nova Unit, derivada de ACBrDFeCapicom, criando implementação da
+    classe de TDFeSSLXmlSignClass usando a Lib MSXML
+
+-- ACBrDFeXsMsXmlCapicom --
+[+] Adicionada nova Unit, derivada de ACBrDFeCapicom, criando implementação da
+    classe de TDFeSSLXmlSignMsXml usando a Lib MSXML e CAPICOM
+
+-- ACBrDFeException --
+[+] Adicionado o exception "EACBrDFeExceptionNoPrivateKey"
+
+-- ACBrDFeUtil --
+[+] Adicionado o método "SignatureElement: String"
+    (por DSA)
+
+08/03/2017
+[+] Adição do separador por dia dos documentos em pastas
+    http://www.projetoacbr.com.br/forum/topic/35456-salvar-xml-em-diretório-diário/
+    (por: Juliomar Marchetti)
+		
+07/02/2017
+-- ACBrDFeConfiguracoes --
+[+] Adicionada a propriedade Geral.IdentarXML: Boolean default False
+    (por: DSA)
+
+24/01/2017
+-- ACBrDFeUtil --
+[*] Rafatoração dos métodos: "ValidaDIRE" e "ValidaRE", aplicando simplificação
+    de código, e retornando "False", se houver caracteres não numéricos
+    (por: DSA)
+
+23/12/2016
+-- ACBrDFeOpenSSL --
+[+] Adicionada a propriedade "SSLType: TSSLType default LT_all", podendo ser:
+    (LT_all, LT_SSLv2, LT_SSLv3, LT_TLSv1, LT_TLSv1_1, LT_TLSv1_2, LT_SSHv2)
+
+-- ACBrDFe --
+[-] Correção de Bug em "LerServicoChaveDeParams". Não era capaz de ler a URL do
+    Serviço com a maior versão existente.
+    (por: DSA)
+
+13/12/2016
+-- ACBrDFeOpenSSL, ssl_openssl_lib --
+[*] Melhoria no tempo de carga do OpenSSL.
+[*] Correção na ordem de liberação de Objetos em "VerificarAssinatura"
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=33811
+    (por: Waldir Paim)
+
+19/11/2016
+-- ACBrDFeOpenSSL --
+[*] Melhorada a detecção de TimeOut na conexão com o Servidor HTTP
+    http://www.projetoacbr.com.br/forum/topic/20518-nfce-timeout/
+
+23/10/2016
+-- ACBrDFeOpenSSL --
+[*] Modificada a implementação dos métodos: "GetSubjectName" e "GetIssuerName",
+    para usar o método do OpenSSL "X509_NAME_print_ex", a fim de resolver
+    problemas de detectação de Encoding em alguns certificados  (por: DSA)
+
+22/10/2016
+-- ACBrDFeOpenSSL --
+[*] Implementada a leitura de CPF por Extensões do Certificado (por: DSA)
+
+21/10/2016
+[-] DANFE NFSe Fortes
+    Acerto feito pelo Márcio para não utilizar Datasets
+
+17/10/2016
+-- ACBrDFeOpenSSL --
+[*] Incluido uma verificação para remover se necessário algum prefixo de infElement
+    ao executar a função: XmlSecFindSignatureNode.
+   Alguns provedores de NFS-e tem prefixos em algumas TAGs.
+   por: Italo Jurisato Junior
+
+14/10/2016
+-- ACBrDFeSSL --
+[-] Correções no método "AjustarXMLAssinado".
+    - Caso a Tag <X509Certificate> não fosse encontrada, o Certificado X509 era
+      inserido no inicio do XML
+    - Remoção indevida de espaços no XML, após a tag "</KeyInfo>"
+
+-- ACBrDFeCapicom --
+[-] Correção na exibição de memsagem de Erro
+
+-- ACBrDFeOpenSSL --
+[+] Adicionado o método: "LerX509Info", que permite ler as informações do
+    certificado, através do conteúdo da Tag <X509Certificate>
+[*] Métodos "LerPFXInfo" tornado público
+[+] Nova Propridade publica: "Certificado: pX509"
+    (por: DSA)
+
+26/09/2016
+-- ACBrDFeSSL, ACBrDFeOpenSSL, ACBrDFeCapicom --
+[+] Adicionada as propriedades:
+    CertIssuerName: String -> Retorna Emissor do Certificado
+    CertCertificadora: String -> Retorna o Nome da Certificadora. Exemplos:
+    "AC VALID" e "AC Certisign".   (por: Leonardo Gregianin)
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=32553
+
+13/09/2016
+-- ACBrDFe, ACBrDFeSSL --
+[+] Adicionado o evento "OnAntesDeAssinar: TDFeSSLAntesDeAssinar", que permite a
+    aplicação, controlar o processo de assinatura, usando por exemplo, algum
+    utilitário externo para a assinatura. Se o valor de "ConteudoXML" for
+    modificado pela aplicação, o TDFeSSL não tentará assinar o documento
+    internamente.  (por: DSA)
+
 18/07/2016
 -- ACBrDFeOpenSSL --
 [*] Incluido o código 202 na checagem do ResultCode, uma vez que o provedor

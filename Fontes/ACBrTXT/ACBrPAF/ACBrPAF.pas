@@ -47,7 +47,7 @@ unit ACBrPAF;
 interface
 
 uses
-   SysUtils, Classes, DateUtils, math,
+   SysUtils, Classes, DateUtils, ACBrBase, math,
    {$IFNDEF NOGUI}
     {$IFDEF FPC}LResources,{$ENDIF}
     {$IF DEFINED(CLX)}
@@ -68,6 +68,7 @@ uses
    ACBrPAF_F_Class,
    ACBrPAF_G_Class,
    ACBrPAF_H_Class,
+   ACBrPAF_J_Class,
    ACBrPAF_L_Class,
    ACBrPAF_M_Class,
    ACBrPAF_N_Class,
@@ -77,6 +78,7 @@ uses
    ACBrPAF_T_Class,
    ACBrPAF_TITP_Class,
    ACBrPAF_U_Class,
+   ACBrPAF_V_Class,
    ACBrPAF_Z_Class;
 
 const
@@ -87,8 +89,10 @@ type
   // DECLARANDO O COMPONENTE - PAF-ECF:
 
   { TACBrPAF }
-
-  TACBrPAF = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrPAF = class(TACBrComponent)
   private
     FOnError: TErrorEvent;
 
@@ -109,6 +113,7 @@ type
     FPAF_F: TPAF_F;
     FPAF_G: TPAF_G;
     FPAF_H: TPAF_H;
+    FPAF_J: TPAF_J;
     FPAF_L: TPAF_L;
     FPAF_M: TPAF_M;
     FPAF_N: TPAF_N;
@@ -118,6 +123,7 @@ type
     FPAF_T: TPAF_T;
     FPAF_TITP: TPAF_TITP;
     FPAF_U: TPAF_U;
+    FPAF_V: TPAF_V;
     FPAF_Z: TPAF_Z;
     fsOnPAFCalcEAD: TACBrEADCalc;
     fsOnPAFGetKeyRSA : TACBrEADGetChave ;
@@ -146,6 +152,7 @@ type
     function SaveToFile_N(Arquivo: String): Boolean;
     function SaveToFile_TITP(Arquivo: String): Boolean;
     function SaveToFile_Z(Arquivo: String): Boolean;
+    function SaveToFile_V(Arquivo: String): Boolean;
     function SaveToFile_RegistrosPAF(Arquivo: String): Boolean;
 
     property PAF_A: TPAF_A read FPAF_A write FPAF_A;
@@ -156,6 +163,7 @@ type
     property PAF_F: TPAF_F read FPAF_F write FPAF_F;
     property PAF_G: TPAF_G read FPAF_G write FPAF_G;
     property PAF_H: TPAF_H read FPAF_H write FPAF_H;
+    property PAF_J: TPAF_J read FPAF_J write FPAF_J;
     property PAF_L: TPAF_L read FPAF_L write FPAF_L;
     property PAF_M: TPAF_M read FPAF_M write FPAF_M;
     property PAF_N: TPAF_N read FPAF_N write FPAF_N;
@@ -165,6 +173,7 @@ type
     property PAF_T: TPAF_T read FPAF_T write FPAF_T;
     property PAF_TITP: TPAF_TITP read FPAF_TITP write FPAF_TITP;
     property PAF_U: TPAF_U read FPAF_U write FPAF_U;
+    property PAF_V: TPAF_V read FPAF_V write FPAF_V;
     property PAF_Z: TPAF_Z read FPAF_Z write FPAF_Z;
 
     Function GetACBrEAD : TACBrEAD ;
@@ -193,6 +202,7 @@ type
 implementation
 
 Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
   {$IFDEF COMPILER6_UP} StrUtils {$ELSE} ACBrD5 {$ENDIF} ;
 
 {$IFNDEF FPC}
@@ -216,6 +226,7 @@ begin
   FPAF_F := TPAF_F.Create;
   FPAF_G := TPAF_G.Create;
   FPAF_H := TPAF_H.Create;
+  FPAF_J := TPAF_J.Create;
   FPAF_L := TPAF_L.Create;
   FPAF_M := TPAF_M.Create;
   FPAF_N := TPAF_N.Create(Self);
@@ -225,6 +236,7 @@ begin
   FPAF_S := TPAF_S.Create;
   FPAF_TITP := TPAF_TITP.Create;
   FPAF_U := TPAF_U.Create;
+  FPAF_V := TPAF_V.Create;
   FPAF_Z := TPAF_Z.Create;
 
   fsEADInterno     := nil;
@@ -248,6 +260,7 @@ begin
   FPAF_F.Free;
   FPAF_G.Free;
   FPAF_H.Free;
+  FPAF_J.Free;
   FPAF_L.Free;
   FPAF_M.Free;
   FPAF_N.Free;
@@ -257,6 +270,7 @@ begin
   FPAF_T.Free;
   FPAF_TITP.Free;
   FPAF_U.Free;
+  FPAF_V.Free;
   FPAF_Z.Free;
 
   if Assigned( fsEADInterno ) then
@@ -297,6 +311,7 @@ begin
   FPAF_F.LinhasBuffer    := AValue;
   FPAF_G.LinhasBuffer    := AValue;
   FPAF_H.LinhasBuffer    := AValue;
+  FPAF_J.LinhasBuffer    := AValue;
   FPAF_L.LinhasBuffer    := AValue;
   FPAF_M.LinhasBuffer    := AValue;
   FPAF_N.LinhasBuffer    := AValue;
@@ -306,6 +321,7 @@ begin
   FPAF_T.LinhasBuffer    := AValue;
   FPAF_TITP.LinhasBuffer := AValue;
   FPAF_U.LinhasBuffer    := AValue;
+  FPAF_V.LinhasBuffer    := AValue;
   FPAF_Z.LinhasBuffer    := AValue;
 end;
 
@@ -326,6 +342,7 @@ begin
   FPAF_F.TrimString := Value;
   FPAF_G.TrimString := Value;
   FPAF_H.TrimString := Value;
+  FPAF_J.TrimString := Value;
   FPAF_L.TrimString := Value;
   FPAF_M.TrimString := Value;
   FPAF_N.TrimString := Value;
@@ -335,6 +352,7 @@ begin
   FPAF_T.TrimString := Value;
   FPAF_TITP.TrimString := Value;
   FPAF_U.TrimString := Value;
+  FPAF_V.TrimString := Value;
   FPAF_Z.TrimString := Value;
 end;
 
@@ -381,6 +399,7 @@ begin
   FPAF_F.OnError := Value;
   FPAF_G.OnError := Value;
   FPAF_H.OnError := Value;
+  FPAF_J.OnError := Value;
   FPAF_L.OnError := Value;
   FPAF_M.OnError := Value;
   FPAF_N.OnError := Value;
@@ -390,6 +409,7 @@ begin
   FPAF_T.OnError := Value;
   FPAF_TITP.OnError := Value;
   FPAF_U.OnError := Value;
+  FPAF_V.OnError := Value;
   FPAF_Z.OnError := Value;
 end;
 
@@ -428,10 +448,10 @@ end ;
 
 function TACBrPAF.SaveToFile_TITP(Arquivo: String): Boolean;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   with FPAF_TITP do
   begin
@@ -470,10 +490,10 @@ end;
 
 function TACBrPAF.SaveToFile_Z(Arquivo: String): Boolean;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   with PAF_Z do
   begin
@@ -494,12 +514,37 @@ begin
   Result:= True;
 end;
 
+function TACBrPAF.SaveToFile_V(Arquivo: String): Boolean;
+begin
+  Arquivo := AjustaNomeArquivo(Arquivo);
+
+  SysUtils.DeleteFile(Arquivo);
+
+  with PAF_V do
+  begin
+    Conteudo.Clear;
+    NomeArquivo := Arquivo;
+
+    WriteRegistroV1;
+    WriteBuffer;
+
+    // Assinatura EAD
+    if FAssinar then
+      AssinaArquivoComEAD(Arquivo);
+
+    // Limpa de todos os Blocos as listas de todos os registros.
+    LimpaRegistros;
+  end;
+
+  Result:= True;
+end;
+
 function TACBrPAF.SaveToFile_N(Arquivo: String): Boolean;
 var
   PAF_MD5 : String ;
   iFor: Integer;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
   if Assigned( fsAAC ) then
@@ -531,13 +576,13 @@ begin
         with FPAF_N.RegistroN3.New do
         begin
           NOME_ARQUIVO := fsAAC.IdentPAF.OutrosArquivos[iFor].Nome;
-	      MD5 := '' ; // MD5 será calculado em WriteRegistroN3
+	        MD5          := Trim(fsAAC.IdentPAF.OutrosArquivos[iFor].MD5);
         end ;
       end;
     end;
   end ;
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   with FPAF_N do
   begin
@@ -629,10 +674,10 @@ end;
 
 function TACBrPAF.SaveToFile_RegistrosPAF(Arquivo: String): Boolean;
 begin
-  Result := False;
+//  Result := False;
   Arquivo := AjustaNomeArquivo(Arquivo);
 
-  DeleteFile(Arquivo);
+  SysUtils.DeleteFile(Arquivo);
 
   FPAF_U.Conteudo.Clear;
   FPAF_A.Conteudo.Clear;
@@ -649,7 +694,9 @@ begin
   FPAF_H.Conteudo.Clear;
   FPAF_S.Conteudo.Clear;
   FPAF_R.Conteudo.Clear;
+  FPAF_V.Conteudo.Clear;
   FPAF_Z.Conteudo.Clear;
+  FPAF_J.Conteudo.Clear;
 
   FPAF_U.NomeArquivo := Arquivo;
   FPAF_A.NomeArquivo := Arquivo;
@@ -666,7 +713,9 @@ begin
   FPAF_H.NomeArquivo := Arquivo;
   FPAF_S.NomeArquivo := Arquivo;
   FPAF_R.NomeArquivo := Arquivo;
+  FPAF_V.NomeArquivo := Arquivo;
   FPAF_Z.NomeArquivo := Arquivo;
+  FPAF_J.NomeArquivo := Arquivo;
 
   PAF_U.WriteRegistroU1;
   PAF_U.WriteBuffer;
@@ -684,11 +733,12 @@ begin
   end;
 
   if FPAF_E.RegistroE2.Count > 0 then
-   begin
-     FPAF_E.WriteRegistroE2;
-     FPAF_E.WriteRegistroE3;
-     FPAF_E.WriteBuffer;
-   end;
+  begin
+    FPAF_E.WriteRegistroE2;
+  end;
+
+  FPAF_E.WriteRegistroE3;
+  FPAF_E.WriteBuffer;   
 
   if FPAF_D.RegistroD2.Count > 0 then
   begin
@@ -758,6 +808,12 @@ begin
   FPAF_R.WriteRegistroR01;
   FPAF_R.WriteBuffer;
 
+  if FPAF_J.RegistroJ1.Count > 0 then
+  begin
+    FPAF_J.WriteRegistroJ1;  //J1 e J2
+    FPAF_J.WriteBuffer;
+  end;
+
   // Assinatura EAD
   if FAssinar then
     AssinaArquivoComEAD(Arquivo);
@@ -778,7 +834,9 @@ begin
   FPAF_H.LimpaRegistros;
   FPAF_S.LimpaRegistros;
   FPAF_R.LimpaRegistros;
+  FPAF_V.LimpaRegistros;
   FPAF_Z.LimpaRegistros;
+  FPAF_J.LimpaRegistros;
 
   Result := True;
 end;

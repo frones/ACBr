@@ -46,23 +46,23 @@ unit ACBrUtil;
 
 interface
 
-Uses SysUtils, Math, Classes, ACBrConsts, synautil
-    {$IFDEF COMPILER6_UP} ,StrUtils, DateUtils {$ELSE} ,ACBrD5, FileCtrl {$ENDIF}
-    {$IFDEF FPC}
-      ,dynlibs, zstream, LazUTF8, LConvEncoding
-      {$IFDEF USE_LCLIntf} ,LCLIntf {$ENDIF}
-    {$ELSE}
-      ,ACBrZLibExGZ
-    {$ENDIF}
-    {$IFDEF MSWINDOWS}
-      ,Windows, ShellAPI
-    {$else}
-      {$IFNDEF FPC}
-        ,Libc
-      {$else}
-        ,unix, BaseUnix
-      {$endif}
-    {$endif} ;
+Uses
+  SysUtils, Math, Classes,
+  ACBrConsts,
+  {$IfDef COMPILER6_UP} StrUtils, DateUtils {$Else} ACBrD5, FileCtrl {$EndIf}
+  {$IfDef FPC}
+    ,dynlibs, LazUTF8, LConvEncoding
+    {$IfDef USE_LCLIntf} ,LCLIntf {$EndIf}
+  {$EndIf}
+  {$IfDef MSWINDOWS}
+    ,Windows, ShellAPI
+  {$Else}
+    {$IfNDef FPC}
+      ,Libc
+    {$Else}
+      ,unix, BaseUnix {$IfNDef NOGUI}, Forms{$EndIf}
+    {$EndIf}
+  {$EndIf} ;
 
 const
 {$IFDEF CPU64}
@@ -71,10 +71,26 @@ const
   CINPOUTDLL = 'inpout32.dll';
 {$ENDIF}
 
+{$IfDef MSWINDOWS}
+  AllFilesMask = '*.*';
+{$Else}
+  AllFilesMask = '*';
+{$EndIf}
+
+
 type
   TSetOfChars = set of AnsiChar;
-  TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, mskAliq);
+  TFormatMask = (msk4x2, msk7x2, msk9x2, msk10x2, msk13x2, msk15x2, msk6x3, msk6x4, mskAliq);
 
+  {$IfNDef FPC}
+   TLibHandle = THandle;
+
+   // Compatibilidade para compilar nas versões anteriores ao Delphi XE2
+   {$IfNDef DELPHIXE2_UP}
+    NativeUInt = Cardinal;
+   {$EndIf}
+  {$EndIf}
+   
 function ParseText( const Texto : AnsiString; const Decode : Boolean = True;
    const IsUTF8: Boolean = True) : String;
 
@@ -87,6 +103,7 @@ function RemoverDeclaracaoXML(const AXML: String): String;
 
 function DecodeToString( const ABinaryString : AnsiString; const StrIsUTF8: Boolean ) : String ;
 function SeparaDados( const AString : String; const Chave : String; const MantemChave : Boolean = False ) : String;
+function SeparaDadosArray( const AArray : Array of String;const AString : String; const MantemChave : Boolean = False ) : String;
 
 procedure QuebrarLinha(const Alinha: string; const ALista: TStringList;
   const QuoteChar: char = '"'; Delimiter: char = ';');
@@ -113,10 +130,11 @@ function CharInSet(C: AnsiChar; const CharSet: TSysCharSet): Boolean; overload;
 function CharInSet(C: WideChar; const CharSet: TSysCharSet): Boolean; overload;
 {$EndIf}
 
-function TruncFix( X : Double ) : Integer ;
-function RoundABNT(const AValue: Double; const Digits: SmallInt;
+function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
+function TruncFix( X : Extended ) : Int64 ;
+function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
   const Delta: Double = 0.00001 ): Double;
-function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
+function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
 function CompareVersions( const VersionStr1, VersionStr2 : String;
   Delimiter: char = '.' ) : Extended;
 function ComparaValor(const ValorUm, ValorDois : Double; const Tolerancia : Double = 0 ): Integer;
@@ -130,6 +148,8 @@ Function AscToBcd( const ANumStr: String ; const TamanhoBCD : Byte) : AnsiString
 
 function IntToLEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
 function LEStrToInt(ALEStr: AnsiString): Integer;
+function IntToBEStr(AInteger: Integer; BytesStr: Integer = 2): AnsiString;
+function BEStrToInt(ABEStr: AnsiString): Integer;
 
 Function HexToAscii(const HexStr : String) : AnsiString ;
 Function AsciiToHex(const ABinaryString: AnsiString): String;
@@ -196,7 +216,7 @@ function FloatToString(const AValue: Double; SeparadorDecimal: Char = '.';
   AFormat: String = ''): String;
 function FormatFloatBr(const AValue: Extended; AFormat: String = ''): String; overload;
 function FormatFloatBr(const AFormat: TFormatMask; const AValue: Extended): String; overload;
-function FloatMask(const DecimalDigits: SmallInt = 2): String;
+function FloatMask(const DecimalDigits: SmallInt = 2; UseThousandSeparator: Boolean = True): String;
 Function StringToFloat( NumString : String ) : Double ;
 Function StringToFloatDef( const NumString : String ;
    const DefaultValue : Double ) : Double ;
@@ -280,7 +300,7 @@ procedure OpenURL( const URL : String ) ;
 function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer)
  : boolean; overload ;
 function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer;
-   var LibHandle: THandle ): boolean; overload ;
+   var LibHandle: TLibHandle ): boolean; overload ;
 function UnLoadLibrary(LibName: String ): Boolean ;
 
 function FlushToDisk( sFile: string): boolean;
@@ -288,6 +308,11 @@ function FlushFileToDisk( sFile: string): boolean;
 
 Procedure DesligarMaquina(Reboot: Boolean = False; Forcar: Boolean = False;
    LogOff: Boolean = False) ;
+{$IfNDef NOGUI}
+function ForceForeground(AppHandle:THandle): boolean;
+{$EndIf}
+
+Procedure WriteToFile( const Arq: String; ABinaryString : AnsiString);
 Procedure WriteToTXT( const ArqTXT : String; ABinaryString : AnsiString;
    const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True );
 procedure WriteLog(const ArqTXT : String; const ABinaryString: AnsiString;
@@ -306,10 +331,20 @@ function EAN13_DV( CodEAN13 : String ) : String ;
 function TranslateString(const S: AnsiString; CP_Destino: Word; CP_Atual: Word = 0): AnsiString;
 function MatchText(const AText: String; const AValues: array of String): Boolean;
 
+function FindDelimiterInText( const AText: String; ADelimiters: String = ''): Char;
+function AddDelimitedTextToList( const AText: String; const ADelimiter: Char;
+   AStringList: TStrings): Integer;
+
 function UnZip(S: TStream): AnsiString; overload;
-function UnZip(S: AnsiString): AnsiString; overload;
+function UnZip(const ABinaryString: AnsiString): AnsiString; overload;
+function Zip(AStream: TStream): AnsiString; overload;
+function Zip(const ABinaryString: AnsiString): AnsiString; overload;
 
 function ChangeLineBreak(const AText: String; NewLineBreak: String = ';'): String;
+
+function IsWorkingDay(ADate: TDateTime): Boolean;
+function WorkingDaysBetween(StartDate,EndDate: TDateTime): Integer;
+function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
 
 {$IfDef FPC}
 var ACBrANSIEncoding: String;
@@ -328,6 +363,10 @@ procedure LoadBlockInput;
 {$ENDIF}
 
 implementation
+
+Uses
+  synautil,
+  ACBrCompress;
 
 var
   Randomized : Boolean ;
@@ -352,6 +391,68 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
+  Retornar True, se a Data for de Segunda a Sexta-feira. Falso para Sábado e Domingo
+ -----------------------------------------------------------------------------}
+function IsWorkingDay(ADate: TDateTime): Boolean;
+begin
+  Result := (DayOfWeek(ADate) in [2..6]);
+end;
+
+{-----------------------------------------------------------------------------
+  Retornar o total de dias úteis em um período de datas, exceto feriados.
+ -----------------------------------------------------------------------------}
+function WorkingDaysBetween(StartDate, EndDate: TDateTime): Integer;
+var
+  ADate: TDateTime;
+begin
+  Result := 0;
+  if (StartDate <= 0) then
+    exit;
+
+  ADate  := IncDay(StartDate, 1);
+  while (ADate <= EndDate) do
+  begin
+    if IsWorkingDay(ADate) then
+      Inc(Result);
+
+    ADate := IncDay(ADate, 1)
+  end;
+end;
+
+{-----------------------------------------------------------------------------
+  Retornar uma data calculando apenas dias úteis, a partir de uma data inicial,
+  exceto feriados.
+ -----------------------------------------------------------------------------}
+function IncWorkingDay(ADate: TDateTime; WorkingDays: Integer): TDatetime;
+var
+  DaysToIncrement, WorkingDaysAdded: Integer;
+
+  function GetNextWorkingDay(ADate: TDateTime): TDateTime;
+  begin
+    Result := ADate;
+    while not IsWorkingDay(Result) do
+      Result := IncDay(Result, DaysToIncrement);
+  end;
+
+begin
+  DaysToIncrement := ifthen(WorkingDays < 0,-1,1);
+
+  if (WorkingDays = 0) then
+    Result := GetNextWorkingDay(ADate)
+  else
+  begin
+    Result := ADate;
+    WorkingDaysAdded := 0;
+
+    while (WorkingDaysAdded <> WorkingDays) do
+    begin
+      Result := GetNextWorkingDay( IncDay(Result, DaysToIncrement) );
+      WorkingDaysAdded := WorkingDaysAdded + DaysToIncrement;
+    end;
+  end;
+end;
+
+{-----------------------------------------------------------------------------
   Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
   D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
   usam UTF-8. A função abaixo converte a "AString" de ANSI CP1252, para UNICODE
@@ -373,7 +474,7 @@ end ;
 {-----------------------------------------------------------------------------
    Todos os Fontes do ACBr usam Encoding CP1252, para manter compatibilidade com
   D5 a D2007, Porém D2009 e superiores usam Unicode, e Lazarus 0.9.27 ou superior,
-  usam UTF-8. A funçã abaixo, Converte a AString de UTF8 ou Unicode para a página
+  usam UTF-8. A função abaixo, Converte a AString de UTF8 ou Unicode para a página
   de código nativa do Sistema Operacional, (apenas se o Compilador usar UNICODE)
  -----------------------------------------------------------------------------}
 function ACBrStrToAnsi(AString: String): String;
@@ -428,6 +529,9 @@ begin
    {$Else}
     Result := Utf8ToAnsi(AUTF8String) ;
    {$EndIf}
+
+   if Result = '' then 
+     Result := AUTF8String;
   {$EndIf}
 end;
 
@@ -507,14 +611,30 @@ end;
 {$EndIf}
 
 {-----------------------------------------------------------------------------
+ Faz o mesmo que "SimpleRoundTo", porém divide pelo Fator, ao invés de Multiplicar.
+ Isso evita Erro A.V. de estouro de Inteiro.
+ Nota: Funcao copiada de SimpleRoundTo do Delphi Seatle
+ -----------------------------------------------------------------------------}
+function SimpleRoundToEX(const AValue: Extended; const ADigit: TRoundToRange = -2): Extended;
+var
+  LFactor: Extended;
+begin
+  LFactor := IntPower(10.0, ADigit);
+  if AValue < 0 then
+    Result := Int((AValue / LFactor) - 0.5) * LFactor
+  else
+    Result := Int((AValue / LFactor) + 0.5) * LFactor;
+end;
+
+{-----------------------------------------------------------------------------
  Corrige, bug da função Trunc.
  Deve calcular Trunc somente com variaveis e nunca com Expressoes, caso contrá-
  rio o resultado pode não ser o esperado.
  // Valores de Teste: Trunc(1,602 x 0,98) | 5 * 12,991 | 2,09 * 23,5
  -----------------------------------------------------------------------------}
-function TruncFix( X : Double ) : Integer ;
+function TruncFix( X : Extended ) : Int64 ;
 begin
-  Result := Trunc( SimpleRoundTo( X, -9) ) ;
+  Result := Trunc( SimpleRoundToEX( X, -9) ) ;
 end ;
 
 {-----------------------------------------------------------------------------
@@ -544,7 +664,8 @@ end;
  http://www.sofazquemsabe.com/2011/01/como-fazer-arredondamento-da-numeracao.html
  http://partners.bematech.com.br/2011/12/edicao-98-entendendo-o-truncamento-e-arredondamento-no-ecf/
  -----------------------------------------------------------------------------}
-function RoundABNT(const AValue: Double; const Digits: SmallInt; const Delta: Double):Double;
+function RoundABNT(const AValue: Double; const Digits: TRoundToRange;
+  const Delta: Double): Double;
 var
    Pow, FracValue, PowValue : Extended;
    RestPart: Double;
@@ -558,7 +679,7 @@ Begin
    IntValue  := trunc(PowValue);
    FracValue := frac(PowValue);
 
-   PowValue := SimpleRoundTo( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
+   PowValue := SimpleRoundToEX( FracValue * 10 * Pow, -9) ; // SimpleRoundTo elimina dizimas ;
    IntCalc  := trunc( PowValue );
    FracCalc := trunc( frac( PowValue ) * 100 );
 
@@ -585,12 +706,21 @@ Begin
      Result := -Result;
 end;
 
-function TruncTo(const AValue: Double; const Digits: SmallInt): Double;
+function TruncTo(const AValue: Double; const Digits: TRoundToRange): Double;
 var
-   Pow : Extended;
+ VFrac : Double;
+ Pow: Extended;
 begin
-   Pow      := intpower(10, abs(Digits) );
-   Result   := trunc(AValue*Pow)/Pow;
+  Result := AValue;
+  VFrac  := Frac(Result);
+
+  if VFrac <> 0 then
+  begin
+    Pow    := intpower(10, abs(Digits) );
+    VFrac  := TruncFix(VFrac * Pow);
+    VFrac  := VFrac / Pow;
+    Result := Int(Result) + VFrac  ;
+  end;
 end;
 
 {-----------------------------------------------------------------------------
@@ -820,6 +950,54 @@ begin
     Result := 0;
 end;
 
+{-----------------------------------------------------------------------------
+  Converte um "AInteger" em uma String binária codificada como Big Endian,
+  no tamanho máximo de "BytesStr"
+  Exemplos: IntToBEStr( 106, 2 ) = chr(0) + chr(106)
+ ---------------------------------------------------------------------------- }
+function IntToBEStr(AInteger: Integer; BytesStr: Integer): AnsiString;
+var
+   AHexStr: String;
+   LenHex, P, DecVal: Integer;
+begin
+  LenHex  := BytesStr * 2 ;
+  AHexStr := IntToHex(AInteger,LenHex);
+  Result  := '' ;
+
+  P := 1;
+  while P < LenHex do
+  begin
+    DecVal := StrToInt('$'+copy(AHexStr,P,2)) ;
+    Result := Result + AnsiChar( DecVal );
+    P := P + 2 ;
+  end ;
+end;
+
+{-----------------------------------------------------------------------------
+  converte uma String binária codificada como Big Endian em Inteiro
+  Veja exemplos na function acima
+ ---------------------------------------------------------------------------- }
+function BEStrToInt(ABEStr: AnsiString): Integer;
+var
+   AHexStr: String;
+   LenBE, P : Integer ;
+begin
+  LenBE   := Length(ABEStr);
+  AHexStr := '';
+
+  P := 1;
+  while P <= LenBE do
+  begin
+    AHexStr := AHexStr + IntToHex(ord(ABEStr[P]),2);
+    Inc( P ) ;
+  end ;
+
+  if AHexStr <> '' then
+    Result := StrToInt( '$'+AHexStr )
+  else
+    Result := 0;
+end;
+
 
 {-----------------------------------------------------------------------------
   Converte uma String em HexaDecimal <HexStr> pela sua representação em ASCII
@@ -862,6 +1040,19 @@ begin
 end;
 
 {-----------------------------------------------------------------------------
+  Retorna o numero de caracteres dentro de uma String, semelhante a Length()
+  Porém Lenght() não funciona corretamente em FPC com UTF8 e acentos
+ ---------------------------------------------------------------------------- }
+function LenghtNativeString(const AString: String): Integer;
+begin
+  {$IfDef FPC}
+   Result := UTF8Length(AString);
+  {$Else}
+   Result := Length(AString);
+  {$EndIf}
+end;
+
+{-----------------------------------------------------------------------------
   Completa <AString> com <Caracter> a direita, até o tamanho <nLen>, Alinhando
   a <AString> a Esquerda. Se <AString> for maior que <nLen>, ela será truncada
  ---------------------------------------------------------------------------- }
@@ -870,7 +1061,7 @@ function PadRight(const AString : String; const nLen : Integer;
 var
   Tam: Integer;
 begin
-  Tam := Length(AString);
+  Tam := LenghtNativeString( AString );
   if Tam < nLen then
     Result := AString + StringOfChar(Caracter, (nLen - Tam))
   else
@@ -886,7 +1077,7 @@ function PadLeft(const AString : String; const nLen : Integer;
 var
   Tam: Integer;
 begin
-  Tam := Length(AString);
+  Tam := LenghtNativeString( AString );
   if Tam < nLen then
     Result := StringOfChar(Caracter, (nLen - Tam)) + AString
   else
@@ -902,7 +1093,7 @@ var
   nCharLeft: Integer;
   Tam: integer;
 begin
-  Tam := Length( AString );
+  Tam := LenghtNativeString( AString );
   if Tam < nLen then
   begin
     nCharLeft := Trunc( (nLen - Tam) / 2 ) ;
@@ -938,9 +1129,9 @@ begin
   end ;
 
   Result   := Trim( Result ) ;
-  D        := (nLen - (Length(Result)-nSep)) / nSep ;
+  D        := (nLen - (LenghtNativeString(Result)-nSep)) / nSep ;
   nCharSep := Trunc( D ) ;
-  nResto   := nLen - ( (Length(Result)-nSep) + (nCharSep*nSep) ) ;
+  nResto   := nLen - ( (LenghtNativeString(Result)-nSep) + (nCharSep*nSep) ) ;
   nFeito   := nSep ;
   StuffStr := String( StringOfChar( Caracter, nCharSep ) ) ;
 
@@ -1362,7 +1553,7 @@ Var
   {$ENDIF}
 begin
   if AFormat = '' then
-     AFormat := '0.00';
+     AFormat := FloatMask();
 
   {$IFDEF HAS_FORMATSETTINGS}
   FS := CreateFormatSettings;
@@ -1383,12 +1574,20 @@ begin
   {$ENDIF}
 end;
 
-function FloatMask(const DecimalDigits: SmallInt): String;
+function FloatMask(const DecimalDigits: SmallInt; UseThousandSeparator: Boolean
+  ): String;
 begin
-  Result := '0';
-
   if DecimalDigits > 0 then
-     Result := Result + '.' + StringOfChar('0',DecimalDigits)
+  begin
+    if UseThousandSeparator then
+      Result := ','
+    else
+      Result := '';
+
+    Result := Result + '0.' + StringOfChar('0',DecimalDigits)
+  end
+  else
+    Result := '0';
 end;
 
 {-----------------------------------------------------------------------------
@@ -2402,7 +2601,7 @@ var
 begin
   LastFile := '' ;
   Path     := PathWithDelim(APath);
-  RetFind  := SysUtils.FindFirst(Path + '*.*', faDirectory, SearchRec);
+  RetFind  := SysUtils.FindFirst(Path + AllFilesMask, faDirectory, SearchRec);
   AStringList.Clear;
 
   try
@@ -2869,34 +3068,129 @@ procedure DesligarMaquina(Reboot : Boolean ; Forcar : Boolean ; LogOff : Boolean
    end;
 
 
-    Var RebootParam : Longword ;
-   begin
-      if WindowsNT then
-         ObtemPrivilegios;
+Var
+  RebootParam : Longword ;
+begin
+    if WindowsNT then
+       ObtemPrivilegios;
 
-      if Reboot then
-         RebootParam := EWX_REBOOT
-      else if LogOff then
-         RebootParam := EWX_LOGOFF
-      else
-         RebootParam := EWX_SHUTDOWN  ;
+    if Reboot then
+       RebootParam := EWX_REBOOT
+    else if LogOff then
+       RebootParam := EWX_LOGOFF
+    else
+       RebootParam := EWX_SHUTDOWN  ;
 
-      if Forcar then
-         RebootParam := RebootParam or EWX_FORCE ;
+    if Forcar then
+       RebootParam := RebootParam or EWX_FORCE ;
 
-      ExitWindowsEx(RebootParam, 0);
-   end;
-
+    ExitWindowsEx(RebootParam, 0);
+end;
 {$ELSE}
    begin
       // Precisa ser o ROOT ou a
       // aplicação ter provilegios de ROOT  (use: su  ,  chmod u+s SeuPrograma )
+      //
       if Reboot then
-         RunCommand('reboot')
+         RunCommand('sudo shutdown -r now')
       else
-         RunCommand('halt') ;
+         RunCommand('sudo shutdown -h now') ;
    end ;
 {$ENDIF}
+
+
+{$IfNDef NOGUI}
+{$IfDef MSWINDOWS}
+// Origem: https://www.experts-exchange.com/questions/20294536/WM-ACTIVATE.html
+function ForceForeground(AppHandle:THandle): boolean;
+const
+  SPI_GETFOREGROUNDLOCKTIMEOUT = $2000;
+  SPI_SETFOREGROUNDLOCKTIMEOUT = $2001;
+var
+  ForegroundThreadID: DWORD;
+  ThisThreadID      : DWORD;
+  timeout           : DWORD;
+  OSVersionInfo     : TOSVersionInfo;
+  Win32Platform     : Integer;
+begin
+  if IsIconic(AppHandle) then
+    ShowWindow(AppHandle, SW_RESTORE);
+
+  if (GetForegroundWindow = AppHandle) then
+    Result := True
+  else
+  begin
+    Win32Platform := 0;
+    OSVersionInfo.dwOSVersionInfoSize := SizeOf(OSVersionInfo);
+    if GetVersionEx(OSVersionInfo) then
+      Win32Platform := OSVersionInfo.dwPlatformId;
+
+    { Windows 98/2000 doesn't want to foreground a window when some other window has keyboard focus}
+
+    if ((Win32Platform = VER_PLATFORM_WIN32_NT) and (OSVersionInfo.dwMajorVersion > 4)) or
+       ((Win32Platform = VER_PLATFORM_WIN32_WINDOWS) and ((OSVersionInfo.dwMajorVersion > 4) or
+       ((OSVersionInfo.dwMajorVersion = 4) and (OSVersionInfo.dwMinorVersion > 0)))) then
+    begin
+      Result := False;
+      ForegroundThreadID := GetWindowThreadProcessID(GetForegroundWindow,nil);
+      ThisThreadID := GetWindowThreadPRocessId(AppHandle,nil);
+
+      if AttachThreadInput(ThisThreadID, ForegroundThreadID, true) then
+      begin
+        BringWindowToTop(AppHandle);
+        SetForegroundWindow(AppHandle);
+        AttachThreadInput(ThisThreadID, ForegroundThreadID, false);
+        Result := (GetForegroundWindow = AppHandle);
+      end;
+
+      if not Result then
+      begin
+        SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, @timeout, 0);
+        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(0), SPIF_SENDCHANGE);
+        BringWindowToTop(AppHandle);
+        SetForegroundWindow(AppHandle);
+        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(timeout), SPIF_SENDCHANGE);
+        Result := (GetForegroundWindow = AppHandle);
+
+        if not Result then
+        begin
+          ShowWindow(AppHandle,SW_HIDE);
+          ShowWindow(AppHandle,SW_SHOWMINIMIZED);
+          ShowWindow(AppHandle,SW_SHOWNORMAL);
+          BringWindowToTop(AppHandle);
+          SetForegroundWindow(AppHandle);
+        end;
+      end;
+    end
+    else
+    begin
+      BringWindowToTop(AppHandle);
+      SetForegroundWindow(AppHandle);
+    end;
+
+    Result := (GetForegroundWindow = AppHandle);
+  end;
+end;
+{$Else}
+function ForceForeground(AppHandle:THandle): boolean;
+begin
+  Application.Restore;
+  Application.BringToFront;
+  Application.RestoreStayOnTop(True);
+  Application.ProcessMessages;
+  if Assigned( Screen.ActiveForm ) then
+    Result := (Screen.ActiveForm.Handle = AppHandle)
+  else
+    Result := False;
+end;
+{$EndIf}
+{$EndIf}
+
+
+procedure WriteToFile(const Arq: String; ABinaryString: AnsiString);
+begin
+  WriteToTXT(Arq, ABinaryString, False, False);
+end;
 
 {-----------------------------------------------------------------------------
  - Grava conteudo de "AString" no arquivo "ArqTXT".
@@ -2992,13 +3286,13 @@ end;
  -----------------------------------------------------------------------------}
 function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer): boolean;
 Var
-  LibHandle: tHandle;
+  LibHandle: TLibHandle;
 begin
  Result := FunctionDetect(LibName, FuncName, LibPointer, LibHandle);
 end;
 
-function FunctionDetect (LibName, FuncName: String; var LibPointer: Pointer;
-   var LibHandle: THandle ): boolean;
+function FunctionDetect(LibName, FuncName: String; var LibPointer: Pointer;
+  var LibHandle: TLibHandle): boolean;
 begin
  Result := false;
  LibPointer := NIL;
@@ -3021,7 +3315,7 @@ end;
 
 function UnLoadLibrary(LibName: String ): Boolean ;
 var
-  LibHandle: THandle ;
+  LibHandle: TLibHandle ;
 begin
  Result := True ;
 
@@ -3222,76 +3516,83 @@ begin
     end;
 end;
 
-{$IFDEF FPC}
-function UnZip(S: TStream): AnsiString;
-{ Descompacta um arquivo padrão GZIP de Stream... Fontes:
-  http://wiki.freepascal.org/paszlib
-  http://www.gocher.me/GZIP
-}
+{------------------------------------------------------------------------------
+  Encontra qual é o primeiro Delimitador usado, em "AText", em uma lista de
+  delimitadores, informada em "ADelimiters".
+  Se "ADelimiters" for vazio, usa como padrão ";,|"
+ ------------------------------------------------------------------------------}
+function FindDelimiterInText(const AText: String; ADelimiters: String): Char;
 var
-  DS: TDecompressionStream;
-  MS: TMemoryStream;
-  readCount: integer;
-  Buf: array[0..1023] of byte;
-  hdr: longword;
+  I: Integer;
 begin
-  S.Position := 0; // goto start of input stream
-  hdr := S.ReadDWord;
-  if (hdr and $00088B1F) = $00088B1F then // gzip header (deflate method)
-    S.Position := 10     // Pula cabeçalho gzip
-  else if (hdr and $00009C78) = $00009C78 then // zlib header
-    S.Position := 2      // Pula cabeçalho zlib
-  else
-    S.Position := 0;
+  if (ADelimiters = '') then
+    ADelimiters := ';,|';
 
-  MS := TMemoryStream.Create;
-  DS := Tdecompressionstream.Create(S, (S.Position > 0) );
-  Buf[0] := 0;
-  try
-    repeat
-      readCount := DS.Read(Buf, SizeOf(Buf));
-      if readCount <> 0 then
-        MS.Write(Buf, readCount);
-    until readCount < SizeOf(Buf);
+  Result := ' ';
+  I := 1;
+  while (Result = ' ') and (I <= Length(ADelimiters)) do
+  begin
+    if (pos( ADelimiters[I], AText) > 0) then
+      Result := ADelimiters[I];
 
-    MS.Position := 0;
-    Result := ReadStrFromStream(MS, MS.Size);
-  finally
-    DS.Free;
-    MS.Free;
+    Inc(I);
   end;
 end;
 
-function UnZip(S: AnsiString): AnsiString; overload;
+{------------------------------------------------------------------------------
+  Quebra a String "AText", em várias linhas, separando-a de acordo com a ocorrência
+  de "ADelimiter", e adiciona os Itens encontrados em "AStringList".
+  Retorna o número de Itens Inseridos
+ ------------------------------------------------------------------------------}
+function AddDelimitedTextToList(const AText: String; const ADelimiter: Char;
+  AStringList: TStrings): Integer;
 var
-  SS: TStringStream;
+  SL: TStringList;
+  ADelimitedText: String;
 begin
-  SS := TStringStream.Create(S);
+  Result := 0;
+  if (AText = '') then
+    Exit;
+
+  SL := TStringList.Create;
   try
-    Result := UnZip(SS);
+    SL.Delimiter := ADelimiter;
+    {$IFDEF FPC}
+     SL.StrictDelimiter := True;
+     ADelimitedText := AText;
+    {$ELSE}
+     ADelimitedText := '"' + StringReplace(AText, ADelimiter,
+                            '"' + ADelimiter + '"', [rfReplaceAll]) +
+                       '"';
+    {$ENDIF}
+    SL.DelimitedText := ADelimitedText;
+    Result := SL.Count;
+
+    AStringList.AddStrings(SL);
   finally
-    SS.Free;
+    SL.Free;
   end;
 end;
 
-
-{$ELSE}
-
 function UnZip(S: TStream): AnsiString;
-Var
-  DataStr: AnsiString;
 begin
-  S.Position := 0;
-  DataStr := ReadStrFromStream(S, S.Size);
-  
-  Result := UnZip(DataStr);
+  Result := ACBrCompress.DeCompress(S);
 end;
 
-function UnZip(S: AnsiString): AnsiString; overload;
+function UnZip(const ABinaryString: AnsiString): AnsiString;
 begin
-  Result := GZDecompressStr(S);
-end ;
-{$ENDIF}
+  Result := ACBrCompress.DeCompress(ABinaryString);
+end;
+
+function Zip(AStream: TStream): AnsiString;
+begin
+  Result := ACBrCompress.ZLibCompress(AStream);
+end;
+
+function Zip(const ABinaryString: AnsiString): AnsiString;
+begin
+ Result := ACBrCompress.ZLibCompress(ABinaryString);
+end;
 
 {------------------------------------------------------------------------------
    Realiza o tratamento de uma String recebida de um Serviço Web
@@ -3358,6 +3659,19 @@ begin
    end;
 
   Result := copy(AString, PosIni, PosFim - (PosIni + 1));
+end;
+
+function SeparaDadosArray(const AArray: array of String; const AString: String;
+  const MantemChave: Boolean): String;
+var
+  I : Integer;
+begin
+ for I:=Low(AArray) to High(AArray) do
+ begin
+   Result := Trim(SeparaDados(AString,AArray[I], MantemChave));
+   if Result <> '' then
+      Exit;
+ end;
 end;
 
 {------------------------------------------------------------------------------
@@ -3482,7 +3796,7 @@ begin
   if not XmlEhUTF8(AXML) then   // Já foi convertido antes ou montado em UTF8 ?
   begin
     UTF8Str := NativeStringToUTF8(AXML);
-    Result := '<?xml version="1.0" encoding="UTF-8"?>' + String(UTF8Str);
+    Result := CUTF8DeclaracaoXML + String(UTF8Str);
   end
   else
     Result := AXML;
@@ -3604,7 +3918,8 @@ begin
     msk10x2 : Mask := '#,###,###,##0.00';
     msk13x2 : Mask := '#,###,###,###,##0.00';
     msk15x2 : Mask := '###,###,###,###,##0.00';
-    msk6x3  : Mask := '###,##0.000';
+    msk6x3  : Mask := ',0.000';
+    msk6x4  : Mask := ',0.0000';
     mskAliq : Mask := '#00%';
   end;
 
@@ -3648,7 +3963,7 @@ initialization
 {$EndIf}
   Randomized := False ;
 {$IfDef FPC}
-ACBrANSIEncoding := GetSysANSIencoding;
+  ACBrANSIEncoding := GetSysANSIencoding;
 {$EndIf}
 
 end.

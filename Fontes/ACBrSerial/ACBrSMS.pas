@@ -54,6 +54,9 @@ uses
   {$ENDIF};
 
 type
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrSMS = class(TACBrComponent)
   private
     fsAtivo: Boolean;

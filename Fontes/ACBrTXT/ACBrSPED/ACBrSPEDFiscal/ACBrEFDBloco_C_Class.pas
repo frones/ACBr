@@ -1328,7 +1328,8 @@ begin
                LFill( SER ) +
                LFill( SUB ) +
                LFill( NUM_DOC ) +
-               LFill( DT_DOC ) ) ;
+               LFill( DT_DOC ) +
+               IfThen( FBloco_0.Registro0000.COD_VER >= vlVersao110, LFill( CHV_DOCe ), EmptyStr));
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -1882,7 +1883,25 @@ begin
                LFill( COD_PART_ULT_E ) +
                DFill( QUANT_ULT_E,3 ) +
                DFill( VL_UNIT_ULT_E,3 ) +
-               DFill( VL_UNIT_BC_ST,3 ) ) ;
+               DFill( VL_UNIT_BC_ST,3 ) +
+               ifthen(DT_INI >= EncodeDate(2017,01,01),
+               LFill( CHAVE_NFE_ULT_E ) +
+               LFill( NUM_ITEM_ULT_E ) +
+               DFill( VL_UNIT_BC_ICMS_ULT_E,2 ) +
+               DFill( ALIQ_ICMS_ULT_E,2 ) +
+               DFill( VL_UNIT_LIMITE_BC_ICMS_ULT_E,2 ) +
+               DFill( VL_UNIT_ICMS_ULT_E,3 ) +
+               DFill( ALIQ_ST_ULT_E,2 ) +
+               DFill( VL_UNIT_RES,3 ) +
+               LFill( COD_RESP_RET ) +
+               LFill( COD_MOT_RES ) +
+               LFill( CHAVE_NFE_RET ) +
+               LFill( COD_PART_NFE_RET ) +
+               LFill( SER_NFE_RET ) +
+               LFill( NUM_NFE_RET ) +
+               LFill( ITEM_NFE_RET ) +
+               LFill( COD_DA ) +
+               LFill( NUM_DA ), '') ) ;
         end;
         RegistroC990.QTD_LIN_C := RegistroC990.QTD_LIN_C + 1;
      end;
@@ -2669,8 +2688,8 @@ begin
                 LFill( VL_BC_ICMS_ST,0,2 ) +
                 LFill( VL_ICMS_ST,0,2 ) +
                 LFill( COD_INF ) +
-                LFill( VL_PIS,0,2 ) +
-                LFill( VL_COFINS,0,2 ) +
+                LFill( VL_PIS,0,2, True ) +
+                LFill( VL_COFINS,0,2, True ) +
                 LFill( intTP_LIGACAO, 0, True ) +
                 LFill( strCOD_GRUPO_TENSAO ) ) ;
         end;

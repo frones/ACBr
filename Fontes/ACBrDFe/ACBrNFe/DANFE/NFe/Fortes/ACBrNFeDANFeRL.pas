@@ -50,9 +50,9 @@
 |*    "Imprimir" e "SavePDF"
 |* 05/02/2010: Peterson de Cerqueira Matos
 |*  - Tratamento das propriedades "Email", "ResumoCanhoto", "Fax", "NumCopias",
-|*    "Ssitema", "Site", "Usuario" em "ACBrNFeDANFeClass"
+|*    "Sistema", "Site", "Usuario" em "ACBrNFeDANFeClass"
 |*  - Acréscimo dos parâmetros "AEmail", "AResumoCanhoto", "AFax", "ANumCopias",
-|*    "ASsitema", "ASite", "AUsuario" nas Class procedures
+|*    "Asistema", "ASite", "AUsuario" nas Class procedures
 |*    "Imprimir" e "SavePDF"
 |* 13/02/2010: Peterson de Cerqueira Matos
 |*  - Correção na exibição do 'Preview' para modo 'PREVIEWMODAL'
@@ -109,8 +109,7 @@ uses
       Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
   pcnNFe, pcnConversao, ACBrNFe, ACBrNFeDANFeRLClass, ACBrUtil,
-  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts,
-  {$IFDEF BORLAND} DBClient, {$ELSE} BufDataset, {$ENDIF} DB;
+  RLReport, RLFilters, RLPrinters, RLPDFFilter, RLConsts;
 
 type
 
@@ -119,14 +118,18 @@ type
   TfrlDANFeRL = class(TForm)
     RLNFe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
-    DataSource1: TDataSource;
-    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     function BuscaDireita(Busca, Text: String): Integer;
     procedure InsereLinhas(sTexto: String; iLimCaracteres: Integer; rMemo: TRLMemo);
     function QuebraLinha: String;
     function ManterDesPro(dvDesc, dvProd: Double): Double;
     function TrataDocumento(sCNPJCPF: String): String;
+    function ManterInfAdFisco: String;
+    function ManterInfCompl: String;
+    function ManterInfContr: String;
+    function ManterObsFisco: String;
+    function ManterProcreferenciado: String;
+
   private
     { Private declarations }
   protected
@@ -138,7 +141,7 @@ type
     FResumoCanhoto: Boolean;
     FFax: String;
     FNumCopias: Integer;
-    FSsitema: String;
+    FSistema: String;
     FSite: String;
     FUsuario: String;
     FPosCanhoto: TPosRecibo;
@@ -197,10 +200,9 @@ type
     fEspacoEntreProdutos: Integer;
     fAlternaCoresProdutos: Boolean;
     fCorDestaqueProdutos: TColor;
-    cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
     vAuxDiferencaPDF : integer;
+    FImprimirDadosDocReferenciados: Boolean;
     procedure ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
-    procedure ConfigDataSet;
   public
     { Public declarations }
     class procedure Imprimir(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
@@ -242,18 +244,22 @@ type
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
-                    AMostraDadosISSQN: Boolean = True;
+                    AMostraDadosISSQN: Boolean = False;
                     AAltLinhaComun: Integer = 30;
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;
                     ACorDestaqueProdutos: TColor = clWhite;
+                    AImprimirDadosDocReferenciados: Boolean = True;
                     ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
                     ARecuoEmpresa: Integer = 10;
                     ALogoemCima: Boolean = False;
                     ATamanhoFonteEndereco: Integer = 10;
-                    ARecuoLogo: Integer = 0);
+                    ARecuoLogo: Integer = 0;
+                    AUltimaNFE : Boolean = True;
+                    AArray : PObjectArray = nil);
+
 
     class procedure SavePDF(AOwner: TComponent; ANFe: TNFe; ALogo: String = '';
                     AMarcaDagua: String = ''; ALarguraCodProd: Integer = 54;
@@ -293,11 +299,12 @@ type
                     AdCasasDecimais_Mask_qCom : String = '###,###,###,##0.00';
                     AdCasasDecimais_Mask_vUnCom:String = '###,###,###,##0.00';
                     AdExibeCampoFatura: Boolean = False;
-                    AMostraDadosISSQN: Boolean = True;
+                    AMostraDadosISSQN: Boolean = False;
                     AAltLinhaComun: Integer = 30;
                     AEspacoEntreProdutos: Integer = 7;
                     AAlternaCoresProdutos: Boolean = False;
                     ACorDestaqueProdutos: TColor = clWhite;
+                    AImprimirDadosDocReferenciados: Boolean = True;
                     ATamanhoLogoHeight: Integer = 200;
                     ATamanhoLogoWidth: Integer = 200;
                     ARecuoEndereco: Integer = 10;
@@ -309,8 +316,6 @@ type
 
   end;
 
-   const
-    sDisplayFormat = '###,###,###,##0.%.*d';
 
 implementation
 
@@ -318,95 +323,6 @@ uses ACBrValidador;
 
 {$R *.dfm}
 
-procedure TfrlDANFeRL.ConfigDataSet;
-begin
- if not Assigned( cdsItens ) then
- cdsItens:=  {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}  TBufDataset.create(nil) {$ENDIF};
-
-  if cdsItens.Active then
- begin
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).EmptyDataSet;
- {$ENDIF}
-  cdsItens.Active := False;
- end;
-
- {$IFDEF BORLAND}
- if cdsItens is TClientDataSet then
-  begin
-  TClientDataSet(cdsItens).StoreDefs := False;
-  TClientDataSet(cdsItens).IndexDefs.Clear;
-  TClientDataSet(cdsItens).IndexFieldNames := '';
-  TClientDataSet(cdsItens).IndexName := '';
-  TClientDataSet(cdsItens).Aggregates.Clear;
-  TClientDataSet(cdsItens).AggFields.Clear;
-  end;
- {$ELSE}
- if cdsItens is TBufDataset then
-  begin
-  TBufDataset(cdsItens).IndexDefs.Clear;
-  TBufDataset(cdsItens).IndexFieldNames:='';
-  TBufDataset(cdsItens).IndexName:='';
-  end;
- {$ENDIF}
-
- with cdsItens do
-  if FieldCount = 0 then
-  begin
-    FieldDefs.Clear;
-    Fields.Clear;
-    FieldDefs.Add('CODIGO',ftString,60);
-    FieldDefs.Add('EAN',ftString,14);
-    FieldDefs.Add('DESCRICAO',ftString,2000);
-    FieldDefs.Add('NCM',ftString,8);
-    FieldDefs.Add('CFOP',ftString,4);
-    FieldDefs.Add('UNIDADE',ftString,6);
-    FieldDefs.Add('QTDE',ftString,18);
-    FieldDefs.Add('VALOR',ftString,18);
-    FieldDefs.Add('VALORDESC',ftString,18);
-    FieldDefs.Add('Valorliquido',ftString,18);
-    FieldDefs.Add('TOTAL',ftString,18);
-    FieldDefs.Add('CST',ftString,3);
-    FieldDefs.Add('CSOSN',ftString,4);
-    FieldDefs.Add('BICMS',ftString,18);
-    FieldDefs.Add('ALIQICMS',ftString,6);
-    FieldDefs.Add('VALORICMS',ftString,18);
-    FieldDefs.Add('BICMSST',ftString,18);
-    FieldDefs.Add('VALORICMSST',ftString,18);
-    FieldDefs.Add('ALIQIPI',ftString,6);
-    FieldDefs.Add('VALORIPI',ftString,18);
-    FieldDefs.Add('XPROD',ftString,200);
-    FieldDefs.Add('INFADIPROD',ftString,200);
-    FieldDefs.Add('ITEM',ftString,3);
-
-
-   {$IFDEF BORLAND}
-    if cdsItens is TClientDataSet then
-    TClientDataSet(cdsItens).CreateDataSet;
-   {$ELSE}
-    if cdsItens is TBufDataset then
-    TBufDataset(cdsItens).CreateDataSet;
-   {$ENDIF}
-   end;
-
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).StoreDefs := False;
- {$ENDIF}
-
-   if not cdsItens.Active then
-   cdsItens.Active := True;
-
-  {$IFDEF BORLAND}
-   if cdsItens is TClientDataSet then
-   if cdsItens.Active then
-   TClientDataSet(cdsItens).LogChanges := False;
- {$ENDIF}
-
- DataSource1.dataset := cdsItens;
-
-end;
 
 class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent;
                 ANFe: TNFe;
@@ -457,15 +373,19 @@ class procedure TfrlDANFeRL.Imprimir(AOwner: TComponent;
                 AEspacoEntreProdutos: Integer;
                 AAlternaCoresProdutos: Boolean;
                 ACorDestaqueProdutos: TColor;
+                AImprimirDadosDocReferenciados: Boolean;
                 ATamanhoLogoHeight: Integer;
                 ATamanhoLogoWidth: Integer;
                 ARecuoEndereco: Integer;
                 ARecuoEmpresa: Integer;
                 ALogoemCima: Boolean;
                 ATamanhoFonteEndereco: Integer;
-                ARecuoLogo: Integer);
+                ARecuoLogo: Integer;
+                AUltimaNFE : Boolean;
+                AArray : PObjectArray);
 
-
+var Report, ReportNext : TRLCustomReport;
+    i : Integer;
 begin
   with Create ( AOwner ) do
     try
@@ -477,7 +397,7 @@ begin
       FResumoCanhoto := AResumoCanhoto;
       FFax := AFax;
       FNumCopias := ANumCopias;
-      FSsitema := ASistema;
+      FSistema := ASistema;
       FSite := ASite;
       FUsuario := AUsuario;
       FPosCanhoto := APosCanhoto;
@@ -525,6 +445,7 @@ begin
       fEspacoEntreProdutos := AEspacoEntreProdutos;
       fAlternaCoresProdutos := AAlternaCoresProdutos;
       fCorDestaqueProdutos := ACorDestaqueProdutos;
+      fImprimirDadosDocReferenciados := AImprimirDadosDocReferenciados;
 
       if not EstaVazio(FImpressora) then
         RLPrinter.PrinterName := FImpressora;
@@ -537,13 +458,39 @@ begin
       vAuxDiferencaPDF := 0;
       RLNFe.ShowProgress := FMostrarStatus;
       RLNFe.PrintDialog := not(FMostrarPreview) and (EstaVazio(FImpressora));
+      RLNFe.CompositeOptions.ResetPageNumber := True;
 
-      if FMostrarPreview then
-        RLNFe.PreviewModal
-      else
-        RLNFe.Print;
+      SetLength(AArray^,Length(AArray^) + 1);
+      AArray^[Length(AArray^) - 1] := RLNFe.Owner;
+
+      if AUltimaNFE then
+      begin
+        Report := TfrlDANFeRL(AArray^[0]).RLNFe;
+        for i := 1 to High(AArray^) do
+        begin
+          if Report.NextReport = nil then
+            Report.NextReport := TfrlDANFeRL(AArray^[i]).RLNFe
+          else
+          begin
+            ReportNext := Report.NextReport;
+            repeat
+              if ReportNext.NextReport <> nil then
+                ReportNext := ReportNext.NextReport;
+            until ReportNext.NextReport = nil;
+            ReportNext.NextReport := TfrlDANFeRL(AArray^[i]).RLNFe;
+          end;
+        end;
+        if FMostrarPreview then
+          Report.PreviewModal
+        else
+          Report.Print;
+      end;
     finally
-      Destroy;
+      if AUltimaNFE then
+      begin
+        for i := Low(AArray^) to High(AArray^) do
+          AArray^[i].Free;
+      end;
     end ;
 end;
 
@@ -597,6 +544,7 @@ class procedure TfrlDANFeRL.SavePDF(AOwner: TComponent;
                 AEspacoEntreProdutos: Integer;
                 AAlternaCoresProdutos: Boolean;
                 ACorDestaqueProdutos: TColor;
+                AImprimirDadosDocReferenciados: Boolean;
                 ATamanhoLogoHeight: Integer;
                 ATamanhoLogoWidth: Integer;
                 ARecuoEndereco: Integer;
@@ -618,7 +566,7 @@ begin
       FResumoCanhoto := AResumoCanhoto;
       FFax := AFax;
       FNumCopias := ANumCopias;
-      FSsitema := ASistema;
+      FSistema := ASistema;
       FSite := ASite;
       FUsuario := AUsuario;
       FPosCanhoto := APosCanhoto;
@@ -665,6 +613,7 @@ begin
       fEspacoEntreProdutos := AEspacoEntreProdutos;
       fAlternaCoresProdutos := AAlternaCoresProdutos;
       fCorDestaqueProdutos := ACorDestaqueProdutos;
+      FImprimirDadosDocReferenciados := AImprimirDadosDocReferenciados;
 
       if FImpressora > '' then
         RLPrinter.PrinterName := FImpressora;
@@ -705,18 +654,11 @@ begin
     end ;
 end;
 
-procedure TfrlDANFeRL.FormDestroy(Sender: TObject);
-begin
-  FreeAndNil( cdsItens );
-end;
-
 procedure TfrlDANFeRL.FormCreate(Sender: TObject);
 begin
   {$IfNDef FPC}
    Self.Scaled := false;
-   Self.ScaleBy( 96,Screen.PixelsPerInch);
   {$EndIf}
-  ConfigDataSet;
 end;
 
 procedure TfrlDANFeRL.ConfigureVariavies(ATipoDANFE: TpcnTipoImpressao);
@@ -762,54 +704,56 @@ begin
   if iQuantCaracteres <= iLimiteLinhas then
     iTotalLinhas := 1
   else
-    begin
-      if (iQuantCaracteres mod iLimCaracteres) > 0 then
-        iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
-      else
-        iTotalLinhas := iQuantCaracteres div iLimCaracteres;
-    end;
+  begin
+    if (iQuantCaracteres mod iLimCaracteres) > 0 then
+      iTotalLinhas := (iQuantCaracteres div iLimCaracteres) + 1
+    else
+      iTotalLinhas := iQuantCaracteres div iLimCaracteres;
+  end;
 
-  for i := 1 to (iTotalLinhas + 10) do
-    begin
-      sLinhaProvisoria := Copy(sTexto, iPosAtual, iLimCaracteres);
-      iUltimoEspacoLinha := BuscaDireita(' ', sLinhaProvisoria);
+  //
+  // Define o numero de linhas em complemento
+  // iTotalLinhas + 20 = 30 linhas
+  //
 
-      if iUltimoEspacoLinha = 0 then
+  for i := 1 to (iTotalLinhas + 20) do
+  begin
+    sLinhaProvisoria    := Copy(sTexto, iPosAtual, iLimCaracteres);
+    iUltimoEspacoLinha  := BuscaDireita(' ', sLinhaProvisoria);
+
+    if iUltimoEspacoLinha = 0 then
         iUltimoEspacoLinha := iQuantCaracteres;
 
-      if Pos(';', sLinhaProvisoria) = 0 then
-        begin
-          if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
-             (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
-            sLinha := sLinhaProvisoria
-          else
-            begin
-              if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
-                sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
-              else
-                begin
-                  sLinha := sLinhaProvisoria;
-                end;
-            end;
-          iPosAtual := iPosAtual + Length(sLinha);
-        end // if Pos(';', sLinhaProvisoria) = 0
+    if Pos(';', sLinhaProvisoria) = 0 then
+    begin
+      if (BuscaDireita(' ', sLinhaProvisoria) = iLimCaracteres)  or
+         (BuscaDireita(' ', sLinhaProvisoria) = (iLimCaracteres + 1)) then
+        sLinha := sLinhaProvisoria
       else
-        begin
-          sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
-          iPosAtual := iPosAtual + (Length(sLinha));
-        end;
-
-      if sLinha > '' then
-        begin
-          if LeftStr(sLinha, 1) = ' ' then
-            sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
-          else
-            sLinha := sLinha;
-
-          rMemo.Lines.Add(sLinha);
-        end;
-
+      begin
+        if (iQuantCaracteres - iPosAtual) > iLimCaracteres then
+          sLinha := Copy(sLinhaProvisoria, 1, iUltimoEspacoLinha)
+        else
+          sLinha := sLinhaProvisoria;
+      end;
+      iPosAtual := iPosAtual + Length(sLinha);
+    end // if Pos(';', sLinhaProvisoria) = 0
+    else
+    begin
+      sLinha := Copy(sLinhaProvisoria, 1, Pos(';', sLinhaProvisoria));
+      iPosAtual := iPosAtual + (Length(sLinha));
     end;
+
+    if sLinha > '' then
+    begin
+      if LeftStr(sLinha, 1) = ' ' then
+        sLinha := Copy(sLinha, 2, (Length(sLinha) - 1))
+      else
+        sLinha := sLinha;
+
+      rMemo.Lines.Add(sLinha);
+    end;
+  end;
 end;
 
 function TfrlDANFeRL.QuebraLinha: String;
@@ -845,6 +789,92 @@ begin
       Result := ' CPF: ';
 
     Result := Result + FormatarCNPJouCPF( sCNPJCPF );
+  end;
+end;
+
+function TfrlDANFeRL.ManterInfAdFisco : String;
+// Informações de interesse do fisco
+begin
+  Result := '';
+  if FNFe.InfAdic.infAdFisco > '' then
+  begin
+    if FNFe.InfAdic.infCpl > '' then
+      Result := FNFe.InfAdic.infAdFisco + '; '
+    else
+      Result := FNFe.InfAdic.infAdFisco;
+  end
+end;
+
+function TfrlDANFeRL.ManterInfCompl : String;
+ // Informações de interesse do contribuinte
+begin
+  Result := '';
+  if FNFe.InfAdic.infCpl > '' then
+    Result := FNFe.InfAdic.infCpl
+end;
+
+
+function TfrlDANFeRL.ManterInfContr : String;
+ // Informações de uso livre do contribuinte com "xCampo" e "xTexto"
+var
+  i : Integer;
+begin
+  Result := '';
+  with FNFe.InfAdic do
+  begin
+    if obsCont.Count > 0 then
+    begin
+      for i := 0 to ( obsCont.Count - 1) do
+      begin
+        Result := Result + obsCont.Items[i].xCampo + ': ' + obsCont.Items[i].xTexto+
+                  ifthen( ( obsCont.Items[i].Index = ( obsCont.Count - 1) ) ,'', ';');
+      end;
+      Result := Result + '; ';
+    end;
+  end;
+end;
+
+function TfrlDANFeRL.ManterObsFisco : String;
+ // Informações de uso livre do fisco com "xCampo" e "xTexto"
+var
+  i : Integer;
+begin
+  Result := '';
+  with FNFe.InfAdic do
+  begin
+    if obsFisco.Count > 0 then
+    begin
+      for i := 0 to ( obsFisco.Count - 1 ) do
+      begin
+        Result := Result + obsFisco.Items[i].xCampo +': ' + obsFisco.Items[i].xTexto +
+                  ifthen( ( obsFisco.Items[i].Index = (obsFisco.Count - 1) ) ,'', ';');
+      end;
+      Result := Result + '; ';
+    end;
+  end;
+end;
+
+function TfrlDANFeRL.ManterProcreferenciado : String;
+ // Informações do processo referenciado
+var
+  i : Integer;
+begin
+  Result := '';
+  with FNFe.InfAdic do
+  begin
+    if procRef.Count > 0 then
+    begin
+      for i := 0 to (procRef.Count - 1) do
+      begin
+        if procRef.Items[i].Index = (procRef.Count - 1) then
+          Result := Result + ACBrStr( 'PROCESSO OU ATO CONCESSÓRIO Nº: ' +
+                             procRef.Items[i].nProc +
+                             ' - ORIGEM: ' +
+                             indProcToDescrStr(procRef.Items[i].indProc ))+
+                  ifthen( ( procRef.Items[i].Index = (procRef.Count - 1) ) ,'', ';');
+      end;
+      Result := Result + '; ';
+    end;
   end;
 end;
 

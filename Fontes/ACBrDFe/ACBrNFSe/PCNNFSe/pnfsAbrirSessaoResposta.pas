@@ -177,7 +177,7 @@ begin
   if Provedor = proISSCuritiba then
     Leitor.Arquivo := RemoverNameSpace(Leitor.Arquivo)
   else
-    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo));
+    Leitor.Arquivo := RemoverNameSpace(RetirarPrefixos(Leitor.Arquivo, Provedor));
 
   Leitor.Grupo := Leitor.Arquivo;
 
@@ -195,7 +195,7 @@ var
   strAux: AnsiString;
 begin
   try
-    InfAbrirSessao.FHashIdent := Leitor.Arquivo;
+    InfAbrirSessao.FHashIdent := Leitor.rCampo(tcStr, 'return'); 
 
     if leitor.rExtrai(1, 'mensagens') <> '' then
     begin

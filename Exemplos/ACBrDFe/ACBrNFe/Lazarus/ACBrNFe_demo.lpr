@@ -7,8 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, sysutils, Unit1
-  { you can add units after this };
+  Forms, sysutils, Unit1, Unit2;
 
 {$R *.res}
 
@@ -17,7 +16,7 @@ var
 begin
   HeapTraceFile := ExtractFilePath(ParamStr(0))+ 'heaptrclog.trc' ;
   DeleteFile( HeapTraceFile );
-  SetHeapTraceOutput( HeapTraceFile );
+  //SetHeapTraceOutput( HeapTraceFile );
 
   RequireDerivedFormResource := True;
   Application.Initialize;

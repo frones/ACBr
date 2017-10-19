@@ -7,7 +7,8 @@ interface
 uses
   Classes, SysUtils, SdfData, db, FileUtil, Forms, Controls, Graphics, Dialogs,
   ComCtrls, StdCtrls, Spin, Buttons, ExtCtrls, types, Typinfo,
-  ACBrUtil, IniFiles, Printers, ACBrPosPrinter;
+  ACBrUtil, IniFiles, Printers, ACBrPosPrinter, fileinfo
+  ;
 
 type
 
@@ -151,6 +152,7 @@ type
     procedure btSaveClick(Sender: TObject);
     procedure cbxImpressoraConfSelect(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure sbLogoMarcaClick(Sender: TObject);
     procedure sbSerialClick(Sender: TObject);
     procedure sbAddClick(Sender: TObject);
@@ -169,6 +171,7 @@ type
 
 var
   frConfiguracoes: TfrConfiguracoes;
+  sVersaoACBrPrinter : string;
 
 implementation
 
@@ -182,6 +185,7 @@ procedure TfrConfiguracoes.FormCreate(Sender: TObject);
 var
   iImpressoraESCPOS: TACBrPosPrinterModelo;
   iPagCodigoESCPOS: TACBrPosPaginaCodigo;
+  FileVerInfo: TFileVersionInfo;
 begin
   cbxImpressora.Items.Clear;
   cbxImpressora.Items.Assign(Printer.Printers);
@@ -212,6 +216,20 @@ begin
   cbxPorta.Items.Add('/temp/ecf.txt');
 
   FindPrinters;
+
+  FileVerInfo:=TFileVersionInfo.Create(nil);
+  try
+    FileVerInfo.FileName:=paramstr(0);
+    FileVerInfo.ReadFileInfo;
+    sVersaoACBrPrinter := FileVerInfo.VersionStrings.Values['FileVersion'];
+  finally
+    FileVerInfo.Free;
+  end;
+end;
+
+procedure TfrConfiguracoes.FormShow(Sender: TObject);
+begin
+  self.Caption := ' ACBrPrinter ' + sVersaoACBrPrinter + ' ';
 end;
 
 procedure TfrConfiguracoes.sbLogoMarcaClick(Sender: TObject);
@@ -530,7 +548,7 @@ procedure TfrConfiguracoes.SaveConfig(FileConfig: String);
 var
   Ini: TIniFile;
 begin
-  FileConfig := PathWithDelim(ExtractFilePath(Application.ExeName))+FileConfig;
+  FileConfig := PathWithDelim(ExtractFilePath(Application.ExeName))+FileConfig+'.ini';
 
   Ini := TIniFile.Create(FileConfig);
   try

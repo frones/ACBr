@@ -1,9 +1,9 @@
 object FrPosPrinterTeste: TFrPosPrinterTeste
   Left = 408
   Top = 125
+  Width = 887
+  Height = 521
   Caption = 'ACBrPosPrinter - Teste'
-  ClientHeight = 498
-  ClientWidth = 887
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,15 +18,15 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
   object Panel1: TPanel
     Left = 256
     Top = 0
-    Width = 631
-    Height = 498
+    Width = 623
+    Height = 490
     Align = alClient
     Caption = 'Panel1'
     TabOrder = 0
     object Panel3: TPanel
       Left = 1
-      Top = 353
-      Width = 629
+      Top = 345
+      Width = 621
       Height = 144
       Align = alBottom
       TabOrder = 0
@@ -123,22 +123,24 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       object Panel4: TPanel
         Left = 1
         Top = 1
-        Width = 627
+        Width = 619
         Height = 39
         Align = alTop
         BevelInner = bvRaised
         BevelOuter = bvLowered
         TabOrder = 11
         DesignSize = (
-          627
+          619
           39)
         object bLimpar: TBitBtn
-          Left = 438
+          Left = 430
           Top = 7
           Width = 83
           Height = 26
           Anchors = [akTop, akRight]
           Caption = 'Limpar'
+          TabOrder = 0
+          OnClick = bLimparClick
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
             2000000000000004000000000000000000000000000000000000FF00FF00FF00
@@ -174,16 +176,16 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             FF00000029FF6B69E7FFCECBFFFFA5A6FFFF21248CFFFF00FF00FF00FF00FF00
             FF00393CBDFF4241C6FFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00FF00FF00000029FF5A59E7FF181C7BFFFF00FF00FF00FF00}
-          TabOrder = 0
-          OnClick = bLimparClick
         end
         object bImprimir: TBitBtn
-          Left = 529
+          Left = 521
           Top = 7
           Width = 92
           Height = 26
           Anchors = [akTop, akRight]
           Caption = 'Imprimir'
+          TabOrder = 1
+          OnClick = bImprimirClick
           Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
             2000000000000004000064000000640000000000000000000000000000000000
@@ -219,8 +221,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
             DFFFBFBFBFFF0000000000000000000000000000000000000000000000000000
             0000000000000000000000000000000000000000000000000000000000000000
             0000000000000000000000000000000000000000000000000000}
-          TabOrder = 1
-          OnClick = bImprimirClick
         end
       end
       object bTagLogo: TButton
@@ -236,8 +236,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 629
-      Height = 352
+      Width = 621
+      Height = 344
       ActivePage = tsImprimir
       Align = alClient
       TabOrder = 1
@@ -246,8 +246,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mImp: TMemo
           Left = 0
           Top = 0
-          Width = 621
-          Height = 324
+          Width = 613
+          Height = 316
           Align = alClient
           TabOrder = 0
         end
@@ -257,8 +257,8 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         object mLog: TMemo
           Left = 0
           Top = 0
-          Width = 621
-          Height = 324
+          Width = 613
+          Height = 316
           Align = alClient
           TabOrder = 0
         end
@@ -269,7 +269,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
     Left = 0
     Top = 0
     Width = 256
-    Height = 498
+    Height = 490
     Align = alLeft
     TabOrder = 1
     object gbConfiguracao: TGroupBox
@@ -401,7 +401,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object cbTraduzirTags: TCheckBox
         Left = 11
-        Top = 196
+        Top = 201
         Width = 88
         Height = 19
         Hint = 'Traduz as Tags de Formata'#195#167#195#163'o e Cod.Barras'
@@ -425,6 +425,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Width = 145
         Height = 21
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 2
         OnChange = cbxModeloChange
       end
@@ -433,6 +434,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Top = 76
         Width = 192
         Height = 21
+        ItemHeight = 13
         TabOrder = 3
         OnChange = cbxPortaChange
       end
@@ -449,7 +451,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
       end
       object cbControlePorta: TCheckBox
         Left = 11
-        Top = 172
+        Top = 161
         Width = 97
         Height = 19
         Hint = 
@@ -476,6 +478,7 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Height = 21
         Hint = 'Pagina de c'#195#179'digo usada pela Impressora POS'
         Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 7
         OnChange = cbxPagCodigoChange
       end
@@ -513,6 +516,10 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         Font.Name = 'MS Sans Serif'
         Font.Pitch = fpVariable
         Font.Style = [fsBold]
+        ModalResult = 1
+        ParentFont = False
+        TabOrder = 10
+        OnClick = bAtivarClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
           18000000000000030000120B0000120B00000000000000000000FFFFFFFFFFFF
@@ -541,10 +548,6 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
           94292994181884FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
         Layout = blGlyphTop
-        ModalResult = 1
-        ParentFont = False
-        TabOrder = 10
-        OnClick = bAtivarClick
       end
       object seLinhasPular: TSpinEdit
         Left = 188
@@ -556,6 +559,20 @@ object FrPosPrinterTeste: TFrPosPrinterTeste
         TabOrder = 11
         Value = 0
         OnChange = seLinhasPularChange
+      end
+      object cbCortarPapel: TCheckBox
+        Left = 11
+        Top = 181
+        Width = 97
+        Height = 19
+        Hint = 
+          'Conecta a Porta Serial a cada comando enviado'#13#10'Desconecta da Por' +
+          'ta Serial ap'#195#179's o envio'
+        Caption = 'Cortar Papel'
+        Checked = True
+        State = cbChecked
+        TabOrder = 12
+        OnClick = cbCortarPapelClick
       end
     end
     object gbCodBarrasConfig: TGroupBox

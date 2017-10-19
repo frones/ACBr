@@ -56,7 +56,9 @@ uses Classes, Graphics, Contnrs,
      ACBrBase, ACBrMail, ACBrValidador;
 
 const
-  CACBrBoleto_Versao = '0.0.205a';
+  CACBrBoleto_Versao = '0.0.233';
+  CInstrucaoPagamento = 'Pagar preferencialmente nas agencias do %s';
+  CInstrucaoPagamentoLoterica = 'Preferencialmente nas Casas Lotéricas até o valor limite';
 
   cACBrTipoOcorrenciaDecricao: array[0..181] of String = (
   'Remessa Registrar',
@@ -264,7 +266,9 @@ type
     cobBradescoSICOOB,
     cobBancoSafra,
     cobSafraBradesco,
-    cobBancoCECRED
+    cobBancoCECRED,
+    cobBancoDaAmazonia,
+    cobBancoDoBrasilSICOOB
     );
 
   TACBrTitulo = class;
@@ -273,6 +277,7 @@ type
   TACBrBanco  = class;
   TACBrBoleto = class;
 
+  TACBrTipoDesconto = (tdNaoConcederDesconto, tdValorFixoAteDataInformada, tdPercentualAteDataInformada);
   TACBrLayoutRemessa = (c400, c240);
 
   {Tipos de ocorrências permitidas no arquivos remessa / retorno}
@@ -320,154 +325,227 @@ type
     toRemessaAlterarValorTitulo,
     toRemessaExcluirSacadorAvalista,
     toRemessaAlterarNumeroDiasProtesto,
+    toRemessaAlterarPrazoProtesto,
+    toRemessaAlterarPrazoDevolucao,
+    toRemessaAlterarOutrosDados,
+    toRemessaAlterarDadosEmissaoBloqueto,
+    toRemessaAlterarProtestoDevolucao,
+    toRemessaAlterarDevolucaoProtesto,
+    toRemessaNegativacaoSerasa,
+    toRemessaExcluirNegativacaoSerasa,
+
 
     {Ocorrências para arquivo retorno}
-    toRetornoRegistroConfirmado,
-    toRetornoTransferenciaCarteira,
-    toRetornoTransferenciaCarteiraEntrada,
-    toRetornoTransferenciaCarteiraBaixa,
-    toRetornoTransferenciaCedente,
-    toRetornoRegistroRecusado,
-    toRetornoComandoRecusado,
-    toRetornoLiquidado,
-    toRetornoLiquidadoEmCartorio,
-    toRetornoLiquidadoParcialmente,
-    toRetornoLiquidadoSaldoRestante,
-    toRetornoLiquidadoSemRegistro,
-    toRetornoLiquidadoPorConta,
-    toRetornoLiquidadoAposBaixaOuNaoRegistro,
-    toRetornoBaixaRejeitada,
-    toRetornoBaixaSolicitada,
-    toRetornoBaixado,
-    toRetornoBaixaAutomatica,
-    toRetornoBaixadoViaArquivo,
-    toRetornoBaixadoInstAgencia,
-    toRetornoBaixadoPorDevolucao,
-    toRetornoBaixadoFrancoPagamento,
-    toRetornoBaixaPorProtesto,
-    toRetornoBaixaSimples,
-    toRetornoBaixaPorTerSidoLiquidado,
-    toRetornoBaixaOuLiquidacaoEstornada,
-    toRetornoBaixaTransferenciaParaDesconto,
-    toRetornoBaixaCreditoCCAtravesSispag,
-    toRetornoBaixaCreditoCCAtravesSispagSemTituloCorresp,
-    toRetornoTituloEmSer,
-    toRetornoTituloNaoExiste,
-    toRetornoTituloPagoEmCheque,
-    toRetornoTituloPagamentoCancelado,
-    toRetornoTituloJaBaixado,
-    toRetornoTituloSustadoJudicialmente,
-    toRetornoRecebimentoInstrucaoBaixar,
-    toRetornoRecebimentoInstrucaoConcederAbatimento,
-    toRetornoRecebimentoInstrucaoCancelarAbatimento,
-    toRetornoRecebimentoInstrucaoConcederDesconto,
-    toRetornoRecebimentoInstrucaoCancelarDesconto,
-    toRetornoRecebimentoInstrucaoAlterarDados,
-    toRetornoRecebimentoInstrucaoAlterarVencimento,
-    toRetornoRecebimentoInstrucaoProtestar,
-    toRetornoRecebimentoInstrucaoSustarProtesto,
-    toRetornoRecebimentoInstrucaoNaoProtestar,
-    toRetornoRecebimentoInstrucaoAlterarNomeSacado,
-    toRetornoRecebimentoInstrucaoAlterarEnderecoSacado,
-    toRetornoRecebimentoInstrucaoAlterarTipoCobranca,
-    toRetornoRecebimentoInstrucaoAlterarValorTitulo,
-    toRetornoRecebimentoInstrucaoAlterarJuros,
-    toRetornoRecebimentoInstrucaoDispensarJuros,
-    toRetornoAbatimentoConcedido,
     toRetornoAbatimentoCancelado,
-    toRetornoDescontoConcedido,
-    toRetornoDescontoCancelado,
-    toRetornoDadosAlterados,
-    toRetornoVencimentoAlterado,
-    toRetornoAlteracaoDadosNovaEntrada,
-    toRetornoAlteracaoDadosBaixa,
-    toRetornoAlteracaoDadosRejeitados,
-    toRetornoAlteracaoOutrosDadosRejeitada,
-    toRetornoAlteracaoUsoCedente,
-    toRetornoAlteracaoDataEmissao,
-    toRetornoAlteracaoEspecie,
-    toRetornoAlteracaoSeuNumero,
-    toRetornoProtestado,
-    toRetornoProtestoSustado,
-    toRetornoProtestoOuSustacaoEstornado,
-    toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
-    toRetornoInstrucaoRejeitada,
-    toRetornoInstrucaoCancelada,
-    toRetornoDebitoEmConta,
-    toRetornoDebitoDiretoAutorizado,
-    toRetornoDebitoDiretoNaoAutorizado,
-    toRetornoNomeSacadoAlterado,
-    toRetornoEnderecoSacadoAlterado,
-    toRetornoEncaminhadoACartorio,
-    toRetornoEntradaEmCartorio,
-    toRetornoRetiradoDeCartorio,
-    toRetornoJurosDispensados,
-    toRetornoDespesasProtesto,
-    toRetornoDespesasSustacaoProtesto,
-    toRetornoCustasSustacao,
-    toRetornoCustasProtesto,
-    toRetornoCustasCartorioDistribuidor,
-    toRetornoCustasEdital,
-    toRetornoCustasSustacaoJudicial,
-    toRetornoCustasIrregularidade,
-    toRetornoAcertoDepositaria,
+    toRetornoAbatimentoConcedido,
     toRetornoAcertoControleParticipante,
     toRetornoAcertoDadosRateioCredito,
-    toRetornoEntradaRejeitaCEPIrregular,
-    toRetornoEntradaConfirmadaRateioCredito,
-    toRetornoEntradaRegistradaAguardandoAvaliacao,
-    toRetornoEntradaRejeitadaCarne,
-    toRetornoEntradaBorderoManual,
-    toRetornoDesagendamentoDebitoAutomatico,
-    toRetornoEstornoPagamento,
-    toRetornoSustadoJudicial,
-    toRetornoManutencaoTituloVencido,
-    toRetornoTipoCobrancaAlterado,
+    toRetornoAcertoDepositaria,
+    toRetornoAguardandoAutorizacaoProtestoEdital,
+    toRetornoAlegacaoDoSacado,
+    toRetornoAlteracaoDadosBaixa,
+    toRetornoAlteracaoDadosNovaEntrada,
+    toRetornoAlteracaoDadosRejeitados,
+    toRetornoAlteracaoDataEmissao,
+    toRetornoAlteracaoEspecie,
+    toRetornoAlteracaoInstrucao,
+    toRetornoAlteracaoOpcaoDevolucaoParaProtestoConfirmada,
+    toRetornoAlteracaoOpcaoProtestoParaDevolucaoConfirmada,
+    toRetornoAlteracaoOutrosDadosRejeitada,
+    toRetornoAlteracaoReemissaoBloquetoConfirmada,
+    toRetornoAlteracaoSeuNumero,
+    toRetornoAlteracaoUsoCedente,
+    toRetornoAlterarDataDesconto,
+    toRetornoAlterarPrazoLimiteRecebimento,
+    toRetornoAlterarSacadorAvalista,
+    toRetornoBaixaAutomatica,
+    toRetornoBaixaCreditoCCAtravesSispag,
+    toRetornoBaixaCreditoCCAtravesSispagSemTituloCorresp,
+    toRetornoBaixado,
+    toRetornoBaixadoFrancoPagamento,
+    toRetornoBaixadoInstAgencia,
+    toRetornoBaixadoPorDevolucao,
+    toRetornoBaixadoViaArquivo,
+    toRetornoBaixaLiquidadoEdital,
+    toRetornoBaixaManualConfirmada,
+    toRetornoBaixaOuLiquidacaoEstornada,
+    toRetornoBaixaPorProtesto,
+    toRetornoBaixaPorTerSidoLiquidado,
+    toRetornoBaixaRejeitada,
+    toRetornoBaixaSimples,
+    toRetornoBaixaSolicitada,
+    toRetornoBaixaTituloNegativadoSemProtesto,
+    toRetornoBaixaTransferenciaParaDesconto,
     toRetornoCancelamentoDadosRateio,
-    toRetornoOutrasOcorrencias,
-    toRetornoOcorrenciasDoSacado,
+    toRetornoChequeCompensado,
+    toRetornoChequeDevolvido,
+    toRetornoChequePendenteCompensacao,
     toRetornoCobrancaContratual,
-    toRetornoTarifaExtratoPosicao,
-    toRetornoTarifaDeRelacaoDasLiquidacoes,
-    toRetornoTarifaDeManutencaoDeTitulosVencidos,
-    toRetornoTarifaEmissaoBoletoEnvioDuplicata,
-    toRetornoTarifaInstrucao,
-    toRetornoTarifaOcorrencias,
-    toRetornoTarifaAvisoCobranca,
-    toRetornoTarifaMensalEmissaoBoletoEnvioDuplicata,
-    toRetornoTarifaMensalRefEntradasBancosCorrespCarteira,
-    toRetornoTarifaMensalBaixasCarteira,
-    toRetornoTarifaMensalBaixasBancosCorrespCarteira,
-    toRetornoTarifaMensalLiquidacoesCarteira,
-    toRetornoTarifaMensalLiquidacoesBancosCorrespCarteira,
-    toRetornoTarifaEmissaoAvisoMovimentacaoTitulos,
-    toRetornoDebitoTarifas,
+    toRetornoCobrancaCreditar,
+    toRetornoComandoRecusado,
+    toRetornoConfCancelamentoNegativacaoExpressaTarifa,
+    toRetornoConfEntradaNegativacaoExpressaTarifa,
+    toRetornoConfExclusaoEntradaNegativacaoExpressaPorLiquidacaoTarifa,
+    toRetornoConfirmacaoAlteracaoBancoSacado,
+    toRetornoConfirmacaoAlteracaoJurosMora,
+    toRetornoConfirmacaoEmailSMS,
+    toRetornoConfirmacaoEntradaCobrancaSimples,
+    toRetornoConfirmacaoExclusaoBancoSacado,
+    toRetornoConfirmacaoInclusaoBancoSacado,
+    toRetornoConfirmacaoPedidoExclNegativacao,
+    toRetornoConfirmacaoRecebPedidoNegativacao,
+    toRetornoConfirmaRecebimentoInstrucaoNaoNegativar,
+    toRetornoConfRecebimentoInstCancelamentoNegativacaoExpressa,
+    toRetornoConfRecebimentoInstEntradaNegativacaoExpressa,
+    toRetornoConfRecebimentoInstExclusaoEntradaNegativacaoExpressa,
+    toRetornoCustasCartorio,
+    toRetornoCustasCartorioDistribuidor,
+    toRetornoCustasEdital,
+    toRetornoCustasIrregularidade,
+    toRetornoCustasProtesto,
+    toRetornoCustasSustacao,
+    toRetornoCustasSustacaoJudicial,
+    toRetornoDadosAlterados,
     toRetornoDebitoCustasAntecipadas,
+    toRetornoDebitoDiretoAutorizado,
+    toRetornoDebitoDiretoNaoAutorizado,
+    toRetornoDebitoEmConta,
+    toRetornoDebitoMensalTarifaAvisoMovimentacaoTitulos,
     toRetornoDebitoMensalTarifasExtradoPosicao,
-    toRetornoDebitoMensalTarifasOutrasInstrucoes,
     toRetornoDebitoMensalTarifasManutencaoTitulosVencidos,
+    toRetornoDebitoMensalTarifasOutrasInstrucoes,
     toRetornoDebitoMensalTarifasOutrasOcorrencias,
     toRetornoDebitoMensalTarifasProtestos,
     toRetornoDebitoMensalTarifasSustacaoProtestos,
-    toRetornoDebitoMensalTarifaAvisoMovimentacaoTitulos,
-    toRetornoChequeDevolvido,
-    toRetornoChequeCompensado,
-    toRetornoConfirmacaoEntradaCobrancaSimples,
-    toRetornoAlegacaoDoSacado,
+    toRetornoDebitoTarifas,
+    toRetornoDesagendamentoDebitoAutomatico,
+    toRetornoDescontoCancelado,
+    toRetornoDescontoConcedido,
+    toRetornoDescontoRetificado,
     toRetornoDespesaCartorio,
-    toRetornoEqualizacaoVendor,
-    toRetornoBaixaLiquidadoEdital,
-    toRetornoAlteracaoInstrucao,
+    toRetornoDespesasProtesto,
+    toRetornoDespesasSustacaoProtesto,
     toRetornoDevolvidoPeloCartorio,
-    toRetornoReembolsoTransferenciaDescontoVendor,
+    toRetornoDispensarIndexador,
+    toRetornoDispensarPrazoLimiteRecebimento,
+    toRetornoEmailSMSRejeitado,
+    toRetornoEmissaoBloquetoBancoSacado,
+    toRetornoEncaminhadoACartorio,
+    toRetornoEnderecoSacadoAlterado,
+    toRetornoEntradaBorderoManual,
+    toRetornoEntradaConfirmadaRateioCredito,
+    toRetornoEntradaEmCartorio,
+    toRetornoEntradaRegistradaAguardandoAvaliacao,
+    toRetornoEntradaRejeitaCEPIrregular,
+    toRetornoEntradaRejeitadaCarne,
+    toRetornoEntradaTituloBancoSacadoRejeitada,
+    toRetornoEqualizacaoVendor,
+    toRetornoEstornoBaixaLiquidacao,
+    toRetornoEstornoPagamento,
+    toRetornoEstornoProtesto,
+    toRetornoInstrucaoCancelada,
+    toRetornoInstrucaoNegativacaoExpressaRejeitada,
+    toRetornoInstrucaoProtestoRejeitadaSustadaOuPendente,
+    toRetornoInstrucaoRejeitada,
+    toRetornoIOFInvalido,
+    toRetornoJurosDispensados,
+    toRetornoLiquidado,
+    toRetornoLiquidadoAposBaixaOuNaoRegistro,
+    toRetornoLiquidadoEmCartorio,
+    toRetornoLiquidadoParcialmente,
+    toRetornoLiquidadoPorConta,
+    toRetornoLiquidadoSaldoRestante,
+    toRetornoLiquidadoSemRegistro,
+    toRetornoManutencaoBancoSacadoRejeitada,
+    toRetornoManutencaoSacadoRejeitada,
+    toRetornoManutencaoTituloVencido,
+    toRetornoNegativacaoExpressaInformacional,
+    toRetornoNomeSacadoAlterado,
+    toRetornoOcorrenciasDoSacado,
+    toRetornoOutrasOcorrencias,
+    toRetornoOutrasTarifasAlteracao,
+    toRetornoPagadorDDA,
+    toRetornoPrazoDevolucaoAlterado,
+    toRetornoPrazoProtestoAlterado,
+    toRetornoProtestado,
+    toRetornoProtestoImediatoFalencia,
+    toRetornoProtestoOuSustacaoEstornado,
+    toRetornoProtestoSustado,
+    toRetornoRecebimentoInstrucaoAlterarDados,
+    toRetornoRecebimentoInstrucaoAlterarEnderecoSacado,
+    toRetornoRecebimentoInstrucaoAlterarJuros,
+    toRetornoRecebimentoInstrucaoAlterarNomeSacado,
+    toRetornoRecebimentoInstrucaoAlterarTipoCobranca,
+    toRetornoRecebimentoInstrucaoAlterarValorTitulo,
+    toRetornoRecebimentoInstrucaoAlterarVencimento,
+    toRetornoRecebimentoInstrucaoBaixar,
+    toRetornoRecebimentoInstrucaoCancelarAbatimento,
+    toRetornoRecebimentoInstrucaoCancelarDesconto,
+    toRetornoRecebimentoInstrucaoConcederAbatimento,
+    toRetornoRecebimentoInstrucaoConcederDesconto,
+    toRetornoRecebimentoInstrucaoDispensarJuros,
+    toRetornoRecebimentoInstrucaoNaoProtestar,
+    toRetornoRecebimentoInstrucaoProtestar,
+    toRetornoRecebimentoInstrucaoSustarProtesto,
     toRetornoReembolsoDevolucaoDescontoVendor,
     toRetornoReembolsoNaoEfetuado,
+    toRetornoReembolsoTransferenciaDescontoVendor,
+    toRetornoRegistroConfirmado,
+    toRetornoRegistroRecusado,
+    toRetornoRelacaoDeTitulos,
+    toRetornoRemessaRejeitada,
+    toRetornoReservado,
+    toRetornoRetiradoDeCartorio,
+    toRetornoSegundaViaInstrumentoProtesto,
+    toRetornoSegundaViaInstrumentoProtestoCartorio,
+    toRetornoSolicitacaoImpressaoTituloConfirmada,
     toRetornoSustacaoEnvioCartorio,
-    toRetornoIOFInvalido,
-    toRetornoTituloDDAReconhecidoPagador,
+    toRetornoSustadoJudicial,
+    toRetornoTarifaAvisoCobranca,
+    toRetornoTarifaDeManutencaoDeTitulosVencidos,
+    toRetornoTarifaDeRelacaoDasLiquidacoes,
+    toRetornoTarifaEmailCobrancaAtivaEletronica,
+    toRetornoTarifaEmissaoAvisoMovimentacaoTitulos,
+    toRetornoTarifaEmissaoBoletoEnvioDuplicata,
+    toRetornoTarifaExtratoPosicao,
+    toRetornoTarifaInstrucao,
+    toRetornoTarifaMensalBaixasBancosCorrespCarteira,
+    toRetornoTarifaMensalBaixasCarteira,
+    toRetornoTarifaMensalCancelamentoNegativacaoExpressa,
+    toRetornoTarifaMensalEmailCobrancaAtivaEletronica,
+    toRetornoTarifaMensalEmissaoBoletoEnvioDuplicata,
+    toRetornoTarifaMensalExclusaoEntradaNegativacaoExpressa,
+    toRetornoTarifaMensalExclusaoNegativacaoExpressaPorLiquidacao,
+    toRetornoTarifaMensalLiquidacoesBancosCorrespCarteira,
+    toRetornoTarifaMensalLiquidacoesCarteira,
+    toRetornoTarifaMensalPorBoletoAte03EnvioCobrancaAtivaEletronica,
+    toRetornoTarifaMensalRefEntradasBancosCorrespCarteira,
+    toRetornoTarifaMensalSMSCobrancaAtivaEletronica,
+    toRetornoTarifaOcorrencias,
+    toRetornoTarifaPorBoletoAte03EnvioCobrancaAtivaEletronica,
+    toRetornoTarifaSMSCobrancaAtivaEletronica,
+    toRetornoTipoCobrancaAlterado,
     toRetornoTituloDDANaoReconhecidoPagador,
+    toRetornoTituloDDAReconhecidoPagador,
     toRetornoTituloDDARecusadoCIP,
-    toRetornoPagadorDDA,
+    toRetornoTituloEmSer,
+    toRetornoTituloJaBaixado,
+    toRetornoTituloNaoExiste,
+    toRetornoTituloPagamentoCancelado,
+    toRetornoTituloPagoEmCheque,
+    toRetornoTituloSustadoJudicialmente,
+    toRetornoTransferenciaCarteira,
+    toRetornoTransferenciaCarteiraBaixa,
+    toRetornoTransferenciaCarteiraEntrada,
+    toRetornoTransferenciaCedente,
+    toRetornoTransitoPagoCartorio,
+    toRetornoVencimentoAlterado,
+    toRetornoRejeicaoSacado,
+    toRetornoAceiteSacado,
+    toRetornoLiquidadoOnLine,
+    toRetornoEstornoLiquidacaoOnLine,
+    toRetornoConfirmacaoAlteracaoValorNominal,
+    toRetornoConfirmacaoAlteracaoValorpercentualMinimoMaximo,
     toTipoOcorrenciaNenhum
   );
 
@@ -503,6 +581,9 @@ type
     fpOrientacoesBanco: TStringList;
     fpCodigosMoraAceitos: String;
     fpCodigosGeracaoAceitos: String;
+    fpNumeroCorrespondente: Integer;
+
+    function GetLocalPagamento: String; virtual;
     function CalcularFatorVencimento(const DataVencimento: TDateTime): String; virtual;
     function CalcularDigitoCodigoBarras(const CodigoBarras: String): String; virtual;
   public
@@ -521,6 +602,8 @@ type
     property OrientacoesBanco: TStringList read fpOrientacoesBanco;
     property CodigosMoraAceitos: String read fpCodigosMoraAceitos;
     property CodigosGeracaoAceitos: String read fpCodigosGeracaoAceitos;
+    property LocalPagamento  : String read GetLocalPagamento;
+    property NumeroCorrespondente : Integer read fpNumeroCorrespondente;
 
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String; virtual;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer; virtual;
@@ -532,6 +615,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo: String): String; overload; virtual;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia; virtual;
+    function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia): String; virtual;
 
     function MontarCodigoBarras(const ACBrTitulo : TACBrTitulo): String; virtual;
     function MontarCampoNossoNumero(const ACBrTitulo : TACBrTitulo): String; virtual;
@@ -553,13 +637,16 @@ type
 
 
   { TACBrBanco }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrBanco = class(TComponent)
   private
     fACBrBoleto        : TACBrBoleto;
     fNumeroBanco       : Integer;
     fTipoCobranca      : TACBrTipoCobranca;
     fBancoClass        : TACBrBancoClass;
+    fLocalPagamento    : String;
     function GetNome   : String;
     function GetDigito : Integer;
     function GetNumero : Integer;
@@ -570,12 +657,17 @@ type
     function GetTamanhoMaximoNossoNum : Integer;
     function GetCodigosMoraAceitos: String;
     function GetCodigosGeracaoAceitos: string;
+    function GetLocalPagamento: String;
+    function GetNumeroCorrespondente: Integer;
+
     procedure SetDigito(const AValue: Integer);
     procedure SetNome(const AValue: String);
     procedure SetTipoCobranca(const AValue: TACBrTipoCobranca);
     procedure SetNumero(const AValue: Integer);
     procedure SetTamMaximoNossoNumero(Const Avalue:Integer);
     procedure SetOrientacoesBanco(Const Avalue: TStringList);
+    procedure SetLocalPagamento(const AValue: String);
+    procedure SetNumeroCorrespondente(const AValue: Integer);
   public
     constructor Create( AOwner : TComponent); override;
     destructor Destroy ; override ;
@@ -594,6 +686,7 @@ type
     function CodMotivoRejeicaoToDescricao(const TipoOcorrencia: TACBrTipoOcorrencia;CodMotivo:Integer): String;
 
     function CodOcorrenciaToTipoRemessa(const CodOcorrencia:Integer): TACBrTipoOcorrencia;
+    function TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia ): String;
     function CalcularDigitoVerificador(const ACBrTitulo : TACBrTitulo): String;
     function CalcularTamMaximoNossoNumero(const Carteira : String; NossoNumero : String = ''; Convenio: String = ''): Integer;
 
@@ -621,6 +714,8 @@ type
     property TamanhoMaximoNossoNum :Integer read GetTamanhoMaximoNossoNum  write SetTamMaximoNossoNumero;
     property TipoCobranca : TACBrTipoCobranca read fTipoCobranca   write SetTipoCobranca;
     property OrientacoesBanco : TStringList read GetOrientacoesBanco write SetOrientacoesBanco;
+    property LocalPagamento : String read GetLocalPagamento write SetLocalPagamento;
+    property NumeroCorrespondente : Integer read GetNumeroCorrespondente write SetNumeroCorrespondente default 0;
   end;
 
   TACBrResponEmissao = (tbCliEmite,tbBancoEmite,tbBancoReemite,tbBancoNaoReemite);
@@ -640,14 +735,28 @@ type
   TACBrTipoDocumento = (Tradicional=1, Escritural=2);
 
   {Define se a carteira é Cobrança Simples / Registrada}
-  TACBrTipoCarteira = (tctSimples, tctRegistrada);
+  TACBrTipoCarteira = (tctSimples, tctRegistrada, tctEletronica);
 
   {Definir como o boleto vai ser gerado/enviado pelo Cedente ou pelo Banco }
   TACBrCarteiraEnvio = (tceCedente, tceBanco);
 
+  {Definir codigo Desconto }
+  TACBrCodigoDesconto    = (cdSemDesconto, cdValorFixo);
+
+  {Definir codigo Juros }
+  TACBrCodigoJuros       = (cjValorDia, cjTaxaMensal, cjIsento);
+
+  {Definir codigo Multa }
+  TACBrCodigoMulta       = (cmValorFixo, cmPercentual);
+
+  {Definir se o titulo será protestado, não protestado ou negativado }
+  TACBrCodigoNegativacao = (cnNenhum, cnProtestarCorrido, cnProtestarUteis, cnNaoProtestar, cnNegativar, cnNaoNegativar);
+
 
   { TACBrCedente }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrCedente = class(TComponent)
   private
     fCodigoTransmissao: String;
@@ -803,6 +912,7 @@ type
     fInstrucao3        : String;
     fLocalPagamento    : String;
     fOcorrenciaOriginal: TACBrOcorrencia;
+    fTipoDesconto      : TACBrTipoDesconto;
     fParcela           : Integer;
     fPercentualMulta   : Double;
     fMultaValorFixo    : Boolean;
@@ -836,8 +946,11 @@ type
     fDataAbatimento       : TDateTime;
     fDataDesconto         : TDateTime;
     fDataMoraJuros        : TDateTime;
+    fDataMulta            : TDateTime;
     fDataProtesto         : TDateTime;
+    fDiasDeProtesto       : Integer;
     fDataBaixa            : TDateTime;
+    fDataLimitePagto      : TDateTime;
     fValorDespesaCobranca : Currency;
     fValorAbatimento      : Currency;
     fValorDesconto        : Currency;
@@ -855,23 +968,33 @@ type
     fCodigoLiquidacao     : String;
     fCodigoLiquidacaoDescricao: String;
     fCarteiraEnvio        : TACBrCarteiraEnvio;
+    fCodigoNegativacao    : TACBrCodigoNegativacao;
+    fCodigoDesconto       : TACBrCodigoDesconto;
+    fCodigoMoraJuros      : TACBrCodigoJuros;
+    fCodigoMulta          : TACBrCodigoMulta;
+
     fCodigoGeracao        : String;
     fValorPago            : Currency;
     fCaracTitulo          :TACBrCaracTitulo;
 
     procedure SetCarteira(const AValue: String);
     procedure SetCodigoMora(AValue: String);
+    procedure SetDiasDeProtesto(AValue: Integer);
     procedure SetNossoNumero ( const AValue: String ) ;
     procedure SetParcela ( const AValue: Integer ) ;
+    procedure SetTipoDiasProtesto(AValue: TACBrTipoDiasIntrucao);
     procedure SetTotalParcelas ( const AValue: Integer );
     procedure SetCodigoGeracao (AValue: String);
+    procedure SetDataProtesto(AValue: TDateTime);
+    procedure SetVencimento(AValue: TDateTime);
+    procedure AtualizaDadosProtesto();
    public
      constructor Create(ACBrBoleto:TACBrBoleto);
      destructor Destroy; override;
 
      property ACBrBoleto        : TACBrBoleto read fACBrBoleto;
      property LocalPagamento    : String      read fLocalPagamento    write fLocalPagamento;
-     property Vencimento        : TDateTime   read fVencimento        write fVencimento;
+     property Vencimento        : TDateTime   read fVencimento        write SetVencimento;
      property DataDocumento     : TDateTime   read fDataDocumento     write fDataDocumento;
      property NumeroDocumento   : String      read fNumeroDocumento   write fNumeroDocumento ;
      property EspecieDoc        : String      read fEspecieDoc        write fEspecieDoc;
@@ -881,6 +1004,11 @@ type
      property UsoBanco          : String      read fUsoBanco          write fUsoBanco;
      property Carteira          : String      read fCarteira          write SetCarteira;
      property CarteiraEnvio     : TACBrCarteiraEnvio read fCarteiraEnvio write fCarteiraEnvio default tceCedente;
+     property CodigoDesconto    : TACBrCodigoDesconto    read fCodigoDesconto    write fCodigoDesconto;
+     property CodigoMoraJuros   : TACBrCodigoJuros       read fCodigoMoraJuros   write fCodigoMoraJuros;
+     property CodigoMulta       : TACBrCodigoMulta       read fCodigoMulta       write fCodigoMulta;
+     property CodigoNegativacao : TACBrCodigoNegativacao read fCodigoNegativacao write fCodigoNegativacao default cnNaoProtestar;
+     
      property EspecieMod        : String      read fEspecieMod        write fEspecieMod;
      property ValorDocumento    : Currency    read fValorDocumento    write fValorDocumento;
      property Mensagem          : TStrings    read fMensagem          write fMensagem;
@@ -895,6 +1023,7 @@ type
      property CodigoLiquidacaoDescricao : String read fCodigoLiquidacaoDescricao write fCodigoLiquidacaoDescricao;
 
      property OcorrenciaOriginal : TACBrOcorrencia read  fOcorrenciaOriginal write fOcorrenciaOriginal;
+     property TipoDesconto       : TACBrTipoDesconto read fTipoDesconto write fTipoDesconto;
 
      property MotivoRejeicaoComando          : TStrings    read fMotivoRejeicaoComando  write fMotivoRejeicaoComando;
      property DescricaoMotivoRejeicaoComando : TStrings    read fDescricaoMotivoRejeicaoComando  write fDescricaoMotivoRejeicaoComando;
@@ -904,8 +1033,11 @@ type
      property DataAbatimento                 : TDateTime read fDataAbatimento  write fDataAbatimento;
      property DataDesconto                   : TDateTime read fDataDesconto    write fDataDesconto;
      property DataMoraJuros                  : TDateTime read fDataMoraJuros   write fDataMoraJuros;
-     property DataProtesto                   : TDateTime read fDataProtesto    write fDataProtesto;
+     property DataMulta                      : TDateTime read fDataMulta       write fDataMulta;
+     property DataProtesto                   : TDateTime read fDataProtesto    write SetDataProtesto;
+     property DiasDeProtesto                 : Integer   read fDiasDeProtesto  write SetDiasDeProtesto;
      property DataBaixa                      : TDateTime read fDataBaixa       write fDataBaixa;
+     property DataLimitePagto                : TDateTime read fDataLimitePagto write fDataLimitePagto;
 
      property ValorDespesaCobranca : Currency read fValorDespesaCobranca  write fValorDespesaCobranca;
      property ValorAbatimento      : Currency read fValorAbatimento       write fValorAbatimento;
@@ -924,7 +1056,7 @@ type
      property ValorDescontoAntDia  : Currency read fValorDescontoAntDia  write  fValorDescontoAntDia;
      property TextoLivre : String read fTextoLivre write fTextoLivre;
      property CodigoMora : String read fCodigoMora write SetCodigoMora;
-     property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write fTipoDiasProtesto;
+     property TipoDiasProtesto     : TACBrTipoDiasIntrucao read fTipoDiasProtesto write SetTipoDiasProtesto;
      property TipoImpressao        : TACBrTipoImpressao read fTipoImpressao write fTipoImpressao;
      property LinhaDigitada : String read fpLinhaDigitada;
      property CodigoGeracao: String read fCodigoGeracao write SetCodigoGeracao;
@@ -955,6 +1087,9 @@ type
   TACBrOcorrenciasRemessa =  Array of TACBrOcorrenciaRemessa;
 
   { TACBrBoleto }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
  TACBrBoleto = class( TACBrComponent )
   private
     fBanco: TACBrBanco;
@@ -972,6 +1107,7 @@ type
     fDataArquivo : TDateTime;     {Data da geração do arquivo remessa ou retorno}
     fDataCreditoLanc : TDateTime; {Data de crédito dos lançamentos do arquivo retorno}
     fLeCedenteRetorno: boolean;
+    fHomologacao: Boolean;
     function GetAbout: String;
     procedure SetAbout(const AValue: String);
     procedure SetACBrBoletoFC(const Value: TACBrBoletoFCClass);
@@ -1001,17 +1137,18 @@ type
     procedure ChecarDadosObrigatorios;
 
     function GetOcorrenciasRemessa() : TACBrOcorrenciasRemessa;
-
+    function GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
   published
     property About : String read GetAbout write SetAbout stored False ;
     property MAIL  : TACBrMail read FMAIL write SetMAIL;
 
+    property Homologacao    : Boolean            read fHomologacao            write fHomologacao default False;
     property Banco          : TACBrBanco         read fBanco                  write fBanco;
     property Cedente        : TACBrCedente       read fCedente                write fCedente ;
-    property NomeArqRemessa : String             read fNomeArqRemessa         write fNomeArqRemessa;  //SetNomeArqRemessa;
-    property DirArqRemessa  : String             read fDirArqRemessa {GetDirArqRemessa} write fDirArqRemessa; //SetNomeArqRemessa;
-    property NomeArqRetorno : String             read fNomeArqRetorno         write fNomeArqRetorno; //SetNomeArqRetorno;
-    property DirArqRetorno  : String             read fDirArqRetorno {GetDirArqRetorno} write fDirArqRetorno; //SetNomeArqRetorno;
+    property NomeArqRemessa : String             read fNomeArqRemessa         write fNomeArqRemessa;
+    property DirArqRemessa  : String             read fDirArqRemessa          write fDirArqRemessa;
+    property NomeArqRetorno : String             read fNomeArqRetorno         write fNomeArqRetorno;
+    property DirArqRetorno  : String             read fDirArqRetorno          write fDirArqRetorno;
     property NumeroArquivo  : integer            read fNumeroArquivo          write fNumeroArquivo;
     property DataArquivo    : TDateTime          read fDataArquivo            write fDataArquivo;
     property DataCreditoLanc: TDateTime          read fDataCreditoLanc        write fDataCreditoLanc;
@@ -1025,7 +1162,9 @@ type
  TACBrBoletoFCFiltro = (fiNenhum, fiPDF, fiHTML ) ;
 
  TACBrBoletoFCOnObterLogo = procedure( const PictureLogo : TPicture; const NumeroBanco: Integer ) of object ;
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
  TACBrBoletoFCClass = class(TACBrComponent)
   private
     fDirLogo        : String;
@@ -1080,20 +1219,32 @@ type
     property PrinterName     : String          read fPrinterName      write fPrinterName;
   end;
 
+function TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
+
 procedure Register;
 
 implementation
 
 Uses Forms, Math, dateutils, strutils,
-     ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoBanestes, ACBrBancoItau,
-     ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
+     ACBrUtil, ACBrBancoBradesco, ACBrBancoBrasil, ACBrBancoAmazonia, ACBrBancoBanestes,
+     ACBrBancoItau, ACBrBancoSicredi, ACBrBancoMercantil, ACBrBancoCaixa, ACBrBancoBanrisul,
      ACBrBancoSantander, ACBrBancoBancoob, ACBrBancoCaixaSICOB ,ACBrBancoHSBC,
      ACBrBancoNordeste , ACBrBancoBRB, ACBrBancoBic, ACBrBancoBradescoSICOOB,
-     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred;
+     ACBrBancoSafra, ACBrBancoSafraBradesco, ACBrBancoCecred, ACBrBancoBrasilSicoob;
 
 {$IFNDEF FPC}
    {$R ACBrBoleto.dcr}
 {$ENDIF}
+
+function TipoDescontoToString(const AValue: TACBrTipoDesconto):string;
+begin
+  Result := '0';
+  case AValue of
+     tdNaoConcederDesconto : Result := '0';
+     tdValorFixoAteDataInformada : Result := '1';
+     tdPercentualAteDataInformada : Result := '2';
+  end;
+end;
 
 procedure Register;
 begin
@@ -1119,9 +1270,15 @@ begin
      with ACbrValidador do
      begin
         if TipoInscricao = pFisica then
-           TipoDocto := docCPF
+         begin
+           TipoDocto := docCPF;
+           Documento := RightStr(AValue,11);
+         end
         else
+        begin
            TipoDocto := docCNPJ;
+           Documento := AValue;
+        end;
 
         IgnorarChar := './-';
         RaiseExcept := True;
@@ -1275,15 +1432,81 @@ begin
   fCodigoMora := AValue;
 end;
 
+procedure TACBrTitulo.SetDiasDeProtesto(AValue: Integer);
+begin
+  if (fDiasDeProtesto = AValue) then
+    Exit;
+
+  fDiasDeProtesto := AValue;
+  fDataProtesto := 0;
+  AtualizaDadosProtesto();
+end;
+
 procedure TACBrTitulo.SetCodigoGeracao(AValue: String);
 begin
   if fCodigoGeracao = AValue then
-      exit;
+    Exit;
 
   if Pos(AValue,ACBrBoleto.Banco.CodigosGeracaoAceitos) = 0 then
      raise Exception.Create( ACBrStr('Código de Geração Inválido!') );
 
   fCodigoGeracao := AValue;
+end;
+
+procedure TACBrTitulo.SetDataProtesto(AValue: TDateTime);
+begin
+  if (fDataProtesto = AValue) then
+    Exit;
+
+   if (fTipoDiasProtesto = diUteis) then
+     fDataProtesto:= IncWorkingDay(AValue,0)
+   else
+     fDataProtesto := Avalue;
+
+  fDiasDeProtesto := 0;
+  AtualizaDadosProtesto();
+end;
+
+procedure TACBrTitulo.SetVencimento(AValue: TDateTime);
+begin
+  if (fVencimento = AValue) then
+    Exit;
+
+  fVencimento := AValue;
+  AtualizaDadosProtesto();
+end;
+
+procedure TACBrTitulo.SetTipoDiasProtesto(AValue: TACBrTipoDiasIntrucao);
+begin
+  if fTipoDiasProtesto = AValue then
+    Exit;
+
+  fTipoDiasProtesto := AValue;
+  if fDiasDeProtesto > 0 then
+    fDataProtesto := 0;
+
+  AtualizaDadosProtesto();
+end;
+
+procedure TACBrTitulo.AtualizaDadosProtesto;
+begin
+  if fVencimento <= 0 then
+    Exit;
+
+  if (fDataProtesto > 0) then
+  begin
+    if (fTipoDiasProtesto = diUteis) then
+      fDiasDeProtesto := WorkingDaysBetween(fVencimento, fDataProtesto)
+    else
+      fDiasDeProtesto := DaysBetween(fVencimento, fDataProtesto);
+  end
+  else if (fDiasDeProtesto > 0) then
+  begin
+    if (fTipoDiasProtesto = diUteis) then
+      fDataProtesto := IncWorkingDay(fVencimento,fDiasDeProtesto)
+    else
+      fDataProtesto := IncDay(fVencimento,fDiasDeProtesto);
+  end;
 end;
 
 procedure TACBrTitulo.SetParcela ( const AValue: Integer ) ;
@@ -1309,7 +1532,7 @@ begin
    inherited Create;
 
    fACBrBoleto        := ACBrBoleto;
-   fLocalPagamento    := 'Pagar preferencialmente nas agencias do '+ ACBrBoleto.Banco.Nome;
+   fLocalPagamento    := ACBrBoleto.Banco.LocalPagamento;
    fVencimento        := 0;
    fDataDocumento     := 0;
    fNumeroDocumento   := '';
@@ -1321,6 +1544,9 @@ begin
    fCarteira          := '';
    fEspecieMod        := '';
    fValorDocumento    := 0;
+   fInstrucao1        := '';
+   fInstrucao2        := '';
+   fInstrucao3        := '';
    fMensagem          := TStringList.Create;
    fInformativo       := TStringList.Create;
    fInstrucoes        := TStringList.Create;
@@ -1336,8 +1562,11 @@ begin
    fDataAbatimento       := 0;
    fDataDesconto         := 0;
    fDataMoraJuros        := 0;
+   fDataMulta            := 0;
    fDataProtesto         := 0;
+   fDiasDeProtesto       := 0;
    fDataBaixa            := 0;
+   fDataLimitePagto      := 0;
    fValorDespesaCobranca := 0;
    fValorAbatimento      := 0;
    fValorDesconto        := 0;
@@ -1352,10 +1581,16 @@ begin
    fReferencia           := '';
    fVersao               := '';
    fTipoImpressao        := tipNormal;
+   fTipoDesconto         := tdNaoConcederDesconto ;
 
    fCodigoMora    := '';
    fCodigoGeracao := '2';
    fCaracTitulo   := fACBrBoleto.Cedente.CaracTitulo;
+   
+   if ACBrBoleto.Cedente.ResponEmissao = tbCliEmite then
+     fCarteiraEnvio := tceCedente
+   else
+     fCarteiraEnvio := tceBanco;
 end;
 
 destructor TACBrTitulo.Destroy;
@@ -1472,7 +1707,7 @@ function TACBrBoleto.CriarTituloNaLista: TACBrTitulo;
 var
    I : Integer;
 begin
-   I      := fListadeBoletos.Add(TACBrTitulo.Create(self));
+   I      := fListadeBoletos.Add(TACBrTitulo.Create(Self));
    Result := fListadeBoletos[I];
 end;
 
@@ -1513,12 +1748,30 @@ procedure TACBrBoleto.EnviarEmail(const sPara, sAssunto: String;
   sMensagem: TStrings; EnviaPDF: Boolean; sCC: TStrings; Anexos: TStrings);
 var
   i: Integer;
+  EMails: TStringList;
+  sDelimiter: Char;
 begin
   if not Assigned(FMAIL) then
     raise Exception.Create( ACBrStr('Componente ACBrMail não associado') );
 
   FMAIL.Clear;
-  FMAIL.AddAddress(sPara);
+
+  EMails := TStringList.Create;
+  try
+    if Pos( ';', sPara) > 0 then
+       sDelimiter := ';'
+    else
+       sDelimiter := ',';
+    QuebrarLinha( sPara, EMails, '"', sDelimiter);
+
+    for i := 0 to EMails.Count -1 do
+       FMAIL.AddAddress( EMails[i] );
+
+  finally
+    EMails.Free;
+  end;
+
+  //FMAIL.AddAddress(sPara);
   FMAIL.Subject := sAssunto;
 
   if Assigned(sMensagem) then
@@ -1575,7 +1828,7 @@ begin
          if TipoDiasProtesto = diCorridos then
             AStringList.Add(ACBrStr('Protestar em ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dias corridos após o vencimento'))
          else
-            AStringList.Add(ACBrStr('Protestar no ' + IntToStr(DaysBetween(Vencimento, DataProtesto))+ ' dia útil após o vencimento'));
+            AStringList.Add(ACBrStr('Protestar no '+IntToStr(max(DiasDeProtesto,1)) + 'º dia útil após o vencimento'));
       end;
 
       if ValorAbatimento <> 0 then
@@ -1621,15 +1874,22 @@ begin
 
       if PercentualMulta <> 0 then   
       begin
-        if DataMoraJuros <> 0 then
+        if DataMulta <> 0 then
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
-                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMoraJuros,
-                                                                IncDay(DataMoraJuros,1),DataMoraJuros))))
+                         ' a partir '+FormatDateTime('dd/mm/yyyy',ifthen(Vencimento = DataMulta,
+                                                                IncDay(DataMulta,1),DataMulta))))
         else
           AStringList.Add(ACBrStr('Cobrar Multa de ' + FormatCurr('R$ #,##0.00',
             IfThen(MultaValorFixo, PercentualMulta, ValorDocumento*( 1+ PercentualMulta/100)-ValorDocumento)) +
                          ' após o vencimento.'));
+      end;
+      if DataLimitePagto <> 0 then
+      begin
+        if DataLimitePagto > Vencimento then
+          AStringList.Add(ACBrStr('Não Receber após ' + IntToStr(DaysBetween(Vencimento, DataLimitePagto))+ ' dias'))
+        else
+          AStringList.Add(ACBrStr('Não Receber após o Vencimento'));
       end;
    end;
 end;
@@ -1727,6 +1987,20 @@ begin
   Result := BancoClass.CodigosGeracaoAceitos;
 end;
 
+function TACBrBanco.GetLocalPagamento: String;
+begin
+   if fLocalPagamento = '' then
+      if not (csDesigning in fACBrBoleto.ComponentState) then
+         fLocalPagamento := fBancoClass.LocalPagamento;
+
+   Result := fLocalPagamento;
+end;
+
+function TACBrBanco.GetNumeroCorrespondente: Integer;
+begin
+  Result:=  BancoClass.NumeroCorrespondente ;
+end;
+
 procedure TACBrBanco.SetDigito(const AValue: Integer);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
@@ -1738,6 +2012,16 @@ begin
 end;
 
 procedure TACBrBanco.SetNumero(const AValue: Integer);
+begin
+  {Apenas para aparecer no ObjectInspector do D7}
+end;
+
+procedure TACBrBanco.SetLocalPagamento(const AValue: String);
+begin
+  fLocalPagamento := TrimRight(AValue);
+end;
+
+procedure TACBrBanco.SetNumeroCorrespondente(const AValue: Integer);
 begin
   {Apenas para aparecer no ObjectInspector do D7}
 end;
@@ -1758,28 +2042,33 @@ begin
    if fTipoCobranca = AValue then
       exit;
 
+   if fLocalPagamento = fBancoClass.LocalPagamento then   //Usando valor Default
+      fLocalPagamento := '';
+
    fBancoClass.Free;
 
    case AValue of
-     cobBancoDoBrasil  : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
-     cobBancoDoNordeste:fBancoClass  := TACBrBancoNordeste.create(Self);       {004}
-     cobBanestes       : fBancoClass := TACBrBancoBanestes.create(self);       {021}
-     cobSantander      : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
-     cobBanrisul       : fBancoClass := TACBrBanrisul.create(Self);            {041}
-     cobBRB            : fBancoClass := TACBrBancoBRB.create(self);            {070}
-     cobBancoCECRED    : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
-     cobCaixaEconomica : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
-     cobCaixaSicob     : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
-     cobBradesco       : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
-     cobItau           : fBancoClass := TACBrBancoItau.Create(self);           {341}
-     cobBancoMercantil : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
-     cobSicred         : fBancoClass := TACBrBancoSicredi.Create(self);        {748}
-     cobBancoob        : fBancoClass := TACBrBancoob.create(self);             {756}
-     cobHSBC           : fBancoClass := TACBrBancoHSBC.create(self);           {399}
-     cobBicBanco       : fBancoClass := TACBrBancoBic.create(self);            {237}
-     cobBradescoSICOOB : fBancoClass := TAcbrBancoBradescoSICOOB.create(self); {237}
-     cobBancoSafra     : fBancoClass := TACBrBancoSafra.create(Self);          {422}
-     cobSafraBradesco  : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
+     cobBancoDoBrasil       : fBancoClass := TACBrBancoBrasil.create(Self);         {001}
+     cobBancoDoBrasilSICOOB : fBancoClass := TACBrBancoBrasilSICOOB.Create(Self);   {001}
+     cobBancoDaAmazonia     : fBancoClass := TACBrBancoAmazonia.create(Self);       {003}
+     cobBancoDoNordeste     : fBancoClass := TACBrBancoNordeste.create(Self);       {004}
+     cobBanestes            : fBancoClass := TACBrBancoBanestes.create(Self);       {021}
+     cobSantander           : fBancoClass := TACBrBancoSantander.create(Self);      {033,353,008}
+     cobBanrisul            : fBancoClass := TACBrBanrisul.create(Self);            {041}
+     cobBRB                 : fBancoClass := TACBrBancoBRB.create(Self);            {070}
+     cobBancoCECRED         : fBancoClass := TACBrBancoCecred.Create(Self);         {085}
+     cobCaixaEconomica      : fBancoClass := TACBrCaixaEconomica.create(Self);      {104}
+     cobCaixaSicob          : fBancoClass := TACBrCaixaEconomicaSICOB.create(Self); {104}
+     cobBradesco            : fBancoClass := TACBrBancoBradesco.create(Self);       {237}
+     cobItau                : fBancoClass := TACBrBancoItau.Create(Self);           {341}
+     cobBancoMercantil      : fBancoClass := TACBrBancoMercantil.create(Self);      {389}
+     cobSicred              : fBancoClass := TACBrBancoSicredi.Create(Self);        {748}
+     cobBancoob             : fBancoClass := TACBrBancoob.create(Self);             {756}
+     cobHSBC                : fBancoClass := TACBrBancoHSBC.create(Self);           {399}
+     cobBicBanco            : fBancoClass := TACBrBancoBic.create(Self);            {237}
+     cobBradescoSICOOB      : fBancoClass := TAcbrBancoBradescoSICOOB.create(Self); {237}
+     cobBancoSafra          : fBancoClass := TACBrBancoSafra.create(Self);          {422}
+     cobSafraBradesco       : fBancoClass := TACBrBancoSafraBradesco.Create(Self);  {422 + 237}
    else
      fBancoClass := TACBrBancoClass.create(Self);
    end;
@@ -1812,7 +2101,12 @@ end;
 
 function TACBrBanco.CodOcorrenciaToTipoRemessa(const CodOcorrencia: Integer ) : TACBrTipoOcorrencia;
 begin
-   Result:= fBancoClass.CodOcorrenciaToTipo(CodOcorrencia);
+   Result:= fBancoClass.CodOcorrenciaToTipoRemessa(CodOcorrencia);
+end;
+
+function TACBrBanco.TipoOcorrenciaToCodRemessa(const TipoOcorrencia: TACBrTipoOcorrencia ) : String;
+begin
+   Result:= fBancoClass.TipoOcorrenciaToCodRemessa(TipoOcorrencia);
 end;
 
 function TACBrBanco.CalcularDigitoVerificador ( const ACBrTitulo: TACBrTitulo
@@ -1905,17 +2199,18 @@ constructor TACBrBancoClass.create(AOwner: TACBrBanco);
 begin
    inherited create;
 
-   fpAOwner := AOwner;
-   fpDigito := 0;
-   fpNome   := 'Não definido';
-   fpNumero := 0;
+   fpAOwner                := AOwner;
+   fpDigito                := 0;
+   fpNome                  := 'Não definido';
+   fpNumero                := 0;
    fpTamanhoMaximoNossoNum := 10;
    fpTamanhoAgencia        := 4;
    fpTamanhoConta          := 10;
    fpCodigosMoraAceitos    := '12';
    fpCodigosGeracaoAceitos := '0123456789';
-   fpModulo := TACBrCalcDigito.Create;
-   fpOrientacoesBanco := TStringList.Create;
+   fpNumeroCorrespondente  := 0;
+   fpModulo                := TACBrCalcDigito.Create;
+   fpOrientacoesBanco      := TStringList.Create;
 end;
 
 destructor TACBrBancoClass.Destroy;
@@ -2004,7 +2299,7 @@ begin
   Result := '';
 end ;
 
-function TACBrBancoClass.CodOcorrenciaToTipo(const CodOcorrencia : Integer
+  function TACBrBancoClass.CodOcorrenciaToTipo(const CodOcorrencia : Integer
   ) : TACBrTipoOcorrencia ;
 begin
   Result := toRemessaRegistrar;
@@ -2033,6 +2328,13 @@ function TACBrBancoClass.CodOcorrenciaToTipoRemessa(const CodOcorrencia : Intege
 begin
   Result := toRemessaRegistrar;
 end ;
+
+function TACBrBancoClass.TipoOcorrenciaToCodRemessa(const TipoOcorrencia : TACBrTipoOcorrencia
+  ) : String ;
+begin
+  Result := '01';
+end ;
+
 {
  function TACBrBancoClass.GetNumero: Integer;
 begin
@@ -2045,6 +2347,11 @@ begin
                                          ' para o banco %s') + sLineBreak +
                                          'Ajude no desenvolvimento do ACBrECF. '+ sLineBreak+
                                          'Acesse nosso Forum em: http://acbr.sf.net/',[NomeProcedure,Nome])) ;
+end;
+
+function TACBrBancoClass.GetLocalPagamento: String;
+begin
+  Result := Format(ACBrStr(CInstrucaoPagamento), [fpNome] );
 end;
 
 function TACBrBancoClass.CalcularFatorVencimento(const DataVencimento: TDateTime
@@ -2208,7 +2515,7 @@ end;
 procedure TACBrBoleto.LerRetorno(AStream: TStream);
 var
   SlRetorno: TStringList;
-  NomeArq  : String;
+  NomeArq  , BancoRetorno: String;
 begin
    SlRetorno:= TStringList.Create;
    try
@@ -2217,9 +2524,12 @@ begin
      if not Assigned(AStream) then 
      begin
        if NomeArqRetorno = '' then
-          raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
+         raise Exception.Create(ACBrStr('NomeArqRetorno deve ser informado.'));
 
-       NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno;
+       if not FileExists(NomeArqRetorno) then
+         NomeArq := IncludeTrailingPathDelimiter(fDirArqRetorno) + NomeArqRetorno
+       else
+         NomeArq := NomeArqRetorno;
 
        if not FilesExists( NomeArq ) then
          raise Exception.Create(ACBrStr('Arquivo não encontrado:'+sLineBreak+NomeArq));
@@ -2227,10 +2537,10 @@ begin
        SlRetorno.LoadFromFile( NomeArq );
      end
      else
-	 begin
-	   AStream.Position := 0;
+     begin
+       AStream.Position := 0;
        SlRetorno.LoadFromStream(AStream);
-	 end;
+     end;
 
      if SlRetorno.Count < 1 then
         raise exception.Create(ACBrStr('O Arquivo de Retorno:'+sLineBreak+
@@ -2242,8 +2552,10 @@ begin
         240 :
           begin
             if Copy(SlRetorno.Strings[0],143,1) <> '2' then
-               Raise Exception.Create( ACBrStr( NomeArq + sLineBreak +
-                  'Não é um arquivo de Retorno de cobrança com layout CNAB240') );
+              Raise Exception.Create( ACBrStr( NomeArq + sLineBreak +
+                'Não é um arquivo de Retorno de cobrança com layout CNAB240') );
+
+            BancoRetorno  := Copy(SlRetorno.Strings[0],0,3);
             LayoutRemessa := c240 ;
           end;
 
@@ -2251,13 +2563,22 @@ begin
           begin
              if (Copy(SlRetorno.Strings[0],1,9) <> '02RETORNO')   then
                Raise Exception.Create( ACBrStr( NomeArq + sLineBreak +
-                  'Não é um arquivo de Retorno de cobrança com layout CNAB400'));
-            LayoutRemessa := c400 ;
+                 'Não é um arquivo de Retorno de cobrança com layout CNAB400'));
+
+             BancoRetorno  := Copy(SlRetorno.Strings[0],77,3);
+             LayoutRemessa := c400 ;
           end;
         else
-            raise Exception.Create( ACBrStr( NomeArq + sLineBreak+
-               'Não é um arquivo de  Retorno de cobrança CNAB240 ou CNAB400'));
+          raise Exception.Create( ACBrStr( NomeArq + sLineBreak+
+            'Não é um arquivo de  Retorno de cobrança CNAB240 ou CNAB400'));
      end;
+
+     if ( IntToStrZero(Banco.Numero, 3) <> BancoRetorno )
+        and ( IntToStrZero(Banco.NumeroCorrespondente, 3) <> BancoRetorno )  then
+       if LeCedenteRetorno then
+         Banco.TipoCobranca := GetTipoCobranca( StrToInt(BancoRetorno))
+       else
+         raise Exception.Create( ACBrStr( 'Arquivo de retorno de banco diferente do Cedente'));
 
      if LayoutRemessa = c240 then
         Banco.LerRetorno240(SlRetorno)
@@ -2278,12 +2599,34 @@ end;
 function TACBrBoleto.GetOcorrenciasRemessa: TACBrOcorrenciasRemessa;
 var I: Integer;
 begin
-  SetLength(Result, 41);
+  SetLength(Result, 47);
 
-  for I:= 1 to 41 do
+  for I:= 1 to 47 do
   begin
     Result[I-1].Tipo := TACBrTipoOcorrencia(I-1);
     Result[I-1].descricao := cACBrTipoOcorrenciaDecricao[I-1];
+  end;
+end;
+
+function TACBrBoleto.GetTipoCobranca(NumeroBanco: Integer): TACBrTipoCobranca;
+begin
+  case NumeroBanco of
+    001: Result := cobBancoDoBrasil;
+    008,033,353: Result := cobSantander;
+    021: Result := cobBanestes;
+    041: Result := cobBanrisul;
+    104: Result := cobCaixaEconomica;
+    237: Result := cobBradesco;
+    341: Result := cobItau;
+    389: Result := cobBancoMercantil;
+    748: Result := cobSicred;
+    756: Result := cobBancoob;
+    399: Result := cobHSBC;
+    422: Result := cobSafraBradesco;
+    085: Result := cobBancoCECRED;
+  else
+    raise Exception.Create('Erro ao configurar o tipo de cobrança.'+
+      sLineBreak+'Número do Banco inválido: '+IntToStr(NumeroBanco));
   end;
 end;
 

@@ -123,6 +123,7 @@ type
       fOperacaoCHQ : Integer;
       fOperacaoCNC : Integer;
       fOperacaoCRT : Integer;
+      fOperacaoPRE : Integer;
       fOperacaoReImpressao: Integer;
       fOperador : AnsiString;
       fParametrosAdicionais : TStringList;
@@ -134,6 +135,7 @@ type
       fPathDLL: string;
       fPortaPinPad: Integer;
       fUsaUTF8: Boolean;
+      fArqBackUp: String;
 
      xConfiguraIntSiTefInterativoEx : function (
                 pEnderecoIP: PAnsiChar;
@@ -163,8 +165,8 @@ type
 
 
      xContinuaFuncaoSiTefInterativo : function (
-                var ProximoComando: Integer;
-                var TipoCampo: Integer;
+                var ProximoComando: SmallInt;
+                var TipoCampo: LongInt;
                 var TamanhoMinimo: SmallInt;
                 var TamanhoMaximo: SmallInt;
                 pBuffer: PAnsiChar;
@@ -228,6 +230,7 @@ type
      Function SuportaDesconto : Boolean ;
      Function HMS : String ;
 
+     function CopiarResposta: string; override;
    public
      property Respostas : TStringList read fRespostas ;
      property PathDLL: string read fPathDLL write fPathDLL;
@@ -259,6 +262,9 @@ type
         DocumentoVinculado : String = ''); override;
      Function CNC(Rede, NSU : String; DataHoraTransacao : TDateTime;
         Valor : Double) : Boolean; overload; override;
+     Function PRE(Valor : Double; DocumentoVinculado : String = '';
+        Moeda : Integer = 0) : Boolean; override;
+
      Function DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
      Function ObtemQuantidadeTransacoesPendentes(Data:TDateTime;
         CupomFiscal:AnsiString):Integer;
@@ -288,6 +294,7 @@ type
      property OperacaoCRT: Integer                      read fOperacaoCRT          write fOperacaoCRT default 0;
      property OperacaoCHQ: Integer                      read fOperacaoCHQ          write fOperacaoCHQ default 1;
      property OperacaoCNC: Integer                      read fOperacaoCNC          write fOperacaoCNC default 200;
+     property OperacaoPRE: Integer                      read fOperacaoPRE          write fOperacaoPRE default 115;
      property OperacaoReImpressao: Integer              read fOperacaoReImpressao  write fOperacaoReImpressao default 112;
      property OnExibeMenu: TACBrTEFDCliSiTefExibeMenu   read fOnExibeMenu          write fOnExibeMenu;
      property OnObtemCampo: TACBrTEFDCliSiTefObtemCampo read fOnObtemCampo         write fOnObtemCampo;
@@ -297,8 +304,10 @@ type
 
 implementation
 
-Uses dateutils, Math, StrUtils,
-  ACBrTEFD, ACBrConsts, ACBrUtil ;
+Uses
+  {$IFDEF MSWINDOWS} Windows, {$ENDIF MSWINDOWS}
+  dateutils, Math, StrUtils,
+  ACBrTEFD, ACBrUtil ;
 
 { TACBrTEFDRespCliSiTef }
 
@@ -310,19 +319,18 @@ end;
 procedure TACBrTEFDRespCliSiTef.ConteudoToProperty;
 var
    I, wTipoOperacao, wNumCB: Integer;
-   Linha : TACBrTEFDLinha;
+   wTotalParc, wValParc: Double;
    Parc  : TACBrTEFDRespParcela;
+   Linha : TACBrTEFDLinha;
    CB    : TACBrTEFDRespCB;
    LinStr: AnsiString;
-   TemParcelas : Boolean;
 begin
-   fpValorTotal  := 0;
+   fpValorTotal := 0;
    fpImagemComprovante1aVia.Clear;
    fpImagemComprovante2aVia.Clear;
    fpDebito    := False;
    fpCredito   := False;
    fpDigitado  := False;
-   TemParcelas := False;
 
    for I := 0 to Conteudo.Count - 1 do
    begin
@@ -374,11 +382,11 @@ begin
            fpValorTotal := fpValorTotal + fpSaque ;
          end;
        131 : fpInstituicao                 := LinStr;
-       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsInteger;
+       133 : fpCodigoAutorizacaoTransacao  := Linha.Informacao.AsString;
        134 : fpNSU                         := LinStr;
+       136 : fpBin                         := Linha.Informacao.AsString;
        139 : fpValorEntradaCDC             := Linha.Informacao.AsFloat;
        140 : fpDataEntradaCDC              := Linha.Informacao.AsDate;
-       141 : TemParcelas                   := True;
        156 : fpRede                        := LinStr;
        501 : fpTipoPessoa                  := AnsiChar(IfThen(Linha.Informacao.AsInteger = 0,'J','F')[1]);
        502 : fpDocumentoPessoa             := LinStr ;
@@ -438,6 +446,8 @@ begin
             101 : fpID                 := Linha.Informacao.AsInteger;
             102 : fpDocumentoVinculado := LinStr;
             103 : fpValorTotal         := fpValorTotal + Linha.Informacao.AsFloat;
+            500 : fpIdPagamento      := Linha.Informacao.AsInteger ;
+            501 : fpIdRespostaFiscal := Linha.Informacao.AsInteger ;
           end;
         end;
 
@@ -459,18 +469,48 @@ begin
    fpQtdLinhasComprovante := max( fpImagemComprovante1aVia.Count,
                                   fpImagemComprovante2aVia.Count ) ;
 
-   fpParcelas.Clear;
-   if TemParcelas then
-   begin
-      for I := 1 to fpQtdParcelas do
-      begin
-         Parc := TACBrTEFDRespParcela.create;
-         Parc.Vencimento := LeInformacao( 141, I).AsDate ;
-         Parc.Valor      := LeInformacao( 142, I).AsFloat ;
+  // leitura de parcelas conforme nova documentação
+  // 141 e 142 foram removidos em Setembro de 2014
+  fpParcelas.Clear;
+  if (fpQtdParcelas > 0) then
+  begin
+    wValParc   := RoundABNT((fpValorTotal / fpQtdParcelas), -2);
+    wTotalParc := 0;
 
-         fpParcelas.Add(Parc);
+    for I := 1 to fpQtdParcelas do
+    begin
+      Parc := TACBrTEFDRespParcela.Create;
+      if I = 1 then
+      begin
+        Parc.Vencimento := LeInformacao(140, I).AsDate;
+        Parc.Valor      := LeInformacao(524, I).AsFloat;
+      end
+      else
+      begin
+        Parc.Vencimento := IncDay(LeInformacao(140, I).AsDate, LeInformacao(508, I).AsInteger);
+        Parc.Valor      := LeInformacao(525, I).AsFloat;
       end;
-   end;
+
+      // caso não retorne os dados acima prencher com os defaults
+      if Trim(Parc.NSUParcela) = '' then
+        Parc.NSUParcela := NSU;
+
+      if Parc.Vencimento <= 0 then
+        Parc.Vencimento := IncDay(fpDataHoraTransacaoHost, I * 30);
+
+      if Parc.Valor <= 0 then
+      begin
+        if (I = fpQtdParcelas) then
+          wValParc := fpValorTotal - wTotalParc
+        else
+          wTotalParc := wTotalParc + wValParc;
+
+        Parc.Valor := wValParc;
+      end;
+
+      fpParcelas.Add(Parc);
+    end;
+  end;
 end;
 
 procedure TACBrTEFDRespCliSiTef.GravaInformacao(const Identificacao: Integer;
@@ -524,6 +564,7 @@ begin
 
   fOperacaoATV         := 111 ; // 111 - Teste de comunicação com o SiTef
   fOperacaoReImpressao := 112 ; // 112 - Menu Re-impressão
+  fOperacaoPRE         := 115 ; // 115 - Pré-autorização
   fOperacaoADM         := 110 ; // 110 - Abre o leque das transações Gerenciais
   fOperacaoCRT         := 0 ;   // A CliSiTef permite que o operador escolha a forma
                                 // de pagamento através de menus
@@ -561,7 +602,7 @@ end;
 
 function TACBrTEFDCliSiTef.DefineMensagemPermanentePinPad(Mensagem:AnsiString):Integer;
 begin
-   if Assigned(xEscreveMensagemPermanentePinPad) then  
+   if Assigned(xEscreveMensagemPermanentePinPad) then
       Result := xEscreveMensagemPermanentePinPad(PAnsiChar(Mensagem))
    else
       raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
@@ -647,7 +688,6 @@ Var
   Sts : Integer ;
   ParamAdic : AnsiString ;
   Erro : String;
-  Est  : AnsiChar;
 begin
   if Inicializado then exit ;
 
@@ -709,36 +749,8 @@ begin
 
   GravaLog( Name +' Inicializado CliSiTEF' );
 
-  try
-     Est := TACBrTEFD(Owner).EstadoECF;
-  except
-     Est := 'O' ;
-     { TODO: Criar arquivo de Status da Transação
-
-         Se o ECF estiver desligado, será retornado 'O', o que fará o código
-       abaixo Cancelar Todas as Transações Pendentes, porém, pelo Roteiro do
-       TEF dedicado, é necessário confirmar a Transação se o Cupom foi
-       finalizado com sucesso.
-         Criar um arquivo de Status que seja atualizado no Fim do Cupom e no
-       inicio do CCD, de maneira que seja possível identificar o Status do
-       Documento no ECF indepentende do mesmo estar ou não ligado
-
-         Como alteranativa, é possível implementar código no Evento "OnInfoECF"
-       para buscar o Status do Documento no Banco de dados da sua aplicação, e
-       responder diferente de 'O',   (Veja exemplo nos fontes do TEFDDemo)
-     }
-  end ;
-
-  fpInicializado := True ;
-
-  TACBrTEFD(Owner).GPAtual := gpCliSiTef;
-
-  // Cupom Ficou aberto ?? Se SIM, Cancele tudo... //
-  if (Est in ['V','P','N','O']) then
-     CancelarTransacoesPendentesClass
-  else
-     // NAO, Cupom Fechado, Pode confirmar e Mandar aviso para re-imprimir //
-     ConfirmarESolicitarImpressaoTransacoesPendentes ;
+  VerificarTransacoesPendentesClass(True);
+  fpInicializado := True;
 end;
 
 procedure TACBrTEFDCliSiTef.DesInicializar;
@@ -911,6 +923,25 @@ begin
         ProcessarResposta;
 end;
 
+function TACBrTEFDCliSiTef.PRE(Valor: Double; DocumentoVinculado: String;
+  Moeda: Integer): Boolean;
+var
+   Sts : Integer;
+begin
+  Sts := FazerRequisicao( fOperacaoPRE, 'PRE', Valor, '', fRestricoes ) ;
+
+  if Sts = 10000 then
+     Sts := ContinuarRequisicao( CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante ) ;
+
+  Result := ( Sts = 0 ) ;
+
+  if not Result then
+     AvaliaErro( Sts )
+  else
+     if not CACBrTEFD_CliSiTef_ImprimeGerencialConcomitante then
+        ProcessarResposta;
+end;
+
 procedure TACBrTEFDCliSiTef.NCN(Rede, NSU, Finalizacao: String; Valor: Double;
   DocumentoVinculado: String);
 begin
@@ -924,7 +955,7 @@ var
   sDate:AnsiString;
 begin
    sDate:= FormatDateTime('yyyymmdd',Data);
-   if Assigned(xObtemQuantidadeTransacoesPendentes) then  
+   if Assigned(xObtemQuantidadeTransacoesPendentes) then
       Result := xObtemQuantidadeTransacoesPendentes(sDate,CupomFiscal)
    else
       raise EACBrTEFDErro.Create( ACBrStr( CACBrTEFD_CliSiTef_NaoInicializado ) ) ;
@@ -1038,11 +1069,12 @@ end;
 function TACBrTEFDCliSiTef.ContinuarRequisicao(ImprimirComprovantes: Boolean
   ): Integer;
 var
-  ProximoComando, TipoCampo, Continua, ItemSelecionado, I: Integer;
-  TamanhoMinimo, TamanhoMaximo : SmallInt ;
+  Continua, ItemSelecionado, I: Integer;
+  ProximoComando,TamanhoMinimo, TamanhoMaximo : SmallInt;
+  TipoCampo: LongInt;
   Buffer: array [0..20000] of AnsiChar;
   Mensagem, MensagemOperador, MensagemCliente, CaptionMenu : String ;
-  Resposta, ArqBackUp : AnsiString;
+  Resposta : AnsiString;
   SL : TStringList ;
   Interromper, Digitado, GerencialAberto, FechaGerencialAberto, ImpressaoOk,
      HouveImpressao, Voltar : Boolean ;
@@ -1070,7 +1102,8 @@ begin
    fIniciouRequisicao:= True ;
    fCancelamento     := False ;
    fReimpressao      := False;
-   ArqBackUp         := '' ;
+   Interromper       := False;
+   fArqBackUp        := '' ;
    Resposta          := '' ;
 
    fpAguardandoResposta := True ;
@@ -1130,7 +1163,7 @@ begin
                              if not HouveImpressao then
                              begin
                                 HouveImpressao := True ;
-                                ArqBackUp      := CopiarResposta;
+                                fArqBackUp := CopiarResposta;
                              end;
 
                              SL := TStringList.Create;
@@ -1213,6 +1246,10 @@ begin
                                 SL.Free;
                              end;
                           end ;
+                        133, 952:
+                        begin
+                          fArqBackUp := CopiarResposta;
+                        end;
                      end;
                    end;
 
@@ -1265,7 +1302,11 @@ begin
                         Mensagem := 'CONFIRMA ?';
 
                      Resposta := ifThen( (DoExibeMsg( opmYesNo, Mensagem ) = mrYes), '0', '1' ) ;
-                     {Digitado := ( Resposta <> '1') ;}
+
+                     // se a resposta a mensagem for não, não deixar interromper
+                     // voltar ao loop
+                     if (TipoCampo = 5013) and (Resposta = '1') then
+                       Interromper := False;
                    end ;
 
                  21 :
@@ -1353,7 +1394,7 @@ begin
 
             if Voltar then
                Continua := 1     { Volta para o menu anterior }
-            else if not Digitado then
+            else if (not Digitado) or Interromper then
                Continua := -1 ;  { Cancela operacao }
 
             if (Voltar and (Result = 10000)) or (not Digitado) then
@@ -1373,8 +1414,8 @@ begin
             ImpressaoOk := False ;
          end;
 
-         if (ArqBackUp <> '') and FileExists( ArqBackUp ) then
-            SysUtils.DeleteFile( ArqBackUp );
+         if (fArqBackUp <> '') and FileExists( fArqBackUp ) then
+            SysUtils.DeleteFile( fArqBackUp );
 
          if HouveImpressao or ( ImprimirComprovantes and fCancelamento) then
             FinalizarTransacao( ImpressaoOk, Resp.DocumentoVinculado );
@@ -1395,6 +1436,22 @@ begin
          fpAguardandoResposta := False ;
       end;
    end ;
+end;
+
+function TACBrTEFDCliSiTef.CopiarResposta: string;
+begin
+  if Trim(fArqBackUp) <> '' then
+  begin
+    if FileExists(fArqBackUp) then
+    begin
+      if not SysUtils.DeleteFile(fArqBackUp) then
+        raise EFilerError.CreateFmt('Não foi possivel apagar o arquivo "%s" de backup!', [fArqBackUp]);
+    end;
+
+    fArqBackUp := '';
+  end;
+
+  Result := inherited CopiarResposta;
 end;
 
 procedure TACBrTEFDCliSiTef.ProcessarResposta;
@@ -1571,6 +1628,7 @@ begin
      Self.Resp.IndiceFPG_ECF := IndiceFPG_ECF;
 
      { Cria Arquivo de Backup, contendo Todas as Respostas }
+
      CopiarResposta ;
 
      { Cria cópia do Objeto Resp, e salva no ObjectList "RespostasPendentes" }
@@ -1661,4 +1719,3 @@ end;
 
 
 end.
-

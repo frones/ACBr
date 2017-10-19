@@ -44,6 +44,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+--ACBrGNReGuiaRL.pas--
+[-] Correção de AV na Guia do Fortes, contribuição: BigWings
+	http://www.projetoacbr.com.br/forum/topic/36490-impress%C3%A3o-gnre-erro-no-lfm/
+	por: Celso Marigo Junior
+
+27/12/2016
+-- pgnreGNREW --
+[*] Evitar a duplicidade de alertas.
+    Por: Italo Jurisato Junior
+
+21/12/2016
+[*] Melhoria na impressão em Fortes e correção de erro
+		http://www.projetoacbr.com.br/forum/topic/31853-erro-ao-imprimir-gnre/
+		por : Juliomar Marchetti
+		
+20/12/2016
+[*] Melhoria para GNRE em Fast Report
+		http://www.projetoacbr.com.br/forum/topic/34030-fontes-alterados/
+		por : Juliomar Marchetti
+		
+24/10/2016
+[-] Correção da impressão da Guia do GNRE em Fortes
+		http://www.projetoacbr.com.br/forum/topic/31853-erro-ao-imprimir-gnre/
+		por : Juliomar Marchetti
+		
 03/08/2016
 [*] Adição de suporte do fortes para as guias do gnre
 		http://www.projetoacbr.com.br/forum/topic/31424-modulo-gnre-para-o-monitor-plus/

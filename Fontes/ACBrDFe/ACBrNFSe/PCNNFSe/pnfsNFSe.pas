@@ -67,6 +67,8 @@ type
  TemailCollection                   = class;
  TemailCollectionItem               = class;
  TDadosTransportadora               = class;
+ TDespesaCollectionItem             = class;
+ TDespesaCollection                 = class;
 
  TNFSe                              = class;
 
@@ -198,6 +200,7 @@ type
     FvalorOutrasRetencoes: Currency;
     FDescricaoOutrasRetencoes: String;
     FvalorRepasse: Currency; //Governa
+    FValorDespesasNaoTributaveis: Currency; //Governa
   published
     property ValorServicos: Currency read FValorServicos write FValorServicos;
     property ValorDeducoes: Currency read FValorDeducoes write FValorDeducoes;
@@ -228,6 +231,8 @@ type
     property valorOutrasRetencoes: Currency read FvalorOutrasRetencoes write FvalorOutrasRetencoes;
     property DescricaoOutrasRetencoes: String read FDescricaoOutrasRetencoes write FDescricaoOutrasRetencoes;
     property ValorRepasse: Currency read FValorRepasse write FValorRepasse;
+    //Provedor Infisc V 11
+    property ValorDespesasNaoTributaveis: Currency read FValorDespesasNaoTributaveis write FValorDespesasNaoTributaveis;
   end;
 
   TItemServicoCollection = class(TCollection)
@@ -379,6 +384,8 @@ type
     FDescricao: String;
     // Provedor IssDsf
     FDeducao: TDeducaoCollection;
+    FOperacao: TOperacao;
+    FTributacao: TTributacao;
     // Provedor Governa
     FUFPrestacao: String;
     // Provedor SP
@@ -407,6 +414,8 @@ type
     property Descricao: String read FDescricao write FDescricao;
     // Provedor IssDsf
     property Deducao: TDeducaoCollection read FDeducao write FDeducao;
+    property Operacao: TOperacao read FOperacao write FOperacao;
+    property Tributacao: TTributacao read FTributacao write FTributacao;
     // Provedor Governa
     property UFPrestacao: String read FUFPrestacao write FUFPrestacao;
     // Provedor SP
@@ -469,9 +478,13 @@ type
   private
     FTelefone: String;
     FEmail: String;
+    FDDD: String;
+    FTipoTelefone: string;
   published
     property Telefone: String read FTelefone write FTelefone;
     property Email: String read FEmail write FEmail;
+    property DDD: String read FDDD write FDDD;
+    property TipoTelefone: string read FTipoTelefone write FTipoTelefone;
   end;
 
  TDadosPrestador = class(TPersistent)
@@ -561,6 +574,7 @@ type
     FnCei: string;
     FnProj: string;
     FnMatri: string;
+    FnNumeroEncapsulamento : string;
   published
     property CodigoObra: String read FCodigoObra write FCodigoObra;
     property Art: String read FArt write FArt;
@@ -576,6 +590,7 @@ type
     property nCei: String read FnCei write FnCei;
     property nProj: String read FnProj write FnProj;
     property nMatri: String read FnMatri write FnMatri;
+    property nNumeroEncapsulamento : string read FnNumeroEncapsulamento write FnNumeroEncapsulamento;
   end;
 
   TParcelasCollectionItem = class(TCollectionItem)
@@ -662,6 +677,29 @@ type
     property vTipoFreteTrans: TnfseFrete read FvTipoFreteTrans write FvTipoFreteTrans;
   end;
 
+  TDespesaCollection = class(TCollection)
+  private
+    function GetItem(Index: Integer): TDespesaCollectionItem;
+    procedure SetItem(Index: Integer; Value: TDespesaCollectionItem);
+  public
+    constructor Create(AOwner: TNFSe);
+    function Add: TDespesaCollectionItem;
+    property Items[Index: Integer]: TDespesaCollectionItem read GetItem write SetItem;
+  end;
+
+  TDespesaCollectionItem = class(TCollectionItem)
+  private
+    FnItemDesp: String;
+    FxDesp: String;
+    FdDesp: TDateTime;
+    FvDesp: Currency;  
+  published
+    property nItemDesp: String read FnItemDesp write FnItemDesp;
+    property xDesp: String read FxDesp write FxDesp;
+    property dDesp: TDateTime read FdDesp write FdDesp;
+    property vDesp: Currency read FvDesp write FvDesp;
+  end;
+
  TNFSe = class(TPersistent)
   private
     // RPS e NFSe
@@ -702,6 +740,7 @@ type
     FLink: String; // para provedor EGoverneISS
     // RPS e NFSe
     FSignature: TSignature;
+    FDespesa: TDespesaCollection;
 
     FNumeroLote: String;
     FProtocolo: String;
@@ -793,6 +832,7 @@ type
     property Cancelada: TnfseSimNao read FCancelada write FCancelada;
     property Canhoto: TnfseCanhoto read FCanhoto Write FCanhoto;
     property Transportadora: TDadosTransportadora read FTransportadora write FTransportadora;
+    property Despesa: TDespesaCollection read FDespesa write FDespesa;
 
     // propriedade para provedor Governa
     property TipoRecolhimento: String read FTipoRecolhimento write FTipoRecolhimento;
@@ -905,6 +945,7 @@ begin
    FValorLiquidoNfse       := 0;
    FDescontoIncondicionado := 0;
    FDescontoCondicionado   := 0;
+   FValorDespesasNaoTributaveis := 0;
   end;
 
  FItemServico := TItemServicoCollection.Create(Self);
@@ -1028,6 +1069,7 @@ begin
  FLogradouroLocalPrestacaoServico := llpTomador;
 
  Femail                        := TemailCollection.Create(Self);
+ FDespesa                      := TDespesaCollection.Create(Self);
 end;
 
 destructor TNFSe.Destroy;
@@ -1050,6 +1092,7 @@ begin
  Fsignature.Free;
  FNfseCancelamento.Free;
  Femail.Free;
+ FDespesa.Free;
 
  FTransportadora.Free;
 
@@ -1287,6 +1330,28 @@ destructor TemailCollectionItem.Destroy;
 begin
 
   inherited;
+end;
+
+{ TDespesaCollection }
+
+function TDespesaCollection.Add: TDespesaCollectionItem;
+begin
+  Result := TDespesaCollectionItem(inherited Add);
+end;
+
+constructor TDespesaCollection.Create(AOwner: TNFSe);
+begin
+  inherited Create(TDespesaCollectionItem);
+end;
+
+function TDespesaCollection.GetItem(Index: Integer): TDespesaCollectionItem;
+begin
+  Result := Inherited GetItem(Index) as TDespesaCollectionItem;
+end;
+
+procedure TDespesaCollection.SetItem(Index: Integer; Value: TDespesaCollectionItem);
+begin
+  Inherited SetItem(Index, Value);
 end;
 
 end.

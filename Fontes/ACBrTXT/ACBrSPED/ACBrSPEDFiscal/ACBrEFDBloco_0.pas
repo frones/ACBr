@@ -342,6 +342,7 @@ type
     fCOD_GEN: String;          /// Código gênero item, tabela indicada item 4.2.1:
     fCOD_LST: String;          /// Código serviço Anexo I - Lei nº116/03:
     fALIQ_ICMS: Variant;      /// Alíquota ICMS aplicável (operações internas):
+		FCEST : string;
 
     FRegistro0205: TRegistro0205List;  /// BLOCO C - Lista de Registro0205 (FILHO)
     FRegistro0206: TRegistro0206List;  /// BLOCO C - Lista de Registro0206 (FILHO)
@@ -362,6 +363,7 @@ type
     property COD_GEN: String read FCOD_GEN write FCOD_GEN;
     property COD_LST: String read FCOD_LST write FCOD_LST;
     property ALIQ_ICMS: Variant read FALIQ_ICMS write FALIQ_ICMS;
+		property CEST : String read FCEST write FCEST;
     /// Registros FILHOS
     property Registro0205: TRegistro0205List read FRegistro0205 write FRegistro0205;
     property Registro0206: TRegistro0206List read FRegistro0206 write FRegistro0206;

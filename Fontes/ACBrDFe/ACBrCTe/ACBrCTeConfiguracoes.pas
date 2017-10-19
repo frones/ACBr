@@ -50,14 +50,19 @@ type
 
   TGeralConfCTe = class(TGeralConf)
   private
+    FModeloDF: TModeloCTe;
+    FModeloDFCodigo: integer;
     FVersaoDF: TVersaoCTe;
 
     procedure SetVersaoDF(const Value: TVersaoCTe);
+    procedure SetModeloDF(const Value: TModeloCTe);
   public
     constructor Create(AOwner: TConfiguracoes); override;
     procedure Assign(DeGeralConfCTe: TGeralConfCTe); reintroduce;
 
   published
+    property ModeloDF: TModeloCTe read FModeloDF write SetModeloDF default moCTe;
+    property ModeloDFCodigo: integer read FModeloDFCodigo;
     property VersaoDF: TVersaoCTe read FVersaoDF write SetVersaoDF default ve200;
   end;
 
@@ -90,7 +95,7 @@ type
     procedure Assign(DeArquivosConfCTe: TArquivosConfCTe); reintroduce;
     destructor Destroy; override;
 
-    function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
+    function GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
     function GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
     function GetPathEvento(tipoEvento: TpcnTpEvento; CNPJ: String = ''; Data: TDateTime = 0): String;
     function GetPathDownload(xNome: String = ''; CNPJ: String = ''; Data: TDateTime = 0): String;
@@ -127,7 +132,7 @@ type
 implementation
 
 uses
-  ACBrUtil, DateUtils;
+  ACBrUtil, ACBrCTe, DateUtils;
 
 { TConfiguracoesCTe }
 
@@ -172,6 +177,7 @@ procedure TGeralConfCTe.Assign(DeGeralConfCTe: TGeralConfCTe);
 begin
   inherited Assign(DeGeralConfCTe);
 
+  ModeloDF := DeGeralConfCTe.ModeloDF;
   FVersaoDF := DeGeralConfCTe.VersaoDF;
 end;
 
@@ -179,7 +185,15 @@ constructor TGeralConfCTe.Create(AOwner: TConfiguracoes);
 begin
   Inherited Create(AOwner);
 
+  FModeloDF := moCTe;
+  FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
   FVersaoDF := ve200;
+end;
+
+procedure TGeralConfCTe.SetModeloDF(const Value: TModeloCTe);
+begin
+  FModeloDF := Value;
+  FModeloDFCodigo := StrToInt(ModeloCTeToStr(FModeloDF));
 end;
 
 procedure TGeralConfCTe.SetVersaoDF(const Value: TVersaoCTe);
@@ -221,9 +235,17 @@ begin
   inherited;
 end;
 
-function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''): String;
+function TArquivosConfCTe.GetPathCTe(Data: TDateTime = 0; CNPJ: String = ''; Modelo: Integer = 0): String;
+var
+  DescricaoModelo: String;
 begin
-  Result := GetPath(FPathCTe, 'CTe', CNPJ, Data);
+  case Modelo of
+     0: DescricaoModelo := TACBrCTe(fpConfiguracoes.Owner).GetNomeModeloDFe;
+    57: DescricaoModelo := 'CTe';
+    67: DescricaoModelo := 'CTeOS';
+  end;
+
+  Result := GetPath(FPathCTe, DescricaoModelo, CNPJ, Data, DescricaoModelo);
 end;
 
 function TArquivosConfCTe.GetPathInu(Data: TDateTime = 0; CNPJ: String = ''): String;
@@ -256,7 +278,7 @@ begin
      FDownloadCTe.PathDownload := PathSalvar;
 
   if (FDownloadCTe.SepararPorNome) and (NaoEstaVazio(xNome)) then
-     rPathDown := rPathDown + PathWithDelim(FDownloadCTe.PathDownload) + TiraAcentos(xNome)
+     rPathDown := rPathDown + PathWithDelim(FDownloadCTe.PathDownload) + OnlyAlphaNum(xNome)
   else
      rPathDown := FDownloadCTe.PathDownload;
 

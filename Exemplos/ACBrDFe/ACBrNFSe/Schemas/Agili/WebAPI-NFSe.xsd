@@ -68,7 +68,7 @@
   </xsd:simpleType>
   <xsd:simpleType name="tsJustificativaCancelamentoNfse">
     <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="200" />
+      <xsd:maxLength value="1000" />
       <xsd:minLength value="10" />
     </xsd:restriction>
   </xsd:simpleType>
@@ -463,7 +463,7 @@
     <xsd:sequence>
       <xsd:element name="TipoLogradouro" type="tsTipoLogradouro" minOccurs="1" maxOccurs="1" />
       <xsd:element name="Logradouro" type="tsLogradouro" minOccurs="1" maxOccurs="1" />
-      <xsd:element name="Numero" type="tsNumeroEndereco" minOccurs="1" maxOccurs="1" />
+      <xsd:element name="Numero" type="tsNumeroEndereco" minOccurs="0" maxOccurs="1" />
       <xsd:element name="Complemento" type="tsComplementoEndereco" minOccurs="0" maxOccurs="1" />
       <xsd:element name="Bairro" type="tsBairro" minOccurs="0" maxOccurs="1" />
       <xsd:element name="Municipio" type="tcIdentificacaoMunicipio" minOccurs="1" maxOccurs="1" />

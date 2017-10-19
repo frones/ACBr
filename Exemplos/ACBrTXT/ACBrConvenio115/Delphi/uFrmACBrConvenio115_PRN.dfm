@@ -325,11 +325,12 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
       Borders.DrawTop = True
       Borders.DrawRight = False
       Borders.DrawBottom = False
-      object RLLabel1: TRLLabel
+      object rllSistema: TRLLabel
         Left = 0
         Top = 1
         Width = 191
         Height = 14
+        Align = faLeftOnly
         Caption = 'Copyright by Jera Soft Co. - 2009/2010'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -337,21 +338,7 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
-      end
-      object RLLabel2: TRLLabel
-        AlignWithMargins = True
-        Left = 694
-        Top = 1
-        Width = 48
-        Height = 14
-        Align = faRightOnly
-        Alignment = taRightJustify
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = []
-        ParentFont = False
+        BeforePrint = rllSistemaBeforePrint
       end
       object RLSystemInfo1: TRLSystemInfo
         Left = 700
@@ -385,19 +372,36 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         ParentFont = False
         Text = 'P'#225'gina: '
       end
-      object RLLabel28: TRLLabel
+      object rllUsuario: TRLLabel
         Left = 0
         Top = 17
-        Width = 136
+        Width = 197
         Height = 14
         Align = faLeftBottom
-        Caption = 'http://www.jerasoft.com.br'
+        Caption = 'Usu'#225'rio:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        BeforePrint = rllUsuarioBeforePrint
+      end
+      object RLLabel2: TRLLabel
+        AlignWithMargins = True
+        Left = 694
+        Top = 1
+        Width = 48
+        Height = 14
+        Align = faRightOnly
+        Alignment = taRightJustify
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = RLLabel2BeforePrint
       end
     end
     object rlbDestinatario: TRLBand
@@ -900,6 +904,7 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         Font.Name = 'Arial'
         Font.Style = []
         ParentFont = False
+        BeforePrint = rllResumoBeforePrint
       end
       object RLLabel20: TRLLabel
         Left = 67
@@ -939,9 +944,9 @@ object FrmACBrConvenio115_PRN: TFrmACBrConvenio115_PRN
         BeforePrint = RLLabel27BeforePrint
       end
       object RLLabel29: TRLLabel
-        Left = 692
+        Left = 688
         Top = 39
-        Width = 50
+        Width = 54
         Height = 14
         Align = faRightOnly
         Caption = 'S'#233'rie: 01'

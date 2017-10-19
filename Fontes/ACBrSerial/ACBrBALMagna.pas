@@ -46,98 +46,85 @@
 unit ACBrBALMagna;
 
 interface
-uses ACBrBALClass,
-     Classes;
+
+uses ACBrBALClass, Classes;
 
 type
-  TACBrBALMagna = class( TACBrBALClass )
+
+  { TACBrBALMagna }
+
+  TACBrBALMagna = class(TACBrBALClass)
   public
     constructor Create(AOwner: TComponent);
-    function LePeso( MillisecTimeOut : Integer = 3000) :Double; override;
-    procedure LeSerial( MillisecTimeOut : Integer = 500) ; override ;
-  end ;
+
+    function InterpretarRepostaPeso(aResposta: AnsiString): Double; override;
+    procedure SolicitarPeso; override;
+  end;
 
 implementation
-Uses ACBrConsts,
-     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF},
-     SysUtils ;
+
+uses
+  ACBrConsts, SysUtils,
+     {$IFDEF COMPILER6_UP} DateUtils, StrUtils {$ELSE} ACBrD5, Windows{$ENDIF};
 
 { TACBrBALGertecSerial }
 
 constructor TACBrBALMagna.Create(AOwner: TComponent);
 begin
-  inherited Create( AOwner );
+  inherited Create(AOwner);
 
-  fpModeloStr := 'Magna' ;
+  fpModeloStr := 'Magna';
 end;
 
-function TACBrBALMagna.LePeso( MillisecTimeOut : Integer) : Double;
+function TACBrBALMagna.InterpretarRepostaPeso(aResposta: AnsiString): Double;
+var
+  wPosIni, wPosFim, wDecimais: Integer;
+  wResposta: AnsiString;
 begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  Result    := 0;
+  aResposta := Copy(aResposta, 1, Pos(#10, aResposta) - 1);
+  wPosIni   := Pos(' ', aResposta);
+  wPosFim   := Pos('k', aResposta);
+  wDecimais := 1000;
 
-  GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' TX -> '+#80 );
-  fpDevice.Limpar ;
-  fpDevice.EnviaString( #80 );      { Envia comando solicitando o Peso }
-  sleep(200) ;
+  if (wPosFim = 0) then
+    wPosFim := Length(aResposta);
 
-  LeSerial( MillisecTimeOut );
+  wResposta := Copy(aResposta, wPosIni, wPosFim - wPosIni);
 
-  Result := fpUltimoPesoLido ;
-end;
+  if (wResposta = EmptyStr) then
+    Exit;
 
-procedure TACBrBALMagna.LeSerial( MillisecTimeOut : Integer) ;
-Var Resposta : AnsiString ;
-    MInicio  : Integer;
-    MFinal   : integer;
-begin
-  fpUltimoPesoLido := 0 ;
-  fpUltimaResposta := '' ;
+  wResposta := StringReplace(wResposta, '.', DecimalSeparator, [rfReplaceAll]);
+  wResposta := StringReplace(wResposta, ',', DecimalSeparator, [rfReplaceAll]);
 
-  Try
-     fpUltimaResposta := fpDevice.LeString( MillisecTimeOut );
-     GravaLog('- '+FormatDateTime('hh:nn:ss:zzz',now)+' RX <- '+fpUltimaResposta );
-
-     fpUltimaResposta := Copy(fpUltimaResposta,1,pos(#10,fpUltimaResposta)-1);
-
-     { Limpa para reposta para pegar o Valor }
-     Resposta := fpUltimaResposta;
-
-     MInicio := Pos(' ',Resposta);
-     Mfinal  := Pos('k',Resposta);
-     if Mfinal = 0 then
-        Mfinal := Length(resposta);
-     Resposta := Copy (Resposta,Minicio,MFinal - Minicio);
-
-     Resposta := StringReplace(Resposta, '.', DecimalSeparator, [rfReplaceAll]);
-     Resposta := StringReplace(Resposta, ',', DecimalSeparator, [rfReplaceAll]);
-
-     try
-        if Length(Resposta) > 10 then
-           fpUltimoPesoLido := StrToFloat(copy(Resposta, 1, 6)) / 1000
-        else if pos(Decimalseparator, Resposta) > 0 then
-           fpUltimoPesoLido := StrToFloat(Resposta)
-        else
-           fpUltimoPesoLido := StrToInt(Resposta) / 1000
-     except
-        case Trim(Resposta)[1] of
-//          'I' : fpUltimoPesoLido := -1  ;  { Instavel }
-            'N' : begin
-                   fpUltimoPesoLido := -2  ;  { Peso Negativo }
-                   fpUltimaResposta := 'Peso Negativo ';
-                  end;
-//          'S' : fpUltimoPesoLido := -10 ;  { Sobrecarga de Peso }
-        else
-           fpUltimoPesoLido := 0 ;
-        end;
-     end;
+  try
+    if (Length(wResposta) > 10) then
+      Result := (StrToFloat(Copy(wResposta, 1, 6)) / wDecimais)
+    else if (Pos(DecimalSeparator, wResposta) > 0) then
+      Result := StrToFloat(wResposta)
+    else
+      Result := (StrToInt(wResposta) / wDecimais);
   except
-     { Peso não foi recebido (TimeOut) }
-     fpUltimoPesoLido := -9 ;
-     fpUltimaResposta := 'Peso Não Lido ';
-  end ;
+    case Trim(wResposta)[1] of
+    //'I' : Result := -1  ;  { Instavel }
+    //'S' : Result := -10 ;  { Sobrecarga de Peso }
+      'N' :                  { Peso Negativo }
+      begin
+        Result    := -2;
+        wResposta := ' Peso Negativo ';
+      end;
+    else
+      Result := 0;
+    end;
+  end
+end;
 
-  GravaLog('              UltimoPesoLido: '+FloatToStr(fpUltimoPesoLido)+' , Resposta: '+Resposta );
+procedure TACBrBALMagna.SolicitarPeso;
+begin
+  GravaLog(' - ' + FormatDateTime('hh:nn:ss:zzz', Now) + ' TX -> ' + #80);
+  fpDevice.Limpar;
+  fpDevice.EnviaString(#80);  { Envia comando Solicitando o Peso }
 end;
 
 end.

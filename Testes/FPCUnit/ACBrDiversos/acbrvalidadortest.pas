@@ -203,6 +203,24 @@ type
     procedure FormatarMaisDeOitoDigitos;
   end;
 
+  { TTestCaseACBrValidadorEmail }
+
+  TTestCaseACBrValidadorEmail = class(TTestCase)
+  published
+    procedure ValidarEmailsValidos;
+    procedure EmailInvalidoComEspacos;
+    procedure EmailInvalidoComecandoComPonto;
+    procedure EmailInvalidoComecandoComArroba;
+    procedure EmailInvalidoComDoisPontosSeguidos;
+    procedure EmailInvalidoArrobaComPonto;
+    procedure EmailInvalidoTerminandoComPonto;
+    procedure EmailInvalidoTerminandoComArroba;
+    procedure EmailInvalidoComCarecteresEspeciais;
+    procedure ValidarListaEmailsValidos;
+    procedure ValidarListaEmailsInvalidos;
+    procedure ValidarListaEmailsMisturandoDelimitadores;
+  end;
+
 implementation
 
 { TTestCaseACBrValidadorCEP }
@@ -1210,6 +1228,71 @@ begin
   CheckFalse(fACBrValidador.Validar, fACBrValidador.MsgErro);
 end;
 
+{ TTestCaseACBrValidadorEmail }
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComEspacos;
+begin
+  CheckNotEquals('', ValidarEmail('nome com espaco@hotmail.com'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComecandoComPonto;
+begin
+  CheckNotEquals('', ValidarEmail('.comecandocomponto@uol.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComecandoComArroba;
+begin
+  CheckNotEquals('', ValidarEmail('@example.com'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComDoisPontosSeguidos;
+begin
+  CheckNotEquals('', ValidarEmail('John..Doe@example.com'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoArrobaComPonto;
+begin
+  CheckNotEquals('', ValidarEmail('JohnDoe@.example.com.'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoTerminandoComPonto;
+begin
+  CheckNotEquals('', ValidarEmail('JohnDoe@example.com.'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoTerminandoComArroba;
+begin
+  CheckNotEquals('', ValidarEmail('JohnDoe@'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.EmailInvalidoComCarecteresEspeciais;
+begin
+  CheckNotEquals('', ValidarEmail('cáractersespeciais@empresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarListaEmailsValidos;
+begin
+  CheckEquals('', ValidarEmail('comercial@djpdv.com.br;financeiro@djpdv.com.br;pessoa@suaempresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarListaEmailsInvalidos;
+begin
+  CheckNotEquals('', ValidarEmail('comercial@djpdv.com.br;nome com espaco@hotmail.com;pessoa@suaempresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarListaEmailsMisturandoDelimitadores;
+begin
+  CheckNotEquals('', ValidarEmail('comercial@djpdv.com.br;financeiro@djpdv.com.br,pessoa@suaempresa.com.br'));
+end;
+
+procedure TTestCaseACBrValidadorEmail.ValidarEmailsValidos;
+begin
+  CheckEquals('', ValidarEmail('nome@gmail.com'));
+  CheckEquals('', ValidarEmail('nome@hotmail.com'));
+  CheckEquals('', ValidarEmail('pessoa@suaempresa.com.br'));
+  CheckEquals('', ValidarEmail('pessoa.cadastrada.com.nome.de.email.muito.longo@minhaempresa.com.br'));
+end;
+
 initialization
 
   RegisterTest(TTestCaseACBrValidadorCPF{$ifndef FPC}.Suite{$endif});
@@ -1218,5 +1301,7 @@ initialization
   RegisterTest(TTestCaseACBrValidadorIE{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorTelefone{$ifndef FPC}.Suite{$endif});
   RegisterTest(TTestCaseACBrValidadorCEP{$ifndef FPC}.Suite{$endif});
+  RegisterTest(TTestCaseACBrValidadorEmail{$ifndef FPC}.Suite{$endif});
+
 end.
 

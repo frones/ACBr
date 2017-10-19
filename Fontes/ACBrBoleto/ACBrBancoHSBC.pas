@@ -1105,8 +1105,8 @@ procedure TACBrBancoHSBC.LerRetorno240(ARetorno: TStringList);  // CLAUDIO TENTA
 var
   ContLinha: Integer;
   Titulo   : TACBrTitulo;
-  Linha, rContrato, rCedente, rCNPJCPF: String;
-  rAgencia, rConta,rDigitoConta, rDigitoAgCta: String;
+  Linha, rCedente, rCNPJCPF: String;
+  rAgencia, rConta,rDigitoConta: String;
   IdxMotivo : Integer;
   wSeuNumero: String;
 begin
@@ -1119,9 +1119,6 @@ begin
    rAgencia     := trim(Copy(ARetorno[0],53,5));
    rConta       := trim(Copy(ARetorno[0],59,12));
    rDigitoConta := Copy(ARetorno[0],71,1);
-   rDigitoAgCta := Copy(ARetorno[0],72,1);
-
-   rContrato    := trim(Copy(ARetorno[0],40,13));
    rCedente     := trim(Copy(ARetorno[0],73,30));
 
    ACBrBanco.ACBrBoleto.NumeroArquivo := StrToIntDef(Copy(ARetorno[0], 158, 6), 0);

@@ -65,6 +65,7 @@ Type
             fpDevice : TACBrDevice;
             fpAtivo : Boolean;
             fpModeloStr : String;
+            fpDuplaConfirmacao: Boolean;
         Public
             Constructor Create(AOwner: TComponent);
             Destructor Destroy; Override;
@@ -81,6 +82,7 @@ Type
             Procedure PosicionaCursor( Linha, Coluna : Word; Terminal : Word = 0 ); Virtual;
             Procedure BackSpace( Terminal : Word = 0 ); Virtual;
             Property ModeloStr : String Read fpModeloStr;
+            Property DuplaConfirmacao: Boolean Read fpDuplaConfirmacao Write fpDuplaConfirmacao;
         End;
 
 Implementation
@@ -104,6 +106,7 @@ Begin
 
     fpAtivo     := False;
     fpModeloStr := 'Não Definida';
+    fpDuplaConfirmacao := True;
 End;
 
 Destructor TACBrTERClass.Destroy;

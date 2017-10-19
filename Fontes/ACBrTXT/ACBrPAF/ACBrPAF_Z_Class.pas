@@ -149,7 +149,7 @@ begin
           LFill(limpaCampo(CNPJ)        , 14) +
           RFill(limpaCampo(IE)          , 14) +
           RFill(limpaCampo(IM)          , 14) +
-          RFill(TiraAcentos(RAZAOSOCIAL), 50));
+          RFill(UpperCase(TiraAcentos(RAZAOSOCIAL)), 50));
     end;
     WriteRegistroZ2;
     WriteRegistroZ3;
@@ -171,7 +171,7 @@ begin
           LFill(limpaCampo(CNPJ)        , 14) +
           RFill(limpaCampo(IE)          , 14) +
           RFill(limpaCampo(IM)          , 14) +
-          RFill(TiraAcentos(RAZAOSOCIAL), 50));
+          RFill(Uppercase(TiraAcentos(RAZAOSOCIAL)), 50));
     end;
   end;
 end;
@@ -183,9 +183,9 @@ begin
     with FRegistroZ3 do
     begin
       Add(LFill('Z3') +
-          RFill(LAUDO , 10) +
-          RFill(NOME  , 50) +
-          RFill(VERSAO, 10));
+          RFill(UpperCase(LAUDO) , 10) +
+          RFill(UpperCase(NOME)  , 50) +
+          RFill(UpperCase(VERSAO), 10));
     end;
   end;
 end;
@@ -203,10 +203,10 @@ begin
     begin
       with FRegistroZ4.Items[intFor] do
       begin
-        Check(ValidarCNPJouCPF(CNPJ) = '', '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CNPJ]);
+        Check(ValidarCNPJouCPF(CPF_CNPJ) = '', '(Z4) Totalização de vendas a CPF/CNPJ: O CNPJ "%s" digitado é inválido!', [CPF_CNPJ]);
 
         Add( LFill('Z4') +
-             LFill(limpaCampo(CNPJ)      , 14) +
+             LFill(limpaCampo(CPF_CNPJ)      , 14) +
              LFill(VL_TOTAL  , 14, 2) +
              LFill(DATA_INI  , 'yyyymmdd') +
              LFill(DATA_FIM  , 'yyyymmdd') +

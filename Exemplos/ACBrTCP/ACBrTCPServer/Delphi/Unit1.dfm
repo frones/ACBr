@@ -1,8 +1,8 @@
 object Form1: TForm1
   Left = 247
   Top = 165
-  Width = 430
-  Height = 347
+  Width = 600
+  Height = 390
   VertScrollBar.Range = 113
   AutoScroll = False
   Caption = 'ACBrTCPServer'
@@ -16,22 +16,30 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 113
-    Width = 422
-    Height = 200
+    Width = 592
+    Height = 246
     Align = alClient
     TabOrder = 1
+    object Splitter1: TSplitter
+      Left = 391
+      Top = 1
+      Width = 5
+      Height = 244
+      Align = alRight
+      Beveled = True
+    end
     object Panel2: TPanel
       Left = 1
       Top = 1
-      Width = 225
-      Height = 198
+      Width = 390
+      Height = 244
       Align = alClient
       TabOrder = 0
       object mOutput: TMemo
         Left = 1
         Top = 1
-        Width = 223
-        Height = 196
+        Width = 388
+        Height = 242
         Align = alClient
         Lines.Strings = (
           'Conecte nesse servidor usando:'
@@ -41,21 +49,25 @@ object Form1: TForm1
           'Exemplo:'
           ''
           'telnet localhost 3434')
+        ScrollBars = ssBoth
         TabOrder = 0
       end
     end
     object Panel3: TPanel
-      Left = 226
+      Left = 396
       Top = 1
       Width = 195
-      Height = 198
+      Height = 244
       Align = alRight
       TabOrder = 1
+      DesignSize = (
+        195
+        244)
       object CheckListBox1: TCheckListBox
         Left = 1
         Top = 1
         Width = 193
-        Height = 145
+        Height = 188
         Align = alTop
         Anchors = [akLeft, akTop, akRight, akBottom]
         ItemHeight = 13
@@ -63,7 +75,7 @@ object Form1: TForm1
       end
       object Button1: TButton
         Left = 12
-        Top = 159
+        Top = 202
         Width = 75
         Height = 27
         Anchors = [akRight, akBottom]
@@ -73,7 +85,7 @@ object Form1: TForm1
       end
       object bEnviar: TButton
         Left = 104
-        Top = 159
+        Top = 202
         Width = 75
         Height = 27
         Anchors = [akRight, akBottom]
@@ -86,10 +98,13 @@ object Form1: TForm1
   object Panel4: TPanel
     Left = 0
     Top = 0
-    Width = 422
+    Width = 592
     Height = 113
     Align = alTop
     TabOrder = 0
+    DesignSize = (
+      592
+      113)
     object Label1: TLabel
       Left = 8
       Top = 8
@@ -112,16 +127,16 @@ object Form1: TForm1
       Caption = 'TimeOut'
     end
     object Label3: TLabel
-      Left = 312
+      Left = 482
       Top = 89
       Width = 50
       Height = 13
       Anchors = [akTop, akRight]
-      Caption = 'Conexões:'
+      Caption = 'Conex'#245'es:'
       OnClick = Label3Click
     end
     object lNConexoes: TLabel
-      Left = 371
+      Left = 541
       Top = 89
       Width = 22
       Height = 13
@@ -167,8 +182,8 @@ object Form1: TForm1
       Text = '10000'
     end
     object bDesativar: TButton
-      Left = 320
-      Top = 44
+      Left = 392
+      Top = 24
       Width = 75
       Height = 25
       Caption = 'Desativar'
@@ -176,8 +191,8 @@ object Form1: TForm1
       OnClick = bDesativarClick
     end
     object bAtivar: TButton
-      Left = 320
-      Top = 8
+      Left = 296
+      Top = 24
       Width = 75
       Height = 25
       Caption = 'Ativar'
@@ -187,7 +202,7 @@ object Form1: TForm1
     object edEnviar: TEdit
       Left = 8
       Top = 72
-      Width = 265
+      Width = 460
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 4

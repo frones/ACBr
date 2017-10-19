@@ -31,7 +31,7 @@
 {******************************************************************************}
 {$I ACBr.inc}
 
-unit DoACBRGNReUnit;
+unit DoACBrGNReUnit;
 
 interface
 
@@ -49,7 +49,9 @@ procedure DoACBrGNRe ( Cmd: TACBrCmd ) ;
 var
   wDiretorioAtual : String;
   Salva, OK, bImprimir, bMostrarPreview, bImprimirPDF : Boolean;
-  ArqNFe, ArqPDF, ArqEvento, Chave, cImpressora : String;
+  ArqPDF , ArqGNRe: String;
+  PathsGNRe: TStringList;
+  FormaEmissao: TpcnTipoEmissao;
 begin
   with FrmACBrMonitor do
   begin
@@ -68,7 +70,8 @@ begin
           end;
         end;
 
-        Cmd.Resposta := ACBrGNRE1.WebServices.Enviar.Msg+
+        
+        Cmd.Resposta := ACBrGNRE1.WebServices.Enviar.Msg+sLineBreak+
                      '[STATUS]'+sLineBreak+
                      'Ambiente='+TpAmbToStr(ACBrGNRE1.WebServices.ConsultaUF.ambiente)+sLineBreak+
                      'Codigo='+IntToStr(ACBrGNRE1.WebServices.ConsultaUF.codigo)+sLineBreak+
@@ -79,49 +82,62 @@ begin
       end
       else if Cmd.Metodo = 'imprimirgnre' then
       begin
-        begin
-          ACBrGNRE1.GuiasRetorno.Clear;
-           if FileExists(Cmd.Params(0)) or
-             FileExists(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) or
-             FileExists(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt') then
-           begin
-              if FileExists(Cmd.Params(0)) then
-                ACBrGNRE1.GuiasRetorno.LoadFromFile(Cmd.Params(0))
-              else if FileExists(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)) then
-                ACBrGNRE1.GuiasRetorno.LoadFromFile(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0))
-              else
-                ACBrGNRE1.GuiasRetorno.LoadFromFile(PathWithDelim(ACBrNFe1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
-           end
-           else
-           raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-           bMostrarPreview := (Cmd.Params(4) = '1');
-           if NaoEstaVazio(Cmd.Params(1)) then
-             ACBrGNRE1.GNREGuia.Impressora:= Cmd.Params(1);
+        ACBrGNRE1.GuiasRetorno.Clear;
+        PathsGNRe := TStringList.Create;
+        try
+          PathsGNRe.Append(Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
+          try
+            CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
+          except
+          end;
+        finally
+          PathsGNRe.Free;
+        end;
 
-           if NaoEstaVazio(Cmd.Params(2)) then
-             ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
+        if not (ACBrGNRE1.GuiasRetorno.Count > 0) then
+           if not ACBrGNRE1.GuiasRetorno.LoadFromString(Cmd.Params(0)) then
+              raise Exception.Create('Erro ao carregar guia. Arquivo não existe ou parâmetro incorreto.');
 
-           ACBrGNRE1.GuiasRetorno.Imprimir;
-           Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
+        bMostrarPreview := (Cmd.Params(4) = '1');
+        if NaoEstaVazio(Cmd.Params(1)) then
+          ACBrGNRE1.GNREGuia.Impressora:= Cmd.Params(1);
 
-           if ACBrGNRE1.GNREGuia.MostrarPreview then
-             Ocultar1.Click;
-        end
+        if NaoEstaVazio(Cmd.Params(2)) then
+          ACBrGNRE1.GNREGuia.NumCopias :=StrToIntDef(Cmd.Params(2),1);
+
+        try
+          AntesDeImprimir(bMostrarPreview);
+          ACBrGNRE1.GuiasRetorno.Imprimir;
+        finally
+          DepoisDeImprimir;
+        end;
+
+        Cmd.Resposta := 'Guia GNRe Impressa com sucesso';
       end
       else if Cmd.Metodo = 'imprimirgnrepdf' then //NFe.ImprimirDANFEPDF(cArqXML,cProtocolo,cMarcaDaqgua,bViaConsumidor,bSimplificado)
       begin
        ACBrGNRE1.GuiasRetorno.Clear;
-         if FileExists(Cmd.Params(0)) then
-           ACBrGNRE1.GuiasRetorno.LoadFromFile(Cmd.Params(0))
-         else
-            raise Exception.Create('Arquivo '+Cmd.Params(0)+' não encontrado.');
-         try
-           ACBrGNRE1.GuiasRetorno.ImprimirPDF;
-           ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';
-           Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrGNRE1.GNREGuia.PathPDF) + ArqPDF ;
-         except
-           raise Exception.Create('Erro ao criar o arquivo PDF');
-         end;
+       PathsGNRe := TStringList.Create;
+        try
+          PathsGNRe.Append(Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0));
+          PathsGNRe.Append(PathWithDelim(ACBrGNRE1.Configuracoes.Arquivos.PathSalvar)+Cmd.Params(0)+'-gnre.txt');
+          try
+            CarregarDFe(PathsGNRe, ArqGNRe, tDFeGNRe);
+          except
+          end;
+        finally
+          PathsGNRe.Free;
+        end;
+       try
+         ACBrGNRE1.GuiasRetorno.ImprimirPDF;
+         ArqPDF := 'GNRE_' +ACBrGNRE1.GuiasRetorno.Items[0].GNRE.RepresentacaoNumerica+'.pdf';
+         Cmd.Resposta := 'Arquivo criado em: '+ PathWithDelim(ACBrGNRE1.GNREGuia.PathPDF) + ArqPDF ;
+       except
+         raise Exception.Create('Erro ao criar o arquivo PDF');
+       end;
       end
       else if cmd.Metodo = 'gerarguia' then
       begin
@@ -133,14 +149,32 @@ begin
         ACBrGNRE1.Enviar;
 
         Cmd.Resposta :=Cmd.Resposta + sLineBreak+
-                     'Envio GNRE'+ sLineBreak+
-                     'ambiente: '+ TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente)+ sLineBreak+
-                     'codigo: '+ IntToStr(ACBrGNRE1.WebServices.Retorno.codigo)+ sLineBreak+
-                     'descricao: '+ ACBrGNRE1.WebServices.Retorno.descricao+ sLineBreak+
-                     'Recibo: '+ ACBrGNRE1.WebServices.Retorno.numeroRecibo+ sLineBreak+
-                     'Protocolo: '+ ACBrGNRE1.WebServices.Retorno.protocolo+ sLineBreak;
+                     '[ENVIO]'+ sLineBreak+
+                     'Ambiente='+ TpAmbToStr(ACBrGNRE1.WebServices.Retorno.ambiente)+ sLineBreak+
+                     'Codigo='+ IntToStr(ACBrGNRE1.WebServices.Retorno.codigo)+ sLineBreak+
+                     'Descricao='+ ACBrGNRE1.WebServices.Retorno.descricao+ sLineBreak+
+                     'Recibo='+ ACBrGNRE1.WebServices.Retorno.numeroRecibo+ sLineBreak+
+                     'Protocolo='+ ACBrGNRE1.WebServices.Retorno.protocolo+ sLineBreak;
 
       end
+      else if Cmd.Metodo = 'setformaemissao' then
+      begin
+        if cbModoEmissao.checked then
+          exit;
+
+        OK := False;
+        FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+
+        if not OK then
+          raise Exception.Create('Forma de Emissão Inválida: '+TpEmisToStr(FormaEmissao))
+        else
+        begin
+          ACBrNFe1.Configuracoes.Geral.FormaEmissao := StrToTpEmis(OK, Cmd.Params(0));
+          cbFormaEmissaoGNRe.ItemIndex := ACBrGNRE1.Configuracoes.Geral.FormaEmissaoCodigo-1;
+          SalvarIni;
+        end;
+      end
+
       else
       raise Exception.Create(ACBrStr('Comando inválido ('+Cmd.Comando+')'));
     finally
@@ -153,89 +187,85 @@ end;
 procedure LerIniGuia( aStr: AnsiString) ;
 var
   IniGuia: TMemIniFile;
-  SL: TStringList;
 begin
-  IniGuia := TMemIniFile.Create('guia.ini');
-  SL         := TStringList.Create;
+  IniGuia := LerConverterIni(aStr);
+
   try
     try
-    if (pos(#10,aStr) = 0) and FileExists(aStr) then
-      SL.LoadFromFile(aStr)
-    else
-      SL.Text := ConvertStrRecived(aStr);
-
-    IniGuia.SetStrings(SL);
-    with FrmACBrMonitor.ACBrGNRE1 do
-    begin
-      Guias.Clear;
-      with Guias.Add.GNRE do
+      with FrmACBrMonitor.ACBrGNRE1 do
       begin
-        if IniGuia.SectionExists('Emitente') then
+        Guias.Clear;
+        with Guias.Add.GNRE do
         begin
-          c27_tipoIdentificacaoEmitente :=IniGuia.ReadInteger('Emitente','tipo',0);//[1,2] INscrito na uf ou nao /////1 CNPJ - 2 CPF
-          //Se inscrito na UF Destino
-          c17_inscricaoEstadualEmitente :=IniGuia.ReadString('Emitente','IE','');  //IE inscrito na uf destino
-          //Se nao Inscrito na uf Destino
-          c03_idContribuinteEmitente    :=IniGuia.ReadString('Emitente','id','cnpjcpf'); //numero do cnpj ou cpf
-          c16_razaoSocialEmitente       :=IniGuia.ReadString('Emitente','RazaoSocial','nome');
-          c18_enderecoEmitente          :=IniGuia.ReadString('Emitente','Endereco','');
-          c19_municipioEmitente         :=IniGuia.ReadString('Emitente','Cidade','');
-          c20_ufEnderecoEmitente        :=IniGuia.ReadString('Emitente','UF','');
-          c21_cepEmitente               :=IniGuia.ReadString('Emitente','Cep','');
-          c22_telefoneEmitente          :=IniGuia.ReadString('Emitente','Telefone','');
-        end;
+          if IniGuia.SectionExists('Emitente') then
+          begin
+            c27_tipoIdentificacaoEmitente :=IniGuia.ReadInteger('Emitente','tipo',0);//[1,2] INscrito na uf ou nao /////1 CNPJ - 2 CPF
+            //Se inscrito na UF Destino
+            c17_inscricaoEstadualEmitente :=IniGuia.ReadString('Emitente','IE','');  //IE inscrito na uf destino
+            //Se nao Inscrito na uf Destino
+            c03_idContribuinteEmitente    :=IniGuia.ReadString('Emitente','id','cnpjcpf'); //numero do cnpj ou cpf
+            c16_razaoSocialEmitente       :=IniGuia.ReadString('Emitente','RazaoSocial','nome');
+            c18_enderecoEmitente          :=IniGuia.ReadString('Emitente','Endereco','');
+            c19_municipioEmitente         :=IniGuia.ReadString('Emitente','Cidade','');
+            c20_ufEnderecoEmitente        :=IniGuia.ReadString('Emitente','UF','');
+            c21_cepEmitente               :=IniGuia.ReadString('Emitente','Cep','');
+            c22_telefoneEmitente          :=IniGuia.ReadString('Emitente','Telefone','');
+          end;
 
-        //Complementes da Recita
-        if IniGuia.SectionExists('Complemento') then
-        begin
-          c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdenfiticadorGuia','');
-          ///Exige Doc Origem
-          c28_tipoDocOrigem      :=IniGuia.ReadInteger('Complemento','tipoDocOrigem',0);
-          c04_docOrigem          :=IniGuia.ReadString('Complemento','DocOrigem','');
-          ///Exige Detalhamento Receita
-          c25_detalhamentoReceita :=IniGuia.ReadInteger('Complemento','detalhamentoReceita',0);
-          ///Exige Produto
-          c26_produto             :=IniGuia.ReadInteger('Complemento','produto',0);
-        end;
+          //Complementes da Recita
+          if IniGuia.SectionExists('Complemento') then
+          begin
+            c42_identificadorGuia  :=IniGuia.ReadString('Complemento','IdentificadorGuia','');
+            ///Exige Doc Origem
+            c28_tipoDocOrigem      :=IniGuia.ReadInteger('Complemento','tipoDocOrigem',0);
+            c04_docOrigem          :=IniGuia.ReadString('Complemento','DocOrigem','');
+            ///Exige Detalhamento Receita
+            c25_detalhamentoReceita :=IniGuia.ReadInteger('Complemento','detalhamentoReceita',0);
+            ///Exige Produto
+            c26_produto             :=IniGuia.ReadInteger('Complemento','produto',0);
+          end;
 
-        //Referencias Da Receita
-        if IniGuia.SectionExists('Referencia') then
-        begin
-          c15_convenio       :=IniGuia.ReadString('Referencia','convenio','');
-          c02_receita        :=IniGuia.ReadInteger('Referencia','receita',0);
-          c01_UfFavorecida   :=IniGuia.ReadString('Referencia','ufFavorecida','');
-          c14_dataVencimento :=StringToDateTime(IniGuia.ReadString('Referencia','dataVencimento',''));
-          c33_dataPagamento  :=StringToDateTime(IniGuia.ReadString('Referencia','dataPagamento',''));
-          referencia.ano     :=IniGuia.ReadInteger('Referencia','referenciaAno',0);
-          referencia.mes     :=IniGuia.ReadString('Referencia','referenciaMes','');
-          referencia.parcela :=IniGuia.ReadInteger('Referencia','referenciaParcela',1);
-          referencia.periodo :=IniGuia.ReadInteger('Referencia','referenciaPeriodo',0);
-          c10_valorTotal     :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorTotal',''),0);
-          c06_valorPrincipal :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorPrincipal',''),0);
-        end;
+          //Referencias Da Receita
+          if IniGuia.SectionExists('Referencia') then
+          begin
+            c15_convenio       :=IniGuia.ReadString('Referencia','convenio','');
+            c02_receita        :=IniGuia.ReadInteger('Referencia','receita',0);
+            c01_UfFavorecida   :=IniGuia.ReadString('Referencia','ufFavorecida','');
+            c14_dataVencimento :=StringToDateTime(IniGuia.ReadString('Referencia','dataVencimento',''));
+            c33_dataPagamento  :=StringToDateTime(IniGuia.ReadString('Referencia','dataPagamento',''));
+            referencia.ano     :=IniGuia.ReadInteger('Referencia','referenciaAno',0);
+            referencia.mes     :=IniGuia.ReadString('Referencia','referenciaMes','');
+            referencia.parcela :=IniGuia.ReadInteger('Referencia','referenciaParcela',1);
+            referencia.periodo :=IniGuia.ReadInteger('Referencia','referenciaPeriodo',0);
+            c10_valorTotal     :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorTotal',''),0);
+            c06_valorPrincipal :=StringToFloatDef(IniGuia.ReadString('Referencia','ValorPrincipal',''),0);
+          end;
 
-        //Destinatario
-        if IniGuia.SectionExists('Destinatario') then
-        begin
-          c34_tipoIdentificacaoDestinatario :=IniGuia.ReadInteger('Destinatario','tipo',0);/// 1 CNPJ - 2 CPF
-          //Se inscrito
-          c36_inscricaoEstadualDestinatario :=IniGuia.ReadString('Destinatario','ie','');
-          //Se nao inscrito
-          c35_idContribuinteDestinatario    :=IniGuia.ReadString('Destinatario','id','cnpjcpf');
-          c37_razaoSocialDestinatario       :=IniGuia.ReadString('Destinatario','razaosocial','nome');
-          c38_municipioDestinatario         :=IniGuia.ReadString('Destinatario','cidade','');
-        end;
+          //Destinatario
+          if IniGuia.SectionExists('Destinatario') then
+          begin
+            c34_tipoIdentificacaoDestinatario :=IniGuia.ReadInteger('Destinatario','tipo',0);/// 1 CNPJ - 2 CPF
+            //Se inscrito
+            c36_inscricaoEstadualDestinatario :=IniGuia.ReadString('Destinatario','ie','');
+            //Se nao inscrito
+            c35_idContribuinteDestinatario    :=IniGuia.ReadString('Destinatario','id','cnpjcpf');
+            c37_razaoSocialDestinatario       :=IniGuia.ReadString('Destinatario','razaosocial','nome');
+            c38_municipioDestinatario         :=IniGuia.ReadString('Destinatario','cidade','');
+          end;
 
-        //Outras Informacoes
-        if IniGuia.SectionExists('CampoExtra') then
-        begin
-          camposExtras.Clear;
-          camposExtras.Add.CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
-          camposExtras.Add.CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
-          camposExtras.Add.CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
+          //Outras Informacoes
+          if IniGuia.SectionExists('CampoExtra') then
+          begin
+            camposExtras.Clear;
+            with camposExtras.Add do
+            begin
+                 CampoExtra.codigo  :=IniGuia.ReadInteger('CampoExtra','codigo',0);
+                 CampoExtra.tipo    :=IniGuia.ReadString('CampoExtra','tipo','');
+                 CampoExtra.valor   :=IniGuia.ReadString('CampoExtra','valor','');
+            end;
+          end;
         end;
       end;
-    end;
   except
     on E: Exception do
     begin
@@ -243,7 +273,6 @@ begin
     end;
   end;
   finally
-    SL.Free;
     IniGuia.Free;
   end;
 end;

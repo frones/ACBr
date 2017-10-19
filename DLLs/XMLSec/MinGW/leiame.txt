@@ -1,0 +1,5 @@
+DLLs Obtidas em:
+ftp://ftp.zlatkovic.com/libxml/64bit/
+
+Leia instruções de uso em:
+http://www.projetoacbr.com.br/forum/topic/34177-acbrdfe-com-openssl-e-suporte-a-tls12/

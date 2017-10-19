@@ -1,0 +1,64 @@
+Obter as mensagens de erro nos métodos:
+
+Enviar
+------
+
+ ACBrNFSe1.WebServices.EnviarLoteRPS.RetEnvLote.InfRec.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.EnviarLoteRPS.RetEnvLote.InfRec.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.EnviarLoteRPS.RetEnvLote.InfRec.MsgRetorno[ x ].Correcao
+
+ConsultarSituacao
+-----------------
+
+ ACBrNFSe1.WebServices.ConsSitLoteRPS.RetSitLote.InfSit.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.ConsSitLoteRPS.RetSitLote.InfSit.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.ConsSitLoteRPS.RetSitLote.InfSit.MsgRetorno[ x ].Correcao
+
+consultarLote
+-------------
+
+ ACBrNFSe1.WebServices.ConsLote.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.ConsLote.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.ConsLote.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Correcao
+
+ConsultarNFSePorRps
+-------------------
+
+ ACBrNFSe1.WebServices.ConsNFSeRps.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.ConsNFSeRps.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.ConsNFSeRps.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Correcao
+
+ConsultarNFSe
+-------------
+
+ ACBrNFSe1.WebServices.ConsNFSe.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.ConsNFSe.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.ConsNFSe.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Correcao
+
+CancelarNFSe
+------------
+
+ ACBrNFSe1.WebServices.CancNFSe.RetCancNFSe.InfCanc.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.CancNFSe.RetCancNFSe.InfCanc.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.CancNFSe.RetCancNFSe.InfCanc.MsgRetorno[ x ].Correcao
+
+Gerar
+-----
+
+ ACBrNFSe1.WebServices.GerarLoteRPS.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.GerarLoteRPS.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.GerarLoteRPS.RetornoNFSe.ListaNFSe.MsgRetorno[ x ].Correcao
+
+EnviarSincrono
+--------------
+
+ ACBrNFSe1.WebServices.EnviarSincrono.RetEnvLote.InfRec.MsgRetorno[ x ].Codigo
+ ACBrNFSe1.WebServices.EnviarSincrono.RetEnvLote.InfRec.MsgRetorno[ x ].Mensagem
+ ACBrNFSe1.WebServices.EnviarSincrono.RetEnvLote.InfRec.MsgRetorno[ x ].Correcao
+
+SubstituirNFSe
+--------------
+
+  ACBrNFSe1.WebServices.SubNFSe.NFSeRetorno.MsgRetorno[ x ].Codigo
+  ACBrNFSe1.WebServices.SubNFSe.NFSeRetorno.MsgRetorno[ x ].Mensagem
+  ACBrNFSe1.WebServices.SubNFSe.NFSeRetorno.MsgRetorno[ x ].Correcao

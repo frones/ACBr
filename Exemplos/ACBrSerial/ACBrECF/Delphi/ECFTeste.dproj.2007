@@ -1,0 +1,140 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{BDD0095E-0644-4B8A-B5AB-08A78C2EEA0B}</ProjectGuid>
+			<MainSource>ECFTeste.dpr</MainSource>
+			<Base>True</Base>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Platform>Win32</Platform>
+			<AppType>Application</AppType>
+			<FrameworkType>VCL</FrameworkType>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UsePackage>vcl;rtl;vclx;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;ibxpress;visualclx;visualdbclx;vclactnband;vclshlctrls;dclOfficeXP;Rave50CLX;Rave50VCL;teeqr;qrpt;Jcl</DCC_UsePackage>
+			<DCC_F>false</DCC_F>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_UNSAFE_TYPE>true</DCC_UNSAFE_TYPE>
+			<DCC_K>false</DCC_K>
+			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+			<DCC_E>false</DCC_E>
+			<DCC_UNSAFE_CODE>true</DCC_UNSAFE_CODE>
+			<DCC_N>true</DCC_N>
+			<DCC_UNSAFE_CAST>true</DCC_UNSAFE_CAST>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_S>false</DCC_S>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+			<DCC_Optimize>false</DCC_Optimize>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="ECFTeste.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="ECFTeste1.pas">
+				<Form>Form1</Form>
+			</DCCReference>
+			<DCCReference Include="VendeItem.pas">
+				<Form>frVendeItem</Form>
+			</DCCReference>
+			<DCCReference Include="Relatorio.pas">
+				<Form>frRelatorio</Form>
+			</DCCReference>
+			<DCCReference Include="EfetuaPagamento.pas">
+				<Form>frPagamento</Form>
+			</DCCReference>
+			<DCCReference Include="Sobre.pas">
+				<Form>frSobre</Form>
+			</DCCReference>
+			<DCCReference Include="ConfiguraSerial.pas">
+				<Form>frConfiguraSerial</Form>
+			</DCCReference>
+			<DCCReference Include="RelatorioGerencialFormatado.pas">
+				<Form>frmGerencialFormatado</Form>
+			</DCCReference>
+			<DCCReference Include="uDAV.pas"/>
+			<DCCReference Include="uDAVOS.pas"/>
+			<DCCReference Include="uVendaFrenetica.pas">
+				<Form>FrVendaFrenetica</Form>
+			</DCCReference>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>VCLApplication</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">ECFTeste.dpr</Source>
+					</Source>
+					<Language>
+						<Language Name="ProjectLang">$00000416</Language>
+						<Language Name="RootDir">C:\ProgHD\Delphi2011\ACBR\Exemplos\ACBrSerial\ACBrECF\Delphi\</Language>
+					</Language>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1046</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

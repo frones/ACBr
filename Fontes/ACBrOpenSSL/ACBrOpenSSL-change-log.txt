@@ -39,6 +39,93 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+06/06/2017
+-- OpenSSLExt --
+[+] Adicionado suporte para os métodos:
+    function BN_num_bytes(const a: PBIGNUM): cint;
+    function BN_bn2bin(const n: PBIGNUM; _to: Pointer): cint;
+    function BN_bin2bn(const _from: Pointer; len: Integer; ret: PBIGNUM): PBIGNUM;
+    (por: DSA)
+
+-- ACBrEAD --
+[+] Adicionado os métodos:
+    procedure LerChavesArquivoPFX(const AArquivoPFX, Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+    procedure LerChavesPFX(const ADadosPFX: AnsiString; const Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+    procedure LerChavesPFX(const AStreamPFX: TStream; const Senha: String;
+      var AChavePublica: AnsiString; var AChavePrivada: AnsiString);
+
+    function ConverteChavePublicaParaOpenSSH(const AChavePublicaOpenSSL: String): String;
+    function ConverterChavePublicaDeOpenSSH(const AChavePublicaOpenSSH: String): String;
+    (por: DSA)
+
+05/06/2017
+-- ACBrEAD --
+[+] Adicionado os métodos:
+    function VerificarAssinatura( const AString, Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ;
+    function VerificarAssinatura(const AStringList : TStringList;
+       const Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ;
+    function VerificarAssinatura(const AStream : TStream;
+       const Assinatura : AnsiString;
+       const Digest: TACBrEADDgst): Boolean ;
+   (por: DSA)
+
+27/03/2017
+-- libxmlsec --
+[*] Remoção da dependencia de "libxslt". (por Waldir Paim)
+    http://www.projetoacbr.com.br/forum/topic/35775-sugest%C3%A3o-limpeza-dos-uses-de-algumas-units/?do=findComment&comment=234842
+
+19/03/2017
+-- libxmlsec --
+[*] variável "libHandle" renomeada para "libXmlSecHandle"
+    (por: DSA)
+
+30/12/2016
+-- ACBrEAD --
+[*] Ajuste para retornar apenas os números da versão do OpenSSL
+[-] Correção de A.V. no método "CalcularModuloeExpoente" quando funcionando com
+    OpenSSL 1.0.0 ou superior
+[-] Correção de A.V. no método "VerificarEAD" quando funcionando com OpenSSL
+    1.0.0 ou superior, e fosse necessária verificação manual do EAD através da
+    chamada a rotina "RSA_public_decrypt"
+[*] Remoção de método desnecessário "VerificaVersaoCompativel"
+    (Por: DSA)
+
+-- OpenSSLExt --
+[+] Adicionado suporte aos métodos:
+    function EvpPkeyGet1RSA(pkey: PEVP_PKEY): pRSA;
+    function EvpPkeySet1RSA(pkey: PEVP_PKEY; rsa: pRSA): cInt;
+    (por: DSA)
+
+23/12/2016
+-- OpenSSLExt --
+[+] Adicionado suporte aos métodos: SslMethodTLSV11, SslMethodTLSV12, BN_bn2hex,
+    BN_bn2dec (por: DSA)
+
+-- ACBrEAD --
+[*] Aplicado ajuste para suportar OpenSSL 1.0.0 ou superior. Ainda continua sem
+    suporte aos métodos "RSA_public_decrypt", e "CalcularModuloeExpoente", em
+    versões superiores a 1.0.0
+
+24/10/2016
+-- libxml2, libxmlsec, libxslt --
+[-] Correção para suporte de libxmlsec em 64 bits. Corrigindo falha ao Assinar XML
+    http://www.projetoacbr.com.br/forum/index.php?showtopic=25670
+[*] Ajuste para permitir o uso de Libxml2, libxslt, libxmlsec compiladas por
+    MinGw (default em Win64)
+    ftp://ftp.zlatkovic.com/libxml/64bit/   (por: DSA)
+
+23/10/2016
+-- OpenSSLExt, libeay32 --
+[+] Adicionado suporte ao método: "X509_NAME_print_ex"  (por: DSA)
+
+13/09/2016
+-- libexslt, libxml2, libxslt --
+[*] Ajustes para correta compilação no Lazarus FPC 64 bits (por: DSA)
+
 13/06/2016
 -- OpenSSLExt --
 [+] Adicionado suporte ao método: X509GetPubkey  (por: DSA)

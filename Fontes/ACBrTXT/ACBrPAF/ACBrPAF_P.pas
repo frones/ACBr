@@ -57,6 +57,8 @@ type
   private
     fRegistroValido: boolean;
     fCOD_MERC_SERV: string;     /// Código da mercadoria ou serviço
+    fCEST : string;             /// Código Especificador da Substituição Tributária
+    fNCM : string;              /// Nomeclatura Comum do Mercosul
     fDESC_MERC_SERV: string;    /// Descrição da mercadoria ou serviço
     fUN_MED: string;            /// Unidade de medida
     fIAT: string;               /// Indicador de Arredondamento ou Truncamento, conforme item 7.2.1.3
@@ -69,6 +71,8 @@ type
 
     property RegistroValido: Boolean read fRegistroValido write fRegistroValido default True;
     property COD_MERC_SERV: string read FCOD_MERC_SERV write FCOD_MERC_SERV;
+    property CEST: string read fCEST write fCEST;
+    property NCM: string read fNCM write fNCM;
     property DESC_MERC_SERV: string read FDESC_MERC_SERV write FDESC_MERC_SERV;
     property UN_MED: string read FUN_MED write FUN_MED;
     property IAT: string read FIAT write FIAT;

@@ -1,14 +1,14 @@
 object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
-  Left = 389
-  Top = 117
-  Width = 763
-  Height = 780
+  Left = 531
+  Top = 32
+  Width = 805
+  Height = 1019
   Caption = 'ACBrSATExtratoFortes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = True
   OnCreate = FormCreate
@@ -16,7 +16,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
   PixelsPerInch = 96
   TextHeight = 13
   object rlVenda: TRLReport
-    Left = 16
+    Left = 32
     Top = 0
     Width = 302
     Height = 1512
@@ -39,9 +39,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbRodape: TRLBand
       Left = 8
-      Top = 668
+      Top = 649
       Width = 286
-      Height = 279
+      Height = 331
       AutoSize = True
       BandType = btSummary
       object RLDraw2: TRLDraw
@@ -69,20 +69,24 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Height = 12
         Align = faTop
+        BeforePrint = pNumSATBeforePrint
         object lTitSAT: TRLLabel
-          Left = 89
-          Top = -1
-          Width = 44
-          Height = 14
+          Left = 0
+          Top = 0
+          Width = 130
+          Height = 12
+          Align = faLeft
           Alignment = taRightJustify
-          Caption = 'SAT N'#176': '
+          AutoSize = False
+          Caption = 'SAT N'#176':   '
           Layout = tlCenter
         end
         object lNumSAT: TRLLabel
-          Left = 136
-          Top = -1
-          Width = 57
-          Height = 14
+          Left = 130
+          Top = 0
+          Width = 156
+          Height = 12
+          Align = faClient
           Caption = '900000102'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -92,22 +96,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Layout = tlCenter
           ParentFont = False
         end
-      end
-      object lChaveAcesso: TRLLabel
-        Left = 0
-        Top = 34
-        Width = 286
-        Height = 12
-        Align = faTop
-        Alignment = taCenter
-        Caption = '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
-        Layout = tlBottom
-        ParentFont = False
       end
       object bcChaveAcesso1: TRLBarcode
         Left = 0
@@ -155,16 +143,16 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object pEspacoFinal: TRLPanel
         Left = 0
-        Top = 265
+        Top = 309
         Width = 286
-        Height = 14
+        Height = 22
         Align = faBottom
         Color = clWhite
         ParentColor = False
         Transparent = False
         object RLDraw10: TRLDraw
           Left = 0
-          Top = 13
+          Top = 21
           Width = 286
           Height = 1
           Align = faBottom
@@ -172,12 +160,66 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Pen.Style = psDot
         end
       end
+      object mMsgAppQRCode: TRLMemo
+        Left = 0
+        Top = 265
+        Width = 286
+        Height = 24
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'dispon'#237'vel na AppStore (Apple) e PlayStore (Android)')
+        ParentFont = False
+      end
+      object mSwHouseSite: TRLMemo
+        Left = 0
+        Top = 289
+        Width = 286
+        Height = 20
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br')
+        ParentFont = False
+      end
+      object lChaveAcesso: TRLMemo
+        Left = 0
+        Top = 34
+        Width = 286
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlBottom
+        Lines.Strings = (
+          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111')
+        ParentFont = False
+      end
     end
     object rlsbDetItem: TRLSubDetail
       Left = 8
-      Top = 272
+      Top = 289
       Width = 286
-      Height = 204
+      Height = 193
       AllowedBands = [btDetail, btSummary]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -190,39 +232,29 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 0
         Width = 286
-        Height = 24
+        Height = 12
         AutoSize = True
         BeforePrint = rlbDetItemBeforePrint
-        object lTotalItem: TRLLabel
-          Left = 242
-          Top = 0
-          Width = 44
-          Height = 24
-          Align = faRight
-          Alignment = taRightJustify
-          Caption = '99.999,99'
-          Layout = tlBottom
-        end
-        object lSequencia: TRLLabel
+        object mLinhaItem: TRLMemo
           Left = 0
           Top = 0
-          Width = 18
+          Width = 286
           Height = 12
-          Caption = '001'
-        end
-        object mLinhaItem: TRLMemo
-          Left = 18
-          Top = 0
-          Width = 214
-          Height = 24
+          Align = faTop
           Behavior = [beSiteExpander]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Courier New'
+          Font.Style = [fsBold]
           Lines.Strings = (
-            '9999999999999 DESCRICAO DO PRODUTO 99,999 UN x 999,999 (99,99)')
+            '999999999 DESCRICAO PRODUTO 99,999 UN x 999,999 (99,99)')
+          ParentFont = False
         end
       end
       object rlbDescItem: TRLBand
         Left = 0
-        Top = 24
+        Top = 12
         Width = 286
         Height = 24
         BeforePrint = rlbDescItemBeforePrint
@@ -266,7 +298,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbOutroItem: TRLBand
         Left = 0
-        Top = 48
+        Top = 36
         Width = 286
         Height = 24
         BeforePrint = rlbOutroItemBeforePrint
@@ -310,7 +342,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDeducISSQN: TRLBand
         Left = 0
-        Top = 72
+        Top = 60
         Width = 286
         Height = 24
         BeforePrint = rlbDeducISSQNBeforePrint
@@ -354,7 +386,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbSubTotal: TRLBand
         Left = 0
-        Top = 106
+        Top = 84
         Width = 286
         Height = 14
         AutoSize = True
@@ -385,7 +417,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbDescontos: TRLBand
         Left = 0
-        Top = 120
+        Top = 98
         Width = 286
         Height = 14
         AutoSize = True
@@ -416,7 +448,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbAcrescimos: TRLBand
         Left = 0
-        Top = 134
+        Top = 112
         Width = 286
         Height = 14
         AutoSize = True
@@ -447,9 +479,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbTotal: TRLBand
         Left = 0
-        Top = 148
+        Top = 126
         Width = 286
         Height = 24
+        AutoSize = True
         BandType = btSummary
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -478,20 +511,12 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Layout = tlCenter
         end
       end
-      object rlbGap: TRLBand
-        Left = 0
-        Top = 96
-        Width = 286
-        Height = 10
-        BandType = btSummary
-        BeforePrint = rlbGapBeforePrint
-      end
     end
     object rlsbPagamentos: TRLSubDetail
       Left = 8
-      Top = 476
+      Top = 482
       Width = 286
-      Height = 42
+      Height = 32
       OnDataRecord = rlsbPagamentosDataRecord
       object rlbPagamento: TRLBand
         Left = 0
@@ -521,7 +546,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 14
         Width = 286
-        Height = 16
+        Height = 14
         AutoSize = True
         BandType = btSummary
         Font.Charset = DEFAULT_CHARSET
@@ -534,24 +559,36 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         object lTitTroco: TRLLabel
           Left = -2
           Top = 0
-          Width = 56
-          Height = 16
+          Width = 47
+          Height = 14
           Caption = 'Troco R$'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
         object lTroco: TRLLabel
-          Left = 225
+          Left = 235
           Top = 0
-          Width = 61
-          Height = 16
+          Width = 51
+          Height = 14
           Align = faRight
           Alignment = taRightJustify
           Caption = '99.999,99'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
         end
       end
     end
     object rlsbObsFisco: TRLSubDetail
       Left = 8
-      Top = 518
+      Top = 514
       Width = 286
       Height = 20
       Font.Charset = DEFAULT_CHARSET
@@ -589,7 +626,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     end
     object rlDadosEntrega: TRLBand
       Left = 8
-      Top = 538
+      Top = 534
       Width = 286
       Height = 46
       AutoSize = True
@@ -612,73 +649,69 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Align = faTop
         Caption = 'DADOS PARA ENTREGA'
       end
-      object pEndDest: TRLPanel
+      object mEndEnt: TRLMemo
         Left = 0
         Top = 22
         Width = 286
         Height = 12
         Align = faTop
-        AutoExpand = True
-        AutoSize = True
-        object mEndEnt: TRLMemo
-          Left = 58
-          Top = 0
-          Width = 212
-          Height = 12
-          Behavior = [beSiteExpander]
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Lines.Strings = (
-            '<Logradouro, 99 - Bairro - Cidade>')
-          ParentFont = False
-        end
-        object lTitEndEnt: TRLLabel
-          Left = 11
-          Top = 0
-          Width = 45
-          Height = 12
-          Alignment = taRightJustify
-          Caption = 'Endere'#231'o:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Layout = tlCenter
-          ParentFont = False
-        end
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          '<Logradouro, 99 - Bairro - Cidade>')
+        ParentFont = False
       end
-      object pDestEnt: TRLPanel
+      object mDestEnt: TRLMemo
         Left = 0
         Top = 34
         Width = 286
         Height = 12
         Align = faTop
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          '<Nome do Destinat'#225'rio>')
+        ParentFont = False
+      end
+    end
+    object rlObsContrib: TRLBand
+      Left = 8
+      Top = 580
+      Width = 286
+      Height = 69
+      AutoSize = True
+      BandType = btSummary
+      BeforePrint = rlObsContribBeforePrint
+      object pAsterisco: TRLPanel
+        Left = 0
+        Top = 57
+        Width = 286
+        Height = 12
+        Align = faTop
         AutoExpand = True
         AutoSize = True
-        object lTitDestEnt: TRLLabel
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        BeforePrint = pAsteriscoBeforePrint
+        object lTitLei12743: TRLMemo
           Left = 0
           Top = 0
-          Width = 56
+          Width = 286
           Height = 12
-          Alignment = taRightJustify
-          Caption = 'Destinat'#225'rio:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Style = []
-          Layout = tlCenter
-          ParentFont = False
-        end
-        object mDestEnt: TRLMemo
-          Left = 58
-          Top = 0
-          Width = 212
-          Height = 12
+          Align = faClient
           Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -686,18 +719,10 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Font.Name = 'Arial'
           Font.Style = []
           Lines.Strings = (
-            '<Nome do Destinat'#225'rio>')
+            '* Valor Aproximado dos Tributos dos Itens')
           ParentFont = False
         end
       end
-    end
-    object rlObsContrib: TRLBand
-      Left = 8
-      Top = 584
-      Width = 286
-      Height = 84
-      BandType = btSummary
-      BeforePrint = rlObsContribBeforePrint
       object RLDraw7: TRLDraw
         Left = 0
         Top = 0
@@ -706,14 +731,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Align = faTop
         DrawKind = dkLine
         Pen.Style = psDot
-      end
-      object lTitObsContrib: TRLLabel
-        Left = 0
-        Top = 8
-        Width = 286
-        Height = 14
-        Align = faTop
-        Caption = 'OBSERVA'#199#213'ES DO CONTRIBUINTE'
       end
       object mObsContrib: TRLMemo
         Left = 0
@@ -735,8 +752,11 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 34
         Width = 286
-        Height = 50
+        Height = 23
         Align = faTop
+        AutoExpand = True
+        AutoSize = True
+        Behavior = [beSiteExpander]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -9
@@ -744,18 +764,11 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Font.Style = []
         ParentFont = False
         BeforePrint = pLei12741BeforePrint
-        object lTitLei12741: TRLLabel
-          Left = 0
-          Top = 8
-          Width = 188
-          Height = 12
-          Caption = 'Valor aproximado dos Tributos deste Cupom'
-        end
         object lValLei12741: TRLLabel
           Left = 242
           Top = 0
           Width = 44
-          Height = 32
+          Height = 23
           Align = faRight
           Alignment = taRightJustify
           Caption = '99.999,99'
@@ -767,52 +780,38 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Layout = tlCenter
           ParentFont = False
         end
-        object lTitLei12742: TRLLabel
-          Left = 1
-          Top = 20
-          Width = 142
-          Height = 12
-          Caption = '(Conforme Lei Fed. 12.741/2012)'
-        end
-        object pAsterisco: TRLPanel
+        object lTitLei12741: TRLMemo
           Left = 0
-          Top = 32
-          Width = 286
-          Height = 18
-          Align = faBottom
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Arial'
-          Font.Style = []
-          ParentFont = False
-          BeforePrint = pAsteriscoBeforePrint
-          object lTitLei12743: TRLLabel
-            Left = 0
-            Top = 6
-            Width = 286
-            Height = 12
-            Align = faBottom
-            Caption = '* Valor Aproximado dos Tributos dos Itens'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -9
-            Font.Name = 'Arial'
-            Font.Style = []
-            ParentFont = False
-          end
+          Top = 0
+          Width = 242
+          Height = 23
+          Align = faClient
+          Behavior = [beSiteExpander]
+          Lines.Strings = (
+            'Valor aproximado dos Tributos deste Cupom'
+            '(Conforme Lei Fed. 12.741/2012)')
         end
+      end
+      object lTitObsContrib: TRLMemo
+        Left = 0
+        Top = 8
+        Width = 286
+        Height = 14
+        Align = faTop
+        Behavior = [beSiteExpander]
+        Lines.Strings = (
+          'OBSERVA'#199#213'ES DO CONTRIBUINTE')
       end
     end
     object rlbsCabecalho: TRLSubDetail
       Left = 8
-      Top = 8
+      Top = 9
       Width = 286
-      Height = 264
+      Height = 280
       OnDataRecord = rlbsCabecalhoDataRecord
       object rlbNumExtrato: TRLBand
         Left = 0
-        Top = 88
+        Top = 101
         Width = 286
         Height = 28
         AutoSize = True
@@ -832,20 +831,22 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Layout = tlCenter
           ParentFont = False
         end
-        object lCupomFiscalEletronico: TRLLabel
+        object lCupomFiscalEletronico: TRLMemo
           Left = 0
           Top = 14
           Width = 286
           Height = 14
           Align = faTop
           Alignment = taCenter
-          Caption = 'CUPOM FISCAL ELETR'#212'NICO - SAT'
+          Behavior = [beSiteExpander]
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           Layout = tlCenter
+          Lines.Strings = (
+            'CUPOM FISCAL ELETR'#212'NICO - SAT')
           ParentFont = False
         end
       end
@@ -853,13 +854,13 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Left = 0
         Top = 0
         Width = 286
-        Height = 88
+        Height = 101
         AutoSize = True
         Margins.LeftMargin = 1.000000000000000000
         Margins.RightMargin = 1.000000000000000000
         object lEndereco: TRLMemo
           Left = 4
-          Top = 42
+          Top = 41
           Width = 278
           Height = 24
           Align = faBottom
@@ -877,7 +878,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lRazaoSocial: TRLMemo
           Left = 4
-          Top = 18
+          Top = 17
           Width = 278
           Height = 24
           Align = faBottom
@@ -895,7 +896,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lNomeFantasia: TRLMemo
           Left = 4
-          Top = 1
+          Top = 0
           Width = 278
           Height = 17
           Align = faTop
@@ -911,49 +912,40 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
             'Nome Fantasia')
           ParentFont = False
         end
-        object lEmitCNPJ_IE_IM: TRLLabel
-          Left = 4
-          Top = 66
-          Width = 278
-          Height = 14
-          Align = faBottom
-          Alignment = taCenter
-          Caption = 
-            'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
-            '3'
-          Layout = tlBottom
-        end
         object RLDraw1: TRLDraw
           Left = 4
-          Top = 80
+          Top = 93
           Width = 278
           Height = 8
           Align = faBottom
           DrawKind = dkLine
           Pen.Style = psDot
         end
-        object imgLogo: TRLImage
+        object lEmitCNPJ_IE_IM: TRLMemo
           Left = 4
-          Top = 0
+          Top = 65
           Width = 278
-          Height = 1
-          Align = faTop
-          AutoSize = True
+          Height = 28
+          Align = faBottom
+          Alignment = taCenter
           Behavior = [beSiteExpander]
-          Center = True
-          Scaled = True
+          Layout = tlBottom
+          Lines.Strings = (
+            
+              'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
+              '3')
         end
       end
       object rlbTeste: TRLBand
         Left = 0
-        Top = 116
+        Top = 129
         Width = 286
         Height = 84
         AutoSize = True
         BeforePrint = rlbTesteBeforePrint
         object lFiller1: TRLLabel
           Left = 0
-          Top = 42
+          Top = 70
           Width = 286
           Height = 14
           Align = faTop
@@ -963,7 +955,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lFiller2: TRLLabel
           Left = 0
-          Top = 56
+          Top = 42
           Width = 286
           Height = 14
           Align = faTop
@@ -973,7 +965,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         end
         object lFiller3: TRLLabel
           Left = 0
-          Top = 70
+          Top = 56
           Width = 286
           Height = 14
           Align = faTop
@@ -998,51 +990,50 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object rlbConsumidor: TRLBand
         Left = 0
-        Top = 200
+        Top = 213
         Width = 286
-        Height = 36
+        Height = 40
         AutoSize = True
-        object RLDraw3: TRLDraw
-          Left = 0
-          Top = 0
-          Width = 286
-          Height = 8
-          Align = faTop
-          DrawKind = dkLine
-          Pen.Style = psDot
-        end
-        object lCPF_CNPJ: TRLLabel
-          Left = 0
-          Top = 8
-          Width = 286
-          Height = 14
-          Align = faTop
-          Alignment = taCenter
-          Behavior = [beSiteExpander]
-          Caption = 'CPF/CNPJ Consumidor: <CPF_CNPJ>'
-          Layout = tlBottom
-          BeforePrint = lCPF_CNPJBeforePrint
-        end
+        BeforePrint = rlbConsumidorBeforePrint
         object lRazaoSocialNome: TRLMemo
           Left = 0
-          Top = 22
+          Top = 26
           Width = 286
           Height = 14
           Align = faTop
           Alignment = taCenter
           Behavior = [beSiteExpander]
-          Layout = tlBottom
           Lines.Strings = (
             'Raz'#227'o Social/Nome: <xNome>')
           BeforePrint = lRazaoSocialNomeBeforePrint
         end
+        object lCPF_CNPJ: TRLMemo
+          Left = 0
+          Top = 12
+          Width = 286
+          Height = 14
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Lines.Strings = (
+            'CPF/CNPJ Consumidor: <CPF_CNPJ>')
+          BeforePrint = lCPF_CNPJBeforePrint
+        end
+        object RLDraw3: TRLDraw
+          Left = 0
+          Top = 0
+          Width = 286
+          Height = 12
+          Align = faTop
+          DrawKind = dkLine
+          Pen.Style = psDot
+        end
       end
       object rlbLegenda: TRLBand
         Left = 0
-        Top = 236
+        Top = 253
         Width = 286
         Height = 28
-        AutoSize = True
         BeforePrint = rlbLegendaBeforePrint
         object RLDraw4: TRLDraw
           Left = 0
@@ -1053,23 +1044,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           DrawKind = dkLine
           Pen.Style = psDot
         end
-        object lCabItem: TRLLabel
-          Left = 0
-          Top = 8
-          Width = 286
-          Height = 12
-          Align = faTop
-          Alignment = taCenter
-          Caption = '#|COD|DESC|QTD|UN| VL UN R$|(VLTR R$)*| VL ITEM R$'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Arial'
-          Font.Pitch = fpVariable
-          Font.Style = []
-          Layout = tlBottom
-          ParentFont = False
-        end
         object RLDraw5: TRLDraw
           Left = 0
           Top = 20
@@ -1079,12 +1053,49 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           DrawKind = dkLine
           Pen.Style = psDot
         end
+        object lCabItem: TRLMemo
+          Left = 0
+          Top = 8
+          Width = 286
+          Height = 12
+          Align = faTop
+          Alignment = taCenter
+          Behavior = [beSiteExpander]
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Arial'
+          Font.Pitch = fpVariable
+          Font.Style = []
+          Lines.Strings = (
+            '#|COD|DESC|QTD|UN| VL UN R$|(VLTR R$)*| VL ITEM R$')
+          ParentFont = False
+        end
+      end
+    end
+    object rlLogo: TRLBand
+      Left = 8
+      Top = 8
+      Width = 286
+      Height = 1
+      BandType = btTitle
+      Visible = False
+      object imgLogo: TRLImage
+        Left = 0
+        Top = 0
+        Width = 286
+        Height = 1
+        Align = faTop
+        AutoSize = True
+        Center = True
+        Scaled = True
+        Transparent = False
       end
     end
   end
   object rlCancelamento: TRLReport
-    Left = 328
-    Top = 0
+    Left = 360
+    Top = 8
     Width = 302
     Height = 1134
     AllowedBands = [btHeader, btDetail, btSummary, btFooter]
@@ -1106,9 +1117,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
     OnDataRecord = rlVendaDataRecord
     object rlbCanRodape: TRLBand
       Left = 8
-      Top = 303
+      Top = 320
       Width = 286
-      Height = 540
+      Height = 589
       AutoSize = True
       BandType = btSummary
       object RLDraw8: TRLDraw
@@ -1136,20 +1147,24 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Width = 286
         Height = 12
         Align = faTop
+        BeforePrint = pNumSATCanBeforePrint
         object lTitSATCan: TRLLabel
-          Left = 92
-          Top = -1
-          Width = 41
-          Height = 14
+          Left = 0
+          Top = 0
+          Width = 136
+          Height = 12
+          Align = faLeft
           Alignment = taRightJustify
-          Caption = 'SAT N'#176':'
+          AutoSize = False
+          Caption = 'SAT N'#176':  '
           Layout = tlCenter
         end
         object lNumSATCan: TRLLabel
           Left = 136
-          Top = -1
-          Width = 57
-          Height = 14
+          Top = 0
+          Width = 150
+          Height = 12
+          Align = faClient
           Caption = '900000102'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1159,22 +1174,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Layout = tlCenter
           ParentFont = False
         end
-      end
-      object lChaveAcessoCan: TRLLabel
-        Left = 0
-        Top = 34
-        Width = 286
-        Height = 12
-        Align = faTop
-        Alignment = taCenter
-        Caption = '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
-        Layout = tlBottom
-        ParentFont = False
       end
       object bcChaveAcessoCan1: TRLBarcode
         Left = 0
@@ -1215,42 +1214,30 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         DrawKind = dkLine
         Pen.Style = psDot
       end
-      object lTitCancelamento2: TRLLabel
-        Left = 0
-        Top = 256
-        Width = 286
-        Height = 10
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'DADOS DO CUPOM FISCAL ELETR'#212'NICO DE CANCELAMENTO'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -8
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        ParentFont = False
-      end
       object pNumSATCancl: TRLPanel
         Left = 0
         Top = 266
         Width = 286
         Height = 12
         Align = faTop
+        BeforePrint = pNumSATCanclBeforePrint
         object lTitSATCanl: TRLLabel
-          Left = 92
-          Top = -1
-          Width = 41
-          Height = 14
+          Left = 0
+          Top = 0
+          Width = 137
+          Height = 12
+          Align = faLeft
           Alignment = taRightJustify
-          Caption = 'SAT N'#176':'
+          AutoSize = False
+          Caption = 'SAT N'#176':  '
           Layout = tlCenter
         end
         object lNumSATCanl: TRLLabel
-          Left = 136
-          Top = -1
-          Width = 57
-          Height = 14
+          Left = 137
+          Top = 0
+          Width = 149
+          Height = 12
+          Align = faClient
           Caption = '900000102'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1270,22 +1257,6 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Alignment = taCenter
         Caption = '14/08/1971 - 08:00:00'
         Layout = tlCenter
-      end
-      object lChaveAcessoCanl: TRLLabel
-        Left = 0
-        Top = 292
-        Width = 286
-        Height = 12
-        Align = faTop
-        Alignment = taCenter
-        Caption = '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = []
-        Layout = tlBottom
-        ParentFont = False
       end
       object bcChaveAcessoCanl1: TRLBarcode
         Left = 0
@@ -1347,13 +1318,13 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object pEspacoFinalCan: TRLPanel
         Left = 0
-        Top = 523
+        Top = 567
         Width = 286
-        Height = 17
-        Align = faTop
+        Height = 22
+        Align = faBottom
         object RLDraw12: TRLDraw
           Left = 0
-          Top = 16
+          Top = 21
           Width = 286
           Height = 1
           Align = faBottom
@@ -1361,29 +1332,107 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           Pen.Style = psDot
         end
       end
+      object mMsgAppQRCodeCanc: TRLMemo
+        Left = 0
+        Top = 523
+        Width = 286
+        Height = 24
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Consulte o QR Code pelo aplicativo  "De olho na nota",'
+          'dispon'#237'vel na AppStore (Apple) e PlayStore (Android)')
+        ParentFont = False
+      end
+      object mSwHouseSiteCanc: TRLMemo
+        Left = 0
+        Top = 547
+        Width = 286
+        Height = 20
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = []
+        Lines.Strings = (
+          'Projeto ACBr'
+          'http://www.projetoacbr.com.br')
+        ParentFont = False
+      end
+      object lChaveAcessoCan: TRLMemo
+        Left = 0
+        Top = 34
+        Width = 286
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlBottom
+        Lines.Strings = (
+          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111')
+        ParentFont = False
+      end
+      object lChaveAcessoCanl: TRLMemo
+        Left = 0
+        Top = 292
+        Width = 286
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = []
+        Layout = tlBottom
+        Lines.Strings = (
+          '1111  2222  3333  4444  5555  6666  7777  8888  9999  0000  1111')
+        ParentFont = False
+      end
+      object lTitCancelamento2: TRLMemo
+        Left = 0
+        Top = 256
+        Width = 286
+        Height = 10
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -8
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        Lines.Strings = (
+          'DADOS DO CUPOM FISCAL ELETR'#212'NICO DE CANCELAMENTO')
+        ParentFont = False
+      end
     end
     object rlbCabecalhoCan: TRLBand
       Left = 8
       Top = 8
       Width = 286
-      Height = 133
+      Height = 146
       AutoSize = True
       BandType = btHeader
-      object lEmitCNPJ_IE_IMCan: TRLLabel
-        Left = 0
-        Top = 69
-        Width = 286
-        Height = 14
-        Align = faBottom
-        Alignment = taCenter
-        Caption = 
-          'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
-          '3'
-        Layout = tlBottom
-      end
       object RLDraw11: TRLDraw
         Left = 0
-        Top = 83
+        Top = 96
         Width = 286
         Height = 8
         Align = faBottom
@@ -1392,7 +1441,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lNumeroExtratoCan: TRLLabel
         Left = 0
-        Top = 91
+        Top = 104
         Width = 286
         Height = 14
         Align = faBottom
@@ -1406,25 +1455,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         Layout = tlCenter
         ParentFont = False
       end
-      object lCupomFiscalEletronicoCan: TRLLabel
-        Left = 0
-        Top = 105
-        Width = 286
-        Height = 14
-        Align = faBottom
-        Alignment = taCenter
-        Caption = 'CUPOM FISCAL ELETR'#212'NICO - SAT'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        ParentFont = False
-      end
       object lTitCancelamento: TRLLabel
         Left = 0
-        Top = 119
+        Top = 132
         Width = 286
         Height = 14
         Align = faBottom
@@ -1440,7 +1473,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lNomeFantasiaCan: TRLMemo
         Left = 0
-        Top = 1
+        Top = 0
         Width = 286
         Height = 20
         Align = faTop
@@ -1458,7 +1491,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lEnderecoCan: TRLMemo
         Left = 0
-        Top = 21
+        Top = 20
         Width = 286
         Height = 24
         Align = faBottom
@@ -1476,7 +1509,7 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
       end
       object lRazaoSocialCan: TRLMemo
         Left = 0
-        Top = 45
+        Top = 44
         Width = 286
         Height = 24
         Align = faBottom
@@ -1492,22 +1525,44 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           'Raz'#227'o Social Canc - Linha 2')
         ParentFont = False
       end
-      object imgLogoCan: TRLImage
+      object lCupomFiscalEletronicoCan: TRLMemo
         Left = 0
-        Top = 0
+        Top = 118
         Width = 286
-        Height = 1
-        Align = faTop
-        AutoSize = True
-        Center = True
-        Scaled = True
+        Height = 14
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        Lines.Strings = (
+          'CUPOM FISCAL ELETR'#212'NICO - SAT')
+        ParentFont = False
+      end
+      object lEmitCNPJ_IE_IMCan: TRLMemo
+        Left = 0
+        Top = 68
+        Width = 286
+        Height = 28
+        Align = faBottom
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Layout = tlBottom
+        Lines.Strings = (
+          
+            'CNPJ: 22.222.222/22222-22  IE:223.233.344.233 IM:2323.222.333.23' +
+            '3')
       end
     end
     object rlbDadosCupomCancelado: TRLBand
       Left = 8
-      Top = 225
+      Top = 241
       Width = 286
-      Height = 78
+      Height = 79
       object RLDraw13: TRLDraw
         Left = 0
         Top = 0
@@ -1517,37 +1572,9 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
         DrawKind = dkLine
         Pen.Style = psDot
       end
-      object lTitCancelamento1: TRLLabel
-        Left = 0
-        Top = 10
-        Width = 286
-        Height = 11
-        Align = faTop
-        Alignment = taCenter
-        Caption = 'DADOS DO CUPOM FISCAL ELETR'#212'NICO CANCELADO'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -9
-        Font.Name = 'Arial'
-        Font.Style = [fsBold]
-        Layout = tlCenter
-        ParentFont = False
-      end
-      object lCPF_CNPJCan: TRLLabel
-        Left = 0
-        Top = 21
-        Width = 286
-        Height = 15
-        Align = faTop
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'CPF/CNPJ Consumidor: <CPF_CNPJ>'
-        Layout = tlBottom
-        BeforePrint = lCPF_CNPJBeforePrint
-      end
       object lRazaoSocialNomeCanc: TRLMemo
         Left = 0
-        Top = 36
+        Top = 37
         Width = 286
         Height = 14
         Align = faTop
@@ -1558,38 +1585,76 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           'Raz'#227'o Social/Nome: <xNome>')
         BeforePrint = lRazaoSocialNomeBeforePrint
       end
-      object RLPanel4: TRLPanel
+      object pTotalCanc: TRLPanel
         Left = 0
-        Top = 50
+        Top = 51
         Width = 286
         Height = 28
         Align = faClient
+        BeforePrint = pTotalCancBeforePrint
         object lTotalCan: TRLLabel
-          Left = 162
-          Top = 8
-          Width = 51
-          Height = 14
-          Alignment = taRightJustify
+          Left = 144
+          Top = 0
+          Width = 142
+          Height = 28
+          Align = faClient
           Caption = '99.999,99'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Arial'
           Font.Style = [fsBold]
+          Layout = tlCenter
           ParentFont = False
         end
         object lTitTotalCan: TRLLabel
-          Left = 72
-          Top = 8
-          Width = 53
-          Height = 14
-          Caption = 'TOTAL R$'
+          Left = 0
+          Top = 0
+          Width = 144
+          Height = 28
+          Align = faLeft
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'TOTAL R$   '
+          Layout = tlCenter
         end
+      end
+      object lCPF_CNPJCan: TRLMemo
+        Left = 0
+        Top = 22
+        Width = 286
+        Height = 15
+        Align = faTop
+        Alignment = taCenter
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Layout = tlBottom
+        Lines.Strings = (
+          'CPF/CNPJ Consumidor: <CPF_CNPJ>')
+        BeforePrint = lCPF_CNPJBeforePrint
+      end
+      object lTitCancelamento1: TRLMemo
+        Left = 0
+        Top = 10
+        Width = 286
+        Height = 12
+        Align = faTop
+        Alignment = taCenter
+        Behavior = [beSiteExpander]
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        Layout = tlCenter
+        Lines.Strings = (
+          'DADOS DO CUPOM FISCAL ELETR'#212'NICO CANCELADO')
+        ParentFont = False
       end
     end
     object rlbTesteCan: TRLBand
       Left = 8
-      Top = 141
+      Top = 154
       Width = 286
       Height = 84
       AutoSize = True
@@ -1638,6 +1703,25 @@ object ACBrSATExtratoFortesFr: TACBrSATExtratoFortesFr
           ''
           '= T E S T E ='
           '')
+      end
+    end
+    object rlLogoCanc: TRLBand
+      Left = 8
+      Top = 238
+      Width = 286
+      Height = 3
+      BandType = btTitle
+      Visible = False
+      object imgLogoCanc: TRLImage
+        Left = 0
+        Top = 0
+        Width = 286
+        Height = 1
+        Align = faTop
+        AutoSize = True
+        Center = True
+        Scaled = True
+        Transparent = False
       end
     end
   end

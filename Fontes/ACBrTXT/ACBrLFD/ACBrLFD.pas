@@ -47,7 +47,7 @@ unit ACBrLFD;
 interface
 
 uses
-  SysUtils, Math, Classes,
+  SysUtils, Math, Classes, ACBrBase,
 {$IFNDEF Framework}
   {$IFDEF FPC}
     LResources,
@@ -70,8 +70,10 @@ const
 type
 
   { TACBrLFD }
-
-  TACBrLFD = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrLFD = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FArquivo: ansistring;
@@ -1059,6 +1061,15 @@ begin
           begin
              REG_BLC := 'A020';
              QTD_REG_BLC := Bloco_A.RegistroA020Count;
+          end;
+       end;
+
+       if Bloco_A.RegistroA025Count > 0 then
+       begin
+          with New do
+          begin
+             REG_BLC := 'A025';
+             QTD_REG_BLC := Bloco_A.RegistroA025Count;
           end;
        end;
 
@@ -2197,6 +2208,22 @@ begin
             begin
                REG_BLC := 'E025';
                QTD_REG_BLC := Bloco_E.RegistroE025Count;
+            end;
+         end;
+         if Bloco_E.RegistroE050Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E050';
+               QTD_REG_BLC := Bloco_E.RegistroE050Count;
+            end;
+         end;
+         if Bloco_E.RegistroE055Count > 0 then
+         begin
+            with New do
+            begin
+               REG_BLC := 'E055';
+               QTD_REG_BLC := Bloco_E.RegistroE055Count;
             end;
          end;
          with New do

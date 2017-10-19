@@ -566,6 +566,8 @@ begin
 
          if (COD_INC_TRIB <> codEscrOpIncCumulativo) then // Mário Mesquita -- Conforme guia prático, Deve ser vazio caso COD_INC_TRIB <> 2
            strIND_REG_CUM := '';
+         if Self.FRegistro0000.IND_ATIV=indAtivoFincanceira then 
+           strIND_REG_CUM := '';
 
          //Nota: Só a versão 2.01 ou superior do PVA vai estar pronta para validar esse arquivo.
          Add( LFill('0110') +

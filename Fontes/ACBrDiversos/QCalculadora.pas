@@ -87,6 +87,8 @@ type
     procedure Copiar1Click(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; 
+      Shift: TShiftState);
   private
     { Private declarations }
     fValor : Double ;

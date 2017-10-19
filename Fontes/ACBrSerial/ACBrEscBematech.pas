@@ -46,7 +46,7 @@ interface
 
 uses
   Classes, SysUtils,
-  ACBrPosPrinter, ACBrEscPosEpson, ACBrConsts;
+  ACBrPosPrinter, ACBrConsts;
 
 const
   ModoEscBema = GS + #249 + #32 + #0;
@@ -55,7 +55,7 @@ type
 
   { TACBrEscBematech }
 
-  TACBrEscBematech = class(TACBrEscPosEpson)
+  TACBrEscBematech = class(TACBrPosPrinterClass)
   private
   public
     constructor Create(AOwner: TACBrPosPrinter);
@@ -78,7 +78,8 @@ implementation
 
 Uses
   strutils, math,
-  ACBrUtil;
+  ACBrUtil, ACBrEscPosEpson;
+
 
 { TACBrEscBematech }
 
@@ -91,50 +92,45 @@ begin
 {(*}
   with Cmd  do
   begin
+    Zera                    := ESC + '@';
+    PuloDeLinha             := LF;
+    EspacoEntreLinhasPadrao := ESC + '2';
+    EspacoEntreLinhas       := ESC + '3';
     LigaNegrito             := ESC + 'E';
     DesligaNegrito          := ESC + 'F';
     LigaExpandido           := ESC + 'W' + #1;
     DesligaExpandido        := ESC + 'W' + #0;
+    LigaSublinhado          := ESC + '-' + #1;
+    DesligaSublinhado       := ESC + '-' + #0;
     LigaInvertido           := '';  // Modo EscBema não suporta
     DesligaInvertido        := '';  // Modo EscBema não suporta
     LigaItalico             := ESC + '4';
     DesligaItalico          := ESC + '5';
     LigaCondensado          := ESC + SI;
     DesligaCondensado       := ESC + 'H';
+    AlinhadoEsquerda        := ESC + 'a' + #0;
+    AlinhadoCentro          := ESC + 'a' + #1;
+    AlinhadoDireita         := ESC + 'a' + #2;
+    CorteTotal              := ESC + 'w';
+    CorteParcial            := ESC + 'm';
     FonteNormal             := ESC + '!' + #0 + DesligaCondensado + DesligaItalico;
     FonteA                  := DesligaCondensado;
     FonteB                  := LigaCondensado;
-    CorteTotal              := ESC + 'w';
-    CorteParcial            := ESC + 'm';
+    Beep                    := ESC + '(A' + #4 + #0 + #48 + #55 + #03 + #10;
   end;
   {*)}
 
+  TagsNaoSuportadas.Add( cTagBarraMSI );
   TagsNaoSuportadas.Add( cTagBarraCode128c );
 end;
 
 function TACBrEscBematech.ComandoCodBarras(const ATag: String;
   ACodigo: AnsiString): AnsiString;
-var
-  P: Integer;
-  BTag: String;
 begin
-  // EscBema não suporta Code128C
-  if (ATag = cTagBarraCode128a) or
-     (ATag = cTagBarraCode128b) or
-     (ATag = cTagBarraCode128c) then
-    BTag := cTagBarraCode128
-  else
-    BTag := ATag;
-
-  Result := inherited ComandoCodBarras(BTag, ACodigo);
-
-  // EscBema não suporta notação para COD128 A, B e C do padrão EscPos
-  if (BTag = cTagBarraCode128) then
+  with fpPosPrinter.ConfigBarras do
   begin
-    P := pos('{',Result);
-    if P > 0 then
-      Delete(Result,P,2);
-  end;
+    Result := ComandoCodBarrasEscPosNo128ABC(ATag, ACodigo, MostrarCodigo, Altura, LarguraLinha);
+  end ;
 end;
 
 function TACBrEscBematech.ComandoQrCode(ACodigo: AnsiString): AnsiString;
@@ -173,17 +169,27 @@ end;
 
 function TACBrEscBematech.ComandoLogo: AnsiString;
 var
-  m: Integer;
+  m, KeyCode: Integer;
 begin
   with fpPosPrinter.ConfigLogo do
   begin
+    if (KeyCode2 = 0) then
+    begin
+      if (KeyCode1 >= 48) and (KeyCode1 <= 57) then  // '0'..'9'
+        KeyCode := StrToInt( chr(KeyCode1) )
+      else
+        KeyCode := KeyCode1 ;
+    end
+    else
+      KeyCode := StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 1);
+
     m := 0;
     if FatorX > 1 then
       m := m + 1;
     if Fatory > 1 then
       m := m + 2;
 
-    Result := FS + 'p' + AnsiChr( StrToIntDef( chr(KeyCode1) + chr(KeyCode2), 1)) + AnsiChr(m);
+    Result := FS + 'p' + AnsiChr(KeyCode) + AnsiChr(m);
   end;
 end;
 
@@ -213,6 +219,9 @@ var
   B: Byte;
   Ret: AnsiString;
 begin
+  if not (fpPosPrinter.Device.IsSerialPort or fpPosPrinter.Device.IsTCPPort) then
+    exit;
+
   try
     Ret := fpPosPrinter.TxRx( GS + #248 + '1', 5, 500 );
     B := Ord(Ret[1]);

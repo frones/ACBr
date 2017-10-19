@@ -54,26 +54,17 @@ type
   TRegistroZ2 = Class(TRegistroX1);
 
   // REGISTRO TIPO Z3 - IDENTIFICAÇÃO DO PAF-ECF
-  TRegistroZ3 = Class
-  private
-    fLAUDO:  string;         /// Número do Laudo de Análise Funcional
-    fNOME:   string;         /// Nome do aplicativo indicado no Laudo de Análise Técnica
-    fVERSAO: string;         /// Versão atual do aplicativo indicado no Laudo de Análise Técnica
-  public
-    property LAUDO: string read fLAUDO write fLAUDO;
-    property NOME: string read fNOME write fNOME;
-    property VERSAO: string read fVERSAO write fVERSAO;
-  end;
+  TRegistroZ3 = Class(TRegistroX3);
 
   // REGISTRO TIPO Z4 – Totalização de vendas a CPF/CNPJ:
   TRegistroZ4 = Class
   private
-    fCNPJ: string;         /// Número do CPF/CNPJ identificado no campo previsto no item 2 do Requsito VIII.
+    fCPF_CNPJ: string;         /// Número do CPF/CNPJ identificado no campo previsto no item 2 do Requsito VIII.
     fVl_Total: Currency ;  /// Total de vendas no mês, com duas casas decimais, ao CPF/CNPJ indicado no campo 02.
     fData_INI: TDateTime;  /// Primeiro dia do mês a que se refere o relatório de vendas ao CPF/CNPJ identificado no campo 02
     fData_FIN: TDateTime;  /// Último dia do mês a que se refere o relatório de vendas ao CPF/CNPJ identificado no campo 02
   public
-    property CNPJ: string read FCNPJ write FCNPJ;
+    property CPF_CNPJ: string read FCPF_CNPJ write FCPF_CNPJ;
     property VL_TOTAL: Currency  read fVl_Total write fVl_Total;
     property DATA_INI: TDateTime read fData_INI write fData_INI;
     property DATA_FIM: TDateTime read fData_FIN write fData_FIN;

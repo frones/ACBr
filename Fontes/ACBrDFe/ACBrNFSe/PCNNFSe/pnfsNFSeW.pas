@@ -68,6 +68,7 @@ type
     FDefTipos: String;
     FServicoEnviar: String;
     FQuebradeLinha: String;
+    FVersaoDados: String;
 
   public
     constructor Create(ANFSeW: TNFSeW); virtual;
@@ -90,6 +91,7 @@ type
     property DefTipos: String        read FDefTipos      write FDefTipos;
     property ServicoEnviar: String   read FServicoEnviar write FServicoEnviar;
     property QuebradeLinha: String   read FQuebradeLinha write FQuebradeLinha;
+    property VersaoDados: String     read FVersaoDados   write FVersaoDados;
   end;
 
   { TNFSeW }
@@ -138,7 +140,7 @@ uses
   ACBrDFeException,
   pnfsNFSeW_ABRASFv1, pnfsNFSeW_ABRASFv2, pnfsNFSeW_EGoverneISS, pnfsNFSeW_EL,
   pnfsNFSeW_Equiplano, pnfsNFSeW_Infisc, pnfsNFSeW_ISSDSF, pnfsNFSeW_Governa,
-  pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili;
+  pnfsNFSeW_SP, pnfsNFSeW_CONAM, pnfsNFSeW_Agili, pnfsNFSeW_SMARAPD;
 
 { TNFSeW }
 
@@ -193,7 +195,8 @@ begin
     loISSDSF:      FNFSeWClass := TNFSeW_ISSDSF.Create(Self);
     loSP:          FNFSeWClass := TNFSeW_SP.Create(Self);
     loCONAM:       FNFSeWClass := TNFSeW_CONAM.Create(Self);
-    loAgili:       FNFSeWClass := TNFSeW_Agili.Create(Self); 
+    loAgili:       FNFSeWClass := TNFSeW_Agili.Create(Self);
+    loSMARAPD:     FNFSeWClass := TNFSeW_SMARAPD.Create(Self);
   else
     FNFSeWClass := TNFSeWClass.Create(Self);
   end;
@@ -228,6 +231,7 @@ begin
   FDefTipos      := '';
   FServicoEnviar := '';
   FQuebradeLinha := ';';
+  FVersaoDados   := '1.0';
 end;
 
 function TNFSeWClass.ObterNomeArquivo: String;

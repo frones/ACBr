@@ -55,7 +55,7 @@ uses
   Variants,
 {$ENDIF}
   pcnAuxiliar, pcnConversao, pcnGerador, pcnLeitor, pcteEventoCTe,
-  ACBrUtil, pcteConversaoCTe;
+  ACBrUtil, pcnConsts, pcteConsts, pcteConversaoCTe, pcteSignature;
 
 type
   TInfEventoCollection     = class;
@@ -77,21 +77,43 @@ type
   private
     FInfEvento: TInfEvento;
     FRetInfEvento: TRetInfEvento;
+    Fsignature: Tsignature;
   public
     constructor Create; reintroduce;
     destructor Destroy; override;
   published
     property InfEvento: TInfEvento       read FInfEvento    write FInfEvento;
+    property signature: Tsignature       read Fsignature    write Fsignature;
     property RetInfEvento: TRetInfEvento read FRetInfEvento write FRetInfEvento;
+  end;
+
+  TGeradorOpcoes = class(TPersistent)
+  private
+    FAjustarTagNro: Boolean;
+    FNormatizarMunicipios: Boolean;
+    FGerarTagAssinatura: TpcnTagAssinatura;
+    FPathArquivoMunicipios: String;
+    FValidarInscricoes: Boolean;
+    FValidarListaServicos: Boolean;
+  published
+    property AjustarTagNro: Boolean                read FAjustarTagNro         write FAjustarTagNro;
+    property NormatizarMunicipios: Boolean         read FNormatizarMunicipios  write FNormatizarMunicipios;
+    property GerarTagAssinatura: TpcnTagAssinatura read FGerarTagAssinatura    write FGerarTagAssinatura;
+    property PathArquivoMunicipios: String         read FPathArquivoMunicipios write FPathArquivoMunicipios;
+    property ValidarInscricoes: Boolean            read FValidarInscricoes     write FValidarInscricoes;
+    property ValidarListaServicos: Boolean         read FValidarListaServicos  write FValidarListaServicos;
   end;
 
   TEventoCTe = class(TPersistent)
   private
     FGerador: TGerador;
+    FOpcoes: TGeradorOpcoes;
     FidLote: Integer;
     FEvento: TInfEventoCollection;
     FVersao: String;
-    
+    FXML: AnsiString;
+    FVersaoDF: TVersaoCTe;
+
     procedure SetEvento(const Value: TInfEventoCollection);
   public
     constructor Create;
@@ -101,10 +123,13 @@ type
     function LerXMLFromString(const AXML: String): boolean;
     function ObterNomeArquivo(tpEvento: TpcnTpEvento): string;
   published
-    property Gerador: TGerador             read FGerador write FGerador;
-    property idLote: Integer               read FidLote  write FidLote;
-    property Evento: TInfEventoCollection  read FEvento  write SetEvento;
-    property Versao: String                read FVersao  write FVersao;
+    property Gerador: TGerador            read FGerador  write FGerador;
+    property Opcoes: TGeradorOpcoes       read FOpcoes   write FOpcoes;
+    property idLote: Integer              read FidLote   write FidLote;
+    property Evento: TInfEventoCollection read FEvento   write SetEvento;
+    property Versao: String               read FVersao   write FVersao;
+    property XML: AnsiString              read FXML      write FXML;
+    property VersaoDF: TVersaoCTe         read FVersaoDF write FVersaoDF;
   end;
 
 implementation
@@ -117,12 +142,19 @@ uses
 constructor TEventoCTe.Create;
 begin
   FGerador := TGerador.Create;
+  FOpcoes  := TGeradorOpcoes.Create;
+  FOpcoes.FAjustarTagNro := True;
+  FOpcoes.FNormatizarMunicipios := False;
+  FOpcoes.FGerarTagAssinatura := taSomenteSeAssinada;
+  FOpcoes.FValidarInscricoes := False;
+  FOpcoes.FValidarListaServicos := False;
   FEvento  := TInfEventoCollection.Create(Self);
 end;
 
 destructor TEventoCTe.Destroy;
 begin
   FGerador.Free;
+  FOpcoes.Free;
   FEvento.Free;
   inherited;
 end;
@@ -141,8 +173,11 @@ end;
 function TEventoCTe.GerarXML: boolean;
 var
   sDoc: String;
-  i: Integer;
+  i, j: Integer;
+  Ok: Boolean;
 begin
+  VersaoDF := StrToVersaoCTe(Ok, Versao);
+
   Gerador.ArquivoFormatoXML := '';
   Gerador.wGrupo('eventoCTe ' + NAME_SPACE_CTE + ' versao="' + Versao + '"');
 
@@ -175,7 +210,13 @@ begin
   if not ValidarChave(Evento.Items[0].InfEvento.chCTe)
    then Gerador.wAlerta('EP08', 'chCTe', '', 'Chave de CTe inválida');
 
-  Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento));
+  if VersaoDF >= ve300 then
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, DateTimeTodh(Evento.Items[0].InfEvento.dhEvento) +
+                                                             GetUTC(CodigoParaUF(Evento.Items[0].InfEvento.cOrgao),
+                                                             Evento.Items[0].InfEvento.dhEvento), DSC_DEMI)
+  else
+    Gerador.wCampo(tcStr, 'EP09', 'dhEvento  ', 01, 27, 1, FormatDateTime('yyyy-mm-dd"T"hh:nn:ss', Evento.Items[0].InfEvento.dhEvento));
+		
   Gerador.wCampo(tcInt, 'EP10', 'tpEvento  ', 06, 06, 1, Evento.Items[0].InfEvento.TipoEvento);
   Gerador.wCampo(tcInt, 'EP11', 'nSeqEvento', 01, 02, 1, Evento.Items[0].InfEvento.nSeqEvento);
 
@@ -186,7 +227,7 @@ begin
        Gerador.wGrupo('evCCeCTe');
        Gerador.wCampo(tcStr, 'EP02', 'descEvento', 17, 17, 1, Evento.Items[0].InfEvento.DescEvento);
 
-       for i:= 0 to Evento.Items[0].FInfEvento.detEvento.infCorrecao.Count  - 1 do
+       for i := 0 to Evento.Items[0].FInfEvento.detEvento.infCorrecao.Count - 1 do
         begin
          Gerador.wGrupo('infCorrecao');
          Gerador.wCampo(tcStr, 'EP04', 'grupoAlterado  ', 01, 020, 1, Evento.Items[0].InfEvento.detEvento.infCorrecao.Items[i].grupoAlterado);
@@ -216,7 +257,11 @@ begin
        Gerador.wCampo(tcDe2, 'EP06', 'vTPrest   ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vTPrest, DSC_VTPREST);
        Gerador.wCampo(tcDe2, 'EP07', 'vCarga    ', 01, 015, 1, Evento.Items[0].InfEvento.detEvento.vCarga, DSC_VTMERC);
 
-       Gerador.wGrupo('toma04');
+       if VersaoDF >= ve300 then
+         Gerador.wGrupo('toma4')
+       else
+         Gerador.wGrupo('toma04');
+
        Gerador.wCampo(tcStr, 'EP09', 'toma', 01, 01, 1, TpTomadorToStr(Evento.Items[0].InfEvento.detEvento.toma), DSC_TOMA);
        Gerador.wCampo(tcStr, 'EP10', 'UF  ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UF, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UF) then
@@ -234,7 +279,10 @@ begin
             Gerador.wAlerta('EP13', 'IE', DSC_IE, ERR_MSG_INVALIDO);
          end;
 
-       Gerador.wGrupo('/toma04');
+       if VersaoDF >= ve300 then
+         Gerador.wGrupo('/toma4')
+       else
+         Gerador.wGrupo('/toma04');
 
        Gerador.wCampo(tcStr, 'EP14', 'modal   ', 02, 02, 1, TpModalToStr(Evento.Items[0].InfEvento.detEvento.modal), DSC_MODAL);
        Gerador.wCampo(tcStr, 'EP15', 'UFIni   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UFIni, DSC_UF);
@@ -243,6 +291,17 @@ begin
        Gerador.wCampo(tcStr, 'EP16', 'UFFim   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.UFFim, DSC_UF);
        if not ValidarUF(Evento.Items[0].InfEvento.detEvento.UFFim) then
          Gerador.wAlerta('EP16', 'UFFim', DSC_UF, ERR_MSG_INVALIDO);
+
+       if VersaoDF >= ve300 then
+       begin
+//         Gerador.wCampo(tcStr, 'EP17', 'tpCTe', 01, 01, 1, tpCTePagToStr(Evento.Items[0].InfEvento.detEvento.tpCTe), DSC_TPCTE);
+         // Segundo o Manual página 104 devemos informar o valor "0" para tpCTe
+         Gerador.wCampo(tcStr, 'EP17', 'tpCTe', 01, 01, 1, '0', DSC_TPCTE);
+         Gerador.wCampo(tcStr, 'EP18', 'dhEmi', 25, 25, 1, DateTimeTodh(Evento.Items[0].InfEvento.detEvento.dhEmi) +
+                                  GetUTC(Evento.Items[0].InfEvento.detEvento.UF,
+                                  Evento.Items[0].InfEvento.detEvento.dhEmi), DSC_DEMI);
+       end;
+
        Gerador.wGrupo('/evEPECCTe');
      end;
    teMultiModal:
@@ -253,9 +312,96 @@ begin
        Gerador.wCampo(tcStr, 'EP04', 'nDoc      ', 01, 0043, 0, Evento.Items[0].InfEvento.detEvento.nDoc);
        Gerador.wGrupo('/evRegMultimodal');
      end;
+   tePrestDesacordo:
+     begin
+       Gerador.wGrupo('evPrestDesacordo');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento      ', 33, 033, 1, Evento.Items[0].InfEvento.DescEvento);
+       Gerador.wCampo(tcStr, 'EP03', 'indDesacordoOper', 01, 001, 1, '1');
+       Gerador.wCampo(tcStr, 'EP04', 'xObs            ', 15, 255, 1, Evento.Items[0].InfEvento.detEvento.xOBS);
+       Gerador.wGrupo('/evPrestDesacordo');
+     end;
+   teGTV:
+     begin
+       Gerador.wGrupo('evGTV');
+       Gerador.wCampo(tcStr, 'EP02', 'descEvento      ', 33, 033, 1, Evento.Items[0].InfEvento.DescEvento);
+
+       for i := 0 to Evento.Items[0].FInfEvento.detEvento.infGTV.Count - 1 do
+       begin
+         Gerador.wGrupo('infGTV');
+         Gerador.wCampo(tcStr, 'EP04', 'nDoc    ', 20, 20, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].nDoc);
+         Gerador.wCampo(tcStr, 'EP05', 'id      ', 20, 20, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].id);
+         Gerador.wCampo(tcStr, 'EP06', 'serie   ', 03, 03, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].serie);
+         Gerador.wCampo(tcStr, 'EP07', 'subserie', 03, 03, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].subserie);
+         Gerador.wCampo(tcDat, 'EP08', 'dEmi    ', 10, 10, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dEmi);
+         Gerador.wCampo(tcInt, 'EP09', 'dDV     ', 01, 01, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].nDV);
+         Gerador.wCampo(tcDe4, 'EP10', 'qCarga  ', 01, 15, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].qCarga);
+
+         for j := 0 to Evento.Items[0].FInfEvento.detEvento.infGTV.Items[i].infEspecie.Count - 1 do
+         begin
+           Gerador.wGrupo('infEspecie');
+           Gerador.wCampo(tcStr, 'EP12', 'tpEspecie', 01, 01, 1, TEspecieToStr(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].infEspecie.Items[j].tpEspecie));
+           Gerador.wCampo(tcDe2, 'EP13', 'vEspecie ', 01, 15, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].infEspecie.Items[j].vEspecie);
+           Gerador.wGrupo('/infEspecie');
+         end;
+
+         Gerador.wGrupo('rem');
+         Gerador.wCampoCNPJCPF('EP15', 'EP16', Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.CNPJCPF);
+
+         if trim(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.IE) <> '' then
+         begin
+           if Trim(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.IE) = 'ISENTO' then
+             Gerador.wCampo(tcStr, 'EP17', 'IE', 00, 14, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.IE, DSC_IE)
+           else
+             Gerador.wCampo(tcStr, 'EP17', 'IE', 00, 14, 1, OnlyNumber(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.IE), DSC_IE);
+
+           if (FOpcoes.ValidarInscricoes) then
+             if not ValidarIE(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.IE, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.UF) then
+               Gerador.wAlerta('EP17', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+         end;
+
+         Gerador.wCampo(tcStr, 'EP18', 'UF   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.UF, DSC_UF);
+         Gerador.wCampo(tcStr, 'EP19', 'xNome', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].rem.xNome, DSC_XNOME);
+         Gerador.wGrupo('/rem');
+
+         Gerador.wGrupo('dest');
+         Gerador.wCampoCNPJCPF('EP21', 'EP22', Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.CNPJCPF);
+
+         if trim(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.IE) <> '' then
+         begin
+           if Trim(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.IE) = 'ISENTO' then
+             Gerador.wCampo(tcStr, 'EP23', 'IE', 00, 14, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.IE, DSC_IE)
+           else
+             Gerador.wCampo(tcStr, 'EP23', 'IE', 00, 14, 1, OnlyNumber(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.IE), DSC_IE);
+
+           if (FOpcoes.ValidarInscricoes) then
+             if not ValidarIE(Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.IE, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.UF) then
+               Gerador.wAlerta('EP23', 'IE', DSC_IE, ERR_MSG_INVALIDO);
+         end;
+
+         Gerador.wCampo(tcStr, 'EP24', 'UF   ', 02, 02, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.UF, DSC_UF);
+         Gerador.wCampo(tcStr, 'EP25', 'xNome', 02, 60, 1, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].dest.xNome, DSC_XNOME);
+         Gerador.wGrupo('/dest');
+
+         Gerador.wCampo(tcStr, 'EP26', 'placa', 07, 07, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].placa, DSC_PLACA);
+         Gerador.wCampo(tcStr, 'EP27', 'UF   ', 02, 02, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].UF, DSC_UF);
+         Gerador.wCampo(tcStr, 'EP28', 'RNTRC', 06, 08, 0, Evento.Items[0].InfEvento.detEvento.infGTV.Items[i].RNTRC, DSC_RNTRC);
+
+         Gerador.wGrupo('/infGTV');
+       end;
+
+       Gerador.wGrupo('/evGTV');
+     end;
   end;
   Gerador.wGrupo('/detEvento');
   Gerador.wGrupo('/infEvento');
+
+  if Evento.Items[0].signature.URI <> '' then
+  begin
+    Evento.Items[0].signature.Gerador.Opcoes.IdentarXML := Gerador.Opcoes.IdentarXML;
+    Evento.Items[0].signature.GerarXMLCTe;
+    Gerador.ArquivoFormatoXML := Gerador.ArquivoFormatoXML + Evento.Items[0].signature.Gerador.ArquivoFormatoXML;
+  end;
+
   Gerador.wGrupo('/eventoCTe');
 
   Result := (Gerador.ListaDeAlertas.Count = 0);
@@ -282,8 +428,9 @@ end;
 function TEventoCTe.LerXMLFromString(const AXML: String): boolean;
 var
   RetEventoCTe: TRetEventoCTe;
-  i: Integer;
+  i, j: Integer;
 begin
+  FXML := AXML;
   RetEventoCTe := TRetEventoCTe.Create;
   try
      RetEventoCTe.Leitor.Arquivo := AXML;
@@ -314,15 +461,54 @@ begin
         infEvento.detEvento.UFIni      := RetEventoCTe.InfEvento.DetEvento.UFIni;
         infEvento.detEvento.UFFim      := RetEventoCTe.InfEvento.DetEvento.UFFim;
         infEvento.detEvento.xCondUso   := RetEventoCTe.InfEvento.DetEvento.xCondUso;
+        infEvento.detEvento.xOBS       := RetEventoCTe.InfEvento.detEvento.xOBS;
+
+        signature.URI             := RetEventoCTe.signature.URI;
+        signature.DigestValue     := RetEventoCTe.signature.DigestValue;
+        signature.SignatureValue  := RetEventoCTe.signature.SignatureValue;
+        signature.X509Certificate := RetEventoCTe.signature.X509Certificate;
 
         for i := 0 to RetEventoCTe.InfEvento.detEvento.infCorrecao.Count -1 do
-         begin
+        begin
           infEvento.detEvento.infCorrecao.Add;
           infEvento.detEvento.infCorrecao[i].grupoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].grupoAlterado;
           infEvento.detEvento.infCorrecao[i].campoAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].campoAlterado;
           infEvento.detEvento.infCorrecao[i].valorAlterado   := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].valorAlterado;
           infEvento.detEvento.infCorrecao[i].nroItemAlterado := RetEventoCTe.InfEvento.detEvento.infCorrecao[i].nroItemAlterado;
-         end;
+        end;
+
+        for i := 0 to RetEventoCTe.InfEvento.detEvento.infGTV.Count -1 do
+        begin
+          infEvento.detEvento.infGTV.Add;
+          infEvento.detEvento.infGTV[i].nDoc     := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDoc;
+          infEvento.detEvento.infGTV[i].id       := RetEventoCTe.InfEvento.detEvento.infGTV[i].id;
+          infEvento.detEvento.infGTV[i].serie    := RetEventoCTe.InfEvento.detEvento.infGTV[i].serie;
+          infEvento.detEvento.infGTV[i].subserie := RetEventoCTe.InfEvento.detEvento.infGTV[i].subserie;
+          infEvento.detEvento.infGTV[i].dEmi     := RetEventoCTe.InfEvento.detEvento.infGTV[i].dEmi;
+          infEvento.detEvento.infGTV[i].nDV      := RetEventoCTe.InfEvento.detEvento.infGTV[i].nDV;
+          infEvento.detEvento.infGTV[i].qCarga   := RetEventoCTe.InfEvento.detEvento.infGTV[i].qCarga;
+
+          for j := 0 to RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie.Count -1 do
+          begin
+            infEvento.detEvento.infGTV[i].infEspecie.Add;
+            infEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].tpEspecie;
+            infEvento.detEvento.infGTV[i].infEspecie[j].vEspecie  := RetEventoCTe.InfEvento.detEvento.infGTV[i].infEspecie[j].vEspecie;
+          end;
+
+          infEvento.detEvento.infGTV[i].rem.CNPJCPF := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.CNPJCPF;
+          infEvento.detEvento.infGTV[i].rem.IE      := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.IE;
+          infEvento.detEvento.infGTV[i].rem.UF      := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.UF;
+          infEvento.detEvento.infGTV[i].rem.xNome   := RetEventoCTe.InfEvento.detEvento.infGTV[i].rem.xNome;
+
+          infEvento.detEvento.infGTV[i].dest.CNPJCPF := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.CNPJCPF;
+          infEvento.detEvento.infGTV[i].dest.IE      := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.IE;
+          infEvento.detEvento.infGTV[i].dest.UF      := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.UF;
+          infEvento.detEvento.infGTV[i].dest.xNome   := RetEventoCTe.InfEvento.detEvento.infGTV[i].dest.xNome;
+
+          infEvento.detEvento.infGTV[i].placa    := RetEventoCTe.InfEvento.detEvento.infGTV[i].placa;
+          infEvento.detEvento.infGTV[i].UF       := RetEventoCTe.InfEvento.detEvento.infGTV[i].UF;
+          infEvento.detEvento.infGTV[i].RNTRC    := RetEventoCTe.InfEvento.detEvento.infGTV[i].RNTRC;
+        end;
 
         if RetEventoCTe.retEvento.Count > 0 then
          begin
@@ -378,12 +564,14 @@ end;
 constructor TInfEventoCollectionItem.Create;
 begin
   FInfEvento := TInfEvento.Create;
+  Fsignature := Tsignature.Create;
   FRetInfEvento := TRetInfEvento.Create;
 end;
 
 destructor TInfEventoCollectionItem.Destroy;
 begin
   FInfEvento.Free;
+  Fsignature.Free;
   FRetInfEvento.Free;
   inherited;
 end;

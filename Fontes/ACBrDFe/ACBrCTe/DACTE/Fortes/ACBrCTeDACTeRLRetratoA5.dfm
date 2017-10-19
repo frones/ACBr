@@ -1,9 +1,10 @@
 inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
-  Left = 350
-  Top = 152
+  Left = 193
+  Top = 0
+  Width = 877
+  Height = 735
+  VertScrollBar.Position = 124
   Caption = 'DACTe - Retrato A5'
-  ClientHeight = 745
-  ClientWidth = 844
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
@@ -11,22 +12,29 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
   TextHeight = 10
   inherited RLCTe: TRLReport
     Left = 24
-    Top = 8
+    Top = -196
+    DataSource = Datasource1
+    Font.Height = -8
+    Font.Name = 'Courier New'
     Margins.LeftMargin = 7.000000000000000000
     Margins.TopMargin = 7.000000000000000000
     Margins.RightMargin = 7.000000000000000000
     Margins.BottomMargin = 7.000000000000000000
-    Font.Height = -8
-    Font.Name = 'Courier New'
     Title = 'DACTe Retrato A5'
     BeforePrint = RLCTeBeforePrint
     object rlb_08_Itens: TRLBand
       Left = 26
-      Top = 679
+      Top = 734
       Width = 742
-      Height = 14
+      Height = 16
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = False
+      Borders.DrawTop = False
+      Borders.DrawRight = False
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
+      AfterPrint = rlb_08_ItensAfterPrint
       BeforePrint = rlb_08_ItensBeforePrint
       object RLDraw29: TRLDraw
         Left = 370
@@ -57,6 +65,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         AutoSize = False
         Color = clWhite
         DataField = 'TIPO_2'
+        DataSource = Datasource1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -64,7 +73,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        Text = ''
         Transparent = False
       end
       object rldbtTpDoc1: TRLDBText
@@ -75,6 +83,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         AutoSize = False
         Color = clWhite
         DataField = 'TIPO_1'
+        DataSource = Datasource1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -82,7 +91,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        Text = ''
         Transparent = False
       end
       object rldbtDocumento2: TRLDBText
@@ -93,6 +101,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         AutoSize = False
         Color = clWhite
         DataField = 'DOCUMENTO_2'
+        DataSource = Datasource1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -100,7 +109,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        Text = ''
         Transparent = False
       end
       object rldbtDocumento1: TRLDBText
@@ -111,6 +119,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         AutoSize = False
         Color = clWhite
         DataField = 'DOCUMENTO_1'
+        DataSource = Datasource1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -118,7 +127,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente2: TRLDBText
@@ -128,6 +136,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Color = clWhite
         DataField = 'CNPJCPF_2'
+        DataSource = Datasource1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -135,7 +144,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        Text = ''
         Transparent = False
       end
       object rldbtCnpjEmitente1: TRLDBText
@@ -145,6 +153,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 12
         Color = clWhite
         DataField = 'CNPJCPF_1'
+        DataSource = Datasource1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -9
@@ -152,7 +161,6 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        Text = ''
         Transparent = False
       end
       object rlsFimItens: TRLDraw
@@ -450,7 +458,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_07_HeaderItens: TRLBand
       Left = 26
-      Top = 668
+      Top = 723
       Width = 742
       Height = 11
       BandType = btColumnHeader
@@ -458,7 +466,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       ParentColor = False
       BeforePrint = rlb_07_HeaderItensBeforePrint
       object rlsQuadro07: TRLDraw
-        Left = 0
+        Left = 1
         Top = 0
         Width = 741
         Height = 11
@@ -570,10 +578,11 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_09_Obs: TRLBand
       Left = 26
-      Top = 693
+      Top = 667
       Width = 742
       Height = 56
       AlignToBottom = True
+      BandType = btHeader
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_09_ObsBeforePrint
@@ -790,9 +799,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Height = 27
         Alignment = taCenter
         AutoSize = False
-        Caption = 
-          'ESSE CONHECIMENTO DE TRANSPORTE ATENDE '#192' LEGISLA'#199#195'O DE TRANSPORT' +
-          'E RODOVI'#193'RIO EM VIGOR'
+        Caption = 'ESSE CT-e DE TRANSP. ATENDE LEGISLA'#199#195'O DE TRANSP. RODO.EM VIGOR'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -848,8 +855,8 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         ParentFont = False
       end
       object rllMsgTeste: TRLLabel
-        Left = 11
-        Top = 22
+        Left = 7
+        Top = 14
         Width = 718
         Height = 31
         Alignment = taCenter
@@ -876,11 +883,21 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       Left = 26
       Top = 241
       Width = 742
-      Height = 173
+      Height = 172
       BandType = btHeader
       Color = clWhite
       ParentColor = False
       BeforePrint = rlb_02_CabecalhoBeforePrint
+      object RLBarcode1: TRLBarcode
+        Left = 354
+        Top = 117
+        Width = 381
+        Height = 28
+        AutoSize = False
+        BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
+      end
       object rlsQuadro01: TRLDraw
         Left = 0
         Top = 0
@@ -995,7 +1012,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Left = 113
         Top = 26
         Width = 216
-        Height = 84
+        Height = 83
         AutoSize = False
         Behavior = [beSiteExpander]
         Color = clWhite
@@ -1484,13 +1501,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rllVariavel1: TRLLabel
         Left = 344
         Top = 116
-        Width = 386
-        Height = 29
+        Width = 388
+        Height = 16
         Alignment = taCenter
         AutoSize = False
         Caption = 
           'Consulta de autenticidade no portal nacional do CT-e, no site da' +
-          ' Sefaz Autorizadora, ou em http://www.cte.fazenda.gov.br/portal'
+          ' Sefaz'
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1524,28 +1541,36 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       end
       object rliBarCode: TRLBarcode
         Left = 337
-        Top = 56
+        Top = 58
         Width = 398
-        Height = 32
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
-        AutoSize = False
-        BarcodeType = bcCode128C
-      end
-      object RLBarcode1: TRLBarcode
-        Left = 346
-        Top = 117
-        Width = 381
         Height = 28
-        Margins.LeftMargin = 1.000000000000000000
-        Margins.RightMargin = 1.000000000000000000
         AutoSize = False
         BarcodeType = bcCode128C
+        Margins.LeftMargin = 1.000000000000000000
+        Margins.RightMargin = 1.000000000000000000
+      end
+      object RLLabel198: TRLLabel
+        Left = 344
+        Top = 131
+        Width = 386
+        Height = 13
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'Autorizadora, ou em http://www.cte.fazenda.gov.br/portal'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Times New Roman'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
       end
     end
     object rlb_03_DadosDACTe: TRLBand
       Left = 26
-      Top = 414
+      Top = 413
       Width = 742
       Height = 81
       BandType = btHeader
@@ -2209,7 +2234,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_04_DadosNotaFiscal: TRLBand
       Left = 26
-      Top = 495
+      Top = 494
       Width = 742
       Height = 65
       BandType = btHeader
@@ -2238,7 +2263,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Brush.Style = bsClear
       end
       object RLDraw7: TRLDraw
-        Left = 526
+        Left = 508
         Top = 23
         Width = 1
         Height = 22
@@ -2381,7 +2406,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       object rllRespSeguroMerc: TRLLabel
         Left = 418
         Top = 32
-        Width = 106
+        Width = 87
         Height = 13
         AutoSize = False
         Color = clWhite
@@ -2439,9 +2464,9 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         ParentFont = False
       end
       object rllNroApolice: TRLLabel
-        Left = 528
+        Left = 510
         Top = 32
-        Width = 102
+        Width = 122
         Height = 13
         AutoSize = False
         Color = clWhite
@@ -2554,7 +2579,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Transparent = False
       end
       object rlLabel39: TRLLabel
-        Left = 528
+        Left = 510
         Top = 24
         Width = 75
         Height = 8
@@ -2933,7 +2958,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_05_Complemento: TRLBand
       Left = 26
-      Top = 560
+      Top = 559
       Width = 742
       Height = 61
       BandType = btHeader
@@ -3107,7 +3132,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_17_Sistema: TRLBand
       Left = 26
-      Top = 1124
+      Top = 1126
       Width = 742
       Height = 13
       AlignToBottom = True
@@ -3150,7 +3175,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_06_ValorPrestacao: TRLBand
       Left = 26
-      Top = 621
+      Top = 620
       Width = 742
       Height = 47
       BandType = btHeader
@@ -3485,7 +3510,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_12_ModAereo: TRLBand
       Left = 26
-      Top = 851
+      Top = 853
       Width = 742
       Height = 97
       BandType = btColumnFooter
@@ -3997,7 +4022,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_13_ModAquaviario: TRLBand
       Left = 26
-      Top = 761
+      Top = 763
       Width = 742
       Height = 90
       BandType = btColumnFooter
@@ -4005,7 +4030,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
       ParentColor = False
       BeforePrint = rlb_13_ModAquaviarioBeforePrint
       object RLDraw73: TRLDraw
-        Left = 0
+        Left = 16
         Top = 0
         Width = 741
         Height = 89
@@ -4324,9 +4349,9 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_14_ModFerroviario: TRLBand
       Left = 26
-      Top = 755
+      Top = 756
       Width = 742
-      Height = 6
+      Height = 7
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
@@ -4334,7 +4359,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_15_ModDutoviario: TRLBand
       Left = 26
-      Top = 749
+      Top = 750
       Width = 742
       Height = 6
       BandType = btColumnFooter
@@ -4601,12 +4626,13 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_11_ModRodLot104: TRLBand
       Left = 26
-      Top = 948
+      Top = 950
       Width = 742
       Height = 108
       BandType = btColumnFooter
       Color = clWhite
       ParentColor = False
+      Visible = False
       BeforePrint = rlb_11_ModRodLot104BeforePrint
       object RLDraw4: TRLDraw
         Left = 0
@@ -4614,6 +4640,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
         Width = 740
         Height = 107
         Brush.Style = bsClear
+        Visible = False
       end
       object RLDraw30: TRLDraw
         Left = 207
@@ -5073,7 +5100,7 @@ inherited frmDACTeRLRetratoA5: TfrmDACTeRLRetratoA5
     end
     object rlb_18_Recibo: TRLBand
       Left = 26
-      Top = 1056
+      Top = 1058
       Width = 742
       Height = 68
       BandType = btSummary

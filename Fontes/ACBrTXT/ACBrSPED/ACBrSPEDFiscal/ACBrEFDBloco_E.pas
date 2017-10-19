@@ -596,23 +596,48 @@ type
     fDEB_ESP_DIFAL: currency;
     fRegistroE311: TRegistroE311List;
     fRegistroE316: TRegistroE316List;
+    FVL_SLD_DEV_ANT_FCP: Currency;
+    FVL_RECOL_DIFAL: Currency;
+    FVL_SLD_CRED_TRANSPORTAR_DIFAL: Currency;
+    FVL_SLD_CRED_ANT_FCP: Currency;
+    FVL_RECOL_FCP: Currency;
+    FVL_SLD_CRED_TRANSPORTAR_FCP: Currency;
+    FVL_OUT_CRED_FCP: Currency;
+    FVL_OUT_DEB_FCP: Currency;
+    FVL_DEDUCOES_FCP: Currency;
+    FDEB_ESP_FCP: Currency;
   public
-    constructor Create(AOwner: TRegistroE300); virtual; /// Create
-    destructor Destroy; override; /// Destroy
-
+    constructor Create(AOwner: TRegistroE300); virtual;
+    destructor Destroy; override;
     property IND_MOV_DIFAL: TACBrMovimentoDIFAL read fIND_MOV_DIFAL write fIND_MOV_DIFAL;
+
     property VL_SLD_CRED_ANT_DIF: currency read fVL_SLD_CRED_ANT_DIF write fVL_SLD_CRED_ANT_DIF;
     property VL_TOT_DEBITOS_DIFAL: currency read fVL_TOT_DEBITOS_DIFAL write fVL_TOT_DEBITOS_DIFAL;
     property VL_OUT_DEB_DIFAL: currency read fVL_OUT_DEB_DIFAL write fVL_OUT_DEB_DIFAL;
-    property VL_TOT_DEB_FCP: currency read fVL_TOT_DEB_FCP write fVL_TOT_DEB_FCP;
     property VL_TOT_CREDITOS_DIFAL: currency read fVL_TOT_CREDITOS_DIFAL write fVL_TOT_CREDITOS_DIFAL;
-    property VL_TOT_CRED_FCP: currency read fVL_TOT_CRED_FCP write fVL_TOT_CRED_FCP;
     property VL_OUT_CRED_DIFAL: currency read fVL_OUT_CRED_DIFAL write fVL_OUT_CRED_DIFAL;
     property VL_SLD_DEV_ANT_DIFAL: currency read fVL_SLD_DEV_ANT_DIFAL write fVL_SLD_DEV_ANT_DIFAL;
     property VL_DEDUCOES_DIFAL: currency read fVL_DEDUCOES_DIFAL write fVL_DEDUCOES_DIFAL;
+    property DEB_ESP_DIFAL: currency read fDEB_ESP_DIFAL write fDEB_ESP_DIFAL;
+
+    // apartir de 01/01/2017
+    property VL_RECOL_DIFAL: Currency read FVL_RECOL_DIFAL write FVL_RECOL_DIFAL;
+    property VL_SLD_CRED_TRANSPORTAR_DIFAL: Currency read FVL_SLD_CRED_TRANSPORTAR_DIFAL write FVL_SLD_CRED_TRANSPORTAR_DIFAL;
+
+    property VL_SLD_CRED_ANT_FCP: Currency read FVL_SLD_CRED_ANT_FCP write FVL_SLD_CRED_ANT_FCP;
+    property VL_TOT_DEB_FCP: currency read fVL_TOT_DEB_FCP write fVL_TOT_DEB_FCP;
+    property VL_OUT_DEB_FCP: Currency read FVL_OUT_DEB_FCP write FVL_OUT_DEB_FCP;
+    property VL_TOT_CRED_FCP: currency read fVL_TOT_CRED_FCP write fVL_TOT_CRED_FCP;
+    property VL_OUT_CRED_FCP: Currency read FVL_OUT_CRED_FCP write FVL_OUT_CRED_FCP;
+    property VL_SLD_DEV_ANT_FCP: Currency read FVL_SLD_DEV_ANT_FCP write FVL_SLD_DEV_ANT_FCP;
+    property VL_DEDUCOES_FCP: Currency read FVL_DEDUCOES_FCP write FVL_DEDUCOES_FCP;
+    property VL_RECOL_FCP: Currency read FVL_RECOL_FCP write FVL_RECOL_FCP;
+    property VL_SLD_CRED_TRANSPORTAR_FCP: Currency read FVL_SLD_CRED_TRANSPORTAR_FCP write FVL_SLD_CRED_TRANSPORTAR_FCP;
+    property DEB_ESP_FCP: Currency read FDEB_ESP_FCP write FDEB_ESP_FCP;
+
+    // ate 31/12/2016
     property VL_RECOL: currency read fVL_RECOL write fVL_RECOL;
     property VL_SLD_CRED_TRANSPORTAR: currency read fVL_SLD_CRED_TRANSPORTAR write fVL_SLD_CRED_TRANSPORTAR;
-    property DEB_ESP_DIFAL: currency read fDEB_ESP_DIFAL write fDEB_ESP_DIFAL;
 
     // Registro FILHO
     property RegistroE311: TRegistroE311List read fRegistroE311 write fRegistroE311;

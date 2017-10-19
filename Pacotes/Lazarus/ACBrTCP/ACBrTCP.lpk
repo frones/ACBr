@@ -3,12 +3,13 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBrTCP"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simoes de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrTCP;..\..\..\Fontes\Terceiros\CodeGear"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrTCP\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -21,14 +22,13 @@
         <CompilerMessages>
           <IgnoredMessages idx5024="True"/>
         </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
       </Other>
     </CompilerOptions>
     <Description Value="ACBr - Socket, CEP, TCP, IBGE, CNIEE, Suframa, Download, FTP, HTTP, NFPws, IBPTax, CNPJ, CPF, Cotação, E-mail - (http://www.projectoacbr.com.br/)"/>
     <License Value="LGPL
 "/>
     <Version Minor="10"/>
-    <Files Count="21">
+    <Files Count="19">
       <Item1>
         <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrSocket.pas"/>
         <UnitName Value="ACBrSocket"/>
@@ -95,27 +95,18 @@
         <UnitName Value="ACBrSedex"/>
       </Item16>
       <Item17>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTer.pas"/>
-        <UnitName Value="ACBrMTer"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinReqRespClass.pas"/>
+        <UnitName Value="ACBrWinReqRespClass"/>
       </Item17>
       <Item18>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerClass.pas"/>
-        <UnitName Value="ACBrMTerClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinHTTPReqResp.pas"/>
+        <UnitName Value="ACBrWinHTTPReqResp"/>
       </Item18>
       <Item19>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerVT100.pas"/>
-        <UnitName Value="ACBrMTerVT100"/>
+        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrWinINetReqResp.pas"/>
+        <UnitName Value="ACBrWinINetReqResp"/>
       </Item19>
-      <Item20>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerStxEtx.pas"/>
-        <UnitName Value="ACBrMTerStxEtx"/>
-      </Item20>
-      <Item21>
-        <Filename Value="..\..\..\Fontes\ACBrTCP\ACBrMTerPMTG.pas"/>
-        <UnitName Value="ACBrMTerPMTG"/>
-      </Item21>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="ACBrDiversos"/>

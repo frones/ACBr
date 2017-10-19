@@ -53,6 +53,31 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+
+12/06/2017
+-- DemoDANFeFR --- 
+[+] Teste de ImprimirDadosDocReferenciados
+     Demostra a utilização da propriedade ImprimirDadosDocReferenciados
+      Por : Henrique Leonardo
+
+29/11/2016
+-- DemoDANFeFR --- 
+[+] Teste de ImprimirQtdVlComercial
+     Demostra a utilização da propriedade ImprimirQtdVlComercial
+      Por : Henrique Leonardo
+
+
+06/11/2016
+-- DemoDANFeFR --- 
+[+] Grupo Ajuste de Decimais na Aba Configuração
+     Demostra a utilização de casas decimais por integer e mascara;
+      Por : Henrique Leonardo
+
+02/09/2016
+-- DemoDANFeFR --- 
+[+] Grupo Margem na Aba Configuração
+      Por : Henrique Leonardo
+
 08/04/2016
 -- DemoDANFeFR --- 
 [+] Adicionado Arquivo de Log ao projeto : DemoDANFeFR-change-log.Txt

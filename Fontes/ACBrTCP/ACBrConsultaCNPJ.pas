@@ -53,7 +53,9 @@ type
   EACBrConsultaCNPJException = class ( Exception );
 
   { TACBrConsultaCNPJ }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrConsultaCNPJ = class(TACBrHTTP)
   private
     FACBrIBGE: TACBrIBGE;
@@ -123,7 +125,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils;
+  ACBrUtil, ACBrValidador, strutils;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -144,18 +146,18 @@ end;
 
 function TACBrConsultaCNPJ.GetCaptchaURL : String ;
 var
-  URL, Html: String;
+  AURL, Html: String;
 begin
   try
     Self.HTTPGet('http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao2.asp');
     Html := Self.RespHTTP.Text;
 
-    URL := 'http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/' +
+    AURL := 'http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/' +
            StrEntreStr(Html, '<img id="imgCaptcha" src="', '"');
 
     FViewState := StrEntreStr(Html, '<input type=hidden id=viewstate name=viewstate value='+'''', '''');
 
-    Result := StringReplace(URL, 'amp;', '', []);
+    Result := StringReplace(AURL, 'amp;', '', []);
   except
     on E: Exception do
     begin
@@ -240,6 +242,7 @@ var
   sMun:String;
   CountCid:Integer;
 begin
+  Result := False;
   Erro := ValidarCNPJ( ACNPJ ) ;
   if Erro <> '' then
      raise EACBrConsultaCNPJException.Create(Erro);
@@ -353,10 +356,7 @@ begin
       end;
     end
     else
-    begin
-      Result:= False;
       raise EACBrConsultaCNPJException.Create(Erro);
-    end;
   finally
     Post.Free;
   end;
@@ -406,7 +406,7 @@ end;
 
 function TACBrConsultaCNPJ.GetIBGE_UF: String;
 begin
- Result := copy(fCodigoIBGE,1,2) ;
+  Result := copy(fCodigoIBGE,1,2) ;
 end;
 
 end.

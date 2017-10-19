@@ -155,13 +155,7 @@ begin
          IntToStr( MultiplicadorH )                          + ',' +
          IntToStr( MultiplicadorV )                          + ',' +
          TipoVideo                                           + ',' +
-         Texto ;
-
-  if AdicionarComandoP then
-  begin
-    Cmd := Cmd +SLineBreak+'P1';
-    Cmd := Cmd +SLineBreak+'N';
-  end;
+         Texto;
 
   ListaCmd.Add(Cmd);
 end;
@@ -348,9 +342,14 @@ end;
 procedure TACBrETQEpl2.CalcularComandoAbertura;
 begin
   if (Temperatura < 0) or (Temperatura > 15) then
-    Raise Exception.Create(ACBrStr('Informe um valor entre 0 e 15 para Temperatura'));
+    raise Exception.Create(ACBrStr('Informe um valor entre 0 e 15 para Temperatura'));
 
-  Cmd := 'D' + IntToStr(Temperatura) ;  // Densidade / temperatura
+  case fpBackFeed of
+    bfOn : Cmd := 'JF' + LF;
+    bfOff: Cmd := 'JB' + LF;
+  end;
+
+  Cmd := Cmd + 'D' + IntToStr(Temperatura);  // Densidade / temperatura
 
   if LimparMemoria then
     Cmd := Cmd + LF + 'N' + LF ; // Limpa "Canvas" da Etiqueta

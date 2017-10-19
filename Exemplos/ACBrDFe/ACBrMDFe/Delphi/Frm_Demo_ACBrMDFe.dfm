@@ -982,14 +982,23 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
         TabOrder = 14
         OnClick = btnGerarPDFEventoClick
       end
-      object Button1: TButton
+      object btnConsultarNaoEncerrados: TButton
         Left = 376
         Top = 166
         Width = 177
         Height = 25
         Caption = 'Consultar N'#227'o Encerrados'
         TabOrder = 15
-        OnClick = Button1Click
+        OnClick = btnConsultarNaoEncerradosClick
+      end
+      object btnModeloFR: TButton
+        Left = 8
+        Top = 166
+        Width = 177
+        Height = 25
+        Caption = 'Modelo do Arquivo FR3'
+        TabOrder = 16
+        OnClick = btnModeloFRClick
       end
     end
     object PageControl2: TPageControl
@@ -1095,12 +1104,14 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     MAIL = ACBrMail1
     OnStatusChange = ACBrMDFe1StatusChange
     Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
-    Configuracoes.Geral.RetirarAcentos = False
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    DAMDFE = ACBrMDFeDAMDFeRL1
+    DAMDFE = ACBrMDFeDAMDFEFR1
     Left = 466
     Top = 297
   end
@@ -1115,7 +1126,7 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     Left = 383
     Top = 341
   end
-  object ACBrMDFeDAMDFeRL1: TACBrMDFeDAMDFeRL
+  object ACBrMDFeDAMDFEFR1: TACBrMDFeDAMDFEFR
     ACBrMDFe = ACBrMDFe1
     ImprimirHoraSaida = False
     MostrarPreview = True
@@ -1129,8 +1140,9 @@ object frmDemo_ACBrMDFe: TfrmDemo_ACBrMDFe
     MargemDireita = 0.510000000000000000
     MDFeCancelada = False
     MDFeEncerrado = False
-    PrintDialog = True
-    Left = 470
-    Top = 345
+    SelecionaImpressora = False
+    EspessuraBorda = 1
+    Left = 422
+    Top = 227
   end
 end

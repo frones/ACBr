@@ -257,6 +257,12 @@ begin
      end ;
 end;
 
+procedure TFrCalculadora.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Not pSaiComEsc) and (Key = VK_ESCAPE) then ZeraDisplay(Self);
+end;
+
 function TFrCalculadora.GetValorDisplay: String;
 begin
   Result := Trim(pValor.Caption) ;

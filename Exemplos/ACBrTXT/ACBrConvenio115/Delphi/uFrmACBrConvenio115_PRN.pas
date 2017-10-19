@@ -35,6 +35,7 @@ uses
   RLXLSFilter, ACBrConvenio115;
 
 type
+
   TEmitente = record
     RazaoSocial: string;
     CNPJ: string;
@@ -71,11 +72,10 @@ type
     rllFone: TRLLabel;
     RLLabel48: TRLLabel;
     RLBand1: TRLBand;
-    RLLabel1: TRLLabel;
-    RLLabel2: TRLLabel;
+    rllSistema: TRLLabel;
     RLSystemInfo1: TRLSystemInfo;
     RLSystemInfo2: TRLSystemInfo;
-    RLLabel28: TRLLabel;
+    rllUsuario: TRLLabel;
     rlbDestinatario: TRLBand;
     RLDraw2: TRLDraw;
     RLLabel7: TRLLabel;
@@ -194,6 +194,7 @@ type
     RLRichFilter1: TRLRichFilter;
     RLXLSFilter1: TRLXLSFilter;
     dsRPT: TDataSource;
+    RLLabel2: TRLLabel;
     procedure rllNumNF0BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
     procedure RLLabel20BeforePrint(Sender: TObject; var Text: string;
@@ -259,9 +260,15 @@ type
       var PrintIt: Boolean);
     procedure RLLabel19BeforePrint(Sender: TObject; var Text: string;
       var PrintIt: Boolean);
+    procedure rllSistemaBeforePrint(Sender: TObject; var Text: string; var PrintIt: Boolean);
+    procedure rllUsuarioBeforePrint(Sender: TObject; var Text: string; var PrintIt: Boolean);
+    procedure RLLabel2BeforePrint(Sender: TObject; var Text: string; var PrintIt: Boolean);
+    procedure rllResumoBeforePrint(Sender: TObject; var Text: string; var PrintIt: Boolean);
   private
     FCds: TClientDataSet;
     FLogoTipo: string;
+    FSistema: String;
+    FUsuario: String;
     FInformacoesAdicionais: string;
     procedure DoAddDataSet;
   public
@@ -274,6 +281,8 @@ type
     procedure SalvarPDF;
   published
     property LogoTipoBMP: string read FLogoTipo write FLogoTipo;
+    property Sistema: string read FSistema write FSistema;
+    property Usuario: string read FUsuario write FUsuario;
     property InformacoesAdicionais: string read FInformacoesAdicionais write FInformacoesAdicionais;
   end;
 
@@ -303,6 +312,8 @@ constructor TFrmACBrConvenio115_PRN.Create(AOwner: TComponent);
   end;
 begin
   inherited;
+  FSistema := 'Copyright by Jera Soft Co. - 2009/2010 - http://www.jerasoft.com.br';
+  FUsuario := '';
   FConvenio115 := TACBrConvenio115.Create(nil);
   FCds := TClientDataSet.Create(nil);
   CriarFields;
@@ -370,7 +381,7 @@ procedure TFrmACBrConvenio115_PRN.RLLabel19BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := IntToStr(Convenio115.Mestre[0].Modelo);
+  Text := IntToStr(Convenio115.Modelo);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel20BeforePrint(Sender: TObject;
@@ -384,7 +395,7 @@ procedure TFrmACBrConvenio115_PRN.RLLabel21BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := Convenio115.Mestre[0].Serie;
+  Text := Convenio115.Serie;
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel22BeforePrint(Sender: TObject;
@@ -404,14 +415,20 @@ procedure TFrmACBrConvenio115_PRN.RLLabel27BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'Mod: ' + IntToStr(Convenio115.Mestre[0].Modelo);
+  Text := 'Mod: ' + IntToStr(Convenio115.Modelo);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel29BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
   inherited;
-  Text := 'Série: ' + Convenio115.Mestre[0].Serie;
+  Text := 'Série: ' + Convenio115.Serie + ' ';;
+end;
+
+procedure TFrmACBrConvenio115_PRN.RLLabel2BeforePrint(Sender: TObject; var Text: string;
+  var PrintIt: Boolean);
+begin
+  Text := 'Impressão: ' + FormatDateTime('dd/mm/yyyy hh:nn:ss',now);
 end;
 
 procedure TFrmACBrConvenio115_PRN.RLLabel31BeforePrint(Sender: TObject;
@@ -550,10 +567,30 @@ begin
   Text := 'Nº ' + FormatFloat('000,000,000', Convenio115.Mestre[0].NumeroNF);
 end;
 
+procedure TFrmACBrConvenio115_PRN.rllResumoBeforePrint(Sender: TObject; var Text: string;
+  var PrintIt: Boolean);
+begin
+  Text := 'Referente a NOTA FISCAL DE SERVIÇO DE COMUNICAÇÃO - Valor Total R$ ' + Format('%m', [Convenio115.Mestre[0].ValorTotal]) + ' - Emissão:' + FormatDateTime('dd/mm/yyyy', Convenio115.Mestre[0].DataEmissao);
+end;
+
+procedure TFrmACBrConvenio115_PRN.rllSistemaBeforePrint(Sender: TObject; var Text: string;
+  var PrintIt: Boolean);
+begin
+  Text := 'Powered by ' + FSistema;
+end;
+
+procedure TFrmACBrConvenio115_PRN.rllUsuarioBeforePrint(Sender: TObject; var Text: string;
+  var PrintIt: Boolean);
+begin
+   Text := '';
+   if FUsuario <> '' then
+     Text := 'Usuário: ' + FUsuario;
+end;
+
 procedure TFrmACBrConvenio115_PRN.RLMemo2BeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
 begin
-  Text := Convenio115.Mestre[0].AutenticacaoDocumentoFiscal;
+  Text := Convenio115.Mestre[0].AutenticacaoDocumentoFiscal(false);
 end;
 
 procedure TFrmACBrConvenio115_PRN.rlmEnderecoBeforePrint(Sender: TObject;
@@ -565,8 +602,9 @@ end;
 
 procedure TFrmACBrConvenio115_PRN.rlmObsItemBeforePrint(Sender: TObject;
   var Text: string; var PrintIt: Boolean);
-var
+{var
   AStr: TStringList;
+}
 begin
   inherited;
   Text := InformacoesAdicionais;

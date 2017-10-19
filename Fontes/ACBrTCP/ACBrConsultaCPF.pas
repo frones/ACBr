@@ -53,7 +53,9 @@ type
   EACBrConsultaCPFException = class ( Exception );
 
   { TACBrConsultaCPF }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrConsultaCPF = class(TACBrHTTP)
   private
     FDataNascimento: String;
@@ -86,7 +88,7 @@ type
 implementation
 
 uses
-  ACBrUtil, ACBrValidador, synautil, strutils;
+  ACBrUtil, ACBrValidador, synautil, strutils, blcksock;
 
 function StrEntreStr(Str, StrInicial, StrFinal: String; ComecarDe: Integer = 1): String;
 var
@@ -108,7 +110,8 @@ end;
 procedure TACBrConsultaCPF.Captcha(Stream: TStream);
 begin
   try
-    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/captcha/gerarCaptcha.asp');
+    HTTPSend.Sock.SSL.SSLType := LT_TLSv1;
+    HTTPGet('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/captcha/gerarCaptcha.asp');
     if HTTPSend.ResultCode = 200 then
     begin
       HTTPSend.Document.Position := 0;
@@ -201,7 +204,7 @@ begin
     HttpSend.Document.Position:= 0;
     HttpSend.Document.CopyFrom(Post, Post.Size);
     HTTPSend.MimeType := 'application/x-www-form-urlencoded';
-    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaPublicaExibir.asp');
+    HTTPPost('https://www.receita.fazenda.gov.br/Aplicacoes/SSL/ATCTA/CPF/ConsultaSituacao/ConsultaPublicaExibir.asp');
 
     Erro := VerificarErros(RespHTTP.Text);
 
@@ -217,7 +220,7 @@ begin
         //Resposta.SaveToFile('C:\temp\cpf.txt');
 
         FCPF      := LerCampo(Resposta,'No do CPF:');
-        FNome     := LerCampo(Resposta,'Nome da Pessoa Física:');
+        FNome     := LerCampo(Resposta,'Nome:');
         FDataNascimento := LerCampo(Resposta,'Data de Nascimento:');
         FSituacao := LerCampo(Resposta,'Situação Cadastral:');
         FDataInscricao := LerCampo(Resposta,'Data da Inscrição:');

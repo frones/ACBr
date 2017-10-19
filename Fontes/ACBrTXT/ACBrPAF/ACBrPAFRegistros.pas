@@ -67,6 +67,18 @@ type
     property InclusaoExclusao: Boolean read fInclusaoExclusao write fInclusaoExclusao default False;
   end;
 
+  // REGISTRO TIPO Z3 - IDENTIFICAÇÃO DO PAF-ECF
+  TRegistroX3 = Class
+  private
+    fLAUDO:  string;         /// Número do Laudo de Análise Funcional
+    fNOME:   string;         /// Nome do aplicativo indicado no Laudo de Análise Técnica
+    fVERSAO: string;         /// Versão atual do aplicativo indicado no Laudo de Análise Técnica
+  public
+    property LAUDO: string read fLAUDO write fLAUDO;
+    property NOME: string read fNOME write fNOME;
+    property VERSAO: string read fVERSAO write fVERSAO;
+  end;
+
   /// REGISTRO TIPO X9 - TOTALIZAÇÃO DO ARQUIVO
 
   TRegistroX9 = class

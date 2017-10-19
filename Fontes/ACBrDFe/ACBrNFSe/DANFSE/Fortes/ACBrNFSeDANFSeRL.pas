@@ -61,13 +61,14 @@ type
   { TfrlDANFSeRL }
 
   TfrlDANFSeRL = class(TForm)
-    dsItens: TDatasource;
     RLNFSe: TRLReport;
     RLPDFFilter1: TRLPDFFilter;
-    procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);
   private
     { Private declarations }
+    FMoreData: Boolean;
   protected    
     FACBrNFSe       : TACBrNFSe;
     FNFSe           : TNFSe;
@@ -104,9 +105,9 @@ type
     FT_Endereco      : String;
     FT_Complemento   : String;
     FT_Email         : String;
+    FImprimeCanhoto  : Boolean;
 
 		cdsItens:  {$IFDEF BORLAND} TClientDataSet {$ELSE} TBufDataset{$ENDIF};
-		procedure ConfigDataSet;
 	
     procedure frlSemValorFiscalPrint(sender: TObject; var Value: String);    
   public
@@ -144,7 +145,8 @@ type
                              AT_Endereco            : String = '';
                              AT_Complemento         : String = '';
                              AT_Email               : String = '';                             
-                             APrintDialog    : Boolean = True);
+                             APrintDialog    : Boolean = True;
+                             AImprimeCanhoto : Boolean = True);
 
     class procedure SavePDF(AOwner: TComponent;
 														AFile           : String;
@@ -177,7 +179,8 @@ type
                             AT_Fone                : String = '';
                             AT_Endereco            : String = '';
                             AT_Complemento         : String = '';
-                            AT_Email               : String = '');
+                            AT_Email               : String = '';
+                            AImprimeCanhoto : Boolean = True);
   end;
 
 var
@@ -193,79 +196,12 @@ implementation
 
 procedure TfrlDANFSeRL.FormCreate(Sender: TObject);
 begin
- ConfigDataSet;
+  FMoreData := True;
 end;
 
 procedure TfrlDANFSeRL.FormDestroy(Sender: TObject);
 begin
  FreeAndNil( cdsItens );
-end;
-
-procedure TfrlDANFSeRL.ConfigDataSet;
-begin
- if not Assigned( cdsItens ) then
- cdsItens:=  {$IFDEF BORLAND}  TClientDataSet.create(nil)  {$ELSE}  TBufDataset.create(nil) {$ENDIF};
-
-  if cdsItens.Active then
- begin
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).EmptyDataSet;
- {$ENDIF}
-  cdsItens.Active := False;
- end;
-
- {$IFDEF BORLAND}
- if cdsItens is TClientDataSet then
-  begin
-  TClientDataSet(cdsItens).StoreDefs := False;
-  TClientDataSet(cdsItens).IndexDefs.Clear;
-  TClientDataSet(cdsItens).IndexFieldNames := '';
-  TClientDataSet(cdsItens).IndexName := '';
-  TClientDataSet(cdsItens).Aggregates.Clear;
-  TClientDataSet(cdsItens).AggFields.Clear;
-  end;
- {$ELSE}
- if cdsItens is TBufDataset then
-  begin
-  TBufDataset(cdsItens).IndexDefs.Clear;
-  TBufDataset(cdsItens).IndexFieldNames:='';
-  TBufDataset(cdsItens).IndexName:='';
-  end;
- {$ENDIF}
-
- with cdsItens do
-  if FieldCount = 0 then
-  begin
-    FieldDefs.Clear;
-    Fields.Clear;
-    FieldDefs.Add('DISCRIMINACAO',ftString,60);
-
-   {$IFDEF BORLAND}
-    if cdsItens is TClientDataSet then
-    TClientDataSet(cdsItens).CreateDataSet;
-   {$ELSE}
-    if cdsItens is TBufDataset then
-    TBufDataset(cdsItens).CreateDataSet;
-   {$ENDIF}
-   end;
-
- {$IFDEF BORLAND}
-  if cdsItens is TClientDataSet then
-  TClientDataSet(cdsItens).StoreDefs := False;
- {$ENDIF}
-
-   if not cdsItens.Active then
-   cdsItens.Active := True;
-
-  {$IFDEF BORLAND}
-   if cdsItens is TClientDataSet then
-   if cdsItens.Active then
-   TClientDataSet(cdsItens).LogChanges := False;
- {$ENDIF}
-
- dsItens.dataset := cdsItens;
-
 end;
 
 procedure TfrlDANFSeRL.frlSemValorFiscalPrint(sender: TObject;
@@ -281,7 +217,7 @@ class procedure TfrlDANFSeRL.Imprimir(AOwner: TComponent; ANFSe: TNFSe; ALogo, A
   AImpressora, APrestLogo, APrefeitura, ARazaoSocial, AEndereco,
   AComplemento, AFone, AMunicipio, AInscMunicipal, AEMail_Prestador, AUF,
   AT_InscEstadual, AT_InscMunicipal, AOutrasInformacaoesImp, AAtividade, AT_Fone,
-  AT_Endereco, AT_Complemento, AT_Email : String; APrintDialog: Boolean);
+  AT_Endereco, AT_Complemento, AT_Email : String; APrintDialog, AImprimeCanhoto: Boolean);
 begin
  with Create ( AOwner ) do
   try
@@ -316,6 +252,7 @@ begin
    FT_Endereco            := AT_Endereco;
    FT_Complemento         := AT_Complemento;
    FT_Email               := AT_Email;
+   FImprimeCanhoto        := AImprimeCanhoto;
 
    if FImpressora > '' then
      RLPrinter.PrinterName := FImpressora;
@@ -336,13 +273,19 @@ begin
   end ;
 end;
 
+procedure TfrlDANFSeRL.RLNFSeNeedData(Sender: TObject; var MoreData: Boolean);
+begin
+  MoreData := FMoreData;
+  FMoreData := False;
+end;
+
 class procedure TfrlDANFSeRL.SavePDF(AOwner: TComponent; AFile: String; ANFSe: TNFSe; ALogo, AEmail,
   AFax: String; ANumCopias: Integer; ASistema, ASite, AUsuario: String;
   AMargemSuperior, AMargemInferior, AMargemEsquerda, AMargemDireita: Double;
   APrestLogo, APrefeitura, ARazaoSocial, AEndereco, AComplemento, AFone, AMunicipio,
   AInscMunicipal, AEMail_Prestador, AUF, AT_InscEstadual, AT_InscMunicipal,
   AOutrasInformacaoesImp, AAtividade, AT_Fone,
-  AT_Endereco, AT_Complemento, AT_Email : String);
+  AT_Endereco, AT_Complemento, AT_Email : String; AImprimeCanhoto: Boolean);
 begin
   with Create ( AOwner ) do
    try
@@ -377,6 +320,8 @@ begin
     FT_Endereco            := AT_Endereco;
     FT_Complemento         := AT_Complemento;
     FT_Email               := AT_Email;
+
+    FImprimeCanhoto := AImprimeCanhoto;
 
     with RLPDFFilter1.DocumentInfo do
       begin

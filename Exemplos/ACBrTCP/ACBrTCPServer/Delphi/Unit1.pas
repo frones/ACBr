@@ -29,6 +29,7 @@ type
     lNConexoes: TLabel;
     edEnviar: TEdit;
     Label2: TLabel;
+    Splitter1: TSplitter;
     procedure bAtivarClick(Sender: TObject);
     procedure bDesativarClick(Sender: TObject);
     procedure ACBrTCPServer1Conecta(const TCPBlockSocket: TTCPBlockSocket;
@@ -98,7 +99,7 @@ procedure TForm1.ACBrTCPServer1Conecta(
   const TCPBlockSocket: TTCPBlockSocket; var Enviar: String);
 begin
   mOutput.Lines.Add('Conexão estabelecida de: ' + TCPBlockSocket.GetRemoteSinIP ) ;
-  Enviar := 'Seja bem vindo' ;
+  Enviar := 'Seja bem vindo' + #13+#10;
   ExibirConexoes ;
 end;
 
@@ -106,7 +107,8 @@ procedure TForm1.ACBrTCPServer1RecebeDados(const TCPBlockSocket: TTCPBlockSocket
       Recebido: String; var Enviar: String) ;
 begin
   mOutput.Lines.Add( Recebido ) ;
-  Enviar := edEnviar.Text ;
+  mOutput.Lines.Add( TCPBlockSocket.GetLocalSinIP );
+  Enviar := edEnviar.Text + #13+#10 ;
 end;
 
 procedure TForm1.Label3Click(Sender: TObject);
@@ -131,12 +133,12 @@ begin
      if CheckListBox1.Checked[I] then
      begin
         Selecionado := True ;
-        ACBrTCPServer1.EnviarString( edEnviar.Text, I );
+        ACBrTCPServer1.EnviarString( edEnviar.Text + #13+#10, I );
      end ;
   end ;
 
   if not Selecionado then
-     ACBrTCPServer1.EnviarString( edEnviar.Text, -1 );  // -1 envia para Todas conexoes
+     ACBrTCPServer1.EnviarString( edEnviar.Text + #13+#10, -1 );  // -1 envia para Todas conexoes
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

@@ -87,13 +87,16 @@ type
 
 
    { TACBrTEFD }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
    TACBrTEFD = class( TACBrComponent )
    private
      fAutoAtivarGP : Boolean;
      fAutoFinalizarCupom : Boolean;
      fAutoEfetuarPagamento : Boolean;
      fCHQEmGerencial: Boolean;
+     fConfirmarAntesDosComprovantes: Boolean;
      fTrocoMaximo: Double;
      fEsperaSleep : Integer;
      fEstadoReq : TACBrTEFDReqEstado;
@@ -127,6 +130,7 @@ type
      fTecladoBloqueado : Boolean;
      fSuportaDesconto : Boolean;
      fSuportaSaque : Boolean;
+     fSuportaReajusteValor : Boolean;
      fTempoInicialMensagemOperador: TDateTime;
      fTempoInicialMensagemCliente: TDateTime;
 
@@ -243,10 +247,12 @@ type
         const DocumentoVinculado : String = '');
      procedure NCN(const Rede, NSU, Finalizacao : String;
         const Valor : Double = 0; const DocumentoVinculado : String = '');
+     Function PRE(Valor : Double; DocumentoVinculado : String = '';
+        Moeda : Integer = 0 ) : Boolean; virtual;
 
      procedure FinalizarCupom( DesbloquearMouseTecladoNoTermino: Boolean = True);
      procedure CancelarTransacoesPendentes;
-     procedure ConfirmarTransacoesPendentes;
+     procedure ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean = True);
      procedure ImprimirTransacoesPendentes;
 
      procedure AgruparRespostasPendentes(
@@ -288,6 +294,10 @@ type
        default True;
      Property SuportaDesconto : Boolean read fSuportaDesconto write fSuportaDesconto
        default True;
+     Property SuportaReajusteValor : Boolean read fSuportaReajusteValor write fSuportaReajusteValor
+       default False;
+     property ConfirmarAntesDosComprovantes: Boolean read fConfirmarAntesDosComprovantes
+       write fConfirmarAntesDosComprovantes default False;
 
      property TEFDial    : TACBrTEFDDial     read fTefDial ;
      property TEFDisc    : TACBrTEFDDisc     read fTefDisc ;
@@ -419,6 +429,7 @@ begin
   fTrocoMaximo          := 0;
   fSuportaDesconto      := True;
   fSuportaSaque         := True;
+  fSuportaReajusteValor := False;
 
   fTempoInicialMensagemCliente  := 0;
   fTempoInicialMensagemOperador := 0;
@@ -576,8 +587,8 @@ begin
   if not Assigned( OnComandaECF )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECF" não programado' ) ) ;
 
-  //if not Assigned( OnComandaECFPagamento )  then
-  //   raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFPagamento" não programado' ) ) ;
+  if not Assigned( OnAguardaResp) and (GP = gpCliSiTef) then
+	raise EACBrTEFDErro.Create( ACBrStr('Evento "OnAguardaResp" não programado' ) ) ;
 
   if not Assigned( OnComandaECFAbreVinculado )  then
      raise EACBrTEFDErro.Create( ACBrStr('Evento "OnComandaECFAbreVinculado" não programado' ) ) ;
@@ -593,7 +604,7 @@ begin
 
   if not DirectoryExists( PathBackup ) then
      raise EACBrTEFDErro.Create( ACBrStr('Diretório de Backup não existente:'+sLineBreak+PathBackup) ) ;
-
+	
   if GP = gpNenhum then
    begin
      Erros := '' ;
@@ -766,6 +777,12 @@ begin
   fTefClass.NCN( Rede, NSU, Finalizacao, Valor, DocumentoVinculado);
 end;
 
+function TACBrTEFD.PRE(Valor: Double; DocumentoVinculado: String;
+  Moeda: Integer): Boolean;
+begin
+  Result := fTefClass.PRE(Valor, DocumentoVinculado, Moeda);
+end;
+
 procedure TACBrTEFD.CancelarTransacoesPendentes;
 Var
   I : Integer;
@@ -787,13 +804,15 @@ begin
   end;
 end;
 
-procedure TACBrTEFD.ConfirmarTransacoesPendentes;
+procedure TACBrTEFD.ConfirmarTransacoesPendentes(ApagarRespostasPendentes: Boolean);
 var
-   I : Integer;
+  HouveConfirmacao: Boolean;
+  I : Integer;
 begin
-  fTefClass.GravaLog( 'ConfirmarTransacoesPendentes' ) ;
+  fTefClass.GravaLog( 'ConfirmarTransacoesPendentes' );
 
-  I := 0 ;
+  HouveConfirmacao := False;
+  I := 0;
   while I < RespostasPendentes.Count do
   begin
     try
@@ -804,11 +823,15 @@ begin
         if not CNFEnviado then
         begin
           CNF( Rede, NSU, Finalizacao, DocumentoVinculado );
-          CNFEnviado := True ;
+          CNFEnviado       := True;
+          HouveConfirmacao := True;
         end;
 
-        ApagaEVerifica( ArqRespPendente );
-        ApagaEVerifica( ArqBackup );
+        if ApagarRespostasPendentes then
+        begin
+          ApagaEVerifica( ArqRespPendente );
+          ApagaEVerifica( ArqBackup );
+        end;
 
         Inc( I ) ;
       end;
@@ -818,10 +841,11 @@ begin
   end ;
 
   try
-     if Assigned( fOnDepoisConfirmarTransacoes ) then
-        fOnDepoisConfirmarTransacoes( RespostasPendentes );
+    if HouveConfirmacao and Assigned( fOnDepoisConfirmarTransacoes ) then
+      fOnDepoisConfirmarTransacoes( RespostasPendentes );
   finally
-     RespostasPendentes.Clear;
+    if ApagarRespostasPendentes then
+      RespostasPendentes.Clear;
   end;
 end;
 
@@ -852,6 +876,9 @@ begin
      if EstadoECF <> 'L' then
         raise EACBrTEFDECF.Create( ACBrStr(CACBrTEFD_Erro_ECFNaoLivre) ) ;
   end;
+
+  if fConfirmarAntesDosComprovantes then
+    ConfirmarTransacoesPendentes(False);
 
   ImpressaoOk            := False ;
   Gerencial              := False ;
@@ -1131,18 +1158,18 @@ begin
         Gerencial := True ;
      end;
   finally
-     if not ImpressaoOk then
-      begin
-        try ComandarECF( opeCancelaCupom ); except {Exceção Muda} end ;
-        CancelarTransacoesPendentes;
-      end
-     else
-        ConfirmarTransacoesPendentes ;
+    if not (fConfirmarAntesDosComprovantes or ImpressaoOk) then
+    begin
+      try ComandarECF(opeCancelaCupom); except {Exceção Muda} end;
+      CancelarTransacoesPendentes;
+    end
+    else
+      ConfirmarTransacoesPendentes;
 
-     BloquearMouseTeclado( False );
+    BloquearMouseTeclado( False );
 
-     if (MsgAutenticacaoAExibir <> '') then  // Tem autenticação ?
-        DoExibeMsg( opmOK, MsgAutenticacaoAExibir ) ;
+    if (MsgAutenticacaoAExibir <> '') then  // Tem autenticação ?
+      DoExibeMsg( opmOK, MsgAutenticacaoAExibir ) ;
   end;
 
   RespostasPendentes.Clear;
@@ -1708,7 +1735,8 @@ begin
 
      // Avisa a aplicação, que está em Espera //
      Interromper := False;
-     OnAguardaResp( 'TempoMinimoMensagemFinal', TempoCorrido, Interromper ) ;
+     if Assigned( OnAguardaResp ) then
+       OnAguardaResp( 'TempoMinimoMensagemFinal', TempoCorrido, Interromper ) ;
 
      Sleep(EsperaSleep) ;
      {$IFNDEF NOGUI}

@@ -35,7 +35,7 @@
 unit DoACBrUnit ;
 
 interface
-Uses Classes, TypInfo, SysUtils, CmdUnit;
+Uses Classes, TypInfo, SysUtils, CmdUnit, IniFiles;
 {$IFDEF MSWINDOWS}
   function BlockInput (fBlockInput: boolean): dword; stdcall; external 'user32.dll';
 {$ENDIF}
@@ -43,6 +43,8 @@ Uses Classes, TypInfo, SysUtils, CmdUnit;
 Procedure DoACBr( {%H-}Cmd : TACBrCmd ) ;
 Procedure VerificaPermiteComandosRemoto ;
 Function ConvertStrRecived( AStr: AnsiString ) : AnsiString ;
+Function LerConverterIni( AStr: AnsiString ) : TMemIniFile;
+Function StringIsXML(AStr: AnsiString) : Boolean;
 
 implementation
 Uses ACBrUtil, DateUtils,
@@ -245,6 +247,9 @@ begin
          else if Cmd.Metodo = 'lerini' then //ACBR.LerIni  Recarrega configurações do arquivo INI
            LerIni
 
+         else if Cmd.Metodo = 'ajustalinhaslog' then //ACBR.AjustaLinhasLog
+           AjustaLinhasLog
+
         ELSE
            raise Exception.Create('Comando inválido ('+ copy(Cmd.Comando,6,length(Cmd.Comando))+')') ;
 
@@ -290,6 +295,36 @@ begin
      P      := pos('\x',Result) ;
   end ;
 end ;
+
+function LerConverterIni(AStr: AnsiString): TMemIniFile;
+var
+  SL: TStringList;
+begin
+  Result := TMemIniFile.Create(' ');
+  SL     := TStringList.Create;
+  try
+    try
+      if (pos(#10,aStr) = 0) and FilesExists(Astr) then
+        SL.LoadFromFile(AStr)
+      else
+        SL.Text := ConvertStrRecived( Astr );
+
+      Result.SetStrings(SL);
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create('Erro ao carregar arquivo'+sLineBreak+E.Message);
+      end;
+    end;
+  finally
+    SL.Free;
+  end;
+end;
+
+function StringIsXML(AStr: AnsiString): Boolean;
+begin
+  Result :=(pos('<', AStr) > 0) and (pos('>', AStr) > 0);
+end;
 
 end.
 

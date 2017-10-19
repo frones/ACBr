@@ -43,7 +43,7 @@ uses
   ACBrConsts,
   pnfsNFSeW,
   pcnAuxiliar, pcnConversao, pcnGerador,
-  pnfsNFSe, pnfsConversao;
+  pnfsNFSe, pnfsConversao, pnfsConsts;
 
 type
   { TNFSeW_SP }
@@ -95,7 +95,7 @@ begin
   Gerador.wGrupoNFSe('ChaveRPS');
   Gerador.wCampoNFSe(tcStr, '', 'InscricaoPrestador', 1, 11, 1, NFSe.Prestador.InscricaoMunicipal, '');
   Gerador.wCampoNFSe(tcStr, '', 'SerieRPS'          , 1, 02, 1, NFSe.IdentificacaoRps.Serie, '');
-  Gerador.wCampoNFSe(tcStr, '', 'NumeroRPS'         , 1, 12, 1, NFSe.IdentificacaoRps.Numero, '');
+  Gerador.wCampoNFSe(tcStr, '', 'NumeroRPS'         , 1, 12, 1, NFSe.IdentificacaoRps.Numero, DSC_NUMRPS);
   Gerador.wGrupoNFSe('/ChaveRPS');
 end;
 
@@ -192,7 +192,7 @@ procedure TNFSeW_SP.GerarListaServicos;
 begin
   Gerador.wCampoNFSe(tcStr, '', 'Discriminacao', 1, 2000, 1, NFSe.Servico.Discriminacao, '');
   Gerador.wCampoNFSe(tcDe2, '', 'ValorCargaTributaria', 1, 15, 0, NFSe.Servico.ValorCargaTributaria, '');
-  Gerador.wCampoNFSe(tcDe2, '', 'PercentualCargaTributaria', 1, 5, 0, NFSe.Servico.PercentualCargaTributaria, '');
+  Gerador.wCampoNFSe(tcDe4, '', 'PercentualCargaTributaria', 1, 5, 0, NFSe.Servico.PercentualCargaTributaria, '');
   Gerador.wCampoNFSe(tcStr, '', 'FonteCargaTributaria', 1, 10, 0, NFSe.Servico.FonteCargaTributaria, '');
 end;
 
@@ -216,6 +216,7 @@ begin
   Gerador.wCampoNFSe(tcStr, '', 'CodigoCEI', 1, 12, 0, NFSe.ConstrucaoCivil.nCei, '');
   Gerador.wCampoNFSe(tcStr, '', 'MatriculaObra', 1, 12, 0, NFSe.ConstrucaoCivil.nMatri, '');
   Gerador.wCampoNFSe(tcStr, '', 'MunicipioPrestacao', 1, 7, 0, NFSe.ConstrucaoCivil.CodigoMunicipioObra, '');
+  Gerador.wCampoNFSe(tcStr, '', 'NumeroEncapsulamento', 1, 12, 0, NFSe.ConstrucaoCivil.nNumeroEncapsulamento, '');
 end;
 
 procedure TNFSeW_SP.GerarCondicaoPagamento;
@@ -268,6 +269,7 @@ function TNFSeW_SP.GerarXml: Boolean;
 var
   Gerar: Boolean;
 begin
+  Gerador.ListaDeAlertas.Clear;
   Gerador.Opcoes.SuprimirDecimais := True;
   Gerador.ArquivoFormatoXML := '';
   Gerador.Prefixo           := FPrefixo4;

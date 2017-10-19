@@ -175,6 +175,7 @@ var
 begin
   { Sobrescrever apenas se realmente necessário }
 
+  FazerLog('Inicio '+ClassName, False);
   InicializarServico;
   try
     DefinirDadosMsg;
@@ -297,7 +298,7 @@ end;
 
 procedure TDFeWebService.EnviarDados;
 Var
-  Tentar, Tratado: Boolean;
+  Tentar, Tratado, TemCertificadoConfigurado: Boolean;
 begin
   { Sobrescrever apenas se necessário }
 
@@ -317,7 +318,11 @@ begin
     Tentar := False;
     Tratado := False;
 
-    if (FPConfiguracoes.Certificados.NumeroSerie <> '') then  // Tem Certificado carregado ?
+    TemCertificadoConfigurado := (FPConfiguracoes.Certificados.NumeroSerie <> '') or
+                                 (FPConfiguracoes.Certificados.DadosPFX <> '') or
+                                 (FPConfiguracoes.Certificados.ArquivoPFX <> '');
+
+    if TemCertificadoConfigurado then
       if FPConfiguracoes.Certificados.VerificarValidade then
          if (FPDFeOwner.SSL.CertDataVenc < Now) then
            raise EACBrDFeException.Create('Data de Validade do Certificado já expirou: '+
@@ -439,7 +444,9 @@ begin
   AOpcoes.FormatoAlerta := FPDFeOwner.Configuracoes.Geral.FormatoAlerta;
   AOpcoes.RetirarAcentos := FPDFeOwner.Configuracoes.Geral.RetirarAcentos;
   AOpcoes.RetirarEspacos := FPDFeOwner.Configuracoes.Geral.RetirarEspacos;
+  AOpcoes.IdentarXML := FPDFeOwner.Configuracoes.Geral.IdentarXML;
   pcnAuxiliar.TimeZoneConf.Assign( FPDFeOwner.Configuracoes.WebServices.TimeZoneConf );
+  AOpcoes.QuebraLinha := FPDFeOwner.Configuracoes.WebServices.QuebradeLinha;
 end;
 
 function TDFeWebService.GerarMsgErro(E: Exception): String;

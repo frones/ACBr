@@ -272,6 +272,10 @@ const
   GEN_IPADD = 7 or V_ASN1_CONTEXT_SPECIFIC;
   GEN_RID = 8 or V_ASN1_CONTEXT_SPECIFIC;
 
+  XN_FLAG_SEP_MASK       = 983040;  //(0xf << 16)
+  XN_FLAG_SEP_CPLUS_SPC  = 131072;  //(2 << 16) ,+ spaced: more readable
+  ASN1_STRFLGS_UTF8_CONVERT = 16;
+
 type
 // Check the correct "Char" type to use according to the Delphi Version
 {$IFDEF FPC}
@@ -1098,6 +1102,7 @@ function DSA_generate_key(a: pDSA): integer; cdecl;
 
 // X.509 names (DN)
 function X509_NAME_oneline(a: pX509_NAME; buf: PCharacter; size: integer): PCharacter; cdecl;
+function X509_NAME_print_ex(bp: pBIO; x: pX509_NAME; indent: integer; flags: Cardinal): Integer; cdecl;
 function X509_NAME_new: pX509_NAME; cdecl;
 procedure X509_NAME_free(x:pX509_NAME) cdecl;
 function X509_NAME_add_entry_by_txt(name: pX509_NAME; field: PCharacter;
@@ -1140,6 +1145,7 @@ function X509V3_EXT_conf_nid(conf: pointer; ctx: pointer;
     ext_nid: integer; value: PCharacter): pX509_EXTENSION; cdecl;
 
 function X509_sign(x: pX509; pkey: pEVP_PKEY; const md: pEVP_MD): integer; cdecl;
+function X509_digest(x: pX509; const _type: pEVP_MD; md: pointer; var mdlen: cardinal): integer; cdecl;
 function X509_set_issuer_name(x: pX509; name: pX509_NAME): integer; cdecl;
 function X509_set_subject_name(x: pX509; name: pX509_NAME): integer; cdecl;
 procedure X509V3_set_ctx(ctx: pX509V3_CTX; issuer: pX509; subject: pX509;
@@ -1802,6 +1808,7 @@ function DSA_generate_parameters; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}d
 function DSA_generate_key; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function X509_NAME_oneline; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_NAME_print_ex; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 function X509_NAME_new; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 procedure X509_NAME_free; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 function X509_NAME_add_entry_by_txt; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
@@ -1850,6 +1857,7 @@ function X509V3_EXT_i2d; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$E
 function X509V3_EXT_conf_nid; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 
 function X509_sign; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
+function X509_digest; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 function X509_set_issuer_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 function X509_set_subject_name; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};
 procedure X509V3_set_ctx; external LIBEAY_DLL_NAME {$IFDEF USE_DELAYED}delayed{$ENDIF};

@@ -48,7 +48,7 @@ uses
      QGraphics, QControls, QForms, QDialogs, QStdCtrls
   {$else}
     {$ifndef FPC}
-      Windows, Messages, WinProcs, WinTypes
+      Windows, Messages
     {$else}
       LCLType
     {$endif}

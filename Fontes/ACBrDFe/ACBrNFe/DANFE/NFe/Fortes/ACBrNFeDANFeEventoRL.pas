@@ -52,7 +52,7 @@ uses
   {$ELSE}
     Graphics, Controls, Forms, Dialogs, ExtCtrls,
   {$ENDIF}
-  pcnEnvEventoNFe, pcnConversao, pcnNFe, ACBrNFeDANFeRLClass,
+  pcnEnvEventoNFe, pcnNFe, ACBrNFeDANFeRLClass,
   RLReport, RLPDFFilter, RLConsts, RLFilters, RLPrinters;
 
 type

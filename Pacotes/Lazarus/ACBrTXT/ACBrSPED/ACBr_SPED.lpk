@@ -9,14 +9,14 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofinsImportar;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF"/>
+        <OtherUnitFiles Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscal;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDContabil;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofins;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDPisCofinsImportar;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDECF;..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar"/>
         <UnitOutputDirectory Value="..\..\..\..\Lib\Lazarus\ACBrTXT\ACBrSPED\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="ACBr - EFD ICMS/IPI, EFD Contribuições, FCONT, EFD Contábil e ECF - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
     <Version Release="1"/>
-    <Files Count="6">
+    <Files Count="7">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSped.pas"/>
         <UnitName Value="ACBrSped"/>
@@ -46,6 +46,11 @@
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrSpedECF"/>
       </Item6>
+      <Item7>
+        <Filename Value="..\..\..\..\Fontes\ACBrTXT\ACBrSPED\ACBrSPEDFiscalImportar\ACBrEFDImportar.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ACBrEFDImportar"/>
+      </Item7>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

@@ -59,14 +59,13 @@ type
    { TACBrTEFDDial }
 
    TACBrTEFDDial = class( TACBrTEFDClassTXT )
-   private
    public
-     constructor Create( AOwner : TComponent ) ; override ;
+     constructor Create(AOwner: TComponent); override;
    end;
 
 implementation
 
-Uses ACBrUtil, dateutils;
+Uses dateutils;
 
 { TACBrTEFDClass }
 

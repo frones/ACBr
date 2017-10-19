@@ -27,9 +27,9 @@ begin
  k := 0;
  repeat
    inc(k);
-   DMDFe.NFe.DistribuicaoDFe( DM_CTA.EmpresaCodigoEstado.AsInteger,
-                              CNPJ,
-                              edtUltNSU.Text, '' );
+   DMDFe.NFe.DistribuicaoDFePorUltNSU( DM_CTA.EmpresaCodigoEstado.AsInteger,
+                                       CNPJ,
+                                       edtUltNSU.Text );
 
    sStat   := IntToStr(DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.cStat);
    sMotivo := DMDFe.NFe.WebServices.DistribuicaoDFe.retDistDFeInt.xMotivo;

@@ -16,7 +16,9 @@ type
     bEnviar: TButton;
     bConectar: TButton;
     edIP: TEdit;
+    edPorta: TEdit;
     Label1: TLabel;
+    Label2: TLabel;
     mEnviar: TMemo;
     mResposta: TMemo;
     Panel1: TPanel;
@@ -54,8 +56,18 @@ end;
 
 procedure TForm1.bConectarClick(Sender: TObject);
 begin
-  fSocket.Connect(edIP.Text, '3434');
-  AguardaReposta;
+  if bConectar.Caption = 'Conectar' then
+  begin
+    fSocket.Connect(edIP.Text, edPorta.Text);
+    AguardaReposta;
+    bConectar.Caption := 'Desconectar';
+  end
+  else
+  begin
+    fSocket.CloseSocket;
+    bConectar.Caption := 'Conectar';
+    AguardaReposta;
+  end;
 end;
 
 procedure TForm1.bEnviarClick(Sender: TObject);

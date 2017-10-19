@@ -39,6 +39,126 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+29/09/2017
+-- pcnConversao --
+[*] Incluido o evento 310611 (Cancelamento de MDF-e) esse código de evento é
+    Retornado pelo DistribuicaoDFe quando um MDF-e esta cancelado.
+   Por: Italo Jurisato Junior
+
+14/09/2017
+-- pcnConversao --
+[*] Ajuste em modFreteToDesStr para versão 4.0.
+   Por: Henrique Leonardo
+
+12/09/2017
+-- pcnConversao --
+[*] Alteração para atender a versão 1.30 da NT 2016/002
+   Por: Italo Jurisato Junior
+
+04/09/2017
+-- pcnConversao --
+[+] Inclusão do tipo TIndicador e suas funções.
+   Por: Italo Jurisato Junior
+
+30/08/2017
+-- pcnAuxiliar --
+[*] Método "ExtrairSerieChaveAcesso", modificado para retornar o Numero de Série, quando for SAT
+
+22/07/2017
+-- pcnConversao --
+[-] Remoção da função DescrModeloNFe. Sendo espicífica para as danfe's ( Fast Report / Fortes Report ).
+    	por: Henrique Leonardo
+
+04/07/2017
+-- pcnAuxiliar --
+[+] Adicionado o método:
+    function ExtrairTipoEmissaoChaveAcesso(aChaveNFe: String): Integer;
+    (por: Graziele e DSA)
+
+19/06/2017
+-- pcnConversao --
+[+] Nova função para retornar a descrição do modelo
+	function DescrModeloNFe(chave: String):String;
+    http://www.projetoacbr.com.br/forum/topic/37267-danfe-fortes-conflito-documentos-referenciados-adicionados-pelo-componente-no-danfe/#comment-244342
+    por: RicardoVoigt / Henrique Leonardo
+
+
+26/04/2017
+-- pcnConversao --
+[-]	Correção de erro de compilação em delphi, contribuição de BigWings, tópico abaixo.
+	http://www.projetoacbr.com.br/forum/topic/36411-erro-na-instalação-acbr-revisão-13237/
+	por: Celso marigo Junior
+
+21/04/2017
+-- pcnConversao --
+[*] Alterações visando a NT 2016/002 versão 1.10
+   Por: Italo Jurisato Junior
+
+08/02/2017
+-- pcnConversao --
+[*] Na function StrToCSTICMS foi trocado o valor '90' por '91' quando o 
+    emumerador for cstICMSOutraUF, conforme proposto por Dr Leite.
+    Por: Italo Jurisato Junior
+
+07/01/2017
+-- Diversos --
+[*] Incluido o tipo de navegação, funções de conversão e constantes pois os
+    mesmos são utilizadas pelo CT-e e MDF-e.
+    Por: Italo Jurisato Junior
+
+07/01/2017
+-- pcnLeitor --
+[*] Correção na leitura do tipo tcDatVcto.
+    por: Italo Jurisato Junior
+
+Data: 06/01/2017
+-- pcnGerador --
+[-] Correção no método "TGerador.wCampo". Não estava convertendo corretamente
+    números Double e maiores do que 999, devido a modificação em ACBrUtil.FloatMask
+    (por: DSA)
+
+14/12/2016
+-- pcnConversao --
+[*] Refatoração da CSTIPIToStrTagPosText(const t: TpcnCstIpi): string;
+    http://www.projetoacbr.com.br/forum/topic/33997-corre%C3%A7%C3%A3o-na-fun%C3%A7%C3%A3o-cstipitostrtagpostext/
+    por: Henrique Leonardo ( HleoRj )
+
+30/11/2016
+-- pcnAuxiliar --
+[+] Adicionado os métodos
+    function ExtrairSerieChaveAcesso(AChaveNFE: String): Integer;
+    function ExtrairNumeroChaveAcesso(AChaveNFE: String): Integer;
+    (por: Graziele)
+
+25/11/2016
+-- pcnConversao --
+[+] Adicionado novo Tipo: TImprimirUnidQtdeValor = (iuComercial, iuTributavel, iuComercialETributavel)
+    http://www.projetoacbr.com.br/forum/topic/33636-impress%C3%A3o-de-nfe-com-a-unidade-comercial-e-tribut%C3%A1vel/
+    por WesleyAS / HLeorj
+
+11/11/2016
+-- pcnConversao --
+[+] Nova função para retornar a descrição da unidade de medida 
+          function UnidMedToDescricaoStr(const t: TUnidMed): string;
+    por: Henrique Leonardo ( HleoRj )
+
+26/10/2016
+-- pcnConversao --
+[*] Remoção do Tipo de Responsável pelo Seguro e das funções de conversão.
+    por: Italo Jurisato Junior
+
+16/09/2016
+-- pcnConst / pcnConversao --
+[*] Definição de 2 novos tipos de enventos a serem usados no componente ACBrCTe e
+    a transferencia de uma constante pois a mesma será usada por mais de um componente.
+    por: Italo Jurisato Junior
+
+23/08/2016
+-- diversos --
+[+] Criada a unit pcnConsts que contem as constantes de mensagens usadas na
+    geração dos XML e que são apresentadas quando ocorre erro na validação.
+    por: Italo Jurisato Junior
+
 03/08/2016
 -- pcnAuxiliar --
 [*] Incluido o caracter "." no final das constantes UFS e CODIGOS da function CodigoParaUF.

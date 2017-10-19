@@ -59,6 +59,7 @@ type TACBrCHQBematech = class( TACBrCHQClass )
 
   protected
 
+    procedure EnviarStr(AStr: string);
   public
     constructor Create(AOwner: TComponent);
 
@@ -98,19 +99,19 @@ end;
 procedure TACBrCHQBematech.TravarCheque;
 begin
   if FImprimeVerso then
-    fpDevice.EnviaString( #27 + #119 + #1 )
+    EnviarStr( #27 + #119 + #1 )
   else
-    fpDevice.EnviaString( #27 + #177 );
-  Sleep(100);
+    EnviarStr( #27 + #177 );
+
 end;
 
 procedure TACBrCHQBematech.DestravarCheque;
 begin
   if FImprimeVerso then
-    fpDevice.EnviaString( #27 + #119 + #0 )
+    EnviarStr( #27 + #119 + #0 )
   else
-    fpDevice.EnviaString( #27 + #176 );
-  Sleep(100);
+    EnviarStr( #27 + #176 );
+
 end;
 
 procedure TACBrCHQBematech.ImprimirVerso(AStringList : TStrings);
@@ -138,26 +139,38 @@ begin
   TravarCheque ;
 
   { Banco }
-  fpDevice.EnviaString( #27 + #162 + fpBanco + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #162 + fpBanco + #13 ) ;
+
   { Valor }
   ValStr := IntToStrZero( Round( fpValor * 100), 11) ;
   ValStr := copy(ValStr,1,9)+','+copy(ValStr,10,2) ;
-  fpDevice.EnviaString( #27 + #163 + ValStr + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #163 + ValStr + #13 ) ;
+
   { Favorecido }
-  fpDevice.EnviaString( #27 + #160 + Trim(fpFavorecido) + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #160 + Trim(fpFavorecido) + #13 ) ;
+
   { Cidade }
-  fpDevice.EnviaString( #27 + #161 + Trim(fpCidade) + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #161 + Trim(fpCidade) + #13 ) ;
+
   { Data }
   DataStr := FormatDateTime('dd/mm/yy',fpData) ;
   DataStr := StringReplace(DataStr,DateSeparator,'/',[rfReplaceAll]) ;
-  fpDevice.EnviaString( #27 + #164 + DataStr + #13 ) ;
-  Sleep(100);
+  EnviarStr( #27 + #164 + DataStr + #13 ) ;
 
   DestravarCheque ;
+end;
+
+procedure TACBrCHQBematech.EnviarStr(AStr: string);
+begin
+  try
+    fpDevice.EnviaString(AStr);
+  except
+    on E: Exception do
+    begin
+    end;
+  end;
+
+  Sleep(100);
 end;
 
 end.

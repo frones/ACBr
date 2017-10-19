@@ -13,7 +13,7 @@ object Form6: TForm6
   Font.Name = 'Tahoma'
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '1.6.0.4'
   object Image1: TImage
     Left = 0
     Height = 40
@@ -397,6 +397,15 @@ object Form6: TForm6
     Caption = 'Tipo Z'
     OnClick = btnZClick
     TabOrder = 5
+  end
+  object btnV: TButton
+    Left = 312
+    Height = 25
+    Top = 128
+    Width = 75
+    Caption = 'Tipo V'
+    OnClick = btnVClick
+    TabOrder = 6
   end
   object ACBrEAD: TACBrEAD
     left = 504

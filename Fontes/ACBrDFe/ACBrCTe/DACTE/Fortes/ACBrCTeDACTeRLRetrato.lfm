@@ -1,14 +1,13 @@
 inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
-  Left = 350
-  Top = 87
+  Left = 333
+  Top = 259
   Caption = 'DACTe - Retrato'
   Font.Height = -8
   Font.Name = 'Arial'
   Font.Style = [fsBold]
   inherited RLCTe: TRLReport
-    Left = 96
-    Top = -27
-    Background.Arrange = baDistributed
+    Left = 16
+    Top = 19
     Background.Height = 96
     Background.Width = 175
     DataSource = Datasource1
@@ -405,7 +404,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_07_HeaderItens: TRLBand[1]
       Left = 26
       Height = 81
-      Top = 1021
+      Top = 1188
       Width = 742
       AutoSize = True
       BandType = btHeader
@@ -422,10 +421,30 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Height = 0
       AfterPrint = rlb_07_HeaderItensAfterPrint
       BeforePrint = rlb_07_HeaderItensBeforePrint
+      object RLLabel20: TRLLabel
+        Left = 6
+        Height = 12
+        Top = 2
+        Width = 732
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'DOCUMENTOS ORIGINÁRIOS'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
       object RLDraw32: TRLDraw
-        Left = 1
+        Left = 0
         Height = 1
-        Top = 15
+        Top = 14
         Width = 740
         HelpContext = 1
         Angle = 0
@@ -494,26 +513,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -7
-        Font.Name = 'Times New Roman'
-        ParentColor = False
-        ParentFont = False
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-        Transparent = False
-      end
-      object RLLabel20: TRLLabel
-        Left = 6
-        Height = 12
-        Top = 2
-        Width = 732
-        Alignment = taCenter
-        AutoSize = False
-        Caption = 'DOCUMENTOS ORIGINÁRIOS'
-        Color = clWhite
-        Font.Color = clWindowText
-        Font.Height = -9
         Font.Name = 'Times New Roman'
         ParentColor = False
         ParentFont = False
@@ -629,7 +628,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_09_Obs: TRLBand[2]
       Left = 26
       Height = 68
-      Top = 1102
+      Top = 1411
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -731,7 +730,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_02_Cabecalho: TRLBand[3]
       Left = 26
-      Height = 188
+      Height = 184
       Top = 258
       Width = 742
       BandType = btHeader
@@ -781,10 +780,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rlsLinhaV01: TRLDraw
-        Left = 174
+        Left = 176
         Height = 60
         Top = 124
-        Width = 3
+        Width = 1
         Angle = 90
         Brush.Style = bsClear
         DrawKind = dkLine
@@ -1039,10 +1038,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel8: TRLLabel
-        Left = 334
+        Left = 333
         Height = 8
         Top = 34
-        Width = 31
+        Width = 32
         Alignment = taCenter
         AutoSize = False
         Caption = 'MODELO'
@@ -1079,7 +1078,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel21: TRLLabel
-        Left = 368
+        Left = 367
         Height = 8
         Top = 34
         Width = 21
@@ -1138,11 +1137,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllNumCte: TRLLabel
-        Left = 392
+        Left = 394
         Height = 15
         Top = 42
         Width = 70
-        Alignment = taRightJustify
         AutoSize = False
         Caption = '999.999.999'
         Color = clWhite
@@ -1197,7 +1195,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object rllEmissao: TRLLabel
-        Left = 509
+        Left = 510
         Height = 13
         Top = 42
         Width = 58
@@ -1308,7 +1306,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 4
         Height = 15
         Top = 166
-        Width = 150
+        Width = 170
         AutoSize = False
         Color = clWhite
         Font.Color = clWindowText
@@ -1599,7 +1597,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_10_ModRodFracionado: TRLBand[4]
       Left = 26
       Height = 44
-      Top = 1170
+      Top = 1523
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -1711,12 +1709,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rllLotacao: TRLLabel
-        Left = 154
-        Height = 13
+        Left = 162
+        Height = 12
         Top = 25
-        Width = 34
-        Alignment = taCenter
-        AutoSize = False
+        Width = 18
         Caption = 'SIM'
         Color = clWhite
         Font.Color = clWindowText
@@ -1733,7 +1729,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Left = 196
         Height = 12
         Top = 25
-        Width = 69
+        Width = 72
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
@@ -1749,8 +1745,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel85: TRLLabel
         Left = 304
         Height = 11
-        Top = 24
-        Width = 434
+        Top = 26
+        Width = 432
         Alignment = taCenter
         AutoSize = False
         Caption = 'ESTE CONHECIMENTO DE TRANSPORTE ATENDE À LEGISLAÇÃO DE TRANSPORTE RODOVIÁRIO EM VIGOR'
@@ -1867,11 +1863,30 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object RLLabel216: TRLLabel
+        Left = 302
+        Height = 8
+        Top = 17
+        Width = 90
+        Caption = 'MSG MODAL RODOVIARIO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+        Visible = False
+      end
     end
     object rlb_11_ModRodLot103: TRLBand[5]
       Left = 26
       Height = 108
-      Top = 1214
+      Top = 1567
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -2611,7 +2626,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_03_DadosDACTe: TRLBand[6]
       Left = 26
       Height = 202
-      Top = 446
+      Top = 442
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -3295,7 +3310,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rllEnderecoDest1: TRLLabel
         Left = 432
-        Height = 19
+        Height = 10
         Top = 62
         Width = 303
         AutoSize = False
@@ -4275,7 +4290,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_04_DadosNotaFiscal: TRLBand[7]
       Left = 26
       Height = 90
-      Top = 648
+      Top = 713
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -4429,7 +4444,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida5: TRLMemo
         Left = 328
-        Height = 36
+        Height = 48
         Top = 38
         Width = 84
         Alignment = taRightJustify
@@ -4453,7 +4468,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida3: TRLMemo
         Left = 166
-        Height = 36
+        Height = 48
         Top = 38
         Width = 76
         Alignment = taRightJustify
@@ -4477,7 +4492,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida2: TRLMemo
         Left = 86
-        Height = 36
+        Height = 48
         Top = 38
         Width = 76
         Alignment = taRightJustify
@@ -4501,7 +4516,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object rlmQtdUnidMedida1: TRLMemo
         Left = 5
-        Height = 36
+        Height = 48
         Top = 38
         Width = 76
         Alignment = taRightJustify
@@ -4934,7 +4949,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_05_Complemento: TRLBand[8]
       Left = 26
       Height = 81
-      Top = 738
+      Top = 803
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5175,7 +5190,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_17_Sistema: TRLBand[9]
       Left = 26
       Height = 16
-      Top = 1702
+      Top = 2055
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5241,7 +5256,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_16_DadosExcEmitente: TRLBand[10]
       Left = 26
       Height = 70
-      Top = 1632
+      Top = 1985
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5373,8 +5388,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_ValorPrestacao: TRLBand[11]
       Left = 26
-      Height = 118
-      Top = 903
+      Height = 144
+      Top = 1044
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -5386,9 +5401,10 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       BeforePrint = rlb_06_ValorPrestacaoBeforePrint
       object rlsQuadro05: TRLDraw
         Left = 0
-        Height = 115
-        Top = 1
-        Width = 741
+        Height = 116
+        Top = 0
+        Width = 742
+        Align = faTop
         Angle = 0
         Brush.Style = bsClear
         RealBounds.Left = 0
@@ -6151,11 +6167,268 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
         Transparent = False
       end
+      object rlpnlTributosFederais: TRLPanel
+        Left = 0
+        Height = 25
+        Top = 116
+        Width = 742
+        Align = faTop
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        object RLDraw101: TRLDraw
+          Left = 150
+          Height = 24
+          Top = 0
+          Width = 4
+          Align = faHeight
+          Angle = 90
+          Brush.Style = bsClear
+          DrawKind = dkLine
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLDraw114: TRLDraw
+          Left = 448
+          Height = 24
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          Brush.Style = bsClear
+          DrawKind = dkLine
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLDraw115: TRLDraw
+          Left = 300
+          Height = 24
+          Top = 0
+          Width = 4
+          Align = faHeight
+          Angle = 90
+          Brush.Style = bsClear
+          DrawKind = dkLine
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLDraw116: TRLDraw
+          Left = 586
+          Height = 24
+          Top = 0
+          Width = 1
+          Align = faHeight
+          Angle = 90
+          Brush.Style = bsClear
+          DrawKind = dkLine
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel220: TRLLabel
+          Left = 211
+          Height = 8
+          Top = 2
+          Width = 53
+          Caption = 'VALOR COFINS'
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -7
+          Font.Name = 'Times New Roman'
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object rlblVlrCOFINS: TRLLabel
+          Left = 189
+          Height = 13
+          Top = 10
+          Width = 95
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel226: TRLLabel
+          Left = 319
+          Height = 8
+          Top = 2
+          Width = 107
+          Caption = 'VALOR DO IMPOSTO DE RENDA'
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -7
+          Font.Name = 'Times New Roman'
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object rlblVlrIR: TRLLabel
+          Left = 338
+          Height = 13
+          Top = 10
+          Width = 95
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel228: TRLLabel
+          Left = 498
+          Height = 8
+          Top = 2
+          Width = 55
+          Caption = 'VALOR DO INSS'
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -7
+          Font.Name = 'Times New Roman'
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object rlblVlrINSS: TRLLabel
+          Left = 476
+          Height = 13
+          Top = 10
+          Width = 95
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel232: TRLLabel
+          Left = 650
+          Height = 8
+          Top = 2
+          Width = 57
+          Caption = 'VALOR DO CSLL'
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -7
+          Font.Name = 'Times New Roman'
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object rlblVlrCSLL: TRLLabel
+          Left = 628
+          Height = 13
+          Top = 10
+          Width = 95
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+        object RLLabel2: TRLLabel
+          Left = 57
+          Height = 8
+          Top = 2
+          Width = 50
+          Caption = 'VALOR DO PIS'
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -7
+          Font.Name = 'Times New Roman'
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+          Transparent = False
+        end
+        object rlblVlrPIS: TRLLabel
+          Left = 35
+          Height = 13
+          Top = 10
+          Width = 95
+          Alignment = taRightJustify
+          AutoSize = False
+          Color = clWhite
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Times New Roman'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          RealBounds.Left = 0
+          RealBounds.Top = 0
+          RealBounds.Width = 0
+          RealBounds.Height = 0
+        end
+      end
     end
     object rlb_12_ModAereo: TRLBand[12]
       Left = 26
       Height = 97
-      Top = 1429
+      Top = 1782
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -6406,7 +6679,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object rllDadosRetira: TRLLabel
         Left = 39
         Height = 14
-        Top = 81
+        Top = 80
         Width = 554
         AutoSize = False
         Color = clWhite
@@ -6786,7 +7059,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_13_ModAquaviario: TRLBand[13]
       Left = 26
       Height = 92
-      Top = 1526
+      Top = 1879
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7225,7 +7498,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_14_ModFerroviario: TRLBand[14]
       Left = 26
       Height = 7
-      Top = 1618
+      Top = 1971
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7239,7 +7512,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_15_ModDutoviario: TRLBand[15]
       Left = 26
       Height = 7
-      Top = 1625
+      Top = 1978
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7568,7 +7841,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     object rlb_11_ModRodLot104: TRLBand[17]
       Left = 26
       Height = 107
-      Top = 1322
+      Top = 1675
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -7593,7 +7866,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw30: TRLDraw
         Left = 207
-        Height = 103
+        Height = 79
         Top = 1
         Width = 1
         Angle = 0
@@ -7705,7 +7978,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel167: TRLLabel
         Left = 2
         Height = 8
-        Top = 16
+        Top = 17
         Width = 17
         Caption = 'TIPO'
         Color = clWhite
@@ -7722,7 +7995,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel169: TRLLabel
         Left = 214
-        Height = 13
+        Height = 12
         Top = 2
         Width = 524
         Alignment = taCenter
@@ -7742,7 +8015,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLLabel170: TRLLabel
         Left = 2
-        Height = 13
+        Height = 12
         Top = 2
         Width = 202
         Alignment = taCenter
@@ -7779,7 +8052,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel172: TRLLabel
-        Left = 212
+        Left = 271
         Height = 8
         Top = 82
         Width = 69
@@ -7817,7 +8090,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel174: TRLLabel
         Left = 334
         Height = 8
-        Top = 16
+        Top = 17
         Width = 87
         Caption = 'NÚMERO COMPROVANTE'
         Color = clWhite
@@ -7835,7 +8108,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel177: TRLLabel
         Left = 618
         Height = 8
-        Top = 16
+        Top = 17
         Width = 70
         Caption = 'CNPJ RESPONSÁVEL'
         Color = clWhite
@@ -7853,7 +8126,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel179: TRLLabel
         Left = 210
         Height = 8
-        Top = 16
+        Top = 17
         Width = 68
         Caption = 'CNPJ FORNECEDOR'
         Color = clWhite
@@ -7871,7 +8144,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel181: TRLLabel
         Left = 124
         Height = 8
-        Top = 16
+        Top = 17
         Width = 26
         Caption = 'RNTRC'
         Color = clWhite
@@ -7889,7 +8162,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel182: TRLLabel
         Left = 102
         Height = 8
-        Top = 16
+        Top = 17
         Width = 11
         Caption = 'UF'
         Color = clWhite
@@ -7907,7 +8180,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       object RLLabel183: TRLLabel
         Left = 44
         Height = 8
-        Top = 16
+        Top = 17
         Width = 25
         Caption = 'PLACA'
         Color = clWhite
@@ -8097,7 +8370,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rllCPFMotorista2: TRLLabel
-        Left = 212
+        Left = 272
         Height = 12
         Top = 91
         Width = 71
@@ -8114,8 +8387,8 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw98: TRLDraw
         Left = 614
-        Height = 66
-        Top = 14
+        Height = 65
+        Top = 15
         Width = 1
         Angle = 0
         Brush.Style = bsClear
@@ -8147,11 +8420,28 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Width = 0
         RealBounds.Height = 0
       end
+      object RLDraw28: TRLDraw
+        Left = 267
+        Height = 26
+        Top = 79
+        Width = 1
+        Angle = 0
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = False
+        Borders.DrawRight = False
+        Borders.DrawBottom = False
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
     end
     object rlb_18_Recibo: TRLBand[18]
       Left = 26
       Height = 97
-      Top = 1718
+      Top = 2071
       Width = 742
       BandType = btHeader
       Color = clWhite
@@ -8527,10 +8817,16 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
     end
     object rlb_06_ProdutosPerigosos: TRLBand[19]
       Left = 26
-      Height = 84
-      Top = 819
+      Height = 83
+      Top = 884
       Width = 742
+      AutoSize = True
       BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       Color = clWhite
       ParentColor = False
       RealBounds.Left = 0
@@ -8538,18 +8834,6 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       RealBounds.Width = 0
       RealBounds.Height = 0
       BeforePrint = rlb_06_ProdutosPerigososBeforePrint
-      object RLDraw101: TRLDraw
-        Left = 0
-        Height = 81
-        Top = 1
-        Width = 741
-        Angle = 0
-        Brush.Style = bsClear
-        RealBounds.Left = 0
-        RealBounds.Top = 0
-        RealBounds.Width = 0
-        RealBounds.Height = 0
-      end
       object RLLabel192: TRLLabel
         Left = 6
         Height = 13
@@ -8584,7 +8868,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object RLLabel193: TRLLabel
-        Left = 5
+        Left = 10
         Height = 8
         Top = 19
         Width = 36
@@ -8602,7 +8886,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         Transparent = False
       end
       object RLLabel194: TRLLabel
-        Left = 84
+        Left = 83
         Height = 8
         Top = 19
         Width = 69
@@ -8675,7 +8959,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw103: TRLDraw
         Left = 80
-        Height = 66
+        Height = 15
         Top = 16
         Width = 1
         Angle = 90
@@ -8688,7 +8972,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw104: TRLDraw
         Left = 300
-        Height = 66
+        Height = 14
         Top = 16
         Width = 1
         Angle = 90
@@ -8701,7 +8985,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw105: TRLDraw
         Left = 500
-        Height = 66
+        Height = 15
         Top = 16
         Width = 1
         Angle = 90
@@ -8714,7 +8998,7 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
       end
       object RLDraw106: TRLDraw
         Left = 620
-        Height = 66
+        Height = 15
         Top = 16
         Width = 1
         Angle = 90
@@ -8726,18 +9010,26 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rlmNumONU: TRLMemo
-        Left = 5
-        Height = 45
-        Top = 33
-        Width = 68
-        AutoSize = False
+        Left = 0
+        Height = 52
+        Top = 30
+        Width = 81
+        Alignment = taCenter
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
           'NUM ONU'
+          ''
+          ''
+          ''
         )
         ParentColor = False
         ParentFont = False
@@ -8747,18 +9039,25 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rlmNomeApropriado: TRLMemo
-        Left = 85
-        Height = 45
-        Top = 33
-        Width = 212
-        AutoSize = False
+        Left = 80
+        Height = 52
+        Top = 30
+        Width = 221
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
           'Nome Apropriado'
+          ''
+          ''
+          ''
         )
         ParentColor = False
         ParentFont = False
@@ -8768,18 +9067,25 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rlmClasse: TRLMemo
-        Left = 309
-        Height = 45
-        Top = 33
-        Width = 188
-        AutoSize = False
+        Left = 300
+        Height = 52
+        Top = 30
+        Width = 201
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
           'Classe'
+          ''
+          ''
+          ''
         )
         ParentColor = False
         ParentFont = False
@@ -8789,18 +9095,25 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rlmGrupoEmbalagem: TRLMemo
-        Left = 509
-        Height = 45
-        Top = 33
-        Width = 108
-        AutoSize = False
+        Left = 500
+        Height = 52
+        Top = 30
+        Width = 121
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
           'Grupo de Embalagem'
+          ''
+          ''
+          ''
         )
         ParentColor = False
         ParentFont = False
@@ -8810,18 +9123,25 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
       object rlmQtdeProduto: TRLMemo
-        Left = 625
-        Height = 45
-        Top = 33
-        Width = 112
-        AutoSize = False
+        Left = 620
+        Height = 52
+        Top = 30
+        Width = 122
         Behavior = [beSiteExpander]
+        Borders.Sides = sdCustom
+        Borders.DrawLeft = True
+        Borders.DrawTop = True
+        Borders.DrawRight = True
+        Borders.DrawBottom = True
         Color = clWhite
         Font.Color = clWindowText
         Font.Height = -9
         Font.Name = 'Times New Roman'
         Lines.Strings = (
           'Quantidade'
+          ''
+          ''
+          ''
         )
         ParentColor = False
         ParentFont = False
@@ -8844,5 +9164,1285 @@ inherited frmDACTeRLRetrato: TfrmDACTeRLRetrato
         RealBounds.Height = 0
       end
     end
+    object rlb_06_VeiculosNovos: TRLBand[20]
+      Left = 26
+      Height = 98
+      Top = 1313
+      Width = 742
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlb_06_VeiculosNovosBeforePrint
+      object RLDraw228: TRLDraw
+        Left = 0
+        Height = 97
+        Top = 1
+        Width = 741
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel222: TRLLabel
+        Left = 6
+        Height = 13
+        Top = 3
+        Width = 732
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'INFORMAÇÕES SOBRE OS VEÍCULOS NOVOS TRANSPORTADOS'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw229: TRLDraw
+        Left = 1
+        Height = 1
+        Top = 16
+        Width = 740
+        HelpContext = 1
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel229: TRLLabel
+        Left = 5
+        Height = 8
+        Top = 19
+        Width = 27
+        Caption = 'CHASSI'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel231: TRLLabel
+        Left = 128
+        Height = 8
+        Top = 19
+        Width = 17
+        Caption = 'COR'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel242: TRLLabel
+        Left = 337
+        Height = 8
+        Top = 19
+        Width = 59
+        Caption = 'MARCA/MODELO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel243: TRLLabel
+        Left = 510
+        Height = 8
+        Top = 19
+        Width = 78
+        Caption = 'VR. UNIT. DO VEÍCULO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel244: TRLLabel
+        Left = 625
+        Height = 8
+        Top = 19
+        Width = 58
+        Caption = 'FRETE UNITARIO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw324: TRLDraw
+        Left = 123
+        Height = 81
+        Top = 16
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw335: TRLDraw
+        Left = 332
+        Height = 81
+        Top = 16
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw310: TRLDraw
+        Left = 500
+        Height = 81
+        Top = 16
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw411: TRLDraw
+        Left = 620
+        Height = 81
+        Top = 16
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object CHASSI: TRLMemo
+        Left = 5
+        Height = 63
+        Top = 33
+        Width = 116
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'CHASSI'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object COR: TRLMemo
+        Left = 128
+        Height = 63
+        Top = 33
+        Width = 201
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'COR'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object MODELO: TRLMemo
+        Left = 336
+        Height = 63
+        Top = 33
+        Width = 161
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'MODELO'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object VUNIT: TRLMemo
+        Left = 509
+        Height = 63
+        Top = 33
+        Width = 108
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'VUNIT'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object VFRETE: TRLMemo
+        Left = 625
+        Height = 63
+        Top = 33
+        Width = 112
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'VFRETE'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+    object rlb_Fluxo_Carga: TRLBand[21]
+      Left = 26
+      Height = 44
+      Top = 1269
+      Width = 742
+      BandType = btHeader
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlb_Fluxo_CargaBeforePrint
+      object rlsQuadro10_Fluxo: TRLDraw
+        Left = 0
+        Height = 42
+        Top = 1
+        Width = 741
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel201: TRLLabel
+        Left = 6
+        Height = 12
+        Top = 2
+        Width = 732
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'PREVISÃO DO FLUXO DA CARGA'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw34: TRLDraw
+        Left = 0
+        Height = 1
+        Top = 14
+        Width = 740
+        HelpContext = 1
+        Angle = 0
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel202: TRLLabel
+        Left = 2
+        Height = 8
+        Top = 17
+        Width = 234
+        Caption = 'SIGLA/CÓD. INT. DA FILIAL/PORTO/ESTAÇÃO/AEROPORTO DE ORIGEM'
+        Color = clWhite
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        Font.Pitch = fpVariable
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel203: TRLLabel
+        Left = 246
+        Height = 8
+        Top = 16
+        Width = 244
+        Caption = 'SIGLA/CÓD. INT. DA FILIAL/PORTO/ESTAÇÃO/AEROPORTO DE PASSAGEM'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel204: TRLLabel
+        Left = 496
+        Height = 8
+        Top = 17
+        Width = 236
+        Caption = 'SIGLA/CÓD. INT. DA FILIAL/PORTO/ESTAÇÃO/AEROPORTO DE DESTINO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw110: TRLDraw
+        Left = 494
+        Height = 28
+        Top = 15
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw111: TRLDraw
+        Left = 241
+        Height = 27
+        Top = 15
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllSiglaOrigem: TRLLabel
+        Left = 8
+        Height = 12
+        Top = 26
+        Width = 59
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllSiglaDestino: TRLLabel
+        Left = 502
+        Height = 12
+        Top = 26
+        Width = 62
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllSiglaPassagem: TRLMemo
+        Left = 248
+        Height = 12
+        Top = 26
+        Width = 188
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'Pass'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+    object rlb_03_DadosDACTe_OS: TRLBand[22]
+      Left = 26
+      Height = 69
+      Top = 644
+      Width = 742
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlb_03_DadosDACTe_OSBeforePrint
+      object rlsQuadro3: TRLDraw
+        Left = 0
+        Height = 68
+        Top = 0
+        Width = 741
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rlsLinhaH7: TRLDraw
+        Left = 1
+        Height = 1
+        Top = 28
+        Width = 740
+        Angle = 0
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel205: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 3
+        Width = 78
+        Caption = 'INÍCIO DA PRESTAÇÃO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel206: TRLLabel
+        Left = 504
+        Height = 8
+        Top = 3
+        Width = 88
+        Caption = 'TÉRMINO DA PRESTAÇÃO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel207: TRLLabel
+        Left = 240
+        Height = 8
+        Top = 3
+        Width = 83
+        Caption = 'PERCURSO DO VEÍCULO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rlsLinhaV12: TRLDraw
+        Left = 235
+        Height = 29
+        Top = 0
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rlsLinhaV13: TRLDraw
+        Left = 500
+        Height = 29
+        Top = 0
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllOrigPrestacao1: TRLLabel
+        Left = 3
+        Height = 15
+        Top = 11
+        Width = 228
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllDestPrestacao1: TRLLabel
+        Left = 504
+        Height = 15
+        Top = 11
+        Width = 233
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllPercursoVeiculo: TRLLabel
+        Left = 238
+        Height = 15
+        Top = 11
+        Width = 260
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllCEPToma1: TRLLabel
+        Left = 673
+        Height = 13
+        Top = 31
+        Width = 64
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel208: TRLLabel
+        Left = 653
+        Height = 8
+        Top = 32
+        Width = 15
+        Caption = 'CEP'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllMunToma1: TRLLabel
+        Left = 416
+        Height = 13
+        Top = 31
+        Width = 233
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel209: TRLLabel
+        Left = 374
+        Height = 8
+        Top = 32
+        Width = 38
+        Caption = 'MUNICÍPIO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel210: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 32
+        Width = 81
+        Caption = 'TOMADOR DO SERVIÇO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllRazaoToma1: TRLLabel
+        Left = 89
+        Height = 13
+        Top = 31
+        Width = 280
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllPaisToma1: TRLLabel
+        Left = 520
+        Height = 13
+        Top = 40
+        Width = 214
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel211: TRLLabel
+        Left = 500
+        Height = 8
+        Top = 43
+        Width = 17
+        Caption = 'PAÍS'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllEnderecoToma1: TRLLabel
+        Left = 48
+        Height = 13
+        Top = 40
+        Width = 445
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel212: TRLLabel
+        Left = 4
+        Height = 8
+        Top = 43
+        Width = 39
+        Caption = 'ENDEREÇO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllFoneToma1: TRLLabel
+        Left = 402
+        Height = 13
+        Top = 50
+        Width = 85
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel213: TRLLabel
+        Left = 378
+        Height = 8
+        Top = 55
+        Width = 20
+        Caption = 'FONE'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllInscEstToma1: TRLLabel
+        Left = 260
+        Height = 13
+        Top = 50
+        Width = 111
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel214: TRLLabel
+        Left = 178
+        Height = 8
+        Top = 55
+        Width = 78
+        Caption = 'INSCRIÇÃO ESTADUAL'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllCnpjToma1: TRLLabel
+        Left = 40
+        Height = 13
+        Top = 50
+        Width = 130
+        AutoSize = False
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel215: TRLLabel
+        Left = 3
+        Height = 8
+        Top = 55
+        Width = 34
+        Caption = 'CNPJ/CPF'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+    end
+    object rlb_Dados_Seguradora: TRLBand[23]
+      Left = 26
+      Height = 44
+      Top = 1479
+      Width = 742
+      BandType = btHeader
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlb_Dados_SeguradoraBeforePrint
+      object rlsQuadro10: TRLDraw
+        Left = 0
+        Height = 43
+        Top = 0
+        Width = 741
+        Angle = 0
+        Brush.Style = bsClear
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLDraw29: TRLDraw
+        Left = 1
+        Height = 1
+        Top = 15
+        Width = 740
+        HelpContext = 1
+        Angle = 0
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllTituloSeguro: TRLLabel
+        Left = 6
+        Height = 13
+        Top = 2
+        Width = 732
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'SEGURO DA VIAGEM'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw112: TRLDraw
+        Left = 246
+        Height = 28
+        Top = 15
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw113: TRLDraw
+        Left = 492
+        Height = 28
+        Top = 16
+        Width = 1
+        Angle = 90
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel217: TRLLabel
+        Left = 8
+        Height = 8
+        Top = 17
+        Width = 51
+        Caption = 'RESPONSÁVEL'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel218: TRLLabel
+        Left = 252
+        Height = 8
+        Top = 17
+        Width = 84
+        Caption = 'NOME DA SEGURADORA'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel219: TRLLabel
+        Left = 500
+        Height = 8
+        Top = 17
+        Width = 75
+        Caption = 'NÚMERO DA APÓLICE'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object rllResponsavelSeguro: TRLMemo
+        Left = 9
+        Height = 12
+        Top = 25
+        Width = 224
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'Resp Seguro'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllNomeSeguradora: TRLMemo
+        Left = 252
+        Height = 12
+        Top = 25
+        Width = 224
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'Nome Seguradora'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object rllApolice: TRLMemo
+        Left = 501
+        Height = 12
+        Top = 25
+        Width = 224
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'Apolice'
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+    object rlb_CTeOS_PrestacaoServico: TRLBand[24]
+      Left = 26
+      Height = 77
+      Top = 967
+      Width = 742
+      BandType = btHeader
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
+      Color = clWhite
+      ParentColor = False
+      RealBounds.Left = 0
+      RealBounds.Top = 0
+      RealBounds.Width = 0
+      RealBounds.Height = 0
+      BeforePrint = rlb_CTeOS_PrestacaoServicoBeforePrint
+      object rlDocOrig_tpDoc3: TRLMemo
+        Left = 3
+        Height = 47
+        Top = 26
+        Width = 737
+        AutoSize = False
+        Behavior = [beSiteExpander]
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        Lines.Strings = (
+          'QTD 1                           DESC 1                          '
+          'QTD 2                           DESC 2                     '
+          'QTD 3                           DESC 3                         '
+          'QTD 4                           DESC 4                          '
+        )
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+      object RLLabel221: TRLLabel
+        Left = 5
+        Height = 8
+        Top = 17
+        Width = 47
+        Caption = 'QUANTIDADE'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel223: TRLLabel
+        Left = 84
+        Height = 8
+        Top = 17
+        Width = 136
+        Caption = 'DESCRIÇÃO DOS SERVIÇOS PRESTADOS'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -7
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLLabel224: TRLLabel
+        Left = 7
+        Height = 12
+        Top = 1
+        Width = 732
+        Alignment = taCenter
+        AutoSize = False
+        Caption = 'INFORMAÇÕES DA PRESTAÇÃO DO SERVIÇO'
+        Color = clWhite
+        Font.Color = clWindowText
+        Font.Height = -9
+        Font.Name = 'Times New Roman'
+        ParentColor = False
+        ParentFont = False
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+        Transparent = False
+      end
+      object RLDraw35: TRLDraw
+        Left = 0
+        Height = 1
+        Top = 14
+        Width = 740
+        HelpContext = 1
+        Angle = 0
+        Brush.Style = bsClear
+        DrawKind = dkLine
+        RealBounds.Left = 0
+        RealBounds.Top = 0
+        RealBounds.Width = 0
+        RealBounds.Height = 0
+      end
+    end
+  end
+  inherited RLPDFFilter1: TRLPDFFilter
+    left = 128
+    top = 16
+  end
+  inherited Datasource1: TDataSource
+    left = 176
+    top = 16
   end
 end

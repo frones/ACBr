@@ -39,6 +39,16 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+Data: 19/03/2017
+-- ACBrCapicom --
+***** PACOTE DESCONTINUADO *****
+[*] Unit "ACBrHTTPReqResp" removida de ACBrDFeCapicom e movida para o pacote
+    ACBrTCP com o nome de  "ACBrWinINetReqResp", pois agora a mesma não
+    depende mais da CAPICOM
+[*] Units "ACBrMSXML2_TLB.pas" e "ACBrCAPICOM_TLB.pas" movidas para
+    "Fontes\Terceiros\Ole"
+    (por: DSA)
+
 Data: 12/04/2016
 -- ACBrHTTPReqResp --
 [*] Removida a propriedde "UseSSL". Ela será computada, de acordo com a URL

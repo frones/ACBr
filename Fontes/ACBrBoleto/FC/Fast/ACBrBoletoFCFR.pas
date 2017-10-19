@@ -67,8 +67,12 @@ type
   TdmACBrBoletoFCFR = class;
 
   { TACBrBoletoFCFR }
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrBoletoFCFR = class(TACBrBoletoFCClass)
   private
+    MensagemPadrao: TStringList;
     { Private declarations }
     fFastReportFile: String;
     FImpressora: String;
@@ -260,6 +264,7 @@ begin
     FieldDefs.Add('Sacado_UF', ftString, 2);
     FieldDefs.Add('Sacado_CEP', ftString, 8);
     FieldDefs.Add('Sacado_Avalista', ftString, 100);
+    FieldDefs.Add('Sacado_Avalista_CNPJCPF', ftString, 18);
     CreateDataSet;
   end;
 end;
@@ -279,10 +284,12 @@ begin
   FIncorporarBackgroundPdf := False;
   FIncorporarFontesPdf := False;
   FdmBoleto := TdmACBrBoletoFCFR.Create(Self);
+  MensagemPadrao  := TStringList.Create;
 end;
 
 destructor TACBrBoletoFCFR.Destroy;
 begin
+  MensagemPadrao.Free;
   FdmBoleto.Free;
   inherited;
 end;
@@ -482,6 +489,7 @@ var
   Field_Sacado_UF: TField;
   Field_Sacado_CEP: TField;
   Field_Sacado_Avalista: TField;
+  Field_Sacado_Avalista_CNPJCPF : TField;
 begin
   with ACBrBoleto do
   begin
@@ -570,6 +578,7 @@ begin
       Field_Sacado_UF := FieldByName('Sacado_UF');
       Field_Sacado_CEP := FieldByName('Sacado_CEP');
       Field_Sacado_Avalista := FieldByName('Sacado_Avalista');
+      Field_Sacado_Avalista_CNPJCPF := FieldByName('Sacado_Avalista_CNPJCPF');
     end;
 
     for iFor := 0 to ListadeBoletos.Count - 1 do
@@ -583,7 +592,9 @@ begin
         sTipoDoc := 'DOC.: ';
       end;
       // Monta mensagens de multa e juros
-      AdicionarMensagensPadroes(ListadeBoletos[iFor], ListadeBoletos[iFor].Mensagem);
+      MensagemPadrao.Clear;
+      MensagemPadrao.Text := ListadeBoletos[iFor].Mensagem.Text;
+      AdicionarMensagensPadroes(ListadeBoletos[iFor], MensagemPadrao);
 
       with FdmBoleto.cdsTitulo do
       begin
@@ -603,7 +614,7 @@ begin
         Field_Aceite.AsInteger := Integer(ListadeBoletos[iFor].Aceite);
         Field_DataProcessamento.AsDateTime := ListadeBoletos[iFor].DataProcessamento;
         Field_NossoNumero.AsString := ListadeBoletos[iFor].NossoNumero;
-        Field_Carteira.AsString := ListadeBoletos[iFor].Carteira;
+        Field_Carteira.AsString := Banco.MontarCampoCarteira(ListadeBoletos[iFor]);
         Field_ValorDocumento.AsCurrency := ListadeBoletos[iFor].ValorDocumento;
         Field_LocalPagamento.AsString := ListadeBoletos[iFor].LocalPagamento;
         Field_ValorMoraJuros.AsCurrency := ListadeBoletos[iFor].ValorMoraJuros;
@@ -614,7 +625,7 @@ begin
         Field_DataABatimento.AsDateTime := ListadeBoletos[iFor].DataAbatimento;
         Field_DataProtesto.AsDateTime := ListadeBoletos[iFor].DataProtesto;
         Field_PercentualMulta.AsFloat := ListadeBoletos[iFor].PercentualMulta;
-        Field_Mensagem.AsString := ListadeBoletos[iFor].Mensagem.Text;
+        Field_Mensagem.AsString := MensagemPadrao.Text;
         Field_OcorrenciaOriginal.AsInteger := Integer(ListadeBoletos[iFor].OcorrenciaOriginal);
         Field_Instrucao1.AsString := ListadeBoletos[iFor].Instrucao1;
         Field_Instrucao2.AsString := ListadeBoletos[iFor].Instrucao2;
@@ -633,6 +644,7 @@ begin
         Field_Sacado_UF.AsString := ListadeBoletos[iFor].Sacado.UF;
         Field_Sacado_CEP.AsString := ListadeBoletos[iFor].Sacado.CEP;
         Field_Sacado_Avalista.AsString := ListadeBoletos[iFor].Sacado.Avalista;
+        Field_Sacado_Avalista_CNPJCPF.asString := ListadeBoletos[iFor].Sacado.SacadoAvalista.CNPJCPF;
 
         Post;
       end;

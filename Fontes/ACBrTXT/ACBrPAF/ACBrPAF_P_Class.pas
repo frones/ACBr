@@ -160,6 +160,8 @@ begin
           Add( LFill('P2') +
                LFill(FRegistroP1.CNPJ, 14) +
                RFill(COD_MERC_SERV, 14) +
+               RFill(CEST, 7) +
+               RFill(NCM, 8) +
                RFill(DESC_MERC_SERV, 50) +
                RFill(UN_MED, 6, ifThen(RegistroValido, ' ', '?')) +
                RFill(IAT, 1) +

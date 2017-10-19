@@ -288,7 +288,7 @@ begin
             RFill(IE, 14) +
             LFill(CNPJ_SH, 14) +
             RFill(IE_SH, 14) +
-            LFill(IM_SH, 14) +
+            RFill(IM_SH, 14) +
             RFill(NOME_SH, 40, ifThen(not InclusaoExclusao, ' ', '?')) +
             RFill(NOME_PAF, 40) + 
             RFill(VER_PAF, 10) +

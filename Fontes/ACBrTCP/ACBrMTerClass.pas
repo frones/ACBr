@@ -83,6 +83,7 @@ type
     function ComandoLimparLinha(aLinha: Integer): AnsiString; virtual;
 
     function InterpretarResposta(aRecebido: AnsiString): AnsiString; virtual;
+    function LimparConteudoParaEnviar(aString: AnsiString): AnsiString;
 
     property ModeloStr: String read fpModeloStr;
   end;
@@ -90,7 +91,8 @@ type
 
 implementation
 
-uses ACBrMTer, ACBrUtil;
+uses
+  ACBrMTer, ACBrUtil;
 
 { TACBrMTerClass }
 
@@ -139,11 +141,10 @@ end;
 
 function TACBrMTerClass.ComandoEco(aValue: AnsiString): AnsiString;
 begin
-  Result := ComandoEnviarTexto(aValue);
+  Result := ComandoEnviarTexto(LimparConteudoParaEnviar(aValue));
 end;
 
-function TACBrMTerClass.ComandoEnviarParaParalela(aDados: AnsiString
-  ): AnsiString;
+function TACBrMTerClass.ComandoEnviarParaParalela(aDados: AnsiString): AnsiString;
 begin
   Result := '';
   DisparaErroNaoImplementado('ComandoEnviarParaParalela');
@@ -186,22 +187,33 @@ begin
 end;
 
 function TACBrMTerClass.InterpretarResposta(aRecebido: AnsiString): AnsiString;
+begin
+  Result := aRecebido;
+end;
+
+function TACBrMTerClass.LimparConteudoParaEnviar(aString: AnsiString): AnsiString;
 var
   aChar: AnsiChar;
   I: Integer;
 begin
+  // Função retira os caracteres estranhos da String,
+  // Usada para enviar o eco ao Micro Terminal.
   Result := '';
 
-  for I := 0 to Length(aRecebido) do
-  begin
-    aChar := aRecebido[I];
+  if (aString = EmptyStr) then
+    Exit;
 
-    {Mantem apenas Letras/Numeros/Pontos/Sinais}
+  for I := 0 to Length(aString) do
+  begin
+    aChar := aString[I];
+
+    { Mantem apenas Letras/Numeros/Pontos/Sinais }
     if not CharInSet(aChar, [#32..#126,#13,#10,#8]) then
       Continue;
 
     Result := Result + aChar;
   end;
+
 end;
 
 end.

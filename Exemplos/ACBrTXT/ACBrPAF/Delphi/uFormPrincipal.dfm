@@ -223,6 +223,7 @@ object Form6: TForm6
       450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1
       FEF3FEB466C7FBCFFAD1450019B1FEF3FEB466C7FBCFFAD1450019B1FEF3FEB4
       66C7FBCFFAD145001BAC7D5FF5A3758FABFEB451401FFFD9}
+    ExplicitWidth = 1024
   end
   object GroupBox1: TGroupBox
     Left = 0
@@ -386,6 +387,15 @@ object Form6: TForm6
     Caption = 'Tipo Z'
     TabOrder = 5
     OnClick = btnZClick
+  end
+  object Button1: TButton
+    Left = 340
+    Top = 116
+    Width = 75
+    Height = 25
+    Caption = 'Tipo V'
+    TabOrder = 6
+    OnClick = Button1Click
   end
   object ACBrPAF: TACBrPAF
     LinesBuffer = 1000

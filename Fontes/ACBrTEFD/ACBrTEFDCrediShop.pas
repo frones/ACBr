@@ -66,7 +66,7 @@ type
 
 implementation
 
-Uses ACBrUtil, dateutils;
+Uses dateutils;
 
 { TACBrTEFDClass }
 

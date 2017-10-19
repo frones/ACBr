@@ -51,12 +51,12 @@ const
   CURL_SEDEX = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx?';
 
 type
-  TACBrTpServico = (Tps41106PAC, Tps40010SEDEX, Tps40215SEDEX10,
+  TACBrTpServico = (Tps04510PAC, Tps04014SEDEX, Tps40215SEDEX10,
     Tps40290SEDEXHOJE, Tps81019eSEDEX, Tps44105MALOTE,
     Tps85480AEROGRAMA, Tps10030CARTASIMPLES, Tps10014CARTAREGISTRADA,
     Tps16012CARTAOPOSTAL, Tps20010IMPRESSO, Tps14010MALADIRETA,
-    Tps40010SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
-    Tps40290SEDEXHojeVarejo, Tps41106PACVarejo);
+    Tps04014SEDEXVarejo, Tps40045SEDEXaCobrarVarejo, Tps40215SEDEX10Varejo,
+    Tps40290SEDEXHojeVarejo, Tps04510PACVarejo);
 
   TACBrTpFormato = (TpfCaixaPacote, TpfRoloPrisma, TpfEnvelope);
 
@@ -96,7 +96,9 @@ type
   end;
 
   { TACBrSedex }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrSedex = class(TACBrHTTP)
   private
     fsCodContrato: String;
@@ -225,7 +227,7 @@ begin
   fsMaoPropria := False;
   fnVlValorDeclarado := 0;
   fsAvisoRecebimento := False;
-  fnCdServico := Tps41106PAC;
+  fnCdServico := Tps04510PAC;
   fUrlConsulta := CURL_SEDEX;
 
   fCodigoServico := '';
@@ -252,10 +254,10 @@ var
   TpServico, TpFormato, TpMaoPropria, TpAvisoRecebimento, Buffer: string;
 begin
   case fnCdServico of
-    Tps41106PAC :
-      TpServico := '41106';
-    Tps40010SEDEX :
-      TpServico := '40010';
+    Tps04510PAC :
+      TpServico := '04510';
+    Tps04014SEDEX :
+      TpServico := '04014';
     Tps40215SEDEX10 :
       TpServico := '40215';
     Tps40290SEDEXHOJE :
@@ -276,16 +278,16 @@ begin
       TpServico := '20010';
     Tps14010MALADIRETA :
       TpServico := '14010';
-    Tps40010SEDEXVarejo :
-      TpServico := '40010';
+    Tps04014SEDEXVarejo :
+      TpServico := '04014';
     Tps40045SEDEXaCobrarVarejo :
       TpServico := '40045';
     Tps40215SEDEX10Varejo :
       TpServico := '40215';
     Tps40290SEDEXHojeVarejo :
       TpServico := '40290';
-    Tps41106PACVarejo :
-      TpServico := '41106';
+    Tps04510PACVarejo :
+      TpServico := '04510';
     else
       raise EACBrSedexException.CreateACBrStr('Tipo de Serviço Inválido');
   end;
@@ -416,7 +418,7 @@ procedure TACBrSedex.Rastrear(const CodRastreio: String);
 var
   SL: TStringList;
   I, Cont: integer;
-  vObs, Erro: String;
+  vObs, Erro, vData, vLocal: String;
 
   function CopyDeAte(Texto, TextIni, TextFim: string): string;
   var
@@ -438,7 +440,7 @@ begin
 
   try
     Self.HTTPGet(
-      'http://websro.correios.com.br/sro_bin/txect01$.QueryList?P_LINGUA=001&P_TIPO=001&P_COD_UNI='
+      'http://www.websro.com.br//detalhes.php?P_COD_UNI='
       + CodRastreio);
   except
     on E: Exception do
@@ -469,20 +471,24 @@ begin
 
     for I := cont downto 0 do
     begin
-      if Pos('colspan', SL[I]) > 0 then
-        vObs := CopyDeAte(SL[I], 'colspan=2>', '</td></tr>')
-
-      else if Pos('rowspan', SL[I]) > 0 then
+      if Pos('rowspan', SL[I]) > 0 then
       begin
+        vData :=  Copy(SL[I], 25, 16) + ':00';
         with retRastreio.New do
         begin
-          DataHora   := StrToDateTime(Copy(SL[I], 19, 16) + ':00');
-          Local      := CopyDeAte(SL[I], '</td><td>', '</td><td><FONT');
-          Situacao   := CopyDeAte(SL[I], '">', '</font>');
+          DataHora   := StrToDateTime(vData);
+          Local      := vLocal;
+          Situacao   := vObs;
           Observacao := vObs;
         end;
+      end;
 
-        vObs := '';
+      if Pos('colspan="2"', SL[I]) > 0 then
+      begin
+        if Pos('colspan="2"><strong>', SL[I]) > 0 then
+          vObs := UTF8Decode(CopyDeAte(SL[I], 'colspan="2"><strong><strong>', '</strong></strong></td>'))
+        else
+          vLocal :=UTF8Decode(CopyDeAte(SL[I], '<tr>  <td colspan="2">Local:', '</td>'));
       end;
     end;
   finally

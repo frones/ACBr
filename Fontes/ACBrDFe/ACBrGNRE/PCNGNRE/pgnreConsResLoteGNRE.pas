@@ -50,7 +50,7 @@ unit pgnreConsResLoteGNRE;
 interface
 
 uses
-  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador;
+  SysUtils, Classes, pcnAuxiliar, pcnConversao, pcnGerador, pcnConsts;
 
 type
   TConsResLoteGNRE = class(TPersistent)

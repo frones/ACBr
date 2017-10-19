@@ -39,6 +39,90 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+09/05/2017
+[+] Mudanças para atender aos novos layouts do bloco x paf-ecf
+		http://www.projetoacbr.com.br/forum/topic/29412-bloco-x-webservice-e-validador/?page=2
+		por : Juliomar
+13/03/2017
+[-] conforme é descrito no xsd https://tributario.sef.sc.gov.br/tax.NET/sat.dfe.siv.web/xsd/estoque.xsd o campo quantidade tem o type
+		Numero1a20Mais3PrecisaoType com precisão de 3 então foi necessário enviar a correção
+		http://www.projetoacbr.com.br/forum/topic/34731-erro-de-schema-n%C3%A3o-especifcado-valida%C3%A7%C3%A3o-bloco-x-estoque/?do=findComment&comment=232573
+		por: Juliomar Marchetti
+		
+		
+09/02/2017
+-- ACBrBlocoX_ReducaoZ --
+[-] Correção de problema ao truncar valores. Passado a utilizar TruncFix.
+	(por: Augusto Fontana)
+
+06/02/2017
+-- ACBrBlocoX_ReducaoZ --
+[*] Modificação para atender aos novos tamanhos dos campos no arquivo de Redução Z.
+	(por: Elias César)
+
+05/01/2017
+--ACBrBlocoX_WebServices
+[-] Correção de bug "Erro: CNPJ do estabelecimento inválido ou em branco" deve ir somente Cnpj
+		http://www.projetoacbr.com.br/forum/topic/33738-erro-envio-bloco-x-redu%C3%A7%C3%B5es-z/?do=findComment&comment=225615
+		por : Juliomar Marchetti
+		
+22/12/2016
+-- ACBrBlocoX, ACBrBlocoX_WebServices --
+[*] Separação das classes de ACBrBlocoX relacionadas a WebServices para
+    ACBrBlocoX_WebServices
+
+-- ACBrBlocoX_WebServices --
+[-] Corrigido o Suporte a Zip Nativo, (disponível apenas para Lazarus ou DelphiXE2
+    ou superior).
+[*] Remoção de TWebServices.EnviarBlocoX, use:
+    TACBrBlocoX_WebServices.EnviarReducaoZ ou TACBrBlocoX_WebServices.EnviarEstoque
+[*] Remoção de TWebServices.ValidarBlocoX, use:
+    TACBrBlocoX_WebServices.ValidarReducaoZ ou TACBrBlocoX_WebServices.ValidarEstoque
+[+] Adicionada a propriedade "TEnviarBlocoX.XMLZipado", para permitir ao
+    programador, informar diretamente o seu XML com Zip e Enconde64. Nesse caso
+    o mesmo não será calculado por "TEnviarBlocoX.GetXMLZipado"
+    (por: DSA)
+
+21/12/2016
+-- ACBrBlocoX --
+[+] Adicionado suporte a Zip e Encode64 do XML em: TEnviarBlocoX.XMLZipado
+    (por: DSA)
+
+20/12/2016
+-- ACBrBlocoX --
+[-] Correção de Erro de compilação em D7
+[-] Remoção de Memory Leak
+    (por: DSA)
+
+20/12/2016
+[*] Mudanças para atender modificações do webservice de SC 
+    http://www.projetoacbr.com.br/forum/topic/33738-erro-envio-bloco-x-redu%C3%A7%C3%B5es-z/
+    por : Juliomar Marchetti
+		
+13/12/2016
+-- ACBrBlocoX.pas --
+[*] Incluídas propriedades de retorno que serão preenchidas em TratarResposta, utilizando
+    a nova unit pcnRetEnvBlocoX para leitura do xml de resposta.
+	
+-- pcnRetEnvBlocoX.pas --
+[+] Criada unit pcnRetEnvBlocoX que fará a leitura do xml de resposta do webservice.
+
+25/11/2016
+[-] Correção pois o campo quantidade não validava no webservice de teste
+    por Juliomar Marchetti
+		
+05/10/2016
+-- ACBrBlocoX_Estoque
+[-] Correção conforme manual e servidor sefaz para 2 casas decimais
+    http://www.projetoacbr.com.br/forum/topic/32702-envio-blocox-altera%C3%A7%C3%A3o-campo-quantidade/
+    por: Juliomar Marchetti
+		
+26/09/2016
+-- ACBrBlocoX_ReducaoZ, ACBrBlocoX_Estoque
+[*] Melhoria para deixar aparecer 3 casas decimais nas quantidades
+    http://www.projetoacbr.com.br/forum/topic/28811-paf-ecf-blocox-corre%C3%A7%C3%A3o-tipo-de-campo/?do=findComment&comment=215309
+    por: Juliomar Marchetti
+		
 22/02/2016
 -- ACBrBlocoX_ReducaoZ --
 [-] Acertos no nome da propriedade Identificacao e na geração de serviços.

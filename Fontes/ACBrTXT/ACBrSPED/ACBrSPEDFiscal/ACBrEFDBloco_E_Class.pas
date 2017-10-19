@@ -43,7 +43,7 @@ unit ACBrEFDBloco_E_Class;
 interface
 
 uses SysUtils, Classes, DateUtils, ACBrSped, ACBrEFDBloco_E,
-     ACBrEFDBloco_0_Class, ACBrEFDBlocos;
+     ACBrEFDBloco_0_Class, ACBrEFDBlocos, StrUtils;
 
 type
   /// TBLOCO_E -
@@ -685,9 +685,7 @@ begin
      begin
         with RegE111.RegistroE113.Items[intFor] do
         begin
-          /// Versão do leiaute do arquivo.
           if FBloco_0.Registro0000.COD_VER = vlVersao102 then
-          begin
              Add( LFill('E113') +
                   LFill( COD_PART ) +
                   LFill( COD_MOD ) +
@@ -697,11 +695,8 @@ begin
                   LFill( DT_DOC ) +
                   LFill( CHV_NFE ) +
                   LFill( COD_ITEM ) +
-                  LFill( VL_AJ_ITEM,0 )) ;
-          end
+                  LFill( VL_AJ_ITEM,0 ))
           else
-          if FBloco_0.Registro0000.COD_VER >= vlVersao103 then //trocar por FBloco_0.Registro0000.COD_VER in [vlVersao103,vlVersao104] se na versão vlVersao105 não for gerado esse registro.
-          begin
              Add( LFill('E113') +
                   LFill( COD_PART ) +
                   LFill( COD_MOD ) +
@@ -710,8 +705,8 @@ begin
                   LFill( NUM_DOC ) +
                   LFill( DT_DOC ) +
                   LFill( COD_ITEM ) +
-                  LFill( VL_AJ_ITEM,0 )) ;
-          end;
+                  LFill( VL_AJ_ITEM,0 ) +
+                  IfThen(DT_INI >= EncodeDate(2017,1,1),LFill( CHV_NFE), ''));
         end;
         RegistroE990.QTD_LIN_E := RegistroE990.QTD_LIN_E + 1;
      end;
@@ -1057,20 +1052,47 @@ begin
      begin
         with RegE300.RegistroE310.Items[intFor] do
         begin
-          Add( LFill('E310') +
-               LFill( Integer(IND_MOV_DIFAL), 0 ) +
-               LFill( VL_SLD_CRED_ANT_DIF,0 ) +
-               LFill( VL_TOT_DEBITOS_DIFAL, 0 ) +
-               LFill( VL_OUT_DEB_DIFAL, 0 ) +
-               LFill( VL_TOT_DEB_FCP, 0 ) +
-               LFill( VL_TOT_CREDITOS_DIFAL, 0 ) +
-               LFill( VL_TOT_CRED_FCP, 0 ) +
-               LFill( VL_OUT_CRED_DIFAL, 0 ) +
-               LFill( VL_SLD_DEV_ANT_DIFAL, 0 ) +
-               LFill( VL_DEDUCOES_DIFAL, 0 ) +
-               LFill( VL_RECOL, 0 ) +
-               LFill( VL_SLD_CRED_TRANSPORTAR, 0 ) +
-               LFill( DEB_ESP_DIFAL, 0 ));
+          if (DT_FIN <= EncodeDate(2016, 12, 31)) then begin
+            Add( LFill('E310') +
+                 LFill( Integer(IND_MOV_DIFAL), 0 ) +
+                 LFill( VL_SLD_CRED_ANT_DIF,0 ) +
+                 LFill( VL_TOT_DEBITOS_DIFAL, 0 ) +
+                 LFill( VL_OUT_DEB_DIFAL, 0 ) +
+                 LFill( VL_TOT_DEB_FCP, 0 ) +
+                 LFill( VL_TOT_CREDITOS_DIFAL, 0 ) +
+                 LFill( VL_TOT_CRED_FCP, 0 ) +
+                 LFill( VL_OUT_CRED_DIFAL, 0 ) +
+                 LFill( VL_SLD_DEV_ANT_DIFAL, 0 ) +
+                 LFill( VL_DEDUCOES_DIFAL, 0 ) +
+                 LFill( VL_RECOL, 0 ) +
+                 LFill( VL_SLD_CRED_TRANSPORTAR, 0 ) +
+                 LFill( DEB_ESP_DIFAL, 0 ));
+          end
+          else begin
+            Add( LFill('E310') +
+                LFill( Integer(IND_MOV_DIFAL), 0 ) +
+                LFill(VL_SLD_CRED_ANT_DIF, 0 ) +
+                LFill(VL_TOT_DEBITOS_DIFAL, 0 ) +
+                LFill(VL_OUT_DEB_DIFAL, 0 ) +
+                LFill(VL_TOT_CREDITOS_DIFAL, 0 ) +
+                LFill(VL_OUT_CRED_DIFAL, 0 ) +
+                LFill(VL_SLD_DEV_ANT_DIFAL, 0 ) +
+                LFill(VL_DEDUCOES_DIFAL, 0 ) +
+                LFill(VL_RECOL_DIFAL, 0 ) +
+                LFill(VL_SLD_CRED_TRANSPORTAR_DIFAL, 0 ) +
+                LFill(DEB_ESP_DIFAL, 0 ) +
+                LFill(VL_SLD_CRED_ANT_FCP, 0 ) +
+                LFill(VL_TOT_DEB_FCP, 0 ) +
+                LFill(VL_OUT_DEB_FCP, 0 ) +
+                LFill(VL_TOT_CRED_FCP, 0 ) +
+                LFill(VL_OUT_CRED_FCP, 0 ) +
+                LFill(VL_SLD_DEV_ANT_FCP, 0 ) +
+                LFill(VL_DEDUCOES_FCP, 0 ) +
+                LFill(VL_RECOL_FCP, 0 ) +
+                LFill(VL_SLD_CRED_TRANSPORTAR_FCP, 0 ) +
+                LFill(DEB_ESP_FCP, 0 ));
+
+          end;
         end;
         /// Registros FILHOS
         WriteRegistroE311(RegE300.RegistroE310.Items[intFor]) ;

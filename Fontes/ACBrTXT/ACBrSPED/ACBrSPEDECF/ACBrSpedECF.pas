@@ -45,7 +45,7 @@ unit ACBrSpedECF;
 interface
 
 uses
-  SysUtils, Math, Classes,
+  SysUtils, Math, Classes, ACBrBase, 
   {$IFNDEF Framework}
     {$IFDEF FPC}
       LResources,
@@ -65,8 +65,10 @@ type
   /// ACBrSpedECF - Sitema Publico de Escrituração Contábil Fiscal
 
   { TACBrSPEDECF }
-
-  TACBrSPEDECF = class(TComponent)
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
+  TACBrSPEDECF = class(TACBrComponent)
   private
     FACBrTXT: TACBrTXTClass;
     FArquivo: String;
@@ -804,6 +806,9 @@ end;
 procedure TACBrSPEDECF.WriteBloco_Q;
 begin
   if Bloco_Q.Gravado then
+    exit;
+
+  if Bloco_0.Registro0000.COD_VER=ECFVersao100 then 
     exit;
 
   if not Bloco_P.Gravado then

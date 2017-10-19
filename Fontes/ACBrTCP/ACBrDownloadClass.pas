@@ -54,7 +54,7 @@ uses
    Windows,
   {$ENDIF}
   Classes, SysUtils, Forms,
-  blcksock, synautil;
+  blcksock;
 
 type
   TMemory = pointer;

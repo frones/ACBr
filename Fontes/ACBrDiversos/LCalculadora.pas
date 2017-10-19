@@ -93,6 +93,8 @@ type
     procedure Copiar1Click(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; 
+      Shift: TShiftState);
   private
     { Private declarations }
     fValor : Double ;
@@ -116,7 +118,9 @@ var
 
 implementation
 
-uses ACBrUtil, Math, ACBrConsts;
+uses 
+  Math, LCLType,
+  ACBrUtil, ACBrConsts;
 
 {$R *.lfm}
 

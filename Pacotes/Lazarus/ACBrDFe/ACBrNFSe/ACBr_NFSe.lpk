@@ -15,7 +15,7 @@
     </CompilerOptions>
     <Description Value="ACBr - Nota Fiscal Eletrônica de Serviço - (http://www.projetoacbr.com.br/)"/>
     <License Value="LGPL"/>
-    <Files Count="23">
+    <Files Count="24">
       <Item1>
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\ACBrNFSe.pas"/>
         <UnitName Value="ACBrNFSe"/>
@@ -109,6 +109,10 @@
         <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsNFSeW_ISSDSF.pas"/>
         <UnitName Value="pnfsNFSeW_ISSDSF"/>
       </Item23>
+      <Item24>
+        <Filename Value="..\..\..\..\Fontes\ACBrDFe\ACBrNFSe\PCNNFSe\pnfsConsts.pas"/>
+        <UnitName Value="pnfsConsts"/>
+      </Item24>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CONFIG>
   <LazReport>
-    <Version Value="25"/>
+    <Version Value="31"/>
     <Title Value="Boleto"/>
     <Subject Value=""/>
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="2012-08-02 10:34:33"/>
-    <ReportLastChange Value="2012-08-02 13:32:52"/>
+    <ReportLastChange Value="2016-12-19 11:24:30"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
     <ReportVersionRelease Value=""/>
     <ReportAutor Value=""/>
+    <Script Value=""/>
     <Pages>
       <PrintToDefault Value="False"/>
       <DoublePass Value="True"/>
@@ -38,7 +39,6 @@
         <ColCount Value="1"/>
         <ColGap Value="0"/>
         <LayoutOrder Value="loColumns"/>
-        <ObjectCount Value="149"/>
         <Object1>
           <Name Value="MasterData1"/>
           <ClassName Value="TfrBandView"/>
@@ -47,17 +47,25 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="0"/>
-            <Top Value="-165"/>
+            <Top Value="27"/>
             <Width Value="752"/>
             <Height Value="833"/>
           </Size>
           <Flags Value="48"/>
           <Data>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Frames>
+            <Restrictions Value=""/>
+          </Frames>
           <BandType Value="btMasterData"/>
           <Condition Value=""/>
           <DatasetStr Value="frUserDataset1"/>
+          <Child Value=""/>
         </Object1>
         <Object2>
           <Name Value="Memo1"/>
@@ -67,7 +75,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="171"/>
-            <Top Value="-160"/>
+            <Top Value="32"/>
             <Width Value="69"/>
             <Height Value="24"/>
           </Size>
@@ -78,13 +86,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Codbanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="18"/>
@@ -101,6 +120,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object2>
         <Object3>
           <Name Value="Memo2"/>
@@ -110,7 +131,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="593"/>
-            <Top Value="-153"/>
+            <Top Value="39"/>
             <Width Value="146"/>
             <Height Value="20"/>
           </Size>
@@ -121,13 +142,24 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Recibo do Sacado&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="12"/>
@@ -144,6 +176,8 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object3>
         <Object4>
           <Name Value="Memo3"/>
@@ -153,7 +187,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="7"/>
-            <Top Value="-130"/>
+            <Top Value="62"/>
             <Width Value="131"/>
             <Height Value="12"/>
           </Size>
@@ -164,13 +198,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Local de Pagamento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -187,6 +232,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object4>
         <Object5>
           <Name Value="Memo4"/>
@@ -196,7 +243,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="8"/>
-            <Top Value="-119"/>
+            <Top Value="73"/>
             <Width Value="567"/>
             <Height Value="15"/>
           </Size>
@@ -207,13 +254,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[LocalPagto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -230,6 +288,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object5>
         <Object6>
           <Name Value="Memo5"/>
@@ -239,7 +299,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="598"/>
-            <Top Value="-132"/>
+            <Top Value="60"/>
             <Width Value="97"/>
             <Height Value="12"/>
           </Size>
@@ -250,13 +310,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Vencimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -273,6 +344,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object6>
         <Object7>
           <Name Value="Memo6"/>
@@ -282,7 +355,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="647"/>
-            <Top Value="-119"/>
+            <Top Value="73"/>
             <Width Value="91"/>
             <Height Value="12"/>
           </Size>
@@ -293,13 +366,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Vencimento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -316,6 +400,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object7>
         <Object8>
           <Name Value="Memo7"/>
@@ -325,7 +411,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="-103"/>
+            <Top Value="89"/>
             <Width Value="34"/>
             <Height Value="12"/>
           </Size>
@@ -336,13 +422,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Cedente&#xD;&#xA;"/>
+            <Memo Value="Beneficiário&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -359,6 +456,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object8>
         <Object9>
           <Name Value="Memo8"/>
@@ -368,7 +467,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="10"/>
-            <Top Value="-89"/>
+            <Top Value="103"/>
             <Width Value="569"/>
             <Height Value="15"/>
           </Size>
@@ -379,13 +478,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Endereco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -402,6 +512,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object9>
         <Object10>
           <Name Value="Memo9"/>
@@ -411,7 +523,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="45"/>
-            <Top Value="-105"/>
+            <Top Value="87"/>
             <Width Value="543"/>
             <Height Value="15"/>
           </Size>
@@ -422,13 +534,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[RazaoSocial]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -445,6 +568,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object10>
         <Object11>
           <Name Value="Line7"/>
@@ -454,7 +579,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="544"/>
-            <Top Value="332"/>
+            <Top Value="524"/>
             <Width Value="0"/>
             <Height Value="0"/>
           </Size>
@@ -463,7 +588,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object11>
         <Object12>
           <Name Value="Shape1"/>
@@ -473,7 +605,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="-105"/>
+            <Top Value="87"/>
             <Width Value="739"/>
             <Height Value="0"/>
           </Size>
@@ -483,7 +615,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
           <ShapeType Value="frstDiagonal1"/>
         </Object12>
         <Object13>
@@ -494,8 +633,8 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="598"/>
-            <Top Value="-104"/>
-            <Width Value="100"/>
+            <Top Value="88"/>
+            <Width Value="112"/>
             <Height Value="13"/>
           </Size>
           <Flags Value="3"/>
@@ -505,13 +644,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Agência\Código Cedente&#xD;&#xA;"/>
+            <Memo Value="Agência\Código Beneficiário&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -528,6 +678,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object13>
         <Object14>
           <Name Value="Memo11"/>
@@ -537,7 +689,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="599"/>
-            <Top Value="-90"/>
+            <Top Value="102"/>
             <Width Value="139"/>
             <Height Value="15"/>
           </Size>
@@ -548,13 +700,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Conta]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -571,6 +734,8 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object14>
         <Object15>
           <Name Value="Memo12"/>
@@ -580,7 +745,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="12"/>
-            <Top Value="-71"/>
+            <Top Value="121"/>
             <Width Value="74"/>
             <Height Value="12"/>
           </Size>
@@ -591,13 +756,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Data do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -614,6 +790,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object15>
         <Object16>
           <Name Value="Memo13"/>
@@ -623,7 +801,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="12"/>
-            <Top Value="-58"/>
+            <Top Value="134"/>
             <Width Value="99"/>
             <Height Value="12"/>
           </Size>
@@ -634,13 +812,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[DataDocto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -657,6 +846,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object16>
         <Object17>
           <Name Value="Memo14"/>
@@ -666,7 +857,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="141"/>
-            <Top Value="-71"/>
+            <Top Value="121"/>
             <Width Value="85"/>
             <Height Value="12"/>
           </Size>
@@ -677,13 +868,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Número do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -700,6 +902,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object17>
         <Object18>
           <Name Value="Memo15"/>
@@ -709,7 +913,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="140"/>
-            <Top Value="-58"/>
+            <Top Value="134"/>
             <Width Value="126"/>
             <Height Value="12"/>
           </Size>
@@ -720,13 +924,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NumDocto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -743,6 +958,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object18>
         <Object19>
           <Name Value="Memo16"/>
@@ -752,7 +969,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="289"/>
-            <Top Value="-71"/>
+            <Top Value="121"/>
             <Width Value="59"/>
             <Height Value="12"/>
           </Size>
@@ -763,13 +980,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie Doc.&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -786,6 +1014,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object19>
         <Object20>
           <Name Value="Memo17"/>
@@ -795,7 +1025,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="287"/>
-            <Top Value="-58"/>
+            <Top Value="134"/>
             <Width Value="68"/>
             <Height Value="12"/>
           </Size>
@@ -806,13 +1036,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Especie]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -829,6 +1070,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object20>
         <Object21>
           <Name Value="Memo18"/>
@@ -838,7 +1081,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="373"/>
-            <Top Value="-71"/>
+            <Top Value="121"/>
             <Width Value="31"/>
             <Height Value="12"/>
           </Size>
@@ -849,13 +1092,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Aceite&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -872,6 +1126,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object21>
         <Object22>
           <Name Value="Memo19"/>
@@ -881,7 +1137,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="374"/>
-            <Top Value="-58"/>
+            <Top Value="134"/>
             <Width Value="52"/>
             <Height Value="12"/>
           </Size>
@@ -892,13 +1148,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Aceite]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -915,6 +1182,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object22>
         <Object23>
           <Name Value="Memo20"/>
@@ -924,7 +1193,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="440"/>
-            <Top Value="-71"/>
+            <Top Value="121"/>
             <Width Value="139"/>
             <Height Value="12"/>
           </Size>
@@ -935,13 +1204,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Data de Processamento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -958,6 +1238,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object23>
         <Object24>
           <Name Value="Memo21"/>
@@ -967,7 +1249,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="445"/>
-            <Top Value="-58"/>
+            <Top Value="134"/>
             <Width Value="128"/>
             <Height Value="14"/>
           </Size>
@@ -978,13 +1260,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[DataProcessamento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1001,6 +1294,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object24>
         <Object25>
           <Name Value="Memo22"/>
@@ -1010,7 +1305,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="599"/>
-            <Top Value="-71"/>
+            <Top Value="121"/>
             <Width Value="90"/>
             <Height Value="12"/>
           </Size>
@@ -1021,13 +1316,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Nosso Número&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1044,6 +1350,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object25>
         <Object26>
           <Name Value="Memo23"/>
@@ -1053,7 +1361,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="599"/>
-            <Top Value="-58"/>
+            <Top Value="134"/>
             <Width Value="140"/>
             <Height Value="13"/>
           </Size>
@@ -1064,13 +1372,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NossoNumero]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1087,6 +1406,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object26>
         <Object27>
           <Name Value="Memo24"/>
@@ -1096,7 +1417,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="12"/>
-            <Top Value="-44"/>
+            <Top Value="148"/>
             <Width Value="87"/>
             <Height Value="12"/>
           </Size>
@@ -1107,13 +1428,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Uso do Banco&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1130,6 +1462,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object27>
         <Object28>
           <Name Value="Memo25"/>
@@ -1139,7 +1473,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="141"/>
-            <Top Value="-43"/>
+            <Top Value="149"/>
             <Width Value="43"/>
             <Height Value="12"/>
           </Size>
@@ -1150,13 +1484,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Carteira&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1173,6 +1518,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object28>
         <Object29>
           <Name Value="Memo26"/>
@@ -1182,7 +1529,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="217"/>
-            <Top Value="-44"/>
+            <Top Value="148"/>
             <Width Value="52"/>
             <Height Value="12"/>
           </Size>
@@ -1193,13 +1540,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1216,6 +1574,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object29>
         <Object30>
           <Name Value="Memo27"/>
@@ -1225,7 +1585,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="219"/>
-            <Top Value="-31"/>
+            <Top Value="161"/>
             <Width Value="52"/>
             <Height Value="15"/>
           </Size>
@@ -1236,13 +1596,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Moeda]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1259,6 +1630,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object30>
         <Object31>
           <Name Value="Memo28"/>
@@ -1268,7 +1641,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="142"/>
-            <Top Value="-29"/>
+            <Top Value="163"/>
             <Width Value="52"/>
             <Height Value="13"/>
           </Size>
@@ -1279,13 +1652,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Carteira]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1302,6 +1686,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object31>
         <Object32>
           <Name Value="Memo29"/>
@@ -1311,7 +1697,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="283"/>
-            <Top Value="-44"/>
+            <Top Value="148"/>
             <Width Value="76"/>
             <Height Value="13"/>
           </Size>
@@ -1322,13 +1708,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Quantidade&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1345,6 +1742,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object32>
         <Object33>
           <Name Value="Memo30"/>
@@ -1354,7 +1753,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="374"/>
-            <Top Value="-42"/>
+            <Top Value="150"/>
             <Width Value="36"/>
             <Height Value="15"/>
           </Size>
@@ -1365,13 +1764,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Valor&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1388,6 +1798,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object33>
         <Object34>
           <Name Value="Memo31"/>
@@ -1397,7 +1809,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="598"/>
-            <Top Value="-43"/>
+            <Top Value="149"/>
             <Width Value="134"/>
             <Height Value="12"/>
           </Size>
@@ -1408,13 +1820,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1431,6 +1854,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object34>
         <Object35>
           <Name Value="Memo32"/>
@@ -1440,7 +1865,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="596"/>
-            <Top Value="-29"/>
+            <Top Value="163"/>
             <Width Value="143"/>
             <Height Value="13"/>
           </Size>
@@ -1451,13 +1876,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Valor]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1474,6 +1910,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object35>
         <Object36>
           <Name Value="Memo33"/>
@@ -1483,7 +1921,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="8"/>
-            <Top Value="-12"/>
+            <Top Value="180"/>
             <Width Value="477"/>
             <Height Value="12"/>
           </Size>
@@ -1494,13 +1932,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Instruções (Todas as instruções deste bloqueto são de exclusiva responsabilidade do cedente.)&#xD;&#xA;"/>
+            <Memo Value="Instruções (Todas as instruções deste bloqueto são de exclusiva responsabilidade do beneficiario.)&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1517,6 +1966,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object36>
         <Object37>
           <Name Value="Memo34"/>
@@ -1526,7 +1977,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="597"/>
-            <Top Value="-12"/>
+            <Top Value="180"/>
             <Width Value="139"/>
             <Height Value="12"/>
           </Size>
@@ -1537,13 +1988,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( - ) Desconto / Abatimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1560,6 +2022,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object37>
         <Object38>
           <Name Value="Memo36"/>
@@ -1569,7 +2033,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="597"/>
-            <Top Value="44"/>
+            <Top Value="236"/>
             <Width Value="130"/>
             <Height Value="12"/>
           </Size>
@@ -1580,13 +2044,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( + ) Mora / Multa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1603,6 +2078,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object38>
         <Object39>
           <Name Value="Memo35"/>
@@ -1612,7 +2089,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="598"/>
-            <Top Value="96"/>
+            <Top Value="288"/>
             <Width Value="130"/>
             <Height Value="12"/>
           </Size>
@@ -1623,13 +2100,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor Cobrado&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1646,6 +2134,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object39>
         <Object40>
           <Name Value="Memo37"/>
@@ -1655,7 +2145,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="104"/>
-            <Top Value="126"/>
+            <Top Value="318"/>
             <Width Value="34"/>
             <Height Value="12"/>
           </Size>
@@ -1666,13 +2156,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Sacado:&#xD;&#xA;"/>
+            <Memo Value="Pagador:&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1689,6 +2190,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object40>
         <Object41>
           <Name Value="Memo38"/>
@@ -1698,7 +2201,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="141"/>
-            <Top Value="125"/>
+            <Top Value="317"/>
             <Width Value="449"/>
             <Height Value="19"/>
           </Size>
@@ -1709,13 +2212,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Nome]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="10"/>
@@ -1732,6 +2246,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlCenter"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object41>
         <Object42>
           <Name Value="Memo39"/>
@@ -1741,7 +2257,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="141"/>
-            <Top Value="147"/>
+            <Top Value="339"/>
             <Width Value="450"/>
             <Height Value="28"/>
           </Size>
@@ -1752,13 +2268,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[EndSacado]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1775,6 +2302,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object42>
         <Object43>
           <Name Value="Memo40"/>
@@ -1784,7 +2313,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="595"/>
-            <Top Value="127"/>
+            <Top Value="319"/>
             <Width Value="70"/>
             <Height Value="12"/>
           </Size>
@@ -1795,13 +2324,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="CPF\CNPJ&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1818,6 +2358,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object43>
         <Object44>
           <Name Value="Memo41"/>
@@ -1827,7 +2369,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="596"/>
-            <Top Value="139"/>
+            <Top Value="331"/>
             <Width Value="112"/>
             <Height Value="15"/>
           </Size>
@@ -1838,13 +2380,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Docto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -1861,6 +2414,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object44>
         <Object45>
           <Name Value="Memo42"/>
@@ -1870,7 +2425,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="597"/>
-            <Top Value="160"/>
+            <Top Value="352"/>
             <Width Value="106"/>
             <Height Value="12"/>
           </Size>
@@ -1881,13 +2436,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Código de Baixa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1904,6 +2470,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object45>
         <Object46>
           <Name Value="Memo43"/>
@@ -1913,7 +2481,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="169"/>
+            <Top Value="361"/>
             <Width Value="90"/>
             <Height Value="12"/>
           </Size>
@@ -1924,13 +2492,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Sacador \ Avalista&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1947,6 +2526,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object46>
         <Object47>
           <Name Value="Memo44"/>
@@ -1956,7 +2537,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="611"/>
-            <Top Value="182"/>
+            <Top Value="374"/>
             <Width Value="128"/>
             <Height Value="12"/>
           </Size>
@@ -1967,13 +2548,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Auntenticação Mecânica &#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -1990,16 +2582,18 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object47>
         <Object48>
           <Name Value="Bar1"/>
-          <ClassName Value="TfrBarCodeView"/>
+          <ClassName Value="TfrBarcodeView"/>
           <Visible Value="True"/>
           <Typ Value="gtAddIn"/>
           <StreamMode Value="0"/>
           <Size>
             <Left Value="10"/>
-            <Top Value="586"/>
+            <Top Value="778"/>
             <Width Value="64"/>
             <Height Value="55"/>
           </Size>
@@ -2009,10 +2603,15 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value="[Barras]&#xD;&#xA;"/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <BarCode Zoom="1" Angle="0" BarType="bcCode_2_5_interleaved" CheckSum="0" ShowText="0"/>
         </Object48>
         <Object49>
@@ -2023,7 +2622,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="182"/>
+            <Top Value="374"/>
             <Width Value="176"/>
             <Height Value="46"/>
           </Size>
@@ -2034,13 +2633,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Recebimento através do cheque número&#xD;&#xA;                  do banco                                 .&#xD;&#xA;Esta quitação só terá validade após o pagamento &#xD;&#xA;do cheque pelo banco sacado.&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2057,6 +2667,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object49>
         <Object50>
           <Name Value="Memo46"/>
@@ -2066,7 +2678,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="175"/>
-            <Top Value="244"/>
+            <Top Value="436"/>
             <Width Value="65"/>
             <Height Value="22"/>
           </Size>
@@ -2077,13 +2689,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Codbanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="18"/>
@@ -2100,6 +2723,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object50>
         <Object51>
           <Name Value="Memo47"/>
@@ -2109,7 +2734,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="244"/>
-            <Top Value="246"/>
+            <Top Value="438"/>
             <Width Value="497"/>
             <Height Value="20"/>
           </Size>
@@ -2120,13 +2745,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[LinhaDigitavel]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="12"/>
@@ -2143,6 +2779,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object51>
         <Object52>
           <Name Value="Memo48"/>
@@ -2152,7 +2790,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="7"/>
-            <Top Value="271"/>
+            <Top Value="463"/>
             <Width Value="78"/>
             <Height Value="12"/>
           </Size>
@@ -2163,13 +2801,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Local de Pagamento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2186,6 +2835,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object52>
         <Object53>
           <Name Value="Memo49"/>
@@ -2195,7 +2846,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="6"/>
-            <Top Value="282"/>
+            <Top Value="474"/>
             <Width Value="566"/>
             <Height Value="13"/>
           </Size>
@@ -2206,13 +2857,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[LocalPagto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2229,6 +2891,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object53>
         <Object54>
           <Name Value="Memo50"/>
@@ -2238,7 +2902,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="583"/>
-            <Top Value="272"/>
+            <Top Value="464"/>
             <Width Value="50"/>
             <Height Value="12"/>
           </Size>
@@ -2249,13 +2913,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Vencimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2272,6 +2947,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object54>
         <Object55>
           <Name Value="Memo51"/>
@@ -2281,7 +2958,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="638"/>
-            <Top Value="281"/>
+            <Top Value="473"/>
             <Width Value="91"/>
             <Height Value="14"/>
           </Size>
@@ -2292,13 +2969,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Vencimento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2315,6 +3003,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object55>
         <Object56>
           <Name Value="Memo52"/>
@@ -2324,7 +3014,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="8"/>
-            <Top Value="298"/>
+            <Top Value="490"/>
             <Width Value="37"/>
             <Height Value="12"/>
           </Size>
@@ -2335,13 +3025,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Cedente&#xD;&#xA;"/>
+            <Memo Value="Beneficiário&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2358,6 +3059,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object56>
         <Object57>
           <Name Value="Memo53"/>
@@ -2367,7 +3070,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="7"/>
-            <Top Value="311"/>
+            <Top Value="503"/>
             <Width Value="565"/>
             <Height Value="15"/>
           </Size>
@@ -2378,13 +3081,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[RazaoSocial]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2401,6 +3115,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object57>
         <Object58>
           <Name Value="Memo54"/>
@@ -2410,8 +3126,8 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="583"/>
-            <Top Value="298"/>
-            <Width Value="95"/>
+            <Top Value="490"/>
+            <Width Value="115"/>
             <Height Value="12"/>
           </Size>
           <Flags Value="3"/>
@@ -2421,13 +3137,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Agência\Código Cedente&#xD;&#xA;"/>
+            <Memo Value="Agência\Código Beneficiário&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2444,6 +3171,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object58>
         <Object59>
           <Name Value="Memo55"/>
@@ -2453,7 +3182,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="586"/>
-            <Top Value="312"/>
+            <Top Value="504"/>
             <Width Value="135"/>
             <Height Value="14"/>
           </Size>
@@ -2464,13 +3193,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Conta]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2487,6 +3227,8 @@
           <Alignment Value="taRightJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object59>
         <Object60>
           <Name Value="Memo56"/>
@@ -2496,7 +3238,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="8"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="75"/>
             <Height Value="12"/>
           </Size>
@@ -2507,13 +3249,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Data do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2530,6 +3283,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object60>
         <Object61>
           <Name Value="Memo57"/>
@@ -2539,7 +3294,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="341"/>
+            <Top Value="533"/>
             <Width Value="88"/>
             <Height Value="14"/>
           </Size>
@@ -2550,13 +3305,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[DataDocto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2573,6 +3339,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object61>
         <Object62>
           <Name Value="Memo58"/>
@@ -2582,7 +3350,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="123"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="89"/>
             <Height Value="12"/>
           </Size>
@@ -2593,13 +3361,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Número do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2616,6 +3395,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object62>
         <Object63>
           <Name Value="Memo59"/>
@@ -2625,7 +3406,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="124"/>
-            <Top Value="341"/>
+            <Top Value="533"/>
             <Width Value="118"/>
             <Height Value="15"/>
           </Size>
@@ -2636,13 +3417,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NumDocto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2659,6 +3451,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object63>
         <Object64>
           <Name Value="Memo60"/>
@@ -2668,7 +3462,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="263"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="50"/>
             <Height Value="12"/>
           </Size>
@@ -2679,13 +3473,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie Doc.&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2702,6 +3507,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object64>
         <Object65>
           <Name Value="Memo61"/>
@@ -2711,7 +3518,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="264"/>
-            <Top Value="340"/>
+            <Top Value="532"/>
             <Width Value="63"/>
             <Height Value="14"/>
           </Size>
@@ -2722,13 +3529,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Especie]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2745,6 +3563,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object65>
         <Object66>
           <Name Value="Memo62"/>
@@ -2754,7 +3574,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="347"/>
-            <Top Value="329"/>
+            <Top Value="521"/>
             <Width Value="29"/>
             <Height Value="12"/>
           </Size>
@@ -2765,13 +3585,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Aceite&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2788,6 +3619,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object66>
         <Object67>
           <Name Value="Memo63"/>
@@ -2797,7 +3630,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="344"/>
-            <Top Value="340"/>
+            <Top Value="532"/>
             <Width Value="44"/>
             <Height Value="16"/>
           </Size>
@@ -2808,13 +3641,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Aceite]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2831,6 +3675,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object67>
         <Object68>
           <Name Value="Memo64"/>
@@ -2840,7 +3686,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="399"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="89"/>
             <Height Value="12"/>
           </Size>
@@ -2851,13 +3697,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Data de Processamento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2874,6 +3731,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object68>
         <Object69>
           <Name Value="Memo65"/>
@@ -2883,7 +3742,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="405"/>
-            <Top Value="341"/>
+            <Top Value="533"/>
             <Width Value="127"/>
             <Height Value="14"/>
           </Size>
@@ -2894,13 +3753,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[DataProcessamento]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -2917,6 +3787,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object69>
         <Object70>
           <Name Value="Memo66"/>
@@ -2926,7 +3798,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="586"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="66"/>
             <Height Value="12"/>
           </Size>
@@ -2937,13 +3809,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Nosso Número&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -2960,6 +3843,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object70>
         <Object71>
           <Name Value="Memo67"/>
@@ -2969,7 +3854,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="590"/>
-            <Top Value="339"/>
+            <Top Value="531"/>
             <Width Value="150"/>
             <Height Value="19"/>
           </Size>
@@ -2980,13 +3865,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[NossoNumero]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3003,6 +3899,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object71>
         <Object72>
           <Name Value="Memo68"/>
@@ -3012,7 +3910,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="358"/>
+            <Top Value="550"/>
             <Width Value="60"/>
             <Height Value="12"/>
           </Size>
@@ -3023,13 +3921,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Uso do Banco&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3046,6 +3955,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object72>
         <Object73>
           <Name Value="Memo69"/>
@@ -3055,7 +3966,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="123"/>
-            <Top Value="358"/>
+            <Top Value="550"/>
             <Width Value="37"/>
             <Height Value="12"/>
           </Size>
@@ -3066,13 +3977,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Carteira&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3089,6 +4011,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object73>
         <Object74>
           <Name Value="Memo70"/>
@@ -3098,7 +4022,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="185"/>
-            <Top Value="359"/>
+            <Top Value="551"/>
             <Width Value="44"/>
             <Height Value="12"/>
           </Size>
@@ -3109,13 +4033,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Espécie&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3132,6 +4067,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object74>
         <Object75>
           <Name Value="Memo71"/>
@@ -3141,7 +4078,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="185"/>
-            <Top Value="369"/>
+            <Top Value="561"/>
             <Width Value="46"/>
             <Height Value="15"/>
           </Size>
@@ -3152,13 +4089,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Moeda]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3175,6 +4123,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object75>
         <Object76>
           <Name Value="Memo72"/>
@@ -3184,7 +4134,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="123"/>
-            <Top Value="371"/>
+            <Top Value="563"/>
             <Width Value="52"/>
             <Height Value="12"/>
           </Size>
@@ -3195,13 +4145,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Carteira]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3218,6 +4179,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object76>
         <Object77>
           <Name Value="Memo73"/>
@@ -3227,7 +4190,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="257"/>
-            <Top Value="359"/>
+            <Top Value="551"/>
             <Width Value="76"/>
             <Height Value="12"/>
           </Size>
@@ -3238,13 +4201,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Quantidade&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3261,6 +4235,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object77>
         <Object78>
           <Name Value="Memo74"/>
@@ -3270,7 +4246,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="401"/>
-            <Top Value="359"/>
+            <Top Value="551"/>
             <Width Value="36"/>
             <Height Value="14"/>
           </Size>
@@ -3281,13 +4257,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Valor&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3304,6 +4291,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object78>
         <Object79>
           <Name Value="Memo75"/>
@@ -3313,7 +4302,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="587"/>
-            <Top Value="358"/>
+            <Top Value="550"/>
             <Width Value="143"/>
             <Height Value="12"/>
           </Size>
@@ -3324,13 +4313,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor do Documento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3347,6 +4347,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object79>
         <Object80>
           <Name Value="Memo76"/>
@@ -3356,7 +4358,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="590"/>
-            <Top Value="371"/>
+            <Top Value="563"/>
             <Width Value="141"/>
             <Height Value="14"/>
           </Size>
@@ -3367,13 +4369,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Valor]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3390,6 +4403,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object80>
         <Object81>
           <Name Value="Memo77"/>
@@ -3399,7 +4414,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="387"/>
+            <Top Value="579"/>
             <Width Value="477"/>
             <Height Value="12"/>
           </Size>
@@ -3410,13 +4425,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Instruções -Texto de responsabilidade do cedente.&#xD;&#xA;"/>
+            <Memo Value="Instruções -Texto de responsabilidade do beneficiário.&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3433,6 +4459,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object81>
         <Object82>
           <Name Value="Memo78"/>
@@ -3442,7 +4470,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="387"/>
+            <Top Value="579"/>
             <Width Value="149"/>
             <Height Value="12"/>
           </Size>
@@ -3453,13 +4481,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( - ) Desconto / Abatimento&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3476,6 +4515,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object82>
         <Object83>
           <Name Value="Memo79"/>
@@ -3485,7 +4526,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="442"/>
+            <Top Value="634"/>
             <Width Value="145"/>
             <Height Value="12"/>
           </Size>
@@ -3496,13 +4537,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( + ) Mora / Multa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3519,6 +4571,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object83>
         <Object84>
           <Name Value="Memo80"/>
@@ -3528,7 +4582,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="490"/>
+            <Top Value="682"/>
             <Width Value="147"/>
             <Height Value="12"/>
           </Size>
@@ -3539,13 +4593,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( = ) Valor Cobrado&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3562,6 +4627,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object84>
         <Object85>
           <Name Value="Memo81"/>
@@ -3571,7 +4638,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="139"/>
-            <Top Value="520"/>
+            <Top Value="712"/>
             <Width Value="37"/>
             <Height Value="12"/>
           </Size>
@@ -3582,13 +4649,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Sacado:&#xD;&#xA;"/>
+            <Memo Value="Pagador:&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3605,6 +4683,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object85>
         <Object86>
           <Name Value="Memo82"/>
@@ -3614,7 +4694,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="181"/>
-            <Top Value="520"/>
+            <Top Value="712"/>
             <Width Value="394"/>
             <Height Value="18"/>
           </Size>
@@ -3625,13 +4705,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Nome]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="10"/>
@@ -3648,6 +4739,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlCenter"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object86>
         <Object87>
           <Name Value="Memo83"/>
@@ -3657,7 +4750,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="181"/>
-            <Top Value="541"/>
+            <Top Value="733"/>
             <Width Value="394"/>
             <Height Value="26"/>
           </Size>
@@ -3668,13 +4761,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[EndSacado]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3691,6 +4795,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object87>
         <Object88>
           <Name Value="Memo84"/>
@@ -3700,7 +4806,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="589"/>
-            <Top Value="517"/>
+            <Top Value="709"/>
             <Width Value="50"/>
             <Height Value="12"/>
           </Size>
@@ -3711,13 +4817,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="CPF\CNPJ&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3734,6 +4851,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object88>
         <Object89>
           <Name Value="Memo85"/>
@@ -3743,7 +4862,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="534"/>
+            <Top Value="726"/>
             <Width Value="112"/>
             <Height Value="15"/>
           </Size>
@@ -3754,13 +4873,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Docto]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -3777,6 +4907,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object89>
         <Object90>
           <Name Value="Memo86"/>
@@ -3786,7 +4918,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="555"/>
+            <Top Value="747"/>
             <Width Value="71"/>
             <Height Value="13"/>
           </Size>
@@ -3797,13 +4929,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Código de Baixa&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3820,6 +4963,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object90>
         <Object91>
           <Name Value="Memo87"/>
@@ -3829,7 +4974,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="570"/>
+            <Top Value="762"/>
             <Width Value="77"/>
             <Height Value="12"/>
           </Size>
@@ -3840,13 +4985,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Sacador \ Avalista&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3863,6 +5019,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object91>
         <Object92>
           <Name Value="Memo88"/>
@@ -3872,7 +5030,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="524"/>
-            <Top Value="585"/>
+            <Top Value="777"/>
             <Width Value="221"/>
             <Height Value="12"/>
           </Size>
@@ -3883,13 +5041,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="Auntenticação  - Ficha de Compensação&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -3906,6 +5075,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object92>
         <Object93>
           <Name Value="Memo89"/>
@@ -3915,7 +5086,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="7"/>
-            <Top Value="1"/>
+            <Top Value="193"/>
             <Width Value="576"/>
             <Height Value="85"/>
           </Size>
@@ -3926,13 +5097,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Obs]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="7"/>
@@ -3949,6 +5131,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object93>
         <Object94>
           <Name Value="Memo90"/>
@@ -3958,7 +5142,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="4"/>
-            <Top Value="399"/>
+            <Top Value="591"/>
             <Width Value="568"/>
             <Height Value="81"/>
           </Size>
@@ -3969,13 +5153,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[Obs]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="7"/>
@@ -3992,6 +5187,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object94>
         <Object95>
           <Name Value="Picture1"/>
@@ -4001,21 +5198,27 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="6"/>
-            <Top Value="-161"/>
+            <Top Value="31"/>
             <Width Value="153"/>
             <Height Value="27"/>
           </Size>
           <Flags Value="5"/>
+          <FillColor Value="clWindow"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value=""/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Picture>
             <SharedName Value=""/>
             <Type Value="0"/>
@@ -4029,21 +5232,27 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="7"/>
-            <Top Value="238"/>
+            <Top Value="430"/>
             <Width Value="152"/>
             <Height Value="28"/>
           </Size>
           <Flags Value="5"/>
+          <FillColor Value="clWindow"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value=""/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Picture>
             <SharedName Value=""/>
             <Type Value="0"/>
@@ -4057,21 +5266,27 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="1"/>
-            <Top Value="221"/>
+            <Top Value="413"/>
             <Width Value="15"/>
             <Height Value="15"/>
           </Size>
           <Flags Value="5"/>
+          <FillColor Value="clWindow"/>
           <Frames>
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDashDotDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Memo Value=""/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Picture>
             <SharedName Value=""/>
             <Type Ext="png" Value="255"/>
@@ -4087,7 +5302,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="264"/>
-            <Top Value="668"/>
+            <Top Value="860"/>
             <Width Value="0"/>
             <Height Value="0"/>
           </Size>
@@ -4096,7 +5311,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object98>
         <Object99>
           <Name Value="Line2"/>
@@ -4106,7 +5328,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="76"/>
-            <Top Value="580"/>
+            <Top Value="772"/>
             <Width Value="0"/>
             <Height Value="0"/>
           </Size>
@@ -4115,7 +5337,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object99>
         <Object100>
           <Name Value="Line3"/>
@@ -4125,7 +5354,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="9"/>
-            <Top Value="233"/>
+            <Top Value="425"/>
             <Width Value="736"/>
             <Height Value="0"/>
           </Size>
@@ -4134,7 +5363,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object100>
         <Object101>
           <Name Value="Line5"/>
@@ -4144,7 +5380,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="578"/>
-            <Top Value="270"/>
+            <Top Value="462"/>
             <Width Value="0"/>
             <Height Value="244"/>
           </Size>
@@ -4153,7 +5389,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object101>
         <Object102>
           <Name Value="Line6"/>
@@ -4172,7 +5415,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object102>
         <Object103>
           <Name Value="Line8"/>
@@ -4182,7 +5432,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="269"/>
+            <Top Value="461"/>
             <Width Value="737"/>
             <Height Value="0"/>
           </Size>
@@ -4191,7 +5441,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object103>
         <Object104>
           <Name Value="Line9"/>
@@ -4201,7 +5458,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="169"/>
-            <Top Value="237"/>
+            <Top Value="429"/>
             <Width Value="0"/>
             <Height Value="32"/>
           </Size>
@@ -4210,7 +5467,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object104>
         <Object105>
           <Name Value="Line10"/>
@@ -4220,7 +5484,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="242"/>
-            <Top Value="237"/>
+            <Top Value="429"/>
             <Width Value="0"/>
             <Height Value="32"/>
           </Size>
@@ -4229,7 +5493,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object105>
         <Object106>
           <Name Value="Line11"/>
@@ -4239,7 +5510,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="6"/>
-            <Top Value="296"/>
+            <Top Value="488"/>
             <Width Value="736"/>
             <Height Value="0"/>
           </Size>
@@ -4248,7 +5519,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object106>
         <Object107>
           <Name Value="Line12"/>
@@ -4258,7 +5536,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="6"/>
-            <Top Value="327"/>
+            <Top Value="519"/>
             <Width Value="736"/>
             <Height Value="0"/>
           </Size>
@@ -4267,7 +5545,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object107>
         <Object108>
           <Name Value="Line13"/>
@@ -4277,7 +5562,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="6"/>
-            <Top Value="357"/>
+            <Top Value="549"/>
             <Width Value="734"/>
             <Height Value="0"/>
           </Size>
@@ -4286,7 +5571,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object108>
         <Object109>
           <Name Value="Line14"/>
@@ -4296,7 +5588,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="4"/>
-            <Top Value="385"/>
+            <Top Value="577"/>
             <Width Value="740"/>
             <Height Value="0"/>
           </Size>
@@ -4305,7 +5597,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object109>
         <Object110>
           <Name Value="Line15"/>
@@ -4315,7 +5614,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="514"/>
+            <Top Value="706"/>
             <Width Value="738"/>
             <Height Value="0"/>
           </Size>
@@ -4324,7 +5623,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object110>
         <Object111>
           <Name Value="Line16"/>
@@ -4334,7 +5640,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="7"/>
-            <Top Value="581"/>
+            <Top Value="773"/>
             <Width Value="737"/>
             <Height Value="0"/>
           </Size>
@@ -4343,7 +5649,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object111>
         <Object112>
           <Name Value="Line17"/>
@@ -4353,7 +5666,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="115"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="0"/>
             <Height Value="57"/>
           </Size>
@@ -4362,7 +5675,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object112>
         <Object113>
           <Name Value="Line18"/>
@@ -4372,7 +5692,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="252"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="0"/>
             <Height Value="57"/>
           </Size>
@@ -4381,7 +5701,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object113>
         <Object114>
           <Name Value="Line19"/>
@@ -4391,7 +5718,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="180"/>
-            <Top Value="358"/>
+            <Top Value="550"/>
             <Width Value="0"/>
             <Height Value="26"/>
           </Size>
@@ -4400,7 +5727,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object114>
         <Object115>
           <Name Value="Line20"/>
@@ -4410,7 +5744,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="337"/>
-            <Top Value="327"/>
+            <Top Value="519"/>
             <Width Value="0"/>
             <Height Value="30"/>
           </Size>
@@ -4419,7 +5753,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object115>
         <Object116>
           <Name Value="Line21"/>
@@ -4429,7 +5770,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="394"/>
-            <Top Value="328"/>
+            <Top Value="520"/>
             <Width Value="0"/>
             <Height Value="57"/>
           </Size>
@@ -4438,7 +5779,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object116>
         <Object117>
           <Name Value="Line22"/>
@@ -4448,7 +5796,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="578"/>
-            <Top Value="413"/>
+            <Top Value="605"/>
             <Width Value="164"/>
             <Height Value="0"/>
           </Size>
@@ -4457,7 +5805,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object117>
         <Object118>
           <Name Value="Line23"/>
@@ -4467,7 +5822,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="579"/>
-            <Top Value="466"/>
+            <Top Value="658"/>
             <Width Value="163"/>
             <Height Value="0"/>
           </Size>
@@ -4476,7 +5831,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object118>
         <Object119>
           <Name Value="Line4"/>
@@ -4486,7 +5848,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="179"/>
+            <Top Value="371"/>
             <Width Value="738"/>
             <Height Value="0"/>
           </Size>
@@ -4495,7 +5857,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object119>
         <Object120>
           <Name Value="Line24"/>
@@ -4505,7 +5874,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="121"/>
+            <Top Value="313"/>
             <Width Value="737"/>
             <Height Value="0"/>
           </Size>
@@ -4514,7 +5883,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object120>
         <Object121>
           <Name Value="Line25"/>
@@ -4524,7 +5900,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="-14"/>
+            <Top Value="178"/>
             <Width Value="736"/>
             <Height Value="0"/>
           </Size>
@@ -4533,7 +5909,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object121>
         <Object122>
           <Name Value="Line26"/>
@@ -4543,7 +5926,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="-45"/>
+            <Top Value="147"/>
             <Width Value="736"/>
             <Height Value="0"/>
           </Size>
@@ -4552,7 +5935,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object122>
         <Object123>
           <Name Value="Line27"/>
@@ -4562,7 +5952,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="-73"/>
+            <Top Value="119"/>
             <Width Value="737"/>
             <Height Value="0"/>
           </Size>
@@ -4571,7 +5961,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object123>
         <Object124>
           <Name Value="Line28"/>
@@ -4581,7 +5978,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="-133"/>
+            <Top Value="59"/>
             <Width Value="738"/>
             <Height Value="0"/>
           </Size>
@@ -4590,7 +5987,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object124>
         <Object125>
           <Name Value="Line29"/>
@@ -4600,7 +6004,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="591"/>
-            <Top Value="-133"/>
+            <Top Value="59"/>
             <Width Value="0"/>
             <Height Value="255"/>
           </Size>
@@ -4609,7 +6013,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object125>
         <Object126>
           <Name Value="Line30"/>
@@ -4619,7 +6030,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="164"/>
-            <Top Value="-164"/>
+            <Top Value="28"/>
             <Width Value="0"/>
             <Height Value="31"/>
           </Size>
@@ -4628,7 +6039,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object126>
         <Object127>
           <Name Value="Line31"/>
@@ -4638,7 +6056,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="240"/>
-            <Top Value="-164"/>
+            <Top Value="28"/>
             <Width Value="0"/>
             <Height Value="31"/>
           </Size>
@@ -4647,7 +6065,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object127>
         <Object128>
           <Name Value="Line32"/>
@@ -4657,7 +6082,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="624"/>
-            <Top Value="440"/>
+            <Top Value="632"/>
             <Width Value="0"/>
             <Height Value="0"/>
           </Size>
@@ -4666,7 +6091,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object128>
         <Object129>
           <Name Value="Line33"/>
@@ -4676,7 +6108,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="592"/>
-            <Top Value="42"/>
+            <Top Value="234"/>
             <Width Value="149"/>
             <Height Value="0"/>
           </Size>
@@ -4685,7 +6117,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object129>
         <Object130>
           <Name Value="Line34"/>
@@ -4695,7 +6134,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="592"/>
-            <Top Value="68"/>
+            <Top Value="260"/>
             <Width Value="149"/>
             <Height Value="0"/>
           </Size>
@@ -4704,7 +6143,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object130>
         <Object131>
           <Name Value="Line35"/>
@@ -4714,7 +6160,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="127"/>
-            <Top Value="-72"/>
+            <Top Value="120"/>
             <Width Value="0"/>
             <Height Value="58"/>
           </Size>
@@ -4723,7 +6169,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object131>
         <Object132>
           <Name Value="Line36"/>
@@ -4733,7 +6186,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="278"/>
-            <Top Value="-72"/>
+            <Top Value="120"/>
             <Width Value="0"/>
             <Height Value="58"/>
           </Size>
@@ -4742,7 +6195,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object132>
         <Object133>
           <Name Value="Line38"/>
@@ -4752,7 +6212,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="364"/>
-            <Top Value="-73"/>
+            <Top Value="119"/>
             <Width Value="0"/>
             <Height Value="59"/>
           </Size>
@@ -4761,7 +6221,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object133>
         <Object134>
           <Name Value="Line39"/>
@@ -4771,7 +6238,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="436"/>
-            <Top Value="-72"/>
+            <Top Value="120"/>
             <Width Value="0"/>
             <Height Value="27"/>
           </Size>
@@ -4780,7 +6247,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object134>
         <Object135>
           <Name Value="Line40"/>
@@ -4790,7 +6264,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="206"/>
-            <Top Value="-45"/>
+            <Top Value="147"/>
             <Width Value="0"/>
             <Height Value="30"/>
           </Size>
@@ -4799,7 +6273,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object135>
         <Object136>
           <Name Value="Memo91"/>
@@ -4809,7 +6290,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="5"/>
-            <Top Value="481"/>
+            <Top Value="673"/>
             <Width Value="292"/>
             <Height Value="12"/>
           </Size>
@@ -4820,13 +6301,24 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="2"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="44"/>
             <FormatStr Value=""/>
             <Memo Value="[Site]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -4843,6 +6335,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object136>
         <Object137>
           <Name Value="Memo122"/>
@@ -4852,7 +6346,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="11"/>
-            <Top Value="-30"/>
+            <Top Value="162"/>
             <Width Value="99"/>
             <Height Value="13"/>
           </Size>
@@ -4863,13 +6357,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[UsoBanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -4886,6 +6391,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object137>
         <Object138>
           <Name Value="Memo123"/>
@@ -4895,7 +6402,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="8"/>
-            <Top Value="370"/>
+            <Top Value="562"/>
             <Width Value="99"/>
             <Height Value="13"/>
           </Size>
@@ -4906,13 +6413,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[UsoBanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="8"/>
@@ -4929,6 +6447,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlBottom"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object138>
         <Object139>
           <Name Value="Line37"/>
@@ -4938,7 +6458,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="592"/>
-            <Top Value="15"/>
+            <Top Value="207"/>
             <Width Value="149"/>
             <Height Value="0"/>
           </Size>
@@ -4947,7 +6467,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object139>
         <Object140>
           <Name Value="Memo92"/>
@@ -4957,7 +6484,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="597"/>
-            <Top Value="18"/>
+            <Top Value="210"/>
             <Width Value="139"/>
             <Height Value="12"/>
           </Size>
@@ -4968,13 +6495,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( - ) Outras Deduções&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -4991,6 +6529,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object140>
         <Object141>
           <Name Value="Memo93"/>
@@ -5000,7 +6540,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="598"/>
-            <Top Value="70"/>
+            <Top Value="262"/>
             <Width Value="130"/>
             <Height Value="12"/>
           </Size>
@@ -5011,13 +6551,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( + ) Outros Acrescimos&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -5034,6 +6585,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object141>
         <Object142>
           <Name Value="Line41"/>
@@ -5043,7 +6596,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="592"/>
-            <Top Value="94"/>
+            <Top Value="286"/>
             <Width Value="149"/>
             <Height Value="0"/>
           </Size>
@@ -5052,7 +6605,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object142>
         <Object143>
           <Name Value="Memo94"/>
@@ -5062,7 +6622,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="415"/>
+            <Top Value="607"/>
             <Width Value="149"/>
             <Height Value="12"/>
           </Size>
@@ -5073,13 +6633,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="2"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( - ) Outras Deduções&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -5096,6 +6667,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object143>
         <Object144>
           <Name Value="Line42"/>
@@ -5105,7 +6678,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="578"/>
-            <Top Value="439"/>
+            <Top Value="631"/>
             <Width Value="163"/>
             <Height Value="0"/>
           </Size>
@@ -5114,7 +6687,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object144>
         <Object145>
           <Name Value="Memo95"/>
@@ -5124,7 +6704,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="588"/>
-            <Top Value="467"/>
+            <Top Value="659"/>
             <Width Value="145"/>
             <Height Value="12"/>
           </Size>
@@ -5135,13 +6715,24 @@
             <FrameStyle Value="frsDot"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="( + ) Outros Acrescimos&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -5158,6 +6749,8 @@
           <Alignment Value="taLeftJustify"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object145>
         <Object146>
           <Name Value="Line43"/>
@@ -5167,7 +6760,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="579"/>
-            <Top Value="488"/>
+            <Top Value="680"/>
             <Width Value="163"/>
             <Height Value="0"/>
           </Size>
@@ -5176,7 +6769,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
         </Object146>
         <Object147>
           <Name Value="Memo96"/>
@@ -5186,7 +6786,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="190"/>
-            <Top Value="182"/>
+            <Top Value="374"/>
             <Width Value="254"/>
             <Height Value="48"/>
           </Size>
@@ -5197,13 +6797,24 @@
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
             <FrameBorders Value=""/>
+            <Restrictions Value=""/>
           </Frames>
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
             <Memo Value="[OrientacoesBanco]&#xD;&#xA;"/>
             <Script Value=""/>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+            <OnClick Value=""/>
+            <OnMouseEnter Value=""/>
+            <OnMouseLeave Value=""/>
+            <DetailReport Value=""/>
+            <ParagraphGap Value="0"/>
+            <LineSpacing Value="2"/>
           </Data>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
           <Font>
             <Name Value="Arial"/>
             <Size Value="6"/>
@@ -5220,6 +6831,8 @@
           <Alignment Value="taCenter"/>
           <Layout Value="tlTop"/>
           <Angle Value="0"/>
+          <Justify Value="False"/>
+          <Cursor Value="0"/>
         </Object147>
         <Object148>
           <Name Value="Shape2"/>
@@ -5229,7 +6842,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="187"/>
-            <Top Value="180"/>
+            <Top Value="372"/>
             <Width Value="0"/>
             <Height Value="49"/>
           </Size>
@@ -5239,7 +6852,14 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
           <ShapeType Value="frstDiagonal1"/>
         </Object148>
         <Object149>
@@ -5250,7 +6870,7 @@
           <StreamMode Value="0"/>
           <Size>
             <Left Value="446"/>
-            <Top Value="180"/>
+            <Top Value="372"/>
             <Width Value="0"/>
             <Height Value="49"/>
           </Size>
@@ -5260,9 +6880,17 @@
             <FrameColor Value="clBlack"/>
             <FrameStyle Value="frsSolid"/>
             <FrameWidth Value="1"/>
+            <Restrictions Value=""/>
           </Frames>
+          <Tag Value=""/>
+          <FURLInfo Value=""/>
+          <Data>
+            <GapX Value="0"/>
+            <GapY Value="0"/>
+          </Data>
           <ShapeType Value="frstDiagonal1"/>
         </Object149>
+        <ObjectCount Value="149"/>
       </Page1>
       <FVal>
         <Count Value="25"/>
@@ -5444,5 +7072,8 @@
       </FVal>
       <ParentVars Value="Sacado&#xD;&#xA; Nome&#xD;&#xA; Docto&#xD;&#xA; EndSacado&#xD;&#xA;Cedente&#xD;&#xA; RazaoSocial&#xD;&#xA; Endereco&#xD;&#xA;Banco&#xD;&#xA; Codbanco&#xD;&#xA; LocalPagto&#xD;&#xA; Conta&#xD;&#xA; OrientacoesBanco&#xD;&#xA; Img&#xD;&#xA;Boleto&#xD;&#xA; Vencimento&#xD;&#xA; DataDocto&#xD;&#xA; Aceite&#xD;&#xA; Especie&#xD;&#xA; NumDocto&#xD;&#xA; DataProcessamento&#xD;&#xA; NossoNumero&#xD;&#xA; Moeda&#xD;&#xA; Carteira&#xD;&#xA; Valor&#xD;&#xA; Barras&#xD;&#xA; LinhaDigitavel&#xD;&#xA; Obs&#xD;&#xA; UsoBanco&#xD;&#xA;Empresa&#xD;&#xA; Site&#xD;&#xA;"/>
     </Pages>
+    <DetailReports>
+      <Count Value="0"/>
+    </DetailReports>
   </LazReport>
 </CONFIG>

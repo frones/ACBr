@@ -5,15 +5,17 @@ unit Unit1;
 interface
 
 uses
-  Classes, SysUtils, memds, db, FileUtil, Forms, Controls, Graphics, Dialogs,
-  StdCtrls, ExtCtrls, CheckLst, Spin, ComCtrls, DBGrids, ACBrTCP,
-  ACBrMTer, ACBrSocket, ACBrConsts, blcksock;
+  Classes, SysUtils, typinfo, memds, db, FileUtil, Forms, Controls, Graphics,
+  Dialogs, StdCtrls, ExtCtrls, CheckLst, Spin, ComCtrls, DBGrids, Buttons,
+  ACBrTCP, ACBrMTer, ACBrSocket, ACBrConsts, ACBrBAL, blcksock;
 
 type
 
   { TForm1 }
   TForm1 = class(TForm)
+    ACBrBAL1: TACBrBAL;
     ACBrMTer1: TACBrMTer;
+    BitBtn1: TBitBtn;
     btAtivar: TButton;
     btAtualizar: TButton;
     btBackSpace: TButton;
@@ -29,9 +31,11 @@ type
     btLimparLinha: TButton;
     btLimparLinha1: TButton;
     btPosicionarCursor: TButton;
+    btSolicitarPeso: TButton;
+    cbBalanca: TComboBox;
+    cbEchoMode: TComboBox;
     cbModelo: TComboBox;
     clbConectados: TCheckListBox;
-    cbEchoMode: TComboBox;
     dbgComandas: TDBGrid;
     dbgTerminais: TDBGrid;
     dsComandas: TDataSource;
@@ -46,12 +50,15 @@ type
     edPosLinha: TSpinEdit;
     edQtdPosicao: TSpinEdit;
     edSerial: TSpinEdit;
+    edSerialPeso: TSpinEdit;
     edTerminador: TEdit;
     edTimeout: TEdit;
     gbComandas: TGroupBox;
     Label1: TLabel;
-    lbEchoMode: TLabel;
+    Label2: TLabel;
+    Label4: TLabel;
     lbDesLinha: TLabel;
+    lbEchoMode: TLabel;
     lbLimparLinha: TLabel;
     lbModelo: TLabel;
     lbPorta: TLabel;
@@ -63,6 +70,7 @@ type
     memComandas: TMemDataset;
     memTerminais: TMemDataset;
     mOutput: TMemo;
+    pgConfigs: TPageControl;
     PageControl2: TPageControl;
     pnAtivarFluxo: TPanel;
     pnComandas: TPanel;
@@ -72,13 +80,18 @@ type
     pnLegenda: TPanel;
     pnTerminais: TPanel;
     Splitter1: TSplitter;
+    tsBalanca: TTabSheet;
+    tsConfig: TTabSheet;
     tsComandos: TTabSheet;
     tsFluxoVendas: TTabSheet;
     procedure ACBrMTer1Conecta(const IP: AnsiString);
     procedure ACBrMTer1Desconecta(const IP: AnsiString; Erro: Integer;
       ErroDesc: AnsiString);
     procedure ACBrMTer1RecebeDados(const IP: AnsiString;
-      var Recebido: AnsiString);
+      var Recebido: AnsiString; var EchoMode: TACBrMTerEchoMode);
+    procedure ACBrMTer1RecebePeso(const IP: AnsiString;
+      const PesoRecebido: Double);
+    procedure BitBtn1Click(Sender: TObject);
     procedure btAtivarClick(Sender: TObject);
     procedure btAtualizarClick(Sender: TObject);
     procedure btBackSpaceClick(Sender: TObject);
@@ -94,6 +107,8 @@ type
     procedure btLimparLinhaClick(Sender: TObject);
     procedure btPosicionarCursorClick(Sender: TObject);
     procedure btFluxoVendasClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure btSolicitarPesoClick(Sender: TObject);
     procedure cbEchoModeChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -159,12 +174,23 @@ begin
 end;
 
 procedure TForm1.ACBrMTer1RecebeDados(const IP: AnsiString;
-  var Recebido: AnsiString);
+  var Recebido: AnsiString; var EchoMode: TACBrMTerEchoMode);
 begin
-  mOutput.Lines.Add('IP: ' + IP + ' - Recebido :' + Recebido);
+  mOutput.Lines.Add('IP: ' + IP + ' - Recebido: ' + Recebido);
 
   if (PageControl2.ActivePageIndex = 1) then
     AvaliarRespostaTerminal(IP, Recebido);
+end;
+
+procedure TForm1.ACBrMTer1RecebePeso(const IP: AnsiString;
+  const PesoRecebido: Double);
+begin
+  mOutput.Lines.Add('IP: '+IP+' - Peso: '+ FormatFloat('##0.000', PesoRecebido));
+end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+  AtualizarConexoes;
 end;
 
 procedure TForm1.btAtualizarClick(Sender: TObject);
@@ -308,14 +334,55 @@ begin
   IniciarFluxoVendas;
 end;
 
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  I: Integer;
+begin
+  VerificaSelecionado;
+
+  for I := 0 to clbConectados.Count - 1 do
+    if clbConectados.Checked[I] then
+      ACBrMTer1.EnviarParaSerial(clbConectados.Items[I], ENQ, edSerial.Value);
+end;
+
+procedure TForm1.btSolicitarPesoClick(Sender: TObject);
+var
+  I: Integer;
+  wIP: String;
+begin
+  VerificaSelecionado;
+
+  if (cbBalanca.ItemIndex = 0) then
+  begin
+    MessageDlg('Selecione o Modelo', mtError, [mbOK], 0);
+    cbBalanca.DroppedDown := True;
+    Exit;
+  end;
+
+  ACBrBAL1.Modelo := TACBrBALModelo(cbBalanca.ItemIndex);
+
+  for I := 0 to clbConectados.Count - 1 do
+  begin
+    wIP := clbConectados.Items[I];
+
+    if clbConectados.Checked[I] then
+      ACBrMTer1.SolicitarPeso(wIP, edSerialPeso.Value);
+  end;
+end;
+
 procedure TForm1.cbEchoModeChange(Sender: TObject);
 begin
   ACBrMTer1.EchoMode := TACBrMTerEchoMode(cbEchoMode.ItemIndex);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+  I: TACBrBALModelo;
 begin
-  PageControl2.ActivePageIndex := 0;
+  cbBalanca.Items.Clear;
+  // Preenchendo ComboBox de Modelos de Balança
+  for I := Low(TACBrBALModelo) to High(TACBrBALModelo) do
+    cbBalanca.Items.Add(GetEnumName(TypeInfo(TACBrBALModelo), Integer(I)));
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
@@ -338,16 +405,11 @@ var
 begin
   clbConectados.Clear;
 
-  with ACBrMTer1.TCPServer.ThreadList.LockList do
-  try
+  with ACBrMTer1.Conexoes do
+  begin
     for I := 0 to Count - 1 do
-    begin
-      with TACBrTCPServerThread(Items[I]) do
-        if Active then
-          clbConectados.Items.Add(TCPBlockSocket.GetRemoteSinIP);
-    end;
-  finally
-    ACBrMTer1.TCPServer.ThreadList.UnlockList;
+      if Objects[I].Conectado then
+        clbConectados.Items.Add(Objects[I].IP);
   end;
 
   Application.ProcessMessages;
@@ -377,21 +439,20 @@ begin
   memTerminais.Clear(False);
   memTerminais.Open;
 
-  with ACBrMTer1.TCPServer.ThreadList.LockList do
-  try
+  with ACBrMTer1.Conexoes do
+  begin
     for I := 0 to Count - 1 do
-      with TACBrTCPServerThread(Items[I]) do
-        if Active then
-        begin
-          memTerminais.Insert;
-          memTerminais.FieldByName('IP_TERMINAL').AsString := TCPBlockSocket.GetRemoteSinIP;
-          memTerminais.FieldByName('COMANDA').AsString     := '';
-          memTerminais.FieldByName('RESPOSTA').AsString    := '';
-          memTerminais.FieldByName('STATUS').AsInteger     :=  0;
-          memTerminais.Post;
-        end;
-  finally
-    ACBrMTer1.TCPServer.ThreadList.UnlockList;
+    begin
+      if Objects[I].Conectado then
+      begin
+        memTerminais.Insert;
+        memTerminais.FieldByName('IP_TERMINAL').AsString := Objects[I].IP;
+        memTerminais.FieldByName('COMANDA').AsString     := '';
+        memTerminais.FieldByName('RESPOSTA').AsString    := '';
+        memTerminais.FieldByName('STATUS').AsInteger     :=  0;
+        memTerminais.Post;
+      end;
+    end;
   end;
 
   Application.ProcessMessages;

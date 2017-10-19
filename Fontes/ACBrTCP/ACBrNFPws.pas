@@ -64,7 +64,9 @@ type
   TACBrNFPwsTipoDocto = (docCupomFiscal, docNF_Mod1) ;
 
   { TACBrNFPws }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrNFPws = class( TACBrHTTP )
     private
       fCategoriaUsuario: TACBrNFPwsCategoriaUsuario;

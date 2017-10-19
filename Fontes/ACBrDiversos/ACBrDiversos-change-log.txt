@@ -39,11 +39,63 @@ Símbolo : Significado
 [*]     : Recurso modificado/melhorado
 [-]     : Correção de Bug (assim esperamos)
 
+05/08/2017
+-- ACBrValidador --
+[+] Adicionado o método:
+    function OnlyCNPJorCPF(const Documento: String): String;
+    Retorna apenas números, e apenas se o conteúdo for CPF ou CNPJ, caso contrário
+    retorna vazio
+
+28/07/2017
+-- ACBrValidador --
+[*] Método "TACBrValidador.ValidarEmail". Ajustes para sempre usar validação por
+    código  (por: DSA)
+
+20/07/2017
+-- ACBrEnterTab --
+[+] Adicionada a propriedade "UseScreenControl", para modificar o comportamento
+    da Seleçao do Próximo componente, baseado em "Screen.ActiveControl"
+    ou "Form.ActiveControl"
+    (por: DSA)
+
+14/07/2017
+-- ACBrValidador, ACBrValidadorTest --
+[*] Método "ValidarEmail" modificado para suportar uma lista de emails
+[*] Método "FormatarFone", ajuste para não formatar números apenas com zeros
+    (por: DSA)
+
+18/02/2017
+-- ACBrValidador , ACBrValidadorTest -- 
+[-] Melhoria na validação de e-mail
+[+] Novo teste de validação de e-mail  
+    http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espaço/
+    (por: BigWings)
+		
+17/01/2017
+-- ACBrValidador --
+[*] Adição do espaço para validar o e-mail pois o mesmo não pode ter
+    http://www.projetoacbr.com.br/forum/topic/34631-acbrvalidador-passa-teste-de-e-mail-com-espa%C3%A7o/
+    (por: Juliomar Marchetti)
+		
+21/11/16
+-- ACBrCargaBal --
+[*] Correção para memoria leak do componente
+    http://www.projetoacbr.com.br/forum/topic/33552-tacbrcargabal-memory-leak-vazamento-de-mem%C3%B3ria/
+    (por : Juliomar Marchetti)
+
+11/10/16
+-- ACBrCalculadora --
+[+] Adicionada funcionalidade para zerar o display quando pressionar ESC e
+    "SaiComEsc = False"
+    http://www.projetoacbr.com.br/forum/topic/32846-acbrcalculadora-sugest%C3%A3o/
+
 12/08/16
-ACBrValidador
-[*] Movido função interna RemoveZerosEsquerda() para a unit ACBrUtil do pacote ACBrComum.
+-- ACBrValidador --
+[*] Movido função interna RemoveZerosEsquerda() para a unit ACBrUtil do pacote
+    ACBrComum.
 
 21/07/2016
+-- ACBrValidador --
 [-] Correção para validar IE no PE
     http://www.projetoacbr.com.br/forum/topic/31351-erro-de-valida%C3%A7%C3%A3o-de-ie-pe-acbrvalidador/
 

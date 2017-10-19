@@ -65,7 +65,9 @@ type
   TACBrAACOnVerificarRecomporNumSerie = procedure(const NumSerie: String;
      const ValorGT : Double; var CRO: Integer; var CNI: Integer) of object ;
   { TACBrAAC }
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}
   TACBrAAC = class( TACBrComponent )
   private
      fsArqLOG : String ;
@@ -254,7 +256,11 @@ begin
                  '"'+NomeArquivoAux+'"'+sLineBreak+
                  'não encontrado') );
 
+  {$IFDEF DELPHI2007_UP}
+  FileAge( fsNomeCompleto, fsDtHrArquivo );
+  {$ELSE}
   fsDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) );
+  {$ENDIF}
 
   // Lê arquivo de modo binário e transfere para a AnsiString = S //
   MS := TMemoryStream.Create;
@@ -321,6 +327,8 @@ begin
         else
         begin
            fsIdentPAF.NumeroLaudo             := Ini.ReadString('PAF','NumeroLaudo','');        // Número do Laudo
+           fsIdentPAF.DataLaudo               := Ini.ReadDate('PAF','EmissaoLaudo',0);          // Emissão do Laudo
+           fsIdentPAF.NumeroCredencimento     := Ini.ReadString('PAF','NumeroCredencimento','');// Número do Laudo
            fsIdentPAF.VersaoER                := Ini.ReadString('PAF','VersaoER','');           // Versão do Roteiro Executado na Homologação
            fsIdentPAF.Paf.Nome                := Ini.ReadString('PAF','Nome','');               // Nome do Sistema PAF
            fsIdentPAF.Paf.Versao              := Ini.ReadString('PAF','Versao','');             // Versão do Sistema PAF
@@ -335,6 +343,7 @@ begin
            fsIdentPAF.Paf.IntegracaoPAFECF    := TACBrPAFTipoIntegracao(Ini.ReadInteger('PAF', 'IntegracaoPAFECF', 0));
 
            fsIdentPAF.Paf.PerfilRequisitos    := Ini.ReadString('PAF', 'PerfilRequisitos', '');
+           fsIdentPAF.Paf.UFContribuinte      := Ini.ReadString('PAF', 'UFContribuinte', '');  // Sigla da UF do Contribuinte
         end ;
      end ;
 
@@ -493,6 +502,8 @@ begin
         Ini.WriteString('PAF','SistemaOperacional',fsIdentPAF.Paf.SistemaOperacional); // Sistema operacional no qual roda o aplicativo
 
         Ini.WriteString('PAF','NumeroLaudo',fsIdentPAF.NumeroLaudo);       // Número do Laudo
+        Ini.WriteDate('PAF','EmissaoLaudo',fsIdentPAF.DataLaudo);       // Emissão do Laudo
+        Ini.WriteString('PAF','NumeroCredencimento',fsIdentPAF.NumeroCredencimento);       // Número do Laudo
         Ini.WriteString('PAF','VersaoER',fsIdentPAF.VersaoER);             // Versão do Roteiro Executado na Homologação
         Ini.WriteString('PAF','NomeExe',fsIdentPAF.Paf.PrincipalExe.Nome); // Nome do Principal EXE do PAF
         Ini.WriteString('PAF','MD5Exe',fsIdentPAF.Paf.PrincipalExe.MD5);   // MD5  do Principal EXE do PAF
@@ -502,6 +513,7 @@ begin
         Ini.WriteInteger('PAF', 'IntegracaoPAFECF', Integer(fsIdentPAF.Paf.IntegracaoPAFECF));
 
         Ini.WriteString('PAF', 'PerfilRequisitos', fsIdentPAF.Paf.PerfilRequisitos);
+        Ini.WriteString('PAF', 'UFContribuinte', fsIdentPAF.Paf.UFContribuinte);  // Sigla da UF do Contribuinte
      end ;
 
      if GravarConfigApp then
@@ -590,7 +602,11 @@ begin
      if fsEfetuarFlush then
         FlushFileToDisk( fsNomeCompleto );
 
+     {$IFDEF DELPHI2007_UP}
+     FileAge( fsNomeCompleto, fsDtHrArquivo );
+     {$ELSE}
      fsDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) );
+     {$ENDIF}
 
      if Assigned( fsOnDepoisGravarArquivo ) then
         fsOnDepoisGravarArquivo( Self );
@@ -606,17 +622,24 @@ var
    Recarregar : Boolean ;
 begin
   Recarregar := ArquivoInvalido;
+  //GravaLog( 'VerificaReCarregarArquivo_Inicio(Recarregar = '+ BoolToStr(Recarregar, True ) + ' )' );
 
   if not Recarregar then
   begin
      // Data/Hora do arquivo é diferente ?
      try
-       NewDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) ) ;
+       {$IFDEF DELPHI2007_UP}
+       FileAge( fsNomeCompleto, NewDtHrArquivo );
+       {$ELSE}
+       NewDtHrArquivo := FileDateToDateTime( FileAge( fsNomeCompleto ) );
+       {$ENDIF}
        Recarregar := (fsDtHrArquivo <> NewDtHrArquivo)
      except
        Recarregar := true;
      end;
   end ;
+
+//  GravaLog( 'VerificaReCarregarArquivo_FIM(Recarregar = '+ BoolToStr(Recarregar, True) + ' )' );
 
   if Recarregar then
      AbrirArquivo ;
@@ -654,7 +677,7 @@ begin
   GravaLog( 'VerificarGTECF( '+ NumeroSerie+ ', '+FloatToStr(ValorGT) +' )' );
 
   Result := 0;
-  VerificaReCarregarArquivo;
+//  VerificaReCarregarArquivo; // Não necessário. Já é chamado dentro de AchaECF
 
   AECF := AchaECF( NumeroSerie );
   if not Assigned( AECF ) then
@@ -745,6 +768,8 @@ var
 begin
   LogTXT := 'AtualizarGTECF - NumSerie: '+NumeroSerie ;
 
+//  GravaLog( LogTXT +' Entrada'); //Debug
+
   AECF := AchaECF( NumeroSerie );    // AchaECF chama VerificaReCarregarArquivo;
   if not Assigned( AECF ) then
   begin
@@ -755,11 +780,11 @@ begin
         ' ECF: '+NumeroSerie+' não encontrado') );
   end ;
 
+  if RoundTo( ValorGT, -2) = RoundTo( AECF.ValorGT, -2) then Exit ;
+
   LogTXT := LogTXT + ' - De:' +FormatFloat('###,###,##0.00',AECF.ValorGT)+
                      ' Para:'+FormatFloat('###,###,##0.00',ValorGT) ;
   GravaLog( LogTXT );
-
-  if RoundTo( ValorGT, -2) = RoundTo( AECF.ValorGT, -2) then exit ;
 
   AECF.ValorGT        := ValorGT ;
   AECF.DtHrAtualizado := Now;

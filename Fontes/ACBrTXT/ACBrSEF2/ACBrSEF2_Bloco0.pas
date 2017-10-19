@@ -49,6 +49,7 @@ type
 
   TRegistroSEF0001 = class;
   TRegistroSEF0205List = class;
+  TRegistroSEF0215List = class;
   TRegistroSEF0400List = class;
   TRegistroSEF0450List = class;
   TRegistroSEF0460List = class;
@@ -268,6 +269,7 @@ type
     FCOD_GEN     : String;
     FCOD_LST     : String;
     FRegistro0205: TRegistroSEF0205List;
+    FRegistro0215: TRegistroSEF0215List;
   public
     constructor Create(AOwner: TRegistroSEF0001); virtual; /// Create
     destructor Destroy; override; /// Destroy
@@ -276,6 +278,7 @@ type
     property COD_GEN     : String  read fCOD_GEN    write fCOD_GEN;
     property COD_LST     : String  read fCOD_LST    write fCOD_LST;
     property Registro0205: TRegistroSEF0205List read FRegistro0205 write FRegistro0205;
+    property Registro0215: TRegistroSEF0215List read FRegistro0215 write FRegistro0215;
   end;
 
   // Registro 0200 - Lista
@@ -336,6 +339,28 @@ type
   public
     function New(AOwner: TRegistroSEF0200): TRegistroSEF0205;
     property Items[Index: Integer]: TRegistroSEF0205 read GetItem write SetItem;
+  end;
+
+  TRegistroSEF0215 = class
+  private
+    fCOD_ITEM_ANP: string;
+    fDT_INI: TDateTime;
+    fDT_FIN: TDateTime;
+  public
+    constructor Create(AOwner: TRegistroSEF0200); virtual; /// Create
+    property COD_ITEM_ANP   : string read fCOD_ITEM_ANP   write fCOD_ITEM_ANP;
+    property DT_INI : TDateTime read fDT_INI write fDT_INI;
+    property DT_FIN : TDateTime read fDT_FIN write fDT_FIN;
+  end;
+
+  // Registro 0215 - Lista
+  TRegistroSEF0215List = class(TACBrSEFIIRegistros)
+  private
+    function GetItem(Index: Integer): TRegistroSEF0215;
+    procedure SetItem(Index: Integer; const Value: TRegistroSEF0215);
+  public
+    function New(AOwner: TRegistroSEF0200): TRegistroSEF0215;
+    property Items[Index: Integer]: TRegistroSEF0215 read GetItem write SetItem;
   end;
 
   //REGISTRO 0400: TABELA DE NATUREZA DA OPERAÇÃO/PRESTAÇÃO
@@ -869,6 +894,32 @@ end;
 constructor TRegistroSEF0470.Create(AOwner: TRegistroSEF0450);
 begin
 
+end;
+
+{ TRegistroSEF0215 }
+
+constructor TRegistroSEF0215.Create(AOwner: TRegistroSEF0200);
+begin
+
+end;
+
+{ TRegistroSEF0215List }
+
+function TRegistroSEF0215List.GetItem(Index: Integer): TRegistroSEF0215;
+begin
+  Result := TRegistroSEF0215(Get(Index));
+end;
+
+function TRegistroSEF0215List.New(AOwner: TRegistroSEF0200): TRegistroSEF0215;
+begin
+  Result := TRegistroSEF0215.create(AOwner);
+  Add(Result);
+end;
+
+procedure TRegistroSEF0215List.SetItem(Index: Integer;
+  const Value: TRegistroSEF0215);
+begin
+  Put(Index, Value);
 end;
 
 end.

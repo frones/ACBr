@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -50,30 +50,39 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="7">
+    <RequiredPackages Count="10">
       <Item1>
-        <PackageName Value="ACBrSerial"/>
+        <PackageName Value="ACBrDiversos"/>
       </Item1>
       <Item2>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="frce"/>
       </Item2>
       <Item3>
-        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
+        <PackageName Value="ACBrTCP"/>
       </Item3>
       <Item4>
-        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
+        <PackageName Value="ACBrSerial"/>
       </Item4>
       <Item5>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item5>
       <Item6>
-        <PackageName Value="ACBr_SAT"/>
+        <PackageName Value="ACBr_SAT_Extrato_ESCPOS"/>
       </Item6>
       <Item7>
-        <PackageName Value="LCL"/>
+        <PackageName Value="ACBr_SAT_Extrato_Fortes"/>
       </Item7>
+      <Item8>
+        <PackageName Value="SynEdit"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="ACBr_SAT"/>
+      </Item9>
+      <Item10>
+        <PackageName Value="LCL"/>
+      </Item10>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="SATTeste.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -89,8 +98,15 @@
       <Unit2>
         <Filename Value="configuraserial.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frConfigureSerial"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="configureserial"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\Fontes\ACBrSAT\PCNMFe\pcnIntegradorResposta.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

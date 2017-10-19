@@ -14,6 +14,67 @@ uses
 
 type
 
+  { WorkingDaysBetweenTest }
+
+  WorkingDaysBetweenTest = class(TTestCase)
+  published
+    procedure WorkingDaysBetween_DataMesmaSemana;
+    procedure WorkingDaysBetween_DataPosSemana;
+    procedure WorkingDaysBetween_DataInicioSabado;
+    procedure WorkingDaysBetween_DataInicioDomingo;
+    procedure WorkingDaysBetween_DataFinalSabado;
+    procedure WorkingDaysBetween_DataFinalDomingo;
+    procedure WorkingDaysBetween_DataFinalMenor;
+    procedure WorkingDaysBetween_DataZero;
+    procedure WorkingDaysBetween_DataInicialZero;
+    procedure WorkingDaysBetween_DataFinalZero;
+  end;
+
+   { IncWorkingDayTest }
+
+  IncWorkingDayTest = class(TTestCase)
+  private
+  published
+    procedure IncWorkingDayTest_DataInicioSabado;
+    procedure IncWorkingDayTest_DataInicioDomingo;
+    procedure IncWorkingDayTest_PosSemana;
+    procedure IncWorkingDayTest_DiaFinalSabado;
+    procedure IncWorkingDayTest_DiaFinalDomingo;
+    procedure IncWorkingDayTest_ZeroDiaSabado;
+    procedure IncWorkingDayTest_ZeroDiaDomingo;
+    procedure IncWorkingDayTest_ZeroDiaSemana;
+    procedure IncWorkingDayTest_DiaNegativo;
+    procedure IncWorkingDayTest_DiaNegativoInicioSabado;
+    procedure IncWorkingDayTest_DiaNegativoInicioDomingo;
+  end;
+
+  { FindDelimiterInTextTest }
+
+  FindDelimiterInTextTest = class(TTestCase)
+  private
+  published
+    procedure FindDelimiterInTextTest_SemDelimitador;
+    procedure FindDelimiterInTextTest_DelimitadorPipe;
+    procedure FindDelimiterInTextTest_DelimitadorVirgula;
+    procedure FindDelimiterInTextTest_DelimitadorPontoEVirgula;
+    procedure FindDelimiterInTextTest_DelimitadorCustomizado;
+  end;
+
+  { AddDelimitedTextToListTeste }
+
+  AddDelimitedTextToListTeste = class(TTestCase)
+  private
+    FSL: TStringList;
+  protected
+    procedure SetUp; override;
+    procedure TearDown; override;
+  published
+    procedure AddDelimitedTextToListTeste_StringVazia;
+    procedure AddDelimitedTextToListTeste_DoisItens;
+    procedure AddDelimitedTextToListTeste_SemDelimitador;
+    procedure AddDelimitedTextToListTeste_DelimitadorEspaco;
+  end;
+
   { TiraPontosTest }
 
   TiraPontosTest = class(TTestCase)
@@ -89,6 +150,36 @@ type
     procedure AsDouble;
     procedure AsExtended;
     procedure AsCurrency;
+    procedure AsLargeExtended;
+  end;
+
+  { TruncToTest }
+
+  TruncToTest = class(TTestCase)
+  private
+  published
+    procedure As199Currency;
+    procedure As4386Currency;
+    procedure As1526Currency;
+    procedure As113Currency;
+    procedure As199Extended;
+    procedure As4386Extended;
+    procedure As1526Extended;
+    procedure As113Extended;
+    procedure As199Double;
+    procedure As9999899Double;
+    procedure As9999899DoubleTruncToZero;
+    procedure As4386Double;
+    procedure As1526Double;
+    procedure As113Double;
+    procedure As199Single;
+    procedure As4386Single;
+    procedure As1526Single;
+    procedure As113Single;
+    procedure As11133Single;
+    procedure As11133Double;
+    procedure As11133Extended;
+    procedure As11133Currency;
   end;
 
   { RoundABNTTest }
@@ -123,6 +214,8 @@ type
   padLeftTest = class(TTestCase)
   published
    procedure CompletarString;
+   procedure CompletarStringAcentosAnsi;
+   procedure CompletarStringAcentosUTF8;
    procedure ManterString;
    procedure TruncarString;
   end;
@@ -403,6 +496,11 @@ type
    procedure ComDecimaisZerados;
    procedure ComFormatacao;
    procedure ComSerparadorDeMilhar;
+   procedure ComMascaraDisplayFormat027x2;
+   procedure ComMascaraDisplayFormat026x2;
+   procedure ComMascaraDisplayFormat02666x3;
+   procedure ComMascaraDisplayFormat026660x4;
+   procedure ComMascaraDisplayFormat026601x5;
   end;
 
   { FloatMaskTest }
@@ -410,8 +508,10 @@ type
   FloatMaskTest = class(TTestCase)
   published
    procedure Inteiro;
-   procedure DuasCasas;
-   procedure QuatroCasas;
+   procedure DuasCasas_Com_Separador_de_Milhar;
+   procedure DuasCasas_Sem_Separador_de_Milhar;
+   procedure QuatroCasas_Com_Separador_de_Milhar;
+   procedure QuatroCasas_Sem_Separador_de_Milhar;
   end;
 
   { StringToFloatTest }
@@ -637,6 +737,7 @@ type
   TiraAcentosTest = class(TTestCase)
   published
     procedure Normal;
+    procedure ComQuebrasDeLinha;
   end;
 
   { TiraAcentoTest }
@@ -793,13 +894,456 @@ type
     procedure ValorUmMaiorTolerancia000001Maior;
   end;
 
+  { ZipUnzip }
+
+  ZipUnzip = class(TTestCase)
+  private
+    fStr: String;
+    fTituloACBr: String;
+    fTituloCompressDeflateAndEncoded64: String;
+    fTituloCompressGZipAndEncoded64: String;
+  protected
+    procedure SetUp; override;
+  published
+    procedure DeflateCompressDecompressAString;
+    procedure DeflateCompressDecompressAStream;
+    procedure DeflateCompressAndEncode64;
+    procedure GZipCompressDecompressAsString;
+    procedure GZipCompressDecompressAsStream;
+    procedure GZipCompressAndEncode64;
+    procedure ZipFileCompressDecompressAString;
+    procedure Decode64AndDeCompressDeflate;
+    procedure Decode64AndDeCompressGZip;
+  end;
 
 
 implementation
 
 uses
   Math, dateutils,
-  ACBrUtil, ACBrConsts;
+  synacode,
+  ACBrUtil, ACBrCompress, ACBrConsts;
+
+{ AddDelimitedTextToListTeste }
+
+procedure AddDelimitedTextToListTeste.SetUp;
+begin
+  inherited SetUp;
+  FSL := TStringList.Create;
+end;
+
+procedure AddDelimitedTextToListTeste.TearDown;
+begin
+  FSL.Free;
+  inherited TearDown;
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_StringVazia;
+begin
+  CheckEquals(0, AddDelimitedTextToList('',';',FSL));
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_DoisItens;
+begin
+  CheckEquals(2, AddDelimitedTextToList('comercial@djpdv.com.br;financeiro@djpdv.com.br',';',FSL));
+  CheckEquals('comercial@djpdv.com.br', FSL[0]);
+  CheckEquals('financeiro@djpdv.com.br', FSL[1]);
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_SemDelimitador;
+begin
+  CheckEquals(1, AddDelimitedTextToList('comercial@djpdv.com.br',';',FSL));
+  CheckEquals('comercial@djpdv.com.br', FSL[0]);
+end;
+
+procedure AddDelimitedTextToListTeste.AddDelimitedTextToListTeste_DelimitadorEspaco;
+begin
+  CheckEquals(3, AddDelimitedTextToList('PROJETO ACBR www.projetoacbr.com.br',' ',FSL));
+  CheckEquals('PROJETO', FSL[0]);
+  CheckEquals('ACBR', FSL[1]);
+  CheckEquals('www.projetoacbr.com.br', FSL[2]);
+end;
+
+{ FindDelimiterInTextTest }
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_SemDelimitador;
+begin
+  CheckEquals(' ',FindDelimiterInText('comercial@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorPipe;
+begin
+  CheckEquals('|',FindDelimiterInText('comercial@djpdv.com.br|financeiro@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorVirgula;
+begin
+  CheckEquals(',',FindDelimiterInText('comercial@djpdv.com.br,financeiro@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorPontoEVirgula;
+begin
+  CheckEquals(';',FindDelimiterInText('comercial@djpdv.com.br;financeiro@djpdv.com.br'));
+end;
+
+procedure FindDelimiterInTextTest.FindDelimiterInTextTest_DelimitadorCustomizado;
+begin
+  CheckEquals('&',FindDelimiterInText('comercial@djpdv.com.br&financeiro@djpdv.com.br','&'));
+end;
+
+{ IncWorkingDayTest }
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DataInicioSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,17);
+  WorkingDays  := 11;
+  ADateResult  := EncodeDate(2017,07,03);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DataInicioDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,18);
+  WorkingDays  := 11;
+  ADateResult  := EncodeDate(2017,07,03);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_PosSemana;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,23);
+  WorkingDays  := 10;
+  ADateResult  := EncodeDate(2017,07,07);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaFinalSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,22);
+  WorkingDays  := 2;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaFinalDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,23);
+  WorkingDays  := 1;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,24);
+  WorkingDays  := 0;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,25);
+  WorkingDays  := 0;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_ZeroDiaSemana;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,26);
+  WorkingDays  := 0;
+  ADateResult  := EncodeDate(2017,06,26);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,19);
+  WorkingDays  := -3;
+  ADateResult  := EncodeDate(2017,06,14);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativoInicioSabado;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,24);
+  WorkingDays  := -6;
+  ADateResult  := EncodeDate(2017,06,16);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+procedure IncWorkingDayTest.IncWorkingDayTest_DiaNegativoInicioDomingo;
+var
+  ADateIni, ADateResult: TDateTime;
+  WorkingDays: Integer;
+begin
+  ADateIni     := EncodeDate(2017,06,25);
+  WorkingDays  := -6;
+  ADateResult  := EncodeDate(2017,06,16);
+
+  CheckEquals(ADateResult,ACBrUtil.IncWorkingDay(ADateIni,WorkingDays));
+end;
+
+{ WorkingDaysBetweenTest }
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataMesmaSemana;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,26);
+  ADateEnd := EncodeDate(2017,06,30);
+  CheckEquals(4,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataPosSemana;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,26);
+  ADateEnd := EncodeDate(2017,07,07);
+  CheckEquals(9,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicioSabado;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,24);
+  ADateEnd := EncodeDate(2017,07,03);
+  CheckEquals(6,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicioDomingo;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,25);
+  ADateEnd := EncodeDate(2017,07,03);
+  CheckEquals(6,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalSabado;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,25);
+  ADateEnd := EncodeDate(2017,07,08);
+  CheckEquals(10,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalDomingo;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,06,25);
+  ADateEnd := EncodeDate(2017,07,09);
+  CheckEquals(10,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalMenor;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,07,10);
+  ADateEnd := EncodeDate(2017,07,09);
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataZero;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := 0;
+  ADateEnd := 0;
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataInicialZero;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := 0;
+  ADateEnd := EncodeDate(2017,07,09);
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+procedure WorkingDaysBetweenTest.WorkingDaysBetween_DataFinalZero;
+var
+  ADateIni, ADateEnd: TDateTime;
+begin
+  ADateIni := EncodeDate(2017,07,09);
+  ADateEnd := 0;
+  CheckEquals(0,ACBrUtil.WorkingDaysBetween(ADateIni,ADateEnd));
+end;
+
+{ ZipUnzip }
+
+procedure ZipUnzip.SetUp;
+var
+  I: Integer;
+  Linha: AnsiString;
+begin
+  fTituloACBr := 'Projeto ACBr - A MAIOR COMUNIDADE DE AUTOMACAO COMERCIAL DO BRASIL - http://www.projetoacbr.com.br/';
+
+  // Valores obtidos em: http://www.txtwizard.net/compression
+  fTituloCompressDeflateAndEncoded64 := 'eJwljEEKgCAUBa/yL5Du2z21hZD9sDxARRBBKCJ4/YxgVgMzc473WSJBq0wdgRwse9LswmQNzEANhJUdNPjzg9cWIxkm5bHYsVVXKamXstYq0v/bjj2LIz5iz/IFhyIdrg==';
+  {$IfNDef USE_ZLibExGZ}
+  fTituloCompressGZipAndEncoded64 := 'H4sIAAAAAAAA/yWMQQqAIBQFr/IvkO7bPbWFkP2wPEBFEEEoInj9jGBWAzNzjvdZIkGrTB2BHCx70uzCZA3MQA2ElR00+POD1xYjGSblsdixVVcpqZey1irS/9uOPYsjPmLP8gVzteS/YwAAAA==';
+  {$Else}
+  fTituloCompressGZipAndEncoded64 := 'H4sIAAAAAAAAACWMQQqAIBQFr/IvkO7bPbWFkP2wPEBFEEEoInj9jGBWAzNzjvdZIkGrTB2BHCx70uzCZA3MQA2ElR00+POD1xYjGSblsdixVVcpqZey1irS/9uOPYsjPmLP8gVzteS/YwAAAA==';
+  {$EndIf} 
+
+  For I := 0 to 255 do
+    Linha := Linha + AnsiChr(i);
+
+  fStr := '';
+  For I := 1 to 1000 do
+    fStr := fStr + Linha + sLineBreak;
+end;
+
+procedure ZipUnzip.DeflateCompressDecompressAString;
+var
+  AZipStr, AUnZipStr: AnsiString;
+  L1, L2: Integer;
+begin
+  AZipStr   := Zip(fStr);
+  AUnZipStr := UnZip(AZipStr);
+  L1 := length(fStr);
+  L2 := length(AUnZipStr);
+  CheckEquals(L1, L2);
+  CheckEquals(AUnZipStr, fStr);
+end;
+
+procedure ZipUnzip.GZipCompressDecompressAsString;
+var
+  AZipStr, AUnZipStr: AnsiString;
+  L1, L2: Integer;
+begin
+  AZipStr   := GZipCompress(fStr);
+  AUnZipStr := UnZip(AZipStr);
+  L1 := length(fStr);
+  L2 := length(AUnZipStr);
+  CheckEquals(L1, L2);
+  CheckEquals(AUnZipStr, fStr);
+end;
+
+procedure ZipUnzip.GZipCompressDecompressAsStream;
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(fStr);
+  try
+    CheckEquals(UnZip(GZipCompress(SS)), fStr);
+  finally
+    SS.Free;
+  end;
+end;
+
+procedure ZipUnzip.DeflateCompressDecompressAStream;
+var
+  SS: TStringStream;
+begin
+  SS := TStringStream.Create(fStr);
+  try
+    CheckEquals(UnZip(Zip(SS)), fStr);
+  finally
+    SS.Free;
+  end;
+end;
+
+procedure ZipUnzip.DeflateCompressAndEncode64;
+var
+  ResultEncoded: String;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultEncoded := EncodeBase64(Zip(fTituloACBr));
+
+  CheckEquals(ResultEncoded, fTituloCompressDeflateAndEncoded64);
+end;
+
+procedure ZipUnzip.Decode64AndDeCompressDeflate;
+var
+  ResultDeCompress: AnsiString;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultDeCompress := UnZip( DecodeBase64(fTituloCompressDeflateAndEncoded64) );
+
+  CheckEquals(ResultDeCompress, fTituloACBr);
+end;
+
+procedure ZipUnzip.GZipCompressAndEncode64;
+var
+  ResultEncoded: String;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultEncoded := EncodeBase64(GZipCompress(fTituloACBr));
+
+  CheckEquals(ResultEncoded, fTituloCompressGZipAndEncoded64);
+end;
+
+procedure ZipUnzip.ZipFileCompressDecompressAString;
+var
+  AZipStr, AUnZipStr: AnsiString;
+  L1, L2: Integer;
+begin
+  AZipStr   := ZipFileCompress(fStr);
+  AUnZipStr := UnZip(AZipStr);
+  L1 := length(fStr);
+  L2 := length(AUnZipStr);
+  CheckEquals(L1, L2);
+  CheckEquals(AUnZipStr, fStr);
+end;
+
+procedure ZipUnzip.Decode64AndDeCompressGZip;
+var
+  ResultDeCompress: AnsiString;
+begin
+  // http://www.txtwizard.net/compression   , Deflate
+  ResultDeCompress := UnZip( DecodeBase64(fTituloCompressGZipAndEncoded64) );
+
+  CheckEquals(ResultDeCompress, fTituloACBr);
+end;
 
 { ComparaValorTest }
 
@@ -1486,14 +2030,24 @@ begin
   CheckEquals('0',FloatMask(0));
 end;
 
-procedure FloatMaskTest.DuasCasas;
+procedure FloatMaskTest.DuasCasas_Com_Separador_de_Milhar;
 begin
-  CheckEquals('0.00',FloatMask(2));
+  CheckEquals(',0.00',FloatMask(2));
 end;
 
-procedure FloatMaskTest.QuatroCasas;
+procedure FloatMaskTest.QuatroCasas_Com_Separador_de_Milhar;
 begin
-  CheckEquals('0.0000',FloatMask(4));
+  CheckEquals(',0.0000',FloatMask(4));
+end;
+
+procedure FloatMaskTest.DuasCasas_Sem_Separador_de_Milhar;
+begin
+  CheckEquals('0.00',FloatMask(2, False));
+end;
+
+procedure FloatMaskTest.QuatroCasas_Sem_Separador_de_Milhar;
+begin
+  CheckEquals('0.0000',FloatMask(4, False));
 end;
 
 { FormatFloatBrTest }
@@ -1516,6 +2070,36 @@ end;
 procedure FormatFloatBrTest.ComSerparadorDeMilhar;
 begin
   CheckEquals('123.456,789', FormatFloatBr(123456.789, '###,000.000'));
+end;
+
+function Mascara(ADec : Integer) : string;
+begin
+  result :=  format(sDisplayFormat,[ADec,0]);
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat026601x5;
+begin
+  CheckEquals('0,26601', FormatFloatBr(0.26601, Mascara(5)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat026660x4;
+begin
+  CheckEquals('0,2660', FormatFloatBr(0.266, Mascara(4)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat02666x3;
+begin
+  CheckEquals('0,266', FormatFloatBr(0.266, Mascara(3)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat026x2;
+begin
+  CheckNotEquals('0,26', FormatFloatBr(0.266, Mascara(2)));
+end;
+
+procedure FormatFloatBrTest.ComMascaraDisplayFormat027x2;
+begin
+  CheckEquals('0,27', FormatFloatBr(0.266, Mascara(2)));
 end;
 
 { CountStrTest }
@@ -2097,6 +2681,10 @@ begin
   dblQtde := 28.50;
   dblTotal := dblValorUnit * dblQtde;
   CheckEquals( 19.66, RoundABNT(dblTotal, 2), 0.00001);
+  dblValorUnit := 4.885;
+  dblQtde := 1;
+  dblTotal := dblValorUnit * dblQtde;
+  CheckEquals( 4.88, RoundABNT(dblTotal, 2), 0.00001);
 end;
 
 procedure RoundABNTTest.TestesEstouro;
@@ -2111,6 +2699,8 @@ begin
   CheckEquals( extVal, RoundABNT(5233.4567567567567567567,-6), 0.00001 );
   extVal := 9999999999.46;
   CheckEquals( extVal, RoundABNT(9999999999.4567567567567567567,-2), 0.00001 );
+  extVal := 9.4121295902;
+  CheckEquals( extVal, RoundABNT(9.41212959024529,-10), 0.00001 );
 end;
 
 procedure RoundABNTTest.ValoresNegativos;
@@ -2207,6 +2797,15 @@ begin
   CheckEquals( 64, TruncFix( ACurr ) );
   ACurr := 2.09 * 23.5;
   CheckEquals( 49, TruncFix( ACurr ) );
+end;
+
+procedure TruncFixTest.AsLargeExtended;
+var
+  AExtended: Extended;
+begin
+  AExtended := 116529560.3123 * 100;
+
+  CheckEquals( 11652956031, TruncFix( AExtended ) );
 end;
 
 { ACBrStrToAnsiTest }
@@ -2316,6 +2915,18 @@ end;
 procedure TiraAcentosTest.Normal;
 begin
   CheckEquals('TesteACBrUtil', TiraAcentos( ACBrStr('TÍstÈ√CBr‹tÏl')) );
+end;
+
+procedure TiraAcentosTest.ComQuebrasDeLinha;
+var
+  AStr: String;
+begin
+  AStr := 'idLote=1'#13#10'[EVENTO001]'#13#10'tpAmb=2'#13#10+
+          'chNFe=35170205481336000137550040000001361002146742'#13#10+
+          'CNPJ=05481336000137'#13#10'dhEvento=15/02/2017 17:42:11'#13#10+
+          'tpEvento=110110'#13#10'nSeqEvento=1'#13#10'versaoEvento=1.00'#13#10+
+          'xCorrecao=012345678901234567890123456789012345678901234567890123456789abcde'#13#10;
+  CheckEquals(Astr, TiraAcentos(AStr) );
 end;
 
 { StrIsIPTest }
@@ -3043,6 +3654,32 @@ begin
   CheckEquals('   ACBrCompletaString', PadLeft('ACBrCompletaString', 21));
 end;
 
+procedure padLeftTest.CompletarStringAcentosAnsi;
+var
+  AcentosStr: String;
+begin
+  AcentosStr := ACBrStr('¡…Õ”⁄');
+
+  CheckEquals('     '+AcentosStr, PadLeft(AcentosStr, 10));
+end;
+
+procedure padLeftTest.CompletarStringAcentosUTF8;
+Var
+  UTF8Str : AnsiString;
+begin
+  {$IfDef FPC}
+  UTF8Str := CP1252ToUTF8('¡…Õ”⁄');  // Nota: essa Unit usa CP1252
+  {$Else}
+   {$IFDEF UNICODE}
+    UTF8Str := '¡…Õ”⁄';
+   {$ELSE}
+    UTF8Str := UTF8Encode('¡…Õ”⁄');
+   {$ENDIF}
+  {$EndIf}
+
+  CheckEquals('     '+UTF8Str, PadLeft(UTF8Str, 10));
+end;
+
 procedure padLeftTest.ManterString;
 begin
   CheckEquals('ACBrMantemString', PadLeft('ACBrMantemString', 16, 'Z'));
@@ -3216,7 +3853,186 @@ begin
               + '&Eacute;&Ecirc;&Otilde;&apos;', True, False));
 end;
 
+{ TruncToTest }
+
+procedure TruncToTest.As11133Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 11.1335;
+  CheckEquals(11.1335, TruncTo( VValor, 4 ), 0.0001);
+end;
+
+procedure TruncToTest.As11133Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 11.133;
+  CheckEquals(11.133, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As11133Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 1189.13390;
+  CheckEquals(1189.1339, TruncTo( VValor, 4 ), 0.0001);
+end;
+
+procedure TruncToTest.As11133Single;
+begin
+  CheckEquals(11.133, TruncTo( 11.133, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 1.139;
+  ChecknotEquals(1.13, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 1.135;
+  CheckEquals(1.13, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 1.1373;
+  CheckEquals(1.137, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As113Single;
+begin
+  CheckEquals(1.13, TruncTo( 1.13, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 15.26001;
+  CheckEquals(15.26, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 15.2623;
+  CheckEquals(15.262, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 155.2611;
+  CheckEquals(155.261, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As1526Single;
+var
+  VValor: Single;
+begin
+  VValor := 1 * 155.2611;
+  CheckEquals(155.261, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 1.997;
+  CheckEquals(1.997, TruncTo( VValor, 3 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 1.9985;
+  CheckEquals(1.998, TruncTo( VValor, 3 ), 0.0001);
+  VValor := 1 * 78.22;
+  CheckEquals(78.22, TruncTo( VValor, 2 ), 0.001);
+end;
+
+procedure TruncToTest.As9999899Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 99998.999658800007;
+  CheckEquals(99998.99, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As9999899DoubleTruncToZero;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 99998.999658800007;
+  CheckEquals(99998, TruncTo( VValor, 0 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 1.999;
+  CheckEquals(1.99, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As199Single;
+var
+  VValor: Single;
+begin
+  VValor := 1 * 1.99;
+  CheckEquals(1.9, TruncTo( VValor, 1 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Currency;
+var
+  VValor: Currency;
+begin
+  VValor := 1 * 43.86;
+  CheckEquals(43.86, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Double;
+var
+  VValor: Double;
+begin
+  VValor := 1 * 43.86;
+  CheckEquals(43.86, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Extended;
+var
+  VValor: Extended;
+begin
+  VValor := 1 * 43.86;
+  CheckEquals(43.86, TruncTo( VValor, 2 ), 0.0001);
+end;
+
+procedure TruncToTest.As4386Single;
+//var
+//  VValor: Single;
+begin
+ // VValor := -430000.80016;
+  CheckEquals(-430000.8001, TruncTo(-430000.80016 , 4 ), 0.0001);
+end;
+
 initialization
+
+  RegisterTest('ACBrComum.ACBrUtil', AddDelimitedTextToListTeste{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', FindDelimiterInTextTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', WorkingDaysBetweenTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', IncWorkingDayTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TiraPontosTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ParseTextTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', LerTagXMLTest{$ifndef FPC}.Suite{$endif});
@@ -3225,6 +4041,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', QuebrarLinhaTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ACBrStrToAnsiTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TruncFixTest{$ifndef FPC}.Suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', TruncToTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', RoundABNTTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', CompareVersionsTest{$ifndef FPC}.Suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', TestBitTest{$ifndef FPC}.Suite{$endif});
@@ -3296,6 +4113,7 @@ initialization
   RegisterTest('ACBrComum.ACBrUtil', TranslateUnprintableTest{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', EAN13Test{$ifndef FPC}.suite{$endif});
   RegisterTest('ACBrComum.ACBrUtil', ComparaValorTest{$ifndef FPC}.suite{$endif});
+  RegisterTest('ACBrComum.ACBrUtil', ZipUnzip{$ifndef FPC}.suite{$endif});
   //TODO: WriteToTXT, WriteLog,
 end.
 

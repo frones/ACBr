@@ -103,6 +103,7 @@ contains
   pgnreRetProduto in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetProduto.pas',
   pgnreRetReceita in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetReceita.pas',
   pgnreRetTipoDocumentoOrigem in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\PCNGNRE\pgnreRetTipoDocumentoOrigem.pas',
-  ACBrGNREGuiaClass in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\ACBrGNREGuiaClass.pas';
+  ACBrGNREGuiaClass in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\GNRE\ACBrGNREGuiaClass.pas',
+  ACBrGNREGuiasRetorno in '..\..\..\..\Fontes\ACBrDFe\ACBrGNRE\ACBrGNREGuiasRetorno.pas';
 
 end.

@@ -54,12 +54,14 @@ unit ACBrNFeDANFEFR;
 interface
 
 uses
-  Forms, SysUtils, Classes, Graphics, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
+  SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFeDANFEFRDM,
   pcnNFe, pcnConversao, frxClass;
 
 type
   EACBrNFeDANFEFR = class(Exception);
-
+	{$IFDEF RTL230_UP}
+  [ComponentPlatformsAttribute(pidWin32 or pidWin64)]
+  {$ENDIF RTL230_UP}	
   TACBrNFeDANFEFR = class( TACBrNFeDANFEClass )
    private
     FdmDanfe: TACBrNFeFRClass;
@@ -76,19 +78,20 @@ type
     FDetalhado: Boolean;
     FURLConsultaPublica:String;
     FDescricaoViaEstabelec: string;
-    FImprimirUnQtVlComercial: boolean;
+    FImprimirUnQtVlComercial: TImprimirUnidQtdeValor;
     FExpandirDadosAdicionaisAuto: boolean;
     FImprimirDadosArma: Boolean;
     fQuebraLinhaEmDetalhamentoEspecifico : Boolean;
     FIncorporarFontesPdf: Boolean;
     FIncorporarBackgroundPdf: Boolean;
     FFastFileInutilizacao: String;
+    FImprimirDadosDocReferenciados: Boolean;
     function GetPreparedReport: TfrxReport;
     function GetPreparedReportEvento: TfrxReport;
 		function GetPreparedReportInutilizacao: TfrxReport;
     function PrepareReport(NFE: TNFe = nil): Boolean;
     function PrepareReportEvento: Boolean;
-    function PrepareReportInutilizacao: Boolean;    
+    function PrepareReportInutilizacao: Boolean;
     procedure setTributosPercentual(const Value: TpcnPercentualTributos);
     procedure setTributosPercentualPersonalizado(const Value: double);
   public
@@ -101,23 +104,23 @@ type
     procedure ImprimirEVENTOPDF(NFE: TNFe = nil); override;
     procedure ImprimirINUTILIZACAO(NFE: TNFe = nil); override;
     procedure ImprimirINUTILIZACAOPDF(NFE: TNFe = nil); override;
+    property PreparedReport: TfrxReport read GetPreparedReport;
+    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
+    property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
   published
     property FastFile: String read FFastFile write FFastFile;
     property FastFileEvento: String read FFastFileEvento write FFastFileEvento;
     property FastFileInutilizacao: String read FFastFileInutilizacao write FFastFileInutilizacao;
     property dmDanfe: TACBrNFeFRClass read FdmDanfe write FdmDanfe;
     property EspessuraBorda: Integer read FEspessuraBorda write FEspessuraBorda;
-    property PreparedReport: TfrxReport read GetPreparedReport;
-    property PreparedReportEvento: TfrxReport read GetPreparedReportEvento;
-		property PreparedReportInutilizacao: TfrxReport read GetPreparedReportInutilizacao;
-    property ShowDialog: Boolean read FShowDialog write FShowDialog default false; // Isaque Pinheiro
+    property ShowDialog: Boolean read FShowDialog write FShowDialog default false;
     property ExibirTotalTributosItem: Boolean read FExibirTotalTributosItem write FExibirTotalTributosItem;
-    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;  //Incluido em 22/05/2013 - Fábio Gabriel
+    property ExibeCampoFatura: Boolean read FExibeCampoFatura write FExibeCampoFatura;
     property TributosFonte: string read FTributosFonte write FTributosFonte;
     property TributosPercentual: TpcnPercentualTributos read FTributosPercentual write setTributosPercentual;
     property TributosPercentualPersonalizado: double read FTributosPercentualPersonalizado write setTributosPercentualPersonalizado;
     property MarcaDaguaMSG: string read FMarcaDaguaMSG write FMarcaDaguaMSG;
-    property ImprimirUnQtVlComercial: boolean read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
+    property ImprimirUnQtVlComercial: TImprimirUnidQtdeValor read FImprimirUnQtVlComercial write FImprimirUnQtVlComercial;
     property Detalhado: Boolean read FDetalhado write FDetalhado;
     property URLConsultaPublica:String read FURLConsultaPublica write FURLConsultaPublica;
     property DescricaoViaEstabelec: string read FDescricaoViaEstabelec write FDescricaoViaEstabelec;
@@ -126,11 +129,12 @@ type
     property QuebraLinhaEmDetalhamentoEspecifico : Boolean  read fQuebraLinhaEmDetalhamentoEspecifico Write fQuebraLinhaEmDetalhamentoEspecifico;
     property IncorporarBackgroundPdf: Boolean read FIncorporarBackgroundPdf write FIncorporarBackgroundPdf;
     property IncorporarFontesPdf: Boolean read FIncorporarFontesPdf write FIncorporarFontesPdf;
+    property ImprimirDadosDocReferenciados: Boolean read FImprimirDadosDocReferenciados write FImprimirDadosDocReferenciados;
   end;
 
 implementation
 
-uses ACBrNFe, ACBrUtil, StrUtils, Dialogs, pcnConversaoNFe;
+uses ACBrNFe, ACBrUtil, StrUtils, pcnConversaoNFe;
 
 constructor TACBrNFeDANFEFR.Create(AOwner: TComponent);
 begin
@@ -144,7 +148,7 @@ begin
   FTributosPercentual := ptValorProdutos;
   FTributosPercentualPersonalizado := 0;
   FMarcaDaguaMSG:='';
-  FImprimirUnQtVlComercial:=false;
+  FImprimirUnQtVlComercial:=iuComercial;
   ExpandirDadosAdicionaisAuto:=false;
   { NFC-e }
   FvTroco := 0;
@@ -155,6 +159,7 @@ begin
   fQuebraLinhaEmDetalhamentoEspecifico  := True;
   FIncorporarFontesPdf := True;
   FIncorporarBackgroundPdf := True;
+  FImprimirDadosDocReferenciados := True;
 end;
 
 destructor TACBrNFeDANFEFR.Destroy;
@@ -205,7 +210,8 @@ end;
 function TACBrNFeDANFEFR.PrepareReport(NFE: TNFe): Boolean;
 var
   I: Integer;
- wProjectStream: TStringStream;
+  wProjectStream: TStringStream;
+  Page: TfrxReportPage;
 begin
   Result := False;
 
@@ -230,6 +236,7 @@ begin
   FdmDanfe.QuebraLinhaEmDetalhamentoEspecifico := fQuebraLinhaEmDetalhamentoEspecifico;
   FdmDanfe.IncorporarBackgroundPdf := FIncorporarFontesPdf;
   FdmDanfe.IncorporarFontesPdf := FIncorporarBackgroundPdf;
+  FdmDanfe.ImprimirDadosDocReferenciados := FImprimirDadosDocReferenciados;
 
   FdmDanfe.SetDataSetsToFrxReport;
   if Trim(FastFile) <> '' then
@@ -255,10 +262,7 @@ begin
   FdmDanfe.frxReport.PrintOptions.Copies := FNumCopias;
   FdmDanfe.frxReport.PrintOptions.ShowDialog := FShowDialog;
   FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
-
-//  if Assigned(ACBrNFe) then
-//   if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFCe)then
-//     FdmDanfe.frxReport.PrintOptions.PrintMode := pmSplit; 
+  FdmDanfe.frxReport.PreviewOptions.AllowEdit := False;
 
   // Define a impressora
   if Length(Impressora) > 0 then
@@ -290,6 +294,23 @@ begin
     else
       raise EACBrNFeDANFEFR.Create('Propriedade ACBrNFe não assinalada.');
   end;
+
+  if Assigned(FdmDanfe.NFe) and
+    (FdmDanfe.NFe.Ide.modelo = 55) then
+//  if(TACBrNFe(ACBrNFe).Configuracoes.Geral.ModeloDF = moNFe)then
+    for i := 0 to FdmDanfe.frxReport.PreviewPages.Count - 1 do
+    begin
+      Page := FdmDanfe.frxReport.PreviewPages.Page[i];
+      if MargemSuperior > 0 then
+        Page.TopMargin    := MargemSuperior * 10;
+      if MargemInferior > 0 then
+        Page.BottomMargin := MargemInferior * 10;
+      if MargemEsquerda > 0 then
+        Page.LeftMargin   := MargemEsquerda * 10;
+      if MargemDireita > 0 then
+        Page.RightMargin  := MargemDireita * 10;
+      FdmDanfe.frxReport.PreviewPages.ModifyPage(i, Page);
+    end;
 end;
 
 function TACBrNFeDANFEFR.PrepareReportEvento: Boolean;
@@ -322,7 +343,11 @@ begin
 
   FdmDanfe.frxReport.PrintOptions.Copies := NumCopias;
   FdmDanfe.frxReport.PrintOptions.ShowDialog := ShowDialog;
+  FdmDanfe.frxReport.ShowProgress := FMostrarStatus;
 
+  // Define a impressora
+  if Length(Impressora) > 0 then
+    FdmDanfe.frxReport.PrintOptions.Printer := FImpressora;
   // preparar relatorio
   if Assigned(ACBrNFe) then
   begin
@@ -439,7 +464,6 @@ procedure TACBrNFeDANFEFR.ImprimirDANFEPDF(NFE: TNFe);
 const
   TITULO_PDF = 'Nota Fiscal Eletrônica';
 var
-  I: Integer;
 	fsShowDialog : Boolean;
 begin
   if PrepareReport(NFE) then
@@ -535,7 +559,7 @@ begin
 
     NomeArq := OnlyNumber(TACBrNFe(ACBrNFe).InutNFe.RetInutNFe.Id);
 
-    FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-ped-inu.pdf';
+    FdmDanfe.frxPDFExport.FileName := PathWithDelim(Self.PathPDF) + NomeArq + '-procInutNFe.pdf';
 
     if not DirectoryExists(ExtractFileDir(FdmDanfe.frxPDFExport.FileName)) then
       ForceDirectories(ExtractFileDir(FdmDanfe.frxPDFExport.FileName));

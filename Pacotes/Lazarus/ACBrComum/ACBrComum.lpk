@@ -3,13 +3,14 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="ACBrComum"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Daniel Simoes de Almeida"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
         <IncludeFiles Value="..\..\..\Fontes\ACBrComum"/>
-        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum"/>
+        <OtherUnitFiles Value="..\..\..\Fontes\ACBrComum;..\..\..\Fontes\Terceiros\GZIPUtils"/>
         <UnitOutputDirectory Value="..\..\..\Lib\Lazarus\ACBrComum\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -18,50 +19,51 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
-      <Other>
-        <CompilerMessages>
-          <UseMsgFile Value="True"/>
-        </CompilerMessages>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="ACBr - Biblioteca Comum, Consts, Util, AAC  - (http://www.projetoacbr.com.br/)
 "/>
     <License Value="LGPL
 "/>
     <Version Major="1"/>
-    <Files Count="7">
+    <Files Count="9">
       <Item1>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
-        <UnitName Value="ACBrBase"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
+        <Type Value="Include"/>
       </Item1>
       <Item2>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrConsts.pas"/>
-        <UnitName Value="ACBrConsts"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrBase.pas"/>
+        <UnitName Value="ACBrBase"/>
       </Item2>
       <Item3>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
-        <UnitName Value="ACBrUtil"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrConsts.pas"/>
+        <UnitName Value="ACBrConsts"/>
       </Item3>
       <Item4>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrUtil.pas"/>
+        <UnitName Value="ACBrUtil"/>
+      </Item4>
+      <Item5>
         <Filename Value="..\..\..\Fontes\ACBrComum\ACBrReg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="ACBrReg"/>
-      </Item4>
-      <Item5>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrAAC.pas"/>
-        <UnitName Value="ACBrAAC"/>
       </Item5>
       <Item6>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas"/>
-        <UnitName Value="ACBrPAFClass"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrAAC.pas"/>
+        <UnitName Value="ACBrAAC"/>
       </Item6>
       <Item7>
-        <Filename Value="..\..\..\Fontes\ACBrComum\ACBr.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrPAFClass.pas"/>
+        <UnitName Value="ACBrPAFClass"/>
       </Item7>
+      <Item8>
+        <Filename Value="..\..\..\Fontes\ACBrComum\ACBrCompress.pas"/>
+        <UnitName Value="ACBrCompress"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\..\Fontes\Terceiros\GZIPUtils\gziputils.pas"/>
+        <UnitName Value="GZIPUtils"/>
+      </Item9>
     </Files>
-    <Type Value="RunAndDesignTime"/>
     <RequiredPkgs Count="2">
       <Item1>
         <PackageName Value="laz_synapse"/>

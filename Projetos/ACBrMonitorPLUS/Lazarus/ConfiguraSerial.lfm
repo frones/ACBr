@@ -1,16 +1,16 @@
 object frConfiguraSerial: TfrConfiguraSerial
-  Left = 322
-  Height = 350
-  Top = 155
+  Left = 706
+  Height = 430
+  Top = 261
   Width = 180
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Porta Serial'
-  ClientHeight = 350
+  ClientHeight = 430
   ClientWidth = 180
-  Constraints.MaxHeight = 350
+  Constraints.MaxHeight = 430
   Constraints.MaxWidth = 180
-  Constraints.MinHeight = 350
+  Constraints.MinHeight = 430
   Constraints.MinWidth = 180
   Icon.Data = {
     360E000000000100020010100000000000006805000026000000202000000000
@@ -133,12 +133,12 @@ object frConfiguraSerial: TfrConfiguraSerial
   OnShow = FormShow
   ParentFont = True
   Position = poOwnerFormCenter
-  LCLVersion = '0.9.29'
+  LCLVersion = '1.6.4.0'
   object Label5: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 52
-    Width = 152
+    Width = 151
     Caption = '&Baud rate (Bits por Segundo)'
     FocusControl = cmbBaudRate
     ParentColor = False
@@ -171,9 +171,9 @@ object frConfiguraSerial: TfrConfiguraSerial
   end
   object Label6: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 97
-    Width = 129
+    Width = 128
     Caption = '&Data Bits (Bits de Dados)'
     FocusControl = cmbDataBits
     ParentColor = False
@@ -198,9 +198,9 @@ object frConfiguraSerial: TfrConfiguraSerial
   end
   object Label7: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 141
-    Width = 88
+    Width = 87
     Caption = '&Parity (Paridade)'
     FocusControl = cmbParity
     ParentColor = False
@@ -226,9 +226,9 @@ object frConfiguraSerial: TfrConfiguraSerial
   end
   object Label11: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 184
-    Width = 132
+    Width = 131
     Caption = '&Stop Bits (Bits de Parada)'
     FocusControl = cmbStopBits
     ParentColor = False
@@ -252,9 +252,9 @@ object frConfiguraSerial: TfrConfiguraSerial
   end
   object Label8: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 231
-    Width = 71
+    Width = 70
     Caption = '&Handshaking'
     FocusControl = cmbHandShaking
     ParentColor = False
@@ -279,9 +279,9 @@ object frConfiguraSerial: TfrConfiguraSerial
   end
   object Label4: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 11
-    Width = 60
+    Width = 59
     Caption = '&Porta Serial'
     FocusControl = cmbPortaSerial
     ParentColor = False
@@ -313,16 +313,16 @@ object frConfiguraSerial: TfrConfiguraSerial
   object BitBtn1: TBitBtn
     Left = 8
     Height = 25
-    Top = 312
+    Top = 400
     Width = 75
     Kind = bkOK
     ModalResult = 1
     TabOrder = 6
   end
   object BitBtn2: TBitBtn
-    Left = 94
+    Left = 96
     Height = 25
-    Top = 312
+    Top = 400
     Width = 75
     Kind = bkCancel
     ModalResult = 2
@@ -345,5 +345,59 @@ object frConfiguraSerial: TfrConfiguraSerial
     Caption = 'SoftFlow'
     OnClick = chSoftFlowClick
     TabOrder = 9
+  end
+  object gbSendBytes: TGroupBox
+    Left = 8
+    Height = 80
+    Top = 312
+    Width = 161
+    Caption = 'Envio de Dados'
+    ClientHeight = 60
+    ClientWidth = 157
+    TabOrder = 10
+    object seSendBytesCount: TSpinEdit
+      Left = 96
+      Height = 23
+      Top = 4
+      Width = 56
+      MaxValue = 999999
+      OnChange = seSendBytesCountChange
+      TabOrder = 0
+    end
+    object seSendBytesInterval: TSpinEdit
+      Left = 96
+      Height = 23
+      Top = 36
+      Width = 56
+      MaxValue = 9999
+      OnChange = seSendBytesIntervalChange
+      TabOrder = 1
+    end
+    object lBuffer: TLabel
+      AnchorSideTop.Control = seSendBytesCount
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = seSendBytesCount
+      Left = 8
+      Height = 15
+      Top = 8
+      Width = 83
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 5
+      Caption = 'Buffer de Envio:'
+      ParentColor = False
+    end
+    object lEsperaBuffer: TLabel
+      AnchorSideTop.Control = seSendBytesInterval
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = seSendBytesInterval
+      Left = 19
+      Height = 15
+      Top = 40
+      Width = 72
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 5
+      Caption = 'Espera Buffer:'
+      ParentColor = False
+    end
   end
 end

@@ -331,7 +331,7 @@ begin
     begin
       with RegK030.Registrok355.Items[intFor] do
       begin
-        Add( LFill('k355') +
+        Add( LFill('K355') +
              LFill(COD_CTA) +
              LFill(COD_CCUS) +
              LFill(VL_SLD_FIN, 19, 2) +
